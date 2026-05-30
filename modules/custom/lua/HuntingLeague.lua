@@ -597,6 +597,53 @@ local function insertSpawnerNPC(zone)
                                 end
                             end
 
+                            -- Party bonus: extra marks when hunting with others.
+                            -- Goes to the killing-blow player only.
+                            -- 2-3 party members = +25% base marks; 4+ = +50%.
+                            do
+                                local ps = killer:getPartySize() or 1
+                                local pb = 0
+                                if ps >= 4 then
+                                    pb = math.floor(baseMarks * 0.50)
+                                elseif ps >= 2 then
+                                    pb = math.floor(baseMarks * 0.25)
+                                end
+                                if pb > 0 then
+                                    addPoints(killer, pb)
+                                    killer:printToPlayer(
+                                        string.format('[Hunting League] Party bonus (%d players): +%d marks!', ps, pb),
+                                        xi.msg.channel.SYSTEM_3)
+                                end
+                            end
+
+                            -- Kill streak bonus: consecutive kills within 5 minutes
+                            -- earn escalating bonus marks.
+                            -- 3 kills = +10% | 5 kills = +20% | 10+ kills = +50%
+                            do
+                                local now    = os.time()
+                                local last   = killer:getCharVar('HL_Streak_LastKill') or 0
+                                local streak = killer:getCharVar('HL_Streak_Count')    or 0
+                                if now - last <= 300 then
+                                    streak = streak + 1
+                                else
+                                    streak = 1  -- gap > 5 min resets streak
+                                end
+                                killer:setCharVar('HL_Streak_LastKill', now)
+                                killer:setCharVar('HL_Streak_Count',    streak)
+                                local mult = 0
+                                if     streak >= 10 then mult = 0.50
+                                elseif streak >=  5 then mult = 0.20
+                                elseif streak >=  3 then mult = 0.10
+                                end
+                                if mult > 0 then
+                                    local sb = math.floor(baseMarks * mult)
+                                    addPoints(killer, sb)
+                                    killer:printToPlayer(
+                                        string.format('[Hunting League] x%d kill streak! +%d bonus marks!', streak, sb),
+                                        xi.msg.channel.SYSTEM_3)
+                                end
+                            end
+
                             -- Distinct-NM stamp. One CharVar per groupId killed.
                             -- The "NM Encyclopedia" leaderboard counts these via
                             -- a LIKE pattern, so each unique kill is +1 toward

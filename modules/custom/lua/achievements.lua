@@ -42,18 +42,22 @@ local MILESTONES = {
         desc     = 'Veteran of ten hunts.  You know the drill.',
     },
     {
-        id       = 'CENTURY',
-        reward   = 300,
-        announce = true,
-        title    = 'Centennial Hunter',
-        desc     = '100 Hunting League kills.  No signs of stopping.',
+        id        = 'CENTURY',
+        reward    = 300,
+        announce  = true,
+        title     = 'Centennial Hunter',
+        desc      = '100 Hunting League kills.  No signs of stopping.',
+        titleId   = xi.title.DESERT_HUNTER,
+        titleName = 'Desert Hunter',
     },
     {
-        id       = 'THOUSAND',
-        reward   = 1000,
-        announce = true,
-        title    = 'Legendary Slayer',
-        desc     = '1,000 NM kills.  You have earned the title.',
+        id        = 'THOUSAND',
+        reward    = 1000,
+        announce  = true,
+        title     = 'Legendary Slayer',
+        desc      = '1,000 NM kills.  You have earned the title.',
+        titleId   = xi.title.HERO_AMONG_HEROES,
+        titleName = 'Hero Among Heroes',
     },
     {
         id       = 'TIER2_FIRST',
@@ -77,11 +81,13 @@ local MILESTONES = {
         desc     = 'First kill from the Tier IV roster.',
     },
     {
-        id       = 'APEX_HUNTER',
-        reward   = 500,
-        announce = true,
-        title    = 'Apex Hunter',
-        desc     = 'First Tier V kill.  These are the hardest NMs on the server.',
+        id        = 'APEX_HUNTER',
+        reward    = 500,
+        announce  = true,
+        title     = 'Apex Hunter',
+        desc      = 'First Tier V kill.  These are the hardest NMs on the server.',
+        titleId   = xi.title.HYDRA_HEADHUNTER,
+        titleName = 'Hydra Headhunter',
     },
     {
         id       = 'MARKS_1K',
@@ -98,11 +104,13 @@ local MILESTONES = {
         desc     = '10,000 lifetime Hunt Marks.  A true devotee.',
     },
     {
-        id       = 'MARKS_100K',
-        reward   = 2000,
-        announce = true,
-        title    = 'Mark of 100,000',
-        desc     = '100,000 lifetime Hunt Marks.  An absolute legend.',
+        id        = 'MARKS_100K',
+        reward    = 2000,
+        announce  = true,
+        title     = 'Mark of 100,000',
+        desc      = '100,000 lifetime Hunt Marks.  An absolute legend.',
+        titleId   = xi.title.PARAGON_OF_WARRIOR_EXCELLENCE,
+        titleName = 'Paragon of Warrior Excellence',
     },
 }
 
@@ -134,6 +142,17 @@ local function award(player, ms)
 
     player:setCharVar(achVar, os.time())
     addPoints(player, ms.reward)
+
+    -- Grant the in-game title if the milestone has one. player:addTitle()
+    -- unlocks it for display without forcing it as active — the player
+    -- chooses when to display it with /title.
+    if ms.titleId then
+        player:addTitle(ms.titleId)
+        player:printToPlayer(
+            string.format('[Achievement] Title unlocked: "%s" — display it with /title!',
+                ms.titleName or 'Unknown'),
+            xi.msg.channel.SYSTEM_3)
+    end
 
     local personalMsg = string.format(
         '[Achievement] %s — %s  (+%d marks!)',
