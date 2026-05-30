@@ -48,12 +48,24 @@ for _, d in ipairs(catalog.dungeons) do
             "[dungeon] WARNING: dungeon '%s' DISABLED — %s",
             d.id, d._disabled))
     elseif type(zoneScript) == 'table' and zoneScript.onZoneIn == nil then
-        d._disabled = string.format(
-            'zone %s is instance-only (no onZoneIn handler); ' ..
-            'setPos warps to it strand the player', d.zoneName)
-        print(string.format(
-            "[dungeon] WARNING: dungeon '%s' DISABLED — %s",
-            d.id, d._disabled))
+        -- No onZoneIn — check if the zone uses onInstanceZoneIn instead.
+        -- Dynamis [D] zones (e.g. Dynamis-San_dOria_[D]) have zonetype=128
+        -- and are entered via setPos like normal zones, but the engine fires
+        -- onInstanceZoneIn rather than onZoneIn on arrival.  We hook that
+        -- instead and prevent the default zone-72 eject for dungeon runners.
+        if type(zoneScript.onInstanceZoneIn) == 'function' then
+            d._useInstanceZoneIn = true
+            print(string.format(
+                "[dungeon] zone %s has onInstanceZoneIn only — will hook that for dungeon arrivals",
+                d.zoneName))
+        else
+            d._disabled = string.format(
+                'zone %s has neither onZoneIn nor onInstanceZoneIn; ' ..
+                'cannot hook player arrival', d.zoneName)
+            print(string.format(
+                "[dungeon] WARNING: dungeon '%s' DISABLED — %s",
+                d.id, d._disabled))
+        end
     end
 end
 
@@ -305,6 +317,54 @@ local function isFeatured(dungeon)
     if not dungeon then return false end
     local f = getFeaturedDungeon()
     return f and f.id == dungeon.id or false
+end
+
+-- ============================================================
+-- WEEKLY BONUS DUNGEON
+-- ============================================================
+-- One dungeon per ISO week awards 2× Infamy on clear. The featured
+-- dungeon rotates deterministically using the same weekIdx formula as
+-- the Hunting League's weekly featured hunt:
+--   weekIdx = math.floor(os.time() / 604800)
+-- so every player on the server sees the same bonus dungeon for the
+-- full ISO week (Monday 00:00 UTC → next Monday 00:00 UTC).
+--
+-- CharVar gating: DB_Bonus_<weekIdx>_<dungeonId> = 1 is written the
+-- first time a player earns the bonus. Subsequent clears of the same
+-- dungeon in the same week still award normal Infamy — the 2× is a
+-- one-time-per-week bonus, not a permanent doubling.
+
+local function getWeeklyBonusDungeon()
+    local weekIdx = math.floor(os.time() / 604800)
+    local enabled = {}
+    for _, d in ipairs(catalog.dungeons or {}) do
+        if not d._disabled then table.insert(enabled, d) end
+    end
+    if #enabled == 0 then return nil, weekIdx end
+    local idx = (weekIdx % #enabled) + 1
+    return enabled[idx], weekIdx
+end
+
+-- Is THIS dungeon this week's bonus dungeon?
+local function isWeeklyBonus(dungeon)
+    if not dungeon then return false end
+    local b, _ = getWeeklyBonusDungeon()
+    return b and b.id == dungeon.id or false
+end
+
+-- CharVar name for the weekly bonus earned flag.
+local function weeklyBonusCv(weekIdx, dungeonId)
+    return string.format('DB_Bonus_%d_%s', weekIdx, dungeonId)
+end
+
+-- Has the player already earned the weekly bonus for this dungeon?
+local function hasEarnedWeeklyBonus(player, weekIdx, dungeonId)
+    return (player:getCharVar(weeklyBonusCv(weekIdx, dungeonId)) or 0) == 1
+end
+
+-- Mark the weekly bonus as earned.
+local function markWeeklyBonusEarned(player, weekIdx, dungeonId)
+    player:setCharVar(weeklyBonusCv(weekIdx, dungeonId), 1)
 end
 
 -- Streak helpers. The streak charvar is global per player (NOT per
@@ -1610,6 +1670,19 @@ function m.endDungeon(player, reason)
         -- fine (just won't print any bonus lines).
         sess.earnedBonuses = earnedBonuses
 
+        -- Weekly Bonus Dungeon: award 2× Infamy once per week for the
+        -- featured dungeon. The bonus is gated per player via a CharVar
+        -- so subsequent clears in the same week earn normal Infamy.
+        local weekIdx = math.floor(os.time() / 604800)
+        local weeklyBonusApplied = false
+        local weeklyBonusAmt     = 0
+        if isWeeklyBonus(dungeon) and not hasEarnedWeeklyBonus(player, weekIdx, dungeon.id) then
+            weeklyBonusAmt     = infamy   -- bonus = one full extra copy of the computed infamy
+            infamy             = infamy * 2
+            weeklyBonusApplied = true
+            markWeeklyBonusEarned(player, weekIdx, dungeon.id)
+        end
+
         addInfamy(player, infamy)
 
         -- Phase-6: stash the final Infamy value on the session so the
@@ -1695,6 +1768,12 @@ function m.endDungeon(player, reason)
         if featuredMult ~= 1.0 then
             player:printToPlayer(
                 string.format('    ** FEATURED dungeon today ** x%.2f bonus', featuredMult),
+                xi.msg.channel.SYSTEM_3)
+        end
+        if weeklyBonusApplied then
+            player:printToPlayer(
+                string.format('[Dungeon] \xe2\x98\x85 BONUS DUNGEON: +%d extra Infamy! (%s is this week\'s featured dungeon.)',
+                    weeklyBonusAmt, dungeon.label),
                 xi.msg.channel.SYSTEM_3)
         end
         if sMult ~= 1.0 then
@@ -1949,29 +2028,64 @@ end
 -- swap during zone transition.
 local _registeredZoneIn = {}
 for _, dungeon in ipairs(catalog.dungeons) do
-    if not _registeredZoneIn[dungeon.zoneName] then
+    if dungeon._disabled then
+        -- skip — zone was marked disabled at load; menu already hides it
+    elseif not _registeredZoneIn[dungeon.zoneName] then
         _registeredZoneIn[dungeon.zoneName] = true
-        local zoneOverride = string.format('xi.zones.%s.Zone.onZoneIn', dungeon.zoneName)
         local zoneIdToMatch = dungeon.zoneId
-        m:addOverride(zoneOverride, function(player, prevZone)
-            local cs = super(player, prevZone)
-            -- Only arm if the arriving player has an active dungeon
-            -- session that targets THIS zone. Prevents accidental
-            -- spawns for any player who happens to wander in.
-            local sess = sessions[player:getName()]
-            if sess and sess.dungeon.zoneId == zoneIdToMatch then
+
+        if dungeon._useInstanceZoneIn then
+            -- -------------------------------------------------------
+            -- Dynamis [D] zones: engine fires onInstanceZoneIn on arrival
+            -- (even for plain setPos warps).  The default handler kicks
+            -- players without an active instance to zone 72.  We intercept
+            -- that and arm the dungeon instead for dungeon runners.
+            -- -------------------------------------------------------
+            local zoneOverride = string.format('xi.zones.%s.Zone.onInstanceZoneIn', dungeon.zoneName)
+            m:addOverride(zoneOverride, function(player, instance)
+                local sess = sessions[player:getName()]
+                local isDungeonRun = sess and sess.dungeon.zoneId == zoneIdToMatch
+                if not isDungeonRun then
+                    -- Not a dungeon run — let the original handler decide
+                    -- (it will eject playerless-instance arrivals to zone 72).
+                    super(player, instance)
+                    return
+                end
                 print(string.format(
-                    "[dungeon] onZoneIn hit for %s in zone %s (session matches)",
+                    "[dungeon] onInstanceZoneIn hit for %s in zone %s (session matches)",
                     player:getName(), dungeon.zoneName))
-                -- Small delay (~1s) so the zone-in finishes fully
-                -- before we ask the engine to insert dynamic entities.
+                -- Small delay so zone-in completes before spawning entities.
                 player:timer(1000, function(p) armDungeonAfterArrival(p) end)
-            end
-            return cs
-        end)
-        print(string.format(
-            "[dungeon] registered onZoneIn override for %s (zone %d)",
-            dungeon.zoneName, dungeon.zoneId))
+            end)
+            print(string.format(
+                "[dungeon] registered onInstanceZoneIn override for %s (zone %d)",
+                dungeon.zoneName, dungeon.zoneId))
+        else
+            -- -------------------------------------------------------
+            -- Normal zones: engine fires onZoneIn on arrival.
+            -- Skip super() for dungeon sessions to avoid any zone-
+            -- specific entry logic (e.g. Dynamis city eject gate).
+            -- -------------------------------------------------------
+            local zoneOverride = string.format('xi.zones.%s.Zone.onZoneIn', dungeon.zoneName)
+            m:addOverride(zoneOverride, function(player, prevZone)
+                local sess = sessions[player:getName()]
+                local isDungeonRun = sess and sess.dungeon.zoneId == zoneIdToMatch
+                local cs = nil
+                if not isDungeonRun then
+                    cs = super(player, prevZone)
+                end
+                if isDungeonRun then
+                    print(string.format(
+                        "[dungeon] onZoneIn hit for %s in zone %s (session matches)",
+                        player:getName(), dungeon.zoneName))
+                    player:timer(1000, function(p) armDungeonAfterArrival(p) end)
+                end
+                return cs
+            end)
+            print(string.format(
+                "[dungeon] registered onZoneIn override for %s (zone %d)",
+                dungeon.zoneName, dungeon.zoneId))
+        end
     end
 end
 
@@ -2143,6 +2257,17 @@ showDungeonMenu = function(player)
                     fmtCountdown(secondsToNextDay())),
                 xi.msg.channel.SYSTEM_3)
         end
+        local bonusDungeon, bonusWeekIdx = getWeeklyBonusDungeon()
+        if bonusDungeon then
+            local bonusStatus = hasEarnedWeeklyBonus(player, bonusWeekIdx, bonusDungeon.id)
+                                and 'earned' or '2x Infamy on clear!'
+            player:printToPlayer(
+                string.format('[Dungeon Master] \xe2\x98\x85 This week\'s BONUS dungeon: %s  [%s, resets in %s]',
+                    bonusDungeon.label,
+                    bonusStatus,
+                    fmtCountdown(secondsToNextWeek())),
+                xi.msg.channel.SYSTEM_3)
+        end
         local streak = getStreak(player)
         if streak > 0 then
             local cap        = catalog.streakCap or 5
@@ -2187,6 +2312,12 @@ showDungeonMenu = function(player)
                                 string.format(
                                     '[Dungeon Master] Mythic key for %s resets in %s.',
                                     d.label, fmtCountdown(secondsToNextWeek())),
+                                xi.msg.channel.SYSTEM_3)
+                        end
+                        -- Weekly Bonus Dungeon pick notification.
+                        if isWeeklyBonus(d) then
+                            p:printToPlayer(
+                                '[Dungeon] \xe2\x98\x85 This is this week\'s BONUS dungeon \xe2\x80\x94 clear it for 2\xc3\x97 Infamy!',
                                 xi.msg.channel.SYSTEM_3)
                         end
                         showTierMenu(p, d)
