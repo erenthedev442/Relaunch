@@ -14636,7 +14636,10 @@ auto CLuaBaseEntity::addCorsairRoll(sol::variadic_args va) -> bool
     PEffect->SetSource(sourceType, sourceTypeParam);
     PEffect->SetOriginID(originID);
 
-    uint8 maxRolls = 2;
+    // [LEGENDARY-CUSTOM] Max simultaneous phantom rolls raised from retail 2 -> 6.
+    // Subjob COR is still limited to 1 (unchanged). Grep "LEGENDARY-CUSTOM" after
+    // any upstream LSB merge to confirm this survived; if it conflicts here, keep 6.
+    uint8 maxRolls = 6;
     if (casterJob != JOB_COR)
     {
         maxRolls = 1;
@@ -14746,7 +14749,11 @@ bool CLuaBaseEntity::addBardSong(CLuaBaseEntity* PEntity, uint16 effectID, uint1
                                                tier                            // Tier
     );
 
-    uint8 maxSongs = 2;
+    // [LEGENDARY-CUSTOM] Max simultaneous songs raised from retail 2 -> 6.
+    // Without a valid instrument equipped you are still limited to 1 (unchanged).
+    // Grep "LEGENDARY-CUSTOM" after any upstream LSB merge to confirm this
+    // survived; if it conflicts here, keep base 6 AND the std::min cap below.
+    uint8 maxSongs = 6;
 
     if (PEntity && PEntity->m_PBaseEntity && PEntity->m_PBaseEntity->objtype == TYPE_PC)
     {
@@ -14761,6 +14768,9 @@ bool CLuaBaseEntity::addBardSong(CLuaBaseEntity* PEntity, uint16 effectID, uint1
 
         maxSongs += PCaster->getMod(Mod::MAXIMUM_SONGS_BONUS);
     }
+
+    // [LEGENDARY-CUSTOM] Hard cap so song+ gear / Clarion Call can't exceed 6.
+    maxSongs = std::min<uint8>(maxSongs, 6);
 
     return PBattle->StatusEffectContainer->ApplyBardEffect(PEffect, maxSongs);
 }
