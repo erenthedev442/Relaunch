@@ -6,9 +6,15 @@ require('scripts/globals/npc_util')
 -----------------------------------
 -- ID Requires
 -----------------------------------
-local dragonsAeryID   = zones[xi.zone.DRAGONS_AERY]
-local valleySorrowsID = zones[xi.zone.VALLEY_OF_SORROWS]
-local behemothDomID   = zones[xi.zone.BEHEMOTHS_DOMINION]
+local dragonsAeryID      = zones[xi.zone.DRAGONS_AERY]
+local valleySorrowsID    = zones[xi.zone.VALLEY_OF_SORROWS]
+local behemothDomID      = zones[xi.zone.BEHEMOTHS_DOMINION]
+-- Lower-tier HNMs
+local sauromugueID       = zones[xi.zone.SAUROMUGUE_CHAMPAIGN]  -- Roc (zone 120)
+local rolanberryID       = zones[xi.zone.ROLANBERRY_FIELDS]     -- Simurgh (zone 110)
+local garlaigeCitadelID  = zones[xi.zone.GARLAIGE_CITADEL]      -- Serket (zone 200)
+local jugnerForestID     = zones[xi.zone.JUGNER_FOREST]         -- King Arthro (zone 104)
+local eastSarutabarutaID = zones[xi.zone.EAST_SARUTABARUTA]     -- Spiny Spipi (zone 116)
 
 -----------------------------------
 -- Module definition
@@ -22,7 +28,7 @@ local hnmSystem = Module:new('custom_HNM_System')
 -- Module enable/disable
 -----------------------------------
 -- Do not use along era_HNM_System module. Choose one or the other.
-hnmSystem:setEnabled(false)
+hnmSystem:setEnabled(true)
 
 -----------------------------------
 -- Dragon's Aery: Fafnir, Nidhogg
@@ -172,6 +178,200 @@ hnmSystem:addOverride('xi.zones.Behemoths_Dominion.npcs.qm2.onTrade', function(p
     then
         player:confirmTrade()
     end
+end)
+
+-----------------------------------
+-- Lower-tier HNMs — 6-10 hour respawn windows (accessible to mid-tier players)
+--
+-- Respawn formula: randomPopTime = minSeconds + math.random(0, rangeSteps) * 1800
+--   Roc / Simurgh / Serket: 21600 + rand(0,4)*1800  → 6–8 h
+--   King Arthro:             28800 + rand(0,4)*1800  → 8–10 h
+--   Spiny Spipi:             14400 + rand(0,4)*1800  → 4–6 h
+--
+-- Zone confirmation (IDs verified against scripts/zones/*/IDs.lua):
+--   Roc         — Sauromugue_Champaign  (zone 120) — sauromugueID.mob.ROC
+--   Simurgh     — Rolanberry_Fields     (zone 110) — rolanberryID.mob.SIMURGH
+--   Serket      — Garlaige_Citadel      (zone 200) — garlaigeCitadelID.mob.SERKET
+--   King Arthro — Jugner_Forest         (zone 104) — jugnerForestID.mob.KING_ARTHRO
+--   Spiny Spipi — East_Sarutabaruta     (zone 116) — eastSarutabarutaID.mob.SPINY_SPIPI
+--
+-- NOTE: The prompt guessed wrong zones for several of these NMs. The zones above
+-- are confirmed from the LSB IDs.lua files and are the correct vanilla locations.
+-----------------------------------
+
+-----------------------------------
+-- Sauromugue Champaign: Roc
+-----------------------------------
+hnmSystem:addOverride('xi.zones.Sauromugue_Champaign.Zone.onInitialize', function(zone)
+    super(zone)
+
+    local hnmPopTime  = GetServerVariable('[HNM]Roc')
+    local currentTime = GetSystemTime()
+
+    if hnmPopTime == 0 then
+        hnmPopTime = currentTime + math.random(1, 20) * 1800
+        SetServerVariable('[HNM]Roc', hnmPopTime)
+    end
+
+    xi.mob.updateNMSpawnPoint(sauromugueID.mob.ROC)
+
+    if hnmPopTime <= currentTime then
+        SpawnMob(sauromugueID.mob.ROC)
+    else
+        GetMobByID(sauromugueID.mob.ROC):setRespawnTime(hnmPopTime - currentTime)
+    end
+end)
+
+hnmSystem:addOverride('xi.zones.Sauromugue_Champaign.mobs.Roc.onMobDespawn', function(mob)
+    super(mob)
+
+    -- 6-8 hour window: 21600s + up to 4 * 1800s
+    local randomPopTime = 21600 + math.random(0, 4) * 1800
+
+    SetServerVariable('[HNM]Roc', GetSystemTime() + randomPopTime)
+
+    GetMobByID(sauromugueID.mob.ROC):setRespawnTime(randomPopTime)
+    xi.mob.updateNMSpawnPoint(sauromugueID.mob.ROC)
+end)
+
+-----------------------------------
+-- Rolanberry Fields: Simurgh
+-----------------------------------
+hnmSystem:addOverride('xi.zones.Rolanberry_Fields.Zone.onInitialize', function(zone)
+    super(zone)
+
+    local hnmPopTime  = GetServerVariable('[HNM]Simurgh')
+    local currentTime = GetSystemTime()
+
+    if hnmPopTime == 0 then
+        hnmPopTime = currentTime + math.random(1, 20) * 1800
+        SetServerVariable('[HNM]Simurgh', hnmPopTime)
+    end
+
+    xi.mob.updateNMSpawnPoint(rolanberryID.mob.SIMURGH)
+
+    if hnmPopTime <= currentTime then
+        SpawnMob(rolanberryID.mob.SIMURGH)
+    else
+        GetMobByID(rolanberryID.mob.SIMURGH):setRespawnTime(hnmPopTime - currentTime)
+    end
+end)
+
+hnmSystem:addOverride('xi.zones.Rolanberry_Fields.mobs.Simurgh.onMobDespawn', function(mob)
+    super(mob)
+
+    -- 6-8 hour window: 21600s + up to 4 * 1800s
+    local randomPopTime = 21600 + math.random(0, 4) * 1800
+
+    SetServerVariable('[HNM]Simurgh', GetSystemTime() + randomPopTime)
+
+    GetMobByID(rolanberryID.mob.SIMURGH):setRespawnTime(randomPopTime)
+    xi.mob.updateNMSpawnPoint(rolanberryID.mob.SIMURGH)
+end)
+
+-----------------------------------
+-- Garlaige Citadel: Serket
+-----------------------------------
+hnmSystem:addOverride('xi.zones.Garlaige_Citadel.Zone.onInitialize', function(zone)
+    super(zone)
+
+    local hnmPopTime  = GetServerVariable('[HNM]Serket')
+    local currentTime = GetSystemTime()
+
+    if hnmPopTime == 0 then
+        hnmPopTime = currentTime + math.random(1, 20) * 1800
+        SetServerVariable('[HNM]Serket', hnmPopTime)
+    end
+
+    xi.mob.updateNMSpawnPoint(garlaigeCitadelID.mob.SERKET)
+
+    if hnmPopTime <= currentTime then
+        SpawnMob(garlaigeCitadelID.mob.SERKET)
+    else
+        GetMobByID(garlaigeCitadelID.mob.SERKET):setRespawnTime(hnmPopTime - currentTime)
+    end
+end)
+
+hnmSystem:addOverride('xi.zones.Garlaige_Citadel.mobs.Serket.onMobDespawn', function(mob)
+    super(mob)
+
+    -- 6-8 hour window: 21600s + up to 4 * 1800s
+    local randomPopTime = 21600 + math.random(0, 4) * 1800
+
+    SetServerVariable('[HNM]Serket', GetSystemTime() + randomPopTime)
+
+    GetMobByID(garlaigeCitadelID.mob.SERKET):setRespawnTime(randomPopTime)
+    xi.mob.updateNMSpawnPoint(garlaigeCitadelID.mob.SERKET)
+end)
+
+-----------------------------------
+-- Jugner Forest: King Arthro
+-----------------------------------
+hnmSystem:addOverride('xi.zones.Jugner_Forest.Zone.onInitialize', function(zone)
+    super(zone)
+
+    local hnmPopTime  = GetServerVariable('[HNM]King_Arthro')
+    local currentTime = GetSystemTime()
+
+    if hnmPopTime == 0 then
+        hnmPopTime = currentTime + math.random(1, 20) * 1800
+        SetServerVariable('[HNM]King_Arthro', hnmPopTime)
+    end
+
+    xi.mob.updateNMSpawnPoint(jugnerForestID.mob.KING_ARTHRO)
+
+    if hnmPopTime <= currentTime then
+        SpawnMob(jugnerForestID.mob.KING_ARTHRO)
+    else
+        GetMobByID(jugnerForestID.mob.KING_ARTHRO):setRespawnTime(hnmPopTime - currentTime)
+    end
+end)
+
+hnmSystem:addOverride('xi.zones.Jugner_Forest.mobs.King_Arthro.onMobDespawn', function(mob)
+    super(mob)
+
+    -- 8-10 hour window: 28800s + up to 4 * 1800s
+    local randomPopTime = 28800 + math.random(0, 4) * 1800
+
+    SetServerVariable('[HNM]King_Arthro', GetSystemTime() + randomPopTime)
+
+    GetMobByID(jugnerForestID.mob.KING_ARTHRO):setRespawnTime(randomPopTime)
+    xi.mob.updateNMSpawnPoint(jugnerForestID.mob.KING_ARTHRO)
+end)
+
+-----------------------------------
+-- East Sarutabaruta: Spiny Spipi
+-----------------------------------
+hnmSystem:addOverride('xi.zones.East_Sarutabaruta.Zone.onInitialize', function(zone)
+    super(zone)
+
+    local hnmPopTime  = GetServerVariable('[HNM]Spiny_Spipi')
+    local currentTime = GetSystemTime()
+
+    if hnmPopTime == 0 then
+        hnmPopTime = currentTime + math.random(1, 12) * 1800
+        SetServerVariable('[HNM]Spiny_Spipi', hnmPopTime)
+    end
+
+    xi.mob.updateNMSpawnPoint(eastSarutabarutaID.mob.SPINY_SPIPI)
+
+    if hnmPopTime <= currentTime then
+        SpawnMob(eastSarutabarutaID.mob.SPINY_SPIPI)
+    else
+        GetMobByID(eastSarutabarutaID.mob.SPINY_SPIPI):setRespawnTime(hnmPopTime - currentTime)
+    end
+end)
+
+hnmSystem:addOverride('xi.zones.East_Sarutabaruta.mobs.Spiny_Spipi.onMobDespawn', function(mob)
+    super(mob)
+
+    -- 4-6 hour window: 14400s + up to 4 * 1800s
+    local randomPopTime = 14400 + math.random(0, 4) * 1800
+
+    SetServerVariable('[HNM]Spiny_Spipi', GetSystemTime() + randomPopTime)
+
+    GetMobByID(eastSarutabarutaID.mob.SPINY_SPIPI):setRespawnTime(randomPopTime)
+    xi.mob.updateNMSpawnPoint(eastSarutabarutaID.mob.SPINY_SPIPI)
 end)
 
 return hnmSystem
