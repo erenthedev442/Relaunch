@@ -190,4 +190,8 @@ function M.check(player, milestoneId)
     end
 end
 
+-- Exported for the !achievements command so it can iterate milestone metadata
+-- without duplicating the list.
+M.MILESTONES = MILESTONES
+
 return M

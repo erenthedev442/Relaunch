@@ -21,6 +21,7 @@ local catalog = require('modules/custom/lua/hunting_league_catalog')
 local hg      = require('modules/custom/lua/hunters_guild')
 local wh      = require('modules/custom/lua/weekly_hunts')
 local ach     = require('modules/custom/lua/achievements')
+local se      = require('modules/custom/lua/seasonal_events')
 
 -- Require the hunt zone so the override path is resolvable.
 local huntZoneName = catalog.huntZonePath:match('xi%.zones%.(.+)')
@@ -545,6 +546,7 @@ local function insertSpawnerNPC(zone)
                             -- did you bank with bonuses".
                             local baseMarks  = md.points
                             local finalMarks = hg.applyAmplifier(killer, 'hl', baseMarks)
+                            finalMarks       = se.applyBonus(killer, finalMarks)
                             local bonus      = finalMarks - baseMarks
                             addPoints(killer, finalMarks)
                             -- Lifetime mark counter (never decreases when marks
