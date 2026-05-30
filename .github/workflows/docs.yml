@@ -1,0 +1,58 @@
+name: Deploy docs site
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "tools/docgen/**"
+      - "sql/**"
+      - ".github/workflows/docs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r tools/docgen/requirements.txt
+
+      # Note: docgen is NOT run in CI on purpose. Some sources (settings/,
+      # modules/custom/, customized scripts/commands/) are gitignored or
+      # differ from upstream LSB. The user runs `refresh-site.bat` locally
+      # against $LEGENDARY_LIVE_ROOT to regenerate, then commits the .md
+      # files. CI just builds whatever was committed.
+
+      - name: Build site
+        run: python -m mkdocs build --strict
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
