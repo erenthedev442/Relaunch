@@ -1,16 +1,16 @@
 -----------------------------------
 -- DungeonSystem.lua
 --
--- Talk-to-NPC dungeon system. Pick a dungeon → warped to a normally-
--- empty zone → mob population spawns around you → fight to the boss
--- → kill boss within time limit → Infamy reward → auto-warped back.
+-- Talk-to-NPC dungeon system. Pick a dungeon -> warped to a normally-
+-- empty zone -> mob population spawns around you -> fight to the boss
+-- -> kill boss within time limit -> Infamy reward -> auto-warped back.
 --
 -- Failure modes (all clean up the session + despawn mobs):
---   * Boss killed within time limit  → SUCCESS, infamy awarded
---   * Time limit expires              → ABORT, no reward
---   * Player dies                     → ABORT, no reward
---   * Player zones out manually       → ABORT, no reward
---   * Player runs !dungeon abort      → ABORT, no reward
+--   * Boss killed within time limit  -> SUCCESS, infamy awarded
+--   * Time limit expires              -> ABORT, no reward
+--   * Player dies                     -> ABORT, no reward
+--   * Player zones out manually       -> ABORT, no reward
+--   * Player runs !dungeon abort      -> ABORT, no reward
 --
 -- Architecture mirrors the established patterns:
 --   * Catalog-driven (dungeon_catalog.lua)
@@ -20,6 +20,7 @@
 -----------------------------------
 require('modules/module_utils')
 local catalog = require('modules/custom/lua/dungeon_catalog')
+local ach     = require('modules/custom/lua/achievements')
 require(string.format('scripts/zones/%s/Zone', catalog.dungeonMasterPos.zone))
 
 -- ============================================================
@@ -28,7 +29,7 @@ require(string.format('scripts/zones/%s/Zone', catalog.dungeonMasterPos.zone))
 -- During the v1 launch we shipped with Outer_Ra'Kaznar_[U2] and
 -- [U3] as dungeon zones. Both were "empty" (no native mob_groups)
 -- AND in the LSB zone enum, so they looked fine. But their Zone.lua
--- scripts ONLY have onInstanceZoneIn — they require the LSB instance
+-- scripts ONLY have onInstanceZoneIn - they require the LSB instance
 -- system to be entered. A plain setPos to them stranded the player
 -- in a black screen + perpetual "already logged in" loop.
 --
@@ -45,10 +46,10 @@ for _, d in ipairs(catalog.dungeons) do
         d._disabled = string.format(
             'zone script not found at scripts/zones/%s/Zone.lua', d.zoneName)
         print(string.format(
-            "[dungeon] WARNING: dungeon '%s' DISABLED — %s",
+            "[dungeon] WARNING: dungeon '%s' DISABLED - %s",
             d.id, d._disabled))
     elseif type(zoneScript) == 'table' and zoneScript.onZoneIn == nil then
-        -- No onZoneIn — check if the zone uses onInstanceZoneIn instead.
+        -- No onZoneIn - check if the zone uses onInstanceZoneIn instead.
         -- Dynamis [D] zones (e.g. Dynamis-San_dOria_[D]) have zonetype=128
         -- and are entered via setPos like normal zones, but the engine fires
         -- onInstanceZoneIn rather than onZoneIn on arrival.  We hook that
@@ -56,14 +57,14 @@ for _, d in ipairs(catalog.dungeons) do
         if type(zoneScript.onInstanceZoneIn) == 'function' then
             d._useInstanceZoneIn = true
             print(string.format(
-                "[dungeon] zone %s has onInstanceZoneIn only — will hook that for dungeon arrivals",
+                "[dungeon] zone %s has onInstanceZoneIn only - will hook that for dungeon arrivals",
                 d.zoneName))
         else
             d._disabled = string.format(
                 'zone %s has neither onZoneIn nor onInstanceZoneIn; ' ..
                 'cannot hook player arrival', d.zoneName)
             print(string.format(
-                "[dungeon] WARNING: dungeon '%s' DISABLED — %s",
+                "[dungeon] WARNING: dungeon '%s' DISABLED - %s",
                 d.id, d._disabled))
         end
     end
@@ -88,7 +89,7 @@ local function getSession(player)
 end
 
 -- Lazy-loaded weekly_hunts for the dungeon_clear event. Same defensive
--- pattern hunters_guild uses — protect-call so a missing module
+-- pattern hunters_guild uses - protect-call so a missing module
 -- doesn't bring down the dungeon flow.
 local _wh = nil
 local function whFire(player, eventType, metadata)
@@ -112,12 +113,12 @@ local function addInfamy(player, amount)
 end
 
 -----------------------------------
--- PHASE 6 — Party / alliance helpers
+-- PHASE 6 - Party / alliance helpers
 -----------------------------------
 -- Encapsulate every party-related operation behind these helpers so
 -- the main startDungeon / armDungeonAfterArrival / endDungeon flow
 -- can opt into party support with a single call per phase. Solo runs
--- still work — when the helpers find no eligible members the session
+-- still work - when the helpers find no eligible members the session
 -- behaves exactly like the pre-Phase-6 solo path.
 
 -- Returns the list of party-member CBaseEntity refs eligible to join
@@ -153,7 +154,7 @@ end
 
 -- Wires shadow session references for each member. After this call,
 -- sessions[<memberName>] resolves to the same table as
--- sessions[<leaderName>] — so getSession(member) returns the leader's
+-- sessions[<leaderName>] - so getSession(member) returns the leader's
 -- session and the whole codebase sees them as "in dungeon" transparently.
 local function attachMembersToSession(session, members)
     session.leaderName = session.leaderName or session.dungeon and nil  -- set by caller
@@ -190,9 +191,9 @@ local function liveMemberInZone(memberName, zoneId)
 end
 
 -----------------------------------
--- PHASE 2 — Difficulty tiers
+-- PHASE 2 - Difficulty tiers
 -----------------------------------
--- Catalog: dungeon_catalog.lua → catalog.tiers (normal/hard/mythic).
+-- Catalog: dungeon_catalog.lua -> catalog.tiers (normal/hard/mythic).
 -- Each tier scales HP/ATT/time/reward and (for Mythic) gates on a
 -- weekly key. Tier picker lives between dungeon selection and entry.
 --
@@ -200,7 +201,7 @@ end
 -- happens at the same instant for every player regardless of timezone.
 -- A new ISO week starts each Monday at 00:00 UTC. We compute the week
 -- number as floor(epoch_with_monday_anchor / 604800). January 1, 1970
--- was a Thursday, so we shift by +259200 (3 days = Mon→Thu offset) so
+-- was a Thursday, so we shift by +259200 (3 days = Mon->Thu offset) so
 -- the bucket boundary lands on Monday 00:00 UTC.
 local SECONDS_PER_WEEK = 604800
 local MONDAY_ANCHOR    = 259200
@@ -228,7 +229,7 @@ local function getTier(tierId)
 end
 
 -- Per-tier clear counter charvar. Separate from Dungeon_Clears_<id>
--- (which counts ALL tiers — kept for back-compat with existing
+-- (which counts ALL tiers - kept for back-compat with existing
 -- weekly-hunts hooks and the docs leaderboard).
 local function tierClearsCv(dungeon, tierId)
     return string.format('Dungeon_Clears_%s_%s', dungeon.id, tierId)
@@ -274,32 +275,32 @@ local function tierLockReason(player, dungeon, tierId)
         local have = getTierClears(player, dungeon, req.tier)
         local label = (catalog.tiers and catalog.tiers[req.tier]
             and catalog.tiers[req.tier].label) or req.tier
-        return string.format('locked — needs %d %s clears (have %d)',
+        return string.format('locked - needs %d %s clears (have %d)',
             req.clears, label, have)
     end
     if tier.weekly and not hasMythicKey(player, dungeon) then
-        return 'weekly key consumed — resets Monday 00:00 UTC'
+        return 'weekly key consumed - resets Monday 00:00 UTC'
     end
     return nil
 end
 
 -----------------------------------
--- PHASE 4 — Meta-progression (daily featured + streak + key UI)
+-- PHASE 4 - Meta-progression (daily featured + streak + key UI)
 -----------------------------------
 -- Three player-facing systems layered onto the reward path. None of
--- them touch session lifecycle directly — they read at clear time
+-- them touch session lifecycle directly - they read at clear time
 -- and write small charvars. Daily featured needs zero state at all
 -- (purely deterministic from the UTC day stamp).
 
 -- Day index for daily featured rotation. Uses raw UTC days since
--- epoch — Jan 1, 1970 UTC = day 0. Same instant on every server.
+-- epoch - Jan 1, 1970 UTC = day 0. Same instant on every server.
 local SECONDS_PER_DAY = 86400
 local function currentUtcDay()
     return math.floor(os.time() / SECONDS_PER_DAY)
 end
 
 -- Today's featured dungeon row (or nil if no enabled dungeons exist).
--- Deterministic: same day → same dungeon for every player. Skips any
+-- Deterministic: same day -> same dungeon for every player. Skips any
 -- dungeons disabled at module load so the feature can't land on a
 -- dungeon that would otherwise be hidden from the menu.
 local function getFeaturedDungeon()
@@ -322,16 +323,16 @@ end
 -- ============================================================
 -- WEEKLY BONUS DUNGEON
 -- ============================================================
--- One dungeon per ISO week awards 2× Infamy on clear. The featured
+-- One dungeon per ISO week awards 2x Infamy on clear. The featured
 -- dungeon rotates deterministically using the same weekIdx formula as
 -- the Hunting League's weekly featured hunt:
 --   weekIdx = math.floor(os.time() / 604800)
 -- so every player on the server sees the same bonus dungeon for the
--- full ISO week (Monday 00:00 UTC → next Monday 00:00 UTC).
+-- full ISO week (Monday 00:00 UTC -> next Monday 00:00 UTC).
 --
 -- CharVar gating: DB_Bonus_<weekIdx>_<dungeonId> = 1 is written the
 -- first time a player earns the bonus. Subsequent clears of the same
--- dungeon in the same week still award normal Infamy — the 2× is a
+-- dungeon in the same week still award normal Infamy - the 2x is a
 -- one-time-per-week bonus, not a permanent doubling.
 
 local function getWeeklyBonusDungeon()
@@ -368,8 +369,8 @@ local function markWeeklyBonusEarned(player, weekIdx, dungeonId)
 end
 
 -- Streak helpers. The streak charvar is global per player (NOT per
--- dungeon) — clearing any dungeon counts. So you can chain Outer
--- Bastion → Voidwalker Arena → Empyreal Paradox for a 3-streak and
+-- dungeon) - clearing any dungeon counts. So you can chain Outer
+-- Bastion -> Voidwalker Arena -> Empyreal Paradox for a 3-streak and
 -- get +30% on the third clear.
 local function getStreak(player)
     return player:getCharVar(catalog.streakCv or 'Dungeon_Streak') or 0
@@ -428,20 +429,20 @@ local function fmtCountdown(secs)
 end
 
 -----------------------------------
--- PHASE 1 — Per-run affixes
+-- PHASE 1 - Per-run affixes
 -----------------------------------
 -- An "affix" is a small data-driven mutator that's rolled at session
 -- start and applied to the boss / trash / session / reward. Each affix
 -- carries a rewardMult; positive affixes (e.g. Fragile) make the run
 -- easier and pay less, negative affixes (e.g. Mighty) make the run
--- harder and pay more. Catalog: dungeon_catalog.lua → catalog.affixes.
+-- harder and pay more. Catalog: dungeon_catalog.lua -> catalog.affixes.
 --
--- This block stays generic — the per-affix logic lives entirely in the
+-- This block stays generic - the per-affix logic lives entirely in the
 -- catalog so adding/removing affixes never requires touching the system
 -- file. Same pattern as the seal/reforge/augment catalogs.
 
 -- Roll affixes for a tier. The tier controls:
---   * count range (Mythic gets 2–3, lower tiers get 1–2)
+--   * count range (Mythic gets 2-3, lower tiers get 1-2)
 --   * pool composition (Mythic also draws from catalog.mythicAffixes)
 -- Returns a list of catalog affix rows in the order they were rolled.
 -- Mythic affixes are guaranteed at least 1 slot when the tier opts in
@@ -470,7 +471,7 @@ local function rollAffixes(tier)
     local n    = math.random(minN, math.min(maxN, #pool))
 
     -- Reservoir-style draw without replacement. The pool is small
-    -- (~15–20 entries), so an in-place shuffle of indices is fine.
+    -- (~15-20 entries), so an in-place shuffle of indices is fine.
     local indices = {}
     for i = 1, #pool do indices[i] = i end
     for i = #pool, 2, -1 do
@@ -505,7 +506,7 @@ end
 
 -- Compute the product of all rolled affixes' rewardMult. Returns 1.0
 -- when no affixes were rolled (back-compat with catalogs that ship
--- without affix data — the system stays neutral).
+-- without affix data - the system stays neutral).
 local function affixRewardMult(affixes)
     local m = 1.0
     for _, a in ipairs(affixes or {}) do
@@ -517,7 +518,7 @@ end
 -- Apply affix effects to a freshly-spawned mob. The session caches
 -- whether the affix has any boss/trash hooks so we can no-op fast for
 -- runs where every rolled affix is session-/reward-only (e.g. Bountiful
--- + Lengthy — no engine mod work to do).
+-- + Lengthy - no engine mod work to do).
 local function applyAffixesToMob(sess, mob, isBoss)
     if not sess or not sess.affixes then return end
     for _, a in ipairs(sess.affixes) do
@@ -538,7 +539,7 @@ local function applyAffixesToSession(sess)
 end
 
 -----------------------------------
--- PHASE 3 — Boss mechanics (HP-threshold triggers + enrage timer)
+-- PHASE 3 - Boss mechanics (HP-threshold triggers + enrage timer)
 -----------------------------------
 -- A "phase" is a data row in dungeon.phases that fires when the boss's
 -- HP% drops at or below `hp`. Catalog defines WHAT and WHEN; this
@@ -555,7 +556,7 @@ end
 -- guarding pcalls around any API that can throw, and printing a
 -- player-facing message if `p.message` is set.
 
--- Forward decl — bossActions references spawnDungeonMob, which is
+-- Forward decl - bossActions references spawnDungeonMob, which is
 -- defined further down. Resolved lazily inside add_spawn at call time.
 local spawnDungeonMobFn
 
@@ -582,7 +583,7 @@ local bossActions =
         _addMod(boss, xi.mod.STR,        p.str)
         _addMod(boss, xi.mod.HASTE_GEAR, p.haste)
         if p.dt then
-            -- dt is "damage taken reduction" — positive number reduces
+            -- dt is "damage taken reduction" - positive number reduces
             -- incoming damage; subtract from PHYS/MAGIC_DMG_TAKEN.
             _addMod(boss, xi.mod.PHYS_DMG_TAKEN,  -p.dt)
             _addMod(boss, xi.mod.MAGIC_DMG_TAKEN, -p.dt)
@@ -604,7 +605,7 @@ local bossActions =
     end,
 
     -- Heal the boss by a percentage of its max HP. Creates a DPS check
-    -- — the player has to outrun the heal. Capped at maxHP by addHP().
+    -- - the player has to outrun the heal. Capped at maxHP by addHP().
     heal = function(boss, sess, player, p)
         local pct  = p.pct or 25
         local amt  = math.floor(boss:getMaxHP() * pct / 100)
@@ -612,7 +613,7 @@ local bossActions =
         _say(player, p, string.format('The boss heals for %d!', amt))
     end,
 
-    -- AoE damage tick to the player. Doesn't kill — clamped to leave
+    -- AoE damage tick to the player. Doesn't kill - clamped to leave
     -- at least 1 HP so the phase trigger never feels like an unfair
     -- one-shot (the boss can still kill you the old-fashioned way).
     aoe = function(boss, sess, player, p)
@@ -688,9 +689,9 @@ end
 
 -- Look up the difficulty-scaled mod profile for a given mob level.
 -- The catalog defines templates at 150/175/200/225/250 anchors but
--- waypoints can use any level — fall back to the CLOSEST defined
--- template at or below the requested level. Lv130 → Lv150 template
--- adjusted-by-engine-level; Lv170 → Lv150 template; Lv180 → Lv175.
+-- waypoints can use any level - fall back to the CLOSEST defined
+-- template at or below the requested level. Lv130 -> Lv150 template
+-- adjusted-by-engine-level; Lv170 -> Lv150 template; Lv180 -> Lv175.
 -- The engine still uses the actual level for base stats; this table
 -- just adds the offensive package on top.
 local function modsForLevel(level)
@@ -740,10 +741,10 @@ local function spawnDungeonMob(player, dungeon, opts)
         pos.x, pos.y, pos.z, level, tostring(isBoss)))
 
     -- Visual size:
-    --   modelSize 0 = stock (engine default — trash uses this)
+    --   modelSize 0 = stock (engine default - trash uses this)
     --   modelSize 1 = small bump
     --   modelSize 2 = noticeably larger (default for bosses)
-    --   modelSize 3 = huge — risky against zone geometry
+    --   modelSize 3 = huge - risky against zone geometry
     -- The boss size is per-dungeon (catalog override) so a tight arena
     -- (Diorama Ghelsba) can keep its boss at 2 while an open chamber
     -- like Empyreal Paradox or the Castle Zvahl Baileys main hall can
@@ -809,16 +810,16 @@ local function spawnDungeonMob(player, dungeon, opts)
             end
         end,
 
-        -- PHASE 3 — onMobFight phase-trigger tick. Fires every combat
+        -- PHASE 3 - onMobFight phase-trigger tick. Fires every combat
         -- tick the boss is engaged. We:
         --   1. Check sess + dungeon.phases exist (no-op for non-Phase-3
-        --      dungeons and for trash mobs — only bosses get this hook).
+        --      dungeons and for trash mobs - only bosses get this hook).
         --   2. Read the boss's current HP%.
         --   3. Walk dungeon.phases in catalog order. For each entry not
         --      already fired this session that meets `getHPP() <= hp`,
         --      fire it and mark it fired.
         --
-        -- Walked in order even when the HP drop jumps multiple bands —
+        -- Walked in order even when the HP drop jumps multiple bands -
         -- a single big hit from 90% to 20% legitimately fires the 75%,
         -- 50%, and 25% phases on the same tick, in that sequence, so
         -- compounded effects (buff then enrage then heal) apply in the
@@ -826,7 +827,7 @@ local function spawnDungeonMob(player, dungeon, opts)
         --
         -- Wrapped in pcall around the action call so a bad data row
         -- in the catalog can't break the boss's AI tick. Per-row
-        -- pcall (vs one big pcall) is intentional — if phase[2] errors
+        -- pcall (vs one big pcall) is intentional - if phase[2] errors
         -- we still want phase[3] to run.
         onMobFight = isBoss and function(fightMob, target)
             local sess = sessions[ownerName]
@@ -873,7 +874,7 @@ local function spawnDungeonMob(player, dungeon, opts)
     mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
     mob:setMobMod(xi.mobMod.DETECTION, xi.detects.NONE)
 
-    -- Block CP — dungeon is a challenge/Infamy farm, not a JP farm.
+    -- Block CP - dungeon is a challenge/Infamy farm, not a JP farm.
     mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
 
     -- Re-apply boss model size post-spawn. The instantiation-time
@@ -921,7 +922,7 @@ local function spawnDungeonMob(player, dungeon, opts)
     end
 
     -- Phase-1 affixes. Applied AFTER the level template AND tier
-    -- multipliers, so things like Hardy's HP×1.5 multiplies the
+    -- multipliers, so things like Hardy's HPx1.5 multiplies the
     -- already-tier-boosted total. Trash affixes (Overgrown) and
     -- boss affixes (Mighty / Voracious / Frenzied / Tyrannical /
     -- Titanic / Apex Predator) route through the same helper;
@@ -929,24 +930,24 @@ local function spawnDungeonMob(player, dungeon, opts)
     applyAffixesToMob(sess, mob, isBoss)
 
     -- Passive flags are now set in THREE places:
-    --   1. Spawn dict (detection=NONE, isAggroable=false) — engine
+    --   1. Spawn dict (detection=NONE, isAggroable=false) - engine
     --      reads these during instantiation, so the mob is born passive.
-    --   2. Pre-spawn setMobMod — applied to the freshly-created entity
+    --   2. Pre-spawn setMobMod - applied to the freshly-created entity
     --      BEFORE mob:spawn() runs the first aggro tick.
-    --   3. Post-spawn setMobMod — applied AFTER spawn in case
+    --   3. Post-spawn setMobMod - applied AFTER spawn in case
     --      CalculateMobStats or any mixin reset something.
     -- Triple-set is intentional belt-and-suspenders. The aggro race we
     -- saw before (mob aggros on the same frame as spawn() before the
     -- Lua-side setMobMod can apply) is now closed at every step.
     --
-    -- Combat after a manual attack is unaffected — addEnmity still
+    -- Combat after a manual attack is unaffected - addEnmity still
     -- works, the mob still pursues + swings + uses TP moves normally.
     -- Linking between mobs is also blocked (linking IS detection).
 
     -- DO NOT pre-claim the mob.
     --
     -- updateClaim() calls battleutils::ClaimMob(), which internally calls
-    -- mob->PEnmityContainer->UpdateEnmity(player, 0, 0, true, true) —
+    -- mob->PEnmityContainer->UpdateEnmity(player, 0, 0, true, true) -
     -- that ADDS the player to the mob's enmity list with active=true.
     -- Once the player is in the enmity container, the mob is already
     -- "engaged" regardless of MOBMOD_NO_AGGRO / DETECTION=NONE. The
@@ -962,7 +963,7 @@ local function spawnDungeonMob(player, dungeon, opts)
     -- the player auto-attacks / casts / uses WS on a mob, the combat
     -- handler calls ClaimMob itself and ownership locks to the player.
     -- Dungeon zones host one session at a time so claim contention
-    -- isn't a real risk — and even if a stray player wandered in, the
+    -- isn't a real risk - and even if a stray player wandered in, the
     -- mob STILL only engages on first-touch, which is the desired
     -- "prep your party before pulling" UX.
     --
@@ -970,7 +971,7 @@ local function spawnDungeonMob(player, dungeon, opts)
     -- instant aggro upon zoning in" even with the triple-redundant
     -- NO_AGGRO + DETECTION=NONE + isAggroable=false defenses.)
 
-    -- NO force-aggro. Progression dungeons rely on detection range —
+    -- NO force-aggro. Progression dungeons rely on detection range -
     -- the player walks deeper into the zone, encounters each tier
     -- of mobs at their own pace. Earlier versions had the boss
     -- force-aggro on spawn (and once had every mob force-aggro);
@@ -1007,7 +1008,7 @@ end
 -- Spawn every mob the dungeon needs in one pass.
 --
 -- LAYOUT MODEL: progression along an axis.
---   1. Read dungeon.progressionAxis (unit vector dx/dz) — the "depth"
+--   1. Read dungeon.progressionAxis (unit vector dx/dz) - the "depth"
 --      direction of the dungeon.
 --   2. Walk dungeon.waypoints in order. Each waypoint is a tier of
 --      mobs at a specific distance along the axis. Each waypoint
@@ -1034,7 +1035,7 @@ local function spawnAllMobs(player, dungeon)
 
     local axis = dungeon.progressionAxis or { dx = 0.0, dz = -1.0 }
 
-    -- Walk waypoints in order — closer-to-entry first.
+    -- Walk waypoints in order - closer-to-entry first.
     for wi, wp in ipairs(dungeon.waypoints or {}) do
         -- Spawn center. Two modes:
         --   (A) Explicit override -- catalog supplies wp.pos = {x,y,z}.
@@ -1103,8 +1104,8 @@ local function spawnAllMobs(player, dungeon)
             string.format('depth %d', dungeon.bossDistance or 60)))
 
     -- Boss roulette. The catalog can ship EITHER:
-    --   bossGroup  / bossName   (singular — old shape, still supported)
-    --   bossGroups / bossNames  (plural — new for variety; pick one per run)
+    --   bossGroup  / bossName   (singular - old shape, still supported)
+    --   bossGroups / bossNames  (plural - new for variety; pick one per run)
     -- When both are present, plural wins. The picked groupId is stashed
     -- on the session so a future "what did I fight?" /stat command can
     -- read it, and so the docs generator can render the full roster.
@@ -1153,7 +1154,7 @@ local function startDungeon(player, dungeon, tierId)
     print(string.format("[dungeon] >>> startDungeon called: player=%s dungeon=%s tier=%s",
         player:getName(), dungeon.id, tierId))
 
-    -- Tier gating. Belt-and-suspenders — the menu also filters, but
+    -- Tier gating. Belt-and-suspenders - the menu also filters, but
     -- this keeps the path safe against direct Lua calls (e.g. an
     -- admin testing tools that bypass the NPC menu).
     if not isTierUnlocked(player, dungeon, tierId) then
@@ -1186,7 +1187,7 @@ local function startDungeon(player, dungeon, tierId)
     end
 
     -- SAFETY RAIL #2: refuse warp if module-load validation marked
-    -- this dungeon as broken. Belt-and-suspenders — even if the menu
+    -- this dungeon as broken. Belt-and-suspenders - even if the menu
     -- somehow shows a disabled dungeon (catalog hot-edit, etc.) the
     -- start path won't actually warp.
     if dungeon._disabled then
@@ -1201,9 +1202,9 @@ local function startDungeon(player, dungeon, tierId)
     -- SAFETY RAIL #5: refuse warp if the player is KO'd.
     --
     -- Discovered the hard way on 2026-05-28: KO'd player picks dungeon
-    -- → warped to dungeon zone with HP=0 → onPlayerDeath hook fires
-    -- the moment the zone-in completes → endDungeon('death') → warped
-    -- back to GM Home → player still KO'd → can do it again forever.
+    -- -> warped to dungeon zone with HP=0 -> onPlayerDeath hook fires
+    -- the moment the zone-in completes -> endDungeon('death') -> warped
+    -- back to GM Home -> player still KO'd -> can do it again forever.
     --
     -- getHP() == 0 covers KO. getStatus() check is belt-and-suspenders
     -- in case the engine has a player in some other non-NORMAL state
@@ -1216,7 +1217,7 @@ local function startDungeon(player, dungeon, tierId)
     end
 
     -- Pre-warp banner. Show the tier label and the effective time
-    -- (post tier multiplier, pre affix mutations — affixes have not
+    -- (post tier multiplier, pre affix mutations - affixes have not
     -- been rolled yet at this print).
     player:printToPlayer(
         string.format('[Dungeon Master] Warping you to %s [%s]. You have %d minutes.',
@@ -1224,8 +1225,8 @@ local function startDungeon(player, dungeon, tierId)
         xi.msg.channel.SYSTEM_3)
 
     -- Phase-1 per-run state: roll affixes for THIS run, scoped to the
-    -- chosen tier (Mythic draws from the Tyrannical pool and gets 2–3
-    -- affixes vs 1–2 for Normal/Hard). Stashed on the session so the
+    -- chosen tier (Mythic draws from the Tyrannical pool and gets 2-3
+    -- affixes vs 1-2 for Normal/Hard). Stashed on the session so the
     -- spawn path (mob mods), the session arming path (timeLimit), and
     -- the reward path (rewardMult) all read the same set. Roll is
     -- pre-warp so the entry banner can announce the affixes the
@@ -1238,7 +1239,7 @@ local function startDungeon(player, dungeon, tierId)
     -- Phase-6 party detection. Runs BEFORE session creation so the
     -- session table can be initialized with the full member list and
     -- members can be attached to the shadow-ref system in one shot.
-    -- Solo runs get an empty members list — same code path, same
+    -- Solo runs get an empty members list - same code path, same
     -- session structure, no behavioral change.
     local partyMembers = detectPartyMembers(player)
 
@@ -1266,7 +1267,7 @@ local function startDungeon(player, dungeon, tierId)
         -- Phase-6 party state. leaderName is the session owner; members
         -- is the list of additional player names that warp in alongside.
         -- spawnDone is flipped by armDungeonAfterArrival after the first
-        -- spawn — subsequent arrivals (members) skip the spawn step.
+        -- spawn - subsequent arrivals (members) skip the spawn step.
         leaderName        = player:getName(),
         members           = {},
         spawnDone         = false,
@@ -1278,13 +1279,13 @@ local function startDungeon(player, dungeon, tierId)
     attachMembersToSession(sessions[player:getName()], partyMembers)
 
     -- Warp the player. The spawn + timeout + countdown warnings are
-    -- ALL armed by the dungeon zone's onZoneIn override below — not
+    -- ALL armed by the dungeon zone's onZoneIn override below - not
     -- here. player:timer uses PAI->QueueAction (lua_baseentity.cpp:12736);
     -- because setPos returns immediately but the zone change takes
     -- ~3 seconds, any timer set here lands on the OLD zone's PAI and
     -- gets garbage-collected when the player actually leaves. The
     -- onZoneIn hook is the engine-guaranteed "player has arrived"
-    -- event — only there can timers safely be scheduled.
+    -- event - only there can timers safely be scheduled.
     print(string.format("[dungeon] startDungeon: setPos to zone=%d at (%.2f, %.2f, %.2f)",
         dungeon.zoneId, dungeon.warpIn.x, dungeon.warpIn.y, dungeon.warpIn.z))
     player:setPos(dungeon.warpIn.x, dungeon.warpIn.y, dungeon.warpIn.z,
@@ -1292,7 +1293,7 @@ local function startDungeon(player, dungeon, tierId)
 
     -- Phase-6 party warp. Each member follows the leader to the
     -- dungeon zone. Their onZoneIn override fires armDungeonAfterArrival
-    -- on arrival just like the leader's — but the shared session's
+    -- on arrival just like the leader's - but the shared session's
     -- spawnDone flag ensures only the FIRST arrival spawns mobs.
     -- Per-player setup (HP/MP restore, grace-unkillable, OOB patrol)
     -- runs for each arrival regardless of who arrived first.
@@ -1303,7 +1304,7 @@ local function startDungeon(player, dungeon, tierId)
             xi.msg.channel.SYSTEM_3)
         for _, mem in ipairs(partyMembers) do
             mem:printToPlayer(
-                string.format('[Dungeon] Following %s into %s [%s] — %d minutes on the clock.',
+                string.format('[Dungeon] Following %s into %s [%s] - %d minutes on the clock.',
                     player:getName(), dungeon.label, tier.label,
                     math.floor(tierAdjustedTime / 60)),
                 xi.msg.channel.SYSTEM_3)
@@ -1330,7 +1331,7 @@ local function armDungeonAfterArrival(player)
     local sess = getSession(player)
     if not sess then
         print(string.format(
-            "[dungeon] armDungeonAfterArrival: %s arrived but no session — likely already aborted",
+            "[dungeon] armDungeonAfterArrival: %s arrived but no session - likely already aborted",
             player:getName()))
         return
     end
@@ -1365,7 +1366,7 @@ local function armDungeonAfterArrival(player)
     --       launch zones caused immediate deaths inside the grace, so
     --       v2 expanded to whole-run unkillable.
     --   v2: full-duration setUnkillable. SAFE but removed all death
-    --       stakes — players just stood in the boss and won by time.
+    --       stakes - players just stood in the boss and won by time.
     --       Time limit was the only failure condition.
     --   v3 (current, 2026-05-29 upgrade): 5-second entry grace ONLY,
     --       trusting the OOB patrol + the now-stable zone choices to
@@ -1373,7 +1374,7 @@ local function armDungeonAfterArrival(player)
     --       lose your HP race, lose the run, lose the Infamy.
     --
     -- The OOB patrol still runs every 500ms and warps the player back
-    -- to safe ground if they fall through geometry — that handles the
+    -- to safe ground if they fall through geometry - that handles the
     -- one remaining "I died for no reason" failure mode. Combined with
     -- the entry-grace setUnkillable on warp-in, the dungeon is now
     -- safe from zone bugs but lethal from bad play.
@@ -1386,7 +1387,7 @@ local function armDungeonAfterArrival(player)
         if s and s.dungeon.id == dungeon.id then
             pcall(function() p:setUnkillable(false) end)
             p:printToPlayer(
-                '[Dungeon] Combat grace expired. You can now be killed — fight carefully, kupo!',
+                '[Dungeon] Combat grace expired. You can now be killed - fight carefully, kupo!',
                 xi.msg.channel.SYSTEM_3)
         end
     end)
@@ -1394,7 +1395,7 @@ local function armDungeonAfterArrival(player)
         '[Dungeon] You have 5 seconds to prep. After that, deaths are permanent for this run.',
         xi.msg.channel.SYSTEM_3)
 
-    -- OUT-OF-BOUNDS RESCUE PATROL (defense in depth — still useful
+    -- OUT-OF-BOUNDS RESCUE PATROL (defense in depth - still useful
     -- in case the engine's OOB check forces a teleport-to-graveyard
     -- regardless of setUnkillable).
     --
@@ -1415,7 +1416,7 @@ local function armDungeonAfterArrival(player)
             p:setPos(dungeon.warpIn.x, dungeon.warpIn.y, dungeon.warpIn.z,
                      dungeon.warpIn.rot)
             p:printToPlayer(
-                '[Dungeon] You fell off the playable area — warped back to entry, kupo!',
+                '[Dungeon] You fell off the playable area - warped back to entry, kupo!',
                 xi.msg.channel.SYSTEM_3)
             -- Bonus-objective telemetry: each rescue counts against
             -- the "Pathfinder" bonus (zero rescues = +Infamy).
@@ -1425,7 +1426,7 @@ local function armDungeonAfterArrival(player)
         -- running). The "Untouched" bonus objective rewards keeping
         -- the lowest sampled HP% above its threshold. 500ms cadence
         -- means a single brutal hit could drop you and recover before
-        -- we see it — a small grace for the player, not the boss.
+        -- we see it - a small grace for the player, not the boss.
         local maxHp = p:getMaxHP() or 1
         local curHp = p:getHP() or 0
         if maxHp > 0 then
@@ -1443,7 +1444,7 @@ local function armDungeonAfterArrival(player)
     -- the leader in the current warp ordering) triggers mob spawn.
     -- Subsequent arrivals (party members) skip the spawn block but
     -- still got the per-player setup above (HP/MP, grace, OOB patrol).
-    -- spawnDone is set on the shared session table — the second arrival
+    -- spawnDone is set on the shared session table - the second arrival
     -- reads true and short-circuits.
     if sess.spawnDone then
         -- Member arrival path: tell them they're caught up.
@@ -1478,8 +1479,8 @@ local function armDungeonAfterArrival(player)
         xi.msg.channel.SYSTEM_3)
 
     -- Phase-1 affix banner. Print the affix labels + descriptions so
-    -- the player can plan around them (Voracious → bring sustain DPS,
-    -- Speedy → skip the buff phase, etc.). Quiet mode (catalog flag)
+    -- the player can plan around them (Voracious -> bring sustain DPS,
+    -- Speedy -> skip the buff phase, etc.). Quiet mode (catalog flag)
     -- suppresses the banner for players who want a clean entry.
     if not catalog.affixesQuiet and sess.affixes and #sess.affixes > 0 then
         local labels = {}
@@ -1544,7 +1545,7 @@ local function armDungeonAfterArrival(player)
     scheduleWarning(30,  '30 seconds')
     scheduleWarning(10,  '10 seconds')
 
-    -- PHASE 3 — enrageAfter timer. A time-based phase trigger that
+    -- PHASE 3 - enrageAfter timer. A time-based phase trigger that
     -- fires once `enrageAfter.sec` seconds into the fight (separate
     -- from the dungeon's overall timeLimit). Same session-id guard
     -- as the countdown warnings so a re-run on the same dungeon
@@ -1569,17 +1570,17 @@ end
 -- 'cleared'), prints chat, warps the player out, clears the session.
 --
 -- reason:
---   'cleared'  boss kill within time limit  → infamy + speed bonus check
---   'timeout'  time limit expired           → no reward
---   'death'    player died                  → no reward
---   'manual'   !dungeon abort               → no reward
+--   'cleared'  boss kill within time limit  -> infamy + speed bonus check
+--   'timeout'  time limit expired           -> no reward
+--   'death'    player died                  -> no reward
+--   'manual'   !dungeon abort               -> no reward
 function m.endDungeon(player, reason)
     local sess = getSession(player)
     if not sess then return end
     local dungeon = sess.dungeon
 
     -- Despawn every live mob. setHP(0) is the canonical "kill it
-    -- silently" idiom — no death animation cascade because we wrap
+    -- silently" idiom - no death animation cascade because we wrap
     -- in pcall to suppress edge cases (mob already gone, entity
     -- pointer stale across zone-out, etc).
     for _, mob in ipairs(sess.mobs) do
@@ -1651,7 +1652,7 @@ function m.endDungeon(player, reason)
         -- each in sequence: keeps the math interpretable. Earning
         -- Untouched (+0.75), Pathfinder (+0.10), and Lightning
         -- (+0.30) means the player sees "objective bonuses: +115%"
-        -- and infamy goes up by 2.15× — not the cascading 2.50×
+        -- and infamy goes up by 2.15x - not the cascading 2.50x
         -- you'd get from sequential mults. Sums are easier to
         -- reason about, easier to balance.
         local earnedBonuses = {}
@@ -1670,7 +1671,7 @@ function m.endDungeon(player, reason)
         -- fine (just won't print any bonus lines).
         sess.earnedBonuses = earnedBonuses
 
-        -- Weekly Bonus Dungeon: award 2× Infamy once per week for the
+        -- Weekly Bonus Dungeon: award 2x Infamy once per week for the
         -- featured dungeon. The bonus is gated per player via a CharVar
         -- so subsequent clears in the same week earn normal Infamy.
         local weekIdx = math.floor(os.time() / 604800)
@@ -1731,7 +1732,7 @@ function m.endDungeon(player, reason)
         local newBestTime  = isNewBest and elapsed or oldBestTime
         local avgTime      = math.floor(newTotalTime / newClears)
 
-        -- Local time-formatter — turns seconds into "Xm Ys" once over
+        -- Local time-formatter - turns seconds into "Xm Ys" once over
         -- the minute mark, else just "Xs". Used 3+ times below.
         local function fmtTime(s)
             if s >= 60 then
@@ -1754,8 +1755,8 @@ function m.endDungeon(player, reason)
             string.format('  Cleared in %s', fmtTime(elapsed)),
             xi.msg.channel.SYSTEM_3)
         -- Single Infamy line, then a per-multiplier breakdown so the
-        -- math is fully auditable. base → speed bonus (if any) → tier
-        -- mult → affix mult → featured mult → streak mult → final.
+        -- math is fully auditable. base -> speed bonus (if any) -> tier
+        -- mult -> affix mult -> featured mult -> streak mult -> final.
         player:printToPlayer(
             string.format('  +%d Infamy earned [%s]', infamy, tier.label),
             xi.msg.channel.SYSTEM_3)
@@ -1815,7 +1816,7 @@ function m.endDungeon(player, reason)
         end
 
         -- Phase-2 unlock progress nudge. If this clear unlocks the
-        -- next tier (or pushes the player closer), tell them — gives
+        -- next tier (or pushes the player closer), tell them - gives
         -- a sense of progression beyond raw Infamy.
         local function unlockNote(targetTierId)
             local target = catalog.tiers and catalog.tiers[targetTierId]
@@ -1845,9 +1846,9 @@ function m.endDungeon(player, reason)
             xi.msg.channel.SYSTEM_3)
 
         -- Per-dungeon stats line. Three formats depending on context:
-        --   * First clear ever — celebrate the "first" status
-        --   * New best time (with prior clears) — highlight the record
-        --   * Normal clear — just show the running stats
+        --   * First clear ever - celebrate the "first" status
+        --   * New best time (with prior clears) - highlight the record
+        --   * Normal clear - just show the running stats
         if oldClears == 0 then
             player:printToPlayer(
                 string.format('  First clear of this dungeon!  Your time to beat: %s',
@@ -1871,7 +1872,7 @@ function m.endDungeon(player, reason)
 
         -- Persist the new stats so next clear can reference them.
         -- Dungeon_Clears_<id> is also bumped further down (in the
-        -- existing block) for the leaderboard side — that bump is
+        -- existing block) for the leaderboard side - that bump is
         -- redundant with this one, but both call setCharVar with
         -- the same end value so it's idempotent.
         player:setCharVar(totalTimeCv, newTotalTime)
@@ -1895,6 +1896,11 @@ function m.endDungeon(player, reason)
         -- leaderboard analogous to HL_Points_Lifetime.
         player:setCharVar('Infamy_Lifetime',
             (player:getCharVar('Infamy_Lifetime') or 0) + infamy)
+
+        -- Personal achievement milestones for lifetime Infamy earned.
+        -- Called after Infamy_Lifetime is updated so the thresholds see
+        -- the current total (500 / 1,000 / 5,000 Infamy).
+        ach.onDungeonClear(player)
     else
         local reasonText = (reason == 'timeout' and 'Time limit expired')
                         or (reason == 'death'   and 'You fell in combat')
@@ -1966,7 +1972,7 @@ function m.endDungeon(player, reason)
                 end)
             end
             -- Always clear the shadow session ref so they're no longer
-            -- considered "in dungeon" by getSession() — even if they've
+            -- considered "in dungeon" by getSession() - even if they've
             -- left the zone, logged out, etc.
             sessions[mname] = nil
         end
@@ -1978,7 +1984,7 @@ function m.endDungeon(player, reason)
     -- of how the dungeon ended. If the player aborted or died within
     -- the 7-second grace window, the post-timer would never fire on
     -- this zone's PAI (they're being warped out), leaving them in a
-    -- permanent unkillable state. Resetting here is idempotent — if
+    -- permanent unkillable state. Resetting here is idempotent - if
     -- the flag was already cleared by the timer, this is a no-op.
     pcall(function() player:setUnkillable(false) end)
 
@@ -2029,7 +2035,7 @@ end
 local _registeredZoneIn = {}
 for _, dungeon in ipairs(catalog.dungeons) do
     if dungeon._disabled then
-        -- skip — zone was marked disabled at load; menu already hides it
+        -- skip - zone was marked disabled at load; menu already hides it
     elseif not _registeredZoneIn[dungeon.zoneName] then
         _registeredZoneIn[dungeon.zoneName] = true
         local zoneIdToMatch = dungeon.zoneId
@@ -2046,7 +2052,7 @@ for _, dungeon in ipairs(catalog.dungeons) do
                 local sess = sessions[player:getName()]
                 local isDungeonRun = sess and sess.dungeon.zoneId == zoneIdToMatch
                 if not isDungeonRun then
-                    -- Not a dungeon run — let the original handler decide
+                    -- Not a dungeon run - let the original handler decide
                     -- (it will eject playerless-instance arrivals to zone 72).
                     super(player, instance)
                     return
@@ -2117,10 +2123,10 @@ m:addOverride('xi.player.onPlayerDeath', function(player, ...)
         detachMember(sess, mname)
         local exit = catalog.exitWarp
         pcall(function() player:setUnkillable(false) end)
-        -- Warp the dead member home immediately. No reward — they fell.
+        -- Warp the dead member home immediately. No reward - they fell.
         player:setPos(exit.x, exit.y, exit.z, exit.rotation, exit.zoneId)
         player:printToPlayer(
-            '[Dungeon] You died. Warping back to GM Home — your party continues without you.',
+            '[Dungeon] You died. Warping back to GM Home - your party continues without you.',
             xi.msg.channel.SYSTEM_3)
         -- Tell the leader so they know to play around the loss.
         local leader = GetPlayerByName(sess.leaderName)
@@ -2133,7 +2139,7 @@ m:addOverride('xi.player.onPlayerDeath', function(player, ...)
         return
     end
 
-    -- Solo or leader-death path → end the whole run.
+    -- Solo or leader-death path -> end the whole run.
     m.endDungeon(player, 'death')
 end)
 
@@ -2157,11 +2163,11 @@ local function showConfirmMenu(player, dungeon, tierId)
     local opts =
     {
         {
-            string.format('Yes — Begin %s [%s]', dungeon.label, tier.label),
+            string.format('Yes - Begin %s [%s]', dungeon.label, tier.label),
             function(p) startDungeon(p, dungeon, tierId) end,
         },
         {
-            'No — Back',
+            'No - Back',
             function(p) showTierMenu(p, dungeon) end,
         },
     }
@@ -2180,7 +2186,7 @@ showTierMenu = function(player, dungeon)
 
     -- Print the dungeon flavour once at the top so the menu can stay
     -- tight (the 150-byte customMenu cap is real, but the row count
-    -- is what really matters here — 3 tiers + back + balance fits).
+    -- is what really matters here - 3 tiers + back + balance fits).
     player:printToPlayer(dungeon.description, xi.msg.channel.SYSTEM_3)
 
     if catalog.tierOrder and catalog.tiers then
@@ -2220,7 +2226,7 @@ showTierMenu = function(player, dungeon)
             end
         end
     else
-        -- No tier catalog → legacy flow: just go straight to confirm
+        -- No tier catalog -> legacy flow: just go straight to confirm
         -- at Normal. Keeps the system working with older catalogs.
         table.insert(opts, {
             string.format('Begin %s', dungeon.label),
@@ -2230,7 +2236,7 @@ showTierMenu = function(player, dungeon)
 
     table.insert(opts, { '<< Back to dungeon list', function(p) showDungeonMenu(p) end })
 
-    dmMenu.title = string.format('%s — pick tier', dungeon.label:sub(1, 22))
+    dmMenu.title = string.format('%s - pick tier', dungeon.label:sub(1, 22))
     dmMenu.options = opts
     player:timer(50, function(p) p:customMenu(dmMenu) end)
 end
@@ -2300,7 +2306,7 @@ showDungeonMenu = function(player)
                         -- showTierMenu, not here, so we don't double-
                         -- print it.
                         --
-                        -- Phase-4 Mythic-key countdown chat print —
+                        -- Phase-4 Mythic-key countdown chat print -
                         -- shown when the player taps into a dungeon
                         -- whose key is burned. Saves them a click
                         -- into the tier menu just to see "locked".
@@ -2370,7 +2376,7 @@ local showPlus4SlotMenu
 local showPlus4Preview
 
 --------------------------------------------------------------------
--- ROOT MENU — category picker
+-- ROOT MENU - category picker
 --------------------------------------------------------------------
 showVendorRoot = function(player)
     local opts = {}
@@ -2385,7 +2391,7 @@ showVendorRoot = function(player)
 end
 
 --------------------------------------------------------------------
--- CURATED BROWSER — paged list combining BOTH:
+-- CURATED BROWSER - paged list combining BOTH:
 --   catalog.vendorItems     (hand-picked curated list)
 --   catalog.vendorItemsAuto (auto-promoted Gold-tier BiS from the
 --                            armor/accessory/weapons scorers, written
@@ -2417,7 +2423,7 @@ showCuratedMenu = function(player, page)
     for idx = startIdx, endIdx do
         local it = items[idx]
         table.insert(opts, {
-            -- Truncate name to 14 chars — keeps 4-item pages within the
+            -- Truncate name to 14 chars - keeps 4-item pages within the
             -- 150-byte customMenu cap including title + nav + back.
             string.format('%s  [%d]', trunc(it.name, 14), it.cost),
             function(p) showCuratedPreview(p, idx, page) end,
@@ -2494,15 +2500,15 @@ showCuratedPreview = function(player, itemIdx, fromPage)
 end
 
 --------------------------------------------------------------------
--- CURATED SETS BROWSER — Set list → Piece list → Preview / Buy
+-- CURATED SETS BROWSER - Set list -> Piece list -> Preview / Buy
 --
 -- Stocks catalog.vendorSets: full armor sets (Nyame, Hjarrandi, etc.)
 -- broken out piece-by-piece so players can fill whichever slots they
 -- still need. Same 150-byte payload cap rules apply:
---   title  "Sets  [XXXX Inf]"      ≤ 18 bytes
---   4 items "Name trunc  [cost]"   ≤ 4 × 24 = 96 bytes
---   Prev + Next + Back             ≤ 21 bytes
---   worst-case middle page total   ≤ 135 bytes  (safe)
+--   title  "Sets  [XXXX Inf]"      <= 18 bytes
+--   4 items "Name trunc  [cost]"   <= 4 x 24 = 96 bytes
+--   Prev + Next + Back             <= 21 bytes
+--   worst-case middle page total   <= 135 bytes  (safe)
 --------------------------------------------------------------------
 local SETS_PAGE_SIZE = 4
 
@@ -2572,7 +2578,7 @@ showCuratedSetPiecePreview = function(player, setIdx, pieceIdx, fromPage)
         return
     end
 
-    -- Print stats to chat before the buy menu — same reason as the other
+    -- Print stats to chat before the buy menu - same reason as the other
     -- previews: stat lines overflow the 150-byte customMenu cap.
     for _, line in ipairs(piece.stats or { '(no description)' }) do
         player:printToPlayer(line, xi.msg.channel.SYSTEM_3)
@@ -2613,7 +2619,7 @@ showCuratedSetPiecePreview = function(player, setIdx, pieceIdx, fromPage)
 end
 
 --------------------------------------------------------------------
--- +4 REFORGE BROWSER — Job → Set → Slot → Preview
+-- +4 REFORGE BROWSER - Job -> Set -> Slot -> Preview
 --------------------------------------------------------------------
 -- Pre-compute the sorted job list once (the catalog table has string keys
 -- so ipairs won't enumerate it deterministically).
@@ -2688,7 +2694,7 @@ showPlus4SlotMenu = function(player, job, setIdx, jobPage)
     for _, slot in ipairs(PLUS4_SLOT_ORDER) do
         local piece = (setEntry.pieces or {})[slot]
         if piece then
-            -- Truncate piece names to 14 chars. 5 slots × (14+6) + short
+            -- Truncate piece names to 14 chars. 5 slots x (14+6) + short
             -- title + back stays well under the 150-byte customMenu cap.
             -- Owned status is shown in the preview title after clicking.
             table.insert(opts, {
@@ -2699,7 +2705,7 @@ showPlus4SlotMenu = function(player, job, setIdx, jobPage)
     end
     table.insert(opts, { '<< Back', function(p) showPlus4SetMenu(p, job, jobPage) end })
 
-    -- Short title: job + set name only (no balance — saves ~15 bytes).
+    -- Short title: job + set name only (no balance - saves ~15 bytes).
     vendorMenu.title = string.format('%s: %s', job, trunc(setEntry.set, 12))
     vendorMenu.options = opts
     player:timer(50, function(p) p:customMenu(vendorMenu) end)
@@ -2714,7 +2720,7 @@ showPlus4Preview = function(player, job, setIdx, slot, jobPage)
     end
     local cost = catalog.plus4Cost or 200
 
-    -- Print stats to chat — same reason as showCuratedPreview: stat lines
+    -- Print stats to chat - same reason as showCuratedPreview: stat lines
     -- for +4 pieces are 80+ bytes each and would overflow the 150-byte
     -- customMenu cap if used as menu options.
     for _, line in ipairs(piece.stats or { '(stats unavailable)' }) do
@@ -2758,7 +2764,7 @@ end
 
 
 -----------------------------------
--- NPC placement (in GM Home only — both NPCs)
+-- NPC placement (in GM Home only - both NPCs)
 -----------------------------------
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.dungeonMasterPos.zone), function(zone)
     super(zone)

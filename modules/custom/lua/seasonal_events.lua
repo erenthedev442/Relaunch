@@ -16,13 +16,40 @@ local catalog = require('modules/custom/lua/seasonal_events_catalog')
 local M = {}
 
 -----------------------------------
+-- Dynamic event cache.
+-- !setbonus writes seasonal_events_dynamic.lua at runtime; we poll it
+-- via loadfile (bypasses require cache) with a 60-second TTL so the
+-- new event propagates within one minute without a server restart.
+-----------------------------------
+local _dynCache       = nil
+local _dynCacheExpiry = 0
+
+local function getDynamicEvents()
+    local now = os.time()
+    if _dynCache and now < _dynCacheExpiry then
+        return _dynCache
+    end
+    local ok, fn = pcall(loadfile, 'modules/custom/lua/seasonal_events_dynamic.lua')
+    if ok and type(fn) == 'function' then
+        local ok2, events = pcall(fn)
+        _dynCache = (ok2 and type(events) == 'table') and events or {}
+    else
+        _dynCache = {}
+    end
+    _dynCacheExpiry = now + 60
+    return _dynCache
+end
+
+-----------------------------------
 -- Returns the active event with the highest priority, or nil if none.
+-- Checks both the static catalog and the runtime-written dynamic file.
 -----------------------------------
 function M.getActiveEvent()
     local now     = os.time()
     local best    = nil
     local bestPri = -math.huge
-    for _, ev in ipairs(catalog.events) do
+
+    local function checkEvent(ev)
         if now >= ev.start and now < ev.finish then
             local pri = ev.priority or 0
             if pri > bestPri then
@@ -31,6 +58,14 @@ function M.getActiveEvent()
             end
         end
     end
+
+    for _, ev in ipairs(catalog.events) do
+        checkEvent(ev)
+    end
+    for _, ev in ipairs(getDynamicEvents()) do
+        checkEvent(ev)
+    end
+
     return best
 end
 

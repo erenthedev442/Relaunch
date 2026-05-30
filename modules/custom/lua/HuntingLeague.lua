@@ -3,18 +3,18 @@
 -- Progressive NM hunting system with a Hunt Marks currency.
 --
 -- Components:
---   Hub NPC     — Hunt zone. Shows rank, points, tier unlock, reward shop.
---   Spawner NPC — Hunt zone. Pops current-tier NMs on demand via
+--   Hub NPC     - Hunt zone. Shows rank, points, tier unlock, reward shop.
+--   Spawner NPC - Hunt zone. Pops current-tier NMs on demand via
 --                 insertDynamicEntity (no mob_spawn_points required).
---   onMobDeath  — Wired inline per-mob inside each dynamic entity table;
+--   onMobDeath  - Wired inline per-mob inside each dynamic entity table;
 --                 no zone-level override or stubs needed.
 --
 -- To configure: edit hunting_league_catalog.lua only.
 -- Each mob.groupId must match a mob_groups row (hunting_league_mobs.sql).
 --
 -- Player CharVars:
---   HL_Points  — accumulated Hunt Marks
---   HL_Tier    — highest tier unlocked (1–5, defaults to 1)
+--   HL_Points  - accumulated Hunt Marks
+--   HL_Tier    - highest tier unlocked (1-5, defaults to 1)
 -----------------------------------
 require('modules/module_utils')
 local catalog = require('modules/custom/lua/hunting_league_catalog')
@@ -37,13 +37,13 @@ local MAX_TIER   = #catalog.tiers
 -- (title + every option label, each NUL-terminated).
 --
 -- Budget breakdown:
---   Category list  — slot names avg ~7 chars; all 9 fit on one page (~126 bytes).
---   Item list      — name-only labels (no cost) capped at 15 chars per row;
---                    6 items + compact title + nav ≈ 141 bytes worst-case.
---   Preview        — up to 4 stat lines (~20 chars each) + Buy + Back ≈ 120 bytes.
+--   Category list  - slot names avg ~7 chars; all 9 fit on one page (~126 bytes).
+--   Item list      - name-only labels (no cost) capped at 15 chars per row;
+--                    6 items + compact title + nav ~ 141 bytes worst-case.
+--   Preview        - up to 4 stat lines (~20 chars each) + Buy + Back ~ 120 bytes.
 --
 -- Cost is shown only in the preview title, keeping list rows short enough to
--- fit 6 items per page — most categories need zero pagination.
+-- fit 6 items per page - most categories need zero pagination.
 local SHOP_PG_SZ    = 6    -- items per page inside a category
 local CAT_PG_SZ     = 9    -- categories per page (all 9 fit on one page)
 local MAX_ITEM_NAME = 15   -- item labels truncated to this before adding to menu row
@@ -247,6 +247,12 @@ buildUnlockMenu = function(player)
                         nextDef.name, getPoints(playerArg), catalog.currencyName),
                     xi.msg.channel.SYSTEM_3
                 )
+                -- Server-wide tier promotion announcement.
+                local broadcastMsg = string.format(
+                    '[Hunting League] \xe2\x98\x85 %s has advanced to %s!  Congratulations!',
+                    playerArg:getName(), nextDef.name)
+                playerArg:printToArea(broadcastMsg,
+                    xi.msg.channel.SYSTEM_3, xi.msg.area.SYSTEM, '', false)
                 buildSealsMain(playerArg)
             end,
         })
@@ -272,10 +278,10 @@ end
 -- buildCategoryMenu  (catIdx = index into rewardCategories, page = item page)
 -- Second level: lists items in the chosen category, SHOP_PG_SZ per page.
 --
--- Labels show item name only (no cost) — cost is shown in the preview title
--- when the player clicks an item.  This keeps each row ≤ 15 chars so 6 items
+-- Labels show item name only (no cost) - cost is shown in the preview title
+-- when the player clicks an item.  This keeps each row <= 15 chars so 6 items
 -- fit per page within the 150-byte customMenu cap:
---   title "Earrings [250M] 1/1" (21) + 6×16 + nav×3×9 ≈ 141 bytes ✓
+--   title "Earrings [250M] 1/1" (21) + 6x16 + navx3x9 ~ 141 bytes ✓
 -----------------------------------
 buildCategoryMenu = function(player, catIdx, page)
     local pts   = getPoints(player)
@@ -328,7 +334,7 @@ buildCategoryMenu = function(player, catIdx, page)
         end })
 
     -- Compact title: slot + balance + page indicator.
-    -- "Earrings [250M] 1/1" = 21 chars — leaves comfortable room for 6 item rows.
+    -- "Earrings [250M] 1/1" = 21 chars - leaves comfortable room for 6 item rows.
     hubMenu.title   = string.format('%s [%dM] %d/%d', cat.label, pts, page, nPages)
     hubMenu.options = options
     player:timer(50, function(p) p:customMenu(hubMenu) end)
@@ -339,8 +345,8 @@ end
 -- Third level: shows stat lines for the selected item + Buy / Back.
 -- catIdx / itemPage are used so "Back" returns to the right category page.
 --
--- Byte budget: title + each option label (NUL-terminated) ≤ 150 bytes.
--- Up to 4 stat lines (~20 chars) + Buy/Need + Back ≈ 120 bytes — safe.
+-- Byte budget: title + each option label (NUL-terminated) <= 150 bytes.
+-- Up to 4 stat lines (~20 chars) + Buy/Need + Back ~ 120 bytes - safe.
 -----------------------------------
 -- Per-purchase stack cap. FFXI items stack to 99 per inventory slot;
 -- exceeding this in a single addItem call would either split into a new
@@ -349,7 +355,7 @@ end
 -- click again if they want more.
 local SEAL_STACK_CAP = 99
 
--- Shared purchase routine — used by both the single-buy path (non-seal
+-- Shared purchase routine - used by both the single-buy path (non-seal
 -- items) and the multi-quantity path (seals). Handles the inventory
 -- check, mark deduction, item grant, and chat confirmation in one place.
 local function doBuyReward(p, reward, qty, catIdx, itemPage)
@@ -381,7 +387,7 @@ buildItemPreviewMenu = function(player, reward, catIdx, itemPage)
     local pts     = getPoints(player)
     local options = {}
 
-    -- Stat lines — clicking any stat line re-shows the preview (no-op).
+    -- Stat lines - clicking any stat line re-shows the preview (no-op).
     for _, line in ipairs(reward.stats or { '(no stat data)' }) do
         table.insert(options, {
             line,
@@ -391,7 +397,7 @@ buildItemPreviewMenu = function(player, reward, catIdx, itemPage)
 
     -- Seals category gets a multi-quantity buy menu (1 / 10 / max). Every
     -- other category is single-purchase only because they're discrete gear
-    -- pieces — you only ever need one Brutal Earring.
+    -- pieces - you only ever need one Brutal Earring.
     local maxAffordable = math.floor(pts / reward.cost)
     if isSealsCat(catIdx) then
         if maxAffordable < 1 then
@@ -400,12 +406,12 @@ buildItemPreviewMenu = function(player, reward, catIdx, itemPage)
                 function(p) buildItemPreviewMenu(p, reward, catIdx, itemPage) end,
             })
         else
-            -- Buy 1 — always available if you can afford one.
+            -- Buy 1 - always available if you can afford one.
             table.insert(options, {
                 string.format('Buy 1  [%d]', reward.cost),
                 function(p) doBuyReward(p, reward, 1, catIdx, itemPage) end,
             })
-            -- Buy 10 — only shown if affordable, and only if it would
+            -- Buy 10 - only shown if affordable, and only if it would
             -- actually be a distinct amount from "Buy max" below.
             if maxAffordable >= 10 and maxAffordable > 10 then
                 table.insert(options, {
@@ -413,7 +419,7 @@ buildItemPreviewMenu = function(player, reward, catIdx, itemPage)
                     function(p) doBuyReward(p, reward, 10, catIdx, itemPage) end,
                 })
             end
-            -- Buy max — capped at one full stack per click so we never
+            -- Buy max - capped at one full stack per click so we never
             -- silently spill into a second inventory slot.
             if maxAffordable > 1 then
                 local cappedMax = math.min(maxAffordable, SEAL_STACK_CAP)
@@ -448,7 +454,7 @@ end
 -----------------------------------
 -- Spawner NPC builder
 -- Uses insertDynamicEntity(objtype=MOB) to create real CMobEntity instances
--- on demand.  No mob_spawn_points rows are required — only mob_groups.
+-- on demand.  No mob_spawn_points rows are required - only mob_groups.
 -- Kill detection is wired inline via each mob's onMobDeath table field.
 -----------------------------------
 local function insertSpawnerNPC(zone)
@@ -540,8 +546,8 @@ local function insertSpawnerNPC(zone)
                             --     only from killing the dedicated vanilla HNMs
                             --     listed in catalog.huntTargets.hl (Bune,
                             --     Carmine Dobsonfly, Aspidochelone, Behemoth,
-                            --     Jormungand) — see hunters_guild_hunts.lua.
-                            -- Lifetime counter uses the BASE value too — it's a
+                            --     Jormungand) - see hunters_guild_hunts.lua.
+                            -- Lifetime counter uses the BASE value too - it's a
                             -- raw "how much did you grind" stat, not "how much
                             -- did you bank with bonuses".
                             local baseMarks  = md.points
@@ -650,7 +656,7 @@ local function insertSpawnerNPC(zone)
                             -- the completionist score.
                             killer:setCharVar('NMKilled_' .. md.groupId, 1)
                             -- Speed-board anchors: first HL kill (any tier) and
-                            -- first Rank V kill. setIfUnset semantics — only the
+                            -- first Rank V kill. setIfUnset semantics - only the
                             -- earliest timestamp wins. os.time() returns the
                             -- current Unix epoch in seconds.
                             if (killer:getCharVar('HL_FirstKill_At') or 0) == 0 then
@@ -713,7 +719,7 @@ local function insertSpawnerNPC(zone)
 
                     -- Block capacity points on kill. HL has its own currency
                     -- (Hunt Marks); without this gate, the cubic CP formula
-                    -- against a Lv150 mob × EXP_RATE=10 dumps ~80k CP per
+                    -- against a Lv150 mob x EXP_RATE=10 dumps ~80k CP per
                     -- kill, turning HL into a degenerate CP farm. Requires
                     -- MOBMOD_NO_CAPACITY_POINTS=97 + early-return in
                     -- src/map/utils/charutils.cpp::DistributeCapacityPoints.
@@ -767,7 +773,7 @@ local function insertSpawnerNPC(zone)
         -- bytes total (title + every option label + a NUL per row).
         -- The previous "Rank IV - Champion  (3 NMs)" labels averaged
         -- ~26 chars each, so 5 tiers + Close + title overflowed at
-        -- ~176 bytes — and the engine silently drops trailing options
+        -- ~176 bytes - and the engine silently drops trailing options
         -- when over budget. By stripping the "Rank N - " prefix from
         -- the catalog name (it's already shown in the row's "R%d:")
         -- and dropping the " NMs" suffix, each row is ~14 chars and
@@ -829,7 +835,7 @@ end
 -- Hunt zone override
 -- Places three NPCs (Seals / Spawner / Accessories) in the hunt zone.
 -- (Weapons + Armor NPCs are registered by their own files in the same
--- zone — they line up alongside these three.)
+-- zone - they line up alongside these three.)
 -----------------------------------
 m:addOverride(catalog.huntZonePath .. '.Zone.onInitialize', function(zone)
     super(zone)
@@ -849,7 +855,7 @@ m:addOverride(catalog.huntZonePath .. '.Zone.onInitialize', function(zone)
         widescan   = 1,
 
         onTrade = function(player, npc, trade)
-            player:printToPlayer('No trades — use the menu, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('No trades - use the menu, kupo!', xi.msg.channel.SYSTEM_3)
         end,
 
         onTrigger = function(player, npc)
@@ -872,7 +878,7 @@ m:addOverride(catalog.huntZonePath .. '.Zone.onInitialize', function(zone)
         widescan   = 1,
 
         onTrade = function(player, npc, trade)
-            player:printToPlayer('No trades — use the menu, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('No trades - use the menu, kupo!', xi.msg.channel.SYSTEM_3)
         end,
 
         onTrigger = function(player, npc)

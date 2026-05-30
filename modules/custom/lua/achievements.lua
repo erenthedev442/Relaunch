@@ -32,7 +32,7 @@ local MILESTONES = {
         reward   = 50,
         announce = false,
         title    = 'First Hunt',
-        desc     = 'Your first Hunting League kill — the legend begins.',
+        desc     = 'Your first Hunting League kill - the legend begins.',
     },
     {
         id       = 'TENTH_HUNT',
@@ -112,6 +112,28 @@ local MILESTONES = {
         titleId   = xi.title.PARAGON_OF_WARRIOR_EXCELLENCE,
         titleName = 'Paragon of Warrior Excellence',
     },
+    -- Dungeon Infamy milestones
+    {
+        id       = 'INFAMY_500',
+        reward   = 100,
+        announce = true,
+        title    = 'Dungeon Aspirant',
+        desc     = '500 lifetime Infamy earned from dungeon clears.',
+    },
+    {
+        id       = 'INFAMY_1K',
+        reward   = 250,
+        announce = true,
+        title    = 'Dungeon Veteran',
+        desc     = '1,000 lifetime Infamy.  The dungeons know your name.',
+    },
+    {
+        id       = 'INFAMY_5K',
+        reward   = 750,
+        announce = true,
+        title    = 'Dungeon Overlord',
+        desc     = '5,000 lifetime Infamy.  An unstoppable force of destruction.',
+    },
 }
 
 -- Build a lookup table by id for fast access
@@ -144,18 +166,18 @@ local function award(player, ms)
     addPoints(player, ms.reward)
 
     -- Grant the in-game title if the milestone has one. player:addTitle()
-    -- unlocks it for display without forcing it as active — the player
+    -- unlocks it for display without forcing it as active - the player
     -- chooses when to display it with /title.
     if ms.titleId then
         player:addTitle(ms.titleId)
         player:printToPlayer(
-            string.format('[Achievement] Title unlocked: "%s" — display it with /title!',
+            string.format('[Achievement] Title unlocked: "%s" - display it with /title!',
                 ms.titleName or 'Unknown'),
             xi.msg.channel.SYSTEM_3)
     end
 
     local personalMsg = string.format(
-        '[Achievement] %s — %s  (+%d marks!)',
+        '[Achievement] %s - %s  (+%d marks!)',
         ms.title, ms.desc, ms.reward)
     player:printToPlayer(personalMsg, xi.msg.channel.SYSTEM_3)
 
@@ -207,6 +229,18 @@ function M.check(player, milestoneId)
     if ms then
         award(player, ms)
     end
+end
+
+-----------------------------------
+-- Called from DungeonSystem.lua endDungeon after a successful clear and
+-- after Infamy_Lifetime has been updated.
+-- Checks the three lifetime Infamy thresholds.
+-----------------------------------
+function M.onDungeonClear(player)
+    local lifetimeInfamy = player:getCharVar('Infamy_Lifetime') or 0
+    if lifetimeInfamy >= 500  then award(player, MILESTONE_BY_ID['INFAMY_500']) end
+    if lifetimeInfamy >= 1000 then award(player, MILESTONE_BY_ID['INFAMY_1K'])  end
+    if lifetimeInfamy >= 5000 then award(player, MILESTONE_BY_ID['INFAMY_5K'])  end
 end
 
 -- Exported for the !achievements command so it can iterate milestone metadata
