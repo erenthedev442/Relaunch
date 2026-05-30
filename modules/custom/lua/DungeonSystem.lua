@@ -2230,6 +2230,9 @@ end
 local showVendorRoot
 local showCuratedMenu
 local showCuratedPreview
+local showCuratedSetsMenu
+local showCuratedSetDetail
+local showCuratedSetPiecePreview
 local showPlus4JobMenu
 local showPlus4SetMenu
 local showPlus4SlotMenu
@@ -2241,6 +2244,7 @@ local showPlus4Preview
 showVendorRoot = function(player)
     local opts = {}
     table.insert(opts, { 'Curated Items',    function(p) showCuratedMenu(p, 1) end })
+    table.insert(opts, { 'Curated Sets',     function(p) showCuratedSetsMenu(p, 1) end })
     table.insert(opts, { '+4 Reforge Sets',  function(p) showPlus4JobMenu(p, 1) end })
     table.insert(opts, { 'Close',            function(p) end })
 
@@ -2354,6 +2358,125 @@ showCuratedPreview = function(player, itemIdx, fromPage)
 
     -- Short title: truncated name + cost. Full stats are in chat above.
     vendorMenu.title = string.format('%s  %d Inf', trunc(item.name, 15), item.cost)
+    vendorMenu.options = opts
+    player:timer(50, function(p) p:customMenu(vendorMenu) end)
+end
+
+--------------------------------------------------------------------
+-- CURATED SETS BROWSER — Set list → Piece list → Preview / Buy
+--
+-- Stocks catalog.vendorSets: full armor sets (Nyame, Hjarrandi, etc.)
+-- broken out piece-by-piece so players can fill whichever slots they
+-- still need. Same 150-byte payload cap rules apply:
+--   title  "Sets  [XXXX Inf]"      ≤ 18 bytes
+--   4 items "Name trunc  [cost]"   ≤ 4 × 24 = 96 bytes
+--   Prev + Next + Back             ≤ 21 bytes
+--   worst-case middle page total   ≤ 135 bytes  (safe)
+--------------------------------------------------------------------
+local SETS_PAGE_SIZE = 4
+
+showCuratedSetsMenu = function(player, page)
+    page = page or 1
+    local sets  = catalog.vendorSets or {}
+    local total = #sets
+    local pages = math.max(1, math.ceil(total / SETS_PAGE_SIZE))
+    page = math.max(1, math.min(page, pages))
+
+    local opts = {}
+    local startIdx = (page - 1) * SETS_PAGE_SIZE + 1
+    local endIdx   = math.min(startIdx + SETS_PAGE_SIZE - 1, total)
+
+    for idx = startIdx, endIdx do
+        local s      = sets[idx]
+        local pcount = s.pieces and #s.pieces or 0
+        table.insert(opts, {
+            string.format('%s  (%d pc)', trunc(s.set, 16), pcount),
+            function(p) showCuratedSetDetail(p, idx, page) end,
+        })
+    end
+
+    if pages > 1 then
+        if page > 1 then
+            table.insert(opts, { '<< Prev', function(p) showCuratedSetsMenu(p, page - 1) end })
+        end
+        if page < pages then
+            table.insert(opts, { 'Next >>',  function(p) showCuratedSetsMenu(p, page + 1) end })
+        end
+    end
+    table.insert(opts, { '<< Back', function(p) showVendorRoot(p) end })
+
+    vendorMenu.title   = string.format('Sets  [%d Inf]', getInfamy(player))
+    vendorMenu.options = opts
+    player:timer(50, function(p) p:customMenu(vendorMenu) end)
+end
+
+showCuratedSetDetail = function(player, setIdx, fromPage)
+    local sets     = catalog.vendorSets or {}
+    local setEntry = sets[setIdx]
+    if not setEntry then
+        showCuratedSetsMenu(player, fromPage)
+        return
+    end
+
+    local opts = {}
+    for pieceIdx, piece in ipairs(setEntry.pieces or {}) do
+        table.insert(opts, {
+            string.format('%s  [%d]', trunc(piece.name, 14), piece.cost),
+            function(p) showCuratedSetPiecePreview(p, setIdx, pieceIdx, fromPage) end,
+        })
+    end
+    table.insert(opts, { '<< Back', function(p) showCuratedSetsMenu(p, fromPage) end })
+
+    vendorMenu.title   = trunc(setEntry.set, 22)
+    vendorMenu.options = opts
+    player:timer(50, function(p) p:customMenu(vendorMenu) end)
+end
+
+showCuratedSetPiecePreview = function(player, setIdx, pieceIdx, fromPage)
+    local sets     = catalog.vendorSets or {}
+    local setEntry = sets[setIdx]
+    local piece    = setEntry and (setEntry.pieces or {})[pieceIdx]
+    if not piece then
+        showCuratedSetDetail(player, setIdx, fromPage)
+        return
+    end
+
+    -- Print stats to chat before the buy menu — same reason as the other
+    -- previews: stat lines overflow the 150-byte customMenu cap.
+    for _, line in ipairs(piece.stats or { '(no description)' }) do
+        player:printToPlayer(line, xi.msg.channel.SYSTEM_3)
+    end
+
+    local opts = {}
+    local bal  = getInfamy(player)
+    if bal >= piece.cost then
+        table.insert(opts, {
+            string.format('Buy  [%d Infamy]', piece.cost),
+            function(p)
+                if p:getFreeSlotsCount() == 0 then
+                    p:printToPlayer('Inventory full! Free a slot first, kupo!',
+                        xi.msg.channel.SYSTEM_3)
+                    showCuratedSetPiecePreview(p, setIdx, pieceIdx, fromPage)
+                    return
+                end
+                p:setCharVar(catalog.currencyCv, getInfamy(p) - piece.cost)
+                p:addItem({ id = piece.id, quantity = 1 })
+                p:printToPlayer(
+                    string.format('[Infamy Vendor] Purchased %s for %d Infamy. (%d remaining), kupo!',
+                        piece.name, piece.cost, getInfamy(p)),
+                    xi.msg.channel.SYSTEM_3)
+                showCuratedSetDetail(p, setIdx, fromPage)
+            end,
+        })
+    else
+        table.insert(opts, {
+            string.format('Need %d  (have %d)', piece.cost, bal),
+            function(p) showCuratedSetPiecePreview(p, setIdx, pieceIdx, fromPage) end,
+        })
+    end
+    table.insert(opts, { '<< Back', function(p) showCuratedSetDetail(p, setIdx, fromPage) end })
+
+    vendorMenu.title   = trunc(piece.name, 22)
     vendorMenu.options = opts
     player:timer(50, function(p) p:customMenu(vendorMenu) end)
 end
@@ -2546,6 +2669,61 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.dungeonMast
         end,
     })
     utils.unused(InfamyVendor)
+end)
+
+-- =========================================================================
+-- ZONE-OUT GUARD RAIL
+-- =========================================================================
+-- While a dungeon session is active, any zone-out attempt bounces the player
+-- back to the dungeon's warpIn coords. Catches every form of leaving:
+--   * Walking through a zone boundary
+--   * Warp / Recall-XXX / Tractor spells
+--   * Home Point teleports
+--   * Mog House warps (Re-Raise, anniversary ring, etc.)
+--   * `!warp` / `!gmhome` style commands
+--   * GM `!goto*` commands
+--
+-- The hook only fires when sessions[name] is non-nil. The dungeon's own
+-- clear/abort code clears sessions[name] BEFORE the 4s exit-warp timer
+-- (see line ~1892), so the legitimate exit warp passes through unimpeded.
+--
+-- Recursion safety: after the bounce-back setPos, onZoneIn fires again
+-- for the dungeon zone. The check `getZoneID() ~= sess.dungeon.zoneId` is
+-- now FALSE, so no second bounce. No flag needed.
+--
+-- This wraps InteractionGlobal.onZoneIn, the C++ engine's dispatcher. We
+-- call super() first so all other onZoneIn logic (including the cutscene
+-- suppressor in modules/custom/lua/disable_zonein_cutscenes.lua) runs
+-- normally, then do the dungeon check, then forward super's return.
+require('scripts/globals/interaction/interaction_global')
+
+m:addOverride('InteractionGlobal.onZoneIn', function(player, prevZone, fallbackFn)
+    local result = super(player, prevZone, fallbackFn)
+
+    local sess = sessions[player:getName()]
+    if sess and sess.dungeon and player:getZoneID() ~= sess.dungeon.zoneId then
+        -- Server-log line so admins can see attempted breakouts. Includes
+        -- player, dungeon id, and the zone they tried to escape to so the
+        -- log is useful for spotting boundary leaks or buggy spell exits.
+        print(string.format(
+            "[dungeon-guard] %s tried to leave dungeon '%s' (zone %d) via zone %d (prev=%d) -- bouncing back to warpIn",
+            player:getName(), sess.dungeon.id, sess.dungeon.zoneId,
+            player:getZoneID(), prevZone or -1))
+
+        player:printToPlayer(
+            "[Dungeon] You can't leave mid-run, kupo! Warping you back...",
+            xi.msg.channel.SYSTEM_3)
+        local w   = sess.dungeon.warpIn
+        local zid = sess.dungeon.zoneId
+        -- Short delay so the new zone has time to finish loading the
+        -- player's session before we yank them out of it. Without this,
+        -- the setPos call has been observed to silently no-op.
+        player:timer(500, function(p)
+            p:setPos(w.x, w.y, w.z, w.rot or 0, zid)
+        end)
+    end
+
+    return result
 end)
 
 return m
