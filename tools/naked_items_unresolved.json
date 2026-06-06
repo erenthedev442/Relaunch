@@ -15,35 +15,6 @@
     "partial": true
   },
   {
-    "itemId": 23743,
-    "shortName": "angantyr_robe",
-    "context": "Armor NPC [bronze] body: Angantyr Robe",
-    "reason": "partial parse — unknown tokens left over (item still emitted)",
-    "bgwiki": "https://www.bg-wiki.com/ffxi/Angantyr_Robe",
-    "raw": "DEF:125 HP+59 MP+79 STR+24 DEX+24 VIT+24 AGI+24 INT+32 MND+32 CHR+32 Accuracy+15 Magic Accuracy+25 Evasion+52 Magic Evasion+107 \"Magic Def. Bonus\"+8 Haste+3% Domain Invasion: STR+20 DEX+20 VIT+20 AGI+20 INT+30 MND+30 CHR+30 Damage taken -50% Trust: Lv.+1",
-    "unknown_tokens": [
-      "Domain",
-      "Invasion",
-      "Trust",
-      "Lv"
-    ],
-    "partial": true
-  },
-  {
-    "itemId": 23797,
-    "shortName": "crepuscular_helm",
-    "context": "Armor NPC [gold] head: Crepuscular Helm",
-    "reason": "partial parse — unknown tokens left over (item still emitted)",
-    "bgwiki": "https://www.bg-wiki.com/ffxi/Crepuscular_Helm",
-    "raw": "DEF:156 HP+114 STR+41 DEX+28 VIT+48 AGI+29 INT+27 MND+31 CHR+29 Accuracy+20 Attack+60 Magic Accuracy+20 Evasion+83 Magic Evasion+86 \"Magic Def. Bonus\"+6 Haste+4% \"Triple Attack\"+4% \"Regen\"+3 Set: Auto-Reraise",
-    "unknown_tokens": [
-      "Set",
-      "Auto",
-      "Reraise"
-    ],
-    "partial": true
-  },
-  {
     "itemId": 23798,
     "shortName": "crepuscular_mail",
     "context": "Armor NPC [gold] body: Crepuscular Mail",
@@ -54,21 +25,6 @@
       "Set",
       "Auto",
       "Reraise"
-    ],
-    "partial": true
-  },
-  {
-    "itemId": 24139,
-    "shortName": "prestige_platemail",
-    "context": "Armor NPC [gold] body: Prestige Platemail",
-    "reason": "partial parse — unknown tokens left over (item still emitted)",
-    "bgwiki": "https://www.bg-wiki.com/ffxi/Prestige_Platemail",
-    "raw": "DEF:190 HP+182 MP+103 STR+44 DEX+33 VIT+50 AGI+29 INT+30 MND+38 CHR+28 Attack+41 Accuracy+41 Magic Accuracy+41 \"Magic Atk. Bonus\"+35 Magic Damage +31 Evasion+86 Magic Evasion+140 \"Magic Def. Bonus\"+7 Haste+3% \"Fast Cast\"+8% Sword enhancement spell damage +9 Damage taken -8%",
-    "unknown_tokens": [
-      "Sword",
-      "enhancement",
-      "spell",
-      "damage"
     ],
     "partial": true
   },
@@ -165,38 +121,6 @@
     "partial": true
   },
   {
-    "itemId": 24193,
-    "shortName": "grace_sune-ate",
-    "context": "Armor NPC [gold] feet: Grace Sune-Ate",
-    "reason": "partial parse — unknown tokens left over (item still emitted)",
-    "bgwiki": "https://www.bg-wiki.com/ffxi/Grace_Sune-Ate",
-    "raw": "DEF:126 HP+68 STR+29 DEX+41 VIT+20 AGI+62 MND+18 CHR+34 Accuracy+41 Attack+41 Ranged Accuracy+41 Ranged Attack+41 Magic Accuracy+41 Evasion+97 Magic Evasion+135 \"Magic Def. Bonus\"+5 Haste+3% Physical damage limit +4% Critical hit rate +4% Damage taken -4% Wyvern: Accuracy+41 Magic Accuracy+41 Lv+1",
-    "unknown_tokens": [
-      "Physical",
-      "damage",
-      "limit",
-      "Wyvern",
-      "Lv"
-    ],
-    "partial": true
-  },
-  {
-    "itemId": 24194,
-    "shortName": "clemency_sune-ate",
-    "context": "Armor NPC [gold] feet: Clemency Sune-Ate",
-    "reason": "partial parse — unknown tokens left over (item still emitted)",
-    "bgwiki": "https://www.bg-wiki.com/ffxi/Clemency_Sune-Ate",
-    "raw": "DEF:127 HP+73 STR+30 DEX+42 VIT+21 AGI+63 MND+19 CHR+35 Accuracy+42 Attack+42 Ranged Accuracy+42 Ranged Attack+42 Magic Accuracy+42 Evasion+98 Magic Evasion+137 \"Magic Def. Bonus\"+6 Haste+3% Physical damage limit +5% Critical hit rate +5% Damage taken -5% Wyvern: Accuracy+42 Magic Accuracy+42 Lv+1",
-    "unknown_tokens": [
-      "Physical",
-      "damage",
-      "limit",
-      "Wyvern",
-      "Lv"
-    ],
-    "partial": true
-  },
-  {
     "itemId": 24274,
     "shortName": "amin_turban",
     "context": "Armor NPC [silver] head: Amin Turban",
@@ -216,20 +140,6 @@
     "partial": true
   },
   {
-    "itemId": 25602,
-    "shortName": "blistering_sallet_+1",
-    "context": "Armor NPC [bronze] head: Blistering Sallet +1",
-    "reason": "partial parse — unknown tokens left over (item still emitted)",
-    "bgwiki": "https://www.bg-wiki.com/ffxi/Blistering_Sallet_%2B1",
-    "raw": "DEF:111 HP+38 STR+16 DEX+16 VIT+16 AGI+16 INT+16 MND+16 CHR+16 Accuracy+8 Evasion+36 Magic Evasion+53 \"Magic Def. Bonus\"+2 Haste+8% \"Double Attack\"+3% Physical damage taken -3% Unity Ranking: HP+30~80",
-    "unknown_tokens": [
-      "Unity",
-      "Ranking",
-      "~80"
-    ],
-    "partial": true
-  },
-  {
     "itemId": 25654,
     "shortName": "welkin_crown",
     "context": "Armor NPC [silver] head: Welkin Crown",
@@ -239,22 +149,6 @@
     "unknown_tokens": [
       "Occult",
       "Acumen"
-    ],
-    "partial": true
-  },
-  {
-    "itemId": 25830,
-    "shortName": "hizamaru_kote_+2",
-    "context": "Armor NPC [silver] hands: Hizamaru Kote +2",
-    "reason": "partial parse — unknown tokens left over (item still emitted)",
-    "bgwiki": "https://www.bg-wiki.com/ffxi/Hizamaru_Kote_%2B2",
-    "raw": "DEF:106 HP+40 STR+20 DEX+43 VIT+38 AGI+16 INT+7 MND+21 CHR+25 Accuracy+43 Attack+25 Evasion+76 Magic Evasion+43 \"Magic Def. Bonus\"+2 Haste+4% \"Tactical Parry\"+25 Set: Enhances \"Counter\" effect",
-    "unknown_tokens": [
-      "Tactical",
-      "Parry",
-      "Set",
-      "Counter",
-      "effect"
     ],
     "partial": true
   },
@@ -292,27 +186,6 @@
       "Vitality",
       "and",
       "Mind"
-    ],
-    "partial": true
-  },
-  {
-    "itemId": 25898,
-    "shortName": "arke_cosciales_+1",
-    "context": "Armor NPC [gold] legs: Arke Cosciales +1",
-    "reason": "partial parse — unknown tokens left over (item still emitted)",
-    "bgwiki": "https://www.bg-wiki.com/ffxi/Arke_Cosciales_%2B1",
-    "raw": "DEF:151 HP+191 STR+45 VIT+35 AGI+19 INT+30 MND+20 CHR+15 Accuracy+51 Haste+5% Resistance to all status ailments +7 Damage taken -11% Converts damage taken to TP +12",
-    "unknown_tokens": [
-      "Resistance",
-      "to",
-      "all",
-      "status",
-      "ailments",
-      "Converts",
-      "damage",
-      "taken",
-      "to",
-      "TP"
     ],
     "partial": true
   },
@@ -355,7 +228,7 @@
   {
     "itemId": 25995,
     "shortName": "turms_mittens_+1",
-    "context": "Armor NPC [silver] hands: Turms Mittens +1",
+    "context": "Armor NPC [gold] hands: Turms Mittens +1",
     "reason": "partial parse — unknown tokens left over (item still emitted)",
     "bgwiki": "https://www.bg-wiki.com/ffxi/Turms_Mittens_%2B1",
     "raw": "DEF:113 HP+74 STR+12 DEX+51 VIT+32 AGI+5 INT+15 MND+30 CHR+23 Accuracy+49 Evasion+80 Magic Evasion+101 \"Magic Def. Bonus\"+5 Haste+4% \"Regen\"+6 Parry: Recover HP+100",
@@ -366,49 +239,9 @@
     "partial": true
   },
   {
-    "itemId": 25996,
-    "shortName": "raetic_bangles",
-    "context": "Armor NPC [silver] hands: Raetic Bangles",
-    "reason": "partial parse — unknown tokens left over (item still emitted)",
-    "bgwiki": "https://www.bg-wiki.com/ffxi/Raetic_Bangles",
-    "raw": "DEF:120 HP+60 STR+33 DEX+33 VIT+33 AGI+33 INT+33 MND+33 CHR+33 Accuracy+45 Ranged Accuracy+45 M. Accuracy+45 Evasion+90 Magic Evasion+90 \"Magic Def. Bonus\"+4 Haste+7% Consumes 5% of MP when taking damage: Chance of abs. dmg. taken based on amount of MP consumed Dec. enmity based on amount of MP consumed when receiving phys. dmg.",
-    "unknown_tokens": [
-      "Consumes",
-      "of",
-      "MP",
-      "when",
-      "taking",
-      "damage",
-      "Chance",
-      "of",
-      "abs",
-      "dmg",
-      "taken",
-      "based",
-      "on",
-      "amount",
-      "of",
-      "MP",
-      "consumed",
-      "Dec",
-      "enmity",
-      "based",
-      "on",
-      "amount",
-      "of",
-      "MP",
-      "consumed",
-      "when",
-      "receiving",
-      "phys",
-      "dmg"
-    ],
-    "partial": true
-  },
-  {
     "itemId": 26526,
     "shortName": "oshosi_vest_+1",
-    "context": "Armor NPC [bronze] body: Oshosi Vest +1",
+    "context": "Armor NPC [silver] body: Oshosi Vest +1",
     "reason": "partial parse — unknown tokens left over (item still emitted)",
     "bgwiki": "https://www.bg-wiki.com/ffxi/Oshosi_Vest_%2B1",
     "raw": "DEF:149 HP+111 STR+38 DEX+30 VIT+26 AGI+49 INT+21 MND+21 CHR+26 Ranged Accuracy+47 Magic Accuracy+52 Evasion+65 Magic Evasion+106 \"Magic Def. Bonus\"+9 \"Store TP\"+10 \"Snapshot\"+14 \"Double Shot\"+8% \"Triple Shot\"+7%",
@@ -430,19 +263,6 @@
     "unknown_tokens": [
       "Sphere",
       "Reraise"
-    ],
-    "partial": true
-  },
-  {
-    "itemId": 27288,
-    "shortName": "vanya_slops",
-    "context": "Armor NPC [bronze] legs: Vanya Slops",
-    "reason": "partial parse — unknown tokens left over (item still emitted)",
-    "bgwiki": "https://www.bg-wiki.com/ffxi/Vanya_Slops",
-    "raw": "DEF:106 HP+43 MP+29 STR+25 VIT+12 AGI+17 INT+44 MND+34 CHR+29 Magic Accuracy+20 Evasion+27 Magic Evasion+107 \"Magic Def. Bonus\"+6 Haste+5% \"Conserve MP\"+6",
-    "unknown_tokens": [
-      "Conserve",
-      "MP"
     ],
     "partial": true
   },

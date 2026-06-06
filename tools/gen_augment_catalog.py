@@ -19,6 +19,9 @@ This is the canonical generator. It combines:
   7. RARE / EX exclusion -- @FLAG_RARE items (you can hold only one, so you can
      never stack the 4 a trade needs) and @FLAG_EX items (cannot be traded at
      all) are dropped from the catalyst pool.
+  8. Superseded-augment collapse -- when a higher-power augment of the EXACT
+     same stat already exists (e.g. Attack+33 vs Attack+1), the lesser one is
+     dropped so the catalog keeps only the top tier per stat (drop_superseded).
 
 For each augment, the eligible pool is SCORED against the augment's category
 keywords. The highest-scoring unused item wins. If no item scores > 0 against
@@ -273,16 +276,33 @@ CATEGORIES = [
             r"\bearth\b", r"\blightning\b", r"\bwater\b",
             r"\blight\b", r"\bdark\b",
         ],
-        # Elemental beasts, weather drops, and tarot-card drops (which the
-        # FFXI db files under @CARDS and represent elemental affinities).
-        ["elemental", "rune", "talisman", "amulet",
+        # FFXI has FAR more elemental-resist augments (~71) than there are
+        # strictly-elemental, non-Rare mob drops, so this catalyst pool is
+        # layered: (1) elemental creatures / affinity materials, (2) crystalline
+        # / mineral wards, then (3) a broad set of general monster-material drops
+        # to cover the remainder. The OLD design leaned on @CARDS (tarot cards)
+        # here -- but cards are @FLAG_RARE (you can't hold the 4 a trade needs),
+        # so they are now filtered out (is_rare_or_ex) and removed. The filler
+        # tokens were picked to NOT overlap any other category's thematic pool --
+        # verified by simulation: adding them moves ONLY this category's count
+        # (12 -> 71) and leaves every other category unchanged.
+        [# 1. elemental creatures / affinity materials
+         "elemental", "rune", "talisman", "amulet",
          "cluster", "core", "spirit", "ember",
          "djinn", "salamander", "ahriman_wing",
-         "card", "cup", "sword", "wand", "coin", "tarot",
          "yggrete", "whiteshell", "jadeshell", "bronzepiece",
          "celadon", "zaffre", "vermilion", "ochre",
-         "ace_of", "two_of", "three_of", "four_of", "five_of",
-         "six_of", "seven_of", "eight_of", "nine_of", "ten_of"],
+         # 2. crystalline / mineral wards (gems, ingots, ash, shards)
+         "ingot", "shard", "slab", "chip", "lump", "gem",
+         "jadeite", "painite", "zircon",
+         # 3. general monster-material fillers (elemental drops are too few to
+         #    cover all the resist augments; these fill the gap left by cards)
+         "pinch", "square", "bag", "sack", "fiber", "sprig", "hair",
+         "piece", "bulb", "web", "carnation", "dahlia", "southern",
+         "animal", "virtue", "recollection", "soulflayer", "lancewood",
+         "twincoon", "gizmo",
+         "moblin", "goblin", "gigas", "qutrub", "mamool", "corse",
+         "mask", "pauldron", "armlet", "shank", "pincer"],
     ),
     (
         "Skill+",
@@ -465,6 +485,50 @@ def is_bad_negative(entry: dict) -> bool:
     return True
 
 
+def drop_superseded(augs: dict) -> dict:
+    """Drop an augment when a strictly higher-power augment of the EXACT same
+    mod-set already exists -- a redundant 'lesser' version (e.g. Attack+1 when
+    Attack+33 exists; HP+33 / HP+65 when HP+97 exists). Keeps only the top tier
+    of each stat.
+
+    Conservative: it ONLY collapses clean POSITIVE bonuses. It deliberately
+    leaves alone:
+      * Delay augments -- for Delay, LESS is better, so a bigger number is not
+        'higher power';
+      * negative-value penalties / debuff counterparts (Dmg:-33, Enmity-1,
+        Slow+1, 'resists -1') -- the opposite of the buff, not a weaker copy;
+      * 'Pet:' mods vs the player-stat version -- a different effect even where
+        they happen to share a modId.
+    """
+    from collections import defaultdict
+    groups: dict[tuple, list] = defaultdict(list)
+    for aug_id, e in augs.items():
+        rows = e["rows"]
+        modset = tuple(sorted(mid for mid, _ in rows if mid != 0))
+        if not modset:
+            continue
+        # signed value of the dominant (largest-magnitude) mod
+        sv = max((v for mid, v in rows if mid != 0), key=lambda v: abs(v), default=0)
+        groups[modset].append((sv, aug_id))
+
+    drop: set[int] = set()
+    for _modset, lst in groups.items():
+        if len(lst) < 2:
+            continue
+        best_sv = max(sv for sv, _ in lst)
+        if best_sv <= 0:
+            continue  # no positive 'best' -> all penalties/delay; leave the group
+        best_is_pet = any("pet:" in augs[aid]["label"].lower()
+                          for sv, aid in lst if sv == best_sv)
+        for sv, aid in lst:
+            if sv >= best_sv:
+                continue
+            label = augs[aid]["label"].lower()
+            if sv > 0 and "delay" not in label and ("pet:" in label) == best_is_pet:
+                drop.add(aid)
+    return {a: e for a, e in augs.items() if a not in drop}
+
+
 def parse_items() -> dict[int, dict]:
     out: dict[int, dict] = {}
     for line in ITEM_SQL.read_text(encoding="utf-8").splitlines():
@@ -535,6 +599,10 @@ def main():
     print(f"\nParsed {len(augs)} unique augIds from augments.sql")
     augs = {a: e for a, e in augs.items() if has_useful_mod(e)}
     augs = {a: e for a, e in augs.items() if not is_bad_negative(e)}
+    _before_super = len(augs)
+    augs = drop_superseded(augs)
+    print(f"Dropped {_before_super - len(augs)} augments superseded by a "
+          f"higher-power version of the same stat")
     aug_ids_sorted = sorted(augs.keys())
     print(f"After filters: {len(aug_ids_sorted)} augs remain")
 
@@ -687,6 +755,8 @@ def main():
         "--     excluded -- catalysts must be material drops from monsters",
         "--   - RARE / EX items excluded (a Rare item can't be held in the",
         "--     quantity a 4-at-a-time trade needs; an EX item can't be traded)",
+        "--   - Lesser augments dropped when a higher-power version of the same",
+        "--     stat already exists (e.g. Attack+1 removed; Attack+33 kept)",
         "--   - Crafting kits excluded from the catalyst pool",
         "--   - Augments dropped entirely if no thematic mob-drop catalyst exists",
         "--",

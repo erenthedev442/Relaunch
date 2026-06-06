@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-06T02:16:48",
+  "generated_at": "2026-06-06T11:40:08",
   "summary": {
     "reforge": {
       "total": 1320,
@@ -10,9 +10,9 @@
       "not_equip": 0
     },
     "hunting_league": {
-      "total": 390,
-      "ok": 309,
-      "naked": 75,
+      "total": 397,
+      "ok": 332,
+      "naked": 59,
       "latent_only": 0,
       "missing": 3,
       "not_equip": 3
@@ -24,22 +24,6 @@
       "shortName": "angantyr_beret",
       "source": "hunting_league",
       "context": "Armor NPC [bronze] head: Angantyr Beret",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 23743,
-      "shortName": "angantyr_robe",
-      "source": "hunting_league",
-      "context": "Armor NPC [bronze] body: Angantyr Robe",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 23797,
-      "shortName": "crepuscular_helm",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] head: Crepuscular Helm",
       "modCount": 0,
       "latentCount": 0
     },
@@ -64,30 +48,6 @@
       "shortName": "revelation_brais",
       "source": "hunting_league",
       "context": "Armor NPC [gold] legs: Revelation Brais",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24133,
-      "shortName": "perfection_sabatons",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] feet: Perfection Sabatons",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24134,
-      "shortName": "revelation_sabatons",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] feet: Revelation Sabatons",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24139,
-      "shortName": "prestige_platemail",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] body: Prestige Platemail",
       "modCount": 0,
       "latentCount": 0
     },
@@ -148,42 +108,10 @@
       "latentCount": 0
     },
     {
-      "itemId": 24193,
-      "shortName": "grace_sune-ate",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] feet: Grace Sune-Ate",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24194,
-      "shortName": "clemency_sune-ate",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] feet: Clemency Sune-Ate",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24270,
-      "shortName": "null_masque",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] head: Null Masque",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
       "itemId": 24274,
       "shortName": "amin_turban",
       "source": "hunting_league",
       "context": "Armor NPC [silver] head: Amin Turban",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24289,
-      "shortName": "el_bracers_+1",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] hands: El Bracers +1",
       "modCount": 0,
       "latentCount": 0
     },
@@ -444,26 +372,10 @@
       "latentCount": 0
     },
     {
-      "itemId": 25602,
-      "shortName": "blistering_sallet_+1",
-      "source": "hunting_league",
-      "context": "Armor NPC [bronze] head: Blistering Sallet +1",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
       "itemId": 25654,
       "shortName": "welkin_crown",
       "source": "hunting_league",
       "context": "Armor NPC [silver] head: Welkin Crown",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 25830,
-      "shortName": "hizamaru_kote_+2",
-      "source": "hunting_league",
-      "context": "Armor NPC [silver] hands: Hizamaru Kote +2",
       "modCount": 0,
       "latentCount": 0
     },
@@ -480,22 +392,6 @@
       "shortName": "ayanmo_manopolas_+2",
       "source": "hunting_league",
       "context": "Armor NPC [silver] hands: Ayanmo Manopolas +2",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 25840,
-      "shortName": "odyssean_cuisses",
-      "source": "hunting_league",
-      "context": "Armor NPC [silver] legs: Odyssean Cuisses",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 25898,
-      "shortName": "arke_cosciales_+1",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] legs: Arke Cosciales +1",
       "modCount": 0,
       "latentCount": 0
     },
@@ -520,14 +416,6 @@
       "shortName": "inyanga_crackows_+2",
       "source": "hunting_league",
       "context": "Armor NPC [bronze] feet: Inyanga Crackows +2",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 25958,
-      "shortName": "kendatsuba_sune-ate",
-      "source": "hunting_league",
-      "context": "Armor NPC [silver] feet: Kendatsuba Sune-Ate",
       "modCount": 0,
       "latentCount": 0
     },
@@ -567,15 +455,7 @@
       "itemId": 25995,
       "shortName": "turms_mittens_+1",
       "source": "hunting_league",
-      "context": "Armor NPC [silver] hands: Turms Mittens +1",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 25996,
-      "shortName": "raetic_bangles",
-      "source": "hunting_league",
-      "context": "Armor NPC [silver] hands: Raetic Bangles",
+      "context": "Armor NPC [gold] hands: Turms Mittens +1",
       "modCount": 0,
       "latentCount": 0
     },
@@ -583,7 +463,7 @@
       "itemId": 26526,
       "shortName": "oshosi_vest_+1",
       "source": "hunting_league",
-      "context": "Armor NPC [bronze] body: Oshosi Vest +1",
+      "context": "Armor NPC [silver] body: Oshosi Vest +1",
       "modCount": 0,
       "latentCount": 0
     },
@@ -600,14 +480,6 @@
       "shortName": "annointed_kalasiris",
       "source": "hunting_league",
       "context": "Armor NPC [bronze] body: Annointed Kalasiris",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 27288,
-      "shortName": "vanya_slops",
-      "source": "hunting_league",
-      "context": "Armor NPC [bronze] legs: Vanya Slops",
       "modCount": 0,
       "latentCount": 0
     },

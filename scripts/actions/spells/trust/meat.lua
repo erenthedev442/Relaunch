@@ -40,6 +40,13 @@ spellObject.onSpellCast = function(caster, target, spell)
 end
 
 spellObject.onMobSpawn = function(mob)
+    -- FJB NAME FIX: set isRenamed=true so the name shows over the head and in chat.
+    -- With a player-model (equipped) look, the spawn entity_update packet writes the
+    -- 20-byte look over the name bytes at 0x34 and blanks it. isRenamed makes the
+    -- engine emit the name AFTER the look at 0x44 (see entity_update.cpp:539), the
+    -- same path the player_trusts framework relies on. 2nd arg = silent (no log spam).
+    mob:renameEntity('Meat', true)
+
     -- Meat wades INTO melee and swings (unlike the backline Skoll). Chip damage
     -- keeps cumulative enmity flowing; the taunts below do the heavy lifting.
     mob:setAutoAttackEnabled(true)

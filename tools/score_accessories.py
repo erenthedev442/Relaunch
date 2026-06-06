@@ -223,6 +223,23 @@ MOD_SANITY_CAP = {
     160: 5000, 161: 5000, 162: 5000, 163: 5000, 164: 5000,  # dmg taken /100, caps 50%
 }
 
+# --- Player-specified additions: role assignments from the scoring workbook's
+# "Unscored on gear" tab. Weights scaled to each mod's storage units:
+#   506 EXTRA_DMG_CHANCE /10, 507 OCC_DO_EXTRA_DMG /100, 175 SKILLCHAINDMG /10000;
+#   all others ~integer. All "higher is better" on gear (no sign flips).
+_ADDED_WEIGHTS = {
+    'DPS':    {11: 1.5, 506: 0.1, 507: 0.05, 368: 1.0, 361: 0.05, 362: 0.1,
+               430: 8.0, 508: 0.1, 1039: 1.0, 432: 0.3, 954: 0.1, 113: 0.2},
+    'WS':     {11: 1.5, 506: 0.1, 507: 0.05, 48: 1.0, 175: 0.01, 113: 0.2},
+    'TANK':   {68: 0.5, 31: 0.2, 370: 8.0, 110: 0.1, 168: 0.5, 291: 1.5,
+               109: 0.3, 108: 0.5, 166: 1.0, 113: 0.2},
+    'CASTER': {114: 0.5, 115: 0.5, 168: 0.5, 113: 0.2},
+    'HEAL':   {168: 0.5, 112: 0.5, 519: 0.5, 113: 0.2},
+}
+for _r, _w in _ADDED_WEIGHTS.items():
+    ROLE_WEIGHTS[_r].update(_w)
+MOD_SANITY_CAP.update({31: 300, 507: 300, 175: 2000, 361: 300, 430: 20})
+
 
 def _clamp(mid: int, val: int) -> int:
     cap = MOD_SANITY_CAP.get(mid, CAP_DEFAULT)

@@ -68,6 +68,13 @@ spellObject.onSpellCast = function(caster, target, spell)
 end
 
 spellObject.onMobSpawn = function(mob)
+    -- FJB NAME FIX: set isRenamed=true so the name ("Gemma") shows over the head and
+    -- in chat. With a player-model (equipped) look, the spawn entity_update packet
+    -- writes the 20-byte look over the name bytes at 0x34 and blanks it. isRenamed
+    -- makes the engine emit the name AFTER the look at 0x44 (entity_update.cpp:539),
+    -- the same path the player_trusts framework relies on. 2nd arg = silent.
+    mob:renameEntity('Gemma', true)
+
     -- Skoll does not fight. He watches.
     mob:setAutoAttackEnabled(false)
     mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
