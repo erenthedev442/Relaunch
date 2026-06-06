@@ -7,7 +7,7 @@ Reads:
     sql/item_latents.sql     (conditional mods — applied at 50% weight)
 
 For each ilvl >= 119 main-armor piece (Head/Body/Hands/Legs/Feet), computes
-a score under each of four role weight maps (DD / Tank / Caster / Heal),
+a score under each role weight map (DPS / WS / Tank / Caster / Heal),
 gated by whether the piece is equippable by any job in that role. The
 piece's "ceiling" is its highest per-role score; ceiling determines the
 tier bucket via 33rd / 66th percentile thresholds.
@@ -151,7 +151,9 @@ JOB = {n: 1 << i for i, n in enumerate(
      'COR', 'PUP', 'DNC', 'SCH', 'GEO', 'RUN'])}
 
 ROLE_JOBS = {
-    'DD':     ['WAR', 'MNK', 'THF', 'DRK', 'BST', 'BRD', 'RNG', 'SAM',
+    'DPS':    ['WAR', 'MNK', 'THF', 'DRK', 'BST', 'BRD', 'RNG', 'SAM',
+               'NIN', 'DRG', 'BLU', 'COR', 'DNC', 'PUP', 'RUN'],
+    'WS':     ['WAR', 'MNK', 'THF', 'DRK', 'BST', 'BRD', 'RNG', 'SAM',
                'NIN', 'DRG', 'BLU', 'COR', 'DNC', 'PUP', 'RUN'],
     'TANK':   ['PLD', 'RUN', 'WAR', 'NIN'],
     'CASTER': ['BLM', 'SCH', 'GEO', 'SMN', 'RDM'],
@@ -161,7 +163,7 @@ ROLE_MASKS = {role: sum(JOB[j] for j in jobs) for role, jobs in ROLE_JOBS.items(
 
 # Mod weights per role — modId -> multiplier
 ROLE_WEIGHTS = {
-    'DD': {
+    'DPS': {                                # sustained auto-attack damage
         8: 2.0, 9: 2.0,                     # STR, DEX
         23: 1.0, 25: 1.5,                   # ATT, ACC
         62: 5.0,                            # ATTP (% atk)
@@ -174,8 +176,16 @@ ROLE_WEIGHTS = {
         289: 0.5,                           # SUBTLE_BLOW
         387: -3.0,                          # UDMGPHYS (negative = less dmg = good)
         421: 1.5,                           # CRIT_DMG_INCREASE
-        840: 2.0, 841: 1.0,                 # WS dmg: ALL_WSDMG_ALL_HITS / FIRST_HIT per 1%
-        570: 0.5,                           # WEAPONSKILL_DAMAGE_BASE (single WS)
+        160: -0.03, 161: -0.03,             # all/phys dmg taken /100 scale (neg = good)
+    },
+    'WS': {                                 # weapon-skill burst damage
+        8: 2.0, 9: 2.0,                     # STR, DEX (common WS attributes)
+        23: 1.5, 25: 1.5,                   # ATT, ACC (WS damage & accuracy)
+        165: 2.0,                           # CRITHITRATE (many WS can crit)
+        421: 3.0,                           # CRIT_DMG_INCREASE (big WS multiplier)
+        345: 0.04,                          # TP_BONUS (raw; ~250 -> 10)
+        840: 3.0, 841: 2.0,                 # WS dmg all-hits / first-hit per 1%
+        570: 1.0,                           # WEAPONSKILL_DAMAGE_BASE (single WS)
     },
     'TANK': {
         10: 2.0,                            # VIT
@@ -184,6 +194,7 @@ ROLE_WEIGHTS = {
         27: 3.0,                            # ENMITY
         29: 3.0,                            # MDEF
         387: -8.0, 389: -8.0,               # UDMGPHYS / UDMGMAGIC
+        160: -0.06, 161: -0.06, 162: -0.04, 163: -0.06, 164: -0.04,  # dmg taken /100 (neg = good)
     },
     'CASTER': {
         12: 2.0, 13: 1.0,                   # INT, MND
@@ -192,6 +203,7 @@ ROLE_WEIGHTS = {
         311: 4.0,                           # MAGIC_DAMAGE
         170: 2.0,                           # FASTCAST per 1%
         5: 0.05, 6: 1.0,                    # MP, MPP
+        160: -0.03, 163: -0.03,             # all/magic dmg taken /100
     },
     'HEAL': {
         13: 2.0, 14: 0.5,                   # MND, CHR
@@ -200,6 +212,7 @@ ROLE_WEIGHTS = {
         374: 2.0,                           # CURE_POTENCY per 1%
         170: 2.0,                           # FASTCAST
         30: 1.0,                            # MACC
+        160: -0.03, 163: -0.03,             # all/magic dmg taken /100
     },
 }
 
@@ -227,6 +240,8 @@ MOD_SANITY_CAP = {
     570: 50,   # WEAPONSKILL_DAMAGE_BASE (single WS)
     840: 50,   # ALL_WSDMG_ALL_HITS (per 1%)
     841: 50,   # ALL_WSDMG_FIRST_HIT (per 1%)
+    345: 500,  # TP_BONUS (raw)
+    160: 5000, 161: 5000, 162: 5000, 163: 5000, 164: 5000,  # dmg taken: /100, caps at 50%
 }
 
 
@@ -248,7 +263,7 @@ def score_item(iid: int, role: str) -> float:
         w = weights.get(row['modId'])
         if not w:
             continue
-        full_weight = role == 'DD' and row['latentId'] in DD_ALWAYS_LATENTS
+        full_weight = role in ('DPS', 'WS') and row['latentId'] in DD_ALWAYS_LATENTS
         score += _clamp(row['modId'], row['value']) * w * (1.0 if full_weight else 0.5)
     return score
 
@@ -486,7 +501,7 @@ def select_bucket(tier_name: str, slot: str) -> list[dict]:
 
     Stages:
       1. Filter to (tier, slot) candidates, dedupe upgrade families.
-      2. Take top picks per role (DD/TANK/CASTER/HEAL) — preserves
+      2. Take top picks per role (DPS/WS/TANK/CASTER/HEAL) — preserves
          representation so a stat-heavy role doesn't crowd others out.
       3. If still under TOP_PER_BUCKET, pad with next-best by ceiling.
       4. Per-job backfill: for any of the 22 jobs with fewer than

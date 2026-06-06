@@ -293,11 +293,11 @@ if lp.exists():
         if mm: item_latents[int(mm.group(1))].append({"modId": int(mm.group(2)), "value": int(mm.group(3)), "latentId": int(mm.group(4))})
 
 JOB = {n: 1 << i for i, n in enumerate(['WAR','MNK','WHM','BLM','RDM','THF','PLD','DRK','BST','BRD','RNG','SAM','NIN','DRG','SMN','BLU','COR','PUP','DNC','SCH','GEO','RUN'])}
-ROLE_JOBS = {'DD':['WAR','MNK','THF','DRK','BST','BRD','RNG','SAM','NIN','DRG','BLU','COR','DNC','PUP','RUN'],'TANK':['PLD','RUN','WAR','NIN'],'CASTER':['BLM','SCH','GEO','SMN','RDM'],'HEAL':['WHM','SCH','RDM','BRD','GEO']}
+ROLE_JOBS = {'DPS':['WAR','MNK','THF','DRK','BST','BRD','RNG','SAM','NIN','DRG','BLU','COR','DNC','PUP','RUN'],'WS':['WAR','MNK','THF','DRK','BST','BRD','RNG','SAM','NIN','DRG','BLU','COR','DNC','PUP','RUN'],'TANK':['PLD','RUN','WAR','NIN'],'CASTER':['BLM','SCH','GEO','SMN','RDM'],'HEAL':['WHM','SCH','RDM','BRD','GEO']}
 ROLE_MASKS = {r: sum(JOB[j] for j in js) for r, js in ROLE_JOBS.items()}
-ROLE_WEIGHTS = {'DD':{8:2.0,9:2.0,23:1.0,25:1.5,62:5.0,73:2.0,165:4.0,259:8.0,288:6.0,302:8.0,384:0.05,289:0.5,387:-3.0,421:1.5,840:2.0,841:1.0,570:0.5},'TANK':{10:2.0,2:0.5,3:3.0,1:1.0,63:3.0,27:3.0,29:3.0,387:-8.0,389:-8.0},'CASTER':{12:2.0,13:1.0,28:3.0,30:2.0,311:4.0,170:2.0,5:0.05,6:1.0},'HEAL':{13:2.0,14:0.5,5:0.05,6:1.5,369:30.0,374:2.0,170:2.0,30:1.0}}
+ROLE_WEIGHTS = {'DPS':{8:2.0,9:2.0,23:1.0,25:1.5,62:5.0,73:2.0,165:4.0,259:8.0,288:6.0,302:8.0,384:0.05,289:0.5,387:-3.0,421:1.5,160:-0.03,161:-0.03},'WS':{8:2.0,9:2.0,23:1.5,25:1.5,165:2.0,421:3.0,345:0.04,840:3.0,841:2.0,570:1.0},'TANK':{10:2.0,2:0.5,3:3.0,1:1.0,63:3.0,27:3.0,29:3.0,387:-8.0,389:-8.0,160:-0.06,161:-0.06,162:-0.04,163:-0.06,164:-0.04},'CASTER':{12:2.0,13:1.0,28:3.0,30:2.0,311:4.0,170:2.0,5:0.05,6:1.0,160:-0.03,163:-0.03},'HEAL':{13:2.0,14:0.5,5:0.05,6:1.5,369:30.0,374:2.0,170:2.0,30:1.0,160:-0.03,163:-0.03}}
 DD_ALWAYS_LATENTS = {7, 10, 41}
-MOD_SANITY_CAP = {62:30,63:30,165:20,170:30,259:15,288:20,302:20,369:10,384:300,387:30,389:30,421:30,570:50,840:50,841:50}
+MOD_SANITY_CAP = {62:30,63:30,165:20,170:30,259:15,288:20,302:20,369:10,384:300,387:30,389:30,421:30,570:50,840:50,841:50,345:500,160:5000,161:5000,162:5000,163:5000,164:5000}
 def _clamp(mid_, val):
     cap = MOD_SANITY_CAP.get(mid_, 200)
     return cap if val > cap else (-cap if val < -cap else val)
@@ -309,11 +309,12 @@ def role_score(iid, role):
     for row in item_latents.get(iid, []):
         ww = w.get(row["modId"])
         if not ww: continue
-        full = role == "DD" and row["latentId"] in DD_ALWAYS_LATENTS
+        full = role in ("DPS", "WS") and row["latentId"] in DD_ALWAYS_LATENTS
         s += _clamp(row["modId"], row["value"]) * ww * (1.0 if full else 0.5)
     ws_ = weapon_stats.get(iid)
     if ws_ and ws_["delay"] > 0:
-        s += (ws_["dmg"] * 60 / ws_["delay"]) * 2.0
+        if role == "DPS": s += (ws_["dmg"] * 60 / ws_["delay"]) * 2.0
+        elif role == "WS": s += ws_["dmg"] * 0.5
     return s
 def norm(nm):
     return re.sub(r"\s+", "_", nm.lower().replace("'", "").replace("’", "").strip())
@@ -321,7 +322,7 @@ def norm(nm):
 allrows = []; matched = 0
 for src, tier, slot, item, cost, currency, jobs, notes in master:
     iid = name2id.get(norm(item))
-    sc = ["", "", "", "", "", ""]   # Best Role, Score, DD, TANK, CASTER, HEAL
+    sc = ["", "", "", "", "", "", ""]   # Best Role, Score, DPS, TANK, CASTER, HEAL, WS
     ilvl = dmg = delay = ""
     statvals = [""] * len(STAT_COLS)
     if iid:
@@ -339,16 +340,16 @@ for src, tier, slot, item, cost, currency, jobs, notes in master:
                 if v > 0: per[role] = v
             if per:
                 best = max(per, key=per.get)
-                sc = [best, round(per[best])] + [round(per[r]) if r in per else "" for r in ("DD","TANK","CASTER","HEAL")]
+                sc = [best, round(per[best])] + [round(per[r]) if r in per else "" for r in ("DPS","TANK","CASTER","HEAL","WS")]
     allrows.append([src, tier, slot, item, (iid or ""), ilvl, cost, currency, jobs]
                    + sc + [dmg, delay] + statvals + [notes])
 print(f"enrich: matched {matched}/{len(master)} item names to DB ids "
       f"({len(STAT_COLS)} stat columns)")
 
 ALL_H = (["Source", "Tier / Group", "Slot", "Item", "Item ID", "ilvl", "Cost", "Currency", "Jobs",
-          "Best Role", "Score", "DD", "TANK", "CASTER", "HEAL", "DMG", "Delay"] + STAT_HEADERS + ["Notes"])
-ALL_W = [22, 15, 10, 28, 7, 5, 6, 14, 26, 9, 7, 6, 6, 7, 6, 6, 6] + [6] * len(STAT_HEADERS) + [30]
-ALL_NUM = {4, 5, 6, 10, 11, 12, 13, 14, 15, 16} | set(range(17, 17 + len(STAT_HEADERS)))
+          "Best Role", "Score", "DPS", "TANK", "CASTER", "HEAL", "WS", "DMG", "Delay"] + STAT_HEADERS + ["Notes"])
+ALL_W = [22, 15, 10, 28, 7, 5, 6, 14, 26, 9, 7, 6, 6, 7, 6, 6, 6, 6] + [6] * len(STAT_HEADERS) + [30]
+ALL_NUM = {4, 5, 6, 10, 11, 12, 13, 14, 15, 16, 17} | set(range(18, 18 + len(STAT_HEADERS)))
 make_sheet("All Items", ALL_H, allrows, ALL_W,
     title="Legendary — All Obtainable Items (stats + role-balance score)",
     numeric_cols=ALL_NUM, freeze_col=5)

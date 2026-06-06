@@ -6,7 +6,7 @@ Reads the three scored catalogs:
     modules/custom/lua/gear_progression_catalog.lua (Weapons NPC)
 
 Each scored row carries a trailing comment in the shape:
-    -- {DD|TANK|CASTER|HEAL} score N
+    -- {DPS|WS|TANK|CASTER|HEAL} score N
 This script reads the catalog.infamy tier of each catalog — the top 5 per
 slot / weapon category that score_armor.py and score_weapons.py skim out
 of the gold gear vendor, plus the 22 Sortie JSE +2 earrings from
@@ -68,7 +68,7 @@ COST_BY_PERCENTILE = [
 # Weapons rows: the slot is derived from the var name post-match (var
 # `swords` → slot label `Swords`, etc).
 # The trailing comment carries role + score and may have extra fields
-# (e.g. weapons: "DD score 91, DMG 143/Dly 264") — the regex stops at
+# (e.g. weapons: "DPS score 91, DMG 143/Dly 264") — the regex stops at
 # the score number, ignoring anything after.
 _ROW_RE = re.compile(
     r"table\.insert\(\s*(\w+)(?:\.(\w+))?\s*,\s*\{\s*"
@@ -76,7 +76,7 @@ _ROW_RE = re.compile(
     r"name\s*=\s*['\"]([^'\"]+)['\"]\s*,\s*"
     r"cost\s*=\s*\d+\s*,\s*"
     r"jobs\s*=\s*['\"]([^'\"]+)['\"]\s*\}\s*\)"
-    r"\s*--\s*(DD|TANK|CASTER|HEAL)\s+score\s+(\d+)",
+    r"\s*--\s*(DPS|WS|TANK|CASTER|HEAL)\s+score\s+(\d+)",
 )
 # Match BOTH binding shapes in the wild:
 #   local b = catalog.bronze                            ← armor + accessory

@@ -68,7 +68,7 @@ REPLACE INTO mob_pools
      spellList, namevis, roamflag, skill_list_id, resist_id,
      modelSize, modelHitboxSize)
 VALUES
-    (5899, 'meat', 'Meat', 255, UNHEX('01000101990199013A00ED41ED51220200000000'),
+    (5899, 'meat', 'Meat', 255, UNHEX('0100010159115821003058410350B46000700000'), -- FJB: valid Hume Male knight look. Prior blob's gear words were missing their slot-marker nibbles (head 0x1n / body 0x2n / ...), so the client dropped the spawn -> blank name + no model.
      7, 1, 0, 240, 10,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,

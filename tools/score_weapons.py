@@ -177,7 +177,9 @@ JOB = {n: 1 << i for i, n in enumerate(
      'COR', 'PUP', 'DNC', 'SCH', 'GEO', 'RUN'])}
 
 ROLE_JOBS = {
-    'DD':     ['WAR', 'MNK', 'THF', 'DRK', 'BST', 'BRD', 'RNG', 'SAM',
+    'DPS':    ['WAR', 'MNK', 'THF', 'DRK', 'BST', 'BRD', 'RNG', 'SAM',
+               'NIN', 'DRG', 'BLU', 'COR', 'DNC', 'PUP', 'RUN'],
+    'WS':     ['WAR', 'MNK', 'THF', 'DRK', 'BST', 'BRD', 'RNG', 'SAM',
                'NIN', 'DRG', 'BLU', 'COR', 'DNC', 'PUP', 'RUN'],
     'TANK':   ['PLD', 'RUN', 'WAR', 'NIN'],
     'CASTER': ['BLM', 'SCH', 'GEO', 'SMN', 'RDM'],
@@ -190,23 +192,32 @@ ROLE_MASKS = {role: sum(JOB[j] for j in jobs) for role, jobs in ROLE_JOBS.items(
 # Mod weights -- same numbers as score_armor.py for cross-tool consistency
 # ============================================================================
 ROLE_WEIGHTS = {
-    'DD': {
+    'DPS': {                                # sustained auto-attack damage
         8: 2.0, 9: 2.0, 23: 1.0, 25: 1.5, 62: 5.0, 73: 2.0,
         165: 4.0, 259: 8.0, 288: 6.0, 302: 8.0, 384: 0.05,
         289: 0.5, 387: -3.0, 421: 1.5,
-        840: 2.0, 841: 1.0, 570: 0.5,       # WS dmg: all-hits / first-hit / single-WS
+        160: -0.03, 161: -0.03,             # all/phys dmg taken /100 (neg = good)
+    },
+    'WS': {                                 # weapon-skill burst damage
+        8: 2.0, 9: 2.0, 23: 1.5, 25: 1.5,   # STR, DEX, ATT, ACC
+        165: 2.0, 421: 3.0,                 # crit rate, crit damage
+        345: 0.04,                          # TP_BONUS (raw)
+        840: 3.0, 841: 2.0, 570: 1.0,       # WS damage mods
     },
     'TANK': {
         10: 2.0, 2: 0.5, 3: 3.0, 1: 1.0, 63: 3.0, 27: 3.0, 29: 3.0,
         387: -8.0, 389: -8.0,
+        160: -0.06, 161: -0.06, 162: -0.04, 163: -0.06, 164: -0.04,  # dmg taken /100
     },
     'CASTER': {
         12: 2.0, 13: 1.0, 28: 3.0, 30: 2.0, 311: 4.0, 170: 2.0,
         5: 0.05, 6: 1.0,
+        160: -0.03, 163: -0.03,             # all/magic dmg taken /100
     },
     'HEAL': {
         13: 2.0, 14: 0.5, 5: 0.05, 6: 1.5, 369: 30.0, 374: 2.0,
         170: 2.0, 30: 1.0,
+        160: -0.03, 163: -0.03,             # all/magic dmg taken /100
     },
 }
 DD_ALWAYS_LATENTS = {7, 10, 41}
@@ -215,6 +226,8 @@ MOD_SANITY_CAP = {
     62: 30, 63: 30, 165: 20, 170: 30, 259: 15, 288: 20, 302: 20,
     369: 10, 384: 300, 387: 30, 389: 30, 421: 30,
     570: 50, 840: 50, 841: 50,   # WS damage mods (per 1%)
+    345: 500,                    # TP_BONUS (raw)
+    160: 5000, 161: 5000, 162: 5000, 163: 5000, 164: 5000,  # dmg taken /100, caps 50%
 }
 
 
@@ -228,6 +241,7 @@ def _clamp(mid: int, val: int) -> int:
 # Weapon-specific: a high-DMG slow weapon shows DPS roughly proportional to
 # dmg*60/delay. Multiplying by this weight folds raw output into the score.
 DPS_WEIGHT = 2.0
+WS_DMG_WEIGHT = 0.5   # WS role: raw weapon base damage matters (heavy/slow weapons)
 
 
 def score_weapon(iid: int, role: str) -> float:
@@ -241,12 +255,15 @@ def score_weapon(iid: int, role: str) -> float:
         w = weights.get(row['modId'])
         if not w:
             continue
-        full = role == 'DD' and row['latentId'] in DD_ALWAYS_LATENTS
+        full = role in ('DPS', 'WS') and row['latentId'] in DD_ALWAYS_LATENTS
         score += _clamp(row['modId'], row['value']) * w * (1.0 if full else 0.5)
-    # DPS bonus for ALL roles (a stronger weapon helps every wielder).
+    # Weapon output: sustained DPS for the DPS role; raw base damage for WS.
     ws = weapon_stats.get(iid)
     if ws and ws['delay'] > 0:
-        score += (ws['dmg'] * 60 / ws['delay']) * DPS_WEIGHT
+        if role == 'DPS':
+            score += (ws['dmg'] * 60 / ws['delay']) * DPS_WEIGHT
+        elif role == 'WS':
+            score += ws['dmg'] * WS_DMG_WEIGHT
     return score
 
 

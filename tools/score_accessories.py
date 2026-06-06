@@ -148,7 +148,9 @@ JOB = {n: 1 << i for i, n in enumerate(
      'COR', 'PUP', 'DNC', 'SCH', 'GEO', 'RUN'])}
 
 ROLE_JOBS = {
-    'DD':     ['WAR', 'MNK', 'THF', 'DRK', 'BST', 'BRD', 'RNG', 'SAM',
+    'DPS':    ['WAR', 'MNK', 'THF', 'DRK', 'BST', 'BRD', 'RNG', 'SAM',
+               'NIN', 'DRG', 'BLU', 'COR', 'DNC', 'PUP', 'RUN'],
+    'WS':     ['WAR', 'MNK', 'THF', 'DRK', 'BST', 'BRD', 'RNG', 'SAM',
                'NIN', 'DRG', 'BLU', 'COR', 'DNC', 'PUP', 'RUN'],
     'TANK':   ['PLD', 'RUN', 'WAR', 'NIN'],
     'CASTER': ['BLM', 'SCH', 'GEO', 'SMN', 'RDM'],
@@ -157,7 +159,7 @@ ROLE_JOBS = {
 ROLE_MASKS = {role: sum(JOB[j] for j in jobs) for role, jobs in ROLE_JOBS.items()}
 
 ROLE_WEIGHTS = {
-    'DD': {
+    'DPS': {                                # sustained auto-attack damage
         8: 2.0, 9: 2.0,
         23: 1.0, 25: 1.5,
         62: 5.0,
@@ -170,8 +172,16 @@ ROLE_WEIGHTS = {
         289: 0.5,
         387: -3.0,
         421: 1.5,
-        840: 2.0, 841: 1.0,                 # WS dmg: all-hits / first-hit per 1%
-        570: 0.5,                           # WEAPONSKILL_DAMAGE_BASE (single WS)
+        160: -0.03, 161: -0.03,             # all/phys dmg taken /100 (neg = good)
+    },
+    'WS': {                                 # weapon-skill burst damage
+        8: 2.0, 9: 2.0,                     # STR, DEX
+        23: 1.5, 25: 1.5,                   # ATT, ACC
+        165: 2.0,                           # CRITHITRATE
+        421: 3.0,                           # CRIT_DMG_INCREASE
+        345: 0.04,                          # TP_BONUS (raw)
+        840: 3.0, 841: 2.0,                 # WS dmg all-hits / first-hit
+        570: 1.0,                           # WEAPONSKILL_DAMAGE_BASE
     },
     'TANK': {
         10: 2.0,
@@ -180,6 +190,7 @@ ROLE_WEIGHTS = {
         27: 3.0,
         29: 3.0,
         387: -8.0, 389: -8.0,
+        160: -0.06, 161: -0.06, 162: -0.04, 163: -0.06, 164: -0.04,  # dmg taken /100
     },
     'CASTER': {
         12: 2.0, 13: 1.0,
@@ -188,6 +199,7 @@ ROLE_WEIGHTS = {
         311: 4.0,
         170: 2.0,
         5: 0.05, 6: 1.0,
+        160: -0.03, 163: -0.03,             # all/magic dmg taken /100
     },
     'HEAL': {
         13: 2.0, 14: 0.5,
@@ -196,6 +208,7 @@ ROLE_WEIGHTS = {
         374: 2.0,
         170: 2.0,
         30: 1.0,
+        160: -0.03, 163: -0.03,             # all/magic dmg taken /100
     },
 }
 
@@ -206,6 +219,8 @@ MOD_SANITY_CAP = {
     62: 30, 63: 30, 165: 20, 170: 30, 259: 15, 288: 20, 302: 20,
     369: 10, 384: 300, 387: 30, 389: 30, 421: 30,
     570: 50, 840: 50, 841: 50,   # WS damage mods (per 1%)
+    345: 500,                    # TP_BONUS (raw)
+    160: 5000, 161: 5000, 162: 5000, 163: 5000, 164: 5000,  # dmg taken /100, caps 50%
 }
 
 
@@ -227,7 +242,7 @@ def score_item(iid: int, role: str) -> float:
         w = weights.get(row['modId'])
         if not w:
             continue
-        full_weight = role == 'DD' and row['latentId'] in DD_ALWAYS_LATENTS
+        full_weight = role in ('DPS', 'WS') and row['latentId'] in DD_ALWAYS_LATENTS
         score += _clamp(row['modId'], row['value']) * w * (1.0 if full_weight else 0.5)
     return score
 
@@ -337,8 +352,8 @@ for iid in sorted(SORTIE_EARRING_IDS):
     else:
         # No positive role score — fall back to the wearer's primary role so
         # build_infamy_top_picks' "<ROLE> score <N>" regex still matches.
-        best_role = next((r for r in ('DD', 'TANK', 'CASTER', 'HEAL')
-                          if e['jobs'] & ROLE_MASKS[r]), 'DD')
+        best_role = next((r for r in ('DPS', 'TANK', 'CASTER', 'HEAL', 'WS')
+                          if e['jobs'] & ROLE_MASKS[r]), 'DPS')
         best_score = 0.0
     sortie_earrings.append({
         'id': iid, 'name': info['name'], 'jobs': e['jobs'],
@@ -456,7 +471,7 @@ def role_balanced_picks(pool: list[dict], n: int) -> list[dict]:
     picked: list[dict] = []
     seen: set[int] = set()
     cursor = {role: 0 for role in by_role}
-    roles = ['DD', 'TANK', 'CASTER', 'HEAL']
+    roles = ['DPS', 'TANK', 'CASTER', 'HEAL', 'WS']
     while len(picked) < n:
         progress = False
         for role in roles:

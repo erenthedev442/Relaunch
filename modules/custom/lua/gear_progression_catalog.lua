@@ -87,125 +87,113 @@ catalog.bronze = { weapons = emptyCategories() }
 do
     -- Hand-to-Hand: 8 pick(s)
     local h2h = cat(catalog.bronze.weapons, 'Hand-to-Hand')
-    table.insert(h2h, { id = 21529, name = "Premium Heart", cost = 12, jobs = 'MNK/PUP' })  -- DD score 156, DMG 172/Dly 576
-    table.insert(h2h, { id = 20508, name = "Comeuppances +1", cost = 12, jobs = 'MNK/PUP' })  -- DD score 142, DMG 163/Dly 559
-    table.insert(h2h, { id = 20512, name = "Verethragna 119 Iii", cost = 12, jobs = 'MNK/PUP' })  -- DD score 134, DMG 158/Dly 561
-    table.insert(h2h, { id = 20523, name = "Chastisers", cost = 12, jobs = 'MNK/PUP' })  -- DD score 128, DMG 148/Dly 570
-    table.insert(h2h, { id = 21514, name = "Pair Of Raetic Baghnakhs +1", cost = 12, jobs = 'WAR/MNK/BLM/RDM/THF/DRK/BST/BRD/NIN/SMN/BLU/PUP/DNC/SCH' })  -- DD score 127, DMG 161/Dly 561
-    table.insert(h2h, { id = 21505, name = "Arasy Sainti +1", cost = 12, jobs = 'WAR/MNK/BST/NIN/PUP' })  -- DD score 97, DMG 108/Dly 559
-    table.insert(h2h, { id = 21517, name = "Eletta Knuckles", cost = 12, jobs = 'WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' })  -- DD score 96, DMG 151/Dly 576
-    table.insert(h2h, { id = 21516, name = "Ajja Knuckles", cost = 12, jobs = 'WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' })  -- CASTER score 68, DMG 136/Dly 576
+    table.insert(h2h, { id = 20508, name = "Comeuppances +1", cost = 12, jobs = 'MNK/PUP' })  -- WS score 183, DMG 163/Dly 559
+    table.insert(h2h, { id = 20512, name = "Verethragna 119 Iii", cost = 12, jobs = 'MNK/PUP' })  -- WS score 179, DMG 158/Dly 561
+    table.insert(h2h, { id = 20523, name = "Chastisers", cost = 12, jobs = 'MNK/PUP' })  -- WS score 176, DMG 148/Dly 570
+    table.insert(h2h, { id = 21514, name = "Pair Of Raetic Baghnakhs +1", cost = 12, jobs = 'WAR/MNK/BLM/RDM/THF/DRK/BST/BRD/NIN/SMN/BLU/PUP/DNC/SCH' })  -- WS score 174, DMG 161/Dly 561
+    table.insert(h2h, { id = 21507, name = "Pair Of Jolt Counter +1", cost = 12, jobs = 'MNK/PUP' })  -- WS score 166, DMG 181/Dly 601
+    table.insert(h2h, { id = 21517, name = "Eletta Knuckles", cost = 12, jobs = 'WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' })  -- WS score 150, DMG 151/Dly 576
+    table.insert(h2h, { id = 21505, name = "Arasy Sainti +1", cost = 12, jobs = 'WAR/MNK/BST/NIN/PUP' })  -- WS score 128, DMG 108/Dly 559
+    table.insert(h2h, { id = 21516, name = "Ajja Knuckles", cost = 12, jobs = 'WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' })  -- WS score 98, DMG 136/Dly 576
 
     -- Daggers: 9 pick(s)
     local daggers = cat(catalog.bronze.weapons, 'Daggers')
-    table.insert(daggers, { id = 21588, name = "Mpu Gandring", cost = 12, jobs = 'RDM/THF/BRD/DNC' })  -- DD score 196, DMG 124/Dly 176
-    table.insert(daggers, { id = 20587, name = "Twashtar", cost = 12, jobs = 'THF/BRD/DNC' })  -- DD score 185, DMG 124/Dly 176
-    table.insert(daggers, { id = 20615, name = "Levante Dagger", cost = 12, jobs = 'WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/SCH/GEO' })  -- DD score 182, DMG 95/Dly 183
-    table.insert(daggers, { id = 21585, name = "Crepuscular Knife", cost = 12, jobs = 'WAR/RDM/THF/BST/BRD/RNG/NIN/COR/DNC' })  -- DD score 174, DMG 133/Dly 190
-    table.insert(daggers, { id = 21569, name = "Chocobo Knife", cost = 12, jobs = 'RDM/THF/BRD/RNG/DNC' })  -- CASTER score 162, DMG 121/Dly 176
-    table.insert(daggers, { id = 21570, name = "Air Knife", cost = 12, jobs = 'THF/DNC' })  -- DD score 157, DMG 103/Dly 150
-    table.insert(daggers, { id = 21568, name = "Acrontica", cost = 12, jobs = 'THF/DNC' })  -- DD score 148, DMG 138/Dly 201
-    table.insert(daggers, { id = 20604, name = "Ternion Dagger +1", cost = 12, jobs = 'WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/DNC/SCH/GEO' })  -- DD score 146, DMG 100/Dly 175
-    table.insert(daggers, { id = 21555, name = "Arasy Knife +1", cost = 12, jobs = 'WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC' })  -- DD score 121, DMG 95/Dly 178
+    table.insert(daggers, { id = 21588, name = "Mpu Gandring", cost = 12, jobs = 'RDM/THF/BRD/DNC' })  -- DPS score 196, DMG 124/Dly 176
+    table.insert(daggers, { id = 20587, name = "Twashtar", cost = 12, jobs = 'THF/BRD/DNC' })  -- DPS score 185, DMG 124/Dly 176
+    table.insert(daggers, { id = 20615, name = "Levante Dagger", cost = 12, jobs = 'WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/SCH/GEO' })  -- DPS score 182, DMG 95/Dly 183
+    table.insert(daggers, { id = 21585, name = "Crepuscular Knife", cost = 12, jobs = 'WAR/RDM/THF/BST/BRD/RNG/NIN/COR/DNC' })  -- DPS score 174, DMG 133/Dly 190
+    table.insert(daggers, { id = 21568, name = "Acrontica", cost = 12, jobs = 'THF/DNC' })  -- DPS score 172, DMG 138/Dly 201
+    table.insert(daggers, { id = 21569, name = "Chocobo Knife", cost = 12, jobs = 'RDM/THF/BRD/RNG/DNC' })  -- DPS score 158, DMG 121/Dly 176
+    table.insert(daggers, { id = 21570, name = "Air Knife", cost = 12, jobs = 'THF/DNC' })  -- DPS score 157, DMG 103/Dly 150
+    table.insert(daggers, { id = 20604, name = "Ternion Dagger +1", cost = 12, jobs = 'WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/DNC/SCH/GEO' })  -- DPS score 146, DMG 100/Dly 175
+    table.insert(daggers, { id = 21555, name = "Arasy Knife +1", cost = 12, jobs = 'WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC' })  -- DPS score 121, DMG 95/Dly 178
 
     -- Swords: 8 pick(s)
     local swords = cat(catalog.bronze.weapons, 'Swords')
-    table.insert(swords, { id = 21635, name = "Malignance Sword", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- TANK score 157, DMG 183/Dly 264
-    table.insert(swords, { id = 21615, name = "Hepatizon Sapara +1", cost = 12, jobs = 'WAR/THF/DRK/SAM/BLU/COR' })  -- DD score 153, DMG 155/Dly 230
-    table.insert(swords, { id = 20612, name = "Sangarius +1", cost = 12, jobs = 'WAR/DRK' })  -- DD score 135, DMG 158/Dly 281
-    table.insert(swords, { id = 20738, name = "Buramenkah", cost = 12, jobs = 'RDM/PLD/BLU' })  -- DD score 134, DMG 130/Dly 240
-    table.insert(swords, { id = 21618, name = "Ajja Sword", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' })  -- CASTER score 110, DMG 140/Dly 240
-    table.insert(swords, { id = 21605, name = "Arasy Sword +1", cost = 12, jobs = 'RDM/PLD/BLU' })  -- DD score 108, DMG 124/Dly 236
-    table.insert(swords, { id = 20678, name = "Firangi", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- DD score 107, DMG 170/Dly 264
-    table.insert(swords, { id = 20685, name = "Excalibur 119 Iii", cost = 12, jobs = 'RDM/PLD' })  -- TANK score 84, DMG 164/Dly 233
+    table.insert(swords, { id = 20690, name = "Reikiko", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 174, DMG 164/Dly 268
+    table.insert(swords, { id = 21615, name = "Hepatizon Sapara +1", cost = 12, jobs = 'WAR/THF/DRK/SAM/BLU/COR' })  -- DPS score 153, DMG 155/Dly 230
+    table.insert(swords, { id = 21635, name = "Malignance Sword", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 144, DMG 183/Dly 264
+    table.insert(swords, { id = 20612, name = "Sangarius +1", cost = 12, jobs = 'WAR/DRK' })  -- DPS score 135, DMG 158/Dly 281
+    table.insert(swords, { id = 20738, name = "Buramenkah", cost = 12, jobs = 'RDM/PLD/BLU' })  -- DPS score 134, DMG 130/Dly 240
+    table.insert(swords, { id = 21605, name = "Arasy Sword +1", cost = 12, jobs = 'RDM/PLD/BLU' })  -- DPS score 108, DMG 124/Dly 236
+    table.insert(swords, { id = 20678, name = "Firangi", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- DPS score 107, DMG 170/Dly 264
+    table.insert(swords, { id = 21618, name = "Ajja Sword", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' })  -- DPS score 100, DMG 140/Dly 240
 
     -- Great Swords: 8 pick(s)
     local greatswords = cat(catalog.bronze.weapons, 'Great Swords')
-    table.insert(greatswords, { id = 20746, name = "Ragnarok 119 Ii", cost = 12, jobs = 'WAR/PLD/DRK' })  -- DD score 178, DMG 224/Dly 431
-    table.insert(greatswords, { id = 21663, name = "Raetic Algol +1", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- DD score 176, DMG 327/Dly 474
-    table.insert(greatswords, { id = 21655, name = "Arasy Claymore +1", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- DD score 165, DMG 252/Dly 475
-    table.insert(greatswords, { id = 21660, name = "Beryllium Sword +1", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- DD score 159, DMG 290/Dly 431
-    table.insert(greatswords, { id = 20765, name = "Tunglmyrkvi", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- DD score 143, DMG 264/Dly 489
-    table.insert(greatswords, { id = 21672, name = "Eletta Claymore", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- DD score 138, DMG 293/Dly 480
-    table.insert(greatswords, { id = 20747, name = "Caladbolg", cost = 12, jobs = 'PLD/DRK' })  -- TANK score 101, DMG 218/Dly 430
-    table.insert(greatswords, { id = 21671, name = "Ajja Claymore", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- DD score 100, DMG 280/Dly 480
+    table.insert(greatswords, { id = 20745, name = "Ragnarok 119", cost = 12, jobs = 'WAR/PLD/DRK' })  -- WS score 200, DMG 224/Dly 431
+    table.insert(greatswords, { id = 20746, name = "Ragnarok 119 Ii", cost = 12, jobs = 'WAR/PLD/DRK' })  -- WS score 200, DMG 224/Dly 431
+    table.insert(greatswords, { id = 21654, name = "Arasy Claymore", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 200, DMG 251/Dly 489
+    table.insert(greatswords, { id = 20765, name = "Tunglmyrkvi", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 186, DMG 264/Dly 489
+    table.insert(greatswords, { id = 21671, name = "Ajja Claymore", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 170, DMG 280/Dly 480
+    table.insert(greatswords, { id = 21684, name = "Caladbolg", cost = 12, jobs = 'PLD/DRK' })  -- WS score 152, DMG 303/Dly 430
+    table.insert(greatswords, { id = 21701, name = "Blurred Claymore +1", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 146, DMG 216/Dly 480
+    table.insert(greatswords, { id = 20770, name = "Mesyohi Sword", cost = 12, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 143, DMG 247/Dly 456
 
     -- Axes: 8 pick(s)
     local axes = cat(catalog.bronze.weapons, 'Axes')
-    table.insert(axes, { id = 21706, name = "Barbarity", cost = 12, jobs = 'WAR/BST' })  -- DD score 174, DMG 188/Dly 288
-    table.insert(axes, { id = 21705, name = "Arasy Tabar +1", cost = 12, jobs = 'WAR/BST' })  -- DD score 130, DMG 149/Dly 280
-    table.insert(axes, { id = 20808, name = "Tramontane Axe", cost = 12, jobs = 'WAR/DRK/BST/RUN' })  -- DD score 104, DMG 156/Dly 288
-    table.insert(axes, { id = 21719, name = "Ajja Axe", cost = 12, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- DD score 100, DMG 168/Dly 288
-    table.insert(axes, { id = 20827, name = "Kerehcatl", cost = 12, jobs = 'WAR/BST' })  -- DD score 98, DMG 156/Dly 288
-    table.insert(axes, { id = 20794, name = "Farsha", cost = 12, jobs = 'WAR/BST' })  -- DD score 87, DMG 140/Dly 276
-    table.insert(axes, { id = 20803, name = "Blurred Axe +1", cost = 12, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- DD score 79, DMG 136/Dly 333
-    table.insert(axes, { id = 20805, name = "Perun +1", cost = 12, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- DD score 75, DMG 157/Dly 280
+    table.insert(axes, { id = 21705, name = "Arasy Tabar +1", cost = 12, jobs = 'WAR/BST' })  -- WS score 147, DMG 149/Dly 280
+    table.insert(axes, { id = 20827, name = "Kerehcatl", cost = 12, jobs = 'WAR/BST' })  -- WS score 117, DMG 156/Dly 288
+    table.insert(axes, { id = 21719, name = "Ajja Axe", cost = 12, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- WS score 114, DMG 168/Dly 288
+    table.insert(axes, { id = 20808, name = "Tramontane Axe", cost = 12, jobs = 'WAR/DRK/BST/RUN' })  -- DPS score 104, DMG 156/Dly 288
+    table.insert(axes, { id = 20803, name = "Blurred Axe +1", cost = 12, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- WS score 98, DMG 136/Dly 333
+    table.insert(axes, { id = 20794, name = "Farsha", cost = 12, jobs = 'WAR/BST' })  -- WS score 96, DMG 140/Dly 276
+    table.insert(axes, { id = 20813, name = "Emxgha", cost = 12, jobs = 'WAR/DRK/BST/RUN' })  -- WS score 82, DMG 164/Dly 312
+    table.insert(axes, { id = 20805, name = "Perun +1", cost = 12, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- WS score 78, DMG 157/Dly 280
 
-    -- Great Axes: 7 pick(s)
+    -- Great Axes: 4 pick(s)
     local greataxes = cat(catalog.bronze.weapons, 'Great Axes')
-    table.insert(greataxes, { id = 21767, name = "Raetic Chopper", cost = 12, jobs = 'WAR/BLM/DRK/BRD/SMN/SCH/RUN' })  -- DD score 166, DMG 336/Dly 504
-    table.insert(greataxes, { id = 21777, name = "Eletta Chopper", cost = 12, jobs = 'WAR/DRK/RUN' })  -- DD score 140, DMG 317/Dly 508
-    table.insert(greataxes, { id = 21765, name = "Hepatizon Axe", cost = 12, jobs = 'WAR/DRK/RUN' })  -- DD score 139, DMG 329/Dly 504
-    table.insert(greataxes, { id = 20846, name = "Jokushuono", cost = 12, jobs = 'WAR/DRK' })  -- DD score 118, DMG 302/Dly 504
-    table.insert(greataxes, { id = 21762, name = "Arasy Axe", cost = 12, jobs = 'WAR/DRK/RUN' })  -- DD score 116, DMG 259/Dly 504
-    table.insert(greataxes, { id = 21776, name = "Ajja Chopper", cost = 12, jobs = 'WAR/DRK/RUN' })  -- DD score 100, DMG 296/Dly 508
-    table.insert(greataxes, { id = 20850, name = "Blurred Cleaver +1", cost = 12, jobs = 'WAR/DRK/RUN' })  -- DD score 94, DMG 231/Dly 489
+    table.insert(greataxes, { id = 21762, name = "Arasy Axe", cost = 12, jobs = 'WAR/DRK/RUN' })  -- WS score 182, DMG 259/Dly 504
+    table.insert(greataxes, { id = 21776, name = "Ajja Chopper", cost = 12, jobs = 'WAR/DRK/RUN' })  -- WS score 178, DMG 296/Dly 508
+    table.insert(greataxes, { id = 20846, name = "Jokushuono", cost = 12, jobs = 'WAR/DRK' })  -- WS score 174, DMG 302/Dly 504
+    table.insert(greataxes, { id = 20850, name = "Blurred Cleaver +1", cost = 12, jobs = 'WAR/DRK/RUN' })  -- WS score 153, DMG 231/Dly 489
 
-    -- Scythes: 5 pick(s)
+    -- Scythes: 2 pick(s)
     local scythes = cat(catalog.bronze.weapons, 'Scythes')
-    table.insert(scythes, { id = 21818, name = "Raetic Scythe", cost = 12, jobs = 'WAR/BLM/DRK/BST' })  -- DD score 166, DMG 352/Dly 528
-    table.insert(scythes, { id = 21815, name = "Maliya Sickle", cost = 12, jobs = 'WAR/BLM/DRK/BST' })  -- DD score 139, DMG 327/Dly 501
-    table.insert(scythes, { id = 20893, name = "Shukuyus Scythe", cost = 12, jobs = 'WAR/DRK/BST' })  -- DD score 122, DMG 288/Dly 480
-    table.insert(scythes, { id = 21827, name = "Ajja Scythe", cost = 12, jobs = 'WAR/BLM/DRK/BST' })  -- CASTER score 110, DMG 308/Dly 528
-    table.insert(scythes, { id = 20897, name = "Blurred Scythe +1", cost = 12, jobs = 'WAR/DRK/BST' })  -- DD score 92, DMG 233/Dly 513
+    table.insert(scythes, { id = 21827, name = "Ajja Scythe", cost = 12, jobs = 'WAR/BLM/DRK/BST' })  -- WS score 184, DMG 308/Dly 528
+    table.insert(scythes, { id = 20897, name = "Blurred Scythe +1", cost = 12, jobs = 'WAR/DRK/BST' })  -- WS score 154, DMG 233/Dly 513
 
-    -- Polearms: 5 pick(s)
+    -- Polearms: 3 pick(s)
     local polearms = cat(catalog.bronze.weapons, 'Polearms')
-    table.insert(polearms, { id = 21869, name = "Exalted Spear", cost = 12, jobs = 'WAR/PLD/SAM/DRG' })  -- DD score 179, DMG 258/Dly 396
-    table.insert(polearms, { id = 21871, name = "Raetic Halberd", cost = 12, jobs = 'WAR/BLM/PLD/BRD/SAM/DRG/SMN/SCH' })  -- DD score 166, DMG 264/Dly 396
-    table.insert(polearms, { id = 21880, name = "Ajja Lance", cost = 12, jobs = 'WAR/PLD/SAM/DRG' })  -- DD score 100, DMG 280/Dly 480
-    table.insert(polearms, { id = 20945, name = "Nativus Halberd", cost = 12, jobs = 'WAR/PLD/SAM/DRG' })  -- DD score 94, DMG 207/Dly 396
-    table.insert(polearms, { id = 20941, name = "Blurred Lance +1", cost = 12, jobs = 'WAR/SAM/DRG' })  -- DD score 92, DMG 224/Dly 492
-
-    -- Great Katana: 1 pick(s)
-    local gkatana = cat(catalog.bronze.weapons, 'Great Katana')
-    table.insert(gkatana, { id = 21963, name = "Beryllium Tachi", cost = 12, jobs = 'SAM/NIN' })  -- DD score 179, DMG 274/Dly 420
+    table.insert(polearms, { id = 21880, name = "Ajja Lance", cost = 12, jobs = 'WAR/PLD/SAM/DRG' })  -- WS score 170, DMG 280/Dly 480
+    table.insert(polearms, { id = 20941, name = "Blurred Lance +1", cost = 12, jobs = 'WAR/SAM/DRG' })  -- WS score 150, DMG 224/Dly 492
+    table.insert(polearms, { id = 20945, name = "Nativus Halberd", cost = 12, jobs = 'WAR/PLD/SAM/DRG' })  -- WS score 129, DMG 207/Dly 396
 
     -- Clubs: 3 pick(s)
     local clubs = cat(catalog.bronze.weapons, 'Clubs')
-    table.insert(clubs, { id = 22026, name = "Raetic Rod +1", cost = 12, jobs = 'WHM/BLM/SMN/SCH/GEO' })  -- HEAL score 172, DMG 193/Dly 280
-    table.insert(clubs, { id = 22024, name = "Beryllium Mace +1", cost = 12, jobs = 'WAR/WHM/PLD/GEO' })  -- DD score 153, DMG 196/Dly 291
-    table.insert(clubs, { id = 22028, name = "Ajja Rod", cost = 12, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 110, DMG 168/Dly 288
+    table.insert(clubs, { id = 22024, name = "Beryllium Mace +1", cost = 12, jobs = 'WAR/WHM/PLD/GEO' })  -- WS score 170, DMG 196/Dly 291
+    table.insert(clubs, { id = 22028, name = "Ajja Rod", cost = 12, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' })  -- WS score 114, DMG 168/Dly 288
+    table.insert(clubs, { id = 22026, name = "Raetic Rod +1", cost = 12, jobs = 'WHM/BLM/SMN/SCH/GEO' })  -- HEAL score 89, DMG 193/Dly 280
 
     -- Staves: 5 pick(s)
     local staves = cat(catalog.bronze.weapons, 'Staves')
-    table.insert(staves, { id = 22078, name = "Exalted Staff", cost = 12, jobs = 'MNK/WHM/PLD/DRG' })  -- DD score 197, DMG 268/Dly 412
-    table.insert(staves, { id = 21170, name = "Nilgal Pole", cost = 12, jobs = 'MNK/WHM/PLD/DRG' })  -- DD score 136, DMG 223/Dly 412
-    table.insert(staves, { id = 22083, name = "Ajja Staff", cost = 12, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 110, DMG 213/Dly 366
-    table.insert(staves, { id = 21168, name = "Ungeri Staff", cost = 12, jobs = 'WAR/MNK/WHM/BLM/PLD/BRD/DRG/SMN/SCH/GEO' })  -- DD score 107, DMG 220/Dly 412
-    table.insert(staves, { id = 21147, name = "Khatvanga", cost = 12, jobs = 'BLM/SMN/SCH' })  -- CASTER score 80, DMG 268/Dly 402
+    table.insert(staves, { id = 21158, name = "Blurred Staff +1", cost = 12, jobs = 'WAR/MNK/WHM/BLM/PLD/BRD/DRG/SMN/SCH/GEO' })  -- CASTER score 171, DMG 184/Dly 399
+    table.insert(staves, { id = 21170, name = "Nilgal Pole", cost = 12, jobs = 'MNK/WHM/PLD/DRG' })  -- WS score 166, DMG 223/Dly 412
+    table.insert(staves, { id = 21168, name = "Ungeri Staff", cost = 12, jobs = 'WAR/MNK/WHM/BLM/PLD/BRD/DRG/SMN/SCH/GEO' })  -- WS score 156, DMG 220/Dly 412
+    table.insert(staves, { id = 21166, name = "Staccato Staff", cost = 12, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 140, DMG 198/Dly 366
+    table.insert(staves, { id = 22083, name = "Ajja Staff", cost = 12, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- WS score 136, DMG 213/Dly 366
 
     -- Archery: 8 pick(s)
     local archery = cat(catalog.bronze.weapons, 'Archery')
-    table.insert(archery, { id = 22128, name = "Raetic Bow +1", cost = 12, jobs = 'WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/SMN/BLU/SCH' })  -- TANK score 92, DMG 211/Dly 351
-    table.insert(archery, { id = 22109, name = "Ajja Bow", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- CASTER score 89, DMG 147/Dly 360
-    table.insert(archery, { id = 22125, name = "Exalted Bow", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- DD score 82, DMG 205/Dly 360
-    table.insert(archery, { id = 22115, name = "Yoichinoyumi 119 Iii", cost = 12, jobs = 'RNG/SAM' })  -- DD score 69, DMG 303/Dly 524
-    table.insert(archery, { id = 22129, name = "Yoichinoyumi 119 Iii Aug", cost = 12, jobs = 'RNG/SAM' })  -- DD score 69, DMG 303/Dly 524
-    table.insert(archery, { id = 21229, name = "Cibitshavore", cost = 12, jobs = 'RNG/SAM' })  -- DD score 52, DMG 261/Dly 600
-    table.insert(archery, { id = 21210, name = "Yoichinoyumi 119", cost = 12, jobs = 'RNG/SAM' })  -- DD score 51, DMG 223/Dly 524
-    table.insert(archery, { id = 21211, name = "Yoichinoyumi 119 Ii", cost = 12, jobs = 'RNG/SAM' })  -- DD score 51, DMG 223/Dly 524
+    table.insert(archery, { id = 22126, name = "Exalted Bow +1", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- WS score 127, DMG 206/Dly 351
+    table.insert(archery, { id = 22111, name = "Kaja Bow", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- WS score 122, DMG 164/Dly 360
+    table.insert(archery, { id = 21299, name = "Yoichis Arrow", cost = 12, jobs = 'RNG/SAM' })  -- DPS score 119, DMG 89/Dly 90
+    table.insert(archery, { id = 21210, name = "Yoichinoyumi 119", cost = 12, jobs = 'RNG/SAM' })  -- WS score 112, DMG 223/Dly 524
+    table.insert(archery, { id = 21211, name = "Yoichinoyumi 119 Ii", cost = 12, jobs = 'RNG/SAM' })  -- WS score 112, DMG 223/Dly 524
+    table.insert(archery, { id = 22128, name = "Raetic Bow +1", cost = 12, jobs = 'WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/SMN/BLU/SCH' })  -- WS score 106, DMG 211/Dly 351
+    table.insert(archery, { id = 22110, name = "Eletta Bow", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- WS score 78, DMG 157/Dly 360
+    table.insert(archery, { id = 22109, name = "Ajja Bow", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- WS score 74, DMG 147/Dly 360
 
     -- Marksmanship: 8 pick(s)
     local marksmanship = cat(catalog.bronze.weapons, 'Marksmanship')
-    table.insert(marksmanship, { id = 22135, name = "Arasy Gun", cost = 12, jobs = 'RNG/COR' })  -- DD score 59, DMG 107/Dly 600
-    table.insert(marksmanship, { id = 22138, name = "Exalted Crossbow +1", cost = 12, jobs = 'WAR/THF/DRK/RNG' })  -- DD score 59, DMG 111/Dly 227
-    table.insert(marksmanship, { id = 21485, name = "Fomalhaut", cost = 12, jobs = 'RNG/COR' })  -- DD score 53, DMG 167/Dly 600
-    table.insert(marksmanship, { id = 21479, name = "Tsoabichi Crossbow", cost = 12, jobs = 'WAR/THF/DRK/RNG' })  -- DD score 43, DMG 104/Dly 288
-    table.insert(marksmanship, { id = 21274, name = "Donar Gun", cost = 12, jobs = 'THF/RNG/NIN/COR' })  -- DD score 33, DMG 103/Dly 548
-    table.insert(marksmanship, { id = 21269, name = "Armageddon", cost = 12, jobs = 'RNG/COR' })  -- DD score 29, DMG 143/Dly 582
-    table.insert(marksmanship, { id = 21276, name = "Pulfanxa", cost = 12, jobs = 'RNG/COR' })  -- DD score 28, DMG 108/Dly 600
-    table.insert(marksmanship, { id = 21284, name = "Vanir Gun", cost = 12, jobs = 'RNG/COR' })  -- DD score 23, DMG 113/Dly 600
+    table.insert(marksmanship, { id = 22143, name = "Fomalhaut", cost = 12, jobs = 'RNG/COR' })  -- WS score 104, DMG 167/Dly 600
+    table.insert(marksmanship, { id = 22135, name = "Arasy Gun", cost = 12, jobs = 'RNG/COR' })  -- WS score 90, DMG 107/Dly 600
+    table.insert(marksmanship, { id = 21269, name = "Armageddon", cost = 12, jobs = 'RNG/COR' })  -- WS score 72, DMG 143/Dly 582
+    table.insert(marksmanship, { id = 22285, name = "Beryllium Bolt", cost = 12, jobs = 'WAR/THF/DRK/RNG' })  -- DPS score 68, DMG 108/Dly 192
+    table.insert(marksmanship, { id = 21274, name = "Donar Gun", cost = 12, jobs = 'THF/RNG/NIN/COR' })  -- WS score 62, DMG 103/Dly 548
+    table.insert(marksmanship, { id = 21276, name = "Pulfanxa", cost = 12, jobs = 'RNG/COR' })  -- WS score 60, DMG 108/Dly 600
+    table.insert(marksmanship, { id = 22138, name = "Exalted Crossbow +1", cost = 12, jobs = 'WAR/THF/DRK/RNG' })  -- DPS score 59, DMG 111/Dly 227
+    table.insert(marksmanship, { id = 21284, name = "Vanir Gun", cost = 12, jobs = 'RNG/COR' })  -- WS score 56, DMG 113/Dly 600
 
 end
 
@@ -216,26 +204,44 @@ catalog.silver = { weapons = emptyCategories() }
 do
     -- Hand-to-Hand: 1 pick(s)
     local h2h = cat(catalog.silver.weapons, 'Hand-to-Hand')
-    table.insert(h2h, { id = 21533, name = "Varga Purnikawa", cost = 25, jobs = 'MNK/PUP' })  -- DD score 216, DMG 192/Dly 596
+    table.insert(h2h, { id = 21529, name = "Premium Heart", cost = 25, jobs = 'MNK/PUP' })  -- WS score 206, DMG 172/Dly 576
 
     -- Daggers: 1 pick(s)
     local daggers = cat(catalog.silver.weapons, 'Daggers')
-    table.insert(daggers, { id = 21589, name = "Mpu Gandring", cost = 25, jobs = 'RDM/THF/BRD/DNC' })  -- DD score 226, DMG 130/Dly 176
+    table.insert(daggers, { id = 21589, name = "Mpu Gandring", cost = 25, jobs = 'RDM/THF/BRD/DNC' })  -- DPS score 226, DMG 130/Dly 176
 
     -- Swords: 1 pick(s)
     local swords = cat(catalog.silver.weapons, 'Swords')
-    table.insert(swords, { id = 20673, name = "Flametongue", cost = 25, jobs = 'WAR/RDM/PLD/BLU' })  -- DD score 205, DMG 187/Dly 264
+    table.insert(swords, { id = 20673, name = "Flametongue", cost = 25, jobs = 'WAR/RDM/PLD/BLU' })  -- WS score 214, DMG 187/Dly 264
 
-    -- Clubs: 1 pick(s)
-    local clubs = cat(catalog.silver.weapons, 'Clubs')
-    table.insert(clubs, { id = 21102, name = "Mafic Cudgel", cost = 25, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- DD score 232, DMG 142/Dly 278
+    -- Great Swords: 3 pick(s)
+    local greatswords = cat(catalog.silver.weapons, 'Great Swords')
+    table.insert(greatswords, { id = 21662, name = "Raetic Algol", cost = 25, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 248, DMG 326/Dly 489
+    table.insert(greatswords, { id = 21660, name = "Beryllium Sword +1", cost = 25, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 223, DMG 290/Dly 431
+    table.insert(greatswords, { id = 21672, name = "Eletta Claymore", cost = 25, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 222, DMG 293/Dly 480
 
-    -- Staves: 4 pick(s)
-    local staves = cat(catalog.silver.weapons, 'Staves')
-    table.insert(staves, { id = 22087, name = "Malignance Pole", cost = 25, jobs = 'MNK/WHM/BLM/PLD/DRG/SMN/SCH/GEO' })  -- TANK score 238, DMG 286/Dly 412
-    table.insert(staves, { id = 22079, name = "Exalted Staff +1", cost = 25, jobs = 'MNK/WHM/PLD/DRG' })  -- DD score 233, DMG 269/Dly 399
-    table.insert(staves, { id = 21158, name = "Blurred Staff +1", cost = 25, jobs = 'WAR/MNK/WHM/BLM/PLD/BRD/DRG/SMN/SCH/GEO' })  -- CASTER score 226, DMG 184/Dly 399
-    table.insert(staves, { id = 21166, name = "Staccato Staff", cost = 25, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 205, DMG 198/Dly 366
+    -- Axes: 1 pick(s)
+    local axes = cat(catalog.silver.weapons, 'Axes')
+    table.insert(axes, { id = 21706, name = "Barbarity", cost = 25, jobs = 'WAR/BST' })  -- WS score 218, DMG 188/Dly 288
+
+    -- Great Axes: 2 pick(s)
+    local greataxes = cat(catalog.silver.weapons, 'Great Axes')
+    table.insert(greataxes, { id = 21765, name = "Hepatizon Axe", cost = 25, jobs = 'WAR/DRK/RUN' })  -- WS score 225, DMG 329/Dly 504
+    table.insert(greataxes, { id = 21763, name = "Arasy Axe +1", cost = 25, jobs = 'WAR/DRK/RUN' })  -- WS score 203, DMG 260/Dly 489
+
+    -- Scythes: 2 pick(s)
+    local scythes = cat(catalog.silver.weapons, 'Scythes')
+    table.insert(scythes, { id = 21815, name = "Maliya Sickle", cost = 25, jobs = 'WAR/BLM/DRK/BST' })  -- WS score 224, DMG 327/Dly 501
+    table.insert(scythes, { id = 20893, name = "Shukuyus Scythe", cost = 25, jobs = 'WAR/DRK/BST' })  -- WS score 204, DMG 288/Dly 480
+
+    -- Polearms: 2 pick(s)
+    local polearms = cat(catalog.silver.weapons, 'Polearms')
+    table.insert(polearms, { id = 21869, name = "Exalted Spear", cost = 25, jobs = 'WAR/PLD/SAM/DRG' })  -- WS score 230, DMG 258/Dly 396
+    table.insert(polearms, { id = 21871, name = "Raetic Halberd", cost = 25, jobs = 'WAR/BLM/PLD/BRD/SAM/DRG/SMN/SCH' })  -- WS score 218, DMG 264/Dly 396
+
+    -- Great Katana: 1 pick(s)
+    local gkatana = cat(catalog.silver.weapons, 'Great Katana')
+    table.insert(gkatana, { id = 21963, name = "Beryllium Tachi", cost = 25, jobs = 'SAM/NIN' })  -- WS score 238, DMG 274/Dly 420
 
 end
 
@@ -246,44 +252,52 @@ catalog.gold = { weapons = emptyCategories() }
 do
     -- Hand-to-Hand: 1 pick(s)
     local h2h = cat(catalog.gold.weapons, 'Hand-to-Hand')
-    table.insert(h2h, { id = 21534, name = "Varga Purnikawa", cost = 50, jobs = 'MNK/PUP' })  -- DD score 254, DMG 202/Dly 596
+    table.insert(h2h, { id = 21534, name = "Varga Purnikawa", cost = 50, jobs = 'MNK/PUP' })  -- WS score 290, DMG 202/Dly 596
 
     -- Daggers: 1 pick(s)
     local daggers = cat(catalog.gold.weapons, 'Daggers')
-    table.insert(daggers, { id = 21590, name = "Mpu Gandring", cost = 50, jobs = 'RDM/THF/BRD/DNC' })  -- DD score 264, DMG 137/Dly 176
+    table.insert(daggers, { id = 21590, name = "Mpu Gandring", cost = 50, jobs = 'RDM/THF/BRD/DNC' })  -- DPS score 264, DMG 137/Dly 176
 
     -- Swords: 8 pick(s)
     local swords = cat(catalog.gold.weapons, 'Swords')
-    table.insert(swords, { id = 20689, name = "Almace", cost = 50, jobs = 'RDM/PLD/BLU' })  -- CASTER score 829, DMG 158/Dly 224
-    table.insert(swords, { id = 20695, name = "Sequence", cost = 50, jobs = 'RDM/PLD/BLU' })  -- CASTER score 828, DMG 168/Dly 240
-    table.insert(swords, { id = 20677, name = "Colada", cost = 50, jobs = 'RDM/PLD/BLU' })  -- CASTER score 642, DMG 140/Dly 240
-    table.insert(swords, { id = 20706, name = "Vampirism", cost = 50, jobs = 'WAR/RDM/THF/PLD/DRK/BRD/RNG/NIN/DRG/BLU/RUN' })  -- CASTER score 598, DMG 127/Dly 240
-    table.insert(swords, { id = 20698, name = "Fettering Blade", cost = 50, jobs = 'WAR/RDM/PLD/DRK/COR/RUN' })  -- CASTER score 586, DMG 134/Dly 231
-    table.insert(swords, { id = 20715, name = "Acclimator", cost = 50, jobs = 'RDM/PLD/BLU' })  -- CASTER score 479, DMG 130/Dly 240
-    table.insert(swords, { id = 20717, name = "Arendsi Fleuret", cost = 50, jobs = 'WAR/RDM/PLD/BRD/DRG/COR/DNC' })  -- CASTER score 454, DMG 119/Dly 224
-    table.insert(swords, { id = 20733, name = "Anahera Saber", cost = 50, jobs = 'RDM/BLU' })  -- CASTER score 437, DMG 130/Dly 240
+    table.insert(swords, { id = 20689, name = "Almace", cost = 50, jobs = 'RDM/PLD/BLU' })  -- CASTER score 744, DMG 158/Dly 224
+    table.insert(swords, { id = 20695, name = "Sequence", cost = 50, jobs = 'RDM/PLD/BLU' })  -- CASTER score 744, DMG 168/Dly 240
+    table.insert(swords, { id = 20677, name = "Colada", cost = 50, jobs = 'RDM/PLD/BLU' })  -- CASTER score 572, DMG 140/Dly 240
+    table.insert(swords, { id = 20706, name = "Vampirism", cost = 50, jobs = 'WAR/RDM/THF/PLD/DRK/BRD/RNG/NIN/DRG/BLU/RUN' })  -- CASTER score 534, DMG 127/Dly 240
+    table.insert(swords, { id = 20698, name = "Fettering Blade", cost = 50, jobs = 'WAR/RDM/PLD/DRK/COR/RUN' })  -- CASTER score 516, DMG 134/Dly 231
+    table.insert(swords, { id = 20715, name = "Acclimator", cost = 50, jobs = 'RDM/PLD/BLU' })  -- CASTER score 414, DMG 130/Dly 240
+    table.insert(swords, { id = 20717, name = "Arendsi Fleuret", cost = 50, jobs = 'WAR/RDM/PLD/BRD/DRG/COR/DNC' })  -- CASTER score 390, DMG 119/Dly 224
+    table.insert(swords, { id = 20733, name = "Anahera Saber", cost = 50, jobs = 'RDM/BLU' })  -- CASTER score 372, DMG 130/Dly 240
+
+    -- Great Axes: 1 pick(s)
+    local greataxes = cat(catalog.gold.weapons, 'Great Axes')
+    table.insert(greataxes, { id = 21767, name = "Raetic Chopper", cost = 50, jobs = 'WAR/BLM/DRK/BRD/SMN/SCH/RUN' })  -- WS score 254, DMG 336/Dly 504
+
+    -- Scythes: 1 pick(s)
+    local scythes = cat(catalog.gold.weapons, 'Scythes')
+    table.insert(scythes, { id = 21818, name = "Raetic Scythe", cost = 50, jobs = 'WAR/BLM/DRK/BST' })  -- WS score 262, DMG 352/Dly 528
 
     -- Clubs: 8 pick(s)
     local clubs = cat(catalog.gold.weapons, 'Clubs')
-    table.insert(clubs, { id = 22029, name = "Eletta Rod", cost = 50, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 978, DMG 176/Dly 288
-    table.insert(clubs, { id = 22022, name = "Ames +1", cost = 50, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 715, DMG 142/Dly 210
-    table.insert(clubs, { id = 21089, name = "Rubicundity", cost = 50, jobs = 'WHM/BLM/RDM/SMN/SCH/GEO' })  -- CASTER score 699, DMG 160/Dly 288
-    table.insert(clubs, { id = 22016, name = "Arasy Rod +1", cost = 50, jobs = 'WHM/BLM/SMN/SCH/GEO' })  -- CASTER score 671, DMG 149/Dly 280
-    table.insert(clubs, { id = 21116, name = "Cagliostros Rod", cost = 50, jobs = 'WHM/BLM/SMN/SCH/GEO' })  -- CASTER score 667, DMG 156/Dly 288
-    table.insert(clubs, { id = 21094, name = "Blurred Rod +1", cost = 50, jobs = 'WAR/MNK/WHM/BLM/PLD/SMN/BLU/SCH/GEO' })  -- CASTER score 666, DMG 149/Dly 280
-    table.insert(clubs, { id = 21103, name = "Vadose Rod", cost = 50, jobs = 'WHM/BLM/SMN/SCH/GEO' })  -- CASTER score 642, DMG 156/Dly 288
-    table.insert(clubs, { id = 21104, name = "Eosuchus Club", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- CASTER score 497, DMG 130/Dly 264
+    table.insert(clubs, { id = 22029, name = "Eletta Rod", cost = 50, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 905, DMG 176/Dly 288
+    table.insert(clubs, { id = 22022, name = "Ames +1", cost = 50, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 634, DMG 142/Dly 210
+    table.insert(clubs, { id = 21089, name = "Rubicundity", cost = 50, jobs = 'WHM/BLM/RDM/SMN/SCH/GEO' })  -- CASTER score 632, DMG 160/Dly 288
+    table.insert(clubs, { id = 22016, name = "Arasy Rod +1", cost = 50, jobs = 'WHM/BLM/SMN/SCH/GEO' })  -- CASTER score 607, DMG 149/Dly 280
+    table.insert(clubs, { id = 21094, name = "Blurred Rod +1", cost = 50, jobs = 'WAR/MNK/WHM/BLM/PLD/SMN/BLU/SCH/GEO' })  -- CASTER score 602, DMG 149/Dly 280
+    table.insert(clubs, { id = 21116, name = "Cagliostros Rod", cost = 50, jobs = 'WHM/BLM/SMN/SCH/GEO' })  -- CASTER score 602, DMG 156/Dly 288
+    table.insert(clubs, { id = 21103, name = "Vadose Rod", cost = 50, jobs = 'WHM/BLM/SMN/SCH/GEO' })  -- CASTER score 577, DMG 156/Dly 288
+    table.insert(clubs, { id = 21102, name = "Mafic Cudgel", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- DPS score 262, DMG 142/Dly 278
 
     -- Staves: 8 pick(s)
     local staves = cat(catalog.gold.weapons, 'Staves')
-    table.insert(staves, { id = 22080, name = "Raetic Staff", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 1080, DMG 244/Dly 366
-    table.insert(staves, { id = 22057, name = "Contemplator", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 1069, DMG 231/Dly 402
-    table.insert(staves, { id = 21152, name = "Reikikon", cost = 50, jobs = 'MNK/WHM/BLM/PLD/DRG/SMN/SCH/GEO' })  -- CASTER score 1058, DMG 242/Dly 402
-    table.insert(staves, { id = 22054, name = "Grioavolr", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 1049, DMG 202/Dly 366
-    table.insert(staves, { id = 22075, name = "Arasy Staff +1", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 1008, DMG 189/Dly 356
-    table.insert(staves, { id = 21181, name = "Venabulum", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 1003, DMG 198/Dly 366
-    table.insert(staves, { id = 22064, name = "Hvergelmir", cost = 50, jobs = 'BLM/SMN/SCH' })  -- CASTER score 955, DMG 275/Dly 390
-    table.insert(staves, { id = 22056, name = "Gozuki Mezuki", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- DD score 259, DMG 266/Dly 412
+    table.insert(staves, { id = 22057, name = "Contemplator", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 1000, DMG 231/Dly 402
+    table.insert(staves, { id = 22080, name = "Raetic Staff", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 1000, DMG 244/Dly 366
+    table.insert(staves, { id = 22085, name = "Kaja Staff", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 984, DMG 238/Dly 366
+    table.insert(staves, { id = 22054, name = "Grioavolr", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 983, DMG 202/Dly 366
+    table.insert(staves, { id = 22064, name = "Hvergelmir", cost = 50, jobs = 'BLM/SMN/SCH' })  -- CASTER score 870, DMG 275/Dly 390
+    table.insert(staves, { id = 22079, name = "Exalted Staff +1", cost = 50, jobs = 'MNK/WHM/PLD/DRG' })  -- WS score 308, DMG 269/Dly 399
+    table.insert(staves, { id = 22056, name = "Gozuki Mezuki", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- WS score 302, DMG 266/Dly 412
+    table.insert(staves, { id = 22087, name = "Malignance Pole", cost = 50, jobs = 'MNK/WHM/BLM/PLD/DRG/SMN/SCH/GEO' })  -- TANK score 275, DMG 286/Dly 412
 
 end
 
@@ -296,107 +310,107 @@ catalog.infamy = { weapons = emptyCategories() }
 do
     -- Hand-to-Hand: 5 pick(s) -> Infamy Vendor
     local inf_h2h = cat(catalog.infamy.weapons, 'Hand-to-Hand')
-    table.insert(inf_h2h, { id = 21535, name = "Varga Purnikawa", cost = 500, jobs = 'MNK/PUP' })  -- DD score 295, DMG 213/Dly 596
-    table.insert(inf_h2h, { id = 21527, name = "Sakpatas Fists", cost = 500, jobs = 'MNK/PUP' })  -- DD score 210, DMG 165/Dly 576
-    table.insert(inf_h2h, { id = 21519, name = "Karambit", cost = 500, jobs = 'WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' })  -- DD score 208, DMG 180/Dly 576
-    table.insert(inf_h2h, { id = 21518, name = "Kaja Knuckles", cost = 500, jobs = 'WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' })  -- DD score 172, DMG 165/Dly 576
-    table.insert(inf_h2h, { id = 21528, name = "Dragon Fangs", cost = 500, jobs = 'MNK/PUP' })  -- DD score 157, DMG 188/Dly 606
+    table.insert(inf_h2h, { id = 21535, name = "Varga Purnikawa", cost = 500, jobs = 'MNK/PUP' })  -- WS score 329, DMG 213/Dly 596
+    table.insert(inf_h2h, { id = 21519, name = "Karambit", cost = 500, jobs = 'WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' })  -- WS score 275, DMG 180/Dly 576
+    table.insert(inf_h2h, { id = 21527, name = "Sakpatas Fists", cost = 500, jobs = 'MNK/PUP' })  -- WS score 258, DMG 165/Dly 576
+    table.insert(inf_h2h, { id = 21518, name = "Kaja Knuckles", cost = 500, jobs = 'WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' })  -- WS score 232, DMG 165/Dly 576
+    table.insert(inf_h2h, { id = 21528, name = "Dragon Fangs", cost = 500, jobs = 'MNK/PUP' })  -- WS score 214, DMG 188/Dly 606
 
     -- Daggers: 5 pick(s) -> Infamy Vendor
     local inf_daggers = cat(catalog.infamy.weapons, 'Daggers')
-    table.insert(inf_daggers, { id = 21565, name = "Tauret", cost = 500, jobs = 'RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' })  -- CASTER score 1056, DMG 125/Dly 180
-    table.insert(inf_daggers, { id = 21564, name = "Kaja Knife", cost = 500, jobs = 'RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' })  -- CASTER score 1017, DMG 117/Dly 180
-    table.insert(inf_daggers, { id = 21563, name = "Eletta Knife", cost = 500, jobs = 'RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' })  -- CASTER score 963, DMG 110/Dly 180
-    table.insert(inf_daggers, { id = 20632, name = "Vanir Knife", cost = 500, jobs = 'WAR/RDM/THF/BST/BRD/RNG/NIN/COR/DNC' })  -- CASTER score 345, DMG 111/Dly 205
-    table.insert(inf_daggers, { id = 21567, name = "Gletis Knife", cost = 500, jobs = 'RDM/THF/BRD/RNG/NIN/COR/DNC' })  -- DD score 278, DMG 133/Dly 200
+    table.insert(inf_daggers, { id = 21565, name = "Tauret", cost = 500, jobs = 'RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' })  -- CASTER score 973, DMG 125/Dly 180
+    table.insert(inf_daggers, { id = 21564, name = "Kaja Knife", cost = 500, jobs = 'RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' })  -- CASTER score 939, DMG 117/Dly 180
+    table.insert(inf_daggers, { id = 21563, name = "Eletta Knife", cost = 500, jobs = 'RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' })  -- CASTER score 890, DMG 110/Dly 180
+    table.insert(inf_daggers, { id = 20632, name = "Vanir Knife", cost = 500, jobs = 'WAR/RDM/THF/BST/BRD/RNG/NIN/COR/DNC' })  -- CASTER score 295, DMG 111/Dly 205
+    table.insert(inf_daggers, { id = 21567, name = "Gletis Knife", cost = 500, jobs = 'RDM/THF/BRD/RNG/NIN/COR/DNC' })  -- DPS score 278, DMG 133/Dly 200
 
     -- Swords: 5 pick(s) -> Infamy Vendor
     local inf_swords = cat(catalog.infamy.weapons, 'Swords')
-    table.insert(inf_swords, { id = 20672, name = "Ice Brand", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 1145, DMG 187/Dly 264
-    table.insert(inf_swords, { id = 21621, name = "Naegling", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' })  -- CASTER score 1060, DMG 166/Dly 240
-    table.insert(inf_swords, { id = 21637, name = "Sakpatas Sword", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 1057, DMG 160/Dly 240
-    table.insert(inf_swords, { id = 21620, name = "Kaja Sword", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' })  -- CASTER score 1017, DMG 156/Dly 240
-    table.insert(inf_swords, { id = 21619, name = "Eletta Sword", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' })  -- CASTER score 993, DMG 146/Dly 240
+    table.insert(inf_swords, { id = 20672, name = "Ice Brand", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 1060, DMG 187/Dly 264
+    table.insert(inf_swords, { id = 21621, name = "Naegling", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' })  -- CASTER score 977, DMG 166/Dly 240
+    table.insert(inf_swords, { id = 21637, name = "Sakpatas Sword", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 977, DMG 160/Dly 240
+    table.insert(inf_swords, { id = 21620, name = "Kaja Sword", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' })  -- CASTER score 939, DMG 156/Dly 240
+    table.insert(inf_swords, { id = 21619, name = "Eletta Sword", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' })  -- CASTER score 920, DMG 146/Dly 240
 
     -- Great Swords: 5 pick(s) -> Infamy Vendor
     local inf_greatswords = cat(catalog.infamy.weapons, 'Great Swords')
-    table.insert(inf_greatswords, { id = 21683, name = "Ragnarok 119 Iii", cost = 500, jobs = 'WAR/PLD/DRK' })  -- DD score 231, DMG 304/Dly 431
-    table.insert(inf_greatswords, { id = 21674, name = "Nandaka", cost = 500, jobs = 'WAR/PLD/DRK/RUN' })  -- DD score 213, DMG 333/Dly 480
-    table.insert(inf_greatswords, { id = 21673, name = "Kaja Claymore", cost = 500, jobs = 'WAR/PLD/DRK/RUN' })  -- DD score 186, DMG 313/Dly 480
-    table.insert(inf_greatswords, { id = 21684, name = "Caladbolg", cost = 500, jobs = 'PLD/DRK' })  -- TANK score 185, DMG 303/Dly 430
-    table.insert(inf_greatswords, { id = 20745, name = "Ragnarok 119", cost = 500, jobs = 'WAR/PLD/DRK' })  -- DD score 178, DMG 224/Dly 431
+    table.insert(inf_greatswords, { id = 21674, name = "Nandaka", cost = 500, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 312, DMG 333/Dly 480
+    table.insert(inf_greatswords, { id = 21673, name = "Kaja Claymore", cost = 500, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 276, DMG 313/Dly 480
+    table.insert(inf_greatswords, { id = 21683, name = "Ragnarok 119 Iii", cost = 500, jobs = 'WAR/PLD/DRK' })  -- WS score 270, DMG 304/Dly 431
+    table.insert(inf_greatswords, { id = 21663, name = "Raetic Algol +1", cost = 500, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 256, DMG 327/Dly 474
+    table.insert(inf_greatswords, { id = 21655, name = "Arasy Claymore +1", cost = 500, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 230, DMG 252/Dly 475
 
     -- Axes: 5 pick(s) -> Infamy Vendor
     local inf_axes = cat(catalog.infamy.weapons, 'Axes')
-    table.insert(inf_axes, { id = 21722, name = "Dolichenus", cost = 500, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- DD score 203, DMG 200/Dly 288
-    table.insert(inf_axes, { id = 21707, name = "Barbarity +1", cost = 500, jobs = 'WAR/BST' })  -- DD score 195, DMG 189/Dly 280
-    table.insert(inf_axes, { id = 21721, name = "Kaja Axe", cost = 500, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- DD score 176, DMG 188/Dly 288
-    table.insert(inf_axes, { id = 21752, name = "Farsha", cost = 500, jobs = 'WAR/BST' })  -- DD score 155, DMG 195/Dly 276
-    table.insert(inf_axes, { id = 21720, name = "Eletta Axe", cost = 500, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- DD score 138, DMG 176/Dly 288
+    table.insert(inf_axes, { id = 21707, name = "Barbarity +1", cost = 500, jobs = 'WAR/BST' })  -- WS score 242, DMG 189/Dly 280
+    table.insert(inf_axes, { id = 21722, name = "Dolichenus", cost = 500, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- WS score 235, DMG 200/Dly 288
+    table.insert(inf_axes, { id = 21721, name = "Kaja Axe", cost = 500, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- WS score 204, DMG 188/Dly 288
+    table.insert(inf_axes, { id = 21752, name = "Farsha", cost = 500, jobs = 'WAR/BST' })  -- WS score 168, DMG 195/Dly 276
+    table.insert(inf_axes, { id = 21720, name = "Eletta Axe", cost = 500, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- WS score 163, DMG 176/Dly 288
 
     -- Great Axes: 5 pick(s) -> Infamy Vendor
     local inf_greataxes = cat(catalog.infamy.weapons, 'Great Axes')
-    table.insert(inf_greataxes, { id = 21779, name = "Lycurgos", cost = 500, jobs = 'WAR/DRK/RUN' })  -- DD score 255, DMG 359/Dly 508
-    table.insert(inf_greataxes, { id = 21778, name = "Kaja Chopper", cost = 500, jobs = 'WAR/DRK/RUN' })  -- DD score 217, DMG 338/Dly 508
-    table.insert(inf_greataxes, { id = 21768, name = "Raetic Chopper +1", cost = 500, jobs = 'WAR/BLM/DRK/BRD/SMN/SCH/RUN' })  -- DD score 176, DMG 337/Dly 489
-    table.insert(inf_greataxes, { id = 21766, name = "Hepatizon Axe +1", cost = 500, jobs = 'WAR/DRK/RUN' })  -- DD score 159, DMG 330/Dly 489
-    table.insert(inf_greataxes, { id = 21763, name = "Arasy Axe +1", cost = 500, jobs = 'WAR/DRK/RUN' })  -- DD score 140, DMG 260/Dly 489
+    table.insert(inf_greataxes, { id = 21779, name = "Lycurgos", cost = 500, jobs = 'WAR/DRK/RUN' })  -- WS score 364, DMG 359/Dly 508
+    table.insert(inf_greataxes, { id = 21778, name = "Kaja Chopper", cost = 500, jobs = 'WAR/DRK/RUN' })  -- WS score 319, DMG 338/Dly 508
+    table.insert(inf_greataxes, { id = 21768, name = "Raetic Chopper +1", cost = 500, jobs = 'WAR/BLM/DRK/BRD/SMN/SCH/RUN' })  -- WS score 262, DMG 337/Dly 489
+    table.insert(inf_greataxes, { id = 21766, name = "Hepatizon Axe +1", cost = 500, jobs = 'WAR/DRK/RUN' })  -- WS score 243, DMG 330/Dly 489
+    table.insert(inf_greataxes, { id = 21777, name = "Eletta Chopper", cost = 500, jobs = 'WAR/DRK/RUN' })  -- WS score 234, DMG 317/Dly 508
 
     -- Scythes: 5 pick(s) -> Infamy Vendor
     local inf_scythes = cat(catalog.infamy.weapons, 'Scythes')
-    table.insert(inf_scythes, { id = 21830, name = "Drepanum", cost = 500, jobs = 'WAR/BLM/DRK/BST' })  -- CASTER score 1086, DMG 366/Dly 528
-    table.insert(inf_scythes, { id = 21829, name = "Kaja Scythe", cost = 500, jobs = 'WAR/BLM/DRK/BST' })  -- CASTER score 1047, DMG 344/Dly 528
-    table.insert(inf_scythes, { id = 21828, name = "Eletta Scythe", cost = 500, jobs = 'WAR/BLM/DRK/BST' })  -- CASTER score 963, DMG 322/Dly 528
-    table.insert(inf_scythes, { id = 21819, name = "Raetic Scythe +1", cost = 500, jobs = 'WAR/BLM/DRK/BST' })  -- DD score 176, DMG 353/Dly 513
-    table.insert(inf_scythes, { id = 21816, name = "Maliya Sickle +1", cost = 500, jobs = 'WAR/BLM/DRK/BST' })  -- DD score 158, DMG 328/Dly 490
+    table.insert(inf_scythes, { id = 21830, name = "Drepanum", cost = 500, jobs = 'WAR/BLM/DRK/BST' })  -- CASTER score 1003, DMG 366/Dly 528
+    table.insert(inf_scythes, { id = 21829, name = "Kaja Scythe", cost = 500, jobs = 'WAR/BLM/DRK/BST' })  -- CASTER score 969, DMG 344/Dly 528
+    table.insert(inf_scythes, { id = 21828, name = "Eletta Scythe", cost = 500, jobs = 'WAR/BLM/DRK/BST' })  -- CASTER score 890, DMG 322/Dly 528
+    table.insert(inf_scythes, { id = 21819, name = "Raetic Scythe +1", cost = 500, jobs = 'WAR/BLM/DRK/BST' })  -- WS score 270, DMG 353/Dly 513
+    table.insert(inf_scythes, { id = 21816, name = "Maliya Sickle +1", cost = 500, jobs = 'WAR/BLM/DRK/BST' })  -- WS score 242, DMG 328/Dly 490
 
     -- Polearms: 5 pick(s) -> Infamy Vendor
     local inf_polearms = cat(catalog.infamy.weapons, 'Polearms')
-    table.insert(inf_polearms, { id = 21883, name = "Shining One", cost = 500, jobs = 'WAR/PLD/SAM/DRG' })  -- DD score 213, DMG 333/Dly 480
-    table.insert(inf_polearms, { id = 21870, name = "Exalted Spear +1", cost = 500, jobs = 'WAR/PLD/SAM/DRG' })  -- DD score 199, DMG 259/Dly 385
-    table.insert(inf_polearms, { id = 21882, name = "Kaja Lance", cost = 500, jobs = 'WAR/PLD/SAM/DRG' })  -- DD score 186, DMG 313/Dly 480
-    table.insert(inf_polearms, { id = 21872, name = "Raetic Halberd +1", cost = 500, jobs = 'WAR/BLM/PLD/BRD/SAM/DRG/SMN/SCH' })  -- DD score 176, DMG 265/Dly 385
-    table.insert(inf_polearms, { id = 21881, name = "Eletta Lance", cost = 500, jobs = 'WAR/PLD/SAM/DRG' })  -- DD score 138, DMG 293/Dly 480
+    table.insert(inf_polearms, { id = 21883, name = "Shining One", cost = 500, jobs = 'WAR/PLD/SAM/DRG' })  -- WS score 312, DMG 333/Dly 480
+    table.insert(inf_polearms, { id = 21882, name = "Kaja Lance", cost = 500, jobs = 'WAR/PLD/SAM/DRG' })  -- WS score 276, DMG 313/Dly 480
+    table.insert(inf_polearms, { id = 21870, name = "Exalted Spear +1", cost = 500, jobs = 'WAR/PLD/SAM/DRG' })  -- WS score 248, DMG 259/Dly 385
+    table.insert(inf_polearms, { id = 21872, name = "Raetic Halberd +1", cost = 500, jobs = 'WAR/BLM/PLD/BRD/SAM/DRG/SMN/SCH' })  -- WS score 226, DMG 265/Dly 385
+    table.insert(inf_polearms, { id = 21881, name = "Eletta Lance", cost = 500, jobs = 'WAR/PLD/SAM/DRG' })  -- WS score 222, DMG 293/Dly 480
 
     -- Great Katana: 5 pick(s) -> Infamy Vendor
     local inf_gkatana = cat(catalog.infamy.weapons, 'Great Katana')
-    table.insert(inf_gkatana, { id = 21975, name = "Hachimonji", cost = 500, jobs = 'SAM/NIN' })  -- DD score 255, DMG 318/Dly 450
-    table.insert(inf_gkatana, { id = 21974, name = "Kaja Tachi", cost = 500, jobs = 'SAM/NIN' })  -- DD score 218, DMG 300/Dly 450
-    table.insert(inf_gkatana, { id = 21964, name = "Beryllium Tachi +1", cost = 500, jobs = 'SAM/NIN' })  -- DD score 199, DMG 275/Dly 407
-    table.insert(inf_gkatana, { id = 21973, name = "Eletta Tachi", cost = 500, jobs = 'SAM/NIN' })  -- DD score 140, DMG 281/Dly 450
-    table.insert(inf_gkatana, { id = 21972, name = "Ajja Tachi", cost = 500, jobs = 'SAM/NIN' })  -- DD score 100, DMG 262/Dly 450
+    table.insert(inf_gkatana, { id = 21975, name = "Hachimonji", cost = 500, jobs = 'SAM/NIN' })  -- WS score 344, DMG 318/Dly 450
+    table.insert(inf_gkatana, { id = 21974, name = "Kaja Tachi", cost = 500, jobs = 'SAM/NIN' })  -- WS score 300, DMG 300/Dly 450
+    table.insert(inf_gkatana, { id = 21964, name = "Beryllium Tachi +1", cost = 500, jobs = 'SAM/NIN' })  -- WS score 256, DMG 275/Dly 407
+    table.insert(inf_gkatana, { id = 21973, name = "Eletta Tachi", cost = 500, jobs = 'SAM/NIN' })  -- WS score 216, DMG 281/Dly 450
+    table.insert(inf_gkatana, { id = 21972, name = "Ajja Tachi", cost = 500, jobs = 'SAM/NIN' })  -- WS score 161, DMG 262/Dly 450
 
     -- Clubs: 5 pick(s) -> Infamy Vendor
     local inf_clubs = cat(catalog.infamy.weapons, 'Clubs')
-    table.insert(inf_clubs, { id = 22042, name = "Wizards Rod", cost = 500, jobs = 'BLM/RDM/SCH/GEO' })  -- CASTER score 1143, DMG 149/Dly 216
-    table.insert(inf_clubs, { id = 22040, name = "Daybreak", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 1116, DMG 150/Dly 216
-    table.insert(inf_clubs, { id = 21071, name = "Cath Palug Hammer", cost = 500, jobs = 'WHM/GEO' })  -- CASTER score 1098, DMG 212/Dly 300
-    table.insert(inf_clubs, { id = 22031, name = "Maxentius", cost = 500, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 1071, DMG 200/Dly 288
-    table.insert(inf_clubs, { id = 22030, name = "Kaja Rod", cost = 500, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 1032, DMG 188/Dly 288
+    table.insert(inf_clubs, { id = 22042, name = "Wizards Rod", cost = 500, jobs = 'BLM/RDM/SCH/GEO' })  -- CASTER score 1060, DMG 149/Dly 216
+    table.insert(inf_clubs, { id = 22040, name = "Daybreak", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 1033, DMG 150/Dly 216
+    table.insert(inf_clubs, { id = 21071, name = "Cath Palug Hammer", cost = 500, jobs = 'WHM/GEO' })  -- CASTER score 1013, DMG 212/Dly 300
+    table.insert(inf_clubs, { id = 22031, name = "Maxentius", cost = 500, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 988, DMG 200/Dly 288
+    table.insert(inf_clubs, { id = 22030, name = "Kaja Rod", cost = 500, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 954, DMG 188/Dly 288
 
     -- Staves: 5 pick(s) -> Infamy Vendor
     local inf_staves = cat(catalog.infamy.weapons, 'Staves')
-    table.insert(inf_staves, { id = 22055, name = "Oranyan", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 1129, DMG 230/Dly 366
-    table.insert(inf_staves, { id = 22081, name = "Raetic Staff +1", cost = 500, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 1102, DMG 245/Dly 356
-    table.insert(inf_staves, { id = 22086, name = "Xoanon", cost = 500, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 1101, DMG 254/Dly 366
-    table.insert(inf_staves, { id = 22058, name = "Contemplator +1", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 1076, DMG 232/Dly 390
-    table.insert(inf_staves, { id = 22085, name = "Kaja Staff", cost = 500, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 1062, DMG 238/Dly 366
+    table.insert(inf_staves, { id = 22055, name = "Oranyan", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 1054, DMG 230/Dly 366
+    table.insert(inf_staves, { id = 22081, name = "Raetic Staff +1", cost = 500, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 1019, DMG 245/Dly 356
+    table.insert(inf_staves, { id = 22086, name = "Xoanon", cost = 500, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 1018, DMG 254/Dly 366
+    table.insert(inf_staves, { id = 22058, name = "Contemplator +1", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 1004, DMG 232/Dly 390
+    table.insert(inf_staves, { id = 21152, name = "Reikikon", cost = 500, jobs = 'MNK/WHM/BLM/PLD/DRG/SMN/SCH/GEO' })  -- CASTER score 986, DMG 242/Dly 402
 
     -- Archery: 5 pick(s) -> Infamy Vendor
     local inf_archery = cat(catalog.infamy.weapons, 'Archery')
-    table.insert(inf_archery, { id = 22107, name = "Ullr", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- CASTER score 139, DMG 178/Dly 360
-    table.insert(inf_archery, { id = 22111, name = "Kaja Bow", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- CASTER score 125, DMG 164/Dly 360
-    table.insert(inf_archery, { id = 21299, name = "Yoichis Arrow", cost = 500, jobs = 'RNG/SAM' })  -- DD score 119, DMG 89/Dly 90
-    table.insert(inf_archery, { id = 22110, name = "Eletta Bow", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- CASTER score 112, DMG 157/Dly 360
-    table.insert(inf_archery, { id = 22126, name = "Exalted Bow +1", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- DD score 94, DMG 206/Dly 351
+    table.insert(inf_archery, { id = 22115, name = "Yoichinoyumi 119 Iii", cost = 500, jobs = 'RNG/SAM' })  -- WS score 152, DMG 303/Dly 524
+    table.insert(inf_archery, { id = 22129, name = "Yoichinoyumi 119 Iii Aug", cost = 500, jobs = 'RNG/SAM' })  -- WS score 152, DMG 303/Dly 524
+    table.insert(inf_archery, { id = 22107, name = "Ullr", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- WS score 149, DMG 178/Dly 360
+    table.insert(inf_archery, { id = 21227, name = "Hangaku-No-Yumi", cost = 500, jobs = 'RNG/SAM' })  -- WS score 146, DMG 251/Dly 600
+    table.insert(inf_archery, { id = 21229, name = "Cibitshavore", cost = 500, jobs = 'RNG/SAM' })  -- WS score 130, DMG 261/Dly 600
 
     -- Marksmanship: 5 pick(s) -> Infamy Vendor
     local inf_marksmanship = cat(catalog.infamy.weapons, 'Marksmanship')
-    table.insert(inf_marksmanship, { id = 21296, name = "Chrono Bullet", cost = 500, jobs = 'RNG/COR' })  -- DD score 150, DMG 300/Dly 240
-    table.insert(inf_marksmanship, { id = 21325, name = "Devastating Bullet", cost = 500, jobs = 'RNG/COR' })  -- DD score 138, DMG 277/Dly 240
-    table.insert(inf_marksmanship, { id = 22136, name = "Arasy Gun +1", cost = 500, jobs = 'RNG/COR' })  -- DD score 78, DMG 108/Dly 582
-    table.insert(inf_marksmanship, { id = 22285, name = "Beryllium Bolt", cost = 500, jobs = 'WAR/THF/DRK/RNG' })  -- DD score 68, DMG 108/Dly 192
-    table.insert(inf_marksmanship, { id = 22134, name = "Holliday", cost = 500, jobs = 'RNG/COR' })  -- DD score 61, DMG 107/Dly 600
+    table.insert(inf_marksmanship, { id = 21296, name = "Chrono Bullet", cost = 500, jobs = 'RNG/COR' })  -- DPS score 150, DMG 300/Dly 240
+    table.insert(inf_marksmanship, { id = 21325, name = "Devastating Bullet", cost = 500, jobs = 'RNG/COR' })  -- DPS score 138, DMG 277/Dly 240
+    table.insert(inf_marksmanship, { id = 22136, name = "Arasy Gun +1", cost = 500, jobs = 'RNG/COR' })  -- WS score 109, DMG 108/Dly 582
+    table.insert(inf_marksmanship, { id = 21485, name = "Fomalhaut", cost = 500, jobs = 'RNG/COR' })  -- WS score 104, DMG 167/Dly 600
+    table.insert(inf_marksmanship, { id = 22134, name = "Holliday", cost = 500, jobs = 'RNG/COR' })  -- WS score 84, DMG 107/Dly 600
 
 end
 return catalog

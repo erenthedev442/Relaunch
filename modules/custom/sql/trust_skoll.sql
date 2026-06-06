@@ -102,7 +102,7 @@ REPLACE INTO mob_pools
      spellList, namevis, roamflag, skill_list_id, resist_id,
      modelSize, modelHitboxSize)
 VALUES
-    (5901, 'skoll', 'Gemma', 246, UNHEX('010004028C004E01980100008C00320333000000'),
+    (5901, 'skoll', 'Gemma', 246, UNHEX('010004020010E520B8305840B8503B613B710000'), -- FJB: valid Hume Female look (face 4). Prior blob's gear words were missing their slot-marker nibbles, so the client dropped the spawn -> blank name + no model.
      17, 5, 0, 240, 0,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,

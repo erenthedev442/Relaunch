@@ -16,6 +16,9 @@ This is the canonical generator. It combines:
      exclusions on the AH category and item-type axes.
   6. Item-id floor (>= 768, start of gems/materials block) and reserved
      crystal/cluster range (4096-4111).
+  7. RARE / EX exclusion -- @FLAG_RARE items (you can hold only one, so you can
+     never stack the 4 a trade needs) and @FLAG_EX items (cannot be traded at
+     all) are dropped from the catalyst pool.
 
 For each augment, the eligible pool is SCORED against the augment's category
 keywords. The highest-scoring unused item wins. If no item scores > 0 against
@@ -484,6 +487,18 @@ def parse_items() -> dict[int, dict]:
     return out
 
 
+def is_rare_or_ex(info: dict) -> bool:
+    """True if the item is RARE (hold only one) or EX (untradeable).
+
+    Either flag makes the item useless as a catalyst you trade up to 4 at a
+    time: RARE caps you at holding ONE (so you can never stack 4), and EX
+    can't be traded to the NPC at all. The flags column is a '@FLAG_A | @FLAG_B'
+    string, so we tokenize on '|' and test for the exact flag names.
+    """
+    toks = {t.strip() for t in info["flags"].split("|")}
+    return "@FLAG_RARE" in toks or "@FLAG_EX" in toks
+
+
 def is_eligible_catalyst(item_id: int, info: dict) -> bool:
     if item_id in RESERVED:
         return False
@@ -492,6 +507,9 @@ def is_eligible_catalyst(item_id: int, info: dict) -> bool:
     if info["type"] in EXCLUDED_TYPE:
         return False
     if info["category"] in EXCLUDED_AH:
+        return False
+    # RARE (can't hold 4 to trade) or EX (can't trade at all): useless catalyst.
+    if is_rare_or_ex(info):
         return False
     # Crafting kits -- short_name contains 'kit'.
     if "kit" in info["short_name"].lower():
@@ -526,6 +544,7 @@ def main():
     # Build eligible+obtainable pool. Exclude items with 'kit' in short_name.
     eligible_pool: list[tuple[int, str]] = []
     kit_excluded = 0
+    rare_ex_excluded = 0
     other_rejected = 0
     for iid in sorted(obtainable):
         info = items.get(iid)
@@ -540,6 +559,10 @@ def main():
         if info["category"] in EXCLUDED_AH:
             other_rejected += 1
             continue
+        # RARE (can't hold 4 to trade) or EX (untradeable): drop from the pool.
+        if is_rare_or_ex(info):
+            rare_ex_excluded += 1
+            continue
         if "kit" in info["short_name"].lower():
             kit_excluded += 1
             continue
@@ -547,6 +570,7 @@ def main():
 
     print(f"Eligible+obtainable catalyst pool: {len(eligible_pool)} items")
     print(f"  (excluded as crafting kits: {kit_excluded})")
+    print(f"  (excluded as RARE/EX: {rare_ex_excluded})")
     print(f"  (rejected by other catalyst filters: {other_rejected})")
 
     # Categorize each augment.
@@ -622,6 +646,7 @@ def main():
         assert iid not in RESERVED, f"itemId {iid} reserved"
         sname = items[iid]["short_name"].lower()
         assert "kit" not in sname, f"kit leaked: {sname}"
+        assert not is_rare_or_ex(items[iid]), f"RARE/EX leaked: {iid} ({sname})"
 
     # Per-category final breakdown.
     final_counts = [0] * len(CATEGORIES)
@@ -660,6 +685,8 @@ def main():
         "--     only, no crafted/fished/guild/gardened/synergy items)",
         "--   - Foods, drinks, medicines, and other @USABLE_TYPE consumables are",
         "--     excluded -- catalysts must be material drops from monsters",
+        "--   - RARE / EX items excluded (a Rare item can't be held in the",
+        "--     quantity a 4-at-a-time trade needs; an EX item can't be traded)",
         "--   - Crafting kits excluded from the catalyst pool",
         "--   - Augments dropped entirely if no thematic mob-drop catalyst exists",
         "--",

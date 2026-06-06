@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # ---------------------------------------------------------------------------
 # _azure_update_remote.sh  -  runs ON the Azure server, launched by
-# azure-update.bat. Rebuilds the binaries and reloads the custom mod SQL,
+# "Azure - Deploy + Rebuild.bat". Rebuilds the binaries and reloads the mod SQL,
 # using the same methods as your existing Azure bats (sudo mariadb, cmake
 # --build build, sudo systemctl restart xi) - NO dbtool, nothing to install.
 # ---------------------------------------------------------------------------
