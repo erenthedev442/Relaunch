@@ -174,6 +174,8 @@ ROLE_WEIGHTS = {
         289: 0.5,                           # SUBTLE_BLOW
         387: -3.0,                          # UDMGPHYS (negative = less dmg = good)
         421: 1.5,                           # CRIT_DMG_INCREASE
+        840: 2.0, 841: 1.0,                 # WS dmg: ALL_WSDMG_ALL_HITS / FIRST_HIT per 1%
+        570: 0.5,                           # WEAPONSKILL_DAMAGE_BASE (single WS)
     },
     'TANK': {
         10: 2.0,                            # VIT
@@ -222,6 +224,9 @@ MOD_SANITY_CAP = {
     387: 30,   # UDMGPHYS (% damage taken — clamped magnitude)
     389: 30,   # UDMGMAGIC
     421: 30,   # CRIT_DMG_INCREASE
+    570: 50,   # WEAPONSKILL_DAMAGE_BASE (single WS)
+    840: 50,   # ALL_WSDMG_ALL_HITS (per 1%)
+    841: 50,   # ALL_WSDMG_FIRST_HIT (per 1%)
 }
 
 

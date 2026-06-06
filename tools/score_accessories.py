@@ -170,6 +170,8 @@ ROLE_WEIGHTS = {
         289: 0.5,
         387: -3.0,
         421: 1.5,
+        840: 2.0, 841: 1.0,                 # WS dmg: all-hits / first-hit per 1%
+        570: 0.5,                           # WEAPONSKILL_DAMAGE_BASE (single WS)
     },
     'TANK': {
         10: 2.0,
@@ -203,6 +205,7 @@ CAP_DEFAULT = 200
 MOD_SANITY_CAP = {
     62: 30, 63: 30, 165: 20, 170: 30, 259: 15, 288: 20, 302: 20,
     369: 10, 384: 300, 387: 30, 389: 30, 421: 30,
+    570: 50, 840: 50, 841: 50,   # WS damage mods (per 1%)
 }
 
 

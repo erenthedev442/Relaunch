@@ -11,6 +11,17 @@
         "--no-livereload"
       ],
       "port": 8765
+    },
+    {
+      "name": "gear-finder",
+      "runtimeExecutable": "D:/server/.claude/worktrees/busy-johnson-c59e6e/.venv-docs/Scripts/mkdocs.exe",
+      "runtimeArgs": [
+        "serve",
+        "-f", "D:/server/.claude/worktrees/busy-johnson-c59e6e/mkdocs.yml",
+        "-a", "127.0.0.1:8766",
+        "--no-livereload"
+      ],
+      "port": 8766
     }
   ]
 }

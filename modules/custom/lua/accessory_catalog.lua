@@ -98,11 +98,11 @@ table.insert(b.ear, { id =  14814, name = 'Diaboloss Earring'                 , 
 table.insert(b.ring, { id =  10751, name = 'Valseurs Ring'                     , cost =  15, jobs = 'All' })  -- DD score 4 [RARE]
 table.insert(b.ring, { id =  13498, name = 'Platinum Ring +1'                  , cost =  15, jobs = 'All' })  -- TANK score 4
 table.insert(b.ring, { id =  10765, name = 'Arvina Ringlet'                    , cost =  15, jobs = 'All' })  -- CASTER score 4 [RARE]
-table.insert(b.ring, { id =  13282, name = 'Saintly Ring'                      , cost =  15, jobs = 'All' })  -- HEAL score 4
+table.insert(b.ring, { id =  15784, name = 'Dominion Ring'                     , cost =  15, jobs = 'WAR/MNK/THF/BST/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC' })  -- HEAL score 5
 table.insert(b.ring, { id =  14652, name = 'Protean Ring'                      , cost =  15, jobs = 'All' })  -- DD score 4
 table.insert(b.ring, { id =  10790, name = 'Ephedra Ring'                      , cost =  15, jobs = 'All' })  -- TANK score 4
 table.insert(b.ring, { id =  13284, name = 'Eremites Ring'                     , cost =  15, jobs = 'All' })  -- CASTER score 4
-table.insert(b.ring, { id =  13480, name = 'Turquoise Ring'                    , cost =  15, jobs = 'All' })  -- HEAL score 4
+table.insert(b.ring, { id =  13282, name = 'Saintly Ring'                      , cost =  15, jobs = 'All' })  -- HEAL score 4
 
 -- back
 table.insert(b.back, { id =  11533, name = 'Lyricists Gonnelle'                , cost =  15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DD score 6 [RARE,EX]

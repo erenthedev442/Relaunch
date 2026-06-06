@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-06T00:37:30",
+  "generated_at": "2026-06-06T02:16:48",
   "summary": {
     "reforge": {
       "total": 1320,
@@ -10,9 +10,9 @@
       "not_equip": 0
     },
     "hunting_league": {
-      "total": 395,
-      "ok": 305,
-      "naked": 84,
+      "total": 390,
+      "ok": 309,
+      "naked": 75,
       "latent_only": 0,
       "missing": 3,
       "not_equip": 3
@@ -92,82 +92,10 @@
       "latentCount": 0
     },
     {
-      "itemId": 24140,
-      "shortName": "sworn_platemail",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] body: Sworn Platemail",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24142,
-      "shortName": "prestige_gauntlets",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] hands: Prestige Gauntlets",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24148,
-      "shortName": "prestige_sabatons",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] feet: Prestige Sabatons",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24149,
-      "shortName": "sworn_sabatons",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] feet: Sworn Sabatons",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24151,
-      "shortName": "intrepid_petasos",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] head: Intrepid Petasos",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24153,
-      "shortName": "bravery_coat",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] body: Bravery Coat",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24156,
-      "shortName": "bravery_gloves",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] hands: Bravery Gloves",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24159,
-      "shortName": "bravery_tonban",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] legs: Bravery Tonban",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
       "itemId": 24166,
       "shortName": "magnificent_crown",
       "source": "hunting_league",
       "context": "Armor NPC [gold] head: Magnificent Crown",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24167,
-      "shortName": "duty_crown",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] head: Duty Crown",
       "modCount": 0,
       "latentCount": 0
     },

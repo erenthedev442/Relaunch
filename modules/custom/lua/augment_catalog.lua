@@ -289,7 +289,7 @@ return {
     [1000] = { augId = 775,  base = 1,   cat = 11, label = 'Dark resist+1' },
     [1001] = { augId = 792,  base = 1,   cat = 11, label = 'Fire,Wind,Lightning,Light resists+1' },
     [1002] = { augId = 793,  base = 1,   cat = 11, label = 'Ice,Earth,Water,Dark resists+1' },
-    [1003] = { augId = 796,  base = 1,   cat = 11, label = 'All elemental resists+1' },
+    [1003] = { augId = 796,  base = 10,  cat = 11, label = 'All elemental resists+10' },
     [1004] = { augId = 797,  base = 1,   cat = 11, label = 'All elemental resists -1' },
     [1005] = { augId = 928,  base = 1,   cat = 11, label = 'Fire Affinity+1' },
     [1006] = { augId = 929,  base = 1,   cat = 11, label = 'Ice Affinity+1' },

@@ -980,14 +980,14 @@ INSERT INTO `augments` VALUES (795,0,16,1,0,0); -- Cont.
 INSERT INTO `augments` VALUES (795,0,18,1,0,0); -- Cont.
 INSERT INTO `augments` VALUES (795,0,20,1,0,0); -- Cont.
 INSERT INTO `augments` VALUES (795,0,22,1,0,0); -- Cont.
-INSERT INTO `augments` VALUES (796,0,15,1,0,0); -- All elemental resists+1
-INSERT INTO `augments` VALUES (796,0,16,1,0,0); -- Cont.
-INSERT INTO `augments` VALUES (796,0,17,1,0,0); -- Cont.
-INSERT INTO `augments` VALUES (796,0,18,1,0,0); -- Cont.
-INSERT INTO `augments` VALUES (796,0,19,1,0,0); -- Cont.
-INSERT INTO `augments` VALUES (796,0,20,1,0,0); -- Cont.
-INSERT INTO `augments` VALUES (796,0,21,1,0,0); -- Cont.
-INSERT INTO `augments` VALUES (796,0,22,1,0,0); -- Cont.
+INSERT INTO `augments` VALUES (796,0,15,10,0,0); -- All elemental resists+10 (FJB: was +1)
+INSERT INTO `augments` VALUES (796,0,16,10,0,0); -- Cont.
+INSERT INTO `augments` VALUES (796,0,17,10,0,0); -- Cont.
+INSERT INTO `augments` VALUES (796,0,18,10,0,0); -- Cont.
+INSERT INTO `augments` VALUES (796,0,19,10,0,0); -- Cont.
+INSERT INTO `augments` VALUES (796,0,20,10,0,0); -- Cont.
+INSERT INTO `augments` VALUES (796,0,21,10,0,0); -- Cont.
+INSERT INTO `augments` VALUES (796,0,22,10,0,0); -- Cont.
 INSERT INTO `augments` VALUES (797,0,15,-1,0,0); -- All elemental resists -1
 INSERT INTO `augments` VALUES (797,0,16,-1,0,0); -- Cont.
 INSERT INTO `augments` VALUES (797,0,17,-1,0,0); -- Cont.
