@@ -13,10 +13,12 @@ Category/Subtype is derived from the live DB:
 A few items are mis-defined in the DB (e.g. Coiste Bodhar is flagged WEAPON_TYPE
 with slot=8; Knobkierrie isn't in item_equipment at all) -> see OVERRIDES.
 
-Writes tools/_infamy_typemap.lua. Paste its contents over the
+Splices the result directly into the
   -- INFAMY_TYPEMAP:BEGIN ... -- INFAMY_TYPEMAP:END
-block in dungeon_catalog.lua (or copy in if the block doesn't exist yet).
-Re-run after adding vendor items; unmapped items fall to 'Other' in the menu.
+block in dungeon_catalog.lua (falls back to writing tools/_infamy_typemap.lua
+for manual paste only if those sentinels are missing). Run AFTER
+build_infamy_top_picks.py (it reads catalog.vendorItemsAuto); rebalance_all.bat
+does this for you. Unmapped items fall to 'Other' in the menu.
 """
 from __future__ import annotations
 import os, re
@@ -57,7 +59,10 @@ def curated_ids():
     blob = (section("catalog.vendorItems =", r"\ncatalog\.vendorSets")
             + section("catalog.vendorItemsAuto =", r"DOCGEN:INFAMY_AUTO:END"))
     seen, out = set(), []
-    for m in re.findall(r"id = (\d+)", blob):
+    # \s* (not a literal single space): the auto block right-aligns ids, e.g.
+    # `id =  20672`, so a single-space pattern would silently skip every
+    # vendorItemsAuto row (the bug that dumped them all into 'Other').
+    for m in re.findall(r"id\s*=\s*(\d+)", blob):
         i = int(m)
         if i not in seen:
             seen.add(i)
@@ -93,6 +98,8 @@ def categorize(iid, slot, skill):
         return "Weapons/Other"
     if s == 2:
         return "Weapons/Grip-Shield"
+    if s & 8:                                # ammo slot: bullets / arrows / bolts
+        return "Weapons/Ammo"
     for bit, name in ((16, "Head"), (32, "Body"), (64, "Hands"), (128, "Legs"), (256, "Feet")):
         if s & bit:
             return "Armor/" + name
@@ -129,15 +136,27 @@ def main():
         lines.append(f"    [{i}] = '{cs}',")
     lines.append("}")
     lines.append("-- INFAMY_TYPEMAP:END")
-    text = "\n".join(lines) + "\n"
-    open(OUT, "w", encoding="utf-8", newline="\n").write(text)
+    block = "\n".join(lines)
+
+    # Splice directly into dungeon_catalog.lua between the sentinels. (Was a
+    # manual copy-paste from tools/_infamy_typemap.lua; now automatic so
+    # rebalance_all.bat refreshes it whenever the vendor list changes.)
+    cat_txt = open(CATALOG, encoding="utf-8").read()
+    sent = re.compile(r"-- INFAMY_TYPEMAP:BEGIN.*?-- INFAMY_TYPEMAP:END", re.DOTALL)
+    if sent.search(cat_txt):
+        open(CATALOG, "w", encoding="utf-8", newline="\n").write(sent.sub(lambda _m: block, cat_txt))
+        dest = f"spliced into {os.path.basename(CATALOG)}"
+    else:
+        open(OUT, "w", encoding="utf-8", newline="\n").write(block + "\n")
+        dest = (f"INFAMY_TYPEMAP sentinels missing in {os.path.basename(CATALOG)} "
+                f"-> wrote {os.path.basename(OUT)} for manual paste")
 
     # human review
     from collections import defaultdict
     g = defaultdict(list)
     for i, cs in rows:
         g[cs].append(i)
-    print(f"mapped {len(rows)} ids -> {OUT}")
+    print(f"mapped {len(rows)} ids ({dest})")
     for cs in sorted(g):
         print(f"  {cs}: {len(g[cs])}")
 
