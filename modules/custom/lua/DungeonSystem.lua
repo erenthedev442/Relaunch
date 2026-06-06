@@ -1,6 +1,11 @@
 -----------------------------------
 -- DungeonSystem.lua
 --
+-- 2026-05-30: progression gate rail + NM mini-bosses. Waypoint packs and
+-- catalog `nms` spawn AGGRESSIVE and become un-bypassable gates (a 500ms
+-- patrol slides the player back to the threshold until the guarding mobs
+-- are dead). See spawnAllMobs / spawnDungeonMob / gatePatrol.
+--
 -- Talk-to-NPC dungeon system. Pick a dungeon -> warped to a normally-
 -- empty zone -> mob population spawns around you -> fight to the boss
 -- -> kill boss within time limit -> Infamy reward -> auto-warped back.
@@ -723,6 +728,13 @@ local function spawnDungeonMob(player, dungeon, opts)
     local pos        = opts.pos
     local isBoss     = opts.isBoss or false
     local forceAggro = opts.forceAggro or false  -- Phase 3 add_spawn opt
+    -- Gate rail (2026-05-30): aggressive mobs notice + engage the player
+    -- on approach; gateId ties this mob to a session gate so its death
+    -- decrements that gate's alive count; hpMultExtra is the NM mini-boss
+    -- toughness multiplier layered on top of the level template.
+    local aggressive  = opts.aggressive or false
+    local gateId      = opts.gateId
+    local hpMultExtra = opts.hpMultExtra
     local ownerName  = player:getName()
 
     local zone = player:getZone()
@@ -755,6 +767,11 @@ local function spawnDungeonMob(player, dungeon, opts)
     if isBoss then
         modelSize = dungeon.bossModelSize or catalog.bossModelSize or 2
     end
+    -- Explicit override (NM mini-bosses pass modelSize = 1 so they read as
+    -- elites without the full boss bulk).
+    if opts.modelSize then
+        modelSize = opts.modelSize
+    end
 
     local mob = zone:insertDynamicEntity({
         objtype              = xi.objType.MOB,
@@ -775,8 +792,8 @@ local function spawnDungeonMob(player, dungeon, opts)
         -- unprovoked" boolean at the entity level. Together they prevent
         -- the first-tick aggro race that bit us when these were set
         -- AFTER mob:spawn().
-        detection            = xi.detects.NONE,
-        isAggroable          = false,
+        detection            = aggressive and (xi.detects.SIGHT + xi.detects.HEARING) or xi.detects.NONE,
+        isAggroable          = aggressive,
         releaseIdOnDisappear = true,
 
         onMobDeath = function(deadMob, killer)
@@ -797,6 +814,24 @@ local function spawnDungeonMob(player, dungeon, opts)
             -- Boss death is tracked via sess.cleared below.
             if not isBoss then
                 sess.trashKilled = (sess.trashKilled or 0) + 1
+            end
+
+            -- Gate accounting: when the last mob guarding a threshold
+            -- dies, open the gate (the patrol stops blocking that depth)
+            -- and tell the player the way deeper is clear.
+            if gateId and sess.gates and sess.gates[gateId] then
+                local g = sess.gates[gateId]
+                g.alive = (g.alive or 1) - 1
+                if g.alive <= 0 and not g.cleared then
+                    g.cleared = true
+                    local opener = GetPlayerByName(ownerName)
+                    if opener then
+                        opener:printToPlayer(
+                            string.format('[Dungeon] %s falls - the way deeper opens, kupo!',
+                                g.label or 'The guardians'),
+                            xi.msg.channel.SYSTEM_3)
+                    end
+                end
             end
 
             if isBoss then
@@ -862,17 +897,29 @@ local function spawnDungeonMob(player, dungeon, opts)
     -- Once mob:spawn() runs, the engine immediately scans for nearby
     -- targets and can aggro on the same frame. Setting these BEFORE
     -- spawn means they're in place at the first aggro tick.
-    mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
-    mob:setMobMod(xi.mobMod.DETECTION, xi.detects.NONE)
+    -- Passive mobs are born non-aggressive. Gate/NM mobs skip this so the
+    -- engine's first aggro tick already sees them as hostile and they can
+    -- notice the player on approach.
+    if not aggressive then
+        mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
+        mob:setMobMod(xi.mobMod.DETECTION, xi.detects.NONE)
+    end
 
     mob:setSpawn(pos.x, pos.y, pos.z, pos.rot or 0)
     mob:spawn()
     print(string.format("[dungeon] spawned mob entity id=%d for '%s' (passive)", mob:getID(), name))
 
     -- Belt-and-suspenders: re-apply after spawn too, in case spawn()
-    -- reset anything via CalculateMobStats or a mixin.
-    mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
-    mob:setMobMod(xi.mobMod.DETECTION, xi.detects.NONE)
+    -- reset anything via CalculateMobStats or a mixin. Aggressive gate/NM
+    -- mobs get the OPPOSITE treatment - detection ON so they engage the
+    -- player who steps into range (the un-skippable guardian rail).
+    if aggressive then
+        mob:setMobMod(xi.mobMod.NO_AGGRO, 0)
+        mob:setMobMod(xi.mobMod.DETECTION, xi.detects.SIGHT + xi.detects.HEARING)
+    else
+        mob:setMobMod(xi.mobMod.NO_AGGRO, 1)
+        mob:setMobMod(xi.mobMod.DETECTION, xi.detects.NONE)
+    end
 
     -- Block CP - dungeon is a challenge/Infamy farm, not a JP farm.
     mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
@@ -913,6 +960,11 @@ local function spawnDungeonMob(player, dungeon, opts)
         -- Phase-2 tier HP scaling: applies to BOTH trash and boss.
         if tier.hpMult and tier.hpMult ~= 1.0 then
             hpMult = hpMult * tier.hpMult
+        end
+        -- NM mini-boss extra HP - keeps an elite sitting between trash and
+        -- the final boss in toughness.
+        if hpMultExtra and hpMultExtra > 1 then
+            hpMult = hpMult * hpMultExtra
         end
         if hpMult > 1 then
             local newMax = mob:getMaxHP() * hpMult
@@ -1035,6 +1087,37 @@ local function spawnAllMobs(player, dungeon)
 
     local axis = dungeon.progressionAxis or { dx = 0.0, dz = -1.0 }
 
+    -- ============================================================
+    -- PROGRESSION GATE RAIL (2026-05-30)
+    -- ============================================================
+    -- Each waypoint pack and each NM becomes a "gate": the player cannot
+    -- advance past its depth until every mob guarding it is dead. Depth is
+    -- measured along the entry->boss axis (anchored to the stable warpIn,
+    -- NOT the player's wandering position) so kiting a mob sideways or
+    -- backward never opens the gate - only killing it does.
+    --
+    -- gatingOn defaults ON; a dungeon can opt out with `gated = false`.
+    --
+    -- aggroOn is DECOUPLED from gatingOn: mobs stay aggressive (the
+    -- intended "annoyance" that forces you to fight your way through)
+    -- even when the gate WALL is off. A dungeon can make mobs passive
+    -- with `aggressive = false`. So `gated = false` removes only the
+    -- warding-force pushback; mobs still notice and chase you.
+    local gatingOn = (dungeon.gated ~= false)
+    local aggroOn  = (dungeon.aggressive ~= false)
+    local entryX, entryZ = dungeon.warpIn.x, dungeon.warpIn.z
+    local bpx = dungeon.bossPos and dungeon.bossPos.x or (px + axis.dx * (dungeon.bossDistance or 60))
+    local bpz = dungeon.bossPos and dungeon.bossPos.z or (pz + axis.dz * (dungeon.bossDistance or 60))
+    local adx, adz = bpx - entryX, bpz - entryZ
+    local alen = math.sqrt(adx * adx + adz * adz)
+    if alen < 0.01 then adx, adz, alen = axis.dx, axis.dz, 1.0 end
+    sess.gateAxis  = { dx = adx / alen, dz = adz / alen }
+    sess.gateEntry = { x = entryX, z = entryZ }
+    sess.gates     = {}
+    local function depthOf(x, z)
+        return (x - entryX) * sess.gateAxis.dx + (z - entryZ) * sess.gateAxis.dz
+    end
+
     -- Walk waypoints in order - closer-to-entry first.
     for wi, wp in ipairs(dungeon.waypoints or {}) do
         -- Spawn center. Two modes:
@@ -1058,6 +1141,22 @@ local function spawnAllMobs(player, dungeon)
             wi, wp.count, cx, cy, cz, wp.level,
             wp.pos and 'explicit pos' or string.format('depth %d', wp.distance or 0)))
 
+        -- Register this pack as a progression gate (must-kill-to-pass).
+        -- alive starts at 0 and is reconciled to the ACTUAL spawn count
+        -- after the loop, so a failed spawn can never leave a phantom gate
+        -- that blocks the run forever.
+        local wpGateId  = nil
+        local wpSpawned = 0
+        if gatingOn then
+            table.insert(sess.gates, {
+                depth   = depthOf(cx, cz),
+                alive   = 0,
+                cleared = false,
+                label   = wp.gateLabel or (wp.names and wp.names[1]) or ('Pack #' .. wi),
+            })
+            wpGateId = #sess.gates
+        end
+
         for i = 1, wp.count do
             -- Random scatter inside a small disc around the waypoint
             -- center so mobs don't perfectly stack. X/Z only -- Y stays
@@ -1068,16 +1167,95 @@ local function spawnAllMobs(player, dungeon)
             local tz    = cz + math.sin(angle) * r
             local name  = wp.names[((i - 1) % #wp.names) + 1]
             local trash = spawnDungeonMob(player, dungeon, {
-                groupId = pickFromList(wp.groups),
-                level   = wp.level,
-                name    = name,
-                pos     = { x = tx, y = cy, z = tz, rot = math.random(0, 255) },
+                groupId    = pickFromList(wp.groups),
+                level      = wp.level,
+                name       = name,
+                pos        = { x = tx, y = cy, z = tz, rot = math.random(0, 255) },
+                aggressive = aggroOn,
+                gateId     = wpGateId,
             })
             if trash then
                 table.insert(sess.mobs, trash)
+                wpSpawned = wpSpawned + 1
                 -- Phase-5 telemetry: total trash count for the "Slayer"
                 -- objective (kill every mob the dungeon spawned).
                 sess.totalTrashSpawned = (sess.totalTrashSpawned or 0) + 1
+            end
+        end
+
+        -- Reconcile this gate's alive count to how many mobs ACTUALLY
+        -- spawned. If none spawned (bad group id, etc.), open the gate
+        -- immediately so a phantom gate can never brick the run.
+        if wpGateId and sess.gates[wpGateId] then
+            sess.gates[wpGateId].alive = wpSpawned
+            if wpSpawned <= 0 then
+                sess.gates[wpGateId].cleared = true
+            end
+        end
+    end
+
+    -- ============================================================
+    -- NM MINI-BOSSES (pre-final-boss elites)
+    -- ============================================================
+    -- Each dungeon.nms entry spawns ONE aggressive elite that is its own
+    -- gate. Position modes:
+    --   (A) nm.pos = { x, y, z }  -- explicit verified coords
+    --   (B) nm.frac in [0,1]      -- fraction along the LAST waypoint ->
+    --       boss segment (both endpoints are verified walkable, so a
+    --       point on that line stays on the final approach corridor).
+    -- Tune any NM that lands in geometry by walking to a good spot with
+    -- !pos and pasting it as nm.pos.
+    if dungeon.nms and #dungeon.nms > 0 then
+        local wpts = dungeon.waypoints or {}
+        local segAx, segAy, segAz = px, py, pz
+        if #wpts > 0 and wpts[#wpts].pos then
+            segAx, segAy, segAz = wpts[#wpts].pos.x, wpts[#wpts].pos.y, wpts[#wpts].pos.z
+        end
+        local segBx = dungeon.bossPos and dungeon.bossPos.x or bpx
+        local segBy = dungeon.bossPos and dungeon.bossPos.y or py
+        local segBz = dungeon.bossPos and dungeon.bossPos.z or bpz
+        for ni, nm in ipairs(dungeon.nms) do
+            local f = nm.frac or (ni / (#dungeon.nms + 1))
+            local nx, ny, nz
+            if nm.pos then
+                nx, ny, nz = nm.pos.x, nm.pos.y, nm.pos.z
+            else
+                nx = segAx + (segBx - segAx) * f
+                ny = segAy + (segBy - segAy) * f
+                nz = segAz + (segBz - segAz) * f
+            end
+            print(string.format(
+                "[dungeon] NM '%s' (frac %.2f) at (%.2f, %.2f, %.2f) Lv%d",
+                nm.name or '?', f, nx, ny, nz, nm.level or 0))
+
+            local nmGateId = nil
+            if gatingOn then
+                table.insert(sess.gates, {
+                    depth   = depthOf(nx, nz),
+                    alive   = 1,
+                    cleared = false,
+                    label   = nm.name or 'Elite guardian',
+                })
+                nmGateId = #sess.gates
+            end
+
+            local nmMob = spawnDungeonMob(player, dungeon, {
+                groupId     = nm.group,
+                level       = nm.level,
+                name        = nm.name,
+                pos         = { x = nx, y = ny, z = nz, rot = nm.rot or math.random(0, 255) },
+                aggressive  = aggroOn,
+                gateId      = nmGateId,
+                hpMultExtra = nm.hpMult or 1.5,
+                modelSize   = nm.modelSize or 1,
+            })
+            if nmMob then
+                table.insert(sess.mobs, nmMob)
+                sess.totalTrashSpawned = (sess.totalTrashSpawned or 0) + 1
+            elseif nmGateId and sess.gates[nmGateId] then
+                -- NM failed to spawn -- open its gate so it can't brick the run.
+                sess.gates[nmGateId].alive   = 0
+                sess.gates[nmGateId].cleared = true
             end
         end
     end
@@ -1440,6 +1618,92 @@ local function armDungeonAfterArrival(player)
     end
     player:timer(500, oobPatrol)
 
+    -- PROGRESSION GATE PATROL (2026-05-30). Self-rescheduling 500ms tick,
+    -- same pattern as oobPatrol. While the lowest-depth uncleared gate
+    -- still has living mobs, the player may not travel past its depth +
+    -- PASS_MARGIN; overshoot slides them back to the threshold (lateral
+    -- position preserved) with a throttled nudge. Armed for EVERY arrival
+    -- (leader + members) since each player is gated independently; the
+    -- gate 'alive' counts live on the shared session so anyone's kill
+    -- opens the gate for the whole party.
+    local function gatePatrol(p)
+        local s = sessions[p:getName()]
+        if not s or s.dungeon.id ~= dungeon.id then
+            return  -- session ended; stop patrolling
+        end
+        local gates = s.gates
+        if gates and #gates > 0 and s.gateAxis and s.gateEntry then
+            -- frontier = lowest-depth gate that still has living mobs
+            local frontier = nil
+            for _, g in ipairs(gates) do
+                if (g.alive or 0) > 0 and (not frontier or g.depth < frontier.depth) then
+                    frontier = g
+                end
+            end
+            if frontier then
+                -- STUCK-GATE FAILSAFE. Track the frontier gate the player is
+                -- being blocked by. If they keep bumping it for STUCK_LIMIT
+                -- seconds WITHOUT its alive count dropping (a guardian is
+                -- unreachable -- stuck in geometry, off-mesh, etc.), force the
+                -- gate open so a bad spawn can never brick a run. ANY real kill
+                -- changes frontier.alive and resets the timer, so a legit (if
+                -- slow) fight never trips it; only pure can't-touch-it blocking
+                -- accrues. Cheap: just two scalars on the session.
+                if s._stuckGate ~= frontier or (s._stuckAlive or -1) ~= (frontier.alive or 0) then
+                    s._stuckGate  = frontier
+                    s._stuckAlive = frontier.alive or 0
+                    s._stuckSince = nil
+                end
+
+                local relx = (p:getXPos() or s.gateEntry.x) - s.gateEntry.x
+                local relz = (p:getZPos() or s.gateEntry.z) - s.gateEntry.z
+                local along = relx * s.gateAxis.dx + relz * s.gateAxis.dz
+                local PASS_MARGIN = 8.0
+                if along > frontier.depth + PASS_MARGIN then
+                    local now = os.time()
+                    s._stuckSince = s._stuckSince or now
+                    local STUCK_LIMIT = 75  -- seconds of pure blocked-no-kill
+                    if now - s._stuckSince >= STUCK_LIMIT then
+                        -- Unreachable guardian: open the gate rather than trap
+                        -- the player behind a mob they physically cannot touch.
+                        frontier.alive   = 0
+                        frontier.cleared = true
+                        s._stuckGate  = nil
+                        s._stuckSince = nil
+                        print(string.format(
+                            "[dungeon] STUCK-GATE FAILSAFE: %s blocked %ds at gate '%s' (depth %.1f) with no kill -- force-opening",
+                            p:getName(), STUCK_LIMIT, frontier.label or '?', frontier.depth))
+                        p:printToPlayer(
+                            string.format('[Dungeon] The ward over %s flickers and dies - the way opens, kupo!',
+                                frontier.label or 'the guardians'),
+                            xi.msg.channel.SYSTEM_3)
+                    else
+                        -- Clamp along-axis depth back to the threshold; keep
+                        -- the player's perpendicular (lateral) offset so they
+                        -- aren't yanked sideways - just stopped going forward.
+                        local newAlong = frontier.depth + (PASS_MARGIN * 0.5)
+                        local perpx = relx - along * s.gateAxis.dx
+                        local perpz = relz - along * s.gateAxis.dz
+                        local nx = s.gateEntry.x + s.gateAxis.dx * newAlong + perpx
+                        local nz = s.gateEntry.z + s.gateAxis.dz * newAlong + perpz
+                        local rot = 0
+                        pcall(function() rot = p:getRotation() end)
+                        p:setPos(nx, p:getYPos(), nz, rot)
+                        if not s.lastGateMsg or (now - s.lastGateMsg) >= 3 then
+                            s.lastGateMsg = now
+                            p:printToPlayer(
+                                string.format('[Dungeon] A warding force bars the way - slay %s to press deeper, kupo!',
+                                    frontier.label or 'the guardians'),
+                                xi.msg.channel.SYSTEM_3)
+                        end
+                    end
+                end
+            end
+        end
+        p:timer(500, gatePatrol)
+    end
+    player:timer(500, gatePatrol)
+
     -- Phase-6 party-aware spawn gate. Only the FIRST arrival (always
     -- the leader in the current warp ordering) triggers mob spawn.
     -- Subsequent arrivals (party members) skip the spawn block but
@@ -1474,9 +1738,15 @@ local function armDungeonAfterArrival(player)
         string.format('[Dungeon] %s - clear the boss within the time limit, kupo!',
             dungeon.label),
         xi.msg.channel.SYSTEM_3)
-    player:printToPlayer(
-        '[Dungeon] All mobs are passive. Buff up, summon Trusts, position, then attack to engage each one at your pace.',
-        xi.msg.channel.SYSTEM_3)
+    if dungeon.gated ~= false then
+        player:printToPlayer(
+            '[Dungeon] Hostile guardians hold each threshold ahead - they aggro on sight and CANNOT be bypassed. Cut a path through them, defeat the elite NMs, then face the final boss, kupo!',
+            xi.msg.channel.SYSTEM_3)
+    else
+        player:printToPlayer(
+            '[Dungeon] All mobs are passive. Buff up, summon Trusts, position, then attack to engage each one at your pace.',
+            xi.msg.channel.SYSTEM_3)
+    end
 
     -- Phase-1 affix banner. Print the affix labels + descriptions so
     -- the player can plan around them (Voracious -> bring sustain DPS,
@@ -1901,6 +2171,7 @@ function m.endDungeon(player, reason)
         -- Called after Infamy_Lifetime is updated so the thresholds see
         -- the current total (500 / 1,000 / 5,000 Infamy).
         ach.onDungeonClear(player)
+        ach.onDungeonCount(player)
     else
         local reasonText = (reason == 'timeout' and 'Time limit expired')
                         or (reason == 'death'   and 'You fell in combat')
@@ -1922,13 +2193,21 @@ function m.endDungeon(player, reason)
         end
     end
 
+    -- Warp-out delay. On a CLEAR we linger ~12s so the party can savor
+    -- the victory + read the reward banner before being yanked out; on
+    -- any non-clear exit (death / timeout / abort) we keep the quick 4s
+    -- so a failed run doesn't make anyone sit around. Leader + members
+    -- share this value so the whole party warps out together.
+    local warpDelayMs  = (reason == 'cleared') and 12000 or 4000
+    local warpDelaySec = math.floor(warpDelayMs / 1000)
+
     -- Phase-6 party reward distribution + cleanup. Walks any remaining
     -- members (those still alive in the dungeon zone) and:
     --   1. On 'cleared' only: awards them memberRewardFactor of the
     --      leader's Infamy + bumps their per-dungeon clear/time CharVars
     --      so they get individual leaderboard credit for the run.
     --   2. Always: prints a short banner so they know the run ended.
-    --   3. Always: schedules a 4-second warp-out (matches leader's).
+    --   3. Always: schedules a warp-out (warpDelayMs; matches leader's).
     --   4. Always: clears their shadow session ref.
     -- This block runs regardless of reason ('cleared' / 'timeout' /
     -- 'death' / 'manual') so members always exit cleanly.
@@ -1964,10 +2243,10 @@ function m.endDungeon(player, reason)
                 -- Schedule per-member warp-out (matches leader timing).
                 pcall(function() mem:setUnkillable(false) end)
                 mem:printToPlayer(
-                    '[Dungeon] Warping back to GM Home in 4 seconds...',
+                    string.format('[Dungeon] Warping back to GM Home in %d seconds...', warpDelaySec),
                     xi.msg.channel.SYSTEM_3)
                 local exit = catalog.exitWarp
-                mem:timer(4000, function(p)
+                mem:timer(warpDelayMs, function(p)
                     p:setPos(exit.x, exit.y, exit.z, exit.rotation, exit.zoneId)
                 end)
             end
@@ -1988,29 +2267,32 @@ function m.endDungeon(player, reason)
     -- the flag was already cleared by the timer, this is a no-op.
     pcall(function() player:setUnkillable(false) end)
 
-    -- WARP-OUT DELAY (4 seconds).
+    -- WARP-OUT DELAY (warpDelayMs: ~12s on a clear, 4s otherwise).
     --
     -- Player feedback (2026-05-28): "as soon as the last strike kills
     -- the mob, the warp fires. There should be a delay, so i can at
-    -- least get a message that I cleared the battlefield".
+    -- least get a message that I cleared the battlefield". (2026-05-31:
+    -- the clear-case delay was stretched to ~12s so the party can
+    -- actually savor the win before the warp.)
     --
-    -- Acceptable risk tradeoff: a DC during the 4-second window leaves
-    -- the player's saved position in the dungeon zone. BUT by this
-    -- point we've already cleared the session and despawned all mobs,
-    -- so a reconnect lands them in a quiet, empty zone where they can
-    -- use !dungeon home to escape. Combined with the still-active
-    -- safety rails (especially the OOB patrol won't fire because they
-    -- aren't moving during the warp delay), the worst case is "extra
-    -- click to escape" rather than "stuck in a broken state."
+    -- Acceptable risk tradeoff: a DC during the warp window leaves the
+    -- player's saved position in the dungeon zone. BUT by this point
+    -- we've already cleared the session and despawned all mobs, so a
+    -- reconnect lands them in a quiet, empty zone. Better still, the
+    -- dungeon zones are the NORMAL Dynamis zones (185-188) whose real
+    -- onZoneIn ejects a sessionless arrival to town -- so a relog during
+    -- the linger self-heals to the city instead of stranding anyone. The
+    -- OOB patrol also won't fire (they aren't moving), so the worst case
+    -- is a harmless extra warp, not a broken state.
     --
-    -- We give them a clear "warping in 4 seconds..." message so they
-    -- know the warp is coming and don't think the game has frozen.
+    -- The "warping in N seconds..." message tells them the warp is
+    -- coming so they don't think the game has frozen.
     player:printToPlayer(
-        '[Dungeon] Warping back to GM Home in 4 seconds...',
+        string.format('[Dungeon] Warping back to GM Home in %d seconds...', warpDelaySec),
         xi.msg.channel.SYSTEM_3)
 
     local exit = catalog.exitWarp
-    player:timer(4000, function(p)
+    player:timer(warpDelayMs, function(p)
         p:setPos(exit.x, exit.y, exit.z, exit.rotation, exit.zoneId)
     end)
 end
@@ -2147,6 +2429,49 @@ end)
 -----------------------------------
 -- Dungeon Master NPC (entry)
 -----------------------------------
+-----------------------------------
+-- customMenu label-collision guard
+--
+-- luautils.cpp HandleCustomMenu() routes a menu click back to the FIRST
+-- option whose label byte-exactly matches the returned string, then
+-- stops. So if two options share an identical label, clicking either one
+-- fires the first option's callback. trunc() can produce that collision
+-- when several names share a long common prefix -- e.g. the five
+-- "Caballarius <slot> +4" reforge pieces all trunc to "Caballarius .." --
+-- which made the Infamy Vendor sell the head piece on every row.
+-- openMenu() runs every menu through dedupeLabels() so a duplicate label
+-- can never silently misroute again.
+local function dedupeLabels(opts)
+    if type(opts) ~= 'table' then return opts end
+    local seen = {}
+    for _, opt in ipairs(opts) do
+        local label = opt[1]
+        if type(label) == 'string' then
+            if seen[label] then
+                local n = 2
+                local candidate = label .. ' (' .. n .. ')'
+                while seen[candidate] do
+                    n = n + 1
+                    candidate = label .. ' (' .. n .. ')'
+                end
+                opt[1] = candidate
+                seen[candidate] = true
+            else
+                seen[label] = true
+            end
+        end
+    end
+    return opts
+end
+
+-- Single send choke-point: dedupe labels, then defer the customMenu by
+-- 50ms (the original timing, preserved so chained menus settle before
+-- the next packet).
+local function openMenu(player, menu)
+    dedupeLabels(menu.options)
+    player:timer(50, function(p) p:customMenu(menu) end)
+end
+
 local dmMenu = { title = 'Dungeon Master', options = {} }
 
 local showDungeonMenu  -- forward decl
@@ -2174,7 +2499,7 @@ local function showConfirmMenu(player, dungeon, tierId)
     dmMenu.title = string.format('%s [%s] (%dm)',
         dungeon.label, tier.label, math.floor(effectiveLimit / 60))
     dmMenu.options = opts
-    player:timer(50, function(p) p:customMenu(dmMenu) end)
+    openMenu(player, dmMenu)
 end
 
 -- Phase-2 tier picker. Shows Normal / Hard / Mythic with lock state
@@ -2238,11 +2563,26 @@ showTierMenu = function(player, dungeon)
 
     dmMenu.title = string.format('%s - pick tier', dungeon.label:sub(1, 22))
     dmMenu.options = opts
-    player:timer(50, function(p) p:customMenu(dmMenu) end)
+    openMenu(player, dmMenu)
 end
 
 showDungeonMenu = function(player)
     local opts = {}
+
+    -- Infamy balance is shown in CHAT, not as a menu row. The customMenu
+    -- payload is hard-capped at 150 bytes (GP_SERV_COMMAND_CHAT_STD.Mes,
+    -- see SetCustomMenuContext) across the title + EVERY option label.
+    -- With all 4 dungeons listed that budget is essentially full; adding a
+    -- "balance" row pushed the serialized menu to ~155 bytes, which the
+    -- engine silently truncated -- lopping the final "Close" option down to
+    -- a stray "C". Printing the balance here keeps it visible without
+    -- spending any of the menu's byte budget on a non-action row.
+    -- (Ceiling note: title + 4 dungeon rows + Close is ~132 bytes. A 5th
+    -- dungeon would need pagination -- see the Infamy Vendor for the pattern.)
+    player:printToPlayer(
+        string.format('[Dungeon Master] Infamy balance: %d', getInfamy(player)),
+        xi.msg.channel.SYSTEM_3)
+
     if getSession(player) then
         table.insert(opts, {
             'Abort current dungeon',
@@ -2299,7 +2639,7 @@ showDungeonMenu = function(player)
                 -- the details; this is the quick scan).
                 local prefix = (featured and featured.id == d.id) and '* ' or ''
                 table.insert(opts, {
-                    string.format('%s%s  (%dm)', prefix, d.label, math.floor(d.timeLimit / 60)),
+                    string.format('%s%s (%dm)', prefix, d.label, math.floor(d.timeLimit / 60)),
                     function(p)
                         -- Phase-2: route through tier picker. The
                         -- dungeon description is printed inside
@@ -2332,15 +2672,11 @@ showDungeonMenu = function(player)
             end
         end
     end
-    table.insert(opts, {
-        string.format('Infamy balance: %d', getInfamy(player)),
-        function(p) showDungeonMenu(p) end,
-    })
     table.insert(opts, { 'Close', function(p) end })
 
     dmMenu.title = 'Dungeon Master'
     dmMenu.options = opts
-    player:timer(50, function(p) p:customMenu(dmMenu) end)
+    openMenu(player, dmMenu)
 end
 
 
@@ -2363,9 +2699,37 @@ local function trunc(s, max)
     return s:sub(1, max - 2) .. '..'
 end
 
+-- Longest common prefix of a list of names, trimmed back to the last whole
+-- word (space) so only complete words are ever stripped. Returns the byte
+-- length to drop (0 = nothing safely strippable). Used to strip the
+-- redundant set-name prefix from curated-set rows -- the set name is already
+-- in the menu title -- so "Nyame Helm"/"Nyame Mail" display as "Helm"/"Mail"
+-- instead of all truncating toward an identical "Nyame ..".
+local function commonWordPrefixLen(names)
+    if type(names) ~= 'table' or #names < 2 then return 0 end
+    local first  = names[1] or ''
+    local maxLen = #first
+    for i = 2, #names do
+        local s = names[i] or ''
+        local j = 1
+        while j <= maxLen and j <= #s and first:byte(j) == s:byte(j) do
+            j = j + 1
+        end
+        maxLen = j - 1
+        if maxLen == 0 then return 0 end
+    end
+    -- Cut back to (and including) the last space inside the common prefix.
+    for pos = maxLen, 1, -1 do
+        if first:byte(pos) == 32 then return pos end
+    end
+    return 0
+end
+
 -- Forward declarations for mutually-recursive menu functions
 local showVendorRoot
 local showCuratedMenu
+local showCuratedCat
+local showCuratedSub
 local showCuratedPreview
 local showCuratedSetsMenu
 local showCuratedSetDetail
@@ -2380,14 +2744,14 @@ local showPlus4Preview
 --------------------------------------------------------------------
 showVendorRoot = function(player)
     local opts = {}
-    table.insert(opts, { 'Curated Items',    function(p) showCuratedMenu(p, 1) end })
+    table.insert(opts, { 'Curated Items',    function(p) showCuratedMenu(p) end })
     table.insert(opts, { 'Curated Sets',     function(p) showCuratedSetsMenu(p, 1) end })
     table.insert(opts, { '+4 Reforge Sets',  function(p) showPlus4JobMenu(p, 1) end })
     table.insert(opts, { 'Close',            function(p) end })
 
     vendorMenu.title = string.format('Infamy Vendor  [%d Infamy]', getInfamy(player))
     vendorMenu.options = opts
-    player:timer(50, function(p) p:customMenu(vendorMenu) end)
+    openMenu(player, vendorMenu)
 end
 
 --------------------------------------------------------------------
@@ -2409,57 +2773,148 @@ local function buildCuratedItems()
     return out
 end
 
-showCuratedMenu = function(player, page)
-    page = page or 1
+-- Display order for the grouped browser (Category -> Subtype).
+local CAT_ORDER = { 'Weapons', 'Armor', 'Accessories', 'Other' }
+local SUB_ORDER =
+{
+    Weapons     = { 'Hand-to-Hand', 'Dagger', 'Sword', 'Great Sword', 'Axe',
+                    'Great Axe', 'Scythe', 'Polearm', 'Katana', 'Great Katana',
+                    'Club', 'Staff', 'Archery', 'Marksmanship', 'Instrument',
+                    'Grip-Shield', 'Other' },
+    Armor       = { 'Head', 'Body', 'Hands', 'Legs', 'Feet', 'Other' },
+    Accessories = { 'Neck', 'Ear', 'Ring', 'Waist', 'Back', 'Other' },
+    Other       = { 'Other' },
+}
+local SUBTYPE_PAGE_SIZE = 6   -- subtype rows per page (Weapons has ~16 types)
+
+-- Group the combined curated list into g[cat][sub] = { {idx, item}, ... } where
+-- idx is the index into buildCuratedItems() (so the buy code can fetch by index
+-- unchanged). Rebuilt each open so catalog hot-edits show up. Items missing a
+-- catalog.itemTypeMap entry fall to Other/Other so nothing ever disappears.
+local function groupCurated()
     local items = buildCuratedItems()
-    local total = #items
-    local pages = math.max(1, math.ceil(total / INVENTORY_PAGE_SIZE))
-    page = math.max(1, math.min(page, pages))
-
-    local opts = {}
-    local startIdx = (page - 1) * INVENTORY_PAGE_SIZE + 1
-    local endIdx   = math.min(startIdx + INVENTORY_PAGE_SIZE - 1, total)
-
-    for idx = startIdx, endIdx do
-        local it = items[idx]
-        table.insert(opts, {
-            -- Truncate name to 14 chars - keeps 4-item pages within the
-            -- 150-byte customMenu cap including title + nav + back.
-            string.format('%s  [%d]', trunc(it.name, 14), it.cost),
-            function(p) showCuratedPreview(p, idx, page) end,
-        })
+    local map   = catalog.itemTypeMap or {}
+    local g     = {}
+    for idx, it in ipairs(items) do
+        local cs       = map[it.id] or 'Other/Other'
+        local cat, sub = cs:match('^(.-)/(.+)$')
+        cat = cat or 'Other'
+        sub = sub or 'Other'
+        g[cat]      = g[cat] or {}
+        g[cat][sub] = g[cat][sub] or {}
+        table.insert(g[cat][sub], { idx = idx, item = it })
     end
+    return g
+end
 
-    if pages > 1 then
-        if page > 1 then
-            table.insert(opts, { '<< Prev', function(p) showCuratedMenu(p, page - 1) end })
-        end
-        if page < pages then
-            table.insert(opts, { 'Next >>', function(p) showCuratedMenu(p, page + 1) end })
+local function catCount(g, cat)
+    local n = 0
+    for _, list in pairs(g[cat] or {}) do n = n + #list end
+    return n
+end
+
+-- Subs present in a category, SUB_ORDER first then any unexpected extras.
+local function subsPresent(g, cat)
+    local present, out, seen = g[cat] or {}, {}, {}
+    for _, sub in ipairs(SUB_ORDER[cat] or {}) do
+        if present[sub] then table.insert(out, sub); seen[sub] = true end
+    end
+    for sub in pairs(present) do
+        if not seen[sub] then table.insert(out, sub) end
+    end
+    return out
+end
+
+--------------------------------------------------------------------
+-- CURATED BROWSER (grouped): Category -> Subtype -> item -> Buy.
+-- Replaces the old flat ~60-item paged list (a pain to cycle). Grouping
+-- uses catalog.itemTypeMap (regen: tools/build_infamy_typemap.py). Each
+-- level honors the ~150-byte customMenu cap: <=4 items/page (item level),
+-- <=6 subtypes/page (subtype level), short titles, stats printed to chat.
+--------------------------------------------------------------------
+showCuratedMenu = function(player)
+    local g = groupCurated()
+    local opts = {}
+    for _, cat in ipairs(CAT_ORDER) do
+        local n = catCount(g, cat)
+        if n > 0 then
+            local c = cat
+            table.insert(opts, { string.format('%s (%d)', cat, n),
+                function(p) showCuratedCat(p, c, 1) end })
         end
     end
     table.insert(opts, { '<< Back', function(p) showVendorRoot(p) end })
 
-    vendorMenu.title = string.format('Curated  [%d Inf]', getInfamy(player))
+    vendorMenu.title = string.format('Browse  [%d Inf]', getInfamy(player))
     vendorMenu.options = opts
-    player:timer(50, function(p) p:customMenu(vendorMenu) end)
+    openMenu(player, vendorMenu)
 end
 
-showCuratedPreview = function(player, itemIdx, fromPage)
-    -- Read from the combined view so indices stay consistent with the
-    -- list the menu just paged through (hand-picked first, then auto).
+showCuratedCat = function(player, cat, page)
+    page = page or 1
+    local g     = groupCurated()
+    local subs  = subsPresent(g, cat)
+    local pages = math.max(1, math.ceil(#subs / SUBTYPE_PAGE_SIZE))
+    page = math.max(1, math.min(page, pages))
+    local startIdx = (page - 1) * SUBTYPE_PAGE_SIZE + 1
+    local endIdx   = math.min(startIdx + SUBTYPE_PAGE_SIZE - 1, #subs)
+
+    local opts = {}
+    for i = startIdx, endIdx do
+        local sub = subs[i]
+        table.insert(opts, { trunc(sub, 16),
+            function(p) showCuratedSub(p, cat, sub, 1) end })
+    end
+    if pages > 1 then
+        if page > 1     then table.insert(opts, { '<< Prev', function(p) showCuratedCat(p, cat, page - 1) end }) end
+        if page < pages then table.insert(opts, { 'Next >>', function(p) showCuratedCat(p, cat, page + 1) end }) end
+    end
+    table.insert(opts, { '<< Back', function(p) showCuratedMenu(p) end })
+
+    vendorMenu.title = trunc(cat, 24)
+    vendorMenu.options = opts
+    openMenu(player, vendorMenu)
+end
+
+showCuratedSub = function(player, cat, sub, page)
+    page = page or 1
+    local g     = groupCurated()
+    local list  = (g[cat] or {})[sub] or {}
+    local total = #list
+    local pages = math.max(1, math.ceil(total / INVENTORY_PAGE_SIZE))
+    page = math.max(1, math.min(page, pages))
+    local startIdx = (page - 1) * INVENTORY_PAGE_SIZE + 1
+    local endIdx   = math.min(startIdx + INVENTORY_PAGE_SIZE - 1, total)
+
+    local opts = {}
+    for i = startIdx, endIdx do
+        local entry = list[i]
+        local it    = entry.item
+        table.insert(opts, {
+            string.format('%s  [%d]', trunc(it.name, 14), it.cost),
+            function(p) showCuratedPreview(p, entry.idx, cat, sub, page) end,
+        })
+    end
+    if pages > 1 then
+        if page > 1     then table.insert(opts, { '<< Prev', function(p) showCuratedSub(p, cat, sub, page - 1) end }) end
+        if page < pages then table.insert(opts, { 'Next >>', function(p) showCuratedSub(p, cat, sub, page + 1) end }) end
+    end
+    table.insert(opts, { '<< Back', function(p) showCuratedCat(p, cat, 1) end })
+
+    vendorMenu.title = string.format('%s  [%d Inf]', trunc(sub, 12), getInfamy(player))
+    vendorMenu.options = opts
+    openMenu(player, vendorMenu)
+end
+
+showCuratedPreview = function(player, itemIdx, cat, sub, page)
     local items = buildCuratedItems()
-    local item = items[itemIdx]
+    local item  = items[itemIdx]
     if not item then
-        showCuratedMenu(player, fromPage)
+        showCuratedSub(player, cat, sub, page)
         return
     end
 
-    -- Print stats to chat BEFORE opening the menu. Long stat lines (e.g.
-    -- "DEF:189 HP+136 STR+35..." = 73 bytes) would blow the 150-byte
-    -- customMenu payload cap if used as menu options, silently dropping
-    -- the Buy button. Chat persists in the scroll buffer so players can
-    -- still read the full stat block after the menu opens.
+    -- Stats to chat (long lines would blow the 150-byte customMenu cap).
     for _, line in ipairs(item.stats or { '(no description)' }) do
         player:printToPlayer(line, xi.msg.channel.SYSTEM_3)
     end
@@ -2473,7 +2928,7 @@ showCuratedPreview = function(player, itemIdx, fromPage)
                 if p:getFreeSlotsCount() == 0 then
                     p:printToPlayer('Inventory full! Free a slot first, kupo!',
                         xi.msg.channel.SYSTEM_3)
-                    showCuratedPreview(p, itemIdx, fromPage)
+                    showCuratedPreview(p, itemIdx, cat, sub, page)
                     return
                 end
                 p:setCharVar(catalog.currencyCv, getInfamy(p) - item.cost)
@@ -2482,21 +2937,20 @@ showCuratedPreview = function(player, itemIdx, fromPage)
                     string.format('[Infamy Vendor] Purchased %s for %d Infamy. (%d remaining), kupo!',
                         item.name, item.cost, getInfamy(p)),
                     xi.msg.channel.SYSTEM_3)
-                showCuratedMenu(p, fromPage)
+                showCuratedSub(p, cat, sub, page)
             end,
         })
     else
         table.insert(opts, {
             string.format('Need %d  (have %d)', item.cost, bal),
-            function(p) showCuratedPreview(p, itemIdx, fromPage) end,
+            function(p) showCuratedPreview(p, itemIdx, cat, sub, page) end,
         })
     end
-    table.insert(opts, { '<< Back', function(p) showCuratedMenu(p, fromPage) end })
+    table.insert(opts, { '<< Back', function(p) showCuratedSub(p, cat, sub, page) end })
 
-    -- Short title: truncated name + cost. Full stats are in chat above.
     vendorMenu.title = string.format('%s  %d Inf', trunc(item.name, 15), item.cost)
     vendorMenu.options = opts
-    player:timer(50, function(p) p:customMenu(vendorMenu) end)
+    openMenu(player, vendorMenu)
 end
 
 --------------------------------------------------------------------
@@ -2544,7 +2998,7 @@ showCuratedSetsMenu = function(player, page)
 
     vendorMenu.title   = string.format('Sets  [%d Inf]', getInfamy(player))
     vendorMenu.options = opts
-    player:timer(50, function(p) p:customMenu(vendorMenu) end)
+    openMenu(player, vendorMenu)
 end
 
 showCuratedSetDetail = function(player, setIdx, fromPage)
@@ -2556,9 +3010,23 @@ showCuratedSetDetail = function(player, setIdx, fromPage)
     end
 
     local opts = {}
-    for pieceIdx, piece in ipairs(setEntry.pieces or {}) do
+    -- Drop the shared set-name prefix from each row (the set name is in the
+    -- title). Falls back to the full name when there's no common word prefix,
+    -- and openMenu()'s dedupe guard still backstops any residual collision.
+    local pieces = setEntry.pieces or {}
+    local names  = {}
+    for _, piece in ipairs(pieces) do names[#names + 1] = piece.name or '' end
+    local cut = commonWordPrefixLen(names)
+    for pieceIdx, piece in ipairs(pieces) do
+        local display = piece.name or ''
+        if cut > 0 then
+            local short = display:sub(cut + 1)
+            if short ~= '' and not short:match('^%s*$') then
+                display = short
+            end
+        end
         table.insert(opts, {
-            string.format('%s  [%d]', trunc(piece.name, 14), piece.cost),
+            string.format('%s  [%d]', trunc(display, 16), piece.cost),
             function(p) showCuratedSetPiecePreview(p, setIdx, pieceIdx, fromPage) end,
         })
     end
@@ -2566,7 +3034,7 @@ showCuratedSetDetail = function(player, setIdx, fromPage)
 
     vendorMenu.title   = trunc(setEntry.set, 22)
     vendorMenu.options = opts
-    player:timer(50, function(p) p:customMenu(vendorMenu) end)
+    openMenu(player, vendorMenu)
 end
 
 showCuratedSetPiecePreview = function(player, setIdx, pieceIdx, fromPage)
@@ -2615,7 +3083,7 @@ showCuratedSetPiecePreview = function(player, setIdx, pieceIdx, fromPage)
 
     vendorMenu.title   = trunc(piece.name, 22)
     vendorMenu.options = opts
-    player:timer(50, function(p) p:customMenu(vendorMenu) end)
+    openMenu(player, vendorMenu)
 end
 
 --------------------------------------------------------------------
@@ -2660,7 +3128,7 @@ showPlus4JobMenu = function(player, page)
 
     vendorMenu.title = string.format('+4 Reforge  [%d Infamy]', getInfamy(player))
     vendorMenu.options = opts
-    player:timer(50, function(p) p:customMenu(vendorMenu) end)
+    openMenu(player, vendorMenu)
 end
 
 showPlus4SetMenu = function(player, job, jobPage)
@@ -2678,7 +3146,7 @@ showPlus4SetMenu = function(player, job, jobPage)
 
     vendorMenu.title = string.format('%s Sets  [%d Infamy]', job, getInfamy(player))
     vendorMenu.options = opts
-    player:timer(50, function(p) p:customMenu(vendorMenu) end)
+    openMenu(player, vendorMenu)
 end
 
 local PLUS4_SLOT_ORDER = { 'head', 'body', 'hands', 'legs', 'feet' }
@@ -2694,11 +3162,15 @@ showPlus4SlotMenu = function(player, job, setIdx, jobPage)
     for _, slot in ipairs(PLUS4_SLOT_ORDER) do
         local piece = (setEntry.pieces or {})[slot]
         if piece then
-            -- Truncate piece names to 14 chars. 5 slots x (14+6) + short
-            -- title + back stays well under the 150-byte customMenu cap.
-            -- Owned status is shown in the preview title after clicking.
+            -- Label by SLOT, not piece name. All five pieces in a reforge
+            -- set share a long common prefix (e.g. "Caballarius ") that
+            -- trunc(14) collapses to one identical string; combined with
+            -- customMenu's first-match routing that made every row buy the
+            -- head piece. The set name is already in the title, and the
+            -- full piece name + stats show in the preview after clicking.
+            local slotLabel = slot:sub(1, 1):upper() .. slot:sub(2)
             table.insert(opts, {
-                string.format('%s  [%d]', trunc(piece.name, 14), cost),
+                string.format('%s  [%d]', slotLabel, cost),
                 function(p) showPlus4Preview(p, job, setIdx, slot, jobPage) end,
             })
         end
@@ -2708,7 +3180,7 @@ showPlus4SlotMenu = function(player, job, setIdx, jobPage)
     -- Short title: job + set name only (no balance - saves ~15 bytes).
     vendorMenu.title = string.format('%s: %s', job, trunc(setEntry.set, 12))
     vendorMenu.options = opts
-    player:timer(50, function(p) p:customMenu(vendorMenu) end)
+    openMenu(player, vendorMenu)
 end
 
 showPlus4Preview = function(player, job, setIdx, slot, jobPage)
@@ -2759,7 +3231,7 @@ showPlus4Preview = function(player, job, setIdx, slot, jobPage)
     -- Short title: truncated piece name. Full stats are in chat above.
     vendorMenu.title = trunc(piece.name, 22)
     vendorMenu.options = opts
-    player:timer(50, function(p) p:customMenu(vendorMenu) end)
+    openMenu(player, vendorMenu)
 end
 
 
@@ -2839,25 +3311,22 @@ m:addOverride('InteractionGlobal.onZoneIn', function(player, prevZone, fallbackF
 
     local sess = sessions[player:getName()]
     if sess and sess.dungeon and player:getZoneID() ~= sess.dungeon.zoneId then
-        -- Server-log line so admins can see attempted breakouts. Includes
-        -- player, dungeon id, and the zone they tried to escape to so the
-        -- log is useful for spotting boundary leaks or buggy spell exits.
+        -- Player used !gmhome / !warp / Home Point / etc. to leave the dungeon
+        -- zone mid-run. Treat as a voluntary abort: clean up the session and
+        -- mobs, but do NOT bounce them back -- they stay wherever they warped to.
         print(string.format(
-            "[dungeon-guard] %s tried to leave dungeon '%s' (zone %d) via zone %d (prev=%d) -- bouncing back to warpIn",
+            "[dungeon] %s left dungeon '%s' (zone %d) for zone %d -- aborting run (no bounce-back)",
             player:getName(), sess.dungeon.id, sess.dungeon.zoneId,
-            player:getZoneID(), prevZone or -1))
+            player:getZoneID()))
 
         player:printToPlayer(
-            "[Dungeon] You can't leave mid-run, kupo! Warping you back...",
+            '[Dungeon] You left the dungeon mid-run. No Infamy awarded.',
             xi.msg.channel.SYSTEM_3)
-        local w   = sess.dungeon.warpIn
-        local zid = sess.dungeon.zoneId
-        -- Short delay so the new zone has time to finish loading the
-        -- player's session before we yank them out of it. Without this,
-        -- the setPos call has been observed to silently no-op.
-        player:timer(500, function(p)
-            p:setPos(w.x, w.y, w.z, w.rot or 0, zid)
-        end)
+
+        -- endDungeon clears the session, cancels all timers, and despawns mobs.
+        -- It also fires a short setPos back to exitWarp (GM Home), which is a
+        -- harmless position-reset if the player is already there from !gmhome.
+        m.endDungeon(player, 'manual')
     end
 
     return result

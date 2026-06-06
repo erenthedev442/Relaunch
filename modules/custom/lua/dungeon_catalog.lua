@@ -8,12 +8,12 @@
 -- expire / death / disconnect = abort, no reward.
 --
 -- All three launch zones were confirmed empty via the live DB
--- (zero mob_groups rows). No SQL changes needed — we reuse the HL
+-- (zero mob_groups rows). No SQL changes needed - we reuse the HL
 -- mob_groups (registered in zone 210 / GM_Home) via `groupZoneId`
 -- so the engine resolves them without needing local zone rows.
 --
 -- Tuning knobs (everything in this file):
---   timeLimit         seconds to kill the boss. miss it → abort.
+--   timeLimit         seconds to kill the boss. miss it -> abort.
 --   infamyBase        flat reward on clear.
 --   infamySpeedBonus  extra Infamy if cleared in the first half of
 --                     the time window (encourages speedrunning).
@@ -105,7 +105,7 @@ catalog.exitWarp =
     rotation = 128,
 }
 
--- HL groupZoneId — the zone our existing 15 NM mob_groups are
+-- HL groupZoneId - the zone our existing 15 NM mob_groups are
 -- registered under (210/GM_Home via hunting_league_gm_home_mobs.sql).
 -- Used as the `groupZoneId` on every dungeon spawn so the engine
 -- resolves the groupId from THIS table regardless of which zone the
@@ -117,13 +117,13 @@ catalog.groupZoneId = 210
 -- ============================================================
 -- modelSize is a uint8 clamped to 0-3 in the engine. The client
 -- renders the entity at progressively larger silhouettes:
---   0 — stock size (trash mobs always use this)
---   1 — small bump, barely noticeable
---   2 — clearly "boss-class" (the dungeon default)
---   3 — huge, can clip on tight zones
+--   0 - stock size (trash mobs always use this)
+--   1 - small bump, barely noticeable
+--   2 - clearly "boss-class" (the dungeon default)
+--   3 - huge, can clip on tight zones
 --
 -- This catalog default applies to every dungeon's boss. Per-dungeon
--- override is available via `bossModelSize` on the dungeon entry —
+-- override is available via `bossModelSize` on the dungeon entry -
 -- set it to 3 on an open zone like Hall of the Gods if you want the
 -- boss to read as truly massive, or back to 1 on a cramped arena.
 catalog.bossModelSize = 2
@@ -131,9 +131,9 @@ catalog.bossModelSize = 2
 -- ============================================================
 -- DUNGEONS (3 launch dungeons)
 -- ============================================================
--- Difficulty climbs: Whispering Halls (entry) → Echoes of Adoulin
--- (mid) → The Forgotten Bastion (apex). Infamy reward scales steeper
--- than linear — apex pays 5× the entry-tier reward.
+-- Difficulty climbs: Whispering Halls (entry) -> Echoes of Adoulin
+-- (mid) -> The Forgotten Bastion (apex). Infamy reward scales steeper
+-- than linear - apex pays 5x the entry-tier reward.
 --
 -- HL groupIds reused:
 --   11355  Leaping_Lizzy
@@ -154,7 +154,7 @@ catalog.bossModelSize = 2
 catalog.dungeons =
 {
     -----------------------------------------------------------
-    -- DUNGEON 1 — THE OUTER BASTION  (Lv99/110/120 trash / Lv135 boss)
+    -- DUNGEON 1 - THE OUTER BASTION  (Lv99/110/120 trash / Lv135 boss)
     -----------------------------------------------------------
     --
     -- Zone-geometry strategy (lesson from the v1 launch bug):
@@ -164,23 +164,38 @@ catalog.dungeons =
     --     zone's onZoneIn ran, NOT at fixed catalog coords. The
     --     bossOffset gives an in-front-of-the-player vector; trash
     --     scatters in a ring around the boss.
-    --   * This means we don't need to know zone DAT geometry —
+    --   * This means we don't need to know zone DAT geometry -
     --     wherever the zone actually placed the player IS the arena
     --     center for that run.
     --
     -- Zone history:
-    --   v1: Hall of the Gods (251) — rejected (wide-open SoA chamber,
+    --   v1: Hall of the Gods (251) - rejected (wide-open SoA chamber,
     --       didn't read as "halls").
-    --   v2: Monastic Cavern (150) — REJECTED, ~100+ visible native
-    --       orcish mobs (15 active mob_groups), the cave is loaded
-    --       with patrolling enemies that fight our spawns for AI ticks.
-    --   v3 (current): Castle Zvahl Baileys (161) — the Shadow Lord's
-    --       outer fortress. Natively heavily populated (270 spawn rows,
-    --       39 active mob_groups: Demon Pawns, Dark Knights, Goblin
-    --       raiders, Orcish patrols, Quadav/Yagudo squads, Marquis NMs).
-    --       Server-wide scrubbed via custom SQL —
-    --       modules/custom/sql/dungeon_zvahl_baileys_scrub.sql — so
-    --       the zone is empty when our dungeon spawns drop in.
+    --   v2: Monastic Cavern (150) - REJECTED, ~100+ visible native
+    --       orcish mobs (15 active mob_groups).
+    --   v3: Castle Zvahl Baileys (161) - scrubbed successfully but the
+    --       multi-level castle geometry caused fall-through bugs when
+    --       mobs were placed along the wrong vertical plane.
+    --   v4: Dynamis-San_dOria_[D] (294) - Divergence version of the city.
+    --       REJECTED (cause of the recurring login-stranding bug): the [D]
+    --       instance zones are entered by setPos but only define
+    --       onInstanceZoneIn, which does NOT reliably eject on a cold
+    --       LOGIN. A player saved inside 294 when the server restarts or
+    --       crashes mid-run cannot complete zone-in on relog -> black
+    --       screen + perpetual "Player already logged in" loop. (Recovery:
+    --       UPDATE chars SET pos_zone=210 ... WHERE pos_zone IN
+    --       (294,295,296,297) moves any stranded char back to GM Home.)
+    --   v5 (current): Dynamis-San_dOria (185) - the NORMAL city zone.
+    --       Empty by default (native Dynamis mobs only spawn during an
+    --       active hourglass event, which this server does not run), so the
+    --       dungeon populates it cleanly. Crucially it has a real onZoneIn
+    --       (xi.dynamis.zoneOnZoneIn) that EJECTS a sessionless arrival to
+    --       the city via the standard Dynamis eject cutscene (cs 100) -- so
+    --       a crash-mid-run no longer strands anyone: on relog they are
+    --       cleanly bounced to town instead of frozen. DungeonSystem's
+    --       onZoneIn override skips that eject ONLY while a live dungeon
+    --       session exists. DO NOT point these dungeons back at the [D]
+    --       (294-297) zones or the login-stranding bug returns.
     --
     -- The internal id stays 'whispering_halls' so existing player
     -- CharVars (clear counts, best times) and weekly-hunt objectives
@@ -188,68 +203,69 @@ catalog.dungeons =
     {
         id          = 'whispering_halls',
         label       = 'The Outer Bastion',
-        description = 'The outer fortress of the dark king. Push east through the demon-haunted halls — the Doom Marquis holds the threshold of the inner keep.',
-        zoneId      = xi.zone.CASTLE_ZVAHL_BAILEYS,   -- 161
-        zoneName    = 'Castle_Zvahl_Baileys',
-        timeLimit   = 900,                            -- 15 minutes
+        description = 'The outer fortress of the dark king. Push east through the demon-haunted halls - the Doom Marquis holds the threshold of the inner keep.',
+        zoneId      = xi.zone.DYNAMIS_SAN_DORIA,  -- 185
+        zoneName    = 'Dynamis-San_dOria',
+        gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
+        timeLimit   = 900,                           -- 15 minutes
         infamyBase  = 50,
         infamySpeedBonus = 25,
 
-        -- Entry coord sourced from Castle_Zvahl_Baileys/Zone.lua's
-        -- onZoneIn default warp (-181.969, -35.542, 19.995, rot 254).
-        -- y=-35.5 is the lowest castle level. The zone's 4 cuboid
-        -- trigger areas (map 4 teleporter pads) all sit at y=17-19,
-        -- so a player staying at y=-35 cannot accidentally fire one
-        -- regardless of where the progression axis points them.
-        warpIn      = { x = -181.969, y = -35.542, z = 19.995, rot = 254 },
+        -- Entry coord matches the regular Dynamis-San_dOria canonical
+        -- entry (same physical city geometry). Adjust with !pos if the
+        -- player lands at a different spot after a live run.
+        warpIn      = { x = 161.838, y = -2.000, z = 161.673, rot = 93 },
 
-        -- Progression model:
-        --   * progressionAxis is a unit vector pointing INTO the dungeon
-        --     from the warp-in point (the "depth direction").
-        --   * waypoints are tiers placed along that axis at increasing
-        --     distance. Each tier has its own count + level + mob pool.
-        --   * The boss spawns at the far end of the path (bossDistance).
-        --
-        -- All mobs are detection-aggro (sight + hearing), so they
-        -- engage only when the player approaches. Player walks deeper,
-        -- difficulty climbs, then the boss at the end.
-        --
-        -- Detection range default is ~15 yalms, so the first waypoint
-        -- needs to be >=18 yalms from the warpIn so the player doesn't
-        -- get insta-aggroed on zone-in.
-        -- Tuned 2026-05-28: was way too hard solo. Halved trash counts,
-        -- dropped levels by 1 tier so a geared Lv99 can actually clear
-        -- the boss within the time limit. Dungeons are a repeatable
-        -- Infamy farm, not endgame HNM gating.
-        --
-        -- First waypoint pushed to 30 yalms (was 18) so the player has
-        -- real prep room — Trusts summoned, buffs up, food eaten, none
-        -- of it visible to the first mob.
-        -- Castle Zvahl Baileys entry is at the WEST side of the
-        -- castle (x=-181, z=20). The keep complex extends EAST.
-        -- Push waypoints toward +X (deeper into the castle, toward
-        -- the keep's threshold). All waypoints stay near z=20 and
-        -- y=-35, well clear of the y=17-19 teleporter trigger boxes
-        -- at z=45-51 / z=-5--10.
-        progressionAxis = { dx = 1.0, dz = 0.0 },
+        -- Retail mob positions (verified from mob_spawn_points.sql, zone 185).
+        -- Path: NE gate plaza -> main road -> city square -> inner keep.
         waypoints =
         {
-            { distance = 30, count = 1, level = 99,  scatter = 3.0,
+            -- More-mobs pass (2026-05-30): density raised. The 3
+            -- original packs (verified mob_spawn_points coords) are interleaved
+            -- with 3 NEW packs (A/B/C) placed at midpoints of the flat segments
+            -- between them, so they sit on the same streets. !pos-fix any that
+            -- land oddly after a live run.
+            -- A (new) - entry plaza swarm
+            { pos = { x = 147.930, y = -1.250, z = 120.340 }, count = 4, level = 99,  scatter = 4.0,
               groups = { 11355, 11357 },
-              names  = { 'Lesser Demon' } },
-            { distance = 45, count = 1, level = 110, scatter = 3.0,
+              names  = { 'Lesser Demon', 'Skulking Imp' } },
+            { pos = { x = 134.013, y = -0.500, z =  79.005 }, count = 4, level = 99,  scatter = 4.0,
+              groups = { 11355, 11357 },
+              names  = { 'Lesser Demon', 'Skulking Imp' } },
+            -- B (new) - main road
+            { pos = { x = 124.780, y = -0.010, z =  25.460 }, count = 4, level = 105, scatter = 4.0,
               groups = { 11359, 11361 },
-              names  = { 'Shadowforged Knight' } },
-            { distance = 60, count = 1, level = 120, scatter = 3.0,
+              names  = { 'Bastion Cur', 'Shadowforged Knight' } },
+            { pos = { x = 115.546, y =  0.483, z = -28.087 }, count = 4, level = 110, scatter = 4.0,
+              groups = { 11359, 11361 },
+              names  = { 'Shadowforged Knight', 'Bastion Cur' } },
+            -- C (new) - approach to the inner square
+            { pos = { x =  61.400, y =  0.990, z = -22.720 }, count = 3, level = 115, scatter = 4.0,
               groups = { 11358, 11362 },
-              names  = { 'Marquis-in-Waiting' } },
+              names  = { 'Hall-Haunt Revenant', 'Marquis-in-Waiting' } },
+            { pos = { x =   7.254, y =  1.499, z = -17.358 }, count = 3, level = 120, scatter = 4.0,
+              groups = { 11358, 11362 },
+              names  = { 'Marquis-in-Waiting', 'Hall-Haunt Revenant' } },
         },
-        bossDistance = 75,
+        bossPos = { x = -81.055, y = 1.500, z = -10.434, rot = 0 },
         bossLevel    = 135,
         bossGroup    = 11364,
         bossName     = 'The Doom Marquis',
+        bossModelSize = 3,                           -- the one big boss: render huge
 
-        -- Phase 3 — entry-tier mechanics. Lighter touch: a single
+        -- Pre-boss NM elites (2026-05-30). Aggressive, un-bypassable gates
+        -- on the final approach (frac = fraction from the last waypoint to
+        -- the boss). hpMult is deliberately kept BELOW the boss so the Doom
+        -- Marquis stays the hardest fight (its phases also out-class these).
+        -- Bump hpMult / level after a live run if they read too soft.
+        nms =
+        {
+            { frac = 0.28, level = 125, group = 11361, name = 'Bastion Vanguard',           hpMult = 1.2 },
+            { frac = 0.50, level = 128, group = 11361, name = 'Bastion Dreadguard',         hpMult = 1.3 },
+            { frac = 0.82, level = 133, group = 11362, name = 'Herald of the Doom Marquis', hpMult = 1.5 },
+        },
+
+        -- Phase 3 - entry-tier mechanics. Lighter touch: a single
         -- mid-fight reinforce + a low-HP enrage. Keeps the entry
         -- dungeon approachable while teaching the phase pattern.
         phases =
@@ -262,48 +278,63 @@ catalog.dungeons =
     },
 
     -----------------------------------------------------------
-    -- DUNGEON 2 — THE VOIDWALKER ARENA  (Lv175 trash / Lv225 boss)
+    -- DUNGEON 2 - THE VOIDWALKER ARENA  (Lv175 trash / Lv225 boss)
     -----------------------------------------------------------
-    -- Diorama_Abdhaljs-Ghelsba (43): small, clean arena zone that
-    -- the Voidwalker system already uses. No onZoneIn auto-correct,
-    -- no trigger areas to worry about, no native mob_groups. Pure
-    -- combat space.
+    -- Dynamis-Bastok_[D] (295): Divergence version of Bastok. Same
+    -- flat industrial streets; Mob population scrubbed via
+    -- modules/custom/sql/dungeon_dynamis_bastok_d_scrub.sql.
     {
         id          = 'voidwalker_arena',
         label       = 'The Voidwalker Arena',
-        description = 'A pocket arena suspended between worlds. Press inward — what answers your challenge waits in the dark.',
-        zoneId      = xi.zone.DIORAMA_ABDHALJS_GHELSBA,   -- 43
-        zoneName    = 'Diorama_Abdhaljs-Ghelsba',
+        description = 'A pocket arena suspended between worlds. Press inward - what answers your challenge waits in the dark.',
+        zoneId      = xi.zone.DYNAMIS_BASTOK,  -- 186
+        zoneName    = 'Dynamis-Bastok',
+        gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
         timeLimit   = 1080,
-        infamyBase  = 100,
-        infamySpeedBonus = 50,
+        -- M2 valley fix: D1 Mythic max = (50+25)*5 = 375; D2 Normal must exceed 375*1.10 = 412.5.
+        -- Old values (100+50=150) caused a valley. Raised to 270+145=415 to clear the 10% threshold.
+        infamyBase  = 270,
+        infamySpeedBonus = 145,
 
-        warpIn      = { x = 0.0, y = 0.0, z = -10.0, rot = 0 },
+        warpIn      = { x = 116.482, y = 0.994, z = -72.121, rot = 128 },
 
-        -- Diorama is a smaller arena (~40 yalms across). The 30-yalm
-        -- first-waypoint floor still applies, but subsequent waypoints
-        -- are more tightly packed than the other dungeons to fit. If
-        -- mobs end up clipping into walls in this zone, lower the
-        -- bossDistance and tighten the waypoint spacing.
-        progressionAxis = { dx = 0.0, dz = 1.0 },
+        -- Retail mob positions (verified from mob_spawn_points.sql, zone 186).
+        -- Path: SE market -> central plaza -> upper district -> far quarter.
         waypoints =
         {
-            { distance = 30, count = 1, level = 120, scatter = 3.0,
+            -- More-mobs pass (2026-05-30): counts raised. Bastok's
+            -- streets change elevation between packs, so only ONE new pack is
+            -- interpolated here - on the FLAT wp2->wp3 run (both y=-0.5). The
+            -- extra density elsewhere comes from higher counts on verified spots.
+            { pos = { x =  66.825, y =  6.500, z = -30.591 }, count = 3, level = 120, scatter = 4.0,
               groups = { 11358, 11360 },
-              names  = { 'Voidsworn Acolyte' } },
-            { distance = 42, count = 2, level = 135, scatter = 3.5,
+              names  = { 'Voidsworn Acolyte', 'Glass Stalker' } },
+            { pos = { x =  17.423, y = -0.500, z = -78.738 }, count = 4, level = 135, scatter = 4.0,
               groups = { 11362, 11363 },
               names  = { 'Charred Sentinel', 'Glass Stalker' } },
-            { distance = 55, count = 2, level = 150, scatter = 3.5,
+            -- new - midpoint of the flat wp2->wp3 corridor
+            { pos = { x =   1.770, y = -0.500, z = -20.000 }, count = 3, level = 142, scatter = 4.5,
+              groups = { 11363, 11364 },
+              names  = { 'Void Spawn', 'Charred Sentinel' } },
+            { pos = { x = -13.875, y = -0.500, z =  38.749 }, count = 3, level = 150, scatter = 4.0,
               groups = { 11364 },
               names  = { 'Withered Knight', 'Ravenous Marauder' } },
         },
-        bossDistance = 70,
+        bossPos = { x = -99.507, y = 7.263, z = 47.654, rot = 0 },
         bossLevel    = 170,
         bossGroup    = 11365,
         bossName     = 'The Void Maw',
+        bossModelSize = 3,                           -- the one big boss: render huge
 
-        -- Phase 3 — mid-tier mechanics. Three phases plus a heal at
+        -- Pre-boss NM elites (see Outer Bastion note).
+        nms =
+        {
+            { frac = 0.28, level = 152, group = 11362, name = 'Void Acolyte-Lord', hpMult = 1.2 },
+            { frac = 0.50, level = 158, group = 11363, name = 'Void Harbinger',    hpMult = 1.3 },
+            { frac = 0.82, level = 165, group = 11360, name = 'Maw-Spawn Tyrant',  hpMult = 1.5 },
+        },
+
+        -- Phase 3 - mid-tier mechanics. Three phases plus a heal at
         -- low HP, no time enrage. Bridges the entry/apex difficulty.
         phases =
         {
@@ -317,78 +348,94 @@ catalog.dungeons =
     },
 
     -----------------------------------------------------------
-    -- DUNGEON 3 — THE EMPYREAL PARADOX  (Lv140/160/180 trash / Lv200 boss)
+    -- DUNGEON 3 - THE EMPYREAL PARADOX  (Lv140/160/180 trash / Lv200 boss)
     -----------------------------------------------------------
-    -- Empyreal Paradox (36): the CoP final-zone, void/sky-sphere
-    -- chamber where Promathia is fought. 6 native mob scripts (CoP
-    -- finale BC mobs, inert outside the battlefield event). Has
-    -- ONE trigger area at (x=538-542, y=-2-0, z=-501--497) that
-    -- warps to The Garden of Ru'hmet — small box at the entry
-    -- corner. Spawning *inside* it is safe (onTriggerAreaEnter only
-    -- fires on boundary crossing), but the progressionAxis must
-    -- push AWAY from that box (toward -X / +Z) so the player
-    -- doesn't walk back through it on the return loop.
+    -- Dynamis-Windurst_[D] (296): Divergence version of Windurst.
+    -- Open market streets - reliable flat geometry. Mob population
+    -- scrubbed via modules/custom/sql/dungeon_dynamis_windurst_d_scrub.sql.
     --
-    -- Zone swap 2026-05-29: Cloister of Frost (203) → Empyreal
-    -- Paradox (36). Reason: Cloister of Frost felt like a BCNM
-    -- arena, not a finale destination. Empyreal Paradox reads as
-    -- the cosmic apex it actually is. Internal id stays
-    -- 'cloister_of_sorrow' for CharVar / weekly-hunt compat.
+    -- Zone swap history:
+    --   2026-05-29: Cloister of Frost (203) -> Empyreal Paradox (36)
+    --   2026-05-30: Empyreal Paradox (36) -> Dynamis-Windurst_[D] (296)
+    --   Internal id stays 'cloister_of_sorrow' for CharVar / weekly-hunt compat.
     {
         id          = 'cloister_of_sorrow',
         label       = 'The Empyreal Paradox',
         description = 'A void-sphere suspended between worlds. Cut through three rings of the Forgotten; the Paradox itself waits at the center of nothing.',
-        zoneId      = xi.zone.EMPYREAL_PARADOX,   -- 36
-        zoneName    = 'Empyreal_Paradox',
+        zoneId      = xi.zone.DYNAMIS_WINDURST,  -- 187
+        zoneName    = 'Dynamis-Windurst',
+        gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
         timeLimit   = 1200,
-        infamyBase  = 250,
-        infamySpeedBonus = 100,
+        -- M2 valley fix: D2 Mythic max = (100+50)*5 = 750; D3 Normal must exceed 750*1.10 = 825.
+        -- Old values (250+100=350) caused a valley. Raised to 600+230=830 to clear the 10% threshold.
+        infamyBase  = 600,
+        infamySpeedBonus = 230,
 
-        -- Entry coord sourced from Empyreal_Paradox/Zone.lua's onZoneIn
-        -- default warp. Lands at the east edge of the chamber. The
-        -- Garden-of-Ru'hmet warp trigger sits ON this same coord but
-        -- only fires on cross-boundary entry — spawning here is safe
-        -- as long as we don't path back into the trigger area.
-        warpIn      = { x = 539.0, y = -1.0, z = -500.0, rot = 69 },
+        warpIn      = { x = -221.988, y = 1.000, z = -120.184, rot = 0 },
 
-        -- Push toward -X (deeper into the chamber, away from the
-        -- Garden-of-Ru'hmet warp trigger sitting at x=538-542). The
-        -- chamber center is around (0, 0) so going -X keeps the
-        -- player heading inward while sliding off the trigger box.
-        progressionAxis = { dx = -1.0, dz = 0.0 },
+        -- Retail mob positions (verified from mob_spawn_points.sql, zone 187).
+        -- Path: NW bridge -> mid market -> city center -> southern plaza.
         waypoints =
         {
-            { distance = 30, count = 2, level = 140, scatter = 4.0,
+            -- More-mobs pass (2026-05-30): density raised. Windurst
+            -- Dynamis is flat open market streets, so all three gaps get a NEW
+            -- interpolated pack (1/2/3) at the segment midpoints between the
+            -- verified spots. !pos-fix any that land oddly after a live run.
+            -- 1 (new) - NW bridge approach
+            { pos = { x = -191.700, y = -0.300, z = -120.100 }, count = 3, level = 140, scatter = 4.5,
+              groups = { 11362, 11363 },
+              names  = { 'Hollow Wisp', 'Voidsworn Watcher' } },
+            { pos = { x = -161.459, y = -1.609, z = -120.014 }, count = 3, level = 140, scatter = 4.0,
               groups = { 11362, 11363 },
               names  = { 'Voidsworn Watcher', 'Hollow Wraith' } },
-            { distance = 48, count = 2, level = 160, scatter = 4.0,
+            -- 2 (new) - mid market
+            { pos = { x = -104.300, y = -2.740, z = -114.500 }, count = 3, level = 150, scatter = 4.5,
+              groups = { 11363, 11364 },
+              names  = { 'Paradox Shade', 'Empyreal Drake' } },
+            { pos = { x =  -47.137, y = -3.863, z = -108.998 }, count = 3, level = 160, scatter = 4.0,
               groups = { 11364, 11365 },
               names  = { 'Empyreal Drake', 'Paradox Tyrant' } },
-            { distance = 65, count = 3, level = 180, scatter = 4.5,
+            -- 3 (new) - turn toward the city center
+            { pos = { x =  -42.500, y = -3.370, z =  -53.400 }, count = 3, level = 170, scatter = 4.5,
+              groups = { 11365, 11366 },
+              names  = { 'Paradox Tyrant', 'Forgotten Inquisitor' } },
+            { pos = { x =  -37.834, y = -2.886, z =    2.252 }, count = 3, level = 180, scatter = 4.5,
               groups = { 11366, 11367 },
               names  = { 'Forgotten Inquisitor', 'Banner of the Forgotten', 'Throne Reaver' } },
         },
-        bossDistance = 85,
+        bossPos = { x = 25.018, y = 0.090, z = 239.729, rot = 0 },
         bossLevel    = 200,
         -- Boss roulette: each run rolls one of these pairs. The
         -- catalog still ships bossGroup / bossName as a singular
         -- fallback for older dungeons; when bossGroups/bossNames is
         -- present and non-empty, the DungeonSystem prefers the plural
         -- form. To pair specific groups with specific names, just keep
-        -- the arrays the same length and the indices matched — but
+        -- the arrays the same length and the indices matched - but
         -- that's optional; in flat form they're picked independently
         -- so the same boss model can show up with different names.
         bossGroup    = 11369,                       -- back-compat default
         bossName     = 'Paradoxon, the Forgotten',  -- back-compat default
         bossGroups   = { 11368, 11369 },            -- Pandemonium Warden / Shinryu
         bossNames    = { 'Paradoxon, the Forgotten', 'Azathoth, the Sundered Crown' },
+        bossModelSize = 3,                           -- the one big boss: render huge
+
+        -- Pre-boss NM elites. This dungeon's final approach is LONG (the
+        -- boss sits far across the zone), so the NMs are pushed close to
+        -- the boss plaza (high frac) to stay on verified-walkable ground.
+        -- Re-place with !pos if either lands in geometry.
+        nms =
+        {
+            { frac = 0.42, level = 182, group = 11365, name = 'Forgotten Arbiter',  hpMult = 1.2 },
+            { frac = 0.65, level = 188, group = 11364, name = 'Forgotten Praetor',  hpMult = 1.3 },
+            { frac = 0.88, level = 195, group = 11366, name = 'Herald of Oblivion', hpMult = 1.5 },
+        },
 
         -- ============================================================
-        -- PHASE 3 — Boss mechanics
+        -- PHASE 3 - Boss mechanics
         -- ============================================================
         -- HP-threshold phase triggers. Each entry fires once per run
         -- when the boss's HP% drops AT OR BELOW its `hp` threshold,
-        -- walked in catalog order so a 75→50→25 chain fires sequentially
+        -- walked in catalog order so a 75->50->25 chain fires sequentially
         -- even if the boss skips intermediate thresholds (e.g. a single
         -- big hit drops from 90% to 20%, all four would still fire on
         -- the same tick). Each `action` selects a handler from
@@ -408,7 +455,7 @@ catalog.dungeons =
             { hp = 50, action = 'add_spawn', groupId = 11366, count = 2,
               level = 150, name = 'Echo of the Forgotten' },
             { hp = 25, action = 'enrage',    att = 2500, haste = 100,
-              message = 'Paradoxon refuses oblivion — its fury is unbound!' },
+              message = 'Paradoxon refuses oblivion - its fury is unbound!' },
             { hp = 10, action = 'heal',      pct = 15,
               message = 'Paradoxon siphons the void itself to mend its wounds!' },
         },
@@ -421,72 +468,94 @@ catalog.dungeons =
             action  = 'enrage',
             att     = 4000,
             haste   = 150,
-            message = 'TIME ENRAGE — Paradoxon channels the Sundering!',
+            message = 'TIME ENRAGE - Paradoxon channels the Sundering!',
         },
     },
 
     -----------------------------------------------------------
-    -- DUNGEON 4 — THE ETERNAL THRONE  (Lv200/225/250 trash / Lv275 boss)
+    -- DUNGEON 4 - THE ETERNAL THRONE  (Lv200/225/250 trash / Lv275 boss)
     -----------------------------------------------------------
-    -- Hall of the Gods (251): the grand SoA congress hall where all
-    -- Celestial Avatars once assembled. Vast open nave — no native
-    -- mob_groups, no trigger areas, no auto-correct zone scripts.
-    -- The wide-open space is intentional for the final encounter:
-    -- players need room to manage three waves of adds plus the boss.
+    -- Dynamis-Jeuno_[D] (297): Divergence version of Jeuno.
+    -- Grand boulevards and elevated bridges - the most open of the
+    -- four Dynamis cities, ideal for the apex encounter. Mob population
+    -- scrubbed via modules/custom/sql/dungeon_dynamis_jeuno_d_scrub.sql.
+    -- (No IDs.lua GetFirstID exclusions needed - [D] zones have no IDs.lua.)
     --
-    -- warpIn coords: use the zone's default onZoneIn landing
-    -- (x=0, y=0, z=0) as the staging point. Adjust if the client
-    -- places the player in a different spot — run !pos after entering
-    -- and paste the result into warpIn.
+    -- Zone swap 2026-05-30: Hall of the Gods (251) -> Dynamis-Jeuno_[D] (297).
+    -- Reason: Hall of the Gods (0,0,0) warpIn was unverified - caused
+    -- fall-off-map. Dynamis city entry coords are sourced from dynamis.lua.
     --
     -- Progression note: this dungeon is intentionally the hardest
     -- content on the server. Full BiS (Nyame / Infamy gear + +4 Reforge)
-    -- is the expected completion baseline. New players should clear
-    -- Dungeons 1–3 first; the Eternal Throne is the prestige run.
+    -- is the expected completion baseline.
     {
         id          = 'eternal_throne',
         label       = 'The Eternal Throne',
         description = 'Where the Celestial Avatars once convened, only silence remains. Fight through the remnants of divine will to reach the seat of eternity itself.',
-        zoneId      = xi.zone.HALL_OF_THE_GODS,   -- 251
-        zoneName    = 'Hall_of_the_Gods',
-        timeLimit   = 1500,                        -- 25 minutes
-        infamyBase  = 400,
-        infamySpeedBonus = 200,
+        zoneId      = xi.zone.DYNAMIS_JEUNO,  -- 188
+        zoneName    = 'Dynamis-Jeuno',
+        gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
+        timeLimit   = 1500,                      -- 25 minutes
+        -- M2 valley fix: D3 Mythic max = (250+100)*5 = 1750; D4 Normal must exceed 1750*1.10 = 1925.
+        -- Old values (400+200=600) caused a valley. Raised to 1400+530=1930 to clear the 10% threshold.
+        infamyBase  = 1400,
+        infamySpeedBonus = 530,
 
-        -- Verified entry: Hall of the Gods default warp-in. The zone
-        -- is a single open chamber with no subdivisions, so any coord
-        -- near origin works. Adjust after a live test with !pos.
-        warpIn      = { x = 0.0, y = 0.0, z = 0.0, rot = 128 },
+        -- Entry coord matches regular Dynamis-Jeuno canonical entry.
+        -- y=10 is the elevated bridge platform.
+        warpIn      = { x = 48.930, y = 10.002, z = -71.032, rot = 195 },
 
-        -- Push north (+Z) through the hall. The open geometry means
-        -- a long 90-yalm path to the boss is feasible without wall
-        -- clipping. Each wave is a full-room engagement.
-        progressionAxis = { dx = 0.0, dz = 1.0 },
+        -- Retail mob positions (verified from mob_spawn_points.sql, zone 188).
+        -- Path: east bridge -> central boulevard -> upper tier -> throne hall.
         waypoints =
         {
-            { distance = 30, count = 2, level = 200, scatter = 4.5,
+            -- More-mobs pass (2026-05-30): density raised. Apex tier,
+            -- so packs stay lean (count 3) since each mob is individually lethal.
+            -- Two NEW packs (A/B) are interpolated on the flat street segments
+            -- wp1->wp2 and wp2->wp3; the bridge descent (warpIn->wp1) is left
+            -- clear because its big elevation drop makes midpoints unreliable.
+            { pos = { x =  26.626, y = -0.599, z = -25.061 }, count = 3, level = 200, scatter = 5.0,
               groups = { 11362, 11363 },
               names  = { 'Throne Sentinel', 'Timeless Watcher' } },
-            { distance = 50, count = 2, level = 225, scatter = 5.0,
+            -- A (new) - central boulevard
+            { pos = { x =  19.650, y =  0.830, z = -16.070 }, count = 3, level = 212, scatter = 5.0,
+              groups = { 11363, 11364 },
+              names  = { 'Throne Sentinel', 'Divine Adjudicator' } },
+            { pos = { x =  12.683, y =  2.250, z =  -7.074 }, count = 3, level = 225, scatter = 5.0,
               groups = { 11364, 11365 },
               names  = { 'Divine Adjudicator', 'Celestial Drake' } },
-            { distance = 70, count = 3, level = 250, scatter = 5.0,
+            -- B (new) - upper tier approach
+            { pos = { x =  -2.890, y =  2.330, z =  -7.650 }, count = 3, level = 237, scatter = 5.0,
+              groups = { 11365, 11366 },
+              names  = { 'Celestial Drake', 'Avatar\'s Revenant' } },
+            { pos = { x = -18.457, y =  2.405, z =  -8.218 }, count = 3, level = 250, scatter = 5.0,
               groups = { 11366, 11367, 11368 },
               names  = { 'Avatar\'s Revenant', 'Eternal Inquisitor', 'The Vanquished' } },
         },
-        bossDistance = 90,
+        bossPos = { x = -58.763, y = 5.400, z = -0.782, rot = 0 },
         bossLevel    = 275,
 
         -- Boss roulette: Absolute Virtue's ghost or the reborn Shinryu.
-        -- Both use the Lv275 stat template — feel free to add a third
+        -- Both use the Lv275 stat template - feel free to add a third
         -- entry if you add more HL NM groups later.
         bossGroup    = 11367,                         -- back-compat default
         bossName     = 'Throne of the Eternal',       -- back-compat default
         bossGroups   = { 11367, 11369 },              -- Absolute_Virtue / Shinryu
         bossNames    = { 'Throne of the Eternal', 'The Undying Storm' },
+        bossModelSize = 3,                           -- the one big boss: render huge
+
+        -- Pre-boss NM elites (see Outer Bastion note). Apex content - these
+        -- sit on the Lv250 stat template; the boss (Lv275 + 4 phases +
+        -- time enrage) remains the hardest fight on the server.
+        nms =
+        {
+            { frac = 0.28, level = 256, group = 11365, name = 'Eternal Sentinel-Lord', hpMult = 1.2 },
+            { frac = 0.50, level = 262, group = 11366, name = 'Eternal Praetorian',    hpMult = 1.3 },
+            { frac = 0.82, level = 270, group = 11368, name = 'Warden of Eternity',    hpMult = 1.5 },
+        },
 
         -- ============================================================
-        -- PHASE — 4-phase boss that tests every system in the game
+        -- PHASE - 4-phase boss that tests every system in the game
         -- ============================================================
         phases =
         {
@@ -498,7 +567,7 @@ catalog.dungeons =
             { hp = 35, action = 'dispel',    count = 4,
               message = 'A wave of eternal silence strips your protection!' },
             { hp = 15, action = 'enrage',    att = 5000, haste = 200,
-              message = 'THE ETERNAL THRONE REFUSES TO FALL — a blinding surge of divine fury!' },
+              message = 'THE ETERNAL THRONE REFUSES TO FALL - a blinding surge of divine fury!' },
         },
         enrageAfter =
         {
@@ -506,7 +575,7 @@ catalog.dungeons =
             action  = 'enrage',
             att     = 8000,
             haste   = 300,
-            message = 'TIME ENRAGE — The Eternal Throne channels eons of wrath!',
+            message = 'TIME ENRAGE - The Eternal Throne channels eons of wrath!',
         },
     },
 }
@@ -522,6 +591,54 @@ catalog.dungeons =
 -- stays one-shottable-with-effort (3-5s per kill for a geared L99).
 catalog.levelMods =
 {
+    -- Sub-150 breakpoints. Added 2026-05-30: the entry dungeon (The Outer
+    -- Bastion, Lv99-135) and the early trash of dungeons 2-3 sit BELOW the
+    -- old Lv150 floor, so modsForLevel() returned nil and those mobs spawned
+    -- with raw base stats - no ATT, no HP boost, no bossHpMultiplier. That's
+    -- why the entry boss was a pushover. These rows extrapolate down from
+    -- [150] so the low end has a real (but gentle) difficulty ramp. Entry
+    -- tier is still meant to be soloable with gear - tune upward if it reads
+    -- too soft after a live run.
+    [99] = {
+        hpBoost = 1.5,
+        mods = {
+            [xi.mod.ATT]           = 1000, [xi.mod.ACC]           = 550,
+            [xi.mod.STR]           = 40,   [xi.mod.DEX]           = 40,
+            [xi.mod.HASTE_GEAR]    = 50,   [xi.mod.DOUBLE_ATTACK] = 3,
+        },
+    },
+    [110] = {
+        hpBoost = 1.8,
+        mods = {
+            [xi.mod.ATT]           = 1400, [xi.mod.ACC]           = 640,
+            [xi.mod.STR]           = 55,   [xi.mod.DEX]           = 55,
+            [xi.mod.HASTE_GEAR]    = 75,   [xi.mod.DOUBLE_ATTACK] = 5,
+        },
+    },
+    [120] = {
+        hpBoost = 2.0,
+        mods = {
+            [xi.mod.ATT]           = 1800, [xi.mod.ACC]           = 720,
+            [xi.mod.STR]           = 70,   [xi.mod.DEX]           = 70,
+            [xi.mod.HASTE_GEAR]    = 100,  [xi.mod.DOUBLE_ATTACK] = 6,
+        },
+    },
+    [135] = {
+        hpBoost = 2.5,
+        mods = {
+            [xi.mod.ATT]           = 2200, [xi.mod.ACC]           = 820,
+            [xi.mod.STR]           = 90,   [xi.mod.DEX]           = 90,
+            [xi.mod.HASTE_GEAR]    = 130,  [xi.mod.DOUBLE_ATTACK] = 8,
+        },
+    },
+    [140] = {
+        hpBoost = 2.7,
+        mods = {
+            [xi.mod.ATT]           = 2350, [xi.mod.ACC]           = 860,
+            [xi.mod.STR]           = 95,   [xi.mod.DEX]           = 95,
+            [xi.mod.HASTE_GEAR]    = 140,  [xi.mod.DOUBLE_ATTACK] = 9,
+        },
+    },
     [150] = {
         hpBoost = 3,
         mods = {
@@ -566,7 +683,7 @@ catalog.levelMods =
             [xi.mod.TRIPLE_ATTACK] = 13,
         },
     },
-    -- Level 275 — Eternal Throne boss tier. Substantially harder than
+    -- Level 275 - Eternal Throne boss tier. Substantially harder than
     -- Lv250 trash: tighter accuracy requirement, higher raw damage, more
     -- multihit. Intended to require near-full BiS gear to clear reliably.
     [275] = {
@@ -583,8 +700,8 @@ catalog.levelMods =
 -- Boss gets EXTRA HP on top of the level template. Multiplied with the
 -- level's hpBoost.
 --
--- Tuned 2026-05-28: was 2.0 (so Lv200 boss = 5× × 2× = 10× base HP,
--- ~150k HP — unkillable in the time limit solo). 1.2 is just enough
+-- Tuned 2026-05-28: was 2.0 (so Lv200 boss = 5x x 2x = 10x base HP,
+-- ~150k HP - unkillable in the time limit solo). 1.2 is just enough
 -- that the boss feels distinct from the trash without being a sponge.
 -- Combined with the level downshifts in each dungeon (apex boss now
 -- Lv200 instead of Lv250), a geared Lv99 should be able to clear the
@@ -592,20 +709,20 @@ catalog.levelMods =
 catalog.bossHpMultiplier = 1.2
 
 -- ============================================================
--- PHASE 1 — PER-RUN AFFIXES
+-- PHASE 1 - PER-RUN AFFIXES
 -- ============================================================
--- Every dungeon run rolls 1–2 affixes from this pool. Each affix is a
+-- Every dungeon run rolls 1-2 affixes from this pool. Each affix is a
 -- self-contained data row describing:
 --   id            unique short string (used in chat / save state)
 --   label         display name shown in the entry banner
 --   kind          'positive' | 'negative' | 'mixed'  (UI flavour only)
 --   description   one-line player-facing explanation
---   applyBoss     optional fn(mob) → applies engine mods to the boss
+--   applyBoss     optional fn(mob) -> applies engine mods to the boss
 --                 right after the level template is applied. Cheap
---                 mod-only effects only — anything that needs scripted
+--                 mod-only effects only - anything that needs scripted
 --                 AI belongs in a later phase.
---   applyTrash   optional fn(mob) → applied to each trash mob
---   applySession optional fn(sess) → mutates the session table itself
+--   applyTrash   optional fn(mob) -> applied to each trash mob
+--   applySession optional fn(sess) -> mutates the session table itself
 --                 (e.g. tweaks timeLimit). Runs once at session start
 --                 BEFORE the timer is armed.
 --   rewardMult    multiplier applied to the dungeon's Infamy reward
@@ -615,7 +732,7 @@ catalog.bossHpMultiplier = 1.2
 --
 -- A run rolls catalog.affixCountMin .. catalog.affixCountMax affixes.
 -- Final reward multiplier = product of all rolled affixes' rewardMult.
--- e.g. Voracious (1.15) × Mighty (1.20) = 1.38x reward on clear.
+-- e.g. Voracious (1.15) x Mighty (1.20) = 1.38x reward on clear.
 -- ============================================================
 catalog.affixCountMin = 1
 catalog.affixCountMax = 2
@@ -632,7 +749,7 @@ catalog.affixes =
         id          = 'voracious',
         label       = 'Voracious',
         kind        = 'negative',
-        description = 'The boss regenerates rapidly — sustain the DPS.',
+        description = 'The boss regenerates rapidly - sustain the DPS.',
         applyBoss   = function(mob)
             mob:setMod(xi.mod.REGEN, 100)
         end,
@@ -679,7 +796,7 @@ catalog.affixes =
         id          = 'vigilant',
         label       = 'Vigilant',
         kind        = 'negative',
-        description = 'The boss never misses — no relying on evasion.',
+        description = 'The boss never misses - no relying on evasion.',
         applyBoss   = function(mob)
             mob:setMod(xi.mod.ACC, 500)
         end,
@@ -723,7 +840,7 @@ catalog.affixes =
         id          = 'speedy',
         label       = 'Speedy',
         kind        = 'negative',
-        description = 'Time is short — the arena devours the slow.',
+        description = 'Time is short - the arena devours the slow.',
         applySession = function(sess)
             sess.timeLimitOverride = math.floor(sess.dungeon.timeLimit * 0.75)
         end,
@@ -735,7 +852,7 @@ catalog.affixes =
         id          = 'fragile',
         label       = 'Fragile',
         kind        = 'positive',
-        description = 'The boss is reeling — its HP is dramatically reduced.',
+        description = 'The boss is reeling - its HP is dramatically reduced.',
         applyBoss   = function(mob)
             local hp = mob:getMaxHP()
             mob:setMaxHP(math.floor(hp * 0.5))
@@ -758,7 +875,7 @@ catalog.affixes =
         id          = 'exposed',
         label       = 'Exposed',
         kind        = 'positive',
-        description = 'The boss has a glaring weakness — damage taken is doubled.',
+        description = 'The boss has a glaring weakness - damage taken is doubled.',
         applyBoss   = function(mob)
             mob:setMod(xi.mod.PHYS_DMG_TAKEN, 50)
             mob:setMod(xi.mod.MAGIC_DMG_TAKEN, 50)
@@ -769,7 +886,7 @@ catalog.affixes =
         id          = 'lengthy',
         label       = 'Lengthy',
         kind        = 'positive',
-        description = 'Time bends — the run window stretches 50% longer.',
+        description = 'Time bends - the run window stretches 50% longer.',
         applySession = function(sess)
             sess.timeLimitOverride = math.floor(sess.dungeon.timeLimit * 1.5)
         end,
@@ -793,15 +910,93 @@ catalog.affixes =
         id          = 'bountiful',
         label       = 'Bountiful',
         kind        = 'positive',
-        description = 'The dungeon overflows with riches — Infamy is increased.',
+        description = 'The dungeon overflows with riches - Infamy is increased.',
         -- Pure reward modifier. No engine effect, no extra difficulty,
         -- just a happy roll. Rare-feeling because of the steep mult.
         rewardMult  = 1.50,
     },
+
+    -- DungeonSystem.lua reads modType and param; complex affixes like boss_enrage are implemented progressively as the system grows.
+
+    -- =================== NEGATIVE (boss harder, more reward) ===================
+    {
+        id      = 'enrage_timer',
+        label   = 'Enraged',
+        desc    = 'Boss enters a frenzy after 60% HP, gaining +50% ATT and Haste.',
+        modType = 'boss_enrage',
+        param   = { hpTrigger = 0.6, attBoost = 5000, hasteBoost = 150 },
+    },
+    {
+        id      = 'regen_aura',
+        label   = 'Regenerating',
+        desc    = 'The boss regenerates 1% HP per second when not taking damage.',
+        modType = 'boss_regen',
+        param   = { regenPct = 1, breakOnHit = true },
+    },
+    {
+        id      = 'shadow_clones',
+        label   = 'Shadow Clones',
+        desc    = 'Trash mobs are joined by illusory copies — double trash count.',
+        modType = 'trash_multiplier',
+        param   = { multiplier = 2 },
+    },
+    {
+        id      = 'time_pressure',
+        label   = 'Time Crunch',
+        desc    = 'Time limit reduced by 30%.',
+        modType = 'time_reduction',
+        param   = { reductionPct = 0.30 },
+    },
+    {
+        id      = 'debuff_aura',
+        label   = 'Cursed Ground',
+        desc    = 'All players suffer Slow and Poison throughout the dungeon.',
+        modType = 'player_debuff',
+        param   = { effects = { 'slow', 'poison' } },
+    },
+
+    -- =================== POSITIVE (make clears rewarding) ===================
+    {
+        id      = 'gold_fever',
+        label   = 'Gold Fever',
+        desc    = 'Infamy reward +50% on clear.',
+        modType = 'infamy_bonus',
+        param   = { bonusPct = 0.50 },
+    },
+    {
+        id      = 'double_boss',
+        label   = 'Twin Threat',
+        desc    = 'Boss is accompanied by a second (weaker) copy — but Infamy +25% if both fall.',
+        modType = 'dual_boss',
+        param   = { secondaryHpMult = 0.4, infamyBonus = 0.25 },
+    },
+    {
+        id      = 'speed_bonus',
+        label   = 'Blitz Mode',
+        desc    = 'Speed-clear bonus doubled this run.',
+        modType = 'speed_multiplier',
+        param   = { multiplier = 2 },
+    },
+
+    -- =================== MIXED (harder AND rewarding) ===================
+    {
+        id      = 'elite_trash',
+        label   = 'Elite Guards',
+        desc    = 'Trash mobs are HNM-strength — but each trash kill grants +5 Infamy.',
+        modType = 'elite_trash',
+        param   = { trashHpMult = 3.0, trashAttMult = 2.5, bonusInfamyPerTrash = 5 },
+    },
+    {
+        id      = 'chaotic_spawn',
+        label   = 'Chaotic Summoning',
+        desc    = 'Boss randomly summons adds. Kill all adds for +30% Infamy.',
+        modType = 'boss_adds',
+        param   = { addCount = 3, infamyBonusIfKilled = 0.30 },
+    },
 }
 
 -- ============================================================
--- PHASE 2 — DIFFICULTY TIERS  (Normal / Hard / Mythic)
+-- PHASE 2 - DIFFICULTY TIERS  (Normal / Hard / Mythic)
 -- ============================================================
 -- Every dungeon now has three tier variants. Players pick a tier
 -- after picking a dungeon; the higher tiers gate on prior clears and
@@ -883,12 +1078,12 @@ catalog.tiers =
 catalog.tierOrder = { 'normal', 'hard', 'mythic' }
 
 -- ============================================================
--- MYTHIC AFFIXES  (Tyrannical pool — drawn only at Mythic tier)
+-- MYTHIC AFFIXES  (Tyrannical pool - drawn only at Mythic tier)
 -- ============================================================
 -- These are nastier than the base pool. They roll only when the
 -- chosen tier has mythicAffixPool = true. The base pool still rolls
--- too — Mythic just gets a larger total selection (typically 2–3
--- affixes per run vs 1–2 for Normal/Hard) AND a chance at these.
+-- too - Mythic just gets a larger total selection (typically 2-3
+-- affixes per run vs 1-2 for Normal/Hard) AND a chance at these.
 catalog.mythicAffixes =
 {
     {
@@ -918,7 +1113,7 @@ catalog.mythicAffixes =
         id          = 'inescapable',
         label       = 'Inescapable',
         kind        = 'negative',
-        description = 'Time itself rebels — the window is brutally short.',
+        description = 'Time itself rebels - the window is brutally short.',
         applySession = function(sess)
             -- Multiplies the already-tier-adjusted limit. Tier.timeMult
             -- runs first; this slashes whatever's left. So Mythic
@@ -946,7 +1141,7 @@ catalog.mythicAffixes =
         id          = 'titanic',
         label       = 'Titanic',
         kind        = 'negative',
-        description = 'The boss is vastly inflated — bring sustain.',
+        description = 'The boss is vastly inflated - bring sustain.',
         applyBoss   = function(mob)
             local hp = mob:getMaxHP()
             mob:setMaxHP(math.floor(hp * 2.0))
@@ -957,13 +1152,13 @@ catalog.mythicAffixes =
 }
 
 -- ============================================================
--- PHASE 4 — META-PROGRESSION
+-- PHASE 4 - META-PROGRESSION
 -- ============================================================
 -- Three login hooks layered on top of the existing reward path:
 --
 -- 1. DAILY FEATURED DUNGEON
 --    One dungeon per UTC day gets a flat Infamy bonus. Selection is
---    DETERMINISTIC — no server-variable state, no race conditions:
+--    DETERMINISTIC - no server-variable state, no race conditions:
 --    the featured dungeon for any given UTC day is the same for
 --    every player on the server. Computed as:
 --        day_index = floor(epoch / 86400)
@@ -979,7 +1174,7 @@ catalog.mythicAffixes =
 --    capped at 5 = 50% bonus). Visible in the menu and the clear
 --    summary so the player can chase the bonus.
 --
--- 3. MYTHIC WEEKLY KEY UI (display only — the gating logic already
+-- 3. MYTHIC WEEKLY KEY UI (display only - the gating logic already
 --    lives in Phase 2). Main menu now shows "Mythic resets in Xd Yh"
 --    next to dungeons whose Mythic key has been burned this week.
 -- ============================================================
@@ -989,7 +1184,7 @@ catalog.streakCap       = 5     -- streak maxes here (so cap mult = 1 + 5*0.10 =
 catalog.streakCv        = 'Dungeon_Streak'
 
 -- ============================================================
--- PHASE 6 — PARTY / ALLIANCE SUPPORT
+-- PHASE 6 - PARTY / ALLIANCE SUPPORT
 -- ============================================================
 -- When a player starts a dungeon, party members in the SAME ZONE
 -- (typically GM Home) get warped along and share the run. Leader
@@ -998,35 +1193,35 @@ catalog.streakCv        = 'Dungeon_Streak'
 --
 -- Semantics:
 --   * No mid-run join. You're in at warp-in, or you're not in at all.
---   * Leader death  → run ends for everyone (no reward).
---   * Member death  → ONLY that member warps out (no reward); the
+--   * Leader death  -> run ends for everyone (no reward).
+--   * Member death  -> ONLY that member warps out (no reward); the
 --                     run continues for the leader + remaining members.
---   * Boss kill     → success for the leader + every member still
+--   * Boss kill     -> success for the leader + every member still
 --                     alive in the dungeon zone.
---   * Timeout       → failure for everyone in the zone.
---   * Manual abort  → leader-only; ends the run for everyone.
+--   * Timeout       -> failure for everyone in the zone.
+--   * Manual abort  -> leader-only; ends the run for everyone.
 --
--- Bonus-objective evaluation runs on SHARED session telemetry — if
+-- Bonus-objective evaluation runs on SHARED session telemetry - if
 -- any one player drops below 50% HP, the whole party loses Untouched.
 -- That's intentional: group play should feel cooperative, not "let
 -- the tank solo while everyone else watches."
 catalog.party =
 {
     enabled            = true,
-    memberRewardFactor = 0.50,   -- members earn 50% of leader's Infamy
+    memberRewardFactor = 0.80,   -- members earn 80% of leader's Infamy (raised from 0.50 to reduce coordination penalty)
     requireSameZone    = true,   -- members must be in the same zone as leader
     maxMembers         = 5,      -- FFXI party caps at 6 (1 leader + 5 members)
 }
 
 -- ============================================================
--- PHASE 5 — BONUS OBJECTIVES (skill-expression rewards)
+-- PHASE 5 - BONUS OBJECTIVES (skill-expression rewards)
 -- ============================================================
 -- Evaluated at endDungeon('cleared'). Each objective with a passing
 -- `check(sess)` adds its `bonusMult` to the final Infamy formula
 -- (additive with featured + streak bonuses, multiplicative with
--- tier × affixes — see the reward chain at the top of endDungeon).
+-- tier x affixes - see the reward chain at the top of endDungeon).
 --
--- Objectives are GLOBAL — they apply to every dungeon, every tier.
+-- Objectives are GLOBAL - they apply to every dungeon, every tier.
 -- This keeps the system simple to reason about: a player learns the
 -- four bonuses once and chases them across all content.
 --
@@ -1035,7 +1230,7 @@ catalog.party =
 --               and in the chat-output label)
 --   label       short human name shown in the clear banner
 --   bonusMult   reward multiplier added (e.g. 0.25 = +25% Infamy)
---   check       function(sess) -> bool — true awards the bonus
+--   check       function(sess) -> bool - true awards the bonus
 --   reason      one-line description shown when the bonus fires
 --
 -- Telemetry the check functions can read (all live on `sess`):
@@ -1096,24 +1291,115 @@ catalog.bonusObjectives =
 -- ============================================================
 -- BiS-tier gear that isn't available through the other vendor systems.
 -- Costs are in Infamy. Stocked at launch with a starter set the user
--- can grow over time — just append to this list.
+-- can grow over time - just append to this list.
 --
 -- All items use raw item IDs. To find the right ID for any item:
 --   1. !lookupitem <NAME>  in-game
 --   2. Or query: SELECT itemid, name FROM item_basic WHERE name LIKE 'X'
 catalog.vendorItems =
 {
-    -- WEAPONS — Aeonic / Mythic / Relic+3 tier
-    { id = 21646, name = 'Naegling',       cost =  500, stats = { 'Sword. Best WS modifier.', 'Aeonic weapon.' } },
+    -- WEAPONS - Aeonic / Mythic / Relic+3 tier
+    -- NOTE: id 21646 is actually Caliburnus (moved to the Stage-5 Relics block
+    -- below); its old mislabeled 'Naegling' entry was removed. id 21621 is
+    -- Naegling (a sword) and is now correctly labeled below -- it was previously
+    -- mislabeled 'Daybreak' with shield stats. The real Daybreak (22040, a
+    -- caster wand) lives in the auto list, so it is not duplicated here.
     { id = 21632, name = 'Aeneas',         cost =  500, stats = { 'Dagger. Best Rudra Storm.', 'Aeonic weapon.' } },
-    { id = 21621, name = 'Daybreak',       cost =  300, stats = { 'Best PLD shield.', 'Empyrean shield.' } },
+    { id = 21621, name = 'Naegling',       cost =  300, stats = { 'Sword (1-hand). Great Savage Blade.', 'iLvl 119, broad job access.' } },
 
-    -- ACCESSORIES — endgame neck/ring/back
+    -- ----------------------------------------------------------------
+    -- STAGE-5 RELIC WEAPONS  (Level 119 III final forms)
+    -- Passive stat blocks added via sql/zz_relic_119iii_mods.sql (BG-Wiki
+    -- sourced, INSERT IGNORE). Relic Aftermath + relic WS are scripted and
+    -- NOT implemented here, so these are strong stat sticks, not full relics.
+    -- Varga/Mpu were already statted in item_mods.sql; Caliburnus in
+    -- zz_naked_dungeon_fix.sql. Loughnashade is ilvl 0 in item_equipment.
+    -- ----------------------------------------------------------------
+    { id = 21535, name = 'Varga Purnikawa', cost = 800, stats = { 'Hand-to-Hand relic (Lv.119 III). Spharai.', 'Final form. Full stat block.' } },
+    { id = 21590, name = 'Mpu Gandring',    cost = 800, stats = { 'Dagger relic (Lv.119 III). Mandau.', 'Final form. Full stat block.' } },
+    { id = 21646, name = 'Caliburnus',      cost = 800, stats = { 'Sword relic (Lv.119 III). Excalibur.', 'DEX/MND+35, Macc, Magic Dmg+263, Refresh+4.' } },
+    { id = 21653, name = 'Helheim',         cost = 800, stats = { 'Great Sword relic (Lv.119 III). Ragnarok.', 'STR/VIT+30, Store TP+7, GS/Parry skill+269.' } },
+    { id = 21730, name = 'Spalirisos',      cost = 800, stats = { 'Axe relic (Lv.119 III). Guttler.', 'STR/DEX/CHR+35, Crit rate+15%, Acc+35.' } },
+    { id = 21785, name = 'Laphria',         cost = 800, stats = { 'Great Axe relic (Lv.119 III). Bravura.', 'STR/VIT+35, Double Atk+10%, GAxe skill+277.' } },
+    { id = 21837, name = 'Foenaria',        cost = 800, stats = { 'Scythe relic (Lv.119 III). Apocalypse.', 'STR/INT+35, Triple Atk+6%, Acc+35.' } },
+    { id = 21891, name = 'Gae Buide',       cost = 800, stats = { 'Polearm relic (Lv.119 III). Gungnir.', 'STR/VIT+35, Double Atk+10%, Acc+35.' } },
+    { id = 21932, name = 'Dokoku',          cost = 800, stats = { 'Katana relic (Lv.119 III). Kikoku.', 'DEX/AGI+35, Store TP+10, Magic Dmg+263.' } },
+    { id = 21986, name = 'Kusanagi',        cost = 800, stats = { 'Great Katana relic (Lv.119 III). Amanomurakumo.', 'STR/DEX+35, Double Atk+10%, GKat skill+277.' } },
+    { id = 22002, name = 'Lorg Mor',        cost = 800, stats = { 'Club relic (Lv.119 III). Mjollnir.', 'STR/MND+30, MAtk+50, Magic Dmg+248, DT-7%.' } },
+    { id = 22106, name = 'Opashoro',        cost = 800, stats = { 'Staff relic (Lv.119 III). Claustrum.', 'INT/MND+35, MAtk+80, Magic Dmg+325.' } },
+    { id = 22163, name = 'Pinaka',          cost = 800, stats = { 'Bow relic (Lv.119 III). Yoichinoyumi.', 'STR/AGI+35, Store TP+10, Archery skill+277.' } },
+    { id = 22164, name = 'Earp',            cost = 800, stats = { 'Gun relic (Lv.119 III). Annihilator.', 'DEX/AGI+35, Crit rate+15%, Mkmanship skill+277.' } },
+    { id = 26495, name = 'Duban',           cost = 800, stats = { 'Shield relic (Lv.119 III). Aegis.', 'DEF+150, VIT/MND+30, Shield skill+129.' } },
+    { id = 22307, name = 'Loughnashade',    cost = 800, stats = { 'Horn relic (Lv.119 III). Gjallarhorn.', 'CHR+20, All Songs+4. (BRD; ilvl 0)' } },
+
+    -- ----------------------------------------------------------------
+    -- REQUESTED ENDGAME GEAR  (added on request)
+    -- Naked/under-statted pieces are statted in sql/zz_infamy_extra_mods.sql
+    -- (Peltast's +3, Pteroslaver Brais +4, Flamma Gambieras +2, Vim Torque +1,
+    -- Brigantia's Mantle, + Sroda audit-fix, + the Hjarrandi set below).
+    -- Vim Torque +1's "Regain+20 while weapon drawn" is a latent in
+    -- sql/zz_infamy_extra_latents.sql. Brigantia's All-Jumps DA+20% and Wyvern
+    -- Breath+15 are real engine mods (JUMP_DOUBLE_ATTACK 888 / WYVERN_BREATH 402).
+    -- Hjarrandi Helm/Breastplate live in the fixed 'Hjarrandi Tank' set below.
+    -- ----------------------------------------------------------------
+    -- Armor
+    { id = 23500, name = "Peltast's Plackart +3", cost = 400, stats = { 'Body. RUN Relic +3 reforged.', 'Tank/hybrid stat block.' } },
+    { id = 23567, name = "Peltast's Vambraces +3",cost = 400, stats = { 'Hands. RUN Relic +3 reforged.', 'Tank/hybrid stat block.' } },
+    -- Pteroslaver Brais +4 (24066) is ALREADY sold via the +4 reforge browser
+    -- (catalog.plus4Sets, DRG) -- not re-listed here to avoid a duplicate. Its
+    -- stats are still fixed by sql/zz_infamy_extra_mods.sql (same item id).
+    { id = 25953, name = 'Flamma Gambieras +2',  cost = 400, stats = { 'Feet. Ambuscade.', 'DA+6, Store TP+6, Haste+2%.' } },
+    -- Accessories
+    { id = 22212, name = 'Utu Grip',             cost = 300, stats = { 'Grip (sub). Acc/Atk + skill.', 'DD grip.' } },
+    { id = 21431, name = 'Coiste Bodhar',        cost = 300, stats = { 'Earring. Double Attack + WS damage.', 'Top DD earring (Omen).' } },
+    { id = 26022, name = 'Vim Torque +1',        cost = 300, stats = { 'Neck. DEF+15.', 'Regain+20 while weapon drawn (latent).' } },
+    { id = 26118, name = 'Sroda Earring',        cost = 300, stats = { 'Earring. STR + WS damage.', 'DD earring.' } },
+    { id = 26084, name = 'Sherida Earring',      cost = 300, stats = { 'Earring. DEX, Double Attack, crit.', 'DD earring.' } },
+    { id = 26185, name = 'Niqmaddu Ring',        cost = 300, stats = { 'Ring. STR/VIT, Double Attack.', 'DD ring.' } },
+    { id = 26190, name = 'Moonlight Ring',       cost = 300, stats = { 'Ring. Hybrid (DT-, Accuracy).', 'Universal ring.' } },
+    { id = 26334, name = 'Ioskeha Belt +1',      cost = 300, stats = { 'Waist. DEX + Double Attack.', 'DD belt.' } },
+    { id = 26259, name = "Brigantia's Mantle",   cost = 300, stats = { 'Back. DRG cape. DEF+18.', 'All Jumps: DA+20%. Wyvern: Breath+15.' } },
+
+    -- ACCESSORIES - endgame neck/ring/back
     { id = 26072, name = 'Knobkierrie',    cost =  300, stats = { 'WSD+5%, STR+25.', 'Top WS neck.' } },
     { id = 27928, name = 'Stikini Ring +1',cost =  200, stats = { 'INT+10, MND+10, MEVA+12.', 'Mage ring.' } },
 
-    -- META — the truly exclusive "I'm done" prestige slot
+    -- META - the truly exclusive "I'm done" prestige slot
     { id = 13566, name = 'Defending Ring', cost = 1500, stats = { 'Damage Taken -10%.', 'Locks itself once equipped.', 'The grand prize.' } },
+
+    -- ----------------------------------------------------------------
+    -- ORPHAN BiS GEAR - no other acquisition path on this server.
+    -- These EX/RARE pieces are excluded by the auto-gen scorers
+    -- (single-job / non-il119 / +1/+2 NM / REM weapons) and exist
+    -- nowhere else (no drop/synth/AH/guild/NPC/quest/event/sparks),
+    -- so the Infamy Vendor is their home. Cost scales with ranking.
+    -- (Surfaced by an inventory-obtainability audit, 2026-05.)
+    -- ----------------------------------------------------------------
+
+    -- REM-tier weapons
+    { id = 19832, name = 'Ryunohige',           cost =  800, stats = { 'Polearm (main). Mythic-tier, DRG.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 16199, name = 'Ochain',              cost =  800, stats = { 'Grip/shield (sub). Best PLD shield.', 'EX/RARE. High block rate / PDT.' } },
+    { id = 21602, name = 'Onion Sword III',     cost =  300, stats = { 'Sword (main or sub), il119.', 'EX/RARE novelty blade.' } },
+
+    -- il119 armor (premium / +2)
+    { id = 23734, name = 'Malignance Gloves',   cost =  500, stats = { 'Hands, il119. DD/hybrid (DEX, Acc, M.Acc).', 'EX/RARE. Top-tier gloves.' } },
+    { id = 25578, name = 'Jhakri Coronal +2',   cost =  500, stats = { 'Head, il119. Mage (M.Atk / M.Acc).', 'EX/RARE. Reforged Jhakri +2.' } },
+    { id = 25794, name = 'Jhakri Robe +2',      cost =  500, stats = { 'Body, il119. Mage (M.Atk / M.Acc).', 'EX/RARE. Reforged Jhakri +2.' } },
+
+    -- il119 armor (base / +1)
+    { id = 25603, name = 'Jumalik Helm',        cost =  400, stats = { 'Head, il119. Hybrid (HP, Refresh, MDB).', 'EX. Augmentable.' } },
+    { id = 28330, name = 'Founders Greaves',    cost =  400, stats = { 'Feet, il119.', 'EX. Endgame greaves.' } },
+    { id = 25809, name = 'Jhakri Cuffs +1',     cost =  400, stats = { 'Hands, il119. Mage (M.Atk / M.Acc).', 'EX/RARE. Reforged Jhakri +1.' } },
+    { id = 25868, name = 'Jhakri Slops +1',     cost =  400, stats = { 'Legs, il119. Mage (M.Atk / M.Acc).', 'EX/RARE. Reforged Jhakri +1.' } },
+    { id = 25934, name = 'Jhakri Pigaches +1',  cost =  400, stats = { 'Feet, il119. Mage (M.Atk / M.Acc).', 'EX/RARE. Reforged Jhakri +1.' } },
+
+    -- Accessories (neck / waist / back)
+    { id = 11007, name = 'Letalis Mantle',      cost =  300, stats = { 'Back. DD cape (STR, Double Attack).', 'EX/RARE.' } },
+    { id = 26015, name = 'Combatants Torque',   cost =  300, stats = { 'Neck. DD (Accuracy / Attack).', 'EX/RARE.' } },
+    { id = 26003, name = 'Baetyl Pendant',      cost =  300, stats = { 'Neck. Caster (Magic Attack).', 'EX/RARE.' } },
+    { id = 27595, name = 'Argochampsa Mantle',  cost =  300, stats = { 'Back. Caster cape (Magic Acc / Atk).', 'EX/RARE.' } },
+    { id = 28420, name = 'Fotia Belt',          cost =  250, stats = { 'Waist. Universal WS belt (WS damage).', 'EX/RARE.' } },
+    { id = 27510, name = 'Fotia Gorget',        cost =  250, stats = { 'Neck. Universal WS gorget (WS damage).', 'EX/RARE.' } },
 }
 
 -- ============================================================
@@ -1127,10 +1413,10 @@ catalog.vendorItems =
 -- ============================================================
 catalog.vendorSets =
 {
-    -- NYAME — Su5 universal armor (all 22 jobs). Stats from item_mods.
+    -- NYAME - Su5 universal armor (all 22 jobs). Stats from item_mods.
     {
         set  = 'Nyame Universal',
-        desc = 'Su5 armor — wearable by all 22 jobs',
+        desc = 'Su5 armor - wearable by all 22 jobs',
         pieces =
         {
             { id = 23761, name = 'Nyame Helm',      cost =  400, stats = { 'DEF:156 HP+91 STR+26 DEX+25 VIT+24 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+5', 'Magic Dmg+123, Spell Interrupt-700, Phys Dmg Taken-7%', 'Su5 / all 22 jobs' } },
@@ -1141,14 +1427,14 @@ catalog.vendorSets =
         },
     },
 
-    -- HJARRANDI — Odyssey-augmented tank/DPS armor (head + body only)
+    -- HJARRANDI - Odyssey-augmented tank/DPS armor (head + body only)
     {
         set  = 'Hjarrandi Tank',
         desc = 'Odyssey-augmented tank/DPS armor',
         pieces =
         {
-            { id = 27637, name = 'Hjarrandi Helm',   cost =  400, stats = { 'Tank head, DPS head.', 'Odyssey augmented.' } },
-            { id = 27718, name = 'Hjarrandi Breast', cost =  800, stats = { 'Tank/DPS body.', 'Odyssey augmented.' } },
+            { id = 25592, name = 'Hjarrandi Helm',        cost =  400, stats = { 'Tank/DD head. DA+6, Store TP+7, DT-10%.', 'Reforged Hjarrandi (fixed from 27637=evalach).' } },
+            { id = 25766, name = 'Hjarrandi Breastplate', cost =  800, stats = { 'Tank/DD body. Store TP+10, Crit+13%, DT-12%.', 'Reforged Hjarrandi (fixed from 27718=worm_masque).' } },
         },
     },
 }
@@ -1162,33 +1448,147 @@ catalog.vendorSets =
 -- Or run tools/rebalance_all.bat to re-rank every catalog AND
 -- this auto-promoted Infamy Vendor list in one shot.
 --
--- These items are sourced from the top scorers across the
--- Armor / Accessory / Weapons NPC catalogs and surfaced here
--- as a premium Infamy-only path. The hand-curated
--- catalog.vendorItems list above is left untouched.
--- Top 20 of 265 unique Gold-tier picks.
+-- Sourced from the catalog.infamy tier of each scored catalog:
+--   * Armor / Weapons: top 5 per slot / weapon category (the
+--     'best options in game', skimmed out of the gold gear vendor).
+--   * Accessory: the 22 Sortie JSE +2 earrings (Infamy exclusive).
+-- The hand-curated catalog.vendorItems list above is left untouched.
+-- 111 gear + 22 Sortie earrings = 133 items.
 catalog.vendorItemsAuto =
 {
-    { id =  20672, name = 'Ice Brand'                         , cost =  800, stats = { 'CASTER score 1145', 'From Weapons Gold tier (Swords)', 'Jobs: RDM/PLD/BLU' } },
-    { id =  22042, name = 'Wizards Rod'                       , cost =  800, stats = { 'CASTER score 1143', 'From Weapons Gold tier (Clubs)', 'Jobs: BLM/RDM/SCH/GEO' } },
-    { id =  22055, name = 'Oranyan'                           , cost =  800, stats = { 'CASTER score 1129', 'From Weapons Gold tier (Staves)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
-    { id =  22040, name = 'Daybreak'                          , cost =  800, stats = { 'CASTER score 1116', 'From Weapons Gold tier (Clubs)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
-    { id =  22081, name = 'Raetic Staff +1'                   , cost =  800, stats = { 'CASTER score 1102', 'From Weapons Gold tier (Staves)', 'Jobs: WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' } },
-    { id =  22086, name = 'Xoanon'                            , cost =  500, stats = { 'CASTER score 1101', 'From Weapons Gold tier (Staves)', 'Jobs: WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' } },
-    { id =  21071, name = 'Cath Palug Hammer'                 , cost =  500, stats = { 'CASTER score 1098', 'From Weapons Gold tier (Clubs)', 'Jobs: WHM/GEO' } },
-    { id =  21830, name = 'Drepanum'                          , cost =  500, stats = { 'CASTER score 1086', 'From Weapons Gold tier (Scythes)', 'Jobs: WAR/BLM/DRK/BST' } },
-    { id =  22058, name = 'Contemplator +1'                   , cost =  500, stats = { 'CASTER score 1076', 'From Weapons Gold tier (Staves)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
-    { id =  22031, name = 'Maxentius'                         , cost =  500, stats = { 'CASTER score 1071', 'From Weapons Gold tier (Clubs)', 'Jobs: WHM/BLM/RDM/SMN/BLU/SCH/GEO' } },
-    { id =  13606, name = 'Judges Cape'                       , cost =  500, stats = { 'DD score 800', 'From Accessory Gold tier (back)', 'Jobs: All' } },
-    { id =  26963, name = 'Onca Suit'                         , cost =  350, stats = { 'DD score 746', 'From Armor Gold tier (body)', 'Jobs: WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' } },
-    { id =  23799, name = 'Crepuscular Cloak'                 , cost =  350, stats = { 'CASTER score 654', 'From Armor Gold tier (body)', 'Jobs: WHM/BLM/RDM/DRK/SMN/SCH/GEO' } },
-    { id =  25799, name = 'Mallquis Saio +2'                  , cost =  350, stats = { 'CASTER score 513', 'From Armor Gold tier (body)', 'Jobs: BLM/SCH/GEO' } },
-    { id =  13505, name = 'Judges Ring'                       , cost =  350, stats = { 'TANK score 500', 'From Accessory Gold tier (ring)', 'Jobs: All' } },
-    { id =  25888, name = 'Mallquis Trews +2'                 , cost =  350, stats = { 'CASTER score 499', 'From Armor Gold tier (legs)', 'Jobs: BLM/SCH/GEO' } },
-    { id =  24155, name = 'Indomitable Coat'                  , cost =  350, stats = { 'CASTER score 463', 'From Armor Gold tier (body)', 'Jobs: BLM/SMN/SCH/GEO' } },
-    { id =  24161, name = 'Indomitable Tonban'                , cost =  250, stats = { 'CASTER score 457', 'From Armor Gold tier (legs)', 'Jobs: BLM/SMN/SCH/GEO' } },
-    { id =  24154, name = 'Intrepid Coat'                     , cost =  250, stats = { 'CASTER score 451', 'From Armor Gold tier (body)', 'Jobs: BLM/SMN/SCH/GEO' } },
-    { id =  26023, name = 'Sanctity Necklace'                 , cost =  250, stats = { 'CASTER score 252', 'From Accessory Gold tier (neck)', 'Jobs: All' } },
+    { id =  20672, name = 'Ice Brand'                         , cost =  800, stats = { 'CASTER score 1145', 'Weapons top-5 (Swords)', 'Jobs: RDM/PLD/BLU' } },
+    { id =  22042, name = 'Wizards Rod'                       , cost =  800, stats = { 'CASTER score 1143', 'Weapons top-5 (Clubs)', 'Jobs: BLM/RDM/SCH/GEO' } },
+    { id =  22055, name = 'Oranyan'                           , cost =  800, stats = { 'CASTER score 1129', 'Weapons top-5 (Staves)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
+    { id =  22040, name = 'Daybreak'                          , cost =  800, stats = { 'CASTER score 1116', 'Weapons top-5 (Clubs)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
+    { id =  22081, name = 'Raetic Staff +1'                   , cost =  800, stats = { 'CASTER score 1102', 'Weapons top-5 (Staves)', 'Jobs: WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' } },
+    { id =  22086, name = 'Xoanon'                            , cost =  800, stats = { 'CASTER score 1101', 'Weapons top-5 (Staves)', 'Jobs: WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' } },
+    { id =  21071, name = 'Cath Palug Hammer'                 , cost =  800, stats = { 'CASTER score 1098', 'Weapons top-5 (Clubs)', 'Jobs: WHM/GEO' } },
+    { id =  21830, name = 'Drepanum'                          , cost =  800, stats = { 'CASTER score 1086', 'Weapons top-5 (Scythes)', 'Jobs: WAR/BLM/DRK/BST' } },
+    { id =  22058, name = 'Contemplator +1'                   , cost =  800, stats = { 'CASTER score 1076', 'Weapons top-5 (Staves)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
+    { id =  22031, name = 'Maxentius'                         , cost =  800, stats = { 'CASTER score 1071', 'Weapons top-5 (Clubs)', 'Jobs: WHM/BLM/RDM/SMN/BLU/SCH/GEO' } },
+    { id =  22085, name = 'Kaja Staff'                        , cost =  800, stats = { 'CASTER score 1062', 'Weapons top-5 (Staves)', 'Jobs: WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' } },
+    { id =  21637, name = 'Sakpatas Sword'                    , cost =  800, stats = { 'CASTER score 1057', 'Weapons top-5 (Swords)', 'Jobs: RDM/PLD/BLU' } },
+    { id =  21565, name = 'Tauret'                            , cost =  800, stats = { 'CASTER score 1056', 'Weapons top-5 (Daggers)', 'Jobs: RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' } },
+    { id =  21829, name = 'Kaja Scythe'                       , cost =  800, stats = { 'CASTER score 1047', 'Weapons top-5 (Scythes)', 'Jobs: WAR/BLM/DRK/BST' } },
+    { id =  22030, name = 'Kaja Rod'                          , cost =  800, stats = { 'CASTER score 1032', 'Weapons top-5 (Clubs)', 'Jobs: WHM/BLM/RDM/SMN/BLU/SCH/GEO' } },
+    { id =  21564, name = 'Kaja Knife'                        , cost =  800, stats = { 'CASTER score 1017', 'Weapons top-5 (Daggers)', 'Jobs: RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' } },
+    { id =  21620, name = 'Kaja Sword'                        , cost =  800, stats = { 'CASTER score 1017', 'Weapons top-5 (Swords)', 'Jobs: WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' } },
+    { id =  21619, name = 'Eletta Sword'                      , cost =  800, stats = { 'CASTER score 993', 'Weapons top-5 (Swords)', 'Jobs: WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' } },
+    { id =  21563, name = 'Eletta Knife'                      , cost =  800, stats = { 'CASTER score 963', 'Weapons top-5 (Daggers)', 'Jobs: RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' } },
+    { id =  21828, name = 'Eletta Scythe'                     , cost =  800, stats = { 'CASTER score 963', 'Weapons top-5 (Scythes)', 'Jobs: WAR/BLM/DRK/BST' } },
+    { id =  13606, name = 'Judges Cape'                       , cost =  800, stats = { 'DD score 800', 'Accessory top-5 (back)', 'Jobs: All' } },
+    { id =  26963, name = 'Onca Suit'                         , cost =  800, stats = { 'DD score 746', 'Armor top-5 (body)', 'Jobs: WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' } },
+    { id =  13505, name = 'Judges Ring'                       , cost =  800, stats = { 'TANK score 500', 'Accessory top-5 (ring)', 'Jobs: All' } },
+    { id =  25784, name = 'Mallquis Saio +1'                  , cost =  500, stats = { 'CASTER score 484', 'Armor top-5 (body)', 'Jobs: BLM/SCH/GEO' } },
+    { id =  25878, name = 'Mallquis Trews +1'                 , cost =  500, stats = { 'CASTER score 470', 'Armor top-5 (legs)', 'Jobs: BLM/SCH/GEO' } },
+    { id =  25571, name = 'Mallquis Chapeau +2'               , cost =  500, stats = { 'CASTER score 445', 'Armor top-5 (head)', 'Jobs: BLM/SCH/GEO' } },
+    { id =  24140, name = 'Sworn Platemail'                   , cost =  500, stats = { 'CASTER score 441', 'Armor top-5 (body)', 'Jobs: WHM/RDM/PLD/DRK/BLU/RUN' } },
+    { id =  24153, name = 'Bravery Coat'                      , cost =  500, stats = { 'CASTER score 440', 'Armor top-5 (body)', 'Jobs: BLM/SMN/SCH/GEO' } },
+    { id =  24159, name = 'Bravery Tonban'                    , cost =  500, stats = { 'CASTER score 434', 'Armor top-5 (legs)', 'Jobs: BLM/SMN/SCH/GEO' } },
+    { id =  23767, name = 'Bunzis Robe'                       , cost =  500, stats = { 'CASTER score 432', 'Armor top-5 (body)', 'Jobs: WHM/RDM/BRD/SMN' } },
+    { id =  23781, name = 'Bunzis Pants'                      , cost =  500, stats = { 'CASTER score 432', 'Armor top-5 (legs)', 'Jobs: WHM/RDM/BRD/SMN' } },
+    { id =  25823, name = 'Mallquis Cuffs +1'                 , cost =  500, stats = { 'CASTER score 416', 'Armor top-5 (hands)', 'Jobs: BLM/SCH/GEO' } },
+    { id =  23760, name = 'Bunzis Hat'                        , cost =  500, stats = { 'CASTER score 413', 'Armor top-5 (head)', 'Jobs: WHM/RDM/BRD/SMN' } },
+    { id =  23780, name = 'Agwus Slops'                       , cost =  500, stats = { 'CASTER score 412', 'Armor top-5 (legs)', 'Jobs: BLM/SCH/GEO/RUN' } },
+    { id =  23774, name = 'Bunzis Gloves'                     , cost =  500, stats = { 'CASTER score 408', 'Armor top-5 (hands)', 'Jobs: WHM/RDM/BRD/SMN' } },
+    { id =  24142, name = 'Prestige Gauntlets'                , cost =  500, stats = { 'CASTER score 406', 'Armor top-5 (hands)', 'Jobs: WHM/RDM/PLD/DRK/BLU/RUN' } },
+    { id =  24151, name = 'Intrepid Petasos'                  , cost =  500, stats = { 'CASTER score 405', 'Armor top-5 (head)', 'Jobs: BLM/SMN/SCH/GEO' } },
+    { id =  24156, name = 'Bravery Gloves'                    , cost =  500, stats = { 'CASTER score 402', 'Armor top-5 (hands)', 'Jobs: BLM/SMN/SCH/GEO' } },
+    { id =  23788, name = 'Bunzis Sabots'                     , cost =  500, stats = { 'CASTER score 389', 'Armor top-5 (feet)', 'Jobs: WHM/RDM/BRD/SMN' } },
+    { id =  23773, name = 'Agwus Gages'                       , cost =  500, stats = { 'CASTER score 387', 'Armor top-5 (hands)', 'Jobs: BLM/SCH/GEO/RUN' } },
+    { id =  25945, name = 'Mallquis Clogs +1'                 , cost =  500, stats = { 'CASTER score 382', 'Armor top-5 (feet)', 'Jobs: BLM/SCH/GEO' } },
+    { id =  23759, name = 'Agwus Cap'                         , cost =  500, stats = { 'CASTER score 370', 'Armor top-5 (head)', 'Jobs: BLM/SCH/GEO/RUN' } },
+    { id =  24149, name = 'Sworn Sabatons'                    , cost =  500, stats = { 'CASTER score 362', 'Armor top-5 (feet)', 'Jobs: WHM/RDM/PLD/DRK/BLU/RUN' } },
+    { id =  23787, name = 'Agwus Pigaches'                    , cost =  500, stats = { 'CASTER score 361', 'Armor top-5 (feet)', 'Jobs: BLM/SCH/GEO/RUN' } },
+    { id =  23722, name = 'Volte Brais'                       , cost =  500, stats = { 'CASTER score 356', 'Armor top-5 (legs)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
+    { id =  24148, name = 'Prestige Sabatons'                 , cost =  500, stats = { 'CASTER score 353', 'Armor top-5 (feet)', 'Jobs: WHM/RDM/PLD/DRK/BLU/RUN' } },
+    { id =  20632, name = 'Vanir Knife'                       , cost =  500, stats = { 'CASTER score 345', 'Weapons top-5 (Daggers)', 'Jobs: WAR/RDM/THF/BST/BRD/RNG/NIN/COR/DNC' } },
+    { id =  24167, name = 'Duty Crown'                        , cost =  500, stats = { 'DD score 334', 'Armor top-5 (head)', 'Jobs: MNK/THF/BST/PUP/DNC' } },
+    { id =  21567, name = 'Gletis Knife'                      , cost =  500, stats = { 'DD score 278', 'Weapons top-5 (Daggers)', 'Jobs: RDM/THF/BRD/RNG/NIN/COR/DNC' } },
+    { id =  21779, name = 'Lycurgos'                          , cost =  500, stats = { 'DD score 255', 'Weapons top-5 (Great Axes)', 'Jobs: WAR/DRK/RUN' } },
+    { id =  21975, name = 'Hachimonji'                        , cost =  500, stats = { 'DD score 255', 'Weapons top-5 (Great Katana)', 'Jobs: SAM/NIN' } },
+    { id =  26023, name = 'Sanctity Necklace'                 , cost =  500, stats = { 'CASTER score 252', 'Accessory top-5 (neck)', 'Jobs: All' } },
+    { id =  21683, name = 'Ragnarok 119 Iii'                  , cost =  500, stats = { 'DD score 231', 'Weapons top-5 (Great Swords)', 'Jobs: WAR/PLD/DRK' } },
+    { id =  21974, name = 'Kaja Tachi'                        , cost =  500, stats = { 'DD score 218', 'Weapons top-5 (Great Katana)', 'Jobs: SAM/NIN' } },
+    { id =  21778, name = 'Kaja Chopper'                      , cost =  500, stats = { 'DD score 217', 'Weapons top-5 (Great Axes)', 'Jobs: WAR/DRK/RUN' } },
+    { id =  21674, name = 'Nandaka'                           , cost =  500, stats = { 'DD score 213', 'Weapons top-5 (Great Swords)', 'Jobs: WAR/PLD/DRK/RUN' } },
+    { id =  21883, name = 'Shining One'                       , cost =  350, stats = { 'DD score 213', 'Weapons top-5 (Polearms)', 'Jobs: WAR/PLD/SAM/DRG' } },
+    { id =  21519, name = 'Karambit'                          , cost =  350, stats = { 'DD score 208', 'Weapons top-5 (H2H)', 'Jobs: WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' } },
+    { id =  21527, name = 'Sakpatas Fists'                    , cost =  350, stats = { 'DD score 205', 'Weapons top-5 (H2H)', 'Jobs: MNK/PUP' } },
+    { id =  21722, name = 'Dolichenus'                        , cost =  350, stats = { 'DD score 203', 'Weapons top-5 (Axes)', 'Jobs: WAR/DRK/BST/RNG/RUN' } },
+    { id =  21870, name = 'Exalted Spear +1'                  , cost =  350, stats = { 'DD score 199', 'Weapons top-5 (Polearms)', 'Jobs: WAR/PLD/SAM/DRG' } },
+    { id =  21964, name = 'Beryllium Tachi +1'                , cost =  350, stats = { 'DD score 199', 'Weapons top-5 (Great Katana)', 'Jobs: SAM/NIN' } },
+    { id =  21707, name = 'Barbarity +1'                      , cost =  350, stats = { 'DD score 187', 'Weapons top-5 (Axes)', 'Jobs: WAR/BST' } },
+    { id =  21673, name = 'Kaja Claymore'                     , cost =  350, stats = { 'DD score 186', 'Weapons top-5 (Great Swords)', 'Jobs: WAR/PLD/DRK/RUN' } },
+    { id =  21882, name = 'Kaja Lance'                        , cost =  350, stats = { 'DD score 186', 'Weapons top-5 (Polearms)', 'Jobs: WAR/PLD/SAM/DRG' } },
+    { id =  21684, name = 'Caladbolg'                         , cost =  350, stats = { 'TANK score 185', 'Weapons top-5 (Great Swords)', 'Jobs: PLD/DRK' } },
+    { id =  20745, name = 'Ragnarok 119'                      , cost =  350, stats = { 'DD score 178', 'Weapons top-5 (Great Swords)', 'Jobs: WAR/PLD/DRK' } },
+    { id =  27620, name = 'Aurists Cape +1'                   , cost =  350, stats = { 'CASTER score 177', 'Accessory top-5 (back)', 'Jobs: WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' } },
+    { id =  21721, name = 'Kaja Axe'                          , cost =  350, stats = { 'DD score 176', 'Weapons top-5 (Axes)', 'Jobs: WAR/DRK/BST/RNG/RUN' } },
+    { id =  21768, name = 'Raetic Chopper +1'                 , cost =  350, stats = { 'DD score 176', 'Weapons top-5 (Great Axes)', 'Jobs: WAR/BLM/DRK/BRD/SMN/SCH/RUN' } },
+    { id =  21819, name = 'Raetic Scythe +1'                  , cost =  350, stats = { 'DD score 176', 'Weapons top-5 (Scythes)', 'Jobs: WAR/BLM/DRK/BST' } },
+    { id =  21872, name = 'Raetic Halberd +1'                 , cost =  350, stats = { 'DD score 176', 'Weapons top-5 (Polearms)', 'Jobs: WAR/BLM/PLD/BRD/SAM/DRG/SMN/SCH' } },
+    { id =  26357, name = 'Skrymir Cord +1'                   , cost =  350, stats = { 'CASTER score 175', 'Accessory top-5 (waist)', 'Jobs: All' } },
+    { id =  21518, name = 'Kaja Knuckles'                     , cost =  350, stats = { 'DD score 172', 'Weapons top-5 (H2H)', 'Jobs: WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' } },
+    { id =  21766, name = 'Hepatizon Axe +1'                  , cost =  350, stats = { 'DD score 159', 'Weapons top-5 (Great Axes)', 'Jobs: WAR/DRK/RUN' } },
+    { id =  21816, name = 'Maliya Sickle +1'                  , cost =  350, stats = { 'DD score 158', 'Weapons top-5 (Scythes)', 'Jobs: WAR/BLM/DRK/BST' } },
+    { id =  21528, name = 'Dragon Fangs'                      , cost =  350, stats = { 'DD score 157', 'Weapons top-5 (H2H)', 'Jobs: MNK/PUP' } },
+    { id =  21752, name = 'Farsha'                            , cost =  350, stats = { 'DD score 155', 'Weapons top-5 (Axes)', 'Jobs: WAR/BST' } },
+    { id =  21296, name = 'Chrono Bullet'                     , cost =  350, stats = { 'DD score 150', 'Weapons top-5 (Marksmanship)', 'Jobs: RNG/COR' } },
+    { id =  26341, name = 'Moonbow Belt +1'                   , cost =  350, stats = { 'DD score 144', 'Accessory top-5 (waist)', 'Jobs: MNK/PUP' } },
+    { id =  26004, name = 'Lissome Necklace'                  , cost =  350, stats = { 'DD score 140', 'Accessory top-5 (neck)', 'Jobs: All' } },
+    { id =  21763, name = 'Arasy Axe +1'                      , cost =  350, stats = { 'DD score 140', 'Weapons top-5 (Great Axes)', 'Jobs: WAR/DRK/RUN' } },
+    { id =  21973, name = 'Eletta Tachi'                      , cost =  350, stats = { 'DD score 140', 'Weapons top-5 (Great Katana)', 'Jobs: SAM/NIN' } },
+    { id =  22107, name = 'Ullr'                              , cost =  350, stats = { 'CASTER score 139', 'Weapons top-5 (Archery)', 'Jobs: WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' } },
+    { id =  21720, name = 'Eletta Axe'                        , cost =  350, stats = { 'DD score 138', 'Weapons top-5 (Axes)', 'Jobs: WAR/DRK/BST/RNG/RUN' } },
+    { id =  21881, name = 'Eletta Lance'                      , cost =  350, stats = { 'DD score 138', 'Weapons top-5 (Polearms)', 'Jobs: WAR/PLD/SAM/DRG' } },
+    { id =  21325, name = 'Devastating Bullet'                , cost =  350, stats = { 'DD score 138', 'Weapons top-5 (Marksmanship)', 'Jobs: RNG/COR' } },
+    { id =  26269, name = 'Moonlight Cape'                    , cost =  350, stats = { 'TANK score 135', 'Accessory top-5 (back)', 'Jobs: All' } },
+    { id =  22111, name = 'Kaja Bow'                          , cost =  350, stats = { 'CASTER score 125', 'Weapons top-5 (Archery)', 'Jobs: WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' } },
+    { id =  21299, name = 'Yoichis Arrow'                     , cost =  250, stats = { 'DD score 119', 'Weapons top-5 (Archery)', 'Jobs: RNG/SAM' } },
+    { id =  22110, name = 'Eletta Bow'                        , cost =  250, stats = { 'CASTER score 112', 'Weapons top-5 (Archery)', 'Jobs: WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' } },
+    { id =  27615, name = 'Reiki Cloak'                       , cost =  250, stats = { 'TANK score 102', 'Accessory top-5 (back)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' } },
+    { id =  21972, name = 'Ajja Tachi'                        , cost =  250, stats = { 'DD score 100', 'Weapons top-5 (Great Katana)', 'Jobs: SAM/NIN' } },
+    { id =  11607, name = 'Artemiss Medal'                    , cost =  250, stats = { 'CASTER score 95', 'Accessory top-5 (neck)', 'Jobs: All' } },
+    { id =  22126, name = 'Exalted Bow +1'                    , cost =  250, stats = { 'DD score 94', 'Weapons top-5 (Archery)', 'Jobs: WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' } },
+    { id =  25437, name = 'Sorcerers Stole +2'                , cost =  250, stats = { 'CASTER score 81', 'Accessory top-5 (neck)', 'Jobs: BLM' } },
+    { id =  28607, name = 'Aput Mantle +1'                    , cost =  250, stats = { 'CASTER score 80', 'Accessory top-5 (back)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' } },
+    { id =  26321, name = 'Reiki Yotai'                       , cost =  250, stats = { 'DD score 79', 'Accessory top-5 (waist)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' } },
+    { id =  25461, name = 'Abyssal Bead Necklace +2'          , cost =  250, stats = { 'DD score 78', 'Accessory top-5 (neck)', 'Jobs: DRK' } },
+    { id =  26088, name = 'Malignance Earring'                , cost =  250, stats = { 'CASTER score 76', 'Accessory top-5 (ear)', 'Jobs: WHM/BLM/RDM/DRK/SMN/SCH/GEO' } },
+    { id =  28471, name = 'Gere Ring'                         , cost =  250, stats = { 'DD score 76', 'Accessory top-5 (ring)', 'Jobs: MNK/THF/BST/NIN/PUP/DNC' } },
+    { id =  22136, name = 'Arasy Gun +1'                      , cost =  250, stats = { 'DD score 68', 'Weapons top-5 (Marksmanship)', 'Jobs: RNG/COR' } },
+    { id =  22285, name = 'Beryllium Bolt'                    , cost =  250, stats = { 'DD score 68', 'Weapons top-5 (Marksmanship)', 'Jobs: WAR/THF/DRK/RNG' } },
+    { id =  28408, name = 'Grunfeld Rope'                     , cost =  250, stats = { 'DD score 67', 'Accessory top-5 (waist)', 'Jobs: All' } },
+    { id =  22134, name = 'Holliday'                          , cost =  250, stats = { 'DD score 61', 'Weapons top-5 (Marksmanship)', 'Jobs: RNG/COR' } },
+    { id =  26191, name = 'Regal Ring'                        , cost =  250, stats = { 'DD score 60', 'Accessory top-5 (ring)', 'Jobs: WAR/MNK/THF/PLD/DRK/BST/RNG/SAM/NIN/DRG/COR/PUP/DNC/RUN' } },
+    { id =  26193, name = 'Woltaris Ring +1'                  , cost =  250, stats = { 'HEAL score 60', 'Accessory top-5 (ring)', 'Jobs: All' } },
+    { id =  26196, name = 'Renaye Ring +1'                    , cost =  250, stats = { 'HEAL score 60', 'Accessory top-5 (ring)', 'Jobs: All' } },
+    { id =  25439, name = 'Wicce Earring +1'                  , cost =  250, stats = { 'CASTER score 56', 'Accessory top-5 (ear)', 'Jobs: BLM' } },
+    { id =  25535, name = 'Arbatel Earring +1'                , cost =  250, stats = { 'CASTER score 56', 'Accessory top-5 (ear)', 'Jobs: SCH' } },
+    { id =  26108, name = 'Odr Earring'                       , cost =  250, stats = { 'DD score 55', 'Accessory top-5 (ear)', 'Jobs: MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' } },
+    { id =  25422, name = 'Boii Earring +2'                   , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for WAR', 'Jobs: WAR' } },
+    { id =  25428, name = 'Bhikku Earring +2'                 , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for MNK', 'Jobs: MNK' } },
+    { id =  25434, name = 'Ebers Earring +2'                  , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for WHM', 'Jobs: WHM' } },
+    { id =  25440, name = 'Wicce Earring +2'                  , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for BLM', 'Jobs: BLM' } },
+    { id =  25446, name = 'Lethargy Earring +2'               , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for RDM', 'Jobs: RDM' } },
+    { id =  25452, name = 'Skulkers Earring +2'               , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for THF', 'Jobs: THF' } },
+    { id =  25458, name = 'Chevaliers Earring +2'             , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for PLD', 'Jobs: PLD' } },
+    { id =  25464, name = 'Heathens Earring +2'               , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for DRK', 'Jobs: DRK' } },
+    { id =  25470, name = 'Nukumi Earring +2'                 , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for BST', 'Jobs: BST' } },
+    { id =  25476, name = 'Fili Earring +2'                   , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for BRD', 'Jobs: BRD' } },
+    { id =  25482, name = 'Amini Earring +2'                  , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for RNG', 'Jobs: RNG' } },
+    { id =  25488, name = 'Kasuga Earring +2'                 , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for SAM', 'Jobs: SAM' } },
+    { id =  25494, name = 'Hattori Earring +2'                , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for NIN', 'Jobs: NIN' } },
+    { id =  25500, name = 'Peltasts Earring +2'               , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for DRG', 'Jobs: DRG' } },
+    { id =  25506, name = 'Beckoners Earring +2'              , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for SMN', 'Jobs: SMN' } },
+    { id =  25512, name = 'Hashishin Earring +2'              , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for BLU', 'Jobs: BLU' } },
+    { id =  25518, name = 'Chasseurs Earring +2'              , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for COR', 'Jobs: COR' } },
+    { id =  25524, name = 'Karagoz Earring +2'                , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for PUP', 'Jobs: PUP' } },
+    { id =  25530, name = 'Maculele Earring +2'               , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for DNC', 'Jobs: DNC' } },
+    { id =  25536, name = 'Arbatel Earring +2'                , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for SCH', 'Jobs: SCH' } },
+    { id =  25542, name = 'Azimuth Earring +2'                , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for GEO', 'Jobs: GEO' } },
+    { id =  25548, name = 'Erilaz Earring +2'                 , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for RUN', 'Jobs: RUN' } },
 }
 -- DOCGEN:INFAMY_AUTO:END
 
@@ -1197,10 +1597,10 @@ catalog.vendorItemsAuto =
 catalog.vendorPageSize = 6
 
 -- ============================================================
--- +4 REFORGE SETS  (separate browser: Job → Set → Slot)
+-- +4 REFORGE SETS  (separate browser: Job -> Set -> Slot)
 -- ============================================================
 -- 200 Infamy per piece (1000 per full 5-slot set). Stats sourced from
--- BG-Wiki via tools/build_infamy_plus4_catalog.py — regenerate that
+-- BG-Wiki via tools/build_infamy_plus4_catalog.py - regenerate that
 -- script to refresh this section.
 catalog.plus4Cost = 200
 
@@ -1596,6 +1996,66 @@ catalog.plus4Sets =
         } },
     },
 }
+
+-- INFAMY_TYPEMAP:BEGIN
+-- AUTO-GENERATED by tools/build_infamy_typemap.py -- do NOT hand-edit.
+-- Maps curated Infamy Vendor item ids to 'Category/Subtype' for the
+-- grouped browser (derived from item_equipment.slot + item_weapon.skill).
+-- Re-run the tool after adding items; unmapped ids show under 'Other'.
+catalog.itemTypeMap =
+{
+    [21632] = 'Weapons/Sword',
+    [21621] = 'Weapons/Sword',
+    [21535] = 'Weapons/Hand-to-Hand',
+    [21590] = 'Weapons/Dagger',
+    [21646] = 'Weapons/Sword',
+    [21653] = 'Weapons/Great Sword',
+    [21730] = 'Weapons/Axe',
+    [21785] = 'Weapons/Great Axe',
+    [21837] = 'Weapons/Scythe',
+    [21891] = 'Weapons/Polearm',
+    [21932] = 'Weapons/Katana',
+    [21986] = 'Weapons/Great Katana',
+    [22002] = 'Weapons/Club',
+    [22106] = 'Weapons/Staff',
+    [22163] = 'Weapons/Archery',
+    [22164] = 'Weapons/Marksmanship',
+    [26495] = 'Weapons/Grip-Shield',
+    [22307] = 'Weapons/Instrument',
+    [23500] = 'Armor/Body',
+    [23567] = 'Armor/Hands',
+    [25953] = 'Armor/Feet',
+    [22212] = 'Weapons/Grip-Shield',
+    [21431] = 'Accessories/Ear',
+    [26022] = 'Accessories/Neck',
+    [26118] = 'Accessories/Ear',
+    [26084] = 'Accessories/Ear',
+    [26185] = 'Accessories/Ring',
+    [26190] = 'Accessories/Ring',
+    [26334] = 'Accessories/Waist',
+    [26259] = 'Accessories/Back',
+    [26072] = 'Accessories/Neck',
+    [27928] = 'Armor/Hands',
+    [13566] = 'Accessories/Ring',
+    [19832] = 'Weapons/Polearm',
+    [16199] = 'Weapons/Grip-Shield',
+    [21602] = 'Weapons/Sword',
+    [23734] = 'Armor/Hands',
+    [25578] = 'Armor/Head',
+    [25794] = 'Armor/Body',
+    [25603] = 'Armor/Head',
+    [28330] = 'Armor/Feet',
+    [25809] = 'Armor/Hands',
+    [25868] = 'Armor/Legs',
+    [25934] = 'Armor/Feet',
+    [11007] = 'Accessories/Back',
+    [26015] = 'Accessories/Neck',
+    [26003] = 'Accessories/Neck',
+    [27595] = 'Accessories/Back',
+    [28420] = 'Accessories/Waist',
+    [27510] = 'Accessories/Neck',
+}
+-- INFAMY_TYPEMAP:END
 
 
 return catalog
