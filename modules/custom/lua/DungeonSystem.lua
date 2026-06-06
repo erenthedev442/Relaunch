@@ -1103,7 +1103,7 @@ local function spawnAllMobs(player, dungeon)
     -- even when the gate WALL is off. A dungeon can make mobs passive
     -- with `aggressive = false`. So `gated = false` removes only the
     -- warding-force pushback; mobs still notice and chase you.
-    local gatingOn = (dungeon.gated ~= false)
+    local gatingOn = (dungeon.gated ~= false) and not catalog.disableBoundaries
     local aggroOn  = (dungeon.aggressive ~= false)
     local entryX, entryZ = dungeon.warpIn.x, dungeon.warpIn.z
     local bpx = dungeon.bossPos and dungeon.bossPos.x or (px + axis.dx * (dungeon.bossDistance or 60))
@@ -1587,7 +1587,7 @@ local function armDungeonAfterArrival(player)
             return  -- session ended; stop patrolling
         end
         local py = p:getYPos() or safeY
-        if py < safeY - 3 then
+        if (not catalog.disableBoundaries) and py < safeY - 3 then
             print(string.format(
                 "[dungeon] OOB RESCUE: %s fell to Y=%.2f (safe=%.2f); warping to entry",
                 p:getName(), py, safeY))
@@ -1738,9 +1738,15 @@ local function armDungeonAfterArrival(player)
         string.format('[Dungeon] %s - clear the boss within the time limit, kupo!',
             dungeon.label),
         xi.msg.channel.SYSTEM_3)
-    if dungeon.gated ~= false then
+    local gatesOn = (dungeon.gated ~= false) and not catalog.disableBoundaries
+    local aggroOn = (dungeon.aggressive ~= false)
+    if gatesOn then
         player:printToPlayer(
             '[Dungeon] Hostile guardians hold each threshold ahead - they aggro on sight and CANNOT be bypassed. Cut a path through them, defeat the elite NMs, then face the final boss, kupo!',
+            xi.msg.channel.SYSTEM_3)
+    elseif aggroOn then
+        player:printToPlayer(
+            '[Dungeon] No barriers bar your path - move freely. Mobs aggro on sight, so fight through or rush past them straight to the boss, kupo!',
             xi.msg.channel.SYSTEM_3)
     else
         player:printToPlayer(
@@ -2779,7 +2785,7 @@ local SUB_ORDER =
 {
     Weapons     = { 'Hand-to-Hand', 'Dagger', 'Sword', 'Great Sword', 'Axe',
                     'Great Axe', 'Scythe', 'Polearm', 'Katana', 'Great Katana',
-                    'Club', 'Staff', 'Archery', 'Marksmanship', 'Instrument',
+                    'Club', 'Staff', 'Archery', 'Marksmanship', 'Ammo', 'Instrument',
                     'Grip-Shield', 'Other' },
     Armor       = { 'Head', 'Body', 'Hands', 'Legs', 'Feet', 'Other' },
     Accessories = { 'Neck', 'Ear', 'Ring', 'Waist', 'Back', 'Other' },

@@ -68,6 +68,18 @@ catalog.currencyName = 'Infamy'
 catalog.currencyCv   = 'Infamy'
 
 -- ============================================================
+-- BOUNDARIES OFF (player request — all dungeons)
+-- ============================================================
+-- When true, BOTH movement-restricting systems are disabled for EVERY
+-- dungeon:
+--   * the progression-gate "warding force" pushback (gatingOn), and
+--   * the out-of-bounds warp-back-to-entry patrol.
+-- Players move freely; mobs still spawn and (unless a dungeon sets
+-- aggressive = false) still aggro and chase, and the boss + time limit are
+-- unchanged. Set to false to restore per-dungeon gates / OOB rescue.
+catalog.disableBoundaries = true
+
+-- ============================================================
 -- DUNGEON MASTER + INFAMY VENDOR NPC PLACEMENT
 -- ============================================================
 -- Both NPCs live at GM Home. Dungeon Master is on the existing custom-
