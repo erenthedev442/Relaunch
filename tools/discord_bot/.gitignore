@@ -1,0 +1,9 @@
+# Real config has the webhook URL — never commit it.
+config.py
+
+# Per-run state lives here. Regenerated on every run; don't commit.
+state.json
+
+# Discord<->character account links (token bot). Player data; never commit.
+links.json
+links.json.tmp

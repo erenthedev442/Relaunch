@@ -3,13 +3,13 @@
 -- NM-farm-to-reforged-armor system. Three currencies, three NM pools.
 --
 -- Components:
---   Reforge Spawner — pops one of 3 NM types on demand.
+--   Reforge Spawner - pops one of 3 NM types on demand.
 --                     AF Marks  <- Sky Gods
 --                     Rel Marks <- Unity NMs
 --                     Em  Marks <- Abyssea NMs
 --                     Each kill drops a random BASE piece from THAT set's
 --                     loot pool, plus the matching currency.
---   Reforge Vendor  — paginated browser to spend currency on upgrades:
+--   Reforge Vendor  - paginated browser to spend currency on upgrades:
 --                       base -> +1 / +1 -> +2 / +2 -> +3
 --                     Each upgrade tier costs the corresponding set's marks.
 --
@@ -31,7 +31,28 @@ local m = Module:new('reforge_system')
 local JOBS_PG_SZ = 6   -- jobs per page on the job picker
 
 -----------------------------------
--- Currency helpers — keyed by setKey
+-- Salvage trade: set of all base-tier item IDs across every job/set/slot.
+-- Built once at module load so the onTrade handler has an O(1) lookup.
+-----------------------------------
+local _basePieceIds = {}
+do
+    for _, jobPieces in pairs(catalog.pieces) do
+        for _, setKey in ipairs({ 'af', 'relic', 'empy' }) do
+            local set = jobPieces[setKey]
+            if set then
+                for _, slot in pairs(set) do
+                    -- slot[1] is always the base tier
+                    if slot[1] and slot[1] > 0 then
+                        _basePieceIds[slot[1]] = true
+                    end
+                end
+            end
+        end
+    end
+end
+
+-----------------------------------
+-- Currency helpers - keyed by setKey
 -----------------------------------
 local function getMarks(player, setKey)
     return player:getCharVar(catalog.sources[setKey].cv)
@@ -46,7 +67,7 @@ local function addMarks(player, setKey, n)
     local def = catalog.sources[setKey]
     -- Current balance (spendable; goes down when player upgrades).
     player:setCharVar(def.cv, player:getCharVar(def.cv) + n)
-    -- Lifetime accumulator that NEVER decreases — drives the
+    -- Lifetime accumulator that NEVER decreases - drives the
     -- "Lifetime Marks Earned" leaderboard so spending doesn't drop
     -- you on the board.
     local lifetimeCV = def.cv .. '_Lifetime'
@@ -58,7 +79,7 @@ local function spendMarks(player, setKey, n)
     player:setCharVar(cv, player:getCharVar(cv) - n)
 end
 
--- "AF:25 Rel:0 Em:0" — used in menu titles to show all three balances at once
+-- "AF:25 Rel:0 Em:0" - used in menu titles to show all three balances at once
 local function balanceTriplet(player)
     return string.format('AF:%d Rel:%d Em:%d',
         getMarks(player, 'af'),
@@ -127,7 +148,7 @@ local function awardCurrency(player, srcDef, mobDef)
     --       - Apex capstone (+50% to ALL when active; supersedes Trinity)
     --   * rep is NO LONGER bumped here. Under the v2 design (2026-05-29)
     --     guild rep comes only from killing the dedicated vanilla HNMs
-    --     listed in catalog.huntTargets — see hunters_guild_hunts.lua.
+    --     listed in catalog.huntTargets - see hunters_guild_hunts.lua.
     --     Reforge kills still BENEFIT from rank (amplifier still flows),
     --     but they no longer GRANT rank progress.
     local final = hg.applyAmplifier(player, srcDef.setKey, base)
@@ -222,7 +243,7 @@ buildSetMenu = function(player, jobDef)
     local function setOption(setKey, label)
         local set = jobPieces and jobPieces[setKey]
         if not set then
-            return  -- silently omit — this job's armor set isn't cataloged yet
+            return  -- silently omit - this job's armor set isn't cataloged yet
         end
         table.insert(options, { label, function(p) buildSlotMenu(p, jobDef, setKey, set) end })
     end
@@ -335,7 +356,7 @@ buildSpawnerMain = function(player)
     for _, setKey in ipairs(catalog.sourceOrder) do
         local s = catalog.sources[setKey]
         table.insert(options, {
-            -- "Sky Gods (AF)" — short so we stay under the 150-byte cap
+            -- "Sky Gods (AF)" - short so we stay under the 150-byte cap
             string.format('%s (%s)', s.label, s.currencyShort),
             function(p) buildSourceNMMenu(p, s) end,
         })
@@ -352,7 +373,7 @@ buildSourceNMMenu = function(player, srcDef)
     local options = {}
     for _, mob in ipairs(srcDef.mobs) do
         local md = mob
-        -- "<name>  +<n>" — currency context is in the title; some NM names
+        -- "<name>  +<n>" - currency context is in the title; some NM names
         -- (e.g. Itzpapalotl, Hadhayosh) are long enough that adding "Spawn "
         -- and a currency suffix per row would push the menu past 150 bytes.
         table.insert(options, {
@@ -375,7 +396,7 @@ buildSourceNMMenu = function(player, srcDef)
                 local mPos = catalog.mobSpawnPos
                 -- Record spawn time so Speed Demon (kill within 60s)
                 -- objectives can compute secondsToKill. Captured by the
-                -- onMobDeath closure below — survives all the way to
+                -- onMobDeath closure below - survives all the way to
                 -- the wh.fire() call after the kill.
                 local spawnedAt = os.time()
                 local mob = z:insertDynamicEntity({
@@ -403,7 +424,7 @@ buildSourceNMMenu = function(player, srcDef)
                         if not killer then return end
                         rollLootDrop(killer, srcDef, md.label)
                         awardCurrency(killer, srcDef, md)
-                        -- Weekly Hunt Board nm_kill — fired here (not
+                        -- Weekly Hunt Board nm_kill - fired here (not
                         -- in awardCurrency) so the spawn-closure's
                         -- spawnedAt is in scope for secondsToKill.
                         wh.fire(killer, 'nm_kill', {
@@ -427,12 +448,12 @@ buildSourceNMMenu = function(player, srcDef)
 
                 -- Block capacity points on kill. Reforge has its own
                 -- currency (RF_*_Marks); without this gate, a Lv250 NM
-                -- × EXP_RATE=10 dumps hundreds of thousands of CP per
+                -- x EXP_RATE=10 dumps hundreds of thousands of CP per
                 -- kill. Requires MOBMOD_NO_CAPACITY_POINTS=200 + the
                 -- early-return in src/map/utils/charutils.cpp.
                 mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
 
-                -- Apply stat mods AFTER spawn() — spawn() recalculates
+                -- Apply stat mods AFTER spawn() - spawn() recalculates
                 -- stats from the pool and would wipe anything set
                 -- earlier. Mirrors the Hunting League spawn path so
                 -- catalog tweaks behave the same way across systems.
@@ -443,8 +464,8 @@ buildSourceNMMenu = function(player, srcDef)
                 end
 
                 -- HP scaling: catalog field hpBoost = multiplier
-                -- (e.g. 12 = 12× base HP). Lv250 Kirin/Tinnin/Hadhayosh
-                -- get 25× base HP — a real fight, not a 5-second melt.
+                -- (e.g. 12 = 12x base HP). Lv250 Kirin/Tinnin/Hadhayosh
+                -- get 25x base HP - a real fight, not a 5-second melt.
                 if md.hpBoost then
                     local newMax = mob:getMaxHP() * md.hpBoost
                     mob:setMaxHP(newMax)
@@ -492,7 +513,35 @@ m:addOverride(catalog.huntZonePath .. '.Zone.onInitialize', function(zone)
         look       = 2430,
         x = vPos.x, y = vPos.y, z = vPos.z, rotation = vPos.rot,
         widescan   = 1,
-        onTrade    = function(p) p:printToPlayer('No trades -- use the menu, kupo!', xi.msg.channel.SYSTEM_3) end,
+        onTrade    = function(p, npc, trade)
+            -- Salvage mechanic: trade exactly 5 identical base-tier pieces
+            -- for 15 Hunt Marks (HL_Points).
+            local tradeSize = trade:getSlotCount()
+            if tradeSize == 5 then
+                -- Collect all traded item IDs to verify they are all the same.
+                local firstId = nil
+                local allSame = true
+                for slot = 0, tradeSize - 1 do
+                    local itemId = trade:getItemId(slot)
+                    if firstId == nil then
+                        firstId = itemId
+                    elseif itemId ~= firstId then
+                        allSame = false
+                        break
+                    end
+                end
+
+                if allSame and firstId and _basePieceIds[firstId] then
+                    trade:confirmTrade()
+                    local current = p:getCharVar('HL_Points')
+                    p:setCharVar('HL_Points', current + 15)
+                    p:printToPlayer('[Reforge] Salvaged 5 redundant pieces - +15 Hunt Marks awarded.', xi.msg.channel.SYSTEM_3)
+                    return
+                end
+            end
+
+            p:printToPlayer('No trades -- use the menu, kupo!', xi.msg.channel.SYSTEM_3)
+        end,
         onTrigger  = function(p) p:timer(50, function(pp) buildVendorMain(pp) end) end,
     })
     utils.unused(Vendor)

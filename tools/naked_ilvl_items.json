@@ -1,0 +1,9537 @@
+{
+  "generated_at": "2026-05-28",
+  "description": "iLvl 100+ equippable items with 0 item_mods and 0 item_latents",
+  "count": 1191,
+  "itemIds": [
+    20530,
+    20539,
+    20542,
+    20546,
+    20549,
+    20553,
+    20579,
+    20580,
+    20581,
+    20592,
+    20595,
+    20596,
+    20597,
+    20598,
+    20599,
+    20600,
+    20603,
+    20606,
+    20607,
+    20608,
+    20617,
+    20619,
+    20633,
+    20637,
+    20639,
+    20655,
+    20663,
+    20664,
+    20679,
+    20680,
+    20681,
+    20682,
+    20683,
+    20696,
+    20697,
+    20700,
+    20701,
+    20702,
+    20703,
+    20704,
+    20705,
+    20708,
+    20709,
+    20710,
+    20718,
+    20719,
+    20720,
+    20723,
+    20724,
+    20725,
+    20727,
+    20729,
+    20730,
+    20731,
+    20735,
+    20736,
+    20739,
+    20740,
+    20742,
+    20744,
+    20749,
+    20750,
+    20751,
+    20752,
+    20753,
+    20756,
+    20757,
+    20759,
+    20760,
+    20762,
+    20764,
+    20767,
+    20768,
+    20771,
+    20776,
+    20778,
+    20779,
+    20780,
+    20785,
+    20786,
+    20787,
+    20788,
+    20789,
+    20796,
+    20797,
+    20798,
+    20799,
+    20800,
+    20801,
+    20804,
+    20806,
+    20807,
+    20809,
+    20810,
+    20811,
+    20812,
+    20814,
+    20815,
+    20816,
+    20820,
+    20823,
+    20824,
+    20826,
+    20828,
+    20829,
+    20833,
+    20844,
+    20847,
+    20848,
+    20853,
+    20854,
+    20857,
+    20859,
+    20863,
+    20866,
+    20869,
+    20870,
+    20872,
+    20873,
+    20874,
+    20875,
+    20876,
+    20877,
+    20878,
+    20879,
+    20891,
+    20892,
+    20894,
+    20895,
+    20898,
+    20899,
+    20901,
+    20903,
+    20907,
+    20911,
+    20914,
+    20915,
+    20917,
+    20918,
+    20919,
+    20920,
+    20921,
+    20924,
+    20932,
+    20936,
+    20937,
+    20938,
+    20939,
+    20942,
+    20943,
+    20946,
+    20947,
+    20948,
+    20950,
+    20951,
+    20952,
+    20954,
+    20956,
+    20957,
+    20958,
+    20960,
+    20961,
+    20964,
+    20965,
+    20967,
+    20968,
+    20969,
+    20978,
+    20979,
+    20980,
+    20981,
+    20983,
+    20987,
+    20988,
+    20992,
+    20993,
+    20996,
+    20999,
+    21000,
+    21003,
+    21005,
+    21008,
+    21009,
+    21010,
+    21011,
+    21012,
+    21013,
+    21014,
+    21021,
+    21022,
+    21026,
+    21027,
+    21034,
+    21035,
+    21037,
+    21039,
+    21043,
+    21045,
+    21046,
+    21047,
+    21050,
+    21051,
+    21053,
+    21054,
+    21055,
+    21056,
+    21057,
+    21058,
+    21059,
+    21066,
+    21067,
+    21068,
+    21069,
+    21070,
+    21072,
+    21073,
+    21075,
+    21076,
+    21080,
+    21082,
+    21083,
+    21084,
+    21085,
+    21088,
+    21090,
+    21091,
+    21092,
+    21099,
+    21100,
+    21101,
+    21105,
+    21109,
+    21110,
+    21120,
+    21123,
+    21124,
+    21129,
+    21130,
+    21133,
+    21134,
+    21145,
+    21148,
+    21149,
+    21150,
+    21156,
+    21159,
+    21160,
+    21162,
+    21163,
+    21171,
+    21172,
+    21174,
+    21175,
+    21178,
+    21179,
+    21180,
+    21184,
+    21185,
+    21186,
+    21188,
+    21189,
+    21198,
+    21199,
+    21204,
+    21205,
+    21206,
+    21207,
+    21214,
+    21215,
+    21216,
+    21219,
+    21222,
+    21223,
+    21224,
+    21226,
+    21230,
+    21231,
+    21232,
+    21235,
+    21236,
+    21238,
+    21241,
+    21242,
+    21248,
+    21251,
+    21253,
+    21254,
+    21257,
+    21258,
+    21259,
+    21273,
+    21275,
+    21277,
+    21278,
+    21279,
+    21281,
+    21282,
+    21285,
+    21286,
+    21288,
+    21289,
+    21290,
+    21291,
+    21292,
+    21293,
+    21294,
+    21295,
+    21297,
+    21300,
+    21301,
+    21302,
+    21303,
+    21310,
+    21312,
+    21313,
+    21315,
+    21316,
+    21317,
+    21322,
+    21323,
+    21324,
+    21328,
+    21329,
+    21330,
+    21331,
+    21332,
+    21338,
+    21339,
+    21349,
+    21351,
+    21352,
+    21355,
+    21356,
+    21357,
+    21368,
+    21390,
+    21476,
+    21477,
+    21478,
+    21483,
+    21484,
+    21510,
+    21515,
+    21539,
+    21540,
+    21541,
+    21556,
+    21557,
+    21559,
+    21560,
+    21561,
+    21566,
+    21591,
+    21592,
+    21593,
+    21602,
+    21603,
+    21610,
+    21611,
+    21612,
+    21613,
+    21617,
+    21622,
+    21640,
+    21641,
+    21642,
+    21643,
+    21644,
+    21645,
+    21646,
+    21647,
+    21648,
+    21649,
+    21650,
+    21651,
+    21652,
+    21653,
+    21664,
+    21665,
+    21670,
+    21675,
+    21676,
+    21677,
+    21686,
+    21687,
+    21688,
+    21689,
+    21690,
+    21691,
+    21695,
+    21696,
+    21697,
+    21698,
+    21702,
+    21703,
+    21708,
+    21709,
+    21710,
+    21711,
+    21712,
+    21718,
+    21723,
+    21724,
+    21725,
+    21726,
+    21727,
+    21728,
+    21729,
+    21730,
+    21731,
+    21732,
+    21746,
+    21747,
+    21748,
+    21749,
+    21754,
+    21755,
+    21764,
+    21769,
+    21775,
+    21780,
+    21781,
+    21782,
+    21783,
+    21784,
+    21785,
+    21788,
+    21789,
+    21804,
+    21805,
+    21806,
+    21814,
+    21822,
+    21826,
+    21831,
+    21833,
+    21834,
+    21835,
+    21836,
+    21837,
+    21841,
+    21842,
+    21856,
+    21864,
+    21879,
+    21884,
+    21885,
+    21887,
+    21888,
+    21889,
+    21890,
+    21891,
+    21892,
+    21893,
+    21904,
+    21905,
+    21912,
+    21918,
+    21925,
+    21927,
+    21928,
+    21929,
+    21930,
+    21931,
+    21932,
+    21935,
+    21936,
+    21952,
+    21953,
+    21971,
+    21976,
+    21979,
+    21980,
+    21981,
+    21982,
+    21983,
+    21984,
+    21985,
+    21986,
+    21990,
+    21991,
+    21992,
+    21998,
+    21999,
+    22000,
+    22001,
+    22002,
+    22006,
+    22027,
+    22041,
+    22082,
+    22088,
+    22100,
+    22101,
+    22102,
+    22103,
+    22104,
+    22105,
+    22106,
+    22108,
+    22133,
+    22144,
+    22145,
+    22150,
+    22151,
+    22152,
+    22155,
+    22156,
+    22157,
+    22158,
+    22159,
+    22160,
+    22161,
+    22162,
+    22163,
+    22164,
+    22166,
+    22167,
+    22168,
+    22169,
+    22170,
+    22194,
+    22289,
+    22290,
+    22291,
+    22292,
+    22294,
+    22295,
+    23738,
+    23739,
+    23740,
+    23741,
+    23743,
+    23744,
+    23745,
+    23746,
+    23747,
+    23748,
+    23749,
+    23750,
+    23751,
+    23752,
+    23777,
+    23797,
+    23798,
+    23799,
+    23861,
+    23895,
+    23896,
+    23897,
+    23898,
+    23899,
+    23900,
+    23901,
+    23902,
+    23903,
+    23904,
+    23905,
+    23906,
+    23907,
+    23908,
+    23909,
+    23910,
+    23911,
+    23912,
+    23913,
+    23914,
+    23915,
+    23916,
+    23917,
+    23918,
+    23919,
+    23920,
+    23921,
+    23922,
+    23923,
+    23924,
+    23925,
+    23926,
+    23927,
+    23928,
+    23929,
+    23930,
+    23931,
+    23932,
+    23933,
+    23934,
+    23935,
+    23936,
+    23937,
+    23938,
+    23939,
+    23940,
+    23941,
+    23942,
+    23943,
+    23944,
+    23945,
+    23946,
+    23947,
+    23948,
+    23949,
+    23950,
+    23951,
+    23952,
+    23953,
+    23955,
+    23956,
+    23957,
+    23958,
+    23959,
+    23960,
+    23961,
+    23962,
+    23963,
+    23964,
+    23965,
+    23966,
+    23967,
+    23968,
+    23969,
+    23970,
+    23971,
+    23972,
+    23973,
+    23974,
+    23975,
+    23976,
+    23977,
+    23978,
+    23979,
+    23980,
+    23981,
+    23982,
+    23983,
+    23984,
+    23985,
+    23986,
+    23987,
+    23988,
+    23989,
+    23990,
+    23991,
+    23992,
+    23993,
+    23994,
+    23995,
+    23996,
+    23997,
+    23998,
+    23999,
+    24000,
+    24001,
+    24002,
+    24003,
+    24004,
+    24005,
+    24006,
+    24007,
+    24008,
+    24009,
+    24010,
+    24011,
+    24012,
+    24013,
+    24014,
+    24015,
+    24016,
+    24017,
+    24018,
+    24019,
+    24020,
+    24021,
+    24022,
+    24023,
+    24024,
+    24025,
+    24026,
+    24027,
+    24028,
+    24029,
+    24030,
+    24031,
+    24032,
+    24033,
+    24034,
+    24035,
+    24036,
+    24037,
+    24038,
+    24039,
+    24040,
+    24041,
+    24042,
+    24043,
+    24044,
+    24045,
+    24046,
+    24047,
+    24048,
+    24049,
+    24050,
+    24051,
+    24052,
+    24053,
+    24054,
+    24055,
+    24056,
+    24057,
+    24058,
+    24059,
+    24060,
+    24061,
+    24062,
+    24063,
+    24064,
+    24065,
+    24066,
+    24067,
+    24068,
+    24069,
+    24070,
+    24071,
+    24072,
+    24073,
+    24074,
+    24075,
+    24076,
+    24077,
+    24078,
+    24079,
+    24080,
+    24081,
+    24082,
+    24083,
+    24084,
+    24085,
+    24086,
+    24087,
+    24088,
+    24089,
+    24090,
+    24091,
+    24092,
+    24093,
+    24094,
+    24095,
+    24096,
+    24097,
+    24098,
+    24099,
+    24100,
+    24101,
+    24102,
+    24103,
+    24104,
+    24105,
+    24106,
+    24107,
+    24108,
+    24109,
+    24110,
+    24111,
+    24112,
+    24113,
+    24114,
+    24115,
+    24116,
+    24117,
+    24118,
+    24119,
+    24120,
+    24121,
+    24122,
+    24123,
+    24124,
+    24125,
+    24126,
+    24127,
+    24128,
+    24129,
+    24130,
+    24131,
+    24132,
+    24133,
+    24134,
+    24135,
+    24136,
+    24137,
+    24138,
+    24139,
+    24140,
+    24141,
+    24142,
+    24143,
+    24144,
+    24145,
+    24146,
+    24147,
+    24148,
+    24149,
+    24150,
+    24151,
+    24152,
+    24153,
+    24154,
+    24155,
+    24156,
+    24157,
+    24158,
+    24159,
+    24160,
+    24161,
+    24162,
+    24163,
+    24164,
+    24165,
+    24166,
+    24167,
+    24168,
+    24169,
+    24170,
+    24171,
+    24172,
+    24173,
+    24174,
+    24175,
+    24176,
+    24177,
+    24178,
+    24179,
+    24180,
+    24181,
+    24182,
+    24183,
+    24184,
+    24185,
+    24186,
+    24187,
+    24188,
+    24189,
+    24190,
+    24191,
+    24192,
+    24193,
+    24194,
+    24270,
+    24274,
+    24275,
+    24283,
+    24284,
+    24285,
+    24286,
+    24287,
+    24288,
+    24289,
+    24297,
+    24298,
+    24299,
+    24300,
+    24301,
+    24302,
+    24303,
+    24304,
+    25592,
+    25601,
+    25602,
+    25603,
+    25630,
+    25631,
+    25635,
+    25636,
+    25640,
+    25641,
+    25653,
+    25654,
+    25655,
+    25656,
+    25659,
+    25660,
+    25663,
+    25664,
+    25680,
+    25681,
+    25703,
+    25705,
+    25706,
+    25709,
+    25710,
+    25716,
+    25717,
+    25719,
+    25720,
+    25721,
+    25727,
+    25728,
+    25729,
+    25730,
+    25731,
+    25732,
+    25733,
+    25745,
+    25746,
+    25749,
+    25750,
+    25760,
+    25761,
+    25766,
+    25767,
+    25790,
+    25791,
+    25792,
+    25793,
+    25795,
+    25796,
+    25797,
+    25798,
+    25799,
+    25800,
+    25801,
+    25804,
+    25805,
+    25824,
+    25825,
+    25826,
+    25828,
+    25829,
+    25830,
+    25831,
+    25832,
+    25833,
+    25834,
+    25835,
+    25836,
+    25837,
+    25840,
+    25841,
+    25843,
+    25852,
+    25854,
+    25855,
+    25856,
+    25858,
+    25859,
+    25862,
+    25863,
+    25879,
+    25881,
+    25882,
+    25883,
+    25884,
+    25885,
+    25886,
+    25887,
+    25888,
+    25889,
+    25890,
+    25891,
+    25892,
+    25893,
+    25894,
+    25897,
+    25898,
+    25899,
+    25900,
+    25901,
+    25902,
+    25903,
+    25904,
+    25905,
+    25906,
+    25907,
+    25908,
+    25920,
+    25921,
+    25922,
+    25923,
+    25924,
+    25925,
+    25926,
+    25929,
+    25930,
+    25946,
+    25947,
+    25949,
+    25950,
+    25952,
+    25953,
+    25954,
+    25955,
+    25956,
+    25957,
+    25958,
+    25960,
+    25961,
+    25964,
+    25965,
+    25966,
+    25967,
+    25968,
+    25969,
+    25970,
+    25971,
+    25972,
+    25973,
+    25974,
+    25975,
+    25976,
+    25977,
+    25978,
+    25979,
+    25980,
+    25981,
+    25982,
+    25984,
+    25985,
+    25986,
+    25987,
+    25988,
+    25989,
+    25990,
+    25991,
+    25992,
+    25993,
+    25994,
+    25995,
+    25996,
+    25997,
+    25998,
+    26117,
+    26401,
+    26402,
+    26413,
+    26417,
+    26488,
+    26491,
+    26492,
+    26493,
+    26494,
+    26495,
+    26525,
+    26526,
+    26527,
+    26529,
+    26530,
+    26533,
+    26534,
+    26535,
+    26536,
+    26537,
+    26538,
+    26539,
+    26540,
+    26541,
+    26542,
+    26543,
+    26544,
+    26692,
+    26695,
+    26696,
+    26697,
+    26699,
+    26701,
+    26709,
+    26716,
+    26722,
+    26723,
+    26724,
+    26726,
+    26727,
+    26731,
+    26784,
+    26786,
+    26790,
+    26791,
+    26792,
+    26793,
+    26794,
+    26795,
+    26796,
+    26797,
+    26844,
+    26870,
+    26872,
+    26875,
+    26876,
+    26887,
+    26942,
+    26947,
+    26948,
+    26949,
+    26950,
+    26951,
+    26952,
+    26953,
+    26958,
+    26959,
+    26960,
+    26961,
+    26962,
+    26972,
+    27050,
+    27097,
+    27098,
+    27099,
+    27100,
+    27101,
+    27102,
+    27103,
+    27104,
+    27134,
+    27135,
+    27137,
+    27138,
+    27139,
+    27141,
+    27142,
+    27143,
+    27146,
+    27147,
+    27148,
+    27149,
+    27150,
+    27151,
+    27224,
+    27225,
+    27226,
+    27282,
+    27283,
+    27284,
+    27285,
+    27286,
+    27287,
+    27288,
+    27319,
+    27320,
+    27321,
+    27322,
+    27323,
+    27409,
+    27457,
+    27458,
+    27459,
+    27460,
+    27461,
+    27462,
+    27464,
+    27491,
+    27492,
+    27493,
+    27494,
+    27495,
+    27498,
+    27499,
+    27502,
+    27503,
+    27624,
+    27627,
+    27629,
+    27630,
+    27635,
+    27636,
+    27637,
+    27638,
+    27639,
+    27640,
+    27641,
+    27642,
+    27721,
+    27737,
+    27738,
+    27778,
+    27857,
+    27989,
+    27993,
+    27995,
+    28000,
+    28001,
+    28002,
+    28003,
+    28004,
+    28006,
+    28007,
+    28026,
+    28028,
+    28134,
+    28136,
+    28143,
+    28145,
+    28146,
+    28167
+  ],
+  "items": [
+    {
+      "itemId": 20530,
+      "name": "ohrmazd",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20539,
+      "name": "ninzas_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20542,
+      "name": "gnafrons_adargas",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20546,
+      "name": "ninzas_+1",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20549,
+      "name": "rigor_baghnakhs",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20553,
+      "name": "ninzas",
+      "level": 99,
+      "ilevel": 105,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20579,
+      "name": "skinflayer",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20580,
+      "name": "kustawi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20581,
+      "name": "kustawi_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20592,
+      "name": "sangoma",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20595,
+      "name": "malevolence",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20596,
+      "name": "taming_sari",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20597,
+      "name": "enchufla",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20598,
+      "name": "shijo",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20599,
+      "name": "kali",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20600,
+      "name": "nibiru_knife",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20603,
+      "name": "ternion_dagger",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20606,
+      "name": "anathema_harpe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20607,
+      "name": "anathema_harpe_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20608,
+      "name": "jugo_kukri",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20617,
+      "name": "homestead_dagger",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20619,
+      "name": "polyhymnia",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20633,
+      "name": "camaraderie_dagger",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20637,
+      "name": "aphotic_kukri",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20639,
+      "name": "oxidant_baselard",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20655,
+      "name": "archdukes_sword",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20663,
+      "name": "ice_brand",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20664,
+      "name": "flametongue",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20679,
+      "name": "tanmogayi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20680,
+      "name": "tanmogayi_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20681,
+      "name": "flyssa",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20682,
+      "name": "flyssa_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20683,
+      "name": "zantetsuken",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20696,
+      "name": "combuster",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20697,
+      "name": "combuster_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20700,
+      "name": "nixxer",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20701,
+      "name": "iris",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20702,
+      "name": "emissary",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20703,
+      "name": "deacon_saber",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20704,
+      "name": "deacon_sword",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20705,
+      "name": "brilliance",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20708,
+      "name": "demersal_degen",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20709,
+      "name": "demersal_degen_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20710,
+      "name": "nibiru_blade",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20718,
+      "name": "claidheamh_soluis",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20719,
+      "name": "homestead_blade",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20720,
+      "name": "egeking",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20723,
+      "name": "dija_sword",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20724,
+      "name": "dija_sword_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20725,
+      "name": "iztaasu_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20727,
+      "name": "tabahi_fleuret",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20729,
+      "name": "vivifiante",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20730,
+      "name": "predatrice",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20731,
+      "name": "xiutleato",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20735,
+      "name": "camaraderie_blade",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20736,
+      "name": "iztaasu_+1",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20739,
+      "name": "halachuinic_sword",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20740,
+      "name": "camatlatia",
+      "level": 99,
+      "ilevel": 106,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20742,
+      "name": "iztaasu",
+      "level": 99,
+      "ilevel": 105,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20744,
+      "name": "bihkah_sword",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20749,
+      "name": "trial_blade",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20750,
+      "name": "lexeme_blade",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20751,
+      "name": "lexeme_blade",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20752,
+      "name": "lexeme_blade",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20753,
+      "name": "epeolatry",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20756,
+      "name": "soulcleaver",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20757,
+      "name": "foreshock_sword",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20759,
+      "name": "macbain",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20760,
+      "name": "homestead_claymore",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20762,
+      "name": "ukudyoni",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20764,
+      "name": "crobaci_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20767,
+      "name": "medicor_sword",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20768,
+      "name": "kaquljaan",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20771,
+      "name": "camaraderie_claymore",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20776,
+      "name": "beorc_sword",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20778,
+      "name": "bereaver",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20779,
+      "name": "senbaak_nagan",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20780,
+      "name": "senbaak_nagan_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20785,
+      "name": "thurisaz_blade",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20786,
+      "name": "thurisaz_blade_+1",
+      "level": 99,
+      "ilevel": 101,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20787,
+      "name": "crobaci",
+      "level": 99,
+      "ilevel": 105,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20788,
+      "name": "hatzoaar_sword_+1",
+      "level": 99,
+      "ilevel": 101,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20789,
+      "name": "hatzoaar_sword",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20796,
+      "name": "purgation",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20797,
+      "name": "skullrender",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20798,
+      "name": "deacon_tabar",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20799,
+      "name": "mdomo_axe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20800,
+      "name": "mdomo_axe_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20801,
+      "name": "nibiru_tabar",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20804,
+      "name": "perun",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20806,
+      "name": "buramgh",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20807,
+      "name": "buramgh_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20809,
+      "name": "kumbhakarna",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20810,
+      "name": "homestead_axe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20811,
+      "name": "arktoi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20812,
+      "name": "izizoeksi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20814,
+      "name": "budliqa",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20815,
+      "name": "budliqa_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20816,
+      "name": "faizzeer_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20820,
+      "name": "hatxiik",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20823,
+      "name": "camaraderie_axe",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20824,
+      "name": "faizzeer_+1",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20826,
+      "name": "hunahpu",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20828,
+      "name": "brethren_axe",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20829,
+      "name": "icoyoca",
+      "level": 99,
+      "ilevel": 106,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20833,
+      "name": "faizzeer",
+      "level": 99,
+      "ilevel": 105,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20844,
+      "name": "ferocity",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20847,
+      "name": "router",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20848,
+      "name": "nibiru_chopper",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20853,
+      "name": "beheader",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20854,
+      "name": "beheader_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20857,
+      "name": "svarga",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20859,
+      "name": "homestead_labrys",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20863,
+      "name": "iclamar_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20866,
+      "name": "parashu",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20869,
+      "name": "camaraderie_reaver",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20870,
+      "name": "iclamar_+1",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20872,
+      "name": "ixtab",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20873,
+      "name": "bloodbath_axe",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20874,
+      "name": "razorfury",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20875,
+      "name": "razorfury_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20876,
+      "name": "trunkcleaver",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20877,
+      "name": "iclamar",
+      "level": 99,
+      "ilevel": 105,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20878,
+      "name": "nohkux_axe",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20879,
+      "name": "nohkux_axe_+1",
+      "level": 99,
+      "ilevel": 101,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20891,
+      "name": "brutality",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20892,
+      "name": "deathbane",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20894,
+      "name": "deacon_scythe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20895,
+      "name": "nibiru_sickle",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20898,
+      "name": "triska_scythe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20899,
+      "name": "triska_scythe_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20901,
+      "name": "inanna",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20903,
+      "name": "homestead_scythe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20907,
+      "name": "iizamal_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20911,
+      "name": "last_rest",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20914,
+      "name": "camaraderie_scythe",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20915,
+      "name": "iizamal_+1",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20917,
+      "name": "xbalanque",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20918,
+      "name": "dimmet_scythe",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20919,
+      "name": "lacryma_sickle",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20920,
+      "name": "lacryma_sickle_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20921,
+      "name": "fieldrazer_scythe",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20924,
+      "name": "iizamal",
+      "level": 99,
+      "ilevel": 105,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20932,
+      "name": "habile_mazrak",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20936,
+      "name": "koresuke",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20937,
+      "name": "rhomphaia",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20938,
+      "name": "annealed_lance",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20939,
+      "name": "nibiru_lance",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20942,
+      "name": "gae_derg",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20943,
+      "name": "gae_derg_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20946,
+      "name": "olyndicus",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20947,
+      "name": "homestead_lance",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20948,
+      "name": "areadbhar",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20950,
+      "name": "terebrokath",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20951,
+      "name": "terebrokath_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20952,
+      "name": "qatsunoci_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20954,
+      "name": "eminent_lance",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20956,
+      "name": "sibat",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20957,
+      "name": "concido_course",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20958,
+      "name": "kuakuakait",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20960,
+      "name": "camaraderie_lance",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20961,
+      "name": "qatsunoci_+1",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20964,
+      "name": "ophidian_trident",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20965,
+      "name": "tlamini",
+      "level": 99,
+      "ilevel": 106,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20967,
+      "name": "qatsunoci",
+      "level": 99,
+      "ilevel": 105,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20968,
+      "name": "chanar_xyston_+1",
+      "level": 99,
+      "ilevel": 101,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20969,
+      "name": "chanar_xyston",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20978,
+      "name": "ochu",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20979,
+      "name": "aizushintogo",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20980,
+      "name": "raicho",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20981,
+      "name": "raicho_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20983,
+      "name": "mijin",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20987,
+      "name": "tancho",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20988,
+      "name": "tancho_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20992,
+      "name": "taikogane",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20993,
+      "name": "senkutanto",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20996,
+      "name": "kannakiri_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 20999,
+      "name": "habukatana",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21000,
+      "name": "magorokuhocho",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21003,
+      "name": "camaraderie_katana",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21005,
+      "name": "kiji",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21008,
+      "name": "kotekirigo",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21009,
+      "name": "nakajimarai",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21010,
+      "name": "nakajimarai_+1",
+      "level": 99,
+      "ilevel": 101,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21011,
+      "name": "enju",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21012,
+      "name": "enju_+1",
+      "level": 99,
+      "ilevel": 101,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21013,
+      "name": "kannakiri",
+      "level": 99,
+      "ilevel": 105,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21014,
+      "name": "ichijintanto",
+      "level": 99,
+      "ilevel": 106,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21021,
+      "name": "umaru",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21022,
+      "name": "shishio",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21026,
+      "name": "himetsuruichimonji",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21027,
+      "name": "ichigohitofuri",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21034,
+      "name": "kunimune",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21035,
+      "name": "kunimune_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21037,
+      "name": "nenekirimaru",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21039,
+      "name": "kurikaranotachi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21043,
+      "name": "shichishito_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21045,
+      "name": "bukyoku",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21046,
+      "name": "kiikanemitsu",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21047,
+      "name": "azukinagamitsu",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21050,
+      "name": "camaraderie_tachi",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21051,
+      "name": "shichishito_+1",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21053,
+      "name": "uguisumaru",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21054,
+      "name": "suijingiri_kanemitsu",
+      "level": 99,
+      "ilevel": 106,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21055,
+      "name": "kashiwadachi",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21056,
+      "name": "tomonari",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21057,
+      "name": "tomonari_+1",
+      "level": 99,
+      "ilevel": 101,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21058,
+      "name": "shichishito",
+      "level": 99,
+      "ilevel": 105,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21059,
+      "name": "ichijinto",
+      "level": 99,
+      "ilevel": 106,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21066,
+      "name": "trial_wand",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21067,
+      "name": "nodal_wand",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21068,
+      "name": "nodal_wand",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21069,
+      "name": "nodal_wand",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21070,
+      "name": "idris",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21072,
+      "name": "gada",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21073,
+      "name": "izcalli",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21075,
+      "name": "septoptic",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21076,
+      "name": "septoptic_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21080,
+      "name": "idris",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21082,
+      "name": "tishtrya",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21083,
+      "name": "sucellus",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21084,
+      "name": "queller_rod",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21085,
+      "name": "solstice",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21088,
+      "name": "divinity",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21090,
+      "name": "loxotic_mace",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21091,
+      "name": "loxotic_mace_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21092,
+      "name": "nibiru_cudgel",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21099,
+      "name": "magesmasher",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21100,
+      "name": "magesmasher_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21101,
+      "name": "herkuleskeule",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21105,
+      "name": "nehushtan",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21109,
+      "name": "homestead_wand",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21110,
+      "name": "sindri",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21120,
+      "name": "patriarch_cane",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21123,
+      "name": "camaraderie_wand",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21124,
+      "name": "dowsers_wand",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21129,
+      "name": "sharur",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21130,
+      "name": "sharur_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21133,
+      "name": "sasah_wand_+1",
+      "level": 99,
+      "ilevel": 101,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21134,
+      "name": "sasah_wand",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21145,
+      "name": "exemplar",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21148,
+      "name": "serenity",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21149,
+      "name": "espiritus",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21150,
+      "name": "akademos",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21156,
+      "name": "nibiru_staff",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21159,
+      "name": "marin_staff",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21160,
+      "name": "marin_staff_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21162,
+      "name": "pouwhenua",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21163,
+      "name": "pouwhenua_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21171,
+      "name": "homestead_staff",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21172,
+      "name": "homestead_scepter",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21174,
+      "name": "gridarvor",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21175,
+      "name": "coeus",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21178,
+      "name": "tumafyrig",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21179,
+      "name": "lehbrailg_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21180,
+      "name": "uffrat_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21184,
+      "name": "surma_staff",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21185,
+      "name": "boonwell_staff",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21186,
+      "name": "baqil_staff",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21188,
+      "name": "camaraderie_staff",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21189,
+      "name": "camaraderie_pole",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21198,
+      "name": "soothsayer_staff",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21199,
+      "name": "yaskomos_pole",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21204,
+      "name": "sortilevel_staff",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21205,
+      "name": "avitap_pole",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21206,
+      "name": "hemolele_staff",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21207,
+      "name": "hemolele_staff_+1",
+      "level": 99,
+      "ilevel": 101,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21214,
+      "name": "nobility",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21215,
+      "name": "vijaya_bow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21216,
+      "name": "nibiru_bow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21219,
+      "name": "paloma_bow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21222,
+      "name": "mengado",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21223,
+      "name": "mengado_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21224,
+      "name": "phaosphaelia",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21226,
+      "name": "homestead_bow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21230,
+      "name": "bocluamni_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21231,
+      "name": "eminent_bow",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21232,
+      "name": "phulax_bow",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21235,
+      "name": "camaraderie_bow",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21236,
+      "name": "bocluamni_+1",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21238,
+      "name": "speleogen_bow",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21241,
+      "name": "coalition_bow",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21242,
+      "name": "bocluamni",
+      "level": 99,
+      "ilevel": 105,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21248,
+      "name": "homestead_bowgun",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21251,
+      "name": "eminent_crossbow",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21253,
+      "name": "atetepeyorg",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21254,
+      "name": "camaraderie_bowgun",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21257,
+      "name": "zoquittihuitz",
+      "level": 99,
+      "ilevel": 106,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21258,
+      "name": "malayo_crossbow",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21259,
+      "name": "malayo_crossbow_+1",
+      "level": 99,
+      "ilevel": 101,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21273,
+      "name": "nibiru_gun",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21275,
+      "name": "homestead_gun",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21277,
+      "name": "lionsquall",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21278,
+      "name": "deathlocke",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21279,
+      "name": "hgafircian_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21281,
+      "name": "eminent_gun",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21282,
+      "name": "qasama_hexagun",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21285,
+      "name": "camaraderie_gun",
+      "level": 99,
+      "ilevel": 109,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21286,
+      "name": "hgafircian_+1",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21288,
+      "name": "surefire_arquebus",
+      "level": 99,
+      "ilevel": 113,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21289,
+      "name": "donderbuss",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21290,
+      "name": "donderbuss_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21291,
+      "name": "shadeshot_gun",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21292,
+      "name": "bandeiras_gun",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21293,
+      "name": "bandeiras_gun_+1",
+      "level": 99,
+      "ilevel": 101,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21294,
+      "name": "hgafircian",
+      "level": 99,
+      "ilevel": 105,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21295,
+      "name": "beryllium_arrow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21297,
+      "name": "chrono_arrow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21300,
+      "name": "divine_arrow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21301,
+      "name": "porxie_arrow",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21302,
+      "name": "eminent_arrow",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21303,
+      "name": "rakaznar_arrow",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21310,
+      "name": "raetic_arrow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21312,
+      "name": "divine_bolt",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21313,
+      "name": "gashing_bolt",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21315,
+      "name": "righteous_bolt",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21316,
+      "name": "eminent_bolt",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21317,
+      "name": "rakaznar_bolt",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21322,
+      "name": "damascus_bolt",
+      "level": 99,
+      "ilevel": 103,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21323,
+      "name": "oxidant_bolt",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21324,
+      "name": "midrium_bolt",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21328,
+      "name": "divine_bullet",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21329,
+      "name": "stinger_bullet",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21330,
+      "name": "decimating_bullet",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21331,
+      "name": "eminent_bullet",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21332,
+      "name": "rakaznar_bullet",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21338,
+      "name": "damascus_bullet",
+      "level": 99,
+      "ilevel": 103,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21339,
+      "name": "midrium_bullet",
+      "level": 99,
+      "ilevel": 100,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21349,
+      "name": "wingcutter",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21351,
+      "name": "roppo_shuriken",
+      "level": 99,
+      "ilevel": 107,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21352,
+      "name": "roppo_shuriken_+1",
+      "level": 99,
+      "ilevel": 108,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21355,
+      "name": "hachiya_shuriken",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21356,
+      "name": "suppa_shuriken",
+      "level": 99,
+      "ilevel": 117,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21357,
+      "name": "togakushi_shuriken",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21368,
+      "name": "bestas_bane",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21390,
+      "name": "albin_bane",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21476,
+      "name": "doomsday",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21477,
+      "name": "atalanta",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21478,
+      "name": "moros_crossbow_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21483,
+      "name": "malison",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21484,
+      "name": "malison_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21510,
+      "name": "voluspa_knuckles",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21515,
+      "name": "tokko_knuckles",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21539,
+      "name": "dathaba_claws",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21540,
+      "name": "dragon_fangs",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21541,
+      "name": "premium_hearts",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21556,
+      "name": "beryllium_kris",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21557,
+      "name": "beryllium_kris_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21559,
+      "name": "raetic_kris",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21560,
+      "name": "raetic_kris_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21561,
+      "name": "tokko_knife",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21566,
+      "name": "voluspa_knife",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21591,
+      "name": "dathaba_knife",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21592,
+      "name": "chocobo_knife",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21593,
+      "name": "air_knife",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21602,
+      "name": "onion_sword_iii",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21603,
+      "name": "save_the_queen_iii",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21610,
+      "name": "hepatizon_rapier",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21611,
+      "name": "hepatizon_rapier_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21612,
+      "name": "raetic_blade",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21613,
+      "name": "raetic_blade_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21617,
+      "name": "tokko_sword",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21622,
+      "name": "voluspa_sword",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21640,
+      "name": "onion_sword_iii",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21641,
+      "name": "save_the_queen_iii",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21642,
+      "name": "prime_sword",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21643,
+      "name": "caliburnus",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21644,
+      "name": "caliburnus",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21645,
+      "name": "caliburnus",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21646,
+      "name": "caliburnus",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21647,
+      "name": "dathaba_hanger",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21648,
+      "name": "dathaba_sword",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21649,
+      "name": "helheim",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21650,
+      "name": "prime_blade",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21651,
+      "name": "helheim",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21652,
+      "name": "helheim",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21653,
+      "name": "helheim",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21664,
+      "name": "zantetsuken_x",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21665,
+      "name": "voluspa_blade",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21670,
+      "name": "tokko_claymore",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21675,
+      "name": "agwus_claymore",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21676,
+      "name": "brave_blade_iii",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21677,
+      "name": "brave_blade_iii",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21686,
+      "name": "zulfiqar",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21687,
+      "name": "takoba",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21688,
+      "name": "montante",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21689,
+      "name": "montante_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21690,
+      "name": "ushenzi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21691,
+      "name": "ushenzi_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21695,
+      "name": "nullis",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21696,
+      "name": "nullis_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21697,
+      "name": "humility",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21698,
+      "name": "bidenhander",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21702,
+      "name": "kladenets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21703,
+      "name": "kladenets_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21708,
+      "name": "beryllium_pick",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21709,
+      "name": "beryllium_pick_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21710,
+      "name": "raetic_axe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21711,
+      "name": "raetic_axe_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21712,
+      "name": "voluspa_axe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21718,
+      "name": "tokko_axe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21723,
+      "name": "ikengas_axe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21724,
+      "name": "agwus_axe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21725,
+      "name": "malefic_axe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21726,
+      "name": "prime_pickaxe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21727,
+      "name": "spalirisos",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21728,
+      "name": "spalirisos",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21729,
+      "name": "spalirisos",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21730,
+      "name": "spalirisos",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21731,
+      "name": "dathaba_axe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21732,
+      "name": "demonic_axe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21746,
+      "name": "digirbalag",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21747,
+      "name": "freydis",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21748,
+      "name": "habilitator",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21749,
+      "name": "habilitator_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21754,
+      "name": "aganoshe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21755,
+      "name": "hodadenon",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21764,
+      "name": "drastic_axe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21769,
+      "name": "voluspa_chopper",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21775,
+      "name": "tokko_chopper",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21780,
+      "name": "bunzis_chopper",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21781,
+      "name": "prime_great_axe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21782,
+      "name": "laphria",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21783,
+      "name": "laphria",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21784,
+      "name": "laphria",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21785,
+      "name": "laphria",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21788,
+      "name": "dathaba_voulge",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21789,
+      "name": "drastic_axe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21804,
+      "name": "obschine",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21805,
+      "name": "pixquizpan",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21806,
+      "name": "pixquizpan_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21814,
+      "name": "final_sickle",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21822,
+      "name": "voluspa_scythe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21826,
+      "name": "tokko_scythe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21831,
+      "name": "ligeia_scythe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21833,
+      "name": "prime_scythe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21834,
+      "name": "foenaria",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21835,
+      "name": "foenaria",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21836,
+      "name": "foenaria",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21837,
+      "name": "foenaria",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21841,
+      "name": "dathaba_sickle",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21842,
+      "name": "final_sickle",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21856,
+      "name": "geirrothr",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21864,
+      "name": "voluspa_lance",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21879,
+      "name": "tokko_lance",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21884,
+      "name": "ikengas_lance",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21885,
+      "name": "hebos_spear",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21887,
+      "name": "prime_lance",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21888,
+      "name": "gae_buide",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21889,
+      "name": "gae_buide",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21890,
+      "name": "gae_buide",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21891,
+      "name": "gae_buide",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21892,
+      "name": "dathaba_spear",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21893,
+      "name": "hebos_spear",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21904,
+      "name": "kanaria",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21905,
+      "name": "taka",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21912,
+      "name": "voluspa_katana",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21918,
+      "name": "tokko_katana",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21925,
+      "name": "kunimitsu",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21927,
+      "name": "yagyu_darkblade",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21928,
+      "name": "genshitanto",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21929,
+      "name": "dokoku",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21930,
+      "name": "dokoku",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21931,
+      "name": "dokoku",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21932,
+      "name": "dokoku",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21935,
+      "name": "dathaba_blade",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21936,
+      "name": "yagyu_darkblade",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21952,
+      "name": "zanmato_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21953,
+      "name": "mutsu-no-kami_yoshiyuki",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21971,
+      "name": "tokko_tachi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21976,
+      "name": "voluspa_tachi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21979,
+      "name": "gekkei",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21980,
+      "name": "zanmato_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21981,
+      "name": "mutsu-no-kami_yoshiyuki",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21982,
+      "name": "genshito",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21983,
+      "name": "kusanagi-no-tsurugi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21984,
+      "name": "kusanagi-no-tsurugi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21985,
+      "name": "kusanagi-no-tsurugi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21986,
+      "name": "kusanagi-no-tsurugi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21990,
+      "name": "dathaba_tachi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21991,
+      "name": "wizards_rod",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21992,
+      "name": "dathaba_wand",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21998,
+      "name": "lorg_mor",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 21999,
+      "name": "prime_maul",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22000,
+      "name": "lorg_mor",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22001,
+      "name": "lorg_mor",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22002,
+      "name": "lorg_mor",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22006,
+      "name": "voluspa_hammer",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22027,
+      "name": "tokko_rod",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22041,
+      "name": "bunzis_rod",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22082,
+      "name": "tokko_staff",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22088,
+      "name": "voluspa_pole",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22100,
+      "name": "mpacas_staff",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22101,
+      "name": "pandits_staff",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22102,
+      "name": "prime_staff",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22103,
+      "name": "opashoro",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22104,
+      "name": "opashoro",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22105,
+      "name": "opashoro",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22106,
+      "name": "opashoro",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22108,
+      "name": "tokko_bow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22133,
+      "name": "voluspa_bow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22144,
+      "name": "voluspa_gun",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22145,
+      "name": "artemiss_bow_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22150,
+      "name": "gletis_crossbow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22151,
+      "name": "mpacas_bow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22152,
+      "name": "exeter",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22155,
+      "name": "prime_bow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22156,
+      "name": "pinaka",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22157,
+      "name": "pinaka",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22158,
+      "name": "pinaka",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22159,
+      "name": "prime_gun",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22160,
+      "name": "earp",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22161,
+      "name": "earp",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22162,
+      "name": "earp",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22163,
+      "name": "pinaka",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22164,
+      "name": "earp",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22166,
+      "name": "dathaba_bow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22167,
+      "name": "dathaba_crossbow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22168,
+      "name": "pandits_staff",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22169,
+      "name": "artemiss_bow_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22170,
+      "name": "exeter",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22194,
+      "name": "dathaba_staff",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22289,
+      "name": "voluspa_arrow",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22290,
+      "name": "voluspa_bolt",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22291,
+      "name": "voluspa_bullet",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22292,
+      "name": "date_shuriken",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22294,
+      "name": "hauksbok_bolt",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 22295,
+      "name": "hauksbok_bullet",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "weapon"
+    },
+    {
+      "itemId": 23738,
+      "name": "hervor_galea",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23739,
+      "name": "heidrek_mask",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23740,
+      "name": "angantyr_beret",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23741,
+      "name": "hervor_haubert",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23743,
+      "name": "angantyr_robe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23744,
+      "name": "hervor_mouffles",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23745,
+      "name": "heidrek_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23746,
+      "name": "angantyr_mittens",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23747,
+      "name": "hervor_brayettes",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23748,
+      "name": "heidrek_brais",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23749,
+      "name": "angantyr_tights",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23750,
+      "name": "hervor_sollerets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23751,
+      "name": "heidrek_boots",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23752,
+      "name": "angantyr_boots",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23777,
+      "name": "gletis_breeches",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23797,
+      "name": "crepuscular_helm",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23798,
+      "name": "crepuscular_mail",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23799,
+      "name": "crepuscular_cloak",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23861,
+      "name": "suit_of_adamantite_armor",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23895,
+      "name": "pummelers_mask_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23896,
+      "name": "anchorites_crown_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23897,
+      "name": "theophany_cap_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23898,
+      "name": "spaekonas_petasos_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23899,
+      "name": "atrophy_chapeau_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23900,
+      "name": "pillagers_bonnet_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23901,
+      "name": "reverence_coronet_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23902,
+      "name": "ignominy_burgeonet_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23903,
+      "name": "totemic_helm_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23904,
+      "name": "brioso_roundlet_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23905,
+      "name": "orion_beret_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23906,
+      "name": "wakido_kabuto_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23907,
+      "name": "hachiya_hatsuburi_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23908,
+      "name": "vishap_armet_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23909,
+      "name": "convokers_horn_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23910,
+      "name": "assimilators_keffiyeh_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23911,
+      "name": "laksamana_tricorne_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23912,
+      "name": "foire_taj_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23913,
+      "name": "maxixi_tiara_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23914,
+      "name": "maxixi_tiara_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23915,
+      "name": "academics_mortarboard_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23916,
+      "name": "geomancy_galero_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23917,
+      "name": "runeist_bandeau_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23918,
+      "name": "agoge_mask_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23919,
+      "name": "hesychasts_crown_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23920,
+      "name": "piety_cap_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23921,
+      "name": "archmages_petasos_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23922,
+      "name": "vitiation_chapeau_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23923,
+      "name": "plunderers_bonnet_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23924,
+      "name": "caballarius_coronet_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23925,
+      "name": "fallens_burgeonet_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23926,
+      "name": "ankusa_helm_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23927,
+      "name": "bihu_roundlet_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23928,
+      "name": "arcadian_beret_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23929,
+      "name": "sakonji_kabuto_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23930,
+      "name": "mochizuki_hatsuburi_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23931,
+      "name": "pteroslaver_armet_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23932,
+      "name": "glyphic_horn_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23933,
+      "name": "luhlaza_keffiyeh_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23934,
+      "name": "lanun_tricorne_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23935,
+      "name": "pitre_taj_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23936,
+      "name": "horos_tiara_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23937,
+      "name": "pedagogy_mortarboard_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23938,
+      "name": "bagua_galero_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23939,
+      "name": "futhark_bandeau_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23940,
+      "name": "pummelers_lorica_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23941,
+      "name": "anchorites_cyclas_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23942,
+      "name": "theophany_bliaut_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23943,
+      "name": "spaekonas_coat_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23944,
+      "name": "atrophy_tabard_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23945,
+      "name": "pillagers_vest_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23946,
+      "name": "reverence_surcoat_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23947,
+      "name": "ignominy_cuirass_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23948,
+      "name": "totemic_jackcoat_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23949,
+      "name": "brioso_justaucorps_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23950,
+      "name": "orion_jerkin_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23951,
+      "name": "wakido_domaru_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23952,
+      "name": "hachiya_chainmail_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23953,
+      "name": "vishap_mail_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23955,
+      "name": "assimilators_jubbah_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23956,
+      "name": "laksamana_frac_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23957,
+      "name": "foire_tobe_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23958,
+      "name": "maxixi_casaque_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23959,
+      "name": "maxixi_casaque_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23960,
+      "name": "academics_gown_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23961,
+      "name": "geomancy_tunic_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23962,
+      "name": "runeist_coat_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23963,
+      "name": "agoge_lorica_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23964,
+      "name": "hesychasts_cyclas_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23965,
+      "name": "piety_bliaut_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23966,
+      "name": "archmages_coat_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23967,
+      "name": "vitiation_tabard_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23968,
+      "name": "plunderers_vest_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23969,
+      "name": "caballarius_surcoat_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23970,
+      "name": "fallens_cuirass_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23971,
+      "name": "ankusa_jackcoat_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23972,
+      "name": "bihu_justaucorps_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23973,
+      "name": "arcadian_jerkin_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23974,
+      "name": "sakonji_domaru_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23975,
+      "name": "mochizuki_chainmail_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23976,
+      "name": "pteroslaver_mail_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23977,
+      "name": "glyphic_doublet_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23978,
+      "name": "luhlaza_jubbah_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23979,
+      "name": "lanun_frac_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23980,
+      "name": "pitre_tobe_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23981,
+      "name": "horos_casaque_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23982,
+      "name": "pedagogy_gown_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23983,
+      "name": "bagua_tunic_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23984,
+      "name": "futhark_coat_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23985,
+      "name": "pummelers_mufflers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23986,
+      "name": "anchorites_gloves_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23987,
+      "name": "theophany_mitts_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23988,
+      "name": "spaekonas_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23989,
+      "name": "atrophy_gloves_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23990,
+      "name": "pillagers_armlets_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23991,
+      "name": "reverence_gauntlets_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23992,
+      "name": "ignominy_finger_gauntlets_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23993,
+      "name": "totemic_gloves_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23994,
+      "name": "brioso_cuffs_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23995,
+      "name": "orion_bracers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23996,
+      "name": "wakido_kote_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23997,
+      "name": "hachiya_tekko_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23998,
+      "name": "vishap_finger_gauntlets_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 23999,
+      "name": "convokers_bracers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24000,
+      "name": "assimilators_bazubands_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24001,
+      "name": "laksamanas_gants_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24002,
+      "name": "foire_dastanas_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24003,
+      "name": "maxixi_bangles_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24004,
+      "name": "maxixi_bangles_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24005,
+      "name": "academics_bracers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24006,
+      "name": "geomancy_mitaines_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24007,
+      "name": "runeist_mitons_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24008,
+      "name": "agoge_mufflers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24009,
+      "name": "hesychasts_gloves_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24010,
+      "name": "piety_mitts_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24011,
+      "name": "archmages_gloves_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24012,
+      "name": "vitiation_gloves_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24013,
+      "name": "plunderers_armlets_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24014,
+      "name": "caballarius_gauntlets_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24015,
+      "name": "fallens_finger_gauntlets_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24016,
+      "name": "ankusa_gloves_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24017,
+      "name": "bihu_cuffs_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24018,
+      "name": "arcadian_bracers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24019,
+      "name": "sakonji_kote_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24020,
+      "name": "mochizuki_tekko_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24021,
+      "name": "pteroslaver_finger_gauntlets_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24022,
+      "name": "glyphic_bracers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24023,
+      "name": "luhlaza_bazubands_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24024,
+      "name": "lanun_gants_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24025,
+      "name": "pitre_dastanas_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24026,
+      "name": "horos_bangles_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24027,
+      "name": "pedagogy_bracers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24028,
+      "name": "bagua_mitaines_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24029,
+      "name": "futhark_mitons_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24030,
+      "name": "pummelers_cuisses_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24031,
+      "name": "anchorites_hose_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24032,
+      "name": "theophany_pantaloons_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24033,
+      "name": "spaekonas_tonban_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24034,
+      "name": "atrophy_tights_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24035,
+      "name": "pillagers_culottes_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24036,
+      "name": "reverence_breeches_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24037,
+      "name": "ignominy_flanchard_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24038,
+      "name": "totemic_trousers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24039,
+      "name": "brioso_cannions_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24040,
+      "name": "orion_braccae_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24041,
+      "name": "wakido_haidate_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24042,
+      "name": "hachiya_hakama_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24043,
+      "name": "vishap_brais_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24044,
+      "name": "convokers_spats_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24045,
+      "name": "assimilators_shalwar_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24046,
+      "name": "laksamanas_trews_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24047,
+      "name": "foire_churidars_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24048,
+      "name": "maxixi_tights_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24049,
+      "name": "maxixi_tights_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24050,
+      "name": "academics_pants_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24051,
+      "name": "geomancy_pants_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24052,
+      "name": "runeist_trousers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24053,
+      "name": "agoge_cuisses_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24054,
+      "name": "hesychasts_hose_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24055,
+      "name": "piety_pantaloons_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24056,
+      "name": "archmages_tonban_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24057,
+      "name": "vitiation_tights_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24058,
+      "name": "plunderers_culottes_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24059,
+      "name": "caballarius_breeches_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24060,
+      "name": "fallens_flanchard_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24061,
+      "name": "ankusa_trousers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24062,
+      "name": "bihu_cannions_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24063,
+      "name": "arcadian_braccae_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24064,
+      "name": "sakonji_haidate_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24065,
+      "name": "mochizuki_hakama_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24066,
+      "name": "pteroslaver_brais_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24067,
+      "name": "glyphic_spats_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24068,
+      "name": "luhlaza_shalwar_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24069,
+      "name": "lanun_trews_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24070,
+      "name": "pitre_churidars_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24071,
+      "name": "horos_tights_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24072,
+      "name": "pedagogy_pants_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24073,
+      "name": "bagua_pants_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24074,
+      "name": "futhark_trousers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24075,
+      "name": "pummelers_calligae_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24076,
+      "name": "anchorites_gaiters_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24077,
+      "name": "theophany_duckbills_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24078,
+      "name": "spaekonas_sabots_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24079,
+      "name": "atrophy_boots_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24080,
+      "name": "pillagers_poulaines_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24081,
+      "name": "reverence_leggings_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24082,
+      "name": "ignominy_sollerets_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24083,
+      "name": "totemic_gaiters_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24084,
+      "name": "brioso_slippers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24085,
+      "name": "orion_socks_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24086,
+      "name": "wakido_sune-ate_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24087,
+      "name": "hachiya_kyahan_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24088,
+      "name": "vishap_greaves_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24089,
+      "name": "convokers_pigaches_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24090,
+      "name": "assimilators_charuqs_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24091,
+      "name": "laksamana_bottes_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24092,
+      "name": "foire_babouches_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24093,
+      "name": "maxixi_toe_shoes_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24094,
+      "name": "maxixi_toe_shoes_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24095,
+      "name": "academics_loafers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24096,
+      "name": "geomancy_sandals_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24097,
+      "name": "runeist_boots_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24098,
+      "name": "agoge_calligae_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24099,
+      "name": "hesychasts_gaiters_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24100,
+      "name": "piety_duckbills_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24101,
+      "name": "archmages_sabots_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24102,
+      "name": "vitiation_boots_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24103,
+      "name": "plunderers_poulaines_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24104,
+      "name": "caballarius_leggings_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24105,
+      "name": "fallens_sollerets_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24106,
+      "name": "ankusa_gaiters_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24107,
+      "name": "bihu_slippers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24108,
+      "name": "arcadian_socks_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24109,
+      "name": "sakonji_sune-ate_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24110,
+      "name": "mochizuki_kyahan_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24111,
+      "name": "pteroslaver_greaves_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24112,
+      "name": "glyphic_pigaches_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24113,
+      "name": "luhlaza_charuqs_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24114,
+      "name": "lanun_bottes_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24115,
+      "name": "pitre_babouches_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24116,
+      "name": "horos_toe_shoes_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24117,
+      "name": "pedagogy_loafers_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24118,
+      "name": "bagua_sandals_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24119,
+      "name": "futhark_boots_+4",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24120,
+      "name": "hope_masque",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24121,
+      "name": "perfection_masque",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24122,
+      "name": "revelation_masque",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24123,
+      "name": "hope_platemail",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24124,
+      "name": "perfection_platemail",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24125,
+      "name": "revelation_platemail",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24126,
+      "name": "hope_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24127,
+      "name": "perfection_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24128,
+      "name": "revelation_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24129,
+      "name": "hope_brais",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24130,
+      "name": "perfection_brais",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24131,
+      "name": "revelation_brais",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24132,
+      "name": "hope_sabatons",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24133,
+      "name": "perfection_sabatons",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24134,
+      "name": "revelation_sabatons",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24135,
+      "name": "trust_crown",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24136,
+      "name": "prestige_crown",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24137,
+      "name": "sworn_crown",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24138,
+      "name": "trust_platemail",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24139,
+      "name": "prestige_platemail",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24140,
+      "name": "sworn_platemail",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24141,
+      "name": "trust_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24142,
+      "name": "prestige_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24143,
+      "name": "sworn_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24144,
+      "name": "trust_brais",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24145,
+      "name": "prestige_brais",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24146,
+      "name": "sworn_brais",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24147,
+      "name": "trust_sabatons",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24148,
+      "name": "prestige_sabatons",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24149,
+      "name": "sworn_sabatons",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24150,
+      "name": "bravery_petasos",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24151,
+      "name": "intrepid_petasos",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24152,
+      "name": "indomitable_petasos",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24153,
+      "name": "bravery_coat",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24154,
+      "name": "intrepid_coat",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24155,
+      "name": "indomitable_coat",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24156,
+      "name": "bravery_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24157,
+      "name": "intrepid_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24158,
+      "name": "indomitable_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24159,
+      "name": "bravery_tonban",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24160,
+      "name": "intrepid_tonban",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24161,
+      "name": "indomitable_tonban",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24162,
+      "name": "bravery_sabots",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24163,
+      "name": "intrepid_sabots",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24164,
+      "name": "indomitable_sabots",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24165,
+      "name": "justice_crown",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24166,
+      "name": "magnificent_crown",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24167,
+      "name": "duty_crown",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24168,
+      "name": "justice_cyclas",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24169,
+      "name": "magnificent_cyclas",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24170,
+      "name": "duty_cyclas",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24171,
+      "name": "justice_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24172,
+      "name": "magnificent_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24173,
+      "name": "duty_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24174,
+      "name": "justice_flanchard",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24175,
+      "name": "magnificent_flanchard",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24176,
+      "name": "duty_flanchard",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24177,
+      "name": "justice_sollerets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24178,
+      "name": "magnificent_sollerets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24179,
+      "name": "duty_sollerets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24180,
+      "name": "mercy_somen",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24181,
+      "name": "grace_somen",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24182,
+      "name": "clemency_somen",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24183,
+      "name": "mercy_haramaki",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24184,
+      "name": "grace_haramaki",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24185,
+      "name": "clemency_haramaki",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24186,
+      "name": "mercy_kote",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24187,
+      "name": "grace_kote",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24188,
+      "name": "clemency_kote",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24189,
+      "name": "mercy_haidate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24190,
+      "name": "grace_haidate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24191,
+      "name": "clemency_haidate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24192,
+      "name": "mercy_sune-ate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24193,
+      "name": "grace_sune-ate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24194,
+      "name": "clemency_sune-ate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24270,
+      "name": "null_masque",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24274,
+      "name": "amin_turban",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24275,
+      "name": "ischkur_turban",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24283,
+      "name": "csm_gloves_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24284,
+      "name": "csf_gloves_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24285,
+      "name": "mg_gauntlets_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24286,
+      "name": "mg_gloves_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24287,
+      "name": "wn_mittens_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24288,
+      "name": "sv_gauntlets_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24289,
+      "name": "el_bracers_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24297,
+      "name": "csm_boots_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24298,
+      "name": "csf_boots_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24299,
+      "name": "mgm_ledelsens_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24300,
+      "name": "mgf_ledelsens_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24301,
+      "name": "wn_clomps_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24302,
+      "name": "sv_gaiters_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24303,
+      "name": "el_sandals_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 24304,
+      "name": "azimuth_turban",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25592,
+      "name": "hjarrandi_helm",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25601,
+      "name": "blistering_sallet",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25602,
+      "name": "blistering_sallet_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25603,
+      "name": "jumalik_helm",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25630,
+      "name": "dampening_tam",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25631,
+      "name": "lilitu_headpiece",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25635,
+      "name": "loess_barbuta",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25636,
+      "name": "loess_barbuta_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25640,
+      "name": "odyssean_helm",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25641,
+      "name": "valorous_mask",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25653,
+      "name": "halitus_helm",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25654,
+      "name": "welkin_crown",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25655,
+      "name": "ipoca_beret",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25656,
+      "name": "ynglinga_sallet",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25659,
+      "name": "sulevias_mask",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25660,
+      "name": "sulevias_mask_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25663,
+      "name": "hizamaru_somen",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25664,
+      "name": "hizamaru_somen_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25680,
+      "name": "cohort_cloak",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25681,
+      "name": "cohort_cloak_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25703,
+      "name": "uac_jerkin",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25705,
+      "name": "witching_robe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25706,
+      "name": "shango_robe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25709,
+      "name": "obviation_cuirass",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25710,
+      "name": "obviation_cuirass_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25716,
+      "name": "odyssean_chestplate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25717,
+      "name": "valorous_mail",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25719,
+      "name": "merlinic_jubbah",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25720,
+      "name": "chironic_doublet",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25721,
+      "name": "vedic_coat",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25727,
+      "name": "passion_jacket",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25728,
+      "name": "zendik_robe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25729,
+      "name": "vatic_byrnie",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25730,
+      "name": "nzingha_cuirass",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25731,
+      "name": "sayadios_kaftan",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25732,
+      "name": "tatenashi_haramaki",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25733,
+      "name": "tatenashi_haramaki_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25745,
+      "name": "sulevias_platemail",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25746,
+      "name": "sulevias_platemail_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25749,
+      "name": "hizamaru_haramaki",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25750,
+      "name": "hizamaru_haramaki_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25760,
+      "name": "mrigavyadha_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25761,
+      "name": "iktomi_dastanas",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25766,
+      "name": "hjarrandi_breastplate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25767,
+      "name": "sacro_breastplate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25790,
+      "name": "sulevias_platemail_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25791,
+      "name": "meghanada_cuirie_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25792,
+      "name": "hizamaru_haramaki_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25793,
+      "name": "inyanga_jubbah_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25795,
+      "name": "ayanmo_corazza_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25796,
+      "name": "taliah_manteel_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25797,
+      "name": "flamma_korazin_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25798,
+      "name": "mummu_jacket_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25799,
+      "name": "mallquis_saio_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25800,
+      "name": "sulevias_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25801,
+      "name": "sulevias_gauntlets_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25804,
+      "name": "hizamaru_kote",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25805,
+      "name": "hizamaru_kote_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25824,
+      "name": "regal_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25825,
+      "name": "regal_captains_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25826,
+      "name": "regal_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25828,
+      "name": "sulevias_gauntlets_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25829,
+      "name": "meghanada_gloves_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25830,
+      "name": "hizamaru_kote_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25831,
+      "name": "inyanga_dastanas_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25832,
+      "name": "jhakri_cuffs_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25833,
+      "name": "ayanmo_manopolas_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25834,
+      "name": "taliah_gages_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25835,
+      "name": "flamma_manopolas_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25836,
+      "name": "mummu_wrists_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25837,
+      "name": "mallquis_cuffs_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25840,
+      "name": "odyssean_cuisses",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25841,
+      "name": "valorous_hose",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25843,
+      "name": "merlinic_shalwar",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25852,
+      "name": "darraigners_brais",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25854,
+      "name": "arjuna_breeches",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25855,
+      "name": "tatenashi_haidate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25856,
+      "name": "tatenashi_haidate_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25858,
+      "name": "sulevias_cuisses",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25859,
+      "name": "sulevias_cuisses_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25862,
+      "name": "hizamaru_hizayoroi",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25863,
+      "name": "hizamaru_hizayoroi_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25879,
+      "name": "sulevias_cuisses_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25881,
+      "name": "hizamaru_hizayoroi_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25882,
+      "name": "inyanga_shalwar_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25883,
+      "name": "jhakri_slops_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25884,
+      "name": "ayanmo_cosciales_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25885,
+      "name": "taliah_seraweels_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25886,
+      "name": "flamma_dirs_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25887,
+      "name": "mummu_kecks_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25888,
+      "name": "mallquis_trews_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25889,
+      "name": "oshosi_trousers",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25890,
+      "name": "oshosi_trousers_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25891,
+      "name": "kendatsuba_hakama",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25892,
+      "name": "kendatsuba_hakama_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25893,
+      "name": "ea_slops",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25894,
+      "name": "ea_slops_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25897,
+      "name": "arke_cosciales",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25898,
+      "name": "arke_cosciales_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25899,
+      "name": "pinga_pants",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25900,
+      "name": "pinga_pants_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25901,
+      "name": "mousai_seraweels",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25902,
+      "name": "mousai_seraweels_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25903,
+      "name": "heyoka_subligar",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25904,
+      "name": "heyoka_subligar_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25905,
+      "name": "baayami_slops",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25906,
+      "name": "baayami_slops_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25907,
+      "name": "turms_subligar",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25908,
+      "name": "turms_subligar_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25920,
+      "name": "ahosi_leggings",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25921,
+      "name": "skaoi_boots",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25922,
+      "name": "navon_crackows",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25923,
+      "name": "tatenashi_sune-ate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25924,
+      "name": "tatenashi_sune-ate_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25925,
+      "name": "sulevias_leggings",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25926,
+      "name": "sulevias_leggings_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25929,
+      "name": "hizamaru_sune-ate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25930,
+      "name": "hizamaru_sune-ate_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25946,
+      "name": "sulevias_leggings_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25947,
+      "name": "meghanada_jambeaux_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25949,
+      "name": "inyanga_crackows_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25950,
+      "name": "jhakri_pigaches_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25952,
+      "name": "taliah_crackows_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25953,
+      "name": "flamma_gambieras_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25954,
+      "name": "mummu_gamashes_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25955,
+      "name": "mallquis_clogs_+2",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25956,
+      "name": "oshosi_leggings",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25957,
+      "name": "oshosi_leggings_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25958,
+      "name": "kendatsuba_sune-ate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25960,
+      "name": "ea_pigaches",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25961,
+      "name": "ea_pigaches_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25964,
+      "name": "arke_gambieras",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25965,
+      "name": "arke_gambieras_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25966,
+      "name": "pinga_pumps",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25967,
+      "name": "pinga_pumps_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25968,
+      "name": "mousai_crackows",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25969,
+      "name": "mousai_crackows_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25970,
+      "name": "heyoka_leggings",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25971,
+      "name": "heyoka_leggings_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25972,
+      "name": "baayami_sabots",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25973,
+      "name": "baayami_sabots_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25974,
+      "name": "turms_leggings",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25975,
+      "name": "turms_leggings_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25976,
+      "name": "oshosi_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25977,
+      "name": "oshosi_gloves_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25978,
+      "name": "kendatsuba_tekko",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25979,
+      "name": "kendatsuba_tekko_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25980,
+      "name": "ea_cuffs",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25981,
+      "name": "ea_cuffs_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25982,
+      "name": "ratri_gadlings",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25984,
+      "name": "arke_manopolas",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25985,
+      "name": "arke_manopolas_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25986,
+      "name": "pinga_mittens",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25987,
+      "name": "pinga_mittens_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25988,
+      "name": "mousai_gages",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25989,
+      "name": "mousai_gages_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25990,
+      "name": "heyoka_mittens",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25991,
+      "name": "heyoka_mittens_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25992,
+      "name": "baayami_cuffs",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25993,
+      "name": "baayami_cuffs_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25994,
+      "name": "turms_mittens",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25995,
+      "name": "turms_mittens_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25996,
+      "name": "raetic_bangles",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25997,
+      "name": "raetic_bangles_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 25998,
+      "name": "anguine_dastanas",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26117,
+      "name": "crepuscular_earring",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26401,
+      "name": "forfend",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26402,
+      "name": "forfend_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26413,
+      "name": "voluspa_shield",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26417,
+      "name": "archdukes_shield",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26488,
+      "name": "diamond_aspis",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26491,
+      "name": "prime_shield",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26492,
+      "name": "duban",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26493,
+      "name": "duban",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26494,
+      "name": "duban",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26495,
+      "name": "duban",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26525,
+      "name": "oshosi_vest",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26526,
+      "name": "oshosi_vest_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26527,
+      "name": "kendatsuba_samue",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26529,
+      "name": "ea_houppelande",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26530,
+      "name": "ea_houppelande_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26533,
+      "name": "arke_corazza",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26534,
+      "name": "arke_corazza_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26535,
+      "name": "pinga_tunic",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26536,
+      "name": "pinga_tunic_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26537,
+      "name": "mousai_manteel",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26538,
+      "name": "mousai_manteel_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26539,
+      "name": "heyoka_harness",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26540,
+      "name": "heyoka_harness_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26541,
+      "name": "baayami_robe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26542,
+      "name": "baayami_robe_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26543,
+      "name": "turms_harness",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26544,
+      "name": "turms_harness_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26692,
+      "name": "blackshell_hairpin",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26695,
+      "name": "fugacity_beret_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26696,
+      "name": "pixie_hairpin_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26697,
+      "name": "accord_hat_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26699,
+      "name": "theias_hairpin_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26701,
+      "name": "smilodon_mask_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26709,
+      "name": "imperial_wing_hairpin",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26716,
+      "name": "highwing_helm",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26722,
+      "name": "gefechtschaller",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26723,
+      "name": "wildheitschaller",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26724,
+      "name": "sombra_tiara",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26726,
+      "name": "revealers_crown",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26727,
+      "name": "revealers_crown_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26731,
+      "name": "stinger_helm",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26784,
+      "name": "hike_khat",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26786,
+      "name": "alhazen_hat",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26790,
+      "name": "befouled_crown",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26791,
+      "name": "eschite_helm",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26792,
+      "name": "despair_helm",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26793,
+      "name": "naga_somen",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26794,
+      "name": "rawhide_mask",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26795,
+      "name": "pursuers_beret",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26796,
+      "name": "psycloth_tiara",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26797,
+      "name": "vanya_hood",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26844,
+      "name": "lustratio_harness",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26870,
+      "name": "emet_harness",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26872,
+      "name": "hime_domaru",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26875,
+      "name": "ravenous_breastplate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26876,
+      "name": "ravenous_breastplate_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26887,
+      "name": "shomonjijoe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26942,
+      "name": "agony_jerkin",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26947,
+      "name": "eschite_breastplate",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26948,
+      "name": "despair_mail",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26949,
+      "name": "naga_samue",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26950,
+      "name": "rawhide_vest",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26951,
+      "name": "pursuers_doublet",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26952,
+      "name": "psycloth_vest",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26953,
+      "name": "vanya_robe",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26958,
+      "name": "swellers_harness",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26959,
+      "name": "kubira_meikogai",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26960,
+      "name": "annointed_kalasiris",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26961,
+      "name": "makora_meikogai",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26962,
+      "name": "enforcers_harness",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 26972,
+      "name": "jumalik_mail",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27050,
+      "name": "kachimusha_kote",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27097,
+      "name": "eschite_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27098,
+      "name": "despair_finger_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27099,
+      "name": "naga_tekko",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27100,
+      "name": "rawhide_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27101,
+      "name": "pursuers_cuffs",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27102,
+      "name": "psycloth_manillas",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27103,
+      "name": "vanya_cuffs",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27104,
+      "name": "shriekers_cuffs",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27134,
+      "name": "kurys_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27135,
+      "name": "leyline_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27137,
+      "name": "floral_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27138,
+      "name": "odyssean_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27139,
+      "name": "valorous_mitts",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27141,
+      "name": "merlinic_dastanas",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27142,
+      "name": "chironic_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27143,
+      "name": "composers_mitts",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27146,
+      "name": "bewegt_cuffs",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27147,
+      "name": "redan_gloves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27148,
+      "name": "tatenashi_gote",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27149,
+      "name": "tatenashi_gote_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27150,
+      "name": "gazu_bracelets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27151,
+      "name": "gazu_bracelets_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27224,
+      "name": "gefechtdiechlings",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27225,
+      "name": "wildheitdiechlings",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27226,
+      "name": "sombra_tights",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27282,
+      "name": "eschite_cuisses",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27283,
+      "name": "despair_cuisses",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27284,
+      "name": "naga_hakama",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27285,
+      "name": "rawhide_trousers",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27286,
+      "name": "pursuers_pants",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27287,
+      "name": "psycloth_lappas",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27288,
+      "name": "vanya_slops",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27319,
+      "name": "obatala_subligar",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27320,
+      "name": "selvans_subligar",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27321,
+      "name": "lengo_pants",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27322,
+      "name": "talab_trousers",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27323,
+      "name": "enticers_pants",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27409,
+      "name": "hippomenes_socks",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27457,
+      "name": "eschite_greaves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27458,
+      "name": "despair_greaves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27459,
+      "name": "naga_kyahan",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27460,
+      "name": "rawhide_boots",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27461,
+      "name": "pursuers_gaiters",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27462,
+      "name": "psycloth_boots",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27464,
+      "name": "inspirited_boots",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27491,
+      "name": "amm_greaves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27492,
+      "name": "loyalist_sabatons",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27493,
+      "name": "mediums_sabots",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27494,
+      "name": "odyssean_greaves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27495,
+      "name": "valorous_greaves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27498,
+      "name": "chironic_slippers",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27499,
+      "name": "composers_sabots",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27502,
+      "name": "maenadic_gambieras",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27503,
+      "name": "thereoid_greaves",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27624,
+      "name": "homestead_shield",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27627,
+      "name": "svalinn",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27629,
+      "name": "weathering_shield_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27630,
+      "name": "thuellaic_ecu_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27635,
+      "name": "chanters_shield",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27636,
+      "name": "evalach",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27637,
+      "name": "evalach_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27638,
+      "name": "ajax",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27639,
+      "name": "ajax_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27640,
+      "name": "deliverance",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27641,
+      "name": "deliverance_+1",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27642,
+      "name": "nibiru_shield",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27721,
+      "name": "umuthi_hat",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27737,
+      "name": "kaabnax_hat",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27738,
+      "name": "ejekamal_mask",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27778,
+      "name": "bokwus_circlet",
+      "level": 99,
+      "ilevel": 110,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27857,
+      "name": "respite_cloak",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27989,
+      "name": "sombra_mittens",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27993,
+      "name": "macabre_gauntlets",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 27995,
+      "name": "shigure_tekko",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28000,
+      "name": "thrift_gloves_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28001,
+      "name": "sasuke_tekko_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28002,
+      "name": "slither_gloves_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28003,
+      "name": "seraph_mittens_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28004,
+      "name": "medbs_gauntlets_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28006,
+      "name": "iuvenalis_mittens_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28007,
+      "name": "nomkahpa_mittens_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28026,
+      "name": "aiwon_gauntlets",
+      "level": 99,
+      "ilevel": 107,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28028,
+      "name": "otomi_gloves",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28134,
+      "name": "assiduity_pants",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28136,
+      "name": "augury_cuisses",
+      "level": 99,
+      "ilevel": 119,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28143,
+      "name": "wukongs_hakama_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28145,
+      "name": "mirador_trousers_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28146,
+      "name": "hidalgo_slops_+1",
+      "level": 99,
+      "ilevel": 118,
+      "kind": "armor"
+    },
+    {
+      "itemId": 28167,
+      "name": "kaabnax_trousers",
+      "level": 99,
+      "ilevel": 115,
+      "kind": "armor"
+    }
+  ]
+}

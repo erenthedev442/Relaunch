@@ -1,16 +1,16 @@
 -----------------------------------
 -- daily_login_bonus.lua
--- Grants 10 Hunt Marks the first time a player logs in each UTC day.
+-- Grants 250 Hunt Marks the first time a player logs in each UTC day.
 -- Creates a daily touchpoint reason to log in even on low-activity days.
 --
 -- CharVars:
---   Daily_Login_Day  — Julian day (YYYY + day-of-year) of last bonus
+--   Daily_Login_Day  - Julian day (YYYY + day-of-year) of last bonus
 -----------------------------------
 require('modules/module_utils')
 
 local m = Module:new('daily_login_bonus')
 
-local DAILY_BONUS = 10
+local DAILY_BONUS = 250
 local CV_POINTS   = 'HL_Points'
 
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)

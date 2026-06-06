@@ -1,0 +1,32 @@
+-- provenance_zone_settings.sql
+-- Enable trust casting in Provenance (zone 222), home of the Ascension
+-- Altar. FJB repurposes this zone as a player-facing hub (reached via the
+-- permission-0 !provenance / !gmhome-style command in
+-- scripts/commands/provenance.lua), so players need to call trusts here
+-- the same as in the Hunting League hub (Reisenjima Henge) and the
+-- Reforge hub (Gwora-Corridor, zone 278 -- see reforge_zone_settings.sql).
+--
+-- Upstream LSB ships zone 222 with misc=4096 (MISC_LOS_PLAYER_BLOCK only),
+-- because retail Provenance (Promyvion-style altar fight) doesn't allow
+-- trusts. We OR in MISC_TRUST while PRESERVING the existing LOS bit.
+--
+-- ZONEMISC bits (src/map/zone.h):
+--   MISC_TRUST            = 0x0800  (2048)  <-- this row enables this bit
+--   MISC_LOS_PLAYER_BLOCK = 0x1000  (4096)  <-- already set, preserved by OR
+--
+-- The trust zone gate lives in scripts/globals/trust.lua (xi.trust.canCast):
+--   if not caster:canUseMisc(xi.zoneMisc.TRUST) then
+--       return xi.msg.basic.TRUST_NO_CALL_AE
+--   end
+-- canUseMisc() reads zone_settings.misc, loaded once at map-server startup.
+--
+-- Using `misc | 2048` instead of a hardcoded value keeps this idempotent
+-- (safe to re-run) and won't clobber other QoL bits added later.
+--
+-- To apply (zone settings load at map-server startup, so a restart is
+-- required for this to take effect):
+--   mysql -u root -p your_db_name < modules/custom/sql/provenance_zone_settings.sql
+
+UPDATE `zone_settings`
+SET    `misc`   = `misc` | 2048
+WHERE  `zoneid` = 222;

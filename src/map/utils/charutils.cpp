@@ -5331,6 +5331,18 @@ void DistributeCapacityPoints(CCharEntity* PChar, CMobEntity* PMob)
 {
     TracyZoneScoped;
 
+    // Legendary custom: opt out of CP for designated mobs (Hunting League,
+    // Game Master waves). These mobs spawn at Lv150+ so the cubic CP formula
+    // dumps ~16k+ CP per kill at EXP_RATE=10 — turning HL into a degenerate
+    // CP farm. Mob flag is set in modules/custom/lua/HuntingLeague.lua and
+    // GameMaster.lua via mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1).
+    // Paired with MOBMOD_NO_CAPACITY_POINTS in src/map/mob_modifier.h and
+    // scripts/enum/mob_mod.lua — keep all three in sync.
+    if (PMob->getMobMod(MOBMOD_NO_CAPACITY_POINTS) > 0)
+    {
+        return;
+    }
+
     // TODO: Capacity Points cannot be gained in Abyssea or Reives.  In addition, Gates areas,
     //       Ra'Kaznar, Escha, and Reisenjima reduce party penalty for capacity points earned.
     ZONEID zone     = PChar->loc.zone->GetID();

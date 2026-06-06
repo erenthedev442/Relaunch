@@ -22,7 +22,7 @@ local H = xi.msg.channel.SYSTEM_3
 local B = xi.msg.channel.LINKSHELL
 
 -- Returns the number of days until the next Monday 00:00 UTC.
--- os.date '!%w': 0=Sun, 1=Mon … 6=Sat.
+-- os.date '!%w': 0=Sun, 1=Mon ... 6=Sat.
 local function daysToMonday(now)
     local weekday = tonumber(os.date('!%w', now)) or 0
     if weekday == 1 then
@@ -37,9 +37,9 @@ commandObj.onTrigger = function(player)
     local weekIdx = math.floor(now / 604800)
     local resetIn = daysToMonday(now)
 
-    -- ── Weekly Hunt Board ──────────────────────────────────────────
+    -- == Weekly Hunt Board ==========================================
     -- CharVars: WH_Week (week index when board was assigned),
-    --           WH_S1_Done … WH_S5_Done (slot completion flags).
+    --           WH_S1_Done ... WH_S5_Done (slot completion flags).
     local whWeek     = player:getCharVar('WH_Week') or -1
     local huntsTotal = 5
     local huntsDone  = 0
@@ -51,7 +51,7 @@ commandObj.onTrigger = function(player)
         end
     end
 
-    -- ── Featured NMs killed this week ─────────────────────────────
+    -- == Featured NMs killed this week =============================
     -- One NM per tier rotates deterministically by weekIdx.
     -- CharVar: HL_Featured_<weekIdx>_<groupId> = 1 when earned.
     local featTotal = #catalog.tiers
@@ -68,7 +68,7 @@ commandObj.onTrigger = function(player)
         end
     end
 
-    -- ── Weekly Bonus Dungeon ───────────────────────────────────────
+    -- == Weekly Bonus Dungeon =======================================
     -- One dungeon per week earns 2x Infamy on first clear.
     -- CharVar: DB_Bonus_<weekIdx>_<dungeonId> = 1 when earned.
     local bonusDungeonName = nil
@@ -89,8 +89,8 @@ commandObj.onTrigger = function(player)
         bonusDungeonDone = (player:getCharVar(bonusCv) or 0) == 1
     end
 
-    -- ── Output ────────────────────────────────────────────────────
-    player:printToPlayer('[Weekly] ── This Week\'s Objectives ──────────────────', H)
+    -- == Output ====================================================
+    player:printToPlayer('[Weekly] == This Week\'s Objectives ==================', H)
     player:printToPlayer(
         string.format('  Reset in:        %d day(s)  (Monday 00:00 UTC)', resetIn), B)
     player:printToPlayer(
@@ -107,7 +107,7 @@ commandObj.onTrigger = function(player)
         player:printToPlayer('  Bonus Dungeon:   None available', B)
     end
 
-    player:printToPlayer('  !featured — this week\'s NMs  |  !bonus_dungeon — bonus dungeon', B)
+    player:printToPlayer('  !featured - this week\'s NMs  |  !bonus_dungeon - bonus dungeon', B)
 end
 
 return commandObj

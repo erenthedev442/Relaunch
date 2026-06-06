@@ -1,0 +1,179 @@
+﻿=== LEGENDARY Server Settings Change Log ===
+Generated on: 2026-04-30 19:40:39
+================================================
+ðŸ„ main.lua - Modified
+   +     SERVER_NAME = 'Legendary',
+   + SERVER_MESSAGE = "Welcome to LEGENDARY! Extreme QoL & Fast Progression Server",
+   +     DAILY_TALLY_AMOUNT = 50,
+   +     GOBBIE_BOX_MIN_AGE = 1, -- Minimum character age in days before a character can sign up for Gobbie Mystery Box
+   +     ENABLE_EXCHANGE_LIMIT = 0, -- Enable Maximum limit of sparks spent per Week (default retail behavior: 1)
+   +     WEEKLY_EXCHANGE_LIMIT = 1000000, -- Maximum amount of sparks/accolades that can be spent per week (default retail value: 100000)
+   +     CAP_CURRENCY_ACCOLADES = 999999,
+   +     CAP_CURRENCY_BALLISTA  = 20000,
+   +     CAP_CURRENCY_SPARKS    = 999999,
+   +     CAP_CURRENCY_VALOR     = 500000,
+   +     INITIAL_LEVEL_CAP              = 99, -- The initial level cap for new players.  There seems to be a hardcap of 255.
+   +     START_GIL                      = 100000, -- Amount of gil given to newly created characters.
+   +     START_INVENTORY                = 80, -- Starting inventory and satchel size.  Ignores values < 30.  Do not set above 80!
+   +     NEW_CHARACTER_CUTSCENE         = 0,  -- Set to 1 to enable opening cutscenes, 0 to disable.
+   +     SUBJOB_QUEST_LEVEL             = 0, -- Minimum level to accept either subjob quest.  Set to 0 to start the game with subjobs unlocked.
+   +     ADVANCED_JOB_LEVEL             = 0, -- Minimum level to accept advanced job quests.  Set to 0 to start the game with advanced jobs.
+   +     ALL_MAPS                       = 1,  -- Set to 1 to give starting characters all the maps.
+   +     UNLOCK_OUTPOST_WARPS           = 2,  -- Set to 1 to give starting characters all outpost warps.  2 to add Tu'Lia and Tavnazia.
+   +     SHOP_PRICE          = 2.000, -- Multiplies prices in NPC shops.
+   +     GIL_RATE            = 100.000, -- Multiplies gil earned from quests.  Won't always display in game.
+   +     BAYLD_RATE          = 2.000, -- Multiples bayld earned from quests.
+   +     EXP_RATE            = 10.000, -- Multiplies exp from script (except FoV/GoV).
+   +     CAPACITY_RATE       = 10.000, -- Multiplies capacity points gained.
+   +     BOOK_EXP_RATE       = 10.000, -- Multiplies exp from FoV/GoV book pages.
+   +     TABS_RATE           = 10.000, -- Multiplies tabs earned from fov.
+   +     ROE_EXP_RATE        = 10.000, -- Multiplies exp earned from records of eminence.
+   +     SPARKS_RATE         = 10.000, -- Multiplies sparks earned from records of eminence.
+   +     CURE_POWER          = 2.000, -- Multiplies amount healed from Healing Magic, including the relevant Blue Magic.
+   +     ELEMENTAL_POWER     = 2.000, -- Multiplies damage dealt by Elemental and non-drain Dark Magic.
+   +     DIVINE_POWER        = 2.000, -- Multiplies damage dealt by Divine Magic.
+   +     NINJUTSU_POWER      = 2.000, -- Multiplies damage dealt by Ninjutsu Magic.
+   +     BLUE_POWER          = 2.000, -- Multiplies damage dealt by Blue Magic.
+   +     DARK_POWER          = 2.000, -- Multiplies amount drained by Dark Magic.
+   +     ITEM_POWER          = 2.000, -- Multiplies the effect of items such as Potions and Ethers.
+   +     WEAPON_SKILL_POWER  = 2.000, -- Multiplies damage dealt by Weapon Skills.
+   +     ENABLE_TRUST_CUSTOM_ENGAGEMENT = 1,
+   +     ENABLE_TRUST_ALTER_EGO_EXTRAVAGANZA          = 1, -- 0 = disabled, 1 = summer/ny, 2 = spring/autumn, 3 = both
+   +     ENABLE_TRUST_ALTER_EGO_EXTRAVAGANZA_ANNOUNCE = 1, -- 0 = disabled, 1 = add announcement to player login
+   +     ENABLE_TRUST_ALTER_EGO_EXPO                  = 1, -- 0 = disabled, 1 = expo - HPP/MPP/Status Resistance, 2 = expo plus (not implemented)
+   +     ENABLE_TRUST_ALTER_EGO_EXPO_ANNOUNCE         = 1, -- 0 = disabled, 1 = add announcement to player login
+   +     BETWEEN_2DYNA_WAIT_TIME     = 0,       -- Hours before player can re-enter Dynamis. Default is 1 Earthday (24 hours).
+   +     DYNA_LEVEL_MIN              = 1,       -- Level min for entering in Dynamis
+   +     PRISMATIC_HOURGLASS_COST    = 1,    -- Cost of the prismatic hourglass for Dynamis.
+   +     CURRENCY_EXCHANGE_RATE      = 10,      -- X Tier 1 ancient currency -> 1 Tier 2, and so on. Certain values may conflict with shop items. Not designed to exceed 198.
+   +     ENABLE_EXCHANGE_100S_TO_1S  = true,    -- true/false. Allow exchange of 100s to 1s, like you can with 10Ks to 100s.
+   +     FREE_COP_DYNAMIS            = 1,        -- Authorize player to entering inside COP Dynamis without completing COP mission (1 = enable 0 = disable)
+   +     STONESKIN_CAP                   = 3500,   -- Soft cap for hp absorbed by stoneskin
+   +     BLINK_SHADOWS                   = 44,     -- Number of shadows supplied by Blink spell
+   +     SPIKE_EFFECT_DURATION           = 1800,   -- the duration of RDM, BLM spikes effects (not Reprisal)
+   +     ELEMENTAL_DEBUFF_DURATION       = 1200,   -- base duration of elemental debuffs
+   +     AQUAVEIL_COUNTER                = 100,     -- Base amount of hits Aquaveil absorbs to prevent spell interrupts. Retail is 1.
+   +     EXPLORER_MOOGLE_LV              = 1, -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
+   +     ENABLE_LOGIN_CAMPAIGN = 1,
+   +     ENABLE_SYNERGY = true, -- true/false. Enable Synergy features.
+   +     ALLOW_MULTIPLE_EXP_RINGS     = 1,     -- Set to 1 to remove ownership restrictions on the Chariot/Empress/Emperor Band trio.
+   +     BYPASS_EXP_RING_ONE_PER_WEEK = 1,     -- Set to 1 to bypass the limit of one ring per Conquest Tally Week.
+   +     NUMBER_OF_DM_EARRINGS        = 10,     -- Number of earrings players can simultaneously own from Divine Might before scripts start blocking them (Default: 1)
+   +     ENM_COOLDOWN                 = 0,   -- Number of hours before a player can obtain same KI for ENMs (default: 5 days)
+   +     EQUIP_FROM_OTHER_CONTAINERS  = true, -- true/false. Allows equipping items from Mog Satchel, Sack, and Case. Only possible with the use of client addons.
+   +     REGIME_REWARD_THRESHOLD      = 150,    -- If the player is more than N levels below the minimum suggested range, do not award experience.
+   -     SERVER_NAME = 'Nameless',
+   -     SERVER_MESSAGE =
+   -         'Please visit https://github.com/LandSandBoat/server for the latest information on the project.\n' ..
+   -         'Thank you, and we hope you enjoy sailing the sands!',
+   -     DAILY_TALLY_AMOUNT = 10,
+   -     GOBBIE_BOX_MIN_AGE = 45, -- Minimum character age in days before a character can sign up for Gobbie Mystery Box
+   -     ENABLE_EXCHANGE_LIMIT = 1, -- Enable Maximum limit of sparks spent per Week (default retail behavior: 1)
+   -     WEEKLY_EXCHANGE_LIMIT = 100000, -- Maximum amount of sparks/accolades that can be spent per week (default retail value: 100000)
+   -     CAP_CURRENCY_ACCOLADES = 99999,
+   -     CAP_CURRENCY_BALLISTA  = 2000,
+   -     CAP_CURRENCY_SPARKS    = 99999,
+   -     CAP_CURRENCY_VALOR     = 50000,
+   -     INITIAL_LEVEL_CAP              = 50, -- The initial level cap for new players.  There seems to be a hardcap of 255.
+   -     START_GIL                      = 10, -- Amount of gil given to newly created characters.
+   -     START_INVENTORY                = 30, -- Starting inventory and satchel size.  Ignores values < 30.  Do not set above 80!
+   -     NEW_CHARACTER_CUTSCENE         = 1,  -- Set to 1 to enable opening cutscenes, 0 to disable.
+   -     SUBJOB_QUEST_LEVEL             = 18, -- Minimum level to accept either subjob quest.  Set to 0 to start the game with subjobs unlocked.
+   -     ADVANCED_JOB_LEVEL             = 30, -- Minimum level to accept advanced job quests.  Set to 0 to start the game with advanced jobs.
+   -     ALL_MAPS                       = 0,  -- Set to 1 to give starting characters all the maps.
+   -     UNLOCK_OUTPOST_WARPS           = 0,  -- Set to 1 to give starting characters all outpost warps.  2 to add Tu'Lia and Tavnazia.
+   -     SHOP_PRICE          = 1.000, -- Multiplies prices in NPC shops.
+   -     GIL_RATE            = 1.000, -- Multiplies gil earned from quests.  Won't always display in game.
+   -     BAYLD_RATE          = 1.000, -- Multiples bayld earned from quests.
+   -     EXP_RATE            = 1.000, -- Multiplies exp from script (except FoV/GoV).
+   -     CAPACITY_RATE       = 1.000, -- Multiplies capacity points gained.
+   -     BOOK_EXP_RATE       = 1.000, -- Multiplies exp from FoV/GoV book pages.
+   -     TABS_RATE           = 1.000, -- Multiplies tabs earned from fov.
+   -     ROE_EXP_RATE        = 1.000, -- Multiplies exp earned from records of eminence.
+   -     SPARKS_RATE         = 1.000, -- Multiplies sparks earned from records of eminence.
+   -     CURE_POWER          = 1.000, -- Multiplies amount healed from Healing Magic, including the relevant Blue Magic.
+   -     ELEMENTAL_POWER     = 1.000, -- Multiplies damage dealt by Elemental and non-drain Dark Magic.
+   -     DIVINE_POWER        = 1.000, -- Multiplies damage dealt by Divine Magic.
+   -     NINJUTSU_POWER      = 1.000, -- Multiplies damage dealt by Ninjutsu Magic.
+   -     BLUE_POWER          = 1.000, -- Multiplies damage dealt by Blue Magic.
+   -     DARK_POWER          = 1.000, -- Multiplies amount drained by Dark Magic.
+   -     ITEM_POWER          = 1.000, -- Multiplies the effect of items such as Potions and Ethers.
+   -     WEAPON_SKILL_POWER  = 1.000, -- Multiplies damage dealt by Weapon Skills.
+   -     ENABLE_TRUST_CUSTOM_ENGAGEMENT = 0,
+   -     ENABLE_TRUST_ALTER_EGO_EXTRAVAGANZA          = 0, -- 0 = disabled, 1 = summer/ny, 2 = spring/autumn, 3 = both
+   -     ENABLE_TRUST_ALTER_EGO_EXTRAVAGANZA_ANNOUNCE = 0, -- 0 = disabled, 1 = add announcement to player login
+   -     ENABLE_TRUST_ALTER_EGO_EXPO                  = 0, -- 0 = disabled, 1 = expo - HPP/MPP/Status Resistance, 2 = expo plus (not implemented)
+   -     ENABLE_TRUST_ALTER_EGO_EXPO_ANNOUNCE         = 0, -- 0 = disabled, 1 = add announcement to player login
+   -     BETWEEN_2DYNA_WAIT_TIME     = 24,       -- Hours before player can re-enter Dynamis. Default is 1 Earthday (24 hours).
+   -     DYNA_LEVEL_MIN              = 65,       -- Level min for entering in Dynamis
+   -     PRISMATIC_HOURGLASS_COST    = 50000,    -- Cost of the prismatic hourglass for Dynamis.
+   -     CURRENCY_EXCHANGE_RATE      = 100,      -- X Tier 1 ancient currency -> 1 Tier 2, and so on. Certain values may conflict with shop items. Not designed to exceed 198.
+   -     ENABLE_EXCHANGE_100S_TO_1S  = false,    -- true/false. Allow exchange of 100s to 1s, like you can with 10Ks to 100s.
+   -     FREE_COP_DYNAMIS            = 0,        -- Authorize player to entering inside COP Dynamis without completing COP mission (1 = enable 0 = disable)
+   -     STONESKIN_CAP                   = 350,   -- Soft cap for hp absorbed by stoneskin
+   -     BLINK_SHADOWS                   = 2,     -- Number of shadows supplied by Blink spell
+   -     SPIKE_EFFECT_DURATION           = 180,   -- the duration of RDM, BLM spikes effects (not Reprisal)
+   -     ELEMENTAL_DEBUFF_DURATION       = 120,   -- base duration of elemental debuffs
+   -     AQUAVEIL_COUNTER                = 1,     -- Base amount of hits Aquaveil absorbs to prevent spell interrupts. Retail is 1.
+   -     EXPLORER_MOOGLE_LV              = 10, -- Enables Explorer Moogle teleports and sets required level. Zero to disable.
+   -     ENABLE_LOGIN_CAMPAIGN = 0,
+   -     ENABLE_SYNERGY = false, -- true/false. Enable Synergy features.
+   -     ALLOW_MULTIPLE_EXP_RINGS     = 0,     -- Set to 1 to remove ownership restrictions on the Chariot/Empress/Emperor Band trio.
+   -     BYPASS_EXP_RING_ONE_PER_WEEK = 0,     -- Set to 1 to bypass the limit of one ring per Conquest Tally Week.
+   -     NUMBER_OF_DM_EARRINGS        = 1,     -- Number of earrings players can simultaneously own from Divine Might before scripts start blocking them (Default: 1)
+   -     ENM_COOLDOWN                 = 120,   -- Number of hours before a player can obtain same KI for ENMs (default: 5 days)
+   -     EQUIP_FROM_OTHER_CONTAINERS  = false, -- true/false. Allows equipping items from Mog Satchel, Sack, and Case. Only possible with the use of client addons.
+   -     REGIME_REWARD_THRESHOLD      = 15,    -- If the player is more than N levels below the minimum suggested range, do not award experience.
+   - 
+
+ðŸ„ map.lua - Modified
+   +     SELF_UNSTUCK_ENABLED  = true,
+   +     AH_LIST_LIMIT = 0,
+   +     EXP_RATE                = 10.0,
+   +     EXP_LOSS_RATE           = 10.0,
+   +     CAPACITY_RATE = 10.0,
+   +     FAME_MULTIPLIER = 10.00,
+   +     BASE_SPEED = 500,
+   +     SPEED_LIMIT = 800,
+   +     MOUNT_SPEED = 800,
+   +     SKILLUP_CHANCE_MULTIPLIER = 10.0,
+   +     CRAFT_CHANCE_MULTIPLIER   = 10.0,
+   +     CRAFT_HQ_CHANCE_MULTIPLIER = 10.0,
+   +     PET_TP_MULTIPLIER    = 3.0,
+   +     PLAYER_TP_MULTIPLIER = 3.0,
+   +     TRUST_TP_MULTIPLIER  = 3.0,
+   +     FELLOW_TP_MULTIPLIER = 3.0,
+   +     SUBJOB_RATIO = 3,
+   +     DROP_RATE_MULTIPLIER = 10.0,
+   +     MOB_GIL_MULTIPLIER = 10.0,
+   +     ALL_MOBS_GIL_BONUS = 1000,
+   +     MAX_MERIT_POINTS = 300,
+   -     SELF_UNSTUCK_ENABLED  = false,
+   -     AH_LIST_LIMIT = 7,
+   -     EXP_RATE                = 1.0,
+   -     EXP_LOSS_RATE           = 1.0,
+   -     CAPACITY_RATE = 1.0,
+   -     FAME_MULTIPLIER = 1.00,
+   -     BASE_SPEED = 50,
+   -     SPEED_LIMIT = 80,
+   -     MOUNT_SPEED = 80,
+   -     SKILLUP_CHANCE_MULTIPLIER = 1.0,
+   -     CRAFT_CHANCE_MULTIPLIER   = 1.0,
+   -     CRAFT_HQ_CHANCE_MULTIPLIER = 1.0,
+   -     PET_TP_MULTIPLIER    = 1.0,
+   -     PLAYER_TP_MULTIPLIER = 1.0,
+   -     TRUST_TP_MULTIPLIER  = 1.0,
+   -     FELLOW_TP_MULTIPLIER = 1.0,
+   -     SUBJOB_RATIO = 1,
+   -     DROP_RATE_MULTIPLIER = 1.0,
+   -     MOB_GIL_MULTIPLIER = 1.0,
+   -     ALL_MOBS_GIL_BONUS = 0,
+   -     MAX_MERIT_POINTS = 30,
+
+ðŸ„ login.lua - Modified
+   +     CLIENT_VER = '30260401_0',
+   -     CLIENT_VER = '30260203_0',
+
+âœ… network.lua - No changes
+================================================
+Auto-generated by Settings-Diff.ps1

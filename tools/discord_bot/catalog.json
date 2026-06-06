@@ -1,0 +1,295 @@
+{
+  "_comment": "GENERATED FILE — do not edit by hand. Exported from the live Lua catalogs by tools/docgen/generators/catalog_json.py. Single source of truth for the Discord bot and docs. Regenerate with refresh-site.bat (or `python tools/docgen/generate.py`). amplifier/bonus are fractions (0.25 = +25%).",
+  "achievements": [
+    {
+      "announce": false,
+      "cv": "ACH_FIRST_HUNT",
+      "desc": "Your first Hunting League kill - the legend begins.",
+      "id": "FIRST_HUNT",
+      "reward": 50,
+      "title": "First Hunt"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_TENTH_HUNT",
+      "desc": "Veteran of ten hunts.  You know the drill.",
+      "id": "TENTH_HUNT",
+      "reward": 100,
+      "title": "Ten Hunts In"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_CENTURY",
+      "desc": "100 Hunting League kills.  No signs of stopping.",
+      "id": "CENTURY",
+      "reward": 300,
+      "title": "Centennial Hunter"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_THOUSAND",
+      "desc": "1,000 NM kills.  You have earned the title.",
+      "id": "THOUSAND",
+      "reward": 1000,
+      "title": "Legendary Slayer"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_TIER2_FIRST",
+      "desc": "First kill from the Tier II roster.",
+      "id": "TIER2_FIRST",
+      "reward": 75,
+      "title": "Tier II Unlocked"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_TIER3_FIRST",
+      "desc": "First kill from the Tier III roster.",
+      "id": "TIER3_FIRST",
+      "reward": 150,
+      "title": "Tier III Unlocked"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_TIER4_FIRST",
+      "desc": "First kill from the Tier IV roster.",
+      "id": "TIER4_FIRST",
+      "reward": 250,
+      "title": "Tier IV Unlocked"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_APEX_HUNTER",
+      "desc": "First Tier V kill.  These are the hardest NMs on the server.",
+      "id": "APEX_HUNTER",
+      "reward": 500,
+      "title": "Apex Hunter"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_MARKS_1K",
+      "desc": "1,000 Hunt Marks earned over your lifetime.",
+      "id": "MARKS_1K",
+      "reward": 200,
+      "title": "Mark of 1,000"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_MARKS_10K",
+      "desc": "10,000 lifetime Hunt Marks.  A true devotee.",
+      "id": "MARKS_10K",
+      "reward": 500,
+      "title": "Mark of 10,000"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_MARKS_100K",
+      "desc": "100,000 lifetime Hunt Marks.  An absolute legend.",
+      "id": "MARKS_100K",
+      "reward": 2000,
+      "title": "Mark of 100,000"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_INFAMY_500",
+      "desc": "500 lifetime Infamy earned from dungeon clears.",
+      "id": "INFAMY_500",
+      "reward": 100,
+      "title": "Dungeon Aspirant"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_INFAMY_1K",
+      "desc": "1,000 lifetime Infamy.  The dungeons know your name.",
+      "id": "INFAMY_1K",
+      "reward": 250,
+      "title": "Dungeon Veteran"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_INFAMY_5K",
+      "desc": "5,000 lifetime Infamy.  An unstoppable force of destruction.",
+      "id": "INFAMY_5K",
+      "reward": 750,
+      "title": "Dungeon Overlord"
+    }
+  ],
+  "capstones": [
+    {
+      "achievedCv": "Title_Trinity_Hunter",
+      "appliesTo": [
+        "af",
+        "relic",
+        "empy"
+      ],
+      "bonus": 0.25,
+      "key": "trinity",
+      "label": "Trinity Hunter",
+      "requires": [
+        "af",
+        "relic",
+        "empy"
+      ]
+    },
+    {
+      "achievedCv": "Title_Apex_Hunter",
+      "appliesTo": [
+        "af",
+        "relic",
+        "empy",
+        "hl"
+      ],
+      "bonus": 0.5,
+      "key": "apex",
+      "label": "Apex Hunter",
+      "requires": [
+        "af",
+        "relic",
+        "empy",
+        "hl"
+      ]
+    }
+  ],
+  "dungeons": [
+    {
+      "clearCv": "Dungeon_Clears_whispering_halls",
+      "id": "whispering_halls",
+      "infamyBase": 50,
+      "label": "The Outer Bastion"
+    },
+    {
+      "clearCv": "Dungeon_Clears_voidwalker_arena",
+      "id": "voidwalker_arena",
+      "infamyBase": 100,
+      "label": "The Voidwalker Arena"
+    },
+    {
+      "clearCv": "Dungeon_Clears_cloister_of_sorrow",
+      "id": "cloister_of_sorrow",
+      "infamyBase": 250,
+      "label": "The Empyreal Paradox"
+    },
+    {
+      "clearCv": "Dungeon_Clears_eternal_throne",
+      "id": "eternal_throne",
+      "infamyBase": 400,
+      "label": "The Eternal Throne"
+    }
+  ],
+  "guild_ranks": [
+    {
+      "amplifier": 0.0,
+      "idx": 1,
+      "label": "Apprentice",
+      "minRep": 0
+    },
+    {
+      "amplifier": 0.1,
+      "idx": 2,
+      "label": "Journeyman",
+      "minRep": 500
+    },
+    {
+      "amplifier": 0.25,
+      "idx": 3,
+      "label": "Veteran",
+      "minRep": 5000
+    },
+    {
+      "amplifier": 0.5,
+      "idx": 4,
+      "label": "Master",
+      "minRep": 25000
+    },
+    {
+      "amplifier": 1.0,
+      "idx": 5,
+      "label": "Grandmaster",
+      "minRep": 100000
+    }
+  ],
+  "guilds": [
+    {
+      "isReforge": true,
+      "key": "af",
+      "label": "AF Hunters' Guild",
+      "lifetimeCv": "RF_AF_Marks_Lifetime",
+      "markType": "AF Marks",
+      "repCv": "Guild_AF_Rep"
+    },
+    {
+      "isReforge": true,
+      "key": "relic",
+      "label": "Relic Hunters' Guild",
+      "lifetimeCv": "RF_Relic_Marks_Lifetime",
+      "markType": "Relic Marks",
+      "repCv": "Guild_Relic_Rep"
+    },
+    {
+      "isReforge": true,
+      "key": "empy",
+      "label": "Empyrean Hunters' Guild",
+      "lifetimeCv": "RF_Empy_Marks_Lifetime",
+      "markType": "Empy Marks",
+      "repCv": "Guild_Empy_Rep"
+    },
+    {
+      "isReforge": false,
+      "key": "hl",
+      "label": "League Hunters' Guild",
+      "lifetimeCv": "HL_Points_Lifetime",
+      "markType": "Hunt Marks",
+      "repCv": "Guild_HL_Rep"
+    }
+  ],
+  "hnm": [
+    {
+      "name": "Fafnir",
+      "var": "[HNM]Fafnir",
+      "window": "21–24 h",
+      "zone": "Dragon's Aery"
+    },
+    {
+      "name": "Adamantoise",
+      "var": "[HNM]Adamantoise",
+      "window": "21–24 h",
+      "zone": "Valley of Sorrows"
+    },
+    {
+      "name": "Behemoth",
+      "var": "[HNM]Behemoth",
+      "window": "21–24 h",
+      "zone": "Behemoth's Dominion"
+    },
+    {
+      "name": "Roc",
+      "var": "[HNM]Roc",
+      "window": "6–8 h",
+      "zone": "Sauromugue Champaign"
+    },
+    {
+      "name": "Simurgh",
+      "var": "[HNM]Simurgh",
+      "window": "6–8 h",
+      "zone": "Rolanberry Fields"
+    },
+    {
+      "name": "Serket",
+      "var": "[HNM]Serket",
+      "window": "6–8 h",
+      "zone": "Garlaige Citadel"
+    },
+    {
+      "name": "King Arthro",
+      "var": "[HNM]King_Arthro",
+      "window": "8–10 h",
+      "zone": "Jugner Forest"
+    },
+    {
+      "name": "Spiny Spipi",
+      "var": "[HNM]Spiny_Spipi",
+      "window": "4–6 h",
+      "zone": "East Sarutabaruta"
+    }
+  ]
+}

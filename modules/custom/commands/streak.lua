@@ -25,7 +25,7 @@ commandObj.onTrigger = function(player)
     local active   = (streak > 0) and (elapsed <= 300)
     local secsLeft = active and (300 - elapsed) or 0
 
-    player:printToPlayer('[Kill Streak] ── Status ──────────────────────────────', H)
+    player:printToPlayer('[Kill Streak] == Status ==============================', H)
 
     if not active then
         player:printToPlayer('  No active streak.', B)
@@ -56,13 +56,13 @@ commandObj.onTrigger = function(player)
     -- Next bonus tier
     if     streak < 3  then
         player:printToPlayer(
-            string.format('  Next bonus at:   x3 kills (+10%%)  — %d more kill(s)', 3 - streak), B)
+            string.format('  Next bonus at:   x3 kills (+10%%)  - %d more kill(s)', 3 - streak), B)
     elseif streak < 5  then
         player:printToPlayer(
-            string.format('  Next bonus at:   x5 kills (+20%%)  — %d more kill(s)', 5 - streak), B)
+            string.format('  Next bonus at:   x5 kills (+20%%)  - %d more kill(s)', 5 - streak), B)
     elseif streak < 10 then
         player:printToPlayer(
-            string.format('  Next bonus at:   x10 kills (+50%%) — %d more kill(s)', 10 - streak), B)
+            string.format('  Next bonus at:   x10 kills (+50%%) - %d more kill(s)', 10 - streak), B)
     else
         player:printToPlayer('  Maximum bonus tier reached!  (+50%% per kill)', B)
     end

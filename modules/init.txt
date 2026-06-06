@@ -29,7 +29,8 @@
 # | 
 # | custom/cpp/custom_module.cpp
 # | custom/lua/claim_shield.lua
-# |
+# | custom/sql/gear_moogle.sql
+# | custom/lua/gear_moogle_npc.sql
 # ---------------------
 #
 # Will load only custom/cpp/custom_module.cpp and custom/lua/claim_shield.lua.
@@ -37,4 +38,10 @@
 # Live example:
 
 custom/commands/
-custom/lua/test_npcs_in_gm_home.lua
+custom/sql/
+custom/lua/
+
+# Custom C++ modules — listed per-file so disabled experiments
+# (ah_announcement.cpp, ah_pagination.cpp) stay opted out.
+custom/cpp/auto_spend_bindings.cpp
+custom/cpp/cross_job_ability_bindings.cpp

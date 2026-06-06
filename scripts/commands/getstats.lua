@@ -15,7 +15,7 @@ local options =
 
 commandObj.cmdprops =
 {
-    permission = 1,
+    permission = 0,
     parameters = 's'
 }
 
@@ -58,8 +58,19 @@ commandObj.onTrigger = function(player, option)
             player:printToPlayer(string.format('Total INT: %i ', target:getStat(xi.mod.INT)), xi.msg.channel.SYSTEM_3)
             player:printToPlayer(string.format('Total CHR: %i ', target:getStat(xi.mod.CHR)), xi.msg.channel.SYSTEM_3)
             if targetType == xi.objType.PC then
-                player:printToPlayer(string.format('Total Subtle Blow: %i ', target:getMod(xi.mod.SUBTLE_BLOW)), xi.msg.channel.SYSTEM_3)
-                player:printToPlayer(string.format('Total Store TP: %i ', target:getMod(xi.mod.STORETP)), xi.msg.channel.SYSTEM_3)
+				player:printToPlayer(string.format('Dual Wield: %i ', target:getMod(xi.mod.DUAL_WIELD)), xi.msg.channel.SYSTEM_3)
+				player:printToPlayer(string.format('Haste - Gear: %i ', target:getMod(xi.mod.HASTE_GEAR)), xi.msg.channel.SYSTEM_3)
+				player:printToPlayer(string.format('Haste - Magic: %i ', target:getMod(xi.mod.HASTE_MAGIC)), xi.msg.channel.SYSTEM_3)
+				player:printToPlayer(string.format('Haste - Ability: %i ', target:getMod(xi.mod.HASTE_ABILITY)), xi.msg.channel.SYSTEM_3)
+				player:printToPlayer(string.format('Quick Magic: %i ', target:getMod(xi.mod.QUICK_MAGIC)), xi.msg.channel.SYSTEM_3)
+				player:printToPlayer(string.format('Fast Cast: %i ', target:getMod(xi.mod.FASTCAST)), xi.msg.channel.SYSTEM_3)
+				player:printToPlayer(string.format('Spell Interuption Rate: %i ', target:getMod(xi.mod.SPELLINTERRUPT)), xi.msg.channel.SYSTEM_3)
+				player:printToPlayer(string.format('Counter: %i ', target:getMod(xi.mod.COUNTER)), xi.msg.channel.SYSTEM_3)
+                player:printToPlayer(string.format('Subtle Blow: %i ', target:getMod(xi.mod.SUBTLE_BLOW)), xi.msg.channel.SYSTEM_3)
+				player:printToPlayer(string.format('Subtle Blow II: %i ', target:getMod(xi.mod.SUBTLE_BLOW_II)), xi.msg.channel.SYSTEM_3)
+                player:printToPlayer(string.format('Store TP: %i ', target:getMod(xi.mod.STORETP)), xi.msg.channel.SYSTEM_3)
+				player:printToPlayer(string.format('Cure Potency: %i ', target:getMod(xi.mod.CURE_POTENCY)), xi.msg.channel.SYSTEM_3)
+				player:printToPlayer(string.format('Cure Potency II: %i ', target:getMod(xi.mod.CURE_POTENCY_II)), xi.msg.channel.SYSTEM_3)
                 player:printToPlayer(string.format('%s\'s base Treasure Hunter with current equipment: %i', target:getName(), target:getMod(xi.mod.TREASURE_HUNTER)), xi.msg.channel.SYSTEM_3)
             elseif targetType == xi.objType.MOB then
                 player:printToPlayer(string.format('Mob\'s current Treasure Hunter Tier: %i', target:getTHlevel()), xi.msg.channel.SYSTEM_3)
@@ -79,7 +90,17 @@ commandObj.onTrigger = function(player, option)
             player:printToPlayer(string.format('Ranged Weap Dmg: %i ', target:getRangedDmg()), xi.msg.channel.SYSTEM_3)
             player:printToPlayer(string.format('Magic Attack bonus: %i ', target:getMod(xi.mod.MATT)), xi.msg.channel.SYSTEM_3)
             player:printToPlayer(string.format('Magic Accuracy bonus: %i ', target:getMod(xi.mod.MACC)), xi.msg.channel.SYSTEM_3)
-
+			player:printToPlayer(string.format('Crit Hit Rate: %i ', target:getMod(xi.mod.CRITHITRATE)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Crit Hit Damage: %i ', target:getMod(xi.mod.CRIT_DMG_INCREASE)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Magic Hit Rate: %i ', target:getMod(xi.mod.MAGIC_CRITHITRATE)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Magic Hit Damage: %i ', target:getMod(xi.mod.MAGIC_CRIT_DMG_INCREASE)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Double Attack: %i ', target:getMod(xi.mod.DOUBLE_ATTACK)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Triple Attack: %i ', target:getMod(xi.mod.TRIPLE_ATTACK)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Quadruple Attack: %i ', target:getMod(xi.mod.QUAD_ATTACK)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('TP Bonus: %i ', target:getMod(xi.mod.TP_BONUS)), xi.msg.channel.SYSTEM_3) 
+			player:printToPlayer(string.format('WS DMG - ALL Hits: %i ', target:getMod(xi.mod.ALL_WSDMG_ALL_HITS)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('WS DMG - First Hit: %i ', target:getMod(xi.mod.ALL_WSDMG_FIRST_HIT)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Skillchain DMG: %i ', target:getMod(xi.mod.SKILLCHAINDMG)), xi.msg.channel.SYSTEM_3)
             return
         end,
 
@@ -90,7 +111,14 @@ commandObj.onTrigger = function(player, option)
             player:printToPlayer(string.format('Defense Base: %i ', target:getMod(xi.mod.DEF)), xi.msg.channel.SYSTEM_3)
             player:printToPlayer(string.format('Total Defense: %i ', target:getStat(xi.mod.DEF)), xi.msg.channel.SYSTEM_3)
             player:printToPlayer(string.format('Magic Defense bonus: %i ', target:getMod(xi.mod.MDEF)), xi.msg.channel.SYSTEM_3)
-
+			player:printToPlayer(string.format('Damage Taken: %i ', target:getMod(xi.mod.DMG)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Physical DMG Taken: %i ', target:getMod(xi.mod.DMGPHYS)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Breath DMG Taken: %i ', target:getMod(xi.mod.DMGBREATH)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Magic DMG Taken: %i ', target:getMod(xi.mod.DMGMAGIC)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Enmity: %i ', target:getMod(xi.mod.ENMITY)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Regen: %i ', target:getMod(xi.mod.REGEN)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Refresh: %i ', target:getMod(xi.mod.REFRESH)), xi.msg.channel.SYSTEM_3)
+			player:printToPlayer(string.format('Regain: %i ', target:getMod(xi.mod.REGAIN)), xi.msg.channel.SYSTEM_3)
             return
         end,
 
@@ -106,11 +134,11 @@ commandObj.onTrigger = function(player, option)
                         end
                     end
 
-                    message = message .. ' SDT: ' ..         target:getMod(xi.data.element.getElementalSDTModifier(v))
-                    message = message .. ' resRank: ' ..     target:getMod(xi.data.element.getElementalResistanceRankModifier(v))
-                    message = message .. ' Null%: ' ..       target:getMod(xi.data.element.getElementalNullificationModifier(v))
-                    message = message .. ' Absorb%: ' ..     target:getMod(xi.data.element.getElementalAbsorptionModifier(v))
-                    message = message .. ' MEva: ' ..        target:getMod(xi.data.element.getElementalMEVAModifier(v))
+                    message = message .. ' SDT: ' ..         target:getMod(xi.combat.element.getElementalSDTModifier(v))
+                    message = message .. ' resRank: ' ..     target:getMod(xi.combat.element.getElementalResistanceRankModifier(v))
+                    message = message .. ' Null%: ' ..       target:getMod(xi.combat.element.getElementalNullificationModifier(v))
+                    message = message .. ' Absorb%: ' ..     target:getMod(xi.combat.element.getElementalAbsorptionModifier(v))
+                    message = message .. ' MEva: ' ..        target:getMod(xi.combat.element.getElementalMEVAModifier(v))
                     eleMessages[v] = message
                 end
             end

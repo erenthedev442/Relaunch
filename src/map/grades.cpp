@@ -57,7 +57,7 @@ std::array<std::array<uint8, 9>, 23> JobGrades = { {
     { 4, 0, 5, 2, 4, 3, 5, 6, 3 }, // PUP
     { 4, 0, 4, 3, 5, 2, 6, 6, 2 }, // DNC
     { 5, 4, 6, 4, 5, 4, 3, 4, 3 }, // SCH
-    { 3, 2, 6, 4, 5, 4, 3, 3, 4 }, // GEO
+    { 1, 0, 4, 4, 1, 4, 6, 4, 4 }, // GEO slot -> Bouncer tank (HP=A, MP=0, VIT=A; HP pushed past MNK via HPP job trait, see modules/custom/sql/bouncer_*.sql)
     { 3, 6, 3, 4, 5, 2, 4, 4, 6 }  // RUN
 } };
 

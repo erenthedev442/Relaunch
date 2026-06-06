@@ -2,13 +2,13 @@
 -- func: top
 -- desc: Shows the top 5 currently online players ranked by a stat.
 --       Respects Leaderboard_OptOut = 1.  For full server-wide rankings
---       see the website at richardknutzjr.github.io/FFXI-Private-Server-FJB
+--       see the website at legendary-ffxi.pages.dev
 --
 -- Usage:
---   !top           — default: top by lifetime Hunt Marks
---   !top kills     — top by NM kill count
---   !top marks     — top by lifetime Hunt Marks earned
---   !top infamy    — top by lifetime Infamy earned
+--   !top           - default: top by lifetime Hunt Marks
+--   !top kills     - top by NM kill count
+--   !top marks     - top by lifetime Hunt Marks earned
+--   !top infamy    - top by lifetime Infamy earned
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
@@ -61,7 +61,7 @@ commandObj.onTrigger = function(player, arg)
     table.sort(rows, function(a, b) return a.val > b.val end)
 
     player:printToPlayer(
-        string.format('[Top 5 Online] ── %s ──────────────────────────', statDef.label), H)
+        string.format('[Top 5 Online] == %s ==========================', statDef.label), H)
 
     if #rows == 0 then
         player:printToPlayer('  No eligible players online.', B)
@@ -75,7 +75,7 @@ commandObj.onTrigger = function(player, arg)
     end
 
     player:printToPlayer(
-        '  Full server rankings: richardknutzjr.github.io/FFXI-Private-Server-FJB', B)
+        '  Full server rankings: legendary-ffxi.pages.dev', B)
 end
 
 return commandObj

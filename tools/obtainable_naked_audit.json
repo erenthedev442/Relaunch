@@ -1,0 +1,5714 @@
+[
+  {
+    "itemId": 21602,
+    "name": "onion_sword_iii",
+    "ilevel": 119,
+    "source": "dungeon_catalog.lua"
+  },
+  {
+    "itemId": 21646,
+    "name": "caliburnus",
+    "ilevel": 119,
+    "source": "dungeon_catalog.lua"
+  },
+  {
+    "itemId": 23911,
+    "name": "laksamana_tricorne_+4",
+    "ilevel": 119,
+    "source": "dungeon_catalog.lua"
+  },
+  {
+    "itemId": 23956,
+    "name": "laksamana_frac_+4",
+    "ilevel": 119,
+    "source": "dungeon_catalog.lua"
+  },
+  {
+    "itemId": 23992,
+    "name": "ignominy_finger_gauntlets_+4",
+    "ilevel": 119,
+    "source": "dungeon_catalog.lua"
+  },
+  {
+    "itemId": 24091,
+    "name": "laksamana_bottes_+4",
+    "ilevel": 119,
+    "source": "dungeon_catalog.lua"
+  },
+  {
+    "itemId": 24097,
+    "name": "runeist_boots_+4",
+    "ilevel": 119,
+    "source": "dungeon_catalog.lua"
+  },
+  {
+    "itemId": 25603,
+    "name": "jumalik_helm",
+    "ilevel": 119,
+    "source": "dungeon_catalog.lua"
+  },
+  {
+    "itemId": 27637,
+    "name": "evalach_+1",
+    "ilevel": 119,
+    "source": "dungeon_catalog.lua"
+  },
+  {
+    "itemId": 10240,
+    "name": "hexed_haubert",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10241,
+    "name": "hexed_domaru",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10242,
+    "name": "hexed_jacket",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10243,
+    "name": "hexed_doublet",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10244,
+    "name": "hexed_bliaut",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10245,
+    "name": "hexed_haubert_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10246,
+    "name": "hexed_domaru_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10247,
+    "name": "hexed_jacket_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10248,
+    "name": "hexed_doublet_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10249,
+    "name": "hexed_bliaut_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10303,
+    "name": "hexed_gauntlets",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10304,
+    "name": "hexed_tekko",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10305,
+    "name": "hexed_wristbands",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10306,
+    "name": "hexed_gages",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10307,
+    "name": "hexed_cuffs",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10308,
+    "name": "hexed_gantl._-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10309,
+    "name": "hexed_tekko_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10310,
+    "name": "hexed_wrist._-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10311,
+    "name": "hexed_gages_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10312,
+    "name": "hexed_cuffs_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10353,
+    "name": "hexed_gambieras",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10354,
+    "name": "hexed_sune-ate",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10355,
+    "name": "hexed_gamashes",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10356,
+    "name": "hexed_nails",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10357,
+    "name": "hexed_boots",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10358,
+    "name": "hexed_gamb._-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10359,
+    "name": "hexed_sune-ate_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10360,
+    "name": "hexed_gamash._-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10361,
+    "name": "hexed_nails_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10362,
+    "name": "hexed_boots_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10419,
+    "name": "hexed_coronet",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10420,
+    "name": "hexed_somen",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10421,
+    "name": "hexed_bonnet",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10422,
+    "name": "hexed_coif",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10423,
+    "name": "hexed_mitra",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10424,
+    "name": "hexed_coronet_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10425,
+    "name": "hexed_somen_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10426,
+    "name": "hexed_bonnet_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10427,
+    "name": "hexed_coif_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10428,
+    "name": "hexed_mitra_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10583,
+    "name": "hexed_hose",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10584,
+    "name": "hexed_hakama",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10585,
+    "name": "hexed_kecks",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10586,
+    "name": "hexed_slops",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10587,
+    "name": "hexed_tights",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10588,
+    "name": "hexed_hose_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10589,
+    "name": "hexed_hakama_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10590,
+    "name": "hexed_kecks_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10591,
+    "name": "hexed_slops_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10592,
+    "name": "hexed_tights_-1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10847,
+    "name": "orc_belt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10848,
+    "name": "quadav_belt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10849,
+    "name": "yagudo_belt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10850,
+    "name": "leech_belt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10851,
+    "name": "slime_belt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 10852,
+    "name": "hecteyes_belt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 11002,
+    "name": "dragon_tank",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 11320,
+    "name": "skeleton_robe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 11531,
+    "name": "fidelity_mantle",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 11654,
+    "name": "puffin_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 11655,
+    "name": "noddy_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 11720,
+    "name": "cirque_earring",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 12491,
+    "name": "onion_cap",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 12619,
+    "name": "onion_harness",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 13122,
+    "name": "miners_pendant",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 13147,
+    "name": "ugg._necklace",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 13179,
+    "name": "kgd._stable_collar",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 13180,
+    "name": "rep._stable_medal",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 13181,
+    "name": "fed._stable_scarf",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 13682,
+    "name": "ether_tank",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 13683,
+    "name": "water_tank",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 13684,
+    "name": "potion_tank",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 13842,
+    "name": "tavnazian_mask",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 14117,
+    "name": "rusty_leggings",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 14242,
+    "name": "rusty_subligar",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 14661,
+    "name": "holla_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 14662,
+    "name": "dem_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 14663,
+    "name": "mea_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 14664,
+    "name": "vahzl_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 14665,
+    "name": "yhoat_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 14666,
+    "name": "altep_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 15288,
+    "name": "pellet_belt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 15289,
+    "name": "bolt_belt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 15453,
+    "name": "lugworm_belt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 15454,
+    "name": "little_worm_belt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 15507,
+    "name": "purgatory_collar",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 15841,
+    "name": "jugner_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 15842,
+    "name": "pashhow_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 15843,
+    "name": "meriphataud_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 15933,
+    "name": "stirge_belt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16223,
+    "name": "orange_tank",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16224,
+    "name": "apple_tank",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16225,
+    "name": "pear_tank",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16226,
+    "name": "pamama_tank",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16227,
+    "name": "persikos_tank",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16249,
+    "name": "elixir_tank",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16257,
+    "name": "ghost_cape",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16285,
+    "name": "pendant_compass",
+    "ilevel": 0,
+    "source": "guildshop"
+  },
+  {
+    "itemId": 16297,
+    "name": "shepherds_chain",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 16399,
+    "name": "katars",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16400,
+    "name": "darksteel_katars",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16401,
+    "name": "jamadhars",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16405,
+    "name": "cat_baghnakhs",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16406,
+    "name": "baghnakhs",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16407,
+    "name": "brass_baghnakhs",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16409,
+    "name": "lynx_baghnakhs",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16411,
+    "name": "claws",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16412,
+    "name": "mythril_claws",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16413,
+    "name": "darksteel_claws",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16414,
+    "name": "cermet_claws",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16419,
+    "name": "patas",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16420,
+    "name": "bone_patas",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16421,
+    "name": "gold_patas",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16422,
+    "name": "tigerfangs",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16441,
+    "name": "brs._baghnakhs_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16442,
+    "name": "fsd._baghnakhs",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16444,
+    "name": "baghnakhs_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16445,
+    "name": "claws_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16447,
+    "name": "rusty_dagger",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 16448,
+    "name": "bronze_dagger",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16449,
+    "name": "brass_dagger",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16450,
+    "name": "dagger",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16451,
+    "name": "mythril_dagger",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16455,
+    "name": "baselard",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16456,
+    "name": "mythril_baselard",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16457,
+    "name": "dst._baselard",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16460,
+    "name": "kris",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16463,
+    "name": "cmb.cst._dagger",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16465,
+    "name": "bronze_knife",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16466,
+    "name": "knife",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16467,
+    "name": "mythril_knife",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16468,
+    "name": "darksteel_knife",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16469,
+    "name": "cermet_knife",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16473,
+    "name": "kukri",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16475,
+    "name": "mythril_kukri",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16476,
+    "name": "darksteel_kukri",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16477,
+    "name": "cermet_kukri",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16482,
+    "name": "onion_dagger",
+    "ilevel": 0,
+    "source": "gear_moogle.lua,AH"
+  },
+  {
+    "itemId": 16483,
+    "name": "onion_knife",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16491,
+    "name": "bronze_knife_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16492,
+    "name": "bronze_dagger_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16511,
+    "name": "burnite_shell",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 16512,
+    "name": "bilbo",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16513,
+    "name": "tuck",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16514,
+    "name": "mailbreaker",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16516,
+    "name": "jr.msk._tuck",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16517,
+    "name": "degen",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16518,
+    "name": "mythril_degen",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16519,
+    "name": "schlaeger",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16524,
+    "name": "fleuret",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16526,
+    "name": "schwert",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16529,
+    "name": "musketeers_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16530,
+    "name": "xiphos",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16531,
+    "name": "brass_xiphos",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16532,
+    "name": "gladius",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16534,
+    "name": "onion_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16535,
+    "name": "bronze_sword",
+    "ilevel": 0,
+    "source": "gear_moogle.lua,AH,guildshop"
+  },
+  {
+    "itemId": 16536,
+    "name": "iron_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16537,
+    "name": "mythril_sword",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16538,
+    "name": "darksteel_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16539,
+    "name": "cermet_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16544,
+    "name": "ryl.arc._sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16545,
+    "name": "broadsword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16546,
+    "name": "katzbalger",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16551,
+    "name": "sapara",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16552,
+    "name": "scimitar",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16553,
+    "name": "tulwar",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16554,
+    "name": "hanger",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16555,
+    "name": "ridill",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 16558,
+    "name": "falchion",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16559,
+    "name": "darksteel_falchion",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16560,
+    "name": "cutlass",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16565,
+    "name": "spatha",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16566,
+    "name": "longsword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16567,
+    "name": "knights_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16568,
+    "name": "saber",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16569,
+    "name": "gold_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16571,
+    "name": "t.k._army_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16572,
+    "name": "bee_spatha",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16576,
+    "name": "hunting_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16577,
+    "name": "bastard_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16583,
+    "name": "claymore",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16584,
+    "name": "mythril_claymore",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16585,
+    "name": "dst._claymore",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16586,
+    "name": "adaman_claymore",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16589,
+    "name": "two-hand._sword",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16590,
+    "name": "greatsword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16591,
+    "name": "zweihander",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16592,
+    "name": "gigant_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16593,
+    "name": "plain_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16595,
+    "name": "ram-dao",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16600,
+    "name": "wax_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16601,
+    "name": "ryl.swd._blade",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16603,
+    "name": "halo_claymore",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16606,
+    "name": "rusty_greatsword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16608,
+    "name": "gladiator",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16612,
+    "name": "saber_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16614,
+    "name": "knife_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16615,
+    "name": "falchion_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16616,
+    "name": "zweihander_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16617,
+    "name": "tuck_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16618,
+    "name": "mailbreaker_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16623,
+    "name": "bronze_sword_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16624,
+    "name": "xiphos_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16625,
+    "name": "scimitar_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16626,
+    "name": "iron_sword_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16627,
+    "name": "spatha_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16628,
+    "name": "longsword_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16631,
+    "name": "kaiser_sword",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 16632,
+    "name": "bilbo_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16633,
+    "name": "degen_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16634,
+    "name": "broadsword_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16635,
+    "name": "mythril_sword_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16636,
+    "name": "tulwar_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16638,
+    "name": "claymore_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16639,
+    "name": "fine_claymore",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16640,
+    "name": "bronze_axe",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16641,
+    "name": "brass_axe",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16642,
+    "name": "bone_axe",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16643,
+    "name": "battleaxe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16644,
+    "name": "mythril_axe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16645,
+    "name": "darksteel_axe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16646,
+    "name": "bronze_axe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16648,
+    "name": "legionnaires_axe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16649,
+    "name": "bone_pick",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16650,
+    "name": "war_pick",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16651,
+    "name": "mythril_pick",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16652,
+    "name": "darksteel_pick",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16654,
+    "name": "glyph_axe",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 16655,
+    "name": "rusty_pick",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16657,
+    "name": "tabar",
+    "ilevel": 0,
+    "source": "AH,drop,guildshop"
+  },
+  {
+    "itemId": 16658,
+    "name": "darksteel_tabar",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16661,
+    "name": "brass_axe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16663,
+    "name": "battleaxe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16664,
+    "name": "war_pick_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16665,
+    "name": "mythril_axe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16666,
+    "name": "bone_axe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16667,
+    "name": "light_axe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16668,
+    "name": "bone_pick_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16670,
+    "name": "mythril_pick_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16671,
+    "name": "tabar_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16672,
+    "name": "tigerhunter",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 16674,
+    "name": "emeth_pick",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16677,
+    "name": "darksteel_axe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16681,
+    "name": "gerwitzs_axe",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 16682,
+    "name": "darksteel_pick_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16683,
+    "name": "dst._tabar_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16687,
+    "name": "platoon_axe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16688,
+    "name": "mythril_claws_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16695,
+    "name": "katars_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16696,
+    "name": "patas_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16697,
+    "name": "dst._claws_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16704,
+    "name": "butterfly_axe",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16705,
+    "name": "greataxe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16706,
+    "name": "heavy_axe",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16712,
+    "name": "centurions_axe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16716,
+    "name": "butterfly_axe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16717,
+    "name": "greataxe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16718,
+    "name": "heavy_axe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16720,
+    "name": "plantbane",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 16724,
+    "name": "heavy_dst._axe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16725,
+    "name": "massive_dst._axe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16729,
+    "name": "berserkers_axe",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 16734,
+    "name": "pendragon_axe",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 16736,
+    "name": "dagger_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16737,
+    "name": "baselard_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16738,
+    "name": "mythril_dagger_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16739,
+    "name": "mythril_knife_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16740,
+    "name": "brass_dagger_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16748,
+    "name": "kukri_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16749,
+    "name": "kris_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16750,
+    "name": "mythril_kukri_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16751,
+    "name": "dst._knife_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16752,
+    "name": "fine_baselard",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16758,
+    "name": "dst._baselard_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16759,
+    "name": "darksteel_kris",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16760,
+    "name": "darksteel_kris_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16763,
+    "name": "darksteel_kukri_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16768,
+    "name": "bronze_zaghnal",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16769,
+    "name": "brass_zaghnal",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16770,
+    "name": "zaghnal",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16772,
+    "name": "brass_zaghnal_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16774,
+    "name": "scythe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16775,
+    "name": "mythril_scythe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16776,
+    "name": "mrc.cpt._scythe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16778,
+    "name": "brz._zaghnal_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16779,
+    "name": "zaghnal_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16781,
+    "name": "scythe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16782,
+    "name": "mythril_scythe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16783,
+    "name": "plantreaper",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 16785,
+    "name": "harvester",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 16789,
+    "name": "darksteel_scythe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16790,
+    "name": "dst._scythe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16794,
+    "name": "bone_scythe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16795,
+    "name": "bone_scythe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16796,
+    "name": "mythril_zaghnal",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16797,
+    "name": "mythril_zaghnal_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16800,
+    "name": "knights_sword_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16801,
+    "name": "sapara_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16802,
+    "name": "brass_xiphos_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16803,
+    "name": "fleuret_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16811,
+    "name": "dst._sword_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16812,
+    "name": "war_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16813,
+    "name": "schlaeger_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16814,
+    "name": "crescent_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16815,
+    "name": "mythril_degen_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16825,
+    "name": "cermet_sword_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16828,
+    "name": "bastard_sword_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16832,
+    "name": "harpoon",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16833,
+    "name": "bronze_spear",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16834,
+    "name": "brass_spear",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16835,
+    "name": "spear",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16836,
+    "name": "halberd",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16839,
+    "name": "partisan",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16842,
+    "name": "golden_spear",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16843,
+    "name": "draconis_lance",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 16844,
+    "name": "ryl.sqr._halberd",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16845,
+    "name": "lance",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16847,
+    "name": "mythril_lance",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16848,
+    "name": "darksteel_lance",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16850,
+    "name": "mercurial_spear",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16851,
+    "name": "r.k._army_lance",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16852,
+    "name": "ryl.spr._spear",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16853,
+    "name": "lizard_piercer",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 16858,
+    "name": "sacred_lance",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16859,
+    "name": "bronze_spear_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16862,
+    "name": "harpoon_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16864,
+    "name": "brass_spear_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16865,
+    "name": "spear_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16866,
+    "name": "halberd_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16871,
+    "name": "kamayari",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16872,
+    "name": "kamayari_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16874,
+    "name": "partisan_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16875,
+    "name": "golden_spear_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16876,
+    "name": "lance_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16877,
+    "name": "mythril_lance_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16878,
+    "name": "dst._lance_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16896,
+    "name": "kunai",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16898,
+    "name": "cmb.cst._kusabi",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16900,
+    "name": "wakizashi",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16901,
+    "name": "kodachi",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16902,
+    "name": "sakurafubuki",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16903,
+    "name": "kabutowari",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16914,
+    "name": "kunai_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16915,
+    "name": "hien",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16916,
+    "name": "hien_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16917,
+    "name": "suzume",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16918,
+    "name": "wakizashi_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16919,
+    "name": "shinobi-gatana",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16920,
+    "name": "shinobi-gatana_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16921,
+    "name": "kodachi_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16922,
+    "name": "sakurafubuki_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16923,
+    "name": "kabutowari_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16931,
+    "name": "2-hand._sword_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16932,
+    "name": "greatsword_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16933,
+    "name": "dst._claymore_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16939,
+    "name": "ram-dao_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16940,
+    "name": "gerwitzs_sword",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 16957,
+    "name": "faussar",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16958,
+    "name": "faussar_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16959,
+    "name": "platoon_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16960,
+    "name": "uchigatana",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16962,
+    "name": "ashura",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16964,
+    "name": "zanbato",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16966,
+    "name": "tachi",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16967,
+    "name": "mikazuki",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16970,
+    "name": "hosodachi",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16975,
+    "name": "kanesada",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16978,
+    "name": "uchigatana_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16979,
+    "name": "ashura_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16981,
+    "name": "tachi_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16982,
+    "name": "nodachi",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16983,
+    "name": "nodachi_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16984,
+    "name": "jindachi",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16985,
+    "name": "jindachi_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16987,
+    "name": "okanehira",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16988,
+    "name": "kotetsu",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16989,
+    "name": "mikazuki_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16991,
+    "name": "odenta",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 16992,
+    "name": "slice_of_bluetail",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16993,
+    "name": "peeled_crayfish",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16994,
+    "name": "slice_of_carp",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16995,
+    "name": "rotten_meat",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 16996,
+    "name": "sardine_ball",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16997,
+    "name": "crayfish_ball",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16998,
+    "name": "insect_ball",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 16999,
+    "name": "trout_ball",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17000,
+    "name": "meatball",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17001,
+    "name": "giant_shell_bug",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17002,
+    "name": "robber_rig",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17003,
+    "name": "super_scoop",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17005,
+    "name": "lufaise_fly",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17014,
+    "name": "hume_fishing_rod",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17015,
+    "name": "halcyon_rod",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17016,
+    "name": "pet_food_alpha",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17017,
+    "name": "pet_food_beta",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17018,
+    "name": "pet_fd._gamma",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17019,
+    "name": "pet_food_delta",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17020,
+    "name": "pet_fd._epsilon",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17021,
+    "name": "pet_food_zeta",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17022,
+    "name": "pet_food_eta",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17023,
+    "name": "pet_food_theta",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17024,
+    "name": "ash_club",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17025,
+    "name": "chestnut_club",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17026,
+    "name": "bone_cudgel",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17027,
+    "name": "oak_cudgel",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17028,
+    "name": "freeswords_club",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17029,
+    "name": "bouncer_club",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17030,
+    "name": "great_club",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17033,
+    "name": "bone_cudgel_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17034,
+    "name": "bronze_mace",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17035,
+    "name": "mace",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17036,
+    "name": "mythril_mace",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17037,
+    "name": "darksteel_mace",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17040,
+    "name": "warp_cudgel",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17042,
+    "name": "bronze_hammer",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17043,
+    "name": "brass_hammer",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17044,
+    "name": "warhammer",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17045,
+    "name": "maul",
+    "ilevel": 0,
+    "source": "AH,drop,guildshop"
+  },
+  {
+    "itemId": 17048,
+    "name": "decurions_hammer",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17066,
+    "name": "molva_maul",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 17068,
+    "name": "onion_rod",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17086,
+    "name": "bronze_mace_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17095,
+    "name": "ash_pole",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17096,
+    "name": "holly_pole",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17097,
+    "name": "elm_pole",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17098,
+    "name": "oak_pole",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17099,
+    "name": "mahogany_pole",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17100,
+    "name": "ebony_pole",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17103,
+    "name": "mercenarys_pole",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17104,
+    "name": "onion_staff",
+    "ilevel": 0,
+    "source": "gear_moogle.lua,AH"
+  },
+  {
+    "itemId": 17115,
+    "name": "warhammer_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17119,
+    "name": "elm_pole_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17120,
+    "name": "oak_pole_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17121,
+    "name": "maul_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17122,
+    "name": "ash_pole_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17124,
+    "name": "holly_pole_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17137,
+    "name": "ash_club_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17139,
+    "name": "solid_club",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17142,
+    "name": "oak_cudgel_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17144,
+    "name": "bronze_hammer_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17145,
+    "name": "mace_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17147,
+    "name": "mythril_mace_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17149,
+    "name": "brass_hammer_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17152,
+    "name": "shortbow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17153,
+    "name": "self_bow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17154,
+    "name": "wrapped_bow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17155,
+    "name": "composite_bow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17156,
+    "name": "kaman",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17157,
+    "name": "rapid_bow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17159,
+    "name": "freeswords_bow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17160,
+    "name": "longbow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17161,
+    "name": "power_bow",
+    "ilevel": 0,
+    "source": "gear_moogle.lua,AH"
+  },
+  {
+    "itemId": 17162,
+    "name": "great_bow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17163,
+    "name": "battle_bow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17164,
+    "name": "war_bow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17167,
+    "name": "ryl.arc._longbow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17170,
+    "name": "speed_bow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17191,
+    "name": "pharaohs_bow",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17202,
+    "name": "platoon_bow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17216,
+    "name": "light_crossbow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17217,
+    "name": "crossbow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17218,
+    "name": "zamburak",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17219,
+    "name": "arbalest",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17220,
+    "name": "heavy_crossbow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17221,
+    "name": "rpt._crossbow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17223,
+    "name": "lgn._crossbow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17224,
+    "name": "killer_crossbow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17231,
+    "name": "tells_crossbow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17232,
+    "name": "lion_crossbow",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17234,
+    "name": "flagel._crossbow",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17236,
+    "name": "leo_crossbow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17237,
+    "name": "leo_crossbow_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17248,
+    "name": "arquebus",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17249,
+    "name": "magoichis_gun",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17250,
+    "name": "matchlock_gun",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17254,
+    "name": "arquebus_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17257,
+    "name": "bandits_gun",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17258,
+    "name": "bandits_gun_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17261,
+    "name": "matchlock_gun_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17262,
+    "name": "corsairs_gun",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17263,
+    "name": "corsairs_gun_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17265,
+    "name": "tanegashima",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17266,
+    "name": "tanegashima_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17267,
+    "name": "negoroshiki",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17268,
+    "name": "negoroshiki_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17271,
+    "name": "platoon_gun",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17274,
+    "name": "deluxe_carbine",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17279,
+    "name": "moonring_blade_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17280,
+    "name": "boomerang",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17281,
+    "name": "wingedge",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17282,
+    "name": "cmb.cst._bmerang",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17284,
+    "name": "chakram",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17285,
+    "name": "moonring_blade",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17286,
+    "name": "rising_sun",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17287,
+    "name": "boomerang_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17288,
+    "name": "wingedge_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17289,
+    "name": "chakram_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17290,
+    "name": "coarse_boomerang",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17293,
+    "name": "yagudo_freezer",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17296,
+    "name": "pebble",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17297,
+    "name": "throwing_coin",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17298,
+    "name": "tathlum",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17299,
+    "name": "astragalos",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17301,
+    "name": "shuriken",
+    "ilevel": 0,
+    "source": "AH,drop,guildshop"
+  },
+  {
+    "itemId": 17302,
+    "name": "juji_shuriken",
+    "ilevel": 0,
+    "source": "AH,drop,guildshop"
+  },
+  {
+    "itemId": 17303,
+    "name": "manji_shuriken",
+    "ilevel": 0,
+    "source": "AH,drop,guildshop"
+  },
+  {
+    "itemId": 17304,
+    "name": "fuma_shuriken",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17307,
+    "name": "dart",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17308,
+    "name": "hawkeye",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17309,
+    "name": "pinwheel",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17310,
+    "name": "hyo",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17311,
+    "name": "dart_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17312,
+    "name": "iron_bullet",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17318,
+    "name": "wooden_arrow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17319,
+    "name": "bone_arrow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17320,
+    "name": "iron_arrow",
+    "ilevel": 0,
+    "source": "AH,drop,guildshop"
+  },
+  {
+    "itemId": 17321,
+    "name": "silver_arrow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17330,
+    "name": "stone_arrow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17336,
+    "name": "crossbow_bolt",
+    "ilevel": 0,
+    "source": "AH,drop,guildshop"
+  },
+  {
+    "itemId": 17337,
+    "name": "mythril_bolt",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17338,
+    "name": "darksteel_bolt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17339,
+    "name": "bronze_bolt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17340,
+    "name": "bullet",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17341,
+    "name": "silver_bullet",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17342,
+    "name": "cannon_shell",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17343,
+    "name": "bronze_bullet",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17345,
+    "name": "flute",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17353,
+    "name": "maple_harp",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17356,
+    "name": "lamia_harp",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17380,
+    "name": "mithran_fish._rod",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17381,
+    "name": "comp._fishing_rod",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17382,
+    "name": "s.h._fishing_rod",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17383,
+    "name": "clothespole",
+    "ilevel": 0,
+    "source": "AH,drop,guildshop"
+  },
+  {
+    "itemId": 17384,
+    "name": "carbon_fish._rod",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17385,
+    "name": "glass_fiber_f._rod",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17386,
+    "name": "lu_shangs_f._rod",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17387,
+    "name": "tarutaru_f._rod",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17388,
+    "name": "fastwater_f._rod",
+    "ilevel": 0,
+    "source": "AH,drop,guildshop"
+  },
+  {
+    "itemId": 17389,
+    "name": "bamboo_fish._rod",
+    "ilevel": 0,
+    "source": "AH,drop,guildshop"
+  },
+  {
+    "itemId": 17390,
+    "name": "yew_fishing_rod",
+    "ilevel": 0,
+    "source": "AH,drop,guildshop"
+  },
+  {
+    "itemId": 17391,
+    "name": "willow_fish._rod",
+    "ilevel": 0,
+    "source": "AH,drop,guildshop"
+  },
+  {
+    "itemId": 17392,
+    "name": "sliced_sardine",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17393,
+    "name": "sliced_cod",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17394,
+    "name": "peeled_lobster",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17395,
+    "name": "lugworm",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17396,
+    "name": "little_worm",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17397,
+    "name": "shell_bug",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17398,
+    "name": "rogue_rig",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17399,
+    "name": "sabiki_rig",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17400,
+    "name": "sinking_minnow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17401,
+    "name": "lizard_lure",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17402,
+    "name": "shrimp_lure",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17403,
+    "name": "frog_lure",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17404,
+    "name": "worm_lure",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17405,
+    "name": "fly_lure",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17407,
+    "name": "minnow",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17408,
+    "name": "great_club_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17416,
+    "name": "arcana_breaker",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17426,
+    "name": "replica_maul",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17428,
+    "name": "darksteel_mace_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17440,
+    "name": "kraken_club",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17462,
+    "name": "platoon_mace",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17474,
+    "name": "grapnel",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 17475,
+    "name": "dst._katars_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17476,
+    "name": "cat_baghnakhs_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17477,
+    "name": "bone_patas_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17482,
+    "name": "jamadhars_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17488,
+    "name": "cermet_claws_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17489,
+    "name": "gold_patas_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17490,
+    "name": "feral_fangs",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17512,
+    "name": "hydro_baghnakhs",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17513,
+    "name": "hyd.baghnakhs_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17514,
+    "name": "hydro_claws",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17515,
+    "name": "hydro_claws_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17516,
+    "name": "hydro_patas",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17517,
+    "name": "hydro_patas_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17519,
+    "name": "platoon_cesti",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17521,
+    "name": "mahogany_pole_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17525,
+    "name": "ebony_pole_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17571,
+    "name": "platoon_pole",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17579,
+    "name": "wyvern_perch",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17601,
+    "name": "demons_knife",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17602,
+    "name": "demons_knife_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17603,
+    "name": "cermet_kukri_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17609,
+    "name": "cermet_knife_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17615,
+    "name": "chicken_knife",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17617,
+    "name": "mst.cst._knife",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17634,
+    "name": "wasp_fleuret",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17635,
+    "name": "schwert_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17638,
+    "name": "katzbalger_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17639,
+    "name": "cutlass_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17641,
+    "name": "gold_sword_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17642,
+    "name": "hanger_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17646,
+    "name": "carnage_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17683,
+    "name": "sacred_degen",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17686,
+    "name": "spark_bilbo",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17687,
+    "name": "spark_bilbo_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17688,
+    "name": "spark_degen",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17689,
+    "name": "spark_degen_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17692,
+    "name": "platoon_spatha",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17705,
+    "name": "vulcan_degen",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17706,
+    "name": "vulcan_blade",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17737,
+    "name": "corsairs_scimitar",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 17767,
+    "name": "chipped_scimitar",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 17776,
+    "name": "hibari",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17777,
+    "name": "hibari_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17778,
+    "name": "muketsu",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17779,
+    "name": "muketsu_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17780,
+    "name": "kyofu",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17781,
+    "name": "kyofu_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17782,
+    "name": "reppu",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17783,
+    "name": "reppu_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17784,
+    "name": "keppu",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17785,
+    "name": "keppu_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17786,
+    "name": "ganko",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17800,
+    "name": "hosodachi_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17802,
+    "name": "kiku-ichimonji",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 17803,
+    "name": "zanbato_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17813,
+    "name": "soboro_sukehiro",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 17816,
+    "name": "kotetsu_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17817,
+    "name": "shinkotetsu",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17818,
+    "name": "kanesada_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17819,
+    "name": "shinkanesada",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17820,
+    "name": "gunromaru",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17825,
+    "name": "honebami",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17860,
+    "name": "carrot_broth",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17861,
+    "name": "f._carrot_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17862,
+    "name": "bug_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17863,
+    "name": "qdv._bug_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17864,
+    "name": "herbal_broth",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17865,
+    "name": "s._herbal_broth",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17866,
+    "name": "carrion_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17867,
+    "name": "c._carrion_broth",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17868,
+    "name": "humus",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17869,
+    "name": "rich_humus",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17870,
+    "name": "meat_broth",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17871,
+    "name": "w._meat_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17872,
+    "name": "tree_sap",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17873,
+    "name": "scarlet_sap",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17874,
+    "name": "cng._brain_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17875,
+    "name": "rzr._brain_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17876,
+    "name": "fish_broth",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17877,
+    "name": "fish_oil_broth",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 17878,
+    "name": "l._carrot_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17879,
+    "name": "c._plasma_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17880,
+    "name": "seedbed_soil",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17881,
+    "name": "deepbed_soil",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17882,
+    "name": "alchemist_water",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17883,
+    "name": "mlw._bird_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17884,
+    "name": "sun_water",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17885,
+    "name": "grass._broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17886,
+    "name": "n._grass._broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17887,
+    "name": "mole_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17888,
+    "name": "l._mole_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17889,
+    "name": "blood_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17890,
+    "name": "c._blood_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17891,
+    "name": "antica_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17892,
+    "name": "f._antica_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17893,
+    "name": "wool_grease",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17894,
+    "name": "vermihumus",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17895,
+    "name": "d._herbal_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17896,
+    "name": "gob._bug_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17897,
+    "name": "b._carrion_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17898,
+    "name": "c._grass._broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17899,
+    "name": "svg._mole_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17900,
+    "name": "cl._wheat_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17901,
+    "name": "b._carrion_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17902,
+    "name": "lucky_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17903,
+    "name": "shadowy_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17904,
+    "name": "briny_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17905,
+    "name": "wormy_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17906,
+    "name": "auroral_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17907,
+    "name": "swirling_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17908,
+    "name": "shimmering_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17909,
+    "name": "spicy_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17911,
+    "name": "salubrious_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17912,
+    "name": "fizzy_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17913,
+    "name": "saline_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17914,
+    "name": "wispy_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17915,
+    "name": "vis._broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17916,
+    "name": "ferm._broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17917,
+    "name": "bubbly_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17918,
+    "name": "windy_greens",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17919,
+    "name": "tant._broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17920,
+    "name": "meaty_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17921,
+    "name": "muddy_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17922,
+    "name": "blackwater_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17924,
+    "name": "tungi",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 17942,
+    "name": "tomahawk",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17943,
+    "name": "tomahawk_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17954,
+    "name": "jolt_axe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17955,
+    "name": "plain_pick",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17957,
+    "name": "navy_axe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17961,
+    "name": "lion_tamer",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 17969,
+    "name": "fendoir",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 17984,
+    "name": "spark_dagger",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17985,
+    "name": "spark_dagger_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17986,
+    "name": "spark_baselard",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17987,
+    "name": "spark_baselard_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17988,
+    "name": "spark_kris",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17989,
+    "name": "spark_kris_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 17993,
+    "name": "platoon_dagger",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18001,
+    "name": "harpe",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 18006,
+    "name": "hoplites_harpe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18020,
+    "name": "mercurial_kris",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18029,
+    "name": "piercing_dagger",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18041,
+    "name": "a_loutrance",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18045,
+    "name": "platoon_zaghnal",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18050,
+    "name": "mandibular_sickle",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18051,
+    "name": "antlion_sickle",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18052,
+    "name": "tredecim_scythe",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 18061,
+    "name": "bahamut_zaghnal",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18062,
+    "name": "lucent_scythe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18067,
+    "name": "keen_zaghnal",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18076,
+    "name": "spark_spear",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18077,
+    "name": "spark_spear_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18078,
+    "name": "spark_lance",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18079,
+    "name": "spark_lance_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18085,
+    "name": "platoon_lance",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18092,
+    "name": "bourdonasse",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18093,
+    "name": "couse",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18094,
+    "name": "couse_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18095,
+    "name": "dispel_couse",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18096,
+    "name": "heavy_lance",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 18108,
+    "name": "lucent_lance",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18117,
+    "name": "gimlet_spear",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18170,
+    "name": "platoon_edge",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18171,
+    "name": "platoon_disc",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18200,
+    "name": "hydro_axe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18201,
+    "name": "hydro_axe_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18202,
+    "name": "hydro_cutter",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18203,
+    "name": "hydro_cutter_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18204,
+    "name": "hydro_chopper",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18205,
+    "name": "hydro_chopper_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18207,
+    "name": "kheten",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18208,
+    "name": "kheten_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18209,
+    "name": "platoon_cutter",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18210,
+    "name": "raifu",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18214,
+    "name": "voulge",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18215,
+    "name": "voulge_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18216,
+    "name": "twicer",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18218,
+    "name": "leucous_voulge",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18219,
+    "name": "lcs._voulge_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18226,
+    "name": "darksteel_voulge",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18227,
+    "name": "dst._voulge_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18228,
+    "name": "battery",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 18229,
+    "name": "kilo_battery",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18230,
+    "name": "mega_battery",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18232,
+    "name": "hydro_pump",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 18233,
+    "name": "kilo_pump",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18234,
+    "name": "mega_pump",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18236,
+    "name": "wind_fan",
+    "ilevel": 0,
+    "source": "AH,guildshop"
+  },
+  {
+    "itemId": 18237,
+    "name": "kilo_fan",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18238,
+    "name": "mega_fan",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18258,
+    "name": "thr._tomahawk",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18259,
+    "name": "angon",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18260,
+    "name": "relic_knuckles",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18266,
+    "name": "relic_dagger",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18272,
+    "name": "relic_sword",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18278,
+    "name": "relic_blade",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18284,
+    "name": "relic_axe",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18290,
+    "name": "relic_bhuj",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18296,
+    "name": "relic_lance",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18302,
+    "name": "relic_scythe",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18308,
+    "name": "ihintanto",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18314,
+    "name": "ito",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18320,
+    "name": "relic_maul",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18326,
+    "name": "relic_staff",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18332,
+    "name": "relic_gun",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18338,
+    "name": "relic_horn",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18344,
+    "name": "relic_bow",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18366,
+    "name": "gust_claymore",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18367,
+    "name": "gust_claymore_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18368,
+    "name": "gust_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18369,
+    "name": "gust_sword_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18375,
+    "name": "falx",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18376,
+    "name": "falx_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18377,
+    "name": "mercurial_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18382,
+    "name": "darksteel_falx",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18383,
+    "name": "darksteel_falx_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18384,
+    "name": "lucent_sword",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18391,
+    "name": "sacred_mace",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18427,
+    "name": "hanafubuki",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18428,
+    "name": "kogitsunemaru",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 18444,
+    "name": "tsurugitachi",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18452,
+    "name": "rindomaru",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18453,
+    "name": "unshomaru",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18455,
+    "name": "ame-no-ohabari",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18481,
+    "name": "lucent_axe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18488,
+    "name": "assailants_axe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18493,
+    "name": "regiment_kheten",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18505,
+    "name": "erlkings_kheten",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18507,
+    "name": "kinship_axe",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18513,
+    "name": "barbarus_bhuj",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18532,
+    "name": "cleofun_axe",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18586,
+    "name": "flexible_pole",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18601,
+    "name": "fay_crozier",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18602,
+    "name": "fay_staff",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18609,
+    "name": "lyft_pole",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18617,
+    "name": "cracked_staff",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18619,
+    "name": "chthonic_staff",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18697,
+    "name": "marid_arrow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18698,
+    "name": "water_arrow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18699,
+    "name": "earth_arrow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18700,
+    "name": "wind_arrow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18710,
+    "name": "seadog_gun",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18713,
+    "name": "copper_bullet",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18723,
+    "name": "steel_bullet",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18729,
+    "name": "djinn_arm",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 18730,
+    "name": "obsidian_arrow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18731,
+    "name": "automaton_oil",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18732,
+    "name": "automat._oil_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18733,
+    "name": "automat._oil_+2",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18736,
+    "name": "fay_gendawa",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18737,
+    "name": "fane_hexagun",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18764,
+    "name": "oberons_knuckles",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18765,
+    "name": "oberons_sainti",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18766,
+    "name": "tyro_katars",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18772,
+    "name": "tyro_katars_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18776,
+    "name": "heofon_knuckles",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18791,
+    "name": "buzbaz_sainti",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18792,
+    "name": "buzbaz_sainti_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18813,
+    "name": "ultio_grip",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18868,
+    "name": "lady_bell",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18869,
+    "name": "lady_bell_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18872,
+    "name": "lyft_ferule",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18892,
+    "name": "corbenic_sword",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18941,
+    "name": "naigama",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18942,
+    "name": "naigama_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18945,
+    "name": "jet_sickle",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18954,
+    "name": "ogre_sickle",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18955,
+    "name": "dweomer_scythe",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18956,
+    "name": "serpette",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18959,
+    "name": "serpette_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18961,
+    "name": "plaga_scythe",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 18962,
+    "name": "rusty_zaghnal",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18963,
+    "name": "gleaming_zaghnal",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 18966,
+    "name": "crisis_scythe",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19109,
+    "name": "trilling_dagger",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19123,
+    "name": "cinquedea",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19128,
+    "name": "edgeless_knife",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19130,
+    "name": "clement_skean",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19131,
+    "name": "magnus_dagger",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19135,
+    "name": "acinaces",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19136,
+    "name": "phurba",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19162,
+    "name": "dull_claymore",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19167,
+    "name": "khloros_blade",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19177,
+    "name": "etourdissante",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19178,
+    "name": "etourdissante_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19182,
+    "name": "ruszor_arrow",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19183,
+    "name": "drk._adm._bolt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19184,
+    "name": "drk._adm._bullet",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19185,
+    "name": "automat._oil_+3",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19187,
+    "name": "murti_bow",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19191,
+    "name": "exequy_gun",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19193,
+    "name": "aeolus_arrow",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19197,
+    "name": "fusion_bolt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19198,
+    "name": "dweomer_bullet",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19200,
+    "name": "black_bolt",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19201,
+    "name": "electrum_bullet",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19224,
+    "name": "musketoon",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19225,
+    "name": "musketoon_+1",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19228,
+    "name": "paktong_bullet",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19229,
+    "name": "tin_bullet",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19248,
+    "name": "lucky_coin",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19251,
+    "name": "pet_roborant",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19252,
+    "name": "pet_poultice",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19283,
+    "name": "rusty_kunai",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19284,
+    "name": "hiwa",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19288,
+    "name": "sekirei",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19289,
+    "name": "toki",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19290,
+    "name": "aizenkunitoshi",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19303,
+    "name": "fay_lance",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19305,
+    "name": "pike",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 19307,
+    "name": "blunt_lance",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19308,
+    "name": "rusty_spear",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19309,
+    "name": "gleaming_spear",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 19312,
+    "name": "skogul_lance",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19313,
+    "name": "magnus_lance",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19314,
+    "name": "quint_spear",
+    "ilevel": 0,
+    "source": "AH,drop"
+  },
+  {
+    "itemId": 19324,
+    "name": "dried_squid",
+    "ilevel": 0,
+    "source": "drop"
+  },
+  {
+    "itemId": 19803,
+    "name": "adaman_bullet",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21438,
+    "name": "poisonous_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21439,
+    "name": "venomous_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21440,
+    "name": "sugary_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21441,
+    "name": "glazed_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21442,
+    "name": "sticky_webbing",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21443,
+    "name": "slimy_webbing",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21444,
+    "name": "livid_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21445,
+    "name": "lyrical_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21446,
+    "name": "airy_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21447,
+    "name": "crumbly_soil",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21448,
+    "name": "pale_sap",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21449,
+    "name": "dire_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21450,
+    "name": "electrified_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21451,
+    "name": "bug-ridden_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21464,
+    "name": "rancid_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21465,
+    "name": "pungent_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21466,
+    "name": "frizzante_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21467,
+    "name": "spumante_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21468,
+    "name": "zestful_sap",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21469,
+    "name": "gassy_sap",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21470,
+    "name": "decaying_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21471,
+    "name": "putrescent_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21472,
+    "name": "turpid_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21473,
+    "name": "feculent_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21488,
+    "name": "pristine_sap",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21489,
+    "name": "t._pristine_sap",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21490,
+    "name": "aged_humus",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21492,
+    "name": "insipid_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21493,
+    "name": "deepwater_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21494,
+    "name": "wetlands_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21495,
+    "name": "heavenly_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21496,
+    "name": "furious_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21497,
+    "name": "rapid_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21498,
+    "name": "crackling_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 21499,
+    "name": "creepy_broth",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 25450,
+    "name": "skulkers_earring",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25451,
+    "name": "skulk._earring_+1",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25452,
+    "name": "skulk._earring_+2",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25456,
+    "name": "chev._earring",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25457,
+    "name": "chev._earring_+1",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25458,
+    "name": "chev._earring_+2",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25462,
+    "name": "heathens_earring",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25463,
+    "name": "heath._earring_+1",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25464,
+    "name": "heath._earring_+2",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25498,
+    "name": "peltasts_earring",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25499,
+    "name": "pel._earring_+1",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25500,
+    "name": "pel._earring_+2",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25504,
+    "name": "beck._earring",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25505,
+    "name": "beck._earring_+1",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25506,
+    "name": "beck._earring_+2",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25516,
+    "name": "chas._earring",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25517,
+    "name": "chas._earring_+1",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25518,
+    "name": "chas._earring_+2",
+    "ilevel": 0,
+    "source": "hunting_league_catalog.lua"
+  },
+  {
+    "itemId": 25864,
+    "name": "stinky_subligar",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 26015,
+    "name": "combatants_torque",
+    "ilevel": 0,
+    "source": "dungeon_catalog.lua"
+  },
+  {
+    "itemId": 26222,
+    "name": "seabirds_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 26223,
+    "name": "patissieres_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 26224,
+    "name": "confectioners_ring",
+    "ilevel": 0,
+    "source": "AH"
+  },
+  {
+    "itemId": 27718,
+    "name": "worm_masque_+1",
+    "ilevel": 0,
+    "source": "dungeon_catalog.lua"
+  },
+  {
+    "itemId": 28568,
+    "name": "resolution_ring",
+    "ilevel": 0,
+    "source": "AH"
+  }
+]

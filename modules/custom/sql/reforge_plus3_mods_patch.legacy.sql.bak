@@ -1,0 +1,33 @@
+-- ============================================================
+-- reforge_plus3_mods_patch.sql
+--
+-- One-item patch for agoge_mufflers_+3 (WAR Relic hands) which
+-- the main generator skipped because it had 3 pre-existing token
+-- mods (WAR JA-bonus mods 903/904/956). Those tokens are layered
+-- ON TOP of the standard +3 stat block, which was missing.
+--
+-- Uses INSERT IGNORE so the existing token values (mod 956=15
+-- specifically — which was hand-tuned higher than the +2 value)
+-- are PRESERVED. Only mods not already present on the +3 are
+-- added. Idempotent.
+-- ============================================================
+
+-- Relic+3 WAR hands  agoge_mufflers_+3 (derived from agoge_mufflers_+2)
+INSERT IGNORE INTO `item_mods` VALUES (23532, 1, 119);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 2, 70);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 8, 25);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 9, 39);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 10, 47);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 11, 13);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 12, 21);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 13, 36);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 14, 26);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 23, 81);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 25, 38);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 29, 4);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 30, 38);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 31, 63);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 68, 42);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 161, -600);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 164, -600);
+INSERT IGNORE INTO `item_mods` VALUES (23532, 384, 500);

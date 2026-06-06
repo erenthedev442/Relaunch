@@ -21,14 +21,14 @@ commandObj.onTrigger = function(player)
     local relicMarks = player:getCharVar('RF_Relic_Marks') or 0
     local empyMarks  = player:getCharVar('RF_Empy_Marks')  or 0
 
-    player:printToPlayer('[Reforge] ── Mark Balances ────────────────────────────', H)
+    player:printToPlayer('[Reforge] == Mark Balances ============================', H)
     player:printToPlayer(string.format('  Artifact (AF) marks:   %d', afMarks),    B)
     player:printToPlayer(string.format('  Relic marks:           %d', relicMarks), B)
     player:printToPlayer(string.format('  Empyrean marks:        %d', empyMarks),  B)
-    player:printToPlayer('  ──────────────────────────────────────────────────', B)
+    player:printToPlayer('  ==================================================', B)
     player:printToPlayer('  Earn Reforge marks by killing Hunting League NMs.', B)
     player:printToPlayer('  Spend them at the Reforge NPC in Reisenjima Henge.', B)
-    player:printToPlayer('  !progress reforge — full breakdown  |  !hunt — warp there', B)
+    player:printToPlayer('  !progress reforge - full breakdown  |  !hunt - warp there', B)
 end
 
 return commandObj

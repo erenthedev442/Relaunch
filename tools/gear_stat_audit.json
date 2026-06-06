@@ -1,0 +1,2429 @@
+{
+  "generated_at": "2026-06-06T00:37:30",
+  "summary": {
+    "reforge": {
+      "total": 1320,
+      "ok": 1110,
+      "naked": 209,
+      "latent_only": 1,
+      "missing": 0,
+      "not_equip": 0
+    },
+    "hunting_league": {
+      "total": 395,
+      "ok": 305,
+      "naked": 84,
+      "latent_only": 0,
+      "missing": 3,
+      "not_equip": 3
+    }
+  },
+  "naked_items": [
+    {
+      "itemId": 23740,
+      "shortName": "angantyr_beret",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] head: Angantyr Beret",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23743,
+      "shortName": "angantyr_robe",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] body: Angantyr Robe",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23797,
+      "shortName": "crepuscular_helm",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] head: Crepuscular Helm",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23798,
+      "shortName": "crepuscular_mail",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] body: Crepuscular Mail",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24128,
+      "shortName": "revelation_gauntlets",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] hands: Revelation Gauntlets",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24131,
+      "shortName": "revelation_brais",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] legs: Revelation Brais",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24133,
+      "shortName": "perfection_sabatons",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] feet: Perfection Sabatons",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24134,
+      "shortName": "revelation_sabatons",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] feet: Revelation Sabatons",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24139,
+      "shortName": "prestige_platemail",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] body: Prestige Platemail",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24140,
+      "shortName": "sworn_platemail",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] body: Sworn Platemail",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24142,
+      "shortName": "prestige_gauntlets",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] hands: Prestige Gauntlets",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24148,
+      "shortName": "prestige_sabatons",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] feet: Prestige Sabatons",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24149,
+      "shortName": "sworn_sabatons",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] feet: Sworn Sabatons",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24151,
+      "shortName": "intrepid_petasos",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] head: Intrepid Petasos",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24153,
+      "shortName": "bravery_coat",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] body: Bravery Coat",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24156,
+      "shortName": "bravery_gloves",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] hands: Bravery Gloves",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24159,
+      "shortName": "bravery_tonban",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] legs: Bravery Tonban",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24166,
+      "shortName": "magnificent_crown",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] head: Magnificent Crown",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24167,
+      "shortName": "duty_crown",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] head: Duty Crown",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24173,
+      "shortName": "duty_gauntlets",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] hands: Duty Gauntlets",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24176,
+      "shortName": "duty_flanchard",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] legs: Duty Flanchard",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24178,
+      "shortName": "magnificent_sollerets",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] feet: Magnificent Sollerets",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24179,
+      "shortName": "duty_sollerets",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] feet: Duty Sollerets",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24182,
+      "shortName": "clemency_somen",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] head: Clemency Somen",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24188,
+      "shortName": "clemency_kote",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] hands: Clemency Kote",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24193,
+      "shortName": "grace_sune-ate",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] feet: Grace Sune-Ate",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24194,
+      "shortName": "clemency_sune-ate",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] feet: Clemency Sune-Ate",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24270,
+      "shortName": "null_masque",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] head: Null Masque",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24274,
+      "shortName": "amin_turban",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] head: Amin Turban",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 24289,
+      "shortName": "el_bracers_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] hands: El Bracers +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25420,
+      "shortName": "boii_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Boii Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25421,
+      "shortName": "boii_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Boii Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25426,
+      "shortName": "bhikku_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Bhikku Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25427,
+      "shortName": "bhikku_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Bhikku Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25432,
+      "shortName": "ebers_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Ebers Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25433,
+      "shortName": "ebers_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Ebers Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25438,
+      "shortName": "wicce_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Wicce Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25439,
+      "shortName": "wicce_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Wicce Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25444,
+      "shortName": "lethargy_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Lethargy Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25445,
+      "shortName": "lethargy_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Lethargy Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25468,
+      "shortName": "nukumi_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Nukumi Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25469,
+      "shortName": "nukumi_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Nukumi Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25474,
+      "shortName": "fili_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Fili Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25475,
+      "shortName": "fili_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Fili Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25480,
+      "shortName": "amini_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Amini Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25481,
+      "shortName": "amini_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Amini Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25486,
+      "shortName": "kasuga_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Kasuga Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25487,
+      "shortName": "kasuga_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Kasuga Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25492,
+      "shortName": "hattori_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Hattori Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25493,
+      "shortName": "hattori_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Hattori Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25510,
+      "shortName": "hashishin_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Hashishin Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25511,
+      "shortName": "hashishin_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Hashishin Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25522,
+      "shortName": "karagoz_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Karagoz Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25523,
+      "shortName": "karagoz_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Karagoz Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25528,
+      "shortName": "maculele_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Maculele Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25529,
+      "shortName": "maculele_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Maculele Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25534,
+      "shortName": "arbatel_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Arbatel Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25535,
+      "shortName": "arbatel_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Arbatel Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25540,
+      "shortName": "azimuth_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Azimuth Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25541,
+      "shortName": "azimuth_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Azimuth Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25546,
+      "shortName": "erilaz_earring",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: NQ] Erilaz Earring",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25547,
+      "shortName": "erilaz_earring_+1",
+      "source": "hunting_league",
+      "context": "HL shop [Sortie: +1] Erilaz Earring +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25602,
+      "shortName": "blistering_sallet_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] head: Blistering Sallet +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25654,
+      "shortName": "welkin_crown",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] head: Welkin Crown",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25830,
+      "shortName": "hizamaru_kote_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] hands: Hizamaru Kote +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25831,
+      "shortName": "inyanga_dastanas_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] hands: Inyanga Dastanas +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25833,
+      "shortName": "ayanmo_manopolas_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] hands: Ayanmo Manopolas +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25840,
+      "shortName": "odyssean_cuisses",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] legs: Odyssean Cuisses",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25898,
+      "shortName": "arke_cosciales_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] legs: Arke Cosciales +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25900,
+      "shortName": "pinga_pants_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] legs: Pinga Pants +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25922,
+      "shortName": "navon_crackows",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] feet: Navon Crackows",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25949,
+      "shortName": "inyanga_crackows_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] feet: Inyanga Crackows +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25958,
+      "shortName": "kendatsuba_sune-ate",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] feet: Kendatsuba Sune-Ate",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25961,
+      "shortName": "ea_pigaches_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] feet: Ea Pigaches +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25967,
+      "shortName": "pinga_pumps_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] feet: Pinga Pumps +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25979,
+      "shortName": "kendatsuba_tekko_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] hands: Kendatsuba Tekko +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25987,
+      "shortName": "pinga_mittens_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] hands: Pinga Mittens +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25995,
+      "shortName": "turms_mittens_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] hands: Turms Mittens +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25996,
+      "shortName": "raetic_bangles",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] hands: Raetic Bangles",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26526,
+      "shortName": "oshosi_vest_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] body: Oshosi Vest +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26536,
+      "shortName": "pinga_tunic_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] body: Pinga Tunic +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26960,
+      "shortName": "annointed_kalasiris",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] body: Annointed Kalasiris",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27288,
+      "shortName": "vanya_slops",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] legs: Vanya Slops",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27857,
+      "shortName": "respite_cloak",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] body: Respite Cloak",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23403,
+      "shortName": "plunderers_bonnet_+3",
+      "source": "reforge",
+      "context": "THF relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23404,
+      "shortName": "caballarius_coronet_+3",
+      "source": "reforge",
+      "context": "PLD relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23405,
+      "shortName": "fallens_burgeonet_+3",
+      "source": "reforge",
+      "context": "DRK relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23406,
+      "shortName": "ankusa_helm_+3",
+      "source": "reforge",
+      "context": "BST relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23407,
+      "shortName": "bihu_roundlet_+3",
+      "source": "reforge",
+      "context": "BRD relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23408,
+      "shortName": "arcadian_beret_+3",
+      "source": "reforge",
+      "context": "RNG relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23409,
+      "shortName": "sakonji_kabuto_+3",
+      "source": "reforge",
+      "context": "SAM relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23410,
+      "shortName": "mochizuki_hatsuburi_+3",
+      "source": "reforge",
+      "context": "NIN relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23412,
+      "shortName": "glyphic_horn_+3",
+      "source": "reforge",
+      "context": "SMN relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23413,
+      "shortName": "luhlaza_keffiyeh_+3",
+      "source": "reforge",
+      "context": "BLU relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23415,
+      "shortName": "pitre_taj_+3",
+      "source": "reforge",
+      "context": "PUP relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23416,
+      "shortName": "horos_tiara_+3",
+      "source": "reforge",
+      "context": "DNC relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23417,
+      "shortName": "pedagogy_mortarboard_+3",
+      "source": "reforge",
+      "context": "SCH relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23419,
+      "shortName": "futhark_bandeau_+3",
+      "source": "reforge",
+      "context": "RUN relic head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23420,
+      "shortName": "boii_mask_+3",
+      "source": "reforge",
+      "context": "WAR empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23421,
+      "shortName": "bhikku_crown_+3",
+      "source": "reforge",
+      "context": "MNK empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23422,
+      "shortName": "ebers_cap_+3",
+      "source": "reforge",
+      "context": "WHM empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23423,
+      "shortName": "wicce_petasos_+3",
+      "source": "reforge",
+      "context": "BLM empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23424,
+      "shortName": "lethargy_chappel_+3",
+      "source": "reforge",
+      "context": "RDM empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23425,
+      "shortName": "skulkers_bonnet_+3",
+      "source": "reforge",
+      "context": "THF empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23426,
+      "shortName": "chevaliers_armet_+3",
+      "source": "reforge",
+      "context": "PLD empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23427,
+      "shortName": "heathens_burgeonet_+3",
+      "source": "reforge",
+      "context": "DRK empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23428,
+      "shortName": "nukumi_cabasset_+3",
+      "source": "reforge",
+      "context": "BST empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23429,
+      "shortName": "fili_calot_+3",
+      "source": "reforge",
+      "context": "BRD empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23430,
+      "shortName": "amini_gapette_+3",
+      "source": "reforge",
+      "context": "RNG empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23431,
+      "shortName": "kasuga_kabuto_+3",
+      "source": "reforge",
+      "context": "SAM empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23432,
+      "shortName": "hattori_zukin_+3",
+      "source": "reforge",
+      "context": "NIN empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23433,
+      "shortName": "peltasts_mezail_+3",
+      "source": "reforge",
+      "context": "DRG empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23434,
+      "shortName": "beckoners_horn_+3",
+      "source": "reforge",
+      "context": "SMN empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23435,
+      "shortName": "hashishin_kavuk_+3",
+      "source": "reforge",
+      "context": "BLU empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23436,
+      "shortName": "chasseurs_tricorne_+3",
+      "source": "reforge",
+      "context": "COR empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23437,
+      "shortName": "karagoz_cappello_+3",
+      "source": "reforge",
+      "context": "PUP empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23438,
+      "shortName": "maculele_tiara_+3",
+      "source": "reforge",
+      "context": "DNC empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23439,
+      "shortName": "arbatel_bonnet_+3",
+      "source": "reforge",
+      "context": "SCH empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23440,
+      "shortName": "azimuth_hood_+3",
+      "source": "reforge",
+      "context": "GEO empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23441,
+      "shortName": "erilaz_galea_+3",
+      "source": "reforge",
+      "context": "RUN empy head plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23466,
+      "shortName": "hesychasts_cyclas_+3",
+      "source": "reforge",
+      "context": "MNK relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23467,
+      "shortName": "piety_bliaut_+3",
+      "source": "reforge",
+      "context": "WHM relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23468,
+      "shortName": "archmages_coat_+3",
+      "source": "reforge",
+      "context": "BLM relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23469,
+      "shortName": "vitiation_tabard_+3",
+      "source": "reforge",
+      "context": "RDM relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23470,
+      "shortName": "plunderers_vest_+3",
+      "source": "reforge",
+      "context": "THF relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23472,
+      "shortName": "fallens_cuirass_+3",
+      "source": "reforge",
+      "context": "DRK relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23473,
+      "shortName": "ankusa_jackcoat_+3",
+      "source": "reforge",
+      "context": "BST relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23474,
+      "shortName": "bihu_justaucorps_+3",
+      "source": "reforge",
+      "context": "BRD relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23475,
+      "shortName": "arcadian_jerkin_+3",
+      "source": "reforge",
+      "context": "RNG relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23476,
+      "shortName": "sakonji_domaru_+3",
+      "source": "reforge",
+      "context": "SAM relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23477,
+      "shortName": "mochizuki_chainmail_+3",
+      "source": "reforge",
+      "context": "NIN relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23478,
+      "shortName": "pteroslaver_mail_+3",
+      "source": "reforge",
+      "context": "DRG relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23479,
+      "shortName": "glyphic_doublet_+3",
+      "source": "reforge",
+      "context": "SMN relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23480,
+      "shortName": "luhlaza_jubbah_+3",
+      "source": "reforge",
+      "context": "BLU relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23481,
+      "shortName": "lanun_frac_+3",
+      "source": "reforge",
+      "context": "COR relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23482,
+      "shortName": "pitre_tobe_+3",
+      "source": "reforge",
+      "context": "PUP relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23483,
+      "shortName": "horos_casaque_+3",
+      "source": "reforge",
+      "context": "DNC relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23484,
+      "shortName": "pedagogy_gown_+3",
+      "source": "reforge",
+      "context": "SCH relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23486,
+      "shortName": "futhark_coat_+3",
+      "source": "reforge",
+      "context": "RUN relic body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23487,
+      "shortName": "boii_lorica_+3",
+      "source": "reforge",
+      "context": "WAR empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23488,
+      "shortName": "bhikku_cyclas_+3",
+      "source": "reforge",
+      "context": "MNK empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23489,
+      "shortName": "ebers_bliaut_+3",
+      "source": "reforge",
+      "context": "WHM empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23490,
+      "shortName": "wicce_coat_+3",
+      "source": "reforge",
+      "context": "BLM empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23491,
+      "shortName": "lethargy_sayon_+3",
+      "source": "reforge",
+      "context": "RDM empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23492,
+      "shortName": "skulkers_vest_+3",
+      "source": "reforge",
+      "context": "THF empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23493,
+      "shortName": "chevaliers_cuirass_+3",
+      "source": "reforge",
+      "context": "PLD empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23494,
+      "shortName": "heathens_cuirass_+3",
+      "source": "reforge",
+      "context": "DRK empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23495,
+      "shortName": "nukumi_gausape_+3",
+      "source": "reforge",
+      "context": "BST empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23496,
+      "shortName": "fili_hongreline_+3",
+      "source": "reforge",
+      "context": "BRD empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23497,
+      "shortName": "amini_caban_+3",
+      "source": "reforge",
+      "context": "RNG empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23498,
+      "shortName": "kasuga_domaru_+3",
+      "source": "reforge",
+      "context": "SAM empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23499,
+      "shortName": "hattori_ningi_+3",
+      "source": "reforge",
+      "context": "NIN empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23500,
+      "shortName": "peltasts_plackart_+3",
+      "source": "reforge",
+      "context": "DRG empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23501,
+      "shortName": "beckoners_doublet_+3",
+      "source": "reforge",
+      "context": "SMN empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23502,
+      "shortName": "hashishin_mintan_+3",
+      "source": "reforge",
+      "context": "BLU empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23503,
+      "shortName": "chasseurs_frac_+3",
+      "source": "reforge",
+      "context": "COR empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23504,
+      "shortName": "karagoz_farsetto_+3",
+      "source": "reforge",
+      "context": "PUP empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23505,
+      "shortName": "maculele_casaque_+3",
+      "source": "reforge",
+      "context": "DNC empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23506,
+      "shortName": "arbatel_gown_+3",
+      "source": "reforge",
+      "context": "SCH empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23507,
+      "shortName": "azimuth_coat_+3",
+      "source": "reforge",
+      "context": "GEO empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23508,
+      "shortName": "erilaz_surcoat_+3",
+      "source": "reforge",
+      "context": "RUN empy body plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23533,
+      "shortName": "hesychasts_gloves_+3",
+      "source": "reforge",
+      "context": "MNK relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23534,
+      "shortName": "piety_mitts_+3",
+      "source": "reforge",
+      "context": "WHM relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23535,
+      "shortName": "archmages_gloves_+3",
+      "source": "reforge",
+      "context": "BLM relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23536,
+      "shortName": "vitiation_gloves_+3",
+      "source": "reforge",
+      "context": "RDM relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23538,
+      "shortName": "caballarius_gauntlets_+3",
+      "source": "reforge",
+      "context": "PLD relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23539,
+      "shortName": "fallens_finger_gauntlets_+3",
+      "source": "reforge",
+      "context": "DRK relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23540,
+      "shortName": "ankusa_gloves_+3",
+      "source": "reforge",
+      "context": "BST relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23541,
+      "shortName": "bihu_cuffs_+3",
+      "source": "reforge",
+      "context": "BRD relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23542,
+      "shortName": "arcadian_bracers_+3",
+      "source": "reforge",
+      "context": "RNG relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23543,
+      "shortName": "sakonji_kote_+3",
+      "source": "reforge",
+      "context": "SAM relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23544,
+      "shortName": "mochizuki_tekko_+3",
+      "source": "reforge",
+      "context": "NIN relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23545,
+      "shortName": "pteroslaver_finger_gauntlets_+3",
+      "source": "reforge",
+      "context": "DRG relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23546,
+      "shortName": "glyphic_bracers_+3",
+      "source": "reforge",
+      "context": "SMN relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23547,
+      "shortName": "luhlaza_bazubands_+3",
+      "source": "reforge",
+      "context": "BLU relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23548,
+      "shortName": "lanun_gants_+3",
+      "source": "reforge",
+      "context": "COR relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23549,
+      "shortName": "pitre_dastanas_+3",
+      "source": "reforge",
+      "context": "PUP relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23550,
+      "shortName": "horos_bangles_+3",
+      "source": "reforge",
+      "context": "DNC relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23551,
+      "shortName": "pedagogy_bracers_+3",
+      "source": "reforge",
+      "context": "SCH relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23553,
+      "shortName": "futhark_mitons_+3",
+      "source": "reforge",
+      "context": "RUN relic hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23554,
+      "shortName": "boii_mufflers_+3",
+      "source": "reforge",
+      "context": "WAR empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23555,
+      "shortName": "bhikku_gloves_+3",
+      "source": "reforge",
+      "context": "MNK empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23556,
+      "shortName": "ebers_mitts_+3",
+      "source": "reforge",
+      "context": "WHM empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23557,
+      "shortName": "wicce_gloves_+3",
+      "source": "reforge",
+      "context": "BLM empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23558,
+      "shortName": "lethargy_gantherots_+3",
+      "source": "reforge",
+      "context": "RDM empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23559,
+      "shortName": "skulkers_armlets_+3",
+      "source": "reforge",
+      "context": "THF empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23560,
+      "shortName": "chevaliers_gauntlets_+3",
+      "source": "reforge",
+      "context": "PLD empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23561,
+      "shortName": "heathens_gauntlets_+3",
+      "source": "reforge",
+      "context": "DRK empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23562,
+      "shortName": "nukumi_manoplas_+3",
+      "source": "reforge",
+      "context": "BST empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23563,
+      "shortName": "fili_manchettes_+3",
+      "source": "reforge",
+      "context": "BRD empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23564,
+      "shortName": "amini_glovelettes_+3",
+      "source": "reforge",
+      "context": "RNG empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23565,
+      "shortName": "kasuga_kote_+3",
+      "source": "reforge",
+      "context": "SAM empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23566,
+      "shortName": "hattori_tekko_+3",
+      "source": "reforge",
+      "context": "NIN empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23567,
+      "shortName": "peltasts_vambraces_+3",
+      "source": "reforge",
+      "context": "DRG empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23568,
+      "shortName": "beckoners_bracers_+3",
+      "source": "reforge",
+      "context": "SMN empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23569,
+      "shortName": "hashishin_bazubands_+3",
+      "source": "reforge",
+      "context": "BLU empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23570,
+      "shortName": "chasseurs_gants_+3",
+      "source": "reforge",
+      "context": "COR empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23571,
+      "shortName": "karagoz_guanti_+3",
+      "source": "reforge",
+      "context": "PUP empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23572,
+      "shortName": "maculele_bangles_+3",
+      "source": "reforge",
+      "context": "DNC empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23574,
+      "shortName": "azimuth_gloves_+3",
+      "source": "reforge",
+      "context": "GEO empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23575,
+      "shortName": "erilaz_gauntlets_+3",
+      "source": "reforge",
+      "context": "RUN empy hands plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23600,
+      "shortName": "hesychasts_hose_+3",
+      "source": "reforge",
+      "context": "MNK relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23601,
+      "shortName": "piety_pantaloons_+3",
+      "source": "reforge",
+      "context": "WHM relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23602,
+      "shortName": "archmages_tonban_+3",
+      "source": "reforge",
+      "context": "BLM relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23603,
+      "shortName": "vitiation_tights_+3",
+      "source": "reforge",
+      "context": "RDM relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23604,
+      "shortName": "plunderers_culottes_+3",
+      "source": "reforge",
+      "context": "THF relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23605,
+      "shortName": "caballarius_breeches_+3",
+      "source": "reforge",
+      "context": "PLD relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23606,
+      "shortName": "fallens_flanchard_+3",
+      "source": "reforge",
+      "context": "DRK relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23607,
+      "shortName": "ankusa_trousers_+3",
+      "source": "reforge",
+      "context": "BST relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23608,
+      "shortName": "bihu_cannions_+3",
+      "source": "reforge",
+      "context": "BRD relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23609,
+      "shortName": "arcadian_braccae_+3",
+      "source": "reforge",
+      "context": "RNG relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23610,
+      "shortName": "sakonji_haidate_+3",
+      "source": "reforge",
+      "context": "SAM relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23612,
+      "shortName": "pteroslaver_brais_+3",
+      "source": "reforge",
+      "context": "DRG relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23613,
+      "shortName": "glyphic_spats_+3",
+      "source": "reforge",
+      "context": "SMN relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23614,
+      "shortName": "luhlaza_shalwar_+3",
+      "source": "reforge",
+      "context": "BLU relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23615,
+      "shortName": "lanun_trews_+3",
+      "source": "reforge",
+      "context": "COR relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23616,
+      "shortName": "pitre_churidars_+3",
+      "source": "reforge",
+      "context": "PUP relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23617,
+      "shortName": "horos_tights_+3",
+      "source": "reforge",
+      "context": "DNC relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23618,
+      "shortName": "pedagogy_pants_+3",
+      "source": "reforge",
+      "context": "SCH relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23620,
+      "shortName": "futhark_trousers_+3",
+      "source": "reforge",
+      "context": "RUN relic legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23621,
+      "shortName": "boii_cuisses_+3",
+      "source": "reforge",
+      "context": "WAR empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23622,
+      "shortName": "bhikku_hose_+3",
+      "source": "reforge",
+      "context": "MNK empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23623,
+      "shortName": "ebers_pantaloons_+3",
+      "source": "reforge",
+      "context": "WHM empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23624,
+      "shortName": "wicce_chausses_+3",
+      "source": "reforge",
+      "context": "BLM empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23625,
+      "shortName": "lethargy_fuseau_+3",
+      "source": "reforge",
+      "context": "RDM empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23626,
+      "shortName": "skulkers_culottes_+3",
+      "source": "reforge",
+      "context": "THF empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23627,
+      "shortName": "chevaliers_cuisses_+3",
+      "source": "reforge",
+      "context": "PLD empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23628,
+      "shortName": "heathens_flanchards_+3",
+      "source": "reforge",
+      "context": "DRK empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23629,
+      "shortName": "nukumi_quijotes_+3",
+      "source": "reforge",
+      "context": "BST empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23630,
+      "shortName": "fili_rhingrave_+3",
+      "source": "reforge",
+      "context": "BRD empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23631,
+      "shortName": "amini_bragues_+3",
+      "source": "reforge",
+      "context": "RNG empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23632,
+      "shortName": "kasuga_haidate_+3",
+      "source": "reforge",
+      "context": "SAM empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23633,
+      "shortName": "hattori_hakama_+3",
+      "source": "reforge",
+      "context": "NIN empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23634,
+      "shortName": "peltasts_cuissots_+3",
+      "source": "reforge",
+      "context": "DRG empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23635,
+      "shortName": "beckoners_spats_+3",
+      "source": "reforge",
+      "context": "SMN empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23636,
+      "shortName": "hashishin_tayt_+3",
+      "source": "reforge",
+      "context": "BLU empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23637,
+      "shortName": "chasseurs_culottes_+3",
+      "source": "reforge",
+      "context": "COR empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23638,
+      "shortName": "karagoz_pantaloni_+3",
+      "source": "reforge",
+      "context": "PUP empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23639,
+      "shortName": "maculele_tights_+3",
+      "source": "reforge",
+      "context": "DNC empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23640,
+      "shortName": "arbatel_pants_+3",
+      "source": "reforge",
+      "context": "SCH empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23641,
+      "shortName": "azimuth_tights_+3",
+      "source": "reforge",
+      "context": "GEO empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23642,
+      "shortName": "erilaz_leg_guards_+3",
+      "source": "reforge",
+      "context": "RUN empy legs plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23688,
+      "shortName": "boii_calligae_+3",
+      "source": "reforge",
+      "context": "WAR empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23689,
+      "shortName": "bhikku_gaiters_+3",
+      "source": "reforge",
+      "context": "MNK empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23690,
+      "shortName": "ebers_duckbills_+3",
+      "source": "reforge",
+      "context": "WHM empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23691,
+      "shortName": "wicce_sabots_+3",
+      "source": "reforge",
+      "context": "BLM empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23692,
+      "shortName": "lethargy_houseaux_+3",
+      "source": "reforge",
+      "context": "RDM empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23693,
+      "shortName": "skulkers_poulaines_+3",
+      "source": "reforge",
+      "context": "THF empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23694,
+      "shortName": "chevaliers_sabatons_+3",
+      "source": "reforge",
+      "context": "PLD empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23695,
+      "shortName": "heathens_sollerets_+3",
+      "source": "reforge",
+      "context": "DRK empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23696,
+      "shortName": "nukumi_ocreae_+3",
+      "source": "reforge",
+      "context": "BST empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23697,
+      "shortName": "fili_cothurnes_+3",
+      "source": "reforge",
+      "context": "BRD empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23698,
+      "shortName": "amini_bottillons_+3",
+      "source": "reforge",
+      "context": "RNG empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23699,
+      "shortName": "kasuga_sune-ate_+3",
+      "source": "reforge",
+      "context": "SAM empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23700,
+      "shortName": "hattori_kyahan_+3",
+      "source": "reforge",
+      "context": "NIN empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23701,
+      "shortName": "peltasts_schynbalds_+3",
+      "source": "reforge",
+      "context": "DRG empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23702,
+      "shortName": "beckoners_pigaches_+3",
+      "source": "reforge",
+      "context": "SMN empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23703,
+      "shortName": "hashishin_basmak_+3",
+      "source": "reforge",
+      "context": "BLU empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23704,
+      "shortName": "chasseurs_bottes_+3",
+      "source": "reforge",
+      "context": "COR empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23705,
+      "shortName": "karagoz_scarpe_+3",
+      "source": "reforge",
+      "context": "PUP empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23706,
+      "shortName": "maculele_toe_shoes_+3",
+      "source": "reforge",
+      "context": "DNC empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23707,
+      "shortName": "arbatel_loafers_+3",
+      "source": "reforge",
+      "context": "SCH empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23708,
+      "shortName": "azimuth_gaiters_+3",
+      "source": "reforge",
+      "context": "GEO empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 23709,
+      "shortName": "erilaz_greaves_+3",
+      "source": "reforge",
+      "context": "RUN empy feet plus3",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26666,
+      "shortName": "futhark_bandeau",
+      "source": "reforge",
+      "context": "RUN relic head base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26667,
+      "shortName": "futhark_bandeau_+1",
+      "source": "reforge",
+      "context": "RUN relic head plus1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26780,
+      "shortName": "azimuth_hood",
+      "source": "reforge",
+      "context": "GEO empy head base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26781,
+      "shortName": "azimuth_hood_+1",
+      "source": "reforge",
+      "context": "GEO empy head plus1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26782,
+      "shortName": "erilaz_galea",
+      "source": "reforge",
+      "context": "RUN empy head base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26842,
+      "shortName": "futhark_coat",
+      "source": "reforge",
+      "context": "RUN relic body base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26843,
+      "shortName": "futhark_coat_+1",
+      "source": "reforge",
+      "context": "RUN relic body plus1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26938,
+      "shortName": "azimuth_coat",
+      "source": "reforge",
+      "context": "GEO empy body base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26939,
+      "shortName": "azimuth_coat_+1",
+      "source": "reforge",
+      "context": "GEO empy body plus1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26940,
+      "shortName": "erilaz_surcoat",
+      "source": "reforge",
+      "context": "RUN empy body base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27018,
+      "shortName": "futhark_mitons",
+      "source": "reforge",
+      "context": "RUN relic hands base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27019,
+      "shortName": "futhark_mitons_+1",
+      "source": "reforge",
+      "context": "RUN relic hands plus1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27092,
+      "shortName": "azimuth_gloves",
+      "source": "reforge",
+      "context": "GEO empy hands base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27093,
+      "shortName": "azimuth_gloves_+1",
+      "source": "reforge",
+      "context": "GEO empy hands plus1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27094,
+      "shortName": "erilaz_gauntlets",
+      "source": "reforge",
+      "context": "RUN empy hands base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27194,
+      "shortName": "futhark_trousers",
+      "source": "reforge",
+      "context": "RUN relic legs base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27195,
+      "shortName": "futhark_trousers_+1",
+      "source": "reforge",
+      "context": "RUN relic legs plus1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27277,
+      "shortName": "azimuth_tights",
+      "source": "reforge",
+      "context": "GEO empy legs base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27278,
+      "shortName": "azimuth_tights_+1",
+      "source": "reforge",
+      "context": "GEO empy legs plus1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27279,
+      "shortName": "erilaz_leg_guards",
+      "source": "reforge",
+      "context": "RUN empy legs base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27370,
+      "shortName": "futhark_boots",
+      "source": "reforge",
+      "context": "RUN relic feet base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27371,
+      "shortName": "futhark_boots_+1",
+      "source": "reforge",
+      "context": "RUN relic feet plus1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27451,
+      "shortName": "azimuth_gaiters",
+      "source": "reforge",
+      "context": "GEO empy feet base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27452,
+      "shortName": "azimuth_gaiters_+1",
+      "source": "reforge",
+      "context": "GEO empy feet plus1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27706,
+      "shortName": "runeist_bandeau_+1",
+      "source": "reforge",
+      "context": "RUN af head plus1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27787,
+      "shortName": "runeist_bandeau",
+      "source": "reforge",
+      "context": "RUN af head base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27986,
+      "shortName": "runeist_mitons_+1",
+      "source": "reforge",
+      "context": "RUN af hands plus1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 28067,
+      "shortName": "runeist_mitons",
+      "source": "reforge",
+      "context": "RUN af hands base",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 28133,
+      "shortName": "runeist_trousers_+1",
+      "source": "reforge",
+      "context": "RUN af legs plus1",
+      "modCount": 0,
+      "latentCount": 0
+    }
+  ],
+  "missing_items": [
+    {
+      "itemId": 29696,
+      "shortName": "",
+      "source": "hunting_league",
+      "context": "HL shop [Spells] Scroll of Silencega",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 29697,
+      "shortName": "",
+      "source": "hunting_league",
+      "context": "HL shop [Spells] Scroll of Divine Aegis",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 29698,
+      "shortName": "",
+      "source": "hunting_league",
+      "context": "HL shop [Spells] Scroll of Convergence",
+      "modCount": 0,
+      "latentCount": 0
+    }
+  ],
+  "latent_only_items": [
+    {
+      "itemId": 23573,
+      "shortName": "arbatel_bracers_+3",
+      "source": "reforge",
+      "context": "SCH empy hands plus3",
+      "modCount": 0,
+      "latentCount": 1
+    }
+  ],
+  "not_equip_items": [
+    {
+      "itemId": 9539,
+      "shortName": "beastmens_medal",
+      "source": "hunting_league",
+      "context": "HL shop [Seals] Beastmens Medal",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 9541,
+      "shortName": "kindreds_medal",
+      "source": "hunting_league",
+      "context": "HL shop [Seals] Kindreds Medal",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 9543,
+      "shortName": "demons_medal",
+      "source": "hunting_league",
+      "context": "HL shop [Seals] Demons Medal",
+      "modCount": 0,
+      "latentCount": 0
+    }
+  ]
+}

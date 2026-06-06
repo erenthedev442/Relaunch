@@ -1,0 +1,123 @@
+-- ============================================================
+-- zz_reforge_plus3_outliers.sql
+--
+-- 5 Reforge +3 items that the BG-Wiki generator skipped because
+-- they had pre-existing token mods (job-specific JA bonuses) which
+-- made the gen's 'is naked' check treat them as already populated.
+-- Without this file these items ship with ONLY their tokens and no
+-- standard stat block.
+--
+-- Strategy: derive each +3 stats from its +2 sibling using the
+-- PLUS3_STEP table (median delta across the user's 110 healthy
+-- AF+3 vs AF+2 pairs).
+--
+-- Filename prefix 'zz_' ensures we load AFTER /sql/item_mods.sql
+-- (which does DROP TABLE on every full update); INSERT IGNORE
+-- preserves existing tokens AND any future BG-Wiki data — if
+-- BG-Wiki ever populates one of these items, its row wins.
+-- ============================================================
+
+-- Relic+3  COR   head  lanun_tricorne_+3 (derived from lanun_tricorne_+2)
+INSERT IGNORE INTO `item_mods` VALUES (23414, 1, 120);   -- DEF
+INSERT IGNORE INTO `item_mods` VALUES (23414, 2, 80);   -- HP
+INSERT IGNORE INTO `item_mods` VALUES (23414, 8, 35);   -- STR
+INSERT IGNORE INTO `item_mods` VALUES (23414, 9, 29);   -- DEX
+INSERT IGNORE INTO `item_mods` VALUES (23414, 10, 22);   -- VIT
+INSERT IGNORE INTO `item_mods` VALUES (23414, 11, 41);   -- AGI
+INSERT IGNORE INTO `item_mods` VALUES (23414, 12, 25);   -- INT
+INSERT IGNORE INTO `item_mods` VALUES (23414, 13, 25);   -- MND
+INSERT IGNORE INTO `item_mods` VALUES (23414, 14, 26);   -- CHR
+INSERT IGNORE INTO `item_mods` VALUES (23414, 24, 82);   -- RATT
+INSERT IGNORE INTO `item_mods` VALUES (23414, 26, 37);   -- RACC
+INSERT IGNORE INTO `item_mods` VALUES (23414, 29, 4);   -- MDEF
+INSERT IGNORE INTO `item_mods` VALUES (23414, 30, 37);   -- MACC
+INSERT IGNORE INTO `item_mods` VALUES (23414, 31, 73);   -- MEVA
+INSERT IGNORE INTO `item_mods` VALUES (23414, 68, 64);   -- EVA
+INSERT IGNORE INTO `item_mods` VALUES (23414, 384, 800);   -- HASTE_GEAR
+INSERT IGNORE INTO `item_mods` VALUES (23414, 542, 50);   -- JOB_BONUS_CHANCE
+
+-- Relic+3  WAR   body  agoge_lorica_+3 (derived from agoge_lorica_+2)
+INSERT IGNORE INTO `item_mods` VALUES (23465, 1, 165);   -- DEF
+INSERT IGNORE INTO `item_mods` VALUES (23465, 2, 81);   -- HP
+INSERT IGNORE INTO `item_mods` VALUES (23465, 8, 36);   -- STR
+INSERT IGNORE INTO `item_mods` VALUES (23465, 9, 35);   -- DEX
+INSERT IGNORE INTO `item_mods` VALUES (23465, 10, 36);   -- VIT
+INSERT IGNORE INTO `item_mods` VALUES (23465, 11, 30);   -- AGI
+INSERT IGNORE INTO `item_mods` VALUES (23465, 12, 30);   -- INT
+INSERT IGNORE INTO `item_mods` VALUES (23465, 13, 30);   -- MND
+INSERT IGNORE INTO `item_mods` VALUES (23465, 14, 30);   -- CHR
+INSERT IGNORE INTO `item_mods` VALUES (23465, 23, 80);   -- ATT
+INSERT IGNORE INTO `item_mods` VALUES (23465, 25, 50);   -- ACC
+INSERT IGNORE INTO `item_mods` VALUES (23465, 29, 7);   -- MDEF
+INSERT IGNORE INTO `item_mods` VALUES (23465, 30, 40);   -- MACC
+INSERT IGNORE INTO `item_mods` VALUES (23465, 31, 84);   -- MEVA
+INSERT IGNORE INTO `item_mods` VALUES (23465, 68, 60);   -- EVA
+INSERT IGNORE INTO `item_mods` VALUES (23465, 288, 5);   -- DOUBLE_ATTACK
+INSERT IGNORE INTO `item_mods` VALUES (23465, 384, 400);   -- HASTE_GEAR
+INSERT IGNORE INTO `item_mods` VALUES (23465, 955, 25);   -- AGGRESSOR_DURATION
+
+-- Relic+3  PLD   body  caballarius_surcoat_+3 (derived from caballarius_surcoat_+2)
+INSERT IGNORE INTO `item_mods` VALUES (23471, 1, 171);   -- DEF
+INSERT IGNORE INTO `item_mods` VALUES (23471, 2, 138);   -- HP
+INSERT IGNORE INTO `item_mods` VALUES (23471, 5, 110);   -- MP
+INSERT IGNORE INTO `item_mods` VALUES (23471, 8, 39);   -- STR
+INSERT IGNORE INTO `item_mods` VALUES (23471, 9, 29);   -- DEX
+INSERT IGNORE INTO `item_mods` VALUES (23471, 10, 39);   -- VIT
+INSERT IGNORE INTO `item_mods` VALUES (23471, 11, 29);   -- AGI
+INSERT IGNORE INTO `item_mods` VALUES (23471, 12, 29);   -- INT
+INSERT IGNORE INTO `item_mods` VALUES (23471, 13, 29);   -- MND
+INSERT IGNORE INTO `item_mods` VALUES (23471, 14, 29);   -- CHR
+INSERT IGNORE INTO `item_mods` VALUES (23471, 23, 60);   -- ATT
+INSERT IGNORE INTO `item_mods` VALUES (23471, 25, 40);   -- ACC
+INSERT IGNORE INTO `item_mods` VALUES (23471, 27, 9);   -- ENMITY
+INSERT IGNORE INTO `item_mods` VALUES (23471, 29, 6);   -- MDEF
+INSERT IGNORE INTO `item_mods` VALUES (23471, 30, 40);   -- MACC
+INSERT IGNORE INTO `item_mods` VALUES (23471, 31, 68);   -- MEVA
+INSERT IGNORE INTO `item_mods` VALUES (23471, 68, 61);   -- EVA
+INSERT IGNORE INTO `item_mods` VALUES (23471, 160, -1100);   -- DMG
+INSERT IGNORE INTO `item_mods` VALUES (23471, 384, 300);   -- HASTE_GEAR
+INSERT IGNORE INTO `item_mods` VALUES (23471, 965, 38);   -- COVER_TO_MP
+
+-- Empyrean+3  SCH  hands  arbatel_bracers_+3 (derived from arbatel_bracers_+2)
+INSERT IGNORE INTO `item_mods` VALUES (23573, 1, 112);   -- DEF
+INSERT IGNORE INTO `item_mods` VALUES (23573, 2, 48);   -- HP
+INSERT IGNORE INTO `item_mods` VALUES (23573, 5, 60);   -- MP
+INSERT IGNORE INTO `item_mods` VALUES (23573, 8, 16);   -- STR
+INSERT IGNORE INTO `item_mods` VALUES (23573, 9, 40);   -- DEX
+INSERT IGNORE INTO `item_mods` VALUES (23573, 10, 38);   -- VIT
+INSERT IGNORE INTO `item_mods` VALUES (23573, 11, 20);   -- AGI
+INSERT IGNORE INTO `item_mods` VALUES (23573, 12, 36);   -- INT
+INSERT IGNORE INTO `item_mods` VALUES (23573, 13, 47);   -- MND
+INSERT IGNORE INTO `item_mods` VALUES (23573, 14, 32);   -- CHR
+INSERT IGNORE INTO `item_mods` VALUES (23573, 25, 62);   -- ACC
+INSERT IGNORE INTO `item_mods` VALUES (23573, 27, -10);   -- ENMITY
+INSERT IGNORE INTO `item_mods` VALUES (23573, 28, 52);   -- MATT
+INSERT IGNORE INTO `item_mods` VALUES (23573, 29, 7);   -- MDEF
+INSERT IGNORE INTO `item_mods` VALUES (23573, 30, 62);   -- MACC
+INSERT IGNORE INTO `item_mods` VALUES (23573, 31, 98);   -- MEVA
+INSERT IGNORE INTO `item_mods` VALUES (23573, 68, 69);   -- EVA
+INSERT IGNORE INTO `item_mods` VALUES (23573, 311, 32);   -- MAGIC_DAMAGE
+INSERT IGNORE INTO `item_mods` VALUES (23573, 384, 300);   -- HASTE_GEAR
+INSERT IGNORE INTO `item_mods` VALUES (23573, 487, 15);   -- MAGIC_BURST_BONUS_CAPPED
+
+-- Relic+3  WAR  hands  agoge_mufflers_+3 (derived from agoge_mufflers_+2)
+INSERT IGNORE INTO `item_mods` VALUES (23532, 1, 119);   -- DEF
+INSERT IGNORE INTO `item_mods` VALUES (23532, 2, 70);   -- HP
+INSERT IGNORE INTO `item_mods` VALUES (23532, 8, 25);   -- STR
+INSERT IGNORE INTO `item_mods` VALUES (23532, 9, 39);   -- DEX
+INSERT IGNORE INTO `item_mods` VALUES (23532, 10, 47);   -- VIT
+INSERT IGNORE INTO `item_mods` VALUES (23532, 11, 13);   -- AGI
+INSERT IGNORE INTO `item_mods` VALUES (23532, 12, 21);   -- INT
+INSERT IGNORE INTO `item_mods` VALUES (23532, 13, 36);   -- MND
+INSERT IGNORE INTO `item_mods` VALUES (23532, 14, 26);   -- CHR
+INSERT IGNORE INTO `item_mods` VALUES (23532, 23, 81);   -- ATT
+INSERT IGNORE INTO `item_mods` VALUES (23532, 25, 38);   -- ACC
+INSERT IGNORE INTO `item_mods` VALUES (23532, 29, 4);   -- MDEF
+INSERT IGNORE INTO `item_mods` VALUES (23532, 30, 38);   -- MACC
+INSERT IGNORE INTO `item_mods` VALUES (23532, 31, 63);   -- MEVA
+INSERT IGNORE INTO `item_mods` VALUES (23532, 68, 42);   -- EVA
+INSERT IGNORE INTO `item_mods` VALUES (23532, 161, -600);   -- DMGPHYS
+INSERT IGNORE INTO `item_mods` VALUES (23532, 164, -600);   -- DMGRANGE
+INSERT IGNORE INTO `item_mods` VALUES (23532, 384, 500);   -- HASTE_GEAR
+INSERT IGNORE INTO `item_mods` VALUES (23532, 956, 10);   -- DEFENDER_DURATION
+

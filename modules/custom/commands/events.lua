@@ -41,7 +41,7 @@ commandObj.onTrigger = function(player)
         table.insert(all, ev)
     end
 
-    player:printToPlayer('[Events] ── Seasonal Bonus Events ────────────────────', H)
+    player:printToPlayer('[Events] == Seasonal Bonus Events ====================', H)
 
     if #all == 0 then
         player:printToPlayer('  No events scheduled.  Check back soon!', B)
@@ -84,7 +84,7 @@ commandObj.onTrigger = function(player)
         player:printToPlayer('  No upcoming events at this time.  Check back soon!', B)
     end
 
-    player:printToPlayer('  !time — server time  |  !featured — weekly bonus NMs', B)
+    player:printToPlayer('  !time - server time  |  !featured - weekly bonus NMs', B)
 end
 
 return commandObj

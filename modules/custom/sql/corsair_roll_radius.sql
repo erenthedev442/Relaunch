@@ -1,0 +1,27 @@
+-- =====================================================================
+-- corsair_roll_radius.sql
+-- Widen the AoE radius of the four Corsair rolls that Trust: Skoll casts so
+-- they reach the WHOLE party, not just allies within the stock 8-yalm radius.
+-- (Skoll is NO_MOVE and can sit at the edge of casting range, so the back line
+-- otherwise falls outside his rolls.)
+--
+-- WHY THE DB COLUMN AND NOT A MOD:
+--   The COR roll-range mod (Mod::ROLL_RANGE, e.g. Luzaf's Ring) is only applied
+--   on the PLAYER ability path -- charentity.cpp routes ability AoE through
+--   xi.combat.abilityAoE.calculateTypeAndRadius, which reads ROLL_RANGE. The
+--   trust / mob path (CBattleEntity::OnAbility) reads abilities.radius DIRECTLY
+--   and never consults that Lua/mod, so for a Trust the radius column is the only
+--   lever short of a C++ change.
+--
+-- SCOPE: abilities is a shared table, so this widens these four rolls for EVERY
+--   Corsair (players included), not just Skoll -- an intentional, server-wide
+--   choice (the "widen for everyone" option). Other rolls are left at 8y; add
+--   their abilityIds below to match if you want all rolls widened.
+--
+-- Re-runnable: plain UPDATE keyed on abilityId. Module SQL imports AFTER the base
+--   sql/abilities.sql (tools/dbtool.py fetch order), so this reliably overrides
+--   the stock radius of 8. Takes effect after a map server restart (abilities are
+--   cached at boot).
+--     98 = fighters_roll, 105 = chaos_roll, 108 = hunters_roll, 109 = samurai_roll
+-- =====================================================================
+UPDATE abilities SET radius = 50 WHERE abilityId IN (98, 105, 108, 109);

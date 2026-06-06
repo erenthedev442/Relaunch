@@ -57,13 +57,13 @@ commandObj.cmdprops =
     parameters = 's',
 }
 
--- ── Tunables ────────────────────────────────────────────────────────
+-- == Tunables ========================================================
 -- JP spent per bonus real-level. 100 -> a maxed job (~2100 JP) is ~+21.
 local JP_PER_LEVEL        = 100
 -- Summed attribute-merit points per bonus real-level.
 local MERIT_ATTR_PER_LEVEL = 5
 
--- ── Output channels (match profile.lua: yellow header, green body) ───
+-- == Output channels (match profile.lua: yellow header, green body) ===
 local H = xi.msg.channel.SYSTEM_3    -- header line
 local B = xi.msg.channel.LINKSHELL   -- body lines
 
@@ -96,18 +96,18 @@ commandObj.onTrigger = function(player, targetName)
     local job   = targ:getMainJob()
     local base  = targ:getMainLvl()
 
-    -- ── Gear: item levels above 99 (weapon-weighted, as shown in-game) ──
+    -- == Gear: item levels above 99 (weapon-weighted, as shown in-game) ==
     local ilvl   = targ:getAverageItemLevel()
     local gearLv = math.max(0, ilvl - 99)
 
-    -- ── Ascension: completed ascensions for the CURRENT job ──
+    -- == Ascension: completed ascensions for the CURRENT job ==
     local ascLv  = targ:getCharVar('Prestige_Level_' .. job) or 0
 
-    -- ── Job Points: total spent on the current job ──
+    -- == Job Points: total spent on the current job ==
     local jpSpent = targ:getSpentJobPoints() or 0
     local jpLv    = math.floor(jpSpent / JP_PER_LEVEL)
 
-    -- ── Merits: sum of the 7 base-attribute merit bonuses ──
+    -- == Merits: sum of the 7 base-attribute merit bonuses ==
     local meritSum = 0
     for _, m in ipairs(ATTR_MERITS) do
         meritSum = meritSum + (targ:getMerit(xi.merit[m]) or 0)
@@ -117,7 +117,7 @@ commandObj.onTrigger = function(player, targetName)
     local realLevel = base + gearLv + ascLv + jpLv + meritLv
     local bonus     = gearLv + ascLv + jpLv + meritLv
 
-    -- ── Render ──
+    -- == Render ==
     player:printToPlayer(string.format(
         '[Real Level] -- %s the %s%d -----------------------',
         targ:getName(), jobName(job), base), H)

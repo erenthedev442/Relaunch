@@ -69,14 +69,14 @@ local MILESTONES = {
     {
         id       = 'TIER3_FIRST',
         reward   = 150,
-        announce = false,
+        announce = true,
         title    = 'Tier III Unlocked',
         desc     = 'First kill from the Tier III roster.',
     },
     {
         id       = 'TIER4_FIRST',
         reward   = 250,
-        announce = false,
+        announce = true,
         title    = 'Tier IV Unlocked',
         desc     = 'First kill from the Tier IV roster.',
     },
@@ -133,6 +133,98 @@ local MILESTONES = {
         announce = true,
         title    = 'Dungeon Overlord',
         desc     = '5,000 lifetime Infamy.  An unstoppable force of destruction.',
+    },
+    -- Dungeon clear count milestones
+    {
+        id       = 'FIRST_DUNGEON',
+        reward   = 150,
+        announce = false,
+        title    = 'First Dungeon Clear',
+        desc     = 'Survived your first dungeon run.',
+    },
+    {
+        id       = 'TEN_DUNGEONS',
+        reward   = 300,
+        announce = true,
+        title    = 'Dungeon Diver',
+        desc     = '10 lifetime dungeon clears.',
+    },
+    {
+        id       = 'FIFTY_DUNGEONS',
+        reward   = 750,
+        announce = true,
+        title    = 'Dungeon Veteran',
+        desc     = '50 lifetime dungeon clears.  The dungeons fear you.',
+    },
+    -- Wave fight milestones
+    {
+        id       = 'FIRST_WAVE',
+        reward   = 100,
+        announce = false,
+        title    = 'Wave Rider',
+        desc     = 'Survived your first wave fight.',
+    },
+    {
+        id       = 'WAVE_FIGHTER',
+        reward   = 200,
+        announce = true,
+        title    = 'Wave Fighter',
+        desc     = '10 lifetime wave fights cleared.',
+    },
+    {
+        id       = 'WAVE_LEGEND',
+        reward   = 600,
+        announce = true,
+        title    = 'Wave Legend',
+        desc     = '50 lifetime wave fights.  The arena never rests.',
+    },
+    -- Prestige / Ascension milestones
+    {
+        id       = 'FIRST_ASCENSION',
+        reward   = 500,
+        announce = true,
+        title    = 'First Ascension',
+        desc     = 'Your first Prestige ascension.  The legend grows.',
+    },
+    {
+        id       = 'TEN_ASCENSIONS',
+        reward   = 1000,
+        announce = true,
+        title    = 'Ascending Master',
+        desc     = '10 lifetime Prestige ascensions.',
+    },
+    {
+        id       = 'FIFTY_ASCENSIONS',
+        reward   = 3000,
+        announce  = true,
+        title     = 'Eternal Ascendant',
+        desc      = '50 lifetime ascensions.  Beyond all mortal limits.',
+        titleId   = xi.title.PARAGON_OF_WARRIOR_EXCELLENCE,
+        titleName = 'Paragon of Warrior Excellence',
+    },
+    -- Augment milestones
+    {
+        id       = 'AUGMENT_NOVICE',
+        reward   = 75,
+        announce = false,
+        title    = 'Augment Novice',
+        desc     = '5 lifetime augmentation trades.',
+    },
+    {
+        id       = 'AUGMENT_EXPERT',
+        reward   = 300,
+        announce = true,
+        title    = 'Augment Expert',
+        desc     = '50 lifetime augmentation trades.',
+    },
+    {
+        id       = 'AUGMENT_MASTER',
+        reward   = 1000,
+        announce  = true,
+        title     = 'Augment Master',
+        desc      = '200 lifetime augmentations.  Gear transformed by your hands.',
+        titleId   = xi.title.HERO_AMONG_HEROES,
+        titleName = 'Hero Among Heroes',
     },
 }
 
@@ -241,6 +333,50 @@ function M.onDungeonClear(player)
     if lifetimeInfamy >= 500  then award(player, MILESTONE_BY_ID['INFAMY_500']) end
     if lifetimeInfamy >= 1000 then award(player, MILESTONE_BY_ID['INFAMY_1K'])  end
     if lifetimeInfamy >= 5000 then award(player, MILESTONE_BY_ID['INFAMY_5K'])  end
+end
+
+-----------------------------------
+-- Called from DungeonSystem.lua after incrementing Dungeon_Clears_Total.
+-- Checks dungeon clear count milestones (in addition to infamy, which
+-- M.onDungeonClear already handles).
+-----------------------------------
+function M.onDungeonCount(player)
+    local clears = player:getCharVar('Dungeon_Clears_Total') or 0
+    if clears >= 1  then award(player, MILESTONE_BY_ID['FIRST_DUNGEON'])  end
+    if clears >= 10 then award(player, MILESTONE_BY_ID['TEN_DUNGEONS'])   end
+    if clears >= 50 then award(player, MILESTONE_BY_ID['FIFTY_DUNGEONS']) end
+end
+
+-----------------------------------
+-- Called from GameMaster.lua after a successful wave-fight completion.
+-- wavesTotal is informational (not used here but kept for future tiers).
+-----------------------------------
+function M.onWaveClear(player)
+    local clears = player:getCharVar('Wave_Clears_Total') or 0
+    if clears >= 1  then award(player, MILESTONE_BY_ID['FIRST_WAVE'])   end
+    if clears >= 10 then award(player, MILESTONE_BY_ID['WAVE_FIGHTER']) end
+    if clears >= 50 then award(player, MILESTONE_BY_ID['WAVE_LEGEND'])  end
+end
+
+-----------------------------------
+-- Called from Prestige_System.lua after a successful ascension.
+-----------------------------------
+function M.onAscension(player)
+    local total = player:getCharVar('Prestige_Total_Ascensions') or 0
+    if total >= 1  then award(player, MILESTONE_BY_ID['FIRST_ASCENSION'])  end
+    if total >= 10 then award(player, MILESTONE_BY_ID['TEN_ASCENSIONS'])   end
+    if total >= 50 then award(player, MILESTONE_BY_ID['FIFTY_ASCENSIONS']) end
+end
+
+-----------------------------------
+-- Called from Augment_Moogle.lua after a confirmed augmentation trade.
+-- Augment_Count is already incremented before this fires.
+-----------------------------------
+function M.onAugmentTrade(player)
+    local count = player:getCharVar('Augment_Count') or 0
+    if count >= 5   then award(player, MILESTONE_BY_ID['AUGMENT_NOVICE'])  end
+    if count >= 50  then award(player, MILESTONE_BY_ID['AUGMENT_EXPERT'])  end
+    if count >= 200 then award(player, MILESTONE_BY_ID['AUGMENT_MASTER'])  end
 end
 
 -- Exported for the !achievements command so it can iterate milestone metadata

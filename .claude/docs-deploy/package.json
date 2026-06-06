@@ -1,0 +1,1 @@
+﻿{ "name": "legendary-docs-deploy", "version": "1.0.0", "private": true, "description": "Shared-on-D: wrangler toolchain so refresh-site.bat can deploy from the user (non-sandbox) context.", "dependencies": { "wrangler": "4.95.0" } }

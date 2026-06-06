@@ -185,7 +185,7 @@ INSERT INTO `augments` VALUES (133,0,28,1,0,0); -- Mag.Atk.Bns.+1
 INSERT INTO `augments` VALUES (134,0,29,1,0,0); -- Mag.Def.Bns.+1
 INSERT INTO `augments` VALUES (135,0,0,0,0,0); -- 135 doesnt seem to be a valid Augment,incomplete or garbled text displays
 INSERT INTO `augments` VALUES (136,0,0,0,0,0); -- 136 doesnt seem to be a valid Augment,incomplete or garbled text displays
-INSERT INTO `augments` VALUES (137,0,370,1,0,0); -- Regen+1
+INSERT INTO `augments` VALUES (137,0,370,5,0,0); -- Regen+5 (custom buff; was 1 -- see modules/custom/sql/fix_aug_137_regen.sql)
 INSERT INTO `augments` VALUES (138,0,369,1,0,0); -- Refresh+1
 INSERT INTO `augments` VALUES (139,0,359,1,0,0); -- Rapid Shot+1
 INSERT INTO `augments` VALUES (140,0,170,1,0,0); -- Fast Cast+1%

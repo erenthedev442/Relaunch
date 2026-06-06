@@ -1,0 +1,102 @@
+﻿=== LEGENDARY Server Settings Changes ===
+Date: 04/30/2026 23:14:36
+
+**Server Info**
+SERVER_NAME Before = 'Nameless', Now = 'Legendary'
+SERVER_MESSAGE Before = ???, Now = "Welcome to LEGENDARY! Extreme QoL & Fast Progression Server"
+
+**Progression**
+INITIAL_LEVEL_CAP Before = 50, Now = 99
+
+**Movement & QoL**
+ALL_MAPS Before = 0, Now = 1
+BASE_SPEED Before = 50, Now = 500
+SPEED_LIMIT Before = 80, Now = 800
+
+**Drops & Loot**
+DROP_RATE_MULTIPLIER Before = 1, Now = 10
+MOB_GIL_MULTIPLIER Before = 1, Now = 10
+
+**Combat Power**
+CURE_POWER Before = 1, Now = 2
+ELEMENTAL_POWER Before = 1, Now = 2
+DIVINE_POWER Before = 1, Now = 2
+BLUE_POWER Before = 1, Now = 2
+WEAPON_SKILL_POWER Before = 1, Now = 2
+
+**Gil & Economy**
+START_GIL Before = 10, Now = 100000
+GIL_RATE Before = 1, Now = 100
+
+**Other**
+DAILY_TALLY_AMOUNT Before = 10, Now = 50
+GOBBIE_BOX_MIN_AGE Before = 45, Now = 1
+ENABLE_EXCHANGE_LIMIT Before = 1, Now = 0
+WEEKLY_EXCHANGE_LIMIT Before = 100000, Now = 1000000
+CAP_CURRENCY_ACCOLADES Before = 99999, Now = 999999
+CAP_CURRENCY_BALLISTA Before = 2000, Now = 20000
+CAP_CURRENCY_SPARKS Before = 99999, Now = 999999
+CAP_CURRENCY_VALOR Before = 50000, Now = 500000
+START_INVENTORY Before = 30, Now = 80
+NEW_CHARACTER_CUTSCENE Before = 1, Now = 0
+SUBJOB_QUEST_LEVEL Before = 18, Now = 0
+ADVANCED_JOB_LEVEL Before = 30, Now = 0
+UNLOCK_OUTPOST_WARPS Before = 0, Now = 2
+SHOP_PRICE Before = 1, Now = 2
+BAYLD_RATE Before = 1, Now = 2
+TABS_RATE Before = 1, Now = 10
+NINJUTSU_POWER Before = 1, Now = 2
+DARK_POWER Before = 1, Now = 2
+ITEM_POWER Before = 1, Now = 2
+ENABLE_TRUST_CUSTOM_ENGAGEMENT Before = 0, Now = 1
+ENABLE_TRUST_ALTER_EGO_EXTRAVAGANZA Before = 0, Now = 1
+ENABLE_TRUST_ALTER_EGO_EXTRAVAGANZA_ANNOUNCE Before = 0, Now = 1
+ENABLE_TRUST_ALTER_EGO_EXPO Before = 0, Now = 1
+ENABLE_TRUST_ALTER_EGO_EXPO_ANNOUNCE Before = 0, Now = 1
+BETWEEN_2DYNA_WAIT_TIME Before = 24, Now = 0
+DYNA_LEVEL_MIN Before = 65, Now = 1
+PRISMATIC_HOURGLASS_COST Before = 50000, Now = 1
+CURRENCY_EXCHANGE_RATE Before = 100, Now = 10
+ENABLE_EXCHANGE_100S_TO_1S Before = false, Now = true
+FREE_COP_DYNAMIS Before = 0, Now = 1
+STONESKIN_CAP Before = 350, Now = 3500
+BLINK_SHADOWS Before = 2, Now = 44
+SPIKE_EFFECT_DURATION Before = 180, Now = 1800
+ELEMENTAL_DEBUFF_DURATION Before = 120, Now = 1200
+AQUAVEIL_COUNTER Before = 1, Now = 100
+EXPLORER_MOOGLE_LV Before = 10, Now = 1
+ENABLE_LOGIN_CAMPAIGN Before = 0, Now = 1
+ENABLE_SYNERGY Before = false, Now = true
+ALLOW_MULTIPLE_EXP_RINGS Before = 0, Now = 1
+BYPASS_EXP_RING_ONE_PER_WEEK Before = 0, Now = 1
+NUMBER_OF_DM_EARRINGS Before = 1, Now = 10
+ENM_COOLDOWN Before = 120, Now = 0
+EQUIP_FROM_OTHER_CONTAINERS Before = false, Now = true
+REGIME_REWARD_THRESHOLD Before = 15, Now = 150
+SELF_UNSTUCK_ENABLED Before = false, Now = true
+AH_LIST_LIMIT Before = 7, Now = 0
+EXP_LOSS_RATE Before = 1, Now = 10
+FAME_MULTIPLIER Before = 1, Now = 10
+MOUNT_SPEED Before = 80, Now = 800
+SKILLUP_CHANCE_MULTIPLIER Before = 1, Now = 10
+CRAFT_CHANCE_MULTIPLIER Before = 1, Now = 10
+CRAFT_HQ_CHANCE_MULTIPLIER Before = 1, Now = 10
+PET_TP_MULTIPLIER Before = 1, Now = 3
+PLAYER_TP_MULTIPLIER Before = 1, Now = 3
+TRUST_TP_MULTIPLIER Before = 1, Now = 3
+FELLOW_TP_MULTIPLIER Before = 1, Now = 3
+SUBJOB_RATIO Before = 1, Now = 3
+ALL_MOBS_GIL_BONUS Before = 0, Now = 1000
+MAX_MERIT_POINTS Before = 30, Now = 300
+CLIENT_VER Before = '30260203_0', Now = '30260401_0'
+
+**Experience Rates**
+EXP_RATE Before = 1, Now = 10
+CAPACITY_RATE Before = 1, Now = 10
+BOOK_EXP_RATE Before = 1, Now = 10
+ROE_EXP_RATE Before = 1, Now = 10
+SPARKS_RATE Before = 1, Now = 10
+EXP_RATE Before = 1, Now = 10
+CAPACITY_RATE Before = 1, Now = 10
+
+============================================

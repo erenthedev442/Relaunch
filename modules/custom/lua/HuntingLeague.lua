@@ -22,6 +22,9 @@ local hg      = require('modules/custom/lua/hunters_guild')
 local wh      = require('modules/custom/lua/weekly_hunts')
 local ach     = require('modules/custom/lua/achievements')
 local se      = require('modules/custom/lua/seasonal_events')
+-- Ascension (Prestige) layer. One-directional require: Prestige_System pulls
+-- in only catalogs, never HuntingLeague, so there is no circular dependency.
+local prestige = require('modules/custom/lua/Prestige_System')
 
 -- Require the hunt zone so the override path is resolvable.
 local huntZoneName = catalog.huntZonePath:match('xi%.zones%.(.+)')
@@ -701,6 +704,13 @@ local function insertSpawnerNPC(zone)
                             -- Personal achievement milestones (first kills,
                             -- kill-count thresholds, lifetime mark thresholds).
                             ach.onHLKill(killer, td.tier)
+
+                            -- Ascension Trial: a Tier-5 (Legend) kill stamps
+                            -- progress toward the next ascension. The module
+                            -- ignores groupIds that aren't on the Trial roster.
+                            if td.tier >= 5 then
+                                prestige.onLegendKill(killer, md.groupId)
+                            end
                         end,
                     })
 

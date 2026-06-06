@@ -1,0 +1,154 @@
+-----------------------------------
+-- func: augstats
+-- desc: Shows the true augment contributions on your equipped gear.
+--
+-- WHY THIS EXISTS:
+--   The FFXI client's item examine window displays augment values using its
+--   own retail lookup table, which maps the packet augment ID to a fixed
+--   display string. Legendary uses custom augment IDs whose values in the
+--   client's retail table do not match the server's stat definitions — so
+--   the window shows nonsense (often a large negative number) for any item
+--   augmented through the Augment Moogle, especially after Augment Sage
+--   multipliers push the per-slot value above what the 5-bit exdata field
+--   can store cleanly.
+--
+--   The actual stat bonus IS applied correctly — only the display is wrong.
+--   This command reads the augment slot data directly from the server and
+--   computes the true per-slot and total values.
+--
+-- FORMULA (mirrors item_equipment.cpp:479):
+--   Each augment slot contributes:
+--     effective_per_slot = sql_base + exdata_value
+--   where sql_base comes from sql/augments.sql and exdata_value is the
+--   5-bit boost stored in the item's exdata (0-31; set by the Augment Sage
+--   multiplier stack, capped at 31 per slot by hardware limit).
+--   Multiple catalyst slots of the same augment type stack independently.
+--
+-- USAGE: 
+--   !augstats
+-----------------------------------
+local catalog = require('modules/custom/lua/augment_catalog')
+
+---@type TCommand
+local commandObj = {}
+
+commandObj.cmdprops =
+{
+    permission = 0,
+    parameters = '',
+}
+
+-- Build reverse map once at module load: augId -> { label, base }
+-- augment_catalog keys on catalyst item ID; we need the inverse.
+-- base is stored as a positive magnitude in the catalog even for
+-- stats like Delay that reduce (the label carries the '-' sign).
+local augById = {}
+for _, def in pairs(catalog) do
+    if def.augId and augById[def.augId] == nil then
+        augById[def.augId] =
+        {
+            label = def.label,
+            base  = math.abs(def.base or 0),
+        }
+    end
+end
+
+local SLOT_NAMES =
+{
+    [0]  = 'Main',  [1]  = 'Sub',   [2]  = 'Ranged', [3]  = 'Ammo',
+    [4]  = 'Head',  [5]  = 'Body',  [6]  = 'Hands',  [7]  = 'Legs',
+    [8]  = 'Feet',  [9]  = 'Neck',  [10] = 'Waist',  [11] = 'Ear1',
+    [12] = 'Ear2',  [13] = 'Ring1', [14] = 'Ring2',  [15] = 'Back',
+}
+
+commandObj.onTrigger = function(player)
+    player:printToPlayer(
+        string.format('=== Augment Stats — %s ===', player:getName()),
+        xi.msg.channel.SYSTEM_3)
+
+    local anyFound = false
+
+    for equipSlot = 0, 15 do
+        local item = player:getEquippedItem(equipSlot)
+        if item ~= nil then
+            -- Collect augment slots 0-4 for this item.
+            -- Group by augId: same catalyst type in multiple slots
+            -- adds to count (all slots have the same exdata value).
+            local augGroups = {}   -- augId -> { label, base, val, count }
+            local augOrder  = {}   -- insertion order for stable printing
+
+            for augSlot = 0, 4 do
+                local aug    = item:getAugment(augSlot)
+                local augId  = aug[1]
+                local augVal = aug[2]
+
+                if augId ~= 0 then
+                    if augGroups[augId] == nil then
+                        local def = augById[augId]
+                        augGroups[augId] =
+                        {
+                            label = def and def.label or string.format('[AugID %d]', augId),
+                            base  = def and def.base  or 0,
+                            val   = augVal,
+                            count = 1,
+                        }
+                        table.insert(augOrder, augId)
+                    else
+                        -- Same augId in another slot = another catalyst of the
+                        -- same type; just increment count (val is identical).
+                        augGroups[augId].count = augGroups[augId].count + 1
+                    end
+                end
+            end
+
+            if #augOrder > 0 then
+                anyFound = true
+
+                -- Print item header
+                player:printToPlayer(
+                    string.format('  [%s] %s:',
+                        SLOT_NAMES[equipSlot] or tostring(equipSlot),
+                        item:getName()),
+                    xi.msg.channel.SYSTEM_3)
+
+                -- Print one line per distinct augment type
+                for _, augId in ipairs(augOrder) do
+                    local g       = augGroups[augId]
+                    -- effective_per_slot = sql_base + exdata_boost
+                    -- (negative-stat augments show magnitude; label carries sign context)
+                    local perSlot = g.base + g.val
+
+                    local line
+                    if g.count > 1 then
+                        line = string.format(
+                            '    %s  ->  %d/slot × %d slots = %d total',
+                            g.label, perSlot, g.count, perSlot * g.count)
+                    elseif g.val > 0 then
+                        -- Single boosted slot: show base + boost breakdown
+                        line = string.format(
+                            '    %s  ->  %d  (base %d + sage boost %d)',
+                            g.label, perSlot, g.base, g.val)
+                    else
+                        -- Single unboosted slot: simple
+                        line = string.format('    %s  ->  %d', g.label, perSlot)
+                    end
+
+                    player:printToPlayer(line, xi.msg.channel.SYSTEM_3)
+                end
+            end
+        end
+    end
+
+    if not anyFound then
+        player:printToPlayer('  (no augmented equipment found)', xi.msg.channel.SYSTEM_3)
+    end
+
+    player:printToPlayer(
+        '  [!] Item examine window shows garbled values for sage-boosted augments — the numbers above are accurate.',
+        xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(
+        '  [!] For reduction stats (Delay, PDT, MDT) the number is the reduction magnitude.',
+        xi.msg.channel.SYSTEM_3)
+end
+
+return commandObj

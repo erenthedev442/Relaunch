@@ -5698,6 +5698,19 @@ CBaseEntity* GenerateDynamicEntity(CZone* PZone, CInstance* PInstance, sol::tabl
             PMob->setMobMod(MOBMOD_SKILL_LIST, skillList);
         }
 
+        // Legendary custom: optional detection bitfield (xi.detects.*). Without
+        // this set, CalculateMobStats logs "has no detection methods!" per spawn
+        // AND the mob never auto-aggros — players have to manually engage. For
+        // dynamic spawns from custom modules (Hunting League, Game Master waves)
+        // we want both: no error spam AND proper sight+hearing aggro behavior.
+        // Setting it here (before the AI ticks) means the error gate at
+        // mobutils.cpp:1059 sees the value and stays quiet.
+        const auto detection = table["detection"].get_or<uint16>(0);
+        if (detection > 0)
+        {
+            PMob->setMobMod(MOBMOD_DETECTION, detection);
+        }
+
         const auto spellList = table["spellList"].get_or<uint16>(0);
         if (spellList > 0)
         {

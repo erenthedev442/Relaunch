@@ -8,7 +8,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 5,
+    permission = 1	,
     parameters = ''
 }
 
@@ -34,7 +34,7 @@ commandObj.onTrigger = function(player)
         --     : So populate it with something unique-ish even if you aren't going to use it.
         --     : You can then hide the name with entity:hideName(true)
         -- NOTE: This name CAN include spaces and underscores.
-        name = 'Fafnir',
+        name = 'Fafqueer',
 
         -- Optional: Define a different name that is visible to players.
         -- 'Fafnir' (DE_Fafnir) will still be used internally for lookups.
@@ -51,8 +51,8 @@ commandObj.onTrigger = function(player)
         --                       groupId ---^        ^--- groupZoneId
         groupId = 5,
         groupZoneId = 154,
-        minLevel = 90,
-        maxLevel = 90,
+        minLevel = 200,
+        maxLevel = 200,
         -- You can provide an onMobDeath function if you want: if you don't
         -- add one, an empty one will be inserted for you behind the scenes.
         onMobDeath = function(mob, playerArg, optParams)

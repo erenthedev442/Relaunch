@@ -10701,9 +10701,28 @@ uint16 CLuaBaseEntity::getSkillLevel(uint16 skillId)
 
 void CLuaBaseEntity::setSkillLevel(uint8 SkillID, uint16 SkillAmount)
 {
-    if (m_PBaseEntity->objtype != TYPE_PC || SkillID >= MAX_SKILLTYPE)
+    if (SkillID >= MAX_SKILLTYPE)
     {
-        ShowWarning("CLuaBaseEntity::setSkillLevel() - Non-PC or Invalid SkillID passed to function.");
+        ShowWarning("CLuaBaseEntity::setSkillLevel() - Invalid SkillID passed to function.");
+        return;
+    }
+
+    // Non-PC battle entities (trusts, mobs, pets) keep skills only as a raw value
+    // in WorkingSkills -- GetSkill returns it masked with 0x7FFF, exactly how
+    // trustutils stores them. They have no RealSkills, client packet, or DB row
+    // to maintain. This lets a trust be granted a skill its jobs do not provide --
+    // e.g. Skoll's Singing, so his bard songs are not stuck at base power
+    // (scripts/actions/spells/trust/skoll.lua).
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        if (auto* PBattle = dynamic_cast<CBattleEntity*>(m_PBaseEntity))
+        {
+            PBattle->WorkingSkills.skill[SkillID] = SkillAmount;
+        }
+        else
+        {
+            ShowWarning("CLuaBaseEntity::setSkillLevel() - Non-battle entity (%s).", m_PBaseEntity->getName());
+        }
         return;
     }
 

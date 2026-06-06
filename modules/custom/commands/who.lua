@@ -29,7 +29,7 @@ commandObj.onTrigger = function(player)
     player:printToPlayer(string.format('[Who] %d player(s) online this session:', #online), H)
 
     if #online == 0 then
-        player:printToPlayer('  No players tracked yet — list updates as players log in.', B)
+        player:printToPlayer('  No players tracked yet - list updates as players log in.', B)
     else
         for _, info in ipairs(online) do
             local tier     = info.tier or 0

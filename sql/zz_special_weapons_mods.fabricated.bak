@@ -1,0 +1,58 @@
+-- ============================================================
+-- zz_special_weapons_mods.sql
+--
+-- 6 named weapons in gear_progression_catalog.lua that ship with
+-- base DMG/Delay but empty/sparse item_mods. Filled using the same
+-- per-skill VOLUSPA_TEMPLATE as the Tokko/Voluspa line, scaled up
+-- by cost-ratio (15 marks = 1.00x baseline, 30 marks = 1.50x).
+--
+-- INSERT IGNORE preserves any pre-existing partial mods
+-- (Twilight Knife has 2, Compensator has 1).
+-- ============================================================
+
+-- honebami (skill 10, cost 18 marks, scale 1.20x)
+INSERT IGNORE INTO `item_mods` VALUES (17825, 25, 26);   -- ACC
+INSERT IGNORE INTO `item_mods` VALUES (17825, 23, 30);   -- ATT
+INSERT IGNORE INTO `item_mods` VALUES (17825, 9, 10);   -- DEX
+INSERT IGNORE INTO `item_mods` VALUES (17825, 2, 72);   -- HP
+INSERT IGNORE INTO `item_mods` VALUES (17825, 8, 14);   -- STR
+
+-- twilight_knife (skill 2, cost 30 marks, scale 1.50x)
+INSERT IGNORE INTO `item_mods` VALUES (19132, 25, 42);   -- ACC
+INSERT IGNORE INTO `item_mods` VALUES (19132, 11, 12);   -- AGI
+INSERT IGNORE INTO `item_mods` VALUES (19132, 23, 27);   -- ATT
+INSERT IGNORE INTO `item_mods` VALUES (19132, 165, 4);   -- CRITHITRATE
+INSERT IGNORE INTO `item_mods` VALUES (19132, 9, 18);   -- DEX
+INSERT IGNORE INTO `item_mods` VALUES (19132, 68, 27);   -- EVA
+INSERT IGNORE INTO `item_mods` VALUES (19132, 384, 450);   -- HASTE_GEAR
+
+-- combuster_+1 (skill 3, cost 15 marks, scale 1.00x)
+INSERT IGNORE INTO `item_mods` VALUES (20697, 25, 22);   -- ACC
+INSERT IGNORE INTO `item_mods` VALUES (20697, 23, 22);   -- ATT
+INSERT IGNORE INTO `item_mods` VALUES (20697, 165, 3);   -- CRITHITRATE
+INSERT IGNORE INTO `item_mods` VALUES (20697, 9, 6);   -- DEX
+INSERT IGNORE INTO `item_mods` VALUES (20697, 2, 50);   -- HP
+INSERT IGNORE INTO `item_mods` VALUES (20697, 8, 12);   -- STR
+
+-- demersal_degen_+1 (skill 3, cost 30 marks, scale 1.50x)
+INSERT IGNORE INTO `item_mods` VALUES (20709, 25, 33);   -- ACC
+INSERT IGNORE INTO `item_mods` VALUES (20709, 23, 33);   -- ATT
+INSERT IGNORE INTO `item_mods` VALUES (20709, 165, 4);   -- CRITHITRATE
+INSERT IGNORE INTO `item_mods` VALUES (20709, 9, 9);   -- DEX
+INSERT IGNORE INTO `item_mods` VALUES (20709, 2, 75);   -- HP
+INSERT IGNORE INTO `item_mods` VALUES (20709, 8, 18);   -- STR
+
+-- tanmogayi_+1 (skill 3, cost 30 marks, scale 1.50x)
+INSERT IGNORE INTO `item_mods` VALUES (20680, 25, 33);   -- ACC
+INSERT IGNORE INTO `item_mods` VALUES (20680, 23, 33);   -- ATT
+INSERT IGNORE INTO `item_mods` VALUES (20680, 165, 4);   -- CRITHITRATE
+INSERT IGNORE INTO `item_mods` VALUES (20680, 9, 9);   -- DEX
+INSERT IGNORE INTO `item_mods` VALUES (20680, 2, 75);   -- HP
+INSERT IGNORE INTO `item_mods` VALUES (20680, 8, 18);   -- STR
+
+-- compensator (skill 26, cost 25 marks, scale 1.50x)
+INSERT IGNORE INTO `item_mods` VALUES (21482, 11, 18);   -- AGI
+INSERT IGNORE INTO `item_mods` VALUES (21482, 9, 12);   -- DEX
+INSERT IGNORE INTO `item_mods` VALUES (21482, 26, 33);   -- RACC
+INSERT IGNORE INTO `item_mods` VALUES (21482, 24, 33);   -- RATT
+

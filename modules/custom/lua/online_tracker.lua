@@ -8,13 +8,13 @@
 -- if the function returns nil the player is no longer in-world.
 --
 -- Exported API (attached to the Module table so require() callers get it):
---   m.getOnline()   → sorted list of { name, tier, loginAt }
+--   m.getOnline()   -> sorted list of { name, tier, loginAt }
 --                     highest-tier first, alphabetical within tier
 -----------------------------------
 require('modules/module_utils')
 
--- In-memory set: charname → { name, tier, loginAt }
--- Resets on server restart — acceptable for a small server.
+-- In-memory set: charname -> { name, tier, loginAt }
+-- Resets on server restart - acceptable for a small server.
 local _online = {}
 
 local m = Module:new('online_tracker')

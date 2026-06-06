@@ -21,8 +21,8 @@
 local catalog = {}
 
 catalog.events = {
-    -- ── EXAMPLE — Winter Solstice Festival ─────────────────────
-    -- Double marks Dec 20 – Jan 3 each year.  Update timestamps annually.
+    -- -- EXAMPLE - Winter Solstice Festival ---------------------
+    -- Double marks Dec 20 - Jan 3 each year.  Update timestamps annually.
     -- {
     --     name       = 'Winter Solstice Festival',
     --     multiplier = 2.0,
@@ -31,7 +31,7 @@ catalog.events = {
     --     priority   = 10,
     -- },
 
-    -- ── EXAMPLE — Anniversary Celebration ──────────────────────
+    -- -- EXAMPLE - Anniversary Celebration ----------------------
     -- 1.5x marks for a weekend (low-cost way to reward activity).
     -- {
     --     name       = 'Server Anniversary',
@@ -41,7 +41,7 @@ catalog.events = {
     --     priority   = 5,
     -- },
 
-    -- ── EXAMPLE — Summer Celebration ───────────────────────────
+    -- -- EXAMPLE - Summer Celebration ---------------------------
     -- {
     --     name       = 'Summer Celebration',
     --     multiplier = 1.5,

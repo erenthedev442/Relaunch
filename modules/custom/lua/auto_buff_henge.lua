@@ -31,7 +31,7 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onZoneIn', function(player, prevZo
         local regainPower  = math.max(1, math.floor(level / 10))
         local duration     = 18000   -- 30 minutes
 
-        -- Reisenjima is in the Adoulin-era region → Ionis buff.
+        -- Reisenjima is in the Adoulin-era region -> Ionis buff.
         -- Fallback to Signet for any unexpected region value.
         local region     = p:getCurrentRegion()
         local regionalId = xi.effect.SIGNET

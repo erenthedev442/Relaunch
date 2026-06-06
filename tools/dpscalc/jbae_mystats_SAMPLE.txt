@@ -1,0 +1,11 @@
+  Job: PLD99 / NIN99   HP: 3200/3200   MP: 900/900   TP: 0
+  STR 180   DEX 175   VIT 210   AGI 160
+  INT 140   MND 200   CHR 150
+  Melee   ATT 1250   ACC 1180   Wpn dmg 181
+  Ranged  ATT    0   ACC    0   Wpn dmg 0
+  Crit hit rate 8%   Crit dmg +0%
+  Dbl Atk 0%   Trpl Atk 2%   Quad Atk 34%
+  DEF 1400   EVA 1100   MDEF 60   MEVA 120
+  Haste-Gear 2100/2500   Haste-Magic 0/4375   Haste-Ability 0/2500   (1% = 100)
+  Dual Wield 0%   Store TP 30   TP Bonus +0
+  WS dmg (all hits) +0%   WS dmg (1st hit) +0%   Skillchain dmg +0%

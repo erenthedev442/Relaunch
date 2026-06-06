@@ -57,6 +57,16 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onInitialize', function(zone)
             local sweeps    = player:getCharVar('WH_AllCleared_Lifetime') or 0
             local infamy    = player:getCharVar('Infamy_Lifetime')        or 0
 
+            -- Ascension (Prestige) endgame layer: account-wide lifetime
+            -- ascensions, plus this character's highest single-job prestige
+            -- level (per-job CharVar Prestige_Level_<jobId>, jobs 1..22).
+            local ascensions  = player:getCharVar('Prestige_Ascensions_Total') or 0
+            local topPrestige = 0
+            for jobId = 1, 22 do
+                local lv = player:getCharVar(string.format('Prestige_Level_%d', jobId)) or 0
+                if lv > topPrestige then topPrestige = lv end
+            end
+
             -- Count distinct NMs defeated.
             local uniqueNMs = 0
             for _, td in ipairs(catalog.tiers) do
@@ -81,13 +91,14 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onInitialize', function(zone)
             local tierName = TIER_NAMES[math.max(1, math.min(hlTier, 5))] or 'Initiate'
             if hlTier == 0 then tierName = 'Initiate' end
 
-            player:printToPlayer('[The Chronicler] ── Your Legendary Record ──────────────', H)
+            player:printToPlayer('[The Chronicler] -- Your Legendary Record --------------', H)
             player:printToPlayer(string.format('  Rank: %-8s  NM Kills: %-6d  Lifetime Marks: %d', tierName, nmKills, hlLife), B)
             player:printToPlayer(string.format('  Unique NMs: %d/%d   Dungeons Cleared: %d   Weekly Sweeps: %d', uniqueNMs, TOTAL_NMS, dungeons, sweeps), B)
             player:printToPlayer(string.format('  Lifetime Infamy: %d   Achievements: %d/%d', infamy, achEarned, #ACH_IDS), B)
-            player:printToPlayer('[The Chronicler] ── Server Leaderboards ───────────────', H)
+            player:printToPlayer(string.format('  Ascensions: %d   Highest Prestige: P%d', ascensions, topPrestige), B)
+            player:printToPlayer('[The Chronicler] -- Server Leaderboards ---------------', H)
             player:printToPlayer('  Full rankings at:', B)
-            player:printToPlayer('  richardknutzjr.github.io/FFXI-Private-Server-FJB/community/leaderboards/', B)
+            player:printToPlayer('  legendary-ffxi.pages.dev/community/leaderboards/', B)
             player:printToPlayer('  Tip: !nms  !progress  !achievements  !featured', B)
         end,
     })

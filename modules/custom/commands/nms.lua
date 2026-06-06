@@ -1,6 +1,6 @@
 -----------------------------------
 -- func: nms
--- desc: Shows the player's NM Encyclopedia progress — which Hunting
+-- desc: Shows the player's NM Encyclopedia progress - which Hunting
 --       League NMs they have killed at least once (NMKilled_<groupId>
 --       CharVar) and which ones remain.  Lists up to 10 missing NMs
 --       to avoid flooding chat.
@@ -42,12 +42,12 @@ commandObj.onTrigger = function(player)
         string.format('[NM Encyclopedia] %d / %d NMs slain (%d%%)', killed, total, pct), H)
 
     if #missing == 0 then
-        player:printToPlayer('  ALL NMs DEFEATED — you are a true completionist!', B)
+        player:printToPlayer('  ALL NMs DEFEATED - you are a true completionist!', B)
     else
         local shown = math.min(#missing, 10)
         player:printToPlayer(string.format('  Still missing (%d):', #missing), B)
         for i = 1, shown do
-            player:printToPlayer('  • ' .. missing[i], B)
+            player:printToPlayer('  * ' .. missing[i], B)
         end
         if #missing > shown then
             player:printToPlayer(

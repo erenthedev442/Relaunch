@@ -1,0 +1,22 @@
+-- ---------------------------------------------------------------------------
+-- zz_disable_voidwatch.sql   (supersedes zz_disable_planar_rifts.sql)
+--
+-- Removes ALL Voidwatch NPCs from every zone -- 456 total:
+--   * 202 "Planar Rift" spawn NPCs scattered across the world, plus
+--   * 254 Voidwatch service NPCs (Voidwatch Purveyor / Officer, Atmacite
+--     Refiner, Riftworn Pyxis, Veridical Conflux, Owain, Gushing Spring,
+--     Hildegard, Kieran, ...), mostly in the cities.
+--
+-- Voidwatch is flagged "(Not Implemented)" in settings/main.lua, so all of
+-- this is non-functional clutter. The content tag can't suppress it cleanly
+-- (IsContentEnabled only blocks tagged content when RESTRICT_CONTENT = 1, and
+-- that's 0 here / global), so we remove the rows directly by content_tag.
+--
+-- zz_ prefix + sql/ location: loads AFTER sql/npc_list.sql (which DROPs and
+-- recreates the table), so the NPCs get added then removed. Idempotent.
+-- npc_list loads at map-server startup, so a RESTART is required in-game.
+--
+-- Reverse: delete this file and re-import sql/npc_list.sql.
+-- ---------------------------------------------------------------------------
+
+DELETE FROM `npc_list` WHERE `content_tag` = 'VOIDWATCH';

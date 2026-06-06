@@ -1,6 +1,6 @@
 -----------------------------------
 -- func: achievements
--- desc: Shows all personal milestone achievements — earned and unearned —
+-- desc: Shows all personal milestone achievements - earned and unearned -
 --       with their reward amounts and descriptions.
 --
 --       Milestones are defined in modules/custom/lua/achievements.lua.
@@ -24,7 +24,7 @@ local H = xi.msg.channel.SYSTEM_3
 local B = xi.msg.channel.LINKSHELL
 
 commandObj.onTrigger = function(player)
-    player:printToPlayer('[Achievements] ── Your Personal Milestones ──────────────', H)
+    player:printToPlayer('[Achievements] == Your Personal Milestones ==============', H)
 
     local earned = 0
     local total  = #ach.MILESTONES
@@ -37,7 +37,7 @@ commandObj.onTrigger = function(player)
         local tag    = done and '[DONE]' or '[----]'
         local reward = string.format('+%d marks', ms.reward)
         player:printToPlayer(
-            string.format('  %s %-22s  (%s)  — %s',
+            string.format('  %s %-22s  (%s)  - %s',
                 tag, ms.title, reward, ms.desc), B)
     end
 

@@ -1,0 +1,24 @@
+{
+    "_README": "AH market-maker config. Two sections, both optional: 'rules' (auto-selected item sets, handled with set-based SQL) and 'items' (hand-listed single items/stacks). Rules run first, then items. ---- RULES ---- A rule of type 'non_ilvl_gear' keeps every auctionable piece of equipment that has NO item level stocked on the AH (~5,786 items: weapons, armor, accessories whose iLvl is 0, that have a real AH browse category, and are not Ex/No-Auction). Fields: type = 'non_ilvl_gear'; target_qty = how many of the BOT'S OWN copies to keep listed per item (the bot always keeps its own stock regardless of what players list, so its cheap copy can't be displaced); level_price_brackets = [[max_level, price], ...] ascending - an item priced at the first bracket whose max_level >= the item's equip level; the LAST entry is the price for everything above the previous threshold (its max_level is only a label). buyback = true buys player listings of these items priced AT OR BELOW the bot's bracket price, paying the bot's bracket price (no more, no less); set false to stock without buying. max_buyback_per_pass = safety cap on how many player listings to buy each pass (a runaway-faucet guard). ---- ITEMS ---- Each entry keeps one (itemid, stack) pair stocked to target_qty, where target_qty counts ALL unsold listings (players + bot). Fields: name (log label); itemid (see scripts/enum/item.lua); stack (0 = single, 1 = full stack); target_qty; sell_price (the bot lists at this price AND pays exactly this when buying back excess). Add 'buyback': false to stock an item without buying any back. ---- The bot is a DRY RUN unless you pass --commit. seller=0 listings pay nobody when bought (gil sink); buying a player's listing pays them via delivery_box.",
+    "rules": [
+        {
+            "type": "non_ilvl_gear",
+            "target_qty": 5,
+            "buyback": true,
+            "max_buyback_per_pass": 50,
+            "level_price_brackets": [
+                [10, 140000],
+                [20, 170000],
+                [30, 210000],
+                [40, 260000],
+                [50, 330000],
+                [60, 410000],
+                [70, 510000],
+                [75, 640000],
+                [98, 800000],
+                [99, 1000000]
+            ]
+        }
+    ],
+    "items": []
+}

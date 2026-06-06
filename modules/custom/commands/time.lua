@@ -30,7 +30,7 @@ commandObj.onTrigger = function(player)
     local minsUntilDaily   = math.floor((secsUntilDaily % 3600) / 60)
 
     -- Days until next Monday 00:00 UTC (weekly hunt + featured reset).
-    -- os.date '!%w' → 0=Sun, 1=Mon … 6=Sat
+    -- os.date '!%w' -> 0=Sun, 1=Mon ... 6=Sat
     local weekday         = tonumber(os.date('!%w', now)) or 0
     local daysUntilMonday = weekday == 1 and 0 or (8 - weekday) % 7
 
@@ -41,18 +41,18 @@ commandObj.onTrigger = function(player)
         local remaining = math.max(0, ev.finish - now)
         local days      = math.floor(remaining / 86400)
         local hours     = math.floor((remaining % 86400) / 3600)
-        eventStr = string.format('  Active Event: %s  (%.1fx marks — ends in %dd %dh)',
+        eventStr = string.format('  Active Event: %s  (%.1fx marks - ends in %dd %dh)',
             ev.name, ev.multiplier, days, hours)
     else
         eventStr = '  Active Event: None currently'
     end
 
-    player:printToPlayer('[Server Time] ── Current Status ───────────────────────────', H)
+    player:printToPlayer('[Server Time] == Current Status ===========================', H)
     player:printToPlayer(string.format('  Server time: %s', utcTime), B)
     player:printToPlayer(string.format('  Daily reset: in %dh %dm', hoursUntilDaily, minsUntilDaily), B)
     player:printToPlayer(string.format('  Weekly reset (Mon 00:00 UTC): in %d day(s)', daysUntilMonday), B)
     player:printToPlayer(eventStr, B)
-    player:printToPlayer('  !featured — this week\'s bonus NMs  |  !bonus_dungeon — bonus dungeon', B)
+    player:printToPlayer('  !featured - this week\'s bonus NMs  |  !bonus_dungeon - bonus dungeon', B)
 end
 
 return commandObj

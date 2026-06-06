@@ -1,0 +1,16 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "legendary-docs",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m", "mkdocs", "serve",
+        "-f", "D:/server/.claude/worktrees/legendary-logo/mkdocs.yml",
+        "-a", "127.0.0.1:8765",
+        "--no-livereload"
+      ],
+      "port": 8765
+    }
+  ]
+}

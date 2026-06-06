@@ -155,8 +155,12 @@ local function applyRoll(caster, target, inAbility, action, total, isDoubleup, c
     end
 
     -- Apply Additional Phantom Roll+ Buff
+    -- getMaxGearMod reads equipped items, so it's PC-only and warns on a non-PC.
+    -- Guard it so non-PC rollers (Trusts like Skoll) don't spam the map log with
+    -- "Invalid Entity (Non-PC)" on every roll. A Trust has no gear, so 0 is the
+    -- correct Phantom Roll+ multiplier anyway -- behavior is unchanged for players.
     local phantomBase = corsairRollMods[abilityId][2] -- Base increment buff
-    local phantomMult = caster:getMaxGearMod(xi.mod.PHANTOM_ROLL)
+    local phantomMult = caster:isPC() and caster:getMaxGearMod(xi.mod.PHANTOM_ROLL) or 0
     effectpower       = effectpower + (phantomBase * phantomMult)
 
     -- Effect Power varies depending on COR level (Main vs Sub)

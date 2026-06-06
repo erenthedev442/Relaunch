@@ -7,12 +7,12 @@
 --
 -- Usage (GM only):
 --   !setbonus <multiplier> <hours>
---   !setbonus 2 4    — 2x marks for 4 hours
---   !setbonus 1.5 24 — 1.5x marks for 24 hours
---   !setbonus 1 0    — immediately cancels any active dynamic event
+--   !setbonus 2 4    - 2x marks for 4 hours
+--   !setbonus 1.5 24 - 1.5x marks for 24 hours
+--   !setbonus 1 0    - immediately cancels any active dynamic event
 --
--- Multiplier: 1.0 – 5.0  (1.0 effectively disables/cancels)
--- Duration:   1 – 168 hours (1 week max)
+-- Multiplier: 1.0 - 5.0  (1.0 effectively disables/cancels)
+-- Duration:   1 - 168 hours (1 week max)
 -----------------------------------
 ---@type TCommand
 local commandObj = {}

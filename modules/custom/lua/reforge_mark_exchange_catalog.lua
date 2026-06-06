@@ -1,0 +1,62 @@
+-----------------------------------
+-- reforge_mark_exchange_catalog.lua
+-- Config for the Reforge Mark Exchange vendor at Reisenjima Henge.
+-- Lets players convert between Reforge mark types at a 2:1 rate,
+-- removing the "dead inventory" feel when you have excess marks in
+-- one track. Does not trivialize any track — the exchange tax is
+-- intentional friction.
+--
+-- Rates: 2 AF = 1 Relic, 2 Relic = 1 Empy, 3 AF = 1 Empy (direct).
+-----------------------------------
+local catalog = {}
+
+catalog.npcPos =
+{
+    zone     = 'Reisenjima_Henge',
+    zoneId   = xi.zone.REISENJIMA_HENGE,
+    x        =  6.0,
+    y        =  5.5,
+    z        = -18.0,
+    rotation =  200,
+}
+
+catalog.npcLook = 2430
+catalog.npcName = 'Reforge Exchange'
+
+-- Each exchange: spend 'cost' of 'from' currency, receive 1 of 'to'.
+-- Players can enter how many batches they want (1–10 per menu visit).
+catalog.exchanges =
+{
+    {
+        id     = 'af_to_relic',
+        label  = '2 AF Marks -> 1 Relic Mark',
+        fromCv = 'RF_AF_Marks',
+        fromName = 'AF Marks',
+        toCv   = 'RF_Relic_Marks',
+        toName = 'Relic Marks',
+        rate   = 2,  -- 2 from = 1 to
+    },
+    {
+        id     = 'relic_to_empy',
+        label  = '2 Relic Marks -> 1 Empy Mark',
+        fromCv = 'RF_Relic_Marks',
+        fromName = 'Relic Marks',
+        toCv   = 'RF_Empy_Marks',
+        toName = 'Empy Marks',
+        rate   = 2,
+    },
+    {
+        id     = 'af_to_empy',
+        label  = '3 AF Marks -> 1 Empy Mark',
+        fromCv = 'RF_AF_Marks',
+        fromName = 'AF Marks',
+        toCv   = 'RF_Empy_Marks',
+        toName = 'Empy Marks',
+        rate   = 3,
+    },
+}
+
+-- Batch sizes offered in the menu (how many 'to' units to receive per trade).
+catalog.batchSizes = { 1, 5, 10, 25, 50 }
+
+return catalog

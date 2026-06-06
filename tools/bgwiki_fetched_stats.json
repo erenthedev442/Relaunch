@@ -1,0 +1,50 @@
+{
+  "27783": {
+    "name": "Skormoth Mask",
+    "url": "https://www.bg-wiki.com/ffxi/Skormoth_Mask",
+    "stats": "DEF:100 HP+36 STR+20 DEX+22 VIT+22 AGI+22 INT+21 MND+21 CHR+21 Accuracy+26 Evasion+38 Magic Evasion+43 \"Magic Def. Bonus\"+4 Haste+8% \"Triple Attack\"+4% Magic damage taken -3%",
+    "note": "verify TA"
+  },
+  "23414": {
+    "name": "Lanun Tricorne +3",
+    "url": "https://www.bg-wiki.com/ffxi/Lanun_Tricorne_%2B3",
+    "stats": "DEF:120 HP+80 STR+35 DEX+29 VIT+22 AGI+41 INT+25 MND+25 CHR+26 Ranged Accuracy+37 Ranged Attack+87 Magic Accuracy+37 Evasion+64 Magic Evasion+73 \"Magic Def. Bonus\"+4 Haste+8% \"Phantom Roll\" effects +50",
+    "note": "COR Relic head +3"
+  },
+  "23465": {
+    "name": "Agoge Lorica +3",
+    "url": "https://www.bg-wiki.com/ffxi/Agoge_Lorica_%2B3",
+    "stats": "DEF:165 HP+81 STR+36 DEX+35 VIT+36 AGI+30 INT+30 MND+30 CHR+30 Accuracy+50 Attack+85 Magic Accuracy+40 Evasion+64 Magic Evasion+84 \"Magic Def. Bonus\"+7 Haste+4% \"Double Attack\"+7% \"Aggressor\" duration +30",
+    "note": "WAR Relic body +3"
+  },
+  "23471": {
+    "name": "Caballarius Surcoat +3",
+    "url": "https://www.bg-wiki.com/ffxi/Caballarius_Surcoat_%2B3",
+    "stats": "DEF:171 HP+138 MP+110 STR+39 DEX+29 VIT+39 AGI+29 INT+29 MND+29 CHR+29 Accuracy+40 Attack+65 Magic Accuracy+40 Evasion+61 Magic Evasion+68 \"Magic Def. Bonus\"+6 Haste+3% Enmity+10 Damage taken -12% \"Cover\": Physical damage converted to MP +41",
+    "note": "PLD Relic body +3"
+  },
+  "23532": {
+    "name": "Agoge Mufflers +3",
+    "url": "https://www.bg-wiki.com/ffxi/Agoge_Mufflers_%2B3",
+    "stats": "DEF:119 HP+70 STR+25 DEX+39 VIT+47 AGI+13 INT+21 MND+36 CHR+26 Accuracy+38 Attack+86 Magic Accuracy+38 Evasion+42 Magic Evasion+63 \"Magic Def. Bonus\"+4 Haste+5% \"Fencer\"+1 \"Defender\" effect duration +15 Physical damage taken -6% Defender: Chance of successful block +15",
+    "note": "WAR Relic hands +3"
+  },
+  "23573": {
+    "name": "Arbatel Bracers +3",
+    "url": "https://www.bg-wiki.com/ffxi/Arbatel_Bracers_%2B3",
+    "stats": "DEF:112 HP+48 MP+60 STR+16 DEX+40 VIT+38 AGI+20 INT+36 MND+47 CHR+32 Accuracy+62 Magic Accuracy+62 \"Magic Atk. Bonus\"+52 Magic Damage+32 Evasion+69 Magic Evasion+98 \"Magic Def. Bonus\"+7 Haste+3% Enmity-12 Magic burst damage +15 \"Perpetuance\"+65% \"Immanence\"+13% Set: Augments grimoire",
+    "note": "BLM Relic hands +3"
+  },
+  "19132": {
+    "name": "Twilight Knife",
+    "url": "https://www.bg-wiki.com/ffxi/Twilight_Knife",
+    "stats": "DMG:40 Delay:190 \"Quadruple Attack\"+3% Additional effect: HP, MP, or TP Drain",
+    "note": "special weapon"
+  },
+  "21482": {
+    "name": "Compensator",
+    "url": "https://www.bg-wiki.com/ffxi/Compensator",
+    "stats": "DMG:89 Delay:480 Ranged Accuracy+10 Ranged Attack+10 Marksmanship skill +242 \"Snapshot\"+10 \"Phantom Roll\" effect duration +20 \"Triple Shot\"+10%",
+    "note": "special weapon"
+  }
+}

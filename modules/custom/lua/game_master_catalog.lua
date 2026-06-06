@@ -17,36 +17,42 @@
 
 local catalog = {}
 
--- Balga's Dais (zone 146): dedicated wave-fight arena.
--- Coordinates match the zone's default player spawn point so the
--- NPC is right in front of players when they zone or !wavemaster in.
+-- Escha_RuAun (zone 289): a huge, open Escha hub -- far more room than the
+-- narrow Hall of the Gods (251), so multi-mob waves spawn in the open instead
+-- of clipping into the walls. Trusts are already enabled here (zone misc 2048).
+--
+-- Both the NPC and the !wavemaster warp sit on the open entry plaza where
+-- players zone in (documented landing: -0.371, -34.277, -466.98, rot 187). The
+-- NPC is placed a few units to the side so players see it on arrival.
+-- Verify/nudge with !pos in-game -- pick a spot clear of any roaming Eschan
+-- mobs if the entry area feels busy.
 catalog.npcPos =
 {
-    zone     = 'Balgas_Dais',
-    zoneId   = 146,
-    x        = 317.842,
-    y        = -126.158,
-    z        = 383.000,
-    rotation = 127,
+    zone     = 'Escha_RuAun',
+    zoneId   = 289,
+    x        =  3.000,
+    y        = -34.277,
+    z        = -466.980,
+    rotation =  192,
 }
 
 -- Difficulty presets. Each preset is a self-contained spec:
---   wavesTotal       — how many waves the session runs
---   mobsPerWave      — mobs spawned per wave (random picks from `mobs`)
---   graceDelay       — seconds after "Start!" before wave 1 spawns
---   waveDelay        — seconds after a wave is cleared before next spawns
---   minLevel/maxLevel — mob level range. REQUIRED — without these,
+--   wavesTotal       - how many waves the session runs
+--   mobsPerWave      - mobs spawned per wave (random picks from `mobs`)
+--   graceDelay       - seconds after "Start!" before wave 1 spawns
+--   waveDelay        - seconds after a wave is cleared before next spawns
+--   minLevel/maxLevel - mob level range. REQUIRED - without these,
 --                      `insertDynamicEntity` defaults the spawn to level
 --                      255 and the engine logs an error per spawn. HL uses
 --                      Lv150 uniformly; we tier here so Easy is gentler
 --                      and Insane bites harder than the standard HL bar.
---   mobs             — pool of { groupId, name } to draw spawns from
---   completionBonus  — HL_Points awarded on full clear
---   markBonus        — bonus added per kill (small, not the full HL amount)
+--   mobs             - pool of { groupId, name } to draw spawns from
+--   completionBonus  - HL_Points awarded on full clear
+--   markBonus        - bonus added per kill (small, not the full HL amount)
 catalog.difficulties =
 {
     -- Stat-mod scaling rebalance (2026-05): HP gets a SLIGHT bump per
-    -- tier (waves shouldn't last forever — pile-on tempo is the point),
+    -- tier (waves shouldn't last forever - pile-on tempo is the point),
     -- but the offensive package gets a SIGNIFICANT one. ACC bumps to
     -- guarantee the mob lands swings on geared L99 players, ATT bumps
     -- to make those landed hits hurt, and HASTE / DOUBLE_ATTACK /
@@ -66,7 +72,7 @@ catalog.difficulties =
         waveDelay       = 20,
         minLevel        = 125,
         maxLevel        = 125,
-        completionBonus = 5,
+        completionBonus = 50,
         markBonus       = 5,
         hpBoost         = 4.0,   -- bumped from 1.5 (2026-05-30) -- Easy fights were ending in seconds.
         mods =
@@ -87,6 +93,9 @@ catalog.difficulties =
             { groupId = 11401, name = 'Stray Mary' },
             { groupId = 11402, name = 'Dune Widow' },
             { groupId = 11403, name = 'Capricornus' },
+            { groupId = 11416, name = 'Leaping Lizzy' },
+            { groupId = 11417, name = 'Tom Tit Tat' },
+            { groupId = 11418, name = 'Aquarius' },
         },
     },
 
@@ -98,7 +107,7 @@ catalog.difficulties =
         waveDelay       = 25,
         minLevel        = 150,
         maxLevel        = 150,
-        completionBonus = 10,
+        completionBonus = 200,
         markBonus       = 15,
         hpBoost         = 6.0,   -- bumped from 2.0 (2026-05-30) -- mid-tier should feel meaningful, not paper.
         mods =
@@ -120,6 +129,9 @@ catalog.difficulties =
             { groupId = 11405, name = 'Hakutaku' },
             { groupId = 11406, name = 'Steam Cleaner' },
             { groupId = 11407, name = 'Faust' },
+            { groupId = 11419, name = 'Serket' },
+            { groupId = 11420, name = 'Simurgh' },
+            { groupId = 11421, name = 'Roc' },
         },
     },
 
@@ -131,7 +143,7 @@ catalog.difficulties =
         waveDelay       = 25,
         minLevel        = 175,
         maxLevel        = 175,
-        completionBonus = 20,
+        completionBonus = 800,
         markBonus       = 30,
         hpBoost         = 8.0,   -- bumped from 2.5 (2026-05-30) -- Hard tier deserves a real endurance check.
         mods =
@@ -153,14 +165,17 @@ catalog.difficulties =
             { groupId = 11409, name = 'Hydra' },
             { groupId = 11410, name = 'Khimaira' },
             { groupId = 11411, name = 'Tiamat' },
+            { groupId = 11422, name = 'Nidhogg' },
+            { groupId = 11423, name = 'King Behemoth' },
+            { groupId = 11424, name = 'Vrtra' },
         },
     },
 
     Insane =
     {
         -- Insane fights endgame gods (Kirin / AV / PW / Shinryu) in
-        -- pile-on waves. Previous tuning (3 waves × 1 mob) was actually
-        -- LESS work than Hard (5 × 2 = 10 kills) — geared L99 groups
+        -- pile-on waves. Previous tuning (3 waves x 1 mob) was actually
+        -- LESS work than Hard (5 x 2 = 10 kills) - geared L99 groups
         -- dropped the lone gods faster than the announcement cleared
         -- chat. New tuning is 5 waves of 3 simultaneous gods at level
         -- 200, with a tight 15s waveDelay so there's no breather
@@ -172,7 +187,7 @@ catalog.difficulties =
         -- only affects damage / acc / eva. L200 is the highest stat
         -- profile that's confirmed-hittable on this server; going
         -- higher risks accuracy/evasion outrunning L99 gear. If you
-        -- want more pain later, bump min/maxLevel to 215–225 in 5-pt
+        -- want more pain later, bump min/maxLevel to 215-225 in 5-pt
         -- steps and check whether the group can still land melee.
         wavesTotal      = 5,
         mobsPerWave     = 3,
@@ -180,8 +195,8 @@ catalog.difficulties =
         waveDelay       = 15,
         minLevel        = 200,
         maxLevel        = 200,
-        completionBonus = 40,
-        markBonus       = 250,
+        completionBonus = 3000,
+        markBonus       = 70,
         hpBoost         = 12.0,  -- bumped from 3.0 (2026-05-30) -- gods should feel like gods, not paper waves.
         mods =
         {
@@ -208,19 +223,65 @@ catalog.difficulties =
             { groupId = 11413, name = 'Ouryu' },
             { groupId = 11414, name = 'Byakko' },
             { groupId = 11415, name = 'Suzaku' },
+            { groupId = 11425, name = 'Kirin' },
+            { groupId = 11426, name = 'Absolute Virtue' },
+            { groupId = 11427, name = 'Shinryu' },
+        },
+    },
+
+    Nightmare =
+    {
+        -- Beyond Insane: 7 waves of 4 simultaneous supreme gods at level 225.
+        -- Designed for full geared parties with deep Prestige investment.
+        -- 28 total kills. waveDelay is 10s -- barely enough to breathe.
+        wavesTotal      = 7,
+        mobsPerWave     = 4,
+        graceDelay      = 10,
+        waveDelay       = 10,
+        minLevel        = 225,
+        maxLevel        = 225,
+        completionBonus = 10000,
+        markBonus       = 130,
+        hpBoost         = 20.0,
+        mods =
+        {
+            [xi.mod.ATT]           = 15000,
+            [xi.mod.ACC]           = 2500,
+            [xi.mod.STR]           = 700,
+            [xi.mod.DEX]           = 700,
+            [xi.mod.HASTE_GEAR]    = 256,
+            [xi.mod.DOUBLE_ATTACK] = 30,
+            [xi.mod.TRIPLE_ATTACK] = 18,
+            [xi.mod.QUAD_ATTACK]   = 5,
+        },
+        mobs =
+        {
+            -- Nightmare pulls from the combined pool of ultimate FFXI gods --
+            -- Kirin, Absolute Virtue, Pandemonium Warden, Shinryu.
+            -- Four different divine models per wave pile-on.
+            { groupId = 11425, name = 'Kirin' },
+            { groupId = 11426, name = 'Absolute Virtue' },
+            { groupId = 11428, name = 'Pandemonium Warden' },
+            { groupId = 11427, name = 'Shinryu' },
         },
     },
 }
 
 -- Order the difficulties appear in the menu (Lua tables aren't ordered).
-catalog.difficultyOrder = { 'Easy', 'Normal', 'Hard', 'Insane' }
+catalog.difficultyOrder = { 'Easy', 'Normal', 'Hard', 'Insane', 'Nightmare' }
 
 -- Spawn ring radius around the player. Mobs appear at this distance and
 -- random angles so they don't all stack on top of each other.
 catalog.spawnRing =
 {
-    minRadius = 6.0,
-    maxRadius = 9.0,
+    minRadius = 5.0,
+    maxRadius = 8.0,
 }
+
+-- Seconds between each mob spawn within a single wave.
+-- 0 = all mobs spawn simultaneously (original behaviour).
+-- 30 = first mob spawns immediately, second at t+30s, third at t+60s, etc.
+-- Players get a chat notification when each new mob arrives.
+catalog.spawnStagger = 30
 
 return catalog

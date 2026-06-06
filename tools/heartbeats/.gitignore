@@ -1,0 +1,6 @@
+# Runtime heartbeat files written by background jobs (db_backup, AH market
+# maker, Discord bots) via tools/_heartbeat.py. They record each job's last
+# successful pass so the docs status page can flag a silently-dead job.
+# Regenerated continuously; never commit.
+*.json
+*.json.tmp

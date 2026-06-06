@@ -1,0 +1,2790 @@
+[
+  {
+    "itemId": 20542,
+    "shortName": "gnafrons_adargas",
+    "kind": "weapon",
+    "ilevel": 109,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Gnafrons_Adargas",
+      "https://www.bg-wiki.com/ffxi/Gnafrons_Adargas_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Gnafrons_Adargas_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Gnafrons_Adargas_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Gnafrons%27s_Adargas"
+    ]
+  },
+  {
+    "itemId": 20655,
+    "shortName": "archdukes_sword",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Archdukes_Sword",
+      "https://www.bg-wiki.com/ffxi/Archdukes_Sword_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Archdukes_Sword_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Archdukes_Sword_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Archdukes%27s_Sword"
+    ]
+  },
+  {
+    "itemId": 20750,
+    "shortName": "lexeme_blade",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Lexeme_Blade",
+      "https://www.bg-wiki.com/ffxi/Lexeme_Blade_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Lexeme_Blade_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Lexeme_Blade_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Lexeme%27s_Blade"
+    ]
+  },
+  {
+    "itemId": 20751,
+    "shortName": "lexeme_blade",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Lexeme_Blade",
+      "https://www.bg-wiki.com/ffxi/Lexeme_Blade_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Lexeme_Blade_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Lexeme_Blade_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Lexeme%27s_Blade"
+    ]
+  },
+  {
+    "itemId": 20752,
+    "shortName": "lexeme_blade",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Lexeme_Blade",
+      "https://www.bg-wiki.com/ffxi/Lexeme_Blade_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Lexeme_Blade_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Lexeme_Blade_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Lexeme%27s_Blade"
+    ]
+  },
+  {
+    "itemId": 21070,
+    "shortName": "idris",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Idris",
+      "https://www.bg-wiki.com/ffxi/Idris_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Idris_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Idris_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21080,
+    "shortName": "idris",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Idris",
+      "https://www.bg-wiki.com/ffxi/Idris_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Idris_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Idris_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21124,
+    "shortName": "dowsers_wand",
+    "kind": "weapon",
+    "ilevel": 109,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Dowsers_Wand",
+      "https://www.bg-wiki.com/ffxi/Dowsers_Wand_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Dowsers_Wand_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Dowsers_Wand_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Dowsers%27s_Wand"
+    ]
+  },
+  {
+    "itemId": 21199,
+    "shortName": "yaskomos_pole",
+    "kind": "weapon",
+    "ilevel": 113,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Yaskomos_Pole",
+      "https://www.bg-wiki.com/ffxi/Yaskomos_Pole_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Yaskomos_Pole_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Yaskomos_Pole_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Yaskomos%27s_Pole"
+    ]
+  },
+  {
+    "itemId": 21303,
+    "shortName": "rakaznar_arrow",
+    "kind": "weapon",
+    "ilevel": 115,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Rakaznar_Arrow",
+      "https://www.bg-wiki.com/ffxi/Rakaznar_Arrow_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Rakaznar_Arrow_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Rakaznar_Arrow_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Rakaznar%27s_Arrow"
+    ]
+  },
+  {
+    "itemId": 21317,
+    "shortName": "rakaznar_bolt",
+    "kind": "weapon",
+    "ilevel": 115,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Rakaznar_Bolt",
+      "https://www.bg-wiki.com/ffxi/Rakaznar_Bolt_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Rakaznar_Bolt_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Rakaznar_Bolt_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Rakaznar%27s_Bolt"
+    ]
+  },
+  {
+    "itemId": 21332,
+    "shortName": "rakaznar_bullet",
+    "kind": "weapon",
+    "ilevel": 115,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Rakaznar_Bullet",
+      "https://www.bg-wiki.com/ffxi/Rakaznar_Bullet_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Rakaznar_Bullet_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Rakaznar_Bullet_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Rakaznar%27s_Bullet"
+    ]
+  },
+  {
+    "itemId": 21541,
+    "shortName": "premium_hearts",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Premium_Hearts",
+      "https://www.bg-wiki.com/ffxi/Premium_Hearts_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Premium_Hearts_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Premium_Hearts_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Premium%27s_Hearts"
+    ]
+  },
+  {
+    "itemId": 21602,
+    "shortName": "onion_sword_iii",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Onion_Sword_Iii",
+      "https://www.bg-wiki.com/ffxi/Onion_Sword_Iii_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Onion_Sword_Iii_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Onion_Sword_Iii_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Onion%27s_Sword_Iii"
+    ]
+  },
+  {
+    "itemId": 21603,
+    "shortName": "save_the_queen_iii",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Save_The_Queen_Iii",
+      "https://www.bg-wiki.com/ffxi/Save_The_Queen_Iii_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Save_The_Queen_Iii_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Save_The_Queen_Iii_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Save%27s_The_Queen_Iii"
+    ]
+  },
+  {
+    "itemId": 21641,
+    "shortName": "save_the_queen_iii",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Save_The_Queen_Iii",
+      "https://www.bg-wiki.com/ffxi/Save_The_Queen_Iii_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Save_The_Queen_Iii_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Save_The_Queen_Iii_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Save%27s_The_Queen_Iii"
+    ]
+  },
+  {
+    "itemId": 21643,
+    "shortName": "caliburnus",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Caliburnus",
+      "https://www.bg-wiki.com/ffxi/Caliburnus_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Caliburnus_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Caliburnus_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21644,
+    "shortName": "caliburnus",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Caliburnus",
+      "https://www.bg-wiki.com/ffxi/Caliburnus_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Caliburnus_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Caliburnus_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21645,
+    "shortName": "caliburnus",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Caliburnus",
+      "https://www.bg-wiki.com/ffxi/Caliburnus_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Caliburnus_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Caliburnus_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21646,
+    "shortName": "caliburnus",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Caliburnus",
+      "https://www.bg-wiki.com/ffxi/Caliburnus_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Caliburnus_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Caliburnus_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21649,
+    "shortName": "helheim",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Helheim",
+      "https://www.bg-wiki.com/ffxi/Helheim_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Helheim_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Helheim_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21651,
+    "shortName": "helheim",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Helheim",
+      "https://www.bg-wiki.com/ffxi/Helheim_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Helheim_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Helheim_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21652,
+    "shortName": "helheim",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Helheim",
+      "https://www.bg-wiki.com/ffxi/Helheim_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Helheim_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Helheim_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21653,
+    "shortName": "helheim",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Helheim",
+      "https://www.bg-wiki.com/ffxi/Helheim_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Helheim_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Helheim_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21675,
+    "shortName": "agwus_claymore",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Agwus_Claymore",
+      "https://www.bg-wiki.com/ffxi/Agwus_Claymore_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Agwus_Claymore_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Agwus_Claymore_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Agwus%27s_Claymore"
+    ]
+  },
+  {
+    "itemId": 21676,
+    "shortName": "brave_blade_iii",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Brave_Blade_Iii",
+      "https://www.bg-wiki.com/ffxi/Brave_Blade_Iii_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Brave_Blade_Iii_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Brave_Blade_Iii_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Brave%27s_Blade_Iii"
+    ]
+  },
+  {
+    "itemId": 21677,
+    "shortName": "brave_blade_iii",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Brave_Blade_Iii",
+      "https://www.bg-wiki.com/ffxi/Brave_Blade_Iii_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Brave_Blade_Iii_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Brave_Blade_Iii_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Brave%27s_Blade_Iii"
+    ]
+  },
+  {
+    "itemId": 21723,
+    "shortName": "ikengas_axe",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Ikengas_Axe",
+      "https://www.bg-wiki.com/ffxi/Ikengas_Axe_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Ikengas_Axe_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Ikengas_Axe_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Ikengas%27s_Axe"
+    ]
+  },
+  {
+    "itemId": 21724,
+    "shortName": "agwus_axe",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Agwus_Axe",
+      "https://www.bg-wiki.com/ffxi/Agwus_Axe_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Agwus_Axe_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Agwus_Axe_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Agwus%27s_Axe"
+    ]
+  },
+  {
+    "itemId": 21727,
+    "shortName": "spalirisos",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Spalirisos",
+      "https://www.bg-wiki.com/ffxi/Spalirisos_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Spalirisos_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Spalirisos_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21728,
+    "shortName": "spalirisos",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Spalirisos",
+      "https://www.bg-wiki.com/ffxi/Spalirisos_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Spalirisos_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Spalirisos_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21729,
+    "shortName": "spalirisos",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Spalirisos",
+      "https://www.bg-wiki.com/ffxi/Spalirisos_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Spalirisos_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Spalirisos_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21730,
+    "shortName": "spalirisos",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Spalirisos",
+      "https://www.bg-wiki.com/ffxi/Spalirisos_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Spalirisos_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Spalirisos_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21780,
+    "shortName": "bunzis_chopper",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Bunzis_Chopper",
+      "https://www.bg-wiki.com/ffxi/Bunzis_Chopper_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Bunzis_Chopper_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Bunzis_Chopper_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Bunzis%27s_Chopper"
+    ]
+  },
+  {
+    "itemId": 21782,
+    "shortName": "laphria",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Laphria",
+      "https://www.bg-wiki.com/ffxi/Laphria_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Laphria_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Laphria_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21783,
+    "shortName": "laphria",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Laphria",
+      "https://www.bg-wiki.com/ffxi/Laphria_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Laphria_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Laphria_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21784,
+    "shortName": "laphria",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Laphria",
+      "https://www.bg-wiki.com/ffxi/Laphria_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Laphria_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Laphria_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21785,
+    "shortName": "laphria",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Laphria",
+      "https://www.bg-wiki.com/ffxi/Laphria_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Laphria_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Laphria_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21834,
+    "shortName": "foenaria",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Foenaria",
+      "https://www.bg-wiki.com/ffxi/Foenaria_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Foenaria_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Foenaria_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21835,
+    "shortName": "foenaria",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Foenaria",
+      "https://www.bg-wiki.com/ffxi/Foenaria_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Foenaria_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Foenaria_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21836,
+    "shortName": "foenaria",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Foenaria",
+      "https://www.bg-wiki.com/ffxi/Foenaria_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Foenaria_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Foenaria_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21837,
+    "shortName": "foenaria",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Foenaria",
+      "https://www.bg-wiki.com/ffxi/Foenaria_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Foenaria_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Foenaria_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21884,
+    "shortName": "ikengas_lance",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Ikengas_Lance",
+      "https://www.bg-wiki.com/ffxi/Ikengas_Lance_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Ikengas_Lance_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Ikengas_Lance_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Ikengas%27s_Lance"
+    ]
+  },
+  {
+    "itemId": 21885,
+    "shortName": "hebos_spear",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Hebos_Spear",
+      "https://www.bg-wiki.com/ffxi/Hebos_Spear_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Hebos_Spear_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Hebos_Spear_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Hebos%27s_Spear"
+    ]
+  },
+  {
+    "itemId": 21888,
+    "shortName": "gae_buide",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Gae_Buide",
+      "https://www.bg-wiki.com/ffxi/Gae_Buide_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Gae_Buide_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Gae_Buide_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Gae%27s_Buide"
+    ]
+  },
+  {
+    "itemId": 21889,
+    "shortName": "gae_buide",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Gae_Buide",
+      "https://www.bg-wiki.com/ffxi/Gae_Buide_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Gae_Buide_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Gae_Buide_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Gae%27s_Buide"
+    ]
+  },
+  {
+    "itemId": 21890,
+    "shortName": "gae_buide",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Gae_Buide",
+      "https://www.bg-wiki.com/ffxi/Gae_Buide_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Gae_Buide_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Gae_Buide_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Gae%27s_Buide"
+    ]
+  },
+  {
+    "itemId": 21891,
+    "shortName": "gae_buide",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Gae_Buide",
+      "https://www.bg-wiki.com/ffxi/Gae_Buide_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Gae_Buide_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Gae_Buide_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Gae%27s_Buide"
+    ]
+  },
+  {
+    "itemId": 21893,
+    "shortName": "hebos_spear",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Hebos_Spear",
+      "https://www.bg-wiki.com/ffxi/Hebos_Spear_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Hebos_Spear_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Hebos_Spear_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Hebos%27s_Spear"
+    ]
+  },
+  {
+    "itemId": 21929,
+    "shortName": "dokoku",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Dokoku",
+      "https://www.bg-wiki.com/ffxi/Dokoku_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Dokoku_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Dokoku_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21930,
+    "shortName": "dokoku",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Dokoku",
+      "https://www.bg-wiki.com/ffxi/Dokoku_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Dokoku_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Dokoku_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21931,
+    "shortName": "dokoku",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Dokoku",
+      "https://www.bg-wiki.com/ffxi/Dokoku_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Dokoku_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Dokoku_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21932,
+    "shortName": "dokoku",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Dokoku",
+      "https://www.bg-wiki.com/ffxi/Dokoku_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Dokoku_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Dokoku_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21953,
+    "shortName": "mutsu-no-kami_yoshiyuki",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Mutsu-no-kami_Yoshiyuki",
+      "https://www.bg-wiki.com/ffxi/Mutsu-no-kami_Yoshiyuki_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Mutsu-no-kami_Yoshiyuki_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Mutsu-no-kami_Yoshiyuki_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Mutsu-no-kami%27s_Yoshiyuki"
+    ]
+  },
+  {
+    "itemId": 21981,
+    "shortName": "mutsu-no-kami_yoshiyuki",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Mutsu-no-kami_Yoshiyuki",
+      "https://www.bg-wiki.com/ffxi/Mutsu-no-kami_Yoshiyuki_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Mutsu-no-kami_Yoshiyuki_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Mutsu-no-kami_Yoshiyuki_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Mutsu-no-kami%27s_Yoshiyuki"
+    ]
+  },
+  {
+    "itemId": 21983,
+    "shortName": "kusanagi-no-tsurugi",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi",
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21984,
+    "shortName": "kusanagi-no-tsurugi",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi",
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21985,
+    "shortName": "kusanagi-no-tsurugi",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi",
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21986,
+    "shortName": "kusanagi-no-tsurugi",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi",
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Kusanagi-no-tsurugi_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 21991,
+    "shortName": "wizards_rod",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Wizards_Rod",
+      "https://www.bg-wiki.com/ffxi/Wizards_Rod_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Wizards_Rod_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Wizards_Rod_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Wizards%27s_Rod"
+    ]
+  },
+  {
+    "itemId": 21998,
+    "shortName": "lorg_mor",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor",
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Lorg%27s_Mor"
+    ]
+  },
+  {
+    "itemId": 22000,
+    "shortName": "lorg_mor",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor",
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Lorg%27s_Mor"
+    ]
+  },
+  {
+    "itemId": 22001,
+    "shortName": "lorg_mor",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor",
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Lorg%27s_Mor"
+    ]
+  },
+  {
+    "itemId": 22002,
+    "shortName": "lorg_mor",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor",
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Lorg_Mor_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Lorg%27s_Mor"
+    ]
+  },
+  {
+    "itemId": 22041,
+    "shortName": "bunzis_rod",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Bunzis_Rod",
+      "https://www.bg-wiki.com/ffxi/Bunzis_Rod_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Bunzis_Rod_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Bunzis_Rod_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Bunzis%27s_Rod"
+    ]
+  },
+  {
+    "itemId": 22100,
+    "shortName": "mpacas_staff",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Mpacas_Staff",
+      "https://www.bg-wiki.com/ffxi/Mpacas_Staff_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Mpacas_Staff_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Mpacas_Staff_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Mpacas%27s_Staff"
+    ]
+  },
+  {
+    "itemId": 22101,
+    "shortName": "pandits_staff",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pandits_Staff",
+      "https://www.bg-wiki.com/ffxi/Pandits_Staff_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pandits_Staff_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pandits_Staff_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pandits%27s_Staff"
+    ]
+  },
+  {
+    "itemId": 22103,
+    "shortName": "opashoro",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Opashoro",
+      "https://www.bg-wiki.com/ffxi/Opashoro_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Opashoro_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Opashoro_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 22104,
+    "shortName": "opashoro",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Opashoro",
+      "https://www.bg-wiki.com/ffxi/Opashoro_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Opashoro_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Opashoro_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 22105,
+    "shortName": "opashoro",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Opashoro",
+      "https://www.bg-wiki.com/ffxi/Opashoro_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Opashoro_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Opashoro_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 22106,
+    "shortName": "opashoro",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Opashoro",
+      "https://www.bg-wiki.com/ffxi/Opashoro_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Opashoro_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Opashoro_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 22145,
+    "shortName": "artemiss_bow_+2",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Artemiss_Bow_%2B2",
+      "https://www.bg-wiki.com/ffxi/Artemiss_Bow_%2B2_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Artemiss_Bow_%2B2_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Artemiss_Bow_%2B2_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Artemiss%27s_Bow_+2"
+    ]
+  },
+  {
+    "itemId": 22150,
+    "shortName": "gletis_crossbow",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Gletis_Crossbow",
+      "https://www.bg-wiki.com/ffxi/Gletis_Crossbow_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Gletis_Crossbow_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Gletis_Crossbow_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Gletis%27s_Crossbow"
+    ]
+  },
+  {
+    "itemId": 22151,
+    "shortName": "mpacas_bow",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Mpacas_Bow",
+      "https://www.bg-wiki.com/ffxi/Mpacas_Bow_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Mpacas_Bow_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Mpacas_Bow_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Mpacas%27s_Bow"
+    ]
+  },
+  {
+    "itemId": 22156,
+    "shortName": "pinaka",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pinaka",
+      "https://www.bg-wiki.com/ffxi/Pinaka_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pinaka_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pinaka_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 22157,
+    "shortName": "pinaka",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pinaka",
+      "https://www.bg-wiki.com/ffxi/Pinaka_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pinaka_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pinaka_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 22158,
+    "shortName": "pinaka",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pinaka",
+      "https://www.bg-wiki.com/ffxi/Pinaka_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pinaka_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pinaka_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 22160,
+    "shortName": "earp",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Earp",
+      "https://www.bg-wiki.com/ffxi/Earp_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Earp_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Earp_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 22161,
+    "shortName": "earp",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Earp",
+      "https://www.bg-wiki.com/ffxi/Earp_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Earp_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Earp_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 22162,
+    "shortName": "earp",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Earp",
+      "https://www.bg-wiki.com/ffxi/Earp_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Earp_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Earp_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 22163,
+    "shortName": "pinaka",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pinaka",
+      "https://www.bg-wiki.com/ffxi/Pinaka_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pinaka_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pinaka_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 22164,
+    "shortName": "earp",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Earp",
+      "https://www.bg-wiki.com/ffxi/Earp_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Earp_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Earp_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 22168,
+    "shortName": "pandits_staff",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pandits_Staff",
+      "https://www.bg-wiki.com/ffxi/Pandits_Staff_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pandits_Staff_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pandits_Staff_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pandits%27s_Staff"
+    ]
+  },
+  {
+    "itemId": 22169,
+    "shortName": "artemiss_bow_+2",
+    "kind": "weapon",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Artemiss_Bow_%2B2",
+      "https://www.bg-wiki.com/ffxi/Artemiss_Bow_%2B2_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Artemiss_Bow_%2B2_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Artemiss_Bow_%2B2_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Artemiss%27s_Bow_+2"
+    ]
+  },
+  {
+    "itemId": 23777,
+    "shortName": "gletis_breeches",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Gletis_Breeches",
+      "https://www.bg-wiki.com/ffxi/Gletis_Breeches_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Gletis_Breeches_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Gletis_Breeches_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Gletis%27s_Breeches"
+    ]
+  },
+  {
+    "itemId": 23861,
+    "shortName": "suit_of_adamantite_armor",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Suit_Of_Adamantite_Armor",
+      "https://www.bg-wiki.com/ffxi/Suit_Of_Adamantite_Armor_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Suit_Of_Adamantite_Armor_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Suit_Of_Adamantite_Armor_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Suit%27s_Of_Adamantite_Armor"
+    ]
+  },
+  {
+    "itemId": 23895,
+    "shortName": "pummelers_mask_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pummelers_Mask_%2B4",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Mask_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Mask_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Mask_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pummelers%27s_Mask_+4"
+    ]
+  },
+  {
+    "itemId": 23896,
+    "shortName": "anchorites_crown_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Anchorites_Crown_%2B4",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Crown_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Crown_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Crown_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Anchorites%27s_Crown_+4"
+    ]
+  },
+  {
+    "itemId": 23898,
+    "shortName": "spaekonas_petasos_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Petasos_%2B4",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Petasos_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Petasos_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Petasos_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas%27s_Petasos_+4"
+    ]
+  },
+  {
+    "itemId": 23900,
+    "shortName": "pillagers_bonnet_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pillagers_Bonnet_%2B4",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Bonnet_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Bonnet_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Bonnet_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pillagers%27s_Bonnet_+4"
+    ]
+  },
+  {
+    "itemId": 23909,
+    "shortName": "convokers_horn_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Convokers_Horn_%2B4",
+      "https://www.bg-wiki.com/ffxi/Convokers_Horn_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Convokers_Horn_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Convokers_Horn_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Convokers%27s_Horn_+4"
+    ]
+  },
+  {
+    "itemId": 23910,
+    "shortName": "assimilators_keffiyeh_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Assimilators_Keffiyeh_%2B4",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Keffiyeh_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Keffiyeh_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Keffiyeh_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Assimilators%27s_Keffiyeh_+4"
+    ]
+  },
+  {
+    "itemId": 23915,
+    "shortName": "academics_mortarboard_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Academics_Mortarboard_%2B4",
+      "https://www.bg-wiki.com/ffxi/Academics_Mortarboard_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Academics_Mortarboard_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Academics_Mortarboard_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Academics%27s_Mortarboard_+4"
+    ]
+  },
+  {
+    "itemId": 23919,
+    "shortName": "hesychasts_crown_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Crown_%2B4",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Crown_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Crown_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Crown_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts%27s_Crown_+4"
+    ]
+  },
+  {
+    "itemId": 23921,
+    "shortName": "archmages_petasos_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Archmages_Petasos_%2B4",
+      "https://www.bg-wiki.com/ffxi/Archmages_Petasos_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Archmages_Petasos_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Archmages_Petasos_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Archmages%27s_Petasos_+4"
+    ]
+  },
+  {
+    "itemId": 23923,
+    "shortName": "plunderers_bonnet_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Plunderers_Bonnet_%2B4",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Bonnet_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Bonnet_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Bonnet_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Plunderers%27s_Bonnet_+4"
+    ]
+  },
+  {
+    "itemId": 23925,
+    "shortName": "fallens_burgeonet_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Fallens_Burgeonet_%2B4",
+      "https://www.bg-wiki.com/ffxi/Fallens_Burgeonet_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Fallens_Burgeonet_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Fallens_Burgeonet_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Fallens%27s_Burgeonet_+4"
+    ]
+  },
+  {
+    "itemId": 23940,
+    "shortName": "pummelers_lorica_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pummelers_Lorica_%2B4",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Lorica_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Lorica_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Lorica_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pummelers%27s_Lorica_+4"
+    ]
+  },
+  {
+    "itemId": 23941,
+    "shortName": "anchorites_cyclas_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Anchorites_Cyclas_%2B4",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Cyclas_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Cyclas_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Cyclas_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Anchorites%27s_Cyclas_+4"
+    ]
+  },
+  {
+    "itemId": 23943,
+    "shortName": "spaekonas_coat_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Coat_%2B4",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Coat_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Coat_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Coat_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas%27s_Coat_+4"
+    ]
+  },
+  {
+    "itemId": 23945,
+    "shortName": "pillagers_vest_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pillagers_Vest_%2B4",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Vest_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Vest_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Vest_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pillagers%27s_Vest_+4"
+    ]
+  },
+  {
+    "itemId": 23955,
+    "shortName": "assimilators_jubbah_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Assimilators_Jubbah_%2B4",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Jubbah_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Jubbah_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Jubbah_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Assimilators%27s_Jubbah_+4"
+    ]
+  },
+  {
+    "itemId": 23960,
+    "shortName": "academics_gown_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Academics_Gown_%2B4",
+      "https://www.bg-wiki.com/ffxi/Academics_Gown_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Academics_Gown_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Academics_Gown_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Academics%27s_Gown_+4"
+    ]
+  },
+  {
+    "itemId": 23964,
+    "shortName": "hesychasts_cyclas_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Cyclas_%2B4",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Cyclas_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Cyclas_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Cyclas_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts%27s_Cyclas_+4"
+    ]
+  },
+  {
+    "itemId": 23966,
+    "shortName": "archmages_coat_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Archmages_Coat_%2B4",
+      "https://www.bg-wiki.com/ffxi/Archmages_Coat_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Archmages_Coat_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Archmages_Coat_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Archmages%27s_Coat_+4"
+    ]
+  },
+  {
+    "itemId": 23968,
+    "shortName": "plunderers_vest_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Plunderers_Vest_%2B4",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Vest_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Vest_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Vest_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Plunderers%27s_Vest_+4"
+    ]
+  },
+  {
+    "itemId": 23970,
+    "shortName": "fallens_cuirass_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Fallens_Cuirass_%2B4",
+      "https://www.bg-wiki.com/ffxi/Fallens_Cuirass_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Fallens_Cuirass_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Fallens_Cuirass_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Fallens%27s_Cuirass_+4"
+    ]
+  },
+  {
+    "itemId": 23985,
+    "shortName": "pummelers_mufflers_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pummelers_Mufflers_%2B4",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Mufflers_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Mufflers_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Mufflers_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pummelers%27s_Mufflers_+4"
+    ]
+  },
+  {
+    "itemId": 23986,
+    "shortName": "anchorites_gloves_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Anchorites_Gloves_%2B4",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Gloves_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Gloves_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Gloves_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Anchorites%27s_Gloves_+4"
+    ]
+  },
+  {
+    "itemId": 23988,
+    "shortName": "spaekonas_gloves",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Gloves",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Gloves_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Gloves_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Gloves_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas%27s_Gloves"
+    ]
+  },
+  {
+    "itemId": 23990,
+    "shortName": "pillagers_armlets_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pillagers_Armlets_%2B4",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Armlets_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Armlets_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Armlets_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pillagers%27s_Armlets_+4"
+    ]
+  },
+  {
+    "itemId": 23999,
+    "shortName": "convokers_bracers_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Convokers_Bracers_%2B4",
+      "https://www.bg-wiki.com/ffxi/Convokers_Bracers_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Convokers_Bracers_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Convokers_Bracers_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Convokers%27s_Bracers_+4"
+    ]
+  },
+  {
+    "itemId": 24000,
+    "shortName": "assimilators_bazubands_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Assimilators_Bazubands_%2B4",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Bazubands_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Bazubands_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Bazubands_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Assimilators%27s_Bazubands_+4"
+    ]
+  },
+  {
+    "itemId": 24001,
+    "shortName": "laksamanas_gants_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Laksamanas_Gants_%2B4",
+      "https://www.bg-wiki.com/ffxi/Laksamanas_Gants_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Laksamanas_Gants_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Laksamanas_Gants_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Laksamanas%27s_Gants_+4"
+    ]
+  },
+  {
+    "itemId": 24005,
+    "shortName": "academics_bracers_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Academics_Bracers_%2B4",
+      "https://www.bg-wiki.com/ffxi/Academics_Bracers_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Academics_Bracers_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Academics_Bracers_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Academics%27s_Bracers_+4"
+    ]
+  },
+  {
+    "itemId": 24009,
+    "shortName": "hesychasts_gloves_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Gloves_%2B4",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Gloves_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Gloves_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Gloves_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts%27s_Gloves_+4"
+    ]
+  },
+  {
+    "itemId": 24011,
+    "shortName": "archmages_gloves_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Archmages_Gloves_%2B4",
+      "https://www.bg-wiki.com/ffxi/Archmages_Gloves_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Archmages_Gloves_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Archmages_Gloves_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Archmages%27s_Gloves_+4"
+    ]
+  },
+  {
+    "itemId": 24013,
+    "shortName": "plunderers_armlets_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Plunderers_Armlets_%2B4",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Armlets_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Armlets_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Armlets_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Plunderers%27s_Armlets_+4"
+    ]
+  },
+  {
+    "itemId": 24015,
+    "shortName": "fallens_finger_gauntlets_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Fallens_Finger_Gauntlets_%2B4",
+      "https://www.bg-wiki.com/ffxi/Fallens_Finger_Gauntlets_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Fallens_Finger_Gauntlets_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Fallens_Finger_Gauntlets_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Fallens%27s_Finger_Gauntlets_+4"
+    ]
+  },
+  {
+    "itemId": 24030,
+    "shortName": "pummelers_cuisses_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pummelers_Cuisses_%2B4",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Cuisses_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Cuisses_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Cuisses_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pummelers%27s_Cuisses_+4"
+    ]
+  },
+  {
+    "itemId": 24031,
+    "shortName": "anchorites_hose_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Anchorites_Hose_%2B4",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Hose_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Hose_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Hose_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Anchorites%27s_Hose_+4"
+    ]
+  },
+  {
+    "itemId": 24032,
+    "shortName": "theophany_pantaloons_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Theophany_Pantaloons_%2B4",
+      "https://www.bg-wiki.com/ffxi/Theophany_Pantaloons_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Theophany_Pantaloons_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Theophany_Pantaloons_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Theophany%27s_Pantaloons_+4"
+    ]
+  },
+  {
+    "itemId": 24033,
+    "shortName": "spaekonas_tonban_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Tonban_%2B4",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Tonban_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Tonban_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Tonban_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas%27s_Tonban_+4"
+    ]
+  },
+  {
+    "itemId": 24035,
+    "shortName": "pillagers_culottes_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pillagers_Culottes_%2B4",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Culottes_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Culottes_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Culottes_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pillagers%27s_Culottes_+4"
+    ]
+  },
+  {
+    "itemId": 24044,
+    "shortName": "convokers_spats_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Convokers_Spats_%2B4",
+      "https://www.bg-wiki.com/ffxi/Convokers_Spats_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Convokers_Spats_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Convokers_Spats_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Convokers%27s_Spats_+4"
+    ]
+  },
+  {
+    "itemId": 24045,
+    "shortName": "assimilators_shalwar_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Assimilators_Shalwar_%2B4",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Shalwar_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Shalwar_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Shalwar_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Assimilators%27s_Shalwar_+4"
+    ]
+  },
+  {
+    "itemId": 24046,
+    "shortName": "laksamanas_trews_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Laksamanas_Trews_%2B4",
+      "https://www.bg-wiki.com/ffxi/Laksamanas_Trews_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Laksamanas_Trews_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Laksamanas_Trews_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Laksamanas%27s_Trews_+4"
+    ]
+  },
+  {
+    "itemId": 24050,
+    "shortName": "academics_pants_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Academics_Pants_%2B4",
+      "https://www.bg-wiki.com/ffxi/Academics_Pants_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Academics_Pants_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Academics_Pants_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Academics%27s_Pants_+4"
+    ]
+  },
+  {
+    "itemId": 24054,
+    "shortName": "hesychasts_hose_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Hose_%2B4",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Hose_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Hose_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Hose_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts%27s_Hose_+4"
+    ]
+  },
+  {
+    "itemId": 24056,
+    "shortName": "archmages_tonban_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Archmages_Tonban_%2B4",
+      "https://www.bg-wiki.com/ffxi/Archmages_Tonban_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Archmages_Tonban_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Archmages_Tonban_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Archmages%27s_Tonban_+4"
+    ]
+  },
+  {
+    "itemId": 24058,
+    "shortName": "plunderers_culottes_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Plunderers_Culottes_%2B4",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Culottes_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Culottes_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Culottes_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Plunderers%27s_Culottes_+4"
+    ]
+  },
+  {
+    "itemId": 24060,
+    "shortName": "fallens_flanchard_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Fallens_Flanchard_%2B4",
+      "https://www.bg-wiki.com/ffxi/Fallens_Flanchard_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Fallens_Flanchard_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Fallens_Flanchard_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Fallens%27s_Flanchard_+4"
+    ]
+  },
+  {
+    "itemId": 24063,
+    "shortName": "arcadian_braccae_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Arcadian_Braccae_%2B4",
+      "https://www.bg-wiki.com/ffxi/Arcadian_Braccae_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Arcadian_Braccae_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Arcadian_Braccae_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Arcadian%27s_Braccae_+4"
+    ]
+  },
+  {
+    "itemId": 24075,
+    "shortName": "pummelers_calligae_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pummelers_Calligae_%2B4",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Calligae_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Calligae_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pummelers_Calligae_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pummelers%27s_Calligae_+4"
+    ]
+  },
+  {
+    "itemId": 24076,
+    "shortName": "anchorites_gaiters_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Anchorites_Gaiters_%2B4",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Gaiters_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Gaiters_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Anchorites_Gaiters_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Anchorites%27s_Gaiters_+4"
+    ]
+  },
+  {
+    "itemId": 24078,
+    "shortName": "spaekonas_sabots_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Sabots_%2B4",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Sabots_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Sabots_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas_Sabots_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Spaekonas%27s_Sabots_+4"
+    ]
+  },
+  {
+    "itemId": 24080,
+    "shortName": "pillagers_poulaines_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pillagers_Poulaines_%2B4",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Poulaines_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Poulaines_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pillagers_Poulaines_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pillagers%27s_Poulaines_+4"
+    ]
+  },
+  {
+    "itemId": 24086,
+    "shortName": "wakido_sune-ate_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Wakido_Sune-ate_%2B4",
+      "https://www.bg-wiki.com/ffxi/Wakido_Sune-ate_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Wakido_Sune-ate_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Wakido_Sune-ate_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Wakido%27s_Sune-Ate_+4"
+    ]
+  },
+  {
+    "itemId": 24089,
+    "shortName": "convokers_pigaches_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Convokers_Pigaches_%2B4",
+      "https://www.bg-wiki.com/ffxi/Convokers_Pigaches_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Convokers_Pigaches_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Convokers_Pigaches_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Convokers%27s_Pigaches_+4"
+    ]
+  },
+  {
+    "itemId": 24090,
+    "shortName": "assimilators_charuqs_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Assimilators_Charuqs_%2B4",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Charuqs_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Charuqs_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Assimilators_Charuqs_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Assimilators%27s_Charuqs_+4"
+    ]
+  },
+  {
+    "itemId": 24095,
+    "shortName": "academics_loafers_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Academics_Loafers_%2B4",
+      "https://www.bg-wiki.com/ffxi/Academics_Loafers_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Academics_Loafers_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Academics_Loafers_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Academics%27s_Loafers_+4"
+    ]
+  },
+  {
+    "itemId": 24099,
+    "shortName": "hesychasts_gaiters_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Gaiters_%2B4",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Gaiters_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Gaiters_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts_Gaiters_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Hesychasts%27s_Gaiters_+4"
+    ]
+  },
+  {
+    "itemId": 24101,
+    "shortName": "archmages_sabots_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Archmages_Sabots_%2B4",
+      "https://www.bg-wiki.com/ffxi/Archmages_Sabots_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Archmages_Sabots_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Archmages_Sabots_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Archmages%27s_Sabots_+4"
+    ]
+  },
+  {
+    "itemId": 24103,
+    "shortName": "plunderers_poulaines_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Plunderers_Poulaines_%2B4",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Poulaines_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Poulaines_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Plunderers_Poulaines_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Plunderers%27s_Poulaines_+4"
+    ]
+  },
+  {
+    "itemId": 24105,
+    "shortName": "fallens_sollerets_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Fallens_Sollerets_%2B4",
+      "https://www.bg-wiki.com/ffxi/Fallens_Sollerets_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Fallens_Sollerets_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Fallens_Sollerets_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Fallens%27s_Sollerets_+4"
+    ]
+  },
+  {
+    "itemId": 24109,
+    "shortName": "sakonji_sune-ate_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sakonji_Sune-ate_%2B4",
+      "https://www.bg-wiki.com/ffxi/Sakonji_Sune-ate_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sakonji_Sune-ate_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sakonji_Sune-ate_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sakonji%27s_Sune-Ate_+4"
+    ]
+  },
+  {
+    "itemId": 24113,
+    "shortName": "luhlaza_charuqs_+4",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Luhlaza_Charuqs_%2B4",
+      "https://www.bg-wiki.com/ffxi/Luhlaza_Charuqs_%2B4_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Luhlaza_Charuqs_%2B4_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Luhlaza_Charuqs_%2B4_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Luhlaza%27s_Charuqs_+4"
+    ]
+  },
+  {
+    "itemId": 24192,
+    "shortName": "mercy_sune-ate",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Mercy_Sune-ate",
+      "https://www.bg-wiki.com/ffxi/Mercy_Sune-ate_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Mercy_Sune-ate_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Mercy_Sune-ate_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Mercy%27s_Sune-Ate"
+    ]
+  },
+  {
+    "itemId": 24193,
+    "shortName": "grace_sune-ate",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Grace_Sune-ate",
+      "https://www.bg-wiki.com/ffxi/Grace_Sune-ate_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Grace_Sune-ate_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Grace_Sune-ate_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Grace%27s_Sune-Ate"
+    ]
+  },
+  {
+    "itemId": 24194,
+    "shortName": "clemency_sune-ate",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Clemency_Sune-ate",
+      "https://www.bg-wiki.com/ffxi/Clemency_Sune-ate_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Clemency_Sune-ate_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Clemency_Sune-ate_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Clemency%27s_Sune-Ate"
+    ]
+  },
+  {
+    "itemId": 24283,
+    "shortName": "csm_gloves_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Csm_Gloves_%2B1",
+      "https://www.bg-wiki.com/ffxi/Csm_Gloves_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Csm_Gloves_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Csm_Gloves_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Csm%27s_Gloves_+1"
+    ]
+  },
+  {
+    "itemId": 24284,
+    "shortName": "csf_gloves_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Csf_Gloves_%2B1",
+      "https://www.bg-wiki.com/ffxi/Csf_Gloves_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Csf_Gloves_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Csf_Gloves_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Csf%27s_Gloves_+1"
+    ]
+  },
+  {
+    "itemId": 24285,
+    "shortName": "mg_gauntlets_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Mg_Gauntlets_%2B1",
+      "https://www.bg-wiki.com/ffxi/Mg_Gauntlets_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Mg_Gauntlets_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Mg_Gauntlets_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Mg%27s_Gauntlets_+1"
+    ]
+  },
+  {
+    "itemId": 24286,
+    "shortName": "mg_gloves_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Mg_Gloves_%2B1",
+      "https://www.bg-wiki.com/ffxi/Mg_Gloves_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Mg_Gloves_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Mg_Gloves_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Mg%27s_Gloves_+1"
+    ]
+  },
+  {
+    "itemId": 24287,
+    "shortName": "wn_mittens_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Wn_Mittens_%2B1",
+      "https://www.bg-wiki.com/ffxi/Wn_Mittens_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Wn_Mittens_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Wn_Mittens_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Wn%27s_Mittens_+1"
+    ]
+  },
+  {
+    "itemId": 24288,
+    "shortName": "sv_gauntlets_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sv_Gauntlets_%2B1",
+      "https://www.bg-wiki.com/ffxi/Sv_Gauntlets_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sv_Gauntlets_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sv_Gauntlets_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sv%27s_Gauntlets_+1"
+    ]
+  },
+  {
+    "itemId": 24289,
+    "shortName": "el_bracers_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/El_Bracers_%2B1",
+      "https://www.bg-wiki.com/ffxi/El_Bracers_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/El_Bracers_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/El_Bracers_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/El%27s_Bracers_+1"
+    ]
+  },
+  {
+    "itemId": 24297,
+    "shortName": "csm_boots_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Csm_Boots_%2B1",
+      "https://www.bg-wiki.com/ffxi/Csm_Boots_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Csm_Boots_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Csm_Boots_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Csm%27s_Boots_+1"
+    ]
+  },
+  {
+    "itemId": 24298,
+    "shortName": "csf_boots_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Csf_Boots_%2B1",
+      "https://www.bg-wiki.com/ffxi/Csf_Boots_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Csf_Boots_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Csf_Boots_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Csf%27s_Boots_+1"
+    ]
+  },
+  {
+    "itemId": 24299,
+    "shortName": "mgm_ledelsens_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Mgm_Ledelsens_%2B1",
+      "https://www.bg-wiki.com/ffxi/Mgm_Ledelsens_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Mgm_Ledelsens_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Mgm_Ledelsens_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Mgm%27s_Ledelsens_+1"
+    ]
+  },
+  {
+    "itemId": 24300,
+    "shortName": "mgf_ledelsens_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Mgf_Ledelsens_%2B1",
+      "https://www.bg-wiki.com/ffxi/Mgf_Ledelsens_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Mgf_Ledelsens_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Mgf_Ledelsens_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Mgf%27s_Ledelsens_+1"
+    ]
+  },
+  {
+    "itemId": 24301,
+    "shortName": "wn_clomps_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Wn_Clomps_%2B1",
+      "https://www.bg-wiki.com/ffxi/Wn_Clomps_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Wn_Clomps_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Wn_Clomps_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Wn%27s_Clomps_+1"
+    ]
+  },
+  {
+    "itemId": 24302,
+    "shortName": "sv_gaiters_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sv_Gaiters_%2B1",
+      "https://www.bg-wiki.com/ffxi/Sv_Gaiters_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sv_Gaiters_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sv_Gaiters_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sv%27s_Gaiters_+1"
+    ]
+  },
+  {
+    "itemId": 24303,
+    "shortName": "el_sandals_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/El_Sandals_%2B1",
+      "https://www.bg-wiki.com/ffxi/El_Sandals_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/El_Sandals_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/El_Sandals_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/El%27s_Sandals_+1"
+    ]
+  },
+  {
+    "itemId": 25659,
+    "shortName": "sulevias_mask",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Mask",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Mask_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Mask_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Mask_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Mask"
+    ]
+  },
+  {
+    "itemId": 25660,
+    "shortName": "sulevias_mask_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Mask_%2B1",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Mask_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Mask_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Mask_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Mask_+1"
+    ]
+  },
+  {
+    "itemId": 25731,
+    "shortName": "sayadios_kaftan",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sayadios_Kaftan",
+      "https://www.bg-wiki.com/ffxi/Sayadios_Kaftan_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sayadios_Kaftan_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sayadios_Kaftan_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sayadios%27s_Kaftan"
+    ]
+  },
+  {
+    "itemId": 25745,
+    "shortName": "sulevias_platemail",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Platemail",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Platemail_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Platemail_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Platemail_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Platemail"
+    ]
+  },
+  {
+    "itemId": 25746,
+    "shortName": "sulevias_platemail_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Platemail_%2B1",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Platemail_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Platemail_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Platemail_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Platemail_+1"
+    ]
+  },
+  {
+    "itemId": 25790,
+    "shortName": "sulevias_platemail_+2",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Platemail_%2B2",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Platemail_%2B2_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Platemail_%2B2_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Platemail_%2B2_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Platemail_+2"
+    ]
+  },
+  {
+    "itemId": 25796,
+    "shortName": "taliah_manteel_+2",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Taliah_Manteel_%2B2",
+      "https://www.bg-wiki.com/ffxi/Taliah_Manteel_%2B2_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Taliah_Manteel_%2B2_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Taliah_Manteel_%2B2_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Taliah%27s_Manteel_+2"
+    ]
+  },
+  {
+    "itemId": 25800,
+    "shortName": "sulevias_gauntlets",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Gauntlets",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Gauntlets_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Gauntlets_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Gauntlets_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Gauntlets"
+    ]
+  },
+  {
+    "itemId": 25801,
+    "shortName": "sulevias_gauntlets_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Gauntlets_%2B1",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Gauntlets_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Gauntlets_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Gauntlets_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Gauntlets_+1"
+    ]
+  },
+  {
+    "itemId": 25825,
+    "shortName": "regal_captains_gloves",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Regal_Captains_Gloves",
+      "https://www.bg-wiki.com/ffxi/Regal_Captains_Gloves_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Regal_Captains_Gloves_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Regal_Captains_Gloves_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Regal%27s_Captains_Gloves"
+    ]
+  },
+  {
+    "itemId": 25828,
+    "shortName": "sulevias_gauntlets_+2",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Gauntlets_%2B2",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Gauntlets_%2B2_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Gauntlets_%2B2_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Gauntlets_%2B2_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Gauntlets_+2"
+    ]
+  },
+  {
+    "itemId": 25834,
+    "shortName": "taliah_gages_+2",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Taliah_Gages_%2B2",
+      "https://www.bg-wiki.com/ffxi/Taliah_Gages_%2B2_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Taliah_Gages_%2B2_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Taliah_Gages_%2B2_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Taliah%27s_Gages_+2"
+    ]
+  },
+  {
+    "itemId": 25852,
+    "shortName": "darraigners_brais",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Darraigners_Brais",
+      "https://www.bg-wiki.com/ffxi/Darraigners_Brais_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Darraigners_Brais_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Darraigners_Brais_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Darraigners%27s_Brais"
+    ]
+  },
+  {
+    "itemId": 25858,
+    "shortName": "sulevias_cuisses",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Cuisses",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Cuisses_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Cuisses_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Cuisses_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Cuisses"
+    ]
+  },
+  {
+    "itemId": 25859,
+    "shortName": "sulevias_cuisses_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Cuisses_%2B1",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Cuisses_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Cuisses_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Cuisses_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Cuisses_+1"
+    ]
+  },
+  {
+    "itemId": 25879,
+    "shortName": "sulevias_cuisses_+2",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Cuisses_%2B2",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Cuisses_%2B2_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Cuisses_%2B2_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Cuisses_%2B2_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Cuisses_+2"
+    ]
+  },
+  {
+    "itemId": 25885,
+    "shortName": "taliah_seraweels_+2",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Taliah_Seraweels_%2B2",
+      "https://www.bg-wiki.com/ffxi/Taliah_Seraweels_%2B2_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Taliah_Seraweels_%2B2_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Taliah_Seraweels_%2B2_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Taliah%27s_Seraweels_+2"
+    ]
+  },
+  {
+    "itemId": 25923,
+    "shortName": "tatenashi_sune-ate",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Tatenashi_Sune-ate",
+      "https://www.bg-wiki.com/ffxi/Tatenashi_Sune-ate_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Tatenashi_Sune-ate_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Tatenashi_Sune-ate_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Tatenashi%27s_Sune-Ate"
+    ]
+  },
+  {
+    "itemId": 25924,
+    "shortName": "tatenashi_sune-ate_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Tatenashi_Sune-ate_%2B1",
+      "https://www.bg-wiki.com/ffxi/Tatenashi_Sune-ate_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Tatenashi_Sune-ate_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Tatenashi_Sune-ate_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Tatenashi%27s_Sune-Ate_+1"
+    ]
+  },
+  {
+    "itemId": 25925,
+    "shortName": "sulevias_leggings",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Leggings",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Leggings_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Leggings_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Leggings_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Leggings"
+    ]
+  },
+  {
+    "itemId": 25926,
+    "shortName": "sulevias_leggings_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Leggings_%2B1",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Leggings_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Leggings_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Leggings_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Leggings_+1"
+    ]
+  },
+  {
+    "itemId": 25929,
+    "shortName": "hizamaru_sune-ate",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Hizamaru_Sune-ate",
+      "https://www.bg-wiki.com/ffxi/Hizamaru_Sune-ate_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Hizamaru_Sune-ate_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Hizamaru_Sune-ate_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Hizamaru%27s_Sune-Ate"
+    ]
+  },
+  {
+    "itemId": 25930,
+    "shortName": "hizamaru_sune-ate_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Hizamaru_Sune-ate_%2B1",
+      "https://www.bg-wiki.com/ffxi/Hizamaru_Sune-ate_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Hizamaru_Sune-ate_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Hizamaru_Sune-ate_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Hizamaru%27s_Sune-Ate_+1"
+    ]
+  },
+  {
+    "itemId": 25946,
+    "shortName": "sulevias_leggings_+2",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Sulevias_Leggings_%2B2",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Leggings_%2B2_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Leggings_%2B2_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Sulevias_Leggings_%2B2_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Sulevias%27s_Leggings_+2"
+    ]
+  },
+  {
+    "itemId": 25952,
+    "shortName": "taliah_crackows_+2",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Taliah_Crackows_%2B2",
+      "https://www.bg-wiki.com/ffxi/Taliah_Crackows_%2B2_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Taliah_Crackows_%2B2_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Taliah_Crackows_%2B2_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Taliah%27s_Crackows_+2"
+    ]
+  },
+  {
+    "itemId": 25958,
+    "shortName": "kendatsuba_sune-ate",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Kendatsuba_Sune-ate",
+      "https://www.bg-wiki.com/ffxi/Kendatsuba_Sune-ate_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Kendatsuba_Sune-ate_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Kendatsuba_Sune-ate_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Kendatsuba%27s_Sune-Ate"
+    ]
+  },
+  {
+    "itemId": 26117,
+    "shortName": "crepuscular_earring",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Crepuscular_Earring",
+      "https://www.bg-wiki.com/ffxi/Crepuscular_Earring_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Crepuscular_Earring_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Crepuscular_Earring_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Crepuscular%27s_Earring"
+    ]
+  },
+  {
+    "itemId": 26417,
+    "shortName": "archdukes_shield",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Archdukes_Shield",
+      "https://www.bg-wiki.com/ffxi/Archdukes_Shield_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Archdukes_Shield_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Archdukes_Shield_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Archdukes%27s_Shield"
+    ]
+  },
+  {
+    "itemId": 26492,
+    "shortName": "duban",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Duban",
+      "https://www.bg-wiki.com/ffxi/Duban_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Duban_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Duban_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 26493,
+    "shortName": "duban",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Duban",
+      "https://www.bg-wiki.com/ffxi/Duban_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Duban_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Duban_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 26494,
+    "shortName": "duban",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Duban",
+      "https://www.bg-wiki.com/ffxi/Duban_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Duban_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Duban_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 26495,
+    "shortName": "duban",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Duban",
+      "https://www.bg-wiki.com/ffxi/Duban_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Duban_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Duban_(Level_119_III)"
+    ]
+  },
+  {
+    "itemId": 26696,
+    "shortName": "pixie_hairpin_+1",
+    "kind": "armor",
+    "ilevel": 118,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pixie_Hairpin_%2B1",
+      "https://www.bg-wiki.com/ffxi/Pixie_Hairpin_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pixie_Hairpin_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pixie_Hairpin_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pixie%27s_Hairpin_+1"
+    ]
+  },
+  {
+    "itemId": 26699,
+    "shortName": "theias_hairpin_+1",
+    "kind": "armor",
+    "ilevel": 118,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Theias_Hairpin_%2B1",
+      "https://www.bg-wiki.com/ffxi/Theias_Hairpin_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Theias_Hairpin_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Theias_Hairpin_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Theias%27s_Hairpin_+1"
+    ]
+  },
+  {
+    "itemId": 26709,
+    "shortName": "imperial_wing_hairpin",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Imperial_Wing_Hairpin",
+      "https://www.bg-wiki.com/ffxi/Imperial_Wing_Hairpin_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Imperial_Wing_Hairpin_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Imperial_Wing_Hairpin_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Imperial%27s_Wing_Hairpin"
+    ]
+  },
+  {
+    "itemId": 26726,
+    "shortName": "revealers_crown",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Revealers_Crown",
+      "https://www.bg-wiki.com/ffxi/Revealers_Crown_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Revealers_Crown_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Revealers_Crown_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Revealers%27s_Crown"
+    ]
+  },
+  {
+    "itemId": 26727,
+    "shortName": "revealers_crown_+1",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Revealers_Crown_%2B1",
+      "https://www.bg-wiki.com/ffxi/Revealers_Crown_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Revealers_Crown_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Revealers_Crown_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Revealers%27s_Crown_+1"
+    ]
+  },
+  {
+    "itemId": 26786,
+    "shortName": "alhazen_hat",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Alhazen_Hat",
+      "https://www.bg-wiki.com/ffxi/Alhazen_Hat_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Alhazen_Hat_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Alhazen_Hat_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Alhazen%27s_Hat"
+    ]
+  },
+  {
+    "itemId": 26795,
+    "shortName": "pursuers_beret",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pursuers_Beret",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Beret_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Beret_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Beret_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pursuers%27s_Beret"
+    ]
+  },
+  {
+    "itemId": 26951,
+    "shortName": "pursuers_doublet",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pursuers_Doublet",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Doublet_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Doublet_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Doublet_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pursuers%27s_Doublet"
+    ]
+  },
+  {
+    "itemId": 26958,
+    "shortName": "swellers_harness",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Swellers_Harness",
+      "https://www.bg-wiki.com/ffxi/Swellers_Harness_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Swellers_Harness_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Swellers_Harness_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Swellers%27s_Harness"
+    ]
+  },
+  {
+    "itemId": 26962,
+    "shortName": "enforcers_harness",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Enforcers_Harness",
+      "https://www.bg-wiki.com/ffxi/Enforcers_Harness_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Enforcers_Harness_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Enforcers_Harness_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Enforcers%27s_Harness"
+    ]
+  },
+  {
+    "itemId": 27101,
+    "shortName": "pursuers_cuffs",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pursuers_Cuffs",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Cuffs_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Cuffs_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Cuffs_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pursuers%27s_Cuffs"
+    ]
+  },
+  {
+    "itemId": 27104,
+    "shortName": "shriekers_cuffs",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Shriekers_Cuffs",
+      "https://www.bg-wiki.com/ffxi/Shriekers_Cuffs_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Shriekers_Cuffs_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Shriekers_Cuffs_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Shriekers%27s_Cuffs"
+    ]
+  },
+  {
+    "itemId": 27143,
+    "shortName": "composers_mitts",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Composers_Mitts",
+      "https://www.bg-wiki.com/ffxi/Composers_Mitts_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Composers_Mitts_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Composers_Mitts_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Composers%27s_Mitts"
+    ]
+  },
+  {
+    "itemId": 27286,
+    "shortName": "pursuers_pants",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pursuers_Pants",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Pants_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Pants_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Pants_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pursuers%27s_Pants"
+    ]
+  },
+  {
+    "itemId": 27322,
+    "shortName": "talab_trousers",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Talab_Trousers",
+      "https://www.bg-wiki.com/ffxi/Talab_Trousers_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Talab_Trousers_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Talab_Trousers_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Talab%27s_Trousers"
+    ]
+  },
+  {
+    "itemId": 27323,
+    "shortName": "enticers_pants",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Enticers_Pants",
+      "https://www.bg-wiki.com/ffxi/Enticers_Pants_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Enticers_Pants_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Enticers_Pants_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Enticers%27s_Pants"
+    ]
+  },
+  {
+    "itemId": 27461,
+    "shortName": "pursuers_gaiters",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Pursuers_Gaiters",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Gaiters_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Gaiters_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Pursuers_Gaiters_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Pursuers%27s_Gaiters"
+    ]
+  },
+  {
+    "itemId": 27493,
+    "shortName": "mediums_sabots",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Mediums_Sabots",
+      "https://www.bg-wiki.com/ffxi/Mediums_Sabots_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Mediums_Sabots_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Mediums_Sabots_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Mediums%27s_Sabots"
+    ]
+  },
+  {
+    "itemId": 27499,
+    "shortName": "composers_sabots",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Composers_Sabots",
+      "https://www.bg-wiki.com/ffxi/Composers_Sabots_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Composers_Sabots_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Composers_Sabots_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Composers%27s_Sabots"
+    ]
+  },
+  {
+    "itemId": 27635,
+    "shortName": "chanters_shield",
+    "kind": "armor",
+    "ilevel": 119,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Chanters_Shield",
+      "https://www.bg-wiki.com/ffxi/Chanters_Shield_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Chanters_Shield_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Chanters_Shield_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Chanters%27s_Shield"
+    ]
+  },
+  {
+    "itemId": 28004,
+    "shortName": "medbs_gauntlets_+1",
+    "kind": "armor",
+    "ilevel": 118,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Medbs_Gauntlets_%2B1",
+      "https://www.bg-wiki.com/ffxi/Medbs_Gauntlets_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Medbs_Gauntlets_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Medbs_Gauntlets_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Medbs%27s_Gauntlets_+1"
+    ]
+  },
+  {
+    "itemId": 28143,
+    "shortName": "wukongs_hakama_+1",
+    "kind": "armor",
+    "ilevel": 118,
+    "tried": [
+      "https://www.bg-wiki.com/ffxi/Wukongs_Hakama_%2B1",
+      "https://www.bg-wiki.com/ffxi/Wukongs_Hakama_%2B1_(Level_119)",
+      "https://www.bg-wiki.com/ffxi/Wukongs_Hakama_%2B1_(Level_119_II)",
+      "https://www.bg-wiki.com/ffxi/Wukongs_Hakama_%2B1_(Level_119_III)",
+      "https://www.bg-wiki.com/ffxi/Wukongs%27s_Hakama_+1"
+    ]
+  }
+]

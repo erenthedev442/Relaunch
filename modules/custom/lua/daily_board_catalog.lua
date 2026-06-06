@@ -34,9 +34,11 @@ catalog.slotsPerDay = 3
 -- Meta-reward when all 3 are cleared in a single calendar day.
 catalog.allClearedReward =
 {
-    currency  = 'hl',
-    amount    = 1000,
-    titleCv   = 'DB_AllCleared_Lifetime',
+    rewards  = {
+        { currency = 'hl', amount = 500 },
+        { currency = 'af', amount = 100 },
+    },
+    titleCv  = 'DB_AllCleared_Lifetime',
 }
 
 -- =========================================================
@@ -50,6 +52,8 @@ catalog.baselines =
     kills    = 'Custom_NM_Kills',
     dungeons = 'Dungeon_Clears_Total',
     infamy   = 'Infamy_Lifetime',
+    waves    = 'Wave_Clears_Total',
+    augments = 'Augment_Count',
 }
 
 -- CharVar suffixes used internally.
@@ -57,6 +61,8 @@ catalog.cvDay         = 'DB_Day'          -- Julian day YYYYDDD of last reset
 catalog.cvKillsBase   = 'DB_Kills_Base'
 catalog.cvDungeonsBase= 'DB_Dungeons_Base'
 catalog.cvInfamyBase  = 'DB_Infamy_Base'
+catalog.cvWavesBase   = 'DB_Waves_Base'
+catalog.cvAugmentsBase= 'DB_Augments_Base'
 
 -- =========================================================
 -- CURRENCY MAPPING
@@ -64,10 +70,10 @@ catalog.cvInfamyBase  = 'DB_Infamy_Base'
 -- Must match the mapping in weekly_hunts_catalog.lua.
 catalog.currencies =
 {
-    hl   = { cv = 'HL_Points',    name = 'Hunt Marks'    },
-    af   = { cv = 'AF_Points',    name = 'AF Marks'      },
-    relic= { cv = 'Relic_Points', name = 'Relic Marks'   },
-    empy = { cv = 'Empy_Points',  name = 'Empy Marks'    },
+    hl   = { cv = 'HL_Points',      name = 'Hunt Marks'    },
+    af   = { cv = 'RF_AF_Marks',    name = 'AF Marks'      },
+    relic= { cv = 'RF_Relic_Marks', name = 'Relic Marks'   },
+    empy = { cv = 'RF_Empy_Marks',  name = 'Empy Marks'    },
 }
 
 -- =========================================================
@@ -75,7 +81,7 @@ catalog.currencies =
 -- =========================================================
 -- Each entry:
 --   id          unique string
---   label       short display name (≤ 16 chars to fit customMenu)
+--   label       short display name (<= 16 chars to fit customMenu)
 --   description one-liner shown in the NPC menu
 --   target      numeric completion threshold
 --   metric      which baseline to measure against: 'kills' | 'dungeons' | 'infamy'
@@ -85,14 +91,14 @@ catalog.currencies =
 -- in any given day's 3 slots, so the board always has variety.
 catalog.objectivePool =
 {
-    -- ─── KILLS ────────────────────────────────────────────────
+    -- --- KILLS ------------------------------------------------
     {
         id          = 'kill_5',
         label       = 'NM Slayer',
         description = 'Kill 5 custom NMs today (any system).',
         target      = 5,
         metric      = 'kills',
-        reward      = { currency = 'hl', amount = 500 },
+        reward      = { currency = 'hl', amount = 400 },
     },
     {
         id          = 'kill_10',
@@ -100,7 +106,7 @@ catalog.objectivePool =
         description = 'Kill 10 custom NMs today (any system).',
         target      = 10,
         metric      = 'kills',
-        reward      = { currency = 'hl', amount = 800 },
+        reward      = { currency = 'hl', amount = 1000 },
     },
     {
         id          = 'kill_20',
@@ -108,10 +114,10 @@ catalog.objectivePool =
         description = 'Kill 20 custom NMs today (any system).',
         target      = 20,
         metric      = 'kills',
-        reward      = { currency = 'af', amount = 1000 },
+        reward      = { currency = 'relic', amount = 1500 },
     },
 
-    -- ─── DUNGEONS ──────────────────────────────────────────────
+    -- --- DUNGEONS ----------------------------------------------
     {
         id          = 'dungeon_1',
         label       = 'Dungeon Diver',
@@ -126,7 +132,7 @@ catalog.objectivePool =
         description = 'Clear 2 dungeon runs today (any combination).',
         target      = 2,
         metric      = 'dungeons',
-        reward      = { currency = 'relic', amount = 1200 },
+        reward      = { currency = 'relic', amount = 900 },
     },
     {
         id          = 'dungeon_3',
@@ -134,10 +140,10 @@ catalog.objectivePool =
         description = 'Clear 3 dungeon runs today.',
         target      = 3,
         metric      = 'dungeons',
-        reward      = { currency = 'empy', amount = 1500 },
+        reward      = { currency = 'empy', amount = 1200 },
     },
 
-    -- ─── INFAMY ────────────────────────────────────────────────
+    -- --- INFAMY ------------------------------------------------
     {
         id          = 'infamy_50',
         label       = 'Infamy Earner',
@@ -152,7 +158,7 @@ catalog.objectivePool =
         description = 'Earn 100 Infamy from dungeons today.',
         target      = 100,
         metric      = 'infamy',
-        reward      = { currency = 'hl', amount = 700 },
+        reward      = { currency = 'hl', amount = 900 },
     },
     {
         id          = 'infamy_250',
@@ -160,7 +166,59 @@ catalog.objectivePool =
         description = 'Earn 250 Infamy from dungeons today.',
         target      = 250,
         metric      = 'infamy',
-        reward      = { currency = 'relic', amount = 1000 },
+        reward      = { currency = 'empy', amount = 1200 },
+    },
+
+    -- --- WAVE FIGHTS ------------------------------------------
+    {
+        id          = 'wave_1',
+        label       = 'Wave Warrior',
+        description = 'Win 1 wave fight today (any difficulty).',
+        target      = 1,
+        metric      = 'waves',
+        reward      = { currency = 'hl', amount = 700 },
+    },
+    {
+        id          = 'wave_2',
+        label       = 'Wave Runner',
+        description = 'Win 2 wave fights today.',
+        target      = 2,
+        metric      = 'waves',
+        reward      = { currency = 'relic', amount = 850 },
+    },
+    {
+        id          = 'wave_3',
+        label       = 'Wave Dominator',
+        description = 'Win 3 wave fights today.',
+        target      = 3,
+        metric      = 'waves',
+        reward      = { currency = 'empy', amount = 1100 },
+    },
+
+    -- --- AUGMENTS ----------------------------------------------
+    {
+        id          = 'augment_1',
+        label       = 'Forgemaster',
+        description = 'Complete 1 augmentation trade today.',
+        target      = 1,
+        metric      = 'augments',
+        reward      = { currency = 'hl', amount = 400 },
+    },
+    {
+        id          = 'augment_2',
+        label       = 'Augment Artisan',
+        description = 'Complete 2 augmentation trades today.',
+        target      = 2,
+        metric      = 'augments',
+        reward      = { currency = 'hl', amount = 700 },
+    },
+    {
+        id          = 'augment_3',
+        label       = 'Augment Adept',
+        description = 'Complete 3 augmentation trades today.',
+        target      = 3,
+        metric      = 'augments',
+        reward      = { currency = 'af', amount = 1200 },
     },
 }
 

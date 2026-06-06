@@ -16,6 +16,8 @@ local PENALTY     = 10   -- marks lost per death
 local EXEMPT_KILLS = 50  -- players below this kill count are exempt
 local HUNT_ZONE   = xi.zone.REISENJIMA_HENGE
 
+local PARDON_VAR = 'MysteryMog_Pardon'  -- set by Mystery Mog Death's Pardon prize
+
 m:addOverride('xi.player.onPlayerDeath', function(player, killer, isKO)
     super(player, killer, isKO)
 
@@ -25,6 +27,16 @@ m:addOverride('xi.player.onPlayerDeath', function(player, killer, isKO)
     -- New-player grace: exempt players who haven't hunted much yet.
     local totalKills = player:getCharVar('Custom_NM_Kills') or 0
     if totalKills < EXEMPT_KILLS then return end
+
+    -- Death's Pardon: Mystery Mog prize that absorbs one death penalty.
+    if (player:getCharVar(PARDON_VAR) or 0) > 0 then
+        player:setCharVar(PARDON_VAR, 0)
+        player:printToPlayer(
+            "[Hunting League] The Mog's pardon absorbed the death penalty! " ..
+            "(Your Hunt Marks are safe.)",
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
 
     local current = player:getCharVar('HL_Points') or 0
     local newBal  = math.max(0, current - PENALTY)

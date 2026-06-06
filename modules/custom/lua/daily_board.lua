@@ -57,10 +57,17 @@ local function todaysObjectives()
         table.insert(byMetric[obj.metric], obj)
     end
 
-    -- Stable metric order so slot 1 is always a kill obj, slot 2 dungeon,
-    -- slot 3 infamy. This mirrors the layout described to players.
-    local metricOrder = { 'kills', 'dungeons', 'infamy' }
     local today = currentDayId()
+    -- 5-metric rotating selection: pick 3 consecutive metrics from a 5-entry
+    -- ring, shifted by (today mod 5). Each metric appears in 3 of every 5 days.
+    -- Cycle: kills/dungeons/infamy -> dungeons/infamy/waves -> infamy/waves/augments
+    --     -> waves/augments/kills -> augments/kills/dungeons -> (repeat)
+    local ALL_METRICS = { 'kills', 'dungeons', 'infamy', 'waves', 'augments' }
+    local dayMod     = today % #ALL_METRICS
+    local metricOrder = {}
+    for i = 1, catalog.slotsPerDay do
+        table.insert(metricOrder, ALL_METRICS[((dayMod + i - 1) % #ALL_METRICS) + 1])
+    end
     local result = {}
     for _, metric in ipairs(metricOrder) do
         local group = byMetric[metric] or {}
@@ -105,6 +112,12 @@ local function getProgress(player, metric)
     elseif metric == 'infamy' then
         baseKey   = catalog.cvInfamyBase
         currentCv = catalog.baselines.infamy
+    elseif metric == 'waves' then
+        baseKey   = catalog.cvWavesBase
+        currentCv = catalog.baselines.waves
+    elseif metric == 'augments' then
+        baseKey   = catalog.cvAugmentsBase
+        currentCv = catalog.baselines.augments
     end
     local base    = player:getCharVar(baseKey)   or 0
     local current = player:getCharVar(currentCv) or 0
@@ -126,6 +139,10 @@ local function resetDay(player)
         player:getCharVar(catalog.baselines.dungeons) or 0)
     player:setCharVar(catalog.cvInfamyBase,
         player:getCharVar(catalog.baselines.infamy)   or 0)
+    player:setCharVar(catalog.cvWavesBase,
+        player:getCharVar(catalog.baselines.waves)    or 0)
+    player:setCharVar(catalog.cvAugmentsBase,
+        player:getCharVar(catalog.baselines.augments) or 0)
 
     -- Assign today's 3 objectives by pool index
     local objs = todaysObjectives()
@@ -157,7 +174,7 @@ local function payCurrency(player, reward)
 end
 
 -----------------------------------
--- NPC MENU — customMenu-based UI
+-- NPC MENU - customMenu-based UI
 -----------------------------------
 
 local dbMenu = { title = '', options = {} }
@@ -239,12 +256,17 @@ showSlotDetail = function(player, slot, obj)
                 end
                 if allDone then
                     local r = catalog.allClearedReward
-                    payCurrency(p, r)
+                    if r.rewards then
+                        for _, reward in ipairs(r.rewards) do
+                            payCurrency(p, reward)
+                        end
+                    else
+                        payCurrency(p, r)
+                    end
                     local lifetime = (p:getCharVar(r.titleCv) or 0) + 1
                     p:setCharVar(r.titleCv, lifetime)
                     p:printToPlayer(
-                        string.format('[Daily Board] ALL 3 CLEARED! Bonus: +%d %s (daily sweep #%d)',
-                            r.amount, (catalog.currencies[r.currency] or {}).name or '?', lifetime),
+                        '[Daily Board] ALL 3 CLEARED! Full sweep bonus awarded! (streak #' .. lifetime .. ')',
                         xi.msg.channel.SYSTEM_3)
                 end
 
@@ -286,7 +308,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
         widescan   = 1,
         onTrigger  = function(player, npc)
             player:printToPlayer(
-                '[ Daily Board ] Fresh objectives await — come back after each task to claim your reward, kupo!',
+                '[ Daily Board ] Fresh objectives await - come back after each task to claim your reward, kupo!',
                 xi.msg.channel.SYSTEM_3)
             showDailyRoot(player)
         end,

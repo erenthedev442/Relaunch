@@ -11,7 +11,7 @@
 -- the documented extension point and is already enabled in init.txt).
 --
 -- Notes:
---   - permission = 0 so any player can run it.
+--   - permission = 1 (GM-only).
 --   - Calls setEminenceCompleted(4013); the engine grants whatever
 --     reward bundle record 4013 has in scripts/globals/roe_records.lua
 --     at the time of the call. If upstream changes the reward, this
@@ -47,7 +47,7 @@ commandObj.onTrigger = function(player)
         local hrs  = math.floor(remaining / 3600)
         local mins = math.floor((remaining % 3600) / 60)
         player:printToPlayer(
-            string.format('[Gain Experience] On cooldown — %d h %02d m remaining.', hrs, mins),
+            string.format('[Gain Experience] On cooldown - %d h %02d m remaining.', hrs, mins),
             xi.msg.channel.SYSTEM_3
         )
         return

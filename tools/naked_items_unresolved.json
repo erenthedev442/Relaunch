@@ -1,0 +1,586 @@
+[
+  {
+    "itemId": 23740,
+    "shortName": "angantyr_beret",
+    "context": "Armor NPC [bronze] head: Angantyr Beret",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Angantyr_Beret",
+    "raw": "DEF:95 HP+41 MP+53 STR+15 DEX+15 VIT+15 AGI+15 INT+21 MND+21 CHR+21 Accuracy+15 Magic Accuracy+25 Evasion+44 Magic Evasion+102 \"Magic Def. Bonus\"+5 Haste+6% Domain Invasion: STR+20 DEX+20 VIT+20 AGI+20 INT+30 MND+30 CHR+30 \"Fast Cast\"+50% Trust: Lv.+1",
+    "unknown_tokens": [
+      "Domain",
+      "Invasion",
+      "Trust",
+      "Lv"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 23743,
+    "shortName": "angantyr_robe",
+    "context": "Armor NPC [bronze] body: Angantyr Robe",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Angantyr_Robe",
+    "raw": "DEF:125 HP+59 MP+79 STR+24 DEX+24 VIT+24 AGI+24 INT+32 MND+32 CHR+32 Accuracy+15 Magic Accuracy+25 Evasion+52 Magic Evasion+107 \"Magic Def. Bonus\"+8 Haste+3% Domain Invasion: STR+20 DEX+20 VIT+20 AGI+20 INT+30 MND+30 CHR+30 Damage taken -50% Trust: Lv.+1",
+    "unknown_tokens": [
+      "Domain",
+      "Invasion",
+      "Trust",
+      "Lv"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 23797,
+    "shortName": "crepuscular_helm",
+    "context": "Armor NPC [gold] head: Crepuscular Helm",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Crepuscular_Helm",
+    "raw": "DEF:156 HP+114 STR+41 DEX+28 VIT+48 AGI+29 INT+27 MND+31 CHR+29 Accuracy+20 Attack+60 Magic Accuracy+20 Evasion+83 Magic Evasion+86 \"Magic Def. Bonus\"+6 Haste+4% \"Triple Attack\"+4% \"Regen\"+3 Set: Auto-Reraise",
+    "unknown_tokens": [
+      "Set",
+      "Auto",
+      "Reraise"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 23798,
+    "shortName": "crepuscular_mail",
+    "context": "Armor NPC [gold] body: Crepuscular Mail",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Crepuscular_Mail",
+    "raw": "DEF:189 HP+159 STR+50 DEX+33 VIT+50 AGI+33 INT+32 MND+36 CHR+34 Accuracy+55 Attack+20 Magic Accuracy+55 Evasion+94 Magic Evasion+102 \"Magic Def. Bonus\"+9 Haste+2% \"Store TP\"+10 \"Refresh\"+2 Set: Auto-Reraise",
+    "unknown_tokens": [
+      "Set",
+      "Auto",
+      "Reraise"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24139,
+    "shortName": "prestige_platemail",
+    "context": "Armor NPC [gold] body: Prestige Platemail",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Prestige_Platemail",
+    "raw": "DEF:190 HP+182 MP+103 STR+44 DEX+33 VIT+50 AGI+29 INT+30 MND+38 CHR+28 Attack+41 Accuracy+41 Magic Accuracy+41 \"Magic Atk. Bonus\"+35 Magic Damage +31 Evasion+86 Magic Evasion+140 \"Magic Def. Bonus\"+7 Haste+3% \"Fast Cast\"+8% Sword enhancement spell damage +9 Damage taken -8%",
+    "unknown_tokens": [
+      "Sword",
+      "enhancement",
+      "spell",
+      "damage"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24140,
+    "shortName": "sworn_platemail",
+    "context": "Armor NPC [gold] body: Sworn Platemail",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Sworn_Platemail",
+    "raw": "DEF:191 HP+187 MP+106 STR+45 DEX+34 VIT+51 AGI+30 INT+31 MND+39 CHR+29 Attack+42 Accuracy+42 Magic Accuracy+42 \"Magic Atk. Bonus\"+35 Magic Damage +32 Evasion+87 Magic Evasion+142 \"Magic Def. Bonus\"+8 Haste+3% \"Fast Cast\"+9% Sword enhancement spell damage +10 Damage taken -9%",
+    "unknown_tokens": [
+      "Sword",
+      "enhancement",
+      "spell",
+      "damage"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24142,
+    "shortName": "prestige_gauntlets",
+    "context": "Armor NPC [gold] hands: Prestige Gauntlets",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Prestige_Gauntlets",
+    "raw": "DEF:148 HP+91 MP+73 STR+26 DEX+43 VIT+54 INT+20 MND+43 CHR+28 Accuracy+41 Attack+41 Magic Accuracy+41 \"Magic Atk. Bonus\"+35 Magic Damage +31 Evasion+67 Magic Evasion+97 \"Magic Def. Bonus\"+4 Haste+5% \"Fast Cast\"+4% Sword enhancement spell damage +6 Damage taken -4%",
+    "unknown_tokens": [
+      "Sword",
+      "enhancement",
+      "spell",
+      "damage"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24148,
+    "shortName": "prestige_sabatons",
+    "context": "Armor NPC [gold] feet: Prestige Sabatons",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Prestige_Sabatons",
+    "raw": "DEF:130 HP+114 MP+59 STR+31 DEX+28 VIT+38 AGI+39 MND+29 CHR+34 Accuracy+41 Attack+41 Magic Accuracy+41 \"Magic Atk. Bonus\"+35 Magic Damage +31 Evasion+100 Magic Evasion+167 \"Magic Def. Bonus\"+5 Haste+3% \"Fast Cast\"+5% Sword enhancement spell damage +6 Damage taken -5%",
+    "unknown_tokens": [
+      "Sword",
+      "enhancement",
+      "spell",
+      "damage"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24149,
+    "shortName": "sworn_sabatons",
+    "context": "Armor NPC [gold] feet: Sworn Sabatons",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Sworn_Sabatons",
+    "raw": "DEF:131 HP+119 MP+62 STR+32 DEX+29 VIT+39 AGI+40 MND+30 CHR+35 Accuracy+42 Attack+42 Magic Accuracy+42 \"Magic Atk. Bonus\"+35 Magic Damage +32 Evasion+101 Magic Evasion+169 \"Magic Def. Bonus\"+6 Haste+3% \"Fast Cast\"+6% Sword enhancement spell damage +7 Damage taken -6%",
+    "unknown_tokens": [
+      "Sword",
+      "enhancement",
+      "spell",
+      "damage"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24151,
+    "shortName": "intrepid_petasos",
+    "context": "Armor NPC [gold] head: Intrepid Petasos",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Intrepid_Petasos",
+    "raw": "DEF:134 HP+79 MP+103 STR+26 DEX+24 VIT+27 AGI+17 INT+37 MND+30 CHR+29 Magic Accuracy+41 \"Magic Atk. Bonus\"+40 Magic Damage +21 Evasion+78 Magic Evasion+92 \"Magic Def. Bonus\"+8 Enmity-5 Haste+6% \"Fast Cast\"+5% Damage taken -3% Avatar: Accuracy+41 Ranged Accuracy+41 Magic Accuracy+41 Enmity+7",
+    "unknown_tokens": [
+      "Avatar"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24153,
+    "shortName": "bravery_coat",
+    "context": "Armor NPC [gold] body: Bravery Coat",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Bravery_Coat",
+    "raw": "DEF:163 HP+97 MP+85 STR+32 DEX+29 VIT+34 AGI+31 INT+50 MND+40 CHR+38 Magic Accuracy+40 \"Magic Atk. Bonus\"+40 Magic Damage +20 Evasion+85 Magic Evasion+105 \"Magic Def. Bonus\"+8 Enmity-8 Haste+3% \"Fast Cast\"+8% Damage taken -4% Avatar: Accuracy+40 Ranged Accuracy+40 Magic Accuracy+40 Critical hit rate +6%",
+    "unknown_tokens": [
+      "Avatar"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24156,
+    "shortName": "bravery_gloves",
+    "context": "Armor NPC [gold] hands: Bravery Gloves",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Bravery_Gloves",
+    "raw": "DEF:121 HP+63 MP+56 STR+13 DEX+37 VIT+38 AGI+17 INT+36 MND+43 CHR+28 Magic Accuracy+40 \"Magic Atk. Bonus\"+40 Magic Damage +20 Evasion+66 Magic Evasion+83 \"Magic Def. Bonus\"+5 Enmity-2 Haste+3% \"Fast Cast\"+2% Avatar: Accuracy+40 Ranged Accuracy+40 Magic Accuracy+40 \"Double Attack\"+6%",
+    "unknown_tokens": [
+      "Avatar"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24159,
+    "shortName": "bravery_tonban",
+    "context": "Armor NPC [gold] legs: Bravery Tonban",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Bravery_Tonban",
+    "raw": "DEF:145 HP+86 MP+70 STR+42 VIT+23 AGI+28 INT+52 MND+35 CHR+28 Magic Accuracy+40 \"Magic Atk. Bonus\"+40 Magic Damage +20 Evasion+66 Magic Evasion+123 \"Magic Def. Bonus\"+7 Enmity-6 Haste+5% \"Fast Cast\"+6% \"Avatar's Favor\" effect +1 Damage taken -3% Pet: Accuracy+40 Ranged Accuracy+40 Magic Accuracy+40",
+    "unknown_tokens": [
+      "Avatar",
+      "Favor",
+      "effect",
+      "Pet"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24166,
+    "shortName": "magnificent_crown",
+    "context": "Armor NPC [gold] head: Magnificent Crown",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Magnificent_Crown",
+    "raw": "DEF:143 HP+114 STR+35 DEX+38 VIT+34 AGI+29 INT+21 MND+27 CHR+27 Accuracy+41 Attack+41 Magic Accuracy+41 Evasion+89 Magic Evasion+113 \"Magic Def. Bonus\"+4 Haste+6% \"Double Attack\"+4% \"Subtle Blow\"+4 Damage taken -4% Pet: Accuracy+41 Ranged Accuracy+41 Magic Accuracy+41 Critical hit rate +7%",
+    "unknown_tokens": [
+      "Pet"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24167,
+    "shortName": "duty_crown",
+    "context": "Armor NPC [gold] head: Duty Crown",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Duty_Crown",
+    "raw": "DEF:144 HP+119 STR+36 DEX+39 VIT+35 AGI+30 INT+22 MND+28 CHR+28 Accuracy+42 Attack+42 Magic Accuracy+42 Evasion+90 Magic Evasion+115 \"Magic Def. Bonus\"+5 Haste+6% \"Double Attack\"+5% \"Subtle Blow\"+5 Damage taken -5% Pet: Accuracy+42 Ranged Accuracy+42 Magic Accuracy+42 Critical hit rate +8%",
+    "unknown_tokens": [
+      "Pet"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24173,
+    "shortName": "duty_gauntlets",
+    "context": "Armor NPC [gold] hands: Duty Gauntlets",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Duty_Gauntlets",
+    "raw": "DEF:132 HP+107 STR+23 DEX+53 VIT+48 AGI+22 INT+17 MND+39 CHR+33 Accuracy+42 Attack+42 Magic Accuracy+42 Evasion+85 Magic Evasion+100 \"Magic Def. Bonus\"+5 Haste+4% \"Double Attack\"+3% \"Subtle Blow\"+3 Damage taken -3% Pet: Accuracy+42 Ranged Accuracy+42 Magic Accuracy+42 \"Subtle Blow\"+8",
+    "unknown_tokens": [
+      "Pet"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24176,
+    "shortName": "duty_flanchard",
+    "context": "Armor NPC [gold] legs: Duty Flanchard",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Duty_Flanchard",
+    "raw": "DEF:156 HP+130 STR+52 VIT+42 AGI+30 INT+33 MND+29 CHR+26 Accuracy+42 Attack+42 Magic Accuracy+42 Evasion+84 Magic Evasion+131 \"Magic Def. Bonus\"+8 Haste+6% \"Double Attack\"+6% \"Subtle Blow\"+6 Damage taken -6% Pet: Accuracy+42 Ranged Accuracy+42 Magic Accuracy+42 \"Double Attack\"+8%",
+    "unknown_tokens": [
+      "Pet"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24178,
+    "shortName": "magnificent_sollerets",
+    "context": "Armor NPC [gold] feet: Magnificent Sollerets",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Magnificent_Sollerets",
+    "raw": "DEF:113 HP+91 STR+30 DEX+39 VIT+30 AGI+39 MND+20 CHR+34 Accuracy+41 Attack+41 Magic Accuracy+41 Evasion+117 Magic Evasion+129 \"Magic Def. Bonus\"+7 Haste+3% \"Double Attack\"+3% \"Subtle Blow\"+3 Damage taken -3% Pet: Accuracy+41 Ranged Accuracy+41 Magic Accuracy+41 Lv+1",
+    "unknown_tokens": [
+      "Pet",
+      "Lv"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24179,
+    "shortName": "duty_sollerets",
+    "context": "Armor NPC [gold] feet: Duty Sollerets",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Duty_Sollerets",
+    "raw": "DEF:114 HP+96 STR+31 DEX+40 VIT+31 AGI+40 MND+21 CHR+35 Accuracy+42 Attack+42 Magic Accuracy+42 Evasion+118 Magic Evasion+131 \"Magic Def. Bonus\"+8 Haste+3% \"Double Attack\"+4% \"Subtle Blow\"+4 Damage taken -4% Pet: Accuracy+42 Ranged Accuracy+42 Magic Accuracy+42 Lv+1",
+    "unknown_tokens": [
+      "Pet",
+      "Lv"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24182,
+    "shortName": "clemency_somen",
+    "context": "Armor NPC [gold] head: Clemency Somen",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Clemency_Somen",
+    "raw": "DEF:157 HP+96 STR+34 DEX+41 VIT+27 AGI+40 INT+22 MND+22 CHR+23 Accuracy+42 Attack+42 Ranged Accuracy+42 Ranged Attack+42 Magic Accuracy+42 Evasion+79 Magic Evasion+105 \"Magic Def. Bonus\"+6 Haste+6% Physical damage limit +6% Critical hit rate +6% Damage taken -6% Wyvern: HP+18% Accuracy+42 Magic Accuracy+42",
+    "unknown_tokens": [
+      "Physical",
+      "damage",
+      "limit",
+      "Wyvern"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24188,
+    "shortName": "clemency_kote",
+    "context": "Armor NPC [gold] hands: Clemency Kote",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Clemency_Kote",
+    "raw": "DEF:145 HP+84 STR+30 DEX+57 VIT+41 AGI+30 INT+21 MND+35 CHR+27 Accuracy+42 Attack+42 Ranged Accuracy+42 Ranged Attack+42 Magic Accuracy+42 Evasion+68 Magic Evasion+88 \"Magic Def. Bonus\"+5 Haste+3% Physical damage limit +4% Critical hit rate +4% Damage taken -4% Wyvern: Accuracy+42 Magic Accuracy+42 \"Subtle Blow\"+8",
+    "unknown_tokens": [
+      "Physical",
+      "damage",
+      "limit",
+      "Wyvern"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24193,
+    "shortName": "grace_sune-ate",
+    "context": "Armor NPC [gold] feet: Grace Sune-Ate",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Grace_Sune-Ate",
+    "raw": "DEF:126 HP+68 STR+29 DEX+41 VIT+20 AGI+62 MND+18 CHR+34 Accuracy+41 Attack+41 Ranged Accuracy+41 Ranged Attack+41 Magic Accuracy+41 Evasion+97 Magic Evasion+135 \"Magic Def. Bonus\"+5 Haste+3% Physical damage limit +4% Critical hit rate +4% Damage taken -4% Wyvern: Accuracy+41 Magic Accuracy+41 Lv+1",
+    "unknown_tokens": [
+      "Physical",
+      "damage",
+      "limit",
+      "Wyvern",
+      "Lv"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24194,
+    "shortName": "clemency_sune-ate",
+    "context": "Armor NPC [gold] feet: Clemency Sune-Ate",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Clemency_Sune-Ate",
+    "raw": "DEF:127 HP+73 STR+30 DEX+42 VIT+21 AGI+63 MND+19 CHR+35 Accuracy+42 Attack+42 Ranged Accuracy+42 Ranged Attack+42 Magic Accuracy+42 Evasion+98 Magic Evasion+137 \"Magic Def. Bonus\"+6 Haste+3% Physical damage limit +5% Critical hit rate +5% Damage taken -5% Wyvern: Accuracy+42 Magic Accuracy+42 Lv+1",
+    "unknown_tokens": [
+      "Physical",
+      "damage",
+      "limit",
+      "Wyvern",
+      "Lv"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 24274,
+    "shortName": "amin_turban",
+    "context": "Armor NPC [silver] head: Amin Turban",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Amin_Turban",
+    "raw": "DEF:111 HP+50 MP+50 STR+25 DEX+25 VIT+25 AGI+25 INT+30 MND+30 CHR+30 Accuracy+40 Ranged Accuracy+40 Magic Accuracy+60 Evasion+70 Magic Evasion+80 Magic Defense+3 Magic Crit. Hit Rate II +10% Pet: Accuracy+50 Ranged Accuracy+50 Magic Accuracy+50",
+    "unknown_tokens": [
+      "Magic",
+      "Defense",
+      "Magic",
+      "Crit",
+      "Hit",
+      "Rate",
+      "II",
+      "Pet"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25602,
+    "shortName": "blistering_sallet_+1",
+    "context": "Armor NPC [bronze] head: Blistering Sallet +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Blistering_Sallet_%2B1",
+    "raw": "DEF:111 HP+38 STR+16 DEX+16 VIT+16 AGI+16 INT+16 MND+16 CHR+16 Accuracy+8 Evasion+36 Magic Evasion+53 \"Magic Def. Bonus\"+2 Haste+8% \"Double Attack\"+3% Physical damage taken -3% Unity Ranking: HP+30~80",
+    "unknown_tokens": [
+      "Unity",
+      "Ranking",
+      "~80"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25654,
+    "shortName": "welkin_crown",
+    "context": "Armor NPC [silver] head: Welkin Crown",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Welkin_Crown",
+    "raw": "DEF:95 HP+36 MP+32 STR+22 DEX+22 VIT+22 AGI+22 INT+29 MND+29 CHR+27 \"Magic Atk. Bonus\"+35 Evasion+36 Magic Evasion+75 \"Magic Def. Bonus\"+5 Haste+6% \"Fast Cast\"+7% \"Occult Acumen\"+10",
+    "unknown_tokens": [
+      "Occult",
+      "Acumen"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25830,
+    "shortName": "hizamaru_kote_+2",
+    "context": "Armor NPC [silver] hands: Hizamaru Kote +2",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Hizamaru_Kote_%2B2",
+    "raw": "DEF:106 HP+40 STR+20 DEX+43 VIT+38 AGI+16 INT+7 MND+21 CHR+25 Accuracy+43 Attack+25 Evasion+76 Magic Evasion+43 \"Magic Def. Bonus\"+2 Haste+4% \"Tactical Parry\"+25 Set: Enhances \"Counter\" effect",
+    "unknown_tokens": [
+      "Tactical",
+      "Parry",
+      "Set",
+      "Counter",
+      "effect"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25831,
+    "shortName": "inyanga_dastanas_+2",
+    "context": "Armor NPC [silver] hands: Inyanga Dastanas +2",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Inyanga_Dastanas_%2B2",
+    "raw": "DEF:88 HP+35 MP+40 STR+3 DEX+23 VIT+28 AGI+9 INT+34 MND+47 CHR+32 Magic Accuracy+43 Evasion+19 Magic Evasion+77 \"Magic Def. Bonus\"+5 Haste+4% Magic skills +20 Magic damage taken -4% Set: Enhances \"Refresh\" effect",
+    "unknown_tokens": [
+      "Magic",
+      "skills",
+      "Set",
+      "Refresh",
+      "effect"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25833,
+    "shortName": "ayanmo_manopolas_+2",
+    "context": "Armor NPC [silver] hands: Ayanmo Manopolas +2",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Ayanmo_Manopolas_%2B2",
+    "raw": "DEF:111 HP+22 MP+14 STR+16 DEX+53 VIT+30 AGI+11 INT+14 MND+37 CHR+19 Accuracy+43 Magic Accuracy+43 Evasion+19 Magic Evasion+37 \"Magic Def. Bonus\"+2 Haste+4% Sword enhancement spell damage +17 Damage taken -3% Set: Increases Strength, Vitality, and Mind",
+    "unknown_tokens": [
+      "Sword",
+      "enhancement",
+      "spell",
+      "damage",
+      "Set",
+      "Increases",
+      "Strength",
+      "Vitality",
+      "and",
+      "Mind"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25898,
+    "shortName": "arke_cosciales_+1",
+    "context": "Armor NPC [gold] legs: Arke Cosciales +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Arke_Cosciales_%2B1",
+    "raw": "DEF:151 HP+191 STR+45 VIT+35 AGI+19 INT+30 MND+20 CHR+15 Accuracy+51 Haste+5% Resistance to all status ailments +7 Damage taken -11% Converts damage taken to TP +12",
+    "unknown_tokens": [
+      "Resistance",
+      "to",
+      "all",
+      "status",
+      "ailments",
+      "Converts",
+      "damage",
+      "taken",
+      "to",
+      "TP"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25949,
+    "shortName": "inyanga_crackows_+2",
+    "context": "Armor NPC [bronze] feet: Inyanga Crackows +2",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Inyanga_Crackows_%2B2",
+    "raw": "DEF:70 HP+25 MP+30 STR+6 DEX+6 VIT+14 AGI+33 INT+32 MND+33 CHR+46 Magic Accuracy+42 Evasion+60 Magic Evasion+147 \"Magic Def. Bonus\"+8 Haste+2% Magic damage taken -3% Avatar: \"Blood Pact\" damage +9 Set: Enhances \"Refresh\" effect",
+    "unknown_tokens": [
+      "Avatar",
+      "Blood",
+      "Pact",
+      "damage",
+      "Set",
+      "Refresh",
+      "effect"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25961,
+    "shortName": "ea_pigaches_+1",
+    "context": "Armor NPC [silver] feet: Ea Pigaches +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Ea_Pigaches_%2B1",
+    "raw": "DEF:83 HP+35 MP+41 STR+11 DEX+14 VIT+15 AGI+38 INT+5 MND+26 CHR+39 Magic Accuracy+48 \"Magic Atk. Bonus\"+32 Evasion+66 Magic Evasion+147 \"Magic Def. Bonus\"+6 Haste+3% Magic Burst damage +5 Magic Burst damage II +5",
+    "unknown_tokens": [
+      "Magic",
+      "Burst",
+      "damage",
+      "Magic",
+      "Burst",
+      "damage",
+      "II"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25995,
+    "shortName": "turms_mittens_+1",
+    "context": "Armor NPC [silver] hands: Turms Mittens +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Turms_Mittens_%2B1",
+    "raw": "DEF:113 HP+74 STR+12 DEX+51 VIT+32 AGI+5 INT+15 MND+30 CHR+23 Accuracy+49 Evasion+80 Magic Evasion+101 \"Magic Def. Bonus\"+5 Haste+4% \"Regen\"+6 Parry: Recover HP+100",
+    "unknown_tokens": [
+      "Parry",
+      "Recover"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25996,
+    "shortName": "raetic_bangles",
+    "context": "Armor NPC [silver] hands: Raetic Bangles",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Raetic_Bangles",
+    "raw": "DEF:120 HP+60 STR+33 DEX+33 VIT+33 AGI+33 INT+33 MND+33 CHR+33 Accuracy+45 Ranged Accuracy+45 M. Accuracy+45 Evasion+90 Magic Evasion+90 \"Magic Def. Bonus\"+4 Haste+7% Consumes 5% of MP when taking damage: Chance of abs. dmg. taken based on amount of MP consumed Dec. enmity based on amount of MP consumed when receiving phys. dmg.",
+    "unknown_tokens": [
+      "Consumes",
+      "of",
+      "MP",
+      "when",
+      "taking",
+      "damage",
+      "Chance",
+      "of",
+      "abs",
+      "dmg",
+      "taken",
+      "based",
+      "on",
+      "amount",
+      "of",
+      "MP",
+      "consumed",
+      "Dec",
+      "enmity",
+      "based",
+      "on",
+      "amount",
+      "of",
+      "MP",
+      "consumed",
+      "when",
+      "receiving",
+      "phys",
+      "dmg"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 26526,
+    "shortName": "oshosi_vest_+1",
+    "context": "Armor NPC [bronze] body: Oshosi Vest +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Oshosi_Vest_%2B1",
+    "raw": "DEF:149 HP+111 STR+38 DEX+30 VIT+26 AGI+49 INT+21 MND+21 CHR+26 Ranged Accuracy+47 Magic Accuracy+52 Evasion+65 Magic Evasion+106 \"Magic Def. Bonus\"+9 \"Store TP\"+10 \"Snapshot\"+14 \"Double Shot\"+8% \"Triple Shot\"+7%",
+    "unknown_tokens": [
+      "Double",
+      "Shot",
+      "Triple",
+      "Shot"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 26960,
+    "shortName": "annointed_kalasiris",
+    "context": "Armor NPC [bronze] body: Annointed Kalasiris",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Annointed_Kalasiris",
+    "raw": "DEF:127 HP+52 MP+64 STR+20 DEX+20 VIT+20 AGI+20 INT+30 MND+33 CHR+29 Magic Accuracy+25 Evasion+41 Magic Evasion+80 Haste+3% \"Magic Def. Bonus\"+7 \"Cure\" potency +10% \"Refresh\"+2 Sphere: \"Reraise\"",
+    "unknown_tokens": [
+      "Sphere",
+      "Reraise"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 27288,
+    "shortName": "vanya_slops",
+    "context": "Armor NPC [bronze] legs: Vanya Slops",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Vanya_Slops",
+    "raw": "DEF:106 HP+43 MP+29 STR+25 VIT+12 AGI+17 INT+44 MND+34 CHR+29 Magic Accuracy+20 Evasion+27 Magic Evasion+107 \"Magic Def. Bonus\"+6 Haste+5% \"Conserve MP\"+6",
+    "unknown_tokens": [
+      "Conserve",
+      "MP"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 27857,
+    "shortName": "respite_cloak",
+    "context": "Armor NPC [gold] body: Respite Cloak",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Respite_Cloak",
+    "raw": "Cannot equip headgear DEF:219 HP+150 MP+150 STR+35 DEX+35 VIT+35 AGI+35 INT+55 MND+55 CHR+48 Magic Accuracy+43 Evasion+77 Magic Evasion+156 \"Magic Def. Bonus\"+12 Haste+9% \"Refresh\"+3",
+    "unknown_tokens": [
+      "Cannot",
+      "equip",
+      "headgear"
+    ],
+    "partial": true
+  }
+]

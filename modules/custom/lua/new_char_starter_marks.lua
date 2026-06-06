@@ -5,9 +5,9 @@
 -- without needing to grind first (breaks the chicken-and-egg loop
 -- where you need gear to do kills and kills to get gear currency).
 --
--- Starter grant: 100 HL Points
---   Bronze weapons cost 10-30 marks, so this covers the first purchase
---   with marks to spare for early upgrades.
+-- Starter grant: 25 HL Points
+--   Bronze weapons cost 10-30 marks, so this covers one entry-level
+--   purchase with a small buffer.
 --
 -- Also prints a welcome message explaining the server's core systems.
 -----------------------------------
@@ -16,7 +16,7 @@ require('scripts/globals/player')
 
 local m = Module:new('new_char_starter_marks')
 
-local STARTER_MARKS = 100
+local STARTER_MARKS = 25
 local CV_POINTS     = 'HL_Points'
 
 m:addOverride('xi.player.charCreate', function(player)
@@ -38,10 +38,14 @@ m:addOverride('xi.player.onPlayerLogin', function(player)
 
         local lines = {
             '=== Welcome to Legendary ===',
-            string.format('You have been granted %d Hunt Marks to get started!', STARTER_MARKS),
-            'Type  !hunt  to warp to Reisenjima Henge and start hunting NMs.',
-            'Type  !buff  for Refresh / Regen / Regain anywhere.',
-            'Type  !progress  to see your overall progression at any time.',
+            string.format('A starter gift of %d Hunt Marks is waiting in your pocket.', STARTER_MARKS),
+            'NEW CHARACTER? Type  !gmhome  and visit the setup Moogles there:',
+            '  - Character Upgrader  -- weapon skills, spells, Trusts, capped skills',
+            string.format('  - EXP Camp Moogle     -- warp to a camp and level to 99 (%gx EXP, fast!)', xi.settings.main.EXP_RATE or 10),
+            '  - Gear Moogle         -- a starter gear kit to get you going',
+            'Then summon your Trusts and type  !hunt  to start the Hunting League.',
+            'Handy anytime:  !buff (Refresh/Regen)  -  !progress  -  !help',
+            'Full walkthrough: https://legendary-ffxi.pages.dev/getting-started/first-steps/',
             'Good luck, and enjoy the hunt!',
         }
         for _, line in ipairs(lines) do

@@ -86,7 +86,7 @@ m:addOverride('xi.player.onGameIn', function(player, isZoning)
 
         local resetIn = daysToMonday(now)
 
-        p:printToPlayer('[Weekly Reset] ── New Week, New Objectives! ──────────', H)
+        p:printToPlayer('[Weekly Reset] == New Week, New Objectives! ==========', H)
         p:printToPlayer(
             string.format('  Resets in %d day(s)  (Monday 00:00 UTC)', resetIn), B)
         p:printToPlayer(
@@ -97,7 +97,7 @@ m:addOverride('xi.player.onGameIn', function(player, isZoning)
             string.format('  Bonus Dungeon:   %s  [%s]  (!bonus_dungeon for details)',
                 bonusLabel, bonusDone and 'DONE!' or 'not cleared'),
             B)
-        p:printToPlayer('  Good luck out there, hunter!  !help — command list', B)
+        p:printToPlayer('  Good luck out there, hunter!  !help - command list', B)
     end)
 end)
 

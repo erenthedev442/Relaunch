@@ -1,0 +1,651 @@
+{
+  "generated_at": "2026-05-28",
+  "total": 91,
+  "categories": {
+    "mythic_base": [
+      {
+        "iid": 20750,
+        "name": "lexeme_blade",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=226 Delay=489 skill=4"
+      },
+      {
+        "iid": 21640,
+        "name": "onion_sword_iii",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=165 Delay=240 skill=3"
+      },
+      {
+        "iid": 21641,
+        "name": "save_the_queen_iii",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=182 Delay=264 skill=3"
+      },
+      {
+        "iid": 21643,
+        "name": "caliburnus",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=156 Delay=233 skill=3"
+      },
+      {
+        "iid": 21651,
+        "name": "helheim",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=288 Delay=431 skill=4"
+      },
+      {
+        "iid": 21676,
+        "name": "brave_blade_iii",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=331 Delay=480 skill=4"
+      },
+      {
+        "iid": 21727,
+        "name": "spalirisos",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=187 Delay=280 skill=5"
+      },
+      {
+        "iid": 21782,
+        "name": "laphria",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=326 Delay=488 skill=6"
+      },
+      {
+        "iid": 21834,
+        "name": "foenaria",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=343 Delay=513 skill=7"
+      },
+      {
+        "iid": 21888,
+        "name": "gae_buide",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=329 Delay=492 skill=8"
+      },
+      {
+        "iid": 21929,
+        "name": "dokoku",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=140 Delay=210 skill=9"
+      },
+      {
+        "iid": 21981,
+        "name": "mutsu-no-kami_yoshiyuki",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=310 Delay=450 skill=10"
+      },
+      {
+        "iid": 21983,
+        "name": "kusanagi-no-tsurugi",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=292 Delay=437 skill=10"
+      },
+      {
+        "iid": 22000,
+        "name": "lorg_mor",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=206 Delay=308 skill=11"
+      },
+      {
+        "iid": 22103,
+        "name": "opashoro",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=261 Delay=390 skill=12"
+      },
+      {
+        "iid": 22156,
+        "name": "pinaka",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=277 Delay=524 skill=25"
+      },
+      {
+        "iid": 22160,
+        "name": "earp",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=128 Delay=582 skill=26"
+      }
+    ],
+    "ammo": [
+      {
+        "iid": 21302,
+        "name": "eminent_arrow",
+        "kind": "weapon",
+        "ilvl": 117,
+        "extra": "DMG=79 Delay=90 skill=25"
+      },
+      {
+        "iid": 21303,
+        "name": "rakaznar_arrow",
+        "kind": "weapon",
+        "ilvl": 115,
+        "extra": "DMG=78 Delay=90 skill=25"
+      },
+      {
+        "iid": 21316,
+        "name": "eminent_bolt",
+        "kind": "weapon",
+        "ilvl": 117,
+        "extra": "DMG=113 Delay=192 skill=26"
+      },
+      {
+        "iid": 21317,
+        "name": "rakaznar_bolt",
+        "kind": "weapon",
+        "ilvl": 115,
+        "extra": "DMG=112 Delay=192 skill=26"
+      },
+      {
+        "iid": 21322,
+        "name": "damascus_bolt",
+        "kind": "weapon",
+        "ilvl": 103,
+        "extra": "DMG=94 Delay=192 skill=26"
+      },
+      {
+        "iid": 21324,
+        "name": "midrium_bolt",
+        "kind": "weapon",
+        "ilvl": 100,
+        "extra": "DMG=75 Delay=192 skill=26"
+      },
+      {
+        "iid": 21331,
+        "name": "eminent_bullet",
+        "kind": "weapon",
+        "ilvl": 117,
+        "extra": "DMG=238 Delay=240 skill=26"
+      },
+      {
+        "iid": 21332,
+        "name": "rakaznar_bullet",
+        "kind": "weapon",
+        "ilvl": 115,
+        "extra": "DMG=237 Delay=240 skill=26"
+      },
+      {
+        "iid": 21338,
+        "name": "damascus_bullet",
+        "kind": "weapon",
+        "ilvl": 103,
+        "extra": "DMG=145 Delay=240 skill=26"
+      },
+      {
+        "iid": 21339,
+        "name": "midrium_bullet",
+        "kind": "weapon",
+        "ilvl": 100,
+        "extra": "DMG=115 Delay=240 skill=26"
+      }
+    ],
+    "joke_or_custom": [
+      {
+        "iid": 21541,
+        "name": "premium_hearts",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=195 Delay=576 skill=1"
+      },
+      {
+        "iid": 21602,
+        "name": "onion_sword_iii",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=183 Delay=240 skill=3"
+      },
+      {
+        "iid": 21603,
+        "name": "save_the_queen_iii",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=201 Delay=264 skill=3"
+      },
+      {
+        "iid": 21677,
+        "name": "brave_blade_iii",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=366 Delay=480 skill=4"
+      }
+    ],
+    "misc_unknown": [
+      {
+        "iid": 20608,
+        "name": "jugo_kukri",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=81 Delay=150 skill=2"
+      },
+      {
+        "iid": 20696,
+        "name": "combuster",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=161 Delay=277 skill=3"
+      },
+      {
+        "iid": 20697,
+        "name": "combuster_+1",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=162 Delay=270 skill=3"
+      },
+      {
+        "iid": 20708,
+        "name": "demersal_degen",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=109 Delay=224 skill=3"
+      },
+      {
+        "iid": 20709,
+        "name": "demersal_degen_+1",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=110 Delay=218 skill=3"
+      },
+      {
+        "iid": 20751,
+        "name": "lexeme_blade",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=228 Delay=489 skill=4"
+      },
+      {
+        "iid": 20752,
+        "name": "lexeme_blade",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=231 Delay=489 skill=4"
+      },
+      {
+        "iid": 21069,
+        "name": "nodal_wand",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=133 Delay=280 skill=11"
+      },
+      {
+        "iid": 21368,
+        "name": "bestas_bane",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=65 Delay=286 skill=27"
+      },
+      {
+        "iid": 21732,
+        "name": "demonic_axe",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=259 Delay=340 skill=5"
+      },
+      {
+        "iid": 21789,
+        "name": "drastic_axe",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=385 Delay=504 skill=6"
+      },
+      {
+        "iid": 21831,
+        "name": "ligeia_scythe",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=300 Delay=528 skill=7"
+      },
+      {
+        "iid": 21842,
+        "name": "final_sickle",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=403 Delay=528 skill=7"
+      },
+      {
+        "iid": 21893,
+        "name": "hebos_spear",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=375 Delay=492 skill=8"
+      },
+      {
+        "iid": 21936,
+        "name": "yagyu_darkblade",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=173 Delay=227 skill=9"
+      },
+      {
+        "iid": 21952,
+        "name": "zanmato_+2",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=354 Delay=464 skill=10"
+      },
+      {
+        "iid": 21953,
+        "name": "mutsu-no-kami_yoshiyuki",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=343 Delay=450 skill=10"
+      },
+      {
+        "iid": 21984,
+        "name": "kusanagi-no-tsurugi",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=310 Delay=437 skill=10"
+      },
+      {
+        "iid": 21985,
+        "name": "kusanagi-no-tsurugi",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=323 Delay=437 skill=10"
+      },
+      {
+        "iid": 21986,
+        "name": "kusanagi-no-tsurugi",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=340 Delay=437 skill=10"
+      },
+      {
+        "iid": 22168,
+        "name": "pandits_staff",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=314 Delay=412 skill=12"
+      },
+      {
+        "iid": 22169,
+        "name": "artemiss_bow_+2",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=336 Delay=540 skill=25"
+      },
+      {
+        "iid": 22170,
+        "name": "exeter",
+        "kind": "weapon",
+        "ilvl": 119,
+        "extra": "DMG=160 Delay=600 skill=26"
+      },
+      {
+        "iid": 23861,
+        "name": "suit_of_adamantite_armor",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 23914,
+        "name": "maxixi_tiara_+4",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 23959,
+        "name": "maxixi_casaque_+4",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24004,
+        "name": "maxixi_bangles_+4",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24032,
+        "name": "theophany_pantaloons_+4",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24049,
+        "name": "maxixi_tights_+4",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24063,
+        "name": "arcadian_braccae_+4",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24094,
+        "name": "maxixi_toe_shoes_+4",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24113,
+        "name": "luhlaza_charuqs_+4",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24283,
+        "name": "csm_gloves_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24284,
+        "name": "csf_gloves_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24285,
+        "name": "mg_gauntlets_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24286,
+        "name": "mg_gloves_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24287,
+        "name": "wn_mittens_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24288,
+        "name": "sv_gauntlets_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24289,
+        "name": "el_bracers_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24297,
+        "name": "csm_boots_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24298,
+        "name": "csf_boots_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24299,
+        "name": "mgm_ledelsens_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24300,
+        "name": "mgf_ledelsens_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24301,
+        "name": "wn_clomps_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24302,
+        "name": "sv_gaiters_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 24303,
+        "name": "el_sandals_+1",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 25796,
+        "name": "taliah_manteel_+2",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 25825,
+        "name": "regal_captains_gloves",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 25834,
+        "name": "taliah_gages_+2",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 25885,
+        "name": "taliah_seraweels_+2",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 25952,
+        "name": "taliah_crackows_+2",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 26117,
+        "name": "crepuscular_earring",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 26493,
+        "name": "duban",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 26494,
+        "name": "duban",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 26495,
+        "name": "duban",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 26696,
+        "name": "pixie_hairpin_+1",
+        "kind": "armor",
+        "ilvl": 118,
+        "extra": ""
+      },
+      {
+        "iid": 26699,
+        "name": "theias_hairpin_+1",
+        "kind": "armor",
+        "ilvl": 118,
+        "extra": ""
+      },
+      {
+        "iid": 26709,
+        "name": "imperial_wing_hairpin",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 26786,
+        "name": "alhazen_hat",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      },
+      {
+        "iid": 27322,
+        "name": "talab_trousers",
+        "kind": "armor",
+        "ilvl": 119,
+        "extra": ""
+      }
+    ]
+  }
+}

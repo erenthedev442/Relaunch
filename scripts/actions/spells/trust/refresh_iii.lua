@@ -1,0 +1,11 @@
+-----------------------------------
+-- Spell shim: Refresh III  (Trust dispatch)
+-- The spell_list row id 894 has group=Trust, but the working
+-- implementation lives at scripts/actions/spells/white/refresh_iii.lua. The engine only looks
+-- in the folder matching the DB group, so without this shim Trust
+-- NPCs scripted to cast Refresh III would silently no-op.
+--
+-- This shim re-uses the canonical implementation. Zero behavioral
+-- divergence between player-cast and Trust-cast versions.
+-----------------------------------
+return require('scripts/actions/spells/white/refresh_iii')

@@ -128,6 +128,7 @@ local homepointData =
     [119] = { group = 3, fee = 1, dest = {    -43.5,       0,    -145,   0, xi.zone.WINDURST_WOODS         } }, -- Windurst Woods #5
     [120] = { group = 6, fee = 1, dest = {       14,   -9.96,      -5,   0, xi.zone.TAVNAZIAN_SAFEHOLD     } }, -- Tavnazian Safehold #2
     [121] = { group = 6, fee = 1, dest = {    73.59, -36.149,   38.87,   0, xi.zone.TAVNAZIAN_SAFEHOLD     } }, -- Tavnazian Safehold #3
+    [122] = { group = 0, fee = 1, dest = {    -7.0,       0,     -11, 128, xi.zone.GM_HOME                } }, -- GM Home #1
 }
 
 local selection =

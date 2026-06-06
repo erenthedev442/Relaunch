@@ -105,4 +105,5 @@ xi.mobMod =
     FOLLOW_LEASH_RANGE     = 94, -- Distance the leader can walk before their followers start moving. Applied to followers.
     FOLLOW_STOP_RANGE      = 95, -- Distance the followers attempt to stop at once their leader stops moving. Applied to followers.
     TRUST_SHIELD_SIZE      = 96, -- TRUSTS ONLY: Set the size of the mob's shield. 3 = Default size, only used for trusts that use shields.
+    NO_CAPACITY_POINTS     = 200, -- Legendary custom: if non-zero, this mob grants NO capacity points on kill. Used by Hunting League / Game Master mobs that are Lv150+ so the cubic CP formula doesn't dump tens of thousands of CP per kill. Value 200 (not 97) to leave headroom for LSB upstream adding more mods. Must stay paired with MOBMOD_NO_CAPACITY_POINTS in src/map/mob_modifier.h + the early-return in src/map/utils/charutils.cpp::DistributeCapacityPoints.
 }

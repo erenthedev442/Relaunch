@@ -2,11 +2,11 @@
 -- func: profile
 -- desc: Displays a competitive stat summary for a player.  With no
 --       argument shows your own stats; with a name shows that player's
---       (they must be online — offline players can't be queried via Lua).
+--       (they must be online - offline players can't be queried via Lua).
 --
 -- Usage:
---   !profile          — your own stats
---   !profile Jbae     — Jbae's stats (must be online)
+--   !profile          - your own stats
+--   !profile Jbae     - Jbae's stats (must be online)
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
@@ -58,7 +58,7 @@ commandObj.onTrigger = function(player, targetName)
     local tierName = TIER_NAMES[math.max(1, math.min(hlTier, 5))] or 'Initiate'
     if hlTier == 0 then tierName = 'Initiate' end
 
-    player:printToPlayer(string.format('[Profile] ── %s ──────────────────────────', name), H)
+    player:printToPlayer(string.format('[Profile] == %s ==========================', name), H)
     player:printToPlayer(string.format('  HL Rank: %-8s  NM Kills: %-6d  Lifetime Marks: %d',
         tierName, nmKills, hlLife), B)
     player:printToPlayer(string.format('  Dungeons: %d clears  |  Infamy: %d  |  Weekly Sweeps: %d',
@@ -67,7 +67,7 @@ commandObj.onTrigger = function(player, targetName)
 
     if targ ~= player then
         player:printToPlayer(
-            '  (Full leaderboards at richardknutzjr.github.io/FFXI-Private-Server-FJB/community/leaderboards/)', B)
+            '  (Full leaderboards at legendary-ffxi.pages.dev/community/leaderboards/)', B)
     end
 end
 

@@ -204,19 +204,24 @@ JobPoints_t* CJobPoints::GetAllJobPoints()
 
 bool CJobPoints::AddCapacityPoints(uint16 amount)
 {
+    // Read the held-JP cap from settings (was hardcoded 500). The hard ceiling
+    // is 65535 because both the storage (JobPoints_t::currentJp) and the
+    // client packet field (0x063 JobPointData::currentJp) are uint16_t.
+    const uint16 maxJobPoints = settings::get<uint16>("map.MAX_JOB_POINTS");
+
     uint32 adjustedCapacity = m_jobPoints[m_PChar->GetMJob()].capacityPoints + amount * settings::get<float>("map.CAPACITY_RATE");
     uint16 currentJobPoints = this->GetJobPoints();
 
     if (adjustedCapacity >= 30000)
     {
         // check if player has reached cap
-        if (currentJobPoints == 500)
+        if (currentJobPoints >= maxJobPoints)
         {
             this->SetCapacityPoints(30000 - 1);
             return false;
         }
 
-        uint16 jobPoints = std::min((int)(currentJobPoints + adjustedCapacity / 30000), 500);
+        uint16 jobPoints = std::min((int)(currentJobPoints + adjustedCapacity / 30000), (int)maxJobPoints);
 
         this->SetCapacityPoints(adjustedCapacity % 30000);
 
@@ -388,50 +393,11 @@ void RefreshGiftMods(CCharEntity* PChar)
             break;
 
         case JOB_GEO:
-            if (totalJpSpent >= 100)
-            {
-                for (const SpellID elementalSpell : { SpellID::Fire_V,
-                                                      SpellID::Blizzard_V,
-                                                      SpellID::Aero_V,
-                                                      SpellID::Stone_V,
-                                                      SpellID::Thunder_V,
-                                                      SpellID::Water_V })
-                {
-                    uint16 spellIdNum = static_cast<uint16>(elementalSpell);
-
-                    if (!charutils::hasSpell(PChar, spellIdNum))
-                    {
-                        charutils::addSpell(PChar, spellIdNum);
-                        charutils::SaveSpell(PChar, spellIdNum);
-                    }
-                }
-
-                sendUpdate = true;
-            }
-
-            if (totalJpSpent >= 550 && !charutils::hasSpell(PChar, (uint16)SpellID::Aspir_III))
-            {
-                charutils::addSpell(PChar, (uint16)SpellID::Aspir_III);
-                charutils::SaveSpell(PChar, (uint16)SpellID::Aspir_III);
-
-                sendUpdate = true;
-            }
-
-            if (totalJpSpent >= 1200 && !charutils::hasSpell(PChar, (uint16)SpellID::Fira_III))
-            {
-                for (const SpellID elementalSpell : { SpellID::Fira_III,
-                                                      SpellID::Blizzara_III,
-                                                      SpellID::Aera_III,
-                                                      SpellID::Stonera_III,
-                                                      SpellID::Thundara_III,
-                                                      SpellID::Watera_III })
-                {
-                    charutils::addSpell(PChar, (uint16)elementalSpell);
-                    charutils::SaveSpell(PChar, (uint16)elementalSpell);
-                }
-
-                sendUpdate = true;
-            }
+            // GEO slot repurposed as the custom "Bouncer" tank job (see
+            // documentation/custom_tank_job_design.md and modules/custom/sql/bouncer_*.sql).
+            // The Bouncer has no spells, so the original GEO elemental/aspir JP
+            // spell grants are intentionally removed. Leave empty so JP spent in
+            // this slot grants no spells.
             break;
 
         case JOB_NIN:

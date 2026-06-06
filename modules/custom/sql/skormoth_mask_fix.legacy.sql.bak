@@ -1,0 +1,34 @@
+-- ============================================================
+-- skormoth_mask_fix.sql
+--
+-- Brings Skormoth Mask's TRIPLE_ATTACK mod from +400 down to +5,
+-- which matches the cluster of comparable iLvl 119 head pieces:
+--   Skulker's Bonnet +2 / +3:  TA+5
+--   Flamma Zucchetto +2:       TA+5
+--   Adhemar Bonnet +1:         TA+6
+--   Kendatsuba Jinpachi +1:    TA+4
+--   Iuitl Headgear +1:         TA+21  (also anomalously high; see note)
+--
+-- Skormoth Mask's +400 is almost certainly an upstream LSB data error
+-- (probably 400 in a column intended for a percent in 1/100ths, or
+-- a paste from the wrong column). The wearer hits the engine's TA
+-- cap automatically, which makes Skormoth strictly best in the head
+-- slot for every job that can wear it (MNK/THF/RNG/NIN/BLU/COR/PUP/
+-- DNC/RUN) — surfaced by the gear-coverage matrix as a 16.6x lead
+-- over its runner-up in TP score.
+--
+-- Idempotent: UPDATE-by-key is repeatable safely.
+--
+-- NOTE: Iuitl Headgear +1 (item 27782) at TA+21 is ALSO above the
+-- standard cluster but was not touched here — fix separately if you
+-- want consistency, or leave as a distinct upper-end TP head.
+--
+-- To apply:
+--   python tools/dbtool.py update modules/custom/sql/skormoth_mask_fix.sql
+-- Then restart xi_map.exe.
+-- ============================================================
+
+UPDATE `item_mods`
+SET    `value`  = 5
+WHERE  `itemId` = 27783      -- Skormoth Mask
+  AND  `modId`  = 302;       -- TRIPLE_ATTACK

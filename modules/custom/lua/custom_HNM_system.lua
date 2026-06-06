@@ -181,19 +181,19 @@ hnmSystem:addOverride('xi.zones.Behemoths_Dominion.npcs.qm2.onTrade', function(p
 end)
 
 -----------------------------------
--- Lower-tier HNMs — 6-10 hour respawn windows (accessible to mid-tier players)
+-- Lower-tier HNMs - 6-10 hour respawn windows (accessible to mid-tier players)
 --
 -- Respawn formula: randomPopTime = minSeconds + math.random(0, rangeSteps) * 1800
---   Roc / Simurgh / Serket: 21600 + rand(0,4)*1800  → 6–8 h
---   King Arthro:             28800 + rand(0,4)*1800  → 8–10 h
---   Spiny Spipi:             14400 + rand(0,4)*1800  → 4–6 h
+--   Roc / Simurgh / Serket: 21600 + rand(0,4)*1800  -> 6-8 h
+--   King Arthro:             28800 + rand(0,4)*1800  -> 8-10 h
+--   Spiny Spipi:             14400 + rand(0,4)*1800  -> 4-6 h
 --
 -- Zone confirmation (IDs verified against scripts/zones/*/IDs.lua):
---   Roc         — Sauromugue_Champaign  (zone 120) — sauromugueID.mob.ROC
---   Simurgh     — Rolanberry_Fields     (zone 110) — rolanberryID.mob.SIMURGH
---   Serket      — Garlaige_Citadel      (zone 200) — garlaigeCitadelID.mob.SERKET
---   King Arthro — Jugner_Forest         (zone 104) — jugnerForestID.mob.KING_ARTHRO
---   Spiny Spipi — East_Sarutabaruta     (zone 116) — eastSarutabarutaID.mob.SPINY_SPIPI
+--   Roc         - Sauromugue_Champaign  (zone 120) - sauromugueID.mob.ROC
+--   Simurgh     - Rolanberry_Fields     (zone 110) - rolanberryID.mob.SIMURGH
+--   Serket      - Garlaige_Citadel      (zone 200) - garlaigeCitadelID.mob.SERKET
+--   King Arthro - Jugner_Forest         (zone 104) - jugnerForestID.mob.KING_ARTHRO
+--   Spiny Spipi - East_Sarutabaruta     (zone 116) - eastSarutabarutaID.mob.SPINY_SPIPI
 --
 -- NOTE: The prompt guessed wrong zones for several of these NMs. The zones above
 -- are confirmed from the LSB IDs.lua files and are the correct vanilla locations.

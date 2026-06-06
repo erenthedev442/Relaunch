@@ -33,16 +33,16 @@ commandObj.onTrigger = function(player)
     end
 
     player:printToPlayer(
-        string.format('[Tier] ── Rank %d: %s ────────────────────────────', tier, tierDef.name), H)
+        string.format('[Tier] == Rank %d: %s ============================', tier, tierDef.name), H)
     player:printToPlayer(string.format('  Current marks:  %d', pts), B)
     player:printToPlayer('  NMs at your rank:', B)
     for _, mob in ipairs(tierDef.mobs) do
         player:printToPlayer(
-            string.format('    • %-22s  +%d marks/kill', mob.label, mob.points), B)
+            string.format('    * %-22s  +%d marks/kill', mob.label, mob.points), B)
     end
 
     -- Next tier information
-    player:printToPlayer('  ──────────────────────────────────────────────────', B)
+    player:printToPlayer('  ==================================================', B)
     if tier >= maxTier then
         player:printToPlayer('  You have reached the maximum rank.  Legend status achieved!', B)
         return
@@ -52,7 +52,7 @@ commandObj.onTrigger = function(player)
     local cost    = nextDef.unlockCost
     if pts >= cost then
         player:printToPlayer(
-            string.format('  ★ READY to unlock %s!', nextDef.name), B)
+            string.format('  * READY to unlock %s!', nextDef.name), B)
         player:printToPlayer(
             string.format('    Cost: %d marks  (you have %d)', cost, pts), B)
         player:printToPlayer(
@@ -69,7 +69,7 @@ commandObj.onTrigger = function(player)
     player:printToPlayer(string.format('  NMs at %s:', nextDef.name), B)
     for _, mob in ipairs(nextDef.mobs) do
         player:printToPlayer(
-            string.format('    • %-22s  +%d marks/kill', mob.label, mob.points), B)
+            string.format('    * %-22s  +%d marks/kill', mob.label, mob.points), B)
     end
 end
 
