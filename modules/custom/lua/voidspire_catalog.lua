@@ -111,7 +111,7 @@ catalog.affixes =
     { id = 'unerring',   label = 'Unerring',   desc = 'Nothing escapes their sight -- evasion is useless here.',
       mods = { [xi.mod.ACC] = 700 } },
     { id = 'warded',     label = 'Warded',     desc = 'A void-shell blunts every blow.',
-      mods = { [xi.mod.PHYS_DMG_TAKEN] = -10, [xi.mod.MAGIC_DMG_TAKEN] = -10 } },
+      mods = { [xi.mod.DMGPHYS] = -10, [xi.mod.DMGMAGIC] = -10 } },
     { id = 'venomous',   label = 'Venomous',   desc = 'Their touch corrodes flesh and magic alike.',
       mods = { [xi.mod.ATT] = 1500, [xi.mod.MATT] = 80 } },
     { id = 'phantasmal', label = 'Phantasmal', desc = 'Half-dreamed, and maddeningly slippery.',
