@@ -307,6 +307,22 @@ _ADDED_WEIGHTS = {  # role assignments from the scoring workbook's "Unscored on 
 }
 for _r, _w in _ADDED_WEIGHTS.items(): ROLE_WEIGHTS[_r].update(_w)
 MOD_SANITY_CAP.update({31:300,507:300,175:2000,361:300,430:20})
+# Normalize x10/x100/x10000-stored mods to their in-game value (700 skillchain -> 7,
+# -1000 PDT -> -10). Values divided; weights x scale, caps / scale -> scores unchanged.
+MOD_SCALE = {160:100,161:100,162:100,163:100,164:100,175:100,506:10,507:100}
+for _role in ROLE_WEIGHTS:
+    for _m,_div in MOD_SCALE.items():
+        if _m in ROLE_WEIGHTS[_role]: ROLE_WEIGHTS[_role][_m] *= _div
+for _m,_div in MOD_SCALE.items():
+    if _m in MOD_SANITY_CAP: MOD_SANITY_CAP[_m] = MOD_SANITY_CAP[_m]/_div
+def _normv(v,div):
+    q=v/div; return int(q) if q==int(q) else round(q,2)
+for _dd in imods.values():
+    for _m,_div in MOD_SCALE.items():
+        if _m in _dd: _dd[_m]=_normv(_dd[_m],_div)
+for _lst in item_latents.values():
+    for _row in _lst:
+        if _row["modId"] in MOD_SCALE: _row["value"]=_normv(_row["value"],MOD_SCALE[_row["modId"]])
 def _clamp(mid_, val):
     cap = MOD_SANITY_CAP.get(mid_, 200)
     return cap if val > cap else (-cap if val < -cap else val)

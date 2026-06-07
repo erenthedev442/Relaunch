@@ -78,19 +78,6 @@
     "partial": true
   },
   {
-    "itemId": 24179,
-    "shortName": "duty_sollerets",
-    "context": "Armor NPC [gold] feet: Duty Sollerets",
-    "reason": "partial parse — unknown tokens left over (item still emitted)",
-    "bgwiki": "https://www.bg-wiki.com/ffxi/Duty_Sollerets",
-    "raw": "DEF:114 HP+96 STR+31 DEX+40 VIT+31 AGI+40 MND+21 CHR+35 Accuracy+42 Attack+42 Magic Accuracy+42 Evasion+118 Magic Evasion+131 \"Magic Def. Bonus\"+8 Haste+3% \"Double Attack\"+4% \"Subtle Blow\"+4 Damage taken -4% Pet: Accuracy+42 Ranged Accuracy+42 Magic Accuracy+42 Lv+1",
-    "unknown_tokens": [
-      "Pet",
-      "Lv"
-    ],
-    "partial": true
-  },
-  {
     "itemId": 24182,
     "shortName": "clemency_somen",
     "context": "Armor NPC [gold] head: Clemency Somen",

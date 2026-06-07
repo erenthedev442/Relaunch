@@ -279,7 +279,6 @@ table.insert(g.legs, { id = 25868, name = "Jhakri Slops +1", cost = 50, jobs = '
 table.insert(g.legs, { id = 28191, name = "Founders Hose", cost = 50, jobs = 'WAR/PLD/DRK/SAM/DRG' })  -- TANK score 313
 
 -- Feet (10 picks, scored highest first)
-table.insert(g.feet, { id = 23786, name = "Mpacas Boots", cost = 50, jobs = 'MNK/SAM/NIN/PUP' })  -- TANK score 358
 table.insert(g.feet, { id = 23728, name = "Volte Sollerets", cost = 50, jobs = 'WAR/PLD/DRK' })  -- TANK score 352
 table.insert(g.feet, { id = 23789, name = "Nyame Sollerets", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- TANK score 350
 table.insert(g.feet, { id = 24178, name = "Magnificent Sollerets", cost = 50, jobs = 'MNK/THF/BST/PUP/DNC' })  -- DPS score 342
@@ -288,6 +287,7 @@ table.insert(g.feet, { id = 23784, name = "Gletis Boots", cost = 50, jobs = 'THF
 table.insert(g.feet, { id = 23727, name = "Volte Spats", cost = 50, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN' })  -- DPS score 314
 table.insert(g.feet, { id = 23736, name = "Malignance Boots", cost = 50, jobs = 'MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC' })  -- TANK score 310
 table.insert(g.feet, { id = 25944, name = "Mallquis Clogs", cost = 50, jobs = 'BLM/SCH/GEO' })  -- CASTER score 308
+table.insert(g.feet, { id = 25928, name = "Meghanada Jambeaux +1", cost = 50, jobs = 'THF/BST/RNG/COR/DNC/RUN' })  -- WS score 292
 table.insert(g.feet, { id = 23726, name = "Volte Gaiters", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 276
 
 
@@ -329,8 +329,8 @@ table.insert(inf.legs, { id = 23778, name = "Sakpatas Cuisses", cost = 500, jobs
 table.insert(inf.feet, { id = 23788, name = "Bunzis Sabots", cost = 500, jobs = 'WHM/RDM/BRD/SMN' })  -- CASTER score 407
 table.insert(inf.feet, { id = 25945, name = "Mallquis Clogs +1", cost = 500, jobs = 'BLM/SCH/GEO' })  -- CASTER score 382
 table.insert(inf.feet, { id = 23787, name = "Agwus Pigaches", cost = 500, jobs = 'BLM/SCH/GEO/RUN' })  -- CASTER score 361
-table.insert(inf.feet, { id = 24179, name = "Duty Sollerets", cost = 500, jobs = 'MNK/THF/BST/PUP/DNC' })  -- DPS score 360
 table.insert(inf.feet, { id = 23785, name = "Sakpatas Leggings", cost = 500, jobs = 'WAR/PLD/DRK' })  -- TANK score 359
+table.insert(inf.feet, { id = 23786, name = "Mpacas Boots", cost = 500, jobs = 'MNK/SAM/NIN/PUP' })  -- TANK score 358
 
 
 return catalog

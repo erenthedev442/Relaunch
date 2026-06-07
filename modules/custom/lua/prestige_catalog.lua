@@ -371,11 +371,22 @@ return
         -- MACC / MATT: 20×50 = +1000 each
         { id = 'MACC', label = 'Magic Acc', mod = xi.mod.MACC, perLevel = 20, cap = 50, apCost = 1, note = '+20 Mag.Acc / level (max +1000) [1 AP]' },
         { id = 'MATT', label = 'Magic Atk', mod = xi.mod.MATT, perLevel = 20, cap = 50, apCost = 1, note = '+20 Mag.Atk / level (max +1000) [1 AP]' },
+        -- MAGIC_DAMAGE is flat (added directly to a spell's base damage). No hard cap.
+        { id = 'MDMG', label = 'Magic Dmg', mod = xi.mod.MAGIC_DAMAGE, perLevel = 10, cap = 25, apCost = 2, note = '+10 Magic Dmg / level (max +250) [2 AP]' },
+
+        -- ---- Ranged offense ------------------------------------------
+        -- Mirrors melee ACC/ATT for RNG/COR. Flat, no hard cap.
+        { id = 'RACC', label = 'Ranged Acc', mod = xi.mod.RACC, perLevel = 10, cap = 50, apCost = 1, note = '+10 R.Acc / level (max +500) [1 AP]'  },
+        { id = 'RATT', label = 'Ranged Att', mod = xi.mod.RATT, perLevel = 20, cap = 50, apCost = 1, note = '+20 R.Att / level (max +1000) [1 AP]' },
 
         -- ---- Combat traits -------------------------------------------
         { id = 'STP',    label = 'Store TP',    mod = xi.mod.STORETP,            perLevel =  2, cap = 50, apCost = 2, note = '+2 Store TP / level (max +100) [2 AP]'     },
         { id = 'TPBON',  label = 'TP Bonus',    mod = xi.mod.TP_BONUS,           perLevel = 10, cap = 50, apCost = 2, note = '+10 TP Bonus / level (max +500) [2 AP]'    },
         { id = 'QA',     label = 'Quad Atk',    mod = xi.mod.QUAD_ATTACK,        perLevel =  1, cap = 50, apCost = 2, note = '+1% Quad.Atk / level (max 50%) [2 AP]'    },
+        -- DUAL_WIELD is whole-% (1 raw = 1% delay reduction on the off-hand). No
+        -- engine clamp, but it's practically capped by the attack-delay floor when
+        -- stacked with Haste, so the perk is held to a sane +25%.
+        { id = 'DW',     label = 'Dual Wield',  mod = xi.mod.DUAL_WIELD,         perLevel =  1, cap = 25, apCost = 2, note = '+1% Dual Wield / level (max 25%) [2 AP]'  },
         { id = 'CRIT',   label = 'Crit Rate',   mod = xi.mod.CRITHITRATE,        perLevel =  1, cap = 50, apCost = 2, note = '+1% Crit / level (max 50%) [2 AP]'         },
         -- CRIT_DMG_INCREASE is WHOLE-% (engine: pDif*(100+mod)/100, clamped 100):
         -- perLevel 2 = +2% crit damage; max +100% at 50 levels.
@@ -392,6 +403,9 @@ return
         -- ---- Mitigation -----------------------------------------------
         -- 10000:1 scale: perLevel -100 = -1% PDT per level; cap 25 = -25% max
         { id = 'PDT',   label = 'Phys.DT-',  mod = xi.mod.DMGPHYS,    perLevel = -100, cap = 25, apCost = 3, note = '-1% Phys.DT / level (max -25%) [3 AP]'    },
+        -- DMGMAGIC mirrors DMGPHYS (same 100:1 scale). Engine HARD-CAPS damage
+        -- taken at -50%; perk maxes at -25%, leaving headroom for gear.
+        { id = 'MDT',   label = 'Mag.DT-',   mod = xi.mod.DMGMAGIC,   perLevel = -100, cap = 25, apCost = 3, note = '-1% Mag.DT / level (max -25%) [3 AP]'     },
         -- 10000:1 scale: perLevel 100 = +1% haste per level; cap 25 = 25% max
         { id = 'HASTE', label = 'Haste',      mod = xi.mod.HASTE_GEAR, perLevel =  100, cap = 25, apCost = 3, note = '+1% Haste / level (max 25%) [3 AP]'        },
 
@@ -403,10 +417,12 @@ return
         -- perLevel 1 = +1% fast cast; max +50% at 50 levels.
         { id = 'FCAST', label = 'Fast Cast',     mod = xi.mod.FASTCAST,          perLevel = 1, cap = 50, apCost = 2, note = '+1% Fast Cast / level (max 50%) [2 AP]'     },
         { id = 'ENSP',  label = 'Enspell Dmg',   mod = xi.mod.ENSPELL_DMG_BONUS, perLevel = 10, cap = 50, apCost = 2, note = '+10 Enspell Dmg / level (max +500) [2 AP]'  },
-        -- CURE_POTENCY is WHOLE-% (engine: cure*(100+mod)/100): perLevel 2 = +2%
-        -- per level. (Gear Cure Potency hard-caps ~50%; a prestige source may
-        -- stack past that, so the +100% nominal is generous -- verify in-game.)
-        { id = 'CURE',  label = 'Cure Potency',  mod = xi.mod.CURE_POTENCY,      perLevel = 2, cap = 50, apCost = 2, note = '+2% Cure Pot. / level (max 100%) [2 AP]'    },
+        -- CURE_POTENCY is WHOLE-% (engine: cure*(100+mod)/100). Cure Potency
+        -- HARD-CAPS at +50%, so the perk is capped there (cap 25 = +50%) -- buying
+        -- past it would be wasted AP.
+        { id = 'CURE',  label = 'Cure Potency',  mod = xi.mod.CURE_POTENCY,      perLevel = 2, cap = 25, apCost = 2, note = '+2% Cure Pot. / level (max +50%) [2 AP]'    },
+        -- REFRESH is flat (MP/tick). No hard cap; held to a sane +10 MP/tick.
+        { id = 'RFSH',  label = 'Refresh',       mod = xi.mod.REFRESH,           perLevel = 1, cap = 10, apCost = 3, note = '+1 Refresh / level (max +10 MP/tick) [3 AP]' },
 
         -- ---- Utility --------------------------------------------------
         { id = 'TH',  label = 'Treas.Hunter', mod = xi.mod.TREASURE_HUNTER, perLevel = 1, cap = 50, apCost = 2, note = '+1 TH / level (max +50) [2 AP]'              },

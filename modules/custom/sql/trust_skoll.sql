@@ -102,7 +102,7 @@ REPLACE INTO mob_pools
      spellList, namevis, roamflag, skill_list_id, resist_id,
      modelSize, modelHitboxSize)
 VALUES
-    (5901, 'skoll', 'Gemma', 246, UNHEX('010004020010E520B8305840B8503B613B710000'), -- FJB: valid Hume Female look (face 4). Prior blob's gear words were missing their slot-marker nibbles, so the client dropped the spawn -> blank name + no model.
+    (5901, 'skoll', 'Gemma', 246, UNHEX('010000024B004E010000C5010000000000000000'), -- FJB Gemma look (per AltanaView): Hume Female (race 2), face F1A (0), Assassin's Bonnet (head 75) + Marine Top (body 334) + Pretty Pink Subligar (legs 453), no weapon. look_t byte order = size(u16=1 MODEL_EQUIPPED), face(u8), race(u8), head/body/hands/legs/feet/main/sub/ranged(u16 LE). Name shows via renameEntity in skoll.lua (isRenamed branch handles the equipped-look name collision).
      17, 5, 0, 240, 0,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,

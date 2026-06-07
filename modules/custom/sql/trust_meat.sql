@@ -68,7 +68,7 @@ REPLACE INTO mob_pools
      spellList, namevis, roamflag, skill_list_id, resist_id,
      modelSize, modelHitboxSize)
 VALUES
-    (5899, 'meat', 'Meat', 255, UNHEX('0100010159115821003058410350B46000700000'), -- FJB: valid Hume Male knight look. Prior blob's gear words were missing their slot-marker nibbles (head 0x1n / body 0x2n / ...), so the client dropped the spawn -> blank name + no model.
+    (5899, 'meat', 'Meat', 255, UNHEX('01000001990199014F004F004F003F0100000000'), -- FJB Meat look: Hume Male (race 1), face M1A (0, hidden by helm), Terminal Helm + Terminal Plate (head/body model 409), Abyss gauntlets/flanchard/sollerets (hands/legs/feet model 79), Ragnarok great sword (main 319), no sub/ranged. size=1 (MODEL_EQUIPPED). NOTE: "Terminal" only exists as helm+plate (no hands/legs/feet mesh), so the dark Abyss set completes the look. look_t byte order = size(u16),face(u8),race(u8),head/body/hands/legs/feet/main/sub/ranged(u16 LE). Name shows via renameEntity in meat.lua.
      7, 1, 0, 240, 10,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,

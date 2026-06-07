@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-06T11:40:08",
+  "generated_at": "2026-06-07T14:33:33",
   "summary": {
     "reforge": {
       "total": 1320,
@@ -10,9 +10,9 @@
       "not_equip": 0
     },
     "hunting_league": {
-      "total": 397,
+      "total": 396,
       "ok": 332,
-      "naked": 59,
+      "naked": 58,
       "latent_only": 0,
       "missing": 3,
       "not_equip": 3
@@ -80,14 +80,6 @@
       "shortName": "magnificent_sollerets",
       "source": "hunting_league",
       "context": "Armor NPC [gold] feet: Magnificent Sollerets",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24179,
-      "shortName": "duty_sollerets",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] feet: Duty Sollerets",
       "modCount": 0,
       "latentCount": 0
     },
