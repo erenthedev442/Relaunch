@@ -822,7 +822,7 @@ int32 CalculateEnspellDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender,
         damage = HandleStoneskin(PDefender, damage);
     }
 
-    damage = std::clamp(damage, -99999, 99999);
+    damage = std::clamp(damage, -131071, 131071);
 
     return damage;
 }
@@ -2179,7 +2179,7 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
         damage = HandleStoneskin(PDefender, damage);
         HandleAfflatusMiseryDamage(PDefender, damage);
     }
-    damage = std::clamp(damage, -99999, 99999);
+    damage = std::clamp(damage, -131071, 131071);
 
     damage = CheckAndApplyDamageCap(damage, PDefender);
 
@@ -2343,7 +2343,7 @@ int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
     }
 
     HandleAfflatusMiseryDamage(PDefender, damage);
-    damage = std::clamp(damage, -99999, 99999);
+    damage = std::clamp(damage, -131071, 131071);
 
     damage = CheckAndApplyDamageCap(damage, PDefender);
 
@@ -3759,7 +3759,7 @@ int32 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, i
         damage = HandleStoneskin(PDefender, damage);
         HandleAfflatusMiseryDamage(PDefender, damage);
     }
-    damage = std::clamp(damage, -99999, 99999);
+    damage = std::clamp(damage, -131071, 131071);
 
     uint16 elementOffset = static_cast<uint16>(DAMAGE_TYPE::ELEMENTAL) + static_cast<uint16>(appliedEle);
     PDefender->takeDamage(damage, PAttacker, ATTACK_TYPE::SPECIAL, appliedEle == ELEMENT_NONE ? DAMAGE_TYPE::NONE : static_cast<DAMAGE_TYPE>(elementOffset), true);
