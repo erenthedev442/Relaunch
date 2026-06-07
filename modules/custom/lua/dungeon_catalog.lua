@@ -1373,7 +1373,6 @@ catalog.vendorItems =
     { id = 26259, name = "Brigantia's Mantle",   cost = 300, stats = { 'Back. DRG cape. DEF+18.', 'All Jumps: DA+20%. Wyvern: Breath+15.' } },
 
     -- ACCESSORIES - endgame neck/ring/back
-    { id = 26072, name = 'Knobkierrie',    cost =  300, stats = { 'WSD+5%, STR+25.', 'Top WS neck.' } },
     { id = 27928, name = 'Stikini Ring +1',cost =  200, stats = { 'INT+10, MND+10, MEVA+12.', 'Mage ring.' } },
 
     -- META - the truly exclusive "I'm done" prestige slot
@@ -2044,7 +2043,6 @@ catalog.itemTypeMap =
     [26190] = 'Accessories/Ring',
     [26334] = 'Accessories/Waist',
     [26259] = 'Accessories/Back',
-    [26072] = 'Accessories/Neck',
     [27928] = 'Armor/Hands',
     [13566] = 'Accessories/Ring',
     [19832] = 'Weapons/Polearm',
