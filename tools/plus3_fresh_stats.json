@@ -1,0 +1,1106 @@
+{
+"23403": {
+"name": "Plunderer's Bonnet +3",
+"db": "plunderers_bonnet_+3",
+"stats": "DEF:122 HP+56 MP+43 STR+31 DEX+41 VIT+31 AGI+35 INT+31 MND+31 CHR+32 Accuracy+44 Attack+62 Magic Accuracy+37 Evasion+64 Magic Evasion+73 \"Magic Def. Bonus\"+4 Haste+8% \"Triple Attack\"+4% \"Mug\"+5",
+"url": "https://www.bg-wiki.com/ffxi/Plunderer%27s_Bonnet_%2B3"
+},
+"23404": {
+"name": "Cab. Coronet +3",
+"db": "caballarius_coronet_+3",
+"stats": "DEF:140 HP+116 MP+98 STR+32 DEX+26 VIT+43 AGI+26 INT+24 MND+24 CHR+24 Accuracy+37 Attack+62 Magic Accuracy+37 Evasion+53 Magic Evasion+52 \"Magic Def. Bonus\"+4 Haste+7% Enmity+9 \"Rampart\" duration +30",
+"url": "https://www.bg-wiki.com/ffxi/Caballarius_Coronet_%2B3"
+},
+"23405": {
+"name": "Fall. Burgeonet +3",
+"db": "fallens_burgeonet_+3",
+"stats": "DEF:134 HP+96 MP+43 STR+40 DEX+24 VIT+40 AGI+24 INT+22 MND+22 CHR+22 Accuracy+44 Attack+77 Magic Accuracy+37 Evasion+53 Magic Evasion+52 \"Magic Def. Bonus\"+4 Haste+7% Dark magic casting time -12%",
+"url": "https://www.bg-wiki.com/ffxi/Fallen%27s_Burgeonet_%2B3"
+},
+"23406": {
+"name": "Ankusa Helm +3",
+"db": "ankusa_helm_+3",
+"stats": "DEF:123 HP+56 MP+43 STR+32 DEX+36 VIT+25 AGI+29 INT+25 MND+25 CHR+33 Accuracy+37 Attack+62 Magic Accuracy+37 Evasion+64 Magic Evasion+73 \"Magic Def. Bonus\"+4 Haste+8% \"Charm\"+14 \"Killer\" effects +5 Weapon skill damage +10% Pet: Haste+6%",
+"url": "https://www.bg-wiki.com/ffxi/Ankusa_Helm_%2B3"
+},
+"23407": {
+"name": "Bihu Roundlet +3",
+"db": "bihu_roundlet_+3",
+"stats": "DEF:115 HP+56 MP+52 STR+21 DEX+24 VIT+28 AGI+24 INT+29 MND+27 CHR+40 Accuracy+37 Attack+62 Magic Accuracy+51 Evasion+58 Magic Evasion+95 \"Magic Def. Bonus\"+7 Singing skill +18 Haste+6% Enmity-9 Physical damage taken -6%",
+"url": "https://www.bg-wiki.com/ffxi/Bihu_Roundlet_%2B3"
+},
+"23408": {
+"name": "Arcadian Beret +3",
+"db": "arcadian_beret_+3",
+"stats": "DEF:120 HP+56 STR+31 DEX+29 VIT+22 AGI+37 INT+25 MND+31 CHR+26 Ranged Accuracy+37 Ranged Attack+62 Magic Accuracy+37 Evasion+64 Magic Evasion+73 \"Magic Def. Bonus\"+4 Haste+8% Enmity-8 \"Rapid Shot\"+14 \"Recycle\"+38",
+"url": "https://www.bg-wiki.com/ffxi/Arcadian_Beret_%2B3"
+},
+"23409": {
+"name": "Sakonji Kabuto +3",
+"db": "sakonji_kabuto_+3",
+"stats": "DEF:135 HP+78 MP+43 STR+34 DEX+30 VIT+32 AGI+30 INT+29 MND+29 CHR+29 Accuracy+45 Attack+79 Ranged Accuracy+45 Ranged Attack+79 Magic Accuracy+37 Evasion+53 Magic Evasion+63 \"Magic Def. Bonus\"+4 Haste+7% \"Snapshot\"+5 \"Store TP\"+8",
+"url": "https://www.bg-wiki.com/ffxi/Sakonji_Kabuto_%2B3"
+},
+"23410": {
+"name": "Mochi. Hatsuburi +3",
+"db": "mochizuki_hatsuburi_+3",
+"stats": "DEF:120 HP+56 STR+31 DEX+31 VIT+33 AGI+33 INT+32 MND+32 CHR+32 Accuracy+44 Attack+62 Magic Accuracy+37 Evasion+73 Magic Evasion+63 \"Magic Atk. Bonus\"+61 \"Magic Def. Bonus\"+6 Parrying skill +20 Haste+8% Ninjutsu damage +21",
+"url": "https://www.bg-wiki.com/ffxi/Mochizuki_Hatsuburi_%2B3"
+},
+"23412": {
+"name": "Glyphic Horn +3",
+"db": "glyphic_horn_+3",
+"stats": "DEF:113 HP+51 MP+115 STR+22 DEX+24 VIT+24 AGI+24 INT+29 MND+29 CHR+29 Accuracy+37 Attack+62 Magic Accuracy+37 Evasion+56 Magic Evasion+95 \"Magic Def. Bonus\"+7 Haste+6% Avatar perpetuation cost -5 \"Blood Pact\" ability delay -10 Avatar: Attack+62 \"Magic Atk. Bonus\"+60",
+"url": "https://www.bg-wiki.com/ffxi/Glyphic_Horn_%2B3"
+},
+"23413": {
+"name": "Luh. Keffiyeh +3",
+"db": "luhlaza_keffiyeh_+3",
+"stats": "DEF:121 HP+91 MP+78 STR+30 DEX+29 VIT+30 AGI+29 INT+30 MND+30 CHR+26 Accuracy+37 Attack+62 Magic Accuracy+37 Evasion+64 Magic Evasion+73 \"Magic Def. Bonus\"+4 Blue magic skill +17 Haste+8% Breath damage dealt +24%",
+"url": "https://www.bg-wiki.com/ffxi/Luhlaza_Keffiyeh_%2B3"
+},
+"23414": {
+"name": "Lanun Tricorne +3",
+"db": "lanun_tricorne_+3",
+"stats": "DEF:120 HP+80 STR+35 DEX+29 VIT+22 AGI+41 INT+25 MND+25 CHR+26 Ranged Accuracy+37 Ranged Attack+87 Magic Accuracy+37 Evasion+64 Magic Evasion+73 \"Magic Def. Bonus\"+4 Haste+8% \"Phantom Roll\" effects +50",
+"url": "https://www.bg-wiki.com/ffxi/Lanun_Tricorne_%2B3"
+},
+"23415": {
+"name": "Pitre Taj +3",
+"db": "pitre_taj_+3",
+"stats": "DEF:123 HP+56 STR+31 DEX+31 VIT+27 AGI+33 INT+26 MND+26 CHR+26 Accuracy+37 Attack+62 Magic Accuracy+37 Evasion+58 Magic Evasion+63 \"Magic Def. Bonus\"+6 Haste+8% \"Regen\"+5 Automaton: Accuracy+37 Attack+57 Ranged Accuracy+37 Ranged Attack+57 \"Regen\"+5 \"Refresh\"+5",
+"url": "https://www.bg-wiki.com/ffxi/Pitre_Taj_%2B3"
+},
+"23416": {
+"name": "Horos Tiara +3",
+"db": "horos_tiara_+3",
+"stats": "DEF:123 HP+86 MP+43 STR+33 DEX+37 VIT+25 AGI+29 INT+25 MND+25 CHR+26 Accuracy+44 Attack+77 Magic Accuracy+37 Evasion+64 Magic Evasion+73 \"Magic Def. Bonus\"+4 Haste+8% \"Waltz\" potency +15%",
+"url": "https://www.bg-wiki.com/ffxi/Horos_Tiara_%2B3"
+},
+"23417": {
+"name": "Peda. M.Board +3",
+"db": "pedagogy_mortarboard_+3",
+"stats": "DEF:112 HP+86 MP+82 STR+24 DEX+24 VIT+24 AGI+24 INT+39 MND+39 CHR+29 Accuracy+37 Magic Accuracy+37 Evasion+56 Magic Evasion+95 \"Magic Atk. Bonus\"+49 \"Magic Def. Bonus\"+7 Elemental magic skill +19 Haste+6% Magic burst accuracy+15 Magic burst damage II +4 Grimoire: Spellcasting time -13%",
+"url": "https://www.bg-wiki.com/ffxi/Pedagogy_Mortarboard_%2B3"
+},
+"23419": {
+"name": "Fu. Bandeau +3",
+"db": "futhark_bandeau_+3",
+"stats": "DEF:124 HP+56 MP+88 STR+23 DEX+27 VIT+30 AGI+34 INT+23 MND+23 CHR+24 Accuracy+37 Attack+62 Magic Accuracy+37 Evasion+64 Magic Evasion+73 \"Magic Def. Bonus\"+4 Haste+8% \"Phalanx\" received +7 Physical damage taken -6%",
+"url": "https://www.bg-wiki.com/ffxi/Futhark_Bandeau_%2B3"
+},
+"23420": {
+"name": "Boii Mask +3",
+"db": "boii_mask_+3",
+"stats": "DEF:144 HP+73 STR+43 DEX+32 VIT+42 AGI+30 INT+26 MND+26 CHR+26 Accuracy+61 Attack+71 Magic Accuracy+61 Evasion+86 Magic Evasion+98 \"Magic Def. Bonus\"+6 Haste+7% \"Double Attack\"+7% Critical hit rate +6% Damage taken -11% Set: Augments \"Double Attack\"",
+"url": "https://www.bg-wiki.com/ffxi/Boii_Mask_%2B3"
+},
+"23421": {
+"name": "Bhikku Crown +3",
+"db": "bhikku_crown_+3",
+"stats": "DEF:127 HP+66 STR+34 DEX+30 VIT+34 AGI+31 INT+25 MND+30 CHR+25 Accuracy+61 Attack+61 Magic Accuracy+61 Evasion+91 Magic Evasion+98 \"Magic Def. Bonus\"+8 Haste+9% \"Subtle Blow\"+14 \"Perfect Counter\" attack +35 Damage taken -11% Set: Augments \"Kick Attacks\"",
+"url": "https://www.bg-wiki.com/ffxi/Bhikku_Crown_%2B3"
+},
+"23422": {
+"name": "Ebers Cap +3",
+"db": "ebers_cap_+3",
+"stats": "DEF:124 HP+64 MP+108 STR+23 DEX+29 VIT+29 AGI+26 INT+34 MND+34 CHR+31 Accuracy+61 Magic Accuracy+61 Evasion+86 Magic Evasion+125 \"Magic Def. Bonus\"+10 Haste+6% \"Fast Cast\"+13% \"Divine Veil\"+26% \"Cure\" potency +22% Set: Augments elemental resistance spells",
+"url": "https://www.bg-wiki.com/ffxi/Ebers_Cap_%2B3"
+},
+"23423": {
+"name": "Wicce Petasos +3",
+"db": "wicce_petasos_+3",
+"stats": "DEF:125 HP+61 MP+86 STR+22 DEX+25 VIT+27 AGI+16 INT+39 MND+32 CHR+32 Accuracy+61 Magic Accuracy+61 \"Magic Atk. Bonus\"+51 Magic Damage+31 Evasion+83 Magic Evasion+136 \"Magic Def. Bonus\"+10 Elemental magic skill +35 Haste+6% Enmity-10 Elemental magic casting time -18% Damage taken -11% Set: Augments \"Conserve MP\"",
+"url": "https://www.bg-wiki.com/ffxi/Wicce_Petasos_%2B3"
+},
+"23424": {
+"name": "Leth. Chappel +3",
+"db": "lethargy_chappel_+3",
+"stats": "DEF:126 HP+66 MP+95 STR+25 DEX+29 VIT+25 AGI+25 INT+38 MND+38 CHR+30 Accuracy+61 Attack+61 Magic Accuracy+61 \"Magic Atk. Bonus\"+56 Magic Damage+31 Evasion+88 Magic Evasion+125 \"Magic Def. Bonus\"+10 Haste+6% Enfeebling magic casting time -17% Damage taken -10% Set: Augments \"Composure\"",
+"url": "https://www.bg-wiki.com/ffxi/Lethargy_Chappel_%2B3"
+},
+"23425": {
+"name": "Skulker's Bonnet +3",
+"db": "skulkers_bonnet_+3",
+"stats": "DEF:130 HP+71 STR+31 DEX+43 VIT+29 AGI+39 INT+23 MND+23 CHR+23 Accuracy+61 Attack+61 Magic Accuracy+61 Evasion+99 Magic Evasion+109 \"Magic Def. Bonus\"+7 Haste+8% \"Triple Attack\"+6% \"Accomplice\"+21% \"Collaborator\"+21% Physical damage limit +10% Set: Augments \"Triple Attack\"",
+"url": "https://www.bg-wiki.com/ffxi/Skulker%27s_Bonnet_%2B3"
+},
+"23426": {
+"name": "Chev. Armet +3",
+"db": "chevaliers_armet_+3",
+"stats": "DEF:148 HP+145 MP+129 STR+36 DEX+30 VIT+58 AGI+30 INT+23 MND+23 CHR+23 Accuracy+61 Attack+61 Magic Accuracy+61 Evasion+80 Magic Evasion+103 \"Magic Def. Bonus\"+6 Shield skill +15 Haste+7% \"Fast Cast\"+9% Converts 8% of physical damage taken to MP Damage taken -11% Set: Occ. absorbs damage taken",
+"url": "https://www.bg-wiki.com/ffxi/Chevalier%27s_Armet_%2B3"
+},
+"23427": {
+"name": "Heath. Bur. +3",
+"db": "heathens_burgeonet_+3",
+"stats": "DEF:145 HP+71 MP+59 STR+42 DEX+26 VIT+33 AGI+28 INT+31 MND+27 CHR+29 Accuracy+61 Attack+61 Magic Accuracy+61 Evasion+86 Magic Evasion+87 \"Magic Def. Bonus\"+6 Scythe skill +38 Haste+7% \"Double Attack\"+6% Physical damage limit +10% Set: Attack occ. varies with HP",
+"url": "https://www.bg-wiki.com/ffxi/Heathen%27s_Burgeonet_%2B3"
+},
+"23428": {
+"name": "Nuk. Cabasset +3",
+"db": "nukumi_cabasset_+3",
+"stats": "DEF:132 HP+73 STR+36 DEX+35 VIT+35 AGI+30 INT+26 MND+26 CHR+29 Accuracy+61 Attack+61 Magic Accuracy+61 Evasion+86 Magic Evasion+98 \"Magic Def. Bonus\"+6 Haste+8% Damage taken -11% Pet: Accuracy+61 Ranged Accuracy+61 Magic Accuracy+61 Monster correlation effects +28 Set: Attack occ. varies with pet's HP",
+"url": "https://www.bg-wiki.com/ffxi/Nukumi_Cabasset_%2B3"
+},
+"23429": {
+"name": "Fili Calot +3",
+"db": "fili_calot_+3",
+"stats": "DEF:125 HP+66 MP+65 STR+23 DEX+31 VIT+22 AGI+26 INT+30 MND+32 CHR+42 Accuracy+61 Magic Accuracy+61 Evasion+88 Magic Evasion+130 \"Magic Def. Bonus\"+10 Haste+6% Enmity-11 \"Madrigal\"+1 Song spellcasting time -16% Damage taken -11% Set: Augments songs",
+"url": "https://www.bg-wiki.com/ffxi/Fili_Calot_%2B3"
+},
+"23430": {
+"name": "Amini Gapette +3",
+"db": "amini_gapette_+3",
+"stats": "DEF:128 HP+64 STR+31 DEX+33 VIT+21 AGI+40 INT+27 MND+27 CHR+22 Accuracy+61 Ranged Accuracy+61 Ranged Attack+71 Magic Accuracy+61 Evasion+97 Magic Evasion+109 \"Magic Def. Bonus\"+7 Haste+8% \"Snapshot\"+9 \"Subtle Blow\"+14 \"Double Shot\" Enmity-58 Damage taken -11% Set: Augments \"Rapid Shot\"",
+"url": "https://www.bg-wiki.com/ffxi/Amini_Gapette_%2B3"
+},
+"23431": {
+"name": "Kasuga Kabuto +3",
+"db": "kasuga_kabuto_+3",
+"stats": "DEF:144 HP+73 STR+36 DEX+34 VIT+35 AGI+30 INT+26 MND+26 CHR+26 Accuracy+61 Attack+61 Magic Accuracy+61 Evasion+86 Magic Evasion+98 \"Magic Def. Bonus\"+6 Haste+7% \"Store TP\"+12 Damage taken -10% Seigan: \"Counter\" rate +18 Set: Augments \"Zanshin\"",
+"url": "https://www.bg-wiki.com/ffxi/Kasuga_Kabuto_%2B3"
+},
+"23432": {
+"name": "Hattori Zukin +3",
+"db": "hattori_zukin_+3",
+"stats": "DEF:131 HP+71 STR+31 DEX+41 VIT+28 AGI+34 INT+27 MND+27 CHR+27 Accuracy+61 Attack+61 Ranged Accuracy+61 Magic Accuracy+61 Evasion+89 Magic Evasion+119 \"Magic Def. Bonus\"+7 Haste+10% \"Dual Wield\"+7 Damage taken -10% Innin: \"Double Attack\"+13% Set: Augments \"Dual Wield\"",
+"url": "https://www.bg-wiki.com/ffxi/Hattori_Zukin_%2B3"
+},
+"23433": {
+"name": "Peltast's Mezail +3",
+"db": "peltasts_mezail_+3",
+"stats": "DEF:140 HP+73 STR+36 DEX+32 VIT+35 AGI+30 INT+26 MND+26 CHR+26 Accuracy+61 Attack+71 Magic Accuracy+61 Evasion+86 Magic Evasion+98 \"Magic Def. Bonus\"+6 Polearm skill +27 Haste+7% Weapon skill damage +12% Wyvern: Accuracy+61 Magic Accuracy+61 Absorbs damage taken +18% Set: Attack occ. varies with wyvern's HP",
+"url": "https://www.bg-wiki.com/ffxi/Peltast%27s_Mezail_%2B3"
+},
+"23434": {
+"name": "Beckoner's Horn +3",
+"db": "beckoners_horn_+3",
+"stats": "DEF:123 HP+61 MP+154 STR+24 DEX+25 VIT+26 AGI+25 INT+35 MND+35 CHR+35 Accuracy+61 Magic Accuracy+61 Evasion+86 Magic Evasion+130 \"Magic Def. Bonus\"+10 Summoning magic skill +23 \"Avatar's Favor\" effect +5 Haste+6% \"Refresh\"+4 Damage taken -10% Avatar: Accuracy+61 Ranged Accuracy+61 Magic Accuracy+61 Set: Augments \"Blood Boon\"",
+"url": "https://www.bg-wiki.com/ffxi/Beckoner%27s_Horn_%2B3"
+},
+"23435": {
+"name": "Hashishin Kavuk +3",
+"db": "hashishin_kavuk_+3",
+"stats": "DEF:132 HP+66 MP+65 STR+28 DEX+29 VIT+28 AGI+28 INT+34 MND+35 CHR+30 Accuracy+61 Attack+61 Magic Accuracy+61 \"Magic Atk. Bonus\"+51 Evasion+88 Magic Evasion+125 \"Magic Def. Bonus\"+10 Sword skill +30 Haste+8% \"Chain Affinity\"+28 Weapon skill damage +12% Set: Occ. augments blue magic spells",
+"url": "https://www.bg-wiki.com/ffxi/Hashishin_Kavuk_%2B3"
+},
+"23436": {
+"name": "Chass. Tricorne +3",
+"db": "chasseurs_tricorne_+3",
+"stats": "DEF:130 HP+64 STR+31 DEX+33 VIT+23 AGI+40 INT+27 MND+27 CHR+22 Accuracy+61 Ranged Accuracy+61 Ranged Attack+61 Magic Accuracy+61 Evasion+97 Magic Evasion+109 \"Magic Def. Bonus\"+7 Haste+8% \"Rapid Shot\"+18 Damage taken -10% Enhances \"Blitzer's Roll\" effect Set: Augments \"Quick Draw\"",
+"url": "https://www.bg-wiki.com/ffxi/Chasseur%27s_Tricorne_%2B3"
+},
+"23437": {
+"name": "Kara. Cappello +3",
+"db": "karagoz_cappello_+3",
+"stats": "DEF:131 HP+66 STR+31 DEX+30 VIT+34 AGI+31 INT+25 MND+30 CHR+25 Acc.+61 Atk.+61 Mag. Acc.+61 Eva.+91 Mag. Eva.+98 \"M. Def. B.\"+8 Hand-to-Hand skill +19 Haste+8% \"Double Attack\"+5% Physical damage limit +10% Automaton: Accuracy+61 Ranged Accuracy+61 Mag. Acc.+61 \"TP Bonus\"+600 Set: Attack occ. varies with automaton's HP",
+"url": "https://www.bg-wiki.com/ffxi/Karagoz_Cappello_%2B3"
+},
+"23438": {
+"name": "Maculele Tiara +3",
+"db": "maculele_tiara_+3",
+"stats": "DEF:131 HP+71 STR+31 DEX+38 VIT+27 AGI+39 INT+21 MND+21 CHR+21 Accuracy+61 Attack+71 Magic Accuracy+61 Evasion+109 Magic Evasion+99 \"Magic Def. Bonus\"+7 Haste+8% \"Store TP\"+10 Weapon skill damage +12% Climactic Flourish: Critical hit rate +1 Critical hit damage +31% Set: Augments \"Samba\"",
+"url": "https://www.bg-wiki.com/ffxi/Maculele_Tiara_%2B3"
+},
+"23439": {
+"name": "Arbatel Bonnet +3",
+"db": "arbatel_bonnet_+3",
+"stats": "DEF:123 HP+61 MP+86 STR+24 DEX+25 VIT+27 AGI+16 INT+38 MND+34 CHR+32 Accuracy+61 Magic Accuracy+61 \"Magic Atk. Bonus\"+51 Magic Damage+31 Evasion+83 Magic Evasion+136 \"Magic Def. Bonus\"+10 Enhancing magic skill +24 Haste+6% \"Rapture\"+21 \"Ebullience\"+21 \"Regen\" potency +25% Damage taken -10% Set: Augments grimoire",
+"url": "https://www.bg-wiki.com/ffxi/Arbatel_Bonnet_%2B3"
+},
+"23440": {
+"name": "Azimuth Hood +3",
+"db": "azimuth_hood_+3",
+"stats": "DEF:128 HP+61 MP+86 STR+24 DEX+24 VIT+24 AGI+16 INT+39 MND+32 CHR+32 Accuracy+61 Magic Accuracy+61 \"Magic Atk. Bonus\"+51 Magic Damage+31 Evasion+83 Magic Evasion+136 \"Magic Def. Bonus\"+10 Geomancy skill +25 Haste+6% \"Full Circle\"+4 Damage taken -12% Luopan: \"Regen\"+5 Set: Occ. casts geomancy spells without using MP",
+"url": "https://www.bg-wiki.com/ffxi/Azimuth_Hood_%2B3"
+},
+"23441": {
+"name": "Erilaz Galea +3",
+"db": "erilaz_galea_+3",
+"stats": "DEF:135 HP+111 MP+65 STR+34 DEX+30 VIT+24 AGI+30 INT+29 MND+31 CHR+27 Accuracy+61 Attack+61 Magic Accuracy+61 Evasion+92 Magic Evasion+119 \"Magic Def. Bonus\"+9 Haste+8% Augments \"Vivacious Pulse\" \"Refresh\" potency +4 Enhancing magic duration +25% Spell interruption rate down 20% Set: Occ. absorbs damage taken",
+"url": "https://www.bg-wiki.com/ffxi/Erilaz_Galea_%2B3"
+},
+"23465": {
+"name": "Agoge Lorica +3",
+"db": "agoge_lorica_+3",
+"stats": "DEF:165 HP+81 STR+36 DEX+35 VIT+36 AGI+30 INT+30 MND+30 CHR+30 Accuracy+50 Attack+85 Magic Accuracy+40 Evasion+64 Magic Evasion+84 \"Magic Def. Bonus\"+7 Haste+4% \"Double Attack\"+7% \"Aggressor\" duration +30",
+"url": "https://www.bg-wiki.com/ffxi/Agoge_Lorica_%2B3"
+},
+"23466": {
+"name": "Hes. Cyclas +3",
+"db": "hesychasts_cyclas_+3",
+"stats": "DEF:142 HP+122 STR+34 DEX+35 VIT+35 AGI+39 INT+34 MND+34 CHR+34 Accuracy+40 Attack+65 Magic Accuracy+40 Evasion+72 Magic Evasion+73 \"Magic Def. Bonus\"+6 Haste+4% \"Counter\"+5 \"Counter\" critical hit rate +30% \"Regen\"+5 Damage taken -5%",
+"url": "https://www.bg-wiki.com/ffxi/Hesychast%27s_Cyclas_%2B3"
+},
+"23467": {
+"name": "Piety Bliaut +3",
+"db": "piety_bliaut_+3",
+"stats": "DEF:144 HP+74 MP+105 STR+31 DEX+31 VIT+31 AGI+31 INT+39 MND+39 CHR+39 Accuracy+40 Attack+65 Magic Accuracy+40 Evasion+61 Magic Evasion+100 \"Magic Def. Bonus\"+8 Haste+3% Enmity-8 \"Regen\" potency +52% \"Refresh\"+3",
+"url": "https://www.bg-wiki.com/ffxi/Piety_Bliaut_%2B3"
+},
+"23468": {
+"name": "Arch. Coat +3",
+"db": "archmages_coat_+3",
+"stats": "DEF:145 HP+74 MP+79 STR+31 DEX+31 VIT+31 AGI+31 INT+46 MND+39 CHR+39 Accuracy+40 Magic Accuracy+40 Evasion+61 Magic Evasion+100 \"Magic Atk. Bonus\"+52 \"Magic Def. Bonus\"+8 Elemental magic skill +24 Haste+3% Enmity-12 \"Refresh\"+3",
+"url": "https://www.bg-wiki.com/ffxi/Archmage%27s_Coat_%2B3"
+},
+"23469": {
+"name": "Viti. Tabard +3",
+"db": "vitiation_tabard_+3",
+"stats": "DEF:146 HP+74 MP+99 STR+31 DEX+31 VIT+31 AGI+31 INT+39 MND+45 CHR+39 Accuracy+40 Attack+65 Magic Accuracy+40 Evasion+61 Magic Evasion+100 \"Magic Def. Bonus\"+8 Healing magic skill +23 Enhancing magic skill +23 Haste+3% \"Fast Cast\"+15% Enhancing magic duration +15%",
+"url": "https://www.bg-wiki.com/ffxi/Vitiation_Tabard_%2B3"
+},
+"23470": {
+"name": "Plunderer's Vest +3",
+"db": "plunderers_vest_+3",
+"stats": "DEF:152 HP+79 MP+64 STR+41 DEX+46 VIT+34 AGI+45 INT+33 MND+33 CHR+33 Accuracy+40 Attack+65 Magic Accuracy+40 Evasion+69 Magic Evasion+84 \"Magic Def. Bonus\"+8 Haste+4% Enmity+30 \"Trick Attack\" damage +10 Critical hit rate +6% Critical hit damage +5%",
+"url": "https://www.bg-wiki.com/ffxi/Plunderer%27s_Vest_%2B3"
+},
+"23471": {
+"name": "Caballarius Surcoat +3",
+"db": "caballarius_surcoat_+3",
+"stats": "DEF:171 HP+138 MP+110 STR+39 DEX+29 VIT+39 AGI+29 INT+29 MND+29 CHR+29 Accuracy+40 Attack+65 Magic Accuracy+40 Evasion+61 Magic Evasion+68 \"Magic Def. Bonus\"+6 Haste+3% Enmity+10 Damage taken -12% \"Cover\": Physical damage converted to MP +41",
+"url": "https://www.bg-wiki.com/ffxi/Caballarius_Surcoat_%2B3"
+},
+"23472": {
+"name": "Fall. Cuirass +3",
+"db": "fallens_cuirass_+3",
+"stats": "DEF:166 HP+103 MP+75 STR+42 DEX+32 VIT+39 AGI+29 INT+32 MND+32 CHR+29 Accuracy+48 Attack+82 Magic Accuracy+40 Evasion+61 Magic Evasion+68 \"Magic Atk. Bonus\"+60 \"Magic Def. Bonus\"+6 Haste+3% \"Fast Cast\"+10% Weapon skill accuracy +27",
+"url": "https://www.bg-wiki.com/ffxi/Fallen%27s_Cuirass_%2B3"
+},
+"23473": {
+"name": "An. Jackcoat +3",
+"db": "ankusa_jackcoat_+3",
+"stats": "DEF:153 HP+79 MP+64 STR+38 DEX+43 VIT+34 AGI+38 INT+37 MND+33 CHR+33 Accuracy+40 Attack+65 Magic Accuracy+40 Evasion+69 Magic Evasion+84 \"Magic Def. Bonus\"+8 Haste+4% \"Charm\"+16 Augments \"Reward\" III Pet: \"Double Attack\"+5% Haste+7%",
+"url": "https://www.bg-wiki.com/ffxi/Ankusa_Jackcoat_%2B3"
+},
+"23474": {
+"name": "Bihu Justaucorps +3",
+"db": "bihu_justaucorps_+3",
+"stats": "DEF:145 HP+89 MP+94 STR+39 DEX+41 VIT+39 AGI+41 INT+39 MND+38 CHR+43 Accuracy+53 Attack+92 Magic Accuracy+54 Evasion+64 Magic Evasion+100 \"Magic Def. Bonus\"+8 Haste+3% Weapon skill damage +10% Physical damage taken -7%",
+"url": "https://www.bg-wiki.com/ffxi/Bihu_Justaucorps_%2B3"
+},
+"23475": {
+"name": "Arc. Jerkin +3",
+"db": "arcadian_jerkin_+3",
+"stats": "DEF:151 HP+79 MP+64 STR+37 DEX+39 VIT+31 AGI+43 INT+33 MND+33 CHR+33 Ranged Accuracy+40 Ranged Attack+65 Magic Accuracy+40 Evasion+69 Magic Evasion+84 \"Magic Def. Bonus\"+8 Haste+4% Enmity-8 \"Rapid Shot\"+16 \"Double Shot\" damage +11 Double Shot: Occasionally becomes Triple Shot",
+"url": "https://www.bg-wiki.com/ffxi/Arcadian_Jerkin_%2B3"
+},
+"23476": {
+"name": "Sakonji Domaru +3",
+"db": "sakonji_domaru_+3",
+"stats": "DEF:165 HP+101 MP+64 STR+42 DEX+37 VIT+36 AGI+31 INT+31 MND+31 CHR+31 Accuracy+47 Attack+80 Magic Accuracy+40 Evasion+61 Magic Evasion+73 \"Magic Def. Bonus\"+6 Haste+3% \"Store TP\"+10 Weapon skill damage +10%",
+"url": "https://www.bg-wiki.com/ffxi/Sakonji_Domaru_%2B3"
+},
+"23477": {
+"name": "Mochi. Chainmail +3",
+"db": "mochizuki_chainmail_+3",
+"stats": "DEF:154 HP+79 STR+34 DEX+35 VIT+31 AGI+35 INT+34 MND+34 CHR+34 Accuracy+51 Attack+87 Ranged Accuracy+47 Ranged Attack+79 Magic Accuracy+40 Evasion+72 Magic Evasion+73 \"Magic Def. Bonus\"+6 Haste+4% \"Dual Wield\"+9 \"Utsusemi\" spellcasting time -14% \"Daken\"+10",
+"url": "https://www.bg-wiki.com/ffxi/Mochizuki_Chainmail_%2B3"
+},
+"23478": {
+"name": "Ptero. Mail +3",
+"db": "pteroslaver_mail_+3",
+"stats": "DEF:161 HP+102 MP+64 STR+44 DEX+39 VIT+36 AGI+31 INT+31 MND+31 CHR+31 Accuracy+40 Attack+80 Magic Accuracy+40 Evasion+76 Magic Evasion+73 \"Magic Def. Bonus\"+6 Haste+3% All Jumps: Adds 100% of wyvern's max HP as additional damage Wyvern: Adds support job abilities to wyvern",
+"url": "https://www.bg-wiki.com/ffxi/Pteroslaver_Mail_%2B3"
+},
+"23479": {
+"name": "Glyphic Doublet +3",
+"db": "glyphic_doublet_+3",
+"stats": "DEF:143 HP+70 MP+135 STR+31 DEX+30 VIT+31 AGI+31 INT+39 MND+39 CHR+39 Accuracy+40 Attack+65 Magic Accuracy+40 Evasion+61 Magic Evasion+100 \"Magic Def. Bonus\"+8 Haste+3% Avatar perpetuation cost -6 \"Blood Pact\" ability delay II -4 Avatar: \"Double Attack\"+15% Critical hit rate +20%",
+"url": "https://www.bg-wiki.com/ffxi/Glyphic_Doublet_%2B3"
+},
+"23480": {
+"name": "Luhlaza Jubbah +3",
+"db": "luhlaza_jubbah_+3",
+"stats": "DEF:155 HP+79 MP+64 STR+37 DEX+42 VIT+34 AGI+38 INT+33 MND+33 CHR+33 Accuracy+50 Attack+86 Magic Accuracy+40 Evasion+69 Magic Evasion+84 \"Magic Def. Bonus\"+8 Haste+4% \"Fast Cast\"+9% \"Refresh\"+3",
+"url": "https://www.bg-wiki.com/ffxi/Luhlaza_Jubbah_%2B3"
+},
+"23481": {
+"name": "Lanun Frac +3",
+"db": "lanun_frac_+3",
+"stats": "DEF:151 HP+79 MP+64 STR+37 DEX+39 VIT+31 AGI+43 INT+36 MND+33 CHR+33 Accuracy+49 Ranged Attack+83 Magic Accuracy+40 Evasion+69 Magic Evasion+84 \"Magic Atk. Bonus\"+61 \"Magic Def. Bonus\"+8 \"Random Deal\" effect +50 Physical damage taken -6% Haste+4%",
+"url": "https://www.bg-wiki.com/ffxi/Lanun_Frac_%2B3"
+},
+"23482": {
+"name": "Foire Tobe +3",
+"db": "pitre_tobe_+3",
+"stats": "DEF:153 HP+100 STR+34 DEX+35 VIT+31 AGI+35 INT+34 MND+34 CHR+34 Accuracy+50 Attack+86 Magic Accuracy+40 Evasion+72 Magic Evasion+73 \"Magic Def. Bonus\"+6 Haste+4% Automaton: Accuracy+50 Attack+60 Ranged Accuracy+50 Ranged Attack+60 \"Store TP\"+15",
+"url": "https://www.bg-wiki.com/ffxi/Pitre_Tobe_%2B3"
+},
+"23483": {
+"name": "Horos Casaque +3",
+"db": "horos_casaque_+3",
+"stats": "DEF:153 HP+79 MP+64 STR+34 DEX+39 VIT+34 AGI+38 INT+33 MND+33 CHR+33 Accuracy+50 Attack+86 Magic Accuracy+40 Evasion+69 Magic Evasion+84 \"Magic Def. Bonus\"+8 Haste+4% \"Triple Attack\"+4% \"Violent Flourish\" accuracy +41 \"Resist Amnesia\"+35 Physical damage taken -6%",
+"url": "https://www.bg-wiki.com/ffxi/Horos_Casaque_%2B3"
+},
+"23484": {
+"name": "Peda. Gown +3",
+"db": "pedagogy_gown_+3",
+"stats": "DEF:144 HP+99 MP+104 STR+31 DEX+31 VIT+31 AGI+31 INT+39 MND+39 CHR+39 Accuracy+40 Magic Accuracy+40 Evasion+61 Magic Evasion+100 \"Magic Atk. Bonus\"+52 \"Magic Def. Bonus\"+10 Healing magic skill +19 Enhancing magic skill +19 Haste+3% \"Sublimation\"+5 Enhancing magic duration +12%",
+"url": "https://www.bg-wiki.com/ffxi/Pedagogy_Gown_%2B3"
+},
+"23486": {
+"name": "Futhark Coat +3",
+"db": "futhark_coat_+3",
+"stats": "DEF:156 HP+119 MP+104 STR+34 DEX+39 VIT+34 AGI+38 INT+33 MND+33 CHR+33 Accuracy+40 Attack+65 Magic Accuracy+40 Evasion+69 Magic Evasion+84 \"Magic Def. Bonus\"+8 Haste+4% \"Regen\"+5 \"Liement\" duration +5 Damage taken -9%",
+"url": "https://www.bg-wiki.com/ffxi/Futhark_Coat_%2B3"
+},
+"23487": {
+"name": "Boii Lorica +3",
+"db": "boii_lorica_+3",
+"stats": "DEF:174 HP+96 STR+43 DEX+39 VIT+43 AGI+34 INT+34 MND+34 CHR+34 Accuracy+64 Attack+74 Magic Accuracy+64 Evasion+94 Magic Evasion+109 \"Magic Def. Bonus\"+8 Great Axe skill +21 Haste+3% \"Store TP\"+11 \"Blood Rage\" effect duration +38 Damage taken -14% Set: Augments \"Double Attack\"",
+"url": "https://www.bg-wiki.com/ffxi/Boii_Lorica_%2B3"
+},
+"23488": {
+"name": "Bhikku Cyclas +3",
+"db": "bhikku_cyclas_+3",
+"stats": "DEF:155 HP+89 STR+40 DEX+39 VIT+39 AGI+40 INT+31 MND+38 CHR+33 Accuracy+64 Attack+74 Magic Accuracy+64 Evasion+105 Magic Evasion+109 \"Magic Def. Bonus\"+8 Haste+4% \"Martial Arts\"+8 Augments \"Impetus\" Weapon skill damage +12% Set: Augments \"Kick Attacks\"",
+"url": "https://www.bg-wiki.com/ffxi/Bhikku_Cyclas_%2B3"
+},
+"23489": {
+"name": "Ebers Bliaut +3",
+"db": "ebers_bliaut_+3",
+"stats": "DEF:155 HP+127 MP+139 STR+30 DEX+35 VIT+35 AGI+30 INT+45 MND+48 CHR+39 Accuracy+64 Magic Accuracy+64 Evasion+91 Magic Evasion+130 \"Magic Def. Bonus\"+11 Healing magic skill +34 Haste+3% \"Afflatus Solace\"+18 \"Regen\"+5 \"Refresh\"+4 Set: Augments elemental resistance spells",
+"url": "https://www.bg-wiki.com/ffxi/Ebers_Bliaut_%2B3"
+},
+"23490": {
+"name": "Wicce Coat +3",
+"db": "wicce_coat_+3",
+"stats": "DEF:154 HP+80 MP+132 STR+29 DEX+34 VIT+34 AGI+34 INT+50 MND+43 CHR+43 Accuracy+64 Magic Accuracy+64 \"Magic Atk. Bonus\"+59 Magic Damage+34 Evasion+88 Magic Evasion+141 \"Magic Def. Bonus\"+11 Haste+3% Elemental magic recast delay -16% Magic burst damage II +5 \"Refresh\"+4 Set: Augments \"Conserve MP\"",
+"url": "https://www.bg-wiki.com/ffxi/Wicce_Coat_%2B3"
+},
+"23491": {
+"name": "Lethargy Sayon +3",
+"db": "lethargy_sayon_+3",
+"stats": "DEF:157 HP+87 MP+91 STR+34 DEX+34 VIT+30 AGI+30 INT+47 MND+45 CHR+35 Accuracy+64 Attack+64 Magic Accuracy+64 \"Magic Atk. Bonus\"+54 Magic Damage+34 Evasion+91 Magic Evasion+136 \"Magic Def. Bonus\"+11 Haste+3% \"Refresh\"+4 Enfeebling magic effect +18 Damage taken -14% Set: Augments \"Composure\"",
+"url": "https://www.bg-wiki.com/ffxi/Lethargy_Sayon_%2B3"
+},
+"23492": {
+"name": "Skulker's Vest +3",
+"db": "skulkers_vest_+3",
+"stats": "DEF:161 HP+93 STR+40 DEX+51 VIT+34 AGI+48 INT+31 MND+31 CHR+31 Accuracy+64 Attack+64 Magic Accuracy+64 Evasion+105 Magic Evasion+119 \"Magic Def. Bonus\"+10 Dagger skill +38 Haste+6% Augments \"Conspirator\" Weapon skill damage +12% Set: Augments \"Triple Attack\"",
+"url": "https://www.bg-wiki.com/ffxi/Skulker%27s_Vest_%2B3"
+},
+"23493": {
+"name": "Chev. Cuirass +3",
+"db": "chevaliers_cuirass_+3",
+"stats": "DEF:180 HP+151 MP+144 STR+44 DEX+32 VIT+52 AGI+32 INT+31 MND+31 CHR+31 Accuracy+64 Attack+74 Magic Accuracy+64 Evasion+86 Magic Evasion+119 \"Magic Def. Bonus\"+8 Haste+3% Enmity+16 Mitigates dmg. taken based on enmity Spell interruption rate down 20% Set: Occ. absorbs damage taken",
+"url": "https://www.bg-wiki.com/ffxi/Chevalier%27s_Cuirass_%2B3"
+},
+"23494": {
+"name": "Heath. Cuirass +3",
+"db": "heathens_cuirass_+3",
+"stats": "DEF:177 HP+93 MP+89 STR+47 DEX+31 VIT+43 AGI+33 INT+35 MND+35 CHR+35 Accuracy+64 Attack+74 Magic Accuracy+64 Evasion+94 Magic Evasion+103 \"Magic Def. Bonus\"+8 Haste+4% \"Dread Spikes\" potency +55% Critical hit rate +7% Damage taken -13% Set: Attack occ. varies with HP",
+"url": "https://www.bg-wiki.com/ffxi/Heathen%27s_Cuirass_%2B3"
+},
+"23495": {
+"name": "Nukumi Gausape +3",
+"db": "nukumi_gausape_+3",
+"stats": "DEF:163 HP+96 STR+43 DEX+39 VIT+43 AGI+34 INT+34 MND+34 CHR+34 Accuracy+64 Attack+74 Magic Accuracy+64 Evasion+94 Magic Evasion+109 \"Magic Def. Bonus\"+8 Axe skill +21 Haste+3% Augments \"Killer\" effects Weapon skill damage +12% Pet: Accuracy+64 Ranged Accuracy+64 Magic Accuracy+64 Set: Attack occ. varies with pet's HP",
+"url": "https://www.bg-wiki.com/ffxi/Nukumi_Gausape_%2B3"
+},
+"23496": {
+"name": "Fili Hongreline +3",
+"db": "fili_hongreline_+3",
+"stats": "DEF:155 HP+84 MP+100 STR+29 DEX+38 VIT+31 AGI+33 INT+39 MND+43 CHR+48 Accuracy+64 Magic Accuracy+64 Evasion+94 Magic Evasion+136 \"Magic Def. Bonus\"+11 Singing skill +24 Wind instrument skill +24 Haste+3% \"Regen\"+5 \"Minuet\"+1 Song effect duration +14% Set: Augments songs",
+"url": "https://www.bg-wiki.com/ffxi/Fili_Hongreline_%2B3"
+},
+"23497": {
+"name": "Amini Caban +3",
+"db": "amini_caban_+3",
+"stats": "DEF:160 HP+87 MP+89 STR+40 DEX+43 VIT+33 AGI+49 INT+34 MND+34 CHR+29 Accuracy+64 Ranged Accuracy+64 Ranged Attack+64 Magic Accuracy+64 Evasion+102 Magic Evasion+119 \"Magic Def. Bonus\"+10 Haste+4% Enmity-13 \"Velocity Shot\"+11% Physical damage limit +10% Set: Augments \"Rapid Shot\"",
+"url": "https://www.bg-wiki.com/ffxi/Amini_Caban_%2B3"
+},
+"23498": {
+"name": "Kasuga Domaru +3",
+"db": "kasuga_domaru_+3",
+"stats": "DEF:176 HP+96 STR+43 DEX+39 VIT+43 AGI+34 INT+34 MND+34 CHR+34 Accuracy+64 Attack+74 Magic Accuracy+64 Evasion+94 Magic Evasion+109 \"Magic Def. Bonus\"+8 Great Katana skill +21 Haste+3% \"Store TP\"+14 \"Zanshin\"+16 Damage taken -14% Set: Augments \"Zanshin\"",
+"url": "https://www.bg-wiki.com/ffxi/Kasuga_Domaru_%2B3"
+},
+"23499": {
+"name": "Hattori Ningi +3",
+"db": "hattori_ningi_+3",
+"stats": "DEF:163 HP+93 STR+40 DEX+47 VIT+35 AGI+43 INT+36 MND+31 CHR+31 Accuracy+64 Attack+74 Ranged Accuracy+64 Magic Accuracy+64 Evasion+95 Magic Evasion+129 \"Magic Def. Bonus\"+10 Haste+4% \"Migawari\"+16 Critical hit rate +8% Damage taken -13% Set: Augments \"Dual Wield\"",
+"url": "https://www.bg-wiki.com/ffxi/Hattori_Ningi_%2B3"
+},
+"23500": {
+"name": "Pelt. Plackart +3",
+"db": "peltasts_plackart_+3",
+"stats": "DEF:170 HP+96 STR+43 DEX+39 VIT+43 AGI+34 INT+34 MND+34 CHR+34 Accuracy+64 Attack+74 Magic Accuracy+64 Evasion+94 Magic Evasion+109 \"Magic Def. Bonus\"+8 Haste+3% \"Store TP\"+14 Physical damage limit +10% Wyvern: Accuracy+64 Magic Accuracy+64 Grants food effect Set: Attack occ. varies with wyvern's HP",
+"url": "https://www.bg-wiki.com/ffxi/Peltast%27s_Plackart_%2B3"
+},
+"23501": {
+"name": "Beck. Doublet +3",
+"db": "beckoners_doublet_+3",
+"stats": "DEF:153 HP+84 MP+171 STR+33 DEX+29 VIT+34 AGI+30 INT+44 MND+44 CHR+44 Acc.+64 Mag. Acc.+64 Eva.+94 Mag. Eva.+130 \"M. Def. B.\"+10 Summoning magic skill +24 Haste+3% Avatar perpetuation cost -8 Damage taken -13% Avatar: Acc.+64 Rng. Acc.+64 M. Acc.+64 \"Blood Pact\" damage +13 Set: Augments \"Blood Boon\"",
+"url": "https://www.bg-wiki.com/ffxi/Beckoner%27s_Doublet_%2B3"
+},
+"23502": {
+"name": "Hashishin Mintan +3",
+"db": "hashishin_mintan_+3",
+"stats": "DEF:164 HP+87 MP+91 STR+34 DEX+34 VIT+30 AGI+30 INT+45 MND+45 CHR+35 Accuracy+64 Attack+64 Magic Accuracy+64 \"Magic Atk. Bonus\"+54 Evasion+91 Magic Evasion+136 \"Magic Def. Bonus\"+11 Haste+4% \"Refresh\"+4 Blue magic spellcasting time -16% Damage taken -13% Set: Occ. augments blue magic spells",
+"url": "https://www.bg-wiki.com/ffxi/Hashishin_Mintan_%2B3"
+},
+"23503": {
+"name": "Chasseur's Frac +3",
+"db": "chasseurs_frac_+3",
+"stats": "DEF:161 HP+87 MP+89 STR+40 DEX+43 VIT+33 AGI+49 INT+34 MND+34 CHR+29 Accuracy+64 Ranged Accuracy+64 Ranged Attack+74 Magic Accuracy+64 Evasion+102 Magic Evasion+119 \"Magic Def. Bonus\"+10 Haste+4% \"Triple Shot\"+14% Enhances \"Tactician's Roll\" effect Damage taken -13% Set: Augments \"Quick Draw\"",
+"url": "https://www.bg-wiki.com/ffxi/Chasseur%27s_Frac_%2B3"
+},
+"23504": {
+"name": "Kara. Farsetto +3",
+"db": "karagoz_farsetto_+3",
+"stats": "DEF:164 HP+89 STR+40 DEX+41 VIT+39 AGI+40 INT+31 MND+38 CHR+33 Accuracy+64 Attack+74 Magic Accuracy+64 Evasion+105 Magic Evasion+109 \"Magic Def. Bonus\"+8 Haste+4% \"Overload\" rate -40 Damage taken -13% Automaton: Accuracy+64 Ranged Accuracy+64 Magic Accuracy+64 Set: Attack occ. varies with automaton's HP",
+"url": "https://www.bg-wiki.com/ffxi/Karagoz_Farsetto_%2B3"
+},
+"23505": {
+"name": "Macu. Casaque +3",
+"db": "maculele_casaque_+3",
+"stats": "DEF:164 HP+93 STR+40 DEX+48 VIT+34 AGI+48 INT+31 MND+31 CHR+32 Accuracy+64 Attack+64 Magic Accuracy+64 Evasion+115 Magic Evasion+109 \"Magic Def. Bonus\"+10 Haste+4% \"Dual Wield\"+11 \"Subtle Blow\"+14 Damage taken -14% Striking Flourish: \"Double Attack\" critical hit rate +70% Set: Augments \"Samba\"",
+"url": "https://www.bg-wiki.com/ffxi/Maculele_Casaque_%2B3"
+},
+"23506": {
+"name": "Arbatel Gown +3",
+"db": "arbatel_gown_+3",
+"stats": "DEF:152 HP+80 MP+97 STR+29 DEX+34 VIT+34 AGI+34 INT+50 MND+43 CHR+43 Accuracy+64 Magic Accuracy+64 \"Magic Atk. Bonus\"+59 Magic Damage+34 Evasion+88 Magic Evasion+141 \"Magic Def. Bonus\"+11 Haste+3% \"Addendum: White\" Enmity-28 \"Addendum: Black\" Enmity-28 \"Refresh\"+4 Damage taken -13% Set: Augments grimoire",
+"url": "https://www.bg-wiki.com/ffxi/Arbatel_Gown_%2B3"
+},
+"23507": {
+"name": "Azimuth Coat +3",
+"db": "azimuth_coat_+3",
+"stats": "DEF:158 HP+80 MP+97 STR+29 DEX+34 VIT+34 AGI+34 INT+50 MND+43 CHR+43 Accuracy+64 Magic Accuracy+64 \"Magic Atk. Bonus\"+59 Magic Damage+34 Evasion+88 Magic Evasion+141 \"Magic Def. Bonus\"+11 Elemental magic skill +28 Haste+3% Enmity-10 Magic burst damage II +5 \"Refresh\"+4 Set: Occ. casts geomancy spells without using MP",
+"url": "https://www.bg-wiki.com/ffxi/Azimuth_Coat_%2B3"
+},
+"23508": {
+"name": "Erilaz Surcoat +3",
+"db": "erilaz_surcoat_+3",
+"stats": "DEF:167 HP+143 MP+91 STR+42 DEX+40 VIT+33 AGI+39 INT+35 MND+39 CHR+34 Accuracy+64 Attack+74 Magic Accuracy+64 Evasion+97 Magic Evasion+130 \"Magic Def. Bonus\"+10 Haste+4% \"Fast Cast\"+13% Converts 8% of physical damage taken to MP Boosts enmity retention when taking damage +14 Set: Occ. absorbs damage taken",
+"url": "https://www.bg-wiki.com/ffxi/Erilaz_Surcoat_%2B3"
+},
+"23532": {
+"name": "Agoge Mufflers +3",
+"db": "agoge_mufflers_+3",
+"stats": "DEF:119 HP+70 STR+25 DEX+39 VIT+47 AGI+13 INT+21 MND+36 CHR+26 Accuracy+38 Attack+86 Magic Accuracy+38 Evasion+42 Magic Evasion+63 \"Magic Def. Bonus\"+4 Haste+5% \"Fencer\"+1 \"Defender\" effect duration +15 Physical damage taken -6% Defender: Chance of successful block +15",
+"url": "https://www.bg-wiki.com/ffxi/Agoge_Mufflers_%2B3"
+},
+"23533": {
+"name": "Hes. Gloves +3",
+"db": "hesychasts_gloves_+3",
+"stats": "DEF:96 HP+80 STR+20 DEX+44 VIT+38 AGI+16 INT+20 MND+38 CHR+26 Accuracy+49 Attack+86 Magic Accuracy+38 Evasion+42 Magic Evasion+46 \"Magic Def. Bonus\"+3 Haste+4% \"Store TP\"+8 \"Subtle Blow\"+10 \"Chakra III\"+51",
+"url": "https://www.bg-wiki.com/ffxi/Hesychast%27s_Gloves_%2B3"
+},
+"23534": {
+"name": "Piety Mitts +3",
+"db": "piety_mitts_+3",
+"stats": "DEF:105 HP+72 MP+64 STR+16 DEX+38 VIT+35 AGI+15 INT+29 MND+43 CHR+29 Accuracy+38 Attack+63 Magic Accuracy+38 Evasion+42 Magic Evasion+57 \"Magic Def. Bonus\"+5 Divine magic skill +26 Enfeebling magic skill +26 Haste+3% Enmity-9 Potency of \"Banish\" vs. undead +30",
+"url": "https://www.bg-wiki.com/ffxi/Piety_Mitts_%2B3"
+},
+"23535": {
+"name": "Arch. Gloves +3",
+"db": "archmages_gloves_+3",
+"stats": "DEF:99 HP+42 MP+34 STR+16 DEX+38 VIT+35 AGI+15 INT+36 MND+43 CHR+29 Accuracy+38 Magic Accuracy+38 Evasion+42 Magic Evasion+57 \"Magic Atk. Bonus\"+50 \"Magic Def. Bonus\"+5 Elemental magic skill +23 Dark magic skill +23 Haste+3% Enmity-7 Magic burst damage +20",
+"url": "https://www.bg-wiki.com/ffxi/Archmage%27s_Gloves_%2B3"
+},
+"23536": {
+"name": "Viti. Gloves +3",
+"db": "vitiation_gloves_+3",
+"stats": "DEF:103 HP+42 MP+64 STR+16 DEX+38 VIT+35 AGI+15 INT+32 MND+46 CHR+29 Accuracy+38 Attack+63 Magic Accuracy+38 Evasion+42 Magic Evasion+57 \"Magic Def. Bonus\"+8 Enhancing magic skill +24 Haste+3% Gain magic effect +30",
+"url": "https://www.bg-wiki.com/ffxi/Vitiation_Gloves_%2B3"
+},
+"23538": {
+"name": "Cab. Gauntlets +3",
+"db": "caballarius_gauntlets_+3",
+"stats": "DEF:125 HP+124 STR+20 DEX+39 VIT+47 INT+18 MND+39 CHR+29 Accuracy+38 Attack+63 Magic Accuracy+38 Evasion+42 Magic Evasion+46 \"Magic Def. Bonus\"+3 Haste+4% Enmity+9 \"Shield Bash\"+35 Shield Bash: \"Dispel\"",
+"url": "https://www.bg-wiki.com/ffxi/Caballarius_Gauntlets_%2B3"
+},
+"23539": {
+"name": "Fall. Fin. Gaunt. +3",
+"db": "fallens_finger_gauntlets_+3",
+"stats": "DEF:122 HP+49 STR+26 DEX+39 VIT+43 INT+24 MND+41 CHR+29 Accuracy+38 Attack+77 Magic Accuracy+38 Evasion+42 Magic Evasion+46 \"Magic Atk. Bonus\"+62 \"Magic Def. Bonus\"+3 Dark magic skill +18 Haste+4% \"Drain\" and \"Aspir\" potency +16",
+"url": "https://www.bg-wiki.com/ffxi/Fallen%27s_Finger_Gauntlets_%2B3"
+},
+"23540": {
+"name": "Ankusa Gloves +3",
+"db": "ankusa_gloves_+3",
+"stats": "DEF:111 HP+45 STR+21 DEX+45 VIT+42 AGI+22 INT+22 MND+40 CHR+27 Accuracy+38 Attack+63 Magic Accuracy+38 Evasion+44 Magic Evasion+57 \"Magic Def. Bonus\"+4 Haste+5% \"Charm\"+13 \"Call Beast\"+2 Pet: Physical damage taken -6%",
+"url": "https://www.bg-wiki.com/ffxi/Ankusa_Gloves_%2B3"
+},
+"23541": {
+"name": "Bihu Cuffs +3",
+"db": "bihu_cuffs_+3",
+"stats": "DEF:104 HP+42 MP+34 STR+16 DEX+38 VIT+35 AGI+15 INT+29 MND+42 CHR+33 Accuracy+38 Attack+63 Magic Accuracy+44 Evasion+44 Magic Evasion+57 \"Magic Def. Bonus\"+5 Wind instrument skill +15 Haste+3% Enmity-9 Physical damage taken -5%",
+"url": "https://www.bg-wiki.com/ffxi/Bihu_Cuffs_%2B3"
+},
+"23542": {
+"name": "Arc. Bracers +3",
+"db": "arcadian_bracers_+3",
+"stats": "DEF:106 HP+45 STR+25 DEX+45 VIT+39 AGI+21 INT+22 MND+40 CHR+27 Ranged Accuracy+38 Ranged Attack+79 Magic Accuracy+38 Evasion+60 Magic Evasion+57 \"Magic Def. Bonus\"+4 Haste+5% Enmity-6 \"Snapshot\"+6",
+"url": "https://www.bg-wiki.com/ffxi/Arcadian_Bracers_%2B3"
+},
+"23543": {
+"name": "Sakonji Kote +3",
+"db": "sakonji_kote_+3",
+"stats": "DEF:125 HP+47 STR+16 DEX+40 VIT+40 AGI+17 INT+20 MND+36 CHR+30 Accuracy+47 Attack+81 Magic Accuracy+38 Evasion+42 Magic Evasion+46 \"Magic Def. Bonus\"+3 Haste+4% \"Meditate\" duration +12 Physical damage taken -6%",
+"url": "https://www.bg-wiki.com/ffxi/Sakonji_Kote_%2B3"
+},
+"23544": {
+"name": "Mochizuki Tekko +3",
+"db": "mochizuki_tekko_+3",
+"stats": "DEF:109 HP+45 STR+30 DEX+44 VIT+37 AGI+16 INT+20 MND+38 CHR+26 Accuracy+38 Attack+79 Magic Accuracy+38 Evasion+42 Magic Evasion+46 \"Magic Def. Bonus\"+3 Haste+5% \"Subtle Blow\"+9 \"Ninja tool expertise\"+38",
+"url": "https://www.bg-wiki.com/ffxi/Mochizuki_Tekko_%2B3"
+},
+"23545": {
+"name": "Pteroslaver Finger Gauntlets +3",
+"db": "pteroslaver_finger_gauntlets_+3",
+"stats": "DEF:116 HP+77 MP+50 STR+16 DEX+43 VIT+40 AGI+20 INT+20 MND+36 CHR+30 Accuracy+46 Attack+63 Magic Accuracy+38 Evasion+42 Magic Evasion+46 \"Magic Def. Bonus\"+3 Haste+4% Weapon skill damage +10% Wyvern: Magic damage taken -11%",
+"url": "https://www.bg-wiki.com/ffxi/Pteroslaver_Finger_Gauntlets_%2B3"
+},
+"23546": {
+"name": "Glyphic Bracers +3",
+"db": "glyphic_bracers_+3",
+"stats": "DEF:101 HP+38 MP+61 STR+16 DEX+38 VIT+34 AGI+15 INT+29 MND+43 CHR+29 Accuracy+38 Attack+63 Magic Accuracy+38 Evasion+42 Magic Evasion+57 \"Magic Def. Bonus\"+5 Summoning magic skill +23 Haste+3% \"Blood Pact\" ability delay -8 Avatar: Accuracy+52 Haste+9%",
+"url": "https://www.bg-wiki.com/ffxi/Glyphic_Bracers_%2B3"
+},
+"23547": {
+"name": "Luh. Bazubands +3",
+"db": "luhlaza_bazubands_+3",
+"stats": "DEF:109 HP+70 MP+45 STR+21 DEX+49 VIT+42 AGI+15 INT+22 MND+44 CHR+27 Accuracy+44 Attack+63 Magic Accuracy+38 Evasion+57 Magic Evasion+57 \"Magic Def. Bonus\"+4 Haste+5% \"Subtle Blow\"+11",
+"url": "https://www.bg-wiki.com/ffxi/Luhlaza_Bazubands_%2B3"
+},
+"23548": {
+"name": "Lanun Gants +3",
+"db": "lanun_gants_+3",
+"stats": "DEF:109 HP+65 STR+26 DEX+45 VIT+39 AGI+22 INT+22 MND+40 CHR+27 Ranged Accuracy+44 Ranged Attack+76 Magic Accuracy+38 Evasion+44 Magic Evasion+57 \"Magic Def. Bonus\"+4 Haste+5% \"Snapshot\"+13 Triple Shot: Occasionally becomes Quad Shot",
+"url": "https://www.bg-wiki.com/ffxi/Lanun_Gants_%2B3"
+},
+"23549": {
+"name": "Foire Dastanas +3",
+"db": "pitre_dastanas_+3",
+"stats": "DEF:110 HP+45 STR+20 DEX+47 VIT+38 AGI+16 INT+20 MND+38 CHR+29 Accuracy+38 Attack+63 Magic Accuracy+38 Evasion+55 Magic Evasion+46 \"Magic Def. Bonus\"+3 Haste+5% Weapon skill damage +10% Automaton: Haste+7% \"Subtle Blow\"+11",
+"url": "https://www.bg-wiki.com/ffxi/Pitre_Dastanas_%2B3"
+},
+"23550": {
+"name": "Horos Bangles +3",
+"db": "horos_bangles_+3",
+"stats": "DEF:111 HP+85 STR+21 DEX+45 VIT+42 AGI+24 INT+22 MND+40 CHR+36 Accuracy+43 Attack+74 Magic Accuracy+38 Evasion+55 Magic Evasion+57 \"Magic Def. Bonus\"+4 Haste+5% Enmity+9 \"Counter\"+6",
+"url": "https://www.bg-wiki.com/ffxi/Horos_Bangles_%2B3"
+},
+"23551": {
+"name": "Peda. Bracers +3",
+"db": "pedagogy_bracers_+3",
+"stats": "DEF:100 HP+42 MP+75 STR+16 DEX+38 VIT+35 AGI+15 INT+32 MND+46 CHR+29 Accuracy+38 Magic Accuracy+38 Evasion+42 Magic Evasion+57 \"Magic Atk. Bonus\"+50 \"Magic Def. Bonus\"+5 Healing magic skill +19 Enfeebling magic skill +19 Haste+3% Enmity-7 \"Cure\" potency II +3%",
+"url": "https://www.bg-wiki.com/ffxi/Pedagogy_Bracers_%2B3"
+},
+"23553": {
+"name": "Futhark Mitons +3",
+"db": "futhark_mitons_+3",
+"stats": "DEF:112 HP+45 STR+21 DEX+45 VIT+42 AGI+15 INT+22 MND+40 CHR+27 Accuracy+38 Attack+81 Magic Accuracy+38 Evasion+44 Magic Evasion+57 \"Magic Def. Bonus\"+8 Haste+5% Enmity+6 \"Swordplay\"+9",
+"url": "https://www.bg-wiki.com/ffxi/Futhark_Mitons_%2B3"
+},
+"23554": {
+"name": "Boii Mufflers +3",
+"db": "boii_mufflers_+3",
+"stats": "DEF:130 HP+57 STR+24 DEX+47 VIT+47 AGI+22 INT+21 MND+38 CHR+31 Accuracy+62 Attack+62 Magic Accuracy+62 Evasion+74 Magic Evasion+82 \"Magic Def. Bonus\"+5 Axe skill +31 Haste+4% \"Restraint\"+130 Weapon skill damage +12% Set: Augments \"Double Attack\"",
+"url": "https://www.bg-wiki.com/ffxi/Boii_Mufflers_%2B3"
+},
+"23555": {
+"name": "Bhikku Gloves +3",
+"db": "bhikku_gloves_+3",
+"stats": "DEF:113 HP+55 STR+26 DEX+49 VIT+45 AGI+21 INT+20 MND+42 CHR+25 Accuracy+62 Attack+62 Magic Accuracy+62 Evasion+74 Magic Evasion+82 \"Magic Def. Bonus\"+5 Hand-to-Hand skill +21 Haste+5% \"Tactical Guard\"+45 Physical damage limit +10% Set: Augments \"Kick Attacks\"",
+"url": "https://www.bg-wiki.com/ffxi/Bhikku_Gloves_%2B3"
+},
+"23556": {
+"name": "Ebers Mitts +3",
+"db": "ebers_mitts_+3",
+"stats": "DEF:114 HP+65 MP+65 STR+16 DEX+40 VIT+40 AGI+15 INT+34 MND+50 CHR+26 Accuracy+62 Magic Accuracy+62 Evasion+72 Magic Evasion+87 \"Magic Def. Bonus\"+7 Haste+3% Enmity-12 \"Divine Caress\"+5 \"Regen\" effect duration +26 Damage taken -11% Set: Augments elemental resistance spells",
+"url": "https://www.bg-wiki.com/ffxi/Ebers_Mitts_%2B3"
+},
+"23557": {
+"name": "Wicce Gloves +3",
+"db": "wicce_gloves_+3",
+"stats": "DEF:110 HP+48 MP+50 STR+16 DEX+40 VIT+38 AGI+20 INT+38 MND+47 CHR+32 Accuracy+62 Magic Accuracy+62 \"Magic Atk. Bonus\"+57 Magic Damage+32 Evasion+69 Magic Evasion+98 \"Magic Def. Bonus\"+7 Haste+3% Magic critical hit rate +13% Magic critical hit damage +13% Damage taken -13% Set: Augments \"Conserve MP\"",
+"url": "https://www.bg-wiki.com/ffxi/Wicce_Gloves_%2B3"
+},
+"23558": {
+"name": "Leth. Ganth. +3",
+"db": "lethargy_gantherots_+3",
+"stats": "DEF:115 HP+55 MP+47 STR+16 DEX+43 VIT+39 AGI+15 INT+33 MND+50 CHR+29 Accuracy+62 Attack+62 Magic Accuracy+62 \"Magic Atk. Bonus\"+52 Magic Damage+32 Evasion+74 Magic Evasion+87 \"Magic Def. Bonus\"+7 Enfeebling magic skill +29 Haste+3% \"Saboteur\"+14 Damage taken -11% Set: Augments \"Composure\"",
+"url": "https://www.bg-wiki.com/ffxi/Lethargy_Gantherots_%2B3"
+},
+"23559": {
+"name": "Skulk. Armlets +3",
+"db": "skulkers_armlets_+3",
+"stats": "DEF:121 HP+57 STR+27 DEX+53 VIT+39 AGI+27 INT+22 MND+40 CHR+27 Accuracy+62 Attack+72 Magic Accuracy+62 Evasion+86 Magic Evasion+93 \"Magic Def. Bonus\"+6 Haste+5% \"Sneak Attack\"+30 Damage taken -11% Set: Augments \"Triple Attack\"",
+"url": "https://www.bg-wiki.com/ffxi/Skulker%27s_Armlets_%2B3"
+},
+"23560": {
+"name": "Chev. Gauntlets +3",
+"db": "chevaliers_gauntlets_+3",
+"stats": "DEF:136 HP+64 MP+44 STR+27 DEX+43 VIT+54 INT+21 MND+36 CHR+31 Accuracy+62 Attack+62 Magic Accuracy+62 Evasion+69 Magic Evasion+98 \"Magic Def. Bonus\"+5 Sword skill +38 Haste+5% \"Shield Def. Bonus\"+5 Damage taken -11% Set: Occ. absorbs damage taken",
+"url": "https://www.bg-wiki.com/ffxi/Chevalier%27s_Gauntlets_%2B3"
+},
+"23561": {
+"name": "Heath. Gauntlets +3",
+"db": "heathens_gauntlets_+3",
+"stats": "DEF:133 HP+59 MP+44 STR+27 DEX+43 VIT+47 INT+25 MND+40 CHR+35 Accuracy+62 Attack+72 Magic Accuracy+62 Evasion+74 Magic Evasion+82 \"Magic Def. Bonus\"+5 Great Sword skill +28 Haste+6% \"Absorb-TP\" effect +30% Damage taken -10% Set: Attack occ. varies with HP",
+"url": "https://www.bg-wiki.com/ffxi/Heathen%27s_Gauntlets_%2B3"
+},
+"23562": {
+"name": "Nukumi Manoplas +3",
+"db": "nukumi_manoplas_+3",
+"stats": "DEF:122 HP+57 STR+25 DEX+48 VIT+47 AGI+22 INT+21 MND+38 CHR+31 Acc.+62 Atk.+72 Mag. Acc.+62 Eva.+74 Mag. Eva.+82 \"M. Def. B.\"+5 Haste+4% \"Sic\" TP Bonus +700 \"Ready\" TP Bonus +700 Critical hit rate +6% Damage taken -11% Pet: Accuracy+62 Ranged Accuracy+62 Magic Accuracy+62 Set: Attack occ. varies with pet's HP",
+"url": "https://www.bg-wiki.com/ffxi/Nukumi_Manoplas_%2B3"
+},
+"23563": {
+"name": "Fili Manchettes +3",
+"db": "fili_manchettes_+3",
+"stats": "DEF:114 HP+52 MP+47 STR+16 DEX+43 VIT+36 AGI+20 INT+29 MND+47 CHR+39 Accuracy+62 Magic Accuracy+62 Evasion+74 Magic Evasion+93 \"Magic Def. Bonus\"+7 Singing skill +22 String instrument skill +22 Wind instrument skill +22 Haste+3% \"March\"+1 Damage taken -11% Set: Augments songs",
+"url": "https://www.bg-wiki.com/ffxi/Fili_Manchettes_%2B3"
+},
+"23564": {
+"name": "Amini Glove. +3",
+"db": "amini_glovelettes_+3",
+"stats": "DEF:118 HP+52 STR+28 DEX+49 VIT+38 AGI+26 INT+23 MND+44 CHR+26 Accuracy+62 Ranged Accuracy+62 Ranged Attack+62 Magic Accuracy+62 Evasion+77 Magic Evasion+93 \"Magic Def. Bonus\"+6 Archery skill +38 Haste+5% \"Store TP\"+11 \"Bounty Shot\"+4 Damage taken -11% Set: Augments \"Rapid Shot\"",
+"url": "https://www.bg-wiki.com/ffxi/Amini_Glovelettes_%2B3"
+},
+"23565": {
+"name": "Kasuga Kote +3",
+"db": "kasuga_kote_+3",
+"stats": "DEF:134 HP+57 STR+24 DEX+47 VIT+47 AGI+23 INT+21 MND+39 CHR+31 Accuracy+62 Attack+62 Ranged Accuracy+62 Ranged Attack+62 Magic Accuracy+62 Evasion+74 Magic Evasion+82 \"Magic Def. Bonus\"+5 Haste+4% Weapon skill damage +12% \"Sekkanoki\": TP bonus based on remaining TP+100% Set: Augments \"Zanshin\"",
+"url": "https://www.bg-wiki.com/ffxi/Kasuga_Kote_%2B3"
+},
+"23566": {
+"name": "Hattori Tekko +3",
+"db": "hattori_tekko_+3",
+"stats": "DEF:121 HP+57 STR+27 DEX+55 VIT+40 AGI+24 INT+27 MND+40 CHR+27 Accuracy+62 Attack+62 Ranged Accuracy+62 Magic Accuracy+62 Evasion+79 Magic Evasion+103 \"Magic Def. Bonus\"+6 Haste+5% Magic burst damage +15 \"Futae\"+28 Elemental ninjutsu damage +18% Set: Augments \"Dual Wield\"",
+"url": "https://www.bg-wiki.com/ffxi/Hattori_Tekko_%2B3"
+},
+"23567": {
+"name": "Pel. Vambraces +3",
+"db": "peltasts_vambraces_+3",
+"stats": "DEF:128 HP+57 STR+24 DEX+47 VIT+47 AGI+22 INT+21 MND+39 CHR+30 Acc.+62 Atk.+62 Mag. Acc.+62 Eva.+74 Mag. Eva.+82 \"M. Def. B.\"+5 Haste+4% \"Double Attack\"+7% \"Spirit Link\"+16% Augments \"Spirit Link\" Damage taken -11% Wyvern: Accuracy+62 Magic Accuracy+62 Set: Attack occ. varies with wyvern's HP",
+"url": "https://www.bg-wiki.com/ffxi/Peltast%27s_Vambraces_%2B3"
+},
+"23568": {
+"name": "Beck. Bracers +3",
+"db": "beckoners_bracers_+3",
+"stats": "DEF:112 HP+48 MP+114 STR+16 DEX+38 VIT+35 AGI+15 INT+34 MND+48 CHR+35 Acc.+62 Mag. Acc.+62 Eva.+72 Mag. Eva.+93 \"M. Def. B.\"+7 Haste+3% \"Mana Cede\"+140 Depending on day or weather: Halves avatar perpetuation cost Avatar: Acc.+62 Rng. Acc.+62 Mag. Acc.+62 \"Blood Pact\" damage +12 Set: Augments \"Blood Boon\"",
+"url": "https://www.bg-wiki.com/ffxi/Beckoner%27s_Bracers_%2B3"
+},
+"23569": {
+"name": "Hashi. Bazu. +3",
+"db": "hashishin_bazubands_+3",
+"stats": "DEF:120 HP+55 MP+47 STR+16 DEX+43 VIT+39 AGI+15 INT+33 MND+50 CHR+29 Accuracy+62 Attack+62 Magic Accuracy+62 \"Magic Atk. Bonus\"+57 Evasion+74 Magic Evasion+87 \"Magic Def. Bonus\"+7 Haste+3% Enmity-6 Blue magic recast delay -16% Damage taken -10% Set: Occ. augments blue magic spells",
+"url": "https://www.bg-wiki.com/ffxi/Hashishin_Bazubands_%2B3"
+},
+"23570": {
+"name": "Chasseur's Gants +3",
+"db": "chasseurs_gants_+3",
+"stats": "DEF:120 HP+52 STR+28 DEX+49 VIT+38 AGI+26 INT+23 MND+44 CHR+26 Acc.+62 Rng. Acc.+62 Rng. Atk.+62 Mag. Acc.+62 Eva.+77 Mag. Eva.+93 \"M. Def. B.\"+6 Haste+5% \"Phantom Roll\" effect duration +60 Enhances \"Allies' Roll\" effect Critical hit rate +8% Weapon skill damage +12% Set: Augments \"Quick Draw\"",
+"url": "https://www.bg-wiki.com/ffxi/Chasseur%27s_Gants_%2B3"
+},
+"23571": {
+"name": "Karagoz Guanti +3",
+"db": "karagoz_guanti_+3",
+"stats": "DEF:119 HP+55 STR+26 DEX+49 VIT+45 AGI+21 INT+20 MND+42 CHR+25 Accuracy+62 Attack+62 Magic Accuracy+62 Evasion+74 Magic Evasion+82 \"Magic Def. Bonus\"+5 Haste+5% \"Store TP\"+11 Damage taken -10% Automaton: STR+26 DEX+26 AGI+26 Accuracy+62 Ranged Accuracy+62 Magic Accuracy+62 Set: Attack occ. varies with automaton's HP",
+"url": "https://www.bg-wiki.com/ffxi/Karagoz_Guanti_%2B3"
+},
+"23572": {
+"name": "Macu. Bangles +3",
+"db": "maculele_bangles_+3",
+"stats": "DEF:121 HP+57 STR+27 DEX+53 VIT+40 AGI+27 INT+23 MND+41 CHR+28 Accuracy+62 Attack+62 Magic Accuracy+62 Evasion+96 Magic Evasion+83 \"Magic Def. Bonus\"+6 Haste+5% \"Skillchain Bonus\"+13 \"Reverse Flourish\"+14 Damage taken -11% Set: Augments \"Samba\"",
+"url": "https://www.bg-wiki.com/ffxi/Maculele_Bangles_%2B3"
+},
+"23573": {
+"name": "Arbatel Bracers +3",
+"db": "arbatel_bracers_+3",
+"stats": "DEF:112 HP+48 MP+60 STR+16 DEX+40 VIT+38 AGI+20 INT+36 MND+47 CHR+32 Accuracy+62 Magic Accuracy+62 \"Magic Atk. Bonus\"+52 Magic Damage+32 Evasion+69 Magic Evasion+98 \"Magic Def. Bonus\"+7 Haste+3% Enmity-12 Magic burst damage +15 \"Perpetuance\"+65% \"Immanence\"+13% Set: Augments grimoire",
+"url": "https://www.bg-wiki.com/ffxi/Arbatel_Bracers_%2B3"
+},
+"23574": {
+"name": "Azimuth Gloves +3",
+"db": "azimuth_gloves_+3",
+"stats": "DEF:115 HP+48 MP+80 STR+16 DEX+40 VIT+38 AGI+20 INT+36 MND+47 CHR+32 Accuracy+62 Magic Accuracy+62 \"Magic Atk. Bonus\"+52 Magic Damage+32 Evasion+69 Magic Evasion+98 \"Magic Def. Bonus\"+7 Enfeebling magic skill +28 Haste+3% Enmity-13 Damage taken -12% Set: Occ. casts geomancy spells without using MP",
+"url": "https://www.bg-wiki.com/ffxi/Azimuth_Gloves_%2B3"
+},
+"23575": {
+"name": "Erilaz Gauntlets +3",
+"db": "erilaz_gauntlets_+3",
+"stats": "DEF:124 HP+59 MP+47 STR+26 DEX+47 VIT+40 AGI+17 INT+26 MND+45 CHR+29 Accuracy+62 Attack+62 Magic Accuracy+62 Evasion+78 Magic Evasion+87 \"Magic Def. Bonus\"+7 Great Sword skill +38 Haste+5% Resistance to all status ailments +8 Damage taken -11% Set: Occ. absorbs damage taken",
+"url": "https://www.bg-wiki.com/ffxi/Erilaz_Gauntlets_%2B3"
+},
+"23600": {
+"name": "Hes. Hose +3",
+"db": "hesychasts_hose_+3",
+"stats": "DEF:124 HP+116 STR+42 DEX+21 VIT+24 AGI+31 INT+42 MND+27 CHR+20 Accuracy+39 Attack+64 Magic Accuracy+39 Evasion+53 Magic Evasion+84 \"Magic Def. Bonus\"+5 Haste+6% \"Kick Attacks\"+19 \"Subtle Blow\"+10 Critical hit rate +8%",
+"url": "https://www.bg-wiki.com/ffxi/Hesychast%27s_Hose_%2B3"
+},
+"23601": {
+"name": "Piety Pantaln. +3",
+"db": "piety_pantaloons_+3",
+"stats": "DEF:127 HP+93 MP+79 STR+35 VIT+22 AGI+27 INT+44 MND+34 CHR+29 Accuracy+39 Attack+64 Magic Accuracy+39 Evasion+47 Magic Evasion+127 \"Magic Def. Bonus\"+8 Healing magic skill +26 Enhancing magic skill +26 Haste+5% Enmity-8 Elemental resistance spells +36",
+"url": "https://www.bg-wiki.com/ffxi/Piety_Pantaloons_%2B3"
+},
+"23602": {
+"name": "Arch. Tonban +3",
+"db": "archmages_tonban_+3",
+"stats": "DEF:123 HP+63 MP+85 STR+35 VIT+22 AGI+27 INT+50 MND+34 CHR+29 Accuracy+39 Magic Accuracy+46 Evasion+47 Magic Evasion+127 \"Magic Atk. Bonus\"+58 \"Magic Def. Bonus\"+8 Haste+5% Enmity-7 Magic burst damage II +3",
+"url": "https://www.bg-wiki.com/ffxi/Archmage%27s_Tonban_%2B3"
+},
+"23603": {
+"name": "Viti. Tights +3",
+"db": "vitiation_tights_+3",
+"stats": "DEF:129 HP+63 MP+49 STR+35 DEX+22 VIT+22 AGI+27 INT+44 MND+34 CHR+29 Accuracy+39 Attack+64 Magic Accuracy+39 Evasion+47 Magic Evasion+127 \"Magic Def. Bonus\"+8 Elemental magic skill +23 \"Spikes\" spell damage +30 Physical damage taken -5% Haste+5%",
+"url": "https://www.bg-wiki.com/ffxi/Vitiation_Tights_%2B3"
+},
+"23604": {
+"name": "Plun. Culottes +3",
+"db": "plunderers_culottes_+3",
+"stats": "DEF:130 HP+67 STR+42 DEX+21 VIT+29 AGI+33 INT+43 MND+30 CHR+24 Accuracy+46 Attack+64 Magic Accuracy+39 Evasion+58 Magic Evasion+89 \"Magic Def. Bonus\"+7 Haste+6% \"Gilfinder\"+4 Weapon skill damage +6%",
+"url": "https://www.bg-wiki.com/ffxi/Plunderer%27s_Culottes_%2B3"
+},
+"23605": {
+"name": "Cab. Breeches +3",
+"db": "caballarius_breeches_+3",
+"stats": "DEF:151 HP+72 MP+100 STR+50 VIT+36 AGI+26 INT+35 MND+27 CHR+20 Accuracy+39 Attack+64 Magic Accuracy+39 Evasion+42 Magic Evasion+84 \"Magic Def. Bonus\"+5 Haste+5% Enmity+9 Spell interruption rate down 10% Physical damage taken -7%",
+"url": "https://www.bg-wiki.com/ffxi/Caballarius_Breeches_%2B3"
+},
+"23606": {
+"name": "Fall. Flanchard +3",
+"db": "fallens_flanchard_+3",
+"stats": "DEF:150 HP+97 MP+45 STR+45 VIT+31 AGI+26 INT+40 MND+27 CHR+20 Accuracy+39 Attack+64 Magic Accuracy+39 Evasion+42 Magic Evasion+84 \"Magic Def. Bonus\"+10 Dark magic skill +18 Weapon skill damage +10% Haste+5%",
+"url": "https://www.bg-wiki.com/ffxi/Fallen%27s_Flanchard_%2B3"
+},
+"23607": {
+"name": "Ankusa Trousers +3",
+"db": "ankusa_trousers_+3",
+"stats": "DEF:132 HP+67 STR+39 DEX+20 VIT+26 AGI+30 INT+40 MND+27 CHR+21 Accuracy+39 Attack+64 Magic Accuracy+39 Evasion+58 Magic Evasion+89 \"Magic Def. Bonus\"+7 Haste+6% \"Charm\"+11 \"Reward\" recast delay -21 Pet: Haste+6% \"Store TP\"+7",
+"url": "https://www.bg-wiki.com/ffxi/Ankusa_Trousers_%2B3"
+},
+"23608": {
+"name": "Bihu Cannions +3",
+"db": "bihu_cannions_+3",
+"stats": "DEF:127 HP+103 MP+89 STR+33 VIT+20 AGI+27 INT+54 MND+43 CHR+43 Accuracy+39 Attack+64 Magic Accuracy+52 Evasion+50 Magic Evasion+127 \"Magic Def. Bonus\"+8 Physical damage taken -6% Haste+5%",
+"url": "https://www.bg-wiki.com/ffxi/Bihu_Cannions_%2B3"
+},
+"23609": {
+"name": "Arc. Braccae +3",
+"db": "arcadian_braccae_+3",
+"stats": "DEF:130 HP+87 MP+43 STR+39 VIT+24 AGI+33 INT+40 MND+27 CHR+21 Ranged Accuracy+47 Ranged Attack+81 Magic Accuracy+39 Evasion+58 Magic Evasion+89 \"Magic Def. Bonus\"+7 Haste+6% Enmity-7 \"Snapshot\"+7 Weapon skill damage +10%",
+"url": "https://www.bg-wiki.com/ffxi/Arcadian_Braccae_%2B3"
+},
+"23610": {
+"name": "Sakonji Haidate +3",
+"db": "sakonji_haidate_+3",
+"stats": "DEF:145 HP+70 STR+43 VIT+29 AGI+25 INT+36 MND+26 CHR+22 Accuracy+39 Attack+82 Magic Accuracy+39 Evasion+60 Magic Evasion+95 \"Magic Def. Bonus\"+5 Haste+5% \"Third Eye\": \"Counter\" rate +35 \"Counter\" damage +25 Magic damage taken -7%",
+"url": "https://www.bg-wiki.com/ffxi/Sakonji_Haidate_%2B3"
+},
+"23612": {
+"name": "Ptero. Brais +3",
+"db": "pteroslaver_brais_+3",
+"stats": "DEF:140 HP+85 STR+43 DEX+22 VIT+41 AGI+25 INT+36 MND+26 CHR+22 Accuracy+39 Attack+64 Magic Accuracy+39 Evasion+42 Magic Evasion+95 \"Magic Def. Bonus\"+5 Haste+5% \"Store TP\"+10 \"High Jump\": Enmity reduction +29% Wyvern: Physical damage taken -11%",
+"url": "https://www.bg-wiki.com/ffxi/Pteroslaver_Brais_%2B3"
+},
+"23613": {
+"name": "Glyphic Spats +3",
+"db": "glyphic_spats_+3",
+"stats": "DEF:123 HP+58 MP+105 STR+35 VIT+21 AGI+27 INT+44 MND+34 CHR+29 Accuracy+39 Attack+64 Magic Accuracy+39 Evasion+47 Magic Evasion+127 \"Magic Def. Bonus\"+8 Haste+5% Shortens magic recast time for spirits \"Blood Pact\" ability delay -8 Avatar: Magic Accuracy+45 \"Magic Atk. Bonus\"+51",
+"url": "https://www.bg-wiki.com/ffxi/Glyphic_Spats_%2B3"
+},
+"23614": {
+"name": "Luhlaza Shalwar +3",
+"db": "luhlaza_shalwar_+3",
+"stats": "DEF:133 HP+87 MP+40 STR+41 VIT+26 AGI+32 INT+40 MND+27 CHR+21 Accuracy+45 Magic Accuracy+45 Evasion+58 Magic Evasion+89 \"Magic Atk. Bonus\"+57 \"Magic Def. Bonus\"+7 Weapon skill damage +10% Haste+6%",
+"url": "https://www.bg-wiki.com/ffxi/Luhlaza_Shalwar_%2B3"
+},
+"23615": {
+"name": "Lanun Trews +3",
+"db": "lanun_trews_+3",
+"stats": "DEF:132 HP+90 MP+43 STR+42 VIT+24 AGI+36 INT+40 MND+27 CHR+21 Attack+78 Ranged Accuracy+46 Ranged Attack+78 Magic Accuracy+39 Evasion+72 Magic Evasion+89 \"Magic Def. Bonus\"+7 Haste+6% \"Snapshot\"+10",
+"url": "https://www.bg-wiki.com/ffxi/Lanun_Trews_%2B3"
+},
+"23616": {
+"name": "Foire Churidars +3",
+"db": "pitre_churidars_+3",
+"stats": "DEF:133 HP+67 STR+45 VIT+27 AGI+31 INT+42 MND+27 CHR+20 Accuracy+46 Attack+64 Magic Accuracy+39 Evasion+53 Magic Evasion+84 \"Magic Def. Bonus\"+5 Haste+6% Automaton: Magic Accuracy+48 \"Magic Atk. Bonus\"+51 \"Fast Cast\"+10%",
+"url": "https://www.bg-wiki.com/ffxi/Pitre_Churidars_%2B3"
+},
+"23617": {
+"name": "Horos Tights +3",
+"db": "horos_tights_+3",
+"stats": "DEF:133 HP+67 STR+42 VIT+26 AGI+30 INT+40 MND+27 CHR+24 Accuracy+45 Attack+64 Magic Accuracy+45 Evasion+58 Magic Evasion+89 \"Magic Def. Bonus\"+10 Haste+6% \"Jig\" duration +50% Weapon skill damage +10%",
+"url": "https://www.bg-wiki.com/ffxi/Horos_Tights_%2B3"
+},
+"23618": {
+"name": "Peda. Pants +3",
+"db": "pedagogy_pants_+3",
+"stats": "DEF:126 HP+83 MP+69 STR+35 VIT+22 AGI+27 INT+47 MND+34 CHR+29 Accuracy+39 Magic Accuracy+39 Evasion+47 Magic Evasion+127 \"Magic Atk. Bonus\"+51 \"Magic Def. Bonus\"+8 Elemental magic skill +19 Dark magic skill +19 Haste+5% Enmity-7 \"Drain\" and \"Aspir\" potency +15",
+"url": "https://www.bg-wiki.com/ffxi/Pedagogy_Pants_%2B3"
+},
+"23620": {
+"name": "Futhark Trousers +3",
+"db": "futhark_trousers_+3",
+"stats": "DEF:139 HP+107 STR+39 VIT+26 AGI+30 INT+40 MND+27 CHR+21 Accuracy+39 Attack+64 Magic Accuracy+39 Evasion+58 Magic Evasion+89 \"Magic Def. Bonus\"+7 Enhancing magic duration +30% Enhancing magic casting time -15% Haste+6%",
+"url": "https://www.bg-wiki.com/ffxi/Futhark_Trousers_%2B3"
+},
+"23621": {
+"name": "Boii Cuisses +3",
+"db": "boii_cuisses_+3",
+"stats": "DEF:155 HP+80 STR+53 VIT+40 AGI+30 INT+38 MND+27 CHR+25 Accuracy+63 Attack+73 Magic Accuracy+63 Evasion+74 Magic Evasion+130 \"Magic Def. Bonus\"+7 Haste+8% \"Double Attack\"+8% \"Fencer\"+4 Physical damage limit +10% \"TP Bonus\"+100 Set: Augments \"Double Attack\"",
+"url": "https://www.bg-wiki.com/ffxi/Boii_Cuisses_%2B3"
+},
+"23622": {
+"name": "Bhikku Hose +3",
+"db": "bhikku_hose_+3",
+"stats": "DEF:140 HP+77 STR+49 VIT+28 AGI+35 INT+37 MND+34 CHR+21 Accuracy+63 Attack+73 Magic Accuracy+63 Evasion+86 Magic Evasion+119 \"Magic Def. Bonus\"+8 Haste+7% \"Kick Attacks\"+30 \"Store TP\"+10 Damage taken -14% Set: Augments \"Kick Attacks\"",
+"url": "https://www.bg-wiki.com/ffxi/Bhikku_Hose_%2B3"
+},
+"23623": {
+"name": "Ebers Pant. +3",
+"db": "ebers_pantaloons_+3",
+"stats": "DEF:136 HP+71 MP+65 STR+34 VIT+26 AGI+27 INT+47 MND+45 CHR+26 Accuracy+63 Magic Accuracy+63 Evasion+77 Magic Evasion+157 \"Magic Def. Bonus\"+10 Haste+5% \"Divine Benison\"+4 Converts 8% of \"Cure\" amount to MP Healing magic casting time -15% Damage taken -13% Set: Augments elemental resistance spells",
+"url": "https://www.bg-wiki.com/ffxi/Ebers_Pantaloons_%2B3"
+},
+"23624": {
+"name": "Wicce Chausses +3",
+"db": "wicce_chausses_+3",
+"stats": "DEF:134 HP+68 MP+119 STR+31 VIT+23 AGI+31 INT+53 MND+38 CHR+32 Accuracy+63 Magic Accuracy+63 \"Magic Atk. Bonus\"+58 Magic Damage+33 Evasion+74 Magic Evasion+168 \"Magic Def. Bonus\"+10 Haste+5% Magic burst damage +15 Increases magic effect duration +50 Set: Augments \"Conserve MP\"",
+"url": "https://www.bg-wiki.com/ffxi/Wicce_Chausses_%2B3"
+},
+"23625": {
+"name": "Leth. Fuseau +3",
+"db": "lethargy_fuseau_+3",
+"stats": "DEF:137 HP+75 MP+117 STR+38 VIT+20 AGI+30 INT+48 MND+43 CHR+30 Accuracy+63 Attack+63 Magic Accuracy+63 \"Magic Atk. Bonus\"+58 Magic Damage+33 Evasion+77 Magic Evasion+162 \"Magic Def. Bonus\"+10 Haste+5% Magic burst damage +15 \"Refresh\" potency +4 Set: Augments \"Composure\"",
+"url": "https://www.bg-wiki.com/ffxi/Lethargy_Fuseau_%2B3"
+},
+"23626": {
+"name": "Skulk. Culottes +3",
+"db": "skulkers_culottes_+3",
+"stats": "DEF:142 HP+80 STR+44 DEX+18 VIT+26 AGI+30 INT+40 MND+27 CHR+21 Accuracy+63 Attack+63 Magic Accuracy+63 Evasion+97 Magic Evasion+125 \"Magic Def. Bonus\"+9 Haste+6% \"Despoil\"+13 Critical hit rate +7% Damage taken -13% Set: Augments \"Triple Attack\"",
+"url": "https://www.bg-wiki.com/ffxi/Skulker%27s_Culottes_%2B3"
+},
+"23627": {
+"name": "Chev. Cuisses +3",
+"db": "chevaliers_cuisses_+3",
+"stats": "DEF:160 HP+127 MP+71 STR+50 VIT+43 AGI+30 INT+41 MND+25 CHR+22 Accuracy+63 Attack+63 Magic Accuracy+63 Evasion+69 Magic Evasion+136 \"Magic Def. Bonus\"+7 Haste+5% Damage taken -13% Boosts enmity retention when taking damage +14 Set: Occ. absorbs damage taken",
+"url": "https://www.bg-wiki.com/ffxi/Chevalier%27s_Cuisses_%2B3"
+},
+"23628": {
+"name": "Heath. Flanchard +3",
+"db": "heathens_flanchards_+3",
+"stats": "DEF:159 HP+82 MP+71 STR+53 VIT+35 AGI+30 INT+41 MND+29 CHR+26 Accuracy+63 Attack+73 Magic Accuracy+63 Evasion+74 Magic Evasion+119 \"Magic Def. Bonus\"+8 Dark magic skill +30 Haste+5% \"Nether Void\"+45 Damage taken -12% Set: Attack occ. varies with HP",
+"url": "https://www.bg-wiki.com/ffxi/Heathen%27s_Flanchards_%2B3"
+},
+"23629": {
+"name": "Nukumi Quijotes +3",
+"db": "nukumi_quijotes_+3",
+"stats": "DEF:143 HP+80 STR+53 VIT+40 AGI+30 INT+38 MND+27 CHR+25 Accuracy+63 Attack+73 Magic Accuracy+63 Evasion+74 Magic Evasion+130 \"Magic Def. Bonus\"+7 Haste+8% \"Stout Servant\"+8 Damage taken -13% Pet: Accuracy+63 Ranged Accuracy+63 Magic Accuracy+63 Set: Attack occ. varies with pet's HP",
+"url": "https://www.bg-wiki.com/ffxi/Nukumi_Quijotes_%2B3"
+},
+"23630": {
+"name": "Fili Rhingrave +3",
+"db": "fili_rhingrave_+3",
+"stats": "DEF:137 HP+73 MP+62 STR+33 VIT+20 AGI+30 INT+44 MND+38 CHR+38 Accuracy+63 Magic Accuracy+63 Evasion+88 Magic Evasion+157 \"Magic Def. Bonus\"+10 Singing skill +28 Haste+5% \"Ballad\"+1 Song recast delay -10 Damage taken -13% Set: Augments songs",
+"url": "https://www.bg-wiki.com/ffxi/Fili_Rhingrave_%2B3"
+},
+"23631": {
+"name": "Amini Bragues +3",
+"db": "amini_bragues_+3",
+"stats": "DEF:141 HP+75 MP+68 STR+45 VIT+25 AGI+43 INT+43 MND+31 CHR+18 Accuracy+63 Ranged Accuracy+63 Ranged Attack+73 Magic Accuracy+63 Evasion+91 Magic Evasion+125 \"Magic Def. Bonus\"+9 Haste+6% \"True Shot\"+8 \"Store TP\"+12 Critical hit rate +6% Damage taken -13% Set: Augments \"Rapid Shot\"",
+"url": "https://www.bg-wiki.com/ffxi/Amini_Bragues_%2B3"
+},
+"23632": {
+"name": "Kasuga Haidate +3",
+"db": "kasuga_haidate_+3",
+"stats": "DEF:156 HP+80 STR+53 DEX+19 VIT+40 AGI+30 INT+38 MND+27 CHR+25 Accuracy+63 Attack+63 Magic Accuracy+63 Evasion+74 Magic Evasion+130 \"Magic Def. Bonus\"+7 Haste+5% \"Store TP\"+11 Damage taken -11% \"Hasso\": Haste+3% Set: Augments \"Zanshin\"",
+"url": "https://www.bg-wiki.com/ffxi/Kasuga_Haidate_%2B3"
+},
+"23633": {
+"name": "Hattori Hakama +3",
+"db": "hattori_hakama_+3",
+"stats": "DEF:143 HP+80 STR+44 VIT+27 AGI+35 INT+45 MND+27 CHR+21 Accuracy+63 Attack+63 Ranged Accuracy+63 Magic Accuracy+63 Evasion+87 Magic Evasion+135 \"Magic Def. Bonus\"+9 Katana skill +33 Haste+8% Damage taken -12% \"Yonin\": \"Counter\"+18 Set: Augments \"Dual Wield\"",
+"url": "https://www.bg-wiki.com/ffxi/Hattori_Hakama_%2B3"
+},
+"23634": {
+"name": "Pelt. Cuissots +3",
+"db": "peltasts_cuissots_+3",
+"stats": "DEF:151 HP+80 STR+53 VIT+40 AGI+30 INT+38 MND+27 CHR+25 Acc.+63 Atk.+73 Mag. Acc.+63 Eva.+74 Mag. Eva.+130 \"M. Def. B.\"+7 Haste+5% \"Spirit Jump\" attack+19% \"Soul Jump\" attack+19% Critical hit damage +13% Damage taken -13% Wyvern: Accuracy+63 Magic Accuracy+63 Set: Attack occ. varies with wyvern's HP",
+"url": "https://www.bg-wiki.com/ffxi/Peltast%27s_Cuissots_%2B3"
+},
+"23635": {
+"name": "Beck. Spats +3",
+"db": "beckoners_spats_+3",
+"stats": "DEF:132 HP+71 MP+136 STR+34 VIT+23 AGI+27 INT+50 MND+38 CHR+35 Accuracy+63 Magic Accuracy+63 Evasion+83 Magic Evasion+157 \"Magic Def. Bonus\"+10 Summoning magic skill +30 Haste+5% \"Blood Boon\"+14 Damage taken -12% Avatar: Accuracy+63 Ranged Accuracy+63 Magic Accuracy+63 \"TP Bonus\"+700 Set: Augments \"Blood Boon\"",
+"url": "https://www.bg-wiki.com/ffxi/Beckoner%27s_Spats_%2B3"
+},
+"23636": {
+"name": "Hashishin Tayt +3",
+"db": "hashishin_tayt_+3",
+"stats": "DEF:143 HP+75 MP+62 STR+42 DEX+20 VIT+20 AGI+30 INT+48 MND+43 CHR+30 Accuracy+63 Attack+63 Magic Accuracy+63 \"Magic Atk. Bonus\"+53 Evasion+77 Magic Evasion+162 \"Magic Def. Bonus\"+10 Blue magic skill +33 Haste+5% \"Efflux\" TP Bonus +800 Damage taken -12% Set: Occ. augments blue magic spells",
+"url": "https://www.bg-wiki.com/ffxi/Hashishin_Tayt_%2B3"
+},
+"23637": {
+"name": "Chas. Culottes +3",
+"db": "chasseurs_culottes_+3",
+"stats": "DEF:143 HP+75 MP+68 STR+45 DEX+20 VIT+27 AGI+43 INT+43 MND+31 CHR+20 Accuracy+63 Ranged Accuracy+63 Ranged Attack+63 Magic Accuracy+63 Evasion+91 Magic Evasion+125 \"Magic Def. Bonus\"+9 Haste+6% \"Snapshot\"+9 \"Store TP\"+12 Enhances \"Caster's Roll\" effect Damage taken -12% Set: Augments \"Quick Draw\"",
+"url": "https://www.bg-wiki.com/ffxi/Chasseur%27s_Culottes_%2B3"
+},
+"23638": {
+"name": "Kara. Pantaloni +3",
+"db": "karagoz_pantaloni_+3",
+"stats": "DEF:145 HP+77 STR+49 VIT+28 AGI+35 INT+37 MND+34 CHR+21 Accuracy+63 Attack+73 Magic Accuracy+63 Evasion+86 Magic Evasion+119 \"Magic Def. Bonus\"+8 Haste+6% \"Martial Arts\"+11 Damage taken -12% Automaton: Accuracy+63 Ranged Accuracy+63 Magic Accuracy+63 Skill +33 Set: Attack occ. varies with automaton's HP",
+"url": "https://www.bg-wiki.com/ffxi/Karagoz_Pantaloni_%2B3"
+},
+"23639": {
+"name": "Maculele Tights +3",
+"db": "maculele_tights_+3",
+"stats": "DEF:144 HP+80 STR+44 VIT+26 AGI+40 INT+40 MND+27 CHR+21 Accuracy+63 Attack+63 Magic Accuracy+63 Evasion+107 Magic Evasion+115 \"Magic Def. Bonus\"+9 Dagger skill +38 Haste+6% \"Critical Parry\"+26 Physical damage limit +10% Set: Augments \"Samba\"",
+"url": "https://www.bg-wiki.com/ffxi/Maculele_Tights_%2B3"
+},
+"23640": {
+"name": "Arbatel Pants +3",
+"db": "arbatel_pants_+3",
+"stats": "DEF:134 HP+68 MP+74 STR+31 VIT+23 AGI+31 INT+53 MND+38 CHR+32 Accuracy+63 Magic Accuracy+63 \"Magic Atk. Bonus\"+54 Magic Damage+33 Evasion+74 Magic Evasion+168 \"Magic Def. Bonus\"+10 Enfeebling magic skill +28 Haste+5% \"Penury\" and \"Parsimony\"+6 Grimoire: Magic Accuracy+36 Damage taken -12% Set: Augments grimoire",
+"url": "https://www.bg-wiki.com/ffxi/Arbatel_Pants_%2B3"
+},
+"23641": {
+"name": "Azimuth Tights +3",
+"db": "azimuth_tights_+3",
+"stats": "DEF:138 HP+68 MP+74 STR+31 VIT+23 AGI+31 INT+55 MND+38 CHR+32 Accuracy+63 Magic Accuracy+63 \"Magic Atk. Bonus\"+58 Magic Damage+33 Evasion+74 Magic Evasion+168 \"Magic Def. Bonus\"+10 Dark magic skill +30 Haste+5% Magic burst damage +15 Set: Occ. casts geomancy spells without using MP",
+"url": "https://www.bg-wiki.com/ffxi/Azimuth_Tights_%2B3"
+},
+"23642": {
+"name": "Eri. Leg Guards +3",
+"db": "erilaz_leg_guards_+3",
+"stats": "DEF:147 HP+100 MP+94 STR+47 VIT+25 AGI+31 INT+43 MND+32 CHR+22 Accuracy+63 Attack+63 Magic Accuracy+63 Evasion+89 Magic Evasion+157 \"Magic Def. Bonus\"+10 Haste+6% Enmity+13 \"Inquartata\"+4 Damage taken -13% Set: Occ. absorbs damage taken",
+"url": "https://www.bg-wiki.com/ffxi/Erilaz_Leg_Guards_%2B3"
+},
+"23688": {
+"name": "Boii Calligae +3",
+"db": "boii_calligae_+3",
+"stats": "DEF:112 HP+45 STR+31 DEX+34 VIT+31 AGI+40 MND+20 CHR+34 Accuracy+60 Attack+60 Magic Accuracy+60 Evasion+105 Magic Evasion+130 \"Magic Def. Bonus\"+6 Haste+6% \"Retaliation\"+31 Critical hit damage +13% Damage taken -10% Set: Augments \"Double Attack\"",
+"url": "https://www.bg-wiki.com/ffxi/Boii_Calligae_%2B3"
+},
+"23689": {
+"name": "Bhikku Gaiters +3",
+"db": "bhikku_gaiters_+3",
+"stats": "DEF:98 HP+43 STR+30 DEX+30 VIT+30 AGI+49 MND+30 CHR+39 Accuracy+60 Attack+60 Magic Accuracy+60 Evasion+122 Magic Evasion+119 \"Magic Def. Bonus\"+7 Haste+4% \"Kick Attacks\" attack +65 \"Footwork\"+16% Damage taken -10% Set: Augments \"Kick Attacks\"",
+"url": "https://www.bg-wiki.com/ffxi/Bhikku_Gaiters_%2B3"
+},
+"23690": {
+"name": "Ebers Duckbills +3",
+"db": "ebers_duckbills_+3",
+"stats": "DEF:96 HP+71 MP+80 STR+20 DEX+26 VIT+25 AGI+43 INT+32 MND+34 CHR+44 Accuracy+60 Magic Accuracy+60 Evasion+105 Magic Evasion+157 \"Magic Def. Bonus\"+9 Enhancing magic skill +35 Haste+3% \"Auspice\"+19 Damage taken -11% Set: Augments elemental resistance spells",
+"url": "https://www.bg-wiki.com/ffxi/Ebers_Duckbills_%2B3"
+},
+"23691": {
+"name": "Wicce Sabots +3",
+"db": "wicce_sabots_+3",
+"stats": "DEF:95 HP+39 MP+50 STR+18 DEX+21 VIT+23 AGI+44 INT+36 MND+32 CHR+47 Accuracy+60 Magic Accuracy+60 \"Magic Atk. Bonus\"+50 Magic Damage+30 Evasion+110 Magic Evasion+168 \"Magic Def. Bonus\"+10 Dark magic skill +35 Haste+3% Enmity-16 \"Mana Wall\"+25% Damage taken -11% Set: Augments \"Conserve MP\"",
+"url": "https://www.bg-wiki.com/ffxi/Wicce_Sabots_%2B3"
+},
+"23692": {
+"name": "Leth. Houseaux +3",
+"db": "lethargy_houseaux_+3",
+"stats": "DEF:98 HP+45 MP+47 STR+22 DEX+30 VIT+22 AGI+43 INT+30 MND+32 CHR+43 Acc.+60 Atk.+60 Mag. Acc.+60 \"M. Atk. B.\"+50 Mag. Dmg.+30 Eva.+110 Mag. Eva.+157 \"M. Def. B.\"+10 Enhancing magic skill +35 Haste+3% Enmity-11 Weapon skill damage +12% Enhancing magic duration +40% Set: Augments \"Composure\"",
+"url": "https://www.bg-wiki.com/ffxi/Lethargy_Houseaux_%2B3"
+},
+"23693": {
+"name": "Skulk. Poulaines +3",
+"db": "skulkers_poulaines_+3",
+"stats": "DEF:103 HP+45 STR+27 DEX+39 VIT+22 AGI+57 MND+22 CHR+40 Accuracy+60 Attack+60 Magic Accuracy+60 Evasion+130 Magic Evasion+125 \"Magic Def. Bonus\"+9 Haste+4% \"Treasure Hunter\"+5 \"Despoil\" effect +8 Damage taken -11% Set: Augments \"Triple Attack\"",
+"url": "https://www.bg-wiki.com/ffxi/Skulker%27s_Poulaines_%2B3"
+},
+"23694": {
+"name": "Chev. Sabatons +3",
+"db": "chevaliers_sabatons_+3",
+"stats": "DEF:121 HP+52 MP+44 STR+34 DEX+28 VIT+40 AGI+43 MND+22 CHR+35 Accuracy+60 Attack+60 Magic Accuracy+60 Evasion+94 Magic Evasion+136 \"Magic Def. Bonus\"+6 Haste+5% Enmity+15 \"Fast Cast\"+13% \"Divine Emblem\"+21 Set: Occ. absorbs damage taken",
+"url": "https://www.bg-wiki.com/ffxi/Chevalier%27s_Sabatons_%2B3"
+},
+"23695": {
+"name": "Heath. Sollerets +3",
+"db": "heathens_sollerets_+3",
+"stats": "DEF:117 HP+48 MP+44 STR+33 DEX+25 VIT+30 AGI+42 INT+22 MND+26 CHR+38 Accuracy+60 Attack+60 Magic Accuracy+60 \"Magic Atk. Bonus\"+50 Evasion+102 Magic Evasion+119 \"Magic Def. Bonus\"+6 Haste+3% \"Occult Acumen\"+36 Weapon skill damage +12% Set: Attack occ. varies with HP",
+"url": "https://www.bg-wiki.com/ffxi/Heathen%27s_Sollerets_%2B3"
+},
+"23696": {
+"name": "Nukumi Ocreae +3",
+"db": "nukumi_ocreae_+3",
+"stats": "DEF:101 HP+45 STR+31 DEX+35 VIT+31 AGI+40 MND+20 CHR+34 Accuracy+60 Attack+60 Magic Accuracy+60 Evasion+105 Magic Evasion+130 \"Magic Def. Bonus\"+6 Haste+3% \"Double Attack\"+6% Physical damage limit +10% \"Spur\"+21 Pet: Accuracy+60 Ranged Accuracy+60 Magic Accuracy+60 Set: Attack occ. varies with pet's HP",
+"url": "https://www.bg-wiki.com/ffxi/Nukumi_Ocreae_%2B3"
+},
+"23697": {
+"name": "Fili Cothurnes +3",
+"db": "fili_cothurnes_+3",
+"stats": "DEF:96 HP+43 MP+47 STR+17 DEX+26 VIT+17 AGI+44 INT+29 MND+35 CHR+53 Accuracy+60 Magic Accuracy+60 Evasion+113 Magic Evasion+157 \"Magic Def. Bonus\"+10 Haste+3% \"Fast Cast\"+13% \"Regen\"+4 \"Scherzo\"+1 Movement speed +18% Set: Augments songs",
+"url": "https://www.bg-wiki.com/ffxi/Fili_Cothurnes_%2B3"
+},
+"23698": {
+"name": "Amini Bottillons +3",
+"db": "amini_bottillons_+3",
+"stats": "DEF:100 HP+41 STR+29 DEX+38 VIT+19 AGI+56 MND+26 CHR+38 Accuracy+60 Ranged Accuracy+60 Ranged Attack+60 Magic Accuracy+60 Evasion+124 Magic Evasion+125 \"Magic Def. Bonus\"+9 Marksmanship skill +38 Haste+4% Enmity-12 Enhances \"Unlimited Shot\" effect Weapon skill damage +12% Set: Augments \"Rapid Shot\"",
+"url": "https://www.bg-wiki.com/ffxi/Amini_Bottillons_%2B3"
+},
+"23700": {
+"name": "Hattori Kyahan +3",
+"db": "hattori_kyahan_+3",
+"stats": "DEF:103 HP+45 STR+27 DEX+39 VIT+23 AGI+54 MND+22 CHR+40 Accuracy+60 Attack+60 Ranged Accuracy+60 Magic Accuracy+60 Evasion+120 Magic Evasion+135 \"Magic Def. Bonus\"+9 Haste+5% \"Critical Parry\"+26 \"Utsusemi\"+1 Weapon skill damage +12% Set: Augments \"Dual Wield\"",
+"url": "https://www.bg-wiki.com/ffxi/Hattori_Kyahan_%2B3"
+},
+"23701": {
+"name": "Pelt. Schyn. +3",
+"db": "peltasts_schynbalds_+3",
+"stats": "DEF:108 HP+45 STR+31 DEX+34 VIT+31 AGI+40 MND+20 CHR+34 Accuracy+60 Attack+70 Magic Accuracy+60 Evasion+105 Magic Evasion+130 \"Magic Def. Bonus\"+6 Haste+6% \"Spirit Jump\": TP+90 Damage taken -11% Wyvern: Accuracy+60 Magic Accuracy+60 Set: Attack occ. varies with wyvern's HP",
+"url": "https://www.bg-wiki.com/ffxi/Peltast%27s_Schynbalds_%2B3"
+},
+"23702": {
+"name": "Beck. Pigaches +3",
+"db": "beckoners_pigaches_+3",
+"stats": "DEF:91 HP+39 MP+117 STR+21 DEX+21 VIT+22 AGI+40 INT+34 MND+34 CHR+50 Acc.+60 Mag. Acc.+60 Evasion+105 Magic Evasion+168 \"Magic Def. Bonus\"+10 Haste+3% \"Elemental Siphon\"+80 Avatar perpetuation cost -9 Avatar: Accuracy+60 Ranged Accuracy+60 Magic Accuracy+60 \"Blood Pact\" damage +12 Set: Augments \"Blood Boon\"",
+"url": "https://www.bg-wiki.com/ffxi/Beckoner%27s_Pigaches_%2B3"
+},
+"23703": {
+"name": "Hashi. Basmak +3",
+"db": "hashishin_basmak_+3",
+"stats": "DEF:103 HP+45 MP+47 STR+22 DEX+30 VIT+22 AGI+43 INT+39 MND+32 CHR+43 Accuracy+60 Attack+60 Magic Accuracy+60 \"Magic Atk. Bonus\"+55 Evasion+110 Magic Evasion+157 \"Magic Def. Bonus\"+10 Haste+3% Enmity-10 Magic burst damage +15 \"Burst Affinity\"+21 Set: Occ. augments blue magic spells",
+"url": "https://www.bg-wiki.com/ffxi/Hashishin_Basmak_%2B3"
+},
+"23704": {
+"name": "Chass. Bottes +3",
+"db": "chasseurs_bottes_+3",
+"stats": "DEF:99 HP+41 STR+29 DEX+38 VIT+19 AGI+56 MND+26 CHR+38 Accuracy+60 Ranged Accuracy+60 Ranged Attack+60 Magic Accuracy+60 \"Magic Atk. Bonus\"+50 Evasion+124 Magic Evasion+125 \"Magic Def. Bonus\"+9 Haste+4% \"Quick Draw\"+31 Enhances \"Courser's Roll\" effect Set: Augments \"Quick Draw\"",
+"url": "https://www.bg-wiki.com/ffxi/Chasseur%27s_Bottes_%2B3"
+},
+"23705": {
+"name": "Karagoz Scarpe +3",
+"db": "karagoz_scarpe_+3",
+"stats": "DEF:100 HP+43 STR+30 DEX+30 VIT+30 AGI+49 INT+21 MND+30 CHR+39 Acc.+60 Atk.+60 Mag. Acc.+60 Eva.+122 Mag. Eva.+119 \"M. Def. B.\"+7 Haste+4% \"Tactical Switch\"+40 Weapon skill damage +12% Automaton: INT+30 MND+30 Accuracy+60 Ranged Accuracy+60 Magic Accuracy+60 Set: Attack occ. varies with automaton's HP",
+"url": "https://www.bg-wiki.com/ffxi/Karagoz_Scarpe_%2B3"
+},
+"23706": {
+"name": "Maculele Toe Shoes +3",
+"db": "maculele_toe_shoes_+3",
+"stats": "DEF:102 HP+45 STR+27 DEX+39 VIT+22 AGI+57 MND+22 CHR+43 Accuracy+60 Attack+60 Magic Accuracy+60 Evasion+140 Magic Evasion+115 \"Magic Def. Bonus\"+9 Haste+5% \"Store TP\"+12 \"Feather Step\"+6 Damage taken -10% Set: Augments \"Samba\"",
+"url": "https://www.bg-wiki.com/ffxi/Maculele_Toe_Shoes_%2B3"
+},
+"23707": {
+"name": "Arbatel Loafers +3",
+"db": "arbatel_loafers_+3",
+"stats": "DEF:95 HP+39 MP+90 STR+18 DEX+21 VIT+23 AGI+44 INT+34 MND+32 CHR+47 Accuracy+60 Magic Accuracy+60 \"Magic Atk. Bonus\"+50 Magic Damage+30 Evasion+110 Magic Evasion+168 \"Magic Def. Bonus\"+10 Elemental magic skill +33 Haste+3% Magic burst damage II +5 \"Klimaform\"+25 Set: Augments grimoire",
+"url": "https://www.bg-wiki.com/ffxi/Arbatel_Loafers_%2B3"
+},
+"23708": {
+"name": "Azimuth Gaiters +3",
+"db": "azimuth_gaiters_+3",
+"stats": "DEF:98 HP+59 MP+70 STR+18 DEX+21 VIT+23 AGI+44 INT+34 MND+32 CHR+47 Accuracy+60 Magic Accuracy+60 \"Magic Atk. Bonus\"+50 Magic Damage+30 Evasion+110 Magic Evasion+168 \"Magic Def. Bonus\"+10 Haste+3% \"Indicolure\" spell duration +30 Damage taken -11% Set: Occ. casts geomancy spells without using MP",
+"url": "https://www.bg-wiki.com/ffxi/Azimuth_Gaiters_%2B3"
+},
+"23709": {
+"name": "Erilaz Greaves +3",
+"db": "erilaz_greaves_+3",
+"stats": "DEF:105 HP+48 MP+59 STR+31 DEX+36 VIT+21 AGI+48 MND+31 CHR+42 All resistances +35 Accuracy+60 Attack+60 Magic Accuracy+60 Evasion+122 Magic Evasion+157 \"Magic Def. Bonus\"+9 Haste+4% Enmity+8 Damage taken -11% Set: Occ. absorbs damage taken",
+"url": "https://www.bg-wiki.com/ffxi/Erilaz_Greaves_%2B3"
+}
+}
