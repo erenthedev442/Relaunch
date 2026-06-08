@@ -106,19 +106,11 @@ with (ROOT / 'sql' / 'item_weapon.sql').open(encoding='utf-8', errors='replace')
 # that by overwriting (itemid, modId) collisions. Without this layered
 # read, +4 weapons score 0 here and get filtered out of the candidate
 # pool entirely.
-_item_mod_map: dict[tuple[int, int], int] = {}
-for sql_path in [
-    ROOT / 'sql' / 'item_mods.sql',
-    ROOT / 'sql' / 'zz_custom_naked_item_mods.sql',
-]:
-    if not sql_path.exists():
-        continue
-    with sql_path.open(encoding='utf-8', errors='replace') as f:
-        for line in f:
-            m = re.match(r"^INSERT INTO `item_mods` VALUES \((\d+),(\d+),(-?\d+)\)", line)
-            if m:
-                iid, mid, val = int(m.group(1)), int(m.group(2)), int(m.group(3))
-                _item_mod_map[(iid, mid)] = val
+from _item_mods import load_item_mod_map
+# Merge EVERY item_mods source (base + all zz_ overlays + tier carry-forward),
+# not just item_mods.sql + zz_custom_naked -- otherwise reforge/relic/Tokko gear
+# and the carry-forward fixes are under-read and mis-scored.
+_item_mod_map = load_item_mod_map(ROOT / 'sql')
 
 item_mods: dict[int, list[tuple[int, int]]] = defaultdict(list)
 for (iid, mid), val in _item_mod_map.items():

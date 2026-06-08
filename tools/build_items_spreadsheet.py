@@ -265,13 +265,10 @@ for ln in (SQLDIR/"item_basic.sql").read_text(encoding="utf-8", errors="replace"
     mm = re.match(r"^INSERT INTO `item_basic` VALUES \((\d+),\d+,'([^']*)'", ln)
     if mm: name2id.setdefault(mm.group(2), int(mm.group(1)))
 
+from _item_mods import load_item_mod_map  # merge ALL item_mods sources, not just 2
 imods = {}
-for fn in ("item_mods.sql", "zz_custom_naked_item_mods.sql"):
-    p = SQLDIR/fn
-    if not p.exists(): continue
-    for ln in p.read_text(encoding="utf-8", errors="replace").splitlines():
-        mm = re.match(r"^INSERT INTO `item_mods` VALUES \((\d+),(\d+),(-?\d+)\)", ln)
-        if mm: imods.setdefault(int(mm.group(1)), {})[int(mm.group(2))] = int(mm.group(3))
+for (iid, mid), val in load_item_mod_map(SQLDIR).items():
+    imods.setdefault(iid, {})[mid] = val
 
 equip = {}
 for ln in (SQLDIR/"item_equipment.sql").read_text(encoding="utf-8", errors="replace").splitlines():
