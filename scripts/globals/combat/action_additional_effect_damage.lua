@@ -159,9 +159,9 @@ xi.combat.action.executeAddEffectDamage = function(actor, target, fedData)
 
     -- Phalanx, One for all, Stoneskin.
     if damage > 0 then
-        damage = utils.clamp(utils.handlePhalanx(params.aeTarget, damage), 0, 99999)
-        damage = utils.clamp(utils.handleOneForAll(params.aeTarget, damage), 0, 99999)
-        damage = utils.clamp(utils.handleStoneskin(params.aeTarget, damage), 0, 99999)
+        damage = utils.clamp(utils.handlePhalanx(params.aeTarget, damage), 0, 131071)
+        damage = utils.clamp(utils.handleOneForAll(params.aeTarget, damage), 0, 131071)
+        damage = utils.clamp(utils.handleStoneskin(params.aeTarget, damage), 0, 131071)
     end
 
     -- Drain HP, MP or TP

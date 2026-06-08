@@ -454,7 +454,7 @@ xi.spells.damage.calculateBaseDamage = function(caster, target, spellId, spellGr
         spellDamage = math.floor(baseSpellDamage * (baseSpellDamageBonus + statDiffBonus))
     end
 
-    return utils.clamp(spellDamage, 0, 99999)
+    return utils.clamp(spellDamage, 0, 131071)
 end
 
 -- Calculate: Multiple Target Damage Reduction (MTDR)
@@ -1187,9 +1187,9 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     end
 
     -- Handle Phalanx, One for All, Stoneskin.
-    finalDamage = utils.clamp(utils.handlePhalanx(target, finalDamage), 0, 99999)
-    finalDamage = utils.clamp(utils.handleOneForAll(target, finalDamage), 0, 99999)
-    finalDamage = utils.clamp(utils.handleStoneskin(target, finalDamage), -99999, 99999)
+    finalDamage = utils.clamp(utils.handlePhalanx(target, finalDamage), 0, 131071)
+    finalDamage = utils.clamp(utils.handleOneForAll(target, finalDamage), 0, 131071)
+    finalDamage = utils.clamp(utils.handleStoneskin(target, finalDamage), -131071, 131071)
 
     -- Handle final adjustments. Most are located in core. TODO: Decide if we want core handling this.
     -- Check if the mob has a damage cap

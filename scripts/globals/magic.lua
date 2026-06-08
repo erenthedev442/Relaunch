@@ -92,7 +92,7 @@ function finalMagicNonSpellAdjustments(caster, target, ele, dmg)
     dmg = utils.handleOneForAll(target, dmg)
     dmg = utils.handleStoneskin(target, dmg)
 
-    dmg = utils.clamp(dmg, -99999, 99999)
+    dmg = utils.clamp(dmg, -131071, 131071)
 
     if dmg < 0 then
         dmg = -(target:addHP(-dmg))
