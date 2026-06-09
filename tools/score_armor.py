@@ -27,6 +27,16 @@ from pathlib import Path
 
 ROOT = Path(r"D:/server")
 
+# NPC-only / non-player junk to keep OUT of the scored vendor catalogs. Mirror
+# of the list in tools/docgen/generators/gear_finder.py (and the DB purge in
+# modules/custom/sql/zz_remove_judge_items.sql). Excluded by id AND name prefix
+# so a re-import can't slip them back in. Keep these copies in sync.
+EXCLUDED_ITEM_IDS = frozenset({
+    12332, 12523, 12551, 12679, 12807, 12935, 13074, 13215, 13358, 13505,
+    13606, 16622, 17004, 17012, 17174, 17326, 17406, 17644, 19325,  # Judge* (Ballista)
+})
+EXCLUDED_NAME_PREFIXES = ('judge',)
+
 
 # --------------------------------------------------------------
 # Parsing helpers
@@ -62,6 +72,8 @@ with (ROOT / 'sql' / 'item_basic.sql').open(encoding='utf-8', errors='replace') 
             iid = int(fields[0])
         except ValueError:
             continue
+        if iid in EXCLUDED_ITEM_IDS or fields[2].strip("'").startswith(EXCLUDED_NAME_PREFIXES):
+            continue  # NPC-only / non-player junk (Judge* etc.) — never score it
         flags = fields[7]
         items_base[iid] = {
             'name':    fields[2].strip("'"),

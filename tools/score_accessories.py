@@ -36,6 +36,17 @@ from pathlib import Path
 ROOT = Path(r"D:/server")
 OUT_LUA = ROOT / "modules" / "custom" / "lua" / "accessory_catalog.lua"
 
+# NPC-only / non-player junk to keep OUT of the scored vendor catalogs. Mirror
+# of the list in tools/docgen/generators/gear_finder.py and the sibling scorers
+# score_armor.py / score_weapons.py (and the DB purge in
+# modules/custom/sql/zz_remove_judge_items.sql). Excluded by id AND name prefix
+# at load time so a re-import can't slip them back in. Keep these copies in sync.
+EXCLUDED_ITEM_IDS = frozenset({
+    12332, 12523, 12551, 12679, 12807, 12935, 13074, 13215, 13358, 13505,
+    13606, 16622, 17004, 17012, 17174, 17326, 17406, 17644, 19325,  # Judge* (Ballista)
+})
+EXCLUDED_NAME_PREFIXES = ('judge',)
+
 
 # ============================================================================
 # SQL parsers — same shape as score_armor.py
@@ -68,6 +79,8 @@ with (ROOT / 'sql' / 'item_basic.sql').open(encoding='utf-8', errors='replace') 
             iid = int(fields[0])
         except ValueError:
             continue
+        if iid in EXCLUDED_ITEM_IDS or fields[2].strip("'").startswith(EXCLUDED_NAME_PREFIXES):
+            continue  # NPC-only / non-player junk (Judge* etc.) — never score it
         # itype (field 5) lets us drop weapons that happen to slot in
         # the same fields as accessories (Knobkierrie is @WEAPON_TYPE
         # in the ammo slot — not an accessory we want here).
@@ -285,11 +298,6 @@ SLOT_NAMES = {
 SORTIE_EARRING_IDS = set(range(25422, 25549, 6))   # 22 ids, step 6
 assert len(SORTIE_EARRING_IDS) == 22, "expected 22 Sortie JSE +2 earrings"
 
-# Owner-banned items — never enter any vendor tier. The Judge's set are joke
-# placeholders with fake 9999 stats that would otherwise top-score every slot
-# and auto-promote into the Infamy Vendor. (Removed at owner request 2026-06-08.)
-BANNED_IDS = {13074, 13215, 13358, 13505, 13606}  # Judge's Gorget/Belt/Earring/Ring/Cape
-
 
 # ============================================================================
 # Build the candidate set
@@ -299,8 +307,6 @@ for iid, info in items_base.items():
     e = equip.get(iid)
     if not e:
         continue
-    if iid in BANNED_IDS:
-        continue   # owner-banned (Judge's joke 9999-stat placeholders) — never sell
     if iid in SORTIE_EARRING_IDS:
         continue   # Infamy-Vendor exclusive — emitted into catalog.infamy below
     if e['slot'] not in SLOT_NAMES:
