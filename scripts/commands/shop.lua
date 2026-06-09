@@ -125,6 +125,11 @@ local stock =
         { 5167,                                 5000 },  -- Coeurl Sub +1        -- STR / DEX
         { 5763,                                 5000 },  -- Yellow Curry Bun +1  -- STR / Acc hybrid
 
+        -- ===== Attack% (best vs high-DEF mobs -- e.g. the Prestige trial bosses) =====
+        { 6072,                                 5000 },  -- Magma Steak +1       -- Attack +24% (cap 185) -- highest attack food, +STR9
+        { 6465,                                 5000 },  -- Behemoth Steak +1    -- Attack +24% (cap 165), +STR8 +DEX8 (attack + a little acc)
+        { 5925,                                 5000 },  -- Charred Salisbury Steak -- Attack +22% (cap 165), +STR8
+
         -- ===== Ranged DD =====
         { 5162,                                 5000 },  -- Squid Sushi +1       -- RACC+18, RATT+13% (RNG / COR)
 
