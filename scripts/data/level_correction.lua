@@ -212,7 +212,11 @@ set{
     xi.zone.ABYSSEA_ALTEPA,
     xi.zone.SHIP_BOUND_FOR_SELBINA,
     xi.zone.SHIP_BOUND_FOR_MHAURA,
-    xi.zone.PROVENANCE,
+    -- [LEGENDARY-CUSTOM 2026-06-08] Provenance removed from level correction:
+    -- it hosts the lv150 Prestige trial bosses, so a lv99 player would otherwise
+    -- eat the full ~51-level cRatio + accuracy penalty. Matches this file's own
+    -- rule ("any zone with a mob over lvl 99 -> level correction deactivated").
+    -- xi.zone.PROVENANCE,
     xi.zone.SAN_DORIA_JEUNO_AIRSHIP,
     xi.zone.BASTOK_JEUNO_AIRSHIP,
     xi.zone.WINDURST_JEUNO_AIRSHIP,
