@@ -39,6 +39,19 @@ OUT_LUA = ROOT / "modules" / "custom" / "lua" / "augment_catalog.lua"
 # reconciles it so the catalog shows the SAME effective numbers the engine uses.
 OVERRIDE_SQL = ROOT / "modules" / "custom" / "sql" / "zz_augment_rebalance.sql"
 
+# Mods stored at xN of their human value (mirrors MOD_SCALE in
+# tools/docgen/generators/gear_finder.py). Stored per-entry as `disp` so the
+# Moogle / !augstats / docs divide the raw (base+boost)*mult back to the
+# meaningful number (a maxed Damage-Taken augment is 12800 raw = 128% / piece).
+# modIds not listed are 1:1. HASTE_GEAR (384) etc. are /1024 AND the stock haste
+# augments are over-scaled -- left raw on purpose (a config question, not display).
+MOD_DISPLAY_SCALE = {
+    160: 100, 161: 100, 162: 100, 163: 100, 164: 100,  # damage-taken family -> %
+    175: 100,                                           # skillchain dmg -> %
+    506: 10,                                            # proc chance -> %
+    507: 100,                                           # occ. extra
+}
+
 MOB_DROPLIST = SQL / "mob_droplist.sql"
 
 # Reserved IDs used as crystals/clusters per scripts/enum/item.lua.
@@ -837,6 +850,9 @@ def main():
         "--           after modules/custom/sql/zz_augment_rebalance.sql).",
         "--   mult  : EFFECTIVE multiplier (engine uses mult>1 ? mult : 1).",
         "--           Real per-slot value = (base + sageBoost 0..31) * mult.",
+        "--   disp  : display divisor -- mods stored at xN (damage-taken /100,",
+        "--           skillchain /100, ...) are divided by this so the Moogle /",
+        "--           !augstats / docs show the meaningful number. 1 = no scaling.",
         "--   cat   : 1..13 thematic category, see CAT_NAMES in the generator.",
         "--           Used by Augment_Sage to apply per-NM affinity bonuses.",
         "--   label : stat NAME only -- flat numbers are stripped because every",
@@ -860,15 +876,18 @@ def main():
             aug_str = f"{aid},".ljust(aug_width + 1)
             id_str = f"[{iid}]".ljust(item_width + 2)
             base_val, mult_val = effective(aid, augs[aid], override)
+            _rows = augs[aid]["rows"]
+            disp_val = MOD_DISPLAY_SCALE.get(_rows[0][0], 1) if _rows else 1
             base_str = f"{base_val},".ljust(4)
             mult_str = f"{mult_val},".ljust(3)
+            disp_str = f"{disp_val},".ljust(5)
             # cat: 1-indexed category. Lets the Augment Moogle look up the
             # affinity bit + apply Sage Mastery / NM-affinity multipliers
             # without re-parsing the augment label at trade time.
             cat_str = f"{_cat_idx + 1},".ljust(3)
             lines.append(
                 f"    {id_str} = {{ augId = {aug_str} base = {base_str} "
-                f"mult = {mult_str} cat = {cat_str} label = {lua_str(clean_label(label))} }},"
+                f"mult = {mult_str} disp = {disp_str} cat = {cat_str} label = {lua_str(clean_label(label))} }},"
             )
     lines.append("}")
     lines.append("")
