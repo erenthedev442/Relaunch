@@ -121,4 +121,9 @@ INSERT INTO `item_mods` VALUES (26259,402,15) ON DUPLICATE KEY UPDATE `value`=VA
 -- penalties and was MISSING the item's main stat. Adds Double Attack+7%.
 INSERT INTO `item_mods` VALUES (26118,288,7) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);    -- DOUBLE_ATTACK: 7
 
+-- 26227: Cornelia's Ring (ring) — naked WSD ring, now Infamy-obtainable (owner request 2026-06-08)
+-- BG-Wiki: Weapon Skill Accuracy+20 (jpwiki: true value), Weapon skill damage +10%
+INSERT INTO `item_mods` VALUES (26227,48,20) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);    -- WSACC: 20
+INSERT INTO `item_mods` VALUES (26227,840,10) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);    -- ALL_WSDMG_ALL_HITS: 10
+
 UNLOCK TABLES;

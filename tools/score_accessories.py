@@ -172,7 +172,7 @@ ROLE_WEIGHTS = {
         165: 2.0,                           # CRITHITRATE
         421: 3.0,                           # CRIT_DMG_INCREASE
         345: 0.04,                          # TP_BONUS (raw)
-        840: 3.0, 841: 2.0,                 # WS dmg all-hits / first-hit
+        840: 5.0, 841: 3.0,                 # WS dmg all-hits / first-hit (bumped — premium for WS)
         570: 1.0,                           # WEAPONSKILL_DAMAGE_BASE
     },
     'TANK': {
@@ -222,7 +222,7 @@ MOD_SANITY_CAP = {
 _ADDED_WEIGHTS = {
     'DPS':    {11: 1.5, 506: 0.1, 507: 0.05, 368: 1.0, 361: 0.05, 362: 0.1,
                430: 8.0, 508: 0.1, 1039: 1.0, 432: 0.3, 954: 0.1, 113: 0.2},
-    'WS':     {11: 1.5, 506: 0.1, 507: 0.05, 48: 1.0, 175: 0.01, 113: 0.2},
+    'WS':     {11: 1.5, 506: 0.1, 507: 0.05, 48: 1.0, 175: 0.01, 113: 0.2, 1144: 3.0, 949: 5.0},  # fTP bonus (Fotia) + WS no-deplete
     'TANK':   {68: 0.5, 31: 0.2, 370: 8.0, 110: 0.1, 168: 0.5, 291: 1.5,
                109: 0.3, 108: 0.5, 166: 1.0, 113: 0.2},
     'CASTER': {114: 0.5, 115: 0.5, 168: 0.5, 113: 0.2},
@@ -230,7 +230,7 @@ _ADDED_WEIGHTS = {
 }
 for _r, _w in _ADDED_WEIGHTS.items():
     ROLE_WEIGHTS[_r].update(_w)
-MOD_SANITY_CAP.update({31: 300, 507: 300, 175: 2000, 361: 300, 430: 20})
+MOD_SANITY_CAP.update({31: 300, 507: 300, 175: 2000, 361: 300, 430: 20, 1144: 100, 949: 10})
 
 
 def _clamp(mid: int, val: int) -> int:
@@ -285,6 +285,11 @@ SLOT_NAMES = {
 SORTIE_EARRING_IDS = set(range(25422, 25549, 6))   # 22 ids, step 6
 assert len(SORTIE_EARRING_IDS) == 22, "expected 22 Sortie JSE +2 earrings"
 
+# Owner-banned items — never enter any vendor tier. The Judge's set are joke
+# placeholders with fake 9999 stats that would otherwise top-score every slot
+# and auto-promote into the Infamy Vendor. (Removed at owner request 2026-06-08.)
+BANNED_IDS = {13074, 13215, 13358, 13505, 13606}  # Judge's Gorget/Belt/Earring/Ring/Cape
+
 
 # ============================================================================
 # Build the candidate set
@@ -294,6 +299,8 @@ for iid, info in items_base.items():
     e = equip.get(iid)
     if not e:
         continue
+    if iid in BANNED_IDS:
+        continue   # owner-banned (Judge's joke 9999-stat placeholders) — never sell
     if iid in SORTIE_EARRING_IDS:
         continue   # Infamy-Vendor exclusive — emitted into catalog.infamy below
     if e['slot'] not in SLOT_NAMES:

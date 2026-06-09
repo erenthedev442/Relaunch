@@ -176,7 +176,7 @@ ROLE_WEIGHTS = {
         165: 2.0,                           # CRITHITRATE (many WS can crit)
         421: 3.0,                           # CRIT_DMG_INCREASE (big WS multiplier)
         345: 0.04,                          # TP_BONUS (raw; ~250 -> 10)
-        840: 3.0, 841: 2.0,                 # WS dmg all-hits / first-hit per 1%
+        840: 5.0, 841: 3.0,                 # WS dmg all-hits / first-hit per 1% (bumped — premium for WS)
         570: 1.0,                           # WEAPONSKILL_DAMAGE_BASE (single WS)
     },
     'TANK': {
@@ -243,7 +243,7 @@ MOD_SANITY_CAP = {
 _ADDED_WEIGHTS = {
     'DPS':    {11: 1.5, 506: 0.1, 507: 0.05, 368: 1.0, 361: 0.05, 362: 0.1,
                430: 8.0, 508: 0.1, 1039: 1.0, 432: 0.3, 954: 0.1, 113: 0.2},
-    'WS':     {11: 1.5, 506: 0.1, 507: 0.05, 48: 1.0, 175: 0.01, 113: 0.2},
+    'WS':     {11: 1.5, 506: 0.1, 507: 0.05, 48: 1.0, 175: 0.01, 113: 0.2, 1144: 3.0, 949: 5.0},  # fTP bonus (Fotia) + WS no-deplete
     'TANK':   {68: 0.5, 31: 0.2, 370: 8.0, 110: 0.1, 168: 0.5, 291: 1.5,
                109: 0.3, 108: 0.5, 166: 1.0, 113: 0.2},
     'CASTER': {114: 0.5, 115: 0.5, 168: 0.5, 113: 0.2},
@@ -251,7 +251,7 @@ _ADDED_WEIGHTS = {
 }
 for _r, _w in _ADDED_WEIGHTS.items():
     ROLE_WEIGHTS[_r].update(_w)
-MOD_SANITY_CAP.update({31: 300, 507: 300, 175: 2000, 361: 300, 430: 20})
+MOD_SANITY_CAP.update({31: 300, 507: 300, 175: 2000, 361: 300, 430: 20, 1144: 100, 949: 10})
 
 
 def _clamp(mid: int, val: int) -> int:
