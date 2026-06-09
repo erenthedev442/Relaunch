@@ -20,10 +20,12 @@
 --   is 4x the per-slot range (HP: 4..128/slot -> 16..512 per piece, matching
 --   the live Nyame numbers, now achievement-gated).
 --
--- NOTE: augments already at value=1 (every stock "+1" augment) need NO row —
--- the Moogle change alone makes their boost scale 1 -> 32 with achievements.
--- Only the HIGH-BASE flat stats below need their base flattened. The custom
--- "All elemental resists +10" (augId 796) is intentionally LEFT ALONE.
+-- NOTE: augments already at value=1 (every stock "+1" augment) need NO row to
+-- scale 1 -> 32 with achievements -- the Moogle change handles that. Rows below
+-- exist for two reasons: (1) HIGH-BASE flat stats (HP/MP/Attack/...) whose base
+-- is flattened to 1 so the achievement boost isn't wasted against the 5-bit cap;
+-- (2) RECOVERY/sustain stats we deliberately cap ABOVE 32 (multiplier > 1). The
+-- custom "All elemental resists +10" (augId 796) is intentionally LEFT ALONE.
 --
 -- Re-runnable. Apply: mariadb xidb < modules/custom/sql/zz_augment_rebalance.sql
 -- then RESTART the map server (augments load at boot via LoadAugmentData).
@@ -45,5 +47,17 @@ UPDATE `augments` SET `value` = 1, `multiplier` = 2 WHERE `augmentId` = 70;   --
 UPDATE `augments` SET `value` = 1, `multiplier` = 2 WHERE `augmentId` = 18;   -- HP+ MP+ (both rows)
 UPDATE `augments` SET `value` = 1, `multiplier` = 2 WHERE `augmentId` = 353;  -- TP Bonus+ (old cap 81 -> 64; engine caps TP Bonus at 1000)
 
--- ---- value 5 -> mult 1 : per-slot 1..32  (x4 = 4..128 per piece) ----
-UPDATE `augments` SET `value` = 1, `multiplier` = 1 WHERE `augmentId` = 137;  -- Regen+ (old cap 36 -> 32)
+-- ---- RECOVERY / SUSTAIN (flat per-tick stats) ----
+-- All defaulted to multiplier 0/1 (the engine treats both as x1) so they capped
+-- at the same 32/slot = 128/piece as a stock augment. Bumped 2026-06-08 so the
+-- achievement climb actually means something for sustain builds. DIFFERENTIATED
+-- per owner decision: combat Refresh (138) is held at x2 because x4 (~170 MP/sec
+-- from one maxed piece) would remove MP as a resource for casters; the resting
+-- "while healing" MP stat (52) CAN go x4 since it only ticks out of combat.
+--   x4 -> per-slot 4..128  (x4 slots = 16..512 per piece)
+UPDATE `augments` SET `value` = 1, `multiplier` = 4 WHERE `augmentId` = 137;  -- Regen (HP/tick, combat)              -> 16..512/piece
+UPDATE `augments` SET `value` = 1, `multiplier` = 4 WHERE `augmentId` = 110;  -- Pet: Regen (HP/tick)                 -> 16..512/piece
+UPDATE `augments` SET `value` = 1, `multiplier` = 4 WHERE `augmentId` = 51;   -- HP recovered while healing (resting) -> 16..512/piece
+UPDATE `augments` SET `value` = 1, `multiplier` = 4 WHERE `augmentId` = 52;   -- MP recovered while healing (resting) -> 16..512/piece
+--   x2 -> per-slot 2..64   (x4 slots = 8..256 per piece)
+UPDATE `augments` SET `value` = 1, `multiplier` = 2 WHERE `augmentId` = 138;  -- Refresh (MP/tick, combat)            -> 8..256/piece (capped on purpose)

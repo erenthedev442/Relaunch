@@ -35,6 +35,9 @@ SQL = ROOT / "sql"
 AUG_SQL = SQL / "augments.sql"
 ITEM_SQL = SQL / "item_basic.sql"
 OUT_LUA = ROOT / "modules" / "custom" / "lua" / "augment_catalog.lua"
+# Live-DB override applied AFTER the stock augments.sql import. The generator
+# reconciles it so the catalog shows the SAME effective numbers the engine uses.
+OVERRIDE_SQL = ROOT / "modules" / "custom" / "sql" / "zz_augment_rebalance.sql"
 
 MOB_DROPLIST = SQL / "mob_droplist.sql"
 
@@ -452,11 +455,13 @@ def parse_augments() -> dict[int, dict]:
         if not m:
             continue
         aug_id = int(m.group(1))
+        mult   = int(m.group(2))   # field 2 = multiplier (augments table schema)
         mod_id = int(m.group(3))
         value = int(m.group(4))
         comment = (m.group(7) or "").strip()
-        entry = augs.setdefault(aug_id, {"label": "", "rows": []})
+        entry = augs.setdefault(aug_id, {"label": "", "rows": [], "mult": 0})
         entry["rows"].append((mod_id, value))
+        entry["mult"] = max(entry["mult"], mult)
         if comment and not comment.startswith("Cont."):
             if not entry["label"]:
                 entry["label"] = comment
@@ -464,6 +469,70 @@ def parse_augments() -> dict[int, dict]:
         if not entry["label"]:
             entry["label"] = f"augment {aug_id}"
     return augs
+
+
+# =========================================================================
+# Live-DB override reconciliation + label cleanup.
+#
+# zz_augment_rebalance.sql re-tunes value+multiplier for the "marquee" + recovery
+# augments AFTER the stock import. The generator MUST fold it in so the catalog
+# (and thus the Moogle trade message + !augstats, which read base+mult) shows the
+# exact numbers the engine applies: (base + sageBoost 0..31) * (mult>1 ? mult : 1).
+# =========================================================================
+_override_re = re.compile(
+    r"UPDATE\s+`?augments`?\s+SET\s+`?value`?\s*=\s*(\d+)\s*,\s*"
+    r"`?multiplier`?\s*=\s*(\d+)\s+WHERE\s+`?augmentId`?\s*=\s*(\d+)",
+    re.IGNORECASE)
+
+
+def parse_override() -> dict:
+    out: dict = {}
+    if not OVERRIDE_SQL.exists():
+        return out
+    for line in OVERRIDE_SQL.read_text(encoding="utf-8").splitlines():
+        m = _override_re.search(line)
+        if m:
+            value, mult, aug_id = int(m.group(1)), int(m.group(2)), int(m.group(3))
+            out[aug_id] = (value, mult)
+    return out
+
+
+def effective(aug_id: int, entry: dict, override: dict) -> tuple:
+    """The (base_value, multiplier) the ENGINE actually applies: override wins,
+    else the stock augments.sql row. Engine = (value+boost)*(mult>1?mult:1), so
+    we normalise mult to >= 1."""
+    if aug_id in override:
+        value, mult = override[aug_id]
+    else:
+        rows = entry["rows"]
+        value = abs(rows[0][1]) if rows else 0
+        mult = entry.get("mult", 0)
+    return value, (mult if mult > 1 else 1)
+
+
+def clean_label(label: str) -> str:
+    """Strip the stock '+97 / +33 / +1%' magnitudes and dev-note asides from a
+    label, leaving just the stat name. Every augment now scales with the Augment
+    Sage, so the flat numbers are misleading; the real per-slot/total value is
+    shown live by the Moogle and !augstats from base*mult."""
+    # Drop parentheticals EXCEPT melee/ranged disambiguators (Dmg/Delay variants).
+    label = re.sub(
+        r"\s*\(([^)]*)\)",
+        lambda m: m.group(0) if re.search(r"melee|ranged", m.group(1), re.I) else "",
+        label)
+    # Drop trailing dev-notes, quoted asides, and '?'-tails.
+    label = re.sub(
+        r'\s*(?:"[^"]*".*|\?.*|--.*|'
+        r"(?:could not|assuming|use multiplier|mod undefined|as of yet|"
+        r"leaving blank|tested in retail|increases? by|additional shots).*)$",
+        "", label, flags=re.IGNORECASE)
+    # Strip flat numeric magnitudes (+97, +33, -1, +1%). Note: no trailing \s*
+    # after the digits, or "HP+33 MP+33" would lose the space and become "HPMP".
+    label = re.sub(r"\s*[+\-]\s*\d+%?", "", label)
+    # Colons -> spaces; collapse whitespace; trim stray punctuation.
+    label = re.sub(r"\s*:\s*", " ", label)
+    label = re.sub(r"\s{2,}", " ", label).strip(" ,.-")
+    return label or "Augment"
 
 
 def has_useful_mod(entry: dict) -> bool:
@@ -597,6 +666,8 @@ def main():
 
     augs = parse_augments()
     print(f"\nParsed {len(augs)} unique augIds from augments.sql")
+    override = parse_override()
+    print(f"Override rows from zz_augment_rebalance.sql: {len(override)} augIds")
     augs = {a: e for a, e in augs.items() if has_useful_mod(e)}
     augs = {a: e for a, e in augs.items() if not is_bad_negative(e)}
     _before_super = len(augs)
@@ -760,12 +831,16 @@ def main():
         "--   - Crafting kits excluded from the catalyst pool",
         "--   - Augments dropped entirely if no thematic mob-drop catalyst exists",
         "--",
-        "-- Each entry: { augId = N, base = N, cat = N, label = '...' }",
+        "-- Each entry: { augId = N, base = N, mult = N, cat = N, label = '...' }",
         "--   augId : index into sql/augments.sql (used for the actual augment)",
-        "--   base  : single-trade stat value (stacks multiply: base * count)",
+        "--   base  : EFFECTIVE per-slot base the engine applies (the live value",
+        "--           after modules/custom/sql/zz_augment_rebalance.sql).",
+        "--   mult  : EFFECTIVE multiplier (engine uses mult>1 ? mult : 1).",
+        "--           Real per-slot value = (base + sageBoost 0..31) * mult.",
         "--   cat   : 1..13 thematic category, see CAT_NAMES in the generator.",
         "--           Used by Augment_Sage to apply per-NM affinity bonuses.",
-        "--   label : human-readable augment description (shown in trade msg)",
+        "--   label : stat NAME only -- flat numbers are stripped because every",
+        "--           augment scales with Augment Sage progress (see !augstats).",
         "--",
         "-- Generated from sql/augments.sql + sql/mob_droplist.sql.",
         "-----------------------------------",
@@ -784,16 +859,16 @@ def main():
         for iid, aid, label, _cat_idx, _sname in entries:
             aug_str = f"{aid},".ljust(aug_width + 1)
             id_str = f"[{iid}]".ljust(item_width + 2)
-            rows = augs[aid]["rows"]
-            base_val = abs(rows[0][1]) if rows else 0
+            base_val, mult_val = effective(aid, augs[aid], override)
             base_str = f"{base_val},".ljust(4)
+            mult_str = f"{mult_val},".ljust(3)
             # cat: 1-indexed category. Lets the Augment Moogle look up the
             # affinity bit + apply Sage Mastery / NM-affinity multipliers
             # without re-parsing the augment label at trade time.
             cat_str = f"{_cat_idx + 1},".ljust(3)
             lines.append(
                 f"    {id_str} = {{ augId = {aug_str} base = {base_str} "
-                f"cat = {cat_str} label = {lua_str(label)} }},"
+                f"mult = {mult_str} cat = {cat_str} label = {lua_str(clean_label(label))} }},"
             )
     lines.append("}")
     lines.append("")

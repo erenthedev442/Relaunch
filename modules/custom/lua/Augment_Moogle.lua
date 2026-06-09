@@ -364,6 +364,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 local def    = catalog[itemId]
                 local count  = catalystCounts[itemId]
                 local base   = def.base or 0
+                local mult   = (def.mult and def.mult > 1) and def.mult or 1
 
                 local affMult = (def.cat and affinity.hasAffinity(player, def.cat))
                     and affinity.affinityMult or 1.0
@@ -422,11 +423,17 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 -- Replaces the old "(6.0x)" multiplier claim -- the boost is an
                 -- ADDITIVE 0..31, not a multiplier; each augment's value +
                 -- multiplier (sql/augments.sql) set the real floor and cap.
-                local boostStr = string.format('  [boost %d/%d]', perSlotExdata, EXDATA_VALUE_MAX)
+                -- Real per-slot value the engine will apply (matches !augstats):
+                --   (base + boost) * mult, with base/mult the EFFECTIVE live
+                --   values from augment_catalog.lua. Show it so the trade message
+                --   matches reality instead of the old flat label number.
+                local perSlotVal = (base + perSlotExdata) * mult
+                local boostStr   = string.format('  [boost %d/%d]', perSlotExdata, EXDATA_VALUE_MAX)
+                local valStr     = (count > 1)
+                    and string.format('  ->  %d/slot x%d = %d total', perSlotVal, count, perSlotVal * count)
+                    or  string.format('  ->  %d', perSlotVal)
 
-                local label = (count > 1)
-                    and string.format('%s x%d%s', def.label, count, boostStr)
-                    or  string.format('%s%s', def.label, boostStr)
+                local label = string.format('%s%s%s', def.label, valStr, boostStr)
                 table.insert(labelSummary, label)
                 table.insert(catalystsHeld, { id = itemId, qty = count })
 

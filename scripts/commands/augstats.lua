@@ -18,10 +18,11 @@
 --
 -- FORMULA (mirrors item_equipment.cpp:479):
 --   Each augment slot contributes:
---     effective_per_slot = sql_base + exdata_value
---   where sql_base comes from sql/augments.sql and exdata_value is the
---   5-bit boost stored in the item's exdata (0-31; set by the Augment Sage
---   multiplier stack, capped at 31 per slot by hardware limit).
+--     effective_per_slot = (base + exdata_boost) * (mult > 1 ? mult : 1)
+--   where base + mult are the EFFECTIVE live values (from augment_catalog.lua,
+--   reconciled from sql/augments.sql + zz_augment_rebalance.sql) and
+--   exdata_boost is the 5-bit Augment Sage boost stored in the item's exdata
+--   (0-31, capped at 31 per slot by the hardware field width).
 --   Multiple catalyst slots of the same augment type stack independently.
 --
 -- USAGE: 
@@ -49,6 +50,7 @@ for _, def in pairs(catalog) do
         {
             label = def.label,
             base  = math.abs(def.base or 0),
+            mult  = def.mult or 1,
         }
     end
 end
@@ -89,6 +91,7 @@ commandObj.onTrigger = function(player)
                         {
                             label = def and def.label or string.format('[AugID %d]', augId),
                             base  = def and def.base  or 0,
+                            mult  = def and def.mult  or 1,
                             val   = augVal,
                             count = 1,
                         }
@@ -114,9 +117,11 @@ commandObj.onTrigger = function(player)
                 -- Print one line per distinct augment type
                 for _, augId in ipairs(augOrder) do
                     local g       = augGroups[augId]
-                    -- effective_per_slot = sql_base + exdata_boost
+                    -- Mirror the engine (item_equipment.cpp:479):
+                    --   per_slot = (base + exdata_boost) * (mult>1 ? mult : 1)
                     -- (negative-stat augments show magnitude; label carries sign context)
-                    local perSlot = g.base + g.val
+                    local m       = (g.mult and g.mult > 1) and g.mult or 1
+                    local perSlot = (g.base + g.val) * m
 
                     local line
                     if g.count > 1 then
@@ -124,12 +129,18 @@ commandObj.onTrigger = function(player)
                             '    %s  ->  %d/slot × %d slots = %d total',
                             g.label, perSlot, g.count, perSlot * g.count)
                     elseif g.val > 0 then
-                        -- Single boosted slot: show base + boost breakdown
-                        line = string.format(
-                            '    %s  ->  %d  (base %d + sage boost %d)',
-                            g.label, perSlot, g.base, g.val)
+                        -- Single boosted slot: show the breakdown
+                        if m > 1 then
+                            line = string.format(
+                                '    %s  ->  %d  ((base %d + boost %d) ×%d)',
+                                g.label, perSlot, g.base, g.val, m)
+                        else
+                            line = string.format(
+                                '    %s  ->  %d  (base %d + boost %d)',
+                                g.label, perSlot, g.base, g.val)
+                        end
                     else
-                        -- Single unboosted slot: simple
+                        -- Single unboosted slot: simple (still applies mult)
                         line = string.format('    %s  ->  %d', g.label, perSlot)
                     end
 
