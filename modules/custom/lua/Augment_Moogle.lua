@@ -369,11 +369,23 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                     and affinity.affinityMult or 1.0
                 local totalMult = masteryMult * affMult * critMult
 
-                -- Per-slot exdata to deliver `base + boost` per slot.
-                -- Boost is `base * (totalMult - 1)`, would-be capped at 31.
-                local rawExdata     = math.floor(math.abs(base) * (totalMult - 1) + 0.5)
-                local perSlotExdata = math.min(rawExdata, EXDATA_VALUE_MAX)
-                local boostClipped  = rawExdata > EXDATA_VALUE_MAX
+                -- Per-slot exdata = the ACHIEVEMENT boost only (Sage mastery x
+                -- affinity x crit), mapped linearly across the full 5-bit range
+                -- (0..EXDATA_VALUE_MAX). It NO LONGER scales off the augment's
+                -- base: a high base (e.g. HP 97) used to blow past 31 the instant
+                -- totalMult rose above ~1.3, pinning the boost and silently
+                -- wasting your rank / affinity / crit. Now the boost is pure
+                -- achievement progress, and each augment's floor + cap come from
+                -- its value+multiplier in sql/augments.sql:
+                --     final/slot = (value + boost) * multiplier
+                --     floor = value*mult  (no achievements)
+                --     cap   = (value+31)*mult  (rank5 + affinity + crit)
+                local maxTotalMult  = (sage.masteryMult[#sage.masteryMult] or 2.0)
+                                        * (affinity.affinityMult or 1.5) * 2.0  -- rank5 x affinity x crit
+                local progress      = (maxTotalMult > 1) and ((totalMult - 1) / (maxTotalMult - 1)) or 0
+                local rawExdata     = math.floor(progress * EXDATA_VALUE_MAX + 0.5)
+                local perSlotExdata = math.min(math.max(rawExdata, 0), EXDATA_VALUE_MAX)
+                local boostClipped  = false  -- progress mapping is bounded to [0, EXDATA_VALUE_MAX] by construction
 
                 -- Emit one augment slot per catalyst. Same augId in multiple
                 -- slots is fine - the engine processes each slot's modValue
@@ -405,18 +417,12 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 --     and show the per-slot magnitude that will actually
                 --     be written, plus the total. Player can decide
                 --     whether to commit knowing the real return.
-                local boostStr
-                if totalMult <= 1.001 then
-                    boostStr = ''
-                elseif boostClipped then
-                    local perSlotEffective = math.abs(base) + perSlotExdata
-                    local totalEffective   = perSlotEffective * count
-                    boostStr = string.format(
-                        ' (boost capped: writes ~%d/slot, %d total - engine 5-bit limit)',
-                        perSlotEffective, totalEffective)
-                else
-                    boostStr = string.format(' (%.1fx)', totalMult)
-                end
+                -- Honest mastery-charge meter: how much of the 0..EXDATA_VALUE_MAX
+                -- achievement boost (rank x affinity x crit) THIS trade landed.
+                -- Replaces the old "(6.0x)" multiplier claim -- the boost is an
+                -- ADDITIVE 0..31, not a multiplier; each augment's value +
+                -- multiplier (sql/augments.sql) set the real floor and cap.
+                local boostStr = string.format('  [boost %d/%d]', perSlotExdata, EXDATA_VALUE_MAX)
 
                 local label = (count > 1)
                     and string.format('%s x%d%s', def.label, count, boostStr)

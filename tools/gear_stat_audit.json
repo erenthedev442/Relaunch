@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-08T19:03:08",
+  "generated_at": "2026-06-08T22:05:26",
   "summary": {
     "reforge": {
       "total": 1320,
@@ -10,9 +10,9 @@
       "not_equip": 0
     },
     "hunting_league": {
-      "total": 397,
-      "ok": 308,
-      "naked": 83,
+      "total": 399,
+      "ok": 306,
+      "naked": 87,
       "latent_only": 0,
       "missing": 3,
       "not_equip": 3
@@ -444,6 +444,14 @@
       "latentCount": 0
     },
     {
+      "itemId": 25681,
+      "shortName": "cohort_cloak_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] body: Cohort Cloak +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
       "itemId": 25766,
       "shortName": "hjarrandi_breastplate",
       "source": "hunting_league",
@@ -524,6 +532,14 @@
       "latentCount": 0
     },
     {
+      "itemId": 25886,
+      "shortName": "flamma_dirs_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] legs: Flamma Dirs +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
       "itemId": 25894,
       "shortName": "ea_slops_+1",
       "source": "hunting_league",
@@ -560,6 +576,14 @@
       "shortName": "navon_crackows",
       "source": "hunting_league",
       "context": "Armor NPC [silver] feet: Navon Crackows",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25926,
+      "shortName": "sulevias_leggings_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] feet: Sulevias Leggings +1",
       "modCount": 0,
       "latentCount": 0
     },
@@ -624,6 +648,14 @@
       "shortName": "pinga_mittens_+1",
       "source": "hunting_league",
       "context": "Armor NPC [bronze] hands: Pinga Mittens +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25991,
+      "shortName": "heyoka_mittens_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] hands: Heyoka Mittens +1",
       "modCount": 0,
       "latentCount": 0
     },

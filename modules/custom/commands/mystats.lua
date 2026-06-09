@@ -153,6 +153,20 @@ commandObj.onTrigger = function(player)
         player:getMod(xi.mod.DMGBREATH) / 100)
 
     -- =========================================================
+    -- Elemental resistances. Read by numeric mod id 15-22 (Fire, Ice, Wind,
+    -- Earth, Lightning, Water, Light, Dark -- the standard FFXI element order).
+    -- Confirmed against sql/augments.sql: "Fire resist" = mod 15 ... "Dark
+    -- resist" = mod 22. These are the additive resist values from gear, augments
+    -- (incl. the "All elemental resists +10" augment), and buffs -- higher means
+    -- more resistant. Read by id because xi.mod has no stable Lua alias for these
+    -- on this build, and the engine applies them by id regardless.
+    header(player, 'Elemental Resists')
+    line(player, 'Fire %3d   Ice %3d   Wind %3d   Earth %3d',
+        player:getMod(15), player:getMod(16), player:getMod(17), player:getMod(18))
+    line(player, 'Thunder %3d   Water %3d   Light %3d   Dark %3d',
+        player:getMod(19), player:getMod(20), player:getMod(21), player:getMod(22))
+
+    -- =========================================================
     header(player, 'Tempo / Haste / Casting')
     -- Haste mods are in 0.01% units, so the raw value 2500 = 25%. The
     -- caps shown here are engine clamps from battleutils.cpp:5990-5991.
