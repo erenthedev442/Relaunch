@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-07T14:33:33",
+  "generated_at": "2026-06-08T19:03:08",
   "summary": {
     "reforge": {
       "total": 1320,
@@ -10,15 +10,87 @@
       "not_equip": 0
     },
     "hunting_league": {
-      "total": 396,
-      "ok": 332,
-      "naked": 58,
+      "total": 397,
+      "ok": 308,
+      "naked": 83,
       "latent_only": 0,
       "missing": 3,
       "not_equip": 3
     }
   },
   "naked_items": [
+    {
+      "itemId": 20764,
+      "shortName": "crobaci_+2",
+      "source": "hunting_league",
+      "context": "Weapons NPC [bronze] greatswords: Crobaci +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 21611,
+      "shortName": "hepatizon_rapier_+1",
+      "source": "hunting_league",
+      "context": "Weapons NPC [gold] swords: Hepatizon Rapier +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 21646,
+      "shortName": "caliburnus",
+      "source": "hunting_league",
+      "context": "Weapons NPC [gold] inf_swords: Caliburnus",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 21653,
+      "shortName": "helheim",
+      "source": "hunting_league",
+      "context": "Weapons NPC [gold] inf_greatswords: Helheim",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 21708,
+      "shortName": "beryllium_pick",
+      "source": "hunting_league",
+      "context": "Weapons NPC [bronze] axes: Beryllium Pick",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 21709,
+      "shortName": "beryllium_pick_+1",
+      "source": "hunting_league",
+      "context": "Weapons NPC [gold] inf_axes: Beryllium Pick +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 22002,
+      "shortName": "lorg_mor",
+      "source": "hunting_league",
+      "context": "Weapons NPC [gold] inf_clubs: Lorg Mor",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 22106,
+      "shortName": "opashoro",
+      "source": "hunting_league",
+      "context": "Weapons NPC [gold] inf_staves: Opashoro",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 22164,
+      "shortName": "earp",
+      "source": "hunting_league",
+      "context": "Weapons NPC [gold] inf_marksmanship: Earp",
+      "modCount": 0,
+      "latentCount": 0
+    },
     {
       "itemId": 23740,
       "shortName": "angantyr_beret",
@@ -64,14 +136,6 @@
       "shortName": "duty_gauntlets",
       "source": "hunting_league",
       "context": "Armor NPC [gold] hands: Duty Gauntlets",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24176,
-      "shortName": "duty_flanchard",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] legs: Duty Flanchard",
       "modCount": 0,
       "latentCount": 0
     },
@@ -364,10 +428,58 @@
       "latentCount": 0
     },
     {
+      "itemId": 25592,
+      "shortName": "hjarrandi_helm",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] head: Hjarrandi Helm",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
       "itemId": 25654,
       "shortName": "welkin_crown",
       "source": "hunting_league",
       "context": "Armor NPC [silver] head: Welkin Crown",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25766,
+      "shortName": "hjarrandi_breastplate",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] body: Hjarrandi Breastplate",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25791,
+      "shortName": "meghanada_cuirie_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] body: Meghanada Cuirie +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25792,
+      "shortName": "hizamaru_haramaki_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] body: Hizamaru Haramaki +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25805,
+      "shortName": "hizamaru_kote_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] hands: Hizamaru Kote +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25829,
+      "shortName": "meghanada_gloves_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] hands: Meghanada Gloves +2",
       "modCount": 0,
       "latentCount": 0
     },
@@ -388,10 +500,58 @@
       "latentCount": 0
     },
     {
+      "itemId": 25856,
+      "shortName": "tatenashi_haidate_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] legs: Tatenashi Haidate +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25882,
+      "shortName": "inyanga_shalwar_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] legs: Inyanga Shalwar +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25885,
+      "shortName": "taliah_seraweels_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] legs: Taliah Seraweels +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25894,
+      "shortName": "ea_slops_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] legs: Ea Slops +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25898,
+      "shortName": "arke_cosciales_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] legs: Arke Cosciales +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
       "itemId": 25900,
       "shortName": "pinga_pants_+1",
       "source": "hunting_league",
       "context": "Armor NPC [bronze] legs: Pinga Pants +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25908,
+      "shortName": "turms_subligar_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] legs: Turms Subligar +1",
       "modCount": 0,
       "latentCount": 0
     },
@@ -404,10 +564,34 @@
       "latentCount": 0
     },
     {
+      "itemId": 25947,
+      "shortName": "meghanada_jambeaux_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] feet: Meghanada Jambeaux +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
       "itemId": 25949,
       "shortName": "inyanga_crackows_+2",
       "source": "hunting_league",
       "context": "Armor NPC [bronze] feet: Inyanga Crackows +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25950,
+      "shortName": "jhakri_pigaches_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] feet: Jhakri Pigaches +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25957,
+      "shortName": "oshosi_leggings_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] feet: Oshosi Leggings +1",
       "modCount": 0,
       "latentCount": 0
     },
@@ -428,10 +612,10 @@
       "latentCount": 0
     },
     {
-      "itemId": 25979,
-      "shortName": "kendatsuba_tekko_+1",
+      "itemId": 25981,
+      "shortName": "ea_cuffs_+1",
       "source": "hunting_league",
-      "context": "Armor NPC [gold] hands: Kendatsuba Tekko +1",
+      "context": "Armor NPC [gold] hands: Ea Cuffs +1",
       "modCount": 0,
       "latentCount": 0
     },
@@ -468,10 +652,26 @@
       "latentCount": 0
     },
     {
+      "itemId": 26544,
+      "shortName": "turms_harness_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [gold] body: Turms Harness +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
       "itemId": 26960,
       "shortName": "annointed_kalasiris",
       "source": "hunting_league",
       "context": "Armor NPC [bronze] body: Annointed Kalasiris",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 27151,
+      "shortName": "gazu_bracelets_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] hands: Gazu Bracelets +1",
       "modCount": 0,
       "latentCount": 0
     },

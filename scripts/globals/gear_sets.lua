@@ -2444,6 +2444,409 @@ local gearSets =
             { xi.mod.ENH_DRAIN_ASPIR, 5 },
         },
     },
+
+    [134] = -- Academic +4 Set (SCH): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23915, -- Academics Mortarboard +4
+            23960, -- Academics Gown +4
+            24005, -- Academics Bracers +4
+            24050, -- Academics Pants +4
+            24095, -- Academics Loafers +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [135] = -- Anchorite +4 Set (MNK): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23896, -- Anchorites Crown +4
+            23941, -- Anchorites Cyclas +4
+            23986, -- Anchorites Gloves +4
+            24031, -- Anchorites Hose +4
+            24076, -- Anchorites Gaiters +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [136] = -- Assimilator +4 Set (BLU): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23910, -- Assimilators Keffiyeh +4
+            23955, -- Assimilators Jubbah +4
+            24000, -- Assimilators Bazubands +4
+            24045, -- Assimilators Shalwar +4
+            24090, -- Assimilators Charuqs +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [137] = -- Atrophy +4 Set (RDM): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23899, -- Atrophy Chapeau +4
+            23944, -- Atrophy Tabard +4
+            23989, -- Atrophy Gloves +4
+            24034, -- Atrophy Tights +4
+            24079, -- Atrophy Boots +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [138] = -- Brioso +4 Set (BRD): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23904, -- Brioso Roundlet +4
+            23949, -- Brioso Justaucorps +4
+            23994, -- Brioso Cuffs +4
+            24039, -- Brioso Cannions +4
+            24084, -- Brioso Slippers +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [139] = -- Foire +4 Set (PUP): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23912, -- Foire Taj +4
+            23957, -- Foire Tobe +4
+            24002, -- Foire Dastanas +4
+            24047, -- Foire Churidars +4
+            24092, -- Foire Babouches +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [140] = -- Geomancy +4 Set (GEO): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23916, -- Geomancy Galero +4
+            23961, -- Geomancy Tunic +4
+            24006, -- Geomancy Mitaines +4
+            24051, -- Geomancy Pants +4
+            24096, -- Geomancy Sandals +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [141] = -- Hachiya +4 Set (NIN): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23907, -- Hachiya Hatsuburi +4
+            23952, -- Hachiya Chainmail +4
+            23997, -- Hachiya Tekko +4
+            24042, -- Hachiya Hakama +4
+            24087, -- Hachiya Kyahan +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [142] = -- Ignominy +4 Set (DRK): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23902, -- Ignominy Burgeonet +4
+            23947, -- Ignominy Cuirass +4
+            23992, -- Ignominy Finger Gauntlets +4
+            24037, -- Ignominy Flanchard +4
+            24082, -- Ignominy Sollerets +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [143] = -- Laksamana +4 Set (COR): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23911, -- Laksamana Tricorne +4
+            23956, -- Laksamana Frac +4
+            24001, -- Laksamanas Gants +4
+            24046, -- Laksamanas Trews +4
+            24091, -- Laksamana Bottes +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [144] = -- Maxixi +4 Set (DNC): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23913, -- Maxixi Tiara +4
+            23914, -- maxixi tiara +4
+            23958, -- Maxixi Casaque +4
+            23959, -- maxixi casaque +4
+            24003, -- Maxixi Bangles +4
+            24004, -- maxixi bangles +4
+            24048, -- Maxixi Tights +4
+            24049, -- maxixi tights +4
+            24093, -- Maxixi Toe Shoes +4
+            24094, -- maxixi toe shoes +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [145] = -- Orion +4 Set (RNG): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23905, -- Orion Beret +4
+            23950, -- Orion Jerkin +4
+            23995, -- Orion Bracers +4
+            24040, -- Orion Braccae +4
+            24085, -- Orion Socks +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [146] = -- Pillager +4 Set (THF): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23900, -- Pillagers Bonnet +4
+            23945, -- Pillagers Vest +4
+            23990, -- Pillagers Armlets +4
+            24035, -- Pillagers Culottes +4
+            24080, -- Pillagers Poulaines +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [147] = -- Pummeler +4 Set (WAR): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23895, -- Pummelers Mask +4
+            23940, -- Pummelers Lorica +4
+            23985, -- Pummelers Mufflers +4
+            24030, -- Pummelers Cuisses +4
+            24075, -- Pummelers Calligae +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [148] = -- Reverence +4 Set (PLD): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23901, -- Reverence Coronet +4
+            23946, -- Reverence Surcoat +4
+            23991, -- Reverence Gauntlets +4
+            24036, -- Reverence Breeches +4
+            24081, -- Reverence Leggings +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [149] = -- Runeist +4 Set (RUN): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23917, -- Runeist Bandeau +4
+            23962, -- Runeist Coat +4
+            24007, -- Runeist Mitons +4
+            24052, -- Runeist Trousers +4
+            24097, -- Runeist Boots +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [150] = -- Spaekona +4 Set (BLM): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23898, -- Spaekonas Petasos +4
+            23943, -- Spaekonas Coat +4
+            24033, -- Spaekonas Tonban +4
+            24078, -- Spaekonas Sabots +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [151] = -- Theophany +4 Set (WHM): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23897, -- Theophany Cap +4
+            23942, -- Theophany Bliaut +4
+            23987, -- Theophany Mitts +4
+            24032, -- theophany pantaloons +4
+            24077, -- Theophany Duckbills +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [152] = -- Totemic +4 Set (BST): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23903, -- Totemic Helm +4
+            23948, -- Totemic Jackcoat +4
+            23993, -- Totemic Gloves +4
+            24038, -- Totemic Trousers +4
+            24083, -- Totemic Gaiters +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [153] = -- Vishap +4 Set (DRG): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23908, -- Vishap Armet +4
+            23953, -- Vishap Mail +4
+            23998, -- Vishap Finger Gauntlets +4
+            24043, -- Vishap Brais +4
+            24088, -- Vishap Greaves +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
+
+    [154] = -- Wakido +4 Set (SAM): Accuracy+ / Ranged Accuracy+ / Magic Accuracy+ (scales 2->5 pieces)
+    {
+        items =
+        {
+            23906, -- Wakido Kabuto +4
+            23951, -- Wakido Domaru +4
+            23996, -- Wakido Kote +4
+            24041, -- Wakido Haidate +4
+            24086, -- Wakido Sune-Ate +4
+        },
+        minEquipped = 2,
+        mods =
+        {
+            { xi.mod.ACC,  10, 15, 20, 25 },
+            { xi.mod.RACC, 10, 15, 20, 25 },
+            { xi.mod.MACC, 10, 15, 20, 25 },
+        },
+    },
 }
 
 -- Build Table to lookup Set ID based on Item ID.  This is cached in xi.gear_sets.itemToSetId table,

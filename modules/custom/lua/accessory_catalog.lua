@@ -66,13 +66,13 @@ local b = catalog.bronze
 
 -- neck
 table.insert(b.neck, { id =  11581, name = 'Ire Torque'                        , cost =  15, jobs = 'All' })  -- DPS score 6
-table.insert(b.neck, { id =  10919, name = 'Tandem Necklace +1'                , cost =  15, jobs = 'All' })  -- TANK score 6 [RARE,EX]
-table.insert(b.neck, { id =  10917, name = 'Pacifying Chain +1'                , cost =  15, jobs = 'All' })  -- CASTER score 6
-table.insert(b.neck, { id =  11580, name = 'Fylgja Torque +1'                  , cost =  15, jobs = 'WHM/BLM/RDM/BRD/SMN/PUP/SCH/GEO' })  -- HEAL score 6
+table.insert(b.neck, { id =  15524, name = 'Fortified Chain'                   , cost =  15, jobs = 'All' })  -- TANK score 7
+table.insert(b.neck, { id =  28393, name = 'Goetic Torque'                     , cost =  15, jobs = 'All' })  -- CASTER score 7 [EX]
+table.insert(b.neck, { id =  13073, name = 'Holy Phial'                        , cost =  15, jobs = 'All' })  -- HEAL score 6
 table.insert(b.neck, { id =  16271, name = 'Lieutenants Gorget'                , cost =  15, jobs = 'All' })  -- DPS score 6 [RARE,EX]
-table.insert(b.neck, { id =  13067, name = 'Nobles Gorget'                     , cost =  15, jobs = 'WAR/PLD/DRK' })  -- TANK score 6
-table.insert(b.neck, { id =  13126, name = 'Torque +1'                         , cost =  15, jobs = 'All' })  -- CASTER score 6
-table.insert(b.neck, { id =  13093, name = 'Justice Badge'                     , cost =  15, jobs = 'All' })  -- HEAL score 6
+table.insert(b.neck, { id =  10919, name = 'Tandem Necklace +1'                , cost =  15, jobs = 'All' })  -- TANK score 6 [RARE,EX]
+table.insert(b.neck, { id =  16262, name = 'Mohbwa Scarf +1'                   , cost =  15, jobs = 'All' })  -- CASTER score 6
+table.insert(b.neck, { id =  11580, name = 'Fylgja Torque +1'                  , cost =  15, jobs = 'WHM/BLM/RDM/BRD/SMN/PUP/SCH/GEO' })  -- HEAL score 6
 
 -- waist
 table.insert(b.waist, { id =  11774, name = 'Oneiros Cest'                      , cost =  15, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 6 [RARE,EX]
@@ -95,22 +95,22 @@ table.insert(b.ear, { id =  14729, name = 'Pilferers Earring'                 , 
 table.insert(b.ear, { id =  11714, name = 'Unkai Mimikazari'                  , cost =  15, jobs = 'SAM' })  -- DPS score 2 [RARE,EX]
 
 -- ring
+table.insert(b.ring, { id =  13553, name = 'Blitz Ring'                        , cost =  15, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- DPS score 5 [RARE]
+table.insert(b.ring, { id =  10791, name = 'Haomas Ring'                       , cost =  15, jobs = 'All' })  -- TANK score 5
+table.insert(b.ring, { id =  10752, name = 'Prolix Ring'                       , cost =  15, jobs = 'All' })  -- CASTER score 5 [RARE]
+table.insert(b.ring, { id =  11672, name = 'Mujin Band'                        , cost =  15, jobs = 'All' })  -- WS score 5 [RARE]
 table.insert(b.ring, { id =  10751, name = 'Valseurs Ring'                     , cost =  15, jobs = 'All' })  -- DPS score 4 [RARE]
-table.insert(b.ring, { id =  13498, name = 'Platinum Ring +1'                  , cost =  15, jobs = 'All' })  -- TANK score 4
+table.insert(b.ring, { id =  10793, name = 'Eshmuns Ring'                      , cost =  15, jobs = 'All' })  -- TANK score 5
 table.insert(b.ring, { id =  13284, name = 'Eremites Ring'                     , cost =  15, jobs = 'All' })  -- CASTER score 4
 table.insert(b.ring, { id =  15784, name = 'Dominion Ring'                     , cost =  15, jobs = 'WAR/MNK/THF/BST/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC' })  -- HEAL score 5
-table.insert(b.ring, { id =  13484, name = 'Jadeite Ring'                      , cost =  15, jobs = 'All' })  -- DPS score 4
-table.insert(b.ring, { id =  10790, name = 'Ephedra Ring'                      , cost =  15, jobs = 'All' })  -- TANK score 4
-table.insert(b.ring, { id =  13478, name = 'Goshenite Ring'                    , cost =  15, jobs = 'All' })  -- CASTER score 4
-table.insert(b.ring, { id =  13282, name = 'Saintly Ring'                      , cost =  15, jobs = 'All' })  -- HEAL score 4
 
 -- back
 table.insert(b.back, { id =  10984, name = 'Tjukurrpa Mantle'                  , cost =  15, jobs = 'THF/RNG' })  -- DPS score 6 [RARE]
-table.insert(b.back, { id =  13595, name = 'Coeurl Mantle'                     , cost =  15, jobs = 'THF/BST/RNG/DNC/RUN' })  -- TANK score 6
+table.insert(b.back, { id =  11535, name = 'Fowlers Mantle'                    , cost =  15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- TANK score 7
 table.insert(b.back, { id =  13586, name = 'Red Cape'                          , cost =  15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- CASTER score 6
 table.insert(b.back, { id =  11008, name = 'Medala Cape'                       , cost =  15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- HEAL score 6 [RARE,EX]
 table.insert(b.back, { id =  11540, name = 'Accura Cape +1'                    , cost =  15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 6
-table.insert(b.back, { id =  13680, name = 'Variable Mantle'                   , cost =  15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- TANK score 6 [RARE,EX]
+table.insert(b.back, { id =  13612, name = 'Dino Mantle'                       , cost =  15, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- TANK score 7
 table.insert(b.back, { id =  13610, name = 'Black Cape +1'                     , cost =  15, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- CASTER score 6
 table.insert(b.back, { id =  11554, name = 'Orison Cape'                       , cost =  15, jobs = 'WHM' })  -- HEAL score 6 [RARE,EX]
 
@@ -133,13 +133,13 @@ table.insert(s.neck, { id =  11621, name = 'Chrysopoeia Torque'                ,
 
 -- waist
 table.insert(s.waist, { id =  10817, name = 'Moepapa Stone'                     , cost =  32, jobs = 'BST/DRG/SMN/PUP' })  -- DPS score 15 [RARE]
-table.insert(s.waist, { id =  10832, name = 'Carriers Sash'                     , cost =  32, jobs = 'All' })  -- TANK score 15 [RARE]
-table.insert(s.waist, { id =  15292, name = 'Penitents Rope'                    , cost =  32, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- CASTER score 15
-table.insert(s.waist, { id =  15909, name = 'Cascade Belt'                      , cost =  32, jobs = 'MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN' })  -- HEAL score 15 [RARE]
+table.insert(s.waist, { id =  28436, name = 'Sveltesse Gouriz +1'               , cost =  32, jobs = 'MNK/WHM/RDM/THF/BST/BRD/RNG/SAM/NIN/BLU/COR/DNC/RUN' })  -- TANK score 16
+table.insert(s.waist, { id =  10840, name = 'Aswang Sash'                       , cost =  32, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- CASTER score 16 [RARE]
+table.insert(s.waist, { id =  28455, name = 'Ovate Rope'                        , cost =  32, jobs = 'WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO' })  -- HEAL score 16 [RARE]
 table.insert(s.waist, { id =  13198, name = 'Swordbelt'                         , cost =  32, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- WS score 15
 table.insert(s.waist, { id =  10826, name = 'Witful Belt'                       , cost =  32, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- DPS score 15 [RARE]
-table.insert(s.waist, { id =  13252, name = 'Forest Belt'                       , cost =  32, jobs = 'All' })  -- TANK score 15 [RARE]
-table.insert(s.waist, { id =  15903, name = 'Ksi Sash'                          , cost =  32, jobs = 'MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN' })  -- CASTER score 15 [RARE,EX]
+table.insert(s.waist, { id =  10832, name = 'Carriers Sash'                     , cost =  32, jobs = 'All' })  -- TANK score 15 [RARE]
+table.insert(s.waist, { id =  15874, name = 'Sorcerers Belt'                    , cost =  32, jobs = 'BLM' })  -- CASTER score 16 [RARE,EX]
 
 -- ear
 table.insert(s.ear, { id =  15979, name = 'Fowling Earring'                   , cost =  32, jobs = 'WAR/PLD/DRK/SAM/DRG' })  -- DPS score 6 [RARE]
@@ -152,12 +152,12 @@ table.insert(s.ear, { id =  11049, name = 'Myrddin Pearl'                     , 
 table.insert(s.ear, { id =  11019, name = 'Aqua Pearl'                        , cost =  32, jobs = 'All' })  -- HEAL score 6
 
 -- ring
-table.insert(s.ring, { id =  10750, name = 'Tyrants Ring'                      , cost =  32, jobs = 'All' })  -- DPS score 10 [RARE]
-table.insert(s.ring, { id =  10760, name = 'Portus Ring'                       , cost =  32, jobs = 'All' })  -- TANK score 10 [RARE,EX]
+table.insert(s.ring, { id =  10761, name = 'Portus Annulet'                    , cost =  32, jobs = 'All' })  -- DPS score 10 [RARE,EX]
+table.insert(s.ring, { id =  28543, name = 'Rhodium Ring +1'                   , cost =  32, jobs = 'All' })  -- TANK score 10
 table.insert(s.ring, { id =  10759, name = 'Aifes Annulet'                     , cost =  32, jobs = 'All' })  -- CASTER score 10 [RARE,EX]
 table.insert(s.ring, { id =  10757, name = 'Tjukurrpa Annulet'                 , cost =  32, jobs = 'All' })  -- HEAL score 10 [RARE,EX]
-table.insert(s.ring, { id =  10756, name = 'Tjukurrpa Ring'                    , cost =  32, jobs = 'All' })  -- DPS score 10 [RARE,EX]
-table.insert(s.ring, { id =  10777, name = 'Caloussu Ring'                     , cost =  32, jobs = 'All' })  -- TANK score 10 [RARE]
+table.insert(s.ring, { id =  11658, name = 'Stormsoul Ring'                    , cost =  32, jobs = 'All' })  -- DPS score 10
+table.insert(s.ring, { id =  10760, name = 'Portus Ring'                       , cost =  32, jobs = 'All' })  -- TANK score 10 [RARE,EX]
 table.insert(s.ring, { id =  10779, name = 'Sophia Ring'                       , cost =  32, jobs = 'All' })  -- CASTER score 10 [RARE]
 table.insert(s.ring, { id =  10780, name = 'Quies Ring'                        , cost =  32, jobs = 'All' })  -- HEAL score 10 [RARE]
 
@@ -186,18 +186,17 @@ table.insert(g.neck, { id =  26033, name = 'Moonbow Whistle +1'                ,
 table.insert(g.neck, { id =  25419, name = 'Warriors Bead Necklace +2'         , cost =  60, jobs = 'WAR' })  -- WS score 75
 table.insert(g.neck, { id =  26026, name = 'Shulmanu Collar'                   , cost =  60, jobs = 'BST/DRG/SMN/PUP' })  -- DPS score 68 [RARE,EX]
 table.insert(g.neck, { id =  25455, name = 'Knights Bead Necklace +2'          , cost =  60, jobs = 'PLD' })  -- TANK score 70
-table.insert(g.neck, { id =  25436, name = 'Sorcerers Stole +1'                , cost =  60, jobs = 'BLM' })  -- CASTER score 65
-table.insert(g.neck, { id =  25415, name = 'Republican Platinum Medal'         , cost =  60, jobs = 'All' })  -- WS score 65 [RARE,EX]
+table.insert(g.neck, { id =  26086, name = 'Nicanders Necklace'                , cost =  60, jobs = 'All' })  -- CASTER score 68 [RARE]
 
 -- waist
 table.insert(g.waist, { id =  26340, name = 'Moonbow Belt'                      , cost =  60, jobs = 'MNK/PUP' })  -- DPS score 123
 table.insert(g.waist, { id =  11750, name = 'Creed Baudrier'                    , cost =  60, jobs = 'PLD' })  -- TANK score 57 [RARE,EX]
 table.insert(g.waist, { id =  26356, name = 'Skrymir Cord'                      , cost =  60, jobs = 'All' })  -- CASTER score 145
 table.insert(g.waist, { id =  26329, name = 'Luminary Sash'                     , cost =  60, jobs = 'MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN' })  -- CASTER score 32 [RARE,EX]
-table.insert(g.waist, { id =  28439, name = 'Prosilio Belt +1'                  , cost =  60, jobs = 'All' })  -- WS score 67 [RARE]
-table.insert(g.waist, { id =  26333, name = 'Ioskeha Belt'                      , cost =  60, jobs = 'WAR/DRK/SAM/DRG/RUN' })  -- DPS score 81
+table.insert(g.waist, { id =  26360, name = 'Gerdr Belt'                        , cost =  60, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 92
 table.insert(g.waist, { id =  28437, name = 'Flume Belt +1'                     , cost =  60, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- TANK score 55 [RARE]
 table.insert(g.waist, { id =  26351, name = 'Sacro Cord'                        , cost =  60, jobs = 'WHM/BLM/RDM/BLU/SCH/GEO' })  -- CASTER score 64 [RARE,EX]
+table.insert(g.waist, { id =  28439, name = 'Prosilio Belt +1'                  , cost =  60, jobs = 'All' })  -- WS score 67 [RARE]
 
 -- ear
 table.insert(g.ear, { id =  25421, name = 'Boii Earring +1'                   , cost =  60, jobs = 'WAR' })  -- DPS score 51 [EX]
@@ -210,20 +209,20 @@ table.insert(g.ear, { id =  28483, name = 'Cryptic Earring'                   , 
 table.insert(g.ear, { id =  25438, name = 'Wicce Earring'                     , cost =  60, jobs = 'BLM' })  -- CASTER score 49 [EX]
 
 -- ring
-table.insert(g.ring, { id =  26185, name = 'Niqmaddu Ring'                     , cost =  60, jobs = 'WAR/MNK/DRK/SAM/DRG/PUP/RUN' })  -- DPS score 64 [RARE,EX]
+table.insert(g.ring, { id =  10766, name = 'Lunette Ring'                      , cost =  60, jobs = 'All' })  -- DPS score 66 [RARE]
 table.insert(g.ring, { id =  10769, name = 'Gelatinous Ring +1'                , cost =  60, jobs = 'All' })  -- TANK score 64 [RARE,EX]
 table.insert(g.ring, { id =  28472, name = 'Freke Ring'                        , cost =  60, jobs = 'WHM/BLM/RDM/SMN/SCH/GEO' })  -- CASTER score 49 [RARE,EX]
 table.insert(g.ring, { id =  26184, name = 'Stikini Ring +1'                   , cost =  60, jobs = 'All' })  -- HEAL score 63
-table.insert(g.ring, { id =  26192, name = 'Adoulin Ring +1'                   , cost =  60, jobs = 'All' })  -- CASTER score 43 [RARE,EX]
-table.insert(g.ring, { id =  26198, name = 'Haverton Ring +1'                  , cost =  60, jobs = 'All' })  -- DPS score 48 [RARE,EX]
+table.insert(g.ring, { id =  10783, name = 'Veneficium Ring'                   , cost =  60, jobs = 'All' })  -- DPS score 66 [RARE]
 table.insert(g.ring, { id =  13566, name = 'Defending Ring'                    , cost =  60, jobs = 'All' })  -- TANK score 60 [RARE,EX]
+table.insert(g.ring, { id =  26192, name = 'Adoulin Ring +1'                   , cost =  60, jobs = 'All' })  -- CASTER score 43 [RARE,EX]
 table.insert(g.ring, { id =  26193, name = 'Woltaris Ring +1'                  , cost =  60, jobs = 'All' })  -- HEAL score 60 [RARE,EX]
 
 -- back
 table.insert(g.back, { id =  28617, name = 'Maulers Mantle'                    , cost =  60, jobs = 'WAR' })  -- DPS score 60 [EX]
 table.insert(g.back, { id =  28591, name = 'Aenotherus Mantle +1'              , cost =  60, jobs = 'WHM/BLM/RDM/PLD/DRK/SMN/BLU/SCH/GEO/RUN' })  -- TANK score 74
 table.insert(g.back, { id =  28607, name = 'Aput Mantle +1'                    , cost =  60, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- CASTER score 80
-table.insert(g.back, { id =  13693, name = 'Aries Mantle'                      , cost =  60, jobs = 'All' })  -- HEAL score 30 [RARE,EX]
+table.insert(g.back, { id =  26268, name = 'Moonbeam Cape'                     , cost =  60, jobs = 'All' })  -- TANK score 68
 table.insert(g.back, { id =  28624, name = 'Niht Mantle'                       , cost =  60, jobs = 'DRK' })  -- WS score 62 [EX]
 table.insert(g.back, { id =  28628, name = 'Takaha Mantle'                     , cost =  60, jobs = 'SAM' })  -- DPS score 58 [EX]
 table.insert(g.back, { id =  10971, name = 'Strendu Mantle'                    , cost =  60, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- TANK score 73 [RARE,EX]
@@ -248,9 +247,9 @@ table.insert(inf.neck, { id =  25497, name = 'Dragoons Collar +2'               
 -- waist (top 5 by score -> Infamy Vendor)
 table.insert(inf.waist, { id =  26357, name = 'Skrymir Cord +1'                   , cost = 300, jobs = 'All' })  -- CASTER score 175
 table.insert(inf.waist, { id =  26341, name = 'Moonbow Belt +1'                   , cost = 300, jobs = 'MNK/PUP' })  -- DPS score 162
+table.insert(inf.waist, { id =  26361, name = 'Gerdr Belt +1'                     , cost = 300, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 136
 table.insert(inf.waist, { id =  26334, name = 'Ioskeha Belt +1'                   , cost = 300, jobs = 'WAR/DRK/SAM/DRG/RUN' })  -- DPS score 94
-table.insert(inf.waist, { id =  26321, name = 'Reiki Yotai'                       , cost = 300, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 79 [RARE,EX]
-table.insert(inf.waist, { id =  26361, name = 'Gerdr Belt +1'                     , cost = 300, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 72
+table.insert(inf.waist, { id =  26359, name = 'Orpheuss Sash'                     , cost = 300, jobs = 'All' })  -- DPS score 92 [RARE]
 
 -- ear (top 5 by score -> Infamy Vendor)
 table.insert(inf.ear, { id =  26088, name = 'Malignance Earring'                , cost = 300, jobs = 'WHM/BLM/RDM/DRK/SMN/SCH/GEO' })  -- CASTER score 76 [RARE,EX]
@@ -274,28 +273,28 @@ table.insert(inf.back, { id =  27615, name = 'Reiki Cloak'                      
 table.insert(inf.back, { id =  13655, name = 'Sand Mantle'                       , cost = 300, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- TANK score 108 [RARE]
 
 -- ear (Sortie +2, one per job)
-table.insert(inf.ear, { id =  25422, name = 'Boii Earring +2'                   , cost = 300, jobs = 'WAR' })  -- DPS score 0
+table.insert(inf.ear, { id =  25422, name = 'Boii Earring +2'                   , cost = 300, jobs = 'WAR' })  -- DPS score 51
 table.insert(inf.ear, { id =  25428, name = 'Bhikku Earring +2'                 , cost = 300, jobs = 'MNK' })  -- DPS score 0
-table.insert(inf.ear, { id =  25434, name = 'Ebers Earring +2'                  , cost = 300, jobs = 'WHM' })  -- HEAL score 0
-table.insert(inf.ear, { id =  25440, name = 'Wicce Earring +2'                  , cost = 300, jobs = 'BLM' })  -- CASTER score 0
-table.insert(inf.ear, { id =  25446, name = 'Lethargy Earring +2'               , cost = 300, jobs = 'RDM' })  -- CASTER score 0
+table.insert(inf.ear, { id =  25434, name = 'Ebers Earring +2'                  , cost = 300, jobs = 'WHM' })  -- HEAL score 6
+table.insert(inf.ear, { id =  25440, name = 'Wicce Earring +2'                  , cost = 300, jobs = 'BLM' })  -- CASTER score 56
+table.insert(inf.ear, { id =  25446, name = 'Lethargy Earring +2'               , cost = 300, jobs = 'RDM' })  -- CASTER score 16
 table.insert(inf.ear, { id =  25452, name = 'Skulkers Earring +2'               , cost = 300, jobs = 'THF' })  -- DPS score 0
 table.insert(inf.ear, { id =  25458, name = 'Chevaliers Earring +2'             , cost = 300, jobs = 'PLD' })  -- TANK score 0
 table.insert(inf.ear, { id =  25464, name = 'Heathens Earring +2'               , cost = 300, jobs = 'DRK' })  -- DPS score 0
 table.insert(inf.ear, { id =  25470, name = 'Nukumi Earring +2'                 , cost = 300, jobs = 'BST' })  -- DPS score 0
 table.insert(inf.ear, { id =  25476, name = 'Fili Earring +2'                   , cost = 300, jobs = 'BRD' })  -- DPS score 0
 table.insert(inf.ear, { id =  25482, name = 'Amini Earring +2'                  , cost = 300, jobs = 'RNG' })  -- DPS score 0
-table.insert(inf.ear, { id =  25488, name = 'Kasuga Earring +2'                 , cost = 300, jobs = 'SAM' })  -- DPS score 0
+table.insert(inf.ear, { id =  25488, name = 'Kasuga Earring +2'                 , cost = 300, jobs = 'SAM' })  -- DPS score 16
 table.insert(inf.ear, { id =  25494, name = 'Hattori Earring +2'                , cost = 300, jobs = 'NIN' })  -- DPS score 0
 table.insert(inf.ear, { id =  25500, name = 'Peltasts Earring +2'               , cost = 300, jobs = 'DRG' })  -- DPS score 0
 table.insert(inf.ear, { id =  25506, name = 'Beckoners Earring +2'              , cost = 300, jobs = 'SMN' })  -- CASTER score 0
 table.insert(inf.ear, { id =  25512, name = 'Hashishin Earring +2'              , cost = 300, jobs = 'BLU' })  -- DPS score 0
 table.insert(inf.ear, { id =  25518, name = 'Chasseurs Earring +2'              , cost = 300, jobs = 'COR' })  -- DPS score 0
-table.insert(inf.ear, { id =  25524, name = 'Karagoz Earring +2'                , cost = 300, jobs = 'PUP' })  -- DPS score 0
+table.insert(inf.ear, { id =  25524, name = 'Karagoz Earring +2'                , cost = 300, jobs = 'PUP' })  -- DPS score 3
 table.insert(inf.ear, { id =  25530, name = 'Maculele Earring +2'               , cost = 300, jobs = 'DNC' })  -- DPS score 0
-table.insert(inf.ear, { id =  25536, name = 'Arbatel Earring +2'                , cost = 300, jobs = 'SCH' })  -- CASTER score 0
-table.insert(inf.ear, { id =  25542, name = 'Azimuth Earring +2'                , cost = 300, jobs = 'GEO' })  -- CASTER score 0
-table.insert(inf.ear, { id =  25548, name = 'Erilaz Earring +2'                 , cost = 300, jobs = 'RUN' })  -- DPS score 0
+table.insert(inf.ear, { id =  25536, name = 'Arbatel Earring +2'                , cost = 300, jobs = 'SCH' })  -- CASTER score 56
+table.insert(inf.ear, { id =  25542, name = 'Azimuth Earring +2'                , cost = 300, jobs = 'GEO' })  -- CASTER score 24
+table.insert(inf.ear, { id =  25548, name = 'Erilaz Earring +2'                 , cost = 300, jobs = 'RUN' })  -- TANK score 2
 
 
 return catalog

@@ -193,14 +193,7 @@ INSERT IGNORE INTO `item_mods` VALUES (21557,9,7);  -- beryllium_kris_+1: +DEX
 INSERT IGNORE INTO `item_mods` VALUES (21557,11,7);  -- beryllium_kris_+1: +AGI
 INSERT IGNORE INTO `item_mods` VALUES (21557,25,47);  -- beryllium_kris_+1: +ACC
 INSERT IGNORE INTO `item_mods` VALUES (21557,68,27);  -- beryllium_kris_+1: +EVA
-INSERT IGNORE INTO `item_mods` VALUES (21611,8,3);  -- hepatizon_rapier_+1: +STR
-INSERT IGNORE INTO `item_mods` VALUES (21611,13,3);  -- hepatizon_rapier_+1: +MND
-INSERT IGNORE INTO `item_mods` VALUES (21611,25,17);  -- hepatizon_rapier_+1: +ACC
-INSERT IGNORE INTO `item_mods` VALUES (21611,28,14);  -- hepatizon_rapier_+1: +MATT
-INSERT IGNORE INTO `item_mods` VALUES (21611,311,108);  -- hepatizon_rapier_+1: +MAGIC_DAMAGE
 INSERT IGNORE INTO `item_mods` VALUES (21615,48,15);  -- hepatizon_sapara_+1: +WSACC
-INSERT IGNORE INTO `item_mods` VALUES (21709,8,10);  -- beryllium_pick_+1: +STR
-INSERT IGNORE INTO `item_mods` VALUES (21709,25,27);  -- beryllium_pick_+1: +ACC
 INSERT IGNORE INTO `item_mods` VALUES (23043,115,13);  -- spaekonas_petasos_+2: +ELEM
 INSERT IGNORE INTO `item_mods` VALUES (23043,407,12);  -- spaekonas_petasos_+2: +UFASTCAST
 INSERT IGNORE INTO `item_mods` VALUES (23044,1047,24);  -- atrophy_chapeau_+2: +COUNTER_DAMAGE

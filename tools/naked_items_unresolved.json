@@ -1,5 +1,207 @@
 [
   {
+    "itemId": 20764,
+    "shortName": "crobaci_+2",
+    "context": "Weapons NPC [bronze] greatswords: Crobaci +2",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Crobaci_%2B2",
+    "raw": "DMG:245 Delay:501 Attack+26 Great Sword skill +228 Parrying skill +228 Magic Accuracy skill +188",
+    "unknown_tokens": [
+      "DMG",
+      "Delay",
+      "Great",
+      "Magic",
+      "Accuracy",
+      "skill"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 21611,
+    "shortName": "hepatizon_rapier_+1",
+    "context": "Weapons NPC [gold] swords: Hepatizon Rapier +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Hepatizon_Rapier_%2B1",
+    "raw": "DMG:147 Delay:218 STR+8 MND+8 Accuracy+22 \"Magic Atk. Bonus\"+14 Magic Damage+108 Sword skill +242 Parrying skill +242 Magic Accuracy skill +201 Weapon Skill Accuracy+20 Adds \"Swift Blade\" effect",
+    "unknown_tokens": [
+      "DMG",
+      "Delay",
+      "Magic",
+      "Accuracy",
+      "skill",
+      "Weapon",
+      "Skill",
+      "Adds",
+      "Swift",
+      "Blade",
+      "effect"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 21646,
+    "shortName": "caliburnus",
+    "context": "Weapons NPC [gold] inf_swords: Caliburnus",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Caliburnus_(Level_119_III)",
+    "raw": "DMG:181 Delay:233 DEX+35 MND+35 Accuracy+35 Attack+70 Magic Accuracy+35 Magic Damage+263 Sword skill +277 Parrying skill +277 Magic Accuracy skill +277 \"Refresh\"+4 Damage taken -10% Imperator Aftermath: Physical damage limit+",
+    "unknown_tokens": [
+      "DMG",
+      "Delay",
+      "Magic",
+      "Accuracy",
+      "skill",
+      "Imperator",
+      "Aftermath",
+      "Physical",
+      "damage",
+      "limit"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 21653,
+    "shortName": "helheim",
+    "context": "Weapons NPC [gold] inf_greatswords: Helheim",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Helheim_(Level_119_II)",
+    "raw": "DMG:318 Delay:431 STR+30 VIT+30 Accuracy+30 Magic Accuracy+30 Great Sword skill +269 Parrying skill +269 Magic Accuracy skill +269 \"Store TP\"+7 Fimbulvetr Aftermath: Physical damage limit+",
+    "unknown_tokens": [
+      "DMG",
+      "Delay",
+      "Great",
+      "Magic",
+      "Accuracy",
+      "skill",
+      "Fimbulvetr",
+      "Aftermath",
+      "Physical",
+      "damage",
+      "limit"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 21708,
+    "shortName": "beryllium_pick",
+    "context": "Weapons NPC [bronze] axes: Beryllium Pick",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Beryllium_Pick",
+    "raw": "DMG:203 Delay:312 STR+10 Accuracy+27 Axe skill +242 Parrying skill +242 Magic Accuracy skill +188 Weapon Skill Accuracy+15 Adds \"Mistral Axe\" effect",
+    "unknown_tokens": [
+      "DMG",
+      "Delay",
+      "Magic",
+      "Accuracy",
+      "skill",
+      "Weapon",
+      "Skill",
+      "Adds",
+      "Mistral",
+      "Axe",
+      "effect"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 21709,
+    "shortName": "beryllium_pick_+1",
+    "context": "Weapons NPC [gold] inf_axes: Beryllium Pick +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Beryllium_Pick_%2B1",
+    "raw": "DMG:204 Delay:303 STR+15 Accuracy+32 Axe skill +242 Parrying skill +242 Magic Accuracy skill +188 Weapon Skill Accuracy+20 Adds \"Mistral Axe\" effect",
+    "unknown_tokens": [
+      "DMG",
+      "Delay",
+      "Magic",
+      "Accuracy",
+      "skill",
+      "Weapon",
+      "Skill",
+      "Adds",
+      "Mistral",
+      "Axe",
+      "effect"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 22002,
+    "shortName": "lorg_mor",
+    "context": "Weapons NPC [gold] inf_clubs: Lorg Mor",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Lorg_Mor_(Level_119_II)",
+    "raw": "DMG:227 Delay:308 STR+30 MND+30 Accuracy+30 Magic Accuracy+30 \"Magic Atk. Bonus\"+50 Magic Damage+248 Club skill +269 Parrying skill +269 Magic Accuracy skill +269 \"Regen\"+6 Damage taken -7% Dagda Aftermath: Magic Damage+ \"Cure\" potency+",
+    "unknown_tokens": [
+      "DMG",
+      "Delay",
+      "Magic",
+      "Accuracy",
+      "skill",
+      "Dagda",
+      "Aftermath",
+      "Magic",
+      "Damage",
+      "Cure",
+      "potency"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 22106,
+    "shortName": "opashoro",
+    "context": "Weapons NPC [gold] inf_staves: Opashoro",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Opashoro_(Level_119_III)",
+    "raw": "DMG:304 Delay:390 INT+35 MND+35 Accuracy+35 Magic Accuracy+35 \"Magic Atk. Bonus\"+80 Magic Damage+325 Staff skill +277 Parrying skill +277 Magic Accuracy skill +277 Avatar: Acc.+35/R.Acc.+35/M.Acc.+35 Lv. +3 Blood Pact Damage +50 Oshala Aftermath (Incl. Avatars): \"Magic Atk. Bonus\"+ Magic Damage+",
+    "unknown_tokens": [
+      "DMG",
+      "Delay",
+      "Magic",
+      "Accuracy",
+      "skill",
+      "Avatar",
+      "Acc",
+      "Acc",
+      "Acc",
+      "Lv",
+      "Blood",
+      "Pact",
+      "Damage",
+      "Oshala",
+      "Aftermath",
+      "Incl",
+      "Avatars",
+      "Magic",
+      "Atk",
+      "Bonus",
+      "Magic",
+      "Damage"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 22164,
+    "shortName": "earp",
+    "context": "Weapons NPC [gold] inf_marksmanship: Earp",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Earp_(Level_119_III)",
+    "raw": "DMG:162 Delay:582 DEX+35 AGI+35 Accuracy+35 Magic Accuracy+35 Marksmanship skill +277 Critical hit rate +15% Scavenge: Bayeux Bullet Terminus Aftermath: Physical damage limit+",
+    "unknown_tokens": [
+      "DMG",
+      "Delay",
+      "Scavenge",
+      "Bayeux",
+      "Bullet",
+      "Terminus",
+      "Aftermath",
+      "Physical",
+      "damage",
+      "limit"
+    ],
+    "partial": true
+  },
+  {
     "itemId": 23740,
     "shortName": "angantyr_beret",
     "context": "Armor NPC [bronze] head: Angantyr Beret",
@@ -47,18 +249,6 @@
     "reason": "partial parse — unknown tokens left over (item still emitted)",
     "bgwiki": "https://www.bg-wiki.com/ffxi/Duty_Gauntlets",
     "raw": "DEF:132 HP+107 STR+23 DEX+53 VIT+48 AGI+22 INT+17 MND+39 CHR+33 Accuracy+42 Attack+42 Magic Accuracy+42 Evasion+85 Magic Evasion+100 \"Magic Def. Bonus\"+5 Haste+4% \"Double Attack\"+3% \"Subtle Blow\"+3 Damage taken -3% Pet: Accuracy+42 Ranged Accuracy+42 Magic Accuracy+42 \"Subtle Blow\"+8",
-    "unknown_tokens": [
-      "Pet"
-    ],
-    "partial": true
-  },
-  {
-    "itemId": 24176,
-    "shortName": "duty_flanchard",
-    "context": "Armor NPC [gold] legs: Duty Flanchard",
-    "reason": "partial parse — unknown tokens left over (item still emitted)",
-    "bgwiki": "https://www.bg-wiki.com/ffxi/Duty_Flanchard",
-    "raw": "DEF:156 HP+130 STR+52 VIT+42 AGI+30 INT+33 MND+29 CHR+26 Accuracy+42 Attack+42 Magic Accuracy+42 Evasion+84 Magic Evasion+131 \"Magic Def. Bonus\"+8 Haste+6% \"Double Attack\"+6% \"Subtle Blow\"+6 Damage taken -6% Pet: Accuracy+42 Ranged Accuracy+42 Magic Accuracy+42 \"Double Attack\"+8%",
     "unknown_tokens": [
       "Pet"
     ],
@@ -140,6 +330,61 @@
     "partial": true
   },
   {
+    "itemId": 25791,
+    "shortName": "meghanada_cuirie_+2",
+    "context": "Armor NPC [gold] body: Meghanada Cuirie +2",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Meghanada_Cuirie_%2B2",
+    "raw": "DEF:133 HP+40 STR+34 DEX+45 VIT+23 AGI+41 INT+19 MND+28 CHR+29 Accuracy+50 Attack+46 Ranged Accuracy+50 Ranged Attack+46 Evasion+55 Magic Evasion+64 \"Magic Def. Bonus\"+6 Haste+2% Critical hit damage +6% Physical damage taken -8% Set: Enhances \"Regen\" effect",
+    "unknown_tokens": [
+      "Set",
+      "Regen",
+      "effect"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25792,
+    "shortName": "hizamaru_haramaki_+2",
+    "context": "Armor NPC [gold] body: Hizamaru Haramaki +2",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Hizamaru_Haramaki_%2B2",
+    "raw": "DEF:141 HP+100 STR+40 DEX+36 VIT+34 AGI+28 INT+20 MND+17 CHR+28 Accuracy+46 Attack+28 Evasion+95 Magic Evasion+69 \"Magic Def. Bonus\"+6 Haste+4% \"Regen\"+12 Set: Enhances \"Counter\" effect",
+    "unknown_tokens": [
+      "Set",
+      "Counter",
+      "effect"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25805,
+    "shortName": "hizamaru_kote_+1",
+    "context": "Armor NPC [silver] hands: Hizamaru Kote +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Hizamaru_Kote_%2B1",
+    "raw": "DEF:101 HP+40 STR+17 DEX+40 VIT+35 AGI+13 INT+7 MND+21 CHR+22 Accuracy+37 Attack+25 Evasion+70 Magic Evasion+43 \"Magic Def. Bonus\"+2 Haste+4% \"Tactical Parry\"+20",
+    "unknown_tokens": [
+      "Tactical",
+      "Parry"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25829,
+    "shortName": "meghanada_gloves_+2",
+    "context": "Armor NPC [gold] hands: Meghanada Gloves +2",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Meghanada_Gloves_%2B2",
+    "raw": "DEF:98 HP+30 STR+23 DEX+50 VIT+29 AGI+19 INT+11 MND+34 CHR+27 Accuracy+47 Attack+43 Ranged Accuracy+47 Ranged Attack+43 Evasion+36 Magic Evasion+37 \"Magic Def. Bonus\"+2 Haste+4% Weapon skill damage +7% Physical damage taken -4% Set: Enhances \"Regen\" effect",
+    "unknown_tokens": [
+      "Set",
+      "Regen",
+      "effect"
+    ],
+    "partial": true
+  },
+  {
     "itemId": 25831,
     "shortName": "inyanga_dastanas_+2",
     "context": "Armor NPC [silver] hands: Inyanga Dastanas +2",
@@ -177,6 +422,97 @@
     "partial": true
   },
   {
+    "itemId": 25856,
+    "shortName": "tatenashi_haidate_+1",
+    "context": "Armor NPC [silver] legs: Tatenashi Haidate +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Tatenashi_Haidate_%2B1",
+    "raw": "DEF:130 HP+50 STR+45 VIT+25 AGI+15 INT+23 MND+12 CHR+10 Attack+31 Evasion+24 Magic Evasion+80 \"Magic Def. Bonus\"+3 Haste+5% \"Zanshin\"+6 Unity Ranking: \"Store TP\"+4~8",
+    "unknown_tokens": [
+      "Unity",
+      "Ranking",
+      "~8"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25882,
+    "shortName": "inyanga_shalwar_+2",
+    "context": "Armor NPC [gold] legs: Inyanga Shalwar +2",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Inyanga_Shalwar_%2B2",
+    "raw": "DEF:110 HP+55 MP+60 STR+19 VIT+14 AGI+20 INT+51 MND+38 CHR+32 Magic Accuracy+45 Evasion+24 Magic Evasion+147 \"Magic Def. Bonus\"+9 Haste+4% Song effect duration +17% Magic damage taken -6% Set: Enhances \"Refresh\" effect",
+    "unknown_tokens": [
+      "Song",
+      "effect",
+      "duration",
+      "Set",
+      "Refresh",
+      "effect"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25885,
+    "shortName": "taliah_seraweels_+2",
+    "context": "Armor NPC [silver] legs: Taliah Seraweels +2",
+    "reason": "no BG-Wiki stats in cache",
+    "bgwiki": ""
+  },
+  {
+    "itemId": 25894,
+    "shortName": "ea_slops_+1",
+    "context": "Armor NPC [gold] legs: Ea Slops +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Ea_Slops_%2B1",
+    "raw": "DEF:125 HP+81 MP+100 STR+26 VIT+17 AGI+24 INT+48 MND+31 CHR+23 Magic Accuracy+51 \"Magic Atk. Bonus\"+41 Evasion+47 Magic Evasion+147 \"Magic Def. Bonus\"+8 Haste+5% Magic Burst damage +8 Magic Burst damage II +8",
+    "unknown_tokens": [
+      "Magic",
+      "Burst",
+      "damage",
+      "Magic",
+      "Burst",
+      "damage",
+      "II"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25898,
+    "shortName": "arke_cosciales_+1",
+    "context": "Armor NPC [gold] legs: Arke Cosciales +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Arke_Cosciales_%2B1",
+    "raw": "DEF:151 HP+191 STR+45 VIT+35 AGI+19 INT+30 MND+20 CHR+15 Accuracy+51 Haste+5% Resistance to all status ailments +7 Damage taken -11% Converts damage taken to TP +12",
+    "unknown_tokens": [
+      "Resistance",
+      "to",
+      "all",
+      "status",
+      "ailments",
+      "Converts",
+      "damage",
+      "taken",
+      "to",
+      "TP"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25947,
+    "shortName": "meghanada_jambeaux_+2",
+    "context": "Armor NPC [gold] feet: Meghanada Jambeaux +2",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Meghanada_Jambeaux_%2B2",
+    "raw": "DEF:78 HP+20 STR+23 DEX+34 VIT+8 AGI+54 MND+19 CHR+34 Accuracy+46 Attack+42 Ranged Accuracy+46 Ranged Attack+42 Evasion+74 Magic Evasion+69 \"Magic Def. Bonus\"+5 Haste+2% \"Snapshot\"+10 Physical damage taken -3% Set: Enhances \"Regen\" effect",
+    "unknown_tokens": [
+      "Set",
+      "Regen",
+      "effect"
+    ],
+    "partial": true
+  },
+  {
     "itemId": 25949,
     "shortName": "inyanga_crackows_+2",
     "context": "Armor NPC [bronze] feet: Inyanga Crackows +2",
@@ -195,12 +531,62 @@
     "partial": true
   },
   {
+    "itemId": 25950,
+    "shortName": "jhakri_pigaches_+2",
+    "context": "Armor NPC [gold] feet: Jhakri Pigaches +2",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Jhakri_Pigaches_%2B2",
+    "raw": "DEF:62 STR+25 DEX+28 VIT+3 AGI+26 INT+33 MND+21 CHR+34 Accuracy+42 Attack+42 Magic Accuracy+42 Evasion+41 Magic Evasion+69 \"Magic Atk. Bonus\"+39 \"Magic Def. Bonus\"+4 Magic burst damage +7 Set: Enhances \"Fast Cast\"",
+    "unknown_tokens": [
+      "Magic",
+      "burst",
+      "damage",
+      "Set",
+      "Fast",
+      "Cast"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25957,
+    "shortName": "oshosi_leggings_+1",
+    "context": "Armor NPC [silver] feet: Oshosi Leggings +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Oshosi_Leggings_%2B1",
+    "raw": "DEF:89 HP+58 STR+26 DEX+24 VIT+15 AGI+56 MND+11 CHR+34 Ranged Accuracy+43 Magic Accuracy+48 Evasion+73 Magic Evasion+131 \"Magic Def. Bonus\"+7 Enmity-15 \"Double Shot\"+4% \"Triple Shot\"+3% Critical hit rate +10%",
+    "unknown_tokens": [
+      "Double",
+      "Shot",
+      "Triple",
+      "Shot"
+    ],
+    "partial": true
+  },
+  {
     "itemId": 25961,
     "shortName": "ea_pigaches_+1",
     "context": "Armor NPC [silver] feet: Ea Pigaches +1",
     "reason": "partial parse — unknown tokens left over (item still emitted)",
     "bgwiki": "https://www.bg-wiki.com/ffxi/Ea_Pigaches_%2B1",
     "raw": "DEF:83 HP+35 MP+41 STR+11 DEX+14 VIT+15 AGI+38 INT+5 MND+26 CHR+39 Magic Accuracy+48 \"Magic Atk. Bonus\"+32 Evasion+66 Magic Evasion+147 \"Magic Def. Bonus\"+6 Haste+3% Magic Burst damage +5 Magic Burst damage II +5",
+    "unknown_tokens": [
+      "Magic",
+      "Burst",
+      "damage",
+      "Magic",
+      "Burst",
+      "damage",
+      "II"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25981,
+    "shortName": "ea_cuffs_+1",
+    "context": "Armor NPC [gold] hands: Ea Cuffs +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Ea_Cuffs_%2B1",
+    "raw": "DEF:101 HP+26 MP+29 STR+7 DEX+29 VIT+30 INT+40 MND+40 CHR+23 Magic Accuracy+49 Evasion+37 Magic Evasion+101 \"Magic Atk. Bonus\"+35 \"Magic Def. Bonus\"+5 Haste+3% Magic Burst damage +6 Magic Burst damage II +6",
     "unknown_tokens": [
       "Magic",
       "Burst",
@@ -250,6 +636,21 @@
     "unknown_tokens": [
       "Sphere",
       "Reraise"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 27151,
+    "shortName": "gazu_bracelets_+1",
+    "context": "Armor NPC [bronze] hands: Gazu Bracelets +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Gazu_Bracelets_%2B1",
+    "raw": "DEF:91 HP+27 STR+10 DEX+32 VIT+32 AGI+6 INT+14 MND+29 CHR+19 Accuracy+31 Attack-17 Evasion+22 Magic Evasion+43 \"Magic Def. Bonus\"+2 Haste+5% Unity Ranking: Accuracy+10~15",
+    "unknown_tokens": [
+      "Attack",
+      "Unity",
+      "Ranking",
+      "~15"
     ],
     "partial": true
   },
