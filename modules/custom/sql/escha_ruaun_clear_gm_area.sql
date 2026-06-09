@@ -12,8 +12,9 @@
 -- SCOPE (verified before writing):
 --   * Targets ONLY normal spawns -- mob_groups.spawntype = 0 -- in zone 289.
 --     Within 100 yalms that is exactly 18 "Eschan Zdei" spawn points.
---   * NMs / scripted pops (spawntype 128) in range are deliberately LEFT
---     ALONE: Warder of Temperance, Sava Savanovic, and Seiryu (Escha) stay.
+--   * NMs / scripted pops (spawntype 128) in range: Sava Savanovic and Seiryu
+--     (Escha) stay. Warder of Temperance is now REMOVED too (owner request
+--     2026-06-09) -- see the second DELETE block below.
 --   * Zone scoping uses the zone encoded in the mobid ((mobid>>12)&0xFFF=289)
 --     because mob_groups' PK is (groupid, zoneid) -- groupid alone is reused
 --     across 50+ zones, so a groupid-only join is NOT zone-safe.
@@ -40,6 +41,11 @@ DELETE FROM `mob_spawn_points`
      17960968, 17960969, 17960970, 17960971, 17960972, 17960974,
      17960984, 17960985, 17960986, 17960987, 17960988, 17960990
  );
+
+-- Warder of Temperance NM removal (owner request 2026-06-09): it spawned ~6 yalms
+-- from the GM wave NPC and was previously left in place. Single scripted-pop
+-- mobid 17961330 in zone 289 (Escha - Ru'Aun).
+DELETE FROM `mob_spawn_points` WHERE `mobid` = 17961330;
 
 
 -- ============================================================================
