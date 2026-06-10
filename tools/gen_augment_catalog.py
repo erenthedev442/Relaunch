@@ -43,13 +43,15 @@ OVERRIDE_SQL = ROOT / "modules" / "custom" / "sql" / "zz_augment_rebalance.sql"
 # tools/docgen/generators/gear_finder.py). Stored per-entry as `disp` so the
 # Moogle / !augstats / docs divide the raw (base+boost)*mult back to the
 # meaningful number (a maxed Damage-Taken augment is 12800 raw = 128% / piece).
-# modIds not listed are 1:1. HASTE_GEAR (384) etc. are /1024 AND the stock haste
-# augments are over-scaled -- left raw on purpose (a config question, not display).
+# modIds not listed are 1:1. The haste family (167/383/384) is stored /1024, so its
+# divisor is 1024/100 = 10.24 to read as %; the haste augments are also re-tuned to a
+# sane ~1%->25% curve in zz_augment_rebalance.sql so that % is meaningful.
 MOD_DISPLAY_SCALE = {
-    160: 100, 161: 100, 162: 100, 163: 100, 164: 100,  # damage-taken family -> %
-    175: 100,                                           # skillchain dmg -> %
-    506: 10,                                            # proc chance -> %
-    507: 100,                                           # occ. extra
+    160: 100, 161: 100, 162: 100, 163: 100, 164: 100,   # damage-taken family -> %
+    175: 100,                                            # skillchain dmg -> %
+    506: 10,                                             # proc chance -> %
+    507: 100,                                            # occ. extra
+    167: 10.24, 383: 10.24, 384: 10.24,                 # haste (gear/magic/ability) /1024 -> %
 }
 
 MOB_DROPLIST = SQL / "mob_droplist.sql"
@@ -493,7 +495,7 @@ def parse_augments() -> dict[int, dict]:
 # exact numbers the engine applies: (base + sageBoost 0..31) * (mult>1 ? mult : 1).
 # =========================================================================
 _override_re = re.compile(
-    r"UPDATE\s+`?augments`?\s+SET\s+`?value`?\s*=\s*(\d+)\s*,\s*"
+    r"UPDATE\s+`?augments`?\s+SET\s+`?value`?\s*=\s*(-?\d+)\s*,\s*"
     r"`?multiplier`?\s*=\s*(\d+)\s+WHERE\s+`?augmentId`?\s*=\s*(\d+)",
     re.IGNORECASE)
 
@@ -516,6 +518,7 @@ def effective(aug_id: int, entry: dict, override: dict) -> tuple:
     we normalise mult to >= 1."""
     if aug_id in override:
         value, mult = override[aug_id]
+        value = abs(value)   # catalog base is a magnitude; the engine keeps the sign
     else:
         rows = entry["rows"]
         value = abs(rows[0][1]) if rows else 0
