@@ -365,6 +365,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 local count  = catalystCounts[itemId]
                 local base   = def.base or 0
                 local mult   = (def.mult and def.mult > 1) and def.mult or 1
+                local disp   = (def.disp and def.disp > 1) and def.disp or 1
 
                 local affMult = (def.cat and affinity.hasAffinity(player, def.cat))
                     and affinity.affinityMult or 1.0
@@ -424,10 +425,11 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 -- ADDITIVE 0..31, not a multiplier; each augment's value +
                 -- multiplier (sql/augments.sql) set the real floor and cap.
                 -- Real per-slot value the engine will apply (matches !augstats):
-                --   (base + boost) * mult, with base/mult the EFFECTIVE live
-                --   values from augment_catalog.lua. Show it so the trade message
-                --   matches reality instead of the old flat label number.
-                local perSlotVal = (base + perSlotExdata) * mult
+                --   (base + boost) * mult / disp, with base/mult/disp the EFFECTIVE
+                --   live values from augment_catalog.lua (disp divides stored-xN mods
+                --   like damage-taken /100 back to a meaningful number). Show it so
+                --   the trade message matches reality, not the old flat label number.
+                local perSlotVal = math.floor((base + perSlotExdata) * mult / disp + 0.5)
                 local boostStr   = string.format('  [boost %d/%d]', perSlotExdata, EXDATA_VALUE_MAX)
                 local valStr     = (count > 1)
                     and string.format('  ->  %d/slot x%d = %d total', perSlotVal, count, perSlotVal * count)

@@ -1,4 +1,4 @@
-oauth_token = "cfoat_wFjq4MljJ__jy0SlCWELQBG9L_PMUEnmycKlXN961Qo.4__d1lFz07Gc0Z9wX7c8_puZq2bg-p3IyDm9Tm-di7I"
-expiration_time = "2026-06-09T18:03:20.438Z"
-refresh_token = "cfort_WZA5WR9zpaCP0klZDCwGU6c4ASAxxM9qvF8FGNvmiQQ._8INuXAftylzJcWUfWGvnc59Sx0BEbauipdfheQ7AAE"
+oauth_token = "cfoat_WYxVmkGaeazbB_vm9QflJuD0geR62IivXilHaXrFpP0.FivV0jF--lamAhsA0tefP9kzf39GPSvPYac_zRDuPuc"
+expiration_time = "2026-06-10T16:40:58.386Z"
+refresh_token = "cfort_Q5LkFfwU9zPKF4_zJt5aBZAwScxB86rotm4VpkKfp_E.yDACPBOoazkwVFbhhHg1odXChb1QM3PvjQEyeINfQcA"
 scopes = [ "account:read", "user:read", "workers:write", "workers_kv:write", "workers_routes:write", "workers_scripts:write", "workers_tail:read", "d1:write", "pages:write", "zone:read", "ssl_certs:write", "ai:write", "ai-search:write", "ai-search:run", "queues:write", "pipelines:write", "secrets_store:write", "artifacts:write", "flagship:write", "containers:write", "cloudchamber:write", "connectivity:admin", "email_routing:write", "email_sending:write", "browser:write", "offline_access" ]
