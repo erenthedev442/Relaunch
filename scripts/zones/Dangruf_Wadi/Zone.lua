@@ -79,13 +79,23 @@ zoneObject.onGameHour = function(zone)
 end
 
 zoneObject.onZoneWeatherChange = function(weather)
+    -- [LEGENDARY-CUSTOM] Guard against the QM not being loaded yet. On a map
+    -- restart the zone sets its initial weather, firing this handler before the
+    -- zone's NPCs are guaranteed to be spawned. GetNPCByID then returns nil and
+    -- the chained :setStatus() crashed the whole map server with
+    -- "attempt to index a nil value" (intermittent ~30s-into-startup crash).
+    local qm = GetNPCByID(ID.npc.AN_EMPTY_VESSEL_QM)
+    if not qm then
+        return
+    end
+
     if
         weather == xi.weather.NONE or
         weather == xi.weather.SUNSHINE
     then
-        GetNPCByID(ID.npc.AN_EMPTY_VESSEL_QM):setStatus(xi.status.NORMAL)
+        qm:setStatus(xi.status.NORMAL)
     else
-        GetNPCByID(ID.npc.AN_EMPTY_VESSEL_QM):setStatus(xi.status.DISAPPEAR)
+        qm:setStatus(xi.status.DISAPPEAR)
     end
 end
 
