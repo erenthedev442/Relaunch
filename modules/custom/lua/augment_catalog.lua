@@ -131,10 +131,10 @@ return {
     -- Agility / Evasion / Haste
     [816]  = { augId = 47,   base = 1,   mult = 1,  disp = 1,    cat = 4,  label = 'Delay (melee,not ranged)' },
     [818]  = { augId = 48,   base = 1,   mult = 1,  disp = 1,    cat = 4,  label = 'Delay (melee,not ranged)' },
-    [820]  = { augId = 49,   base = 1,   mult = 100, disp = 1,    cat = 4,  label = 'Haste' },
-    [821]  = { augId = 50,   base = 1,   mult = 100, disp = 1,    cat = 4,  label = 'Slow' },
+    [820]  = { augId = 49,   base = 1,   mult = 2,  disp = 10.24, cat = 4,  label = 'Haste' },
+    [821]  = { augId = 50,   base = 1,   mult = 2,  disp = 10.24, cat = 4,  label = 'Slow' },
     [825]  = { augId = 98,   base = 1,   mult = 1,  disp = 1,    cat = 4,  label = 'Pet Evasion' },
-    [826]  = { augId = 111,  base = 1,   mult = 100, disp = 1,    cat = 4,  label = 'Pet Haste' },
+    [826]  = { augId = 111,  base = 1,   mult = 2,  disp = 10.24, cat = 4,  label = 'Pet Haste' },
     [827]  = { augId = 117,  base = 1,   mult = 1,  disp = 1,    cat = 4,  label = 'Pet Mag. Evasion' },
     [828]  = { augId = 186,  base = 1,   mult = 1,  disp = 1,    cat = 4,  label = 'Resist Slow' },
     [829]  = { augId = 211,  base = 1,   mult = 1,  disp = 1,    cat = 4,  label = 'Snapshot' },

@@ -61,3 +61,14 @@ UPDATE `augments` SET `value` = 1, `multiplier` = 4 WHERE `augmentId` = 51;   --
 UPDATE `augments` SET `value` = 1, `multiplier` = 4 WHERE `augmentId` = 52;   -- MP recovered while healing (resting) -> 16..512/piece
 --   x2 -> per-slot 2..64   (x4 slots = 8..256 per piece)
 UPDATE `augments` SET `value` = 1, `multiplier` = 2 WHERE `augmentId` = 138;  -- Refresh (MP/tick, combat)            -> 8..256/piece (capped on purpose)
+
+-- ---- HASTE (gear/pet haste, modId 384, stored /1024) ----
+-- The stock haste augments are OVER-SCALED: mult 100 means a FRESH augment already
+-- grants ~9.8% haste -- near the 25% gear-haste cap -- ignoring the Sage curve, and
+-- a maxed one computes to ~312%/slot. Re-tuned to scale ~1% -> 25% (the gear cap)
+-- across a 4-slot piece like every other augment: final = (value+boost)*mult, read
+-- as a % via /1024, so a maxed piece = 4*(1+31)*2 = 256 = 25%. Slow keeps its
+-- negative sign (self-slow); the catalog shows its magnitude.
+UPDATE `augments` SET `value` =  1, `multiplier` = 2 WHERE `augmentId` = 49;   -- Haste       -> ~1..25% / piece
+UPDATE `augments` SET `value` =  1, `multiplier` = 2 WHERE `augmentId` = 111;  -- Pet: Haste  -> ~1..25% / piece
+UPDATE `augments` SET `value` = -1, `multiplier` = 2 WHERE `augmentId` = 50;   -- Slow (negative haste; display shows magnitude)
