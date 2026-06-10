@@ -100,7 +100,7 @@ showConfirmMenu = function(player)
     local options =
     {
         {
-            string.format('Yes - Apply (cost: %d gil)', GIL_COST),
+            string.format('Yes - apply (%d gil)', GIL_COST),
             function(playerArg)
                 if playerArg:getFreeSlotsCount() == 0 then
                     playerArg:printToPlayer('Inventory full! Free a slot first, kupo!', xi.msg.channel.SYSTEM_3)
@@ -168,7 +168,7 @@ showConfirmMenu = function(player)
             end,
         },
         {
-            'Cancel  (return item + catalysts)',
+            'Cancel - return items',
             function(playerArg)
                 returnAll(playerArg)
                 playerArg:printToPlayer('Item and catalysts returned, kupo!', xi.msg.channel.SYSTEM_3)
@@ -176,25 +176,17 @@ showConfirmMenu = function(player)
         },
     }
 
-    -- customMenu caps the title+options packet at 150 bytes. The Yes /
-    -- Cancel option rows below cost ~64 bytes, leaving ~86 bytes for the
-    -- title (and a few bytes of margin for NULs and a future tweak).
-    --
-    -- The old format -- `'Apply: ' + names joined by ' / ' + ' ?'` --
-    -- balloons to 100+ chars with 4 long-named catalysts and pushed the
-    -- packet over 150 bytes, which silently dropped the Cancel row -- the
-    -- safety button. Now we show a count and only spell out the names
-    -- when they comfortably fit.
-    local joined    = table.concat(nameList, ' / ')
-    local longTitle = string.format('Apply: %s ?', joined)
-    if #longTitle <= 80 then
-        menu.title = longTitle
-    else
-        -- Names are visible in the option rows or via the items themselves,
-        -- so the title degrades to a count rather than a truncated list
-        -- that could mislead about which catalysts will apply.
-        menu.title = string.format('Apply %d catalyst(s) ?', #nameList)
-    end
+    -- Keep the confirm title SHORT and fixed-length. The full per-catalyst
+    -- breakdown is already printed to chat ("Catalysts accepted! Will apply:
+    -- ..."), so the menu doesn't need it -- and embedding it here is exactly
+    -- what broke STACKED trades: a long label like
+    -- "Weapon skill damage -> +16 (stacked x4) [boost 12/31]" pushed
+    -- title+options past the client's ~128-byte customMenu ceiling, so the
+    -- entire menu silently no-op'd (no Yes button) and the trade hung with the
+    -- item held in limbo. A fixed title fits no matter how many or how big the
+    -- catalysts are.
+    utils.unused(nameList)
+    menu.title = 'Apply this augment, kupo?'
     menu.options = options
     player:timer(50, function(p) p:customMenu(menu) end)
 end
@@ -415,11 +407,15 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 -- reaches the player.) One slot per type, with the count folded
                 -- into the value, sidesteps that entirely.
                 --
-                -- The engine applies (base + value) * mult, so value =
-                -- base*(count-1) yields count x base. Fold in the Sage boost,
-                -- then clamp to the 5-bit ceiling (31).
-                local stackBoost = math.floor(base * (count - 1) + 0.5)
-                local slotValue  = math.min(perSlotExdata + stackBoost, EXDATA_VALUE_MAX)
+                -- The engine applies (base + value) * mult. We want N catalysts
+                -- to read N x the single-catalyst result (base + boost): aim for
+                -- (base + value) = count * (base + boost), solve for the slot
+                -- value, then clamp to the 5-bit ceiling (31). NOTE: for low-base
+                -- augments the clamp caps the real multiplier -- a base-1 aug
+                -- (e.g. WSD, mult 1) tops out at (1 + 31) = 32 no matter how many
+                -- catalysts, because the value field is only 5 bits wide.
+                local target     = count * (base + perSlotExdata)   -- desired (base + value)
+                local slotValue  = math.min(math.max(target - base, 0), EXDATA_VALUE_MAX)
                 table.insert(exAugsBySlot, {
                     id    = def.augId,
                     value = slotValue,
@@ -457,7 +453,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 --   the trade message matches reality, not the old flat label number.
                 local appliedVal = math.floor((base + slotValue) * mult / disp + 0.5)
                 local boostStr   = (perSlotExdata > 0) and string.format('  [boost %d/%d]', perSlotExdata, EXDATA_VALUE_MAX) or ''
-                local capped     = (perSlotExdata + stackBoost) > EXDATA_VALUE_MAX
+                local capped     = (target - base) > EXDATA_VALUE_MAX
                 local valStr     = (count > 1)
                     and string.format('  ->  +%d  (stacked x%d%s)', appliedVal, count, capped and ', capped' or '')
                     or  string.format('  ->  +%d', appliedVal)
