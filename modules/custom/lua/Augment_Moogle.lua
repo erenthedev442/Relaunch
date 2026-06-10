@@ -19,7 +19,8 @@ local wh       = require('modules/custom/lua/weekly_hunts')
 -----------------------------------
 local m = Module:new('augment_moogle')
 
-local MAX_CATALYST_COUNT = 4       -- max catalyst items (incl. stacks) per trade
+local MAX_CATALYST_TYPES = 5       -- distinct catalysts per trade (engine: Augments[5] = 5 augment slots)
+local MAX_CATALYST_COUNT = 32      -- total catalysts per trade; one slot per type, stacks amplify via the 5-bit value field
 local GIL_COST           = 10000   -- flat per trade
 
 -- Augment formula recap (from src/map/items/item_equipment.cpp:479):
@@ -123,8 +124,7 @@ showConfirmMenu = function(player)
                     table.insert(exAugs, { id = sel.id, value = sel.value })
                 end
 
-                playerArg:delGil(GIL_COST)
-                playerArg:addItem({
+                local augmented = playerArg:addItem({
                     id     = st2.itemId,
                     exdata =
                     {
@@ -133,6 +133,16 @@ showConfirmMenu = function(player)
                         augments       = exAugs,
                     },
                 })
+
+                -- Never eat the player's gear: if the engine refused the
+                -- augmented item, hand everything back and charge no gil.
+                if not augmented then
+                    returnAll(playerArg)
+                    playerArg:printToPlayer('Augmentation failed - gear and catalysts returned, no gil charged, kupo!', xi.msg.channel.SYSTEM_3)
+                    return
+                end
+
+                playerArg:delGil(GIL_COST)
 
                 -- Bump the lifetime augment counter - feeds Sage rank-ups.
                 local prev = playerArg:getCharVar('Augment_Count') or 0
@@ -214,8 +224,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 showConfirmMenu(player)
                 return
             end
-            player:printToPlayer(string.format('[ Augment Moogle ] Trade me 1 piece of gear + up to %d catalyst items (incl. stacks), kupo!', MAX_CATALYST_COUNT), xi.msg.channel.SYSTEM_3)
-            player:printToPlayer(string.format('  Stack same catalysts to amplify: 4 of one = 4x the augment. Cost: %d gil per trade.', GIL_COST), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('[ Augment Moogle ] Trade me 1 piece of gear + up to %d catalysts (%d different types), kupo!', MAX_CATALYST_COUNT, MAX_CATALYST_TYPES), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('  Stack the SAME catalyst to amplify that augment (more = stronger). Cost: %d gil per trade.', GIL_COST), xi.msg.channel.SYSTEM_3)
             player:printToPlayer('  See modules/custom/lua/augment_catalog.lua for the full item -> augment list.', xi.msg.channel.SYSTEM_3)
         end,
 
@@ -247,7 +257,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                         gearId = itemId
 
                     else
-                        player:printToPlayer('Trade 1 equipment piece + up to 4 catalyst items, kupo!', xi.msg.channel.SYSTEM_3)
+                        player:printToPlayer('Trade 1 equipment piece + catalyst items only, kupo! (one of those items is not a catalyst)', xi.msg.channel.SYSTEM_3)
                         return
                     end
                 end
@@ -260,6 +270,11 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
             if totalCatalysts == 0 then
                 player:printToPlayer('Include at least 1 catalyst item, kupo!', xi.msg.channel.SYSTEM_3)
+                return
+            end
+
+            if #catalystOrder > MAX_CATALYST_TYPES then
+                player:printToPlayer(string.format('Max %d different catalysts per item (one per augment slot), kupo!', MAX_CATALYST_TYPES), xi.msg.channel.SYSTEM_3)
                 return
             end
 
@@ -389,16 +404,27 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 local perSlotExdata = math.min(math.max(rawExdata, 0), EXDATA_VALUE_MAX)
                 local boostClipped  = false  -- progress mapping is bounded to [0, EXDATA_VALUE_MAX] by construction
 
-                -- Emit one augment slot per catalyst. Same augId in multiple
-                -- slots is fine - the engine processes each slot's modValue
-                -- separately and sums them into the mod total.
-                for _ = 1, count do
-                    table.insert(exAugsBySlot, {
-                        id    = def.augId,
-                        value = perSlotExdata,
-                        cat   = def.cat,
-                    })
-                end
+                -- Emit ONE augment slot per catalyst TYPE, amplifying a stack
+                -- through the 5-bit exdata Value field instead of repeating the
+                -- same augId across N slots.
+                --
+                -- The old "one slot per catalyst" approach wrote duplicate augIds
+                -- (e.g. 4x WSD), which the client rejects on delivery -- the whole
+                -- item is refused and the player loses their gear + catalysts.
+                -- (The engine WOULD sum them server-side, but the item never
+                -- reaches the player.) One slot per type, with the count folded
+                -- into the value, sidesteps that entirely.
+                --
+                -- The engine applies (base + value) * mult, so value =
+                -- base*(count-1) yields count x base. Fold in the Sage boost,
+                -- then clamp to the 5-bit ceiling (31).
+                local stackBoost = math.floor(base * (count - 1) + 0.5)
+                local slotValue  = math.min(perSlotExdata + stackBoost, EXDATA_VALUE_MAX)
+                table.insert(exAugsBySlot, {
+                    id    = def.augId,
+                    value = slotValue,
+                    cat   = def.cat,
+                })
 
                 -- Build the label so the player sees what actually lands.
                 --
@@ -429,11 +455,12 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 --   live values from augment_catalog.lua (disp divides stored-xN mods
                 --   like damage-taken /100 back to a meaningful number). Show it so
                 --   the trade message matches reality, not the old flat label number.
-                local perSlotVal = math.floor((base + perSlotExdata) * mult / disp + 0.5)
-                local boostStr   = string.format('  [boost %d/%d]', perSlotExdata, EXDATA_VALUE_MAX)
+                local appliedVal = math.floor((base + slotValue) * mult / disp + 0.5)
+                local boostStr   = (perSlotExdata > 0) and string.format('  [boost %d/%d]', perSlotExdata, EXDATA_VALUE_MAX) or ''
+                local capped     = (perSlotExdata + stackBoost) > EXDATA_VALUE_MAX
                 local valStr     = (count > 1)
-                    and string.format('  ->  %d/slot x%d = %d total', perSlotVal, count, perSlotVal * count)
-                    or  string.format('  ->  %d', perSlotVal)
+                    and string.format('  ->  +%d  (stacked x%d%s)', appliedVal, count, capped and ', capped' or '')
+                    or  string.format('  ->  +%d', appliedVal)
 
                 local label = string.format('%s%s%s', def.label, valStr, boostStr)
                 table.insert(labelSummary, label)
