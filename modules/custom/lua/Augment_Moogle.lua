@@ -20,8 +20,14 @@ local wh       = require('modules/custom/lua/weekly_hunts')
 local m = Module:new('augment_moogle')
 
 local MAX_CATALYST_TYPES = 5       -- distinct catalysts per trade (engine: Augments[5] = 5 augment slots)
-local MAX_CATALYST_COUNT = 32      -- total catalysts per trade; one slot per type, stacks amplify via the 5-bit value field
+local MAX_CATALYST_COUNT = 20      -- total catalysts per trade (5 types x STACK_FULL_AT = full stacks)
 local GIL_COST           = 10000   -- flat per trade
+
+-- Value-field (0..31) budget split: a maxed augment needs full Sage rank AND a
+-- full catalyst stack. Owner-chosen weighting "rank-driven, stack tops off".
+local SAGE_VALUE_MAX     = 24      -- Sage rank/affinity/crit fills up to here
+local STACK_VALUE_MAX    = 7       -- extra same-type catalysts fill the rest (24 + 7 = 31)
+local STACK_FULL_AT      = 4       -- this many of one catalyst = full stack bonus
 
 -- Augment formula recap (from src/map/items/item_equipment.cpp:479):
 --   final_mod = (base + exdata) * (multiplier > 1 ? multiplier : 1)   -- positive base
@@ -217,7 +223,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 return
             end
             player:printToPlayer(string.format('[ Augment Moogle ] Trade me 1 piece of gear + up to %d catalysts (%d different types), kupo!', MAX_CATALYST_COUNT, MAX_CATALYST_TYPES), xi.msg.channel.SYSTEM_3)
-            player:printToPlayer(string.format('  Stack the SAME catalyst to amplify that augment (more = stronger). Cost: %d gil per trade.', GIL_COST), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('  Stack up to %d of the SAME catalyst to amplify it (rank + stack both cap it). Cost: %d gil per trade.', STACK_FULL_AT, GIL_COST), xi.msg.channel.SYSTEM_3)
             player:printToPlayer('  See modules/custom/lua/augment_catalog.lua for the full item -> augment list.', xi.msg.channel.SYSTEM_3)
         end,
 
@@ -273,6 +279,13 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             if totalCatalysts > MAX_CATALYST_COUNT then
                 player:printToPlayer(string.format('Max %d catalysts per trade (you traded %d), kupo!', MAX_CATALYST_COUNT, totalCatalysts), xi.msg.channel.SYSTEM_3)
                 return
+            end
+
+            for _, cid in ipairs(catalystOrder) do
+                if catalystCounts[cid] > STACK_FULL_AT then
+                    player:printToPlayer(string.format('Max %d of one catalyst per item -- more adds nothing, kupo!', STACK_FULL_AT), xi.msg.channel.SYSTEM_3)
+                    return
+                end
             end
 
             if player:getGil() < GIL_COST then
@@ -392,9 +405,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 local maxTotalMult  = (sage.masteryMult[#sage.masteryMult] or 2.0)
                                         * (affinity.affinityMult or 1.5) * 2.0  -- rank5 x affinity x crit
                 local progress      = (maxTotalMult > 1) and ((totalMult - 1) / (maxTotalMult - 1)) or 0
-                local rawExdata     = math.floor(progress * EXDATA_VALUE_MAX + 0.5)
-                local perSlotExdata = math.min(math.max(rawExdata, 0), EXDATA_VALUE_MAX)
-                local boostClipped  = false  -- progress mapping is bounded to [0, EXDATA_VALUE_MAX] by construction
+                local rawExdata     = math.floor(progress * SAGE_VALUE_MAX + 0.5)
+                local perSlotExdata = math.min(math.max(rawExdata, 0), SAGE_VALUE_MAX)  -- Sage rank portion: 0..SAGE_VALUE_MAX
 
                 -- Emit ONE augment slot per catalyst TYPE, amplifying a stack
                 -- through the 5-bit exdata Value field instead of repeating the
@@ -407,15 +419,13 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 -- reaches the player.) One slot per type, with the count folded
                 -- into the value, sidesteps that entirely.
                 --
-                -- The engine applies (base + value) * mult. We want N catalysts
-                -- to read N x the single-catalyst result (base + boost): aim for
-                -- (base + value) = count * (base + boost), solve for the slot
-                -- value, then clamp to the 5-bit ceiling (31). NOTE: for low-base
-                -- augments the clamp caps the real multiplier -- a base-1 aug
-                -- (e.g. WSD, mult 1) tops out at (1 + 31) = 32 no matter how many
-                -- catalysts, because the value field is only 5 bits wide.
-                local target     = count * (base + perSlotExdata)   -- desired (base + value)
-                local slotValue  = math.min(math.max(target - base, 0), EXDATA_VALUE_MAX)
+                -- Stack bonus: extra same-type catalysts fill 0..STACK_VALUE_MAX,
+                -- full at STACK_FULL_AT of them. value = rank + stack, so a maxed
+                -- augment (full rank + full stack) reaches the 5-bit ceiling 31
+                -- -> (base + 31) * mult. For WSD (base 1, mult 1) that is +32.
+                local stackProg  = math.min((count - 1) / math.max(STACK_FULL_AT - 1, 1), 1.0)
+                local stackBonus = math.min(math.floor(stackProg * STACK_VALUE_MAX + 0.5), STACK_VALUE_MAX)
+                local slotValue  = math.min(perSlotExdata + stackBonus, EXDATA_VALUE_MAX)
                 table.insert(exAugsBySlot, {
                     id    = def.augId,
                     value = slotValue,
@@ -452,11 +462,10 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 --   like damage-taken /100 back to a meaningful number). Show it so
                 --   the trade message matches reality, not the old flat label number.
                 local appliedVal = math.floor((base + slotValue) * mult / disp + 0.5)
-                local boostStr   = (perSlotExdata > 0) and string.format('  [boost %d/%d]', perSlotExdata, EXDATA_VALUE_MAX) or ''
-                local capped     = (target - base) > EXDATA_VALUE_MAX
-                local valStr     = (count > 1)
-                    and string.format('  ->  +%d  (stacked x%d%s)', appliedVal, count, capped and ', capped' or '')
-                    or  string.format('  ->  +%d', appliedVal)
+                local valStr     = string.format('  ->  +%d', appliedVal)
+                local boostStr   = (count > 1)
+                    and string.format('  [rank %d/%d, stack %d/%d]', perSlotExdata, SAGE_VALUE_MAX, stackBonus, STACK_VALUE_MAX)
+                    or  string.format('  [rank %d/%d]', perSlotExdata, SAGE_VALUE_MAX)
 
                 local label = string.format('%s%s%s', def.label, valStr, boostStr)
                 table.insert(labelSummary, label)
