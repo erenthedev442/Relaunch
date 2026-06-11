@@ -19,7 +19,7 @@ local wh       = require('modules/custom/lua/weekly_hunts')
 -----------------------------------
 local m = Module:new('augment_moogle')
 
-local MAX_CATALYST_COUNT = 4       -- max catalyst items (incl. stacks) per trade; <=5 (engine has 5 augment slots)
+local MAX_CATALYST_COUNT = 5       -- max catalyst items per trade = the engine's 5 augment slots (each catalyst writes one line; mix types or stack one)
 local GIL_COST           = 10000   -- flat per trade
 
 -- Augment formula recap (from src/map/items/item_equipment.cpp:479):
@@ -216,7 +216,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 return
             end
             player:printToPlayer(string.format('[ Augment Moogle ] Trade me 1 piece of gear + up to %d catalyst items (incl. stacks), kupo!', MAX_CATALYST_COUNT), xi.msg.channel.SYSTEM_3)
-            player:printToPlayer('  Stack same catalysts to amplify: 4 of one = 4x the augment. Cost: 10,000 gil per trade.', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('  Each catalyst = 1 augment line, up to 5 per item -- stack one type (4 of one = 4x) or mix several. Cost: 10,000 gil.', xi.msg.channel.SYSTEM_3)
             player:printToPlayer('  See modules/custom/lua/augment_catalog.lua for the full item -> augment list.', xi.msg.channel.SYSTEM_3)
         end,
 
