@@ -393,11 +393,50 @@ void RefreshGiftMods(CCharEntity* PChar)
             break;
 
         case JOB_GEO:
-            // GEO slot repurposed as the custom "Bouncer" tank job (see
-            // documentation/custom_tank_job_design.md and modules/custom/sql/bouncer_*.sql).
-            // The Bouncer has no spells, so the original GEO elemental/aspir JP
-            // spell grants are intentionally removed. Leave empty so JP spent in
-            // this slot grants no spells.
+            if (totalJpSpent >= 100)
+            {
+                for (const SpellID elementalSpell : { SpellID::Fire_V,
+                                                      SpellID::Blizzard_V,
+                                                      SpellID::Aero_V,
+                                                      SpellID::Stone_V,
+                                                      SpellID::Thunder_V,
+                                                      SpellID::Water_V })
+                {
+                    uint16 spellIdNum = static_cast<uint16>(elementalSpell);
+
+                    if (!charutils::hasSpell(PChar, spellIdNum))
+                    {
+                        charutils::addSpell(PChar, spellIdNum);
+                        charutils::SaveSpell(PChar, spellIdNum);
+                    }
+                }
+
+                sendUpdate = true;
+            }
+
+            if (totalJpSpent >= 550 && !charutils::hasSpell(PChar, (uint16)SpellID::Aspir_III))
+            {
+                charutils::addSpell(PChar, (uint16)SpellID::Aspir_III);
+                charutils::SaveSpell(PChar, (uint16)SpellID::Aspir_III);
+
+                sendUpdate = true;
+            }
+
+            if (totalJpSpent >= 1200 && !charutils::hasSpell(PChar, (uint16)SpellID::Fira_III))
+            {
+                for (const SpellID elementalSpell : { SpellID::Fira_III,
+                                                      SpellID::Blizzara_III,
+                                                      SpellID::Aera_III,
+                                                      SpellID::Stonera_III,
+                                                      SpellID::Thundara_III,
+                                                      SpellID::Watera_III })
+                {
+                    charutils::addSpell(PChar, (uint16)elementalSpell);
+                    charutils::SaveSpell(PChar, (uint16)elementalSpell);
+                }
+
+                sendUpdate = true;
+            }
             break;
 
         case JOB_NIN:
