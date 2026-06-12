@@ -340,8 +340,14 @@ uint8 CBattleEntity::UpdateSpeed(bool run)
     // Mount speed. Independent from regular speed and unaffected by most things.
     if (isMounted())
     {
-        outputSpeed = settings::get<uint8>("map.MOUNT_SPEED") / 2;
+        // FJB: read as uint16 so MOUNT_SPEED isn't silently truncated to a uint8
+        // (550 used to wrap to 38 -> /2 = a 19-speed crawl). Speed is sent to the
+        // client as a uint8 (entity_update.cpp), so 255 is the hard engine
+        // ceiling -- MOUNT_SPEED = 510 reaches it after the /2. Clamp after the
+        // MOUNT_MOVE bonus so % gear can't wrap the uint8 return either.
+        outputSpeed = std::min<int16>(settings::get<uint16>("map.MOUNT_SPEED") / 2, 255);
         outputSpeed *= 1.0f + static_cast<float>(getMod(Mod::MOUNT_MOVE)) / 100.0f;
+        outputSpeed = std::clamp<int16>(outputSpeed, 0, 255);
     }
     else if (baseSpeed == 0 || getMod(Mod::MOVE_SPEED_OVERRIDE) < 0)
     {
