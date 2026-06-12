@@ -638,7 +638,8 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
 
     -----------------------------------
     -- "Face the Trial": summon the next uncleared Nightmare Court boss right
-    -- at the Altar. One live boss per player at a time. Uses the EXACT Hunting
+    -- where the summoner stands (at the Altar). One live boss per player at a
+    -- time. Uses the EXACT Hunting
     -- League insertDynamicEntity pattern -- minLevel/maxLevel + detection are
     -- REQUIRED (else lv255/unhittable, no aggro), and mods + hpBoost are
     -- applied AFTER spawn() (spawn recalculates stats from the pool). The
@@ -671,7 +672,20 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             return
         end
 
-        local sp  = cfg.trialSpawnPos
+        -- [LEGENDARY] Spawn the boss right where the summoner ("the game master")
+        -- is standing instead of at a fixed arena point. The old hardcoded
+        -- cfg.trialSpawnPos (-624, -20, -519.999) sat near the edge of
+        -- Provenance's floating arena, so summoned bosses frequently materialised
+        -- off the platform / unreachable ("off map"). The summoner is provably on
+        -- valid floor (they walked to the Altar to summon), so anchoring to their
+        -- live position guarantees the boss always spawns on-map and right next to
+        -- them. cfg.trialSpawnPos remains the fallback if the read ever fails.
+        local sp = cfg.trialSpawnPos
+        local px = player:getXPos()
+        if px then
+            sp = { x = px, y = player:getYPos(), z = player:getZPos(), rot = player:getRotPos() }
+        end
+
         local mob = zone:insertDynamicEntity({
             objtype              = xi.objType.MOB,
             groupId              = gid,
