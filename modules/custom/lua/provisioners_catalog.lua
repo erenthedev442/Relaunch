@@ -19,7 +19,7 @@ local catalog = {}
 catalog.npcPos =
 {
     zone     = 'Reisenjima_Henge',
-    zoneId   = 291,
+    zoneId   = 292,
     x        = 10.500,
     y        =  5.509,
     z        = -12.183,
