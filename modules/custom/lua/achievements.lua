@@ -205,6 +205,28 @@ local MILESTONES = {
         titleId   = xi.title.PARAGON_OF_WARRIOR_EXCELLENCE,
         titleName = 'Paragon of Warrior Excellence',
     },
+    -- Invasion defense milestones
+    {
+        id       = 'INV_FIRST_DEFENSE',
+        reward   = 150,
+        announce = false,
+        title    = 'Sanctuary Defender',
+        desc     = 'Helped repel your first Voidsent invasion.',
+    },
+    {
+        id       = 'INV_10_DEFENSES',
+        reward   = 500,
+        announce = true,
+        title    = 'Bulwark of the Sanctuary',
+        desc     = '10 successful invasion defenses.  The moogles sleep soundly.',
+    },
+    {
+        id       = 'INV_100_KILLS',
+        reward   = 300,
+        announce = true,
+        title    = 'Voidsent Bane',
+        desc     = '100 Voidsent invaders cut down.',
+    },
     -- Colosseum ladder milestones
     {
         id       = 'COL_FIRST_WIN',
@@ -420,6 +442,18 @@ function M.onAscension(player)
     if total >= 1  then award(player, MILESTONE_BY_ID['FIRST_ASCENSION'])  end
     if total >= 10 then award(player, MILESTONE_BY_ID['TEN_ASCENSIONS'])   end
     if total >= 50 then award(player, MILESTONE_BY_ID['FIFTY_ASCENSIONS']) end
+end
+
+-----------------------------------
+-- Called from Invasion.lua for each participant after a victorious
+-- defense, AFTER Inv_Wins / Inv_Kills have been updated.
+-----------------------------------
+function M.onInvasionResult(player)
+    local wins  = player:getCharVar('Inv_Wins')  or 0
+    local kills = player:getCharVar('Inv_Kills') or 0
+    if wins >= 1    then award(player, MILESTONE_BY_ID['INV_FIRST_DEFENSE']) end
+    if wins >= 10   then award(player, MILESTONE_BY_ID['INV_10_DEFENSES'])   end
+    if kills >= 100 then award(player, MILESTONE_BY_ID['INV_100_KILLS'])     end
 end
 
 -----------------------------------

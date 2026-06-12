@@ -105,6 +105,11 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onInitialize', function(zone)
                     player:getCharVar('Col_Wins')   or 0,
                     player:getCharVar('Col_Losses') or 0), B)
             end
+            local invWins = player:getCharVar('Inv_Wins') or 0
+            if invWins > 0 then
+                player:printToPlayer(string.format('  Invasions repelled: %d   Voidsent slain: %d',
+                    invWins, player:getCharVar('Inv_Kills') or 0), B)
+            end
             player:printToPlayer('[The Chronicler] -- Server Leaderboards ---------------', H)
             player:printToPlayer('  Full rankings at:', B)
             player:printToPlayer('  legendary-ffxi.pages.dev/community/leaderboards/', B)
