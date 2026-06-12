@@ -153,7 +153,10 @@ local MILESTONES = {
         id       = 'FIFTY_DUNGEONS',
         reward   = 750,
         announce = true,
-        title    = 'Dungeon Veteran',
+        -- 'Dungeon Conqueror' since 2026-06-12: was 'Dungeon Veteran', which
+        -- collided with INFAMY_1K's label above. Display-only (achievements
+        -- key on id), so already-earned progress is unaffected.
+        title    = 'Dungeon Conqueror',
         desc     = '50 lifetime dungeon clears.  The dungeons fear you.',
     },
     -- Wave fight milestones
