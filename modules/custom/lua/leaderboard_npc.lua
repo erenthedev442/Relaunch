@@ -97,6 +97,14 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onInitialize', function(zone)
             player:printToPlayer(string.format('  Unique NMs: %d/%d   Dungeons Cleared: %d   Weekly Sweeps: %d', uniqueNMs, TOTAL_NMS, dungeons, sweeps), B)
             player:printToPlayer(string.format('  Lifetime Infamy: %d   Achievements: %d/%d', infamy, achEarned, #ACH_IDS), B)
             player:printToPlayer(string.format('  Ascensions: %d   Highest Prestige: P%d   Best Keystone: M+%d', ascensions, topPrestige, keyBest), B)
+            local colRating = player:getCharVar('Col_Rating') or 0
+            if colRating > 0 then
+                player:printToPlayer(string.format('  Arena: %d rating (best %d)   W-L: %d-%d',
+                    colRating,
+                    player:getCharVar('Col_Best_Rating') or 0,
+                    player:getCharVar('Col_Wins')   or 0,
+                    player:getCharVar('Col_Losses') or 0), B)
+            end
             player:printToPlayer('[The Chronicler] -- Server Leaderboards ---------------', H)
             player:printToPlayer('  Full rankings at:', B)
             player:printToPlayer('  legendary-ffxi.pages.dev/community/leaderboards/', B)

@@ -205,6 +205,35 @@ local MILESTONES = {
         titleId   = xi.title.PARAGON_OF_WARRIOR_EXCELLENCE,
         titleName = 'Paragon of Warrior Excellence',
     },
+    -- Colosseum ladder milestones
+    {
+        id       = 'COL_FIRST_WIN',
+        reward   = 100,
+        announce = false,
+        title    = 'First Blood',
+        desc     = 'Won your first Colosseum duel.',
+    },
+    {
+        id       = 'COL_10_WINS',
+        reward   = 300,
+        announce = true,
+        title    = 'Arena Regular',
+        desc     = '10 Colosseum victories.  The crowd knows your name.',
+    },
+    {
+        id       = 'COL_RATING_1400',
+        reward   = 500,
+        announce = true,
+        title    = 'Contender',
+        desc     = 'Reached 1400 arena rating.',
+    },
+    {
+        id       = 'COL_RATING_1600',
+        reward   = 1500,
+        announce = true,
+        title    = 'Arena Champion',
+        desc     = 'Reached 1600 arena rating.  The ladder bows.',
+    },
     -- Mythic+ keystone milestones (level = highest key TIMED, any dungeon)
     {
         id       = 'KEYSTONE_5',
@@ -391,6 +420,19 @@ function M.onAscension(player)
     if total >= 1  then award(player, MILESTONE_BY_ID['FIRST_ASCENSION'])  end
     if total >= 10 then award(player, MILESTONE_BY_ID['TEN_ASCENSIONS'])   end
     if total >= 50 then award(player, MILESTONE_BY_ID['FIFTY_ASCENSIONS']) end
+end
+
+-----------------------------------
+-- Called from Colosseum.lua after every duel result (win or loss),
+-- AFTER Col_Wins / Col_Best_Rating have been updated.
+-----------------------------------
+function M.onColosseumResult(player)
+    local wins = player:getCharVar('Col_Wins') or 0
+    local best = player:getCharVar('Col_Best_Rating') or 0
+    if wins >= 1     then award(player, MILESTONE_BY_ID['COL_FIRST_WIN'])    end
+    if wins >= 10    then award(player, MILESTONE_BY_ID['COL_10_WINS'])      end
+    if best >= 1400  then award(player, MILESTONE_BY_ID['COL_RATING_1400']) end
+    if best >= 1600  then award(player, MILESTONE_BY_ID['COL_RATING_1600']) end
 end
 
 -----------------------------------
