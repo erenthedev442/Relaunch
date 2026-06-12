@@ -705,6 +705,13 @@ local function insertSpawnerNPC(zone)
                             -- kill-count thresholds, lifetime mark thresholds).
                             ach.onHLKill(killer, td.tier)
 
+                            -- Treasure Hunting map roll. Lazy + guarded
+                            -- so hunts never break if the module is out.
+                            local okTh, th = pcall(require, 'modules/custom/lua/TreasureHunt')
+                            if okTh and th and th.onHuntKill then
+                                pcall(function() th.onHuntKill(killer, td.tier) end)
+                            end
+
                             -- Ascension Trial: a Tier-5 (Legend) kill stamps
                             -- progress toward the next ascension. The module
                             -- ignores groupIds that aren't on the Trial roster.

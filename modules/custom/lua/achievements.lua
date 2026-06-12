@@ -205,6 +205,21 @@ local MILESTONES = {
         titleId   = xi.title.PARAGON_OF_WARRIOR_EXCELLENCE,
         titleName = 'Paragon of Warrior Excellence',
     },
+    -- Treasure Hunting milestones
+    {
+        id       = 'TH_FIRST_CHEST',
+        reward   = 100,
+        announce = false,
+        title    = 'X Marks the Spot',
+        desc     = 'Unearthed your first buried strongbox.',
+    },
+    {
+        id       = 'TH_10_CHESTS',
+        reward   = 500,
+        announce = true,
+        title    = 'Master Cartographer',
+        desc     = '10 strongboxes unearthed across Vana\'diel.',
+    },
     -- Provisioners' League milestones
     {
         id       = 'LEAGUE_FIRST_TURNIN',
@@ -479,6 +494,16 @@ function M.onAscension(player)
     if total >= 1  then award(player, MILESTONE_BY_ID['FIRST_ASCENSION'])  end
     if total >= 10 then award(player, MILESTONE_BY_ID['TEN_ASCENSIONS'])   end
     if total >= 50 then award(player, MILESTONE_BY_ID['FIFTY_ASCENSIONS']) end
+end
+
+-----------------------------------
+-- Called from TreasureHunt.lua after a strongbox is unearthed
+-- (TH_Found already updated).
+-----------------------------------
+function M.onTreasureFound(player)
+    local found = player:getCharVar('TH_Found') or 0
+    if found >= 1  then award(player, MILESTONE_BY_ID['TH_FIRST_CHEST']) end
+    if found >= 10 then award(player, MILESTONE_BY_ID['TH_10_CHESTS'])   end
 end
 
 -----------------------------------

@@ -119,6 +119,10 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onInitialize', function(zone)
                 player:printToPlayer(string.format('  League points: %d   Fish weighed: %d',
                     leaguePts, player:getCharVar('League_Turnins') or 0), B)
             end
+            local chests = player:getCharVar('TH_Found') or 0
+            if chests > 0 then
+                player:printToPlayer(string.format('  Strongboxes unearthed: %d', chests), B)
+            end
             player:printToPlayer('[The Chronicler] -- Server Leaderboards ---------------', H)
             player:printToPlayer('  Full rankings at:', B)
             player:printToPlayer('  legendary-ffxi.pages.dev/community/leaderboards/', B)
