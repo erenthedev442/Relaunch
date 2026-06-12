@@ -84,7 +84,7 @@ catalog.currencies =
 --   label       short display name (<= 16 chars to fit customMenu)
 --   description one-liner shown in the NPC menu
 --   target      numeric completion threshold
---   metric      which baseline to measure against: 'kills' | 'dungeons' | 'infamy'
+--   metric      which baseline to measure against: 'kills' | 'dungeons' | 'infamy' | 'waves' | 'augments'
 --   reward      { currency = 'hl'|'af'|'relic'|'empy', amount = N }
 --
 -- Rotation guarantees that only ONE entry per metric appears

@@ -1,6 +1,6 @@
 -----------------------------------
 -- Augment_Moogle.lua
--- Trade 1 equipment piece + 1-4 catalyst items.
+-- Trade 1 equipment piece + 1-5 catalyst items.
 -- Each catalyst maps 1:1 to a specific augmentId via augment_catalog.lua.
 -- Costs 10,000 gil per successful augmentation (flat, regardless of how many
 -- augments are applied in the trade).
@@ -216,7 +216,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 return
             end
             player:printToPlayer(string.format('[ Augment Moogle ] Trade me 1 piece of gear + up to %d catalyst items (incl. stacks), kupo!', MAX_CATALYST_COUNT), xi.msg.channel.SYSTEM_3)
-            player:printToPlayer('  Each catalyst = 1 augment line, up to 5 per item -- stack one type (4 of one = 4x) or mix several. Cost: 10,000 gil.', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('  Each catalyst = 1 augment line, up to 5 per item -- stack one type (5 of one = 5x) or mix several. Cost: 10,000 gil.', xi.msg.channel.SYSTEM_3)
             player:printToPlayer('  See modules/custom/lua/augment_catalog.lua for the full item -> augment list.', xi.msg.channel.SYSTEM_3)
         end,
 
@@ -293,7 +293,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             --
             -- Fix: emit ONE augment slot per catalyst instead of stuffing
             -- the stack into a single slot. Equipment supports 5 augment
-            -- slots; MAX_CATALYST_COUNT=4 keeps us within budget. The
+            -- slots; MAX_CATALYST_COUNT=5 fills them exactly. The
             -- engine sums each slot's contribution to the mod independently
             -- so 4 slots of Accuracy+33 (exdata=0 each) cleanly delivers
             -- +132.
