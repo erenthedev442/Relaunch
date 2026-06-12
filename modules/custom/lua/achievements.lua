@@ -205,6 +205,21 @@ local MILESTONES = {
         titleId   = xi.title.PARAGON_OF_WARRIOR_EXCELLENCE,
         titleName = 'Paragon of Warrior Excellence',
     },
+    -- Raid milestones
+    {
+        id        = 'RAID_FIRST_KILL',
+        reward    = 500,
+        announce  = true,
+        title     = 'Star-Slayer',
+        desc      = 'Felled the Star-Devourer for the first time.',
+    },
+    {
+        id        = 'RAID_10_KILLS',
+        reward    = 1500,
+        announce  = true,
+        title     = 'Devourer of the Devourer',
+        desc      = '10 Star-Devourer kills.  It fears YOU now.',
+    },
     -- Invasion defense milestones
     {
         id       = 'INV_FIRST_DEFENSE',
@@ -442,6 +457,16 @@ function M.onAscension(player)
     if total >= 1  then award(player, MILESTONE_BY_ID['FIRST_ASCENSION'])  end
     if total >= 10 then award(player, MILESTONE_BY_ID['TEN_ASCENSIONS'])   end
     if total >= 50 then award(player, MILESTONE_BY_ID['FIFTY_ASCENSIONS']) end
+end
+
+-----------------------------------
+-- Called from RaidBoss.lua for each credited player after a kill,
+-- AFTER Raid_Kills has been updated.
+-----------------------------------
+function M.onRaidKill(player)
+    local kills = player:getCharVar('Raid_Kills') or 0
+    if kills >= 1  then award(player, MILESTONE_BY_ID['RAID_FIRST_KILL']) end
+    if kills >= 10 then award(player, MILESTONE_BY_ID['RAID_10_KILLS'])   end
 end
 
 -----------------------------------
