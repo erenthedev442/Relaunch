@@ -56,6 +56,7 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onInitialize', function(zone)
             local dungeons  = player:getCharVar('Dungeon_Clears_Total')   or 0
             local sweeps    = player:getCharVar('WH_AllCleared_Lifetime') or 0
             local infamy    = player:getCharVar('Infamy_Lifetime')        or 0
+            local keyBest   = player:getCharVar('Dungeon_KeyBest')        or 0
 
             -- Ascension (Prestige) endgame layer: account-wide lifetime
             -- ascensions, plus this character's highest single-job prestige
@@ -95,7 +96,7 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onInitialize', function(zone)
             player:printToPlayer(string.format('  Rank: %-8s  NM Kills: %-6d  Lifetime Marks: %d', tierName, nmKills, hlLife), B)
             player:printToPlayer(string.format('  Unique NMs: %d/%d   Dungeons Cleared: %d   Weekly Sweeps: %d', uniqueNMs, TOTAL_NMS, dungeons, sweeps), B)
             player:printToPlayer(string.format('  Lifetime Infamy: %d   Achievements: %d/%d', infamy, achEarned, #ACH_IDS), B)
-            player:printToPlayer(string.format('  Ascensions: %d   Highest Prestige: P%d', ascensions, topPrestige), B)
+            player:printToPlayer(string.format('  Ascensions: %d   Highest Prestige: P%d   Best Keystone: M+%d', ascensions, topPrestige, keyBest), B)
             player:printToPlayer('[The Chronicler] -- Server Leaderboards ---------------', H)
             player:printToPlayer('  Full rankings at:', B)
             player:printToPlayer('  legendary-ffxi.pages.dev/community/leaderboards/', B)

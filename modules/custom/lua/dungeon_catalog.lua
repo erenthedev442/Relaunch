@@ -1164,6 +1164,89 @@ catalog.mythicAffixes =
 }
 
 -- ============================================================
+-- PHASE 7 - MYTHIC+ KEYSTONES  (endless key-level push)
+-- ============================================================
+-- Open-ended difficulty ABOVE Mythic. Unlocked per dungeon by 1
+-- Mythic clear of that dungeon. Each dungeon tracks a key level
+-- (Dungeon_KeyLevel_<id>, min 1). A keystone run spawns the dungeon
+-- at Mythic-grade base scaling grown per key level, with a
+-- DETERMINISTIC weekly affix set (rotation below) instead of the
+-- random roller - everyone fights the same combo all week, and the
+-- combo changes every Monday 00:00 UTC (same anchor as the Mythic
+-- weekly key).
+--
+-- Every clear is "timed" by construction (timeout ENDS the run), so
+-- a clear upgrades the key by +1/+2/+3 based on how much clock was
+-- used; any failed run (death/timeout/abort/leave) depletes it by 1
+-- (floor: minLevel). Score = highest level cleared, per dungeon
+-- (Dungeon_KeyBest_<id>) + global max (Dungeon_KeyBest) for the
+-- website leaderboard. A new personal best pays a one-time bonus of
+-- infamyBase * pbBonusMult.
+--
+-- Economy guard: infamyMult starts at 3.0 and grows +15%/level but is
+-- CAPPED at the Mythic 5.0. Keystone runs are unlimited, so past ~M+6
+-- the chase is score + PB bonuses, not an ever-growing Infamy faucet.
+-- The weekly Mythic key (one-shot 5x jackpot) is untouched and never
+-- burns on keystone runs.
+catalog.keystone =
+{
+    enabled     = true,
+    label       = 'Mythic+',
+    labelShort  = 'M+',
+    description = 'Endless keystone push. Clears upgrade the key; failures deplete it.',
+
+    -- Per-dungeon unlock, checked against the same per-tier clear
+    -- counters Phase 2 writes (Dungeon_Clears_<id>_mythic).
+    unlockRequires = { tier = 'mythic', clears = 1 },
+
+    -- Level-1 baseline (matches the Mythic tier row except infamy).
+    base = { hpMult = 2.5, attMult = 1.8, timeMult = 0.85, infamyMult = 3.0 },
+
+    -- Linear growth per level above 1, as a fraction of base:
+    --   value(L) = base * (1 + per * (L - 1))
+    perLevel = { hp = 0.12, att = 0.05, infamy = 0.15 },
+    attMultCap    = 4.0,   -- acc/eva outrun L99 gear past this (Voidspire lesson)
+    infamyMultCap = 5.0,   -- parity with the weekly Mythic jackpot
+
+    -- Key delta on a clear, by fraction of the time limit USED.
+    -- Walked in order; first match wins; falls through to +1.
+    upgrade =
+    {
+        { frac = 0.40, delta = 3 },   -- blazing: 60%+ of the clock left
+        { frac = 0.60, delta = 2 },   -- fast:    40%+ left
+        { frac = 1.00, delta = 1 },   -- any clear
+    },
+    depleteOnFail = 1,
+    minLevel      = 1,
+    pbBonusMult   = 2.0,   -- one-time Infamy bonus on a new best: infamyBase * this
+
+    -- Weekly affix sets, rotating by ISO week. Every id must exist in
+    -- catalog.affixes or catalog.mythicAffixes. ORDER MATTERS: slot 1
+    -- is active from M+1, slot 2 joins at M+4, slot 3 at M+7 (see
+    -- affixThresholds). Session-time affixes that OVERWRITE the limit
+    -- (speedy/lengthy) are excluded - inescapable composes correctly.
+    rotation =
+    {
+        { 'tyrannical',  'mighty',    'apex'        },
+        { 'unrelenting', 'frenzied',  'titanic'     },
+        { 'apex',        'voracious', 'tyrannical'  },
+        { 'titanic',     'fortified', 'inescapable' },
+        { 'inescapable', 'evasive',   'unrelenting' },
+    },
+    affixThresholds =
+    {
+        { level = 1, count = 1 },
+        { level = 4, count = 2 },
+        { level = 7, count = 3 },
+    },
+
+    -- CharVar names (per-dungeon formats take the dungeon id).
+    keyLevelCvFmt   = 'Dungeon_KeyLevel_%s',
+    keyBestCvFmt    = 'Dungeon_KeyBest_%s',
+    keyBestCvGlobal = 'Dungeon_KeyBest',
+}
+
+-- ============================================================
 -- PHASE 4 - META-PROGRESSION
 -- ============================================================
 -- Three login hooks layered on top of the existing reward path:

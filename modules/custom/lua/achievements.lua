@@ -205,6 +205,28 @@ local MILESTONES = {
         titleId   = xi.title.PARAGON_OF_WARRIOR_EXCELLENCE,
         titleName = 'Paragon of Warrior Excellence',
     },
+    -- Mythic+ keystone milestones (level = highest key TIMED, any dungeon)
+    {
+        id       = 'KEYSTONE_5',
+        reward   = 300,
+        announce = true,
+        title    = 'Keystone Climber',
+        desc     = 'Cleared a Mythic+5 keystone dungeon.',
+    },
+    {
+        id       = 'KEYSTONE_10',
+        reward   = 750,
+        announce = true,
+        title    = 'Keystone Conqueror',
+        desc     = 'Cleared a Mythic+10.  The key only goes deeper.',
+    },
+    {
+        id       = 'KEYSTONE_15',
+        reward   = 2000,
+        announce = true,
+        title    = 'Keystone Legend',
+        desc     = 'Cleared a Mythic+15.  Few will ever stand here.',
+    },
     -- Augment milestones
     {
         id       = 'AUGMENT_NOVICE',
@@ -369,6 +391,16 @@ function M.onAscension(player)
     if total >= 1  then award(player, MILESTONE_BY_ID['FIRST_ASCENSION'])  end
     if total >= 10 then award(player, MILESTONE_BY_ID['TEN_ASCENSIONS'])   end
     if total >= 50 then award(player, MILESTONE_BY_ID['FIFTY_ASCENSIONS']) end
+end
+
+-----------------------------------
+-- Called from DungeonSystem.lua when a NEW personal-best keystone
+-- level is recorded (level = the key level just cleared).
+-----------------------------------
+function M.onKeystoneBest(player, level)
+    if level >= 5  then award(player, MILESTONE_BY_ID['KEYSTONE_5'])  end
+    if level >= 10 then award(player, MILESTONE_BY_ID['KEYSTONE_10']) end
+    if level >= 15 then award(player, MILESTONE_BY_ID['KEYSTONE_15']) end
 end
 
 -----------------------------------

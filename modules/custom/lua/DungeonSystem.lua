@@ -290,6 +290,151 @@ local function tierLockReason(player, dungeon, tierId)
 end
 
 -----------------------------------
+-- PHASE 7 - Mythic+ keystones
+-----------------------------------
+-- Open-ended key levels above Mythic. Catalog: dungeon_catalog.lua ->
+-- catalog.keystone. A keystone run is an ordinary dungeon session whose
+-- tier table is SYNTHESIZED per run (synthKeystoneTier) from the
+-- player's current key level - the existing spawn / reward / affix
+-- plumbing needs no special cases beyond tierId == 'keystone' at the
+-- three integration points (startDungeon, endDungeon, menus).
+
+-- id -> affix row lookup across BOTH pools, built lazily on first use
+-- so catalog load order doesn't matter.
+local AFFIXES_BY_ID = nil
+local function affixById(id)
+    if not AFFIXES_BY_ID then
+        AFFIXES_BY_ID = {}
+        for _, a in ipairs(catalog.affixes or {}) do AFFIXES_BY_ID[a.id] = a end
+        for _, a in ipairs(catalog.mythicAffixes or {}) do AFFIXES_BY_ID[a.id] = a end
+    end
+    return AFFIXES_BY_ID[id]
+end
+
+local function keystoneEnabled()
+    return catalog.keystone and catalog.keystone.enabled or false
+end
+
+local function keyLevelCv(dungeon)
+    return string.format(catalog.keystone.keyLevelCvFmt, dungeon.id)
+end
+
+local function keyBestCv(dungeon)
+    return string.format(catalog.keystone.keyBestCvFmt, dungeon.id)
+end
+
+-- Current key level for a dungeon. Unset charvar (0) reads as minLevel,
+-- so a fresh unlock starts at M+1 without any initialization step.
+local function getKeyLevel(player, dungeon)
+    return math.max(catalog.keystone.minLevel or 1,
+        player:getCharVar(keyLevelCv(dungeon)) or 0)
+end
+
+local function setKeyLevel(player, dungeon, level)
+    player:setCharVar(keyLevelCv(dungeon),
+        math.max(catalog.keystone.minLevel or 1, level))
+end
+
+-- Highest key level ever cleared for this dungeon (0 = none yet).
+local function getKeyBest(player, dungeon)
+    return player:getCharVar(keyBestCv(dungeon)) or 0
+end
+
+local function isKeystoneUnlocked(player, dungeon)
+    if not keystoneEnabled() then return false end
+    local req = catalog.keystone.unlockRequires
+    if not req then return true end
+    return getTierClears(player, dungeon, req.tier) >= (req.clears or 0)
+end
+
+-- Player-facing reason Mythic+ is locked for this dungeon, or nil.
+local function keystoneLockReason(player, dungeon)
+    if not keystoneEnabled() then return 'disabled' end
+    local req = catalog.keystone.unlockRequires
+    if not req then return nil end
+    local have = getTierClears(player, dungeon, req.tier)
+    if have >= (req.clears or 0) then return nil end
+    local label = (catalog.tiers and catalog.tiers[req.tier]
+        and catalog.tiers[req.tier].label) or req.tier
+    return string.format('locked - needs %d %s clear%s of this dungeon (have %d)',
+        req.clears, label, req.clears == 1 and '' or 's', have)
+end
+
+-- This ISO week's affix id list (rotates Monday 00:00 UTC, same anchor
+-- as the Mythic weekly key).
+local function keystoneWeekSet()
+    local rot = (catalog.keystone and catalog.keystone.rotation) or {}
+    if #rot == 0 then return {} end
+    return rot[(currentIsoWeek() % #rot) + 1]
+end
+
+-- How many of the week's affixes are active at a given key level.
+local function keystoneAffixCount(level)
+    local n = 0
+    for _, t in ipairs(catalog.keystone.affixThresholds or {}) do
+        if level >= t.level then n = math.max(n, t.count) end
+    end
+    return n
+end
+
+-- Resolve this week's ACTIVE affix rows for a key level: the first N
+-- ids of the week set, N from the level thresholds. Unknown ids are
+-- skipped (catalog typo shouldn't break the run).
+local function keystoneAffixesFor(level)
+    local ids = keystoneWeekSet()
+    local out = {}
+    for i = 1, math.min(keystoneAffixCount(level), #ids) do
+        local row = affixById(ids[i])
+        if row then table.insert(out, row) end
+    end
+    return out
+end
+
+-- Synthesize the tier table for a keystone run at a given level. Shaped
+-- exactly like a catalog.tiers row so every downstream consumer (spawn
+-- scaling, time limit, reward math, banners) works unchanged. weekly is
+-- ALWAYS false - keystone runs never burn the Mythic weekly key.
+local function synthKeystoneTier(level)
+    local ks  = catalog.keystone
+    local b   = ks.base
+    local per = ks.perLevel
+    local up  = level - 1
+
+    local att = b.attMult * (1 + (per.att or 0) * up)
+    if ks.attMultCap then att = math.min(att, ks.attMultCap) end
+
+    local infamy = b.infamyMult * (1 + (per.infamy or 0) * up)
+    if ks.infamyMultCap then infamy = math.min(infamy, ks.infamyMultCap) end
+
+    return {
+        id            = 'keystone',
+        label         = string.format('%s%d', ks.labelShort or 'M+', level),
+        description   = ks.description or 'Endless keystone push.',
+        hpMult        = b.hpMult * (1 + (per.hp or 0) * up),
+        attMult       = att,
+        timeMult      = b.timeMult or 1.0,
+        infamyMult    = infamy,
+        affixCountMin = 0,      -- affixes come from the weekly rotation,
+        affixCountMax = 0,      -- not the random roller
+        mythicAffixPool = false,
+        unlockRequires  = nil,  -- real gate is isKeystoneUnlocked
+        weekly          = false,
+        keystoneLevel   = level,
+    }
+end
+
+-- Key delta for a clear: walk catalog.keystone.upgrade in order, first
+-- threshold the elapsed FRACTION fits under wins. Defaults to +1.
+local function keystoneUpgradeDelta(elapsed, limit)
+    if not limit or limit <= 0 then return 1 end
+    local frac = elapsed / limit
+    for _, u in ipairs(catalog.keystone.upgrade or {}) do
+        if frac <= u.frac then return u.delta end
+    end
+    return 1
+end
+
+-----------------------------------
 -- PHASE 4 - Meta-progression (daily featured + streak + key UI)
 -----------------------------------
 -- Three player-facing systems layered onto the reward path. None of
@@ -1322,7 +1467,30 @@ local function startDungeon(player, dungeon, tierId)
     -- Phase-2: tier defaults to 'normal' so existing callers
     -- (legacy weekly-hunt hooks, abort/restart paths) keep working.
     tierId = tierId or 'normal'
-    local tier = getTier(tierId)
+
+    -- Phase-7: 'keystone' synthesizes a Mythic+<level> tier from the
+    -- player's current key for this dungeon. getTier() knows nothing
+    -- about it (it's not in catalog.tiers), so resolve it here. The
+    -- generic gating below then passes harmlessly (the synthesized
+    -- tier has no unlockRequires and weekly=false) - the real gate is
+    -- isKeystoneUnlocked.
+    local tier
+    if tierId == 'keystone' then
+        if not keystoneEnabled() then
+            player:printToPlayer('[Dungeon Master] Keystones are currently disabled.',
+                xi.msg.channel.SYSTEM_3)
+            return
+        end
+        local lock = keystoneLockReason(player, dungeon)
+        if lock then
+            player:printToPlayer(string.format('[Dungeon Master] Mythic+ is %s', lock),
+                xi.msg.channel.SYSTEM_3)
+            return
+        end
+        tier = synthKeystoneTier(getKeyLevel(player, dungeon))
+    else
+        tier = getTier(tierId)
+    end
 
     -- Entry diagnostic: prints the moment startDungeon is called.
     -- If you see this line in the server log, the code is loaded and
@@ -1409,7 +1577,12 @@ local function startDungeon(player, dungeon, tierId)
     -- the reward path (rewardMult) all read the same set. Roll is
     -- pre-warp so the entry banner can announce the affixes the
     -- moment the player lands.
-    local rolledAffixes = rollAffixes(tier)
+    -- Phase-7 exception: keystone runs use the DETERMINISTIC weekly
+    -- rotation (count grows with key level) instead of the random
+    -- roller - the M+ identity is mastering THIS week's combo.
+    local rolledAffixes = (tierId == 'keystone')
+        and keystoneAffixesFor(tier.keystoneLevel)
+        or  rollAffixes(tier)
 
     -- Warp first. The session table is set BEFORE the warp because
     -- onZoneIn checks may race; ensureCurrentWeek-style modules want
@@ -2178,6 +2351,50 @@ function m.endDungeon(player, reason)
         -- the current total (500 / 1,000 / 5,000 Infamy).
         ach.onDungeonClear(player)
         ach.onDungeonCount(player)
+
+        -- Phase-7 keystone result: upgrade the key by clear speed,
+        -- record bests, pay the one-time personal-best bonus. Only
+        -- runs for keystone-tier sessions.
+        if sess.tierId == 'keystone' and catalog.keystone
+           and sess.tier and sess.tier.keystoneLevel then
+            local ks       = catalog.keystone
+            local level    = sess.tier.keystoneLevel
+            local delta    = keystoneUpgradeDelta(elapsed, effectiveLimit)
+            local newLevel = level + delta
+            setKeyLevel(player, dungeon, newLevel)
+
+            local clockLeftPct = math.max(0,
+                math.floor((1 - elapsed / math.max(effectiveLimit, 1)) * 100))
+            player:printToPlayer(string.format(
+                '  Keystone upgraded: M+%d -> M+%d  (+%d, %d%% of the clock left)',
+                level, newLevel, delta, clockLeftPct),
+                xi.msg.channel.SYSTEM_3)
+
+            local oldBest = getKeyBest(player, dungeon)
+            if level > oldBest then
+                player:setCharVar(keyBestCv(dungeon), level)
+                local globalBest = player:getCharVar(ks.keyBestCvGlobal) or 0
+                if level > globalBest then
+                    player:setCharVar(ks.keyBestCvGlobal, level)
+                end
+                local pbBonus = math.max(1,
+                    math.floor(dungeon.infamyBase * (ks.pbBonusMult or 0)))
+                addInfamy(player, pbBonus)
+                player:setCharVar('Infamy_Lifetime',
+                    (player:getCharVar('Infamy_Lifetime') or 0) + pbBonus)
+                player:printToPlayer(string.format(
+                    '  *** KEYSTONE BEST: %s M+%d! One-time bonus: +%d Infamy ***',
+                    dungeon.label, level, pbBonus),
+                    xi.msg.channel.SYSTEM_3)
+                -- Guarded: ships in the same change as the hook, but a
+                -- partial deploy must not crash the reward path.
+                if ach.onKeystoneBest then
+                    pcall(ach.onKeystoneBest, player, level)
+                end
+            end
+            whFire(player, 'keystone_clear',
+                { dungeonId = dungeon.id, level = level, elapsed = elapsed })
+        end
     else
         local reasonText = (reason == 'timeout' and 'Time limit expired')
                         or (reason == 'death'   and 'You fell in combat')
@@ -2196,6 +2413,27 @@ function m.endDungeon(player, reason)
             player:printToPlayer(
                 string.format('[Dungeon] Your %d-clear streak has been broken.', priorStreak),
                 xi.msg.channel.SYSTEM_3)
+        end
+
+        -- Phase-7 keystone depletion on ANY non-clear exit (death /
+        -- timeout / abort / leave). The floor is minLevel, so a fresh
+        -- key can't go negative.
+        if sess.tierId == 'keystone' and catalog.keystone
+           and sess.tier and sess.tier.keystoneLevel then
+            local level    = sess.tier.keystoneLevel
+            local minLevel = catalog.keystone.minLevel or 1
+            local newLevel = math.max(minLevel,
+                level - (catalog.keystone.depleteOnFail or 1))
+            setKeyLevel(player, dungeon, newLevel)
+            if newLevel < level then
+                player:printToPlayer(string.format(
+                    '[Dungeon] Keystone depleted: M+%d -> M+%d.', level, newLevel),
+                    xi.msg.channel.SYSTEM_3)
+            else
+                player:printToPlayer(string.format(
+                    '[Dungeon] Keystone holds at M+%d (the floor).', level),
+                    xi.msg.channel.SYSTEM_3)
+            end
         end
     end
 
@@ -2488,7 +2726,13 @@ local showTierMenu     -- forward decl
 -- keep back-compat with any legacy direct caller.
 local function showConfirmMenu(player, dungeon, tierId)
     tierId = tierId or 'normal'
-    local tier = getTier(tierId)
+    -- Phase-7: synthesize the keystone tier for display so the title
+    -- shows the real M+<level> label and time limit. startDungeon
+    -- re-synthesizes at launch (key level can't change in between -
+    -- it only moves at run end).
+    local tier = (tierId == 'keystone')
+        and synthKeystoneTier(getKeyLevel(player, dungeon))
+        or  getTier(tierId)
     local effectiveLimit = math.floor(dungeon.timeLimit * (tier.timeMult or 1.0))
 
     local opts =
@@ -2521,22 +2765,19 @@ showTierMenu = function(player, dungeon)
     player:printToPlayer(dungeon.description, xi.msg.channel.SYSTEM_3)
 
     if catalog.tierOrder and catalog.tiers then
+        -- Labels are deliberately TERSE: the customMenu payload caps
+        -- at ~150 bytes across title + every label, and the Phase-7
+        -- keystone row pushed the old verbose labels over the cap
+        -- (which silently truncates the menu). Details print to chat
+        -- on click instead.
         for _, tId in ipairs(catalog.tierOrder) do
-            local tier   = catalog.tiers[tId]
-            local lock   = tierLockReason(player, dungeon, tId)
-            local label
+            local tier = catalog.tiers[tId]
+            local lock = tierLockReason(player, dungeon, tId)
             if lock then
-                label = string.format('[%s] %s (%s)', tier.label, '?', lock:sub(1, 28))
-            else
-                label = string.format('[%s] x%.1f Infamy, %s',
-                    tier.label, tier.infamyMult or 1.0,
-                    tier.weekly and 'weekly' or 'unlimited')
-            end
-            if lock then
-                -- Print the gating message in chat so the player can
-                -- read the full reason (the menu label is truncated).
+                local short = (not isTierUnlocked(player, dungeon, tId))
+                    and 'locked' or 'used this wk'
                 table.insert(opts, {
-                    label,
+                    string.format('[%s] %s', tier.label, short),
                     function(p)
                         p:printToPlayer(string.format(
                             '[Dungeon Master] %s tier: %s',
@@ -2546,12 +2787,48 @@ showTierMenu = function(player, dungeon)
                 })
             else
                 table.insert(opts, {
-                    label,
+                    string.format('[%s] x%.1f%s',
+                        tier.label, tier.infamyMult or 1.0,
+                        tier.weekly and ' wkly' or ''),
                     function(p)
                         p:printToPlayer(string.format(
                             '[Dungeon Master] %s: %s', tier.label, tier.description),
                             xi.msg.channel.SYSTEM_3)
                         showConfirmMenu(p, dungeon, tId)
+                    end,
+                })
+            end
+        end
+
+        -- Phase-7 keystone row, below Mythic.
+        if keystoneEnabled() then
+            local lock = keystoneLockReason(player, dungeon)
+            if lock then
+                table.insert(opts, {
+                    '[M+] locked',
+                    function(p)
+                        p:printToPlayer(string.format(
+                            '[Dungeon Master] Mythic+ is %s', lock),
+                            xi.msg.channel.SYSTEM_3)
+                        showTierMenu(p, dungeon)
+                    end,
+                })
+            else
+                local level = getKeyLevel(player, dungeon)
+                local kTier = synthKeystoneTier(level)
+                table.insert(opts, {
+                    string.format('[M+%d] x%.1f', level, kTier.infamyMult),
+                    function(p)
+                        local names = {}
+                        for _, a in ipairs(keystoneAffixesFor(level)) do
+                            table.insert(names, a.label)
+                        end
+                        p:printToPlayer(string.format(
+                            '[Dungeon Master] Mythic+%d %s | best M+%d | affixes: %s | fast clears upgrade the key (+1/+2/+3), any failure depletes it by 1.',
+                            level, dungeon.label, getKeyBest(player, dungeon),
+                            (#names > 0) and table.concat(names, ', ') or 'none'),
+                            xi.msg.channel.SYSTEM_3)
+                        showConfirmMenu(p, dungeon, 'keystone')
                     end,
                 })
             end
@@ -2565,9 +2842,9 @@ showTierMenu = function(player, dungeon)
         })
     end
 
-    table.insert(opts, { '<< Back to dungeon list', function(p) showDungeonMenu(p) end })
+    table.insert(opts, { '<< Back', function(p) showDungeonMenu(p) end })
 
-    dmMenu.title = string.format('%s - pick tier', dungeon.label:sub(1, 22))
+    dmMenu.title = string.format('%s - tier', dungeon.label:sub(1, 22))
     dmMenu.options = opts
     openMenu(player, dmMenu)
 end
@@ -2632,6 +2909,34 @@ showDungeonMenu = function(player)
                 string.format('[Dungeon Master] Streak: %d/%d clears (next clear: x%.2f Infamy)',
                     streak, cap, nextMult),
                 xi.msg.channel.SYSTEM_3)
+        end
+
+        -- Phase-7 keystone context: this week's affix combo + the
+        -- player's key levels. Chat prints - zero menu byte cost -
+        -- and only once any dungeon has Mythic+ unlocked.
+        if keystoneEnabled() then
+            local bits = {}
+            for _, d in ipairs(catalog.dungeons) do
+                if not d._disabled and isKeystoneUnlocked(player, d) then
+                    table.insert(bits, string.format('%s M+%d (best %d)',
+                        d.label:sub(1, 14), getKeyLevel(player, d), getKeyBest(player, d)))
+                end
+            end
+            if #bits > 0 then
+                local names = {}
+                for _, id in ipairs(keystoneWeekSet()) do
+                    local a = affixById(id)
+                    if a then table.insert(names, a.label) end
+                end
+                if #names > 0 then
+                    player:printToPlayer(
+                        string.format('[Dungeon Master] Mythic+ affixes this week: %s  (rotate in %s)',
+                            table.concat(names, ', '), fmtCountdown(secondsToNextWeek())),
+                        xi.msg.channel.SYSTEM_3)
+                end
+                player:printToPlayer('[Dungeon Master] Keystones: ' .. table.concat(bits, ' | '),
+                    xi.msg.channel.SYSTEM_3)
+            end
         end
 
         -- Only show dungeons that passed module-load validation. A
