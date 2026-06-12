@@ -672,18 +672,28 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             return
         end
 
-        -- [LEGENDARY] Spawn the boss right where the summoner ("the game master")
-        -- is standing instead of at a fixed arena point. The old hardcoded
-        -- cfg.trialSpawnPos (-624, -20, -519.999) sat near the edge of
-        -- Provenance's floating arena, so summoned bosses frequently materialised
-        -- off the platform / unreachable ("off map"). The summoner is provably on
-        -- valid floor (they walked to the Altar to summon), so anchoring to their
-        -- live position guarantees the boss always spawns on-map and right next to
-        -- them. cfg.trialSpawnPos remains the fallback if the read ever fails.
+        -- [LEGENDARY] Spawn the boss next to the summoner ("the game master"), not
+        -- at a fixed arena point. The old hardcoded cfg.trialSpawnPos (-624, -20,
+        -- -519.999) dropped the boss below the arena floor / off the platform, so
+        -- it kept appearing "off map" (under the platform, down in the void). The
+        -- summoner is provably on valid floor at the Altar, so we anchor to their
+        -- LIVE position and use the EXACT working GameMaster-wave pattern: a small
+        -- ring around the player (random angle, cfg.trialSpawnGap yalms out) at the
+        -- player's OWN Y -- which sits on the floor, never below it. trialSpawnPos
+        -- stays as a fallback if the position read ever fails.
         local sp = cfg.trialSpawnPos
         local px = player:getXPos()
         if px then
-            sp = { x = px, y = player:getYPos(), z = player:getZPos(), rot = player:getRotPos() }
+            local py    = player:getYPos()
+            local pz    = player:getZPos()
+            local angle = math.random() * math.pi * 2
+            local dist  = cfg.trialSpawnGap or 2.5
+            sp = {
+                x   = px + math.cos(angle) * dist,
+                y   = py,
+                z   = pz + math.sin(angle) * dist,
+                rot = math.random(0, 255),
+            }
         end
 
         local mob = zone:insertDynamicEntity({

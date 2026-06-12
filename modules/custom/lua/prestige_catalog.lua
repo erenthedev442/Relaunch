@@ -102,9 +102,15 @@ return
     -- a time, in this order, until every stamp is cleared for the cycle.
     trialBossOrder = { 11370, 11373, 11372 },
 
-    -- Where a summoned boss materialises: a few units east of the Altar
-    -- (altarPos.x = -636) on the same z-line as the known-good player entry
-    -- point (..., -20, -519.999), which is open floor in Provenance's arena.
+    -- Summoned bosses appear NEXT TO THE SUMMONER (their live position) on a small
+    -- ring -- not at a fixed arena point. The old fixed point below spawned bosses
+    -- under the platform / off-map ("below the character"). trialSpawnGap = how many
+    -- yalms out from the summoner the boss lands (a small gap so it isn't on top of
+    -- them); its height is the player's own, which sits on the floor. This mirrors
+    -- the working GameMaster waves -- see summonNextTrial in Prestige_System.lua.
+    -- trialSpawnPos is kept ONLY as a fallback if the player position can't be read
+    -- (should never happen). Bump trialSpawnGap if you want the boss further away.
+    trialSpawnGap = 2.5,
     trialSpawnPos = { x = -624.000, y = -20.000, z = -519.999, rot = 192 },
 
     -- Per-boss spawn profile. Mirrors the Hunting League Tier-5 mod schema:
