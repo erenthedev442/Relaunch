@@ -83,7 +83,13 @@ class ZMQRouterWrapper final
                 std::array<zmq::message_t, 2> msgs;
                 try
                 {
-                    if (!zmq::recv_multipart_n(zmqSocket_, msgs.data(), msgs.size(), zmq::recv_flags::dontwait))
+                    // FJB: recv_flags::none, NOT dontwait. dontwait overrides the
+                    // rcvtimeo(200ms) set in the constructor and turns this loop into
+                    // a busy-spin (poll+getpid ~13.7k/sec) that pins an entire core
+                    // at 100% while idle. With ::none the recv blocks up to 200ms,
+                    // then drains the outgoing queue -- the exact pattern the
+                    // map-side ZMQDealerWrapper already uses (recv_flags::none).
+                    if (!zmq::recv_multipart_n(zmqSocket_, msgs.data(), msgs.size(), zmq::recv_flags::none))
                     {
                         IPPMessage msg;
                         while (outgoingQueue_.try_dequeue(msg))
