@@ -17,6 +17,10 @@
 --   * Recovery      : Regen, Refresh, Regain, Cure Potency, Conv Healing
 --   * Misc / niche  : Subtle Blow I+II, Enmity, Treasure Hunter, TP Bonus,
 --                     WS dmg modifiers, Skillchain dmg
+--   * Ascension     : EVERY Provenance Altar AP category (from
+--                     prestige_catalog.lua) with this job's purchased
+--                     levels/cap -- iterates the catalog, so a category
+--                     added at the Altar shows up here automatically
 --
 -- Equipment contribution is automatically rolled in because:
 --   * getStat(mod) returns the FULL stat after equipment + buffs + job
@@ -43,6 +47,10 @@ commandObj.cmdprops =
 --   LINKSHELL2 (27) = green       -- section headers, pops against yellow
 local CH_BODY   = xi.msg.channel.SYSTEM_3
 local CH_HEADER = xi.msg.channel.LINKSHELL2
+
+-- Ascension (Provenance) catalog -- pcall so !mystats keeps working even if
+-- the prestige module is ever renamed/removed.
+local prestigeOk, prestige = pcall(require, 'modules/custom/lua/prestige_catalog')
 
 local function line(player, fmt, ...)
     player:printToPlayer('  ' .. string.format(fmt, ...), CH_BODY)
@@ -226,6 +234,32 @@ commandObj.onTrigger = function(player)
         player:getMod(xi.mod.ALL_WSDMG_ALL_HITS),
         player:getMod(xi.mod.ALL_WSDMG_FIRST_HIT),
         player:getMod(xi.mod.SKILLCHAINDMG) / 100)
+
+    -- =========================================================
+    -- Every AP spend category from the Provenance Altar, with THIS main
+    -- job's purchased levels (Ascension is per-job, like Job Points).
+    -- Values are levels/cap -- the same units as the Altar's own menu;
+    -- the resulting stat bonuses are already baked into the sections
+    -- above. Iterates prestige_catalog.categories so a category added
+    -- there appears here automatically -- no drift.
+    if prestigeOk and prestige and prestige.categories then
+        header(player, 'Ascension (Provenance)')
+        line(player, 'Prestige Lv %d   AP unspent %d   (current main job)',
+            player:getCharVar(string.format('Prestige_Level_%d', mJob)) or 0,
+            player:getCharVar(string.format('Prestige_AP_%d', mJob)) or 0)
+        local buf = {}
+        for _, cat in ipairs(prestige.categories) do
+            local lv = player:getCharVar(string.format('Prestige_Cat_%d_%s', mJob, cat.id)) or 0
+            table.insert(buf, string.format('%s %d/%d', cat.label, lv, cat.cap))
+            if #buf == 3 then
+                line(player, '%s', table.concat(buf, '   '))
+                buf = {}
+            end
+        end
+        if #buf > 0 then
+            line(player, '%s', table.concat(buf, '   '))
+        end
+    end
 
     player:printToPlayer(' ', CH_BODY)                       -- trailing spacer
     player:printToPlayer('>>> END OF STATS <<<', CH_HEADER)  -- matched footer
