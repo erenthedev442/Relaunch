@@ -205,6 +205,28 @@ local MILESTONES = {
         titleId   = xi.title.PARAGON_OF_WARRIOR_EXCELLENCE,
         titleName = 'Paragon of Warrior Excellence',
     },
+    -- Provisioners' League milestones
+    {
+        id       = 'LEAGUE_FIRST_TURNIN',
+        reward   = 50,
+        announce = false,
+        title    = 'First Weigh-In',
+        desc     = 'Your first catch on the League scales.',
+    },
+    {
+        id       = 'LEAGUE_RANK3',
+        reward   = 300,
+        announce = true,
+        title    = 'Expert Provisioner',
+        desc     = 'Reached rank 3 of the Provisioners\' League.',
+    },
+    {
+        id       = 'LEAGUE_RANK5',
+        reward   = 2000,
+        announce = true,
+        title    = 'Legendary Provisioner',
+        desc     = 'The League\'s summit.  Rods bend and kilns roar at your name.',
+    },
     -- Raid milestones
     {
         id        = 'RAID_FIRST_KILL',
@@ -457,6 +479,21 @@ function M.onAscension(player)
     if total >= 1  then award(player, MILESTONE_BY_ID['FIRST_ASCENSION'])  end
     if total >= 10 then award(player, MILESTONE_BY_ID['TEN_ASCENSIONS'])   end
     if total >= 50 then award(player, MILESTONE_BY_ID['FIFTY_ASCENSIONS']) end
+end
+
+-----------------------------------
+-- Called from ProvisionersLeague.lua after a fish weigh-in
+-- (League_Turnins already updated) and after rank-ups.
+-----------------------------------
+function M.onLeagueTurnIn(player)
+    if (player:getCharVar('League_Turnins') or 0) >= 1 then
+        award(player, MILESTONE_BY_ID['LEAGUE_FIRST_TURNIN'])
+    end
+end
+
+function M.onLeagueRank(player, rank)
+    if rank >= 3 then award(player, MILESTONE_BY_ID['LEAGUE_RANK3']) end
+    if rank >= 5 then award(player, MILESTONE_BY_ID['LEAGUE_RANK5']) end
 end
 
 -----------------------------------

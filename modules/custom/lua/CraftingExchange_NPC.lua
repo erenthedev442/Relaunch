@@ -141,6 +141,13 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
                     getTodayCount(player, tradedId),
                     entry.maxPerDay and tostring(entry.maxPerDay) or 'unlimited'),
                 xi.msg.channel.SYSTEM_3)
+
+            -- Provisioners' League crafting credit. Lazy + guarded so
+            -- the exchange works even if the league module is absent.
+            local okLg, lg = pcall(require, 'modules/custom/lua/ProvisionersLeague')
+            if okLg and lg and lg.onCraftTurnIn then
+                pcall(function() lg.onCraftTurnIn(player, marks) end)
+            end
         end,
     })
 end)

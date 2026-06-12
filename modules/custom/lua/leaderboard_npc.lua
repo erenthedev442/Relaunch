@@ -114,6 +114,11 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onInitialize', function(zone)
             if raidKills > 0 then
                 player:printToPlayer(string.format('  Star-Devourer kills: %d', raidKills), B)
             end
+            local leaguePts = player:getCharVar('League_Points') or 0
+            if leaguePts > 0 then
+                player:printToPlayer(string.format('  League points: %d   Fish weighed: %d',
+                    leaguePts, player:getCharVar('League_Turnins') or 0), B)
+            end
             player:printToPlayer('[The Chronicler] -- Server Leaderboards ---------------', H)
             player:printToPlayer('  Full rankings at:', B)
             player:printToPlayer('  legendary-ffxi.pages.dev/community/leaderboards/', B)
