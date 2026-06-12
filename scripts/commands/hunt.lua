@@ -3,8 +3,6 @@
 -- desc: Warps you to the Hunting League Seals NPC in Reisenjima Henge —
 --       the leftmost of the five NPCs in that row. Sidestep right to reach
 --       Spawner / Weapons / Armor / Accessories.
---       Position matches catalog.sealsPos in
---       modules/custom/lua/hunting_league_catalog.lua — keep them in sync.
 -----------------------------------
 ---@type TCommand
 local commandObj = {}

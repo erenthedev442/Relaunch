@@ -1,8 +1,6 @@
 -----------------------------------
 -- func: reforged
 -- desc: Warps you to the Reforge Armor system NPCs in Gwora-Corridor.
---       Position matches catalog.spawnerPos in
---       modules/custom/lua/reforge_catalog.lua — keep them in sync.
 -----------------------------------
 ---@type TCommand
 local commandObj = {}

@@ -1,7 +1,7 @@
 -----------------------------------
 -- func: top
 -- desc: Shows the top 5 currently online players ranked by a stat.
---       Respects Leaderboard_OptOut = 1.  For full server-wide rankings
+--       Opted-out players are excluded.  For full server-wide rankings
 --       see the website at legendary-ffxi.pages.dev
 --
 -- Usage:

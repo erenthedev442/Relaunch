@@ -1,8 +1,7 @@
 -----------------------------------
 -- func: dig
 -- desc: Treasure Hunting - dig for the strongbox your treasure map
---       points at. Maps drop from Hunting League kills; see
---       modules/custom/lua/TreasureHunt.lua for the mini-game.
+--       points at. Maps drop from Hunting League kills.
 --
 -- Usage: !dig
 -----------------------------------

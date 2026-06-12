@@ -2,7 +2,6 @@
 -- func: optin
 -- desc: Opts the player INTO leaderboards and Discord tracking.
 --       This is the default state for new characters.
---       Clears the Leaderboard_OptOut CharVar (sets to 0).
 --
 -- Usage: !optin
 -- See also: !optout

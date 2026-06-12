@@ -1,9 +1,8 @@
 -----------------------------------
 -- func: nms
 -- desc: Shows the player's NM Encyclopedia progress - which Hunting
---       League NMs they have killed at least once (NMKilled_<groupId>
---       CharVar) and which ones remain.  Lists up to 10 missing NMs
---       to avoid flooding chat.
+--       League NMs they have killed at least once, and which ones
+--       remain.  Lists up to 10 missing NMs to avoid flooding chat.
 --
 -- Usage: !nms
 -----------------------------------
