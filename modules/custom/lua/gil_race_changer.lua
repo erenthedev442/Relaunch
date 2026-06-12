@@ -131,7 +131,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 function(p) buildFaceMenu(p, raceDef, group) end,
             },
         }
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     buildFaceMenu = function(player, raceDef, group)
@@ -150,7 +151,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
         menu.title   = string.format('%s - %s', raceDef.label, group.label)
         menu.options = options
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     buildGroupMenu = function(player, raceDef)
@@ -169,7 +171,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
         menu.title   = string.format('%s - pick a face', raceDef.label)
         menu.options = options
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     buildRaceMenu = function(player)
@@ -191,7 +194,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
         menu.title   = string.format('Race Change  (Gil: %d)', player:getGil())
         menu.options = options
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     local RaceChanger = zone:insertDynamicEntity({

@@ -161,7 +161,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
         menu.title   = string.format('Void Keeper  (Your gil: %s)', fmtGil(player:getGil()))
         menu.options = options
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     -- NPC model 3017 (Prishe Trust): a divine warrior aesthetic, chosen so the

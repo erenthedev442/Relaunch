@@ -84,7 +84,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         -- budget-note comment in `config` for why this matters.
         menu.title   = string.format('Gil Exchange  (Gil: %d)', gil)
         menu.options = options
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     local GilExchange = zone:insertDynamicEntity({

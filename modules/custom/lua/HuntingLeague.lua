@@ -167,7 +167,8 @@ buildSealsMain = function(player)
             end,
         },
     }
-    player:timer(50, function(p) p:customMenu(hubMenu) end)
+    local snapshot = { title = hubMenu.title, options = hubMenu.options }  -- shared table + deferred send
+    player:timer(50, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------
@@ -199,7 +200,8 @@ buildAccessoriesMain = function(player)
 
     hubMenu.title   = string.format('Hunt Accessories [%d %s]', pts, catalog.currencyName)
     hubMenu.options = options
-    player:timer(50, function(p) p:customMenu(hubMenu) end)
+    local snapshot = { title = hubMenu.title, options = hubMenu.options }  -- shared table + deferred send
+    player:timer(50, function(p) p:customMenu(snapshot) end)
 end
 
 buildTierInfoMenu = function(player)
@@ -228,7 +230,8 @@ buildTierInfoMenu = function(player)
 
     hubMenu.title   = string.format('[%s] NM List (+%s)', tierDef.name, catalog.currencyName)
     hubMenu.options = options
-    player:timer(50, function(p) p:customMenu(hubMenu) end)
+    local snapshot = { title = hubMenu.title, options = hubMenu.options }  -- shared table + deferred send
+    player:timer(50, function(p) p:customMenu(snapshot) end)
 end
 
 buildUnlockMenu = function(player)
@@ -270,7 +273,8 @@ buildUnlockMenu = function(player)
 
     hubMenu.title   = string.format('Unlock %s?  Cost: %d %s', nextDef.name, cost, catalog.currencyName)
     hubMenu.options = options
-    player:timer(50, function(p) p:customMenu(hubMenu) end)
+    local snapshot = { title = hubMenu.title, options = hubMenu.options }  -- shared table + deferred send
+    player:timer(50, function(p) p:customMenu(snapshot) end)
 end
 
 -- (the old buildShopCategoryMenu was removed when the Hub was split into
@@ -340,7 +344,8 @@ buildCategoryMenu = function(player, catIdx, page)
     -- "Earrings [250M] 1/1" = 21 chars - leaves comfortable room for 6 item rows.
     hubMenu.title   = string.format('%s [%dM] %d/%d', cat.label, pts, page, nPages)
     hubMenu.options = options
-    player:timer(50, function(p) p:customMenu(hubMenu) end)
+    local snapshot = { title = hubMenu.title, options = hubMenu.options }  -- shared table + deferred send
+    player:timer(50, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------
@@ -451,7 +456,8 @@ buildItemPreviewMenu = function(player, reward, catIdx, itemPage)
 
     hubMenu.title   = string.format('[%s]  %d %s', reward.name, reward.cost, catalog.currencyName)
     hubMenu.options = options
-    player:timer(50, function(p) p:customMenu(hubMenu) end)
+    local snapshot = { title = hubMenu.title, options = hubMenu.options }  -- shared table + deferred send
+    player:timer(50, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------

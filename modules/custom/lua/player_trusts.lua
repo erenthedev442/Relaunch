@@ -309,7 +309,11 @@ end
 local menu = { title = 'Companion Master', options = {} }
 
 local function delaySendMenu(player)
-    player:timer(50, function(p) p:customMenu(menu) end)
+    -- Snapshot before the deferred send: `menu` is a shared scratch
+    -- table, and another player's interaction inside the 50ms window
+    -- would otherwise swap its contents mid-flight.
+    local snapshot = { title = menu.title, options = menu.options }
+    player:timer(50, function(p) p:customMenu(snapshot) end)
 end
 
 -- Convert internal spell name like "kuyin_hathdenna" to a readable

@@ -36,7 +36,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
         menu.title   = string.format('Title Broker  (Your gil: %d)', player:getGil())
         menu.options = options
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     buildTierMenu = function(player, tier)
@@ -80,7 +81,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         -- to leave room for them in the same 150-byte packet budget.
         menu.title   = string.format('%s tier (%d g)', tier.label, tier.cost)
         menu.options = options
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     local TitleBroker = zone:insertDynamicEntity({

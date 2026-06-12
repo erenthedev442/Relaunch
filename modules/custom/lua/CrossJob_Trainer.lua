@@ -84,7 +84,8 @@ showMainMenu = function(player)
         title   = 'Cross-Job Ability Trainer',
         options = options,
     }
-    player:timer(50, function(p) p:customMenu(menu) end)
+    local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+    player:timer(50, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------
@@ -123,7 +124,8 @@ showGroupMenu = function(player, groupIndex)
         title   = string.format('%s  (* = owned)', group.name),
         options = options,
     }
-    player:timer(50, function(p) p:customMenu(menu) end)
+    local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+    player:timer(50, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------
@@ -182,7 +184,8 @@ showConfirmMenu = function(player, groupIndex, ab)
         title   = string.format('Learn %s for %s gil?', ab.name, GIL_STR),
         options = options,
     }
-    player:timer(50, function(p) p:customMenu(menu) end)
+    local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+    player:timer(50, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------

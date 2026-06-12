@@ -93,6 +93,50 @@ local function getSession(player)
     return sessions[player:getName()]
 end
 
+-----------------------------------
+-- PHASE 8 - Public-launch serialization: one group per dungeon ZONE.
+-----------------------------------
+-- The dungeon zones are real shared zones, not instances - two groups
+-- in the same dungeon would fight interleaved spawns and could kill
+-- each other's boss (completing the other group's run). This lock
+-- serializes entry per zoneId; different dungeons live in different
+-- zones and run concurrently without contact.
+--
+-- Self-healing: a lock whose leader has no live session for the zone
+-- is stale and freed on the next entry attempt. A lock whose run blew
+-- far past its clock means the leader disconnected (their PAI timers
+-- died, so endDungeon never ran) - its leftovers are despawned and
+-- the orphaned session dropped before the lock frees.
+local zoneOccupancy = {}   -- zoneId -> { leaderName, startedAt }
+
+local OCC_GRACE_SEC = 300  -- slack past the effective time limit
+
+local function dungeonLockHolder(dungeon)
+    local occ = zoneOccupancy[dungeon.zoneId]
+    if not occ then return nil end
+
+    local occSess = sessions[occ.leaderName]
+    if occSess and occSess.dungeon and occSess.dungeon.zoneId == dungeon.zoneId then
+        local limit = occSess.timeLimitOverride or occSess.dungeon.timeLimit or 1800
+        if os.time() <= occ.startedAt + limit + OCC_GRACE_SEC then
+            return occ   -- genuinely occupied
+        end
+        -- Expired with a live session table: orphaned run (leader DC).
+        for _, mob in ipairs(occSess.mobs or {}) do
+            if mob then
+                pcall(function() mob:setHP(0) end)
+            end
+        end
+        for _, mname in ipairs(occSess.members or {}) do
+            sessions[mname] = nil
+        end
+        sessions[occ.leaderName] = nil
+    end
+
+    zoneOccupancy[dungeon.zoneId] = nil
+    return nil
+end
+
 -- Lazy-loaded weekly_hunts for the dungeon_clear event. Same defensive
 -- pattern hunters_guild uses - protect-call so a missing module
 -- doesn't bring down the dungeon flow.
@@ -1532,6 +1576,16 @@ local function startDungeon(player, dungeon, tierId)
         return
     end
 
+    -- Phase-8 occupancy gate: one group per dungeon zone at a time.
+    local occ = dungeonLockHolder(dungeon)
+    if occ then
+        player:printToPlayer(string.format(
+            '[Dungeon Master] %s is currently contested by %s\'s party. Pick another dungeon or wait for their run to end, kupo!',
+            dungeon.label, occ.leaderName),
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
+
     -- SAFETY RAIL #2: refuse warp if module-load validation marked
     -- this dungeon as broken. Belt-and-suspenders - even if the menu
     -- somehow shows a disabled dungeon (catalog hot-edit, etc.) the
@@ -1628,6 +1682,13 @@ local function startDungeon(player, dungeon, tierId)
     -- works for them too. Has to happen AFTER session creation since
     -- attachMembersToSession needs the session table to point at.
     attachMembersToSession(sessions[player:getName()], partyMembers)
+
+    -- Phase-8: claim the zone for this run. Freed in endDungeon, or by
+    -- the stale-lock sweep in dungeonLockHolder if this run orphans.
+    zoneOccupancy[dungeon.zoneId] = {
+        leaderName = player:getName(),
+        startedAt  = os.time(),
+    }
 
     -- Warp the player. The spawn + timeout + countdown warnings are
     -- ALL armed by the dungeon zone's onZoneIn override below - not
@@ -2503,6 +2564,14 @@ function m.endDungeon(player, reason)
 
     sessions[player:getName()] = nil
 
+    -- Phase-8: free the dungeon-zone occupancy lock. Keyed to the
+    -- session's leader so a member-triggered end still releases the
+    -- right lock (and never someone else's fresh claim).
+    local occ = zoneOccupancy[dungeon.zoneId]
+    if occ and occ.leaderName == (sess.leaderName or player:getName()) then
+        zoneOccupancy[dungeon.zoneId] = nil
+    end
+
     -- Always release the entry-grace setUnkillable flag, regardless
     -- of how the dungeon ended. If the player aborted or died within
     -- the 7-second grace window, the post-timer would never fire on
@@ -2713,7 +2782,11 @@ end
 -- the next packet).
 local function openMenu(player, menu)
     dedupeLabels(menu.options)
-    player:timer(50, function(p) p:customMenu(menu) end)
+    -- Snapshot before the deferred send: dmMenu/vendorMenu are shared
+    -- scratch tables, and another player's interaction inside the 50ms
+    -- window would otherwise swap their contents mid-flight.
+    local snapshot = { title = menu.title, options = menu.options }
+    player:timer(50, function(p) p:customMenu(snapshot) end)
 end
 
 local dmMenu = { title = 'Dungeon Master', options = {} }

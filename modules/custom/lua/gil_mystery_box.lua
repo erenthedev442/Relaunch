@@ -331,7 +331,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             },
         }
 
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     local MysteryMog = zone:insertDynamicEntity({

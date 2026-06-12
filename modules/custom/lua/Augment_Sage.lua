@@ -190,7 +190,8 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
 
         menu.title   = string.format('Affinities %d/%d', unlocked, #affinity.affinities)
         menu.options = options
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     -----------------------------------
@@ -237,7 +238,8 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
             and string.format('Rank %d: %s', nextRank, req.title:sub(1, 18))
             or  'Maxed out'
         menu.options = options
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     -----------------------------------
@@ -296,7 +298,8 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
                 function(p) p:printToPlayer('Hone your craft, augmenter.', xi.msg.channel.SYSTEM_3) end,
             },
         }
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     -----------------------------------

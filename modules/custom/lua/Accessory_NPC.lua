@@ -142,7 +142,8 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
 
         menu.title   = string.format('%s (%d/%d)', sealDef.name, page, totalPages)
         menu.options = options
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     -----------------------------------
@@ -195,7 +196,8 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
             sealCount,
             sealDef.name)
         menu.options = options
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     -----------------------------------
@@ -230,7 +232,8 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
                 function(playerArg) playerArg:printToPlayer('Come back for more accessories!', xi.msg.channel.SYSTEM_3) end,
             },
         }
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     -----------------------------------

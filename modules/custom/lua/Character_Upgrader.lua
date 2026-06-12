@@ -29,8 +29,12 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     local teleportMenu = {}   -- forward decl; populated after the confirm submenus
 
     local delaySendMenu = function(player)
+        -- Snapshot before the deferred send: `menu` is a shared scratch
+        -- table, and another player's interaction inside the 50ms window
+        -- would otherwise swap its contents mid-flight.
+        local snapshot = { title = menu.title, options = menu.options }
         player:timer(50, function(playerArg)
-            playerArg:customMenu(menu)
+            playerArg:customMenu(snapshot)
         end)
     end
 
@@ -596,8 +600,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
         onTrigger = function(player, npc)
             menu.options = mainMenu
+            local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
             player:timer(50, function(playerArg)
-                playerArg:customMenu(menu)
+                playerArg:customMenu(snapshot)
             end)
         end,
     })

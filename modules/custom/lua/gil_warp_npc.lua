@@ -59,7 +59,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         -- labels are bare.
         menu.title   = string.format('%s tier (%d g)', tier.label, tier.cost)
         menu.options = options
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     buildTierMenu = function(player)
@@ -78,7 +79,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
         menu.title   = string.format('Warpman  (Your gil: %d)', player:getGil())
         menu.options = options
-        player:timer(50, function(p) p:customMenu(menu) end)
+        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        player:timer(50, function(p) p:customMenu(snapshot) end)
     end
 
     local Warpman = zone:insertDynamicEntity({
