@@ -123,6 +123,13 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onInitialize', function(zone)
             if chests > 0 then
                 player:printToPlayer(string.format('  Strongboxes unearthed: %d', chests), B)
             end
+            local derbyRaces = player:getCharVar('Derby_Races') or 0
+            if derbyRaces > 0 then
+                local profit = player:getCharVar('Derby_Profit') or 0
+                player:printToPlayer(string.format('  Derby: %d wins / %d races   Lifetime: %s%d gil',
+                    player:getCharVar('Derby_Wins') or 0, derbyRaces,
+                    profit >= 0 and '+' or '', profit), B)
+            end
             player:printToPlayer('[The Chronicler] -- Server Leaderboards ---------------', H)
             player:printToPlayer('  Full rankings at:', B)
             player:printToPlayer('  legendary-ffxi.pages.dev/community/leaderboards/', B)

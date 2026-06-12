@@ -205,6 +205,28 @@ local MILESTONES = {
         titleId   = xi.title.PARAGON_OF_WARRIOR_EXCELLENCE,
         titleName = 'Paragon of Warrior Excellence',
     },
+    -- Chocobo Derby milestones
+    {
+        id       = 'DERBY_FIRST_WIN',
+        reward   = 100,
+        announce = false,
+        title    = 'Winning Ticket',
+        desc     = 'Your first Chocobo Derby win.',
+    },
+    {
+        id       = 'DERBY_10_WINS',
+        reward   = 300,
+        announce = true,
+        title    = 'Derby Regular',
+        desc     = '10 Derby wins.  The Race Caller knows your face.',
+    },
+    {
+        id       = 'DERBY_OWN_WIN',
+        reward   = 250,
+        announce = true,
+        title    = 'Home Stable Hero',
+        desc     = 'Won the Derby on your OWN raised chocobo.',
+    },
     -- Treasure Hunting milestones
     {
         id       = 'TH_FIRST_CHEST',
@@ -494,6 +516,17 @@ function M.onAscension(player)
     if total >= 1  then award(player, MILESTONE_BY_ID['FIRST_ASCENSION'])  end
     if total >= 10 then award(player, MILESTONE_BY_ID['TEN_ASCENSIONS'])   end
     if total >= 50 then award(player, MILESTONE_BY_ID['FIFTY_ASCENSIONS']) end
+end
+
+-----------------------------------
+-- Called from ChocoboDerby.lua after every settled race. wonOnOwnBird
+-- is true only when the player's raised chocobo took the race.
+-----------------------------------
+function M.onDerbyResult(player, wonOnOwnBird)
+    local wins = player:getCharVar('Derby_Wins') or 0
+    if wins >= 1  then award(player, MILESTONE_BY_ID['DERBY_FIRST_WIN']) end
+    if wins >= 10 then award(player, MILESTONE_BY_ID['DERBY_10_WINS'])   end
+    if wonOnOwnBird then award(player, MILESTONE_BY_ID['DERBY_OWN_WIN']) end
 end
 
 -----------------------------------
