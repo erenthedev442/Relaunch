@@ -8,21 +8,26 @@ require('scripts/zones/GM_Home/Zone')
 -----------------------------------
 local m = Module:new('character_upgrader')
 
--- Skoll (spell 901, the repurposed Nanaa Mihgo slot -> "Trust: Skoll, the
--- Voidhound") is meant to be EARNED from the Void Keeper, never handed out by
--- the bulk grants. The fallback to 901 covers module load order: custom_spell_ids
--- may register xi.magic.spell.SKOLL after this file is required.
+-- Skoll/Gemma (spell 901, the repurposed Nanaa Mihgo slot) and Meat (spell 899,
+-- the repurposed Excenmille slot) are PAID custom trusts -- earned from the Void
+-- Keeper for 50M gil each, never handed out by the bulk grants below. Meat sits
+-- on the RETAIL Excenmille spell id (899), so without this exclusion every
+-- giveAllSpells / giveAllTrusts / !addalltrusts hands it out for free. The
+-- fallbacks cover module load order (custom_spell_ids may register the enums
+-- after this file is required); EXCENMILLE is a core enum so 899 always resolves.
 local SKOLL_SPELL = (xi.magic and xi.magic.spell and xi.magic.spell.SKOLL) or 901
+local MEAT_SPELL  = (xi.magic and xi.magic.spell and xi.magic.spell.EXCENMILLE) or 899
 
 m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     super(zone)
 
     -----------------------------------
-    -- Custom trusts withheld from the bulk grants. Skoll is a SPELLGROUP_TRUST
-    -- spell, so it lands in the spell-id range that giveAllSpells/giveAllTrusts
-    -- sweep; exclude it by id.
+    -- Custom (paid) trusts withheld from the bulk grants: Gemma/Skoll (901) and
+    -- Meat (899). Both are SPELLGROUP_TRUST spells in the id range that
+    -- giveAllSpells / giveAllTrusts sweep, so exclude them by id -- otherwise the
+    -- Void Keeper's 50M-gil trusts get handed out for free.
     -----------------------------------
-    local EXCLUDED_SPELLS = { [SKOLL_SPELL] = true }
+    local EXCLUDED_SPELLS = { [SKOLL_SPELL] = true, [MEAT_SPELL] = true }
 
     local menu         = { title = 'Unlocker', options = {} }
     local mainMenu     = {}
@@ -610,13 +615,14 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 end)
 
 -----------------------------------
--- Also withhold Skoll from the GM-only "!addalltrusts" command (permission 1),
--- which mirrors this NPC's bulk grant. The stock command (scripts/commands/
--- addalltrusts.lua) hardcodes spell 901 in its trust list and forwards it to
--- !addallspells. Rather than edit that tracked core file (upstream merge risk),
--- override its onTrigger: temporarily wrap addallspells to strip 901 from the
--- forwarded list, run the original via super, then restore. Wrapping (instead of
--- copying the id list) keeps us correct if upstream changes which trusts exist.
+-- Also withhold the paid custom trusts -- Gemma/Skoll (901) AND Meat (899) -- from
+-- the GM-only "!addalltrusts" command (permission 1), which mirrors this NPC's bulk
+-- grant. The stock command (scripts/commands/addalltrusts.lua) hardcodes the trust
+-- list and forwards it to !addallspells. Rather than edit that tracked core file
+-- (upstream merge risk), override its onTrigger: temporarily wrap addallspells to
+-- strip both paid ids from the forwarded list, run the original via super, then
+-- restore. Wrapping (instead of copying the id list) keeps us correct if upstream
+-- changes which trusts exist.
 -----------------------------------
 m:addOverride('xi.commands.addalltrusts.onTrigger', function(player, target)
     local addallspells = xi.commands.addallspells
@@ -631,7 +637,7 @@ m:addOverride('xi.commands.addalltrusts.onTrigger', function(player, target)
         if spellList then
             local filtered = {}
             for _, id in ipairs(spellList) do
-                if id ~= SKOLL_SPELL then
+                if id ~= SKOLL_SPELL and id ~= MEAT_SPELL then
                     filtered[#filtered + 1] = id
                 end
             end
