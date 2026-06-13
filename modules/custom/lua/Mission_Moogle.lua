@@ -40,17 +40,19 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             player:completeMission(3, i)
         end
 
-        -- Chains of Promathia (log_id 6)
-        local missionCoP = {
-            101,110,118,128,138,218,228,238,248,257,258,
-            318,325,335,341,350,358,368,418,428,438,448,
-            518,530,543,552,560,568,578,618,628,638,648,
-            718,728,738,748,758,800,818,828,840,850
-        }
-        for _, id in ipairs(missionCoP) do
-            player:addMission(6, id)
-            player:completeMission(6, id)
-        end
+        -- Chains of Promathia (log_id 6).
+        -- CoP completion is NOT stored in the per-mission complete[] bits the
+        -- other expansions use. The engine reports a CoP mission complete only
+        -- when its id is LESS THAN the log's "current" pointer
+        -- (hasCompletedMission: missionID < current), and completeMission() even
+        -- RESETS CoP's current to 0 -- so the old addMission+completeMission loop
+        -- marked nothing done (that's why CoP was being skipped over entirely).
+        -- Fix: push current to the final mission, THE_LAST_VERSE = 850. That
+        -- flags every earlier CoP mission -- including the Dawn final battle
+        -- (840) -- as complete and unlocks all CoP-gated content. 850 is the
+        -- highest the engine accepts (MAX_MISSIONID = 851), so the post-game
+        -- epilogue entry itself can't be flagged and may still show as active.
+        player:addMission(6, 850)
 
         -- Treasures of Aht Urhgan (log_id 4)
         for i = 0, 47 do
