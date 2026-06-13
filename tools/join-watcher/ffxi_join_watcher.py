@@ -4,7 +4,7 @@
 Two feeds, two webhooks:
 
   JOINS  (private log channel, /etc/ffxi-join-watcher/webhook.url):
-    - new accounts   (accounts.id rises)          "New account created"
+    - new accounts   DISABLED 2026-06-13 (account login names are semi-sensitive)
     - new characters (chars.charid rises)         "New character: Name"
     - logins         (accounts_sessions diff)     "Name logged in - N online"
 
@@ -136,9 +136,9 @@ def joins_feed(state: dict) -> list[str]:
 
     events: list[str] = []
     if not bootstrap:
-        if max_acc > state["max_acc"]:
-            for row in sql(f"SELECT login FROM accounts WHERE id > {state['max_acc']} ORDER BY id"):
-                events.append(f":new: New account created: `{row[0]}`")
+        # New-account posts DISABLED 2026-06-13: account login names are
+        # semi-sensitive, so we no longer broadcast them to Discord. max_acc is
+        # still tracked below, so re-enabling later won't backlog-spam old ones.
         if max_char > state["max_char"]:
             for row in sql(f"SELECT charname FROM chars WHERE charid > {state['max_char']} ORDER BY charid"):
                 events.append(f":mage: New character: **{row[0]}**")
@@ -152,8 +152,8 @@ def joins_feed(state: dict) -> list[str]:
     state["online"]   = list(online)
 
     if bootstrap:
-        post(HOOK_JOINS, ":white_check_mark: **Join watcher armed** — new accounts, "
-                         "new characters, and logins will be posted here (checked every minute).")
+        post(HOOK_JOINS, ":white_check_mark: **Join watcher armed** — new characters "
+                         "and logins will be posted here (checked every minute).")
     return events
 
 
