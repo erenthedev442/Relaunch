@@ -5,10 +5,15 @@
 -- next login) and every future new character (on first login), gated by the
 -- GlobalLS_Pearl CharVar so it fires only once per character.
 --
--- The engine's addLinkpearl auto-equips + connects linkpearls to the SECONDARY
--- linkshell slot (/l2); that is intentional here (owner's choice) -- it is the
--- only path that joins LS chat the same session without a relog. Players who
--- want it in their main slot can just drag it there in-game.
+-- IMPORTANT (2026-06-13): addLinkpearl's AUTO-EQUIP path (equip=true) writes a
+-- char_equip row for the secondary linkshell slot (equipslotid 17) with a
+-- GARBAGE containerid (observed 99/97/85). On the character's NEXT login the
+-- engine's LoadEquip dereferences that non-existent container and SEGFAULTS the
+-- whole map server -- a single new player crash-loops the server for everyone.
+-- So we now grant the pearl WITHOUT auto-equipping (equip=false): the player
+-- gets it in their bag and drags it into a linkshell slot themselves. (A live
+-- safety net `equip_guard.service` on the box also scrubs any container>16
+-- rows; this change removes the source so that guard can eventually retire.)
 --
 -- Requires the "Legendary" linkshell row to exist in the `linkshells` table
 -- (sql/zz_global_linkshell.sql); addLinkpearl looks it up by name.
@@ -39,15 +44,16 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
             return
         end
         -- addLinkpearl: spawns the linkpearl, stamps its exdata (LS id / color /
-        -- signature) from the linkshells row matching LS_NAME, adds it to
-        -- inventory, and (equip = true) equips + connects it to LS chat in the
-        -- secondary slot. Returns false if the linkshell row is missing or the
+        -- signature) from the linkshells row matching LS_NAME, and adds it to
+        -- inventory. equip=FALSE: do NOT use the engine auto-equip path (it
+        -- corrupts the linkshell-slot char_equip row -> LoadEquip segfault; see
+        -- header). Returns false if the linkshell row is missing or the
         -- inventory is full -- we leave DONE_VAR unset in that case so it retries
         -- on the next login.
-        if p:addLinkpearl(LS_NAME, true) then
+        if p:addLinkpearl(LS_NAME, false) then
             p:setCharVar(DONE_VAR, 1)
             p:printToPlayer(string.format(
-                'You have received the server linkpearl [%s], kupo! It is equipped in your second linkshell slot -- say hello to everyone!',
+                'You have received the server linkpearl [%s], kupo! Equip it in a linkshell slot (drag it onto your /linkshell or /linkshell2 slot) to join the global chat -- say hello to everyone!',
                 LS_NAME), xi.msg.channel.SYSTEM_3)
         end
     end)
