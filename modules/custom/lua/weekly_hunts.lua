@@ -380,7 +380,7 @@ local function showBoardMenu(player)
 
     hbMenu.options = opts
     local snapshot = { title = hbMenu.title, options = hbMenu.options }  -- shared table + deferred send
-    player:timer(15, function(p) p:customMenu(snapshot) end)
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------

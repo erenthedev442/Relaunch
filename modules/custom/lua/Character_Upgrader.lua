@@ -33,7 +33,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         -- table, and another player's interaction inside the 50ms window
         -- would otherwise swap its contents mid-flight.
         local snapshot = { title = menu.title, options = menu.options }
-        player:timer(15, function(playerArg)
+        player:timer(30, function(playerArg)
             playerArg:customMenu(snapshot)
         end)
     end
@@ -601,7 +601,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         onTrigger = function(player, npc)
             menu.options = mainMenu
             local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-            player:timer(15, function(playerArg)
+            player:timer(30, function(playerArg)
                 playerArg:customMenu(snapshot)
             end)
         end,

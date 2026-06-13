@@ -207,7 +207,7 @@ buildVendorMain = function(player)
         { 'Close', function(p) p:printToPlayer('Reforge well, kupo!', xi.msg.channel.SYSTEM_3) end },
     }
     local snapshot = { title = vendorMenu.title, options = vendorMenu.options }  -- shared table + deferred send
-    player:timer(15, function(p) p:customMenu(snapshot) end)
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 buildJobMenu = function(player, page)
@@ -235,7 +235,7 @@ buildJobMenu = function(player, page)
     vendorMenu.title   = string.format('Pick Job (%d/%d)', page, nPages)
     vendorMenu.options = options
     local snapshot = { title = vendorMenu.title, options = vendorMenu.options }  -- shared table + deferred send
-    player:timer(15, function(p) p:customMenu(snapshot) end)
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 buildSetMenu = function(player, jobDef)
@@ -258,7 +258,7 @@ buildSetMenu = function(player, jobDef)
     vendorMenu.title   = string.format('[%s] Pick Set  %s', jobDef.label, balanceTriplet(player))
     vendorMenu.options = options
     local snapshot = { title = vendorMenu.title, options = vendorMenu.options }  -- shared table + deferred send
-    player:timer(15, function(p) p:customMenu(snapshot) end)
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 buildSlotMenu = function(player, jobDef, setKey, set)
@@ -280,7 +280,7 @@ buildSlotMenu = function(player, jobDef, setKey, set)
         jobDef.label, setKey, cur.currencyShort, getMarks(player, setKey))
     vendorMenu.options = options
     local snapshot = { title = vendorMenu.title, options = vendorMenu.options }  -- shared table + deferred send
-    player:timer(15, function(p) p:customMenu(snapshot) end)
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 buildUpgradeMenu = function(player, jobDef, setKey, slotKey, tiers)
@@ -341,7 +341,7 @@ buildUpgradeMenu = function(player, jobDef, setKey, slotKey, tiers)
         jobDef.label, setKey, slotKey, cur.currencyShort, getMarks(player, setKey))
     vendorMenu.options = options
     local snapshot = { title = vendorMenu.title, options = vendorMenu.options }  -- shared table + deferred send
-    player:timer(15, function(p) p:customMenu(snapshot) end)
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------
@@ -372,7 +372,7 @@ buildSpawnerMain = function(player)
     spawnerMenu.title   = 'Spawner  ' .. balanceTriplet(player)
     spawnerMenu.options = options
     local snapshot = { title = spawnerMenu.title, options = spawnerMenu.options }  -- shared table + deferred send
-    player:timer(15, function(p) p:customMenu(snapshot) end)
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 buildSourceNMMenu = function(player, srcDef)
@@ -490,7 +490,7 @@ buildSourceNMMenu = function(player, srcDef)
     spawnerMenu.title   = string.format('%s  (%s)', srcDef.label, srcDef.currencyName)
     spawnerMenu.options = options
     local snapshot = { title = spawnerMenu.title, options = spawnerMenu.options }  -- shared table + deferred send
-    player:timer(15, function(p) p:customMenu(snapshot) end)
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------

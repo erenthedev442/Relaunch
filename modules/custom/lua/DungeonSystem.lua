@@ -2786,7 +2786,7 @@ local function openMenu(player, menu)
     -- scratch tables, and another player's interaction inside the 50ms
     -- window would otherwise swap their contents mid-flight.
     local snapshot = { title = menu.title, options = menu.options }
-    player:timer(15, function(p) p:customMenu(snapshot) end)
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 local dmMenu = { title = 'Dungeon Master', options = {} }

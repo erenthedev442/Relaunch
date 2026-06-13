@@ -105,7 +105,7 @@ local function showPaged(player, title, entries, backLabel, backFn)
         local pageTitle = (nPages > 1) and string.format('%s (%d/%d)', title, idx, nPages) or title
         local menu      = { title = pageTitle, options = options }
         local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-        p:timer(15, function(pp) pp:customMenu(snapshot) end)
+        p:timer(30, function(pp) pp:customMenu(snapshot) end)
     end
 
     showPage(player, 1)
@@ -142,7 +142,7 @@ showRoot = function(player)
         },
     }
     local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-    player:timer(15, function(p) p:customMenu(snapshot) end)
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 showRegionList = function(player)
