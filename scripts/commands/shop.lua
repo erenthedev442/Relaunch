@@ -171,6 +171,15 @@ local augmentGroups =
     [13] = { 'ws',     'Weaponskill DMG'         },
 }
 
+-- EXP / Capacity point augments are tagged cat 12 ('Skill+') in the catalog,
+-- which buries them under 20 weapon/magic skill augments where nobody finds
+-- them. Pull these specific catalysts into their own visible group instead.
+-- (Shop-display only -- the catalog's cat tag is left alone so the Augment
+-- Sage's per-NM affinity system and gen_augment_catalog.py are unaffected.)
+local POINT_AUGMENTS = { [2523] = true, [942] = true } -- peiste_skin (Exp+), philosophers_stone (Cap+)
+local POINT_TOKEN    = 'points'
+local POINT_NAME     = 'EXP / Capacity Points'
+
 local augmentStock = {} -- token -> { { itemId, price }, ... }
 local augmentOrder = {} -- ordered { token, name, count } for the index menu
 
@@ -180,8 +189,14 @@ do
         local byToken = {}
         for itemId, def in pairs(catalog) do
             if type(def) == 'table' and def.cat then
-                local grp   = augmentGroups[def.cat]
-                local token = grp and grp[1] or 'other'
+                -- Point augments get their own group; everything else uses its cat.
+                local token
+                if POINT_AUGMENTS[itemId] then
+                    token = POINT_TOKEN
+                else
+                    local grp = augmentGroups[def.cat]
+                    token = grp and grp[1] or 'other'
+                end
                 byToken[token] = byToken[token] or {}
                 table.insert(byToken[token], itemId)
             end
@@ -203,6 +218,7 @@ do
         for cat = 1, 13 do
             finalize(augmentGroups[cat][1], augmentGroups[cat][2])
         end
+        finalize(POINT_TOKEN, POINT_NAME) -- EXP / Capacity, pulled out of cat 12
         finalize('other', 'Other') -- safety net for any cat outside 1-13
     end
 end
