@@ -448,9 +448,9 @@ TIER_COST = {'bronze': 12, 'silver': 25, 'gold': 50, 'infamy': 500}
 # NOTE: a forced item is NOT removed from any higher tier it also auto-selects
 # into, so check for cross-tier family overlap when adding ids here.
 FORCED_INCLUDE = {
-    ('bronze', 'body'): [25790, 26849, 25683, 25780, 25702, 25686, 26870],
+    ('bronze', 'body'): [25790, 26849, 25683, 25780, 25702, 25686, 26870, 25684],
     ('silver', 'body'): [25717],
-    ('gold',   'body'): [23733],
+    ('gold',   'body'): [23733, 26943],
 }
 
 # Pin each forced item to its tier and pull it out of whatever tier it would
