@@ -378,4 +378,16 @@ return {
     [2851] = { augId = 1056, base = 1,   mult = 5,  disp = 1,    cat = 13, label = 'Blade To DMG' },
     [2859] = { augId = 1057, base = 1,   mult = 5,  disp = 1,    cat = 13, label = 'Blade Chi DMG' },
     [3503] = { augId = 1058, base = 1,   mult = 5,  disp = 1,    cat = 13, label = 'Blade Ten DMG' },
+
+    -- Progression (Exp / Cap)
+    ---   Cap. Point +33% (augId 75) uses Mod::CAPACITY_BONUS (915) in
+    ---   sql/augments.sql and works out of the box.
+    ---   Exp. Point +33% (augId 73) shipped with modId=0 upstream -- a real
+    ---   bug (nothing attaches when the gear is equipped). Fixed in the live
+    ---   DB by modules/custom/sql/fix_aug_73_exp_bonus.sql, which repoints it
+    ---   at Mod::EXP_BONUS (382). Apply that SQL once and restart map.
+    ---   base = 1 keeps the floor modest; real power scales with Augment Sage
+    ---   progress. cat = 12 (Skill+) so the Sage's Skill+ affinity boosts these.
+    [2523] = { augId = 73,   base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Exp. Point +33%' },  -- peiste_skin
+    [942]  = { augId = 75,   base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Cap. Point +33%' },  -- philosophers_stone
 }

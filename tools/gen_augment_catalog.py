@@ -74,6 +74,44 @@ LABEL_OVERRIDE = {
     896: 'Enspell Dmg',   # vs the stock "Sword Enhancement Spell Damage"
 }
 
+# Progression augments (Exp. Point / Cap. Point). These are leveling-currency
+# bonuses, NOT combat stats, so categorize_label() can't place them -- they land
+# in the "Other" bucket and the thematic greedy pass discards them. For a long
+# time they were maintained BY HAND as a trailing "Progression (Exp / Cap)"
+# section appended to the catalog... which every regeneration silently wiped,
+# because the generator never knew they existed. That is exactly the regression
+# this block fixes: the entries are pinned here so the generator emits them and
+# they survive future regenerations.
+#
+# They bypass the augs[] pipeline entirely (see main()): augId 73 has modId=0 in
+# stock augments.sql so has_useful_mod() already drops it, and augId 75 would be
+# discarded by the "Other"-bucket rule. So we emit them straight from this table.
+#
+#   augId 73  Exp. Point: ships with modId=0 in sql/augments.sql -- an upstream
+#     bug (nothing attaches to the player when the gear is equipped). The LIVE DB
+#     repoints it at Mod::EXP_BONUS (382) via
+#     modules/custom/sql/fix_aug_73_exp_bonus.sql; that SQL must be applied + map
+#     restarted or the augment is cosmetic. (Apply is idempotent.)
+#   augId 75  Cap. Point: already modId=915 (Mod::CAPACITY_BONUS) in stock
+#     augments.sql -- works out of the box, no DB fix needed.
+#
+#   base = 1 keeps the per-slot FLOOR modest and gates real power behind Augment
+#     Sage progress (the server-wide "augments scale with the Sage" rule): a
+#     fully-slotted 5-catalyst piece gives ~+5% at rank 0, climbing to ~+160% at
+#     rank-5 + affinity + crit (boost 31/slot). Bumping base toward 33 (the stock
+#     augments.sql value) makes it strong immediately -- a deliberate balance knob.
+#   cat = 12 (Skill+) so the Sage's Skill+ NM affinity also boosts these.
+#
+# Each entry: augId -> (catalystItemId, base, mult, disp, cat, label)
+# Catalysts must be unused, obtainable (mob-drop), non-RARE/EX, id >= MIN_ITEM_ID
+# items -- the asserts in main() enforce it. peiste_skin kept from the historical
+# section; philosophers_stone replaces the old marid_tusk catalyst (id 2147),
+# which a later regen handed to a different augment.
+PROGRESSION_AUGS = {
+    73: (2523, 1, 1, 1, 12, 'Exp. Point +33%'),   # peiste_skin
+    75: (942,  1, 1, 1, 12, 'Cap. Point +33%'),   # philosophers_stone
+}
+
 MOB_DROPLIST = SQL / "mob_droplist.sql"
 
 # Reserved IDs used as crystals/clusters per scripts/enum/item.lua.
@@ -789,6 +827,15 @@ def main():
     for _fiid in forced.values():
         used_items.add(_fiid)
 
+    # Progression augments: reserve their catalysts too, so the thematic greedy
+    # pass can't hand peiste_skin / philosophers_stone to some other augment.
+    # These augIds never enter augs[] (Exp. Point has modId=0; Cap. Point lands
+    # in "Other"), so they're emitted directly from PROGRESSION_AUGS below -- the
+    # reservation just protects their catalyst items from being claimed twice.
+    for _piid, *_prest in PROGRESSION_AUGS.values():
+        if _piid in items:
+            used_items.add(_piid)
+
     for aid in aug_ids_sorted:
         # Forced assignment wins over the thematic greedy pass.
         if aid in forced:
@@ -835,6 +882,17 @@ def main():
         sname = items[iid]["short_name"].lower()
         assert "kit" not in sname, f"kit leaked: {sname}"
         assert not is_rare_or_ex(items[iid]), f"RARE/EX leaked: {iid} ({sname})"
+
+    # Progression catalysts must be valid, obtainable, and NOT collide with a
+    # thematic entry (the reservation above guarantees the last point).
+    _used_set = set(item_ids_used)
+    for _aid, (_piid, *_prest) in PROGRESSION_AUGS.items():
+        assert _piid in items, f"progression catalyst {_piid} (aug {_aid}) not in item_basic"
+        assert _piid in obtainable, f"progression catalyst {_piid} (aug {_aid}) not a mob drop"
+        assert _piid >= MIN_ITEM_ID, f"progression catalyst {_piid} (aug {_aid}) below floor"
+        assert _piid not in RESERVED, f"progression catalyst {_piid} (aug {_aid}) reserved"
+        assert _piid not in _used_set, f"progression catalyst {_piid} (aug {_aid}) collides with a thematic entry"
+        assert not is_rare_or_ex(items[_piid]), f"progression catalyst {_piid} (aug {_aid}) is RARE/EX"
 
     # Per-category final breakdown.
     final_counts = [0] * len(CATEGORIES)
@@ -925,11 +983,45 @@ def main():
                 f"    {id_str} = {{ augId = {aug_str} base = {base_str} "
                 f"mult = {mult_str} disp = {disp_str} cat = {cat_str} label = {lua_str(LABEL_OVERRIDE.get(aid, clean_label(label)))} }},"
             )
+
+    # -- Progression (Exp / Cap) ------------------------------------------------
+    # Emitted as a dedicated trailing section, NOT through the thematic pass:
+    # these are leveling-currency augments, so the scorer's "Other" bucket would
+    # drop them. The SINGLE-dash header below is what docgen treats as the
+    # category title; the TRIPLE-dash lines are explanatory only (docgen's header
+    # regex needs a letter right after "--", so "---" lines are skipped) and the
+    # main entry regex tolerates the trailing "-- name" hint.
+    if PROGRESSION_AUGS:
+        lines.append("")
+        lines.append("    -- Progression (Exp / Cap)")
+        lines.append("    ---   Cap. Point +33% (augId 75) uses Mod::CAPACITY_BONUS (915) in")
+        lines.append("    ---   sql/augments.sql and works out of the box.")
+        lines.append("    ---   Exp. Point +33% (augId 73) shipped with modId=0 upstream -- a real")
+        lines.append("    ---   bug (nothing attaches when the gear is equipped). Fixed in the live")
+        lines.append("    ---   DB by modules/custom/sql/fix_aug_73_exp_bonus.sql, which repoints it")
+        lines.append("    ---   at Mod::EXP_BONUS (382). Apply that SQL once and restart map.")
+        lines.append("    ---   base = 1 keeps the floor modest; real power scales with Augment Sage")
+        lines.append("    ---   progress. cat = 12 (Skill+) so the Sage's Skill+ affinity boosts these.")
+        for aid in sorted(PROGRESSION_AUGS):
+            iid, base_val, mult_val, disp_val, cat_val, label = PROGRESSION_AUGS[aid]
+            id_str   = f"[{iid}]".ljust(item_width + 2)
+            aug_str  = f"{aid},".ljust(aug_width + 1)
+            base_str = f"{base_val},".ljust(4)
+            mult_str = f"{mult_val},".ljust(3)
+            disp_str = f"{disp_val},".ljust(5)
+            cat_str  = f"{cat_val},".ljust(3)
+            sname    = items[iid]["short_name"] if iid in items else "?"
+            lines.append(
+                f"    {id_str} = {{ augId = {aug_str} base = {base_str} "
+                f"mult = {mult_str} disp = {disp_str} cat = {cat_str} label = {lua_str(label)} }},  -- {sname}"
+            )
+
     lines.append("}")
     lines.append("")
 
     OUT_LUA.write_text("\n".join(lines), encoding="utf-8")
-    print(f"\nWrote {OUT_LUA} ({len(mapping)} entries)")
+    print(f"\nWrote {OUT_LUA} ({len(mapping)} thematic + "
+          f"{len(PROGRESSION_AUGS)} progression = {len(mapping) + len(PROGRESSION_AUGS)} entries)")
 
     # ----- Report -----
     print("\n" + "=" * 70)

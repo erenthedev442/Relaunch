@@ -15,14 +15,26 @@
 --
 -- Apply once with: dbtool, or:
 --    mysql -u <user> -p <db> < modules/custom/sql/fix_aug_73_exp_bonus.sql
+-- On deploy this is applied automatically by tools/_apply_changed_custom_sql.sh
+-- whenever this file's checksum changes (the header is refreshed below to force
+-- exactly that). sql/augments.sql is never re-imported on deploy, so once this
+-- runs the modId sticks across restarts -- it only reverts on a full DB re-import.
 --
 -- After applying:
 --   1. Restart the map server so the augments table is reloaded.
 --   2. Re-zone any character who already has the augmented piece equipped
 --      (the mod attaches on item-load, which fires on zone or relog).
+--
+-- 2026-06-12: re-asserted alongside restoring the Exp./Cap. Point catalysts to
+-- modules/custom/lua/augment_catalog.lua (a catalog regeneration had dropped the
+-- hand-maintained "Progression (Exp / Cap)" section; the generator now emits it).
+-- This Exp. Point catalyst is cosmetic until this row is live, so we want it to
+-- re-apply on the next deploy.
 -- ----------------------------------------------------------------------------
 
+-- Unconditional (not `AND modId = 0`): augId 73 is "Exp. Point" on this server
+-- and must always map to Mod::EXP_BONUS. Re-running is a harmless no-op when the
+-- value already matches, so this is safe for the every-changed-deploy ledger.
 UPDATE `augments`
 SET    `modId` = 382      -- Mod::EXP_BONUS (see src/map/modifier.h:692)
-WHERE  `augmentId` = 73
-   AND `modId`     = 0;
+WHERE  `augmentId` = 73;
