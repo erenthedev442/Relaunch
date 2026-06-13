@@ -15,7 +15,7 @@ commandObj.cmdprops =
 }
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.SYSTEM_1
+local B = xi.msg.channel.SYSTEM_3
 
 commandObj.onTrigger = function(player)
     local current  = player:getCharVar('HL_Points')          or 0

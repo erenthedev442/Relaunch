@@ -16,7 +16,7 @@ commandObj.cmdprops =
 }
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.SYSTEM_1
+local B = xi.msg.channel.SYSTEM_3
 
 -- Load both the static catalog and the dynamic events file (written by
 -- !setbonus). The dynamic file is optional - missing it is not an error.

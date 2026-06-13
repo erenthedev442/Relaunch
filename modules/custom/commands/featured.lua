@@ -24,7 +24,7 @@ commandObj.cmdprops =
 local catalog = require('modules/custom/lua/hunting_league_catalog')
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.SYSTEM_1
+local B = xi.msg.channel.SYSTEM_3
 
 commandObj.onTrigger = function(player)
     local weekIdx = math.floor(os.time() / 604800)

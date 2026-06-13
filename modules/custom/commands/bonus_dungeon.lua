@@ -23,7 +23,7 @@ commandObj.cmdprops =
 local catalog = require('modules/custom/lua/dungeon_catalog')
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.SYSTEM_1
+local B = xi.msg.channel.SYSTEM_3
 
 commandObj.onTrigger = function(player)
     -- Build the enabled dungeon list (same as DungeonSystem.lua's getWeeklyBonusDungeon).

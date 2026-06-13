@@ -17,7 +17,7 @@ commandObj.cmdprops =
 local se = require('modules/custom/lua/seasonal_events')
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.SYSTEM_1
+local B = xi.msg.channel.SYSTEM_3
 
 commandObj.onTrigger = function(player)
     local now     = os.time()

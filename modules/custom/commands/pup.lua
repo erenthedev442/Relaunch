@@ -33,7 +33,7 @@ commandObj.cmdprops =
 }
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.SYSTEM_1
+local B = xi.msg.channel.SYSTEM_3
 
 local NUM_SLOTS = 5
 local NUM_ATT   = 12       -- attachment slots 0..11

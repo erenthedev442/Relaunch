@@ -47,7 +47,7 @@ local function guildRankName(rep)
 end
 
 local H = xi.msg.channel.SYSTEM_3    -- yellow (headers)
-local B = xi.msg.channel.SYSTEM_1   -- default (body rows)
+local B = xi.msg.channel.SYSTEM_3   -- default (body rows)
 
 commandObj.onTrigger = function(player, sub)
     sub = ((sub or '') .. ''):lower():gsub('%s+', '')

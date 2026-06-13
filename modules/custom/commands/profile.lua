@@ -23,7 +23,7 @@ local ACH_IDS    = { 'FIRST_HUNT','TENTH_HUNT','CENTURY','THOUSAND',
                       'MARKS_1K','MARKS_10K','MARKS_100K' }
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.SYSTEM_1
+local B = xi.msg.channel.SYSTEM_3
 
 commandObj.onTrigger = function(player, targetName)
     local targ

@@ -65,7 +65,7 @@ local MERIT_ATTR_PER_LEVEL = 5
 
 -- == Output channels (match profile.lua: yellow header, default body) ===
 local H = xi.msg.channel.SYSTEM_3    -- header line
-local B = xi.msg.channel.SYSTEM_1   -- body lines
+local B = xi.msg.channel.SYSTEM_3   -- body lines
 
 -- The 7 base-attribute merits we can read exactly via getMerit(). HP/MP
 -- merits are intentionally excluded -- their values are an order of
