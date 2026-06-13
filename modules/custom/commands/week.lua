@@ -19,7 +19,7 @@ local catalog        = require('modules/custom/lua/hunting_league_catalog')
 local dungeonCatalog = require('modules/custom/lua/dungeon_catalog')
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.LINKSHELL
+local B = xi.msg.channel.SYSTEM_1
 
 -- Returns the number of days until the next Monday 00:00 UTC.
 -- os.date '!%w': 0=Sun, 1=Mon ... 6=Sat.

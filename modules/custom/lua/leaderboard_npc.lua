@@ -47,7 +47,7 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onInitialize', function(zone)
 
         onTrigger = function(player, npcArg)
             local H = xi.msg.channel.SYSTEM_3
-            local B = xi.msg.channel.LINKSHELL
+            local B = xi.msg.channel.SYSTEM_1
 
             -- Gather player's competitive stats.
             local hlTier    = player:getCharVar('HL_Tier')            or 0

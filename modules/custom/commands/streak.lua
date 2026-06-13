@@ -15,7 +15,7 @@ commandObj.cmdprops =
 }
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.LINKSHELL
+local B = xi.msg.channel.SYSTEM_1
 
 commandObj.onTrigger = function(player)
     local streak   = player:getCharVar('HL_Streak_Count')    or 0

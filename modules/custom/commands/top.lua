@@ -22,7 +22,7 @@ commandObj.cmdprops =
 local ot = require('modules/custom/lua/online_tracker')
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.LINKSHELL
+local B = xi.msg.channel.SYSTEM_1
 
 -- Stat definitions: label shown to player + CharVar to read.
 local STATS = {

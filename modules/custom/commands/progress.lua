@@ -15,7 +15,7 @@
 --   !progress daily          - Daily Board only
 --
 -- Output sections (via SYSTEM_3 / yellow chat for headers,
--- LINKSHELL channel for body lines so they're visually distinct):
+-- SYSTEM_1 chat for body lines so they're visually distinct):
 --   [Progress] == Hunting League ==
 --   [Progress] == Reforge Marks ==
 --   [Progress] == Dungeons & Infamy ==
@@ -47,7 +47,7 @@ local function guildRankName(rep)
 end
 
 local H = xi.msg.channel.SYSTEM_3    -- yellow (headers)
-local B = xi.msg.channel.LINKSHELL   -- teal  (body rows)
+local B = xi.msg.channel.SYSTEM_1   -- default (body rows)
 
 commandObj.onTrigger = function(player, sub)
     sub = ((sub or '') .. ''):lower():gsub('%s+', '')

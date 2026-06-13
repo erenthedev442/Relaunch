@@ -83,25 +83,25 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
             player:timer(4200, function(p)
                 p:printToPlayer(
                     string.format('[Login Streak] %d days in a row - 7 days earns +50 marks!', streak),
-                    xi.msg.channel.LINKSHELL)
+                    xi.msg.channel.SYSTEM_1)
             end)
         elseif streak > 7 and streak < 14 then
             player:timer(4200, function(p)
                 p:printToPlayer(
                     string.format('[Login Streak] %d days in a row - 14 days earns +100 marks!', streak),
-                    xi.msg.channel.LINKSHELL)
+                    xi.msg.channel.SYSTEM_1)
             end)
         elseif streak > 14 and streak < 21 then
             player:timer(4200, function(p)
                 p:printToPlayer(
                     string.format('[Login Streak] %d days in a row - 21 days earns +150 marks!', streak),
-                    xi.msg.channel.LINKSHELL)
+                    xi.msg.channel.SYSTEM_1)
             end)
         elseif streak > 21 and streak < 30 then
             player:timer(4200, function(p)
                 p:printToPlayer(
                     string.format('[Login Streak] %d days in a row - 30 days earns +350 marks!', streak),
-                    xi.msg.channel.LINKSHELL)
+                    xi.msg.channel.SYSTEM_1)
             end)
         end
     end

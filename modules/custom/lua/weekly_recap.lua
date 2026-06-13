@@ -16,7 +16,7 @@ require('modules/module_utils')
 local m = Module:new('weekly_recap')
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.LINKSHELL
+local B = xi.msg.channel.SYSTEM_1
 
 -- Days until next Monday 00:00 UTC.  Returns 7 when already Monday
 -- so the value is always a full remaining week (not "0 days").

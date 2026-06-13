@@ -43,13 +43,12 @@ commandObj.cmdprops =
 -- Color channels for visual contrast. FFXI client renders each chat
 -- channel in a distinct color, so we send headers and body to different
 -- channels rather than trying to embed escape codes (no native bold).
---   SYSTEM_3   (29) = yellow      -- body lines, the default "system" color
---   LINKSHELL3 (30) = green       -- section headers. LS3 has no real linkshell
---                                    slot, so it never collides with the global
---                                    [Legendary] linkshell that now lives in the
---                                    2nd LS slot (was LINKSHELL2 / 27 before).
-local CH_BODY   = xi.msg.channel.SYSTEM_3
-local CH_HEADER = xi.msg.channel.LINKSHELL3
+-- BOTH are SYSTEM channels (never a LINKSHELL channel) so this output is
+-- never mistaken for the server's [Legendary] linkshell chat.
+--   SYSTEM_3 (29) = yellow   -- section headers
+--   SYSTEM_1 (6)  = default  -- body lines
+local CH_BODY   = xi.msg.channel.SYSTEM_1
+local CH_HEADER = xi.msg.channel.SYSTEM_3
 
 -- Ascension (Provenance) catalog -- pcall so !mystats keeps working even if
 -- the prestige module is ever renamed/removed.
@@ -60,7 +59,7 @@ local function line(player, fmt, ...)
 end
 
 local function header(player, title)
-    -- Green chevrons + ALL CAPS + a blank-ish separator line above for
+    -- Yellow chevrons + ALL CAPS + a blank-ish separator line above for
     -- visual breathing room. The leading newline-style spacer is sent as
     -- its own message so the client treats it as a separate row in the
     -- log -- printToPlayer collapses multi-line strings to one row.

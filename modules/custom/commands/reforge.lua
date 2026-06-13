@@ -14,7 +14,7 @@ commandObj.cmdprops =
 }
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.LINKSHELL
+local B = xi.msg.channel.SYSTEM_1
 
 commandObj.onTrigger = function(player)
     local afMarks    = player:getCharVar('RF_AF_Marks')    or 0

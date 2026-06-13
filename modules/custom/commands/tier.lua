@@ -18,7 +18,7 @@ commandObj.cmdprops =
 local catalog = require('modules/custom/lua/hunting_league_catalog')
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.LINKSHELL
+local B = xi.msg.channel.SYSTEM_1
 
 commandObj.onTrigger = function(player)
     local tier    = player:getCharVar('HL_Tier') or 1

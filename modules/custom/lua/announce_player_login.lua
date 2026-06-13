@@ -30,7 +30,7 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
         -- 500ms after the broadcast so it lands below the login message.
         player:timer(3000, function(playerArg)
             local S = xi.msg.channel.SYSTEM_3
-            local B = xi.msg.channel.LINKSHELL
+            local B = xi.msg.channel.SYSTEM_1
             playerArg:printToPlayer('[Legendary] -- Quick Tips -------------------------------------', S)
             playerArg:printToPlayer('  !featured     - this week\'s bonus-mark NMs  (2x marks on 1st kill)', B)
             playerArg:printToPlayer('  !achievements - your personal milestone progress', B)

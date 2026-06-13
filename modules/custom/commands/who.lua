@@ -21,7 +21,7 @@ local tracker = require('modules/custom/lua/online_tracker')
 local HL_TIER_NAMES = { 'Initiate', 'Bronze', 'Silver', 'Gold', 'Legend' }
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.LINKSHELL
+local B = xi.msg.channel.SYSTEM_1
 
 commandObj.onTrigger = function(player)
     local online = tracker.getOnline()

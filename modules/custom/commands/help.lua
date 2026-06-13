@@ -14,7 +14,7 @@ commandObj.cmdprops =
 }
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.LINKSHELL
+local B = xi.msg.channel.SYSTEM_1
 
 commandObj.onTrigger = function(player)
     player:printToPlayer('[Legendary] == Custom Commands ==========================', H)

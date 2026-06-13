@@ -21,7 +21,7 @@ commandObj.cmdprops =
 local ach = require('modules/custom/lua/achievements')
 
 local H = xi.msg.channel.SYSTEM_3
-local B = xi.msg.channel.LINKSHELL
+local B = xi.msg.channel.SYSTEM_1
 
 commandObj.onTrigger = function(player)
     player:printToPlayer('[Achievements] == Your Personal Milestones ==============', H)
