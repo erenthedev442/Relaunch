@@ -40,6 +40,13 @@ catalog.vendorPos  = { x = 15.0, y = 0.0, z =  0.0, rot = 128 }
 -- Where dynamic NMs appear when popped.
 catalog.mobSpawnPos = { x = 10.0, y = 0.0, z = 20.0, rot = 0 }
 
+-- Un-engaged despawn: a popped NM that nobody engages within this many
+-- seconds despawns on its own, so an ignored/accidental pop doesn't clog
+-- the spawn area (and the duplicate-spawn guard frees up again). The
+-- countdown is cancelled the instant a player engages, and re-armed if the
+-- NM is abandoned after a fight. Set to 0 to disable. (Mirrors HuntingLeague.)
+catalog.unengagedDespawnSecs = 180  -- 3 minutes
+
 -- =========================================================
 -- THREE NM POOLS, EACH TIED TO ONE CURRENCY + ONE SET
 --

@@ -29,6 +29,10 @@ local m = Module:new('reforge_system')
 -- customMenu prompt payload is capped at 150 bytes total. Page sizes below
 -- are tuned to fit even with the longest realistic labels.
 local JOBS_PG_SZ = 6   -- jobs per page on the job picker
+-- Un-engaged NM auto-despawn window (seconds). A popped NM that nobody
+-- engages within this time vanishes on its own; engaging cancels it (see
+-- onMobEngage / onMobRoam in the spawner). Tunable in the catalog; 0 disables.
+local DESPAWN_SECS = catalog.unengagedDespawnSecs or 180
 
 -----------------------------------
 -- Salvage trade: set of all base-tier item IDs across every job/set/slot.
@@ -426,6 +430,34 @@ buildSourceNMMenu = function(player, srcDef)
                     isAggroable          = true,
                     releaseIdOnDisappear = true,
 
+                    -- Idle despawn: an un-engaged NM cleans itself up after
+                    -- DESPAWN_SECS so an ignored/accidental pop (or one tagged
+                    -- then abandoned) doesn't clog the spawn area or block a
+                    -- re-pop behind the dup-spawn guard. State machine on the
+                    -- RF_DespawnAt localVar (absolute os.time deadline):
+                    --   * stamped after spawn() below   (initial countdown)
+                    --   * onMobEngage    -> 0            (fighting; no despawn)
+                    --   * onMobDisengage -> re-armed     (abandoned; count again)
+                    --   * onMobRoam      -> despawns once past the deadline
+                    -- onMobRoam fires only while alive AND un-engaged, so it
+                    -- can never interrupt an active fight. Mirrors HuntingLeague.
+                    onMobEngage = function(engagedMob)
+                        engagedMob:setLocalVar('RF_DespawnAt', 0)
+                    end,
+
+                    onMobDisengage = function(disMob)
+                        if DESPAWN_SECS > 0 then
+                            disMob:setLocalVar('RF_DespawnAt', os.time() + DESPAWN_SECS)
+                        end
+                    end,
+
+                    onMobRoam = function(roamMob)
+                        local deadline = roamMob:getLocalVar('RF_DespawnAt')
+                        if deadline > 0 and os.time() >= deadline then
+                            DespawnMob(roamMob:getID())
+                        end
+                    end,
+
                     onMobDeath = function(deadMob, killer)
                         if not killer then return end
                         rollLootDrop(killer, srcDef, md.label)
@@ -451,6 +483,14 @@ buildSourceNMMenu = function(player, srcDef)
                 end
                 mob:setSpawn(mPos.x, mPos.y, mPos.z, mPos.rot)
                 mob:spawn()
+
+                -- Arm the un-engaged despawn (absolute deadline). onMobRoam
+                -- removes the NM if still un-engaged past this time; onMobEngage
+                -- clears it. Stamped after spawn() so spawn()'s stat recalc
+                -- can't wipe it. Mirrors HuntingLeague.
+                if DESPAWN_SECS > 0 then
+                    mob:setLocalVar('RF_DespawnAt', os.time() + DESPAWN_SECS)
+                end
 
                 -- Block capacity points on kill. Reforge has its own
                 -- currency (RF_*_Marks); without this gate, a Lv250 NM
