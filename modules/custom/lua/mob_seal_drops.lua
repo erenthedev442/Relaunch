@@ -50,15 +50,20 @@ end
 -- land silently (the seals still appear in the player's inventory).
 local ANNOUNCE_MIN = 5
 
--- Quantity roll. Each tier is an independent chance; the largest that procs
--- wins (floor 1). Matches: 100%->1, 50%->2, 33%->3, 25%->4, 5%->10.
+-- Quantity roll. The stated chances are CUMULATIVE -- "X% chance to drop N"
+-- means an X% chance to drop N OR MORE -- so one roll resolves the count
+-- against descending thresholds:
+--   P(>=1)=100%, P(>=2)=50%, P(>=3)=33%, P(>=4)=25%, P(=10)=5%.
+-- Per-exact-quantity that works out to: 1=50%, 2=17%, 3=8%, 4=20%, 10=5%
+-- (average ~2.4 seals per kill).
 local function rollQuantity()
-    local qty = 1
-    if math.random(100) <= 50 then qty = 2  end
-    if math.random(100) <= 33 then qty = 3  end
-    if math.random(100) <= 25 then qty = 4  end
-    if math.random(100) <=  5 then qty = 10 end
-    return qty
+    local r = math.random(100)
+    if     r <=  5 then return 10
+    elseif r <= 25 then return 4
+    elseif r <= 33 then return 3
+    elseif r <= 50 then return 2
+    end
+    return 1
 end
 
 m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSkillKill)
