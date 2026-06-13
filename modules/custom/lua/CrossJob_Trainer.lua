@@ -37,6 +37,12 @@ end
 
 local GIL_STR = commafy(GIL_COST)
 
+-- Group-menu pagination: keep each page's customMenu payload under the
+-- ~150-byte cap. 6 abilities + nav + Back per page stays safely within budget,
+-- so a group can hold any number of abilities without silently truncating the
+-- Back/Next buttons.
+local GROUP_PAGE_SIZE = 6
+
 -- Forward declarations (mutually recursive menu screens).
 local showMainMenu, showGroupMenu, showConfirmMenu
 
@@ -91,23 +97,48 @@ end
 -----------------------------------
 -- Group menu: pick an ability to buy. Owned ones are marked with " *".
 -----------------------------------
-showGroupMenu = function(player, groupIndex)
+showGroupMenu = function(player, groupIndex, page)
     local group = catalog.groups[groupIndex]
     if not group then
         showMainMenu(player)
         return
     end
 
-    local owned   = ownedSet(player)
+    local owned = ownedSet(player)
+    local list  = group.abilities
+    local pages = math.max(1, math.ceil(#list / GROUP_PAGE_SIZE))
+    page = math.max(1, math.min(page or 1, pages))
+
+    local startIdx = (page - 1) * GROUP_PAGE_SIZE + 1
+    local endIdx   = math.min(startIdx + GROUP_PAGE_SIZE - 1, #list)
+
     local options = {}
 
-    for _, ability in ipairs(group.abilities) do
-        local ab    = ability
+    for i = startIdx, endIdx do
+        local ab    = list[i]
         local label = owned[ab.id] and (ab.name .. ' *') or ab.name
         table.insert(options, {
             label,
             function(playerArg)
                 showConfirmMenu(playerArg, groupIndex, ab)
+            end,
+        })
+    end
+
+    -- Page navigation (only shown when the group spans more than one page).
+    if page > 1 then
+        table.insert(options, {
+            string.format('<< Page %d/%d', page - 1, pages),
+            function(playerArg)
+                showGroupMenu(playerArg, groupIndex, page - 1)
+            end,
+        })
+    end
+    if page < pages then
+        table.insert(options, {
+            string.format('Page %d/%d >>', page + 1, pages),
+            function(playerArg)
+                showGroupMenu(playerArg, groupIndex, page + 1)
             end,
         })
     end
@@ -121,7 +152,9 @@ showGroupMenu = function(player, groupIndex)
 
     local menu =
     {
-        title   = string.format('%s  (* = owned)', group.name),
+        title   = (pages > 1)
+            and string.format('%s %d/%d (* = owned)', group.name, page, pages)
+            or  string.format('%s  (* = owned)', group.name),
         options = options,
     }
     local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
