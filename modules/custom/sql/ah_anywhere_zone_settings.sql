@@ -1,0 +1,41 @@
+-- ah_anywhere_zone_settings.sql
+-- Make the Auction House usable in EVERY zone (QoL: the `!ah` command).
+--
+-- WHY: `scripts/commands/ah.lua` only sends the AH menu to the client
+-- (`player:sendMenu(xi.menuType.AUCTION)`). It does NOT grant AH access.
+-- Every real auction action -- browse/Info, Bid, Sell/AskCommit, LotIn,
+-- LotCancel -- is a separate client packet that the map server validates
+-- against the player's current zone:
+--
+--     src/map/packets/c2s/0x04e_auc.cpp:32
+--         .hasZoneMiscFlag(MISC_AH)
+--
+-- Without the MISC_AH flag on the zone, the validator rejects the packet,
+-- so the AH window opens but listings never load and you cannot bid or
+-- sell. Stock LSB only flags 21 zones (the cities + GM Home), so `!ah`
+-- silently no-ops in field zones like West Ronfaure (zone 100, misc 2206).
+--
+-- FIX: OR the MISC_AH bit onto every zone. `misc | 512` is idempotent --
+-- zones that already carry it (the 21 cities, etc.) are unchanged; the OR
+-- preserves all other flags on the row.
+--
+-- ZONEMISC bits (src/map/zone.h):
+--   MISC_AH       = 0x0200 (512)    <-- this script sets this bit, all zones
+--   MISC_MOGMENU  = 0x0400 (1024)
+--   MISC_TRUST    = 0x0800 (2048)
+--
+-- SIDE EFFECT (intended/accepted): MISC_AH is ALSO read by the delivery-box
+-- handler (src/map/packets/c2s/0x04d_pbx.cpp:185 -- dbox allowed if the zone
+-- has MISC_AH *or* MISC_MOGMENU, or is residential, or the player is a GM).
+-- Setting MISC_AH everywhere therefore also enables the mog delivery box in
+-- every zone. On this QoL server that is desired.
+--
+-- NOTE: zone_settings is read once at map-server startup, so xi_map must be
+-- restarted for this to take effect live (no hot-reload of the misc mask
+-- exists). Re-run this after any full DB rebuild from the stock sql/ dumps.
+--
+-- To apply:
+--   mysql -u root -p your_db_name < modules/custom/sql/ah_anywhere_zone_settings.sql
+
+UPDATE `zone_settings`
+SET    `misc` = `misc` | 512;
