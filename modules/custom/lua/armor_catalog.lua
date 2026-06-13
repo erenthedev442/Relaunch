@@ -177,8 +177,7 @@ table.insert(s.head, { id = 26673, name = "Argosy Celata +1", cost = 25, jobs = 
 table.insert(s.head, { id = 25654, name = "Welkin Crown", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 208
 table.insert(s.head, { id = 25577, name = "Inyanga Tiara +2", cost = 25, jobs = 'WHM/BRD/SMN' })  -- CASTER score 206
 
--- Body (9 picks, scored highest first)
-table.insert(s.body, { id = 26848, name = "Argosy Hauberk", cost = 25, jobs = 'WAR/DRK/BST' })  -- DPS score 250
+-- Body (8 picks, scored highest first)
 table.insert(s.body, { id = 26880, name = "Wretched Coat +1", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 244
 table.insert(s.body, { id = 27887, name = "Vanir Cotehardie", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- TANK score 244
 table.insert(s.body, { id = 23762, name = "Ikengas Vest", cost = 25, jobs = 'RNG/COR' })  -- DPS score 232

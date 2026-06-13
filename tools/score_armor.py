@@ -37,6 +37,12 @@ EXCLUDED_ITEM_IDS = frozenset({
 })
 EXCLUDED_NAME_PREFIXES = ('judge',)
 
+# Owner suppressions: gameplay items kept OUT of every tier. 2026-06-13:
+# Argosy Hauberk base (26848) dropped -- its +1 (26849) is pinned to bronze
+# via FORCED_INCLUDE, so the base in silver was redundant (and made the +1
+# both better AND cheaper than the base).
+OWNER_EXCLUDE_IDS = frozenset({26848})
+
 
 # --------------------------------------------------------------
 # Parsing helpers
@@ -74,6 +80,8 @@ with (ROOT / 'sql' / 'item_basic.sql').open(encoding='utf-8', errors='replace') 
             continue
         if iid in EXCLUDED_ITEM_IDS or fields[2].strip("'").startswith(EXCLUDED_NAME_PREFIXES):
             continue  # NPC-only / non-player junk (Judge* etc.) — never score it
+        if iid in OWNER_EXCLUDE_IDS:
+            continue  # owner-suppressed (e.g. a base superseded by a +N pinned elsewhere)
         flags = fields[7]
         items_base[iid] = {
             'name':    fields[2].strip("'"),
