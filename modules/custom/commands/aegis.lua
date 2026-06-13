@@ -1,5 +1,9 @@
 -----------------------------------
--- !aegis  --  Cast Divine Aegis (custom spell 1020) on yourself.
+-- func: aegis
+-- desc: Cast Divine Aegis (a PLD-only custom spell) on yourself: a Holy
+--       shield that absorbs physical damage and cuts physical damage taken
+--       by 20% for 30s, then detonates as a Holy AoE. Exposed as a command
+--       because the client cannot hard-cast custom spell IDs.
 --
 -- Divine Aegis is a Legendary-only custom spell (ID 1020). The stock client
 -- has no data for IDs >= 1020, so it cannot hard-cast it (you get "a command

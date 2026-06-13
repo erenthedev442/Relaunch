@@ -1,5 +1,8 @@
 -----------------------------------
--- !silencega  --  AoE Silence on your battle target and nearby enemies.
+-- func: silencega
+-- desc: Cast Silencega: an area Silence on your current target and nearby
+--       enemies. Since Silencega uses a standard spell ID you can also cast
+--       it normally with /ma "Silencega"; this command is a convenience.
 --
 -- Silencega is spell 359. Unlike Divine Aegis/Convergence it is a STOCK
 -- spell ID (it ships in sql/spell_list.sql with a real animation), so a

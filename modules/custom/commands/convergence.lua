@@ -1,5 +1,10 @@
 -----------------------------------
--- !convergence  --  Cast Convergence (custom spell 1021) on your target.
+-- func: convergence
+-- desc: Cast Convergence (an RDM-only custom spell) on your current target:
+--       a random element + enfeeble combo that deals magic damage plus one
+--       of six status effects (Slow, Blind, Paralyze, Silence, Gravity, or
+--       Bind). Exposed as a command because the client cannot hard-cast
+--       custom spell IDs.
 --
 -- Convergence is a Legendary-only custom spell (ID 1021). The stock client
 -- has no data for IDs >= 1020, so it cannot hard-cast it ("a command error
