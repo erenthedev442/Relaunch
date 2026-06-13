@@ -213,6 +213,17 @@ local stock =
         { 17304,  20 },  -- Fuma Shuriken   (Lv60)
         { 21353,  50 },  -- Happo Shuriken  (Lv99)
     },
+
+    -- Ninja tools at 1 gil. These three are the "universal" tools a MAIN-job NIN
+    -- can substitute for ANY elemental ninjutsu tool (see HasNinjaTool in
+    -- battleutils.cpp), so a NIN stocks every ninjutsu for next to nothing here.
+    -- (A NIN *subjob* still needs the specific tools, e.g. Shihei for Utsusemi.)
+    ninja =
+    {
+        { 2971, 1 },  -- Inoshishinofuda
+        { 2972, 1 },  -- Shikanofuda
+        { 2973, 1 },  -- Chonofuda
+    },
 }
 
 -----------------------------------
@@ -340,7 +351,7 @@ local petStock =
     },
 }
 
-local validCategories = 'general, weapons, armor, consumables, food, dice, ammo, pets, augments'
+local validCategories = 'general, weapons, armor, consumables, food, dice, ammo, ninja, pets, augments'
 
 commandObj.onTrigger = function(player, category, subcat)
     local cat = category and category:lower() or 'general'
