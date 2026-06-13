@@ -38,7 +38,7 @@ return
     -- clog the arena (and the duplicate-spawn guard frees up again). The
     -- countdown is cancelled the instant a player engages the NM, so an
     -- active fight is never interrupted. Set to 0 to disable.
-    unengagedDespawnSecs = 180,  -- 3 minutes
+    unengagedDespawnSecs = 30,  -- 30 seconds
 
     -- =========================================================
     -- TIER DEFINITIONS
