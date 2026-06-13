@@ -347,6 +347,21 @@
     "partial": true
   },
   {
+    "itemId": 25790,
+    "shortName": "sulevias_platemail_+2",
+    "context": "Armor NPC [bronze] body: Sulevias Platemail +2",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Sulevia%27s_Platemail_%2B2",
+    "raw": "DEF:153 HP+70 MP+70 STR+41 DEX+24 VIT+41 AGI+16 INT+16 MND+27 CHR+27 Accuracy+46 Attack+50 Evasion+36 Magic Evasion+59 \"Magic Def. Bonus\"+3 Haste+1% \"Skillchain Bonus\"+7 Damage taken -9% Set: Enhances \"Subtle Blow\" effect",
+    "unknown_tokens": [
+      "Set",
+      "Subtle",
+      "Blow",
+      "effect"
+    ],
+    "partial": true
+  },
+  {
     "itemId": 25791,
     "shortName": "meghanada_cuirie_+2",
     "context": "Armor NPC [gold] body: Meghanada Cuirie +2",
@@ -373,6 +388,13 @@
       "effect"
     ],
     "partial": true
+  },
+  {
+    "itemId": 25796,
+    "shortName": "taliah_manteel_+2",
+    "context": "Armor NPC [silver] body: Taliah Manteel +2",
+    "reason": "no BG-Wiki stats in cache",
+    "bgwiki": ""
   },
   {
     "itemId": 25805,
@@ -437,6 +459,13 @@
       "Mind"
     ],
     "partial": true
+  },
+  {
+    "itemId": 25834,
+    "shortName": "taliah_gages_+2",
+    "context": "Armor NPC [silver] hands: Taliah Gages +2",
+    "reason": "no BG-Wiki stats in cache",
+    "bgwiki": ""
   },
   {
     "itemId": 25856,
@@ -587,6 +616,13 @@
     "partial": true
   },
   {
+    "itemId": 25952,
+    "shortName": "taliah_crackows_+2",
+    "context": "Armor NPC [silver] feet: Taliah Crackows +2",
+    "reason": "no BG-Wiki stats in cache",
+    "bgwiki": ""
+  },
+  {
     "itemId": 25957,
     "shortName": "oshosi_leggings_+1",
     "context": "Armor NPC [silver] feet: Oshosi Leggings +1",
@@ -674,6 +710,20 @@
       "Shot",
       "Triple",
       "Shot"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 26870,
+    "shortName": "emet_harness",
+    "context": "Armor NPC [bronze] body: Emet Harness",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Emet_Harness",
+    "raw": "DEF:130 HP+61 STR+25 DEX+24 VIT+25 AGI+23 INT+23 MND+23 CHR+23 Evasion+69 Magic Evasion+64 \"Magic Def. Bonus\"+5 Haste+4% Enmity+9 Physical damage taken -5% Unity Ranking: Accuracy+10~20",
+    "unknown_tokens": [
+      "Unity",
+      "Ranking",
+      "~20"
     ],
     "partial": true
   },

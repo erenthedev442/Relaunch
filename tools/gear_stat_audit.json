@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-12T23:15:57",
+  "generated_at": "2026-06-13T12:12:00",
   "summary": {
     "reforge": {
       "total": 1320,
@@ -10,9 +10,9 @@
       "not_equip": 0
     },
     "hunting_league": {
-      "total": 399,
-      "ok": 306,
-      "naked": 87,
+      "total": 403,
+      "ok": 305,
+      "naked": 92,
       "latent_only": 0,
       "missing": 3,
       "not_equip": 3
@@ -452,10 +452,26 @@
       "latentCount": 0
     },
     {
+      "itemId": 25717,
+      "shortName": "valorous_mail",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] body: Valorous Mail",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
       "itemId": 25766,
       "shortName": "hjarrandi_breastplate",
       "source": "hunting_league",
       "context": "Armor NPC [gold] body: Hjarrandi Breastplate",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25790,
+      "shortName": "sulevias_platemail_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] body: Sulevias Platemail +2",
       "modCount": 0,
       "latentCount": 0
     },
@@ -472,6 +488,14 @@
       "shortName": "hizamaru_haramaki_+2",
       "source": "hunting_league",
       "context": "Armor NPC [gold] body: Hizamaru Haramaki +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25796,
+      "shortName": "taliah_manteel_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] body: Taliah Manteel +2",
       "modCount": 0,
       "latentCount": 0
     },
@@ -504,6 +528,14 @@
       "shortName": "ayanmo_manopolas_+2",
       "source": "hunting_league",
       "context": "Armor NPC [silver] hands: Ayanmo Manopolas +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25834,
+      "shortName": "taliah_gages_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] hands: Taliah Gages +2",
       "modCount": 0,
       "latentCount": 0
     },
@@ -612,6 +644,14 @@
       "latentCount": 0
     },
     {
+      "itemId": 25952,
+      "shortName": "taliah_crackows_+2",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] feet: Taliah Crackows +2",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
       "itemId": 25957,
       "shortName": "oshosi_leggings_+1",
       "source": "hunting_league",
@@ -676,18 +716,18 @@
       "latentCount": 0
     },
     {
-      "itemId": 26536,
-      "shortName": "pinga_tunic_+1",
-      "source": "hunting_league",
-      "context": "Armor NPC [bronze] body: Pinga Tunic +1",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
       "itemId": 26544,
       "shortName": "turms_harness_+1",
       "source": "hunting_league",
       "context": "Armor NPC [gold] body: Turms Harness +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26870,
+      "shortName": "emet_harness",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] body: Emet Harness",
       "modCount": 0,
       "latentCount": 0
     },
