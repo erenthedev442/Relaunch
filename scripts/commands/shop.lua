@@ -75,6 +75,7 @@ local stock =
 		    { 19104,   100000 },  --Darksteel jambiya +1
 		    { 16878,   100000 },  --Darksteel Lance +1
 		    { 18175,   100000 },  --Optical Needle
+        { 21460,   15000 },  --Matre bell (Lv.1 GEO handbell, MP+5)
     },
 
     armor =
