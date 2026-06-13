@@ -257,13 +257,18 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
                         playerArg:printToPlayer('No bronze items configured to test.', xi.msg.channel.SYSTEM_3)
                         return
                     end
-                    local sealId = catalog.seals.bronze.id
                     playerArg:timer(50, function(p)
                         p:createShop(#items)
                         for _, it in ipairs(items) do
-                            p:addShopItem(it.id, it.cost)
+                            -- 100,000,000 GIL each. This native shop window is
+                            -- gil-flavored, and it.cost is the SEAL price for the
+                            -- real tier menus above -- using it here listed top gear
+                            -- at ~12 gil. Hardcode a 100M gil price so this leftover
+                            -- preview can't be used to buy gear cheaply. Real seal
+                            -- purchases still go through the Bronze/Silver/Gold menus.
+                            p:addShopItem(it.id, 100000000)
                         end
-                        p:setShopCurrency(sealId)
+                        -- No setShopCurrency: charge plain gil (100M), not seals.
                         p:sendMenu(xi.menuType.SHOP)
                     end)
                 end,
