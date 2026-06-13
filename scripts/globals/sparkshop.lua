@@ -663,6 +663,10 @@ function xi.sparkshop.onEventUpdate(player, csid, option, npc)
         local item         = itemCategory and itemCategory[selection]
 
         if not item then
+            -- No catalog entry for this menu slot. Refresh the menu instead of
+            -- returning silently: a bare return sends NO updateEvent, so the
+            -- client locks forever waiting for a reply (the Rolandienne freeze).
+            player:updateEvent(sparks, 0, 0, 0, 0, remainingLimit)
             return
         end
 
@@ -703,6 +707,7 @@ function xi.sparkshop.onEventUpdate(player, csid, option, npc)
     elseif category == 20 then
         local currency = optionToItem[category][selection]
         if currency == nil then
+            player:updateEvent(sparks, player:getCurrency('aman_vouchers'))
             return
         end
 
@@ -741,6 +746,7 @@ function xi.sparkshop.onEventUpdate(player, csid, option, npc)
         local copperVouchersStored = player:getCurrency('aman_vouchers')
 
         if not validProvisions[selection] then
+            player:updateEvent(sparks, player:getCurrency('aman_vouchers'))
             return
         end
 
@@ -756,6 +762,10 @@ function xi.sparkshop.onEventUpdate(player, csid, option, npc)
         end
 
         player:updateEvent(sparks, player:getCurrency('aman_vouchers'))
+    else
+        -- Any category the handler doesn't recognize still gets a menu refresh,
+        -- so the client can never wedge waiting for a reply that never comes.
+        player:updateEvent(sparks, 0, 0, 0, 0, remainingLimit)
     end
 end
 
