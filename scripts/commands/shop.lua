@@ -220,9 +220,18 @@ local stock =
     -- (A NIN *subjob* still needs the specific tools, e.g. Shihei for Utsusemi.)
     ninja =
     {
+        -- Universal tools -- a MAIN-job NIN can use these for ANY elemental ninjutsu.
         { 2971, 1 },  -- Inoshishinofuda
         { 2972, 1 },  -- Shikanofuda
         { 2973, 1 },  -- Chonofuda
+        -- Specific tools -- a SUBJOB ninja gets no substitution, so it needs these
+        -- by name (Shihei is the big one: Utsusemi). Also handy for main-NIN utility.
+        { 1179, 1 },  -- Shihei            -- Utsusemi: Ichi/Ni (shadows)
+        { 2553, 1 },  -- Sanjaku-tenugui   -- Tonko: Ichi/Ni (Invisible)
+        { 1188, 1 },  -- Sairui-ran        -- Monomi: Ichi (Sneak)
+        { 1182, 1 },  -- Jusatsu           -- Kurayami: Ichi/Ni (Blind)
+        { 1191, 1 },  -- Kodoku            -- Dokumori: Ichi (poison / enmity)
+        { 1185, 1 },  -- Kaginawa          -- Hojo: Ichi/Ni (Slow)
     },
 }
 
