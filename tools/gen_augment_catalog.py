@@ -54,6 +54,26 @@ MOD_DISPLAY_SCALE = {
     167: 10.24, 383: 10.24, 384: 10.24,                 # haste (gear/magic/ability) /1024 -> %
 }
 
+# Forced catalyst assignments: pin a specific augId to a specific catalyst
+# itemId, bypassing the thematic greedy pass. Use when an augment we WANT in the
+# catalog keeps losing the greedy contest for its category's scarce items. The
+# item is reserved up-front so the greedy pass can't take it, and it must be a
+# valid obtainable (mob-drop, non-RARE/EX, id>=768) item or the integrity
+# asserts in main() will catch it.
+#   896 = "Sword Enhancement Spell Damage" (Enspell Dmg, mod 432). It already
+#   exists in the augments table but cat 5 is item-starved (17 candidates, 16
+#   placed, 21 dropped), so the greedy pass never reaches it. Wamoura Scale is a
+#   mob-drop alchemy reagent left unused by every category -- free to claim.
+FORCED_CATALYST = {
+    896: 2338,   # Enspell Dmg -> Wamoura Scale
+}
+
+# Display-label overrides keyed by augId, applied after clean_label(). For when
+# the augments.sql comment is technically correct but not what players call it.
+LABEL_OVERRIDE = {
+    896: 'Enspell Dmg',   # vs the stock "Sword Enhancement Spell Damage"
+}
+
 MOB_DROPLIST = SQL / "mob_droplist.sql"
 
 # Reserved IDs used as crystals/clusters per scripts/enum/item.lua.
@@ -762,7 +782,20 @@ def main():
     # Position cursors per category.
     cursor = [0] * len(CATEGORIES)
 
+    # Forced catalysts: reserve their items up-front so the greedy pass below
+    # can't consume them, guaranteeing the pinned augId gets exactly that item.
+    forced = {aid: iid for aid, iid in FORCED_CATALYST.items()
+              if aid in augs and iid in items}
+    for _fiid in forced.values():
+        used_items.add(_fiid)
+
     for aid in aug_ids_sorted:
+        # Forced assignment wins over the thematic greedy pass.
+        if aid in forced:
+            _fiid = forced[aid]
+            mapping.append((_fiid, aid, augs[aid]["label"], aug_cat[aid],
+                            items[_fiid]["short_name"]))
+            continue
         cidx = aug_cat[aid]
         # If the augment landed in the "Other" fallback (no thematic match
         # from its label), DROP it -- per spec.
@@ -890,7 +923,7 @@ def main():
             cat_str = f"{_cat_idx + 1},".ljust(3)
             lines.append(
                 f"    {id_str} = {{ augId = {aug_str} base = {base_str} "
-                f"mult = {mult_str} disp = {disp_str} cat = {cat_str} label = {lua_str(clean_label(label))} }},"
+                f"mult = {mult_str} disp = {disp_str} cat = {cat_str} label = {lua_str(LABEL_OVERRIDE.get(aid, clean_label(label)))} }},"
             )
     lines.append("}")
     lines.append("")
