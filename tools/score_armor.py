@@ -449,8 +449,17 @@ TIER_COST = {'bronze': 12, 'silver': 25, 'gold': 50, 'infamy': 500}
 # into, so check for cross-tier family overlap when adding ids here.
 FORCED_INCLUDE = {
     ('bronze', 'body'): [25790, 26849, 25683, 25780, 25702, 25686, 26870, 25684],
-    ('silver', 'body'): [25717],
+    ('silver', 'body'): [25717, 25796],
     ('gold',   'body'): [23733, 26943],
+    # Taliah +2 set (BST/SMN/PUP): pin hands/feet/body +2 to silver alongside
+    # the auto-scored Turban +2 (head) and Seraweels +2 (legs) so the full
+    # 5-piece +2 set is buyable from the one Kindreds Medal tier. These three
+    # +2 pieces score into the gold band but don't survive gold's top-N, so
+    # unpinned only their +1 (hands/feet) or nothing (body) appears. The family
+    # roll-up then drops the now-redundant +1 from silver automatically.
+    ('silver', 'hands'): [25834],  # Taliah Gages +2    (replaces Gages +1)
+    ('silver', 'feet'):  [25952],  # Taliah Crackows +2 (replaces Crackows +1)
+    #   ('silver', 'body') above also gains 25796 = Taliah Manteel +2
 }
 
 # Pin each forced item to its tier and pull it out of whatever tier it would
