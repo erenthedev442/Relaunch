@@ -780,6 +780,7 @@ INSERT IGNORE INTO `item_mods` VALUES (26700,25,-20);  -- gallian_helm_+1: +ACC
 INSERT IGNORE INTO `item_mods` VALUES (26715,23,15);  -- adorned_helm_+1: +ATT
 INSERT IGNORE INTO `item_mods` VALUES (26819,27,-6);  -- bihu_justaucorps_+1: +ENMITY
 INSERT IGNORE INTO `item_mods` VALUES (26819,119,12);  -- bihu_justaucorps_+1: +SINGING
+INSERT IGNORE INTO `item_mods` VALUES (26871,25,10);  -- emet_harness_+1: +ACC
 INSERT IGNORE INTO `item_mods` VALUES (27231,288,5);  -- zoar_subligar_+1: +DOUBLE_ATTACK
 INSERT IGNORE INTO `item_mods` VALUES (27357,357,5);  -- glyphic_pigaches_+1: +BP_DELAY
 INSERT IGNORE INTO `item_mods` VALUES (27408,27,-7);  -- hygieia_clogs_+1: +ENMITY
