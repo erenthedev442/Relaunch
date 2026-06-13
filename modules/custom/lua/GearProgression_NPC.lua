@@ -19,6 +19,7 @@
 -----------------------------------
 require('modules/module_utils')
 local catalog = require('modules/custom/lua/gear_progression_catalog')
+local sealBank = require('modules/custom/lua/hl_seal_currency')
 
 -- Resolve the zone script path from the catalog so the require + override
 -- target stay in sync with catalog.zonePath. No more hardcoded zone names.
@@ -50,7 +51,14 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
             return
         end
 
-        player:delItem(sealId, item.cost)
+        -- Consume seals across EVERY stack and container the balance check
+        -- counts. The old delItem() only hit the first stack of main inventory
+        -- and silently removed nothing on a multi-stack/wrong-container miss,
+        -- handing out free weapons. Give the item only if the seals were taken.
+        if not sealBank.take(player, sealId, item.cost) then
+            player:printToPlayer('Could not take your seals - move them into your inventory and retry.', xi.msg.channel.SYSTEM_3)
+            return
+        end
         player:addItem({ id = item.id, quantity = 1 })
         player:printToPlayer(
             string.format('Purchased %s for %d %s!', item.name, item.cost, sealName),

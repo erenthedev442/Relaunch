@@ -19,6 +19,7 @@
 -----------------------------------
 require('modules/module_utils')
 local catalog = require('modules/custom/lua/armor_catalog')
+local sealBank = require('modules/custom/lua/hl_seal_currency')
 
 -- Resolve the zone script path from the catalog so the require + override
 -- target stay in sync with catalog.zonePath. No more hardcoded zone names.
@@ -72,8 +73,20 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
             return
         end
 
-        player:delItem(sealDef.id, item.cost)
-        if extra then player:delItem(extra.id, extra.qty) end
+        -- Consume seals (and any extra) across EVERY stack and container the
+        -- balance check counts. The old delItem() only hit the first stack of
+        -- main inventory and silently removed nothing on a multi-stack/wrong-
+        -- container miss, handing out free gear. Give the item only if the
+        -- medals were actually taken.
+        if not sealBank.take(player, sealDef.id, item.cost) then
+            player:printToPlayer('Could not take your seals - move them into your inventory and retry, kupo!', xi.msg.channel.SYSTEM_3)
+            return
+        end
+        if extra and not sealBank.take(player, extra.id, extra.qty) then
+            player:addItem({ id = sealDef.id, quantity = item.cost }) -- refund the seals to keep it atomic
+            player:printToPlayer('Could not take the required extra item, kupo!', xi.msg.channel.SYSTEM_3)
+            return
+        end
         player:addItem({ id = item.id, quantity = 1 })
 
         local extraStr = extra and string.format(' + %d %s', extra.qty, extra.name or 'item') or ''
@@ -224,6 +237,36 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
                     player:getItemCount(catalog.seals.gold.id),
                     catalog.seals.gold.name:match('^(%S+)') or 'seals'),
                 function(playerArg) buildSlotMenu(playerArg, menu, 'gold', buildMainMenu) end,
+            },
+            {
+                '[TEST] Preview shop',
+                function(playerArg)
+                    -- SPIKE: open the FFXI shop GUI (item icons + stat previews)
+                    -- for the first non-empty Bronze slot, priced in bronze seals,
+                    -- to verify the engine patch + that the client allows the seal
+                    -- purchase. Remove once the NPCs are converted for real.
+                    local items
+                    for _, slotKey in ipairs({ 'body', 'head', 'hands', 'legs', 'feet' }) do
+                        local list = catalog.bronze and catalog.bronze[slotKey]
+                        if list and #list > 0 then
+                            items = list
+                            break
+                        end
+                    end
+                    if not items then
+                        playerArg:printToPlayer('No bronze items configured to test.', xi.msg.channel.SYSTEM_3)
+                        return
+                    end
+                    local sealId = catalog.seals.bronze.id
+                    playerArg:timer(50, function(p)
+                        p:createShop(#items)
+                        for _, it in ipairs(items) do
+                            p:addShopItem(it.id, it.cost)
+                        end
+                        p:setShopCurrency(sealId)
+                        p:sendMenu(xi.menuType.SHOP)
+                    end)
+                end,
             },
             {
                 'Close',
