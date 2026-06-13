@@ -1,7 +1,7 @@
 -----------------------------------
 -- trust_skoll.lua
 -- Void Keeper NPC in GM Home: the SINGLE vendor for all custom trusts.
--- Sells Gemma (901) and Meat (899) for 500,000,000 gil each. One purchase per
+-- Sells Gemma (901) and Meat (899) for 50,000,000 gil each. One purchase per
 -- character -- the spell is permanently added to the spell book on payment.
 --
 -- (The standalone "Bulwark Keeper" Meat vendor was folded into this NPC on
@@ -19,7 +19,7 @@ require('scripts/globals/combat/magic_aoe')   -- defines xi.combat.magicAoE.* (o
 
 local m = Module:new('trust_skoll')
 
-local GIL_COST = 500000000     -- 500,000,000 gil (500M) -- premium endgame trust
+local GIL_COST = 50000000      -- 50,000,000 gil (50M) -- premium endgame trust
 
 -- Every custom trust the Void Keeper sells. Add a row to sell another one.
 --   spellId    : the (repurposed) spell slot; also registered in custom_spell_ids.lua
@@ -57,7 +57,7 @@ local TRUSTS = {
 
 local NPC_NAME  = 'Void_Keeper'
 local NPC_LOOK  = 3017          -- 3017 = Trust: Prishe — a silver-haired divine warrior model; far more fitting
-                                -- for a 500M-gil vendor of legendary Trusts than a generic Moogle.
+                                -- for a 50M-gil vendor of legendary Trusts than a generic Moogle.
                                 -- Change this value if you have a preferred divine/godlike NPC look ID.
 local NPC_POS   = { x = 5.000, y = 0.000, z = -28.000, rot = 192 }
 
@@ -242,8 +242,8 @@ local GEMMA_QUIPS =
 
     -- ---- The indignity of the spell name ----------------------------------
     '[Gemma] A support goddess of overwhelming power, summoned by casting "Nanaa Mihgo." She has chosen, graciously, not to comment.',
-    '[Legendary] Calling a 500-million-gil clutch healer requires typing the name of a Mithra thief. The healer is aware. The healer is very tired.',
-    '[Gemma] Five hundred million gil. Full support suite. Summoned with the spell "Nanaa Mihgo." Every single day is like this.',
+    '[Legendary] Calling a 50-million-gil clutch healer requires typing the name of a Mithra thief. The healer is aware. The healer is very tired.',
+    '[Gemma] Fifty million gil. Full support suite. Summoned with the spell "Nanaa Mihgo." Every single day is like this.',
 
     -- ---- She is very small -----------------------------------------------
     '[Gemma] She comes up to your belt and out-heals, out-buffs, and out-lasts everything taller than her -- which is everything.',
@@ -252,7 +252,7 @@ local GEMMA_QUIPS =
 
     -- ---- Buff economics --------------------------------------------------
     '[Legendary] Somewhere right now, a five-foot woman is casting Haste II on someone who has not said thank you.',
-    '[Gemma] No healing fee. No rebuff fee. She charged 500M gil once and considers your continued survival the receipt.',
+    '[Gemma] No healing fee. No rebuff fee. She charged 50M gil once and considers your continued survival the receipt.',
     '[Gemma] Four songs. Four rolls. Full debuff suite. Total status immunity. She is not the hero of the story -- she is why the hero lived to the end of it.',
     '[Gemma] She does not fight. She keeps six debuffs on the enemy and four buffs on you, and asks only that you not stand in the AoE.',
 
@@ -265,7 +265,7 @@ local GEMMA_QUIPS =
     '[Gemma] Chaos Roll. Rogue\'s Roll. Allies\' Roll. Choral Roll. She runs the full table and has never busted. She is far too small to bust.',
 
     -- ---- Availability reminders (semi-helpful) ---------------------------
-    '[Legendary] Gemma: songs, rolls, debuffs, magic bursts, raise, and a full status-cure suite -- all packed into someone who has to look UP at a Tarutaru. Sold by the Void Keeper in GM Home. 500M gil. Worth every coin.',
+    '[Legendary] Gemma: songs, rolls, debuffs, magic bursts, raise, and a full status-cure suite -- all packed into someone who has to look UP at a Tarutaru. Sold by the Void Keeper in GM Home. 50M gil. Worth every coin.',
     '[Legendary] The Void Keeper in GM Home sells a five-foot woman who will personally keep your party alive. You have been informed. She is waiting. She is not impressed yet.',
 }
 
