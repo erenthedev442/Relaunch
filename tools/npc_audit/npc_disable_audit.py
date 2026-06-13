@@ -50,6 +50,7 @@ NPC_LIST      = ROOT / "sql" / "npc_list.sql"
 ZONE_SETTINGS = ROOT / "sql" / "zone_settings.sql"
 OUT_MD        = ROOT / "tools" / "npc_audit" / "npc_disable_candidates.md"
 OUT_JSON      = ROOT / "tools" / "npc_audit" / "npc_disable_candidates.json"
+OUT_HTML      = ROOT / "tools" / "npc_audit" / "npc_disable_candidates.html"
 
 
 def split_fields(s: str) -> list[str]:
@@ -270,6 +271,91 @@ OUT_MD.parent.mkdir(parents=True, exist_ok=True)
 OUT_MD.write_text("\n".join(lines) + "\n", encoding="utf-8")
 OUT_JSON.write_text(json.dumps(proposal, indent=1), encoding="utf-8")
 
+
+# --- self-contained searchable HTML view ------------------------------------
+def esc(s: str) -> str:
+    return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def disp_html(polutils: str, name: str) -> str:
+    p = polutils.strip()
+    label = "<i>(unnamed)</i>" if (not p or p.upper() == "NPC") else esc(p)
+    return f"{label} <code>{esc(name)}</code>"
+
+
+_CSS = """
+:root{color-scheme:dark}
+body{font:14px/1.5 system-ui,Segoe UI,sans-serif;margin:0;background:#14161a;color:#e6e6e6}
+header{position:sticky;top:0;background:#1b1e24;border-bottom:1px solid #333;padding:14px 18px;z-index:5}
+h1{margin:0 0 6px;font-size:18px}
+.sub{color:#9aa4b2;font-size:13px;margin:2px 0}
+#q{width:min(420px,68%);padding:7px 10px;margin-top:8px;border:1px solid #3a4150;border-radius:6px;background:#0f1115;color:#e6e6e6}
+label.cut{margin-left:14px;color:#9aa4b2;font-size:13px;user-select:none}
+main{padding:8px 18px 60px}
+details.zone{border:1px solid #2a2f38;border-radius:8px;margin:8px 0;background:#181b21}
+summary{cursor:pointer;padding:10px 12px;font-weight:600;list-style:none}
+summary .z{color:#7fd1ff}
+summary small{font-weight:400;color:#8b94a3;margin-left:8px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+td{padding:3px 12px;border-top:1px solid #23272f}
+td.id{color:#8b94a3;text-align:right;width:96px;font-variant-numeric:tabular-nums}
+code{color:#8b94a3;font-size:12px}
+.ref{color:#e0a04a;font-size:11px;border:1px solid #5a4a2a;border-radius:4px;padding:0 4px;margin-left:6px}
+.cutbox{padding:7px 12px 11px;color:#9aa4b2;font-size:12px;border-top:1px dashed #2a2f38}
+.hidden{display:none}
+"""
+
+_JS = """
+const q=document.getElementById('q'),cut=document.getElementById('cut');
+q.addEventListener('input',()=>{const t=q.value.trim().toLowerCase();
+ document.querySelectorAll('details.zone').forEach(d=>{
+  let any=false; const zoneMatch=d.dataset.name.includes(t);
+  d.querySelectorAll('tr').forEach(tr=>{const m=!t||zoneMatch||tr.dataset.name.includes(t);
+   tr.classList.toggle('hidden',!m); if(m)any=true;});
+  d.classList.toggle('hidden', !!t && !any && !zoneMatch);
+  if(t&&(any||zoneMatch))d.open=true; if(!t)d.open=false;
+ });});
+cut.addEventListener('change',()=>document.querySelectorAll('.cutbox')
+  .forEach(c=>c.classList.toggle('hidden',!cut.checked)));
+"""
+
+h: list[str] = []
+h.append("<!doctype html><html lang=en><head><meta charset=utf-8>")
+h.append("<meta name=viewport content='width=device-width,initial-scale=1'>")
+h.append("<title>NPC Disable Audit</title><style>" + _CSS + "</style></head><body>")
+h.append("<header><h1>NPC Disable Audit — review list</h1>")
+h.append(f"<p class=sub>{grand['total']:,} NPCs · {grand['hidden']:,} already hidden · "
+         f"<b>{grand['FLAVOR']:,} flavor candidates</b> · {grand['FUNCTIONAL']:,} functional kept · "
+         f"{grand['CUTSCENE']:,} cutscene (review) · {grand['SCENERY']:,} scenery · "
+         f"{grand['OBJECT']:,} doors/markers filtered out. <b>Disables nothing.</b></p>")
+h.append("<input id=q placeholder='filter by NPC or zone name…' autocomplete=off>")
+h.append("<label class=cut><input type=checkbox id=cut> show cutscene NPCs</label></header>")
+h.append("<main id=zones>")
+for folder, z in ranked:
+    flavor, cut_ = z["FLAVOR"], z["CUTSCENE"]
+    if not flavor and not cut_:
+        continue
+    pretty = esc(folder.replace("_", " "))
+    h.append(f"<details class=zone data-name='{pretty.lower()}'><summary>"
+             f"<span class=z>{pretty}</span> <small>({z['zoneId']}) · {len(flavor)} flavor · "
+             f"{len(z['FUNCTIONAL'])} functional · {len(z['SCENERY'])} scenery · "
+             f"{z['hidden']} hidden</small></summary>")
+    if flavor:
+        h.append("<table>")
+        for npcid, polutils, name, ref in sorted(flavor, key=lambda t: t[1].lower()):
+            badge = "<span class=ref>ref</span>" if ref else ""
+            key = f"{(polutils.strip() or name)} {name}".lower()
+            h.append(f"<tr data-name='{esc(key)}'><td class=id>{npcid}</td>"
+                     f"<td>{disp_html(polutils, name)}{badge}</td></tr>")
+        h.append("</table>")
+    if cut_:
+        names = ", ".join(sorted({esc(p.strip() or n) for _i, p, n, _r in cut_}))
+        h.append(f"<div class='cutbox hidden'>↳ {len(cut_)} cutscene NPC(s) — review (possible "
+                 f"mission steps): {names}</div>")
+    h.append("</details>")
+h.append("</main><script>" + _JS + "</script></body></html>")
+OUT_HTML.write_text("\n".join(h), encoding="utf-8")
+
 prop_total = sum(len(v) for v in proposal.values())
 print(f"NPCs total {grand['total']:,} | already hidden {grand['hidden']:,}")
 print(f"FUNCTIONAL {grand['FUNCTIONAL']:,} | FLAVOR {grand['FLAVOR']:,} | "
@@ -278,3 +364,4 @@ print(f"Default-safe proposal (FLAVOR, not [ref], not hidden): {prop_total:,} NP
       f"across {len(proposal)} zones")
 print(f"Wrote {OUT_MD}")
 print(f"Wrote {OUT_JSON}")
+print(f"Wrote {OUT_HTML}")

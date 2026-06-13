@@ -1,6 +1,6 @@
 # NPC Disable Audit — review list
 
-_Generated 2026-06-13 03:17 UTC. **Disables nothing** — this is a candidate list to review. The eventual mechanism is `status=2` (DISAPPEAR): reversible, and the entity still loads so nothing nil-crashes._
+_Generated 2026-06-13 03:25 UTC. **Disables nothing** — this is a candidate list to review. The eventual mechanism is `status=2` (DISAPPEAR): reversible, and the entity still loads so nothing nil-crashes._
 
 ## Summary
 
