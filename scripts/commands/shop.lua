@@ -140,6 +140,45 @@ local stock =
         { 5744,                                 5000 },  -- Marinara Pizza +1    -- Enmity (PLD / RUN)
         { 4330,                                 5000 },  -- Witch Risotto        -- Magic defense (mage burns)
     },
+
+    -- Corsair dice: each die TEACHES its Phantom Roll when used by a COR of the
+    -- required level (e.g. Monk Die -> Monk's Roll). Rolls are item-taught on
+    -- this server, so a cheap dice shop lets COR players assemble their full kit
+    -- without AH hunting. 1 gil each.  (!shop dice)
+    dice =
+    {
+        { 5477, 1 },  -- Warrior Die       -> Fighter's Roll
+        { 5478, 1 },  -- Monk Die          -> Monk's Roll
+        { 5479, 1 },  -- White Mage Die    -> Healer's Roll
+        { 5480, 1 },  -- Black Mage Die    -> Wizard's Roll
+        { 5481, 1 },  -- Red Mage Die      -> Warlock's Roll
+        { 5482, 1 },  -- Thief Die         -> Rogue's Roll
+        { 5483, 1 },  -- Paladin Die       -> Gallant's Roll
+        { 5484, 1 },  -- Dark Knight Die   -> Chaos Roll
+        { 5485, 1 },  -- Beastmaster Die   -> Beast Roll
+        { 5486, 1 },  -- Bard Die          -> Choral Roll
+        { 5487, 1 },  -- Ranger Die        -> Hunter's Roll
+        { 5488, 1 },  -- Samurai Die       -> Samurai Roll
+        { 5489, 1 },  -- Ninja Die         -> Ninja Roll
+        { 5490, 1 },  -- Dragoon Die       -> Drachen Roll
+        { 5491, 1 },  -- Summoner Die      -> Evoker's Roll
+        { 5492, 1 },  -- Blue Mage Die     -> Magus's Roll
+        { 5493, 1 },  -- Corsair Die       -> Corsair's Roll
+        { 5494, 1 },  -- Puppetmaster Die  -> Puppet Roll
+        { 5495, 1 },  -- Dancer Die        -> Dancer's Roll
+        { 5496, 1 },  -- Scholar Die       -> Scholar's Roll
+        { 5497, 1 },  -- Bolter's Die      -> Bolter's Roll
+        { 5498, 1 },  -- Caster's Die      -> Caster's Roll
+        { 5499, 1 },  -- Courser's Die     -> Courser's Roll
+        { 5500, 1 },  -- Blitzer's Die     -> Blitzer's Roll
+        { 5501, 1 },  -- Tactician's Die   -> Tactician's Roll
+        { 5502, 1 },  -- Allies' Die       -> Allies' Roll
+        { 5503, 1 },  -- Miser's Die       -> Miser's Roll
+        { 5504, 1 },  -- Companion's Die   -> Companion's Roll
+        { 5505, 1 },  -- Avenger's Die     -> Avenger's Roll
+        { 6368, 1 },  -- Geomancer Die     -> Naturalist's Roll
+        { 6369, 1 },  -- Rune Fencer Die   -> Runeist's Roll
+    },
 }
 
 -----------------------------------
@@ -223,7 +262,7 @@ do
     end
 end
 
-local validCategories = 'general, weapons, armor, consumables, food, augments'
+local validCategories = 'general, weapons, armor, consumables, food, dice, augments'
 
 commandObj.onTrigger = function(player, category, subcat)
     local cat = category and category:lower() or 'general'
