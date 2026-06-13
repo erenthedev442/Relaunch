@@ -182,17 +182,19 @@ end
 m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     super(zone)
 
-    -- Crystal sits 8 yalms east of the dungeon exit-warp landing spot
-    -- (exitWarp: x=-15, z=-11) so players see it the moment they return
-    -- from a dungeon run. Same z-row as the exit warp, same y as ground.
+    -- Teleport-services cluster on the east side of GM Home: the three travel
+    -- NPCs (Home Point / Warpman / ExpCamp Moogle) sit together here so players
+    -- find every warp option in one spot. IMPORTANT: keep this position in sync
+    -- with the homepoint-return coord for index 122 in scripts/globals/homepoint.lua,
+    -- or raising / warping back will land players away from the crystal.
     local HomeCrystal = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Home_Point',
         packetName = 'Home Point',
         look       = 51,        -- homepoint crystal model (modelid 0x0033)
-        x          = -7.000,
+        x          =  4.000,
         y          =  0.000,
-        z          = -11.000,
+        z          = -12.000,
         rotation   =  128,
         widescan   = 1,
 

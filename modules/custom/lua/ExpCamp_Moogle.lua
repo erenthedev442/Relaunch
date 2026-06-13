@@ -92,11 +92,11 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         name       = 'ExpCamp_Moogle',
         packetName = string.format('%sExpCamp Moogle', xi.icon.STAR_LARGE),
         look       = 2419,
-        -- GM Home Activities cluster (z=-21): ExpCamp / Weekly Hunts /
-        -- Dungeon Master / Infamy Vendor.
-        x          =  -4.500,
+        -- Teleport-services cluster (east side of GM Home), grouped with the
+        -- Home Point crystal and Warpman so all the warp NPCs are together.
+        x          =   6.000,
         y          =   0.000,
-        z          = -21.000,
+        z          = -15.000,
         rotation   =   128,
         widescan   =  1,
 

@@ -1,7 +1,7 @@
 -----------------------------------
 -- gil_warp_npc.lua
--- Warpman: pay gil to insta-warp to popular zones. The first gil sink
--- in the GIL SERVICES row at GM Home (z=-35).
+-- Warpman: pay gil to insta-warp to popular zones. Sits in the teleport-
+-- services cluster at GM Home (east side, beside the Home Point crystal).
 --
 -- Menu is TWO LEVELS to stay under FFXI's ~150-byte customMenu packet
 -- cap (a flat 15-row list truncated client-side):
