@@ -67,7 +67,6 @@ return {
     [1293] = { augId = 354,  base = 1,   mult = 1,  disp = 1,    cat = 1,  label = 'Quadruple Attack' },
     [1516] = { augId = 360,  base = 10,  mult = 1,  disp = 1,    cat = 1,  label = 'Save TP' },
     [1591] = { augId = 370,  base = 1,   mult = 1,  disp = 1,    cat = 1,  label = 'Reverse Flourish' },
-    [1620] = { augId = 380,  base = 1,   mult = 1,  disp = 1,    cat = 1,  label = 'Physical Damage Limit' },
     [1628] = { augId = 512,  base = 1,   mult = 1,  disp = 1,    cat = 1,  label = 'STR' },
     [1640] = { augId = 550,  base = 1,   mult = 1,  disp = 1,    cat = 1,  label = 'STR DEX' },
     [1680] = { augId = 551,  base = 1,   mult = 1,  disp = 1,    cat = 1,  label = 'STR VIT' },

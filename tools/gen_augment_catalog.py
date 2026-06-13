@@ -112,6 +112,17 @@ PROGRESSION_AUGS = {
     75: (942,  1, 1, 1, 12, 'Cap. Point +33%'),   # philosophers_stone
 }
 
+# Augments to DROP from the catalog entirely, keyed by augId. The augment still
+# exists in the engine/DB (and on any gear already carrying it) -- it is just no
+# longer offered by the Augment Moogle, !shop, or the docs, and its catalyst is
+# freed for other augments. Applied as a skip in the greedy assignment in main().
+#   380 = "Physical Damage Limit" raises the per-hit physical damage CAP, which is
+#         moot now that the server-wide damage cap was raised to 131,071 -- removed
+#         to declutter cat 1 and free its catalyst.
+EXCLUDED_AUGS = {
+    380,
+}
+
 MOB_DROPLIST = SQL / "mob_droplist.sql"
 
 # Reserved IDs used as crystals/clusters per scripts/enum/item.lua.
@@ -837,6 +848,10 @@ def main():
             used_items.add(_piid)
 
     for aid in aug_ids_sorted:
+        # Explicitly-excluded augments (EXCLUDED_AUGS) are skipped entirely: no
+        # catalyst, no catalog entry. They stay in the engine, just unoffered.
+        if aid in EXCLUDED_AUGS:
+            continue
         # Forced assignment wins over the thematic greedy pass.
         if aid in forced:
             _fiid = forced[aid]
