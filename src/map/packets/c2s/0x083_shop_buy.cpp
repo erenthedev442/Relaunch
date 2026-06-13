@@ -62,6 +62,30 @@ void GP_CLI_COMMAND_SHOP_BUY::process(MapSession* PSession, CCharEntity* PChar) 
         quantity = PItem->getStackSize();
     }
 
+    // FJB: custom-currency shops (Hunting League seal/medal vendors, etc.) charge
+    // a configured inventory item instead of gil. createShop()/Clean() resets the
+    // currency to 0 (gil); a vendor's Lua opts in via player:setShopCurrency(id).
+    const uint16 currencyItem = PChar->Container->getShopCurrency();
+    if (currencyItem != 0)
+    {
+        const uint32 totalCost = price * quantity;
+        if (charutils::getItemCount(PChar, currencyItem) >= totalCost)
+        {
+            if (charutils::AddItem(PChar, LOC_INVENTORY, itemId, quantity) != ERROR_SLOTID)
+            {
+                const uint8 slotID = PChar->getStorage(LOC_INVENTORY)->SearchItem(currencyItem);
+                if (slotID != ERROR_SLOTID)
+                {
+                    charutils::UpdateItem(PChar, LOC_INVENTORY, slotID, -static_cast<int32>(totalCost));
+                }
+                ShowInfo("User '%s' bought %u of item %u [VENDOR, currency %u]", PChar->getName(), quantity, itemId, currencyItem);
+                PChar->pushPacket<GP_SERV_COMMAND_SHOP_BUY>(this->ShopItemIndex, quantity);
+                PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
+            }
+        }
+        return;
+    }
+
     const CItem* gil = PChar->getStorage(LOC_INVENTORY)->GetItem(0);
 
     if (!gil || !gil->isType(ITEM_CURRENCY) || gil->getReserve() != 0)

@@ -267,6 +267,7 @@ public:
 
     void createShop(uint8 size, const sol::object& arg1);
     void addShopItem(uint16 itemID, double rawPrice, const sol::object& arg2, const sol::object& arg3);
+    void setShopCurrency(uint16 itemID); // FJB: open shop charges this item instead of gil
     auto getCurrentGPItem(uint8 guildId) const -> std::tuple<uint16, uint16>;
     bool breakLinkshell(const std::string& lsname);
     bool addLinkpearl(const std::string& lsname, bool equip);

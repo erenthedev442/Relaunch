@@ -4877,6 +4877,25 @@ void CLuaBaseEntity::addShopItem(uint16 itemID, double rawPrice, const sol::obje
 }
 
 /************************************************************************
+ *  Function: setShopCurrency()
+ *  Purpose : Make the currently-built shop charge an inventory item instead of
+ *            gil (FJB custom -- used by the Hunting League seal/medal vendors).
+ *  Example : player:setShopCurrency(xi.item.SOME_SEAL)   -- 0 restores gil
+ *  Notes   : Call after createShop(); reset to gil (0) by the shop's Clean().
+ ************************************************************************/
+
+void CLuaBaseEntity::setShopCurrency(uint16 itemID)
+{
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
+        return;
+    }
+
+    static_cast<CCharEntity*>(m_PBaseEntity)->Container->setShopCurrency(itemID);
+}
+
+/************************************************************************
  *  Function: getCurrentGPItem()
  *  Purpose : Returns the current Guild Point Item needed
  *  Example : player:getCurrentGPItem(guildID)
@@ -19961,6 +19980,7 @@ void CLuaBaseEntity::Register()
 
     SOL_REGISTER("createShop", CLuaBaseEntity::createShop);
     SOL_REGISTER("addShopItem", CLuaBaseEntity::addShopItem);
+    SOL_REGISTER("setShopCurrency", CLuaBaseEntity::setShopCurrency);
     SOL_REGISTER("getCurrentGPItem", CLuaBaseEntity::getCurrentGPItem);
     SOL_REGISTER("breakLinkshell", CLuaBaseEntity::breakLinkshell);
     SOL_REGISTER("addLinkpearl", CLuaBaseEntity::addLinkpearl);

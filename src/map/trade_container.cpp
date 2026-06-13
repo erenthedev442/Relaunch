@@ -268,9 +268,10 @@ void CTradeContainer::unreserveUnconfirmed()
 
 void CTradeContainer::Clean()
 {
-    m_type       = 0;
-    m_ItemsCount = 0;
-    m_exSize     = 0;
+    m_type         = 0;
+    m_ItemsCount   = 0;
+    m_exSize       = 0;
+    m_shopCurrency = 0; // FJB: shops default to charging gil
 
     m_PItem.clear();
     m_PItem.resize(CONTAINER_SIZE, nullptr);

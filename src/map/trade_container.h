@@ -64,12 +64,18 @@ public:
     void setExSize(uint8 size); // Set "extra" size information; purpose changes depending on container's goal
     void unreserveUnconfirmed();
 
+    // FJB: custom-currency shops. When non-zero, the shop charges this inventory
+    // itemID instead of gil (see packets/c2s/0x083_shop_buy.cpp). Reset by Clean().
+    void   setShopCurrency(uint16 itemID) { m_shopCurrency = itemID; }
+    uint16 getShopCurrency() const { return m_shopCurrency; }
+
     void Clean(); // we clean the container
 
 private:
     uint8 m_type{};       // Container type (crystal type, store nation, etc.)
     uint8 m_ItemsCount{}; // The number of items in the container (set by yourself)
-    uint8 m_exSize{};     // Can be used as a custom delineation point inside a container
+    uint8  m_exSize{};       // Can be used as a custom delineation point inside a container
+    uint16 m_shopCurrency{}; // FJB: itemID charged instead of gil (0 = gil)
 
     std::vector<CItem*> m_PItem;
     std::vector<uint8>  m_slotID;
