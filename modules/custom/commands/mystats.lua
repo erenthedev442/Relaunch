@@ -40,15 +40,15 @@ commandObj.cmdprops =
     parameters = '',
 }
 
--- Color channels for visual contrast. FFXI client renders each chat
--- channel in a distinct color, so we send headers and body to different
--- channels rather than trying to embed escape codes (no native bold).
--- BOTH are SYSTEM channels (never a LINKSHELL channel) so this output is
--- never mistaken for the server's [Legendary] linkshell chat.
---   SYSTEM_3 (29) = yellow   -- section headers
---   SYSTEM_1 (6)  = default  -- body lines
-local CH_BODY   = xi.msg.channel.SYSTEM_1
+-- Output channels. Everything goes on SYSTEM_3 (29) = clean yellow text.
+-- WHY: the old body channel SYSTEM_1 (6) makes the FFXI client stamp a
+-- "----== SystemMessage ==----" banner above EVERY message, spamming a
+-- separator line between every single stat row. SYSTEM_3 has no banner.
+-- Kept as two names so the body could later take a *different* clean channel
+-- for colour contrast -- but avoid SYSTEM_1/2 (banner) and SAY/LINKSHELL
+-- channels (say-filter can hide it / looks like LS chat).
 local CH_HEADER = xi.msg.channel.SYSTEM_3
+local CH_BODY   = xi.msg.channel.SYSTEM_3
 
 -- Ascension (Provenance) catalog -- pcall so !mystats keeps working even if
 -- the prestige module is ever renamed/removed.
