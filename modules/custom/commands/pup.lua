@@ -11,6 +11,7 @@
 --   !pup load <name>     - apply a saved loadout (auto-dismisses the automaton)
 --   !pup list            - list your saved loadouts
 --   !pup show            - show your deployed automaton's current parts
+--   !pup unlock          - unlock ALL automaton frames & heads (one-time)
 --   !pup clear <name>    - delete a saved loadout
 --
 -- Names: one word, letters/numbers, up to 10 chars (e.g. tank, nuke, rngacc).
@@ -266,7 +267,7 @@ local function doList(player)
     if not any then
         player:printToPlayer('  (none yet -- deploy a setup, then !pup save <name>)', B)
     end
-    player:printToPlayer('  !pup load <name> | save <name> | clear <name> | show | (no arg = menu)', B)
+    player:printToPlayer('  !pup load/save/clear <name> | show | unlock | (no arg = menu)', B)
 end
 
 local function doShow(player)
@@ -296,6 +297,43 @@ local function doShow(player)
     end
 end
 
+-----------------------------------
+-- Unlock every automaton frame & head in one shot. unlockAttachment() is the
+-- same engine binding Ghatsad (Aht Urhgan Whitegate) uses to grant frames/heads
+-- from the retail "No Strings Attached" line -- it sets the per-character unlock
+-- bit, so the parts then appear in the Automaton menu / Trunk normally. It's
+-- idempotent, so we set every bit unconditionally and just tailor the message.
+-- Harlequin frame+head are the PUP starter set, so they're omitted.
+-----------------------------------
+local UNLOCK_ITEMS =
+{
+    { xi.item.VALOREDGE_FRAME,   'Valoredge Frame'   },
+    { xi.item.VALOREDGE_HEAD,    'Valoredge Head'    },
+    { xi.item.SHARPSHOT_FRAME,   'Sharpshot Frame'   },
+    { xi.item.SHARPSHOT_HEAD,    'Sharpshot Head'    },
+    { xi.item.STORMWAKER_FRAME,  'Stormwaker Frame'  },
+    { xi.item.STORMWAKER_HEAD,   'Stormwaker Head'   },
+    { xi.item.SOULSOOTHER_HEAD,  'Soulsoother Head'  },
+    { xi.item.SPIRITREAVER_HEAD, 'Spiritreaver Head' },
+}
+
+local function doUnlock(player)
+    local hadAll = true
+    for _, entry in ipairs(UNLOCK_ITEMS) do
+        if not player:hasAttachment(entry[1]) then
+            hadAll = false
+        end
+        player:unlockAttachment(entry[1])  -- idempotent; always set the bit
+    end
+
+    if hadAll then
+        player:printToPlayer('[Automaton] You already have every frame and head, kupo!', H)
+    else
+        player:printToPlayer('[Automaton] All automaton frames & heads unlocked! Open the '
+            .. 'Automaton menu (or visit an Automaton Trunk) to equip them, kupo!', H)
+    end
+end
+
 local function openMenu(player)
     local options = {}
     for n = 1, NUM_SLOTS do
@@ -314,6 +352,7 @@ local function openMenu(player)
     end
 
     table.insert(options, { 'Show current parts', function(p) doShow(p) end })
+    table.insert(options, { 'Unlock all frames/heads', function(p) doUnlock(p) end })
     table.insert(options, { 'Close', function() end })
 
     player:customMenu({ title = 'Automaton Loadouts', options = options })
@@ -338,10 +377,12 @@ commandObj.onTrigger = function(player, sub, name)
         doList(player)
     elseif sub == 'show' or sub == 'current' then
         doShow(player)
+    elseif sub == 'unlock' or sub == 'unlockall' then
+        doUnlock(player)
     elseif sub == 'clear' or sub == 'delete' or sub == 'del' then
         doClear(player, name)
     else
-        player:printToPlayer('Usage: !pup (menu) | save <name> | load <name> | list | show | clear <name>', H)
+        player:printToPlayer('Usage: !pup (menu) | save <name> | load <name> | list | show | unlock | clear <name>', H)
     end
 end
 
