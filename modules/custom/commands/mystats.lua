@@ -44,9 +44,12 @@ commandObj.cmdprops =
 -- channel in a distinct color, so we send headers and body to different
 -- channels rather than trying to embed escape codes (no native bold).
 --   SYSTEM_3   (29) = yellow      -- body lines, the default "system" color
---   LINKSHELL2 (27) = green       -- section headers, pops against yellow
+--   LINKSHELL3 (30) = green       -- section headers. LS3 has no real linkshell
+--                                    slot, so it never collides with the global
+--                                    [Legendary] linkshell that now lives in the
+--                                    2nd LS slot (was LINKSHELL2 / 27 before).
 local CH_BODY   = xi.msg.channel.SYSTEM_3
-local CH_HEADER = xi.msg.channel.LINKSHELL2
+local CH_HEADER = xi.msg.channel.LINKSHELL3
 
 -- Ascension (Provenance) catalog -- pcall so !mystats keeps working even if
 -- the prestige module is ever renamed/removed.
