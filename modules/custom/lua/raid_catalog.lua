@@ -61,8 +61,9 @@ catalog.boss =
 -- Starts when HP first drops to startHpp. Stances alternate every
 -- periodSec, applied as setMod OVERRIDES on the two damage-taken mods
 -- (absolute values - the module sets them, never stacks them).
--- PHYS_DMG_TAKEN / MAGIC_DMG_TAKEN are percentages: -90 = near-immune,
--- +30 = vulnerable.
+-- DMGPHYS / DMGMAGIC are the engine's damage-taken mods on a /10000 scale
+-- (battleutils divides by 10000): -9000 = take 90% less (near-immune),
+-- +3000 = take 30% more (vulnerable).
 catalog.stance =
 {
     startHpp  = 90,
@@ -72,12 +73,12 @@ catalog.stance =
         {
             id  = 'aegis',
             msg = 'The Star-Devourer hardens into AEGIS STANCE - blades glance off! (Magic rips through.)',
-            mods = { [xi.mod.PHYS_DMG_TAKEN] = -90, [xi.mod.MAGIC_DMG_TAKEN] = 30 },
+            mods = { [xi.mod.DMGPHYS] = -9000, [xi.mod.DMGMAGIC] = 3000 },
         },
         {
             id  = 'umbral',
             msg = 'The Star-Devourer dissolves into UMBRAL STANCE - spells gutter out! (Steel bites deep.)',
-            mods = { [xi.mod.PHYS_DMG_TAKEN] = 30, [xi.mod.MAGIC_DMG_TAKEN] = -90 },
+            mods = { [xi.mod.DMGPHYS] = 3000, [xi.mod.DMGMAGIC] = -9000 },
         },
     },
 }
