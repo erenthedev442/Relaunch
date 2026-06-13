@@ -180,6 +180,38 @@ local stock =
         { 6368, 1 },  -- Geomancer Die     -> Naturalist's Roll
         { 6369, 1 },  -- Rune Fencer Die   -> Runeist's Roll
     },
+
+    -- Ranged ammo for RNG / COR / NIN. A leveling-friendly ladder per type
+    -- (cheap stacks, so a leveler is never stranded without arrows) plus a
+    -- Lv99 endgame option. Shops sell per-unit; buy a stack of up to 99.
+    ammo =
+    {
+        -- Arrows (bows)
+        { 17319,   2 },  -- Bone Arrow      (Lv7)
+        { 17320,   3 },  -- Iron Arrow      (Lv14)
+        { 18155,   5 },  -- Scorpion Arrow  (Lv40)
+        { 18159,  10 },  -- Demon Arrow     (Lv60)
+        { 17325,  20 },  -- Kabura Arrow    (Lv70)
+        { 21297,  50 },  -- Chrono Arrow    (Lv99)
+        -- Bolts (crossbows)
+        { 17336,   2 },  -- Crossbow Bolt   (Lv1)
+        { 17337,   5 },  -- Mythril Bolt    (Lv40)
+        { 19197,  20 },  -- Fusion Bolt     (Lv79)
+        { 21316,  50 },  -- Eminent Bolt    (Lv99)
+        -- Bullets (guns)
+        { 17343,   2 },  -- Bronze Bullet   (Lv1)
+        { 17340,   3 },  -- Bullet          (Lv22)
+        { 18160,   5 },  -- Spartan Bullet  (Lv30)
+        { 17341,   8 },  -- Silver Bullet   (Lv50)
+        { 18723,  20 },  -- Steel Bullet    (Lv66)
+        { 21331,  50 },  -- Eminent Bullet  (Lv99)
+        -- Shuriken (NIN throwing)
+        { 17301,   3 },  -- Shuriken        (Lv18)
+        { 17302,   5 },  -- Juji Shuriken   (Lv28)
+        { 17303,   8 },  -- Manji Shuriken  (Lv48)
+        { 17304,  20 },  -- Fuma Shuriken   (Lv60)
+        { 21353,  50 },  -- Happo Shuriken  (Lv99)
+    },
 }
 
 -----------------------------------
@@ -307,7 +339,7 @@ local petStock =
     },
 }
 
-local validCategories = 'general, weapons, armor, consumables, food, dice, pets, augments'
+local validCategories = 'general, weapons, armor, consumables, food, dice, ammo, pets, augments'
 
 commandObj.onTrigger = function(player, category, subcat)
     local cat = category and category:lower() or 'general'
