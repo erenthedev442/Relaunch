@@ -73,11 +73,44 @@ void GP_CLI_COMMAND_SHOP_BUY::process(MapSession* PSession, CCharEntity* PChar) 
         {
             if (charutils::AddItem(PChar, LOC_INVENTORY, itemId, quantity) != ERROR_SLOTID)
             {
-                const uint8 slotID = PChar->getStorage(LOC_INVENTORY)->SearchItem(currencyItem);
-                if (slotID != ERROR_SLOTID)
+                // Charge the currency across EVERY stack and container that the
+                // getItemCount check above counts. The old code debited only the
+                // first stack of main inventory -- and charutils::UpdateItem
+                // debits nothing when the cost exceeds that one stack -- so a
+                // buyer whose medals were in the mog safe, or split across
+                // 99-stacks, was never charged while the item was handed over.
+                uint32 remaining = totalCost;
+                for (uint8 loc = 0; loc < CONTAINER_ID::MAX_CONTAINER_ID && remaining > 0; ++loc)
                 {
-                    charutils::UpdateItem(PChar, LOC_INVENTORY, slotID, -static_cast<int32>(totalCost));
+                    CItemContainer* PCurrencyBag = PChar->getStorage(loc);
+                    if (PCurrencyBag == nullptr)
+                    {
+                        continue;
+                    }
+
+                    for (const uint8 slotID : PCurrencyBag->SearchItems(currencyItem))
+                    {
+                        if (remaining == 0)
+                        {
+                            break;
+                        }
+
+                        CItem* PCurrency = PCurrencyBag->GetItem(slotID);
+                        if (PCurrency == nullptr)
+                        {
+                            continue;
+                        }
+
+                        const uint32 available = PCurrency->getQuantity() - PCurrency->getReserve();
+                        const uint32 take      = available < remaining ? available : remaining;
+                        if (take > 0)
+                        {
+                            charutils::UpdateItem(PChar, loc, slotID, -static_cast<int32>(take));
+                            remaining -= take;
+                        }
+                    }
                 }
+
                 ShowInfo("User '%s' bought %u of item %u [VENDOR, currency %u]", PChar->getName(), quantity, itemId, currencyItem);
                 PChar->pushPacket<GP_SERV_COMMAND_SHOP_BUY>(this->ShopItemIndex, quantity);
                 PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
