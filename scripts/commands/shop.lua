@@ -263,7 +263,51 @@ do
     end
 end
 
-local validCategories = 'general, weapons, armor, consumables, food, dice, augments'
+-----------------------------------
+-- BST pets: jug broths (summon a pet) + pet food (heal/feed it).
+-- Split into two sub-pages because a FFXI shop window holds only 16 items:
+--   !shop pets        -> curated best/most-used jug pets
+--   !shop pets food   -> pet food biscuits
+-- Buy a broth, then use Call Beast / Bestial Loyalty to summon it.
+-- NOTE: the broth->pet link is data/C++-driven, so the pet labels below are
+-- best-effort -- players buy by the broth's in-game name. Prices easily tuned.
+-----------------------------------
+local petStock =
+{
+    jugs =
+    {
+        { 17902, 1000 },  -- Lucky Broth        -> CourierCarrie (crab): Metallic Body, heavy PDT -- top tank/utility jug
+        { 17917, 1000 },  -- Bubbly Broth       -- strong melee-DD jug
+        { 21498, 1000 },  -- Crackling Broth    -- melee-DD jug
+        { 21496, 1000 },  -- Furious Broth      -- melee-DD jug
+        { 21497, 1000 },  -- Rapid Broth        -- fast multi-hit jug
+        { 21493, 1000 },  -- Deepwater Broth    -- ranged/bird jug
+        { 21495, 1000 },  -- Heavenly Broth     -- utility jug
+        { 21494, 1000 },  -- Wetlands Broth     -- utility jug
+        { 21449, 1000 },  -- Dire Broth         -- melee-DD jug
+        { 21450, 1000 },  -- Electrified Broth  -- thunder-DD jug
+        { 21444, 1000 },  -- Livid Broth        -- melee-DD jug
+        { 21445, 1000 },  -- Lyrical Broth      -- support jug
+        { 21446, 1000 },  -- Airy Broth         -- utility jug
+        { 21440, 1000 },  -- Sugary Broth       -- DD jug
+        { 21441, 1000 },  -- Glazed Broth       -- DD jug (HQ broth)
+        { 17922, 1000 },  -- Blackwater Broth   -- DD jug
+    },
+
+    food =
+    {
+        { 17016, 500 },  -- Pet Food Alpha Biscuit
+        { 17017, 500 },  -- Pet Food Beta Biscuit
+        { 17018, 500 },  -- Pet Food Gamma Biscuit
+        { 17019, 500 },  -- Pet Food Delta Biscuit
+        { 17020, 500 },  -- Pet Food Epsilon Biscuit
+        { 17021, 500 },  -- Pet Food Zeta Biscuit
+        { 17022, 500 },  -- Pet Food Eta Biscuit
+        { 17023, 500 },  -- Pet Food Theta Biscuit
+    },
+}
+
+local validCategories = 'general, weapons, armor, consumables, food, dice, pets, augments'
 
 commandObj.onTrigger = function(player, category, subcat)
     local cat = category and category:lower() or 'general'
@@ -297,6 +341,20 @@ commandObj.onTrigger = function(player, category, subcat)
 
         player:printToPlayer(string.format('Augment catalysts -- %s gil each. Trade purchases to the Augment Moogle at GM Home to apply.', AUGMENT_PRICE_STR), xi.msg.channel.SYSTEM_3)
         xi.shop.general(player, list)
+        return
+    end
+
+    -- BST pets: curated jug broths, with a pet-food sub-page.
+    if cat == 'pets' then
+        local sub = subcat and subcat:lower() or ''
+        if sub == 'food' or sub == 'pots' or sub == 'biscuits' then
+            player:printToPlayer('BST pet food -- feed/heal your jug pet.', xi.msg.channel.SYSTEM_3)
+            xi.shop.general(player, petStock.food)
+        else
+            player:printToPlayer('BST jug pets -- buy a broth, then Call Beast / Bestial Loyalty to summon it.', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('Pet food page: !shop pets food', xi.msg.channel.SYSTEM_3)
+            xi.shop.general(player, petStock.jugs)
+        end
         return
     end
 
