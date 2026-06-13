@@ -36,6 +36,11 @@ local m = Module:new('hunting_league')
 local CV_POINTS  = 'HL_Points'
 local CV_TIER    = 'HL_Tier'
 local MAX_TIER   = #catalog.tiers
+-- Un-engaged NM auto-despawn window (seconds). A popped NM that nobody
+-- engages within this time vanishes on its own; engaging it cancels the
+-- countdown (see onMobEngage / onMobRoam in the spawner below). Tunable in
+-- the catalog; 0 disables.
+local DESPAWN_SECS = catalog.unengagedDespawnSecs or 180
 -- customMenu prompt payload is capped at 150 bytes total
 -- (title + every option label, each NUL-terminated).
 --
@@ -536,6 +541,34 @@ local function insertSpawnerNPC(zone)
                         isAggroable          = true,
                         releaseIdOnDisappear = true,
 
+                        -- Idle despawn: an un-engaged NM cleans itself up after
+                        -- DESPAWN_SECS so an ignored/accidental pop (or one that's
+                        -- tagged then abandoned) doesn't clog the arena or block a
+                        -- re-pop behind the dup-spawn guard. State machine on the
+                        -- HL_DespawnAt localVar (absolute os.time deadline):
+                        --   * stamped after spawn() below   (initial countdown)
+                        --   * onMobEngage    -> 0            (fighting; no despawn)
+                        --   * onMobDisengage -> re-armed     (abandoned; count again)
+                        --   * onMobRoam      -> despawns once past the deadline
+                        -- onMobRoam fires only while alive AND un-engaged, so it
+                        -- can never interrupt an active fight.
+                        onMobEngage = function(engagedMob)
+                            engagedMob:setLocalVar('HL_DespawnAt', 0)
+                        end,
+
+                        onMobDisengage = function(disMob)
+                            if DESPAWN_SECS > 0 then
+                                disMob:setLocalVar('HL_DespawnAt', os.time() + DESPAWN_SECS)
+                            end
+                        end,
+
+                        onMobRoam = function(roamMob)
+                            local deadline = roamMob:getLocalVar('HL_DespawnAt')
+                            if deadline > 0 and os.time() >= deadline then
+                                DespawnMob(roamMob:getID())
+                            end
+                        end,
+
                         onMobDeath = function(deadMob, killer, optParams)
                             if not killer then return end
                             local playerTier = getTier(killer)
@@ -739,6 +772,14 @@ local function insertSpawnerNPC(zone)
 
                     mob:setSpawn(mPos.x, mPos.y, mPos.z, mPos.rot)
                     mob:spawn()
+
+                    -- Arm the un-engaged despawn (absolute deadline). onMobRoam
+                    -- removes the NM if it's still un-engaged past this time;
+                    -- onMobEngage clears it. Stamped after spawn() so the stat
+                    -- recalculation spawn() performs can't wipe it.
+                    if DESPAWN_SECS > 0 then
+                        mob:setLocalVar('HL_DespawnAt', os.time() + DESPAWN_SECS)
+                    end
 
                     -- Block capacity points on kill. HL has its own currency
                     -- (Hunt Marks); without this gate, the cubic CP formula

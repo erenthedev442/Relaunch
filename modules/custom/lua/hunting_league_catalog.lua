@@ -31,6 +31,16 @@ return
     currencyName = 'Hunt Marks',
 
     -- =========================================================
+    -- SPAWN BEHAVIOUR
+    -- =========================================================
+    -- Un-engaged despawn: a popped NM that nobody engages within this many
+    -- seconds despawns on its own, so an ignored or accidental pop doesn't
+    -- clog the arena (and the duplicate-spawn guard frees up again). The
+    -- countdown is cancelled the instant a player engages the NM, so an
+    -- active fight is never interrupted. Set to 0 to disable.
+    unengagedDespawnSecs = 180,  -- 3 minutes
+
+    -- =========================================================
     -- TIER DEFINITIONS
     -- =========================================================
     --
