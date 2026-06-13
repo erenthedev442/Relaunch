@@ -230,6 +230,39 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     end
 
     -----------------------------------
+    -- UNLOCK ALL AUTOMATON PARTS (PUP)
+    -- Mirrors the stock !addallattachments: unlockAttachment() sets the per-
+    -- character bit for every automaton head/frame/attachment so they become
+    -- assignable at the Automaton menu / Tinkerer's Bench. (Buying the item
+    -- alone does NOT unlock it -- the engine checks HasAttachment before letting
+    -- you equip one.) Idempotent. List mirrors scripts/commands/
+    -- addallattachments.lua: heads 8193-8198, frames 8224-8227, attachments 8449+.
+    -----------------------------------
+    local AUTOMATON_PARTS =
+    {
+        8193, 8194, 8195, 8196, 8197, 8198, 8224, 8225, 8226, 8227,
+        8449, 8450, 8451, 8452, 8453, 8454, 8455, 8456, 8457, 8458,
+        8459, 8460, 8461, 8462, 8463, 8464, 8465, 8466, 8481, 8482,
+        8483, 8484, 8485, 8486, 8487, 8488, 8489, 8490, 8491, 8492,
+        8493, 8494, 8495, 8496, 8497, 8498, 8513, 8514, 8515, 8516,
+        8517, 8518, 8519, 8520, 8521, 8522, 8523, 8524, 8525, 8526,
+        8527, 8528, 8545, 8546, 8547, 8548, 8549, 8550, 8551, 8552,
+        8553, 8554, 8555, 8556, 8557, 8577, 8578, 8579, 8580, 8581,
+        8582, 8583, 8584, 8585, 8586, 8587, 8588, 8589, 8590, 8609,
+        8610, 8611, 8612, 8613, 8614, 8615, 8616, 8617, 8618, 8619,
+        8620, 8621, 8622, 8641, 8642, 8643, 8644, 8645, 8646, 8648,
+        8649, 8650, 8651, 8652, 8653, 8654, 8655, 8673, 8674, 8675,
+        8676, 8677, 8678, 8680, 8681, 8682, 8683,
+    }
+
+    local function giveAllAttachments(player)
+        for _, id in ipairs(AUTOMATON_PARTS) do
+            pcall(function() player:unlockAttachment(id) end)
+        end
+        player:printToPlayer('All automaton frames, heads & attachments unlocked, kupo!', 0, 'Unlocker')
+    end
+
+    -----------------------------------
     -- GRANT EVERYTHING
     -----------------------------------
     local function giveEverything(player)
@@ -243,6 +276,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         giveAllHomepoints(player)
         giveAllSurvivalGuides(player)
         bumpWardrobeSizes(player)
+        giveAllAttachments(player)
         player:printToPlayer('Everything granted, kupo! You\'re unstoppable!', 0, 'Unlocker')
     end
 
@@ -423,6 +457,25 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         },
     }
 
+    local confirmAT =
+    {
+        {
+            'Yes - Unlock all automaton parts!',
+            function(player)
+                giveAllAttachments(player)
+                menu.options = teleportMenu
+                delaySendMenu(player)
+            end,
+        },
+        {
+            'No - Go back.',
+            function(player)
+                menu.options = teleportMenu
+                delaySendMenu(player)
+            end,
+        },
+    }
+
     local confirmWD =
     {
         {
@@ -515,7 +568,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             -- GMPROMPT UI only renders the first 8 - so options 9+ were
             -- silently dropped (the user couldn't see Survival Guides /
             -- Wardrobes / Give Me Everything!).
-            'Teleports',
+            'Teleports / Pets',
             function(player)
                 menu.options = teleportMenu
                 delaySendMenu(player)
@@ -570,6 +623,14 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             function(player)
                 warnPatience(player)
                 menu.options = confirmSG
+                delaySendMenu(player)
+            end,
+        },
+        {
+            'Pet Attachments',
+            function(player)
+                warnPatience(player)
+                menu.options = confirmAT
                 delaySendMenu(player)
             end,
         },
