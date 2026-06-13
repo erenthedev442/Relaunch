@@ -37,13 +37,18 @@ effectObject.onEffectGain = function(target, effect)
 
         local power = effectArg:getPower()
         effectArg:setPower(0)
-        effectArg:delMod(xi.mod.ATT, 2 * power)
-        effectArg:delMod(xi.mod.CRITHITRATE, power)
+        -- NOTE (Legendary core patch): this LSB fork's CLuaStatusEffect binds
+        -- addMod but NOT delMod, so the stock delMod() calls errored on every
+        -- miss ("attempt to call method 'delMod' (a nil value)"). addMod with a
+        -- negated amount is the exact inverse -- it nets the accumulated stacks
+        -- back out live -- so it restores the intended reset with no C++ rebuild.
+        effectArg:addMod(xi.mod.ATT, -2 * power)
+        effectArg:addMod(xi.mod.CRITHITRATE, -power)
 
         local subPower = effectArg:getSubPower() -- Subpower tracks if user had effect augment, and what quality, when effect was applied.
         if subPower ~= 0 then
-            effectArg:delMod(xi.mod.ACC, 2 * power)
-            effectArg:delMod(xi.mod.CRIT_DMG_INCREASE, math.floor(subPower / 2) * power)
+            effectArg:addMod(xi.mod.ACC, -2 * power)
+            effectArg:addMod(xi.mod.CRIT_DMG_INCREASE, -math.floor(subPower / 2) * power)
         end
     end)
 end

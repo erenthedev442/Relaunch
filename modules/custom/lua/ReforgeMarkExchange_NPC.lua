@@ -9,6 +9,12 @@ require(string.format('scripts/zones/%s/Zone', catalog.npcPos.zone))
 
 local m = Module:new('reforge_mark_exchange')
 
+-- Forward-declared: the NPC's onTrigger closure (and showExchangeMenu's option
+-- closures) reference these before the definitions below, so they must exist as
+-- upvalues first -- otherwise they bind to nil globals (the showExchangeMenu /
+-- showBatchMenu nil-value crashes).
+local showExchangeMenu, showBatchMenu
+
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)
     super(zone)
 
@@ -31,7 +37,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
     })
 end)
 
-local function showExchangeMenu(player)
+showExchangeMenu = function(player)
     local opts = {}
     for _, ex in ipairs(catalog.exchanges) do
         local haveFrom = player:getCharVar(ex.fromCv) or 0
@@ -42,10 +48,11 @@ local function showExchangeMenu(player)
         })
     end
     table.insert(opts, { 'Close', function(p) end })
-    p:customMenu({ title = 'Reforge Mark Exchange', options = opts })
+    local snapshot = { title = 'Reforge Mark Exchange', options = opts }
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
-local function showBatchMenu(player, ex, maxBatch)
+showBatchMenu = function(player, ex, maxBatch)
     if maxBatch <= 0 then
         player:printToPlayer(string.format('[Reforge Exchange] Not enough %s.', ex.fromName), xi.msg.channel.SYSTEM_3)
         showExchangeMenu(player)
@@ -76,7 +83,8 @@ local function showBatchMenu(player, ex, maxBatch)
         end
     end
     table.insert(opts, { 'Back', function(p) showExchangeMenu(p) end })
-    player:customMenu({ title = string.format('Convert to %s', ex.toName), options = opts })
+    local snapshot = { title = string.format('Convert to %s', ex.toName), options = opts }
+    player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 return m
