@@ -1,0 +1,8 @@
+[Unit]
+Description=FFXI join watcher -> Discord webhook (one poll)
+After=mariadb.service
+Wants=mariadb.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 /opt/ffxi-join-watcher/ffxi_join_watcher.py
