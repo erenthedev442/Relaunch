@@ -36,7 +36,7 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
             playerArg:printToPlayer('  !achievements - your personal milestone progress', B)
             playerArg:printToPlayer('  !progress     - full progression summary across all systems', B)
             playerArg:printToPlayer('  !hunt         - warp to Reisenjima Henge to start hunting', B)
-            playerArg:printToPlayer('  Discord: discord.gg/legendary  (events, announcements, help)', B)
+            playerArg:printToPlayer('  Discord: discord.gg/MsZqvuDn  (events, announcements, help)', B)
         end)
     end
 end)
