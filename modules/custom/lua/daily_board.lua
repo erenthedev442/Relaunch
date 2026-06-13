@@ -218,7 +218,7 @@ showDailyRoot = function(player)
     dbMenu.title   = string.format('Daily Board  %d/3', doneCount)
     dbMenu.options = opts
     local snapshot = { title = dbMenu.title, options = dbMenu.options }  -- shared table + deferred send
-    player:timer(50, function(p) p:customMenu(snapshot) end)
+    player:timer(15, function(p) p:customMenu(snapshot) end)
 end
 
 showSlotDetail = function(player, slot, obj)
@@ -288,7 +288,7 @@ showSlotDetail = function(player, slot, obj)
     dbMenu.title   = obj.label:sub(1, 22)
     dbMenu.options = opts
     local snapshot = { title = dbMenu.title, options = dbMenu.options }  -- shared table + deferred send
-    player:timer(50, function(p) p:customMenu(snapshot) end)
+    player:timer(15, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------

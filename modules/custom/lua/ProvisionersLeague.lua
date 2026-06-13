@@ -289,7 +289,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
             }
             menu.options = options
             local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-            player:timer(50, function(p) p:customMenu(snapshot) end)
+            player:timer(15, function(p) p:customMenu(snapshot) end)
         end,
     })
     utils.unused(steward)

@@ -168,7 +168,7 @@ buildSealsMain = function(player)
         },
     }
     local snapshot = { title = hubMenu.title, options = hubMenu.options }  -- shared table + deferred send
-    player:timer(50, function(p) p:customMenu(snapshot) end)
+    player:timer(15, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------
@@ -201,7 +201,7 @@ buildAccessoriesMain = function(player)
     hubMenu.title   = string.format('Hunt Accessories [%d %s]', pts, catalog.currencyName)
     hubMenu.options = options
     local snapshot = { title = hubMenu.title, options = hubMenu.options }  -- shared table + deferred send
-    player:timer(50, function(p) p:customMenu(snapshot) end)
+    player:timer(15, function(p) p:customMenu(snapshot) end)
 end
 
 buildTierInfoMenu = function(player)
@@ -231,7 +231,7 @@ buildTierInfoMenu = function(player)
     hubMenu.title   = string.format('[%s] NM List (+%s)', tierDef.name, catalog.currencyName)
     hubMenu.options = options
     local snapshot = { title = hubMenu.title, options = hubMenu.options }  -- shared table + deferred send
-    player:timer(50, function(p) p:customMenu(snapshot) end)
+    player:timer(15, function(p) p:customMenu(snapshot) end)
 end
 
 buildUnlockMenu = function(player)
@@ -274,7 +274,7 @@ buildUnlockMenu = function(player)
     hubMenu.title   = string.format('Unlock %s?  Cost: %d %s', nextDef.name, cost, catalog.currencyName)
     hubMenu.options = options
     local snapshot = { title = hubMenu.title, options = hubMenu.options }  -- shared table + deferred send
-    player:timer(50, function(p) p:customMenu(snapshot) end)
+    player:timer(15, function(p) p:customMenu(snapshot) end)
 end
 
 -- (the old buildShopCategoryMenu was removed when the Hub was split into
@@ -345,7 +345,7 @@ buildCategoryMenu = function(player, catIdx, page)
     hubMenu.title   = string.format('%s [%dM] %d/%d', cat.label, pts, page, nPages)
     hubMenu.options = options
     local snapshot = { title = hubMenu.title, options = hubMenu.options }  -- shared table + deferred send
-    player:timer(50, function(p) p:customMenu(snapshot) end)
+    player:timer(15, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------
@@ -457,7 +457,7 @@ buildItemPreviewMenu = function(player, reward, catIdx, itemPage)
     hubMenu.title   = string.format('[%s]  %d %s', reward.name, reward.cost, catalog.currencyName)
     hubMenu.options = options
     local snapshot = { title = hubMenu.title, options = hubMenu.options }  -- shared table + deferred send
-    player:timer(50, function(p) p:customMenu(snapshot) end)
+    player:timer(15, function(p) p:customMenu(snapshot) end)
 end
 
 -----------------------------------
@@ -785,7 +785,7 @@ local function insertSpawnerNPC(zone)
         local pts       = getPoints(player)
         mobMenu.title   = string.format('[%s]  %d %s', tierDef.name, pts, catalog.currencyName)
         mobMenu.options = options
-        player:timer(50, function(p) p:customMenu(mobMenu) end)
+        player:timer(15, function(p) p:customMenu(mobMenu) end)
     end
 
     buildTierPickerMenu = function(player)
@@ -828,7 +828,7 @@ local function insertSpawnerNPC(zone)
         tierPickerMenu.title   = string.format('Hunting League  (R%d, %d %s)',
                                                tier, pts, catalog.currencyName)
         tierPickerMenu.options = options
-        player:timer(50, function(p) p:customMenu(tierPickerMenu) end)
+        player:timer(15, function(p) p:customMenu(tierPickerMenu) end)
     end
 
     local pos     = catalog.spawnerPos

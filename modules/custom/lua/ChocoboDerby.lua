@@ -181,7 +181,7 @@ local function sendMenu(player)
     -- table, and another player's interaction inside the 50ms window
     -- would otherwise swap its contents mid-flight.
     local snapshot = { title = menu.title, options = menu.options }
-    player:timer(50, function(p) p:customMenu(snapshot) end)
+    player:timer(15, function(p) p:customMenu(snapshot) end)
 end
 
 local function showRunnerMenu(player, bet)

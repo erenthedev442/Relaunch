@@ -536,7 +536,7 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             jobTag(curJob(player)), cfg.apName:sub(1, 2), getAP(player))
         menu.options = options
         local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-        player:timer(50, function(p) p:customMenu(snapshot) end)
+        player:timer(15, function(p) p:customMenu(snapshot) end)
     end
 
     -----------------------------------
@@ -578,7 +578,7 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
         menu.title   = string.format('Ascend %s (P%d)', jobTag(jobId), level)
         menu.options = options
         local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-        player:timer(50, function(p) p:customMenu(snapshot) end)
+        player:timer(15, function(p) p:customMenu(snapshot) end)
     end
 
     -----------------------------------
@@ -830,7 +830,7 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
         menu.title   = string.format('Ascension Altar [%s P%d]', jobTag(jobId), level)
         menu.options = options
         local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-        player:timer(50, function(p) p:customMenu(snapshot) end)
+        player:timer(15, function(p) p:customMenu(snapshot) end)
     end
 
     -----------------------------------

@@ -71,7 +71,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             }
 
             local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-            player:timer(50, function(playerArg)
+            player:timer(15, function(playerArg)
                 playerArg:customMenu(snapshot)
             end)
         end,

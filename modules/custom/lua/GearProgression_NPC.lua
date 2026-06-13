@@ -123,7 +123,7 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
         menu.title   = string.format('%s (%d/%d)', sealDef.name, page, totalPages)
         menu.options = options
         local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-        player:timer(50, function(p) p:customMenu(snapshot) end)
+        player:timer(15, function(p) p:customMenu(snapshot) end)
     end
 
     -----------------------------------
@@ -200,7 +200,7 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
             sealDef.name)
         menu.options = options
         local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-        player:timer(50, function(p) p:customMenu(snapshot) end)
+        player:timer(15, function(p) p:customMenu(snapshot) end)
     end
 
     -----------------------------------
@@ -245,7 +245,7 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
             },
         }
         local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-        player:timer(50, function(p) p:customMenu(snapshot) end)
+        player:timer(15, function(p) p:customMenu(snapshot) end)
     end
 
     -----------------------------------

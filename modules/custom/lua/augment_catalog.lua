@@ -190,6 +190,7 @@ return {
     [2776] = { augId = 334,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Magic burst dmg' },
     [2777] = { augId = 335,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Mag. crit. hit dmg' },
     [2943] = { augId = 343,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Augment' },
+    [2338] = { augId = 896,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Enspell Dmg' },
 
     -- Mind / Healing / Cure
     [791]  = { augId = 52,   base = 1,   mult = 4,  disp = 1,    cat = 6,  label = 'MP recovered while healing' },
