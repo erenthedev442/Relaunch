@@ -15,14 +15,15 @@ return
     -- Position of the Hunt Seals NPC (tier/rank + seal purchases). This is
     -- also the !hunt warp landing spot, so updates here should sync to
     -- scripts/commands/hunt.lua.
-    sealsPos       = { x = -6.5139, y = 5.5090, z = -12.1827, rot = 230 },
+    sealsPos       = { x = -11.0000, y = 5.5090, z = -12.1827, rot = 230 },
 
-    -- Position of the Spawner NPC (pops NMs on demand). Offset 3 on X.
-    spawnerPos     = { x = -3.5139, y = 5.5090, z = -12.1827, rot = 230 },
+    -- Position of the Spawner NPC (pops NMs on demand). +4 on X (vendor row
+    -- widened from 3 -> 4 units 2026-06-13 so the name labels stop overlapping).
+    spawnerPos     = { x = -7.0000, y = 5.5090, z = -12.1827, rot = 230 },
 
     -- Position of the Hunt Accessories NPC (Neck/Earrings/Rings/etc. shop).
-    -- Sits past the Armor NPC (+2.5139), continuing the +3-unit row.
-    accessoriesPos = { x =  5.4861, y = 5.5090, z = -12.1827, rot = 230 },
+    -- Continues the +4-unit vendor row (one slot past the Armor NPC).
+    accessoriesPos = { x =  5.0000, y = 5.5090, z = -12.1827, rot = 230 },
 
     -- Where dynamic NMs appear when the Spawner NPC pops them.
     mobSpawnPos = { x = 1.1883, y = 5.5000, z = 1.8036, rot = 208 },

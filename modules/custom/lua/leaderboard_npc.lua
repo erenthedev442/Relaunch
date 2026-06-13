@@ -34,8 +34,8 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onInitialize', function(zone)
         name       = 'The Chronicler',
         packetName = string.format('%sThe Chronicler', xi.icon.STAR_LARGE),
         look       = 3017,
-        -- Positioned to the right of the Accessories NPC (same Y/Z row).
-        x          = 8.4861,
+        -- Right end of the Hunting League vendor row (same Y/Z, +4 past Accessory).
+        x          = 13.0000,
         y          = 5.5090,
         z          = -12.1827,
         rotation   = 230,

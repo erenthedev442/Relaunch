@@ -33,7 +33,7 @@ local catalog = {}
 -----------------------------------
 catalog.zoneId    = xi.zone.REISENJIMA_HENGE
 catalog.zonePath  = 'xi.zones.Reisenjima_Henge'
-catalog.vendorPos = { x = 8.4861, y = 5.5090, z = -12.1827, rot = 230 }
+catalog.vendorPos = { x = 9.0000, y = 5.5090, z = -12.1827, rot = 230 }
 
 -----------------------------------
 -- SEAL CURRENCY DEFINITIONS (shared with Armor / Weapons NPCs)
