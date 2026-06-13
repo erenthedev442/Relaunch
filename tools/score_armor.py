@@ -347,6 +347,9 @@ for iid, info in items_base.items():
 
 print(f"Viable ilvl>=119 armor candidates: {len(candidates)}")
 
+# id -> candidate lookup, used by the owner-forced bucket additions (FORCED_INCLUDE).
+_cand_by_id = {c['id']: c for c in candidates}
+
 
 # --------------------------------------------------------------
 # 7. Tier bucketing: FIXED score bands + top-5-per-slot Infamy skim
@@ -428,6 +431,17 @@ def js_jobs(bits: int) -> str:
 # rows live in catalog.infamy and the REAL Infamy price is assigned by
 # tools/build_infamy_top_picks.py when it writes catalog.vendorItemsAuto.
 TIER_COST = {'bronze': 12, 'silver': 25, 'gold': 50, 'infamy': 500}
+
+# Owner-forced bucket additions: item ids guaranteed to appear in a given
+# (tier, slot) regardless of their computed score band. These pieces score
+# into silver/gold naturally; pinning them at bronze is a deliberate
+# accessibility choice -- here, seeding bronze BODY with melee/tank options
+# (the auto-scored bronze body was caster/heal-only). Added 2026-06-13.
+# NOTE: a forced item is NOT removed from any higher tier it also auto-selects
+# into, so check for cross-tier family overlap when adding ids here.
+FORCED_INCLUDE = {
+    ('bronze', 'body'): [25790, 26849, 25683, 25780, 25702],
+}
 
 # Starting size of each (tier, slot) bucket from role-balanced selection.
 # This is the FLOOR — the per-job coverage pass below may expand a bucket
@@ -572,6 +586,18 @@ def tier_block(tier_name: str, var: str) -> str:
     lines = [f"catalog.{tier_name} = emptySlots()", f"local {var} = catalog.{tier_name}", ""]
     for slot in ('head', 'body', 'hands', 'legs', 'feet'):
         rows = select_bucket(tier_name, slot)
+        # Owner-forced additions: guaranteed present in this (tier, slot)
+        # regardless of score band (see FORCED_INCLUDE).
+        for fid in FORCED_INCLUDE.get((tier_name, slot), []):
+            if any(r['id'] == fid for r in rows):
+                continue
+            fc = _cand_by_id.get(fid)
+            if fc:
+                rows.append(fc)
+            else:
+                print(f"  [FORCED_INCLUDE] WARN: id {fid} not in scored pool "
+                      f"(no DB mods / <iL119 / single-job?) -- NOT added to {tier_name}/{slot}")
+        rows = sorted(rows, key=lambda x: -x['ceiling'])
         all_selected[(tier_name, slot)] = rows
         if not rows:
             continue

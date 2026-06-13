@@ -106,6 +106,12 @@ table.insert(b.body, { id = 26845, name = "Lustratio Harness +1", cost = 12, job
 table.insert(b.body, { id = 25751, name = "Inyanga Jubbah", cost = 12, jobs = 'WHM/BRD/SMN' })  -- CASTER score 158
 table.insert(b.body, { id = 27877, name = "Gendewitha Bliaut +1", cost = 12, jobs = 'WHM/RDM/BRD/SCH' })  -- HEAL score 151
 table.insert(b.body, { id = 26895, name = "Helios Jacket", cost = 12, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' })  -- DPS score 134
+-- [LEGENDARY-CUSTOM] forced into bronze body (owner pick 2026-06-13): melee/tank options for a caster-heavy bronze tier. Kept on regen via FORCED_INCLUDE in tools/score_armor.py.
+table.insert(b.body, { id = 25790, name = "Sulevias Plate. +2", cost = 12, jobs = 'WAR/PLD/DRK/DRG' })  -- forced
+table.insert(b.body, { id = 26849, name = "Argosy Hauberk +1", cost = 12, jobs = 'WAR/DRK/BST' })  -- forced
+table.insert(b.body, { id = 25683, name = "Emicho Haubert +1", cost = 12, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- forced
+table.insert(b.body, { id = 25780, name = "Flamma Korazin +1", cost = 12, jobs = 'WAR/PLD/DRK/SAM/DRG' })  -- forced
+table.insert(b.body, { id = 25702, name = "Reiki Osode", cost = 12, jobs = 'WAR/MNK/BST/BRD/RNG/SAM/NIN' })  -- forced
 
 -- Hands (13 picks, scored highest first)
 table.insert(b.hands, { id = 25812, name = "Taliah Gages", cost = 12, jobs = 'BST/SMN/PUP' })  -- DPS score 199
