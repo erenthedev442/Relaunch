@@ -67,6 +67,7 @@ local stock =
         { 18510,     15000 }, --vermeil bhuj
         { 18171,     15000 }, --platoon disc
         { xi.item.BRONZE_DAGGER,   15000 },
+        { 17809,     15000 }, --Mumeito (SAM great katana, DMG 12/Delay 420)
 		  { 16822,   100000 },  --crimson blade
 		  { 16923,   100000 },  --Kabutowari +1
 		  { 17440,   4000000 },  --Kraken Club
