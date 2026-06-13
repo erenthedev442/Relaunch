@@ -77,8 +77,13 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         }
         for _, id in ipairs(missionSOA) do
             player:addMission(12, id)
-            player:completeMission(12, id)
+            player:completeMission(12, id)   -- sets the complete[] bit for ids < 64
         end
+        -- SoA ids >= 64 use the same current-pointer rule as CoP (and the loop's
+        -- completeMission resets current to 0), so they wouldn't register. Push
+        -- current one past the final mission (THE_LIGHT_WITHIN = 129) so every SoA
+        -- mission reads complete and no mission shows as active.
+        player:addMission(12, 130)
 
         -- Rhapsodies of Vana'diel (log_id 13)
         local missionROV = {
@@ -91,8 +96,11 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         }
         for _, id in ipairs(missionROV) do
             player:addMission(13, id)
-            player:completeMission(13, id)
+            player:completeMission(13, id)   -- sets the complete[] bit for ids < 64
         end
+        -- Same fix as SoA: RoV ids >= 64 need current pushed one past the final
+        -- mission (A_RHAPSODY_FOR_THE_AGES = 226) to register as complete.
+        player:addMission(13, 227)
     end
 
     -----------------------------------
