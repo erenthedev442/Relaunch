@@ -42,7 +42,7 @@ INSERT INTO `mob_groups` VALUES (11359, 498,  210, 'Bomb_Queen',      0, 128, 33
 INSERT INTO `mob_groups` VALUES (11360, 206,  210, 'Aquarius',        0, 128, 100,  0,      0,      0, NULL);
 
 -- Tier 3 — Rank III: Elite
-INSERT INTO `mob_groups` VALUES (11361, 3549, 210, 'Serket',          0, 128, 99,   0,      0,      0, NULL);
+INSERT INTO `mob_groups` VALUES (11361, 3549, 210, 'Serket',          0, 128, 99,   50000,  0,      0, NULL); -- HP buff: match Hunt League Serket (was 0 = too soft); 50000 x hpBoost(8) ~= 400k effective
 INSERT INTO `mob_groups` VALUES (11362, 4261, 210, 'Vrtra',           0, 128, 2592, 100000, 100000, 0, NULL);
 INSERT INTO `mob_groups` VALUES (11363, 3630, 210, 'Simurgh',         0, 128, 1990, 0,      0,      0, NULL);
 
