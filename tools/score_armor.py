@@ -448,8 +448,17 @@ TIER_COST = {'bronze': 12, 'silver': 25, 'gold': 50, 'infamy': 500}
 # NOTE: a forced item is NOT removed from any higher tier it also auto-selects
 # into, so check for cross-tier family overlap when adding ids here.
 FORCED_INCLUDE = {
-    ('bronze', 'body'): [25790, 26849, 25683, 25780, 25702],
+    ('bronze', 'body'): [25790, 26849, 25683, 25780, 25702, 25686, 26870],
+    ('silver', 'body'): [25717],
+    ('gold',   'body'): [23733],
 }
+
+# Pin each forced item to its tier and pull it out of whatever tier it would
+# otherwise auto-select into, so a forced item never shows up in two tiers.
+_forced_tier = {iid: t for (t, _slot), ids in FORCED_INCLUDE.items() for iid in ids}
+for _c in candidates:
+    if _c['id'] in _forced_tier:
+        _c['tier'] = _forced_tier[_c['id']]
 
 # Starting size of each (tier, slot) bucket from role-balanced selection.
 # This is the FLOOR — the per-job coverage pass below may expand a bucket

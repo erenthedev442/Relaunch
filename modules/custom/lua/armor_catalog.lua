@@ -112,6 +112,8 @@ table.insert(b.body, { id = 26849, name = "Argosy Hauberk +1", cost = 12, jobs =
 table.insert(b.body, { id = 25683, name = "Emicho Haubert +1", cost = 12, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- forced
 table.insert(b.body, { id = 25780, name = "Flamma Korazin +1", cost = 12, jobs = 'WAR/PLD/DRK/SAM/DRG' })  -- forced
 table.insert(b.body, { id = 25702, name = "Reiki Osode", cost = 12, jobs = 'WAR/MNK/BST/BRD/RNG/SAM/NIN' })  -- forced
+table.insert(b.body, { id = 25686, name = "Adhemar Jacket", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' })  -- forced (light-DD coverage)
+table.insert(b.body, { id = 26870, name = "Emet Harness", cost = 12, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- forced (wide DD; closes COR=0)
 
 -- Hands (13 picks, scored highest first)
 table.insert(b.hands, { id = 25812, name = "Taliah Gages", cost = 12, jobs = 'BST/SMN/PUP' })  -- DPS score 199
@@ -186,6 +188,8 @@ table.insert(s.body, { id = 26526, name = "Oshosi Vest +1", cost = 25, jobs = 'R
 table.insert(s.body, { id = 25688, name = "Amalric Doublet", cost = 25, jobs = 'BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 225
 table.insert(s.body, { id = 25753, name = "Jhakri Robe", cost = 25, jobs = 'BLM/RDM/BLU/SCH/GEO' })  -- WS score 216
 table.insert(s.body, { id = 26970, name = "Lapidary Tunic", cost = 25, jobs = 'MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' })  -- TANK score 204
+-- [LEGENDARY-CUSTOM] forced into silver body (owner pick 2026-06-13): WAR/PLD/DRK/BST/SAM/DRG DD plate -- silver body was thin and DRG had 0. FORCED_INCLUDE in tools/score_armor.py.
+table.insert(s.body, { id = 25717, name = "Valorous Mail", cost = 25, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- forced
 
 -- Hands (11 picks, scored highest first)
 table.insert(s.hands, { id = 25833, name = "Ayanmo Manopolas +2", cost = 25, jobs = 'WHM/RDM/BRD/BLU/RUN' })  -- DPS score 248
@@ -255,6 +259,8 @@ table.insert(g.body, { id = 26544, name = "Turms Harness +1", cost = 50, jobs = 
 table.insert(g.body, { id = 25792, name = "Hizamaru Haramaki +2", cost = 50, jobs = 'MNK/SAM/NIN/PUP' })  -- TANK score 434
 table.insert(g.body, { id = 25791, name = "Meghanada Cuirie +2", cost = 50, jobs = 'THF/BST/RNG/COR/DNC/RUN' })  -- DPS score 408
 table.insert(g.body, { id = 25787, name = "Shamash Robe", cost = 50, jobs = 'WHM/BLM/RDM/BLU/SCH/GEO' })  -- CASTER score 379
+-- [LEGENDARY-CUSTOM] forced into gold body (owner pick 2026-06-13): premium multi-job DD body -- gold body had only 1 pure-DPS option. FORCED_INCLUDE in tools/score_armor.py.
+table.insert(g.body, { id = 23733, name = "Malignance Tabard", cost = 50, jobs = 'MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC' })  -- forced
 
 -- Hands (11 picks, scored highest first)
 table.insert(g.hands, { id = 25823, name = "Mallquis Cuffs +1", cost = 50, jobs = 'BLM/SCH/GEO' })  -- CASTER score 416
