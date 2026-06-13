@@ -213,20 +213,24 @@ return
                   },
                 },
                 { name = 'Simurgh',   label = 'Simurgh',   points = 22, groupId = 11363, minLv = 150, maxLv = 150,
-                  hpBoost = 8,
+                  -- Difficulty bump (2026-06-13, owner request): tuned a notch
+                  -- above its T3 tier-mates (Serket/Vrtra) -- +25% HP, harder &
+                  -- faster hits (ATT/HASTE/Double+Triple Atk), and stronger Regen
+                  -- so a group has to out-DPS the self-heal. Dial up/down here.
+                  hpBoost = 10,
                   mods = {
                       [xi.mod.DEF]           = 900,
-                      [xi.mod.ATT]           = 4000,
-                      [xi.mod.ACC]           = 700,   -- T3 normalized target
+                      [xi.mod.ATT]           = 4400,  -- T3+ (was 4000)
+                      [xi.mod.ACC]           = 750,   -- T3+ (was 700)
                       [xi.mod.EVASION]       = 250,
                       [xi.mod.MEVA]          = 300,
                       [xi.mod.MDEF]          = 200,
                       [xi.mod.STR]           = 200,
                       [xi.mod.DEX]           = 200,
-                      [xi.mod.HASTE_GEAR]    = 200,
-                      [xi.mod.DOUBLE_ATTACK] = 15,
-                      [xi.mod.TRIPLE_ATTACK] = 3,
-                      [xi.mod.REGEN]         = 200,
+                      [xi.mod.HASTE_GEAR]    = 230,   -- ~22% (was 200)
+                      [xi.mod.DOUBLE_ATTACK] = 20,    -- was 15
+                      [xi.mod.TRIPLE_ATTACK] = 5,     -- was 3
+                      [xi.mod.REGEN]         = 275,   -- was 200
                   },
                 },
             },
