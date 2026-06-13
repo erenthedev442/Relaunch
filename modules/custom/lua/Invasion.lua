@@ -270,9 +270,25 @@ endInvasion = function(zone, reason)
                 p:setCharVar('Infamy_Lifetime',
                     (p:getCharVar('Infamy_Lifetime') or 0) + catalog.reward.victoryInfamy)
                 p:setCharVar('Inv_Wins', (p:getCharVar('Inv_Wins') or 0) + 1)
+
+                -- Gear-vendor seal loot: guaranteed silver medals, plus a
+                -- chance at the gold (Demons) medal. Seals stack to 99, so a
+                -- best-effort addItem lands for anyone with a stack or a free
+                -- slot; pcall keeps a full inventory from breaking the payout.
+                local sealMsg = ''
+                for _, s in ipairs(catalog.reward.victorySeals or {}) do
+                    pcall(function() p:addItem(s.id, s.qty) end)
+                    sealMsg = sealMsg .. string.format(', +%d %s', s.qty, s.name)
+                end
+                local gold = catalog.reward.victoryGoldSeal
+                if gold and math.random(100) <= (gold.chancePercent or 0) then
+                    pcall(function() p:addItem(gold.id, gold.qty or 1) end)
+                    sealMsg = sealMsg .. string.format(' + a %s!', gold.name)
+                end
+
                 p:printToPlayer(string.format(
-                    '[Invasion] THE SANCTUARY STANDS! +%d marks, +%d Infamy.',
-                    catalog.reward.victoryMarks, catalog.reward.victoryInfamy),
+                    '[Invasion] THE SANCTUARY STANDS! +%d marks, +%d Infamy%s.',
+                    catalog.reward.victoryMarks, catalog.reward.victoryInfamy, sealMsg),
                     xi.msg.channel.SYSTEM_3)
 
                 local okAch, ach = pcall(require, 'modules/custom/lua/achievements')

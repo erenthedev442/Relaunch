@@ -93,10 +93,21 @@ catalog.spawnRingMax = 14.0
 -- A participant is anyone present at ANY wave start.
 catalog.reward =
 {
-    perWaveMarks  = 100,   -- on each wave clear
-    victoryMarks  = 400,   -- on full clear, plus...
-    victoryInfamy = 150,   -- ...the only Infamy source outside dungeons (intentional)
-    failMarks     = 50,    -- consolation if the clock beats the defense
+    perWaveMarks  = 200,   -- on each wave clear (x5 waves = 1000 across a full assault)
+    victoryMarks  = 1500,  -- on full clear (the Warlord falls), plus...
+    victoryInfamy = 400,   -- ...the only Infamy source outside dungeons (intentional)
+    failMarks     = 200,   -- consolation if the clock beats the defense
+
+    -- Gear-vendor seal loot on a WIN -- ties the invasion into the Armor /
+    -- Weapons NPC gear loop (!hunt). Seals stack to 99 (stackable_medals.sql).
+    -- This is the "feels like loot" reward; these two lines are the main
+    -- economy levers, tune freely:
+    --   9541 Kindreds Medal = SILVER currency (mid gear, ~25 medals/piece)
+    --   9543 Demons Medal   = GOLD  currency (BiS gear, 50-500 medals/piece)
+    -- Gold is kept a rare ~1-in-5 jackpot so the invasion doesn't trivialise
+    -- the dungeon/Infamy-gated BiS path.
+    victorySeals    = { { id = 9541, qty = 2, name = 'Kindreds Medal' } },               -- guaranteed
+    victoryGoldSeal = { id = 9543, qty = 1, name = 'Demons Medal', chancePercent = 20 },  -- ~1-in-5
 }
 
 return catalog
