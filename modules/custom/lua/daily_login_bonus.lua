@@ -14,9 +14,15 @@ local DAILY_BONUS = 250
 local CV_POINTS   = 'HL_Points'
 
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
+    -- Real-login gate (see announce_player_login.lua): capture gameLogin before super() clears it.
+    -- `not zoning` misfires on zone-ins that arrive with char_stats.zoning == 0; gameLogin == 1 is
+    -- set by the core only for an actual login. The Daily_Login_Day guard below already masked the
+    -- double-fire, but this stops the wasted per-zone reprocessing.
+    local isLogin = player:getLocalVar('gameLogin') == 1
+
     super(player, firstLogin, zoning)
 
-    if not zoning then
+    if isLogin then
         local today   = tonumber(os.date('!%Y%j')) or 0  -- UTC Julian day
         local lastDay = player:getCharVar('Daily_Login_Day') or 0
 

@@ -32,9 +32,15 @@ local STREAK_MILESTONES = {
 }
 
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
+    -- Real-login gate (see announce_player_login.lua): capture gameLogin before super() clears it.
+    -- `not zoning` misfires on zone-ins that arrive with char_stats.zoning == 0; gameLogin == 1 is
+    -- set by the core only for an actual login. The Streak_LastDay guard below already masked the
+    -- double-fire, but this stops the wasted per-zone reprocessing.
+    local isLogin = player:getLocalVar('gameLogin') == 1
+
     super(player, firstLogin, zoning)
 
-    if not zoning then
+    if isLogin then
         local today   = math.floor(os.time() / 86400)  -- epoch days; avoids year-boundary YYYYDDD gap
         local lastDay = player:getCharVar('Streak_LastDay') or 0
         local streak  = player:getCharVar('Streak_Count')   or 0

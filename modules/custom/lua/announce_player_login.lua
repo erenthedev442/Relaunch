@@ -6,9 +6,18 @@ require('modules/module_utils')
 local m = Module:new('announce_player_login')
 
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
+    -- Gate on the real-login signal, captured BEFORE super() runs: xi.player.onGameIn clears
+    -- gameLogin to 0 on exit (scripts/globals/player.lua). The core sets gameLogin = 1 only when
+    -- char_stats.zoning == 2 -- an actual login from character select -- never for a zone change.
+    -- The `zoning` arg alone is not reliable here: it is only true for char_stats.zoning == 1, so a
+    -- zone-in that arrives with the flag at 0 (logout reset, or a zone-out/zone-in race) slips past
+    -- `not zoning` and gets mis-announced as a fresh login. gameLogin is the same discriminator the
+    -- core uses internally, so it stays correct in every case.
+    local isLogin = player:getLocalVar('gameLogin') == 1
+
     super(player, firstLogin, zoning)
 
-    if not zoning then
+    if isLogin then
         -- Login announcement broadcast to all zones via ZMQ.
         -- Delay 2500ms: PChar->loc.zone may not be populated yet at hook time.
         player:timer(2500, function(playerArg)
