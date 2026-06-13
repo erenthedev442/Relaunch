@@ -172,6 +172,18 @@ WEAPON_CATEGORY = {
     26: ('Marksmanship', 'marksmanship'),
 }
 
+# Relic/Empyrean/Mythic/Aeonic RANGED weapon families to keep OUT of the Weapons
+# Vendor so the ultimate ranged weapons stay an EARNED reward (the ranged analogue
+# of how single-job melee REMA route to the Reforge System). Matched by
+# short_name prefix with '-' normalised to '_'. Archery: Yoichinoyumi (relic),
+# Gandiva (empy), Fail-Not (aeonic). Marksmanship: Annihilator (relic),
+# Armageddon (empy), Gastraphetes + Death Penalty (mythic). Applies to single- AND
+# multi-job (e.g. Yoichinoyumi is RNG/SAM but still held back). Extend as needed.
+RANGED_EXCLUDE = (
+    'yoichinoyumi', 'gandiva', 'fail_not',
+    'annihilator', 'armageddon', 'gastraphetes', 'death_penalty',
+)
+
 
 # ============================================================================
 # Job map + role classification -- mirrors score_armor.py
@@ -306,10 +318,18 @@ for iid, info in items_base.items():
         continue
     if not item_mods.get(iid) and not item_latents.get(iid):
         continue
-    # Multi-job filter: REMA/Aeonic single-job weapons are handled by the
-    # Reforge System catalog, not the Weapons Vendor. Keep cross-job items.
-    if bin(e['jobs']).count('1') < 2:
+    # Multi-job filter: single-job MELEE weapons (REMA/Aeonic) are handled by the
+    # Reforge System catalog, not the Weapons Vendor, so they're skipped. RANGED
+    # is EXEMPT -- ranged jobs (RNG/COR) have no Reforge path, so single-job
+    # Archery (25) / Marksmanship (26) weapons are kept in the Weapons Vendor.
+    if bin(e['jobs']).count('1') < 2 and ws['skill'] not in (25, 26):
         continue
+    # ...but the genuine ULTIMATE ranged weapons (Relic/Empy/Mythic/Aeonic) are
+    # held back so they stay an earned reward, single- OR multi-job alike.
+    if ws['skill'] in (25, 26):
+        _rfam = items_base[iid]['name'].replace('-', '_')
+        if any(_rfam.startswith(_r) for _r in RANGED_EXCLUDE):
+            continue
     # Explicit +4 exclusion (belt-and-suspenders on top of the multi-job
     # filter above). +4 reforge sets are an Infamy Vendor exclusive (see
     # modules/custom/lua/dungeon_catalog.lua catalog.plus4Sets). Even if
