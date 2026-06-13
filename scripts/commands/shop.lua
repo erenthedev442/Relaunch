@@ -146,12 +146,12 @@ local stock =
 -- Augment catalysts (custom gil sink)
 -- Pulled live from the Augment Moogle catalog (augment_catalog.lua) so this
 -- shop always matches what the moogle accepts. Every catalyst sells for a
--- flat 1,000,000 gil. The catalog holds ~379 catalysts -- far more than the
+-- flat 100,000 gil. The catalog holds ~379 catalysts -- far more than the
 -- 255-item shop-window cap -- so they are split into the same 13 thematic
 -- groups the catalog already tags via its `cat` field (1-13).
 -----------------------------------
-local AUGMENT_PRICE     = 1000000
-local AUGMENT_PRICE_STR = '1,000,000'
+local AUGMENT_PRICE     = 100000
+local AUGMENT_PRICE_STR = '100,000'
 
 -- cat index (1-13) -> { token for "!shop augments <token>", display name }
 local augmentGroups =
