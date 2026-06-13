@@ -65,6 +65,16 @@ catalog.pool =
     { tier = 'uncommon', weight =  70, label = 'an Elixir (2x)',
       item = xi.item.ELIXIR,              itemQty = 2 },
 
+    -- Pupil set pieces (starter gear; collect the set across pulls)
+    { tier = 'uncommon', weight =  25, label = "a Pupil's Shirt",
+      item = 26946 },
+    { tier = 'uncommon', weight =  25, label = "a Pupil's Camisa",
+      item = 26964 },
+    { tier = 'uncommon', weight =  25, label = "a Pupil's Trousers",
+      item = 27281 },
+    { tier = 'uncommon', weight =  25, label = "a Pupil's Shoes",
+      item = 27455 },
+
     -- Rare (~18%)
     { tier = 'rare',     weight =  80, label = 'a fistful of 5 Hunt Marks',
       huntMarks =   5 },
