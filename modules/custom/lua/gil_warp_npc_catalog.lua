@@ -77,7 +77,7 @@ catalog.tiers =
         {
             { label = "Reisenjima",            zone = xi.zone.REISENJIMA,           x =   0.00, y =   0.00, z =  0.00, r = 192 },
             { label = "Reisenjima Henge",      zone = xi.zone.REISENJIMA_HENGE,     x =   0.00, y =   5.50, z =  0.00, r = 192 },
-            { label = "Ra'Kaznar Inner Court", zone = xi.zone.RAKAZNAR_INNER_COURT, x = 757.00, y = 120.00, z = 17.50, r = 128 }, -- coord = the in-zone homepoint (#116)
+            { label = "Ra'Kaznar Inner Court", zone = xi.zone.RAKAZNAR_INNER_COURT, x = -312.29, y = -440.25, z = 380.70, r = 129 }, -- coord verified in-game via !pos (Floor 1, Stone terrain)
         },
     },
 }
