@@ -182,6 +182,9 @@ WEAPON_CATEGORY = {
 RANGED_EXCLUDE = (
     'yoichinoyumi', 'gandiva', 'fail_not',
     'annihilator', 'armageddon', 'gastraphetes', 'death_penalty',
+    # Other earned-only ultimate ranged tiers (owner 2026-06-13: cap these too) --
+    # Prime (Odyssey), Su5 (Skirmish: Pinaka / Mpaca's), Ambuscade (Artemis's).
+    'prime', 'pinaka', 'mpacas', 'artemiss',
 )
 
 
@@ -276,6 +279,13 @@ def _clamp(mid: int, val: int) -> int:
 # dmg*60/delay. Multiplying by this weight folds raw output into the score.
 DPS_WEIGHT = 2.0
 WS_DMG_WEIGHT = 0.5   # WS role: raw weapon base damage matters (heavy/slow weapons)
+# Ranged weapons score low on the melee-tuned DMG terms, so without help they all
+# cluster in Bronze. Multiply the ranged weapon-OUTPUT term so the (capped, non-
+# ultimate) ranged pool spreads across Bronze/Silver/Gold like melee does.
+# Per-skill because guns (Marksmanship, lower base DMG) need a bigger nudge than
+# bows (Archery) to reach the upper tiers. Tune if the spread looks off.
+# (Owner request 2026-06-13.)
+RANGED_DMG_MULT = {25: 2.0, 26: 3.0}   # 25 Archery, 26 Marksmanship
 
 
 def score_weapon(iid: int, role: str) -> float:
@@ -294,10 +304,11 @@ def score_weapon(iid: int, role: str) -> float:
     # Weapon output: sustained DPS for the DPS role; raw base damage for WS.
     ws = weapon_stats.get(iid)
     if ws and ws['delay'] > 0:
+        rmult = RANGED_DMG_MULT.get(ws['skill'], 1.0)
         if role == 'DPS':
-            score += (ws['dmg'] * 60 / ws['delay']) * DPS_WEIGHT
+            score += (ws['dmg'] * 60 / ws['delay']) * DPS_WEIGHT * rmult
         elif role == 'WS':
-            score += ws['dmg'] * WS_DMG_WEIGHT
+            score += ws['dmg'] * WS_DMG_WEIGHT * rmult
     return score
 
 
@@ -315,6 +326,11 @@ for iid, info in items_base.items():
     if not ws:
         continue
     if ws['skill'] not in WEAPON_CATEGORY:
+        continue
+    # Drop AMMO from the ranged categories: arrows/bullets/bolts share the
+    # Archery/Marksmanship skill but sit in the Ammo slot (0x08), while bows/guns
+    # sit in the Ranged slot (0x04). The Weapons Vendor sells the weapons only.
+    if ws['skill'] in (25, 26) and (e['slot'] & 0x08):
         continue
     if not item_mods.get(iid) and not item_latents.get(iid):
         continue

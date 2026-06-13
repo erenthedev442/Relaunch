@@ -172,29 +172,21 @@ do
     table.insert(staves, { id = 21166, name = "Staccato Staff", cost = 12, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 140, DMG 198/Dly 366
     table.insert(staves, { id = 22083, name = "Ajja Staff", cost = 12, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- WS score 136, DMG 213/Dly 366
 
-    -- Archery: 8 pick(s)
+    -- Archery: 2 pick(s)
     local archery = cat(catalog.bronze.weapons, 'Archery')
-    table.insert(archery, { id = 22123, name = "Arasy Bow +1", cost = 12, jobs = 'RNG' })  -- WS score 182, DMG 227/Dly 524
-    table.insert(archery, { id = 22107, name = "Ullr", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- WS score 172, DMG 178/Dly 360
-    table.insert(archery, { id = 21220, name = "Paloma Bow +1", cost = 12, jobs = 'RNG' })  -- WS score 162, DMG 220/Dly 480
-    table.insert(archery, { id = 21227, name = "Hangaku-No-Yumi", cost = 12, jobs = 'RNG/SAM' })  -- WS score 146, DMG 251/Dly 600
-    table.insert(archery, { id = 22126, name = "Exalted Bow +1", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- WS score 145, DMG 206/Dly 351
-    table.insert(archery, { id = 22111, name = "Kaja Bow", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- WS score 137, DMG 164/Dly 360
-    table.insert(archery, { id = 21298, name = "Artemiss Arrow", cost = 12, jobs = 'RNG' })  -- DPS score 135, DMG 101/Dly 90
-    table.insert(archery, { id = 22128, name = "Raetic Bow +1", cost = 12, jobs = 'WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/SMN/BLU/SCH' })  -- WS score 106, DMG 211/Dly 351
+    table.insert(archery, { id = 22110, name = "Eletta Bow", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- WS score 157, DMG 157/Dly 360
+    table.insert(archery, { id = 22109, name = "Ajja Bow", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- WS score 147, DMG 147/Dly 360
 
-    -- Marksmanship: 10 pick(s)
+    -- Marksmanship: 8 pick(s)
     local marksmanship = cat(catalog.bronze.weapons, 'Marksmanship')
-    table.insert(marksmanship, { id = 22120, name = "Imati", cost = 12, jobs = 'RNG' })  -- WS score 155, DMG 145/Dly 432
-    table.insert(marksmanship, { id = 21325, name = "Devastating Bullet", cost = 12, jobs = 'RNG/COR' })  -- DPS score 138, DMG 277/Dly 240
-    table.insert(marksmanship, { id = 21337, name = "Achiyalabopa Bullet", cost = 12, jobs = 'RNG' })  -- DPS score 126, DMG 253/Dly 240
-    table.insert(marksmanship, { id = 21326, name = "Living Bullet", cost = 12, jobs = 'COR' })  -- DPS score 122, DMG 245/Dly 240
-    table.insert(marksmanship, { id = 19209, name = "Molybdosis", cost = 12, jobs = 'COR' })  -- WS score 119, DMG 103/Dly 480
-    table.insert(marksmanship, { id = 22135, name = "Arasy Gun", cost = 12, jobs = 'RNG/COR' })  -- WS score 114, DMG 107/Dly 600
-    table.insert(marksmanship, { id = 22134, name = "Holliday", cost = 12, jobs = 'RNG/COR' })  -- WS score 106, DMG 107/Dly 600
-    table.insert(marksmanship, { id = 21485, name = "Fomalhaut", cost = 12, jobs = 'RNG/COR' })  -- WS score 104, DMG 167/Dly 600
-    table.insert(marksmanship, { id = 22138, name = "Exalted Crossbow +1", cost = 12, jobs = 'WAR/THF/DRK/RNG' })  -- DPS score 81, DMG 111/Dly 227
-    table.insert(marksmanship, { id = 21274, name = "Donar Gun", cost = 12, jobs = 'THF/RNG/NIN/COR' })  -- WS score 69, DMG 103/Dly 548
+    table.insert(marksmanship, { id = 22138, name = "Exalted Crossbow +1", cost = 12, jobs = 'WAR/THF/DRK/RNG' })  -- DPS score 199, DMG 111/Dly 227
+    table.insert(marksmanship, { id = 22149, name = "Sharanga", cost = 12, jobs = 'RNG' })  -- WS score 192, DMG 128/Dly 280
+    table.insert(marksmanship, { id = 22148, name = "Arke Crossbow", cost = 12, jobs = 'RNG' })  -- WS score 190, DMG 127/Dly 280
+    table.insert(marksmanship, { id = 22147, name = "Scouts Crossbow", cost = 12, jobs = 'RNG' })  -- WS score 189, DMG 126/Dly 288
+    table.insert(marksmanship, { id = 21481, name = "Blurred Crossbow +1", cost = 12, jobs = 'RNG' })  -- WS score 182, DMG 121/Dly 280
+    table.insert(marksmanship, { id = 21274, name = "Donar Gun", cost = 12, jobs = 'THF/RNG/NIN/COR' })  -- WS score 172, DMG 103/Dly 548
+    table.insert(marksmanship, { id = 21284, name = "Vanir Gun", cost = 12, jobs = 'RNG/COR' })  -- WS score 170, DMG 113/Dly 600
+    table.insert(marksmanship, { id = 21276, name = "Pulfanxa", cost = 12, jobs = 'RNG/COR' })  -- WS score 168, DMG 108/Dly 600
 
 end
 
@@ -245,6 +237,21 @@ do
     -- Polearms: 1 pick(s)
     local polearms = cat(catalog.silver.weapons, 'Polearms')
     table.insert(polearms, { id = 21871, name = "Raetic Halberd", cost = 25, jobs = 'WAR/BLM/PLD/BRD/SAM/DRG/SMN/SCH' })  -- WS score 218, DMG 264/Dly 396
+
+    -- Archery: 5 pick(s)
+    local archery = cat(catalog.silver.weapons, 'Archery')
+    table.insert(archery, { id = 22126, name = "Exalted Bow +1", cost = 25, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- WS score 248, DMG 206/Dly 351
+    table.insert(archery, { id = 21228, name = "Falubeza", cost = 25, jobs = 'RNG' })  -- WS score 243, DMG 243/Dly 540
+    table.insert(archery, { id = 22118, name = "Venery Bow", cost = 25, jobs = 'RNG' })  -- WS score 243, DMG 243/Dly 600
+    table.insert(archery, { id = 22111, name = "Kaja Bow", cost = 25, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- WS score 219, DMG 164/Dly 360
+    table.insert(archery, { id = 22128, name = "Raetic Bow +1", cost = 25, jobs = 'WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/SMN/BLU/SCH' })  -- WS score 211, DMG 211/Dly 351
+
+    -- Marksmanship: 4 pick(s)
+    local marksmanship = cat(catalog.silver.weapons, 'Marksmanship')
+    table.insert(marksmanship, { id = 22135, name = "Arasy Gun", cost = 25, jobs = 'RNG/COR' })  -- WS score 222, DMG 107/Dly 600
+    table.insert(marksmanship, { id = 22134, name = "Holliday", cost = 25, jobs = 'RNG/COR' })  -- WS score 213, DMG 107/Dly 600
+    table.insert(marksmanship, { id = 22119, name = "Wochowsen", cost = 25, jobs = 'RNG' })  -- WS score 202, DMG 135/Dly 288
+    table.insert(marksmanship, { id = 21256, name = "Illapa", cost = 25, jobs = 'RNG' })  -- WS score 202, DMG 135/Dly 432
 
 end
 
@@ -314,6 +321,19 @@ do
     table.insert(staves, { id = 22079, name = "Exalted Staff +1", cost = 50, jobs = 'MNK/WHM/PLD/DRG' })  -- WS score 374, DMG 269/Dly 399
     table.insert(staves, { id = 22056, name = "Gozuki Mezuki", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- WS score 302, DMG 266/Dly 412
     table.insert(staves, { id = 22087, name = "Malignance Pole", cost = 50, jobs = 'MNK/WHM/BLM/PLD/DRG/SMN/SCH/GEO' })  -- TANK score 275, DMG 286/Dly 412
+
+    -- Archery: 5 pick(s)
+    local archery = cat(catalog.gold.weapons, 'Archery')
+    table.insert(archery, { id = 22122, name = "Arasy Bow", cost = 50, jobs = 'RNG' })  -- WS score 274, DMG 226/Dly 540
+    table.insert(archery, { id = 21227, name = "Hangaku-No-Yumi", cost = 50, jobs = 'RNG/SAM' })  -- WS score 271, DMG 251/Dly 600
+    table.insert(archery, { id = 21218, name = "Blurred Bow +1", cost = 50, jobs = 'RNG' })  -- WS score 266, DMG 266/Dly 524
+    table.insert(archery, { id = 21229, name = "Cibitshavore", cost = 50, jobs = 'RNG/SAM' })  -- WS score 266, DMG 261/Dly 600
+    table.insert(archery, { id = 22107, name = "Ullr", cost = 50, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' })  -- WS score 260, DMG 178/Dly 360
+
+    -- Marksmanship: 2 pick(s)
+    local marksmanship = cat(catalog.gold.weapons, 'Marksmanship')
+    table.insert(marksmanship, { id = 22120, name = "Imati", cost = 50, jobs = 'RNG' })  -- WS score 300, DMG 145/Dly 432
+    table.insert(marksmanship, { id = 22143, name = "Fomalhaut", cost = 50, jobs = 'RNG/COR' })  -- WS score 270, DMG 167/Dly 600
 
 end
 
@@ -414,19 +434,19 @@ do
 
     -- Archery: 5 pick(s) -> Infamy Vendor
     local inf_archery = cat(catalog.infamy.weapons, 'Archery')
-    table.insert(inf_archery, { id = 22163, name = "Pinaka", cost = 500, jobs = 'RNG' })  -- WS score 337, DMG 324/Dly 524
-    table.insert(inf_archery, { id = 22293, name = "Hauksbok Arrow", cost = 500, jobs = 'RNG' })  -- WS score 220, DMG 110/Dly 90
-    table.insert(inf_archery, { id = 22114, name = "Steinthor", cost = 500, jobs = 'RNG' })  -- WS score 200, DMG 290/Dly 600
-    table.insert(inf_archery, { id = 21221, name = "Brahmastra", cost = 500, jobs = 'RNG' })  -- WS score 196, DMG 261/Dly 600
-    table.insert(inf_archery, { id = 22113, name = "Teller", cost = 500, jobs = 'RNG' })  -- WS score 188, DMG 270/Dly 600
+    table.insert(inf_archery, { id = 22114, name = "Steinthor", cost = 500, jobs = 'RNG' })  -- WS score 346, DMG 290/Dly 600
+    table.insert(inf_archery, { id = 21221, name = "Brahmastra", cost = 500, jobs = 'RNG' })  -- WS score 326, DMG 261/Dly 600
+    table.insert(inf_archery, { id = 22113, name = "Teller", cost = 500, jobs = 'RNG' })  -- WS score 322, DMG 270/Dly 600
+    table.insert(inf_archery, { id = 22123, name = "Arasy Bow +1", cost = 500, jobs = 'RNG' })  -- WS score 295, DMG 227/Dly 524
+    table.insert(inf_archery, { id = 21220, name = "Paloma Bow +1", cost = 500, jobs = 'RNG' })  -- WS score 272, DMG 220/Dly 480
 
     -- Marksmanship: 5 pick(s) -> Infamy Vendor
     local inf_marksmanship = cat(catalog.infamy.weapons, 'Marksmanship')
-    table.insert(inf_marksmanship, { id = 22164, name = "Earp", cost = 500, jobs = 'RNG/COR' })  -- WS score 286, DMG 162/Dly 582
-    table.insert(inf_marksmanship, { id = 22121, name = "Imati +1", cost = 500, jobs = 'RNG' })  -- WS score 161, DMG 146/Dly 424
-    table.insert(inf_marksmanship, { id = 21296, name = "Chrono Bullet", cost = 500, jobs = 'RNG/COR' })  -- DPS score 150, DMG 300/Dly 240
-    table.insert(inf_marksmanship, { id = 21327, name = "Eradicating Bullet", cost = 500, jobs = 'RNG' })  -- DPS score 144, DMG 289/Dly 240
-    table.insert(inf_marksmanship, { id = 22136, name = "Arasy Gun +1", cost = 500, jobs = 'RNG/COR' })  -- WS score 144, DMG 108/Dly 582
+    table.insert(inf_marksmanship, { id = 22164, name = "Earp", cost = 500, jobs = 'RNG/COR' })  -- WS score 448, DMG 162/Dly 582
+    table.insert(inf_marksmanship, { id = 22121, name = "Imati +1", cost = 500, jobs = 'RNG' })  -- WS score 307, DMG 146/Dly 424
+    table.insert(inf_marksmanship, { id = 21485, name = "Fomalhaut", cost = 500, jobs = 'RNG/COR' })  -- WS score 270, DMG 167/Dly 600
+    table.insert(inf_marksmanship, { id = 22136, name = "Arasy Gun +1", cost = 500, jobs = 'RNG/COR' })  -- WS score 252, DMG 108/Dly 582
+    table.insert(inf_marksmanship, { id = 19209, name = "Molybdosis", cost = 500, jobs = 'COR' })  -- WS score 222, DMG 103/Dly 480
 
 end
 return catalog
