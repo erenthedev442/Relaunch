@@ -2931,6 +2931,17 @@ auto CLuaBaseEntity::getZone(const sol::object& arg0) -> CZone*
 
 uint16 CLuaBaseEntity::getZoneID()
 {
+    // FJB: guard against a null/removed entity. The Sturdy Pyxis (Abyssea
+    // treasure casket) crashed the map server here (treasure.lua moveTreasure ->
+    // npc:getZoneID()) when its queued AI action fired after the entity was gone,
+    // dereferencing a dead m_PBaseEntity. getZone() is already null-safe on loc.zone,
+    // so the only unguarded deref was the wrapper pointer itself.
+    if (m_PBaseEntity == nullptr)
+    {
+        ShowWarning("CLuaBaseEntity::getZoneID() called on a null entity.");
+        return 0;
+    }
+
     return m_PBaseEntity->getZone();
 }
 
