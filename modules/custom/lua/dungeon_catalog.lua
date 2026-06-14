@@ -590,6 +590,300 @@ catalog.dungeons =
             message = 'TIME ENRAGE - The Eternal Throne channels eons of wrath!',
         },
     },
+
+    -----------------------------------------------------------
+    -- DUNGEON 5 - THE SHATTERED COAST  (parallel D1 entry tier)
+    -----------------------------------------------------------
+    -- Dynamis-Valkurm (39). Same difficulty envelope as The Outer
+    -- Bastion (D1) so both zones can host simultaneous entry-tier
+    -- groups. Coastal Valkurm aesthetic vs. D1's dark fortress halls.
+    --
+    -- warpIn sourced from dynamis.lua enterPos for xi.zone.VALKURM_DUNES.
+    -- All waypoint / bossPos coords are PLACEHOLDERS - enter the dungeon
+    -- and use !pos to pin each position to the actual floor, then paste
+    -- the values back here.
+    {
+        id          = 'shattered_coast',
+        label       = 'The Shattered Coast',
+        description = 'A storm-wracked shore where ancient tidal demons have made their lair. Cut through the surf-haunted beach to reach the Hungering Tide before the sea reclaims you.',
+        zoneId      = xi.zone.DYNAMIS_VALKURM,  -- 39
+        zoneName    = 'Dynamis-Valkurm',
+        gated       = false,
+        timeLimit   = 900,               -- 15 min, mirrors D1
+        infamyBase       = 50,
+        infamySpeedBonus = 25,
+
+        warpIn = { x = 100.000, y = -8.000, z = 131.000, rot = 47 },
+
+        waypoints =
+        {
+            -- !pos NEEDED: all positions below are estimates from the floor Y.
+            -- Enter dungeon, walk to desired spawn point, run !pos, update.
+            { pos = { x =  90.0, y = -8.0, z = 105.0 }, count = 4, level = 99,  scatter = 4.0,
+              groups = { 11355, 11357 },
+              names  = { 'Tidal Wraith', 'Surf Specter' } },
+            { pos = { x =  75.0, y = -8.0, z =  80.0 }, count = 4, level = 99,  scatter = 4.0,
+              groups = { 11355, 11357 },
+              names  = { 'Surf Specter', 'Tidal Wraith' } },
+            { pos = { x =  58.0, y = -8.0, z =  55.0 }, count = 4, level = 105, scatter = 4.0,
+              groups = { 11359, 11361 },
+              names  = { 'Coastal Marauder', 'Deep-Sea Revenant' } },
+            { pos = { x =  42.0, y = -8.0, z =  30.0 }, count = 4, level = 110, scatter = 4.0,
+              groups = { 11359, 11361 },
+              names  = { 'Deep-Sea Revenant', 'Coastal Marauder' } },
+            { pos = { x =  25.0, y = -8.0, z =   5.0 }, count = 3, level = 115, scatter = 4.0,
+              groups = { 11358, 11362 },
+              names  = { 'Tide-Caller', 'Shoreline Tyrant' } },
+            { pos = { x =   8.0, y = -8.0, z = -20.0 }, count = 3, level = 120, scatter = 4.0,
+              groups = { 11358, 11362 },
+              names  = { 'Shoreline Tyrant', 'Tide-Caller' } },
+        },
+        bossPos      = { x = -25.0, y = -8.0, z = -60.0, rot = 0 },
+        bossLevel    = 135,
+        bossGroup    = 11364,
+        bossName     = 'The Hungering Tide',
+        bossModelSize = 3,
+
+        nms =
+        {
+            { frac = 0.28, level = 125, group = 11361, name = 'Tidecaller Vanguard',   hpMult = 1.2 },
+            { frac = 0.50, level = 128, group = 11361, name = 'Surf Colossus',         hpMult = 1.3 },
+            { frac = 0.82, level = 133, group = 11362, name = 'Admiral of the Deep',   hpMult = 1.5 },
+        },
+
+        phases =
+        {
+            { hp = 50, action = 'add_spawn', groupId = 11355, count = 1,
+              level = 99, name = 'Tide Acolyte' },
+            { hp = 25, action = 'enrage', att = 1500, haste = 75,
+              message = 'The Hungering Tide surges with furious ocean energy!' },
+        },
+    },
+
+    -----------------------------------------------------------
+    -- DUNGEON 6 - THE FORSAKEN PENINSULA  (parallel D2 mid tier)
+    -----------------------------------------------------------
+    -- Dynamis-Buburimu (40). Same difficulty envelope as The Voidwalker
+    -- Arena (D2). Ruined coastal peninsula aesthetic vs. D2's void arena.
+    --
+    -- warpIn sourced from dynamis.lua enterPos for xi.zone.BUBURIMU_PENINSULA.
+    -- All waypoint / bossPos coords are PLACEHOLDERS - enter the dungeon
+    -- and use !pos to pin each position to the actual floor, then paste
+    -- the values back here.
+    {
+        id          = 'forsaken_peninsula',
+        label       = 'The Forsaken Peninsula',
+        description = 'Ancient ruins reclaimed by shadow and sea. Ruin-born sentinels hold every approach to the Forsaken Sovereign, who waits at the last standing tower on the edge of the world.',
+        zoneId      = xi.zone.DYNAMIS_BUBURIMU,  -- 40
+        zoneName    = 'Dynamis-Buburimu',
+        gated       = false,
+        timeLimit   = 1080,              -- 18 min, mirrors D2
+        infamyBase       = 270,
+        infamySpeedBonus = 145,
+
+        warpIn = { x = 155.000, y = -1.000, z = -169.000, rot = 170 },
+
+        waypoints =
+        {
+            -- !pos NEEDED: all positions below are estimates from the floor Y.
+            { pos = { x = 130.0, y = -1.0, z = -148.0 }, count = 3, level = 120, scatter = 4.0,
+              groups = { 11358, 11360 },
+              names  = { 'Ruined Sentinel', 'Peninsula Shade' } },
+            { pos = { x = 105.0, y = -1.0, z = -126.0 }, count = 4, level = 135, scatter = 4.0,
+              groups = { 11362, 11363 },
+              names  = { 'Ancient Marauder', 'Forsaken Watcher' } },
+            { pos = { x =  80.0, y = -1.0, z = -104.0 }, count = 3, level = 142, scatter = 4.5,
+              groups = { 11363, 11364 },
+              names  = { 'Ruin Tyrant', 'Peninsula Arbiter' } },
+            { pos = { x =  55.0, y = -1.0, z =  -80.0 }, count = 3, level = 150, scatter = 4.0,
+              groups = { 11364 },
+              names  = { 'Ancient Sovereign-Guard', 'Forsaken Warden' } },
+        },
+        bossPos      = { x = 20.0, y = -1.0, z = -45.0, rot = 0 },
+        bossLevel    = 170,
+        bossGroup    = 11365,
+        bossName     = 'The Forsaken Sovereign',
+        bossModelSize = 3,
+
+        nms =
+        {
+            { frac = 0.28, level = 152, group = 11362, name = 'Ruin-Watcher Prime',         hpMult = 1.2 },
+            { frac = 0.50, level = 158, group = 11363, name = 'Peninsula Arbiter-Lord',      hpMult = 1.3 },
+            { frac = 0.82, level = 165, group = 11360, name = 'Herald of the Forsaken Shore',hpMult = 1.5 },
+        },
+
+        phases =
+        {
+            { hp = 70, action = 'buff', att = 1000, haste = 50,
+              message = 'The Forsaken Sovereign draws power from the ancient ruins!' },
+            { hp = 40, action = 'dispel', count = 3,
+              message = 'Ruinous energies strip your protections!' },
+            { hp = 15, action = 'heal', pct = 10,
+              message = 'The Forsaken Sovereign absorbs the peninsula itself to mend its wounds!' },
+        },
+    },
+
+    -----------------------------------------------------------
+    -- DUNGEON 7 - THE DARK CITADEL  (parallel D3 upper-mid tier)
+    -----------------------------------------------------------
+    -- Dynamis-Xarcabard (135). Same difficulty envelope as The Empyreal
+    -- Paradox (D3). Dark fortress aesthetic vs. D3's void-sphere.
+    --
+    -- warpIn sourced from dynamis.lua enterPos for xi.zone.XARCABARD.
+    -- All waypoint / bossPos coords are PLACEHOLDERS - enter the dungeon
+    -- and use !pos to pin each position to the actual floor, then paste
+    -- the values back here. Xarcabard is flat (y~=0) so waypoints should
+    -- land cleanly; the zone is large so spread generously.
+    {
+        id          = 'dark_citadel',
+        label       = 'The Dark Citadel',
+        description = 'The shadow-fortress at the edge of the known world. Shadow-bound legions defend every corridor leading to the Obsidian Throne, where an ancient power refuses to be forgotten.',
+        zoneId      = xi.zone.DYNAMIS_XARCABARD,  -- 135
+        zoneName    = 'Dynamis-Xarcabard',
+        gated       = false,
+        timeLimit   = 1200,              -- 20 min, mirrors D3
+        infamyBase       = 600,
+        infamySpeedBonus = 230,
+
+        warpIn = { x = 569.312, y = -0.098, z = -270.158, rot = 90 },
+
+        waypoints =
+        {
+            -- !pos NEEDED: all positions below are estimates stepping west
+            -- along the citadel floor (y~=0). Xarcabard is a large open zone.
+            { pos = { x = 540.0, y = 0.0, z = -260.0 }, count = 3, level = 140, scatter = 4.5,
+              groups = { 11362, 11363 },
+              names  = { 'Citadel Specter', 'Shadow-Bound Watcher' } },
+            { pos = { x = 510.0, y = 0.0, z = -247.0 }, count = 3, level = 140, scatter = 4.0,
+              groups = { 11362, 11363 },
+              names  = { 'Shadow-Bound Watcher', 'Citadel Specter' } },
+            { pos = { x = 480.0, y = 0.0, z = -233.0 }, count = 3, level = 150, scatter = 4.5,
+              groups = { 11363, 11364 },
+              names  = { 'Dark Citadel Shade', 'Void-Touched Sentinel' } },
+            { pos = { x = 448.0, y = 0.0, z = -218.0 }, count = 3, level = 160, scatter = 4.0,
+              groups = { 11364, 11365 },
+              names  = { 'Citadel Drake', 'Dark Arbiter' } },
+            { pos = { x = 415.0, y = 0.0, z = -200.0 }, count = 3, level = 170, scatter = 4.5,
+              groups = { 11365, 11366 },
+              names  = { 'Shadow Inquisitor', 'Citadel Tyrant' } },
+            { pos = { x = 380.0, y = 0.0, z = -178.0 }, count = 3, level = 180, scatter = 4.5,
+              groups = { 11366, 11367 },
+              names  = { 'Shadow Sovereign-Guard', 'Abyss Throne Reaver' } },
+        },
+        bossPos      = { x = 330.0, y = 0.0, z = -145.0, rot = 0 },
+        bossLevel    = 200,
+        bossGroup    = 11369,
+        bossName     = 'The Obsidian Throne',
+        bossGroups   = { 11368, 11369 },
+        bossNames    = { 'The Obsidian Throne', 'The Unbound Storm' },
+        bossModelSize = 3,
+
+        nms =
+        {
+            { frac = 0.42, level = 182, group = 11365, name = 'Citadel Harbinger',     hpMult = 1.2 },
+            { frac = 0.65, level = 188, group = 11364, name = 'Shadow Arch-Praetor',   hpMult = 1.3 },
+            { frac = 0.88, level = 195, group = 11366, name = 'Herald of the Abyss',   hpMult = 1.5 },
+        },
+
+        phases =
+        {
+            { hp = 75, action = 'buff',      att =  800, message = 'The Obsidian Throne writhes with shadow energy!' },
+            { hp = 50, action = 'add_spawn', groupId = 11366, count = 2,
+              level = 150, name = 'Citadel Echo' },
+            { hp = 25, action = 'enrage',    att = 2500, haste = 100,
+              message = 'The Obsidian Throne refuses oblivion - darkness is unbound!' },
+            { hp = 10, action = 'heal',      pct = 15,
+              message = 'The Obsidian Throne draws power from the shadow to mend itself!' },
+        },
+        enrageAfter =
+        {
+            sec     = 600,
+            action  = 'enrage',
+            att     = 4000,
+            haste   = 150,
+            message = 'TIME ENRAGE - The Dark Citadel awakens its full wrath!',
+        },
+    },
+
+    -----------------------------------------------------------
+    -- DUNGEON 8 - THE SUNKEN SPIRE  (parallel D4 apex tier)
+    -----------------------------------------------------------
+    -- Dynamis-Qufim (41). Same difficulty envelope as The Eternal Throne
+    -- (D4). Abyssal island aesthetic vs. D4's grand Jeuno boulevard apex.
+    --
+    -- warpIn sourced from dynamis.lua enterPos for xi.zone.QUFIM_ISLAND.
+    -- All waypoint / bossPos coords are PLACEHOLDERS - Qufim Island is
+    -- a relatively compact zone; keep waypoints conservative and spread
+    -- no more than 30-40 units per step until !pos verification.
+    {
+        id          = 'sunken_spire',
+        label       = 'The Sunken Spire',
+        description = 'A forgotten tower rising from a drowned island, haunted by abyssal guardians. Only the strongest groups have ever reached its peak - where the Drowned Eternal waits in the dark above the sea.',
+        zoneId      = xi.zone.DYNAMIS_QUFIM,  -- 41
+        zoneName    = 'Dynamis-Qufim',
+        gated       = false,
+        timeLimit   = 1500,              -- 25 min, mirrors D4
+        infamyBase       = 1400,
+        infamySpeedBonus = 530,
+
+        warpIn = { x = -19.000, y = -17.000, z = 104.000, rot = 253 },
+
+        waypoints =
+        {
+            -- !pos NEEDED: all positions below are estimates. Qufim Island
+            -- is compact - if any position falls off-map, tighten the steps.
+            { pos = { x = -8.0, y = -17.0, z =  84.0 }, count = 3, level = 200, scatter = 5.0,
+              groups = { 11362, 11363 },
+              names  = { 'Spire Warden', 'Abyssal Specter' } },
+            { pos = { x =  5.0, y = -17.0, z =  64.0 }, count = 3, level = 212, scatter = 5.0,
+              groups = { 11363, 11364 },
+              names  = { 'Spire Sentinel', 'Deep Arbiter' } },
+            { pos = { x = 18.0, y = -17.0, z =  44.0 }, count = 3, level = 225, scatter = 5.0,
+              groups = { 11364, 11365 },
+              names  = { 'Deep Arbiter', 'Abyssal Drake' } },
+            { pos = { x = 32.0, y = -17.0, z =  24.0 }, count = 3, level = 237, scatter = 5.0,
+              groups = { 11365, 11366 },
+              names  = { 'Abyssal Drake', 'Spire Inquisitor' } },
+            { pos = { x = 46.0, y = -17.0, z =   4.0 }, count = 3, level = 250, scatter = 5.0,
+              groups = { 11366, 11367, 11368 },
+              names  = { 'Spire Inquisitor', 'Abyssal Sovereign', 'The Submerged' } },
+        },
+        bossPos      = { x = 70.0, y = -17.0, z = -28.0, rot = 0 },
+        bossLevel    = 275,
+        bossGroup    = 11367,
+        bossName     = 'The Drowned Eternal',
+        bossGroups   = { 11367, 11369 },
+        bossNames    = { 'The Drowned Eternal', 'The Abyssal Storm' },
+        bossModelSize = 3,
+
+        nms =
+        {
+            { frac = 0.28, level = 256, group = 11365, name = 'Spire Sentinel-Lord',         hpMult = 1.2 },
+            { frac = 0.50, level = 262, group = 11366, name = 'Abyssal Praetorian',          hpMult = 1.3 },
+            { frac = 0.82, level = 270, group = 11368, name = 'Warden of the Sunken Spire',  hpMult = 1.5 },
+        },
+
+        phases =
+        {
+            { hp = 80, action = 'buff',      att = 2000, haste = 50,
+              message = 'The Drowned Eternal rises from the deep!' },
+            { hp = 60, action = 'add_spawn', groupId = 11366, count = 2,
+              level = 225, name = 'Fragment of the Deep',
+              message = 'Abyssal shards coalesce from the darkness!' },
+            { hp = 35, action = 'dispel',    count = 4,
+              message = 'A wave of abyssal silence strips your protection!' },
+            { hp = 15, action = 'enrage',    att = 5000, haste = 200,
+              message = 'THE DROWNED ETERNAL REFUSES TO SINK - a crushing surge of abyssal fury!' },
+        },
+        enrageAfter =
+        {
+            sec     = 900,
+            action  = 'enrage',
+            att     = 8000,
+            haste   = 300,
+            message = 'TIME ENRAGE - The Sunken Spire drowns the world in wrath!',
+        },
+    },
 }
 
 -- ============================================================
