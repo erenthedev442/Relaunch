@@ -2513,6 +2513,16 @@ uint8 GetHitRateEx(CBattleEntity* PAttacker, CBattleEntity* PDefender, uint8 att
 {
     int32 hitrate = 75;
 
+    // FJB GUARD (2026-06-14): a null attacker or defender gets dereferenced below
+    // (PAttacker->StatusEffectContainer, PDefender->loc.p, ...) and core-dumped the
+    // whole map server (root: GetBestIndiSpell on a target-less GEO). Callers should
+    // never pass null, but an upstream bug shouldn't take the server down -- bail to
+    // the neutral default hit rate instead.
+    if (PAttacker == nullptr || PDefender == nullptr)
+    {
+        return hitrate;
+    }
+
     bool hasSneakAttack      = PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_SNEAK_ATTACK);
     bool hasTrickAttack      = PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_TRICK_ATTACK);
     bool isBehind            = behind(PAttacker->loc.p, PDefender->loc.p, 64);

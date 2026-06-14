@@ -44,9 +44,10 @@ local function applyTrait(player, trait)
     for _, mv in ipairs(trait.mods) do
         player:addMod(mv[1], mv[2])
     end
-    if trait.trait then
-        player:addTrait(trait.trait)
-    end
+    -- NOTE: addTrait is NOT a binding on this build -- calling it threw
+    -- "attempt to call method 'addTrait' (a nil value)" on every owned-trait
+    -- re-apply. The addMod above is what actually grants the trait's effect;
+    -- the trait-bit (for hasTrait()) just isn't settable from Lua on this fork.
 end
 
 -- Re-apply every owned trait (a zone-in/login wipes in-memory mods), then
@@ -57,7 +58,9 @@ local function applyAll(player)
             applyTrait(player, trait)
         end
     end
-    player:sendCommandData()
+    -- sendCommandData is NOT a binding on this build -- it threw on EVERY login
+    -- (xi.player.onGameIn -> applyAll). The trait mods above apply regardless, so
+    -- the (non-functional) client-refresh call is dropped.
 end
 
 local showMenu, showConfirm

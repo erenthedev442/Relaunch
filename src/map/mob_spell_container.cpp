@@ -189,26 +189,47 @@ Maybe<SpellID> CMobSpellContainer::GetBestAvailable(SPELLFAMILY family)
 
 Maybe<SpellID> CMobSpellContainer::GetBestIndiSpell(CBattleEntity* PTarget)
 {
-    auto mJob          = PTarget->GetMJob();
-    auto mTarget       = PTarget->GetBattleTarget();
-    auto hitrate       = battleutils::GetHitRate(PTarget, mTarget);
-    bool accBuffNeeded = hitrate < 65 ? true : false;
-    auto mInt          = PTarget->getMod(Mod::INT);
-    auto tInt          = mTarget->getMod(Mod::INT);
-    auto intDiff       = mInt - tInt + 10;
-    auto macc          = PTarget->getMod(Mod::MACC);
-    auto tMaeva        = mTarget->getMod(Mod::MEVA);
-    auto mSkill        = PTarget->GetSkill(SKILL_ELEMENTAL_MAGIC);
-    auto maccFromInt   = mInt;
-
-    if (mInt > tInt + 10)
+    // FJB GUARD (2026-06-14): callers pass the GEO entity's master
+    // (gambits_container: GetBestIndiSpell(PMaster)), which can be NULL -- a GEO
+    // mob has no master, and a trust's owner can be gone. Dereferencing it below
+    // core-dumped the map server.
+    if (PTarget == nullptr)
     {
-        maccFromInt = tInt + ((mInt - intDiff) * 0.5);
+        return std::nullopt;
     }
 
-    auto totalMacc      = mSkill + maccFromInt + macc;
-    auto magicHitRate   = float(totalMacc - tMaeva) / 10;
-    bool mAccBuffNeeded = magicHitRate < 10 ? true : false;
+    auto mJob    = PTarget->GetMJob();
+    auto mTarget = PTarget->GetBattleTarget();
+
+    // FJB GUARD (2026-06-14): with no battle target, mTarget is NULL -- GetHitRate()
+    // and the mTarget->getMod() reads below dereferenced it and crashed the server
+    // (THIS was the core-dump: GetBestIndiSpell -> GetHitRate -> GetHitRateEx). With
+    // no target there's nothing to out-accuracy, so leave both buff flags false and
+    // fall through to the default (non-accuracy) indi choice.
+    bool accBuffNeeded  = false;
+    bool mAccBuffNeeded = false;
+    if (mTarget != nullptr)
+    {
+        auto hitrate     = battleutils::GetHitRate(PTarget, mTarget);
+        accBuffNeeded    = hitrate < 65;
+
+        auto mInt        = PTarget->getMod(Mod::INT);
+        auto tInt        = mTarget->getMod(Mod::INT);
+        auto intDiff     = mInt - tInt + 10;
+        auto macc        = PTarget->getMod(Mod::MACC);
+        auto tMaeva      = mTarget->getMod(Mod::MEVA);
+        auto mSkill      = PTarget->GetSkill(SKILL_ELEMENTAL_MAGIC);
+        auto maccFromInt = mInt;
+
+        if (mInt > tInt + 10)
+        {
+            maccFromInt = tInt + ((mInt - intDiff) * 0.5);
+        }
+
+        auto totalMacc    = mSkill + maccFromInt + macc;
+        auto magicHitRate = float(totalMacc - tMaeva) / 10;
+        mAccBuffNeeded    = magicHitRate < 10;
+    }
 
     Maybe<SpellID> choice    = std::nullopt;
     Maybe<SpellID> subChoice = SpellID::Indi_Regen;
