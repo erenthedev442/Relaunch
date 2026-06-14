@@ -151,10 +151,12 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 end)
 
 -----------------------------------
--- Re-apply owned traits after a zone-in/login rebuilds (and wipes) in-memory
--- mods. Same pattern as Prestige_System. NOTE: a job change may also rebuild
--- mods; if a trait drops after switching jobs, a quick zone restores it
--- (onGameIn fires on zone-in). Add a job-change hook here if testing needs it.
+-- Re-apply owned traits after a zone reload wipes in-memory mods (Prestige
+-- pattern). JOB CHANGE needs NO hook (verified by tracing the engine): the
+-- handler 0x100_myroom_job.cpp -> BuildingCharTraitsTable (charutils.cpp:4027)
+-- delModifier's only the TRACKED gear/trait/gift mods by their exact value and
+-- never blanket-clears m_modStat, so a standalone addMod like ours survives a
+-- /job switch untouched. Only a zone reload wipes mods, which this re-applies.
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     applyAll(player)
