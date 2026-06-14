@@ -878,7 +878,6 @@ public:
 
     void instantiateMob(uint32 groupID);
 
-    bool hasTrait(uint16 traitID);
     bool hasImmunity(uint32 immunityID); // Check if the mob has immunity for a type of spell (immunity list in mobentity.h)
     void addImmunity(uint32 immunityID);
     void delImmunity(uint32 immunityID);

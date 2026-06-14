@@ -14513,15 +14513,6 @@ void CLuaBaseEntity::delTrait(uint16 traitID)
     charutils::delTrait(dynamic_cast<CCharEntity*>(m_PBaseEntity), traitID);
 }
 
-bool CLuaBaseEntity::hasTrait(uint16 traitID)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        return false;
-    }
-    return charutils::hasTrait(dynamic_cast<CCharEntity*>(m_PBaseEntity), traitID) != 0;
-}
-
 void CLuaBaseEntity::sendCommandData()
 {
     if (m_PBaseEntity->objtype != TYPE_PC)
@@ -20492,7 +20483,6 @@ void CLuaBaseEntity::Register()
 
     SOL_REGISTER("addTrait", CLuaBaseEntity::addTrait);
     SOL_REGISTER("delTrait", CLuaBaseEntity::delTrait);
-    SOL_REGISTER("hasTrait", CLuaBaseEntity::hasTrait);
     SOL_REGISTER("sendCommandData", CLuaBaseEntity::sendCommandData);
 
     SOL_REGISTER("addLatent", CLuaBaseEntity::addLatent);
