@@ -13,7 +13,7 @@ commandObj.cmdprops =
 }
 
 commandObj.onTrigger = function(player)
-    player:setPos(42.4, 0, 46.4, 0, xi.zone.AL_ZAHBI)
+    player:setPos(40.8, -1.4, 116.3, 0, xi.zone.AL_ZAHBI)
 end
 
 return commandObj
