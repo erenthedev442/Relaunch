@@ -67,6 +67,9 @@ fi
 cd "$DOCS_REPO" || { echo "[FATAL] DOCS_REPO not found: $DOCS_REPO"; exit 1; }
 export LEGENDARY_LIVE_ROOT="$LIVE_ROOT"
 
+echo "[0/4] pulling latest docs..."
+git pull --ff-only 2>&1 | tail -1 || echo "[WARN] git pull failed -- building from current checkout"
+
 # Activate the docs venv so `python3` and `mkdocs` resolve to the ones that
 # have mkdocs + pymysql installed.
 if [ -f "$DOCS_VENV/bin/activate" ]; then
@@ -84,11 +87,11 @@ echo "[info] DOCS_REPO=$DOCS_REPO"
 echo "[info] LEGENDARY_LIVE_ROOT=$LEGENDARY_LIVE_ROOT"
 echo "[info] venv=$DOCS_VENV  token_file=$CF_ENV_FILE  token_set=$([ -n "${CLOUDFLARE_API_TOKEN:-}" ] && echo yes || echo NO)"
 
-echo "[1/3] docgen (leaderboards + player profiles read the live DB)..."
+echo "[1/4] docgen (leaderboards + player profiles read the live DB)..."
 # shellcheck disable=SC2086
 $DOCGEN_CMD || { echo "[FATAL] docgen failed"; exit 1; }
 
-echo "[2/3] mkdocs build..."
+echo "[2/4] mkdocs build..."
 mkdocs build --clean || { echo "[FATAL] mkdocs build failed"; exit 1; }
 
 # De-silence the "DB unreachable -> generators skip quietly" failure mode:
@@ -100,7 +103,7 @@ if [ "$players" -eq 0 ]; then
     echo "[WARN] leaderboards/player pages are STALE this run (deploying anyway for doc-only changes)."
 fi
 
-echo "[3/3] deploy to Cloudflare Pages ($CF_PROJECT)..."
+echo "[3/4] deploy to Cloudflare Pages ($CF_PROJECT)..."
 npx --yes wrangler pages deploy site --project-name="$CF_PROJECT" --commit-dirty=true \
     || { echo "[FATAL] wrangler deploy failed (CLOUDFLARE_API_TOKEN set?)"; exit 1; }
 
