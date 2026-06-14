@@ -32,6 +32,7 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
             local S = xi.msg.channel.SYSTEM_3
             local B = xi.msg.channel.SYSTEM_1
             playerArg:printToPlayer('[Legendary] -- Quick Tips -------------------------------------', S)
+            playerArg:printToPlayer('  LINKSHELL     - ask Jbae, Bdr, or Bro in-game for a linkpearl!', B)
             playerArg:printToPlayer('  !featured     - this week\'s bonus-mark NMs  (2x marks on 1st kill)', B)
             playerArg:printToPlayer('  !achievements - your personal milestone progress', B)
             playerArg:printToPlayer('  !progress     - full progression summary across all systems', B)
