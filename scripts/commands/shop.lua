@@ -55,6 +55,7 @@ local stock =
         { xi.item.FLASK_OF_EYE_DROPS,        150 },
         { xi.item.FLASK_OF_HOLY_WATER,       200 },
         { xi.item.FLASK_OF_SLEEPING_POTION,  300 },
+        { xi.item.BOTTLE_OF_ANTACID,         500 },
         { xi.item.VILE_ELIXIR,             10000 },
         { xi.item.VILE_ELIXIR_P1,          18000 },
     },
@@ -76,6 +77,9 @@ local stock =
 		    { 16878,   100000 },  --Darksteel Lance +1
 		    { 18175,   100000 },  --Optical Needle
         { 21460,   15000 },  --Matre bell (Lv.1 GEO handbell, MP+5)
+        { 17859,      10000 },  -- Animator      (PUP, Lv1)
+        { 17857,      50000 },  -- Animator +1   (PUP, Lv71)
+        { 21392,    1000000 },  -- Animator Z    (PUP, iLvl 119) -- Animator P / P+1 / P II line reserved for !hunt
     },
 
     armor =
@@ -362,7 +366,19 @@ local petStock =
     },
 }
 
-local validCategories = 'general, weapons, armor, consumables, food, dice, ammo, ninja, pets, augments'
+-- Reforged armor (FREE claim): pulls each job's ilvl-109 AF/Relic/Empy BASE pieces
+-- live from modules/custom/lua/reforge_catalog, so this stays in sync with the
+-- Reforge system's own data. catalog.buildJobLootPool(job, setKey) returns a set's
+-- base item IDs for one job.
+local reforgeCatalog
+do
+    local ok, cat = pcall(require, 'modules/custom/lua/reforge_catalog')
+    if ok and type(cat) == 'table' and cat.pieces then
+        reforgeCatalog = cat
+    end
+end
+
+local validCategories = 'general, weapons, armor, consumables, food, dice, ammo, ninja, pets, augments, reforge'
 
 commandObj.onTrigger = function(player, category, subcat)
     local cat = category and category:lower() or 'general'
@@ -409,6 +425,58 @@ commandObj.onTrigger = function(player, category, subcat)
             player:printToPlayer('BST jug pets -- buy a broth, then Call Beast / Bestial Loyalty to summon it.', xi.msg.channel.SYSTEM_3)
             player:printToPlayer('Pet food page: !shop pets food', xi.msg.channel.SYSTEM_3)
             xi.shop.general(player, petStock.jugs)
+        end
+        return
+    end
+
+    -- Reforged armor: claim your CURRENT MAIN JOB's ilvl-109 AF/Relic/Empy set(s),
+    -- FREE. Reads the live reforge_catalog so it always matches the Reforge system.
+    if cat == 'reforge' then
+        local H = xi.msg.channel.SYSTEM_3
+        if not reforgeCatalog then
+            player:printToPlayer('The reforge claim is unavailable (catalog failed to load).', H)
+            return
+        end
+
+        local job       = player:getMainJob()
+        local jobPieces = reforgeCatalog.pieces[job]
+        if not jobPieces then
+            player:printToPlayer('Your current main job has no reforged set configured yet.', H)
+            return
+        end
+
+        local setLabels = { af = 'Artifact (AF)', relic = 'Relic', empy = 'Empyrean' }
+        local sub       = subcat and subcat:lower() or ''
+
+        -- No / invalid set name: show the claim menu.
+        if sub ~= 'af' and sub ~= 'relic' and sub ~= 'empy' and sub ~= 'all' then
+            player:printToPlayer('Reforged armor -- claim your main-job ilvl-109 set, FREE:', H)
+            player:printToPlayer('  !shop reforge af     - Artifact set (5 pieces)', H)
+            player:printToPlayer('  !shop reforge relic  - Relic set (5 pieces)', H)
+            player:printToPlayer('  !shop reforge empy   - Empyrean set (5 pieces)', H)
+            player:printToPlayer('  !shop reforge all    - all three sets (15 pieces)', H)
+            player:printToPlayer('  Grants pieces for the job you are CURRENTLY on; switch jobs for another.', H)
+            return
+        end
+
+        local toGrant = (sub == 'all') and { 'af', 'relic', 'empy' } or { sub }
+        local granted, owned, failed = 0, 0, 0
+        for _, setKey in ipairs(toGrant) do
+            for _, itemId in ipairs(reforgeCatalog.buildJobLootPool(job, setKey)) do
+                if player:hasItem(itemId) then
+                    owned = owned + 1
+                elseif player:addItem(itemId) then
+                    granted = granted + 1
+                else
+                    failed = failed + 1
+                end
+            end
+        end
+
+        local label = (sub == 'all') and 'All reforged sets' or (setLabels[sub] .. ' set')
+        player:printToPlayer(string.format('[Reforge] %s -- %d granted, %d already owned.', label, granted, owned), H)
+        if failed > 0 then
+            player:printToPlayer(string.format('  %d piece(s) could not be added -- free inventory space and re-run.', failed), H)
         end
         return
     end
