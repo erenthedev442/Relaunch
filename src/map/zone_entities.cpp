@@ -1681,6 +1681,15 @@ auto CZoneEntities::mobTick(CMobEntity* PMob, timer::time_point tick) -> Task<vo
             }
         }
 
+        // FJB: Clear this mob's own enmity container before freeing its memory.
+        // Die()/FadeOut() should have done this already, but if any code path set
+        // status=DISAPPEAR without going through FadeOut (or if new enmity was added
+        // after the clear), stale raw pointers in player PNotorietyContainers would
+        // survive until the next tick and cause a UAF crash in dynamic_cast inside
+        // GenerateCureEnmity / CNotorietyContainer::hasEnmity. Calling Clear() here
+        // is always safe (no-op on an already-empty list).
+        PMob->PEnmityContainer->Clear();
+
         m_mobsToDelete.emplace_back(PMob);
         co_return;
     }
@@ -1766,6 +1775,10 @@ auto CZoneEntities::petTick(CPetEntity* PPet, timer::time_point tick) -> Task<vo
             PCurrentMob->PEnmityContainer->Clear(PPet->id);
         }
 
+        // FJB: same UAF guard as the mob path — clear the pet's own enmity so
+        // no mob notoriety container holds a dangling pointer after destroy().
+        PPet->PEnmityContainer->Clear();
+
         m_petsToDelete.emplace_back(PPet);
         co_return;
     }
@@ -1814,6 +1827,9 @@ auto CZoneEntities::trustTick(CTrustEntity* PTrust, timer::time_point tick) -> T
                 PChar->SpawnTRUSTList.erase(PTrust->id);
             }
         }
+
+        // FJB: same UAF guard — clear trust's enmity before freeing.
+        PTrust->PEnmityContainer->Clear();
 
         m_trustsToDelete.emplace_back(PTrust);
         co_return;
