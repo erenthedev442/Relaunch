@@ -15,14 +15,18 @@
 -----------------------------------
 local catalog = {}
 
--- Battleground: Al Zahbi. Spawns ring around DEFENDERS (never fixed
--- coords), so the zone's geometry can't strand a mob off-map.
+-- Battleground: Al Zahbi.
 catalog.zone   = 'Al_Zahbi'
 catalog.zoneId = 48
 
 -- Mob groups are still registered under zone 210 (GM_Home) in the DB.
 -- groupZoneId tells the engine where to look up the group definitions.
 catalog.groupZoneId = 210
+
+-- Fixed spawn anchor: mobs always pour in from this spot (center of the
+-- Al Zahbi market plaza) regardless of where defenders are standing.
+-- Tune with !pos while standing at the desired spawn center, then update.
+catalog.fixedSpawn = { x = 0, y = 0, z = 36 }
 
 -- ============================================================
 -- SCHEDULE (UTC)

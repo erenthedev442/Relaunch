@@ -111,7 +111,10 @@ local nextWave, endInvasion
 -----------------------------------
 local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
     opts = opts or {}
-    local px, py, pz = anchor:getXPos(), anchor:getYPos(), anchor:getZPos()
+    local fs = catalog.fixedSpawn
+    local px = fs and fs.x or anchor:getXPos()
+    local py = fs and fs.y or anchor:getYPos()
+    local pz = fs and fs.z or anchor:getZPos()
     local angle = math.random() * math.pi * 2
     local dist  = catalog.spawnRingMin
         + math.random() * (catalog.spawnRingMax - catalog.spawnRingMin)

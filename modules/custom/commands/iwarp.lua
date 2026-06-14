@@ -12,7 +12,7 @@ commandObj.cmdprops =
     parameters = '',
 }
 
-local DEST = { x = 610, y = -24, z = 356, rot = 0 }
+local DEST = { x = 0, y = 0, z = 36, rot = 0 }
 
 commandObj.onTrigger = function(player)
     player:teleport(DEST, xi.zone.AL_ZAHBI)
