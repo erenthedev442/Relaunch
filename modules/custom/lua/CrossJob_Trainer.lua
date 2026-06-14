@@ -43,6 +43,12 @@ local GIL_STR = commafy(GIL_COST)
 -- Back/Next buttons.
 local GROUP_PAGE_SIZE = 6
 
+-- Main-menu pagination (added 2026-06-13): the client's GMPROMPT UI renders only
+-- the FIRST 8 options, and this menu had 9 job groups + "How it works" = 10, so
+-- Ninja + How-it-works were silently dropped. Paginate the top-level list so
+-- every page stays <= 8 (entries + nav).
+local MAIN_PAGE_SIZE  = 6
+
 -- Forward declarations (mutually recursive menu screens).
 local showMainMenu, showGroupMenu, showConfirmMenu
 
@@ -62,20 +68,19 @@ end
 -----------------------------------
 -- Main menu: pick a job group.
 -----------------------------------
-showMainMenu = function(player)
-    local options = {}
-
+showMainMenu = function(player, page)
+    -- Full top-level item list: every job group, then "How it works" last.
+    local items = {}
     for idx, group in ipairs(catalog.groups) do
         local groupIndex = idx
-        table.insert(options, {
+        items[#items + 1] = {
             group.name,
             function(playerArg)
                 showGroupMenu(playerArg, groupIndex)
             end,
-        })
+        }
     end
-
-    table.insert(options, {
+    items[#items + 1] = {
         'How it works',
         function(playerArg)
             playerArg:printToPlayer('[ Cross-Job Trainer ] Buy a job ability and use it on ANY job.', xi.msg.channel.SYSTEM_3)
@@ -83,11 +88,36 @@ showMainMenu = function(player)
             playerArg:printToPlayer('  It will NOT show in your Job Abilities menu - use a macro, e.g.  /ja "Meditate" <me>', xi.msg.channel.SYSTEM_3)
             showMainMenu(playerArg)
         end,
-    })
+    }
+
+    -- Paginate so each page stays under the client's 8-option GMPROMPT cap.
+    local pages = math.max(1, math.ceil(#items / MAIN_PAGE_SIZE))
+    page = math.max(1, math.min(page or 1, pages))
+    local startIdx = (page - 1) * MAIN_PAGE_SIZE + 1
+    local endIdx   = math.min(startIdx + MAIN_PAGE_SIZE - 1, #items)
+
+    local options = {}
+    for i = startIdx, endIdx do
+        options[#options + 1] = items[i]
+    end
+    if page > 1 then
+        table.insert(options, {
+            string.format('<< Page %d/%d', page - 1, pages),
+            function(p) showMainMenu(p, page - 1) end,
+        })
+    end
+    if page < pages then
+        table.insert(options, {
+            string.format('Page %d/%d >>', page + 1, pages),
+            function(p) showMainMenu(p, page + 1) end,
+        })
+    end
 
     local menu =
     {
-        title   = 'Cross-Job Ability Trainer',
+        title   = (pages > 1)
+            and string.format('Cross-Job Ability Trainer %d/%d', page, pages)
+            or  'Cross-Job Ability Trainer',
         options = options,
     }
     local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
