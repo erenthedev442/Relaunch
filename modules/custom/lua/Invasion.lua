@@ -398,4 +398,53 @@ for _, zoneName in ipairs(TICK_ZONES) do
     end)
 end
 
+-----------------------------------
+-- Public API for the !invasion GM command.
+-- Lives here so closures can reach state, nextWave, endInvasion, etc.
+-----------------------------------
+xi._invasion_api = {
+    isActive = function()
+        return state ~= nil
+    end,
+
+    info = function()
+        if not state then return nil end
+        return { wave = state.wave, total = #catalog.waves, endsAt = state.endsAt }
+    end,
+
+    -- Initiating player must be inside GM Home so their position can
+    -- anchor the first wave's mob spawns.
+    forceStart = function(zone)
+        if state then return false, 'Invasion already in progress.' end
+        state = {
+            wave         = 0,
+            mobsAlive    = {},
+            participants = {},
+            startedAt    = os.time(),
+            endsAt       = os.time() + catalog.timeLimitSec,
+        }
+        local players = zone:getPlayers()
+        broadcast(players[1],
+            '[Invasion] THE VOIDSENT ARE HERE! GM Home is under attack - defend the sanctuary!')
+        nextWave(zone)
+        return true
+    end,
+
+    -- Zone-independent abort: mirrors endInvasion's despawn path but
+    -- skips reward distribution (GM abort gives no rewards).
+    forceEnd = function()
+        if not state then return false, 'No active invasion.' end
+        local mobs = state.mobsAlive
+        state = nil   -- clear before touching mobs (re-entrancy guard)
+        for _, mob in pairs(mobs or {}) do
+            if type(mob) == 'userdata' then
+                pcall(function()
+                    if mob:getHP() > 0 then mob:setHP(0) end
+                end)
+            end
+        end
+        return true
+    end,
+}
+
 return m
