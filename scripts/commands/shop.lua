@@ -80,6 +80,8 @@ local stock =
 
     armor =
     {
+        { 10293,   50000 }, --Chocobo Shirt
+        { 11811,   50000 }, --Destrier Beret
         { 12486,   50000 }, --seers crown +1
         { 11003,   500000 }, --prodigious mantle
         { 28440,   500000 }, --wind buffet belt +1
