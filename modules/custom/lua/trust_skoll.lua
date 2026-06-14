@@ -53,6 +53,19 @@ local TRUSTS = {
             'Stand behind it. That is all you need do.',
         },
     },
+    {
+        spellId    = 902,
+        name       = 'Corvus',
+        clientName = 'Curilla',
+        cost       = 15000000,   -- 15M: a cheaper ranged DD, not a 50M support pillar
+        bindLabel  = 'Bind Corvus to your service',
+        boundMsg   = 'Corvus already shadows you. Cast "Curilla" from your Trust menu -- the back line is his.',
+        sealMsgs   = {
+            'The covenant is sealed. The Black Arrow is yours.',
+            'Look for "Curilla" in your Trust menu -- casting it calls Corvus.',
+            'Point him at what you want dead. He does the rest, and says nothing.',
+        },
+    },
 }
 
 local NPC_NAME  = 'Void_Keeper'
@@ -84,8 +97,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             }
         end
 
-        local label = string.format('%s  (-%s gil)', t.bindLabel, fmtGil(GIL_COST))
-        if player:getGil() < GIL_COST then
+        local cost  = t.cost or GIL_COST   -- per-trust price; falls back to the shared 50M
+        local label = string.format('%s  (-%s gil)', t.bindLabel, fmtGil(cost))
+        if player:getGil() < cost then
             label = label .. '  [insufficient gil]'
         end
 
@@ -97,15 +111,15 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                         xi.msg.channel.SYSTEM_3)
                     return
                 end
-                if p:getGil() < GIL_COST then
+                if p:getGil() < cost then
                     p:printToPlayer(
                         string.format('The binding demands %s gil. You carry only %s.',
-                            fmtGil(GIL_COST), fmtGil(p:getGil())),
+                            fmtGil(cost), fmtGil(p:getGil())),
                         xi.msg.channel.SYSTEM_3)
                     return
                 end
 
-                p:delGil(GIL_COST)
+                p:delGil(cost)
                 p:addSpell(t.spellId)
 
                 local S = xi.msg.channel.SYSTEM_3

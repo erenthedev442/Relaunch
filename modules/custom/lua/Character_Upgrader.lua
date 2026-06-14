@@ -15,8 +15,13 @@ local m = Module:new('character_upgrader')
 -- giveAllSpells / giveAllTrusts / !addalltrusts hands it out for free. The
 -- fallbacks cover module load order (custom_spell_ids may register the enums
 -- after this file is required); EXCENMILLE is a core enum so 899 always resolves.
-local SKOLL_SPELL = (xi.magic and xi.magic.spell and xi.magic.spell.SKOLL) or 901
-local MEAT_SPELL  = (xi.magic and xi.magic.spell and xi.magic.spell.EXCENMILLE) or 899
+-- Corvus (spell 902, the repurposed Curilla slot) is a third PAID custom trust;
+-- like Meat it sits on a REAL retail id with a free quest grant (blocked in
+-- block_curilla_retail_grant.lua), so it must be excluded here too. CURILLA is a
+-- core enum so 902 always resolves.
+local SKOLL_SPELL  = (xi.magic and xi.magic.spell and xi.magic.spell.SKOLL) or 901
+local MEAT_SPELL   = (xi.magic and xi.magic.spell and xi.magic.spell.EXCENMILLE) or 899
+local CORVUS_SPELL = (xi.magic and xi.magic.spell and xi.magic.spell.CURILLA) or 902
 
 m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     super(zone)
@@ -27,7 +32,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     -- giveAllSpells / giveAllTrusts sweep, so exclude them by id -- otherwise the
     -- Void Keeper's 50M-gil trusts get handed out for free.
     -----------------------------------
-    local EXCLUDED_SPELLS = { [SKOLL_SPELL] = true, [MEAT_SPELL] = true }
+    local EXCLUDED_SPELLS = { [SKOLL_SPELL] = true, [MEAT_SPELL] = true, [CORVUS_SPELL] = true }
 
     local menu         = { title = 'Unlocker', options = {} }
     local mainMenu     = {}
@@ -698,7 +703,7 @@ m:addOverride('xi.commands.addalltrusts.onTrigger', function(player, target)
         if spellList then
             local filtered = {}
             for _, id in ipairs(spellList) do
-                if id ~= SKOLL_SPELL and id ~= MEAT_SPELL then
+                if id ~= SKOLL_SPELL and id ~= MEAT_SPELL and id ~= CORVUS_SPELL then
                     filtered[#filtered + 1] = id
                 end
             end
