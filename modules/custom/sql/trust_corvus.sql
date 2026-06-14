@@ -59,27 +59,30 @@ VALUES
      939, 1500, 0, 0, 1.00, 0, 0,
      0, 0, 0, NULL);
 
--- ---- 2. Overwrite mob pool 5902 (= 902 + 5000) with Corvus ------------
+-- ---- 2. TP skill list for Corvus (Jishnu's Radiance, player WS 202) ------
+--   trustutils::LoadTrustStatsAndSkills reads mob_skill_lists via
+--   battleutils::GetMobSkillList(PTrust->m_MobSkillList) where m_MobSkillList
+--   comes from mob_pools.skill_list_id.  mob_skill_id <= 255 is treated as a
+--   player weaponskill ID (not a mob skill), so 202 = Jishnu's Radiance.
+--   setTrustTPSkillSettings in corvus.lua then fires it via TryTrustSkill().
+REPLACE INTO mob_skill_lists (skill_list_name, skill_list_id, mob_skill_id)
+VALUES ('corvus_jishnu', 5902, 202);
+
+-- ---- 3. Overwrite mob pool 5902 (= 902 + 5000) with Corvus ------------
 --   look_t (size=1 MODEL_EQUIPPED): byte order = size(u16 LE=1), face(u8),
 --   race(u8), then head/body/hands/legs/feet/main/sub/ranged (u16 LE, raw
---   item_equipment.MId, NO slot offset). Race 01 = Hume Male.
---   *** LOOK: the Orion set -- RNG relic, a dark hooded marksman (fits "the Black
---   Arrow") ***: race 03 (Elvaan Male), face 0x04, the FULL Orion relic set in every
---   armor slot (head/body/hands/legs/feet all MId 84 -- a relic set shares one model
---   number across its slots), no melee weapon, and Gandiva (empyrean bow, MId 98) in
---   the `ranged` slot. Values are raw item_equipment.MId.
---   TWEAKS: the `face` byte (3rd byte of the UNHEX, 0x04) picks the Elvaan face + hair
---   (0x00-0x07). BOW SWAP: change the last 2 bytes (ranged) -- e.g. Gandiva 0x62(98),
---   Perdu Bow 0x28(40), or a plain Longbow 0x25(37). ARMOR SWAP: set the head..feet
---   pairs to any item_equipment.MId for a different outfit (all 5 = one MId for a set).
+--   item_equipment.MId, NO slot offset).
+--   *** LOOK: Galka Male (race 05, face 02), full Taeon set (MId 326 = 0x0146 LE
+--   -> bytes 0x46,0x01), Fail-not bow (MId 133 = 0x85 -> bytes 0x85,0x00).
+--   Taeon is dark leather ranger armour; Fail-not is the legendary "never-miss"
+--   bow -- fits the Black Arrow lore perfectly.
+--   TWEAKS: face byte (3rd) = 0x00-0x07 for different Galka heads. BOW SWAP:
+--   change last 2 bytes (ranged LE), e.g. Gandiva 0x62 00, Fomalhaut 0x86 00.
+--   ARMOR SWAP: set the 5 head/body/hands/legs/feet u16 pairs to any MId.
 --
---   mJob 11 / sJob 12 = RNG / SAM. RNG main = the ranged-DD identity; SAM sub
---   grants Store TP for faster weaponskills (trustutils computes sub-job skill
---   at the master's full level). cmbDmgMult 250 makes each shot/hit hurt;
---   cmbDelay 240 = standard. skill_list_id 0 (no native mob TP moves) +
---   spellList 0 (no spells) -- his damage is RATTACK + weaponskills, configured
---   in corvus.lua. packet_name 'Corvus' shows over his head + in the party list
---   (corvus.lua also renameEntity's it for the equipped-look name path).
+--   mJob 11 / sJob 12 = RNG / SAM.  skill_list_id 5902 -> mob_skill_lists row
+--   above -> WS 202 fed into TryTrustSkill (set in corvus.lua via
+--   setTrustTPSkillSettings).  spellList 0 = no magic spells.
 REPLACE INTO mob_pools
     (poolid, name,     packet_name, speciesid, modelid,
      mJob, sJob, cmbSkill, cmbDelay, cmbDmgMult,
@@ -88,9 +91,9 @@ REPLACE INTO mob_pools
      spellList, namevis, roamflag, skill_list_id, resist_id,
      modelSize, modelHitboxSize)
 VALUES
-    (5902, 'corvus', 'Corvus', 246, UNHEX('0100040354005400540054005400000000006200'),
+    (5902, 'corvus', 'Corvus', 246, UNHEX('0100020546014601460146014601000000008500'),
      11, 12, 0, 240, 250,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,
-     0, 0, 0, 0, 153,
+     0, 0, 0, 5902, 153,
      1, 12);

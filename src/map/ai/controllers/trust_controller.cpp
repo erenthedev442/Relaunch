@@ -31,6 +31,7 @@
 #include "entities/trustentity.h"
 #include "items/item_weapon.h"
 #include "mob_modifier.h"
+#include "modifier.h"
 #include "mob_spell_container.h"
 #include "player_controller.h"
 #include "recast_container.h"
@@ -461,6 +462,14 @@ bool CTrustController::RangedAttack(uint16 targid)
     if (CItemWeapon* PRange = dynamic_cast<CItemWeapon*>(POwner->m_Weapons[SLOT_RANGED]))
     {
         rangedDelay = std::chrono::milliseconds(PRange->getDelay());
+    }
+
+    // Apply SNAPSHOT reduction (Mod::SNAPSHOT = percent reduction, capped at 50)
+    // so weaponless trusts like Corvus benefit from the SNAPSHOT mob mod they set.
+    int16 snapshot = std::min(POwner->getMod(Mod::SNAPSHOT), static_cast<int16>(50));
+    if (snapshot > 0)
+    {
+        rangedDelay = rangedDelay * (100 - snapshot) / 100;
     }
 
     if (m_Tick - m_LastRangedAttackTime > rangedDelay && !m_InTransit)

@@ -41,12 +41,12 @@ spellObject.onMobSpawn = function(mob)
     -- Name shows over the head + in the party list. true = silent (same path Gemma uses).
     mob:renameEntity('Corvus', true)
 
-    -- Ranged DD: he shoots, he never swings, and he PLANTS once positioned.
-    -- NO_MOVE stops the every-3s repositioning (the "running from hate" you get with
-    -- LONG_RANGE, which re-paths to a new spot constantly) -- he settles ~9y back when
-    -- the fight starts and holds that spot, firing from there.
+    -- Ranged DD: he shoots, he never swings. He maintains 10y from the target --
+    -- close enough to stay in range of every ranged attack, far enough to never
+    -- stand in melee. He follows target movement so he never falls out of range,
+    -- but 10y isn't enough to look like "running away."
     mob:setAutoAttackEnabled(false)
-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, 10)
 
     -- ---- Survivability (int16 trap: Mod::HP/HPP are int16, so a single value
     -- must stay <= 32767; a flat 99999 overflows negative and he dies on spawn).
@@ -83,63 +83,44 @@ spellObject.onMobSpawn = function(mob)
     -- ---- Threat control: hard DPS, but he must never out-hate the master. ----
     mob:addMod(xi.mod.ENMITY, -50) -- halve all the hate his shots generate
 
-    -- ---- RANGED DAMAGE -- the whole point of him; sized so he's worth 15M. ----
-    -- A Trust has NO real bow, so its ranged weapon DMG is 0 and RATT alone just
-    -- multiplies zero (that's why an un-tuned ranged trust hits soft). The ranged
-    -- weapon DMG is built entirely from mods -- mobutils::GetWeaponDamage(SLOT_
-    -- RANGED) -- and attack.cpp resolves each shot as:
-    --     shot = (rangedWeaponDmg + fSTR) x damageRatio
-    --     rangedWeaponDmg = (baseByLvl + RANGED_DAMAGE_OFFSET + RANGED_DMG_RATING)
-    --                       x BASE_DAMAGE_MULTIPLIER
-    --     damageRatio climbs with RATT vs the target's DEF.
-    -- So THESE THREE MODS ARE HIS BOW, and RATT turns each shot into a heavy hit.
-    mob:addMod(xi.mod.RANGED_DMG_RATING,              800)          -- his "bow" DMG -- the #1 damage dial
-    mob:setMobMod(xi.mobMod.RANGED_DAMAGE_OFFSET,     300)          -- more ranged base damage
-    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER,   175)          -- x1.75 on the ranged base
-    mob:addMod(xi.mod.MAIN_DMG_RATING,                500)          -- feeds his Apex Arrow (it scales off getWeaponDmg)
+    -- ---- RANGED DAMAGE -- the whole point of him. ----
+    -- No real bow: weapon DMG is built from mods (mobutils::GetWeaponDamage(SLOT_RANGED)).
+    --     rangedWeaponDmg = (baseByLvl + RANGED_DAMAGE_OFFSET + RANGED_DMG_RATING) x BASE_DAMAGE_MULTIPLIER%
+    --     shot            = (rangedWeaponDmg + fSTR) x pDIF
+    -- RANGED_DMG_RATING is the #1 damage dial. BASE_DAMAGE_MULTIPLIER% scales the whole base.
+    -- RATT vs boss DEF determines pDIF (higher RATT -> higher pDIF -> more damage).
+    mob:addMod(xi.mod.RANGED_DMG_RATING,              3500)         -- main bow-damage dial
+    mob:setMobMod(xi.mobMod.RANGED_DAMAGE_OFFSET,     500)          -- base offset
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER,   250)          -- x2.5 on the ranged base
+    mob:addMod(xi.mod.MAIN_DMG_RATING,                2000)         -- feeds Jishnu's Radiance WS damage
 
-    -- Drive the damage ratio to its cap even against lv150-boss DEF, and make
-    -- sure every shot LANDS through boss evasion.
+    -- Drive pDIF to cap against lv150-boss DEF and guarantee every shot lands.
     mob:addMod(xi.mod.RATT, xi.trust.modGrowthValMax(mob, 250))
-    mob:addMod(xi.mod.RATT, 2500)                                   -- flat ranged attack: keeps pDIF near cap vs heavy DEF
+    mob:addMod(xi.mod.RATT, 4000)                                   -- flat ranged attack vs heavy DEF
     mob:addMod(xi.mod.RACC, xi.trust.modGrowthValMax(mob, 250))
-    mob:addMod(xi.mod.RACC, 1200)                                   -- flat ranged accuracy to clear lv150 evasion
+    mob:addMod(xi.mod.RACC, 1500)                                   -- flat accuracy vs lv150 evasion
 
-    mob:addMod(xi.mod.STR, 300)                                     -- fSTR added to every shot
-    mob:addMod(xi.mod.DEX, 250)                                     -- crit rate
-    mob:addMod(xi.mod.AGI, 500)                                     -- ranged attack + accuracy + crit
+    mob:addMod(xi.mod.STR, 500)                                     -- fSTR into every shot
+    mob:addMod(xi.mod.DEX, 300)                                     -- crit rate
+    mob:addMod(xi.mod.AGI, 700)                                     -- ranged attack + accuracy + Jishnu's WS mod
 
-    -- Volume + spikes: fire fast, fire twice, crit hard.
-    mob:addMod(xi.mod.SNAPSHOT,         50)                         -- shorter ranged delay -> faster shots (the cap)
-    mob:addMod(xi.mod.RAPID_SHOT,       100)                        -- rapid-shot procs (faster shot + double-damage chance)
-    mob:addMod(xi.mod.DOUBLE_SHOT_RATE, 100)                        -- a second shot nearly every volley
-    mob:addMod(xi.mod.CRITHITRATE,      40)                         -- +40% critical hit rate
-    mob:addMod(xi.mod.STORETP,          500)                        -- feed any weaponskill fast
+    -- Volume: fast cadence + near-constant double shots + high crit rate.
+    -- SNAPSHOT is applied to the weaponless ranged delay in trust_controller.cpp.
+    mob:addMod(xi.mod.SNAPSHOT,         50)                         -- halves the base ranged delay
+    mob:addMod(xi.mod.RAPID_SHOT,       100)                        -- rapid-shot procs
+    mob:addMod(xi.mod.DOUBLE_SHOT_RATE, 100)                        -- second shot almost every volley
+    mob:addMod(xi.mod.CRITHITRATE,      40)                         -- +40% crit rate
+    mob:addMod(xi.mod.STORETP,          500)                        -- charge TP fast for Jishnu's
 
-    -- TUNING DIALS after a live test: for the shot stream, RANGED_DMG_RATING (bow
-    -- DMG) + the flat RATT are the big two and BASE_DAMAGE_MULTIPLIER scales it
-    -- all; for the Apex Arrow spike, MAIN_DMG_RATING above. (No setTrustTPSkill-
-    -- Settings on purpose: a weaponless Trust has no weaponskills, and its
-    -- CLOSER_UNTIL_TP would make him sit on TP instead of firing the gambit below.)
+    -- ---- WEAPONSKILL: Jishnu's Radiance (player WS 202) at 1000 TP. ----
+    -- Wired via mob_skill_lists (skill_list_id 5902, mob_skill_id 202 <= 255
+    -- -> treated as player WS by trustutils::LoadTrustStatsAndSkills).
+    -- setTrustTPSkillSettings(ASAP, RANDOM, 1000) fires via TryTrustSkill()
+    -- the moment TP >= 1000. The gambit loop does NOT handle ai.r.WS -- only
+    -- TryTrustSkill does -- so the old ai.r.WS gambit was silently a no-op.
+    mob:setTrustTPSkillSettings(ai.tp.ASAP, ai.s.RANDOM, 1000)
 
-    -- ---- HARD HITTER: a REAL player weaponskill at 1000 TP. *** ai.r.WS, not
-    -- ai.r.MS *** -- this routes through gambits_container -> controller->WeaponSkill()
-    -- with a genuine CWeaponSkill, so it uses the FULL player WS damage formula (and
-    -- the raised 131,071 cap). The old code fired ai.r.MS / mob_skill 203, but the
-    -- mob-skill apex_arrow has NO damage script (scripts/globals/mobskills/apex_arrow
-    -- .lua doesn't exist) -> it fell back to a trivial ~2k hit. THAT was the bug.
-    -- WS 202 = Jishnu's Radiance: an empyrean Archery WS (3 hits) that scales with
-    -- AGI (he has 500) + his ranged weapon DMG + RATT, and his 40% crit / double-shot
-    -- mods all ride along. Corvus is RNG-main, so he has the Archery skill to fire it.
-    -- ALT vs very tanky DEF: Apex Arrow (the PLAYER WS, also id 203) -- swap 202->203;
-    -- it TP-scales fTP and ignores 15-50% DEF, so it can out-damage Jishnu on a
-    -- high-defense boss. The TP_GTE self-gates the recast (TP drains on use).
-    mob:addGambit(ai.t.TARGET, { ai.c.TP_GTE, 1000 }, { ai.r.WS, ai.s.SPECIFIC, 202 })
-
-    -- ---- Ranged auto-shots: the bread-and-butter damage that also BUILDS the TP
-    -- for Apex Arrow. The RATTACK reaction tuple MUST have 3 elements to parse
-    -- (lua_baseentity.cpp addGambit); selector/arg are ignored -- the engine just
-    -- calls RangedAttack. ALWAYS, so he fires whenever off cooldown and in range.
+    -- ---- Ranged auto-shots: bread-and-butter damage + TP building. ----
     mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, ai.s.SPECIFIC, 0 })
 end
 

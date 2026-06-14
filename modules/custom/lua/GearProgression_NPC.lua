@@ -1,147 +1,53 @@
 -----------------------------------
 -- GearProgression_NPC.lua
--- Weapons-only vendor: spend seals earned from content to purchase tiered
--- weapons independently (no prior item needed).
--- Zone: Reisenjima_Henge (zone 292) - same zone as the Hunting League NPCs
--- so the player can hand in marks and shop in one place.
+-- Weapons-only vendor: spend seals to purchase tiered weapons.
+-- Zone: Reisenjima_Henge (zone 292).
 --
--- Seal currencies:
--- Seal currencies (loaded from catalog.seals at runtime - see catalog file
--- for the actual names and tier descriptions; main-menu labels below take
--- the first whitespace-delimited word of each seal name for compactness).
+-- Seal currencies (loaded from catalog.seals at runtime).
 --
 -- Menu flow:
---   Main menu (tier picker)
---     -> Tier menu (weapon-category picker, paginated)
---        -> Item menu (paginated weapon list, paginated)
+--   Main menu (tier picker)                   [customMenu - service navigation]
+--     -> Category picker (Swords/Daggers/...)  [customMenu - service navigation]
+--        -> Native shop window                 [setShopCurrency - full item previews]
+--
+-- The native shop window charges sealDef.id items automatically via the
+-- C++ packet handler (setShopCurrency). No Lua purchase helper needed.
 --
 -- To add weapons: edit gear_progression_catalog.lua only.
 -----------------------------------
 require('modules/module_utils')
 local catalog = require('modules/custom/lua/gear_progression_catalog')
-local sealBank = require('modules/custom/lua/hl_seal_currency')
 
--- Resolve the zone script path from the catalog so the require + override
--- target stay in sync with catalog.zonePath. No more hardcoded zone names.
 local _zoneName = catalog.zonePath:match('xi%.zones%.(.+)')
 require(string.format('scripts/zones/%s/Zone', _zoneName))
------------------------------------
+
 local m = Module:new('gear_progression_npc')
 
 m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
     super(zone)
 
-    -----------------------------------
-    -- Purchase helper
-    -----------------------------------
-    local function purchase(player, sealDef, item)
-        local sealId   = sealDef.id
-        local sealName = sealDef.name
-
-        if player:getItemCount(sealId) < item.cost then
-            player:printToPlayer(
-                string.format('You need %d %s to buy %s. (You do not have enough.)', item.cost, sealName, item.name),
-                xi.msg.channel.SYSTEM_3
-            )
+    local function openShop(player, sealDef, items)
+        if #items == 0 then
+            player:printToPlayer('No weapons available here.', xi.msg.channel.SYSTEM_3)
             return
         end
-
-        if player:getFreeSlotsCount() == 0 then
-            player:printToPlayer('Your inventory is full! Free up a slot first.', xi.msg.channel.SYSTEM_3)
-            return
-        end
-
-        -- Consume seals across EVERY stack and container the balance check
-        -- counts. The old delItem() only hit the first stack of main inventory
-        -- and silently removed nothing on a multi-stack/wrong-container miss,
-        -- handing out free weapons. Give the item only if the seals were taken.
-        if not sealBank.take(player, sealId, item.cost) then
-            player:printToPlayer('Could not take your seals - move them into your inventory and retry.', xi.msg.channel.SYSTEM_3)
-            return
-        end
-        player:addItem({ id = item.id, quantity = 1 })
+        local count = math.min(#items, 16)
         player:printToPlayer(
-            string.format('Purchased %s for %d %s!', item.name, item.cost, sealName),
-            xi.msg.channel.SYSTEM_3
-        )
+            string.format('Browsing %s weapons. Currency: %s (you have %d). Hover items to preview.',
+                sealDef.name, sealDef.name, player:getItemCount(sealDef.id)),
+            xi.msg.channel.SYSTEM_3)
+        player:timer(50, function(p)
+            p:createShop(count)
+            for i = 1, count do
+                p:addShopItem(items[i].id, items[i].cost)
+            end
+            p:setShopCurrency(sealDef.id)
+            p:sendMenu(xi.menuType.SHOP)
+        end)
     end
 
-    -----------------------------------
-    -- Build a paginated item list menu (weapons inside a chosen category)
-    --
-    -- NOTE: the customMenu prompt packet caps the title+options payload at
-    -- 150 bytes. Page size, format, and per-row truncation below are tuned
-    -- so the packet can't silently truncate the Back/Next buttons even if
-    -- the catalog gains very long item names later.
-    -----------------------------------
-    local PAGE_SIZE     = 3
-    local MAX_ITEM_NAME = 22  -- truncated with '*' if longer; protects the budget
-
-    local function buildItemMenu(player, menu, sealDef, items, page, returnFunc)
-        local totalPages = math.max(1, math.ceil(#items / PAGE_SIZE))
-        page = math.max(1, math.min(page, totalPages))
-
-        local startIdx = (page - 1) * PAGE_SIZE + 1
-        local endIdx   = math.min(startIdx + PAGE_SIZE - 1, #items)
-
-        local options = {}
-
-        for i = startIdx, endIdx do
-            local item = items[i]
-            local name = item.name
-            if #name > MAX_ITEM_NAME then
-                name = name:sub(1, MAX_ITEM_NAME - 1) .. '*'
-            end
-            -- Seal name lives in the title; jobs are omitted from the menu
-            -- label (the in-game item description has them) so 3 rows + nav
-            -- buttons reliably fit the 150-byte customMenu cap.
-            local label = string.format('%s  [%d]', name, item.cost)
-            table.insert(options, {
-                label,
-                function(playerArg)
-                    purchase(playerArg, sealDef, item)
-                    buildItemMenu(playerArg, menu, sealDef, items, page, returnFunc)
-                end,
-            })
-        end
-
-        if totalPages > 1 then
-            if page > 1 then
-                table.insert(options, {
-                    string.format('<< %d/%d', page - 1, totalPages),
-                    function(playerArg)
-                        buildItemMenu(playerArg, menu, sealDef, items, page - 1, returnFunc)
-                    end,
-                })
-            end
-            if page < totalPages then
-                table.insert(options, {
-                    string.format('%d/%d >>', page + 1, totalPages),
-                    function(playerArg)
-                        buildItemMenu(playerArg, menu, sealDef, items, page + 1, returnFunc)
-                    end,
-                })
-            end
-        end
-
-        table.insert(options, { '<< Back', function(playerArg)
-            returnFunc(playerArg)
-        end })
-
-        menu.title   = string.format('%s (%d/%d)', sealDef.name, page, totalPages)
-        menu.options = options
-        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-        player:timer(30, function(p) p:customMenu(snapshot) end)
-    end
-
-    -----------------------------------
-    -- Build the weapon-category menu (Swords / Daggers / Clubs / ...)
-    --
-    -- Replaces the old "slot picker" - since this NPC is weapons-only, the
-    -- categories from the catalog become the top-level choice after picking
-    -- a tier.  Paginated (5/page) so the menu stays under 150 bytes even if
-    -- the catalog grows past the current 14 weapon types.
-    -----------------------------------
+    -- Weapon category picker, paginated so catalog growth doesn't overflow
+    -- the 150-byte customMenu budget.
     local CAT_PG_SZ = 5
 
     local function buildTierMenu(player, menu, tierKey, page, returnFunc)
@@ -149,11 +55,10 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
         local sealDef   = catalog.seals[tierKey]
         local sealCount = player:getItemCount(sealDef.id)
 
-        -- Show only categories that have at least one item.
         local populated = {}
         for _, group in ipairs(tierData.weapons or {}) do
             if #group.items > 0 then
-                table.insert(populated, group)
+                populated[#populated + 1] = group
             end
         end
 
@@ -165,59 +70,54 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
         local options = {}
 
         if #populated == 0 then
-            table.insert(options, { 'No weapons yet (catalog empty)', function() end })
+            options[#options + 1] = { 'No weapons yet (catalog empty)', function() end }
         else
             for i = startIdx, endIdx do
                 local grp = populated[i]
-                table.insert(options, {
+                local capturedItems   = grp.items
+                local capturedSealDef = sealDef
+                options[#options + 1] = {
                     string.format('%s (%d)', grp.label, #grp.items),
                     function(playerArg)
-                        buildItemMenu(playerArg, menu, sealDef, grp.items, 1, function(pp)
-                            buildTierMenu(pp, menu, tierKey, page, returnFunc)
-                        end)
+                        openShop(playerArg, capturedSealDef, capturedItems)
                     end,
-                })
+                }
             end
+
             if totalPages > 1 then
                 if page > 1 then
-                    table.insert(options, {
+                    options[#options + 1] = {
                         string.format('<< %d/%d', page - 1, totalPages),
                         function(playerArg)
                             buildTierMenu(playerArg, menu, tierKey, page - 1, returnFunc)
                         end,
-                    })
+                    }
                 end
                 if page < totalPages then
-                    table.insert(options, {
+                    options[#options + 1] = {
                         string.format('%d/%d >>', page + 1, totalPages),
                         function(playerArg)
                             buildTierMenu(playerArg, menu, tierKey, page + 1, returnFunc)
                         end,
-                    })
+                    }
                 end
             end
         end
 
-        table.insert(options, { '<< Back', function(playerArg)
-            returnFunc(playerArg)
-        end })
+        options[#options + 1] = { '<< Back', function(playerArg) returnFunc(playerArg) end }
 
-        menu.title = string.format('[%s] %d %s',
+        menu.title   = string.format('[%s] %d %s',
             tierKey:sub(1,1):upper() .. tierKey:sub(2),
             sealCount,
             sealDef.name)
         menu.options = options
-        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        local snapshot = { title = menu.title, options = menu.options }
         player:timer(30, function(p) p:customMenu(snapshot) end)
     end
 
-    -----------------------------------
-    -- Main menu (tier picker)
-    -----------------------------------
     local menu = { title = 'Gear Progression', options = {} }
 
     local function buildMainMenu(player)
-        -- Labels kept short: customMenu payload is capped at 150 bytes
         menu.title   = 'Weapons - Choose Tier'
         menu.options =
         {
@@ -252,16 +152,10 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
                 end,
             },
         }
-        local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+        local snapshot = { title = menu.title, options = menu.options }
         player:timer(30, function(p) p:customMenu(snapshot) end)
     end
 
-    -----------------------------------
-    -- NPC Entity
-    --   Position comes from catalog.vendorPos - single source of truth
-    --   shared with the docgen. Adjust placement by editing
-    --   gear_progression_catalog.lua only.
-    -----------------------------------
     local _p = catalog.vendorPos
     local GearProgressionNPC = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
