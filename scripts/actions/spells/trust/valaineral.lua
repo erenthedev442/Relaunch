@@ -100,7 +100,7 @@ spellObject.onMobSpawn = function(mob)
                 end
             end
 
-            mobArg:setLocalVar('[Gambit]LastUrielTime', GetSystemTime())
+            mobArg:setLocalVar('[Gambit]LastUrielTime', GetSystemTime() or 0)
         end
     end)
 end
