@@ -162,6 +162,11 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
         mob:setSpawn(mx, py, mz, 0)
         mob:spawn()
         mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
+        -- FJB: NonExclusive claim so the WHOLE raid can fight every invader, not just the
+        -- party that tagged it first. The engine's IsMobOwner/isMobOwner checks treat a
+        -- CLAIM_TYPE=NonExclusive mob as free-for-all; kill credit goes to the killer
+        -- (handled in onMobDeath) and the wave-clear reward pays everyone in the zone.
+        mob:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)
         for modId, val in pairs(mods) do mob:setMod(modId, val) end
         if hpMult and hpMult > 1.0 then
             local newMax = math.floor(mob:getMaxHP() * hpMult)
@@ -171,7 +176,7 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
         if opts.modelSize then
             pcall(function() mob:setModelSize(opts.modelSize) end)
         end
-        mob:addEnmity(anchor, 1, 1)   -- open claim: no updateClaim, any player can engage
+        mob:addEnmity(anchor, 1, 1)   -- seed enmity on the spawn anchor; NonExclusive claim (set above) lets the whole raid join in
     end
     return mob
 end
