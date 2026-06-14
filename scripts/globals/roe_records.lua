@@ -9650,6 +9650,34 @@ xi.roe.records =
     { -- 10 RoE Objectives Complete (All for One requirement)
         flags = set { 'hidden' },
     },
+
+    -----------------------------------
+    -- Alter Ego Points (March 2026 retail) -- Capacity chain.
+    -- Marjory in Ru'Lude Gardens gates the chain and grants Marjory's Thesis (200 AEP)
+    -- after the WAY_OVER_CAPACITY record completes.
+    -- Phase 1: records exist as hidden stubs so completion state is tractable via GM
+    -- !roeaction <id>. The capacity-points-with-trust trigger needs hooking into the
+    -- capacityPoints code path -- Phase 1.5 follow-up.
+    -- TODO: NOT CAPTURE-VERIFIED -- exact retail trigger condition unknown.
+    -----------------------------------
+
+    [4086] =
+    { -- Filled to Capacity (March 2026 RoE3 chain, step 1 of 3)
+        flags = set { 'hidden' },
+        reward = { sparks = 1000, exp = 5000, item = { xi.item.CIPHER_OF_INGRIDS_ALTER_EGO_II } },
+    },
+
+    [4087] =
+    { -- Over Capacity (March 2026 RoE3 chain, step 2 of 3)
+        flags = set { 'hidden' },
+        reward = { sparks = 1000, exp = 5000, item = { xi.item.CIPHER_OF_ROSULATIAS_ALTER_EGO } },
+    },
+
+    [4088] =
+    { -- Way Over Capacity (March 2026 RoE3 chain, step 3 of 3 -- completion qualifies player for Marjory's Thesis)
+        flags = set { 'hidden' },
+        reward = { sparks = 1000, exp = 5000, item = { xi.item.CIPHER_OF_AUGUSTS_ALTER_EGO } },
+    },
 }
 
 if xi.roe.initialize then

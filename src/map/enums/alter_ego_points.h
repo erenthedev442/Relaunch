@@ -34,3 +34,24 @@ enum class AlterEgoCategory : uint8_t
     MND = 15,
     CHR = 16,
 };
+
+// Cost in alter ego points to advance from `currentRank` to `currentRank + 1`.
+// Returns 0 if already at cap (rank 50 in Phase 1).
+inline constexpr uint16 AlterEgoUpgradeCost(uint8 currentRank)
+{
+    if (currentRank >= 50)
+    {
+        return 0;
+    }
+    if (currentRank < 10) return 1;
+    if (currentRank < 20) return 2;
+    if (currentRank < 30) return 3;
+    if (currentRank < 40) return 4;
+    return 5;
+}
+
+// Sanity: the AlterEgoCategory enum has exactly 9 values (HP..CHR), and the per-character
+// upgrade cache (CCharEntity::m_alterEgoUpgrades) is a fixed-size array. Lock that
+// invariant at compile time so future enum additions force a cache-size bump.
+static_assert(static_cast<int>(AlterEgoCategory::CHR) - static_cast<int>(AlterEgoCategory::HP) + 1 == 9,
+    "AlterEgoCategory range must equal m_alterEgoUpgrades array size (9)");

@@ -32,6 +32,7 @@
 #include "mobutils.h"
 #include "zoneutils.h"
 
+#include "enums/alter_ego_points.h"
 #include "grades.h"
 #include "mob_spell_list.h"
 
@@ -377,6 +378,37 @@ auto LoadTrust(CCharEntity* PMaster, uint32 TrustID) -> CTrustEntity*
     PTrust->SetSLevel(std::floor(PMaster->GetMLevel() / 2));
 
     LoadTrustStatsAndSkills(PTrust);
+
+    // Apply Alter Ego Points stat bonuses (March 2026 system, Phase 1: flat baseline).
+    // Per-archetype HP/MP multipliers are deferred to Phase 1.5 once captures land.
+    {
+        const uint8 hpRank  = charutils::GetAlterEgoUpgrade(PMaster, static_cast<uint8>(AlterEgoCategory::HP));
+        const uint8 mpRank  = charutils::GetAlterEgoUpgrade(PMaster, static_cast<uint8>(AlterEgoCategory::MP));
+        const uint8 strRank = charutils::GetAlterEgoUpgrade(PMaster, static_cast<uint8>(AlterEgoCategory::STR));
+        const uint8 dexRank = charutils::GetAlterEgoUpgrade(PMaster, static_cast<uint8>(AlterEgoCategory::DEX));
+        const uint8 vitRank = charutils::GetAlterEgoUpgrade(PMaster, static_cast<uint8>(AlterEgoCategory::VIT));
+        const uint8 agiRank = charutils::GetAlterEgoUpgrade(PMaster, static_cast<uint8>(AlterEgoCategory::AGI));
+        const uint8 intRank = charutils::GetAlterEgoUpgrade(PMaster, static_cast<uint8>(AlterEgoCategory::INT));
+        const uint8 mndRank = charutils::GetAlterEgoUpgrade(PMaster, static_cast<uint8>(AlterEgoCategory::MND));
+        const uint8 chrRank = charutils::GetAlterEgoUpgrade(PMaster, static_cast<uint8>(AlterEgoCategory::CHR));
+
+        PTrust->health.maxhp += hpRank * 5;
+        PTrust->health.maxmp += mpRank * 2;
+
+        PTrust->stats.STR += strRank;
+        PTrust->stats.DEX += dexRank;
+        PTrust->stats.VIT += vitRank;
+        PTrust->stats.AGI += agiRank;
+        PTrust->stats.INT += intRank;
+        PTrust->stats.MND += mndRank;
+        PTrust->stats.CHR += chrRank;
+
+        // Recompute HP/MP through the modifier pipeline so percent buffs (HPP/MPP, Alter Ego Expo,
+        // gear) apply on top of the AEP-boosted base, then spawn at full.
+        PTrust->UpdateHealth();
+        PTrust->health.hp = PTrust->GetMaxHP();
+        PTrust->health.mp = PTrust->GetMaxMP();
+    }
 
     // Use Mob formulas to work out base "weapon" damage, but scale down to reasonable values.
     const float  mobStyleDamage   = static_cast<float>(mobutils::GetWeaponDamage(PTrust, SLOT_MAIN));

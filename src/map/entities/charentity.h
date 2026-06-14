@@ -366,6 +366,10 @@ public:
 
     std::array<uint8, 20> m_SetBlueSpells{}; // The 0x200 offsetted blue magic spell IDs which the user has set. (1 byte per spell)
 
+    // Alter Ego Points upgrade ranks, indexed by (AlterEgoCategory - 8).
+    // Loaded by charutils::LoadAlterEgoUpgrades on zone-in.
+    std::array<uint8, 9> m_alterEgoUpgrades{};
+
     uint32 m_FieldChocobo{};
     uint8  m_mountId{}; // Do not reset to 0. Only update when the mount changes.
     uint32 m_claimedDeeds[5]{};

@@ -944,6 +944,7 @@ auto LoadChar(Scheduler& scheduler, MapConfig config, const uint32 charId) -> st
     monstrosity::TryPopulateMonstrosityData(PChar);
 
     charutils::LoadInventory(PChar);
+    charutils::LoadAlterEgoUpgrades(PChar);
 
     CalculateStats(PChar);
     jobpointutils::RefreshGiftMods(PChar);
@@ -7291,6 +7292,79 @@ int32 GetPoints(CCharEntity* PChar, const char* type)
     }
 
     return 0;
+}
+
+namespace
+{
+    constexpr uint8 ALTER_EGO_CATEGORY_MIN = 8;  // HP
+    constexpr uint8 ALTER_EGO_CATEGORY_MAX = 16; // CHR
+    constexpr uint8 ALTER_EGO_RANK_MAX     = 50; // Phase 1 cap
+
+    inline bool IsValidAlterEgoCategory(uint8 category)
+    {
+        return category >= ALTER_EGO_CATEGORY_MIN && category <= ALTER_EGO_CATEGORY_MAX;
+    }
+} // namespace
+
+void LoadAlterEgoUpgrades(CCharEntity* PChar)
+{
+    TracyZoneScoped;
+
+    PChar->m_alterEgoUpgrades.fill(0);
+
+    const auto rset = db::preparedStmt(
+        "SELECT category, `rank` FROM char_alter_ego_upgrades WHERE charid = ?", PChar->id);
+    if (!rset)
+    {
+        return;
+    }
+
+    while (rset->next())
+    {
+        const auto category = rset->get<uint8>("category");
+        const auto rank     = rset->get<uint8>("rank");
+        if (IsValidAlterEgoCategory(category))
+        {
+            PChar->m_alterEgoUpgrades[category - ALTER_EGO_CATEGORY_MIN] = rank;
+        }
+    }
+}
+
+uint8 GetAlterEgoUpgrade(const CCharEntity* PChar, uint8 category)
+{
+    if (!IsValidAlterEgoCategory(category))
+    {
+        return 0;
+    }
+    return PChar->m_alterEgoUpgrades[category - ALTER_EGO_CATEGORY_MIN];
+}
+
+void SetAlterEgoUpgrade(CCharEntity* PChar, uint8 category, uint8 newRank)
+{
+    TracyZoneScoped;
+
+    if (!IsValidAlterEgoCategory(category))
+    {
+        ShowErrorFmt("charutils::SetAlterEgoUpgrade: invalid category {} for {}", category, PChar->getName());
+        return;
+    }
+
+    const auto clampedRank = std::min<uint8>(newRank, ALTER_EGO_RANK_MAX);
+    PChar->m_alterEgoUpgrades[category - ALTER_EGO_CATEGORY_MIN] = clampedRank;
+
+    db::preparedStmt(
+        "INSERT INTO char_alter_ego_upgrades (charid, category, `rank`) "
+        "VALUES (?, ?, ?) "
+        "ON DUPLICATE KEY UPDATE `rank` = VALUES(`rank`)",
+        PChar->id, category, clampedRank);
+}
+
+void ResetAlterEgoUpgrades(CCharEntity* PChar)
+{
+    TracyZoneScoped;
+
+    PChar->m_alterEgoUpgrades.fill(0);
+    db::preparedStmt("DELETE FROM char_alter_ego_upgrades WHERE charid = ?", PChar->id);
 }
 
 void SetUnityLeader(CCharEntity* PChar, uint8 leaderID)

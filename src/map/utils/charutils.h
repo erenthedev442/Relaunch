@@ -253,6 +253,14 @@ bool IsAidBlocked(CCharEntity* PInitiator, CCharEntity* PTarget);
 void  AddPoints(CCharEntity* PChar, const char* type, int32 amount, int32 max = INT32_MAX);
 void  SetPoints(CCharEntity* PChar, const char* type, int32 amount);
 int32 GetPoints(CCharEntity* PChar, const char* type);
+
+// Alter Ego upgrade rank helpers (March 2026 system).
+// category must be a valid AlterEgoCategory value (8..16).
+void  LoadAlterEgoUpgrades(CCharEntity* PChar);
+uint8 GetAlterEgoUpgrade(const CCharEntity* PChar, uint8 category);
+void  SetAlterEgoUpgrade(CCharEntity* PChar, uint8 category, uint8 newRank);
+void  ResetAlterEgoUpgrades(CCharEntity* PChar);
+
 void  SetUnityLeader(CCharEntity* PChar, uint8 leaderID);
 auto  GetConquestPointsName(CCharEntity* PChar) -> std::string;
 void  SendToZone(CCharEntity* PChar, uint16 zoneId);
