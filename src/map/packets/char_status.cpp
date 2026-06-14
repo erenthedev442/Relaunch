@@ -327,8 +327,7 @@ CCharStatusPacket::CCharStatusPacket(CCharEntity* PChar)
     flags4.GeoIndiElement = 0;
     flags4.GeoIndiSize    = 1;
     flags4.GeoIndiFlag    = 0;
-    // FJB custom: ascended players (Prestige_Total_Ascensions > 0) also show the master stars.
-    flags4.JobMasterFlag  = (PChar->getMod(Mod::SUPERIOR_LEVEL) == 5 && PChar->m_jobMasterDisplay) || PChar->getCharVar("Prestige_Total_Ascensions") > 0;
+    flags4.JobMasterFlag  = PChar->getMod(Mod::SUPERIOR_LEVEL) == 5 && PChar->m_jobMasterDisplay;
 
     // GEO bubble effects, changes bubble effect depending on what effect is activated.
     if (PChar->StatusEffectContainer->HasStatusEffect(EFFECT_COLURE_ACTIVE))
