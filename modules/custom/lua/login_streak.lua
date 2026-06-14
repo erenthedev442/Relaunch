@@ -25,10 +25,10 @@ local CV_POINTS = 'HL_Points'
 
 -- { days, bonus_marks, display_label }
 local STREAK_MILESTONES = {
-    {  7,  50,  '7-Day Streak'  },
-    { 14, 100,  '14-Day Streak' },
-    { 21, 150,  '21-Day Streak' },
-    { 30, 350,  '30-Day Streak' },
+    {  7,  1500,  '7-Day Streak'  },
+    { 14,  3000,  '14-Day Streak' },
+    { 21,  4500,  '21-Day Streak' },
+    { 30, 10500,  '30-Day Streak' },
 }
 
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
@@ -82,25 +82,25 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
         if streak > 1 and streak < 7 then
             player:timer(4200, function(p)
                 p:printToPlayer(
-                    string.format('[Login Streak] %d days in a row - 7 days earns +50 marks!', streak),
+                    string.format('[Login Streak] %d days in a row - 7 days earns +1,500 marks!', streak),
                     xi.msg.channel.SYSTEM_1)
             end)
         elseif streak > 7 and streak < 14 then
             player:timer(4200, function(p)
                 p:printToPlayer(
-                    string.format('[Login Streak] %d days in a row - 14 days earns +100 marks!', streak),
+                    string.format('[Login Streak] %d days in a row - 14 days earns +3,000 marks!', streak),
                     xi.msg.channel.SYSTEM_1)
             end)
         elseif streak > 14 and streak < 21 then
             player:timer(4200, function(p)
                 p:printToPlayer(
-                    string.format('[Login Streak] %d days in a row - 21 days earns +150 marks!', streak),
+                    string.format('[Login Streak] %d days in a row - 21 days earns +4,500 marks!', streak),
                     xi.msg.channel.SYSTEM_1)
             end)
         elseif streak > 21 and streak < 30 then
             player:timer(4200, function(p)
                 p:printToPlayer(
-                    string.format('[Login Streak] %d days in a row - 30 days earns +350 marks!', streak),
+                    string.format('[Login Streak] %d days in a row - 30 days earns +10,500 marks!', streak),
                     xi.msg.channel.SYSTEM_1)
             end)
         end
