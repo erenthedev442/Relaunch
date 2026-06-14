@@ -352,23 +352,43 @@ endSession = function(player, completed)
     if completed then
         local diffDef = catalog.difficulties[sess.difficulty]
         local bonus   = diffDef.completionBonus
-        player:setCharVar('HL_Points',
-            (player:getCharVar('HL_Points') or 0) + bonus)
-        player:printToPlayer(
-            string.format('[Game Master] ALL WAVES CLEARED! %s complete. +%d bonus points (total kills: %d).',
-                sess.difficulty, bonus, sess.kills),
-            xi.msg.channel.SYSTEM_3)
+        local ach     = require('modules/custom/lua/achievements')
 
-        -- Weekly Hunt Board: fire wave_clear event so any active
-        -- "Wave Master" objective gets credit. Pass difficulty as
-        -- metadata in case we add tier-gated wave objectives later.
-        wh.fire(player, 'gm_wave_clear', { difficulty = sess.difficulty })
+        -- Build recipient list: session owner first, then any party members
+        -- who are in the same zone. getParty() includes the caller, so skip
+        -- the owner in the party loop to avoid a double-award.
+        local recipients = { player }
+        local party = player:getParty()
+        if party then
+            for _, member in ipairs(party) do
+                if member and member:getID() ~= player:getID() then
+                    recipients[#recipients + 1] = member
+                end
+            end
+        end
 
-        -- Track lifetime wave clears and fire achievement checks.
-        local waveTotalCv = player:getCharVar('Wave_Clears_Total') or 0
-        player:setCharVar('Wave_Clears_Total', waveTotalCv + 1)
-        local ach = require('modules/custom/lua/achievements')
-        ach.onWaveClear(player)
+        for i, recipient in ipairs(recipients) do
+            recipient:setCharVar('HL_Points',
+                (recipient:getCharVar('HL_Points') or 0) + bonus)
+
+            if i == 1 then
+                -- Session owner gets the full kill-count summary.
+                recipient:printToPlayer(
+                    string.format('[Game Master] ALL WAVES CLEARED! %s complete. +%d bonus points (total kills: %d).',
+                        sess.difficulty, bonus, sess.kills),
+                    xi.msg.channel.SYSTEM_3)
+            else
+                recipient:printToPlayer(
+                    string.format('[Game Master] ALL WAVES CLEARED! %s complete. +%d bonus points.',
+                        sess.difficulty, bonus),
+                    xi.msg.channel.SYSTEM_3)
+            end
+
+            wh.fire(recipient, 'gm_wave_clear', { difficulty = sess.difficulty })
+            local waveTotalCv = recipient:getCharVar('Wave_Clears_Total') or 0
+            recipient:setCharVar('Wave_Clears_Total', waveTotalCv + 1)
+            ach.onWaveClear(recipient)
+        end
 
         -- No despawn loop on the completion path. mobsAlive is empty
         -- by definition (that's what triggered completion), and the
