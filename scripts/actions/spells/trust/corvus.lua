@@ -93,6 +93,7 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.RANGED_DMG_RATING,              800)          -- his "bow" DMG -- the #1 damage dial
     mob:setMobMod(xi.mobMod.RANGED_DAMAGE_OFFSET,     300)          -- more ranged base damage
     mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER,   175)          -- x1.75 on the ranged base
+    mob:addMod(xi.mod.MAIN_DMG_RATING,                500)          -- feeds his Apex Arrow (it scales off getWeaponDmg)
 
     -- Drive the damage ratio to its cap even against lv150-boss DEF, and make
     -- sure every shot LANDS through boss evasion.
@@ -112,18 +113,25 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.CRITHITRATE,      40)                         -- +40% critical hit rate
     mob:addMod(xi.mod.STORETP,          500)                        -- feed any weaponskill fast
 
-    -- Weaponskills are a FREE BONUS if his ranged skill resolves any (a weaponless
-    -- Trust usually has none) -- hold TP to close the party's skillchains, else
-    -- fire the highest at 1000 TP. His DPS does not depend on this; the shot
-    -- stream above is the engine. TUNING DIALS after a live test: RANGED_DMG_RATING
-    -- (his bow DMG) + the flat RATT are the big two; BASE_DAMAGE_MULTIPLIER scales
-    -- it all. A hard-hitting mob TP move can be added later (skill_list) for burst.
-    mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 1000)
+    -- TUNING DIALS after a live test: for the shot stream, RANGED_DMG_RATING (bow
+    -- DMG) + the flat RATT are the big two and BASE_DAMAGE_MULTIPLIER scales it
+    -- all; for the Apex Arrow spike, MAIN_DMG_RATING above. (No setTrustTPSkill-
+    -- Settings on purpose: a weaponless Trust has no weaponskills, and its
+    -- CLOSER_UNTIL_TP would make him sit on TP instead of firing the gambit below.)
 
-    -- ---- Ranged auto-shots: the bread-and-butter damage. The gambit reaction
-    -- tuple MUST have 3 elements to parse (lua_baseentity.cpp addGambit); the
-    -- selector/arg are ignored for RATTACK -- the engine just calls RangedAttack.
-    -- ALWAYS, so he fires every time he's off cooldown and in range. ----
+    -- ---- HARD HITTER: Apex Arrow at 1000 TP -- a Humanoid Archery weaponskill
+    -- (mob skill id 203) that IGNORES 15-50% of the enemy's DEF (TP-scaled) and
+    -- hits at fTP 3.0. Fired via ai.r.MS / SPECIFIC -> controller->MobSkill ->
+    -- Internal_MobSkill, which looses the EXACT skill with no skill-list needed.
+    -- Its baseDamage = getWeaponDmg (fed by MAIN_DMG_RATING) and its ratio rides
+    -- his big RATT, so it lands as a heavy spike. Sits ABOVE the auto-shot so it
+    -- wins once TP is full; the TP_GTE self-gates its recast (TP drains on use).
+    mob:addGambit(ai.t.TARGET, { ai.c.TP_GTE, 1000 }, { ai.r.MS, ai.s.SPECIFIC, 203 })
+
+    -- ---- Ranged auto-shots: the bread-and-butter damage that also BUILDS the TP
+    -- for Apex Arrow. The RATTACK reaction tuple MUST have 3 elements to parse
+    -- (lua_baseentity.cpp addGambit); selector/arg are ignored -- the engine just
+    -- calls RangedAttack. ALWAYS, so he fires whenever off cooldown and in range.
     mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.RATTACK, ai.s.SPECIFIC, 0 })
 end
 
