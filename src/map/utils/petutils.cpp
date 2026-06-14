@@ -632,6 +632,16 @@ void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats,
             // near-zero damage even with optimal attachments.
             PPet->addModifier(Mod::ATT, 400);
             PPet->addModifier(Mod::ACC, 300);
+
+            // FJB: survivability pass -- lv99-capped automatons fight lv150 NMs, so the
+            // stock ~2-3k HP gets them one-shot by NM hits/AoEs. Give a big flat HP buffer
+            // (partly scaled to the master's own max HP so the pet grows with your gear;
+            // clamped to the int16 modifier ceiling), extra DEF on top of the frame's, and
+            // light regen for between-Repair sustain. Spawn at full HP.
+            PPet->addModifier(Mod::HP, (int16)std::min(28000, 10000 + (int32)(PMaster->GetMaxHP() / 2)));
+            PPet->addModifier(Mod::DEF, 400);
+            PPet->addModifier(Mod::REGEN, 100);
+            PPet->health.hp = PPet->GetMaxHP(); // spawn at full boosted HP
         }
     }
 }
