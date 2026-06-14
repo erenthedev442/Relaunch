@@ -66,46 +66,6 @@ MOD_DISPLAY_SCALE = {
 #   mob-drop alchemy reagent left unused by every category -- free to claim.
 FORCED_CATALYST = {
     896: 2338,   # Enspell Dmg -> Wamoura Scale
-    # --- restored magic-offense augments (catalyst-starved / uncategorized) ---
-    362: 1269,   # Magic Damage -> mana_barrel
-    516: 1725,   # INT -> snow_lily
-    554: 1740,   # INT MND -> iolite
-    556: 1817,   # INT MND CHR -> cactus_arm
-    899: 1854,   # Sword Enhancement spell damage -> deed_of_moderation
-    944: 2154,   # Fire Affinity Magic Damage -> orobon_lure
-    945: 2155,   # Ice Affinity Magic Damage -> lesser_chigoe
-    946: 2161,   # Wind Affinity Magic Damage -> troll_vambrace
-    947: 2171,   # Earth Affinity Magic Damage -> colibri_beak
-    948: 2212,   # Lightning Affinity Magic Damage -> gunpowder_swathe
-    949: 2334,   # Water Affinity Magic Damage -> poroggo_hat
-    950: 2498,   # Light Affinity Magic Damage -> briareuss_sash
-    951: 2507,   # Dark Affinity Magic Damage -> lycopodium_flower
-    968: 2510,   # Fire Affinity Magic Damage,Fire Affinity Casting time -> orc_helmet
-    1008: 2640,   # Fire Affinity Magic Damage,Fire Affinity Recast time -> murex_spicule
-    1157: 2641,   # Spell Interruption Rate Down 2% -> amoeban_pseudopod
-    1248: 2711,   # Enhancing Magic Effect Duration -> khroma_nugget
-    1249: 2729,   # Helix Effect Duration -> hydrangea
-    1264: 2831,   # Meditate Effect Duration -> yellow_brass_chain
-    1796: 2834,   # Pet INT -> immortal_molt
-    # --- restored job skill augments (catalyst-starved / uncategorized) ---
-    288: 2842,   # Divine magic skill -> flawed_garnet
-    290: 2847,   # Enha.mag. skill -> blue_jasper
-    291: 2848,   # Enfb.mag. skill -> grimy_bronze_sheet
-    292: 2853,   # Elem. magic skill -> malebolge_mandrel
-    295: 2875,   # Ninjutsu skill -> ethereal_squama
-    296: 2879,   # Singing skill -> igneous_barnacle
-    297: 2888,   # String instrument skill -> sanguinet
-    299: 2933,   # Blue Magic skill -> chukwas_egg
-    300: 2934,   # Geomancy Skill -> manananggals_necklet
-    301: 2935,   # Handbell Skill -> marvins_pelage
-    # --- restored utility/Other augments (catalyst-starved / uncategorized) ---
-    215: 2940,   # Ninja tool expertise -> mictlantecuhtlis_habit
-    341: 2941,   # Repair potency -> keesha_poppos_pamama
-    351: 2944,   # Occ. quickens spellcasting -> lieje_lantern
-    897: 3550,   # Enhances Souleater Effect -> spool_of_wyrdstrand
-    1250: 3928,   # Indi Effect Duration -> velkk_necklace
-    1287: 3935,   # Enhances Blood Weapon effect -> jar_of_umbril_ooze
-    1300: 3938,   # Enhances Bolster effect -> mantid_foreleg
 }
 
 # Display-label overrides keyed by augId, applied after clean_label(). For when
