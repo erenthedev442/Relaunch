@@ -238,6 +238,36 @@ commandObj.onTrigger = function(player)
         player:getMod(xi.mod.SKILLCHAINDMG) / 100)
 
     -- =========================================================
+    -- Puppetmaster: analyze the deployed Automaton. Its combat SKILLS + stats
+    -- live on the PET entity (not the master), so the pet must be deployed
+    -- (Deploy / !pup) first. Shown for PUP main only -- the only job that fields
+    -- an automaton. getSkillLevel(AUTOMATON_*) reads the same skill the engine
+    -- uses for the pet's accuracy/attack/magic (battleentity.cpp GetWeaponDamage).
+    if mJob == xi.job.PUP then
+        header(player, 'Automaton (Pet)')
+        local pet = player:getPet()
+        if pet == nil then
+            line(player, 'No automaton deployed -- use Deploy (or !pup), then re-run !mystats.')
+        else
+            line(player, '%s   HP %d/%d   TP %d',
+                pet:getName(), pet:getHP(), pet:getMaxHP(), pet:getTP())
+            line(player, 'Skills:   Melee %d   Ranged %d   Magic %d',
+                pet:getSkillLevel(xi.skill.AUTOMATON_MELEE),
+                pet:getSkillLevel(xi.skill.AUTOMATON_RANGED),
+                pet:getSkillLevel(xi.skill.AUTOMATON_MAGIC))
+            line(player, 'Offense:  ATT %4d   ACC %4d   RATT %4d   RACC %4d',
+                pet:getStat(xi.mod.ATT), pet:getStat(xi.mod.ACC),
+                pet:getStat(xi.mod.RATT), pet:getStat(xi.mod.RACC))
+            line(player, 'Magic:    MATT %3d   MACC %3d   Magic Haste %d',
+                pet:getMod(xi.mod.MATT), pet:getMod(xi.mod.MACC),
+                pet:getMod(xi.mod.HASTE_MAGIC))
+            line(player, 'Defense:  DEF %4d   EVA %4d   MDEF %3d   MEVA %3d',
+                pet:getStat(xi.mod.DEF), pet:getStat(xi.mod.EVA),
+                pet:getMod(xi.mod.MDEF), pet:getMod(xi.mod.MEVA))
+        end
+    end
+
+    -- =========================================================
     -- Every AP spend category from the Provenance Altar, with THIS main
     -- job's purchased levels (Ascension is per-job, like Job Points).
     -- Values are levels/cap -- the same units as the Altar's own menu;

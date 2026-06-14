@@ -41,9 +41,12 @@ spellObject.onMobSpawn = function(mob)
     -- Name shows over the head + in the party list. true = silent (same path Gemma uses).
     mob:renameEntity('Corvus', true)
 
-    -- Ranged DD: he shoots, he never swings. Stay 12y back and fire from there.
+    -- Ranged DD: he shoots, he never swings, and he PLANTS once positioned.
+    -- NO_MOVE stops the every-3s repositioning (the "running from hate" you get with
+    -- LONG_RANGE, which re-paths to a new spot constantly) -- he settles ~9y back when
+    -- the fight starts and holds that spot, firing from there.
     mob:setAutoAttackEnabled(false)
-    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.LONG_RANGE)
+    mob:setMobMod(xi.mobMod.TRUST_DISTANCE, xi.trust.movementType.NO_MOVE)
 
     -- ---- Survivability (int16 trap: Mod::HP/HPP are int16, so a single value
     -- must stay <= 32767; a flat 99999 overflows negative and he dies on spawn).
@@ -119,14 +122,19 @@ spellObject.onMobSpawn = function(mob)
     -- Settings on purpose: a weaponless Trust has no weaponskills, and its
     -- CLOSER_UNTIL_TP would make him sit on TP instead of firing the gambit below.)
 
-    -- ---- HARD HITTER: Apex Arrow at 1000 TP -- a Humanoid Archery weaponskill
-    -- (mob skill id 203) that IGNORES 15-50% of the enemy's DEF (TP-scaled) and
-    -- hits at fTP 3.0. Fired via ai.r.MS / SPECIFIC -> controller->MobSkill ->
-    -- Internal_MobSkill, which looses the EXACT skill with no skill-list needed.
-    -- Its baseDamage = getWeaponDmg (fed by MAIN_DMG_RATING) and its ratio rides
-    -- his big RATT, so it lands as a heavy spike. Sits ABOVE the auto-shot so it
-    -- wins once TP is full; the TP_GTE self-gates its recast (TP drains on use).
-    mob:addGambit(ai.t.TARGET, { ai.c.TP_GTE, 1000 }, { ai.r.MS, ai.s.SPECIFIC, 203 })
+    -- ---- HARD HITTER: a REAL player weaponskill at 1000 TP. *** ai.r.WS, not
+    -- ai.r.MS *** -- this routes through gambits_container -> controller->WeaponSkill()
+    -- with a genuine CWeaponSkill, so it uses the FULL player WS damage formula (and
+    -- the raised 131,071 cap). The old code fired ai.r.MS / mob_skill 203, but the
+    -- mob-skill apex_arrow has NO damage script (scripts/globals/mobskills/apex_arrow
+    -- .lua doesn't exist) -> it fell back to a trivial ~2k hit. THAT was the bug.
+    -- WS 202 = Jishnu's Radiance: an empyrean Archery WS (3 hits) that scales with
+    -- AGI (he has 500) + his ranged weapon DMG + RATT, and his 40% crit / double-shot
+    -- mods all ride along. Corvus is RNG-main, so he has the Archery skill to fire it.
+    -- ALT vs very tanky DEF: Apex Arrow (the PLAYER WS, also id 203) -- swap 202->203;
+    -- it TP-scales fTP and ignores 15-50% DEF, so it can out-damage Jishnu on a
+    -- high-defense boss. The TP_GTE self-gates the recast (TP drains on use).
+    mob:addGambit(ai.t.TARGET, { ai.c.TP_GTE, 1000 }, { ai.r.WS, ai.s.SPECIFIC, 202 })
 
     -- ---- Ranged auto-shots: the bread-and-butter damage that also BUILDS the TP
     -- for Apex Arrow. The RATTACK reaction tuple MUST have 3 elements to parse

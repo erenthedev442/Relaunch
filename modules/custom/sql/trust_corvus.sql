@@ -63,16 +63,15 @@ VALUES
 --   look_t (size=1 MODEL_EQUIPPED): byte order = size(u16 LE=1), face(u8),
 --   race(u8), then head/body/hands/legs/feet/main/sub/ranged (u16 LE, raw
 --   item_equipment.MId, NO slot offset). Race 01 = Hume Male.
---   *** LOOK: Elvaan Male ranger (Lord-of-the-Rings elf) ***: race 03 (Elvaan
---   Male), bare head so the long hair shows (no helm, like Legolas), green
---   Gambison tunic (body MId 23), brown leather gloves/trousers/highboots
---   (MId 1 each), and a Longbow held in the `ranged` slot (MId 37). Values are
---   raw item_equipment.MId.
---   HAIR TUNING: the `face` byte (3rd byte of the UNHEX, currently 0x04) selects
---   the Elvaan face + hairstyle -- nudge it across 0x00-0x07 to land the exact
---   elven hair you want. BOW SWAP: change the last 2 bytes (ranged) -- other bow
---   MIds are great_bow 0x22(34), war_bow 0x21(33), power_bow 0x24(36),
---   composite_bow 0x30(48), rune_bow 0x33(51).
+--   *** LOOK: the Orion set -- RNG relic, a dark hooded marksman (fits "the Black
+--   Arrow") ***: race 03 (Elvaan Male), face 0x04, the FULL Orion relic set in every
+--   armor slot (head/body/hands/legs/feet all MId 84 -- a relic set shares one model
+--   number across its slots), no melee weapon, and Gandiva (empyrean bow, MId 98) in
+--   the `ranged` slot. Values are raw item_equipment.MId.
+--   TWEAKS: the `face` byte (3rd byte of the UNHEX, 0x04) picks the Elvaan face + hair
+--   (0x00-0x07). BOW SWAP: change the last 2 bytes (ranged) -- e.g. Gandiva 0x62(98),
+--   Perdu Bow 0x28(40), or a plain Longbow 0x25(37). ARMOR SWAP: set the head..feet
+--   pairs to any item_equipment.MId for a different outfit (all 5 = one MId for a set).
 --
 --   mJob 11 / sJob 12 = RNG / SAM. RNG main = the ranged-DD identity; SAM sub
 --   grants Store TP for faster weaponskills (trustutils computes sub-job skill
@@ -89,7 +88,7 @@ REPLACE INTO mob_pools
      spellList, namevis, roamflag, skill_list_id, resist_id,
      modelSize, modelHitboxSize)
 VALUES
-    (5902, 'corvus', 'Corvus', 246, UNHEX('0100040300001700010001000100000000002500'),
+    (5902, 'corvus', 'Corvus', 246, UNHEX('0100040354005400540054005400000000006200'),
      11, 12, 0, 240, 250,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,

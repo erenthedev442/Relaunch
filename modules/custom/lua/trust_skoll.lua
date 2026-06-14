@@ -87,24 +87,23 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     local menu = { title = '', options = {} }
 
     -- One bind/summon menu option for a single custom trust.
+    -- LABEL BUDGET: SetCustomMenuContext concatenates title + every label (all
+    -- quoted) into one string. The client echoes this back in a GMTELL packet
+    -- capped at 128 bytes -- overflow = silent no-op on every option. With 3
+    -- trusts + 2 lore + Leave, the title + labels must total <= 128 bytes.
+    -- Keep each label short; the current 7-option menu fits in ~103 bytes.
     local function trustOption(player, t)
         if player:hasSpell(t.spellId) then
             return {
-                string.format('Summon %s  (already bound)', t.name),
+                string.format('%s: owned', t.name),
                 function(p)
                     p:printToPlayer(t.boundMsg, xi.msg.channel.SYSTEM_3)
                 end,
             }
         end
 
-        -- Keep menu labels SHORT and QUOTE-FREE. customMenu serializes the title
-        -- + every option label into one quoted string (luautils
-        -- SetCustomMenuContext escapes by wrapping in " without escaping inner
-        -- quotes), so a label containing a " -- or long enough to overflow the
-        -- prompt packet -- corrupts every option after it. The "can't afford"
-        -- path lives in the click handler below.
         local cost  = t.cost or GIL_COST   -- per-trust price; falls back to the shared 50M
-        local label = string.format('Bind %s  (%s gil)', t.name, fmtGil(cost))
+        local label = string.format('Bind %s (%s)', t.name, fmtGil(cost))
 
         return {
             label,
@@ -176,7 +175,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             end,
         })
 
-        menu.title   = string.format('Void Keeper  (Your gil: %s)', fmtGil(player:getGil()))
+        menu.title   = 'Void Keeper'
         menu.options = options
         local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
         player:timer(30, function(p) p:customMenu(snapshot) end)
@@ -202,6 +201,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         end,
 
         onTrigger = function(player, npc)
+            player:printToPlayer(string.format('[ Void Keeper ]  Your gil: %s', fmtGil(player:getGil())), xi.msg.channel.SYSTEM_3)
             buildMenu(player)
         end,
     })

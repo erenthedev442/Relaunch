@@ -1,9 +1,9 @@
 -----------------------------------
 -- mob_seal_drops.lua
--- Server-wide gear-vendor seal drops. EVERY mob killed by a player drops at
--- least one Hunting League seal, with an escalating quantity. The seal TYPE
--- scales with the mob's level (NMs bump up a tier); the QUANTITY follows the
--- owner-specified distribution below.
+-- Gear-vendor seal drops for mobs killed in GM_Home (zone 210) only.
+-- NMs in that zone drop at least one seal per kill, with an escalating quantity.
+-- The seal TYPE scales with the mob's level (NMs bump up a tier); the QUANTITY
+-- follows the owner-specified distribution below.
 --
 --   9539 Beastmens Medal = BRONZE tier (entry gear,  ~12 / piece)
 --   9541 Kindreds Medal  = SILVER tier (mid gear,    ~25 / piece)
@@ -72,6 +72,7 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
     pcall(function()
         if not isKiller or player == nil then return end
         if player:getObjType() ~= xi.objType.PC then return end
+        if mob:getZoneID() ~= xi.zone.GM_HOME then return end
 
         local tier = baseTier(mob:getMainLvl() or 0)
         if mob:isNM() then

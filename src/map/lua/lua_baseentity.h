@@ -487,6 +487,8 @@ public:
     void  setCurrency(const std::string& currencyType, int32 amount);
     void  delCurrency(const std::string& currencyType, int32 amount);
 
+    void  resetAlterEgoUpgrades();
+
     int32 getCP(); // Conquest points, not to be confused with Capacity Points
     void  addCP(int32 cp);
     void  delCP(int32 cp);
@@ -713,6 +715,11 @@ public:
     void  setMod(uint16 modID, int16 value);
     void  delMod(uint16 modID, int16 value);
     void  printAllMods();
+
+    void addTrait(uint16 traitID);
+    void delTrait(uint16 traitID);
+    bool hasTrait(uint16 traitID);
+    void sendCommandData();
     int16 getMaxGearMod(Mod modId);
     int16 getGearModFromSlot(uint8 slot, Mod modId);
 

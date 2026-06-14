@@ -4,22 +4,23 @@
 -- Skill Level: N/A -- granted by equipping the Prime Maul.
 -- Description: Delivers a twofold attack. Damage varies with TP.
 -- Element: None   Skillchain: Transfixion / Scission / Gravitation
--- Modifiers: STR 50% / MND 50%
+-- Modifiers: STR 40% / MND 40%  (community consensus per FFXIAH topic 57318,
+--   reverse-engineered by Bolmster + SimonSes, 2026-01-26)
 -- 100%TP   200%TP   300%TP
--- 3.0      6.5      10.0
--- NOTE: retail fTP for Dagda is undocumented (LSB mob capture is a {1,1,1}
--- placeholder); the fTP below is an estimate tuned to sit between the other
--- 2-hit Prime weapon skills. Adjust in this file if you want it stronger/weaker.
+-- 4.3      8.87*    13.5
+-- (* 2k fTP interpolated; SimonSes warned linearity not confirmed for Dagda)
+-- NOTE: WSC changed from INT/MND to STR/MND in the March 2024 retail update.
 -----------------------------------
 ---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
-    params.numHits = 2
-    params.ftpMod  = { 3.0, 6.5, 10.0 }
-    params.str_wsc = 0.5
-    params.mnd_wsc = 0.5
+    params.numHits     = 2
+    params.ftpMod      = { 4.3, 8.87, 13.5 }
+    params.multiHitfTP = true
+    params.str_wsc     = 0.4
+    params.mnd_wsc     = 0.4
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage

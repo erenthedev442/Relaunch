@@ -22,7 +22,7 @@ catalog.npcPos   = { x = 9.000, y = 0.000, z = -7.000, rot = 128 }  -- GM Home t
 catalog.traits =
 {
     { id = 'dwield',   name = 'Dual Wield',     desc = 'Wield two weapons on ANY job (+15% dual wield).',
-      mods = { { xi.mod.DUAL_WIELD, 15 } } },
+      mods = { { xi.mod.DUAL_WIELD, 15 } }, trait = xi.trait.DUAL_WIELD },
     { id = 'counter',  name = 'Counter',        desc = 'Chance to counter melee attacks (+5%).',
       mods = { { xi.mod.COUNTER, 5 } } },
     { id = 'fcast',    name = 'Fast Cast',      desc = 'Reduce spell casting time (+15%).',

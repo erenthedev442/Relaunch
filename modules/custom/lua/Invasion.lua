@@ -171,8 +171,7 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
         if opts.modelSize then
             pcall(function() mob:setModelSize(opts.modelSize) end)
         end
-        mob:updateClaim(anchor)
-        mob:addEnmity(anchor, 1, 1)   -- nudge pursuit; free-for-all from there
+        mob:addEnmity(anchor, 1, 1)   -- open claim: no updateClaim, any player can engage
     end
     return mob
 end

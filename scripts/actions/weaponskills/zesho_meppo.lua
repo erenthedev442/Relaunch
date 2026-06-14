@@ -1,24 +1,24 @@
 -----------------------------------
--- Diarmuid
--- Polearm weapon skill (Prime: "Prime Lance", item 21887)
--- Skill Level: N/A -- granted by equipping the Prime Lance.
--- Description: Delivers a twofold attack. Damage varies with TP.
--- Element: None   Skillchain: Distortion / Scission / Transfixion
--- Modifiers: STR 55% / VIT 55%
+-- Zesho Meppo
+-- Katana weapon skill (Prime / Dokoku)
+-- Skill Level: N/A -- granted by equipping the Dokoku.
+-- Description: Delivers a fourfold attack. Damage varies with TP.
+-- Element: None   Skillchain: Induration / Reverberation / Fusion
+-- Modifiers: DEX 25% / AGI 25%
 -- 100%TP   200%TP   300%TP
--- 2.17     5.36     8.55
--- Values from LSB mob capture scripts/actions/mobskills/diarmuid.lua.
+-- 4.0      11.3*    18.715
+-- (* 2000 TP fTP not published on BG-Wiki; linearly interpolated -- TODO verify)
 -----------------------------------
 ---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
-    params.numHits     = 2
-    params.ftpMod      = { 2.17, 5.36, 8.55 }
+    params.numHits     = 4
+    params.ftpMod      = { 4.0, 11.3, 18.715 }
     params.multiHitfTP = true
-    params.str_wsc     = 0.55
-    params.vit_wsc     = 0.55
+    params.dex_wsc     = 0.25
+    params.agi_wsc     = 0.25
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage

@@ -53,7 +53,7 @@ xi.weaponskill =
     AEOLIAN_EDGE        = 30,
     RUDRAS_STORM        = 31,
     EXENTERATOR         = 224,
-    MERCILESS_STRIKE    = 232,
+    RUTHLESS_STROKE     = 232,
 
     -----------------------------------
     -- SWORD
@@ -195,7 +195,7 @@ xi.weaponskill =
     BLADE_YU            = 139,
     BLADE_HI            = 140,
     BLADE_SHUN          = 141,
-    JIJIN_KAIMETSU      = 142,
+    ZESHO_MEPPO         = 142,
 
     -----------------------------------
     -- GREAT KATANA

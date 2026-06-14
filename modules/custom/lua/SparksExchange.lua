@@ -23,7 +23,7 @@ local cfg =
     rate   = 10,                                                 -- gil paid per spark (999,999 cap = ~10M gil)
     tiers  = { 1000, 10000, 50000 },                            -- preset convert amounts (+ "all")
     npcPos = { x = -7.500, y = 0.000, z = -35.000, rot = 128 },  -- GM Home economy corner, west end of the gil-NPC row
-    name   = 'Eminence Broker',
+    name   = 'Sparks Cash',
     look   = 3000,
 }
 

@@ -27,12 +27,17 @@ catalog.groupZoneId = 210
 -- ============================================================
 -- SCHEDULE (UTC)
 -- ============================================================
--- Two windows daily. 23:00 UTC = 7pm EDT / 6pm EST; 01:00 UTC = 9pm
--- EDT / 8pm EST. Each window fires at most once per UTC day.
+-- Every 3 hours. Each window fires at most once per UTC day.
 catalog.windows =
 {
-    { hour = 23, min = 0 },
-    { hour =  1, min = 0 },
+    { hour =  0, min = 0 },
+    { hour =  3, min = 0 },
+    { hour =  6, min = 0 },
+    { hour =  9, min = 0 },
+    { hour = 12, min = 0 },
+    { hour = 15, min = 0 },
+    { hour = 18, min = 0 },
+    { hour = 21, min = 0 },
 }
 
 catalog.warnMinutes  = 5    -- server-wide warning this many minutes before
@@ -93,10 +98,10 @@ catalog.spawnRingMax = 14.0
 -- A participant is anyone present at ANY wave start.
 catalog.reward =
 {
-    perWaveMarks  = 200,   -- on each wave clear (x5 waves = 1000 across a full assault)
-    victoryMarks  = 1500,  -- on full clear (the Warlord falls), plus...
-    victoryInfamy = 400,   -- ...the only Infamy source outside dungeons (intentional)
-    failMarks     = 200,   -- consolation if the clock beats the defense
+    perWaveMarks  = 1200,  -- on each wave clear (x4 waves = 4800 across a full assault)
+    victoryMarks  = 9000,  -- on full clear (the Warlord falls), plus...
+    victoryInfamy = 2400,  -- ...the only Infamy source outside dungeons (intentional)
+    failMarks     = 1200,  -- consolation if the clock beats the defense
 
     -- Gear-vendor seal loot on a WIN -- ties the invasion into the Armor /
     -- Weapons NPC gear loop (!hunt). Seals stack to 99 (stackable_medals.sql).
@@ -104,10 +109,8 @@ catalog.reward =
     -- economy levers, tune freely:
     --   9541 Kindreds Medal = SILVER currency (mid gear, ~25 medals/piece)
     --   9543 Demons Medal   = GOLD  currency (BiS gear, 50-500 medals/piece)
-    -- Gold is kept a rare ~1-in-5 jackpot so the invasion doesn't trivialise
-    -- the dungeon/Infamy-gated BiS path.
-    victorySeals    = { { id = 9541, qty = 2, name = 'Kindreds Medal' } },               -- guaranteed
-    victoryGoldSeal = { id = 9543, qty = 1, name = 'Demons Medal', chancePercent = 20 },  -- ~1-in-5
+    victorySeals    = { { id = 9541, qty = 12, name = 'Kindreds Medal' } },              -- guaranteed
+    victoryGoldSeal = { id = 9543, qty = 6, name = 'Demons Medal', chancePercent = 100 }, -- guaranteed
 }
 
 return catalog

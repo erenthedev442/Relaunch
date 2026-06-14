@@ -451,7 +451,13 @@ bool CTrustController::RangedAttack(uint16 targid)
 {
     TracyZoneScoped;
 
-    timer::duration rangedDelay = 10s;
+    // A Trust with a real ranged weapon fires on that weapon's delay. A WEAPONLESS
+    // ranged trust -- e.g. Corvus, whose "bow" is a cosmetic equipment-look (look_t),
+    // not a CItemWeapon -- used to fall through to a 10s default: ONE shot every ten
+    // seconds, which makes a ranged-DD trust feel dead no matter how hard each shot
+    // hits. Fall back to a brisk fixed cadence so it actually streams damage.
+    // (FJB core patch -- tune the 2000ms if a weaponless ranged trust needs more/less.)
+    timer::duration rangedDelay = std::chrono::milliseconds(2000);
     if (CItemWeapon* PRange = dynamic_cast<CItemWeapon*>(POwner->m_Weapons[SLOT_RANGED]))
     {
         rangedDelay = std::chrono::milliseconds(PRange->getDelay());

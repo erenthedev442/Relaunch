@@ -9672,6 +9672,23 @@ void CLuaBaseEntity::delCurrency(const std::string& currencyType, int32 amount)
 }
 
 /************************************************************************
+ *  Function: resetAlterEgoUpgrades()
+ *  Purpose : Clears all alter ego upgrade ranks (March 2026 AEP system).
+ *  Example : player:resetAlterEgoUpgrades()
+ *  Notes   : Does not refund spent AEP. GM use only.
+ ************************************************************************/
+
+void CLuaBaseEntity::resetAlterEgoUpgrades()
+{
+    auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+    if (PChar == nullptr)
+    {
+        return;
+    }
+    charutils::ResetAlterEgoUpgrades(PChar);
+}
+
+/************************************************************************
  *  Function: getCP()
  *  Purpose : Returns the current amount of conquest points for a player
  *  Example : player:getCP()
@@ -14467,6 +14484,53 @@ void CLuaBaseEntity::printAllMods()
             ShowInfo(fmt::format("| {:<{}} | {:<8} |", magic_enum::enum_name(modId), longestEnumLength, value).c_str());
         }
     };
+}
+
+/************************************************************************
+ *  Function: addTrait() / delTrait() / hasTrait()
+ *  Purpose : Set/clear/query a trait bit in m_TraitList (player only).
+ *  Example : player:addTrait(xi.trait.DUAL_WIELD)
+ *  Notes   : Trait bits are in-memory only; re-apply on every zone-in.
+ ************************************************************************/
+
+void CLuaBaseEntity::addTrait(uint16 traitID)
+{
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        ShowWarning("Invalid entity type calling addTrait (%s).", m_PBaseEntity->getName());
+        return;
+    }
+    charutils::addTrait(dynamic_cast<CCharEntity*>(m_PBaseEntity), traitID);
+}
+
+void CLuaBaseEntity::delTrait(uint16 traitID)
+{
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        ShowWarning("Invalid entity type calling delTrait (%s).", m_PBaseEntity->getName());
+        return;
+    }
+    charutils::delTrait(dynamic_cast<CCharEntity*>(m_PBaseEntity), traitID);
+}
+
+bool CLuaBaseEntity::hasTrait(uint16 traitID)
+{
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        return false;
+    }
+    return charutils::hasTrait(dynamic_cast<CCharEntity*>(m_PBaseEntity), traitID) != 0;
+}
+
+void CLuaBaseEntity::sendCommandData()
+{
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        ShowWarning("Invalid entity type calling sendCommandData (%s).", m_PBaseEntity->getName());
+        return;
+    }
+    auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
+    PChar->pushPacket<GP_SERV_COMMAND_COMMAND_DATA>(PChar);
 }
 
 /************************************************************************
@@ -20205,6 +20269,8 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setCurrency", CLuaBaseEntity::setCurrency);
     SOL_REGISTER("delCurrency", CLuaBaseEntity::delCurrency);
 
+    SOL_REGISTER("resetAlterEgoUpgrades", CLuaBaseEntity::resetAlterEgoUpgrades);
+
     SOL_REGISTER("getAssaultPoint", CLuaBaseEntity::getAssaultPoint);
     SOL_REGISTER("addAssaultPoint", CLuaBaseEntity::addAssaultPoint);
     SOL_REGISTER("delAssaultPoint", CLuaBaseEntity::delAssaultPoint);
@@ -20423,6 +20489,11 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("printAllMods", CLuaBaseEntity::printAllMods);
     SOL_REGISTER("getMaxGearMod", CLuaBaseEntity::getMaxGearMod);
     SOL_REGISTER("getGearModFromSlot", CLuaBaseEntity::getGearModFromSlot);
+
+    SOL_REGISTER("addTrait", CLuaBaseEntity::addTrait);
+    SOL_REGISTER("delTrait", CLuaBaseEntity::delTrait);
+    SOL_REGISTER("hasTrait", CLuaBaseEntity::hasTrait);
+    SOL_REGISTER("sendCommandData", CLuaBaseEntity::sendCommandData);
 
     SOL_REGISTER("addLatent", CLuaBaseEntity::addLatent);
     SOL_REGISTER("delLatent", CLuaBaseEntity::delLatent);

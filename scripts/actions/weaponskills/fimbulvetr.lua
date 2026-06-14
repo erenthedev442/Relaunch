@@ -1,15 +1,12 @@
 -----------------------------------
--- Imperator
--- Sword weapon skill (Prime: Caliburnus / "Prime Sword", item 21642)
--- Skill Level: N/A -- granted by equipping the Prime Sword.
+-- Fimbulvetr
+-- Great Sword weapon skill (Prime / Helheim)
+-- Skill Level: N/A -- granted by equipping the Helheim.
 -- Description: Single-hit attack. Damage varies with TP.
 -- Element: None   Skillchain: Detonation / Compression / Distortion
--- Modifiers: DEX 27% / MND 27%  (community consensus: Aspens 27%/za_ibd 26%/Anillla 28%;
---   BG-Wiki's 70/70 + {3.75/7.5/11.75} are WRONG -- superseded by player testing)
+-- Modifiers: STR 60% / VIT 60%
 -- 100%TP   200%TP   300%TP
--- 6.6      13.35    20.1
--- (za_ibd 256ths precision: 1722/256, 3444/256, 5164/256)
--- Source: FFXIAH topic 57318 + https://x.com/za_ibd/status/1881683907923603591
+-- 3.3      6.6      9.9
 -----------------------------------
 ---@type TWeaponSkill
 local weaponskillObject = {}
@@ -17,9 +14,9 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftpMod  = { 6.6, 13.35, 20.1 }
-    params.dex_wsc = 0.27
-    params.mnd_wsc = 0.27
+    params.ftpMod  = { 3.3, 6.6, 9.9 }
+    params.str_wsc = 0.6
+    params.vit_wsc = 0.6
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage

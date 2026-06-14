@@ -425,14 +425,6 @@ local function handleSinglePhysicalHit(mob, target, baseHitDamage, params)
     hitInfo.isCritical = isCritical
     hitInfo.pDif       = pDif
 
-    -- [PETRDY-DEBUG 2026-06-13] temporary: BST pet Ready zero-damage trace.
-    -- Only pets (have a master). REMOVE after capture.
-    if mob.getMaster and mob:getMaster() ~= nil then
-        print(string.format('[PETRDY] %s->%s base=%s pDif=%s crit=%s blocked=%s hitDmg=%s',
-            tostring(mob:getName()), tostring(target:getName()), tostring(baseHitDamage),
-            tostring(pDif), tostring(isCritical), tostring(hitBlocked), tostring(hitDamage)))
-    end
-
     return hitInfo
 end
 
@@ -539,14 +531,6 @@ local function handleSingleRangedHit(mob, target, baseHitDamage, params)
     hitInfo.hitBlocked = hitBlocked
     hitInfo.isCritical = isCritical
     hitInfo.pDif       = pDif
-
-    -- [PETRDY-DEBUG 2026-06-13] temporary: BST pet Ready zero-damage trace.
-    -- Only pets (have a master). REMOVE after capture.
-    if mob.getMaster and mob:getMaster() ~= nil then
-        print(string.format('[PETRDY] %s->%s base=%s pDif=%s crit=%s blocked=%s hitDmg=%s',
-            tostring(mob:getName()), tostring(target:getName()), tostring(baseHitDamage),
-            tostring(pDif), tostring(isCritical), tostring(hitBlocked), tostring(hitDamage)))
-    end
 
     return hitInfo
 end

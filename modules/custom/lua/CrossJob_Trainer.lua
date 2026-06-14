@@ -260,7 +260,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     local CrossJobTrainer = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'CrossJob_Trainer',
-        packetName = string.format('%sCross-Job Trainer', xi.icon.STAR_LARGE),
+        packetName = string.format('%sBuy: Abilities', xi.icon.STAR_LARGE),
         look       = 2401,
         -- Extends the GM Home progression row at z=-7:
         --   Gear (-3) / Augment Moogle (0) / Augment Sage (+3) / Trainer (+6).

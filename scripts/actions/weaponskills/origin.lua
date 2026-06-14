@@ -25,16 +25,15 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
-    -- Absorb: heal the player for the damage dealt (capped at the target's HP),
-    -- and drain MP the same way. Undead targets grant no HP absorb.
+    -- HP absorb: skipped on Undead per BG-Wiki. MP absorb ~50% of damage per retail testing.
     if damage and damage > 0 then
-        if not target:isUndead() then
+        if target:getSystem() ~= xi.ecosystem.UNDEAD then
             player:addHP(math.min(damage, targetHP))
         end
-        if targetMP > 0 then
-            local mpDrain = math.min(damage, targetMP)
-            target:delMP(mpDrain)
-            player:addMP(mpDrain)
+        local mpAbsorbed = math.min(targetMP, math.floor(damage / 2))
+        if mpAbsorbed > 0 then
+            target:delMP(mpAbsorbed)
+            player:addMP(mpAbsorbed)
         end
     end
 

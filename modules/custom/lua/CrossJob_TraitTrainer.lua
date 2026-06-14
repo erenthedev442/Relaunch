@@ -4,12 +4,12 @@
 -- Sibling to the Cross-Job Ability Trainer: an NPC at GM Home that sells
 -- "borrowed" JOB TRAITS usable on ANY job, for a flat gil cost each.
 --
--- Traits are passive MODIFIERS (not learnable abilities), so there's no C++
--- binding here: a purchase sets a per-trait charVar and applies the mod(s)
--- additively, and the onGameIn override re-applies every owned trait after a
--- zone-in/login rebuilds (and wipes) in-memory mods -- the same trick the
--- Prestige system uses. Unlike borrowed abilities, traits are passive, so they
--- need NO macro: they just work.
+-- Traits are passive MODIFIERS (not learnable abilities). A purchase sets a
+-- per-trait charVar and applies the mod(s) additively via addMod. Traits that
+-- also unlock an equipment slot (e.g. Dual Wield) additionally call addTrait()
+-- to set the m_TraitList bit the engine's hasTrait() equip-check reads.
+-- The onGameIn override re-applies everything after a zone wipe. No macro: they
+-- just work.
 --
 -- Sellable list: modules/custom/lua/cross_job_trait_catalog.lua.
 -- A SEPARATE NPC (not a branch on the Ability Trainer) because that NPC's main
@@ -38,20 +38,26 @@ local function cvKey(trait)        return catalog.cvPrefix .. trait.id end
 local function owns(player, trait) return (player:getCharVar(cvKey(trait)) or 0) == 1 end
 
 -- Apply one trait's mods additively (so they stack with gear). Called on
--- purchase and on every onGameIn re-apply.
+-- purchase and on every onGameIn re-apply. Traits with an equip-unlock (e.g.
+-- Dual Wield) also set the trait bit so the engine's hasTrait() checks pass.
 local function applyTrait(player, trait)
     for _, mv in ipairs(trait.mods) do
         player:addMod(mv[1], mv[2])
     end
+    if trait.trait then
+        player:addTrait(trait.trait)
+    end
 end
 
--- Re-apply every owned trait (a zone-in/login wipes in-memory mods).
+-- Re-apply every owned trait (a zone-in/login wipes in-memory mods), then
+-- push the command-data packet so the client's trait UI reflects the new bits.
 local function applyAll(player)
     for _, trait in ipairs(catalog.traits) do
         if owns(player, trait) then
             applyTrait(player, trait)
         end
     end
+    player:sendCommandData()
 end
 
 local showMenu, showConfirm
@@ -109,6 +115,7 @@ showConfirm = function(player, trait)
                 p:delGil(GIL_COST)
                 p:setCharVar(cvKey(trait), 1)
                 applyTrait(p, trait)
+                p:sendCommandData()
                 p:printToPlayer(string.format('Learned %s! It now applies on every job, kupo.', trait.name), S)
                 showMenu(p)
             end,
@@ -133,7 +140,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     local TraitTrainer = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'CrossJob_TraitTrainer',
-        packetName = string.format('%sCross-Job Trait Trainer', xi.icon.STAR_LARGE),
+        packetName = string.format('%sBuy: Traits', xi.icon.STAR_LARGE),
         look       = 2401,
         x          = catalog.npcPos.x,
         y          = catalog.npcPos.y,

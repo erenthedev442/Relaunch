@@ -31,6 +31,7 @@ catalog.pricing =
     city     = 5000,    -- nation capitals, Jeuno
     mid      = 15000,   -- mid-range zones (Aht Urhgan, Tavnazia, etc.)
     remote   = 30000,   -- exotic / endgame entry zones
+    apex     = 50000,   -- Adoulin Apex camp zones
     endgame  = 50000,   -- premium endgame (Reisenjima, etc.)
 }
 
@@ -68,6 +69,20 @@ catalog.tiers =
             { label = "Western Adoulin", zone = xi.zone.WESTERN_ADOULIN, x = -10.00, y = 0.00, z = 0.00, r = 192 },
             { label = "Eastern Adoulin", zone = xi.zone.EASTERN_ADOULIN, x = -10.00, y = 0.00, z = 0.00, r = 192 },
             { label = "Al Zahbi",        zone = xi.zone.AL_ZAHBI,        x =   0.00, y = 0.00, z = 0.00, r = 192 },
+        },
+    },
+    {
+        label = 'Apex Zones (50k)',
+        cost  = catalog.pricing.apex,
+        destinations =
+        {
+            { label = 'Ceizak Battlegrounds',  zone = xi.zone.CEIZAK_BATTLEGROUNDS,  x = -107.0, y =   3.0,  z =  295.0, r = 128 },
+            { label = 'Foret de Hennetiel',    zone = xi.zone.FORET_DE_HENNETIEL,    x = -193.0, y =  -0.5,  z = -252.0, r = 128 },
+            { label = 'Morimar Basalt Fields', zone = xi.zone.MORIMAR_BASALT_FIELDS, x = -415.0, y = -63.2,  z =  409.0, r = 106 },
+            { label = 'Yorcia Weald',          zone = xi.zone.YORCIA_WEALD,          x = -420.0, y =   0.0,  z =  -62.0, r =  64 },
+            { label = 'Marjami Ravine',        zone = xi.zone.MARJAMI_RAVINE,        x =  -23.0, y =   0.0,  z =  174.0, r =   0 },
+            { label = 'Kamihr Drifts',         zone = xi.zone.KAMIHR_DRIFTS,         x =  210.0, y =  20.3,  z =  315.0, r = 192 },
+            { label = 'Leafallia',             zone = xi.zone.LEAFALLIA,             x =    5.5, y =  -0.4,  z =    8.1, r =  73 },
         },
     },
     {

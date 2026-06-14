@@ -1,24 +1,23 @@
 -----------------------------------
--- Diarmuid
--- Polearm weapon skill (Prime: "Prime Lance", item 21887)
--- Skill Level: N/A -- granted by equipping the Prime Lance.
--- Description: Delivers a twofold attack. Damage varies with TP.
--- Element: None   Skillchain: Distortion / Scission / Transfixion
--- Modifiers: STR 55% / VIT 55%
+-- Blitz
+-- Axe weapon skill (Prime / Spalirisos)
+-- Skill Level: N/A -- granted by equipping the Spalirisos.
+-- Description: Delivers a fivefold attack. Damage varies with TP.
+-- Element: None   Skillchain: Liquefaction / Impaction / Fragmentation
+-- Modifiers: STR 32% / DEX 32%
 -- 100%TP   200%TP   300%TP
--- 2.17     5.36     8.55
--- Values from LSB mob capture scripts/actions/mobskills/diarmuid.lua.
+-- 1.5      7.0      12.5
 -----------------------------------
 ---@type TWeaponSkill
 local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
-    params.numHits     = 2
-    params.ftpMod      = { 2.17, 5.36, 8.55 }
+    params.numHits     = 5
+    params.ftpMod      = { 1.5, 7.0, 12.5 }
     params.multiHitfTP = true
-    params.str_wsc     = 0.55
-    params.vit_wsc     = 0.55
+    params.str_wsc     = 0.32
+    params.dex_wsc     = 0.32
 
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
