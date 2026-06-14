@@ -371,7 +371,9 @@ local function openMenu(player)
         end })
     end
 
-    table.insert(options, { 'Show current parts', function(p) doShow(p) end })
+    -- 'Show current parts' is intentionally NOT in the clickable menu (still available
+    -- as !pup show). The client renders only ~8 options; 5 loadouts + these 3 actions
+    -- is the ceiling, so keep this list at <= 8 entries or the last one silently drops.
     table.insert(options, { 'Unlock all frames/heads', function(p) doUnlock(p) end })
     table.insert(options, { 'Unlock all attachments', function(p) doUnlockAttachments(p) end })
     table.insert(options, { 'Close', function() end })
