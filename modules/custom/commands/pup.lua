@@ -12,6 +12,7 @@
 --   !pup list            - list your saved loadouts
 --   !pup show            - show your deployed automaton's current parts
 --   !pup unlock          - unlock ALL automaton frames & heads (one-time)
+--   !pup attachments     - unlock ALL automaton attachments (one-time)
 --   !pup clear <name>    - delete a saved loadout
 --
 -- Names: one word, letters/numbers, up to 10 chars (e.g. tank, nuke, rngacc).
@@ -267,7 +268,7 @@ local function doList(player)
     if not any then
         player:printToPlayer('  (none yet -- deploy a setup, then !pup save <name>)', B)
     end
-    player:printToPlayer('  !pup load/save/clear <name> | show | unlock | (no arg = menu)', B)
+    player:printToPlayer('  !pup load/save/clear <name> | show | unlock | attachments | (no arg = menu)', B)
 end
 
 local function doShow(player)
@@ -334,6 +335,25 @@ local function doUnlock(player)
     end
 end
 
+-----------------------------------
+-- Unlock every ATTACHMENT in one shot by running the stock !addallattachments
+-- command (same unlockAttachment() engine bit, the full ~120-item set) -- so we
+-- reuse its id list rather than keeping a second copy here, and stay in sync if
+-- it ever changes. pcall-loaded so a bad path can never break !pup.
+-----------------------------------
+local okAddAtt, addAttCmd = pcall(require, 'scripts/commands/addallattachments')
+if not okAddAtt then
+    print(string.format('[pup] addallattachments unavailable -- attachment unlock disabled (%s)', tostring(addAttCmd)))
+end
+
+local function doUnlockAttachments(player)
+    if okAddAtt and type(addAttCmd) == 'table' and addAttCmd.onTrigger then
+        addAttCmd.onTrigger(player) -- target nil -> unlocks all attachments for this player
+    else
+        player:printToPlayer('[Automaton] Attachment unlock is unavailable right now, kupo.', H)
+    end
+end
+
 local function openMenu(player)
     local options = {}
     for n = 1, NUM_SLOTS do
@@ -353,6 +373,7 @@ local function openMenu(player)
 
     table.insert(options, { 'Show current parts', function(p) doShow(p) end })
     table.insert(options, { 'Unlock all frames/heads', function(p) doUnlock(p) end })
+    table.insert(options, { 'Unlock all attachments', function(p) doUnlockAttachments(p) end })
     table.insert(options, { 'Close', function() end })
 
     player:customMenu({ title = 'Automaton Loadouts', options = options })
@@ -379,10 +400,12 @@ commandObj.onTrigger = function(player, sub, name)
         doShow(player)
     elseif sub == 'unlock' or sub == 'unlockall' then
         doUnlock(player)
+    elseif sub == 'attachments' or sub == 'att' or sub == 'unlockatt' then
+        doUnlockAttachments(player)
     elseif sub == 'clear' or sub == 'delete' or sub == 'del' then
         doClear(player, name)
     else
-        player:printToPlayer('Usage: !pup (menu) | save <name> | load <name> | list | show | unlock | clear <name>', H)
+        player:printToPlayer('Usage: !pup (menu) | save <name> | load <name> | list | show | unlock | attachments | clear <name>', H)
     end
 end
 
