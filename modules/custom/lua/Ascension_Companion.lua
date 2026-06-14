@@ -1,7 +1,7 @@
 -----------------------------------
 -- Ascension_Companion.lua
--- Gives ascended players a permanent menacing "shadow companion" -- a dark
--- creature that trails them around. This is the Ascension marker that lives ON
+-- Gives ascended players a permanent "shadow companion" -- a small pet that
+-- trails them around. This is the Ascension marker that lives ON
 -- the character (the nameplate only exposes the locked master-star flag + a
 -- title, both of which the admin ruled out).
 --
@@ -20,16 +20,15 @@
 -- Re-armed on every onGameIn (login + each zone-in) with a per-name generation
 -- guard so stale loops self-terminate -- same pattern as the other Ascension hooks.
 --
--- *** TUNING (swap the model) ***  COMPANION_PET takes any xi.petId. Options:
---   DIABOLOS  - big dark winged demon (default, most menacing)
---   ODIN / ALEXANDER / ATOMOS - other dramatic avatars
---   WYVERN    - small dark dragon (far less obtrusive than a full avatar)
+-- *** TUNING (swap the model) ***  COMPANION_PET takes any avatar xi.petId:
+--   CARBUNCLE - small floating lynx (default, least obtrusive small pet)
+--   CAIT_SITH - bipedal cat (a bit larger)
+--   DIABOLOS / ODIN / ALEXANDER / ATOMOS - big dramatic avatars (menacing)
 -- Change the one constant below, redeploy, restart.
 --
--- *** OPT-OUT ***  A character skips the companion if its name is in OPTED_OUT
--- below, or if it sets the AscensionCompanion_Off charVar (any player can
--- self-exempt with: !setplayervar AscensionCompanion_Off 1). Jbae opted out by
--- admin request 2026-06-14.
+-- *** OPT-OUT ***  A character skips the companion entirely if its name is in
+-- OPTED_OUT below, or if it sets the AscensionCompanion_Off charVar (any player
+-- can self-exempt with: !setplayervar AscensionCompanion_Off 1).
 --
 -- Override module -> needs a server RESTART to take effect (a hot file-reload
 -- does NOT re-apply onGameIn overrides). Lives in modules/custom/ (merge-safe).
@@ -40,8 +39,8 @@ local m = Module:new('ascension_companion')
 
 local ASCENSION_VAR = 'Prestige_Total_Ascensions'
 local OPTOUT_VAR    = 'AscensionCompanion_Off'       -- per-char opt-out charVar (>0 = no companion)
-local OPTED_OUT     = { ['Jbae'] = true }            -- hard opt-out by character name (admin request)
-local COMPANION_PET = xi.petId.DIABOLOS  -- dark winged demon; swap to taste (see header)
+local OPTED_OUT     = {}                             -- hard opt-out by character name, e.g. { ['Name'] = true }
+local COMPANION_PET = xi.petId.CARBUNCLE -- small floating lynx; swap to taste (see header)
 local CHECK_MS      = 10000              -- keeper re-check interval
 local FIRST_MS      = 5000               -- first spawn, after a zone-in settles
 
