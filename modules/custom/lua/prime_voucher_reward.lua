@@ -7,9 +7,9 @@
 -- the player messaging so every source behaves identically. The granted
 -- voucher is redeemed at the Prime Armory NPC (GM Home) for a Prime weapon.
 --
--- The SOURCE is intentionally NOT wired yet (pending a decision on where
--- vouchers should come from). To make vouchers earnable, add ONE call to the
--- reward code of the chosen source:
+-- SOURCE (live): a 1% drop from any Hunting League NM -- the call sits in
+-- HuntingLeague.lua's NM onMobDeath. Add MORE sources by calling award() from
+-- their reward code; examples:
 --
 --   local primeVoucher = require('modules/custom/lua/prime_voucher_reward')
 --

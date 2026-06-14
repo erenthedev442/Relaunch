@@ -580,6 +580,17 @@ local function insertSpawnerNPC(zone)
                                 )
                                 return
                             end
+
+                            -- Prime Voucher: 1% drop from any Hunting League NM
+                            -- (the token redeemed at the Prime Armory NPC for a
+                            -- Prime weapon). pcall-guarded so a reward error can
+                            -- never break the mark-award logic below.
+                            pcall(function()
+                                if math.random(100) <= 1 then
+                                    require('modules/custom/lua/prime_voucher_reward').award(killer, 1, 'Hunting League')
+                                end
+                            end)
+
                             -- Hunter's Guild integration (v2):
                             --   * marks awarded use the AMPLIFIED value, factoring
                             --     in League guild rank + Apex capstone bonus.
