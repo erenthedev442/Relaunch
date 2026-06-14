@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 150" role="img" aria-label="Hunt beast">
+  <defs>
+    <linearGradient id="hl-metal" x1="80" y1="14" x2="80" y2="96" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffbea"/>
+      <stop offset=".14" stop-color="#f7d877"/>
+      <stop offset=".34" stop-color="#e0ad2f"/>
+      <stop offset=".5" stop-color="#a9761a"/>
+      <stop offset=".6" stop-color="#6e4a0c"/>
+      <stop offset=".72" stop-color="#caa03a"/>
+      <stop offset=".86" stop-color="#f4ce63"/>
+      <stop offset="1" stop-color="#7a5410"/>
+    </linearGradient>
+    <radialGradient id="hl-eye" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#fff1c0"/>
+      <stop offset=".4" stop-color="#ff8a2e"/>
+      <stop offset="1" stop-color="#e0480c"/>
+    </radialGradient>
+    <radialGradient id="hl-ember" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#ffce86"/>
+      <stop offset=".34" stop-color="#ff7a1e"/>
+      <stop offset=".66" stop-color="#e0480c"/>
+      <stop offset="1" stop-color="#e0480c" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="hl-glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="1.2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="hl-soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4.2"/></filter>
+  </defs>
+
+  <ellipse cx="80" cy="74" rx="42" ry="46" fill="url(#hl-ember)" filter="url(#hl-soft)"/>
+
+  <!-- Horns -->
+  <g fill="#5e4310"><path d="M96 45C107 40 117 33 127 17 122 34 112 46 103 54Z" transform="translate(0,1.3)"/><path d="M64 45C53 40 43 33 33 17 38 34 48 46 57 54Z" transform="translate(0,1.3)"/></g>
+  <path fill="url(#hl-metal)" d="M96 45C107 40 117 33 127 17 122 34 112 46 103 54Z"/>
+  <path fill="url(#hl-metal)" d="M64 45C53 40 43 33 33 17 38 34 48 46 57 54Z"/>
+
+  <!-- Skull -->
+  <path fill="#5e4310" d="M80 31C92 31 101 39 102 52L99 63C97 73 90 82 80 88 70 82 63 73 61 63L58 52C59 39 68 31 80 31Z" transform="translate(0,1.4)"/>
+  <path fill="url(#hl-metal)" d="M80 31C92 31 101 39 102 52L99 63C97 73 90 82 80 88 70 82 63 73 61 63L58 52C59 39 68 31 80 31Z"/>
+
+  <!-- Eye sockets -->
+  <path fill="#0a0e36" d="M85 50C93 49 99 53 98 61 91 63 85 59 85 50Z"/>
+  <path fill="#0a0e36" d="M75 50C67 49 61 53 62 61 69 63 75 59 75 50Z"/>
+  <ellipse cx="90.5" cy="56.5" rx="3.6" ry="2.7" fill="url(#hl-eye)" filter="url(#hl-glow)"/>
+  <ellipse cx="69.5" cy="56.5" rx="3.6" ry="2.7" fill="url(#hl-eye)" filter="url(#hl-glow)"/>
+
+  <!-- Nasal cavity -->
+  <path fill="#0a0e36" d="M80 65 86 75 80 79 74 75Z"/>
+
+  <!-- Fangs -->
+  <g fill="url(#hl-metal)" stroke="#7a5414" stroke-width=".4">
+    <path d="M66 76 69 88 71.5 77Z"/>
+    <path d="M94 76 91 88 88.5 77Z"/>
+    <path d="M75 80 77 89 79 80Z"/>
+    <path d="M85 80 83 89 81 80Z"/>
+  </g>
+
+  <!-- Brow gem -->
+  <path d="M80 38l3.2 3.2-3.2 3.2-3.2-3.2Z" fill="#bdecff" filter="url(#hl-glow)"/>
+
+  <g fill="#ffd081" filter="url(#hl-glow)">
+    <circle cx="58" cy="96" r="1.3" opacity=".8"/>
+    <circle cx="102" cy="92" r="1.4" opacity=".85"/>
+    <circle cx="80" cy="104" r="1.1" opacity=".7"/>
+  </g>
+</svg>

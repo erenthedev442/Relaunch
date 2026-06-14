@@ -1,3 +1,7 @@
 {
-	"deviceId": "4ec69dd4-23aa-4d0c-94eb-53a6c4151617"
+	"deviceId": "4ec69dd4-23aa-4d0c-94eb-53a6c4151617",
+	"permission": {
+		"enabled": true,
+		"date": "2026-06-14T05:59:11.910Z"
+	}
 }

@@ -1,0 +1,53 @@
+/* Live server-status badge shown in the announcement bar.
+ * Markup is in docs/overrides/main.html; behavior in docs/assets/status.js.
+ *
+ * The badge is a full-width flex row so it stays centered inside
+ * Material's .md-banner__inner without having to override that element. */
+
+.server-status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45em;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.server-status__dot {
+  width: 0.62em;
+  height: 0.62em;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: #9ea7b3; /* neutral default until first poll resolves */
+}
+
+/* Online — green with a soft pulse so it reads as "live". */
+.server-status--up .server-status__dot {
+  background: #3fb950;
+  animation: server-status-pulse 2s infinite;
+}
+
+/* Offline — solid red, no animation. */
+.server-status--down .server-status__dot {
+  background: #f85149;
+}
+
+/* Unknown / still loading — neutral grey. */
+.server-status--unknown .server-status__dot,
+.server-status--loading .server-status__dot {
+  background: #9ea7b3;
+}
+
+@keyframes server-status-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(63, 185, 80, 0.6); }
+  70%  { box-shadow: 0 0 0 0.5em rgba(63, 185, 80, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(63, 185, 80, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .server-status--up .server-status__dot {
+    animation: none;
+  }
+}
