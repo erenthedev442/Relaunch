@@ -60,33 +60,44 @@ catalog.timeLimitSec      = 900   -- 15 minutes for the full assault
 catalog.waves =
 {
     {
-        label = 'Vanguard', level = 110, base = 3, perDefender = 2,
-        groups = { 11355, 11357 }, names = { 'Voidsent Raider', 'Voidsent Skirmisher' },
+        label = 'Vanguard', level = 110, base = 5, perDefender = 2,
+        groups = { 11355, 11356, 11357, 11358 },
+        names  = { 'Voidsent Raider', 'Voidsent Skirmisher', 'Voidsent Scout', 'Voidsent Stalker' },
         mods = { [xi.mod.ATT] = 1400, [xi.mod.ACC] = 640, [xi.mod.HASTE_GEAR] = 75 },
         hpMult = 1.8,
     },
     {
-        label = 'Shock Troops', level = 125, base = 3, perDefender = 2,
-        groups = { 11359, 11361 }, names = { 'Voidsent Marauder', 'Voidsent Impaler' },
+        label = 'Shock Troops', level = 125, base = 5, perDefender = 2,
+        groups = { 11359, 11360, 11361 },
+        names  = { 'Voidsent Marauder', 'Voidsent Impaler', 'Voidsent Crusher', 'Voidsent Berserker' },
         mods = { [xi.mod.ATT] = 1900, [xi.mod.ACC] = 740, [xi.mod.HASTE_GEAR] = 100, [xi.mod.DOUBLE_ATTACK] = 6 },
         hpMult = 2.2,
     },
     {
-        label = 'Dreadguard', level = 140, base = 3, perDefender = 2,
-        groups = { 11362, 11363 }, names = { 'Voidsent Ravager', 'Voidsent Dreadknight' },
+        label = 'Dreadguard', level = 140, base = 5, perDefender = 2,
+        groups = { 11362, 11363, 11365 },
+        names  = { 'Voidsent Ravager', 'Voidsent Dreadknight', 'Voidsent Juggernaut', 'Voidsent Warden' },
         mods = { [xi.mod.ATT] = 2400, [xi.mod.ACC] = 860, [xi.mod.HASTE_GEAR] = 140, [xi.mod.DOUBLE_ATTACK] = 9 },
         hpMult = 2.6,
     },
     {
-        label = 'The Warlord', level = 155, base = 2, perDefender = 1,
-        groups = { 11364, 11366 }, names = { 'Voidsent Houndmaster', 'Voidsent Banneret' },
+        label = 'Apex Guard', level = 155, base = 4, perDefender = 2,
+        groups = { 11364, 11366, 11367 },
+        names  = { 'Voidsent Houndmaster', 'Voidsent Banneret', 'Voidsent Destroyer', 'Voidsent Champion' },
         mods = { [xi.mod.ATT] = 2900, [xi.mod.ACC] = 980, [xi.mod.HASTE_GEAR] = 170, [xi.mod.DOUBLE_ATTACK] = 11 },
         hpMult = 3.0,
+    },
+    {
+        label = 'The Warlord', level = 165, base = 3, perDefender = 1,
+        groups = { 11368, 11369 },
+        names  = { 'Voidsent Sentinel', 'Voidsent Harbinger', 'Voidsent Executioner' },
+        mods = { [xi.mod.ATT] = 3200, [xi.mod.ACC] = 1040, [xi.mod.HASTE_GEAR] = 185, [xi.mod.DOUBLE_ATTACK] = 12 },
+        hpMult = 3.5,
         boss = {
-            name = 'Voidsent Warlord', level = 165, group = 11368,
-            mods = { [xi.mod.ATT] = 3400, [xi.mod.ACC] = 1060, [xi.mod.HASTE_GEAR] = 200, [xi.mod.DOUBLE_ATTACK] = 13 },
-            hpMult = 7.0,
-            modelSize = 3,    -- render huge - it IS the event
+            name = 'Voidsent Warlord', level = 175, group = 11368,
+            mods = { [xi.mod.ATT] = 3800, [xi.mod.ACC] = 1120, [xi.mod.HASTE_GEAR] = 210, [xi.mod.DOUBLE_ATTACK] = 14 },
+            hpMult = 8.0,
+            modelSize = 3,
         },
     },
 }

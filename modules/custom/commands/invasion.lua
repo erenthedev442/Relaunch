@@ -153,7 +153,7 @@ nextWave = function(zone)
                 catalog.reward.victoryMarks, catalog.reward.victoryInfamy),
                 xi.msg.channel.SYSTEM_3)
         end
-        broadcastZone(zone, '[Invasion] The Voidsent are repelled - glory to the defenders!')
+        broadcastZone(zone, '[Invasion] Al Zahbi holds! The Voidsent are repelled - glory to the defenders!')
         state = nil
         xi._any_invasion_active = false
         return
