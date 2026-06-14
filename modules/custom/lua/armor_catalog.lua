@@ -25,6 +25,10 @@
 --       drop = { id = X, qty = N }     -- OPTIONAL: extra drop item required
 --       jobs = 'WAR/PLD/...'
 --   })
+--
+-- MANUAL ADDS (the scorer drops these -- re-add after any tools/score_armor.py regen):
+--   Gold feet: Malignance Boots (23736) -- completes the Malignance Gold set
+--   (the other 4 pieces score into Gold; the Boots scored just under the cut).
 -----------------------------------
 local catalog = {}
 
@@ -293,6 +297,7 @@ table.insert(g.feet, { id = 25947, name = "Meghanada Jambeaux +2", cost = 50, jo
 table.insert(g.feet, { id = 23727, name = "Volte Spats", cost = 50, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN' })  -- DPS score 314
 table.insert(g.feet, { id = 25950, name = "Jhakri Pigaches +2", cost = 50, jobs = 'BLM/RDM/BLU/SCH/GEO' })  -- CASTER score 288
 table.insert(g.feet, { id = 23726, name = "Volte Gaiters", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 276
+table.insert(g.feet, { id = 23736, name = "Malignance Boots", cost = 50, jobs = 'MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC' })  -- FJB manual Gold add (completes the Malignance set; see MANUAL ADDS note in header)
 
 
 -- INFAMY TIER  (top-5-per-slot; promoted to the Dungeon Infamy
