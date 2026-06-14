@@ -17,7 +17,7 @@ local RESTORE_DELAY_MS = 500   -- ms after sendReraise before we max HP/strip de
 m:addOverride('xi.player.onPlayerDeath', function(player, killer, isKO)
     super(player, killer, isKO)
 
-    if player:getZoneID() ~= xi.zone.GM_HOME then return end
+    if player:getZoneID() ~= xi.zone.AL_ZAHBI then return end
     if not xi._any_invasion_active then return end
 
     player:timer(RAISE_DELAY_MS, function(p)

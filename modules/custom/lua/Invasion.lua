@@ -405,7 +405,7 @@ local function armClock(player)
     end)
 end
 
-local TICK_ZONES = { 'GM_Home', 'Reisenjima_Henge' }
+local TICK_ZONES = { 'Al_Zahbi', 'Reisenjima_Henge' }
 for _, zoneName in ipairs(TICK_ZONES) do
     require(string.format('scripts/zones/%s/Zone', zoneName))
     m:addOverride(string.format('xi.zones.%s.Zone.onZoneIn', zoneName), function(player, prevZone)

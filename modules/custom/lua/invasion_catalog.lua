@@ -15,13 +15,13 @@
 -----------------------------------
 local catalog = {}
 
--- Battleground: the hub. Spawns ring around DEFENDERS (never fixed
+-- Battleground: Al Zahbi. Spawns ring around DEFENDERS (never fixed
 -- coords), so the zone's geometry can't strand a mob off-map.
-catalog.zone   = 'GM_Home'
-catalog.zoneId = 210
+catalog.zone   = 'Al_Zahbi'
+catalog.zoneId = 48
 
--- HL mob groups are registered under this zone id (hunting_league_
--- gm_home_mobs.sql), resolvable by the engine for spawns here.
+-- Mob groups are still registered under zone 210 (GM_Home) in the DB.
+-- groupZoneId tells the engine where to look up the group definitions.
 catalog.groupZoneId = 210
 
 -- ============================================================
