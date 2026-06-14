@@ -5,8 +5,10 @@
 -- discretion. A player trades one to the Prime Armory NPC at GM Home to claim
 -- a Prime weapon of their choice (see modules/custom/lua/PrimeArmory_NPC.lua).
 --
--- Grant one with the standard GM command:   !additem 29699
--- (or !additem 29699 <count> for several).
+-- Grant one to a player with the GM command:  !primevoucher <player> [count]
+-- (modules/custom/commands/primevoucher.lua). The voucher is EX/bound, so a GM
+-- can't trade it by hand -- that command adds it straight to the player. (Plain
+-- !additem 29699 still works to give one to YOURSELF for testing.)
 --
 -- Flags = 28736 = NOAUCTION(64) + NOSALE(4096) + NODELIVERY(8192) + EX(16384):
 --   bound to the character (no AH, no NPC sale-for-gil, no mail, no player
