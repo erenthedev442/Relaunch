@@ -89,7 +89,7 @@ REPLACE INTO mob_pools
      spellList, namevis, roamflag, skill_list_id, resist_id,
      modelSize, modelHitboxSize)
 VALUES
-    (5902, 'corvus', 'Corvus', 246, UNHEX('010004030000170001000100010000000000002500'),
+    (5902, 'corvus', 'Corvus', 246, UNHEX('0100040300001700010001000100000000002500'),
      11, 12, 0, 240, 250,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,

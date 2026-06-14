@@ -330,6 +330,23 @@
     "partial": true
   },
   {
+    "itemId": 25681,
+    "shortName": "cohort_cloak_+1",
+    "context": "Armor NPC [silver] body: Cohort Cloak +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Cohort_Cloak_%2B1",
+    "raw": "Cannot Equip Headgear DEF:218 HP+91 MP+91 STR+35 DEX+35 VIT+35 AGI+35 INT+56 MND+56 CHR+48 Evasion+77 Magic Evasion+156 \"Magic Def. Bonus\"+12 Enfeebling magic skill +34 Elemental magic skill +34 Haste+9% Unity Ranking: Magic Accuracy+10~20",
+    "unknown_tokens": [
+      "Cannot",
+      "Equip",
+      "Headgear",
+      "Unity",
+      "Ranking",
+      "~20"
+    ],
+    "partial": true
+  },
+  {
     "itemId": 25790,
     "shortName": "sulevias_platemail_+2",
     "context": "Armor NPC [bronze] body: Sulevias Platemail +2",
@@ -489,6 +506,28 @@
     "bgwiki": ""
   },
   {
+    "itemId": 25886,
+    "shortName": "flamma_dirs_+2",
+    "context": "Armor NPC [gold] legs: Flamma Dirs +2",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Flamma_Dirs_%2B2",
+    "raw": "DEF:135 HP+100 MP+25 STR+53 DEX+11 VIT+29 AGI+16 INT+24 MND+14 CHR+11 Accuracy+45 Magic Accuracy+45 Evasion+41 Magic Evasion+86 \"Magic Def. Bonus\"+5 Haste+4% \"Store TP\"+8 Potency of \"Cure\" effect received +9% Set: Increases Strength, Dexterity, and Vitality",
+    "unknown_tokens": [
+      "Potency",
+      "of",
+      "Cure",
+      "effect",
+      "received",
+      "Set",
+      "Increases",
+      "Strength",
+      "Dexterity",
+      "and",
+      "Vitality"
+    ],
+    "partial": true
+  },
+  {
     "itemId": 25894,
     "shortName": "ea_slops_+1",
     "context": "Armor NPC [gold] legs: Ea Slops +1",
@@ -631,6 +670,18 @@
       "Burst",
       "damage",
       "II"
+    ],
+    "partial": true
+  },
+  {
+    "itemId": 25991,
+    "shortName": "heyoka_mittens_+1",
+    "context": "Armor NPC [silver] hands: Heyoka Mittens +1",
+    "reason": "partial parse — unknown tokens left over (item still emitted)",
+    "bgwiki": "https://www.bg-wiki.com/ffxi/Heyoka_Mittens_%2B1",
+    "raw": "DEF:107 HP+49 STR+20 DEX+56 VIT+32 INT+11 MND+30 CHR+25 Accuracy+49 Evasion+51 Magic Evasion+90 \"Magic Def. Bonus\"+5 Haste+4% Critical hit rate +7% Pet: Accuracy+49 Ranged Accuracy+49 Enmity+9 Haste+4%",
+    "unknown_tokens": [
+      "Pet"
     ],
     "partial": true
   },
