@@ -4099,16 +4099,26 @@ void GenerateCureEnmity(CBattleEntity* PSource, CBattleEntity* PTarget, int32 am
         return;
     }
 
-    for (auto* PEntity : *PTarget->PNotorietyContainer)
+    // FJB GUARD (2026-06-14): the original looped PTarget->PNotorietyContainer, but a
+    // dynamically-spawned mob (Hunting League / invasion NM via insertDynamicEntity) can
+    // be freed without cleaning its entry out of that set, leaving a dangling pointer
+    // that crashed the dynamic_cast below (SIGQUIT on the next cure). Iterate the zone's
+    // LIVE mobs instead and act on the ones that have PTarget on their enmity -- same
+    // result, but no stale/freed pointer can ever be dereferenced.
+    if (PTarget->loc.zone == nullptr)
     {
-        if (CMobEntity* PCurrentMob = dynamic_cast<CMobEntity*>(PEntity))
-        {
-            if (PCurrentMob->m_HiPCLvl > 0 && PCurrentMob->PEnmityContainer->HasID(PTarget->id))
-            {
-                PCurrentMob->PEnmityContainer->UpdateEnmityFromCure(PSource, PTarget->GetMLevel(), amount, fixedCE, fixedVE);
-            }
-        }
+        return;
     }
+
+    PTarget->loc.zone->ForEachMob([&](CMobEntity* PCurrentMob)
+    {
+        if (PCurrentMob != nullptr && PCurrentMob->m_HiPCLvl > 0 &&
+            PCurrentMob->PEnmityContainer != nullptr &&
+            PCurrentMob->PEnmityContainer->HasID(PTarget->id))
+        {
+            PCurrentMob->PEnmityContainer->UpdateEnmityFromCure(PSource, PTarget->GetMLevel(), amount, fixedCE, fixedVE);
+        }
+    });
 }
 
 // Generate enmity for all targets in range
