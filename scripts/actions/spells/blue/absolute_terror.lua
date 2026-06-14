@@ -1,13 +1,15 @@
 -----------------------------------
--- Spell stub: Absolute Terror
--- AUTO-GENERATED placeholder for spell_list row id 738 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Absolute Terror
+-- Freezes an enemy with terror
+-- Spell cost: 29 MP
+-- Monster Type: Dragons
+-- Spell Type: Magical (Dark)
+-- Blue Magic Points: 3
+-- Stat Bonus: HP+5 STR+1
+-- Level: 96
+-- Casting Time: 0.5 seconds
+-- Recast Time: 30 seconds
+-- Duration: 10 seconds
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +19,17 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "absolute_terror" (id 738, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Absolute Terror" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
-    end
-    return 0
+    local params = {}
+    params.ecosystem       = xi.ecosystem.DRAGON
+    params.effect          = xi.effect.TERROR
+    params.power           = 1
+    params.tick            = 0
+    params.duration        = 10
+    params.resistThreshold = 0.5
+    params.isGaze          = false
+    params.isConal         = false
+
+    return xi.spells.blue.useEnfeeblingSpell(caster, target, spell, params)
 end
 
 return spellObject

@@ -1,13 +1,16 @@
 -----------------------------------
--- Spell stub: Carcharian Verve
--- AUTO-GENERATED placeholder for spell_list row id 745 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Carcharian Verve
+-- Enhances attack, magic attack, and grants Aquaveil
+-- Spell cost: 65 MP
+-- Monster Type: Aquans
+-- Spell Type: Magical (Water)
+-- Blue Magic Points: 5
+-- Stat Bonus: HP+5 MND+2
+-- Level: 99
+-- Casting Time: 2 seconds
+-- Recast Time: 60 seconds
+-- Duration: 15 minutes
+-- Requires Unbridled Learning
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +20,13 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "carcharian_verve" (id 745, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Carcharian Verve" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
-    end
-    return 0
+    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 900)
+
+    caster:addStatusEffect(xi.effect.ATTACK_BOOST,    { power = 20, duration = duration, origin = caster })
+    caster:addStatusEffect(xi.effect.MAGIC_ATK_BOOST, { power = 20, duration = duration, origin = caster })
+    caster:addStatusEffect(xi.effect.AQUAVEIL,        { power = 10, duration = duration, origin = caster })
+
+    return xi.effect.ATTACK_BOOST
 end
 
 return spellObject

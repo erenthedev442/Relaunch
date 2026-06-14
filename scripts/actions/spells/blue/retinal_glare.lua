@@ -1,13 +1,15 @@
 -----------------------------------
--- Spell stub: Retinal Glare
--- AUTO-GENERATED placeholder for spell_list row id 707 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Retinal Glare
+-- Deals light damage to enemies within a fan-shaped area originating from the caster. Additional effect: Flash
+-- Spell cost: 26 MP
+-- Monster Type: Arcana
+-- Spell Type: Magical (Light)
+-- Blue Magic Points: 3
+-- Stat Bonus: MND+1
+-- Level: 99
+-- Casting Time: 1 second
+-- Recast Time: 45 seconds
+-- Combos: None
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +19,34 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "retinal_glare" (id 707, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Retinal Glare" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
-    end
-    return 0
+    local params = {}
+    params.ecosystem   = xi.ecosystem.ARCANA
+    params.attackType  = xi.attackType.MAGICAL
+    params.damageType  = xi.damageType.LIGHT
+    params.attribute   = xi.mod.INT
+    params.multiplier  = 1.0
+    params.tMultiplier = 1.0
+    params.duppercap   = 100
+    params.str_wsc     = 0.0
+    params.dex_wsc     = 0.0
+    params.vit_wsc     = 0.0
+    params.agi_wsc     = 0.0
+    params.int_wsc     = 0.0
+    params.mnd_wsc     = 0.0
+    params.chr_wsc     = 0.0
+
+    -- Handle damage.
+    local damage = xi.spells.blue.useMagicalSpell(caster, target, spell, params)
+
+    -- Handle status effects (Flash).
+    local effectTable =
+    {
+        [1] = { xi.effect.FLASH, 1, 0, 15 },
+    }
+
+    xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)
+
+    return damage
 end
 
 return spellObject

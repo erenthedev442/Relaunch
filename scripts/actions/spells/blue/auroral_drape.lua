@@ -37,7 +37,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     -- Not sure if there's a better way to implement both status effects
     local effectTable =
     {
-        [1] = { xi.effect.BIND, 25, 0, 40 + math.floor(resist * 20) },
+        [1] = { xi.effect.BLINDNESS, 25, 0, 40 + math.floor(resist * 20) },
     }
 
     xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)

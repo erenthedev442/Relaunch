@@ -1,13 +1,15 @@
 -----------------------------------
--- Spell stub: Orcish Counterstance
--- AUTO-GENERATED placeholder for spell_list row id 696 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Ochre Counterstance
+-- Enhances counter rate and counter damage
+-- Spell cost: 18 MP
+-- Monster Type: Lizards
+-- Spell Type: Magical (Fire)
+-- Blue Magic Points: 3
+-- Stat Bonus: VIT+2
+-- Level: 98
+-- Casting Time: 4.5 seconds
+-- Recast Time: 120 seconds
+-- Duration: 3 minutes
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +19,13 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "orcish_counterstance" (id 696, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Orcish Counterstance" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
+    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 180)
+
+    if not caster:addStatusEffect(xi.effect.COUNTER_BOOST, { power = 50, duration = duration, origin = caster }) then
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
     end
-    return 0
+
+    return xi.effect.COUNTER_BOOST
 end
 
 return spellObject

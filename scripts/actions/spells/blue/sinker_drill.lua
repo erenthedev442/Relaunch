@@ -1,13 +1,16 @@
 -----------------------------------
--- Spell stub: Sinker Drill
--- AUTO-GENERATED placeholder for spell_list row id 714 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Sinker Drill
+-- Delivers a fivefold attack
+-- Spell cost: 91 MP
+-- Monster Type: Vermin
+-- Spell Type: Physical (Piercing)
+-- Blue Magic Points: 5
+-- Stat Bonus: STR+4 DEX+4 VIT+4
+-- Level: 99
+-- Casting Time: 1 second
+-- Recast Time: 20 seconds
+-- Skillchain Element(s): Gravitation/Reverberation
+-- Combos: Critical Attack Bonus
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +20,28 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "sinker_drill" (id 714, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Sinker Drill" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
-    end
-    return 0
+    local params = {}
+    params.ecosystem  = xi.ecosystem.VERMIN
+    params.tpmod      = xi.spells.blue.tpMod.DAMAGE
+    params.attackType = xi.attackType.PHYSICAL
+    params.damageType = xi.damageType.PIERCING
+    params.scattr     = xi.skillchainType.GRAVITATION
+    params.scattr2    = xi.skillchainType.REVERBERATION
+    params.numhits    = 5
+    params.multiplier = 1.0
+    params.tp150      = 1.0
+    params.tp300      = 1.0
+    params.azuretp    = 1.0
+    params.duppercap  = 100
+    params.str_wsc    = 0.5
+    params.dex_wsc    = 0.0
+    params.vit_wsc    = 0.5
+    params.agi_wsc    = 0.0
+    params.int_wsc    = 0.0
+    params.mnd_wsc    = 0.0
+    params.chr_wsc    = 0.0
+
+    return xi.spells.blue.usePhysicalSpell(caster, target, spell, params)
 end
 
 return spellObject

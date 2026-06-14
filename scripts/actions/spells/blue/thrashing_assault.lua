@@ -1,13 +1,16 @@
 -----------------------------------
--- Spell stub: Thrashing Assault
--- AUTO-GENERATED placeholder for spell_list row id 709 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Thrashing Assault
+-- Delivers a fivefold attack. Accuracy varies with TP
+-- Spell cost: 119 MP
+-- Monster Type: Beasts
+-- Spell Type: Physical (Slashing)
+-- Blue Magic Points: 5
+-- Stat Bonus: HP+20 DEX+8
+-- Level: 99
+-- Casting Time: 0.5 seconds
+-- Recast Time: 60 seconds
+-- Skillchain Element(s): Fusion/Impaction
+-- Combos: Double Attack/Triple Attack
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +20,35 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "thrashing_assault" (id 709, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Thrashing Assault" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
+    local params = {}
+    params.ecosystem  = xi.ecosystem.BEAST
+    params.tpmod      = xi.spells.blue.tpMod.ACC
+    params.bonusacc   = 0
+    if caster:hasStatusEffect(xi.effect.AZURE_LORE) then
+        params.bonusacc = 70
+    elseif caster:hasStatusEffect(xi.effect.CHAIN_AFFINITY) then
+        params.bonusacc = math.floor(caster:getTP() / 50)
     end
-    return 0
+
+    params.attackType = xi.attackType.PHYSICAL
+    params.damageType = xi.damageType.SLASHING
+    params.scattr     = xi.skillchainType.FUSION
+    params.scattr2    = xi.skillchainType.IMPACTION
+    params.numhits    = 5
+    params.multiplier = 1.25
+    params.tp150      = 1.5
+    params.tp300      = 1.75
+    params.azuretp    = 2.0
+    params.duppercap  = 100
+    params.str_wsc    = 0.32
+    params.dex_wsc    = 0.32
+    params.vit_wsc    = 0.0
+    params.agi_wsc    = 0.0
+    params.int_wsc    = 0.0
+    params.mnd_wsc    = 0.0
+    params.chr_wsc    = 0.0
+
+    return xi.spells.blue.usePhysicalSpell(caster, target, spell, params)
 end
 
 return spellObject

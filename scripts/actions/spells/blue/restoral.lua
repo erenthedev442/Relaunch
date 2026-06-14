@@ -1,13 +1,15 @@
 -----------------------------------
--- Spell stub: Restoral
--- AUTO-GENERATED placeholder for spell_list row id 711 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Restoral
+-- Restores the caster's HP
+-- Spell cost: 127 MP
+-- Monster Type: Aquans
+-- Spell Type: Magical (Light)
+-- Blue Magic Points: 5
+-- Stat Bonus: HP+15 MP+15
+-- Level: 99
+-- Casting Time: 2 seconds
+-- Recast Time: 10 seconds
+-- Combos: Max HP Boost
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +19,19 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "restoral" (id 711, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Restoral" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
+    -- Formula: base ~640 HP, soft cap ~1040 HP
+    -- BLU skill/2 additional HP, MND * 1.5, VIT * 0.5
+    local blueSkill = caster:getSkillLevel(xi.skill.BLUE_MAGIC)
+    local healing   = 320 + math.floor(blueSkill / 2) + math.floor(caster:getStat(xi.mod.MND) * 1.5) + math.floor(caster:getStat(xi.mod.VIT) * 0.5)
+    healing = math.min(healing, 1040)
+
+    local diff = caster:getMaxHP() - caster:getHP()
+    if healing > diff then
+        healing = diff
     end
-    return 0
+
+    caster:addHP(healing)
+    return healing
 end
 
 return spellObject

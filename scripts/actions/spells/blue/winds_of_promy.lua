@@ -1,13 +1,15 @@
 -----------------------------------
--- Spell stub: Winds Of Promy
--- AUTO-GENERATED placeholder for spell_list row id 681 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Winds of Promy.
+-- Removes one detrimental magic effect for party members within area of effect
+-- Spell cost: 36 MP
+-- Monster Type: Empty
+-- Spell Type: Magical (Light)
+-- Blue Magic Points: 3
+-- Stat Bonus: MND+3 CHR-2
+-- Level: 89
+-- Casting Time: 3 seconds
+-- Recast Time: 20 seconds
+-- Combos: Auto Refresh
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,12 +19,8 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "winds_of_promy" (id 681, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Winds Of Promy" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
-    end
+    -- Remove one detrimental magic effect from party member target.
+    target:eraseStatusEffect(false)
     return 0
 end
 

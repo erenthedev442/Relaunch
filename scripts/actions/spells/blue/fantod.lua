@@ -1,13 +1,15 @@
 -----------------------------------
--- Spell stub: Fantod
--- AUTO-GENERATED placeholder for spell_list row id 674 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Fantod
+-- Enhances attack and magic attack. Effect is stackable (up to 10 times)
+-- Spell cost: 12 MP
+-- Monster Type: Lizards
+-- Spell Type: Magical (Fire)
+-- Blue Magic Points: 2
+-- Stat Bonus: Store TP
+-- Level: 85
+-- Casting Time: 0.5 seconds
+-- Recast Time: 10 seconds
+-- Duration: Unknown (stackable)
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +19,12 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "fantod" (id 674, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Fantod" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
-    end
-    return 0
+    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 180)
+
+    caster:addStatusEffect(xi.effect.ATTACK_BOOST,    { power = 5,  duration = duration, origin = caster })
+    caster:addStatusEffect(xi.effect.MAGIC_ATK_BOOST, { power = 5,  duration = duration, origin = caster })
+
+    return xi.effect.ATTACK_BOOST
 end
 
 return spellObject

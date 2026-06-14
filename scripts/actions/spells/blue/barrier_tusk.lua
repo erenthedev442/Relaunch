@@ -1,13 +1,15 @@
 -----------------------------------
--- Spell stub: Barrier Tusk
--- AUTO-GENERATED placeholder for spell_list row id 685 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Barrier Tusk
+-- Reduces damage taken by 15%
+-- Spell cost: 41 MP
+-- Monster Type: Beasts
+-- Spell Type: Magical (Earth)
+-- Blue Magic Points: 4
+-- Stat Bonus: Max HP Boost
+-- Level: 91
+-- Casting Time: 6 seconds
+-- Recast Time: 60 seconds
+-- Duration: 3 minutes
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +19,13 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "barrier_tusk" (id 685, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Barrier Tusk" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
+    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 180)
+
+    if not target:addStatusEffect(xi.effect.PHALANX, { power = 15, duration = duration, origin = caster }) then
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
     end
-    return 0
+
+    return xi.effect.PHALANX
 end
 
 return spellObject

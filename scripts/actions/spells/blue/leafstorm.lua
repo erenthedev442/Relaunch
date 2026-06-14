@@ -1,13 +1,16 @@
 -----------------------------------
--- Spell stub: Leafstorm
--- AUTO-GENERATED placeholder for spell_list row id 663 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Leafstorm
+-- Deals wind damage to enemies within area of effect
+-- Spell cost: 132 MP
+-- Monster Type: Plantoids
+-- Spell Type: Magical (Wind)
+-- Blue Magic Points: 4
+-- Stat Bonus: STR+2
+-- Level: 77
+-- Casting Time: 7 seconds
+-- Recast Time: 62 seconds
+-- Magic Bursts on: Detonation, Fragmentation, and Light
+-- Combos: Magic Attack Bonus
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +20,23 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "leafstorm" (id 663, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Leafstorm" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
-    end
-    return 0
+    local params = {}
+    params.ecosystem   = xi.ecosystem.PLANTOID
+    params.attackType  = xi.attackType.MAGICAL
+    params.damageType  = xi.damageType.WIND
+    params.attribute   = xi.mod.INT
+    params.multiplier  = 2.75
+    params.tMultiplier = 2.0
+    params.duppercap   = 100
+    params.str_wsc     = 0.3
+    params.dex_wsc     = 0.0
+    params.vit_wsc     = 0.0
+    params.agi_wsc     = 0.0
+    params.int_wsc     = 0.0
+    params.mnd_wsc     = 0.0
+    params.chr_wsc     = 0.0
+
+    return xi.spells.blue.useMagicalSpell(caster, target, spell, params)
 end
 
 return spellObject

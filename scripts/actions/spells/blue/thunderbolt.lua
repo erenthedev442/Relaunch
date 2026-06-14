@@ -1,13 +1,16 @@
 -----------------------------------
--- Spell stub: Thunderbolt
--- AUTO-GENERATED placeholder for spell_list row id 736 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Thunderbolt
+-- Deals lightning damage to enemies within area of effect. Additional effect: Stun
+-- Spell cost: 138 MP
+-- Monster Type: Beasts
+-- Spell Type: Magical (Lightning)
+-- Blue Magic Points: 4
+-- Stat Bonus: INT+2 MND+1
+-- Level: 95
+-- Casting Time: 8.5 seconds
+-- Recast Time: 30 seconds
+-- Magic Bursts on: Impaction, Fragmentation, and Light
+-- Combos: None
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +20,38 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "thunderbolt" (id 736, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Thunderbolt" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
+    local params = {}
+    params.ecosystem   = xi.ecosystem.BEAST
+    params.attackType  = xi.attackType.MAGICAL
+    params.damageType  = xi.damageType.THUNDER
+    params.attribute   = xi.mod.INT
+    params.multiplier  = 4.0
+    params.tMultiplier = 2.0
+    params.duppercap   = 100
+    params.str_wsc     = 0.0
+    params.dex_wsc     = 0.0
+    params.vit_wsc     = 0.0
+    params.agi_wsc     = 0.0
+    params.int_wsc     = 0.3
+    params.mnd_wsc     = 0.2
+    params.chr_wsc     = 0.0
+
+    -- Handle damage.
+    local damage = xi.spells.blue.useMagicalSpell(caster, target, spell, params)
+
+    if damage <= 0 then
+        return damage
     end
-    return 0
+
+    -- Handle status effects.
+    local effectTable =
+    {
+        [1] = { xi.effect.STUN, 1, 0, 10 },
+    }
+
+    xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)
+
+    return damage
 end
 
 return spellObject

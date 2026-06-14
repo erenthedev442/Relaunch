@@ -1,13 +1,16 @@
 -----------------------------------
--- Spell stub: Gates Of Hades
--- AUTO-GENERATED placeholder for spell_list row id 739 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Gates of Hades
+-- Deals fire damage to enemies within area of effect. Additional effect: Burn
+-- Spell cost: 156 MP
+-- Monster Type: Demons
+-- Spell Type: Magical (Fire)
+-- Blue Magic Points: 5
+-- Stat Bonus: STR+3 DEX+2
+-- Level: 97
+-- Casting Time: 3.5 seconds
+-- Recast Time: 30 seconds
+-- Combos: None
+-- Requires Unbridled Learning
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +20,38 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "gates_of_hades" (id 739, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Gates Of Hades" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
+    local params = {}
+    params.ecosystem   = xi.ecosystem.DEMON
+    params.attackType  = xi.attackType.MAGICAL
+    params.damageType  = xi.damageType.FIRE
+    params.attribute   = xi.mod.INT
+    params.multiplier  = 5.0
+    params.tMultiplier = 1.0
+    params.duppercap   = 100
+    params.str_wsc     = 0.2
+    params.dex_wsc     = 0.2
+    params.vit_wsc     = 0.0
+    params.agi_wsc     = 0.0
+    params.int_wsc     = 0.0
+    params.mnd_wsc     = 0.0
+    params.chr_wsc     = 0.0
+
+    -- Handle damage.
+    local damage = xi.spells.blue.useMagicalSpell(caster, target, spell, params)
+
+    if damage <= 0 then
+        return damage
     end
-    return 0
+
+    -- Handle status effects.
+    local effectTable =
+    {
+        [1] = { xi.effect.BURN, 30, 3, 90 },
+    }
+
+    xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)
+
+    return damage
 end
 
 return spellObject

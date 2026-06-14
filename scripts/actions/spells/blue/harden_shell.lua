@@ -1,13 +1,16 @@
 -----------------------------------
--- Spell stub: Harden Shell
--- AUTO-GENERATED placeholder for spell_list row id 737 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Harden Shell
+-- Enhances defense by 100%
+-- Spell cost: 20 MP
+-- Monster Type: Aquans
+-- Spell Type: Magical (Earth)
+-- Blue Magic Points: 3
+-- Stat Bonus: VIT+3
+-- Level: 95
+-- Casting Time: 1.5 seconds
+-- Recast Time: 25 seconds
+-- Duration: 90 seconds
+-- Requires Unbridled Learning
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +20,13 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "harden_shell" (id 737, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Harden Shell" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
+    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 90)
+
+    if not caster:addStatusEffect(xi.effect.DEFENSE_BOOST, { power = 100, duration = duration, origin = caster }) then
+        spell:setMsg(xi.msg.basic.MAGIC_NO_EFFECT)
     end
-    return 0
+
+    return xi.effect.DEFENSE_BOOST
 end
 
 return spellObject

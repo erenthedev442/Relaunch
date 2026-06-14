@@ -1,13 +1,16 @@
 -----------------------------------
--- Spell stub: Foul Waters
--- AUTO-GENERATED placeholder for spell_list row id 705 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Foul Waters
+-- Deals water damage to enemies within area of effect. Additional effect: Drown
+-- Spell cost: 76 MP
+-- Monster Type: Aquans
+-- Spell Type: Magical (Water)
+-- Blue Magic Points: 4
+-- Stat Bonus: STR+1 MND+1
+-- Level: 99
+-- Casting Time: 3.5 seconds
+-- Recast Time: 60 seconds
+-- Magic Bursts on: Reverberation, Distortion, and Darkness
+-- Combos: Clear Mind
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +20,38 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "foul_waters" (id 705, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Foul Waters" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
+    local params = {}
+    params.ecosystem   = xi.ecosystem.AQUAN
+    params.attackType  = xi.attackType.MAGICAL
+    params.damageType  = xi.damageType.WATER
+    params.attribute   = xi.mod.INT
+    params.multiplier  = 2.25
+    params.tMultiplier = 2.0
+    params.duppercap   = 100
+    params.str_wsc     = 0.2
+    params.dex_wsc     = 0.0
+    params.vit_wsc     = 0.0
+    params.agi_wsc     = 0.0
+    params.int_wsc     = 0.0
+    params.mnd_wsc     = 0.2
+    params.chr_wsc     = 0.0
+
+    -- Handle damage.
+    local damage = xi.spells.blue.useMagicalSpell(caster, target, spell, params)
+
+    if damage <= 0 then
+        return damage
     end
-    return 0
+
+    -- Handle status effects.
+    local effectTable =
+    {
+        [1] = { xi.effect.DROWN, 31, 3, 180 },
+    }
+
+    xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)
+
+    return damage
 end
 
 return spellObject

@@ -27,7 +27,7 @@ spellObject.onSpellCast = function(caster, target, spell)
     params.tick            = 1
     params.duration        = 30
     params.resistThreshold = 0.5
-    params.isGaze          = true
+    params.isGaze          = false
     params.isConal         = true
 
     return xi.spells.blue.useEnfeeblingSpell(caster, target, spell, params)

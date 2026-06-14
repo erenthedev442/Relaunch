@@ -1,13 +1,16 @@
 -----------------------------------
--- Spell stub: Bilgestorm
--- AUTO-GENERATED placeholder for spell_list row id 742 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Bilgestorm
+-- Delivers a single attack. Additional effect: Defense Down, Attack Down, Accuracy Down
+-- Spell cost: 122 MP
+-- Monster Type: Aquans
+-- Spell Type: Physical (Blunt)
+-- Blue Magic Points: 5
+-- Stat Bonus: STR+3 VIT+2
+-- Level: 99
+-- Casting Time: 1 second
+-- Recast Time: 30 seconds
+-- Skillchain Element(s): Darkness/Gravitation
+-- Combos: None
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +20,45 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "bilgestorm" (id 742, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Bilgestorm" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
+    local params = {}
+    params.ecosystem  = xi.ecosystem.AQUAN
+    params.tpmod      = xi.spells.blue.tpMod.DAMAGE
+    params.attackType = xi.attackType.PHYSICAL
+    params.damageType = xi.damageType.HTH
+    params.scattr     = xi.skillchainType.DARKNESS
+    params.scattr2    = xi.skillchainType.GRAVITATION
+    params.numhits    = 1
+    params.multiplier = 3.0
+    params.tp150      = 3.0
+    params.tp300      = 3.0
+    params.azuretp    = 3.0
+    params.duppercap  = 100
+    params.str_wsc    = 0.3
+    params.dex_wsc    = 0.0
+    params.vit_wsc    = 0.0
+    params.agi_wsc    = 0.0
+    params.int_wsc    = 0.0
+    params.mnd_wsc    = 0.0
+    params.chr_wsc    = 0.0
+
+    -- Handle damage.
+    local damage = xi.spells.blue.usePhysicalSpell(caster, target, spell, params)
+
+    if damage <= 0 then
+        return damage
     end
-    return 0
+
+    -- Handle status effects.
+    local effectTable =
+    {
+        [1] = { xi.effect.DEFENSE_DOWN,  25, 0, 60 },
+        [2] = { xi.effect.ATTACK_DOWN,   25, 0, 60 },
+        [3] = { xi.effect.ACCURACY_DOWN, 10, 0, 60 },
+    }
+
+    xi.spells.blue.applyBlueAdditionalEffect(caster, target, params, effectTable)
+
+    return damage
 end
 
 return spellObject

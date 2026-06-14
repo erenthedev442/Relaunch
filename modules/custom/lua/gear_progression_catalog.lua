@@ -158,6 +158,10 @@ do
     table.insert(polearms, { id = 20941, name = "Blurred Lance +1", cost = 12, jobs = 'WAR/SAM/DRG' })  -- WS score 150, DMG 224/Dly 492
     table.insert(polearms, { id = 20945, name = "Nativus Halberd", cost = 12, jobs = 'WAR/PLD/SAM/DRG' })  -- WS score 129, DMG 207/Dly 396
 
+    -- Great Katana: 1 pick(s)
+    local gkatana = cat(catalog.bronze.weapons, 'Great Katana')
+    table.insert(gkatana, { id = 21971, name = "Tokko Tachi", cost = 12, jobs = 'SAM/NIN' })  -- WS score 122, DMG 243/Dly 450
+
     -- Clubs: 3 pick(s)
     local clubs = cat(catalog.bronze.weapons, 'Clubs')
     table.insert(clubs, { id = 22024, name = "Beryllium Mace +1", cost = 12, jobs = 'WAR/WHM/PLD/GEO' })  -- WS score 190, DMG 196/Dly 291

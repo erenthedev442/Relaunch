@@ -21,7 +21,7 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 120)
+    local duration = xi.spells.blue.calculateDurationWithDiffusion(caster, 180)
 
     -- Reactor Cool Will Overwrite Ice Spikes and Def Boost regardless of Power
     if

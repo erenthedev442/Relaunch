@@ -1,13 +1,16 @@
 -----------------------------------
--- Spell stub: Vanity Dive
--- AUTO-GENERATED placeholder for spell_list row id 667 (group 3).
--- No real implementation existed -- the cast was silently no-op'ing.
--- This stub now prints a clear "not implemented" message to the caster
--- and a `[spell-stub]` line to the server log so admins can see how
--- often each missing spell is being attempted.
---
--- To finish: replace this file with the real damage / status formula
--- and remove the corresponding row from docs/admin/missing-spells.md.
+-- Spell: Vanity Dive
+-- Deals slashing damage to an enemy. Accuracy and Attack varies with TP
+-- Spell cost: 58 MP
+-- Monster Type: Birds
+-- Spell Type: Physical (Slashing)
+-- Blue Magic Points: 2
+-- Stat Bonus: DEX+2
+-- Level: 82
+-- Casting Time: 0.5 seconds
+-- Recast Time: 40 seconds
+-- Skillchain Element(s): Scission
+-- Combos: None
 -----------------------------------
 ---@type TSpell
 local spellObject = {}
@@ -17,13 +20,34 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    print('[spell-stub] cast of "vanity_dive" (id 667, group 3) -- not implemented; no effect applied')
-    if caster:getObjType() == xi.objType.PC then
-        caster:printToPlayer(
-            '[Spell] "Vanity Dive" is not yet implemented on this server, kupo.',
-            xi.msg.channel.SYSTEM_3)
+    local params = {}
+    params.ecosystem  = xi.ecosystem.BIRD
+    params.tpmod      = xi.spells.blue.tpMod.ACC
+    params.bonusacc   = 0
+    if caster:hasStatusEffect(xi.effect.AZURE_LORE) then
+        params.bonusacc = 60
+    elseif caster:hasStatusEffect(xi.effect.CHAIN_AFFINITY) then
+        params.bonusacc = math.floor(caster:getTP() / 50)
     end
-    return 0
+
+    params.attackType = xi.attackType.PHYSICAL
+    params.damageType = xi.damageType.SLASHING
+    params.scattr     = xi.skillchainType.SCISSION
+    params.numhits    = 1
+    params.multiplier = 3.0
+    params.tp150      = 4.0
+    params.tp300      = 4.5
+    params.azuretp    = 4.75
+    params.duppercap  = 100
+    params.str_wsc    = 0.0
+    params.dex_wsc    = 0.5
+    params.vit_wsc    = 0.0
+    params.agi_wsc    = 0.0
+    params.int_wsc    = 0.0
+    params.mnd_wsc    = 0.0
+    params.chr_wsc    = 0.0
+
+    return xi.spells.blue.usePhysicalSpell(caster, target, spell, params)
 end
 
 return spellObject
