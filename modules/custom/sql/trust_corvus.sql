@@ -63,10 +63,16 @@ VALUES
 --   look_t (size=1 MODEL_EQUIPPED): byte order = size(u16 LE=1), face(u8),
 --   race(u8), then head/body/hands/legs/feet/main/sub/ranged (u16 LE, raw
 --   item_equipment.MId, NO slot offset). Race 01 = Hume Male.
---   *** PLACEHOLDER LOOK ***: this reuses Gemma's armor MIds (head 75 / body
---   334 / legs 453) on a male frame and shows no weapon. It renders fine but
---   is meant to be re-themed -- swap the UNHEX for a marksman outfit + a gun
---   in the `ranged` slot via AltanaView, the same way Gemma's look was built.
+--   *** LOOK: Elvaan Male ranger (Lord-of-the-Rings elf) ***: race 03 (Elvaan
+--   Male), bare head so the long hair shows (no helm, like Legolas), green
+--   Gambison tunic (body MId 23), brown leather gloves/trousers/highboots
+--   (MId 1 each), and a Longbow held in the `ranged` slot (MId 37). Values are
+--   raw item_equipment.MId.
+--   HAIR TUNING: the `face` byte (3rd byte of the UNHEX, currently 0x04) selects
+--   the Elvaan face + hairstyle -- nudge it across 0x00-0x07 to land the exact
+--   elven hair you want. BOW SWAP: change the last 2 bytes (ranged) -- other bow
+--   MIds are great_bow 0x22(34), war_bow 0x21(33), power_bow 0x24(36),
+--   composite_bow 0x30(48), rune_bow 0x33(51).
 --
 --   mJob 11 / sJob 12 = RNG / SAM. RNG main = the ranged-DD identity; SAM sub
 --   grants Store TP for faster weaponskills (trustutils computes sub-job skill
@@ -83,7 +89,7 @@ REPLACE INTO mob_pools
      spellList, namevis, roamflag, skill_list_id, resist_id,
      modelSize, modelHitboxSize)
 VALUES
-    (5902, 'corvus', 'Corvus', 246, UNHEX('010000014B004E010000C5010000000000000000'),
+    (5902, 'corvus', 'Corvus', 246, UNHEX('010004030000170001000100010000000000002500'),
      11, 12, 0, 240, 250,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,
