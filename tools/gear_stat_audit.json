@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-13T12:12:00",
+  "generated_at": "2026-06-13T18:44:37",
   "summary": {
     "reforge": {
       "total": 1320,
@@ -10,10 +10,10 @@
       "not_equip": 0
     },
     "hunting_league": {
-      "total": 403,
-      "ok": 305,
+      "total": 413,
+      "ok": 314,
       "naked": 92,
-      "latent_only": 0,
+      "latent_only": 1,
       "missing": 3,
       "not_equip": 3
     }
@@ -2455,6 +2455,14 @@
     }
   ],
   "latent_only_items": [
+    {
+      "itemId": 22118,
+      "shortName": "venery_bow",
+      "source": "hunting_league",
+      "context": "Weapons NPC [silver] archery: Venery Bow",
+      "modCount": 0,
+      "latentCount": 3
+    },
     {
       "itemId": 23573,
       "shortName": "arbatel_bracers_+3",
