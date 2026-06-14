@@ -11,12 +11,14 @@ REM  then shipped to the Azure server. That guarantees the live server
 REM  and legendary-ffxi.pages.dev always show identical gear tiers
 REM  (this killed the old server-vs-website drift).
 REM
-REM    [1] refresh + publish the WEBSITE = re-score ALL catalogs, build
-REM        the docs, deploy to Cloudflare Pages   (auto-confirmed)
+REM    [1] re-score ALL gear catalogs from live data + build docs locally
+REM        (the laptop NO LONGER publishes -- it reads an empty db)
 REM    [2] commit + push the freshly-scored working tree to GitHub (backup)
 REM    [3] ship the SAME content + code to the Azure SERVER (file sync)
 REM        + auto-apply changed modules/custom/sql
 REM    [4] rebuild C++ + reload zz_*.sql + restart + health-check
+REM    [5] PUBLISH the website FROM THE BOX (reads the LIVE db -> correct
+REM        player data); replaces the old laptop Cloudflare deploy
 REM
 REM  ** EVERY step is timestamped into deploy-everything.log (next to this
 REM     script). If the window ever closes early, open that log to see the
@@ -42,8 +44,8 @@ set "SITEOK=skipped"
 (echo === Deploy Everything run started %DATE% %TIME% ===)> "%LOG%"
 
 echo(
-echo   DEPLOY EVERYTHING:  website re-score+publish  -^>  GitHub backup  -^>  Azure server
-echo   Score ONCE, deploy BOTH - server and website stay in sync.
+echo   DEPLOY EVERYTHING:  re-score catalogs  -^>  GitHub backup  -^>  Azure server
+echo   -^>  publish the site FROM THE BOX [live db].  Score once, deploy both.
 echo   Full release - site build + C++ rebuild can take several minutes.
 echo   Step-by-step log:  %LOG%
 echo(
@@ -51,39 +53,37 @@ set "GO="
 set /p GO="   Proceed? [Y/N]:  "
 if /i not "%GO%"=="Y" ( echo   Cancelled - nothing changed.& goto :end )
 
-REM ---- 1. WEBSITE FIRST = the single re-score. refresh-site re-scores
-REM         EVERY catalog, builds the docs, and deploys to Cloudflare. The
-REM         LEGENDARY_AUTO_PUBLISH flag makes it confirm + finish without
-REM         prompting. The catalogs it leaves on disk are exactly what we
-REM         ship to the server in step 3 -> server == website. ----
+REM ---- 1. RE-SCORE = the single re-score. refresh-site re-scores EVERY
+REM         catalog from live data (LEGENDARY_AUTO_PUBLISH lets it run
+REM         non-interactively). Its laptop Cloudflare deploy is now DISABLED
+REM         -- the BOX publishes in step 5. The catalogs it leaves on disk
+REM         are exactly what we ship to the server in step 3. ----
 echo(
-echo  [1/4] Refreshing + publishing the WEBSITE (re-scores all catalogs, docs -^> Cloudflare)...
-(echo [%TIME%] [1/4] website + single re-score: start)>> "%LOG%"
-if not exist "%SITE_BAT%" ( echo        ERROR: website script not found - aborting.& set "SITEOK=MISSING"& goto :finish )
+echo  [1/5] Re-scoring ALL gear catalogs from live data (the site publishes from the box in step 5)...
+(echo [%TIME%] [1/5] re-score: start)>> "%LOG%"
+if not exist "%SITE_BAT%" ( echo        ERROR: re-score script not found - aborting.& set "SITEOK=MISSING"& goto :finish )
 set "LEGENDARY_AUTO_PUBLISH=1"
 call "%SITE_BAT%"
 set "LEGENDARY_AUTO_PUBLISH="
-set "SITEOK=check log"
-findstr /c:"cloudflare deploy exit code: 0" "%SITELOG%" >nul
-if not errorlevel 1 set "SITEOK=OK"
-(echo [%TIME%] [1/4] website returned - SITEOK=%SITEOK%)>> "%LOG%"
+set "SITEOK=rescored; box publish pending"
+(echo [%TIME%] [1/5] re-score returned)>> "%LOG%"
 
 REM ---- 2. Commit + push the freshly-scored working tree to GitHub.
 REM         Push is time-boxed to 90s so an auth popup can't hang it. ----
 echo(
-echo  [2/4] Committing + pushing all changes to GitHub (backup)...
-(echo [%TIME%] [2/4] git add/commit/push: start)>> "%LOG%"
+echo  [2/5] Committing + pushing all changes to GitHub (backup)...
+(echo [%TIME%] [2/5] git add/commit/push: start)>> "%LOG%"
 git -C "%SRC%" add -A
 git -C "%SRC%" commit -m "Deploy Everything %DATE% %TIME%" >> "%LOG%" 2>&1
 powershell -NoProfile -Command "$j=Start-Job { git -C 'D:\server' push fjb HEAD 2>&1 }; if (Wait-Job $j -Timeout 90) { Receive-Job $j } else { Stop-Job $j; 'push timed out (sign-in popup?) - skipped; run: git push fjb HEAD' }; Remove-Job $j -Force" > "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
-(echo [%TIME%] [2/4] git: done)>> "%LOG%"
+(echo [%TIME%] [2/5] git: done)>> "%LOG%"
 
 REM ---- 3. Ship the SAME catalogs to the Azure SERVER (file sync + custom SQL) ----
 echo(
-echo  [3/4] Shipping the same content to the Azure server (modules/custom + scripts + tools + src)...
-(echo [%TIME%] [3/4] pack+upload+install: start)>> "%LOG%"
+echo  [3/5] Shipping the same content to the Azure server (modules/custom + scripts + tools + src)...
+(echo [%TIME%] [3/5] pack+upload+install: start)>> "%LOG%"
 tar -czf "%TGZ%" -C "%SRC%" modules/custom scripts tools src
 if errorlevel 1 ( echo        ERROR: tar failed -- skipping server deploy.& set "SRVOK=PROBLEM"& goto :finish )
 scp -i "%KEY%" %SSHOPT% "%TGZ%" %HOST%:/tmp/fjb_full.tgz
@@ -99,12 +99,12 @@ type "%OUT%"
 type "%OUT%" >> "%LOG%"
 findstr /c:"files-OK" "%OUT%" >nul
 if errorlevel 1 ( echo        ERROR: install / custom-SQL step failed -- skipping rebuild.& set "SRVOK=PROBLEM"& goto :finish )
-(echo [%TIME%] [3/4] install: OK)>> "%LOG%"
+(echo [%TIME%] [3/5] install: OK)>> "%LOG%"
 
 REM ---- 4. Rebuild C++ + reload zz_*.sql + restart + health-check ----
 echo(
-echo  [4/4] Rebuilding C++ + reloading zz_ SQL + restarting Azure (may take a while)...
-(echo [%TIME%] [4/4] rebuild+restart: start)>> "%LOG%"
+echo  [4/5] Rebuilding C++ + reloading zz_ SQL + restarting Azure (may take a while)...
+(echo [%TIME%] [4/5] rebuild+restart: start)>> "%LOG%"
 ssh -i "%KEY%" %SSHOPT% %HOST% "tr -d '\015' < ~/_azure_update_remote.sh > ~/_au.sh && bash ~/_au.sh; rm -f ~/_au.sh" > "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
@@ -113,7 +113,20 @@ type "%OUT%"
 type "%OUT%" >> "%LOG%"
 findstr /c:"xi_map=active" "%OUT%" >nul
 if errorlevel 1 ( echo        WARNING: xi_map not confirmed active - check health output above.& set "SRVOK=PROBLEM" ) else ( echo        server live.& set "SRVOK=OK" )
-(echo [%TIME%] [4/4] rebuild+restart done - SRVOK=%SRVOK%)>> "%LOG%"
+(echo [%TIME%] [4/5] rebuild+restart done - SRVOK=%SRVOK%)>> "%LOG%"
+
+REM ---- 5. PUBLISH the website FROM THE BOX (reads the LIVE db, so the
+REM         freshly-shipped catalogs + correct player data go live). This
+REM         replaces the retired laptop Cloudflare deploy. ----
+echo(
+echo  [5/5] Publishing the website from the Azure box (live db -^> correct players)...
+(echo [%TIME%] [5/5] box publish: start)>> "%LOG%"
+ssh -i "%KEY%" %SSHOPT% %HOST% "bash ~/server/tools/refresh_site_azure.sh; tail -3 ~/refresh_site.log" > "%OUT%" 2>&1
+type "%OUT%"
+type "%OUT%" >> "%LOG%"
+findstr /c:"refresh_site DONE" "%OUT%" >nul
+if errorlevel 1 ( echo        WARNING: box publish not confirmed - check output above.& set "SITEOK=PROBLEM" ) else ( echo        website published from box.& set "SITEOK=OK" )
+(echo [%TIME%] [5/5] box publish done - SITEOK=%SITEOK%)>> "%LOG%"
 
 :finish
 echo(
