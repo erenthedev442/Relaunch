@@ -20,8 +20,19 @@
 -- cleared BEFORE despawning on every abort path; NO_CAPACITY_POINTS.
 -----------------------------------
 require('modules/module_utils')
-local catalog = require('modules/custom/lua/invasion_catalog')
+local catalog   = require('modules/custom/lua/invasion_catalog')
+local LOOT_POOL = require('modules/custom/lua/invasion_loot_pool')
+local LOOT_POOL_SIZE = #LOOT_POOL
+local DROP_CHANCE    = 15  -- % per mob kill
 require(string.format('scripts/zones/%s/Zone', catalog.zone))
+
+local function tryDrop(killer)
+    if not killer then return end
+    if killer:getObjType() ~= xi.objType.PC then return end
+    if math.random(100) > DROP_CHANCE then return end
+    local itemId = LOOT_POOL[math.random(LOOT_POOL_SIZE)]
+    pcall(function() killer:addItem(itemId, 1) end)
+end
 
 local m = Module:new('invasion')
 
@@ -121,6 +132,10 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
 
         onMobDeath = function(deadMob, killer)
             if not state then return end
+
+            -- Per-kill item drop from full item DB.
+            pcall(tryDrop, killer)
+
             state.mobsAlive[deadMob:getID()] = nil
 
             if killer then
@@ -255,6 +270,7 @@ endInvasion = function(zone, reason)
     local mobsToDespawn = state.mobsAlive
     local participants  = state.participants
     state = nil   -- clear BEFORE touching mobs (re-entrancy guard)
+    xi._any_invasion_active = false
 
     for _, mob in pairs(mobsToDespawn or {}) do
         if type(mob) == 'userdata' then
@@ -370,6 +386,7 @@ local function checkClock(player)
                     startedAt    = os.time(),
                     endsAt       = os.time() + catalog.timeLimitSec,
                 }
+                xi._any_invasion_active = true
                 broadcast(player,
                     '[Invasion] THE VOIDSENT ARE HERE! GM Home is under attack - defend the sanctuary!')
                 nextWave(zone)

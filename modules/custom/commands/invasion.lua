@@ -8,12 +8,15 @@
 --   !invasion end     -- abort + despawn all Voidsent (no rewards)
 --
 -- Self-contained: maintains its own state so it works without a restart
--- even though Invasion.lua is an addOverride module.  If the scheduled
--- invasion fires at the same time, both can coexist (mobs from both
--- events occupy the zone simultaneously; the scheduled one handles its
--- own wave-clear chain independently).
+-- even though Invasion.lua is an addOverride module.
+--
+-- Sets xi._any_invasion_active = true/false so the reraise module can
+-- see when either a scheduled or GM invasion is running.
 -----------------------------------
-local catalog = require('modules/custom/lua/invasion_catalog')
+local catalog   = require('modules/custom/lua/invasion_catalog')
+local LOOT_POOL = require('modules/custom/lua/invasion_loot_pool')
+local LOOT_POOL_SIZE = #LOOT_POOL
+local DROP_CHANCE = 15  -- % per mob kill
 
 ---@type TCommand
 local commandObj = {}
@@ -46,6 +49,14 @@ local function defendersInZone(zone)
     return out
 end
 
+local function tryDrop(killer)
+    if not killer then return end
+    if killer:getObjType() ~= xi.objType.PC then return end
+    if math.random(100) > DROP_CHANCE then return end
+    local itemId = LOOT_POOL[math.random(LOOT_POOL_SIZE)]
+    pcall(function() killer:addItem(itemId, 1) end)
+end
+
 local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
     opts = opts or {}
     local px, py, pz = anchor:getXPos(), anchor:getYPos(), anchor:getZPos()
@@ -70,8 +81,11 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
 
         onMobDeath = function(deadMob, killer)
             if not state then return end
-            state.mobsAlive[deadMob:getID()] = nil
 
+            -- Per-kill item drop.
+            pcall(tryDrop, killer)
+
+            state.mobsAlive[deadMob:getID()] = nil
             for _ in pairs(state.mobsAlive) do return end  -- wave still alive
 
             -- Wave cleared.
@@ -138,6 +152,7 @@ nextWave = function(zone)
         end
         broadcastZone(zone, '[Invasion] The Voidsent are repelled - glory to the defenders!')
         state = nil
+        xi._any_invasion_active = false
         return
     end
 
@@ -188,6 +203,7 @@ endLocalInvasion = function(zone, reason)
     if not state then return end
     local mobs = state.mobsAlive
     state = nil
+    xi._any_invasion_active = false
     for _, mob in pairs(mobs or {}) do
         if type(mob) == 'userdata' then
             pcall(function() if mob:getHP() > 0 then mob:setHP(0) end end)
@@ -218,6 +234,7 @@ commandObj.onTrigger = function(player, a1, ...)
             startedAt = os.time(),
             endsAt    = os.time() + catalog.timeLimitSec,
         }
+        xi._any_invasion_active = true
         broadcastZone(player:getZone(),
             '[Invasion] THE VOIDSENT ARE HERE! GM Home is under attack - defend the sanctuary!')
         nextWave(player:getZone())
