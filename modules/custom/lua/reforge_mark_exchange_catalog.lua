@@ -1,6 +1,6 @@
 -----------------------------------
 -- reforge_mark_exchange_catalog.lua
--- Config for the Reforge Mark Exchange vendor at Reisenjima Henge.
+-- Config for the Reforge Mark Exchange vendor at Gwora-Corridor.
 -- Lets players convert between Reforge mark types at a 2:1 rate,
 -- removing the "dead inventory" feel when you have excess marks in
 -- one track. Does not trivialize any track — the exchange tax is
@@ -12,12 +12,12 @@ local catalog = {}
 
 catalog.npcPos =
 {
-    zone     = 'Reisenjima_Henge',
-    zoneId   = xi.zone.REISENJIMA_HENGE,
-    x        =  6.0,
-    y        =  5.5,
-    z        = -18.0,
-    rotation =  200,
+    zone     = 'Gwora-Corridor',
+    zoneId   = xi.zone.GWORA_CORRIDOR,
+    x        = 20.0,
+    y        =  0.0,
+    z        =  0.0,
+    rotation =  128,
 }
 
 catalog.npcLook = 2430
