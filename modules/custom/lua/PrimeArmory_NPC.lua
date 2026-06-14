@@ -53,6 +53,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
     local showMain  -- forward declaration (the confirm menu's "Back" calls it)
 
+    local PAGE_SIZE = 7  -- 7 weapons + 1 nav button stays within the 8-option client limit
+
     -----------------------------------
     -- Spend a voucher and hand over the weapon.
     -----------------------------------
@@ -82,7 +84,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     -----------------------------------
     -- Per-weapon detail + confirm menu.
     -----------------------------------
-    local function showWeapon(player, weapon)
+    local function showWeapon(player, weapon, page)
         player:printToPlayer(string.format('%s -- weapon skill: %s', weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
         player:printToPlayer('  ' .. weapon.info, xi.msg.channel.SYSTEM_3)
         player:printToPlayer(string.format('  You hold %d Prime Voucher(s).', player:getItemCount(VOUCHER)), xi.msg.channel.SYSTEM_3)
@@ -92,23 +94,41 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             options =
             {
                 { 'Claim (trade 1 Prime Voucher)', function(p) claim(p, weapon) end },
-                { '<< Back',                        function(p) showMain(p) end },
+                { '<< Back',                        function(p) showMain(p, page) end },
             },
         })
     end
 
     -----------------------------------
-    -- Main browse menu: every Prime weapon + the skill it grants.
+    -- Main browse menu: paginated (PAGE_SIZE per page) to stay within the
+    -- 8-option client-side render limit.
     -----------------------------------
-    showMain = function(player)
+    showMain = function(player, page)
+        page = page or 1
+        local totalPages = math.ceil(#WEAPONS / PAGE_SIZE)
+        local startIdx   = (page - 1) * PAGE_SIZE + 1
+        local endIdx     = math.min(startIdx + PAGE_SIZE - 1, #WEAPONS)
+
         local options = {}
-        for _, weapon in ipairs(WEAPONS) do
+        for i = startIdx, endIdx do
+            local weapon = WEAPONS[i]
             table.insert(options, {
                 string.format('%s [%s]', weapon.name, weapon.ws),
-                function(p) showWeapon(p, weapon) end,
+                function(p) showWeapon(p, weapon, page) end,
             })
         end
-        sendMenu(player, { title = 'Prime Armory', options = options })
+
+        if page < totalPages then
+            table.insert(options, { 'More weapons >>', function(p) showMain(p, page + 1) end })
+        end
+        if page > 1 then
+            table.insert(options, { '<< Previous page', function(p) showMain(p, page - 1) end })
+        end
+
+        local title = totalPages > 1
+            and string.format('Prime Armory (%d/%d)', page, totalPages)
+            or  'Prime Armory'
+        sendMenu(player, { title = title, options = options })
     end
 
     -----------------------------------

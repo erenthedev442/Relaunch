@@ -582,10 +582,12 @@ void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats,
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setSkillType(SKILL_AUTOMATON_MELEE);
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDelay(petStats->cmbDelay); // every pet should use this eventually
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setBaseDelay(petStats->cmbDelay);
-        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_MELEE) / 9) * 2 + 3);
+        // FJB: increased weapon rating so automatons can deal meaningful damage vs high-level custom NMs.
+        // Old formula (skill/9)*2+3 gives D87 at rank-5 lv99; new formula gives D146 — closer to a real lv99 weapon.
+        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_MAIN])->setDamage(PPet->GetSkill(SKILL_AUTOMATON_MELEE) / 3 + 20);
 
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_RANGED])->setSkillType(SKILL_AUTOMATON_RANGED);
-        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_RANGED])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_RANGED) / 9) * 2 + 3);
+        static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_RANGED])->setDamage(PPet->GetSkill(SKILL_AUTOMATON_RANGED) / 3 + 20);
         static_cast<CItemWeapon*>(PPet->m_Weapons[SLOT_RANGED])->setDmgType(DAMAGE_TYPE::PIERCING);
 
         // Automatons are hard to interrupt
@@ -624,6 +626,12 @@ void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats,
             PPet->addModifier(Mod::MDEF, PMaster->getMod(Mod::PET_MAB_MDB));
             PPet->addModifier(Mod::MACC, PMaster->getMod(Mod::PET_MACC_MEVA));
             PPet->addModifier(Mod::MEVA, PMaster->getMod(Mod::PET_MACC_MEVA));
+            // FJB: flat ACC/ATT bonus so automatons can meaningfully participate against
+            // level-150 custom NMs. Skill is capped at lv99 but our NMs are lv150 with
+            // large EVA/DEF mods — without this boost automatons miss constantly and do
+            // near-zero damage even with optimal attachments.
+            PPet->addModifier(Mod::ATT, 400);
+            PPet->addModifier(Mod::ACC, 300);
         }
     }
 }
