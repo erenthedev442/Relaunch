@@ -29,6 +29,7 @@ local stock =
     general =
     {
          { 27556,   100000 },  --Echad Ring
+         { 27557,   100000 },  --Trizek Ring
         { xi.item.HI_POTION,                 600 },
         { xi.item.X_POTION,                 1800 },
         { xi.item.ETHER,                     800 },
