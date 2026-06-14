@@ -20,10 +20,11 @@
 -- Re-armed on every onGameIn (login + each zone-in) with a per-name generation
 -- guard so stale loops self-terminate -- same pattern as the other Ascension hooks.
 --
--- *** TUNING (swap the model) ***  COMPANION_PET takes any avatar xi.petId:
---   CARBUNCLE - small floating lynx (default, least obtrusive small pet)
---   CAIT_SITH - bipedal cat (a bit larger)
---   DIABOLOS / ODIN / ALEXANDER / ATOMOS - big dramatic avatars (menacing)
+-- *** TUNING (swap the model) ***  COMPANION_PET takes any xi.petId. Options:
+--   LYNX_FAMILIAR / HARE_FAMILIAR / SHEEP_FAMILIAR / etc. - small ground-level
+--     BST jug-pet animals (default). Full list: scripts/enum/pet_id.lua.
+--     NOTE: jug pets follow AND auto-engage in combat (avatars only follow).
+--   CARBUNCLE / CAIT_SITH / DIABOLOS - SMN avatars (bigger, cosmetic-only)
 -- Change the one constant below, redeploy, restart.
 --
 -- *** OPT-OUT ***  A character skips the companion entirely if its name is in
@@ -40,7 +41,7 @@ local m = Module:new('ascension_companion')
 local ASCENSION_VAR = 'Prestige_Total_Ascensions'
 local OPTOUT_VAR    = 'AscensionCompanion_Off'       -- per-char opt-out charVar (>0 = no companion)
 local OPTED_OUT     = {}                             -- hard opt-out by character name, e.g. { ['Name'] = true }
-local COMPANION_PET = xi.petId.CARBUNCLE -- small floating lynx; swap to taste (see header)
+local COMPANION_PET = xi.petId.LYNX_FAMILIAR -- small BST jug-pet cat; swap to taste (see header)
 local CHECK_MS      = 10000              -- keeper re-check interval
 local FIRST_MS      = 5000               -- first spawn, after a zone-in settles
 
