@@ -373,7 +373,14 @@ xi.job_utils.ranger.useDecoyShot = function(player, target, ability, action)
 end
 
 xi.job_utils.ranger.useHoverShot = function(player, target, ability, action)
-    return 0, 0 -- Not implemented yet
+    -- Hover Shot and Decoy Shot overwrite each other (retail parity).
+    if player:hasStatusEffect(xi.effect.DECOY_SHOT) then
+        player:delStatusEffect(xi.effect.DECOY_SHOT)
+    end
+
+    player:addStatusEffect(xi.effect.HOVER_SHOT, { power = 0, duration = 3600, origin = player })
+
+    return xi.effect.HOVER_SHOT
 end
 
 xi.job_utils.ranger.useOverkill = function(player, target, ability, action)
