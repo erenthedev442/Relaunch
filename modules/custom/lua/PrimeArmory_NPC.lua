@@ -53,7 +53,10 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
     local showMain  -- forward declaration (the confirm menu's "Back" calls it)
 
-    local PAGE_SIZE = 7  -- 7 weapons + 1 nav button stays within the 8-option client limit
+    -- customMenu payload cap is ~150 bytes across title + ALL option labels combined.
+    -- With [WS] labels averaging 25 bytes each, 4 items/page keeps every page safely
+    -- under the cap (page 1 worst case: 18 title + 107 labels = 125 bytes).
+    local PAGE_SIZE = 4
 
     -----------------------------------
     -- Spend a voucher and hand over the weapon.
@@ -101,7 +104,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
     -----------------------------------
     -- Main browse menu: paginated (PAGE_SIZE per page) to stay within the
-    -- 8-option client-side render limit.
+    -- ~150-byte customMenu payload cap (title + all labels combined).
     -----------------------------------
     showMain = function(player, page)
         page = page or 1
@@ -119,10 +122,10 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         end
 
         if page < totalPages then
-            table.insert(options, { 'More weapons >>', function(p) showMain(p, page + 1) end })
+            table.insert(options, { 'Next >>',  function(p) showMain(p, page + 1) end })
         end
         if page > 1 then
-            table.insert(options, { '<< Previous page', function(p) showMain(p, page - 1) end })
+            table.insert(options, { '<< Prev',  function(p) showMain(p, page - 1) end })
         end
 
         local title = totalPages > 1
