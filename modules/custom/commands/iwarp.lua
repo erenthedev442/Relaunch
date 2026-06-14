@@ -12,10 +12,8 @@ commandObj.cmdprops =
     parameters = '',
 }
 
-local DEST = { x = 0, y = 0, z = 36, rot = 0 }
-
 commandObj.onTrigger = function(player)
-    player:teleport(DEST, xi.zone.AL_ZAHBI)
+    player:setPos(0, 0, 36, 0, xi.zone.AL_ZAHBI)
 end
 
 return commandObj
