@@ -5,8 +5,8 @@
 -- spend them on; this is their outlet (a sparks sink / modest gil faucet).
 -- Pure Lua, mirrors the gil_mystery_box / Casino menu pattern.
 --
--- TUNE: `cfg.rate` below is the gil paid per spark (default 50 -> a full
--- 99,999-spark cap = ~5M gil). Change that one number to reprice it.
+-- TUNE: `cfg.rate` below is the gil paid per spark (10 -> at the live
+-- 999,999-spark cap = ~10M gil). Change that one number to reprice it.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/GM_Home/Zone')
@@ -20,7 +20,7 @@ local GIL_CAP = 999999999
 -- ===== config (tune freely) =====
 local cfg =
 {
-    rate   = 50,                                                 -- gil paid per spark
+    rate   = 10,                                                 -- gil paid per spark (999,999 cap = ~10M gil)
     tiers  = { 1000, 10000, 50000 },                            -- preset convert amounts (+ "all")
     npcPos = { x = -7.500, y = 0.000, z = -35.000, rot = 128 },  -- GM Home economy corner, west end of the gil-NPC row
     name   = 'Eminence Broker',
