@@ -26,7 +26,8 @@
 --       jobs = 'WAR/PLD/...'
 --   })
 --
--- MANUAL ADDS (the scorer drops these -- re-add after any tools/score_armor.py regen):
+-- FORCED ADDS (now pinned in tools/score_armor.py via FORCED_INCLUDE, so the
+-- scorer KEEPS them on every regen -- no manual re-add needed anymore):
 --   Gold feet: Malignance Boots (23736) -- completes the Malignance Gold set
 --   (the other 4 pieces score into Gold; the Boots scored just under the cut).
 -----------------------------------
@@ -299,6 +300,7 @@ table.insert(g.feet, { id = 25947, name = "Meghanada Jambeaux +2", cost = 50, jo
 table.insert(g.feet, { id = 23727, name = "Volte Spats", cost = 50, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN' })  -- DPS score 314
 table.insert(g.feet, { id = 25950, name = "Jhakri Pigaches +2", cost = 50, jobs = 'BLM/RDM/BLU/SCH/GEO' })  -- CASTER score 288
 table.insert(g.feet, { id = 23726, name = "Volte Gaiters", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 276
+table.insert(g.feet, { id = 23736, name = "Malignance Boots", cost = 50, jobs = 'MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC' })  -- manual add: completes the Malignance Gold set (scored just under the 251 cut)
 
 
 -- INFAMY TIER  (top-5-per-slot; promoted to the Dungeon Infamy

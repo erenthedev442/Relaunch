@@ -451,6 +451,7 @@ FORCED_INCLUDE = {
     ('bronze', 'body'): [25790, 26849, 25683, 25780, 25702, 25686, 26870, 25684],
     ('silver', 'body'): [25717, 25796],
     ('gold',   'body'): [23733, 26943],
+    ('gold',   'feet'): [23736],  # Malignance Boots -- pin to gold so the full Malignance gold set is buyable (it scores just under gold's cut). Added 2026-06-14.
     # Taliah +2 set (BST/SMN/PUP): pin hands/feet/body +2 to silver alongside
     # the auto-scored Turban +2 (head) and Seraweels +2 (legs) so the full
     # 5-piece +2 set is buyable from the one Kindreds Medal tier. These three
