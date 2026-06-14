@@ -312,8 +312,14 @@ xi.trust.canCast = function(caster, spell, notAllowedTrustIds)
     end
 
     -- Block summoning trusts if someone recently joined party (120s)
+    -- GUARD (2026-06-14): getPartyLastMemberJoinedTime() can return nil (e.g. for
+    -- characters whose party-join time wasn't initialized after a crash/relog),
+    -- and `GetSystemTime() - nil` threw "arithmetic on a nil value" here, which
+    -- broke trust casting SERVER-WIDE. Skip the recent-join block when either
+    -- value is nil so trusts always cast.
     local lastPartyMemberAddedTime = caster:getPartyLastMemberJoinedTime()
-    if GetSystemTime() - lastPartyMemberAddedTime < 120 then
+    local nowTime = GetSystemTime()
+    if lastPartyMemberAddedTime and nowTime and (nowTime - lastPartyMemberAddedTime) < 120 then
         caster:messageSystem(xi.msg.system.TRUST_DELAY_NEW_PARTY_MEMBER)
         return -1
     end
