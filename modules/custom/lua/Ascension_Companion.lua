@@ -26,6 +26,11 @@
 --   WYVERN    - small dark dragon (far less obtrusive than a full avatar)
 -- Change the one constant below, redeploy, restart.
 --
+-- *** OPT-OUT ***  A character skips the companion if its name is in OPTED_OUT
+-- below, or if it sets the AscensionCompanion_Off charVar (any player can
+-- self-exempt with: !setplayervar AscensionCompanion_Off 1). Jbae opted out by
+-- admin request 2026-06-14.
+--
 -- Override module -> needs a server RESTART to take effect (a hot file-reload
 -- does NOT re-apply onGameIn overrides). Lives in modules/custom/ (merge-safe).
 -----------------------------------
@@ -34,6 +39,8 @@ require('modules/module_utils')
 local m = Module:new('ascension_companion')
 
 local ASCENSION_VAR = 'Prestige_Total_Ascensions'
+local OPTOUT_VAR    = 'AscensionCompanion_Off'       -- per-char opt-out charVar (>0 = no companion)
+local OPTED_OUT     = { ['Jbae'] = true }            -- hard opt-out by character name (admin request)
 local COMPANION_PET = xi.petId.DIABOLOS  -- dark winged demon; swap to taste (see header)
 local CHECK_MS      = 10000              -- keeper re-check interval
 local FIRST_MS      = 5000               -- first spawn, after a zone-in settles
@@ -44,9 +51,20 @@ local function isAscended(player)
     return (player:getCharVar(ASCENSION_VAR) or 0) > 0
 end
 
+-- Per-character opt-out: a hard-coded name (admin request) OR the AscensionCompanion_Off
+-- charVar > 0 (any player can self-exempt with !setplayervar AscensionCompanion_Off 1).
+local function optedOut(player)
+    return OPTED_OUT[player:getName()] == true
+        or (player:getCharVar(OPTOUT_VAR) or 0) > 0
+end
+
 local function keeper(player, name, gen)
     if not player or genByName[name] ~= gen then
         return  -- entity gone, or superseded by a newer onGameIn -- stop.
+    end
+
+    if optedOut(player) then
+        return  -- opted out (name or charVar) -- stop the keeper, no respawn.
     end
 
     -- (Re)spawn only when they have NO pet (yields to real job pets) and pets are
@@ -62,6 +80,9 @@ end
 m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
     super(player, gameLogin, zoning)
 
+    if optedOut(player) then
+        return  -- opted out of the shadow companion (name or charVar) -- no companion.
+    end
     if not isAscended(player) then
         return  -- not ascended -- no companion.
     end
