@@ -223,7 +223,7 @@ commandObj.onTrigger = function(player, a1, ...)
     if sub == 'start' then
         if player:getZoneID() ~= catalog.zoneId then
             player:printToPlayer(string.format(
-                '[Invasion] You must be in GM Home (zone %d) to start the invasion.',
+                '[Invasion] You must be in Al Zahbi (zone %d) to start the invasion.',
                 catalog.zoneId))
             return
         end
