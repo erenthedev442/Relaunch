@@ -19,11 +19,12 @@
 -- Unlock: bought from the Void Keeper NPC in GM Home (cheaper than the support
 -- trusts -- see modules/custom/lua/trust_skoll.lua).
 --
--- *** TUNING NOTE ***: a Trust has no real ranged weapon, so ranged-attack base
--- damage leans on the mob_pools cmbDmgMult (250) + the ranged mods below rather
--- than a weapon's DMG. If in-game testing shows his shots hitting soft, the
--- levers are: cmbDmgMult (trust_corvus.sql), the RATT/RACC values here, and the
--- weaponskill settings at the bottom. Verify and tune against live content.
+-- *** DAMAGE MODEL ***: a Trust has no real bow (ranged weapon DMG = 0), so his
+-- shots are powered by MODS, not a weapon: RANGED_DMG_RATING + the RANGED_DAMAGE_
+-- OFFSET / BASE_DAMAGE_MULTIPLIER mobMods build the "bow" DMG, and RATT drives the
+-- hit ratio. See the RANGED DAMAGE block in onMobSpawn for the dials. He is sized
+-- to be a real DPS at lv150; verify vs live content and adjust RANGED_DMG_RATING /
+-- RATT to taste.
 -----------------------------------
 ---@type TSpellTrust
 local spellObject = {}
@@ -79,35 +80,44 @@ spellObject.onMobSpawn = function(mob)
     -- ---- Threat control: hard DPS, but he must never out-hate the master. ----
     mob:addMod(xi.mod.ENMITY, -50) -- halve all the hate his shots generate
 
-    -- ---- Ranged offense ----------------------------------------------------
-    -- Ranged damage ratio is RATT vs the target's DEF; RACC must clear a lv150
-    -- boss's high evasion or every shot misses. AGI feeds ranged attack/acc/crit,
-    -- DEX feeds crit rate, STR adds to ranged damage. Store TP shortens the road
-    -- to each weaponskill; Snapshot / Rapid Shot speed the shots themselves;
-    -- Double Shot fires a free second shot; the crit mods spike the damage.
-    mob:addMod(xi.mod.RATT, xi.trust.modGrowthValMax(mob, 200))
-    mob:addMod(xi.mod.RATT, 1200)                                   -- flat ranged attack to drive damage through boss DEF
+    -- ---- RANGED DAMAGE -- the whole point of him; sized so he's worth 15M. ----
+    -- A Trust has NO real bow, so its ranged weapon DMG is 0 and RATT alone just
+    -- multiplies zero (that's why an un-tuned ranged trust hits soft). The ranged
+    -- weapon DMG is built entirely from mods -- mobutils::GetWeaponDamage(SLOT_
+    -- RANGED) -- and attack.cpp resolves each shot as:
+    --     shot = (rangedWeaponDmg + fSTR) x damageRatio
+    --     rangedWeaponDmg = (baseByLvl + RANGED_DAMAGE_OFFSET + RANGED_DMG_RATING)
+    --                       x BASE_DAMAGE_MULTIPLIER
+    --     damageRatio climbs with RATT vs the target's DEF.
+    -- So THESE THREE MODS ARE HIS BOW, and RATT turns each shot into a heavy hit.
+    mob:addMod(xi.mod.RANGED_DMG_RATING,              800)          -- his "bow" DMG -- the #1 damage dial
+    mob:setMobMod(xi.mobMod.RANGED_DAMAGE_OFFSET,     300)          -- more ranged base damage
+    mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER,   175)          -- x1.75 on the ranged base
+
+    -- Drive the damage ratio to its cap even against lv150-boss DEF, and make
+    -- sure every shot LANDS through boss evasion.
+    mob:addMod(xi.mod.RATT, xi.trust.modGrowthValMax(mob, 250))
+    mob:addMod(xi.mod.RATT, 2500)                                   -- flat ranged attack: keeps pDIF near cap vs heavy DEF
     mob:addMod(xi.mod.RACC, xi.trust.modGrowthValMax(mob, 250))
-    mob:addMod(xi.mod.RACC, 800)                                    -- flat ranged accuracy to clear lv150 evasion
-    -- Attack/Accuracy too, so melee-skill weaponskills (if his WS resolve to
-    -- melee) still land and hit hard alongside the ranged ones.
-    mob:addMod(xi.mod.ATT, xi.trust.modGrowthValMax(mob, 150))
-    mob:addMod(xi.mod.ATT, 800)
-    mob:addMod(xi.mod.ACC, xi.trust.modGrowthValMax(mob, 200))
-    mob:addMod(xi.mod.ACC, 600)
+    mob:addMod(xi.mod.RACC, 1200)                                   -- flat ranged accuracy to clear lv150 evasion
 
-    mob:addMod(xi.mod.STR, 200)
-    mob:addMod(xi.mod.DEX, 250)
-    mob:addMod(xi.mod.AGI, 400)
+    mob:addMod(xi.mod.STR, 300)                                     -- fSTR added to every shot
+    mob:addMod(xi.mod.DEX, 250)                                     -- crit rate
+    mob:addMod(xi.mod.AGI, 500)                                     -- ranged attack + accuracy + crit
 
-    mob:addMod(xi.mod.STORETP,          500)                        -- reach weaponskills fast
-    mob:addMod(xi.mod.SNAPSHOT,         50)                         -- faster ranged attack delay
-    mob:addMod(xi.mod.RAPID_SHOT,       100)                        -- rapid-shot proc (faster shot + double-damage chance)
-    mob:addMod(xi.mod.DOUBLE_SHOT_RATE, 80)                         -- ~80% chance of a free second shot
-    mob:addMod(xi.mod.CRITHITRATE,      30)                         -- +30% critical hit rate
+    -- Volume + spikes: fire fast, fire twice, crit hard.
+    mob:addMod(xi.mod.SNAPSHOT,         50)                         -- shorter ranged delay -> faster shots (the cap)
+    mob:addMod(xi.mod.RAPID_SHOT,       100)                        -- rapid-shot procs (faster shot + double-damage chance)
+    mob:addMod(xi.mod.DOUBLE_SHOT_RATE, 100)                        -- a second shot nearly every volley
+    mob:addMod(xi.mod.CRITHITRATE,      40)                         -- +40% critical hit rate
+    mob:addMod(xi.mod.STORETP,          500)                        -- feed any weaponskill fast
 
-    -- ---- Weaponskills: hold TP to close the party's skillchains, but fire the
-    -- HIGHEST-available WS the moment TP hits 1000 so he never sits on TP. ----
+    -- Weaponskills are a FREE BONUS if his ranged skill resolves any (a weaponless
+    -- Trust usually has none) -- hold TP to close the party's skillchains, else
+    -- fire the highest at 1000 TP. His DPS does not depend on this; the shot
+    -- stream above is the engine. TUNING DIALS after a live test: RANGED_DMG_RATING
+    -- (his bow DMG) + the flat RATT are the big two; BASE_DAMAGE_MULTIPLIER scales
+    -- it all. A hard-hitting mob TP move can be added later (skill_list) for burst.
     mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.HIGHEST, 1000)
 
     -- ---- Ranged auto-shots: the bread-and-butter damage. The gambit reaction
