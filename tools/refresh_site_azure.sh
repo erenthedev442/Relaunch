@@ -19,6 +19,10 @@
 # ============================================================
 set -uo pipefail
 
+# cron runs with a minimal PATH; node/npx (NodeSource) live in /usr/bin. Make
+# PATH explicit so mkdocs (venv, added below) and wrangler resolve under cron.
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
 # ---- CONFIG: set these to the box's real layout ------------------
 # Docs checkout that has tools/docgen/, mkdocs.yml and docs/.
 # (On the laptop this is the "legendary-logo" git worktree.)
@@ -39,6 +43,15 @@ DOCGEN_CMD="${DOCGEN_CMD:-python3 tools/docgen/generate.py}"
 CF_PROJECT="${CF_PROJECT:-legendary-ffxi}"
 
 LOG="${LOG:-$HOME/refresh_site.log}"
+
+# Python venv holding mkdocs + pymysql (the box's system python3 lacks them).
+DOCS_VENV="${DOCS_VENV:-$HOME/docs-venv}"
+
+# Cloudflare API token is sourced from this env file if present, so the token
+# stays OUT of this script and out of the crontab. Create it once with:
+#   printf 'export CLOUDFLARE_API_TOKEN=%s\n' 'YOUR_TOKEN' > ~/.cloudflare_env
+#   chmod 600 ~/.cloudflare_env
+CF_ENV_FILE="${CF_ENV_FILE:-$HOME/.cloudflare_env}"
 # ------------------------------------------------------------------
 
 exec >>"$LOG" 2>&1
@@ -53,8 +66,23 @@ fi
 
 cd "$DOCS_REPO" || { echo "[FATAL] DOCS_REPO not found: $DOCS_REPO"; exit 1; }
 export LEGENDARY_LIVE_ROOT="$LIVE_ROOT"
+
+# Activate the docs venv so `python3` and `mkdocs` resolve to the ones that
+# have mkdocs + pymysql installed.
+if [ -f "$DOCS_VENV/bin/activate" ]; then
+    # shellcheck disable=SC1091
+    . "$DOCS_VENV/bin/activate"
+fi
+
+# Load the Cloudflare API token (CLOUDFLARE_API_TOKEN) for the deploy step.
+if [ -f "$CF_ENV_FILE" ]; then
+    # shellcheck disable=SC1090
+    . "$CF_ENV_FILE"
+fi
+
 echo "[info] DOCS_REPO=$DOCS_REPO"
 echo "[info] LEGENDARY_LIVE_ROOT=$LEGENDARY_LIVE_ROOT"
+echo "[info] venv=$DOCS_VENV  token_file=$CF_ENV_FILE  token_set=$([ -n "${CLOUDFLARE_API_TOKEN:-}" ] && echo yes || echo NO)"
 
 echo "[1/3] docgen (leaderboards + player profiles read the live DB)..."
 # shellcheck disable=SC2086
