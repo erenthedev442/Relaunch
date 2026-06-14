@@ -97,11 +97,14 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             }
         end
 
+        -- Keep menu labels SHORT and QUOTE-FREE. customMenu serializes the title
+        -- + every option label into one quoted string (luautils
+        -- SetCustomMenuContext escapes by wrapping in " without escaping inner
+        -- quotes), so a label containing a " -- or long enough to overflow the
+        -- prompt packet -- corrupts every option after it. The "can't afford"
+        -- path lives in the click handler below.
         local cost  = t.cost or GIL_COST   -- per-trust price; falls back to the shared 50M
-        local label = string.format('%s  (-%s gil)', t.bindLabel, fmtGil(cost))
-        if player:getGil() < cost then
-            label = label .. '  [insufficient gil]'
-        end
+        local label = string.format('Bind %s  (%s gil)', t.name, fmtGil(cost))
 
         return {
             label,
@@ -148,7 +151,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             end,
         })
         table.insert(options, {
-            'What is "Meat"?',
+            'What is Meat?',
             function(p)
                 local S = xi.msg.channel.SYSTEM_3
                 p:printToPlayer('A wall does not fear the blade. A wall does not tire.', S)
