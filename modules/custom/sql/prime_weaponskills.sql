@@ -1,7 +1,7 @@
 -- ============================================================================
 -- prime_weaponskills.sql
 --
--- Enables 6 more Prime weapon skills as usable PLAYER weapon skills (Maru Kala,
+-- Enables the Prime weapon skills as usable PLAYER weapon skills (Maru Kala,
 -- id 231, is handled separately in maru_kala_ws.sql). Stock LSB leaves these
 -- commented out in sql/weapon_skills.sql and ships them only as mob skills.
 --
@@ -14,9 +14,11 @@
 --          primary_sc, secondary_sc, tertiary_sc, main_only, unlock_id
 --
 -- jobs      = all-zero  -> granted purely by the weapon (BuildingCharWeaponSkills
---             `== main_ws` clause), exactly like Final Heaven / Maru Kala.
+--             `== main_ws` / `== range_ws` clause), exactly like Maru Kala.
 -- type      = weapon skill category (must match the granting weapon's skill):
---             1 H2H, 2 Dagger, 3 Sword, 11 Club, 12 Staff.
+--             1 H2H, 2 Dagger, 3 Sword, 6 Great Axe, 7 Scythe, 8 Polearm,
+--             11 Club, 12 Staff, 25 Archery, 26 Marksmanship.
+-- range     = 3 for melee, 20 for ranged (Sarv/Terminus).
 -- skilllevel/unlock_id = 0  -> no skill gate, no separate unlock.
 -- animation = a VALID animation index for that weapon type (placeholder; LSB
 --             never captured these Prime WS' real client indices). The WS id
@@ -24,17 +26,19 @@
 -- skillchain ids: 1 Transfixion 2 Compression 3 Liquefaction 4 Scission
 --             5 Reverberation 6 Detonation 7 Induration 8 Impaction
 --             9 Gravitation 10 Distortion 11 Fusion 12 Fragmentation
+-- Skillchain props for the low-id WS come straight from their mob_skills rows.
 --
 -- Idempotent: DELETE then INSERT.
 -- ============================================================================
 
-DELETE FROM `weapon_skills` WHERE `weaponskillid` IN (229, 230, 232, 233, 234, 235);
+DELETE FROM `weapon_skills` WHERE `weaponskillid` IN (94, 110, 126, 204, 222, 229, 230, 232, 233, 234, 235);
 
 INSERT INTO `weapon_skills`
     (`weaponskillid`, `name`, `jobs`, `type`, `skilllevel`, `element`,
      `animation`, `animationTime`, `range`, `aoe`, `radius`,
      `primary_sc`, `secondary_sc`, `tertiary_sc`, `main_only`, `unlock_id`)
 VALUES
+    -- ----- melee, first batch ---------------------------------------------
     -- Fast Blade II (Sword / Naegling)  -- best-effort: no captured retail values
     (229, 'fast_blade_ii',    0x00000000000000000000000000000000000000000000, 3, 0, 0,  11, 2000, 3, 0, 0,  4, 1,  0, 1, 0),
     -- Dragon Blow (H2H / Prime Fists)
@@ -46,4 +50,15 @@ VALUES
     -- Dagda (Club / Prime Maul)
     (234, 'dagda',            0x00000000000000000000000000000000000000000000,11, 0, 0,  85, 2000, 3, 0, 0,  1, 4,  9, 1, 0),
     -- Oshala (Staff / Prime Staff)
-    (235, 'oshala',           0x00000000000000000000000000000000000000000000,12, 0, 0, 145, 2000, 3, 0, 0,  7, 5, 11, 1, 0);
+    (235, 'oshala',           0x00000000000000000000000000000000000000000000,12, 0, 0, 145, 2000, 3, 0, 0,  7, 5, 11, 1, 0),
+    -- ----- the other 5 weapon types ---------------------------------------
+    -- Disaster (Great Axe / Prime Great Axe)
+    ( 94, 'disaster',         0x00000000000000000000000000000000000000000000, 6, 0, 0, 102, 2000, 3, 0, 0,  9, 4,  1, 1, 0),
+    -- Origin (Scythe / Prime Scythe) -- absorbs HP/MP
+    (110, 'origin',           0x00000000000000000000000000000000000000000000, 7, 0, 0,  74, 2000, 3, 0, 0, 11, 7,  5, 1, 0),
+    -- Diarmuid (Polearm / Prime Lance)
+    (126, 'diarmuid',         0x00000000000000000000000000000000000000000000, 8, 0, 0, 134, 2000, 3, 0, 0, 10, 4,  1, 1, 0),
+    -- Sarv (Archery / Prime Bow) -- ranged
+    (204, 'sarv',             0x00000000000000000000000000000000000000000000,25, 0, 0, 234, 2000,20, 0, 0,  9, 4,  1, 1, 0),
+    -- Terminus (Marksmanship / Prime Gun) -- ranged
+    (222, 'terminus',         0x00000000000000000000000000000000000000000000,26, 0, 0, 241, 2000,20, 0, 0, 11, 7,  5, 1, 0);
