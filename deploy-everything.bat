@@ -94,7 +94,7 @@ scp -i "%KEY%" %SSHOPT% zz_*.sql "../tools/_azure_update_remote.sh" %HOST%:
 set "RC=%ERRORLEVEL%"
 popd
 if not "%RC%"=="0" ( echo        ERROR: scp of sql/script failed -- skipping server deploy.& set "SRVOK=PROBLEM"& goto :finish )
-ssh -i "%KEY%" %SSHOPT% %HOST% "cd %REMOTE% && sudo tar -czf $HOME/predeploy-$(date +%%Y%%m%%d-%%H%%M%%S).tgz modules/custom scripts tools 2>/dev/null && ls -t $HOME/predeploy-*.tgz | tail -n +6 | xargs -r rm -f; sudo tar -xzf /tmp/fjb_full.tgz -C %REMOTE% --no-same-owner && sudo chown -R xi:xi %REMOTE%/modules/custom %REMOTE%/scripts %REMOTE%/tools %REMOTE%/src && rm -f /tmp/fjb_full.tgz && echo   files-OK && tr -d '\015' < tools/_apply_changed_custom_sql.sh > /tmp/_acs.sh && bash /tmp/_acs.sh; rm -f /tmp/_acs.sh" > "%OUT%" 2>&1
+ssh -i "%KEY%" %SSHOPT% %HOST% "cd %REMOTE% && rm -f /tmp/fjb_extract_ok && sudo tar -czf $HOME/predeploy-$(date +%%Y%%m%%d-%%H%%M%%S).tgz modules/custom scripts tools 2>/dev/null && ls -t $HOME/predeploy-*.tgz | tail -n +6 | xargs -r rm -f; echo '   stopping xi_map for a storm-free extract...'; sudo systemctl stop xi_map; sudo tar -xzf /tmp/fjb_full.tgz -C %REMOTE% --no-same-owner && sudo chown -R xi:xi %REMOTE%/modules/custom %REMOTE%/scripts %REMOTE%/tools %REMOTE%/src && touch /tmp/fjb_extract_ok; sudo systemctl start xi_map; echo '   xi_map restarted after extract'; rm -f /tmp/fjb_full.tgz; test -f /tmp/fjb_extract_ok && echo   files-OK && tr -d '\015' < tools/_apply_changed_custom_sql.sh > /tmp/_acs.sh && bash /tmp/_acs.sh; rm -f /tmp/_acs.sh /tmp/fjb_extract_ok" > "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
 findstr /c:"files-OK" "%OUT%" >nul
