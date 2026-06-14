@@ -50,8 +50,6 @@ import os
 import re
 import time
 
-import mariadb
-
 # Best-effort heartbeat so the docs status page can flag this job if it dies
 # silently. _heartbeat.py sits next to this script (tools/), which is on
 # sys.path when run directly. Degrade to a no-op if it's ever absent.
@@ -81,14 +79,18 @@ def load_credentials():
 
 def connect():
     c = load_credentials()
-    db = mariadb.connect(
-        host=c["SQL_HOST"],
-        port=int(c["SQL_PORT"]),
-        user=c["SQL_LOGIN"],
-        passwd=c["SQL_PASSWORD"],
-        db=c["SQL_DATABASE"],
-    )
-    print("Connected to database: " + c["SQL_DATABASE"])
+    host, port = c["SQL_HOST"], int(c["SQL_PORT"])
+    user, pw, dbname = c["SQL_LOGIN"], c["SQL_PASSWORD"], c["SQL_DATABASE"]
+    # Driver-agnostic: the laptop has the `mariadb` connector; the Azure box's
+    # docs-venv ships `pymysql`. Both speak DB-API 2.0 with %s placeholders, so
+    # the rest of the script is unchanged. Try mariadb first, fall back to pymysql.
+    try:
+        import mariadb
+        db = mariadb.connect(host=host, port=port, user=user, passwd=pw, db=dbname)
+    except ImportError:
+        import pymysql
+        db = pymysql.connect(host=host, port=port, user=user, password=pw, database=dbname)
+    print("Connected to database: " + dbname)
     return db
 
 
@@ -301,6 +303,74 @@ def gear_buyback(cur, brackets, cap, commit):
     return len(rows)
 
 
+# Fallback gear brackets if no non_ilvl_gear rule supplies its own (kept in sync
+# with the config's level_price_brackets; only used if a rule is missing them).
+DEFAULT_BRACKETS = [[10, 140000], [20, 170000], [30, 210000], [40, 260000],
+                    [50, 330000], [60, 410000], [70, 510000], [75, 640000],
+                    [98, 800000], [99, 1000000]]
+
+
+def universal_buyback(cur, ub, commit):
+    """Buy back ANY auctionable item a player lists, at a layered floor price.
+
+    The SELL side is untouched (gear_topup still stocks only the non-iLvl gear).
+    This buys back EVERY ah-able item a player lists at or below a per-item
+    reference price, paying that price. The reference is the first source that
+    resolves, most-trusted first:
+
+      1. real market - if the item has >= min_sales recent PLAYER sales, use
+                     sale_fraction x its average sale (a floor below market).
+      2. NPC value  - else npc_multiplier x the item's vendor sell value
+                      (BaseSell). Capping at a small multiple of NPC value is
+                      what stops the gil dupe: the bot never pays the inflated
+                      gear SELL-bracket to BUY cheap vendor-buyable gear.
+      3. flat floor - items with no sales and no NPC value: no_data_floor.
+
+    Only listings priced AT OR BELOW the reference are taken (cheap listings),
+    each paid its reference price; the auction_house_buy trigger delivers the
+    gil. Capped at max_buyback_per_pass - the runaway-faucet guard. Returns the
+    eligible rows (id, listed_price, botprice, name, source) so a dry run can
+    preview exactly what it would buy.
+    """
+    frac = float(ub.get("sale_fraction", 0.6))
+    msales = int(ub.get("min_sales", 3))
+    npc_mult = float(ub.get("npc_multiplier", 2.0))
+    floor = int(ub.get("no_data_floor", 1000))
+    cap = int(ub.get("max_buyback_per_pass", 50))
+
+    # Layered reference price, evaluated per candidate listing in SQL. NOTE: the
+    # gear sell-bracket is deliberately NOT a buy source (it over-values cheap
+    # vendor gear -> dupe). Gear without sales falls to npc_multiplier x BaseSell
+    # like everything else.
+    ref = ("COALESCE("
+           "(SELECT ROUND(AVG(a.sale)*{frac}) FROM auction_house a "
+           " WHERE a.itemid=ah.itemid AND a.sale>0 AND a.seller<>{sid} "
+           " HAVING COUNT(*)>={ms}),"
+           "ROUND({nm}*NULLIF(b.BaseSell,0)),"
+           "{floor})").format(frac=frac, sid=SELLER_ID, ms=msales, nm=npc_mult, floor=floor)
+
+    src = ("CASE WHEN (SELECT COUNT(*) FROM auction_house a "
+           "          WHERE a.itemid=ah.itemid AND a.sale>0 AND a.seller<>{sid})>={ms} THEN 'sale' "
+           "     WHEN b.BaseSell>0 THEN 'npc' ELSE 'floor' END").format(sid=SELLER_ID, ms=msales)
+
+    cur.execute(
+        "SELECT ah.id, ah.price, ({ref}) AS botprice, b.name, ({src}) AS src "
+        "FROM auction_house ah JOIN item_basic b ON b.itemid=ah.itemid "
+        "WHERE ah.buyer_name IS NULL AND ah.seller<>{sid} "
+        "  AND b.aH<>0 AND (b.flags&64)=0 AND (b.flags&16384)=0 "
+        "  AND ah.price <= ({ref}) "
+        "ORDER BY ah.price ASC LIMIT {cap}".format(ref=ref, src=src, sid=SELLER_ID, cap=cap))
+    rows = cur.fetchall()
+
+    if commit and rows:
+        for ah_id, _price, botprice, _name, _src in rows:
+            cur.execute(
+                "UPDATE auction_house SET buyer_name=%s, sale=%s, "
+                "sell_date=UNIX_TIMESTAMP() WHERE id=%s",
+                (SELLER_NAME, int(botprice), ah_id))
+    return rows
+
+
 def process_rule(cur, rule, commit):
     if rule.get("type") != "non_ilvl_gear":
         print("  rule '{}': unknown type, skipped".format(rule.get("type")))
@@ -368,6 +438,32 @@ def run_pass(db, cfg, commit):
         except Exception as err:
             db.rollback()
             print("  ERROR on item {}: {}".format(item.get("itemid"), err))
+
+    # Universal buy-back: buy any ah-able player listing at its layered floor.
+    # (Stock stays the gear rule; this is the buy side for the whole AH.)
+    ub = cfg.get("universal_buyback")
+    if ub and ub.get("enabled", True):
+        try:
+            rows = universal_buyback(cur, ub, commit)
+            if rows:
+                by_src, spend = {}, 0
+                for _id, _price, botprice, _name, s in rows:
+                    by_src[s] = by_src.get(s, 0) + 1
+                    spend += int(botprice or 0)
+                verb = "bought" if commit else "would buy"
+                print("  universal buy-back: {} {} listing(s) for {}g total (cap {}/pass) -- by source {}".format(
+                    verb, len(rows), spend, ub.get("max_buyback_per_pass", 50), by_src))
+                for _id, price, botprice, name, s in rows[:15]:
+                    print("      {}: listed {}g -> pay {}g [{}]".format(name, price, botprice, s))
+                if len(rows) > 15:
+                    print("      ... and {} more".format(len(rows) - 15))
+            else:
+                print("  universal buy-back: nothing at/below floor this pass")
+            if commit:
+                db.commit()
+        except Exception as err:
+            db.rollback()
+            print("  ERROR universal_buyback: {}".format(err))
 
     cur.close()
 
