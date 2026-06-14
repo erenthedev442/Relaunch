@@ -383,11 +383,15 @@ buildSourceNMMenu = function(player, srcDef)
     local options = {}
     for _, mob in ipairs(srcDef.mobs) do
         local md = mob
-        -- "<name>  +<n>" - currency context is in the title; some NM names
-        -- (e.g. Itzpapalotl, Hadhayosh) are long enough that adding "Spawn "
-        -- and a currency suffix per row would push the menu past 150 bytes.
+        -- "<name> +<n>" - currency context is in the title. The label's
+        -- internal whitespace is collapsed to a single space so any cosmetic
+        -- column-padding in the catalog (which never aligns in the client's
+        -- proportional font anyway) can't eat into the 150-byte menu budget
+        -- enforced below. Long names (Itzpapalotl, Hadhayosh) make every byte
+        -- count - unpadded the empy menu is 138 bytes; padded it was 167 and
+        -- overflowed, truncating the apex NM's row so it couldn't be spawned.
         table.insert(options, {
-            string.format('%s  +%d', md.label, md.marks),
+            string.format('%s +%d', (md.label:gsub('%s+', ' ')), md.marks),
             function(p)
                 local z = p:getZone()
 
@@ -527,8 +531,30 @@ buildSourceNMMenu = function(player, srcDef)
     end
     table.insert(options, { '<< Back', function(p) buildSpawnerMain(p) end })
 
-    spawnerMenu.title   = string.format('%s  (%s)', srcDef.label, srcDef.currencyName)
+    -- Title mirrors the spawner main menu's "<set> (<short>)" form (e.g.
+    -- "Abyssea NMs (Em)"). Using currencyShort instead of the full
+    -- currencyName ("Empy Marks") keeps the whole menu under the wire cap.
+    spawnerMenu.title   = string.format('%s (%s)', srcDef.label, srcDef.currencyShort)
     spawnerMenu.options = options
+
+    -- Wire-safety guard. SetCustomMenuContext (luautils.cpp) serializes the
+    -- menu as the title plus every option label, each wrapped in quotes
+    -- (+2 bytes), and the client only receives the first 150 bytes (Mes[150]
+    -- in the GP_SERV_COMMAND_CHAT_STD packet, packets/s2c/0x017_chat_std.h).
+    -- Overflow truncates the tail: the last NM renders cut off AND its click
+    -- can't exact-match in HandleCustomMenu, so it silently no-ops. That is
+    -- exactly what made the Lv250 apex NM (Hadhayosh) unspawnable. Warn to
+    -- the console if a future NM/label addition blows the budget again.
+    local menuBytes = #spawnerMenu.title + 2
+    for _, opt in ipairs(spawnerMenu.options) do
+        menuBytes = menuBytes + #opt[1] + 2
+    end
+    if menuBytes > 150 then
+        print(string.format(
+            '[Reforge] WARNING: "%s" spawn menu is %d bytes (>150 cap) -- its last NM will render truncated and be unclickable. Shorten labels or paginate the NM list.',
+            srcDef.label, menuBytes))
+    end
+
     local snapshot = { title = spawnerMenu.title, options = spawnerMenu.options }  -- shared table + deferred send
     player:timer(30, function(p) p:customMenu(snapshot) end)
 end
