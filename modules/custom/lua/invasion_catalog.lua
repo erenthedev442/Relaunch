@@ -26,7 +26,7 @@ catalog.groupZoneId = 210
 -- Fixed spawn anchor: mobs always pour in from this spot (center of the
 -- Al Zahbi market plaza) regardless of where defenders are standing.
 -- Tune with !pos while standing at the desired spawn center, then update.
-catalog.fixedSpawn = { x = -35, y = -1, z = -31 }
+catalog.fixedSpawn = { x = 42.4, y = 0, z = 46.4 }
 
 -- ============================================================
 -- SCHEDULE (UTC)
