@@ -40,7 +40,7 @@ local m = Module:new('ascension_companion')
 
 local ASCENSION_VAR = 'Prestige_Total_Ascensions'
 local OPTOUT_VAR    = 'AscensionCompanion_Off'       -- per-char opt-out charVar (>0 = no companion)
-local OPTED_OUT     = {}                             -- hard opt-out by character name, e.g. { ['Name'] = true }
+local OPTED_OUT     = { ['Jbae'] = true }            -- hard opt-out by character name, e.g. { ['Name'] = true }
 local COMPANION_PET = xi.petId.LYNX_FAMILIAR -- small BST jug-pet cat; swap to taste (see header)
 local CHECK_MS      = 10000              -- keeper re-check interval
 local FIRST_MS      = 5000               -- first spawn, after a zone-in settles
