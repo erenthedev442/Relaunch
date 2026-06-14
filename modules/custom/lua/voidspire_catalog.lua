@@ -132,11 +132,11 @@ catalog.markPerFloor = 2
 -- onVoidspireFloor) so we reuse existing title plumbing, not invent IDs here.
 catalog.milestones =
 {
-    { floor = 10,  marks = 200  },
-    { floor = 25,  marks = 500  },
-    { floor = 50,  marks = 1500 },
-    { floor = 75,  marks = 3000 },
-    { floor = 100, marks = 6000 },
+    { floor = 10,  marks = 2500  },
+    { floor = 25,  marks = 10000 },
+    { floor = 50,  marks = 25000 },
+    { floor = 75,  marks = 40000 },
+    { floor = 100, marks = 70000 },
 }
 
 -- Flavor banners announced the first time you cross into a new Court depth
