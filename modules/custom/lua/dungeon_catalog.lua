@@ -1695,6 +1695,7 @@ catalog.vendorItems =
     -- caster wand) lives in the auto list, so it is not duplicated here.
     { id = 21632, name = 'Aeneas',         cost =  500, stats = { 'Dagger. Best Rudra Storm.', 'Aeonic weapon.' } },
     { id = 20935, name = 'Trishula',       cost =  800, stats = { 'Polearm (main). Aeonic, DRG only. Grants Stardiver.', 'DMG 345, TP Bonus+500, Magic Dmg+155, Store TP+10.' } },
+    { id = 20890, name = 'Anguta',         cost =  800, stats = { 'Scythe (main). Aeonic, DRK only. Grants Entropy.', 'DMG 370, TP Bonus+500, Magic Dmg+155, Store TP+10.' } },
     { id = 21621, name = 'Naegling',       cost =  300, stats = { 'Sword (1-hand). Great Savage Blade.', 'iLvl 119, broad job access.' } },
 
     -- ----------------------------------------------------------------
