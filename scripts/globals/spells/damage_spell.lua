@@ -34,6 +34,23 @@ local column =
     MULTIPLIER_500  = 13,
 }
 
+-- Scholar Helix Detonation: Tier V/VI nukes that can fire the combo.
+local HELIX_DETONATE_TRIGGERS =
+{
+    [xi.magic.spell.FIRE_V    ] = true,
+    [xi.magic.spell.BLIZZARD_V] = true,
+    [xi.magic.spell.AERO_V    ] = true,
+    [xi.magic.spell.STONE_V   ] = true,
+    [xi.magic.spell.THUNDER_V ] = true,
+    [xi.magic.spell.WATER_V   ] = true,
+    [xi.magic.spell.FIRE_VI   ] = true,
+    [xi.magic.spell.BLIZZARD_VI] = true,
+    [xi.magic.spell.AERO_VI   ] = true,
+    [xi.magic.spell.STONE_VI  ] = true,
+    [xi.magic.spell.THUNDER_VI] = true,
+    [xi.magic.spell.WATER_VI  ] = true,
+}
+
 local pTable =
 {
 -- Single target black magic spells:
@@ -1122,6 +1139,12 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         forceDayWeatherBonus = true
     end
 
+    -- Scholar Helix Detonation: stamp the cast element + time so a follow-up nuke can detonate it.
+    if forceDayWeatherBonus and caster:isPC() and caster:getMainJob() == xi.job.SCH then
+        caster:setCharVar('HelixDetEl',   spellElement)
+        caster:setCharVar('HelixDetTime', os.time())
+    end
+
     -- Calculate base damage and the rest of damage multipliers.
     local spellDamage               = xi.spells.damage.calculateBaseDamage(caster, target, spellId, spellGroup, skillType, statUsed)
     local multipleTargetReduction   = xi.spells.damage.calculateMTDR(caster, spell)
@@ -1174,6 +1197,21 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     finalDamage = math.floor(finalDamage * magicBurst)
     finalDamage = math.floor(finalDamage * magicBurstBonus)
 
+    -- Scholar Helix Detonation: same-element Tier V/VI nuke within 10s of a Helix doubles
+    -- damage and adds a Magic Burst bonus, consuming the primed window.
+    local helixDetonated = false
+    if HELIX_DETONATE_TRIGGERS[spellId] and caster:isPC() and caster:getMainJob() == xi.job.SCH then
+        local lastEl   = caster:getCharVar('HelixDetEl')
+        local lastTime = caster:getCharVar('HelixDetTime')
+        if lastEl == spellElement and lastEl > 0 and (os.time() - lastTime) <= 10 then
+            finalDamage    = math.floor(finalDamage * 2)    -- twice the elemental damage
+            finalDamage    = math.floor(finalDamage * 1.35) -- bonus magic burst damage
+            helixDetonated = true
+            caster:setCharVar('HelixDetEl', 0)
+            target:delStatusEffect(xi.effect.HELIX)         -- consume on any outcome including absorb
+        end
+    end
+
     -- Handle "Nuke Wall". It must be handled after all previous calculations, but before clamp.
     local nukeWallFactor = calculateNukeWallFactor(target, spellElement, finalDamage)
     finalDamage          = math.floor(finalDamage * nukeWallFactor)
@@ -1208,6 +1246,12 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     if magicBurst > 1 then
         spell:setMsg(xi.msg.basic.MAGIC_BURST_DAMAGE)
         caster:triggerRoeEvent(xi.roeTrigger.MAGIC_BURST)
+    end
+
+    -- Scholar Helix Detonation: show MB message (helix already removed in damage block above).
+    if helixDetonated then
+        spell:setMsg(xi.msg.basic.MAGIC_BURST_DAMAGE)
+        caster:printToPlayer('[Scholar] Helix detonated!', xi.msg.channel.SYSTEM_3)
     end
 
     return finalDamage
