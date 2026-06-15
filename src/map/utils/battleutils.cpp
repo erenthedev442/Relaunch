@@ -101,11 +101,13 @@ std::unordered_map<uint32, CPetSkill*>        g_PPetSkillList;    // List of pet
 std::array<std::list<CWeaponSkill*>, MAX_SKILLTYPE> g_PWeaponSkillsList;
 std::unordered_map<uint16, std::vector<uint16>>     g_PMobSkillLists; // List of mob skills defined from mob_skill_lists.sql
 
-// Sends a SYSTEM_3 chat message to the attacker when a hit exceeds the
-// 131,071 display cap baked into the 17-bit action-packet damage field.
-// The mob still takes the full damage; only the floating number shown
-// to the client is wrong. This lets the player see the real value in
-// their chat log without modifying the client.
+// Sends a SYSTEM_3 chat message to the attacker when a hit exceeds the 131,071
+// ceiling of the 17-bit action-packet damage field, so the player can read the
+// real value in their chat log without a client mod. This only REPORTS the
+// number -- whether the target actually loses that much HP is up to the caller:
+// PC weaponskills apply the full over-cap amount to HP (TakeWeaponskillDamage),
+// while the physical / other paths still clamp HP damage to 131,071. Keep the
+// message aligned with what each caller applies so it never overstates.
 namespace
 {
     void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_view type)
@@ -2388,10 +2390,28 @@ int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
     }
 
     HandleAfflatusMiseryDamage(PDefender, damage);
-    NotifyOverCapDamage(PAttacker, damage, "WS");
-    damage = std::clamp(damage, -131071, 131071);
 
+    // Legit per-target "received damage cap" NM mechanic (applies to everyone,
+    // PC or mob). Keep it ahead of the over-cap handling so the value we report
+    // and apply already reflects any per-NM cap.
     damage = CheckAndApplyDamageCap(damage, PDefender);
+
+    // FJB true-damage: a PC weaponskill is allowed to exceed the 131,071 per-hit
+    // packet ceiling and land the FULL value on the target's HP. The client's
+    // 17-bit action-packet damage field can't render >131,071, so we report the
+    // real number to the player via chat (NotifyOverCapDamage) and clamp ONLY the
+    // value handed back for the action packet / enmity (see the clamped return at
+    // the end of this function). Mob-sourced damage that funnels through here
+    // (some mobskills do) stays clamped, so mobs can't punch through the cap onto
+    // players.
+    if (PAttacker && PAttacker->objtype == TYPE_PC)
+    {
+        NotifyOverCapDamage(PAttacker, damage, "WS");
+    }
+    else
+    {
+        damage = std::clamp(damage, -131071, 131071);
+    }
 
     int32 corrected = PDefender->takeDamage(damage, PAttacker, attackType, damageType);
     if (damage < 0)
@@ -2482,7 +2502,11 @@ int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
         PAttacker->StatusEffectContainer->DelStatusEffect(EFFECT_HAGAKURE);
     }
 
-    return damage;
+    // The full (possibly >131,071) hit already landed on HP above. The client's
+    // action-packet damage field is only 17-bit, so hand back a packet-safe value
+    // for the floating number + enmity; the true amount was shown to the player
+    // in chat via NotifyOverCapDamage.
+    return std::clamp(damage, -131071, 131071);
 }
 
 /************************************************************************
