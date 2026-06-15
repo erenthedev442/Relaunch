@@ -792,13 +792,13 @@ local function insertSpawnerNPC(zone)
                         mob:setLocalVar('HL_DespawnAt', os.time() + DESPAWN_SECS)
                     end
 
-                    -- Block capacity points on kill. HL has its own currency
-                    -- (Hunt Marks); without this gate, the cubic CP formula
-                    -- against a Lv150 mob x EXP_RATE=10 dumps ~80k CP per
-                    -- kill, turning HL into a degenerate CP farm. Requires
-                    -- MOBMOD_NO_CAPACITY_POINTS=97 + early-return in
-                    -- src/map/utils/charutils.cpp::DistributeCapacityPoints.
-                    mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
+                    -- Capacity/Job Points are INTENTIONALLY enabled on HL NMs
+                    -- (2026-06-14). They are single-target pops, so the engine's
+                    -- level-scaled CP (x EXP_RATE*CAPACITY_RATE, currently ~x9;
+                    -- 30,000 CP per Job Point) is a deliberate, difficulty-scaled
+                    -- JP source. Previously suppressed via NO_CAPACITY_POINTS=1 --
+                    -- removed; that was tuned for an old 10x world and zeroed ALL
+                    -- JP. Multi-mob wave/add systems still set the flag.
 
                     -- Apply stat mods AFTER spawn().
                     -- spawn() recalculates stats from the pool, so anything set

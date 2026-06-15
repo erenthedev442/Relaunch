@@ -730,7 +730,9 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
 
         mob:setSpawn(sp.x, sp.y, sp.z, sp.rot)
         mob:spawn()
-        mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
+        -- Capacity/Job Points INTENTIONALLY enabled (2026-06-14): single-target
+        -- trial boss -> a deliberate, difficulty-scaled JP source. (Was
+        -- NO_CAPACITY_POINTS=1; multi-mob wave/add systems still set the flag.)
 
         -- Difficulty scaling: the Court rises with the prestige LEVEL of the job
         -- being ascended (discrete tiers in cfg.trialScaling). The tier `mult`

@@ -496,12 +496,15 @@ buildSourceNMMenu = function(player, srcDef)
                     mob:setLocalVar('RF_DespawnAt', os.time() + DESPAWN_SECS)
                 end
 
-                -- Block capacity points on kill. Reforge has its own
-                -- currency (RF_*_Marks); without this gate, a Lv250 NM
-                -- x EXP_RATE=10 dumps hundreds of thousands of CP per
-                -- kill. Requires MOBMOD_NO_CAPACITY_POINTS=200 + the
-                -- early-return in src/map/utils/charutils.cpp.
-                mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
+                -- Capacity/Job Points are INTENTIONALLY enabled on this NM
+                -- (2026-06-14). It is a single-target, on-demand pop, so the
+                -- engine's level-scaled CP (x EXP_RATE*CAPACITY_RATE, currently
+                -- ~x9; 30,000 CP per Job Point) is a deliberate, difficulty-
+                -- scaled JP source: a Lv250 NM ~= 9.75 JP/kill, a Lv150 ~= 0.48.
+                -- Previously suppressed via NO_CAPACITY_POINTS=1 -- removed
+                -- because that was tuned for an old 10x world and zeroed ALL JP.
+                -- Multi-mob wave/add systems (Invasion/Dungeon/Raid/Colosseum)
+                -- still set the flag so mass clears can't be CP-farmed.
 
                 -- Apply stat mods AFTER spawn() - spawn() recalculates
                 -- stats from the pool and would wipe anything set
