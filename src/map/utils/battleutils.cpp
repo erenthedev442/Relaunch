@@ -34,6 +34,8 @@
 
 #include "packets/char_status.h"
 #include "packets/s2c/0x01d_item_same.h"
+#include "packets/s2c/0x017_chat_std.h"
+#include "enums/chat_message_type.h"
 
 #include "lua/luautils.h"
 
@@ -98,6 +100,26 @@ std::unordered_map<uint32, CPetSkill*>        g_PPetSkillList;    // List of pet
 
 std::array<std::list<CWeaponSkill*>, MAX_SKILLTYPE> g_PWeaponSkillsList;
 std::unordered_map<uint16, std::vector<uint16>>     g_PMobSkillLists; // List of mob skills defined from mob_skill_lists.sql
+
+// Sends a SYSTEM_3 chat message to the attacker when a hit exceeds the
+// 131,071 display cap baked into the 17-bit action-packet damage field.
+// The mob still takes the full damage; only the floating number shown
+// to the client is wrong. This lets the player see the real value in
+// their chat log without modifying the client.
+namespace
+{
+    void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_view type)
+    {
+        if (damage <= 131071 || !PAttacker || PAttacker->objtype != TYPE_PC)
+        {
+            return;
+        }
+        auto* PChar = static_cast<CCharEntity*>(PAttacker);
+        PChar->pushPacket<GP_SERV_COMMAND_CHAT_STD>(
+            PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_3,
+            fmt::format("[{}] {}", type, damage));
+    }
+} // namespace
 
 namespace battleutils
 {
@@ -1985,8 +2007,28 @@ bool TryInterruptSpell(CBattleEntity* PAttacker, CBattleEntity* PDefender, CSpel
  *                                                                       *
  ************************************************************************/
 
+// FJB: Automatons are hard-capped at lv99 combat skill, but our custom NMs are
+// lv150 with massive DEF/EVA -- even with the petutils ATT/ACC boost their raw
+// output is a fraction of what a real DD does. This flat multiplier scales an
+// automaton's outgoing PHYSICAL damage: melee + ranged auto-attacks AND weapon-
+// skills, which all funnel through TakePhysicalDamage / TakeWeaponskillDamage.
+// Tune AUTOMATON_DMG_MULTIPLIER (target 10-15x). Does NOT touch magic-frame nukes
+// (those go through the spell path) or any non-automaton entity.
+static constexpr float AUTOMATON_DMG_MULTIPLIER = 12.0f;
+
+static inline int32 ApplyAutomatonDamageBonus(CBattleEntity* PAttacker, int32 damage)
+{
+    if (damage > 0 && PAttacker != nullptr && PAttacker->objtype == TYPE_PET &&
+        static_cast<CPetEntity*>(PAttacker)->getPetType() == PET_TYPE::AUTOMATON)
+    {
+        return static_cast<int32>(damage * AUTOMATON_DMG_MULTIPLIER);
+    }
+    return damage;
+}
+
 int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHYSICAL_ATTACK_TYPE physicalAttackType, int32 damage, bool isBlocked, uint8 slot, uint16 tpMultiplier, CBattleEntity* taChar, bool giveTPtoVictim, bool giveTPtoAttacker, bool isCounter, bool isCovered, CBattleEntity* POriginalTarget)
 {
+    damage = ApplyAutomatonDamageBonus(PAttacker, damage); // FJB: automaton DPS multiplier (melee + ranged)
     auto* weapon           = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
     giveTPtoAttacker       = giveTPtoAttacker && !PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI);
     giveTPtoVictim         = giveTPtoVictim && physicalAttackType != PHYSICAL_ATTACK_TYPE::DAKEN;
@@ -2179,6 +2221,7 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
         damage = HandleStoneskin(PDefender, damage);
         HandleAfflatusMiseryDamage(PDefender, damage);
     }
+    NotifyOverCapDamage(PAttacker, damage, "Phys");
     damage = std::clamp(damage, -131071, 131071);
 
     damage = CheckAndApplyDamageCap(damage, PDefender);
@@ -2311,6 +2354,8 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
 
 int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, int32 damage, ATTACK_TYPE attackType, DAMAGE_TYPE damageType, uint8 slot, bool primary, float tpMultiplier, uint16 bonusTP, float targetTPMultiplier)
 {
+    damage = ApplyAutomatonDamageBonus(PAttacker, damage); // FJB: automaton DPS multiplier (weaponskills)
+
     bool isRanged = (slot == SLOT_AMMO || slot == SLOT_RANGED);
 
     if (attackType == ATTACK_TYPE::PHYSICAL &&
@@ -2343,6 +2388,7 @@ int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
     }
 
     HandleAfflatusMiseryDamage(PDefender, damage);
+    NotifyOverCapDamage(PAttacker, damage, "WS");
     damage = std::clamp(damage, -131071, 131071);
 
     damage = CheckAndApplyDamageCap(damage, PDefender);
@@ -2447,6 +2493,8 @@ int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
 
 void TakeSpellDamage(CBattleEntity* PDefender, CBattleEntity* PAttacker, CSpell* PSpell, int32 damage, ATTACK_TYPE attackType, DAMAGE_TYPE damageType)
 {
+    NotifyOverCapDamage(PAttacker, damage, "Magic");
+
     // Scarlet Delirium: Updates status effect power with damage bonus
     battleutils::HandleScarletDelirium(PDefender, damage);
 
