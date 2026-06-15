@@ -108,11 +108,23 @@ echo  [4/5] Rebuilding C++ + reloading zz_ SQL + restarting Azure (may take a wh
 ssh -i "%KEY%" %SSHOPT% %HOST% "tr -d '\015' < ~/_azure_update_remote.sh > ~/_au.sh && bash ~/_au.sh; rm -f ~/_au.sh" > "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
+
+REM ---- Capture the REBUILD outcome NOW, before the health-check overwrites
+REM      %OUT%. _azure_update_remote.sh prints "build OK." on success and aborts
+REM      with "build failed - server NOT restarted" on failure. Without this,
+REM      a failed C++ rebuild would still report Server: OK below -- step 3's
+REM      extract-restart leaves xi_map "active" on the OLD binary, so the
+REM      is-active check alone can't tell a good build from a bad one. ----
+set "BUILDFAIL="
+findstr /c:"build failed" "%OUT%" >nul && set "BUILDFAIL=1"
+findstr /c:"build OK." "%OUT%" >nul || findstr /c:"skipping rebuild" "%OUT%" >nul || set "BUILDFAIL=1"
+(echo [%TIME%] [4/5] rebuild outcome: BUILDFAIL=%BUILDFAIL%)>> "%LOG%"
+
 ssh -i "%KEY%" %SSHOPT% %HOST% "for s in xi_map xi_world xi_search xi_connect; do echo    $s=$(systemctl is-active $s); done; echo '   --- recent map errors (none below = clean) ---'; sudo journalctl -u xi_map --since '2 min ago' --no-pager 2>/dev/null | grep -iE 'attempt to|stack traceback|\.lua:[0-9]+:|\[error\]|fatal' | head -8" > "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
 findstr /c:"xi_map=active" "%OUT%" >nul
-if errorlevel 1 ( echo        WARNING: xi_map not confirmed active - check health output above.& set "SRVOK=PROBLEM" ) else ( echo        server live.& set "SRVOK=OK" )
+if errorlevel 1 ( echo        WARNING: xi_map not confirmed active - check health output above.& set "SRVOK=PROBLEM" ) else if defined BUILDFAIL ( echo        ERROR: C++ REBUILD FAILED -- new binary NOT live; xi_map still up on the OLD binary. Fix the build + re-deploy.& set "SRVOK=BUILD FAILED" ) else ( echo        server live.& set "SRVOK=OK" )
 (echo [%TIME%] [4/5] rebuild+restart done - SRVOK=%SRVOK%)>> "%LOG%"
 
 REM ---- 5. PUBLISH the website FROM THE BOX (reads the LIVE db, so the
