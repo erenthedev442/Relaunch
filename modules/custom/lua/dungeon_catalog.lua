@@ -220,8 +220,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-San_dOria',
         gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
         timeLimit   = 900,                           -- 15 minutes
-        infamyBase  = 50,
-        infamySpeedBonus = 25,
+        infamyBase  = 17,
+        infamySpeedBonus = 8,
 
         -- Entry coord matches the regular Dynamis-San_dOria canonical
         -- entry (same physical city geometry). Adjust with !pos if the
@@ -303,10 +303,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Bastok',
         gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
         timeLimit   = 1080,
-        -- M2 valley fix: D1 Mythic max = (50+25)*5 = 375; D2 Normal must exceed 375*1.10 = 412.5.
-        -- Old values (100+50=150) caused a valley. Raised to 270+145=415 to clear the 10% threshold.
-        infamyBase  = 270,
-        infamySpeedBonus = 145,
+        infamyBase  = 90,
+        infamySpeedBonus = 48,
 
         warpIn      = { x = 116.482, y = 0.994, z = -72.121, rot = 128 },
 
@@ -378,10 +376,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Windurst',
         gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
         timeLimit   = 1200,
-        -- M2 valley fix: D2 Mythic max = (100+50)*5 = 750; D3 Normal must exceed 750*1.10 = 825.
-        -- Old values (250+100=350) caused a valley. Raised to 600+230=830 to clear the 10% threshold.
-        infamyBase  = 600,
-        infamySpeedBonus = 230,
+        infamyBase  = 200,
+        infamySpeedBonus = 77,
 
         warpIn      = { x = -221.988, y = 1.000, z = -120.184, rot = 0 },
 
@@ -508,10 +504,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Jeuno',
         gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
         timeLimit   = 1500,                      -- 25 minutes
-        -- M2 valley fix: D3 Mythic max = (250+100)*5 = 1750; D4 Normal must exceed 1750*1.10 = 1925.
-        -- Old values (400+200=600) caused a valley. Raised to 1400+530=1930 to clear the 10% threshold.
-        infamyBase  = 1400,
-        infamySpeedBonus = 530,
+        infamyBase  = 467,
+        infamySpeedBonus = 177,
 
         -- Entry coord matches regular Dynamis-Jeuno canonical entry.
         -- y=10 is the elevated bridge platform.
@@ -610,8 +604,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Valkurm',
         gated       = false,
         timeLimit   = 900,               -- 15 min, mirrors D1
-        infamyBase       = 50,
-        infamySpeedBonus = 25,
+        infamyBase       = 17,
+        infamySpeedBonus = 8,
 
         warpIn = { x = 100.000, y = -8.000, z = 131.000, rot = 47 },
 
@@ -678,8 +672,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Buburimu',
         gated       = false,
         timeLimit   = 1080,              -- 18 min, mirrors D2
-        infamyBase       = 270,
-        infamySpeedBonus = 145,
+        infamyBase       = 90,
+        infamySpeedBonus = 48,
 
         warpIn = { x = 155.000, y = -1.000, z = -169.000, rot = 170 },
 
@@ -742,8 +736,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Xarcabard',
         gated       = false,
         timeLimit   = 1200,              -- 20 min, mirrors D3
-        infamyBase       = 600,
-        infamySpeedBonus = 230,
+        infamyBase       = 200,
+        infamySpeedBonus = 77,
 
         warpIn = { x = 569.312, y = -0.098, z = -270.158, rot = 90 },
 
@@ -823,8 +817,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Qufim',
         gated       = false,
         timeLimit   = 1500,              -- 25 min, mirrors D4
-        infamyBase       = 1400,
-        infamySpeedBonus = 530,
+        infamyBase       = 467,
+        infamySpeedBonus = 177,
 
         warpIn = { x = -19.000, y = -17.000, z = 104.000, rot = 253 },
 
@@ -1722,6 +1716,35 @@ catalog.vendorItems =
     { id = 22164, name = 'Earp',            cost = 800, stats = { 'Gun relic (Lv.119 III). Annihilator.', 'DEX/AGI+35, Crit rate+15%, Mkmanship skill+277.' } },
     { id = 26495, name = 'Duban',           cost = 800, stats = { 'Shield relic (Lv.119 III). Aegis.', 'DEF+150, VIT/MND+30, Shield skill+129.' } },
     { id = 22307, name = 'Loughnashade',    cost = 800, stats = { 'Horn relic (Lv.119 III). Gjallarhorn.', 'CHR+20, All Songs+4. (BRD; ilvl 0)' } },
+
+    -- ----------------------------------------------------------------
+    -- MYTHIC WEAPONS  (i119 III final forms — one per job)
+    -- Einherjar / Nyzul Isle legendary weapons at their highest upgrade.
+    -- (Note: Ryunohige already listed at id 19832 in Orphan BiS below
+    --  as the lv99 form; 21858 here is the i119 III final.)
+    -- ----------------------------------------------------------------
+    { id = 21756, name = 'Bravura',       cost = 10000, stats = { 'Great Axe (main). WAR. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20510, name = 'Glanzfaust',    cost = 10000, stats = { 'H2H (main). MNK. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21078, name = 'Yagrush',       cost = 10000, stats = { 'Club (main/sub). WHM. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 22062, name = 'Laevateinn',    cost = 10000, stats = { 'Staff (main). BLM. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20686, name = 'Murgleis',      cost = 10000, stats = { 'Sword (main/sub). RDM. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20587, name = 'Twashtar',      cost = 10000, stats = { 'Dagger (main/sub). THF. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20687, name = 'Burtgang',      cost = 10000, stats = { 'Sword (main/sub). PLD. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21809, name = 'Liberator',     cost = 10000, stats = { 'Weapon (main). DRK. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21751, name = 'Aymur',         cost = 10000, stats = { 'Club (main/sub). BST. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20586, name = 'Carnwenhan',    cost = 10000, stats = { 'Dagger (main/sub). BRD. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 22130, name = 'Gandiva',       cost = 10000, stats = { 'Bow (ranged). RNG. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21955, name = 'Kogarasumaru',  cost = 10000, stats = { 'Great Katana (main). SAM. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21908, name = 'Kannagi',       cost = 10000, stats = { 'Katana (main/sub). NIN. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21858, name = 'Ryunohige',     cost = 10000, stats = { 'Polearm (main). DRG. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 22063, name = 'Nirvana',       cost = 10000, stats = { 'Staff (main). SMN. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20688, name = 'Tizona',        cost = 10000, stats = { 'Sword (main/sub). BLU. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21482, name = 'Compensator',   cost = 10000, stats = { 'Gun (ranged). COR. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20511, name = 'Kenkonken',     cost = 10000, stats = { 'H2H (main). PUP. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20584, name = 'Terpsichore',   cost = 10000, stats = { 'Dagger (main/sub). DNC. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 22099, name = 'Musa',          cost = 10000, stats = { 'Staff (main). SCH. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21080, name = 'Idris',         cost = 10000, stats = { 'Club (main/sub). GEO. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21685, name = 'Epeolatry',     cost = 10000, stats = { 'Sword (main). RUN. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
 
     -- ----------------------------------------------------------------
     -- REQUESTED ENDGAME GEAR  (added on request)
