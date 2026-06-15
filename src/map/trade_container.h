@@ -23,6 +23,7 @@
 #define _CTRADECONTAINER_H
 
 #include "common/cbasetypes.h"
+#include <string>
 #include <vector>
 
 #define CONTAINER_SIZE       17
@@ -69,6 +70,13 @@ public:
     void   setShopCurrency(uint16 itemID) { m_shopCurrency = itemID; }
     uint16 getShopCurrency() const { return m_shopCurrency; }
 
+    // FJB: custom-currency shops can instead charge a CharVar (e.g. the dungeon
+    // "Infamy" currency), so a non-inventory currency still uses the native shop
+    // window. When non-empty this takes precedence over gil and the item
+    // currency (see packets/c2s/0x083_shop_buy.cpp). Reset by Clean().
+    void               setShopCurrencyVar(const std::string& varName) { m_shopCurrencyVar = varName; }
+    const std::string& getShopCurrencyVar() const { return m_shopCurrencyVar; }
+
     void Clean(); // we clean the container
 
 private:
@@ -76,6 +84,7 @@ private:
     uint8 m_ItemsCount{}; // The number of items in the container (set by yourself)
     uint8  m_exSize{};       // Can be used as a custom delineation point inside a container
     uint16 m_shopCurrency{}; // FJB: itemID charged instead of gil (0 = gil)
+    std::string m_shopCurrencyVar{}; // FJB: CharVar charged instead of gil/item ("" = unused)
 
     std::vector<CItem*> m_PItem;
     std::vector<uint8>  m_slotID;

@@ -62,6 +62,28 @@ void GP_CLI_COMMAND_SHOP_BUY::process(MapSession* PSession, CCharEntity* PChar) 
         quantity = PItem->getStackSize();
     }
 
+    // FJB: CharVar-currency shops (e.g. the dungeon Infamy Vendor) charge a named
+    // CharVar instead of an inventory item or gil. A vendor's Lua opts in via
+    // player:setShopCurrencyVar("Infamy"); createShop()/Clean() resets it. Checked
+    // first so it takes precedence over the item-currency and gil paths below.
+    const std::string& currencyVar = PChar->Container->getShopCurrencyVar();
+    if (!currencyVar.empty())
+    {
+        const uint32 totalCost = price * quantity;
+        const int32  balance   = PChar->getCharVar(currencyVar);
+        if (balance >= 0 && static_cast<uint32>(balance) >= totalCost)
+        {
+            if (charutils::AddItem(PChar, LOC_INVENTORY, itemId, quantity) != ERROR_SLOTID)
+            {
+                PChar->setCharVar(currencyVar, balance - static_cast<int32>(totalCost));
+                ShowInfo("User '%s' bought %u of item %u [VENDOR, charvar %s]", PChar->getName(), quantity, itemId, currencyVar.c_str());
+                PChar->pushPacket<GP_SERV_COMMAND_SHOP_BUY>(this->ShopItemIndex, quantity);
+                PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
+            }
+        }
+        return;
+    }
+
     // FJB: custom-currency shops (Hunting League seal/medal vendors, etc.) charge
     // a configured inventory item instead of gil. createShop()/Clean() resets the
     // currency to 0 (gil); a vendor's Lua opts in via player:setShopCurrency(id).

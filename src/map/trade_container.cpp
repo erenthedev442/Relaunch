@@ -272,6 +272,7 @@ void CTradeContainer::Clean()
     m_ItemsCount   = 0;
     m_exSize       = 0;
     m_shopCurrency = 0; // FJB: shops default to charging gil
+    m_shopCurrencyVar.clear(); // FJB: ...and to no CharVar currency
 
     m_PItem.clear();
     m_PItem.resize(CONTAINER_SIZE, nullptr);
