@@ -121,7 +121,7 @@ catalog.reward =
 {
     perWaveMarks  = 150,   -- on each wave clear (x4 waves = 600 across a full assault)  [was 300; orig 1200]
     victoryMarks  = 1125,  -- on full clear (the Warlord falls), plus...                 [was 2250; orig 9000]
-    victoryInfamy = 300,   -- ...the only Infamy source outside dungeons (intentional)   [was 600; orig 2400]
+    victoryInfamy = 100,   -- ...the only Infamy source outside dungeons (intentional)   [was 300; orig 2400]
     failMarks     = 150,   -- consolation if the clock beats the defense                 [was 300; orig 1200]
 
     -- Gear-vendor seal loot on a WIN -- ties the invasion into the Armor /

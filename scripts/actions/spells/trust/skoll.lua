@@ -360,8 +360,13 @@ spellObject.onMobSpawn = function(mob)
 
     -- Buff rotation: Protectra V → Shellra V → Haste II → Phalanx II → Regen V
     --                → self-Aquaveil   (no Refresh -- party wants no MP buffs)
-    mob:addGambit(ai.t.PARTY, { ai.c.NOT_STATUS, xi.effect.PROTECT  }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PROTECTRA })
-    mob:addGambit(ai.t.PARTY, { ai.c.NOT_STATUS, xi.effect.SHELL    }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.SHELLRA   })
+    -- SELF target (not PARTY) for the AoE buffs: Protectra V and Shellra V are
+    -- self-centered AoEs. With ai.t.PARTY the engine fires the gambit once per
+    -- member who lacks the buff, causing N back-to-back casts for an N-person party.
+    -- ai.t.SELF fires once; she gets the effect herself (since she's in the AoE),
+    -- so NOT_STATUS clears and the gambit won't fire again -- same pattern as songs.
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.PROTECT  }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PROTECTRA })
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.SHELL    }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.SHELLRA   })
     mob:addGambit(ai.t.PARTY, { ai.c.NOT_STATUS, xi.effect.HASTE    }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.HASTE_II       })
     -- Phalanx II -> flat per-hit damage reduction on the whole party. Its
     -- validTargets allow allies (unlike self-only base Phalanx / Stoneskin), so

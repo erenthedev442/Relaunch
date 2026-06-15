@@ -158,7 +158,7 @@ do
     table.insert(polearms, { id = 20941, name = "Blurred Lance +1", cost = 12, jobs = 'WAR/SAM/DRG' })  -- WS score 150, DMG 224/Dly 492
     table.insert(polearms, { id = 20945, name = "Nativus Halberd", cost = 12, jobs = 'WAR/PLD/SAM/DRG' })  -- WS score 129, DMG 207/Dly 396
 
-    -- Katana: 1 manual pick(s)
+    -- Katana: 0 pick(s) + 1 manual
     local katana = cat(catalog.bronze.weapons, 'Katana')
     table.insert(katana, { id = 21919, name = "Ajja Katana", cost = 12, jobs = 'NIN' })  -- MANUAL, DMG 132/Dly 227
 
@@ -203,10 +203,6 @@ end
 -----------------------------------
 catalog.silver = { weapons = emptyCategories() }
 do
-    -- Katana: 1 manual pick(s)
-    local katana = cat(catalog.silver.weapons, 'Katana')
-    table.insert(katana, { id = 21915, name = "Koga Shinobi-Gatana", cost = 25, jobs = 'NIN' })  -- MANUAL, DMG 152/Dly 227
-
     -- Hand-to-Hand: 1 pick(s)
     local h2h = cat(catalog.silver.weapons, 'Hand-to-Hand')
     table.insert(h2h, { id = 21529, name = "Premium Heart", cost = 25, jobs = 'MNK/PUP' })  -- WS score 206, DMG 172/Dly 576
@@ -249,6 +245,10 @@ do
     -- Polearms: 1 pick(s)
     local polearms = cat(catalog.silver.weapons, 'Polearms')
     table.insert(polearms, { id = 21871, name = "Raetic Halberd", cost = 25, jobs = 'WAR/BLM/PLD/BRD/SAM/DRG/SMN/SCH' })  -- WS score 218, DMG 264/Dly 396
+
+    -- Katana: 0 pick(s) + 1 manual
+    local katana = cat(catalog.silver.weapons, 'Katana')
+    table.insert(katana, { id = 21915, name = "Koga Shinobi-Gatana", cost = 25, jobs = 'NIN' })  -- MANUAL, DMG 152/Dly 227
 
     -- Archery: 5 pick(s)
     local archery = cat(catalog.silver.weapons, 'Archery')
@@ -308,7 +308,7 @@ do
     local polearms = cat(catalog.gold.weapons, 'Polearms')
     table.insert(polearms, { id = 21869, name = "Exalted Spear", cost = 50, jobs = 'WAR/PLD/SAM/DRG' })  -- WS score 254, DMG 258/Dly 396
 
-    -- Katana: 1 manual pick(s)
+    -- Katana: 0 pick(s) + 1 manual
     local katana = cat(catalog.gold.weapons, 'Katana')
     table.insert(katana, { id = 21936, name = "Yagyu Darkblade", cost = 50, jobs = 'NIN' })  -- MANUAL, DMG 173/Dly 227
 

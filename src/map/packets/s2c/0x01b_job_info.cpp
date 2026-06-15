@@ -49,6 +49,14 @@ GP_SERV_COMMAND_JOB_INFO::GP_SERV_COMMAND_JOB_INFO(CCharEntity* PChar)
     packet.mentor_rank          = PChar->aman().getMentorRank();
     packet.mastery_rank         = PChar->aman().getMasteryRank();
 
+    // Store the reallevel tier (0-7) in job_mastery_levels[0] (JOB_NONE slot,
+    // always 0 in vanilla FFXI). The Ashita mastercolor addon reads this via
+    // GetJobMasterLevel(0) to pick a star color without needing a new packet.
+    {
+        const int32 rawTier = PChar->getCharVar("MasterStarTier");
+        packet.job_mastery_levels[0] = static_cast<uint8_t>(rawTier < 0 ? 0 : rawTier > 7 ? 7 : rawTier);
+    }
+
     if (PChar->m_PMonstrosity != nullptr)
     {
         packet.dancer.mjob_no = JOB_MON;

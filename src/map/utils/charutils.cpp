@@ -2347,7 +2347,9 @@ bool EquipArmor(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 conta
         return false;
     }
 
-    if ((PChar->m_EquipBlock & (1 << equipSlotID)) || !(PItem->getJobs() & (1 << (PChar->GetMJob() - 1))) ||
+    const bool jobAllowed = (PItem->getJobs() & (1 << (PChar->GetMJob() - 1))) ||
+                            (PChar->GetSJob() > 0 && (PItem->getJobs() & (1 << (PChar->GetSJob() - 1))));
+    if ((PChar->m_EquipBlock & (1 << equipSlotID)) || !jobAllowed ||
         (PItem->getSuperiorLevel() > PChar->getMod(Mod::SUPERIOR_LEVEL)) ||
         (PItem->getReqLvl() > (settings::get<bool>("map.DISABLE_GEAR_SCALING") ? PChar->GetMLevel() : PChar->jobs.job[PChar->GetMJob()])) ||
         !PItem->isEquippableByRace(PChar->look.race))
