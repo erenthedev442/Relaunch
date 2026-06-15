@@ -89,6 +89,12 @@ local m = Module:new('dungeon_system')
 --   }
 local sessions = {}
 
+-- Mob refs deferred from a zone-exit abort (player left the dungeon zone).
+-- setHP(0) on mobs in an empty/sleeping zone triggers the LSB destructor
+-- crash. Instead we park them here and flush at the START of the next
+-- session for that zone (when a player IS present and the zone is alive).
+local pendingCleanup = {}  -- zoneId -> { mob, mob, ... }
+
 local function getSession(player)
     return sessions[player:getName()]
 end
@@ -1962,6 +1968,17 @@ local function armDungeonAfterArrival(player)
     end
     sess.spawnDone = true
 
+    -- Flush any leftover mobs from a prior zone-exit abort on this zone.
+    -- Those refs were parked in pendingCleanup to avoid the sleeping-zone
+    -- destructor crash. Now a player IS present, so setHP(0) is safe.
+    local leftovers = pendingCleanup[dungeon.zoneId]
+    if leftovers then
+        for _, mob in ipairs(leftovers) do
+            pcall(function() mob:setHP(0) end)
+        end
+        pendingCleanup[dungeon.zoneId] = nil
+    end
+
     -- Spawn (xpcall'd so any individual mob failure gets a real
     -- traceback instead of silently aborting the whole batch).
     local ok, err = xpcall(
@@ -2097,13 +2114,28 @@ function m.endDungeon(player, reason)
     if not sess then return end
     local dungeon = sess.dungeon
 
-    -- Despawn every live mob. setHP(0) is the canonical "kill it
-    -- silently" idiom - no death animation cascade because we wrap
-    -- in pcall to suppress edge cases (mob already gone, entity
-    -- pointer stale across zone-out, etc).
-    for _, mob in ipairs(sess.mobs) do
-        if mob then
-            pcall(function() mob:setHP(0) end)
+    -- Despawn every live mob. setHP(0) is the canonical "kill it silently"
+    -- idiom. BUT: if the player has already left the dungeon zone (zone-exit
+    -- abort), the zone is empty/sleeping. Calling setHP(0) on mobs in that
+    -- state triggers the LSB destructor-order crash (same crash that hit
+    -- Brogurt 2026-06-14 22:47 and again 2026-06-15 04:15). Instead, defer
+    -- the despawn to pendingCleanup -- flushed at the start of the next run
+    -- for this zone when a player IS present.
+    if player:getZoneID() ~= dungeon.zoneId then
+        -- Player already outside the dungeon zone. Park refs for later flush.
+        local bucket = pendingCleanup[dungeon.zoneId] or {}
+        for _, mob in ipairs(sess.mobs) do
+            if mob then
+                table.insert(bucket, mob)
+            end
+        end
+        pendingCleanup[dungeon.zoneId] = bucket
+    else
+        -- Player still inside the dungeon zone: safe to kill now.
+        for _, mob in ipairs(sess.mobs) do
+            if mob then
+                pcall(function() mob:setHP(0) end)
+            end
         end
     end
 
