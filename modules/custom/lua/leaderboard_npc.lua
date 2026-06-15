@@ -9,7 +9,7 @@
 -- which regenerates from the live DB several times a day.
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Reisenjima_Henge/Zone')
+require('scripts/zones/Escha_ZiTah/Zone')
 local catalog = require('modules/custom/lua/hunting_league_catalog')
 
 local m = Module:new('leaderboard_npc')
@@ -26,7 +26,7 @@ local function countTotalNMs()
 end
 local TOTAL_NMS = countTotalNMs()
 
-m:addOverride('xi.zones.Reisenjima_Henge.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Escha_ZiTah.Zone.onInitialize', function(zone)
     super(zone)
 
     local npc = zone:insertDynamicEntity({
@@ -34,11 +34,11 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onInitialize', function(zone)
         name       = 'The Chronicler',
         packetName = string.format('%sThe Chronicler', xi.icon.STAR_LARGE),
         look       = 3017,
-        -- Right end of the Hunting League vendor row (same Y/Z, +4 past Accessory).
-        x          = 13.0000,
-        y          = 5.5090,
-        z          = -12.1827,
-        rotation   = 230,
+        -- Right end of the Hunting League vendor row in Escha Zi'Tah hub.
+        x          = 32.0000,
+        y          = -0.5000,
+        z          = -30.0000,
+        rotation   = 128,
         widescan   = 1,
 
         onTrade = function(player, npcArg, trade)

@@ -472,18 +472,13 @@ end
 -- Kill detection is wired inline via each mob's onMobDeath table field.
 -----------------------------------
 local function insertSpawnerNPC(zone)
-    -- Two-level menu so customMenu's visible-row cap can't truncate a
-    -- 15-NM flat list. Top-level picks a rank; second-level picks an NM
-    -- within that rank.
-    local tierPickerMenu = { title = '', options = {} }
-    local mobMenu        = { title = '', options = {} }
-
-    local buildTierPickerMenu  -- forward-declare so mobMenu's Back can call it
+    -- Each tier has its own spawner NPC placed at the tier's cluster area.
+    -- Each NPC opens directly to its own mob list; no tier-picker needed.
+    local mobMenu = { title = '', options = {} }
 
     local function buildMobMenu(player, tierNum)
         local tierDef = catalog.tiers[tierNum]
         if not tierDef then
-            buildTierPickerMenu(player)
             return
         end
         local options = {}
@@ -513,7 +508,7 @@ local function insertSpawnerNPC(zone)
                         end
                     end
 
-                    local mPos = catalog.mobSpawnPos
+                    local mPos = md.spawnPos or catalog.mobSpawnPos
                     -- Record spawn time so Speed Demon (kill within 60s
                     -- of spawn) objectives can compute secondsToKill.
                     -- Captured by the onMobDeath closure below.
@@ -830,8 +825,10 @@ local function insertSpawnerNPC(zone)
         end -- for _, mobDef
 
         table.insert(options, {
-            '<< Back to Ranks',
-            function(playerArg) buildTierPickerMenu(playerArg) end,
+            'Close',
+            function(playerArg)
+                playerArg:printToPlayer('Good hunting, kupo!', xi.msg.channel.SYSTEM_3)
+            end,
         })
 
         local pts       = getPoints(player)
@@ -840,54 +837,82 @@ local function insertSpawnerNPC(zone)
         player:timer(30, function(p) p:customMenu(mobMenu) end)
     end
 
-    buildTierPickerMenu = function(player)
-        local tier    = getTier(player)
+    -- One spawner NPC per tier, placed at each tier's cluster area.
+    -- Each NPC only shows mobs for its own tier — no tier-picker needed.
+    for _, tierDef in ipairs(catalog.tiers) do
+        local td     = tierDef
+        local pos    = td.spawnerPos or catalog.spawnerPos
+        local suffix = td.name:match('%-%s*(.+)$') or td.name
+        local Spawner = zone:insertDynamicEntity({
+            objtype    = xi.objType.NPC,
+            name       = string.format('HuntingLeague_Spawner_T%d', td.tier),
+            packetName = string.format('%sR%d: %s', xi.icon.STAR_LARGE, td.tier, suffix),
+            look       = 2430,
+            x          = pos.x,
+            y          = pos.y,
+            z          = pos.z,
+            rotation   = pos.rot,
+            widescan   = 1,
+
+            onTrade = function(player, npc, trade)
+                player:printToPlayer('No trades, kupo!', xi.msg.channel.SYSTEM_3)
+            end,
+
+            onTrigger = function(player, npc)
+                player:timer(50, function(p)
+                    if getTier(p) < td.tier then
+                        p:printToPlayer(
+                            string.format('[Hunting League] Unlock %s to use this spawner, kupo!', td.name),
+                            xi.msg.channel.SYSTEM_3
+                        )
+                        return
+                    end
+                    buildMobMenu(p, td.tier)
+                end)
+            end,
+        })
+        utils.unused(Spawner)
+    end
+end
+
+-----------------------------------
+-- Zone Guide NPC
+-- Hub NPC that offers a one-click teleport to any of the five tier cluster
+-- areas so players never have to run across the zone.
+-----------------------------------
+local function insertZoneGuideNPC(zone)
+    local menu = { title = 'Hunting Grounds', options = {} }
+
+    local function buildMenu(player)
         local options = {}
-
-        -- Compact row format. The customMenu packet is capped at 150
-        -- bytes total (title + every option label + a NUL per row).
-        -- The previous "Rank IV - Champion  (3 NMs)" labels averaged
-        -- ~26 chars each, so 5 tiers + Close + title overflowed at
-        -- ~176 bytes - and the engine silently drops trailing options
-        -- when over budget. By stripping the "Rank N - " prefix from
-        -- the catalog name (it's already shown in the row's "R%d:")
-        -- and dropping the " NMs" suffix, each row is ~14 chars and
-        -- all 5 tiers + Close fit under ~115 bytes with room to spare.
-        for t = 1, tier do
-            local td = catalog.tiers[t]
-            if td then
-                local tierNum = t  -- capture for the option's closure
-                -- catalog.tiers[t].name is "Rank N - Suffix"; pull just
-                -- the suffix ("Initiate", "Hunter", "Elite", ...) for
-                -- the compact label. Fallback to the full name if the
-                -- pattern ever stops matching.
-                local suffix = td.name:match('%-%s*(.+)$') or td.name
-                table.insert(options, {
-                    string.format('R%d: %s (%d)', tierNum, suffix, #td.mobs),
-                    function(playerArg) buildMobMenu(playerArg, tierNum) end,
-                })
-            end
+        for _, tierDef in ipairs(catalog.tiers) do
+            local td     = tierDef
+            local wp     = td.warpPos or td.spawnerPos or catalog.spawnerPos
+            local suffix = td.name:match('%-%s*(.+)$') or td.name
+            table.insert(options, {
+                string.format('R%d: %s', td.tier, suffix),
+                function(playerArg)
+                    playerArg:timer(100, function(p)
+                        p:setPos(wp.x, wp.y, wp.z, wp.rot or 0)
+                    end)
+                end,
+            })
         end
-
         table.insert(options, {
             'Close',
             function(playerArg)
-                playerArg:printToPlayer('Good hunting, kupo!', xi.msg.channel.SYSTEM_3)
+                playerArg:printToPlayer('Safe travels, kupo!', xi.msg.channel.SYSTEM_3)
             end,
         })
-
-        local pts              = getPoints(player)
-        tierPickerMenu.title   = string.format('Hunting League  (R%d, %d %s)',
-                                               tier, pts, catalog.currencyName)
-        tierPickerMenu.options = options
-        player:timer(30, function(p) p:customMenu(tierPickerMenu) end)
+        menu.options = options
+        player:timer(30, function(p) p:customMenu(menu) end)
     end
 
-    local pos     = catalog.spawnerPos
-    local Spawner = zone:insertDynamicEntity({
+    local pos      = catalog.zoneGuidePos
+    local GuideNPC = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
-        name       = 'HuntingLeague_Spawner',
-        packetName = string.format('%sHunt: Spawner', xi.icon.STAR_LARGE),
+        name       = 'HuntingLeague_ZoneGuide',
+        packetName = string.format('%sZone Guide', xi.icon.STAR_LARGE),
         look       = 2430,
         x          = pos.x,
         y          = pos.y,
@@ -896,21 +921,21 @@ local function insertSpawnerNPC(zone)
         widescan   = 1,
 
         onTrade = function(player, npc, trade)
-            player:printToPlayer('No trades, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('No trades - use the menu, kupo!', xi.msg.channel.SYSTEM_3)
         end,
 
         onTrigger = function(player, npc)
-            player:timer(50, function(p) buildTierPickerMenu(p) end)
+            player:timer(50, function(p) buildMenu(p) end)
         end,
     })
-    utils.unused(Spawner)
+    utils.unused(GuideNPC)
 end
 
 -----------------------------------
 -- Hunt zone override
--- Places three NPCs (Seals / Spawner / Accessories) in the hunt zone.
--- (Weapons + Armor NPCs are registered by their own files in the same
--- zone - they line up alongside these three.)
+-- Places two hub NPCs (Seals, Accessories) and a Zone Guide NPC at the
+-- zone-in area, plus five tier-specific spawner NPCs spread across the zone.
+-- Weapons + Armor NPCs are registered by their own module files.
 -----------------------------------
 m:addOverride(catalog.huntZonePath .. '.Zone.onInitialize', function(zone)
     super(zone)
@@ -962,6 +987,7 @@ m:addOverride(catalog.huntZonePath .. '.Zone.onInitialize', function(zone)
     })
     utils.unused(AccNPC)
 
+    insertZoneGuideNPC(zone)
     insertSpawnerNPC(zone)
 end)
 

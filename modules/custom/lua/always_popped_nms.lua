@@ -1,9 +1,9 @@
 -----------------------------------
 -- always_popped_nms.lua
 --
--- Forces every NM in Abyssea, Escha, and Reisenjima to be auto-spawned
--- at server start AND to respawn 30 seconds after each death. No trade
--- pop, no key item, no atmacite - just walk in and fight.
+-- Forces every NM in Abyssea, Escha Ru'Aun, and Reisenjima to be
+-- auto-spawned at server start AND to respawn 30 seconds after each
+-- death. No trade pop, no key item, no atmacite - just walk in and fight.
 --
 -- How it works
 -- ------------
@@ -21,14 +21,14 @@
 --
 -- Excluded zones
 -- --------------
---   Reisenjima Henge is the Hunting League hub. The Hunt: Spawner NPC
---   there manages NM pops on demand (with rank gating and mark
---   rewards). Auto-spawning every NM in Henge would spawn the same
---   entities at their default mob_spawn_points, breaking the Hunt
---   Spawner's "spawn in front of you" UX and conflicting with the
---   single-entity-per-ID engine constraint. So Henge is intentionally
---   not in the target list. If you want it included, append
---   `xi.zone.REISENJIMA_HENGE` to TARGET_ZONES below.
+--   Reisenjima Henge and Escha - Zi'Tah are both Hunting League hubs.
+--   The tier Spawner NPCs there manage NM pops on demand (rank gating,
+--   mark rewards, per-mob arenas). Auto-spawning every NM would
+--   conflict with the single-entity-per-ID engine constraint and break
+--   the spawner's "pop in front of you" UX. Both are intentionally
+--   absent from TARGET_ZONES. All native mob_spawn_points in Escha
+--   Zi'Tah have also been cleared from the DB so getMobs() returns
+--   nothing there even if the entry were re-added.
 --
 -- Module enable/disable
 -- ---------------------
@@ -76,8 +76,7 @@ local TARGET_ZONES =
     { xi.zone.ABYSSEA_ULEGUERAND,       'Abyssea-Uleguerand',       'xi.zones.Abyssea-Uleguerand.Zone.onInitialize'       },
     { xi.zone.ABYSSEA_EMPYREAL_PARADOX, 'Abyssea-Empyreal_Paradox', 'xi.zones.Abyssea-Empyreal_Paradox.Zone.onInitialize' },
 
-    -- Escha (both) - underscore-separated
-    { xi.zone.ESCHA_ZITAH,              'Escha_ZiTah',              'xi.zones.Escha_ZiTah.Zone.onInitialize'              },
+    -- Escha Ru'Aun - underscore-separated (Escha Zi'Tah excluded: HL hub)
     { xi.zone.ESCHA_RUAUN,              'Escha_RuAun',              'xi.zones.Escha_RuAun.Zone.onInitialize'              },
 
     -- Reisenjima main + Sanctorium (Henge excluded - see header note)

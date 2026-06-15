@@ -26,9 +26,9 @@ local catalog = {}
 --     - GearProgression_NPC.lua : override registration + NPC position
 --     - docgen                  : gear-vendors.md location table + zone name
 -----------------------------------
-catalog.zoneId    = xi.zone.REISENJIMA_HENGE
-catalog.zonePath  = 'xi.zones.Reisenjima_Henge'
-catalog.vendorPos = { x = -3.0000, y = 5.5090, z = -12.1827, rot = 230 }
+catalog.zoneId    = xi.zone.ESCHA_ZITAH
+catalog.zonePath  = 'xi.zones.Escha_ZiTah'
+catalog.vendorPos = { x = -16.0000, y = -0.5000, z = -30.0000, rot = 128 }
 
 -----------------------------------
 -- SEAL CURRENCY DEFINITIONS

@@ -9,24 +9,27 @@ return
     -- =========================================================
     -- ZONE CONFIGURATION
     -- =========================================================
-    huntZoneId   = xi.zone.REISENJIMA_HENGE,
-    huntZonePath = 'xi.zones.Reisenjima_Henge',
+    huntZoneId   = xi.zone.ESCHA_ZITAH,
+    huntZonePath = 'xi.zones.Escha_ZiTah',
 
     -- Position of the Hunt Seals NPC (tier/rank + seal purchases). This is
     -- also the !hunt warp landing spot, so updates here should sync to
     -- scripts/commands/hunt.lua.
-    sealsPos       = { x = -11.0000, y = 5.5090, z = -12.1827, rot = 230 },
+    sealsPos       = { x =  0.0000, y = -0.5000, z = -30.0000, rot = 128 },
 
-    -- Position of the Spawner NPC (pops NMs on demand). +4 on X (vendor row
-    -- widened from 3 -> 4 units 2026-06-13 so the name labels stop overlapping).
-    spawnerPos     = { x = -7.0000, y = 5.5090, z = -12.1827, rot = 230 },
+    -- Position of the Zone Guide NPC (warps players to a tier cluster area).
+    zoneGuidePos   = { x =  8.0000, y = -0.5000, z = -30.0000, rot = 128 },
 
-    -- Position of the Hunt Accessories NPC (Neck/Earrings/Rings/etc. shop).
-    -- Continues the +4-unit vendor row (one slot past the Armor NPC).
-    accessoriesPos = { x =  5.0000, y = 5.5090, z = -12.1827, rot = 230 },
+    -- Position of the Hunt Accessories NPC.
+    accessoriesPos = { x = 16.0000, y = -0.5000, z = -30.0000, rot = 128 },
 
-    -- Where dynamic NMs appear when the Spawner NPC pops them.
-    mobSpawnPos = { x = 1.1883, y = 5.5000, z = 1.8036, rot = 208 },
+    -- Fallback spawner position for tier NPCs that have no spawnerPos defined.
+    spawnerPos     = { x =  8.0000, y = -0.5000, z = -30.0000, rot = 128 },
+
+    -- Fallback spawn position used if a mob entry has no spawnPos defined.
+    -- Each mob now has its own arena position (spawnPos field in tiers table)
+    -- so mobs fan out across the zone instead of piling up in one spot.
+    mobSpawnPos = { x = 0.0, y = -0.5, z = 50.0, rot = 0 },
 
     -- Currency display name
     currencyName = 'Hunt Marks',
@@ -39,7 +42,7 @@ return
     -- clog the arena (and the duplicate-spawn guard frees up again). The
     -- countdown is cancelled the instant a player engages the NM, so an
     -- active fight is never interrupted. Set to 0 to disable.
-    unengagedDespawnSecs = 30,  -- 30 seconds
+    unengagedDespawnSecs = 120,  -- 120s — players need time to walk to their arena in the large zone
 
     -- =========================================================
     -- TIER DEFINITIONS
@@ -71,9 +74,12 @@ return
             tier       = 1,
             name       = 'Rank I - Initiate',
             unlockCost = 0,
+            spawnerPos = { x =  -95.0, y =  -0.2, z =  -15.0, rot =  64 },
+            warpPos    = { x = -105.0, y =  -0.2, z =  -15.0, rot =  64 },  -- 10u west of spawner, face east
             mobs =
             {
                 { name = 'Leaping_Lizzy',    label = 'Leaping Lizzy',    points = 5,  groupId = 11355, minLv = 150, maxLv = 150,
+                  spawnPos = { x = -130.0, y =  -0.2, z =    5.0, rot =   0 },  -- T1 cluster: NW
                   hpBoost = 4,
                   mods = {
                       [xi.mod.DEF] = 385,
@@ -89,6 +95,7 @@ return
                   },
                 },
                 { name = 'Valkurm_Emperor',  label = 'Valkurm Emperor',  points = 5,  groupId = 11356, minLv = 150, maxLv = 150,
+                  spawnPos = { x = -110.0, y =  -0.2, z =   25.0, rot = 128 },  -- T1 cluster: N
                   hpBoost = 4,
                   mods = {
                       [xi.mod.DEF] = 385,
@@ -102,6 +109,7 @@ return
                   },
                 },
                 { name = 'Tom_Tit_Tat',      label = 'Tom Tit Tat',      points = 5,  groupId = 11357, minLv = 150, maxLv = 150,
+                  spawnPos = { x =  -85.0, y =  -0.2, z =    5.0, rot = 192 },  -- T1 cluster: NE
                   hpBoost = 4,
                   mods = {
                       [xi.mod.DEF] = 385,
@@ -122,9 +130,12 @@ return
             tier       = 2,
             name       = 'Rank II - Hunter',
             unlockCost = 50,
+            spawnerPos = { x =   15.0, y =  -8.0, z =  155.0, rot = 128 },
+            warpPos    = { x =   15.0, y =  -8.0, z =  145.0, rot = 128 },  -- 10u south of spawner, face south
             mobs =
             {
                 { name = 'Roc',         label = 'Roc',         points = 12, groupId = 11358, minLv = 150, maxLv = 150,
+                  spawnPos = { x =  -15.0, y =  -8.0, z =  185.0, rot =   0 },  -- T2 cluster: W
                   hpBoost = 6,
                   mods = {
                       [xi.mod.DEF] = 660,
@@ -139,6 +150,7 @@ return
                   },
                 },
                 { name = 'Bomb_Queen',  label = 'Bomb Queen',  points = 12, groupId = 11359, minLv = 150, maxLv = 150,
+                  spawnPos = { x =   10.0, y =  -8.0, z =  200.0, rot = 128 },  -- T2 cluster: C
                   hpBoost = 6,
                   mods = {
                       [xi.mod.DEF] = 660,
@@ -155,6 +167,7 @@ return
                   },
                 },
                 { name = 'Aquarius',    label = 'Aquarius',    points = 12, groupId = 11360, minLv = 150, maxLv = 150,
+                  spawnPos = { x =   35.0, y =  -8.0, z =  185.0, rot = 192 },  -- T2 cluster: E
                   hpBoost = 6,
                   mods = {
                       [xi.mod.DEF] = 660,
@@ -178,9 +191,12 @@ return
             tier       = 3,
             name       = 'Rank III - Elite',
             unlockCost = 150,
+            spawnerPos = { x =  230.0, y =  -1.0, z =   50.0, rot =  96 },
+            warpPos    = { x =  220.0, y =  -1.0, z =   50.0, rot =  96 },  -- 10u west of spawner, face east
             mobs =
             {
                 { name = 'Serket',    label = 'Serket',    points = 22, groupId = 11361, minLv = 150, maxLv = 150,
+                  spawnPos = { x =  265.0, y =  -1.0, z =   45.0, rot =  96 },  -- T3 cluster: W
                   hpBoost = 10,
                   mods = {
                       [xi.mod.DEF] = 990,
@@ -196,6 +212,7 @@ return
                   },
                 },
                 { name = 'Vrtra',     label = 'Vrtra',     points = 22, groupId = 11362, minLv = 150, maxLv = 150,
+                  spawnPos = { x =  275.0, y =  -1.0, z =   75.0, rot =  64 },  -- T3 cluster: C
                   hpBoost = 10,
                   mods = {
                       [xi.mod.DEF] = 990,
@@ -213,6 +230,7 @@ return
                   },
                 },
                 { name = 'Simurgh',   label = 'Simurgh',   points = 22, groupId = 11363, minLv = 150, maxLv = 150,
+                  spawnPos = { x =  260.0, y =  -1.0, z =  100.0, rot = 128 },  -- T3 cluster: N
                   -- Difficulty bump (2026-06-13, owner request): tuned a notch
                   -- above its T3 tier-mates (Serket/Vrtra) -- +25% HP, harder &
                   -- faster hits (ATT/HASTE/Double+Triple Atk), and stronger Regen
@@ -241,9 +259,12 @@ return
             tier       = 4,
             name       = 'Rank IV - Champion',
             unlockCost = 350,
+            spawnerPos = { x =  315.0, y =  -8.0, z =   95.0, rot =  96 },
+            warpPos    = { x =  305.0, y =  -8.0, z =   95.0, rot =  96 },  -- 10u west of spawner, face east
             mobs =
             {
                 { name = 'Nidhogg',       label = 'Nidhogg',       points = 38, groupId = 11364, minLv = 150, maxLv = 150,
+                  spawnPos = { x =  355.0, y =  -8.0, z =   90.0, rot =  96 },  -- T4 cluster: W
                   hpBoost = 14,
                   mods = {
                       [xi.mod.DEF] = 1430,
@@ -259,6 +280,7 @@ return
                   },
                 },
                 { name = 'King_Behemoth', label = 'King Behemoth', points = 38, groupId = 11365, minLv = 150, maxLv = 150,
+                  spawnPos = { x =  365.0, y =  -8.0, z =  120.0, rot =  64 },  -- T4 cluster: C
                   hpBoost = 14,
                   mods = {
                       [xi.mod.DEF] = 1430,
@@ -276,6 +298,7 @@ return
                   },
                 },
                 { name = 'Kirin',         label = 'Kirin',         points = 38, groupId = 11366, minLv = 150, maxLv = 150,
+                  spawnPos = { x =  355.0, y =  -8.0, z =  145.0, rot = 128 },  -- T4 cluster: N
                   hpBoost = 14,
                   mods = {
                       [xi.mod.DEF] = 1430,
@@ -300,9 +323,12 @@ return
             tier       = 5,
             name       = 'Rank V - Legend',
             unlockCost = 700,
+            spawnerPos = { x =  455.0, y =  25.0, z =   75.0, rot =  96 },
+            warpPos    = { x =  445.0, y =  25.0, z =   75.0, rot =  96 },  -- 10u west of spawner, face east
             mobs =
             {
                 { name = 'Absolute_Virtue',    label = 'Absolute Virtue',    points = 65, groupId = 11367, minLv = 150, maxLv = 150,
+                  spawnPos = { x =  495.0, y =  25.0, z =   70.0, rot =  96 },  -- T5 cluster: W
                   hpBoost = 24,
                   mods = {
                       [xi.mod.DEF] = 2200,
@@ -320,6 +346,7 @@ return
                   },
                 },
                 { name = 'Pandemonium_Warden', label = 'Pandemonium Warden', points = 65, groupId = 11368, minLv = 150, maxLv = 150,
+                  spawnPos = { x =  505.0, y =  25.0, z =  100.0, rot =  64 },  -- T5 cluster: C
                   hpBoost = 24,
                   mods = {
                       [xi.mod.DEF] = 2200,
@@ -335,6 +362,7 @@ return
                   },
                 },
                 { name = 'Shinryu',            label = 'Shinryu',            points = 110, groupId = 11369, minLv = 225, maxLv = 250,
+                  spawnPos = { x =  490.0, y =  25.0, z =  130.0, rot = 128 },  -- T5 cluster: N
                   hpBoost = 48,
                   mods = {
                       [xi.mod.DEF] = 8800,

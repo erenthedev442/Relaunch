@@ -1,22 +1,22 @@
 -----------------------------------
 -- auto_buff_henge.lua
 -- Automatically applies Refresh / Regen / Regain when a player zones
--- into Reisenjima Henge so they can immediately start hunting without
--- typing !buff first.  Same power formula as scripts/commands/buff.lua:
+-- into Escha - Zi'Tah (the Hunting League hub) so they can immediately
+-- start hunting without typing !buff first.
 --   Refresh = 10% of max MP per tick
 --   Regen   = 10% of max HP per tick
 --   Regain  = 1 per 10 levels (min 1)
 --   Duration = 30 minutes
--- The appropriate regional buff (Ionis for Adoulin-era zones) is also
--- applied.  If the player already has the effect, the existing one is
--- replaced (same as the manual !buff command).
+-- A regional buff is applied if the zone's region matches; Escha zones
+-- have their own region so this typically falls back to Signet.
+-- If the player already has the effect it is replaced (same as !buff).
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Reisenjima_Henge/Zone')
+require('scripts/zones/Escha_ZiTah/Zone')
 
 local m = Module:new('auto_buff_henge')
 
-m:addOverride('xi.zones.Reisenjima_Henge.Zone.onZoneIn', function(player, prevZone)
+m:addOverride('xi.zones.Escha_ZiTah.Zone.onZoneIn', function(player, prevZone)
     super(player, prevZone)
 
     -- 1500ms delay: let the zone-in animation settle and stat calculations
@@ -31,8 +31,8 @@ m:addOverride('xi.zones.Reisenjima_Henge.Zone.onZoneIn', function(player, prevZo
         local regainPower  = math.max(1, math.floor(level / 10))
         local duration     = 18000   -- 30 minutes
 
-        -- Reisenjima is in the Adoulin-era region -> Ionis buff.
-        -- Fallback to Signet for any unexpected region value.
+        -- Apply Ionis for Adoulin-era regions; Escha zones have their own
+        -- region so this typically resolves to Signet (harmless fallback).
         local region     = p:getCurrentRegion()
         local regionalId = xi.effect.SIGNET
         if region == xi.region.ADOULIN_ISLANDS or region == xi.region.EAST_ULBUKA then
