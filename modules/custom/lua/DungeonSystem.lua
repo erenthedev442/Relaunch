@@ -3707,10 +3707,15 @@ m:addOverride('InteractionGlobal.onZoneIn', function(player, prevZone, fallbackF
             '[Dungeon] You left the dungeon mid-run. No Infamy awarded.',
             xi.msg.channel.SYSTEM_3)
 
-        -- endDungeon clears the session, cancels all timers, and despawns mobs.
-        -- It also fires a short setPos back to exitWarp (GM Home), which is a
-        -- harmless position-reset if the player is already there from !gmhome.
-        m.endDungeon(player, 'manual')
+        -- DEFER the teardown out of this onZoneIn callback. endDungeon despawns
+        -- mobs and fires exit-warp setPos calls; running that synchronously while
+        -- the engine is still mid-OnZoneIn (the player is *arriving* at GM Home in
+        -- this very call) is a re-entrant zone change that segfaulted the map
+        -- (crash 2026-06-14 22:47:37, Brogurt aborting whispering_halls -> GM Home).
+        -- A short timer lets OnZoneIn return and the player settle first; the
+        -- dungeon zone lingers far longer than this, so the mob refs stay valid.
+        -- endDungeon is idempotent (getSession guard) if onZoneIn somehow re-fires.
+        player:timer(500, function(p) m.endDungeon(p, 'manual') end)
     end
 
     return result
