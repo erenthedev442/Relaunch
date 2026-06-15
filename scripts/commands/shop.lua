@@ -216,12 +216,13 @@ local stock =
         { 17341,   8 },  -- Silver Bullet   (Lv50)
         { 18723,  20 },  -- Steel Bullet    (Lv66)
         { 21331,  50 },  -- Eminent Bullet  (Lv99)
-        -- Infinite-ammo pouches: equip ONE, never consumed (RECYCLE 100). RARE,
-        -- so you hold 1 and it never runs out. (See bullet_pouches_ammo.sql.)
-        { 26348, 50000 },  -- Living Bullet Pouch      (infinite, DMG 245, COR)
-        { 26349, 50000 },  -- Devastating Bullet Pouch (infinite, DMG 277, RNG/COR)
-        { 26347, 50000 },  -- Eradicating Bullet Pouch (infinite, DMG 289, RNG)
-        { 26350, 50000 },  -- Chrono Bullet Pouch      (infinite, DMG 300, RNG/COR)
+        -- Infinite-ammo WAIST pouches: wear one + a stack of any bullets and the
+        -- bullets are never consumed (RECYCLE 100), plus ranged stats. RARE, hold
+        -- 1. (See bullet_pouches_waist.sql.)
+        { 26348, 50000 },  -- Living Bullet Pouch      (waist, MATT35/MACC25, COR)
+        { 26349, 50000 },  -- Devastating Bullet Pouch (waist, RACC35/MACC35, RNG/COR)
+        { 26347, 50000 },  -- Eradicating Bullet Pouch (waist, RATT30/RACC30, RNG)
+        { 26350, 50000 },  -- Chrono Bullet Pouch      (waist, RATT20/RACC20, RNG/COR)
         -- Shuriken (NIN throwing)
         { 17301,   3 },  -- Shuriken        (Lv18)
         { 17302,   5 },  -- Juji Shuriken   (Lv28)
