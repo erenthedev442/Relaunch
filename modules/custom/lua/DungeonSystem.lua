@@ -962,6 +962,14 @@ local function spawnDungeonMob(player, dungeon, opts)
         modelSize = opts.modelSize
     end
 
+    -- FJB: the engine stores mob level in a uint8 (max 255). Catalog apex levels
+    -- ABOVE 255 (Eternal Throne / Sunken Spire NMs Lv256-270, boss Lv275) OVERFLOW
+    -- the field -- Lv275 wraps to Lv19, Lv262 to Lv6 -- so the boss spawns with a
+    -- Lv19 mob's HP and the run insta-clears, paying out for nothing. Cap the
+    -- ENGINE level at 255; the un-capped `level` still drives modsForLevel + the
+    -- hpBoost below, so the mob keeps its intended apex toughness.
+    local engineLevel = (type(level) == 'number') and math.min(level, 255) or level
+
     local mob = zone:insertDynamicEntity({
         objtype              = xi.objType.MOB,
         groupId              = groupId,
@@ -971,8 +979,8 @@ local function spawnDungeonMob(player, dungeon, opts)
         y                    = pos.y,
         z                    = pos.z,
         rotation             = pos.rot or 0,
-        minLevel             = level,
-        maxLevel             = level,
+        minLevel             = engineLevel,
+        maxLevel             = engineLevel,
         modelSize            = modelSize,
         -- PASSIVE design: both flags set DURING instantiation so the
         -- engine knows the mob is non-aggressive from the very first
