@@ -10,6 +10,7 @@ xi.aftermath.type =
     RELIC    = 1,
     MYTHIC   = 2,
     EMPYREAN = 3,
+    PRIME    = 4,
 } -- TODO: Add Aeonic
 
 -----------------------------------
@@ -548,6 +549,42 @@ xi.aftermath.effects =
         mod = xi.mod.REM_OCC_DO_TRIPLE_DMG,
         power = { 30, 40, 50 },
         duration = { 60, 120, 180 },
+    },
+
+    -----------------------------------
+    -- Prime  (FJB custom -- faithful to retail Prime Aftermath,
+    --         bg-wiki.com/ffxi/Prime_Aftermath). TP-tiered like Empyrean:
+    --         Lv.1/2/3 at 1000/2000/3000 TP, applied by the weapon's own Prime
+    --         weaponskill (imperator/oshala/dagda/...). Values are Stage 5.
+    --         `mods` is a list of { modId, { Lv1, Lv2, Lv3 } } applied in
+    --         onEffectGain (Prime case). NOTE: the physical Damage Limit entry
+    --         is largely INERT on this server's raised 131,071 damage cap --
+    --         only the Staff/Club magic aftermaths are felt here.
+    -----------------------------------
+    [46] = -- Physical Primes: Imperator, Disaster, Origin, Diarmuid, Dragon Blow, Sarv, Terminus
+    {
+        mods     = { { xi.mod.DAMAGE_LIMITP, { 6, 9, 12 } } }, -- +6/9/12% (wiki Stage 5 range 6-12%; mid interpolated)
+        duration = { 120, 180, 240 },
+    },
+
+    [47] = -- Prime Club / Lorg Mor (Dagda WS): Magic Damage + Cure potency  (WHM)
+    {
+        mods =
+        {
+            { xi.mod.MAGIC_DAMAGE, { 30, 50, 80 } },
+            { xi.mod.CURE_POTENCY, { 30, 50, 80 } }, -- gear cure-potency caps at +50; AM may share that cap
+        },
+        duration = { 120, 180, 240 },
+    },
+
+    [48] = -- Prime Staff / Opashoro (Oshala WS): Magic Attack Bonus + Magic Damage  (BLM)
+    {
+        mods =
+        {
+            { xi.mod.MATT,         { 20, 30, 40 } }, -- MAB (3000-TP endpoint 40 documented; lower tiers interpolated)
+            { xi.mod.MAGIC_DAMAGE, { 40, 60, 80 } }, -- M.Dmg (3000-TP endpoint 80 documented; lower tiers interpolated)
+        },
+        duration = { 120, 180, 240 },
     }
 }
 
@@ -580,7 +617,12 @@ xi.aftermath.addStatusEffect = function(player, tp, weaponSlot, aftermathType)
 
         -- Empyrean
         [3] = function(x)
-            invalid = id < 44
+            invalid = id < 44 or id > 45
+        end,
+
+        -- Prime
+        [4] = function(x)
+            invalid = id < 46
         end
     }
 
@@ -614,6 +656,13 @@ xi.aftermath.addStatusEffect = function(player, tp, weaponSlot, aftermathType)
 
         -- Empyrean
         [3] = function(x)
+            local tier = math.floor(tp / 1000)
+            local icon = xi.effect['AFTERMATH_LV'..tier]
+            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = icon, subPower = tp, tier = aftermathType })
+        end,
+
+        -- Prime (TP-tiered like Empyrean; the mods are applied in onEffectGain)
+        [4] = function(x)
             local tier = math.floor(tp / 1000)
             local icon = xi.effect['AFTERMATH_LV'..tier]
             player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = icon, subPower = tp, tier = aftermathType })
@@ -668,6 +717,14 @@ xi.aftermath.onEffectGain = function(target, effect)
         -- Empyrean
         [3] = function(x)
             effect:addMod(aftermath.mod, aftermath.power[math.floor(effect:getSubPower() / 1000)])
+        end,
+
+        -- Prime (multi-mod, TP-tiered): apply every mod at the current Lv tier
+        [4] = function(x)
+            local tier = math.floor(effect:getSubPower() / 1000)
+            for _, m in ipairs(aftermath.mods) do
+                effect:addMod(m[1], m[2][tier])
+            end
         end
     }
 end
@@ -702,6 +759,13 @@ xi.aftermath.canOverwrite = function(player, tp, aftermathId, aftermathType)
 
         -- Empyrean
         [3] = function(x)
+            local currentLevel = math.floor(effect:getSubPower() / 1000)
+            local newLevel = math.floor(tp / 1000)
+            canOverwrite = currentLevel == 1 or currentLevel < newLevel
+        end,
+
+        -- Prime (same TP-level overwrite rule as Empyrean)
+        [4] = function(x)
             local currentLevel = math.floor(effect:getSubPower() / 1000)
             local newLevel = math.floor(tp / 1000)
             canOverwrite = currentLevel == 1 or currentLevel < newLevel
