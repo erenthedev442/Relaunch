@@ -35,10 +35,21 @@ local function spawnOne()
         return
     end
 
-    local c   = catalog.campCenter
+    -- Zone-wide: spawn at a random native walkable point so the farm fills the
+    -- WHOLE zone on valid ground (no water/terrain clipping). Fall back to the
+    -- campCenter patch if the pool is missing/empty.
+    local x, y, z
+    local pts = catalog.spawnPoints
+    if pts and #pts > 0 then
+        local p = pts[math.random(#pts)]
+        x, y, z = p.x, p.y, p.z
+    else
+        local c = catalog.campCenter
+        x = c.x + math.random(-catalog.spreadX, catalog.spreadX)
+        y = c.y
+        z = c.z + math.random(-catalog.spreadZ, catalog.spreadZ)
+    end
     local gid = catalog.templates[math.random(#catalog.templates)]
-    local x   = c.x + math.random(-catalog.spreadX, catalog.spreadX)
-    local z   = c.z + math.random(-catalog.spreadZ, catalog.spreadZ)
     local rot = math.random(0, 255)
 
     local mob = campZone:insertDynamicEntity({
@@ -47,7 +58,7 @@ local function spawnOne()
         groupZoneId          = catalog.groupZoneId,
         name                 = catalog.mobName,
         x                    = x,
-        y                    = c.y,
+        y                    = y,
         z                    = z,
         rotation             = rot,
         -- REQUIRED: without min/max level the engine defaults to lv255
@@ -79,7 +90,7 @@ local function spawnOne()
         return
     end
 
-    mob:setSpawn(x, c.y, z, rot)
+    mob:setSpawn(x, y, z, rot)
     mob:spawn()
 
     -- Shared free-for-all claim so the whole camp can fight every mob and the

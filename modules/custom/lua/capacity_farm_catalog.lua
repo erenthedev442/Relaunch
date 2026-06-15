@@ -29,6 +29,12 @@ catalog.campCenter = { x = 93.0, y = -45.5, z = 928.0 }
 catalog.spreadX    = 5
 catalog.spreadZ    = 8
 
+-- ZONE-WIDE spawn pool: every native walkable spawn point in Bibiki Bay (357,
+-- pulled from mob_spawn_points). spawnOne picks a random one, so the farm fills
+-- the WHOLE zone on guaranteed-valid ground (no water/terrain clipping). The
+-- campCenter/spread above are now just the !capacity warp landing + a fallback.
+catalog.spawnPoints = require('modules/custom/lua/capacity_farm_points')
+
 -- HL NM mob_groups (registered in zone 210 / GM_Home) reused as spawn
 -- templates -- the same cross-zone trick the dungeon system uses. These
 -- supply only the model/base; level + HP are overridden at spawn. A small
@@ -44,7 +50,9 @@ catalog.templates =
 }
 
 catalog.mobName  = 'Capacity Phantom'  -- display name; also used to count/top-up the pool
-catalog.mobCount = 24                   -- target population (kept topped up; tripled 8->24)
+catalog.mobCount = 200                  -- zone-wide population, spread across spawnPoints; tunable
+                                        -- (raise toward ~357 = one per point for max density, or
+                                        --  lower it if you ever see server tick lag)
 catalog.minLv    = 150                  -- engine rolls each spawn in [minLv, maxLv]
 catalog.maxLv    = 160
 catalog.maxHP    = 45000                -- low HP = quick kills (-25% from 60000)
