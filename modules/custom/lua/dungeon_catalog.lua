@@ -220,8 +220,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-San_dOria',
         gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
         timeLimit   = 900,                           -- 15 minutes
-        infamyBase  = 17,
-        infamySpeedBonus = 8,
+        infamyBase  = 10,
+        infamySpeedBonus = 3,
 
         -- Entry coord matches the regular Dynamis-San_dOria canonical
         -- entry (same physical city geometry). Adjust with !pos if the
@@ -303,8 +303,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Bastok',
         gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
         timeLimit   = 1080,
-        infamyBase  = 90,
-        infamySpeedBonus = 48,
+        infamyBase  = 15,
+        infamySpeedBonus = 5,
 
         warpIn      = { x = 116.482, y = 0.994, z = -72.121, rot = 128 },
 
@@ -376,8 +376,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Windurst',
         gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
         timeLimit   = 1200,
-        infamyBase  = 200,
-        infamySpeedBonus = 77,
+        infamyBase  = 22,
+        infamySpeedBonus = 8,
 
         warpIn      = { x = -221.988, y = 1.000, z = -120.184, rot = 0 },
 
@@ -504,8 +504,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Jeuno',
         gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
         timeLimit   = 1500,                      -- 25 minutes
-        infamyBase  = 467,
-        infamySpeedBonus = 177,
+        infamyBase  = 30,
+        infamySpeedBonus = 12,
 
         -- Entry coord matches regular Dynamis-Jeuno canonical entry.
         -- y=10 is the elevated bridge platform.
@@ -604,8 +604,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Valkurm',
         gated       = false,
         timeLimit   = 900,               -- 15 min, mirrors D1
-        infamyBase       = 17,
-        infamySpeedBonus = 8,
+        infamyBase       = 10,
+        infamySpeedBonus = 3,
 
         warpIn = { x = 100.000, y = -8.000, z = 131.000, rot = 47 },
 
@@ -672,8 +672,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Buburimu',
         gated       = false,
         timeLimit   = 1080,              -- 18 min, mirrors D2
-        infamyBase       = 90,
-        infamySpeedBonus = 48,
+        infamyBase       = 15,
+        infamySpeedBonus = 5,
 
         warpIn = { x = 155.000, y = -1.000, z = -169.000, rot = 170 },
 
@@ -736,8 +736,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Xarcabard',
         gated       = false,
         timeLimit   = 1200,              -- 20 min, mirrors D3
-        infamyBase       = 200,
-        infamySpeedBonus = 77,
+        infamyBase       = 22,
+        infamySpeedBonus = 8,
 
         warpIn = { x = 569.312, y = -0.098, z = -270.158, rot = 90 },
 
@@ -817,8 +817,8 @@ catalog.dungeons =
         zoneName    = 'Dynamis-Qufim',
         gated       = false,
         timeLimit   = 1500,              -- 25 min, mirrors D4
-        infamyBase       = 467,
-        infamySpeedBonus = 177,
+        infamyBase       = 30,
+        infamySpeedBonus = 12,
 
         warpIn = { x = -19.000, y = -17.000, z = 104.000, rot = 253 },
 
