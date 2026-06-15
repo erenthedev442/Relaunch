@@ -121,23 +121,17 @@ PROGRESSION_AUGS = {
 #         to declutter cat 1 and free its catalyst.
 EXCLUDED_AUGS = {
     380,
-    # 327 = "Weapon skill damage" (generic WSD%). Removed by owner request
-    # (2026-06-14): its only catalyst was the cheap, easily-farmed High-Quality
-    # Scorpion Shell (item 1473, also excluded below), so players spammed the
-    # shell to stack WSD+. Dropping the aug as well stops the greedy pass from
-    # re-homing WSD+ onto a different catalyst. Per-weaponskill DMG augments
-    # (cat 13) are unaffected.
-    327,
+    # (327 "Weapon skill damage" was excluded 2026-06-14 -- cheap/farmable HQ
+    #  Scorpion Shell catalyst -> stackable WSD+ -- then RESTORED exactly as
+    #  before 2026-06-15 by owner request. See augment_catalog.lua [1473].)
 }
 
 # Specific item IDs kept OUT of the catalyst pool entirely -- never offered as
 # an augment catalyst regardless of score, and (unlike EXCLUDED_AUGS) never
-# freed for re-assignment to another augment. Owner request 2026-06-14:
-#   1473 = High-Quality Scorpion Shell -- too cheap a catalyst for the
-#          "Weapon skill damage" augment (327, excluded above).
-EXCLUDED_ITEMS = {
-    1473,
-}
+# freed for re-assignment to another augment. Add item IDs here to ban one.
+#   (1473 = High-Quality Scorpion Shell was banned 2026-06-14, then RESTORED
+#    2026-06-15 by owner request as the WS-Damage catalyst -- no longer banned.)
+EXCLUDED_ITEMS = set()
 
 MOB_DROPLIST = SQL / "mob_droplist.sql"
 
