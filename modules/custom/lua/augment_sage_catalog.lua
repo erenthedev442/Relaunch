@@ -28,7 +28,7 @@ local catalog = {}
 catalog.zoneId    = xi.zone.GM_HOME
 catalog.zonePath  = 'xi.zones.GM_Home'
 -- GM Home Progression cluster (z=-7): Gear / Augment Moogle / Augment Sage.
-catalog.vendorPos = { x = 3.000, y = 0.000, z = -7.000, rot = 128 }
+catalog.vendorPos = { x = -1.500, y = 0.000, z = -5.000, rot = 128 }
 
 -----------------------------------
 -- SEAL CURRENCY (shared with Armor / Weapons / Hunting League NPCs)

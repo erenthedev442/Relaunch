@@ -18,7 +18,7 @@ catalog.npcPos =
     zoneId   = 210,
     x        = -1.500,
     y        =  0.000,
-    z        = -21.000,
+    z        = -25.000,
     rotation =  128,
 }
 

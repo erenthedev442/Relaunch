@@ -23,7 +23,7 @@ catalog.zoneId    = xi.zone.GM_HOME
 catalog.zonePath  = 'xi.zones.GM_Home'
 catalog.npcName   = 'Warpman'
 catalog.npcLook   = 3000
-catalog.npcPos    = { x = 2.000, y = 0.000, z = -15.000, rot = 128 }
+catalog.npcPos    = { x = 3.000, y = 0.000, z = -15.000, rot = 128 }
 
 -- Pricing tiers used in the destinations below. Adjust globally here.
 catalog.pricing =

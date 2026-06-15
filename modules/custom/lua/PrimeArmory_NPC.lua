@@ -182,7 +182,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         name       = 'Prime_Armory',
         packetName = string.format('%sPrime Armory', xi.icon.STAR_LARGE),
         look       = 3000,
-        x          = -3.000,
+        x          = 0.000,
         y          =  0.000,
         z          = -20.000,
         rotation   =  128,

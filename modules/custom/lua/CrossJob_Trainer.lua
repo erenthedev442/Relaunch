@@ -285,9 +285,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         look       = 2401,
         -- Extends the GM Home progression row at z=-7:
         --   Gear (-3) / Augment Moogle (0) / Augment Sage (+3) / Trainer (+6).
-        x          =  6.000,
+        x          =  1.500,
         y          =  0.000,
-        z          = -7.000,
+        z          = -5.000,
         rotation   =  128,
         widescan   =  1,
 

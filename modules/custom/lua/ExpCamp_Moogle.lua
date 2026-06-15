@@ -105,7 +105,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         look       = 2419,
         -- Teleport-services cluster (east side of GM Home), grouped with the
         -- Home Point crystal and Warpman so all the warp NPCs are together.
-        x          =   6.000,
+        x          =   0.000,
         y          =   0.000,
         z          = -15.000,
         rotation   =   128,

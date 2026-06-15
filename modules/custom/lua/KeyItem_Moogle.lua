@@ -19,9 +19,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         packetName = string.format('%sKeyItem Moogle', xi.icon.STAR_LARGE),
         look       = 2364,
         -- GM Home Utility cluster (z=-14): Unlocker / KeyItem / Mission Skip.
-        x          =  0.000,
+        x          =  1.500,
         y          =  0.000,
-        z          = -14.000,
+        z          = -10.000,
         rotation   =  128,
         widescan   =  1,
 

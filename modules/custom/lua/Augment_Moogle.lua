@@ -203,9 +203,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         packetName = string.format('%sAugment Moogle', xi.icon.STAR_LARGE),
         look       = 2401,
         -- GM Home Progression cluster (z=-7): Gear / Augment Moogle / Augment Sage.
-        x          =  0.000,
+        x          =  -4.500,
         y          =  0.000,
-        z          = -7.000,
+        z          = -5.000,
         rotation   =  128,
         widescan   =  1,
 
