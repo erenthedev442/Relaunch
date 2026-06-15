@@ -71,8 +71,9 @@ local function spawnOne()
         isAggroable          = true,
         releaseIdOnDisappear = true,
 
-        -- Instant respawn: each death tops the pool back up to mobCount, so a
-        -- kill is immediately replaced and the capacity chain never lapses.
+        -- Instant respawn: each death immediately tops the pool back up to
+        -- mobCount, so a kill is replaced on the spot and the capacity chain
+        -- never lapses.
         onMobDeath = function(deadMob, killer)
             -- Bonus Capacity Points on top of the engine's level-based award, to
             -- boost the farm. addCapacityPoints self-guards non-PC killers and
@@ -81,19 +82,20 @@ local function spawnOne()
             if killer and catalog.cpBonus and catalog.cpBonus > 0 then
                 killer:addCapacityPoints(catalog.cpBonus)
             end
-            -- Respawn after a brief delay. CRITICAL: schedule the timer on the
-            -- KILLER (a live player), NOT on deadMob -- these mobs are dynamic
-            -- with releaseIdOnDisappear, so the corpse and any timer attached to
-            -- it are freed the instant it vanishes; deadMob:timer() therefore
-            -- never fired and the pool never refilled (the "not respawning" bug).
-            -- A pet/trust kill (no PC killer) just tops up immediately.
-            if killer and killer:getObjType() == xi.objType.PC then
-                killer:timer(2000, function(_)
-                    ensurePopulation()
-                end)
-            else
-                ensurePopulation()
-            end
+            -- Refill SYNCHRONOUSLY, right here -- do NOT defer through a timer.
+            -- History of this bug: deadMob:timer() never fired (the corpse and
+            -- any timer on it are freed the instant a releaseIdOnDisappear mob
+            -- vanishes), so it was moved to killer:timer() -- but that never
+            -- fired either. entity:timer queues the closure onto the entity's PAI
+            -- action queue (CLuaBaseEntity::timer -> QueueAction), which does not
+            -- run it in the just-killed-something state, so ensurePopulation()
+            -- was never reached and the pool never refilled ("not respawning").
+            -- Calling it inline is reliable AND truly instant, and it is safe:
+            -- the zone mob list is a std::map (node-based, EntityList_t in
+            -- zone.h), so inserting a mob while the engine is mid-death-handling
+            -- does not invalidate the iterator it is walking. This mirrors the
+            -- inline work the dungeon system does in its own onMobDeath.
+            ensurePopulation()
         end,
     })
     if not mob then
@@ -137,8 +139,17 @@ ensurePopulation = function()
             end
         end
     end
+    local spawned = 0
     for _ = alive + 1, catalog.mobCount do
         spawnOne()
+        spawned = spawned + 1
+    end
+    -- Diagnostic (catalog.debug): one line per refill that actually spawns, so
+    -- the live map log confirms deaths are driving respawns. Flip catalog.debug
+    -- off once you've watched a few kills come back.
+    if catalog.debug and spawned > 0 then
+        print(string.format('[capacity_farm] refill: %d alive -> +%d spawned (target %d)',
+            alive, spawned, catalog.mobCount))
     end
 end
 
@@ -154,11 +165,10 @@ end)
 m:addOverride(catalog.zonePath .. '.Zone.onZoneIn', function(player, prevZone)
     local cs = super(player, prevZone)
     campZone = player:getZone()
-    -- Defer so the client/zone is settled before we spawn (mirrors the
-    -- deferred-spawn timing the other systems use).
-    player:timer(1500, function()
-        ensurePopulation()
-    end)
+    -- Re-stock inline. A timer here proved as unreliable as the death-respawn
+    -- one (see onMobDeath); spawning directly is safe and matches how
+    -- onInitialize seeds the camp at boot.
+    ensurePopulation()
     return cs
 end)
 

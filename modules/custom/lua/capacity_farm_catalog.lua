@@ -50,11 +50,28 @@ catalog.templates =
 }
 
 catalog.mobName  = 'Capacity Phantom'  -- display name; also used to count/top-up the pool
-catalog.mobCount = 357                  -- zone-wide population, one per spawn point (max density)
+
+-- POPULATION vs the engine's HARD cap. A zone holds at most 511 *dynamic*
+-- entities at once (dynamic targid range [0x700,0x900) in zone_entities.cpp),
+-- and a killed mob's targid is parked for 60s before it can be reused
+-- (EraseStaleDynamicTargIDs). That same 511-slot pool is ALSO shared with every
+-- player's trusts and pets. 357 left almost no room: while farming, the
+-- 60s-held dead targids + trusts push past 511 and every spawn after that gets
+-- a broken targid (>=0x900 -> "update packets ignored") so the mob is INVISIBLE
+-- to clients -- which looks exactly like "not respawning". 100 is a dense
+-- always-up camp that stays well clear of the cap for realistic Bibiki Bay load
+-- (solo/duo). Pushing it much higher reintroduces the overflow under groups.
+catalog.mobCount = 100
 catalog.minLv    = 150                  -- engine rolls each spawn in [minLv, maxLv]
 catalog.maxLv    = 160
 catalog.maxHP    = 45000                -- low HP = quick kills (-25% from 60000)
 catalog.cpBonus  = 2000                 -- flat bonus Capacity Points to the killer per kill, ON TOP of
                                         -- the engine's level-based award (both x map EXP_RATE). 0 = off.
+
+-- Diagnostic logging. true -> CapacityFarm.lua prints one '[capacity_farm]
+-- refill: ...' line to the map log each time a death actually drives a respawn,
+-- so you can confirm in journalctl that the farm is cycling. Set false once
+-- you've verified kills are coming back.
+catalog.debug    = true
 
 return catalog
