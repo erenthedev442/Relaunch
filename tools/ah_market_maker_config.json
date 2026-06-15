@@ -27,6 +27,6 @@
         "min_sales": 3,
         "npc_multiplier": 2.0,
         "no_data_floor": 1000,
-        "max_buyback_per_pass": 200
+        "max_buyback_per_pass": 1000
     }
 }
