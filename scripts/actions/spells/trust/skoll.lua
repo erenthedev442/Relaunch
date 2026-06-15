@@ -32,7 +32,7 @@
 --   Wizard's (Magic Attack Bonus)
 --
 -- Debuffer kit (enemy):
---   Slow II, Paralyze II, Blind II, Distract II,
+--   Slow II, Paralyze II, Blind II,
 --   Dia III, Silence (50%), Dispel (15%)
 --
 -- Damage (enemy) -- PRIMARY support always comes first; he only nukes in the gaps:
@@ -146,7 +146,7 @@ spellObject.onMobSpawn = function(mob)
     -- ---- Debuff DURATION -- make his enfeebles STICK on tough mobs. -----------
     -- enfeebling_spell.lua::calculateDuration multiplies the final duration by
     -- (1 + ENF_MAG_DURATION/100) BEFORE the resist step, so this stretches every
-    -- enfeeble he lands: Slow / Paralyze / Blind / Distract II, Silence (and
+    -- enfeeble he lands: Slow / Paralyze / Blind, Silence (and
     -- Dia's DoT). It's a CASTER mod, so ONLY Skoll's casts
     -- are affected -- players and other content are untouched. His big MACC above
     -- already keeps partial-resists (which shorten duration) rare, so debuffs land
@@ -403,9 +403,6 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.SLOW      }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.SLOW_II     }, 120)
     mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.PARALYSIS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.PARALYZE_II }, 120)
     mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.BLINDNESS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.BLIND_II    }, 120)
-    -- Distract II -> cuts the enemy's EVASION so the master's melee lands through
-    -- a high-evasion boss. Enfeebling, landed by his big MACC.
-    mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.DISTRACT  }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.DISTRACT_II }, 120)
     -- Dispel -> strip a beneficial status off the enemy. No "enemy has a buff"
     -- gambit condition exists, so it fires on a low 15% chance (a cast with nothing
     -- to strip simply no-effects). Insurance, not a main lever.
