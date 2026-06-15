@@ -1,0 +1,324 @@
+-----------------------------------
+-- job_mastery.lua
+--
+-- JOB MASTERY CHALLENGES: each of the 12 weapon types has a powerful Guardian
+-- boss that spawns in Walk of Echoes. Defeating your chosen Guardian earns
+-- Prime Weapon Trial 4 credit (charVar PW_Trial4_Done = 1).
+--
+-- The fight is solo (honor system — trusts are not blocked, just discouraged).
+-- Death ends the challenge with no reward and no save.
+--
+-- CharVars:
+--   PW_T4_<weapon>_Done   1 when that weapon's Guardian has been killed
+--   PW_Trial4_Done        1 when ANY guardian has been killed (gates Prime Armory)
+--
+-- Globals exposed for the !mastery command:
+--   xi._jm_sessions       live session table
+--   xi._jm_endChallenge   endChallenge(player, reason) function
+--   xi._jm_guardians      GUARDIANS catalog (read-only)
+--
+-- NPC: Weapon Mastery Sage in GM Home, z = -27.
+-- Needs map restart (addOverride hooks for GM_Home + WalkOfEchoes + onPlayerDeath).
+-----------------------------------
+require('modules/module_utils')
+require('scripts/zones/Walk_of_Echoes/Zone')
+require('scripts/zones/GM_Home/Zone')
+
+local m = Module:new('job_mastery')
+
+-----------------------------------
+-- Constants
+-----------------------------------
+local CHALLENGE_ZONE_ID = xi.zone.WALK_OF_ECHOES
+local GROUP_ZONE_ID     = 210
+local WARP_IN  = { x = -380, y = 14, z = 10, rot = 128 }
+local EXIT_WARP = { zoneId = 210, x = -15, y = 0, z = -18, rot = 128 }
+
+-----------------------------------
+-- Boss affix pool (same as Endless Tower)
+-----------------------------------
+local AFFIXES = {
+    { label = 'Fortified',    mods = { [xi.mod.DEF] = 600 },                                     hpMult = 1.3  },
+    { label = 'Frenzied',     mods = { [xi.mod.HASTE_GEAR] = 150, [xi.mod.DOUBLE_ATTACK] = 10 }, hpMult = 1.0  },
+    { label = 'Regenerating', mods = { [xi.mod.REGEN] = 80 },                                    hpMult = 1.0  },
+    { label = 'Empowered',    mods = { [xi.mod.ATT] = 2500, [xi.mod.STR] = 100 },                hpMult = 1.0  },
+    { label = 'Colossal',     mods = {},                                                           hpMult = 2.0  },
+    { label = 'Furious',      mods = { [xi.mod.ATT] = 3000, [xi.mod.HASTE_GEAR] = 100 },         hpMult = 1.2  },
+}
+
+-----------------------------------
+-- Guardian catalog (12 weapon types)
+-- groupId picks from existing HL mob_groups (registered in zone 210 / GM_Home).
+-----------------------------------
+local GUARDIANS =
+{
+    sword      = { label = 'Sword',      bossName = 'Guardian of the Blade',    level = 260, hp = 5000000, groupId = 11365 },
+    dagger     = { label = 'Dagger',     bossName = 'Guardian of the Shadow',   level = 260, hp = 5000000, groupId = 11362 },
+    greatsword = { label = 'Grt.Sword',  bossName = 'Guardian of Ruin',         level = 265, hp = 5500000, groupId = 11367 },
+    axe        = { label = 'Axe',        bossName = 'Guardian of the Axe',      level = 260, hp = 5000000, groupId = 11363 },
+    greataxe   = { label = 'Grt.Axe',   bossName = 'Guardian of the Vanguard', level = 265, hp = 5500000, groupId = 11368 },
+    scythe     = { label = 'Scythe',     bossName = 'Guardian of Catastrophe',  level = 265, hp = 5500000, groupId = 11366 },
+    polearm    = { label = 'Polearm',    bossName = 'Guardian of the Dragon',   level = 265, hp = 5500000, groupId = 11369 },
+    katana     = { label = 'Katana',     bossName = 'Void Blade Guardian',      level = 260, hp = 5000000, groupId = 11362 },
+    greatkatana = { label = 'Grt.Katana', bossName = 'Guardian of the Kensei', level = 265, hp = 5500000, groupId = 11367 },
+    club       = { label = 'Club',       bossName = 'Guardian of the Mace',     level = 260, hp = 5000000, groupId = 11364 },
+    staff      = { label = 'Staff',      bossName = 'Guardian of Elements',     level = 265, hp = 5500000, groupId = 11366 },
+    archery    = { label = 'Archery',    bossName = 'Guardian of the Hunt',     level = 260, hp = 5000000, groupId = 11363 },
+}
+
+-- Page-ordered key list for the 2-page menu (6 per page).
+local GUARDIAN_ORDER = {
+    'sword', 'dagger', 'greatsword', 'axe', 'greataxe', 'scythe',
+    'polearm', 'katana', 'greatkatana', 'club', 'staff', 'archery',
+}
+
+-----------------------------------
+-- Sessions
+-----------------------------------
+local sessions = {}
+xi._jm_sessions  = sessions
+xi._jm_guardians = GUARDIANS
+
+local function getSession(p)   return sessions[p:getName()] end
+local function clearSession(p) sessions[p:getName()] = nil  end
+
+-----------------------------------
+-- Forward declarations
+-----------------------------------
+local endChallenge
+
+-----------------------------------
+-- Complete a guardian challenge
+-----------------------------------
+local function completeChallenge(player, weaponKey)
+    clearSession(player)
+
+    local g = GUARDIANS[weaponKey]
+    player:setCharVar('PW_T4_' .. weaponKey .. '_Done', 1)
+
+    player:printToPlayer(string.format(
+        '[Mastery] The %s has been defeated! %s Challenge complete!',
+        g.bossName, g.label), xi.msg.channel.SYSTEM_3)
+
+    if (player:getCharVar('PW_Trial4_Done') or 0) == 0 then
+        player:setCharVar('PW_Trial4_Done', 1)
+        player:printToPlayer(
+            '[Mastery] Trial 4 complete! Visit the Prime Armory to forge your Prime Weapon.',
+            xi.msg.channel.SYSTEM_3)
+    else
+        player:printToPlayer(
+            '[Mastery] Additional guardian defeated! All weapon challenges accumulate.',
+            xi.msg.channel.SYSTEM_3)
+    end
+
+    player:timer(3000, function(p)
+        p:setPos(EXIT_WARP.x, EXIT_WARP.y, EXIT_WARP.z, EXIT_WARP.rot, EXIT_WARP.zoneId)
+    end)
+end
+
+-----------------------------------
+-- End the challenge early (death / abort / zone-leave)
+-----------------------------------
+endChallenge = function(player, reason)
+    local sess = getSession(player)
+    clearSession(player)
+
+    if sess and sess.boss then
+        pcall(function() sess.boss:setHP(0) end)
+    end
+
+    if reason == 'death' then
+        player:printToPlayer('[Mastery] You were defeated. The Guardian endures.', xi.msg.channel.SYSTEM_3)
+    elseif reason == 'abort' then
+        player:printToPlayer('[Mastery] Challenge aborted.', xi.msg.channel.SYSTEM_3)
+    elseif reason == 'left' then
+        player:printToPlayer('[Mastery] You left the arena. Challenge forfeited.', xi.msg.channel.SYSTEM_3)
+    end
+
+    player:timer(2000, function(p)
+        p:setPos(EXIT_WARP.x, EXIT_WARP.y, EXIT_WARP.z, EXIT_WARP.rot, EXIT_WARP.zoneId)
+    end)
+end
+
+xi._jm_endChallenge = endChallenge
+
+-----------------------------------
+-- Spawn the Guardian
+-----------------------------------
+local function spawnGuardian(player, weaponKey)
+    local g         = GUARDIANS[weaponKey]
+    local affix     = AFFIXES[math.random(#AFFIXES)]
+    local ownerName = player:getName()
+
+    local px, py, pz = player:getXPos(), player:getYPos(), player:getZPos()
+    local mx = px + 12
+    local mz = pz
+
+    local mob = player:getZone():insertDynamicEntity({
+        objtype              = xi.objType.MOB,
+        groupId              = g.groupId,
+        groupZoneId          = GROUP_ZONE_ID,
+        name                 = g.bossName,
+        x = mx, y = py, z = mz,
+        rotation             = 128,
+        minLevel             = g.level,
+        maxLevel             = g.level,
+        detection            = xi.detects.SIGHT_AND_HEARING,
+        isAggroable          = true,
+        releaseIdOnDisappear = true,
+
+        onMobDeath = function(deadMob, killer)
+            if not sessions[ownerName] then return end
+            sessions[ownerName] = nil
+            local resolved = GetPlayerByName(ownerName)
+            if resolved then completeChallenge(resolved, weaponKey) end
+        end,
+    })
+
+    if not mob then
+        player:printToPlayer('[Mastery] ERROR: Guardian failed to spawn. Aborting.', xi.msg.channel.SYSTEM_3)
+        endChallenge(player, 'abort')
+        return
+    end
+
+    mob:setSpawn(mx, py, mz, 128)
+    mob:spawn()
+    mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
+    mob:setModelSize(3)
+
+    for modId, val in pairs(affix.mods) do mob:setMod(modId, val) end
+
+    local finalHp = math.floor(g.hp * affix.hpMult)
+    mob:setMaxHP(finalHp)
+    mob:setHP(finalHp)
+    mob:addEnmity(player, 30000, 30000)
+
+    -- Store ref for abort/death cleanup.
+    local sess = sessions[ownerName]
+    if sess then sess.boss = mob end
+
+    player:printToPlayer(string.format(
+        '[Mastery] The %s appears! [%s — %d HP] Solo fight: defeat it to earn Trial 4.',
+        g.bossName, affix.label, finalHp), xi.msg.channel.SYSTEM_3)
+end
+
+-----------------------------------
+-- Zone-in trigger (called after the warp lands)
+-----------------------------------
+local function startChallenge(player, weaponKey)
+    local g = GUARDIANS[weaponKey]
+    player:printToPlayer(string.format(
+        '[Mastery] %s Mastery Challenge! Defeat the %s. Good luck.',
+        g.label, g.bossName), xi.msg.channel.SYSTEM_3)
+    player:timer(2000, function(p)
+        if sessions[p:getName()] then spawnGuardian(p, weaponKey) end
+    end)
+end
+
+-----------------------------------
+-- NPC menu (2 pages; each page ≤150 bytes including title + all labels)
+-----------------------------------
+local function showMasteryMenu(player, page)
+    -- Print completion status above the menu.
+    local doneList = {}
+    for _, key in ipairs(GUARDIAN_ORDER) do
+        if (player:getCharVar('PW_T4_' .. key .. '_Done') or 0) == 1 then
+            doneList[#doneList + 1] = GUARDIANS[key].label
+        end
+    end
+    if #doneList > 0 then
+        player:printToPlayer('[Mastery] Guardians defeated: ' .. table.concat(doneList, ', '), xi.msg.channel.SYSTEM_3)
+    else
+        player:printToPlayer('[Mastery] No Weapon Guardians defeated yet. Trial 4 incomplete.', xi.msg.channel.SYSTEM_3)
+    end
+
+    local title    = 'Mastery ' .. page .. '/2'
+    local opts     = {}
+    local idxStart = (page == 1) and 1 or 7
+    local idxEnd   = (page == 1) and 6 or 12
+
+    for i = idxStart, idxEnd do
+        local key    = GUARDIAN_ORDER[i]
+        local g      = GUARDIANS[key]
+        local isDone = (player:getCharVar('PW_T4_' .. key .. '_Done') or 0) == 1
+        local lbl    = isDone and (g.label .. ' [Done]') or g.label
+
+        local capturedKey = key
+        table.insert(opts, {
+            lbl,
+            function(p)
+                if getSession(p) then
+                    p:printToPlayer('[Mastery] Active challenge. !mastery abort to reset.', xi.msg.channel.SYSTEM_3)
+                    return
+                end
+                sessions[p:getName()] = { weapon = capturedKey, boss = nil }
+                p:setPos(WARP_IN.x, WARP_IN.y, WARP_IN.z, WARP_IN.rot, CHALLENGE_ZONE_ID)
+            end,
+        })
+    end
+
+    if page == 1 then
+        table.insert(opts, { 'Next ->', function(p) showMasteryMenu(p, 2) end })
+    else
+        table.insert(opts, { '<- Back', function(p) showMasteryMenu(p, 1) end })
+    end
+    table.insert(opts, { 'Leave', function(p) end })
+
+    local snap = { title = title, options = opts }
+    player:timer(30, function(p) p:customMenu(snap) end)
+end
+
+-----------------------------------
+-- Module overrides
+-----------------------------------
+
+-- GM Home: place the Mastery Sage NPC at z = -27.
+m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+    super(zone)
+
+    local npc = zone:insertDynamicEntity({
+        objtype    = xi.objType.NPC,
+        name       = 'Mastery_Sage',
+        packetName = 'Weapon Mastery Sage',
+        look       = 2401,
+        x          =  0.000,
+        y          =  0.000,
+        z          = -27.000,
+        rotation   =  128,
+        widescan   =  1,
+
+        onTrigger = function(player, npc)
+            if getSession(player) then
+                player:printToPlayer('[Mastery] You have an active challenge. Use !mastery abort to reset.', xi.msg.channel.SYSTEM_3)
+                return
+            end
+            player:printToPlayer(
+                '[Mastery] Choose a weapon type. Its Guardian waits in Walk of Echoes. Defeat it to earn Trial 4 of the Prime Weapon path.',
+                xi.msg.channel.SYSTEM_3)
+            showMasteryMenu(player, 1)
+        end,
+    })
+    utils.unused(npc)
+end)
+
+-- Walk of Echoes: start the challenge after zone-in.
+m:addOverride('xi.zones.Walk_of_Echoes.Zone.onZoneIn', function(player, prevZone)
+    local cs   = super(player, prevZone)
+    local sess = getSession(player)
+    -- Only fire if we have a session and the boss hasn't spawned yet.
+    if sess and sess.boss == nil and sess.weapon then
+        startChallenge(player, sess.weapon)
+    end
+    return cs
+end)
+
+-- Death ends the challenge.
+m:addOverride('xi.player.onPlayerDeath', function(player, ...)
+    local cs = super(player, ...)
+    if getSession(player) then
+        player:timer(2000, function(p) endChallenge(p, 'death') end)
+    end
+    return cs
+end)
+
+return m
