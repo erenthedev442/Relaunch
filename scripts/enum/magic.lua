@@ -696,6 +696,7 @@ xi.magic.spell =
     SENTINELS_SCHERZO     =  470,
     FOE_LULLABY_II        =  471,
     PINING_NOCTURNE       =  472,
+    ARIA_OF_PASSION       = 1000,
     REFRESH_II            =  473,
     CURA_II               =  474,
     CURA_III              =  475,

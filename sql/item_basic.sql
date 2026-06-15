@@ -5803,6 +5803,7 @@ INSERT INTO `item_basic` VALUES (5990,0,'scroll_of_instant_stoneskin','instant_s
 INSERT INTO `item_basic` VALUES (5991,0,'farewell_fly','farewell_fly','スカーム帰巣蝶',@USABLE_TYPE,1,@FLAG_NOAUCTION | @FLAG_CANUSE | @FLAG_CANTRADENPC | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (5992,0,'fenestral_key','fenestral_key','髑髏の鍵',@USABLE_TYPE,1,@FLAG_NOAUCTION | @FLAG_CANUSE | @FLAG_CANTRADENPC | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (5993,0,'senroh_frog','senroh_frog','センローフロッグ',@USABLE_TYPE,12,@FLAG_MYSTERY_BOX | @FLAG_MOG_GARDEN | @FLAG_CANUSE | @FLAG_CANTRADENPC,@FISH,0);
+INSERT INTO `item_basic` VALUES (5994,1000,'scroll_of_aria_of_passion','aria_of_passion','情熱のアリア',@USABLE_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_MOG_GARDEN | @FLAG_SCROLL | @FLAG_CANUSE | @FLAG_CANTRADENPC | @FLAG_RARE,@SONGS,5000);
 INSERT INTO `item_basic` VALUES (5995,0,'malicious_perch','malicious_perch','マリシアスパーチ',@USABLE_TYPE,1,@FLAG_MOG_GARDEN | @FLAG_CANUSE | @FLAG_CANTRADENPC,@FISH,0);
 INSERT INTO `item_basic` VALUES (5997,0,'shen','shen','シン',@USABLE_TYPE,1,@FLAG_MOG_GARDEN | @FLAG_CANUSE | @FLAG_CANTRADENPC,@FISH,0);
 INSERT INTO `item_basic` VALUES (5998,0,'bowl_of_adoulinian_soup','adoulinian_soup','アドゥリンスープ',@USABLE_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_MOG_GARDEN | @FLAG_INSCRIBABLE | @FLAG_CANUSE | @FLAG_CANTRADENPC,@SOUPS,0);
