@@ -63,6 +63,13 @@ local function spawnOne()
         -- Instant respawn: each death tops the pool back up to mobCount, so a
         -- kill is immediately replaced and the capacity chain never lapses.
         onMobDeath = function(deadMob, killer)
+            -- Bonus Capacity Points on top of the engine's level-based award, to
+            -- boost the farm. addCapacityPoints self-guards non-PC killers and
+            -- applies map EXP_RATE, so a pet/trust kill simply gets no extra (the
+            -- engine still credits the master the base CP).
+            if killer and catalog.cpBonus and catalog.cpBonus > 0 then
+                killer:addCapacityPoints(catalog.cpBonus)
+            end
             ensurePopulation()
         end,
     })
