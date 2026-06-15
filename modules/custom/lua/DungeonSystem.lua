@@ -3124,6 +3124,43 @@ local showPlus4SlotMenu
 local showPlus4Preview
 
 --------------------------------------------------------------------
+-- NATIVE SHOP HELPER  (FJB 2026-06-14)
+-- Opens the real FFXI shop window (item icons + stat tooltips) for a slice of
+-- items, charging the Infamy CharVar via the setShopCurrencyVar engine hook
+-- (packets/c2s/0x083_shop_buy.cpp) instead of gil -- mirrors the Hunting League
+-- gear vendors. The window holds 16 items; callers with more pass a page index
+-- and surface "Items A-B" page rows themselves. The C++ buy handler does the
+-- Infamy debit, so no Lua purchase/deduction code is needed here.
+--------------------------------------------------------------------
+local SHOP_PAGE_SIZE = 16
+
+local function openInfamyShop(player, items, page)
+    page = page or 1
+    local total = #items
+    if total == 0 then
+        player:printToPlayer('Nothing available here, kupo!', xi.msg.channel.SYSTEM_3)
+        return
+    end
+    local startIdx = (page - 1) * SHOP_PAGE_SIZE + 1
+    local endIdx   = math.min(startIdx + SHOP_PAGE_SIZE - 1, total)
+    if endIdx < startIdx then return end
+
+    player:printToPlayer(
+        string.format('You have %d Infamy. Hover items to preview; buying spends Infamy, kupo!',
+            getInfamy(player)),
+        xi.msg.channel.SYSTEM_3)
+
+    player:timer(50, function(p)
+        p:createShop(endIdx - startIdx + 1)
+        for i = startIdx, endIdx do
+            p:addShopItem(items[i].id, items[i].cost)
+        end
+        p:setShopCurrencyVar(catalog.currencyCv)
+        p:sendMenu(xi.menuType.SHOP)
+    end)
+end
+
+--------------------------------------------------------------------
 -- ROOT MENU - category picker
 --------------------------------------------------------------------
 showVendorRoot = function(player)
@@ -3261,31 +3298,32 @@ showCuratedCat = function(player, cat, page)
 end
 
 showCuratedSub = function(player, cat, sub, page)
-    page = page or 1
-    local g     = groupCurated()
-    local list  = (g[cat] or {})[sub] or {}
-    local total = #list
-    local pages = math.max(1, math.ceil(total / INVENTORY_PAGE_SIZE))
-    page = math.max(1, math.min(page, pages))
-    local startIdx = (page - 1) * INVENTORY_PAGE_SIZE + 1
-    local endIdx   = math.min(startIdx + INVENTORY_PAGE_SIZE - 1, total)
-
-    local opts = {}
-    for i = startIdx, endIdx do
-        local entry = list[i]
-        local it    = entry.item
-        table.insert(opts, {
-            string.format('%s  [%d]', trunc(it.name, 14), it.cost),
-            function(p) showCuratedPreview(p, entry.idx, cat, sub, page) end,
-        })
+    local g    = groupCurated()
+    local list = (g[cat] or {})[sub] or {}
+    local items = {}
+    for _, entry in ipairs(list) do
+        items[#items + 1] = { id = entry.item.id, cost = entry.item.cost }
     end
-    if pages > 1 then
-        if page > 1     then table.insert(opts, { '<< Prev', function(p) showCuratedSub(p, cat, sub, page - 1) end }) end
-        if page < pages then table.insert(opts, { 'Next >>', function(p) showCuratedSub(p, cat, sub, page + 1) end }) end
+
+    -- <=16 items: straight into the native shop window. >16 (e.g. the Ear slot
+    -- once the Sortie earrings are stocked): a tiny page-picker, each row
+    -- opening a 16-item shop slice.
+    if #items <= SHOP_PAGE_SIZE then
+        openInfamyShop(player, items, 1)
+        return
+    end
+
+    local opts  = {}
+    local pages = math.ceil(#items / SHOP_PAGE_SIZE)
+    for pg = 1, pages do
+        local a = (pg - 1) * SHOP_PAGE_SIZE + 1
+        local b = math.min(pg * SHOP_PAGE_SIZE, #items)
+        table.insert(opts, { string.format('Items %d-%d', a, b),
+            function(p) openInfamyShop(p, items, pg) end })
     end
     table.insert(opts, { '<< Back', function(p) showCuratedCat(p, cat, 1) end })
 
-    vendorMenu.title = string.format('%s  [%d Inf]', trunc(sub, 12), getInfamy(player))
+    vendorMenu.title   = string.format('%s  [%d Inf]', trunc(sub, 12), getInfamy(player))
     vendorMenu.options = opts
     openMenu(player, vendorMenu)
 end
@@ -3393,32 +3431,12 @@ showCuratedSetDetail = function(player, setIdx, fromPage)
         return
     end
 
-    local opts = {}
-    -- Drop the shared set-name prefix from each row (the set name is in the
-    -- title). Falls back to the full name when there's no common word prefix,
-    -- and openMenu()'s dedupe guard still backstops any residual collision.
-    local pieces = setEntry.pieces or {}
-    local names  = {}
-    for _, piece in ipairs(pieces) do names[#names + 1] = piece.name or '' end
-    local cut = commonWordPrefixLen(names)
-    for pieceIdx, piece in ipairs(pieces) do
-        local display = piece.name or ''
-        if cut > 0 then
-            local short = display:sub(cut + 1)
-            if short ~= '' and not short:match('^%s*$') then
-                display = short
-            end
-        end
-        table.insert(opts, {
-            string.format('%s  [%d]', trunc(display, 16), piece.cost),
-            function(p) showCuratedSetPiecePreview(p, setIdx, pieceIdx, fromPage) end,
-        })
+    -- The set's pieces (<=5) go straight into the native shop window.
+    local items = {}
+    for _, piece in ipairs(setEntry.pieces or {}) do
+        items[#items + 1] = { id = piece.id, cost = piece.cost }
     end
-    table.insert(opts, { '<< Back', function(p) showCuratedSetsMenu(p, fromPage) end })
-
-    vendorMenu.title   = trunc(setEntry.set, 22)
-    vendorMenu.options = opts
-    openMenu(player, vendorMenu)
+    openInfamyShop(player, items, 1)
 end
 
 showCuratedSetPiecePreview = function(player, setIdx, pieceIdx, fromPage)
@@ -3541,30 +3559,16 @@ showPlus4SlotMenu = function(player, job, setIdx, jobPage)
         showPlus4SetMenu(player, job, jobPage)
         return
     end
-    local opts = {}
-    local cost = catalog.plus4Cost or 200
+    -- The set's 5 pieces (all at the flat +4 cost) go into the native shop.
+    local cost  = catalog.plus4Cost or 200
+    local items = {}
     for _, slot in ipairs(PLUS4_SLOT_ORDER) do
         local piece = (setEntry.pieces or {})[slot]
         if piece then
-            -- Label by SLOT, not piece name. All five pieces in a reforge
-            -- set share a long common prefix (e.g. "Caballarius ") that
-            -- trunc(14) collapses to one identical string; combined with
-            -- customMenu's first-match routing that made every row buy the
-            -- head piece. The set name is already in the title, and the
-            -- full piece name + stats show in the preview after clicking.
-            local slotLabel = slot:sub(1, 1):upper() .. slot:sub(2)
-            table.insert(opts, {
-                string.format('%s  [%d]', slotLabel, cost),
-                function(p) showPlus4Preview(p, job, setIdx, slot, jobPage) end,
-            })
+            items[#items + 1] = { id = piece.id, cost = cost }
         end
     end
-    table.insert(opts, { '<< Back', function(p) showPlus4SetMenu(p, job, jobPage) end })
-
-    -- Short title: job + set name only (no balance - saves ~15 bytes).
-    vendorMenu.title = string.format('%s: %s', job, trunc(setEntry.set, 12))
-    vendorMenu.options = opts
-    openMenu(player, vendorMenu)
+    openInfamyShop(player, items, 1)
 end
 
 showPlus4Preview = function(player, job, setIdx, slot, jobPage)
