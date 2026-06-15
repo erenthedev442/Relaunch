@@ -76,7 +76,7 @@ _ROW_RE = re.compile(
     r"name\s*=\s*['\"]([^'\"]+)['\"]\s*,\s*"
     r"cost\s*=\s*\d+\s*,\s*"
     r"jobs\s*=\s*['\"]([^'\"]+)['\"]\s*\}\s*\)"
-    r"\s*--\s*(DPS|WS|TANK|CASTER|HEAL)\s+score\s+(\d+)",
+    r"\s*--\s*(DPS|WS|TANK|CASTER|HEAL|PET)\s+score\s+(\d+)",
 )
 # Match BOTH binding shapes in the wild:
 #   local b = catalog.bronze                            ← armor + accessory

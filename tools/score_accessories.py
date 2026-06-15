@@ -160,6 +160,9 @@ ROLE_JOBS = {
     'TANK':   ['PLD', 'RUN', 'WAR', 'NIN'],
     'CASTER': ['BLM', 'SCH', 'GEO', 'SMN', 'RDM'],
     'HEAL':   ['WHM', 'SCH', 'RDM', 'BRD', 'GEO'],
+    # PET role: pet/avatar accessories (incl. the SMN sachets) are SMN's
+    # real BiS and never scored under CASTER. BST/PUP share the pet mods.
+    'PET':    ['SMN', 'BST', 'PUP'],
 }
 ROLE_MASKS = {role: sum(JOB[j] for j in jobs) for role, jobs in ROLE_JOBS.items()}
 
@@ -215,6 +218,17 @@ ROLE_WEIGHTS = {
         30: 1.0,
         160: -0.03, 163: -0.03,             # all/magic dmg taken /100
     },
+    'PET': {                                # avatar / pet performance (SMN/BST/PUP)
+        126: 4.0,                           # BP_DAMAGE (Blood Pact: Rage dmg %)
+        994: 3.0,                           # PET_ATTR_BONUS
+        990: 1.5, 991: 1.5, 992: 1.5, 993: 1.5,  # PET atk/def, acc/eva, mab/mdb, macc/meva
+        995: 1.0,                           # PET_TP_BONUS
+        117: 2.0,                           # SUMMONING (summoning magic skill)
+        346: 2.0,                           # PERPETUATION_REDUCTION
+        357: 1.5, 541: 1.5,                 # BP_DELAY, BP_DELAY_II
+        1040: 5.0,                          # AVATAR_LVL_BONUS
+        5: 0.03, 6: 0.5,                    # MP, MPP
+    },
 }
 
 DD_ALWAYS_LATENTS = {7, 10, 41}
@@ -240,10 +254,14 @@ _ADDED_WEIGHTS = {
                109: 0.3, 108: 0.5, 166: 1.0, 113: 0.2},
     'CASTER': {114: 0.5, 115: 0.5, 168: 0.5, 113: 0.2},
     'HEAL':   {168: 0.5, 112: 0.5, 519: 0.5, 113: 0.2},
+    'PET':    {113: 0.2},   # shared baseline carried by every role
 }
 for _r, _w in _ADDED_WEIGHTS.items():
     ROLE_WEIGHTS[_r].update(_w)
 MOD_SANITY_CAP.update({31: 300, 507: 300, 175: 2000, 361: 300, 430: 20, 1144: 100, 949: 10})
+# PET-stat caps so a single outlier value can't dominate the ranking.
+MOD_SANITY_CAP.update({126: 50, 990: 50, 991: 50, 992: 50, 993: 50, 994: 50,
+                       995: 50, 117: 100, 346: 30, 357: 100, 541: 100, 1040: 10})
 
 
 def _clamp(mid: int, val: int) -> int:
@@ -297,6 +315,26 @@ SLOT_NAMES = {
 # ============================================================================
 SORTIE_EARRING_IDS = set(range(25422, 25549, 6))   # 22 ids, step 6
 assert len(SORTIE_EARRING_IDS) == 22, "expected 22 Sortie JSE +2 earrings"
+
+
+# ============================================================================
+# SMN sachets — forced AMMO picks (owner request 2026-06-14).
+# These five SMN-only avatar items (Eminent / Dashavatara / Arasy / Sancus /
+# Sancus +1) carry avatar/Blood-Pact mods (AVATAR_LVL_BONUS, BP_DELAY[_II]),
+# so they score well under the new PET role — BUT they live in the AMMO slot
+# (slot bitmask 8) with itype @WEAPON_TYPE, so the normal candidate loop drops
+# them on BOTH the SLOT_NAMES check and the @EQUIPMENT_TYPE check. We surface
+# them anyway by scoring them directly off the DB (same as the Sortie earrings)
+# and emitting them into the Accessory NPC's AMMO slot. Sancus Sachet +1
+# (21395) is the BiS -> gold; the rest -> silver. {id: tier}.
+SACHET_AMMO_TIER = {
+    21395: 'gold',     # sancus_sachet_+1  (BiS)
+    21394: 'silver',   # sancus_sachet
+    21393: 'silver',   # arasy_sachet
+    21388: 'silver',   # dashavatara_sachet
+    21383: 'silver',   # eminent_sachet
+}
+SACHET_IDS = set(SACHET_AMMO_TIER)
 
 
 # ============================================================================
@@ -374,7 +412,7 @@ for iid in sorted(SORTIE_EARRING_IDS):
     else:
         # No positive role score — fall back to the wearer's primary role so
         # build_infamy_top_picks' "<ROLE> score <N>" regex still matches.
-        best_role = next((r for r in ('DPS', 'TANK', 'CASTER', 'HEAL', 'WS')
+        best_role = next((r for r in ('DPS', 'TANK', 'CASTER', 'HEAL', 'WS', 'PET')
                           if e['jobs'] & ROLE_MASKS[r]), 'DPS')
         best_score = 0.0
     sortie_earrings.append({
@@ -382,6 +420,45 @@ for iid in sorted(SORTIE_EARRING_IDS):
         'role': best_role, 'score': best_score,
     })
 print(f"Sortie JSE +2 earrings for Infamy override: {len(sortie_earrings)}")
+
+
+# ----------------------------------------------------------------------------
+# SMN sachets — build full candidate-shaped rows (forced into the WAIST slot).
+# They're dropped by the candidate loop (ammo slot + @WEAPON_TYPE), so score
+# them directly here. Injected into the bronze/silver/gold waist buckets after
+# role-balanced selection so they're guaranteed to appear for SMN.
+# ----------------------------------------------------------------------------
+sachet_rows: list[dict] = []
+for iid, tier in SACHET_AMMO_TIER.items():
+    info = items_base.get(iid)
+    e = equip.get(iid)
+    if not info or not e:
+        print(f"  [SACHET] WARN: id {iid} not found in item_basic/item_equipment — skipped")
+        continue
+    per = {}
+    for role in ROLE_WEIGHTS:
+        if (e['jobs'] & ROLE_MASKS[role]) == 0:
+            continue
+        sc = score_item(iid, role)
+        if sc > 0:
+            per[role] = sc
+    if not per:
+        # No weighted mod hit — still surface it under PET so SMN can buy it.
+        per = {'PET': 0.0}
+    sachet_rows.append({
+        'id':      iid,
+        'name':    info['name'],
+        'slot':    'ammo',
+        'jobs':    e['jobs'],
+        'ilevel':  e['ilevel'],
+        'level':   e['level'],
+        'is_rare': info['is_rare'],
+        'is_ex':   info['is_ex'],
+        'roles':   per,
+        'ceiling': max(per.values()),
+        'tier':    tier,
+    })
+print(f"SMN sachets forced into ammo: {len(sachet_rows)}")
 
 
 by_slot: dict[str, list[dict]] = defaultdict(list)
@@ -448,7 +525,7 @@ tier_slot_count = Counter((c['tier'], c['slot']) for c in candidates)
 print("\nPiece counts by tier x slot:")
 for tier in ('bronze', 'silver', 'gold'):
     row = "  " + tier.capitalize().ljust(8)
-    for slot in ('neck', 'waist', 'ear', 'ring', 'back'):
+    for slot in ('neck', 'waist', 'ear', 'ring', 'back', 'ammo'):
         row += f"{slot}:{tier_slot_count[(tier, slot)]:>4}  "
     print(row)
 
@@ -492,8 +569,11 @@ def role_balanced_picks(pool: list[dict], n: int) -> list[dict]:
 
     picked: list[dict] = []
     seen: set[int] = set()
-    cursor = {role: 0 for role in by_role}
-    roles = ['DPS', 'TANK', 'CASTER', 'HEAL', 'WS']
+    roles = ['DPS', 'TANK', 'CASTER', 'HEAL', 'WS', 'PET']
+    # cursor keyed by the full role list (not just roles present in this pool)
+    # so an empty/partial pool -- e.g. the curated-only 'ammo' slot whose
+    # candidate pool is empty -- can't KeyError on cursor[role] below.
+    cursor = {role: 0 for role in roles}
     while len(picked) < n:
         progress = False
         for role in roles:
@@ -524,7 +604,7 @@ def role_balanced_picks(pool: list[dict], n: int) -> list[dict]:
 
 buckets: dict[tuple[str, str], list[dict]] = defaultdict(list)
 for tier in ('bronze', 'silver', 'gold'):
-    for slot in ('neck', 'waist', 'ear', 'ring', 'back'):
+    for slot in ('neck', 'waist', 'ear', 'ring', 'back', 'ammo'):
         pool = [c for c in candidates if c['tier'] == tier and c['slot'] == slot]
         buckets[(tier, slot)] = role_balanced_picks(pool, TOP_PER_BUCKET)
 
@@ -553,13 +633,27 @@ for (tier, slot), picks in buckets.items():
     buckets[(tier, slot)] = picks
 
 
+# ----------------------------------------------------------------------------
+# Inject the SMN sachets into their tier's AMMO bucket (forced — they can't
+# flow through the scored candidate pool because they're ammo-slot/@WEAPON_TYPE
+# items). Prepended so they surface at the top of the ammo list for SMN, and
+# id-deduped so a re-run can't double them.
+# ----------------------------------------------------------------------------
+for sr in sachet_rows:
+    key = (sr['tier'], 'ammo')
+    existing = buckets.get(key, [])
+    if any(c['id'] == sr['id'] for c in existing):
+        continue
+    buckets[key] = [sr] + existing
+
+
 # ============================================================================
 # Pretty print top picks
 # ============================================================================
 print("\nTop picks per (tier, slot):\n")
 for tier in ('bronze', 'silver', 'gold'):
     print(f"=== {tier.upper()} (cost {TIER_COST[tier]} medals) ===")
-    for slot in ('neck', 'waist', 'ear', 'ring', 'back'):
+    for slot in ('neck', 'waist', 'ear', 'ring', 'back', 'ammo'):
         print(f"  -- {slot} --")
         for c in buckets[(tier, slot)]:
             top_role, top_score = max(c['roles'].items(), key=lambda kv: kv[1])
@@ -646,7 +740,7 @@ lines: list[str] = [
     "-- Helper: empty slot tables for a tier",
     "-----------------------------------",
     "local function emptySlots()",
-    "    return { neck = {}, waist = {}, ear = {}, ring = {}, back = {} }",
+    "    return { neck = {}, waist = {}, ear = {}, ring = {}, back = {}, ammo = {} }",
     "end",
     "",
 ]
@@ -665,7 +759,7 @@ for tier in ('bronze', 'silver', 'gold'):
     lines.append(f"catalog.{tier} = emptySlots()")
     lines.append(f"local {var} = catalog.{tier}")
     lines.append("")
-    for slot in ('neck', 'waist', 'ear', 'ring', 'back'):
+    for slot in ('neck', 'waist', 'ear', 'ring', 'back', 'ammo'):
         picks = buckets[(tier, slot)]
         if not picks:
             continue
@@ -704,7 +798,7 @@ lines.append("-----------------------------------")
 lines.append("catalog.infamy = emptySlots()")
 lines.append("local inf = catalog.infamy")
 lines.append("")
-for slot in ('neck', 'waist', 'ear', 'ring', 'back'):
+for slot in ('neck', 'waist', 'ear', 'ring', 'back', 'ammo'):
     rows = sorted((c for c in candidates if c['tier'] == 'infamy' and c['slot'] == slot),
                   key=lambda x: -x['ceiling'])
     if not rows:

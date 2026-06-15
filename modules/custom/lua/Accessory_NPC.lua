@@ -48,8 +48,8 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
         end)
     end
 
-    local SLOT_ORDER = { 'neck', 'waist', 'ear', 'ring', 'back' }
-    local SLOT_LABEL = { neck = 'Neck', waist = 'Waist', ear = 'Ear', ring = 'Ring', back = 'Back' }
+    local SLOT_ORDER = { 'neck', 'waist', 'ear', 'ring', 'back', 'ammo' }
+    local SLOT_LABEL = { neck = 'Neck', waist = 'Waist', ear = 'Ear', ring = 'Ring', back = 'Back', ammo = 'Ammo' }
 
     local function buildSlotMenu(player, menu, tierKey, returnFunc)
         local tierData  = catalog[tierKey]

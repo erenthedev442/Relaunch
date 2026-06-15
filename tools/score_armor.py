@@ -170,6 +170,10 @@ ROLE_JOBS = {
     'TANK':   ['PLD', 'RUN', 'WAR', 'NIN'],
     'CASTER': ['BLM', 'SCH', 'GEO', 'SMN', 'RDM'],
     'HEAL':   ['WHM', 'SCH', 'RDM', 'BRD', 'GEO'],
+    # PET role: pet/avatar gear is SMN's real BiS and never scored under
+    # CASTER (which only rewards nuke stats), so SMN pet pieces scored ~0
+    # and never got picked. BST/PUP share the same pet-stat mods.
+    'PET':    ['SMN', 'BST', 'PUP'],
 }
 ROLE_MASKS = {role: sum(JOB[j] for j in jobs) for role, jobs in ROLE_JOBS.items()}
 
@@ -226,6 +230,21 @@ ROLE_WEIGHTS = {
         30: 1.0,                            # MACC
         160: -0.03, 163: -0.03,             # all/magic dmg taken /100
     },
+    'PET': {                                # avatar / pet performance (SMN/BST/PUP)
+        126: 4.0,                           # BP_DAMAGE (Blood Pact: Rage dmg %) — key SMN DD stat
+        994: 3.0,                           # PET_ATTR_BONUS (pet attributes)
+        990: 1.5,                           # PET_ATK_DEF (pet atk/def)
+        991: 1.5,                           # PET_ACC_EVA (pet acc/eva)
+        992: 1.5,                           # PET_MAB_MDB (pet magic attack/def)
+        993: 1.5,                           # PET_MACC_MEVA (pet magic acc/eva)
+        995: 1.0,                           # PET_TP_BONUS
+        117: 2.0,                           # SUMMONING (summoning magic skill)
+        346: 2.0,                           # PERPETUATION_REDUCTION (MP/tick)
+        357: 1.5,                           # BP_DELAY
+        541: 1.5,                           # BP_DELAY_II
+        1040: 5.0,                          # AVATAR_LVL_BONUS
+        5: 0.03, 6: 0.5,                    # MP, MPP (perpetuation pool)
+    },
 }
 
 # Latents that count at FULL weight for DD (engaged/TP/WS contexts).
@@ -268,10 +287,14 @@ _ADDED_WEIGHTS = {
                109: 0.3, 108: 0.5, 166: 1.0, 113: 0.2},
     'CASTER': {114: 0.5, 115: 0.5, 168: 0.5, 113: 0.2},
     'HEAL':   {168: 0.5, 112: 0.5, 519: 0.5, 113: 0.2},
+    'PET':    {113: 0.2},   # shared baseline (CONVERSION etc.) carried by every role
 }
 for _r, _w in _ADDED_WEIGHTS.items():
     ROLE_WEIGHTS[_r].update(_w)
 MOD_SANITY_CAP.update({31: 300, 507: 300, 175: 2000, 361: 300, 430: 20, 1144: 100, 949: 10})
+# PET-stat caps so a single outlier value can't dominate the ranking.
+MOD_SANITY_CAP.update({126: 50, 990: 50, 991: 50, 992: 50, 993: 50, 994: 50,
+                       995: 50, 117: 100, 346: 30, 357: 100, 541: 100, 1040: 10})
 
 
 def _clamp(mid: int, val: int) -> int:
