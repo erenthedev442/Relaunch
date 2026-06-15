@@ -1742,6 +1742,7 @@ catalog.vendorItems =
     { id = 25953, name = 'Flamma Gambieras +2',  cost = 400, stats = { 'Feet. Ambuscade.', 'DA+6, Store TP+6, Haste+2%.' } },
     -- Accessories
     { id = 22212, name = 'Utu Grip',             cost = 300, stats = { 'Grip (sub). Acc/Atk + skill.', 'DD grip.' } },
+    { id = 22298, name = 'Aurgelmir Orb +1',    cost = 250, stats = { 'Grip (sub). Lv.99. STR/DEX/VIT+7, ATT+10, Store TP+5.', 'Melee grip. WAR/MNK/THF/PLD/DRK/SAM/NIN/DRG and more.' } },
     { id = 21431, name = 'Coiste Bodhar',        cost = 300, stats = { 'Earring. Double Attack + WS damage.', 'Top DD earring (Omen).' } },
     { id = 26022, name = 'Vim Torque +1',        cost = 300, stats = { 'Neck. DEF+15.', 'Regain+20 while weapon drawn (latent).' } },
     { id = 26118, name = 'Sroda Earring',        cost = 300, stats = { 'Earring. STR + WS damage.', 'DD earring.' } },
@@ -1788,6 +1789,7 @@ catalog.vendorItems =
     { id = 26015, name = 'Combatants Torque',   cost =  300, stats = { 'Neck. DD (Accuracy / Attack).', 'EX/RARE.' } },
     { id = 26003, name = 'Baetyl Pendant',      cost =  300, stats = { 'Neck. Caster (Magic Attack).', 'EX/RARE.' } },
     { id = 27595, name = 'Argochampsa Mantle',  cost =  300, stats = { 'Back. Caster cape (Magic Acc / Atk).', 'EX/RARE.' } },
+    { id = 26251, name = "Toutatis's Cape",     cost =  300, stats = { 'Back. THF only. DEF+16, Crit Rate+10%, Triple Atk Dmg+20%.', 'EX/RARE. Omen drop.' } },
     { id = 28420, name = 'Fotia Belt',          cost =  250, stats = { 'Waist. Universal WS belt (WS damage).', 'EX/RARE.' } },
     { id = 27510, name = 'Fotia Gorget',        cost =  250, stats = { 'Neck. Universal WS gorget (WS damage).', 'EX/RARE.' } },
 

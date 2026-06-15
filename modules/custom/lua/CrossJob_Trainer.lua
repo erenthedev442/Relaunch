@@ -37,6 +37,13 @@ end
 
 local GIL_STR = commafy(GIL_COST)
 
+-- Hard cap on cross-job ability purchases per character. The ability-recast
+-- packet (GP_SERV_COMMAND_ABIL_RECAST) holds at most 31 entries total across
+-- native job abilities AND borrowed ones. Keeping cross-job purchases at 30
+-- leaves headroom for at least 1 native ability and prevents the send-buffer
+-- overflow that crashes the map server.
+local MAX_CROSS_JOB_ABILITIES = 30
+
 -- Group-menu pagination: keep each page's customMenu payload under the
 -- ~150-byte cap. 6 abilities + nav + Back per page stays safely within budget,
 -- so a group can hold any number of abilities without silently truncating the
@@ -204,6 +211,13 @@ showConfirmMenu = function(player, groupIndex, ab)
         return
     end
 
+    local owned = player:getCrossJobAbilities()
+    if #owned >= MAX_CROSS_JOB_ABILITIES then
+        player:printToPlayer(string.format('[ Cross-Job Trainer ] You have reached the limit of %d borrowed abilities.', MAX_CROSS_JOB_ABILITIES), xi.msg.channel.SYSTEM_3)
+        showGroupMenu(player, groupIndex)
+        return
+    end
+
     local options =
     {
         {
@@ -212,6 +226,13 @@ showConfirmMenu = function(player, groupIndex, ab)
                 -- Re-check on confirm (state may have changed).
                 if playerArg:hasCrossJobAbility(ab.id) then
                     playerArg:printToPlayer(string.format('You already know %s.', ab.name), xi.msg.channel.SYSTEM_3)
+                    showGroupMenu(playerArg, groupIndex)
+                    return
+                end
+
+                local ownedNow = playerArg:getCrossJobAbilities()
+                if #ownedNow >= MAX_CROSS_JOB_ABILITIES then
+                    playerArg:printToPlayer(string.format('[ Cross-Job Trainer ] You have reached the limit of %d borrowed abilities.', MAX_CROSS_JOB_ABILITIES), xi.msg.channel.SYSTEM_3)
                     showGroupMenu(playerArg, groupIndex)
                     return
                 end

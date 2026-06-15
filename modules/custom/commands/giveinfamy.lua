@@ -13,7 +13,7 @@ local commandObj = {}
 commandObj.cmdprops =
 {
     permission = 1,
-    parameters = 'si',
+    parameters = 'ss',
 }
 
 commandObj.onTrigger = function(player, a1, a2)

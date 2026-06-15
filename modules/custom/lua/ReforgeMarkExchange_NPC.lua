@@ -43,7 +43,11 @@ showExchangeMenu = function(player)
         local haveFrom = player:getCharVar(ex.fromCv) or 0
         local maxBatch = math.floor(haveFrom / ex.rate)
         table.insert(opts, {
-            string.format('%s  (have %d %s)', ex.label, haveFrom, ex.fromName),
+            -- Keep labels short: "2 AF->1 Relic  [42]" stays well under the
+            -- 150-byte customMenu cap. The old "(have N AF Marks)" suffix made
+            -- the three-option main menu 178 bytes, truncating AF->Empy and
+            -- Close so they were unclickable.
+            string.format('%s  [%d]', ex.label, haveFrom),
             function(p) showBatchMenu(p, ex, maxBatch) end,
         })
     end
@@ -63,7 +67,9 @@ showBatchMenu = function(player, ex, maxBatch)
         if qty <= maxBatch then
             local cost = qty * ex.rate
             table.insert(opts, {
-                string.format('Convert %d  (costs %d %s)', qty, cost, ex.fromName),
+                -- "x5  [10 Relic]" style keeps all 5 batch sizes + Back under
+                -- 110 bytes even for the longest currency name (Relic->Empy).
+                string.format('x%d  [%d %s]', qty, cost, ex.fromShort),
                 function(p)
                     local have = p:getCharVar(ex.fromCv) or 0
                     if have < cost then
@@ -83,7 +89,7 @@ showBatchMenu = function(player, ex, maxBatch)
         end
     end
     table.insert(opts, { 'Back', function(p) showExchangeMenu(p) end })
-    local snapshot = { title = string.format('Convert to %s', ex.toName), options = opts }
+    local snapshot = { title = string.format('%s->%s', ex.fromShort, ex.toShort), options = opts }
     player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
