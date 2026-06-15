@@ -45,6 +45,11 @@ local COMPANION_PET = xi.petId.LYNX_FAMILIAR -- small BST jug-pet cat; swap to t
 local CHECK_MS      = 10000              -- keeper re-check interval
 local FIRST_MS      = 5000               -- first spawn, after a zone-in settles
 
+-- SYSTEM DISABLED 2026-06-15 (admin request): no Ascension companions for anyone.
+-- The module still loads; the onGameIn override below just early-returns so no
+-- keeper loop is ever scheduled. Flip back to false (+ a map restart) to re-enable.
+local DISABLED      = true
+
 local genByName = {}
 
 local function isAscended(player)
@@ -80,6 +85,9 @@ end
 m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
     super(player, gameLogin, zoning)
 
+    if DISABLED then
+        return  -- companion system turned off -- nobody gets a companion.
+    end
     if optedOut(player) then
         return  -- opted out of the shadow companion (name or charVar) -- no companion.
     end
