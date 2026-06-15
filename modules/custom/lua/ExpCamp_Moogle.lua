@@ -34,6 +34,17 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         { label = '50-60 Western Altepa Desert', zone = xi.zone.WESTERN_ALTEPA_DESERT, x =  419.33, y =  -3.12, z =   11.68, r =  32 },
         -- Lv 60-75
         { label = '60-75 The Boyahda Tree',      zone = xi.zone.THE_BOYAHDA_TREE,      x =   88.00, y = -15.00, z = -217.00, r =   0 },
+        -- Lv 75-99: Aht Urhgan -> Adoulin Apex. The Aht Urhgan camps drop at the
+        -- zone default (0,0,0); refine with !pos in-game for a precise spot. The
+        -- Adoulin coords are verified (shared with the Warpman 'Apex Zones' tier).
+        { label = '75-85 Bhaflau Thickets',      zone = xi.zone.BHAFLAU_THICKETS,      x =    0.00, y =   0.00, z =    0.00, r = 128 },
+        { label = '75-85 Mount Zhayolm',         zone = xi.zone.MOUNT_ZHAYOLM,         x =    0.00, y =   0.00, z =    0.00, r = 128 },
+        { label = '80-90 Caedarva Mire',         zone = xi.zone.CAEDARVA_MIRE,         x =    0.00, y =   0.00, z =    0.00, r = 128 },
+        { label = '85-95 Ceizak',                zone = xi.zone.CEIZAK_BATTLEGROUNDS,  x = -107.00, y =   3.00, z =  295.00, r = 128 },
+        { label = '90-99 Yorcia Weald',          zone = xi.zone.YORCIA_WEALD,          x = -420.00, y =   0.00, z =  -62.00, r =  64 },
+        { label = '90-99 Marjami Ravine',        zone = xi.zone.MARJAMI_RAVINE,        x =  -23.00, y =   0.00, z =  174.00, r =   0 },
+        { label = '95-99 Foret Hennetiel',       zone = xi.zone.FORET_DE_HENNETIEL,    x = -193.00, y =  -0.50, z = -252.00, r = 128 },
+        { label = '95-99 Kamihr Drifts',         zone = xi.zone.KAMIHR_DRIFTS,         x =  210.00, y =  20.30, z =  315.00, r = 192 },
     }
 
     local PAGE_SIZE  = 4
