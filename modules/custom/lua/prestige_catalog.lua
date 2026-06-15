@@ -133,18 +133,18 @@ return
             name    = 'Diabolos',
             label   = 'Diabolos, the Dream Devourer',
             level   = 150,
-            hpBoost = 26,
+            hpBoost = 39,
             cry     = '"Close your eyes... this nightmare is the last thing you will know."',
             mods =
             {
-                [xi.mod.DEF] = 1980,
-                [xi.mod.ATT] = 8400,
-                [xi.mod.ACC] = 1800,
-                [xi.mod.EVASION] = 480,
-                [xi.mod.MATT] = 600,
-                [xi.mod.MACC] = 840,
-                [xi.mod.MEVA] = 840,
-                [xi.mod.MDEF] = 840,
+                [xi.mod.DEF] = 2475,
+                [xi.mod.ATT] = 12600,
+                [xi.mod.ACC] = 2700,
+                [xi.mod.EVASION] = 720,
+                [xi.mod.MATT] = 900,
+                [xi.mod.MACC] = 1260,
+                [xi.mod.MEVA] = 1260,
+                [xi.mod.MDEF] = 1260,
                 [xi.mod.INT]        = 500,
                 [xi.mod.MND]        = 400,
                 [xi.mod.HASTE_GEAR] = 250,
@@ -156,16 +156,16 @@ return
             name    = 'Medusa',
             label   = 'Medusa, the Gorgon Queen',
             level   = 150,
-            hpBoost = 29,
+            hpBoost = 44,
             cry     = '"Look upon me... and be still, forever."',
             mods =
             {
-                [xi.mod.DEF] = 2310,
-                [xi.mod.ATT] = 10200,
-                [xi.mod.ACC] = 2040,
-                [xi.mod.EVASION] = 600,
-                [xi.mod.MEVA] = 600,
-                [xi.mod.MDEF] = 600,
+                [xi.mod.DEF] = 2887,
+                [xi.mod.ATT] = 15300,
+                [xi.mod.ACC] = 3060,
+                [xi.mod.EVASION] = 900,
+                [xi.mod.MEVA] = 900,
+                [xi.mod.MDEF] = 900,
                 [xi.mod.STR]           = 400,
                 [xi.mod.DEX]           = 400,
                 [xi.mod.DOUBLE_ATTACK] = 22,
@@ -178,16 +178,16 @@ return
             name    = 'Odin',
             label   = 'Odin, the Doombringer',
             level   = 150,
-            hpBoost = 34,
+            hpBoost = 51,
             cry     = '"Zantetsuken. There is no wound -- only the end."',
             mods =
             {
-                [xi.mod.DEF] = 2640,
-                [xi.mod.ATT] = 12000,
-                [xi.mod.ACC] = 2640,
-                [xi.mod.EVASION] = 780,
-                [xi.mod.MEVA] = 840,
-                [xi.mod.MDEF] = 840,
+                [xi.mod.DEF] = 3300,
+                [xi.mod.ATT] = 18000,
+                [xi.mod.ACC] = 3960,
+                [xi.mod.EVASION] = 1170,
+                [xi.mod.MEVA] = 1260,
+                [xi.mod.MDEF] = 1260,
                 [xi.mod.STR]           = 600,
                 [xi.mod.DEX]           = 600,
                 [xi.mod.HASTE_GEAR]    = 300,
@@ -242,80 +242,80 @@ return
         -- summon their own three bosses (one Court per 10 ascensions).
         tiers =
         {
-            { minLevel = 0, mult = 1.50, name = 'The Nightmare Court' },  -- P.Lv 0-9: Diabolos/Medusa/Odin (top-level roster)
+            { minLevel = 0, mult = 1.00, name = 'The Nightmare Court' },  -- P.Lv 0-9: Diabolos/Medusa/Odin (top-level roster)
 
-            { minLevel = 10, mult = 1.50, name = 'The Voidwalkers',
+            { minLevel = 10, mult = 1.00, name = 'The Voidwalkers',
               roster =
               {
                   order  = { 11381, 11382, 11383 },
                   bosses =
                   {
-                      [11381] = { name = 'Sarameya', label = 'Sarameya, the Abyssal Hound', level = 150, hpBoost = 31,
+                      [11381] = { name = 'Sarameya', label = 'Sarameya, the Abyssal Hound', level = 150, hpBoost = 47,
                                   cry = '"From the rift I was loosed. I will drag you back through it."',
-                                  mods = { [xi.mod.DEF] = 3300, [xi.mod.ATT] = 15600, [xi.mod.ACC] = 3240, [xi.mod.EVASION] = 720, [xi.mod.MATT] = 720, [xi.mod.MACC] = 1080, [xi.mod.MEVA] = 960, [xi.mod.MDEF] = 1080, [xi.mod.STR] = 600, [xi.mod.VIT] = 500, [xi.mod.DOUBLE_ATTACK] = 30, [xi.mod.HASTE_GEAR] = 250, [xi.mod.REGEN] = 1100 } },
-                      [11382] = { name = 'Kaggen', label = 'Kaggen, the Devouring Swarm', level = 150, hpBoost = 31,
+                                  mods = { [xi.mod.DEF] = 4125, [xi.mod.ATT] = 23400, [xi.mod.ACC] = 4860, [xi.mod.EVASION] = 1080, [xi.mod.MATT] = 1080, [xi.mod.MACC] = 1620, [xi.mod.MEVA] = 1440, [xi.mod.MDEF] = 1620, [xi.mod.STR] = 600, [xi.mod.VIT] = 500, [xi.mod.DOUBLE_ATTACK] = 30, [xi.mod.HASTE_GEAR] = 250, [xi.mod.REGEN] = 1100 } },
+                      [11382] = { name = 'Kaggen', label = 'Kaggen, the Devouring Swarm', level = 150, hpBoost = 47,
                                   cry = '"Ten thousand mandibles hunger. Be unmade."',
-                                  mods = { [xi.mod.DEF] = 3080, [xi.mod.ATT] = 14400, [xi.mod.ACC] = 3360, [xi.mod.EVASION] = 960, [xi.mod.MATT] = 1080, [xi.mod.MACC] = 1320, [xi.mod.MEVA] = 1080, [xi.mod.MDEF] = 960, [xi.mod.DEX] = 500, [xi.mod.INT] = 400, [xi.mod.DOUBLE_ATTACK] = 25, [xi.mod.TRIPLE_ATTACK] = 12, [xi.mod.HASTE_GEAR] = 300, [xi.mod.REGEN] = 1000 } },
-                      [11383] = { name = 'Qilin', label = 'Qilin, the Tempest Beast', level = 150, hpBoost = 32,
+                                  mods = { [xi.mod.DEF] = 3850, [xi.mod.ATT] = 21600, [xi.mod.ACC] = 5040, [xi.mod.EVASION] = 1440, [xi.mod.MATT] = 1620, [xi.mod.MACC] = 1980, [xi.mod.MEVA] = 1620, [xi.mod.MDEF] = 1440, [xi.mod.DEX] = 500, [xi.mod.INT] = 400, [xi.mod.DOUBLE_ATTACK] = 25, [xi.mod.TRIPLE_ATTACK] = 12, [xi.mod.HASTE_GEAR] = 300, [xi.mod.REGEN] = 1000 } },
+                      [11383] = { name = 'Qilin', label = 'Qilin, the Tempest Beast', level = 150, hpBoost = 48,
                                   cry = '"The storm walks. You are merely in its path."',
-                                  mods = { [xi.mod.DEF] = 3190, [xi.mod.ATT] = 15000, [xi.mod.ACC] = 3480, [xi.mod.EVASION] = 1080, [xi.mod.MATT] = 1200, [xi.mod.MACC] = 1320, [xi.mod.MEVA] = 1020, [xi.mod.MDEF] = 1020, [xi.mod.STR] = 500, [xi.mod.AGI] = 500, [xi.mod.DOUBLE_ATTACK] = 28, [xi.mod.HASTE_GEAR] = 350, [xi.mod.REGEN] = 1000 } },
+                                  mods = { [xi.mod.DEF] = 3987, [xi.mod.ATT] = 22500, [xi.mod.ACC] = 5220, [xi.mod.EVASION] = 1620, [xi.mod.MATT] = 1800, [xi.mod.MACC] = 1980, [xi.mod.MEVA] = 1530, [xi.mod.MDEF] = 1530, [xi.mod.STR] = 500, [xi.mod.AGI] = 500, [xi.mod.DOUBLE_ATTACK] = 28, [xi.mod.HASTE_GEAR] = 350, [xi.mod.REGEN] = 1000 } },
                   },
               },
             },
 
-            { minLevel = 20, mult = 1.50, name = 'The Jailers',
+            { minLevel = 20, mult = 1.00, name = 'The Jailers',
               roster =
               {
                   order  = { 11384, 11385, 11386 },
                   bosses =
                   {
-                      [11384] = { name = 'Jailer_of_Justice', label = 'Jailer of Justice', level = 150, hpBoost = 36,
+                      [11384] = { name = 'Jailer_of_Justice', label = 'Jailer of Justice', level = 150, hpBoost = 54,
                                   cry = '"You are weighed, and found wanting. The sentence is death."',
-                                  mods = { [xi.mod.DEF] = 3740, [xi.mod.ATT] = 18600, [xi.mod.ACC] = 4080, [xi.mod.EVASION] = 1200, [xi.mod.MATT] = 1320, [xi.mod.MACC] = 1560, [xi.mod.MEVA] = 1200, [xi.mod.MDEF] = 1200, [xi.mod.AGI] = 600, [xi.mod.DOUBLE_ATTACK] = 30, [xi.mod.TRIPLE_ATTACK] = 15, [xi.mod.HASTE_GEAR] = 400, [xi.mod.REGEN] = 1200 } },
-                      [11385] = { name = 'Jailer_of_Fortitude', label = 'Jailer of Fortitude', level = 150, hpBoost = 37,
+                                  mods = { [xi.mod.DEF] = 4675, [xi.mod.ATT] = 27900, [xi.mod.ACC] = 6120, [xi.mod.EVASION] = 1800, [xi.mod.MATT] = 1980, [xi.mod.MACC] = 2340, [xi.mod.MEVA] = 1800, [xi.mod.MDEF] = 1800, [xi.mod.AGI] = 600, [xi.mod.DOUBLE_ATTACK] = 30, [xi.mod.TRIPLE_ATTACK] = 15, [xi.mod.HASTE_GEAR] = 400, [xi.mod.REGEN] = 1200 } },
+                      [11385] = { name = 'Jailer_of_Fortitude', label = 'Jailer of Fortitude', level = 150, hpBoost = 56,
                                   cry = '"My guard has never broken. Yours already has."',
-                                  mods = { [xi.mod.DEF] = 3630, [xi.mod.ATT] = 16800, [xi.mod.ACC] = 3840, [xi.mod.EVASION] = 1080, [xi.mod.MATT] = 1800, [xi.mod.MACC] = 1800, [xi.mod.MEVA] = 1440, [xi.mod.MDEF] = 1440, [xi.mod.INT] = 700, [xi.mod.MND] = 500, [xi.mod.HASTE_GEAR] = 350, [xi.mod.REGEN] = 1200 } },
-                      [11386] = { name = 'Jailer_of_Temperance', label = 'Jailer of Temperance', level = 150, hpBoost = 36,
+                                  mods = { [xi.mod.DEF] = 4537, [xi.mod.ATT] = 25200, [xi.mod.ACC] = 5760, [xi.mod.EVASION] = 1620, [xi.mod.MATT] = 2700, [xi.mod.MACC] = 2700, [xi.mod.MEVA] = 2160, [xi.mod.MDEF] = 2160, [xi.mod.INT] = 700, [xi.mod.MND] = 500, [xi.mod.HASTE_GEAR] = 350, [xi.mod.REGEN] = 1200 } },
+                      [11386] = { name = 'Jailer_of_Temperance', label = 'Jailer of Temperance', level = 150, hpBoost = 54,
                                   cry = '"All things in measure -- including your last breath."',
-                                  mods = { [xi.mod.DEF] = 4620, [xi.mod.ATT] = 17400, [xi.mod.ACC] = 3840, [xi.mod.EVASION] = 840, [xi.mod.MATT] = 1200, [xi.mod.MACC] = 1440, [xi.mod.MEVA] = 1440, [xi.mod.MDEF] = 1560, [xi.mod.VIT] = 800, [xi.mod.STR] = 600, [xi.mod.DOUBLE_ATTACK] = 20, [xi.mod.HASTE_GEAR] = 250, [xi.mod.REGEN] = 1500 } },
+                                  mods = { [xi.mod.DEF] = 5775, [xi.mod.ATT] = 26100, [xi.mod.ACC] = 5760, [xi.mod.EVASION] = 1260, [xi.mod.MATT] = 1800, [xi.mod.MACC] = 2160, [xi.mod.MEVA] = 2160, [xi.mod.MDEF] = 2340, [xi.mod.VIT] = 800, [xi.mod.STR] = 600, [xi.mod.DOUBLE_ATTACK] = 20, [xi.mod.HASTE_GEAR] = 250, [xi.mod.REGEN] = 1500 } },
                   },
               },
             },
 
-            { minLevel = 30, mult = 1.50, name = 'The Voidwalker Lords',
+            { minLevel = 30, mult = 1.00, name = 'The Voidwalker Lords',
               roster =
               {
                   order  = { 11387, 11388, 11389 },
                   bosses =
                   {
-                      [11387] = { name = 'Kreutzet', label = 'Kreutzet, the Skydark', level = 150, hpBoost = 42,
+                      [11387] = { name = 'Kreutzet', label = 'Kreutzet, the Skydark', level = 150, hpBoost = 63,
                                   cry = '"I blot out the heavens. Die in my shadow."',
-                                  mods = { [xi.mod.DEF] = 4730, [xi.mod.ATT] = 21600, [xi.mod.ACC] = 4560, [xi.mod.EVASION] = 1140, [xi.mod.MATT] = 1680, [xi.mod.MACC] = 1800, [xi.mod.MEVA] = 1560, [xi.mod.MDEF] = 1560, [xi.mod.STR] = 800, [xi.mod.VIT] = 700, [xi.mod.DOUBLE_ATTACK] = 28, [xi.mod.HASTE_GEAR] = 400, [xi.mod.REGEN] = 1500 } },
-                      [11388] = { name = 'Raja', label = 'Raja, the Voidfang', level = 150, hpBoost = 42,
+                                  mods = { [xi.mod.DEF] = 5912, [xi.mod.ATT] = 32400, [xi.mod.ACC] = 6840, [xi.mod.EVASION] = 1710, [xi.mod.MATT] = 2520, [xi.mod.MACC] = 2700, [xi.mod.MEVA] = 2340, [xi.mod.MDEF] = 2340, [xi.mod.STR] = 800, [xi.mod.VIT] = 700, [xi.mod.DOUBLE_ATTACK] = 28, [xi.mod.HASTE_GEAR] = 400, [xi.mod.REGEN] = 1500 } },
+                      [11388] = { name = 'Raja', label = 'Raja, the Voidfang', level = 150, hpBoost = 63,
                                   cry = '"No cage has held me, and no flesh has survived me."',
-                                  mods = { [xi.mod.DEF] = 4510, [xi.mod.ATT] = 21000, [xi.mod.ACC] = 4680, [xi.mod.EVASION] = 1260, [xi.mod.MATT] = 1920, [xi.mod.MACC] = 2040, [xi.mod.MEVA] = 1080, [xi.mod.MDEF] = 1680, [xi.mod.INT] = 800, [xi.mod.STR] = 700, [xi.mod.DOUBLE_ATTACK] = 30, [xi.mod.HASTE_GEAR] = 450, [xi.mod.REGEN] = 1400, [xi.mod.SILENCE_RES_RANK] = -11 } },  -- 2026-06-13: made silenceable -- MEVA 1400->900 eases the magic-accuracy gate; SILENCE_RES_RANK -11 removes Raja's silence-specific resistance so Silence lands at full duration (it was never hard-immune, just resisting via high MEVA + resist rank).
-                      [11389] = { name = 'Maere', label = 'Maere, the Living Nightmare', level = 150, hpBoost = 43,
+                                  mods = { [xi.mod.DEF] = 5637, [xi.mod.ATT] = 31500, [xi.mod.ACC] = 7020, [xi.mod.EVASION] = 1890, [xi.mod.MATT] = 2880, [xi.mod.MACC] = 3060, [xi.mod.MEVA] = 1620, [xi.mod.MDEF] = 2520, [xi.mod.INT] = 800, [xi.mod.STR] = 700, [xi.mod.DOUBLE_ATTACK] = 30, [xi.mod.HASTE_GEAR] = 450, [xi.mod.REGEN] = 1400, [xi.mod.SILENCE_RES_RANK] = -11 } },  -- 2026-06-13: made silenceable -- MEVA 1400->900 eases the magic-accuracy gate; SILENCE_RES_RANK -11 removes Raja's silence-specific resistance so Silence lands at full duration (it was never hard-immune, just resisting via high MEVA + resist rank).
+                      [11389] = { name = 'Maere', label = 'Maere, the Living Nightmare', level = 150, hpBoost = 65,
                                   cry = '"You will not wake from this one."',
-                                  mods = { [xi.mod.DEF] = 4400, [xi.mod.ATT] = 20400, [xi.mod.ACC] = 4800, [xi.mod.EVASION] = 1320, [xi.mod.MATT] = 1800, [xi.mod.MACC] = 1920, [xi.mod.MEVA] = 1680, [xi.mod.MDEF] = 1560, [xi.mod.AGI] = 700, [xi.mod.INT] = 700, [xi.mod.DOUBLE_ATTACK] = 28, [xi.mod.TRIPLE_ATTACK] = 15, [xi.mod.HASTE_GEAR] = 450, [xi.mod.REGEN] = 1400 } },
+                                  mods = { [xi.mod.DEF] = 5500, [xi.mod.ATT] = 30600, [xi.mod.ACC] = 7200, [xi.mod.EVASION] = 1980, [xi.mod.MATT] = 2700, [xi.mod.MACC] = 2880, [xi.mod.MEVA] = 2520, [xi.mod.MDEF] = 2340, [xi.mod.AGI] = 700, [xi.mod.INT] = 700, [xi.mod.DOUBLE_ATTACK] = 28, [xi.mod.TRIPLE_ATTACK] = 15, [xi.mod.HASTE_GEAR] = 450, [xi.mod.REGEN] = 1400 } },
                   },
               },
             },
 
-            { minLevel = 40, mult = 1.50, name = "The World's End",
+            { minLevel = 40, mult = 1.00, name = "The World's End",
               roster =
               {
                   order  = { 11390, 11391, 11392 },
                   bosses =
                   {
-                      [11390] = { name = 'Omega', label = 'Omega, the Final Engine', level = 150, hpBoost = 48,
+                      [11390] = { name = 'Omega', label = 'Omega, the Final Engine', level = 150, hpBoost = 72,
                                   cry = '"Directive: extinction. Target: all that draws breath."',
-                                  mods = { [xi.mod.DEF] = 5280, [xi.mod.ATT] = 24600, [xi.mod.ACC] = 5280, [xi.mod.EVASION] = 1380, [xi.mod.MATT] = 2160, [xi.mod.MACC] = 2280, [xi.mod.MEVA] = 1920, [xi.mod.MDEF] = 1920, [xi.mod.STR] = 900, [xi.mod.INT] = 800, [xi.mod.DOUBLE_ATTACK] = 32, [xi.mod.TRIPLE_ATTACK] = 16, [xi.mod.HASTE_GEAR] = 450, [xi.mod.REGEN] = 1700 } },
-                      [11391] = { name = 'Ultima', label = 'Ultima, the First Weapon', level = 150, hpBoost = 49,
+                                  mods = { [xi.mod.DEF] = 6600, [xi.mod.ATT] = 36900, [xi.mod.ACC] = 7920, [xi.mod.EVASION] = 2070, [xi.mod.MATT] = 3240, [xi.mod.MACC] = 3420, [xi.mod.MEVA] = 2880, [xi.mod.MDEF] = 2880, [xi.mod.STR] = 900, [xi.mod.INT] = 800, [xi.mod.DOUBLE_ATTACK] = 32, [xi.mod.TRIPLE_ATTACK] = 16, [xi.mod.HASTE_GEAR] = 450, [xi.mod.REGEN] = 1700 } },
+                      [11391] = { name = 'Ultima', label = 'Ultima, the First Weapon', level = 150, hpBoost = 74,
                                   cry = '"I predate your gods. I will outlast your world."',
-                                  mods = { [xi.mod.DEF] = 5390, [xi.mod.ATT] = 24000, [xi.mod.ACC] = 5280, [xi.mod.EVASION] = 1440, [xi.mod.MATT] = 2400, [xi.mod.MACC] = 2400, [xi.mod.MEVA] = 2040, [xi.mod.MDEF] = 2040, [xi.mod.INT] = 900, [xi.mod.MND] = 700, [xi.mod.DOUBLE_ATTACK] = 30, [xi.mod.HASTE_GEAR] = 500, [xi.mod.REGEN] = 1600 } },
-                      [11392] = { name = 'Provenance_Watcher', label = 'The Provenance Watcher', level = 150, hpBoost = 50,
+                                  mods = { [xi.mod.DEF] = 6737, [xi.mod.ATT] = 36000, [xi.mod.ACC] = 7920, [xi.mod.EVASION] = 2160, [xi.mod.MATT] = 3600, [xi.mod.MACC] = 3600, [xi.mod.MEVA] = 3060, [xi.mod.MDEF] = 3060, [xi.mod.INT] = 900, [xi.mod.MND] = 700, [xi.mod.DOUBLE_ATTACK] = 30, [xi.mod.HASTE_GEAR] = 500, [xi.mod.REGEN] = 1600 } },
+                      [11392] = { name = 'Provenance_Watcher', label = 'The Provenance Watcher', level = 150, hpBoost = 75,
                                   cry = '"You stand in MY domain now. Provenance answers to me alone."',
-                                  mods = { [xi.mod.DEF] = 5500, [xi.mod.ATT] = 25200, [xi.mod.ACC] = 5520, [xi.mod.EVASION] = 1560, [xi.mod.MATT] = 2400, [xi.mod.MACC] = 2520, [xi.mod.MEVA] = 2160, [xi.mod.MDEF] = 2160, [xi.mod.STR] = 900, [xi.mod.INT] = 900, [xi.mod.DOUBLE_ATTACK] = 32, [xi.mod.TRIPLE_ATTACK] = 18, [xi.mod.HASTE_GEAR] = 500, [xi.mod.REGEN] = 1800 } },
+                                  mods = { [xi.mod.DEF] = 6875, [xi.mod.ATT] = 37800, [xi.mod.ACC] = 8280, [xi.mod.EVASION] = 2340, [xi.mod.MATT] = 3600, [xi.mod.MACC] = 3780, [xi.mod.MEVA] = 3240, [xi.mod.MDEF] = 3240, [xi.mod.STR] = 900, [xi.mod.INT] = 900, [xi.mod.DOUBLE_ATTACK] = 32, [xi.mod.TRIPLE_ATTACK] = 18, [xi.mod.HASTE_GEAR] = 500, [xi.mod.REGEN] = 1800 } },
                   },
               },
             },
