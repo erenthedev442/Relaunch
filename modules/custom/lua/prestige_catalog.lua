@@ -242,9 +242,9 @@ return
         -- summon their own three bosses (one Court per 10 ascensions).
         tiers =
         {
-            { minLevel = 0, mult = 1.00, name = 'The Nightmare Court' },  -- P.Lv 0-9: Diabolos/Medusa/Odin (top-level roster)
+            { minLevel = 0, mult = 1.50, name = 'The Nightmare Court' },  -- P.Lv 0-9: Diabolos/Medusa/Odin (top-level roster)
 
-            { minLevel = 10, mult = 1.00, name = 'The Voidwalkers',
+            { minLevel = 10, mult = 1.50, name = 'The Voidwalkers',
               roster =
               {
                   order  = { 11381, 11382, 11383 },
@@ -263,7 +263,7 @@ return
               },
             },
 
-            { minLevel = 20, mult = 1.00, name = 'The Jailers',
+            { minLevel = 20, mult = 1.50, name = 'The Jailers',
               roster =
               {
                   order  = { 11384, 11385, 11386 },
@@ -282,7 +282,7 @@ return
               },
             },
 
-            { minLevel = 30, mult = 1.00, name = 'The Voidwalker Lords',
+            { minLevel = 30, mult = 1.50, name = 'The Voidwalker Lords',
               roster =
               {
                   order  = { 11387, 11388, 11389 },
@@ -301,7 +301,7 @@ return
               },
             },
 
-            { minLevel = 40, mult = 1.00, name = "The World's End",
+            { minLevel = 40, mult = 1.50, name = "The World's End",
               roster =
               {
                   order  = { 11390, 11391, 11392 },

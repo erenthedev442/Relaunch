@@ -900,7 +900,7 @@ catalog.levelMods =
     -- tier is still meant to be soloable with gear - tune upward if it reads
     -- too soft after a live run.
     [99] = {
-        hpBoost = 1.5,
+        hpBoost = 2.25,
         mods = {
             [xi.mod.ATT]           = 1000, [xi.mod.ACC]           = 550,
             [xi.mod.STR]           = 40,   [xi.mod.DEX]           = 40,
@@ -908,7 +908,7 @@ catalog.levelMods =
         },
     },
     [110] = {
-        hpBoost = 1.8,
+        hpBoost = 2.7,
         mods = {
             [xi.mod.ATT]           = 1400, [xi.mod.ACC]           = 640,
             [xi.mod.STR]           = 55,   [xi.mod.DEX]           = 55,
@@ -916,7 +916,7 @@ catalog.levelMods =
         },
     },
     [120] = {
-        hpBoost = 2.0,
+        hpBoost = 3.0,
         mods = {
             [xi.mod.ATT]           = 1800, [xi.mod.ACC]           = 720,
             [xi.mod.STR]           = 70,   [xi.mod.DEX]           = 70,
@@ -924,7 +924,7 @@ catalog.levelMods =
         },
     },
     [135] = {
-        hpBoost = 2.5,
+        hpBoost = 3.75,
         mods = {
             [xi.mod.ATT]           = 2200, [xi.mod.ACC]           = 820,
             [xi.mod.STR]           = 90,   [xi.mod.DEX]           = 90,
@@ -932,7 +932,7 @@ catalog.levelMods =
         },
     },
     [140] = {
-        hpBoost = 2.7,
+        hpBoost = 4.05,
         mods = {
             [xi.mod.ATT]           = 2350, [xi.mod.ACC]           = 860,
             [xi.mod.STR]           = 95,   [xi.mod.DEX]           = 95,
@@ -940,7 +940,7 @@ catalog.levelMods =
         },
     },
     [150] = {
-        hpBoost = 3,
+        hpBoost = 4.5,
         mods = {
             [xi.mod.ATT]           = 2500, [xi.mod.ACC]           = 900,
             [xi.mod.STR]           = 100,  [xi.mod.DEX]           = 100,
@@ -948,7 +948,7 @@ catalog.levelMods =
         },
     },
     [175] = {
-        hpBoost = 4,
+        hpBoost = 6,
         mods = {
             [xi.mod.ATT]           = 4000, [xi.mod.ACC]           = 1200,
             [xi.mod.STR]           = 200,  [xi.mod.DEX]           = 200,
@@ -957,7 +957,7 @@ catalog.levelMods =
         },
     },
     [200] = {
-        hpBoost = 5,
+        hpBoost = 7.5,
         mods = {
             [xi.mod.ATT]           = 6000, [xi.mod.ACC]           = 1500,
             [xi.mod.STR]           = 300,  [xi.mod.DEX]           = 300,
@@ -966,7 +966,7 @@ catalog.levelMods =
         },
     },
     [225] = {
-        hpBoost = 8,
+        hpBoost = 12,
         mods = {
             [xi.mod.ATT]           = 8000, [xi.mod.ACC]           = 1750,
             [xi.mod.STR]           = 450,  [xi.mod.DEX]           = 450,
@@ -975,7 +975,7 @@ catalog.levelMods =
         },
     },
     [250] = {
-        hpBoost = 12,
+        hpBoost = 18,
         mods = {
             [xi.mod.ATT]           = 12000, [xi.mod.ACC]           = 2200,
             [xi.mod.STR]           = 600,  [xi.mod.DEX]           = 600,
@@ -987,7 +987,7 @@ catalog.levelMods =
     -- Lv250 trash: tighter accuracy requirement, higher raw damage, more
     -- multihit. Intended to require near-full BiS gear to clear reliably.
     [275] = {
-        hpBoost = 20,
+        hpBoost = 30,
         mods = {
             [xi.mod.ATT]           = 18000, [xi.mod.ACC]           = 2800,
             [xi.mod.STR]           = 900,  [xi.mod.DEX]           = 900,
