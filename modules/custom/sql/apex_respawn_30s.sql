@@ -1,0 +1,13 @@
+-- =====================================================================
+-- apex_respawn_30s.sql
+-- Speeds up apex mob respawns server-wide: every apex `mob_groups` row
+-- (Apex Bats / Crabs / Toads / Jagil / the Ra'Kaznar Woeful-Lamenter,
+-- Livid-Rager, Idle-Drifter set / etc.) drops to a 30-second respawn so
+-- apex zones stay populated for the whole zone population.
+--
+-- 38 groups affected (1,197 spawn points). Was: 300s most, 960s the
+-- Ra'Kaznar tough set, 180s a few. Idempotent (plain UPDATE, safe to re-run).
+-- Needs a MAP RESTART to take effect -- respawntime is read into mob data
+-- at zone startup. Rollback = re-set the originals (300/960/180) by name.
+-- =====================================================================
+UPDATE `mob_groups` SET `respawntime` = 30 WHERE `name` LIKE '%apex%';
