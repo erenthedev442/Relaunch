@@ -321,6 +321,61 @@ local function burnMythicKey(player, dungeon)
     player:setCharVar(mythicKeyCv(dungeon), currentIsoWeek())
 end
 
+-- ---------------------------------------------------------------
+-- Per-dungeon re-entry cooldowns (anti-farm + anti-spam)
+-- ---------------------------------------------------------------
+-- One CharVar per dungeon stores the unix time at which the player may
+-- re-enter THAT dungeon. Armed when a run ENDS (endDungeon): the full
+-- clearCooldownSec after a CLEAR (stops reward farming), the short
+-- abortCooldownSec after any non-clear exit (closes the rapid
+-- enter/leave/re-enter loop). Checked at startDungeon, GM-exempt at the
+-- call site. Reads 0 (ready) when unset. Storing an absolute ready-at
+-- timestamp (not the engine's expiry feature) keeps it deploy-portable
+-- and lets the menu show the remaining time.
+local function reentryCooldownCv(dungeon)
+    return string.format('Dungeon_CD_%s', dungeon.id)
+end
+
+-- Cooldown length (seconds) for a given exit kind. Per-dungeon override
+-- -> catalog default -> hard-coded fallback. 'cleared' draws the long
+-- farm gate; every other reason draws the short anti-spam gate.
+local function cooldownSecFor(dungeon, reason)
+    if reason == 'cleared' then
+        return dungeon.clearCooldownSec or catalog.clearCooldownSec or (30 * 60)
+    end
+    return dungeon.abortCooldownSec or catalog.abortCooldownSec or 90
+end
+
+-- Seconds left before the player may re-enter this dungeon (0 = ready).
+local function reentryCooldownRemaining(player, dungeon)
+    local readyAt = player:getCharVar(reentryCooldownCv(dungeon)) or 0
+    return math.max(0, readyAt - os.time())
+end
+
+-- Stamp the cooldown for a player on a dungeon, given the exit reason.
+-- A longer pending cooldown is never shortened: a quick abort moments
+-- after a clear must NOT wipe the 30-min farm gate down to 90 s.
+local function armReentryCooldown(player, dungeon, reason)
+    local sec = cooldownSecFor(dungeon, reason)
+    if sec <= 0 then return end
+    local cv      = reentryCooldownCv(dungeon)
+    local readyAt = os.time() + sec
+    if (player:getCharVar(cv) or 0) < readyAt then
+        player:setCharVar(cv, readyAt)
+    end
+end
+
+-- "29m 50s" / "1m 30s" / "45s" - compact remaining-time formatter.
+local function fmtCooldown(sec)
+    sec = math.max(0, math.floor(sec))
+    local mins = math.floor(sec / 60)
+    local secs = sec % 60
+    if mins > 0 then
+        return string.format('%dm %02ds', mins, secs)
+    end
+    return string.format('%ds', secs)
+end
+
 -- Player-facing reason a tier is currently locked. Returns nil when
 -- the tier is fully available, else a short string for the menu.
 local function tierLockReason(player, dungeon, tierId)
@@ -1630,6 +1685,26 @@ local function startDungeon(player, dungeon, tierId)
         return
     end
 
+    -- SAFETY RAIL #6: per-dungeon re-entry cooldown (anti-farm + anti-
+    -- spam). Armed when a run ends - 30 min after a clear (stops farming
+    -- the same dungeon's rewards), 90 s after any non-clear exit (closes
+    -- the "enter -> leave -> enter again -> free reward" loop). It's
+    -- PER-DUNGEON, so it never blocks a DIFFERENT dungeon. GMs are exempt
+    -- so staff can test without waiting.
+    if player:getGMLevel() == 0 then
+        local remain = reentryCooldownRemaining(player, dungeon)
+        if remain > 0 then
+            player:printToPlayer(string.format(
+                '[Dungeon Master] You\'ve run %s too recently. Try again in %s, kupo!',
+                dungeon.label, fmtCooldown(remain)),
+                xi.msg.channel.SYSTEM_3)
+            print(string.format(
+                "[dungeon] startDungeon blocked: %s on cooldown for %s (%ds left)",
+                player:getName(), dungeon.id, remain))
+            return
+        end
+    end
+
     -- Pre-warp banner. Show the tier label and the effective time
     -- (post tier multiplier, pre affix mutations - affixes have not
     -- been rolled yet at this print).
@@ -2538,6 +2613,13 @@ function m.endDungeon(player, reason)
         end
     end
 
+    -- Arm the leader's per-dungeon re-entry cooldown. ONE call covers
+    -- every exit reason: 'cleared' -> 30-min farm gate, anything else ->
+    -- 90-s anti-spam gate (see armReentryCooldown / catalog cooldown
+    -- config). Stamped here, before the warp-out, so it's set the instant
+    -- the run resolves - a DC during the linger can't dodge it.
+    armReentryCooldown(player, dungeon, reason)
+
     -- Warp-out delay. On a CLEAR we linger ~12s so the party can savor
     -- the victory + read the reward banner before being yanked out; on
     -- any non-clear exit (death / timeout / abort) we keep the quick 4s
@@ -2585,6 +2667,10 @@ function m.endDungeon(player, reason)
                         string.format('[Dungeon] Run ended (%s). No reward.', tostring(reason or '?')),
                         xi.msg.channel.SYSTEM_3)
                 end
+                -- Members earn the SAME per-dungeon cooldown as the leader
+                -- (clear -> 30 min, else -> 90 s), so a carried member can't
+                -- immediately re-run the dungeon to farm it either.
+                armReentryCooldown(mem, dungeon, reason)
                 -- Schedule per-member warp-out (matches leader timing).
                 pcall(function() mem:setUnkillable(false) end)
                 mem:printToPlayer(

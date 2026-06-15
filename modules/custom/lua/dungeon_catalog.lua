@@ -1567,6 +1567,29 @@ catalog.streakCap       = 5     -- streak maxes here (so cap mult = 1 + 5*0.10 =
 catalog.streakCv        = 'Dungeon_Streak'
 
 -- ============================================================
+-- RE-ENTRY COOLDOWNS (anti-farm / anti-spam)
+-- ============================================================
+-- Per-player, per-dungeon lockout gating how often the SAME dungeon can
+-- be run. Two durations, both armed when a run ENDS (endDungeon) and
+-- checked at the next entry (startDungeon):
+--
+--   clearCooldownSec  armed after a CLEAR. Stops re-clearing the same
+--                     dungeon back-to-back to farm Infamy / loot.
+--   abortCooldownSec  armed after ANY non-clear exit (abort / death /
+--                     timeout). Short anti-spam gate that closes the
+--                     "enter -> leave -> enter again -> free reward" loop
+--                     players were exploiting.
+--
+-- Both are PER-DUNGEON: a cooldown on one dungeon never blocks another,
+-- and the longer (clear) cooldown is never shortened by a later quick
+-- abort. GMs (gmlevel > 0) are exempt so staff can test freely. A
+-- catalog.dungeons entry may override either with its own
+-- dungeon.clearCooldownSec / dungeon.abortCooldownSec. Set a value to 0
+-- to disable that gate globally.
+catalog.clearCooldownSec = 30 * 60   -- 30 minutes after a successful clear
+catalog.abortCooldownSec = 90        -- 90 seconds after any non-clear exit
+
+-- ============================================================
 -- PHASE 6 - PARTY / ALLIANCE SUPPORT
 -- ============================================================
 -- When a player starts a dungeon, party members in the SAME ZONE
