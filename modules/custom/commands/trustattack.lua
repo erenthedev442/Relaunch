@@ -24,13 +24,26 @@ local CV      = 'TrustAtkOn'   -- charVar: 1 = auto-engage mode on
 local TICK_MS = 2000           -- target re-check cadence
 local lastTgt = {}             -- [playerId] = last targ id we engaged on
 
--- Engage the CALLER on the target. Trusts mirror their master: the engine
--- disengages them the instant the master is idle (trust_controller.cpp), so
--- putting YOU in combat is the only thing that keeps the trusts on the mob.
--- Engage on a target change only -> the swing timer never resets.
+-- Engage the CALLER on the target, THEN point each of their trusts at it.
+-- Two engine rules force this combo: (1) the engine only keeps a trust in
+-- combat while its master is engaged (trust_controller.cpp:125), so we engage
+-- YOU; (2) a roaming trust only joins the fight once the master has actually
+-- SWUNG recently (DoRoamTick checks last-attack time), which hasn't happened the
+-- instant you engage -- so we also engage each trust directly instead of waiting
+-- for that swing. Target change only -> no swing reset.
 local function engageOnTarget(player, target)
-    player:engage(target:getTargID())
-    lastTgt[player:getID()] = target:getTargID()
+    local targID = target:getTargID()
+    player:engage(targID)
+    local myId = player:getID()
+    for _, member in ipairs(player:getPartyWithTrusts()) do
+        if member:isTrust() then
+            local master = member:getMaster()
+            if master ~= nil and master:getID() == myId then
+                member:engage(targID)
+            end
+        end
+    end
+    lastTgt[myId] = targID
 end
 
 -- One re-check: if you have a living enemy selected and it differs from what we
