@@ -370,7 +370,7 @@ local function checkClock(player)
         if inWarn and (GetServerVariable(svWarn(idx)) or 0) ~= today then
             SetServerVariable(svWarn(idx), today)
             broadcast(player, string.format(
-                '[Invasion] The Voidsent march on Al Zahbi - assault begins in ~%d minutes! Rally to the city!',
+                '[Invasion] The Voidsent march on Al Zahbi - assault begins in ~%d minutes! Type !iwarp to join the defense!',
                 catalog.warnMinutes))
         end
 
@@ -391,7 +391,7 @@ local function checkClock(player)
                 }
                 xi._any_invasion_active = true
                 broadcast(player,
-                    '[Invasion] THE VOIDSENT ARE HERE! Al Zahbi is under attack - defend the city!')
+                    '[Invasion] THE VOIDSENT ARE HERE! Al Zahbi is under attack - type !iwarp to join the fight!')
                 nextWave(zone)
             end
         end
@@ -445,7 +445,7 @@ xi._invasion_api = {
         }
         local players = zone:getPlayers()
         broadcast(players[1],
-            '[Invasion] THE VOIDSENT ARE HERE! Al Zahbi is under attack - defend the city!')
+            '[Invasion] THE VOIDSENT ARE HERE! Al Zahbi is under attack - type !iwarp to join the fight!')
         nextWave(zone)
         return true
     end,
