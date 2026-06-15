@@ -50,9 +50,7 @@ catalog.templates =
 }
 
 catalog.mobName  = 'Capacity Phantom'  -- display name; also used to count/top-up the pool
-catalog.mobCount = 200                  -- zone-wide population, spread across spawnPoints; tunable
-                                        -- (raise toward ~357 = one per point for max density, or
-                                        --  lower it if you ever see server tick lag)
+catalog.mobCount = 357                  -- zone-wide population, one per spawn point (max density)
 catalog.minLv    = 150                  -- engine rolls each spawn in [minLv, maxLv]
 catalog.maxLv    = 160
 catalog.maxHP    = 45000                -- low HP = quick kills (-25% from 60000)

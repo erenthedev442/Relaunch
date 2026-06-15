@@ -81,7 +81,10 @@ local function spawnOne()
             if killer and catalog.cpBonus and catalog.cpBonus > 0 then
                 killer:addCapacityPoints(catalog.cpBonus)
             end
-            ensurePopulation()
+            -- 2-second respawn delay before topping the pool back up.
+            deadMob:timer(2000, function(_)
+                ensurePopulation()
+            end)
         end,
     })
     if not mob then
