@@ -13,11 +13,14 @@
 -- ============================================================
 
 -- ---- 1. Clear all native mob spawns from Escha Zi'Tah (zone 288) ----------
---   Deletes every mob_spawn_points row whose mob_group is in zone 288.
---   HL NMs are pure-dynamic (no spawn points), so this never touches them.
-DELETE msp FROM mob_spawn_points msp
-INNER JOIN mob_groups mg ON msp.groupid = mg.groupid
-WHERE mg.zoneid = 288;
+--   Scope by the zone encoded in the mobid: (mobid >> 12) & 0xFFF = zoneid.
+--   DO NOT join mob_spawn_points to mob_groups on groupid alone -- `groupid`
+--   is REUSED across zones, so `ON msp.groupid = mg.groupid WHERE mg.zoneid = 288`
+--   matched zone 288's groupids in EVERY zone and deleted mob_spawn_points
+--   server-wide. That gutted the table 82,974 -> 11,879 rows on 2026-06-15 and
+--   emptied every zone (zone-ID lookups read mob_spawn_points). HL NMs are
+--   pure-dynamic (no spawn points), so this never touches them.
+DELETE FROM `mob_spawn_points` WHERE ((`mobid` >> 12) & 0xFFF) = 288;
 
 -- ---- 2. Remove old Reisenjima Henge HL mob_groups (zone 292) ---------------
 DELETE FROM mob_groups WHERE groupid BETWEEN 11355 AND 11369 AND zoneid = 292;
