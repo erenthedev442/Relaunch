@@ -1371,11 +1371,28 @@ catalog.tiers =
         unlockRequires  = { tier = 'hard', clears = 5 },
         weekly          = true,
     },
+    nightmare =
+    {
+        id               = 'nightmare',
+        label            = 'Nightmare',
+        description      = 'Extreme endgame trial. Weekly rotating affix, one clear per dungeon per week. Clears earn Shadow Fragments toward the Prime Weapon.',
+        hpMult           = 3.0,     -- 3x HP vs. Normal
+        attMult          = 2.5,     -- 2.5x damage output
+        timeMult         = 0.80,    -- 20% less time on the clock
+        infamyMult       = 0,       -- no Infamy - Shadow Fragments instead (guarded in DungeonSystem)
+        affixCountMin    = 1,
+        affixCountMax    = 1,       -- exactly 1 affix, fixed weekly (no per-run RNG)
+        mythicAffixPool  = true,
+        weeklyAffixFixed = true,    -- deterministic weekly rotation (DungeonSystem.weeklyFixedAffix)
+        unlockRequires   = { tier = 'mythic', clears = 3 },
+        weekly           = true,
+        shadowFrags      = 1,       -- Shadow Fragments awarded per clear
+    },
 }
 
 -- Menu/display order. Loops that walk tiers should use this rather
 -- than pairs(catalog.tiers) so the order is deterministic.
-catalog.tierOrder = { 'normal', 'hard', 'mythic' }
+catalog.tierOrder = { 'normal', 'hard', 'mythic', 'nightmare' }
 
 -- ============================================================
 -- MYTHIC AFFIXES  (Tyrannical pool - drawn only at Mythic tier)

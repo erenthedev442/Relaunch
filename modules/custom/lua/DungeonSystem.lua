@@ -759,6 +759,17 @@ local function rollAffixes(tier)
     return out
 end
 
+-- Nightmare tier: one deterministic affix from the mythic pool, rotating
+-- each ISO week. Same affix for all players the entire week (Monday-Sunday).
+local function weeklyFixedAffix()
+    local pool = (catalog.mythicAffixes and #catalog.mythicAffixes > 0)
+        and catalog.mythicAffixes
+        or  (catalog.affixes or {})
+    if #pool == 0 then return {} end
+    local idx = (currentIsoWeek() % #pool) + 1
+    return { pool[idx] }
+end
+
 -- Compute the product of all rolled affixes' rewardMult. Returns 1.0
 -- when no affixes were rolled (back-compat with catalogs that ship
 -- without affix data - the system stays neutral).
@@ -1723,9 +1734,14 @@ local function startDungeon(player, dungeon, tierId)
     -- Phase-7 exception: keystone runs use the DETERMINISTIC weekly
     -- rotation (count grows with key level) instead of the random
     -- roller - the M+ identity is mastering THIS week's combo.
-    local rolledAffixes = (tierId == 'keystone')
-        and keystoneAffixesFor(tier.keystoneLevel)
-        or  rollAffixes(tier)
+    local rolledAffixes
+    if tierId == 'keystone' then
+        rolledAffixes = keystoneAffixesFor(tier.keystoneLevel)
+    elseif tier.weeklyAffixFixed then
+        rolledAffixes = weeklyFixedAffix()
+    else
+        rolledAffixes = rollAffixes(tier)
+    end
 
     -- Warp first. The session table is set BEFORE the warp because
     -- onZoneIn checks may race; ensureCurrentWeek-style modules want
@@ -2309,14 +2325,34 @@ function m.endDungeon(player, reason)
             markWeeklyBonusEarned(player, weekIdx, dungeon.id)
         end
 
-        addInfamy(player, infamy)
+        -- Nightmare tier skips Infamy entirely (infamyMult = 0) and grants
+        -- Shadow Fragments instead. All other tiers award Infamy as normal.
+        if (tier.infamyMult or 1) > 0 then
+            addInfamy(player, infamy)
+        end
+
+        -- Nightmare Shadow Fragment payout.
+        local fragReward = (tierId == 'nightmare') and (tier.shadowFrags or 1) or 0
+        if fragReward > 0 then
+            local fragsBefore = player:getCharVar('PW_Trial1_Frags') or 0
+            local fragsNow    = fragsBefore + fragReward
+            player:setCharVar('PW_Trial1_Frags', fragsNow)
+            sess.fragsEarned = fragReward
+            sess.fragsTotal  = fragsNow
+            if fragsNow >= 10 and (player:getCharVar('PW_Trial1_Done') or 0) == 0 then
+                player:setCharVar('PW_Trial1_Done', 1)
+                player:printToPlayer(
+                    '[Nightmare] Trial 1 complete! You have collected 10 Shadow Fragments. Visit the Prime Armory.',
+                    xi.msg.channel.SYSTEM_3)
+            end
+        end
 
         -- Phase-6: stash the final Infamy value on the session so the
         -- party-reward distribution block below (which runs outside
         -- this `if reason == 'cleared' then` scope) can compute the
         -- member discounted payout from it. Without this, `infamy`
         -- would fall out of scope and member rewards would be zero.
-        sess.finalInfamy = infamy
+        sess.finalInfamy = (tier.infamyMult or 1) > 0 and infamy or 0
 
         -- Phase-2 per-tier clear counter. Drives the unlock gating for
         -- Hard / Mythic (Hard needs 1 Normal clear, Mythic needs 5 Hard
@@ -2382,15 +2418,26 @@ function m.endDungeon(player, reason)
         -- Single Infamy line, then a per-multiplier breakdown so the
         -- math is fully auditable. base -> speed bonus (if any) -> tier
         -- mult -> affix mult -> featured mult -> streak mult -> final.
-        player:printToPlayer(
-            string.format('  +%d Infamy earned [%s]', infamy, tier.label),
-            xi.msg.channel.SYSTEM_3)
-        player:printToPlayer(
-            string.format('    base %d%s   tier x%.2f   affixes x%.2f',
-                dungeon.infamyBase,
-                bonusApplied and string.format(' + SPEED %d', dungeon.infamySpeedBonus) or '',
-                tierMult, affixMult),
-            xi.msg.channel.SYSTEM_3)
+        if tierId == 'nightmare' then
+            -- Nightmare: show Shadow Fragment reward instead of Infamy.
+            player:printToPlayer(
+                string.format('  +%d Shadow Fragment [%s] (%d/10 total)',
+                    sess.fragsEarned or 1, tier.label, sess.fragsTotal or 1),
+                xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(
+                '  Shadow Fragments: 10 required to complete Prime Weapon Trial 1.',
+                xi.msg.channel.SYSTEM_3)
+        else
+            player:printToPlayer(
+                string.format('  +%d Infamy earned [%s]', infamy, tier.label),
+                xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(
+                string.format('    base %d%s   tier x%.2f   affixes x%.2f',
+                    dungeon.infamyBase,
+                    bonusApplied and string.format(' + SPEED %d', dungeon.infamySpeedBonus) or '',
+                    tierMult, affixMult),
+                xi.msg.channel.SYSTEM_3)
+        end
         if featuredMult ~= 1.0 then
             player:printToPlayer(
                 string.format('    ** FEATURED dungeon today ** x%.2f bonus', featuredMult),
