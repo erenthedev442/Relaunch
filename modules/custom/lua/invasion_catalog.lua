@@ -2,8 +2,8 @@
 -- invasion_catalog.lua
 -- Config for the Invasion system (see Invasion.lua).
 --
--- Twice a day at fixed UTC times, the Voidsent assault GM Home - the
--- moogles' sanctuary and the server's social hub. Every defender
+-- Every 3 hours at fixed UTC times, the Voidsent assault Al Zahbi - the
+-- besieged Aht Urhgan city. Every defender
 -- present fights waves that scale with attendance; clear all waves
 -- (including the Warlord) before the clock runs out and everyone
 -- present is paid in marks + Infamy.

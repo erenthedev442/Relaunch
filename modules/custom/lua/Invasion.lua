@@ -1,7 +1,7 @@
 -----------------------------------
 -- Invasion.lua
--- SCHEDULED INVASIONS: twice a day at fixed times, the Voidsent assault
--- GM Home and everyone online is called to defend it. Waves scale with
+-- SCHEDULED INVASIONS: every 3 hours at fixed times, the Voidsent assault
+-- Al Zahbi and everyone online is called to defend it. Waves scale with
 -- attendance; clear them all inside the time limit for marks + Infamy.
 --
 -- Clock architecture (no global tick exists in LSB Lua):
@@ -310,7 +310,7 @@ endInvasion = function(zone, reason)
                 end
 
                 p:printToPlayer(string.format(
-                    '[Invasion] THE SANCTUARY STANDS! +%d marks, +%d Infamy%s.',
+                    '[Invasion] AL ZAHBI STANDS! +%d marks, +%d Infamy%s.',
                     catalog.reward.victoryMarks, catalog.reward.victoryInfamy, sealMsg),
                     xi.msg.channel.SYSTEM_3)
 
@@ -325,7 +325,7 @@ endInvasion = function(zone, reason)
             end
         end
         broadcast(everyone[1],
-            '[Invasion] GM Home stands! The Voidsent are repelled - glory to the defenders!')
+            '[Invasion] Al Zahbi stands! The Voidsent are repelled - glory to the defenders!')
     elseif reason == 'timeout' then
         for _, p in ipairs(everyone) do
             if participants[p:getName()] then
@@ -370,7 +370,7 @@ local function checkClock(player)
         if inWarn and (GetServerVariable(svWarn(idx)) or 0) ~= today then
             SetServerVariable(svWarn(idx), today)
             broadcast(player, string.format(
-                '[Invasion] The Voidsent march on GM Home - assault begins in ~%d minutes! Rally to the sanctuary!',
+                '[Invasion] The Voidsent march on Al Zahbi - assault begins in ~%d minutes! Rally to the city!',
                 catalog.warnMinutes))
         end
 
@@ -391,7 +391,7 @@ local function checkClock(player)
                 }
                 xi._any_invasion_active = true
                 broadcast(player,
-                    '[Invasion] THE VOIDSENT ARE HERE! GM Home is under attack - defend the sanctuary!')
+                    '[Invasion] THE VOIDSENT ARE HERE! Al Zahbi is under attack - defend the city!')
                 nextWave(zone)
             end
         end
@@ -432,7 +432,7 @@ xi._invasion_api = {
         return { wave = state.wave, total = #catalog.waves, endsAt = state.endsAt }
     end,
 
-    -- Initiating player must be inside GM Home so their position can
+    -- Initiating player must be inside Al Zahbi so their position can
     -- anchor the first wave's mob spawns.
     forceStart = function(zone)
         if state then return false, 'Invasion already in progress.' end
@@ -445,7 +445,7 @@ xi._invasion_api = {
         }
         local players = zone:getPlayers()
         broadcast(players[1],
-            '[Invasion] THE VOIDSENT ARE HERE! GM Home is under attack - defend the sanctuary!')
+            '[Invasion] THE VOIDSENT ARE HERE! Al Zahbi is under attack - defend the city!')
         nextWave(zone)
         return true
     end,
