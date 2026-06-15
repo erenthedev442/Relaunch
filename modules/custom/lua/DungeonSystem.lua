@@ -1835,6 +1835,13 @@ local function startDungeon(player, dungeon, tierId)
     -- gets garbage-collected when the player actually leaves. The
     -- onZoneIn hook is the engine-guaranteed "player has arrived"
     -- event - only there can timers safely be scheduled.
+    -- Dismiss all trusts before warping. Loading 10+ trust entities simultaneously
+    -- into the dungeon zone during zone-in corrupts the heap allocator's metadata
+    -- (free(): invalid size crash), crashing the server before ARM can even run.
+    -- Trusts are dismissed here so the zone-in is clean; players can resummon after
+    -- arriving. Pets (wyverns, avatars) are cleared by the engine on zone change.
+    pcall(function() player:clearTrusts() end)
+
     print(string.format("[dungeon] startDungeon: setPos to zone=%d at (%.2f, %.2f, %.2f)",
         dungeon.zoneId, dungeon.warpIn.x, dungeon.warpIn.y, dungeon.warpIn.z))
     player:setPos(dungeon.warpIn.x, dungeon.warpIn.y, dungeon.warpIn.z,
@@ -1852,6 +1859,7 @@ local function startDungeon(player, dungeon, tierId)
                 #partyMembers),
             xi.msg.channel.SYSTEM_3)
         for _, mem in ipairs(partyMembers) do
+            pcall(function() mem:clearTrusts() end)
             mem:printToPlayer(
                 string.format('[Dungeon] Following %s into %s [%s] - %d minutes on the clock.',
                     player:getName(), dungeon.label, tier.label,
