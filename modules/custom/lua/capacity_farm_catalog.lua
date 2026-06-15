@@ -44,9 +44,9 @@ catalog.templates =
 }
 
 catalog.mobName  = 'Capacity Phantom'  -- display name; also used to count/top-up the pool
-catalog.mobCount = 8                    -- target population (kept topped up)
+catalog.mobCount = 24                   -- target population (kept topped up; tripled 8->24)
 catalog.minLv    = 150                  -- engine rolls each spawn in [minLv, maxLv]
 catalog.maxLv    = 160
-catalog.maxHP    = 60000                -- low HP = quick kills; a geared 99 melts it in a hit or two
+catalog.maxHP    = 45000                -- low HP = quick kills (-25% from 60000)
 
 return catalog
