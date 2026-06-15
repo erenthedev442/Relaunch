@@ -132,7 +132,7 @@ xi.job_utils.ranger.checkDecoyShot = function(player, target, ability)
 end
 
 xi.job_utils.ranger.checkHoverShot = function(player, target, ability)
-    return 0, 0  -- Not implemented yet
+    return 0, 0
 end
 
 xi.job_utils.ranger.checkOverkill = function(player, target, ability)
