@@ -2012,9 +2012,9 @@ bool TryInterruptSpell(CBattleEntity* PAttacker, CBattleEntity* PDefender, CSpel
 // output is a fraction of what a real DD does. This flat multiplier scales an
 // automaton's outgoing PHYSICAL damage: melee + ranged auto-attacks AND weapon-
 // skills, which all funnel through TakePhysicalDamage / TakeWeaponskillDamage.
-// Tune AUTOMATON_DMG_MULTIPLIER (target 10-15x). Does NOT touch magic-frame nukes
+// Tune AUTOMATON_DMG_MULTIPLIER here (set to 20x). Does NOT touch magic-frame nukes
 // (those go through the spell path) or any non-automaton entity.
-static constexpr float AUTOMATON_DMG_MULTIPLIER = 12.0f;
+static constexpr float AUTOMATON_DMG_MULTIPLIER = 20.0f;
 
 static inline int32 ApplyAutomatonDamageBonus(CBattleEntity* PAttacker, int32 damage)
 {
