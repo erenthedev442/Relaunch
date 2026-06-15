@@ -48,19 +48,31 @@ VALUES
     (11371, 2606, 222, 'Medusa',   0, 128, 0,  55000,     0, 0, NULL),  -- (legacy spare)
     (11372, 2941, 222, 'Odin',     0, 128, 0,  70000, 10000, 0, NULL),
     (11373, 2606, 222, 'Medusa',   0, 128, 0,  55000,     0, 0, NULL),
+    -- FJB 2026-06-15: tiers 1-4 REPOOLED to Provenance-safe models. The original
+    -- pools (Sarameya 3465, Kaggen 4694, Omega 2973, etc.) use monster models the
+    -- client does NOT load in zone 222, so those bosses spawned INVISIBLE. The
+    -- poolids below are all confirmed to render in Provenance: native zone-222
+    -- mobs (Crystal_Fetter + the RoV "Naphula" chess pieces) and the proven
+    -- tier-0 avatars (Diabolos/Odin/Medusa) + the Provenance Watcher. The pool
+    -- ALSO carries the TP-move kit, so each boss now uses its new pool's moves --
+    -- the higher tiers actually GAIN dread kits (Medusa petrify / Diabolos
+    -- nightmare / Odin Zantetsuken). Stats/HP (the real difficulty) are catalog-
+    -- driven and unchanged. Boss NAMES are kept (the mob just wears a stand-in
+    -- model). To restore a specific original look, the model must be one zone 222
+    -- loads, or override it post-spawn via setModelId in Prestige_System.lua.
     -- ---- Tier 1 : The Voidwalkers (P.Lv 10-19) --------------------------
-    (11381, 3465, 222, 'Sarameya',             0, 128, 0,  95000, 10000, 0, NULL),
-    (11382, 4694, 222, 'Kaggen',               0, 128, 0,  90000, 10000, 0, NULL),
-    (11383, 4716, 222, 'Qilin',                0, 128, 0,  92000, 10000, 0, NULL),
+    (11381, 4664, 222, 'Sarameya',             0, 128, 0,  95000, 10000, 0, NULL),  -- Asb (native 222)
+    (11382, 4663, 222, 'Kaggen',               0, 128, 0,  90000, 10000, 0, NULL),  -- Rukh (native 222)
+    (11383, 4666, 222, 'Qilin',                0, 128, 0,  92000, 10000, 0, NULL),  -- Wazir (native 222)
     -- ---- Tier 2 : The Jailers (P.Lv 20-29) ------------------------------
-    (11384, 2133, 222, 'Jailer_of_Justice',    0, 128, 0,  95000, 30000, 0, NULL),
-    (11385, 2131, 222, 'Jailer_of_Fortitude',  0, 128, 0,  92000, 30000, 0, NULL),
-    (11386, 2136, 222, 'Jailer_of_Temperance', 0, 128, 0, 105000, 30000, 0, NULL),
+    (11384, 4667, 222, 'Jailer_of_Justice',    0, 128, 0,  95000, 30000, 0, NULL),  -- Shah (native 222)
+    (11385, 4665, 222, 'Jailer_of_Fortitude',  0, 128, 0,  92000, 30000, 0, NULL),  -- Sarbaz (native 222)
+    (11386, 5315, 222, 'Jailer_of_Temperance', 0, 128, 0, 105000, 30000, 0, NULL),  -- Pil (native 222)
     -- ---- Tier 3 : The Voidwalker Lords (P.Lv 30-39) ---------------------
-    (11387, 2287, 222, 'Kreutzet',             0, 128, 0, 100000, 30000, 0, NULL),
-    (11388, 3313, 222, 'Raja',                 0, 128, 0, 100000, 30000, 0, NULL),
-    (11389, 2474, 222, 'Maere',                0, 128, 0,  98000, 30000, 0, NULL),
+    (11387, 5314, 222, 'Kreutzet',             0, 128, 0, 100000, 30000, 0, NULL),  -- Crystal_Fetter (native 222)
+    (11388, 2606, 222, 'Raja',                 0, 128, 0, 100000, 30000, 0, NULL),  -- Medusa (proven; petrify kit)
+    (11389, 1027, 222, 'Maere',                0, 128, 0,  98000, 30000, 0, NULL),  -- Diabolos (proven; nightmare kit)
     -- ---- Tier 4 : The World's End (P.Lv 40+) ----------------------------
-    (11390, 2973, 222, 'Omega',                0, 128, 0, 105000, 30000, 0, NULL),
-    (11391, 4083, 222, 'Ultima',               0, 128, 0, 105000, 30000, 0, NULL),
-    (11392, 4654, 222, 'Provenance_Watcher',   0, 128, 0, 110000, 30000, 0, NULL);
+    (11390, 2941, 222, 'Omega',                0, 128, 0, 105000, 30000, 0, NULL),  -- Odin (proven; Zantetsuken kit)
+    (11391, 4654, 222, 'Ultima',               0, 128, 0, 105000, 30000, 0, NULL),  -- Provenance Watcher (shares 11392's look)
+    (11392, 4654, 222, 'Provenance_Watcher',   0, 128, 0, 110000, 30000, 0, NULL);  -- native apex (unchanged)
