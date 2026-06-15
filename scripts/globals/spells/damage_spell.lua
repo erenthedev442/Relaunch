@@ -34,22 +34,37 @@ local column =
     MULTIPLIER_500  = 13,
 }
 
--- Scholar Helix Detonation: Tier V/VI nukes that can fire the combo.
+-- Scholar Helix Detonation: elemental nukes mapped to their tier (1-5).
+-- Higher tiers earn a larger flat bonus on detonation, making T1 the weakest trigger.
 local HELIX_DETONATE_TRIGGERS =
 {
-    [xi.magic.spell.FIRE_V    ] = true,
-    [xi.magic.spell.BLIZZARD_V] = true,
-    [xi.magic.spell.AERO_V    ] = true,
-    [xi.magic.spell.STONE_V   ] = true,
-    [xi.magic.spell.THUNDER_V ] = true,
-    [xi.magic.spell.WATER_V   ] = true,
-    [xi.magic.spell.FIRE_VI   ] = true,
-    [xi.magic.spell.BLIZZARD_VI] = true,
-    [xi.magic.spell.AERO_VI   ] = true,
-    [xi.magic.spell.STONE_VI  ] = true,
-    [xi.magic.spell.THUNDER_VI] = true,
-    [xi.magic.spell.WATER_VI  ] = true,
+    -- Tier I
+    [xi.magic.spell.FIRE    ] = 1,  [xi.magic.spell.BLIZZARD    ] = 1,
+    [xi.magic.spell.AERO    ] = 1,  [xi.magic.spell.STONE       ] = 1,
+    [xi.magic.spell.THUNDER ] = 1,  [xi.magic.spell.WATER       ] = 1,
+    -- Tier II
+    [xi.magic.spell.FIRE_II    ] = 2,  [xi.magic.spell.BLIZZARD_II ] = 2,
+    [xi.magic.spell.AERO_II    ] = 2,  [xi.magic.spell.STONE_II    ] = 2,
+    [xi.magic.spell.THUNDER_II ] = 2,  [xi.magic.spell.WATER_II    ] = 2,
+    -- Tier III
+    [xi.magic.spell.FIRE_III   ] = 3,  [xi.magic.spell.BLIZZARD_III] = 3,
+    [xi.magic.spell.AERO_III   ] = 3,  [xi.magic.spell.STONE_III   ] = 3,
+    [xi.magic.spell.THUNDER_III] = 3,  [xi.magic.spell.WATER_III   ] = 3,
+    -- Tier IV
+    [xi.magic.spell.FIRE_IV    ] = 4,  [xi.magic.spell.BLIZZARD_IV ] = 4,
+    [xi.magic.spell.AERO_IV    ] = 4,  [xi.magic.spell.STONE_IV    ] = 4,
+    [xi.magic.spell.THUNDER_IV ] = 4,  [xi.magic.spell.WATER_IV    ] = 4,
+    -- Tier V + VI (both use the T5 bonus)
+    [xi.magic.spell.FIRE_V    ] = 5,  [xi.magic.spell.BLIZZARD_V ] = 5,
+    [xi.magic.spell.AERO_V    ] = 5,  [xi.magic.spell.STONE_V    ] = 5,
+    [xi.magic.spell.THUNDER_V ] = 5,  [xi.magic.spell.WATER_V    ] = 5,
+    [xi.magic.spell.FIRE_VI   ] = 5,  [xi.magic.spell.BLIZZARD_VI] = 5,
+    [xi.magic.spell.AERO_VI   ] = 5,  [xi.magic.spell.STONE_VI   ] = 5,
+    [xi.magic.spell.THUNDER_VI] = 5,  [xi.magic.spell.WATER_VI   ] = 5,
 }
+
+-- Flat bonus damage added on top of the 2× multiplier, keyed by nuke tier.
+local HELIX_DETONATE_BONUS = { [1] = 250, [2] = 500, [3] = 750, [4] = 1250, [5] = 1750 }
 
 local pTable =
 {
@@ -1204,8 +1219,9 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         local lastEl   = caster:getCharVar('HelixDetEl')
         local lastTime = caster:getCharVar('HelixDetTime')
         if lastEl == spellElement and lastEl > 0 and (os.time() - lastTime) <= 10 then
-            finalDamage    = math.floor(finalDamage * 2)    -- twice the elemental damage
-            finalDamage    = math.floor(finalDamage * 1.35) -- bonus magic burst damage
+            local nukeTier  = HELIX_DETONATE_TRIGGERS[spellId]
+            local flatBonus = HELIX_DETONATE_BONUS[nukeTier] or 0
+            finalDamage    = math.floor(finalDamage * 2) + flatBonus  -- 2× + tier flat bonus
             helixDetonated = true
             caster:setCharVar('HelixDetEl', 0)
             target:delStatusEffect(xi.effect.HELIX)         -- consume on any outcome including absorb
