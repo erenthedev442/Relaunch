@@ -111,12 +111,17 @@ catalog.spawnRingMax = 14.0
 -- ============================================================
 -- Paid to every participant still in the zone at the relevant moment.
 -- A participant is anyone present at ANY wave start.
+-- FJB 2026-06-15: all invasion rewards cut 75% (-> 25% of prior values).
+-- The Al Zahbi assault was paying out too richly relative to its effort/
+-- frequency. Marks + Infamy scaled straight down; seal quantities scaled
+-- down and rounded (gold 6 -> 1.5 rounded to 2). Prior values in the
+-- trailing comments for easy restore.
 catalog.reward =
 {
-    perWaveMarks  = 1200,  -- on each wave clear (x4 waves = 4800 across a full assault)
-    victoryMarks  = 9000,  -- on full clear (the Warlord falls), plus...
-    victoryInfamy = 2400,  -- ...the only Infamy source outside dungeons (intentional)
-    failMarks     = 1200,  -- consolation if the clock beats the defense
+    perWaveMarks  = 300,   -- on each wave clear (x4 waves = 1200 across a full assault)  [was 1200]
+    victoryMarks  = 2250,  -- on full clear (the Warlord falls), plus...                  [was 9000]
+    victoryInfamy = 600,   -- ...the only Infamy source outside dungeons (intentional)    [was 2400]
+    failMarks     = 300,   -- consolation if the clock beats the defense                  [was 1200]
 
     -- Gear-vendor seal loot on a WIN -- ties the invasion into the Armor /
     -- Weapons NPC gear loop (!hunt). Seals stack to 99 (stackable_medals.sql).
@@ -124,8 +129,8 @@ catalog.reward =
     -- economy levers, tune freely:
     --   9541 Kindreds Medal = SILVER currency (mid gear, ~25 medals/piece)
     --   9543 Demons Medal   = GOLD  currency (BiS gear, 50-500 medals/piece)
-    victorySeals    = { { id = 9541, qty = 12, name = 'Kindreds Medal' } },              -- guaranteed
-    victoryGoldSeal = { id = 9543, qty = 6, name = 'Demons Medal', chancePercent = 100 }, -- guaranteed
+    victorySeals    = { { id = 9541, qty = 3, name = 'Kindreds Medal' } },               -- guaranteed  [was qty 12]
+    victoryGoldSeal = { id = 9543, qty = 2, name = 'Demons Medal', chancePercent = 100 }, -- guaranteed  [was qty 6]
 }
 
 return catalog
