@@ -2010,6 +2010,40 @@ local function armDungeonAfterArrival(player)
         if not s or s.dungeon.id ~= dungeon.id then
             return  -- session ended; stop patrolling
         end
+
+        -- BOSS-SPAWN SELF-HEAL (2026-06-15). The boss only spawns when the LAST
+        -- tracked mob's DEATH registers (#sess.mobs hits 0 in onMobDeath). A mob
+        -- that DESPAWNS instead of dying (fell off-mesh, orphaned, cleaned up)
+        -- never fires onMobDeath, so it lingers in sess.mobs forever and the run
+        -- soft-locks: zone empty, no boss, nothing left to kill. Failsafe: if the
+        -- tracker still lists mobs but the dungeon zone is genuinely empty of live
+        -- mobs for ~2s, reconcile and spawn the boss. We count the ZONE's live
+        -- mobs (valid refs from getMobs) -- NEVER the stale sess.mobs refs, which
+        -- may be freed (touching a freed entity ref can segfault; cf. endDungeon's
+        -- despawn guard). Gated on `not bossEntity` so it can't double-spawn, and
+        -- on `#mobs > 0` so it can't fire during the initial pre-spawn window.
+        if not s.bossEntity and #s.mobs > 0 and p:getZoneID() == dungeon.zoneId then
+            local live = 0
+            for _, mob in pairs(p:getZone():getMobs()) do
+                if mob:isSpawned() and mob:getHPP() > 0 then
+                    live = live + 1
+                end
+            end
+            if live == 0 then
+                s._clearSince = s._clearSince or os.time()
+                if os.time() - s._clearSince >= 2 then
+                    print(string.format(
+                        "[dungeon] SELF-HEAL: %s zone clear with %d stale tracked mob(s) -- spawning boss",
+                        p:getName(), #s.mobs))
+                    s.mobs        = {}
+                    s._clearSince = nil
+                    if spawnBoss then spawnBoss(p) end
+                end
+            else
+                s._clearSince = nil
+            end
+        end
+
         local gates = s.gates
         if gates and #gates > 0 and s.gateAxis and s.gateEntry then
             -- frontier = lowest-depth gate that still has living mobs
