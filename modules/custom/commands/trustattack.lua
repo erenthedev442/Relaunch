@@ -21,31 +21,38 @@ local CV      = 'TrustAtkOn'   -- charVar: 1 = auto-attack mode on
 local TICK_MS = 2000           -- target re-check cadence
 local lastTgt = {}             -- [playerId] = last targ id the trusts were sent to
 
--- Point the caller's own trusts at the target.
-local function sendTrusts(player, target)
+-- Point the caller's own trusts at the target AND make the mob fight them.
+-- `engage` only fires on a target change (re-engaging every tick would reset the
+-- swing timer); the enmity is (re)applied every call so the mob keeps aggroing
+-- the trusts even though the master never engaged. Without it the trust just
+-- mirrors its idle master and disengages instantly -- the "needs me to engage"
+-- bug. Same hands-free pull BST/PUP put on a mob to make it fight a pet.
+local function sendTrusts(player, target, doEngage)
     local targID = target:getTargID()
     local myId   = player:getID()
     for _, member in ipairs(player:getPartyWithTrusts()) do
         if member:isTrust() then
             local master = member:getMaster()
             if master ~= nil and master:getID() == myId then
-                member:engage(targID)
+                if doEngage then
+                    member:engage(targID)
+                end
+                target:addEnmity(member, 50, 100)
             end
         end
     end
     lastTgt[myId] = targID
 end
 
--- One re-check: if you have a living enemy selected and it differs from where the
--- trusts were last sent, send them. Same target -> leave them swinging (no reset).
+-- One re-check: if you have a living enemy selected, keep your trusts on it.
+-- Re-point (engage) only when the target changed; refresh the enmity every tick
+-- so the mob stays locked onto the trusts for the whole fight, hands-free.
 local function tick(player)
     local target = player:getCursorTarget()
     if target == nil or not target:isMob() or not target:isAlive() then
         return
     end
-    if lastTgt[player:getID()] ~= target:getTargID() then
-        sendTrusts(player, target)
-    end
+    sendTrusts(player, target, lastTgt[player:getID()] ~= target:getTargID())
 end
 
 -- Re-arming loop: re-arms only while the mode is on, so a toggle-off stops it.
