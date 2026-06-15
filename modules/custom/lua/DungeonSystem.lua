@@ -825,6 +825,7 @@ end
 -- Forward decl - bossActions references spawnDungeonMob, which is
 -- defined further down. Resolved lazily inside add_spawn at call time.
 local spawnDungeonMobFn
+local spawnBoss  -- forward decl; defined after spawnDungeonMob below
 
 local function _say(player, p, fallback)
     if p.message then
@@ -1083,6 +1084,11 @@ local function spawnDungeonMob(player, dungeon, opts)
             -- Boss death is tracked via sess.cleared below.
             if not isBoss then
                 sess.trashKilled = (sess.trashKilled or 0) + 1
+                -- All trash/NMs dead and boss hasn't spawned yet → trigger it.
+                if not sess.bossEntity and #sess.mobs == 0 and spawnBoss then
+                    local resolved = GetPlayerByName(ownerName)
+                    if resolved then spawnBoss(resolved) end
+                end
             end
 
             -- Gate accounting: when the last mob guarding a threshold
@@ -1319,6 +1325,32 @@ end
 -- bossActions table was defined before spawnDungeonMob so the action
 -- handler couldn't capture it directly; this line closes that gap.
 spawnDungeonMobFn = spawnDungeonMob
+
+-- Spawns the dungeon boss. Called either when all trash/NMs are dead (normal path)
+-- or immediately when the dungeon spawns no trash mobs at all (safety fallback).
+spawnBoss = function(player)
+    local sess = sessions[player:getName()]
+    if not sess or not sess.bossPending or sess.bossEntity then return end
+    local dungeon = sess.dungeon
+    local bp      = sess.bossPending
+    sess.bossPending = nil  -- clear first to prevent re-entrant double-spawn
+
+    player:printToPlayer(
+        string.format('[Dungeon] All enemies defeated! %s appears!', bp.name or 'The boss'),
+        xi.msg.channel.SYSTEM_3)
+
+    local boss = spawnDungeonMob(player, dungeon, {
+        groupId = bp.groupId,
+        level   = dungeon.bossLevel,
+        name    = bp.name,
+        pos     = bp.pos,
+        isBoss  = true,
+    })
+    if boss then
+        sess.bossEntity = boss
+        table.insert(sess.mobs, boss)
+    end
+end
 
 
 local function pickFromList(list)
@@ -1567,16 +1599,16 @@ local function spawnAllMobs(player, dungeon)
     sess.rolledBossGroup = bossGroupId
     sess.rolledBossName  = bossNameForRun
 
-    local boss = spawnDungeonMob(player, dungeon, {
+    -- Defer boss spawn until all trash/NMs are dead.
+    sess.bossPending = {
         groupId = bossGroupId,
-        level   = dungeon.bossLevel,
         name    = bossNameForRun,
         pos     = { x = bx, y = by, z = bz, rot = brot },
-        isBoss  = true,
-    })
-    if boss then
-        sess.bossEntity = boss
-        table.insert(sess.mobs, boss)
+    }
+
+    -- Safety: if no trash mobs were configured, spawn boss immediately.
+    if #sess.mobs == 0 then
+        spawnBoss(player)
     end
 end
 
