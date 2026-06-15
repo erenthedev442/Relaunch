@@ -902,6 +902,7 @@ INSERT INTO `item_usable` VALUES (5022,'scroll_of_warding_round',1,1,15,5,0,0,0,
 INSERT INTO `item_usable` VALUES (5023,'scroll_of_goblin_gavotte',1,1,15,5,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5027,'scroll_of_advancing_march',1,1,15,5,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5028,'scroll_of_victory_march',1,1,15,5,0,0,0,0);
+INSERT INTO `item_usable` VALUES (5031,'scroll_of_honor_march',1,1,15,5,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5029,'scroll_of_battlefield_elegy',1,1,15,5,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5030,'scroll_of_carnage_elegy',1,1,15,5,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5032,'scroll_of_sinewy_etude',1,1,15,5,0,0,0,0);
