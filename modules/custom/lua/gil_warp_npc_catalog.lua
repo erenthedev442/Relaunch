@@ -69,6 +69,7 @@ catalog.tiers =
             { label = "Western Adoulin", zone = xi.zone.WESTERN_ADOULIN, x = -10.00, y = 0.00, z = 0.00, r = 192 },
             { label = "Eastern Adoulin", zone = xi.zone.EASTERN_ADOULIN, x = -10.00, y = 0.00, z = 0.00, r = 192 },
             { label = "Al Zahbi",        zone = xi.zone.AL_ZAHBI,        x =   0.00, y = 0.00, z = 0.00, r = 192 },
+            { label = "Bibiki Bay (CP Farm)", zone = xi.zone.BIBIKI_BAY, x = 93.00, y = -45.50, z = 928.00, r = 128 }, -- matches !capacity / capacity_farm_catalog.warpPos
         },
     },
     {
