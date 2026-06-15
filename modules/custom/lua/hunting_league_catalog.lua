@@ -80,46 +80,46 @@ return
             {
                 { name = 'Leaping_Lizzy',    label = 'Leaping Lizzy',    points = 5,  groupId = 11355, minLv = 150, maxLv = 150,
                   spawnPos = { x = -130.0, y =  -0.2, z =    5.0, rot =   0 },  -- T1 cluster: NW
-                  hpBoost = 4,
+                  hpBoost = 6,
                   mods = {
-                      [xi.mod.DEF] = 385,
-                      [xi.mod.ATT] = 1800,
-                      [xi.mod.ACC] = 180,   -- T1 normalized target
-                      [xi.mod.EVASION] = 120,
-                      [xi.mod.MEVA] = 120,
-                      [xi.mod.STR]           = 50,    -- + damage on hit
-                      [xi.mod.DEX]           = 50,    -- DEX feeds ACC formula (~0.75 DEX = 1 ACC)
-                      [xi.mod.HASTE_GEAR]    = 100,   -- ~10%
-                      [xi.mod.DOUBLE_ATTACK] = 5,
-                      [xi.mod.REGEN]         = 50,
+                      [xi.mod.DEF] = 481,
+                      [xi.mod.ATT] = 2700,
+                      [xi.mod.ACC] = 270,   -- T1 normalized target
+                      [xi.mod.EVASION] = 180,
+                      [xi.mod.MEVA] = 180,
+                      [xi.mod.STR] = 75,    -- + damage on hit
+                      [xi.mod.DEX] = 75,    -- DEX feeds ACC formula (~0.75 DEX = 1 ACC)
+                      [xi.mod.HASTE_GEAR] = 150,   -- ~10%
+                      [xi.mod.DOUBLE_ATTACK] = 8,
+                      [xi.mod.REGEN] = 75,
                   },
                 },
                 { name = 'Valkurm_Emperor',  label = 'Valkurm Emperor',  points = 5,  groupId = 11356, minLv = 150, maxLv = 150,
                   spawnPos = { x = -110.0, y =  -0.2, z =   25.0, rot = 128 },  -- T1 cluster: N
-                  hpBoost = 4,
+                  hpBoost = 6,
                   mods = {
-                      [xi.mod.DEF] = 385,
-                      [xi.mod.ATT] = 1800,
-                      [xi.mod.ACC] = 180,   -- T1 normalized target
-                      [xi.mod.EVASION] = 120,
-                      [xi.mod.MEVA] = 120,
-                      [xi.mod.HASTE_GEAR]    = 100,
-                      [xi.mod.DOUBLE_ATTACK] = 5,
-                      [xi.mod.REGEN]         = 50,
+                      [xi.mod.DEF] = 481,
+                      [xi.mod.ATT] = 2700,
+                      [xi.mod.ACC] = 270,   -- T1 normalized target
+                      [xi.mod.EVASION] = 180,
+                      [xi.mod.MEVA] = 180,
+                      [xi.mod.HASTE_GEAR] = 150,
+                      [xi.mod.DOUBLE_ATTACK] = 8,
+                      [xi.mod.REGEN] = 75,
                   },
                 },
                 { name = 'Tom_Tit_Tat',      label = 'Tom Tit Tat',      points = 5,  groupId = 11357, minLv = 150, maxLv = 150,
                   spawnPos = { x =  -85.0, y =  -0.2, z =    5.0, rot = 192 },  -- T1 cluster: NE
-                  hpBoost = 4,
+                  hpBoost = 6,
                   mods = {
-                      [xi.mod.DEF] = 385,
-                      [xi.mod.ATT] = 1800,
-                      [xi.mod.ACC] = 180,   -- T1 normalized target
-                      [xi.mod.EVASION] = 120,
-                      [xi.mod.MEVA] = 120,
-                      [xi.mod.HASTE_GEAR]    = 100,
-                      [xi.mod.DOUBLE_ATTACK] = 5,
-                      [xi.mod.REGEN]         = 50,
+                      [xi.mod.DEF] = 481,
+                      [xi.mod.ATT] = 2700,
+                      [xi.mod.ACC] = 270,   -- T1 normalized target
+                      [xi.mod.EVASION] = 180,
+                      [xi.mod.MEVA] = 180,
+                      [xi.mod.HASTE_GEAR] = 150,
+                      [xi.mod.DOUBLE_ATTACK] = 8,
+                      [xi.mod.REGEN] = 75,
                   },
                 },
             },
@@ -136,51 +136,51 @@ return
             {
                 { name = 'Roc',         label = 'Roc',         points = 12, groupId = 11358, minLv = 150, maxLv = 150,
                   spawnPos = { x =  -15.0, y =  -8.0, z =  185.0, rot =   0 },  -- T2 cluster: W
-                  hpBoost = 6,
+                  hpBoost = 9,
                   mods = {
-                      [xi.mod.DEF] = 660,
-                      [xi.mod.ATT] = 3000,
-                      [xi.mod.ACC] = 600,   -- T2 normalized target
-                      [xi.mod.EVASION] = 180,
-                      [xi.mod.MEVA] = 240,
-                      [xi.mod.MDEF] = 120,
-                      [xi.mod.HASTE_GEAR]    = 150,   -- ~15%
-                      [xi.mod.DOUBLE_ATTACK] = 10,
-                      [xi.mod.REGEN]         = 100,
+                      [xi.mod.DEF] = 825,
+                      [xi.mod.ATT] = 4500,
+                      [xi.mod.ACC] = 900,   -- T2 normalized target
+                      [xi.mod.EVASION] = 270,
+                      [xi.mod.MEVA] = 360,
+                      [xi.mod.MDEF] = 180,
+                      [xi.mod.HASTE_GEAR] = 225,   -- ~15%
+                      [xi.mod.DOUBLE_ATTACK] = 15,
+                      [xi.mod.REGEN] = 150,
                   },
                 },
                 { name = 'Bomb_Queen',  label = 'Bomb Queen',  points = 12, groupId = 11359, minLv = 150, maxLv = 150,
                   spawnPos = { x =   10.0, y =  -8.0, z =  200.0, rot = 128 },  -- T2 cluster: C
-                  hpBoost = 6,
+                  hpBoost = 9,
                   mods = {
-                      [xi.mod.DEF] = 660,
-                      [xi.mod.ATT] = 3000,
-                      [xi.mod.ACC] = 600,   -- T2 normalized target
-                      [xi.mod.EVASION] = 180,
-                      [xi.mod.MEVA] = 240,
-                      [xi.mod.MDEF] = 120,
-                      [xi.mod.STR]           = 100,
-                      [xi.mod.DEX]           = 100,
-                      [xi.mod.HASTE_GEAR]    = 150,
-                      [xi.mod.DOUBLE_ATTACK] = 10,
-                      [xi.mod.REGEN]         = 100,
+                      [xi.mod.DEF] = 825,
+                      [xi.mod.ATT] = 4500,
+                      [xi.mod.ACC] = 900,   -- T2 normalized target
+                      [xi.mod.EVASION] = 270,
+                      [xi.mod.MEVA] = 360,
+                      [xi.mod.MDEF] = 180,
+                      [xi.mod.STR] = 150,
+                      [xi.mod.DEX] = 150,
+                      [xi.mod.HASTE_GEAR] = 225,
+                      [xi.mod.DOUBLE_ATTACK] = 15,
+                      [xi.mod.REGEN] = 150,
                   },
                 },
                 { name = 'Aquarius',    label = 'Aquarius',    points = 12, groupId = 11360, minLv = 150, maxLv = 150,
                   spawnPos = { x =   35.0, y =  -8.0, z =  185.0, rot = 192 },  -- T2 cluster: E
-                  hpBoost = 6,
+                  hpBoost = 9,
                   mods = {
-                      [xi.mod.DEF] = 660,
-                      [xi.mod.ATT] = 3000,
-                      [xi.mod.ACC] = 600,   -- T2 normalized target
-                      [xi.mod.EVASION] = 180,
-                      [xi.mod.MEVA] = 240,
-                      [xi.mod.MDEF] = 120,
-                      [xi.mod.STR]           = 100,
-                      [xi.mod.DEX]           = 100,
-                      [xi.mod.HASTE_GEAR]    = 150,
-                      [xi.mod.DOUBLE_ATTACK] = 10,
-                      [xi.mod.REGEN]         = 100,
+                      [xi.mod.DEF] = 825,
+                      [xi.mod.ATT] = 4500,
+                      [xi.mod.ACC] = 900,   -- T2 normalized target
+                      [xi.mod.EVASION] = 270,
+                      [xi.mod.MEVA] = 360,
+                      [xi.mod.MDEF] = 180,
+                      [xi.mod.STR] = 150,
+                      [xi.mod.DEX] = 150,
+                      [xi.mod.HASTE_GEAR] = 225,
+                      [xi.mod.DOUBLE_ATTACK] = 15,
+                      [xi.mod.REGEN] = 150,
                   },
                 },
             },
@@ -197,36 +197,36 @@ return
             {
                 { name = 'Serket',    label = 'Serket',    points = 22, groupId = 11361, minLv = 150, maxLv = 150,
                   spawnPos = { x =  265.0, y =  -1.0, z =   45.0, rot =  96 },  -- T3 cluster: W
-                  hpBoost = 10,
+                  hpBoost = 15,
                   mods = {
-                      [xi.mod.DEF] = 990,
-                      [xi.mod.ATT] = 4800,
-                      [xi.mod.ACC] = 840,   -- T3 normalized target
-                      [xi.mod.EVASION] = 300,
-                      [xi.mod.MEVA] = 360,
-                      [xi.mod.MDEF] = 240,
-                      [xi.mod.HASTE_GEAR]    = 200,   -- ~20%
-                      [xi.mod.DOUBLE_ATTACK] = 15,
-                      [xi.mod.TRIPLE_ATTACK] = 3,
-                      [xi.mod.REGEN]         = 200,
+                      [xi.mod.DEF] = 1238,
+                      [xi.mod.ATT] = 7200,
+                      [xi.mod.ACC] = 1260,   -- T3 normalized target
+                      [xi.mod.EVASION] = 450,
+                      [xi.mod.MEVA] = 540,
+                      [xi.mod.MDEF] = 360,
+                      [xi.mod.HASTE_GEAR] = 300,   -- ~20%
+                      [xi.mod.DOUBLE_ATTACK] = 23,
+                      [xi.mod.TRIPLE_ATTACK] = 5,
+                      [xi.mod.REGEN] = 300,
                   },
                 },
                 { name = 'Vrtra',     label = 'Vrtra',     points = 22, groupId = 11362, minLv = 150, maxLv = 150,
                   spawnPos = { x =  275.0, y =  -1.0, z =   75.0, rot =  64 },  -- T3 cluster: C
-                  hpBoost = 10,
+                  hpBoost = 15,
                   mods = {
-                      [xi.mod.DEF] = 990,
-                      [xi.mod.ATT] = 4800,
-                      [xi.mod.ACC] = 840,   -- T3 normalized target
-                      [xi.mod.EVASION] = 300,
-                      [xi.mod.MEVA] = 360,
-                      [xi.mod.MDEF] = 240,
-                      [xi.mod.STR]           = 200,
-                      [xi.mod.DEX]           = 200,
-                      [xi.mod.HASTE_GEAR]    = 200,
-                      [xi.mod.DOUBLE_ATTACK] = 15,
-                      [xi.mod.TRIPLE_ATTACK] = 3,
-                      [xi.mod.REGEN]         = 200,
+                      [xi.mod.DEF] = 1238,
+                      [xi.mod.ATT] = 7200,
+                      [xi.mod.ACC] = 1260,   -- T3 normalized target
+                      [xi.mod.EVASION] = 450,
+                      [xi.mod.MEVA] = 540,
+                      [xi.mod.MDEF] = 360,
+                      [xi.mod.STR] = 300,
+                      [xi.mod.DEX] = 300,
+                      [xi.mod.HASTE_GEAR] = 300,
+                      [xi.mod.DOUBLE_ATTACK] = 23,
+                      [xi.mod.TRIPLE_ATTACK] = 5,
+                      [xi.mod.REGEN] = 300,
                   },
                 },
                 { name = 'Simurgh',   label = 'Simurgh',   points = 22, groupId = 11363, minLv = 150, maxLv = 150,
@@ -235,20 +235,20 @@ return
                   -- above its T3 tier-mates (Serket/Vrtra) -- +25% HP, harder &
                   -- faster hits (ATT/HASTE/Double+Triple Atk), and stronger Regen
                   -- so a group has to out-DPS the self-heal. Dial up/down here.
-                  hpBoost = 12,
+                  hpBoost = 18,
                   mods = {
-                      [xi.mod.DEF] = 990,
-                      [xi.mod.ATT] = 5280,  -- T3+ (was 4000)
-                      [xi.mod.ACC] = 900,   -- T3+ (was 700)
-                      [xi.mod.EVASION] = 300,
-                      [xi.mod.MEVA] = 360,
-                      [xi.mod.MDEF] = 240,
-                      [xi.mod.STR]           = 200,
-                      [xi.mod.DEX]           = 200,
-                      [xi.mod.HASTE_GEAR]    = 230,   -- ~22% (was 200)
-                      [xi.mod.DOUBLE_ATTACK] = 20,    -- was 15
-                      [xi.mod.TRIPLE_ATTACK] = 5,     -- was 3
-                      [xi.mod.REGEN]         = 275,   -- was 200
+                      [xi.mod.DEF] = 1238,
+                      [xi.mod.ATT] = 7920,  -- T3+ (was 4000)
+                      [xi.mod.ACC] = 1350,   -- T3+ (was 700)
+                      [xi.mod.EVASION] = 450,
+                      [xi.mod.MEVA] = 540,
+                      [xi.mod.MDEF] = 360,
+                      [xi.mod.STR] = 300,
+                      [xi.mod.DEX] = 300,
+                      [xi.mod.HASTE_GEAR] = 345,   -- ~22% (was 200)
+                      [xi.mod.DOUBLE_ATTACK] = 30,    -- was 15
+                      [xi.mod.TRIPLE_ATTACK] = 8,     -- was 3
+                      [xi.mod.REGEN] = 413,   -- was 200
                   },
                 },
             },
@@ -265,54 +265,54 @@ return
             {
                 { name = 'Nidhogg',       label = 'Nidhogg',       points = 38, groupId = 11364, minLv = 150, maxLv = 150,
                   spawnPos = { x =  355.0, y =  -8.0, z =   90.0, rot =  96 },  -- T4 cluster: W
-                  hpBoost = 14,
+                  hpBoost = 21,
                   mods = {
-                      [xi.mod.DEF] = 1430,
-                      [xi.mod.ATT] = 7200,
-                      [xi.mod.ACC] = 1080,   -- T4 normalized target
-                      [xi.mod.EVASION] = 420,
-                      [xi.mod.MEVA] = 480,
-                      [xi.mod.MDEF] = 420,
-                      [xi.mod.HASTE_GEAR]    = 250,   -- ~25%
-                      [xi.mod.DOUBLE_ATTACK] = 20,
-                      [xi.mod.TRIPLE_ATTACK] = 8,
-                      [xi.mod.REGEN]         = 400,
+                      [xi.mod.DEF] = 1788,
+                      [xi.mod.ATT] = 10800,
+                      [xi.mod.ACC] = 1620,   -- T4 normalized target
+                      [xi.mod.EVASION] = 630,
+                      [xi.mod.MEVA] = 720,
+                      [xi.mod.MDEF] = 630,
+                      [xi.mod.HASTE_GEAR] = 375,   -- ~25%
+                      [xi.mod.DOUBLE_ATTACK] = 30,
+                      [xi.mod.TRIPLE_ATTACK] = 12,
+                      [xi.mod.REGEN] = 600,
                   },
                 },
                 { name = 'King_Behemoth', label = 'King Behemoth', points = 38, groupId = 11365, minLv = 150, maxLv = 150,
                   spawnPos = { x =  365.0, y =  -8.0, z =  120.0, rot =  64 },  -- T4 cluster: C
-                  hpBoost = 14,
+                  hpBoost = 21,
                   mods = {
-                      [xi.mod.DEF] = 1430,
-                      [xi.mod.ATT] = 7200,
-                      [xi.mod.ACC] = 1080,   -- T4 normalized target
-                      [xi.mod.EVASION] = 420,
-                      [xi.mod.MEVA] = 480,
-                      [xi.mod.MDEF] = 420,
-                      [xi.mod.STR]           = 300,
-                      [xi.mod.DEX]           = 300,
-                      [xi.mod.HASTE_GEAR]    = 250,
-                      [xi.mod.DOUBLE_ATTACK] = 20,
-                      [xi.mod.TRIPLE_ATTACK] = 8,
-                      [xi.mod.REGEN]         = 400,
+                      [xi.mod.DEF] = 1788,
+                      [xi.mod.ATT] = 10800,
+                      [xi.mod.ACC] = 1620,   -- T4 normalized target
+                      [xi.mod.EVASION] = 630,
+                      [xi.mod.MEVA] = 720,
+                      [xi.mod.MDEF] = 630,
+                      [xi.mod.STR] = 450,
+                      [xi.mod.DEX] = 450,
+                      [xi.mod.HASTE_GEAR] = 375,
+                      [xi.mod.DOUBLE_ATTACK] = 30,
+                      [xi.mod.TRIPLE_ATTACK] = 12,
+                      [xi.mod.REGEN] = 600,
                   },
                 },
                 { name = 'Kirin',         label = 'Kirin',         points = 38, groupId = 11366, minLv = 150, maxLv = 150,
                   spawnPos = { x =  355.0, y =  -8.0, z =  145.0, rot = 128 },  -- T4 cluster: N
-                  hpBoost = 14,
+                  hpBoost = 21,
                   mods = {
-                      [xi.mod.DEF] = 1430,
-                      [xi.mod.ATT] = 7200,
-                      [xi.mod.ACC] = 1080,   -- T4 normalized target
-                      [xi.mod.EVASION] = 420,
-                      [xi.mod.MEVA] = 480,
-                      [xi.mod.MDEF] = 420,
-                      [xi.mod.STR]           = 300,
-                      [xi.mod.DEX]           = 300,
-                      [xi.mod.HASTE_GEAR]    = 250,
-                      [xi.mod.DOUBLE_ATTACK] = 20,
-                      [xi.mod.TRIPLE_ATTACK] = 8,
-                      [xi.mod.REGEN]         = 400,
+                      [xi.mod.DEF] = 1788,
+                      [xi.mod.ATT] = 10800,
+                      [xi.mod.ACC] = 1620,   -- T4 normalized target
+                      [xi.mod.EVASION] = 630,
+                      [xi.mod.MEVA] = 720,
+                      [xi.mod.MDEF] = 630,
+                      [xi.mod.STR] = 450,
+                      [xi.mod.DEX] = 450,
+                      [xi.mod.HASTE_GEAR] = 375,
+                      [xi.mod.DOUBLE_ATTACK] = 30,
+                      [xi.mod.TRIPLE_ATTACK] = 12,
+                      [xi.mod.REGEN] = 600,
                   },
                 },
             },
@@ -329,54 +329,54 @@ return
             {
                 { name = 'Absolute_Virtue',    label = 'Absolute Virtue',    points = 65, groupId = 11367, minLv = 150, maxLv = 150,
                   spawnPos = { x =  495.0, y =  25.0, z =   70.0, rot =  96 },  -- T5 cluster: W
-                  hpBoost = 24,
+                  hpBoost = 36,
                   mods = {
-                      [xi.mod.DEF] = 2200,
-                      [xi.mod.ATT] = 10800,
-                      [xi.mod.ACC] = 2160,  -- unmissable except vs huge EVA stacks
-                      [xi.mod.EVASION] = 600,
-                      [xi.mod.MEVA] = 720,
-                      [xi.mod.MDEF] = 720,
-                      [xi.mod.STR]           = 500,
-                      [xi.mod.DEX]           = 500,
-                      [xi.mod.HASTE_GEAR]    = 300,   -- ~30% (capped by engine)
-                      [xi.mod.DOUBLE_ATTACK] = 25,
-                      [xi.mod.TRIPLE_ATTACK] = 12,
-                      [xi.mod.REGEN]         = 800,
+                      [xi.mod.DEF] = 2750,
+                      [xi.mod.ATT] = 16200,
+                      [xi.mod.ACC] = 3240,  -- unmissable except vs huge EVA stacks
+                      [xi.mod.EVASION] = 900,
+                      [xi.mod.MEVA] = 1080,
+                      [xi.mod.MDEF] = 1080,
+                      [xi.mod.STR] = 750,
+                      [xi.mod.DEX] = 750,
+                      [xi.mod.HASTE_GEAR] = 450,   -- ~30% (capped by engine)
+                      [xi.mod.DOUBLE_ATTACK] = 38,
+                      [xi.mod.TRIPLE_ATTACK] = 18,
+                      [xi.mod.REGEN] = 1200,
                   },
                 },
                 { name = 'Pandemonium_Warden', label = 'Pandemonium Warden', points = 65, groupId = 11368, minLv = 150, maxLv = 150,
                   spawnPos = { x =  505.0, y =  25.0, z =  100.0, rot =  64 },  -- T5 cluster: C
-                  hpBoost = 24,
+                  hpBoost = 36,
                   mods = {
-                      [xi.mod.DEF] = 2200,
-                      [xi.mod.ATT] = 10800,
-                      [xi.mod.ACC] = 600,
-                      [xi.mod.EVASION] = 600,
-                      [xi.mod.MEVA] = 720,
-                      [xi.mod.MDEF] = 720,
-                      [xi.mod.HASTE_GEAR]    = 300,
-                      [xi.mod.DOUBLE_ATTACK] = 25,
-                      [xi.mod.TRIPLE_ATTACK] = 12,
-                      [xi.mod.REGEN]         = 800,
+                      [xi.mod.DEF] = 2750,
+                      [xi.mod.ATT] = 16200,
+                      [xi.mod.ACC] = 900,
+                      [xi.mod.EVASION] = 900,
+                      [xi.mod.MEVA] = 1080,
+                      [xi.mod.MDEF] = 1080,
+                      [xi.mod.HASTE_GEAR] = 450,
+                      [xi.mod.DOUBLE_ATTACK] = 38,
+                      [xi.mod.TRIPLE_ATTACK] = 18,
+                      [xi.mod.REGEN] = 1200,
                   },
                 },
                 { name = 'Shinryu',            label = 'Shinryu',            points = 110, groupId = 11369, minLv = 225, maxLv = 250,
                   spawnPos = { x =  490.0, y =  25.0, z =  130.0, rot = 128 },  -- T5 cluster: N
-                  hpBoost = 48,
+                  hpBoost = 72,
                   mods = {
-                      [xi.mod.DEF] = 8800,
-                      [xi.mod.MDEF] = 6000,
-                      [xi.mod.ATT] = 18000,
-                      [xi.mod.ACC] = 3000,  -- guaranteed hit even on full EVA stacks
-                      [xi.mod.EVASION] = 4800,
-                      [xi.mod.MEVA] = 2400,
-                      [xi.mod.STR]           = 800,
-                      [xi.mod.DEX]           = 800,
-                      [xi.mod.HASTE_GEAR]    = 400,
-                      [xi.mod.DOUBLE_ATTACK] = 35,
-                      [xi.mod.TRIPLE_ATTACK] = 15,
-                      [xi.mod.REGEN]         = 2000,
+                      [xi.mod.DEF] = 11000,
+                      [xi.mod.MDEF] = 9000,
+                      [xi.mod.ATT] = 27000,
+                      [xi.mod.ACC] = 4500,  -- guaranteed hit even on full EVA stacks
+                      [xi.mod.EVASION] = 7200,
+                      [xi.mod.MEVA] = 3600,
+                      [xi.mod.STR] = 1200,
+                      [xi.mod.DEX] = 1200,
+                      [xi.mod.HASTE_GEAR] = 600,
+                      [xi.mod.DOUBLE_ATTACK] = 53,
+                      [xi.mod.TRIPLE_ATTACK] = 23,
+                      [xi.mod.REGEN] = 3000,
                   },
                 },
             },
