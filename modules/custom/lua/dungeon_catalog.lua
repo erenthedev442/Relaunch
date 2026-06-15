@@ -330,7 +330,7 @@ catalog.dungeons =
               groups = { 11364 },
               names  = { 'Withered Knight', 'Ravenous Marauder' } },
         },
-        bossPos = { x = -99.507, y = 7.263, z = 47.654, rot = 0 },
+        bossPos = { x = -99.507, y = 12.000, z = 47.654, rot = 0 },
         bossLevel    = 170,
         bossGroup    = 11365,
         bossName     = 'The Void Maw',
