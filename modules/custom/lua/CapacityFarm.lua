@@ -81,10 +81,19 @@ local function spawnOne()
             if killer and catalog.cpBonus and catalog.cpBonus > 0 then
                 killer:addCapacityPoints(catalog.cpBonus)
             end
-            -- 2-second respawn delay before topping the pool back up.
-            deadMob:timer(2000, function(_)
+            -- Respawn after a brief delay. CRITICAL: schedule the timer on the
+            -- KILLER (a live player), NOT on deadMob -- these mobs are dynamic
+            -- with releaseIdOnDisappear, so the corpse and any timer attached to
+            -- it are freed the instant it vanishes; deadMob:timer() therefore
+            -- never fired and the pool never refilled (the "not respawning" bug).
+            -- A pet/trust kill (no PC killer) just tops up immediately.
+            if killer and killer:getObjType() == xi.objType.PC then
+                killer:timer(2000, function(_)
+                    ensurePopulation()
+                end)
+            else
                 ensurePopulation()
-            end)
+            end
         end,
     })
     if not mob then
