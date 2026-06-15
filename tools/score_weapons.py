@@ -446,6 +446,16 @@ for tier in ('bronze', 'silver', 'gold'):
 # 'infamy' cost is cosmetic — the real Infamy price for promoted weapons is
 # assigned by tools/build_infamy_top_picks.py in catalog.vendorItemsAuto.
 TIER_COST = {'bronze': 12, 'silver': 25, 'gold': 50, 'infamy': 500}
+
+# Manual forced picks -- items the scorer's filters skip (e.g. every one-handed
+# katana is EX + NIN-only single-job, so none score into the vendor) but that we
+# still want sold. {(tier, category): [ {id, name, jobs, dmg, delay}, ... ]}.
+# tier_block emits these AFTER the auto picks, so they survive a re-score.
+MANUAL_PICKS = {
+    ('bronze', 'Katana'): [{'id': 21919, 'name': 'Ajja Katana',        'jobs': 'NIN', 'dmg': 132, 'delay': 227}],
+    ('silver', 'Katana'): [{'id': 21915, 'name': 'Koga Shinobi-Gatana', 'jobs': 'NIN', 'dmg': 152, 'delay': 227}],
+    ('gold',   'Katana'): [{'id': 21936, 'name': 'Yagyu Darkblade',     'jobs': 'NIN', 'dmg': 173, 'delay': 227}],
+}
 TOP_PER_BUCKET = 8       # weapons need fewer slots than armor (skill specialisation)
 MIN_PER_JOB    = 1       # at least 1 weapon-cat option per applicable job
 
@@ -533,9 +543,11 @@ def tier_block(tier_name: str) -> str:
     for skill_id, (cat_label, cat_var) in WEAPON_CATEGORY.items():
         rows = select_bucket(tier_name, cat_label)
         all_selected[(tier_name, cat_label)] = rows
-        if not rows:
+        manual = MANUAL_PICKS.get((tier_name, cat_label), [])
+        if not rows and not manual:
             continue
-        lines.append(f"    -- {cat_label}: {len(rows)} pick(s)")
+        suffix = f" + {len(manual)} manual" if manual else ""
+        lines.append(f"    -- {cat_label}: {len(rows)} pick(s){suffix}")
         lines.append(f"    local {cat_var} = cat(catalog.{tier_name}.weapons, '{cat_label}')")
         for c in rows:
             cost = TIER_COST[tier_name]
@@ -548,6 +560,13 @@ def tier_block(tier_name: str) -> str:
                 f"{{ id = {c['id']}, name = \"{name}\", cost = {cost}, "
                 f"jobs = '{jobs}' }})  -- {best_role} score {score:.0f}, "
                 f"DMG {c['dmg']}/Dly {c['delay']}"
+            )
+        for mp in manual:
+            cost = TIER_COST[tier_name]
+            lines.append(
+                f"    table.insert({cat_var}, "
+                f"{{ id = {mp['id']}, name = \"{mp['name']}\", cost = {cost}, "
+                f"jobs = '{mp['jobs']}' }})  -- MANUAL, DMG {mp['dmg']}/Dly {mp['delay']}"
             )
         lines.append("")
     lines.append("end")
