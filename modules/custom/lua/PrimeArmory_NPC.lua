@@ -1,8 +1,15 @@
 -----------------------------------
 -- PrimeArmory_NPC.lua
--- "Prime Armory" -- a GM Home NPC where players can SEE the seven Prime
--- weapons, but can only claim one by trading a Prime Voucher (item 29699),
--- which a GM grants at their discretion (!additem 29699).
+-- "Prime Armory" -- a GM Home NPC where players forge a Prime Weapon by
+-- completing the four Prime Weapon Trials:
+--
+--   Trial 1 (PW_Trial1_Done)  10 Shadow Fragments from Nightmare dungeons
+--   Trial 2 (PW_Trial2_Done)  Clear floor 50 of the Endless Tower
+--   Trial 3 (PW_Trial3_Done)  Earn kill credit on 3 Weekly World Bosses
+--   Trial 4 (PW_Trial4_Done)  Defeat any Weapon Guardian (Job Mastery)
+--
+-- Once all four are complete the player may claim ONE Prime weapon of their
+-- choice. Claiming sets PW_WeaponClaimed = item_id (0 = none yet).
 --
 -- Each Prime weapon's ADDS_WEAPONSKILL mod unlocks its Prime weapon skill the
 -- moment it is equipped (wired in modules/custom/sql/prime_weapons_gear.sql):
@@ -11,23 +18,26 @@
 --   Prime Sword      -> Imperator          Prime Maul   -> Dagda
 --   Prime Staff      -> Oshala
 --
--- Flow: talk -> pick a weapon -> see its details -> confirm (spends 1 voucher).
 -- Zone: GM Home (zone 210).
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/GM_Home/Zone')
------------------------------------
+
 local m = Module:new('prime_armory')
 
-local VOUCHER = 29699
+local TRIALS =
+{
+    { var = 'PW_Trial1_Done', label = 'Trial 1', desc = '10 Shadow Fragments (Nightmare dungeons)' },
+    { var = 'PW_Trial2_Done', label = 'Trial 2', desc = 'Endless Tower floor 50' },
+    { var = 'PW_Trial3_Done', label = 'Trial 3', desc = '3 Weekly World Boss kills' },
+    { var = 'PW_Trial4_Done', label = 'Trial 4', desc = 'Weapon Guardian defeated (Job Mastery)' },
+}
 
--- The grantable Prime weapons. `info` lines are shown when a player inspects
--- the weapon so they know what they are claiming before spending a voucher.
 local WEAPONS =
 {
     { id = 21531, name = 'Prime Fists',     ws = 'Dragon Blow',      info = 'Hand-to-Hand. STR/DEX, Acc, Att, Store TP, Double Attack.' },
     { id = 21534, name = 'Varga Purnikawa', ws = 'Maru Kala',        info = 'Hand-to-Hand. STR/DEX, Acc, Att, Store TP, Double Attack.' },
-    { id = 21589, name = 'Mpu Gandring',    ws = 'Merciless Strike', info = 'Dagger. DEX/AGI, Acc, Att, Store TP, Double Attack.' },
+    { id = 21589, name = 'Mpu Gandring',    ws = 'Merciless Strike',  info = 'Dagger. DEX/AGI, Acc, Att, Store TP, Double Attack.' },
     { id = 21621, name = 'Naegling',        ws = 'Fast Blade II',    info = 'Sword. STR/DEX, Acc, Att, Store TP, Double Attack.' },
     { id = 21642, name = 'Prime Sword',     ws = 'Imperator',        info = 'Sword. STR/DEX/MND, Acc, Att, Store TP, Double Attack.' },
     { id = 21999, name = 'Prime Maul',      ws = 'Dagda',            info = 'Club. STR/MND, Acc, Att, Store TP, Double Attack.' },
@@ -42,69 +52,99 @@ local WEAPONS =
 m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     super(zone)
 
-    local NAME = 'Prime Armory'
-
-    -- Deferred customMenu send: snapshot first so a second player interacting
-    -- in the 30ms window can't swap the shared table mid-flight.
     local function sendMenu(player, menu)
         local snapshot = { title = menu.title, options = menu.options }
         player:timer(30, function(p) p:customMenu(snapshot) end)
     end
 
-    local showMain  -- forward declaration (the confirm menu's "Back" calls it)
+    local showMain
 
-    -- customMenu payload cap is ~150 bytes across title + ALL option labels combined.
-    -- With [WS] labels averaging 25 bytes each, 4 items/page keeps every page safely
-    -- under the cap (page 1 worst case: 18 title + 107 labels = 125 bytes).
+    -- customMenu cap ~150 bytes across title + ALL labels. 4 items/page keeps
+    -- every page under the cap (worst case: 18 title + 107 labels = 125 bytes).
     local PAGE_SIZE = 4
 
     -----------------------------------
-    -- Spend a voucher and hand over the weapon.
+    -- Returns true if all four trials are complete.
+    -----------------------------------
+    local function trialsComplete(player)
+        for _, t in ipairs(TRIALS) do
+            if (player:getCharVar(t.var) or 0) == 0 then return false end
+        end
+        return true
+    end
+
+    -----------------------------------
+    -- Print trial status to the player (used on first talk when incomplete).
+    -----------------------------------
+    local function printTrialStatus(player)
+        player:printToPlayer('[Prime Armory] Complete all four trials to forge a Prime Weapon:', xi.msg.channel.SYSTEM_3)
+        for _, t in ipairs(TRIALS) do
+            local done  = (player:getCharVar(t.var) or 0) == 1
+            local icon  = done and '[+]' or '[ ]'
+            player:printToPlayer(string.format('  %s %s — %s', icon, t.label, t.desc), xi.msg.channel.SYSTEM_3)
+        end
+    end
+
+    -----------------------------------
+    -- Forge the selected weapon (one per player, ever).
     -----------------------------------
     local function claim(player, weapon)
-        if player:getItemCount(VOUCHER) < 1 then
-            player:printToPlayer('You need a Prime Voucher to claim this. Ask a GM for one, kupo!', xi.msg.channel.SYSTEM_3)
+        -- Guard: all trials must still be complete (in case a GM cleared them).
+        if not trialsComplete(player) then
+            player:printToPlayer('[Prime Armory] Trial requirement no longer met. Cannot forge.', xi.msg.channel.SYSTEM_3)
             return
         end
+        -- Guard: one prime weapon per player.
+        local alreadyClaimed = player:getCharVar('PW_WeaponClaimed') or 0
+        if alreadyClaimed ~= 0 then
+            -- Find the weapon name for the message.
+            for _, w in ipairs(WEAPONS) do
+                if w.id == alreadyClaimed then
+                    player:printToPlayer(string.format(
+                        '[Prime Armory] You already forged %s. Each hero may forge one Prime Weapon. Kupo!', w.name),
+                        xi.msg.channel.SYSTEM_3)
+                    return
+                end
+            end
+            player:printToPlayer('[Prime Armory] You have already forged a Prime Weapon. Kupo!', xi.msg.channel.SYSTEM_3)
+            return
+        end
+        -- Inventory check.
         if player:getFreeSlotsCount() == 0 then
-            player:printToPlayer('Your inventory is full -- free a slot first, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Armory] Your inventory is full — free a slot first! Kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
-        -- Take the voucher BEFORE giving the weapon, and verify by count rather
-        -- than trusting delItem's return (which isn't reliable across builds --
-        -- see the currency-consumption gotcha). Only hand the weapon over if a
-        -- voucher was actually removed.
-        local before = player:getItemCount(VOUCHER)
-        player:delItem(VOUCHER, 1)
-        if player:getItemCount(VOUCHER) >= before then
-            player:printToPlayer('Could not take your Prime Voucher -- move it into your main inventory and retry, kupo!', xi.msg.channel.SYSTEM_3)
-            return
-        end
+        -- Forge!
+        player:setCharVar('PW_WeaponClaimed', weapon.id)
         player:addItem({ id = weapon.id, quantity = 1 })
-        player:printToPlayer(string.format('Claimed %s! Equip it to wield the weapon skill %s, kupo!', weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format(
+            '[Prime Armory] %s has been forged! Equip it to unlock the weapon skill %s. Kupo!',
+            weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
     end
 
     -----------------------------------
     -- Per-weapon detail + confirm menu.
     -----------------------------------
     local function showWeapon(player, weapon, page)
-        player:printToPlayer(string.format('%s -- weapon skill: %s', weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format('[Prime Armory] %s — Weapon Skill: %s', weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
         player:printToPlayer('  ' .. weapon.info, xi.msg.channel.SYSTEM_3)
-        player:printToPlayer(string.format('  You hold %d Prime Voucher(s).', player:getItemCount(VOUCHER)), xi.msg.channel.SYSTEM_3)
+        local claimed = player:getCharVar('PW_WeaponClaimed') or 0
+        if claimed ~= 0 then
+            player:printToPlayer('[Prime Armory] You have already forged a Prime Weapon. Each hero gets one.', xi.msg.channel.SYSTEM_3)
+        end
 
         sendMenu(player, {
             title   = weapon.name,
             options =
             {
-                { 'Claim (trade 1 Prime Voucher)', function(p) claim(p, weapon) end },
-                { '<< Back',                        function(p) showMain(p, page) end },
+                { 'Forge this weapon', function(p) claim(p, weapon) end },
+                { '<< Back',           function(p) showMain(p, page) end },
             },
         })
     end
 
     -----------------------------------
-    -- Main browse menu: paginated (PAGE_SIZE per page) to stay within the
-    -- ~150-byte customMenu payload cap (title + all labels combined).
+    -- Paginated weapon browse menu.
     -----------------------------------
     showMain = function(player, page)
         page = page or 1
@@ -142,7 +182,6 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         name       = 'Prime_Armory',
         packetName = string.format('%sPrime Armory', xi.icon.STAR_LARGE),
         look       = 3000,
-        -- GM Home corridor, just south of the Unlocker cluster (adjust freely).
         x          = -3.000,
         y          =  0.000,
         z          = -20.000,
@@ -150,10 +189,29 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         widescan   =  1,
 
         onTrade = function(player, npc, trade)
-            player:printToPlayer('Talk to me to choose a Prime weapon, kupo! Bring a Prime Voucher.', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Armory] Talk to me to forge your Prime Weapon, kupo!', xi.msg.channel.SYSTEM_3)
         end,
 
         onTrigger = function(player, npc)
+            local claimed = player:getCharVar('PW_WeaponClaimed') or 0
+            if claimed ~= 0 then
+                for _, w in ipairs(WEAPONS) do
+                    if w.id == claimed then
+                        player:printToPlayer(string.format(
+                            '[Prime Armory] You have forged %s. Each hero may forge one Prime Weapon. Kupo!', w.name),
+                            xi.msg.channel.SYSTEM_3)
+                        return
+                    end
+                end
+            end
+
+            if not trialsComplete(player) then
+                printTrialStatus(player)
+                return
+            end
+
+            -- All trials done and no weapon claimed yet — show the forge menu.
+            player:printToPlayer('[Prime Armory] All four trials complete! Choose your Prime Weapon. Kupo!', xi.msg.channel.SYSTEM_3)
             showMain(player)
         end,
     })
