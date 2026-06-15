@@ -303,6 +303,7 @@ INSERT INTO `abilities` VALUES (285,'bounty_shot',11,87,4,60,51,100,0,189,2000,0
 INSERT INTO `abilities` VALUES (286,'decoy_shot',11,95,4,300,52,100,0,261,2000,0,6,0,0,0,0,0,0,0,NULL); -- needs animation
 INSERT INTO `abilities` VALUES (287,'hamanoha',12,87,4,300,53,100,0,249,2000,0,6,10,0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (288,'hagakure',12,95,1,180,54,0,0,249,2000,0,6,0,0,0,1,80,0,0,'ABYSSEA');
+INSERT INTO `abilities` VALUES (289,'hover_shot',11,95,1,180,55,0,0,22,2000,0,6,0,0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (291,'issekigan',13,95,1,300,57,0,0,246,2000,0,6,0,0,0,1,0,0,0,'ABYSSEA');
 INSERT INTO `abilities` VALUES (292,'dragon_breaker',14,87,4,300,58,320,0,236,2000,0,6,10,0,0,0,0,0,0,NULL);
 INSERT INTO `abilities` VALUES (293,'soul_jump',14,85,4,120,167,100,0,209,2000,0,3,8,0,0,1,0,1220,0,NULL);
