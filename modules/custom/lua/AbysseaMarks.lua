@@ -16,23 +16,25 @@ local INFAMY_LIFE_CV  = 'Infamy_Lifetime'
 local MARKS_INFAMY_LV = '[MarksPopInfamy]'
 local MARKS_GIL_LV    = '[MarksPopGil]'
 
--- Mark cost, base Infamy, and base Gil reward per zone tier.
+-- Mark cost, base Infamy, base Gil reward, spawn level, and max HP per zone tier.
+-- Level drives ATK/DEF/evasion scaling; maxHP is set explicitly so HP pools are
+-- predictable regardless of what the level formula gives for each specific NM.
 local zoneConfig =
 {
-    -- Visions of Abyssea (entry)
-    [xi.zone.ABYSSEA_KONSCHTAT]        = { cost = 200, infamy = 1, gil =  50000 },
-    [xi.zone.ABYSSEA_TAHRONGI]         = { cost = 200, infamy = 1, gil =  50000 },
-    [xi.zone.ABYSSEA_LA_THEINE]        = { cost = 200, infamy = 1, gil =  50000 },
-    -- Scars of Abyssea
-    [xi.zone.ABYSSEA_ATTOHWA]          = { cost = 350, infamy = 2, gil = 100000 },
-    [xi.zone.ABYSSEA_MISAREAUX]        = { cost = 350, infamy = 2, gil = 100000 },
-    [xi.zone.ABYSSEA_VUNKERL]          = { cost = 350, infamy = 2, gil = 100000 },
-    -- Heroes of Abyssea
-    [xi.zone.ABYSSEA_ALTEPA]           = { cost = 500, infamy = 3, gil = 150000 },
-    [xi.zone.ABYSSEA_ULEGUERAND]       = { cost = 500, infamy = 3, gil = 150000 },
-    [xi.zone.ABYSSEA_GRAUBERG]         = { cost = 500, infamy = 3, gil = 150000 },
-    -- Empyreal Paradox
-    [xi.zone.ABYSSEA_EMPYREAL_PARADOX] = { cost = 750, infamy = 5, gil = 250000 },
+    -- Visions of Abyssea — hard full-party content
+    [xi.zone.ABYSSEA_KONSCHTAT]        = { cost = 200, infamy = 1, gil =  50000, level = 135, maxHP = 200000 },
+    [xi.zone.ABYSSEA_TAHRONGI]         = { cost = 200, infamy = 1, gil =  50000, level = 135, maxHP = 200000 },
+    [xi.zone.ABYSSEA_LA_THEINE]        = { cost = 200, infamy = 1, gil =  50000, level = 135, maxHP = 200000 },
+    -- Scars of Abyssea — harder
+    [xi.zone.ABYSSEA_ATTOHWA]          = { cost = 350, infamy = 2, gil = 100000, level = 145, maxHP = 350000 },
+    [xi.zone.ABYSSEA_MISAREAUX]        = { cost = 350, infamy = 2, gil = 100000, level = 145, maxHP = 350000 },
+    [xi.zone.ABYSSEA_VUNKERL]          = { cost = 350, infamy = 2, gil = 100000, level = 145, maxHP = 350000 },
+    -- Heroes of Abyssea — hardest standard tier
+    [xi.zone.ABYSSEA_ALTEPA]           = { cost = 500, infamy = 3, gil = 150000, level = 155, maxHP = 500000 },
+    [xi.zone.ABYSSEA_ULEGUERAND]       = { cost = 500, infamy = 3, gil = 150000, level = 155, maxHP = 500000 },
+    [xi.zone.ABYSSEA_GRAUBERG]         = { cost = 500, infamy = 3, gil = 150000, level = 155, maxHP = 500000 },
+    -- Empyreal Paradox — endgame
+    [xi.zone.ABYSSEA_EMPYREAL_PARADOX] = { cost = 750, infamy = 5, gil = 250000, level = 165, maxHP = 750000 },
 }
 
 local function spawnViaMark(p, mobId, cost, nmName, cfg)
@@ -51,10 +53,14 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     local dy = p:getYPos()
     local dz = p:getZPos() + math.random(-1, 1)
     mob:setSpawn(dx, dy, dz)
-    SpawnMob(mobId):updateClaim(p)
-    GetMobByID(mobId):setLocalVar('[ClaimedBy]', p:getID())
-    GetMobByID(mobId):setLocalVar(MARKS_INFAMY_LV, cfg.infamy)
-    GetMobByID(mobId):setLocalVar(MARKS_GIL_LV,    cfg.gil)
+    local spawned = SpawnMob(mobId)
+    spawned:updateClaim(p)
+    spawned:setLevel(cfg.level)
+    spawned:setMaxHP(cfg.maxHP)
+    spawned:setHP(cfg.maxHP)
+    spawned:setLocalVar('[ClaimedBy]', p:getID())
+    spawned:setLocalVar(MARKS_INFAMY_LV, cfg.infamy)
+    spawned:setLocalVar(MARKS_GIL_LV,    cfg.gil)
     p:printToPlayer(
         string.format('[Abyssea] %d Hunt Marks spent. %s appears!', cost, nmName),
         xi.msg.channel.SYSTEM_3)
