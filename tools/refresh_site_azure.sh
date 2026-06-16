@@ -87,6 +87,11 @@ echo "[info] DOCS_REPO=$DOCS_REPO"
 echo "[info] LEGENDARY_LIVE_ROOT=$LEGENDARY_LIVE_ROOT"
 echo "[info] venv=$DOCS_VENV  token_file=$CF_ENV_FILE  token_set=$([ -n "${CLOUDFLARE_API_TOKEN:-}" ] && echo yes || echo NO)"
 
+echo "[0c/4] regenerating augment catalog from live SQL..."
+python3 "$LIVE_ROOT/tools/gen_augment_catalog.py" >> "$LOG" 2>&1 \
+    && echo "[0c/4] augment catalog: OK" \
+    || echo "[WARN] augment catalog regen failed — using existing (see $LOG)"
+
 echo "[1/4] docgen (leaderboards + player profiles read the live DB)..."
 # shellcheck disable=SC2086
 $DOCGEN_CMD || { echo "[FATAL] docgen failed"; exit 1; }

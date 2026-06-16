@@ -27,10 +27,11 @@ For each augment, the eligible pool is SCORED against the augment's category
 keywords. The highest-scoring unused item wins. If no item scores > 0 against
 the augment's category, the augment is DROPPED -- no non-thematic fallback.
 """
+import os
 import re
 from pathlib import Path
 
-ROOT = Path(r"D:/server")
+ROOT = Path(os.environ.get("LEGENDARY_LIVE_ROOT", r"D:/server"))
 SQL = ROOT / "sql"
 AUG_SQL = SQL / "augments.sql"
 ITEM_SQL = SQL / "item_basic.sql"
