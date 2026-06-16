@@ -117,7 +117,13 @@ commandObj.onTrigger = function(player, bossArg, targetPlayerName)
                 if named then creditPlayer = named end
             end
             if creditPlayer then
+                local cid = creditPlayer:getID()
+                -- Stamp trial progress.
                 creditPlayer:setCharVar('Prestige_Trial_' .. gid, os.time())
+                -- Clear any stale Altar-tracked "alive" entry so the menu unblocks.
+                if xi._prestige_summonedTrial then
+                    xi._prestige_summonedTrial[cid] = nil
+                end
                 creditPlayer:printToPlayer(string.format(
                     '[Ascension] %s slain. Trial stamp recorded -- commune with the Altar to check your progress.',
                     boss.label), xi.msg.channel.SYSTEM_3)

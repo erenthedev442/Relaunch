@@ -332,6 +332,7 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
     -- id) so the option can't stack adds; cleared in the boss's onMobDeath.
     local summonNextTrial
     local summonedTrial = {}
+    xi._prestige_summonedTrial = summonedTrial  -- exposed for !spawntrialboss to clear stale entries
 
     -----------------------------------
     -- Ascension. Validates gate -> level cap -> trial -> mark cost, then
