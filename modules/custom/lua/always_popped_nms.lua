@@ -1,9 +1,11 @@
 -----------------------------------
 -- always_popped_nms.lua
 --
--- Forces every NM in Abyssea, Escha Ru'Aun, and Reisenjima to be
--- auto-spawned at server start AND to respawn 30 seconds after each
--- death. No trade pop, no key item, no atmacite - just walk in and fight.
+-- Forces every NM in Escha Ru'Aun and Reisenjima to be auto-spawned
+-- at server start AND to respawn 30 seconds after each death.
+--
+-- Abyssea NMs are intentionally excluded: they are popped via the
+-- AbysseaMarks module (spend Hunt Marks at the ??? to spawn the NM).
 --
 -- How it works
 -- ------------
@@ -64,18 +66,6 @@ local RESPAWN_SECONDS = 30
 -----------------------------------
 local TARGET_ZONES =
 {
-    -- Abyssea (all 10) - note the DASH in zone names
-    { xi.zone.ABYSSEA_KONSCHTAT,        'Abyssea-Konschtat',        'xi.zones.Abyssea-Konschtat.Zone.onInitialize'        },
-    { xi.zone.ABYSSEA_TAHRONGI,         'Abyssea-Tahrongi',         'xi.zones.Abyssea-Tahrongi.Zone.onInitialize'         },
-    { xi.zone.ABYSSEA_LA_THEINE,        'Abyssea-La_Theine',        'xi.zones.Abyssea-La_Theine.Zone.onInitialize'        },
-    { xi.zone.ABYSSEA_MISAREAUX,        'Abyssea-Misareaux',        'xi.zones.Abyssea-Misareaux.Zone.onInitialize'        },
-    { xi.zone.ABYSSEA_VUNKERL,          'Abyssea-Vunkerl',          'xi.zones.Abyssea-Vunkerl.Zone.onInitialize'          },
-    { xi.zone.ABYSSEA_ATTOHWA,          'Abyssea-Attohwa',          'xi.zones.Abyssea-Attohwa.Zone.onInitialize'          },
-    { xi.zone.ABYSSEA_ALTEPA,           'Abyssea-Altepa',           'xi.zones.Abyssea-Altepa.Zone.onInitialize'           },
-    { xi.zone.ABYSSEA_GRAUBERG,         'Abyssea-Grauberg',         'xi.zones.Abyssea-Grauberg.Zone.onInitialize'         },
-    { xi.zone.ABYSSEA_ULEGUERAND,       'Abyssea-Uleguerand',       'xi.zones.Abyssea-Uleguerand.Zone.onInitialize'       },
-    { xi.zone.ABYSSEA_EMPYREAL_PARADOX, 'Abyssea-Empyreal_Paradox', 'xi.zones.Abyssea-Empyreal_Paradox.Zone.onInitialize' },
-
     -- Escha Ru'Aun - underscore-separated (Escha Zi'Tah excluded: HL hub)
     { xi.zone.ESCHA_RUAUN,              'Escha_RuAun',              'xi.zones.Escha_RuAun.Zone.onInitialize'              },
 
