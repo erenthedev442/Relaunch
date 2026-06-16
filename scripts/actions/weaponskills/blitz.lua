@@ -19,6 +19,9 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     params.str_wsc     = 0.32
     params.dex_wsc     = 0.32
 
+    -- Prime Aftermath (TP-tiered Lv.1/2/3), applied from the weapon's own WS.
+    xi.aftermath.addStatusEffect(player, tp, xi.slot.MAIN, xi.aftermath.type.PRIME)
+
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     return tpHits, extraHits, criticalHit, damage
 end
