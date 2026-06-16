@@ -117,6 +117,11 @@ commandObj.onTrigger = function(player, targetName)
     local realLevel = base + gearLv + ascLv + jpLv + meritLv
     local bonus     = gearLv + ascLv + jpLv + meritLv
 
+    -- Persist for the website leaderboard. docs/community/leaderboards.md ranks
+    -- the RealLevel CharVar (see tools/docgen/generators/leaderboards.py); running
+    -- !reallevel on a character registers / refreshes them on the board.
+    targ:setCharVar('RealLevel', realLevel)
+
     -- == Render ==
     player:printToPlayer(string.format(
         '[Real Level] -- %s the %s%d -----------------------',
