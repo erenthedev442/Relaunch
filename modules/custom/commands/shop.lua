@@ -9,7 +9,8 @@ commandObj.cmdprops =
     parameters = 'ss',
 }
 
-local origShop  = require('scripts/commands/shop')
+local origShop = require('scripts/commands/shop')
+package.loaded['modules/custom/lua/augment_item_names'] = nil
 local itemNames = require('modules/custom/lua/augment_item_names')
 
 local augmentGroups =
