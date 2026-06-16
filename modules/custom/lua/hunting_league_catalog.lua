@@ -271,7 +271,7 @@ return
             {
                 { name = 'Nidhogg',       label = 'Nidhogg',       points = 38, groupId = 11364, minLv = 150, maxLv = 150,
                   spawnPos = { x =    7.0, y =  0.90, z = -121.4, rot =  96 },  -- T4 cluster: W
-                  drops = { { id = 1122, qty = 1 } },  -- Wyvern Skin (Augment Affinity: HP/Regen)
+                  drops = { { id = 1122, qty = 1 }, { id = 10037, qty = 1 } },  -- Wyvern Skin + Fafnir's Scale (Augment Sage rank 4)
                   hpBoost = 21,
                   mods = {
                       [xi.mod.DEF] = 1788,
