@@ -16,25 +16,25 @@ local INFAMY_LIFE_CV  = 'Infamy_Lifetime'
 local MARKS_INFAMY_LV = '[MarksPopInfamy]'
 local MARKS_GIL_LV    = '[MarksPopGil]'
 
--- Mark cost, base Infamy, base Gil reward, spawn level, and max HP per zone tier.
--- Level drives ATK/DEF/evasion scaling; maxHP is set explicitly so HP pools are
--- predictable regardless of what the level formula gives for each specific NM.
+-- Per zone tier: mark cost, rewards, spawn level, HP, and flat stat mods applied
+-- at spawn time.  atkDef is added to ATT, DEF, MATT.  accEva is added to ACC,
+-- EVA, MACC, MEVA.  Level drives the formula-based stat floor on top of these.
 local zoneConfig =
 {
-    -- Visions of Abyssea — hard full-party content
-    [xi.zone.ABYSSEA_KONSCHTAT]        = { cost = 200, infamy = 1, gil =  50000, level = 135, maxHP = 200000 },
-    [xi.zone.ABYSSEA_TAHRONGI]         = { cost = 200, infamy = 1, gil =  50000, level = 135, maxHP = 200000 },
-    [xi.zone.ABYSSEA_LA_THEINE]        = { cost = 200, infamy = 1, gil =  50000, level = 135, maxHP = 200000 },
-    -- Scars of Abyssea — harder
-    [xi.zone.ABYSSEA_ATTOHWA]          = { cost = 350, infamy = 2, gil = 100000, level = 145, maxHP = 350000 },
-    [xi.zone.ABYSSEA_MISAREAUX]        = { cost = 350, infamy = 2, gil = 100000, level = 145, maxHP = 350000 },
-    [xi.zone.ABYSSEA_VUNKERL]          = { cost = 350, infamy = 2, gil = 100000, level = 145, maxHP = 350000 },
-    -- Heroes of Abyssea — hardest standard tier
-    [xi.zone.ABYSSEA_ALTEPA]           = { cost = 500, infamy = 3, gil = 150000, level = 155, maxHP = 500000 },
-    [xi.zone.ABYSSEA_ULEGUERAND]       = { cost = 500, infamy = 3, gil = 150000, level = 155, maxHP = 500000 },
-    [xi.zone.ABYSSEA_GRAUBERG]         = { cost = 500, infamy = 3, gil = 150000, level = 155, maxHP = 500000 },
-    -- Empyreal Paradox — endgame
-    [xi.zone.ABYSSEA_EMPYREAL_PARADOX] = { cost = 750, infamy = 5, gil = 250000, level = 165, maxHP = 750000 },
+    -- Visions of Abyssea
+    [xi.zone.ABYSSEA_KONSCHTAT]        = { cost = 200, infamy = 1, gil =  50000, level = 135, maxHP =  6000000, atkDef =  5000, accEva = 3000 },
+    [xi.zone.ABYSSEA_TAHRONGI]         = { cost = 200, infamy = 1, gil =  50000, level = 135, maxHP =  6000000, atkDef =  5000, accEva = 3000 },
+    [xi.zone.ABYSSEA_LA_THEINE]        = { cost = 200, infamy = 1, gil =  50000, level = 135, maxHP =  6000000, atkDef =  5000, accEva = 3000 },
+    -- Scars of Abyssea
+    [xi.zone.ABYSSEA_ATTOHWA]          = { cost = 350, infamy = 2, gil = 100000, level = 145, maxHP = 10500000, atkDef =  9000, accEva = 5000 },
+    [xi.zone.ABYSSEA_MISAREAUX]        = { cost = 350, infamy = 2, gil = 100000, level = 145, maxHP = 10500000, atkDef =  9000, accEva = 5000 },
+    [xi.zone.ABYSSEA_VUNKERL]          = { cost = 350, infamy = 2, gil = 100000, level = 145, maxHP = 10500000, atkDef =  9000, accEva = 5000 },
+    -- Heroes of Abyssea
+    [xi.zone.ABYSSEA_ALTEPA]           = { cost = 500, infamy = 3, gil = 150000, level = 155, maxHP = 15000000, atkDef = 13000, accEva = 7500 },
+    [xi.zone.ABYSSEA_ULEGUERAND]       = { cost = 500, infamy = 3, gil = 150000, level = 155, maxHP = 15000000, atkDef = 13000, accEva = 7500 },
+    [xi.zone.ABYSSEA_GRAUBERG]         = { cost = 500, infamy = 3, gil = 150000, level = 155, maxHP = 15000000, atkDef = 13000, accEva = 7500 },
+    -- Empyreal Paradox
+    [xi.zone.ABYSSEA_EMPYREAL_PARADOX] = { cost = 750, infamy = 5, gil = 250000, level = 165, maxHP = 22500000, atkDef = 20000, accEva = 11000 },
 }
 
 local function spawnViaMark(p, mobId, cost, nmName, cfg)
@@ -58,6 +58,13 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     spawned:setLevel(cfg.level)
     spawned:setMaxHP(cfg.maxHP)
     spawned:setHP(cfg.maxHP)
+    spawned:addMod(xi.mod.ATT,  cfg.atkDef)
+    spawned:addMod(xi.mod.DEF,  cfg.atkDef)
+    spawned:addMod(xi.mod.MATT, cfg.atkDef)
+    spawned:addMod(xi.mod.ACC,  cfg.accEva)
+    spawned:addMod(xi.mod.EVA,  cfg.accEva)
+    spawned:addMod(xi.mod.MACC, cfg.accEva)
+    spawned:addMod(xi.mod.MEVA, cfg.accEva)
     spawned:setLocalVar('[ClaimedBy]', p:getID())
     spawned:setLocalVar(MARKS_INFAMY_LV, cfg.infamy)
     spawned:setLocalVar(MARKS_GIL_LV,    cfg.gil)
