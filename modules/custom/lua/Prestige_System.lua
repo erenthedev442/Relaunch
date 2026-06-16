@@ -699,6 +699,11 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             }
         end
 
+        -- idleDespawned: set before calling setHP(0) in the idle watcher so
+        -- onMobDeath skips kill credit even if C++ resolves a non-nil killer
+        -- from prior enmity on the programmatic kill.
+        local idleDespawned = false
+
         local mob = zone:insertDynamicEntity({
             objtype              = xi.objType.MOB,
             groupId              = gid,
@@ -716,7 +721,7 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
 
             onMobDeath = function(deadMob, killer, optParams)
                 summonedTrial[pid] = nil
-                if killer then
+                if killer and not idleDespawned then
                     m.onLegendKill(killer, gid)
                 end
             end,
@@ -788,6 +793,42 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             '[Ascension] %s has summoned %s within Provenance!',
             player:getName(), boss.label),
             xi.msg.channel.SYSTEM_3, xi.msg.area.SYSTEM, '', false)
+
+        -- Idle-despawn: if no damage is dealt to the boss for 20 seconds it
+        -- retreats without awarding kill credit, and the player's summon slot
+        -- is freed so they can try again.
+        local IDLE_SECONDS = 20
+        local lastHp       = mob:getMaxHP()
+        local idleSecs     = 0
+
+        local function watchIdle()
+            if summonedTrial[pid] == nil then return end  -- already dead or cleared
+
+            local curHp = 0
+            local ok    = pcall(function() curHp = mob:getHP() end)
+            if not ok or curHp <= 0 then return end      -- mob gone
+
+            if curHp < lastHp then
+                lastHp   = curHp
+                idleSecs = 0
+            else
+                idleSecs = idleSecs + 5
+            end
+
+            if idleSecs >= IDLE_SECONDS then
+                idleDespawned      = true
+                summonedTrial[pid] = nil
+                player:printToPlayer(string.format(
+                    '[Ascension] %s retreats into the void unchallenged. You may summon it again when ready.',
+                    boss.label), xi.msg.channel.SYSTEM_3)
+                pcall(function() mob:setHP(0) end)
+                return
+            end
+
+            player:timer(5000, watchIdle)
+        end
+
+        player:timer(5000, watchIdle)
     end
 
     -----------------------------------
