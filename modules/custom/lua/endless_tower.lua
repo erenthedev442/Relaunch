@@ -40,7 +40,7 @@ local MAX_FLOOR      = 50
 local FLOOR_DELAY_MS = 5000  -- ms between floors (breather)
 local WARP_IN        = { x = -420, y = 14, z = -49, rot = 192 }
 
--- Exit warp: GM Home in front of the dungeon cluster.
+-- Exit warp: back to GM Home activities area.
 local EXIT_WARP = { zoneId = 210, x = -15, y = 0, z = -18, rot = 128 }
 
 -----------------------------------

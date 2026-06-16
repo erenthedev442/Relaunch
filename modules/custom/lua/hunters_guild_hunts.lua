@@ -21,8 +21,7 @@
 -- decision only requires deleting this file, not surgery on the
 -- core lib.
 --
--- Override pattern lifted from DungeonSystem.lua's onZoneIn
--- registration - same Module + addOverride approach so the install
+-- Override pattern: Module + addOverride so the install
 -- is non-destructive (no edits to vanilla mob scripts).
 -----------------------------------
 require('modules/module_utils')
@@ -34,7 +33,7 @@ local m = Module:new('hunters_guild_hunts')
 -- Pre-load every NM zone's mob script directory so xi.zones.<zone>.mobs.<name>
 -- exists in the runtime table before we try to override it. Without this
 -- the addOverride path can land before the script is loaded, leaving the
--- override dangling. Same pattern DungeonSystem uses for Zone scripts.
+-- override dangling.
 local _required = {}
 for guildKey, targets in pairs(catalog.huntTargets) do
     for _, t in ipairs(targets) do

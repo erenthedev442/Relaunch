@@ -1,8 +1,8 @@
 -----------------------------------
 -- func: week
 -- desc: Shows the player's current weekly objectives at a glance:
---       Weekly Hunt Board progress, featured NMs killed, and bonus
---       dungeon status.  Resets each Monday 00:00 UTC.
+--       Weekly Hunt Board progress and featured NMs killed.
+--       Resets each Monday 00:00 UTC.
 --
 -- Usage: !week
 -----------------------------------
@@ -15,8 +15,7 @@ commandObj.cmdprops =
     parameters = '',
 }
 
-local catalog        = require('modules/custom/lua/hunting_league_catalog')
-local dungeonCatalog = require('modules/custom/lua/dungeon_catalog')
+local catalog = require('modules/custom/lua/hunting_league_catalog')
 
 local H = xi.msg.channel.SYSTEM_3
 local B = xi.msg.channel.SYSTEM_3
@@ -68,27 +67,6 @@ commandObj.onTrigger = function(player)
         end
     end
 
-    -- == Weekly Bonus Dungeon =======================================
-    -- One dungeon per week earns 2x Infamy on first clear.
-    -- CharVar: DB_Bonus_<weekIdx>_<dungeonId> = 1 when earned.
-    local bonusDungeonName = nil
-    local bonusDungeonDone = false
-    local enabledDungeons  = {}
-    for _, d in ipairs(dungeonCatalog.dungeons or {}) do
-        -- Skip dungeons explicitly disabled (uses a flag set by DungeonSystem
-        -- at load time; the flag may not be present when loaded from here,
-        -- but any dungeon that never gets _disabled stays in the list).
-        if not d._disabled then
-            table.insert(enabledDungeons, d)
-        end
-    end
-    if #enabledDungeons > 0 then
-        local bd      = enabledDungeons[(weekIdx % #enabledDungeons) + 1]
-        bonusDungeonName = bd.label
-        local bonusCv = string.format('DB_Bonus_%d_%s', weekIdx, bd.id)
-        bonusDungeonDone = (player:getCharVar(bonusCv) or 0) == 1
-    end
-
     -- == Output ====================================================
     player:printToPlayer('[Weekly] == This Week\'s Objectives ==================', H)
     player:printToPlayer(
@@ -98,16 +76,7 @@ commandObj.onTrigger = function(player)
     player:printToPlayer(
         string.format('  Featured NMs:    %d / %d killed this week', featDone, featTotal), B)
 
-    if bonusDungeonName then
-        player:printToPlayer(
-            string.format('  Bonus Dungeon:   %s  [%s]',
-                bonusDungeonName, bonusDungeonDone and 'DONE!' or 'not cleared'),
-            B)
-    else
-        player:printToPlayer('  Bonus Dungeon:   None available', B)
-    end
-
-    player:printToPlayer('  !featured - this week\'s NMs  |  !bonus_dungeon - bonus dungeon', B)
+    player:printToPlayer('  !featured - this week\'s featured bonus NMs (2x marks)', B)
 end
 
 return commandObj

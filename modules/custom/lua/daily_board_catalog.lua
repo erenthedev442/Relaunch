@@ -50,7 +50,6 @@ catalog.allClearedReward =
 catalog.baselines =
 {
     kills    = 'Custom_NM_Kills',
-    dungeons = 'Dungeon_Clears_Total',
     infamy   = 'Infamy_Lifetime',
     waves    = 'Wave_Clears_Total',
     augments = 'Augment_Count',
@@ -59,7 +58,6 @@ catalog.baselines =
 -- CharVar suffixes used internally.
 catalog.cvDay         = 'DB_Day'          -- Julian day YYYYDDD of last reset
 catalog.cvKillsBase   = 'DB_Kills_Base'
-catalog.cvDungeonsBase= 'DB_Dungeons_Base'
 catalog.cvInfamyBase  = 'DB_Infamy_Base'
 catalog.cvWavesBase   = 'DB_Waves_Base'
 catalog.cvAugmentsBase= 'DB_Augments_Base'
@@ -84,7 +82,7 @@ catalog.currencies =
 --   label       short display name (<= 16 chars to fit customMenu)
 --   description one-liner shown in the NPC menu
 --   target      numeric completion threshold
---   metric      which baseline to measure against: 'kills' | 'dungeons' | 'infamy' | 'waves' | 'augments'
+--   metric      which baseline to measure against: 'kills' | 'infamy' | 'waves' | 'augments'
 --   reward      { currency = 'hl'|'af'|'relic'|'empy', amount = N }
 --
 -- Rotation guarantees that only ONE entry per metric appears
@@ -117,37 +115,11 @@ catalog.objectivePool =
         reward      = { currency = 'relic', amount = 1500 },
     },
 
-    -- --- DUNGEONS ----------------------------------------------
-    {
-        id          = 'dungeon_1',
-        label       = 'Dungeon Diver',
-        description = 'Clear any dungeon today.',
-        target      = 1,
-        metric      = 'dungeons',
-        reward      = { currency = 'hl', amount = 750 },
-    },
-    {
-        id          = 'dungeon_2',
-        label       = 'Twin Diver',
-        description = 'Clear 2 dungeon runs today (any combination).',
-        target      = 2,
-        metric      = 'dungeons',
-        reward      = { currency = 'relic', amount = 900 },
-    },
-    {
-        id          = 'dungeon_3',
-        label       = 'Triple Diver',
-        description = 'Clear 3 dungeon runs today.',
-        target      = 3,
-        metric      = 'dungeons',
-        reward      = { currency = 'empy', amount = 1200 },
-    },
-
     -- --- INFAMY ------------------------------------------------
     {
         id          = 'infamy_50',
         label       = 'Infamy Earner',
-        description = 'Earn 50 Infamy from dungeons today.',
+        description = 'Earn 50 Infamy today.',
         target      = 50,
         metric      = 'infamy',
         reward      = { currency = 'hl', amount = 400 },
@@ -155,7 +127,7 @@ catalog.objectivePool =
     {
         id          = 'infamy_100',
         label       = 'Infamy Collector',
-        description = 'Earn 100 Infamy from dungeons today.',
+        description = 'Earn 100 Infamy today.',
         target      = 100,
         metric      = 'infamy',
         reward      = { currency = 'hl', amount = 900 },
@@ -163,7 +135,7 @@ catalog.objectivePool =
     {
         id          = 'infamy_250',
         label       = 'Infamy Hoarder',
-        description = 'Earn 250 Infamy from dungeons today.',
+        description = 'Earn 250 Infamy today.',
         target      = 250,
         metric      = 'infamy',
         reward      = { currency = 'empy', amount = 1200 },

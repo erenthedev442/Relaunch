@@ -10,13 +10,11 @@
 --     other systems' lifetime CharVars (Custom_NM_Kills, etc.).
 --   * Progress = current value − baseline. Players complete objectives
 --     by doing activities, then returning to claim the reward.
---   * Requires zero modifications to HuntingLeague, DungeonSystem,
---     or any other module.
+--   * Requires zero modifications to HuntingLeague or any other module.
 --
 -- CharVar layout per player:
 --   DB_Day              Julian day (YYYYDDD) of last reset
 --   DB_Kills_Base       snapshot of Custom_NM_Kills at day start
---   DB_Dungeons_Base    snapshot of Dungeon_Clears_Total at day start
 --   DB_Infamy_Base      snapshot of Infamy_Lifetime at day start
 --   DB_S1_ObjIdx        pool index (1-based) of today's slot-1 objective
 --   DB_S2_ObjIdx        pool index of slot-2
@@ -47,7 +45,7 @@ end
 -----------------------------------
 
 -- Pick today's 3 objectives. Guarantees one per metric group
--- (kills / dungeons / infamy) so the board has variety every day.
+-- (kills / infamy / waves / augments) so the board has variety every day.
 -- Selection within each group rotates deterministically by day number.
 local function todaysObjectives()
     local pool = catalog.objectivePool
@@ -58,11 +56,11 @@ local function todaysObjectives()
     end
 
     local today = currentDayId()
-    -- 5-metric rotating selection: pick 3 consecutive metrics from a 5-entry
-    -- ring, shifted by (today mod 5). Each metric appears in 3 of every 5 days.
-    -- Cycle: kills/dungeons/infamy -> dungeons/infamy/waves -> infamy/waves/augments
-    --     -> waves/augments/kills -> augments/kills/dungeons -> (repeat)
-    local ALL_METRICS = { 'kills', 'dungeons', 'infamy', 'waves', 'augments' }
+    -- 4-metric rotating selection: pick 3 consecutive metrics from a 4-entry
+    -- ring, shifted by (today mod 4). Each metric appears in 3 of every 4 days.
+    -- Cycle: kills/infamy/waves -> infamy/waves/augments -> waves/augments/kills
+    --     -> augments/kills/infamy -> (repeat)
+    local ALL_METRICS = { 'kills', 'infamy', 'waves', 'augments' }
     local dayMod     = today % #ALL_METRICS
     local metricOrder = {}
     for i = 1, catalog.slotsPerDay do
@@ -106,10 +104,7 @@ end
 local function getProgress(player, metric)
     local baseKey   = catalog.cvKillsBase
     local currentCv = catalog.baselines.kills
-    if metric == 'dungeons' then
-        baseKey   = catalog.cvDungeonsBase
-        currentCv = catalog.baselines.dungeons
-    elseif metric == 'infamy' then
+    if metric == 'infamy' then
         baseKey   = catalog.cvInfamyBase
         currentCv = catalog.baselines.infamy
     elseif metric == 'waves' then
@@ -135,8 +130,6 @@ local function resetDay(player)
     -- Snap baselines
     player:setCharVar(catalog.cvKillsBase,
         player:getCharVar(catalog.baselines.kills)    or 0)
-    player:setCharVar(catalog.cvDungeonsBase,
-        player:getCharVar(catalog.baselines.dungeons) or 0)
     player:setCharVar(catalog.cvInfamyBase,
         player:getCharVar(catalog.baselines.infamy)   or 0)
     player:setCharVar(catalog.cvWavesBase,

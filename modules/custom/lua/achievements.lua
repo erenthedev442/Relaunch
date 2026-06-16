@@ -112,53 +112,6 @@ local MILESTONES = {
         titleId   = xi.title.PARAGON_OF_WARRIOR_EXCELLENCE,
         titleName = 'Paragon of Warrior Excellence',
     },
-    -- Dungeon Infamy milestones
-    {
-        id       = 'INFAMY_500',
-        reward   = 100,
-        announce = true,
-        title    = 'Dungeon Aspirant',
-        desc     = '500 lifetime Infamy earned from dungeon clears.',
-    },
-    {
-        id       = 'INFAMY_1K',
-        reward   = 250,
-        announce = true,
-        title    = 'Dungeon Veteran',
-        desc     = '1,000 lifetime Infamy.  The dungeons know your name.',
-    },
-    {
-        id       = 'INFAMY_5K',
-        reward   = 750,
-        announce = true,
-        title    = 'Dungeon Overlord',
-        desc     = '5,000 lifetime Infamy.  An unstoppable force of destruction.',
-    },
-    -- Dungeon clear count milestones
-    {
-        id       = 'FIRST_DUNGEON',
-        reward   = 150,
-        announce = false,
-        title    = 'First Dungeon Clear',
-        desc     = 'Survived your first dungeon run.',
-    },
-    {
-        id       = 'TEN_DUNGEONS',
-        reward   = 300,
-        announce = true,
-        title    = 'Dungeon Diver',
-        desc     = '10 lifetime dungeon clears.',
-    },
-    {
-        id       = 'FIFTY_DUNGEONS',
-        reward   = 750,
-        announce = true,
-        -- 'Dungeon Conqueror' since 2026-06-12: was 'Dungeon Veteran', which
-        -- collided with INFAMY_1K's label above. Display-only (achievements
-        -- key on id), so already-earned progress is unaffected.
-        title    = 'Dungeon Conqueror',
-        desc     = '50 lifetime dungeon clears.  The dungeons fear you.',
-    },
     -- Wave fight milestones
     {
         id       = 'FIRST_WAVE',
@@ -330,28 +283,6 @@ local MILESTONES = {
         title    = 'Arena Champion',
         desc     = 'Reached 1600 arena rating.  The ladder bows.',
     },
-    -- Mythic+ keystone milestones (level = highest key TIMED, any dungeon)
-    {
-        id       = 'KEYSTONE_5',
-        reward   = 300,
-        announce = true,
-        title    = 'Keystone Climber',
-        desc     = 'Cleared a Mythic+5 keystone dungeon.',
-    },
-    {
-        id       = 'KEYSTONE_10',
-        reward   = 750,
-        announce = true,
-        title    = 'Keystone Conqueror',
-        desc     = 'Cleared a Mythic+10.  The key only goes deeper.',
-    },
-    {
-        id       = 'KEYSTONE_15',
-        reward   = 2000,
-        announce = true,
-        title    = 'Keystone Legend',
-        desc     = 'Cleared a Mythic+15.  Few will ever stand here.',
-    },
     -- Augment milestones
     {
         id       = 'AUGMENT_NOVICE',
@@ -474,30 +405,6 @@ function M.check(player, milestoneId)
 end
 
 -----------------------------------
--- Called from DungeonSystem.lua endDungeon after a successful clear and
--- after Infamy_Lifetime has been updated.
--- Checks the three lifetime Infamy thresholds.
------------------------------------
-function M.onDungeonClear(player)
-    local lifetimeInfamy = player:getCharVar('Infamy_Lifetime') or 0
-    if lifetimeInfamy >= 500  then award(player, MILESTONE_BY_ID['INFAMY_500']) end
-    if lifetimeInfamy >= 1000 then award(player, MILESTONE_BY_ID['INFAMY_1K'])  end
-    if lifetimeInfamy >= 5000 then award(player, MILESTONE_BY_ID['INFAMY_5K'])  end
-end
-
------------------------------------
--- Called from DungeonSystem.lua after incrementing Dungeon_Clears_Total.
--- Checks dungeon clear count milestones (in addition to infamy, which
--- M.onDungeonClear already handles).
------------------------------------
-function M.onDungeonCount(player)
-    local clears = player:getCharVar('Dungeon_Clears_Total') or 0
-    if clears >= 1  then award(player, MILESTONE_BY_ID['FIRST_DUNGEON'])  end
-    if clears >= 10 then award(player, MILESTONE_BY_ID['TEN_DUNGEONS'])   end
-    if clears >= 50 then award(player, MILESTONE_BY_ID['FIFTY_DUNGEONS']) end
-end
-
------------------------------------
 -- Called from GameMaster.lua after a successful wave-fight completion.
 -- wavesTotal is informational (not used here but kept for future tiers).
 -----------------------------------
@@ -587,16 +494,6 @@ function M.onColosseumResult(player)
     if wins >= 10    then award(player, MILESTONE_BY_ID['COL_10_WINS'])      end
     if best >= 1400  then award(player, MILESTONE_BY_ID['COL_RATING_1400']) end
     if best >= 1600  then award(player, MILESTONE_BY_ID['COL_RATING_1600']) end
-end
-
------------------------------------
--- Called from DungeonSystem.lua when a NEW personal-best keystone
--- level is recorded (level = the key level just cleared).
------------------------------------
-function M.onKeystoneBest(player, level)
-    if level >= 5  then award(player, MILESTONE_BY_ID['KEYSTONE_5'])  end
-    if level >= 10 then award(player, MILESTONE_BY_ID['KEYSTONE_10']) end
-    if level >= 15 then award(player, MILESTONE_BY_ID['KEYSTONE_15']) end
 end
 
 -----------------------------------
