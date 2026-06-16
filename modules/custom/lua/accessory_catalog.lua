@@ -219,10 +219,10 @@ table.insert(g.ring, { id =  10766, name = 'Lunette Ring'                      ,
 table.insert(g.ring, { id =  10769, name = 'Gelatinous Ring +1'                , cost =  60, jobs = 'All' })  -- TANK score 64 [RARE,EX]
 table.insert(g.ring, { id =  28472, name = 'Freke Ring'                        , cost =  60, jobs = 'WHM/BLM/RDM/SMN/SCH/GEO' })  -- CASTER score 49 [RARE,EX]
 table.insert(g.ring, { id =  26184, name = 'Stikini Ring +1'                   , cost =  60, jobs = 'All' })  -- HEAL score 63
+table.insert(g.ring, { id =  26227, name = 'Cornelias Ring'                    , cost =  60, jobs = 'All' })  -- WS score 70 [RARE,EX]
 table.insert(g.ring, { id =  14625, name = 'Evokers Ring'                      , cost =  60, jobs = 'SMN' })  -- PET score 23 [RARE,EX]
 table.insert(g.ring, { id =  10783, name = 'Veneficium Ring'                   , cost =  60, jobs = 'All' })  -- DPS score 66 [RARE]
 table.insert(g.ring, { id =  13566, name = 'Defending Ring'                    , cost =  60, jobs = 'All' })  -- TANK score 60 [RARE,EX]
-table.insert(g.ring, { id =  26192, name = 'Adoulin Ring +1'                   , cost =  60, jobs = 'All' })  -- CASTER score 43 [RARE,EX]
 
 -- back
 table.insert(g.back, { id =  28617, name = 'Maulers Mantle'                    , cost =  60, jobs = 'WAR' })  -- DPS score 60 [EX]
@@ -268,11 +268,11 @@ table.insert(inf.ear, { id =  25535, name = 'Arbatel Earring +1'                
 table.insert(inf.ear, { id =  26108, name = 'Odr Earring'                       , cost = 300, jobs = 'MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' })  -- DPS score 55 [RARE,EX]
 
 -- ring (top 5 by score -> Infamy Vendor)
+table.insert(inf.ring, { id =  26230, name = 'Fickblixs Ring'                    , cost = 300, jobs = 'All' })  -- CASTER score 115 [RARE,EX]
 table.insert(inf.ring, { id =  26190, name = 'Moonlight Ring'                    , cost = 300, jobs = 'WAR/THF/PLD/DRK/BST/BRD/DRG/DNC/RUN' })  -- TANK score 85
 table.insert(inf.ring, { id =  26191, name = 'Regal Ring'                        , cost = 300, jobs = 'WAR/MNK/THF/PLD/DRK/BST/RNG/SAM/NIN/DRG/COR/PUP/DNC/RUN' })  -- WS score 85 [RARE,EX]
 table.insert(inf.ring, { id =  28471, name = 'Gere Ring'                         , cost = 300, jobs = 'MNK/THF/BST/NIN/PUP/DNC' })  -- DPS score 76 [RARE,EX]
 table.insert(inf.ring, { id =  26186, name = 'Ilabrat Ring'                      , cost = 300, jobs = 'MNK/WHM/RDM/THF/BST/BRD/RNG/SAM/NIN/BLU/COR/DNC/RUN' })  -- WS score 72 [RARE,EX]
-table.insert(inf.ring, { id =  26227, name = 'Cornelias Ring'                    , cost = 300, jobs = 'All' })  -- WS score 70 [RARE,EX]
 
 -- back (top 5 by score -> Infamy Vendor)
 table.insert(inf.back, { id =  27620, name = 'Aurists Cape +1'                   , cost = 300, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- CASTER score 177 [RARE,EX]

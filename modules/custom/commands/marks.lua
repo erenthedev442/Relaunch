@@ -11,7 +11,7 @@ local commandObj = {}
 commandObj.cmdprops =
 {
     permission = 0,
-    parameters = '',
+    parameters = '', 
 }
 
 local H = xi.msg.channel.SYSTEM_3

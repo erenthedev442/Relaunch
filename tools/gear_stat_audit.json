@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-15T23:59:05",
+  "generated_at": "2026-06-16T15:53:49",
   "summary": {
     "reforge": {
       "total": 1320,
@@ -10,9 +10,9 @@
       "not_equip": 0
     },
     "hunting_league": {
-      "total": 413,
-      "ok": 318,
-      "naked": 88,
+      "total": 415,
+      "ok": 317,
+      "naked": 91,
       "latent_only": 1,
       "missing": 3,
       "not_equip": 3
@@ -452,6 +452,14 @@
       "latentCount": 0
     },
     {
+      "itemId": 25681,
+      "shortName": "cohort_cloak_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] body: Cohort Cloak +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
       "itemId": 25717,
       "shortName": "valorous_mail",
       "source": "hunting_league",
@@ -588,6 +596,14 @@
       "latentCount": 0
     },
     {
+      "itemId": 25926,
+      "shortName": "sulevias_leggings_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] feet: Sulevias Leggings +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
       "itemId": 25947,
       "shortName": "meghanada_jambeaux_+2",
       "source": "hunting_league",
@@ -656,6 +672,14 @@
       "shortName": "pinga_mittens_+1",
       "source": "hunting_league",
       "context": "Armor NPC [bronze] hands: Pinga Mittens +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 25991,
+      "shortName": "heyoka_mittens_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [silver] hands: Heyoka Mittens +1",
       "modCount": 0,
       "latentCount": 0
     },

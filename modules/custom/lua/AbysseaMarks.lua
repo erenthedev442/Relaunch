@@ -111,8 +111,8 @@ local function calcMultipliers(player)
     local ok = pcall(function()
         local pcCount    = 0
         local trustCount = 0
-        for i = 0, 5 do
-            local mem = player:getPartyMember(i)
+        for i = 0, (player:getPartySize() or 1) - 1 do
+            local mem = player:getPartyMember(i, 0)
             if mem then
                 if mem:getObjType() == xi.objType.PC then
                     pcCount    = pcCount    + 1
@@ -216,8 +216,9 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
         end
 
         -- Distribute to every online PC in the party.
-        for i = 0, 5 do
-            local mem = player:getPartyMember(i)
+        -- getPartyMember(0) always returns self; 1..N-1 returns other members.
+        for i = 0, (player:getPartySize() or 1) - 1 do
+            local mem = player:getPartyMember(i, 0)
             if mem and mem:getObjType() == xi.objType.PC then
                 if infamyEarned > 0 then
                     mem:setCharVar(INFAMY_CV,      (mem:getCharVar(INFAMY_CV)      or 0) + infamyEarned)
