@@ -27,6 +27,12 @@ DELETE FROM mob_groups WHERE groupid BETWEEN 11355 AND 11369 AND zoneid = 292;
 
 -- ---- 3. Add Hunting League mob_groups for Escha Zi'Tah (zone 288) ----------
 --   Same poolids / dropids / HP / MP as the original 292 rows.
+--   Clear existing 288 rows FIRST so these INSERTs are idempotent. Step 2 only
+--   removes the old zone-292 rows, so without this a re-run (when this file's
+--   checksum changes and the custom-SQL applier re-runs it) hit "Duplicate
+--   entry '288-11355'" and aborted the migration mid-file. Zone 210 (GM Home)
+--   rows are owned by hunting_league_gm_home_mobs.sql and are NOT touched here.
+DELETE FROM mob_groups WHERE groupid BETWEEN 11355 AND 11369 AND zoneid = 288;
 
 -- Tier 1 — Rank I: Initiate
 INSERT INTO mob_groups VALUES (11355, 2384, 288, 'Leaping_Lizzy',   0, 128, 103,  0,      0,      0, NULL);
