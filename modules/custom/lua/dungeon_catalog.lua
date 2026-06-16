@@ -2160,11 +2160,11 @@ catalog.plus4Sets =
             ['feet'] = { id = 24116, name = 'Horos Toe Shoes +4', stats = { 'DEF:96 HP+83 STR+25 DEX+34 VIT+27 AGI+47 MND+22 CHR+42 Accuracy+47 Attack+71 Magic Accurac' } },
         } },
         { set = 'Maxixi', pieces = {
-            ['head'] = { id = 23914, name = 'maxixi tiara +4', stats = { 'DEF:127 HP+74 MP+43 STR+30 DEX+40 VIT+30 AGI+42 INT+30 MND+33 CHR+36 Accuracy+57 Magic Acc' } },
-            ['body'] = { id = 23959, name = 'maxixi casaque +4', stats = { 'DEF:157 HP+108 MP+64 STR+34 DEX+45 VIT+34 AGI+46 INT+33 MND+36 CHR+35 Accuracy+66 Attack+3' } },
-            ['hands'] = { id = 24004, name = 'maxixi bangles +4', stats = { 'DEF:115 HP+87 STR+21 DEX+48 VIT+42 AGI+28 INT+22 MND+43 CHR+29 Accuracy+58 Attack+40 Magic' } },
-            ['legs'] = { id = 24049, name = 'maxixi tights +4', stats = { 'DEF:139 HP+90 STR+39 VIT+26 AGI+35 INT+40 MND+30 CHR+23 Accuracy+66 Attack+40 Magic Accura' } },
-            ['feet'] = { id = 24094, name = 'maxixi toe shoes +4', stats = { 'DEF:97 HP+69 STR+22 DEX+37 VIT+22 AGI+52 MND+25 CHR+42 Accuracy+56 Attack+35 Magic Accurac' } },
+            ['head'] = { id = 23913, name = 'maxixi tiara +4', stats = { 'DEF:127 HP+74 MP+43 STR+30 DEX+40 VIT+30 AGI+42 INT+30 MND+33 CHR+36 Accuracy+57 Magic Acc' } },
+            ['body'] = { id = 23958, name = 'maxixi casaque +4', stats = { 'DEF:157 HP+108 MP+64 STR+34 DEX+45 VIT+34 AGI+46 INT+33 MND+36 CHR+35 Accuracy+66 Attack+3' } },
+            ['hands'] = { id = 24003, name = 'maxixi bangles +4', stats = { 'DEF:115 HP+87 STR+21 DEX+48 VIT+42 AGI+28 INT+22 MND+43 CHR+29 Accuracy+58 Attack+40 Magic' } },
+            ['legs'] = { id = 24048, name = 'maxixi tights +4', stats = { 'DEF:139 HP+90 STR+39 VIT+26 AGI+35 INT+40 MND+30 CHR+23 Accuracy+66 Attack+40 Magic Accura' } },
+            ['feet'] = { id = 24093, name = 'maxixi toe shoes +4', stats = { 'DEF:97 HP+69 STR+22 DEX+37 VIT+22 AGI+52 MND+25 CHR+42 Accuracy+56 Attack+35 Magic Accurac' } },
         } },
     },
     -- DRG
