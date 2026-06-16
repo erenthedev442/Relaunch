@@ -372,6 +372,30 @@ local SEAL_STACK_CAP = 99
 -- items) and the multi-quantity path (seals). Handles the inventory
 -- check, mark deduction, item grant, and chat confirmation in one place.
 local function doBuyReward(p, reward, qty, catIdx, itemPage)
+    -- Spell rewards TEACH the spell (addSpell) instead of granting an item.
+    -- The custom scroll item ids (29696-29698) aren't in the client's item
+    -- data, so a usable scroll never shows a "Use" option -- a player could
+    -- never learn it that way. addSpell is job-agnostic (the spell only shows
+    -- when on a job that can cast it), so it's safe to learn on any job; cast
+    -- it on the job listed in the reward's stats. No inventory slot needed.
+    if reward.learnSpell then
+        if p:hasSpell(reward.learnSpell) then
+            p:printToPlayer(
+                string.format('[Hunting League] You already know %s, kupo!', reward.name),
+                xi.msg.channel.SYSTEM_3)
+            buildCategoryMenu(p, catIdx, itemPage)
+            return
+        end
+        spendPoints(p, reward.cost)
+        p:addSpell(reward.learnSpell)
+        p:printToPlayer(
+            string.format('[Hunting League] Learned %s for %d %s!  (%d remaining), kupo! Cast it on the listed job.',
+                reward.name, reward.cost, catalog.currencyName, getPoints(p)),
+            xi.msg.channel.SYSTEM_3)
+        buildCategoryMenu(p, catIdx, itemPage)
+        return
+    end
+
     if p:getFreeSlotsCount() == 0 and p:hasItem(reward.id) ~= true then
         p:printToPlayer('Inventory full! Free a slot first, kupo!', xi.msg.channel.SYSTEM_3)
         buildItemPreviewMenu(p, reward, catIdx, itemPage)
@@ -763,6 +787,20 @@ local function insertSpawnerNPC(zone)
                             if td.tier >= 5 then
                                 prestige.onLegendKill(killer, md.groupId)
                             end
+
+                            -- Catalog-defined trophy drops. Guaranteed unless
+                            -- `rate` (1-100) is specified on the drop entry.
+                            if md.drops then
+                                for _, drop in ipairs(md.drops) do
+                                    local rate = drop.rate or 100
+                                    if math.random(100) <= rate then
+                                        killer:addItem({ id = drop.id, quantity = drop.qty or 1 })
+                                        killer:printToPlayer(
+                                            string.format('[Hunting League] Trophy drop from %s!', md.label),
+                                            xi.msg.channel.SYSTEM_3)
+                                    end
+                                end
+                            end
                         end,
                     })
 
@@ -893,7 +931,7 @@ local function insertZoneGuideNPC(zone)
                 string.format('R%d: %s', td.tier, suffix),
                 function(playerArg)
                     playerArg:timer(100, function(p)
-                        p:setPos(wp.x, wp.y, wp.z, wp.rot or 0)
+                        p:setPos(wp.x, wp.y, wp.z, wp.rot or 0, xi.zone.ESCHA_ZITAH)
                     end)
                 end,
             })

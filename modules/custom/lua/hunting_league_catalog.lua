@@ -18,10 +18,10 @@ return
     sealsPos       = { x =  0.0000, y = -0.5000, z = -30.0000, rot = 128 },
 
     -- Position of the Zone Guide NPC (warps players to a tier cluster area).
-    zoneGuidePos   = { x =  8.0000, y = -0.5000, z = -30.0000, rot = 128 },
+    zoneGuidePos   = { x =  3.0000, y = -0.5000, z = -30.0000, rot = 128 },
 
     -- Position of the Hunt Accessories NPC.
-    accessoriesPos = { x = 16.0000, y = -0.5000, z = -30.0000, rot = 128 },
+    accessoriesPos = { x =  6.0000, y = -0.5000, z = -30.0000, rot = 128 },
 
     -- Fallback spawner position for tier NPCs that have no spawnerPos defined.
     spawnerPos     = { x =  8.0000, y = -0.5000, z = -30.0000, rot = 128 },
@@ -74,12 +74,12 @@ return
             tier       = 1,
             name       = 'Rank I - Initiate',
             unlockCost = 0,
-            spawnerPos = { x =  -95.0, y =  -0.2, z =  -15.0, rot =  64 },
-            warpPos    = { x = -105.0, y =  -0.2, z =  -15.0, rot =  64 },  -- 10u west of spawner, face east
+            spawnerPos = { x = -41.5941, y = 0.1103, z = 73.7704, rot = 176 },
+            warpPos    = { x = -41.5941, y = 0.1103, z = 73.7704, rot = 176 },
             mobs =
             {
                 { name = 'Leaping_Lizzy',    label = 'Leaping Lizzy',    points = 5,  groupId = 11355, minLv = 150, maxLv = 150,
-                  spawnPos = { x = -130.0, y =  -0.2, z =    5.0, rot =   0 },  -- T1 cluster: NW
+                  spawnPos = { x =  -56.6, y =  0.11, z =  73.8, rot =   0 },  -- T1 cluster: W
                   hpBoost = 6,
                   mods = {
                       [xi.mod.DEF] = 481,
@@ -95,7 +95,7 @@ return
                   },
                 },
                 { name = 'Valkurm_Emperor',  label = 'Valkurm Emperor',  points = 5,  groupId = 11356, minLv = 150, maxLv = 150,
-                  spawnPos = { x = -110.0, y =  -0.2, z =   25.0, rot = 128 },  -- T1 cluster: N
+                  spawnPos = { x =  -41.6, y =  0.11, z =  58.8, rot = 128 },  -- T1 cluster: S
                   hpBoost = 6,
                   mods = {
                       [xi.mod.DEF] = 481,
@@ -109,7 +109,7 @@ return
                   },
                 },
                 { name = 'Tom_Tit_Tat',      label = 'Tom Tit Tat',      points = 5,  groupId = 11357, minLv = 150, maxLv = 150,
-                  spawnPos = { x =  -85.0, y =  -0.2, z =    5.0, rot = 192 },  -- T1 cluster: NE
+                  spawnPos = { x =  -26.6, y =  0.11, z =  73.8, rot = 192 },  -- T1 cluster: E
                   hpBoost = 6,
                   mods = {
                       [xi.mod.DEF] = 481,
@@ -130,12 +130,12 @@ return
             tier       = 2,
             name       = 'Rank II - Hunter',
             unlockCost = 50,
-            spawnerPos = { x =   15.0, y =  -8.0, z =  155.0, rot = 128 },
-            warpPos    = { x =   15.0, y =  -8.0, z =  145.0, rot = 128 },  -- 10u south of spawner, face south
+            spawnerPos = { x = 40.9101, y = 0.4831, z = 132.8770, rot = 71 },
+            warpPos    = { x = 40.9101, y = 0.4831, z = 132.8770, rot = 71 },
             mobs =
             {
                 { name = 'Roc',         label = 'Roc',         points = 12, groupId = 11358, minLv = 150, maxLv = 150,
-                  spawnPos = { x =  -15.0, y =  -8.0, z =  185.0, rot =   0 },  -- T2 cluster: W
+                  spawnPos = { x =   25.9, y =  0.48, z =  132.9, rot =   0 },  -- T2 cluster: W
                   hpBoost = 9,
                   mods = {
                       [xi.mod.DEF] = 825,
@@ -150,7 +150,7 @@ return
                   },
                 },
                 { name = 'Bomb_Queen',  label = 'Bomb Queen',  points = 12, groupId = 11359, minLv = 150, maxLv = 150,
-                  spawnPos = { x =   10.0, y =  -8.0, z =  200.0, rot = 128 },  -- T2 cluster: C
+                  spawnPos = { x =   40.9, y =  0.48, z =  117.9, rot = 128 },  -- T2 cluster: S
                   hpBoost = 9,
                   mods = {
                       [xi.mod.DEF] = 825,
@@ -167,7 +167,7 @@ return
                   },
                 },
                 { name = 'Aquarius',    label = 'Aquarius',    points = 12, groupId = 11360, minLv = 150, maxLv = 150,
-                  spawnPos = { x =   35.0, y =  -8.0, z =  185.0, rot = 192 },  -- T2 cluster: E
+                  spawnPos = { x =   55.9, y =  0.48, z =  132.9, rot = 192 },  -- T2 cluster: E
                   hpBoost = 9,
                   mods = {
                       [xi.mod.DEF] = 825,
@@ -191,12 +191,12 @@ return
             tier       = 3,
             name       = 'Rank III - Elite',
             unlockCost = 150,
-            spawnerPos = { x =  230.0, y =  -1.0, z =   50.0, rot =  96 },
-            warpPos    = { x =  220.0, y =  -1.0, z =   50.0, rot =  96 },  -- 10u west of spawner, face east
+            spawnerPos = { x = 48.6277, y = 0.8776, z = 18.8663, rot = 215 },
+            warpPos    = { x = 48.6277, y = 0.8776, z = 18.8663, rot = 215 },
             mobs =
             {
                 { name = 'Serket',    label = 'Serket',    points = 22, groupId = 11361, minLv = 150, maxLv = 150,
-                  spawnPos = { x =  265.0, y =  -1.0, z =   45.0, rot =  96 },  -- T3 cluster: W
+                  spawnPos = { x =   33.6, y =  0.88, z =   18.9, rot =  96 },  -- T3 cluster: W
                   hpBoost = 15,
                   mods = {
                       [xi.mod.DEF] = 1238,
@@ -212,7 +212,7 @@ return
                   },
                 },
                 { name = 'Vrtra',     label = 'Vrtra',     points = 22, groupId = 11362, minLv = 150, maxLv = 150,
-                  spawnPos = { x =  275.0, y =  -1.0, z =   75.0, rot =  64 },  -- T3 cluster: C
+                  spawnPos = { x =   48.6, y =  0.88, z =    3.9, rot =  64 },  -- T3 cluster: S
                   hpBoost = 15,
                   mods = {
                       [xi.mod.DEF] = 1238,
@@ -230,7 +230,7 @@ return
                   },
                 },
                 { name = 'Simurgh',   label = 'Simurgh',   points = 22, groupId = 11363, minLv = 150, maxLv = 150,
-                  spawnPos = { x =  260.0, y =  -1.0, z =  100.0, rot = 128 },  -- T3 cluster: N
+                  spawnPos = { x =   63.6, y =  0.88, z =   18.9, rot = 128 },  -- T3 cluster: E
                   -- Difficulty bump (2026-06-13, owner request): tuned a notch
                   -- above its T3 tier-mates (Serket/Vrtra) -- +25% HP, harder &
                   -- faster hits (ATT/HASTE/Double+Triple Atk), and stronger Regen
@@ -259,12 +259,12 @@ return
             tier       = 4,
             name       = 'Rank IV - Champion',
             unlockCost = 350,
-            spawnerPos = { x =  315.0, y =  -8.0, z =   95.0, rot =  96 },
-            warpPos    = { x =  305.0, y =  -8.0, z =   95.0, rot =  96 },  -- 10u west of spawner, face east
+            spawnerPos = { x = 22.0112, y = 0.8983, z = -121.4367, rot = 126 },
+            warpPos    = { x = 22.0112, y = 0.8983, z = -121.4367, rot = 126 },
             mobs =
             {
                 { name = 'Nidhogg',       label = 'Nidhogg',       points = 38, groupId = 11364, minLv = 150, maxLv = 150,
-                  spawnPos = { x =  355.0, y =  -8.0, z =   90.0, rot =  96 },  -- T4 cluster: W
+                  spawnPos = { x =    7.0, y =  0.90, z = -121.4, rot =  96 },  -- T4 cluster: W
                   hpBoost = 21,
                   mods = {
                       [xi.mod.DEF] = 1788,
@@ -280,7 +280,7 @@ return
                   },
                 },
                 { name = 'King_Behemoth', label = 'King Behemoth', points = 38, groupId = 11365, minLv = 150, maxLv = 150,
-                  spawnPos = { x =  365.0, y =  -8.0, z =  120.0, rot =  64 },  -- T4 cluster: C
+                  spawnPos = { x =   22.0, y =  0.90, z = -136.4, rot =  64 },  -- T4 cluster: S
                   hpBoost = 21,
                   mods = {
                       [xi.mod.DEF] = 1788,
@@ -298,7 +298,7 @@ return
                   },
                 },
                 { name = 'Kirin',         label = 'Kirin',         points = 38, groupId = 11366, minLv = 150, maxLv = 150,
-                  spawnPos = { x =  355.0, y =  -8.0, z =  145.0, rot = 128 },  -- T4 cluster: N
+                  spawnPos = { x =   37.0, y =  0.90, z = -121.4, rot = 128 },  -- T4 cluster: E
                   hpBoost = 21,
                   mods = {
                       [xi.mod.DEF] = 1788,
@@ -323,12 +323,12 @@ return
             tier       = 5,
             name       = 'Rank V - Legend',
             unlockCost = 700,
-            spawnerPos = { x =  455.0, y =  25.0, z =   75.0, rot =  96 },
-            warpPos    = { x =  445.0, y =  25.0, z =   75.0, rot =  96 },  -- 10u west of spawner, face east
+            spawnerPos = { x = 433.8451, y = 0.1066, z = -199.3157, rot = 119 },
+            warpPos    = { x = 433.8451, y = 0.1066, z = -199.3157, rot = 119 },
             mobs =
             {
                 { name = 'Absolute_Virtue',    label = 'Absolute Virtue',    points = 65, groupId = 11367, minLv = 150, maxLv = 150,
-                  spawnPos = { x =  495.0, y =  25.0, z =   70.0, rot =  96 },  -- T5 cluster: W
+                  spawnPos = { x =  418.8, y =  0.11, z = -199.3, rot =  96 },  -- T5 cluster: W
                   hpBoost = 36,
                   mods = {
                       [xi.mod.DEF] = 2750,
@@ -346,7 +346,8 @@ return
                   },
                 },
                 { name = 'Pandemonium_Warden', label = 'Pandemonium Warden', points = 65, groupId = 11368, minLv = 150, maxLv = 150,
-                  spawnPos = { x =  505.0, y =  25.0, z =  100.0, rot =  64 },  -- T5 cluster: C
+                  spawnPos = { x =  433.8, y =  0.11, z = -214.3, rot =  64 },  -- T5 cluster: S
+                  drops = { { id = xi.item.KHIMAIRA_HORN, qty = 1 } },
                   hpBoost = 36,
                   mods = {
                       [xi.mod.DEF] = 2750,
@@ -362,7 +363,7 @@ return
                   },
                 },
                 { name = 'Shinryu',            label = 'Shinryu',            points = 110, groupId = 11369, minLv = 225, maxLv = 250,
-                  spawnPos = { x =  490.0, y =  25.0, z =  130.0, rot = 128 },  -- T5 cluster: N
+                  spawnPos = { x =  448.8, y =  0.11, z = -199.3, rot = 128 },  -- T5 cluster: E
                   hpBoost = 72,
                   mods = {
                       [xi.mod.DEF] = 11000,
@@ -552,19 +553,23 @@ return
         -- Accessory NPC at Reisenjima Henge x=8.49.)
 
         -- ---------------------------------------------------------
-        -- Magic Scrolls  (item IDs 29696+; spells custom to this server)
-        -- Apply modules/custom/sql/silencega_scroll.sql to the DB first.
+        -- Magic Scrolls  (spells custom to this server). The `learnSpell`
+        -- field makes the NPC TEACH the spell on purchase (addSpell) instead
+        -- of handing over a scroll item: the custom scroll item ids
+        -- (29696-29698) aren't in the client's item data, so a usable scroll
+        -- never shows a "Use" option and could never be learned. `id` is kept
+        -- only for reference (the item rows still exist, just unused).
         -- ---------------------------------------------------------
         {
             label = 'Spells',
             items =
             {
-                { name = 'Scroll of Silencega', id = 29696, cost = 200,
-                  stats = { 'WHM 40 / RDM 50 / SCH 50', 'AoE Silence (Wind)', 'Enfeebling Magic' } },
-                { name = 'Scroll of Divine Aegis', id = 29697, cost = 400,
-                  stats = { 'PLD 50', 'Holy shield → AoE detonation', 'Enhancing / Divine Magic' } },
-                { name = 'Scroll of Convergence', id = 29698, cost = 350,
-                  stats = { 'RDM 50', 'Random enfeeble + elemental damage', 'Enfeebling Magic' } },
+                { name = 'Silencega', id = 29696, cost = 200, learnSpell = 359,
+                  stats = { 'WHM 40 / RDM 50 / SCH 50', 'AoE Silence (Wind)', 'Learned on purchase' } },
+                { name = 'Divine Aegis', id = 29697, cost = 400, learnSpell = 1020,
+                  stats = { 'PLD 50', 'Holy shield → AoE detonation', 'Learned on purchase' } },
+                { name = 'Convergence', id = 29698, cost = 350, learnSpell = 1021,
+                  stats = { 'RDM 50', 'Random enfeeble + elemental damage', 'Learned on purchase' } },
             },
         },
     },
