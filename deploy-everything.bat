@@ -88,7 +88,7 @@ if errorlevel 1 ( echo        ERROR: tar failed -- skipping server deploy.& set 
 scp -i "%KEY%" %SSHOPT% "%TGZ%" %HOST%:/tmp/fjb_full.tgz
 if errorlevel 1 ( echo        ERROR: scp of bundle failed -- skipping server deploy.& set "SRVOK=PROBLEM"& goto :finish )
 del "%TGZ%" >nul 2>&1
-ssh -i "%KEY%" %SSHOPT% %HOST% "cd %REMOTE% && rm -f /tmp/fjb_extract_ok && sudo tar -czf $HOME/predeploy-$(date +%%Y%%m%%d-%%H%%M%%S).tgz modules/custom scripts tools 2>/dev/null && ls -t $HOME/predeploy-*.tgz | tail -n +6 | xargs -r rm -f; echo '   stopping xi_map for a storm-free extract...'; sudo systemctl stop xi_map; sudo tar -xzf /tmp/fjb_full.tgz -C %REMOTE% --no-same-owner && sudo chown -R xi:xi %REMOTE%/modules/custom %REMOTE%/scripts %REMOTE%/tools %REMOTE%/src && touch /tmp/fjb_extract_ok; sudo systemctl start xi_map; echo '   xi_map restarted after extract'; rm -f /tmp/fjb_full.tgz; test -f /tmp/fjb_extract_ok && echo   files-OK; rm -f /tmp/fjb_extract_ok" > "%OUT%" 2>&1
+ssh -i "%KEY%" %SSHOPT% %HOST% "cd %REMOTE% && rm -f /tmp/fjb_extract_ok && sudo tar -czf $HOME/predeploy-$(date +%%Y%%m%%d-%%H%%M%%S).tgz modules/custom scripts tools 2>/dev/null && ls -t $HOME/predeploy-*.tgz | tail -n +6 | xargs -r rm -f; sudo tar -xzf /tmp/fjb_full.tgz -C %REMOTE% --no-same-owner && sudo chown -R xi:xi %REMOTE%/modules/custom %REMOTE%/scripts %REMOTE%/tools %REMOTE%/src && touch /tmp/fjb_extract_ok; rm -f /tmp/fjb_full.tgz; test -f /tmp/fjb_extract_ok && echo   files-OK; rm -f /tmp/fjb_extract_ok" > "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
 findstr /c:"files-OK" "%OUT%" >nul

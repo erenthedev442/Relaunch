@@ -13,7 +13,7 @@ REM
 REM    [1] re-score ALL gear catalogs from live data
 REM    [2] commit + push working tree to GitHub (backup)
 REM    [3] ship modules/custom + scripts + tools to Azure
-REM        (no src/) + stop/extract/start xi_map
+REM        (no src/); extract while server stays up -- step [4] restarts
 REM    [4] git pull + apply ALL changed SQL + restart + health-check
 REM    [5] publish the website FROM THE BOX (live db)
 REM
@@ -69,14 +69,14 @@ type "%OUT%" >> "%LOG%"
 REM ---- [3] Ship files + extract + apply custom SQL ----
 REM   src/ intentionally excluded -- not rebuilding C++.
 echo(
-echo  [3/5] Shipping modules/custom + scripts + tools to Azure + restarting after extract...
+echo  [3/5] Shipping modules/custom + scripts + tools to Azure (server stays up during extract)...
 (echo [%TIME%] [3/5] pack+upload+install: start)>> "%LOG%"
 tar -czf "%TGZ%" -C "%SRC%" modules/custom scripts tools
 if errorlevel 1 ( echo        ERROR: tar failed -- skipping server deploy.& set "SRVOK=PROBLEM"& goto :finish )
 scp -i "%KEY%" %SSHOPT% "%TGZ%" %HOST%:/tmp/fjb_nrb.tgz
 if errorlevel 1 ( echo        ERROR: scp of bundle failed -- skipping server deploy.& set "SRVOK=PROBLEM"& goto :finish )
 del "%TGZ%" >nul 2>&1
-ssh -i "%KEY%" %SSHOPT% %HOST% "cd %REMOTE% && rm -f /tmp/fjb_nrb_ok && sudo tar -czf $HOME/predeploy-$(date +%%Y%%m%%d-%%H%%M%%S).tgz modules/custom scripts tools 2>/dev/null && ls -t $HOME/predeploy-*.tgz | tail -n +6 | xargs -r rm -f; echo '   stopping xi_map for a storm-free extract...'; sudo systemctl stop xi_map; sudo tar -xzf /tmp/fjb_nrb.tgz -C %REMOTE% --no-same-owner && sudo chown -R xi:xi %REMOTE%/modules/custom %REMOTE%/scripts %REMOTE%/tools && touch /tmp/fjb_nrb_ok; sudo systemctl start xi_map; echo '   xi_map restarted after extract'; rm -f /tmp/fjb_nrb.tgz; test -f /tmp/fjb_nrb_ok && echo   files-OK; rm -f /tmp/fjb_nrb_ok" > "%OUT%" 2>&1
+ssh -i "%KEY%" %SSHOPT% %HOST% "cd %REMOTE% && rm -f /tmp/fjb_nrb_ok && sudo tar -czf $HOME/predeploy-$(date +%%Y%%m%%d-%%H%%M%%S).tgz modules/custom scripts tools 2>/dev/null && ls -t $HOME/predeploy-*.tgz | tail -n +6 | xargs -r rm -f; sudo tar -xzf /tmp/fjb_nrb.tgz -C %REMOTE% --no-same-owner && sudo chown -R xi:xi %REMOTE%/modules/custom %REMOTE%/scripts %REMOTE%/tools && touch /tmp/fjb_nrb_ok; rm -f /tmp/fjb_nrb.tgz; test -f /tmp/fjb_nrb_ok && echo   files-OK; rm -f /tmp/fjb_nrb_ok" > "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
 findstr /c:"files-OK" "%OUT%" >nul
