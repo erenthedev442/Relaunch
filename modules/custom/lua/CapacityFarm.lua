@@ -82,6 +82,13 @@ local function spawnOne()
             if killer and catalog.cpBonus and catalog.cpBonus > 0 then
                 killer:addCapacityPoints(catalog.cpBonus)
             end
+            -- Refresh campZone from the dead mob before refilling. This self-heals
+            -- the case where the FileWatcher re-ran this module file (creating a new
+            -- module instance with campZone=nil), causing any callback written by a
+            -- subsequent spawnOne() to see a nil campZone. By reading deadMob:getZone()
+            -- here, we guarantee campZone is always valid when ensurePopulation() runs,
+            -- regardless of which module-instance closure is in the Lua cache.
+            campZone = deadMob:getZone()
             -- Refill SYNCHRONOUSLY, right here -- do NOT defer through a timer.
             -- History of this bug: deadMob:timer() never fired (the corpse and
             -- any timer on it are freed the instant a releaseIdOnDisappear mob
@@ -147,10 +154,10 @@ ensurePopulation = function()
         spawnOne()
         spawned = spawned + 1
     end
-    -- Diagnostic (catalog.debug): one line per refill that actually spawns, so
-    -- the live map log confirms deaths are driving respawns. Flip catalog.debug
-    -- off once you've watched a few kills come back.
-    if catalog.debug and spawned > 0 then
+    -- Diagnostic (catalog.debug): log every ensurePopulation call so the live
+    -- map log confirms deaths are driving respawns. Flip catalog.debug off once
+    -- you've verified kills cycle correctly.
+    if catalog.debug then
         print(string.format('[capacity_farm] refill: %d alive -> +%d spawned (target %d)',
             alive, spawned, catalog.mobCount))
     end
