@@ -138,7 +138,7 @@ spellObject.onMobSpawn = function(mob)
     --   * MACC must beat MEVA 700 for BOTH bursts and free nukes -- and free nukes
     --     get NO magic-burst accuracy bonus, so this flat MACC is what carries them.
     mob:addMod(xi.mod.MACC,       xi.trust.modGrowthValMax(mob, 250))    -- debuff/nuke accuracy (level-scaled)
-    mob:addMod(xi.mod.MACC,       600)                                   -- flat magic accuracy to clear Odin's MEVA 700
+    mob:addMod(xi.mod.MACC,       6000)                                  -- flat magic accuracy; sized for Abyssea NMs (MEVA 2000-5000 flat + base)
     mob:addMod(xi.mod.MATT,       xi.trust.modGrowthValMax(mob, 80))     -- Dia tick damage
     mob:addMod(xi.mod.MATT,      1500)                                   -- Magic Attack to drive nukes through Odin's MDEF 700
     mob:addMod(xi.mod.HASTE_MAGIC, 1500)                                 -- 15% magic haste
