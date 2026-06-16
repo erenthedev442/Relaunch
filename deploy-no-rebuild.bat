@@ -83,6 +83,13 @@ findstr /c:"files-OK" "%OUT%" >nul
 if errorlevel 1 ( echo        ERROR: install / custom-SQL step failed.& set "SRVOK=PROBLEM"& goto :finish )
 (echo [%TIME%] [3/5] install: OK)>> "%LOG%"
 
+REM ---- 3b. Upload sql/zz_*.sql so _apply_changed_sql.sh has fresh copies. ----
+echo  Uploading sql/zz_*.sql to box...
+for %%F in ("%SRC%\sql\zz_*.sql") do (
+    scp -i "%KEY%" %SSHOPT% "%%F" %HOST%:%REMOTE%/sql/ >> "%LOG%" 2>&1
+)
+(echo [%TIME%] [3b] zz_*.sql upload done)>> "%LOG%"
+
 REM ---- [4] git pull + apply ALL changed SQL + restart (no C++ rebuild) ----
 echo(
 echo  [4/5] Applying ALL changed SQL + restarting xi_map (no rebuild)...

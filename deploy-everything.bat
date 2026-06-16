@@ -95,6 +95,16 @@ findstr /c:"files-OK" "%OUT%" >nul
 if errorlevel 1 ( echo        ERROR: install / custom-SQL step failed -- skipping rebuild.& set "SRVOK=PROBLEM"& goto :finish )
 (echo [%TIME%] [3/5] install: OK)>> "%LOG%"
 
+REM ---- 3b. Upload sql/zz_*.sql so _apply_changed_sql.sh has fresh copies.
+REM          The box is tarball-synced (not a git clone) so git-diff won't
+REM          detect SQL changes; the fallback in _apply_changed_sql.sh
+REM          re-applies every zz_*.sql it finds in sql/ after this upload. ----
+echo  Uploading sql/zz_*.sql to box...
+for %%F in ("%SRC%\sql\zz_*.sql") do (
+    scp -i "%KEY%" %SSHOPT% "%%F" %HOST%:%REMOTE%/sql/ >> "%LOG%" 2>&1
+)
+(echo [%TIME%] [3b] zz_*.sql upload done)>> "%LOG%"
+
 REM ---- 4. Rebuild C++ + reload zz_*.sql + restart + health-check ----
 echo(
 echo  [4/5] Rebuilding C++ + applying ALL changed SQL + restarting Azure (may take a while)...
