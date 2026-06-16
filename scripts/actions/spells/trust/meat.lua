@@ -123,6 +123,7 @@ spellObject.onMobSpawn = function(mob)
             seen[id] = true
             if foe:getZoneID() == myZone and foe:isAlive() then
                 foe:addEnmity(mobArg, HATE_CE, HATE_VE)
+                foe:updateEnmity(mobArg)  -- force immediate target switch to Meat (not just table update)
             end
         end
 
