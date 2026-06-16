@@ -131,7 +131,10 @@ ensurePopulation = function()
         return
     end
     local alive    = 0
-    local existing = campZone:queryEntitiesByName(catalog.mobName)
+    -- Dynamic entities have their name stored as "DE_<name>" internally (luautils.cpp:5596).
+    -- queryEntitiesByName matches against this internal name, and non-"DE_" patterns are
+    -- memoized as empty on first miss -- so querying without the prefix never finds them.
+    local existing = campZone:queryEntitiesByName('DE_' .. catalog.mobName)
     if existing then
         for _, e in ipairs(existing) do
             if e:getHP() > 0 then
