@@ -160,7 +160,8 @@ m:addOverride('xi.abyssea.qmOnTrigger', function(player, npc, mobId, kis, tradeR
             if not validKis then
                 local ok, err = pcall(offerMarksPop, player, mobId, cfg)
                 if ok then
-                    return false  -- menu sent; skip vanilla missing-KI event
+                    player:release()  -- free client from ??? interaction lock before menu opens
+                    return false
                 end
                 -- fall through to super so the player sees SOMETHING
             end
