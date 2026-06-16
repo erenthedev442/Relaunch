@@ -147,22 +147,12 @@ catalog.bossModelSize = 2
 -- (mid) -> The Forgotten Bastion (apex). Infamy reward scales steeper
 -- than linear - apex pays 5x the entry-tier reward.
 --
--- HL groupIds reused:
---   11355  Leaping_Lizzy
---   11356  Valkurm_Emperor
---   11357  Tom_Tit_Tat
---   11358  Roc
---   11359  Bomb_Queen
---   11360  Aquarius
---   11361  Serket
---   11362  Vrtra
---   11363  Simurgh
---   11364  Nidhogg
---   11365  King_Behemoth
---   11366  Kirin
---   11367  Absolute_Virtue
---   11368  Pandemonium_Warden
---   11369  Shinryu
+-- THEMED 2026-06-15: each dungeon now has a DISTINCT mob family. Trash,
+-- minibosses and boss spawn from mob_groups 11500-11579 (D1 Orcs / D2 Quadav /
+-- D3 Yagudo / D4 Goblins / D5 Flora / D6 Beasts / D7 Demons / D8 Aquatic),
+-- defined in modules/custom/sql/dungeon_themed_mobs.sql (regenerate via
+-- tools/gen_dungeon_themed_mobs.py). The old HL-reused groups 11355-11369 are
+-- no longer referenced by any dungeon.
 catalog.dungeons =
 {
     -----------------------------------------------------------
@@ -215,7 +205,7 @@ catalog.dungeons =
     {
         id          = 'whispering_halls',
         label       = 'The Outer Bastion',
-        description = 'The outer fortress of the dark king. Push east through the demon-haunted halls - the Doom Marquis holds the threshold of the inner keep.',
+        description = 'The dark king\'s outer fortress, now overrun by his Orcish horde. Carve through the warbands - Warchief of the Bastion holds the threshold of the inner keep.',
         zoneId      = xi.zone.DYNAMIS_SAN_DORIA,  -- 185
         zoneName    = 'Dynamis-San_dOria',
         gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
@@ -237,32 +227,32 @@ catalog.dungeons =
             -- with 3 NEW packs (A/B/C) placed at midpoints of the flat segments
             -- between them, so they sit on the same streets. !pos-fix any that
             -- land oddly after a live run.
-            -- A (new) - entry plaza swarm
-            { pos = { x = 147.930, y = -1.250, z = 120.340 }, count = 4, level = 99,  scatter = 4.0,
-              groups = { 11355, 11357 },
-              names  = { 'Lesser Demon', 'Skulking Imp' } },
-            { pos = { x = 134.013, y = -0.500, z =  79.005 }, count = 4, level = 99,  scatter = 4.0,
-              groups = { 11355, 11357 },
-              names  = { 'Lesser Demon', 'Skulking Imp' } },
-            -- B (new) - main road
-            { pos = { x = 124.780, y = -0.010, z =  25.460 }, count = 4, level = 105, scatter = 4.0,
-              groups = { 11359, 11361 },
-              names  = { 'Bastion Cur', 'Shadowforged Knight' } },
-            { pos = { x = 115.546, y =  0.483, z = -28.087 }, count = 4, level = 110, scatter = 4.0,
-              groups = { 11359, 11361 },
-              names  = { 'Shadowforged Knight', 'Bastion Cur' } },
-            -- C (new) - approach to the inner square
-            { pos = { x =  61.400, y =  0.990, z = -22.720 }, count = 3, level = 115, scatter = 4.0,
-              groups = { 11358, 11362 },
-              names  = { 'Hall-Haunt Revenant', 'Marquis-in-Waiting' } },
-            { pos = { x =   7.254, y =  1.499, z = -17.358 }, count = 3, level = 120, scatter = 4.0,
-              groups = { 11358, 11362 },
-              names  = { 'Marquis-in-Waiting', 'Hall-Haunt Revenant' } },
+            -- THEMED 2026-06-15: Orcish Horde (groups 11500-11505, see
+            -- modules/custom/sql/dungeon_themed_mobs.sql). Verified v1 positions
+            -- kept; counts raised for the bigger pulls (~26 trash).
+            { pos = { x = 147.930, y = -1.250, z = 120.340 }, count = 5, level = 99,  scatter = 4.5,
+              groups = { 11500, 11501 },
+              names  = { 'Orcish Fodder', 'Orcish Brute' } },
+            { pos = { x = 134.013, y = -0.500, z =  79.005 }, count = 5, level = 99,  scatter = 4.5,
+              groups = { 11500, 11502 },
+              names  = { 'Orcish Fodder', 'Orcish Gladiator' } },
+            { pos = { x = 124.780, y = -0.010, z =  25.460 }, count = 4, level = 105, scatter = 4.5,
+              groups = { 11503, 11504 },
+              names  = { 'Bastion Footman', 'Bastion Marauder' } },
+            { pos = { x = 115.546, y =  0.483, z = -28.087 }, count = 4, level = 110, scatter = 4.5,
+              groups = { 11504, 11505 },
+              names  = { 'Bastion Marauder', 'Bastion Siegeworks' } },
+            { pos = { x =  61.400, y =  0.990, z = -22.720 }, count = 4, level = 115, scatter = 4.5,
+              groups = { 11501, 11505 },
+              names  = { 'Orcish Brute', 'Bastion Siegeworks' } },
+            { pos = { x =   7.254, y =  1.499, z = -17.358 }, count = 4, level = 120, scatter = 4.5,
+              groups = { 11502, 11503 },
+              names  = { 'Orcish Gladiator', 'Bastion Footman' } },
         },
         bossPos = { x = -81.055, y = 1.500, z = -10.434, rot = 0 },
         bossLevel    = 135,
-        bossGroup    = 11364,
-        bossName     = 'The Doom Marquis',
+        bossGroup    = 11509,
+        bossName     = 'Warchief of the Bastion',
         bossModelSize = 3,                           -- the one big boss: render huge
 
         -- Pre-boss NM elites (2026-05-30). Aggressive, un-bypassable gates
@@ -272,9 +262,9 @@ catalog.dungeons =
         -- Bump hpMult / level after a live run if they read too soft.
         nms =
         {
-            { frac = 0.28, level = 125, group = 11361, name = 'Bastion Vanguard',           hpMult = 1.2 },
-            { frac = 0.50, level = 128, group = 11361, name = 'Bastion Dreadguard',         hpMult = 1.3 },
-            { frac = 0.82, level = 133, group = 11362, name = 'Herald of the Doom Marquis', hpMult = 1.5 },
+            { frac = 0.28, level = 125, group = 11506, name = 'Orcish Beastlord', hpMult = 1.2 },
+            { frac = 0.50, level = 128, group = 11507, name = 'Orcish Predator',  hpMult = 1.3 },
+            { frac = 0.82, level = 133, group = 11508, name = 'Bastion Warlord',  hpMult = 1.5 },
         },
 
         -- Phase 3 - entry-tier mechanics. Lighter touch: a single
@@ -282,10 +272,10 @@ catalog.dungeons =
         -- dungeon approachable while teaching the phase pattern.
         phases =
         {
-            { hp = 50, action = 'add_spawn', groupId = 11355, count = 1,
-              level = 99, name = 'Marquis Acolyte' },
+            { hp = 50, action = 'add_spawn', groupId = 11500, count = 2,
+              level = 99, name = 'Orcish Reinforcement' },
             { hp = 25, action = 'enrage', att = 1500, haste = 75,
-              message = 'The Doom Marquis casts off restraint!' },
+              message = 'The Warchief casts off all restraint!' },
         },
     },
 
@@ -298,7 +288,7 @@ catalog.dungeons =
     {
         id          = 'voidwalker_arena',
         label       = 'The Voidwalker Arena',
-        description = 'A pocket arena suspended between worlds. Press inward - what answers your challenge waits in the dark.',
+        description = 'A pocket arena suspended between worlds, held by an endless Quadav legion. Press inward through the shieldwall - the Adamant Sovereign answers your challenge in the dark.',
         zoneId      = xi.zone.DYNAMIS_BASTOK,  -- 186
         zoneName    = 'Dynamis-Bastok',
         gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
@@ -316,32 +306,32 @@ catalog.dungeons =
             -- streets change elevation between packs, so only ONE new pack is
             -- interpolated here - on the FLAT wp2->wp3 run (both y=-0.5). The
             -- extra density elsewhere comes from higher counts on verified spots.
-            { pos = { x =  66.825, y =  6.500, z = -30.591 }, count = 3, level = 120, scatter = 4.0,
-              groups = { 11358, 11360 },
-              names  = { 'Voidsworn Acolyte', 'Glass Stalker' } },
-            { pos = { x =  17.423, y = -0.500, z = -78.738 }, count = 4, level = 135, scatter = 4.0,
-              groups = { 11362, 11363 },
-              names  = { 'Charred Sentinel', 'Glass Stalker' } },
-            -- new - midpoint of the flat wp2->wp3 corridor
-            { pos = { x =   1.770, y = -0.500, z = -20.000 }, count = 3, level = 142, scatter = 4.5,
-              groups = { 11363, 11364 },
-              names  = { 'Void Spawn', 'Charred Sentinel' } },
-            { pos = { x = -13.875, y = -0.500, z =  38.749 }, count = 3, level = 150, scatter = 4.0,
-              groups = { 11364 },
-              names  = { 'Withered Knight', 'Ravenous Marauder' } },
+            -- THEMED 2026-06-15: Quadav Legion (groups 11510-11515).
+            { pos = { x =  66.825, y =  6.500, z = -30.591 }, count = 6, level = 120, scatter = 4.5,
+              groups = { 11510, 11511 },
+              names  = { 'Voidforged Amber', 'Voidforged Amethyst' } },
+            { pos = { x =  17.423, y = -0.500, z = -78.738 }, count = 6, level = 135, scatter = 4.5,
+              groups = { 11512, 11513 },
+              names  = { 'Voidforged Brass', 'Voidforged Bronze' } },
+            { pos = { x =   1.770, y = -0.500, z = -20.000 }, count = 6, level = 142, scatter = 4.5,
+              groups = { 11514, 11515 },
+              names  = { 'Voidforged Cobalt', 'Voidforged Copper' } },
+            { pos = { x = -13.875, y = -0.500, z =  38.749 }, count = 6, level = 150, scatter = 4.5,
+              groups = { 11511, 11514 },
+              names  = { 'Voidforged Amethyst', 'Voidforged Cobalt' } },
         },
         bossPos = { x = -99.507, y = 12.000, z = 47.654, rot = 0 },
         bossLevel    = 170,
-        bossGroup    = 11365,
-        bossName     = 'The Void Maw',
+        bossGroup    = 11519,
+        bossName     = 'The Adamant Sovereign',
         bossModelSize = 3,                           -- the one big boss: render huge
 
         -- Pre-boss NM elites (see Outer Bastion note).
         nms =
         {
-            { frac = 0.28, level = 152, group = 11362, name = 'Void Acolyte-Lord', hpMult = 1.2 },
-            { frac = 0.50, level = 158, group = 11363, name = 'Void Harbinger',    hpMult = 1.3 },
-            { frac = 0.82, level = 165, group = 11360, name = 'Maw-Spawn Tyrant',  hpMult = 1.5 },
+            { frac = 0.28, level = 152, group = 11516, name = 'Darksteel Warden', hpMult = 1.2 },
+            { frac = 0.50, level = 158, group = 11517, name = 'Diamond Warden',   hpMult = 1.3 },
+            { frac = 0.82, level = 165, group = 11518, name = 'Emerald Warden',   hpMult = 1.5 },
         },
 
         -- Phase 3 - mid-tier mechanics. Three phases plus a heal at
@@ -349,11 +339,11 @@ catalog.dungeons =
         phases =
         {
             { hp = 70, action = 'buff', att = 1000, haste = 50,
-              message = 'The Void Maw extends a horrid pseudopod!' },
+              message = 'The Adamant Sovereign raises an impenetrable guard!' },
             { hp = 40, action = 'dispel', count = 3,
               message = 'A wave of unbeing strips your protections!' },
             { hp = 15, action = 'heal', pct = 10,
-              message = 'The Void Maw devours its own wounds!' },
+              message = 'The Adamant Sovereign reforges its shattered plates!' },
         },
     },
 
@@ -371,7 +361,7 @@ catalog.dungeons =
     {
         id          = 'cloister_of_sorrow',
         label       = 'The Empyreal Paradox',
-        description = 'A void-sphere suspended between worlds. Cut through three rings of the Forgotten; the Paradox itself waits at the center of nothing.',
+        description = 'A void-sphere suspended between worlds, seized by the Yagudo Theomilitary. Cut through three rings of zealots; the Empyreal Doomsayer waits at the center of nothing.',
         zoneId      = xi.zone.DYNAMIS_WINDURST,  -- 187
         zoneName    = 'Dynamis-Windurst',
         gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
@@ -389,27 +379,25 @@ catalog.dungeons =
             -- Dynamis is flat open market streets, so all three gaps get a NEW
             -- interpolated pack (1/2/3) at the segment midpoints between the
             -- verified spots. !pos-fix any that land oddly after a live run.
-            -- 1 (new) - NW bridge approach
-            { pos = { x = -191.700, y = -0.300, z = -120.100 }, count = 3, level = 140, scatter = 4.5,
-              groups = { 11362, 11363 },
-              names  = { 'Hollow Wisp', 'Voidsworn Watcher' } },
-            { pos = { x = -161.459, y = -1.609, z = -120.014 }, count = 3, level = 140, scatter = 4.0,
-              groups = { 11362, 11363 },
-              names  = { 'Voidsworn Watcher', 'Hollow Wraith' } },
-            -- 2 (new) - mid market
-            { pos = { x = -104.300, y = -2.740, z = -114.500 }, count = 3, level = 150, scatter = 4.5,
-              groups = { 11363, 11364 },
-              names  = { 'Paradox Shade', 'Empyreal Drake' } },
-            { pos = { x =  -47.137, y = -3.863, z = -108.998 }, count = 3, level = 160, scatter = 4.0,
-              groups = { 11364, 11365 },
-              names  = { 'Empyreal Drake', 'Paradox Tyrant' } },
-            -- 3 (new) - turn toward the city center
-            { pos = { x =  -42.500, y = -3.370, z =  -53.400 }, count = 3, level = 170, scatter = 4.5,
-              groups = { 11365, 11366 },
-              names  = { 'Paradox Tyrant', 'Forgotten Inquisitor' } },
-            { pos = { x =  -37.834, y = -2.886, z =    2.252 }, count = 3, level = 180, scatter = 4.5,
-              groups = { 11366, 11367 },
-              names  = { 'Forgotten Inquisitor', 'Banner of the Forgotten', 'Throne Reaver' } },
+            -- THEMED 2026-06-15: Yagudo Theomilitary (groups 11520-11524).
+            { pos = { x = -191.700, y = -0.300, z = -120.100 }, count = 4, level = 140, scatter = 4.5,
+              groups = { 11520, 11521 },
+              names  = { 'Paradox Votary', 'Paradox Acolyte' } },
+            { pos = { x = -161.459, y = -1.609, z = -120.014 }, count = 4, level = 140, scatter = 4.0,
+              groups = { 11521, 11522 },
+              names  = { 'Paradox Acolyte', 'Paradox Initiate' } },
+            { pos = { x = -104.300, y = -2.740, z = -114.500 }, count = 4, level = 150, scatter = 4.5,
+              groups = { 11522, 11523 },
+              names  = { 'Paradox Initiate', 'Paradox Theologist' } },
+            { pos = { x =  -47.137, y = -3.863, z = -108.998 }, count = 4, level = 160, scatter = 4.0,
+              groups = { 11523, 11524 },
+              names  = { 'Paradox Theologist', 'Paradox Zealot' } },
+            { pos = { x =  -42.500, y = -3.370, z =  -53.400 }, count = 4, level = 170, scatter = 4.5,
+              groups = { 11524, 11520 },
+              names  = { 'Paradox Zealot', 'Paradox Votary' } },
+            { pos = { x =  -37.834, y = -2.886, z =    2.252 }, count = 5, level = 180, scatter = 4.5,
+              groups = { 11521, 11523, 11524 },
+              names  = { 'Paradox Acolyte', 'Paradox Theologist', 'Paradox Zealot' } },
         },
         bossPos = { x = 25.018, y = 0.090, z = 239.729, rot = 0 },
         bossLevel    = 200,
@@ -421,10 +409,10 @@ catalog.dungeons =
         -- the arrays the same length and the indices matched - but
         -- that's optional; in flat form they're picked independently
         -- so the same boss model can show up with different names.
-        bossGroup    = 11369,                       -- back-compat default
-        bossName     = 'Paradoxon, the Forgotten',  -- back-compat default
-        bossGroups   = { 11368, 11369 },            -- Pandemonium Warden / Shinryu
-        bossNames    = { 'Paradoxon, the Forgotten', 'Azathoth, the Sundered Crown' },
+        bossGroup    = 11528,                        -- themed: Yagudo Doomsayer
+        bossName     = 'The Empyreal Doomsayer',
+        bossGroups   = { 11528 },
+        bossNames    = { 'The Empyreal Doomsayer' },
         bossModelSize = 3,                           -- the one big boss: render huge
 
         -- Pre-boss NM elites. This dungeon's final approach is LONG (the
@@ -433,9 +421,9 @@ catalog.dungeons =
         -- Re-place with !pos if either lands in geometry.
         nms =
         {
-            { frac = 0.42, level = 182, group = 11365, name = 'Forgotten Arbiter',  hpMult = 1.2 },
-            { frac = 0.65, level = 188, group = 11364, name = 'Forgotten Praetor',  hpMult = 1.3 },
-            { frac = 0.88, level = 195, group = 11366, name = 'Herald of Oblivion', hpMult = 1.5 },
+            { frac = 0.42, level = 182, group = 11525, name = 'Yagudo Prelate',    hpMult = 1.2 },
+            { frac = 0.65, level = 188, group = 11526, name = 'Yagudo Persecutor', hpMult = 1.3 },
+            { frac = 0.88, level = 195, group = 11527, name = 'Yagudo Oracle',     hpMult = 1.5 },
         },
 
         -- ============================================================
@@ -459,13 +447,13 @@ catalog.dungeons =
         --   add_spawn  spawns N adds at boss position, force-aggroed
         phases =
         {
-            { hp = 75, action = 'buff',      att =  800, message = 'Paradoxon wreathes itself in void energy!' },
-            { hp = 50, action = 'add_spawn', groupId = 11366, count = 2,
-              level = 150, name = 'Echo of the Forgotten' },
+            { hp = 75, action = 'buff',      att =  800, message = 'The Doomsayer wreathes itself in void energy!' },
+            { hp = 50, action = 'add_spawn', groupId = 11520, count = 2,
+              level = 150, name = 'Empyreal Echo' },
             { hp = 25, action = 'enrage',    att = 2500, haste = 100,
-              message = 'Paradoxon refuses oblivion - its fury is unbound!' },
+              message = 'The Doomsayer refuses oblivion - its fury is unbound!' },
             { hp = 10, action = 'heal',      pct = 15,
-              message = 'Paradoxon siphons the void itself to mend its wounds!' },
+              message = 'The Doomsayer siphons the void to mend its wounds!' },
         },
         -- Enrage timer: if the fight runs past this many seconds, the
         -- boss erupts with massive permanent buffs. Drives time pressure
@@ -476,7 +464,7 @@ catalog.dungeons =
             action  = 'enrage',
             att     = 4000,
             haste   = 150,
-            message = 'TIME ENRAGE - Paradoxon channels the Sundering!',
+            message = 'TIME ENRAGE - the Doomsayer channels the Sundering!',
         },
     },
 
@@ -499,7 +487,7 @@ catalog.dungeons =
     {
         id          = 'eternal_throne',
         label       = 'The Eternal Throne',
-        description = 'Where the Celestial Avatars once convened, only silence remains. Fight through the remnants of divine will to reach the seat of eternity itself.',
+        description = 'Where the Celestial Avatars once convened, a goblin syndicate now runs its rackets amid the silence. Fight through the mob to the seat of eternity - and the Overboss who has claimed it.',
         zoneId      = xi.zone.DYNAMIS_JEUNO,  -- 188
         zoneName    = 'Dynamis-Jeuno',
         gated       = false,  -- warding-force wall removed 2026-05-31; mobs still aggro & chase
@@ -520,23 +508,22 @@ catalog.dungeons =
             -- Two NEW packs (A/B) are interpolated on the flat street segments
             -- wp1->wp2 and wp2->wp3; the bridge descent (warpIn->wp1) is left
             -- clear because its big elevation drop makes midpoints unreliable.
-            { pos = { x =  26.626, y = -0.599, z = -25.061 }, count = 3, level = 200, scatter = 5.0,
-              groups = { 11362, 11363 },
-              names  = { 'Throne Sentinel', 'Timeless Watcher' } },
-            -- A (new) - central boulevard
-            { pos = { x =  19.650, y =  0.830, z = -16.070 }, count = 3, level = 212, scatter = 5.0,
-              groups = { 11363, 11364 },
-              names  = { 'Throne Sentinel', 'Divine Adjudicator' } },
-            { pos = { x =  12.683, y =  2.250, z =  -7.074 }, count = 3, level = 225, scatter = 5.0,
-              groups = { 11364, 11365 },
-              names  = { 'Divine Adjudicator', 'Celestial Drake' } },
-            -- B (new) - upper tier approach
-            { pos = { x =  -2.890, y =  2.330, z =  -7.650 }, count = 3, level = 237, scatter = 5.0,
-              groups = { 11365, 11366 },
-              names  = { 'Celestial Drake', 'Avatar\'s Revenant' } },
-            { pos = { x = -18.457, y =  2.405, z =  -8.218 }, count = 3, level = 250, scatter = 5.0,
-              groups = { 11366, 11367, 11368 },
-              names  = { 'Avatar\'s Revenant', 'Eternal Inquisitor', 'The Vanquished' } },
+            -- THEMED 2026-06-15: Goblin Syndicate (groups 11530-11535).
+            { pos = { x =  26.626, y = -0.599, z = -25.061 }, count = 5, level = 200, scatter = 5.0,
+              groups = { 11530, 11531 },
+              names  = { 'Throne Saboteur', 'Throne Bonebreaker' } },
+            { pos = { x =  19.650, y =  0.830, z = -16.070 }, count = 5, level = 212, scatter = 5.0,
+              groups = { 11532, 11533 },
+              names  = { 'Throne Jackboot', 'Throne Longnail' } },
+            { pos = { x =  12.683, y =  2.250, z =  -7.074 }, count = 5, level = 225, scatter = 5.0,
+              groups = { 11534, 11535 },
+              names  = { 'Throne Cutpurse', 'Throne Snitch' } },
+            { pos = { x =  -2.890, y =  2.330, z =  -7.650 }, count = 5, level = 237, scatter = 5.0,
+              groups = { 11531, 11534 },
+              names  = { 'Throne Bonebreaker', 'Throne Cutpurse' } },
+            { pos = { x = -18.457, y =  2.405, z =  -8.218 }, count = 5, level = 250, scatter = 5.0,
+              groups = { 11530, 11532, 11535 },
+              names  = { 'Throne Saboteur', 'Throne Jackboot', 'Throne Snitch' } },
         },
         bossPos = { x = -58.763, y = 5.400, z = -0.782, rot = 0 },
         bossLevel    = 275,
@@ -544,10 +531,10 @@ catalog.dungeons =
         -- Boss roulette: Absolute Virtue's ghost or the reborn Shinryu.
         -- Both use the Lv275 stat template - feel free to add a third
         -- entry if you add more HL NM groups later.
-        bossGroup    = 11367,                         -- back-compat default
-        bossName     = 'Throne of the Eternal',       -- back-compat default
-        bossGroups   = { 11367, 11369 },              -- Absolute_Virtue / Shinryu
-        bossNames    = { 'Throne of the Eternal', 'The Undying Storm' },
+        bossGroup    = 11539,                          -- themed: Goblin Overboss
+        bossName     = 'The Goblin Overboss',
+        bossGroups   = { 11539 },
+        bossNames    = { 'The Goblin Overboss' },
         bossModelSize = 3,                           -- the one big boss: render huge
 
         -- Pre-boss NM elites (see Outer Bastion note). Apex content - these
@@ -555,9 +542,9 @@ catalog.dungeons =
         -- time enrage) remains the hardest fight on the server.
         nms =
         {
-            { frac = 0.28, level = 256, group = 11365, name = 'Eternal Sentinel-Lord', hpMult = 1.2 },
-            { frac = 0.50, level = 262, group = 11366, name = 'Eternal Praetorian',    hpMult = 1.3 },
-            { frac = 0.82, level = 270, group = 11368, name = 'Warden of Eternity',    hpMult = 1.5 },
+            { frac = 0.28, level = 256, group = 11536, name = 'Goblin Magus',      hpMult = 1.2 },
+            { frac = 0.50, level = 262, group = 11537, name = 'Goblin Reaver',     hpMult = 1.3 },
+            { frac = 0.82, level = 270, group = 11538, name = 'Goblin Trapmaster', hpMult = 1.5 },
         },
 
         -- ============================================================
@@ -566,14 +553,14 @@ catalog.dungeons =
         phases =
         {
             { hp = 80, action = 'buff',      att = 2000,  haste = 50,
-              message = 'The Eternal Throne awakens to your challenge!' },
-            { hp = 60, action = 'add_spawn', groupId = 11366, count = 2,
-              level = 225, name = 'Fragment of Will',
-              message = 'Shards of ancient divinity coalesce!' },
+              message = 'The Overboss rallies the whole syndicate!' },
+            { hp = 60, action = 'add_spawn', groupId = 11530, count = 2,
+              level = 225, name = 'Goblin Cutthroat',
+              message = 'The syndicate calls in reinforcements!' },
             { hp = 35, action = 'dispel',    count = 4,
               message = 'A wave of eternal silence strips your protection!' },
             { hp = 15, action = 'enrage',    att = 5000, haste = 200,
-              message = 'THE ETERNAL THRONE REFUSES TO FALL - a blinding surge of divine fury!' },
+              message = 'THE OVERBOSS REFUSES TO FALL - a savage surge of fury!' },
         },
         enrageAfter =
         {
@@ -581,7 +568,7 @@ catalog.dungeons =
             action  = 'enrage',
             att     = 8000,
             haste   = 300,
-            message = 'TIME ENRAGE - The Eternal Throne channels eons of wrath!',
+            message = 'TIME ENRAGE - the Overboss throws everything he has!',
         },
     },
 
@@ -599,7 +586,7 @@ catalog.dungeons =
     {
         id          = 'shattered_coast',
         label       = 'The Shattered Coast',
-        description = 'A storm-wracked shore where ancient tidal demons have made their lair. Cut through the surf-haunted beach to reach the Hungering Tide before the sea reclaims you.',
+        description = 'A storm-wracked shore choked with carnivorous bloom and ancient growth. Hack through the writhing thicket to the Eldest Bough before the tide - and the roots - reclaim you.',
         zoneId      = xi.zone.DYNAMIS_VALKURM,  -- 39
         zoneName    = 'Dynamis-Valkurm',
         gated       = false,
@@ -613,44 +600,45 @@ catalog.dungeons =
         {
             -- !pos NEEDED: all positions below are estimates from the floor Y.
             -- Enter dungeon, walk to desired spawn point, run !pos, update.
-            { pos = { x =  90.0, y = -8.0, z = 105.0 }, count = 4, level = 99,  scatter = 4.0,
-              groups = { 11355, 11357 },
-              names  = { 'Tidal Wraith', 'Surf Specter' } },
-            { pos = { x =  75.0, y = -8.0, z =  80.0 }, count = 4, level = 99,  scatter = 4.0,
-              groups = { 11355, 11357 },
-              names  = { 'Surf Specter', 'Tidal Wraith' } },
-            { pos = { x =  58.0, y = -8.0, z =  55.0 }, count = 4, level = 105, scatter = 4.0,
-              groups = { 11359, 11361 },
-              names  = { 'Coastal Marauder', 'Deep-Sea Revenant' } },
-            { pos = { x =  42.0, y = -8.0, z =  30.0 }, count = 4, level = 110, scatter = 4.0,
-              groups = { 11359, 11361 },
-              names  = { 'Deep-Sea Revenant', 'Coastal Marauder' } },
-            { pos = { x =  25.0, y = -8.0, z =   5.0 }, count = 3, level = 115, scatter = 4.0,
-              groups = { 11358, 11362 },
-              names  = { 'Tide-Caller', 'Shoreline Tyrant' } },
-            { pos = { x =   8.0, y = -8.0, z = -20.0 }, count = 3, level = 120, scatter = 4.0,
-              groups = { 11358, 11362 },
-              names  = { 'Shoreline Tyrant', 'Tide-Caller' } },
+            -- THEMED 2026-06-15: Nightmare Flora (groups 11540-11544).
+            { pos = { x =  90.0, y = -8.0, z = 105.0 }, count = 4, level = 99,  scatter = 4.5,
+              groups = { 11540, 11541 },
+              names  = { 'Coastal Funguar', 'Coastal Flytrap' } },
+            { pos = { x =  75.0, y = -8.0, z =  80.0 }, count = 4, level = 99,  scatter = 4.5,
+              groups = { 11541, 11544 },
+              names  = { 'Coastal Flytrap', 'Coastal Sabotender' } },
+            { pos = { x =  58.0, y = -8.0, z =  55.0 }, count = 5, level = 105, scatter = 4.5,
+              groups = { 11542, 11543 },
+              names  = { 'Coastal Treant', 'Coastal Goobbue' } },
+            { pos = { x =  42.0, y = -8.0, z =  30.0 }, count = 5, level = 110, scatter = 4.5,
+              groups = { 11540, 11543 },
+              names  = { 'Coastal Funguar', 'Coastal Goobbue' } },
+            { pos = { x =  25.0, y = -8.0, z =   5.0 }, count = 4, level = 115, scatter = 4.5,
+              groups = { 11544, 11542 },
+              names  = { 'Coastal Sabotender', 'Coastal Treant' } },
+            { pos = { x =   8.0, y = -8.0, z = -20.0 }, count = 4, level = 120, scatter = 4.5,
+              groups = { 11541, 11542 },
+              names  = { 'Coastal Flytrap', 'Coastal Treant' } },
         },
         bossPos      = { x = -25.0, y = -8.0, z = -60.0, rot = 0 },
         bossLevel    = 135,
-        bossGroup    = 11364,
-        bossName     = 'The Hungering Tide',
+        bossGroup    = 11548,
+        bossName     = 'The Eldest Bough',
         bossModelSize = 3,
 
         nms =
         {
-            { frac = 0.28, level = 125, group = 11361, name = 'Tidecaller Vanguard',   hpMult = 1.2 },
-            { frac = 0.50, level = 128, group = 11361, name = 'Surf Colossus',         hpMult = 1.3 },
-            { frac = 0.82, level = 133, group = 11362, name = 'Admiral of the Deep',   hpMult = 1.5 },
+            { frac = 0.28, level = 125, group = 11545, name = 'Snapjaw Bloom',   hpMult = 1.2 },
+            { frac = 0.50, level = 128, group = 11546, name = 'Ancient Goobbue', hpMult = 1.3 },
+            { frac = 0.82, level = 133, group = 11547, name = 'Elder Treant',    hpMult = 1.5 },
         },
 
         phases =
         {
-            { hp = 50, action = 'add_spawn', groupId = 11355, count = 1,
-              level = 99, name = 'Tide Acolyte' },
+            { hp = 50, action = 'add_spawn', groupId = 11540, count = 2,
+              level = 99, name = 'Sprouting Spore' },
             { hp = 25, action = 'enrage', att = 1500, haste = 75,
-              message = 'The Hungering Tide surges with furious ocean energy!' },
+              message = 'The Eldest Bough erupts with furious, grasping growth!' },
         },
     },
 
@@ -667,7 +655,7 @@ catalog.dungeons =
     {
         id          = 'forsaken_peninsula',
         label       = 'The Forsaken Peninsula',
-        description = 'Ancient ruins reclaimed by shadow and sea. Ruin-born sentinels hold every approach to the Forsaken Sovereign, who waits at the last standing tower on the edge of the world.',
+        description = 'Ancient ruins reclaimed by feral wildlife. Apex predators stalk every approach to the last standing tower, where the Apex Predator itself rules the edge of the world.',
         zoneId      = xi.zone.DYNAMIS_BUBURIMU,  -- 40
         zoneName    = 'Dynamis-Buburimu',
         gated       = false,
@@ -680,40 +668,41 @@ catalog.dungeons =
         waypoints =
         {
             -- !pos NEEDED: all positions below are estimates from the floor Y.
-            { pos = { x = 130.0, y = -1.0, z = -148.0 }, count = 3, level = 120, scatter = 4.0,
-              groups = { 11358, 11360 },
-              names  = { 'Ruined Sentinel', 'Peninsula Shade' } },
-            { pos = { x = 105.0, y = -1.0, z = -126.0 }, count = 4, level = 135, scatter = 4.0,
-              groups = { 11362, 11363 },
-              names  = { 'Ancient Marauder', 'Forsaken Watcher' } },
-            { pos = { x =  80.0, y = -1.0, z = -104.0 }, count = 3, level = 142, scatter = 4.5,
-              groups = { 11363, 11364 },
-              names  = { 'Ruin Tyrant', 'Peninsula Arbiter' } },
-            { pos = { x =  55.0, y = -1.0, z =  -80.0 }, count = 3, level = 150, scatter = 4.0,
-              groups = { 11364 },
-              names  = { 'Ancient Sovereign-Guard', 'Forsaken Warden' } },
+            -- THEMED 2026-06-15: Feral Beasts (groups 11550-11555).
+            { pos = { x = 130.0, y = -1.0, z = -148.0 }, count = 6, level = 120, scatter = 4.5,
+              groups = { 11550, 11551 },
+              names  = { 'Feral Manticore', 'Feral Tiger' } },
+            { pos = { x = 105.0, y = -1.0, z = -126.0 }, count = 6, level = 135, scatter = 4.5,
+              groups = { 11552, 11553 },
+              names  = { 'Feral Ram', 'Feral Hare' } },
+            { pos = { x =  80.0, y = -1.0, z = -104.0 }, count = 6, level = 142, scatter = 4.5,
+              groups = { 11554, 11555 },
+              names  = { 'Feral Dhalmel', 'Feral Hippogryph' } },
+            { pos = { x =  55.0, y = -1.0, z =  -80.0 }, count = 6, level = 150, scatter = 4.5,
+              groups = { 11551, 11550 },
+              names  = { 'Feral Tiger', 'Feral Manticore' } },
         },
         bossPos      = { x = 20.0, y = -1.0, z = -45.0, rot = 0 },
         bossLevel    = 170,
-        bossGroup    = 11365,
-        bossName     = 'The Forsaken Sovereign',
+        bossGroup    = 11559,
+        bossName     = 'The Apex Predator',
         bossModelSize = 3,
 
         nms =
         {
-            { frac = 0.28, level = 152, group = 11362, name = 'Ruin-Watcher Prime',         hpMult = 1.2 },
-            { frac = 0.50, level = 158, group = 11363, name = 'Peninsula Arbiter-Lord',      hpMult = 1.3 },
-            { frac = 0.82, level = 165, group = 11360, name = 'Herald of the Forsaken Shore',hpMult = 1.5 },
+            { frac = 0.28, level = 152, group = 11556, name = 'Dire Bugard',        hpMult = 1.2 },
+            { frac = 0.50, level = 158, group = 11557, name = 'Dire Taurus',        hpMult = 1.3 },
+            { frac = 0.82, level = 165, group = 11558, name = 'Apocalyptic Weapon', hpMult = 1.5 },
         },
 
         phases =
         {
             { hp = 70, action = 'buff', att = 1000, haste = 50,
-              message = 'The Forsaken Sovereign draws power from the ancient ruins!' },
+              message = 'The Apex Predator draws raw strength from the wild!' },
             { hp = 40, action = 'dispel', count = 3,
               message = 'Ruinous energies strip your protections!' },
             { hp = 15, action = 'heal', pct = 10,
-              message = 'The Forsaken Sovereign absorbs the peninsula itself to mend its wounds!' },
+              message = 'The Apex Predator devours its kill to mend its wounds!' },
         },
     },
 
@@ -731,7 +720,7 @@ catalog.dungeons =
     {
         id          = 'dark_citadel',
         label       = 'The Dark Citadel',
-        description = 'The shadow-fortress at the edge of the known world. Shadow-bound legions defend every corridor leading to the Obsidian Throne, where an ancient power refuses to be forgotten.',
+        description = 'The shadow-fortress at the edge of the known world. A demon legion - animated arsenals and the infernal peerage - defends every corridor to the Obsidian Throne, where the Dark Sovereign refuses to be forgotten.',
         zoneId      = xi.zone.DYNAMIS_XARCABARD,  -- 135
         zoneName    = 'Dynamis-Xarcabard',
         gated       = false,
@@ -745,49 +734,50 @@ catalog.dungeons =
         {
             -- !pos NEEDED: all positions below are estimates stepping west
             -- along the citadel floor (y~=0). Xarcabard is a large open zone.
-            { pos = { x = 540.0, y = 0.0, z = -260.0 }, count = 3, level = 140, scatter = 4.5,
-              groups = { 11362, 11363 },
-              names  = { 'Citadel Specter', 'Shadow-Bound Watcher' } },
-            { pos = { x = 510.0, y = 0.0, z = -247.0 }, count = 3, level = 140, scatter = 4.0,
-              groups = { 11362, 11363 },
-              names  = { 'Shadow-Bound Watcher', 'Citadel Specter' } },
-            { pos = { x = 480.0, y = 0.0, z = -233.0 }, count = 3, level = 150, scatter = 4.5,
-              groups = { 11363, 11364 },
-              names  = { 'Dark Citadel Shade', 'Void-Touched Sentinel' } },
-            { pos = { x = 448.0, y = 0.0, z = -218.0 }, count = 3, level = 160, scatter = 4.0,
-              groups = { 11364, 11365 },
-              names  = { 'Citadel Drake', 'Dark Arbiter' } },
-            { pos = { x = 415.0, y = 0.0, z = -200.0 }, count = 3, level = 170, scatter = 4.5,
-              groups = { 11365, 11366 },
-              names  = { 'Shadow Inquisitor', 'Citadel Tyrant' } },
-            { pos = { x = 380.0, y = 0.0, z = -178.0 }, count = 3, level = 180, scatter = 4.5,
-              groups = { 11366, 11367 },
-              names  = { 'Shadow Sovereign-Guard', 'Abyss Throne Reaver' } },
+            -- THEMED 2026-06-15: Demon Legion - animated arsenal (groups 11560-11565).
+            { pos = { x = 540.0, y = 0.0, z = -260.0 }, count = 4, level = 140, scatter = 4.5,
+              groups = { 11560, 11561 },
+              names  = { 'Animated Claymore', 'Animated Great Axe' } },
+            { pos = { x = 510.0, y = 0.0, z = -247.0 }, count = 4, level = 140, scatter = 4.0,
+              groups = { 11562, 11563 },
+              names  = { 'Animated Longsword', 'Animated Scythe' } },
+            { pos = { x = 480.0, y = 0.0, z = -233.0 }, count = 5, level = 150, scatter = 4.5,
+              groups = { 11564, 11565 },
+              names  = { 'Animated Spear', 'Animated Tachi' } },
+            { pos = { x = 448.0, y = 0.0, z = -218.0 }, count = 5, level = 160, scatter = 4.0,
+              groups = { 11561, 11562 },
+              names  = { 'Animated Great Axe', 'Animated Longsword' } },
+            { pos = { x = 415.0, y = 0.0, z = -200.0 }, count = 4, level = 170, scatter = 4.5,
+              groups = { 11563, 11560 },
+              names  = { 'Animated Scythe', 'Animated Claymore' } },
+            { pos = { x = 380.0, y = 0.0, z = -178.0 }, count = 4, level = 180, scatter = 4.5,
+              groups = { 11564, 11565 },
+              names  = { 'Animated Spear', 'Animated Tachi' } },
         },
         bossPos      = { x = 330.0, y = 0.0, z = -145.0, rot = 0 },
         bossLevel    = 200,
-        bossGroup    = 11369,
-        bossName     = 'The Obsidian Throne',
-        bossGroups   = { 11368, 11369 },
-        bossNames    = { 'The Obsidian Throne', 'The Unbound Storm' },
+        bossGroup    = 11569,                          -- themed: Dynamis Lord
+        bossName     = 'The Dark Sovereign',
+        bossGroups   = { 11569 },
+        bossNames    = { 'The Dark Sovereign' },
         bossModelSize = 3,
 
         nms =
         {
-            { frac = 0.42, level = 182, group = 11365, name = 'Citadel Harbinger',     hpMult = 1.2 },
-            { frac = 0.65, level = 188, group = 11364, name = 'Shadow Arch-Praetor',   hpMult = 1.3 },
-            { frac = 0.88, level = 195, group = 11366, name = 'Herald of the Abyss',   hpMult = 1.5 },
+            { frac = 0.42, level = 182, group = 11566, name = 'Baron Avnas',    hpMult = 1.2 },
+            { frac = 0.65, level = 188, group = 11567, name = 'Count Haagenti', hpMult = 1.3 },
+            { frac = 0.88, level = 195, group = 11568, name = 'Duke Berith',    hpMult = 1.5 },
         },
 
         phases =
         {
-            { hp = 75, action = 'buff',      att =  800, message = 'The Obsidian Throne writhes with shadow energy!' },
-            { hp = 50, action = 'add_spawn', groupId = 11366, count = 2,
-              level = 150, name = 'Citadel Echo' },
+            { hp = 75, action = 'buff',      att =  800, message = 'The Dark Sovereign writhes with shadow energy!' },
+            { hp = 50, action = 'add_spawn', groupId = 11560, count = 2,
+              level = 150, name = 'Animated Vanguard' },
             { hp = 25, action = 'enrage',    att = 2500, haste = 100,
-              message = 'The Obsidian Throne refuses oblivion - darkness is unbound!' },
+              message = 'The Dark Sovereign refuses oblivion - darkness is unbound!' },
             { hp = 10, action = 'heal',      pct = 15,
-              message = 'The Obsidian Throne draws power from the shadow to mend itself!' },
+              message = 'The Dark Sovereign draws power from the shadow to mend itself!' },
         },
         enrageAfter =
         {
@@ -812,7 +802,7 @@ catalog.dungeons =
     {
         id          = 'sunken_spire',
         label       = 'The Sunken Spire',
-        description = 'A forgotten tower rising from a drowned island, haunted by abyssal guardians. Only the strongest groups have ever reached its peak - where the Drowned Eternal waits in the dark above the sea.',
+        description = 'A forgotten tower rising from a drowned island, swarming with abyssal sea-horrors. Only the strongest have ever reached its peak - where the Abyssal Maw waits in the dark above the sea.',
         zoneId      = xi.zone.DYNAMIS_QUFIM,  -- 41
         zoneName    = 'Dynamis-Qufim',
         gated       = false,
@@ -826,48 +816,49 @@ catalog.dungeons =
         {
             -- !pos NEEDED: all positions below are estimates. Qufim Island
             -- is compact - if any position falls off-map, tighten the steps.
-            { pos = { x = -8.0, y = -17.0, z =  84.0 }, count = 3, level = 200, scatter = 5.0,
-              groups = { 11362, 11363 },
-              names  = { 'Spire Warden', 'Abyssal Specter' } },
-            { pos = { x =  5.0, y = -17.0, z =  64.0 }, count = 3, level = 212, scatter = 5.0,
-              groups = { 11363, 11364 },
-              names  = { 'Spire Sentinel', 'Deep Arbiter' } },
-            { pos = { x = 18.0, y = -17.0, z =  44.0 }, count = 3, level = 225, scatter = 5.0,
-              groups = { 11364, 11365 },
-              names  = { 'Deep Arbiter', 'Abyssal Drake' } },
-            { pos = { x = 32.0, y = -17.0, z =  24.0 }, count = 3, level = 237, scatter = 5.0,
-              groups = { 11365, 11366 },
-              names  = { 'Abyssal Drake', 'Spire Inquisitor' } },
-            { pos = { x = 46.0, y = -17.0, z =   4.0 }, count = 3, level = 250, scatter = 5.0,
-              groups = { 11366, 11367, 11368 },
-              names  = { 'Spire Inquisitor', 'Abyssal Sovereign', 'The Submerged' } },
+            -- THEMED 2026-06-15: Drowned Depths (groups 11570-11575).
+            { pos = { x = -8.0, y = -17.0, z =  84.0 }, count = 5, level = 200, scatter = 5.0,
+              groups = { 11570, 11571 },
+              names  = { 'Spire Kraken', 'Spire Crab' } },
+            { pos = { x =  5.0, y = -17.0, z =  64.0 }, count = 5, level = 212, scatter = 5.0,
+              groups = { 11572, 11573 },
+              names  = { 'Spire Diremite', 'Spire Stirge' } },
+            { pos = { x = 18.0, y = -17.0, z =  44.0 }, count = 5, level = 225, scatter = 5.0,
+              groups = { 11574, 11575 },
+              names  = { 'Spire Uragnite', 'Spire Snoll' } },
+            { pos = { x = 32.0, y = -17.0, z =  24.0 }, count = 5, level = 237, scatter = 5.0,
+              groups = { 11571, 11574 },
+              names  = { 'Spire Crab', 'Spire Uragnite' } },
+            { pos = { x = 46.0, y = -17.0, z =   4.0 }, count = 5, level = 250, scatter = 5.0,
+              groups = { 11570, 11572, 11573 },
+              names  = { 'Spire Kraken', 'Spire Diremite', 'Spire Stirge' } },
         },
         bossPos      = { x = 70.0, y = -17.0, z = -28.0, rot = 0 },
         bossLevel    = 275,
-        bossGroup    = 11367,
-        bossName     = 'The Drowned Eternal',
-        bossGroups   = { 11367, 11369 },
-        bossNames    = { 'The Drowned Eternal', 'The Abyssal Storm' },
+        bossGroup    = 11579,                          -- themed: giant Kraken
+        bossName     = 'The Abyssal Maw',
+        bossGroups   = { 11579 },
+        bossNames    = { 'The Abyssal Maw' },
         bossModelSize = 3,
 
         nms =
         {
-            { frac = 0.28, level = 256, group = 11365, name = 'Spire Sentinel-Lord',         hpMult = 1.2 },
-            { frac = 0.50, level = 262, group = 11366, name = 'Abyssal Praetorian',          hpMult = 1.3 },
-            { frac = 0.82, level = 270, group = 11368, name = 'Warden of the Sunken Spire',  hpMult = 1.5 },
+            { frac = 0.28, level = 256, group = 11576, name = 'Abyssal Makara', hpMult = 1.2 },
+            { frac = 0.50, level = 262, group = 11577, name = 'Abyssal Leech',  hpMult = 1.3 },
+            { frac = 0.82, level = 270, group = 11578, name = 'Abyssal Worm',   hpMult = 1.5 },
         },
 
         phases =
         {
             { hp = 80, action = 'buff',      att = 2000, haste = 50,
-              message = 'The Drowned Eternal rises from the deep!' },
-            { hp = 60, action = 'add_spawn', groupId = 11366, count = 2,
-              level = 225, name = 'Fragment of the Deep',
-              message = 'Abyssal shards coalesce from the darkness!' },
+              message = 'The Abyssal Maw rises from the deep!' },
+            { hp = 60, action = 'add_spawn', groupId = 11570, count = 2,
+              level = 225, name = 'Abyssal Spawn',
+              message = 'Abyssal horrors coalesce from the darkness!' },
             { hp = 35, action = 'dispel',    count = 4,
               message = 'A wave of abyssal silence strips your protection!' },
             { hp = 15, action = 'enrage',    att = 5000, haste = 200,
-              message = 'THE DROWNED ETERNAL REFUSES TO SINK - a crushing surge of abyssal fury!' },
+              message = 'THE ABYSSAL MAW REFUSES TO SINK - a crushing surge of abyssal fury!' },
         },
         enrageAfter =
         {
