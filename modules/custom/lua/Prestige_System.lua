@@ -804,6 +804,16 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
         local function watchIdle()
             if summonedTrial[pid] == nil then return end  -- already dead or cleared
 
+            -- Zone guard: if the player has left Provenance the dynamic mob entity may
+            -- have been freed from C++ memory when the zone went to sleep. pcall cannot
+            -- catch a C++ SIGSEGV from a dangling pointer -- bail before touching mob.
+            local inZone = false
+            pcall(function() inZone = player:getZone():getID() == 222 end)
+            if not inZone then
+                summonedTrial[pid] = nil
+                return
+            end
+
             local curHp = 0
             local ok    = pcall(function() curHp = mob:getHP() end)
             if not ok or curHp <= 0 then return end      -- mob gone
