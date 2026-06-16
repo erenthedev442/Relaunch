@@ -320,7 +320,11 @@ do
         local function finalize(token, name)
             local ids = byToken[token]
             if ids and #ids > 0 then
-                table.sort(ids) -- stable display order
+                table.sort(ids, function(a, b)
+                    local la = catalog[a] and catalog[a].label or ''
+                    local lb = catalog[b] and catalog[b].label or ''
+                    return la < lb
+                end)
                 local list = {}
                 for _, itemId in ipairs(ids) do
                     list[#list + 1] = { itemId, AUGMENT_PRICE }
