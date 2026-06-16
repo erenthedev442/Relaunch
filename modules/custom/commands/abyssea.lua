@@ -6,7 +6,7 @@
 ---@type TCommand
 local commandObj = {}
 
-commandObj.cmdprops =
+commandObj.cmdprops = 
 {
     permission = 0,
     parameters = '',
@@ -61,11 +61,10 @@ showRoot = function(p)
         pl:customMenu({
             title   = 'Abyssea Warp',
             options = {
-                { 'Visions',          function(q) showVisions(q) end },
-                { 'Scars',            function(q) showScars(q)   end },
-                { 'Heroes',           function(q) showHeroes(q)  end },
-                { 'Empyreal Paradox', function(q) q:setPos(540, -500, -571, 64, xi.zone.ABYSSEA_EMPYREAL_PARADOX) end },
-                { 'Close',            nil },
+                { 'Visions', function(q) showVisions(q) end },
+                { 'Scars',   function(q) showScars(q)   end },
+                { 'Heroes',  function(q) showHeroes(q)  end },
+                { 'Close',   nil },
             },
         })
     end)

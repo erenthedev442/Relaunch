@@ -33,8 +33,6 @@ local zoneConfig =
     [xi.zone.ABYSSEA_ALTEPA]           = { cost = 500, infamy = 3, gil =   750000, level = 155, maxHP = 10000000, atkDef = 13000, accEva = 7500 },
     [xi.zone.ABYSSEA_ULEGUERAND]       = { cost = 500, infamy = 3, gil =   750000, level = 155, maxHP = 10000000, atkDef = 13000, accEva = 7500 },
     [xi.zone.ABYSSEA_GRAUBERG]         = { cost = 500, infamy = 3, gil =   750000, level = 155, maxHP = 10000000, atkDef = 13000, accEva = 7500 },
-    -- Empyreal Paradox
-    [xi.zone.ABYSSEA_EMPYREAL_PARADOX] = { cost = 750, infamy = 5, gil =  1250000, level = 165, maxHP = 15000000, atkDef = 20000, accEva = 11000 },
 }
 
 local function spawnViaMark(p, mobId, cost, nmName, cfg)
