@@ -31,7 +31,12 @@ local m = Module:new('job_mastery')
 -----------------------------------
 local CHALLENGE_ZONE_ID = xi.zone.WALK_OF_ECHOES
 local GROUP_ZONE_ID     = 210
-local WARP_IN  = { x = -380, y = 14, z = 10, rot = 128 }
+-- Match the Endless Tower's KNOWN-GOOD landing spot in Walk of Echoes
+-- (-420,14,-49). The previous (-380,14,10) was off the platform -> players
+-- warped "off the map". Both trials share zone 182; the boss spawns at
+-- player+12 (still on-platform). Tower + Mastery only collide if both are run
+-- at the same instant (rare; mobs target their own owner).
+local WARP_IN  = { x = -420, y = 14, z = -49, rot = 128 }
 local EXIT_WARP = { zoneId = 210, x = -15, y = 0, z = -18, rot = 128 }
 
 -----------------------------------
