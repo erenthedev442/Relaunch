@@ -126,4 +126,35 @@ INSERT INTO `item_mods` VALUES (26118,288,7) ON DUPLICATE KEY UPDATE `value`=VAL
 INSERT INTO `item_mods` VALUES (26227,48,20) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);    -- WSACC: 20
 INSERT INTO `item_mods` VALUES (26227,840,10) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);    -- ALL_WSDMG_ALL_HITS: 10
 
+-- 26225: Medada's Ring — STR+10, Accuracy+15, Crit Rate+3% (melee DD ring)
+INSERT INTO `item_mods` VALUES (26225,8,10) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);    -- STR: 10
+INSERT INTO `item_mods` VALUES (26225,25,15) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);   -- ACC: 15
+INSERT INTO `item_mods` VALUES (26225,165,3) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);   -- CRITHITRATE: 3
+
+-- 26226: Gurebu's Ring — STR+10, VIT+10, Double Attack+5% (STR/DA melee ring)
+INSERT INTO `item_mods` VALUES (26226,8,10) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);    -- STR: 10
+INSERT INTO `item_mods` VALUES (26226,10,10) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);   -- VIT: 10
+INSERT INTO `item_mods` VALUES (26226,288,5) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);   -- DOUBLE_ATTACK: 5
+
+-- 26228: Ragelise's Ring — HP+30, DEF+20, MND+10 (tank/hybrid ring)
+INSERT INTO `item_mods` VALUES (26228,2,30) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);    -- HP: 30
+INSERT INTO `item_mods` VALUES (26228,1,20) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);    -- DEF: 20
+INSERT INTO `item_mods` VALUES (26228,13,10) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);   -- MND: 10
+
+-- 26229: Lehko's Ring — DEX+10, AGI+10, Store TP+5, Haste+2% (TP/speed ring)
+INSERT INTO `item_mods` VALUES (26229,9,10) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);    -- DEX: 10
+INSERT INTO `item_mods` VALUES (26229,11,10) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);   -- AGI: 10
+INSERT INTO `item_mods` VALUES (26229,73,5) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);    -- STORETP: 5
+INSERT INTO `item_mods` VALUES (26229,384,200) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`); -- HASTE_GEAR: 200 (2%)
+
+-- 26230: Fickblix's Ring — INT+15, Magic Atk+15, Magic Acc+20 (mage ring)
+INSERT INTO `item_mods` VALUES (26230,12,15) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);   -- INT: 15
+INSERT INTO `item_mods` VALUES (26230,28,15) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);   -- MATT: 15
+INSERT INTO `item_mods` VALUES (26230,30,20) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);   -- MACC: 20
+
+-- 26231: Ephramad's Ring — MND+15, Cure Potency+10%, Healing Magic Skill+15 (healer ring)
+INSERT INTO `item_mods` VALUES (26231,13,15) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);   -- MND: 15
+INSERT INTO `item_mods` VALUES (26231,374,10) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);  -- CURE_POTENCY: 10
+INSERT INTO `item_mods` VALUES (26231,112,15) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);  -- HEALING: 15 (Healing Magic Skill)
+
 UNLOCK TABLES;

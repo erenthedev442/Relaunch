@@ -222,24 +222,23 @@ catalog.dungeons =
         -- Path: NE gate plaza -> main road -> city square -> inner keep.
         waypoints =
         {
-            -- More-mobs pass (2026-05-30): density raised. The 3
-            -- original packs (verified mob_spawn_points coords) are interleaved
-            -- with 3 NEW packs (A/B/C) placed at midpoints of the flat segments
-            -- between them, so they sit on the same streets. !pos-fix any that
-            -- land oddly after a live run.
-            -- THEMED 2026-06-15: Orcish Horde (groups 11500-11505, see
-            -- modules/custom/sql/dungeon_themed_mobs.sql). Verified v1 positions
-            -- kept; counts raised for the bigger pulls (~26 trash).
+            -- THEMED 2026-06-15: Orcish Horde (groups 11500-11505).
+            -- Positions 1-2 verified accessible from entry.
+            -- Positions 3-4 moved 2026-06-16 to lie on the WP2->WP5
+            -- diagonal (1/3 and 2/3 along that segment) after the
+            -- original straight-south coords landed in enclosed
+            -- courtyards the player can't reach. !pos-fix after a run
+            -- if any pack is still inaccessible.
             { pos = { x = 147.930, y = -1.250, z = 120.340 }, count = 5, level = 99,  scatter = 4.5,
               groups = { 11500, 11501 },
               names  = { 'Orcish Fodder', 'Orcish Brute' } },
             { pos = { x = 134.013, y = -0.500, z =  79.005 }, count = 5, level = 99,  scatter = 4.5,
               groups = { 11500, 11502 },
               names  = { 'Orcish Fodder', 'Orcish Gladiator' } },
-            { pos = { x = 124.780, y = -0.010, z =  25.460 }, count = 4, level = 105, scatter = 4.5,
+            { pos = { x = 109.800, y = -0.010, z =  45.100 }, count = 4, level = 105, scatter = 4.5,
               groups = { 11503, 11504 },
               names  = { 'Bastion Footman', 'Bastion Marauder' } },
-            { pos = { x = 115.546, y =  0.483, z = -28.087 }, count = 4, level = 110, scatter = 4.5,
+            { pos = { x =  85.600, y =  0.483, z =  11.200 }, count = 4, level = 110, scatter = 4.5,
               groups = { 11504, 11505 },
               names  = { 'Bastion Marauder', 'Bastion Siegeworks' } },
             { pos = { x =  61.400, y =  0.990, z = -22.720 }, count = 4, level = 115, scatter = 4.5,
@@ -1859,7 +1858,15 @@ catalog.vendorItems =
 
     -- WS-focused additions (owner request 2026-06-08)
     { id = 22281, name = 'Knobkierrie',         cost =  250, stats = { 'Ammo. Best WS ammo (Attack+23, WS damage +6%).', 'EX/RARE.' } },
-    { id = 26227, name = 'Cornelia\'s Ring',     cost =  500, stats = { 'Ring. Best WS-damage ring (WS damage +10%, WS Acc+20).', 'EX/RARE.' } },
+    { id = 26227, name = 'Cornelia\'s Ring',    cost =  500, stats = { 'Ring. Best WS-damage ring (WS damage +10%, WS Acc+20).', 'EX/RARE.' } },
+
+    -- Sortie companion rings (26225-26231; stats via zz_infamy_extra_mods.sql)
+    { id = 26225, name = "Medada's Ring",       cost =  300, stats = { 'Ring. STR+10, Acc+15, Crit Rate+3%.', 'EX/RARE.' } },
+    { id = 26226, name = "Gurebu's Ring",       cost =  300, stats = { 'Ring. STR+10, VIT+10, Double Attack+5%.', 'EX/RARE.' } },
+    { id = 26228, name = "Ragelise's Ring",     cost =  300, stats = { 'Ring. HP+30, DEF+20, MND+10.', 'EX/RARE.' } },
+    { id = 26229, name = "Lehko's Ring",        cost =  300, stats = { 'Ring. DEX+10, AGI+10, Store TP+5, Haste+2%.', 'EX/RARE.' } },
+    { id = 26230, name = "Fickblix's Ring",     cost =  300, stats = { 'Ring. INT+15, Magic Atk+15, Magic Acc+20.', 'EX/RARE.' } },
+    { id = 26231, name = "Ephramad's Ring",     cost =  300, stats = { 'Ring. MND+15, Cure Potency+10%, Healing Skill+15.', 'EX/RARE.' } },
 }
 
 -- ============================================================
@@ -2506,7 +2513,13 @@ catalog.itemTypeMap =
     [28420] = 'Accessories/Waist',
     [27510] = 'Accessories/Neck',
     [22281] = 'Weapons/Ammo',
+    [26225] = 'Accessories/Ring',
+    [26226] = 'Accessories/Ring',
     [26227] = 'Accessories/Ring',
+    [26228] = 'Accessories/Ring',
+    [26229] = 'Accessories/Ring',
+    [26230] = 'Accessories/Ring',
+    [26231] = 'Accessories/Ring',
     [20672] = 'Weapons/Sword',
     [22042] = 'Weapons/Club',
     [22055] = 'Weapons/Staff',

@@ -396,14 +396,14 @@ local function doBuyReward(p, reward, qty, catIdx, itemPage)
         return
     end
 
-    if p:getFreeSlotsCount() == 0 and p:hasItem(reward.id) ~= true then
+    local totalCost = reward.cost * qty
+    local added = p:addItem({ id = reward.id, quantity = qty })
+    if not added then
         p:printToPlayer('Inventory full! Free a slot first, kupo!', xi.msg.channel.SYSTEM_3)
         buildItemPreviewMenu(p, reward, catIdx, itemPage)
         return
     end
-    local totalCost = reward.cost * qty
     spendPoints(p, totalCost)
-    p:addItem({ id = reward.id, quantity = qty })
     if qty == 1 then
         p:printToPlayer(
             string.format('[Hunting League] Purchased %s for %d %s!  (%d remaining), kupo!',

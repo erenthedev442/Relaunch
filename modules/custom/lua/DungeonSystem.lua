@@ -2914,14 +2914,20 @@ function m.endDungeon(player, reason)
     --
     -- The "warping in N seconds..." message tells them the warp is
     -- coming so they don't think the game has frozen.
-    player:printToPlayer(
-        string.format('[Dungeon] Warping back to GM Home in %d seconds...', warpDelaySec),
-        xi.msg.channel.SYSTEM_3)
-
-    local exit = catalog.exitWarp
-    player:timer(warpDelayMs, function(p)
-        p:setPos(exit.x, exit.y, exit.z, exit.rotation, exit.zoneId)
-    end)
+    -- Only warp if the player is still inside the dungeon zone. If they
+    -- left via !gmhome / HomePoint / etc., the zone-out guard already
+    -- delivered them to the exit zone and called endDungeon from there.
+    -- Firing a second warp timer causes the "double-warp" bug (player
+    -- arrives at GM Home, then gets teleported there again 4s later).
+    if player:getZoneID() == dungeon.zoneId then
+        player:printToPlayer(
+            string.format('[Dungeon] Warping back to GM Home in %d seconds...', warpDelaySec),
+            xi.msg.channel.SYSTEM_3)
+        local exit = catalog.exitWarp
+        player:timer(warpDelayMs, function(p)
+            p:setPos(exit.x, exit.y, exit.z, exit.rotation, exit.zoneId)
+        end)
+    end
 end
 
 
@@ -3518,15 +3524,7 @@ end
 -- ROOT MENU - category picker
 --------------------------------------------------------------------
 showVendorRoot = function(player)
-    local opts = {}
-    table.insert(opts, { 'Curated Items',    function(p) showCuratedMenu(p) end })
-    table.insert(opts, { 'Curated Sets',     function(p) showCuratedSetsMenu(p, 1) end })
-    table.insert(opts, { '+4 Reforge Sets',  function(p) showPlus4JobMenu(p, 1) end })
-    table.insert(opts, { 'Close',            function(p) end })
-
-    vendorMenu.title = string.format('Infamy Vendor  [%d Infamy]', getInfamy(player))
-    vendorMenu.options = opts
-    openMenu(player, vendorMenu)
+    showCuratedMenu(player)
 end
 
 --------------------------------------------------------------------
@@ -3618,9 +3616,11 @@ showCuratedMenu = function(player)
                 function(p) showCuratedCat(p, c, 1) end })
         end
     end
-    table.insert(opts, { '<< Back', function(p) showVendorRoot(p) end })
+    table.insert(opts, { 'Curated Sets',  function(p) showCuratedSetsMenu(p, 1) end })
+    table.insert(opts, { '+4 Reforge',    function(p) showPlus4JobMenu(p, 1) end })
+    table.insert(opts, { 'Close',         function(p) end })
 
-    vendorMenu.title = string.format('Browse  [%d Inf]', getInfamy(player))
+    vendorMenu.title = string.format('Infamy Vendor  [%d Infamy]', getInfamy(player))
     vendorMenu.options = opts
     openMenu(player, vendorMenu)
 end
@@ -3864,12 +3864,19 @@ showPlus4JobMenu = function(player, page)
     local endIdx   = math.min(startIdx + JOB_PAGE_SIZE - 1, total)
 
     for idx = startIdx, endIdx do
-        local job = plus4Jobs[idx]
+        local job  = plus4Jobs[idx]
         local sets = catalog.plus4Sets[job] or {}
-        table.insert(opts, {
-            string.format('%s  (%d set%s)', job, #sets, #sets == 1 and '' or 's'),
-            function(p) showPlus4SetMenu(p, job, page) end,
-        })
+        if #sets == 1 then
+            table.insert(opts, {
+                string.format('%s  (5 pc)', job),
+                function(p) showPlus4SlotMenu(p, job, 1, page) end,
+            })
+        else
+            table.insert(opts, {
+                string.format('%s  (%d sets)', job, #sets),
+                function(p) showPlus4SetMenu(p, job, page) end,
+            })
+        end
     end
 
     if pages > 1 then
