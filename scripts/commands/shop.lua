@@ -40,6 +40,8 @@ local stock =
         { xi.item.FLASK_OF_HOLY_WATER,       200 },
         { xi.item.FLASK_OF_SLEEPING_POTION,  300 },
         { xi.item.STRIP_OF_MEAT_JERKY,       120 },
+        { xi.item.TRUMP_CARD,                 50 },  -- Trump Card
+        { xi.item.TRUMP_CARD_CASE,            50 },  -- Trump Card Case
     },
 
     consumables =
@@ -294,6 +296,9 @@ local augmentStock = {} -- token -> { { itemId, price }, ... }
 local augmentOrder = {} -- ordered { token, name, count } for the index menu
 
 do
+    -- Force-reload the catalog so hot-reloading shop.lua always picks up the
+    -- latest augment_catalog.lua without a full map restart.
+    package.loaded['modules/custom/lua/augment_catalog'] = nil
     local ok, catalog = pcall(require, 'modules/custom/lua/augment_catalog')
     if ok and type(catalog) == 'table' then
         local byToken = {}
