@@ -4,7 +4,7 @@
         {
             "type": "non_ilvl_gear",
             "target_qty": 5,
-            "buyback": false,
+            "buyback": true,
             "max_buyback_per_pass": 200,
             "level_price_brackets": [
                 [10, 140000],

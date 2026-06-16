@@ -58,4 +58,22 @@ FROM auction_house a LEFT JOIN item_basic b ON b.itemid=a.itemid
 WHERE a.seller=0 AND a.sell_date>0 ORDER BY a.sell_date DESC LIMIT 15;" 2>/dev/null
 
 echo
+echo "--- top 3 BUYERS last 24h (most gil spent) ---"
+sudo mariadb xidb -t -e "
+SELECT buyer_name player, COUNT(*) items, CONCAT(FORMAT(SUM(sale),0),' g') gil_spent
+FROM auction_house
+WHERE sell_date >= UNIX_TIMESTAMP(NOW() - INTERVAL 24 HOUR)
+  AND buyer_name IS NOT NULL AND buyer_name != '' AND buyer_name != 'AH-Jeuno'
+GROUP BY buyer_name ORDER BY SUM(sale) DESC LIMIT 3;" 2>/dev/null
+
+echo
+echo "--- top 3 SELLERS last 24h (most gil earned) ---"
+sudo mariadb xidb -t -e "
+SELECT seller_name player, COUNT(*) items, CONCAT(FORMAT(SUM(sale),0),' g') gil_earned
+FROM auction_house
+WHERE sell_date >= UNIX_TIMESTAMP(NOW() - INTERVAL 24 HOUR)
+  AND seller != 0 AND seller_name IS NOT NULL AND seller_name != ''
+GROUP BY seller_name ORDER BY SUM(sale) DESC LIMIT 3;" 2>/dev/null
+
+echo
 echo "(read-only snapshot -- run the bat anytime)"

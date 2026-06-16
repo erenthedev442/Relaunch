@@ -188,7 +188,6 @@ VALUES
     ('skoll', 901, 494, 1, 255),   -- Arise        (rez the fallen; HIGHEST RAISE picks it over lower Raise tiers)
     ('skoll', 901, 107, 1, 255),   -- Phalanx II   (party flat damage reduction; validTargets allow allies)
     ('skoll', 901,  55, 1, 255),   -- Aquaveil     (self: casts can't be interrupted)
-    ('skoll', 901, 842, 1, 255),   -- Distract II  (enemy evasion down -> melee lands)
     ('skoll', 901, 260, 1, 255);   -- Dispel       (strip enemy buffs)
 
 -- ---- 4. Drop spells removed from the rotation ------------------------------
@@ -197,4 +196,4 @@ VALUES
 --   a no-op once they're gone.
 --     894 Refresh III, 388 Mage's Ballad III   -- MP buffs (owner wants none)
 --     844 Frazzle II, 884 Addle II, 216 Gravity -- removed from his rotation by request
-DELETE FROM mob_spell_lists WHERE spell_list_id = 901 AND spell_id IN (894, 388, 844, 884, 216);
+DELETE FROM mob_spell_lists WHERE spell_list_id = 901 AND spell_id IN (894, 388, 844, 884, 216, 842);

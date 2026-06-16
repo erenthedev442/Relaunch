@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-15T12:59:42",
+  "generated_at": "2026-06-15T23:59:05",
   "summary": {
     "reforge": {
       "total": 1320,
@@ -10,9 +10,9 @@
       "not_equip": 0
     },
     "hunting_league": {
-      "total": 418,
-      "ok": 317,
-      "naked": 94,
+      "total": 413,
+      "ok": 318,
+      "naked": 88,
       "latent_only": 1,
       "missing": 3,
       "not_equip": 3
@@ -144,14 +144,6 @@
       "shortName": "magnificent_crown",
       "source": "hunting_league",
       "context": "Armor NPC [gold] head: Magnificent Crown",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 24173,
-      "shortName": "duty_gauntlets",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] hands: Duty Gauntlets",
       "modCount": 0,
       "latentCount": 0
     },
@@ -460,14 +452,6 @@
       "latentCount": 0
     },
     {
-      "itemId": 25681,
-      "shortName": "cohort_cloak_+1",
-      "source": "hunting_league",
-      "context": "Armor NPC [silver] body: Cohort Cloak +1",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
       "itemId": 25717,
       "shortName": "valorous_mail",
       "source": "hunting_league",
@@ -496,14 +480,6 @@
       "shortName": "meghanada_cuirie_+2",
       "source": "hunting_league",
       "context": "Armor NPC [gold] body: Meghanada Cuirie +2",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 25792,
-      "shortName": "hizamaru_haramaki_+2",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] body: Hizamaru Haramaki +2",
       "modCount": 0,
       "latentCount": 0
     },
@@ -580,22 +556,6 @@
       "latentCount": 0
     },
     {
-      "itemId": 25886,
-      "shortName": "flamma_dirs_+2",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] legs: Flamma Dirs +2",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 25894,
-      "shortName": "ea_slops_+1",
-      "source": "hunting_league",
-      "context": "Armor NPC [gold] legs: Ea Slops +1",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
       "itemId": 25898,
       "shortName": "arke_cosciales_+1",
       "source": "hunting_league",
@@ -624,14 +584,6 @@
       "shortName": "navon_crackows",
       "source": "hunting_league",
       "context": "Armor NPC [silver] feet: Navon Crackows",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
-      "itemId": 25926,
-      "shortName": "sulevias_leggings_+1",
-      "source": "hunting_league",
-      "context": "Armor NPC [silver] feet: Sulevias Leggings +1",
       "modCount": 0,
       "latentCount": 0
     },
@@ -708,14 +660,6 @@
       "latentCount": 0
     },
     {
-      "itemId": 25991,
-      "shortName": "heyoka_mittens_+1",
-      "source": "hunting_league",
-      "context": "Armor NPC [silver] hands: Heyoka Mittens +1",
-      "modCount": 0,
-      "latentCount": 0
-    },
-    {
       "itemId": 25995,
       "shortName": "turms_mittens_+1",
       "source": "hunting_league",
@@ -736,6 +680,14 @@
       "shortName": "turms_harness_+1",
       "source": "hunting_league",
       "context": "Armor NPC [gold] body: Turms Harness +1",
+      "modCount": 0,
+      "latentCount": 0
+    },
+    {
+      "itemId": 26727,
+      "shortName": "revealers_crown_+1",
+      "source": "hunting_league",
+      "context": "Armor NPC [bronze] head: Revealers Crown +1",
       "modCount": 0,
       "latentCount": 0
     },
@@ -2449,7 +2401,7 @@
       "itemId": 29696,
       "shortName": "",
       "source": "hunting_league",
-      "context": "HL shop [Spells] Scroll of Silencega",
+      "context": "HL shop [Spells] Silencega",
       "modCount": 0,
       "latentCount": 0
     },
@@ -2457,7 +2409,7 @@
       "itemId": 29697,
       "shortName": "",
       "source": "hunting_league",
-      "context": "HL shop [Spells] Scroll of Divine Aegis",
+      "context": "HL shop [Spells] Divine Aegis",
       "modCount": 0,
       "latentCount": 0
     },
@@ -2465,7 +2417,7 @@
       "itemId": 29698,
       "shortName": "",
       "source": "hunting_league",
-      "context": "HL shop [Spells] Scroll of Convergence",
+      "context": "HL shop [Spells] Convergence",
       "modCount": 0,
       "latentCount": 0
     }

@@ -38,7 +38,7 @@ function M.check(player, cfg)
     -- Must have learned the spell (i.e. bought + used the scroll).
     if not player:hasSpell(cfg.spellId) then
         player:printToPlayer(
-            string.format('%s: you have not learned this spell. Buy its scroll from the Accessories NPC in Reisenjima Henge.', cfg.name),
+            string.format('%s: you have not learned this spell. Learn it from the Hunting League rewards NPC (Spells category) at Reisenjima Henge.', cfg.name),
             CH)
         return false
     end
