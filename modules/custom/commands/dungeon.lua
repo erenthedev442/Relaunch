@@ -5,8 +5,6 @@
 -- Usage:
 --   !dungeon abort   -- cancel the current run (no reward, cooldown applies)
 -----------------------------------
-local DungeonSystem = require('modules/custom/lua/DungeonSystem')
-
 ---@type TCommand
 local commandObj = {}
 
@@ -21,7 +19,12 @@ commandObj.onTrigger = function(player, sub)
     sub = (sub or ''):lower()
 
     if sub == 'abort' then
-        DungeonSystem.endDungeon(player, 'manual')
+        local ds = xi._dungeonSystem
+        if not ds then
+            player:printToPlayer('[Dungeon] Dungeon system not loaded.', CH)
+            return
+        end
+        ds.endDungeon(player, 'manual')
         player:printToPlayer('[Dungeon] Run aborted. No reward applied.', CH)
     else
         player:printToPlayer('Usage: !dungeon abort', CH)

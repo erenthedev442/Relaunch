@@ -4079,4 +4079,9 @@ m:addOverride('InteractionGlobal.onZoneIn', function(player, prevZone, fallbackF
     return result
 end)
 
+-- Expose the live module instance globally so !dungeon abort (a hot-reloaded
+-- command file that can't share the addOverride closure) can reach endDungeon
+-- without getting a stale require()-cached copy with an empty sessions table.
+xi._dungeonSystem = m
+
 return m
