@@ -19,6 +19,7 @@ local B = xi.msg.channel.SYSTEM_3
 
 commandObj.onTrigger = function(player)
     local current  = player:getCharVar('HL_Points')          or 0
+    local infamy   = player:getCharVar('Infamy')             or 0
     local streak   = player:getCharVar('HL_Streak_Count')    or 0
     local lastKill = player:getCharVar('HL_Streak_LastKill') or 0
     local tier     = player:getCharVar('HL_Tier')            or 1
@@ -40,10 +41,11 @@ commandObj.onTrigger = function(player)
         streakStr = 'None  (!streak for details)'
     end
 
-    player:printToPlayer('[Hunt Marks] == Balance ==============================', H)
-    player:printToPlayer(string.format('  Current balance:  %d marks', current),  B)
-    player:printToPlayer(string.format('  Hunter rank:      Tier %d', tier),      B)
-    player:printToPlayer(string.format('  Kill streak:      %s', streakStr),      B)
+    player:printToPlayer('[Currencies] == Balance ==============================', H)
+    player:printToPlayer(string.format('  Hunt Marks:  %d', current), B)
+    player:printToPlayer(string.format('  Infamy:      %d', infamy),  B)
+    player:printToPlayer(string.format('  Hunter rank: Tier %d', tier), B)
+    player:printToPlayer(string.format('  Kill streak: %s', streakStr), B)
     player:printToPlayer('  Spend marks at the Hunt Seals NPC in Reisenjima Henge!', B)
 end
 
