@@ -1,7 +1,8 @@
 -----------------------------------
 -- func: mobs
--- desc: GM/debug. Lists the LIVE (spawned, HP > 0) mobs in your current zone,
---       nearest first, with HP% and rough distance. Optional name filter:
+-- desc: Lists the LIVE (spawned, HP > 0) mobs in your current zone, nearest
+--       first, with HP%, rough distance, and (X, Y, Z) world position (same
+--       coords as !pos / Windower). Optional name filter:
 --         !mobs            -> everything alive nearby
 --         !mobs lizard     -> only names containing "lizard"
 --
@@ -34,12 +35,14 @@ commandObj.onTrigger = function(player, filter)
         if m:isSpawned() and m:getHPP() > 0 then
             local nm = m:getName()
             if not f or string.find(nm:lower(), f, 1, true) then
-                local dx, dy, dz = m:getXPos() - px, m:getYPos() - py, m:getZPos() - pz
+                local mx, my, mz = m:getXPos(), m:getYPos(), m:getZPos()
+                local dx, dy, dz = mx - px, my - py, mz - pz
                 list[#list + 1] =
                 {
                     name = nm,
                     hpp  = m:getHPP(),
                     dist = math.floor(math.sqrt(dx * dx + dy * dy + dz * dz)),
+                    x = mx, y = my, z = mz,
                 }
             end
         end
@@ -58,7 +61,8 @@ commandObj.onTrigger = function(player, filter)
 
     for i = 1, math.min(#list, 30) do
         local e = list[i]
-        player:printToPlayer(string.format('  %-24s HP %3d%%  ~%dy', e.name, e.hpp, e.dist),
+        player:printToPlayer(string.format('  %-24s HP %3d%%  ~%dy  (%.0f, %.0f, %.0f)',
+            e.name, e.hpp, e.dist, e.x, e.y, e.z),
             xi.msg.channel.SYSTEM_3)
     end
     if #list > 30 then
