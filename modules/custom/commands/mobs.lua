@@ -15,7 +15,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 1,   -- GM only
+    permission = 0,   -- all players (read-only: lists live mobs in your zone)
     parameters = 's',
 }
 
