@@ -344,7 +344,7 @@ return {
 
     -- Weaponskill DMG+
     [1110] = { augId = 326,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Weapon Skill Acc' },
-    [1473] = { augId = 327,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Weapon skill damage' },
+    [1473] = { augId = 327,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'All-WS DMG%' },
     [865]  = { augId = 332,  base = 1,   mult = 100, disp = 100,  cat = 13, label = 'Sklchn.dmg' },
     [889]  = { augId = 743,  base = 1,   mult = 4,  disp = 1,    cat = 13, label = 'Dmg (melee,not ranged)' },
     [893]  = { augId = 744,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Dmg (melee,not ranged)' },
