@@ -9,7 +9,8 @@ commandObj.cmdprops =
     parameters = 'ss',
 }
 
-local origShop = require('scripts/commands/shop')
+local origShop  = require('scripts/commands/shop')
+local itemNames = require('modules/custom/lua/augment_item_names')
 
 local augmentGroups =
 {
@@ -62,8 +63,8 @@ local function buildAugmentStock()
         local ids = byToken[token]
         if ids and #ids > 0 then
             table.sort(ids, function(a, b)
-                local la = catalog[a] and catalog[a].label or ''
-                local lb = catalog[b] and catalog[b].label or ''
+                local la = itemNames[a] or (catalog[a] and catalog[a].label) or ''
+                local lb = itemNames[b] or (catalog[b] and catalog[b].label) or ''
                 return la < lb
             end)
             local list = {}
