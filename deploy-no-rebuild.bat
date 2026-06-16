@@ -32,7 +32,7 @@ set "LOG=%SRC%\deploy-no-rebuild.log"
 set "SRVOK=skipped"
 set "SITEOK=skipped"
 
-(echo === Deploy (No Rebuild) started %DATE% %TIME% ===)> "%LOG%"
+(echo === Deploy No-Rebuild started %DATE% %TIME% ===)> "%LOG%"
 
 echo(
 echo   DEPLOY (NO REBUILD):  Lua/SQL only -- C++ rebuild skipped.
