@@ -1,7 +1,7 @@
 -----------------------------------
 -- world_boss.lua
 --
--- WEEKLY WORLD BOSS: a single epic encounter spawns in Hall of the Gods (251)
+-- WEEKLY WORLD BOSS: a single epic encounter spawns in West Ronfaure (100)
 -- every Sunday (UTC). Eight bosses rotate in order by week number.
 --
 -- The boss has a large HP pool saved to server_variables every player tick so
@@ -34,7 +34,7 @@
 -- Deploy: Lua hot-reload loads this file on edit; no restart needed.
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Hall_of_the_Gods/Zone')
+require('scripts/zones/West_Ronfaure/Zone')
 
 local m = Module:new('world_boss')
 
@@ -46,7 +46,7 @@ xi._wb = xi._wb or nil   -- nil = no boss; set in spawnBoss(), cleared in onMobD
 -----------------------------------
 -- Constants
 -----------------------------------
-local BOSS_ZONE_ID  = xi.zone.HALL_OF_THE_GODS   -- 251
+local BOSS_ZONE_ID  = xi.zone.WEST_RONFAURE   -- 100
 local GROUP_ZONE_ID = 210   -- GM Home (where all HL mob_groups are registered)
 local BOSS_LEVEL    = 250
 local TICK_SECONDS  = 30
@@ -64,49 +64,49 @@ local BOSSES =
         name    = 'Ancient Behemoth',
         groupId = 11365,    -- King_Behemoth base
         hp      = 3000000,
-        pos     = { x = 0.000, y = -1.848, z = -100.000, rot = 0 },
+        pos     = { x = -300.000, y = -50.000, z = 270.000, rot = 0 },
     },
     {
         name    = 'Absolute Virtue Reborn',
         groupId = 11367,    -- Absolute_Virtue base
         hp      = 3500000,
-        pos     = { x = 0.000, y = -1.848, z = -100.000, rot = 0 },
+        pos     = { x = -300.000, y = -50.000, z = 270.000, rot = 0 },
     },
     {
         name    = 'Grand Pandemonium',
         groupId = 11368,    -- Pandemonium_Warden base
         hp      = 3500000,
-        pos     = { x = 0.000, y = -1.848, z = -100.000, rot = 0 },
+        pos     = { x = -300.000, y = -50.000, z = 270.000, rot = 0 },
     },
     {
         name    = 'Eternal Shinryu',
         groupId = 11369,    -- Shinryu base
         hp      = 4000000,
-        pos     = { x = 0.000, y = -1.848, z = -100.000, rot = 0 },
+        pos     = { x = -300.000, y = -50.000, z = 270.000, rot = 0 },
     },
     {
         name    = 'Lord Kirin Ascendant',
         groupId = 11366,    -- Kirin base
         hp      = 3000000,
-        pos     = { x = 0.000, y = -1.848, z = -100.000, rot = 0 },
+        pos     = { x = -300.000, y = -50.000, z = 270.000, rot = 0 },
     },
     {
         name    = 'Vrtra the Unbound',
         groupId = 11362,    -- Vrtra base
         hp      = 3000000,
-        pos     = { x = 0.000, y = -1.848, z = -100.000, rot = 0 },
+        pos     = { x = -300.000, y = -50.000, z = 270.000, rot = 0 },
     },
     {
         name    = 'Nidhogg Unchained',
         groupId = 11364,    -- Nidhogg base
         hp      = 3500000,
-        pos     = { x = 0.000, y = -1.848, z = -100.000, rot = 0 },
+        pos     = { x = -300.000, y = -50.000, z = 270.000, rot = 0 },
     },
     {
         name    = 'Simurgh Eternal',
         groupId = 11363,    -- Simurgh base
         hp      = 3000000,
-        pos     = { x = 0.000, y = -1.848, z = -100.000, rot = 0 },
+        pos     = { x = -300.000, y = -50.000, z = 270.000, rot = 0 },
     },
 }
 
@@ -251,7 +251,7 @@ xi._wb_spawnBoss = spawnBoss
 -----------------------------------
 
 -- onInitialize: re-spawn the boss if it was alive when the server restarted.
-m:addOverride('xi.zones.Hall_of_the_Gods.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.West_Ronfaure.Zone.onInitialize', function(zone)
     super(zone)
 
     if svGet('Active') ~= 1 then return end
@@ -275,7 +275,7 @@ m:addOverride('xi.zones.Hall_of_the_Gods.Zone.onInitialize', function(zone)
 end)
 
 -- onZoneIn: arm the per-player 30s tick and greet with current status.
-m:addOverride('xi.zones.Hall_of_the_Gods.Zone.onZoneIn', function(player, prevZone)
+m:addOverride('xi.zones.West_Ronfaure.Zone.onZoneIn', function(player, prevZone)
     local cs = super(player, prevZone)
 
     -- Re-arming 30s tick. Stops automatically once the player leaves HotG

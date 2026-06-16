@@ -40,8 +40,8 @@ commandObj.onTrigger = function(player, sub, ...)
             return
         end
 
-        if player:getZoneID() ~= xi.zone.HALL_OF_THE_GODS then
-            player:printToPlayer('[World Boss] You must be in Hall of the Gods to force-spawn the boss.', xi.msg.channel.SYSTEM_3)
+        if player:getZoneID() ~= xi.zone.WEST_RONFAURE then
+            player:printToPlayer('[World Boss] You must be in West Ronfaure to force-spawn the boss.', xi.msg.channel.SYSTEM_3)
             return
         end
 
