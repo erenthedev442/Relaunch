@@ -1597,6 +1597,16 @@ catalog.streakCv        = 'Dungeon_Streak'
 catalog.clearCooldownSec = 30 * 60   -- 30 minutes after a successful clear
 catalog.abortCooldownSec = 90        -- 90 seconds after any non-clear exit
 
+-- Gil reward on clear, scaled by dungeon difficulty. The dungeon with the
+-- LOWEST infamyBase pays gilRewardMin; the HIGHEST pays gilRewardMax; the rest
+-- interpolate linearly by infamyBase. With the current spread (infamyBase
+-- 10/15/22/30) that is 10->1M, 15->3.25M, 22->6.4M, 30->10M. Deliberately FLAT
+-- per dungeon -- NOT multiplied by the Normal/Hard/Mythic tier or the speed
+-- bonus -- so the 1M..10M endpoints stay exact and Mythic farming can't flood
+-- the economy. Party members get memberRewardFactor of it (same split as Infamy).
+catalog.gilRewardMin = 1000000       -- easiest dungeon (lowest infamyBase)
+catalog.gilRewardMax = 10000000      -- hardest dungeon (highest infamyBase)
+
 -- ============================================================
 -- PHASE 6 - PARTY / ALLIANCE SUPPORT
 -- ============================================================

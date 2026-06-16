@@ -167,6 +167,44 @@ local function addInfamy(player, amount)
     end
 end
 
+-- Thousands-separated number for the reward banners (e.g. 10000000 -> "10,000,000").
+local function commaNum(n)
+    local s = string.format('%d', math.floor((n or 0) + 0.5))
+    local count
+    repeat
+        s, count = s:gsub('^(-?%d+)(%d%d%d)', '%1,%2')
+    until count == 0
+    return s
+end
+
+-- Scaled gil reward on clear. Linear interpolation across the catalog's ACTUAL
+-- infamyBase spread: the lowest-infamyBase dungeon pays catalog.gilRewardMin,
+-- the highest pays catalog.gilRewardMax, the rest scale between. Read off the
+-- live spread so it auto-adjusts if dungeons are re-tiered. Flat per dungeon --
+-- independent of the Normal/Hard/Mythic tier and the speed bonus. Range cached.
+local _gilLo, _gilHi
+local function gilInfamyRange()
+    if _gilLo then return _gilLo, _gilHi end
+    local lo, hi
+    for _, d in ipairs(catalog.dungeons) do
+        local b = d.infamyBase or 0
+        if not lo or b < lo then lo = b end
+        if not hi or b > hi then hi = b end
+    end
+    _gilLo, _gilHi = lo or 10, hi or 30
+    return _gilLo, _gilHi
+end
+
+local function dungeonGilReward(dungeon)
+    local minG = catalog.gilRewardMin or 1000000
+    local maxG = catalog.gilRewardMax or 10000000
+    local lo, hi = gilInfamyRange()
+    local base = dungeon.infamyBase or lo
+    local t = (hi > lo) and ((base - lo) / (hi - lo)) or 0
+    if t < 0 then t = 0 elseif t > 1 then t = 1 end
+    return math.floor(minG + t * (maxG - minG) + 0.5)
+end
+
 -----------------------------------
 -- PHASE 6 - Party / alliance helpers
 -----------------------------------
@@ -2428,6 +2466,16 @@ function m.endDungeon(player, reason)
         -- would fall out of scope and member rewards would be zero.
         sess.finalInfamy = (tier.infamyMult or 1) > 0 and infamy or 0
 
+        -- Scaled gil reward: flat per dungeon (catalog.gilRewardMin..Max by
+        -- infamyBase), independent of tier/speed/affix so the 1M..10M endpoints
+        -- stay exact. Awarded to the leader here for EVERY tier (Nightmare too);
+        -- members get their memberRewardFactor share in the distribution block.
+        local gilReward = dungeonGilReward(dungeon)
+        if gilReward > 0 then
+            player:addGil(gilReward)
+        end
+        sess.finalGil = gilReward
+
         -- Phase-2 per-tier clear counter. Drives the unlock gating for
         -- Hard / Mythic (Hard needs 1 Normal clear, Mythic needs 5 Hard
         -- clears). Separate from Dungeon_Clears_<id> which counts ALL
@@ -2512,6 +2560,10 @@ function m.endDungeon(player, reason)
                     tierMult, affixMult),
                 xi.msg.channel.SYSTEM_3)
         end
+        -- Scaled gil reward line (shown for every tier, Nightmare included).
+        player:printToPlayer(
+            string.format('  +%s gil  (dungeon completion bonus)', commaNum(gilReward)),
+            xi.msg.channel.SYSTEM_3)
         if featuredMult ~= 1.0 then
             player:printToPlayer(
                 string.format('    ** FEATURED dungeon today ** x%.2f bonus', featuredMult),
@@ -2763,6 +2815,9 @@ function m.endDungeon(player, reason)
     local memberInfamy = (reason == 'cleared')
         and math.max(1, math.floor((sess.finalInfamy or 0) * memberFactor + 0.5))
         or 0
+    local memberGil = (reason == 'cleared')
+        and math.max(0, math.floor((sess.finalGil or 0) * memberFactor + 0.5))
+        or 0
     if sess.members then
         for _, mname in ipairs(sess.members) do
             local mem = liveMemberInZone(mname, dungeon.zoneId)
@@ -2779,9 +2834,10 @@ function m.endDungeon(player, reason)
                         (mem:getCharVar('Dungeon_Clears_Total') or 0) + 1)
                     mem:setCharVar('Infamy_Lifetime',
                         (mem:getCharVar('Infamy_Lifetime') or 0) + memberInfamy)
+                    if memberGil > 0 then mem:addGil(memberGil) end
                     mem:printToPlayer(
-                        string.format('[Dungeon] Party reward: +%d Infamy (%.0f%% of leader\'s payout)',
-                            memberInfamy, memberFactor * 100),
+                        string.format('[Dungeon] Party reward: +%d Infamy, +%s gil (%.0f%% of leader\'s payout)',
+                            memberInfamy, commaNum(memberGil), memberFactor * 100),
                         xi.msg.channel.SYSTEM_3)
                 else
                     mem:printToPlayer(
