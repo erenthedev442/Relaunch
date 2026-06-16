@@ -36,7 +36,7 @@ local zoneConfig =
 }
 
 local function spawnViaMark(p, mobId, cost, nmName, cfg)
-    local cur = p:getCharVar(MARKS_CV)
+    local cur = p:getCharVar(MARKS_CV) or 0
     if cur < cost then
         p:printToPlayer('[Abyssea] Not enough Hunt Marks.', xi.msg.channel.SYSTEM_3)
         return
@@ -64,7 +64,7 @@ local function offerMarksPop(player, mobId, cfg)
     local mob = GetMobByID(mobId)
     if not mob then return end
     local nmName = mob:getName():gsub('_', ' ')
-    local pts    = player:getCharVar(MARKS_CV)
+    local pts    = player:getCharVar(MARKS_CV) or 0
     local cost   = cfg.cost
 
     local label, callback
@@ -145,8 +145,11 @@ m:addOverride('xi.abyssea.qmOnTrigger', function(player, npc, mobId, kis, tradeR
             end
 
             if not validKis then
-                offerMarksPop(player, mobId, cfg)
-                return false
+                local ok, err = pcall(offerMarksPop, player, mobId, cfg)
+                if ok then
+                    return false  -- menu sent; skip vanilla missing-KI event
+                end
+                -- fall through to super so the player sees SOMETHING
             end
         end
     end
