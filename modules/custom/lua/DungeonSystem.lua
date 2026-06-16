@@ -1500,10 +1500,20 @@ local function spawnAllMobs(player, dungeon)
             -- Random scatter inside a small disc around the waypoint
             -- center so mobs don't perfectly stack. X/Z only -- Y stays
             -- on the waypoint plane so all mobs in a pack share a floor.
-            local angle = math.random() * math.pi * 2
-            local r     = math.random() * scatter
-            local tx    = cx + math.cos(angle) * r
-            local tz    = cz + math.sin(angle) * r
+            -- Retry up to 8 times to find a position the navmesh accepts;
+            -- fall back to the waypoint center if all retries land in walls.
+            local tx, tz = cx, cz
+            local dZone = player:getZone()
+            for _ = 1, 8 do
+                local angle = math.random() * math.pi * 2
+                local r     = math.random() * scatter
+                local px    = cx + math.cos(angle) * r
+                local pz    = cz + math.sin(angle) * r
+                if not dZone or dZone:isNavigablePoint({ x = px, y = cy, z = pz }) then
+                    tx, tz = px, pz
+                    break
+                end
+            end
             local name  = wp.names[((i - 1) % #wp.names) + 1]
             local trash = spawnDungeonMob(player, dungeon, {
                 groupId    = pickFromList(wp.groups),
