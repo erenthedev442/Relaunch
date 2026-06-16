@@ -1014,7 +1014,13 @@ xi.weaponskills.takeWeaponskillDamage = function(defender, attacker, wsParams, p
     if finaldmg > 0 then
         -- Pack the weaponskill ID in the top 8 bits of this variable which is utilized
         -- in OnMobDeath in luautils.  Max WSID is 255.
-        defender:setLocalVar('weaponskillHit', bit.lshift(wsResults.wsID, 24) + finaldmg)
+        -- Use the pre-cap value (wsResults.finalDmg) when it exceeds finaldmg so the
+        -- WEAPONSKILL_USE listener and leaderboard record the true server-calculated hit,
+        -- not the 131,071 engine cap.  wsResults.finalDmg is set by doPhysicalWeaponskill
+        -- before calling takeWeaponskillDamage and is NOT mutated by the C++ call here.
+        local preCap   = wsResults.finalDmg or 0
+        local trackDmg = (preCap > finaldmg) and preCap or finaldmg
+        defender:setLocalVar('weaponskillHit', bit.lshift(wsResults.wsID, 24) + trackDmg)
     end
 
     return finaldmg
