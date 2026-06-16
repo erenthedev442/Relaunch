@@ -9,9 +9,13 @@ commandObj.cmdprops =
     parameters = 'ss',
 }
 
-local origShop = require('scripts/commands/shop')
 package.loaded['modules/custom/lua/augment_item_names'] = nil
 local itemNames = require('modules/custom/lua/augment_item_names')
+
+local function getShop()
+    package.loaded['scripts/commands/shop'] = nil
+    return require('scripts/commands/shop')
+end
 
 local augmentGroups =
 {
@@ -119,7 +123,7 @@ commandObj.onTrigger = function(player, category, subcat)
     local cat = category and category:lower() or 'general'
 
     if cat ~= 'augments' then
-        return origShop.onTrigger(player, category, subcat)
+        return getShop().onTrigger(player, category, subcat)
     end
 
     local augmentStock, augmentOrder = buildAugmentStock()

@@ -225,6 +225,9 @@ local stock =
         { 26349, 50000 },  -- Devastating Bullet Pouch (waist, RACC35/MACC35, RNG/COR)
         { 26347, 50000 },  -- Eradicating Bullet Pouch (waist, RATT30/RACC30, RNG)
         { 26350, 50000 },  -- Chrono Bullet Pouch      (waist, RATT20/RACC20, RNG/COR)
+        -- Job-specific throwing weapons
+        { 18259,  50 },  -- Angon           (Lv62, DRG)
+        { 18258,  50 },  -- Throwing Tomahawk (Lv75, WAR)
         -- Shuriken (NIN throwing)
         { 17301,   3 },  -- Shuriken        (Lv18)
         { 17302,   5 },  -- Juji Shuriken   (Lv28)
