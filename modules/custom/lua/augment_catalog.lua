@@ -331,6 +331,16 @@ return {
     [2524] = { augId = 283,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Throwing skill' },
     [2936] = { augId = 286,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Shield skill' },
     [2937] = { augId = 287,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Parrying Skill' },
+    [668]  = { augId = 288,  base = 1,   mult = 1,  disp = 1,    cat = 6,  label = 'Divine magic skill' },
+    [669]  = { augId = 290,  base = 1,   mult = 1,  disp = 1,    cat = 6,  label = 'Enhancing magic skill' },
+    [670]  = { augId = 291,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Enfeebling magic skill' },
+    [671]  = { augId = 292,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Elemental magic skill' },
+    [672]  = { augId = 295,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Ninjutsu skill' },
+    [673]  = { augId = 296,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Singing skill' },
+    [674]  = { augId = 297,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'String instrument skill' },
+    [675]  = { augId = 299,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Blue magic skill' },
+    [676]  = { augId = 300,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Geomancy skill' },
+    [678]  = { augId = 301,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Handbell skill' },
 
     -- Weaponskill DMG+
     [1110] = { augId = 326,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Weapon Skill Acc' },
