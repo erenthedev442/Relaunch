@@ -22,7 +22,7 @@ local ABYSSEA_POP_KIS =
 
 local CLEANUP_CV = 'AbysseaKICleanupDone'
 
-m:addOverride('xi.globals.interaction.interaction_global.onGameIn', function(player, firstLogin, zoning)
+m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     super(player, firstLogin, zoning)
 
     if not firstLogin then return end
