@@ -1,0 +1,18 @@
+-- ---------------------------------------------------------------------------
+-- endless_tower_trust.sql
+-- Allow trusts in Walk of Echoes (zone 182) -- the Endless Tower zone.
+--
+-- The Tower's "1 Trust only" rule is HONOR-SYSTEM: endless_tower.lua only WARNS
+-- the player (it does not block or count trusts). But the zone's misc bitmask
+-- lacked MISC_TRUST (0x800), so the C++ CanUseMisc() gate (magic_state.cpp)
+-- rejected EVERY trust summon -- players could call zero, not one.
+--
+-- Set the bit (bitwise OR -> idempotent, preserves the other misc flags).
+-- Only MISC_TRUST is added; mounts/fellows stay off (the Tower is a combat
+-- challenge, and a fellow would break the "near-solo" intent).
+--
+-- zone_settings.misc is read at zone init, so this needs a MAP RESTART to take
+-- effect (no hot-reload). Idempotent, so the deploy's custom-SQL applier can
+-- re-run it harmlessly.
+-- ---------------------------------------------------------------------------
+UPDATE zone_settings SET misc = misc | 0x800 WHERE zoneid = 182;
