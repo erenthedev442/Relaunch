@@ -22,17 +22,17 @@ local MARKS_GIL_LV    = '[MarksPopGil]'
 local zoneConfig =
 {
     -- Visions of Abyssea
-    [xi.zone.ABYSSEA_KONSCHTAT]        = { cost = 200, infamy = 2, gil =   250000, level = 135, maxHP =  4000000, atkDef =  5000, accEva = 3000 },
-    [xi.zone.ABYSSEA_TAHRONGI]         = { cost = 200, infamy = 2, gil =   250000, level = 135, maxHP =  4000000, atkDef =  5000, accEva = 3000 },
-    [xi.zone.ABYSSEA_LA_THEINE]        = { cost = 200, infamy = 2, gil =   250000, level = 135, maxHP =  4000000, atkDef =  5000, accEva = 3000 },
+    [xi.zone.ABYSSEA_KONSCHTAT]        = { cost = 200, infamy = 25, gil =   250000, level = 135, maxHP =  4000000, atkDef =  5000, accEva = 3000 },
+    [xi.zone.ABYSSEA_TAHRONGI]         = { cost = 200, infamy = 25, gil =   250000, level = 135, maxHP =  4000000, atkDef =  5000, accEva = 3000 },
+    [xi.zone.ABYSSEA_LA_THEINE]        = { cost = 200, infamy = 25, gil =   250000, level = 135, maxHP =  4000000, atkDef =  5000, accEva = 3000 },
     -- Scars of Abyssea
-    [xi.zone.ABYSSEA_ATTOHWA]          = { cost = 350, infamy = 2, gil =   500000, level = 145, maxHP =  7000000, atkDef =  9000, accEva = 5000 },
-    [xi.zone.ABYSSEA_MISAREAUX]        = { cost = 350, infamy = 2, gil =   500000, level = 145, maxHP =  7000000, atkDef =  9000, accEva = 5000 },
-    [xi.zone.ABYSSEA_VUNKERL]          = { cost = 350, infamy = 2, gil =   500000, level = 145, maxHP =  7000000, atkDef =  9000, accEva = 5000 },
+    [xi.zone.ABYSSEA_ATTOHWA]          = { cost = 350, infamy = 40, gil =   500000, level = 145, maxHP =  7000000, atkDef =  9000, accEva = 5000 },
+    [xi.zone.ABYSSEA_MISAREAUX]        = { cost = 350, infamy = 40, gil =   500000, level = 145, maxHP =  7000000, atkDef =  9000, accEva = 5000 },
+    [xi.zone.ABYSSEA_VUNKERL]          = { cost = 350, infamy = 40, gil =   500000, level = 145, maxHP =  7000000, atkDef =  9000, accEva = 5000 },
     -- Heroes of Abyssea
-    [xi.zone.ABYSSEA_ALTEPA]           = { cost = 500, infamy = 3, gil =   750000, level = 155, maxHP = 10000000, atkDef = 13000, accEva = 7500 },
-    [xi.zone.ABYSSEA_ULEGUERAND]       = { cost = 500, infamy = 3, gil =   750000, level = 155, maxHP = 10000000, atkDef = 13000, accEva = 7500 },
-    [xi.zone.ABYSSEA_GRAUBERG]         = { cost = 500, infamy = 3, gil =   750000, level = 155, maxHP = 10000000, atkDef = 13000, accEva = 7500 },
+    [xi.zone.ABYSSEA_ALTEPA]           = { cost = 500, infamy = 60, gil =   750000, level = 155, maxHP = 10000000, atkDef = 13000, accEva = 7500 },
+    [xi.zone.ABYSSEA_ULEGUERAND]       = { cost = 500, infamy = 60, gil =   750000, level = 155, maxHP = 10000000, atkDef = 13000, accEva = 7500 },
+    [xi.zone.ABYSSEA_GRAUBERG]         = { cost = 500, infamy = 60, gil =   750000, level = 155, maxHP = 10000000, atkDef = 13000, accEva = 7500 },
 }
 
 local function spawnViaMark(p, mobId, cost, nmName, cfg)
