@@ -171,8 +171,8 @@ end)
 
 -- ============================================================
 -- Reward on kill
--- Awards Gil + Infamy to the killing blow dealer on a
--- marks-popped NM, with multipliers for:
+-- Awards Gil + Infamy to every PC in the party on a marks-popped NM
+-- kill, with multipliers for:
 --   x2.0  — 2+ real players in party
 --   x1.5  — no trusts in party
 -- Multipliers stack (solo no-trust = x1.5, party no-trust = x3).
@@ -194,16 +194,7 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
         local infamyEarned = math.floor(infamyBase * totalMult)
         local gilEarned    = math.floor(gilBase    * totalMult)
 
-        if infamyEarned > 0 then
-            player:setCharVar(INFAMY_CV,      (player:getCharVar(INFAMY_CV)      or 0) + infamyEarned)
-            player:setCharVar(INFAMY_LIFE_CV, (player:getCharVar(INFAMY_LIFE_CV) or 0) + infamyEarned)
-        end
-
-        if gilEarned > 0 then
-            player:addGil(gilEarned)
-        end
-
-        -- Build the reward message.
+        -- Build reward message once; same for every member.
         local parts = {}
         if infamyEarned > 0 then table.insert(parts, string.format('+%d Infamy', infamyEarned)) end
         if gilEarned    > 0 then table.insert(parts, string.format('+%dg', gilEarned))           end
@@ -217,7 +208,18 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
             msg = msg .. string.format('  (x%.1f: %s)', totalMult, table.concat(bonusParts, ' + '))
         end
 
-        player:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
+        -- Distribute to every online PC in the party.
+        for i = 0, 5 do
+            local mem = player:getPartyMember(i)
+            if mem and mem:getObjType() == xi.objType.PC then
+                if infamyEarned > 0 then
+                    mem:setCharVar(INFAMY_CV,      (mem:getCharVar(INFAMY_CV)      or 0) + infamyEarned)
+                    mem:setCharVar(INFAMY_LIFE_CV, (mem:getCharVar(INFAMY_LIFE_CV) or 0) + infamyEarned)
+                end
+                if gilEarned > 0 then mem:addGil(gilEarned) end
+                mem:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
+            end
+        end
     end)
 end)
 
