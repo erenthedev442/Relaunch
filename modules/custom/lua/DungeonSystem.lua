@@ -2062,7 +2062,8 @@ local function armDungeonAfterArrival(player)
         -- on `#mobs > 0` so it can't fire during the initial pre-spawn window.
         if not s.bossEntity and #s.mobs > 0 and p:getZoneID() == dungeon.zoneId then
             local live = 0
-            for _, mob in pairs(p:getZone():getMobs()) do
+            local pZone = p:getZone()
+            for _, mob in pairs(pZone and pZone:getMobs() or {}) do
                 if mob:isSpawned() and mob:getHPP() > 0 then
                     live = live + 1
                 end
