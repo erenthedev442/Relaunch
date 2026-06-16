@@ -144,6 +144,13 @@ end
 m:addOverride('xi.abyssea.qmOnTrigger', function(player, npc, mobId, kis, tradeReqs)
     local cfg = zoneConfig[player:getZoneID()]
 
+    -- Trade-to-pop ??? (mobId == 0): required items don't exist on this server.
+    -- Silently release the player instead of firing the "trade X item" cutscene.
+    if cfg and mobId == 0 then
+        player:release()
+        return false
+    end
+
     if cfg and mobId ~= 0 and kis and #kis > 0 then
         local mob = GetMobByID(mobId)
         if mob and not mob:isSpawned() then
