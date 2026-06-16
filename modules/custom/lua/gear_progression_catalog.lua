@@ -28,7 +28,7 @@ local catalog = {}
 -----------------------------------
 catalog.zoneId    = xi.zone.ESCHA_ZITAH
 catalog.zonePath  = 'xi.zones.Escha_ZiTah'
-catalog.vendorPos = { x = -16.0000, y = -0.5000, z = -30.0000, rot = 128 }
+catalog.vendorPos = { x =  -6.0000, y = -0.5000, z = -30.0000, rot = 128 }
 
 -----------------------------------
 -- SEAL CURRENCY DEFINITIONS
@@ -295,6 +295,12 @@ do
     -- Great Swords: 1 pick(s)
     local greatswords = cat(catalog.gold.weapons, 'Great Swords')
     table.insert(greatswords, { id = 21660, name = "Beryllium Sword +1", cost = 50, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 253, DMG 290/Dly 431
+
+    -- Axes: 3 pick(s)
+    local axes = cat(catalog.gold.weapons, 'Axes')
+    table.insert(axes, { id = 21707, name = "Barbarity +1", cost = 50, jobs = 'WAR/BST' })  -- WS score 250, DMG 189/Dly 280
+    table.insert(axes, { id = 21722, name = "Dolichenus", cost = 50, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- WS score 235, DMG 200/Dly 288
+    table.insert(axes, { id = 21721, name = "Kaja Axe", cost = 50, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- WS score 204, DMG 188/Dly 288
 
     -- Great Axes: 1 pick(s)
     local greataxes = cat(catalog.gold.weapons, 'Great Axes')
