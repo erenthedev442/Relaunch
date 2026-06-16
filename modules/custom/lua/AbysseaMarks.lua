@@ -22,9 +22,9 @@ local MARKS_GIL_LV    = '[MarksPopGil]'
 local zoneConfig =
 {
     -- Visions of Abyssea
-    [xi.zone.ABYSSEA_KONSCHTAT]        = { cost = 200, infamy = 1, gil =   250000, level = 135, maxHP =  6000000, atkDef =  5000, accEva = 3000 },
-    [xi.zone.ABYSSEA_TAHRONGI]         = { cost = 200, infamy = 1, gil =   250000, level = 135, maxHP =  6000000, atkDef =  5000, accEva = 3000 },
-    [xi.zone.ABYSSEA_LA_THEINE]        = { cost = 200, infamy = 1, gil =   250000, level = 135, maxHP =  6000000, atkDef =  5000, accEva = 3000 },
+    [xi.zone.ABYSSEA_KONSCHTAT]        = { cost = 200, infamy = 2, gil =   250000, level = 135, maxHP =  6000000, atkDef =  5000, accEva = 3000 },
+    [xi.zone.ABYSSEA_TAHRONGI]         = { cost = 200, infamy = 2, gil =   250000, level = 135, maxHP =  6000000, atkDef =  5000, accEva = 3000 },
+    [xi.zone.ABYSSEA_LA_THEINE]        = { cost = 200, infamy = 2, gil =   250000, level = 135, maxHP =  6000000, atkDef =  5000, accEva = 3000 },
     -- Scars of Abyssea
     [xi.zone.ABYSSEA_ATTOHWA]          = { cost = 350, infamy = 2, gil =   500000, level = 145, maxHP = 10500000, atkDef =  9000, accEva = 5000 },
     [xi.zone.ABYSSEA_MISAREAUX]        = { cost = 350, infamy = 2, gil =   500000, level = 145, maxHP = 10500000, atkDef =  9000, accEva = 5000 },
