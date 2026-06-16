@@ -14,40 +14,16 @@
 --   !reallevel          -- your own real level
 --   !reallevel Jbae     -- Jbae's real level (must be online)
 --
--- HOW THE NUMBER IS BUILT
--- =======================
--- Real Level = base job level + the sum of four INDEPENDENT bonuses.
--- Each bonus is read from its OWN system so nothing is double-counted:
---
---   Gear ........ getAverageItemLevel() - 99
---                 The weighted item level the game shows on your stats
---                 screen (weapon-heavy). iLvl 119 in every slot = +20.
---                 Purely from equipped gear -- no merits/JP/ascension in it.
---
---   Ascension ... Prestige_Level_<job> CharVar
---                 Each completed ascension at the Altar = +1. This axis is
---                 UNCAPPED (the endless "Paragon" tail), so it's the big
---                 long-term flex. Per-CURRENT-job, matching how Prestige
---                 stat bonuses apply.
---
---   Job Points .. getSpentJobPoints() / JP_PER_LEVEL
---                 Total JP poured into the current job (0 below lvl 99).
---                 A fully job-pointed job (~2100 JP) ~= +21 at the default
---                 divisor of 100.
---
---   Merits ...... sum of the 7 base-attribute merits / MERIT_ATTR_PER_LEVEL
---                 STR DEX VIT AGI INT MND CHR meritted bonuses. This is the
---                 slice of merit investment we can measure exactly; broader
---                 merit/skill investment still shows up in your effective
---                 stats (see !mystats).
---
--- TUNING: the two divisors below are the only knobs. Lower divisor = each
---         point of JP / merit is worth more real levels. Gear and Ascension
---         are deliberately 1:1 (an item level / an ascension each = 1 level).
+-- The actual formula + tunables live in the shared lib
+-- modules/custom/lua/real_level.lua, so this command and the login-time
+-- leaderboard updater (RealLevel_Tracker.lua) can never drift apart. This
+-- file is just the chat-display + an on-demand CharVar refresh.
 --
 -- Lives in modules/custom/commands/ so it survives upstream LSB merges
 -- (scripts/commands/ is upstream-tracked; this folder is ours).
 -----------------------------------
+local realLib = require('modules/custom/lua/real_level')
+
 ---@type TCommand
 local commandObj = {}
 
@@ -57,20 +33,9 @@ commandObj.cmdprops =
     parameters = 's',
 }
 
--- == Tunables ========================================================
--- JP spent per bonus real-level. 100 -> a maxed job (~2100 JP) is ~+21.
-local JP_PER_LEVEL        = 100
--- Summed attribute-merit points per bonus real-level.
-local MERIT_ATTR_PER_LEVEL = 5
-
 -- == Output channels (match profile.lua: yellow header, default body) ===
 local H = xi.msg.channel.SYSTEM_3    -- header line
 local B = xi.msg.channel.SYSTEM_3   -- body lines
-
--- The 7 base-attribute merits we can read exactly via getMerit(). HP/MP
--- merits are intentionally excluded -- their values are an order of
--- magnitude larger and would drown out the attribute signal.
-local ATTR_MERITS = { 'STR', 'DEX', 'VIT', 'AGI', 'INT', 'MND', 'CHR' }
 
 -- Invert xi.job (key->id) once so we can show "WAR" instead of a raw id.
 local function jobName(jobId)
@@ -93,45 +58,28 @@ commandObj.onTrigger = function(player, targetName)
         end
     end
 
-    local job   = targ:getMainJob()
-    local base  = targ:getMainLvl()
-
-    -- == Gear: item levels above 99 (weapon-weighted, as shown in-game) ==
-    local ilvl   = targ:getAverageItemLevel()
-    local gearLv = math.max(0, ilvl - 99)
-
-    -- == Ascension: completed ascensions for the CURRENT job ==
-    local ascLv  = targ:getCharVar('Prestige_Level_' .. job) or 0
-
-    -- == Job Points: total spent on the current job ==
-    local jpSpent = targ:getSpentJobPoints() or 0
-    local jpLv    = math.floor(jpSpent / JP_PER_LEVEL)
-
-    -- == Merits: sum of the 7 base-attribute merit bonuses ==
-    local meritSum = 0
-    for _, m in ipairs(ATTR_MERITS) do
-        meritSum = meritSum + (targ:getMerit(xi.merit[m]) or 0)
+    -- Shared computation (single source -- see real_level.lua).
+    local realLevel, bd = realLib.compute(targ)
+    if realLevel == nil then
+        player:printToPlayer('[Real Level] Target is not a player character.', H)
+        return
     end
-    local meritLv = math.floor(meritSum / MERIT_ATTR_PER_LEVEL)
 
-    local realLevel = base + gearLv + ascLv + jpLv + meritLv
-    local bonus     = gearLv + ascLv + jpLv + meritLv
-
-    -- Persist for the website leaderboard. docs/community/leaderboards.md ranks
-    -- the RealLevel CharVar (see tools/docgen/generators/leaderboards.py); running
-    -- !reallevel on a character registers / refreshes them on the board.
+    -- Persist for the website leaderboard (docs/community/leaderboards.md ranks
+    -- the RealLevel CharVar). Running !reallevel registers / refreshes the board
+    -- on demand; the login hook (RealLevel_Tracker) keeps everyone else fresh.
     targ:setCharVar('RealLevel', realLevel)
 
     -- == Render ==
     player:printToPlayer(string.format(
         '[Real Level] -- %s the %s%d -----------------------',
-        targ:getName(), jobName(job), base), H)
+        targ:getName(), jobName(bd.job), bd.base), H)
     player:printToPlayer(string.format('  >>> REAL LEVEL: %d <<<', realLevel), B)
-    player:printToPlayer(string.format('  Base lvl %d  +  %d from your investment:', base, bonus), B)
-    player:printToPlayer(string.format('    Gear ......... +%-4d (avg iLvl %d)',   gearLv, ilvl), B)
-    player:printToPlayer(string.format('    Ascension .... +%-4d (Prestige rank %d)', ascLv, ascLv), B)
-    player:printToPlayer(string.format('    Job Points ... +%-4d (%d JP spent)',   jpLv, jpSpent), B)
-    player:printToPlayer(string.format('    Merits ....... +%-4d (attribute merits +%d)', meritLv, meritSum), B)
+    player:printToPlayer(string.format('  Base lvl %d  +  %d from your investment:', bd.base, bd.bonus), B)
+    player:printToPlayer(string.format('    Gear ......... +%-4d (avg iLvl %d)',   bd.gear, bd.ilvl), B)
+    player:printToPlayer(string.format('    Ascension .... +%-4d (Prestige rank %d)', bd.asc, bd.asc), B)
+    player:printToPlayer(string.format('    Job Points ... +%-4d (%d JP spent)',   bd.jp, bd.jpSpent), B)
+    player:printToPlayer(string.format('    Merits ....... +%-4d (attribute merits +%d)', bd.merit, bd.meritSum), B)
 
     -- Account-wide flex tail: total ascensions across every job.
     local lifeAsc = targ:getCharVar('Prestige_Ascensions_Total') or 0
