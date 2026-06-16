@@ -7,7 +7,7 @@
 -- completion (charVar PW_Trial2_Done = 1).
 --
 -- Rules:
---   * One Trust allowed (honor system — the entry dialog warns you).
+--   * One Trust allowed (now ENFORCED — the entry dialog warns you).
 --   * Death ends the run with no reward and no floor save.
 --   * You can abort via !tower abort.
 --
@@ -42,6 +42,41 @@ local WARP_IN        = { x = -420, y = 14, z = -49, rot = 192 }
 
 -- Exit warp: GM Home in front of the dungeon cluster.
 local EXIT_WARP = { zoneId = 210, x = -15, y = 0, z = -18, rot = 128 }
+
+-----------------------------------
+-- HARD CAP: exactly 1 Trust inside the Tower (zone 182).
+-- Overrides the global trust-cast gate. Runs every stock check first via
+-- super() (trust setting, zone-misc, party-leader, enmity, ROV key-item caps,
+-- battlefield rules); if those allow it, additionally blocks the summon once
+-- the player already has one Trust *while in the Tower zone*. Scoped by zoneId,
+-- so trust behaviour is unchanged in every other zone. Stock allows 3-5 trusts
+-- (ROV key items); this clamps the Tower to 1.
+-- canCast contract: returns 0 = allowed, any non-zero (msg id / -1) = blocked.
+-- Override module -> needs a map restart to register.
+-----------------------------------
+m:addOverride('xi.trust.canCast', function(caster, spell, notAllowedTrustIds)
+    local result = super(caster, spell, notAllowedTrustIds)
+    if result ~= 0 then
+        return result   -- a stock gate already blocked it
+    end
+
+    if caster:getZoneID() == TOWER_ZONE_ID then
+        local trustCount = 0
+        for _, member in pairs(caster:getPartyWithTrusts()) do
+            if member:getObjType() == xi.objType.TRUST then
+                trustCount = trustCount + 1
+            end
+        end
+        if trustCount >= 1 then
+            caster:printToPlayer(
+                '[Endless Tower] 1 Trust only - you already have one summoned.',
+                xi.msg.channel.SYSTEM_3)
+            return -1   -- blocked; message already shown
+        end
+    end
+
+    return 0
+end)
 
 -----------------------------------
 -- Floor band definitions
