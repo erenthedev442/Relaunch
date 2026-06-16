@@ -26,18 +26,6 @@ fi
 echo "Server folder: $REPO"
 cd "$REPO"
 
-# Place freshly-uploaded zz_*.sql (your latest from the laptop) into sql/.
-shopt -s nullglob
-UP=( "$HOME"/zz_*.sql )
-if [ ${#UP[@]} -gt 0 ]; then
-  echo "Refreshing custom SQL:"; printf '  %s\n' "${UP[@]##*/}"
-  for f in "${UP[@]}"; do
-    sudo cp -f "$f" "$REPO/sql/$(basename "$f")"
-    rm -f "$f"
-  done
-  sudo chown xi:xi "$REPO"/sql/zz_*.sql 2>/dev/null || true
-fi
-
 # [1] Safety backup (best-effort; the zz_ reload below is idempotent anyway).
 echo; echo "[1/5] Backing up database..."
 mkdir -p sql/backups 2>/dev/null || sudo mkdir -p sql/backups
@@ -86,19 +74,15 @@ else
   echo "  WARNING: no build/ directory found - skipping rebuild."
 fi
 
-# [4] Reload the custom mod SQL. Only the zz_*.sql layer (gear/zones/mods),
-#     which is idempotent (INSERT IGNORE / ON DUPLICATE / DELETE) so it's
-#     safe to re-run. Player data is never touched.
-echo; echo "[4/5] Reloading custom mod SQL (zz_*.sql)..."
-shopt -s nullglob
-for f in sql/zz_*.sql; do
-  echo "  $f"
-  if ! sudo mariadb xidb < "$f"; then
-    echo "ERROR applying $f - server NOT restarted. Restore from sql/backups if needed." >&2
-    exit 1
-  fi
-done
-echo "  SQL reloaded."
+# [4] Apply ALL SQL that changed since the last deploy.
+#     Covers sql/*.sql (base + zz_* override layers) and modules/custom/sql/*.sql.
+echo; echo "[4/5] Applying changed SQL (all layers — sql + custom)..."
+if bash tools/_apply_changed_sql.sh; then
+  echo "  SQL step complete."
+else
+  echo "ERROR: SQL step failed — server NOT restarted. Check output above." >&2
+  exit 1
+fi
 
 # [5] Restart so the new code + data take effect.
 echo; echo "[5/5] Restarting server (players briefly disconnect)..."

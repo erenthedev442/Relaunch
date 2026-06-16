@@ -13,8 +13,8 @@ REM
 REM    [1] re-score ALL gear catalogs from live data
 REM    [2] commit + push working tree to GitHub (backup)
 REM    [3] ship modules/custom + scripts + tools to Azure
-REM        (no src/) + stop/extract/start xi_map + custom SQL
-REM    [4] apply zz_*.sql + restart xi_map + health-check
+REM        (no src/) + stop/extract/start xi_map
+REM    [4] git pull + apply ALL changed SQL + restart + health-check
 REM    [5] publish the website FROM THE BOX (live db)
 REM
 REM  ** If any src/ C++ file changed: run deploy-everything.bat **
@@ -76,23 +76,18 @@ if errorlevel 1 ( echo        ERROR: tar failed -- skipping server deploy.& set 
 scp -i "%KEY%" %SSHOPT% "%TGZ%" %HOST%:/tmp/fjb_nrb.tgz
 if errorlevel 1 ( echo        ERROR: scp of bundle failed -- skipping server deploy.& set "SRVOK=PROBLEM"& goto :finish )
 del "%TGZ%" >nul 2>&1
-pushd "%SRC%\sql"
-scp -i "%KEY%" %SSHOPT% zz_*.sql %HOST%:
-set "RC=%ERRORLEVEL%"
-popd
-if not "%RC%"=="0" ( echo        ERROR: scp of zz_*.sql failed -- skipping server deploy.& set "SRVOK=PROBLEM"& goto :finish )
-ssh -i "%KEY%" %SSHOPT% %HOST% "cd %REMOTE% && rm -f /tmp/fjb_nrb_ok && sudo tar -czf $HOME/predeploy-$(date +%%Y%%m%%d-%%H%%M%%S).tgz modules/custom scripts tools 2>/dev/null && ls -t $HOME/predeploy-*.tgz | tail -n +6 | xargs -r rm -f; echo '   stopping xi_map for a storm-free extract...'; sudo systemctl stop xi_map; sudo tar -xzf /tmp/fjb_nrb.tgz -C %REMOTE% --no-same-owner && sudo chown -R xi:xi %REMOTE%/modules/custom %REMOTE%/scripts %REMOTE%/tools && touch /tmp/fjb_nrb_ok; sudo systemctl start xi_map; echo '   xi_map restarted after extract'; rm -f /tmp/fjb_nrb.tgz; test -f /tmp/fjb_nrb_ok && echo   files-OK && tr -d '\015' < tools/_apply_changed_custom_sql.sh > /tmp/_acs.sh && bash /tmp/_acs.sh; rm -f /tmp/_acs.sh /tmp/fjb_nrb_ok" > "%OUT%" 2>&1
+ssh -i "%KEY%" %SSHOPT% %HOST% "cd %REMOTE% && rm -f /tmp/fjb_nrb_ok && sudo tar -czf $HOME/predeploy-$(date +%%Y%%m%%d-%%H%%M%%S).tgz modules/custom scripts tools 2>/dev/null && ls -t $HOME/predeploy-*.tgz | tail -n +6 | xargs -r rm -f; echo '   stopping xi_map for a storm-free extract...'; sudo systemctl stop xi_map; sudo tar -xzf /tmp/fjb_nrb.tgz -C %REMOTE% --no-same-owner && sudo chown -R xi:xi %REMOTE%/modules/custom %REMOTE%/scripts %REMOTE%/tools && touch /tmp/fjb_nrb_ok; sudo systemctl start xi_map; echo '   xi_map restarted after extract'; rm -f /tmp/fjb_nrb.tgz; test -f /tmp/fjb_nrb_ok && echo   files-OK; rm -f /tmp/fjb_nrb_ok" > "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
 findstr /c:"files-OK" "%OUT%" >nul
 if errorlevel 1 ( echo        ERROR: install / custom-SQL step failed.& set "SRVOK=PROBLEM"& goto :finish )
 (echo [%TIME%] [3/5] install: OK)>> "%LOG%"
 
-REM ---- [4] Apply zz_*.sql + restart (no C++ rebuild) ----
+REM ---- [4] git pull + apply ALL changed SQL + restart (no C++ rebuild) ----
 echo(
-echo  [4/5] Applying zz_*.sql + restarting xi_map (no rebuild)...
+echo  [4/5] Applying ALL changed SQL + restarting xi_map (no rebuild)...
 (echo [%TIME%] [4/5] sql+restart: start)>> "%LOG%"
-ssh -i "%KEY%" %SSHOPT% %HOST% "cd %REMOTE% && shopt -s nullglob && for f in ~/zz_*.sql; do sudo cp -f $f sql/$(basename $f); rm -f $f; done; sudo chown xi:xi sql/zz_*.sql 2>/dev/null || true; mkdir -p sql/backups; BK=sql/backups/predeploy-$(date +%%Y%%m%%d-%%H%%M%%S).sql; sudo mariadb-dump xidb > $BK 2>/dev/null || sudo mysqldump xidb > $BK 2>/dev/null && echo   backup: $BK || echo   WARNING: backup skipped; for f in sql/zz_*.sql; do echo   applying $f; sudo mariadb xidb < $f || { echo ERROR applying $f; exit 1; }; done && echo   zz_ SQL reloaded. && (sudo systemctl restart xi 2>/dev/null || sudo systemctl restart xi_map xi_connect xi_search xi_world) && echo   restarted. && echo restart OK." > "%OUT%" 2>&1
+ssh -i "%KEY%" %SSHOPT% %HOST% "cd %REMOTE% && mkdir -p sql/backups; BK=sql/backups/predeploy-$(date +%%Y%%m%%d-%%H%%M%%S).sql; sudo mariadb-dump xidb > $BK 2>/dev/null || sudo mysqldump xidb > $BK 2>/dev/null && echo '   backup: '$BK || echo '   WARNING: backup skipped'; git pull --ff-only 2>&1 | tail -2; bash tools/_apply_changed_sql.sh && (sudo systemctl restart xi 2>/dev/null || sudo systemctl restart xi_map xi_connect xi_search xi_world) && echo restart OK." > "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
 findstr /c:"restart OK." "%OUT%" >nul
