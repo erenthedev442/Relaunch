@@ -3169,8 +3169,25 @@ showTierMenu = function(player, dungeon)
     openMenu(player, dmMenu)
 end
 
-showDungeonMenu = function(player)
+showDungeonMenu = function(player, page)
+    page = page or 1
     local opts = {}
+
+    -- Pagination: the 8 dungeons overflow the customMenu caps (~150 bytes
+    -- across the title + every option label, and ~8 options client-side), so
+    -- the list is split into pages of DUNGEON_PAGE. Computed up front so the
+    -- title below can show the page count. (The menu was unpaginated back when
+    -- there were only 4 dungeons -- the comment below predicted this.)
+    local DUNGEON_PAGE = 4
+    local visibleCount = 0
+    for _, dd in ipairs(catalog.dungeons) do
+        if not dd._disabled then visibleCount = visibleCount + 1 end
+    end
+    local dungeonPages = math.max(1, math.ceil(visibleCount / DUNGEON_PAGE))
+    if page < 1 then page = 1 end
+    if page > dungeonPages then page = dungeonPages end
+    local pgFirst, pgLast = (page - 1) * DUNGEON_PAGE + 1, page * DUNGEON_PAGE
+    local visIdx = 0
 
     -- Infamy balance is shown in CHAT, not as a menu row. The customMenu
     -- payload is hard-capped at 150 bytes (GP_SERV_COMMAND_CHAT_STD.Mes,
@@ -3264,13 +3281,19 @@ showDungeonMenu = function(player)
         -- so hiding it from the menu is the right protection.
         for _, dungeon in ipairs(catalog.dungeons) do
             if not dungeon._disabled then
+                visIdx = visIdx + 1
+                if visIdx >= pgFirst and visIdx <= pgLast then
                 local d = dungeon
                 -- Star prefix on the featured dungeon so it's visible
                 -- at a glance in the menu (the chat print above gave
                 -- the details; this is the quick scan).
                 local prefix = (featured and featured.id == d.id) and '* ' or ''
+                -- Strip the uniform "The " prefix to keep labels short -- all
+                -- dungeon labels start with "The ", and 4 long rows + nav would
+                -- otherwise risk the ~150-byte customMenu cap.
+                local label  = (d.label:gsub('^The ', ''))
                 table.insert(opts, {
-                    string.format('%s%s (%dm)', prefix, d.label, math.floor(d.timeLimit / 60)),
+                    string.format('%s%s (%dm)', prefix, label, math.floor(d.timeLimit / 60)),
                     function(p)
                         -- Phase-2: route through tier picker. The
                         -- dungeon description is printed inside
@@ -3300,12 +3323,29 @@ showDungeonMenu = function(player)
                         showTierMenu(p, d)
                     end,
                 })
+                end  -- /page slice (if visIdx >= pgFirst and <= pgLast)
             end
+        end
+
+        -- Pagination nav (only in the no-session branch, after the list).
+        if page > 1 then
+            table.insert(opts, {
+                string.format('<< Prev (%d/%d)', page - 1, dungeonPages),
+                function(p) showDungeonMenu(p, page - 1) end,
+            })
+        end
+        if page < dungeonPages then
+            table.insert(opts, {
+                string.format('Next >> (%d/%d)', page + 1, dungeonPages),
+                function(p) showDungeonMenu(p, page + 1) end,
+            })
         end
     end
     table.insert(opts, { 'Close', function(p) end })
 
-    dmMenu.title = 'Dungeon Master'
+    dmMenu.title = (dungeonPages > 1)
+        and string.format('Dungeon Master (%d/%d)', page, dungeonPages)
+        or 'Dungeon Master'
     dmMenu.options = opts
     openMenu(player, dmMenu)
 end
