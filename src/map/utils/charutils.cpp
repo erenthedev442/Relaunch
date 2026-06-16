@@ -2347,6 +2347,9 @@ bool EquipArmor(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 conta
         return false;
     }
 
+    // FJB core patch: equip allowed if the item's job mask matches the MAIN *or*
+    // SUB job (stock LSB checks main only). Loosens job-restricted gear to sub-job
+    // use; item level / superior level / race still gate. reference_lsb_core_patches.md
     const bool jobAllowed = (PItem->getJobs() & (1 << (PChar->GetMJob() - 1))) ||
                             (PChar->GetSJob() > 0 && (PItem->getJobs() & (1 << (PChar->GetSJob() - 1))));
     if ((PChar->m_EquipBlock & (1 << equipSlotID)) || !jobAllowed ||
