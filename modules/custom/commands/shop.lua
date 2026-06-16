@@ -77,9 +77,38 @@ local function buildAugmentStock()
         end
     end
 
-    for cat = 1, 13 do
+    for cat = 1, 12 do
         finalize(augmentGroups[cat][1], augmentGroups[cat][2])
     end
+
+    -- cat 13 (ws) has 125 items; FFXI client caps shop display at ~80.
+    -- Split at 'm' boundary so each page stays safely under the limit.
+    local wsIds = byToken['ws']
+    if wsIds and #wsIds > 0 then
+        table.sort(wsIds, function(a, b)
+            local la = itemNames[a] or (catalog[a] and catalog[a].label) or ''
+            local lb = itemNames[b] or (catalog[b] and catalog[b].label) or ''
+            return la < lb
+        end)
+        local wsA, wsB = {}, {}
+        for _, itemId in ipairs(wsIds) do
+            local nm = itemNames[itemId] or (catalog[itemId] and catalog[itemId].label) or ''
+            if nm < 'm' then
+                wsA[#wsA + 1] = { itemId, AUGMENT_PRICE }
+            else
+                wsB[#wsB + 1] = { itemId, AUGMENT_PRICE }
+            end
+        end
+        if #wsA > 0 then
+            stock['ws']              = wsA
+            order[#order + 1]        = { 'ws',  'Weaponskill DMG (A-L)', #wsA }
+        end
+        if #wsB > 0 then
+            stock['ws2']             = wsB
+            order[#order + 1]        = { 'ws2', 'Weaponskill DMG (M-Z)', #wsB }
+        end
+    end
+
     finalize(POINT_TOKEN, POINT_NAME)
     finalize('other', 'Other')
 
