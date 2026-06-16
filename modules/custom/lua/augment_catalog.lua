@@ -377,6 +377,105 @@ return {
     [2851] = { augId = 1056, base = 1,   mult = 5,  disp = 1,    cat = 13, label = 'Blade To DMG' },
     [2859] = { augId = 1057, base = 1,   mult = 5,  disp = 1,    cat = 13, label = 'Blade Chi DMG' },
     [3503] = { augId = 1058, base = 1,   mult = 5,  disp = 1,    cat = 13, label = 'Blade Ten DMG' },
+    -- Katana (continued)
+    [496]  = { augId = 1059, base = 1, mult = 5, disp = 1, cat = 13, label = 'Blade Ku DMG' },
+    -- Great Katana
+    [497]  = { augId = 1060, base = 1, mult = 5, disp = 1, cat = 13, label = 'Tachi Goten DMG' },
+    [498]  = { augId = 1061, base = 1, mult = 5, disp = 1, cat = 13, label = 'Tachi Jinpu DMG' },
+    [499]  = { augId = 1062, base = 1, mult = 5, disp = 1, cat = 13, label = 'Tachi Koki DMG' },
+    [501]  = { augId = 1063, base = 1, mult = 5, disp = 1, cat = 13, label = 'Tachi Kasha DMG' },
+    -- Club
+    [503]  = { augId = 1064, base = 1, mult = 5, disp = 1, cat = 13, label = 'Brainshaker DMG' },
+    [505]  = { augId = 1065, base = 1, mult = 5, disp = 1, cat = 13, label = 'Skullbreaker DMG' },
+    [506]  = { augId = 1066, base = 1, mult = 5, disp = 1, cat = 13, label = 'Judgment DMG' },
+    [507]  = { augId = 1067, base = 1, mult = 5, disp = 1, cat = 13, label = 'Black Halo DMG' },
+    [620]  = { augId = 1094, base = 1, mult = 5, disp = 1, cat = 13, label = 'Randgrith DMG' },
+    [621]  = { augId = 1095, base = 1, mult = 5, disp = 1, cat = 13, label = 'Mystic Boon DMG' },
+    [663]  = { augId = 1136, base = 1, mult = 5, disp = 1, cat = 13, label = 'Realmrazer DMG' },
+    -- Staff
+    [508]  = { augId = 1068, base = 1, mult = 5, disp = 1, cat = 13, label = 'Rock Crusher DMG' },
+    [510]  = { augId = 1069, base = 1, mult = 5, disp = 1, cat = 13, label = 'Shell Crusher DMG' },
+    [511]  = { augId = 1070, base = 1, mult = 5, disp = 1, cat = 13, label = 'Full Swing DMG' },
+    [529]  = { augId = 1071, base = 1, mult = 5, disp = 1, cat = 13, label = 'Retribution DMG' },
+    [643]  = { augId = 1116, base = 1, mult = 5, disp = 1, cat = 13, label = 'Gate Tartarus DMG' },
+    [644]  = { augId = 1117, base = 1, mult = 5, disp = 1, cat = 13, label = 'Omniscience DMG' },
+    [645]  = { augId = 1118, base = 1, mult = 5, disp = 1, cat = 13, label = 'Vidohunir DMG' },
+    [646]  = { augId = 1119, base = 1, mult = 5, disp = 1, cat = 13, label = 'Garland of Bliss DMG' },
+    [664]  = { augId = 1137, base = 1, mult = 5, disp = 1, cat = 13, label = 'Shattersoul DMG' },
+    -- Archery
+    [534]  = { augId = 1072, base = 1, mult = 5, disp = 1, cat = 13, label = 'Dulling Arrow DMG' },
+    [560]  = { augId = 1073, base = 1, mult = 5, disp = 1, cat = 13, label = 'Blast Arrow DMG' },
+    [564]  = { augId = 1074, base = 1, mult = 5, disp = 1, cat = 13, label = 'Arching Arrow DMG' },
+    [565]  = { augId = 1075, base = 1, mult = 5, disp = 1, cat = 13, label = 'Empyreal Arrow DMG' },
+    [647]  = { augId = 1120, base = 1, mult = 5, disp = 1, cat = 13, label = 'Namas Arrow DMG' },
+    [648]  = { augId = 1121, base = 1, mult = 5, disp = 1, cat = 13, label = "Jishnu's Radiance DMG" },
+    -- Marksmanship
+    [566]  = { augId = 1076, base = 1, mult = 5, disp = 1, cat = 13, label = 'Hot Shot DMG' },
+    [568]  = { augId = 1077, base = 1, mult = 5, disp = 1, cat = 13, label = 'Split Shot DMG' },
+    [572]  = { augId = 1078, base = 1, mult = 5, disp = 1, cat = 13, label = 'Sniper Shot DMG' },
+    [573]  = { augId = 1079, base = 1, mult = 5, disp = 1, cat = 13, label = 'Detonator DMG' },
+    [649]  = { augId = 1122, base = 1, mult = 5, disp = 1, cat = 13, label = 'Trueflight DMG' },
+    [650]  = { augId = 1123, base = 1, mult = 5, disp = 1, cat = 13, label = 'Coronach DMG' },
+    [651]  = { augId = 1124, base = 1, mult = 5, disp = 1, cat = 13, label = 'Leaden Salute DMG' },
+    [652]  = { augId = 1125, base = 1, mult = 5, disp = 1, cat = 13, label = 'Wildfire DMG' },
+    [667]  = { augId = 1140, base = 1, mult = 5, disp = 1, cat = 13, label = 'Last Stand DMG' },
+    -- Generic weapon skill
+    [574]  = { augId = 1080, base = 1, mult = 5, disp = 1, cat = 13, label = 'Weapon Skill DMG' },
+    -- H2H
+    [575]  = { augId = 1081, base = 1, mult = 5, disp = 1, cat = 13, label = 'Final Heaven DMG' },
+    [596]  = { augId = 1082, base = 1, mult = 5, disp = 1, cat = 13, label = 'Ascetics Fury DMG' },
+    [605]  = { augId = 1083, base = 1, mult = 5, disp = 1, cat = 13, label = 'Stringing Pummel DMG' },
+    [610]  = { augId = 1084, base = 1, mult = 5, disp = 1, cat = 13, label = 'Victory Smite DMG' },
+    [654]  = { augId = 1128, base = 1, mult = 5, disp = 1, cat = 13, label = 'Shijin Spiral DMG' },
+    -- Dagger
+    [611]  = { augId = 1085, base = 1, mult = 5, disp = 1, cat = 13, label = 'Mercy Stroke DMG' },
+    [612]  = { augId = 1086, base = 1, mult = 5, disp = 1, cat = 13, label = 'Pyrrhic Kleos DMG' },
+    [613]  = { augId = 1087, base = 1, mult = 5, disp = 1, cat = 13, label = 'Mandalic Stab DMG' },
+    [614]  = { augId = 1088, base = 1, mult = 5, disp = 1, cat = 13, label = 'Mordant Rime DMG' },
+    [615]  = { augId = 1089, base = 1, mult = 5, disp = 1, cat = 13, label = "Rudra's Storm DMG" },
+    [655]  = { augId = 1129, base = 1, mult = 5, disp = 1, cat = 13, label = 'Exenterator DMG' },
+    -- Sword
+    [616]  = { augId = 1090, base = 1, mult = 5, disp = 1, cat = 13, label = 'Kts of Round DMG' },
+    [617]  = { augId = 1091, base = 1, mult = 5, disp = 1, cat = 13, label = 'Death Blossom DMG' },
+    [618]  = { augId = 1092, base = 1, mult = 5, disp = 1, cat = 13, label = 'Expiacion DMG' },
+    [619]  = { augId = 1093, base = 1, mult = 5, disp = 1, cat = 13, label = 'Chant du Cygne DMG' },
+    [657]  = { augId = 1130, base = 1, mult = 5, disp = 1, cat = 13, label = 'Requiescat DMG' },
+    -- Great Sword
+    [653]  = { augId = 1126, base = 1, mult = 5, disp = 1, cat = 13, label = 'Dimidiation DMG' },
+    [665]  = { augId = 1138, base = 1, mult = 5, disp = 1, cat = 13, label = 'Resolution DMG' },
+    -- Axe
+    [666]  = { augId = 1139, base = 1, mult = 5, disp = 1, cat = 13, label = 'Ruinator DMG' },
+    -- Great Axe
+    [625]  = { augId = 1099, base = 1, mult = 5, disp = 1, cat = 13, label = 'Primal Rend DMG' },
+    [626]  = { augId = 1100, base = 1, mult = 5, disp = 1, cat = 13, label = 'Cloudsplitter DMG' },
+    [627]  = { augId = 1101, base = 1, mult = 5, disp = 1, cat = 13, label = 'Metatron Torment DMG' },
+    [628]  = { augId = 1102, base = 1, mult = 5, disp = 1, cat = 13, label = "King's Justice DMG" },
+    [629]  = { augId = 1103, base = 1, mult = 5, disp = 1, cat = 13, label = "Ukko's Fury DMG" },
+    [658]  = { augId = 1131, base = 1, mult = 5, disp = 1, cat = 13, label = 'Upheaval DMG' },
+    -- Scythe
+    [622]  = { augId = 1096, base = 1, mult = 5, disp = 1, cat = 13, label = 'Scourge DMG' },
+    [630]  = { augId = 1104, base = 1, mult = 5, disp = 1, cat = 13, label = 'Catastrophe DMG' },
+    [631]  = { augId = 1105, base = 1, mult = 5, disp = 1, cat = 13, label = 'Insurgency DMG' },
+    [632]  = { augId = 1106, base = 1, mult = 5, disp = 1, cat = 13, label = 'Quietus DMG' },
+    [659]  = { augId = 1132, base = 1, mult = 5, disp = 1, cat = 13, label = 'Entropy DMG' },
+    -- Great Sword / Axe overlap (Torcleaver=GS, Onslaught=Axe)
+    [623]  = { augId = 1097, base = 1, mult = 5, disp = 1, cat = 13, label = 'Torcleaver DMG' },
+    [624]  = { augId = 1098, base = 1, mult = 5, disp = 1, cat = 13, label = 'Onslaught DMG' },
+    -- Polearm
+    [633]  = { augId = 1107, base = 1, mult = 5, disp = 1, cat = 13, label = 'Geirskogul DMG' },
+    [635]  = { augId = 1108, base = 1, mult = 5, disp = 1, cat = 13, label = 'Drakesbane DMG' },
+    [636]  = { augId = 1109, base = 1, mult = 5, disp = 1, cat = 13, label = "Camlann's Torment DMG" },
+    [660]  = { augId = 1133, base = 1, mult = 5, disp = 1, cat = 13, label = 'Stardiver DMG' },
+    -- Katana (Blade: Metsu / Kamu / Hi / Shun)
+    [637]  = { augId = 1110, base = 1, mult = 5, disp = 1, cat = 13, label = 'Blade Metsu DMG' },
+    [638]  = { augId = 1111, base = 1, mult = 5, disp = 1, cat = 13, label = 'Blade Kamu DMG' },
+    [639]  = { augId = 1112, base = 1, mult = 5, disp = 1, cat = 13, label = 'Blade Hi DMG' },
+    [661]  = { augId = 1134, base = 1, mult = 5, disp = 1, cat = 13, label = 'Blade Shun DMG' },
+    -- Great Katana (Tachi: Kaiten / Rana / Fudo / Shoha)
+    [640]  = { augId = 1113, base = 1, mult = 5, disp = 1, cat = 13, label = 'Tachi Kaiten DMG' },
+    [641]  = { augId = 1114, base = 1, mult = 5, disp = 1, cat = 13, label = 'Tachi Rana DMG' },
+    [642]  = { augId = 1115, base = 1, mult = 5, disp = 1, cat = 13, label = 'Tachi Fudo DMG' },
+    [662]  = { augId = 1135, base = 1, mult = 5, disp = 1, cat = 13, label = 'Tachi Shoha DMG' },
 
     -- Progression (Exp / Cap)
     ---   Cap. Point +33% (augId 75) uses Mod::CAPACITY_BONUS (915) in
