@@ -1,28 +1,35 @@
 -----------------------------------
 -- SparksExchange.lua
--- "Eminence Broker" -- a GM Home NPC that buys your Sparks of Eminence for gil.
--- Sparks cap easily via Records of Eminence, so capped players have nothing to
--- spend them on; this is their outlet (a sparks sink / modest gil faucet).
+-- "Eminence Broker" -- a GM Home NPC that buys Sparks of Eminence and
+-- Unity Accolades for gil. Both cap easily via Records of Eminence;
+-- this gives capped players a gil outlet.
 -- Pure Lua, mirrors the gil_mystery_box / Casino menu pattern.
 --
--- TUNE: `cfg.rate` below is the gil paid per spark (10 -> at the live
--- 999,999-spark cap = ~10M gil). Change that one number to reprice it.
+-- TUNE: rates below. Sparks 10 gil/ea (999,999 cap = ~10M max).
+--       Accolades 100 gil/ea (99,999 cap = ~10M max).
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/GM_Home/Zone')
 
 local m = Module:new('sparks_exchange')
 
-local S       = xi.msg.channel.SYSTEM_3
-local SPARKS  = 'spark_of_eminence'
-local GIL_CAP = 999999999
+local S          = xi.msg.channel.SYSTEM_3
+local SPARKS     = 'spark_of_eminence'
+local ACCOLADES  = 'unity_accolades'
+local GIL_CAP    = 999999999
 
 -- ===== config (tune freely) =====
 local cfg =
 {
-    rate   = 10,                                                 -- gil paid per spark (999,999 cap = ~10M gil)
-    tiers  = { 1000, 10000, 50000 },                            -- preset convert amounts (+ "all")
-    npcPos = { x = -7.500, y = 0.000, z = -35.000, rot = 128 },  -- GM Home economy corner, west end of the gil-NPC row
+    sparks = {
+        rate  = 10,
+        tiers = { 1000, 10000, 50000 },
+    },
+    accolades = {
+        rate  = 100,
+        tiers = { 500, 5000, 25000 },
+    },
+    npcPos = { x = -7.500, y = 0.000, z = -35.000, rot = 128 },
     name   = 'Sparks Cash',
     look   = 3000,
 }
@@ -37,51 +44,79 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     super(zone)
 
     local menu = { title = '', options = {} }
-    local mainScreen
+    local mainScreen, sparksScreen, accoladesScreen
 
     local function show(player)
         local snap = { title = menu.title, options = menu.options }
         player:timer(30, function(p) p:customMenu(snap) end)
     end
 
-    -- Convert `amount` sparks to gil. amount == 'all' converts the full balance.
-    local function convert(player, amount)
-        local have = player:getCurrency(SPARKS)
+    local function convertCurrency(player, currencyKey, amount, rate, label, backFn)
+        local have = player:getCurrency(currencyKey)
         if amount == 'all' then amount = have end
         if have <= 0 then
-            player:printToPlayer('[Sparks] You have no Sparks of Eminence to exchange, kupo.', S)
-            mainScreen(player)
+            player:printToPlayer(string.format('[Broker] You have no %s to exchange, kupo.', label), S)
+            backFn(player)
             return
         end
         if amount > have then
-            player:printToPlayer(string.format('[Sparks] You only have %d sparks.', have), S)
-            mainScreen(player)
+            player:printToPlayer(string.format('[Broker] You only have %d %s.', have, label), S)
+            backFn(player)
             return
         end
-        local gil = amount * cfg.rate
+        local gil = amount * rate
         if player:getGil() + gil > GIL_CAP then
-            player:printToPlayer('[Sparks] That would overflow your gil -- spend some first, kupo.', S)
-            mainScreen(player)
+            player:printToPlayer('[Broker] That would overflow your gil -- spend some first, kupo.', S)
+            backFn(player)
             return
         end
-        player:delCurrency(SPARKS, amount)
+        player:delCurrency(currencyKey, amount)
         player:addGil(gil)
-        player:printToPlayer(string.format('[Sparks] Exchanged %d sparks for %d gil. (Sparks left: %d)',
-            amount, gil, have - amount), S)
-        mainScreen(player)
+        player:printToPlayer(string.format('[Broker] Exchanged %d %s for %s gil. (%s left: %d)',
+            amount, label, fmtGil(gil), label, have - amount), S)
+        backFn(player)
+    end
+
+    sparksScreen = function(player)
+        local have = player:getCurrency(SPARKS)
+        menu.title = string.format('Sparks of Eminence (%d)', have)
+        local opts = {}
+        for _, amt in ipairs(cfg.sparks.tiers) do
+            local a = amt
+            table.insert(opts, { string.format('Convert %d (%s gil)', a, fmtGil(a * cfg.sparks.rate)),
+                function(p) convertCurrency(p, SPARKS, a, cfg.sparks.rate, 'Sparks', sparksScreen) end })
+        end
+        table.insert(opts, { 'Convert ALL sparks',
+            function(p) convertCurrency(p, SPARKS, 'all', cfg.sparks.rate, 'Sparks', sparksScreen) end })
+        table.insert(opts, { 'Back', function(p) mainScreen(p) end })
+        menu.options = opts
+        show(player)
+    end
+
+    accoladesScreen = function(player)
+        local have = player:getCurrency(ACCOLADES)
+        menu.title = string.format('Unity Accolades (%d)', have)
+        local opts = {}
+        for _, amt in ipairs(cfg.accolades.tiers) do
+            local a = amt
+            table.insert(opts, { string.format('Convert %d (%s gil)', a, fmtGil(a * cfg.accolades.rate)),
+                function(p) convertCurrency(p, ACCOLADES, a, cfg.accolades.rate, 'Accolades', accoladesScreen) end })
+        end
+        table.insert(opts, { 'Convert ALL accolades',
+            function(p) convertCurrency(p, ACCOLADES, 'all', cfg.accolades.rate, 'Accolades', accoladesScreen) end })
+        table.insert(opts, { 'Back', function(p) mainScreen(p) end })
+        menu.options = opts
+        show(player)
     end
 
     mainScreen = function(player)
-        menu.title = string.format('Eminence Broker (Sparks: %d)', player:getCurrency(SPARKS))
-        local opts = {}
-        for _, amt in ipairs(cfg.tiers) do
-            local a = amt  -- fresh capture per option
-            table.insert(opts, { string.format('Convert %d (%s gil)', a, fmtGil(a * cfg.rate)),
-                function(p) convert(p, a) end })
-        end
-        table.insert(opts, { 'Convert ALL sparks', function(p) convert(p, 'all') end })
-        table.insert(opts, { 'Walk away',          function(p) p:printToPlayer('[Sparks] Safe travels, kupo!', S) end })
-        menu.options = opts
+        menu.title = string.format('Eminence Broker (Sparks: %d | Accolades: %d)',
+            player:getCurrency(SPARKS), player:getCurrency(ACCOLADES))
+        menu.options = {
+            { 'Exchange Sparks of Eminence',  function(p) sparksScreen(p) end },
+            { 'Exchange Unity Accolades',      function(p) accoladesScreen(p) end },
+            { 'Walk away',                     function(p) p:printToPlayer('[Broker] Safe travels, kupo!', S) end },
+        }
         show(player)
     end
 
