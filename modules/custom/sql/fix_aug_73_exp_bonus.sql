@@ -30,6 +30,13 @@
 -- hand-maintained "Progression (Exp / Cap)" section; the generator now emits it).
 -- This Exp. Point catalyst is cosmetic until this row is live, so we want it to
 -- re-apply on the next deploy.
+--
+-- 2026-06-17: live augments table STILL had modId=0 (the custom-SQL ledger had
+-- this file marked applied WITHOUT ever running it -- a seed bug), so the EXP
+-- boost was purely cosmetic for players. Manually applied the UPDATE to live
+-- (augId 73 modId -> 382); it goes active on the next map restart. This header
+-- is bumped to change the file's checksum so the deploy ledger actually re-runs
+-- it -- keeps the fix durable if the augments table is ever re-imported.
 -- ----------------------------------------------------------------------------
 
 -- Unconditional (not `AND modId = 0`): augId 73 is "Exp. Point" on this server
