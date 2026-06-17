@@ -10186,6 +10186,17 @@ int32 CLuaBaseEntity::addHPLeaveSleeping(int32 hpAdd)
 
 void CLuaBaseEntity::setHP(int32 value)
 {
+    // FJB: guard null AND dangling (freed) entity pointers — same rationale as
+    // getZoneID()/setLocalVar(). A !command (worldboss/tower/invasion) or a timer
+    // can call setHP on a boss that was already despawned/freed; m_PBaseEntity is
+    // then a dangling pointer and the first deref (->objtype) crashes. Seen live
+    // via a GP_CLI_COMMAND_CHAT_STD command (13:27 UTC Jun-17).
+    if (!CBaseEntity::IsEntityAlive(m_PBaseEntity))
+    {
+        ShowWarning("CLuaBaseEntity::setHP() called on a dead/null entity — suppressing crash.");
+        return;
+    }
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
