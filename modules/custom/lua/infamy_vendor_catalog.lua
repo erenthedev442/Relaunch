@@ -1,0 +1,950 @@
+-----------------------------------
+-- infamy_vendor_catalog.lua
+-- Config for the Infamy Vendor NPC (GM Home, x=4.5, z=-21).
+-- Edit this file to add/change items. InfamyVendor.lua reads it.
+--
+-- AUTO-GENERATED sections (vendorItemsAuto, plus4Sets, itemTypeMap)
+-- are managed by tools/build_infamy_top_picks.py and
+-- tools/build_infamy_plus4_catalog.py respectively.
+-----------------------------------
+local catalog = {}
+
+catalog.currencyCv = 'Infamy'
+
+catalog.npcPos =
+{
+    zone     = 'GM_Home',
+    zoneId   = 210,
+    x        =  4.500,
+    y        =  0.000,
+    z        = -21.000,
+    rotation = 128,
+}
+
+catalog.vendorItems =
+{
+    -- WEAPONS - Aeonic / Mythic / Relic+3 tier
+    -- NOTE: id 21646 is actually Caliburnus (moved to the Stage-5 Relics block
+    -- below); its old mislabeled 'Naegling' entry was removed. id 21621 is
+    -- Naegling (a sword) and is now correctly labeled below -- it was previously
+    -- mislabeled 'Daybreak' with shield stats. The real Daybreak (22040, a
+    -- caster wand) lives in the auto list, so it is not duplicated here.
+    { id = 21632, name = 'Aeneas',         cost =  500, stats = { 'Dagger. Best Rudra Storm.', 'Aeonic weapon.' } },
+    { id = 20935, name = 'Trishula',       cost =  800, stats = { 'Polearm (main). Aeonic, DRG only. Grants Stardiver.', 'DMG 345, TP Bonus+500, Magic Dmg+155, Store TP+10.' } },
+    { id = 20890, name = 'Anguta',         cost =  800, stats = { 'Scythe (main). Aeonic, DRK only. Grants Entropy.', 'DMG 370, TP Bonus+500, Magic Dmg+155, Store TP+10.' } },
+    { id = 21621, name = 'Naegling',       cost =  300, stats = { 'Sword (1-hand). Great Savage Blade.', 'iLvl 119, broad job access.' } },
+
+    -- ----------------------------------------------------------------
+    -- STAGE-5 RELIC WEAPONS  (Level 119 III final forms)
+    -- Passive stat blocks added via sql/zz_relic_119iii_mods.sql (BG-Wiki
+    -- sourced, INSERT IGNORE). Relic Aftermath + relic WS are scripted and
+    -- NOT implemented here, so these are strong stat sticks, not full relics.
+    -- Varga/Mpu were already statted in item_mods.sql; Caliburnus in
+    -- zz_naked_dungeon_fix.sql. Loughnashade is ilvl 0 in item_equipment.
+    -- ----------------------------------------------------------------
+    { id = 21535, name = 'Varga Purnikawa', cost = 800, stats = { 'Hand-to-Hand relic (Lv.119 III). Spharai.', 'Final form. Full stat block.' } },
+    { id = 21590, name = 'Mpu Gandring',    cost = 800, stats = { 'Dagger relic (Lv.119 III). Mandau.', 'Final form. Full stat block.' } },
+    { id = 21646, name = 'Caliburnus',      cost = 800, stats = { 'Sword relic (Lv.119 III). Excalibur.', 'DEX/MND+35, Macc, Magic Dmg+263, Refresh+4.' } },
+    { id = 21653, name = 'Helheim',         cost = 800, stats = { 'Great Sword relic (Lv.119 III). Ragnarok.', 'STR/VIT+30, Store TP+7, GS/Parry skill+269.' } },
+    { id = 21730, name = 'Spalirisos',      cost = 800, stats = { 'Axe relic (Lv.119 III). Guttler.', 'STR/DEX/CHR+35, Crit rate+15%, Acc+35.' } },
+    { id = 21785, name = 'Laphria',         cost = 800, stats = { 'Great Axe relic (Lv.119 III). Bravura.', 'STR/VIT+35, Double Atk+10%, GAxe skill+277.' } },
+    { id = 21837, name = 'Foenaria',        cost = 800, stats = { 'Scythe relic (Lv.119 III). Apocalypse.', 'STR/INT+35, Triple Atk+6%, Acc+35.' } },
+    { id = 21891, name = 'Gae Buide',       cost = 800, stats = { 'Polearm relic (Lv.119 III). Gungnir.', 'STR/VIT+35, Double Atk+10%, Acc+35.' } },
+    { id = 21932, name = 'Dokoku',          cost = 800, stats = { 'Katana relic (Lv.119 III). Kikoku.', 'DEX/AGI+35, Store TP+10, Magic Dmg+263.' } },
+    { id = 21986, name = 'Kusanagi',        cost = 800, stats = { 'Great Katana relic (Lv.119 III). Amanomurakumo.', 'STR/DEX+35, Double Atk+10%, GKat skill+277.' } },
+    { id = 22002, name = 'Lorg Mor',        cost = 800, stats = { 'Club relic (Lv.119 III). Mjollnir.', 'STR/MND+30, MAtk+50, Magic Dmg+248, DT-7%.' } },
+    { id = 22106, name = 'Opashoro',        cost = 800, stats = { 'Staff relic (Lv.119 III). Claustrum.', 'INT/MND+35, MAtk+80, Magic Dmg+325.' } },
+    { id = 22163, name = 'Pinaka',          cost = 800, stats = { 'Bow relic (Lv.119 III). Yoichinoyumi.', 'STR/AGI+35, Store TP+10, Archery skill+277.' } },
+    { id = 22164, name = 'Earp',            cost = 800, stats = { 'Gun relic (Lv.119 III). Annihilator.', 'DEX/AGI+35, Crit rate+15%, Mkmanship skill+277.' } },
+    { id = 26495, name = 'Duban',           cost = 800, stats = { 'Shield relic (Lv.119 III). Aegis.', 'DEF+150, VIT/MND+30, Shield skill+129.' } },
+    { id = 22307, name = 'Loughnashade',    cost = 800, stats = { 'Horn relic (Lv.119 III). Gjallarhorn.', 'CHR+20, All Songs+4. (BRD; ilvl 0)' } },
+
+    -- ----------------------------------------------------------------
+    -- MYTHIC WEAPONS  (i119 III final forms — one per job)
+    -- Einherjar / Nyzul Isle legendary weapons at their highest upgrade.
+    -- (Note: Ryunohige already listed at id 19832 in Orphan BiS below
+    --  as the lv99 form; 21858 here is the i119 III final.)
+    -- ----------------------------------------------------------------
+    { id = 21756, name = 'Bravura',       cost = 10000, stats = { 'Great Axe (main). WAR. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20510, name = 'Glanzfaust',    cost = 10000, stats = { 'H2H (main). MNK. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21078, name = 'Yagrush',       cost = 10000, stats = { 'Club (main/sub). WHM. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 22062, name = 'Laevateinn',    cost = 10000, stats = { 'Staff (main). BLM. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20686, name = 'Murgleis',      cost = 10000, stats = { 'Sword (main/sub). RDM. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20587, name = 'Twashtar',      cost = 10000, stats = { 'Dagger (main/sub). THF. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20687, name = 'Burtgang',      cost = 10000, stats = { 'Sword (main/sub). PLD. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21809, name = 'Liberator',     cost = 10000, stats = { 'Weapon (main). DRK. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21751, name = 'Aymur',         cost = 10000, stats = { 'Club (main/sub). BST. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20586, name = 'Carnwenhan',    cost = 10000, stats = { 'Dagger (main/sub). BRD. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 22130, name = 'Gandiva',       cost = 10000, stats = { 'Bow (ranged). RNG. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21955, name = 'Kogarasumaru',  cost = 10000, stats = { 'Great Katana (main). SAM. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21908, name = 'Kannagi',       cost = 10000, stats = { 'Katana (main/sub). NIN. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21858, name = 'Ryunohige',     cost = 10000, stats = { 'Polearm (main). DRG. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 22063, name = 'Nirvana',       cost = 10000, stats = { 'Staff (main). SMN. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20688, name = 'Tizona',        cost = 10000, stats = { 'Sword (main/sub). BLU. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21482, name = 'Compensator',   cost = 10000, stats = { 'Gun (ranged). COR. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20511, name = 'Kenkonken',     cost = 10000, stats = { 'H2H (main). PUP. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 20584, name = 'Terpsichore',   cost = 10000, stats = { 'Dagger (main/sub). DNC. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 22099, name = 'Musa',          cost = 10000, stats = { 'Staff (main). SCH. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21080, name = 'Idris',         cost = 10000, stats = { 'Club (main/sub). GEO. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21685, name = 'Epeolatry',     cost = 10000, stats = { 'Sword (main). RUN. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
+
+    -- ----------------------------------------------------------------
+    -- REQUESTED ENDGAME GEAR  (added on request)
+    -- Naked/under-statted pieces are statted in sql/zz_infamy_extra_mods.sql
+    -- (Peltast's +3, Pteroslaver Brais +4, Flamma Gambieras +2, Vim Torque +1,
+    -- Brigantia's Mantle, + Sroda audit-fix, + the Hjarrandi set below).
+    -- Vim Torque +1's "Regain+20 while weapon drawn" is a latent in
+    -- sql/zz_infamy_extra_latents.sql. Brigantia's All-Jumps DA+20% and Wyvern
+    -- Breath+15 are real engine mods (JUMP_DOUBLE_ATTACK 888 / WYVERN_BREATH 402).
+    -- Hjarrandi Helm/Breastplate live in the fixed 'Hjarrandi Tank' set below.
+    -- ----------------------------------------------------------------
+    -- Armor
+    { id = 23500, name = "Peltast's Plackart +3", cost = 400, stats = { 'Body. RUN Relic +3 reforged.', 'Tank/hybrid stat block.' } },
+    { id = 23567, name = "Peltast's Vambraces +3",cost = 400, stats = { 'Hands. RUN Relic +3 reforged.', 'Tank/hybrid stat block.' } },
+    -- Pteroslaver Brais +4 (24066) is ALREADY sold via the +4 reforge browser
+    -- (catalog.plus4Sets, DRG) -- not re-listed here to avoid a duplicate. Its
+    -- stats are still fixed by sql/zz_infamy_extra_mods.sql (same item id).
+    { id = 25953, name = 'Flamma Gambieras +2',  cost = 400, stats = { 'Feet. Ambuscade.', 'DA+6, Store TP+6, Haste+2%.' } },
+    -- Accessories
+    { id = 22212, name = 'Utu Grip',             cost = 300, stats = { 'Grip (sub). Acc/Atk + skill.', 'DD grip.' } },
+    { id = 22298, name = 'Aurgelmir Orb +1',    cost = 250, stats = { 'Grip (sub). Lv.99. STR/DEX/VIT+7, ATT+10, Store TP+5.', 'Melee grip. WAR/MNK/THF/PLD/DRK/SAM/NIN/DRG and more.' } },
+    { id = 21431, name = 'Coiste Bodhar',        cost = 300, stats = { 'Earring. Double Attack + WS damage.', 'Top DD earring (Omen).' } },
+    { id = 26022, name = 'Vim Torque +1',        cost = 300, stats = { 'Neck. DEF+15.', 'Regain+20 while weapon drawn (latent).' } },
+    { id = 26118, name = 'Sroda Earring',        cost = 300, stats = { 'Earring. STR + WS damage.', 'DD earring.' } },
+    { id = 26084, name = 'Sherida Earring',      cost = 300, stats = { 'Earring. DEX, Double Attack, crit.', 'DD earring.' } },
+    { id = 26185, name = 'Niqmaddu Ring',        cost = 300, stats = { 'Ring. STR/VIT, Double Attack.', 'DD ring.' } },
+    { id = 26190, name = 'Moonlight Ring',       cost = 300, stats = { 'Ring. Hybrid (DT-, Accuracy).', 'Universal ring.' } },
+    { id = 26334, name = 'Ioskeha Belt +1',      cost = 300, stats = { 'Waist. DEX + Double Attack.', 'DD belt.' } },
+    { id = 26259, name = "Brigantia's Mantle",   cost = 300, stats = { 'Back. DRG cape. DEF+18.', 'All Jumps: DA+20%. Wyvern: Breath+15.' } },
+
+    -- ACCESSORIES - endgame neck/ring/back
+    { id = 27928, name = 'Stikini Ring +1',cost =  200, stats = { 'INT+10, MND+10, MEVA+12.', 'Mage ring.' } },
+
+    -- META - the truly exclusive "I'm done" prestige slot
+    { id = 13566, name = 'Defending Ring', cost = 1500, stats = { 'Damage Taken -10%.', 'Locks itself once equipped.', 'The grand prize.' } },
+
+    -- ----------------------------------------------------------------
+    -- ORPHAN BiS GEAR - no other acquisition path on this server.
+    -- These EX/RARE pieces are excluded by the auto-gen scorers
+    -- (single-job / non-il119 / +1/+2 NM / REM weapons) and exist
+    -- nowhere else (no drop/synth/AH/guild/NPC/quest/event/sparks),
+    -- so the Infamy Vendor is their home. Cost scales with ranking.
+    -- (Surfaced by an inventory-obtainability audit, 2026-05.)
+    -- ----------------------------------------------------------------
+
+    -- REM-tier weapons
+    { id = 19832, name = 'Ryunohige',           cost =  800, stats = { 'Polearm (main). Mythic-tier, DRG.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 16199, name = 'Ochain',              cost =  800, stats = { 'Grip/shield (sub). Best PLD shield.', 'EX/RARE. High block rate / PDT.' } },
+    { id = 21602, name = 'Onion Sword III',     cost =  300, stats = { 'Sword (main or sub), il119.', 'EX/RARE novelty blade.' } },
+
+    -- il119 armor (premium / +2)
+    { id = 23734, name = 'Malignance Gloves',   cost =  500, stats = { 'Hands, il119. DD/hybrid (DEX, Acc, M.Acc).', 'EX/RARE. Top-tier gloves.' } },
+    { id = 25578, name = 'Jhakri Coronal +2',   cost =  500, stats = { 'Head, il119. Mage (M.Atk / M.Acc).', 'EX/RARE. Reforged Jhakri +2.' } },
+    { id = 25794, name = 'Jhakri Robe +2',      cost =  500, stats = { 'Body, il119. Mage (M.Atk / M.Acc).', 'EX/RARE. Reforged Jhakri +2.' } },
+
+    -- il119 armor (base / +1)
+    { id = 25603, name = 'Jumalik Helm',        cost =  400, stats = { 'Head, il119. Hybrid (HP, Refresh, MDB).', 'EX. Augmentable.' } },
+    { id = 28330, name = 'Founders Greaves',    cost =  400, stats = { 'Feet, il119.', 'EX. Endgame greaves.' } },
+    { id = 25809, name = 'Jhakri Cuffs +1',     cost =  400, stats = { 'Hands, il119. Mage (M.Atk / M.Acc).', 'EX/RARE. Reforged Jhakri +1.' } },
+    { id = 25868, name = 'Jhakri Slops +1',     cost =  400, stats = { 'Legs, il119. Mage (M.Atk / M.Acc).', 'EX/RARE. Reforged Jhakri +1.' } },
+    { id = 25934, name = 'Jhakri Pigaches +1',  cost =  400, stats = { 'Feet, il119. Mage (M.Atk / M.Acc).', 'EX/RARE. Reforged Jhakri +1.' } },
+
+    -- Accessories (neck / waist / back)
+    { id = 11007, name = 'Letalis Mantle',      cost =  300, stats = { 'Back. DD cape (STR, Double Attack).', 'EX/RARE.' } },
+    { id = 26015, name = 'Combatants Torque',   cost =  300, stats = { 'Neck. DD (Accuracy / Attack).', 'EX/RARE.' } },
+    { id = 26003, name = 'Baetyl Pendant',      cost =  300, stats = { 'Neck. Caster (Magic Attack).', 'EX/RARE.' } },
+    { id = 27595, name = 'Argochampsa Mantle',  cost =  300, stats = { 'Back. Caster cape (Magic Acc / Atk).', 'EX/RARE.' } },
+    { id = 26251, name = "Toutatis's Cape",     cost =  300, stats = { 'Back. THF only. DEF+16, Crit Rate+10%, Triple Atk Dmg+20%.', 'EX/RARE. Omen drop.' } },
+    { id = 28420, name = 'Fotia Belt',          cost =  250, stats = { 'Waist. Universal WS belt (WS damage).', 'EX/RARE.' } },
+    { id = 27510, name = 'Fotia Gorget',        cost =  250, stats = { 'Neck. Universal WS gorget (WS damage).', 'EX/RARE.' } },
+
+    -- WS-focused additions (owner request 2026-06-08)
+    { id = 22281, name = 'Knobkierrie',         cost =  250, stats = { 'Ammo. Best WS ammo (Attack+23, WS damage +6%).', 'EX/RARE.' } },
+    { id = 26227, name = 'Cornelia\'s Ring',    cost =  500, stats = { 'Ring. Best WS-damage ring (WS damage +10%, WS Acc+20).', 'EX/RARE.' } },
+
+    -- Sortie companion rings (26225-26231; stats via zz_infamy_extra_mods.sql)
+    { id = 26225, name = "Medada's Ring",       cost =  300, stats = { 'Ring. STR+10, Acc+15, Crit Rate+3%.', 'EX/RARE.' } },
+    { id = 26226, name = "Gurebu's Ring",       cost =  300, stats = { 'Ring. STR+10, VIT+10, Double Attack+5%.', 'EX/RARE.' } },
+    { id = 26228, name = "Ragelise's Ring",     cost =  300, stats = { 'Ring. HP+30, DEF+20, MND+10.', 'EX/RARE.' } },
+    { id = 26229, name = "Lehko's Ring",        cost =  300, stats = { 'Ring. DEX+10, AGI+10, Store TP+5, Haste+2%.', 'EX/RARE.' } },
+    { id = 26230, name = "Fickblix's Ring",     cost =  300, stats = { 'Ring. INT+15, Magic Atk+15, Magic Acc+20.', 'EX/RARE.' } },
+    { id = 26231, name = "Ephramad's Ring",     cost =  300, stats = { 'Ring. MND+15, Cure Potency+10%, Healing Skill+15.', 'EX/RARE.' } },
+}
+
+-- ============================================================
+-- CURATED SETS  (browsed via the "Curated Sets" vendor menu)
+-- ============================================================
+-- Full armor sets broken out piece-by-piece. Players can buy
+-- whichever slots they still need without purchasing duplicates.
+-- Each entry:  set (display name), desc (shown in root), pieces[]
+-- Each piece:  id, name, cost, stats[]
+-- To add a new set, append an entry and restart the server.
+-- ============================================================
+catalog.vendorSets =
+{
+    -- NYAME - Su5 universal armor (all 22 jobs). Stats from item_mods.
+    {
+        set  = 'Nyame Universal',
+        desc = 'Su5 armor - wearable by all 22 jobs',
+        pieces =
+        {
+            { id = 23761, name = 'Nyame Helm',      cost =  400, stats = { 'DEF:156 HP+91 STR+26 DEX+25 VIT+24 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+5', 'Magic Dmg+123, Spell Interrupt-700, Phys Dmg Taken-7%', 'Su5 / all 22 jobs' } },
+            { id = 23768, name = 'Nyame Mail',      cost =  800, stats = { 'DEF:189 HP+136 STR+35 DEX+24 VIT+35 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+8', 'Magic Dmg+139, Spell Interrupt-900, Phys Dmg Taken-9%', 'Su5 / all 22 jobs' } },
+            { id = 23775, name = 'Nyame Gauntlets', cost =  400, stats = { 'DEF:142 HP+91 STR+17 DEX+42 VIT+39 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+4', 'Magic Dmg+112, Spell Interrupt-700, Phys Dmg Taken-7%', 'Su5 / all 22 jobs' } },
+            { id = 23782, name = 'Nyame Flanchard', cost =  400, stats = { 'DEF:169 HP+114 STR+43 VIT+30 AGI+34 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+6', 'Magic Dmg+150, Spell Interrupt-800, Phys Dmg Taken-8%', 'Su5 / all 22 jobs' } },
+            { id = 23789, name = 'Nyame Sollerets', cost =  400, stats = { 'DEF:122 HP+68 STR+23 DEX+26 AGI+38 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+5', 'Magic Dmg+150, Spell Interrupt-700, Phys Dmg Taken-7%', 'Su5 / all 22 jobs' } },
+        },
+    },
+
+    -- HJARRANDI - Odyssey-augmented tank/DPS armor (head + body only)
+    {
+        set  = 'Hjarrandi Tank',
+        desc = 'Odyssey-augmented tank/DPS armor',
+        pieces =
+        {
+            { id = 25592, name = 'Hjarrandi Helm',        cost =  400, stats = { 'Tank/DD head. DA+6, Store TP+7, DT-10%.', 'Reforged Hjarrandi (fixed from 27637=evalach).' } },
+            { id = 25766, name = 'Hjarrandi Breastplate', cost =  800, stats = { 'Tank/DD body. Store TP+10, Crit+13%, DT-12%.', 'Reforged Hjarrandi (fixed from 27718=worm_masque).' } },
+        },
+    },
+}
+
+-- DOCGEN:INFAMY_AUTO:BEGIN
+-- catalog.vendorItemsAuto
+--
+-- AUTO-GENERATED by tools/build_infamy_top_picks.py — do NOT
+-- hand-edit. To refresh after re-scoring any gear catalog:
+--     python tools/build_infamy_top_picks.py
+-- Or run tools/rebalance_all.bat to re-rank every catalog AND
+-- this auto-promoted Infamy Vendor list in one shot.
+--
+-- Sourced from the catalog.infamy tier of each scored catalog:
+--   * Armor / Weapons: top 5 per slot / weapon category (the
+--     'best options in game', skimmed out of the gold gear vendor).
+--   * Accessory: the 22 Sortie JSE +2 earrings (Infamy exclusive).
+-- The hand-curated catalog.vendorItems list above is left untouched.
+-- 103 gear + 22 Sortie earrings = 125 items.
+catalog.vendorItemsAuto =
+{
+    { id =  20672, name = 'Ice Brand'                         , cost =  800, stats = { 'CASTER score 1060', 'Weapons top-5 (Swords)', 'Jobs: RDM/PLD/BLU' } },
+    { id =  22042, name = 'Wizards Rod'                       , cost =  800, stats = { 'CASTER score 1060', 'Weapons top-5 (Clubs)', 'Jobs: BLM/RDM/SCH/GEO' } },
+    { id =  22055, name = 'Oranyan'                           , cost =  800, stats = { 'CASTER score 1054', 'Weapons top-5 (Staves)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
+    { id =  22040, name = 'Daybreak'                          , cost =  800, stats = { 'CASTER score 1033', 'Weapons top-5 (Clubs)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
+    { id =  22081, name = 'Raetic Staff +1'                   , cost =  800, stats = { 'CASTER score 1019', 'Weapons top-5 (Staves)', 'Jobs: WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' } },
+    { id =  22086, name = 'Xoanon'                            , cost =  800, stats = { 'CASTER score 1018', 'Weapons top-5 (Staves)', 'Jobs: WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' } },
+    { id =  21071, name = 'Cath Palug Hammer'                 , cost =  800, stats = { 'CASTER score 1013', 'Weapons top-5 (Clubs)', 'Jobs: WHM/GEO' } },
+    { id =  22058, name = 'Contemplator +1'                   , cost =  800, stats = { 'CASTER score 1004', 'Weapons top-5 (Staves)', 'Jobs: WHM/BLM/RDM/BRD/SMN/SCH/GEO' } },
+    { id =  21830, name = 'Drepanum'                          , cost =  800, stats = { 'CASTER score 1003', 'Weapons top-5 (Scythes)', 'Jobs: WAR/BLM/DRK/BST' } },
+    { id =  22031, name = 'Maxentius'                         , cost =  800, stats = { 'CASTER score 988', 'Weapons top-5 (Clubs)', 'Jobs: WHM/BLM/RDM/SMN/BLU/SCH/GEO' } },
+    { id =  21637, name = 'Sakpatas Sword'                    , cost =  800, stats = { 'CASTER score 977', 'Weapons top-5 (Swords)', 'Jobs: RDM/PLD/BLU' } },
+    { id =  21565, name = 'Tauret'                            , cost =  800, stats = { 'CASTER score 973', 'Weapons top-5 (Daggers)', 'Jobs: RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' } },
+    { id =  21829, name = 'Kaja Scythe'                       , cost =  800, stats = { 'CASTER score 969', 'Weapons top-5 (Scythes)', 'Jobs: WAR/BLM/DRK/BST' } },
+    { id =  21564, name = 'Kaja Knife'                        , cost =  800, stats = { 'CASTER score 939', 'Weapons top-5 (Daggers)', 'Jobs: RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' } },
+    { id =  21620, name = 'Kaja Sword'                        , cost =  800, stats = { 'CASTER score 939', 'Weapons top-5 (Swords)', 'Jobs: WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' } },
+    { id =  21563, name = 'Eletta Knife'                      , cost =  800, stats = { 'CASTER score 890', 'Weapons top-5 (Daggers)', 'Jobs: RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' } },
+    { id =  21828, name = 'Eletta Scythe'                     , cost =  800, stats = { 'CASTER score 890', 'Weapons top-5 (Scythes)', 'Jobs: WAR/BLM/DRK/BST' } },
+    { id =  26963, name = 'Onca Suit'                         , cost =  800, stats = { 'DPS score 881', 'Armor top-5 (body)', 'Jobs: WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' } },
+    { id =  23716, name = 'Volte Haubert'                     , cost =  800, stats = { 'TANK score 562', 'Armor top-5 (body)', 'Jobs: WAR/PLD/DRK' } },
+    { id =  25799, name = 'Mallquis Saio +2'                  , cost =  800, stats = { 'CASTER score 537', 'Armor top-5 (body)', 'Jobs: BLM/SCH/GEO' } },
+    { id =  23765, name = 'Mpacas Doublet'                    , cost =  800, stats = { 'TANK score 509', 'Armor top-5 (body)', 'Jobs: MNK/SAM/NIN/PUP' } },
+    { id =  23764, name = 'Sakpatas Breastplate'              , cost =  500, stats = { 'TANK score 501', 'Armor top-5 (body)', 'Jobs: WAR/PLD/DRK' } },
+    { id =  25888, name = 'Mallquis Trews +2'                 , cost =  500, stats = { 'CASTER score 499', 'Armor top-5 (legs)', 'Jobs: BLM/SCH/GEO' } },
+    { id =  23781, name = 'Bunzis Pants'                      , cost =  500, stats = { 'CASTER score 469', 'Armor top-5 (legs)', 'Jobs: WHM/RDM/BRD/SMN' } },
+    { id =  23779, name = 'Mpacas Hose'                       , cost =  500, stats = { 'TANK score 447', 'Armor top-5 (legs)', 'Jobs: MNK/SAM/NIN/PUP' } },
+    { id =  25571, name = 'Mallquis Chapeau +2'               , cost =  500, stats = { 'CASTER score 445', 'Armor top-5 (head)', 'Jobs: BLM/SCH/GEO' } },
+    { id =  25837, name = 'Mallquis Cuffs +2'                 , cost =  500, stats = { 'CASTER score 445', 'Armor top-5 (hands)', 'Jobs: BLM/SCH/GEO' } },
+    { id =  23724, name = 'Volte Brayettes'                   , cost =  500, stats = { 'TANK score 440', 'Armor top-5 (legs)', 'Jobs: WAR/PLD/DRK' } },
+    { id =  23778, name = 'Sakpatas Cuisses'                  , cost =  500, stats = { 'TANK score 439', 'Armor top-5 (legs)', 'Jobs: WAR/PLD/DRK' } },
+    { id =  23774, name = 'Bunzis Gloves'                     , cost =  500, stats = { 'CASTER score 432', 'Armor top-5 (hands)', 'Jobs: WHM/RDM/BRD/SMN' } },
+    { id =  23760, name = 'Bunzis Hat'                        , cost =  500, stats = { 'CASTER score 413', 'Armor top-5 (head)', 'Jobs: WHM/RDM/BRD/SMN' } },
+    { id =  25955, name = 'Mallquis Clogs +2'                 , cost =  500, stats = { 'CASTER score 411', 'Armor top-5 (feet)', 'Jobs: BLM/SCH/GEO' } },
+    { id =  23788, name = 'Bunzis Sabots'                     , cost =  500, stats = { 'CASTER score 407', 'Armor top-5 (feet)', 'Jobs: WHM/RDM/BRD/SMN' } },
+    { id =  23757, name = 'Sakpatas Helm'                     , cost =  500, stats = { 'TANK score 405', 'Armor top-5 (head)', 'Jobs: WAR/PLD/DRK' } },
+    { id =  23772, name = 'Mpacas Gloves'                     , cost =  500, stats = { 'TANK score 402', 'Armor top-5 (hands)', 'Jobs: MNK/SAM/NIN/PUP' } },
+    { id =  23771, name = 'Sakpatas Gauntlets'                , cost =  500, stats = { 'TANK score 398', 'Armor top-5 (hands)', 'Jobs: WAR/PLD/DRK' } },
+    { id =  23758, name = 'Mpacas Cap'                        , cost =  500, stats = { 'TANK score 391', 'Armor top-5 (head)', 'Jobs: MNK/SAM/NIN/PUP' } },
+    { id =  23712, name = 'Volte Salade'                      , cost =  500, stats = { 'TANK score 389', 'Armor top-5 (head)', 'Jobs: WAR/PLD/DRK' } },
+    { id =  23773, name = 'Agwus Gages'                       , cost =  500, stats = { 'CASTER score 387', 'Armor top-5 (hands)', 'Jobs: BLM/SCH/GEO/RUN' } },
+    { id =  21779, name = 'Lycurgos'                          , cost =  500, stats = { 'WS score 364', 'Weapons top-5 (Great Axes)', 'Jobs: WAR/DRK/RUN' } },
+    { id =  23787, name = 'Agwus Pigaches'                    , cost =  500, stats = { 'CASTER score 361', 'Armor top-5 (feet)', 'Jobs: BLM/SCH/GEO/RUN' } },
+    { id =  23785, name = 'Sakpatas Leggings'                 , cost =  500, stats = { 'TANK score 359', 'Armor top-5 (feet)', 'Jobs: WAR/PLD/DRK' } },
+    { id =  23786, name = 'Mpacas Boots'                      , cost =  500, stats = { 'TANK score 358', 'Armor top-5 (feet)', 'Jobs: MNK/SAM/NIN/PUP' } },
+    { id =  22114, name = 'Steinthor'                         , cost =  500, stats = { 'WS score 346', 'Weapons top-5 (Archery)', 'Jobs: RNG' } },
+    { id =  21975, name = 'Hachimonji'                        , cost =  500, stats = { 'WS score 344', 'Weapons top-5 (Great Katana)', 'Jobs: SAM/NIN' } },
+    { id =  21221, name = 'Brahmastra'                        , cost =  500, stats = { 'WS score 326', 'Weapons top-5 (Archery)', 'Jobs: RNG' } },
+    { id =  22113, name = 'Teller'                            , cost =  500, stats = { 'WS score 322', 'Weapons top-5 (Archery)', 'Jobs: RNG' } },
+    { id =  21778, name = 'Kaja Chopper'                      , cost =  500, stats = { 'WS score 319', 'Weapons top-5 (Great Axes)', 'Jobs: WAR/DRK/RUN' } },
+    { id =  21674, name = 'Nandaka'                           , cost =  500, stats = { 'WS score 312', 'Weapons top-5 (Great Swords)', 'Jobs: WAR/PLD/DRK/RUN' } },
+    { id =  21883, name = 'Shining One'                       , cost =  500, stats = { 'WS score 312', 'Weapons top-5 (Polearms)', 'Jobs: WAR/PLD/SAM/DRG' } },
+    { id =  22121, name = 'Imati +1'                          , cost =  500, stats = { 'WS score 307', 'Weapons top-5 (Marksmanship)', 'Jobs: RNG' } },
+    { id =  21567, name = 'Gletis Knife'                      , cost =  500, stats = { 'DPS score 300', 'Weapons top-5 (Daggers)', 'Jobs: RDM/THF/BRD/RNG/NIN/COR/DNC' } },
+    { id =  21974, name = 'Kaja Tachi'                        , cost =  350, stats = { 'WS score 300', 'Weapons top-5 (Great Katana)', 'Jobs: SAM/NIN' } },
+    { id =  21683, name = 'Ragnarok 119 Iii'                  , cost =  350, stats = { 'WS score 296', 'Weapons top-5 (Great Swords)', 'Jobs: WAR/PLD/DRK' } },
+    { id =  22123, name = 'Arasy Bow +1'                      , cost =  350, stats = { 'WS score 295', 'Weapons top-5 (Archery)', 'Jobs: RNG' } },
+    { id =  21964, name = 'Beryllium Tachi +1'                , cost =  350, stats = { 'WS score 286', 'Weapons top-5 (Great Katana)', 'Jobs: SAM/NIN' } },
+    { id =  21870, name = 'Exalted Spear +1'                  , cost =  350, stats = { 'WS score 278', 'Weapons top-5 (Polearms)', 'Jobs: WAR/PLD/SAM/DRG' } },
+    { id =  21673, name = 'Kaja Claymore'                     , cost =  350, stats = { 'WS score 276', 'Weapons top-5 (Great Swords)', 'Jobs: WAR/PLD/DRK/RUN' } },
+    { id =  21882, name = 'Kaja Lance'                        , cost =  350, stats = { 'WS score 276', 'Weapons top-5 (Polearms)', 'Jobs: WAR/PLD/SAM/DRG' } },
+    { id =  21519, name = 'Karambit'                          , cost =  350, stats = { 'WS score 275', 'Weapons top-5 (H2H)', 'Jobs: WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' } },
+    { id =  21766, name = 'Hepatizon Axe +1'                  , cost =  350, stats = { 'WS score 273', 'Weapons top-5 (Great Axes)', 'Jobs: WAR/DRK/RUN' } },
+    { id =  21816, name = 'Maliya Sickle +1'                  , cost =  350, stats = { 'WS score 272', 'Weapons top-5 (Scythes)', 'Jobs: WAR/BLM/DRK/BST' } },
+    { id =  21220, name = 'Paloma Bow +1'                     , cost =  350, stats = { 'WS score 272', 'Weapons top-5 (Archery)', 'Jobs: RNG' } },
+    { id =  21819, name = 'Raetic Scythe +1'                  , cost =  350, stats = { 'WS score 270', 'Weapons top-5 (Scythes)', 'Jobs: WAR/BLM/DRK/BST' } },
+    { id =  21485, name = 'Fomalhaut'                         , cost =  350, stats = { 'WS score 270', 'Weapons top-5 (Marksmanship)', 'Jobs: RNG/COR' } },
+    { id =  21527, name = 'Sakpatas Fists'                    , cost =  350, stats = { 'WS score 262', 'Weapons top-5 (H2H)', 'Jobs: MNK/PUP' } },
+    { id =  21768, name = 'Raetic Chopper +1'                 , cost =  350, stats = { 'WS score 262', 'Weapons top-5 (Great Axes)', 'Jobs: WAR/BLM/DRK/BRD/SMN/SCH/RUN' } },
+    { id =  21663, name = 'Raetic Algol +1'                   , cost =  350, stats = { 'WS score 256', 'Weapons top-5 (Great Swords)', 'Jobs: WAR/PLD/DRK/RUN' } },
+    { id =  26023, name = 'Sanctity Necklace'                 , cost =  350, stats = { 'CASTER score 252', 'Accessory top-5 (neck)', 'Jobs: All' } },
+    { id =  22136, name = 'Arasy Gun +1'                      , cost =  350, stats = { 'WS score 252', 'Weapons top-5 (Marksmanship)', 'Jobs: RNG/COR' } },
+    { id =  21707, name = 'Barbarity +1'                      , cost =  350, stats = { 'WS score 250', 'Weapons top-5 (Axes)', 'Jobs: WAR/BST' } },
+    { id =  21722, name = 'Dolichenus'                        , cost =  350, stats = { 'WS score 235', 'Weapons top-5 (Axes)', 'Jobs: WAR/DRK/BST/RNG/RUN' } },
+    { id =  21777, name = 'Eletta Chopper'                    , cost =  350, stats = { 'WS score 234', 'Weapons top-5 (Great Axes)', 'Jobs: WAR/DRK/RUN' } },
+    { id =  21518, name = 'Kaja Knuckles'                     , cost =  350, stats = { 'WS score 232', 'Weapons top-5 (H2H)', 'Jobs: WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' } },
+    { id =  21872, name = 'Raetic Halberd +1'                 , cost =  350, stats = { 'WS score 226', 'Weapons top-5 (Polearms)', 'Jobs: WAR/BLM/PLD/BRD/SAM/DRG/SMN/SCH' } },
+    { id =  21881, name = 'Eletta Lance'                      , cost =  350, stats = { 'WS score 222', 'Weapons top-5 (Polearms)', 'Jobs: WAR/PLD/SAM/DRG' } },
+    { id =  19209, name = 'Molybdosis'                        , cost =  350, stats = { 'WS score 222', 'Weapons top-5 (Marksmanship)', 'Jobs: COR' } },
+    { id =  21973, name = 'Eletta Tachi'                      , cost =  350, stats = { 'WS score 216', 'Weapons top-5 (Great Katana)', 'Jobs: SAM/NIN' } },
+    { id =  21528, name = 'Dragon Fangs'                      , cost =  350, stats = { 'WS score 214', 'Weapons top-5 (H2H)', 'Jobs: MNK/PUP' } },
+    { id =  21721, name = 'Kaja Axe'                          , cost =  350, stats = { 'WS score 204', 'Weapons top-5 (Axes)', 'Jobs: WAR/DRK/BST/RNG/RUN' } },
+    { id =  21709, name = 'Beryllium Pick +1'                 , cost =  350, stats = { 'WS score 180', 'Weapons top-5 (Axes)', 'Jobs: WAR/DRK/BST/RUN' } },
+    { id =  27620, name = 'Aurists Cape +1'                   , cost =  350, stats = { 'CASTER score 177', 'Accessory top-5 (back)', 'Jobs: WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' } },
+    { id =  26357, name = 'Skrymir Cord +1'                   , cost =  350, stats = { 'CASTER score 175', 'Accessory top-5 (waist)', 'Jobs: All' } },
+    { id =  26269, name = 'Moonlight Cape'                    , cost =  250, stats = { 'TANK score 171', 'Accessory top-5 (back)', 'Jobs: All' } },
+    { id =  21752, name = 'Farsha'                            , cost =  250, stats = { 'WS score 168', 'Weapons top-5 (Axes)', 'Jobs: WAR/BST' } },
+    { id =  26341, name = 'Moonbow Belt +1'                   , cost =  250, stats = { 'DPS score 162', 'Accessory top-5 (waist)', 'Jobs: MNK/PUP' } },
+    { id =  21972, name = 'Ajja Tachi'                        , cost =  250, stats = { 'WS score 161', 'Weapons top-5 (Great Katana)', 'Jobs: SAM/NIN' } },
+    { id =  27615, name = 'Reiki Cloak'                       , cost =  250, stats = { 'TANK score 153', 'Accessory top-5 (back)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' } },
+    { id =  26004, name = 'Lissome Necklace'                  , cost =  250, stats = { 'DPS score 140', 'Accessory top-5 (neck)', 'Jobs: All' } },
+    { id =  26361, name = 'Gerdr Belt +1'                     , cost =  250, stats = { 'DPS score 136', 'Accessory top-5 (waist)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' } },
+    { id =  13655, name = 'Sand Mantle'                       , cost =  250, stats = { 'TANK score 108', 'Accessory top-5 (back)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' } },
+    { id =  11607, name = 'Artemiss Medal'                    , cost =  250, stats = { 'CASTER score 95', 'Accessory top-5 (neck)', 'Jobs: All' } },
+    { id =  26359, name = 'Orpheuss Sash'                     , cost =  250, stats = { 'DPS score 92', 'Accessory top-5 (waist)', 'Jobs: All' } },
+    { id =  25461, name = 'Abyssal Bead Necklace +2'          , cost =  250, stats = { 'WS score 90', 'Accessory top-5 (neck)', 'Jobs: DRK' } },
+    { id =  26191, name = 'Regal Ring'                        , cost =  250, stats = { 'WS score 85', 'Accessory top-5 (ring)', 'Jobs: WAR/MNK/THF/PLD/DRK/BST/RNG/SAM/NIN/DRG/COR/PUP/DNC/RUN' } },
+    { id =  25497, name = 'Dragoons Collar +2'                , cost =  250, stats = { 'WS score 83', 'Accessory top-5 (neck)', 'Jobs: DRG' } },
+    { id =  28607, name = 'Aput Mantle +1'                    , cost =  250, stats = { 'CASTER score 80', 'Accessory top-5 (back)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' } },
+    { id =  26088, name = 'Malignance Earring'                , cost =  250, stats = { 'CASTER score 76', 'Accessory top-5 (ear)', 'Jobs: WHM/BLM/RDM/DRK/SMN/SCH/GEO' } },
+    { id =  28471, name = 'Gere Ring'                         , cost =  250, stats = { 'DPS score 76', 'Accessory top-5 (ring)', 'Jobs: MNK/THF/BST/NIN/PUP/DNC' } },
+    { id =  26186, name = 'Ilabrat Ring'                      , cost =  250, stats = { 'WS score 72', 'Accessory top-5 (ring)', 'Jobs: MNK/WHM/RDM/THF/BST/BRD/RNG/SAM/NIN/BLU/COR/DNC/RUN' } },
+    { id =  25439, name = 'Wicce Earring +1'                  , cost =  250, stats = { 'CASTER score 56', 'Accessory top-5 (ear)', 'Jobs: BLM' } },
+    { id =  25535, name = 'Arbatel Earring +1'                , cost =  250, stats = { 'CASTER score 56', 'Accessory top-5 (ear)', 'Jobs: SCH' } },
+    { id =  26108, name = 'Odr Earring'                       , cost =  250, stats = { 'DPS score 55', 'Accessory top-5 (ear)', 'Jobs: MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' } },
+    { id =  25422, name = 'Boii Earring +2'                   , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for WAR', 'Jobs: WAR' } },
+    { id =  25428, name = 'Bhikku Earring +2'                 , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for MNK', 'Jobs: MNK' } },
+    { id =  25434, name = 'Ebers Earring +2'                  , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for WHM', 'Jobs: WHM' } },
+    { id =  25440, name = 'Wicce Earring +2'                  , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for BLM', 'Jobs: BLM' } },
+    { id =  25446, name = 'Lethargy Earring +2'               , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for RDM', 'Jobs: RDM' } },
+    { id =  25452, name = 'Skulkers Earring +2'               , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for THF', 'Jobs: THF' } },
+    { id =  25458, name = 'Chevaliers Earring +2'             , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for PLD', 'Jobs: PLD' } },
+    { id =  25464, name = 'Heathens Earring +2'               , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for DRK', 'Jobs: DRK' } },
+    { id =  25470, name = 'Nukumi Earring +2'                 , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for BST', 'Jobs: BST' } },
+    { id =  25476, name = 'Fili Earring +2'                   , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for BRD', 'Jobs: BRD' } },
+    { id =  25482, name = 'Amini Earring +2'                  , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for RNG', 'Jobs: RNG' } },
+    { id =  25488, name = 'Kasuga Earring +2'                 , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for SAM', 'Jobs: SAM' } },
+    { id =  25494, name = 'Hattori Earring +2'                , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for NIN', 'Jobs: NIN' } },
+    { id =  25500, name = 'Peltasts Earring +2'               , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for DRG', 'Jobs: DRG' } },
+    { id =  25506, name = 'Beckoners Earring +2'              , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for SMN', 'Jobs: SMN' } },
+    { id =  25512, name = 'Hashishin Earring +2'              , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for BLU', 'Jobs: BLU' } },
+    { id =  25518, name = 'Chasseurs Earring +2'              , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for COR', 'Jobs: COR' } },
+    { id =  25524, name = 'Karagoz Earring +2'                , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for PUP', 'Jobs: PUP' } },
+    { id =  25530, name = 'Maculele Earring +2'               , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for DNC', 'Jobs: DNC' } },
+    { id =  25536, name = 'Arbatel Earring +2'                , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for SCH', 'Jobs: SCH' } },
+    { id =  25542, name = 'Azimuth Earring +2'                , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for GEO', 'Jobs: GEO' } },
+    { id =  25548, name = 'Erilaz Earring +2'                 , cost =  300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for RUN', 'Jobs: RUN' } },
+}
+-- DOCGEN:INFAMY_AUTO:END
+
+-- ============================================================
+-- +4 REFORGE SETS  (separate browser: Job -> Set -> Slot)
+-- ============================================================
+-- 200 Infamy per piece (1000 per full 5-slot set). Stats sourced from
+-- BG-Wiki via tools/build_infamy_plus4_catalog.py - regenerate that
+-- script to refresh this section.
+catalog.plus4Cost = 200
+
+-- (Auto-generated table follows; do NOT hand-edit. To refresh:
+--   python tools/build_infamy_plus4_catalog.py
+-- then paste the contents of tools/_plus4_catalog.lua over this block.)
+-- AUTO-GENERATED by tools/build_infamy_plus4_catalog.py
+-- Source: tools/bgwiki_stats_cache.json
+-- Edit the SET_TO_JOB map in the Python script, not this file.
+
+catalog.plus4Sets =
+{
+    -- BLM
+    ['BLM'] = {
+        { set = 'Archmages', pieces = {
+            ['head'] = { id = 23921, name = 'Archmages Petasos +4', stats = { 'DEF:120 HP+66 MP+62 STR+27 DEX+24 VIT+29 AGI+24 INT+39 MND+29 CHR+29 Accuracy+42 Magic Acc' } },
+            ['body'] = { id = 23966, name = 'Archmages Coat +4', stats = { 'DEF:150 HP+84 MP+89 STR+34 DEX+31 VIT+36 AGI+31 INT+51 MND+39 CHR+39 Accuracy+45 Magic Acc' } },
+            ['hands'] = { id = 24011, name = 'Archmages Gloves +4', stats = { 'DEF:104 HP+52 MP+44 STR+19 DEX+38 VIT+40 AGI+15 INT+41 MND+43 CHR+29 Accuracy+43 Magic Acc' } },
+            ['legs'] = { id = 24056, name = 'Archmages Tonban +4', stats = { 'DEF:128 HP+73 MP+95 STR+38 VIT+27 AGI+27 INT+55 MND+34 CHR+29 Accuracy+44 Magic Accuracy+5' } },
+            ['feet'] = { id = 24101, name = 'Archmages Sabots +4', stats = { 'DEF:88 HP+43 MP+44 STR+23 DEX+21 VIT+25 AGI+43 INT+35 MND+29 CHR+44 Accuracy+41 Magic Accu' } },
+        } },
+        { set = 'Spaekonas', pieces = {
+            ['head'] = { id = 23898, name = 'Spaekonas Petasos +4', stats = { 'DEF:118 HP+74 MP+68 STR+29 DEX+32 VIT+29 AGI+34 INT+37 MND+39 CHR+34 Accuracy+57 Magic Acc' } },
+            ['body'] = { id = 23943, name = 'Spaekonas Coat +4', stats = { 'DEF:148 HP+101 MP+108 STR+31 DEX+34 VIT+31 AGI+36 INT+39 MND+44 CHR+39 Accuracy+65 Magic A' } },
+            ['legs'] = { id = 24033, name = 'Spaekonas Tonban +4', stats = { 'DEF:130 HP+84 MP+168 STR+35 VIT+22 AGI+32 INT+44 MND+39 CHR+29 Accuracy+59 Magic Accuracy+' } },
+            ['feet'] = { id = 24078, name = 'Spaekonas Sabots +4', stats = { 'DEF:88 HP+51 MP+53 STR+20 DEX+24 VIT+20 AGI+48 INT+32 MND+34 CHR+44 Accuracy+64 Magic Accu' } },
+        } },
+    },
+    -- BLU
+    ['BLU'] = {
+        { set = 'Assimilators', pieces = {
+            ['head'] = { id = 23910, name = 'Assimilators Keffiyeh +4', stats = { 'DEF:127 HP+89 MP+69 STR+30 DEX+39 VIT+30 AGI+39 INT+33 MND+36 CHR+31 Accuracy+66 Magic Acc' } },
+            ['body'] = { id = 23955, name = 'Assimilators Jubbah +4', stats = { 'DEF:157 HP+123 MP+101 STR+39 DEX+49 VIT+34 AGI+43 INT+33 MND+36 CHR+33 Accuracy+60 Magic A' } },
+            ['hands'] = { id = 24000, name = 'Assimilators Bazubands +4', stats = { 'DEF:115 HP+57 MP+65 STR+21 DEX+50 VIT+42 AGI+20 INT+32 MND+43 CHR+27 Accuracy+58 Magic Acc' } },
+            ['legs'] = { id = 24045, name = 'Assimilators Shalwar +4', stats = { 'DEF:139 HP+113 MP+42 STR+42 VIT+26 AGI+35 INT+43 MND+30 CHR+21 Accuracy+59 Magic Accuracy+' } },
+            ['feet'] = { id = 24090, name = 'Assimilators Charuqs +4', stats = { 'DEF:97 HP+69 MP+50 STR+22 DEX+39 VIT+22 AGI+52 MND+25 CHR+40 Accuracy+65 Attack+43 Magic A' } },
+        } },
+        { set = 'Luhlaza', pieces = {
+            ['head'] = { id = 23933, name = 'Luhlaza Keffiyeh +4', stats = { 'DEF:126 HP+101 MP+88 STR+35 DEX+29 VIT+35 AGI+29 INT+33 MND+30 CHR+26 Accuracy+42 Attack+7' } },
+            ['body'] = { id = 23978, name = 'Luhlaza Jubbah +4', stats = { 'DEF:160 HP+89 MP+74 STR+42 DEX+42 VIT+39 AGI+38 INT+36 MND+33 CHR+33 Accuracy+55 Attack+96' } },
+            ['hands'] = { id = 24023, name = 'Luhlaza Bazubands +4', stats = { 'DEF:114 HP+80 MP+55 STR+26 DEX+49 VIT+47 AGI+15 INT+25 MND+44 CHR+27 Accuracy+49 Attack+73' } },
+            ['legs'] = { id = 24068, name = 'Luhlaza Shalwar +4', stats = { 'DEF:138 HP+97 MP+50 STR+46 VIT+31 AGI+32 INT+43 MND+27 CHR+21 Accuracy+50 Magic Accuracy+5' } },
+            ['feet'] = { id = 24113, name = 'luhlaza charuqs +4', stats = { 'DEF:98 HP+43 MP+66 STR+27 DEX+34 VIT+27 AGI+47 INT+25 MND+22 CHR+40 Accuracy+41 Attack+96 ' } },
+        } },
+    },
+    -- BRD
+    ['BRD'] = {
+        { set = 'Bihu', pieces = {
+            ['head'] = { id = 23927, name = 'Bihu Roundlet +4', stats = { 'DEF:120 HP+66 MP+62 STR+24 DEX+24 VIT+33 AGI+24 INT+32 MND+27 CHR+42 Accuracy+42 Attack+72' } },
+            ['body'] = { id = 23972, name = 'Bihu Justaucorps +4', stats = { 'DEF:150 HP+99 MP+104 STR+42 DEX+41 VIT+44 AGI+41 INT+42 MND+38 CHR+45 Accuracy+58 Attack+1' } },
+            ['hands'] = { id = 24017, name = 'Bihu Cuffs +4', stats = { 'DEF:109 HP+52 MP+44 STR+19 DEX+38 VIT+40 AGI+15 INT+32 MND+42 CHR+35 Accuracy+43 Attack+73' } },
+            ['legs'] = { id = 24062, name = 'Bihu Cannions +4', stats = { 'DEF:132 HP+113 MP+99 STR+36 VIT+25 AGI+27 INT+57 MND+43 CHR+45 Accuracy+44 Attack+74 Magic' } },
+            ['feet'] = { id = 24107, name = 'Bihu Slippers +4', stats = { 'DEF:91 HP+43 MP+44 STR+20 DEX+21 VIT+22 AGI+43 INT+30 MND+27 CHR+50 Accuracy+41 Attack+71 ' } },
+        } },
+        { set = 'Brioso', pieces = {
+            ['head'] = { id = 23904, name = 'Brioso Roundlet +4', stats = { 'DEF:120 HP+74 MP+52 STR+26 DEX+32 VIT+26 AGI+34 INT+34 MND+38 CHR+43 Accuracy+71 Magic Acc' } },
+            ['body'] = { id = 23949, name = 'Brioso Justaucorps +4', stats = { 'DEF:150 HP+101 MP+79 STR+29 DEX+34 VIT+29 AGI+36 INT+39 MND+41 CHR+45 Accuracy+74 Magic Ac' } },
+            ['hands'] = { id = 23994, name = 'Brioso Cuffs +4', stats = { 'DEF:108 HP+53 MP+34 STR+16 DEX+41 VIT+35 AGI+20 INT+29 MND+45 CHR+41 Accuracy+58 Magic Acc' } },
+            ['legs'] = { id = 24039, name = 'Brioso Cannions +4', stats = { 'DEF:132 HP+84 MP+79 STR+33 VIT+20 AGI+32 INT+44 MND+36 CHR+35 Accuracy+66 Magic Accuracy+6' } },
+            ['feet'] = { id = 24084, name = 'Brioso Slippers +4', stats = { 'DEF:90 HP+84 MP+64 STR+17 DEX+24 VIT+17 AGI+48 INT+27 MND+30 CHR+50 Accuracy+56 Magic Accu' } },
+        } },
+    },
+    -- BST
+    ['BST'] = {
+        { set = 'Ankusa', pieces = {
+            ['head'] = { id = 23926, name = 'Ankusa Helm +4', stats = { 'DEF:128 HP+66 MP+53 STR+37 DEX+36 VIT+30 AGI+29 INT+28 MND+25 CHR+33 Accuracy+42 Attack+72' } },
+            ['body'] = { id = 23971, name = 'Ankusa Jackcoat +4', stats = { 'DEF:153 HP+79 MP+64 STR+38 DEX+43 VIT+34 AGI+38 INT+37 MND+33 CHR+33 Accuracy+40 Attack+65' } },
+            ['hands'] = { id = 24016, name = 'Ankusa Gloves +4', stats = { 'DEF:116 HP+55 STR+26 DEX+45 VIT+47 AGI+22 INT+25 MND+40 CHR+27 Accuracy+43 Attack+73 Magic' } },
+            ['legs'] = { id = 24061, name = 'Ankusa Trousers +4', stats = { 'DEF:137 HP+77 STR+44 DEX+20 VIT+31 AGI+30 INT+43 MND+27 CHR+21 Accuracy+44 Attack+74 Magic' } },
+            ['feet'] = { id = 24106, name = 'Ankusa Gaiters +4', stats = { 'DEF:96 HP+43 STR+27 DEX+34 VIT+27 AGI+47 MND+22 CHR+40 Accuracy+41 Attack+71 Magic Accurac' } },
+        } },
+        { set = 'Totemic', pieces = {
+            ['head'] = { id = 23903, name = 'Totemic Helm +4', stats = { 'DEF:127 HP+74 MP+33 STR+33 DEX+39 VIT+30 AGI+39 INT+30 MND+33 CHR+34 Accuracy+57 Magic Acc' } },
+            ['body'] = { id = 23948, name = 'Totemic Jackcoat +4', stats = { 'DEF:157 HP+108 MP+54 STR+39 DEX+44 VIT+34 AGI+43 INT+33 MND+36 CHR+38 Accuracy+60 Magic Ac' } },
+            ['hands'] = { id = 23993, name = 'Totemic Gloves +4', stats = { 'DEF:115 HP+57 STR+21 DEX+50 VIT+42 AGI+20 INT+22 MND+43 CHR+30 Accuracy+58 Magic Accuracy+' } },
+            ['legs'] = { id = 24038, name = 'Totemic Trousers +4', stats = { 'DEF:139 HP+90 STR+39 VIT+26 AGI+35 INT+40 MND+30 CHR+21 Accuracy+59 Magic Accuracy+59 Evas' } },
+            ['feet'] = { id = 24083, name = 'Totemic Gaiters +4', stats = { 'DEF:97 HP+39 STR+22 DEX+39 VIT+22 AGI+52 MND+25 CHR+40 Accuracy+56 Magic Accuracy+56 Evasi' } },
+        } },
+    },
+    -- COR
+    ['COR'] = {
+        { set = 'Laksamana', pieces = {
+            ['head'] = { id = 23911, name = 'Laksamana Tricorne +4', stats = { 'DEF:125 HP+74 STR+33 DEX+39 VIT+27 AGI+44 INT+30 MND+33 CHR+31 Ranged Accuracy+66 Magic Ac' } },
+            ['body'] = { id = 23956, name = 'Laksamana Frac +4', stats = { 'DEF:155 HP+108 MP+64 STR+39 DEX+44 VIT+31 AGI+50 INT+33 MND+36 CHR+33 Ranged Accuracy+67 R' } },
+            ['feet'] = { id = 24091, name = 'Laksamana Bottes +4', stats = { 'DEF:95 HP+84 STR+22 DEX+39 VIT+20 AGI+54 MND+25 CHR+40 Ranged Accuracy+62 Magic Accuracy+6' } },
+        } },
+        { set = 'Laksamanas', pieces = {
+            ['hands'] = { id = 24001, name = 'Laksamanas Gants +4', stats = { 'DEF:113 HP+57 MP+45 STR+21 DEX+50 VIT+39 AGI+22 INT+22 MND+43 CHR+27 Accuracy+40 Ranged Ac' } },
+            ['legs'] = { id = 24046, name = 'Laksamanas Trews +4', stats = { 'DEF:137 HP+150 MP+83 STR+39 VIT+24 AGI+38 INT+40 MND+30 CHR+21 Attack+40 Ranged Accuracy+5' } },
+        } },
+        { set = 'Lanun', pieces = {
+            ['head'] = { id = 23934, name = 'Lanun Tricorne +4', stats = { 'DEF:125 HP+90 STR+40 DEX+29 VIT+27 AGI+41 INT+28 MND+25 CHR+26 Ranged Accuracy+42br&gt', 'Ranged Attack+97 Magic Accuracy+42 Evasion+89 Magic Evasion+113 "Magic Def. Bonus"+5 Haste' } },
+            ['body'] = { id = 23979, name = 'Lanun Frac +4', stats = { 'DEF:156 HP+89 MP+74 STR+42 DEX+39 VIT+36 AGI+43 INT+39 MND+33 CHR+33 Accuracy+54 Ranged At' } },
+            ['hands'] = { id = 24024, name = 'Lanun Gants +4', stats = { 'DEF:114 HP+75 STR+31 DEX+45 VIT+44 AGI+22 INT+25 MND+40 CHR+27 Ranged Accuracy+49 Ranged A' } },
+            ['legs'] = { id = 24069, name = 'Lanun Trews +4', stats = { 'DEF:137 HP+100 MP+53 STR+47 VIT+29 AGI+36 INT+43 MND+27 CHR+21 Attack+88 Ranged Accuracy+5' } },
+            ['feet'] = { id = 24114, name = 'Lanun Bottes +4', stats = { 'DEF:93 HP+68 STR+27 DEX+34 VIT+25 AGI+49 INT+22 MND+22 CHR+40 Accuracy+48 Ranged Attack+71' } },
+        } },
+    },
+    -- DNC
+    ['DNC'] = {
+        { set = 'Horos', pieces = {
+            ['head'] = { id = 23936, name = 'Horos Tiara +4', stats = { 'DEF:128 HP+96 MP+53 STR+36 DEX+37 VIT+30 AGI+29 INT+28 MND+25 CHR+28 Accuracy+49 Attack+87' } },
+            ['body'] = { id = 23981, name = 'Horos Casaque +4', stats = { 'DEF:158 HP+89 MP+74 STR+37 DEX+39 VIT+39 AGI+38 INT+36 MND+33 CHR+35 Accuracy+55 Attack+96' } },
+            ['hands'] = { id = 24026, name = 'Horos Bangles +4', stats = { 'DEF:116 HP+95 STR+24 DEX+45 VIT+47 AGI+24 INT+25 MND+40 CHR+38 Accuracy+48 Attack+84 Magic' } },
+            ['legs'] = { id = 24071, name = 'Horos Tights +4', stats = { 'DEF:138 HP+77 STR+45 VIT+31 AGI+30 INT+43 MND+27 CHR+26 Accuracy+50 Attack+74 Magic Accura' } },
+            ['feet'] = { id = 24116, name = 'Horos Toe Shoes +4', stats = { 'DEF:96 HP+83 STR+25 DEX+34 VIT+27 AGI+47 MND+22 CHR+42 Accuracy+47 Attack+71 Magic Accurac' } },
+        } },
+        { set = 'Maxixi', pieces = {
+            ['head'] = { id = 23913, name = 'maxixi tiara +4', stats = { 'DEF:127 HP+74 MP+43 STR+30 DEX+40 VIT+30 AGI+42 INT+30 MND+33 CHR+36 Accuracy+57 Magic Acc' } },
+            ['body'] = { id = 23958, name = 'maxixi casaque +4', stats = { 'DEF:157 HP+108 MP+64 STR+34 DEX+45 VIT+34 AGI+46 INT+33 MND+36 CHR+35 Accuracy+66 Attack+3' } },
+            ['hands'] = { id = 24003, name = 'maxixi bangles +4', stats = { 'DEF:115 HP+87 STR+21 DEX+48 VIT+42 AGI+28 INT+22 MND+43 CHR+29 Accuracy+58 Attack+40 Magic' } },
+            ['legs'] = { id = 24048, name = 'maxixi tights +4', stats = { 'DEF:139 HP+90 STR+39 VIT+26 AGI+35 INT+40 MND+30 CHR+23 Accuracy+66 Attack+40 Magic Accura' } },
+            ['feet'] = { id = 24093, name = 'maxixi toe shoes +4', stats = { 'DEF:97 HP+69 STR+22 DEX+37 VIT+22 AGI+52 MND+25 CHR+42 Accuracy+56 Attack+35 Magic Accurac' } },
+        } },
+    },
+    -- DRG
+    ['DRG'] = {
+        { set = 'Pteroslaver', pieces = {
+            ['head'] = { id = 23931, name = 'Pteroslaver Armet +4', stats = { 'DEF:136 HP+90 MP+53 STR+42 DEX+25 VIT+40 AGI+25 INT+27 MND+24 CHR+24 Accuracy+49 Attack+87' } },
+            ['body'] = { id = 23976, name = 'Pteroslaver Mail +4', stats = { 'DEF:166 HP+112 MP+74 STR+49 DEX+39 VIT+41 AGI+31 INT+34 MND+31 CHR+31 Accuracy+45 Attack+9' } },
+            ['legs'] = { id = 24066, name = 'Pteroslaver Brais +4', stats = { 'DEF:145 HP+95 STR+48 DEX+22 VIT+46 AGI+25 INT+39 MND+26 CHR+22 Accuracy+44 Attack+74 Magic' } },
+            ['feet'] = { id = 24111, name = 'Pteroslaver Greaves +4', stats = { 'DEF:103 HP+65 MP+50 STR+33 DEX+27 VIT+30 AGI+42 MND+20 CHR+36 Accuracy+47 Attack+83 Magic ' } },
+        } },
+        { set = 'Pteroslaver Finger', pieces = {
+            ['hands'] = { id = 24021, name = 'Pteroslaver Finger Gauntlets +4', stats = { 'DEF:121 HP+87 MP+60 STR+21 DEX+43 VIT+45 AGI+20 INT+23 MND+36 CHR+30 Accuracy+51 Attack+73' } },
+        } },
+        { set = 'Vishap', pieces = {
+            ['head'] = { id = 23908, name = 'Vishap Armet +4', stats = { 'DEF:134 HP+77 MP+43 STR+37 DEX+35 VIT+35 AGI+35 INT+29 MND+35 CHR+29 Accuracy+57 Attack+47' } },
+            ['body'] = { id = 23953, name = 'Vishap Mail +4', stats = { 'DEF:164 HP+111 MP+64 STR+41 DEX+36 VIT+41 AGI+36 INT+31 MND+34 CHR+31 Accuracy+67 Attack+4' } },
+            ['legs'] = { id = 24043, name = 'Vishap Brais +4', stats = { 'DEF:146 HP+95 STR+43 DEX+25 VIT+29 AGI+30 INT+36 MND+29 CHR+22 Accuracy+59 Magic Accuracy+' } },
+            ['feet'] = { id = 24088, name = 'Vishap Greaves +4', stats = { 'DEF:104 HP+57 STR+30 DEX+32 VIT+25 AGI+47 MND+23 CHR+36 Accuracy+56 Attack+35 Magic Accura' } },
+        } },
+        { set = 'Vishap Finger', pieces = {
+            ['hands'] = { id = 23998, name = 'Vishap Finger Gauntlets +4', stats = { 'DEF:122 HP+60 STR+16 DEX+45 VIT+40 AGI+22 INT+20 MND+39 CHR+30 Accuracy+58 Attack+40 Magic' } },
+        } },
+    },
+    -- DRK
+    ['DRK'] = {
+        { set = 'Fallens', pieces = {
+            ['head'] = { id = 23925, name = 'Fallens Burgeonet +4', stats = { 'DEF:139 HP+106 MP+53 STR+45 DEX+24 VIT+45 AGI+24 INT+25 MND+22 CHR+22 Accuracy+49 Attack+8' } },
+            ['body'] = { id = 23970, name = 'Fallens Cuirass +4', stats = { 'DEF:171 HP+113 MP+85 STR+47 DEX+32 VIT+44 AGI+29 INT+35 MND+32 CHR+29 Accuracy+53 Attack+9' } },
+            ['legs'] = { id = 24060, name = 'Fallens Flanchard +4', stats = { 'DEF:155 HP+107 MP+55 STR+50 VIT+36 AGI+26 INT+43 MND+27 CHR+20 Accuracy+44 Attack+74 Magic' } },
+            ['feet'] = { id = 24105, name = 'Fallens Sollerets +4', stats = { 'DEF:113 HP+48 STR+36 DEX+27 VIT+32 AGI+39 MND+20 CHR+36 Accuracy+41 Attack+86 Magic Accura' } },
+        } },
+        { set = 'Fallens Finger', pieces = {
+            ['hands'] = { id = 24015, name = 'Fallens Finger Gauntlets +4', stats = { 'DEF:127 HP+59 STR+31 DEX+39 VIT+48 INT+27 MND+41 CHR+29 Accuracy+43 Attack+87 Magic Accura' } },
+        } },
+        { set = 'Ignominy', pieces = {
+            ['head'] = { id = 23902, name = 'Ignominy Burgeonet +4', stats = { 'DEF:141 HP+81 MP+54 STR+38 DEX+34 VIT+35 AGI+34 INT+30 MND+30 CHR+27 Accuracy+57 Attack+43' } },
+            ['body'] = { id = 23947, name = 'Ignominy Cuirass +4', stats = { 'DEF:171 HP+174 MP+132 STR+46 DEX+34 VIT+39 AGI+34 INT+29 MND+32 CHR+29 Accuracy+60 Attack+' } },
+            ['legs'] = { id = 24037, name = 'Ignominy Flanchard +4', stats = { 'DEF:153 HP+98 STR+50 DEX+20 VIT+31 AGI+31 INT+40 MND+25 CHR+20 Accuracy+59 Attack+50 Magic' } },
+            ['feet'] = { id = 24082, name = 'Ignominy Sollerets +4', stats = { 'DEF:111 HP+77 MP+50 STR+26 DEX+27 VIT+27 AGI+44 MND+23 CHR+36 Accuracy+64 Attack+45 Magic ' } },
+        } },
+        { set = 'Ignominy Finger', pieces = {
+            ['hands'] = { id = 23992, name = 'Ignominy Finger Gauntlets +4', stats = { 'DEF:129 HP+86 MP+42 STR+25 DEX+49 VIT+43 INT+18 MND+38 CHR+29 Accuracy+64 Attack+38 Magic ' } },
+        } },
+    },
+    -- GEO
+    ['GEO'] = {
+        { set = 'Bagua', pieces = {
+            ['head'] = { id = 23938, name = 'Bagua Galero +4', stats = { 'DEF:123 HP+101 MP+62 STR+27 DEX+24 VIT+29 AGI+24 INT+34 MND+29 CHR+29 Accuracy+42 Magic Ac' } },
+            ['body'] = { id = 23983, name = 'Bagua Tunic +4', stats = { 'DEF:154 HP+124 MP+129 STR+34 DEX+31 VIT+36 AGI+31 INT+44 MND+39 CHR+39 Accuracy+45 Magic A' } },
+            ['hands'] = { id = 24028, name = 'Bagua Mitaines +4', stats = { 'DEF:109 HP+52 MP+44 STR+19 DEX+38 VIT+40 AGI+15 INT+34 MND+43 CHR+29 Accuracy+43 Magic Acc' } },
+            ['legs'] = { id = 24073, name = 'Bagua Pants +4', stats = { 'DEF:133 HP+128 MP+59 STR+38 VIT+27 AGI+30 INT+52 MND+37 CHR+29 Accuracy+44 Magic Accuracy+' } },
+            ['feet'] = { id = 24118, name = 'Bagua Sandals +4', stats = { 'DEF:92 HP+73 MP+44 STR+23 DEX+21 VIT+28 AGI+43 INT+35 MND+32 CHR+44 Accuracy+41 Magic Accu' } },
+        } },
+        { set = 'Geomancy', pieces = {
+            ['head'] = { id = 23916, name = 'Geomancy Galero +4', stats = { 'DEF:122 HP+74 MP+89 STR+26 DEX+29 VIT+26 AGI+31 INT+36 MND+41 CHR+31 Accuracy+57 Magic Acc' } },
+            ['body'] = { id = 23961, name = 'Geomancy Tunic +4', stats = { 'DEF:152 HP+101 MP+147 STR+31 DEX+34 VIT+31 AGI+36 INT+39 MND+44 CHR+39 Accuracy+60 Magic A' } },
+            ['hands'] = { id = 24006, name = 'Geomancy Mitaines +4', stats = { 'DEF:110 HP+90 MP+78 STR+16 DEX+41 VIT+35 AGI+20 INT+29 MND+48 CHR+29 Accuracy+58 Magic Acc' } },
+            ['legs'] = { id = 24051, name = 'Geomancy Pants +4', stats = { 'DEF:134 HP+137 MP+116 STR+35 VIT+22 AGI+32 INT+44 MND+39 CHR+29 Accuracy+59 Magic Accuracy' } },
+            ['feet'] = { id = 24096, name = 'Geomancy Sandals +4', stats = { 'DEF:92 HP+39 MP+93 STR+20 DEX+24 VIT+20 AGI+48 INT+27 MND+34 CHR+44 Accuracy+56 Magic Accu' } },
+        } },
+    },
+    -- MNK
+    ['MNK'] = {
+        { set = 'Anchorites', pieces = {
+            ['head'] = { id = 23896, name = 'Anchorites Crown +4', stats = { 'DEF:125 HP+92 STR+33 DEX+35 VIT+32 AGI+37 INT+31 MND+37 CHR+31 Accuracy+57 Magic Accuracy+' } },
+            ['body'] = { id = 23941, name = 'Anchorites Cyclas +4', stats = { 'DEF:155 HP+138 STR+39 DEX+40 VIT+36 AGI+40 INT+34 MND+37 CHR+34 Accuracy+65 Magic Accuracy' } },
+            ['hands'] = { id = 23986, name = 'Anchorites Gloves +4', stats = { 'DEF:113 HP+100 STR+28 DEX+49 VIT+38 AGI+21 INT+20 MND+41 CHR+26 Accuracy+58 Magic Accuracy' } },
+            ['legs'] = { id = 24031, name = 'Anchorites Hose +4', stats = { 'DEF:137 HP+114 STR+42 VIT+29 AGI+36 INT+42 MND+35 CHR+20 Accuracy+59 Magic Accuracy+59 Eva' } },
+            ['feet'] = { id = 24076, name = 'Anchorites Gaiters +4', stats = { 'DEF:95 HP+46 STR+24 DEX+35 VIT+21 AGI+49 MND+30 CHR+39 Accuracy+56 Magic Accuracy+56 Evasi' } },
+        } },
+        { set = 'Hesychasts', pieces = {
+            ['head'] = { id = 23919, name = 'Hesychasts Crown +4', stats = { 'DEF:113 HP+112 STR+35 DEX+30 VIT+37 AGI+26 INT+28 MND+25 CHR+25 Accuracy+42 Attack+72 Magi' } },
+            ['body'] = { id = 23964, name = 'Hesychasts Cyclas +4', stats = { 'DEF:147 HP+132 STR+39 DEX+35 VIT+40 AGI+39 INT+37 MND+34 CHR+34 Accuracy+45 Attack+75 Magi' } },
+            ['hands'] = { id = 24009, name = 'Hesychasts Gloves +4', stats = { 'DEF:101 HP+90 STR+25 DEX+44 VIT+43 AGI+16 INT+23 MND+38 CHR+26 Accuracy+54 Attack+96 Magic' } },
+            ['legs'] = { id = 24054, name = 'Hesychasts Hose +4', stats = { 'DEF:129 HP+126 STR+47 DEX+21 VIT+29 AGI+31 INT+45 MND+27 CHR+20 Accuracy+44 Attack+74 Magi' } },
+            ['feet'] = { id = 24099, name = 'Hesychasts Gaiters +4', stats = { 'DEF:86 HP+94 STR+33 DEX+29 VIT+26 AGI+44 MND+22 CHR+39 Accuracy+41 Attack+71 Magic Accurac' } },
+        } },
+    },
+    -- NIN
+    ['NIN'] = {
+        { set = 'Hachiya', pieces = {
+            ['head'] = { id = 23907, name = 'Hachiya Hatsuburi +4', stats = { 'DEF:127 HP+74 STR+33 DEX+38 VIT+32 AGI+37 INT+31 MND+34 CHR+31 Accuracy+64 Magic Accuracy+' } },
+            ['body'] = { id = 23952, name = 'Hachiya Chainmail +4', stats = { 'DEF:157 HP+108 STR+39 DEX+40 VIT+36 AGI+40 INT+34 MND+37 CHR+34 Accuracy+60 Magic Accuracy' } },
+            ['hands'] = { id = 23997, name = 'Hachiya Tekko +4', stats = { 'DEF:115 HP+57 STR+20 DEX+49 VIT+38 AGI+31 INT+20 MND+41 CHR+26 Accuracy+58 Ranged Accuracy' } },
+            ['legs'] = { id = 24042, name = 'Hachiya Hakama +4', stats = { 'DEF:139 HP+90 STR+42 VIT+24 AGI+36 INT+42 MND+30 CHR+20 Accuracy+66 Ranged Accuracy+45 Mag' } },
+            ['feet'] = { id = 24087, name = 'Hachiya Kyahan +4', stats = { 'DEF:97 HP+39 STR+24 DEX+30 VIT+21 AGI+49 INT+20 MND+25 CHR+39 Accuracy+62 Magic Accuracy+6' } },
+        } },
+        { set = 'Mochizuki', pieces = {
+            ['head'] = { id = 23930, name = 'Mochizuki Hatsuburi +4', stats = { 'DEF:125 HP+66 STR+36 DEX+31 VIT+38 AGI+33 INT+35 MND+32 CHR+32 Accuracy+49 Attack+72 Magic' } },
+            ['body'] = { id = 23975, name = 'Mochizuki Chainmail +4', stats = { 'DEF:159 HP+89 STR+39 DEX+35 VIT+36 AGI+35 INT+37 MND+34 CHR+34 Accuracy+56 Attack+97 Range' } },
+            ['hands'] = { id = 24020, name = 'Mochizuki Tekko +4', stats = { 'DEF:114 HP+55 STR+35 DEX+44 VIT+42 AGI+16 INT+23 MND+38 CHR+26 Accuracy+43 Attack+89 Magic' } },
+            ['legs'] = { id = 24065, name = 'Mochizuki Hakama +4', stats = { 'DEF:139 HP+92 STR+47 VIT+29 AGI+36 INT+45 MND+27 CHR+20 Accuracy+44 Attack+74 Magic Accura' } },
+            ['feet'] = { id = 24110, name = 'Mochizuki Kyahan +4', stats = { 'DEF:98 HP+43 STR+33 DEX+29 VIT+30 AGI+48 MND+22 CHR+39 Accuracy+48 Attack+86 Magic Accurac' } },
+        } },
+    },
+    -- PLD
+    ['PLD'] = {
+        { set = 'Caballarius', pieces = {
+            ['head'] = { id = 23924, name = 'Caballarius Coronet +4', stats = { 'DEF:145 HP+126 MP+108 STR+37 DEX+26 VIT+48 AGI+26 INT+27 MND+24 CHR+24 Accuracy+42 Attack+' } },
+            ['body'] = { id = 23969, name = 'Caballarius Surcoat +4', stats = { 'DEF:176 HP+148 MP+120 STR+44 DEX+29 VIT+44 AGI+29 INT+32 MND+29 CHR+29 Accuracy+45 Attack+' } },
+            ['hands'] = { id = 24014, name = 'Caballarius Gauntlets +4', stats = { 'DEF:130 HP+134 STR+25 DEX+39 VIT+52 INT+21 MND+39 CHR+29 Accuracy+43 Attack+73 Magic Accur' } },
+            ['legs'] = { id = 24059, name = 'Caballarius Breeches +4', stats = { 'DEF:156 HP+82 MP+110 STR+55 VIT+41 AGI+26 INT+38 MND+27 CHR+20 Accuracy+44 Attack+74 Magic' } },
+            ['feet'] = { id = 24104, name = 'Caballarius Leggings +4', stats = { 'DEF:114 HP+73 MP+55 STR+31 DEX+22 VIT+32 AGI+39 MND+20 CHR+36 Accuracy+41 Attack+71 Magic ' } },
+        } },
+        { set = 'Reverence', pieces = {
+            ['head'] = { id = 23901, name = 'Reverence Coronet +4', stats = { 'DEF:144 HP+81 MP+54 STR+35 DEX+34 VIT+38 AGI+34 INT+27 MND+33 CHR+27 Accuracy+57 Magic Acc' } },
+            ['body'] = { id = 23946, name = 'Reverence Surcoat +4', stats = { 'DEF:174 HP+264 MP+72 STR+39 DEX+34 VIT+39 AGI+34 INT+29 MND+32 CHR+29 Accuracy+60 Magic Ac' } },
+            ['hands'] = { id = 23991, name = 'Reverence Gauntlets +4', stats = { 'DEF:132 HP+123 STR+20 DEX+44 VIT+43 INT+18 MND+38 CHR+29 Accuracy+58 Magic Accuracy+58 Eva' } },
+            ['legs'] = { id = 24036, name = 'Reverence Breeches +4', stats = { 'DEF:156 HP+173 MP+95 STR+45 VIT+31 AGI+31 INT+35 MND+25 CHR+20 Accuracy+59 Magic Accuracy+' } },
+            ['feet'] = { id = 24081, name = 'Reverence Leggings +4', stats = { 'DEF:114 HP+92 MP+65 STR+26 DEX+27 VIT+27 AGI+44 MND+23 CHR+36 Accuracy+61 Magic Accuracy+6' } },
+        } },
+    },
+    -- PUP
+    ['PUP'] = {
+        { set = 'Foire', pieces = {
+            ['head'] = { id = 23912, name = 'Foire Taj +4', stats = { 'DEF:127 HP+74 STR+30 DEX+38 VIT+35 AGI+37 INT+31 MND+37 CHR+31 Accuracy+57 Magic Accuracy+' } },
+            ['body'] = { id = 23957, name = 'Foire Tobe +4', stats = { 'DEF:157 HP+109 STR+34 DEX+40 VIT+31 AGI+40 INT+34 MND+37 CHR+34 Accuracy+67 Attack+40 Magi' } },
+            ['hands'] = { id = 24002, name = 'Foire Dastanas +4', stats = { 'DEF:115 HP+80 STR+20 DEX+49 VIT+38 AGI+21 INT+20 MND+41 CHR+26 Accuracy+58 Magic Accuracy+' } },
+            ['legs'] = { id = 24047, name = 'Foire Churidars +4', stats = { 'DEF:139 HP+143 STR+42 VIT+24 AGI+36 INT+42 MND+30 CHR+20 Accuracy+59 Magic Accuracy+59 Eva' } },
+            ['feet'] = { id = 24092, name = 'Foire Babouches +4', stats = { 'DEF:97 HP+84 STR+24 DEX+30 VIT+21 AGI+49 MND+25 CHR+39 Accuracy+61 Magic Accuracy+61 Evasi' } },
+        } },
+        { set = 'Pitre', pieces = {
+            ['head'] = { id = 23935, name = 'Pitre Taj +4', stats = { 'DEF:128 HP+66 STR+36 DEX+31 VIT+32 AGI+33 INT+29 MND+26 CHR+26 Accuracy+42 Attack+72 Magic' } },
+            ['body'] = { id = 23980, name = 'Pitre Tobe +4', stats = { 'DEF:158 HP+110 STR+39 DEX+35 VIT+36 AGI+35 INT+37 MND+34 CHR+34 Accuracy+55 Attack+96 Magi' } },
+            ['hands'] = { id = 24025, name = 'Pitre Dastanas +4', stats = { 'DEF:115 HP+55 STR+25 DEX+47 VIT+43 AGI+16 INT+23 MND+38 CHR+29 Accuracy+43 Attack+73 Magic' } },
+            ['legs'] = { id = 24070, name = 'Pitre Churidars +4', stats = { 'DEF:138 HP+77 STR+50 VIT+32 AGI+31 INT+45 MND+27 CHR+20 Accuracy+51 Attack+74 Magic Accura' } },
+            ['feet'] = { id = 24115, name = 'Pitre Babouches +4', stats = { 'DEF:96 HP+93 STR+29 DEX+25 VIT+26 AGI+44 INT+22 MND+22 CHR+39 Accuracy+41 Attack+71 Magic ' } },
+        } },
+    },
+    -- RDM
+    ['RDM'] = {
+        { set = 'Atrophy', pieces = {
+            ['head'] = { id = 23899, name = 'Atrophy Chapeau +4', stats = { 'DEF:121 HP+74 MP+68 STR+29 DEX+32 VIT+29 AGI+34 INT+37 MND+42 CHR+34 Accuracy+64 Magic Acc' } },
+            ['body'] = { id = 23944, name = 'Atrophy Tabard +4', stats = { 'DEF:151 HP+101 MP+108 STR+31 DEX+34 VIT+31 AGI+36 INT+43 MND+48 CHR+39 Accuracy+65 Magic A' } },
+            ['hands'] = { id = 23989, name = 'Atrophy Gloves +4', stats = { 'DEF:109 HP+53 MP+41 STR+21 DEX+46 VIT+35 AGI+20 INT+29 MND+48 CHR+29 Accuracy+63 Attack+35' } },
+            ['legs'] = { id = 24034, name = 'Atrophy Tights +4', stats = { 'DEF:133 HP+84 MP+63 STR+35 VIT+22 AGI+32 INT+44 MND+44 CHR+29 Accuracy+59 Magic Accuracy+5' } },
+            ['feet'] = { id = 24079, name = 'Atrophy Boots +4', stats = { 'DEF:91 HP+92 MP+93 STR+20 DEX+24 VIT+20 AGI+48 INT+27 MND+34 CHR+44 Accuracy+66 Magic Accu' } },
+        } },
+        { set = 'Vitiation', pieces = {
+            ['head'] = { id = 23922, name = 'Vitiation Chapeau +4', stats = { 'DEF:123 HP+91 MP+87 STR+27 DEX+24 VIT+29 AGI+24 INT+34 MND+42 CHR+29 Accuracy+42 Attack+72' } },
+            ['body'] = { id = 23967, name = 'Vitiation Tabard +4', stats = { 'DEF:151 HP+84 MP+109 STR+34 DEX+31 VIT+36 AGI+31 INT+44 MND+45 CHR+39 Accuracy+45 Attack+7' } },
+            ['hands'] = { id = 24012, name = 'Vitiation Gloves +4', stats = { 'DEF:108 HP+52 MP+74 STR+19 DEX+38 VIT+40 AGI+15 INT+37 MND+46 CHR+29 Accuracy+43 Attack+73' } },
+            ['legs'] = { id = 24057, name = 'Vitiation Tights +4', stats = { 'DEF:134 HP+73 MP+59 STR+38 DEX+22 VIT+27 AGI+27 INT+49 MND+34 CHR+29 Accuracy+44 Attack+74' } },
+            ['feet'] = { id = 24102, name = 'Vitiation Boots +4', stats = { 'DEF:92 HP+43 MP+75 STR+21 DEX+19 VIT+23 AGI+41 INT+35 MND+32 CHR+42 Accuracy+41 Magic Accu' } },
+        } },
+    },
+    -- RNG
+    ['RNG'] = {
+        { set = 'Arcadian', pieces = {
+            ['head'] = { id = 23928, name = 'Arcadian Beret +4', stats = { 'DEF:125 HP+66 STR+36 DEX+29 VIT+27 AGI+37 INT+28 MND+31 CHR+26 Ranged Accuracy+42 Ranged A' } },
+            ['body'] = { id = 23973, name = 'Arcadian Jerkin +4', stats = { 'DEF:156 HP+89 MP+74 STR+42 DEX+39 VIT+36 AGI+43 INT+36 MND+33 CHR+33 Ranged Accuracy+45 Ra' } },
+            ['hands'] = { id = 24018, name = 'Arcadian Bracers +4', stats = { 'DEF:111 HP+55 STR+30 DEX+45 VIT+44 AGI+21 INT+25 MND+40 CHR+27 Ranged Accuracy+43 Ranged A' } },
+            ['legs'] = { id = 24063, name = 'arcadian braccae +4', stats = { 'DEF:135 HP+97 MP+53 STR+44 VIT+29 AGI+33 INT+43 MND+27 CHR+21 Ranged Accuracy+52 Ranged At' } },
+            ['feet'] = { id = 24108, name = 'Arcadian Socks +4', stats = { 'DEF:93 HP+43 STR+29 DEX+34 VIT+25 AGI+51 MND+22 CHR+40 Ranged Accuracy+41 Ranged Attack+91' } },
+        } },
+        { set = 'Orion', pieces = {
+            ['head'] = { id = 23905, name = 'Orion Beret +4', stats = { 'DEF:124 HP+74 STR+33 DEX+39 VIT+27 AGI+44 INT+30 MND+33 CHR+31 Ranged Accuracy+57 Ranged A' } },
+            ['body'] = { id = 23950, name = 'Orion Jerkin +4', stats = { 'DEF:154 HP+108 MP+64 STR+34 DEX+44 VIT+31 AGI+45 INT+33 MND+36 CHR+33 Ranged Accuracy+70 R' } },
+            ['hands'] = { id = 23995, name = 'Orion Bracers +4', stats = { 'DEF:112 HP+57 STR+21 DEX+50 VIT+39 AGI+32 INT+22 MND+43 CHR+27 Ranged Accuracy+58 Magic Ac' } },
+            ['legs'] = { id = 24040, name = 'Orion Braccae +4', stats = { 'DEF:136 HP+90 MP+43 STR+39 VIT+24 AGI+42 INT+40 MND+34 CHR+21 Ranged Accuracy+66 Magic Acc' } },
+            ['feet'] = { id = 24085, name = 'Orion Socks +4', stats = { 'DEF:94 HP+39 STR+22 DEX+39 VIT+20 AGI+54 MND+25 CHR+40 Ranged Accuracy+64 Ranged Attack+41' } },
+        } },
+    },
+    -- RUN
+    ['RUN'] = {
+        { set = 'Futhark', pieces = {
+            ['head'] = { id = 23939, name = 'Futhark Bandeau +4', stats = { 'DEF:129 HP+66 MP+98 STR+26 DEX+27 VIT+35 AGI+34 INT+28 MND+23 CHR+24 Accuracy+42 Attack+72' } },
+            ['body'] = { id = 23984, name = 'Futhark Coat +4', stats = { 'DEF:161 HP+129 MP+114 STR+37 DEX+39 VIT+39 AGI+38 INT+38 MND+33 CHR+33 Accuracy+45 Attack+' } },
+            ['hands'] = { id = 24029, name = 'Futhark Mitons +4', stats = { 'DEF:117 HP+55 STR+24 DEX+45 VIT+47 AGI+15 INT+27 MND+40 CHR+27 Accuracy+43 Attack+91 Magic' } },
+            ['legs'] = { id = 24074, name = 'Futhark Trousers +4', stats = { 'DEF:144 HP+117 STR+42 VIT+31 AGI+30 INT+45 MND+27 CHR+21 Accuracy+44 Attack+74 Magic Accur' } },
+            ['feet'] = { id = 24119, name = 'Futhark Boots +4', stats = { 'DEF:100 HP+43 MP+60 STR+25 DEX+34 VIT+27 AGI+47 MND+22 CHR+40 Accuracy+50 Attack+71 Magic ' } },
+        } },
+        { set = 'Runeist', pieces = {
+            ['head'] = { id = 23917, name = 'Runeist Bandeau +4', stats = { 'DEF:130 HP+119 MP+99 STR+31 DEX+38 VIT+31 AGI+40 INT+31 MND+36 CHR+32 Accuracy+57 Magic Ac' } },
+            ['body'] = { id = 23962, name = 'Runeist Coat +4', stats = { 'DEF:160 HP+228 MP+86 STR+34 DEX+42 VIT+34 AGI+43 INT+33 MND+38 CHR+33 All resistances+39 A' } },
+            ['hands'] = { id = 24007, name = 'Runeist Mitons +4', stats = { 'DEF:118 HP+95 MP+57 STR+21 DEX+48 VIT+42 AGI+20 INT+22 MND+45 CHR+27 Accuracy+58 Magic Acc' } },
+            ['legs'] = { id = 24052, name = 'Runeist Trousers +4', stats = { 'DEF:142 HP+90 MP+72 STR+39 VIT+26 AGI+35 INT+40 MND+33 CHR+21 Accuracy+59 Magic Accuracy+5' } },
+            ['feet'] = { id = 24097, name = 'Runeist Boots +4', stats = { 'DEF:100 HP+84 STR+22 DEX+37 VIT+22 AGI+52 MND+27 CHR+40 Accuracy+56 Magic Accuracy+56 Evas' } },
+        } },
+    },
+    -- SAM
+    ['SAM'] = {
+        { set = 'Sakonji', pieces = {
+            ['head'] = { id = 23929, name = 'Sakonji Kabuto +4', stats = { 'DEF:140 HP+88 MP+53 STR+39 DEX+30 VIT+37 AGI+30 INT+32 MND+29 CHR+29 Accuracy+50 Attack+89' } },
+            ['body'] = { id = 23974, name = 'Sakonji Domaru +4', stats = { 'DEF:170 HP+111 MP+74 STR+47 DEX+37 VIT+41 AGI+31 INT+34 MND+31 CHR+31 Accuracy+52 Attack+9' } },
+            ['hands'] = { id = 24019, name = 'Sakonji Kote +4', stats = { 'DEF:130 HP+57 STR+21 DEX+40 VIT+45 AGI+17 INT+23 MND+36 CHR+30 Accuracy+52 Attack+91 Magic' } },
+            ['legs'] = { id = 24064, name = 'Sakonji Haidate +4', stats = { 'DEF:150 HP+80 STR+48 VIT+34 AGI+25 INT+39 MND+26 CHR+22 Accuracy+44 Attack+92 Magic Accura' } },
+            ['feet'] = { id = 24109, name = 'Sakonji Sune-Ate +4', stats = { 'DEF:111 HP+75 STR+36 DEX+27 VIT+30 AGI+42 MND+20 CHR+36 Accuracy+41 Attack+94 Magic Accura' } },
+        } },
+        { set = 'Wakido', pieces = {
+            ['head'] = { id = 23906, name = 'Wakido Kabuto +4', stats = { 'DEF:140 HP+77 MP+43 STR+37 DEX+38 VIT+32 AGI+35 INT+29 MND+32 CHR+29 Accuracy+57 Attack+46' } },
+            ['body'] = { id = 23951, name = 'Wakido Domaru +4', stats = { 'DEF:170 HP+111 MP+64 STR+41 DEX+36 VIT+41 AGI+36 INT+31 MND+34 CHR+31 Accuracy+67 Magic Ac' } },
+            ['hands'] = { id = 23996, name = 'Wakido Kote +4', stats = { 'DEF:128 HP+60 STR+24 DEX+45 VIT+40 AGI+22 INT+20 MND+40 CHR+30 Accuracy+58 Magic Accuracy+' } },
+            ['legs'] = { id = 24041, name = 'Wakido Haidate +4', stats = { 'DEF:152 HP+95 STR+44 VIT+29 AGI+30 INT+37 MND+29 CHR+22 Accuracy+59 Attack+45 Ranged Attac' } },
+            ['feet'] = { id = 24086, name = 'Wakido Sune-Ate +4', stats = { 'DEF:110 HP+42 STR+25 DEX+33 VIT+25 AGI+47 MND+23 CHR+37 Accuracy+66 Attack+43 Ranged Accur' } },
+        } },
+    },
+    -- SCH
+    ['SCH'] = {
+        { set = 'Academics', pieces = {
+            ['head'] = { id = 23915, name = 'Academics Mortarboard +4', stats = { 'DEF:118 HP+74 MP+68 STR+29 DEX+32 VIT+29 AGI+34 INT+37 MND+42 CHR+34 Accuracy+62 Magic Acc' } },
+            ['body'] = { id = 23960, name = 'Academics Gown +4', stats = { 'DEF:148 HP+101 MP+183 STR+31 DEX+34 VIT+31 AGI+36 INT+44 MND+44 CHR+39 Accuracy+60 Magic A' } },
+            ['hands'] = { id = 24005, name = 'Academics Bracers +4', stats = { 'DEF:106 HP+53 MP+71 STR+16 DEX+41 VIT+35 AGI+20 INT+29 MND+48 CHR+29 Accuracy+58 Magic Acc' } },
+            ['legs'] = { id = 24050, name = 'Academics Pants +4', stats = { 'DEF:130 HP+99 MP+78 STR+35 VIT+22 AGI+32 INT+44 MND+44 CHR+29 Accuracy+59 Magic Accuracy+5' } },
+            ['feet'] = { id = 24095, name = 'Academics Loafers +4', stats = { 'DEF:88 HP+39 MP+41 STR+20 DEX+24 VIT+20 AGI+48 INT+32 MND+34 CHR+44 Accuracy+56 Magic Accu' } },
+        } },
+        { set = 'Pedagogy', pieces = {
+            ['head'] = { id = 23937, name = 'Pedagogy Mortarboard +4', stats = { 'DEF:117 HP+96 MP+92 STR+27 DEX+24 VIT+29 AGI+24 INT+44 MND+39 CHR+29 Accuracy+42 Magic Acc' } },
+            ['body'] = { id = 23982, name = 'Pedagogy Gown +4', stats = { 'DEF:149 HP+109 MP+114 STR+34 DEX+31 VIT+36 AGI+31 INT+44 MND+39 CHR+39 Accuracy+45 Magic A' } },
+            ['hands'] = { id = 24027, name = 'Pedagogy Bracers +4', stats = { 'DEF:105 HP+52 MP+85 STR+19 DEX+38 VIT+40 AGI+15 INT+37 MND+46 CHR+29 Accuracy+43 Magic Acc' } },
+            ['legs'] = { id = 24072, name = 'Pedagogy Pants +4', stats = { 'DEF:131 HP+93 MP+79 STR+38 VIT+27 AGI+27 INT+52 MND+34 CHR+29 Accuracy+44 Magic Accuracy+4' } },
+            ['feet'] = { id = 24117, name = 'Pedagogy Loafers +4', stats = { 'DEF:89 HP+43 MP+69 STR+23 DEX+21 VIT+25 AGI+43 INT+32 MND+29 CHR+44 Accuracy+41 Magic Accu' } },
+        } },
+    },
+    -- SMN
+    ['SMN'] = {
+        { set = 'Convokers', pieces = {
+            ['head'] = { id = 23909, name = 'Convokers Horn +4', stats = { 'DEF:117 HP+66 MP+108 STR+22 DEX+29 VIT+24 AGI+29 INT+29 MND+32 CHR+29 Accuracy+57 Magic Ac' } },
+            ['hands'] = { id = 23999, name = 'Convokers Bracers +4', stats = { 'DEF:105 HP+47 MP+96 STR+16 DEX+43 VIT+34 AGI+20 INT+29 MND+46 CHR+29 Accuracy+58 Magic Acc' } },
+            ['legs'] = { id = 24044, name = 'Convokers Spats +4', stats = { 'DEF:129 HP+77 MP+119 STR+35 VIT+21 AGI+32 INT+44 MND+37 CHR+29 Accuracy+59 Magic Accuracy+' } },
+            ['feet'] = { id = 24089, name = 'Convokers Pigaches +4', stats = { 'DEF:87 HP+33 MP+81 STR+20 DEX+26 VIT+20 AGI+47 INT+27 MND+32 CHR+44 Accuracy+56 Magic Accu' } },
+        } },
+        { set = 'Glyphic', pieces = {
+            ['head'] = { id = 23932, name = 'Glyphic Horn +4', stats = { 'DEF:118 HP+61 MP+125 STR+27 DEX+24 VIT+29 AGI+24 INT+32 MND+29 CHR+29 Accuracy+42 Attack+7' } },
+            ['body'] = { id = 23977, name = 'Glyphic Doublet +4', stats = { 'DEF:148 HP+80 MP+145 STR+36 DEX+30 VIT+36 AGI+31 INT+42 MND+39 CHR+39 Accuracy+45 Attack+7' } },
+            ['hands'] = { id = 24022, name = 'Glyphic Bracers +4', stats = { 'DEF:106 HP+48 MP+71 STR+21 DEX+38 VIT+39 AGI+15 INT+32 MND+43 CHR+29 Accuracy+43 Attack+73' } },
+            ['legs'] = { id = 24067, name = 'Glyphic Spats +4', stats = { 'DEF:128 HP+68 MP+115 STR+40 VIT+26 AGI+27 INT+47 MND+34 CHR+29 Accuracy+44 Attack+74 Magic' } },
+            ['feet'] = { id = 24112, name = 'Glyphic Pigaches +4', stats = { 'DEF:85 HP+39 MP+105 STR+25 DEX+21 VIT+25 AGI+42 INT+30 MND+29 CHR+44 Accuracy+41 Attack+71' } },
+        } },
+    },
+    -- THF
+    ['THF'] = {
+        { set = 'Pillagers', pieces = {
+            ['head'] = { id = 23900, name = 'Pillagers Bonnet +4', stats = { 'DEF:126 HP+74 MP+43 STR+30 DEX+42 VIT+30 AGI+42 INT+30 MND+33 CHR+31 Accuracy+63 Ranged Ac' } },
+            ['body'] = { id = 23945, name = 'Pillagers Vest +4', stats = { 'DEF:156 HP+108 MP+64 STR+34 DEX+49 VIT+34 AGI+43 INT+33 MND+36 CHR+33 Accuracy+70 Magic Ac' } },
+            ['hands'] = { id = 23990, name = 'Pillagers Armlets +4', stats = { 'DEF:114 HP+57 STR+21 DEX+50 VIT+42 AGI+30 INT+22 MND+43 CHR+27 Accuracy+58 Magic Accuracy+' } },
+            ['legs'] = { id = 24035, name = 'Pillagers Culottes +4', stats = { 'DEF:138 HP+90 STR+39 DEX+20 VIT+26 AGI+35 INT+40 MND+30 CHR+21 Accuracy+64 Attack+35 Magic' } },
+            ['feet'] = { id = 24080, name = 'Pillagers Poulaines +4', stats = { 'DEF:96 HP+39 STR+22 DEX+39 VIT+22 AGI+52 MND+25 CHR+40 Accuracy+62 Ranged Accuracy+43 Magi' } },
+        } },
+        { set = 'Plunderers', pieces = {
+            ['head'] = { id = 23923, name = 'Plunderers Bonnet +4', stats = { 'DEF:127 HP+66 MP+53 STR+36 DEX+41 VIT+36 AGI+35 INT+34 MND+31 CHR+32 Accuracy+49 Attack+72' } },
+            ['body'] = { id = 23968, name = 'Plunderers Vest +4', stats = { 'DEF:157 HP+89 MP+74 STR+46 DEX+46 VIT+39 AGI+45 INT+36 MND+33 CHR+33 Accuracy+45 Attack+75' } },
+            ['hands'] = { id = 24013, name = 'Plunderers Armlets +4', stats = { 'DEF:115 HP+55 STR+24 DEX+43 VIT+45 AGI+13 INT+23 MND+38 CHR+34 Accuracy+50 Attack+73 Magic' } },
+            ['legs'] = { id = 24058, name = 'Plunderers Culottes +4', stats = { 'DEF:135 HP+77 STR+47 DEX+21 VIT+34 AGI+33 INT+46 MND+30 CHR+24 Accuracy+51 Attack+74 Magic' } },
+            ['feet'] = { id = 24103, name = 'Plunderers Poulaines +4', stats = { 'DEF:97 HP+43 STR+27 DEX+37 VIT+27 AGI+47 MND+22 CHR+43 Accuracy+41 Attack+71 Magic Accurac' } },
+        } },
+    },
+    -- WAR
+    ['WAR'] = {
+        { set = 'Agoge', pieces = {
+            ['head'] = { id = 23918, name = 'Agoge Mask +4', stats = { 'DEF:140 HP+68 STR+40 DEX+28 VIT+40 AGI+28 INT+31 MND+28 CHR+28 Accuracy+42 Attack+93 Magic' } },
+            ['body'] = { id = 23963, name = 'Agoge Lorica +4', stats = { 'DEF:170 HP+91 STR+41 DEX+35 VIT+41 AGI+30 INT+33 MND+30 CHR+30 Accuracy+55 Attack+95 Magic' } },
+            ['hands'] = { id = 24008, name = 'Agoge Mufflers +4', stats = { 'DEF:124 HP+80 STR+30 DEX+39 VIT+52 AGI+13 INT+24 MND+36 CHR+26 Accuracy+43 Attack+96 Magic' } },
+            ['legs'] = { id = 24053, name = 'Agoge Cuisses +4', stats = { 'DEF:151 HP+80 STR+48 VIT+35 AGI+24 INT+39 MND+23 CHR+23 Accuracy+44 Attack+74 Magic Accura' } },
+            ['feet'] = { id = 24098, name = 'Agoge Calligae +4', stats = { 'DEF:106 HP+45 STR+32 DEX+29 VIT+33 AGI+43 MND+21 CHR+38 Accuracy+48 Attack+71 Magic Accura' } },
+        } },
+        { set = 'Pummelers', pieces = {
+            ['head'] = { id = 23895, name = 'Pummelers Mask +4', stats = { 'DEF:138 HP+77 STR+31 DEX+39 VIT+34 AGI+36 INT+31 MND+34 CHR+31 Accuracy+57 Magic Accuracy+' } },
+            ['body'] = { id = 23940, name = 'Pummelers Lorica +4', stats = { 'DEF:168 HP+111 STR+40 DEX+39 VIT+40 AGI+38 INT+33 MND+36 CHR+33 Accuracy+60 Attack+37 Magi' } },
+            ['hands'] = { id = 23985, name = 'Pummelers Mufflers +4', stats = { 'DEF:126 HP+75 STR+28 DEX+47 VIT+42 AGI+21 INT+24 MND+42 CHR+29 Accuracy+58 Magic Accuracy+' } },
+            ['legs'] = { id = 24030, name = 'Pummelers Cuisses +4', stats = { 'DEF:150 HP+95 STR+40 VIT+27 AGI+32 INT+39 MND+29 CHR+26 Accuracy+66 Magic Accuracy+66 Evas' } },
+            ['feet'] = { id = 24075, name = 'Pummelers Calligae +4', stats = { 'DEF:108 HP+65 STR+24 DEX+31 VIT+31 AGI+48 MND+24 CHR+38 Accuracy+56 Attack+45 Magic Accura' } },
+        } },
+    },
+    -- WHM
+    ['WHM'] = {
+        { set = 'Piety', pieces = {
+            ['head'] = { id = 23920, name = 'Piety Cap +4', stats = { 'DEF:119 HP+66 MP+95 STR+29 DEX+26 VIT+36 AGI+26 INT+36 MND+36 CHR+31 Accuracy+42 Attack+72' } },
+            ['body'] = { id = 23965, name = 'Piety Bliaut +4', stats = { 'DEF:149 HP+84 MP+115 STR+34 DEX+31 VIT+36 AGI+31 INT+44 MND+39 CHR+39 Accuracy+45 Attack+7' } },
+            ['hands'] = { id = 24010, name = 'Piety Mitts +4', stats = { 'DEF:110 HP+82 MP+74 STR+19 DEX+38 VIT+40 AGI+15 INT+34 MND+43 CHR+29 Accuracy+43 Attack+73' } },
+            ['legs'] = { id = 24055, name = 'Piety Pantaloons +4', stats = { 'DEF:132 HP+103 MP+89 STR+38 VIT+27 AGI+27 INT+49 MND+34 CHR+29 Accuracy+44 Attack+74 Magic' } },
+            ['feet'] = { id = 24100, name = 'Piety Duckbills +4', stats = { 'DEF:91 HP+68 MP+69 STR+23 DEX+21 VIT+25 AGI+43 INT+32 MND+29 CHR+44 Accuracy+41 Attack+71 ' } },
+        } },
+        { set = 'Theophany', pieces = {
+            ['head'] = { id = 23897, name = 'Theophany Cap +4', stats = { 'DEF:120 HP+74 MP+68 STR+29 DEX+32 VIT+29 AGI+34 INT+34 MND+42 CHR+34 Accuracy+57 Magic Acc' } },
+            ['body'] = { id = 23942, name = 'Theophany Bliaut +4', stats = { 'DEF:150 HP+101 MP+108 STR+31 DEX+34 VIT+31 AGI+36 INT+39 MND+44 CHR+39 Accuracy+60 Magic A' } },
+            ['hands'] = { id = 23987, name = 'Theophany Mitts +4', stats = { 'DEF:108 HP+53 MP+93 STR+21 DEX+41 VIT+35 AGI+20 INT+29 MND+53 CHR+29 Accuracy+58 Magic Acc' } },
+            ['legs'] = { id = 24032, name = 'theophany pantaloons +4', stats = { 'DEF:132 HP+84 MP+63 STR+35 VIT+22 AGI+32 INT+44 MND+39 CHR+29 Accuracy+59 Magic Accuracy+5' } },
+            ['feet'] = { id = 24077, name = 'Theophany Duckbills +4', stats = { 'DEF:90 HP+84 MP+86 STR+20 DEX+24 VIT+20 AGI+53 INT+32 MND+39 CHR+44 Accuracy+56 Magic Accu' } },
+        } },
+    },
+}
+
+-- INFAMY_TYPEMAP:BEGIN
+-- AUTO-GENERATED by tools/build_infamy_typemap.py -- do NOT hand-edit.
+-- Maps curated Infamy Vendor item ids to 'Category/Subtype' for the
+-- grouped browser (derived from item_equipment.slot + item_weapon.skill).
+-- Re-run the tool after adding items; unmapped ids show under 'Other'.
+catalog.itemTypeMap =
+{
+    [21632] = 'Weapons/Sword',
+    [21621] = 'Weapons/Sword',
+    [21535] = 'Weapons/Hand-to-Hand',
+    [21590] = 'Weapons/Dagger',
+    [21646] = 'Weapons/Sword',
+    [21653] = 'Weapons/Great Sword',
+    [21730] = 'Weapons/Axe',
+    [21785] = 'Weapons/Great Axe',
+    [21837] = 'Weapons/Scythe',
+    [21891] = 'Weapons/Polearm',
+    [21932] = 'Weapons/Katana',
+    [21986] = 'Weapons/Great Katana',
+    [22002] = 'Weapons/Club',
+    [22106] = 'Weapons/Staff',
+    [22163] = 'Weapons/Archery',
+    [22164] = 'Weapons/Marksmanship',
+    [26495] = 'Weapons/Grip-Shield',
+    [22307] = 'Weapons/Instrument',
+    [23500] = 'Armor/Body',
+    [23567] = 'Armor/Hands',
+    [25953] = 'Armor/Feet',
+    [22212] = 'Weapons/Grip-Shield',
+    [21431] = 'Accessories/Ear',
+    [26022] = 'Accessories/Neck',
+    [26118] = 'Accessories/Ear',
+    [26084] = 'Accessories/Ear',
+    [26185] = 'Accessories/Ring',
+    [26190] = 'Accessories/Ring',
+    [26334] = 'Accessories/Waist',
+    [26259] = 'Accessories/Back',
+    [27928] = 'Armor/Hands',
+    [13566] = 'Accessories/Ring',
+    [19832] = 'Weapons/Polearm',
+    [16199] = 'Weapons/Grip-Shield',
+    [21602] = 'Weapons/Sword',
+    [23734] = 'Armor/Hands',
+    [25578] = 'Armor/Head',
+    [25794] = 'Armor/Body',
+    [25603] = 'Armor/Head',
+    [28330] = 'Armor/Feet',
+    [25809] = 'Armor/Hands',
+    [25868] = 'Armor/Legs',
+    [25934] = 'Armor/Feet',
+    [11007] = 'Accessories/Back',
+    [26015] = 'Accessories/Neck',
+    [26003] = 'Accessories/Neck',
+    [27595] = 'Accessories/Back',
+    [28420] = 'Accessories/Waist',
+    [27510] = 'Accessories/Neck',
+    [22281] = 'Weapons/Ammo',
+    [26225] = 'Accessories/Ring',
+    [26226] = 'Accessories/Ring',
+    [26227] = 'Accessories/Ring',
+    [26228] = 'Accessories/Ring',
+    [26229] = 'Accessories/Ring',
+    [26230] = 'Accessories/Ring',
+    [26231] = 'Accessories/Ring',
+    [20672] = 'Weapons/Sword',
+    [22042] = 'Weapons/Club',
+    [22055] = 'Weapons/Staff',
+    [22040] = 'Weapons/Club',
+    [22081] = 'Weapons/Staff',
+    [22086] = 'Weapons/Staff',
+    [21071] = 'Weapons/Club',
+    [22058] = 'Weapons/Staff',
+    [21830] = 'Weapons/Scythe',
+    [22031] = 'Weapons/Club',
+    [21637] = 'Weapons/Sword',
+    [21565] = 'Weapons/Dagger',
+    [21829] = 'Weapons/Scythe',
+    [21564] = 'Weapons/Dagger',
+    [21620] = 'Weapons/Sword',
+    [21563] = 'Weapons/Dagger',
+    [21828] = 'Weapons/Scythe',
+    [26963] = 'Armor/Body',
+    [23716] = 'Armor/Body',
+    [25799] = 'Armor/Body',
+    [23765] = 'Armor/Body',
+    [23764] = 'Armor/Body',
+    [25888] = 'Armor/Legs',
+    [23781] = 'Armor/Legs',
+    [23779] = 'Armor/Legs',
+    [25571] = 'Armor/Head',
+    [25837] = 'Armor/Hands',
+    [23724] = 'Armor/Legs',
+    [23778] = 'Armor/Legs',
+    [23774] = 'Armor/Hands',
+    [23760] = 'Armor/Head',
+    [25955] = 'Armor/Feet',
+    [23788] = 'Armor/Feet',
+    [23757] = 'Armor/Head',
+    [23772] = 'Armor/Hands',
+    [23771] = 'Armor/Hands',
+    [23758] = 'Armor/Head',
+    [23712] = 'Armor/Head',
+    [23773] = 'Armor/Hands',
+    [21779] = 'Weapons/Great Axe',
+    [23787] = 'Armor/Feet',
+    [23785] = 'Armor/Feet',
+    [23786] = 'Armor/Feet',
+    [21975] = 'Weapons/Great Katana',
+    [21778] = 'Weapons/Great Axe',
+    [21674] = 'Weapons/Great Sword',
+    [21883] = 'Weapons/Polearm',
+    [21567] = 'Weapons/Dagger',
+    [21974] = 'Weapons/Great Katana',
+    [21683] = 'Weapons/Great Sword',
+    [21964] = 'Weapons/Great Katana',
+    [21870] = 'Weapons/Polearm',
+    [21673] = 'Weapons/Great Sword',
+    [21882] = 'Weapons/Polearm',
+    [21519] = 'Weapons/Hand-to-Hand',
+    [21766] = 'Weapons/Great Axe',
+    [21816] = 'Weapons/Scythe',
+    [21819] = 'Weapons/Scythe',
+    [21527] = 'Weapons/Hand-to-Hand',
+    [21768] = 'Weapons/Great Axe',
+    [21663] = 'Weapons/Great Sword',
+    [26023] = 'Accessories/Neck',
+    [21707] = 'Weapons/Axe',
+    [21722] = 'Weapons/Axe',
+    [21777] = 'Weapons/Great Axe',
+    [21518] = 'Weapons/Hand-to-Hand',
+    [21872] = 'Weapons/Polearm',
+    [21881] = 'Weapons/Polearm',
+    [21973] = 'Weapons/Great Katana',
+    [21528] = 'Weapons/Hand-to-Hand',
+    [21721] = 'Weapons/Axe',
+    [21709] = 'Weapons/Axe',
+    [22115] = 'Weapons/Archery',
+    [27620] = 'Accessories/Back',
+    [26357] = 'Accessories/Waist',
+    [22107] = 'Weapons/Archery',
+    [26269] = 'Accessories/Back',
+    [21752] = 'Weapons/Axe',
+    [26341] = 'Accessories/Waist',
+    [21972] = 'Weapons/Great Katana',
+    [27615] = 'Accessories/Back',
+    [22129] = 'Weapons/Archery',
+    [21296] = 'Weapons/Ammo',
+    [21227] = 'Weapons/Archery',
+    [21269] = 'Weapons/Marksmanship',
+    [22126] = 'Weapons/Archery',
+    [22136] = 'Weapons/Marksmanship',
+    [26004] = 'Accessories/Neck',
+    [21325] = 'Weapons/Ammo',
+    [26361] = 'Accessories/Waist',
+    [13655] = 'Accessories/Back',
+    [11607] = 'Accessories/Neck',
+    [26359] = 'Accessories/Waist',
+    [25461] = 'Accessories/Neck',
+    [26191] = 'Accessories/Ring',
+    [25497] = 'Accessories/Neck',
+    [28607] = 'Accessories/Back',
+    [26088] = 'Accessories/Ear',
+    [28471] = 'Accessories/Ring',
+    [26186] = 'Accessories/Ring',
+    [25439] = 'Accessories/Ear',
+    [25535] = 'Accessories/Ear',
+    [26108] = 'Accessories/Ear',
+    [25422] = 'Accessories/Ear',
+    [25428] = 'Accessories/Ear',
+    [25434] = 'Accessories/Ear',
+    [25440] = 'Accessories/Ear',
+    [25446] = 'Accessories/Ear',
+    [25452] = 'Accessories/Ear',
+    [25458] = 'Accessories/Ear',
+    [25464] = 'Accessories/Ear',
+    [25470] = 'Accessories/Ear',
+    [25476] = 'Accessories/Ear',
+    [25482] = 'Accessories/Ear',
+    [25488] = 'Accessories/Ear',
+    [25494] = 'Accessories/Ear',
+    [25500] = 'Accessories/Ear',
+    [25506] = 'Accessories/Ear',
+    [25512] = 'Accessories/Ear',
+    [25518] = 'Accessories/Ear',
+    [25524] = 'Accessories/Ear',
+    [25530] = 'Accessories/Ear',
+    [25536] = 'Accessories/Ear',
+    [25542] = 'Accessories/Ear',
+    [25548] = 'Accessories/Ear',
+}
+-- INFAMY_TYPEMAP:END
+
+
+return catalog
