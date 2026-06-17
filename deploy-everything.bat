@@ -119,17 +119,24 @@ REM ---- 3b. Upload sql/zz_*.sql so _apply_changed_sql.sh has fresh copies.
 REM          The box is tarball-synced (not a git clone) so git-diff won't
 REM          detect SQL changes; the fallback in _apply_changed_sql.sh
 REM          re-applies every zz_*.sql it finds in sql/ after this upload. ----
-echo  Uploading sql/zz_*.sql to box...
+echo  Uploading sql/zz_*.sql to box (via /tmp + sudo cp -- sql/ is xi:xi-owned, a plain scp gets Permission denied)...
+ssh -i "%KEY%" %SSHOPT% %HOST% "rm -rf /tmp/fjb_zz && mkdir -p /tmp/fjb_zz" >> "%LOG%" 2>&1
 for %%F in ("%SRC%\sql\zz_*.sql") do (
-    scp -i "%KEY%" %SSHOPT% "%%F" %HOST%:%REMOTE%/sql/ >> "%LOG%" 2>&1
+    scp -i "%KEY%" %SSHOPT% "%%F" %HOST%:/tmp/fjb_zz/ >> "%LOG%" 2>&1
 )
+ssh -i "%KEY%" %SSHOPT% %HOST% "sudo cp /tmp/fjb_zz/*.sql %REMOTE%/sql/ && sudo chown xi:xi %REMOTE%/sql/zz_*.sql && rm -rf /tmp/fjb_zz && echo zz-sql-installed" >> "%LOG%" 2>&1
 (echo [%TIME%] [3b] zz_*.sql upload done)>> "%LOG%"
 
 REM ---- 4. Rebuild C++ + reload zz_*.sql + restart + health-check ----
 echo(
 echo  [4/5] Rebuilding C++ + applying ALL changed SQL + restarting Azure (may take a while)...
 (echo [%TIME%] [4/5] rebuild+restart: start)>> "%LOG%"
-ssh -i "%KEY%" %SSHOPT% %HOST% "tr -d '\015' < %REMOTE%/tools/_azure_update_remote.sh > /tmp/_au.sh && bash /tmp/_au.sh; rm -f /tmp/_au.sh" > "%OUT%" 2>&1
+REM -- Live build-progress side window: tails the captured output so you can
+REM    watch the per-file counter (percent / done-of-total / elapsed) instead
+REM    of waiting blind. Self-closes when the build prints DONE or a failure.
+type nul > "%OUT%"
+start "Legendary - Build Progress" powershell -NoProfile -Command "Get-Content -Path '%OUT%' -Wait | ForEach-Object { Write-Host $_; if ($_ -match 'DONE - rebuilt|build failed|NOT restarted') { Start-Sleep 2; break } }"
+ssh -i "%KEY%" %SSHOPT% %HOST% "tr -d '\015' < %REMOTE%/tools/_azure_update_remote.sh > /tmp/_au.sh && bash /tmp/_au.sh; rm -f /tmp/_au.sh" >> "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
 

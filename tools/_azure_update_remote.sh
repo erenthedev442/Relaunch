@@ -79,6 +79,9 @@ fi
 
 # [3] Rebuild (same command as your Azure - Rebuild Server.bat).
 echo; echo "[3/5] Rebuilding server binaries..."
+# Live per-file progress readout: [percent | done/total files | elapsed].
+# Ninja reads NINJA_STATUS; harmlessly ignored if the generator is Make.
+export NINJA_STATUS='   [%p%% | %f/%t files | %es] '
 if [ -d build ]; then
   if cmake --build build -j2; then
     echo "  build OK."
