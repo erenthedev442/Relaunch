@@ -57,6 +57,9 @@ catalog.vendorItems =
     { id = 22163, name = 'Pinaka',          cost = 800, stats = { 'Bow relic (Lv.119 III). Yoichinoyumi.', 'STR/AGI+35, Store TP+10, Archery skill+277.' } },
     { id = 22164, name = 'Earp',            cost = 800, stats = { 'Gun relic (Lv.119 III). Annihilator.', 'DEX/AGI+35, Crit rate+15%, Mkmanship skill+277.' } },
     { id = 26495, name = 'Duban',           cost = 800, stats = { 'Shield relic (Lv.119 III). Aegis.', 'DEF+150, VIT/MND+30, Shield skill+129.' } },
+    { id = 21398, name = 'Marsyas',          cost = 400, stats = { 'Wind horn (BRD). Song duration+50%.', 'Top-tier BRD wind instrument.' } },
+    { id = 21401, name = 'Blurred Harp +1', cost = 300, stats = { 'String harp (BRD). Lullaby+2, Ballad+2.', 'All Songs+2, +1 song slot.' } },
+    { id = 21403, name = 'Damani Horn +1',  cost = 250, stats = { 'Wind horn (BRD). MP+25, Wind Skill+4.', 'All Songs+3.' } },
     { id = 22307, name = 'Loughnashade',    cost = 800, stats = { 'Horn relic (Lv.119 III). Gjallarhorn.', 'CHR+20, All Songs+4. (BRD; ilvl 0)' } },
 
     -- ----------------------------------------------------------------
@@ -775,6 +778,9 @@ catalog.itemTypeMap =
     [22163] = 'Weapons/Archery',
     [22164] = 'Weapons/Marksmanship',
     [26495] = 'Weapons/Grip-Shield',
+    [21398] = 'Weapons/Instrument',
+    [21401] = 'Weapons/Instrument',
+    [21403] = 'Weapons/Instrument',
     [22307] = 'Weapons/Instrument',
     [23500] = 'Armor/Body',
     [23567] = 'Armor/Hands',
