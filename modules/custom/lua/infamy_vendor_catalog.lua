@@ -60,7 +60,8 @@ catalog.vendorItems =
     { id = 21398, name = 'Marsyas',          cost = 400, stats = { 'Wind horn (BRD). Song duration+50%.', 'Top-tier BRD wind instrument.' } },
     { id = 21401, name = 'Blurred Harp +1', cost = 300, stats = { 'String harp (BRD). Lullaby+2, Ballad+2.', 'All Songs+2, +1 song slot.' } },
     { id = 21403, name = 'Damani Horn +1',  cost = 250, stats = { 'Wind horn (BRD). MP+25, Wind Skill+4.', 'All Songs+3.' } },
-    { id = 22307, name = 'Loughnashade',    cost = 800, stats = { 'Horn relic (Lv.119 III). Gjallarhorn.', 'CHR+20, All Songs+4. (BRD; ilvl 0)' } },
+    { id = 22307, name = 'Loughnashade',    cost = 800, stats = { 'Horn relic (Lv.119 III). Gjallarhorn.', 'CHR+20, All Songs+4. (BRD)' } },
+    { id = 18839, name = 'Daurdabla',       cost = 800, stats = { 'Harp relic (string). Singing+20, Str+20.', '+2 song slots, Song dur+30%. (BRD)' } },
 
     -- ----------------------------------------------------------------
     -- MYTHIC WEAPONS  (i119 III final forms — one per job)
@@ -778,6 +779,7 @@ catalog.itemTypeMap =
     [22163] = 'Weapons/Archery',
     [22164] = 'Weapons/Marksmanship',
     [26495] = 'Weapons/Grip-Shield',
+    [18839] = 'Weapons/Instrument',
     [21398] = 'Weapons/Instrument',
     [21401] = 'Weapons/Instrument',
     [21403] = 'Weapons/Instrument',
