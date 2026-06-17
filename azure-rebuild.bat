@@ -9,7 +9,10 @@ REM
 REM  Ships NOTHING from this laptop and never touches the local
 REM  database. The whole job runs on the Azure box: it verifies the
 REM  core patches (if that script is present), backs up the live DB,
-REM  compiles the C++ already in the box's source tree, then restarts.
+REM  recompiles the box's C++, applies any CHANGED SQL already on the box
+REM  (sql/ + modules/custom/sql via the deploys' ledger), then restarts.
+REM  NOTE: it can only apply SQL files ALREADY on the box -- SQL not yet
+REM  shipped here still needs deploy-everything.bat / deploy-no-rebuild.bat.
 REM
 REM  USE THIS TO: build engine changes that were previously deployed
 REM  to the box but not yet compiled, or just recompile the binaries.
@@ -40,7 +43,7 @@ if /i not "%GO%"=="Y" ( echo   Cancelled - nothing changed.& goto :end )
 echo(
 echo   Running on the box (compile keeps the server UP; restart at the end)...
 echo(
-ssh -i "%KEY%" %SSHOPT% %HOST% "cd %REMOTE% && echo '[1/4] verify core patches (if present)...' && { if [ -f tools/verify_core_patches.py ] && command -v python3 >/dev/null 2>&1; then python3 tools/verify_core_patches.py || { echo '   CORE-PATCH VERIFY FAILED - aborting, nothing rebuilt.'; exit 7; }; else echo '   (verify script not on box yet - skipping)'; fi; } && echo '[2/4] backing up live DB...' && mkdir -p sql/backups && (sudo mariadb-dump xidb > sql/backups/prerebuild-$(date +%%Y%%m%%d-%%H%%M%%S).sql 2>/dev/null && echo '   saved' || echo '   (backup skipped)') && echo '[3/4] compiling (server stays UP on old binary)...' && cmake --build build -j2 && echo '[4/4] restarting (brief disconnect)...' && (sudo systemctl restart xi 2>/dev/null || sudo systemctl restart xi_map xi_connect xi_search xi_world) && echo REBUILD-OK"
+ssh -i "%KEY%" %SSHOPT% %HOST% "cd %REMOTE% && echo '[1/5] verify core patches (if present)...' && { if [ -f tools/verify_core_patches.py ] && command -v python3 >/dev/null 2>&1; then python3 tools/verify_core_patches.py || { echo '   CORE-PATCH VERIFY FAILED - aborting, nothing rebuilt.'; exit 7; }; else echo '   (verify script not on box yet - skipping)'; fi; } && echo '[2/5] backing up live DB...' && mkdir -p sql/backups && (sudo mariadb-dump xidb > sql/backups/prerebuild-$(date +%%Y%%m%%d-%%H%%M%%S).sql 2>/dev/null && echo '   saved' || echo '   (backup skipped)') && echo '[3/5] compiling (server stays UP on old binary)...' && cmake --build build -j2 && echo '[4/5] applying changed SQL already on the box (sql/ + custom layers)...' && bash tools/_apply_changed_sql.sh && echo '[5/5] restarting (brief disconnect)...' && (sudo systemctl restart xi 2>/dev/null || sudo systemctl restart xi_map xi_connect xi_search xi_world) && echo REBUILD-OK"
 set "RC=%ERRORLEVEL%"
 
 echo(
