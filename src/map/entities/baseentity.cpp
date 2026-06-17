@@ -33,6 +33,20 @@
 #include <map/ximesh/ximesh.h>
 
 #include <cstring>
+#include <unordered_set>
+
+// FJB: alive-entity registry. Single-threaded (main map thread only).
+// Lets CLuaBaseEntity detect dangling pointers caused by Lua closures or
+// queued AI actions that outlive their wrapped entity.
+namespace
+{
+    std::unordered_set<const CBaseEntity*> g_liveEntities;
+}
+
+bool CBaseEntity::IsEntityAlive(const CBaseEntity* p)
+{
+    return p != nullptr && g_liveEntities.count(p) > 0;
+}
 
 CBaseEntity::CBaseEntity()
 : id(0)
@@ -58,11 +72,13 @@ CBaseEntity::CBaseEntity()
     TracyZoneScoped;
     speed          = baseSpeed;
     animationSpeed = static_cast<uint8>(std::clamp<float>((baseSpeed / settings::get<float>("map.ANIMATION_SPEED_DIVISOR")), std::numeric_limits<uint8>::min(), std::numeric_limits<uint8>::max()));
+    g_liveEntities.insert(this);
 }
 
 CBaseEntity::~CBaseEntity()
 {
     TracyZoneScoped;
+    g_liveEntities.erase(this);
     if (PBattlefield)
     {
         PBattlefield->RemoveEntity(this, BATTLEFIELD_LEAVE_CODE_WARPDC);

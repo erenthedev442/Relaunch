@@ -268,6 +268,13 @@ public:
     virtual const std::string& getName() const; // Internal name of entity
     virtual const std::string& getPacketName(); // Name of entity sent to the client
 
+    // FJB: alive-entity registry — lets Lua wrappers (CLuaBaseEntity) detect dangling
+    // pointers after an entity is freed, without requiring shared_ptr or Lua GC hooks.
+    // Every constructor registers `this`; every destructor unregisters it.
+    // All entity creation / deletion happens on the main map thread (same thread as
+    // all Lua callbacks) so no mutex is needed.
+    static bool IsEntityAlive(const CBaseEntity* p);
+
     uint16        getZone() const; // Current zone
     float         GetXPos() const; // Position of co-ordinate X
     float         GetYPos() const; // Position of co-ordinate Y

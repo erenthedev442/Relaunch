@@ -496,6 +496,11 @@ bool CTrustController::Cast(uint16 targid, SpellID spellid)
     }
 
     auto* PSpell = spell::GetSpell(spellid);
+    if (PSpell == nullptr)
+    {
+        // Injected or invalid spell ID — GetSpell already logged the warning.
+        return false;
+    }
     if (PSpell->getValidTarget() == TARGET_SELF)
     {
         targid = POwner->targid;
