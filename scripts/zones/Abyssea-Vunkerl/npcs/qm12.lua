@@ -4,15 +4,16 @@
 -- Spawns Gnawtooth Gary
 -- !pos -343 -39 -644 217
 -----------------------------------
+local ID = zones[xi.zone.ABYSSEA_VUNKERL]
+-----------------------------------
 ---@type TNpcEntity
 local entity = {}
 
 entity.onTrade = function(player, npc, trade)
-    -- xi.abyssea.qmOnTrade(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    -- xi.abyssea.qmOnTrigger(player, npc)
+    xi.abyssea.qmOnTrigger(player, npc, ID.mob.GNAWTOOTH_GARY, {})
 end
 
 return entity

@@ -14,7 +14,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    xi.abyssea.qmOnTrigger(player, npc, 0, 0, { xi.item.PURSUERS_WING })
+    xi.abyssea.qmOnTrigger(player, npc, ID.mob.MINARUJA, {}, { xi.item.PURSUERS_WING })
 end
 
 return entity

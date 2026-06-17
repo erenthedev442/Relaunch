@@ -14,7 +14,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    xi.abyssea.qmOnTrigger(player, npc, 0, 0, { xi.item.JAR_OF_GOBLIN_GUNPOWDER, xi.item.JAR_OF_GOBLIN_OIL })
+    xi.abyssea.qmOnTrigger(player, npc, ID.mob.BOMBLIX_FLAMEFINGER, {}, { xi.item.JAR_OF_GOBLIN_GUNPOWDER, xi.item.JAR_OF_GOBLIN_OIL })
 end
 
 return entity

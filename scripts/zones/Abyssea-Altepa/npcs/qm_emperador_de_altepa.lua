@@ -14,7 +14,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    xi.abyssea.qmOnTrigger(player, npc, 0, 0, { xi.item.BOTTLE_OF_OASIS_WATER, xi.item.SPRIG_OF_GIANT_MISTLETOE })
+    xi.abyssea.qmOnTrigger(player, npc, ID.mob.EMPERADOR_DE_ALTEPA, {}, { xi.item.BOTTLE_OF_OASIS_WATER, xi.item.SPRIG_OF_GIANT_MISTLETOE })
 end
 
 return entity

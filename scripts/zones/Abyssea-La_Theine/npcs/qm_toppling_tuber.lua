@@ -14,7 +14,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    xi.abyssea.qmOnTrigger(player, npc, 0, 0, { xi.item.GIANT_AGARICUS_MUSHROOM })
+    xi.abyssea.qmOnTrigger(player, npc, ID.mob.TOPPLING_TUBER, {}, { xi.item.GIANT_AGARICUS_MUSHROOM })
 end
 
 return entity

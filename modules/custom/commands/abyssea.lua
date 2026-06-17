@@ -47,9 +47,8 @@ local function showHeroes(p)
         pl:customMenu({
             title   = 'Heroes',
             options = {
-                { 'Altepa',     function(q) q:setPos( 435,     0,     320,   136, xi.zone.ABYSSEA_ALTEPA)     end },
-                { 'Uleguerand', function(q) q:setPos(-238,   -40,    -520.5,   0, xi.zone.ABYSSEA_ULEGUERAND) end },
-                { 'Grauberg',   function(q) q:setPos(-555,    31,    -760,     0, xi.zone.ABYSSEA_GRAUBERG)   end },
+                { 'Altepa',   function(q) q:setPos( 435, 0,    320,  136, xi.zone.ABYSSEA_ALTEPA)   end },
+                { 'Grauberg', function(q) q:setPos(-555, 31, -760,    0, xi.zone.ABYSSEA_GRAUBERG) end },
                 { 'Back',       function(q) showRoot(q) end },
             },
         })

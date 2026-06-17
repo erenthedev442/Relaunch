@@ -14,7 +14,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    xi.abyssea.qmOnTrigger(player, npc, 0, 0, { xi.item.HIGH_QUALITY_PUGIL_SCALE })
+    xi.abyssea.qmOnTrigger(player, npc, ID.mob.IKA_ROA, {}, { xi.item.HIGH_QUALITY_PUGIL_SCALE })
 end
 
 return entity

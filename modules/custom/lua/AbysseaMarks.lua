@@ -31,7 +31,6 @@ local zoneConfig =
     [xi.zone.ABYSSEA_VUNKERL]          = { cost = 350, infamy = 40, gil =   500000, level = 145, maxHP =  7000000, atkDef =  6000, accEva = 3333 },
     -- Heroes of Abyssea
     [xi.zone.ABYSSEA_ALTEPA]           = { cost = 500, infamy = 60, gil =   750000, level = 155, maxHP = 10000000, atkDef =  8666, accEva = 5000 },
-    [xi.zone.ABYSSEA_ULEGUERAND]       = { cost = 500, infamy = 60, gil =   750000, level = 155, maxHP = 10000000, atkDef =  8666, accEva = 5000 },
     [xi.zone.ABYSSEA_GRAUBERG]         = { cost = 500, infamy = 60, gil =   750000, level = 155, maxHP = 10000000, atkDef =  8666, accEva = 5000 },
 }
 
@@ -143,33 +142,45 @@ end
 -- ============================================================
 m:addOverride('xi.abyssea.qmOnTrigger', function(player, npc, mobId, kis, tradeReqs)
     local cfg = zoneConfig[player:getZoneID()]
+    if not cfg then
+        return super(player, npc, mobId, kis, tradeReqs)
+    end
 
-    -- Trade-to-pop ??? (mobId == 0): required items don't exist on this server.
-    -- Silently release the player instead of firing the "trade X item" cutscene.
-    if cfg and mobId == 0 then
+    -- Safety fallback: mobId == 0 means no mob to spawn.
+    if mobId == 0 then
         player:release()
         return false
     end
 
-    if cfg and mobId ~= 0 and kis and #kis > 0 then
-        local mob = GetMobByID(mobId)
-        if mob and not mob:isSpawned() then
-            local validKis = true
-            for _, ki in ipairs(kis) do
-                if ki ~= 0 and not player:hasKeyItem(ki) then
-                    validKis = false
-                    break
-                end
-            end
+    local mob = GetMobByID(mobId)
+    if not mob then
+        player:release()
+        return false
+    end
 
-            if not validKis then
-                local ok, err = pcall(offerMarksPop, player, mobId, cfg)
-                if ok then
-                    player:release()  -- free client from ??? interaction lock before menu opens
-                    return false
-                end
-                -- fall through to super so the player sees SOMETHING
+    -- Mob already up: nothing for marks system to do.
+    if mob:isSpawned() then
+        return super(player, npc, mobId, kis, tradeReqs)
+    end
+
+    -- Mob is NOT spawned.  Offer marks pop when:
+    --   (a) #kis == 0: trade-pop NM or Misareaux/Vunkerl stub (no KI method exists)
+    --   (b) player is missing at least one required KI
+    local hasAllKis = type(kis) == 'table' and #kis > 0
+    if hasAllKis then
+        for _, ki in ipairs(kis) do
+            if ki ~= 0 and not player:hasKeyItem(ki) then
+                hasAllKis = false
+                break
             end
+        end
+    end
+
+    if not hasAllKis then
+        local ok = pcall(offerMarksPop, player, mobId, cfg)
+        if ok then
+            player:release()
+            return false
         end
     end
 

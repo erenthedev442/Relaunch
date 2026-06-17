@@ -14,7 +14,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    xi.abyssea.qmOnTrigger(player, npc, 0, 0, { xi.item.LENGTH_OF_GOBLIN_ROPE })
+    xi.abyssea.qmOnTrigger(player, npc, ID.mob.BURSTROX_POWDERPATE, {}, { xi.item.LENGTH_OF_GOBLIN_ROPE })
 end
 
 return entity

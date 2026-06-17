@@ -14,7 +14,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    xi.abyssea.qmOnTrigger(player, npc, 0, 0, { xi.item.COEURL_ROUND })
+    xi.abyssea.qmOnTrigger(player, npc, ID.mob.MAAHES, {}, { xi.item.COEURL_ROUND })
 end
 
 return entity

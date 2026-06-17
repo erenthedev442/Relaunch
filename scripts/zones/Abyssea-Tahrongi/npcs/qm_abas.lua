@@ -14,7 +14,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    xi.abyssea.qmOnTrigger(player, npc, 0, 0, { xi.item.EFT_EGG })
+    xi.abyssea.qmOnTrigger(player, npc, ID.mob.ABAS, {}, { xi.item.EFT_EGG })
 end
 
 return entity

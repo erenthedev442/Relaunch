@@ -14,7 +14,7 @@ entity.onTrade = function(player, npc, trade)
 end
 
 entity.onTrigger = function(player, npc)
-    xi.abyssea.qmOnTrigger(player, npc, 0, 0, { xi.item.CLOUDED_LENS })
+    xi.abyssea.qmOnTrigger(player, npc, ID.mob.ARIMASPI, {}, { xi.item.CLOUDED_LENS })
 end
 
 return entity
