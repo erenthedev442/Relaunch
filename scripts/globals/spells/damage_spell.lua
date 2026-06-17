@@ -486,6 +486,12 @@ xi.spells.damage.calculateBaseDamage = function(caster, target, spellId, spellGr
         spellDamage = math.floor(baseSpellDamage * (baseSpellDamageBonus + statDiffBonus))
     end
 
+    -- FJB: PC casters have NO upper cap on base spell damage (true uncapped magic,
+    -- mirrors the WS uncap). Mob casters keep the 131,071 ceiling.
+    if caster:isPC() then
+        return math.max(spellDamage, 0)
+    end
+
     return utils.clamp(spellDamage, 0, 131071)
 end
 
@@ -702,9 +708,17 @@ xi.spells.damage.calculateMagicBonusDiff = function(caster, target, spellId, ski
 
     -- Final operations
     local finalCasterMAB = (100 + mab) * (1 + caster:getMod(xi.mod.AUTO_MAB_COEFFICIENT) / 100)
-    local finalTargetMDB = 100 + target:getMod(xi.mod.MDEF) + mDefBarBonus
+    local finalTargetMDB = math.max(100 + target:getMod(xi.mod.MDEF) + mDefBarBonus, 1) -- floor at 1: avoids div-by-zero on extreme MDEF debuffs
 
-    magicBonusDiff = utils.clamp(finalCasterMAB / finalTargetMDB, 0, 10)
+    -- FJB: PC casters have NO upper cap on the MAB/MDB ratio (true uncapped magic,
+    -- mirrors the WS uncap). Mob casters keep the retail 10x ceiling so their nukes
+    -- can't scale absurdly against players.
+    local mabRatio = finalCasterMAB / finalTargetMDB
+    if caster:isPC() then
+        magicBonusDiff = math.max(mabRatio, 0)
+    else
+        magicBonusDiff = utils.clamp(mabRatio, 0, 10)
+    end
 
     return magicBonusDiff
 end
