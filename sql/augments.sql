@@ -2340,7 +2340,7 @@ INSERT INTO `augments` VALUES (2036,0,0,0,0,0);
 INSERT INTO `augments` VALUES (2037,0,0,0,0,0);
 INSERT INTO `augments` VALUES (2038,0,0,0,0,0);
 INSERT INTO `augments` VALUES (2039,0,0,0,0,0);
-INSERT INTO `augments` VALUES (2040,0,0,0,0,0);
+INSERT INTO `augments` VALUES (2040,0,36,1,0,0); -- Thunder Affinity +1 (THUNDER_MAB)
 INSERT INTO `augments` VALUES (2041,0,0,0,0,0);
 INSERT INTO `augments` VALUES (2042,0,0,0,0,0);
 INSERT INTO `augments` VALUES (2043,0,0,0,0,0);
