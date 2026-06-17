@@ -10,11 +10,12 @@ require('scripts/globals/abyssea')
 
 local m = Module:new('AbysseaMarks')
 
-local MARKS_CV        = 'HL_Points'
-local INFAMY_CV       = 'Infamy'
-local INFAMY_LIFE_CV  = 'Infamy_Lifetime'
-local MARKS_INFAMY_LV = '[MarksPopInfamy]'
-local MARKS_GIL_LV    = '[MarksPopGil]'
+local MARKS_CV         = 'HL_Points'
+local INFAMY_CV        = 'Infamy'
+local INFAMY_LIFE_CV   = 'Infamy_Lifetime'
+local MARKS_INFAMY_LV  = '[MarksPopInfamy]'
+local MARKS_GIL_LV     = '[MarksPopGil]'
+local MARKS_CRUOR_LV   = '[MarksPopCruor]'
 
 -- Per zone tier: mark cost, rewards, spawn level, HP, and flat stat mods applied
 -- at spawn time.  atkDef is added to ATT, DEF, MATT.  accEva is added to ACC,
@@ -22,16 +23,16 @@ local MARKS_GIL_LV    = '[MarksPopGil]'
 local zoneConfig =
 {
     -- Visions of Abyssea
-    [xi.zone.ABYSSEA_KONSCHTAT]        = { cost = 200, infamy = 25, gil =   250000, level = 135, maxHP =  4000000, atkDef =  3333, accEva = 2000 },
-    [xi.zone.ABYSSEA_TAHRONGI]         = { cost = 200, infamy = 25, gil =   250000, level = 135, maxHP =  4000000, atkDef =  3333, accEva = 2000 },
-    [xi.zone.ABYSSEA_LA_THEINE]        = { cost = 200, infamy = 25, gil =   250000, level = 135, maxHP =  4000000, atkDef =  3333, accEva = 2000 },
+    [xi.zone.ABYSSEA_KONSCHTAT]        = { cost = 200, infamy = 25, gil =   250000, cruor = 1000, level = 135, maxHP =  4000000, atkDef =  3333, accEva = 2000 },
+    [xi.zone.ABYSSEA_TAHRONGI]         = { cost = 200, infamy = 25, gil =   250000, cruor = 1000, level = 135, maxHP =  4000000, atkDef =  3333, accEva = 2000 },
+    [xi.zone.ABYSSEA_LA_THEINE]        = { cost = 200, infamy = 25, gil =   250000, cruor = 1000, level = 135, maxHP =  4000000, atkDef =  3333, accEva = 2000 },
     -- Scars of Abyssea
-    [xi.zone.ABYSSEA_ATTOHWA]          = { cost = 350, infamy = 40, gil =   500000, level = 145, maxHP =  7000000, atkDef =  6000, accEva = 3333 },
-    [xi.zone.ABYSSEA_MISAREAUX]        = { cost = 350, infamy = 40, gil =   500000, level = 145, maxHP =  7000000, atkDef =  6000, accEva = 3333 },
-    [xi.zone.ABYSSEA_VUNKERL]          = { cost = 350, infamy = 40, gil =   500000, level = 145, maxHP =  7000000, atkDef =  6000, accEva = 3333 },
+    [xi.zone.ABYSSEA_ATTOHWA]          = { cost = 350, infamy = 40, gil =   500000, cruor = 1500, level = 145, maxHP =  7000000, atkDef =  6000, accEva = 3333 },
+    [xi.zone.ABYSSEA_MISAREAUX]        = { cost = 350, infamy = 40, gil =   500000, cruor = 1500, level = 145, maxHP =  7000000, atkDef =  6000, accEva = 3333 },
+    [xi.zone.ABYSSEA_VUNKERL]          = { cost = 350, infamy = 40, gil =   500000, cruor = 1500, level = 145, maxHP =  7000000, atkDef =  6000, accEva = 3333 },
     -- Heroes of Abyssea
-    [xi.zone.ABYSSEA_ALTEPA]           = { cost = 500, infamy = 60, gil =   750000, level = 155, maxHP = 10000000, atkDef =  8666, accEva = 5000 },
-    [xi.zone.ABYSSEA_GRAUBERG]         = { cost = 500, infamy = 60, gil =   750000, level = 155, maxHP = 10000000, atkDef =  8666, accEva = 5000 },
+    [xi.zone.ABYSSEA_ALTEPA]           = { cost = 500, infamy = 60, gil =   750000, cruor = 2000, level = 155, maxHP = 10000000, atkDef =  8666, accEva = 5000 },
+    [xi.zone.ABYSSEA_GRAUBERG]         = { cost = 500, infamy = 60, gil =   750000, cruor = 2000, level = 155, maxHP = 10000000, atkDef =  8666, accEva = 5000 },
 }
 
 local function spawnViaMark(p, mobId, cost, nmName, cfg)
@@ -46,12 +47,19 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
         return
     end
     p:setCharVar(MARKS_CV, cur - cost)
-    local dx = p:getXPos() + math.random(-1, 1)
+    -- Spawn 3 units behind the player so the mob lands in open ground
+    -- rather than clipping into terrain features (trees, hills) at the ???.
+    -- Formula mirrors nearPosition() in utils.cpp (radian=π → behind).
+    local rot = p:getRotPos()
+    local rad = (rot / 256.0) * 2 * math.pi + math.pi
+    local dist = 3.0
+    local dx = p:getXPos() + math.cos(2 * math.pi - rad) * dist
     local dy = p:getYPos()
-    local dz = p:getZPos() + math.random(-1, 1)
+    local dz = p:getZPos() + math.sin(2 * math.pi - rad) * dist
     mob:setSpawn(dx, dy, dz)
     local spawned = SpawnMob(mobId)
     spawned:updateClaim(p)
+    spawned:updateEnmity(p)  -- immediately engage spawner; no delay before attacking
     spawned:setLevel(cfg.level)
     spawned:setMaxHP(cfg.maxHP)
     spawned:setHP(cfg.maxHP)
@@ -63,8 +71,9 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     spawned:addMod(xi.mod.MACC, cfg.accEva)
     spawned:addMod(xi.mod.MEVA, cfg.accEva)
     spawned:setLocalVar('[ClaimedBy]', p:getID())
-    spawned:setLocalVar(MARKS_INFAMY_LV, cfg.infamy)
+    spawned:setLocalVar(MARKS_INFAMY_LV,  cfg.infamy)
     spawned:setLocalVar(MARKS_GIL_LV,    cfg.gil)
+    spawned:setLocalVar(MARKS_CRUOR_LV,  cfg.cruor)
     p:printToPlayer(
         string.format('[Abyssea] %d Hunt Marks spent. %s appears!', cost, nmName),
         xi.msg.channel.SYSTEM_3)
@@ -203,7 +212,8 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
 
     local infamyBase = mob:getLocalVar(MARKS_INFAMY_LV)
     local gilBase    = mob:getLocalVar(MARKS_GIL_LV)
-    if (not infamyBase or infamyBase == 0) and (not gilBase or gilBase == 0) then return end
+    local cruorBase  = mob:getLocalVar(MARKS_CRUOR_LV)
+    if (not infamyBase or infamyBase == 0) and (not gilBase or gilBase == 0) and (not cruorBase or cruorBase == 0) then return end
 
     pcall(function()
         local partyMult, trustMult = calcMultipliers(player)
@@ -211,11 +221,13 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
 
         local infamyEarned = math.floor(infamyBase * totalMult)
         local gilEarned    = math.floor(gilBase    * totalMult)
+        local cruorEarned  = math.floor(cruorBase  * totalMult)
 
         -- Build reward message once; same for every member.
         local parts = {}
         if infamyEarned > 0 then table.insert(parts, string.format('+%d Infamy', infamyEarned)) end
         if gilEarned    > 0 then table.insert(parts, string.format('+%dg', gilEarned))           end
+        if cruorEarned  > 0 then table.insert(parts, string.format('+%d Cruor', cruorEarned))    end
 
         local bonusParts = {}
         if partyMult > 1.0 then table.insert(bonusParts, 'party')     end
@@ -235,7 +247,8 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
                     mem:setCharVar(INFAMY_CV,      (mem:getCharVar(INFAMY_CV)      or 0) + infamyEarned)
                     mem:setCharVar(INFAMY_LIFE_CV, (mem:getCharVar(INFAMY_LIFE_CV) or 0) + infamyEarned)
                 end
-                if gilEarned > 0 then mem:addGil(gilEarned) end
+                if gilEarned   > 0 then mem:addGil(gilEarned)                       end
+                if cruorEarned > 0 then mem:addCurrency('cruor', cruorEarned)        end
                 mem:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
             end
         end
