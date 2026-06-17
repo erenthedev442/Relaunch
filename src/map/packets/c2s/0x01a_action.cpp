@@ -36,6 +36,7 @@
 #include "packets/s2c/0x053_systemmes.h"
 #include "packets/s2c/0x119_abil_recast.h"
 #include "recast_container.h"
+#include "spell.h"
 #include "status_effect.h"
 #include "status_effect_container.h"
 #include "trade_container.h"
@@ -258,6 +259,11 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
             // clang-format on
 
             const auto spellId = static_cast<SpellID>(this->CastMagic.SpellId);
+            if (!spell::GetSpell(spellId))
+            {
+                ShowWarningFmt("GP_CLI_COMMAND_ACTION: {} sent invalid spell ID {} — dropping packet", PChar->getName(), static_cast<uint16_t>(this->CastMagic.SpellId));
+                return;
+            }
             PChar->PAI->Cast(this->ActIndex, spellId);
 
             // target offset used only for luopan placement as of now

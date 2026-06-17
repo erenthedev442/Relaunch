@@ -40,8 +40,7 @@ m:addOverride('xi.player.onGameIn', function(player, isZoning)
 
     -- Delay so login bonuses + MOTD fire first.
     player:timer(5000, function(p)
-        local catalog        = require('modules/custom/lua/hunting_league_catalog')
-        local dungeonCatalog = require('modules/custom/lua/dungeon_catalog')
+        local catalog    = require('modules/custom/lua/hunting_league_catalog')
 
         -- Weekly Hunts progress
         local whWeek     = p:getCharVar('WH_Week') or -1
@@ -70,20 +69,6 @@ m:addOverride('xi.player.onGameIn', function(player, isZoning)
             end
         end
 
-        -- Bonus dungeon status
-        local bonusLabel = 'N/A'
-        local bonusDone  = false
-        local enabled    = {}
-        for _, d in ipairs(dungeonCatalog.dungeons or {}) do
-            if not d._disabled then table.insert(enabled, d) end
-        end
-        if #enabled > 0 then
-            local bd    = enabled[(weekIdx % #enabled) + 1]
-            bonusLabel  = bd.label
-            local bcv   = string.format('DB_Bonus_%d_%s', weekIdx, bd.id)
-            bonusDone   = (p:getCharVar(bcv) or 0) == 1
-        end
-
         local resetIn = daysToMonday(now)
 
         p:printToPlayer('[Weekly Reset] == New Week, New Objectives! ==========', H)
@@ -93,10 +78,6 @@ m:addOverride('xi.player.onGameIn', function(player, isZoning)
             string.format('  Weekly Hunts:    %d / %d  (!featured to see which NMs)', huntsDone, huntsTotal), B)
         p:printToPlayer(
             string.format('  Featured NMs:    %d / %d killed this week', featDone, featTotal), B)
-        p:printToPlayer(
-            string.format('  Bonus Dungeon:   %s  [%s]  (!bonus_dungeon for details)',
-                bonusLabel, bonusDone and 'DONE!' or 'not cleared'),
-            B)
         p:printToPlayer('  Good luck out there, hunter!  !help - command list', B)
     end)
 end)
