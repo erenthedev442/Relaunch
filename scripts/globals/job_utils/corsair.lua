@@ -120,6 +120,7 @@ local function corsairSetup(caster, ability, action, effect, job)
     caster:addStatusEffect(xi.effect.DOUBLE_UP_CHANCE, { power = roll, duration = 45, origin = caster, subPower = effect, tier = job, sourceType = xi.effectSourceType.CORSAIR_ROLL, sourceTypeParam = ability:getID(), silent = true })
     caster:setLocalVar('corsairRollTotal', roll)
     caster:setLocalVar('corsairDuEffect', effect)
+    caster:setLocalVar('corsairActiveRoll', ability:getID())
     action:info(caster:getID(), roll)
 
     local recastReduction = utils.clamp(caster:getMerit(xi.merit.PHANTOM_ROLL_RECAST) + caster:getMod(xi.mod.PHANTOM_RECAST), 0, 45)
@@ -231,8 +232,6 @@ xi.job_utils.corsair.useDoubleUp = function(caster, target, ability, action)
         local prevRoll = caster:getStatusEffect(duEffect:getSubPower())
         local roll     = prevRoll:getSubPower()
         local job      = duEffect:getTier()
-
-        caster:setLocalVar('corsairActiveRoll', duEffect:getSourceTypeParam())
 
         local snakeEye = caster:getStatusEffect(xi.effect.SNAKE_EYE)
 
