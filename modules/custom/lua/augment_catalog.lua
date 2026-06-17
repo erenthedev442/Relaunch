@@ -237,6 +237,7 @@ return {
     [1830] = { augId = 369,  base = 1,   mult = 1,  disp = 1,    cat = 10, label = 'Avatar Blood Pact Dmg' },
     [1831] = { augId = 956,  base = 1,   mult = 1,  disp = 1,    cat = 10, label = 'Thunder Affinity Avatar perp. cost' },
     [1979] = { augId = 1246, base = 1,   mult = 200, disp = 100,  cat = 10, label = 'Pet Phy. Dmg. Taken' },
+    [2173] = { augId = 2040, base = 1,   mult = 1,  disp = 1,    cat = 10, label = 'Thunder Affinity' },
 
     -- Elemental resistance
     [1163] = { augId = 176,  base = 1,   mult = 1,  disp = 1,    cat = 11, label = 'Resist Sleep' },
@@ -336,6 +337,12 @@ return {
     [1110] = { augId = 326,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Weapon Skill Acc' },
     [1473] = { augId = 327,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Weapon skill damage' },
     [865]  = { augId = 332,  base = 1,   mult = 100, disp = 100,  cat = 13, label = 'Sklchn.dmg' },
+    [889]  = { augId = 743,  base = 1,   mult = 4,  disp = 1,    cat = 13, label = 'Dmg (melee,not ranged)' },
+    [893]  = { augId = 744,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Dmg (melee,not ranged)' },
+    [896]  = { augId = 745,  base = 33,  mult = 1,  disp = 1,    cat = 13, label = 'Dmg (melee,not ranged)' },
+    [908]  = { augId = 749,  base = 1,   mult = 4,  disp = 1,    cat = 13, label = 'Dmg (ranged,not melee)' },
+    [924]  = { augId = 750,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Dmg (ranged,not melee)' },
+    [930]  = { augId = 751,  base = 33,  mult = 1,  disp = 1,    cat = 13, label = 'Dmg (ranged,not melee)' },
     [1016] = { augId = 1024, base = 1,   mult = 5,  disp = 1,    cat = 13, label = 'Backhand Blow DMG' },
     [2013] = { augId = 1025, base = 1,   mult = 5,  disp = 1,    cat = 13, label = 'Spinning Attack DMG' },
     [2014] = { augId = 1026, base = 1,   mult = 5,  disp = 1,    cat = 13, label = 'Howling Fist DMG' },

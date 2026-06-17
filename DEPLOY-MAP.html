@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Legendary FFXI — Deploy Map</title>
+<style>
+  :root{
+    --bg:#0f1419; --panel:#1a2230; --panel2:#212c3d; --ink:#e6edf3; --mut:#9fb0c3;
+    --line:#33455c; --accent:#4ea1ff; --green:#3fb950; --amber:#d29922; --red:#f85149;
+    --pill:#2b3a52;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:linear-gradient(160deg,#0c1118,#121b27);color:var(--ink);
+       font:15px/1.5 "Segoe UI",system-ui,sans-serif;padding:28px 20px 60px}
+  h1{font-size:26px;margin:0 0 4px;letter-spacing:.3px}
+  h1 .sub{color:var(--mut);font-size:14px;font-weight:400;margin-left:8px}
+  h2{font-size:15px;text-transform:uppercase;letter-spacing:1.5px;color:var(--accent);
+     margin:34px 0 14px;border-bottom:1px solid var(--line);padding-bottom:7px}
+  .wrap{max-width:1080px;margin:0 auto}
+  /* three places */
+  .places{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:stretch}
+  .place{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 16px 14px;position:relative}
+  .place h3{margin:0 0 8px;font-size:16px}
+  .place .tag{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--mut)}
+  .place ul{margin:8px 0 0;padding-left:18px;color:var(--mut);font-size:13.5px}
+  .place li{margin:3px 0}
+  .place.local{border-color:#2f6f4a}
+  .place.git{border-color:#5a4a8a}
+  .place.live{border-color:#8a3f3f}
+  .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px;vertical-align:middle}
+  .flowrow{display:flex;align-items:center;gap:10px;color:var(--mut);font-size:12.5px;margin:10px 2px 0;flex-wrap:wrap}
+  .arrow{color:var(--accent);font-weight:700}
+  /* generic card grids */
+  .cards{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px}
+  .card.k{border-left:4px solid var(--accent)}
+  .card h4{margin:0 0 6px;font-size:14px}
+  .card code{background:var(--pill);color:#cfe6ff;padding:2px 7px;border-radius:6px;font-size:12.5px;white-space:nowrap}
+  .card p{margin:8px 0 0;color:var(--mut);font-size:13px}
+  /* the decision table */
+  table{width:100%;border-collapse:collapse;margin-top:6px;font-size:13.5px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--mut);font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:600}
+  td code{background:var(--pill);color:#cfe6ff;padding:2px 7px;border-radius:6px;font-size:12.5px}
+  .yes{color:var(--red);font-weight:600}
+  .no{color:var(--green);font-weight:600}
+  .badge{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;background:var(--pill);color:var(--mut)}
+  .rule{background:var(--panel2);border:1px solid var(--line);border-radius:11px;padding:14px 16px;margin-top:6px}
+  .rule .lvl{display:flex;gap:12px;align-items:flex-start;padding:9px 0;border-bottom:1px dashed var(--line)}
+  .rule .lvl:last-child{border-bottom:0}
+  .rule .lvl b{min-width:150px;display:inline-block}
+  .seq{display:grid;grid-template-columns:1fr;gap:10px}
+  .step{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13.5px}
+  .step b{color:var(--ink)}
+  .step .chev{color:var(--accent);font-weight:700;margin:0 6px}
+  .foot{color:var(--mut);font-size:12.5px;margin-top:26px;border-top:1px solid var(--line);padding-top:14px}
+  .pill-no{color:var(--green)} .pill-yes{color:var(--red)}
+  @media(max-width:820px){.places,.cards{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Legendary FFXI — Deploy Map <span class="sub">edit local → back up to GitHub → push to live</span></h1>
+
+  <h2>The 3 places</h2>
+  <div class="places">
+    <div class="place local">
+      <span class="tag"><span class="dot" style="background:var(--green)"></span>where you work</span>
+      <h3>Local Test Server</h3>
+      <div style="color:var(--mut);font-size:12.5px">D:\server &middot; laptop &middot; local xidb</div>
+      <ul>
+        <li>You <b>EDIT</b> every file here</li>
+        <li>Run a private copy of the server</li>
+        <li>Point your client to 127.0.0.1</li>
+        <li>Nothing here affects players</li>
+      </ul>
+    </div>
+    <div class="place git">
+      <span class="tag"><span class="dot" style="background:#a98bff"></span>safety net</span>
+      <h3>GitHub (fjb)</h3>
+      <div style="color:var(--mut);font-size:12.5px">richardknutzjr/FFXI-…-FJB</div>
+      <ul>
+        <li>Backup of your code</li>
+        <li>Written by the <b>deploy</b> buttons</li>
+        <li>Never serves players</li>
+      </ul>
+    </div>
+    <div class="place live">
+      <span class="tag"><span class="dot" style="background:var(--red)"></span>real players</span>
+      <h3>Live Azure Server</h3>
+      <div style="color:var(--mut);font-size:12.5px">172.215.213.23 &middot; live xidb</div>
+      <ul>
+        <li>The server players connect to</li>
+        <li>Receives your pushes</li>
+        <li>Spot VM: self-reboots ~13h (≈2 min)</li>
+      </ul>
+    </div>
+  </div>
+  <div class="flowrow">
+    <span><span class="arrow">→</span> push code to GitHub + Live</span>
+    <span style="margin-left:18px"><span class="arrow">←</span> <code style="background:var(--pill);padding:2px 7px;border-radius:6px">sync-db-from-azure.bat</code> pulls the live DB down to test with real data</span>
+  </div>
+
+  <h2>Bucket 2 — Push to live · pick ONE by what you changed</h2>
+  <table>
+    <tr><th>You changed…</th><th>Use this</th><th>Restarts live?</th><th>GitHub backup?</th><th>Time</th></tr>
+    <tr>
+      <td><b>Lua only</b><br><span class="badge">catalogs · commands · scripts</span></td>
+      <td><code>sync-lua-to-azure.bat</code></td>
+      <td class="no">No — hot-reload</td>
+      <td class="no">No</td>
+      <td>~15 s</td>
+    </tr>
+    <tr>
+      <td><b>Lua + SQL</b>, or a <b>new override module</b><br><span class="badge">addOverride / onGameIn / .sql</span></td>
+      <td><code>deploy-no-rebuild.bat</code></td>
+      <td class="yes">Yes — ~5–10 s blip</td>
+      <td class="no" style="color:var(--green)">Yes</td>
+      <td>~2 min</td>
+    </tr>
+    <tr>
+      <td><b>C++ (src/)</b>, or "do everything"<br><span class="badge">crash fixes · engine · full release</span></td>
+      <td><code>deploy-everything.bat</code></td>
+      <td class="yes">Yes — ~5–10 s (after ~8–10 min build)</td>
+      <td style="color:var(--green);font-weight:600">Yes</td>
+      <td>~10–15 min</td>
+    </tr>
+  </table>
+
+  <h2>The one rule that explains "restart" timing</h2>
+  <div class="rule">
+    <div class="lvl"><b style="color:var(--green)">Pure Lua</b><span>catalogs, commands, plain scripts → live FileWatcher <b>hot-reloads instantly, NO restart</b>. &nbsp;<code style="background:var(--pill);padding:1px 6px;border-radius:5px">sync-lua-to-azure</code></span></div>
+    <div class="lvl"><b style="color:var(--amber)">Override / SQL / settings</b><span>addOverride &amp; onGameIn modules, DB rows, gameplay knobs → only apply on a <b>restart</b>. &nbsp;<code style="background:var(--pill);padding:1px 6px;border-radius:5px">deploy-no-rebuild</code></span></div>
+    <div class="lvl"><b style="color:var(--red)">C++ (src/)</b><span>engine / crash fixes → need a <b>rebuild + restart</b>. &nbsp;<code style="background:var(--pill);padding:1px 6px;border-radius:5px">deploy-everything</code></span></div>
+  </div>
+  <p style="color:var(--mut);font-size:13px;margin-top:10px">↳ This is why tonight's crash fixes are <b>staged but not live</b> — they're C++ + override changes, so they wait for a restart you haven't run yet.</p>
+
+  <h2>Bucket 1 — Test locally (optional, laptop only)</h2>
+  <div class="cards">
+    <div class="card"><h4>① Get real data</h4><code>sync-db-from-azure.bat</code><p>Live DB → local. Overwrites local xidb. Stop the local server first.</p></div>
+    <div class="card"><h4>② Rebuild (if C++)</h4><code>rebuild-server.bat</code><p>Builds local xi_map.exe etc. Skip if you only touched Lua/SQL.</p></div>
+    <div class="card"><h4>③ Run &amp; play</h4><code>test-server-start.bat</code><p>Starts local server + points your client to 127.0.0.1. Stop with <code>kill-servers.bat</code>.</p></div>
+  </div>
+
+  <h2>Bucket 3 — Targeted live ops</h2>
+  <div class="cards">
+    <div class="card"><h4>Apply staged changes</h4><code>Azure - Restart Map.bat</code><p>Restart xi_map to activate already-synced override/SQL/settings — no full deploy.</p></div>
+    <div class="card"><h4>Docs site only</h4><code>refresh-site.bat</code><p>Rebuilds &amp; publishes the website (Cloudflare). Zero server impact.</p></div>
+    <div class="card"><h4>Controls</h4><code>Azure - Status / Map Logs / Connect</code><p>Health, live logs, and an SSH shell into the box.</p></div>
+  </div>
+
+  <h2>Typical sequences</h2>
+  <div class="seq">
+    <div class="step"><b>Quick content tweak</b> &nbsp;<span class="chev">›</span> edit in D:\server <span class="chev">›</span> <code style="background:var(--pill);padding:1px 6px;border-radius:5px">sync-lua-to-azure.bat</code> <span class="chev">›</span> <span class="pill-no">live in seconds, no restart</span></div>
+    <div class="step"><b>SQL / new module</b> &nbsp;<span class="chev">›</span> edit <span class="chev">›</span> (optional local test) <span class="chev">›</span> <code style="background:var(--pill);padding:1px 6px;border-radius:5px">deploy-no-rebuild.bat</code> <span class="chev">›</span> <span class="pill-yes">~5–10 s restart</span>, live ~2 min</div>
+    <div class="step"><b>C++ / crash fixes / big release</b> &nbsp;<span class="chev">›</span> edit <span class="chev">›</span> <code style="background:var(--pill);padding:1px 6px;border-radius:5px">deploy-everything.bat</code> <span class="chev">›</span> build ~10 min <span class="chev">›</span> one <span class="pill-yes">~5–10 s restart</span> + GitHub backup + site publish</div>
+  </div>
+
+  <div class="foot">
+    Edit happens in <b>one</b> place (D:\server). Pushing is just "pick the lightest button that covers what changed."
+    A restart is the only thing players feel — and only override/SQL/C++ changes need one. The occasional unprompted reboot is the Azure Spot eviction (~13 h, self-heals ≈2 min), not your deploy.
+  </div>
+
+</div>
+</body>
+</html>
