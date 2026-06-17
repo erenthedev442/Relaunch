@@ -93,7 +93,15 @@ echo(
 echo  [2/5] Committing + pushing all changes to GitHub (backup)...
 (echo [%TIME%] [2/5] git add/commit/push: start)>> "%LOG%"
 git -C "%SRC%" add -A
-git -C "%SRC%" commit -m "Deploy Everything %DATE% %TIME%" >> "%LOG%" 2>&1
+REM Self-documenting marker: "Deploy Everything ..." subject (watermark detection
+REM still matches on the first line) + a changed-file list in the commit body, so
+REM the auto-swept commits say WHAT shipped instead of being an opaque marker.
+set "DEPLOYMSG=%TEMP%\fjb_deploy_msg.txt"
+(echo Deploy Everything %DATE% %TIME%)> "%DEPLOYMSG%"
+(echo.)>> "%DEPLOYMSG%"
+git -C "%SRC%" diff --cached --name-status >> "%DEPLOYMSG%"
+git -C "%SRC%" commit -F "%DEPLOYMSG%" >> "%LOG%" 2>&1
+del "%DEPLOYMSG%" >nul 2>&1
 powershell -NoProfile -Command "$j=Start-Job { git -C 'D:\server' push fjb HEAD 2>&1 }; if (Wait-Job $j -Timeout 90) { Receive-Job $j } else { Stop-Job $j; 'push timed out (sign-in popup?) - skipped; run: git push fjb HEAD' }; Remove-Job $j -Force" > "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
