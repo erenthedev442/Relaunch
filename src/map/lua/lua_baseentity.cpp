@@ -1023,6 +1023,30 @@ void CLuaBaseEntity::entityVisualPacket(const std::string& command, const sol::o
     static_cast<CCharEntity*>(m_PBaseEntity)->pushPacket<GP_SERV_COMMAND_MAPSCHEDULOR>(PNpc, command.c_str());
 }
 
+// ---------------------------------------------------------------------------
+// FJB: dangling-entity guard for CLuaBaseEntity methods.
+// Lua (commands/timers/closures) routinely holds an entity reference past the
+// entity's lifetime; calling any method then derefs freed memory -> SIGSEGV,
+// which Lua pcall CANNOT catch. The alive-entity registry (CBaseEntity
+// ctor/dtor, see baseentity.cpp) is the authoritative liveness check. These
+// turn a call on a freed/null entity into a logged no-op instead of a crash.
+//   FJB_REQUIRE_ALIVE(retval) -- value-returning methods
+//   FJB_REQUIRE_ALIVE_VOID()  -- void methods
+// (getZoneID/setHP/setLocalVar/getLocalVar use the explicit form of this check.)
+// ---------------------------------------------------------------------------
+#define FJB_REQUIRE_ALIVE(retval) \
+    if (!CBaseEntity::IsEntityAlive(m_PBaseEntity)) \
+    { \
+        ShowWarning("CLuaBaseEntity::%s on a dead/null entity - suppressed.", __func__); \
+        return retval; \
+    }
+#define FJB_REQUIRE_ALIVE_VOID() \
+    if (!CBaseEntity::IsEntityAlive(m_PBaseEntity)) \
+    { \
+        ShowWarning("CLuaBaseEntity::%s on a dead/null entity - suppressed.", __func__); \
+        return; \
+    }
+
 /************************************************************************
  *  Function: entityAnimationPacket()
  *  Purpose : Sends an animation packet to the entity
@@ -1032,6 +1056,8 @@ void CLuaBaseEntity::entityVisualPacket(const std::string& command, const sol::o
 
 void CLuaBaseEntity::entityAnimationPacket(const char* command, const sol::object& target)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     CBaseEntity* PTarget = nullptr;
     if (target != sol::lua_nil)
     {
@@ -1555,6 +1581,8 @@ bool CLuaBaseEntity::needToZone(const sol::object& arg0)
 
 uint32 CLuaBaseEntity::getID()
 {
+    FJB_REQUIRE_ALIVE(0);
+
     return m_PBaseEntity->id;
 }
 
@@ -1739,6 +1767,8 @@ uint8 CLuaBaseEntity::getStatus()
 
 void CLuaBaseEntity::setStatus(uint8 status)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     m_PBaseEntity->status = static_cast<STATUS_TYPE>(status);
     m_PBaseEntity->updatemask |= UPDATE_HP;
 }
@@ -2498,6 +2528,8 @@ void CLuaBaseEntity::showNPC(const sol::object& seconds)
 
 void CLuaBaseEntity::hideNPC(const sol::object& seconds)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype != TYPE_NPC)
     {
         ShowWarning("Attempting to hide NPC with invalid entity type (%s).", m_PBaseEntity->getName());
@@ -3373,6 +3405,8 @@ void CLuaBaseEntity::positionSpecial(std::map<std::string, float> pos, POSMODE m
 
 void CLuaBaseEntity::setPos(sol::variadic_args va)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     float x        = 0;
     float y        = 0;
     float z        = 0;
@@ -5829,6 +5863,8 @@ bool CLuaBaseEntity::raceChange(const CharRace newRace, const CharFace newFace, 
 
 std::string CLuaBaseEntity::getName()
 {
+    FJB_REQUIRE_ALIVE("");
+
     return m_PBaseEntity->name;
 }
 
@@ -6104,6 +6140,8 @@ uint8 CLuaBaseEntity::getAnimation()
 
 void CLuaBaseEntity::setAnimation(uint8 animation)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->animation != animation)
     {
         m_PBaseEntity->animation = animation;
@@ -10065,6 +10103,8 @@ auto CLuaBaseEntity::addGuildPoints(const uint8 guildId, const uint8 slotId) con
 
 int32 CLuaBaseEntity::getHP()
 {
+    FJB_REQUIRE_ALIVE(0);
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -10101,6 +10141,8 @@ uint8 CLuaBaseEntity::getHPP()
 
 int32 CLuaBaseEntity::getMaxHP()
 {
+    FJB_REQUIRE_ALIVE(0);
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -10225,6 +10267,8 @@ void CLuaBaseEntity::setHP(int32 value)
 
 void CLuaBaseEntity::setMaxHP(int32 value)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -10429,6 +10473,8 @@ void CLuaBaseEntity::setDeathType(int32 value)
 
 int32 CLuaBaseEntity::getMP()
 {
+    FJB_REQUIRE_ALIVE(0);
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -10516,6 +10562,8 @@ int32 CLuaBaseEntity::addMP(int32 amount)
 
 void CLuaBaseEntity::setMP(int32 value)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -10597,6 +10645,8 @@ int32 CLuaBaseEntity::delMP(int32 amount)
 
 float CLuaBaseEntity::getTP()
 {
+    FJB_REQUIRE_ALIVE(0);
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -10632,6 +10682,8 @@ int16 CLuaBaseEntity::addTP(int16 amount)
 
 void CLuaBaseEntity::setTP(int16 value)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     if (auto* PBattle = dynamic_cast<CBattleEntity*>(m_PBaseEntity))
     {
         PBattle->health.tp = value;
@@ -13812,6 +13864,8 @@ void CLuaBaseEntity::clearEnmityForEntity(CLuaBaseEntity* PEntity)
  ************************************************************************/
 auto CLuaBaseEntity::addStatusEffect(const EFFECT effectId, sol::table params) const -> bool
 {
+    FJB_REQUIRE_ALIVE(false);
+
     auto* PBattleEntity = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
     if (!PBattleEntity)
     {
@@ -14178,6 +14232,8 @@ uint8 CLuaBaseEntity::countEffectWithFlag(uint32 flag)
 
 bool CLuaBaseEntity::delStatusEffect(uint16 StatusID, const sol::object& SubType, const sol::object& SourceType, const sol::object& SourceTypeParam)
 {
+    FJB_REQUIRE_ALIVE(false);
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -17423,6 +17479,8 @@ uint8 CLuaBaseEntity::getModelSize()
 
 void CLuaBaseEntity::setModelSize(uint8 newSize)
 {
+    FJB_REQUIRE_ALIVE_VOID();
+
     auto* PEntity = dynamic_cast<CBattleEntity*>(m_PBaseEntity);
     if (!PEntity)
     {
