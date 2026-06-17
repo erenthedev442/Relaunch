@@ -167,11 +167,12 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     end
 
     mainScreen = function(player)
-        local jobId   = player:getMainJob()
-        local jobName = JOB_NAMES[jobId] or ('Job' .. jobId)
-        menu.title = string.format('Eminence Broker (Sparks: %d | Accolades: %d | %s JP: %d)',
-            player:getCurrency(SPARKS), player:getCurrency(ACCOLADES),
-            jobName, player:getJobPoints(jobId))
+        -- FJB: keep this title SHORT and fixed. The old title inlined Sparks/Accolades/JP;
+        -- for high-balance players (e.g. Gwendin, 978k sparks) the extra digits pushed the
+        -- customMenu click echo "...Question(<title>): Result (<option>)" past the 128-byte
+        -- inbound Mes[] buffer, truncating the option so the exact-match in HandleCustomMenu
+        -- failed -> dead buttons. Per-currency balances are still shown on each sub-screen.
+        menu.title = 'Eminence Broker'
         menu.options = {
             { 'Exchange Sparks of Eminence',  function(p) sparksScreen(p) end },
             { 'Exchange Unity Accolades',      function(p) accoladesScreen(p) end },
