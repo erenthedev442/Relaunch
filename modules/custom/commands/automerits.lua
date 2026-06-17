@@ -6,12 +6,13 @@
 --
 -- ALGORITHM (breadth-first cycling):
 --   1. Snapshot the unspent merit balance.
---   2. Loop: for each merit ID in xi.merit, call player:raiseMerit(id).
+--   2. Loop: for each merit ID in the GENERIC categories (HP/MP, Attributes,
+--      Combat Skills, Magic Skills), call player:raiseMerit(id).
+--      Job-specific merits (Group 1/2), Others, and Weaponskills are skipped
+--      intentionally — those slots are limited and belong to the player's choice.
 --      The engine (CMeritPoints::RaiseMerit) silently no-ops if:
 --        * the player can't afford the next rank,
---        * the category is already at its cap,
---        * the merit doesn't apply to this player's job (Group 1/2),
---        * the merit_id is invalid for this player.
+--        * the category is already at its cap.
 --      We treat the return value as "did one rank go up?". If false on
 --      every ID in a single pass, we're done.
 --   3. After a successful pass, repeat - so each category gets +1 rank
@@ -59,11 +60,17 @@ commandObj.onTrigger = function(player, target)
         return
     end
 
-    -- Snapshot every merit ID once so we don't recompute the pairs() walk
-    -- on every pass. Values are uint16 identifiers, not data.
+    -- Collect only the four generic merit categories:
+    --   HP_MP=0x0040  ATTRIBUTES=0x0080  COMBAT=0x00C0  MAGIC=0x0100
+    -- The category is encoded in bits 6-15 of each merit ID (id & 0xFFC0).
+    -- Skipped: OTHERS (0x0140), all job-specific groups 1+2 (0x0180+),
+    -- and Weaponskills (0x0680) — those are limited/expensive player choices.
     local meritIds = {}
     for _, id in pairs(xi.merit) do
-        table.insert(meritIds, id)
+        local cat = bit.band(id, 0xFFC0)
+        if cat >= 0x0040 and cat <= 0x0100 then
+            table.insert(meritIds, id)
+        end
     end
 
     -- Safety cap on iterations. Theoretical worst case is bounded by the
