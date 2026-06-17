@@ -62,8 +62,6 @@ catalog.vendorItems =
     -- ----------------------------------------------------------------
     -- MYTHIC WEAPONS  (i119 III final forms — one per job)
     -- Einherjar / Nyzul Isle legendary weapons at their highest upgrade.
-    -- (Note: Ryunohige already listed at id 19832 in Orphan BiS below
-    --  as the lv99 form; 21858 here is the i119 III final.)
     -- ----------------------------------------------------------------
     { id = 21756, name = 'Bravura',       cost = 10000, stats = { 'Great Axe (main). WAR. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
     { id = 20510, name = 'Glanzfaust',    cost = 10000, stats = { 'H2H (main). MNK. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
@@ -78,7 +76,6 @@ catalog.vendorItems =
     { id = 22130, name = 'Gandiva',       cost = 10000, stats = { 'Bow (ranged). RNG. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
     { id = 21955, name = 'Kogarasumaru',  cost = 10000, stats = { 'Great Katana (main). SAM. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
     { id = 21908, name = 'Kannagi',       cost = 10000, stats = { 'Katana (main/sub). NIN. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
-    { id = 21858, name = 'Ryunohige',     cost = 10000, stats = { 'Polearm (main). DRG. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
     { id = 22063, name = 'Nirvana',       cost = 10000, stats = { 'Staff (main). SMN. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
     { id = 20688, name = 'Tizona',        cost = 10000, stats = { 'Sword (main/sub). BLU. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
     { id = 21482, name = 'Compensator',   cost = 10000, stats = { 'Gun (ranged). COR. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
@@ -133,7 +130,7 @@ catalog.vendorItems =
     -- ----------------------------------------------------------------
 
     -- REM-tier weapons
-    { id = 19832, name = 'Ryunohige',           cost =  800, stats = { 'Polearm (main). Mythic-tier, DRG.', 'EX/RARE. Aftermath weapon.' } },
+    { id = 21858, name = 'Ryunohige',           cost =  800, stats = { 'Polearm (main). DRG. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
     { id = 16199, name = 'Ochain',              cost =  800, stats = { 'Grip/shield (sub). Best PLD shield.', 'EX/RARE. High block rate / PDT.' } },
     { id = 21602, name = 'Onion Sword III',     cost =  300, stats = { 'Sword (main or sub), il119.', 'EX/RARE novelty blade.' } },
 
