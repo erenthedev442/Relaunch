@@ -44,6 +44,26 @@ set "GO="
 set /p GO="   Proceed? [Y/N]:  "
 if /i not "%GO%"=="Y" ( echo   Cancelled - nothing changed.& goto :end )
 
+REM ---- [0] VERIFY core LSB patches survived (merge/revert tripwire) ----
+REM   Also covers the Lua-side patches this no-rebuild deploy ships
+REM   (damage cap Lua, init.txt, CP-suppression enum, etc.).
+echo(
+echo  [0/5] Verifying core LSB patches are intact...
+python "%SRC%\tools\verify_core_patches.py"
+if errorlevel 1 goto :patchwarn
+goto :patchok
+:patchwarn
+echo(
+echo   ============================================================
+echo    WARNING: one or more CORE PATCHES look REVERTED (see above).
+echo    Deploying now would push code MISSING your customizations.
+echo    Fix: reference_lsb_core_patches.md  /  git diff 54bd6e24f9 HEAD
+echo   ============================================================
+set "PGO="
+set /p PGO="   Deploy anyway? [y/N]:  "
+if /i not "%PGO%"=="Y" ( echo   Aborted - re-apply the patches, then re-run.& goto :end )
+:patchok
+
 REM ---- [1] Re-score gear catalogs ----
 echo(
 echo  [1/5] Re-scoring ALL gear catalogs from live data...

@@ -61,6 +61,22 @@ if [ -f "$INIT" ]; then
   sudo chown xi:xi "$INIT" 2>/dev/null || true
 fi
 
+# [2.5] Verify the in-place LSB core patches survived the pull/extract BEFORE we
+#       rebuild. Refuses to compile + restart a tree that lost the customizations
+#       (damage cap, CP suppression, sub-job equip, init.txt, etc.).
+echo; echo "[2.5/5] Verifying core LSB patches are intact..."
+if command -v python3 >/dev/null 2>&1; then
+  if python3 tools/verify_core_patches.py; then
+    echo "  core patches intact."
+  else
+    echo "ERROR: core patches appear REVERTED (see above) - NOT rebuilding/restarting." >&2
+    echo "       Re-apply from reference_lsb_core_patches.md, then re-deploy." >&2
+    exit 1
+  fi
+else
+  echo "  WARNING: python3 not found - skipping core-patch verify."
+fi
+
 # [3] Rebuild (same command as your Azure - Rebuild Server.bat).
 echo; echo "[3/5] Rebuilding server binaries..."
 if [ -d build ]; then
