@@ -2,7 +2,7 @@
 -- hl_seal_currency.lua
 --
 -- Shared seal/medal currency consumption for the Hunting League vendors
--- (Armor / Weapons / Accessory NPCs at Reisenjima_Henge).
+-- (Armor / Weapons / Accessory NPCs at Escha - Zi'Tah).
 --
 -- THE BUG THIS FIXES: those NPCs checked affordability with
 -- player:getItemCount(sealId) -- which counts the medal across EVERY

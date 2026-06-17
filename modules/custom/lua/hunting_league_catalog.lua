@@ -561,7 +561,7 @@ return
 
         -- (Rings / Back / Waist categories decommissioned - see top of
         -- rewardCategories. Those slots are now served by the medal-paid
-        -- Accessory NPC at Reisenjima Henge x=8.49.)
+        -- Accessory NPC at Escha - Zi'Tah, x=-9.0, next to Armor/Weapons.)
 
         -- ---------------------------------------------------------
         -- Magic Scrolls  (spells custom to this server). The `learnSpell`
