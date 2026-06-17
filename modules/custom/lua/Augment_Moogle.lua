@@ -187,7 +187,12 @@ showConfirmMenu = function(player)
     utils.unused(nameList)
     menu.title = 'Apply this augment, kupo?'
     menu.options = options
-    local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
+    local snapshot = { title = menu.title, options = menu.options,
+        onCancelled = function(p)
+            returnAll(p)
+            p:printToPlayer('Augmentation cancelled - items returned, kupo!', xi.msg.channel.SYSTEM_3)
+        end,
+    }
     player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
