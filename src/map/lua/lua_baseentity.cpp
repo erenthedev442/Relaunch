@@ -776,7 +776,15 @@ void CLuaBaseEntity::setVolatileCharVar(const std::string& varName, int32 value,
 
 auto CLuaBaseEntity::getLocalVars() -> sol::table
 {
-    auto  table     = lua.create_table();
+    auto table = lua.create_table();
+
+    // FJB: guard null AND dangling (freed) entity pointers — see getZoneID()/setLocalVar().
+    if (!CBaseEntity::IsEntityAlive(m_PBaseEntity))
+    {
+        ShowWarning("CLuaBaseEntity::getLocalVars() called on a dead/null entity — suppressing crash.");
+        return table;
+    }
+
     auto& localVars = m_PBaseEntity->GetLocalVars();
 
     for (const auto& [varName, value] : localVars)
@@ -798,6 +806,13 @@ auto CLuaBaseEntity::getLocalVars() -> sol::table
 
 uint32 CLuaBaseEntity::getLocalVar(const std::string& var)
 {
+    // FJB: guard null AND dangling (freed) entity pointers — see getZoneID()/setLocalVar().
+    if (!CBaseEntity::IsEntityAlive(m_PBaseEntity))
+    {
+        ShowWarning("CLuaBaseEntity::getLocalVar() called on a dead/null entity — suppressing crash.");
+        return 0;
+    }
+
     return m_PBaseEntity->GetLocalVar(var.c_str());
 }
 
@@ -810,6 +825,17 @@ uint32 CLuaBaseEntity::getLocalVar(const std::string& var)
 
 void CLuaBaseEntity::setLocalVar(const std::string& var, uint32 val)
 {
+    // FJB: guard null AND dangling (freed) entity pointers — same rationale as
+    // getZoneID(). A queued AI/Lua action (treasure timer, zone-out handler, etc.)
+    // can fire after its wrapped entity was freed; m_PBaseEntity is then a non-null
+    // dangling pointer and SetLocalVar() crashes in the localVar map key compare
+    // (memcmp). Seen live in CharZoneOut -> OnZoneOut (02:00 UTC Jun-17).
+    if (!CBaseEntity::IsEntityAlive(m_PBaseEntity))
+    {
+        ShowWarning("CLuaBaseEntity::setLocalVar() called on a dead/null entity — suppressing crash.");
+        return;
+    }
+
     m_PBaseEntity->SetLocalVar(var.c_str(), val);
 }
 
