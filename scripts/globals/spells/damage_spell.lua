@@ -1241,16 +1241,25 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
     end
 
     -- Handle Phalanx, One for All, Stoneskin.
-    finalDamage = utils.clamp(utils.handlePhalanx(target, finalDamage), 0, 131071)
-    finalDamage = utils.clamp(utils.handleOneForAll(target, finalDamage), 0, 131071)
-    finalDamage = utils.clamp(utils.handleStoneskin(target, finalDamage), -131071, 131071)
+    -- FJB: 131,071 caps removed so PC casters can land over-cap damage (see below).
+    -- handleStoneskin/Phalanx/OneForAll never return negative, so no lower-bound needed.
+    finalDamage = utils.handlePhalanx(target, finalDamage)
+    finalDamage = utils.handleOneForAll(target, finalDamage)
+    finalDamage = utils.handleStoneskin(target, finalDamage)
 
     -- Handle final adjustments. Most are located in core. TODO: Decide if we want core handling this.
     -- Check if the mob has a damage cap
     finalDamage = target:checkDamageCap(finalDamage)
 
-    -- Handle Bind break and TP?
-    target:takeSpellDamage(caster, spell, finalDamage, xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + spellElement)
+    -- FJB: PC casters bypass the 131,071 action-packet ceiling and land the full
+    -- damage on HP (same as TakeWeaponskillDamage for WS). The real value is shown
+    -- in SYSTEM_3 chat by C++ NotifyOverCapDamage inside TakeSpellDamage.
+    -- Mob nukes stay capped so they can't punch >131,071 onto players.
+    if caster:getObjType() == xi.objType.PC then
+        target:takeSpellDamage(caster, spell, finalDamage, xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + spellElement)
+    else
+        target:takeSpellDamage(caster, spell, math.min(finalDamage, 131071), xi.attackType.MAGICAL, xi.damageType.ELEMENTAL + spellElement)
+    end
 
     -- Handle Afflatus Misery.
     target:handleAfflatusMiseryDamage(finalDamage)
@@ -1270,5 +1279,6 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
         caster:printToPlayer('[Scholar] Helix detonated!', xi.msg.channel.SYSTEM_3)
     end
 
-    return finalDamage
+    -- Clamp the action-packet display value (17-bit field); HP was already debited above.
+    return math.min(finalDamage, 131071)
 end
