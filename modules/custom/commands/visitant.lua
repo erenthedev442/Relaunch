@@ -1,28 +1,40 @@
 -----------------------------------
 -- !visitant
--- Grants the calling player PERMANENT Abyssea Visitant status -- the same
--- no-duration effect retail hands visible GMs (xi.abyssea.onZoneIn, the
--- getVisibleGMLevel >= 3 branch). With no `duration` the engine never starts
--- the countdown, so the player is never ejected for running out of time.
+-- Gives the caller effectively-permanent Abyssea Visitant status so the
+-- countdown never ejects them. Usable by all players, inside Abyssea only.
 --
--- Must be used INSIDE an Abyssea zone: the VISITANT effect's onEffectTick
--- (scripts/effects/visitant.lua) deletes itself on the next tick anywhere
--- that isn't an Abyssea zone, so granting it elsewhere is a no-op.
+-- WHY WE NEVER delStatusEffect(VISITANT):
+--   Losing the VISITANT effect while standing in Abyssea mid-session fires
+--   its onEffectLose handler (scripts/effects/visitant.lua), which runs
+--   startEvent(2180) -- the "your visitant status expired" EJECT cutscene.
+--   So removing-then-re-adding (the old version of this command) kicked the
+--   player out instead of helping. We instead:
+--     * have a visitant already -> extend it IN PLACE (setDuration +
+--       resetStartTime), exactly like !addabytime. No removal -> no eject.
+--     * have none             -> add the permanent (no-duration) effect, the
+--       one retail hands visible GMs in xi.abyssea.onZoneIn.
 --
--- NOTE: this server already auto-grants permanent visitant to every player
--- on Abyssea zone-in (modules/custom/lua/unlimited_visitant.lua /
--- AbysseaPermanentVisitant.lua). This command is a manual re-assert -- useful
--- if a timed 304s visitant ever overwrote the permanent one, or to restore it
--- on demand without re-zoning.
+--   NOTE: we set a huge finite duration rather than 0. Setting 0 on an
+--   already-running timed effect makes reportTimeRemaining() see the time
+--   cross its warning thresholds (300s..1s) and run the countdown -> eject.
+--   A 14-day duration just trips the "time went UP, reset" branch and stays
+--   silent; the passive zone-in grant re-ups true-permanent anyway.
+--
+-- Must be used INSIDE an Abyssea zone -- the effect self-removes on tick
+-- anywhere else (visitant.lua onEffectTick).
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 0,   -- all players (matches the auto-grant everyone already gets)
+    permission = 0,   -- all players
     parameters = '',
 }
+
+-- 14 days in ms. Well under int32 max, far longer than any Abyssea session,
+-- so the visitant countdown never reaches its warning window.
+local PERMA_MS = 1209600000
 
 commandObj.onTrigger = function(player)
     if not xi.abyssea.isInAbysseaZone(player) then
@@ -30,17 +42,19 @@ commandObj.onTrigger = function(player)
         return
     end
 
-    -- Drop any existing (possibly timed) visitant first so the permanent,
-    -- no-duration effect replaces it instead of inheriting its expiring timer.
-    if player:hasStatusEffect(xi.effect.VISITANT) then
-        player:delStatusEffect(xi.effect.VISITANT)
+    local effect = player:getStatusEffect(xi.effect.VISITANT)
+    if effect then
+        -- Extend in place -- DO NOT remove it (removal triggers the eject).
+        -- Same safe path !addabytime uses.
+        effect:setDuration(PERMA_MS)
+        effect:resetStartTime()
+        effect:setIcon(xi.effect.VISITANT)
+    else
+        -- No visitant present: grant the permanent (no-duration) effect.
+        player:addStatusEffect(xi.effect.VISITANT, { origin = player })
     end
 
-    -- No `duration` field -> permanent. Mirrors the visible-GM grant in
-    -- xi.abyssea.onZoneIn; the countdown never runs, so no eject to Searing Ward.
-    player:addStatusEffect(xi.effect.VISITANT, { origin = player })
-
-    player:printToPlayer('Permanent Visitant status granted -- your Abyssea time will never expire.', xi.msg.channel.SYSTEM_3)
+    player:printToPlayer('Permanent Visitant status set -- your Abyssea time will not expire.', xi.msg.channel.SYSTEM_3)
 end
 
 return commandObj
