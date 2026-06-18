@@ -933,6 +933,16 @@ local checkMobID = function(zoneId, mobId)
 end
 
 xi.abyssea.qmOnTrigger = function(player, npc, mobId, kis, tradeReqs)
+    -- FJB: marks-pop hook (clobber-proof). AbysseaMarks sets xi.abyssea.marksPopHook; baking the
+    -- CALL into this stock function means a Lua-sync reload of this file can't remove the custom
+    -- ??? pop. Hook returns non-nil = handled (return it); nil = fall through to the stock logic.
+    if xi.abyssea.marksPopHook then
+        local handled = xi.abyssea.marksPopHook(player, npc, mobId, kis, tradeReqs)
+        if handled ~= nil then
+            return handled
+        end
+    end
+
     -- validate QM pop data
     local zoneId = player:getZoneID()
     local events = popEvents[zoneId]
@@ -952,8 +962,10 @@ xi.abyssea.qmOnTrigger = function(player, npc, mobId, kis, tradeReqs)
         end
     end
 
-    -- validate nm status
-    if GetMobByID(mobId):isSpawned() then
+    -- validate nm status (FJB: nil-guard -- GetMobByID can be nil for an unloaded/cross-zone
+    -- mobId; without this guard the :isSpawned() call crashes the ??? trigger)
+    local nmEntity = GetMobByID(mobId)
+    if nmEntity and nmEntity:isSpawned() then
         return false
     end
 

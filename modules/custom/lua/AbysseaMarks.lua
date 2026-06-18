@@ -143,16 +143,18 @@ local function calcMultipliers(player)
 end
 
 -- ============================================================
--- Override qmOnTrigger
--- When a player taps ??? and is missing pop KIs, skip the
--- "missing key items" cutscene and offer a marks-based pop
--- via customMenu instead.  Normal KI pops fall through to
--- super unchanged.
+-- ??? marks-pop hook  (xi.abyssea.marksPopHook)
+-- Registered as a HOOK, not an addOverride: the stock
+-- xi.abyssea.qmOnTrigger calls this first (the call is baked into
+-- abyssea.lua).  A Lua-sync reload of abyssea.lua re-defines
+-- qmOnTrigger but CANNOT remove this hook, so the ??? pop survives.
+-- Return nil to fall through to the stock function; return
+-- true/false when we've handled it (offered the pop / released).
 -- ============================================================
-m:addOverride('xi.abyssea.qmOnTrigger', function(player, npc, mobId, kis, tradeReqs)
+xi.abyssea.marksPopHook = function(player, npc, mobId, kis, tradeReqs)
     local cfg = zoneConfig[player:getZoneID()]
     if not cfg then
-        return super(player, npc, mobId, kis, tradeReqs)
+        return nil  -- not a marks zone -> stock handles
     end
 
     -- Safety fallback: mobId == 0 means no mob to spawn.
@@ -167,9 +169,9 @@ m:addOverride('xi.abyssea.qmOnTrigger', function(player, npc, mobId, kis, tradeR
         return false
     end
 
-    -- Mob already up: nothing for marks system to do.
+    -- Mob already up: let the stock qmOnTrigger handle it.
     if mob:isSpawned() then
-        return super(player, npc, mobId, kis, tradeReqs)
+        return nil
     end
 
     -- Mob is NOT spawned.  Offer marks pop when:
@@ -193,20 +195,21 @@ m:addOverride('xi.abyssea.qmOnTrigger', function(player, npc, mobId, kis, tradeR
         end
     end
 
-    return super(player, npc, mobId, kis, tradeReqs)
-end)
+    return nil  -- KI pop path -> stock handles
+end
 
 -- ============================================================
--- Reward on kill
--- Awards Gil + Infamy to every PC in the party on a marks-popped NM
--- kill, with multipliers for:
+-- Reward on kill  (xi.mob.marksRewardHook)
+-- Registered as a HOOK, not an addOverride: the stock
+-- xi.mob.onMobDeathEx calls this at the end (call baked into
+-- mobs.lua), so a Lua-sync reload of mobs.lua can't clobber it.
+-- Awards Gil + Infamy + Cruor to every PC in the party on a
+-- marks-popped NM kill, with multipliers for:
 --   x2.0  — 2+ real players in party
 --   x1.5  — no trusts in party
 -- Multipliers stack (solo no-trust = x1.5, party no-trust = x3).
 -- ============================================================
-m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSkillKill)
-    super(mob, player, isKiller, isWeaponSkillKill)
-
+xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)
     if not isKiller or player == nil then return end
     if player:getObjType() ~= xi.objType.PC then return end
 
@@ -253,6 +256,6 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
             end
         end
     end)
-end)
+end
 
 return m

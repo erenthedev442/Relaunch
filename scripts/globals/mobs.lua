@@ -10,6 +10,12 @@ xi.mob = xi.mob or {}
 
 -- onMobDeathEx is called from the core
 xi.mob.onMobDeathEx = function(mob, player, isKiller, isWeaponSkillKill)
+    -- FJB: marks-reward hook. AbysseaMarks sets xi.mob.marksRewardHook; baking the CALL into
+    -- this stock function means a Lua-sync reload of mobs.lua can't clobber the reward
+    -- (only the external hook fn matters, and it survives this file's reloads).
+    if xi.mob.marksRewardHook then
+        xi.mob.marksRewardHook(mob, player, isKiller, isWeaponSkillKill)
+    end
 end
 
 -----------------------------------
