@@ -197,13 +197,6 @@ do
     table.insert(marksmanship, { id = 21284, name = "Vanir Gun", cost = 12, jobs = 'RNG/COR' })  -- WS score 170, DMG 113/Dly 600
     table.insert(marksmanship, { id = 21276, name = "Pulfanxa", cost = 12, jobs = 'RNG/COR' })  -- WS score 168, DMG 108/Dly 600
 
-    -- Instruments: 4 pick(s)
-    local instruments = cat(catalog.bronze.weapons, 'Instruments')
-    table.insert(instruments, { id = 21405, name = "Eminent Flute",   cost = 12, jobs = 'BRD' })  -- Wind. All Songs+2
-    table.insert(instruments, { id = 21409, name = "Forefront Flute", cost = 12, jobs = 'BRD' })  -- Wind. Wind Skill+10
-    table.insert(instruments, { id = 21402, name = "Damani Horn",     cost = 12, jobs = 'BRD' })  -- Wind. MP+20, Wind+3, Songs+2
-    table.insert(instruments, { id = 21400, name = "Blurred Harp",    cost = 12, jobs = 'BRD' })  -- String. Lullaby+2, All Songs+1, +1 slot
-
 end
 
 -----------------------------------
@@ -272,11 +265,6 @@ do
     table.insert(marksmanship, { id = 22134, name = "Holliday", cost = 25, jobs = 'RNG/COR' })  -- WS score 213, DMG 107/Dly 600
     table.insert(marksmanship, { id = 22119, name = "Wochowsen", cost = 25, jobs = 'RNG' })  -- WS score 202, DMG 135/Dly 288
     table.insert(marksmanship, { id = 21256, name = "Illapa", cost = 25, jobs = 'RNG' })  -- WS score 202, DMG 135/Dly 432
-
-    -- Instruments: 2 pick(s)
-    local instruments = cat(catalog.silver.weapons, 'Instruments')
-    table.insert(instruments, { id = 21403, name = "Damani Horn +1",  cost = 25, jobs = 'BRD' })  -- Wind. MP+25, Wind+4, Songs+3
-    table.insert(instruments, { id = 21401, name = "Blurred Harp +1", cost = 25, jobs = 'BRD' })  -- String. Lullaby+2, Ballad+2, All Songs+2, +1 slot
 
 end
 
@@ -363,10 +351,6 @@ do
     local marksmanship = cat(catalog.gold.weapons, 'Marksmanship')
     table.insert(marksmanship, { id = 22120, name = "Imati", cost = 50, jobs = 'RNG' })  -- WS score 300, DMG 145/Dly 432
     table.insert(marksmanship, { id = 22143, name = "Fomalhaut", cost = 50, jobs = 'RNG/COR' })  -- WS score 270, DMG 167/Dly 600
-
-    -- Instruments: 1 pick(s)
-    local instruments = cat(catalog.gold.weapons, 'Instruments')
-    table.insert(instruments, { id = 21398, name = "Marsyas", cost = 50, jobs = 'BRD' })  -- Wind. Song duration+50%
 
 end
 
