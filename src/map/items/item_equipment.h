@@ -78,6 +78,7 @@ public:
     int16  getModifier(Mod mod) const;
     uint8  getSlotType() const;
     auto   getAugment(uint8 slot) const -> uint16;
+    uint8  getAugmentCount() const;
     auto   getTrialNumber() const -> uint16;
     uint8  getSuperiorLevel();
 

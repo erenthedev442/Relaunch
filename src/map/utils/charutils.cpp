@@ -1132,13 +1132,18 @@ void LoadInventory(CCharEntity* PChar)
                 // check if the item is valid and can have an augment applied to it
                 if (PItem != nullptr && ((PItem->isType(ITEM_EQUIPMENT) || PItem->isType(ITEM_WEAPON)) && !PItem->isSubType(ITEM_CHARGED)))
                 {
-                    // check if there are any valid augments to be applied to the item
-                    for (uint8 j = 0; j < 4; ++j)
+                    // check if there are any valid augments to be applied to the item.
+                    // Standard augments have 5 slots (trial 4, mezzotint 3); a hardcoded
+                    // 4 here dropped the 5th slot on every inventory load -> the last
+                    // catalyst's stats silently vanished after zoning.
+                    auto*       PEquip   = static_cast<CItemEquipment*>(PItem);
+                    const uint8 augCount = PEquip->getAugmentCount();
+                    for (uint8 j = 0; j < augCount; ++j)
                     {
                         // found a match, apply the augment
-                        if (((CItemEquipment*)PItem)->getAugment(j) != 0)
+                        if (PEquip->getAugment(j) != 0)
                         {
-                            ((CItemEquipment*)PItem)->ApplyAugment(j);
+                            PEquip->ApplyAugment(j);
                         }
                     }
                 }

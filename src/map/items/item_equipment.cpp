@@ -502,3 +502,21 @@ auto CItemEquipment::getAugment(uint8 slot) const -> uint16
     std::memcpy(&result, &augData.Augments[slot], sizeof(uint16));
     return result;
 }
+
+// Number of augment slots this item's exdata layout actually uses: standard = 5,
+// trial = 4, mezzotint = 3. getAugment() reads the AugmentStandard layout, so
+// callers must not read past this count or they'd mis-read adjacent exdata
+// (e.g. a trial item's TrialId field) as a bogus augment.
+uint8 CItemEquipment::getAugmentCount() const
+{
+    auto& augData = this->exdata<Exdata::AugmentStandard>();
+    if (static_cast<uint8_t>(augData.AugmentSubKind & Exdata::AugmentSubKindFlags::Trial))
+    {
+        return 4;
+    }
+    if (static_cast<uint8_t>(augData.AugmentSubKind & Exdata::AugmentSubKindFlags::Mezzotint))
+    {
+        return 3;
+    }
+    return 5;
+}
