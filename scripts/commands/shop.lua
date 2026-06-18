@@ -234,6 +234,8 @@ local stock =
         { 17303,   8 },  -- Manji Shuriken  (Lv48)
         { 17304,  20 },  -- Fuma Shuriken   (Lv60)
         { 21353,  50 },  -- Happo Shuriken  (Lv99)
+        -- Sachets (throwing, ammo slot)
+        { 21383,  50 },  -- Eminent Sachet  (Lv99)
     },
 
     -- Ninja tools at 1 gil. These three are the "universal" tools a MAIN-job NIN
