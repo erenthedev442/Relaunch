@@ -1,7 +1,7 @@
 -----------------------------------
 -- always_popped_nms.lua
 --
--- Forces every NM in Escha Ru'Aun and Reisenjima to be auto-spawned
+-- Forces every NM in Reisenjima to be auto-spawned
 -- at server start AND to respawn 30 seconds after each death.
 --
 -- Abyssea NMs are intentionally excluded: they are popped via the
@@ -66,9 +66,6 @@ local RESPAWN_SECONDS = 30
 -----------------------------------
 local TARGET_ZONES =
 {
-    -- Escha Ru'Aun - underscore-separated (Escha Zi'Tah excluded: HL hub)
-    { xi.zone.ESCHA_RUAUN,              'Escha_RuAun',              'xi.zones.Escha_RuAun.Zone.onInitialize'              },
-
     -- Reisenjima main + Sanctorium (Henge excluded - see header note)
     { xi.zone.REISENJIMA,               'Reisenjima',               'xi.zones.Reisenjima.Zone.onInitialize'               },
     { xi.zone.REISENJIMA_SANCTORIUM,    'Reisenjima_Sanctorium',    'xi.zones.Reisenjima_Sanctorium.Zone.onInitialize'    },
