@@ -238,23 +238,40 @@ commandObj.onTrigger = function(player)
         player:getMod(xi.mod.SKILLCHAINDMG) / 100)
 
     -- =========================================================
-    -- Puppetmaster: analyze the deployed Automaton. Its combat SKILLS + stats
-    -- live on the PET entity (not the master), so the pet must be deployed
-    -- (Deploy / !pup) first. Shown for PUP main only -- the only job that fields
-    -- an automaton. getSkillLevel(AUTOMATON_*) reads the same skill the engine
-    -- uses for the pet's accuracy/attack/magic (battleentity.cpp GetWeaponDamage).
-    if mJob == xi.job.PUP then
-        header(player, 'Automaton (Pet)')
+    -- Pet readout for ANY pet job: Automaton (PUP), Avatar (SMN), Jug/Charmed
+    -- pet (BST), or Wyvern (DRG). The pet's level + combat stats live on the PET
+    -- entity (not the master), so it must be out first. getStat(mod) = the full
+    -- post-gear/buff value the engine fights with; getMainLvl() = the pet's REAL
+    -- level (a BST jug's level can differ from your BST level; an avatar/wyvern
+    -- matches your level). PUP also shows the 3 automaton combat skills; SMN
+    -- shows your Summoning skill (drives blood-pact accuracy/potency).
+    -- =========================================================
+    local PET_JOBS =
+    {
+        [xi.job.PUP] = { label = 'Automaton (Pet)',   summon = 'Deploy (or !pup)'    },
+        [xi.job.SMN] = { label = 'Avatar (Pet)',      summon = 'summon an avatar'    },
+        [xi.job.BST] = { label = 'Jug / Charmed Pet', summon = 'Call Beast or Charm' },
+        [xi.job.DRG] = { label = 'Wyvern (Pet)',      summon = 'Call Wyvern'         },
+    }
+    local petCfg = PET_JOBS[mJob]
+    if petCfg then
+        header(player, petCfg.label)
         local pet = player:getPet()
         if pet == nil then
-            line(player, 'No automaton deployed -- use Deploy (or !pup), then re-run !mystats.')
+            line(player, 'No pet out -- %s, then re-run !mystats.', petCfg.summon)
         else
-            line(player, '%s   HP %d/%d   TP %d',
-                pet:getName(), pet:getHP(), pet:getMaxHP(), pet:getTP())
-            line(player, 'Skills:   Melee %d   Ranged %d   Magic %d',
-                pet:getSkillLevel(xi.skill.AUTOMATON_MELEE),
-                pet:getSkillLevel(xi.skill.AUTOMATON_RANGED),
-                pet:getSkillLevel(xi.skill.AUTOMATON_MAGIC))
+            line(player, '%s   Lv %d   HP %d/%d   TP %d',
+                pet:getName(), pet:getMainLvl(), pet:getHP(), pet:getMaxHP(), pet:getTP())
+            -- Per-job "power source" line.
+            if mJob == xi.job.PUP then
+                line(player, 'Skills:   Melee %d   Ranged %d   Magic %d',
+                    pet:getSkillLevel(xi.skill.AUTOMATON_MELEE),
+                    pet:getSkillLevel(xi.skill.AUTOMATON_RANGED),
+                    pet:getSkillLevel(xi.skill.AUTOMATON_MAGIC))
+            elseif mJob == xi.job.SMN then
+                line(player, 'Summoning skill: %d   (drives blood-pact acc/potency)',
+                    player:getSkillLevel(xi.skill.SUMMONING_MAGIC))
+            end
             line(player, 'Offense:  ATT %4d   ACC %4d   RATT %4d   RACC %4d',
                 pet:getStat(xi.mod.ATT), pet:getStat(xi.mod.ACC),
                 pet:getStat(xi.mod.RATT), pet:getStat(xi.mod.RACC))
