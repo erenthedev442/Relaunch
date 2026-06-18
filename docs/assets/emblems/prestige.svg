@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 150" role="img" aria-label="Ascending star">
+  <defs>
+    <linearGradient id="pr-metal" x1="80" y1="24" x2="80" y2="120" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fffbea"/>
+      <stop offset=".16" stop-color="#f7d877"/>
+      <stop offset=".36" stop-color="#e0ad2f"/>
+      <stop offset=".52" stop-color="#a9761a"/>
+      <stop offset=".64" stop-color="#6e4a0c"/>
+      <stop offset=".78" stop-color="#caa03a"/>
+      <stop offset=".9" stop-color="#f4ce63"/>
+      <stop offset="1" stop-color="#7a5410"/>
+    </linearGradient>
+    <radialGradient id="pr-ember" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#ffe6a0"/>
+      <stop offset=".3" stop-color="#ff8a2e"/>
+      <stop offset=".64" stop-color="#e0480c"/>
+      <stop offset="1" stop-color="#e0480c" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="pr-glow" x="-90%" y="-90%" width="280%" height="280%">
+      <feGaussianBlur stdDeviation="1.3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="pr-soft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="4.2"/></filter>
+  </defs>
+
+  <ellipse cx="80" cy="60" rx="46" ry="44" fill="url(#pr-ember)" filter="url(#pr-soft)"/>
+
+  <!-- Radiant burst behind the star -->
+  <g stroke="#ffd081" stroke-width="1.5" stroke-linecap="round" filter="url(#pr-glow)" stroke-opacity=".55">
+    <path d="M80 14V4"/><path d="M110 24l6-7"/><path d="M50 24l-6-7"/>
+    <path d="M118 52l9-3"/><path d="M42 52l-9-3"/>
+  </g>
+
+  <!-- Ascendant star -->
+  <path fill="#5e4310" transform="translate(0,1.5)" d="M80 28 L86.2 45.5 L104.7 46 L90 57.2 L95.3 75 L80 64.5 L64.7 75 L70 57.2 L55.3 46 L73.8 45.5Z"/>
+  <path fill="url(#pr-metal)" d="M80 28 L86.2 45.5 L104.7 46 L90 57.2 L95.3 75 L80 64.5 L64.7 75 L70 57.2 L55.3 46 L73.8 45.5Z"/>
+  <path fill="#fff7da" fill-opacity=".55" d="M80 28 L83.1 36.7 L80 51 L73.8 45.5Z"/>
+  <!-- Star core gem -->
+  <circle cx="80" cy="50" r="4.4" fill="#bdecff" filter="url(#pr-glow)"/>
+  <circle cx="80" cy="50" r="2" fill="#eaf9ff"/>
+
+  <!-- Three ascending chevrons (rising prestige tiers) -->
+  <g fill="none" stroke="#5e4310" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round" transform="translate(0,1.5)">
+    <path d="M68 90 L80 82 L92 90"/>
+    <path d="M63 103 L80 94 L97 103"/>
+    <path d="M58 116 L80 106 L102 116"/>
+  </g>
+  <g fill="none" stroke="url(#pr-metal)" stroke-width="6.4" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M68 90 L80 82 L92 90"/>
+    <path d="M63 103 L80 94 L97 103"/>
+    <path d="M58 116 L80 106 L102 116"/>
+  </g>
+
+  <!-- Sparks -->
+  <g fill="#fff2c8" filter="url(#pr-glow)">
+    <circle cx="48" cy="66" r="1.5"/><circle cx="112" cy="66" r="1.5"/>
+    <circle cx="54" cy="38" r="1.2"/><circle cx="106" cy="38" r="1.2"/>
+    <circle cx="80" cy="128" r="1.2" opacity=".8"/>
+  </g>
+  <circle cx="44" cy="80" r="2.2" fill="#9fe6ff" filter="url(#pr-glow)"/>
+  <circle cx="116" cy="80" r="2.2" fill="#9fe6ff" filter="url(#pr-glow)"/>
+</svg>

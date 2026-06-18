@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+<!--
+  Injects a live server-status badge into Material's announcement bar
+  (the `announce` block), so it appears at the top of every page.
+
+  Material wraps whatever this block emits in <aside class="md-banner">,
+  so we only provide the inner content. The badge is populated by
+  docs/assets/status.js, which polls the status JSON published by the
+  status-bridge (see tools/status-bridge/).
+-->
+{% block announce %}
+<div id="server-status" class="server-status server-status--loading" role="status" aria-live="polite">
+  <span class="server-status__dot" aria-hidden="true"></span>
+  <span class="server-status__text">Checking server status&hellip;</span>
+</div>
+{% endblock %}

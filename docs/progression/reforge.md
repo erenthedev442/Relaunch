@@ -1,0 +1,126 @@
+# Reforge System
+
+![Forge hammer](../assets/emblems/reforge.svg){ .lgnd-emblem }
+
+The Reforge System is a custom NM-hunting + armor-upgrade pipeline that takes you from base AF/Relic/Empyrean armor to +3 versions through three parallel tracks.
+
+!!! tip "Summary"
+    Talk to the **Reforge Spawner** at **Gwora Corridor** `(10, 0, 0)`. Pop one of three NM pools. Each kill drops a random base armor piece from that pool's set plus marks for that set. Take base pieces to the **Reforge Vendor** at `(15, 0, 0)` to upgrade base → +1 → +2 → +3 using the same marks.
+
+## How it works
+
+Three parallel tracks. Each track ties one **NM pool**, one **currency**, and one **armor set** together:
+
+| Track | NM pool | Currency | Armor set |
+|---|---|---|---|
+| **AF** | Sky Gods | AF Marks | Job's AF/Artifact armor |
+| **Relic** | Unity NMs | Relic Marks | Job's Relic armor |
+| **Empyrean** | Abyssea NMs | Empyrean Marks | Job's Empyrean armor |
+
+Every NM kill awards:
+
+1. **One base piece.** Each drop has a configurable chance of being for the killer's **main job** (currently **50%**); the remainder fall back to a random piece across all jobs. When you get a job-matched drop, your chat message includes `(main-job match!)`.
+2. **Marks** for that track's currency.
+
+The Reforge Vendor sells progressive upgrades: trade in a base piece + marks for +1, trade +1 + marks for +2, trade +2 + marks for +3.
+
+!!! tip "Roughly how many kills for a full +3 set?"
+    With the 50% main-job bias and the current mark/cost values, expect **~50-80 NM kills** to complete a 5-piece +3 set on one specific job. Marks accumulate alongside drops, so the bottleneck is rolling the right slots — the bias makes each kill ~11× more likely to land on a piece you want.
+
+## NPC locations
+
+| NPC | Zone | Position |
+|---|---|---|
+| **Reforge Spawner** | Gwora Corridor | `(10.0, 0.0, 0.0)` |
+| **Reforge Vendor** | Gwora Corridor | `(15.0, 0.0, 0.0)` |
+| Dynamic NM spawn point | Gwora Corridor | `(10.0, 0.0, 20.0)` |
+
+## NM pools and rewards
+
+<!-- DOCGEN:BEGIN id="reforge-sources" -->
+### AF (Sky Gods)
+
+**Currency:** AF Marks
+
+| NM | Level | Marks per kill |
+|---|---:|---:|
+| Genbu | Lv150 | 25 |
+| Suzaku | Lv175 | 40 |
+| Seiryu | Lv200 | 60 |
+| Byakko | Lv225 | 90 |
+| Kirin | Lv250 | 150 |
+
+### Relic (Unity NMs)
+
+**Currency:** Relic Marks
+
+| NM | Level | Marks per kill |
+|---|---:|---:|
+| Bukhis | Lv150 | 25 |
+| Khun | Lv175 | 40 |
+| Padfoot | Lv200 | 60 |
+| Glavoid | Lv225 | 90 |
+| Tinnin | Lv250 | 150 |
+
+### Empyrean (Abyssea NMs)
+
+**Currency:** Empy Marks
+
+| NM | Level | Marks per kill |
+|---|---:|---:|
+| Aello | Lv150 | 25 |
+| Iratham | Lv175 | 40 |
+| Briareus | Lv200 | 60 |
+| Itzpapalotl | Lv225 | 90 |
+| Hadhayosh | Lv250 | 150 |
+<!-- DOCGEN:END id="reforge-sources" -->
+
+## Upgrade costs
+
+<!-- DOCGEN:BEGIN id="reforge-costs" -->
+| Set | base → +1 | +1 → +2 | +2 → +3 |
+|---|---:|---:|---:|
+| AF (Sky Gods) | 100 | 300 | 650 |
+| Relic (Unity NMs) | 100 | 300 | 650 |
+| Empyrean (Abyssea NMs) | 100 | 300 | 650 |
+
+_Costs are paid in that set's marks (e.g. AF upgrades cost AF Marks)._
+<!-- DOCGEN:END id="reforge-costs" -->
+
+## Per-job set names
+
+The catalog covers every job. Each job has three named sets across the AF/Relic/Empyrean tracks:
+
+<!-- DOCGEN:BEGIN id="reforge-job-sets" -->
+| Job | AF | Relic | Empyrean |
+|---|---|---|---|
+| WAR | Pummeler's | Agoge | Boii |
+| MNK | Anchorite's | Hesychast's | Bhikku |
+| WHM | Theophany | Piety | Ebers |
+| BLM | Spaekona's | Archmage's | Wicce |
+| RDM | Atrophy | Vitiation | Lethargic |
+| THF | Pillager's | Plunderer's | Skulker's |
+| PLD | Reverence | Caballarius | Chevalier's |
+| DRK | Ignominy | Fallen's | Heathen's |
+| BST | Totemic | Ankusa | Nukumi |
+| BRD | Brioso | Bihu | Fili |
+| RNG | Orion | Arcadian | Amini |
+| SAM | Wakido | Sakonji | Kasuga |
+| NIN | Hachiya | Mochizuki | Hattori |
+| DRG | Vishap | Pteroslaver | Peltast's |
+| SMN | Convoker's | Glyphic | Beckoner's |
+| BLU | Assimilator's | Luhlaza | Hashishin |
+| COR | Laksamana's | Lanun | Chasseur's |
+| PUP | Foire | Pitre | Karagoz |
+| DNC | Maxixi | Horos | Maculele |
+| SCH | Academic's | Pedagogy | Arbatel |
+| GEO | Geomancy | Bagua | Azimuth |
+| RUN | Runeist | Futhark | Erilaz |
+<!-- DOCGEN:END id="reforge-job-sets" -->
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 275bd829ab06 -->
+_Last updated: 2026-06-12 23:32 UTC_
+<!-- DOCGEN:END id="last-updated" -->

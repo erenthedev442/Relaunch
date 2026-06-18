@@ -26,7 +26,7 @@ if errorlevel 1 (
 
 echo.
 echo === [2/4] Generating reference docs from Lua catalogs ===
-python tools\docgen\generate_docs.py
+python tools\docgen\generate.py
 if errorlevel 1 (
     echo WARNING: doc generation skipped/failed [local docgen tooling may be missing].
     echo          Catalogs are already re-scored above, and the box re-generates +

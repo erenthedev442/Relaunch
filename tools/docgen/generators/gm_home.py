@@ -1,0 +1,493 @@
+"""Generate GM Home feature reference tables inside docs/progression/gm-home.md.
+
+Reads four catalogs:
+  - modules/custom/lua/test_dummy_catalog.lua
+  - modules/custom/lua/gil_mystery_box_catalog.lua
+  - modules/custom/lua/gil_warp_npc_catalog.lua
+  - modules/custom/lua/gil_title_vendor_catalog.lua
+
+Marker IDs:
+  - "gm-home-test-dummy"    -- Test Dummy tiers table
+  - "gm-home-mystery-mog"   -- Mystery Mog pool tables + pull cost summary
+  - "gm-home-warpman"       -- Warpman destinations table
+  - "gm-home-title-broker"  -- Title Broker tiers + title list
+"""
+from __future__ import annotations
+
+import re
+from pathlib import Path
+
+from tools.docgen._paths import resolve_source
+from tools.docgen._markers import write_between_markers
+
+# ---------------------------------------------------------------------------
+# Lua helpers (duplicated per the established pattern)
+# ---------------------------------------------------------------------------
+
+_QUOTED = r"""'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*" """
+
+
+def _quoted_value(s: str) -> str:
+    s = s.strip()
+    if (s.startswith("'") and s.endswith("'")) or (s.startswith('"') and s.endswith('"')):
+        return s[1:-1]
+    return s
+
+
+def _balanced_blocks(text: str):
+    """Yield (start, end) character offsets for every top-level {...} block."""
+    depth = 0
+    in_single = False
+    in_double = False
+    start = -1
+    i = 0
+    while i < len(text):
+        c = text[i]
+        if not in_single and not in_double and text[i:i+2] == '--':
+            end_of_line = text.find('\n', i)
+            i = end_of_line + 1 if end_of_line != -1 else len(text)
+            continue
+        if c == "'" and not in_double:
+            in_single = not in_single
+        elif c == '"' and not in_single:
+            in_double = not in_double
+        elif not in_single and not in_double:
+            if c == '{':
+                if depth == 0:
+                    start = i
+                depth += 1
+            elif c == '}':
+                depth -= 1
+                if depth == 0 and start != -1:
+                    yield (start, i + 1)
+                    start = -1
+        i += 1
+
+
+# ---------------------------------------------------------------------------
+# Helpers
+# ---------------------------------------------------------------------------
+
+def _parse_int(text: str, key: str) -> int | None:
+    m = re.search(rf'\b{re.escape(key)}\s*=\s*(\d+)', text)
+    return int(m.group(1)) if m else None
+
+
+def _hp_display(hp: int) -> str:
+    m_val = hp // 1_000_000
+    if m_val * 1_000_000 == hp:
+        return f"{hp:,} ({m_val}M)"
+    return f"{hp:,}"
+
+
+# ---------------------------------------------------------------------------
+# Test Dummy parsers
+# ---------------------------------------------------------------------------
+
+def _parse_tier_order(text: str, key: str = "tierOrder") -> list[str]:
+    m = re.search(rf'\b{re.escape(key)}\s*=\s*\{{', text)
+    if not m:
+        return []
+    for start, end in _balanced_blocks(text[m.start():]):
+        block = text[m.start():][start:end]
+        return [_quoted_value(q) for q in re.findall(_QUOTED, block)]
+    return []
+
+
+def _parse_test_dummy_tiers(text: str, tier_order: list[str]) -> list[dict]:
+    m = re.search(r'\btiers\s*=\s*\{', text)
+    if not m:
+        return []
+    for start, end in _balanced_blocks(text[m.start():]):
+        tiers_block = text[m.start():][start:end]
+        break
+    else:
+        return []
+
+    tiers = []
+    for name in tier_order:
+        tm = re.search(rf'\b{re.escape(name)}\s*=\s*\{{', tiers_block)
+        if not tm:
+            continue
+        sub = tiers_block[tm.start():]
+        for ts, te in _balanced_blocks(sub):
+            entry = sub[ts:te]
+            min_lv = re.search(r'\bminLevel\s*=\s*(\d+)', entry)
+            hp_m   = re.search(r'\bhp\s*=\s*(\d+)', entry)
+            tiers.append({
+                "name":  name,
+                "level": int(min_lv.group(1)) if min_lv else "?",
+                "hp":    int(hp_m.group(1)) if hp_m else 0,
+            })
+            break
+
+    return tiers
+
+
+# ---------------------------------------------------------------------------
+# Mystery Mog parsers
+# ---------------------------------------------------------------------------
+
+def _parse_pool_entries(text: str, pool_key: str) -> list[dict]:
+    m = re.search(rf'\b{re.escape(pool_key)}\s*=\s*\{{', text)
+    if not m:
+        return []
+    for start, end in _balanced_blocks(text[m.start():]):
+        pool_block = text[m.start():][start:end]
+        break
+    else:
+        return []
+
+    entries = []
+    for es, ee in _balanced_blocks(pool_block[1:]):
+        entry = pool_block[1:][es:ee]
+        tier_m   = re.search(r'\btier\s*=\s*(' + _QUOTED + r')', entry)
+        weight_m = re.search(r'\bweight\s*=\s*(\d+)', entry)
+        label_m  = re.search(r'\blabel\s*=\s*(' + _QUOTED + r')', entry)
+        if not (tier_m and weight_m and label_m):
+            continue
+        entries.append({
+            "tier":   _quoted_value(tier_m.group(1).strip()),
+            "weight": int(weight_m.group(1)),
+            "label":  _quoted_value(label_m.group(1).strip()),
+        })
+    return entries
+
+
+# ---------------------------------------------------------------------------
+# Warp NPC parsers
+# ---------------------------------------------------------------------------
+
+def _parse_pricing(text: str) -> dict[str, int]:
+    m = re.search(r'\bpricing\s*=\s*\{', text)
+    if not m:
+        return {}
+    for start, end in _balanced_blocks(text[m.start():]):
+        block = text[m.start():][start:end]
+        pricing = {}
+        for pm in re.finditer(r'\b(\w+)\s*=\s*(\d+)', block):
+            pricing[pm.group(1)] = int(pm.group(2))
+        return pricing
+    return {}
+
+
+def _parse_warp_tiers(text: str, pricing: dict[str, int]) -> list[dict]:
+    m = re.search(r'\btiers\s*=\s*\{', text)
+    if not m:
+        return []
+    for start, end in _balanced_blocks(text[m.start():]):
+        tiers_block = text[m.start():][start:end]
+        break
+    else:
+        return []
+
+    tiers = []
+    for es, ee in _balanced_blocks(tiers_block[1:]):
+        entry = tiers_block[1:][es:ee]
+        label_m = re.search(r'\blabel\s*=\s*(' + _QUOTED + r')', entry)
+        if not label_m:
+            continue
+        raw_label = _quoted_value(label_m.group(1).strip())
+
+        # Try literal cost first, then catalog.pricing.X reference
+        cost_m = re.search(r'\bcost\s*=\s*(\d+)', entry)
+        if cost_m:
+            cost = int(cost_m.group(1))
+        else:
+            ref_m = re.search(r'\bcost\s*=\s*catalog\.pricing\.(\w+)', entry)
+            cost = pricing.get(ref_m.group(1), 0) if ref_m else 0
+
+        # Parse destinations sub-block
+        dest_m = re.search(r'\bdestinations\s*=\s*\{', entry)
+        destinations = []
+        if dest_m:
+            sub = entry[dest_m.start():]
+            for ds, de in _balanced_blocks(sub):
+                dest_block = sub[ds:de]
+                for dds, dde in _balanced_blocks(dest_block[1:]):
+                    dest_entry = dest_block[1:][dds:dde]
+                    dlabel_m = re.search(r'\blabel\s*=\s*(' + _QUOTED + r')', dest_entry)
+                    if dlabel_m:
+                        destinations.append(_quoted_value(dlabel_m.group(1).strip()))
+                break
+
+        # Strip price suffix like " (5k)" or " (50k)" from tier label
+        clean_label = re.sub(r'\s*\(\d+k\)\s*$', '', raw_label).strip()
+
+        tiers.append({
+            "label":        clean_label,
+            "cost":         cost,
+            "destinations": destinations,
+        })
+
+    return tiers
+
+
+# ---------------------------------------------------------------------------
+# Renderers
+# ---------------------------------------------------------------------------
+
+def _render_test_dummy(tiers: list[dict]) -> str:
+    lines = [
+        "| Tier | Level | HP |",
+        "|---|---|---|",
+    ]
+    for t in tiers:
+        lines.append(f"| {t['name']} | L{t['level']} | {_hp_display(t['hp'])} |")
+    return "\n".join(lines)
+
+
+def _render_mystery_mog(
+    pull_cost: int,
+    triple_cost: int,
+    deca_cost: int,
+    premium_cost: int,
+    pool: list[dict],
+    premium_pool: list[dict],
+) -> str:
+    lines = []
+
+    # Pull cost summary
+    lines.append("| Pull type | Cost |")
+    lines.append("|---|---:|")
+    lines.append(f"| Single | {pull_cost:,} gil |")
+    lines.append(f"| Triple (10% off) | {triple_cost:,} gil |")
+    lines.append(f"| 10× pull | {deca_cost:,} gil |")
+    lines.append(f"| Premium | {premium_cost:,} gil |")
+    lines.append("")
+
+    # Standard pool
+    total_weight = sum(e["weight"] for e in pool)
+    lines.append(f"_Standard pull: **{pull_cost:,} gil** per pull._")
+    lines.append("")
+    lines.append("| Rarity | Prize | Approx. Chance |")
+    lines.append("|---|---|---:|")
+    for entry in pool:
+        chance = entry["weight"] / total_weight * 100
+        lines.append(
+            f"| {entry['tier'].capitalize()} | {entry['label']} | {chance:.1f}% |"
+        )
+
+    lines.append("")
+
+    # Premium pool
+    total_premium = sum(e["weight"] for e in premium_pool)
+    lines.append(f"_Premium pull: **{premium_cost:,} gil** per pull. No commons — higher odds on rare+ prizes._")
+    lines.append("")
+    lines.append("| Rarity | Prize | Approx. Chance |")
+    lines.append("|---|---|---:|")
+    for entry in premium_pool:
+        chance = entry["weight"] / total_premium * 100
+        lines.append(
+            f"| {entry['tier'].capitalize()} | {entry['label']} | {chance:.1f}% |"
+        )
+
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# Title Broker parsers
+# ---------------------------------------------------------------------------
+
+def _parse_title_tiers(text: str) -> list[dict]:
+    """Return list of {label, cost, titles:[str]} from catalog.tiers."""
+    m = re.search(r'\btiers\s*=\s*\{', text)
+    if not m:
+        return []
+    suffix = text[m.start():]
+    outer_block = None
+    for s, e in _balanced_blocks(suffix):
+        outer_block = suffix[s:e]
+        break
+    if not outer_block:
+        return []
+
+    tiers = []
+    inner = outer_block[1:-1]
+    for ts, te in _balanced_blocks(inner):
+        tier_block = inner[ts:te]
+
+        label_m = re.search(r"\blabel\s*=\s*'([^']+)'", tier_block)
+        cost_m  = re.search(r'\bcost\s*=\s*(\d+)', tier_block)
+        if not (label_m and cost_m):
+            continue
+
+        tier_label = label_m.group(1)
+        cost       = int(cost_m.group(1))
+
+        # Parse titles sub-block
+        titles_m = re.search(r'\btitles\s*=\s*\{', tier_block)
+        titles: list[str] = []
+        if titles_m:
+            ts_suffix = tier_block[titles_m.start():]
+            for tls, tle in _balanced_blocks(ts_suffix):
+                titles_block = ts_suffix[tls:tle]
+                for es, ee in _balanced_blocks(titles_block[1:-1]):
+                    entry = titles_block[1:-1][es:ee]
+                    tlabel_m = re.search(r"\blabel\s*=\s*'([^']+)'", entry)
+                    if tlabel_m:
+                        titles.append(tlabel_m.group(1))
+                break
+
+        if titles:
+            tiers.append({'label': tier_label, 'cost': cost, 'titles': titles})
+
+    return tiers
+
+
+def _render_warpman(tiers: list[dict]) -> str:
+    lines = [
+        "| Tier | Cost | Destinations |",
+        "|---|---:|---|",
+    ]
+    for t in tiers:
+        dests = " · ".join(t["destinations"])
+        lines.append(f"| {t['label']} | {t['cost']:,} gil | {dests} |")
+    return "\n".join(lines)
+
+
+def _render_title_broker(tiers: list[dict]) -> str:
+    lines: list[str] = []
+    for tier in tiers:
+        # Strip the "(cost)" suffix from tier labels like "Cheap (10k)" for cleaner headers
+        clean = re.sub(r'\s*\(\d+[kKmM]?\)\s*$', '', tier['label']).strip()
+        lines.append(f"**{clean}** — {tier['cost']:,} gil each")
+        lines.append("")
+        lines.append("| Title |")
+        lines.append("|---|")
+        for title in tier['titles']:
+            lines.append(f"| {title} |")
+        lines.append("")
+    return "\n".join(lines).rstrip() + "\n"
+
+
+# ---------------------------------------------------------------------------
+# Gil Exchange parsers + renderer (writes into server-features.md)
+# ---------------------------------------------------------------------------
+
+def _parse_gil_exchange_bundles(text: str) -> list[dict]:
+    """Return list of {gil, marks} from config.bundles in gil_exchange_npc.lua."""
+    m = re.search(r'\bbundles\s*=\s*\{', text)
+    if not m:
+        return []
+    for start, end in _balanced_blocks(text[m.start():]):
+        bundles_block = text[m.start():][start:end]
+        break
+    else:
+        return []
+
+    bundles = []
+    for es, ee in _balanced_blocks(bundles_block[1:-1]):
+        entry = bundles_block[1:-1][es:ee]
+        gil_m   = re.search(r'\bgil\s*=\s*(\d+)', entry)
+        marks_m = re.search(r'\bmarks\s*=\s*(\d+)', entry)
+        if not (gil_m and marks_m):
+            continue
+        bundles.append({"gil": int(gil_m.group(1)), "marks": int(marks_m.group(1))})
+    return bundles
+
+
+def _render_gil_exchange(bundles: list[dict]) -> str:
+    lines = [
+        "| Gil | Hunt Marks |",
+        "|---:|---:|",
+    ]
+    for b in bundles:
+        lines.append(f"| {b['gil']:,} | {b['marks']} |")
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
+# Entry point
+# ---------------------------------------------------------------------------
+
+def generate(repo_root: Path, docs_dir: Path) -> None:
+    page = docs_dir / "progression" / "gm-home.md"
+    if not page.exists():
+        print(f"[gm_home] skip: target page {page} not found")
+        return
+
+    # --- Test Dummy ---
+    dummy_src = resolve_source(repo_root, "modules/custom/lua/test_dummy_catalog.lua")
+    if dummy_src is None:
+        print("[gm_home] skip test-dummy: test_dummy_catalog.lua not found")
+    else:
+        dummy_text  = dummy_src.read_text(encoding="utf-8", errors="replace")
+        tier_order  = _parse_tier_order(dummy_text, "tierOrder")
+        dummy_tiers = _parse_test_dummy_tiers(dummy_text, tier_order)
+        dummy_content = _render_test_dummy(dummy_tiers)
+        wrote = write_between_markers(page, "gm-home-test-dummy", dummy_content)
+        if wrote:
+            print(f"[gm_home] test-dummy: {len(dummy_tiers)} tiers written into marker")
+        else:
+            print(f"[gm_home] test-dummy: marker 'gm-home-test-dummy' not found in {page.name}")
+
+    # --- Mystery Mog ---
+    mog_src = resolve_source(repo_root, "modules/custom/lua/gil_mystery_box_catalog.lua")
+    if mog_src is None:
+        print("[gm_home] skip mystery-mog: gil_mystery_box_catalog.lua not found")
+    else:
+        mog_text     = mog_src.read_text(encoding="utf-8", errors="replace")
+        pull_cost    = _parse_int(mog_text, "pullCost")    or 100000
+        triple_cost  = _parse_int(mog_text, "tripleCost")  or 270000
+        deca_cost    = _parse_int(mog_text, "decaCost")    or 900000
+        premium_cost = _parse_int(mog_text, "premiumCost") or 500000
+        pool         = _parse_pool_entries(mog_text, "pool")
+        premium_pool = _parse_pool_entries(mog_text, "premiumPool")
+        mog_content  = _render_mystery_mog(pull_cost, triple_cost, deca_cost, premium_cost, pool, premium_pool)
+        wrote = write_between_markers(page, "gm-home-mystery-mog", mog_content)
+        if wrote:
+            print(f"[gm_home] mystery-mog: {len(pool)} standard + {len(premium_pool)} premium entries written into marker")
+        else:
+            print(f"[gm_home] mystery-mog: marker 'gm-home-mystery-mog' not found in {page.name}")
+
+    # --- Warpman ---
+    warp_src = resolve_source(repo_root, "modules/custom/lua/gil_warp_npc_catalog.lua")
+    if warp_src is None:
+        print("[gm_home] skip warpman: gil_warp_npc_catalog.lua not found")
+    else:
+        warp_text    = warp_src.read_text(encoding="utf-8", errors="replace")
+        pricing      = _parse_pricing(warp_text)
+        warp_tiers   = _parse_warp_tiers(warp_text, pricing)
+        warp_content = _render_warpman(warp_tiers)
+        wrote = write_between_markers(page, "gm-home-warpman", warp_content)
+        if wrote:
+            print(f"[gm_home] warpman: {len(warp_tiers)} tiers written into marker")
+        else:
+            print(f"[gm_home] warpman: marker 'gm-home-warpman' not found in {page.name}")
+
+    # --- Title Broker ---
+    title_src = resolve_source(repo_root, "modules/custom/lua/gil_title_vendor_catalog.lua")
+    if title_src is None:
+        print("[gm_home] skip title-broker: gil_title_vendor_catalog.lua not found")
+    else:
+        title_text    = title_src.read_text(encoding="utf-8", errors="replace")
+        title_tiers   = _parse_title_tiers(title_text)
+        title_content = _render_title_broker(title_tiers)
+        wrote = write_between_markers(page, "gm-home-title-broker", title_content)
+        if wrote:
+            total = sum(len(t['titles']) for t in title_tiers)
+            print(f"[gm_home] title-broker: {total} titles across {len(title_tiers)} tiers written into marker")
+        else:
+            print(f"[gm_home] title-broker: marker 'gm-home-title-broker' not found in {page.name}")
+
+    # --- Gil Exchange (writes into the server-features overview page) ---
+    # The Gil Exchange rate bundles live only in gil_exchange_npc.lua and have
+    # no section on gm-home.md, so the overview page (server-features.md) is the
+    # single authoritative home for them. Generate the rate table there to keep
+    # it from drifting away from the Lua catalog.
+    features_page = docs_dir / "progression" / "server-features.md"
+    gil_src = resolve_source(repo_root, "modules/custom/lua/gil_exchange_npc.lua")
+    if gil_src is None:
+        print("[gm_home] skip gil-exchange: gil_exchange_npc.lua not found")
+    elif not features_page.exists():
+        print(f"[gm_home] skip gil-exchange: target page {features_page} not found")
+    else:
+        gil_text     = gil_src.read_text(encoding="utf-8", errors="replace")
+        gil_bundles  = _parse_gil_exchange_bundles(gil_text)
+        gil_content  = _render_gil_exchange(gil_bundles)
+        wrote = write_between_markers(features_page, "server-features-gil-exchange", gil_content)
+        if wrote:
+            print(f"[gm_home] gil-exchange: {len(gil_bundles)} bundles written into {features_page.name}")
+        else:
+            print(f"[gm_home] gil-exchange: marker 'server-features-gil-exchange' not found in {features_page.name}")

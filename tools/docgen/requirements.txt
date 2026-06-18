@@ -1,0 +1,6 @@
+mkdocs>=1.6
+mkdocs-material>=9.5
+# Pure-Python MySQL/MariaDB driver used by leaderboards.py to read
+# char_vars from the live server DB. Lighter than `mariadb` (no native
+# C lib dep), so it installs cleanly in a fresh venv.
+pymysql>=1.1

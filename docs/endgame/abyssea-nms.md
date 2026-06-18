@@ -1,0 +1,137 @@
+# Abyssea NMs — Hunt Marks System
+
+Abyssea is home to some of the most powerful Notorious Monsters on the server. Rather than hunting down rare key items to spawn them, Legendary replaces the retail pop system with a **Hunt Marks** spend: find the `???`, pay your marks, and the NM rises right in front of you.
+
+!!! tip "Summary"
+    Spend Hunt Marks at any Abyssea `???` to pop its NM on demand. Kill it with your party for a large Infamy and Gil payout — no key items required.
+
+---
+
+## Zones & Difficulty Tiers
+
+Abyssea is divided into three difficulty tiers based on the expansion each zone belongs to. Higher tiers demand more coordination, hit harder, and reward more.
+
+| Tier | Zones | Mark Cost | Level | HP |
+|---|---|---|---|---|
+| **Visions** | Konschtat, Tahrongi, La Theine | 200 marks | 135 | 4,000,000 |
+| **Scars** | Attohwa, Misareaux, Vunkerl | 350 marks | 145 | 7,000,000 |
+| **Heroes** | Altepa, Uleguerand, Grauberg | 500 marks | 155 | 10,000,000 |
+
+!!! warning "These are not solo targets"
+    All tiers are tuned for a full party of real players. Each NM has dramatically boosted ATK, DEF, accuracy, and evasion on top of its level-scaled stats. Coming in underprepared or alone is likely to end badly.
+
+---
+
+## Getting There
+
+Use the `!abyssea` command to open a zone warp menu:
+
+```
+!abyssea
+```
+
+A two-tier menu appears — pick the expansion tier, then the specific zone. You'll land at a safe camp near the zone entrance.
+
+---
+
+## Popping an NM
+
+Each Abyssea NM has a `???` landmark somewhere in the zone. Walk up to it and check:
+
+**If you're missing the retail key items** (which you almost certainly are — they've been removed from the game):
+
+1. A menu appears showing the NM name and the Hunt Mark cost.
+2. If you have enough marks, a **Pop** button is available — confirm it.
+3. Your marks are spent, the NM spawns directly next to you, and it's already claimed to your party.
+
+**If you somehow still have the original retail key items**, the vanilla pop still works — the `???` will handle it as normal.
+
+!!! note "Key items from retail"
+    If you had any Abyssea pop key items from retail (Tattered Hippogryph Wing, Cracked Wivre Horn, etc.), they were automatically removed from your inventory when you last logged in. They have no function on this server.
+
+---
+
+## Rewards
+
+Killing a marks-popped NM pays out **Infamy** and **Gil** to **every member of your party**. The payout scales with your party composition.
+
+### Base rewards by tier
+
+| Tier | Infamy | Gil |
+|---|---|---|
+| Visions | 25 | 250,000 |
+| Scars | 40 | 500,000 |
+| Heroes | 60 | 750,000 |
+
+### Multipliers
+
+Two bonuses can stack on top of the base reward:
+
+| Condition | Multiplier |
+|---|---|
+| **2 or more real players** in party | ×2.0 |
+| **No trusts** in party | ×1.5 |
+
+These multiply together, so a full party of real players with no trusts earns **×3.0**.
+
+### Full reward table
+
+=== "Visions"
+
+    | Scenario | Mult | Infamy | Gil |
+    |---|---|---|---|
+    | Solo, with trusts | ×1.0 | 25 | 250,000 |
+    | Solo, no trusts | ×1.5 | 37 | 375,000 |
+    | Party, with trusts | ×2.0 | 50 | 500,000 |
+    | Party, no trusts | ×3.0 | 75 | 750,000 |
+
+=== "Scars"
+
+    | Scenario | Mult | Infamy | Gil |
+    |---|---|---|---|
+    | Solo, with trusts | ×1.0 | 40 | 500,000 |
+    | Solo, no trusts | ×1.5 | 60 | 750,000 |
+    | Party, with trusts | ×2.0 | 80 | 1,000,000 |
+    | Party, no trusts | ×3.0 | 120 | 1,500,000 |
+
+=== "Heroes"
+
+    | Scenario | Mult | Infamy | Gil |
+    |---|---|---|---|
+    | Solo, with trusts | ×1.0 | 60 | 750,000 |
+    | Solo, no trusts | ×1.5 | 90 | 1,125,000 |
+    | Party, with trusts | ×2.0 | 120 | 1,500,000 |
+    | Party, no trusts | ×3.0 | 180 | 2,250,000 |
+
+After the kill a system message confirms your payout and any active multiplier bonus.
+
+---
+
+## What to Spend Infamy On
+
+Infamy is spent at the **Infamy Vendor** in GM Home. The full catalog includes accessories, armor, Relic/Mythic/Aeonic weapons, and more. A few reference points:
+
+| Item tier | Cost |
+|---|---|
+| Accessories (Fotia Belt, earrings, rings) | 250–300 Infamy |
+| Armor pieces (Nyame, Jhakri) | 400–800 Infamy |
+| Relic / Aeonic weapons | 800 Infamy |
+| Mythic weapons | 10,000 Infamy |
+
+A party running Heroes NMs without trusts earns **180 Infamy per kill** — enough for a full Nyame body in under 5 kills, and a Mythic weapon in roughly 55 kills.
+
+---
+
+## Tips
+
+- **Bring a healer.** Every NM tier is designed to require active healing. The stat boosts are large enough that an undefended party member can be killed in a few hits.
+- **Drop your trusts before the kill.** The ×1.5 no-trust multiplier is free Infamy. Dismiss them once the NM is engaged and you're confident in your party.
+- **The NM respawns after a server restart.** If you pop and kill an NM, the `???` is available immediately for the next pop — there's no lockout timer.
+- **You need to be the one to land the kill.** Only parties where someone gets the killing blow trigger the reward. Don't let a rogue trust finish it off right as you dismiss them.
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 29a4855a6db3 -->
+_Last updated: 2026-06-16 22:53 UTC_
+<!-- DOCGEN:END id="last-updated" -->

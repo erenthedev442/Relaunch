@@ -1,0 +1,486 @@
+{
+  "_comment": "GENERATED FILE — do not edit by hand. Exported from the live Lua catalogs by tools/docgen/generators/catalog_json.py. Single source of truth for the Discord bot and docs. Regenerate with refresh-site.bat (or `python tools/docgen/generate.py`). amplifier/bonus are fractions (0.25 = +25%).",
+  "achievements": [
+    {
+      "announce": false,
+      "cv": "ACH_FIRST_HUNT",
+      "desc": "Your first Hunting League kill - the legend begins.",
+      "id": "FIRST_HUNT",
+      "reward": 50,
+      "title": "First Hunt"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_TENTH_HUNT",
+      "desc": "Veteran of ten hunts.  You know the drill.",
+      "id": "TENTH_HUNT",
+      "reward": 100,
+      "title": "Ten Hunts In"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_CENTURY",
+      "desc": "100 Hunting League kills.  No signs of stopping.",
+      "id": "CENTURY",
+      "reward": 300,
+      "title": "Centennial Hunter"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_THOUSAND",
+      "desc": "1,000 NM kills.  You have earned the title.",
+      "id": "THOUSAND",
+      "reward": 1000,
+      "title": "Legendary Slayer"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_TIER2_FIRST",
+      "desc": "First kill from the Tier II roster.",
+      "id": "TIER2_FIRST",
+      "reward": 75,
+      "title": "Tier II Unlocked"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_TIER3_FIRST",
+      "desc": "First kill from the Tier III roster.",
+      "id": "TIER3_FIRST",
+      "reward": 150,
+      "title": "Tier III Unlocked"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_TIER4_FIRST",
+      "desc": "First kill from the Tier IV roster.",
+      "id": "TIER4_FIRST",
+      "reward": 250,
+      "title": "Tier IV Unlocked"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_APEX_HUNTER",
+      "desc": "First Tier V kill.  These are the hardest NMs on the server.",
+      "id": "APEX_HUNTER",
+      "reward": 500,
+      "title": "Apex Hunter"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_MARKS_1K",
+      "desc": "1,000 Hunt Marks earned over your lifetime.",
+      "id": "MARKS_1K",
+      "reward": 200,
+      "title": "Mark of 1,000"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_MARKS_10K",
+      "desc": "10,000 lifetime Hunt Marks.  A true devotee.",
+      "id": "MARKS_10K",
+      "reward": 500,
+      "title": "Mark of 10,000"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_MARKS_100K",
+      "desc": "100,000 lifetime Hunt Marks.  An absolute legend.",
+      "id": "MARKS_100K",
+      "reward": 2000,
+      "title": "Mark of 100,000"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_FIRST_WAVE",
+      "desc": "Survived your first wave fight.",
+      "id": "FIRST_WAVE",
+      "reward": 100,
+      "title": "Wave Rider"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_WAVE_FIGHTER",
+      "desc": "10 lifetime wave fights cleared.",
+      "id": "WAVE_FIGHTER",
+      "reward": 200,
+      "title": "Wave Fighter"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_WAVE_LEGEND",
+      "desc": "50 lifetime wave fights.  The arena never rests.",
+      "id": "WAVE_LEGEND",
+      "reward": 600,
+      "title": "Wave Legend"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_FIRST_ASCENSION",
+      "desc": "Your first Prestige ascension.  The legend grows.",
+      "id": "FIRST_ASCENSION",
+      "reward": 500,
+      "title": "First Ascension"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_TEN_ASCENSIONS",
+      "desc": "10 lifetime Prestige ascensions.",
+      "id": "TEN_ASCENSIONS",
+      "reward": 1000,
+      "title": "Ascending Master"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_FIFTY_ASCENSIONS",
+      "desc": "50 lifetime ascensions.  Beyond all mortal limits.",
+      "id": "FIFTY_ASCENSIONS",
+      "reward": 3000,
+      "title": "Eternal Ascendant"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_DERBY_FIRST_WIN",
+      "desc": "Your first Chocobo Derby win.",
+      "id": "DERBY_FIRST_WIN",
+      "reward": 100,
+      "title": "Winning Ticket"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_DERBY_10_WINS",
+      "desc": "10 Derby wins.  The Race Caller knows your face.",
+      "id": "DERBY_10_WINS",
+      "reward": 300,
+      "title": "Derby Regular"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_DERBY_OWN_WIN",
+      "desc": "Won the Derby on your OWN raised chocobo.",
+      "id": "DERBY_OWN_WIN",
+      "reward": 250,
+      "title": "Home Stable Hero"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_TH_FIRST_CHEST",
+      "desc": "Unearthed your first buried strongbox.",
+      "id": "TH_FIRST_CHEST",
+      "reward": 100,
+      "title": "X Marks the Spot"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_TH_10_CHESTS",
+      "desc": "10 strongboxes unearthed across Vana'diel.",
+      "id": "TH_10_CHESTS",
+      "reward": 500,
+      "title": "Master Cartographer"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_LEAGUE_FIRST_TURNIN",
+      "desc": "Your first catch on the League scales.",
+      "id": "LEAGUE_FIRST_TURNIN",
+      "reward": 50,
+      "title": "First Weigh-In"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_LEAGUE_RANK3",
+      "desc": "Reached rank 3 of the Provisioners' League.",
+      "id": "LEAGUE_RANK3",
+      "reward": 300,
+      "title": "Expert Provisioner"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_LEAGUE_RANK5",
+      "desc": "The League's summit.  Rods bend and kilns roar at your name.",
+      "id": "LEAGUE_RANK5",
+      "reward": 2000,
+      "title": "Legendary Provisioner"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_RAID_FIRST_KILL",
+      "desc": "Felled the Star-Devourer for the first time.",
+      "id": "RAID_FIRST_KILL",
+      "reward": 500,
+      "title": "Star-Slayer"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_RAID_10_KILLS",
+      "desc": "10 Star-Devourer kills.  It fears YOU now.",
+      "id": "RAID_10_KILLS",
+      "reward": 1500,
+      "title": "Devourer of the Devourer"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_INV_FIRST_DEFENSE",
+      "desc": "Helped repel your first Voidsent invasion.",
+      "id": "INV_FIRST_DEFENSE",
+      "reward": 150,
+      "title": "Sanctuary Defender"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_INV_10_DEFENSES",
+      "desc": "10 successful invasion defenses.  The moogles sleep soundly.",
+      "id": "INV_10_DEFENSES",
+      "reward": 500,
+      "title": "Bulwark of the Sanctuary"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_INV_100_KILLS",
+      "desc": "100 Voidsent invaders cut down.",
+      "id": "INV_100_KILLS",
+      "reward": 300,
+      "title": "Voidsent Bane"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_COL_FIRST_WIN",
+      "desc": "Won your first Colosseum duel.",
+      "id": "COL_FIRST_WIN",
+      "reward": 100,
+      "title": "First Blood"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_COL_10_WINS",
+      "desc": "10 Colosseum victories.  The crowd knows your name.",
+      "id": "COL_10_WINS",
+      "reward": 300,
+      "title": "Arena Regular"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_COL_RATING_1400",
+      "desc": "Reached 1400 arena rating.",
+      "id": "COL_RATING_1400",
+      "reward": 500,
+      "title": "Contender"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_COL_RATING_1600",
+      "desc": "Reached 1600 arena rating.  The ladder bows.",
+      "id": "COL_RATING_1600",
+      "reward": 1500,
+      "title": "Arena Champion"
+    },
+    {
+      "announce": false,
+      "cv": "ACH_AUGMENT_NOVICE",
+      "desc": "5 lifetime augmentation trades.",
+      "id": "AUGMENT_NOVICE",
+      "reward": 75,
+      "title": "Augment Novice"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_AUGMENT_EXPERT",
+      "desc": "50 lifetime augmentation trades.",
+      "id": "AUGMENT_EXPERT",
+      "reward": 300,
+      "title": "Augment Expert"
+    },
+    {
+      "announce": true,
+      "cv": "ACH_AUGMENT_MASTER",
+      "desc": "200 lifetime augmentations.  Gear transformed by your hands.",
+      "id": "AUGMENT_MASTER",
+      "reward": 1000,
+      "title": "Augment Master"
+    }
+  ],
+  "capstones": [
+    {
+      "achievedCv": "Title_Trinity_Hunter",
+      "appliesTo": [
+        "af",
+        "relic",
+        "empy"
+      ],
+      "bonus": 0.25,
+      "key": "trinity",
+      "label": "Trinity Hunter",
+      "requires": [
+        "af",
+        "relic",
+        "empy"
+      ]
+    },
+    {
+      "achievedCv": "Title_Apex_Hunter",
+      "appliesTo": [
+        "af",
+        "relic",
+        "empy",
+        "hl"
+      ],
+      "bonus": 0.5,
+      "key": "apex",
+      "label": "Apex Hunter",
+      "requires": [
+        "af",
+        "relic",
+        "empy",
+        "hl"
+      ]
+    }
+  ],
+  "dungeons": [
+    {
+      "clearCv": "Dungeon_Clears_whispering_halls",
+      "id": "whispering_halls",
+      "infamyBase": 50,
+      "label": "The Outer Bastion"
+    },
+    {
+      "clearCv": "Dungeon_Clears_voidwalker_arena",
+      "id": "voidwalker_arena",
+      "infamyBase": 270,
+      "label": "The Voidwalker Arena"
+    },
+    {
+      "clearCv": "Dungeon_Clears_cloister_of_sorrow",
+      "id": "cloister_of_sorrow",
+      "infamyBase": 600,
+      "label": "The Empyreal Paradox"
+    },
+    {
+      "clearCv": "Dungeon_Clears_eternal_throne",
+      "id": "eternal_throne",
+      "infamyBase": 1400,
+      "label": "The Eternal Throne"
+    }
+  ],
+  "guild_ranks": [
+    {
+      "amplifier": 0.0,
+      "idx": 1,
+      "label": "Apprentice",
+      "minRep": 0
+    },
+    {
+      "amplifier": 0.1,
+      "idx": 2,
+      "label": "Journeyman",
+      "minRep": 500
+    },
+    {
+      "amplifier": 0.25,
+      "idx": 3,
+      "label": "Veteran",
+      "minRep": 5000
+    },
+    {
+      "amplifier": 0.5,
+      "idx": 4,
+      "label": "Master",
+      "minRep": 25000
+    },
+    {
+      "amplifier": 0.75,
+      "idx": 5,
+      "label": "Champion",
+      "minRep": 55000
+    },
+    {
+      "amplifier": 1.0,
+      "idx": 6,
+      "label": "Grandmaster",
+      "minRep": 100000
+    }
+  ],
+  "guilds": [
+    {
+      "isReforge": true,
+      "key": "af",
+      "label": "AF Hunters' Guild",
+      "lifetimeCv": "RF_AF_Marks_Lifetime",
+      "markType": "AF Marks",
+      "repCv": "Guild_AF_Rep"
+    },
+    {
+      "isReforge": true,
+      "key": "relic",
+      "label": "Relic Hunters' Guild",
+      "lifetimeCv": "RF_Relic_Marks_Lifetime",
+      "markType": "Relic Marks",
+      "repCv": "Guild_Relic_Rep"
+    },
+    {
+      "isReforge": true,
+      "key": "empy",
+      "label": "Empyrean Hunters' Guild",
+      "lifetimeCv": "RF_Empy_Marks_Lifetime",
+      "markType": "Empy Marks",
+      "repCv": "Guild_Empy_Rep"
+    },
+    {
+      "isReforge": false,
+      "key": "hl",
+      "label": "League Hunters' Guild",
+      "lifetimeCv": "HL_Points_Lifetime",
+      "markType": "Hunt Marks",
+      "repCv": "Guild_HL_Rep"
+    }
+  ],
+  "hnm": [
+    {
+      "name": "Fafnir",
+      "var": "[HNM]Fafnir",
+      "window": "21–24 h",
+      "zone": "Dragon's Aery"
+    },
+    {
+      "name": "Adamantoise",
+      "var": "[HNM]Adamantoise",
+      "window": "21–24 h",
+      "zone": "Valley of Sorrows"
+    },
+    {
+      "name": "Behemoth",
+      "var": "[HNM]Behemoth",
+      "window": "21–24 h",
+      "zone": "Behemoth's Dominion"
+    },
+    {
+      "name": "Spiny Spipi",
+      "var": "[HNM]Spiny Spipi",
+      "window": "4–6 h",
+      "zone": "East Sarutabaruta"
+    },
+    {
+      "name": "Roc",
+      "var": "[HNM]Roc",
+      "window": "6–8 h",
+      "zone": "Sauromugue Champaign"
+    },
+    {
+      "name": "Serket",
+      "var": "[HNM]Serket",
+      "window": "6–8 h",
+      "zone": "Garlaige Citadel"
+    },
+    {
+      "name": "Simurgh",
+      "var": "[HNM]Simurgh",
+      "window": "6–8 h",
+      "zone": "Rolanberry Fields"
+    },
+    {
+      "name": "King Arthro",
+      "var": "[HNM]King Arthro",
+      "window": "8–10 h",
+      "zone": "Jugner Forest"
+    }
+  ],
+  "seasonal_events": []
+}
