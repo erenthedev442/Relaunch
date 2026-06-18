@@ -72,3 +72,9 @@ UPDATE `augments` SET `value` = 1, `multiplier` = 2 WHERE `augmentId` = 138;  --
 UPDATE `augments` SET `value` =  1, `multiplier` = 2 WHERE `augmentId` = 49;   -- Haste       -> ~1..25% / piece
 UPDATE `augments` SET `value` =  1, `multiplier` = 2 WHERE `augmentId` = 111;  -- Pet: Haste  -> ~1..25% / piece
 UPDATE `augments` SET `value` = -1, `multiplier` = 2 WHERE `augmentId` = 50;   -- Slow (negative haste; display shows magnitude)
+
+-- ---- INDIVIDUAL WS DMG+ (augIds 1024-1058, one per named weaponskill) ----
+-- Original: value=1, mult=5 → per-slot 5..160, 5 slots = 25..800%
+-- New:      value=9, mult=1 → per-slot 9.. 40, 5 slots = 45..200%
+-- Cap reduced 800→200% so WS DMG augments are strong but not ludicrous.
+UPDATE `augments` SET `value` = 9, `multiplier` = 1 WHERE `augmentId` BETWEEN 1024 AND 1058;
