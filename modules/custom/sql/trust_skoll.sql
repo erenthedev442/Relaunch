@@ -162,7 +162,7 @@ VALUES
     ('skoll', 901, 420, 1, 255),   -- Victory March
     ('skoll', 901, 398, 1, 255),   -- Valor Minuet V
     ('skoll', 901, 399, 1, 255),   -- Sword Madrigal
-    ('skoll', 901, 470, 1, 255),   -- Sentinel's Scherzo  (4th song: party phys+magic damage-taken down)
+    ('skoll', 901, 401, 1, 255),   -- Hunter's Prelude  (4th song: party ranged accuracy)
     -- (Mage's Ballad III (388) removed -- it is an MP-refresh song; see section 4.)
     -- Elemental nukes for MAGIC BURST (gambit: MB_AVAILABLE -> MA / MB_ELEMENT in
     -- skoll.lua). MB_ELEMENT scans ONLY the single-target damage list (m_damage-
@@ -196,4 +196,4 @@ VALUES
 --   a no-op once they're gone.
 --     894 Refresh III, 388 Mage's Ballad III   -- MP buffs (owner wants none)
 --     844 Frazzle II, 884 Addle II, 216 Gravity -- removed from his rotation by request
-DELETE FROM mob_spell_lists WHERE spell_list_id = 901 AND spell_id IN (894, 388, 844, 884, 216, 842);
+DELETE FROM mob_spell_lists WHERE spell_list_id = 901 AND spell_id IN (894, 388, 844, 884, 216, 842, 470);
