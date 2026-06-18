@@ -185,7 +185,7 @@ auto CAutomatonController::GetCurrentManeuvers() const -> CurrentManeuvers
 
 auto CAutomatonController::DoCombatTick(timer::time_point tick) -> Task<void>
 {
-    if ((PAutomaton->PMaster == nullptr || PAutomaton->PMaster->isDead()) && PAutomaton->isAlive())
+    if (PAutomaton->PMaster == nullptr && PAutomaton->isAlive())
     {
         PAutomaton->Die();
         co_return;
