@@ -101,6 +101,14 @@ xi.pets.avatar.onMobSpawn = function(pet)
     pet:updateHealth()
     pet:setMP(pet:getMaxMP())
 
+    -- Legendary: scale Blood Pact damage to be competitive with endgame content.
+    -- BP_DAMAGE is a percentage bonus: (1 + bpBonus/100) × base damage.
+    -- 2500 base ≈ 26× multiplier; +4 per summoning-skill over-cap for progression value.
+    if master:getMainJob() == xi.job.SMN then
+        local skillOverCap = math.max(xi.summon.getSummoningSkillOverCap(pet), 0)
+        pet:addMod(xi.mod.BP_DAMAGE, 2500 + skillOverCap * 4)
+    end
+
     -- Add listener to player to fine-tune spirit pact cast delays in realtime
     master:addListener('TICK', 'SMN_SPIRIT_CAST_DELAY', function(masterArg)
         local petArg = masterArg:getPet()

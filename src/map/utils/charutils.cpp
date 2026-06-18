@@ -2208,6 +2208,16 @@ void UnequipItem(CCharEntity* PChar, uint8 equipSlotID, Recalculate recalculate)
         PChar->PLatentEffectContainer->DelLatentEffects(((CItemEquipment*)PItem)->getReqLvl(), equipSlotID);
         PChar->delPetModifiers(&((CItemEquipment*)PItem)->petModList);
 
+        // Legendary: re-run CalculateAvatarStats so AVATAR_LVL_BONUS (and
+        // any other spawn-time stat) immediately reflects the removed gear.
+        if (PChar->GetMJob() == JOB_SMN &&
+            PChar->PPet &&
+            PChar->PPet->objtype == TYPE_PET &&
+            static_cast<CPetEntity*>(PChar->PPet)->getPetType() == PET_TYPE::AVATAR)
+        {
+            petutils::CalculateAvatarStats(PChar, static_cast<CPetEntity*>(PChar->PPet));
+        }
+
         switch (equipSlotID)
         {
             case SLOT_HEAD:
@@ -3384,6 +3394,16 @@ void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 contai
                 PChar->PLatentEffectContainer->AddLatentEffects(PItem->latentList, PItem->getReqLvl(), equipSlotID);
                 PChar->PLatentEffectContainer->CheckLatentsEquip(equipSlotID);
                 PChar->addPetModifiers(&PItem->petModList);
+
+                // Legendary: re-run CalculateAvatarStats so AVATAR_LVL_BONUS (and
+                // any other spawn-time stat) immediately reflects the new gear.
+                if (PChar->GetMJob() == JOB_SMN &&
+                    PChar->PPet &&
+                    PChar->PPet->objtype == TYPE_PET &&
+                    static_cast<CPetEntity*>(PChar->PPet)->getPetType() == PET_TYPE::AVATAR)
+                {
+                    petutils::CalculateAvatarStats(PChar, static_cast<CPetEntity*>(PChar->PPet));
+                }
 
                 // Only call the lua onEquip if it's a valid equip - e.g. has passed EquipArmor and other checks above
                 luautils::OnItemEquip(PChar, PItem);
