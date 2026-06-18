@@ -39,6 +39,7 @@ set "SITELOG=D:\server\refresh-site.log"
 set "LOG=%SRC%\deploy-everything.log"
 set "SRVOK=skipped"
 set "SITEOK=skipped"
+set "SYNCOK=skipped"
 
 (echo === Deploy Everything run started %DATE% %TIME% ===)> "%LOG%"
 
@@ -186,18 +187,55 @@ findstr /c:"refresh_site DONE" "%OUT%" >nul
 if errorlevel 1 ( echo        WARNING: box publish not confirmed - check output above.& set "SITEOK=PROBLEM" ) else ( echo        website published from box.& set "SITEOK=OK" )
 (echo [%TIME%] [5/5] box publish done - SITEOK=%SITEOK%)>> "%LOG%"
 
+REM ---- 6. Sync local test DB from the freshly-deployed Azure server ----
+REM   Overwrites local xidb so the laptop test server matches live exactly.
+REM   Requires the local test server to be stopped (kill-servers.bat) to
+REM   avoid in-use table locks on import.
+echo(
+echo  [6/6] Syncing local test DB from Azure (overwrites local xidb)...
+(echo [%TIME%] [6/6] DB sync: start)>> "%LOG%"
+set "DBDUMP=%TEMP%\xidb_sync.sql"
+set "MYSQLEXE=C:\Program Files\MariaDB 10.6\bin\mysql.exe"
+ssh -i "%KEY%" %SSHOPT% %HOST% "mysqldump --single-transaction -u xiuser -pwarrior3 xidb > /tmp/xidb_sync.sql && echo dump-OK" > "%OUT%" 2>&1
+findstr /c:"dump-OK" "%OUT%" >nul
+if errorlevel 1 (
+    echo        ERROR: Azure DB dump failed -- local DB not synced. Check %LOG%.
+    set "SYNCOK=DUMP FAILED"
+    goto :finish
+)
+echo        Downloading dump to laptop...
+scp -i "%KEY%" %SSHOPT% "%HOST%:/tmp/xidb_sync.sql" "%DBDUMP%" >> "%LOG%" 2>&1
+if errorlevel 1 (
+    echo        ERROR: SCP download failed -- local DB not synced.
+    set "SYNCOK=DOWNLOAD FAILED"
+    goto :finish
+)
+echo        Restoring into local xidb...
+"%MYSQLEXE%" -u root -pwarrior3 xidb < "%DBDUMP%" >> "%LOG%" 2>&1
+if errorlevel 1 (
+    echo        ERROR: Local DB restore failed -- xidb may be partially restored.
+    set "SYNCOK=RESTORE FAILED"
+) else (
+    echo        Local test DB synced from live.
+    set "SYNCOK=OK"
+)
+del "%DBDUMP%" 2>nul
+ssh -i "%KEY%" %SSHOPT% %HOST% "rm -f /tmp/xidb_sync.sql" >> "%LOG%" 2>&1
+(echo [%TIME%] [6/6] DB sync done - SYNCOK=%SYNCOK%)>> "%LOG%"
+
 :finish
 echo(
 echo   ===========================================================
 echo   Deploy Everything finished.
 echo     Website:  %SITEOK%
 echo     Server:   %SRVOK%
+echo     DB Sync:  %SYNCOK%
 echo   Full log:   %LOG%
 echo   Server rollback if needed: "Azure - Connect.bat" -^> restore
 echo   newest ~/predeploy-*.tgz -^> "Azure - Restart Map.bat".
 echo   ===========================================================
-(echo [%TIME%] DONE - website=%SITEOK% server=%SRVOK%)>> "%LOG%"
-powershell -NoProfile -Command "Add-Type -AssemblyName System.Windows.Forms; [void][System.Windows.Forms.MessageBox]::Show('Deploy Everything finished.'+[Environment]::NewLine+'Website: %SITEOK%'+[Environment]::NewLine+'Server: %SRVOK%'+[Environment]::NewLine+[Environment]::NewLine+'Full log: %LOG%','Legendary - Deploy Everything')" >nul 2>&1
+(echo [%TIME%] DONE - website=%SITEOK% server=%SRVOK% sync=%SYNCOK%)>> "%LOG%"
+powershell -NoProfile -Command "Add-Type -AssemblyName System.Windows.Forms; [void][System.Windows.Forms.MessageBox]::Show('Deploy Everything finished.'+[Environment]::NewLine+'Website: %SITEOK%'+[Environment]::NewLine+'Server: %SRVOK%'+[Environment]::NewLine+'DB Sync: %SYNCOK%'+[Environment]::NewLine+[Environment]::NewLine+'Full log: %LOG%','Legendary - Deploy Everything')" >nul 2>&1
 
 :end
 echo(
