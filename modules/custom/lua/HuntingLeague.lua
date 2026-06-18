@@ -852,6 +852,14 @@ local function insertSpawnerNPC(zone)
                         mob:setHP(newMax)
                     end
 
+                    -- Spawn the NM already aggroed onto the player who popped it,
+                    -- so it engages immediately instead of idling at the pop point
+                    -- (same pattern as the Abyssea marks pop). Claims it for the
+                    -- spawner; the resulting onMobEngage also clears the un-engaged
+                    -- despawn timer set above.
+                    mob:updateClaim(playerArg)
+                    mob:updateEnmity(playerArg)
+
                     playerArg:printToPlayer(
                         string.format('%s has appeared!  Slay it for %d %s, kupo!',
                             md.label, md.points, catalog.currencyName),
