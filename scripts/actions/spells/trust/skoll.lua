@@ -25,7 +25,7 @@
 --   Shellra V, Haste II, Phalanx II, Regen V, self-Aquaveil
 --
 -- Bard songs (party AoE, sung on self -- FULL power via a granted Singing skill):
---   Victory March, Valor Minuet V, Sword Madrigal, Hunter's Prelude
+--   Victory March, Valor Minuet V, Sword Madrigal + Blade Madrigal (double accuracy)
 --
 -- Corsair rolls (party):
 --   Chaos (Attack), Rogue's (Crit rate), Allies' (Skillchain dmg),
@@ -309,13 +309,14 @@ spellObject.onMobSpawn = function(mob)
     -- 901 (trust_skoll.sql) or its gambit is silently dropped at load; rolls are
     -- JAs and are NOT spell-list gated. COR main job => full-power rolls.
     -- =====================================================
-    -- 4 Bard songs (3 offense + Hunter's Prelude for ranged accuracy)
-    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.MARCH    }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.VICTORY_MARCH   })
-    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.MINUET   }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.VALOR_MINUET_V  })
-    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.MADRIGAL }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.SWORD_MADRIGAL  })
-    -- Hunter's Prelude -> party ranged accuracy. PRELUDE effect stacks with the
-    -- three above (each song occupies its own status slot).
-    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.PRELUDE  }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.HUNTERS_PRELUDE })
+    -- 4 Bard songs (March + Minuet + double Madrigal for maximum accuracy)
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.MARCH    }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.VICTORY_MARCH  })
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.MINUET   }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.VALOR_MINUET_V })
+    mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.MADRIGAL }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.SWORD_MADRIGAL })
+    -- Blade Madrigal: second accuracy layer. Condition STATUS MADRIGAL fires as
+    -- soon as Sword Madrigal lands, then the 220s retry_delay keeps recasting
+    -- before the ~240s (doubled) duration expires -- maintaining double madrigal.
+    mob:addGambit(ai.t.SELF, { ai.c.STATUS,     xi.effect.MADRIGAL }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.BLADE_MADRIGAL }, 220)
     -- 4 Corsair rolls (recast each only when it wears off):
     --   Chaos (Attack) / Rogue's (Crit rate) / Allies' (Skillchain dmg) /
     --   Wizard's (Magic Attack Bonus). Allies' and Wizard's both feed Skoll's
