@@ -19,6 +19,9 @@ Legendary is a private FFXI server built around one idea: the grind should be *f
 !!! tip "New Player? Start here."
     Don't know where to begin? The **[Getting Started guide](getting-started/index.md)** walks you through installing the client, connecting to the server, and taking your first steps — in about 20 minutes.
 
+!!! note "Already playing? See what's new"
+    The **[Changelog](changelog.md)** lists every recent update and balance change, newest first, grouped by week.
+
 ---
 
 ## What makes Legendary different
@@ -136,4 +139,4 @@ See where you rank across the server — most augments crafted, top hunters, fas
 
 ---
 
-*Think this sounds good? [Get started now.](getting-started/index.md) Or read [What's Custom](changes/index.md) for the full breakdown of every change.*
+*Think this sounds good? [Get started now.](getting-started/index.md) Or read [What's Custom](changes/index.md) for the full breakdown — and check the [Changelog](changelog.md) for the latest updates.*
