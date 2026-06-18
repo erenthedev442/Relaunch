@@ -47,6 +47,7 @@ local BANK_JOB_VAR = 'SubExpBankJob'
 -- level. Update this if exp_base is ever retuned. No level-99 entry: the
 -- sub is hard-capped at the main's level (<= 99) before it could be used.
 local EXP_TO_NEXT = {
+    [0]=0,
     [1]=500,    [2]=750,    [3]=1000,   [4]=1250,   [5]=1500,
     [6]=1750,   [7]=2000,   [8]=2200,   [9]=2400,   [10]=2600,
     [11]=2800,  [12]=3000,  [13]=3200,  [14]=3400,  [15]=3600,
