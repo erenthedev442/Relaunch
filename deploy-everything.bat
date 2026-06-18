@@ -82,8 +82,12 @@ echo  [1/5] Re-scoring ALL gear catalogs from live data (the site publishes from
 (echo [%TIME%] [1/5] re-score: start)>> "%LOG%"
 if not exist "%SITE_BAT%" ( echo        ERROR: re-score script not found - aborting.& set "SITEOK=MISSING"& goto :finish )
 set "LEGENDARY_AUTO_PUBLISH=1"
+REM Skip the laptop's Cloudflare publish -- the box publishes from the LIVE db in step [5/5].
+REM (refresh-site.bat gates its step [4/4] on this flag; the re-score + local build still run.)
+set "LEGENDARY_SKIP_PUBLISH=1"
 call "%SITE_BAT%"
 set "LEGENDARY_AUTO_PUBLISH="
+set "LEGENDARY_SKIP_PUBLISH="
 set "SITEOK=rescored; box publish pending"
 (echo [%TIME%] [1/5] re-score returned)>> "%LOG%"
 
