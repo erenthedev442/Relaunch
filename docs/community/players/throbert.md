@@ -1,6 +1,6 @@
 # Throbert
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-16 · Character age 2d 10h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-16 · Character age 3d 6h
 
 `💪 5 jobs @99`
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9732efef82f3 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: 61c19b8d5c3a -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

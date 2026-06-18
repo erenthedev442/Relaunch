@@ -1,6 +1,6 @@
 # Mdz
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-17 · Character age 1d 15h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-17 · Character age 2d 10h
 
 `💪 2 jobs @99`
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4cbf6e4406e7 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: acc098314758 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

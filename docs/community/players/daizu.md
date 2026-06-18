@@ -1,6 +1,6 @@
 # Daizu
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 18h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 13h
 
 `💪 6 jobs @99`
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 00f845cff775 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: 1366cb2d4c28 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Hooza
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 2d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 2d 22h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 47/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0420cd99afb6 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: 1388b24184e6 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

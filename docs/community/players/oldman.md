@@ -1,6 +1,6 @@
 # Oldman
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 1d 11h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 2d 6h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b6743270f9bb -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: 34748e32def4 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

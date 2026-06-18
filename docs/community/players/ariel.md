@@ -1,6 +1,6 @@
 # Ariel
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 3d 18h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 4d 13h
 
 `💪 2 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3b100b7f0df1 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: 27a419f82917 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

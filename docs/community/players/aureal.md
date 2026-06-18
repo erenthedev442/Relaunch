@@ -1,6 +1,6 @@
 # Aureal
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 22h 24m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 17h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 18/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 400b1f95e494 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: fa5eeecb3ff3 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

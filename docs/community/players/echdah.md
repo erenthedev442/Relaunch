@@ -1,6 +1,6 @@
 # Echdah
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 18h
 
 `💪 6 jobs @99`
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 91efb945a0e6 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: 6d18b05a7d33 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

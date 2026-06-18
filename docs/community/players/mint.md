@@ -1,6 +1,6 @@
 # Mint
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 3d 3h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 3d 22h
 
 `💪 1 job @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 765a665245f5 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: a07cba4436a8 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

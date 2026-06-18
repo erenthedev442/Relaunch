@@ -1,6 +1,6 @@
 # Ella
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-14 · Character age 3d 8h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-14 · Character age 4d 3h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 9/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b66598e339f3 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: c72fe0d7b105 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

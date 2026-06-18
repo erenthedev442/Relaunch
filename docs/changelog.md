@@ -4,7 +4,25 @@ Recent changes to Legendary. Updated automatically from our development history.
 
 ---
 
-!!! note "Wednesday · June 17, 2026"
+!!! note "Thursday · June 18, 2026"
+    - fix(pup): automaton survives master death (retail behavior)
+    - feat(deploy): sync local test DB from Azure at end of deploy-everything
+    - fix(augments): apply the 5th augment slot on inventory load
+    - fix(items): grant Geomancy/Handbell skill on all-magic-skills gear
+    - fix(augments): reduce individual WS DMG+ cap 800%â†’200%
+    - feat(augments): cap Gilfinder augment at +4/slot (20 total max)
+
+??? note "Wednesday · June 17, 2026"
+    - feat(battleutils): uncap skillchain damage for PC attackers
+    - fix(trust): replace Hunter's Prelude with double madrigal on Gemma
+    - fix(trust): replace Gemma's Sentinel's Scherzo with Hunter's Prelude
+    - fix(combat): exclude the 8 Abyssea marks-pop zones from level correction
+    - feat(ascension): despawn trial NM on player KO
+    - fix(items): add missing mods for Spaekonas Gloves +4 (23988)
+    - fix(battleutils): use MESSAGE_SYSTEM_1 for over-cap damage notification
+    - feat(smn): boost avatar BP damage and fix gear-swap stat refresh
+    - feat(tools): list_char_augments.py -- decode any char's augmented items
+    - fix(casino): close 30ms double-bet exploit at Lady Luck
     - feat(mystats): show pet level + stats for all 4 pet jobs (was PUP-only)
     - docs: refresh from live server (first full docgen run on Legendary, 62/62 generators)
     - fix(docgen): changelog uses dt.day not %-d (Windows-compatible)
@@ -1042,6 +1060,6 @@ Recent changes to Legendary. Updated automatically from our development history.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bcef94d46c76 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: fcae2811c893 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

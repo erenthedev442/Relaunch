@@ -1,6 +1,6 @@
 # Aspencer
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-14 · Character age 4d 10h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-14 · Character age 5d 6h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 82/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a10729789661 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: efa8d69a029f -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

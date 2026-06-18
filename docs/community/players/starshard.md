@@ -1,6 +1,6 @@
 # Starshard
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 1d 17h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 2d 12h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 02e4e8d1f74b -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: f355b986ed19 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

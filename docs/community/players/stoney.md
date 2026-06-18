@@ -1,6 +1,6 @@
 # Stoney
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 5d 12h
 
 `⭐ 6 Ascensions` `💪 8 jobs @99`
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1d66acb85893 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: 7f8274f17ff0 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

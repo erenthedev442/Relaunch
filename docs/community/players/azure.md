@@ -1,6 +1,6 @@
 # Azure
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-16 · Character age 4d 9h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-16 · Character age 5d 4h
 
 `💪 7 jobs @99`
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9839af808a8f -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: c9874b6aff54 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

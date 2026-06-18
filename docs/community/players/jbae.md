@@ -1,6 +1,6 @@
 # Jbae
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-18 · Character age 24d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-18 · Character age 24d 23h
 
 `⭐ 106 Ascensions` `💪 17 jobs @99`
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7a19ed34b620 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: f875fb942a2b -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

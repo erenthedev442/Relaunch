@@ -1,6 +1,6 @@
 # Bard
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 2d 3h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 2d 23h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 69/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ec049f23bdd8 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: c18547532bec -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Metz
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 1d 4h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 1d 23h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0ecc55914176 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: 5e2b2a890cf7 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

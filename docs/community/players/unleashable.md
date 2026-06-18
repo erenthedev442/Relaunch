@@ -1,6 +1,6 @@
 # Unleashable
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 22h 41m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 1d 17h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 51/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7fff0c55c129 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: d82a46639717 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

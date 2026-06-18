@@ -1,6 +1,6 @@
 # Prale
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-17 · Character age 1d 14h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-17 · Character age 2d 9h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 79/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 157c9adaced9 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: 920a60be6d91 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->

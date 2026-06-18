@@ -1,6 +1,6 @@
 # Granae
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-17 · Character age 1d 18h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-17 · Character age 2d 13h
 
 `💪 2 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a6d56b41d176 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: 332d323a1ee6 -->
+_Last updated: 2026-06-18 20:56 UTC_
 <!-- DOCGEN:END id="last-updated" -->
