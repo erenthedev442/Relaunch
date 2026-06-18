@@ -176,6 +176,16 @@ findstr /c:"xi_map=active" "%OUT%" >nul
 if errorlevel 1 ( echo        WARNING: xi_map not confirmed active - check health output above.& set "SRVOK=PROBLEM" ) else if defined BUILDFAIL ( echo        ERROR: C++ REBUILD FAILED -- new binary NOT live; xi_map still up on the OLD binary. Fix the build + re-deploy.& set "SRVOK=BUILD FAILED" ) else ( echo        server live.& set "SRVOK=OK" )
 (echo [%TIME%] [4/5] rebuild+restart done - SRVOK=%SRVOK%)>> "%LOG%"
 
+REM ---- 4c. Ship the freshly-generated changelog to the box's docs checkout.
+REM          The box CANNOT regenerate changelog.md -- its ~/server has no .git, so
+REM          changelog.py skips there. Step [1] regenerated it on the laptop from the
+REM          real git deploy-history; scp it into ~/legendary-docs so step [5]'s box
+REM          publish picks it up. Server-safe: copies one doc file, never touches xi_map.
+echo(
+echo  [4c] Shipping the changelog to the box docs site...
+scp -i "%KEY%" %SSHOPT% "%SRC%\docs\changelog.md" %HOST%:/home/azureuser/legendary-docs/docs/changelog.md >> "%LOG%" 2>&1
+if errorlevel 1 ( echo        WARNING: changelog scp failed - site keeps the previous changelog.& (echo [%TIME%] [4c] changelog scp FAILED)>> "%LOG%" ) else ( echo        changelog shipped to box.& (echo [%TIME%] [4c] changelog scp OK)>> "%LOG%" )
+
 REM ---- 5. PUBLISH the website FROM THE BOX (reads the LIVE db, so the
 REM         freshly-shipped catalogs + correct player data go live). This
 REM         replaces the retired laptop Cloudflare deploy. ----
