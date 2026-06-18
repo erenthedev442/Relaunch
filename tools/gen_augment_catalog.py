@@ -579,12 +579,28 @@ _override_re = re.compile(
     r"`?multiplier`?\s*=\s*(\d+)\s+WHERE\s+`?augmentId`?\s*=\s*(\d+)",
     re.IGNORECASE)
 
+# A RANGE override (`WHERE augmentId BETWEEN lo AND hi`) applies the same
+# value/multiplier to EVERY augId in [lo, hi]. The single-id regex above
+# silently skipped these, so a BETWEEN rebalance (e.g. the WS DMG augs
+# 1024-1058: value=9/mult=1 -> 200%) never reached the catalog and the docs
+# reverted to the stock value (1/5 -> 800%). Match it too.
+_override_between_re = re.compile(
+    r"UPDATE\s+`?augments`?\s+SET\s+`?value`?\s*=\s*(-?\d+)\s*,\s*"
+    r"`?multiplier`?\s*=\s*(\d+)\s+WHERE\s+`?augmentId`?\s+BETWEEN\s+(\d+)\s+AND\s+(\d+)",
+    re.IGNORECASE)
+
 
 def parse_override() -> dict:
     out: dict = {}
     if not OVERRIDE_SQL.exists():
         return out
     for line in OVERRIDE_SQL.read_text(encoding="utf-8").splitlines():
+        mb = _override_between_re.search(line)
+        if mb:
+            value, mult, lo, hi = (int(g) for g in mb.groups())
+            for aug_id in range(lo, hi + 1):
+                out[aug_id] = (value, mult)
+            continue
         m = _override_re.search(line)
         if m:
             value, mult, aug_id = int(m.group(1)), int(m.group(2)), int(m.group(3))
