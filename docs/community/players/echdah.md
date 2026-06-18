@@ -1,6 +1,6 @@
 # Echdah
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 15h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 22h
 
 `💪 6 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | SCH 99 |
-| Time played | 21h |
-| Enemies defeated | 4,517 |
-| Deaths | 22 |
+| Time played | 23h |
+| Enemies defeated | 5,682 |
+| Deaths | 23 |
 
 ## Job levels
 
@@ -36,22 +36,22 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 10
-- **Marks (lifetime):** 2,779
+- **Marks (current):** 923
+- **Marks (lifetime):** 2,992
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 161
+- **Total NM kills:** 180
 
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 52
-- **NM Affinities:** 0 / 13
+- **Augments crafted:** 127
+- **NM Affinities:** 1 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 815 | 2,915 |
+| AF | 65 | 5,315 |
 | Relic | 1,300 | 0 |
 | Empyrean | 110 | 4,160 |
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ff2cfe203904 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: b31d460e0d73 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

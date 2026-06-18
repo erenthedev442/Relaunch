@@ -1,6 +1,6 @@
 # Chausie
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-16 · Character age 2d 13h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 2d 20h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 76/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 01d00d5f4202 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 74cac6693bfc -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

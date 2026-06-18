@@ -1,6 +1,6 @@
 # Brogurt
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-16 · Character age 4d 3h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 10h
 
 `⭐ 6 Ascensions` `💪 9 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BLU 99** |
 | Sub job | RUN 99 |
-| Time played | 40h |
-| Enemies defeated | 2,364 |
-| Deaths | 33 |
+| Time played | 42h |
+| Enemies defeated | 2,708 |
+| Deaths | 34 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,568
-- **Marks (lifetime):** 1,067
+- **Marks (current):** 630
+- **Marks (lifetime):** 1,921
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 173
+- **Total NM kills:** 186
 
 ## Augment Sage
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ec703c1a5982 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 88ac5b3c6d60 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

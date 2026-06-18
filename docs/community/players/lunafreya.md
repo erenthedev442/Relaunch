@@ -1,6 +1,6 @@
 # Lunafreya
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-15 · Character age 2d 18h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-15 · Character age 3d 1h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 2/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 751ee14dbdeb -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 9aa9679db03e -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

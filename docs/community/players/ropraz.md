@@ -1,6 +1,6 @@
 # Ropraz
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 13h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 3d 20h
 
 `⭐ 13 Ascensions` `💪 6 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 34,035
+- **Marks (current):** 34,685
 - **Marks (lifetime):** 1,840
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 275
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 818eab7a926c -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: e2915642bbfb -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

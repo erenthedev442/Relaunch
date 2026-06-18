@@ -1,18 +1,18 @@
 # Jin
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 1d 3h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-17 · Character age 1d 10h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 56/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RUN 1** |
-| Sub job | DNC 1 |
-| Time played | 0h |
-| Enemies defeated | 1 |
+| Main job | **RUN 56** |
+| Sub job | DNC 40 |
+| Time played | 2h |
+| Enemies defeated | 79 |
 | Deaths | 0 |
 
 ## Job levels
@@ -26,15 +26,15 @@
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| DRK | 1 | DNC | 40 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| RNG | 1 | RUN | 56 |
 
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 1,050
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -42,7 +42,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Augments crafted:** 5
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -55,7 +55,11 @@
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
+
+## Achievements
+
+**1** unlocked — Augment Novice.
 
 ## Speed records
 
@@ -68,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e8689573c3b6 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 7cf0a9915468 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

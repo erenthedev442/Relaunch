@@ -1,6 +1,6 @@
 # Kikkyo
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-17 · Character age 20h 43m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-17 · Character age 1d 3h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 10/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fc84d3a168ca -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 76289e86349b -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

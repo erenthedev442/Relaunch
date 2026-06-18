@@ -1,6 +1,6 @@
 # Senta
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 2d 1h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 2d 8h
 
 `💪 2 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | NIN 99 |
-| Time played | 7h |
-| Enemies defeated | 264 |
-| Deaths | 4 |
+| Time played | 8h |
+| Enemies defeated | 310 |
+| Deaths | 5 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 855
+- **Marks (current):** 930
 - **Marks (lifetime):** 15
 - **Distinct NMs slain:** 3
 - **Total NM kills:** 3
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 4
+- **Augments crafted:** 8
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**1** unlocked — First Hunt.
+**2** unlocked — First Hunt · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 153b4a40cdae -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: b6e749cc40ab -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

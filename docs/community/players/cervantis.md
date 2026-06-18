@@ -1,8 +1,8 @@
 # Cervantis
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 10h
 
-`⭐ 4 Ascensions` `💪 4 jobs @99`
+`⭐ 6 Ascensions` `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **SAM 99** |
+| Main job | **DRK 99** |
 | Sub job | WAR 99 |
-| Time played | 28h |
-| Enemies defeated | 2,916 |
-| Deaths | 45 |
+| Time played | 33h |
+| Enemies defeated | 3,335 |
+| Deaths | 52 |
 
 ## Job levels
 
@@ -28,7 +28,7 @@
 | RDM | 1 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 62 | DNC | 1 |
+| **DRK** | **99** | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,29 +36,29 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,921
-- **Marks (lifetime):** 747
-- **Distinct NMs slain:** 13
-- **Total NM kills:** 64
+- **Marks (current):** 12,919
+- **Marks (lifetime):** 1,207
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 106
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 48
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 64
 - **NM Affinities:** 2 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 2,965 | 65 |
+| AF | 1,465 | 1,565 |
+| Relic | 1,290 | 840 |
+| Empyrean | 5 | 2,355 |
 
 ## Prestige
 
-- **Total Ascensions:** 4
-- **Per-job prestige:** SAM P4
+- **Total Ascensions:** 6
+- **Per-job prestige:** SAM P6
 
 ## Collections
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · First Ascension · Sanctuary Defender · Augment Novice.
+**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Sanctuary Defender · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e2bd146846ca -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 5e550294497d -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Mbetam
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-16 · Character age 1d 22h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-16 · Character age 2d 5h
 
 `💪 1 job @99`
 
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 404e08502397 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 57c824bc6be9 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

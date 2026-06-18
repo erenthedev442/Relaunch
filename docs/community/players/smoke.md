@@ -1,6 +1,6 @@
 # Smoke
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 2d 2h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 2d 9h
 
 `💪 1 job @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **COR 99** |
-| Sub job | NIN 73 |
-| Time played | 11h |
-| Enemies defeated | 309 |
+| Sub job | NIN 75 |
+| Time played | 15h |
+| Enemies defeated | 330 |
 | Deaths | 4 |
 
 ## Job levels
@@ -22,7 +22,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 73 |
+| MNK | 1 | NIN | 75 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 1,115
-- **Marks (lifetime):** 15
+- **Marks (current):** 622
+- **Marks (lifetime):** 115
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 3
+- **Total NM kills:** 24
 
 ## Augment Sage
 
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 0 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 25 | 25 |
 
 ## Collections
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**1** unlocked — First Hunt.
+**2** unlocked — First Hunt · Ten Hunts In.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 15d9d76a05ab -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: f8200838379f -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

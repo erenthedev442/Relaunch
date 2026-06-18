@@ -131,11 +131,11 @@ The reward shop is organized into 4 categories — 50 purchasable entries in all
 4. **Start Rank I - Initiate.** Pop any of the three NMs from the Spawner: Leaping Lizzy, Valkurm Emperor, Tom Tit Tat. Each kill pays **5 Hunt Marks**. Grind until you have **50 Hunt Marks** to unlock Rank II — talk to the Seals NPC to advance.
 5. **Pick up Weekly Hunt objectives.** Visit the Weekly Hunt Board at GM Home (`!gmhome`) or type `!weekly` for a status check. Five random objectives roll fresh each Monday. Sweeping all 5 objectives in a single week pays a **5,000 Hunt Marks** meta-bonus on top of the per-objective rewards. Completing these adds a big mark income boost alongside your regular NM grind.
 6. **Push through Rank II - Hunter and Rank III - Elite.** Rank II unlocks at **50 Hunt Marks** spent; each kill pays **12 Hunt Marks** (Roc, Bomb Queen, Aquarius). Rank III unlocks at **150 Hunt Marks** — kills pay **22 Hunt Marks** (Serket, Vrtra, Simurgh). Use accumulated marks to buy core BiS accessories: Brutal Earring, Epona’s Ring, Rajas Ring, Suppanomimi, etc.
-7. **Try your first Dungeon — The Outer Bastion.** Talk to the Dungeon Master NPC at GM Home (`!gmhome`). Clear the boss (Lv 135 boss) for **50 Infamy** — a new currency spent at the Infamy Vendor for BiS gear unavailable through the Hunt Mark shop. Type `!dungeon` to check your progress mid-run.
+7. **Try your first Dungeon at GM Home.** Talk to the Dungeon Master NPC. Clearing the boss earns Infamy — a separate currency for BiS gear at the Infamy Vendor. Type `!dungeon` for mid-run status.
 8. **Try Game Master wave challenges at GM Home.** Talk to the Game Master NPC (`!gmhome`). Start with **Easy** difficulty: 3 waves, 1 mob per wave, manageable for a geared solo player. Full clear pays **50 Hunt Marks**. Harder difficulties (Normal / Hard / Insane) pay progressively more marks and unlock tougher wave pools.
 9. **Unlock Rank IV - Champion and Rank V - Legend.** Rank IV costs **350 Hunt Marks** total spent; kills pay **38 Hunt Marks** (Nidhogg, King Behemoth, Kirin). Rank V costs **700 Hunt Marks** total spent — endgame kills pay **65 Hunt Marks** (Absolute Virtue, Pandemonium Warden, Shinryu). Rank V is the gear-check wall. Bring a party.
 10. **Start the Reforge track.** Farm Sky Gods, Unity NMs, and Abyssea NMs for AF Marks, Relic Marks, and Empy Marks. These currencies feed the Reforge system to upgrade your AF/Relic/Empy armor to +1 / +2 / +3 tiers. Type `!huntrank` to check your current Hunting League rank and overall progress.
-11. **Augment your gear.** Visit the Augment Moogle at GM Home (`!gmhome`) to add random stats to equipment. For passive endgame bonuses, earn enough Infamy to unlock the **Augment Sage** — requires clearing the apex dungeon (**The Eternal Throne**, 1400 Infamy base reward). The Sage applies permanent stat bonuses outside the normal augment RNG.
+11. **Augment your gear.** Visit the Augment Moogle at GM Home (`!gmhome`) for random stat additions. The Augment Sage (unlocked via Infamy) provides passive endgame stat bonuses.
 <!-- DOCGEN:END id="progression-order" -->
 
 ## Where retail content still matters
@@ -162,6 +162,6 @@ The Hunting League is the main game now, but retail content still has a role:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1efdef6f3ea8 -->
-_Last updated: 2026-06-16 22:53 UTC_
+<!-- content-hash: b4a8eb59761d -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

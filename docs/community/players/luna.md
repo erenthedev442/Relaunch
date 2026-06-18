@@ -1,6 +1,6 @@
 # Luna
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-16 · Character age 4d 7h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 14h
 
 `💪 2 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | RDM 99 |
-| Time played | 19h |
+| Time played | 22h |
 | Enemies defeated | 43 |
-| Deaths | 12 |
+| Deaths | 13 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 35,812
-- **Marks (lifetime):** 642
+- **Marks (current):** 37,989
+- **Marks (lifetime):** 1,126
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 29
+- **Total NM kills:** 37
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Star-Slayer · Sanctuary Defender · Augment Novice.
+**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Star-Slayer · Sanctuary Defender · Augment Novice.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 449257630964 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 4d73b6958c7b -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

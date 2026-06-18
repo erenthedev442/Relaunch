@@ -2,7 +2,7 @@
 
 _Spells are sorted by ID._
 
-**Spells in this category:** 112
+**Spells in this category:** 113
 
 | ID | Name | Skill | Element | MP | Cast | Recast | Jobs |
 |---:|---|---|---|---:|---:|---:|---|
@@ -54,7 +54,7 @@ _Spells are sorted by ID._
 | 414 | Warding Round | Singing | Light | — | 8.0s | 24.0s | BRD 73 |
 | 415 | Goblin Gavotte | Singing | Fire | — | 8.0s | 24.0s | BRD 49 |
 | 416 | Cactuar Fugue | Singing | Ice | — | 8.0s | 24.0s | — |
-| 417 | Moogle Rhapsody | Singing | Light | — | 8.0s | 24.0s | — |
+| 417 | Honor March | Singing | Thunder | — | 8.0s | 24.0s | BRD 29 |
 | 418 | Protected Aria | Singing | Light | — | 8.0s | 24.0s | — |
 | 419 | Advancing March | Singing | Thunder | — | 8.0s | 24.0s | BRD 29 |
 | 420 | Victory March | Singing | Thunder | — | 8.0s | 24.0s | BRD 60 |
@@ -118,10 +118,11 @@ _Spells are sorted by ID._
 | 876 | Water Threnody II | Singing | Thunder | — | 2.0s | 24.0s | — |
 | 877 | Light Threnody II | Singing | Dark | — | 2.0s | 24.0s | — |
 | 878 | Dark Threnody II | Singing | Light | — | 2.0s | 24.0s | — |
+| 1000 | Aria Of Passion | Singing | None | — | 8.0s | 24.0s | BRD 99 |
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 09fc93775513 -->
-_Last updated: 2026-06-12 23:32 UTC_
+<!-- content-hash: 5e5b8fdff81c -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

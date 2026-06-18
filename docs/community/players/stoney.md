@@ -1,8 +1,8 @@
 # Stoney
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 16h
 
-`⭐ 2 Ascensions` `💪 7 jobs @99`
+`⭐ 6 Ascensions` `💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | THF 99 |
-| Time played | 49h |
-| Enemies defeated | 5,122 |
+| Time played | 51h |
+| Enemies defeated | 5,472 |
 | Deaths | 7 |
 
 ## Job levels
@@ -24,7 +24,7 @@
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
+| **BLM** | **99** | SMN | 1 |
 | RDM | 1 | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | PLD | 94 | PUP | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 11,320
+- **Marks (current):** 2,320
 - **Marks (lifetime):** 4,314
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 231
@@ -47,7 +47,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Veteran | 5,000 | 20,000 to Master |
+| AF Hunters' Guild | Veteran | 6,000 | 19,000 to Master |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | League Hunters' Guild | Veteran | 5,500 | 19,500 to Master |
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 2
-- **Per-job prestige:** MNK P2
+- **Total Ascensions:** 6
+- **Per-job prestige:** MNK P6
 
 ## Collections
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: adbffc259c0b -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 1d66acb85893 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Sora
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 3d 8h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 3d 15h
 
 `💪 1 job @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fbf727761e92 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: c049c0b7d67d -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

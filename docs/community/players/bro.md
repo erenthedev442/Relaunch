@@ -1,8 +1,8 @@
 # Bro
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 11h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 18h
 
-`💪 22 jobs @99`
+`⭐ 7 Ascensions` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **WHM 99** |
+| Main job | **BLU 99** |
 | Sub job | NIN 99 |
-| Time played | 62h |
-| Enemies defeated | 1,922 |
-| Deaths | 43 |
+| Time played | 69h |
+| Enemies defeated | 1,964 |
+| Deaths | 44 |
 
 ## Job levels
 
@@ -36,24 +36,29 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,532
-- **Marks (lifetime):** 2,164
+- **Marks (current):** 6,264
+- **Marks (lifetime):** 4,949
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 84
+- **Total NM kills:** 113
 
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 163
-- **NM Affinities:** 2 / 13
+- **Augments crafted:** 189
+- **NM Affinities:** 3 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 0 | 0 |
-| Relic | 0 | 0 |
+| Relic | 1,500 | 0 |
 | Empyrean | 0 | 0 |
+
+## Prestige
+
+- **Total Ascensions:** 7
+- **Per-job prestige:** BLU P7
 
 ## Collections
 
@@ -61,7 +66,7 @@
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
+**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -77,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 14304e3972d7 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 93f248cf23d6 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

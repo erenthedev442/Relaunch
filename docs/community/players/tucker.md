@@ -1,6 +1,6 @@
 # Tucker
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 2d 20h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 3h
 
 `💪 2 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5bf55b56fced -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 23451b8e2949 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

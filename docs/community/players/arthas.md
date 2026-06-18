@@ -1,6 +1,6 @@
 # Arthas
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 7h
 
 `💪 2 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BLU 99** |
 | Sub job | WAR 99 |
-| Time played | 9h |
-| Enemies defeated | 491 |
+| Time played | 10h |
+| Enemies defeated | 573 |
 | Deaths | 1 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 3,325
+- **Marks (current):** 3,975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fc905ff6ecda -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 48872216c714 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

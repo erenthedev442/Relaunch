@@ -1,8 +1,8 @@
 # Thanos
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 17h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d
 
-`⭐ 1 Ascension` `💪 2 jobs @99`
+`⭐ 2 Ascensions` `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | WAR 99 |
-| Time played | 24h |
-| Enemies defeated | 1,897 |
+| Time played | 26h |
+| Enemies defeated | 1,912 |
 | Deaths | 17 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,634
-- **Marks (lifetime):** 1,757
+- **Marks (current):** 809
+- **Marks (lifetime):** 1,932
 - **Distinct NMs slain:** 12
-- **Total NM kills:** 211
+- **Total NM kills:** 213
 
 ## Augment Sage
 
@@ -57,8 +57,8 @@
 
 ## Prestige
 
-- **Total Ascensions:** 1
-- **Per-job prestige:** MNK P1
+- **Total Ascensions:** 2
+- **Per-job prestige:** MNK P2
 
 ## Collections
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0f36fccadd6a -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 54879ac99247 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

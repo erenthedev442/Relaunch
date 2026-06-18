@@ -1,18 +1,18 @@
 # Namshiel
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-16 · Character age 1d 23h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 2d 6h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 13/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 32/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 13** |
-| Sub job | NIN 10 |
+| Main job | **RDM 32** |
+| Sub job | NIN 23 |
 | Time played | 1h |
-| Enemies defeated | 20 |
+| Enemies defeated | 25 |
 | Deaths | 0 |
 
 ## Job levels
@@ -20,10 +20,10 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 10 |
+| MNK | 1 | NIN | 23 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 13 | BLU | 1 |
+| RDM | 32 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0941018c793d -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: a3829cba3d86 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Olindre
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 5h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 12h
 
-`⭐ 14 Ascensions` `💪 2 jobs @99`
+`⭐ 20 Ascensions` `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,17 +12,17 @@
 | | |
 |---|---|
 | Main job | **WAR 99** |
-| Sub job | RUN 81 |
-| Time played | 40h |
-| Enemies defeated | 1,664 |
-| Deaths | 43 |
+| Sub job | RUN 99 |
+| Time played | 47h |
+| Enemies defeated | 3,135 |
+| Deaths | 52 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| MNK | 1 | NIN | 58 |
+| MNK | 1 | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -31,15 +31,15 @@
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 81 |
+| RNG | 1 | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 31,199
-- **Marks (lifetime):** 919
+- **Marks (current):** 23,565
+- **Marks (lifetime):** 1,329
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 134
+- **Total NM kills:** 156
 
 ## Guild standing
 
@@ -68,16 +68,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 14
-- **Per-job prestige:** WAR P14
+- **Total Ascensions:** 20
+- **Per-job prestige:** WAR P20
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
-**15** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · First Ascension · Ascending Master · X Marks the Spot · Sanctuary Defender · First Blood · Augment Novice · Augment Expert · Augment Master.
+**17** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · X Marks the Spot · Sanctuary Defender · First Blood · Arena Regular · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b5befc55908d -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: d0ae9f16c7d3 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

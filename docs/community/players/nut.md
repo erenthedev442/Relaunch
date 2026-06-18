@@ -1,6 +1,6 @@
 # Nut
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 2d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 3h
 
 `💪 6 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | NIN 99 |
-| Time played | 19h |
-| Enemies defeated | 3,677 |
+| Sub job | PLD 31 |
+| Time played | 25h |
+| Enemies defeated | 3,687 |
 | Deaths | 2 |
 
 ## Job levels
@@ -27,7 +27,7 @@
 | BLM | 1 | **SMN** | **99** |
 | RDM | 1 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
-| PLD | 1 | PUP | 1 |
+| PLD | 31 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | **BRD** | **99** | GEO | 1 |
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 10f62556a475 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: acafce7b62b9 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

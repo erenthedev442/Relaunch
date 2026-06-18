@@ -1,6 +1,6 @@
 # Yojin
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 17h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d
 
 `💪 3 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **WAR 99** |
-| Sub job | THF 92 |
-| Time played | 13h |
-| Enemies defeated | 584 |
+| Sub job | SAM 99 |
+| Time played | 14h |
+| Enemies defeated | 589 |
 | Deaths | 9 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 29,597
+- **Marks (current):** 30,347
 - **Marks (lifetime):** 236
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 27
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 1 / 5
-- **Augments crafted:** 10
+- **Augments crafted:** 11
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ebb66cee472c -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 43318ce02e1a -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

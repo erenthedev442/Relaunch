@@ -1,6 +1,6 @@
 # Miss
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 1d 23h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 2d 6h
 
 `💪 5 jobs @99`
 
@@ -12,16 +12,16 @@
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | WAR 74 |
-| Time played | 22h |
-| Enemies defeated | 1,208 |
+| Sub job | WAR 85 |
+| Time played | 23h |
+| Enemies defeated | 1,243 |
 | Deaths | 14 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 74 | **SAM** | **99** |
+| WAR | 85 | **SAM** | **99** |
 | MNK | 1 | NIN | 1 |
 | **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | SMN | 34 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 116
+- **Marks (current):** 616
 - **Marks (lifetime):** 27
 - **Distinct NMs slain:** 2
 - **Total NM kills:** 4
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 6
+- **Augments crafted:** 14
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 81d6d0d6af36 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 16d7c89fa107 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

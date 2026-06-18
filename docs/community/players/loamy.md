@@ -1,8 +1,8 @@
 # Loamy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 15h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 22h
 
-`💪 5 jobs @99`
+`💪 6 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BRD 60** |
-| Sub job | WHM 56 |
-| Time played | 25h |
-| Enemies defeated | 753 |
+| Main job | **SMN 99** |
+| Sub job | BLM 99 |
+| Time played | 28h |
+| Enemies defeated | 795 |
 | Deaths | 6 |
 
 ## Job levels
@@ -23,28 +23,28 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | **NIN** | **99** |
-| WHM | 56 | DRG | 1 |
+| WHM | 84 | DRG | 1 |
 | **BLM** | **99** | **SMN** | **99** |
 | RDM | 3 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | **DNC** | **99** |
 | BST | 1 | **SCH** | **99** |
-| BRD | 60 | GEO | 1 |
+| **BRD** | **99** | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,485
-- **Marks (lifetime):** 25
+- **Marks (current):** 2,354
+- **Marks (lifetime):** 70
 - **Distinct NMs slain:** 2
-- **Total NM kills:** 5
+- **Total NM kills:** 14
 
 ## Augment Sage
 
 - **Mastery rank:** 2 / 5
-- **Augments crafted:** 25
+- **Augments crafted:** 32
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**2** unlocked — First Hunt · Augment Novice.
+**3** unlocked — First Hunt · Ten Hunts In · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 95b228d16f58 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: bbdd41f632d2 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

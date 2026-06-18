@@ -2,11 +2,11 @@
 
 _Search the site (top right) to find a spell by name._
 
-**Total spells in database:** 891
+**Total spells in database:** 892
 
 | Category | Spells |
 |---|---:|
-| [Songs](songs.md) | 112 |
+| [Songs](songs.md) | 113 |
 | [Black Magic](black.md) | 190 |
 | [Blue Magic](blue.md) | 157 |
 | [Ninjutsu](ninjutsu.md) | 43 |
@@ -18,6 +18,6 @@ _Search the site (top right) to find a spell by name._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 04a70930ed3c -->
-_Last updated: 2026-06-12 23:32 UTC_
+<!-- content-hash: 13bb8e51bdab -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

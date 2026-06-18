@@ -1,18 +1,20 @@
 # Towoo
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-16 · Character age 3d 21h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 4h
+
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 87/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BLM 87** |
+| Main job | **RDM 74** |
 | Sub job | WHM 16 |
-| Time played | 6h |
-| Enemies defeated | 234 |
+| Time played | 7h |
+| Enemies defeated | 263 |
 | Deaths | 2 |
 
 ## Job levels
@@ -22,8 +24,8 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 8 |
 | WHM | 16 | DRG | 1 |
-| BLM | 87 | SMN | 51 |
-| RDM | 60 | BLU | 36 |
+| **BLM** | **99** | SMN | 51 |
+| RDM | 74 | BLU | 36 |
 | THF | 24 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -72,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 313077f46e26 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 7d84c705e3b1 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

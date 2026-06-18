@@ -1,6 +1,6 @@
 # Caera
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 16h 20m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 23h 28m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 354940d8cba9 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 294c065861af -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Jbae
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-17 · Character age 23d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-18 · Character age 24d 4h
 
 `⭐ 106 Ascensions` `💪 17 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **RDM 99** |
-| Sub job | NIN 99 |
-| Time played | 266h |
-| Enemies defeated | 8,747 |
+| Sub job | WHM 51 |
+| Time played | 268h |
+| Enemies defeated | 8,792 |
 | Deaths | 147 |
 
 ## Job levels
@@ -23,7 +23,7 @@
 |---|---:|---|---:|
 | **WAR** | **99** | SAM | 1 |
 | **MNK** | **99** | **NIN** | **99** |
-| WHM | 1 | **DRG** | **99** |
+| WHM | 51 | **DRG** | **99** |
 | **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | **COR** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 77,676
+- **Marks (current):** 79,821
 - **Marks (lifetime):** 1,299
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 6,056
+- **Total NM kills:** 6,067
 
 ## Guild standing
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 49c153772ee4 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 7a19ed34b620 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

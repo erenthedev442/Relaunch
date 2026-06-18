@@ -1,8 +1,8 @@
 # Vistrix
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 17h
 
-`⭐ 2 Ascensions` `💪 2 jobs @99`
+`⭐ 3 Ascensions` `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DRG 99** |
 | Sub job | SAM 99 |
-| Time played | 23h |
-| Enemies defeated | 2,293 |
-| Deaths | 17 |
+| Time played | 26h |
+| Enemies defeated | 2,332 |
+| Deaths | 18 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 8,904
-- **Marks (lifetime):** 582
-- **Distinct NMs slain:** 10
-- **Total NM kills:** 51
+- **Marks (current):** 5,552
+- **Marks (lifetime):** 1,920
+- **Distinct NMs slain:** 11
+- **Total NM kills:** 72
 
 ## Guild standing
 
@@ -47,16 +47,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Journeyman | 2,500 | 2,500 to Veteran |
+| AF Hunters' Guild | Veteran | 5,000 | 20,000 to Master |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | League Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 77
-- **NM Affinities:** 5 / 13
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 144
+- **NM Affinities:** 6 / 13
 
 ## Reforge
 
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 2
-- **Per-job prestige:** DRG P2
+- **Total Ascensions:** 3
+- **Per-job prestige:** DRG P3
 
 ## Collections
 
@@ -77,7 +77,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · First Ascension · Augment Novice · Augment Expert.
+**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4082e5ed837b -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: baf7b78c6744 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

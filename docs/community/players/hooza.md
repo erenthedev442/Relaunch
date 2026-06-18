@@ -1,33 +1,33 @@
 # Hooza
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 1d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 2d 2h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 24/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 47/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BST 24** |
-| Sub job | WHM 18 |
-| Time played | 2h |
-| Enemies defeated | 49 |
-| Deaths | 0 |
+| Main job | **BST 47** |
+| Sub job | NIN 22 |
+| Time played | 6h |
+| Enemies defeated | 186 |
+| Deaths | 1 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
-| WHM | 18 | DRG | 1 |
+| MNK | 1 | NIN | 22 |
+| WHM | 25 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| RDM | 1 | BLU | 11 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
-| BST | 24 | SCH | 1 |
+| BST | 47 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b106ab413473 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 58ae40f1d23b -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

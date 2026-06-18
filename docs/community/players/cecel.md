@@ -1,8 +1,8 @@
 # Cecel
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 11h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 18h
 
-`⭐ 10 Ascensions` `💪 9 jobs @99`
+`⭐ 14 Ascensions` `💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,17 +11,17 @@
 
 | | |
 |---|---|
-| Main job | **NIN 99** |
-| Sub job | WAR 99 |
-| Time played | 57h |
-| Enemies defeated | 3,792 |
-| Deaths | 41 |
+| Main job | **SAM 55** |
+| Sub job | DRK 55 |
+| Time played | 62h |
+| Enemies defeated | 3,963 |
+| Deaths | 45 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 1 |
+| **WAR** | **99** | SAM | 55 |
 | MNK | 8 | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 11,708
+- **Marks (current):** 24,655
 - **Marks (lifetime):** 2,424
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 173
+- **Total NM kills:** 253
 
 ## Guild standing
 
@@ -55,21 +55,21 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 337
+- **Augments crafted:** 352
 - **NM Affinities:** 12 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 188 | 748 |
-| Relic | 400 | 0 |
-| Empyrean | 4,925 | 605 |
+| AF | 288 | 748 |
+| Relic | 1,250 | 0 |
+| Empyrean | 2,825 | 605 |
 
 ## Prestige
 
-- **Total Ascensions:** 10
-- **Per-job prestige:** NIN P10
+- **Total Ascensions:** 14
+- **Per-job prestige:** DRK P4 · NIN P10
 
 ## Collections
 
@@ -77,7 +77,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Ascending Master · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
+**15** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 338e3973ef67 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: d3200bf8dfac -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,18 +1,18 @@
 # Aureal
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 14h 33m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 21h 41m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 18/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **MNK 1** |
-| Sub job | WAR 1 |
-| Time played | 0h |
-| Enemies defeated | 0 |
+| Main job | **BLU 2** |
+| Sub job | RDM 2 |
+| Time played | 2h |
+| Enemies defeated | 5 |
 | Deaths | 0 |
 
 ## Job levels
@@ -20,10 +20,10 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
+| MNK | 18 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| RDM | 3 | BLU | 2 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2ce882d79111 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: d79b47e690c3 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

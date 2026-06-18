@@ -1,8 +1,8 @@
 # Herdofturtles
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 15h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 22h
 
-`⭐ 15 Ascensions` `💪 4 jobs @99`
+`⭐ 29 Ascensions` `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RUN 99** |
-| Sub job | RDM 99 |
-| Time played | 35h |
-| Enemies defeated | 3,028 |
+| Main job | **RDM 99** |
+| Sub job | NIN 60 |
+| Time played | 38h |
+| Enemies defeated | 3,078 |
 | Deaths | 21 |
 
 ## Job levels
@@ -22,7 +22,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 83 | SAM | 1 |
-| MNK | 1 | NIN | 32 |
+| MNK | 1 | NIN | 60 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 37,259
+- **Marks (current):** 5,399
 - **Marks (lifetime):** 5,406
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 209
+- **Total NM kills:** 228
 
 ## Guild standing
 
@@ -54,9 +54,9 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
-- **Augments crafted:** 134
-- **NM Affinities:** 7 / 13
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 270
+- **NM Affinities:** 10 / 13
 
 ## Reforge
 
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 15
-- **Per-job prestige:** RUN P15
+- **Total Ascensions:** 29
+- **Per-job prestige:** RDM P14 · RUN P15
 
 ## Collections
 
@@ -77,7 +77,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**13** unlocked — First Hunt · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert.
+**14** unlocked — First Hunt · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -85,6 +85,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|
 | Fastest 1 → 99 | 3h 31m |
 | HL Rank I → V | 1d 3h |
+| Augment Archon | 4d 13h |
 
 ---
 
@@ -93,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 86840ec61be5 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 0058ff1d9267 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

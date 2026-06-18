@@ -1,8 +1,8 @@
 # Broken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-17 · Character age 1d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-18 · Character age 1d 10h
 
-`💪 5 jobs @99`
+`💪 6 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | COR 99 |
-| Time played | 10h |
+| Main job | **GEO 99** |
+| Sub job | NIN 1 |
+| Time played | 15h |
 | Enemies defeated | 21 |
 | Deaths | 3 |
 
@@ -30,16 +30,16 @@
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| BRD | 1 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 75,505
-- **Marks (lifetime):** 28,886
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 466
+- **Marks (current):** 81,502
+- **Marks (lifetime):** 30,206
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 507
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**7** unlocked — Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Augment Novice.
+**9** unlocked — Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7a8ed4314c2f -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 3f8ea2f15c75 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

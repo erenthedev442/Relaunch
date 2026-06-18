@@ -1,8 +1,8 @@
 # Meowgic
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-16 · Character age 3d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 2h
 
-`💪 6 jobs @99`
+`⭐ 3 Ascensions` `💪 6 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 14h |
-| Enemies defeated | 121 |
-| Deaths | 24 |
+| Time played | 16h |
+| Enemies defeated | 129 |
+| Deaths | 28 |
 
 ## Job levels
 
@@ -36,14 +36,14 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,798
-- **Marks (lifetime):** 1,411
+- **Marks (current):** 7,880
+- **Marks (lifetime):** 4,196
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 47
+- **Total NM kills:** 76
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
+- **Mastery rank:** 4 / 5
 - **Augments crafted:** 157
 - **NM Affinities:** 0 / 13
 
@@ -52,8 +52,13 @@
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 0 | 0 |
-| Relic | 0 | 0 |
+| Relic | 1,500 | 0 |
 | Empyrean | 0 | 0 |
+
+## Prestige
+
+- **Total Ascensions:** 3
+- **Per-job prestige:** RDM P3
 
 ## Collections
 
@@ -61,7 +66,7 @@
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Star-Slayer · Augment Novice · Augment Expert.
+**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Star-Slayer · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -77,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f394b9f817a1 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 133d6109d37c -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

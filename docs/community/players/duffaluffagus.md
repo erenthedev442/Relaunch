@@ -1,8 +1,8 @@
 # Duffaluffagus
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 2d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 4h
 
-`💪 4 jobs @99`
+`💪 6 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | WAR 99 |
-| Time played | 5h |
-| Enemies defeated | 213 |
-| Deaths | 7 |
+| Sub job | WHM 1 |
+| Time played | 8h |
+| Enemies defeated | 486 |
+| Deaths | 13 |
 
 ## Job levels
 
@@ -26,9 +26,9 @@
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | **BLU** | **99** |
-| THF | 1 | COR | 1 |
+| **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
-| DRK | 1 | DNC | 23 |
+| DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 2,278
-- **Marks (lifetime):** 51
-- **Distinct NMs slain:** 6
-- **Total NM kills:** 14
+- **Marks (current):** 328
+- **Marks (lifetime):** 119
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 21
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 22
+- **Augments crafted:** 27
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 0 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 5 | 105 |
+| Empyrean | 110 | 210 |
 
 ## Collections
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**5** unlocked — First Hunt · Tier II Unlocked · Wave Rider · Star-Slayer · Augment Novice.
+**6** unlocked — First Hunt · Tier II Unlocked · Tier III Unlocked · Wave Rider · Star-Slayer · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 863106ba2b54 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 39f621e99e7c -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

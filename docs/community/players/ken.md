@@ -1,8 +1,8 @@
 # Ken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-17 · Character age 1d 17h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-18 · Character age 2d
 
-`💪 9 jobs @99`
+`💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | RDM 99 |
-| Time played | 20h |
+| Main job | **NIN 99** |
+| Sub job | THF 1 |
+| Time played | 25h |
 | Enemies defeated | 91 |
 | Deaths | 8 |
 
@@ -22,7 +22,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| **MNK** | **99** | NIN | 75 |
+| **MNK** | **99** | **NIN** | **99** |
 | WHM | 1 | DRG | 65 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 54,631
-- **Marks (lifetime):** 29,303
-- **Distinct NMs slain:** 11
-- **Total NM kills:** 553
+- **Marks (current):** 60,434
+- **Marks (lifetime):** 30,623
+- **Distinct NMs slain:** 13
+- **Total NM kills:** 594
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 258
+- **Augments crafted:** 268
 - **NM Affinities:** 7 / 13
 
 ## Reforge
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Augment Novice · Augment Expert · Augment Master.
+**14** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d86e8a16e973 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: d834de635890 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

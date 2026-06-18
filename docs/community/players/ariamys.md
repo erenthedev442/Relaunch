@@ -1,20 +1,20 @@
 # Ariamys
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 2d 22h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 3d 5h
 
 `💪 7 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | NIN 99 |
-| Time played | 26h |
-| Enemies defeated | 1,046 |
+| Main job | **MNK 99** |
+| Sub job | RDM 99 |
+| Time played | 27h |
+| Enemies defeated | 1,072 |
 | Deaths | 26 |
 
 ## Job levels
@@ -35,16 +35,16 @@
 
 ## Hunting League
 
-- **Rank:** 4 / 5
-- **Marks (current):** 400
-- **Marks (lifetime):** 5,745
-- **Distinct NMs slain:** 12
-- **Total NM kills:** 728
+- **Rank:** 5 / 5
+- **Marks (current):** 679
+- **Marks (lifetime):** 7,165
+- **Distinct NMs slain:** 14
+- **Total NM kills:** 754
 
 ## Augment Sage
 
 - **Mastery rank:** 2 / 5
-- **Augments crafted:** 28
+- **Augments crafted:** 49
 - **NM Affinities:** 9 / 13
 
 ## Reforge
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Augment Novice.
+**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 21h 31m |
+| HL Rank I → V | 1d 22h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 01b9aa1b23a2 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 67a538b59f6c -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

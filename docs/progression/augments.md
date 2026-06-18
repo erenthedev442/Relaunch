@@ -70,7 +70,7 @@ So a maxed tank reaches **+640 HP on a single body piece**, and a sustain build 
 The table below lists **which catalyst maps to which augment**, grouped by stat family. **Fresh ×1–×5** is the total stat from trading that many catalysts with no Sage progress; **Max ×1–×5** is the same trade at full [Augment Sage](augment-sage.md) progress (rank 5 + affinity + a crit); **Cap** is the hard in-game ceiling where one exists — see [how scaling works](#how-augment-power-scales) above.
 
 <!-- DOCGEN:BEGIN id="augment-catalog" -->
-_320 catalyst items across 14 categories. Trade the catalyst to the Augment Moogle to apply the matching augment. Cost is **10,000 gil flat per trade** plus the catalyst items themselves._
+_314 catalyst items across 14 categories. Trade the catalyst to the Augment Moogle to apply the matching augment. Cost is **10,000 gil flat per trade** plus the catalyst items themselves._
 
 Each augment **scales with [Augment Sage](augment-sage.md) progress** and with how many catalysts you trade (**×N** = that many, 1–5; an item has 5 augment slots). **Fresh ×N** is a brand-new augment with **no Sage progress**; **Max ×N** is the ceiling at **rank-5 mastery + full affinity + a crit**. Your live value starts near Fresh and climbs toward Max as you rank Augment Sage up. Percentage augments (damage-taken, haste, etc.) show the raw value; the **Cap** column is the hard in-game ceiling for that stat (e.g. Phys. dmg. taken floors at -50%), or **no cap** for additive stats like Attack/HP — values above the Cap can't be reached no matter how many catalysts you stack.
 
@@ -415,12 +415,6 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/1110" data-img="https://static.ffxiah.com/images/icon/1110.png" target="_blank" rel="noopener">Vial Of Black Beetle Blood</a> | 1110 | Weapon Skill Acc | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1473" data-img="https://www.bg-wiki.com/images/5/5d/H.Q._Scp._Shell_description.png" target="_blank" rel="noopener">High-Quality Scorpion Shell</a> | 1473 | Weapon skill damage | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/865" data-img="https://static.ffxiah.com/images/icon/865.png" target="_blank" rel="noopener">Handful Of Nidhoggs Scales</a> | 865 | Sklchn.dmg | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/889" data-img="https://www.bg-wiki.com/images/a/ab/Beetle_Shell_description.png" target="_blank" rel="noopener">Beetle Shell</a> | 889 | Dmg (melee,not ranged) | 4 | 8 | 12 | 16 | 20 | 128 | 256 | 384 | 512 | 640 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/893" data-img="https://www.bg-wiki.com/images/a/a6/Giant_Femur_description.png" target="_blank" rel="noopener">Giant Femur</a> | 893 | Dmg (melee,not ranged) | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/896" data-img="https://www.bg-wiki.com/images/1/17/Scorpion_Shell_description.png" target="_blank" rel="noopener">Scorpion Shell</a> | 896 | Dmg (melee,not ranged) | 33 | 66 | 99 | 132 | 165 | 64 | 128 | 192 | 256 | 320 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/908" data-img="https://www.bg-wiki.com/images/2/26/Adamantoise_Shell_description.png" target="_blank" rel="noopener">Adamantoise Shell</a> | 908 | Dmg (ranged,not melee) | 4 | 8 | 12 | 16 | 20 | 128 | 256 | 384 | 512 | 640 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/924" data-img="https://static.ffxiah.com/images/icon/924.png" target="_blank" rel="noopener">Vial Of Fiend Blood</a> | 924 | Dmg (ranged,not melee) | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/930" data-img="https://static.ffxiah.com/images/icon/930.png" target="_blank" rel="noopener">Vial Of Beastman Blood</a> | 930 | Dmg (ranged,not melee) | 33 | 66 | 99 | 132 | 165 | 64 | 128 | 192 | 256 | 320 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1016" data-img="https://www.bg-wiki.com/images/1/1d/Remi_Shell_description.png" target="_blank" rel="noopener">Remi Shell</a> | 1016 | Backhand Blow DMG | 5 | 10 | 15 | 20 | 25 | 160 | 320 | 480 | 640 | 800 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2013" data-img="https://static.ffxiah.com/images/icon/2013.png" target="_blank" rel="noopener">Vial Of Lizard Blood</a> | 2013 | Spinning Attack DMG | 5 | 10 | 15 | 20 | 25 | 160 | 320 | 480 | 640 | 800 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2014" data-img="https://static.ffxiah.com/images/icon/2014.png" target="_blank" rel="noopener">Vial Of Bird Blood</a> | 2014 | Howling Fist DMG | 5 | 10 | 15 | 20 | 25 | 160 | 320 | 480 | 640 | 800 | no cap |
@@ -474,6 +468,6 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: eb62927eb39b -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 4b230bf5a49d -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Alice
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-16 · Character age 2d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 2h
 
 `💪 1 job @99`
 
@@ -11,8 +11,8 @@
 
 | | |
 |---|---|
-| Main job | **BST 66** |
-| Sub job | PUP 66 |
+| Main job | **BST 78** |
+| Sub job | PUP 78 |
 | Time played | 7h |
 | Enemies defeated | 385 |
 | Deaths | 5 |
@@ -29,14 +29,14 @@
 | THF | 48 | COR | 1 |
 | PLD | 1 | **PUP** | **99** |
 | DRK | 1 | DNC | 72 |
-| BST | 66 | SCH | 1 |
+| BST | 78 | SCH | 1 |
 | BRD | 57 | GEO | 1 |
 | RNG | 1 | RUN | 15 |
 
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 67
+- **Marks (current):** 667
 - **Marks (lifetime):** 157
 - **Distinct NMs slain:** 6
 - **Total NM kills:** 16
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 212d18904dcd -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 4f48af8ee861 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

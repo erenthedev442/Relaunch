@@ -1,8 +1,8 @@
 # Mardukas
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 13h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 3d 20h
 
-`💪 5 jobs @99`
+`⭐ 10 Ascensions` `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | DNC 99 |
-| Time played | 40h |
-| Enemies defeated | 7,667 |
-| Deaths | 36 |
+| Time played | 46h |
+| Enemies defeated | 7,907 |
+| Deaths | 44 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 71,668
+- **Marks (current):** 50,268
 - **Marks (lifetime):** 39,929
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 751
+- **Total NM kills:** 832
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 363
+- **Augments crafted:** 377
 - **NM Affinities:** 5 / 13
 
 ## Reforge
@@ -63,8 +63,13 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 2,765 | 765 |
-| Relic | 165 | 165 |
-| Empyrean | 830 | 4,080 |
+| Relic | 2,505 | 7,755 |
+| Empyrean | 1,130 | 5,430 |
+
+## Prestige
+
+- **Total Ascensions:** 10
+- **Per-job prestige:** WAR P10
 
 ## Collections
 
@@ -72,7 +77,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**14** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**16** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -89,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fc95eea1617c -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 07a8bf0f8251 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

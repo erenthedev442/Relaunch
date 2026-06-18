@@ -1,6 +1,6 @@
 # Champa
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 1d 19h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 2d 2h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 7/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dc90cdfeed70 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: c781f5fc72f5 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

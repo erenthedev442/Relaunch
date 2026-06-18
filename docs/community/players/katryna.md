@@ -1,21 +1,21 @@
 # Katryna
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 1d 23h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 2d 6h
 
-`💪 1 job @99`
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
 | Main job | **BLM 99** |
-| Sub job | RDM 89 |
-| Time played | 12h |
-| Enemies defeated | 334 |
-| Deaths | 9 |
+| Sub job | RDM 99 |
+| Time played | 18h |
+| Enemies defeated | 606 |
+| Deaths | 14 |
 
 ## Job levels
 
@@ -25,7 +25,7 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
-| RDM | 89 | BLU | 1 |
+| **RDM** | **99** | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 1,889
-- **Marks (lifetime):** 475
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 95
+- **Rank:** 4 / 5
+- **Marks (current):** 3,442
+- **Marks (lifetime):** 2,653
+- **Distinct NMs slain:** 4
+- **Total NM kills:** 527
 
 ## Guild standing
 
@@ -55,16 +55,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 25
+- **Augments crafted:** 26
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 25 | 25 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 25 | 25 |
 
 ## Collections
 
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**3** unlocked — First Hunt · Ten Hunts In · Augment Novice.
+**6** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 176ac76cbd1d -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 52c1c42bd439 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Flcl
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 11h
 
 `💪 5 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **DNC 99** |
-| Sub job | THF 77 |
-| Time played | 28h |
-| Enemies defeated | 1,498 |
+| Sub job | BRD 31 |
+| Time played | 33h |
+| Enemies defeated | 3,008 |
 | Deaths | 47 |
 
 ## Job levels
@@ -26,48 +26,49 @@
 | WHM | 1 | DRG | 44 |
 | BLM | 1 | SMN | 95 |
 | RDM | 1 | BLU | 1 |
-| THF | 77 | COR | 62 |
+| THF | 96 | COR | 62 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| BRD | 31 | GEO | 1 |
 | **RNG** | **99** | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 9
-- **Marks (lifetime):** 1,371
-- **Distinct NMs slain:** 10
-- **Total NM kills:** 202
+- **Marks (current):** 4,206
+- **Marks (lifetime):** 9,253
+- **Distinct NMs slain:** 13
+- **Total NM kills:** 1,722
 
 ## Augment Sage
 
 - **Mastery rank:** 2 / 5
-- **Augments crafted:** 50
-- **NM Affinities:** 0 / 13
+- **Augments crafted:** 72
+- **NM Affinities:** 1 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 0 | 0 |
-| Relic | 50 | 50 |
+| Relic | 900 | 50 |
 | Empyrean | 275 | 75 |
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Wave Rider · Augment Novice · Augment Expert.
+**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 0s |
+| HL Rank I → V | 4d 8h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ae604f4c0ee8 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: e8fbb08a6b93 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

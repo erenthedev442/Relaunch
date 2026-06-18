@@ -1,6 +1,6 @@
 # Daizu
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 10h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 17h
 
 `💪 6 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BLU 99** |
 | Sub job | RDM 99 |
-| Time played | 45h |
+| Time played | 46h |
 | Enemies defeated | 2,797 |
 | Deaths | 3 |
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6da3e4073b33 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 5a5f3eeae1fb -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

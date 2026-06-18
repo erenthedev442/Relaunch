@@ -1,8 +1,8 @@
 # Lunita
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-16 · Character age 2d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 2d 10h
 
-`💪 1 job @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -11,17 +11,17 @@
 
 | | |
 |---|---|
-| Main job | **WAR 41** |
-| Sub job | SAM 20 |
-| Time played | 5h |
-| Enemies defeated | 268 |
+| Main job | **WAR 99** |
+| Sub job | SAM 99 |
+| Time played | 8h |
+| Enemies defeated | 392 |
 | Deaths | 13 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 41 | SAM | 20 |
+| **WAR** | **99** | **SAM** | **99** |
 | MNK | 10 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 65
-- **Marks (lifetime):** 90
+- **Marks (current):** 1,375
+- **Marks (lifetime):** 100
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 18
+- **Total NM kills:** 20
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 684159a08095 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 8cc855ddacd5 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

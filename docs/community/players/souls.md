@@ -1,8 +1,8 @@
 # Souls
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 14h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 3d 22h
 
-`💪 8 jobs @99`
+`⭐ 3 Ascensions` `💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 28h |
-| Enemies defeated | 2,034 |
-| Deaths | 35 |
+| Time played | 30h |
+| Enemies defeated | 2,043 |
+| Deaths | 36 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,524
+- **Marks (current):** 1,024
 - **Marks (lifetime):** 1,842
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 228
+- **Total NM kills:** 229
 
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 63
+- **Augments crafted:** 96
 - **NM Affinities:** 8 / 13
 
 ## Reforge
@@ -53,7 +53,12 @@
 |---|---:|---:|
 | AF | 1 | 4,885 |
 | Relic | 32 | 1,655 |
-| Empyrean | 2,070 | 610 |
+| Empyrean | 2,220 | 760 |
+
+## Prestige
+
+- **Total Ascensions:** 3
+- **Per-job prestige:** DRK P3
 
 ## Collections
 
@@ -61,7 +66,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Augment Novice · Augment Expert.
+**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -77,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 07b0aa0b6de8 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: a3d78fe98354 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

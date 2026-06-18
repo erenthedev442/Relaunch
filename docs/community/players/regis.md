@@ -1,6 +1,6 @@
 # Regis
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-16 · Character age 4d 7h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 14h
 
 `💪 2 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 19h |
-| Enemies defeated | 630 |
+| Time played | 22h |
+| Enemies defeated | 731 |
 | Deaths | 15 |
 
 ## Job levels
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 32,437
-- **Marks (lifetime):** 642
+- **Marks (current):** 33,714
+- **Marks (lifetime):** 1,126
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 29
+- **Total NM kills:** 37
 
 ## Augment Sage
 
 - **Mastery rank:** 2 / 5
-- **Augments crafted:** 34
-- **NM Affinities:** 1 / 13
+- **Augments crafted:** 35
+- **NM Affinities:** 2 / 13
 
 ## Reforge
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Star-Slayer · Sanctuary Defender · Augment Novice.
+**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Star-Slayer · Sanctuary Defender · Augment Novice.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1a1900142b1f -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 9a9e91b908ef -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

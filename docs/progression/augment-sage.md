@@ -89,7 +89,7 @@ Holding an affinity multiplies augments **in that category** by **1.5×**. Affin
 | 10 | Pet | King Vinegarroon | Sand Bat Fang | 9 |
 | 11 | Elemental resistance | Khimaira | Khimaira Horn | 70 |
 | 12 | Skill+ | Maat (proxy: a king-tier predator) | Gargantuan Black Tiger Fang | 23 |
-| 13 | Weaponskill DMG+ | Tiamat | High-Quality Scorpion Shell | 44 |
+| 13 | Weaponskill DMG+ | Tiamat | High-Quality Scorpion Shell | 38 |
 <!-- DOCGEN:END id="sage-affinities" -->
 
 ## Charvars used
@@ -122,6 +122,6 @@ Yes — both the Sage rank trophy and the affinity registration trophy are remov
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b0f0e39c5a4e -->
-_Last updated: 2026-06-17 06:02 UTC_
+<!-- content-hash: b0324b4aad06 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

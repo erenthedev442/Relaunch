@@ -1,6 +1,6 @@
 # Kyrie
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-17 · Character age 1d 17h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-18 · Character age 2d
 
 `💪 5 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 22h |
-| Enemies defeated | 329 |
+| Time played | 27h |
+| Enemies defeated | 589 |
 | Deaths | 12 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 65,162
-- **Marks (lifetime):** 29,328
-- **Distinct NMs slain:** 11
-- **Total NM kills:** 550
+- **Marks (current):** 61,737
+- **Marks (lifetime):** 30,660
+- **Distinct NMs slain:** 13
+- **Total NM kills:** 597
 
 ## Guild standing
 
@@ -55,8 +55,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 260
-- **NM Affinities:** 4 / 13
+- **Augments crafted:** 272
+- **NM Affinities:** 7 / 13
 
 ## Reforge
 
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Augment Novice · Augment Expert · Augment Master.
+**14** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 14018d2f46f5 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: f092553b2517 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

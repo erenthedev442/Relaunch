@@ -1,6 +1,6 @@
 # Daiis
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 8h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 15h
 
 `💪 4 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **SAM 99** |
 | Sub job | WAR 99 |
-| Time played | 31h |
+| Time played | 32h |
 | Enemies defeated | 1,008 |
 | Deaths | 19 |
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8d38e5f72707 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: a79c8919fab7 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

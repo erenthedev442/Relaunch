@@ -1,6 +1,6 @@
 # Moss
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 1d 21h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 2d 4h
 
 `💪 6 jobs @99`
 
@@ -12,7 +12,7 @@
 | | |
 |---|---|
 | Main job | **SMN 99** |
-| Sub job | BLU 80 |
+| Sub job | BLU 89 |
 | Time played | 21h |
 | Enemies defeated | 170 |
 | Deaths | 10 |
@@ -25,7 +25,7 @@
 | MNK | 1 | **NIN** | **99** |
 | **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | **SMN** | **99** |
-| **RDM** | **99** | BLU | 80 |
+| **RDM** | **99** | BLU | 89 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 75bef7fd93be -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: dc827610ede2 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

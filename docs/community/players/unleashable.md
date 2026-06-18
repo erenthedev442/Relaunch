@@ -1,18 +1,18 @@
 # Unleashable
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 14h 50m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 21h 59m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 38/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 51/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **THF 38** |
-| Sub job | RNG 1 |
+| Main job | **THF 51** |
+| Sub job | RNG 23 |
 | Time played | 1h |
-| Enemies defeated | 21 |
+| Enemies defeated | 35 |
 | Deaths | 0 |
 
 ## Job levels
@@ -24,12 +24,12 @@
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 38 | COR | 1 |
+| THF | 51 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| RNG | 23 | RUN | 1 |
 
 ## Hunting League
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e552ec095a43 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 4a4ff35d8926 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

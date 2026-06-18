@@ -1,8 +1,8 @@
 # Velvet
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 17h
 
-`⭐ 1 Ascension` `💪 5 jobs @99`
+`⭐ 2 Ascensions` `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | NIN 99 |
-| Time played | 31h |
-| Enemies defeated | 1,709 |
-| Deaths | 11 |
+| Time played | 37h |
+| Enemies defeated | 1,822 |
+| Deaths | 12 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,758
-- **Marks (lifetime):** 602
+- **Marks (current):** 3,109
+- **Marks (lifetime):** 3,407
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 123
+- **Total NM kills:** 192
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 212
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 267
 - **NM Affinities:** 10 / 13
 
 ## Reforge
@@ -57,8 +57,8 @@
 
 ## Prestige
 
-- **Total Ascensions:** 1
-- **Per-job prestige:** THF P1
+- **Total Ascensions:** 2
+- **Per-job prestige:** THF P2
 
 ## Collections
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · First Ascension · Augment Novice · Augment Expert · Augment Master.
+**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 18de0a5edbc3 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 0588c48f180a -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

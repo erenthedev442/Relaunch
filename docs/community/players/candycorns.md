@@ -1,8 +1,8 @@
 # Candycorns
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 3d 21h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 4h
 
-`💪 5 jobs @99`
+`💪 7 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,19 +11,19 @@
 
 | | |
 |---|---|
-| Main job | **DNC 99** |
-| Sub job | THF 99 |
-| Time played | 26h |
-| Enemies defeated | 1,337 |
+| Main job | **WHM 50** |
+| Sub job | THF 50 |
+| Time played | 32h |
+| Enemies defeated | 1,510 |
 | Deaths | 8 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 54 |
-| MNK | 1 | **NIN** | **99** |
-| WHM | 1 | DRG | 84 |
+| **WAR** | **99** | **SAM** | **99** |
+| **MNK** | **99** | **NIN** | **99** |
+| WHM | 50 | DRG | 84 |
 | BLM | 96 | SMN | 1 |
 | RDM | 61 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,184
-- **Marks (lifetime):** 100
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 11
+- **Marks (current):** 5,611
+- **Marks (lifetime):** 230
+- **Distinct NMs slain:** 8
+- **Total NM kills:** 13
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
+- **Mastery rank:** 3 / 5
 - **Augments crafted:** 64
-- **NM Affinities:** 5 / 13
+- **NM Affinities:** 6 / 13
 
 ## Reforge
 
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**6** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Augment Novice · Augment Expert.
+**7** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Apex Hunter · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 1d 11h |
+| HL Rank I → V | 15h 38m |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5bd51d445f23 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 4222f2b05ece -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

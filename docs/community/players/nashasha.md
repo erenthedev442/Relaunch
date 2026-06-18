@@ -1,6 +1,6 @@
 # Nashasha
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 1h 13m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 8h 21m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -11,9 +11,9 @@
 |---|---|
 | Main job | **MNK 1** |
 | Sub job | — |
-| Time played | 0h |
+| Time played | 1h |
 | Enemies defeated | 0 |
-| Deaths | 0 |
+| Deaths | 2 |
 
 ## Job levels
 
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0596e0c075bf -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 0b8402bab564 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

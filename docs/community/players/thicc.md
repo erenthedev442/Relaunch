@@ -1,6 +1,6 @@
 # Thicc
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-13 · Character age 4d 6h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-13 · Character age 4d 13h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 12/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ad1c44ca4f93 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: a8b7dab23dce -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

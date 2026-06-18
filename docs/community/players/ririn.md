@@ -1,11 +1,11 @@
 # Ririn
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 1d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 2d 4h
 
 `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | NIN 99 |
-| Time played | 5h |
-| Enemies defeated | 168 |
-| Deaths | 4 |
+| Time played | 12h |
+| Enemies defeated | 295 |
+| Deaths | 11 |
 
 ## Job levels
 
@@ -35,35 +35,51 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 975
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 5 / 5
+- **Marks (current):** 7,717
+- **Marks (lifetime):** 521
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 96
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Journeyman | 1,500 | 3,500 to Veteran |
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 1
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 1 / 5
+- **Augments crafted:** 10
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| AF | 5,640 | 5,040 |
+| Relic | 0 | 5,250 |
+| Empyrean | 150 | 150 |
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
+
+## Achievements
+
+**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Star-Slayer · Augment Novice.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 1d 13h |
+| HL Rank I → V | 4h 20m |
 
 ---
 
@@ -72,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 710fc81f4b45 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: c1286026ba80 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

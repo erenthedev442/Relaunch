@@ -1,6 +1,6 @@
 # Curtisjohn
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-15 · Character age 2d 11h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-15 · Character age 2d 18h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a5b0a70a7f35 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 9fd389cdaa25 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

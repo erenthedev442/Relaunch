@@ -1,18 +1,18 @@
 # Rose
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 12h 37m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 19h 45m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 2/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 66/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **MNK 2** |
+| Main job | **MNK 66** |
 | Sub job | RDM 1 |
-| Time played | 7h |
-| Enemies defeated | 0 |
+| Time played | 8h |
+| Enemies defeated | 11 |
 | Deaths | 0 |
 
 ## Job levels
@@ -20,7 +20,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 2 | NIN | 1 |
+| MNK | 66 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -34,10 +34,10 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 300
+- **Marks (current):** 3,890
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Total NM kills:** 5
 
 ## Augment Sage
 
@@ -55,11 +55,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 116
 
 ## Achievements
 
-**2** unlocked — Augment Novice · Augment Expert.
+**3** unlocked — Star-Slayer · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0e9d3afb5217 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: af475f1e1411 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

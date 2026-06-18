@@ -1,8 +1,8 @@
 # Miyasanima
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 5h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 3d 12h
 
-`💪 4 jobs @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,23 +11,23 @@
 
 | | |
 |---|---|
-| Main job | **SCH 99** |
-| Sub job | BLM 99 |
-| Time played | 19h |
-| Enemies defeated | 1,767 |
-| Deaths | 10 |
+| Main job | **PLD 99** |
+| Sub job | WAR 94 |
+| Time played | 22h |
+| Enemies defeated | 1,988 |
+| Deaths | 11 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
+| WAR | 94 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | **SMN** | **99** |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 1 |
+| **PLD** | **99** | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | **SCH** | **99** |
 | BRD | 1 | GEO | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,923
+- **Marks (current):** 1,573
 - **Marks (lifetime):** 30
 - **Distinct NMs slain:** 3
 - **Total NM kills:** 6
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 28
+- **Augments crafted:** 42
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a8ac6dc11b3b -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 3e7fcab23565 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

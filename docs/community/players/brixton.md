@@ -1,8 +1,8 @@
 # Brixton
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 4d 7h
 
-`⭐ 3 Ascensions` `💪 2 jobs @99`
+`⭐ 3 Ascensions` `💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,23 +11,23 @@
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | NIN 99 |
-| Time played | 32h |
-| Enemies defeated | 1,166 |
-| Deaths | 14 |
+| Main job | **WAR 80** |
+| Sub job | PLD 80 |
+| Time played | 35h |
+| Enemies defeated | 1,353 |
+| Deaths | 15 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 21 | SAM | 1 |
+| WAR | 80 | SAM | 1 |
 | MNK | 1 | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
-| PLD | 1 | PUP | 1 |
+| **PLD** | **99** | PUP | 1 |
 | DRK | 1 | DNC | 50 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,651
+- **Marks (current):** 2,151
 - **Marks (lifetime):** 15,593
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 203
@@ -55,8 +55,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 128
-- **NM Affinities:** 7 / 13
+- **Augments crafted:** 165
+- **NM Affinities:** 8 / 13
 
 ## Reforge
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cb92fc87d982 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 1022873c8ae7 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

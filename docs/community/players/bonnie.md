@@ -1,6 +1,6 @@
 # Bonnie
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 1d 20h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 2d 3h
 
 `💪 2 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | RDM 99 |
-| Time played | 3h |
+| Time played | 5h |
 | Enemies defeated | 109 |
 | Deaths | 0 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,525
+- **Marks (current):** 2,125
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 490c4d621253 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 00fe0cada323 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

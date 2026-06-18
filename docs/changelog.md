@@ -4,7 +4,162 @@ Recent changes to Legendary. Updated automatically from our development history.
 
 ---
 
-??? note "Week of 2026-06-15"
+!!! note "Wednesday · June 17, 2026"
+    - feat(docgen): recover the docs toolchain into the main tree (from fjb/main)
+    - feat(shop): add Eminent Sachet (21383) to !shop ammo
+    - fix(deploy): repair the SITE_BAT re-score step after the worktree was deleted
+    - feat(deploy): add deploy-rebuild.bat â€” ship + rebuild + SQL + restart
+    - Deploy Everything Wed 06/17/2026 17:38:36.90
+    - feat(always-popped-nms): drop Escha Ru'Aun from the auto-pop list (Reisenjima only)
+    - fix(deploy): fix broken SITE_BAT path (worktree busy-johnson deleted)
+    - fix(deploy): exclude scripts/specs from live sync tarballs
+    - fix(game-master): guard onMobDeath against non-PC killers, add per-diff stagger
+    - fix(abyssea): make ??? marks-pop + kill-reward clobber-proof (hook pattern)
+    - feat(blue-magic): disable Mortal Ray (spell 686) - cannot be cast
+    - fix(subjob): level-0 sub jobs permanently stuck (EXP_TO_NEXT[0] was nil)
+    - feat(deploy): list changed files in the Deploy Everything auto-commit body
+    - chore(augment): remove 6 negative-DMG augment entries (743-745 melee, 749-751 ranged)
+    - fix(augment): refund staked items when the player cancels the augment menu
+    - fix(skillchain): record SC damage as int32 (int16 capped hits at 32,767)
+    - fix(sparks-exchange): shorten Eminence Broker main title (128-byte click cap)
+    - feat(abyssea): add Cruor reward on marks-popped NM kill
+    - feat(tools): negative-DMG augment DB scan + strip
+    - fix(corsair): double-up always showed 0 because corsairActiveRoll was clobbered
+    - feat(commands): add !delnegdmg - purge items whose applied DMG augment netted negative
+    - feat(magic): uncap PC magic damage (remove base + MAB/MDB ratio ceilings)
+    - feat(infamy): add Daurdabla (string relic) to Infamy Vendor at 800 Inf
+    - fix(automerits): skip job-specific, Others, and Weaponskill merits
+    - feat(vendors): add BRD instruments to hunting league + infamy gear vendors
+    - fix(infamy-vendor): Ryunohige -> i119 III final form (21858)
+    - Deploy Everything Wed 06/17/2026 10:57:15.56
+    - fix(augment): force re-apply of EXP-bonus augment fix (augId 73 -> mod 382)
+    - fix(crash): comprehensive IsEntityAlive guard pass on CLuaBaseEntity
+    - fix(crash): extend IsEntityAlive guard to setHP (boss-command UAF)
+
+??? note "Tuesday · June 16, 2026"
+    - fix(deploy): SQL upload past xi:xi perms + live C++ build-progress window
+    - Deploy Everything Tue 06/16/2026 23:03:02.01
+    - feat(deploy): azure-rebuild.bat now applies changed SQL before restart
+    - feat(deploy): add azure-rebuild.bat - box-only recompile, no laptop files
+    - feat(deploy): verify core LSB patches survived before every rebuild/ship
+    - feat(augments): remove 6 Dmg (melee/ranged) augments from pool
+    - feat(infamy): restore Infamy Vendor as standalone module
+    - feat(augments): add Thunder Affinity augment (augId 2040)
+    - fix(abyssea): grant permanent visitant on onZoneIn so !abyssea warps work
+    - feat(magic): uncap magic damage for PC casters (mirrors WS uncap)
+    - fix(abyssea): !visitant no longer ejects the player from Abyssea
+    - feat(abyssea): add !visitant command to grant permanent visitant status
+    - chore(deploy): retire legacy deploy-to-azure (SQL-only) to _legacy/
+    - fix(crash): extend IsEntityAlive guard to setLocalVar/getLocalVar(s)
+    - feat(hunting-league): make full Augment Sage rank chain obtainable in Escha
+    - fix(crash): alive-entity registry + trust null-spell guard
+    - feat(abyssea): wire ??? markers to AbysseaMarks gil/infamy pop menu
+    - feat(vendors): consolidate Accessory NPC to Escha-ZiTah gear row
+    - fix(crash): gate treasure re-show on trading player still in zone
+    - fix(crash): guard invalid spell IDs in CastMagic packet + drop dungeon recap
+    - fix(deploy): remove intermediate map restart in step 3
+    - fix(deploy): non-git fallback in _apply_changed_sql.sh + restore zz_*.sql SCP
+    - Deploy Everything Tue 06/16/2026 15:54:16.59
+    - fix(docs): box cron now regenerates augment catalog before publishing
+    - feat(deploy): git-diff-based SQL apply covers all layers
+    - feat(marks): add Infamy balance to !marks output
+    - balance(gemma): increase MACC 600â†’6000 to land enfeebles on Abyssea NMs
+    - fix(abyssea): correct onGameIn override path in AbysseaKICleanup
+    - balance(abyssea): reduce NM atkDef/accEva by 1/3 across all tiers
+    - chore: delete temporary gmboot.lua bootstrap command
+    - fix(abyssea): suppress trade-to-pop ??? interaction silently
+    - feat(dungeon): remove custom dungeon system entirely
+    - feat(abyssea): reward all party members on marks-pop NM kill
+    - feat(abyssea): one-shot cleanup of retail pop key items
+    - balance(abyssea): raise infamy rewards to match vendor costs
+    - feat(abyssea): remove Empyreal Paradox from marks-pop system
+    - balance(abyssea): reduce marks-pop NM HP by 1/3
+    - fix(abyssea): raise Visions base infamy to 2 so multipliers show
+    - feat(abyssea): increase marks-pop NM gil reward 5x
+    - fix(abyssea): release player from ??? lock before customMenu
+    - fix(subjob): restore true 50%-of-main sub leveling (curve was 2-4x too steep)
+    - feat(abyssea): boost marks-pop NM difficulty x30
+    - feat(abyssea): zone-tiered difficulty â€” full-party NM stats
+    - feat(abyssea): remove Abyssea from always_popped_nms
+    - fix(abyssea): guard nil getCharVar + pcall-protect marks pop path
+    - fix(cmd): split !abyssea into two-tier menu (client 8-option cap)
+    - feat(cmd): add !abyssea warp command for all 10 Abyssea zones
+    - feat(abyssea): add Gil reward + party/trust multipliers to marks pop
+    - feat(abyssea): add Hunt Marks pop system + Infamy kill reward
+    - feat: dungeon double-warp fix, Outer Bastion WP fix, Sortie rings, item fixes
+    - fix(capacity_farm): refresh campZone from deadMob to survive FileWatcher reloads
+    - feat(shop): add Angon and Throwing Tomahawk to !shop ammo
+    - fix(dungeon): fix !dungeon abort reaching live session table
+    - feat(cmd): add !dungeon abort command
+    - fix(dungeon): clamp mob scatter positions to navmesh
+    - feat(cmd): add !henge warp command to Reisenjima Henge
+    - feat(deploy): add sync-lua-to-azure.bat for no-restart content push
+    - fix(dungeon): guard getZone() nil deref in mob-count PAI loop
+    - fix(prestige): guard idle-watcher against freed mob entity after zone exit
+    - fix(brd): add missing scroll script for Aria of Passion
+    - fix(ranger): replace broken hover_shot JA with !hovershot command
+    - feat(prestige): idle-despawn trial boss after 20s of no damage
+    - feat(world-boss): move spawn zone from Hall of the Gods to West Ronfaure
+    - revert(endless-tower): disallow Trusts in Walk of Echoes (zone 182)
+    - fix(job-mastery): use owner-verified Mastery warp coords (-519,36,236)
+    - fix(job-mastery): correct Weapon Mastery warp-in (was off-map)
+    - fix(leaderboard): record pre-cap WS damage for peak hit tracker
+    - feat(endless-tower): hard-cap trusts at 1 (was honor-system)
+    - fix(endless-tower): allow trusts in Walk of Echoes (zone 182)
+    - fix(hunting-league): idempotent mob_groups in escha migration (zone 288)
+
+??? note "Monday · June 15, 2026"
+    - Deploy (No Rebuild) Mon 06/15/2026 23:59:36.23
+    - fix(deploy): remove parens from log header in deploy-no-rebuild.bat
+    - fix(deploy): convert bat files from LF to CRLF (Windows CMD requires CRLF)
+    - fix(capacity_farm): use DE_ prefix in queryEntitiesByName so mobs respawn
+    - docs(core): mark the sub-job gear-equip patch in EquipArmor
+    - feat(vendor): add Gold-tier axes to Hunting League gear vendor
+    - feat(dungeon): scaled gil reward on clear (1M easiest -> 10M hardest)
+    - feat(dungeon): theme all 8 dungeons to distinct mob families
+    - fix(trust): Meat now forces mob target-switch on every hate-pin tick
+    - fix(crash): guard treasure.lua timers against freed NPC entity
+    - fix(dungeon): paginate the Dungeon Master menu (8 dungeons overflowed)
+    - feat(cmd): show (X,Y,Z) world coords in !mobs listing
+    - chore(cmd): open !mobs to permission 0 (all players)
+    - feat(npc): add Unity Accolades exchange to Eminence Broker
+    - feat(hl): increase affinity trophy drop quantity from 1 to 5
+    - feat(hl): Nidhogg also drops Fafnir's Scale (Augment Sage rank 4 trophy)
+    - feat(shop): split augments ws into ws/ws2 to stay under client 80-item cap
+    - fix(shop): sort !shop augments by sortname to match client display
+    - feat(shop): sort !shop augments by actual item name from item_basic
+    - fix(augment): rename HQ Scorpion Shell label to sort first in !shop augments ws
+    - feat(shop): make !shop augments live-reload via module command override
+    - fix(dungeon): switch Maxixi +4 drops to first (Hume F/Taru F) race variant
+    - feat(shop): sort augment catalysts alphabetically by label
+    - fix(shop): force-reload augment_catalog on shop hot-reload
+    - feat(reallevel): auto-populate the leaderboard via a login hook
+    - feat(augment): add 10 missing magic/instrument skill catalysts
+    - feat(ws): boost Asuran Fists fTP to 1.5/1.75/2.0 per hit
+    - feat(ws): add per-hit crit chance to Asuran Fists
+    - feat(reallevel): store Real Level in a CharVar for the website leaderboard
+    - feat(hl): add Augment Sage affinity trophy drops to all 13 HL NMs
+    - feat(hl): guaranteed Khimaira Horn drop from Pandemonium Warden
+    - feat(tracker): WSMaxDmg charVar - record peak weapon skill damage per player
+    - feat(augment): full weapon skill coverage in augment catalog
+    - feat(cmd): GM Ascension Trial tools - spawntrialboss / killtrial / cleartrial
+    - feat(prime): enable Great Sword (Fimbulvetr) + Axe (Blitz) Prime WS + aftermath
+    - feat(cmd): !fixboss - GM teleport any mob to player position
+    - feat(prime): wire Prime aftermath onto the Prime Dagger too
+    - feat(prime): implement faithful Prime Weapon Aftermath
+    - feat(cmd): !spawntrialboss - GM force-spawn Ascension Trial boss in Provenance
+    - feat(brd): add Aria of Passion + Honor March songs
+    - fix(dungeon): self-heal boss spawn when zone is genuinely clear
+    - feat(cmd): !mobs - list live mobs in your zone (GM debug)
+    - revert(augment): restore HQ Scorpion Shell -> Weapon skill damage catalyst
+    - tune(ah): raise universal buyback cap 200 -> 1000 per pass
+    - feat(tools): AH bot status + transaction-history check
+    - fix(dungeon): correct voidwalker_arena bossPos Y from 7.263 to 12.000
+    - feat(brd): implement Honor March (spell 417) as tier-3 BRD march
+    - fix(hunting-league): scope Escha migration mob_spawn_points delete by zone
+    - fix(rng): correct hover_shot to retail abilityId 289, recastId 55
+    - chore(hunt): temporarily restrict !hunt to GM (permission 0 -> 1)
+    - Deploy Everything Mon 06/15/2026 13:00:01.89
     - fix(dungeon): dismiss trusts before zone warp to prevent heap crash
     - fix(bullet-pouches): make the 4 Bullet Pouches equippable WAIST pieces
     - feat(rng): register Hover Shot ability (abilityId 971)
@@ -23,7 +178,7 @@ Recent changes to Legendary. Updated automatically from our development history.
     - feat(apex): 30s respawn for all apex mobs server-wide
     - feat(ascension): disable the Ascension companion system (no more lynx familiars)
 
-??? note "Week of 2026-06-08"
+??? note "Sunday · June 14, 2026"
     - fix(trustattack): engage the trusts directly, not just the master
     - feat(endgame): Prime Armory wired to all 4 trials (remove voucher system)
     - feat(endgame): Job Mastery Challenges â€” 12 Weapon Guardians (Prime Weapon Trial 4)
@@ -137,6 +292,8 @@ Recent changes to Legendary. Updated automatically from our development history.
     - fix(pup): keep loadout menu under the ~8-option cap
     - feat(pup): add 'Unlock all attachments' to !pup menu + !pup attachments (runs addallattachments)
     - feat(prime): open !primevoucher to all players (permission 0)
+
+??? note "Saturday · June 13, 2026"
     - chore(ops): untrack navmeshes phantom gitlink
     - Deploy Everything Sat 06/13/2026 23:55:14.03
     - deploy(retire-laptop-publish): deploy-everything now publishes the site FROM THE BOX
@@ -231,6 +388,8 @@ Recent changes to Legendary. Updated automatically from our development history.
     - balance(hunting-league): buff Serket HP (Rank III was too soft)
     - balance(shop): augment catalysts 1,000,000 -> 100,000 gil
     - feat(shop): surface EXP/Capacity augments as their own !shop group
+
+??? note "Friday · June 12, 2026"
     - fix(linkshell)!: remove global LS auto-grant entirely (was crash-looping server)
     - fix(linkshell)!: stop auto-equipping global LS - it crash-loops the server
     - Deploy Everything Fri 06/12/2026 23:16:26.25
@@ -273,11 +432,15 @@ Recent changes to Legendary. Updated automatically from our development history.
     - feat(dungeon): Mythic+ keystones - endless key levels above Mythic
     - ï»¿Retire the new-player linkshell; dedupe the Dungeon Veteran title
     - ï»¿docs-in-code: catch comments up to the 5-catalyst reality
+
+??? note "Wednesday · June 10, 2026"
     - Deploy Everything Wed 06/10/2026 20:57:21.64
     - feat(augment): allow up to 5 catalysts/trade (the engine's 5 augment slots)
     - Deploy Everything Wed 06/10/2026 20:33:09.33
     - revert(augment): back to one augment line per catalyst (4-line stacking)
     - balance(augment): split value budget rank 0-24 / stack 0-7 (owner choice)
+
+??? note "Tuesday · June 9, 2026"
     - Deploy Everything Tue 06/09/2026 19:19:28.42
     - fix(augment): confirm menu fits stacked trades + proper N-times scaling
     - Deploy Everything Tue 06/09/2026 18:57:54.58
@@ -285,6 +448,8 @@ Recent changes to Legendary. Updated automatically from our development history.
     - fix(augment): stop catalyst stacking from eating gear; amplify via value field
     - Re-tune haste augments to a sane ~1%->25% curve + normalize their display
     - Deploy Everything Tue 06/09/2026 17:41:12.31
+
+??? note "Monday · June 8, 2026"
     - Normalize stored-xN augment mods in the displays (disp divisor)
     - Deploy Everything Mon 06/08/2026 22:59:55.47
     - fix(escha): remove Warder of Temperance spawn from the GM-wave area
@@ -296,13 +461,15 @@ Recent changes to Legendary. Updated automatically from our development history.
     - feat(gear): WS Set Builder fixes â€” grips, Fotia, WSD rings, Knobkierrie; remove Judge's
     - Deploy Everything Mon 06/08/2026 19:03:31.04
 
-??? note "Week of 2026-06-01"
+??? note "Sunday · June 7, 2026"
     - Reforge tier carry-forward + all-source mod reads + ascension perks
     - feat(gear): commit reforge tier stat/model fills + audit tooling
     - feat(combat): raise magic/spell damage cap 99,999 -> 131,071
     - feat(combat): raise damage cap 99,999 -> 131,071 (FFXIAH client packet max)
     - fix(infamy): remove phantom 'Knobkierrie' vendor entry (id 26072 doesn't exist)
     - Deploy Everything Sun 06/07/2026 14:33:55.23
+
+??? note "Saturday · June 6, 2026"
     - Deploy Everything Sat 06/06/2026 11:40:31.11
     - feat(deploy): score-once-deploy-both so server and website never drift
     - deploy: sync server catalogs to published website + harden deploy button
@@ -318,11 +485,15 @@ Recent changes to Legendary. Updated automatically from our development history.
     - feat(gmhome): Home Point crystal warps to any homepoint, free
     - feat(infamy): grouped vendor browser + relic/endgame listings
     - feat(infamy): generator for the vendor item type-map (grouped browser)
+
+??? note "Friday · June 5, 2026"
     - chore(docgen): commit BG-Wiki stats cache for reproducibility
     - feat(infamy): stat blocks for relic 119 III + endgame gear
+
+??? note "Thursday · June 4, 2026"
     - fix: stat naked dungeon-shop gear + make DB-only tier mods rebuild-safe
 
-??? note "Week of 2026-05-25"
+??? note "Saturday · May 30, 2026"
     - feat: add !reallevel command (effective level past 99)
     - feat: raise BRD max songs and COR max phantom rolls to 6
     - feat: help/marks/streak/tier/week/events/top/announce/setbonus/reforge commands, death penalty, weekly recap, Infamy milestones, tier promotion broadcast
@@ -334,13 +505,17 @@ Recent changes to Legendary. Updated automatically from our development history.
     - refactor(augments): remove weaker duplicate augment catalysts, keep strongest only
     - feat: move Wave Master NPC from GM_Home to Balga's Dais (zone 146)
     - feat: Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
+
+??? note "Friday · May 29, 2026"
     - feat: add Curated Sets vendor category to Infamy Vendor
     - fix: Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
 
-??? note "Week of 2026-05-11"
+??? note "Saturday · May 16, 2026"
     - Khimaira Audit
     - [lua] [sql] Mammet Bugfixes
     - [trust, sql, lua, core] Trust Tank audit and cleanup (#10002)
+
+??? note "Friday · May 15, 2026"
     - [lua] Fixes nil errors in Disaster Idol spell choose
     - Fix hit distortion wrap on overkills
     - [core] Use slot to determine delay for TP return
@@ -351,13 +526,19 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Add missing steal to Antican Praetor and Legatus
     - Fix Rice balls latent values on gear
     - Allow ammo to be consumed while equipped
+
+??? note "Thursday · May 14, 2026"
     - Fix Automaton Skill Lookup
     - [lua] Truth Lies Hid quest
     - [lua] [sql] Implement Dainslaif's add effect
     - Mocking Colibri base dmg adjustment
     - Convert Bugfix
+
+??? note "Wednesday · May 13, 2026"
     - [lua][module] BST Era Bug Fix
     - [lua] AA MR Pet Fix
+
+??? note "Tuesday · May 12, 2026"
     - [lua] Superlinking
     - Watch Wamoura adjustment
     - Crustacean Conundrum
@@ -366,24 +547,30 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Lua bindings to get/set MMM unlocks
     - Load and send MMM unlocks to player
     - Add MMM unlocks to char_unlocks table
+
+??? note "Monday · May 11, 2026"
     - [sql] Add Elementals Ancient Magic
     - fix(dbtool): open modules/init.txt with utf-8 encoding
     - [lua] [sql] Dragon Poison Breath
     - [cpp] Fixes underflow in avatar perpetuation
     - [cpp, lua, sql] Implements new family system
 
-??? note "Week of 2026-05-04"
+??? note "Sunday · May 10, 2026"
     - [lua] Holy Cow
     - Behemoth NM Audits Resists Fix
     - Moment of Truth implementation
     - Add missing RACC for Demon Arrow
     - [lua] Bahamut TP Move Cleanup
+
+??? note "Saturday · May 9, 2026"
     - /itemsearch support
     - Lua bindings for PC-to-PC trades tests
     - [sql] Fixes promy dem mob name
     - [lua] [sql] Up in Arms Improvements
     - Route synthesis through SynthTransaction
     - [trust, sql, lua, core] Valaineral gambits, mods, spells, gambit support (#9947)
+
+??? note "Friday · May 8, 2026"
     - [sql] Movalpolis Goblin Skill List Audit
     - [lua] Pulling the Strings Improvements
     - Allow spells to set knockback and distortion in packets
@@ -397,6 +584,8 @@ Recent changes to Legendary. Updated automatically from our development history.
     - [lua][sql] Rapid Raptors
     - [lua] Pulling the Strings Bugfixes
     - [cpp] Allows dualWield to be changed on the fly
+
+??? note "Thursday · May 7, 2026"
     - [cpp] Combined trust and char ranged attack code to battle entity
     - Core: Add safety check to entity:canSee(...) binding
     - Give Peace a Chance Full inv event
@@ -413,6 +602,8 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Add missing HIDE_TIMER to effects
     - Add missing NO_CANCEL to effects
     - Fix cross-family mob linking in Einherjar
+
+??? note "Wednesday · May 6, 2026"
     - Lazy load instances
     - [sql] Expansion Flock Bat SkillList Audit
     - Link rapidyaml; YAML parsing lib
@@ -427,12 +618,16 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Core: Fix packBits heap-buffer-overflow.
     - [cpp, lua] Change delay to have the in-game input instead of milliseonds
     - [lua] [sql] Pulling the Strings
+
+??? note "Tuesday · May 5, 2026"
     - ISNM 3k Happy Caster adjustment
     - [lua] [sql] Improve Hundredfaced Hapool Ja
     - [core][lua][sql] Movalpolis Patrols and Guards
     - [cpp] fixes ranged job abilities - Removes shadow bug for double and triple shot (+40% activation rate over what's shown on mod::double_shot_rate and mod::triple_shot_rate
     - [lua] What Price Loyalty quest
     - [lua] [sql] Implement Lamiabane
+
+??? note "Monday · May 4, 2026"
     - [lua] Charmed Pet/MNK Mob TP Returns
     - synth HQ rate xi_test
     - [core] Simplify magic/ranged state hasMoved()
@@ -454,7 +649,7 @@ Recent changes to Legendary. Updated automatically from our development history.
     - gambits_container RANDOM TP amount trigger
     - rughadjeen and trion gambits and skills
 
-??? note "Week of 2026-04-27"
+??? note "Sunday · May 3, 2026"
     - Route item usage through transactions
     - [core] Use message to determine if spell had no effect
     - [lua] [module] Lamian Fang Key Conquest Timer
@@ -468,28 +663,38 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Engine: Add runtime navmesh generation
     - [lua] Convert COR AF3 to Interaction Framework
     - [lua] Honor Under Fire quest
+
+??? note "Saturday · May 2, 2026"
     - [lua] [sql] Barrage support to ranged attacks
     - ISNM3k Compliments to the Chef adjustment
     - Core: Turn REPLACE INTO into upserts
     - Core: make chocoboRaisingInfo upserts
     - [sql] Fix Fluorescence target flag to self
+
+??? note "Friday · May 1, 2026"
     - Adds getLocalVars table for LLS
     - Adds event 171 default action to qm_cancel_escort in Grand Palace
     - Adjust Foreseer's delay back to 240
     - Adjust Tyrannic Tunnok to a 7 hit
     - Conflict fix for automaton skills in mob_skill.lua
     - Mnejing, gambits, scripts, sql and mob_skill.lua additions
+    - Add player and trial table check to magian onMobDeath function
+
+??? note "Thursday · April 30, 2026"
     - [lua] Check if any NM in the PH list is spawned or going to spawn
     - [lua] Enable spawning of both Tom Tit Tat copies
     - [lua] Fixes 3 mobskills
     - [lua] [sql] Implement Hyakume
-    - Add player and trial table check to magian onMobDeath function
     - [SQL] Correct Four of Batons dropid
     - [core] equip sync: remove stale references from items being deleted
     - [core] Only queue equip update if item was equipped
+
+??? note "Wednesday · April 29, 2026"
     - Raising: Add breeding.lua (not hooked up yet)
     - Encapsulate PC equipment and set ItemState
     - ItemState and badge-gated mark() role transitions
+
+??? note "Tuesday · April 28, 2026"
     - Adjust several MNK NMs to observed delays
     - [lua] Chocobo riding game reward fix
     - Puppetmaster LB Fight
@@ -503,13 +708,15 @@ Recent changes to Legendary. Updated automatically from our development history.
     - [chore] Starts mob ecosystem cleanup
     - [lua] Ouryu Bugfix
     - Update Dialogue to reference correct brother in The Competition
+
+??? note "Monday · April 27, 2026"
     - [lua] [sql] Archery Mobskills
     - [lua] Quelling the Storm quest
     - Items, containers tests
     - [lua] Convert COR AF2 to Interaction Framework
     - Raising: Map out ability learning flow
 
-??? note "Week of 2026-04-20"
+??? note "Sunday · April 26, 2026"
     - [lua] [sql] Club Mobskills
     - [lua][module] Adds blocks for certain door related KIs
     - Raising: Map out chocobo visible mood opcode
@@ -517,6 +724,8 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Route all item creation/lookups through xi::items
     - Limit HQ2 and HQ3 results depending on HQ tier
     - Great Katana Mobskills
+
+??? note "Saturday · April 25, 2026"
     - [lua][sql] COP Bomb/Snoll Skill Lists + Audit
     - [sql] Fixes several droplist typos in mob groups
     - Implement katana mobskills
@@ -525,18 +734,26 @@ Recent changes to Legendary. Updated automatically from our development history.
     - [lua] [sql] Scythe Mobskills
     - [lua] [sql] Axe Mobskills
     - [lua] [sql] Greataxe mobskills
+
+??? note "Friday · April 24, 2026"
     - [Module][Quest] Home Point Era Menu
     - [core] Unify more Core/Lua TP Functions
     - [lua] Repeatable Quest Fixes
+
+??? note "Thursday · April 23, 2026"
     - [lua] Add Choke Effect to Gale Axe
     - Fixes Bind allowed resist state value and duration calculation
     - [lua] [sql] H2H Mobskills
     - Fix impetus setMod() usage
     - [lua] [sql] Great Sword Mobskills
+
+??? note "Wednesday · April 22, 2026"
     - [lua] [module] Implement old TP gain as module
     - Raising: Tidy walks
     - Raising: Fix forced retirement
     - Raising: General VM cleanup
+
+??? note "Tuesday · April 21, 2026"
     - Prevent client lockup during Brygid The Stylist Returns
     - [lua, sql][module] Remove OOE HELM items
     - [lua] Bahamut BV2 Message
@@ -560,7 +777,7 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Raising: Handle initial care plan shifting and reporting
     - Raising: Remove synthetic events, general cleanup
 
-??? note "Week of 2026-04-13"
+??? note "Sunday · April 19, 2026"
     - [lua] Premium Mogti WS Message
     - [lua] [sql] Sword mobskills
     - Improve mobskill status effect handling and application
@@ -568,6 +785,8 @@ Recent changes to Legendary. Updated automatically from our development history.
     - [trust, sql, lua, core] Gessho adjustments and Issekigan Job Point crash fix for trust (#9826)
     - Cap targetfinding vertical search to 8/8.5y
     - Chuchuroon patrol nodes
+
+??? note "Saturday · April 18, 2026"
     - [lua][module] Set gravity to apply evasion penalty
     - [lua] [sql] Markmanship Mobskills
     - [lua] [sql] The Wyrmking Descends
@@ -582,16 +801,22 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Fire _TAKE listeners on all AoE targets
     - Mobskills only trigger resonance on main target
     - Uplift !additem to new exdata format
+
+??? note "Friday · April 17, 2026"
     - Round packet size to nearest 4
     - [cpp] Fix NM hp in mob groups not working
     - [lua, sql] Rework ToAU 15 Black Coffin battlefield
     - [lua] utils.shadowAbsorb cleanup
     - [cpp] Changes crystal drop rate per party member and rates
+
+??? note "Thursday · April 16, 2026"
     - [Module] Quest "Chocobo's Wounds" - Era-Wait-Time
     - [cpp, lua] Moves dynamis cpp function to lua
     - Fix mobskill spam: Angler Orobon, Tinnin
     - The Bonds of Fate (Qultada)
     - Fix Chocobo's Wounds
+
+??? note "Wednesday · April 15, 2026"
     - Fold PacketGuard into the general C2S system
     - BLU LB Raubahn out of combat self buff adjustment
     - Remove Battlefield Scripted Roamflag
@@ -604,9 +829,11 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Riverne A NM Audits
     - Fix quest events, their priority and overall cleanup
     - [Quest] Chocobos Wounds Trade Function Correction
+    - Return to the Depths implementation
+
+??? note "Tuesday · April 14, 2026"
     - Skull of Sins Audit
     - [core][lua] Physical Mobskll Refactor
-    - Return to the Depths implementation
     - [lua] Fix ranged PDIF edgecase
     - [lua] [sql] Divine Might Tuning
     - [lua] Implement high/low pdif rolls for melee
@@ -614,12 +841,14 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Unbridled Passion bugfix
     - [core] Don't fire mobskill if mob has Hysteria status
     - Cleanup teleport NPC scripts
+
+??? note "Monday · April 13, 2026"
     - Implement Promy Vahzl Apex Mobs
     - Implement Promy Mea Apex Mobs
     - /translate support, JP item names
     - Implement Promy Holla Apex Mobs
 
-??? note "Week of 2026-04-06"
+??? note "Sunday · April 12, 2026"
     - [lua, sql] Implement Promy Dem Apex Mobs
     - [lua] [sql] Storms of Fate & Bahamut Mobskills
     - [sql] Minuet / Titanis Earring Latents
@@ -628,10 +857,15 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Validate furniture placement
     - [sql] Delete unused and duplicate mob family values
     - Fix Alsha immediately changing phase after last cure is casted
+
+??? note "Saturday · April 11, 2026"
     - [lua][chore] ROE Objective enums
     - [Trust, core, sql, lua] August gambits and supporting gambit_container changes (#9718)
     - Knocking on Forbidden Doors fight mechanics and adjustments
     - Flag certain items to skip rare check and recycle bin
+    - [lua] [sql] Ouryu Cometh
+
+??? note "Friday · April 10, 2026"
     - [lua] Aydeewa Diremite Remove unused mixin
     - Audit weapon damage type
     - [core] Exclude mobs from Martial Arts calculations
@@ -642,12 +876,13 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Audit usable items usage time and targets
     - [lua] [sql] KS99 Adjustments
     - Drop nodiscard flag from setters
-    - [lua] [sql] Ouryu Cometh
     - [lua] WoTG Sword Module Bugfix
     - Audit furnishing storage, element
     - Audit items stack size
     - Audit item flags
     - Sort usable item entries
+
+??? note "Thursday · April 9, 2026"
     - Add missing general items
     - Add missing equipment and weapon items
     - Add missing usable items
@@ -668,39 +903,55 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Docs: Add advanced guidance for IF usage and event packets
     - Docs: Add information on capture formats
     - Docs: Add guidance for humans and AI agents
+
+??? note "Wednesday · April 8, 2026"
     - BRD AF3 Bugfix
     - [login] Increment key after char deletion
     - Limit delivery box to 128 items in flight
     - [lua, sql] Fixes COP 7-1 full inventory message and NPC
     - [documentation] Moves all of the old limbus to documentation folder
+
+??? note "Tuesday · April 7, 2026"
     - Exdata definitions
     - [lua] [sql] Moblin Fantocciniman + Marionette Dice
+
+??? note "Monday · April 6, 2026"
     - Yeet unneeded THF AF1 stew code
     - TOAU Mission 5 Quest IF Adjustments
     - [lua] [sql] Marionette Dice Pt. 1
     - [c++] Fix Moghouse entry in WoTG + SoA
     - Fix message ID for Leviathan Slowga
 
-??? note "Week of 2026-03-30"
+??? note "Sunday · April 5, 2026"
     - Remove Silver beastcoin from THF quest quadavs
     - [lua] [sql] Moblin Emotes
     - Exdata definitions
     - [lua, sq;] ToAU 13 Lost Kingdom fight adjustments
     - Bug Fix Quest Rock Racketeer wrong Prog Value
+
+??? note "Saturday · April 4, 2026"
     - Ancient Goobbue Audits
     - [lua] ENM Pulling the Strings framework
     - Exdata definitions
     - Replace Magic Numbers in Tavnazia, Nashmau, Shadowreign shops
+
+??? note "Friday · April 3, 2026"
     - [lua] [lls] Adjust some LLS hinting for new LLS version
+    - [lua] Add 'hitsLanded' = 1 to calcparams of magic ws (#9701)
+
+??? note "Thursday · April 2, 2026"
     - [core] Always fetch subjob when saving char to db
     - Exdata definitions
-    - [lua] Add 'hitsLanded' = 1 to calcparams of magic ws (#9701)
     - [core] thunder element should look up thunder res rank
     - Quest Cleanup Promotion Superior Private
     - [core] Filter additional bad equip packets
     - Replace magic numbers in TOAU shops
     - [core] [lua] Actually enforce "must zone" and not just /logout
+
+??? note "Wednesday · April 1, 2026"
     - Exdata definitions
+
+??? note "Tuesday · March 31, 2026"
     - Enable ximesh files support
     - [lua] Fix edge cases that report incorrect misses for mob/weaponskill
     - Implemented burden of suspicion
@@ -708,6 +959,8 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Audit Uleguerand Range NMs
     - Fix stackoverflow from reentrant action queue
     - Revamp exdata handling
+
+??? note "Monday · March 30, 2026"
     - [lua] Refactor PDIF clamping and simplify code
     - Implement Inner Horutoto Ruins spawn slots and phs
     - Implement West Sarutabaruta spawn slots and ph ids
@@ -717,12 +970,14 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Implement cape Teriggan spawn slots
     - [lua] KS99 Horns of War
 
-??? note "Week of 2026-03-23"
+??? note "Sunday · March 29, 2026"
     - Implement Upper Delkfutt's Tower spawn slots and update NM PHs
     - Implement Sea Serpent Grotto spawn slots and NM phs
     - Implement Promy Dem spawn slots
     - Implement Kuftal Tunnel spawn lots and NM PHs
     - Implement PsoXja spawn slots and NM info
+
+??? note "Saturday · March 28, 2026"
     - Allow mob entities to use job abilities
     - Implement Middle Delkfutts Tower spawn slots
     - Core: Streamline MapStatistics usage in MapNetworking
@@ -731,23 +986,31 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Core: Refactor packet building in MapNetworking
     - Core: Move network cpp locals into class members
     - Core: Tidy up MapSocket
+
+??? note "Friday · March 27, 2026"
     - Fix Ranged Weapon Rank
     - Core: Remove PacketMod system
     - Core: Move NetworkBuffer definition
     - Core: add operator== and hash to IPP
     - Add rewards to brigands chart
     - Mob fishable for brigands chart
+
+??? note "Thursday · March 26, 2026"
     - [lua] Changed Valkurm Emperor to true lotto
     - [lua][module] ToAU mission era wait times
+
+??? note "Tuesday · March 24, 2026"
     - [core] [lua] Load /check exp curve from lua
     - [tests] Adjust Sonic Boom Finish & mobs parrying/guarding tests
     - Brigand chart: Make chests fishable
+
+??? note "Monday · March 23, 2026"
     - Spells cost,recast,levels audit
     - Update client spells and abilities after changing equip
     - [core] nullptr check for Rune Enhancement
     - Update synthesis skill up amount calculations
 
-??? note "Week of 2026-03-16"
+??? note "Sunday · March 22, 2026"
     - Yazquhl ws message placement fix
     - [lua] [sql] Follow the White Rabbit
     - Remove unused 'xi.ws' weaponskill alias
@@ -756,6 +1019,8 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Bundled augments enum and data
     - [trust] tuned AAEV/AAHM/Amchuchu and cleaned up scripts
     - Evolith data tables
+
+??? note "Saturday · March 21, 2026"
     - Exdata enums for Evolith/Meeble
     - Core: Remove g_PTrigger legacy global
     - Core: Remove Scheduler::isTest helpers
@@ -765,40 +1030,8 @@ Recent changes to Legendary. Updated automatically from our development history.
     - Enums and data for Pankration
     - Enums for Chocobo Racing/Raising, Mannequins
     - Add safety to spawn lists
-    - Enum and data for Moblin Maze Mongers
     - Exdata supporting enums for Bonanza/Brenner/Escutcheons/Legion
     - [trust] AAHM: Added gambits/mods/tp usage
-    - Convert jsa.SKILL to mobSkill.SKILL
-    - Core: Unify scheduler naming
-    - [sql,lua] AAEV shield mastery power lvl range, reprisal spell
-    - [trust] AAEV fixed palisade using MA not JA
-    - [sql,lua,core] Make gambit RANDOM skillchain-aware; add AAEV mobskills
-    - [trust] AAEV gambits, Amchuchu gambit ONE_FOR_ALL ai.r.MA->ai.r.JA fix
-    - Adjust SC Trigger distance for Against All Odds
-    - Reorder jsa enum and remove associated alias
-    - Fix Despot behavior
-    - COR AF3 Fight (Against All Odds)
-    - Core: Pipe Scheduler into CLuaTestEntity
-    - Core: add Scheduler::blockOnMain
-    - Core: Propagate coros into AI::Tick()
-    - Core: Introduce Scheduler::TaskGroup
-    - Core: Make time_server a coro
-    - Core: Simplify charutils::LoadChar
-    - Tools: Update cppcheck to C++20
-    - Core: Make ZoneServer a coroutine
-    - Core: Remove Async helpers
-    - Core: Run all MapEngine tasks in Scheduler
-    - Core: Use Maybe alias for std::optional
-    - Core: Remove CTaskManager
-    - Implement Bostaunieux Oubliette spawn slots
-    - Implement Castle Zvahl Keep spawn slots
-    - Implement Crawler's Nest spawn slots
-    - Implement Fei'Yin spawn slots
-    - Implement Davoi spawn slots
 
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d73c6df2d321 -->
-_Last updated: 2026-06-15 19:59 UTC_
-<!-- DOCGEN:END id="last-updated" -->
+??? note "Friday · March 20, 2026"
+    - Enum and data for Moblin Maze Mongers

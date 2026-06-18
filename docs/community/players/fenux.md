@@ -1,6 +1,6 @@
 # Fenux
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-16 · Character age 2d
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-16 · Character age 2d 7h
 
 `💪 1 job @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f092e76ec435 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 1745678749a1 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->

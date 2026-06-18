@@ -1,6 +1,6 @@
 # Langy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 9h
 
 `💪 2 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | DRK 99 |
-| Time played | 13h |
-| Enemies defeated | 647 |
+| Sub job | WHM 78 |
+| Time played | 15h |
+| Enemies defeated | 762 |
 | Deaths | 3 |
 
 ## Job levels
@@ -23,7 +23,7 @@
 |---|---:|---|---:|
 | WAR | 7 | SAM | 1 |
 | **MNK** | **99** | NIN | 1 |
-| WHM | 29 | DRG | 1 |
+| WHM | 78 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 63 | BLU | 65 |
 | THF | 1 | COR | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,732
-- **Marks (lifetime):** 963
+- **Marks (current):** 6,247
+- **Marks (lifetime):** 978
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 32
+- **Total NM kills:** 35
 
 ## Augment Sage
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0765a90c66d8 -->
-_Last updated: 2026-06-17 17:57 UTC_
+<!-- content-hash: 36957b92d805 -->
+_Last updated: 2026-06-18 01:05 UTC_
 <!-- DOCGEN:END id="last-updated" -->
