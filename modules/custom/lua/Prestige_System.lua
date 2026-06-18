@@ -814,6 +814,20 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
                 return
             end
 
+            -- Player KO check: if the player died to the boss, despawn without
+            -- awarding kill credit and free the slot so they can re-summon after a raise.
+            local playerHP = 0
+            local phOk     = pcall(function() playerHP = player:getHP() end)
+            if phOk and playerHP == 0 then
+                idleDespawned      = true
+                summonedTrial[pid] = nil
+                player:printToPlayer(string.format(
+                    '[Ascension] %s withdraws as you fall. Rise again and face the Trial.',
+                    boss.label), xi.msg.channel.SYSTEM_3)
+                pcall(function() mob:setHP(0) end)
+                return
+            end
+
             local curHp = 0
             local ok    = pcall(function() curHp = mob:getHP() end)
             if not ok or curHp <= 0 then return end      -- mob gone
