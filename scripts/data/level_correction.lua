@@ -234,9 +234,33 @@ set{
     xi.zone.WALK_OF_ECHOES_P1
 }
 
+-- [LEGENDARY-CUSTOM 2026-06-18] The 8 Abyssea marks-pop zones host lv135-155 custom
+-- NMs (AbysseaMarks), so per this file's OWN rule -- "any zone with a mob over lvl 99
+-- -> level correction deactivated" -- they are excluded here. Without this a lv99
+-- player eats a -144..-224 accuracy penalty vs the marks NMs ON TOP of their
+-- +2000..5000 evasion bonus. Mirrors the PROVENANCE removal above; done as an
+-- override set (not list comment-outs) so it ALSO holds on the USE_ADOULIN=false
+-- path, which corrects every zone.
+local fjbLevelCorrectionExclusions =
+set{
+    xi.zone.ABYSSEA_KONSCHTAT,
+    xi.zone.ABYSSEA_TAHRONGI,
+    xi.zone.ABYSSEA_LA_THEINE,
+    xi.zone.ABYSSEA_ATTOHWA,
+    xi.zone.ABYSSEA_MISAREAUX,
+    xi.zone.ABYSSEA_VUNKERL,
+    xi.zone.ABYSSEA_ALTEPA,
+    xi.zone.ABYSSEA_GRAUBERG,
+}
+
 -- Meant to be called from a master function and fed to corresponding calculation.
 -- Example: pDIF functions, Actor magic accuracy, etc...
 xi.data.levelCorrection.isLevelCorrectedZone = function(actor)
+    -- FJB: marks-pop Abyssea zones are never level-corrected (see exclusion set above).
+    if fjbLevelCorrectionExclusions[actor:getZoneID()] then
+        return false
+    end
+
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         local actorZone = actor:getZoneID()
 
