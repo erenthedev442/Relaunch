@@ -21,7 +21,12 @@ set "SSHOPT=-o StrictHostKeyChecking=accept-new"
 
 echo.
 echo  Packing modules/custom + scripts...
-tar -czf "%TGZ%" -C "%SRC%" modules/custom scripts
+REM --exclude=scripts/specs is REQUIRED: scripts/specs/ holds ---@meta tooling
+REM stubs (core/Globals.lua etc.). If extracted over the LIVE tree, the FileWatcher
+REM hot-reloads them and their empty `function GetSystemTime() end` stubs CLOBBER
+REM the real C++ global bindings -> GetSystemTime()/Vanadiel*/GetZone return nil
+REM server-wide (mob-roam + game-hour error flood). Never ship specs to a live box.
+tar -czf "%TGZ%" -C "%SRC%" --exclude=scripts/specs modules/custom scripts
 if errorlevel 1 ( echo  ERROR: tar failed. & pause & exit /b 1 )
 
 echo  Uploading to Azure...

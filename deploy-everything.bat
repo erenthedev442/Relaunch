@@ -111,7 +111,10 @@ REM ---- 3. Ship the SAME catalogs to the Azure SERVER (file sync + custom SQL) 
 echo(
 echo  [3/5] Shipping the same content to the Azure server (modules/custom + scripts + tools + src)...
 (echo [%TIME%] [3/5] pack+upload+install: start)>> "%LOG%"
-tar -czf "%TGZ%" -C "%SRC%" modules/custom scripts tools src
+REM --exclude=scripts/specs: never ship the ---@meta tooling stubs (core/Globals.lua
+REM etc.) to the box -- a live FileWatcher reload of them clobbers the real C++ global
+REM bindings (GetSystemTime/Vanadiel*/GetZone -> nil). See sync-lua-to-azure.bat note.
+tar -czf "%TGZ%" -C "%SRC%" --exclude=scripts/specs modules/custom scripts tools src
 if errorlevel 1 ( echo        ERROR: tar failed -- skipping server deploy.& set "SRVOK=PROBLEM"& goto :finish )
 scp -i "%KEY%" %SSHOPT% "%TGZ%" %HOST%:/tmp/fjb_full.tgz
 if errorlevel 1 ( echo        ERROR: scp of bundle failed -- skipping server deploy.& set "SRVOK=PROBLEM"& goto :finish )
