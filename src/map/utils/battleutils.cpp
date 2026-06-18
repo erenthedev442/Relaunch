@@ -118,7 +118,7 @@ namespace
         }
         auto* PChar = static_cast<CCharEntity*>(PAttacker);
         PChar->pushPacket<GP_SERV_COMMAND_CHAT_STD>(
-            PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_3,
+            PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1,
             fmt::format("[{}] {}", type, damage));
     }
 } // namespace
