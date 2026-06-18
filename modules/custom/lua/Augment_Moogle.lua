@@ -393,7 +393,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                                         * (affinity.affinityMult or 1.5) * 2.0  -- rank5 x affinity x crit
                 local progress      = (maxTotalMult > 1) and ((totalMult - 1) / (maxTotalMult - 1)) or 0
                 local rawExdata     = math.floor(progress * EXDATA_VALUE_MAX + 0.5)
-                local perSlotExdata = math.min(math.max(rawExdata, 0), EXDATA_VALUE_MAX)
+                local boostCap      = def.maxBoost and math.min(EXDATA_VALUE_MAX, def.maxBoost) or EXDATA_VALUE_MAX
+                local perSlotExdata = math.min(math.max(rawExdata, 0), boostCap)
 
                 -- Emit ONE augment slot PER CATALYST: 4 catalysts of one type
                 -- write 4 slots of the same augId. The engine sums each slot's
@@ -447,7 +448,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 local valStr     = (count > 1)
                     and string.format('  ->  %d/slot x%d = %d total', perSlotVal, count, perSlotVal * count)
                     or  string.format('  ->  %d', perSlotVal)
-                local boostStr   = string.format('  [boost %d/%d]', perSlotExdata, EXDATA_VALUE_MAX)
+                local boostStr   = string.format('  [boost %d/%d]', perSlotExdata, boostCap)
 
                 local label = string.format('%s%s%s', def.label, valStr, boostStr)
                 table.insert(labelSummary, label)

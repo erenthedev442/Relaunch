@@ -209,7 +209,7 @@ return {
     [1408] = { augId = 104,  base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'Pet Enmity' },
     [1453] = { augId = 105,  base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'Pet Enmity' },
     [1844] = { augId = 147,  base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'Treasure Hunter' },
-    [1858] = { augId = 148,  base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'Gilfinder' },
+    [1858] = { augId = 148,  base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'Gilfinder', maxBoost = 3 },  -- cap: (1+3)*1 = 4/slot, 5 slots = 20 max
     [2372] = { augId = 188,  base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'Resist Charm' },
     [2827] = { augId = 322,  base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'Song spellcasting time' },
     [2841] = { augId = 518,  base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'CHR' },
