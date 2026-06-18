@@ -144,7 +144,9 @@ def _group_by_date(commits: list[dict]) -> dict[str, dict]:
 
 def _date_label(dt: datetime) -> str:
     """Return a human-readable label like 'Sunday · June 15, 2026'."""
-    return dt.strftime("%A · %B %-d, %Y")
+    # FJB: %-d (no-leading-zero day) is a Linux-only strftime token and raises
+    # ValueError on Windows; use dt.day directly so this runs on the laptop too.
+    return f"{dt:%A} · {dt:%B} {dt.day}, {dt:%Y}"
 
 
 # ---------------------------------------------------------------------------
