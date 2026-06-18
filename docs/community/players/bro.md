@@ -1,6 +1,6 @@
 # Bro
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 18h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 19h
 
 `⭐ 7 Ascensions` `💪 22 jobs @99`
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 93f248cf23d6 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: 600c5eafe58d -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

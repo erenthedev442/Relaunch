@@ -1,6 +1,6 @@
 # Subpar
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 3d 7h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 3d 8h
 
 `⭐ 2 Ascensions` `💪 3 jobs @99`
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b40071edc6b7 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: 583a5d324e86 -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

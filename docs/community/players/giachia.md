@@ -1,6 +1,6 @@
 # Giachia
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 3d 3h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 3d 4h
 
 `💪 1 job @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 440f91e8c7c9 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: 53bf851ac177 -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

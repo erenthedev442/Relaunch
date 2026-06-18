@@ -74,17 +74,17 @@ _**13 abilities** available across 4 job groups._
 | Ability | Why |
 |---|---|
 | **Meditate** | Free TP buildup — valuable on any melee job |
-| **Convert** | HP↔MP swap — useful for any job that uses MP |
 | **Souleater** | High burst damage at the cost of HP — strong on DD jobs |
-| **Provoke** | Enmity tool for off-tanks or situations without a PLD |
-| **Flee** | Fastest movement boost in the game — great for travel |
-| **Sneak Attack** | Guaranteed crit from behind — excellent for opener bursts |
+| **Berserk** | Straight attack boost — pure DD value on any melee |
+| **Warcry** | Party-wide attack boost — great for coordinated parties |
+| **Rampart** | Party-wide damage-reduction ward — strong in tough content |
+| **Sentinel** | Heavy defense + enmity burst — useful off-tank tool |
 
 There's no wrong choice — the 10M gil cost means you'll pick deliberately, but the license lasts forever. Start with the ability that fills a hole in your job's toolkit.
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2ea15eb4c525 -->
-_Last updated: 2026-06-15 02:32 UTC_
+<!-- content-hash: 5795f585a137 -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

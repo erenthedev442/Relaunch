@@ -1,6 +1,6 @@
 # Rtklm
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 10h 34m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 11h 16m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 68/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d0637954170f -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: f59836512bc1 -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

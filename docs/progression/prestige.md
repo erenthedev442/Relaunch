@@ -51,7 +51,7 @@ The Trial is no ordinary fight. Three superbosses — used **nowhere else** on t
 | Boss | The Dread |
 |---|---|
 | **Diabolos, the Dream Devourer** | Weaves **Nightmare** — an area sleep that drags your whole party into the dark, then drains your life while you dream. |
-| **Medusa, the Gorgon Queen** | _Unknown_ |
+| **Medusa, the Gorgon Queen** | Her **petrifying gaze** turns you to stone where you stand. Frozen, you can only watch as she carves the party apart. |
 | **Odin, the Doombringer** | Raises his blade for **Zantetsuken** — a stroke that does not wound. It simply ends you. |
 <!-- DOCGEN:END id="prestige-nightmare-court" -->
 
@@ -137,12 +137,22 @@ Spend AP at the Altar on any of the categories below.
 | Parry Rate | +1% Parry / level (max 25%) [1 AP] | 25 | 1 AP | — |
 | Subtle Blow | +1 Subtle Blow / level (max +50) [1 AP] | 50 | 1 AP | — |
 | WS Dmg | +2% WS Dmg / level (max 100%) [3 AP] | 50 | 3 AP | — |
+| Dual Wield | +1% Dual Wield / level (max 25%) [2 AP] | 25 | 2 AP | — |
+| SC Dmg | +2% Skillchain Dmg / level (max 100%) [3 AP] | 50 | 3 AP | — |
+
+**Ranged**
+
+| Stat | Per Level | Max Levels | AP Cost | Max Total |
+|---|---|---:|---:|---|
+| Ranged Acc | +10 R.Acc / level (max +500) [1 AP] | 50 | 1 AP | — |
+| Ranged Att | +20 R.Att / level (max +1000) [1 AP] | 50 | 1 AP | — |
 
 **Mitigation**
 
 | Stat | Per Level | Max Levels | AP Cost | Max Total |
 |---|---|---:|---:|---|
 | Phys.DT- | -1% Phys.DT / level (max -25%) [3 AP] | 25 | 3 AP | — |
+| Mag.DT- | -1% Mag.DT / level (max -25%) [3 AP] | 25 | 3 AP | — |
 | Haste | +1% Haste / level (max 25%) [3 AP] | 25 | 3 AP | — |
 
 **Magic Support**
@@ -153,6 +163,8 @@ Spend AP at the Altar on any of the categories below.
 | Fast Cast | +1% Fast Cast / level (max 50%) [2 AP] | 50 | 2 AP | — |
 | Enspell Dmg | +10 Enspell Dmg / level (max +500) [2 AP] | 50 | 2 AP | — |
 | Cure Potency | +2% Cure Pot. / level (max +50%) [2 AP] | 25 | 2 AP | — |
+| Refresh | +1 Refresh / level (max +10 MP/tick) [3 AP] | 10 | 3 AP | — |
+| Magic Dmg | +10 Magic Dmg / level (max +250) [2 AP] | 25 | 2 AP | — |
 
 **Utility**
 
@@ -185,6 +197,6 @@ Boosts are **permanent and stacking** — they re-apply automatically every time
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bad7b9737446 -->
-_Last updated: 2026-06-14 05:50 UTC_
+<!-- content-hash: 82a9a1315dbc -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

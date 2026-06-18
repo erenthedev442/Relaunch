@@ -50,6 +50,11 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     local playSlots, hiloReveal, rouletteChoice, diceChoice
     local games
 
+    -- Per-player in-flight guard: prevents the 30ms timer window between
+    -- settle() and the new menu arriving from being exploited via packet
+    -- replay (sending the same bet click twice before the menu updates).
+    local betting = {}
+
     -- The menu round-trips title + the clicked label through a 128-byte buffer
     -- (client matches the full string on click) -- keep labels short or a click
     -- silently no-ops. Send is deferred a tick so result messages land first.
@@ -62,13 +67,19 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         return string.format('Lady Luck  (Gil: %s)', fmtGil(player:getGil()))
     end
 
-    -- Debit the wager; false (with a message) if the player can't cover it.
+    -- Debit the wager; false (with a message) if the player can't cover it
+    -- or if a previous bet is still resolving (double-click guard).
     local function takeBet(player, bet)
+        local pid = player:getID()
+        if betting[pid] then
+            return false
+        end
         if player:getGil() < bet then
             player:printToPlayer(string.format('[Casino] You need %s gil for that bet -- you have %s.',
                 fmtGil(bet), fmtGil(player:getGil())), S)
             return false
         end
+        betting[pid] = true
         player:delGil(bet)
         return true
     end
@@ -202,6 +213,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
     -- ---------- stake picker (shared by all games) ----------
     openBets = function(player, game)
+        betting[player:getID()] = nil  -- lift the in-flight guard
         menu.title = string.format('%s -- choose your stake  (Gil: %s)', game.label, fmtGil(player:getGil()))
         local opts = {}
         for _, amt in ipairs(catalog.betTiers) do
@@ -234,6 +246,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     end
 
     mainScreen = function(player)
+        betting[player:getID()] = nil  -- ensure guard is clear on any return to main
         menu.title = header(player)
         menu.options =
         {

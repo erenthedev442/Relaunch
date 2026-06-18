@@ -8,13 +8,13 @@ Records of Eminence shower you with **Sparks of Eminence**, and once you're capp
 ## Where to find the Broker
 
 <!-- DOCGEN:BEGIN id="sparks-exchange-access" -->
-The **Eminence Broker** — shown as **"Sparks Cash"** — stands in the economy corner of **GM Home**, in the row of gil-service NPCs. Talk to him and the menu opens with your current spark balance up top.
+The **Eminence Broker** stands in the economy corner of **GM Home**, in the row of gil-service NPCs. Talk to him to convert Sparks of Eminence, Unity Accolades, or Job Points into gil.
 <!-- DOCGEN:END id="sparks-exchange-access" -->
 
 ## The exchange rate
 
 <!-- DOCGEN:BEGIN id="sparks-exchange-rate" -->
-Every Spark of Eminence is worth **10 gil**. Sparks cap out fast through Records of Eminence, so a full balance cashes out to a tidy lump of gil — a reliable way to keep your purse topped up once there's nothing left to spend sparks on.
+Sparks: **10 gil** each · Accolades: **100 gil** each · Job Points: **4,000 gil** each
 <!-- DOCGEN:END id="sparks-exchange-rate" -->
 
 ## Convert amounts
@@ -22,9 +22,38 @@ Every Spark of Eminence is worth **10 gil**. Sparks cap out fast through Records
 Talk to the Broker and the menu shows your current spark balance. Pick one of the preset amounts, or cash out your whole balance in a single click:
 
 <!-- DOCGEN:BEGIN id="sparks-exchange-tiers" -->
+### Sparks of Eminence
+
+**10 gil** per Spark.
+
 | Sparks | You receive |
 |---|---|
+| 1,000 | 10,000 gil |
+| 10,000 | 100,000 gil |
+| 50,000 | 500,000 gil |
 | **All your sparks** | balance × 10 gil |
+
+### Unity Accolades
+
+**100 gil** per Accolade.
+
+| Accolades | You receive |
+|---|---|
+| 500 | 50,000 gil |
+| 5,000 | 500,000 gil |
+| 25,000 | 2,500,000 gil |
+| **All your accolades** | balance × 100 gil |
+
+### Job Points
+
+**4,000 gil** per Job Point.
+
+| Job Points | You receive |
+|---|---|
+| 1 | 4,000 gil |
+| 5 | 20,000 gil |
+| 20 | 80,000 gil |
+| **All your JP** | balance × 4,000 gil |
 <!-- DOCGEN:END id="sparks-exchange-tiers" -->
 
 The Broker won't let an exchange overflow your gil — if you're near the gil cap, spend some first and come back.
@@ -32,6 +61,6 @@ The Broker won't let an exchange overflow your gil — if you're near the gil ca
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3b8cb3f2e366 -->
-_Last updated: 2026-06-16 22:53 UTC_
+<!-- content-hash: 4b4ef733d8ba -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

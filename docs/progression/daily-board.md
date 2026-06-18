@@ -81,13 +81,13 @@ The Daily Board NPC stands at GM Home, Activities cluster:
 
 | NPC | Position | Zone |
 |---|---|---|
-| **Daily Board** | `(-7.5, 0, -21)` | GM Home (zone 210) |
+| **Daily Board** | `(-4.5, 0, -25)` | GM Home (zone 210) |
 
 It's the westernmost NPC in the row — just past the EXP Camp Moogle heading west.
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 87271959b44d -->
-_Last updated: 2026-06-16 22:53 UTC_
+<!-- content-hash: 8f7d607d5a2a -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

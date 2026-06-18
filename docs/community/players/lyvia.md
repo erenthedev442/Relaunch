@@ -1,6 +1,6 @@
 # Lyvia
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 5h 23m
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 6h 6m
 
 `💪 1 job @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 45e23f0ad6da -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: ffe3532c5a95 -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

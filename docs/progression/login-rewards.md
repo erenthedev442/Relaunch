@@ -44,9 +44,9 @@ Each milestone reward is granted **once per threshold**. Reaching 30 days also t
 
 ### Example Nudge Messages
 
-> *[Login Streak] 3 days in a row — 7 days earns +50 marks!*
+> *[Login Streak] 3 days in a row — 7 days earns +1,500 marks!*
 >
-> *[Login Streak] 7-Day Streak — 7 days in a row! +50 bonus marks!*
+> *[Login Streak] 7-Day Streak — 7 days in a row! +1,500 bonus marks!*
 
 ---
 
@@ -59,6 +59,6 @@ Streaks are a low-effort way to accumulate marks between active play sessions. E
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 80729a9b0925 -->
-_Last updated: 2026-06-14 05:50 UTC_
+<!-- content-hash: 6814d95194ad -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

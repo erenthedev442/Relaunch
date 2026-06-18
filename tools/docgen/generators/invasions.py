@@ -1,6 +1,6 @@
 """Sync docs/endgame/invasions.md with invasion_catalog.lua.
 
-Scheduled Invasions are a Besieged-style outpost defense in GM Home: twice a
+Scheduled Invasions are a Besieged-style outpost defense in Al Zahbi: twice a
 day the Voidsent assault the hub in escalating waves that scale with how many
 defenders turn up, capped by a boss. The schedule (UTC windows), the warn/grace
 timing, the wave ladder (label + level), the time limit, and the mark/Infamy/
@@ -87,8 +87,8 @@ def _render_schedule(c: dict) -> str:
         f"**{times}**.",
         "",
         f"- A server-wide warning shouts **{c['warn']} minutes** before each window "
-        f"so you can rally at GM Home.",
-        f"- The assault only fires if **at least one defender** is standing in GM Home "
+        f"so you can rally at Al Zahbi.",
+        f"- The assault only fires if **at least one defender** is standing in Al Zahbi "
         f"when the window opens — it stays armed for up to **{c['grace']} minutes** "
         f"waiting for someone to show. No defenders, no invasion.",
     ]
@@ -122,7 +122,7 @@ def _render_scaling(c: dict) -> str:
 
 def _render_rewards(c: dict) -> str:
     lines = [
-        f"Every defender present is paid out — credit goes to anyone in GM Home at the "
+        f"Every defender present is paid out — credit goes to anyone in Al Zahbi at the "
         f"relevant moment:",
         "",
         f"- **{commafy(c['per_wave'])} Hunt Marks** for each wave cleared.",
@@ -133,12 +133,16 @@ def _render_rewards(c: dict) -> str:
         f"defense.",
     ]
     lines.append("")
-    lines.append(
-        f"Victory also drops gear-vendor **medals** — a guaranteed Kindreds Medal haul, "
-        + (f"plus a rare **~1-in-{_one_in(c['gold_chance'])}** chance at a Demons Medal "
-           f"for the very best gear."
-           if c.get("gold_chance") else "with a rare bonus chance at a higher-grade medal.")
-    )
+    if c.get("gold_chance") and c["gold_chance"] >= 100:
+        medal_text = ("Victory also drops gear-vendor **medals** — a guaranteed Kindreds Medal "
+                      "haul, plus a **guaranteed Demons Medal** drop.")
+    elif c.get("gold_chance"):
+        medal_text = (f"Victory also drops gear-vendor **medals** — a guaranteed Kindreds Medal "
+                      f"haul, plus a **~1-in-{_one_in(c['gold_chance'])}** chance at a Demons Medal "
+                      f"for the very best gear.")
+    else:
+        medal_text = ("Victory also drops gear-vendor **medals** — a guaranteed Kindreds Medal haul.")
+    lines.append(medal_text)
     return "\n".join(lines)
 
 

@@ -3,7 +3,7 @@
 Live rankings pulled from the server's database. These tables refresh whenever the docs site is regenerated — typically a few times a day — so think of them as a snapshot, not a real-time scoreboard.
 
 <!-- DOCGEN:BEGIN id="lb-asof" -->
-**📊 Leaderboard data as of 2026-06-18 01:05 UTC**
+**📊 Leaderboard data as of 2026-06-18 01:47 UTC**
 <!-- DOCGEN:END id="lb-asof" -->
 
 !!! tip "Want to stay off these tables?"
@@ -204,9 +204,9 @@ _Number of distinct custom NMs each character has personally killed at least onc
 | Rank | Character | Nms |
 |---:|---|---:|
 | 🥇 | [Olindre](players/olindre.md) | 15 |
-| 🥈 | [Ririn](players/ririn.md) | 15 |
-| 🥉 | [Stoney](players/stoney.md) | 15 |
-| 4 | [Zxs](players/zxs.md) | 15 |
+| 🥈 | [Stoney](players/stoney.md) | 15 |
+| 🥉 | [Zxs](players/zxs.md) | 15 |
+| 4 | [Ririn](players/ririn.md) | 15 |
 | 5 | [Spyro](players/spyro.md) | 15 |
 | 6 | [Brixton](players/brixton.md) | 15 |
 | 7 | [Herdofturtles](players/herdofturtles.md) | 15 |
@@ -630,6 +630,6 @@ _Real Level = job level + gear iLvl bonus + Ascension levels + Job Points + attr
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 09509ea4245c -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: d33592a5a6c3 -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

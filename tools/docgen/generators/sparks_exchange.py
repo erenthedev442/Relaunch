@@ -1,15 +1,12 @@
 """Sync docs/economy/sparks-exchange.md with SparksExchange.lua.
 
-The Eminence Broker buys Sparks of Eminence for gil. Unlike the catalog-style
-systems, this NPC keeps its config inline in a `local cfg = { ... }` table, so
-we slice that block out (section) and pull the per-spark `rate`, the preset
-`tiers`, and the display `name` from it. The gil value of each tier is *computed*
-(tier * rate), so re-pricing the rate updates the published payouts.
+Reads the three exchange types from xi.sparks_exchange (sp_rate/sp_tiers,
+ac_rate/ac_tiers, jp_rate/jp_tiers) and renders a combined tiers table with
+all three currencies plus a "convert all" row for each.
 
 Markers written:
   sparks-exchange-access  — NPC + zone line
-  sparks-exchange-rate    — gil-per-spark rate
-  sparks-exchange-tiers   — preset convert amounts -> gil + "convert all"
+  sparks-exchange-tiers   — full conversion table (Sparks + Accolades + JP)
 """
 from __future__ import annotations
 
@@ -18,61 +15,98 @@ from pathlib import Path
 
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
-from tools.docgen._luaparse import section, ints, commafy
+from tools.docgen._luaparse import commafy
+
+
+def _ints(text: str) -> list[int]:
+    return [int(x) for x in re.findall(r"\d+", text)]
 
 
 def _parse(text: str) -> dict:
-    c: dict = {"name": "Sparks Cash", "rate": 10, "tiers": []}
+    c: dict = {
+        "sp_rate": 10,  "sp_tiers": [],
+        "ac_rate": 100, "ac_tiers": [],
+        "jp_rate": 4000, "jp_tiers": [],
+    }
 
-    cfg = section(text, "cfg")
+    # Find the xi.sparks_exchange = { ... } block
+    m = re.search(r"xi\.sparks_exchange\s*=\s*\{", text)
+    if not m:
+        return c
+    # Grab everything up to the closing brace (simple scan)
+    block_start = m.end()
+    depth = 1
+    i = block_start
+    while i < len(text) and depth:
+        if text[i] == "{":
+            depth += 1
+        elif text[i] == "}":
+            depth -= 1
+        i += 1
+    block = text[block_start:i - 1]
 
-    m = re.search(r"rate\s*=\s*(\d+)", cfg)
-    if m:
-        c["rate"] = int(m.group(1))
+    for key in ("sp_rate", "ac_rate", "jp_rate"):
+        m2 = re.search(rf"\b{key}\s*=\s*(\d+)", block)
+        if m2:
+            c[key] = int(m2.group(1))
 
-    m = re.search(r"tiers\s*=\s*\{([^}]*)\}", cfg)
-    if m:
-        c["tiers"] = ints(m.group(1))
-
-    m = re.search(r"name\s*=\s*'([^']+)'", cfg)
-    if m:
-        c["name"] = m.group(1)
+    for key in ("sp_tiers", "ac_tiers", "jp_tiers"):
+        m2 = re.search(rf"\b{key}\s*=\s*\{{([^}}]*)\}}", block)
+        if m2:
+            c[key] = _ints(m2.group(1))
 
     return c
 
 
-# ---------------------------------------------------------------------------
-
 def _render_access(c: dict) -> str:
     return (
-        f"The **Eminence Broker** — shown as **\"{c['name']}\"** — stands in the "
-        f"economy corner of **GM Home**, in the row of gil-service NPCs. Talk to "
-        f"him and the menu opens with your current spark balance up top."
-    )
-
-
-def _render_rate(c: dict) -> str:
-    return (
-        f"Every Spark of Eminence is worth **{commafy(c['rate'])} gil**. Sparks cap "
-        f"out fast through Records of Eminence, so a full balance cashes out to a "
-        f"tidy lump of gil — a reliable way to keep your purse topped up once "
-        f"there's nothing left to spend sparks on."
+        "The **Eminence Broker** stands in the economy corner of **GM Home**, in the "
+        "row of gil-service NPCs. Talk to him to convert Sparks of Eminence, Unity "
+        "Accolades, or Job Points into gil."
     )
 
 
 def _render_tiers(c: dict) -> str:
-    rate = c["rate"]
     rows = [
+        "### Sparks of Eminence",
+        "",
+        f"**{commafy(c['sp_rate'])} gil** per Spark.",
+        "",
         "| Sparks | You receive |",
         "|---|---|",
     ]
-    for amt in c["tiers"]:
-        rows.append(f"| {commafy(amt)} | {commafy(amt * rate)} gil |")
-    rows.append("| **All your sparks** | balance × " + commafy(rate) + " gil |")
+    for amt in c["sp_tiers"]:
+        rows.append(f"| {commafy(amt)} | {commafy(amt * c['sp_rate'])} gil |")
+    rows.append(f"| **All your sparks** | balance × {commafy(c['sp_rate'])} gil |")
+
+    rows += [
+        "",
+        "### Unity Accolades",
+        "",
+        f"**{commafy(c['ac_rate'])} gil** per Accolade.",
+        "",
+        "| Accolades | You receive |",
+        "|---|---|",
+    ]
+    for amt in c["ac_tiers"]:
+        rows.append(f"| {commafy(amt)} | {commafy(amt * c['ac_rate'])} gil |")
+    rows.append(f"| **All your accolades** | balance × {commafy(c['ac_rate'])} gil |")
+
+    rows += [
+        "",
+        "### Job Points",
+        "",
+        f"**{commafy(c['jp_rate'])} gil** per Job Point.",
+        "",
+        "| Job Points | You receive |",
+        "|---|---|",
+    ]
+    for amt in c["jp_tiers"]:
+        rows.append(f"| {commafy(amt)} | {commafy(amt * c['jp_rate'])} gil |")
+    rows.append(f"| **All your JP** | balance × {commafy(c['jp_rate'])} gil |")
+
     return "\n".join(rows)
 
-
-# ---------------------------------------------------------------------------
 
 def generate(repo_root: Path, docs_dir: Path) -> None:
     src = resolve_source(repo_root, "modules/custom/lua/SparksExchange.lua")
@@ -84,11 +118,18 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     c = _parse(text)
 
     page = docs_dir / "economy" / "sparks-exchange.md"
+    rate_summary = (
+        f"Sparks: **{commafy(c['sp_rate'])} gil** each · "
+        f"Accolades: **{commafy(c['ac_rate'])} gil** each · "
+        f"Job Points: **{commafy(c['jp_rate'])} gil** each"
+    )
     blocks = [
         ("sparks-exchange-access", _render_access(c)),
-        ("sparks-exchange-rate", _render_rate(c)),
+        ("sparks-exchange-rate", rate_summary),
         ("sparks-exchange-tiers", _render_tiers(c)),
     ]
     written = sum(1 for marker, content in blocks if write_between_markers(page, marker, content))
-    print(f"[sparks_exchange] {written}/{len(blocks)} marker block(s) written "
-          f"(rate={c['rate']}, tiers={len(c['tiers'])})")
+    print(f"[sparks_exchange] {written}/{len(blocks)} marker block(s) written "  # noqa: E501
+          f"(sp={c['sp_rate']}g/{len(c['sp_tiers'])} tiers, "
+          f"ac={c['ac_rate']}g/{len(c['ac_tiers'])} tiers, "
+          f"jp={c['jp_rate']}g/{len(c['jp_tiers'])} tiers)")

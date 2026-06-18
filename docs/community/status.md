@@ -33,10 +33,10 @@ _Snapshot taken at build time — timers drift after that. For live status, chec
 |---|---|---:|---|
 | **Roc** | Sauromugue Champaign | 6–8 h | 🟢 **Up now** |
 | **Simurgh** | Rolanberry Fields | 6–8 h | 🟢 **Up now** |
-| **Serket** | Garlaige Citadel | 6–8 h | 🟠 pops in ~2h 7m |
-| **Adamantoise** | Valley of Sorrows | 21–24 h | 🟠 pops in ~8h 16m |
-| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~16h 8m |
-| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟠 pops in ~18h 28m |
+| **Serket** | Garlaige Citadel | 6–8 h | 🟠 pops in ~1h 24m |
+| **Adamantoise** | Valley of Sorrows | 21–24 h | 🟠 pops in ~7h 34m |
+| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~15h 25m |
+| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟠 pops in ~17h 45m |
 | **Spiny Spipi** | East Sarutabaruta | 4–6 h | ⚪ awaiting first spawn |
 | **King Arthro** | Jugner Forest | 8–10 h | ⚪ awaiting first spawn |
 <!-- DOCGEN:END id="status-hnm" -->
@@ -58,10 +58,10 @@ _Health snapshot from the last site rebuild._ 🟢 OK · 🟠 last run reported 
 
 | Background job | Schedule | Last run | Status (snapshot) |
 |---|---|---:|---|
-| **Auction House market-maker** | every 15 min | 3d 6h ago | 🔴 **STALE** — no run in 3d 6h |
+| **Auction House market-maker** | every 15 min | 3d 7h ago | 🔴 **STALE** — no run in 3d 7h |
 | **Discord notifier (webhook)** | every 5 min | — | ⚪ no signal yet |
 | **Discord bot (slash commands)** | daemon · 5 min beat | — | ⚪ no signal yet |
-| **Database backup + verify** | nightly 04:00 | 17d 12h ago | 🔴 **STALE** — no run in 17d 12h |
+| **Database backup + verify** | nightly 04:00 | 17d 13h ago | 🔴 **STALE** — no run in 17d 13h |
 <!-- DOCGEN:END id="status-jobs" -->
 
 ---
@@ -119,6 +119,6 @@ See the full list at [Hall of Fame](highlights.md).
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6d769ce85451 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: 6320621d0992 -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

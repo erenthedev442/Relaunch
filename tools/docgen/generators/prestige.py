@@ -73,7 +73,7 @@ def _balanced_blocks(text: str):
 
 _DREAD = {
     11370: "Weaves **Nightmare** — an area sleep that drags your whole party into the dark, then drains your life while you dream.",
-    11371: "Her **petrifying gaze** turns you to stone where you stand. Frozen, you can only watch as she carves the party apart.",
+    11373: "Her **petrifying gaze** turns you to stone where you stand. Frozen, you can only watch as she carves the party apart.",
     11372: "Raises his blade for **Zantetsuken** — a stroke that does not wound. It simply ends you.",
 }
 
@@ -84,9 +84,10 @@ _DREAD = {
 _SECTIONS = [
     ("Base Stats",        ["STR", "DEX", "VIT", "AGI", "INT", "MND", "CHR", "HP", "MP"]),
     ("Melee & Magic",     ["ACC", "ATT", "DEF", "EVA", "MACC", "MATT"]),
-    ("Combat Traits",     ["STP", "TPBON", "QA", "CRIT", "CRITDMG", "CTR", "PARRY", "SBL", "WSDMG"]),
-    ("Mitigation",        ["PDT", "HASTE"]),
-    ("Magic Support",     ["INTP", "FCAST", "ENSP", "CURE"]),
+    ("Combat Traits",     ["STP", "TPBON", "QA", "CRIT", "CRITDMG", "CTR", "PARRY", "SBL", "WSDMG", "DW", "SCDMG"]),
+    ("Ranged",            ["RACC", "RATT"]),
+    ("Mitigation",        ["PDT", "MDT", "HASTE"]),
+    ("Magic Support",     ["INTP", "FCAST", "ENSP", "CURE", "RFSH", "MDMG"]),
     ("Utility",           ["TH", "GIL"]),
     ("Resistances & Skills", ["STRES", "ELRES", "SKILL"]),
 ]

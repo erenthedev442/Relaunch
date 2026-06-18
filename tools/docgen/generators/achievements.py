@@ -161,6 +161,13 @@ _FUNC_CATEGORY = {
     "onWaveClear": "Wave Fights",
     "onAscension": "Prestige Ascensions",
     "onAugmentTrade": "Augment Trades",
+    "onDerbyResult": "Chocobo Derby",
+    "onTreasureFound": "Treasure Hunting",
+    "onLeagueTurnIn": "Provisioners' League",
+    "onLeagueRank": "Provisioners' League",
+    "onRaidKill": "Star-Devourer Raid",
+    "onInvasionResult": "Invasions",
+    "onColosseumResult": "Colosseum",
 }
 _HLKILL_VAR_CATEGORY = {
     "totalKills": "Hunting Milestones",
@@ -178,6 +185,12 @@ _CATEGORY_ORDER = [
     "Wave Fights",
     "Prestige Ascensions",
     "Augment Trades",
+    "Chocobo Derby",
+    "Treasure Hunting",
+    "Provisioners' League",
+    "Star-Devourer Raid",
+    "Invasions",
+    "Colosseum",
 ]
 
 

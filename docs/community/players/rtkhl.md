@@ -1,6 +1,6 @@
 # Rtkhl
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-17 · Character age 2d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-17 · Character age 2d 1h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 68/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ba5b88a68720 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: d804c6c38648 -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

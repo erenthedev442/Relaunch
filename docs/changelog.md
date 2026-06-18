@@ -5,6 +5,9 @@ Recent changes to Legendary. Updated automatically from our development history.
 ---
 
 !!! note "Wednesday · June 17, 2026"
+    - feat(mystats): show pet level + stats for all 4 pet jobs (was PUP-only)
+    - docs: refresh from live server (first full docgen run on Legendary, 62/62 generators)
+    - fix(docgen): changelog uses dt.day not %-d (Windows-compatible)
     - feat(docgen): recover the docs toolchain into the main tree (from fjb/main)
     - feat(shop): add Eminent Sachet (21383) to !shop ammo
     - fix(deploy): repair the SITE_BAT re-score step after the worktree was deleted
@@ -1035,3 +1038,10 @@ Recent changes to Legendary. Updated automatically from our development history.
 
 ??? note "Friday · March 20, 2026"
     - Enum and data for Moblin Maze Mongers
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: bcef94d46c76 -->
+_Last updated: 2026-06-18 01:47 UTC_
+<!-- DOCGEN:END id="last-updated" -->

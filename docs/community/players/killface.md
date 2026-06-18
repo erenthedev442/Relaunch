@@ -1,6 +1,6 @@
 # Killface
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 20h 52m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 21h 34m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 58/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8156b7bc0da5 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: 32dde327bb69 -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

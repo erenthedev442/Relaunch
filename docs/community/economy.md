@@ -75,7 +75,7 @@ Completed Auction House sales over recent windows. **Gil volume** is the total t
 
 | Window | Lots sold | Gil volume | Gil sunk to AH |
 |---|---:|---:|---:|
-| Last 24 hours | 510 | 254,453,835 gil | 141,470,000 gil |
+| Last 24 hours | 506 | 250,653,835 gil | 137,670,000 gil |
 | Last 7 days | 1,983 | 696,651,978 gil | 504,920,000 gil |
 | Last 30 days | 1,983 | 696,651,978 gil | 504,920,000 gil |
 <!-- DOCGEN:END id="econ-velocity" -->
@@ -131,6 +131,6 @@ Who's around. **Active** counts characters that logged out within the window (a 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cb217e4b2c17 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: 921c629c440d -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

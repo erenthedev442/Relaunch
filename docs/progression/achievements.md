@@ -78,6 +78,63 @@ Trigger based on your total number of augmentation trades.
 | Augment Novice | 5 lifetime augments | +75 | — |
 | Augment Expert | 50 lifetime augments | +300 | — |
 | Augment Master | 200 lifetime augments | +1,000 | Hero Among Heroes |
+
+---
+
+## Chocobo Derby
+
+| Milestone | Trigger | Reward | Title Unlock |
+|---|---|---:|---|
+| Winning Ticket | wins >= 1 | +100 | — |
+| Derby Regular | wins >= 10 | +300 | — |
+
+---
+
+## Treasure Hunting
+
+| Milestone | Trigger | Reward | Title Unlock |
+|---|---|---:|---|
+| X Marks the Spot | found >= 1 | +100 | — |
+| Master Cartographer | found >= 10 | +500 | — |
+
+---
+
+## Provisioners' League
+
+| Milestone | Trigger | Reward | Title Unlock |
+|---|---|---:|---|
+| Expert Provisioner | rank >= 3 | +300 | — |
+| Legendary Provisioner | rank >= 5 | +2,000 | — |
+
+---
+
+## Star-Devourer Raid
+
+| Milestone | Trigger | Reward | Title Unlock |
+|---|---|---:|---|
+| Star-Slayer | kills >= 1 | +500 | — |
+| Devourer of the Devourer | kills >= 10 | +1,500 | — |
+
+---
+
+## Invasions
+
+| Milestone | Trigger | Reward | Title Unlock |
+|---|---|---:|---|
+| Sanctuary Defender | wins >= 1 | +150 | — |
+| Bulwark of the Sanctuary | wins >= 10 | +500 | — |
+| Voidsent Bane | kills >= 100 | +300 | — |
+
+---
+
+## Colosseum
+
+| Milestone | Trigger | Reward | Title Unlock |
+|---|---|---:|---|
+| First Blood | wins >= 1 | +100 | — |
+| Arena Regular | wins >= 10 | +300 | — |
+| Contender | best >= 1400 | +500 | — |
+| Arena Champion | best >= 1600 | +1,500 | — |
 <!-- DOCGEN:END id="achievements-tables" -->
 
 ---
@@ -92,6 +149,6 @@ Trigger based on your total number of augmentation trades.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 70808166d9a6 -->
-_Last updated: 2026-06-16 22:53 UTC_
+<!-- content-hash: a2c82d1df4a7 -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->

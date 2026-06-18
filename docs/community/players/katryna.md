@@ -1,6 +1,6 @@
 # Katryna
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 2d 6h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 2d 7h
 
 `💪 2 jobs @99`
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 52c1c42bd439 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: 9cb04986c502 -->
+_Last updated: 2026-06-18 01:47 UTC_
 <!-- DOCGEN:END id="last-updated" -->
