@@ -1,6 +1,6 @@
 # Ibuprofen
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-13 · Character age 4d 21h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-13 · Character age 4d 22h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 13b0a64f5d50 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 5c8df97796a6 -->
+_Last updated: 2026-06-18 21:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

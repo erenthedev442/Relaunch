@@ -1,6 +1,6 @@
 # Herdofturtles
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 18h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 19h
 
 `⭐ 29 Ascensions` `💪 4 jobs @99`
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e539595fbca7 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 5f1e01e53cd8 -->
+_Last updated: 2026-06-18 21:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

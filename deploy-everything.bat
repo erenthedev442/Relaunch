@@ -33,7 +33,9 @@ set "SRC=D:\server"
 set "REMOTE=/home/azureuser/server"
 set "TGZ=%TEMP%\fjb_full.tgz"
 set "OUT=%TEMP%\fjb_de_out.txt"
-set "SSHOPT=-o StrictHostKeyChecking=accept-new"
+REM keepalive: a dropped connection ERRORS in ~60s instead of hanging the deploy forever.
+REM (15s probe x4 misses = ~60s dead-detect; ConnectTimeout bounds the initial connect.)
+set "SSHOPT=-o StrictHostKeyChecking=accept-new -o ServerAliveInterval=15 -o ServerAliveCountMax=4 -o ConnectTimeout=20"
 set "SITE_BAT=D:\server\refresh-site.bat"
 set "SITELOG=D:\server\refresh-site.log"
 set "LOG=%SRC%\deploy-everything.log"

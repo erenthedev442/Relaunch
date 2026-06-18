@@ -1,6 +1,6 @@
 # Jatant
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-14 · Character age 4d 20h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-14 · Character age 4d 21h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 18/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8d86580b530a -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: c13456fa9a74 -->
+_Last updated: 2026-06-18 21:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

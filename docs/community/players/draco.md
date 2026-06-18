@@ -1,6 +1,6 @@
 # Draco
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 15h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 16h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 66/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6dc28711b197 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 266db6258dfb -->
+_Last updated: 2026-06-18 21:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

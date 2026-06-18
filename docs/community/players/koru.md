@@ -1,6 +1,6 @@
 # Koru
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 1h
 
 `💪 2 jobs @99`
 
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a4681389c094 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 5da706d7aa71 -->
+_Last updated: 2026-06-18 21:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

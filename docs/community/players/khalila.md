@@ -1,6 +1,6 @@
 # Khalila
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 3d 17h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 3d 18h
 
 `💪 3 jobs @99`
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 872c979f1db3 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: ec683c9f8fc8 -->
+_Last updated: 2026-06-18 21:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

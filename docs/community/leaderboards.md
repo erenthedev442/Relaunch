@@ -3,7 +3,7 @@
 Live rankings pulled from the server's database. These tables refresh whenever the docs site is regenerated — typically a few times a day — so think of them as a snapshot, not a real-time scoreboard.
 
 <!-- DOCGEN:BEGIN id="lb-asof" -->
-**📊 Leaderboard data as of 2026-06-18 20:56 UTC**
+**📊 Leaderboard data as of 2026-06-18 21:39 UTC**
 <!-- DOCGEN:END id="lb-asof" -->
 
 !!! tip "Want to stay off these tables?"
@@ -630,6 +630,6 @@ _Real Level = job level + gear iLvl bonus + Ascension levels + Job Points + attr
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dd1cd4e67f8b -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: b16cc85e516a -->
+_Last updated: 2026-06-18 21:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

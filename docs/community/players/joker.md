@@ -1,6 +1,6 @@
 # Joker
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 7h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 8h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 93/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 39b20213e910 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 4da1a94879f4 -->
+_Last updated: 2026-06-18 21:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

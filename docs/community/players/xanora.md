@@ -1,6 +1,6 @@
 # Xanora
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-17 · Character age 1d 15h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-17 · Character age 1d 16h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 74/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 48e9cf57dc3d -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 78787da8caae -->
+_Last updated: 2026-06-18 21:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

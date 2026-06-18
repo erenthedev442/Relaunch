@@ -1,6 +1,6 @@
 # Sophia
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 13h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 14h
 
 `💪 2 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6d5b54d42cf6 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 75ff75307f70 -->
+_Last updated: 2026-06-18 21:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

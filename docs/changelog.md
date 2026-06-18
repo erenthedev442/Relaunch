@@ -5,6 +5,7 @@ Recent changes to Legendary. Updated automatically from our development history.
 ---
 
 !!! note "Thursday · June 18, 2026"
+    - Deploy Everything Thu 06/18/2026 13:56:56.38
     - fix(pup): automaton survives master death (retail behavior)
     - feat(deploy): sync local test DB from Azure at end of deploy-everything
     - fix(augments): apply the 5th augment slot on inventory load
@@ -1060,6 +1061,6 @@ Recent changes to Legendary. Updated automatically from our development history.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fcae2811c893 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 2bd6e68a50ec -->
+_Last updated: 2026-06-18 21:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

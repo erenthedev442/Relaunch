@@ -1,6 +1,6 @@
 # Cervantis
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 5d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 5d 7h
 
 `⭐ 6 Ascensions` `💪 5 jobs @99`
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3474f1c49a44 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: d942b1363dfd -->
+_Last updated: 2026-06-18 21:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->
