@@ -234,10 +234,14 @@ catalog.difficulties =
         -- Beyond Insane: 7 waves of 4 simultaneous supreme gods at level 225.
         -- Designed for full geared parties with deep Prestige investment.
         -- 28 total kills. waveDelay is 10s -- barely enough to breathe.
+        -- spawnStagger=5: 4 gods arrive at t+0/5/10/15s. The global 30s
+        -- stagger stacks 90s of dead air while players wait for gods 2-4;
+        -- 5s lets all four pile on within 15s for a true chaos wave.
         wavesTotal      = 7,
         mobsPerWave     = 4,
         graceDelay      = 10,
         waveDelay       = 10,
+        spawnStagger    = 5,
         minLevel        = 225,
         maxLevel        = 225,
         completionBonus = 10000,

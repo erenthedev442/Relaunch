@@ -137,7 +137,11 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
             -- Per-kill points go to the actual killer (might be the
             -- owner, might be a friend helping out). Custom_NM_Kills
             -- bumps for whoever got the killing blow.
-            if killer then
+            -- Guard against non-PC killers (trusts, pets, DoT ticks):
+            -- setCharVar/printToPlayer are PC-only; calling them on a
+            -- trust entity throws a Lua error that silently skips the
+            -- wave-clear check below → session freezes permanently.
+            if killer and killer:getObjType() == xi.objType.PC then
                 killer:setCharVar('HL_Points',
                     (killer:getCharVar('HL_Points') or 0) + sess.markBonus)
                 killer:setCharVar('Custom_NM_Kills',
@@ -272,7 +276,7 @@ startWave = function(player)
     sess.mobsAlive     = {}
     sess.pendingSpawns = #mobsThisWave   -- counts mobs not yet spawned
 
-    local staggerMs     = (catalog.spawnStagger or 0) * 1000
+    local staggerMs     = (diffDef.spawnStagger or catalog.spawnStagger or 0) * 1000
     local capturedWave  = sess.waveIndex  -- snapshot so timer closures can detect wave change
 
     for i, mobDef in ipairs(mobsThisWave) do
