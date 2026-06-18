@@ -3841,7 +3841,17 @@ int32 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, i
         damage = HandleStoneskin(PDefender, damage);
         HandleAfflatusMiseryDamage(PDefender, damage);
     }
-    damage = std::clamp(damage, -131071, 131071);
+    // FJB: PC skillchain damage bypasses the 131,071 action-packet ceiling just
+    // like TakeWeaponskillDamage. Full damage lands on HP; the 17-bit client
+    // field caps the floating number. Mob-sourced skillchains stay clamped.
+    if (PAttacker && PAttacker->objtype == TYPE_PC)
+    {
+        NotifyOverCapDamage(PAttacker, damage, "SC");
+    }
+    else
+    {
+        damage = std::clamp(damage, -131071, 131071);
+    }
 
     uint16 elementOffset = static_cast<uint16>(DAMAGE_TYPE::ELEMENTAL) + static_cast<uint16>(appliedEle);
     PDefender->takeDamage(damage, PAttacker, ATTACK_TYPE::SPECIAL, appliedEle == ELEMENT_NONE ? DAMAGE_TYPE::NONE : static_cast<DAMAGE_TYPE>(elementOffset), true);
@@ -3865,7 +3875,7 @@ int32 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, i
 
         case TYPE_MOB:
         {
-            static_cast<CMobEntity*>(PDefender)->PEnmityContainer->UpdateEnmityFromDamage(taChar ? taChar : PAttacker, std::abs(damage)); // assume negative damage (healing) deals the same enmity as dealing damage
+            static_cast<CMobEntity*>(PDefender)->PEnmityContainer->UpdateEnmityFromDamage(taChar ? taChar : PAttacker, std::abs(std::clamp(damage, -131071, 131071))); // assume negative damage (healing) deals the same enmity as dealing damage
         }
         break;
         default:
@@ -3874,7 +3884,9 @@ int32 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, i
         }
     }
 
-    return damage;
+    // Full damage already landed on HP; return packet-safe value for the action
+    // packet floating number (addEffectParam is a 17-bit field on the client).
+    return std::clamp(damage, -131071, 131071);
 }
 
 CItemEquipment* GetEntityArmor(CBattleEntity* PEntity, SLOTTYPE Slot)
