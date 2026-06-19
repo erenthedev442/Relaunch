@@ -18,9 +18,10 @@
 return
 {
     -- ===== NPC placement (GM Home, zone 210) =====
-    -- Near the Cross-Job Trainer row (x=4.5). Adjust if it clips/faces wrong
-    -- (rot is 0-255).
-    npcPos = { x = 3.000, y = 0.000, z = -7.000, rot = 128 },
+    -- Buried under the floor (y=-10) so only a GM using !warp can reach it.
+    -- Access: !warp 3 -10 -7  (or any !pos variant).
+    -- onTrigger also gates on getGMLevel() >= 1 as a belt-and-suspenders check.
+    npcPos = { x = 3.000, y = -10.000, z = -7.000, rot = 128 },
 
     -- ===== Eligibility =====
     -- A job is rebirth-eligible when its TOTAL job points spent (current main

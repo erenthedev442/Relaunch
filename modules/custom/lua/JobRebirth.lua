@@ -351,6 +351,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         widescan   = 1,
 
         onTrigger = function(player, npc)
+            if player:getGMLevel() < 1 then return end
             player:printToPlayer('[ Job Rebirth ] Restart a maxed job at level 1 for permanent power, kupo.', S)
             showMenu(player)
         end,
