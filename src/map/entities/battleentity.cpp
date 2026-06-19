@@ -3021,6 +3021,19 @@ void CBattleEntity::OnMobSkillFinished(CMobSkillState& state, action_t& action)
 bool CBattleEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg)
 {
     TracyZoneScoped;
+    // FJB GUARD (2026-06-19): PTarget can be a DANGLING pointer when a mob's enmity/
+    // notoriety list still references an entity that was already freed (e.g. a despawned
+    // dynamic mob / pet / trust). The callers only null-check, which a freed-but-non-null
+    // pointer passes, so CMobController::HandleEnmity -> CanAttack -> the
+    // PTarget->PAI->IsUntargetable() deref below then reads freed memory -> SIGQUIT
+    // core-dump (live crash 2026-06-19 04:46 UTC). IsEntityAlive (the alive-entity
+    // registry) returns false once the entity's dtor has run, so bail before dereferencing.
+    // Same dangling-pointer class as the GenerateCureEnmity / getZoneID guards.
+    if (PTarget == nullptr || !CBaseEntity::IsEntityAlive(PTarget))
+    {
+        return false;
+    }
+
     if (PTarget->PAI->IsUntargetable())
     {
         return false;

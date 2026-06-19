@@ -366,6 +366,13 @@ bool CPetEntity::ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags)
 
 bool CPetEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg)
 {
+    // FJB GUARD (2026-06-19): dangling PTarget -- IsMobOwner(PTarget) below derefs it.
+    // See CBattleEntity::CanAttack for the full rationale.
+    if (PTarget == nullptr || !CBaseEntity::IsEntityAlive(PTarget))
+    {
+        return false;
+    }
+
     // prevent pets from attacking mobs that the PC master does not own
     if (this->PMaster)
     {

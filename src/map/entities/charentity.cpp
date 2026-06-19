@@ -1385,6 +1385,13 @@ bool CCharEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket
 {
     TracyZoneScoped;
 
+    // FJB GUARD (2026-06-19): dangling PTarget from a stale target/enmity ref -- bail before
+    // the PAI deref reads freed memory. See CBattleEntity::CanAttack for the full rationale.
+    if (PTarget == nullptr || !CBaseEntity::IsEntityAlive(PTarget))
+    {
+        return false;
+    }
+
     if (PTarget->PAI->IsUntargetable())
     {
         return false;

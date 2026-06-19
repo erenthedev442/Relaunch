@@ -1139,6 +1139,14 @@ void CMobEntity::DropItems(CCharEntity* PChar)
 bool CMobEntity::CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg)
 {
     TracyZoneScoped;
+    // FJB GUARD (2026-06-19): see CBattleEntity::CanAttack -- PTarget may be a dangling
+    // pointer from a stale enmity entry (freed dynamic mob / pet / trust). The skill_list
+    // branch below derefs it directly (GetMeleeRange / modelHitboxSize / distance) without
+    // going through the base CanAttack, so guard here too.
+    if (PTarget == nullptr || !CBaseEntity::IsEntityAlive(PTarget))
+    {
+        return false;
+    }
     auto skill_list_id{ getMobMod(MOBMOD_ATTACK_SKILL_LIST) };
     if (skill_list_id)
     {
