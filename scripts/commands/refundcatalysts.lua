@@ -63,7 +63,7 @@ local BANNED_AUG_NAMES =
     [558] = 'STR+INT',
     [559] = 'STR+MND',
 }
-local GIL_PER_AUG_SLOT = 10000
+local GIL_PER_AUG_SLOT = 100000
 
 -- ── All containers (bags + wardrobes) ────────────────────────────────────
 local CONTAINERS =
@@ -194,7 +194,7 @@ commandObj.onTrigger = function(player, arg)
     end
 
     if #gearHits > 0 then
-        player:printToPlayer('  -- Gear Augments (slot ZEROED in exdata + 10k/slot, relog to see effect) --', CHANNEL)
+        player:printToPlayer('  -- Gear Augments (slot ZEROED in exdata + 100k/slot, relog to see effect) --', CHANNEL)
         for _, h in ipairs(gearHits) do
             player:printToPlayer(
                 string.format('  %s  (%s #%d)  %s  → %d gil%s',
