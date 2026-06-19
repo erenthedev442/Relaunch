@@ -94,7 +94,6 @@ return {
     [1690] = { augId = 195,  base = 1,   mult = 1,  disp = 1,    cat = 2,  label = 'Subtle Blow' },
     [2149] = { augId = 328,  base = 1,   mult = 1,  disp = 1,    cat = 2,  label = 'Crit. hit damage' },
     [2150] = { augId = 513,  base = 1,   mult = 1,  disp = 1,    cat = 2,  label = 'DEX' },
-    [2499] = { augId = 553,  base = 1,   mult = 1,  disp = 1,    cat = 2,  label = 'DEX AGI' },
     [2506] = { augId = 936,  base = 1,   mult = 1,  disp = 1,    cat = 2,  label = 'Fire Affinity Magic Accuracy' },
     [2509] = { augId = 937,  base = 1,   mult = 1,  disp = 1,    cat = 2,  label = 'Ice Affinity Magic Accuracy' },
     [2522] = { augId = 938,  base = 1,   mult = 1,  disp = 1,    cat = 2,  label = 'Wind Affinity Magic Accuracy' },
@@ -192,7 +191,6 @@ return {
     [833]  = { augId = 329,  base = 1,   mult = 1,  disp = 1,    cat = 6,  label = 'Cure potency' },
     [887]  = { augId = 356,  base = 1,   mult = 1,  disp = 1,    cat = 6,  label = 'Potency of Cure received' },
     [888]  = { augId = 517,  base = 1,   mult = 1,  disp = 1,    cat = 6,  label = 'MND' },
-    [1274] = { augId = 555,  base = 1,   mult = 1,  disp = 1,    cat = 6,  label = 'MND CHR' },
     [2198] = { augId = 1797, base = 1,   mult = 1,  disp = 1,    cat = 6,  label = 'Pet MND' },
 
     -- Charisma / Charm / Enmity
@@ -331,12 +329,6 @@ return {
     [1110] = { augId = 326,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Weapon Skill Acc' },
     [1473] = { augId = 327,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Weapon skill damage' },
     [865]  = { augId = 332,  base = 1,   mult = 100, disp = 100,  cat = 13, label = 'Sklchn.dmg' },
-    [889]  = { augId = 743,  base = 1,   mult = 4,  disp = 1,    cat = 13, label = 'Dmg (melee,not ranged)' },
-    [893]  = { augId = 744,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Dmg (melee,not ranged)' },
-    [896]  = { augId = 745,  base = 33,  mult = 1,  disp = 1,    cat = 13, label = 'Dmg (melee,not ranged)' },
-    [908]  = { augId = 749,  base = 1,   mult = 4,  disp = 1,    cat = 13, label = 'Dmg (ranged,not melee)' },
-    [924]  = { augId = 750,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Dmg (ranged,not melee)' },
-    [930]  = { augId = 751,  base = 33,  mult = 1,  disp = 1,    cat = 13, label = 'Dmg (ranged,not melee)' },
     [1016] = { augId = 1024, base = 9,   mult = 1,  disp = 1,    cat = 13, label = 'Backhand Blow DMG' },
     [2013] = { augId = 1025, base = 9,   mult = 1,  disp = 1,    cat = 13, label = 'Spinning Attack DMG' },
     [2014] = { augId = 1026, base = 9,   mult = 1,  disp = 1,    cat = 13, label = 'Howling Fist DMG' },

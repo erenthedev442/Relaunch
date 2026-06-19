@@ -132,6 +132,15 @@ EXCLUDED_AUGS = {
     557,  # STR CHR  (Wyrm Horn 1816)
     558,  # STR INT  (Ovinnik Hide 2121)
     559,  # STR MND  (Catoblepas Hide 2123)
+    # More 2-stat pairs + the flat weapon-Dmg augments removed 2026-06-19 (owner request):
+    553,  # DEX AGI    (Regurgitated Wing 2499)
+    555,  # MND CHR    (Southern Pearl 1274)
+    743,  # Dmg melee  (Beetle Shell 889)
+    744,  # Dmg melee  (Giant Femur 893)
+    745,  # Dmg melee  (Scorpion Shell 896)
+    749,  # Dmg ranged (Adamantoise Shell 908)
+    750,  # Dmg ranged (Vial of Fiend Blood 924)
+    751,  # Dmg ranged (Vial of Beastman Blood 930)
     # (327 "Weapon skill damage" was excluded 2026-06-14 -- cheap/farmable HQ
     #  Scorpion Shell catalyst -> stackable WSD+ -- then RESTORED exactly as
     #  before 2026-06-15 by owner request. See augment_catalog.lua [1473].)
@@ -146,6 +155,8 @@ EXCLUDED_ITEMS = {
     # The 6 catalysts of the removed STR-pair augments (2026-06-19) — banned so
     # they aren't re-assigned to other augments (a clean removal, not a swap).
     1628, 1640, 1680, 1816, 2121, 2123,
+    # Catalysts of the DEX/AGI + MND/CHR pairs and the 6 weapon-Dmg augments (2026-06-19):
+    2499, 1274, 889, 893, 896, 908, 924, 930,
 }
 
 MOB_DROPLIST = SQL / "mob_droplist.sql"
