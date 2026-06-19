@@ -1,15 +1,15 @@
 -----------------------------------
 -- !rebirth
--- GM-only command: warps the executor to the hidden Job Rebirth NPC
--- buried underground in RuLude Gardens (zone 243, y=-5).
--- Players cannot reach this spot; only GMs can trigger the NPC there.
+-- Player command: warps the caller to the Job Rebirth NPC, which sits
+-- underground in RuLude Gardens (zone 243, y=-5). The NPC is unreachable
+-- on foot, so this command is how every player reaches Job Rebirth.
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 1,
+    permission = 0,
     parameters = '',
 }
 
