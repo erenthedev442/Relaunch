@@ -262,6 +262,30 @@ local attackTypeShields =
     [xi.attackType.MAGICAL ] = xi.effect.MAGIC_SHIELD,
 }
 
+-- FJB true-damage readout for pet Blood Pacts. A SMN avatar's BP can land far more
+-- than 131,071 on a target's HP (BP damage is uncapped server-side), but the client's
+-- 17-bit action-packet damage field can't render a number above 131,071 -- so the
+-- floating text lies and shows the cap. Mirror the PC weaponskill over-cap behaviour:
+-- when a player-owned pet over-caps, whisper the true number to its master in chat.
+-- Called from avatarFinalAdjustments (physical BPs) and xi.mobskills.processDamage
+-- (magical BPs). The dmg <= 131071 guard keeps this to one int compare on the hot path.
+---@param pet CBaseEntity the avatar/pet that dealt the hit
+---@param dmg number the full (possibly >131,071) damage that landed on HP
+xi.summon.reportPetOverCap = function(pet, dmg)
+    if not dmg or dmg <= 131071 then
+        return
+    end
+
+    local master = pet and pet:getMaster()
+    if not master or not master:isPC() then
+        return
+    end
+
+    master:printToPlayer(string.format(
+        '%s\'s Blood Pact dealt %d damage! (the on-screen number caps at 131,071)',
+        pet:getName(), dmg), xi.msg.channel.SYSTEM_3)
+end
+
 ---@param info magicalMobSkillRetVal|physicalAvatarSkillRetVal
 ---@param mob CBaseEntity
 ---@param skill CPetSkill|CMobSkill
@@ -383,6 +407,9 @@ xi.summon.avatarFinalAdjustments = function(info, mob, skill, target, skilltype,
 
     -- Check if the mob has a damage cap
     dmg = target:checkDamageCap(dmg)
+
+    -- Tell the summoner the true number when a physical BP punches past the 131k display cap.
+    xi.summon.reportPetOverCap(mob, dmg)
 
     return dmg
 end

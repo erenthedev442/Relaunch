@@ -1516,6 +1516,11 @@ xi.mobskills.processDamage = function(actor, target, skill, action, info)
     if info.hitsLanded > 0 then
         target:updateEnmityFromDamage(actor, info.damage)
 
+        -- Tell the summoner the true number when a magical BP punches past the 131k
+        -- display cap. Cheap on the hot path: bails on a single int compare unless a
+        -- player-owned pet actually over-caps (see xi.summon.reportPetOverCap).
+        xi.summon.reportPetOverCap(actor, info.damage)
+
         return true
     end
 
