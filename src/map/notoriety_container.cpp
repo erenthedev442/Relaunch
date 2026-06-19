@@ -21,6 +21,7 @@
 #include "notoriety_container.h"
 
 #include "enmity_container.h"
+#include "entities/baseentity.h"
 #include "entities/battleentity.h"
 #include "entities/mobentity.h"
 
@@ -72,6 +73,18 @@ bool CNotorietyContainer::hasEnmity()
         std::vector<CBattleEntity*> toRemove;
         for (CBattleEntity* entry : *this)
         {
+            // FJB: a despawned entity can be left in this notoriety set as a
+            // dangling pointer; the dynamic_cast below would then deref freed
+            // memory's vtable and SIGSEGV -- the recurring hasEnmity() UAF that
+            // surfaces via a player's magic-casting check (e.g. crafted 0x01A
+            // CastMagic packets). IsEntityAlive() only looks the pointer up in
+            // the live-entity registry BY VALUE, so it is safe on a dangling
+            // pointer -- skip and purge the stale entry instead of casting it.
+            if (!CBaseEntity::IsEntityAlive(entry))
+            {
+                toRemove.emplace_back(entry);
+                continue;
+            }
             if (auto* mob = dynamic_cast<CMobEntity*>(entry))
             {
                 EnmityList_t* mobEnmityList   = mob->PEnmityContainer->GetEnmityList();
