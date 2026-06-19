@@ -76,6 +76,7 @@ def main() -> int:
         gm_home_npcs,
         hunters_guild,
         hunting_league,
+        infamy_npc,
         item_index,
         leaderboards,
         login_rewards,
@@ -158,6 +159,10 @@ def main() -> int:
         # dungeons reads dungeon_catalog.lua and renders the launch
         # ladder + Infamy Vendor inventory onto progression/dungeons.md.
         ("dungeons",         dungeons),
+        # infamy_npc reads infamy_vendor_catalog.lua and renders the Infamy
+        # Vendor's curated + auto-promoted stock onto gear-vendors.md. Runs
+        # before item_index so the finder's infamy rows match this page.
+        ("infamy_npc",       infamy_npc),
         # item_index aggregates every purchasable item across all four
         # vendor catalogs (armor/weapons/accessories/infamy) into one
         # alphabetical "where do I get it" table on

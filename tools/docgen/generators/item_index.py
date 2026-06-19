@@ -6,7 +6,7 @@ purchasable item across all four vendor catalogs into one searchable list:
   * Armor Vendor        (armor_catalog.lua)
   * Weapons Vendor      (gear_progression_catalog.lua)
   * Accessories Vendor  (accessory_catalog.lua)
-  * Infamy Vendor       (dungeon_catalog.lua — curated + auto-promoted BiS)
+  * Infamy Vendor       (infamy_vendor_catalog.lua — curated + auto-promoted BiS)
 
 It deliberately does **not** re-implement the catalog parsers. Each of the
 per-vendor generators already parses its catalog for the gear-vendors.md /
@@ -63,7 +63,7 @@ _CATALOGS = {
     "armor":       "modules/custom/lua/armor_catalog.lua",
     "weapons":     "modules/custom/lua/gear_progression_catalog.lua",
     "accessories": "modules/custom/lua/accessory_catalog.lua",
-    "infamy":      "modules/custom/lua/dungeon_catalog.lua",
+    "infamy":      "modules/custom/lua/infamy_vendor_catalog.lua",
 }
 
 # Stable order for the per-source count summary line.
@@ -170,7 +170,7 @@ def _collect_infamy(src: Path) -> list:
     text = src.read_text(encoding="utf-8", errors="replace")
     cm = dungeons._CURRENCY_NAME_RE.search(text)
     currency = dungeons._quoted_value(cm) if cm else "Infamy"
-    anchor = f"{_DUNGEON_PAGE}#the-infamy-vendor"
+    anchor = f"{_GEAR_PAGE}#infamy-vendor"
     rows = []
     for it in dungeons._extract_vendor_items(text):
         rows.append(_row(it["name"], it["cost"], currency, "", None,
