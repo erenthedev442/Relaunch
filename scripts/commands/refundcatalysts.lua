@@ -32,12 +32,12 @@ commandObj.cmdprops =
 -- Unused catalyst stacks are removed on confirm; 50,000 gil refunded per item.
 local BANNED_CATALYSTS =
 {
-    { id = 1628, name = 'Buffalo Hide',     refund = 50000 },
-    { id = 1640, name = 'Bugard Skin',      refund = 50000 },
-    { id = 1680, name = 'H.Q. Bugard Skin', refund = 50000 },
-    { id = 1816, name = 'Wyrm Horn',        refund = 50000 },
-    { id = 2121, name = 'Ovinnik Hide',     refund = 50000 },
-    { id = 2123, name = 'Catoblepas Hide',  refund = 50000 },
+    { id = 1628, name = 'Buffalo Hide',     refund = 100000 },
+    { id = 1640, name = 'Bugard Skin',      refund = 100000 },
+    { id = 1680, name = 'H.Q. Bugard Skin', refund = 100000 },
+    { id = 1816, name = 'Wyrm Horn',        refund = 100000 },
+    { id = 2121, name = 'Ovinnik Hide',     refund = 100000 },
+    { id = 2123, name = 'Catoblepas Hide',  refund = 100000 },
 }
 
 local CATALYST_SET = {}
@@ -168,7 +168,7 @@ commandObj.onTrigger = function(player, arg)
         CHANNEL)
 
     if #catalystHits > 0 then
-        player:printToPlayer('  -- Unused Catalysts (item removed + 50k/each) --', CHANNEL)
+        player:printToPlayer('  -- Unused Catalysts (item removed + 100k/each) --', CHANNEL)
         for _, h in ipairs(catalystHits) do
             player:printToPlayer(
                 string.format('  %s x%d  (%s #%d)  → %d gil%s',
