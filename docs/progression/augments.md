@@ -284,7 +284,7 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 |---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
 | <a class="item-link" href="https://www.ffxiah.com/item/841" data-img="https://www.bg-wiki.com/images/9/98/Yagudo_Feather_description.png" target="_blank" rel="noopener">Yagudo Feather</a> | 841 | MP | 4 | 8 | 12 | 16 | 20 | 128 | 256 | 384 | 512 | 640 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/919" data-img="https://static.ffxiah.com/images/icon/919.png" target="_blank" rel="noopener">Clump Of Boyahda Moss</a> | 919 | Refresh | 2 | 4 | 6 | 8 | 10 | 64 | 128 | 192 | 256 | 320 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/921" data-img="https://static.ffxiah.com/images/icon/921.png" target="_blank" rel="noopener">Bottle Of Ahriman Tears</a> | 921 | Conserve MP | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/1119" data-img="https://static.ffxiah.com/images/icon/1119.png" target="_blank" rel="noopener">Tonberry Coat</a> | 1119 | Conserve MP | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 
 ### Pet
 

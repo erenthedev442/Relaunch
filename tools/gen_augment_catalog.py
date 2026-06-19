@@ -67,6 +67,14 @@ MOD_DISPLAY_SCALE = {
 #   mob-drop alchemy reagent left unused by every category -- free to claim.
 FORCED_CATALYST = {
     896: 2338,   # Enspell Dmg -> Wamoura Scale
+    # INT (augId 516) lives in cat 5 (Intelligence / Magic offense), which is
+    # item-starved, so the greedy pass never gives it a catalyst and it gets
+    # dropped. Pin it to Bottle of Ahriman Tears (921) -- a thematic dark-magic
+    # mob drop -- so it's emitted on every regeneration AND reserved, which keeps
+    # it from colliding with Conserve MP (the greedy then relocates Conserve MP to
+    # its own item instead of double-booking 921). value/mult come from the
+    # zz_augment_rebalance.sql override (value=1, mult=1, matching MND).
+    516: 921,    # INT -> Bottle of Ahriman Tears
 }
 
 # Display-label overrides keyed by augId, applied after clean_label(). For when

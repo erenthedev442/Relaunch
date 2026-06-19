@@ -219,7 +219,7 @@ return {
     -- MP / Refresh
     [841]  = { augId = 12,   base = 1,   mult = 4,  disp = 1,    cat = 9,  label = 'MP' },
     [919]  = { augId = 138,  base = 1,   mult = 2,  disp = 1,    cat = 9,  label = 'Refresh' },
-    [921]  = { augId = 141,  base = 1,   mult = 1,  disp = 1,    cat = 9,  label = 'Conserve MP' },
+    [1119] = { augId = 141,  base = 1,   mult = 1,  disp = 1,    cat = 9,  label = 'Conserve MP' },
 
     -- Pet
     [839]  = { augId = 124,  base = 1,   mult = 1,  disp = 1,    cat = 10, label = 'Pet Acc R.Acc Atk. R.Atk' },
