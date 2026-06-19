@@ -1,20 +1,23 @@
 -----------------------------------
 -- !refundcatalysts [confirm]
 --
--- Scans the cursor-targeted player's inventory (all containers) for
--- catalyst items that have been removed from the augment system and
--- reimburses them with gil.
+-- Scans the cursor-targeted player's full inventory (all bags + wardrobes)
+-- for two categories of reimbursement from the augment-catalog removal:
 --
--- Without "confirm": dry-run — reports what would be refunded, no
---   changes made.
--- With "confirm": removes the catalyst items and adds the gil.
+--   1. UNUSED CATALYSTS: banned catalyst items still sitting in bags/wardrobes.
+--      Refunds 50,000 gil per catalyst item.
+--
+--   2. GEAR AUGMENTS: equipment that has one of the banned augment IDs applied
+--      to it (the player spent 10,000 gil per application).
+--      Refunds 10,000 gil per banned augment slot found on the gear.
+--      The augment itself stays on the item — only the gil is reimbursed.
+--
+-- Without "confirm": dry-run — reports what would be refunded, no changes.
+-- With "confirm": removes unused catalyst items, adds the total gil.
 --
 -- Usage:
 --   !refundcatalysts           (dry-run on cursor target)
 --   !refundcatalysts confirm   (live run on cursor target)
---
--- To add future banned catalysts: add a row to BANNED_CATALYSTS below.
--- refund = gil given per item in the stack.
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
@@ -25,26 +28,39 @@ commandObj.cmdprops =
     parameters = 's',
 }
 
--- ── Banned catalyst table ─────────────────────────────────────────────
--- Each entry: item id, display name, gil refunded per quantity.
--- Adjust refund amounts freely; they are only used when "confirm" runs.
+-- ── Banned catalyst items ─────────────────────────────────────────────────
+-- Unused catalyst stacks are removed on confirm; 50,000 gil refunded per item.
 local BANNED_CATALYSTS =
 {
-    { id = 1628, name = 'Buffalo Hide',       refund = 50000 },
-    { id = 1640, name = 'Bugard Skin',        refund = 50000 },
-    { id = 1680, name = 'H.Q. Bugard Skin',   refund = 50000 },
-    { id = 1816, name = 'Wyrm Horn',          refund = 50000 },
-    { id = 2121, name = 'Ovinnik Hide',       refund = 50000 },
-    { id = 2123, name = 'Catoblepas Hide',    refund = 50000 },
+    { id = 1628, name = 'Buffalo Hide',     refund = 50000 },
+    { id = 1640, name = 'Bugard Skin',      refund = 50000 },
+    { id = 1680, name = 'H.Q. Bugard Skin', refund = 50000 },
+    { id = 1816, name = 'Wyrm Horn',        refund = 50000 },
+    { id = 2121, name = 'Ovinnik Hide',     refund = 50000 },
+    { id = 2123, name = 'Catoblepas Hide',  refund = 50000 },
 }
 
--- Build a quick-lookup set: itemId -> catalog entry
-local BANNED_SET = {}
+local CATALYST_SET = {}
 for _, entry in ipairs(BANNED_CATALYSTS) do
-    BANNED_SET[entry.id] = entry
+    CATALYST_SET[entry.id] = entry
 end
 
--- All containers a player can hold items in.
+-- ── Banned augment IDs applied to gear ───────────────────────────────────
+-- The six STR+X combos removed from the catalog.
+-- 10,000 gil refunded per slot on gear that carries one of these IDs.
+-- The augment itself is NOT removed (the stat stays on the item).
+local BANNED_AUG_NAMES =
+{
+    [550] = 'STR+DEX',
+    [551] = 'STR+VIT',
+    [552] = 'STR+AGI',
+    [557] = 'STR+CHR',
+    [558] = 'STR+INT',
+    [559] = 'STR+MND',
+}
+local GIL_PER_AUG_SLOT = 10000
+
+-- ── All containers (bags + wardrobes) ────────────────────────────────────
 local CONTAINERS =
 {
     { id = xi.inv.INVENTORY,  name = 'Inventory'   },
@@ -55,6 +71,14 @@ local CONTAINERS =
     { id = xi.inv.MOGSATCHEL, name = 'Mog Satchel' },
     { id = xi.inv.MOGSACK,    name = 'Mog Sack'    },
     { id = xi.inv.MOGCASE,    name = 'Mog Case'    },
+    { id = xi.inv.WARDROBE,   name = 'Wardrobe'    },
+    { id = xi.inv.WARDROBE2,  name = 'Wardrobe 2'  },
+    { id = xi.inv.WARDROBE3,  name = 'Wardrobe 3'  },
+    { id = xi.inv.WARDROBE4,  name = 'Wardrobe 4'  },
+    { id = xi.inv.WARDROBE5,  name = 'Wardrobe 5'  },
+    { id = xi.inv.WARDROBE6,  name = 'Wardrobe 6'  },
+    { id = xi.inv.WARDROBE7,  name = 'Wardrobe 7'  },
+    { id = xi.inv.WARDROBE8,  name = 'Wardrobe 8'  },
 }
 
 local CHANNEL = xi.msg.channel.SYSTEM_3
@@ -68,55 +92,103 @@ commandObj.onTrigger = function(player, arg)
 
     local commit = (arg ~= nil and string.lower(arg) == 'confirm')
 
-    -- ── Scan all containers ───────────────────────────────────────────
-    local hits      = {}
-    local totalGil  = 0
+    -- ── Scan all containers ───────────────────────────────────────────────
+    local catalystHits = {}   -- unused catalyst items to remove
+    local gearHits     = {}   -- gear pieces with banned augment slots
+    local totalGil     = 0
 
     for _, c in ipairs(CONTAINERS) do
         local size = targ:getContainerSize(c.id)
         for slot = 1, size do
             local item = targ:getStorageItem(c.id, slot, 255)
             if item ~= nil then
-                local entry = BANNED_SET[item:getID()]
-                if entry then
+
+                -- Category 1: unused catalyst item in inventory
+                local catEntry = CATALYST_SET[item:getID()]
+                if catEntry then
                     local qty    = item:getQuantity()
-                    local refund = entry.refund * qty
-                    hits[#hits + 1] =
+                    local refund = catEntry.refund * qty
+                    catalystHits[#catalystHits + 1] =
                     {
                         container = c.id,
                         locName   = c.name,
                         slot      = slot,
-                        itemId    = entry.id,
-                        name      = entry.name,
+                        itemId    = catEntry.id,
+                        name      = catEntry.name,
                         qty       = qty,
                         refund    = refund,
                     }
                     totalGil = totalGil + refund
+
+                -- Category 2: equipment with banned augment slots
+                elseif item:isType(xi.itemType.WEAPON) or item:isType(xi.itemType.ARMOR) then
+                    local bannedSlots  = {}
+                    local slotGil      = 0
+                    for augSlot = 0, 4 do
+                        local a      = item:getAugment(augSlot)
+                        local augId  = a[1]
+                        local augName = BANNED_AUG_NAMES[augId]
+                        if augName then
+                            bannedSlots[#bannedSlots + 1] = string.format('slot%d:%s(#%d)', augSlot, augName, augId)
+                            slotGil = slotGil + GIL_PER_AUG_SLOT
+                        end
+                    end
+                    if #bannedSlots > 0 then
+                        gearHits[#gearHits + 1] =
+                        {
+                            container  = c.id,
+                            locName    = c.name,
+                            slot       = slot,
+                            itemId     = item:getID(),
+                            name       = item:getName(),
+                            augDesc    = table.concat(bannedSlots, ', '),
+                            slotCount  = #bannedSlots,
+                            refund     = slotGil,
+                        }
+                        totalGil = totalGil + slotGil
+                    end
                 end
+
             end
         end
     end
 
-    -- ── Report ────────────────────────────────────────────────────────
-    if #hits == 0 then
+    -- ── Report ────────────────────────────────────────────────────────────
+    if #catalystHits == 0 and #gearHits == 0 then
         player:printToPlayer(
-            string.format('[RefundCatalysts] %s has no banned catalysts.', targ:getName()),
+            string.format('[RefundCatalysts] %s — nothing to refund.', targ:getName()),
             CHANNEL)
         return
     end
 
     local mode = commit and '[LIVE]' or '[DRY-RUN]'
     player:printToPlayer(
-        string.format('[RefundCatalysts] %s %s — %d stack(s) found, %d gil total:',
-            mode, targ:getName(), #hits, totalGil),
+        string.format('[RefundCatalysts] %s %s — %d catalyst stack(s), %d gear piece(s) — %d gil total:',
+            mode, targ:getName(), #catalystHits, #gearHits, totalGil),
         CHANNEL)
 
-    for _, h in ipairs(hits) do
+    if #catalystHits > 0 then
+        player:printToPlayer('  -- Unused Catalysts (item removed + 50k/each) --', CHANNEL)
+        for _, h in ipairs(catalystHits) do
+            player:printToPlayer(
+                string.format('  %s x%d  (%s #%d)  → %d gil%s',
+                    h.name, h.qty, h.locName, h.slot, h.refund,
+                    commit and '  [removed]' or ''),
+                CHANNEL)
+        end
+    end
+
+    if #gearHits > 0 then
         player:printToPlayer(
-            string.format('  %s x%d  (%s slot %d)  → %d gil%s',
-                h.name, h.qty, h.locName, h.slot, h.refund,
-                commit and '  [removed + paid]' or ''),
+            string.format('  -- Gear Augments (augment stays, 10k/slot × %d) --',
+                #gearHits),
             CHANNEL)
+        for _, h in ipairs(gearHits) do
+            player:printToPlayer(
+                string.format('  %s  (%s #%d)  %s  → %d gil',
+                    h.name, h.locName, h.slot, h.augDesc, h.refund),
+                CHANNEL)
+        end
     end
 
     if not commit then
@@ -126,18 +198,20 @@ commandObj.onTrigger = function(player, arg)
         return
     end
 
-    -- ── Apply — delete items then pay gil ─────────────────────────────
-    -- Delete items first (collect then delete so iteration stays safe).
-    for _, h in ipairs(hits) do
+    -- ── Apply — remove catalysts, then pay total gil ───────────────────────
+    for _, h in ipairs(catalystHits) do
         targ:delItemAt(h.itemId, h.qty, h.container, h.slot)
     end
 
     targ:addGil(totalGil)
 
-    -- Notify the target player as well.
+    local catCount = #catalystHits
+    local augCount = 0
+    for _, h in ipairs(gearHits) do augCount = augCount + h.slotCount end
+
     targ:printToPlayer(
-        string.format('[Augment Refund] %d banned catalyst(s) removed from your inventory. %d gil reimbursed.',
-            #hits, totalGil),
+        string.format('[Augment Refund] %d catalyst item(s) removed, %d banned augment slot(s) on gear found. %d gil reimbursed.',
+            catCount, augCount, totalGil),
         CHANNEL)
 
     player:printToPlayer(
