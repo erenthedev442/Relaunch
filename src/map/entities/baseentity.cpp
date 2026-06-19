@@ -33,19 +33,31 @@
 #include <map/ximesh/ximesh.h>
 
 #include <cstring>
+#include <shared_mutex>
 #include <unordered_set>
 
-// FJB: alive-entity registry. Single-threaded (main map thread only).
-// Lets CLuaBaseEntity detect dangling pointers caused by Lua closures or
-// queued AI actions that outlive their wrapped entity.
+// FJB: alive-entity registry. Lets CLuaBaseEntity detect dangling pointers
+// caused by Lua closures or queued AI actions that outlive their wrapped entity.
+//
+// MUST be thread-safe: entity construction/destruction runs on the asio worker
+// pool (e.g. zoneutils::LoadNPCList builds NPCs concurrently across zones), and
+// IsEntityAlive is read from AI-action callbacks. A bare std::unordered_set
+// raced here and corrupted its hash table -> ACCESS_VIOLATION during NPC load.
+// shared_mutex: many concurrent IsEntityAlive reads, exclusive insert/erase.
 namespace
 {
     std::unordered_set<const CBaseEntity*> g_liveEntities;
+    std::shared_mutex                      g_liveEntitiesMutex;
 }
 
 bool CBaseEntity::IsEntityAlive(const CBaseEntity* p)
 {
-    return p != nullptr && g_liveEntities.count(p) > 0;
+    if (p == nullptr)
+    {
+        return false;
+    }
+    std::shared_lock<std::shared_mutex> lock(g_liveEntitiesMutex);
+    return g_liveEntities.count(p) > 0;
 }
 
 CBaseEntity::CBaseEntity()
@@ -72,13 +84,19 @@ CBaseEntity::CBaseEntity()
     TracyZoneScoped;
     speed          = baseSpeed;
     animationSpeed = static_cast<uint8>(std::clamp<float>((baseSpeed / settings::get<float>("map.ANIMATION_SPEED_DIVISOR")), std::numeric_limits<uint8>::min(), std::numeric_limits<uint8>::max()));
-    g_liveEntities.insert(this);
+    {
+        std::unique_lock<std::shared_mutex> lock(g_liveEntitiesMutex);
+        g_liveEntities.insert(this);
+    }
 }
 
 CBaseEntity::~CBaseEntity()
 {
     TracyZoneScoped;
-    g_liveEntities.erase(this);
+    {
+        std::unique_lock<std::shared_mutex> lock(g_liveEntitiesMutex);
+        g_liveEntities.erase(this);
+    }
     if (PBattlefield)
     {
         PBattlefield->RemoveEntity(this, BATTLEFIELD_LEAVE_CODE_WARPDC);
