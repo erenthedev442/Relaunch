@@ -1,6 +1,6 @@
 # Bro
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-17 · Character age 5d 15h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 10h
 
 `⭐ 7 Ascensions` `💪 22 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
+| Main job | **DRK 99** |
 | Sub job | NIN 99 |
-| Time played | 69h |
-| Enemies defeated | 1,964 |
+| Time played | 77h |
+| Enemies defeated | 1,966 |
 | Deaths | 44 |
 
 ## Job levels
@@ -36,23 +36,23 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,264
+- **Marks (current):** 7,964
 - **Marks (lifetime):** 4,949
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 113
+- **Total NM kills:** 1,676
 
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 189
-- **NM Affinities:** 3 / 13
+- **Augments crafted:** 217
+- **NM Affinities:** 4 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 0 | 0 |
-| Relic | 1,500 | 0 |
+| Relic | 1,500 | 2,250 |
 | Empyrean | 0 | 0 |
 
 ## Prestige
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert.
+**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 771f8cdfe4c8 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: b435ceb3b014 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

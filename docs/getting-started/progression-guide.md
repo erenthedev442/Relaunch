@@ -138,6 +138,6 @@ On top of all of it, your **[Hunter's Guild](../progression/hunters-guild.md)** 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 503e7edaa698 -->
-_Last updated: 2026-06-05 21:50 UTC_
+<!-- content-hash: 9ebfb1310a6c -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

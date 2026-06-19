@@ -1,6 +1,6 @@
 # Zxs
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 10h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 5d 5h
 
 `💪 1 job @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 6,217
 - **Marks (lifetime):** 22,398
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 432
+- **Total NM kills:** 1,854
 
 ## Guild standing
 
@@ -62,9 +62,9 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 17 | 0 |
+| AF | 17 | 25 |
 | Relic | 0 | 0 |
-| Empyrean | 10,976 | 15,240 |
+| Empyrean | 10,976 | 16,464 |
 
 ## Collections
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 35666e334ffc -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: b555afcb13f3 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

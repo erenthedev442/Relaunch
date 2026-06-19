@@ -1,6 +1,6 @@
 # Jatant
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-14 · Character age 4d 21h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-14 · Character age 5d 15h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 18/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -37,7 +37,7 @@
 - **Marks (current):** 475
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Total NM kills:** 95
 
 ## Augment Sage
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c13456fa9a74 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 1933bf3521af -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,18 +1,18 @@
 # Jin
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-17 · Character age 2d 7h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-18 · Character age 3d 1h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 56/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 66/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RUN 56** |
-| Sub job | DNC 40 |
-| Time played | 2h |
-| Enemies defeated | 79 |
+| Main job | **RUN 66** |
+| Sub job | DNC 52 |
+| Time played | 3h |
+| Enemies defeated | 100 |
 | Deaths | 0 |
 
 ## Job levels
@@ -26,18 +26,18 @@
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 40 |
+| DRK | 1 | DNC | 52 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 56 |
+| RNG | 1 | RUN | 66 |
 
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,050
+- **Marks (current):** 1,600
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Total NM kills:** 320
 
 ## Augment Sage
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 279ecbe49f99 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: c8e6b76dff2f -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

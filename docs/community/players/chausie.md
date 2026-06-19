@@ -1,19 +1,19 @@
 # Chausie
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 3d 17h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-18 · Character age 4d 11h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 76/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 79/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **THF 76** |
-| Sub job | DNC 52 |
-| Time played | 14h |
-| Enemies defeated | 490 |
-| Deaths | 2 |
+| Main job | **THF 79** |
+| Sub job | DNC 59 |
+| Time played | 15h |
+| Enemies defeated | 509 |
+| Deaths | 3 |
 
 ## Job levels
 
@@ -24,9 +24,9 @@
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 76 | COR | 1 |
+| THF | 79 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 52 |
+| DRK | 1 | DNC | 59 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -34,10 +34,21 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 975
+- **Marks (current):** 1,525
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Total NM kills:** 305
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Journeyman | 500 | 4,500 to Veteran |
 
 ## Augment Sage
 
@@ -55,7 +66,7 @@
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
 
 ## Speed records
 
@@ -68,6 +79,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 895ea80398bb -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 4ab7e591e068 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

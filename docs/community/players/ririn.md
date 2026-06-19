@@ -1,6 +1,6 @@
 # Ririn
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 3d 1h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-18 · Character age 3d 19h
 
 `💪 2 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | NIN 99 |
-| Time played | 12h |
-| Enemies defeated | 295 |
-| Deaths | 11 |
+| Time played | 14h |
+| Enemies defeated | 652 |
+| Deaths | 13 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,717
-- **Marks (lifetime):** 521
+- **Marks (current):** 88
+- **Marks (lifetime):** 586
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 96
+- **Total NM kills:** 440
 
 ## Guild standing
 
@@ -54,25 +54,25 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 10
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 144
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 5,640 | 5,040 |
+| AF | 790 | 5,040 |
 | Relic | 0 | 5,250 |
-| Empyrean | 150 | 150 |
+| Empyrean | 750 | 1,125 |
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 120
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Star-Slayer · Augment Novice.
+**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Star-Slayer · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 56f6752ee6c1 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: b74d2eb0c616 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

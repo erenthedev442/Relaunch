@@ -1,8 +1,8 @@
 # Luna
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 10h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 5h
 
-`💪 2 jobs @99`
+`⭐ 10 Ascensions` `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | RDM 99 |
-| Time played | 22h |
+| Time played | 27h |
 | Enemies defeated | 43 |
-| Deaths | 13 |
+| Deaths | 20 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 37,989
+- **Marks (current):** 18,864
 - **Marks (lifetime):** 1,126
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 37
+- **Total NM kills:** 3,772
 
 ## Augment Sage
 
@@ -55,13 +55,18 @@
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
+## Prestige
+
+- **Total Ascensions:** 10
+- **Per-job prestige:** GEO P10
+
 ## Collections
 
 - **Trusts learned:** 118
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Star-Slayer · Sanctuary Defender · Augment Novice.
+**12** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Ascending Master · Star-Slayer · Sanctuary Defender · Augment Novice.
 
 ## Speed records
 
@@ -77,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8a75e8e62338 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 5b34fc1719da -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

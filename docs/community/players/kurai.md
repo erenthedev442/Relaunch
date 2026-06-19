@@ -1,6 +1,6 @@
 # Kurai
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 13h
 
 `💪 2 jobs @99`
 
@@ -11,24 +11,24 @@
 
 | | |
 |---|---|
-| Main job | **DRK 20** |
-| Sub job | SAM 19 |
-| Time played | 8h |
-| Enemies defeated | 492 |
+| Main job | **DRK 42** |
+| Sub job | SAM 41 |
+| Time played | 9h |
+| Enemies defeated | 514 |
 | Deaths | 5 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 92 | SAM | 19 |
+| WAR | 92 | SAM | 41 |
 | MNK | 1 | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 65 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 20 | DNC | 1 |
+| DRK | 42 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,686
+- **Marks (current):** 2,336
 - **Marks (lifetime):** 36
 - **Distinct NMs slain:** 2
-- **Total NM kills:** 3
+- **Total NM kills:** 467
 
 ## Guild standing
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 599adcf26ce4 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 651562f0afde -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

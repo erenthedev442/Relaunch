@@ -1,6 +1,6 @@
 # Verz
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 5d 1h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 5d 19h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 31/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -37,7 +37,7 @@
 - **Marks (current):** 1,550
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Total NM kills:** 310
 
 ## Augment Sage
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: eeef8be02563 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 849de24e6372 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

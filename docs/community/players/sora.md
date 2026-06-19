@@ -1,51 +1,51 @@
 # Sora
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 4d 12h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 6h
 
-`💪 1 job @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **SMN 99** |
-| Sub job | WHM 68 |
-| Time played | 8h |
-| Enemies defeated | 293 |
-| Deaths | 14 |
+| Main job | **WAR 99** |
+| Sub job | DRG 99 |
+| Time played | 12h |
+| Enemies defeated | 476 |
+| Deaths | 22 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
-| WHM | 68 | DRG | 1 |
+| **WAR** | **99** | **SAM** | **99** |
+| MNK | 1 | NIN | 43 |
+| WHM | 68 | **DRG** | **99** |
 | BLM | 1 | **SMN** | **99** |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| **DRK** | **99** | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 1,505
-- **Marks (lifetime):** 30
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 6
+- **Rank:** 5 / 5
+- **Marks (current):** 6,071
+- **Marks (lifetime):** 615
+- **Distinct NMs slain:** 13
+- **Total NM kills:** 1,214
 
 ## Augment Sage
 
 - **Mastery rank:** 1 / 5
 - **Augments crafted:** 10
-- **NM Affinities:** 0 / 13
+- **NM Affinities:** 9 / 13
 
 ## Reforge
 
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**2** unlocked — First Hunt · Augment Novice.
+**7** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 19h 3m |
+| HL Rank I → V | 3d 1h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bb1852c00748 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 4aa0fa3e04f3 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,19 +1,21 @@
 # Joker
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 8h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 2d 2h
+
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 93/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **THF 93** |
-| Sub job | DNC 69 |
-| Time played | 6h |
-| Enemies defeated | 348 |
-| Deaths | 5 |
+| Main job | **BLM 77** |
+| Sub job | RDM 59 |
+| Time played | 16h |
+| Enemies defeated | 525 |
+| Deaths | 7 |
 
 ## Job levels
 
@@ -22,27 +24,27 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
-| THF | 93 | COR | 1 |
+| BLM | 79 | SMN | 1 |
+| RDM | 59 | BLU | 1 |
+| **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 69 |
+| DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 1,040
-- **Marks (lifetime):** 5
-- **Distinct NMs slain:** 1
-- **Total NM kills:** 1
+- **Rank:** 3 / 5
+- **Marks (current):** 6,647
+- **Marks (lifetime):** 100
+- **Distinct NMs slain:** 3
+- **Total NM kills:** 1,329
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Augments crafted:** 9
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -59,11 +61,13 @@
 
 ## Achievements
 
-**1** unlocked — First Hunt.
+**3** unlocked — First Hunt · Ten Hunts In · Augment Novice.
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 4h 59m |
 
 ---
 
@@ -72,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4da1a94879f4 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: e34c0380581b -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

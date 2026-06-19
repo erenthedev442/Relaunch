@@ -1,6 +1,6 @@
 # Rous
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-17 · Character age 22h 23m
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-17 · Character age 1d 16h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 4/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b2bdbfe782d6 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: eaa497f9ac43 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

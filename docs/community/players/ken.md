@@ -1,6 +1,6 @@
 # Ken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-18 · Character age 2d 20h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 3d 15h
 
 `💪 10 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **NIN 99** |
-| Sub job | THF 1 |
-| Time played | 25h |
-| Enemies defeated | 91 |
+| Main job | **MNK 99** |
+| Sub job | RDM 99 |
+| Time played | 31h |
+| Enemies defeated | 101 |
 | Deaths | 8 |
 
 ## Job levels
@@ -36,23 +36,23 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 60,434
+- **Marks (current):** 49,104
 - **Marks (lifetime):** 30,623
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 594
+- **Total NM kills:** 9,970
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 268
-- **NM Affinities:** 7 / 13
+- **Augments crafted:** 284
+- **NM Affinities:** 12 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 1,500 | 0 |
+| AF | 1,200 | 1,800 |
+| Relic | 1,500 | 2,250 |
 | Empyrean | 0 | 0 |
 
 ## Collections
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8f5181a8a37f -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 9af2a2e880e7 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

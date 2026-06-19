@@ -1,6 +1,6 @@
 # Souls
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 18h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 13h
 
 `⭐ 3 Ascensions` `💪 8 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
-| Sub job | SAM 99 |
-| Time played | 30h |
-| Enemies defeated | 2,043 |
-| Deaths | 36 |
+| Main job | **MNK 99** |
+| Sub job | THF 99 |
+| Time played | 31h |
+| Enemies defeated | 2,204 |
+| Deaths | 37 |
 
 ## Job levels
 
@@ -36,24 +36,24 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,024
+- **Marks (current):** 28,961
 - **Marks (lifetime):** 1,842
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 229
+- **Total NM kills:** 6,338
 
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 96
-- **NM Affinities:** 8 / 13
+- **Augments crafted:** 106
+- **NM Affinities:** 9 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1 | 4,885 |
+| AF | 451 | 9,535 |
 | Relic | 32 | 1,655 |
-| Empyrean | 2,220 | 760 |
+| Empyrean | 2,370 | 3,555 |
 
 ## Prestige
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3c161036cc02 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: e8715a297a09 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

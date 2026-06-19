@@ -1,8 +1,8 @@
 # Vistrix
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 5d 13h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 8h
 
-`⭐ 3 Ascensions` `💪 2 jobs @99`
+`⭐ 5 Ascensions` `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DRG 99** |
 | Sub job | SAM 99 |
-| Time played | 26h |
-| Enemies defeated | 2,332 |
-| Deaths | 18 |
+| Time played | 29h |
+| Enemies defeated | 2,482 |
+| Deaths | 19 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,552
-- **Marks (lifetime):** 1,920
-- **Distinct NMs slain:** 11
-- **Total NM kills:** 72
+- **Marks (current):** 7,823
+- **Marks (lifetime):** 2,106
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 1,631
 
 ## Guild standing
 
@@ -55,21 +55,21 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 144
+- **Augments crafted:** 150
 - **NM Affinities:** 6 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 10 | 0 |
+| AF | 10 | 15 |
 | Relic | 0 | 0 |
 | Empyrean | 10 | 1,780 |
 
 ## Prestige
 
-- **Total Ascensions:** 3
-- **Per-job prestige:** DRG P3
+- **Total Ascensions:** 5
+- **Per-job prestige:** DRG P5
 
 ## Collections
 
@@ -77,7 +77,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert.
+**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Star-Slayer · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 576127ed030e -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 3a658020eedb -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

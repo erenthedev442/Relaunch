@@ -1,26 +1,28 @@
 # Prale
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-17 · Character age 2d 10h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 3d 4h
+
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 79/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **NIN 79** |
-| Sub job | WAR 65 |
-| Time played | 4h |
-| Enemies defeated | 115 |
+| Main job | **NIN 99** |
+| Sub job | WAR 88 |
+| Time played | 7h |
+| Enemies defeated | 247 |
 | Deaths | 3 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 65 | SAM | 1 |
-| MNK | 1 | NIN | 79 |
+| WAR | 88 | SAM | 1 |
+| MNK | 1 | **NIN** | **99** |
 | WHM | 9 | DRG | 1 |
 | BLM | 11 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -33,8 +35,8 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 1,050
+- **Rank:** 5 / 5
+- **Marks (current):** 0
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -63,7 +65,9 @@
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 1d 8h |
 
 ---
 
@@ -72,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1bf11d0c3ad9 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 687d486b218d -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

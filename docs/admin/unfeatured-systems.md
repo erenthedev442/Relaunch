@@ -14,12 +14,13 @@ The following system detail pages exist but are **not** represented on the [Why 
 | Detail page | Lead blurb |
 |---|---|
 | [`progression/item-finder.md`](../progression/item-finder.md) | Every purchasable item on Legendary in one searchable list — armor, weapons, accessories, and the Infamy Vendor's stock. Use it to answer "where do I get X, and |
+| [`progression/job-rebirth.md`](../progression/job-rebirth.md) | !Phoenix rising{ .lgnd-emblem } |
 | [`community/economy.md`](../community/economy.md) | A live, anonymous snapshot of Legendary's economy and population — how much gil is in circulation, how busy the Auction House is, and how many hunters are aroun |
 <!-- DOCGEN:END id="unfeatured" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3a906b3ea296 -->
-_Last updated: 2026-06-16 22:53 UTC_
+<!-- content-hash: ea13d4bf719a -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

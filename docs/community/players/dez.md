@@ -1,6 +1,6 @@
 # Dez
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 5d 18h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 6d 13h
 
 `⭐ 11 Ascensions` `💪 4 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 47,343
 - **Marks (lifetime):** 2,012
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 256
+- **Total NM kills:** 10,510
 
 ## Guild standing
 
@@ -62,9 +62,9 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 6,119 | 7,919 |
-| Relic | 4,350 | 450 |
-| Empyrean | 8,285 | 2,885 |
+| AF | 6,119 | 9,178 |
+| Relic | 4,350 | 6,525 |
+| Empyrean | 8,285 | 12,427 |
 
 ## Prestige
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3ed18113291c -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 054458191498 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

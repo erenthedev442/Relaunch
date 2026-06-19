@@ -1,6 +1,6 @@
 # Drunk
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-17 · Character age 5d 15h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 10h
 
 `💪 7 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | NIN 1 |
-| Time played | 19h |
+| Time played | 20h |
 | Enemies defeated | 1 |
 | Deaths | 4 |
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,667
+- **Marks (current):** 3,317
 - **Marks (lifetime):** 446
 - **Distinct NMs slain:** 9
-- **Total NM kills:** 19
+- **Total NM kills:** 663
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e4444d5d7176 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: b42fb6e4672a -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Bdr
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-04-30 · Last seen 2026-06-13 · Character age 48d 22h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-04-30 · Last seen 2026-06-19 · Character age 49d 16h
 
-`💪 4 jobs @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,8 +11,8 @@
 
 | | |
 |---|---|
-| Main job | **NIN 99** |
-| Sub job | DNC 99 |
+| Main job | **NIN 1** |
+| Sub job | DNC 1 |
 | Time played | 60h |
 | Enemies defeated | 694 |
 | Deaths | 7 |
@@ -22,7 +22,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | **NIN** | **99** |
+| MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 98 | **BLU** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,204
+- **Marks (current):** 3,454
 - **Marks (lifetime):** 38
 - **Distinct NMs slain:** 1
-- **Total NM kills:** 47
+- **Total NM kills:** 703
 
 ## Augment Sage
 
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 92924526c939 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 8728e780b9e3 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

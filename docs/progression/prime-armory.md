@@ -31,7 +31,7 @@ All **12 Prime weapons**, one per weapon type:
 | **Prime Fists** | Hand-to-Hand | Dragon Blow |
 | **Varga Purnikawa** | Hand-to-Hand | Maru Kala |
 | **Mpu Gandring** | Dagger | Merciless Strike |
-| **Naegling** | Sword | Fast Blade II |
+| **Naegling** | Sword | Savage Blade |
 | **Prime Sword** | Sword | Imperator |
 | **Prime Maul** | Club | Dagda |
 | **Prime Staff** | Staff | Oshala |
@@ -53,6 +53,6 @@ Browsing is free — you can read every weapon's stats and weapon skill before d
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 281231db65c2 -->
-_Last updated: 2026-06-14 13:15 UTC_
+<!-- content-hash: 835a2ba8b5cc -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Job Rebirth — Legendary FFXI (preview)</title>
+<style>
+  :root{
+    --bg:#15151b; --bg2:#1b1c24; --panel:#1e1f29; --panel2:#23242f;
+    --ink:#e7e6ea; --ink-dim:#a9a7b4; --ink-faint:#7d7b89;
+    --line:#33323f;
+    --gold-top:#fff4c2; --gold-mid:#ecc25f; --gold-bot:#c08f2b;
+    --rule:linear-gradient(90deg,transparent,#c79a34 45%,#f3d680 50%,#c79a34 55%,transparent);
+    --indigo:#8a93ff; --indigo-dim:#5b62b8;
+    --ember:#ff7a2e;
+    --good:#7fd18a; --bad:#ef7a7a;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:
+      radial-gradient(1100px 540px at 50% -8%, rgba(255,122,46,.12), transparent 60%),
+      radial-gradient(900px 600px at 90% 12%, rgba(138,147,255,.07), transparent 55%),
+      var(--bg);
+    color:var(--ink);
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 22px 90px}
+  .serif{font-family:Georgia,"Times New Roman",serif}
+  .gold{
+    background:linear-gradient(180deg,var(--gold-top),var(--gold-mid) 55%,var(--gold-bot));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+
+  /* draft ribbon */
+  .draft{
+    position:sticky;top:0;z-index:5;
+    display:flex;justify-content:center;gap:10px;align-items:center;
+    background:linear-gradient(180deg,rgba(255,122,46,.16),rgba(255,122,46,.05));
+    border-bottom:1px solid rgba(255,122,46,.35);
+    font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:#ffcca3;
+    padding:7px 12px;
+  }
+  .draft b{color:#fff;font-weight:700}
+
+  /* hero */
+  .hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:46px 0 8px}
+  .crest{width:122px;height:122px;filter:drop-shadow(0 0 12px rgba(255,120,30,.42)) drop-shadow(0 8px 20px rgba(190,70,15,.4))}
+  .hero h1{font-size:clamp(2.7rem,8vw,4.3rem);letter-spacing:.10em;margin:.35rem 0 0;padding-left:.10em;font-weight:700;line-height:1.02}
+  .hero .sub{font-size:.78rem;font-weight:700;letter-spacing:.42em;padding-left:.42em;text-transform:uppercase;color:var(--ink-dim);margin:.5rem 0 0}
+  .hero hr{width:min(340px,72%);height:2px;border:0;margin:.95rem 0 .35rem;background:var(--rule)}
+  .hero .tag{font-style:italic;color:var(--ink-dim);margin:.1rem 0 0;font-size:1.05rem}
+
+  .lede{font-size:1.08rem;color:var(--ink);max-width:760px;margin:26px auto 6px;text-align:center}
+  .lede em{color:var(--gold-mid);font-style:normal}
+
+  /* stat strip */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:34px 0 8px}
+  .stat{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:14px;padding:18px 14px;text-align:center}
+  .stat .n{font-family:Georgia,serif;font-size:1.95rem;font-weight:700;line-height:1}
+  .stat .l{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);margin-top:9px}
+
+  section{margin-top:54px}
+  h2.sec{font-size:1.7rem;letter-spacing:.02em;margin:0 0 4px;display:flex;align-items:center;gap:.6rem}
+  h2.sec .dot{width:8px;height:8px;border-radius:50%;background:var(--gold-mid);box-shadow:0 0 10px var(--ember);flex:0 0 auto}
+  .sec-rule{height:1px;background:linear-gradient(90deg,#3a3850,transparent);margin:10px 0 22px}
+  p{color:var(--ink-dim)}
+  p strong,li strong{color:var(--ink)}
+  .accent{color:var(--gold-mid)}
+  .rp{color:var(--indigo);font-weight:600}
+
+  /* loop steps */
+  .loop{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .step{position:relative;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 14px 16px}
+  .step .num{font-family:Georgia,serif;font-size:1.05rem;font-weight:700;color:#1a1206;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,var(--gold-top),var(--gold-bot));box-shadow:0 0 12px rgba(255,160,60,.35);margin-bottom:12px}
+  .step h3{margin:0 0 6px;font-size:1rem;color:var(--ink)}
+  .step p{margin:0;font-size:.86rem;line-height:1.5}
+
+  /* generic cards */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .card h3{margin:0 0 8px;font-size:1.06rem;color:var(--ink);display:flex;align-items:center;gap:.5rem}
+  .card h3 .ic{font-size:1.1rem;filter:drop-shadow(0 0 6px rgba(255,140,60,.5))}
+  .card p{margin:.2rem 0 0;font-size:.92rem}
+  .card ul{margin:.4rem 0 0;padding-left:1.15rem}
+  .card li{margin:.3rem 0;font-size:.92rem;color:var(--ink-dim)}
+
+  .callout{background:linear-gradient(180deg,rgba(138,147,255,.10),rgba(138,147,255,.03));border:1px solid rgba(138,147,255,.3);border-radius:12px;padding:14px 18px;margin-top:16px;font-size:.92rem;color:var(--ink)}
+  .callout .h{color:var(--indigo);font-weight:700;letter-spacing:.04em}
+
+  /* tables */
+  .tbl{width:100%;border-collapse:collapse;font-size:.9rem;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .tbl th{background:#262531;color:var(--ink-dim);text-align:left;font-weight:600;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;padding:11px 14px}
+  .tbl td{padding:10px 14px;border-top:1px solid var(--line);color:var(--ink-dim)}
+  .tbl td.cat{color:var(--ink);font-weight:600;white-space:nowrap}
+  .tbl tr.grp td{background:#1a1a23;color:var(--gold-mid);font-family:Georgia,serif;letter-spacing:.05em;font-size:.82rem;text-transform:uppercase;font-weight:700;padding:9px 14px}
+  .cost{display:inline-block;min-width:42px;text-align:center;font-weight:700;color:var(--indigo);background:rgba(138,147,255,.12);border:1px solid rgba(138,147,255,.28);border-radius:7px;padding:1px 8px;font-size:.82rem}
+
+  /* penalty curve */
+  .curve{display:grid;gap:8px;margin-top:6px}
+  .row{display:grid;grid-template-columns:64px 1fr 116px;align-items:center;gap:12px}
+  .row .lab{font-size:.84rem;color:var(--ink-dim);font-weight:600}
+  .bar{height:22px;border-radius:6px;background:#23232e;overflow:hidden;border:1px solid var(--line)}
+  .bar > i{display:block;height:100%;border-radius:6px 0 0 6px;background:linear-gradient(90deg,#caa23a,#ef9a4a)}
+  .row .val{font-size:.82rem;color:var(--ink-faint);text-align:right}
+  .row .val b{color:var(--bad);font-weight:700}
+  .row.head .lab,.row.head .val{color:var(--ink-faint);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase}
+
+  /* compare */
+  .cmp{width:100%;border-collapse:collapse;font-size:.92rem;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .cmp th,.cmp td{padding:12px 16px;border-top:1px solid var(--line);text-align:left}
+  .cmp thead th{border-top:0;background:#262531;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim)}
+  .cmp td:first-child{color:var(--ink-faint);font-size:.82rem;letter-spacing:.04em;text-transform:uppercase}
+  .cmp .asc{color:var(--ink-dim)}
+  .cmp .reb{color:var(--ink);font-weight:600}
+  .cmp tbody tr:nth-child(even) td{background:rgba(255,255,255,.012)}
+
+  .npc{display:flex;gap:18px;align-items:center;background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+  .npc .star{font-size:2.6rem;filter:drop-shadow(0 0 12px var(--ember))}
+  .npc h3{margin:0 0 3px;font-size:1.15rem;color:var(--ink)}
+  .npc p{margin:0;font-size:.92rem}
+
+  footer{margin-top:60px;border-top:1px solid var(--line);padding-top:22px;color:var(--ink-faint);font-size:.85rem}
+  footer .note{background:#191921;border:1px dashed #3c3a4a;border-radius:12px;padding:16px 18px;margin-bottom:16px}
+  footer .note .h{color:var(--gold-mid);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.74rem}
+  footer code{background:#26262f;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:#d8d6e0;font-size:.85em}
+
+  @media(max-width:820px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .loop{grid-template-columns:1fr 1fr}
+    .cards{grid-template-columns:1fr}
+    .row{grid-template-columns:56px 1fr 96px}
+  }
+</style>
+</head>
+<body>
+
+<div class="draft"><b>Draft</b> · For review · not yet published</div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <svg class="crest" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fff4c2"/><stop offset=".55" stop-color="#ecc25f"/><stop offset="1" stop-color="#c08f2b"/>
+        </linearGradient>
+      </defs>
+      <circle cx="60" cy="60" r="52" stroke="url(#g)" stroke-width="2.5" opacity=".55"/>
+      <circle cx="60" cy="60" r="44" stroke="url(#g)" stroke-width="1" opacity=".3"/>
+      <!-- phoenix / rising flame -->
+      <path d="M60 26c8 11 4 19-1 25 9-3 12-10 12-10 5 12-2 23-11 28 14 1 22-9 22-9 1 16-11 28-22 30 6 3 14 2 14 2-7 7-19 8-26 4-7 4-19 3-26-4 0 0 8 1 14-2-11-2-23-14-22-30 0 0 8 10 22 9-9-5-16-16-11-28 0 0 3 7 12 10-5-6-9-14-1-25 0 0-3 9 4 14 3-9 1-15 1-15 7 5 9 11 9 11s2-6-1-15c0 0 6 6 7 15z" fill="url(#g)" opacity=".9"/>
+      <path d="M50 84c0 6 4 11 10 11s10-5 10-11c0-4-3-8-10-14-7 6-10 10-10 14z" fill="#15151b"/>
+    </svg>
+    <h1 class="serif gold">Job Rebirth</h1>
+    <p class="sub">Prestige System</p>
+    <hr>
+    <p class="tag serif">Master a job. Burn it down. Rise stronger.</p>
+  </div>
+
+  <p class="lede">When a job has nothing left to earn — level 99, every Job Point spent — <em>Rebirth</em> sends it back to level 1 and wipes its Job Points clean. In exchange you earn <span class="rp">Rebirth Points</span>: a currency you pour into permanent stat boosts. Each rebirth makes the climb harder, and your character permanently stronger.</p>
+
+  <!-- KEY NUMBERS -->
+  <div class="stats">
+    <div class="stat"><div class="n gold">2,100</div><div class="l">Job Points to qualify</div></div>
+    <div class="stat"><div class="n gold">+10</div><div class="l">Rebirth Points each</div></div>
+    <div class="stat"><div class="n gold">42</div><div class="l">Boost categories</div></div>
+    <div class="stat"><div class="n gold">−90%</div><div class="l">Max EXP penalty</div></div>
+  </div>
+
+  <!-- THE LOOP -->
+  <section>
+    <h2 class="sec serif"><span class="dot"></span><span class="gold">The Rebirth Loop</span></h2>
+    <div class="sec-rule"></div>
+    <div class="loop">
+      <div class="step"><div class="num">1</div><h3>Master</h3><p>Take a job to level 99 and spend all <strong>2,100</strong> Job Points.</p></div>
+      <div class="step"><div class="num">2</div><h3>Rebirth</h3><p>The job resets to <strong>level 1</strong> and its Job Points are <strong>fully wiped</strong>.</p></div>
+      <div class="step"><div class="num">3</div><h3>Earn</h3><p>Receive <strong>10 Rebirth Points</strong> for that job.</p></div>
+      <div class="step"><div class="num">4</div><h3>Empower</h3><p>Spend them on <strong>permanent</strong> per-job stat boosts.</p></div>
+      <div class="step"><div class="num">5</div><h3>Repeat</h3><p>Climb again under a harder penalty — then rebirth for more.</p></div>
+    </div>
+  </section>
+
+  <!-- WHAT IT DOES -->
+  <section>
+    <h2 class="sec serif"><span class="dot"></span><span class="gold">What a Rebirth Does</span></h2>
+    <div class="sec-rule"></div>
+    <div class="cards">
+      <div class="card">
+        <h3><span class="ic">🔥</span> The Sacrifice</h3>
+        <ul>
+          <li><strong>Level resets to 1.</strong> You re-level the job from scratch.</li>
+          <li><strong>Job Points fully wiped</strong> — every category, gift, and capacity point on that job is cleared to zero.</li>
+          <li>Only the <strong>reborn job</strong> is affected. Your other jobs are untouched.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="ic">✦</span> The Reward</h3>
+        <ul>
+          <li><strong>+10 Rebirth Points</strong> banked for that job.</li>
+          <li>Spent on <strong>permanent stat boosts</strong> that survive every future rebirth.</li>
+          <li>Boosts are <strong>per-job</strong> — active only while you're playing the job that earned them.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout"><span class="h">Permanent by design.</span> &nbsp;Rebirth Points and the boosts you buy with them are <strong>never</strong> wiped — only the job's level and Job Points are. Every cycle is a net gain in power; the only cost is the time to climb back.</div>
+  </section>
+
+  <!-- SPENDING -->
+  <section>
+    <h2 class="sec serif"><span class="dot"></span><span class="gold">Spending Rebirth Points</span></h2>
+    <div class="sec-rule"></div>
+    <p>At the Rebirth altar, open <strong>Spend Rebirth Points</strong> to browse the boost catalog. Each category has a <span class="rp">cost per level</span> and a hard <strong>cap</strong>. Buy a level and the effect applies <strong>instantly</strong> — no relog needed. Cheaper stats (raw STR, HP, Accuracy) cost <span class="cost">1</span> per level; premium combat perks (Crit Dmg, WS Dmg, Haste, damage reduction) cost <span class="cost">3</span>.</p>
+  </section>
+
+  <!-- CATEGORY TABLE -->
+  <section>
+    <h2 class="sec serif"><span class="dot"></span><span class="gold">The 42 Boost Categories</span></h2>
+    <div class="sec-rule"></div>
+    <table class="tbl">
+      <thead><tr><th style="width:34%">Category</th><th>Effect</th><th style="width:90px;text-align:center">RP / level</th></tr></thead>
+      <tbody>
+        <tr class="grp"><td colspan="3">Base Stats</td></tr>
+        <tr><td class="cat">Strength</td><td>+1 STR / level &nbsp;·&nbsp; max +50</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Dexterity</td><td>+1 DEX / level &nbsp;·&nbsp; max +50</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Vitality</td><td>+1 VIT / level &nbsp;·&nbsp; max +50</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Agility</td><td>+1 AGI / level &nbsp;·&nbsp; max +50</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Intelligence</td><td>+1 INT / level &nbsp;·&nbsp; max +50</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Mind</td><td>+1 MND / level &nbsp;·&nbsp; max +50</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Charisma</td><td>+1 CHR / level &nbsp;·&nbsp; max +50</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+
+        <tr class="grp"><td colspan="3">Vitals</td></tr>
+        <tr><td class="cat">Max HP</td><td>+20 HP / level &nbsp;·&nbsp; max +1,000</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Max MP</td><td>+20 MP / level &nbsp;·&nbsp; max +500</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+
+        <tr class="grp"><td colspan="3">Melee Offense &amp; Defense</td></tr>
+        <tr><td class="cat">Accuracy</td><td>+10 Accuracy / level &nbsp;·&nbsp; max +500</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Attack</td><td>+20 Attack / level &nbsp;·&nbsp; max +1,000</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Defense</td><td>+5 Defense / level &nbsp;·&nbsp; max +250</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Evasion</td><td>+5 Evasion / level &nbsp;·&nbsp; max +250</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+
+        <tr class="grp"><td colspan="3">Magic Offense</td></tr>
+        <tr><td class="cat">Magic Accuracy</td><td>+20 Mag.Acc / level &nbsp;·&nbsp; max +1,000</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Magic Attack</td><td>+20 Mag.Atk / level &nbsp;·&nbsp; max +1,000</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Magic Damage</td><td>+10 Magic Dmg / level &nbsp;·&nbsp; max +250</td><td style="text-align:center"><span class="cost">2</span></td></tr>
+
+        <tr class="grp"><td colspan="3">Ranged Offense</td></tr>
+        <tr><td class="cat">Ranged Accuracy</td><td>+10 R.Acc / level &nbsp;·&nbsp; max +500</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Ranged Attack</td><td>+20 R.Att / level &nbsp;·&nbsp; max +1,000</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+
+        <tr class="grp"><td colspan="3">Combat Traits</td></tr>
+        <tr><td class="cat">Store TP</td><td>+2 Store TP / level &nbsp;·&nbsp; max +100</td><td style="text-align:center"><span class="cost">2</span></td></tr>
+        <tr><td class="cat">TP Bonus</td><td>+10 TP Bonus / level &nbsp;·&nbsp; max +500</td><td style="text-align:center"><span class="cost">2</span></td></tr>
+        <tr><td class="cat">Quad Attack</td><td>+1% Quad Attack / level &nbsp;·&nbsp; max 50%</td><td style="text-align:center"><span class="cost">2</span></td></tr>
+        <tr><td class="cat">Dual Wield</td><td>+1% Dual Wield / level &nbsp;·&nbsp; max 25%</td><td style="text-align:center"><span class="cost">2</span></td></tr>
+        <tr><td class="cat">Critical Rate</td><td>+1% Crit / level &nbsp;·&nbsp; max 50%</td><td style="text-align:center"><span class="cost">2</span></td></tr>
+        <tr><td class="cat">Critical Damage</td><td>+2% Crit Dmg / level &nbsp;·&nbsp; max 100%</td><td style="text-align:center"><span class="cost">3</span></td></tr>
+        <tr><td class="cat">Counter</td><td>+1 Counter / level &nbsp;·&nbsp; max +50</td><td style="text-align:center"><span class="cost">2</span></td></tr>
+        <tr><td class="cat">Parry Rate</td><td>+1% Parry / level &nbsp;·&nbsp; max 25%</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Subtle Blow</td><td>+1 Subtle Blow / level &nbsp;·&nbsp; max +50</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Weaponskill Damage</td><td>+2% WS Dmg / level &nbsp;·&nbsp; max 100%</td><td style="text-align:center"><span class="cost">3</span></td></tr>
+        <tr><td class="cat">Skillchain Damage</td><td>+2% SC Dmg / level &nbsp;·&nbsp; max 100%</td><td style="text-align:center"><span class="cost">3</span></td></tr>
+
+        <tr class="grp"><td colspan="3">Mitigation</td></tr>
+        <tr><td class="cat">Physical Dmg Taken −</td><td>−1% Phys. DT / level &nbsp;·&nbsp; max −25%</td><td style="text-align:center"><span class="cost">3</span></td></tr>
+        <tr><td class="cat">Magic Dmg Taken −</td><td>−1% Mag. DT / level &nbsp;·&nbsp; max −25%</td><td style="text-align:center"><span class="cost">3</span></td></tr>
+        <tr><td class="cat">Haste</td><td>+1% Haste / level &nbsp;·&nbsp; max 25%</td><td style="text-align:center"><span class="cost">3</span></td></tr>
+
+        <tr class="grp"><td colspan="3">Magic Support</td></tr>
+        <tr><td class="cat">Spell Interrupt Down</td><td>+1% SIRD / level &nbsp;·&nbsp; max 50%</td><td style="text-align:center"><span class="cost">2</span></td></tr>
+        <tr><td class="cat">Fast Cast</td><td>+1% Fast Cast / level &nbsp;·&nbsp; max 50%</td><td style="text-align:center"><span class="cost">2</span></td></tr>
+        <tr><td class="cat">Enspell Damage</td><td>+10 Enspell Dmg / level &nbsp;·&nbsp; max +500</td><td style="text-align:center"><span class="cost">2</span></td></tr>
+        <tr><td class="cat">Cure Potency</td><td>+2% Cure Potency / level &nbsp;·&nbsp; max +50%</td><td style="text-align:center"><span class="cost">2</span></td></tr>
+        <tr><td class="cat">Refresh</td><td>+1 Refresh / level &nbsp;·&nbsp; max +10 MP/tick</td><td style="text-align:center"><span class="cost">3</span></td></tr>
+
+        <tr class="grp"><td colspan="3">Utility</td></tr>
+        <tr><td class="cat">Treasure Hunter</td><td>+1 TH / level &nbsp;·&nbsp; max +50</td><td style="text-align:center"><span class="cost">2</span></td></tr>
+        <tr><td class="cat">Gilfinder</td><td>+2% Gilfinder / level &nbsp;·&nbsp; max +100%</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Status Resistance</td><td>+2 Status Res. / level &nbsp;·&nbsp; max +100</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+        <tr><td class="cat">Elemental Resistance</td><td>+10 to all 8 elements / level &nbsp;·&nbsp; max +500 each</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+
+        <tr class="grp"><td colspan="3">Skills</td></tr>
+        <tr><td class="cat">All Skills</td><td>+2 to every combat &amp; magic skill / level &nbsp;·&nbsp; max +100 each</td><td style="text-align:center"><span class="cost">1</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- PENALTY -->
+  <section>
+    <h2 class="sec serif"><span class="dot"></span><span class="gold">The Trial of Mastery</span></h2>
+    <div class="sec-rule"></div>
+    <p>Every rebirth stacks a <strong>−15% EXP penalty</strong> on that job, capped at <strong>−90%</strong>. The penalty is <strong>per-job</strong> — it only slows the job that's been reborn, and vanishes the moment you switch to anything else. Re-leveling a six-times-reborn job is a true endgame grind; you always keep at least <strong>10%</strong> of normal EXP, so the climb is always possible.</p>
+    <div class="curve">
+      <div class="row head"><div class="lab">Rebirth</div><div>Effective EXP gain</div><div class="val">Penalty</div></div>
+      <div class="row"><div class="lab">1st</div><div class="bar"><i style="width:85%"></i></div><div class="val">85% &nbsp; <b>−15%</b></div></div>
+      <div class="row"><div class="lab">2nd</div><div class="bar"><i style="width:70%"></i></div><div class="val">70% &nbsp; <b>−30%</b></div></div>
+      <div class="row"><div class="lab">3rd</div><div class="bar"><i style="width:55%"></i></div><div class="val">55% &nbsp; <b>−45%</b></div></div>
+      <div class="row"><div class="lab">4th</div><div class="bar"><i style="width:40%"></i></div><div class="val">40% &nbsp; <b>−60%</b></div></div>
+      <div class="row"><div class="lab">5th</div><div class="bar"><i style="width:25%"></i></div><div class="val">25% &nbsp; <b>−75%</b></div></div>
+      <div class="row"><div class="lab">6th +</div><div class="bar"><i style="width:10%"></i></div><div class="val">10% &nbsp; <b>−90%</b></div></div>
+    </div>
+  </section>
+
+  <!-- STANDALONE -->
+  <section>
+    <h2 class="sec serif"><span class="dot"></span><span class="gold">A System of Its Own</span></h2>
+    <div class="sec-rule"></div>
+    <p>Rebirth is <strong>entirely separate</strong> from Ascension. It has its own currency, its own progress, and its own altar — they simply <strong>offer the same menu of stats</strong>. Because the two tracks are independent, their boosts <strong>stack</strong>: a stat you've maxed through Ascension can be raised <em>again</em> through Rebirth.</p>
+    <table class="cmp">
+      <thead><tr><th>&nbsp;</th><th>Ascension</th><th>Job Rebirth</th></tr></thead>
+      <tbody>
+        <tr><td>Currency</td><td class="asc">Ascension Points</td><td class="reb">Rebirth Points</td></tr>
+        <tr><td>How you earn it</td><td class="asc">Prestige trials &amp; milestones</td><td class="reb">Rebirthing a maxed job</td></tr>
+        <tr><td>Where you spend</td><td class="asc">Ascension Altar</td><td class="reb">The Rebirth altar itself</td></tr>
+        <tr><td>Boost menu</td><td class="asc">42 categories</td><td class="reb">The same 42 categories</td></tr>
+        <tr><td>Progress tracking</td><td class="asc">Separate</td><td class="reb">Separate — they stack</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- WHERE -->
+  <section>
+    <h2 class="sec serif"><span class="dot"></span><span class="gold">Where to Begin</span></h2>
+    <div class="sec-rule"></div>
+    <div class="npc">
+      <div class="star">✦</div>
+      <div>
+        <h3>The Job Rebirth altar</h3>
+        <p>Found at <strong>GM Home</strong>, alongside the Cross-Job Trainers. Speak to it on a job that's hit level 99 with maxed Job Points to begin — or visit any time to spend Rebirth Points you've already earned.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER / DESIGNER NOTES -->
+  <footer>
+    <div class="note">
+      <div class="h">Designer notes — review</div>
+      <p style="margin:.5rem 0 0">
+        • <strong>Stacking caps:</strong> Rebirth currently <strong>inherits Ascension's per-category caps</strong> (e.g. +50 STR). As a separate track it can reach those caps again, so a fully-invested character could reach up to <strong>2× a category</strong> (Ascension + Rebirth). Intended per the "separate system" brief — say the word if you'd prefer Rebirth to have its own (lower) caps.<br>
+        • <strong>Deploy status:</strong> Lua is committed &amp; pushed. Goes live after the <strong>pending C++ rebuild + restart</strong> — the only engine dependency is the <code>resetJobPoints()</code> binding that performs the Job Point wipe.<br>
+        • <strong>Tunables</strong> (all in <code>job_rebirth_catalog.lua</code>): JP to qualify (2,100), Rebirth Points per rebirth (10), penalty per rebirth (15%) &amp; cap (90%), max rebirths (uncapped), altar position.
+      </p>
+    </div>
+    Legendary FFXI · Job Rebirth preview · generated for review
+  </footer>
+
+</div>
+</body>
+</html>

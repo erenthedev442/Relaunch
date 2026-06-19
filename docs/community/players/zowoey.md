@@ -1,6 +1,6 @@
 # Zowoey
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-14 · Character age 4d 23h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-14 · Character age 5d 18h
 
 `💪 1 job @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 275
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Total NM kills:** 55
 
 ## Augment Sage
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3c81fd9d6097 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 9dc6c53dd148 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

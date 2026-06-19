@@ -1,6 +1,6 @@
 # Candycorns
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 19h
 
 `💪 7 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **WHM 50** |
-| Sub job | THF 50 |
-| Time played | 32h |
-| Enemies defeated | 1,510 |
+| Main job | **THF 99** |
+| Sub job | MNK 99 |
+| Time played | 39h |
+| Enemies defeated | 1,863 |
 | Deaths | 8 |
 
 ## Job levels
@@ -23,7 +23,7 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
-| WHM | 50 | DRG | 84 |
+| WHM | 82 | DRG | 84 |
 | BLM | 96 | SMN | 1 |
 | RDM | 61 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,611
-- **Marks (lifetime):** 230
-- **Distinct NMs slain:** 8
-- **Total NM kills:** 13
+- **Marks (current):** 5,245
+- **Marks (lifetime):** 412
+- **Distinct NMs slain:** 13
+- **Total NM kills:** 1,049
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 64
-- **NM Affinities:** 6 / 13
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 127
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
@@ -57,11 +57,11 @@
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
-**7** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Apex Hunter · Augment Novice · Augment Expert.
+**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5c014d5716f3 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: fb93913390c0 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

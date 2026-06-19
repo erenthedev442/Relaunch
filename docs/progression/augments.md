@@ -70,7 +70,7 @@ So a maxed tank reaches **+640 HP on a single body piece**, and a sustain build 
 The table below lists **which catalyst maps to which augment**, grouped by stat family. **Fresh ×1–×5** is the total stat from trading that many catalysts with no Sage progress; **Max ×1–×5** is the same trade at full [Augment Sage](augment-sage.md) progress (rank 5 + affinity + a crit); **Cap** is the hard in-game ceiling where one exists — see [how scaling works](#how-augment-power-scales) above.
 
 <!-- DOCGEN:BEGIN id="augment-catalog" -->
-_313 catalyst items across 14 categories. Trade the catalyst to the Augment Moogle to apply the matching augment. Cost is **10,000 gil flat per trade** plus the catalyst items themselves._
+_306 catalyst items across 14 categories. Trade the catalyst to the Augment Moogle to apply the matching augment. Cost is **10,000 gil flat per trade** plus the catalyst items themselves._
 
 Each augment **scales with [Augment Sage](augment-sage.md) progress** and with how many catalysts you trade (**×N** = that many, 1–5; an item has 5 augment slots). **Fresh ×N** is a brand-new augment with **no Sage progress**; **Max ×N** is the ceiling at **rank-5 mastery + full affinity + a crit**. Your live value starts near Fresh and climbs toward Max as you rank Augment Sage up. Percentage augments (damage-taken, haste, etc.) show the raw value; the **Cap** column is the hard in-game ceiling for that stat (e.g. Phys. dmg. taken floors at -50%), or **no cap** for additive stats like Attack/HP — values above the Cap can't be reached no matter how many catalysts you stack.
 
@@ -110,12 +110,6 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/1516" data-img="https://www.bg-wiki.com/images/4/49/Griffon_Hide_description.png" target="_blank" rel="noopener">Griffon Hide</a> | 1516 | Save TP | 10 | 20 | 30 | 40 | 50 | 41 | 82 | 123 | 164 | 205 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1591" data-img="https://www.bg-wiki.com/images/c/c9/H.Q._Coeurl_Hide_description.png" target="_blank" rel="noopener">High-Quality Coeurl Hide</a> | 1591 | Reverse Flourish | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1620" data-img="https://www.bg-wiki.com/images/7/7f/Taurus_Horn_description.png" target="_blank" rel="noopener">Taurus Horn</a> | 1620 | STR | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1628" data-img="https://www.bg-wiki.com/images/2/27/Buffalo_Hide_description.png" target="_blank" rel="noopener">Buffalo Hide</a> | 1628 | STR DEX | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1640" data-img="https://www.bg-wiki.com/images/a/af/Bugard_Skin_description.png" target="_blank" rel="noopener">Bugard Skin</a> | 1640 | STR VIT | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1680" data-img="https://www.bg-wiki.com/images/5/51/H.Q._Bugard_Skin_description.png" target="_blank" rel="noopener">High-Quality Bugard Skin</a> | 1680 | STR AGI | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1816" data-img="https://www.bg-wiki.com/images/a/a3/Wyrm_Horn_description.png" target="_blank" rel="noopener">Wyrm Horn</a> | 1816 | STR CHR | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2121" data-img="https://www.bg-wiki.com/images/9/93/Ovinnik_Hide_description.png" target="_blank" rel="noopener">Ovinnik Hide</a> | 2121 | STR INT | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2123" data-img="https://www.bg-wiki.com/images/7/75/Catoblepas_Hide_description.png" target="_blank" rel="noopener">Catoblepas Hide</a> | 2123 | STR MND | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2147" data-img="https://www.bg-wiki.com/images/4/4b/Marid_Tusk_description.png" target="_blank" rel="noopener">Marid Tusk</a> | 2147 | Counter | 2 | 4 | 6 | 8 | 10 | 64 | 128 | 192 | 256 | 320 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2151" data-img="https://www.bg-wiki.com/images/d/d3/Marid_Hide_description.png" target="_blank" rel="noopener">Marid Hide</a> | 2151 | Physical Damage Taken | 2 | 4 | 6 | 8 | 10 | 64 | 128 | 192 | 256 | 320 | -50% |
 | <a class="item-link" href="https://www.ffxiah.com/item/2158" data-img="https://www.bg-wiki.com/images/0/0e/Hydra_Fang_description.png" target="_blank" rel="noopener">Hydra Fang</a> | 2158 | Magic Damage Taken | 2 | 4 | 6 | 8 | 10 | 64 | 128 | 192 | 256 | 320 | -50% |
@@ -145,7 +139,6 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/1690" data-img="https://www.bg-wiki.com/images/5/59/Hippogryph_Tf._description.png" target="_blank" rel="noopener">Hippogryph Tailfeather</a> | 1690 | Subtle Blow | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2149" data-img="https://www.bg-wiki.com/images/4/4e/Apkallu_Feather_description.png" target="_blank" rel="noopener">Apkallu Feather</a> | 2149 | Crit. hit damage | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | +100% |
 | <a class="item-link" href="https://www.ffxiah.com/item/2150" data-img="https://www.bg-wiki.com/images/e/e1/Colibri_Feather_description.png" target="_blank" rel="noopener">Colibri Feather</a> | 2150 | DEX | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2499" data-img="https://www.bg-wiki.com/images/c/c4/Regurg._Wing_description.png" target="_blank" rel="noopener">Regurgitated Wing</a> | 2499 | DEX AGI | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2506" data-img="https://www.bg-wiki.com/images/1/1a/Ladybug_Wing_description.png" target="_blank" rel="noopener">Ladybug Wing</a> | 2506 | Fire Affinity Magic Accuracy | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2509" data-img="https://www.bg-wiki.com/images/3/3a/Slug_Eye_description.png" target="_blank" rel="noopener">Slug Eye</a> | 2509 | Ice Affinity Magic Accuracy | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2522" data-img="https://www.bg-wiki.com/images/0/08/Gnat_Wing_description.png" target="_blank" rel="noopener">Gnat Wing</a> | 2522 | Wind Affinity Magic Accuracy | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
@@ -227,6 +220,7 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 
 | Catalyst | Item ID | Augment | Fresh ×1 | ×2 | ×3 | ×4 | ×5 | Max ×1 | ×2 | ×3 | ×4 | ×5 | Cap |
 |---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
+| <a class="item-link" href="https://www.ffxiah.com/item/921" data-img="https://static.ffxiah.com/images/icon/921.png" target="_blank" rel="noopener">Bottle Of Ahriman Tears</a> | 921 | INT | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/854" data-img="https://www.bg-wiki.com/images/6/6d/Cockatrice_Skin_description.png" target="_blank" rel="noopener">Cockatrice Skin</a> | 854 | Spell interruption rate down 1% | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/886" data-img="https://www.bg-wiki.com/images/2/26/Demon_Skull_description.png" target="_blank" rel="noopener">Demon Skull</a> | 886 | Mag. Acc | 2 | 4 | 6 | 8 | 10 | 64 | 128 | 192 | 256 | 320 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/905" data-img="https://www.bg-wiki.com/images/5/5e/Wyvern_Skull_description.png" target="_blank" rel="noopener">Wyvern Skull</a> | 905 | Mag. Acc. Mag.Atk.Bns | 2 | 4 | 6 | 8 | 10 | 64 | 128 | 192 | 256 | 320 | no cap |
@@ -255,7 +249,6 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/833" data-img="https://static.ffxiah.com/images/icon/833.png" target="_blank" rel="noopener">Clump Of Moko Grass</a> | 833 | Cure potency | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/887" data-img="https://www.bg-wiki.com/images/9/9a/Coral_Fragment_description.png" target="_blank" rel="noopener">Coral Fragment</a> | 887 | Potency of Cure received | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/888" data-img="https://www.bg-wiki.com/images/b/b4/Seashell_description.png" target="_blank" rel="noopener">Seashell</a> | 888 | MND | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1274" data-img="https://www.bg-wiki.com/images/4/40/Southern_Pearl_description.png" target="_blank" rel="noopener">Southern Pearl</a> | 1274 | MND CHR | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2198" data-img="https://www.bg-wiki.com/images/0/04/W._Spider%27s_Web_description.png" target="_blank" rel="noopener">Water Spiders Web</a> | 2198 | Pet MND | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 
 ### Charisma / Charm / Enmity
@@ -265,10 +258,10 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/787" data-img="https://www.bg-wiki.com/images/6/6e/Diamond_description.png" target="_blank" rel="noopener">Diamond</a> | 787 | Enmity | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/901" data-img="https://www.bg-wiki.com/images/f/fb/Venomous_Claw_description.png" target="_blank" rel="noopener">Venomous Claw</a> | 901 | Enmity | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/902" data-img="https://www.bg-wiki.com/images/1/19/Demon_Horn_description.png" target="_blank" rel="noopener">Demon Horn</a> | 902 | Charm | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1291" data-img="https://www.bg-wiki.com/images/9/96/Golden_Hktk._Eye_description.png" target="_blank" rel="noopener">Golden Hakutaku Eye</a> | 1291 | All songs | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1408" data-img="https://static.ffxiah.com/images/icon/1408.png" target="_blank" rel="noopener">Bottle Of Illuminink</a> | 1408 | Pet Enmity | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1453" data-img="https://www.bg-wiki.com/images/c/c6/M._Silverpiece_description.png" target="_blank" rel="noopener">Montiont Silverpiece</a> | 1453 | Pet Enmity | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1844" data-img="https://static.ffxiah.com/images/icon/1844.png" target="_blank" rel="noopener">Square Of Spectral Goldenrod</a> | 1844 | Treasure Hunter | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/1858" data-img="https://www.bg-wiki.com/images/b/b7/Moblumin_Ingot_description.png" target="_blank" rel="noopener">Moblumin Ingot</a> | 1858 | Gilfinder | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2372" data-img="https://www.bg-wiki.com/images/6/65/Khimaira_Mane_description.png" target="_blank" rel="noopener">Khimaira Mane</a> | 2372 | Resist Charm | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2827" data-img="https://static.ffxiah.com/images/icon/2827.png" target="_blank" rel="noopener">Spool Of Rugged Gold Thread</a> | 2827 | Song spellcasting time | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2841" data-img="https://static.ffxiah.com/images/icon/2841.png" target="_blank" rel="noopener">Ingot Of Quadav Silver</a> | 2841 | CHR | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
@@ -454,8 +447,8 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 
 | Catalyst | Item ID | Augment | Fresh ×1 | ×2 | ×3 | ×4 | ×5 | Max ×1 | ×2 | ×3 | ×4 | ×5 | Cap |
 |---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
-| <a class="item-link" href="https://www.ffxiah.com/item/2523" data-img="https://www.bg-wiki.com/images/e/ec/Peiste_Skin_description.png" target="_blank" rel="noopener">Peiste Skin</a> | 2523 | Exp. Point +33% | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/942" data-img="https://www.bg-wiki.com/images/9/90/Phil._Stone_description.png" target="_blank" rel="noopener">Philosophers Stone</a> | 942 | Cap. Point +33% | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2523" data-img="https://www.bg-wiki.com/images/e/ec/Peiste_Skin_description.png" target="_blank" rel="noopener">Peiste Skin</a> | 2523 | Exp. Point +33% | 33 | 66 | 99 | 132 | 165 | 64 | 128 | 192 | 256 | 320 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/942" data-img="https://www.bg-wiki.com/images/9/90/Phil._Stone_description.png" target="_blank" rel="noopener">Philosophers Stone</a> | 942 | Cap. Point +33% | 33 | 66 | 99 | 132 | 165 | 64 | 128 | 192 | 256 | 320 | no cap |
 <!-- DOCGEN:END id="augment-catalog" -->
 
 ## Notes
@@ -467,6 +460,6 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c867d07fcce7 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 1d0e703f0441 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

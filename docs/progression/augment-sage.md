@@ -77,12 +77,12 @@ Holding an affinity multiplies augments **in that category** by **1.5×**. Affin
 
 | Cat | Category | NM | Trophy | Catalysts available |
 |---:|---|---|---|---:|
-| 1 | Strength / Attack | Behemoth | Giant Femur | 43 |
-| 2 | Dexterity / Accuracy | King Arthro | Emperor Arthro's Shell | 29 |
+| 1 | Strength / Attack | Behemoth | Giant Femur | 37 |
+| 2 | Dexterity / Accuracy | King Arthro | Emperor Arthro's Shell | 28 |
 | 3 | Vitality / Defense | Adamantoise | Adamantoise Shell | 14 |
 | 4 | Agility / Evasion / Haste | Roc | Giant Bird Plume | 43 |
-| 5 | Intelligence / Magic offense | Ouryu (Guivre-tier wyrm) | Guivre's Skull | 17 |
-| 6 | Mind / Healing / Cure | Phoenix | Phoenix Feather | 8 |
+| 5 | Intelligence / Magic offense | Ouryu (Guivre-tier wyrm) | Guivre's Skull | 18 |
+| 6 | Mind / Healing / Cure | Phoenix | Phoenix Feather | 7 |
 | 7 | Charisma / Charm / Enmity | Lady Lilith (Khimaira-tier charmer) | Khimaira Mane | 12 |
 | 8 | HP / Regen | Fafnir | Wyvern Skin | 6 |
 | 9 | MP / Refresh | Vrtra | Vial of Dragon Blood | 3 |
@@ -122,6 +122,6 @@ Yes — both the Sage rank trophy and the affinity registration trophy are remov
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b0324b4aad06 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: d931f3b52a2d -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

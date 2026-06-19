@@ -1,8 +1,8 @@
 # Lunita
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-17 · Character age 3d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 4d 2h
 
-`💪 3 jobs @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **WAR 99** |
-| Sub job | SAM 99 |
-| Time played | 8h |
-| Enemies defeated | 392 |
-| Deaths | 13 |
+| Main job | **BLU 99** |
+| Sub job | BRD 99 |
+| Time played | 9h |
+| Enemies defeated | 505 |
+| Deaths | 15 |
 
 ## Job levels
 
@@ -25,21 +25,21 @@
 | MNK | 10 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 9 | BLU | 1 |
+| RDM | 9 | **BLU** | **99** |
 | THF | 1 | COR | 68 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 24 |
-| BRD | 1 | GEO | 1 |
+| **BRD** | **99** | GEO | 1 |
 | **RNG** | **99** | RUN | 29 |
 
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 1,375
-- **Marks (lifetime):** 100
+- **Marks (current):** 2,466
+- **Marks (lifetime):** 665
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 20
+- **Total NM kills:** 493
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**2** unlocked — First Hunt · Ten Hunts In.
+**3** unlocked — First Hunt · Ten Hunts In · Centennial Hunter.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: de52d0ee3669 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 0bcc5c92067c -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

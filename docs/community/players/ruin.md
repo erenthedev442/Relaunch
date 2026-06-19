@@ -1,8 +1,8 @@
 # Ruin
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 5h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 23h
 
-`⭐ 2 Ascensions` `💪 6 jobs @99`
+`⭐ 13 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,34 +12,34 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | WAR 99 |
-| Time played | 29h |
-| Enemies defeated | 1,573 |
-| Deaths | 4 |
+| Sub job | GEO 99 |
+| Time played | 36h |
+| Enemies defeated | 2,639 |
+| Deaths | 7 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 1 |
+| **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
-| WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
+| **WHM** | **99** | DRG | 1 |
+| **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| BRD | 1 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 34,054
-- **Marks (lifetime):** 2,656
+- **Marks (current):** 2,170
+- **Marks (lifetime):** 3,336
 - **Distinct NMs slain:** 7
-- **Total NM kills:** 212
+- **Total NM kills:** 766
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 130
+- **Augments crafted:** 144
 - **NM Affinities:** 12 / 13
 
 ## Reforge
@@ -68,16 +68,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 2
-- **Per-job prestige:** MNK P2
+- **Total Ascensions:** 13
+- **Per-job prestige:** MNK P13
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
-**10** unlocked — First Hunt · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · X Marks the Spot · Star-Slayer · Augment Novice · Augment Expert.
+**11** unlocked — First Hunt · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · X Marks the Spot · Star-Slayer · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: caf59108a01c -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 3a1e1248cfd2 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

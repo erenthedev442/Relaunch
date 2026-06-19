@@ -1,6 +1,6 @@
 # Daizu
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 13h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 8h
 
 `💪 6 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BLU 99** |
 | Sub job | RDM 99 |
-| Time played | 46h |
-| Enemies defeated | 2,797 |
+| Time played | 63h |
+| Enemies defeated | 3,703 |
 | Deaths | 3 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,410
+- **Marks (current):** 2,060
 - **Marks (lifetime):** 73
 - **Distinct NMs slain:** 7
-- **Total NM kills:** 7
+- **Total NM kills:** 412
 
 ## Guild standing
 
@@ -49,13 +49,13 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---|---:|---|
 | AF Hunters' Guild | Journeyman | 1,000 | 4,000 to Veteran |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| League Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Journeyman | 3,750 | 1,250 to Veteran |
+| League Hunters' Guild | Journeyman | 1,000 | 4,000 to Veteran |
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 5
+- **Mastery rank:** 1 / 5
+- **Augments crafted:** 32
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1366cb2d4c28 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 1839d3f06638 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

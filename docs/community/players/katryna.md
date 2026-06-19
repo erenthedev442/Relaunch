@@ -1,11 +1,11 @@
 # Katryna
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 3d 2h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 3d 21h
 
 `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 18h |
-| Enemies defeated | 606 |
-| Deaths | 14 |
+| Time played | 22h |
+| Enemies defeated | 749 |
+| Deaths | 18 |
 
 ## Job levels
 
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 4 / 5
-- **Marks (current):** 3,442
-- **Marks (lifetime):** 2,653
-- **Distinct NMs slain:** 4
-- **Total NM kills:** 527
+- **Rank:** 5 / 5
+- **Marks (current):** 6,175
+- **Marks (lifetime):** 4,291
+- **Distinct NMs slain:** 5
+- **Total NM kills:** 1,312
 
 ## Guild standing
 
@@ -50,29 +50,29 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| League Hunters' Guild | Journeyman | 1,500 | 3,500 to Veteran |
+| League Hunters' Guild | Journeyman | 4,500 | 500 to Veteran |
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 26
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 1 / 5
+- **Augments crafted:** 40
+- **NM Affinities:** 3 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 25 | 25 |
+| AF | 1,265 | 1,897 |
 | Relic | 0 | 0 |
-| Empyrean | 25 | 25 |
+| Empyrean | 125 | 187 |
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
 
 ## Achievements
 
-**6** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Mark of 1,000 · Augment Novice.
+**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier IV Unlocked · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ecfedcf48cd8 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 24b0b64ad88f -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

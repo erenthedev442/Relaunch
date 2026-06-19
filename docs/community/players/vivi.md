@@ -1,6 +1,6 @@
 # Vivi
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-18 · Character age 2d 4h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-18 · Character age 2d 23h
 
 `💪 3 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | SCH 99 |
-| Time played | 12h |
-| Enemies defeated | 169 |
-| Deaths | 5 |
+| Time played | 17h |
+| Enemies defeated | 1,365 |
+| Deaths | 6 |
 
 ## Job levels
 
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 9,890
-- **Marks (lifetime):** 205
-- **Distinct NMs slain:** 6
-- **Total NM kills:** 189
+- **Marks (current):** 2,956
+- **Marks (lifetime):** 322
+- **Distinct NMs slain:** 11
+- **Total NM kills:** 1,511
 
 ## Augment Sage
 
 - **Mastery rank:** 2 / 5
-- **Augments crafted:** 20
-- **NM Affinities:** 3 / 13
+- **Augments crafted:** 37
+- **NM Affinities:** 6 / 13
 
 ## Reforge
 
@@ -57,11 +57,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 119
 
 ## Achievements
 
-**6** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice.
+**7** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e1117ae36fed -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: b6bd56338f13 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

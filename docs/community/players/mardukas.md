@@ -1,8 +1,8 @@
 # Mardukas
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 17h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 11h
 
-`⭐ 10 Ascensions` `💪 5 jobs @99`
+`⭐ 20 Ascensions` `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **WAR 99** |
+| Main job | **DRK 99** |
 | Sub job | DNC 99 |
-| Time played | 46h |
-| Enemies defeated | 7,907 |
-| Deaths | 44 |
+| Time played | 52h |
+| Enemies defeated | 8,094 |
+| Deaths | 45 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 50,268
+- **Marks (current):** 25,218
 - **Marks (lifetime):** 39,929
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 832
+- **Total NM kills:** 5,685
 
 ## Guild standing
 
@@ -47,29 +47,29 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Journeyman | 500 | 4,500 to Veteran |
-| Relic Hunters' Guild | Journeyman | 2,500 | 2,500 to Veteran |
+| AF Hunters' Guild | Journeyman | 3,000 | 2,000 to Veteran |
+| Relic Hunters' Guild | Veteran | 5,000 | 20,000 to Master |
 | Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| League Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Journeyman | 2,500 | 2,500 to Veteran |
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 377
+- **Augments crafted:** 379
 - **NM Affinities:** 5 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 2,765 | 765 |
+| AF | 2,765 | 4,147 |
 | Relic | 2,505 | 7,755 |
 | Empyrean | 1,130 | 5,430 |
 
 ## Prestige
 
-- **Total Ascensions:** 10
-- **Per-job prestige:** WAR P10
+- **Total Ascensions:** 20
+- **Per-job prestige:** WAR P10 · DRK P10
 
 ## Collections
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 118c747221b0 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 21f1cae55402 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

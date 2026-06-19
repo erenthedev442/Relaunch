@@ -1,71 +1,73 @@
 # Rhis
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 1h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 20h
 
-`💪 2 jobs @99`
+`💪 6 jobs @99`
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
 | Main job | **BLM 99** |
-| Sub job | RDM 99 |
-| Time played | 2h |
-| Enemies defeated | 0 |
-| Deaths | 0 |
+| Sub job | RUN 99 |
+| Time played | 11h |
+| Enemies defeated | 924 |
+| Deaths | 4 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
+| WAR | 1 | **SAM** | **99** |
+| MNK | 1 | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 1 |
+| BST | 1 | **SCH** | **99** |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| RNG | 1 | **RUN** | **99** |
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 1,068
-- **Marks (lifetime):** 15
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 3
+- **Rank:** 5 / 5
+- **Marks (current):** 300
+- **Marks (lifetime):** 861
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 196
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 172
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| AF | 490 | 1,590 |
+| Relic | 200 | 1,950 |
+| Empyrean | 100 | 150 |
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
 
 ## Achievements
 
-**1** unlocked — First Hunt.
+**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Sanctuary Defender · Augment Novice · Augment Expert.
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| HL Rank I → V | 56m 15s |
 
 ---
 
@@ -74,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7d413ff1a683 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 77ea9bcabe09 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

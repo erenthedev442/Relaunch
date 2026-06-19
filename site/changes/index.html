@@ -1,0 +1,4192 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Player guide and reference for Legendary — an extreme QoL, fast-progression FFXI private server">
+      
+      
+      
+        <link rel="canonical" href="https://legendary-ffxi.pages.dev/changes/">
+      
+      
+        <link rel="prev" href="../changelog/">
+      
+      
+        <link rel="next" href="background-systems/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/favicon.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>What's Custom - Legendary FFXI</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/item-tooltip.css">
+    
+      <link rel="stylesheet" href="../assets/branding.css">
+    
+      <link rel="stylesheet" href="../assets/status.css">
+    
+      <link rel="stylesheet" href="../assets/gear-finder.css">
+    
+      <link rel="stylesheet" href="../assets/item-search.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#whats-custom" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+        <aside class="md-banner">
+          <div class="md-banner__inner md-grid md-typeset">
+            
+            
+<div id="server-status" class="server-status server-status--loading" role="status" aria-live="polite">
+  <span class="server-status__dot" aria-hidden="true"></span>
+  <span class="server-status__text">Checking server status&hellip;</span>
+</div>
+
+          </div>
+          
+        </aside>
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Legendary FFXI" class="md-header__button md-logo" aria-label="Legendary FFXI" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Legendary FFXI
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              What's Custom
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/richardknutzjr/FFXI-Private-Server-FJB" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Source
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../why-legendary/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Why Legendary?
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../getting-started/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Getting Started
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../rules/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Rules
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../changelog/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Changelog
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  
+    
+  
+  What's Custom
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../progression/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Progression
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../endgame/abyssea-nms/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Endgame & Events
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../economy/sparks-exchange/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Economy & Services
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../progression/augments/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Augmenting
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../community/players/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Community
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../reference/commands/" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Player Commands
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../reference/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Legendary FFXI" class="md-nav__button md-logo" aria-label="Legendary FFXI" data-md-component="logo">
+      
+  <img src="../assets/logo.png" alt="logo">
+
+    </a>
+    Legendary FFXI
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/richardknutzjr/FFXI-Private-Server-FJB" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Source
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../why-legendary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Why Legendary?
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../getting-started/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_3" id="__nav_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/install/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Install the Client
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/connect/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Connect to Server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/first-steps/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    First Steps
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/progression-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progression Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../getting-started/troubleshoot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Troubleshooting
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rules/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rules
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../changelog/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Changelog
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="./" class="md-nav__link md-nav__link--active">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    What's Custom
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link md-nav__link--active" for="__nav_6" id="__nav_6_label" tabindex="">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    What's Custom
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="background-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Background Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_7" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../progression/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Progression
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_7" id="__nav_7_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Progression
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/gear-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gear Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/gear-finder/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gear Finder (tool)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/item-database/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Item Database (tool)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/hnm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    HNM Kings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/prestige/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prestige / Ascension
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/achievements/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Achievements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/server-features/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quality of Life
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/gear-vendors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gear Vendors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/reforge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reforge System
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/hunters-guild/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hunter's Guild
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/subjob-exp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Subjob EXP Share
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/game-master/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Game Master (Wave Mode)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/weekly-hunts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Weekly Hunt Board
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/daily-board/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Daily Board
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/login-rewards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Login Rewards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/death-penalty/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Death Penalty
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/dungeons/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dungeons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/bis-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Best-in-Slot Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/gm-home/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    GM Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/skoll/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gemma
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/meat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Meat, the Immortal Tank
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/corvus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Corvus, the Sharpshooter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/cross-job-abilities/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cross-Job Abilities
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/cross-job-traits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cross-Job Traits
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/gear-progression/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gear Progression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/prime-armory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Prime Armory
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/title-vendor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Title Broker
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Endgame & Events
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Endgame & Events
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endgame/abyssea-nms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Abyssea NMs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endgame/star-devourer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Star-Devourer Raid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endgame/voidspire/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Voidspire
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endgame/colosseum/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Colosseum
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endgame/invasions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scheduled Invasions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endgame/treasure-hunts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Treasure Hunts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endgame/chocobo-derby/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Chocobo Derby
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endgame/provisioners-league/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Provisioners' League
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endgame/casino/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Casino
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../endgame/seasonal-events/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Seasonal Events
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Economy & Services
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Economy & Services
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../economy/sparks-exchange/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sparks Exchange
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../economy/gil-exchange/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Gil Exchange
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../economy/reforge-mark-exchange/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reforge Mark Exchange
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../economy/home-point/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home Point Network
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../economy/race-changer/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Race Changer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Augmenting
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Augmenting
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/augments/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Augment Moogle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../progression/augment-sage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Augment Sage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../community/players/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Community
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_11">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Community
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../community/status/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Server Status
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../community/leaderboards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Leaderboards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../community/highlights/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Hall of Fame
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../community/player-trusts/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Player Trusts
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../community/faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/commands/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Player Commands
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reference/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reference
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13" id="__nav_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_13_3" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../reference/spells/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Spells
+  
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13_3" id="__nav_13_3_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_13_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_13_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Spells
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/spells/white/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    White Magic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/spells/black/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Black Magic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/spells/songs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Songs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/spells/ninjutsu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ninjutsu
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/spells/summoning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Summoning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/spells/blue/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Blue Magic
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/spells/geomancy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Geomancy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/spells/trust/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Trust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/custom-spells/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom Spells
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rates-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rates at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#new-character-bonuses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        New character bonuses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#combat-magic-buffs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Combat &amp; magic buffs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#movement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Movement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subjob" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Subjob
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merits-currencies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Merits &amp; currencies
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Dynamis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trusts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trusts
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quality-of-life-settings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quality-of-life settings
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="whats-custom">What's Custom<a class="headerlink" href="#whats-custom" title="Permanent link">&para;</a></h1>
+<p><strong>Server name:</strong> Legendary
+<strong>Tagline:</strong> <em>Extreme QoL &amp; Fast Progression</em></p>
+<p>Legendary is a heavily-customized FFXI server. Beyond the settings tweaks (rates, caps, durations), it adds custom NPCs, hunt systems, gear pipelines, and background overrides that don't exist on retail. This page is the index — every custom system is listed here. Detail pages link out for the big content.</p>
+<h2 id="rates-at-a-glance">Rates at a glance<a class="headerlink" href="#rates-at-a-glance" title="Permanent link">&para;</a></h2>
+<!-- DOCGEN:BEGIN id="rates-at-a-glance" -->
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">Multiplier</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>EXP</strong> (scripted, FoV/GoV, ROE)</td>
+<td style="text-align: right;"><strong>10×</strong></td>
+<td>All script-based EXP sources</td>
+</tr>
+<tr>
+<td><strong>EXP</strong> (mob kills)</td>
+<td style="text-align: right;"><strong>3×</strong></td>
+<td>Base mob EXP</td>
+</tr>
+<tr>
+<td><strong>Capacity Points</strong> (scripted)</td>
+<td style="text-align: right;"><strong>10×</strong></td>
+<td>Records of Eminence, etc.</td>
+</tr>
+<tr>
+<td><strong>Capacity Points</strong> (mob kills)</td>
+<td style="text-align: right;"><strong>3×</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Sparks</strong></td>
+<td style="text-align: right;"><strong>10×</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>TABs</strong> (FoV)</td>
+<td style="text-align: right;"><strong>10×</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Mob drop rate</strong></td>
+<td style="text-align: right;"><strong>3×</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Gil from mobs</strong></td>
+<td style="text-align: right;"><strong>10×</strong></td>
+<td>Plus the <strong>+N gil/mob level</strong> bonus shown below</td>
+</tr>
+<tr>
+<td><strong>Gil bonus per mob level</strong></td>
+<td style="text-align: right;"><strong>+1,000</strong></td>
+<td>Flat bonus added to every mob kill</td>
+</tr>
+<tr>
+<td><strong>Gil from quests</strong></td>
+<td style="text-align: right;"><strong>100×</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Bayld from quests</strong></td>
+<td style="text-align: right;"><strong>2×</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Fame gain</strong></td>
+<td style="text-align: right;"><strong>10×</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Skill-up rate</strong></td>
+<td style="text-align: right;"><strong>10×</strong></td>
+<td>All combat &amp; magic skills</td>
+</tr>
+<tr>
+<td><strong>Craft skill-up rate</strong></td>
+<td style="text-align: right;"><strong>10×</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Craft HQ chance</strong></td>
+<td style="text-align: right;"><strong>10×</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Player / Pet / Trust / Fellow TP gain</strong></td>
+<td style="text-align: right;"><strong>3×</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>NPC shop prices</strong></td>
+<td style="text-align: right;"><strong>2×</strong></td>
+<td>Things cost more at vendors</td>
+</tr>
+<tr>
+<td><strong>EXP loss on death</strong></td>
+<td style="text-align: right;"><strong>3×</strong></td>
+<td>Death is costly — be careful</td>
+</tr>
+</tbody>
+</table>
+<!-- DOCGEN:END id="rates-at-a-glance" -->
+
+<p><em>If a stat maps to more than one underlying setting and they differ, both values are shown (e.g. <code>10× / 3×</code>).</em></p>
+<h2 id="new-character-bonuses">New character bonuses<a class="headerlink" href="#new-character-bonuses" title="Permanent link">&para;</a></h2>
+<p>You start with way more than retail:</p>
+<table>
+<thead>
+<tr>
+<th>Setting</th>
+<th>This server</th>
+<th>Retail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Starting gil</strong></td>
+<td><!--setting:START_GIL:comma-->5,000,000<!--/setting--></td>
+<td>10</td>
+</tr>
+<tr>
+<td><strong>Starting inventory &amp; satchel</strong></td>
+<td><!--setting:START_INVENTORY-->80<!--/setting--> (max)</td>
+<td>30</td>
+</tr>
+<tr>
+<td><strong>All 8 Mog Wardrobes</strong></td>
+<td><!--setting:START_INVENTORY-->80<!--/setting--> slots each, at creation</td>
+<td>0 (must be quested individually)</td>
+</tr>
+<tr>
+<td><strong>Starting level cap</strong></td>
+<td>99</td>
+<td>50 (Limit Break required)</td>
+</tr>
+<tr>
+<td><strong>Subjob unlocked at</strong></td>
+<td>level 0 (immediate)</td>
+<td>level 18 quest</td>
+</tr>
+<tr>
+<td><strong>Advanced jobs unlocked at</strong></td>
+<td>level 0 (immediate)</td>
+<td>level 30 quest</td>
+</tr>
+<tr>
+<td><strong>All maps</strong></td>
+<td>granted at creation</td>
+<td>earn over time</td>
+</tr>
+<tr>
+<td><strong>Outpost warps</strong></td>
+<td>all unlocked (including Tu'Lia and Tavnazia)</td>
+<td>earn over time</td>
+</tr>
+<tr>
+<td><strong>Opening cutscene</strong></td>
+<td>skipped</td>
+<td>shown</td>
+</tr>
+</tbody>
+</table>
+<h2 id="combat-magic-buffs">Combat &amp; magic buffs<a class="headerlink" href="#combat-magic-buffs" title="Permanent link">&para;</a></h2>
+<p>Magic and weapon skills hit harder; defensive spells last longer:</p>
+<table>
+<thead>
+<tr>
+<th>Effect</th>
+<th style="text-align: right;">This server</th>
+<th style="text-align: right;">Retail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Cure power</td>
+<td style="text-align: right;"><!--setting:CURE_POWER-->2<!--/setting-->×</td>
+<td style="text-align: right;">1×</td>
+</tr>
+<tr>
+<td>Elemental magic damage</td>
+<td style="text-align: right;"><!--setting:ELEMENTAL_POWER-->2<!--/setting-->×</td>
+<td style="text-align: right;">1×</td>
+</tr>
+<tr>
+<td>Divine magic damage</td>
+<td style="text-align: right;"><!--setting:DIVINE_POWER-->2<!--/setting-->×</td>
+<td style="text-align: right;">1×</td>
+</tr>
+<tr>
+<td>Ninjutsu damage</td>
+<td style="text-align: right;"><!--setting:NINJUTSU_POWER-->2<!--/setting-->×</td>
+<td style="text-align: right;">1×</td>
+</tr>
+<tr>
+<td>Blue magic damage</td>
+<td style="text-align: right;"><!--setting:BLUE_POWER-->2<!--/setting-->×</td>
+<td style="text-align: right;">1×</td>
+</tr>
+<tr>
+<td>Dark magic drain</td>
+<td style="text-align: right;"><!--setting:DARK_POWER-->2<!--/setting-->×</td>
+<td style="text-align: right;">1×</td>
+</tr>
+<tr>
+<td>Weapon skill damage</td>
+<td style="text-align: right;"><!--setting:WEAPON_SKILL_POWER-->2<!--/setting-->×</td>
+<td style="text-align: right;">1×</td>
+</tr>
+<tr>
+<td>Item potency (potions/ethers)</td>
+<td style="text-align: right;"><!--setting:ITEM_POWER-->2<!--/setting-->×</td>
+<td style="text-align: right;">1×</td>
+</tr>
+<tr>
+<td><strong>Stoneskin HP cap</strong></td>
+<td style="text-align: right;"><!--setting:STONESKIN_CAP:comma-->1,000<!--/setting--></td>
+<td style="text-align: right;">350</td>
+</tr>
+<tr>
+<td><strong>Blink shadows</strong></td>
+<td style="text-align: right;"><!--setting:BLINK_SHADOWS-->6<!--/setting--></td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td><strong>Spike effects last</strong></td>
+<td style="text-align: right;"><!--setting:SPIKE_EFFECT_DURATION-->1800<!--/setting-->s</td>
+<td style="text-align: right;">180s</td>
+</tr>
+<tr>
+<td><strong>Elemental debuffs last</strong></td>
+<td style="text-align: right;"><!--setting:ELEMENTAL_DEBUFF_DURATION-->1200<!--/setting-->s</td>
+<td style="text-align: right;">120s</td>
+</tr>
+<tr>
+<td><strong>Aquaveil hits absorbed</strong></td>
+<td style="text-align: right;"><!--setting:AQUAVEIL_COUNTER-->5<!--/setting--></td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<h2 id="movement">Movement<a class="headerlink" href="#movement" title="Permanent link">&para;</a></h2>
+<p>You move <em>fast</em>:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">This server</th>
+<th style="text-align: right;">Retail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base run speed</td>
+<td style="text-align: right;"><!--setting:BASE_SPEED-->100<!--/setting--></td>
+<td style="text-align: right;">50</td>
+</tr>
+<tr>
+<td>Speed cap (with gear)</td>
+<td style="text-align: right;"><!--setting:SPEED_LIMIT-->500<!--/setting--></td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr>
+<td>Mount speed</td>
+<td style="text-align: right;"><!--setting:MOUNT_SPEED-->510<!--/setting--></td>
+<td style="text-align: right;">80</td>
+</tr>
+</tbody>
+</table>
+<h2 id="subjob">Subjob<a class="headerlink" href="#subjob" title="Permanent link">&para;</a></h2>
+<p><strong>Subjob is full level</strong>, not half. If your main is 99, your sub is 99 too. (Retail: sub is half main, so 99/49.)</p>
+<p><strong>Subjob also levels itself.</strong> While you grind your main, your subjob banks half the EXP and levels up in the background, capped at main's current level. See <a href="../progression/subjob-exp/">Subjob EXP Share</a> for the full mechanic.</p>
+<h2 id="merits-currencies">Merits &amp; currencies<a class="headerlink" href="#merits-currencies" title="Permanent link">&para;</a></h2>
+<p>Higher caps and unlimited spending:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align: right;">This server</th>
+<th style="text-align: right;">Retail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Max merit points held</td>
+<td style="text-align: right;"><!--setting:MAX_MERIT_POINTS:comma-->127<!--/setting--></td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr>
+<td>Sparks cap</td>
+<td style="text-align: right;"><!--setting:CAP_CURRENCY_SPARKS:comma-->999,999<!--/setting--></td>
+<td style="text-align: right;">99,999</td>
+</tr>
+<tr>
+<td>Accolades cap</td>
+<td style="text-align: right;"><!--setting:CAP_CURRENCY_ACCOLADES:comma-->999,999<!--/setting--></td>
+<td style="text-align: right;">99,999</td>
+</tr>
+<tr>
+<td>Valor cap</td>
+<td style="text-align: right;"><!--setting:CAP_CURRENCY_VALOR:comma-->500,000<!--/setting--></td>
+<td style="text-align: right;">50,000</td>
+</tr>
+<tr>
+<td>Ballista crystals cap</td>
+<td style="text-align: right;"><!--setting:CAP_CURRENCY_BALLISTA:comma-->20,000<!--/setting--></td>
+<td style="text-align: right;">2,000</td>
+</tr>
+<tr>
+<td>Weekly sparks/accolades spending cap</td>
+<td style="text-align: right;"><strong>disabled</strong></td>
+<td style="text-align: right;">100,000/week</td>
+</tr>
+</tbody>
+</table>
+<h2 id="dynamis">Dynamis<a class="headerlink" href="#dynamis" title="Permanent link">&para;</a></h2>
+<p>Built for grinding:</p>
+<ul>
+<li><strong>Cooldown between Dynamis runs:</strong> <!--setting:BETWEEN_2DYNA_WAIT_TIME-->0<!--/setting-->h (retail: 24h).</li>
+<li><strong>Level minimum:</strong> <!--setting:DYNA_LEVEL_MIN-->1<!--/setting--> (retail: 65).</li>
+<li><strong>Prismatic Hourglass cost:</strong> <!--setting:PRISMATIC_HOURGLASS_COST:comma-->1<!--/setting--> gil (retail: 50,000).</li>
+<li><strong>Currency exchange rate:</strong> <!--setting:CURRENCY_EXCHANGE_RATE-->10<!--/setting-->:1 (retail: 100:1) — cheaper to upgrade ancient currency.</li>
+<li><strong>100s → 1s exchange enabled.</strong></li>
+<li><strong>COP Dynamis</strong> has no Chains of Promathia mission prerequisite (FREE_COP_DYNAMIS = <!--setting:FREE_COP_DYNAMIS-->1<!--/setting-->).</li>
+</ul>
+<h2 id="trusts">Trusts<a class="headerlink" href="#trusts" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Custom Engagement</strong> enabled — trusts behave more flexibly.</li>
+<li><strong>Alter Ego Extravaganza</strong> event running (summer/NY trust acquisition discounts).</li>
+<li><strong>Alter Ego Expo</strong> running (HPP / MPP / Status Resistance bonus).</li>
+</ul>
+<h2 id="quality-of-life-settings">Quality-of-life settings<a class="headerlink" href="#quality-of-life-settings" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><code>@unstuck</code> self-rescue command</strong> enabled (24h cooldown).</li>
+<li><strong>Unlimited AH listings</strong> (retail: 7).</li>
+<li><strong>Equip from Mog Satchel / Sack / Case</strong> allowed (requires a client addon).</li>
+<li><strong>Explorer Moogle teleports</strong> available from level <!--setting:EXPLORER_MOOGLE_LV-->1<!--/setting--> (retail: 10).</li>
+<li><strong>Records of Eminence timed records</strong> active.</li>
+<li><strong>Synergy crafting</strong> enabled.</li>
+<li><strong>Login Campaign</strong> active — daily rewards for logging in.</li>
+<li><strong>Daily tally / Gobbie Mystery Box</strong> — <!--setting:DAILY_TALLY_AMOUNT-->50<!--/setting--> points/day (retail: 10), eligible after <!--setting:GOBBIE_BOX_MIN_AGE-->1<!--/setting--> day (retail: 45).</li>
+<li><strong>ENM key-item cooldown</strong> — <!--setting:ENM_COOLDOWN-->0<!--/setting-->h (retail: 120h).</li>
+<li><strong>No regime level penalty</strong> — REGIME_REWARD_THRESHOLD = <!--setting:REGIME_REWARD_THRESHOLD-->150<!--/setting--> (retail: 15).</li>
+<li><strong>EXP rings</strong> — multiple ownership allowed, no one-per-week limit, up to <strong><!--setting:NUMBER_OF_DM_EARRINGS-->10<!--/setting--> Divine Might earrings</strong>.</li>
+<li><strong>Homepoint teleport system</strong> enabled.</li>
+</ul>
+<hr />
+<h1 id="custom-npcs-and-content">Custom NPCs and content<a class="headerlink" href="#custom-npcs-and-content" title="Permanent link">&para;</a></h1>
+<p>Beyond the settings tweaks above, Legendary adds a stack of custom NPCs and hunt systems. The big ones each have their own page; the rest are summarized inline.</p>
+<h2 id="reisenjima-henge-hub">Reisenjima Henge hub<a class="headerlink" href="#reisenjima-henge-hub" title="Permanent link">&para;</a></h2>
+<p>Three custom NPCs stand side-by-side at <strong>Reisenjima Henge</strong> — the endgame zone that anchors the bulk of Legendary's progression loop.</p>
+<table>
+<thead>
+<tr>
+<th>NPC</th>
+<th>Position</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Hunt: Hub</strong></td>
+<td><em>see <a href="../progression/">Hunting League</a></em></td>
+<td>Shows rank &amp; marks, unlocks ranks, reward shop</td>
+</tr>
+<tr>
+<td><strong>Hunt: Spawner</strong></td>
+<td><em>see <a href="../progression/">Hunting League</a></em></td>
+<td>Pops current-rank NMs on demand</td>
+</tr>
+<tr>
+<td><strong>Armor Vendor</strong></td>
+<td><code>(2.49, 5.51, -12.18)</code></td>
+<td>Endgame armor for seals — see <a href="../progression/gear-vendors/">Gear Vendors</a></td>
+</tr>
+<tr>
+<td><strong>Weapons Vendor</strong></td>
+<td><code>(-0.51, 5.51, -12.18)</code></td>
+<td>Endgame weapons for seals — see <a href="../progression/gear-vendors/">Gear Vendors</a></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>Hunting League</strong> is the rank-based NM hunting system that drives all progression. Five ranks, ~3 NMs per rank, mark currency, reward shop. → <a href="../progression/">Full details</a></li>
+<li><strong>Armor Vendor</strong> and <strong>Weapons Vendor</strong> sell tiered gear (Bronze / Silver / Gold) for the three seal currencies. → <a href="../progression/gear-vendors/">Full catalogs</a></li>
+</ul>
+<h2 id="reforge-system-gwora-corridor">Reforge System (Gwora Corridor)<a class="headerlink" href="#reforge-system-gwora-corridor" title="Permanent link">&para;</a></h2>
+<p>Two NPCs at <strong>Gwora Corridor</strong> drive a parallel NM-farm-to-armor pipeline focused on <strong>AF / Relic / Empyrean</strong> armor.</p>
+<table>
+<thead>
+<tr>
+<th>NPC</th>
+<th>Position</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reforge Spawner</strong></td>
+<td><code>(10.0, 0.0, 0.0)</code></td>
+<td>Pops one of three NM pools (Sky Gods / Unity NMs / Abyssea NMs)</td>
+</tr>
+<tr>
+<td><strong>Reforge Vendor</strong></td>
+<td><code>(15.0, 0.0, 0.0)</code></td>
+<td>Upgrades base → +1 → +2 → +3 for marks</td>
+</tr>
+</tbody>
+</table>
+<p>Three currencies (AF Marks, Relic Marks, Empyrean Marks) track separately. Every kill drops a base piece <strong>and</strong> marks for its track. All 22 jobs supported. → <a href="../progression/reforge/">Full details</a></p>
+<h2 id="gm-home-npcs">GM Home NPCs<a class="headerlink" href="#gm-home-npcs" title="Permanent link">&para;</a></h2>
+<p>GM Home hosts five clusters of custom NPCs spanning starter setup, character upgrades, weekly activities, combat testing, and commerce. Use <strong><code>!gmhome</code></strong> from anywhere in-game to warp there instantly. Positions auto-update from the live Lua source files.</p>
+<!-- DOCGEN:BEGIN id="gm-home-npcs" -->
+<p><em>All NPCs are in <strong>GM Home</strong> (zone 210). Positions shown as (x, y, z).</em></p>
+<p><strong>Progression cluster</strong> — gear upgrades and augments (z ≈ −7)</p>
+<table>
+<thead>
+<tr>
+<th>NPC</th>
+<th>Position</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Gear Moogle</strong></td>
+<td><code>(-4.5, 0, -7)</code></td>
+<td>One-time starter gear kit for new characters (once per character)</td>
+</tr>
+<tr>
+<td><strong>Augment Moogle</strong></td>
+<td><code>(-4.5, 0, -7)</code></td>
+<td>Trade one equipment piece + 1–4 catalyst crystals for stacking augments</td>
+</tr>
+<tr>
+<td><strong>Augment Sage</strong></td>
+<td><code>(-1.5, 0, -5)</code></td>
+<td>Augment affinity system — unlock passive stat bonuses by spending hunt marks</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Utility cluster</strong> — one-time character setup (z ≈ −14)</p>
+<table>
+<thead>
+<tr>
+<th>NPC</th>
+<th>Position</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Character Upgrader</strong></td>
+<td><code>(-1.5, 0, -14)</code></td>
+<td>Menu-driven: grants all weapon skills, spells, trusts, capped skills, outpost warps</td>
+</tr>
+<tr>
+<td><strong>Key Item Moogle</strong></td>
+<td><code>(1.5, 0, -14)</code></td>
+<td>Grants all ~4,000 key items in one transaction (single-use, once per character)</td>
+</tr>
+<tr>
+<td><strong>Mission Moogle</strong></td>
+<td><code>(4.5, 0, -14)</code></td>
+<td>Skip all missions at once, or per-expansion (RoZ, CoP, ToAU, Wings, SoA, RoV)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Activities cluster</strong> — ongoing gameplay systems (z ≈ −21)</p>
+<table>
+<thead>
+<tr>
+<th>NPC</th>
+<th>Position</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>EXP Camp Moogle</strong></td>
+<td><code>(0, 0, -15)</code></td>
+<td>Warp to one of 12 fixed EXP camp locations (Lv 10–75 tier list)</td>
+</tr>
+<tr>
+<td><strong>Hunt Board</strong></td>
+<td><code>(-1.5, 0, -25)</code></td>
+<td>Weekly hunt board — pick up and turn in weekly NM target bounties for marks</td>
+</tr>
+<tr>
+<td><strong>Dungeon Master</strong></td>
+<td><em>unknown</em></td>
+<td>Enter instanced dungeon challenges; earn infamy currency on completion</td>
+</tr>
+<tr>
+<td><strong>Infamy Vendor</strong></td>
+<td><em>unknown</em></td>
+<td>Spend infamy currency earned from dungeons on gear and rewards</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Admin cluster</strong> — testing and meta systems (z ≈ −28)</p>
+<table>
+<thead>
+<tr>
+<th>NPC</th>
+<th>Position</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Game Master</strong></td>
+<td><code>(3, -34.3, -467)</code></td>
+<td>Wave-based fight challenge (Easy → Insane); earn hunt marks on full clear</td>
+</tr>
+<tr>
+<td><strong>Companion Master</strong></td>
+<td><code>(-3, 0, -30)</code></td>
+<td>Player companion system — link friends and summon them as trusts in your party</td>
+</tr>
+<tr>
+<td><strong>Test Dummy</strong></td>
+<td><code>(3, 0, -30)</code></td>
+<td>Interactive combat dummy for testing DPS and skill rotations</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Commerce row</strong> — gil sinks and convenience services (z ≈ −35)</p>
+<table>
+<thead>
+<tr>
+<th>NPC</th>
+<th>Position</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Warpman</strong></td>
+<td><code>(3, 0, -15)</code></td>
+<td>Paid warp service to city hubs (San d'Oria, Bastok, Windurst, Jeuno, and more)</td>
+</tr>
+<tr>
+<td><strong>Mystery Mog</strong></td>
+<td><code>(-1.5, 0, -35)</code></td>
+<td>Gacha box — spend hunt marks for a random pull from the reward table</td>
+</tr>
+<tr>
+<td><strong>Title Broker</strong></td>
+<td><code>(1.5, 0, -35)</code></td>
+<td>Buy cosmetic titles for gil; cheap flavor titles to rare endgame trophies</td>
+</tr>
+<tr>
+<td><strong>Gil Exchange</strong></td>
+<td><code>(4.5, 0, -35)</code></td>
+<td>Trade hunt marks for gil in bulk</td>
+</tr>
+</tbody>
+</table>
+<!-- DOCGEN:END id="gm-home-npcs" -->
+
+<h2 id="custom-hnm-system">Custom HNM system<a class="headerlink" href="#custom-hnm-system" title="Permanent link">&para;</a></h2>
+<p>Legendary runs a <strong>hybrid HNM pop system</strong> that blends era-style timed rotation with retail-style QM pops:</p>
+<ul>
+<li><strong>NQ kings</strong> (Fafnir, Behemoth, Aspidochelone, etc.) rotate on a timed window, persisting across server restarts.</li>
+<li><strong>HQ kings</strong> (Nidhogg, King Behemoth, etc.) drop via QM placeholders.</li>
+<li>Respawn timers persist across restarts — crashes don't reset the clock.</li>
+<li>Each king's respawn window is tuned individually (e.g. Fafnir's is 21–24h).</li>
+</ul>
+<h2 id="world-first-announcements">World-first announcements<a class="headerlink" href="#world-first-announcements" title="Permanent link">&para;</a></h2>
+<p>The server broadcasts to everyone online when a milestone is first achieved:</p>
+<ul>
+<li><strong>First player death</strong> (server-wide bragging rights)</li>
+<li><strong>First level-up to each level per job</strong> (e.g. "First WAR to hit 75")</li>
+<li><strong>First NM kills</strong> for tracked HNMs</li>
+<li>Winners are recorded permanently, so the title stays attributed even after restarts.</li>
+</ul>
+<hr />
+<h1 id="background-systems">Background systems<a class="headerlink" href="#background-systems" title="Permanent link">&para;</a></h1>
+<p>System-level modules that change behavior server-wide without adding NPCs. You probably won't notice them directly — but you'll notice their absence on a vanilla server.</p>
+<table>
+<thead>
+<tr>
+<th>Module</th>
+<th>What it changes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Always-Popped NMs</strong></td>
+<td>Every NM in Abyssea (all 10 zones), Escha (Zi'Tah + Ru'Aun), Reisenjima, and Reisenjima Sanctorium auto-spawns at server start and respawns <strong>30 seconds</strong> after death. No trade pop, no key item, no atmacite, no cruor — just walk in and fight. HNMs and wave bosses included. Reisenjima Henge is excluded so the Hunting League's on-demand spawner can keep working.</td>
+</tr>
+<tr>
+<td><strong>Unlimited Visitant (Abyssea)</strong></td>
+<td>Every player gets permanent Visitant status the moment they zone into any Abyssea area. No timer, no eject to Searing Ward, no pearl/atma farming just to stay alive. Same mechanism retail uses for GMs, applied to everyone.</td>
+</tr>
+<tr>
+<td><strong>Homepoint Heal</strong></td>
+<td>Every homepoint visit restores full HP &amp; MP. No more relying on a healer at the crystal.</td>
+</tr>
+<tr>
+<td><strong>Persistent NM Time of Death</strong></td>
+<td>NM respawn timers survive crashes and restarts. Currently tracks Behemoth (21–24h window), with more NMs addable.</td>
+</tr>
+<tr>
+<td><strong>Disable Zone-In Cutscenes</strong></td>
+<td>Suppresses every auto-cutscene that fires when you zone into an area with a mission/quest stage that would normally trigger one. Side effects (position resets, charvar updates, key item grants) still happen — only the cutscene playback is skipped. Talk to the NPC manually if you want to see it.</td>
+</tr>
+<tr>
+<td><strong>Auto Unstick</strong></td>
+<td>Server-side watchdog that clears stuck event state from any character on zone-in. If your character is wedged in a "still in cutscene" state, just zone (or log out and back in) and the watchdog releases you. Also defuses the Mog House 2F unlock cutscene loop that traps some characters.</td>
+</tr>
+<tr>
+<td><strong>RoE "Gain Experience" Always On</strong></td>
+<td>The Records of Eminence 4-hour timed reward for "gain 5000 EXP" is active in <em>every</em> slot, every day — was 3 slots per week by default. (There's also a GM-only <code>!gainexp</code> command for instant claim, but players earn this the normal way by gaining EXP.)</td>
+</tr>
+<tr>
+<td><strong>Conquest Regional NPCs Always Up</strong></td>
+<td>Bastok, Windurst, and San d'Oria regional NPCs stay visible regardless of which nation owns conquest. No "come back next week" walls.</td>
+</tr>
+<tr>
+<td><strong>Mission Wardrobe Unlocks</strong></td>
+<td>Hitting mission milestones unlocks Mog Wardrobe slots. Currently: Zilart completion → Mog Wardrobe 3 unlocked.</td>
+</tr>
+<tr>
+<td><strong>Max-Size Mog Wardrobes at Creation</strong></td>
+<td>All 8 Mog Wardrobes are pre-sized to maximum capacity on character creation. By default, wardrobes 1-8 start at 0 slots until manually expanded; this skips that and gives every new character full storage from minute one.</td>
+</tr>
+<tr>
+<td><strong>New Player Linkshell</strong></td>
+<td>New characters automatically receive a designated server linkshell at character creation.</td>
+</tr>
+<tr>
+<td><strong>Login Announcements</strong></td>
+<td>Broadcasts a server-wide message when a player logs in, so the community knows when familiar names are online.</td>
+</tr>
+<tr>
+<td><strong>First-99 Timestamp Tracker</strong></td>
+<td>The first time any of a character's jobs hits level 99, the timestamp is stamped permanently into a charvar. Powers the "Fastest 1 → 99" leaderboard on the <a href="../community/leaderboards/">Community</a> page. Lock-once — re-leveling another job to 99 doesn't overwrite the stamp.</td>
+</tr>
+<tr>
+<td><strong>Chocobo Raising QoL</strong></td>
+<td>Faster chocobo growth (2 days to chick stage), higher endgame stat caps (riding speed 120, endurance), tuned for active raising.</td>
+</tr>
+<tr>
+<td><strong>Wish Upon a Star Workaround</strong></td>
+<td>Patches the Bastok "Wish Upon a Star" weather-gate quest that's otherwise impossible without a specific weather event.</td>
+</tr>
+<tr>
+<td><strong>SoA Imprimatur Gate Removed</strong></td>
+<td>Seekers of Adoulin missions no longer require Imprimatur key items or fame. Talk to the NPC, get the mission.</td>
+</tr>
+<tr>
+<td><strong>Garrison Placeholder Data</strong></td>
+<td>Supplies temporary NPC appearance data (looks, weapons) for Garrison content so it runs even without captured units. Organized by level cap × nation.</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="whats-not-changed">What's NOT changed<a class="headerlink" href="#whats-not-changed" title="Permanent link">&para;</a></h2>
+<p>For reference, these are at retail defaults on this server:</p>
+<ul>
+<li>Mob HP / accuracy / damage multipliers</li>
+<li>Mob movement speed</li>
+<li>Auction House fee structure</li>
+<li>Enmity cap (30,000)</li>
+<li>Sneak/Invis/Deodorize durations</li>
+<li>Old cure formula / old magic damage (both off — uses modern formulas)</li>
+<li>Fishing is <strong>disabled</strong> (server-wide)</li>
+</ul>
+<hr />
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: d7ed9918fa76 -->
+<p><em>Last updated: 2026-06-18 01:05 UTC</em></p>
+<!-- DOCGEN:END id="last-updated" -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "navigation.indexes", "search.highlight", "search.suggest", "content.code.copy", "toc.follow"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+        <script src="../assets/item-tooltip.js"></script>
+      
+        <script src="../assets/status.js"></script>
+      
+        <script src="../assets/gear-finder.js"></script>
+      
+        <script src="../assets/item-search.js"></script>
+      
+    
+  </body>
+</html>

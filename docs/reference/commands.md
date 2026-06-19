@@ -2,13 +2,13 @@
 
 These chat commands are available to every player on Legendary (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 56
+**Total player-accessible commands:** 58
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    41 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    42 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -41,6 +41,7 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!marks` | — | Quick Hunt Marks balance - current spendable balance plus an at-a-glance kill-streak summary. | :material-puzzle: **custom** |
 | `!mastery` | string, string, string | _(no description)_ | :material-puzzle: **custom** |
 | `!mobs` | string | Lists the LIVE (spawned, HP > 0) mobs in your current zone, nearest first, with HP%, rough distance, and (X, Y, Z) world position (same coords as !pos / Windower). Optional name filter: !mobs            -> everything alive nearby !mobs lizard     -> only names containing "lizard" | :material-puzzle: **custom** |
+| `!mobstats` | — | _(no description)_ |  |
 | `!mystats` | — | Self-targeted dump of EVERY stat the player has, with equipment and buff contributions baked into the totals. Single command, no arguments, no cursor-target needed. | :material-puzzle: **custom** |
 | `!nms` | — | Shows the player's NM Encyclopedia progress - which Hunting League NMs they have killed at least once, and which ones remain.  Lists up to 10 missing NMs to avoid flooding chat. | :material-puzzle: **custom** |
 | `!optin` | — | Opts the player INTO leaderboards and Discord tracking. This is the default state for new characters. | :material-puzzle: **custom** |
@@ -61,6 +62,7 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!tier` | — | Shows the player's current Hunting League tier, the NMs available at that tier, and exactly what is needed to unlock the next rank. | :material-puzzle: **custom** |
 | `!time` | — | Shows server time (UTC), hours until daily reset, days until weekly reset (Monday 00:00 UTC), and any active seasonal event. | :material-puzzle: **custom** |
 | `!top` | string | Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at legendary-ffxi.pages.dev | :material-puzzle: **custom** |
+| `!tournament` | string, string, string | Legendary Tournament — last-person-standing PvE wave event. | :material-puzzle: **custom** |
 | `!tower` | string, string | _(no description)_ | :material-puzzle: **custom** |
 | `!trustattack` | — | Run once to turn ON: while on, you AUTO-ENGAGE whatever mob you have targeted (cursor target), so you and your trusts attack it hands-free -- point at the next mob and you all switch to it. Run again to turn OFF. Macro:  /console !trustattack | :material-puzzle: **custom** |
 | `!unstick` | — | Self-rescue from stuck event/sequence state. |  |
@@ -263,6 +265,10 @@ Lists the LIVE (spawned, HP > 0) mobs in your current zone, nearest first, with 
 
 **Parameter types:** string
 
+### `!mobstats`
+
+**Usage:** `mobstats`
+
 ### `!nms`  _(custom)_
 
 Shows the player's NM Encyclopedia progress - which Hunting League NMs they have killed at least once, and which ones remain.  Lists up to 10 missing NMs to avoid flooding chat.
@@ -387,6 +393,14 @@ Shows the top 5 currently online players ranked by a stat. Opted-out players are
 
 **Parameter types:** string
 
+### `!tournament`  _(custom)_
+
+Legendary Tournament — last-person-standing PvE wave event.
+
+**Usage:** `tournament`
+
+**Parameter types:** string, string, string
+
 ### `!tower`  _(custom)_
 
 **Usage:** `tower`
@@ -448,6 +462,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dc66ea5c0382 -->
-_Last updated: 2026-06-17 06:02 UTC_
+<!-- content-hash: 7b132a0b3fc6 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

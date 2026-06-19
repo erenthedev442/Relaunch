@@ -1,6 +1,6 @@
 # Jbae
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-18 · Character age 25d
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-05-24 · Last seen 2026-06-18 · Character age 25d 19h
 
 `⭐ 106 Ascensions` `💪 17 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **RDM 99** |
-| Sub job | WHM 51 |
-| Time played | 268h |
-| Enemies defeated | 8,792 |
+| Sub job | NIN 99 |
+| Time played | 270h |
+| Enemies defeated | 8,799 |
 | Deaths | 147 |
 
 ## Job levels
@@ -23,7 +23,7 @@
 |---|---:|---|---:|
 | **WAR** | **99** | SAM | 1 |
 | **MNK** | **99** | **NIN** | **99** |
-| WHM | 51 | **DRG** | **99** |
+| WHM | 53 | **DRG** | **99** |
 | **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | **COR** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 79,821
-- **Marks (lifetime):** 1,299
+- **Marks (current):** 79,397
+- **Marks (lifetime):** 1,375
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 6,067
+- **Total NM kills:** 16,139
 
 ## Guild standing
 
@@ -55,16 +55,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 571
+- **Augments crafted:** 620
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 360 | 360 |
+| AF | 360 | 540 |
 | Relic | 0 | 0 |
-| Empyrean | 4,330 | 530 |
+| Empyrean | 4,330 | 6,495 |
 
 ## Prestige
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8d1416409471 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: d4e0ce305cfc -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

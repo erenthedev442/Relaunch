@@ -1,18 +1,18 @@
 # Von
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 18h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 4/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 10/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **DRK 4** |
+| Main job | **DRK 10** |
 | Sub job | — |
 | Time played | 0h |
-| Enemies defeated | 0 |
+| Enemies defeated | 13 |
 | Deaths | 2 |
 
 ## Job levels
@@ -26,7 +26,7 @@
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 4 | DNC | 1 |
+| DRK | 10 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -37,7 +37,7 @@
 - **Marks (current):** 975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Total NM kills:** 195
 
 ## Augment Sage
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 68606a41efe9 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 3163266e05f8 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

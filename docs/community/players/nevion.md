@@ -1,6 +1,6 @@
 # Nevion
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 10h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 5d 5h
 
 `💪 5 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 1,289
 - **Marks (lifetime):** 127
 - **Distinct NMs slain:** 8
-- **Total NM kills:** 13
+- **Total NM kills:** 257
 
 ## Guild standing
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 821587817f01 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: f777c02052e5 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

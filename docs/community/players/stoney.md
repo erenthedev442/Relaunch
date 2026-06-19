@@ -1,8 +1,8 @@
 # Stoney
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 5d 12h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 7h
 
-`⭐ 6 Ascensions` `💪 8 jobs @99`
+`⭐ 7 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | THF 99 |
-| Time played | 51h |
-| Enemies defeated | 5,472 |
-| Deaths | 7 |
+| Sub job | WHM 99 |
+| Time played | 56h |
+| Enemies defeated | 6,137 |
+| Deaths | 9 |
 
 ## Job levels
 
@@ -23,9 +23,9 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
-| WHM | 1 | DRG | 1 |
+| **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
-| RDM | 1 | **BLU** | **99** |
+| **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | PLD | 94 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,320
-- **Marks (lifetime):** 4,314
+- **Marks (current):** 485
+- **Marks (lifetime):** 4,456
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 231
+- **Total NM kills:** 253
 
 ## Guild standing
 
@@ -47,10 +47,10 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Veteran | 6,000 | 19,000 to Master |
+| AF Hunters' Guild | Veteran | 8,500 | 16,500 to Master |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| League Hunters' Guild | Veteran | 5,500 | 19,500 to Master |
+| League Hunters' Guild | Veteran | 6,500 | 18,500 to Master |
 
 ## Augment Sage
 
@@ -62,14 +62,14 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| AF | 455 | 682 |
+| Relic | 405 | 607 |
+| Empyrean | 515 | 772 |
 
 ## Prestige
 
-- **Total Ascensions:** 6
-- **Per-job prestige:** MNK P6
+- **Total Ascensions:** 7
+- **Per-job prestige:** MNK P7
 
 ## Collections
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7f8274f17ff0 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 345a373ea177 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

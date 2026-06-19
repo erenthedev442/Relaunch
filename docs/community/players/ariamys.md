@@ -1,6 +1,6 @@
 # Ariamys
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 20h
 
 `💪 7 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | RDM 99 |
-| Time played | 27h |
-| Enemies defeated | 1,072 |
-| Deaths | 26 |
+| Sub job | NIN 99 |
+| Time played | 30h |
+| Enemies defeated | 1,175 |
+| Deaths | 27 |
 
 ## Job levels
 
@@ -26,7 +26,7 @@
 | **WHM** | **99** | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
-| THF | 1 | COR | 1 |
+| THF | 15 | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
@@ -36,23 +36,23 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 679
-- **Marks (lifetime):** 7,165
-- **Distinct NMs slain:** 14
-- **Total NM kills:** 754
+- **Marks (current):** 69
+- **Marks (lifetime):** 11,610
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 830
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 49
-- **NM Affinities:** 9 / 13
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 106
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 0 | 0 |
-| Relic | 0 | 0 |
+| Relic | 1,500 | 2,250 |
 | Empyrean | 0 | 0 |
 
 ## Collections
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice.
+**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0edadd1e9f3c -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: acf41191d978 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

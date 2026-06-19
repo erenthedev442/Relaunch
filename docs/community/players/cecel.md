@@ -1,8 +1,8 @@
 # Cecel
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 15h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 9h
 
-`⭐ 14 Ascensions` `💪 9 jobs @99`
+`⭐ 14 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,17 +11,17 @@
 
 | | |
 |---|---|
-| Main job | **SAM 55** |
-| Sub job | DRK 55 |
-| Time played | 62h |
-| Enemies defeated | 3,963 |
-| Deaths | 45 |
+| Main job | **DRK 99** |
+| Sub job | SAM 99 |
+| Time played | 63h |
+| Enemies defeated | 4,081 |
+| Deaths | 46 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 55 |
+| **WAR** | **99** | **SAM** | **99** |
 | MNK | 8 | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 24,655
+- **Marks (current):** 25,355
 - **Marks (lifetime):** 2,424
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 253
+- **Total NM kills:** 5,325
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 352
+- **Augments crafted:** 357
 - **NM Affinities:** 12 / 13
 
 ## Reforge
@@ -63,8 +63,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 288 | 748 |
-| Relic | 1,250 | 0 |
-| Empyrean | 2,825 | 605 |
+| Relic | 1,250 | 1,875 |
+| Empyrean | 2,825 | 4,237 |
 
 ## Prestige
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9a7a6aabd2be -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 361f9bd9a523 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Meowgic
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 23h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-17 · Character age 5d 17h
 
 `⭐ 3 Ascensions` `💪 6 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 7,880
 - **Marks (lifetime):** 4,196
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 76
+- **Total NM kills:** 1,659
 
 ## Augment Sage
 
@@ -52,7 +52,7 @@
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 0 | 0 |
-| Relic | 1,500 | 0 |
+| Relic | 1,500 | 2,250 |
 | Empyrean | 0 | 0 |
 
 ## Prestige
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6fb070155b6f -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: aa34335c9086 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

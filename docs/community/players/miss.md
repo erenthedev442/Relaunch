@@ -1,8 +1,8 @@
 # Miss
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 3d 2h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 3d 21h
 
-`💪 5 jobs @99`
+`💪 7 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,24 +11,24 @@
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | WAR 85 |
-| Time played | 23h |
-| Enemies defeated | 1,243 |
-| Deaths | 14 |
+| Main job | **BLM 99** |
+| Sub job | RDM 99 |
+| Time played | 38h |
+| Enemies defeated | 1,747 |
+| Deaths | 21 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 85 | **SAM** | **99** |
+| **WAR** | **99** | **SAM** | **99** |
 | MNK | 1 | NIN | 1 |
-| **WHM** | **99** | DRG | 1 |
+| **WHM** | **99** | DRG | 58 |
 | **BLM** | **99** | SMN | 34 |
-| **RDM** | **99** | BLU | 1 |
+| **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
-| PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| PLD | 85 | PUP | 1 |
+| DRK | 45 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,16 +36,27 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 616
-- **Marks (lifetime):** 27
-- **Distinct NMs slain:** 2
-- **Total NM kills:** 4
+- **Marks (current):** 12,203
+- **Marks (lifetime):** 1,470
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 2,816
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Journeyman | 3,000 | 2,000 to Veteran |
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 14
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 2 / 5
+- **Augments crafted:** 22
+- **NM Affinities:** 1 / 13
 
 ## Reforge
 
@@ -53,21 +64,22 @@
 |---|---:|---:|
 | AF | 0 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 6,775 | 10,162 |
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 120
 
 ## Achievements
 
-**3** unlocked — First Hunt · Tier II Unlocked · Augment Novice.
+**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 16h 29m |
+| HL Rank I → V | 1d 2h |
 
 ---
 
@@ -76,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0d29cab3c578 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: aacac773a533 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

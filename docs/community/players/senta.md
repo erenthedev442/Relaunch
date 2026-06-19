@@ -1,6 +1,6 @@
 # Senta
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 3d 5h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 4d
 
 `💪 2 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 930
 - **Marks (lifetime):** 15
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 3
+- **Total NM kills:** 186
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 20f811a63927 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 2105b182b747 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

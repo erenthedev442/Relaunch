@@ -1,6 +1,6 @@
 # Broken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-18 · Character age 2d 7h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 3d 1h
 
 `💪 6 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **GEO 99** |
-| Sub job | NIN 1 |
-| Time played | 15h |
-| Enemies defeated | 21 |
+| Main job | **THF 99** |
+| Sub job | RDM 99 |
+| Time played | 17h |
+| Enemies defeated | 25 |
 | Deaths | 3 |
 
 ## Job levels
@@ -36,22 +36,22 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 81,502
+- **Marks (current):** 55,152
 - **Marks (lifetime):** 30,206
 - **Distinct NMs slain:** 7
-- **Total NM kills:** 507
+- **Total NM kills:** 11,097
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 8
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 269
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 1,200 | 1,800 |
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**9** unlocked — Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice.
+**11** unlocked — Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -69,6 +69,7 @@
 |---|---:|
 | Fastest 1 → 99 | 0s |
 | HL Rank I → V | 0s |
+| Augment Archon | 1d 10h |
 
 ---
 
@@ -77,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0638bab930c4 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 5626580a6fc1 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

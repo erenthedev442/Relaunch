@@ -1,6 +1,6 @@
 # Olindre
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 8h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 3h
 
 `⭐ 20 Ascensions` `💪 4 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | RUN 99 |
-| Time played | 47h |
-| Enemies defeated | 3,135 |
-| Deaths | 52 |
+| Time played | 57h |
+| Enemies defeated | 3,647 |
+| Deaths | 55 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 23,565
-- **Marks (lifetime):** 1,329
+- **Marks (current):** 29,687
+- **Marks (lifetime):** 3,123
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 156
+- **Total NM kills:** 6,395
 
 ## Guild standing
 
@@ -55,16 +55,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 342
-- **NM Affinities:** 11 / 13
+- **Augments crafted:** 382
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 325 | 2,225 |
-| Relic | 1,050 | 150 |
-| Empyrean | 1,928 | 528 |
+| AF | 3,273 | 4,909 |
+| Relic | 3,000 | 4,500 |
+| Empyrean | 1,978 | 2,967 |
 
 ## Prestige
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c4e19c4f701a -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 8164d63c0e6a -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

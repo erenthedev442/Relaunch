@@ -1,6 +1,6 @@
 # Darrent
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 20h
 
 `💪 4 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
-| Sub job | SAM 99 |
-| Time played | 23h |
-| Enemies defeated | 774 |
-| Deaths | 7 |
+| Main job | **SCH 47** |
+| Sub job | BLM 44 |
+| Time played | 26h |
+| Enemies defeated | 845 |
+| Deaths | 8 |
 
 ## Job levels
 
@@ -24,22 +24,22 @@
 | **WAR** | **99** | **SAM** | **99** |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
+| BLM | 44 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
-| BST | 1 | SCH | 1 |
+| BST | 1 | SCH | 47 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,560
-- **Marks (lifetime):** 704
+- **Marks (current):** 462
+- **Marks (lifetime):** 889
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 49
+- **Total NM kills:** 209
 
 ## Guild standing
 
@@ -54,16 +54,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 37
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 57
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 65 | 65 |
-| Relic | 850 | 0 |
+| AF | 1,265 | 1,897 |
+| Relic | 850 | 1,275 |
 | Empyrean | 0 | 0 |
 
 ## Collections
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**6** unlocked — Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · Augment Novice.
+**7** unlocked — Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1b584ea59dfc -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: e9b6b815276c -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

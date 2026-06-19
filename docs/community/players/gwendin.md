@@ -1,6 +1,6 @@
 # Gwendin
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 12h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 7h
 
 `💪 5 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | BLU 99 |
-| Time played | 39h |
-| Enemies defeated | 795 |
+| Time played | 48h |
+| Enemies defeated | 869 |
 | Deaths | 20 |
 
 ## Job levels
@@ -36,24 +36,24 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 318
-- **Marks (lifetime):** 4,524
+- **Marks (current):** 1,680
+- **Marks (lifetime):** 8,924
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 73
+- **Total NM kills:** 469
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 20
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 50
 - **NM Affinities:** 7 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 1,200 | 1,800 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 1,200 | 1,800 |
 
 ## Collections
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5e781d64be87 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: fc545eca419b -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

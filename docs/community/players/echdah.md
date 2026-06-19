@@ -1,8 +1,8 @@
 # Echdah
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 13h
 
-`💪 6 jobs @99`
+`⭐ 2 Ascensions` `💪 11 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,40 +11,40 @@
 
 | | |
 |---|---|
-| Main job | **BLM 99** |
-| Sub job | SCH 99 |
-| Time played | 23h |
-| Enemies defeated | 5,682 |
-| Deaths | 23 |
+| Main job | **RUN 99** |
+| Sub job | WAR 99 |
+| Time played | 28h |
+| Enemies defeated | 7,130 |
+| Deaths | 24 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | SAM | 83 |
-| MNK | 1 | **NIN** | **99** |
-| WHM | 1 | **DRG** | **99** |
+| **MNK** | **99** | **NIN** | **99** |
+| **WHM** | **99** | **DRG** | **99** |
 | **BLM** | **99** | SMN | 1 |
-| RDM | 6 | BLU | 80 |
+| **RDM** | **99** | BLU | 80 |
 | **THF** | **99** | COR | 1 |
-| PLD | 1 | PUP | 1 |
+| **PLD** | **99** | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | **SCH** | **99** |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| RNG | 1 | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 923
-- **Marks (lifetime):** 2,992
+- **Marks (current):** 63
+- **Marks (lifetime):** 4,214
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 180
+- **Total NM kills:** 435
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 127
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 177
 - **NM Affinities:** 1 / 13
 
 ## Reforge
@@ -52,8 +52,13 @@
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 65 | 5,315 |
-| Relic | 1,300 | 0 |
+| Relic | 1,300 | 1,950 |
 | Empyrean | 110 | 4,160 |
+
+## Prestige
+
+- **Total Ascensions:** 2
+- **Per-job prestige:** BLM P2
 
 ## Collections
 
@@ -61,7 +66,7 @@
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Augment Novice · Augment Expert.
+**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -77,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 841a0e1a8af3 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 135761b586ef -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

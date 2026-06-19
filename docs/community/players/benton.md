@@ -1,6 +1,6 @@
 # Benton
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-18 · Character age 2d 18h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 3d 12h
 
 `💪 3 jobs @99`
 
@@ -12,8 +12,8 @@
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | NIN 1 |
-| Time played | 6h |
+| Sub job | NIN 11 |
+| Time played | 7h |
 | Enemies defeated | 15 |
 | Deaths | 0 |
 
@@ -22,7 +22,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| **MNK** | **99** | NIN | 1 |
+| **MNK** | **99** | NIN | 11 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 8,773
-- **Marks (lifetime):** 1,320
-- **Distinct NMs slain:** 6
-- **Total NM kills:** 41
+- **Marks (current):** 1,669
+- **Marks (lifetime):** 1,385
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 333
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
+- **Mastery rank:** 5 / 5
 - **Augments crafted:** 250
-- **NM Affinities:** 0 / 13
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
@@ -61,13 +61,15 @@
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**10** unlocked — First Hunt · Ten Hunts In · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 1d 12h |
+| HL Rank I → V | 2h 9m |
+| Augment Archon | 1d 15h |
 
 ---
 
@@ -76,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1518a1ab9247 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 88a7b97250f1 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

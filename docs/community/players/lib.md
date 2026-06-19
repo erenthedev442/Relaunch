@@ -1,8 +1,8 @@
 # Lib
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 4d 9h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 4h
 
-`💪 3 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -11,21 +11,21 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
-| Sub job | RUN 99 |
-| Time played | 5h |
-| Enemies defeated | 355 |
-| Deaths | 1 |
+| Main job | **MNK 99** |
+| Sub job | WAR 85 |
+| Time played | 9h |
+| Enemies defeated | 753 |
+| Deaths | 6 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 18 | SAM | 14 |
-| MNK | 1 | NIN | 1 |
+| WAR | 85 | SAM | 14 |
+| **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 65 | BLU | 1 |
+| RDM | 72 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
@@ -36,24 +36,24 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 227
-- **Marks (lifetime):** 97
+- **Marks (current):** 8
+- **Marks (lifetime):** 133
 - **Distinct NMs slain:** 5
-- **Total NM kills:** 9
+- **Total NM kills:** 71
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 18
+- **Mastery rank:** 2 / 5
+- **Augments crafted:** 24
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 1,115 | 1,672 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 140 | 210 |
 
 ## Collections
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f907f97fd24f -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 39eb4aa85a10 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

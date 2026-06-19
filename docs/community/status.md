@@ -17,7 +17,7 @@ Legendary's current state at a glance. Stats update daily via the auto-generatio
 ## Who's Online
 
 <!-- DOCGEN:BEGIN id="status-online" -->
-**35** online · **285** characters · _snapshot from the last site rebuild — the header badge shows live status._
+**1** online · **326** characters · _snapshot from the last site rebuild — the header badge shows live status._
 <!-- DOCGEN:END id="status-online" -->
 
 ---
@@ -33,10 +33,10 @@ _Snapshot taken at build time — timers drift after that. For live status, chec
 |---|---|---:|---|
 | **Fafnir** | Dragon's Aery | 21–24 h | 🟢 **Up now** |
 | **Adamantoise** | Valley of Sorrows | 21–24 h | 🟢 **Up now** |
-| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟢 **Up now** |
 | **Roc** | Sauromugue Champaign | 6–8 h | 🟢 **Up now** |
 | **Serket** | Garlaige Citadel | 6–8 h | 🟢 **Up now** |
 | **Simurgh** | Rolanberry Fields | 6–8 h | 🟢 **Up now** |
+| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟠 pops in ~8m |
 | **Spiny Spipi** | East Sarutabaruta | 4–6 h | ⚪ awaiting first spawn |
 | **King Arthro** | Jugner Forest | 8–10 h | ⚪ awaiting first spawn |
 <!-- DOCGEN:END id="status-hnm" -->
@@ -58,10 +58,10 @@ _Health snapshot from the last site rebuild._ 🟢 OK · 🟠 last run reported 
 
 | Background job | Schedule | Last run | Status (snapshot) |
 |---|---|---:|---|
-| **Auction House market-maker** | every 15 min | 4d 2h ago | 🔴 **STALE** — no run in 4d 2h |
+| **Auction House market-maker** | every 15 min | 4d 21h ago | 🔴 **STALE** — no run in 4d 21h |
 | **Discord notifier (webhook)** | every 5 min | — | ⚪ no signal yet |
 | **Discord bot (slash commands)** | daemon · 5 min beat | — | ⚪ no signal yet |
-| **Database backup + verify** | nightly 04:00 | 18d 9h ago | 🔴 **STALE** — no run in 18d 9h |
+| **Database backup + verify** | nightly 04:00 | 19d 4h ago | 🔴 **STALE** — no run in 19d 4h |
 <!-- DOCGEN:END id="status-jobs" -->
 
 ---
@@ -119,6 +119,6 @@ See the full list at [Hall of Fame](highlights.md).
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: af2fff44540f -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: b2b5e0a89932 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

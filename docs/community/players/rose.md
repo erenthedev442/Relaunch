@@ -1,17 +1,17 @@
 # Rose
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 2d 10h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 66/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 73/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **MNK 66** |
+| Main job | **MNK 73** |
 | Sub job | RDM 1 |
-| Time played | 8h |
+| Time played | 12h |
 | Enemies defeated | 11 |
 | Deaths | 0 |
 
@@ -20,7 +20,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 66 | NIN | 1 |
+| MNK | 73 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -33,23 +33,23 @@
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 3,890
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 5
+- **Rank:** 4 / 5
+- **Marks (current):** 10,430
+- **Marks (lifetime):** 874
+- **Distinct NMs slain:** 2
+- **Total NM kills:** 2,152
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 96
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 250
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 1,200 | 1,800 |
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
@@ -59,7 +59,7 @@
 
 ## Achievements
 
-**3** unlocked — Star-Slayer · Augment Novice · Augment Expert.
+**6** unlocked — Ten Hunts In · Tier IV Unlocked · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 73d41d809803 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 4571f6aa6864 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

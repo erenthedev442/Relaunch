@@ -1,6 +1,6 @@
 # Subpar
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 4d 4h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 4d 22h
 
 `⭐ 2 Ascensions` `💪 3 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 20,459
 - **Marks (lifetime):** 1,249
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 168
+- **Total NM kills:** 4,623
 
 ## Augment Sage
 
@@ -51,8 +51,8 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 450 | 450 |
-| Relic | 1,240 | 240 |
+| AF | 450 | 675 |
+| Relic | 1,240 | 1,860 |
 | Empyrean | 6,830 | 11,830 |
 
 ## Prestige
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6e6c50bc5a71 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 89a06d710e36 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Sophia
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 14h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 8h
 
 `💪 2 jobs @99`
 
@@ -11,18 +11,18 @@
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
-| Sub job | RDM 99 |
-| Time played | 15h |
-| Enemies defeated | 523 |
+| Main job | **MNK 45** |
+| Sub job | WAR 30 |
+| Time played | 18h |
+| Enemies defeated | 579 |
 | Deaths | 1 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
+| WAR | 30 | SAM | 1 |
+| MNK | 45 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 1,198
+- **Marks (current):** 1,848
 - **Marks (lifetime):** 10
 - **Distinct NMs slain:** 2
-- **Total NM kills:** 2
+- **Total NM kills:** 369
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 75ff75307f70 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 74674d298d4d -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

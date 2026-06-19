@@ -1,8 +1,8 @@
 # Masu
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-17 · Character age 5d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 22h
 
-`💪 4 jobs @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **MNK 36** |
-| Sub job | PUP 35 |
-| Time played | 26h |
-| Enemies defeated | 627 |
+| Main job | **BLU 74** |
+| Sub job | NIN 60 |
+| Time played | 31h |
+| Enemies defeated | 811 |
 | Deaths | 3 |
 
 ## Job levels
@@ -22,12 +22,12 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| MNK | 36 | NIN | 1 |
+| **MNK** | **99** | NIN | 60 |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| RDM | 1 | BLU | 74 |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 35 |
+| PLD | 1 | PUP | 87 |
 | **DRK** | **99** | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 5,674
+- **Marks (current):** 6,374
 - **Marks (lifetime):** 172
 - **Distinct NMs slain:** 7
-- **Total NM kills:** 17
+- **Total NM kills:** 1,274
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3899641903c1 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 8e28500c6ae2 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

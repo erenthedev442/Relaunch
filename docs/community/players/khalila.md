@@ -1,6 +1,6 @@
 # Khalila
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 3d 18h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-18 · Character age 4d 12h
 
 `💪 3 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **PLD 99** |
-| Sub job | WAR 81 |
-| Time played | 16h |
-| Enemies defeated | 610 |
-| Deaths | 6 |
+| Main job | **THF 99** |
+| Sub job | DNC 99 |
+| Time played | 24h |
+| Enemies defeated | 1,044 |
+| Deaths | 7 |
 
 ## Job levels
 
@@ -25,21 +25,21 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| RDM | 42 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| BRD | 49 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,460
-- **Marks (lifetime):** 569
+- **Marks (current):** 4,857
+- **Marks (lifetime):** 749
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 28
+- **Total NM kills:** 1,024
 
 ## Guild standing
 
@@ -54,25 +54,25 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 10
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 252
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 100 | 0 |
-| Relic | 850 | 0 |
+| AF | 100 | 150 |
+| Relic | 850 | 1,275 |
 | Empyrean | 0 | 0 |
 
 ## Collections
 
-- **Trusts learned:** 116
+- **Trusts learned:** 117
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · Augment Novice.
+**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -80,6 +80,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|
 | Fastest 1 → 99 | 0s |
 | HL Rank I → V | 1d |
+| Augment Archon | 3d |
 
 ---
 
@@ -88,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ec683c9f8fc8 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 3f3fb7593c18 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

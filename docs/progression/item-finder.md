@@ -663,6 +663,6 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b76ce8d2a952 -->
-_Last updated: 2026-06-18 01:05 UTC_
+<!-- content-hash: 42ddbf216f59 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

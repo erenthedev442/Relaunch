@@ -1,29 +1,29 @@
 # Mikeal
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-14 · Character age 5d 16h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 10h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 45/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 69/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BLU 45** |
-| Sub job | NIN 26 |
-| Time played | 2h |
-| Enemies defeated | 159 |
-| Deaths | 2 |
+| Main job | **BLU 69** |
+| Sub job | NIN 55 |
+| Time played | 5h |
+| Enemies defeated | 254 |
+| Deaths | 6 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 26 |
+| MNK | 1 | NIN | 55 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 45 |
+| RDM | 1 | BLU | 69 |
 | THF | 2 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -34,10 +34,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 980
+- **Marks (current):** 1,430
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Total NM kills:** 286
 
 ## Augment Sage
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d3f2c3b1e04c -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 796e8a5c2e0b -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Ropraz
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 16h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 11h
 
-`⭐ 13 Ascensions` `💪 6 jobs @99`
+`⭐ 39 Ascensions` `💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **SAM 99** |
+| Main job | **WAR 99** |
 | Sub job | DRG 99 |
-| Time played | 38h |
-| Enemies defeated | 4,555 |
-| Deaths | 31 |
+| Time played | 51h |
+| Enemies defeated | 5,903 |
+| Deaths | 45 |
 
 ## Job levels
 
@@ -30,16 +30,16 @@
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| **BRD** | **99** | **GEO** | **99** |
+| **RNG** | **99** | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 34,685
+- **Marks (current):** 31,787
 - **Marks (lifetime):** 1,840
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 275
+- **Total NM kills:** 6,817
 
 ## Guild standing
 
@@ -50,26 +50,26 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | AF Hunters' Guild | Journeyman | 2,500 | 2,500 to Veteran |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| League Hunters' Guild | Veteran | 6,000 | 19,000 to Master |
+| League Hunters' Guild | Veteran | 7,500 | 17,500 to Master |
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 279
-- **NM Affinities:** 4 / 13
+- **Augments crafted:** 302
+- **NM Affinities:** 5 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,640 | 890 |
-| Relic | 2,850 | 450 |
-| Empyrean | 610 | 2,760 |
+| AF | 1,299 | 5,399 |
+| Relic | 2,850 | 4,275 |
+| Empyrean | 1,810 | 2,760 |
 
 ## Prestige
 
-- **Total Ascensions:** 13
-- **Per-job prestige:** SAM P12 · DRG P1
+- **Total Ascensions:** 39
+- **Per-job prestige:** WAR P26 · SAM P12 · DRG P1
 
 ## Collections
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5ba336f5bfcb -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: ffc2c34f32b9 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Ants
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 16h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 5d 11h
 
 `💪 1 job @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 2,028
 - **Marks (lifetime):** 12
 - **Distinct NMs slain:** 1
-- **Total NM kills:** 1
+- **Total NM kills:** 405
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d9a3739528a2 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 9f0343dc03c7 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

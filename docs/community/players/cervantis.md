@@ -1,6 +1,6 @@
 # Cervantis
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-17 · Character age 5d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 2h
 
 `⭐ 6 Ascensions` `💪 5 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
-| Sub job | WAR 99 |
-| Time played | 33h |
-| Enemies defeated | 3,335 |
-| Deaths | 52 |
+| Main job | **WAR 99** |
+| Sub job | SAM 99 |
+| Time played | 37h |
+| Enemies defeated | 3,882 |
+| Deaths | 54 |
 
 ## Job levels
 
@@ -36,24 +36,24 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 12,919
+- **Marks (current):** 13,219
 - **Marks (lifetime):** 1,207
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 106
+- **Total NM kills:** 3,196
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 64
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 193
 - **NM Affinities:** 2 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,465 | 1,565 |
-| Relic | 1,290 | 840 |
-| Empyrean | 5 | 2,355 |
+| AF | 3,265 | 5,465 |
+| Relic | 1,230 | 1,845 |
+| Empyrean | 5 | 7,605 |
 
 ## Prestige
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d942b1363dfd -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 26dd7ca650ec -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

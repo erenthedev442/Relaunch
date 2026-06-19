@@ -1,21 +1,21 @@
 # Xiongda
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 8h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 2h
 
-`💪 2 jobs @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | SMN 97 |
-| Time played | 8h |
+| Sub job | SMN 99 |
+| Time played | 11h |
 | Enemies defeated | 488 |
-| Deaths | 2 |
+| Deaths | 3 |
 
 ## Job levels
 
@@ -24,7 +24,7 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| **BLM** | **99** | SMN | 97 |
+| **BLM** | **99** | **SMN** | **99** |
 | RDM | 63 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
@@ -35,16 +35,16 @@
 
 ## Hunting League
 
-- **Rank:** 4 / 5
-- **Marks (current):** 3
-- **Marks (lifetime):** 17
-- **Distinct NMs slain:** 2
-- **Total NM kills:** 2
+- **Rank:** 5 / 5
+- **Marks (current):** 1,100
+- **Marks (lifetime):** 127
+- **Distinct NMs slain:** 3
+- **Total NM kills:** 220
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 6
+- **Augments crafted:** 10
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**3** unlocked — First Hunt · Tier II Unlocked · Augment Novice.
+**4** unlocked — First Hunt · Tier II Unlocked · Apex Hunter · Augment Novice.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 1d 18h |
+| HL Rank I → V | 1d 10h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 87d1dc49c7e7 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 6dc0eea3170c -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

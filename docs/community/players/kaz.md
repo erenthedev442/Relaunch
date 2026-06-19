@@ -1,6 +1,6 @@
 # Kaz
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-17 · Character age 4d 21h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 16h
 
 `💪 2 jobs @99`
 
@@ -12,16 +12,16 @@
 | | |
 |---|---|
 | Main job | **BLU 99** |
-| Sub job | WAR 1 |
-| Time played | 7h |
-| Enemies defeated | 651 |
-| Deaths | 4 |
+| Sub job | WAR 74 |
+| Time played | 8h |
+| Enemies defeated | 696 |
+| Deaths | 6 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 75 |
+| WAR | 74 | SAM | 75 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 29
-- **Marks (lifetime):** 1,244
-- **Distinct NMs slain:** 5
-- **Total NM kills:** 239
+- **Marks (current):** 1,623
+- **Marks (lifetime):** 1,780
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 324
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**6** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Mark of 1,000 · Augment Novice.
+**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fd7490a0c2b5 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: 20064411e001 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

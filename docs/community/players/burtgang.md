@@ -1,8 +1,8 @@
 # Burtgang
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 19h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 13h
 
-`💪 13 jobs @99`
+`⭐ 26 Ascensions` `💪 13 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 38h |
-| Enemies defeated | 6,438 |
-| Deaths | 19 |
+| Time played | 46h |
+| Enemies defeated | 7,243 |
+| Deaths | 20 |
 
 ## Job levels
 
@@ -36,24 +36,40 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 8,660
-- **Marks (lifetime):** 7,206
+- **Marks (current):** 205,614
+- **Marks (lifetime):** 18,316
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 120
+- **Total NM kills:** 41,222
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Journeyman | 1,500 | 3,500 to Veteran |
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 674
+- **Augments crafted:** 728
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 50 | 0 |
+| AF | 50 | 75 |
 | Relic | 0 | 0 |
 | Empyrean | 15 | 2,615 |
+
+## Prestige
+
+- **Total Ascensions:** 26
+- **Per-job prestige:** RDM P26
 
 ## Collections
 
@@ -61,7 +77,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
+**16** unlocked — First Hunt · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3a4cb70dd7f2 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: a58908ecfebd -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

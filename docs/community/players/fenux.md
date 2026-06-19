@@ -1,6 +1,6 @@
 # Fenux
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-16 · Character age 3d 3h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-18 · Character age 3d 22h
 
 `💪 1 job @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **RUN 99** |
-| Sub job | BLU 63 |
-| Time played | 2h |
-| Enemies defeated | 52 |
-| Deaths | 0 |
+| Sub job | BLU 66 |
+| Time played | 4h |
+| Enemies defeated | 55 |
+| Deaths | 1 |
 
 ## Job levels
 
@@ -25,7 +25,7 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 63 |
+| RDM | 1 | BLU | 66 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 835
-- **Marks (lifetime):** 5
-- **Distinct NMs slain:** 1
-- **Total NM kills:** 1
+- **Marks (current):** 912
+- **Marks (lifetime):** 54
+- **Distinct NMs slain:** 3
+- **Total NM kills:** 182
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**1** unlocked — First Hunt.
+**2** unlocked — First Hunt · Tier III Unlocked.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7a3722b989c4 -->
-_Last updated: 2026-06-18 20:56 UTC_
+<!-- content-hash: b55e436dfa22 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

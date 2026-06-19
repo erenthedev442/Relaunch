@@ -1,6 +1,6 @@
 # Daiis
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 12h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 6h
 
 `💪 4 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **SAM 99** |
 | Sub job | WAR 99 |
-| Time played | 32h |
-| Enemies defeated | 1,008 |
-| Deaths | 19 |
+| Time played | 44h |
+| Enemies defeated | 1,386 |
+| Deaths | 1 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 24
-- **Marks (lifetime):** 1,298
-- **Distinct NMs slain:** 9
-- **Total NM kills:** 99
+- **Marks (current):** 14
+- **Marks (lifetime):** 2,328
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 110
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 2 / 5
-- **Augments crafted:** 47
+- **Augments crafted:** 54
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -68,17 +68,18 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 119
 
 ## Achievements
 
-**7** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Augment Novice.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 16h 43m |
+| HL Rank I → V | 3d 6h |
 
 ---
 
@@ -87,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c01899aa0130 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 9cdb2add1335 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

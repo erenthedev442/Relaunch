@@ -1,8 +1,8 @@
 # Duffaluffagus
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-17 · Character age 4d 1h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 19h
 
-`💪 6 jobs @99`
+`💪 13 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | WHM 1 |
-| Time played | 8h |
-| Enemies defeated | 486 |
-| Deaths | 13 |
+| Sub job | WAR 99 |
+| Time played | 12h |
+| Enemies defeated | 6 |
+| Deaths | 0 |
 
 ## Job levels
 
@@ -23,28 +23,28 @@
 |---|---:|---|---:|
 | **WAR** | **99** | SAM | 19 |
 | **MNK** | **99** | NIN | 1 |
-| WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
-| RDM | 1 | **BLU** | **99** |
-| **THF** | **99** | COR | 1 |
-| **PLD** | **99** | PUP | 1 |
-| DRK | 1 | **DNC** | **99** |
-| BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| **WHM** | **99** | DRG | 1 |
+| **BLM** | **99** | SMN | 1 |
+| **RDM** | **99** | **BLU** | **99** |
+| **THF** | **99** | **COR** | **99** |
+| **PLD** | **99** | **PUP** | **99** |
+| **DRK** | **99** | **DNC** | **99** |
+| BST | 37 | SCH | 1 |
+| **BRD** | **99** | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 328
-- **Marks (lifetime):** 119
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 21
+- **Marks (current):** 2,367
+- **Marks (lifetime):** 251
+- **Distinct NMs slain:** 8
+- **Total NM kills:** 483
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 27
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 50
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -53,15 +53,15 @@
 |---|---:|---:|
 | AF | 0 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 110 | 210 |
+| Empyrean | 70 | 270 |
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
 
 ## Achievements
 
-**6** unlocked — First Hunt · Tier II Unlocked · Tier III Unlocked · Wave Rider · Star-Slayer · Augment Novice.
+**7** unlocked — First Hunt · Tier II Unlocked · Tier III Unlocked · Wave Rider · Star-Slayer · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f99430c393e3 -->
-_Last updated: 2026-06-18 21:39 UTC_
+<!-- content-hash: 54bd7fb4ed95 -->
+_Last updated: 2026-06-19 16:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->
