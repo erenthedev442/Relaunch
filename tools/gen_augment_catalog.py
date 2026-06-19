@@ -125,6 +125,13 @@ PROGRESSION_AUGS = {
 #         to declutter cat 1 and free its catalyst.
 EXCLUDED_AUGS = {
     380,
+    # 2-stat "STR + X" augments removed 2026-06-19 by owner request (whole set):
+    550,  # STR DEX  (Buffalo Hide 1628)
+    551,  # STR VIT  (Bugard Skin 1640)
+    552,  # STR AGI  (High-Quality Bugard Skin 1680)
+    557,  # STR CHR  (Wyrm Horn 1816)
+    558,  # STR INT  (Ovinnik Hide 2121)
+    559,  # STR MND  (Catoblepas Hide 2123)
     # (327 "Weapon skill damage" was excluded 2026-06-14 -- cheap/farmable HQ
     #  Scorpion Shell catalyst -> stackable WSD+ -- then RESTORED exactly as
     #  before 2026-06-15 by owner request. See augment_catalog.lua [1473].)
@@ -135,7 +142,11 @@ EXCLUDED_AUGS = {
 # freed for re-assignment to another augment. Add item IDs here to ban one.
 #   (1473 = High-Quality Scorpion Shell was banned 2026-06-14, then RESTORED
 #    2026-06-15 by owner request as the WS-Damage catalyst -- no longer banned.)
-EXCLUDED_ITEMS = set()
+EXCLUDED_ITEMS = {
+    # The 6 catalysts of the removed STR-pair augments (2026-06-19) — banned so
+    # they aren't re-assigned to other augments (a clean removal, not a swap).
+    1628, 1640, 1680, 1816, 2121, 2123,
+}
 
 MOB_DROPLIST = SQL / "mob_droplist.sql"
 
