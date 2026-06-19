@@ -166,6 +166,7 @@ return {
     [1861] = { augId = 1795, base = 1,   mult = 1,  disp = 1,    cat = 4,  label = 'Pet AGI' },
 
     -- Intelligence / Magic offense
+    [921]  = { augId = 516,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'INT' },
     [854]  = { augId = 53,   base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Spell interruption rate down 1%' },
     [886]  = { augId = 64,   base = 1,   mult = 2,  disp = 1,    cat = 5,  label = 'Mag. Acc' },
     [905]  = { augId = 70,   base = 1,   mult = 2,  disp = 1,    cat = 5,  label = 'Mag. Acc. Mag.Atk.Bns' },

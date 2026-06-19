@@ -73,6 +73,10 @@ UPDATE `augments` SET `value` =  1, `multiplier` = 2 WHERE `augmentId` = 49;   -
 UPDATE `augments` SET `value` =  1, `multiplier` = 2 WHERE `augmentId` = 111;  -- Pet: Haste  -> ~1..25% / piece
 UPDATE `augments` SET `value` = -1, `multiplier` = 2 WHERE `augmentId` = 50;   -- Slow (negative haste; display shows magnitude)
 
+-- ---- INT+ (augId 516) ----
+-- Stock entry has value=0/mult=0 → floor of 0; set to value=1/mult=1 to match MND (517).
+UPDATE `augments` SET `value` = 1, `multiplier` = 1 WHERE `augmentId` = 516;  -- INT+ -> 1..32/slot
+
 -- ---- INDIVIDUAL WS DMG+ (augIds 1024-1058, one per named weaponskill) ----
 -- Original: value=1, mult=5 → per-slot 5..160, 5 slots = 25..800%
 -- New:      value=9, mult=1 → per-slot 9.. 40, 5 slots = 45..200%
