@@ -18,6 +18,13 @@ git checkout, so ``git log`` fails and this generator SKIPS — leaving the
 committed changelog.md in place. The changelog is therefore generated on the
 laptop (which has the history) and published as-is by the box. See
 [[reference_deploy_watermark]] / [[reference_docs_site]].
+
+TIMING: this generator drops commits NEWER than the latest "Deploy Everything"
+marker (the not-live-yet guard in ``_build_updates``). So it MUST be run AFTER
+the current deploy's marker commit exists, or that deploy's own changes lag by
+one deploy. ``deploy-everything.bat`` step [2b] (``tools/regen_changelog.py``)
+re-runs it post-marker for exactly this reason; running it in [1/5] alone is a
+bug.
 """
 from __future__ import annotations
 

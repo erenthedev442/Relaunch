@@ -114,6 +114,30 @@ type "%OUT%"
 type "%OUT%" >> "%LOG%"
 (echo [%TIME%] [2/5] git: done)>> "%LOG%"
 
+REM ---- 2b. Regenerate the changelog NOW that [2/5] created THIS deploy's
+REM          "Deploy Everything" marker. The changelog generator drops commits
+REM          newer than the latest marker ("not live yet"), so generating it in
+REM          [1/5] -- before this deploy's marker exists -- lagged every deploy's
+REM          own changes by one deploy. Re-running it here puts this update on
+REM          the page, and [4c] then ships the corrected docs/changelog.md to the
+REM          box. Non-fatal: if it fails the page just lags one deploy (old behavior).
+echo(
+echo  [2b] Regenerating changelog (now this deploy's marker exists)...
+(echo [%TIME%] [2b] changelog regen: start)>> "%LOG%"
+python "%SRC%\tools\regen_changelog.py" >> "%LOG%" 2>&1
+if errorlevel 1 (
+    echo        WARNING: changelog regen failed - page will lag one deploy. Continuing.
+) else (
+    echo        changelog regenerated.
+)
+REM Commit/push the refreshed page (no-ops harmlessly if it didn't change or
+REM regen failed). [4c] ships docs/changelog.md to the box from disk regardless,
+REM so the publish is correct even if this commit/push is skipped.
+git -C "%SRC%" add docs/changelog.md >> "%LOG%" 2>&1
+git -C "%SRC%" commit -m "docs(changelog): regenerate post-deploy-marker (include this update)" >> "%LOG%" 2>&1
+powershell -NoProfile -Command "$j=Start-Job { git -C 'D:\server' push fjb HEAD 2>&1 }; if (Wait-Job $j -Timeout 90) { Receive-Job $j } else { Stop-Job $j; 'changelog push timed out - skipped' }; Remove-Job $j -Force" >> "%LOG%" 2>&1
+(echo [%TIME%] [2b] changelog regen done)>> "%LOG%"
+
 REM ---- 3. Ship the SAME catalogs to the Azure SERVER (file sync + custom SQL) ----
 echo(
 echo  [3/5] Shipping the same content to the Azure server (modules/custom + scripts + tools + src)...
