@@ -5,6 +5,31 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 ---
 
 !!! note "Week of June 15–21, 2026"
+    **Friday, June 19**
+
+    - **Crash** — Guard CanAttack against dangling target ptr (mob enmity SIGQUIT)
+    - **Augments** — Cap All songs augment at 75% of prior max
+    - **Crash** — Make alive-entity registry thread-safe (real fix for NPC-load crash/hang)
+    - **DB** — Evict broken PreparedStatement on CR_OUT_OF_MEMORY to prevent heap corruption
+    - **DMG** — Break melee/ranged damage cap for PC attackers
+    - **Rebirth** — Make NPC player-accessible, remove GM gate
+    - **Tournament** — Add team support
+    - **Rebirth** — Move NPC to RuLude Gardens underground + !rebirth warp cmd
+    - **Tournament** — Add last-person-standing wave tournament system
+    - **Rebirth** — Move Rebirth NPC underground, GM-only gate
+    - **Rebirth** — Scale Rebirth Points per rebirth level (10→20 cap)
+    - **SMN** — Whisper the true number when a Blood Pact exceeds the 131,071 display cap
+    - **SMN** — Boost avatar Blood Pact damage x10 -> ~260x (BP_DAMAGE 2500->25900, owner request)
+    - **Augments** — Activate INT+ augment via Ahriman Tears (item 921)
+    - **Naegling** — Restore retail stats and correct WS to Savage Blade
+    - **Job Rebirth** — Rebirth a maxed job for power, reusing Ascension categories
+    - **Hunting League** — Rank IV unlock button was unclickable for long-named players (menu click round-trip exceeded Mes[128])
+    - **Augments** — Remove DEX/AGI + MND/CHR pairs and the 6 flat weapon-Dmg augments (owner request)
+    - **Augments** — Remove the six 2-stat STR augments + ban their catalysts (owner request)
+    - **Augments** — Show EXP/Cap Point at base=33 to match the live engine value
+    - **Hunting League** — NMs spawn aggroed onto the player who popped them
+    - **Equip** — Disable /equipset macros server-wide
+
     **Thursday, June 18**
 
     - **PUP** — Automaton survives master death (retail behavior)
@@ -313,10 +338,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 73f753321468 -->
-_Last updated: 2026-06-19 16:09 UTC_
-<!-- DOCGEN:END id="last-updated" -->
