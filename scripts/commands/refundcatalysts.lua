@@ -2,23 +2,21 @@
 -- !refundcatalysts [confirm]
 --
 -- Scans the cursor-targeted player's full inventory (all bags + wardrobes)
--- for two categories of reimbursement from the augment-catalog removal:
+-- for two categories of reimbursement:
 --
 --   1. UNUSED CATALYSTS: banned catalyst items still sitting in bags/wardrobes.
---      Item is removed on confirm; 100,000 gil refunded per item.
+--      Item is deleted on confirm; 100,000 gil refunded per item.
 --
---   2. GEAR AUGMENTS: equipment that has one of the banned augment IDs baked
---      into an augment slot (player paid 10,000 gil per application).
---      On confirm the banned slot(s) are ZEROED out via setExDataRaw (writes
---      directly to the packed exdata bytes, persisted with setDirty); the stat
---      stays active in-memory until the player relogs, then it's gone.
---      10,000 gil refunded per zeroed augment slot.
+--   2. GEAR AUGMENTS: equipment with augment slots whose augId is NOT present
+--      in the live augment_catalog.lua (orphaned / removed augments).
+--      On confirm the slot is ZEROED via setExDataRaw (persisted; stat stays
+--      active in-memory until player relogs). 100,000 gil refunded per slot.
 --
--- Without "confirm": dry-run — reports what would change, no changes made.
--- With "confirm":  removes catalyst items, zeros banned aug slots, pays gil.
+-- Without "confirm": dry-run — reports what would change, nothing modified.
+-- With "confirm":    deletes catalyst items, zeros orphan aug slots, pays gil.
 --
--- Augment slot byte offsets in AugmentStandard exdata (pragma pack 1):
---   byte 0: AugmentKind, byte 1: AugmentSubKind
+-- augId byte offsets in AugmentStandard exdata (pragma pack 1, m_extra overlay):
+--   byte 0: AugmentKind   byte 1: AugmentSubKind
 --   slot s (0-4): bytes (2 + s*2) and (3 + s*2)
 --
 -- Usage:
@@ -34,36 +32,44 @@ commandObj.cmdprops =
     parameters = 's',
 }
 
--- ── Banned catalyst items ─────────────────────────────────────────────────
--- Unused catalyst stacks are deleted on confirm; 100,000 gil per item.
+-- ── Build valid augId set from the live catalog ───────────────────────────
+-- Any augId NOT in this set is an orphan (removed or never catalogued).
+local catalog = require('modules/custom/lua/augment_catalog')
+local VALID_AUG_IDS = {}
+for _, def in pairs(catalog) do
+    if type(def) == 'table' and def.augId then
+        VALID_AUG_IDS[def.augId] = true
+    end
+end
+
+-- ── Banned catalyst items (hardcoded — removed from the shop) ────────────
+-- These are specific item IDs that were used as catalysts and then pulled.
+-- 100,000 gil refunded per item (the shop price).
 local BANNED_CATALYSTS =
 {
-    { id = 1628, name = 'Buffalo Hide',     refund = 100000 },
-    { id = 1640, name = 'Bugard Skin',      refund = 100000 },
-    { id = 1680, name = 'H.Q. Bugard Skin', refund = 100000 },
-    { id = 1816, name = 'Wyrm Horn',        refund = 100000 },
-    { id = 2121, name = 'Ovinnik Hide',     refund = 100000 },
-    { id = 2123, name = 'Catoblepas Hide',  refund = 100000 },
+    { id = 1628, name = 'Buffalo Hide'      },
+    { id = 1640, name = 'Bugard Skin'       },
+    { id = 1680, name = 'H.Q. Bugard Skin'  },
+    { id = 1816, name = 'Wyrm Horn'         },
+    { id = 2121, name = 'Ovinnik Hide'      },
+    { id = 2123, name = 'Catoblepas Hide'   },
+    { id = 2499, name = 'Regurgitated Wing' },
+    { id = 1274, name = 'Southern Pearl'    },
+    { id = 889,  name = 'Beetle Shell'      },
+    { id = 893,  name = 'Giant Femur'       },
+    { id = 896,  name = 'Scorpion Shell'    },
+    { id = 908,  name = 'Adamantoise Shell' },
+    { id = 924,  name = 'Vial of Fiend Blood'    },
+    { id = 930,  name = 'Vial of Beastman Blood' },
 }
+local CATALYST_REFUND = 100000
 
 local CATALYST_SET = {}
 for _, entry in ipairs(BANNED_CATALYSTS) do
     CATALYST_SET[entry.id] = entry
 end
 
--- ── Banned augment IDs applied to gear ───────────────────────────────────
--- The six STR+X combos removed from the catalog.
--- 10,000 gil refunded per slot; the slot is zeroed via setExDataRaw on confirm.
-local BANNED_AUG_NAMES =
-{
-    [550] = 'STR+DEX',
-    [551] = 'STR+VIT',
-    [552] = 'STR+AGI',
-    [557] = 'STR+CHR',
-    [558] = 'STR+INT',
-    [559] = 'STR+MND',
-}
-local GIL_PER_AUG_SLOT = 100000
+local AUG_SLOT_REFUND = 100000
 
 -- ── All containers (bags + wardrobes) ────────────────────────────────────
 local CONTAINERS =
@@ -88,9 +94,8 @@ local CONTAINERS =
 
 local CHANNEL = xi.msg.channel.SYSTEM_3
 
--- Zero augment slot `s` (0-4) in an item's packed AugmentStandard exdata.
--- The struct is reinterpret_cast onto m_extra, so setExDataRaw writes the
--- C++ struct directly. setDirty(true) is called by setExDataRaw automatically.
+-- Zero augment slot s (0-4) directly in the packed AugmentStandard exdata.
+-- exdata<T>() is reinterpret_cast on m_extra, so setExDataRaw hits the struct.
 local function zeroAugSlot(item, augSlot)
     local b = 2 + augSlot * 2
     item:setExDataRaw({ [b] = 0, [b + 1] = 0 })
@@ -116,11 +121,11 @@ commandObj.onTrigger = function(player, arg)
             local item = targ:getStorageItem(c.id, slot, 255)
             if item ~= nil then
 
-                -- Category 1: unused catalyst item
+                -- Category 1: unused banned catalyst item
                 local catEntry = CATALYST_SET[item:getID()]
                 if catEntry then
                     local qty    = item:getQuantity()
-                    local refund = catEntry.refund * qty
+                    local refund = CATALYST_REFUND * qty
                     catalystHits[#catalystHits + 1] =
                     {
                         container = c.id,
@@ -133,18 +138,18 @@ commandObj.onTrigger = function(player, arg)
                     }
                     totalGil = totalGil + refund
 
-                -- Category 2: equipment with banned augment slots
+                -- Category 2: equipment with orphan augment slots
                 elseif item:isType(xi.itemType.WEAPON) or item:isType(xi.itemType.ARMOR) then
                     local augSlotIndices = {}
                     local augDescs       = {}
                     local slotGil        = 0
                     for augSlot = 0, 4 do
-                        local a       = item:getAugment(augSlot)
-                        local augName = BANNED_AUG_NAMES[a[1]]
-                        if augName then
+                        local a     = item:getAugment(augSlot)
+                        local augId = a[1]
+                        if augId ~= 0 and not VALID_AUG_IDS[augId] then
                             augSlotIndices[#augSlotIndices + 1] = augSlot
-                            augDescs[#augDescs + 1] = string.format('slot%d:%s(#%d)', augSlot, augName, a[1])
-                            slotGil = slotGil + GIL_PER_AUG_SLOT
+                            augDescs[#augDescs + 1] = string.format('slot%d:#%d', augSlot, augId)
+                            slotGil = slotGil + AUG_SLOT_REFUND
                         end
                     end
                     if #augSlotIndices > 0 then
@@ -183,7 +188,7 @@ commandObj.onTrigger = function(player, arg)
         CHANNEL)
 
     if #catalystHits > 0 then
-        player:printToPlayer('  -- Unused Catalysts (item deleted + 100k/each) --', CHANNEL)
+        player:printToPlayer('  -- Unused Catalysts (deleted + 100k/item) --', CHANNEL)
         for _, h in ipairs(catalystHits) do
             player:printToPlayer(
                 string.format('  %s x%d  (%s #%d)  → %d gil%s',
@@ -194,7 +199,7 @@ commandObj.onTrigger = function(player, arg)
     end
 
     if #gearHits > 0 then
-        player:printToPlayer('  -- Gear Augments (slot ZEROED in exdata + 100k/slot, relog to see effect) --', CHANNEL)
+        player:printToPlayer('  -- Orphan Gear Augments (slot zeroed + 100k/slot, relog for effect) --', CHANNEL)
         for _, h in ipairs(gearHits) do
             player:printToPlayer(
                 string.format('  %s  (%s #%d)  %s  → %d gil%s',
@@ -212,12 +217,10 @@ commandObj.onTrigger = function(player, arg)
     end
 
     -- ── Apply ─────────────────────────────────────────────────────────────
-    -- 1. Delete unused catalyst stacks.
     for _, h in ipairs(catalystHits) do
         targ:delItemAt(h.itemId, h.qty, h.container, h.slot)
     end
 
-    -- 2. Zero banned augment slots in gear (re-fetch item for write access).
     local augCount = 0
     for _, h in ipairs(gearHits) do
         local item = targ:getStorageItem(h.container, h.slot, 255)
@@ -229,11 +232,10 @@ commandObj.onTrigger = function(player, arg)
         end
     end
 
-    -- 3. Pay total gil.
     targ:addGil(totalGil)
 
     targ:printToPlayer(
-        string.format('[Augment Refund] %d catalyst(s) deleted, %d banned augment slot(s) removed from gear. %d gil reimbursed. Relog for gear stats to update.',
+        string.format('[Augment Refund] %d catalyst(s) deleted, %d orphan augment slot(s) removed. %d gil reimbursed. Relog for gear stats to update.',
             #catalystHits, augCount, totalGil),
         CHANNEL)
 
