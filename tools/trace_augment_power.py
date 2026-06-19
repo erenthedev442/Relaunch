@@ -43,13 +43,20 @@ def mysql(query):
     return r.stdout
 
 
-# catalog: augId -> (base, mult, label)  -- the system's INTENT
+# catalog: augId -> (base, mult, label, maxBoost)  -- the system's INTENT.
+# maxBoost is the per-augment boost ceiling the Moogle enforces (default 31 =
+# the engine's hard cap). An item whose stored boost exceeds it was augmented
+# before the cap was lowered and is "too strong vs current".
 catalog = {}
-txt = open(CATALOG, encoding="utf-8").read()
-for m in re.finditer(
-        r'augId\s*=\s*(\d+)\s*,\s*base\s*=\s*(-?\d+)\s*,\s*mult\s*=\s*(\d+).*?label\s*=\s*([\'"])(.*?)\4',
-        txt):
-    catalog[int(m.group(1))] = (int(m.group(2)), int(m.group(3)), m.group(5))
+for line in open(CATALOG, encoding="utf-8"):
+    m = re.search(r'augId\s*=\s*(\d+)\s*,\s*base\s*=\s*(-?\d+)\s*,\s*mult\s*=\s*(\d+)', line)
+    if not m:
+        continue
+    lm = re.search(r"""label\s*=\s*(['"])(.*?)\1""", line)
+    mb = re.search(r'maxBoost\s*=\s*(\d+)', line)
+    catalog[int(m.group(1))] = (int(m.group(2)), int(m.group(3)),
+                                lm.group(2) if lm else "?",
+                                int(mb.group(1)) if mb else MAX_BOOST)
 
 # augments table: augId -> representative (modId, value, mult) the ENGINE applies
 tbl = {}
@@ -87,36 +94,42 @@ for ln in mysql(q).splitlines():
         if aug not in catalog:
             noncatalog[aug] += 1
             continue
-        cbase, cmult, _lbl = catalog[aug]
+        cbase, cmult, _lbl, cmax = catalog[aug]
         _mid, tval, tmul = tbl[aug]
         tmul = tmul if tmul > 1 else 1
         cmult = cmult if cmult > 1 else 1
         applied = (tval + boost if tval > 0 else tval - boost) * tmul
-        cap = (abs(cbase) + MAX_BOOST) * cmult
-        if applied > cap:
-            over.append((aug, boost, applied, cap))
+        cap = (abs(cbase) + cmax) * cmult
+        if boost > cmax:                 # stored boost over the augment's ceiling
+            over.append((aug, boost, cmax, applied, cap))
 
 print(f"scanned {items} augmented items\n")
 
-print("=== Slots GENUINELY OVER the catalog cap (applied > (base+31)*mult) ===")
+print("=== Slots OVER the augment's boost ceiling (boost > maxBoost) ===")
 if not over:
-    print("  NONE — every augment on every item is at or below the current system max.\n")
+    print("  NONE — every augment on every item is within its maxBoost.\n")
 else:
-    for aug, boost, applied, cap in over:
-        lbl = catalog[aug][2]
-        print(f"  #{aug} {lbl}: boost {boost} -> applied {applied} > cap {cap}")
+    by_aug = defaultdict(lambda: [0, None, None])  # aug -> [count, maxBoost, label]
+    for aug, boost, cmax, applied, cap in over:
+        by_aug[aug][0] += 1
+        by_aug[aug][1] = cmax
+        by_aug[aug][2] = catalog[aug][2]
+    for aug, (cnt, cmax, lbl) in sorted(by_aug.items(), key=lambda kv: -kv[1][0]):
+        seen = sorted(set(boost for a, boost, *_ in over if a == aug))
+        print(f"  #{aug} {lbl}: maxBoost={cmax}, but {cnt} slot(s) carry boost {seen}  -> would cap to {cmax}")
     print()
 
-print("=== Boost spread per cataloged augment found on gear (cap = the system max) ===")
+print("=== Boost spread per cataloged augment on gear (cap = its maxBoost) ===")
 for aug in sorted(seen_boost):
     if aug not in catalog:
         continue
     boosts = seen_boost[aug]
-    cbase, cmult, lbl = catalog[aug]
+    cbase, cmult, lbl, cmax = catalog[aug]
     cmult = cmult if cmult > 1 else 1
-    cap = (abs(cbase) + MAX_BOOST) * cmult
+    cap = (abs(cbase) + cmax) * cmult
     uniq = sorted(set(boosts))
-    print(f"  #{aug:<4} {lbl[:24]:24s} boosts {uniq}  on {len(boosts):>3} slot(s)   cap={cap}")
+    flag = "  <-- maxBoost < 31" if cmax < MAX_BOOST else ""
+    print(f"  #{aug:<4} {lbl[:24]:24s} boosts {uniq}  on {len(boosts):>3} slot(s)   maxBoost={cmax} cap={cap}{flag}")
 
 if noncatalog:
     print("\n=== Augments on gear NOT in the Moogle catalog (retail/casket/removed) ===")

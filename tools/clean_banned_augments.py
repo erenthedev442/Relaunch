@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Clean BANNED and MALFORMED augments from every character inventory, KEEPING the
-item and all other (valid) augments.
+Clean BANNED, MALFORMED, and OVER-CAP augments from every character inventory,
+KEEPING the item and all other (valid) augments.
 
 Augments live bit-packed in the 24-byte `char_inventory.extra` blob:
   byte 0      = 0x02  (AugmentKind: this is an augmented item)
@@ -14,43 +14,42 @@ The engine applies, per slot:  final = (value + boost) * multiplier
 stores augId + boost).
 
 WHAT THIS DOES, per augment slot (augId != 0):
-  A) BANNED   -- augId in BANNED_AUGS (retired augments that still sit on gear
-                 augmented before their removal) -> ZERO the slot.
-  B) MALFORMED-- augId has NO row in the `augments` table (orphaned / garbage id)
-                 -> ZERO the slot. A boost is, by construction, already 0..31
-                 (it is a 5-bit field), so there is nothing to clamp; a slot
-                 with a VALID augId and a real table row is left BYTE-FOR-BYTE
-                 untouched. => part B is a no-op on clean blobs.
+  A) BANNED   -- augId in BANNED_AUGS (retired augments still on pre-removal
+                 gear) -> ZERO the slot.
+  B) MALFORMED-- augId has NO row in the `augments` table (orphaned id)
+                 -> ZERO the slot.
+  C) OVER-CAP -- augId is valid but its stored boost exceeds the augment's
+                 maxBoost in augment_catalog.lua (the Moogle enforces maxBoost
+                 only at augment time, so gear augmented before a cap was
+                 lowered keeps the old higher boost) -> REDUCE the boost to
+                 maxBoost in place (augId + other slots untouched).
 
-Everything else in the blob is preserved exactly: AugmentKind, the kept slots,
-and the signature. If an item ends up with NO augments AND an empty signature,
-its blob is NULLed so it becomes a clean stock item.
+A slot with a valid augId whose boost is already <= its maxBoost is left
+BYTE-FOR-BYTE. => B and C are no-ops on clean blobs. Everything else in the blob
+is preserved: AugmentKind, kept slots, signature. An item left with NO augments
+AND an empty signature is NULLed to a clean stock item.
 
-The DRY-RUN report names every flagged augment (augId + its real stat from the
-`augments` table) and prints a per-augment summary, so you can confirm by eye
-exactly what will be removed BEFORE writing.
+The DRY-RUN report names every affected augment (augId + its stat) and, for
+over-cap, shows boost X->maxBoost.
 
 SAFETY:
-  * OFFLINE characters only. A DB edit to an ONLINE char's inventory is
-    overwritten when they log out (the server saves RAM -> DB), so online chars
-    are REPORTED but never written -- re-run once they are offline.
-  * Every affected row is backed up to a .tsv + a restore .sql before any write.
-  * DRY-RUN by default. Set env DRY=0 to actually write.
-  * No server restart needed -- offline inventories load fresh from
-    char_inventory on next login.
+  * OFFLINE characters only (online edits revert on logout -> reported, skipped).
+  * Backs up every affected row + a restore .sql before any write.
+  * DRY-RUN by default. DRY=0 to write.
+  * No restart needed -- offline inventories load fresh on next login.
 
 ENV OVERRIDES:
-  DRY        '1' (default) = dry-run; '0' = write.
-  AUG_MYSQL  base mysql command (default 'sudo mysql' for the Azure box). For a
-             local dry-run set e.g.:
-               AUG_MYSQL='"C:/Program Files/MariaDB 10.6/bin/mysql.exe" -uroot -pwarrior3'
-  AUG_BKDIR  backup directory (default /home/azureuser/augment_clean_backups).
+  DRY         '1' (default) dry-run; '0' write.
+  AUG_MYSQL   base mysql cmd (default 'sudo mysql'). Local laptop example:
+                AUG_MYSQL='"C:/Program Files/MariaDB 10.6/bin/mysql.exe" -uroot -pwarrior3'
+  AUG_BKDIR   backup dir (default /home/azureuser/augment_clean_backups).
+  AUG_CATALOG augment_catalog.lua path (default ~/server/modules/custom/lua/
+              augment_catalog.lua) -- read for the maxBoost ceilings (part C).
 
-KEEP-IN-SYNC: BANNED_AUGS below mirrors EXCLUDED_AUGS in
-tools/gen_augment_catalog.py. If you retire another augment there, add its augId
-here so it gets stripped from existing gear.
+KEEP-IN-SYNC: BANNED_AUGS mirrors EXCLUDED_AUGS in gen_augment_catalog.py.
 """
 import os
+import re
 import shlex
 import subprocess
 import sys
@@ -64,10 +63,11 @@ BKDIR = os.environ.get("AUG_BKDIR", "/home/azureuser/augment_clean_backups")
 BACKUP = f"{BKDIR}/aug_clean_{TS}.tsv"
 RESTORE = f"{BKDIR}/aug_clean_{TS}_restore.sql"
 MYSQL_BASE = shlex.split(os.environ.get("AUG_MYSQL", "sudo mysql"))
+CATALOG = os.environ.get("AUG_CATALOG",
+                         os.path.expanduser("~/server/modules/custom/lua/augment_catalog.lua"))
+HARD_MAX_BOOST = 31   # engine's 5-bit ceiling; the per-augment maxBoost can be lower
 
 # --- A) BANNED augment IDs ---------------------------------------------------
-# Mirror of EXCLUDED_AUGS in tools/gen_augment_catalog.py: augments retired from
-# the catalog that may still sit on gear augmented before removal.
 BANNED_AUGS = {
     380,                            # Physical Damage Limit
     550, 551, 552, 557, 558, 559,   # STR + DEX / VIT / AGI / CHR / INT / MND
@@ -75,27 +75,22 @@ BANNED_AUGS = {
     743, 744, 745, 749, 750, 751,   # flat melee / ranged Dmg
 }
 
-# Short names for the modIds that appear in banned/flagged augments (+ a few
-# common ones). Anything else prints as mod<id>. Display only -- no logic uses it.
 MOD_NAMES = {
-    1: "DEF", 2: "HP", 5: "MP",
-    8: "STR", 9: "DEX", 10: "VIT", 11: "AGI", 12: "INT", 13: "MND", 14: "CHR",
-    287: "DMG", 376: "Rng.DMG", 1081: "Phys.Dmg.Limit%",
+    1: "DEF", 2: "HP", 5: "MP", 8: "STR", 9: "DEX", 10: "VIT", 11: "AGI",
+    12: "INT", 13: "MND", 14: "CHR", 25: "ATT", 287: "DMG", 376: "Rng.DMG",
+    1081: "Phys.Dmg.Limit%",
 }
 
 
 def mysql(query):
-    r = subprocess.run(MYSQL_BASE + ["-N", "-B", "-e", query],
-                       capture_output=True, text=True)
+    r = subprocess.run(MYSQL_BASE + ["-N", "-B", "-e", query], capture_output=True, text=True)
     if r.returncode != 0:
         sys.stderr.write("MYSQL ERROR:\n" + r.stderr + "\n")
         sys.exit(1)
     return r.stdout
 
 
-# --- Augment definitions (augId -> [(modId, value, mult), ...]) --------------
-# An augId with NO entry here is orphaned/garbage -> part B zeroes it. An augId
-# WITH an entry (even an inert modId=0 one) is a real, defined augment, left alone.
+# --- augments table: augId -> [(modId, value, mult), ...] --------------------
 augdefs = {}
 for ln in mysql(f"SELECT augmentId,modId,value,multiplier FROM {DB}.augments;").splitlines():
     ln = ln.strip()
@@ -106,9 +101,33 @@ for ln in mysql(f"SELECT augmentId,modId,value,multiplier FROM {DB}.augments;").
 valid_augids = set(augdefs)
 
 
+# --- C) per-augment boost ceilings from augment_catalog.lua ------------------
+# augId -> maxBoost (default 31). Only augments the catalog caps below 31 matter.
+maxboost = {}
+catalog_label = {}
+if os.path.exists(CATALOG):
+    for line in open(CATALOG, encoding="utf-8"):
+        m = re.search(r'augId\s*=\s*(\d+)', line)
+        if not m:
+            continue
+        aug = int(m.group(1))
+        mb = re.search(r'maxBoost\s*=\s*(\d+)', line)
+        maxboost[aug] = int(mb.group(1)) if mb else HARD_MAX_BOOST
+        lm = re.search(r"""label\s*=\s*(['"])(.*?)\1""", line)
+        if lm:
+            catalog_label[aug] = lm.group(2)
+    capped = {a: mb for a, mb in maxboost.items() if mb < HARD_MAX_BOOST}
+    print(f"catalog loaded: {len(maxboost)} augs, {len(capped)} with maxBoost<31 {capped}")
+else:
+    print(f"[warn] catalog not found at {CATALOG} -- part C (over-cap) SKIPPED. "
+          f"Set AUG_CATALOG to enable it.")
+
+
 def aug_desc(aug_id):
-    """Human-readable 'what stat is this augment' -- e.g. '#550 STR+1 DEX+1'."""
-    rows = augdefs.get(aug_id)
+    lbl = catalog_label.get(aug_id)
+    if lbl:                              # cataloged -> human label (e.g. 'All songs')
+        return f"#{aug_id} {lbl}"
+    rows = augdefs.get(aug_id)           # else (banned/orphan) -> raw stat
     if not rows:
         return f"#{aug_id} (orphan/undefined)"
     parts = []
@@ -121,14 +140,6 @@ def aug_desc(aug_id):
             s += f"x{mul}"
         parts.append(s)
     return f"#{aug_id} " + (" ".join(parts) if parts else "(inert)")
-
-
-def fmt_hits(hits):
-    """hits = [(slot, augId), ...] -> 'slot[0,1,2] #743 DMG+1x4; slot[4] #550 STR+1 DEX+1'."""
-    by_aug = {}
-    for s, a in hits:
-        by_aug.setdefault(a, []).append(s)
-    return " ; ".join(f"slot{sorted(ss)} {aug_desc(a)}" for a, ss in sorted(by_aug.items()))
 
 
 online = set(int(x) for x in
@@ -153,49 +164,62 @@ for ln in mysql(q).splitlines():
     b = bytearray.fromhex(hexx)
     if len(b) < 12:
         continue
-    banned_hits, orphan_hits, kept = [], [], []   # (slot, augId) / (slot, augId, boost)
+    banned_hits, orphan_hits, cap_hits, kept = [], [], [], []
     for s in range(5):
         off = 2 + s * 2
         u16 = b[off] | (b[off + 1] << 8)
         aug = u16 & 0x7FF
         boost = (u16 >> 11) & 0x1F
         if aug == 0:
-            continue                            # empty slot
+            continue
         if aug in BANNED_AUGS:
-            banned_hits.append((s, aug))        # A) banned
+            banned_hits.append((s, aug))                       # A) zero
         elif aug not in valid_augids:
-            orphan_hits.append((s, aug))        # B) orphaned / malformed
+            orphan_hits.append((s, aug))                       # B) zero
         else:
-            kept.append((s, aug, boost))        # valid -> keep byte-for-byte
-    if banned_hits or orphan_hits:
+            mx = maxboost.get(aug, HARD_MAX_BOOST)
+            if boost > mx:
+                cap_hits.append((s, aug, boost, mx))           # C) reduce boost
+            else:
+                kept.append((s, aug, boost))
+    if banned_hits or orphan_hits or cap_hits:
         sig = b[12:24].hex().upper()
         aff.append((charid, charname, loc, slot, itemId, name, b,
-                    banned_hits, orphan_hits, kept, sig))
+                    banned_hits, orphan_hits, cap_hits, kept, sig))
 
-# --- Summary: what augments are being removed, across every item -------------
-slot_counter = Counter()
+# --- Summary -----------------------------------------------------------------
+zero_counter = Counter()
+cap_counter = Counter()
 for a in aff:
     for _, augid in a[7] + a[8]:
-        slot_counter[augid] += 1
+        zero_counter[augid] += 1
+    for _, augid, _, _ in a[9]:
+        cap_counter[augid] += 1
 
-print(f"online charids right now: {len(online)}")
-print(f"items to clean: {len(aff)}  "
-      f"(banned slots={sum(len(a[7]) for a in aff)}, orphan slots={sum(len(a[8]) for a in aff)})")
-print("\nAugments being removed (slot count across ALL items) -- confirm by eye:")
-for augid, cnt in slot_counter.most_common():
-    kind = "BANNED" if augid in BANNED_AUGS else "orphan"
-    print(f"   {kind:6s}  {aug_desc(augid):34s} x {cnt} slot(s)")
+print(f"\nonline charids right now: {len(online)}")
+print(f"items to clean: {len(aff)}  (zero banned/orphan slots={sum(zero_counter.values())}, "
+      f"cap-to-maxBoost slots={sum(cap_counter.values())})")
+if zero_counter:
+    print("\nAugments being REMOVED (zeroed) -- confirm by eye:")
+    for augid, cnt in zero_counter.most_common():
+        kind = "BANNED" if augid in BANNED_AUGS else "orphan"
+        print(f"   {kind:6s}  {aug_desc(augid):34s} x {cnt} slot(s)")
+if cap_counter:
+    print("\nAugments being CAPPED to maxBoost (boost reduced, item kept):")
+    for augid, cnt in cap_counter.most_common():
+        mx = maxboost.get(augid, HARD_MAX_BOOST)
+        print(f"   CAP     {aug_desc(augid):34s} -> boost<= {mx}   x {cnt} slot(s)")
 print()
 
 if not aff:
     print("Nothing to do.")
     sys.exit(0)
 
-# --- backup (always, even in DRY) -------------------------------------------
+# --- backup (always) ---------------------------------------------------------
 os.makedirs(BKDIR, exist_ok=True)
 with open(BACKUP, "w", encoding="utf-8") as bf, open(RESTORE, "w", encoding="utf-8") as rf:
     bf.write("charid\tlocation\tslot\titemId\torig_extra_hex\n")
-    for charid, charname, loc, slot, itemId, name, b, banned_hits, orphan_hits, kept, sig in aff:
+    for charid, charname, loc, slot, itemId, name, b, *_rest in aff:
         bf.write(f"{charid}\t{loc}\t{slot}\t{itemId}\t{b.hex().upper()}\n")
         rf.write(f"UPDATE {DB}.char_inventory SET extra=UNHEX('{b.hex().upper()}') "
                  f"WHERE charid={charid} AND location={loc} AND slot={slot};\n")
@@ -203,21 +227,30 @@ print(f"backup : {BACKUP}")
 print(f"restore: {RESTORE}\n")
 
 done = on_skip = off_cnt = 0
-for charid, charname, loc, slot, itemId, name, b, banned_hits, orphan_hits, kept, sig in aff:
+for charid, charname, loc, slot, itemId, name, b, banned_hits, orphan_hits, cap_hits, kept, sig in aff:
     nb = bytearray(b)
-    for s, _a in banned_hits + orphan_hits:
+    for s, _a in banned_hits + orphan_hits:                    # zero
         off = 2 + s * 2
         nb[off] = 0
         nb[off + 1] = 0
-    # No augments left AND empty signature -> NULL the blob (clean stock item).
-    # Otherwise keep the modified blob byte-for-byte (preserves kind + kept slots + sig).
+    for s, aug, _old, mx in cap_hits:                          # reduce boost in place
+        off = 2 + s * 2
+        u16 = aug | (mx << 11)
+        nb[off] = u16 & 0xFF
+        nb[off + 1] = (u16 >> 8) & 0xFF
+
     remaining = any((nb[2 + 2 * s] | nb[2 + 2 * s + 1]) for s in range(5))
     sig_zero = (sig == "000000000000000000000000")
     newval = "NULL" if (not remaining and sig_zero) else f"UNHEX('{nb.hex().upper()}')"
 
-    desc = fmt_hits(banned_hits + orphan_hits)
-    keptd = ("| keep " + ",".join(f"#{a}" for _, a, _ in kept)) if kept \
-        else ("-> NULL" if newval == "NULL" else "-> blank")
+    acts = []
+    for _s, a in banned_hits:
+        acts.append(f"zero {aug_desc(a)}")
+    for _s, a in orphan_hits:
+        acts.append(f"zero {aug_desc(a)}")
+    for _s, a, old, mx in cap_hits:
+        acts.append(f"cap {aug_desc(a)} boost {old}->{mx}")
+    desc = " | ".join(acts)
 
     is_on = charid in online
     if is_on:
@@ -227,7 +260,7 @@ for charid, charname, loc, slot, itemId, name, b, banned_hits, orphan_hits, kept
 
     off_cnt += 1
     tag = "DRY" if DRY else "CLEAN"
-    print(f"  [{tag}/offline] {charname:13.13s} {name[:18]:18.18s} zero {desc} {keptd}")
+    print(f"  [{tag}/offline] {charname:13.13s} {name[:18]:18.18s} {desc}")
     if not DRY:
         mysql(f"UPDATE {DB}.char_inventory SET extra={newval} "
               f"WHERE charid={charid} AND location={loc} AND slot={slot};")
