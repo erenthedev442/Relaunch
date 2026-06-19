@@ -249,7 +249,11 @@ buildUnlockMenu = function(player)
 
     if pts >= cost then
         table.insert(options, {
-            string.format('Yes - Unlock %s  (%d)', nextDef.name, cost),
+            -- Keep this label SHORT: the customMenu click round-trip (Mes[128])
+            -- is title + this label + player name + boilerplate. Repeating the
+            -- rank name here pushed long-named players (e.g. Duffaluffagus) over
+            -- 128 bytes on the Rank IV unlock, killing the button. Cost only.
+            string.format('Yes - pay %d %s', cost, catalog.currencyName),
             function(playerArg)
                 spendPoints(playerArg, cost)
                 setTier(playerArg, nextIdx)
@@ -276,7 +280,9 @@ buildUnlockMenu = function(player)
 
     table.insert(options, { '<< Back', function(playerArg) buildSealsMain(playerArg) end })
 
-    hubMenu.title   = string.format('Unlock %s?  Cost: %d %s', nextDef.name, cost, catalog.currencyName)
+    -- Title drops the redundant cost (it's in the Yes label) to keep the
+    -- click round-trip under the 128-byte customMenu cap for long player names.
+    hubMenu.title   = string.format('Unlock %s?', nextDef.name)
     hubMenu.options = options
     local snapshot = { title = hubMenu.title, options = hubMenu.options }  -- shared table + deferred send
     player:timer(30, function(p) p:customMenu(snapshot) end)
