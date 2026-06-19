@@ -2223,8 +2223,14 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
         damage = HandleStoneskin(PDefender, damage);
         HandleAfflatusMiseryDamage(PDefender, damage);
     }
+    // FJB true-damage: PC melee/ranged hits bypass the 131,071 packet ceiling and
+    // land the FULL value on HP, matching the WS/SC/Magic paths. Mob hits stay
+    // clamped so mobs can't punch through the cap onto players.
     NotifyOverCapDamage(PAttacker, damage, "Phys");
-    damage = std::clamp(damage, -131071, 131071);
+    if (!PAttacker || PAttacker->objtype != TYPE_PC)
+    {
+        damage = std::clamp(damage, -131071, 131071);
+    }
 
     damage = CheckAndApplyDamageCap(damage, PDefender);
 
@@ -2345,7 +2351,9 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
         ((CMobEntity*)PDefender)->PEnmityContainer->UpdateEnmityFromDamage(PAttacker, 0);
     }
 
-    return damage;
+    // The full (possibly >131,071) hit already landed on HP above. Clamp the
+    // return value so the action-packet floating number and enmity stay valid.
+    return std::clamp(damage, -131071, 131071);
 }
 
 /************************************************************************
