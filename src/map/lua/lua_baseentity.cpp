@@ -9455,6 +9455,25 @@ void CLuaBaseEntity::setJobPoints(uint16 amount)
 }
 
 /************************************************************************
+ *  Function: resetJobPoints()
+ *  Purpose : Fully wipes the player's CURRENT main job's Job Points
+ *  Example : player:resetJobPoints()
+ *  Notes   : FJB custom -- used by the Job Rebirth system
+ ************************************************************************/
+void CLuaBaseEntity::resetJobPoints()
+{
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        ShowWarning("Attempt to reset Job Points for non-PC (%s).", m_PBaseEntity->getName());
+        return;
+    }
+
+    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
+    PChar->PJobPoints->ResetJobPoints();
+    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::JOB_POINTS>(PChar);
+}
+
+/************************************************************************
  *  Function: addJobPoints()
  *  Purpose : Adds job points to a player based on job, amount entered
  *  Example : player:addJobPoints(17, 30)
@@ -20353,6 +20372,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("addCapacityPoints", CLuaBaseEntity::addCapacityPoints);
     SOL_REGISTER("setCapacityPoints", CLuaBaseEntity::setCapacityPoints);
     SOL_REGISTER("setJobPoints", CLuaBaseEntity::setJobPoints);
+    SOL_REGISTER("resetJobPoints", CLuaBaseEntity::resetJobPoints);
     SOL_REGISTER("addJobPoints", CLuaBaseEntity::addJobPoints);
     SOL_REGISTER("delJobPoints", CLuaBaseEntity::delJobPoints);
     SOL_REGISTER("getJobPoints", CLuaBaseEntity::getJobPoints);

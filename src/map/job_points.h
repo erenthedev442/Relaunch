@@ -381,6 +381,7 @@ public:
     CJobPoints(CCharEntity* PChar);
     bool   IsJobPointExist(JOBPOINT_TYPE jpType); // Check to see if JP exists
     void   RaiseJobPoint(JOBPOINT_TYPE jpType);   // Add upgrade
+    void   ResetJobPoints();                      // FJB (Job Rebirth): full wipe of the CURRENT main job's JP
     uint16 GetJobPoints();                        // Get unspent job points for current job
     uint16 GetJobPointsByJob(uint8 jobID) const;  // get current job points for a players specified job
     void   SetJobPoints(int16 amount);            // Set job points for current job

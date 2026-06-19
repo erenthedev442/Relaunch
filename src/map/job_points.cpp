@@ -122,6 +122,33 @@ void CJobPoints::RaiseJobPoint(JOBPOINT_TYPE jpType)
     }
 }
 
+// FJB (Job Rebirth): full wipe of the CURRENT main job's Job Points -- every
+// category rank, gifts, capacity, the spent/unspent counters, and the DB row.
+// Category effects are read live (GetJobPointValue), so zeroing their values
+// removes them with no mod bookkeeping; gift mods are stripped via
+// RefreshGiftMods once totalJpSpent is 0.
+void CJobPoints::ResetJobPoints()
+{
+    const uint8  jobID = static_cast<uint8>(m_PChar->GetMJob());
+    JobPoints_t& job   = m_jobPoints[jobID];
+
+    job.currentJp      = 0;
+    job.totalJpSpent   = 0;
+    job.capacityPoints = 0;
+    for (auto& jpt : job.job_point_types)
+    {
+        jpt.value = 0;
+    }
+
+    db::preparedStmt("UPDATE char_job_points SET job_points = 0, job_points_spent = 0, "
+                     "jptype0 = 0, jptype1 = 0, jptype2 = 0, jptype3 = 0, jptype4 = 0, "
+                     "jptype5 = 0, jptype6 = 0, jptype7 = 0, jptype8 = 0, jptype9 = 0 "
+                     "WHERE charid = ? AND jobid = ?",
+                     m_PChar->id, jobID);
+
+    jobpointutils::RefreshGiftMods(m_PChar);
+}
+
 uint16 CJobPoints::GetJobPoints()
 {
     return m_jobPoints[m_PChar->GetMJob()].currentJp;
