@@ -349,10 +349,9 @@ m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
         y          = cfg.npcPos.y,
         z          = cfg.npcPos.z,
         rotation   = cfg.npcPos.rot,
-        widescan   = 0,
+        widescan   = 1,
 
         onTrigger = function(player, npc)
-            if player:getGMLevel() < 1 then return end
             player:printToPlayer('[ Job Rebirth ] Restart a maxed job at level 1 for permanent power, kupo.', S)
             showMenu(player)
         end,
