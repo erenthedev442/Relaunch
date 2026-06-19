@@ -17,11 +17,12 @@
 -----------------------------------
 return
 {
-    -- ===== NPC placement (GM Home, zone 210) =====
-    -- Buried under the floor (y=-10) so only a GM using !warp can reach it.
-    -- Access: !warp 3 -10 -7  (or any !pos variant).
+    -- ===== NPC placement (RuLude Gardens, zone 243) =====
+    -- Buried underground (y=-5) at a spot only reachable via !rebirth (GM command).
+    -- Players cannot walk underground; GMs use !rebirth to warp here directly.
     -- onTrigger also gates on getGMLevel() >= 1 as a belt-and-suspenders check.
-    npcPos = { x = 3.000, y = -10.000, z = -7.000, rot = 128 },
+    npcZone = 243,
+    npcPos  = { x = 0.2612, y = -5.0000, z = 30.0492, rot = 62 },
 
     -- ===== Eligibility =====
     -- A job is rebirth-eligible when its TOTAL job points spent (current main

@@ -23,7 +23,7 @@
 -- Tunables: job_rebirth_catalog.lua. Zone: GM Home (zone 210).
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/GM_Home/Zone')
+require('scripts/zones/RuLude_Gardens/Zone')
 local cfg = require('modules/custom/lua/job_rebirth_catalog')
 -- Same boost categories Ascension offers (the LIST only -- this system stores,
 -- caps, and applies them independently). Each entry:
@@ -334,21 +334,22 @@ showMenu = function(player)
 end
 
 -----------------------------------
--- NPC at GM Home.
+-- NPC hidden underground in RuLude Gardens (zone 243).
+-- Accessible only via the !rebirth GM command (warps to cfg.npcPos).
 -----------------------------------
-m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
     super(zone)
 
     local Rebirth = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'JobRebirth_Altar',
         packetName = string.format('%sJob Rebirth', xi.icon.STAR_LARGE),
-        look       = 2401, -- GM Home NPC model (same family as the trainers); change freely
+        look       = 2401,
         x          = cfg.npcPos.x,
         y          = cfg.npcPos.y,
         z          = cfg.npcPos.z,
         rotation   = cfg.npcPos.rot,
-        widescan   = 1,
+        widescan   = 0,
 
         onTrigger = function(player, npc)
             if player:getGMLevel() < 1 then return end
