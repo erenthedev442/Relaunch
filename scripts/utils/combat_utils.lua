@@ -209,8 +209,11 @@ function utils.handlePhalanx(actor, damage)
     if damage <= 0 then
         return damage
     end
-
-    return utils.clamp(damage - actor:getMod(xi.mod.PHALANX), 0, 99999)
+    local phalanx = actor:getMod(xi.mod.PHALANX)
+    if phalanx <= 0 then
+        return damage
+    end
+    return math.max(damage - phalanx, 0)
 end
 
 -- Returns reduced magic damage from RUN buff, 'One for All'
@@ -228,7 +231,7 @@ function utils.handleOneForAll(actor, damage)
         return damage
     end
 
-    return utils.clamp(damage - oneForAllEffect:getPower(), 0, 99999)
+    return math.max(damage - oneForAllEffect:getPower(), 0)
 end
 
 -- Calculates Stoneskin damage reduction.
