@@ -94,7 +94,7 @@ def _parse_tier_order(text: str, key: str = "tierOrder") -> list[str]:
     return []
 
 
-def _parse_test_dummy_tiers(text: str, tier_order: list[str]) -> list[dict]:
+def _parse_test_dummy_tiers(text: str, order: list[str]) -> list[dict]:
     m = re.search(r'\btiers\s*=\s*\{', text)
     if not m:
         return []
@@ -105,19 +105,26 @@ def _parse_test_dummy_tiers(text: str, tier_order: list[str]) -> list[dict]:
         return []
 
     tiers = []
-    for name in tier_order:
+    for name in order:
         tm = re.search(rf'\b{re.escape(name)}\s*=\s*\{{', tiers_block)
         if not tm:
             continue
         sub = tiers_block[tm.start():]
         for ts, te in _balanced_blocks(sub):
             entry = sub[ts:te]
-            min_lv = re.search(r'\bminLevel\s*=\s*(\d+)', entry)
-            hp_m   = re.search(r'\bhp\s*=\s*(\d+)', entry)
+            # label / family are quoted (single OR double -- "World's End"); capture
+            # the opening quote and match up to its twin so apostrophes are safe.
+            label_m  = re.search(r'''\blabel\s*=\s*(['"])(.*?)\1''', entry)
+            family_m = re.search(r'''\bfamily\s*=\s*(['"])(.*?)\1''', entry)
+            lvl = _parse_int(entry, "maxLevel")
+            if lvl is None:
+                lvl = _parse_int(entry, "minLevel")
             tiers.append({
-                "name":  name,
-                "level": int(min_lv.group(1)) if min_lv else "?",
-                "hp":    int(hp_m.group(1)) if hp_m else 0,
+                "key":    name,
+                "label":  label_m.group(2) if label_m else name,
+                "family": family_m.group(2) if family_m else "",
+                "level":  lvl if lvl is not None else "?",
+                "hp":     _parse_int(entry, "hp") or 0,
             })
             break
 
@@ -228,13 +235,34 @@ def _parse_warp_tiers(text: str, pricing: dict[str, int]) -> list[dict]:
 # ---------------------------------------------------------------------------
 
 def _render_test_dummy(tiers: list[dict]) -> str:
-    lines = [
-        "| Tier | Level | HP |",
-        "|---|---|---|",
-    ]
-    for t in tiers:
-        lines.append(f"| {t['name']} | L{t['level']} | {_hp_display(t['hp'])} |")
-    return "\n".join(lines)
+    asc   = [t for t in tiers if t["family"] == "asc"]
+    aby   = [t for t in tiers if t["family"] == "aby"]
+    other = [t for t in tiers if t["family"] not in ("asc", "aby")]
+
+    def _table(title: str, header: str, rows: list[dict]) -> list[str]:
+        out = []
+        if title:
+            out.append(title)
+            out.append("")
+        out.append(f"| {header} | Level | HP |")
+        out.append("|---|---|---|")
+        for t in rows:
+            out.append(f"| {t['label']} | L{t['level']} | {_hp_display(t['hp'])} |")
+        out.append("")
+        return out
+
+    lines: list[str] = []
+    if asc:
+        lines += _table(
+            "**Ascension Courts** — each mirrors the toughest boss of that Prestige trial tier (all level 150).",
+            "Court", asc)
+    if aby:
+        lines += _table(
+            "**Abyssea NMs** — each mirrors our custom Abyssea notorious-monster defense at that content tier.",
+            "NM tier", aby)
+    if other:
+        lines += _table("", "Target", other)
+    return "\n".join(lines).rstrip()
 
 
 def _render_mystery_mog(
@@ -413,8 +441,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         print("[gm_home] skip test-dummy: test_dummy_catalog.lua not found")
     else:
         dummy_text  = dummy_src.read_text(encoding="utf-8", errors="replace")
-        tier_order  = _parse_tier_order(dummy_text, "tierOrder")
-        dummy_tiers = _parse_test_dummy_tiers(dummy_text, tier_order)
+        # Catalog now splits targets into two ordered families (ascension +
+        # abyssea); concatenate them in display order. (Old single tierOrder
+        # was replaced 2026-06-19.)
+        order = (_parse_tier_order(dummy_text, "ascensionOrder")
+                 + _parse_tier_order(dummy_text, "abysseaOrder"))
+        dummy_tiers = _parse_test_dummy_tiers(dummy_text, order)
         dummy_content = _render_test_dummy(dummy_tiers)
         wrote = write_between_markers(page, "gm-home-test-dummy", dummy_content)
         if wrote:

@@ -3,21 +3,44 @@
 -- Data for the Test Dummy NPC (modules/custom/lua/TestDummy.lua).
 --
 -- The Test Dummy is a training-target NPC at GM Home. Players talk
--- to it, pick a tier, and a stationary dummy mob spawns next to the
--- NPC. The dummy:
---   - has a huge HP pool (won't die during normal testing)
---   - won't aggro (doesn't come at the player on detection)
---   - won't move from the spawn point (NO_MOVE = 1)
---   - won't drop loot / award capacity points
---   - WILL still engage and hit back if the player attacks it, but
---     because the underlying pool (Leaping Lizzy, mob_groups 11355)
---     is set for a low-tier mob even at high levels, its outgoing
---     damage is tickle-tier on geared L99 players. Hitback is useful
---     for testing PDT / MDT mitigation - it's not a threat.
+-- to it, pick a target, and a stationary dummy mob spawns next to the
+-- NPC so they can verify gear / augment / DPS output against the
+-- DEFENSIVE PROFILE of our real endgame encounters.
 --
--- Mob source: reuses Hunting League mob_groups 11355 (Leaping_Lizzy)
--- registered in modules/custom/sql/hunting_league_gm_home_mobs.sql.
--- No new SQL is needed.
+-- Every dummy:
+--   - has a big HP pool (survives a full parse; Despawn when done)
+--   - won't aggro (setAggressive(false)) or move (NO_MOVE = 1)
+--   - won't drop loot / award capacity points
+--   - hits back only at TICKLE tier and is therefore SAFE -- the base
+--     pool is Leaping Lizzy (mob_groups 11355), a low-tier mob whose
+--     outgoing damage stays trivial even at level 150 (the whole reason
+--     that pool was chosen). The dummy's DEFENSE, not its offense, is
+--     what we replicate.
+--
+-- WHAT MAKES A DUMMY "FAITHFUL": the engine hit-rate / damage formulas
+-- key off the target's LEVEL and its DEF / EVA / MEVA / MDEF. So each
+-- target below sets minLevel = maxLevel to the encounter's level and
+-- applies that encounter's exact defensive mods AFTER spawn() (the same
+-- way the live systems do). The dummy then takes damage / dodges /
+-- resists exactly like the real thing, so your parse on it matches the
+-- real fight. (GM Home is NOT a level-corrected zone, and neither
+-- Provenance nor the Abyssea marks zones are either, so there is no
+-- hidden zone penalty to account for -- the stat profile IS the fight.)
+--
+-- Targets come in two families, shown in submenus:
+--   ASCENSION (Prestige) -- the 5 trial Courts. Each dummy mirrors the
+--     APEX boss of that tier in prestige_catalog.lua trialScaling
+--     (the wall of that Court). All are level 150 (the AV/PW baseline).
+--   ABYSSEA NMs -- our custom marks-pop NMs. Each dummy mirrors the
+--     per-content-tier profile in AbysseaMarks.lua zoneConfig
+--     (atkDef -> DEF, accEva -> EVA + MEVA) at its level (135/145/155).
+--
+-- KEEP-IN-SYNC: the mod numbers below are COPIED from prestige_catalog.lua
+-- (trialScaling apex bosses) and AbysseaMarks.lua (zoneConfig). If you
+-- rebalance either system, refresh the matching block here so the dummy
+-- keeps matching the real encounter. Mob source reuses Hunting League
+-- mob_groups 11355 (registered in hunting_league_gm_home_mobs.sql) -- no
+-- new SQL needed. xi.mod.* is available at require-time.
 -----------------------------------
 
 local catalog = {}
@@ -35,8 +58,8 @@ catalog.npcPos =
 }
 
 -- Where the dummy mob appears when summoned. Pulled WELL away from the
--- new tight 4-row NPC layout so combat at the dummy doesn't visually
--- crowd the lobby. Placed off to the east in open empty space.
+-- tight NPC layout so combat at the dummy doesn't visually crowd the
+-- lobby. Placed off to the east in open empty space.
 catalog.spawnPos =
 {
     x = 20.000,
@@ -45,47 +68,78 @@ catalog.spawnPos =
     rotation = 192,
 }
 
--- Tier presets. Each tier sets:
---   minLevel/maxLevel - REQUIRED. Drives defense/evasion stat scaling
---                       so a higher-tier dummy harder to hit / less
---                       penetrated by physical hits. Without these
---                       the engine defaults to level 255 and the mob
---                       loads as "unhittable garbage" (same caveat
---                       documented in GameMaster.lua).
---   hp               - explicit HP override (raw value, set after
---                       spawn() via setMaxHP + setHP).
---   groupId          - mob_groups row to inherit the stat pool from.
---                       Using 11355 (Leaping_Lizzy) for all tiers so
---                       the visual model + base damage stay tickle-
---                       tier across levels.
+-- Every target entry sets:
+--   label    - display name (kept short for the customMenu byte cap)
+--   family   - 'asc' | 'aby' (drives which submenu it appears in)
+--   minLevel /
+--   maxLevel - REQUIRED, equal. Drives the level-based hit-rate / cRatio
+--              floor; without it the engine spawns at level 255 = an
+--              "unhittable garbage" mob (same caveat as GameMaster.lua).
+--   hp       - testing HP pool (raw; setMaxHP + setHP after spawn()).
+--   groupId  - mob_groups pool for the visual model + tickle base offense
+--              (11355 = Leaping_Lizzy for ALL targets -> safe dummy).
+--   mods     - { [xi.mod.X] = value } applied AFTER spawn() (pairs-iterated),
+--              the encounter's DEFENSIVE profile. ONLY defense -- no ATT/ACC,
+--              so the dummy can never threaten the tester.
 catalog.tiers =
 {
-    Standard =
+    -- ===== ASCENSION (Prestige) -- apex boss of each trialScaling tier =====
+    -- All level 150. Mods mirror prestige_catalog.lua (DEF/EVASION/MEVA/MDEF).
+    asc_nightmare =
     {
-        minLevel = 99,
-        maxLevel = 99,
-        hp       = 10000000,            -- 10M HP
-        groupId  = 11355,
+        label = 'Nightmare Court', family = 'asc',
+        minLevel = 150, maxLevel = 150, hp =  50000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 3300, [xi.mod.EVASION] = 1170, [xi.mod.MEVA] = 1260, [xi.mod.MDEF] = 1260 },  -- Odin (11372)
+    },
+    asc_voidwalkers =
+    {
+        label = 'Voidwalkers', family = 'asc',
+        minLevel = 150, maxLevel = 150, hp =  75000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 3987, [xi.mod.EVASION] = 1620, [xi.mod.MEVA] = 1530, [xi.mod.MDEF] = 1530 },  -- Qilin (11383)
+    },
+    asc_jailers =
+    {
+        label = 'The Jailers', family = 'asc',
+        minLevel = 150, maxLevel = 150, hp = 100000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 5775, [xi.mod.EVASION] = 1260, [xi.mod.MEVA] = 2160, [xi.mod.MDEF] = 2340 },  -- Jailer of Temperance (11386)
+    },
+    asc_lords =
+    {
+        label = 'Voidwalker Lords', family = 'asc',
+        minLevel = 150, maxLevel = 150, hp = 150000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 5500, [xi.mod.EVASION] = 1980, [xi.mod.MEVA] = 2520, [xi.mod.MDEF] = 2340 },  -- Maere (11389)
+    },
+    asc_worldsend =
+    {
+        label = "World's End", family = 'asc',
+        minLevel = 150, maxLevel = 150, hp = 200000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 6875, [xi.mod.EVASION] = 2340, [xi.mod.MEVA] = 3240, [xi.mod.MDEF] = 3240 },  -- Provenance Watcher (11392)
     },
 
-    Endgame =
+    -- ===== ABYSSEA custom NMs -- per content tier =====
+    -- Mods mirror AbysseaMarks.lua zoneConfig: atkDef -> DEF, accEva -> EVA + MEVA.
+    aby_visions =
     {
-        minLevel = 150,
-        maxLevel = 150,
-        hp       = 50000000,            -- 50M HP
-        groupId  = 11355,
+        label = 'Visions', family = 'aby',
+        minLevel = 135, maxLevel = 135, hp = 30000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 3333, [xi.mod.EVA] = 2000, [xi.mod.MEVA] = 2000 },  -- Konschtat/Tahrongi/La Theine
     },
-
-    Insane =
+    aby_scars =
     {
-        minLevel = 200,
-        maxLevel = 200,
-        hp       = 100000000,           -- 100M HP
-        groupId  = 11355,
+        label = 'Scars', family = 'aby',
+        minLevel = 145, maxLevel = 145, hp = 50000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 6000, [xi.mod.EVA] = 3333, [xi.mod.MEVA] = 3333 },  -- Attohwa/Misareaux/Vunkerl
+    },
+    aby_heroes =
+    {
+        label = 'Heroes', family = 'aby',
+        minLevel = 155, maxLevel = 155, hp = 75000000, groupId = 11355,
+        mods = { [xi.mod.DEF] = 8666, [xi.mod.EVA] = 5000, [xi.mod.MEVA] = 5000 },  -- Altepa/Grauberg
     },
 }
 
--- Stable menu order.
-catalog.tierOrder = { 'Standard', 'Endgame', 'Insane' }
+-- Stable submenu order.
+catalog.ascensionOrder = { 'asc_nightmare', 'asc_voidwalkers', 'asc_jailers', 'asc_lords', 'asc_worldsend' }
+catalog.abysseaOrder   = { 'aby_visions', 'aby_scars', 'aby_heroes' }
 
 return catalog

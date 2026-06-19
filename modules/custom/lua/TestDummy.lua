@@ -68,9 +68,11 @@ end
 
 
 -----------------------------------
--- Forward declarations
+-- Forward declarations (the menus reference each other)
 -----------------------------------
 local showMenu
+local showAscensionMenu
+local showAbysseaMenu
 
 
 -----------------------------------
@@ -89,6 +91,7 @@ local function spawnDummy(player, tierName)
     -- the dummy (extremely unlikely given the HP, but possible) still
     -- maintains the owner's session state correctly.
     local ownerName = player:getName()
+    local tierLabel = tier.label or tierName
 
     local sp  = catalog.spawnPos
     local mob = zone:insertDynamicEntity({
@@ -118,7 +121,7 @@ local function spawnDummy(player, tierName)
             local resolved = GetPlayerByName(ownerName)
             if resolved then
                 resolved:printToPlayer(
-                    string.format('[Test Dummy] %s dummy down. Re-summon when ready.', tierName),
+                    string.format('[Test Dummy] %s dummy down. Re-summon when ready.', tierLabel),
                     xi.msg.channel.SYSTEM_3)
             end
         end,
@@ -147,6 +150,17 @@ local function spawnDummy(player, tierName)
     mob:setMobMod(xi.mobMod.NO_DESPAWN,         1)
     mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
 
+    -- Apply the encounter's DEFENSIVE profile (DEF / EVA / MEVA / MDEF).
+    -- These come AFTER spawn() because spawn() recomputes stats from the
+    -- mob pool and would otherwise wipe them. Mirrors how Prestige_System
+    -- and AbysseaMarks stat-load their real mobs. Offense is left at the
+    -- tickle base on purpose, so the dummy stays a safe target.
+    if tier.mods then
+        for mod, value in pairs(tier.mods) do
+            mob:addMod(mod, value)
+        end
+    end
+
     -- Bump HP to the configured cap. setMaxHP first so the engine
     -- knows the new ceiling before we top off current HP.
     mob:setMaxHP(tier.hp)
@@ -155,8 +169,8 @@ local function spawnDummy(player, tierName)
     sess.dummies[mob:getID()] = mob
 
     player:printToPlayer(
-        string.format('[Test Dummy] %s dummy spawned at (%.0f, %.0f, %.0f). %dM HP, no aggro, no drops.',
-            tierName, sp.x, sp.y, sp.z, math.floor(tier.hp / 1000000)),
+        string.format('[Test Dummy] %s (L%d) dummy spawned. %dM HP, real defense, tickle offense -- swing away.',
+            tierLabel, tier.maxLevel, math.floor(tier.hp / 1000000)),
         xi.msg.channel.SYSTEM_3)
 end
 
@@ -226,39 +240,53 @@ end
 -- Menus
 -----------------------------------
 
-local menu = { title = 'Test Dummy', options = {} }
-
-local function delaySendMenu(player)
-    -- Snapshot before the deferred send: `menu` is a shared scratch
-    -- table, and another player's interaction inside the 50ms window
-    -- would otherwise swap its contents mid-flight.
-    local snapshot = { title = menu.title, options = menu.options }
+-- Build a fresh snapshot table per send (customMenu's option tables are
+-- shared scratch otherwise) and defer 30ms so re-opening a menu from
+-- inside a menu callback doesn't race the client packet. Same pattern the
+-- Casino / Shop multi-menu NPCs use.
+local function sendMenu(player, title, options)
+    local snapshot = { title = title, options = options }
     player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
 
-showMenu = function(player)
+-- Submenu: the 5 Ascension (Prestige) Courts. All level 150, so the level
+-- rides in the title and labels stay short (well under the 150-byte cap).
+showAscensionMenu = function(player)
     local options = {}
-    for _, tierName in ipairs(catalog.tierOrder) do
-        local tier = catalog.tiers[tierName]
+    for _, key in ipairs(catalog.ascensionOrder) do
+        local tier = catalog.tiers[key]
+        table.insert(options, { tier.label, function(p) spawnDummy(p, key) end })
+    end
+    table.insert(options, { 'Back', function(p) showMenu(p) end })
+    sendMenu(player, 'Ascension Lv.150', options)
+end
+
+
+-- Submenu: the custom Abyssea NM tiers. Levels differ (135/145/155), so
+-- each label carries its own level.
+showAbysseaMenu = function(player)
+    local options = {}
+    for _, key in ipairs(catalog.abysseaOrder) do
+        local tier = catalog.tiers[key]
         table.insert(options, {
-            -- Compact label keeps the customMenu packet well under the
-            -- 150-byte cap with all 5 rows present.
-            string.format('Spawn %s (L%d, %dM HP)',
-                tierName, tier.maxLevel, math.floor(tier.hp / 1000000)),
-            function(p) spawnDummy(p, tierName) end,
+            string.format('%s Lv.%d', tier.label, tier.maxLevel),
+            function(p) spawnDummy(p, key) end,
         })
     end
-    table.insert(options, {
-        'Reset dummy HP',
-        function(p) resetDummies(p) end,
+    table.insert(options, { 'Back', function(p) showMenu(p) end })
+    sendMenu(player, 'Abyssea NMs', options)
+end
+
+
+-- Top menu: pick a family, or manage live dummies.
+showMenu = function(player)
+    sendMenu(player, 'Test Dummy', {
+        { 'Ascension Levels', function(p) showAscensionMenu(p) end },
+        { 'Abyssea NMs',      function(p) showAbysseaMenu(p)   end },
+        { 'Reset dummy HP',   function(p) resetDummies(p)      end },
+        { 'Despawn dummies',  function(p) despawnDummies(p)    end },
     })
-    table.insert(options, {
-        'Despawn dummies',
-        function(p) despawnDummies(p) end,
-    })
-    menu.options = options
-    delaySendMenu(player)
 end
 
 
@@ -281,7 +309,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
 
         onTrigger = function(player, npc)
             player:printToPlayer(
-                '[ Test Dummy ] Need a target for science? Pick a tier and swing away, kupo!',
+                '[ Test Dummy ] Want to test your damage against the real endgame? Pick an Ascension Court or an Abyssea NM and swing away, kupo!',
                 xi.msg.channel.SYSTEM_3)
             showMenu(player)
         end,
