@@ -619,6 +619,122 @@ _Real Level = job level + gear iLvl bonus + Ascension levels + Job Points + attr
 
 ---
 
+## Combat Records
+
+_Personal combat bests recorded since tracking began. Split by mob level tier — **T1** = Lv 1–33 &ensp;|&ensp; **T2** = Lv 34–67 &ensp;|&ensp; **T3** = Lv 68–99 &ensp;|&ensp; **T4** = Lv 100+. Your all-tier personal bests appear in-game at The Chronicler NPC._
+
+### Highest Single Heal
+
+<!-- DOCGEN:BEGIN id="lb-MaxHeal-T1" -->
+### Highest Single Heal — Lv 1–33 (T1)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxHeal-T1" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxHeal-T2" -->
+### Highest Single Heal — Lv 34–67 (T2)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxHeal-T2" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxHeal-T3" -->
+### Highest Single Heal — Lv 68–99 (T3)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxHeal-T3" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxHeal-T4" -->
+### Highest Single Heal — Lv 100+ (T4)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxHeal-T4" -->
+
+### Highest Single Nuke
+
+<!-- DOCGEN:BEGIN id="lb-MaxNuke-T1" -->
+### Highest Single Nuke — Lv 1–33 (T1)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxNuke-T1" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxNuke-T2" -->
+### Highest Single Nuke — Lv 34–67 (T2)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxNuke-T2" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxNuke-T3" -->
+### Highest Single Nuke — Lv 68–99 (T3)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxNuke-T3" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxNuke-T4" -->
+### Highest Single Nuke — Lv 100+ (T4)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxNuke-T4" -->
+
+### Highest Magic Burst
+
+<!-- DOCGEN:BEGIN id="lb-MaxBurst-T1" -->
+### Highest Magic Burst — Lv 1–33 (T1)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxBurst-T1" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxBurst-T2" -->
+### Highest Magic Burst — Lv 34–67 (T2)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxBurst-T2" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxBurst-T3" -->
+### Highest Magic Burst — Lv 68–99 (T3)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxBurst-T3" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxBurst-T4" -->
+### Highest Magic Burst — Lv 100+ (T4)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxBurst-T4" -->
+
+### Highest Skillchain
+
+<!-- DOCGEN:BEGIN id="lb-MaxSC-T1" -->
+### Highest Skillchain — Lv 1–33 (T1)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxSC-T1" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxSC-T2" -->
+### Highest Skillchain — Lv 34–67 (T2)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxSC-T2" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxSC-T3" -->
+### Highest Skillchain — Lv 68–99 (T3)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxSC-T3" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxSC-T4" -->
+### Highest Skillchain — Lv 100+ (T4)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxSC-T4" -->
+
+### Most Damage in 30 Seconds
+
+<!-- DOCGEN:BEGIN id="lb-MaxDmg30-T1" -->
+### Most Damage in 30 Seconds — Lv 1–33 (T1)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxDmg30-T1" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxDmg30-T2" -->
+### Most Damage in 30 Seconds — Lv 34–67 (T2)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxDmg30-T2" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxDmg30-T3" -->
+### Most Damage in 30 Seconds — Lv 68–99 (T3)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxDmg30-T3" -->
+
+<!-- DOCGEN:BEGIN id="lb-MaxDmg30-T4" -->
+### Most Damage in 30 Seconds — Lv 100+ (T4)
+_No qualifying records yet — be the first!_
+<!-- DOCGEN:END id="lb-MaxDmg30-T4" -->
+
+---
+
 ## Notes
 
 - **Snapshot, not live.** These tables update only when `refresh-site.bat` runs. If you just earned that #1 spot, it'll show up after the next refresh.

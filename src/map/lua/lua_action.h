@@ -53,6 +53,7 @@ public:
     void actionID(uint16 actionid) const;
     auto getParam(uint32 actionTargetId) const -> uint16;
     void param(uint32 actionTargetId, int32 param) const;
+    auto getAddEffectParam(uint32 actionTargetId) const -> int32;
     void messageId(uint32 actionTargetId, MsgBasic messageId) const;
     auto getMsg(uint32 actionTargetId) const -> Maybe<MsgBasic>;
     auto getAnimation(uint32 actionTargetId) const -> Maybe<ActionAnimation>;

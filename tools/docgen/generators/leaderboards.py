@@ -337,6 +337,56 @@ _COMBINED_REFORGE_BOARD = {
 }
 
 
+# Tiered combat records — 5 categories × 4 mob-level tiers.
+# Each tier is a separate CharVar: <category>_T1 through _T4.
+# Tiers: T1 = Lv 1–33 | T2 = Lv 34–67 | T3 = Lv 68–99 | T4 = Lv 100+
+# Tracked by modules/custom/lua/combat_records.lua (needs one map restart).
+_TIER_LABELS = [("T1", "Lv 1–33"), ("T2", "Lv 34–67"), ("T3", "Lv 68–99"), ("T4", "Lv 100+")]
+
+_TIERED_COMBAT_BOARDS = [
+    {
+        "category": "MaxHeal",
+        "heading":  "Highest Single Heal",
+        "blurb":    "Largest single cure or healing spell on any target at {tier}. "
+                    "Measured at the moment the spell lands. Your best across all tiers "
+                    "is shown in-game by The Chronicler NPC.",
+        "unit":     "HP healed",
+    },
+    {
+        "category": "MaxNuke",
+        "heading":  "Highest Single Nuke",
+        "blurb":    "Peak magic damage from a single spell landing on a {tier} mob. "
+                    "Magic bursts also count here — the highest burst naturally sets "
+                    "this record too.",
+        "unit":     "damage",
+    },
+    {
+        "category": "MaxBurst",
+        "heading":  "Highest Magic Burst",
+        "blurb":    "Largest magic burst damage on a single {tier} mob target. "
+                    "Requires matching the right element chain at the right moment — "
+                    "the precision record.",
+        "unit":     "damage",
+    },
+    {
+        "category": "MaxSC",
+        "heading":  "Highest Skillchain",
+        "blurb":    "Largest single skillchain damage on a {tier} mob. Triggered via "
+                    "weapon skills in the correct order. Records start accumulating "
+                    "after the next map rebuild (requires C++ getAddEffectParam).",
+        "unit":     "damage",
+    },
+    {
+        "category": "MaxDmg30",
+        "heading":  "Most Damage in 30 Seconds",
+        "blurb":    "Highest total damage dealt to {tier} mobs in any rolling 30-second "
+                    "window, combining weapon skills, magic, and ranged attacks. The "
+                    "burst DPS record — reset on zone change.",
+        "unit":     "damage",
+    },
+]
+
+
 # Lifetime combined Reforge marks (sum across the three _Lifetime
 # counters). Never decreases when players spend, so this is the true
 # "grind" measure.
@@ -884,6 +934,21 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             boards_written += 1
         else:
             print("[leaderboards] lb-real-level: marker missing in leaderboards.md")
+
+        # Tiered combat records — 5 categories × 4 mob-level tiers
+        for board in _TIERED_COMBAT_BOARDS:
+            cat = board["category"]
+            for suffix, tier_label in _TIER_LABELS:
+                var     = f"{cat}_{suffix}"
+                marker  = f"lb-{cat}-{suffix}"
+                heading = f"{board['heading']} — {tier_label}"
+                blurb   = board["blurb"].replace("{tier}", tier_label)
+                rows    = _query_single_var(cur, var, None)
+                content = _render_board(heading, blurb, board["unit"], rows)
+                if write_between_markers(page, marker, content):
+                    boards_written += 1
+                else:
+                    print(f"[leaderboards] {marker}: marker missing in {page.name}")
 
     finally:
         cur.close()

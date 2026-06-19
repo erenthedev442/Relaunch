@@ -130,6 +130,31 @@ m:addOverride('xi.zones.Escha_ZiTah.Zone.onInitialize', function(zone)
                     player:getCharVar('Derby_Wins') or 0, derbyRaces,
                     profit >= 0 and '+' or '', profit), B)
             end
+            -- Combat records: show all-tier personal bests in a single line each.
+            local maxNuke  = 0
+            local maxBurst = 0
+            local maxHeal  = 0
+            local maxSC    = 0
+            local maxDmg30 = 0
+            for t = 1, 4 do
+                local function cv(base) return player:getCharVar(base .. '_T' .. t) or 0 end
+                if cv('MaxNuke')  > maxNuke  then maxNuke  = cv('MaxNuke')  end
+                if cv('MaxBurst') > maxBurst then maxBurst = cv('MaxBurst') end
+                if cv('MaxHeal')  > maxHeal  then maxHeal  = cv('MaxHeal')  end
+                if cv('MaxSC')    > maxSC    then maxSC    = cv('MaxSC')    end
+                if cv('MaxDmg30') > maxDmg30 then maxDmg30 = cv('MaxDmg30') end
+            end
+            if maxNuke > 0 or maxBurst > 0 or maxHeal > 0 or maxDmg30 > 0 then
+                player:printToPlayer('[The Chronicler] -- Combat Records -------------------', H)
+                player:printToPlayer(string.format('  Nuke: %s  Burst: %s  Heal: %s  Dmg/30s: %s',
+                    maxNuke  > 0 and tostring(maxNuke)  or '--',
+                    maxBurst > 0 and tostring(maxBurst) or '--',
+                    maxHeal  > 0 and tostring(maxHeal)  or '--',
+                    maxDmg30 > 0 and tostring(maxDmg30) or '--'), B)
+                if maxSC > 0 then
+                    player:printToPlayer(string.format('  Skillchain: %d', maxSC), B)
+                end
+            end
             player:printToPlayer('[The Chronicler] -- Server Leaderboards ---------------', H)
             player:printToPlayer('  Full rankings at:', B)
             player:printToPlayer('  legendary-ffxi.pages.dev/community/leaderboards/', B)

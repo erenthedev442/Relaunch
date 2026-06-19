@@ -248,6 +248,18 @@ void CLuaAction::additionalEffect(const uint32 actionTargetId, const ActionProcA
     }
 }
 
+auto CLuaAction::getAddEffectParam(const uint32 actionTargetId) const -> int32
+{
+    for (auto&& actionTarget : m_PLuaAction->targets)
+    {
+        if (actionTarget.actorId == actionTargetId)
+        {
+            return actionTarget.results[0].addEffectParam;
+        }
+    }
+    return 0;
+}
+
 void CLuaAction::addEffectParam(const uint32 actionTargetId, const int32 addEffectParam) const
 {
     for (auto&& actionTarget : m_PLuaAction->targets)
@@ -299,6 +311,7 @@ void CLuaAction::Register()
     SOL_REGISTER("setRecast", CLuaAction::setRecast);
     SOL_REGISTER("actionID", CLuaAction::actionID);
     SOL_REGISTER("getParam", CLuaAction::getParam);
+    SOL_REGISTER("getAddEffectParam", CLuaAction::getAddEffectParam);
     SOL_REGISTER("param", CLuaAction::param);
     SOL_REGISTER("messageID", CLuaAction::messageId);
     SOL_REGISTER("getMsg", CLuaAction::getMsg);
