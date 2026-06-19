@@ -166,7 +166,7 @@ REM   [N/M] Linking CXX executable xi_map.exe     <- linking a final binary
 REM M is the total dirty-file count for THIS run (incremental) or the
 REM full ~806 for a clean rebuild.
 powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-    "& { cmake --build '%BUILD_DIR%' --config RelWithDebInfo %CLEAN_FLAG% 2>&1 | Tee-Object -FilePath '%LOG%' -Append; exit $LASTEXITCODE }"
+    "& { cmake --build '%BUILD_DIR%' --config RelWithDebInfo %CLEAN_FLAG% --target xi_map xi_connect xi_world xi_search 2>&1 | Tee-Object -FilePath '%LOG%' -Append; exit $LASTEXITCODE }"
 set "BUILD_RC=%errorlevel%"
 echo.
 

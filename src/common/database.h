@@ -718,6 +718,13 @@ auto preparedStmt(const std::string& rawQuery, Args&&... args) -> std::unique_pt
                 {
                     if (!detail::isConnectionIssue(e))
                     {
+                        // CR_OUT_OF_MEMORY leaves the PreparedStatement object in a broken
+                        // state in lazyPreparedStatements. Reusing it on the next call
+                        // causes heap corruption. Evict it so the next call prepares fresh.
+                        if (std::string(e.what()).find("Client run out of memory") != std::string::npos)
+                        {
+                            state.lazyPreparedStatements.erase(rawQuery);
+                        }
                         ShowErrorFmt("Query Failed: {}", rawQuery.c_str());
                         ShowErrorFmt("{}", e.what());
                         return nullptr;
