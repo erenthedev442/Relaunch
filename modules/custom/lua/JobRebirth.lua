@@ -1,28 +1,36 @@
 -----------------------------------
 -- JobRebirth.lua
--- Job Rebirth: once a job is level 99 with its Job Points maxed, rebirth it --
--- the job's level resets to 1 and its Job Points are FULLY wiped (categories,
--- gifts, capacity, DB) via the C++ player:resetJobPoints() binding. In return
--- you bank Ascension Points into that job's Ascension pool, spent at the
--- Ascension Altar on the SAME category tree Ascension uses (prestige_catalog).
+-- Job Rebirth -- a STANDALONE prestige system (NOT tied to Ascension).
 --
--- Each rebirth also stamps an escalating PER-JOB EXP penalty (a stacking
--- negative EXP_BONUS applied only while that job is active), so every cycle's
--- re-grind to 99 is harder than the last, up to expPenaltyCap.
+-- Once a job is level 99 with its Job Points maxed, the Rebirth NPC at GM Home
+-- resets that job to level 1 and FULLY wipes its Job Points (via the C++
+-- player:resetJobPoints() binding). In return you earn REBIRTH POINTS -- this
+-- system's own currency -- which you spend at the same NPC on permanent stat
+-- boosts.
 --
--- Reuses the Ascension (Prestige) economy entirely: AP -> CharVar
--- Prestige_AP_<job>; categories + their apply (zone-in + job change) live in
--- Prestige_System.lua. This module adds ONLY the rebirth NPC/action and the
--- per-job exp penalty.
+-- INDEPENDENCE: own currency (CharVar Rebirth_RP_<job>), own per-job boost
+-- levels (Rebirth_Cat_<job>_<id>), own caps, own apply, own NPC. No Ascension
+-- Points, no Altar, no Prestige storage -- the two systems are fully separate
+-- and STACK. The ONLY thing borrowed from Ascension is the boost CATEGORY LIST
+-- (prestige_catalog.categories) so both offer the same stats (single source of
+-- truth -> they never drift); everything about HOW they're earned, stored,
+-- capped, and applied is this module's own.
 --
--- Zone: GM Home (zone 210)
+-- Boosts are PER-JOB (active only on the reborn job) and re-applied on zone-in
+-- and job change. Each rebirth also stamps an escalating per-job EXP penalty
+-- (a stacking negative EXP_BONUS) so every re-grind to 99 is harder.
+--
+-- Tunables: job_rebirth_catalog.lua. Zone: GM Home (zone 210).
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/GM_Home/Zone')
 local cfg = require('modules/custom/lua/job_rebirth_catalog')
+-- Same boost categories Ascension offers (the LIST only -- this system stores,
+-- caps, and applies them independently). Each entry:
+--   { id, label, mod (or mods), perLevel, cap, apCost, note }
+local categories = require('modules/custom/lua/prestige_catalog').categories
 
 local m = Module:new('job_rebirth')
-
 local S = xi.msg.channel.SYSTEM_3
 
 local JOB_ABBR =
@@ -32,14 +40,18 @@ local JOB_ABBR =
     [13] = 'NIN', [14] = 'DRG', [15] = 'SMN', [16] = 'BLU', [17] = 'COR', [18] = 'PUP',
     [19] = 'DNC', [20] = 'SCH', [21] = 'GEO', [22] = 'RUN',
 }
-local function jobName(jobId)  return JOB_ABBR[jobId] or ('Job ' .. tostring(jobId)) end
+local function jobName(jobId) return JOB_ABBR[jobId] or ('Job ' .. tostring(jobId)) end
 
-local function countKey(jobId)  return 'Rebirth_Count_' .. jobId end
-local function apKey(jobId)     return string.format('Prestige_AP_%d', jobId) end
-local function apLifeKey(jobId) return string.format('Prestige_AP_Lifetime_%d', jobId) end
-local function getCount(player, jobId) return player:getCharVar(countKey(jobId)) or 0 end
+-- Storage keys (all rebirth-owned; per main-job).
+local function countKey(jobId)   return 'Rebirth_Count_' .. jobId end
+local function rpKey(jobId)      return 'Rebirth_RP_' .. jobId end
+local function catKey(jobId, id) return string.format('Rebirth_Cat_%d_%s', jobId, id) end
 
--- exp penalty % for a given rebirth count (capped)
+local function getCount(player, jobId)  return player:getCharVar(countKey(jobId)) or 0 end
+local function getRP(player, jobId)     return player:getCharVar(rpKey(jobId)) or 0 end
+local function getCatLv(player, jobId, id) return player:getCharVar(catKey(jobId, id)) or 0 end
+
+-- exp penalty % for a given rebirth count (capped).
 local function expPenalty(count)
     if count <= 0 then
         return 0
@@ -48,39 +60,75 @@ local function expPenalty(count)
 end
 
 -----------------------------------
--- PER-JOB EXP PENALTY (negative EXP_BONUS, active only on the reborn job).
--- Mirrors the Prestige per-job mod swap: track the applied job in a LocalVar,
--- swap on job change, force re-apply after a zone wipe. EXP_BONUS is read live
--- at exp-gain time (charutils.cpp), so no stat recompute is needed.
--- Invariant: a job's Rebirth_Count only changes while that job is live (rebirth
--- acts on the current main job), so reading it back at removal yields what was
--- added -- keeping addMod/delMod balanced.
+-- PER-JOB MODS: bought category boosts + the escalating exp penalty, applied
+-- only while the reborn job is active. A category may carry a single mod or a
+-- list (cat.mods); both get the same delta. EXP_BONUS is read live at exp-gain
+-- time, so only the category boosts need a stat recompute.
+--
+-- Invariant: per-job CharVars (cat levels, rebirth count) only change while
+-- that job is live, so a later remove reads back exactly what was added --
+-- keeping addMod/delMod balanced across job swaps.
 -----------------------------------
-local function applyExp(player, jobId)
+local function _modAdd(player, cat, delta)
+    if cat.mods then
+        for _, mod in ipairs(cat.mods) do
+            player:addMod(mod, delta)
+        end
+    elseif cat.mod then
+        player:addMod(cat.mod, delta)
+    end
+end
+
+local function _modDel(player, cat, delta)
+    if cat.mods then
+        for _, mod in ipairs(cat.mods) do
+            player:delMod(mod, delta)
+        end
+    elseif cat.mod then
+        player:delMod(cat.mod, delta)
+    end
+end
+
+local function applyJobMods(player, jobId)
+    for _, cat in ipairs(categories) do
+        local lv = getCatLv(player, jobId, cat.id)
+        if lv > 0 then
+            _modAdd(player, cat, lv * cat.perLevel)
+        end
+    end
     local pen = expPenalty(getCount(player, jobId))
     if pen > 0 then
         player:addMod(xi.mod.EXP_BONUS, -pen)
     end
 end
 
-local function removeExp(player, jobId)
+local function removeJobMods(player, jobId)
+    for _, cat in ipairs(categories) do
+        local lv = getCatLv(player, jobId, cat.id)
+        if lv > 0 then
+            _modDel(player, cat, lv * cat.perLevel)
+        end
+    end
     local pen = expPenalty(getCount(player, jobId))
     if pen > 0 then
         player:delMod(xi.mod.EXP_BONUS, -pen)
     end
 end
 
-local function refreshExpPenalty(player)
+-- Make the live mods match the current main job. Cheap no-op when unchanged
+-- (the common case on gear-change calls), a swap when the job actually moved.
+local function refreshJobMods(player)
     local cur     = player:getMainJob()
-    local applied = player:getLocalVar('RebirthExpJob')
+    local applied = player:getLocalVar('RebirthModJob')
     if applied == cur then
         return
     end
     if applied ~= 0 then
-        removeExp(player, applied)
+        removeJobMods(player, applied)
     end
-    applyExp(player, cur)
-    player:setLocalVar('RebirthExpJob', cur)
+    applyJobMods(player, cur)
+    player:setLocalVar('RebirthModJob', cur)
+    player:recalculateStats() -- rebuild cached Max HP/MP etc. from the new mod map
 end
 
 -----------------------------------
@@ -103,46 +151,137 @@ end
 local function doRebirth(player)
     local job = player:getMainJob()
 
-    -- Strip this job's CURRENT exp penalty before bumping the count (reads the
-    -- pre-rebirth count) so the new, larger penalty below isn't double-applied.
-    removeExp(player, job)
+    -- Strip this job's live mods (categories + current exp penalty) so the
+    -- penalty can be re-stamped at the new, higher rebirth count without
+    -- double-counting. Categories are unchanged by a rebirth and are re-applied
+    -- as-is below; only the penalty actually changes.
+    removeJobMods(player, job)
 
-    -- Full wipe: Job Points (categories/gifts/capacity/DB) cleared, level -> 1.
+    -- Full wipe: Job Points cleared (C++ resetJobPoints), level -> 1.
     player:resetJobPoints()
     player:setLevel(1)
 
-    -- Stamp the rebirth (this escalates the job's exp penalty).
+    -- Stamp the rebirth and grant Rebirth Points (this system's own currency).
     local count = getCount(player, job) + 1
     player:setCharVar(countKey(job), count)
+    player:setCharVar(rpKey(job), getRP(player, job) + cfg.rpPerRebirth)
 
-    -- Bank Ascension Points into this job's pool (spent at the Ascension Altar).
-    player:setCharVar(apKey(job),     (player:getCharVar(apKey(job))     or 0) + cfg.apPerRebirth)
-    player:setCharVar(apLifeKey(job), (player:getCharVar(apLifeKey(job)) or 0) + cfg.apPerRebirth)
+    -- Re-apply categories + the new (harder) exp penalty for this live job.
+    applyJobMods(player, job)
+    player:setLocalVar('RebirthModJob', job)
+    player:recalculateStats()
 
-    -- Apply the new, harder penalty immediately for this (still-active) job.
-    applyExp(player, job)
-    player:setLocalVar('RebirthExpJob', job)
-
-    player:printToPlayer(string.format('%s has been REBORN -- back to level 1, Job Points wiped.', jobName(job)), S)
-    player:printToPlayer(string.format('  +%d Ascension Points banked (spend at the Ascension Altar). Rebirths: %d.', cfg.apPerRebirth, count), S)
+    player:printToPlayer(string.format('%s has been REBORN -- level 1, Job Points wiped.', jobName(job)), S)
+    player:printToPlayer(string.format('  +%d Rebirth Points earned (spend them here). Rebirths: %d.', cfg.rpPerRebirth, count), S)
     if expPenalty(count) > 0 then
         player:printToPlayer(string.format('  Trial of Mastery: this job now earns %d%% less EXP. Earn your power again.', expPenalty(count)), S)
     end
 end
 
 -----------------------------------
--- Menu.
+-- Spend one level in a category (current main job). The job's mods are live
+-- (RebirthModJob == job from login/zone/job-change), so apply just the new
+-- level's delta and recompute derived stats.
 -----------------------------------
-local function showMenu(player)
+local function tryBuy(player, cat)
+    local job = player:getMainJob()
+    local lv  = getCatLv(player, job, cat.id)
+    if lv >= cat.cap then
+        player:printToPlayer(string.format('%s is already maxed (%d/%d), kupo.', cat.label, lv, cat.cap), S)
+        return
+    end
+    local rp = getRP(player, job)
+    if rp < cat.apCost then
+        player:printToPlayer(string.format('Not enough Rebirth Points: %s costs %d, you have %d.', cat.label, cat.apCost, rp), S)
+        return
+    end
+
+    player:setCharVar(rpKey(job), rp - cat.apCost)
+    player:setCharVar(catKey(job, cat.id), lv + 1)
+    _modAdd(player, cat, cat.perLevel)
+    player:recalculateStats()
+
+    player:printToPlayer(string.format('%s: %d -> %d / %d   (-%d RP, %d left).', cat.label, lv, lv + 1, cat.cap, cat.apCost, rp - cat.apCost), S)
+end
+
+-----------------------------------
+-- Menus (forward-declared for mutual recursion).
+-----------------------------------
+local showMenu, showSpend, showBuy
+
+local PER_PAGE = 5 -- categories per page (5 + up to 3 nav = within the 8-option client cap)
+
+showBuy = function(player, cat, page)
+    local job = player:getMainJob()
+    local lv  = getCatLv(player, job, cat.id)
+    local rp  = getRP(player, job)
+
+    player:printToPlayer(string.format('%s -- %s', cat.label, cat.note or ''), S)
+    player:printToPlayer(string.format('  Now %d/%d   --   %d RP per level   --   you have %d RP.', lv, cat.cap, cat.apCost, rp), S)
+
+    local options = {}
+    if lv >= cat.cap then
+        table.insert(options, { 'Maxed', function(p) showSpend(p, page) end })
+    elseif rp < cat.apCost then
+        table.insert(options, { 'Not enough RP', function(p) showSpend(p, page) end })
+    else
+        table.insert(options, {
+            string.format('Buy +1  (-%d RP)', cat.apCost),
+            function(p)
+                tryBuy(p, cat)
+                showBuy(p, cat, page) -- stay here so multiple levels can be bought
+            end,
+        })
+    end
+    table.insert(options, { 'Back', function(p) showSpend(p, page) end })
+
+    local title = string.format('%s  %d/%d', cat.label, lv, cat.cap)
+    player:timer(30, function(p) p:customMenu({ title = title, options = options }) end)
+end
+
+showSpend = function(player, page)
+    page = page or 1
+    local job   = player:getMainJob()
+    local rp    = getRP(player, job)
+    local total = #categories
+    local pages = math.max(1, math.ceil(total / PER_PAGE))
+    if page < 1 then page = 1 end
+    if page > pages then page = pages end
+
+    local first = (page - 1) * PER_PAGE + 1
+    local last  = math.min(first + PER_PAGE - 1, total)
+
+    local options = {}
+    for i = first, last do
+        local cat = categories[i]
+        local lv  = getCatLv(player, job, cat.id)
+        table.insert(options, {
+            string.format('%s %d/%d', cat.label, lv, cat.cap),
+            function(p) showBuy(p, cat, page) end,
+        })
+    end
+    if page < pages then
+        table.insert(options, { 'Next page >>', function(p) showSpend(p, page + 1) end })
+    end
+    if page > 1 then
+        table.insert(options, { '<< Prev page', function(p) showSpend(p, page - 1) end })
+    end
+    table.insert(options, { 'Back', function(p) showMenu(p) end })
+
+    local title = string.format('Spend RP: %d  (pg %d/%d)', rp, page, pages)
+    player:timer(30, function(p) p:customMenu({ title = title, options = options }) end)
+end
+
+showMenu = function(player)
     local job     = player:getMainJob()
     local count   = getCount(player, job)
     local spent   = player:getSpentJobPoints()
+    local rp      = getRP(player, job)
     local options = {}
 
     if isEligible(player, job) then
-        table.insert(options,
-        {
-            string.format('Rebirth %s  (lv1 + wipe JP, +%d AP)', jobName(job), cfg.apPerRebirth),
+        table.insert(options, {
+            string.format('Rebirth %s  (lv1, wipe JP, +%d RP)', jobName(job), cfg.rpPerRebirth),
             function(p)
                 local opts =
                 {
@@ -164,12 +303,16 @@ local function showMenu(player)
         })
     end
 
-    table.insert(options,
-    {
+    table.insert(options, {
+        string.format('Spend Rebirth Points  (%d RP)', rp),
+        function(p) showSpend(p, 1) end,
+    })
+
+    table.insert(options, {
         'How Rebirth works',
         function(p)
             p:printToPlayer('[ Rebirth ] Max a job (lv99 + Job Points maxed), then rebirth it:', S)
-            p:printToPlayer(string.format('  level -> 1, Job Points WIPED, +%d Ascension Points (spend at the Altar).', cfg.apPerRebirth), S)
+            p:printToPlayer(string.format('  level -> 1, Job Points WIPED, +%d Rebirth Points to spend here.', cfg.rpPerRebirth), S)
             p:printToPlayer(string.format('  Each rebirth stacks -%d%% EXP on THIS job (cap -%d%%) -- each grind is harder.', cfg.expPenaltyPerRebirth, cfg.expPenaltyCap), S)
             showMenu(p)
         end,
@@ -177,11 +320,10 @@ local function showMenu(player)
 
     local title
     if isEligible(player, job) then
-        title = string.format('%s READY to rebirth  (rebirths: %d)', jobName(job), count)
+        title = string.format('%s READY to rebirth (rebirths: %d)', jobName(job), count)
     else
         title = string.format('%s  JP %d/%d  (rebirths: %d)', jobName(job), spent, cfg.jpRequired, count)
     end
-
     player:timer(30, function(p) p:customMenu({ title = title, options = options }) end)
 end
 
@@ -211,19 +353,19 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 end)
 
 -----------------------------------
--- Re-apply the per-job exp penalty. onGameIn fires on every zone-in (which
--- wipes in-memory mods); forcing RebirthExpJob=0 makes refreshExpPenalty re-add
--- for the current job. checkForGearSet fires on job change (and gear change).
+-- Re-apply the per-job mods. onGameIn fires on every zone-in (which wipes
+-- in-memory mods); forcing RebirthModJob=0 makes refreshJobMods re-add for the
+-- current job. checkForGearSet fires on job change (and gear change).
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
-    player:setLocalVar('RebirthExpJob', 0)
+    player:setLocalVar('RebirthModJob', 0)
     super(player, firstLogin, zoning)
-    refreshExpPenalty(player)
+    refreshJobMods(player)
 end)
 
 m:addOverride('xi.gear_sets.checkForGearSet', function(player)
     super(player)
-    refreshExpPenalty(player)
+    refreshJobMods(player)
 end)
 
 return m
