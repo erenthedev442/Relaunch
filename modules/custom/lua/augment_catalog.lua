@@ -198,7 +198,7 @@ return {
     [787]  = { augId = 39,   base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'Enmity' },
     [901]  = { augId = 40,   base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'Enmity' },
     [902]  = { augId = 43,   base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'Charm' },
-    [1291] = { augId = 67,   base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'All songs' },
+    [1291] = { augId = 67,   base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'All songs', maxBoost = 7 },
     [1408] = { augId = 104,  base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'Pet Enmity' },
     [1453] = { augId = 105,  base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'Pet Enmity' },
     [1844] = { augId = 147,  base = 1,   mult = 1,  disp = 1,    cat = 7,  label = 'Treasure Hunter' },
