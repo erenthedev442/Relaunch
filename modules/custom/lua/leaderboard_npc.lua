@@ -53,10 +53,8 @@ m:addOverride('xi.zones.Escha_ZiTah.Zone.onInitialize', function(zone)
             local hlTier    = player:getCharVar('HL_Tier')            or 0
             local hlLife    = player:getCharVar('HL_Points_Lifetime') or 0
             local nmKills   = player:getCharVar('Custom_NM_Kills')    or 0
-            local dungeons  = player:getCharVar('Dungeon_Clears_Total')   or 0
             local sweeps    = player:getCharVar('WH_AllCleared_Lifetime') or 0
             local infamy    = player:getCharVar('Infamy_Lifetime')        or 0
-            local keyBest   = player:getCharVar('Dungeon_KeyBest')        or 0
 
             -- Ascension (Prestige) endgame layer: account-wide lifetime
             -- ascensions, plus this character's highest single-job prestige
@@ -94,9 +92,9 @@ m:addOverride('xi.zones.Escha_ZiTah.Zone.onInitialize', function(zone)
 
             player:printToPlayer('[The Chronicler] -- Your Legendary Record --------------', H)
             player:printToPlayer(string.format('  Rank: %-8s  NM Kills: %-6d  Lifetime Marks: %d', tierName, nmKills, hlLife), B)
-            player:printToPlayer(string.format('  Unique NMs: %d/%d   Dungeons Cleared: %d   Weekly Sweeps: %d', uniqueNMs, TOTAL_NMS, dungeons, sweeps), B)
+            player:printToPlayer(string.format('  Unique NMs: %d/%d   Weekly Sweeps: %d', uniqueNMs, TOTAL_NMS, sweeps), B)
             player:printToPlayer(string.format('  Lifetime Infamy: %d   Achievements: %d/%d', infamy, achEarned, #ACH_IDS), B)
-            player:printToPlayer(string.format('  Ascensions: %d   Highest Prestige: P%d   Best Keystone: M+%d', ascensions, topPrestige, keyBest), B)
+            player:printToPlayer(string.format('  Ascensions: %d   Highest Prestige: P%d', ascensions, topPrestige), B)
             local colRating = player:getCharVar('Col_Rating') or 0
             if colRating > 0 then
                 player:printToPlayer(string.format('  Arena: %d rating (best %d)   W-L: %d-%d',

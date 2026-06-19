@@ -136,7 +136,7 @@ Armor does not come from the Weapons Vendor — it comes from two other sources:
 
 **Reforge System:** AF, Relic, and Empyrean armor sets are upgraded from base through +3 using Reforge marks earned from spawner NMs. This is your primary armor progression path alongside the medal vendors. See [Reforge System](reforge.md).
 
-**Dungeon infamy:** High-end armor pieces can be obtained from the infamy vendor inside the Dungeon system. These compete with or surpass Reforge +3 in some slots. See [Dungeons](dungeons.md).
+**Infamy gear:** High-end armor and weapons are sold by the [Infamy Vendor](gear-vendors.md#infamy-vendor) for **Infamy** earned from endgame content. These compete with or surpass Reforge +3 in some slots.
 
 ---
 
@@ -169,7 +169,7 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 
 - **Gold tier weapons** become the next major weapon goal. At 2,000 Hunt Marks each, budget accordingly — main job main-hand first.
 - Reforge sets should be approaching +2/+3 in key slots by now.
-- Run [Dungeons](dungeons.md) for infamy — infamy vendor pieces fill in slots where Reforge lags or as upgrades over +3 in select slots.
+- Earn **Infamy** from endgame content and spend it at the [Infamy Vendor](gear-vendors.md#infamy-vendor) — its pieces fill slots where Reforge lags, or upgrade over +3 in select slots.
 - Push the Augment Sage to Rank 3 or 4 and register NM affinities for your main augment categories.
 
 ### Endgame

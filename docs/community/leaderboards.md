@@ -512,31 +512,12 @@ _How many distinct weeks this character has cleared ALL 5 Weekly Hunt Board obje
 
 ---
 
-## Dungeons
-
-<!-- DOCGEN:BEGIN id="lb-dungeon-clears" -->
-### Most Dungeon Clears
-
-_Total dungeon clears across all 4 dungeons. Each successful boss kill within the time limit counts once. Aborted / timed-out runs don't count. See [Dungeons](../progression/dungeons.md) for the ladder._
-
-| Rank | Character | Clears |
-|---:|---|---:|
-| 🥇 | [Ropraz](players/ropraz.md) | 31 |
-| 🥈 | [Jbae](players/jbae.md) | 21 |
-| 🥉 | [Cecel](players/cecel.md) | 18 |
-| 4 | [Cervantis](players/cervantis.md) | 15 |
-| 5 | [Dez](players/dez.md) | 11 |
-| 6 | [Olindre](players/olindre.md) | 9 |
-| 7 | [Bro](players/bro.md) | 9 |
-| 8 | [Vistrix](players/vistrix.md) | 6 |
-| 9 | [Subpar](players/subpar.md) | 6 |
-| 10 | [Azure](players/azure.md) | 3 |
-<!-- DOCGEN:END id="lb-dungeon-clears" -->
+## Infamy
 
 <!-- DOCGEN:BEGIN id="lb-infamy-lifetime" -->
 ### Infamy Earned (Lifetime)
 
-_Cumulative Infamy earned across all dungeon clears — doesn't decrease when spent at the Infamy Vendor. The raw grind metric. Includes base reward + speed bonuses._
+_Cumulative Infamy earned across all endgame content — doesn't decrease when spent at the Infamy Vendor. The raw grind metric. Includes base reward + speed bonuses._
 
 | Rank | Character | Infamy |
 |---:|---|---:|

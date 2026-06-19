@@ -127,7 +127,7 @@ The Hunting League is the spine, but it isn't the whole skeleton. As you climb, 
 
 - **[Ascension (Prestige)](../progression/prestige.md)** — hit the top HL rank on a job, then reset it for permanent per-job bonuses.
 - **[Gear Guide](../progression/gear-guide.md)** and **[Best-in-Slot](../progression/bis-guide.md)** — where your marks are best spent as you gear up.
-- **[HNM Kings](../progression/hnm.md)**, **[Dungeons](../progression/dungeons.md)**, and the **[Hunter's Guild](../progression/hunters-guild.md)** — the endgame loops beyond the Henge.
+- **[HNM Kings](../progression/hnm.md)** and the **[Hunter's Guild](../progression/hunters-guild.md)** — the endgame loops beyond the Henge.
 
 To see your own trajectory, your character gets a public profile with a **personalized "recommended next step."** Browse the **[Player Profiles](../community/players/index.md)** list and click your name — it appears after your first stats sync.
 

@@ -80,13 +80,11 @@ See [Augment Sage](../progression/augment-sage.md) for the full rank requirement
 
 ---
 
-## Stage 5 — Dungeons (Late)
+## Stage 5 — Infamy & Endgame (Late)
 
-**Goal:** Earn Infamy, clear content with affixes, and spend Infamy at the Dungeon Vendor.
+**Goal:** Earn Infamy from endgame content and spend it at the Infamy Vendor.
 
-The [Dungeon System](../progression/dungeons.md) offers four dungeons (The Outer Bastion, The Voidwalker Arena, The Empyreal Paradox, The Eternal Throne) with configurable difficulty tiers. Dungeons award **Infamy** per clear, and a Dungeon Vendor sells curated gear, full +4 job sets, and rare augment catalysts for Infamy.
-
-**Affixes** modify each dungeon run — random modifiers that make enemies harder (or occasionally easier). Higher-tier affix sets pay more Infamy.
+**Infamy** is earned across Legendary's endgame — Abyssea NM hunts, scheduled Invasions, and the weekly Raid, among others. Spend it at the [Infamy Vendor](../progression/gear-vendors.md#infamy-vendor), which sells gear found nowhere else: relic-tier weapons, bard instruments, best-in-slot armor, and per-job +4 Reforge Sets.
 
 **Featured Dungeon:** One dungeon rotates as the Weekly Bonus Dungeon. The first clear of the week pays 2× Infamy.
 

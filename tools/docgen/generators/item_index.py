@@ -54,7 +54,6 @@ from tools.docgen.generators.weapons_npc import (
 
 
 _GEAR_PAGE = "gear-vendors.md"
-_DUNGEON_PAGE = "dungeons.md"
 _TIER_LABEL = {"bronze": "Bronze", "silver": "Silver", "gold": "Gold"}
 
 # Catalog paths, in display order. Used both to resolve sources and to

@@ -956,9 +956,9 @@ _47 items across 3 categories. All costs are in Hunt Marks._
 ## Infamy Vendor
 
 <!-- DOCGEN:BEGIN id="infamy-vendor" -->
-The **Infamy Vendor** stands at GM Home and is paid in **Infamy**, earned by clearing [Dungeons](dungeons.md). It carries gear sold nowhere else -- relic-tier weapons, bard instruments, and best-in-slot picks promoted from the top gear tier. All costs below are in Infamy.
+The **Infamy Vendor** stands at GM Home and is paid in **Infamy**, earned from endgame content -- Abyssea NM hunts, Invasions, and the weekly Raid. It carries gear sold nowhere else -- relic-tier weapons, bard instruments, and best-in-slot picks promoted from the top gear tier. All costs below are in Infamy.
 
-Per-job **+4 Reforge Sets** are also sold here; those are listed on the [Dungeons](dungeons.md#the-infamy-vendor) page.
+Per-job **+4 Reforge Sets** (AF/Relic/Empyrean +4) are also sold here.
 
 ### Curated picks
 

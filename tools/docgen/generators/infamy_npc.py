@@ -87,14 +87,14 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     lines: list[str] = []
     lines.append(
         f"The **Infamy Vendor** stands at GM Home and is paid in **{currency}**, "
-        f"earned by clearing [Dungeons](dungeons.md). It carries gear sold nowhere "
-        f"else -- relic-tier weapons, bard instruments, and best-in-slot picks "
-        f"promoted from the top gear tier. All costs below are in {currency}."
+        f"earned from endgame content -- Abyssea NM hunts, Invasions, and the weekly "
+        f"Raid. It carries gear sold nowhere else -- relic-tier weapons, bard "
+        f"instruments, and best-in-slot picks promoted from the top gear tier. All "
+        f"costs below are in {currency}."
     )
     lines.append("")
     lines.append(
-        f"Per-job **+4 Reforge Sets** are also sold here; those are listed on the "
-        f"[Dungeons](dungeons.md#the-infamy-vendor) page."
+        f"Per-job **+4 Reforge Sets** (AF/Relic/Empyrean +4) are also sold here."
     )
     lines.append("")
 

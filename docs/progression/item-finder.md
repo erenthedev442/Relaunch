@@ -658,7 +658,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 ---
 
 !!! note "Not everything is vendor-sold"
-    A few gear sources have their own pages and don't appear above: the [Reforge System](reforge.md) (AF / Relic / Empyrean upgrades), [HNM Kings](hnm.md), and the per-job [+4 Reforge Sets](dungeons.md#the-infamy-vendor). Crafted, augmented, and quest gear isn't sold by these NPCs, so it won't show up in the finder either.
+    A few gear sources have their own pages and don't appear above: the [Reforge System](reforge.md) (AF / Relic / Empyrean upgrades), [HNM Kings](hnm.md), and the per-job [+4 Reforge Sets](gear-vendors.md#infamy-vendor). Crafted, augmented, and quest gear isn't sold by these NPCs, so it won't show up in the finder either.
 
 ---
 

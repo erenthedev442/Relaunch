@@ -168,21 +168,11 @@ _SINGLE_VAR_BOARDS = [
         "var":     "WH_AllCleared_Lifetime",
         "unit":    "sweeps",
     },
-    # ===== Dungeon System ============================================
-    {
-        "marker":  "lb-dungeon-clears",
-        "heading": "Most Dungeon Clears",
-        "blurb":   "Total dungeon clears across all 4 dungeons. Each "
-                   "successful boss kill within the time limit counts once. "
-                   "Aborted / timed-out runs don't count. See "
-                   "[Dungeons](../progression/dungeons.md) for the ladder.",
-        "var":     "Dungeon_Clears_Total",
-        "unit":    "clears",
-    },
+    # ===== Infamy ====================================================
     {
         "marker":  "lb-infamy-lifetime",
         "heading": "Infamy Earned (Lifetime)",
-        "blurb":   "Cumulative Infamy earned across all dungeon clears — "
+        "blurb":   "Cumulative Infamy earned across all endgame content —"
                    "doesn't decrease when spent at the Infamy Vendor. The "
                    "raw grind metric. Includes base reward + speed bonuses.",
         "var":     "Infamy_Lifetime",

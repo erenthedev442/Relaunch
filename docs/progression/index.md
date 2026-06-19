@@ -16,7 +16,7 @@ Legendary layers a handful of custom currencies on top of gil. Here's what each 
 | **Hunt Marks** | Killing Hunting League NMs (5–65 per kill by rank), Weekly Hunts, and the Wave Master | Hunt Hub reward shop — rank unlocks, seals, and Sortie job earrings |
 | **Seals** (Bronze / Silver / Gold) | Bought with Hunt Marks at the Seals NPC | [Armor & Weapons vendors](gear-vendors.md) at Reisenjima Henge |
 | **AF / Relic / Empy Marks** | Killing Sky God / Unity / Abyssea NMs | [Reforge system](reforge.md) — upgrade AF/Relic/Empy armor from base to +3 |
-| **Infamy** | Clearing [Dungeons](dungeons.md) | Infamy Vendor — dungeon-exclusive gear; also unlocks the Augment Sage |
+| **Infamy** | Endgame content — Abyssea NM hunts, Invasions, and the weekly Raid | [Infamy Vendor](gear-vendors.md#infamy-vendor) — relic weapons, instruments & best-in-slot gear; also unlocks the Augment Sage |
 | **Gil** | Quests (100× rate), crafting, and drops | Auction House, NPC vendors, consumables |
 
 ## The Hunting League at a glance
