@@ -32,8 +32,12 @@ return
     -- Rebirth Points granted per rebirth (this system's OWN currency, CharVar
     -- Rebirth_RP_<job>). Spent at the Rebirth NPC on the boost categories.
     -- Categories reuse Ascension's per-level cost (apCost) so relative prices
-    -- stay sensible; tune this to set how many levels a rebirth buys.
-    rpPerRebirth = 10,
+    -- stay sensible; tune these to set how many levels a rebirth buys.
+    -- Formula: min(rpBase + (rebirthNumber - 1) * rpPerLevel, rpMax)
+    --   Rebirth 1: 10, Rebirth 2: 12, Rebirth 3: 14, Rebirth 4: 16, Rebirth 5: 18, Rebirth 6+: 20
+    rpBase     = 10,
+    rpPerLevel =  2,
+    rpMax      = 20,
 
     -- ===== Escalating exp penalty (the "harder each time" knob) =====
     -- Per-job: each rebirth adds this many % to the exp penalty (a negative

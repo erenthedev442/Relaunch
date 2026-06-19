@@ -59,6 +59,11 @@ local function expPenalty(count)
     return math.min(count * cfg.expPenaltyPerRebirth, cfg.expPenaltyCap)
 end
 
+-- RP granted for the Nth rebirth (1-indexed). Scales +rpPerLevel each time, capped at rpMax.
+local function rpForCount(count)
+    return math.min(cfg.rpBase + (count - 1) * cfg.rpPerLevel, cfg.rpMax)
+end
+
 -----------------------------------
 -- PER-JOB MODS: bought category boosts + the escalating exp penalty, applied
 -- only while the reborn job is active. A category may carry a single mod or a
@@ -162,9 +167,10 @@ local function doRebirth(player)
     player:setLevel(1)
 
     -- Stamp the rebirth and grant Rebirth Points (this system's own currency).
-    local count = getCount(player, job) + 1
+    local count    = getCount(player, job) + 1
+    local rpEarned = rpForCount(count)
     player:setCharVar(countKey(job), count)
-    player:setCharVar(rpKey(job), getRP(player, job) + cfg.rpPerRebirth)
+    player:setCharVar(rpKey(job), getRP(player, job) + rpEarned)
 
     -- Re-apply categories + the new (harder) exp penalty for this live job.
     applyJobMods(player, job)
@@ -172,7 +178,7 @@ local function doRebirth(player)
     player:recalculateStats()
 
     player:printToPlayer(string.format('%s has been REBORN -- level 1, Job Points wiped.', jobName(job)), S)
-    player:printToPlayer(string.format('  +%d Rebirth Points earned (spend them here). Rebirths: %d.', cfg.rpPerRebirth, count), S)
+    player:printToPlayer(string.format('  +%d Rebirth Points earned (spend them here). Rebirths: %d.', rpEarned, count), S)
     if expPenalty(count) > 0 then
         player:printToPlayer(string.format('  Trial of Mastery: this job now earns %d%% less EXP. Earn your power again.', expPenalty(count)), S)
     end
@@ -281,7 +287,7 @@ showMenu = function(player)
 
     if isEligible(player, job) then
         table.insert(options, {
-            string.format('Rebirth %s  (lv1, wipe JP, +%d RP)', jobName(job), cfg.rpPerRebirth),
+            string.format('Rebirth %s  (lv1, wipe JP, +%d RP)', jobName(job), rpForCount(count + 1)),
             function(p)
                 local opts =
                 {
@@ -312,7 +318,7 @@ showMenu = function(player)
         'How Rebirth works',
         function(p)
             p:printToPlayer('[ Rebirth ] Max a job (lv99 + Job Points maxed), then rebirth it:', S)
-            p:printToPlayer(string.format('  level -> 1, Job Points WIPED, +%d Rebirth Points to spend here.', cfg.rpPerRebirth), S)
+            p:printToPlayer(string.format('  level -> 1, Job Points WIPED, +%d~%d Rebirth Points (starts at %d, +%d each rebirth, cap %d) to spend here.', cfg.rpBase, cfg.rpMax, cfg.rpBase, cfg.rpPerLevel, cfg.rpMax), S)
             p:printToPlayer(string.format('  Each rebirth stacks -%d%% EXP on THIS job (cap -%d%%) -- each grind is harder.', cfg.expPenaltyPerRebirth, cfg.expPenaltyCap), S)
             showMenu(p)
         end,
