@@ -14,7 +14,7 @@
 -- Each Prime weapon's ADDS_WEAPONSKILL mod unlocks its Prime weapon skill the
 -- moment it is equipped (wired in modules/custom/sql/prime_weapons_gear.sql):
 --   Prime Fists      -> Dragon Blow        Mpu Gandring -> Merciless Strike
---   Varga Purnikawa  -> Maru Kala          Naegling     -> Fast Blade II
+--   Varga Purnikawa  -> Maru Kala          Naegling     -> Savage Blade
 --   Prime Sword      -> Imperator          Prime Maul   -> Dagda
 --   Prime Staff      -> Oshala
 --
@@ -38,7 +38,7 @@ local WEAPONS =
     { id = 21531, name = 'Prime Fists',     ws = 'Dragon Blow',      info = 'Hand-to-Hand. STR/DEX, Acc, Att, Store TP, Double Attack.' },
     { id = 21534, name = 'Varga Purnikawa', ws = 'Maru Kala',        info = 'Hand-to-Hand. STR/DEX, Acc, Att, Store TP, Double Attack.' },
     { id = 21589, name = 'Mpu Gandring',    ws = 'Merciless Strike',  info = 'Dagger. DEX/AGI, Acc, Att, Store TP, Double Attack.' },
-    { id = 21621, name = 'Naegling',        ws = 'Fast Blade II',    info = 'Sword. STR/DEX, Acc, Att, Store TP, Double Attack.' },
+    { id = 21621, name = 'Naegling',        ws = 'Savage Blade',     info = 'Sword. STR/DEX/INT/MND, Acc/Att, MAcc/MAtt, Magic Dmg +217, Savage Blade DMG+15%.' },
     { id = 21642, name = 'Prime Sword',     ws = 'Imperator',        info = 'Sword. STR/DEX/MND, Acc, Att, Store TP, Double Attack.' },
     { id = 21999, name = 'Prime Maul',      ws = 'Dagda',            info = 'Club. STR/MND, Acc, Att, Store TP, Double Attack.' },
     { id = 22102, name = 'Prime Staff',     ws = 'Oshala',           info = 'Staff. INT/MND, Magic Acc/Att, Magic Dmg, Acc, Att.' },
