@@ -109,8 +109,11 @@ LABEL_OVERRIDE = {
 # section; philosophers_stone replaces the old marid_tusk catalyst (id 2147),
 # which a later regen handed to a different augment.
 PROGRESSION_AUGS = {
-    73: (2523, 1, 1, 1, 12, 'Exp. Point +33%'),   # peiste_skin
-    75: (942,  1, 1, 1, 12, 'Cap. Point +33%'),   # philosophers_stone
+    # base = 33 MIRRORS the live `augments` table (engine applies value=33; the
+    # site must match the game). audit_augment_page.py flags drift if the DB value
+    # ever changes -- keep these in sync with augId 73/75 in sql/augments.sql.
+    73: (2523, 33, 1, 1, 12, 'Exp. Point +33%'),   # peiste_skin
+    75: (942,  33, 1, 1, 12, 'Cap. Point +33%'),   # philosophers_stone
 }
 
 # Augments to DROP from the catalog entirely, keyed by augId. The augment still
@@ -1045,8 +1048,8 @@ def main():
         lines.append("    ---   bug (nothing attaches when the gear is equipped). Fixed in the live")
         lines.append("    ---   DB by modules/custom/sql/fix_aug_73_exp_bonus.sql, which repoints it")
         lines.append("    ---   at Mod::EXP_BONUS (382). Apply that SQL once and restart map.")
-        lines.append("    ---   base = 1 keeps the floor modest; real power scales with Augment Sage")
-        lines.append("    ---   progress. cat = 12 (Skill+) so the Sage's Skill+ affinity boosts these.")
+        lines.append("    ---   base = 33 mirrors the live augments-table value so the site matches the")
+        lines.append("    ---   game (cap 64/slot); cat = 12 (Skill+) so the Sage's Skill+ affinity boosts.")
         for aid in sorted(PROGRESSION_AUGS):
             iid, base_val, mult_val, disp_val, cat_val, label = PROGRESSION_AUGS[aid]
             id_str   = f"[{iid}]".ljust(item_width + 2)

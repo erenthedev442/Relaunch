@@ -386,8 +386,8 @@ return {
     ---   bug (nothing attaches when the gear is equipped). Fixed in the live
     ---   DB by modules/custom/sql/fix_aug_73_exp_bonus.sql, which repoints it
     ---   at Mod::EXP_BONUS (382). Apply that SQL once and restart map.
-    ---   base = 1 keeps the floor modest; real power scales with Augment Sage
-    ---   progress. cat = 12 (Skill+) so the Sage's Skill+ affinity boosts these.
-    [2523] = { augId = 73,   base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Exp. Point +33%' },  -- peiste_skin
-    [942]  = { augId = 75,   base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Cap. Point +33%' },  -- philosophers_stone
+    ---   base = 33 mirrors the live augments-table value so the site matches the
+    ---   game (cap 64/slot); cat = 12 (Skill+) so the Sage's Skill+ affinity boosts.
+    [2523] = { augId = 73,   base = 33,  mult = 1,  disp = 1,    cat = 12, label = 'Exp. Point +33%' },  -- peiste_skin
+    [942]  = { augId = 75,   base = 33,  mult = 1,  disp = 1,    cat = 12, label = 'Cap. Point +33%' },  -- philosophers_stone
 }
