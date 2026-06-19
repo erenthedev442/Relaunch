@@ -16,17 +16,20 @@ Rebirth becomes available on any job that reaches **level 99 with all 2,100 Job 
 
 ## The Altar
 
-The **Job Rebirth altar** stands at **GM Home**, alongside the Cross-Job Trainers. Speak to it on a qualifying job to rebirth — or visit any time to spend Rebirth Points you have already banked.
+<!-- DOCGEN:BEGIN id="rebirth-location" -->
+The **Job Rebirth altar** is in **RuLude Gardens**, accessible via the `!rebirth` command. Speak to it on a qualifying job to rebirth — or visit any time to spend Rebirth Points you have already banked.
+<!-- DOCGEN:END id="rebirth-location" -->
 
 ---
 
 ## How Rebirth Works
 
+<!-- DOCGEN:BEGIN id="rebirth-how-it-works" -->
 Rebirth is a three-step cycle:
 
 1. **Master the job** — Reach level 99 and spend all 2,100 Job Points.
 2. **Rebirth at the altar** — Choose **Rebirth this job** and confirm. The job resets to level 1 and its Job Points are fully wiped.
-3. **Earn Rebirth Points** — Each rebirth grants **10 Rebirth Points (RP)** for that job.
+3. **Earn Rebirth Points** — Each rebirth grants **10–20 RP**: 10 for your 1st rebirth, +2 per additional rebirth, capped at 20.
 
 !!! warning "Rebirth is permanent"
     A rebirth cannot be undone. Your level and Job Points on that job are wiped the moment you confirm. Everything you have bought with Rebirth Points — and the points themselves — are kept.
@@ -39,8 +42,9 @@ Rebirth is a three-step cycle:
 
 ### What You Gain
 
-- **+10 Rebirth Points** banked for that job.
+- **10–20 Rebirth Points** banked for that job (base 10, +2 per rebirth, cap 20).
 - Spent on **permanent** per-job stat boosts that survive every future rebirth.
+<!-- DOCGEN:END id="rebirth-how-it-works" -->
 
 ---
 
@@ -145,6 +149,7 @@ Boosts are **permanent and stacking** — they re-apply automatically every time
 
 ## The Trial of Mastery
 
+<!-- DOCGEN:BEGIN id="rebirth-exp-penalty" -->
 Each rebirth stacks a **−15% EXP penalty** on that job, capped at **−90%**. The penalty is **per-job** — it only slows the job that has been reborn, and disappears the instant you switch to anything else. You always keep at least **10%** of normal EXP, so the climb is always possible — but a many-times-reborn job is a true endgame grind.
 
 | Rebirth | EXP Penalty (that job) | Effective EXP |
@@ -155,6 +160,7 @@ Each rebirth stacks a **−15% EXP penalty** on that job, capped at **−90%**. 
 | 4th | −60% | 40% |
 | 5th | −75% | 25% |
 | 6th and beyond | **−90%** (cap) | 10% |
+<!-- DOCGEN:END id="rebirth-exp-penalty" -->
 
 ---
 
@@ -166,7 +172,7 @@ Rebirth and [Ascension](prestige.md) are **separate systems that share one menu 
 |---|---|---|
 | Currency | Ascension Points | Rebirth Points |
 | Earned by | Prestige trials at the Altar | Rebirthing a maxed job |
-| Spent at | Ascension Altar (Provenance) | Rebirth altar (GM Home) |
+| Spent at | Ascension Altar (Provenance) | Rebirth altar (RuLude Gardens, `!rebirth`) |
 | Boost menu | 42 categories | The same 42 categories |
 | Progress | Tracked independently | Independent — stacks with Ascension |
 

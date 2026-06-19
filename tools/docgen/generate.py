@@ -66,9 +66,9 @@ def main() -> int:
         cross_job_abilities,
         daily_board,
         death_penalty,
+        job_rebirth,
         differentiators,
         drop_finder,
-        dungeons,
         economy,
         game_master,
         gear_finder,
@@ -156,9 +156,6 @@ def main() -> int:
         # rotating objective pool + reset/bonus config onto
         # docs/progression/weekly-hunts.md.
         ("weekly_hunts",     weekly_hunts),
-        # dungeons reads dungeon_catalog.lua and renders the launch
-        # ladder + Infamy Vendor inventory onto progression/dungeons.md.
-        ("dungeons",         dungeons),
         # infamy_npc reads infamy_vendor_catalog.lua and renders the Infamy
         # Vendor's curated + auto-promoted stock onto gear-vendors.md. Runs
         # before item_index so the finder's infamy rows match this page.
@@ -187,6 +184,9 @@ def main() -> int:
         # death_penalty reads death_penalty.lua and fills death-penalty.md
         # (config summary table).
         ("death_penalty",    death_penalty),
+        # job_rebirth reads job_rebirth_catalog.lua and fills job-rebirth.md
+        # (NPC location, RP grant formula, EXP penalty table).
+        ("job_rebirth",      job_rebirth),
         # gm_home reads test_dummy, gil_mystery_box, and gil_warp_npc catalogs
         # and fills gm-home.md (Test Dummy tiers, Mystery Mog pool, Warpman dests).
         ("gm_home",          gm_home),
