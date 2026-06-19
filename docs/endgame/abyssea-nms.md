@@ -11,11 +11,13 @@ Abyssea is home to some of the most powerful Notorious Monsters on the server. R
 
 Abyssea is divided into three difficulty tiers based on the expansion each zone belongs to. Higher tiers demand more coordination, hit harder, and reward more.
 
+<!-- DOCGEN:BEGIN id="abyssea-tiers" -->
 | Tier | Zones | Mark Cost | Level | HP |
 |---|---|---|---|---|
 | **Visions** | Konschtat, Tahrongi, La Theine | 200 marks | 135 | 4,000,000 |
 | **Scars** | Attohwa, Misareaux, Vunkerl | 350 marks | 145 | 7,000,000 |
-| **Heroes** | Altepa, Uleguerand, Grauberg | 500 marks | 155 | 10,000,000 |
+| **Heroes** | Altepa, Grauberg | 500 marks | 155 | 10,000,000 |
+<!-- DOCGEN:END id="abyssea-tiers" -->
 
 !!! warning "These are not solo targets"
     All tiers are tuned for a full party of real players. Each NM has dramatically boosted ATK, DEF, accuracy, and evasion on top of its level-scaled stats. Coming in underprepared or alone is likely to end badly.
@@ -55,6 +57,7 @@ Each Abyssea NM has a `???` landmark somewhere in the zone. Walk up to it and ch
 
 Killing a marks-popped NM pays out **Infamy** and **Gil** to **every member of your party**. The payout scales with your party composition.
 
+<!-- DOCGEN:BEGIN id="abyssea-rewards" -->
 ### Base rewards by tier
 
 | Tier | Infamy | Gil |
@@ -102,6 +105,7 @@ These multiply together, so a full party of real players with no trusts earns **
     | Solo, no trusts | ×1.5 | 90 | 1,125,000 |
     | Party, with trusts | ×2.0 | 120 | 1,500,000 |
     | Party, no trusts | ×3.0 | 180 | 2,250,000 |
+<!-- DOCGEN:END id="abyssea-rewards" -->
 
 After the kill a system message confirms your payout and any active multiplier bonus.
 

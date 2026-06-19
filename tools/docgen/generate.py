@@ -54,6 +54,8 @@ def main() -> int:
         crafting_exchange,
         custom_spells,
         hnm,
+        abyssea_nms,
+        tournament,
         missing_spells,
         accessories_npc,
         accessory_npc,
@@ -87,7 +89,6 @@ def main() -> int:
         rates_table,
         reforge,
         settings_inject,
-        sparks_exchange,
         spells,
         status,
         weapons_npc,
@@ -138,6 +139,12 @@ def main() -> int:
         # no catalog table) and renders the land-king pairs + lower-tier HNM
         # tables onto progression/hnm.md — correcting a badly drifted page.
         ("hnm",              hnm),
+        # abyssea_nms reads AbysseaMarks.lua zoneConfig and fills the tiers
+        # table and all reward tables on endgame/abyssea-nms.md.
+        ("abyssea_nms",      abyssea_nms),
+        # tournament reads the WAVES table from Tournament.lua and fills the
+        # wave difficulty table on endgame/tournament.md.
+        ("tournament",       tournament),
         # progression_order reads rank/dungeon/GM-wave/weekly catalogs and
         # generates the Recommended progression order on docs/progression/index.md.
         ("progression_order", progression_order),
@@ -226,7 +233,6 @@ def main() -> int:
         # --- new content generators (2026-06-04): fill formerly hand-written pages ---
         ("achievements",     achievements),
         ("ah_prices",        ah_prices),
-        ("hnm",              hnm),
         ("custom_spells",    custom_spells),
         ("crafting_exchange", crafting_exchange),
         ("missing_spells",   missing_spells),
