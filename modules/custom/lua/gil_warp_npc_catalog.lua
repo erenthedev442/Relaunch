@@ -43,7 +43,7 @@ catalog.tiers =
         destinations =
         {
             { label = "San d'Oria",     zone = xi.zone.SOUTHERN_SAN_DORIA, x =  20.00, y =   0.50, z = -55.00, r = 192 },
-            { label = "Bastok Markets", zone = xi.zone.BASTOK_MARKETS,     x =  41.00, y =  -1.00, z =  -1.00, r = 192 },
+            { label = "Bastok Markets", zone = xi.zone.BASTOK_MARKETS,     x = -298.0346, y = -12.0000, z = -53.9794, r = 10 },
             { label = "Windurst Woods", zone = xi.zone.WINDURST_WOODS,     x =   0.00, y =  -5.00, z =   0.00, r = 192 },
             { label = "Jeuno (Lower)",  zone = xi.zone.LOWER_JEUNO,        x =  35.00, y =  -7.00, z =   0.00, r = 192 },
         },
