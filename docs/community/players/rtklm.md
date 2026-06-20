@@ -1,6 +1,6 @@
 # Rtklm
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 12h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 2d 13h
 
 `💪 4 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 16h |
-| Enemies defeated | 107 |
+| Time played | 22h |
+| Enemies defeated | 122 |
 | Deaths | 6 |
 
 ## Job levels
@@ -36,14 +36,14 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 8,453
-- **Marks (lifetime):** 2,613
+- **Marks (current):** 150,894
+- **Marks (lifetime):** 74,178
 - **Distinct NMs slain:** 12
-- **Total NM kills:** 509
+- **Total NM kills:** 1,160
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
+- **Mastery rank:** 5 / 5
 - **Augments crafted:** 252
 - **NM Affinities:** 0 / 13
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Augment Novice · Augment Expert · Augment Master.
+**13** unlocked — First Hunt · Ten Hunts In · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -69,6 +69,7 @@
 |---|---:|
 | Fastest 1 → 99 | 16h 55m |
 | HL Rank I → V | 23h 57m |
+| Augment Archon | 1d 19h |
 
 ---
 
@@ -77,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: db19b99fcb61 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 4bd6ad8a5ab9 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

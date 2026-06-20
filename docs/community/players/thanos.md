@@ -1,8 +1,8 @@
 # Thanos
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 3h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 3h
 
-`⭐ 10 Ascensions` `💪 4 jobs @99`
+`⭐ 11 Ascensions` `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | WAR 99 |
-| Time played | 35h |
-| Enemies defeated | 2,499 |
+| Time played | 38h |
+| Enemies defeated | 2,601 |
 | Deaths | 22 |
 
 ## Job levels
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 11,978
-- **Marks (lifetime):** 5,442
-- **Distinct NMs slain:** 12
-- **Total NM kills:** 350
+- **Marks (current):** 12,463
+- **Marks (lifetime):** 5,568
+- **Distinct NMs slain:** 13
+- **Total NM kills:** 364
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 95
-- **NM Affinities:** 4 / 13
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 123
+- **NM Affinities:** 5 / 13
 
 ## Reforge
 
@@ -57,8 +57,8 @@
 
 ## Prestige
 
-- **Total Ascensions:** 10
-- **Per-job prestige:** MNK P10
+- **Total Ascensions:** 11
+- **Per-job prestige:** MNK P11
 
 ## Collections
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**15** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · First Blood · Arena Regular · Augment Novice · Augment Expert.
+**16** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · First Blood · Arena Regular · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8f1eac5c7828 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 4b56bc4dda91 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

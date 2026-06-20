@@ -1,11 +1,11 @@
 # Byakko
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 1d 6h
 
-`💪 2 jobs @99`
+`💪 6 jobs @99`
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | WHM 99 |
-| Time played | 7h |
+| Time played | 14h |
 | Enemies defeated | 1 |
-| Deaths | 4 |
+| Deaths | 7 |
 
 ## Job levels
 
@@ -24,28 +24,28 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | **WHM** | **99** | DRG | 1 |
-| BLM | 1 | SMN | 1 |
+| **BLM** | **99** | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 1 | COR | 1 |
+| **THF** | **99** | **COR** | **99** |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| **BRD** | **99** | GEO | 1 |
+| **BRD** | **99** | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 950
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 5 / 5
+- **Marks (current):** 99,228
+- **Marks (lifetime):** 52,671
+- **Distinct NMs slain:** 14
+- **Total NM kills:** 515
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
-- **NM Affinities:** 0 / 13
+- **Augments crafted:** 1
+- **NM Affinities:** 1 / 13
 
 ## Reforge
 
@@ -59,11 +59,16 @@
 
 - **Trusts learned:** 117
 
+## Achievements
+
+**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000.
+
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 10h 58m |
+| HL Rank I → V | 27m 57s |
 
 ---
 
@@ -72,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e6bfe26296c2 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 43911a90da97 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

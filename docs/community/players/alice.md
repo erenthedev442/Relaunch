@@ -1,8 +1,8 @@
 # Alice
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 5h
 
-`💪 2 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BLU 33** |
-| Sub job | RDM 32 |
-| Time played | 8h |
-| Enemies defeated | 496 |
+| Main job | **BST 99** |
+| Sub job | BLU 99 |
+| Time played | 10h |
+| Enemies defeated | 620 |
 | Deaths | 5 |
 
 ## Job levels
@@ -25,7 +25,7 @@
 | MNK | 1 | NIN | 34 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 32 | BLU | 33 |
+| **RDM** | **99** | **BLU** | **99** |
 | THF | 48 | COR | 1 |
 | PLD | 1 | **PUP** | **99** |
 | DRK | 1 | DNC | 72 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 1,317
+- **Marks (current):** 1,717
 - **Marks (lifetime):** 157
 - **Distinct NMs slain:** 6
 - **Total NM kills:** 16
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 49486ac63fa7 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 5bb404fd0d76 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

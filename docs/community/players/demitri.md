@@ -1,6 +1,6 @@
 # Demitri
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-13 · Character age 6d 14h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-13 · Character age 6d 15h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 19/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7a907b45bb91 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: aeffcbdfbae3 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

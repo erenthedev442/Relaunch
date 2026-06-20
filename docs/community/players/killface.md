@@ -1,6 +1,6 @@
 # Killface
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 2d 23h
 
 `💪 2 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 10h |
-| Enemies defeated | 294 |
-| Deaths | 4 |
+| Time played | 15h |
+| Enemies defeated | 479 |
+| Deaths | 10 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 4,100
-- **Marks (lifetime):** 1,519
+- **Marks (current):** 2,320
+- **Marks (lifetime):** 4,611
 - **Distinct NMs slain:** 7
-- **Total NM kills:** 257
+- **Total NM kills:** 517
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 32aae5fe7413 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: c30dacbf6470 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

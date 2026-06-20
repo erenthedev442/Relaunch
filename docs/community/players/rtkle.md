@@ -1,6 +1,6 @@
 # Rtkle
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 13h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 2d 13h
 
 `💪 4 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 20h |
-| Enemies defeated | 106 |
+| Time played | 26h |
+| Enemies defeated | 134 |
 | Deaths | 5 |
 
 ## Job levels
@@ -36,23 +36,23 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,423
-- **Marks (lifetime):** 2,388
-- **Distinct NMs slain:** 11
-- **Total NM kills:** 506
+- **Marks (current):** 144,479
+- **Marks (lifetime):** 73,953
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 1,157
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 252
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 267
+- **NM Affinities:** 7 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 0 | 0 |
-| Relic | 0 | 0 |
+| Relic | 1,500 | 0 |
 | Empyrean | 0 | 0 |
 
 ## Collections
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Augment Novice · Augment Expert · Augment Master.
+**13** unlocked — First Hunt · Ten Hunts In · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -69,6 +69,7 @@
 |---|---:|
 | Fastest 1 → 99 | 17h 10m |
 | HL Rank I → V | 23h 57m |
+| Augment Archon | 1d 20h |
 
 ---
 
@@ -77,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f06746f174f8 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 255bf0b7a999 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Velvet
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 6d 20h
 
-`⭐ 5 Ascensions` `💪 6 jobs @99`
+`⭐ 5 Ascensions` `💪 7 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | NIN 99 |
-| Time played | 42h |
-| Enemies defeated | 2,256 |
-| Deaths | 12 |
+| Main job | **COR 99** |
+| Sub job | RDM 99 |
+| Time played | 44h |
+| Enemies defeated | 2,494 |
+| Deaths | 13 |
 
 ## Job levels
 
@@ -26,25 +26,25 @@
 | WHM | 90 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
-| **THF** | **99** | COR | 1 |
+| **THF** | **99** | **COR** | **99** |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 65 |
 | BST | 1 | SCH | 84 |
 | BRD | 31 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| RNG | 24 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,728
+- **Marks (current):** 11,068
 - **Marks (lifetime):** 8,464
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 260
+- **Total NM kills:** 308
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 270
+- **Augments crafted:** 271
 - **NM Affinities:** 11 / 13
 
 ## Reforge
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert · Augment Master.
+**12** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8bf67141408a -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 290123cb912d -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

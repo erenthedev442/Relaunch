@@ -1,8 +1,8 @@
 # Miss
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-19 · Character age 4d 8h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-19 · Character age 4d 9h
 
-`💪 15 jobs @99`
+`💪 20 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **SAM 99** |
-| Sub job | BST 1 |
-| Time played | 48h |
+| Main job | **NIN 99** |
+| Sub job | SCH 99 |
+| Time played | 51h |
 | Enemies defeated | 1,781 |
 | Deaths | 23 |
 
@@ -22,14 +22,14 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| **MNK** | **99** | NIN | 87 |
+| **MNK** | **99** | **NIN** | **99** |
 | **WHM** | **99** | **DRG** | **99** |
 | **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
-| **THF** | **99** | COR | 1 |
+| **THF** | **99** | **COR** | **99** |
 | **PLD** | **99** | **PUP** | **99** |
-| **DRK** | **99** | DNC | 1 |
-| BST | 1 | SCH | 1 |
+| **DRK** | **99** | **DNC** | **99** |
+| **BST** | **99** | **SCH** | **99** |
 | **BRD** | **99** | GEO | 1 |
 | **RNG** | **99** | RUN | 1 |
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 259
+- **Augments crafted:** 268
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7b4684d510db -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: ad6717196a0e -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Ken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-19 · Character age 4d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 3h
 
-`💪 19 jobs @99`
+`💪 20 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **NIN 99** |
-| Sub job | GEO 60 |
-| Time played | 41h |
+| Main job | **BRD 99** |
+| Sub job | GEO 95 |
+| Time played | 46h |
 | Enemies defeated | 101 |
 | Deaths | 8 |
 
@@ -30,16 +30,16 @@
 | **PLD** | **99** | **PUP** | **99** |
 | **DRK** | **99** | **DNC** | **99** |
 | **BST** | **99** | **SCH** | **99** |
-| BRD | 24 | GEO | 60 |
+| **BRD** | **99** | GEO | 95 |
 | RNG | 85 | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 94,164
-- **Marks (lifetime):** 33,245
+- **Marks (current):** 238,999
+- **Marks (lifetime):** 104,745
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 1,091
+- **Total NM kills:** 1,741
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**15** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Wave Legend · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**16** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Mark of 100,000 · Wave Rider · Wave Fighter · Wave Legend · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 255bc8511ba7 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: a9662fb5ac0c -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -2,7 +2,7 @@
 
 **Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-19 · Character age 4d 8h
 
-`💪 17 jobs @99`
+`💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | COR 1 |
-| Time played | 48h |
+| Main job | **BLU 99** |
+| Sub job | GEO 99 |
+| Time played | 50h |
 | Enemies defeated | 137 |
 | Deaths | 9 |
 
@@ -26,12 +26,12 @@
 | **WHM** | **99** | **DRG** | **99** |
 | **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
-| **THF** | **99** | COR | 1 |
+| **THF** | **99** | **COR** | **99** |
 | **PLD** | **99** | **PUP** | **99** |
-| **DRK** | **99** | DNC | 1 |
-| **BST** | **99** | SCH | 1 |
-| **BRD** | **99** | GEO | 1 |
-| **RNG** | **99** | RUN | 1 |
+| **DRK** | **99** | **DNC** | **99** |
+| **BST** | **99** | **SCH** | **99** |
+| **BRD** | **99** | **GEO** | **99** |
+| **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5a1e52efb7d1 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: b15711c226c8 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

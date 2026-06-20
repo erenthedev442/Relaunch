@@ -2,7 +2,7 @@
 
 **San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 16h
 
-`⭐ 1 Ascension` `💪 21 jobs @99`
+`⭐ 1 Ascension` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **GEO 99** |
-| Sub job | NIN 99 |
-| Time played | 51h |
+| Main job | **BLM 99** |
+| Sub job | RDM 99 |
+| Time played | 55h |
 | Enemies defeated | 2,048 |
 | Deaths | 32 |
 
@@ -31,12 +31,12 @@
 | **DRK** | **99** | **DNC** | **99** |
 | **BST** | **99** | **SCH** | **99** |
 | **BRD** | **99** | **GEO** | **99** |
-| **RNG** | **99** | RUN | 1 |
+| **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 28,421
+- **Marks (current):** 20,301
 - **Marks (lifetime):** 26,477
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 479
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 307
+- **Augments crafted:** 332
 - **NM Affinities:** 12 / 13
 
 ## Reforge
@@ -64,7 +64,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|---:|
 | AF | 1,000 | 0 |
 | Relic | 1,500 | 0 |
-| Empyrean | 9,990 | 15,240 |
+| Empyrean | 4,740 | 15,240 |
 
 ## Prestige
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 05e5bb25aca5 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 407c5f669636 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

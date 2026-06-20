@@ -1,18 +1,18 @@
 # Lakshmi
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 65/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 76/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 65** |
-| Sub job | DNC 60 |
-| Time played | 12h |
-| Enemies defeated | 272 |
+| Main job | **RDM 76** |
+| Sub job | DNC 67 |
+| Time played | 13h |
+| Enemies defeated | 355 |
 | Deaths | 3 |
 
 ## Job levels
@@ -23,10 +23,10 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 65 | BLU | 1 |
+| RDM | 76 | BLU | 1 |
 | THF | 12 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 60 |
+| DRK | 1 | DNC | 67 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,051
+- **Marks (current):** 2,101
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -42,7 +42,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 8
+- **Augments crafted:** 12
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6bf0ffc60e91 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 59f64458c69d -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

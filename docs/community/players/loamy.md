@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **PUP 99** |
-| Sub job | DNC 99 |
-| Time played | 48h |
-| Enemies defeated | 1,004 |
+| Main job | **RNG 15** |
+| Sub job | DNC 15 |
+| Time played | 51h |
+| Enemies defeated | 1,073 |
 | Deaths | 7 |
 
 ## Job levels
@@ -31,12 +31,12 @@
 | DRK | 1 | **DNC** | **99** |
 | BST | 1 | **SCH** | **99** |
 | **BRD** | **99** | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| RNG | 15 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 11,972
+- **Marks (current):** 11,472
 - **Marks (lifetime):** 3,545
 - **Distinct NMs slain:** 4
 - **Total NM kills:** 697
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 54
+- **Augments crafted:** 59
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 085c358ba7ee -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 9a93f99024ce -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

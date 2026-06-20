@@ -1,8 +1,8 @@
 # Lyvia
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 7h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 8h
 
-`💪 2 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **BLM 99** |
-| Sub job | RDM 99 |
-| Time played | 19h |
-| Enemies defeated | 559 |
-| Deaths | 14 |
+| Sub job | BLU 99 |
+| Time played | 27h |
+| Enemies defeated | 600 |
+| Deaths | 17 |
 
 ## Job levels
 
@@ -23,9 +23,9 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 1 | DRG | 1 |
+| **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
-| **RDM** | **99** | BLU | 1 |
+| **RDM** | **99** | **BLU** | **99** |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,884
-- **Marks (lifetime):** 4,409
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 880
+- **Marks (current):** 6,722
+- **Marks (lifetime):** 4,561
+- **Distinct NMs slain:** 8
+- **Total NM kills:** 905
 
 ## Guild standing
 
@@ -54,8 +54,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 56
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 132
 - **NM Affinities:** 5 / 13
 
 ## Reforge
@@ -63,7 +63,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 115 | 3,365 |
-| Relic | 100 | 2,100 |
+| Relic | 0 | 5,250 |
 | Empyrean | 2,125 | 125 |
 
 ## Collections
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 80444dcba7d5 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: e411dfb34950 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

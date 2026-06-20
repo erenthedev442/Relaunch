@@ -1,8 +1,8 @@
 # Herdofturtles
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 7d
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 1h
 
-`⭐ 50 Ascensions` `💪 7 jobs @99`
+`⭐ 64 Ascensions` `💪 12 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RUN 99** |
+| Main job | **NIN 99** |
 | Sub job | BLU 99 |
-| Time played | 47h |
-| Enemies defeated | 3,725 |
+| Time played | 57h |
+| Enemies defeated | 6,720 |
 | Deaths | 28 |
 
 ## Job levels
@@ -22,24 +22,24 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 83 | **SAM** | **99** |
-| MNK | 1 | NIN | 77 |
-| WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
+| **MNK** | **99** | **NIN** | **99** |
+| **WHM** | **99** | DRG | 1 |
+| **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
 | THF | 52 | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | DRK | 1 | DNC | 94 |
 | **BST** | **99** | SCH | 1 |
-| BRD | 1 | **GEO** | **99** |
+| **BRD** | **99** | **GEO** | **99** |
 | RNG | 1 | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 9,544
+- **Marks (current):** 8,489
 - **Marks (lifetime):** 5,406
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 374
+- **Total NM kills:** 515
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 310
+- **Augments crafted:** 337
 - **NM Affinities:** 10 / 13
 
 ## Reforge
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 50
-- **Per-job prestige:** RDM P14 · PLD P4 · RUN P32
+- **Total Ascensions:** 64
+- **Per-job prestige:** RDM P14 · PLD P4 · NIN P1 · RUN P45
 
 ## Collections
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 114babcaf341 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 7a13cee73b63 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

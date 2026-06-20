@@ -1,6 +1,6 @@
 # Shadowsfall
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 22h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 1d 23h
 
 `💪 2 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
 | Time played | 4h |
-| Enemies defeated | 103 |
+| Enemies defeated | 107 |
 | Deaths | 0 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 5,921
-- **Marks (lifetime):** 590
+- **Marks (current):** 5,941
+- **Marks (lifetime):** 610
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 118
+- **Total NM kills:** 122
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5ffb10c559a4 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 336e45128006 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

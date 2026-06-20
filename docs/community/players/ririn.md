@@ -1,8 +1,8 @@
 # Ririn
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-19 · Character age 4d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 4d 7h
 
-`💪 2 jobs @99`
+`⭐ 8 Ascensions` `💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | NIN 99 |
-| Time played | 17h |
-| Enemies defeated | 1,564 |
-| Deaths | 14 |
+| Time played | 24h |
+| Enemies defeated | 1,761 |
+| Deaths | 20 |
 
 ## Job levels
 
@@ -25,7 +25,7 @@
 | MNK | 1 | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 9 |
+| **RDM** | **99** | BLU | 9 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,433
+- **Marks (current):** 1,853
 - **Marks (lifetime):** 1,356
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 113
+- **Total NM kills:** 213
 
 ## Guild standing
 
@@ -54,8 +54,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
-- **Augments crafted:** 144
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 284
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -64,7 +64,12 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|---:|
 | AF | 790 | 5,040 |
 | Relic | 0 | 5,250 |
-| Empyrean | 1,500 | 1,500 |
+| Empyrean | 90 | 5,340 |
+
+## Prestige
+
+- **Total Ascensions:** 8
+- **Per-job prestige:** THF P8
 
 ## Collections
 
@@ -72,7 +77,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Star-Slayer · Augment Novice · Augment Expert.
+**13** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -80,6 +85,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|
 | Fastest 1 → 99 | 1d 13h |
 | HL Rank I → V | 4h 20m |
+| Augment Archon | 3d 20h |
 
 ---
 
@@ -88,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: acd13b564d3d -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: fd8c4f634567 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

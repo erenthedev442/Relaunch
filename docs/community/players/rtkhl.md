@@ -1,6 +1,6 @@
 # Rtkhl
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-19 · Character age 4d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 3h
 
 `💪 4 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 23h |
-| Enemies defeated | 213 |
-| Deaths | 5 |
+| Time played | 30h |
+| Enemies defeated | 264 |
+| Deaths | 6 |
 
 ## Job levels
 
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,289
-- **Marks (lifetime):** 2,527
+- **Marks (current):** 146,485
+- **Marks (lifetime):** 73,982
 - **Distinct NMs slain:** 12
-- **Total NM kills:** 507
+- **Total NM kills:** 1,157
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 252
-- **NM Affinities:** 0 / 13
+- **Augments crafted:** 292
+- **NM Affinities:** 8 / 13
 
 ## Reforge
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Augment Novice · Augment Expert · Augment Master.
+**13** unlocked — First Hunt · Ten Hunts In · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 755280d64d6f -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: e7009f20efa4 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

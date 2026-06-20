@@ -1,6 +1,6 @@
 # Corvinos
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 5d 4h
 
 `⭐ 1 Ascension` `💪 8 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | WAR 99 |
-| Time played | 17h |
-| Enemies defeated | 2,034 |
+| Main job | **WAR 99** |
+| Sub job | NIN 99 |
+| Time played | 20h |
+| Enemies defeated | 2,790 |
 | Deaths | 8 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,933
-- **Marks (lifetime):** 1,530
+- **Marks (current):** 2,176
+- **Marks (lifetime):** 1,620
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 154
+- **Total NM kills:** 203
 
 ## Guild standing
 
@@ -55,16 +55,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 70
+- **Augments crafted:** 81
 - **NM Affinities:** 8 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 2,245 | 195 |
-| Relic | 15 | 1,065 |
-| Empyrean | 1,005 | 1,105 |
+| AF | 95 | 1,095 |
+| Relic | 15 | 2,115 |
+| Empyrean | 105 | 2,305 |
 
 ## Prestige
 
@@ -73,7 +73,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 120
 
 ## Achievements
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c4a2930e3ca0 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 24ec4a1f733e -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

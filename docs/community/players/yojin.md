@@ -1,8 +1,8 @@
 # Yojin
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 2h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 3h
 
-`⭐ 2 Ascensions` `💪 3 jobs @99`
+`⭐ 3 Ascensions` `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,24 +11,24 @@
 
 | | |
 |---|---|
-| Main job | **WAR 99** |
-| Sub job | SAM 99 |
-| Time played | 17h |
-| Enemies defeated | 619 |
-| Deaths | 12 |
+| Main job | **DRK 71** |
+| Sub job | BLM 1 |
+| Time played | 21h |
+| Enemies defeated | 938 |
+| Deaths | 14 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| MNK | 1 | **NIN** | **99** |
+| MNK | 31 | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 92 | COR | 1 |
+| **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| DRK | 71 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,29 +36,40 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 37,727
+- **Marks (current):** 39,982
 - **Marks (lifetime):** 476
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 49
+- **Total NM kills:** 69
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Journeyman | 1,250 | 3,750 to Veteran |
+| League Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 36
-- **NM Affinities:** 12 / 13
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 250
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 100 | 0 |
+| AF | 200 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 401 | 401 |
 
 ## Prestige
 
-- **Total Ascensions:** 2
-- **Per-job prestige:** WAR P2
+- **Total Ascensions:** 3
+- **Per-job prestige:** WAR P3
 
 ## Collections
 
@@ -66,7 +77,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · First Ascension · X Marks the Spot · Star-Slayer · Augment Novice.
+**14** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · First Ascension · X Marks the Spot · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -74,6 +85,7 @@
 |---|---:|
 | Fastest 1 → 99 | 11h 21m |
 | HL Rank I → V | 2d 19h |
+| Augment Archon | 5d 19h |
 
 ---
 
@@ -82,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a852d3d3fc8e -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: ce0662e0ab6f -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

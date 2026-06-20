@@ -1,8 +1,8 @@
 # Kirin
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 8h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 1d 9h
 
-`💪 2 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,17 +12,17 @@
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | WAR 99 |
-| Time played | 14h |
-| Enemies defeated | 1,157 |
-| Deaths | 9 |
+| Sub job | MNK 99 |
+| Time played | 23h |
+| Enemies defeated | 2,136 |
+| Deaths | 10 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 1 |
-| MNK | 1 | NIN | 1 |
+| **WAR** | **99** | **SAM** | **99** |
+| **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,086
-- **Marks (lifetime):** 609
-- **Distinct NMs slain:** 12
-- **Total NM kills:** 17
+- **Marks (current):** 91,364
+- **Marks (lifetime):** 53,500
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 534
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 15
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 54
+- **NM Affinities:** 1 / 13
 
 ## Reforge
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**6** unlocked — First Hunt · Ten Hunts In · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice.
+**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5212b2795f7b -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: e917c731016b -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Duffaluffagus
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 7h
 
 `💪 17 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | SAM 99 |
-| Time played | 16h |
-| Enemies defeated | 460 |
-| Deaths | 6 |
+| Sub job | BRD 99 |
+| Time played | 19h |
+| Enemies defeated | 512 |
+| Deaths | 10 |
 
 ## Job levels
 
@@ -36,24 +36,24 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,796
-- **Marks (lifetime):** 643
+- **Marks (current):** 246
+- **Marks (lifetime):** 863
 - **Distinct NMs slain:** 12
-- **Total NM kills:** 73
+- **Total NM kills:** 97
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
-- **Augments crafted:** 196
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 285
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 10 | 60 |
+| AF | 160 | 210 |
 | Relic | 150 | 150 |
-| Empyrean | 200 | 700 |
+| Empyrean | 1,350 | 2,500 |
 
 ## Collections
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**10** unlocked — First Hunt · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert.
+**12** unlocked — First Hunt · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · Star-Slayer · Devourer of the Devourer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -69,6 +69,7 @@
 |---|---:|
 | Fastest 1 → 99 | 20h 6m |
 | HL Rank I → V | 3d 15h |
+| Augment Archon | 4d 14h |
 
 ---
 
@@ -77,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: db867692e4fb -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 709a048bd676 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Moss
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-19 · Character age 4d 6h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-19 · Character age 4d 7h
 
-`💪 16 jobs @99`
+`💪 20 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **BLM 99** |
-| Sub job | DRK 76 |
-| Time played | 48h |
-| Enemies defeated | 2,022 |
+| Sub job | COR 99 |
+| Time played | 50h |
+| Enemies defeated | 3,047 |
 | Deaths | 17 |
 
 ## Job levels
@@ -26,10 +26,10 @@
 | **WHM** | **99** | **DRG** | **99** |
 | **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
-| **THF** | **99** | COR | 1 |
+| **THF** | **99** | **COR** | **99** |
 | **PLD** | **99** | **PUP** | **99** |
-| DRK | 76 | **DNC** | **99** |
-| BST | 1 | SCH | 1 |
+| **DRK** | **99** | **DNC** | **99** |
+| **BST** | **99** | **SCH** | **99** |
 | **BRD** | **99** | GEO | 1 |
 | **RNG** | **99** | RUN | 1 |
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 280
+- **Augments crafted:** 281
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4197e160e731 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 5d8a981a667b -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

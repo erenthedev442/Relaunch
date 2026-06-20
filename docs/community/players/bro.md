@@ -1,6 +1,6 @@
 # Bro
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 6d 21h
 
 `⭐ 11 Ascensions` `💪 22 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BLU 99** |
 | Sub job | NIN 99 |
-| Time played | 90h |
-| Enemies defeated | 1,984 |
-| Deaths | 47 |
+| Time played | 96h |
+| Enemies defeated | 2,164 |
+| Deaths | 48 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 617
-- **Marks (lifetime):** 5,205
+- **Marks (current):** 2,237
+- **Marks (lifetime):** 5,676
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 118
+- **Total NM kills:** 133
 
 ## Augment Sage
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 632448912bc2 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 25160a3ed6f7 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

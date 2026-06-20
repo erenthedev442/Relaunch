@@ -1,8 +1,8 @@
 # Daiis
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 17h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 18h
 
-`💪 4 jobs @99`
+`⭐ 1 Ascension` `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **SAM 99** |
 | Sub job | WAR 99 |
-| Time played | 45h |
-| Enemies defeated | 1,388 |
+| Time played | 49h |
+| Enemies defeated | 1,395 |
 | Deaths | 1 |
 
 ## Job levels
@@ -66,13 +66,18 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
+## Prestige
+
+- **Total Ascensions:** 1
+- **Per-job prestige:** SAM P1
+
 ## Collections
 
 - **Trusts learned:** 119
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
+**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -88,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 797a8358a131 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 9daf30aae51c -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

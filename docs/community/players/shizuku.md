@@ -1,6 +1,6 @@
 # Shizuku
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-19 · Character age 18h 46m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-19 · Character age 19h 23m
 
 `💪 2 jobs @99`
 
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | BLU 60 |
-| Time played | 7h |
+| Main job | **DNC 18** |
+| Sub job | BLU 18 |
+| Time played | 10h |
 | Enemies defeated | 19 |
 | Deaths | 0 |
 
@@ -28,7 +28,7 @@
 | **RDM** | **99** | BLU | 60 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| DRK | 1 | DNC | 18 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 550
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Augments crafted:** 16
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -57,7 +57,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 119
+
+## Achievements
+
+**1** unlocked — Augment Novice.
 
 ## Speed records
 
@@ -70,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 824587984ac3 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 456b901b122e -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

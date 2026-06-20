@@ -1,6 +1,6 @@
 # Langy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 11h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 12h
 
 `💪 10 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | WAR 99 |
-| Time played | 23h |
-| Enemies defeated | 2,221 |
+| Sub job | THF 67 |
+| Time played | 27h |
+| Enemies defeated | 2,243 |
 | Deaths | 4 |
 
 ## Job levels
@@ -26,7 +26,7 @@
 | **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
-| THF | 65 | COR | 1 |
+| THF | 67 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
 | BST | 1 | **SCH** | **99** |
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 30
-- **Marks (lifetime):** 7,416
+- **Marks (current):** 50
+- **Marks (lifetime):** 7,436
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 1,289
+- **Total NM kills:** 1,293
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 255
+- **Augments crafted:** 274
 - **NM Affinities:** 9 / 13
 
 ## Reforge
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b009ba45f20e -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: b04bc211e4d9 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

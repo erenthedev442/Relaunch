@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | THF 99 |
-| Time played | 64h |
-| Enemies defeated | 6,219 |
+| Sub job | WAR 99 |
+| Time played | 66h |
+| Enemies defeated | 6,233 |
 | Deaths | 12 |
 
 ## Job levels
@@ -39,7 +39,7 @@
 - **Marks (current):** 6,556
 - **Marks (lifetime):** 5,201
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 271
+- **Total NM kills:** 273
 
 ## Guild standing
 
@@ -64,7 +64,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|---:|
 | AF | 455 | 455 |
 | Relic | 405 | 405 |
-| Empyrean | 515 | 515 |
+| Empyrean | 815 | 815 |
 
 ## Prestige
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: af5080bdfb78 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: d6f4a2ef03a5 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

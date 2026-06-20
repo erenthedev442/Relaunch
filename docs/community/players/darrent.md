@@ -1,8 +1,8 @@
 # Darrent
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 5d 8h
 
-`💪 5 jobs @99`
+`💪 6 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BLU 13** |
-| Sub job | WAR 13 |
-| Time played | 35h |
-| Enemies defeated | 1,108 |
-| Deaths | 9 |
+| Main job | **SCH 99** |
+| Sub job | BLM 99 |
+| Time played | 37h |
+| Enemies defeated | 1,193 |
+| Deaths | 10 |
 
 ## Job levels
 
@@ -25,21 +25,21 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
-| RDM | 1 | BLU | 13 |
+| RDM | 1 | BLU | 58 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
-| BST | 1 | SCH | 88 |
+| BST | 1 | **SCH** | **99** |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,072
+- **Marks (current):** 527
 - **Marks (lifetime):** 1,965
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 97
+- **Total NM kills:** 98
 
 ## Guild standing
 
@@ -47,7 +47,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Veteran | 5,000 | 20,000 to Master |
+| AF Hunters' Guild | Veteran | 7,500 | 17,500 to Master |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | League Hunters' Guild | Journeyman | 4,500 | 500 to Veteran |
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 276
+- **Augments crafted:** 283
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -64,7 +64,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|---:|
 | AF | 1,365 | 65 |
 | Relic | 2,350 | 0 |
-| Empyrean | 325 | 1,375 |
+| Empyrean | 475 | 1,525 |
 
 ## Collections
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 89da10e7823b -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: daf4d96a0aea -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

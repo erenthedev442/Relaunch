@@ -1,6 +1,6 @@
 # Rayun
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-16 · Character age 4d 3h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-16 · Character age 4d 4h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 77/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f9f3c0226932 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 0daa51b122ef -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

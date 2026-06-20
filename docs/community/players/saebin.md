@@ -5,17 +5,17 @@
 `💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
 | Main job | **SAM 99** |
-| Sub job | DRG 79 |
+| Sub job | DRG 83 |
 | Time played | 2h |
-| Enemies defeated | 50 |
-| Deaths | 0 |
+| Enemies defeated | 57 |
+| Deaths | 1 |
 
 ## Job levels
 
@@ -23,7 +23,7 @@
 |---|---:|---|---:|
 | WAR | 1 | **SAM** | **99** |
 | MNK | 1 | NIN | 1 |
-| WHM | 1 | DRG | 79 |
+| WHM | 1 | DRG | 83 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 25
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 3 / 5
+- **Marks (current):** 829
+- **Marks (lifetime):** 73
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 7
 
 ## Augment Sage
 
@@ -59,6 +59,10 @@
 
 - **Trusts learned:** 117
 
+## Achievements
+
+**3** unlocked — First Hunt · Tier II Unlocked · Tier III Unlocked.
+
 ## Speed records
 
 | Record | Time |
@@ -72,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 633b9ce4035a -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 0c377e6fba07 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

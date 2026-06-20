@@ -1,8 +1,8 @@
 # Miyasanima
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 14h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 5d 15h
 
-`💪 12 jobs @99`
+`💪 13 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BLM 99** |
-| Sub job | RDM 99 |
-| Time played | 32h |
-| Enemies defeated | 3,994 |
+| Main job | **THF 99** |
+| Sub job | DNC 99 |
+| Time played | 34h |
+| Enemies defeated | 4,220 |
 | Deaths | 17 |
 
 ## Job levels
@@ -31,15 +31,15 @@
 | DRK | 1 | **DNC** | **99** |
 | BST | 1 | **SCH** | **99** |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | **RUN** | **99** |
+| **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,465
-- **Marks (lifetime):** 828
+- **Marks (current):** 7,382
+- **Marks (lifetime):** 1,188
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 43
+- **Total NM kills:** 55
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 78
+- **Augments crafted:** 91
 - **NM Affinities:** 6 / 13
 
 ## Reforge
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice · Augment Expert.
+**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3580f4d01c07 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 969418f9f99d -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

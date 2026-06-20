@@ -1,18 +1,18 @@
 # Jin
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 3d 12h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 3d 13h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 66/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 68/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RUN 66** |
-| Sub job | DNC 52 |
+| Main job | **RUN 68** |
+| Sub job | DNC 54 |
 | Time played | 3h |
-| Enemies defeated | 100 |
+| Enemies defeated | 113 |
 | Deaths | 0 |
 
 ## Job levels
@@ -26,15 +26,15 @@
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 52 |
+| DRK | 1 | DNC | 54 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 66 |
+| RNG | 1 | RUN | 68 |
 
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,600
+- **Marks (current):** 2,850
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a7133340d5e9 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 25e0a08c91a5 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

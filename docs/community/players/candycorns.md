@@ -1,6 +1,6 @@
 # Candycorns
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 7h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 6d 7h
 
 `💪 8 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | THF 99 |
-| Time played | 46h |
-| Enemies defeated | 2,209 |
-| Deaths | 9 |
+| Main job | **WAR 99** |
+| Sub job | SAM 99 |
+| Time played | 53h |
+| Enemies defeated | 2,642 |
+| Deaths | 14 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,259
-- **Marks (lifetime):** 517
-- **Distinct NMs slain:** 13
-- **Total NM kills:** 41
+- **Marks (current):** 5,099
+- **Marks (lifetime):** 1,052
+- **Distinct NMs slain:** 14
+- **Total NM kills:** 62
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 273
+- **Augments crafted:** 287
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice · Augment Expert · Augment Master.
+**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c833230863c9 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 83d90fc04a7d -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

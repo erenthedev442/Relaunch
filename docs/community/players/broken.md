@@ -1,6 +1,6 @@
 # Broken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-19 · Character age 3d 12h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 3d 13h
 
 `💪 14 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **DNC 80** |
-| Sub job | RUN 39 |
-| Time played | 25h |
-| Enemies defeated | 162 |
+| Main job | **MNK 99** |
+| Sub job | RDM 99 |
+| Time played | 32h |
+| Enemies defeated | 532 |
 | Deaths | 3 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 98,972
-- **Marks (lifetime):** 32,828
+- **Marks (current):** 244,907
+- **Marks (lifetime):** 104,328
 - **Distinct NMs slain:** 7
-- **Total NM kills:** 1,006
+- **Total NM kills:** 1,656
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 269
+- **Augments crafted:** 270
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**11** unlocked — Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**12** unlocked — Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Mark of 100,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bf7d9fa8212f -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 2bd05ad90146 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

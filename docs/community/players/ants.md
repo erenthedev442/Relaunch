@@ -1,8 +1,8 @@
 # Ants
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 22h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 5d 23h
 
-`💪 2 jobs @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,17 +12,17 @@
 | | |
 |---|---|
 | Main job | **BRD 99** |
-| Sub job | NIN 89 |
-| Time played | 7h |
-| Enemies defeated | 282 |
-| Deaths | 10 |
+| Sub job | NIN 99 |
+| Time played | 10h |
+| Enemies defeated | 345 |
+| Deaths | 13 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 89 |
+| MNK | 1 | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,678
-- **Marks (lifetime):** 12
-- **Distinct NMs slain:** 1
-- **Total NM kills:** 1
+- **Marks (current):** 1,606
+- **Marks (lifetime):** 313
+- **Distinct NMs slain:** 13
+- **Total NM kills:** 15
 
 ## Augment Sage
 
 - **Mastery rank:** 2 / 5
-- **Augments crafted:** 29
-- **NM Affinities:** 0 / 13
+- **Augments crafted:** 43
+- **NM Affinities:** 10 / 13
 
 ## Reforge
 
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**3** unlocked — First Hunt · Tier II Unlocked · Augment Novice.
+**7** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 12h 33m |
+| HL Rank I → V | 5d 2h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 34a73771b5e1 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: bb7ad0b3626e -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

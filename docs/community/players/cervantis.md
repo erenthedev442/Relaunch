@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | SAM 99 |
-| Time played | 39h |
-| Enemies defeated | 3,942 |
+| Time played | 43h |
+| Enemies defeated | 3,980 |
 | Deaths | 54 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,809
-- **Marks (lifetime):** 2,971
+- **Marks (current):** 839
+- **Marks (lifetime):** 5,346
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 222
+- **Total NM kills:** 244
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 250
+- **Augments crafted:** 263
 - **NM Affinities:** 2 / 13
 
 ## Reforge
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f2aefd5dacaf -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 35a437b7e6a3 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

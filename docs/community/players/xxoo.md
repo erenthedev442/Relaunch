@@ -1,21 +1,21 @@
 # Xxoo
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-19 · Character age 1d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-20 · Character age 1d 1h
 
 `💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | BLU 23 |
-| Time played | 5h |
-| Enemies defeated | 87 |
-| Deaths | 14 |
+| Sub job | BLU 67 |
+| Time played | 7h |
+| Enemies defeated | 89 |
+| Deaths | 17 |
 
 ## Job levels
 
@@ -25,7 +25,7 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 23 |
+| RDM | 1 | BLU | 67 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
@@ -35,8 +35,8 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 513
+- **Rank:** 2 / 5
+- **Marks (current):** 1,751
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Augments crafted:** 11
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -57,7 +57,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 116
+
+## Achievements
+
+**1** unlocked — Augment Novice.
 
 ## Speed records
 
@@ -70,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b5efac60f6ca -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 55400decf839 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

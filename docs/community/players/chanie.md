@@ -1,8 +1,8 @@
 # Chanie
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-19 · Character age 17h 31m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-19 · Character age 18h 9m
 
-`💪 2 jobs @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **THF 72** |
-| Sub job | DNC 52 |
-| Time played | 6h |
-| Enemies defeated | 419 |
+| Main job | **BLM 55** |
+| Sub job | RDM 41 |
+| Time played | 9h |
+| Enemies defeated | 641 |
 | Deaths | 0 |
 
 ## Job levels
@@ -24,11 +24,11 @@
 | **WAR** | **99** | SAM | 1 |
 | **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
-| THF | 72 | COR | 1 |
+| BLM | 55 | SMN | 1 |
+| RDM | 41 | BLU | 1 |
+| **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 52 |
+| DRK | 1 | DNC | 81 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: abc8627442b0 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 5c7c2482d47d -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Speedbump
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-19 · Character age 3d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d
 
 `💪 5 jobs @99`
 
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **WHM 1** |
-| Sub job | SCH 1 |
-| Time played | 19h |
+| Main job | **RDM 99** |
+| Sub job | SCH 93 |
+| Time played | 24h |
 | Enemies defeated | 4 |
 | Deaths | 1 |
 
@@ -29,22 +29,22 @@
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 1 |
+| BST | 1 | SCH | 93 |
 | BRD | 1 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 25,093
-- **Marks (lifetime):** 3,942
-- **Distinct NMs slain:** 6
-- **Total NM kills:** 525
+- **Marks (current):** 161,818
+- **Marks (lifetime):** 75,442
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 1,175
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 255
+- **Augments crafted:** 269
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 1d 12h |
+| HL Rank I → V | 2d 1h |
 | Augment Archon | 1d 15h |
 
 ---
@@ -77,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0162c6f665f6 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: c3aed181f1bb -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,25 +1,27 @@
 # Nanafu
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 2d 1h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 2h
+
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 90/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **WAR 90** |
-| Sub job | SAM 70 |
-| Time played | 5h |
-| Enemies defeated | 232 |
-| Deaths | 5 |
+| Main job | **WAR 99** |
+| Sub job | SAM 84 |
+| Time played | 8h |
+| Enemies defeated | 288 |
+| Deaths | 14 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 90 | SAM | 70 |
+| **WAR** | **99** | SAM | 84 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -33,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 975
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 3 / 5
+- **Marks (current):** 3,922
+- **Marks (lifetime):** 167
+- **Distinct NMs slain:** 6
+- **Total NM kills:** 25
 
 ## Augment Sage
 
@@ -55,11 +57,17 @@
 
 ## Collections
 
-- **Trusts learned:** 116
+- **Trusts learned:** 117
+
+## Achievements
+
+**3** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked.
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 1d 9h |
 
 ---
 
@@ -68,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ae6f7a474963 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: ca199d8f4656 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

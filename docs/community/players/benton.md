@@ -1,6 +1,6 @@
 # Benton
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-19 · Character age 3d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d
 
 `💪 5 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **DRK 1** |
-| Sub job | WHM 1 |
-| Time played | 20h |
+| Main job | **RDM 99** |
+| Sub job | SCH 96 |
+| Time played | 25h |
 | Enemies defeated | 15 |
-| Deaths | 0 |
+| Deaths | 3 |
 
 ## Job levels
 
@@ -29,22 +29,22 @@
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 1 |
+| BST | 1 | SCH | 96 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 21,499
-- **Marks (lifetime):** 4,007
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 526
+- **Marks (current):** 155,424
+- **Marks (lifetime):** 73,857
+- **Distinct NMs slain:** 8
+- **Total NM kills:** 1,161
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 255
+- **Augments crafted:** 271
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -52,7 +52,7 @@
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 1,200 | 0 |
-| Relic | 0 | 0 |
+| Relic | 1,500 | 0 |
 | Empyrean | 0 | 0 |
 
 ## Collections
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f2c46de2a195 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 91f9546c4051 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

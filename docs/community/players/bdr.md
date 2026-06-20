@@ -1,6 +1,6 @@
 # Bdr
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-04-30 · Last seen 2026-06-13 · Character age 50d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-04-30 · Last seen 2026-06-19 · Character age 50d 4h
 
 `💪 4 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **NIN 99** |
 | Sub job | DNC 99 |
-| Time played | 60h |
+| Time played | 61h |
 | Enemies defeated | 694 |
 | Deaths | 7 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,204
+- **Marks (current):** 3,654
 - **Marks (lifetime):** 38
 - **Distinct NMs slain:** 1
 - **Total NM kills:** 47
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dae168e6687c -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: a7df46d01cad -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

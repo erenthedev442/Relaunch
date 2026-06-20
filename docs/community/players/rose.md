@@ -1,8 +1,8 @@
 # Rose
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 2d 22h
 
-`💪 9 jobs @99`
+`💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
-| Sub job | BST 67 |
-| Time played | 19h |
+| Main job | **THF 99** |
+| Sub job | COR 1 |
+| Time played | 24h |
 | Enemies defeated | 11 |
 | Deaths | 0 |
 
@@ -29,14 +29,14 @@
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
-| BST | 67 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| BST | 69 | SCH | 1 |
+| **BRD** | **99** | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 57,342
+- **Marks (current):** 57,942
 - **Marks (lifetime):** 3,496
 - **Distinct NMs slain:** 3
 - **Total NM kills:** 528
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2ee157528037 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 3e00ea3bed9c -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

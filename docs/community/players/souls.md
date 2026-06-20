@@ -1,8 +1,8 @@
 # Souls
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d
 
-`⭐ 3 Ascensions` `💪 11 jobs @99`
+`⭐ 13 Ascensions` `💪 11 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
-| Sub job | RDM 99 |
-| Time played | 35h |
-| Enemies defeated | 2,843 |
-| Deaths | 37 |
+| Main job | **RDM 99** |
+| Sub job | NIN 99 |
+| Time played | 40h |
+| Enemies defeated | 2,960 |
+| Deaths | 46 |
 
 ## Job levels
 
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 22,655
-- **Marks (lifetime):** 1,880
+- **Marks (current):** 4,858
+- **Marks (lifetime):** 1,902
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 357
+- **Total NM kills:** 433
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 259
-- **NM Affinities:** 9 / 13
+- **Augments crafted:** 270
+- **NM Affinities:** 10 / 13
 
 ## Reforge
 
@@ -57,8 +57,8 @@
 
 ## Prestige
 
-- **Total Ascensions:** 3
-- **Per-job prestige:** DRK P3
+- **Total Ascensions:** 13
+- **Per-job prestige:** RDM P10 · DRK P3
 
 ## Collections
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert · Augment Master.
+**14** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 844c74f81b79 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 77f4db9a1256 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

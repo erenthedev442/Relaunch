@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **PUP 99** |
 | Sub job | BLU 99 |
-| Time played | 34h |
-| Enemies defeated | 2,130 |
+| Time played | 37h |
+| Enemies defeated | 3,789 |
 | Deaths | 8 |
 
 ## Job levels
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 761ebe2497e4 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: ddba4d035856 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

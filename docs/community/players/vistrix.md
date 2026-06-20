@@ -1,6 +1,6 @@
 # Vistrix
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 6d 20h
 
 `⭐ 8 Ascensions` `💪 2 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **DRG 99** |
 | Sub job | SAM 99 |
-| Time played | 34h |
+| Time played | 35h |
 | Enemies defeated | 2,494 |
 | Deaths | 19 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 488
+- **Marks (current):** 1,388
 - **Marks (lifetime):** 2,106
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 108
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 161
+- **Augments crafted:** 191
 - **NM Affinities:** 6 / 13
 
 ## Reforge
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 48c834565bec -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: e21901c3b54d -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

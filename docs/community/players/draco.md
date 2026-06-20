@@ -1,8 +1,8 @@
 # Draco
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 2d 22h
 
-`💪 9 jobs @99`
+`💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **BST 67** |
-| Sub job | BRD 1 |
-| Time played | 17h |
+| Main job | **RDM 99** |
+| Sub job | GEO 1 |
+| Time played | 20h |
 | Enemies defeated | 14 |
 | Deaths | 0 |
 
@@ -29,17 +29,17 @@
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
-| BST | 67 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| BST | 69 | SCH | 1 |
+| **BRD** | **99** | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 51,837
-- **Marks (lifetime):** 3,496
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 523
+- **Marks (current):** 196,732
+- **Marks (lifetime):** 74,996
+- **Distinct NMs slain:** 4
+- **Total NM kills:** 1,173
 
 ## Augment Sage
 
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**9** unlocked — Ten Hunts In · Tier IV Unlocked · Mark of 1,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**12** unlocked — Ten Hunts In · Legendary Slayer · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 1d 15h |
+| HL Rank I → V | 1d 2h |
 | Augment Archon | 1d 14h |
 
 ---
@@ -77,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ddfea592df95 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 86ec979b2a43 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Kurai
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 1h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 1h
 
-`💪 2 jobs @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,24 +11,24 @@
 
 | | |
 |---|---|
-| Main job | **DRK 84** |
-| Sub job | SAM 73 |
-| Time played | 9h |
-| Enemies defeated | 571 |
-| Deaths | 6 |
+| Main job | **NIN 99** |
+| Sub job | WAR 92 |
+| Time played | 10h |
+| Enemies defeated | 628 |
+| Deaths | 7 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 92 | SAM | 73 |
+| WAR | 92 | SAM | 94 |
 | MNK | 1 | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 65 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 84 | DNC | 1 |
+| **DRK** | **99** | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,036
-- **Marks (lifetime):** 36
-- **Distinct NMs slain:** 2
-- **Total NM kills:** 3
+- **Marks (current):** 6,726
+- **Marks (lifetime):** 84
+- **Distinct NMs slain:** 3
+- **Total NM kills:** 7
 
 ## Guild standing
 
@@ -50,11 +50,11 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | AF Hunters' Guild | Journeyman | 2,500 | 2,500 to Veteran |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| League Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Journeyman | 1,500 | 3,500 to Veteran |
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
+- **Mastery rank:** 1 / 5
 - **Augments crafted:** 14
 - **NM Affinities:** 0 / 13
 
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**3** unlocked — First Hunt · Tier II Unlocked · Augment Novice.
+**4** unlocked — First Hunt · Tier II Unlocked · X Marks the Spot · Augment Novice.
 
 ## Speed records
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c5654b8ac6a2 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 1ef1767f8d51 -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

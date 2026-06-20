@@ -1,6 +1,6 @@
 # Smoke
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-18 · Character age 4d 11h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 4d 12h
 
 `💪 1 job @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **COR 99** |
-| Sub job | NIN 78 |
-| Time played | 22h |
-| Enemies defeated | 371 |
+| Sub job | NIN 80 |
+| Time played | 26h |
+| Enemies defeated | 405 |
 | Deaths | 11 |
 
 ## Job levels
@@ -22,7 +22,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 78 |
+| MNK | 1 | NIN | 80 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 399
-- **Marks (lifetime):** 243
+- **Marks (current):** 34
+- **Marks (lifetime):** 377
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 37
+- **Total NM kills:** 54
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Augments crafted:** 4
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d9c7700d98c6 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 9bcc56cdcd9f -->
+_Last updated: 2026-06-20 03:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->
