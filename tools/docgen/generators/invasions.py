@@ -127,8 +127,7 @@ def _render_rewards(c: dict) -> str:
         "",
         f"- **{commafy(c['per_wave'])} Hunt Marks** for each wave cleared.",
         f"- **{commafy(c['victory'])} Hunt Marks + {commafy(c['infamy'])} Infamy** on a "
-        f"full victory (the boss falls). This is one of the few sources of Infamy "
-        f"outside the dungeons.",
+        f"full victory (the boss falls). This is a major source of Infamy.",
         f"- **{commafy(c['fail'])} Hunt Marks** as a consolation if the clock beats the "
         f"defense.",
     ]

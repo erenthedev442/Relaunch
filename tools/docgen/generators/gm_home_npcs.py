@@ -98,17 +98,10 @@ _NPCS: list[dict] = [
     },
     {
         "cluster":   "Activities cluster",
-        "display":   "Dungeon Master",
-        "file":      "modules/custom/lua/dungeon_catalog.lua",
-        "pos_field": "dungeonMasterPos",
-        "desc":      "Enter instanced dungeon challenges; earn infamy currency on completion",
-    },
-    {
-        "cluster":   "Activities cluster",
         "display":   "Infamy Vendor",
         "file":      "modules/custom/lua/dungeon_catalog.lua",
         "pos_field": "infamyVendorPos",
-        "desc":      "Spend infamy currency earned from dungeons on gear and rewards",
+        "desc":      "Spend infamy currency earned from Abyssea NM hunts, Invasions, and the weekly Raid on gear and rewards",
     },
     # ── Admin cluster (z ≈ −28) ───────────────────────────────────────────────
     {

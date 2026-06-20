@@ -245,11 +245,11 @@ _The full exchange list: **22 items** across **8 crafts**._
 
 ## Home Point Crystal
 
-A **Home Point crystal** is placed near the dungeon exit warp. Examine it to set GM Home as your home point. If you raise from death or use `!homepoint`, you will return here instead of a standard city zone.
+A **Home Point crystal** is placed among the travel NPCs at GM Home. Examine it to set GM Home as your home point. If you raise from death or use `!homepoint`, you will return here instead of a standard city zone.
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d254abcd1180 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 80d488be3c64 -->
+_Last updated: 2026-06-20 21:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -8,7 +8,7 @@ This page maps the full Legendary progression arc from a new character to endgam
 
 ```
 Setup → Hunting League (Rank I–V) → Reforge System
-     → Augmenting → Dungeons → Prestige (infinite)
+     → Augmenting → Infamy & Endgame → Prestige (infinite)
 ```
 
 Every system on this server feeds marks into that path. The Hunting League is the spine; everything else branches off it.
@@ -39,7 +39,7 @@ At **Rank V** you're at the top of the Hunting League. Rank V NMs pay 65 marks e
 
 **What to buy at V:** Gold gear (Demons Medals) from the vendor. This is your gear floor while you pursue Reforge and Augments.
 
-**Weekly Hunts unlock at Rank V:** Each week, a fresh set of objectives rotates in (kill NMs, clear dungeons). Completing your weekly objectives pays a sweep bonus in marks. See [Weekly Hunt Board](../progression/weekly-hunts.md).
+**Weekly Hunts unlock at Rank V:** Each week, a fresh set of objectives rotates in (kill NMs, partied kills, speed kills, no-death streaks). Completing your weekly objectives pays a sweep bonus in marks. See [Weekly Hunt Board](../progression/weekly-hunts.md).
 
 ---
 
@@ -86,8 +86,6 @@ See [Augment Sage](../progression/augment-sage.md) for the full rank requirement
 
 **Infamy** is earned across Legendary's endgame — Abyssea NM hunts, scheduled Invasions, and the weekly Raid, among others. Spend it at the [Infamy Vendor](../progression/gear-vendors.md#infamy-vendor), which sells gear found nowhere else: relic-tier weapons, bard instruments, best-in-slot armor, and per-job +4 Reforge Sets.
 
-**Featured Dungeon:** One dungeon rotates as the Weekly Bonus Dungeon. The first clear of the week pays 2× Infamy.
-
 ---
 
 ## Stage 6 — Prestige / Ascension (Endgame · Infinite)
@@ -113,7 +111,7 @@ These systems don't have a fixed "unlock" point — run them alongside whatever 
 | System | What it does | Where |
 |---|---|---|
 | **[Login Rewards](../progression/login-rewards.md)** | Marks for each daily login; escalating streak milestones | Automatic |
-| **[Daily Board](../progression/daily-board.md)** | Daily kill/dungeon objectives; full-clear bonus | Henge NPC |
+| **[Daily Board](../progression/daily-board.md)** | Daily kill/Infamy/wave objectives; full-clear bonus | Henge NPC |
 | **[Weekly Hunt Board](../progression/weekly-hunts.md)** | Weekly objectives with sweep bonus | Henge NPC |
 | **[Hunter's Guild](../progression/hunters-guild.md)** | Kill NMs to earn rep; rep gives escalating mark multipliers | Passive |
 | **[Game Master (Wave Mode)](../progression/game-master.md)** | Themed wave fights of rising difficulty for bonus marks | `!wavemaster` |
@@ -138,6 +136,6 @@ On top of all of it, your **[Hunter's Guild](../progression/hunters-guild.md)** 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9ebfb1310a6c -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 86dce1138114 -->
+_Last updated: 2026-06-20 21:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -12,8 +12,6 @@ This page celebrates Legendary's biggest moments — server firsts, record clear
 | Achievement | Player | Date | Notes |
 |---|---|---|---|
 | First Rank V (Legend) in Hunting League | — | — | |
-| First Eternal Throne clear (Normal) | — | — | |
-| First Eternal Throne clear (Mythic) | — | — | Requires 5 Hard clears + weekly key |
 | First Reforge +3 piece | — | — | |
 | First Wave Master Insane clear | — | — | |
 | First Weekly Hunt Board sweep (all 5 completed) | — | — | |
@@ -25,7 +23,6 @@ This page celebrates Legendary's biggest moments — server firsts, record clear
 
 | Category | Record | Player | Date |
 |---|---|---|---|
-| Fastest Mythic clear (any dungeon) | — | — | — |
 | Most Hunt Marks earned in a week | — | — | — |
 | Most Infamy earned in a single run | — | — | — |
 | Highest augmented item score | — | — | — |
@@ -37,11 +34,11 @@ This page celebrates Legendary's biggest moments — server firsts, record clear
 
 Hit a server first? Set a record? Do something embarrassingly impressive? Post it in **#general** on Discord with a screenshot. Staff review submissions weekly and update this page. We want to celebrate the people who are pushing the server forward.
 
-Community milestones — total kills, total dungeons cleared, total marks earned — will be added here as the server matures. This is your history.
+Community milestones — total kills, total marks earned, total Infamy banked — will be added here as the server matures. This is your history.
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b784797a22c4 -->
-_Last updated: 2026-06-12 23:32 UTC_
+<!-- content-hash: 733f5c5a0ce5 -->
+_Last updated: 2026-06-20 21:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

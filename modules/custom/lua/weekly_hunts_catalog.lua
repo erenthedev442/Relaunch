@@ -161,38 +161,6 @@ catalog.objectivePool =
         end,
         reward      = { currency = 'hl', amount = 2500 },
     },
-    {
-        id          = 'dungeon_1',
-        label       = 'Dungeon Diver',
-        description = 'Clear any dungeon this week.',
-        target      = 1,
-        eventType   = 'dungeon_clear',
-        reward      = { currency = 'hl', amount = 1500 },
-    },
-    {
-        id          = 'dungeon_apex',
-        label       = 'Paradox Breaker',
-        description = 'Clear The Empyreal Paradox (apex dungeon) this week.',
-        target      = 1,
-        eventType   = 'dungeon_clear',
-        -- NOTE: the internal id is still 'cloister_of_sorrow' from the
-        -- v1 launch - kept stable across the 2026-05-29 zone swap
-        -- (Cloister of Frost -> Empyreal Paradox) so existing player
-        -- CharVars + weekly-hunt progress carry over. Only the visible
-        -- label changes.
-        matches     = function(meta)
-            return meta and meta.dungeonId == 'cloister_of_sorrow'
-        end,
-        reward      = { currency = 'empy', amount = 2500 },
-    },
-    {
-        id          = 'dungeon_3',
-        label       = 'Dungeon Veteran',
-        description = 'Clear 3 dungeon runs this week (any combination).',
-        target      = 3,
-        eventType   = 'dungeon_clear',
-        reward      = { currency = 'hl', amount = 3000 },
-    },
 }
 
 -- =========================================================

@@ -1,15 +1,18 @@
-"""Generate the Dungeons page from the live catalog.
+"""Infamy-Vendor / dungeon-catalog parsing helpers.
 
-Reads `modules/custom/lua/dungeon_catalog.lua` and emits:
-  - "dungeons-ladder"     — the dungeon table with time limits and rewards
-  - "dungeons-tiers"      — Normal/Hard/Mythic tier multipliers + gating  (Phase 2)
-  - "dungeons-affixes"    — base + mythic affix pool                       (Phase 1)
-  - "dungeons-mechanics"  — per-dungeon HP-phase triggers + enrageAfter    (Phase 3)
-  - "dungeons-meta"       — daily-featured + streak + Mythic-key summary   (Phase 4)
-  - "dungeons-vendor"     — the Infamy Vendor's full inventory + costs
+The standalone Dungeons page (docs/progression/dungeons.md) was retired along
+with the custom dungeon system, so this module no longer generates any page and
+is **not** registered in tools/docgen/generate.py — `generate()` is a no-op.
 
-Catalog is normally gitignored, so this generator runs against
-`$LEGENDARY_LIVE_ROOT`. CI without that skips cleanly.
+It survives purely as a parsing-helper library for the live Infamy Vendor: the
+extractors below read `modules/custom/lua/dungeon_catalog.lua` (the vendor's
+stock + currency still live there) and are imported by:
+  - infamy_npc.py  — renders the Infamy Vendor's stock onto gear-vendors.md
+  - item_index.py  — folds Infamy-Vendor items into the item-finder table
+
+Re-used symbols: `_quoted_value`, `_CURRENCY_NAME_RE`, `_extract_vendor_items`,
+`_extract_vendor_items_block`. The catalog is normally gitignored, so callers
+resolve it against `$LEGENDARY_LIVE_ROOT`; CI without that skips cleanly.
 """
 from __future__ import annotations
 
@@ -958,76 +961,15 @@ def _render_vendor(items: list[dict], auto_items: list[dict],
 
 
 def generate(repo_root: Path, docs_dir: Path) -> None:
-    src = resolve_source(repo_root, "modules/custom/lua/dungeon_catalog.lua")
-    if src is None:
-        print("[dungeons] skip: dungeon_catalog.lua not found")
-        return
+    """No-op: the standalone Dungeons page was retired with the dungeon system.
 
-    text = src.read_text(encoding="utf-8", errors="replace")
-
-    cm = _CURRENCY_NAME_RE.search(text)
-    currency = _quoted_value(cm) if cm else "Infamy"
-
-    dungeons      = _extract_dungeons(text)
-    vendor        = _extract_vendor_items(text)
-    vendor_auto   = _extract_vendor_items_block(text, "catalog.vendorItemsAuto")
-    type_map      = _extract_type_map(text)
-    plus4_cost, plus4_by_job = _extract_plus4_sets(text)
-    base_affixes  = _extract_affix_pool(text, "catalog.affixes")
-    mythic_affixes = _extract_affix_pool(text, "catalog.mythicAffixes")
-    tiers         = _extract_tiers(text)
-    meta          = _extract_meta(text)
-
-    # Sanity guards: if the catalog clearly has these blocks but we
-    # parsed nothing, raise so the page keeps its previous content
-    # rather than publishing "_No data_" as a regression. Field
-    # renames break parsing silently otherwise.
-    if "catalog.dungeons" in text and not dungeons:
-        raise RuntimeError(
-            "dungeon_catalog.lua has a `catalog.dungeons` block but "
-            "_extract_dungeons returned zero entries. Field renames "
-            "(id/label/timeLimit/etc.) — update regexes at the top of dungeons.py."
-        )
-    if "catalog.vendorItems" in text and not vendor:
-        raise RuntimeError(
-            "dungeon_catalog.lua has a `catalog.vendorItems` block but "
-            "_extract_vendor_items returned zero entries — update regexes."
-        )
-    if "catalog.affixes" in text and not base_affixes:
-        raise RuntimeError(
-            "dungeon_catalog.lua has a `catalog.affixes` block but the "
-            "affix extractor returned zero entries — update regexes."
-        )
-    if "catalog.tiers" in text and not tiers:
-        raise RuntimeError(
-            "dungeon_catalog.lua has a `catalog.tiers` block but the "
-            "tier extractor returned zero entries — update regexes."
-        )
-
-    page = docs_dir / "progression" / "dungeons.md"
-    if not page.exists():
-        print(f"[dungeons] skip: page not found ({page})")
-        return
-
-    # Order of writes matches the order markers appear in the page.
-    writes = [
-        ("dungeons-ladder",    _render_ladder(dungeons, currency),
-         f"{len(dungeons)} dungeons"),
-        ("dungeons-tiers",     _render_tiers(tiers),
-         f"{len(tiers)} tiers"),
-        ("dungeons-affixes",   _render_affixes(base_affixes, mythic_affixes),
-         f"{len(base_affixes)} base + {len(mythic_affixes)} mythic affixes"),
-        ("dungeons-mechanics", _render_mechanics(dungeons),
-         f"{sum(len(d['phases']) for d in dungeons)} phases across {len(dungeons)} dungeons"),
-        ("dungeons-meta",      _render_meta(meta, dungeons),
-         "featured + streak + key"),
-        ("dungeons-vendor",    _render_vendor(vendor, vendor_auto, plus4_cost, plus4_by_job, currency, type_map),
-         f"{len(vendor)} curated + {len(vendor_auto)} auto + "
-         f"{sum(len(sets) for sets in plus4_by_job.values())} +4 sets across "
-         f"{len(plus4_by_job)} jobs"),
-    ]
-    for marker, content, summary in writes:
-        if write_between_markers(page, marker, content):
-            print(f"[dungeons] {marker}: {summary} written")
-        else:
-            print(f"[dungeons] {marker}: marker missing in {page.name}")
+    This module is intentionally **not** registered in tools/docgen/generate.py
+    anymore — it no longer writes any page. It survives only as a parsing-helper
+    library: ``infamy_npc.py`` and ``item_index.py`` import its vendor-item
+    extractors (``_extract_vendor_items`` / ``_extract_vendor_items_block`` /
+    ``_CURRENCY_NAME_RE`` / ``_quoted_value``) to read the Infamy Vendor's stock
+    out of the catalog. Keeping this entry point as a harmless stub means that if
+    the module is ever re-registered by mistake it does nothing rather than
+    trying to write a page that no longer exists.
+    """
+    return

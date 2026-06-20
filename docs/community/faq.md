@@ -74,7 +74,7 @@ A custom system where you can summon other registered players as Trust-style NPC
 
 ### Can I play solo?
 
-Yes. Almost all custom content (Hunting League, Reforge System, Dungeons, Weekly Hunts) can be soloed at the cap. Difficulty is gear-checked, not group-size-checked.
+Yes. Almost all custom content (Hunting League, Reforge System, Weekly Hunts) can be soloed at the cap. Difficulty is gear-checked, not group-size-checked.
 
 ---
 
@@ -106,7 +106,7 @@ The [What's Custom](../changes/index.md) page is the authoritative list. Highlig
 - Faster EXP / CP / drop rates (current multipliers shown on the [home page](../index.md))
 - Full subjob from character creation
 - 99 starting level cap, all maps + outpost warps granted at creation
-- Custom Hunting League, Reforge System, Augment Sage, Player Trusts, Weekly Hunt Board, and Dungeons systems
+- Custom Hunting League, Reforge System, Augment Sage, Player Trusts, and Weekly Hunt Board systems
 - Every player command listed in [Reference → Player Commands](../reference/commands.md)
 
 ### Are character files / progress safe? Are there backups?
@@ -120,6 +120,6 @@ _Have a question that should be on this page? Ping a GM in [Discord](https://dis
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 73cc068674bd -->
-_Last updated: 2026-05-31 00:24 UTC_
+<!-- content-hash: f18ef0dff97d -->
+_Last updated: 2026-06-20 21:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

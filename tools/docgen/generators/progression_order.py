@@ -5,7 +5,7 @@ Reads catalog Lua files from modules/custom/lua/ via resolve_source() and
 emits a data-driven ordered list into the DOCGEN marker block:
   "progression-order"
 
-All four catalog sources are optional — if any file is missing (CI without
+All catalog sources are optional — if any file is missing (CI without
 LEGENDARY_LIVE_ROOT), that data section falls back to a static description.
 If ALL files are missing, the entire block is replaced with a single
 fallback message.
@@ -192,38 +192,6 @@ def _parse_gm_difficulties(text: str) -> dict[str, dict]:
 
 
 # ---------------------------------------------------------------------------
-# Dungeon catalog parsing
-# ---------------------------------------------------------------------------
-
-def _parse_dungeons(text: str) -> list[dict]:
-    """Return ordered list of dungeon dicts: {label, infamyBase, bossLevel}."""
-    label_re = re.compile(r"\blabel\s*=\s*" + _QUOTED)
-
-    m = re.search(r"\bdungeons\s*=\s*", text)
-    if not m:
-        return []
-    remaining = text[m.end():]
-    outer = next(_balanced_blocks(remaining), None)
-    if outer is None:
-        return []
-    dungeons_block = remaining[outer[0] + 1: outer[1] - 1]
-
-    dungeons = []
-    for ds, de in _balanced_blocks(dungeons_block):
-        body = dungeons_block[ds + 1: de - 1]
-        lbl = label_re.search(body)
-        infamy = re.search(r"\binfamyBase\s*=\s*(\d+)", body)
-        boss_lv = re.search(r"\bbossLevel\s*=\s*(\d+)", body)
-        if lbl and infamy:
-            dungeons.append({
-                "label": _quoted_value(lbl),
-                "infamyBase": int(infamy.group(1)),
-                "bossLevel": int(boss_lv.group(1)) if boss_lv else None,
-            })
-    return dungeons
-
-
-# ---------------------------------------------------------------------------
 # Weekly hunts catalog parsing
 # ---------------------------------------------------------------------------
 
@@ -253,7 +221,6 @@ def _render(
     currency: str,
     defending_ring_cost: int | None,
     difficulties: dict | None,
-    dungeons: list[dict] | None,
     weekly_all_cleared: int | None,
 ) -> str:
     """Assemble the ordered-list markdown."""
@@ -265,7 +232,7 @@ def _render(
         "1. **Visit GM Home first.** Type `!gmhome` to warp there instantly. "
         "Collect your starter gear from the Armor and Accessories NPCs, pick up "
         "key items and any open missions, and configure your character. "
-        "Nearly every system — Weekly Hunts, Dungeons, the Game Master, the "
+        "Nearly every system — Weekly Hunts, the Game Master, the "
         "Infamy Vendor, the Augment Sage — is accessible from GM Home."
     )
 
@@ -340,28 +307,7 @@ def _render(
             "Spend marks on core BiS accessories along the way."
         )
 
-    # ---- Step 7: First Dungeon ----------------------------------------
-    if dungeons:
-        d1 = dungeons[0]
-        boss_note = (
-            f" (Lv {d1['bossLevel']} boss)" if d1.get("bossLevel") else ""
-        )
-        lines.append(
-            f"7. **Try your first Dungeon — {d1['label']}.** "
-            f"Talk to the Dungeon Master NPC at GM Home (`!gmhome`). "
-            f"Clear the boss{boss_note} for **{d1['infamyBase']} Infamy** — "
-            "a new currency spent at the Infamy Vendor for BiS gear unavailable "
-            "through the Hunt Mark shop. "
-            "Type `!dungeon` to check your progress mid-run."
-        )
-    else:
-        lines.append(
-            "7. **Try your first Dungeon at GM Home.** Talk to the Dungeon Master NPC. "
-            "Clearing the boss earns Infamy — a separate currency for BiS gear at "
-            "the Infamy Vendor. Type `!dungeon` for mid-run status."
-        )
-
-    # ---- Step 8: Game Master wave challenges --------------------------
+    # ---- Step 7: Game Master wave challenges --------------------------
     if difficulties and "Easy" in difficulties:
         easy = difficulties["Easy"]
         bonus_note = (
@@ -371,7 +317,7 @@ def _render(
             f" {easy['wavesTotal']} waves," if easy.get("wavesTotal") else ""
         )
         lines.append(
-            "8. **Try Game Master wave challenges at GM Home.** "
+            "7. **Try Game Master wave challenges at GM Home.** "
             f"Talk to the Game Master NPC (`!gmhome`). "
             f"Start with **Easy** difficulty:{waves_note} 1 mob per wave, manageable for a geared solo player.{bonus_note} "
             "Harder difficulties (Normal / Hard / Insane) pay progressively more marks "
@@ -379,12 +325,12 @@ def _render(
         )
     else:
         lines.append(
-            "8. **Try Game Master wave challenges at GM Home (`!gmhome`).** "
+            "7. **Try Game Master wave challenges at GM Home (`!gmhome`).** "
             "Start on Easy difficulty. Full clear pays bonus Hunt Marks. "
             "Harder difficulties pay more and pull from tougher mob pools."
         )
 
-    # ---- Step 9: Ranks IV–V -------------------------------------------
+    # ---- Step 8: Ranks IV–V -------------------------------------------
     if tiers and len(tiers) >= 5:
         t4, t5 = tiers[3], tiers[4]
         dr_note = ""
@@ -394,7 +340,7 @@ def _render(
                 "for the Defending Ring (−10% Damage Taken) — a premium tank/survivability item."
             )
         lines.append(
-            f"9. **Unlock {t4['name']} and {t5['name']}.** "
+            f"8. **Unlock {t4['name']} and {t5['name']}.** "
             f"Rank IV costs **{t4['unlockCost']} {currency}** total spent; "
             f"kills pay **{t4['mobs'][0]['points']} {currency}** "
             f"({', '.join(m['label'] for m in t4['mobs'])}). "
@@ -405,36 +351,28 @@ def _render(
         )
     else:
         lines.append(
-            "9. **Unlock Ranks IV–V.** Rank V is the gear-check wall — "
+            "8. **Unlock Ranks IV–V.** Rank V is the gear-check wall — "
             "Shinryu (Lv 225–250) is a real raid boss. Bring a party."
         )
 
-    # ---- Step 10: Reforge track ---------------------------------------
+    # ---- Step 9: Reforge track ----------------------------------------
     lines.append(
-        "10. **Start the Reforge track.** Farm Sky Gods, Unity NMs, and Abyssea NMs "
+        "9. **Start the Reforge track.** Farm Sky Gods, Unity NMs, and Abyssea NMs "
         "for AF Marks, Relic Marks, and Empy Marks. "
         "These currencies feed the Reforge system to upgrade your AF/Relic/Empy armor "
         "to +1 / +2 / +3 tiers. "
         "Type `!huntrank` to check your current Hunting League rank and overall progress."
     )
 
-    # ---- Step 11: Augmentation ----------------------------------------
-    if dungeons and len(dungeons) >= 3:
-        apex = dungeons[-1]
-        lines.append(
-            "11. **Augment your gear.** Visit the Augment Moogle at GM Home (`!gmhome`) "
-            "to add random stats to equipment. "
-            "For passive endgame bonuses, earn enough Infamy to unlock the "
-            "**Augment Sage** — requires clearing the apex dungeon "
-            f"(**{apex['label']}**, {apex['infamyBase']} Infamy base reward). "
-            "The Sage applies permanent stat bonuses outside the normal augment RNG."
-        )
-    else:
-        lines.append(
-            "11. **Augment your gear.** Visit the Augment Moogle at GM Home (`!gmhome`) "
-            "for random stat additions. The Augment Sage (unlocked via Infamy) "
-            "provides passive endgame stat bonuses."
-        )
+    # ---- Step 10: Augmentation -----------------------------------------
+    lines.append(
+        "10. **Augment your gear.** Visit the Augment Moogle at GM Home (`!gmhome`) "
+        "to add random stats to equipment. "
+        "For passive endgame bonuses, earn enough Infamy to unlock the "
+        "**Augment Sage** — Infamy comes from apex Reisenjima NMs, Scheduled "
+        "Invasions, and the weekly Raid. "
+        "The Sage applies permanent stat bonuses outside the normal augment RNG."
+    )
 
     return "\n".join(lines)
 
@@ -449,10 +387,9 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # ---- Resolve sources -----------------------------------------------
     hl_src  = resolve_source(repo_root, "modules/custom/lua/hunting_league_catalog.lua")
     gm_src  = resolve_source(repo_root, "modules/custom/lua/game_master_catalog.lua")
-    dn_src  = resolve_source(repo_root, "modules/custom/lua/dungeon_catalog.lua")
     wh_src  = resolve_source(repo_root, "modules/custom/lua/weekly_hunts_catalog.lua")
 
-    if not any([hl_src, gm_src, dn_src, wh_src]):
+    if not any([hl_src, gm_src, wh_src]):
         fallback = (
             "_Progression order temporarily unavailable — catalog data not found. "
             "Run with `LEGENDARY_LIVE_ROOT` set to regenerate._"
@@ -483,20 +420,13 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         if not difficulties:
             print("[progression_order] warning: GM difficulties parsed as empty")
 
-    dungeons: list[dict] | None = None
-    if dn_src:
-        dn_text = dn_src.read_text(encoding="utf-8", errors="replace")
-        dungeons = _parse_dungeons(dn_text)
-        if not dungeons:
-            print("[progression_order] warning: dungeons parsed as empty")
-
     weekly_all_cleared: int | None = None
     if wh_src:
         wh_text = wh_src.read_text(encoding="utf-8", errors="replace")
         weekly_all_cleared = _parse_weekly_all_cleared(wh_text)
 
     # ---- Render --------------------------------------------------------
-    content = _render(tiers, currency, defending_ring_cost, difficulties, dungeons, weekly_all_cleared)
+    content = _render(tiers, currency, defending_ring_cost, difficulties, weekly_all_cleared)
 
     wrote = write_between_markers(page, "progression-order", content)
     if not wrote:
@@ -506,9 +436,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # ---- Summary -------------------------------------------------------
     tier_count = len(tiers) if tiers else 0
     diff_count = len(difficulties) if difficulties else 0
-    dung_count = len(dungeons) if dungeons else 0
     print(
-        f"[progression_order] wrote 11-step progression list — "
+        f"[progression_order] wrote 10-step progression list — "
         f"{tier_count} HL ranks, {diff_count} GM difficulties, "
-        f"{dung_count} dungeons, weekly bonus={weekly_all_cleared} {currency}"
+        f"weekly bonus={weekly_all_cleared} {currency}"
     )

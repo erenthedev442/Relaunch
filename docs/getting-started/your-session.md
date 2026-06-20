@@ -67,7 +67,7 @@ Legendary front-loads its generosity. You don't have to grind for hours to feel 
 | Your 100th NM kill | **+300** + the *Desert Hunter* title |
 | Your 1,000th NM kill | **+1,000** + the *Hero Among Heroes* title |
 
-Login streaks reset if you skip a UTC day, so a quick daily login keeps them alive. There are plenty more milestones beyond the ones above — first kill at each tier, lifetime-marks landmarks, dungeon clears — and you can see the whole list, earned and unearned, with:
+Login streaks reset if you skip a UTC day, so a quick daily login keeps them alive. There are plenty more milestones beyond the ones above — first kill at each tier, lifetime-marks landmarks, Infamy hauls — and you can see the whole list, earned and unearned, with:
 
 ```
 !achievements
@@ -84,7 +84,6 @@ Once the core loop clicks, two rotating boards give you a reason to come back be
 
 - **Weekly Hunt Board** — five objectives rolled fresh each week. Complete them for bonus marks and a lifetime "Weekly Hunter" sweep counter. Track it with `!weekly`. (Details: [Weekly Hunt Board](../progression/weekly-hunts.md).)
 - **Featured Hunts** — one NM per tier is featured each week and pays **2× base marks** on your first kill of the week. See them with `!featured`.
-- **Bonus Dungeon** — one dungeon each week awards **2× Infamy** on the first clear. Find this week's with `!bonus_dungeon`.
 - **Daily Board** — lighter objectives that refresh every daily reset.
 
 Two commands roll up everything time-sensitive:
@@ -112,7 +111,7 @@ You don't need to learn every command — these are the ones a new hunter actual
 | `!nms` | NM Encyclopedia — what you've killed, what's left |
 | `!achievements` | Every milestone, earned and unearned |
 | `!week` / `!weekly` | Weekly objectives and board progress |
-| `!featured` / `!bonus_dungeon` | This week's 2× bonuses |
+| `!featured` | This week's 2× featured-hunt bonuses |
 | `!lfg` | Broadcast "looking for group" server-wide |
 | `!who` | Who's online, ranked by tier |
 | `!help` | The full custom-command list |
@@ -142,6 +141,6 @@ Welcome to the hunt.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3ff484a56cbd -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 1212195d23fe -->
+_Last updated: 2026-06-20 21:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -15,7 +15,7 @@ uses.
       Healer/Caster*, or a single stat), and get the top pick for every slot
       plus runners-up.
     - Tick **Obtainable here** to limit results to gear you can actually earn
-      on Legendary (vendors, dungeons, augments, reforge, boards…).
+      on Legendary (vendors, augments, reforge, boards…).
     - Hover (or tap) any item name for its BG-Wiki preview.
 
 <div id="gear-finder">
@@ -25,6 +25,6 @@ uses.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a9ad4a35f9ee -->
-_Last updated: 2026-06-06 11:06 UTC_
+<!-- content-hash: ed0b6e73cf54 -->
+_Last updated: 2026-06-20 21:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

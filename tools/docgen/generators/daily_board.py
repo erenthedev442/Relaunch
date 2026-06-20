@@ -73,7 +73,7 @@ _CURRENCY_DISPLAY = {
 _METRIC_DISPLAY = {
     "kills":    ("NM Kills (any system)", "kills"),
     "dungeons": ("Dungeon Clears",        "clears"),
-    "infamy":   ("Dungeon Infamy",        "Infamy"),
+    "infamy":   ("Infamy",                "Infamy"),
     "waves":    ("Wave Fights",           "wins"),
     "augments": ("Augmentation Trades",   "trades"),
 }

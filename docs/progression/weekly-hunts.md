@@ -27,7 +27,7 @@ A rotating set of weekly objectives that *amplify* your normal hunting. Every Mo
 ## The pool
 
 <!-- DOCGEN:BEGIN id="weekly-hunts-pool" -->
-_The pool has **14 objectives**. Each week, **5** are rolled randomly per player — your set may differ from your friends' sets._
+_The pool has **11 objectives**. Each week, **5** are rolled randomly per player — your set may differ from your friends' sets._
 
 | Objective | Target | Source | Reward |
 |---|---:|---|---:|
@@ -42,9 +42,6 @@ _The pool has **14 objectives**. Each week, **5** are rolled randomly per player
 | **Pack Hunter**<br><sub>Slay 10 NMs while partied with another player.</sub> | 10 | Any NM kill (Hunting League + Reforge) | 1,500 Hunt Marks |
 | **Speed Demon**<br><sub>Kill an apex (Lv250) NM within 60 seconds of its spawn.</sub> | 1 | Any NM kill (Hunting League + Reforge) | 2,000 Empy Marks |
 | **Untouchable**<br><sub>Kill 15 custom NMs in a row without dying.</sub> | 15 | Any NM kill (Hunting League + Reforge) | 2,500 Hunt Marks |
-| **Dungeon Diver**<br><sub>Clear any dungeon this week.</sub> | 1 | dungeon_clear | 1,500 Hunt Marks |
-| **Paradox Breaker**<br><sub>Clear The Empyreal Paradox (apex dungeon) this week.</sub> | 1 | dungeon_clear | 2,500 Empy Marks |
-| **Dungeon Veteran**<br><sub>Clear 3 dungeon runs this week (any combination).</sub> | 3 | dungeon_clear | 3,000 Hunt Marks |
 <!-- DOCGEN:END id="weekly-hunts-pool" -->
 
 ## How weeks reset
@@ -74,6 +71,6 @@ The **Weekly Hunt Sweeps** leaderboard on the [Leaderboards page](../community/l
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 075145e55cf0 -->
-_Last updated: 2026-06-12 23:32 UTC_
+<!-- content-hash: 219bb2baff63 -->
+_Last updated: 2026-06-20 21:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

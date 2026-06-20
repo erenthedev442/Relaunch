@@ -51,11 +51,11 @@ Rewards are on a **weekly lockout** (resetting Monday 00:00 UTC):
 You must be near the boss when it dies to get credit.
 <!-- DOCGEN:END id="star-devourer-rewards" -->
 
-The weekly reset shares the same Monday anchor as the Mythic dungeon key, so you can plan your big-ticket weekly runs together.
+The weekly reset shares the same Monday 00:00 UTC anchor as the Weekly Hunt Board and the weekly Raid, so you can plan your big-ticket weekly runs together.
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a78157b02143 -->
-_Last updated: 2026-06-14 13:15 UTC_
+<!-- content-hash: cdabcaa1dda5 -->
+_Last updated: 2026-06-20 21:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

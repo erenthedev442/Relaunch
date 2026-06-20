@@ -7,9 +7,9 @@ Talk to the **Daily Board** NPC at GM Home to pick up 3 objectives that reset ev
 
 ## How it works
 
-1. **Talk to the Daily Board NPC** on your first visit of the day. It snapshots your current kill counts, dungeon clears, and infamy so it can measure progress from that moment forward.
-2. **Three objectives appear** — drawn from five metric groups (kills / dungeons / infamy / waves / augments), so the board has variety every day.
-3. **Do the activities.** Objectives track automatically as you play — kills, dungeon clears, and infamy are all counted for you.
+1. **Talk to the Daily Board NPC** on your first visit of the day. It snapshots your current kill counts, Infamy, and other metrics so it can measure progress from that moment forward.
+2. **Three objectives appear** — drawn from several metric groups (NM kills / Infamy / wave fights / augment trades), so the board has variety every day.
+3. **Do the activities.** Objectives track automatically as you play — kills, Infamy, wave wins, and augment trades are all counted for you.
 4. **Return to claim each reward** individually. The NPC shows real-time progress (`3/5`), and a **Claim** button appears once you hit the target.
 5. **Clear all 3 in one calendar day** to earn the bonus all-cleared reward on top of the three individual payouts.
 
@@ -18,7 +18,7 @@ Talk to the **Daily Board** NPC at GM Home to pick up 3 objectives that reset ev
 
 ## Objectives rotate daily
 
-Every player on the server sees the **same 3 objectives** on the same day. Rotation is deterministic — three of the five metric groups (kills, dungeons, infamy, waves, augments) are picked and cycle based on the UTC Julian day number, so the board is always predictable. You can plan your day's activities in advance.
+Every player on the server sees the **same 3 objectives** on the same day. Rotation is deterministic — the metric groups (NM kills, Infamy, wave fights, augment trades) are cycled based on the UTC Julian day number, so the board is always predictable. You can plan your day's activities in advance.
 
 ## Objective pool
 
@@ -31,7 +31,7 @@ Every player on the server sees the **same 3 objectives** on the same day. Rotat
 | NM Veteran | 10 kills | 1,000 Hunt Marks |
 | NM Rampage | 20 kills | 1,500 Relic Marks |
 
-**Dungeon Infamy**
+**Infamy**
 
 | Objective | Target | Reward |
 |---|---:|---|
@@ -88,6 +88,6 @@ It's the westernmost NPC in the row — just past the EXP Camp Moogle heading we
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8f7d607d5a2a -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: 2249f19a7383 -->
+_Last updated: 2026-06-20 21:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

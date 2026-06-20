@@ -167,11 +167,11 @@ The server broadcasts a server-wide message when:
 - Any job reaches a significant **level milestone**
 - A player **logs in** — so you always know who's online
 
-First Blood moments are real on Legendary. If you're the first person to kill Absolute Virtue or clear a Mythic dungeon, the whole server sees it.
+First Blood moments are real on Legendary. If you're the first person to kill Absolute Virtue or land a server-first NM kill, the whole server sees it.
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 243438b01090 -->
-_Last updated: 2026-06-13 04:26 UTC_
+<!-- content-hash: 18e90bcb312c -->
+_Last updated: 2026-06-20 21:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

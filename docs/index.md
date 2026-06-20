@@ -30,7 +30,7 @@ Retail FFXI is a masterpiece buried under 20 years of time-gating. Most private 
 
 - **Fast leveling, real endgame.** <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP (plus <!--setting:main.EXP_RATE-->10<!--/setting-->× from books, FoV/GoV & Records of Eminence) gets you to 99 in a few hours, not months. Then the actual game begins.
 - **Everything unlocked at creation.** Advanced jobs, all outpost warps, all maps, full inventory — no arbitrary gates.
-- **Custom content built for long-term play.** The Hunting League, Dungeon system, Reforge gear, and weekly objectives give you a loop that doesn't expire.
+- **Custom content built for long-term play.** The Hunting League, Reforge gear, Ascension, and weekly objectives give you a loop that doesn't expire.
 - **A small, friendly community.** No drama, no gatekeeping — just people who like this game.
 
 ---
@@ -40,8 +40,6 @@ Retail FFXI is a masterpiece buried under 20 years of time-gating. Most private 
 :crossed_swords: **Hunting League** — A custom 5-rank NM hunting system. Kill your way from Initiate to Legend, unlocking gear, titles, and HL Points at every tier.
 
 :crown: **Ascension** — The endgame *above* the endgame. Reaching Legend opens a per-job, no-cap progression track: re-clear escalating superboss Courts to bank Ascension Points and spend them on permanent stat boosts. The gauntlet swaps to a deadlier roster every 10 ascensions, so the climb never goes stale.
-
-:door: **Dungeons** — Four dungeons with Normal, Hard, and Mythic difficulties. Random affixes, streak multipliers, and the rarest gear drops in the game.
 
 :shield: **Reforge system** — Three parallel NM ladders (AF, Relic, Empy) that upgrade your armor from base all the way to +3. Best-in-slot is earnable, not bought.
 
@@ -110,9 +108,6 @@ The true ceiling. Reaching Legend tier opens the **Ascension Altar** in Provenan
 **Hunter's Guild (4 guilds, lifetime amplifiers)**
 A passive reputation layer on top of every NM track. Each guild — AF, Relic, Empyrean, and League — ranks up as you kill its NMs, permanently amplifying the marks you earn from that source. Push to Grandmaster across multiple guilds for the **Trinity** and **Apex Hunter** capstones. The more you hunt, the more every kill pays out.
 
-**Dungeon System (4 dungeons, 3 difficulties)**
-Four dungeons, each with Normal, Hard, and Mythic clears. Mythic is gated behind five Hard clears and a weekly key. Random affixes mean every run plays differently. The best gear in the game drops here.
-
 **Reforge Gear (+3 from NM kills)**
 Three independent NM ladders — AF Marks from Sky Gods, Relic Marks from Unity NMs, Empy Marks from Abyssea NMs — each upgrades a full armor set from base to +1 to +2 to +3. No RNG. No gatcha. Just kills.
 
@@ -120,10 +115,10 @@ Three independent NM ladders — AF Marks from Sky Gods, Relic Marks from Unity 
 Catalysts drop from monsters across the world. Trade them to the Augment Moogle to permanently apply stat bonuses to your gear. Pair with the Augment Sage — an NPC whose bonuses scale with your NM kill history — to push augment strength even further.
 
 **Weekly Hunt Board**
-Five objectives, reset every week. Ranging from "kill 10 of X" to "clear a Mythic dungeon." Complete all five and you earn a significant bonus. Always rotating, never stale.
+Five objectives, reset every week. Ranging from "kill 10 of X" to "slay an apex NM within 60 seconds of its spawn." Complete all five and you earn a significant bonus. Always rotating, never stale.
 
 **Daily Board**
-Three fresh objectives every day, reset at UTC midnight — drawn from five metric groups (kills, dungeons, infamy, wave fights, augments), so it never plays out the same way twice. Clear all three in one day for a bonus on top. The daily counterpart to the Weekly Hunt Board.
+Three fresh objectives every day, reset at UTC midnight — drawn from several metric groups (NM kills, Infamy, wave fights, augment trades), so it never plays out the same way twice. Clear all three in one day for a bonus on top. The daily counterpart to the Weekly Hunt Board.
 
 **Wave Master**
 Head to Escha - Ru'Aun and talk to the Wave Master NPC to start a themed NM wave event — solo or with a group. Scales with your party. Earns Hunt Marks. Good for practice, great for marks farming.
@@ -132,7 +127,7 @@ Head to Escha - Ru'Aun and talk to the Wave Master NPC to start a themed NM wave
 Summons you won't find on retail. **Gemma** is a premium support Trust: a tiny Hume woman who heals, raises, buffs, debuffs, sings, rolls, and magic-bursts your skillchains without ever pulling hate. **Meat** is an unkillable tank Trust that soaks every hit and refuses to let go of aggro. Both are permanent 50M-gil unlocks — a serious late-game gil sink.
 
 **Achievements (26 milestones)**
-Twenty-six personal milestones — first kills, tier climbs, lifetime mark totals, dungeon clears, and Infamy hauls — each paying bonus Hunt Marks, with the biggest ones awarding a title and a server-wide announcement. Side-goals that tick along under everything else you do.
+Twenty-six personal milestones — first kills, tier climbs, lifetime mark totals, and Infamy hauls — each paying bonus Hunt Marks, with the biggest ones awarding a title and a server-wide announcement. Side-goals that tick along under everything else you do.
 
 **Leaderboards**
 See where you rank across the server — most augments crafted, top hunters, fastest clears, and more — pulled live from the database and refreshed a few times a day. Chase the top spot, or opt any character out if you'd rather hunt in peace.

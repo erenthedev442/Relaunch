@@ -14,7 +14,7 @@ New to Legendary and wondering what to wear? This page answers "what gear should
 | **Weapons Vendor** | Weapons in three tiers (Bronze / Silver / Gold) | Hunt Marks → convert to medals at the Seals NPC |
 | **Armor Vendor / Accessories Vendor** | Body armor and accessories in three tiers | Same medal system as weapons |
 | **Reforge System** | AF/Relic/Empy armor sets, base through +3 | AF Marks, Relic Marks, or Empy Marks from Reforge NMs |
-| **Dungeon infamy vendor** | High-end armor unlocked by dungeon runs | Infamy earned inside the Dungeon system |
+| **Infamy Vendor** | Best-in-slot armor and weapons found nowhere else | Infamy earned from Abyssea NM hunts, Invasions, and the weekly Raid |
 | **Augmented gear** | Any piece with extra stats from the Augment Moogle | Catalysts from mob drops + Hunt Marks for seals |
 | **Hunting League rewards** | Currency and access to all of the above | Participate in Hunt spawns at Reisenjima Henge |
 
@@ -176,7 +176,7 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 
 - Full Gold-tier weapons across main and offhand.
 - Reforge +3 armor in all five slots (head/body/hands/legs/feet) for your main set.
-- Dungeon infamy pieces in slots where they beat Reforge +3.
+- Infamy Vendor pieces in slots where they beat Reforge +3.
 - Augment Moogle with Rank 5 Augment Archon mastery (2.0x multiplier, 20% crit chance) and all 13 NM affinities registered.
 - Register for [Hunter's Guild](hunters-guild.md) rep on all four guilds to maximize mark yield from future farming.
 
@@ -198,6 +198,6 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6e483bb4dc81 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 981124a16b26 -->
+_Last updated: 2026-06-20 21:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->
