@@ -190,6 +190,19 @@ _SINGLE_VAR_BOARDS = [
 ]
 
 
+# Job Rebirth board — SUM of Rebirth_Count_* across all jobs per character.
+_JOB_REBIRTH_BOARD = {
+    "marker":  "lb-job-rebirths",
+    "heading": "Job Rebirths — Total Resets",
+    "blurb":   "Total number of job rebirths across all jobs combined. "
+               "Each rebirth wipes a job back to level 1 and earns Rebirth Points "
+               "for permanent per-job stat boosts. The grind metric for committed "
+               "power-grinders.",
+    "pattern": "Rebirth_Count_%",
+    "unit":    "rebirths",
+}
+
+
 # Boards that count CharVars matching a name pattern (e.g. NMKilled_%).
 # Each row is one set/collection — the score is "how many bits/items".
 _PATTERN_COUNT_BOARDS = [
@@ -434,6 +447,32 @@ def _query_single_var(cur, var: str, tiebreaker: str | None) -> list[tuple[str, 
         (var, _TOP_N),
     )
     return [(r[0], r[1]) for r in cur.fetchall()]
+
+
+def _query_pattern_sum(cur, pattern: str) -> list[tuple[str, int]]:
+    """Top _TOP_N characters by SUM of `value` across vars matching a LIKE pattern.
+
+    Used for Job Rebirth totals (Rebirth_Count_%) where we want the cumulative
+    count across all jobs, not just a count of how many vars exist.
+    """
+    cur.execute(
+        """
+        SELECT c.charname, SUM(cv.value) AS total
+          FROM char_vars cv
+          JOIN chars c ON c.charid = cv.charid
+     LEFT JOIN char_vars opt ON opt.charid = cv.charid AND opt.varname = 'Leaderboard_OptOut'
+         WHERE cv.varname LIKE %s
+           AND (cv.expiry = 0 OR cv.expiry > UNIX_TIMESTAMP())
+           AND cv.value > 0
+           AND (opt.value IS NULL OR opt.value = 0)
+      GROUP BY c.charid, c.charname
+        HAVING total > 0
+      ORDER BY total DESC
+         LIMIT %s
+        """,
+        (pattern, _TOP_N),
+    )
+    return [(r[0], int(r[1])) for r in cur.fetchall()]
 
 
 def _query_summed_vars(cur, varnames: tuple[str, ...]) -> list[tuple[str, int]]:
@@ -879,6 +918,19 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
                 boards_written += 1
             else:
                 print(f"[leaderboards] {board['marker']}: marker missing in {page.name}")
+
+        # Job Rebirth board — SUM of Rebirth_Count_* per character.
+        rows = _query_pattern_sum(cur, _JOB_REBIRTH_BOARD["pattern"])
+        content = _render_board(
+            _JOB_REBIRTH_BOARD["heading"],
+            _JOB_REBIRTH_BOARD["blurb"],
+            _JOB_REBIRTH_BOARD["unit"],
+            rows,
+        )
+        if write_between_markers(page, _JOB_REBIRTH_BOARD["marker"], content):
+            boards_written += 1
+        else:
+            print(f"[leaderboards] {_JOB_REBIRTH_BOARD['marker']}: marker missing in {page.name}")
 
         # Speed boards — durations rendered with _format_duration.
         for board in _SPEED_BOARDS:

@@ -278,6 +278,27 @@ def _render_guild_ranks(p: dict, meta: dict) -> list:
     return lines
 
 
+def _render_rebirth(p: dict) -> list:
+    """Job Rebirth section — skipped if the char has never reborn a job."""
+    counts = p.get("rebirth_counts", {})
+    total  = p.get("rebirth_total", 0)
+    if not total:
+        return []
+    lines = [
+        "## Job Rebirth",
+        "",
+        f"- **Total rebirths:** {total}",
+    ]
+    parts = [
+        f"{JOB_ABBR.get(j, f'#{j}')} ×{counts[j]}"
+        for j in sorted(counts) if counts[j] > 0
+    ]
+    if parts:
+        lines.append(f"- **By job:** {' · '.join(parts)}")
+    lines.append("")
+    return lines
+
+
 def _render_prestige(p: dict) -> list:
     """Prestige / Ascension section — skipped if the char has never ascended."""
     asc = p.get("ascensions", 0)
@@ -411,6 +432,21 @@ def _load_profile(cur, charid: int, base: dict, meta: dict) -> dict:
             continue
     profile["prestige_levels"] = prestige_levels
 
+    # Per-job rebirth counts (Rebirth_Count_<jobId>).
+    cur.execute(
+        "SELECT varname, value FROM char_vars "
+        " WHERE charid = %s AND varname LIKE 'Rebirth_Count_%%' AND value > 0",
+        (charid,),
+    )
+    rebirth_counts: dict = {}
+    for name, val in cur.fetchall():
+        try:
+            rebirth_counts[int(name.rsplit("_", 1)[1])] = int(val)
+        except (ValueError, IndexError):
+            continue
+    profile["rebirth_counts"] = rebirth_counts
+    profile["rebirth_total"]  = sum(rebirth_counts.values())
+
     # Achievements earned (ACH_<id> CharVar set > 0).
     cur.execute(
         "SELECT varname FROM char_vars "
@@ -530,6 +566,9 @@ def _render_profile(p: dict, creation_unix: int, meta: dict) -> str:
         f"| Empyrean | {p['rf_empy']:,} | {p['rf_empy_lt']:,} |",
         "",
     ]
+
+    # Job Rebirth (skipped for chars who've never reborn)
+    lines += _render_rebirth(p)
 
     # Prestige / Ascension (skipped for chars who've never ascended)
     lines += _render_prestige(p)
