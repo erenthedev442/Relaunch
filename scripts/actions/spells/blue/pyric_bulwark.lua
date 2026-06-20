@@ -16,7 +16,14 @@
 local spellObject = {}
 
 spellObject.onMagicCastingCheck = function(caster, target, spell)
-    return 0
+    -- DISABLED 2026-06-20 (owner request): block every cast of Pyric Bulwark.
+    -- Its absorb-physical-hits barrier trivialized melee content. Returning a
+    -- non-zero message from the casting check aborts the cast cleanly (no MP /
+    -- recast spent), same pattern as arise.lua's living-target block. The spell
+    -- stays learnable + in spell_list; it just can't be cast. To re-enable,
+    -- restore `return 0`. onSpellCast below is now unreachable, kept for an easy
+    -- revert.
+    return xi.msg.basic.MAGIC_CANNOT_BE_CAST
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
