@@ -242,18 +242,41 @@ xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)
         end
 
         -- Distribute to every online PC in the party.
-        -- getPartyMember(0) always returns self; 1..N-1 returns other members.
-        for i = 0, (player:getPartySize() or 1) - 1 do
-            local mem = player:getPartyMember(i, 0)
-            if mem and mem:getObjType() == xi.objType.PC then
-                if infamyEarned > 0 then
-                    mem:setCharVar(INFAMY_CV,      (mem:getCharVar(INFAMY_CV)      or 0) + infamyEarned)
-                    mem:setCharVar(INFAMY_LIFE_CV, (mem:getCharVar(INFAMY_LIFE_CV) or 0) + infamyEarned)
-                end
-                if gilEarned   > 0 then mem:addGil(gilEarned)                       end
-                if cruorEarned > 0 then mem:addCurrency('cruor', cruorEarned)        end
-                mem:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
+        --
+        -- getPartyMember(0, 0) always returns self (C++ special-case), while
+        -- getPartyMember(i, 0) for i >= 1 returns members[i] from the shared
+        -- 0-indexed party vector.  When the killer is NOT the party leader
+        -- (i.e. NOT at members[0]), looping i=0..N-1 double-grants to the
+        -- killer (hit at both i=0 and i=killer_index) and never visits
+        -- members[0] (the leader).  Fix: reference the killer directly,
+        -- pull the leader via getPartyLeader(), and dedup by player ID.
+        local seen = {}
+        local partySize = player:getPartySize() or 1
+
+        local function grantTo(mem)
+            if mem == nil then return end
+            if mem:getObjType() ~= xi.objType.PC then return end
+            local id = mem:getID()
+            if seen[id] then return end
+            seen[id] = true
+            if infamyEarned > 0 then
+                mem:setCharVar(INFAMY_CV,      (mem:getCharVar(INFAMY_CV)      or 0) + infamyEarned)
+                mem:setCharVar(INFAMY_LIFE_CV, (mem:getCharVar(INFAMY_LIFE_CV) or 0) + infamyEarned)
             end
+            if gilEarned   > 0 then mem:addGil(gilEarned)                    end
+            if cruorEarned > 0 then mem:addCurrency('cruor', cruorEarned)     end
+            mem:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
+        end
+
+        -- Killer (always correct via direct parameter reference)
+        grantTo(player)
+        -- Party leader = members[0]; may differ from killer when killer is not leader
+        if partySize > 1 then
+            grantTo(player:getPartyLeader())
+        end
+        -- members[1]..members[N-1] from the shared party vector
+        for i = 1, partySize - 1 do
+            grantTo(player:getPartyMember(i, 0))
         end
     end)
 end
