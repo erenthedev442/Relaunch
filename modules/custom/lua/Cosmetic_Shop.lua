@@ -42,10 +42,10 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     openShop = function(player)
         local item = getItem(0)
 
-        menu.title = string.format('Boutique: %s', item.name)
+        menu.title = string.format("Today's item: %s", item.name)
         menu.options =
         {
-            { string.format('Buy  %s', fmtAN(item.price)), function(p)
+            { string.format('Buy %s (%s)', item.name, fmtAN(item.price)), function(p)
                 if p:getCurrency('allied_notes') < item.price then
                     p:printToPlayer('[Boutique] Not enough allied notes, kupo!', S)
                     openShop(p)
@@ -77,10 +77,10 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         local item = getItem(offset)
         local label = (offset == 1) and 'Tomorrow' or string.format('Day +%d', offset)
 
-        menu.title = string.format('%s: %s', label, item.name)
+        menu.title = string.format("%s's item: %s", label, item.name)
         menu.options =
         {
-            { string.format('Price: %s', fmtAN(item.price)), function(p)
+            { string.format('%s (%s)', item.name, fmtAN(item.price)), function(p)
                 -- informational -- re-show same preview
                 previewDay(p, offset)
             end },
