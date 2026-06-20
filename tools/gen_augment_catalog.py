@@ -154,6 +154,15 @@ EXCLUDED_AUGS = {
     #  before 2026-06-15 by owner request. See augment_catalog.lua [1473].)
 }
 
+# Per-augment boost ceiling (0..31). The Augment Moogle clamps the baked boost
+# to this at augment time (Augment_Moogle.lua def.maxBoost). It MUST live here so
+# the generator re-emits it: this script reruns every 4h on the box
+# (refresh_site_azure.sh [0c/4]), and any maxBoost only hand-edited into
+# augment_catalog.lua gets WIPED on the next regen. augId -> maxBoost; omit = 31.
+MAXBOOST = {
+    67: 7,   # All songs -- capped 2026-06-19 ("75% of prior max").
+}
+
 # Specific item IDs kept OUT of the catalyst pool entirely -- never offered as
 # an augment catalyst regardless of score, and (unlike EXCLUDED_AUGS) never
 # freed for re-assignment to another augment. Add item IDs here to ban one.
@@ -1057,9 +1066,11 @@ def main():
             # affinity bit + apply Sage Mastery / NM-affinity multipliers
             # without re-parsing the augment label at trade time.
             cat_str = f"{_cat_idx + 1},".ljust(3)
+            mb_suffix = f", maxBoost = {MAXBOOST[aid]}" if aid in MAXBOOST else ""
             lines.append(
                 f"    {id_str} = {{ augId = {aug_str} base = {base_str} "
-                f"mult = {mult_str} disp = {disp_str} cat = {cat_str} label = {lua_str(LABEL_OVERRIDE.get(aid, clean_label(label)))} }},"
+                f"mult = {mult_str} disp = {disp_str} cat = {cat_str} "
+                f"label = {lua_str(LABEL_OVERRIDE.get(aid, clean_label(label)))}{mb_suffix} }},"
             )
 
     # -- Progression (Exp / Cap) ------------------------------------------------
