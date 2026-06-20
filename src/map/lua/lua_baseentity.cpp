@@ -4976,6 +4976,26 @@ void CLuaBaseEntity::setShopCurrencyVar(std::string varName)
 }
 
 /************************************************************************
+ *  Function: setShopCurrencyName()
+ *  Purpose : Make the currently-built shop charge a named char_points currency
+ *            (e.g. "allied_notes") instead of gil/item/CharVar, so a points
+ *            currency still uses the native shop window (FJB custom).
+ *  Example : player:setShopCurrencyName("allied_notes")   -- "" restores gil
+ *  Notes   : Call after createShop(); reset by the shop's Clean().
+ ************************************************************************/
+
+void CLuaBaseEntity::setShopCurrencyName(std::string curName)
+{
+    if (m_PBaseEntity->objtype != TYPE_PC)
+    {
+        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
+        return;
+    }
+
+    static_cast<CCharEntity*>(m_PBaseEntity)->Container->setShopCurrencyName(curName);
+}
+
+/************************************************************************
  *  Function: getCurrentGPItem()
  *  Purpose : Returns the current Guild Point Item needed
  *  Example : player:getCurrentGPItem(guildID)
@@ -20171,6 +20191,7 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("addShopItem", CLuaBaseEntity::addShopItem);
     SOL_REGISTER("setShopCurrency", CLuaBaseEntity::setShopCurrency);
     SOL_REGISTER("setShopCurrencyVar", CLuaBaseEntity::setShopCurrencyVar);
+    SOL_REGISTER("setShopCurrencyName", CLuaBaseEntity::setShopCurrencyName);
     SOL_REGISTER("getCurrentGPItem", CLuaBaseEntity::getCurrentGPItem);
     SOL_REGISTER("breakLinkshell", CLuaBaseEntity::breakLinkshell);
     SOL_REGISTER("addLinkpearl", CLuaBaseEntity::addLinkpearl);

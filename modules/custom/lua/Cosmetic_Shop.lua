@@ -2,7 +2,12 @@
 -- Cosmetic_Shop.lua
 -- "Boutique Moogle" -- GM Home seasonal boutique.
 -- Sells one appearance item per server day (UTC), rotating through
--- cosmetic_shop_catalog.lua. Purchased with Allied Notes (from (S) zones). No combat stats on any item.
+-- cosmetic_shop_catalog.lua.
+--
+-- Uses the NATIVE shop window (examinable item icons -- so players can SEE the
+-- look before buying, instead of just a name) and charges Allied Notes via the
+-- FJB named-currency shop hook (player:setShopCurrencyName -> 0x083_shop_buy.cpp).
+-- No combat stats on any item.
 --
 -- NPC position: x=7.5, z=-25 (east end of the z=-25 activities row).
 -----------------------------------
@@ -29,68 +34,27 @@ end
 m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     super(zone)
 
-    local menu = { title = '', options = {} }
+    local function openBoutique(player)
+        local today    = getItem(0)
+        local tomorrow = getItem(1)
 
-    local function show(player)
-        local snapshot = { title = menu.title, options = menu.options }
-        player:timer(30, function(p) p:customMenu(snapshot) end)
-    end
+        player:printToPlayer(string.format(
+            "[Boutique] Today's cosmetic: %s -- %s. Examine it in the window to see the look, kupo!",
+            today.name, fmtAN(today.price)), S)
+        player:printToPlayer(string.format(
+            '[Boutique] Appearance only (no stats). Buying spends Allied Notes -- you have %d. Tomorrow: %s.',
+            player:getCurrency('allied_notes'), tomorrow.name), S)
 
-    local openShop   -- forward declaration
-    local previewDay -- forward declaration
-
-    openShop = function(player)
-        local item = getItem(0)
-
-        menu.title = string.format("Today's item: %s", item.name)
-        menu.options =
-        {
-            { string.format('Buy %s (%s)', item.name, fmtAN(item.price)), function(p)
-                if p:getCurrency('allied_notes') < item.price then
-                    p:printToPlayer('[Boutique] Not enough allied notes, kupo!', S)
-                    openShop(p)
-                    return
-                end
-                if p:getFreeSlotsCount() < 1 then
-                    p:printToPlayer('[Boutique] Inventory is full, kupo!', S)
-                    openShop(p)
-                    return
-                end
-                p:delCurrency('allied_notes', item.price)
-                p:addItem({ id = item.id, quantity = 1 })
-                p:printToPlayer(
-                    string.format('[Boutique] Enjoy your %s, kupo!', item.name), S)
-            end },
-
-            { "Tomorrow's item", function(p)
-                previewDay(p, 1)
-            end },
-
-            { 'Leave', function(p)
-                p:printToPlayer('[Boutique] Come back tomorrow for a new item, kupo!', S)
-            end },
-        }
-        show(player)
-    end
-
-    previewDay = function(player, offset)
-        local item = getItem(offset)
-        local label = (offset == 1) and 'Tomorrow' or string.format('Day +%d', offset)
-
-        menu.title = string.format("%s's item: %s", label, item.name)
-        menu.options =
-        {
-            { string.format('%s (%s)', item.name, fmtAN(item.price)), function(p)
-                -- informational -- re-show same preview
-                previewDay(p, offset)
-            end },
-
-            { 'Back to today',  function(p) openShop(p) end },
-            { 'Leave',          function(p)
-                p:printToPlayer('[Boutique] See you next time, kupo!', S)
-            end },
-        }
-        show(player)
+        -- Native shop window: one examinable item, charged in Allied Notes via
+        -- the FJB named-currency hook (setShopCurrencyName -> 0x083_shop_buy.cpp).
+        -- The window still shows a gil icon next to the price (client limitation),
+        -- which is why the chat lines above spell out the real cost in Allied Notes.
+        player:timer(50, function(p)
+            p:createShop(1)
+            p:addShopItem(today.id, today.price)
+            p:setShopCurrencyName('allied_notes')
+            p:sendMenu(xi.menuType.SHOP)
+        end)
     end
 
     local BoutiqueMoogle = zone:insertDynamicEntity({
@@ -105,11 +69,11 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         widescan   = 1,
 
         onTrade = function(player, npc, trade)
-            player:printToPlayer('[Boutique] No trading -- use the menu to browse, kupo!', S)
+            player:printToPlayer('[Boutique] No trading -- browse the shop window, kupo!', S)
         end,
 
         onTrigger = function(player, npc)
-            openShop(player)
+            openBoutique(player)
         end,
     })
     utils.unused(BoutiqueMoogle)

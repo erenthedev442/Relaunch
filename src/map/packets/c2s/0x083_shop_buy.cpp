@@ -62,6 +62,28 @@ void GP_CLI_COMMAND_SHOP_BUY::process(MapSession* PSession, CCharEntity* PChar) 
         quantity = PItem->getStackSize();
     }
 
+    // FJB: named-CURRENCY shops (a char_points currency like "allied_notes" -- the
+    // cosmetic Boutique). Neither gil, an inventory item, nor a CharVar. A vendor's
+    // Lua opts in via player:setShopCurrencyName("allied_notes"); createShop()/Clean()
+    // resets it. Checked first so it takes precedence over everything below.
+    const std::string& currencyName = PChar->Container->getShopCurrencyName();
+    if (!currencyName.empty())
+    {
+        const uint32 totalCost = price * quantity;
+        const int32  balance   = charutils::GetPoints(PChar, currencyName.c_str());
+        if (balance >= 0 && static_cast<uint32>(balance) >= totalCost)
+        {
+            if (charutils::AddItem(PChar, LOC_INVENTORY, itemId, quantity) != ERROR_SLOTID)
+            {
+                charutils::AddPoints(PChar, currencyName.c_str(), -static_cast<int32>(totalCost));
+                ShowInfo("User '%s' bought %u of item %u [VENDOR, currency %s]", PChar->getName(), quantity, itemId, currencyName.c_str());
+                PChar->pushPacket<GP_SERV_COMMAND_SHOP_BUY>(this->ShopItemIndex, quantity);
+                PChar->pushPacket<GP_SERV_COMMAND_ITEM_SAME>(PChar);
+            }
+        }
+        return;
+    }
+
     // FJB: CharVar-currency shops (e.g. the dungeon Infamy Vendor) charge a named
     // CharVar instead of an inventory item or gil. A vendor's Lua opts in via
     // player:setShopCurrencyVar("Infamy"); createShop()/Clean() resets it. Checked

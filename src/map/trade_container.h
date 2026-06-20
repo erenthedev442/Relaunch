@@ -77,6 +77,13 @@ public:
     void               setShopCurrencyVar(const std::string& varName) { m_shopCurrencyVar = varName; }
     const std::string& getShopCurrencyVar() const { return m_shopCurrencyVar; }
 
+    // FJB: ...or a named CURRENCY from char_points (e.g. "allied_notes", the
+    // cosmetic Boutique) -- a points currency that is neither gil, an inventory
+    // item, nor a CharVar. When non-empty this takes precedence over all of the
+    // above (see packets/c2s/0x083_shop_buy.cpp). Reset by Clean().
+    void               setShopCurrencyName(const std::string& curName) { m_shopCurrencyName = curName; }
+    const std::string& getShopCurrencyName() const { return m_shopCurrencyName; }
+
     void Clean(); // we clean the container
 
 private:
@@ -85,6 +92,7 @@ private:
     uint8  m_exSize{};       // Can be used as a custom delineation point inside a container
     uint16 m_shopCurrency{}; // FJB: itemID charged instead of gil (0 = gil)
     std::string m_shopCurrencyVar{}; // FJB: CharVar charged instead of gil/item ("" = unused)
+    std::string m_shopCurrencyName{}; // FJB: named char_points currency charged ("" = unused)
 
     std::vector<CItem*> m_PItem;
     std::vector<uint8>  m_slotID;
