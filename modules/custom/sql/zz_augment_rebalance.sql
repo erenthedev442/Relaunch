@@ -77,6 +77,12 @@ UPDATE `augments` SET `value` = -1, `multiplier` = 2 WHERE `augmentId` = 50;   -
 -- Stock entry has value=0/mult=0 → floor of 0; set to value=1/mult=1 to match MND (517).
 UPDATE `augments` SET `value` = 1, `multiplier` = 1 WHERE `augmentId` = 516;  -- INT+ -> 1..32/slot
 
+-- ---- Flat weapon Dmg+ TOP tier (743 melee / 749 ranged) -- restored 2026-06-20 ----
+-- Stock value is +97 (Dmg:+97), absurd stacked across 5 augment slots. Rebalance to
+-- value=1/mult=1 -> +1..32 per slot (the retail DMG+32 cap), scaling with Augment Sage.
+UPDATE `augments` SET `value` = 1, `multiplier` = 1 WHERE `augmentId` = 743;  -- DMG melee  -> +1..32/slot
+UPDATE `augments` SET `value` = 1, `multiplier` = 1 WHERE `augmentId` = 749;  -- DMG ranged -> +1..32/slot
+
 -- ---- INDIVIDUAL WS DMG+ (augIds 1024-1058, one per named weaponskill) ----
 -- Original: value=1, mult=5 → per-slot 5..160, 5 slots = 25..800%
 -- New:      value=9, mult=1 → per-slot 9.. 40, 5 slots = 45..200%

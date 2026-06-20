@@ -75,6 +75,11 @@ FORCED_CATALYST = {
     # its own item instead of double-booking 921). value/mult come from the
     # zz_augment_rebalance.sql override (value=1, mult=1, matching MND).
     516: 921,    # INT -> Bottle of Ahriman Tears
+    # Flat weapon Dmg+ (top tier), restored 2026-06-20 (owner request). Pinned so the
+    # generator emits them; value rebalanced to +1..32/slot in zz_augment_rebalance.sql
+    # (stock +97 is absurd stacked across 5 slots).
+    743: 889,    # DMG (melee)  -> Beetle Shell
+    749: 908,    # DMG (ranged) -> Adamantoise Shell
 }
 
 # Display-label overrides keyed by augId, applied after clean_label(). For when
@@ -140,15 +145,18 @@ EXCLUDED_AUGS = {
     557,  # STR CHR  (Wyrm Horn 1816)
     558,  # STR INT  (Ovinnik Hide 2121)
     559,  # STR MND  (Catoblepas Hide 2123)
-    # More 2-stat pairs + the flat weapon-Dmg augments removed 2026-06-19 (owner request):
+    # More 2-stat pairs removed 2026-06-19 (owner request):
     553,  # DEX AGI    (Regurgitated Wing 2499)
     555,  # MND CHR    (Southern Pearl 1274)
-    743,  # Dmg melee  (Beetle Shell 889)
-    744,  # Dmg melee  (Giant Femur 893)
-    745,  # Dmg melee  (Scorpion Shell 896)
-    749,  # Dmg ranged (Adamantoise Shell 908)
-    750,  # Dmg ranged (Vial of Fiend Blood 924)
-    751,  # Dmg ranged (Vial of Beastman Blood 930)
+    # Flat weapon-Dmg: the TOP tier is RESTORED 2026-06-20 (owner request) -- 743
+    # (melee) + 749 (ranged) are placed via FORCED_CATALYST below + rebalanced to
+    # +1..32/slot in zz_augment_rebalance.sql. The lower +1/+33/+65 tiers stay
+    # excluded so they don't supersede-compete with the rebalanced top tier, and the
+    # Dmg:-1/-33 negatives stay excluded as junk.
+    740, 741, 742,  # Dmg:+1/+33/+65 melee  (lower tiers, superseded by 743)
+    744, 745,       # Dmg:-1/-33 melee      (negatives)
+    746, 747, 748,  # Dmg:+1/+33/+65 ranged (lower tiers, superseded by 749)
+    750, 751,       # Dmg:-1/-33 ranged     (negatives)
     # (327 "Weapon skill damage" was excluded 2026-06-14 -- cheap/farmable HQ
     #  Scorpion Shell catalyst -> stackable WSD+ -- then RESTORED exactly as
     #  before 2026-06-15 by owner request. See augment_catalog.lua [1473].)
@@ -172,8 +180,10 @@ EXCLUDED_ITEMS = {
     # The 6 catalysts of the removed STR-pair augments (2026-06-19) — banned so
     # they aren't re-assigned to other augments (a clean removal, not a swap).
     1628, 1640, 1680, 1816, 2121, 2123,
-    # Catalysts of the DEX/AGI + MND/CHR pairs and the 6 weapon-Dmg augments (2026-06-19):
-    2499, 1274, 889, 893, 896, 908, 924, 930,
+    # Catalysts of the DEX/AGI + MND/CHR pairs (2026-06-19) and the junk lower/negative
+    # weapon-Dmg tiers. Beetle Shell 889 + Adamantoise Shell 908 were FREED 2026-06-20
+    # to catalyze the restored top-tier Dmg+ (743/749) -- see FORCED_CATALYST.
+    2499, 1274, 893, 896, 924, 930,
 }
 
 MOB_DROPLIST = SQL / "mob_droplist.sql"

@@ -330,6 +330,8 @@ return {
     [1110] = { augId = 326,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Weapon Skill Acc' },
     [1473] = { augId = 327,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Weapon skill damage' },
     [865]  = { augId = 332,  base = 1,   mult = 100, disp = 100,  cat = 13, label = 'Sklchn.dmg' },
+    [889]  = { augId = 743,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Dmg (melee,not ranged)' },
+    [908]  = { augId = 749,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Dmg (ranged,not melee)' },
     [1016] = { augId = 1024, base = 9,   mult = 1,  disp = 1,    cat = 13, label = 'Backhand Blow DMG' },
     [2013] = { augId = 1025, base = 9,   mult = 1,  disp = 1,    cat = 13, label = 'Spinning Attack DMG' },
     [2014] = { augId = 1026, base = 9,   mult = 1,  disp = 1,    cat = 13, label = 'Howling Fist DMG' },
