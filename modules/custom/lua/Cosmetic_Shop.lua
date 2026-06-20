@@ -2,7 +2,7 @@
 -- Cosmetic_Shop.lua
 -- "Boutique Moogle" -- GM Home seasonal boutique.
 -- Sells one appearance item per server day (UTC), rotating through
--- cosmetic_shop_catalog.lua. Gil only. No combat stats on any item.
+-- cosmetic_shop_catalog.lua. Purchased with Allied Notes (from (S) zones). No combat stats on any item.
 --
 -- NPC position: x=7.5, z=-25 (east end of the z=-25 activities row).
 -----------------------------------
@@ -14,13 +14,11 @@ local m = Module:new('cosmetic_shop')
 
 local S = xi.msg.channel.SYSTEM_3
 
-local function fmtGil(n)
-    if n >= 1000000 then
-        return string.format('%gM gil', n / 1000000)
-    elseif n >= 1000 then
-        return string.format('%dk gil', n / 1000)
+local function fmtAN(n)
+    if n >= 1000 then
+        return string.format('%dk AN', n / 1000)
     end
-    return tostring(n) .. ' gil'
+    return tostring(n) .. ' AN'
 end
 
 local function getItem(offset)
@@ -47,9 +45,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         menu.title = string.format('Boutique: %s', item.name)
         menu.options =
         {
-            { string.format('Buy  %s', fmtGil(item.price)), function(p)
-                if p:getGil() < item.price then
-                    p:printToPlayer('[Boutique] Not enough gil, kupo!', S)
+            { string.format('Buy  %s', fmtAN(item.price)), function(p)
+                if p:getCurrency('allied_notes') < item.price then
+                    p:printToPlayer('[Boutique] Not enough allied notes, kupo!', S)
                     openShop(p)
                     return
                 end
@@ -58,7 +56,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                     openShop(p)
                     return
                 end
-                p:delGil(item.price)
+                p:delCurrency('allied_notes', item.price)
                 p:addItem({ id = item.id, quantity = 1 })
                 p:printToPlayer(
                     string.format('[Boutique] Enjoy your %s, kupo!', item.name), S)
@@ -82,7 +80,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         menu.title = string.format('%s: %s', label, item.name)
         menu.options =
         {
-            { string.format('Price: %s', fmtGil(item.price)), function(p)
+            { string.format('Price: %s', fmtAN(item.price)), function(p)
                 -- informational -- re-show same preview
                 previewDay(p, offset)
             end },
