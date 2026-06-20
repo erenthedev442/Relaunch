@@ -181,7 +181,7 @@ return {
     [2428] = { augId = 237,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Occult Acumen' },
     [2776] = { augId = 334,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Magic burst dmg' },
     [2777] = { augId = 335,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Mag. crit. hit dmg' },
-    [2943] = { augId = 343,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Augment' },
+    [2943] = { augId = 343,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Drain/Aspir Potency' },
     [921]  = { augId = 516,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'INT' },
     [2338] = { augId = 896,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Enspell Dmg' },
 

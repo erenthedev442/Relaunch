@@ -92,6 +92,12 @@ FORCED_CATALYST = {
 # the augments.sql comment is technically correct but not what players call it.
 LABEL_OVERRIDE = {
     896: 'Enspell Dmg',   # vs the stock "Sword Enhancement Spell Damage"
+    # augId 343's comment -- "Drain" and "Aspir" Potency +1 -- STARTS with a quote,
+    # so clean_label() strips from the first " to end-of-string -> empty -> the
+    # generic 'Augment' fallback. It is the ONLY quote-first comment in augments.sql
+    # (swept 2026-06-20), so this single override fixes the whole class. (Keep the
+    # value quote-free: a literal " in a Moogle/customMenu label corrupts the menu.)
+    343: 'Drain/Aspir Potency',
 }
 
 # Progression augments (Exp. Point / Cap. Point). These are leveling-currency
