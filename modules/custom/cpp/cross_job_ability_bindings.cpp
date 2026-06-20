@@ -82,6 +82,19 @@ namespace
     // erased on zone-out to bound memory.
     std::unordered_map<uint32, std::vector<uint16>> g_learnedCache;
 
+    // The ability-recast packet (GP_SERV_COMMAND_ABIL_RECAST, see
+    // src/map/packets/s2c/0x119_abil_recast.cpp) carries at most 30 ability
+    // recast entries -- native job abilities AND borrowed ones combined. The
+    // 31st makes the engine drop the overflow and log "> 31 abilities ...
+    // unsupported", leaving those abilities unusable. A fully-merited/Job-Point
+    // job already has ~20-25 native abilities, so only the first few borrowed
+    // ones fit. We inject borrowed abilities only while the recast list has room
+    // and stop at this ceiling; native abilities are placed first by
+    // BuildingCharAbilityTable, so borrowed fill the remaining slots. Excess
+    // borrowed abilities stay owned in char_cross_job_abilities and re-activate
+    // automatically on a job whose native list leaves free slots.
+    constexpr std::size_t MAX_ABILITY_RECASTS = 30;
+
     // Mechanical safety gate (NOT the content curation -- that lives in
     // cross_job_ability_catalog.lua). An ability is grantable cross-job if it:
     //   * exists in the global ability list,
@@ -115,6 +128,16 @@ namespace
     void applyCrossJobAbility(CCharEntity* PChar, uint16 abilityId)
     {
         if (PChar == nullptr || !isCrossJobLearnable(abilityId))
+        {
+            return;
+        }
+
+        // Never push the recast list past the packet ceiling (MAX_ABILITY_RECASTS).
+        // Native abilities are already present at this point, so this fills the
+        // remaining slots and skips any borrowed abilities that wouldn't fit --
+        // they stay owned and re-apply later when there's room.
+        const RecastList_t* recasts = PChar->PRecastContainer->GetRecastList(RECAST_ABILITY);
+        if (recasts != nullptr && recasts->size() >= MAX_ABILITY_RECASTS)
         {
             return;
         }
@@ -324,7 +347,29 @@ class CrossJobAbilityBindingsModule : public CPPModule
             return result;
         };
 
-        ShowInfo("[cross_job_ability_bindings] Registered learn/unlearn/has/get CrossJobAbility Lua bindings.");
+        // -----------------------------------------------------------------
+        // player:getAbilityRecastCount() -> int
+        // -----------------------------------------------------------------
+        // Current number of ability recast entries (native + borrowed). The
+        // client's ability-recast packet (0x119) holds at most 30, so the
+        // Cross-Job Trainer uses this to show players how many borrowed slots
+        // are actually free on their current job.
+        lua["CBaseEntity"]["getAbilityRecastCount"] =
+            [](CLuaBaseEntity& self) -> uint16
+        {
+            auto* entity = self.GetBaseEntity();
+            if (entity == nullptr || entity->objtype != TYPE_PC)
+            {
+                return 0;
+            }
+
+            auto* PChar = static_cast<CCharEntity*>(entity);
+
+            const RecastList_t* recasts = PChar->PRecastContainer->GetRecastList(RECAST_ABILITY);
+            return recasts != nullptr ? static_cast<uint16>(recasts->size()) : static_cast<uint16>(0);
+        };
+
+        ShowInfo("[cross_job_ability_bindings] Registered learn/unlearn/has/get/count CrossJobAbility Lua bindings.");
     }
 
     // Login + every zone-in: refresh cache from DB, then apply.

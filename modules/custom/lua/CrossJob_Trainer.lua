@@ -37,12 +37,17 @@ end
 
 local GIL_STR = commafy(GIL_COST)
 
--- Hard cap on cross-job ability purchases per character. The ability-recast
--- packet (GP_SERV_COMMAND_ABIL_RECAST) holds at most 31 entries total across
--- native job abilities AND borrowed ones. Keeping cross-job purchases at 30
--- leaves headroom for at least 1 native ability and prevents the send-buffer
--- overflow that crashes the map server.
-local MAX_CROSS_JOB_ABILITIES = 30
+-- Hard cap on cross-job ability PURCHASES per character. This is a purchase
+-- ceiling, NOT a usability one: the ability-recast packet
+-- (GP_SERV_COMMAND_ABIL_RECAST) carries at most 30 entries total -- native job
+-- abilities AND borrowed ones combined -- and a fully-merited job already runs
+-- ~20-25 native abilities, so only the first few borrowed ones fit on a heavy
+-- job. The C++ binding caps LIVE injection at 30 total (excess borrowed stay
+-- owned but dormant until you're on a lighter job); this purchase cap just keeps
+-- players from paying for far more than they could realistically use. (The old
+-- value of 30 assumed ~1 native ability -- the miscount that let players overbuy
+-- past the packet limit and lose access to abilities they had paid for.)
+local MAX_CROSS_JOB_ABILITIES = 15
 
 -- Group-menu pagination: keep each page's customMenu payload under the
 -- ~150-byte cap. 6 abilities + nav + Back per page stays safely within budget,
@@ -204,6 +209,17 @@ end
 showConfirmMenu = function(player, groupIndex, ab)
     -- Show what the ability does + its home job/level before committing.
     player:printToPlayer(string.format('%s (%s Lv%d): %s', ab.name, ab.job, ab.lvl, ab.desc), xi.msg.channel.SYSTEM_3)
+
+    -- Show how full the ability bar is on the player's CURRENT job so they
+    -- understand a borrowed ability only fits under the 30-total (native +
+    -- borrowed) recast-packet cap. A heavy job may leave little or no room; the
+    -- ability still saves and re-activates on a lighter job.
+    local used = player:getAbilityRecastCount()
+    if used >= 30 then
+        player:printToPlayer('  Heads-up: your ability bar is FULL (30/30) on this job - a borrowed ability stays dormant until you switch to a job with fewer abilities.', xi.msg.channel.SYSTEM_3)
+    else
+        player:printToPlayer(string.format('  Ability slots used on this job: %d/30 (room for %d more borrowed).', used, 30 - used), xi.msg.channel.SYSTEM_3)
+    end
 
     if player:hasCrossJobAbility(ab.id) then
         player:printToPlayer(string.format('You already know %s. Use it with  /ja "%s" <me>', ab.name, ab.name), xi.msg.channel.SYSTEM_3)
