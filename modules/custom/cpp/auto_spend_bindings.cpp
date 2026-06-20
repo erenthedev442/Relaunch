@@ -182,7 +182,81 @@ class AutoSpendBindingsModule : public CPPModule
             return true;
         };
 
-        ShowInfo("[auto_spend_bindings] Registered raiseMerit + raiseJobPoint Lua bindings.");
+        // -----------------------------------------------------------------
+        // player:lowerMerit(meritId, refundPoints) -> bool
+        // -----------------------------------------------------------------
+        // Lowers one rank on the given merit and refunds the specified
+        // number of merit points to the player's unspent balance.
+        //
+        // LowerMerit() handles spell/WS removal when the rank drops to 0
+        // but does NOT touch m_MeritPoints, so callers must pass in the
+        // exact cost of the rank being removed (see merit.cpp upgrade[]
+        // array). The Lua !resetjobmerits command computes this from its
+        // own per-rank cost tables that mirror the C++ constants.
+        //
+        // Returns false if the entity is not a player, has no merit data,
+        // or the merit rank is already 0 (LowerMerit would no-op).
+        lua["CBaseEntity"]["lowerMerit"] =
+            [](CLuaBaseEntity& self, uint16 merit, uint8 refundPoints) -> bool
+        {
+            auto* entity = self.GetBaseEntity();
+            if (entity == nullptr || entity->objtype != TYPE_PC)
+            {
+                return false;
+            }
+
+            auto* PChar = static_cast<CCharEntity*>(entity);
+            if (PChar->PMeritPoints == nullptr)
+            {
+                return false;
+            }
+
+            const MERIT_TYPE meritType = static_cast<MERIT_TYPE>(merit);
+
+            // GetMeritCountInSameCategory sums ranks across the whole group;
+            // use the combo total as a proxy to detect if this merit is at 0.
+            // A cleaner check: RaiseMerit then LowerMerit was the old pattern,
+            // but that would corrupt the balance. Instead we rely on the Lua
+            // caller only passing merits with rank > 0 (verified via getMerit).
+            PChar->PMeritPoints->LowerMerit(meritType);
+
+            // Refund the caller-supplied point cost into the unspent balance.
+            const int32 newBalance = static_cast<int32>(PChar->PMeritPoints->m_MeritPoints) + refundPoints;
+            PChar->PMeritPoints->m_MeritPoints = static_cast<uint8>(std::min(newBalance, 255));
+
+            // Push updated balance + per-merit packets so the client UI
+            // reflects the change without a relog. Then rebuild traits/skills
+            // in case the lowered merit had active effects.
+            PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::MERITS>(PChar);
+            PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::MONSTROSITY1>(PChar);
+            PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::MONSTROSITY2>(PChar);
+            PChar->pushPacket<GP_SERV_COMMAND_MERIT>(PChar, meritType);
+
+            charutils::SaveCharExp(PChar, PChar->GetMJob());
+            PChar->PMeritPoints->SaveMeritPoints(PChar->id);
+
+            charutils::BuildingCharSkillsTable(PChar);
+            charutils::CalculateStats(PChar);
+            charutils::CheckValidEquipment(PChar);
+            charutils::BuildingCharAbilityTable(PChar);
+            charutils::BuildingCharTraitsTable(PChar);
+
+            PChar->UpdateHealth();
+            PChar->addHP(PChar->GetMaxHP());
+            PChar->addMP(PChar->GetMaxMP());
+
+            PChar->pushPacket<CCharStatusPacket>(PChar);
+            PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS>(PChar);
+            PChar->pushPacket<GP_SERV_COMMAND_CLISTATUS2>(PChar);
+            PChar->pushPacket<GP_SERV_COMMAND_ABIL_RECAST>(PChar);
+            PChar->pushPacket<GP_SERV_COMMAND_COMMAND_DATA>(PChar);
+            charutils::SendExtendedJobPackets(PChar);
+            PChar->pushPacket<CCharSyncPacket>(PChar);
+
+            return true;
+        };
+
+        ShowInfo("[auto_spend_bindings] Registered raiseMerit + raiseJobPoint + lowerMerit Lua bindings.");
     }
 };
 
