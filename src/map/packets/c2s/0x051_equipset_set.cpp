@@ -99,11 +99,13 @@ auto GP_CLI_COMMAND_EQUIPSET_SET::validate(MapSession* PSession, const CCharEnti
 
 void GP_CLI_COMMAND_EQUIPSET_SET::process(MapSession* PSession, CCharEntity* PChar) const
 {
-    // Legendary: /equipset macros are DISABLED server-wide. Equipping is
-    // server-authoritative, so simply ignoring this packet makes /equipset a
-    // silent no-op (the client shows no change, no desync, no chat spam).
-    // Single-item /equip (0x050) and the equipset-build menu (0x052) are
-    // unaffected. To re-enable, restore the original equip loop from git history.
-    (void)PSession;
-    (void)PChar;
+    for (uint8 i = 0; i < this->Count; i++)
+    {
+        charutils::EquipItem(PChar, this->Equipment[i].ItemIndex, this->Equipment[i].EquipKind, this->Equipment[i].Category);
+    }
+
+    PChar->RequestPersist(CHAR_PERSIST::EQUIP);
+    luautils::CheckForGearSet(PChar); // check for gear set on gear change
+    PChar->UpdateHealth();
+    PChar->retriggerLatents = true; // retrigger all latents later because our gear has changed
 }
