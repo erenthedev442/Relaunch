@@ -27,6 +27,7 @@ For each augment, the eligible pool is SCORED against the augment's category
 keywords. The highest-scoring unused item wins. If no item scores > 0 against
 the augment's category, the augment is DROPPED -- no non-thematic fallback.
 """
+import json
 import os
 import re
 from pathlib import Path
@@ -36,6 +37,11 @@ SQL = ROOT / "sql"
 AUG_SQL = SQL / "augments.sql"
 ITEM_SQL = SQL / "item_basic.sql"
 OUT_LUA = ROOT / "modules" / "custom" / "lua" / "augment_catalog.lua"
+# Structured sibling of the .lua, emitted from the SAME data in the same run.
+# The docs site (tools/docgen/generators/augments.py) consumes THIS, not a
+# regex scrape of the .lua text -- so a new catalog field can never again
+# silently drop an entry from the website (that broke 'All songs' 2026-06-19).
+OUT_JSON = ROOT / "modules" / "custom" / "lua" / "augment_catalog.json"
 # Live-DB override applied AFTER the stock augments.sql import. The generator
 # reconciles it so the catalog shows the SAME effective numbers the engine uses.
 OVERRIDE_SQL = ROOT / "modules" / "custom" / "sql" / "zz_augment_rebalance.sql"
@@ -1054,6 +1060,10 @@ def main():
         "return {",
     ]
 
+    # Structured mirror of the .lua, accumulated in lockstep so the website
+    # reads data instead of regex-scraping text. Shape mirrors docgen's
+    # _parse_catalog: ordered [{category, entries:[{...}]}].
+    json_groups: list[dict] = []
     first_cat = True
     for cidx in range(len(CATEGORIES)):
         entries = by_cat.get(cidx, [])
@@ -1063,6 +1073,7 @@ def main():
             lines.append("")
         first_cat = False
         lines.append(f"    -- {CAT_NAMES[cidx]}")
+        jentries: list[dict] = []
         for iid, aid, label, _cat_idx, _sname in entries:
             aug_str = f"{aid},".ljust(aug_width + 1)
             id_str = f"[{iid}]".ljust(item_width + 2)
@@ -1076,12 +1087,20 @@ def main():
             # affinity bit + apply Sage Mastery / NM-affinity multipliers
             # without re-parsing the augment label at trade time.
             cat_str = f"{_cat_idx + 1},".ljust(3)
-            mb_suffix = f", maxBoost = {MAXBOOST[aid]}" if aid in MAXBOOST else ""
+            label_final = LABEL_OVERRIDE.get(aid, clean_label(label))
+            mb_val = MAXBOOST.get(aid)
+            mb_suffix = f", maxBoost = {mb_val}" if mb_val is not None else ""
             lines.append(
                 f"    {id_str} = {{ augId = {aug_str} base = {base_str} "
                 f"mult = {mult_str} disp = {disp_str} cat = {cat_str} "
-                f"label = {lua_str(LABEL_OVERRIDE.get(aid, clean_label(label)))}{mb_suffix} }},"
+                f"label = {lua_str(label_final)}{mb_suffix} }},"
             )
+            jentries.append({
+                "itemId": iid, "augId": aid, "label": label_final,
+                "base": base_val, "mult": mult_val, "disp": disp_val,
+                "cat": _cat_idx + 1, "maxBoost": mb_val,
+            })
+        json_groups.append({"category": CAT_NAMES[cidx], "entries": jentries})
 
     # -- Progression (Exp / Cap) ------------------------------------------------
     # Emitted as a dedicated trailing section, NOT through the thematic pass:
@@ -1101,6 +1120,7 @@ def main():
         lines.append("    ---   at Mod::EXP_BONUS (382). Apply that SQL once and restart map.")
         lines.append("    ---   base = 33 mirrors the live augments-table value so the site matches the")
         lines.append("    ---   game (cap 64/slot); cat = 12 (Skill+) so the Sage's Skill+ affinity boosts.")
+        pj: list[dict] = []
         for aid in sorted(PROGRESSION_AUGS):
             iid, base_val, mult_val, disp_val, cat_val, label = PROGRESSION_AUGS[aid]
             id_str   = f"[{iid}]".ljust(item_width + 2)
@@ -1114,6 +1134,12 @@ def main():
                 f"    {id_str} = {{ augId = {aug_str} base = {base_str} "
                 f"mult = {mult_str} disp = {disp_str} cat = {cat_str} label = {lua_str(label)} }},  -- {sname}"
             )
+            pj.append({
+                "itemId": iid, "augId": aid, "label": label,
+                "base": base_val, "mult": mult_val, "disp": disp_val,
+                "cat": cat_val, "maxBoost": MAXBOOST.get(aid),
+            })
+        json_groups.append({"category": "Progression (Exp / Cap)", "entries": pj})
 
     lines.append("}")
     lines.append("")
@@ -1121,6 +1147,17 @@ def main():
     OUT_LUA.write_text("\n".join(lines), encoding="utf-8")
     print(f"\nWrote {OUT_LUA} ({len(mapping)} thematic + "
           f"{len(PROGRESSION_AUGS)} progression = {len(mapping) + len(PROGRESSION_AUGS)} entries)")
+
+    # Structured sibling for the docs site (single source of truth -- see
+    # OUT_JSON comment up top). Stable key order + trailing newline so git
+    # diffs stay clean across regens.
+    _json_total = sum(len(g["entries"]) for g in json_groups)
+    OUT_JSON.write_text(
+        json.dumps({"schema": 1, "total": _json_total, "groups": json_groups},
+                   indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    print(f"Wrote {OUT_JSON} ({_json_total} entries, {len(json_groups)} categories)")
 
     # ----- Report -----
     print("\n" + "=" * 70)

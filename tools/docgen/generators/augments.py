@@ -135,6 +135,28 @@ def _parse_catalog(text: str) -> list[tuple[str, list[tuple[int, int, str, int, 
     return groups
 
 
+def _groups_from_json(json_path: Path) -> list[tuple[str, list[tuple[int, int, str, int, int, int]]]]:
+    """Build the same (category, rows) structure `_parse_catalog` returns, but
+    from the structured `augment_catalog.json` the catalog generator emits in
+    lockstep with the .lua. This is the PREFERRED path: no regex, so a new
+    catalog field can never silently drop an entry. Returns [] if the file is
+    unreadable so generate() can fall back to the regex parse of the .lua."""
+    try:
+        data = json.loads(json_path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return []
+    groups: list[tuple[str, list[tuple[int, int, str, int, int, int]]]] = []
+    for g in data.get("groups", []):
+        rows: list[tuple[int, int, str, int, int, int]] = []
+        for e in g.get("entries", []):
+            rows.append((
+                int(e["itemId"]), int(e["augId"]), str(e["label"]),
+                int(e["base"]), int(e["mult"]), float(e["disp"]),
+            ))
+        groups.append((str(g.get("category", "Other")), rows))
+    return groups
+
+
 def _format_item_name(name: str) -> str:
     """Convert snake_case to Title Case for display.
 
@@ -335,26 +357,41 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     gap_set = _load_gap_set(gap_src)
 
     text = cat_src.read_text(encoding="utf-8", errors="replace")
-    groups = _parse_catalog(text)
+
+    # PREFERRED: read the structured sidecar the catalog generator emits in
+    # lockstep with the .lua (single source of truth -- no regex round-trip,
+    # so a new field can't silently drop an entry). Fall back to scraping the
+    # .lua text only if the JSON is missing (older checkout / hand-built file).
+    json_src = resolve_source(repo_root, "modules/custom/lua/augment_catalog.json")
+    if json_src is not None and (groups := _groups_from_json(json_src)):
+        source = f"json ({json_src.name})"
+    else:
+        groups = _parse_catalog(text)
+        source = "regex(.lua)"
     total = sum(len(rs) for _, rs in groups)
 
-    # Sanity check: silent regressions here have wiped this table before.
-    # If the catalog file has body content but we parsed zero entries, the
-    # schema almost certainly grew a field _ENTRY_RE doesn't handle. Raise
-    # instead of overwriting docs/progression/augments.md with "0 items" --
-    # the harness in generate.py catches this, prints the traceback, and
-    # leaves the existing markdown intact so the published table stays alive
-    # until a human fixes the parser.
+    # Strict reconciliation: the number of entries we ended up with MUST equal
+    # the number of entry-shaped lines in the runtime .lua. This is the guard
+    # that catches BOTH failure modes that silently wiped/holed this table
+    # before:
+    #   * regex path drops one entry (a field after `label` -> 'All songs'
+    #     vanished 2026-06-19) -> total < entry_lines
+    #   * JSON path is stale vs the .lua (regen didn't run) -> mismatch too
+    # On mismatch we RAISE; generate.py catches it, prints the traceback, and
+    # leaves the existing markdown intact so the live table stays correct until
+    # a human reconciles the source. (Was previously `total == 0`, which only
+    # fired when EVERY entry failed -- a single drop sailed straight through.)
     entry_lines = sum(
         1 for ln in text.splitlines() if re.match(r"\s*\[\s*\d+\s*\]\s*=", ln)
     )
-    if entry_lines > 0 and total == 0:
+    if entry_lines > 0 and total != entry_lines:
         raise RuntimeError(
-            f"augment_catalog.lua has {entry_lines} entry-shaped lines but "
-            f"_ENTRY_RE matched zero of them. The catalog schema probably "
-            f"grew a new field. Inspect a recent entry and update _ENTRY_RE "
-            f"in {Path(__file__).name}. Refusing to overwrite augments.md "
-            f"with an empty catalog table."
+            f"augment catalog out of sync: parsed {total} entries via {source} "
+            f"but augment_catalog.lua has {entry_lines} entry-shaped lines. "
+            f"If using the .json, it's stale -- re-run tools/gen_augment_catalog.py. "
+            f"If using regex, the .lua grew a field _ENTRY_RE can't handle -- fix "
+            f"the pattern in {Path(__file__).name}. Refusing to publish a catalog "
+            f"table that's missing {abs(entry_lines - total)} augment(s)."
         )
 
     item_names = _load_item_names(item_src)
@@ -365,6 +402,6 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     if wrote:
         total = sum(len(rs) for _, rs in groups)
         gap_count = sum(1 for _, rs in groups for r in rs if r[0] in gap_set)
-        print(f"[augments] augment-catalog: {total} entries across {len(groups)} categories written into markers ({gap_count} flagged as unobtainable)")
+        print(f"[augments] augment-catalog: {total} entries across {len(groups)} categories written into markers ({gap_count} flagged as unobtainable) [source: {source}]")
     else:
         print(f"[augments] augment-catalog: skipped (markers not found in {page.name})")
