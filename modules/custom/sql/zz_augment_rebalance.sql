@@ -34,8 +34,8 @@
 -- ---- value 97 -> mult 4 : per-slot 4..128  (x4 = 16..512 per piece) ----
 UPDATE `augments` SET `value` = 1, `multiplier` = 4 WHERE `augmentId` = 4;    -- HP+
 UPDATE `augments` SET `value` = 1, `multiplier` = 4 WHERE `augmentId` = 12;   -- MP+
-UPDATE `augments` SET `value` = 1, `multiplier` = 4 WHERE `augmentId` = 743;  -- Dmg:+ (melee)  [weapon base dmg]
-UPDATE `augments` SET `value` = 1, `multiplier` = 4 WHERE `augmentId` = 749;  -- Dmg:+ (ranged)
+-- (743 melee Dmg / 749 ranged Dmg removed 2026-06-19: banned augments, dropped
+--  from augment_catalog.lua -- no longer offered, so no override belongs here.)
 
 -- ---- value 33 -> mult 2 : per-slot 2..64  (x4 = 8..256 per piece) ----
 UPDATE `augments` SET `value` = 1, `multiplier` = 2 WHERE `augmentId` = 65;   -- Attack+
