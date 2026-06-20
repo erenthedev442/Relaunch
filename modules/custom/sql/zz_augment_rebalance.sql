@@ -84,6 +84,11 @@ UPDATE `augments` SET `value` = 1, `multiplier` = 1 WHERE `augmentId` = 743;  --
 UPDATE `augments` SET `value` = 1, `multiplier` = 1 WHERE `augmentId` = 749;  -- DMG ranged -> +1..32/slot
 
 -- ---- INDIVIDUAL WS DMG+ (augIds 1024-1058, one per named weaponskill) ----
+-- REMOVED from the catalog 2026-06-20 (owner request) via EXCLUDED_AUGS +
+-- EXCLUDED_ITEMS in tools/gen_augment_catalog.py -- these 35 specific per-WS
+-- damage augments are no longer offered by the Augment Moogle / !shop / docs.
+-- This override row STAYS so any gear ALREADY carrying one is held at the nerfed
+-- 200% cap; dropping it would revert that legacy gear to the stock 800%.
 -- Original: value=1, mult=5 → per-slot 5..160, 5 slots = 25..800%
 -- New:      value=9, mult=1 → per-slot 9.. 40, 5 slots = 45..200%
 -- Cap reduced 800→200% so WS DMG augments are strong but not ludicrous.

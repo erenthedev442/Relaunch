@@ -166,6 +166,13 @@ EXCLUDED_AUGS = {
     # (327 "Weapon skill damage" was excluded 2026-06-14 -- cheap/farmable HQ
     #  Scorpion Shell catalyst -> stackable WSD+ -- then RESTORED exactly as
     #  before 2026-06-15 by owner request. See augment_catalog.lua [1473].)
+    #
+    # All 35 SPECIFIC per-weaponskill DMG augments (1024-1058) removed 2026-06-20
+    # (owner request): "Backhand Blow DMG" .. "Blade Ten DMG" -- the named-WS damage
+    # boosts. KEPT: GENERIC "Weapon skill damage" (327), "Sklchn.dmg" (332), "Weapon
+    # Skill Acc" (326), flat weapon Dmg+ (743/749). The 35 catalysts are banned in
+    # EXCLUDED_ITEMS so this is a clean removal (no catalyst churn into other augs).
+    *range(1024, 1059),
 }
 
 # Per-augment boost ceiling (0..31). The Augment Moogle clamps the baked boost
@@ -174,7 +181,12 @@ EXCLUDED_AUGS = {
 # (refresh_site_azure.sh [0c/4]), and any maxBoost only hand-edited into
 # augment_catalog.lua gets WIPED on the next regen. augId -> maxBoost; omit = 31.
 MAXBOOST = {
-    67: 7,   # All songs -- capped 2026-06-19 ("75% of prior max").
+    # All songs -- successively nerfed. Stock maxBoost 31 => per-slot cap (1+31)=32.
+    #   2026-06-19: -> 7  (cap 8/slot, a 75% cut of the prior cap).
+    #   2026-06-20: -> 1  (cap 2/slot, ANOTHER 75% cut, owner request).
+    # base/mult are already at the integer floor (1/1), so maxBoost is the only
+    # lever. Total song bonus across 5 slots is now +5..10 (was +5..40, stock +5..160).
+    67: 1,
 }
 
 # Specific item IDs kept OUT of the catalyst pool entirely -- never offered as
@@ -190,6 +202,13 @@ EXCLUDED_ITEMS = {
     # weapon-Dmg tiers. Beetle Shell 889 + Adamantoise Shell 908 were FREED 2026-06-20
     # to catalyze the restored top-tier Dmg+ (743/749) -- see FORCED_CATALYST.
     2499, 1274, 893, 896, 924, 930,
+    # The 35 catalysts of the removed specific-WS DMG augments (1024-1058), banned
+    # 2026-06-20 so the removal is clean (not a swap). Each was only ever used by its
+    # now-removed augment, so banning them frees nothing into other augments.
+    1016, 2013, 2014, 2015, 2229, 2365, 843, 866, 1155, 1157,
+    1455, 1456, 1466, 1469, 1517, 1618, 1626, 1650, 1700, 1703,
+    1704, 1719, 1852, 1855, 1871, 1875, 1885, 1899, 1900, 2175,
+    2488, 2849, 2851, 2859, 3503,
 }
 
 MOB_DROPLIST = SQL / "mob_droplist.sql"
