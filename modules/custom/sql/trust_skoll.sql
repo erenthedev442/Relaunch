@@ -67,10 +67,10 @@ VALUES
 
 -- ---- 2. Overwrite mob pool 5901 (= 901 + 5000) with the model --------
 --   modelid is a size=1 EQUIPMENT look (look_t), NOT a fixed model: Hume
---   Female (race 2), face F1A, no weapon, wearing Assassin's Bonnet (head) +
+--   Female (race 2), face F1A, no weapon, wearing Snow Bunny Hat (head) +
 --   Hume Top (body) + Hume Shorts (legs) -- hands/feet/main/sub/ranged empty.
 --   Each look_t slot holds the item's RAW model id straight from
---   item_equipment.MId (head 75, body 157, legs 157 -- Hume Top & Shorts are
+--   item_equipment.MId (head 142, body 157, legs 157 -- Hume Top & Shorts are
 --   the same beachwear set, model 157, the SLOT picks top vs shorts) -- NO
 --   slot offset; the slot is fixed by field position, the way charutils sets
 --   look.head = getModelId(). (The mannequin packet 0x026
@@ -103,7 +103,7 @@ REPLACE INTO mob_pools
      spellList, namevis, roamflag, skill_list_id, resist_id,
      modelSize, modelHitboxSize)
 VALUES
-    (5901, 'skoll', 'Gemma', 246, UNHEX('010000024B009D0000009D000000000000000000'), -- FJB Gemma look (per AltanaView): Hume Female (race 2), face F1A (0), Assassin's Bonnet (head 75) + Hume Top (body 157) + Hume Shorts (legs 157), no weapon. (Hume Top/Shorts share model 157 -- it's the Hume beachwear set; the equip SLOT picks top vs shorts.) look_t byte order = size(u16=1 MODEL_EQUIPPED), face(u8), race(u8), head/body/hands/legs/feet/main/sub/ranged(u16 LE). Name shows via renameEntity in skoll.lua (isRenamed branch handles the equipped-look name collision).
+    (5901, 'skoll', 'Gemma', 246, UNHEX('010000028E009D0000009D000000000000000000'), -- FJB Gemma look (per AltanaView): Hume Female (race 2), face F1A (0), Snow Bunny Hat (head 142) + Hume Top (body 157) + Hume Shorts (legs 157), no weapon. (Hume Top/Shorts share model 157 -- it's the Hume beachwear set; the equip SLOT picks top vs shorts.) look_t byte order = size(u16=1 MODEL_EQUIPPED), face(u8), race(u8), head/body/hands/legs/feet/main/sub/ranged(u16 LE). Name shows via renameEntity in skoll.lua (isRenamed branch handles the equipped-look name collision).
      17, 5, 0, 240, 0,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,
