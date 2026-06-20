@@ -129,7 +129,7 @@ catalog.vendorItems =
     { id = 26185, name = 'Niqmaddu Ring',        cost = 300, stats = { 'Ring. STR/VIT, Double Attack.', 'DD ring.' } },
     { id = 26190, name = 'Moonlight Ring',       cost = 300, stats = { 'Ring. Hybrid (DT-, Accuracy).', 'Universal ring.' } },
     { id = 26334, name = 'Ioskeha Belt +1',      cost = 300, stats = { 'Waist. DEX + Double Attack.', 'DD belt.' } },
-    { id = 26259, name = "Brigantia's Mantle",   cost = 300, stats = { 'Back. DRG cape. DEF+18.', 'All Jumps: DA+20%. Wyvern: Breath+15.' } },
+    { id = 26259, name = "Brigantia's Mantle",   cost = 4000, stats = { 'Back. DRG JSE cape. DEF+18.', 'All Jumps: DA+20%. Wyvern: Breath+15.' } },
 
     -- ACCESSORIES - endgame neck/ring/back
     { id = 27928, name = 'Stikini Ring +1',cost =  200, stats = { 'INT+10, MND+10, MEVA+12.', 'Mage ring.' } },
@@ -168,9 +168,34 @@ catalog.vendorItems =
     { id = 26015, name = 'Combatants Torque',   cost =  300, stats = { 'Neck. DD (Accuracy / Attack).', 'EX/RARE.' } },
     { id = 26003, name = 'Baetyl Pendant',      cost =  300, stats = { 'Neck. Caster (Magic Attack).', 'EX/RARE.' } },
     { id = 27595, name = 'Argochampsa Mantle',  cost =  300, stats = { 'Back. Caster cape (Magic Acc / Atk).', 'EX/RARE.' } },
-    { id = 26251, name = "Toutatis's Cape",     cost =  300, stats = { 'Back. THF only. DEF+16, Crit Rate+10%, Triple Atk Dmg+20%.', 'EX/RARE. Omen drop.' } },
+    { id = 26251, name = "Toutatis's Cape",     cost = 4000, stats = { 'Back. THF JSE cape. DEF+16.', 'Sneak Atk+10, Triple Atk dmg+20.' } },
     { id = 28420, name = 'Fotia Belt',          cost =  250, stats = { 'Waist. Universal WS belt (WS damage).', 'EX/RARE.' } },
     { id = 27510, name = 'Fotia Gorget',        cost =  250, stats = { 'Neck. Universal WS gorget (WS damage).', 'EX/RARE.' } },
+
+    -- JSE / Ambuscade capes -- one per job (ids 26246-26267). Stats baked via
+    -- modules/custom/sql/jse_capes_stats.sql. DRG (Brigantia 26259) and THF
+    -- (Toutatis 26251) are listed above. A few effects have no LSB gear mod and
+    -- are omitted (BLM Mana Wall, DRK Last Resort dur, NIN Migawari, BLU Efflux).
+    { id = 26246, name = "Cichol's Mantle",      cost = 4000, stats = { 'Back. WAR JSE cape. DEF+18.', 'Double Atk dmg+20, Berserk dur+15.' } },
+    { id = 26247, name = "Segomo's Mantle",      cost = 4000, stats = { 'Back. MNK JSE cape. DEF+16.', 'Kick Attacks+10, Attack+25.' } },
+    { id = 26248, name = "Alaunus's Cape",       cost = 4000, stats = { 'Back. WHM JSE cape. DEF+15.', 'Afflatus Solace+10, Cursna+25.' } },
+    { id = 26249, name = "Taranus's Cape",       cost = 4000, stats = { 'Back. BLM JSE cape. DEF+15.', 'Magic Burst dmg+5.' } },
+    { id = 26250, name = "Sucellos's Cape",      cost = 4000, stats = { 'Back. RDM JSE cape. DEF+15.', 'Enhancing dur+20, Enfeebling eff+10.' } },
+    { id = 26252, name = "Rudianos's Mantle",    cost = 4000, stats = { 'Back. PLD JSE cape. DEF+20.', 'Phys dmg->MP 5%, Shield block+3.' } },
+    { id = 26253, name = "Ankou's Mantle",       cost = 4000, stats = { 'Back. DRK JSE cape. DEF+18.', 'Absorb duration+10.' } },
+    { id = 26254, name = "Artio's Mantle",       cost = 4000, stats = { 'Back. BST JSE cape. DEF+18.', 'Reward HP+30, Spur+10.' } },
+    { id = 26255, name = "Intarabus's Cape",     cost = 4000, stats = { 'Back. BRD JSE cape. DEF+15.', 'Madrigal+1, Prelude+1.' } },
+    { id = 26256, name = "Belenus's Cape",       cost = 4000, stats = { 'Back. RNG JSE cape. DEF+16.', 'Velocity Shot+2, Ranged Atk+20.' } },
+    { id = 26257, name = "Smertrios's Mantle",   cost = 4000, stats = { 'Back. SAM JSE cape. DEF+18.', 'Meditate dur+8, Skillchain Bonus+3.' } },
+    { id = 26258, name = "Andartia's Mantle",    cost = 4000, stats = { 'Back. NIN JSE cape. DEF+16.', 'Utsusemi: extra shadow+1.' } },
+    { id = 26260, name = "Campestres's Cape",    cost = 4000, stats = { 'Back. SMN JSE cape. DEF+15.', 'Avatar Lv+1, Blood Pact dmg+5.' } },
+    { id = 26261, name = "Rosmerta's Cape",      cost = 4000, stats = { 'Back. BLU JSE cape. DEF+16.', 'Monster correlation+10.' } },
+    { id = 26262, name = "Camulus's Mantle",     cost = 4000, stats = { 'Back. COR JSE cape. DEF+16.', 'Phantom Roll dur+30, Triple Shot+5%.' } },
+    { id = 26263, name = "Visucius's Mantle",    cost = 4000, stats = { 'Back. PUP JSE cape. DEF+16.', 'Automaton Lv+1, Overload-10.' } },
+    { id = 26264, name = "Senuna's Mantle",      cost = 4000, stats = { 'Back. DNC JSE cape. DEF+16.', 'Samba dur+15, Crit dmg+5%.' } },
+    { id = 26265, name = "Lugh's Cape",          cost = 4000, stats = { 'Back. SCH JSE cape. DEF+15.', 'Skillchain Bonus+10, Regen dur+15.' } },
+    { id = 26266, name = "Nantosuelta's Cape",   cost = 4000, stats = { 'Back. GEO JSE cape. DEF+15.', 'Indi duration+20, Life Cycle+10.' } },
+    { id = 26267, name = "Ogma's Cape",          cost = 4000, stats = { 'Back. RUN JSE cape. DEF+18.', 'Inquartata+3, Vallation/Valiance dur+15.' } },
 
     -- WS-focused additions (owner request 2026-06-08)
     { id = 22281, name = 'Knobkierrie',         cost =  250, stats = { 'Ammo. Best WS ammo (Attack+23, WS damage +6%).', 'EX/RARE.' } },
