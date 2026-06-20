@@ -46,7 +46,8 @@ ENV OVERRIDES:
   AUG_CATALOG augment_catalog.lua path (default ~/server/modules/custom/lua/
               augment_catalog.lua) -- read for the maxBoost ceilings (part C).
 
-KEEP-IN-SYNC: BANNED_AUGS mirrors EXCLUDED_AUGS in gen_augment_catalog.py.
+BANNED_AUGS is IMPORTED from EXCLUDED_AUGS in gen_augment_catalog.py -- single
+source of truth, no manual mirroring, so the two can never drift again.
 """
 import os
 import re
@@ -68,12 +69,17 @@ CATALOG = os.environ.get("AUG_CATALOG",
 HARD_MAX_BOOST = 31   # engine's 5-bit ceiling; the per-augment maxBoost can be lower
 
 # --- A) BANNED augment IDs ---------------------------------------------------
-BANNED_AUGS = {
-    380,                            # Physical Damage Limit
-    550, 551, 552, 557, 558, 559,   # STR + DEX / VIT / AGI / CHR / INT / MND
-    553, 555,                       # DEX+AGI, MND+CHR
-    743, 744, 745, 749, 750, 751,   # flat melee / ranged Dmg
-}
+# Single source of truth: pull EXCLUDED_AUGS straight from the catalog generator
+# (same tools/ dir) so this list can NEVER drift from what the Moogle / !shop /
+# docs actually drop. It HAD drifted while hard-coded: the old set still banned
+# 743/749 AFTER they were RESTORED (2026-06-20) -- so the next deploy would have
+# wrongly stripped those valid Dmg+ augments off everyone's gear -- and it lacked
+# the 35 specific-WS augs (1024-1058) removed the same day. gen_augment_catalog
+# imports cleanly: module scope only defines data and compiles regexes; no file
+# I/O happens until main(), which we never call here.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from gen_augment_catalog import EXCLUDED_AUGS as _EXCLUDED_AUGS
+BANNED_AUGS = set(_EXCLUDED_AUGS)
 
 MOD_NAMES = {
     1: "DEF", 2: "HP", 5: "MP", 8: "STR", 9: "DEX", 10: "VIT", 11: "AGI",
