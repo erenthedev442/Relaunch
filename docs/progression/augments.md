@@ -235,7 +235,7 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/2428" data-img="https://www.bg-wiki.com/images/d/d2/Wivre_Hide_description.png" target="_blank" rel="noopener">Wivre Hide</a> | 2428 | Occult Acumen | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2776" data-img="https://www.bg-wiki.com/images/5/5d/Pumice_Stone_description.png" target="_blank" rel="noopener">Pumice Stone</a> | 2776 | Magic burst dmg | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | +40% |
 | <a class="item-link" href="https://www.ffxiah.com/item/2777" data-img="https://static.ffxiah.com/images/icon/2777.png" target="_blank" rel="noopener">Vial Of Magicked Blood</a> | 2777 | Mag. crit. hit dmg | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2943" data-img="https://www.bg-wiki.com/images/5/57/Balaur_Skull_description.png" target="_blank" rel="noopener">Balaur Skull</a> | 2943 | Augment | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2943" data-img="https://www.bg-wiki.com/images/5/57/Balaur_Skull_description.png" target="_blank" rel="noopener">Balaur Skull</a> | 2943 | Drain/Aspir Potency | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/921" data-img="https://static.ffxiah.com/images/icon/921.png" target="_blank" rel="noopener">Bottle Of Ahriman Tears</a> | 921 | INT | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2338" data-img="https://www.bg-wiki.com/images/0/0d/Wamoura_Scale_description.png" target="_blank" rel="noopener">Wamoura Scale</a> | 2338 | Enspell Dmg | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 
@@ -258,7 +258,7 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/787" data-img="https://www.bg-wiki.com/images/6/6e/Diamond_description.png" target="_blank" rel="noopener">Diamond</a> | 787 | Enmity | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/901" data-img="https://www.bg-wiki.com/images/f/fb/Venomous_Claw_description.png" target="_blank" rel="noopener">Venomous Claw</a> | 901 | Enmity | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/902" data-img="https://www.bg-wiki.com/images/1/19/Demon_Horn_description.png" target="_blank" rel="noopener">Demon Horn</a> | 902 | Charm | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1291" data-img="https://www.bg-wiki.com/images/9/96/Golden_Hktk._Eye_description.png" target="_blank" rel="noopener">Golden Hakutaku Eye</a> | 1291 | All songs | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/1291" data-img="https://www.bg-wiki.com/images/9/96/Golden_Hktk._Eye_description.png" target="_blank" rel="noopener">Golden Hakutaku Eye</a> | 1291 | All songs | 1 | 2 | 3 | 4 | 5 | 2 | 4 | 6 | 8 | 10 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1408" data-img="https://static.ffxiah.com/images/icon/1408.png" target="_blank" rel="noopener">Bottle Of Illuminink</a> | 1408 | Pet Enmity | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1453" data-img="https://www.bg-wiki.com/images/c/c6/M._Silverpiece_description.png" target="_blank" rel="noopener">Montiont Silverpiece</a> | 1453 | Pet Enmity | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1844" data-img="https://static.ffxiah.com/images/icon/1844.png" target="_blank" rel="noopener">Square Of Spectral Goldenrod</a> | 1844 | Treasure Hunter | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
@@ -422,7 +422,7 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 
 | Catalyst | Item ID | Augment | Fresh ×1 | ×2 | ×3 | ×4 | ×5 | Max ×1 | ×2 | ×3 | ×4 | ×5 | Cap |
 |---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
-| <a class="item-link" href="https://www.ffxiah.com/item/1875" data-img="https://www.bg-wiki.com/images/2/2d/Anct._Beastcoin_description.png" target="_blank" rel="noopener">Ancient Beastcoin</a> | 1875 | Phantom Roll effect | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/1875" data-img="https://www.bg-wiki.com/images/2/2d/Anct._Beastcoin_description.png" target="_blank" rel="noopener">Ancient Beastcoin</a> | 1875 | Phantom Roll effect | 1 | 2 | 3 | 4 | 5 | 1 | 2 | 3 | 4 | 5 | no cap |
 <!-- DOCGEN:END id="augment-catalog" -->
 
 ## Notes
@@ -434,6 +434,6 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a1e97726d428 -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: f59815558737 -->
+_Last updated: 2026-06-20 18:50 UTC_
 <!-- DOCGEN:END id="last-updated" -->

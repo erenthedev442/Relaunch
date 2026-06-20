@@ -63,6 +63,9 @@ _MULT_RE = re.compile(r"\bmult\s*=\s*(-?\d+)")
 # Display divisor — mods stored at xN are divided by this so the table shows the
 # meaningful number (matches the Moogle / !augstats). Defaults to 1.
 _DISP_RE = re.compile(r"\bdisp\s*=\s*(-?\d+(?:\.\d+)?)")
+# Per-entry boost ceiling (0-31). When set, the Max column uses this instead of
+# 31 so nerfed augments (e.g. All songs maxBoost=1) show their true max.
+_MAXBOOST_RE = re.compile(r"\bmaxBoost\s*=\s*(\d+)")
 
 # Matches a category header comment, e.g.:
 #   -- HP / Regen
@@ -91,14 +94,14 @@ def _load_item_names(item_sql: Path) -> dict[int, str]:
     return names
 
 
-def _parse_catalog(text: str) -> list[tuple[str, list[tuple[int, int, str, int, int, int]]]]:
+def _parse_catalog(text: str) -> list[tuple[str, list[tuple[int, int, str, int, int, int, int]]]]:
     """Walk the catalog file linearly, tracking the most recent category
-    header comment. Returns [(category, [(itemId, augId, label, base, mult, disp), ...]), ...]
+    header comment. Returns [(category, [(itemId, augId, label, base, mult, disp, maxBoost), ...]), ...]
     in source order. Entries with no preceding header land in 'Other'.
-    `base` defaults to 0, `mult`/`disp` to 1 when the entry omits the field."""
-    groups: list[tuple[str, list[tuple[int, int, str, int, int, int]]]] = []
+    `base` defaults to 0, `mult`/`disp` to 1, `maxBoost` to 31 (uncapped) when omitted."""
+    groups: list[tuple[str, list[tuple[int, int, str, int, int, int, int]]]] = []
     current: str = "Other"
-    bucket: dict[str, list[tuple[int, int, str, int, int, int]]] = {}
+    bucket: dict[str, list[tuple[int, int, str, int, int, int, int]]] = {}
     order: list[str] = []
 
     for line in text.splitlines():
@@ -125,17 +128,19 @@ def _parse_catalog(text: str) -> list[tuple[str, list[tuple[int, int, str, int, 
         mult = int(mm.group(1)) if mm else 1
         dd = _DISP_RE.search(line)
         disp = float(dd.group(1)) if dd else 1
+        mb = _MAXBOOST_RE.search(line)
+        max_boost = int(mb.group(1)) if mb else 31
         if current not in bucket:
             bucket[current] = []
             order.append(current)
-        bucket[current].append((item_id, aug_id, label, base, mult, disp))
+        bucket[current].append((item_id, aug_id, label, base, mult, disp, max_boost))
 
     for cat in order:
         groups.append((cat, bucket[cat]))
     return groups
 
 
-def _groups_from_json(json_path: Path) -> list[tuple[str, list[tuple[int, int, str, int, int, int]]]]:
+def _groups_from_json(json_path: Path) -> list[tuple[str, list[tuple[int, int, str, int, int, int, int]]]]:
     """Build the same (category, rows) structure `_parse_catalog` returns, but
     from the structured `augment_catalog.json` the catalog generator emits in
     lockstep with the .lua. This is the PREFERRED path: no regex, so a new
@@ -145,13 +150,15 @@ def _groups_from_json(json_path: Path) -> list[tuple[str, list[tuple[int, int, s
         data = json.loads(json_path.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError):
         return []
-    groups: list[tuple[str, list[tuple[int, int, str, int, int, int]]]] = []
+    groups: list[tuple[str, list[tuple[int, int, str, int, int, int, int]]]] = []
     for g in data.get("groups", []):
-        rows: list[tuple[int, int, str, int, int, int]] = []
+        rows: list[tuple[int, int, str, int, int, int, int]] = []
         for e in g.get("entries", []):
+            mb = e.get("maxBoost")
             rows.append((
                 int(e["itemId"]), int(e["augId"]), str(e["label"]),
                 int(e["base"]), int(e["mult"]), float(e["disp"]),
+                int(mb) if mb is not None else 31,
             ))
         groups.append((str(g.get("category", "Other")), rows))
     return groups
@@ -308,7 +315,7 @@ def _render(groups, item_names, gap_set: set[int]) -> str:
         lines.append("")
         lines.append("| Catalyst | Item ID | Augment | Fresh ×1 | ×2 | ×3 | ×4 | ×5 | Max ×1 | ×2 | ×3 | ×4 | ×5 | Cap |")
         lines.append("|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|")
-        for item_id, aug_id, label, base, mult, disp in rows:
+        for item_id, aug_id, label, base, mult, disp, max_boost in rows:
             name = item_names.get(item_id, f"item_{item_id}")
             readable = _format_item_name(name)
             # Fall back to plain text for items without a name lookup —
@@ -320,14 +327,14 @@ def _render(groups, item_names, gap_set: set[int]) -> str:
             if item_id in gap_set:
                 display = f"{display} {_GAP_MARK}"
             # Power at each trade size for 1–5 catalysts (= 1–5 augment slots).
-            # Fresh = no Sage (boost 0); Max = full Sage (boost 31 = rank-5 +
-            # affinity + crit). Per slot = (base + boost) * mult / display-scale;
-            # N catalysts sum N of them. int(x + 0.5) = round-half-up, matching
-            # the Lua math.floor(x + 0.5) the Moogle applies.
+            # Fresh = no Sage (boost 0); Max = full Sage (boost max_boost, where
+            # 31 = fully uncapped and lower values reflect a catalog maxBoost cap).
+            # Per slot = (base + boost) * mult / display-scale; N catalysts sum N.
+            # int(x + 0.5) = round-half-up, matching the Lua math.floor(x+0.5).
             m = mult if mult > 1 else 1
             d = disp if disp > 1 else 1
             fresh = [int(n * base * m / d + 0.5) for n in (1, 2, 3, 4, 5)]
-            maxv  = [int(n * (base + 31) * m / d + 0.5) for n in (1, 2, 3, 4, 5)]
+            maxv  = [int(n * (base + max_boost) * m / d + 0.5) for n in (1, 2, 3, 4, 5)]
             cells = " | ".join(str(v) for v in (fresh + maxv))
             cap = _CAP_BY_AUG.get(aug_id, "no cap")
             lines.append(
