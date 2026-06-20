@@ -97,6 +97,7 @@ def main() -> int:
         casino,
         chocobo_derby,
         colosseum,
+        maats_challenge,
         corvus,
         cross_job_traits,
         gear_progression,
@@ -239,6 +240,7 @@ def main() -> int:
         # --- custom-systems pages (2026-06-14): each parses its own live catalog ---
         ("casino",              casino),
         ("colosseum",           colosseum),
+        ("maats_challenge",     maats_challenge),
         ("invasions",           invasions),
         ("star_devourer",       star_devourer),
         ("voidspire",           voidspire),

@@ -5,6 +5,17 @@ Think you can take on the master? Seek out **Maat's Echo** in **Ru'Lude Gardens*
 !!! tip "Summary"
     Talk to **Maat's Echo** in Ru'Lude Gardens, pay **50 Infamy**, and you'll be teleported to Waughroon Shrine to face a level-250 Maat. Defeat him for a **25% chance** at a **Maat's Blessing** — an item that guarantees your next augment at the Augment Moogle will be a critical.
 
+<!-- DOCGEN:BEGIN id="maat-stats" -->
+| Stat | Value |
+|---|---|
+| Entry cost | **50 Infamy** |
+| Maat's level | **250** |
+| Maat's Blessing drop chance | **25%** |
+| Entry NPC | **Maat's Echo** — Ru'Lude Gardens |
+| Fight zone | **Waughroon Shrine** |
+| Simultaneous fights | One at a time (server-wide) |
+<!-- DOCGEN:END id="maat-stats" -->
+
 ## Where to find the NPC
 
 Maat's Echo stands near the original Maat NPC in **Ru'Lude Gardens**, just to the side of the familiar old sage. Look for the gold star icon.
@@ -38,3 +49,10 @@ The item is **consumed on success**. It is not consumed if the augment fails (e.
 - **You keep the Infamy on his death.** Only the entry fee is spent; you don't lose more if you die.
 - **If you die without killing him**, Maat despawns and the fight resets. The 50 Infamy entry cost is still spent — don't go in unprepared.
 - **Stack up before augmenting.** Maat's Blessing lasts indefinitely while held. You can earn multiple blessings before redeeming them, but the item is RARE so you can only hold one at a time.
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: b39ec26bd8f8 -->
+_Last updated: 2026-06-20 18:58 UTC_
+<!-- DOCGEN:END id="last-updated" -->

@@ -30,9 +30,10 @@ local DROP_CHANCE   = 0.25
 
 -- Maat_rdm (groupId=12, zone=144) — the classic Chainspell-nuke version.
 -- All three Maat groups in zone 144 share the same model; this one is used
--- as the spawn template. Level is overridden to 250 by min/maxLevel below.
+-- as the spawn template. Level is overridden to MAAT_LEVEL by min/maxLevel.
 local MAAT_GROUP_ID  = 12
 local MAAT_GROUP_ZID = 144
+local MAAT_LEVEL     = 250
 
 -- Waughroon Shrine default zone-in point (matches Zone.lua onZoneIn default).
 local SHRINE_ENTRY_X =  -361.434
@@ -72,8 +73,8 @@ local function spawnMaat(player)
         y                    = MAAT_Y,
         z                    = MAAT_Z,
         rotation             = MAAT_R,
-        minLevel             = 250,
-        maxLevel             = 250,
+        minLevel             = MAAT_LEVEL,
+        maxLevel             = MAAT_LEVEL,
         detection            = xi.detects.SIGHT_AND_HEARING,
         isAggroable          = true,
         releaseIdOnDisappear = true,
