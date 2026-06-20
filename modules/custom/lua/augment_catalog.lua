@@ -103,6 +103,7 @@ return {
     [3502] = { augId = 942,  base = 1,   mult = 1,  disp = 1,    cat = 2,  label = 'Light Affinity Magic Accuracy' },
     [3930] = { augId = 943,  base = 1,   mult = 1,  disp = 1,    cat = 2,  label = 'Dark Affinity Magic Accuracy' },
     [3941] = { augId = 960,  base = 1,   mult = 1,  disp = 1,    cat = 2,  label = 'Fire Affinity Magic Accuracy Recast time' },
+    [2842] = { augId = 1793, base = 1,   mult = 1,  disp = 1,    cat = 2,  label = 'Pet DEX' },
 
     -- Vitality / Defense / Stoneskin
     [881]  = { augId = 33,   base = 1,   mult = 1,  disp = 1,    cat = 3,  label = 'DEF' },
@@ -182,8 +183,14 @@ return {
     [2776] = { augId = 334,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Magic burst dmg' },
     [2777] = { augId = 335,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Mag. crit. hit dmg' },
     [2943] = { augId = 343,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Drain/Aspir Potency' },
+    [2498] = { augId = 362,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Magic Damage' },
     [921]  = { augId = 516,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'INT' },
     [2338] = { augId = 896,  base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Enspell Dmg' },
+    [2834] = { augId = 1157, base = 2,   mult = 1,  disp = 1,    cat = 5,  label = 'Spell Interruption Rate Down 2%' },
+    [2510] = { augId = 1248, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Enhancing Magic Effect Duration' },
+    [2640] = { augId = 1249, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Helix Effect Duration' },
+    [2711] = { augId = 1264, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Meditate Effect Duration' },
+    [2847] = { augId = 1796, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Pet INT' },
 
     -- Mind / Healing / Cure
     [791]  = { augId = 52,   base = 1,   mult = 4,  disp = 1,    cat = 6,  label = 'MP recovered while healing' },
@@ -233,6 +240,7 @@ return {
     [2173] = { augId = 2040, base = 1,   mult = 1,  disp = 1,    cat = 10, label = 'Thunder Affinity' },
 
     -- Elemental resistance
+    [2831] = { augId = 61,   base = 1,   mult = 1,  disp = 1,    cat = 11, label = 'Occ. inc. resist to stat ailments' },
     [1163] = { augId = 176,  base = 1,   mult = 1,  disp = 1,    cat = 11, label = 'Resist Sleep' },
     [1452] = { augId = 177,  base = 1,   mult = 1,  disp = 1,    cat = 11, label = 'Resist Poison' },
     [1630] = { augId = 178,  base = 1,   mult = 1,  disp = 1,    cat = 11, label = 'Resist Paralyze' },
@@ -325,6 +333,16 @@ return {
     [2524] = { augId = 283,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Throwing skill' },
     [2936] = { augId = 286,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Shield skill' },
     [2937] = { augId = 287,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Parrying Skill' },
+    [1725] = { augId = 288,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Divine magic skill' },
+    [1740] = { augId = 290,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Enha.mag. skill' },
+    [1817] = { augId = 291,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Enfb.mag. skill' },
+    [1854] = { augId = 292,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Elem. magic skill' },
+    [2154] = { augId = 295,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Ninjutsu skill' },
+    [2155] = { augId = 296,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Singing skill' },
+    [2161] = { augId = 297,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'String instrument skill' },
+    [2171] = { augId = 299,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Blue Magic skill' },
+    [2212] = { augId = 300,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Geomancy Skill' },
+    [2334] = { augId = 301,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Handbell Skill' },
 
     -- Weaponskill DMG+
     [1110] = { augId = 326,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Weapon Skill Acc' },
@@ -332,6 +350,12 @@ return {
     [865]  = { augId = 332,  base = 1,   mult = 100, disp = 100,  cat = 13, label = 'Sklchn.dmg' },
     [889]  = { augId = 743,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Dmg (melee,not ranged)' },
     [908]  = { augId = 749,  base = 1,   mult = 1,  disp = 1,    cat = 13, label = 'Dmg (ranged,not melee)' },
+
+    -- Other
+    [1269] = { augId = 215,  base = 1,   mult = 1,  disp = 1,    cat = 14, label = 'Ninja tool expertise' },
+    [2729] = { augId = 341,  base = 1,   mult = 1,  disp = 1,    cat = 14, label = 'Repair potency' },
+    [2507] = { augId = 351,  base = 1,   mult = 1,  disp = 1,    cat = 14, label = 'Occ. quickens spellcasting' },
+    [2641] = { augId = 1250, base = 1,   mult = 1,  disp = 1,    cat = 14, label = 'Indi Effect Duration' },
 
     -- Progression (Exp / Cap)
     ---   Cap. Point +33% (augId 75) uses Mod::CAPACITY_BONUS (915) in

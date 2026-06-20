@@ -44,10 +44,12 @@ local function applyTrait(player, trait)
     for _, mv in ipairs(trait.mods) do
         player:addMod(mv[1], mv[2])
     end
-    -- NOTE: addTrait is NOT a binding on this build -- calling it threw
-    -- "attempt to call method 'addTrait' (a nil value)" on every owned-trait
-    -- re-apply. The addMod above is what actually grants the trait's effect;
-    -- the trait-bit (for hasTrait()) just isn't settable from Lua on this fork.
+    -- NOTE: addTrait is NOT a binding on this build, so we can't set the engine
+    -- trait bit that hasTrait() reads. For Dual Wield that bit gates the off-hand
+    -- equip slot -- so charutils.cpp's 3 dual-wield equip checks were patched (FJB)
+    -- to also honor this trainer's purchase flag, the charVar CJTrait_dwield (=
+    -- cvPrefix .. 'dwield', set on buy below). That unlocks the off-hand for
+    -- BUYERS only (NOT DUAL_WIELD gear), while the addMod above grants the +15%.
 end
 
 -- Re-apply every owned trait (a zone-in/login wipes in-memory mods), then

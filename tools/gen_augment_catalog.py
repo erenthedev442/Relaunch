@@ -86,6 +86,38 @@ FORCED_CATALYST = {
     # (stock +97 is absurd stacked across 5 slots).
     743: 889,    # DMG (melee)  -> Beetle Shell
     749: 908,    # DMG (ranged) -> Adamantoise Shell
+    # ---- Owner request 2026-06-20: offer 22 previously-dropped real augments ----
+    # All have a real mod in augments.sql (value=1 -> +1..32/slot via Augment Sage)
+    # but landed in item-starved categories and got dropped. Pinned to score-0,
+    # unused, obtainable (mob-drop, non-RARE/EX) catalysts so reserving them
+    # displaces no thematic augment. (Job skills, Magic Damage, quickens-cast,
+    # effect durations, and the utility/pet picks.)
+    # job skills (11)
+    215: 1269,   # Ninja Tool Expertise  -> mana_barrel
+    288: 1725,   # Divine magic skill    -> snow_lily
+    290: 1740,   # Enhancing magic skill -> iolite
+    291: 1817,   # Enfeebling magic skill-> cactus_arm
+    292: 1854,   # Elemental magic skill -> deed_of_moderation
+    295: 2154,   # Ninjutsu skill        -> orobon_lure
+    296: 2155,   # Singing skill         -> lesser_chigoe
+    297: 2161,   # String instr. skill   -> troll_vambrace
+    299: 2171,   # Blue Magic skill      -> colibri_beak
+    300: 2212,   # Geomancy skill        -> gunpowder_swathe
+    301: 2334,   # Handbell skill        -> poroggo_hat
+    # magic offense (2)
+    362: 2498,   # Magic Damage          -> briareuss_sash
+    351: 2507,   # Occ. quickens spellcasting -> lycopodium_flower
+    # effect durations (4)
+    1248: 2510,  # Enhancing Magic Duration -> orc_helmet
+    1249: 2640,  # Helix Effect Duration    -> murex_spicule
+    1250: 2641,  # Indi Effect Duration     -> amoeban_pseudopod
+    1264: 2711,  # Meditate Effect Duration -> khroma_nugget
+    # utility / pet (5)
+    341: 2729,   # Repair potency        -> hydrangea
+    61: 2831,    # Occ. resist ailments  -> yellow_brass_chain
+    1157: 2834,  # Spell Interruption Down-> immortal_molt
+    1793: 2842,  # Pet: DEX              -> flawed_garnet
+    1796: 2847,  # Pet: INT             -> blue_jasper
 }
 
 # Display-label overrides keyed by augId, applied after clean_label(). For when
@@ -806,6 +838,10 @@ def drop_superseded(augs: dict) -> dict:
             label = augs[aid]["label"].lower()
             if sv > 0 and "delay" not in label and ("pet:" in label) == best_is_pet:
                 drop.add(aid)
+    # Never collapse an owner-pinned augment: if it's in FORCED_CATALYST the owner
+    # explicitly wants it offered, even if a higher-tier sibling exists (e.g. the
+    # +1 'Occ. resist to stat ailments' #61, requested 2026-06-20).
+    drop -= set(FORCED_CATALYST)
     return {a: e for a, e in augs.items() if a not in drop}
 
 
