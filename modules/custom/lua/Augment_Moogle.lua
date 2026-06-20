@@ -21,6 +21,7 @@ local m = Module:new('augment_moogle')
 
 local MAX_CATALYST_COUNT = 5       -- max catalyst items per trade = the engine's 5 augment slots (each catalyst writes one line; mix types or stack one)
 local GIL_COST           = 10000   -- flat per trade
+local CRIT_TOKEN_ID      = 29000   -- Maat's Blessing: guarantees a crit when held (consumed on success)
 
 -- Augment formula recap (from src/map/items/item_equipment.cpp:479):
 --   final_mod = (base + exdata) * (multiplier > 1 ? multiplier : 1)   -- positive base
@@ -142,6 +143,12 @@ showConfirmMenu = function(player)
                 end
 
                 playerArg:delGil(GIL_COST)
+
+                -- Consume Maat's Blessing if it guaranteed this crit.
+                if st2.usedCritToken then
+                    playerArg:delItem(CRIT_TOKEN_ID, 1)
+                    playerArg:printToPlayer("Maat's Blessing consumed by the augment's power.", xi.msg.channel.SYSTEM_3)
+                end
 
                 -- Bump the lifetime augment counter - feeds Sage rank-ups.
                 local prev = playerArg:getCharVar('Augment_Count') or 0
@@ -287,8 +294,10 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             local rank        = player:getCharVar('Augment_Mastery') or 0
             local masteryMult = sage.masteryMult[rank + 1] or 1.0
             local critPct     = sage.critChance[rank + 1]  or 0.0
-            local isCrit      = math.random() < critPct
-            local critMult    = isCrit and 2.0 or 1.0
+            -- Maat's Blessing guarantees a crit; consumed after delGil on success.
+            local usedCritToken = player:getItemCount(CRIT_TOKEN_ID) > 0
+            local isCrit        = usedCritToken or (math.random() < critPct)
+            local critMult      = isCrit and 2.0 or 1.0
 
             -- IMPORTANT: the exdata Value field is 5 bits wide (max 31),
             -- defined in src/map/items/exdata/augment_standard.h. Stuffing
@@ -491,7 +500,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 exAugsBySlot  = exAugsBySlot,    -- {id,value,cat} per slot
                 labelSummary  = labelSummary,    -- one string per catalyst type
                 catalystsHeld = catalystsHeld,
-                isCrit        = isCrit,  -- for the confirm screen
+                isCrit        = isCrit,          -- for the confirm screen
+                usedCritToken = usedCritToken,   -- consume Maat's Blessing on success
             }
 
             player:printToPlayer(
