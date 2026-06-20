@@ -1,0 +1,37 @@
+-- =====================================================================
+-- aug_phantom_roll_potency.sql
+-- Add a CORSAIR "Phantom Roll effect" (potency) augment by repurposing a
+-- dead augment-ID slot.
+--
+-- WHY REPURPOSE 2046
+--   The 11-bit augment-ID space (1..2047) is completely full, so a new
+--   augment has to reuse an existing ID. 2046 ships as pure filler in
+--   stock sql/augments.sql -- `(2046,0,0,0,0,0)`, modId=0 (Mod::NONE), so
+--   it attaches nothing and is NOT offered by the Augment Moogle. Nothing
+--   on any player's gear references it, so repointing it is safe.
+--
+-- WHAT IT DOES
+--   Sets augId 2046 -> Mod::PHANTOM_ROLL (881), the same "Phantom Roll+
+--   Effect" mod the SOA rings grant. scripts/globals/job_utils/corsair.lua
+--   reads it via getMaxGearMod and adds (phantomBase * value) to every
+--   roll's effect power, so it directly boosts roll POTENCY.
+--     value = 1     -> +1 per augment slot
+--     multiplier = 1
+--   A gear piece has 5 augment slots whose Mod::PHANTOM_ROLL values SUM, so
+--   without a cap a fully-slotted piece would give +5. corsair.lua clamps
+--   the total to +3 (math.min(getMaxGearMod(PHANTOM_ROLL), 3)), so a piece
+--   caps at +3 -- reached by stacking 3 of the catalyst. The catalog entry
+--   (augId 2046, catalyst Ancient Beastcoin 1875) is pinned in
+--   tools/gen_augment_catalog.py CUSTOM_AUGS with maxBoost = 0 (fixed +1/slot,
+--   no Augment Sage scaling -- the effect is tiny and hard-capped).
+--
+-- APPLYING
+--   1) Import this file (the deploy's custom-SQL ledger does it on a content
+--      change), or: mysql xidb < modules/custom/sql/aug_phantom_roll_potency.sql
+--   2) RESTART THE MAP SERVER -- the augments table is cached at boot via
+--      CItemEquipment::LoadAugmentData(); there is no hot-reload.
+--
+-- Idempotent: a plain UPDATE keyed on the augmentId. Safe to re-run.
+-- =====================================================================
+
+UPDATE `augments` SET `multiplier` = 1, `modId` = 881, `value` = 1 WHERE `augmentId` = 2046;

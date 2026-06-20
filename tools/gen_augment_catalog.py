@@ -135,6 +135,22 @@ PROGRESSION_AUGS = {
     75: (942,  33, 1, 1, 12, 'Cap. Point +33%'),   # philosophers_stone
 }
 
+# Custom-mod augments emitted directly (same bypass as PROGRESSION_AUGS) for an
+# augId whose STOCK augments.sql row is a dead modId=0 filler -- a custom SQL file
+# repoints it at a real engine mod. The generator can't learn the real mod from
+# augments.sql (it still reads modId=0 there and would drop it), so the full
+# catalog entry is specified here. Each: augId -> (catalystItemId, base, mult,
+# disp, cat, label, maxBoost).
+#   2046 -> Mod::PHANTOM_ROLL (881) "Phantom Roll+ effect" (the SOA-ring potency
+#     mod). Repointed by modules/custom/sql/aug_phantom_roll_potency.sql. value=1
+#     => +1 per augment slot; maxBoost=0 => FIXED (no Sage scaling) because the
+#     effect is tiny and HARD-CAPPED at +3 in scripts/globals/job_utils/corsair.lua
+#     (a piece's 5 slots sum, so the cap lives in the roll code, not here). cat 4
+#     groups it with the Phantom Roll ability-delay augment on the site.
+CUSTOM_AUGS = {
+    2046: (1875, 1, 1, 1, 4, 'Phantom Roll effect', 0),  # ancient_beastcoin (a coin -> gambler's roll)
+}
+
 # Augments to DROP from the catalog entirely, keyed by augId. The augment still
 # exists in the engine/DB (and on any gear already carrying it) -- it is just no
 # longer offered by the Augment Moogle, !shop, or the docs, and its catalyst is
@@ -954,6 +970,11 @@ def main():
         if _piid in items:
             used_items.add(_piid)
 
+    # Custom-mod augments: reserve their catalysts the same way.
+    for _ciid, *_crest in CUSTOM_AUGS.values():
+        if _ciid in items:
+            used_items.add(_ciid)
+
     for aid in aug_ids_sorted:
         # Explicitly-excluded augments (EXCLUDED_AUGS) are skipped entirely: no
         # catalyst, no catalog entry. They stay in the engine, just unoffered.
@@ -1015,6 +1036,15 @@ def main():
         assert _piid not in RESERVED, f"progression catalyst {_piid} (aug {_aid}) reserved"
         assert _piid not in _used_set, f"progression catalyst {_piid} (aug {_aid}) collides with a thematic entry"
         assert not is_rare_or_ex(items[_piid]), f"progression catalyst {_piid} (aug {_aid}) is RARE/EX"
+
+    # Custom-mod catalysts: same validity guarantees.
+    for _aid, (_ciid, *_crest) in CUSTOM_AUGS.items():
+        assert _ciid in items, f"custom catalyst {_ciid} (aug {_aid}) not in item_basic"
+        assert _ciid in obtainable, f"custom catalyst {_ciid} (aug {_aid}) not a mob drop"
+        assert _ciid >= MIN_ITEM_ID, f"custom catalyst {_ciid} (aug {_aid}) below floor"
+        assert _ciid not in RESERVED, f"custom catalyst {_ciid} (aug {_aid}) reserved"
+        assert _ciid not in _used_set, f"custom catalyst {_ciid} (aug {_aid}) collides with a thematic entry"
+        assert not is_rare_or_ex(items[_ciid]), f"custom catalyst {_ciid} (aug {_aid}) is RARE/EX"
 
     # Per-category final breakdown.
     final_counts = [0] * len(CATEGORIES)
@@ -1160,12 +1190,45 @@ def main():
             })
         json_groups.append({"category": "Progression (Exp / Cap)", "entries": pj})
 
+    # -- Custom-mod augments (direct-emit, see CUSTOM_AUGS) ----------------------
+    # Same bypass as the progression block: the augId is a repurposed dead modId=0
+    # slot whose real mod is set by a custom SQL file, so the entry is specified
+    # by hand. Single-dash header -> docgen treats it as the category title.
+    if CUSTOM_AUGS:
+        lines.append("")
+        lines.append("    -- Corsair (Phantom Roll)")
+        lines.append("    ---   Phantom Roll effect (augId 2046) grants Mod::PHANTOM_ROLL (881) via")
+        lines.append("    ---   modules/custom/sql/aug_phantom_roll_potency.sql (repoints a dead modId=0")
+        lines.append("    ---   slot). +1 per augment slot, HARD-CAPPED at +3/piece in corsair.lua.")
+        cj: list[dict] = []
+        for aid in sorted(CUSTOM_AUGS):
+            iid, base_val, mult_val, disp_val, cat_val, label, mb_val = CUSTOM_AUGS[aid]
+            id_str   = f"[{iid}]".ljust(item_width + 2)
+            aug_str  = f"{aid},".ljust(aug_width + 1)
+            base_str = f"{base_val},".ljust(4)
+            mult_str = f"{mult_val},".ljust(3)
+            disp_str = f"{disp_val},".ljust(5)
+            cat_str  = f"{cat_val},".ljust(3)
+            sname    = items[iid]["short_name"] if iid in items else "?"
+            mb_suffix = f", maxBoost = {mb_val}" if mb_val is not None else ""
+            lines.append(
+                f"    {id_str} = {{ augId = {aug_str} base = {base_str} "
+                f"mult = {mult_str} disp = {disp_str} cat = {cat_str} label = {lua_str(label)}{mb_suffix} }},  -- {sname}"
+            )
+            cj.append({
+                "itemId": iid, "augId": aid, "label": label,
+                "base": base_val, "mult": mult_val, "disp": disp_val,
+                "cat": cat_val, "maxBoost": mb_val,
+            })
+        json_groups.append({"category": "Corsair (Phantom Roll)", "entries": cj})
+
     lines.append("}")
     lines.append("")
 
     OUT_LUA.write_text("\n".join(lines), encoding="utf-8")
     print(f"\nWrote {OUT_LUA} ({len(mapping)} thematic + "
-          f"{len(PROGRESSION_AUGS)} progression = {len(mapping) + len(PROGRESSION_AUGS)} entries)")
+          f"{len(PROGRESSION_AUGS)} progression + {len(CUSTOM_AUGS)} custom = "
+          f"{len(mapping) + len(PROGRESSION_AUGS) + len(CUSTOM_AUGS)} entries)")
 
     # Structured sibling for the docs site (single source of truth -- see
     # OUT_JSON comment up top). Stable key order + trailing newline so git

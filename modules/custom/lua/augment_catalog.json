@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "total": 274,
+  "total": 275,
   "groups": [
     {
       "category": "Strength / Attack / Phys.dmg.taken",
@@ -2809,6 +2809,21 @@
           "disp": 1,
           "cat": 12,
           "maxBoost": null
+        }
+      ]
+    },
+    {
+      "category": "Corsair (Phantom Roll)",
+      "entries": [
+        {
+          "itemId": 1875,
+          "augId": 2046,
+          "label": "Phantom Roll effect",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 4,
+          "maxBoost": 0
         }
       ]
     }

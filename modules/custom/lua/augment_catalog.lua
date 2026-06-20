@@ -344,4 +344,10 @@ return {
     ---   game (cap 64/slot); cat = 12 (Skill+) so the Sage's Skill+ affinity boosts.
     [2523] = { augId = 73,   base = 33,  mult = 1,  disp = 1,    cat = 12, label = 'Exp. Point +33%' },  -- peiste_skin
     [942]  = { augId = 75,   base = 33,  mult = 1,  disp = 1,    cat = 12, label = 'Cap. Point +33%' },  -- philosophers_stone
+
+    -- Corsair (Phantom Roll)
+    ---   Phantom Roll effect (augId 2046) grants Mod::PHANTOM_ROLL (881) via
+    ---   modules/custom/sql/aug_phantom_roll_potency.sql (repoints a dead modId=0
+    ---   slot). +1 per augment slot, HARD-CAPPED at +3/piece in corsair.lua.
+    [1875] = { augId = 2046, base = 1,   mult = 1,  disp = 1,    cat = 4,  label = 'Phantom Roll effect', maxBoost = 0 },  -- ancient_beastcoin
 }
