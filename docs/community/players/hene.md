@@ -1,19 +1,19 @@
 # Hene
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 18h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 5h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 34/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 53/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **THF 1** |
-| Sub job | DNC 1 |
-| Time played | 5h |
-| Enemies defeated | 167 |
-| Deaths | 0 |
+| Main job | **BLM 53** |
+| Sub job | WHM 32 |
+| Time played | 9h |
+| Enemies defeated | 176 |
+| Deaths | 1 |
 
 ## Job levels
 
@@ -21,8 +21,8 @@
 |---|---:|---|---:|
 | WAR | 29 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 17 | DRG | 1 |
-| BLM | 34 | SMN | 1 |
+| WHM | 32 | DRG | 1 |
+| BLM | 53 | SMN | 1 |
 | RDM | 14 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 23 | PUP | 1 |
@@ -34,10 +34,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 975
+- **Marks (current):** 1,525
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 195
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 98fcafecc776 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 6986b80e0517 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

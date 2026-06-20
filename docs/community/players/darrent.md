@@ -1,8 +1,8 @@
 # Darrent
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 7h
 
-`💪 4 jobs @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **SCH 47** |
-| Sub job | BLM 44 |
-| Time played | 26h |
-| Enemies defeated | 845 |
-| Deaths | 8 |
+| Main job | **BLU 13** |
+| Sub job | WAR 13 |
+| Time played | 35h |
+| Enemies defeated | 1,108 |
+| Deaths | 9 |
 
 ## Job levels
 
@@ -24,22 +24,22 @@
 | **WAR** | **99** | **SAM** | **99** |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 44 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| **BLM** | **99** | SMN | 1 |
+| RDM | 1 | BLU | 13 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
-| BST | 1 | SCH | 47 |
+| BST | 1 | SCH | 88 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 462
-- **Marks (lifetime):** 889
+- **Marks (current):** 5,072
+- **Marks (lifetime):** 1,965
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 209
+- **Total NM kills:** 97
 
 ## Guild standing
 
@@ -54,25 +54,25 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 57
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 276
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,265 | 1,897 |
-| Relic | 850 | 1,275 |
-| Empyrean | 0 | 0 |
+| AF | 1,365 | 65 |
+| Relic | 2,350 | 0 |
+| Empyrean | 325 | 1,375 |
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
-**7** unlocked — Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · Augment Novice · Augment Expert.
+**9** unlocked — Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -80,6 +80,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|
 | Fastest 1 → 99 | 1d 3h |
 | HL Rank I → V | 1d |
+| Augment Archon | 3d 22h |
 
 ---
 
@@ -88,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e9b6b815276c -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 89da10e7823b -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

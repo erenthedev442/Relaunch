@@ -1,18 +1,18 @@
 # Aldo
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 1d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 15h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 15/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 35/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **WHM 15** |
-| Sub job | DNC 10 |
-| Time played | 3h |
-| Enemies defeated | 26 |
+| Main job | **DNC 32** |
+| Sub job | RDM 16 |
+| Time played | 9h |
+| Enemies defeated | 47 |
 | Deaths | 0 |
 
 ## Job levels
@@ -21,12 +21,12 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 15 | DRG | 1 |
+| WHM | 35 | DRG | 1 |
 | BLM | 11 | SMN | 1 |
-| RDM | 7 | BLU | 1 |
+| RDM | 16 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 10 |
+| DRK | 1 | DNC | 32 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -34,10 +34,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 95
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0b426f752aaa -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 717d70c0ea03 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Echdah
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 13h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 7d
 
 `⭐ 2 Ascensions` `💪 11 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RUN 99** |
-| Sub job | WAR 99 |
-| Time played | 28h |
-| Enemies defeated | 7,130 |
+| Main job | **BLM 99** |
+| Sub job | SCH 99 |
+| Time played | 29h |
+| Enemies defeated | 7,155 |
 | Deaths | 24 |
 
 ## Job levels
@@ -36,23 +36,23 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 63
-- **Marks (lifetime):** 4,214
+- **Marks (current):** 1,071
+- **Marks (lifetime):** 4,252
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 435
+- **Total NM kills:** 222
 
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 177
+- **Augments crafted:** 203
 - **NM Affinities:** 1 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 65 | 5,315 |
-| Relic | 1,300 | 1,950 |
+| AF | 815 | 6,065 |
+| Relic | 3,910 | 2,610 |
 | Empyrean | 110 | 4,160 |
 
 ## Prestige
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert.
+**12** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 135761b586ef -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: d6671562b615 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

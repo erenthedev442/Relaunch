@@ -1,6 +1,6 @@
 # Fenux
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-18 · Character age 3d 22h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-18 · Character age 4d 9h
 
 `💪 1 job @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 912
 - **Marks (lifetime):** 54
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 182
+- **Total NM kills:** 4
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b55e436dfa22 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 2ed3b8567842 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

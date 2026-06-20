@@ -1,6 +1,6 @@
 # Bocao
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 2d 17h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-19 · Character age 3d 4h
 
 `💪 2 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **WAR 99** |
-| Sub job | BLU 78 |
-| Time played | 16h |
-| Enemies defeated | 309 |
+| Sub job | BLU 81 |
+| Time played | 17h |
+| Enemies defeated | 330 |
 | Deaths | 0 |
 
 ## Job levels
@@ -25,7 +25,7 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 78 |
+| RDM | 1 | BLU | 81 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,525
+- **Marks (current):** 2,125
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 305
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2f953587c167 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 7621e3196b5a -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

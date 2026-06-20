@@ -1,30 +1,32 @@
 # Kirin
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-18 · Character age 21h 37m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 8h
+
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 60/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **THF 60** |
-| Sub job | WAR 31 |
-| Time played | 2h |
-| Enemies defeated | 69 |
-| Deaths | 3 |
+| Main job | **THF 99** |
+| Sub job | WAR 99 |
+| Time played | 14h |
+| Enemies defeated | 1,157 |
+| Deaths | 9 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 31 | SAM | 1 |
+| **WAR** | **99** | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 60 | COR | 1 |
+| **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
@@ -33,16 +35,16 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 475
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 95
+- **Rank:** 5 / 5
+- **Marks (current):** 2,086
+- **Marks (lifetime):** 609
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 17
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Mastery rank:** 1 / 5
+- **Augments crafted:** 15
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -55,11 +57,18 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
+
+## Achievements
+
+**6** unlocked — First Hunt · Ten Hunts In · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice.
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 10h 2m |
+| HL Rank I → V | 13m 19s |
 
 ---
 
@@ -68,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e6be050a28bc -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 5212b2795f7b -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

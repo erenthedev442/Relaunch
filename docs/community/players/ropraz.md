@@ -1,8 +1,8 @@
 # Ropraz
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 11h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 22h
 
-`⭐ 39 Ascensions` `💪 9 jobs @99`
+`⭐ 42 Ascensions` `💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | DRG 99 |
-| Time played | 51h |
-| Enemies defeated | 5,903 |
-| Deaths | 45 |
+| Time played | 54h |
+| Enemies defeated | 5,921 |
+| Deaths | 47 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 31,787
+- **Marks (current):** 22,087
 - **Marks (lifetime):** 1,840
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 6,817
+- **Total NM kills:** 597
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 302
+- **Augments crafted:** 308
 - **NM Affinities:** 5 / 13
 
 ## Reforge
@@ -63,13 +63,13 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 1,299 | 5,399 |
-| Relic | 2,850 | 4,275 |
+| Relic | 2,850 | 450 |
 | Empyrean | 1,810 | 2,760 |
 
 ## Prestige
 
-- **Total Ascensions:** 39
-- **Per-job prestige:** WAR P26 · SAM P12 · DRG P1
+- **Total Ascensions:** 42
+- **Per-job prestige:** WAR P29 · SAM P12 · DRG P1
 
 ## Collections
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ffc2c34f32b9 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 1541647dfb00 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

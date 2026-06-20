@@ -1,25 +1,25 @@
 # Pulk
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 1d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 21h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 18/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **WAR 1** |
+| Main job | **WAR 18** |
 | Sub job | — |
-| Time played | 0h |
-| Enemies defeated | 0 |
-| Deaths | 2 |
+| Time played | 3h |
+| Enemies defeated | 80 |
+| Deaths | 3 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
+| WAR | 18 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -34,10 +34,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 95
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 82eefbebad62 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 639a110395c2 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

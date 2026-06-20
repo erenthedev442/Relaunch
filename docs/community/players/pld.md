@@ -1,8 +1,8 @@
 # Pld
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-18 · Character age 1d 11h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 22h
 
-`💪 2 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **PLD 37** |
-| Sub job | BLM 37 |
-| Time played | 11h |
-| Enemies defeated | 863 |
-| Deaths | 2 |
+| Main job | **THF 99** |
+| Sub job | DNC 99 |
+| Time played | 19h |
+| Enemies defeated | 1,363 |
+| Deaths | 4 |
 
 ## Job levels
 
@@ -26,9 +26,9 @@
 | WHM | 1 | DRG | 1 |
 | BLM | 83 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 74 | COR | 1 |
-| PLD | 37 | PUP | 1 |
-| DRK | 1 | DNC | 47 |
+| **THF** | **99** | COR | 1 |
+| PLD | 54 | PUP | 1 |
+| DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 93 |
 | RNG | 1 | **RUN** | **99** |
@@ -36,16 +36,27 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 225
-- **Marks (lifetime):** 306
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 45
+- **Marks (current):** 20
+- **Marks (lifetime):** 377
+- **Distinct NMs slain:** 9
+- **Total NM kills:** 38
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Journeyman | 4,000 | 1,000 to Veteran |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Journeyman | 3,750 | 1,250 to Veteran |
+| League Hunters' Guild | Veteran | 10,500 | 14,500 to Master |
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
 - **Augments crafted:** 0
-- **NM Affinities:** 0 / 13
+- **NM Affinities:** 1 / 13
 
 ## Reforge
 
@@ -76,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b1bf48fd7af0 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 5199eb33615e -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

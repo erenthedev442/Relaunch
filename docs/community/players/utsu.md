@@ -1,18 +1,18 @@
 # Utsu
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-17 · Character age 2d 16h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-19 · Character age 3d 3h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 7/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 1** |
-| Sub job | — |
-| Time played | 0h |
-| Enemies defeated | 0 |
+| Main job | **PUP 7** |
+| Sub job | WHM 4 |
+| Time played | 1h |
+| Enemies defeated | 34 |
 | Deaths | 0 |
 
 ## Job levels
@@ -21,11 +21,11 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 1 | DRG | 1 |
+| WHM | 4 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| RDM | 7 | BLU | 1 |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 1 |
+| PLD | 1 | PUP | 7 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -34,10 +34,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 975
+- **Marks (current):** 1,525
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 195
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 32cf29ad3087 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 4852999a2b74 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

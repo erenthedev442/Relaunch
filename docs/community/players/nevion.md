@@ -1,6 +1,6 @@
 # Nevion
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 5d 5h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 16h
 
 `💪 5 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | NIN 99 |
-| Time played | 18h |
-| Enemies defeated | 2,698 |
-| Deaths | 14 |
+| Time played | 21h |
+| Enemies defeated | 2,796 |
+| Deaths | 16 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,289
-- **Marks (lifetime):** 127
-- **Distinct NMs slain:** 8
-- **Total NM kills:** 257
+- **Marks (current):** 4,238
+- **Marks (lifetime):** 396
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 27
 
 ## Guild standing
 
@@ -49,7 +49,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---|---:|---|
 | AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| Empyrean Hunters' Guild | Journeyman | 4,500 | 500 to Veteran |
+| Empyrean Hunters' Guild | Veteran | 7,000 | 18,000 to Master |
 | League Hunters' Guild | Journeyman | 500 | 4,500 to Veteran |
 
 ## Augment Sage
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**5** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Augment Novice.
+**6** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Augment Novice.
 
 ## Speed records
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f777c02052e5 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: bd81e978143c -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Joker
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 2d 2h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 13h
 
-`💪 2 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BLM 77** |
-| Sub job | RDM 59 |
-| Time played | 16h |
-| Enemies defeated | 525 |
-| Deaths | 7 |
+| Main job | **THF 99** |
+| Sub job | DNC 99 |
+| Time played | 21h |
+| Enemies defeated | 617 |
+| Deaths | 9 |
 
 ## Job levels
 
@@ -24,8 +24,8 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 79 | SMN | 1 |
-| RDM | 59 | BLU | 1 |
+| **BLM** | **99** | SMN | 1 |
+| **RDM** | **99** | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | **DNC** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 6,647
-- **Marks (lifetime):** 100
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 1,329
+- **Marks (current):** 11,140
+- **Marks (lifetime):** 244
+- **Distinct NMs slain:** 4
+- **Total NM kills:** 46
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**3** unlocked — First Hunt · Ten Hunts In · Augment Novice.
+**4** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e34c0380581b -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 31e479b8505c -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

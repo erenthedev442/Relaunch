@@ -1,6 +1,6 @@
 # Lyvia
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 20h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 7h
 
 `💪 2 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 8h |
-| Enemies defeated | 361 |
-| Deaths | 9 |
+| Time played | 19h |
+| Enemies defeated | 559 |
+| Deaths | 14 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,456
-- **Marks (lifetime):** 3,481
-- **Distinct NMs slain:** 4
-- **Total NM kills:** 1,312
+- **Marks (current):** 7,884
+- **Marks (lifetime):** 4,409
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 880
 
 ## Guild standing
 
@@ -54,17 +54,17 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 29
-- **NM Affinities:** 3 / 13
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 56
+- **NM Affinities:** 5 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 265 | 397 |
-| Relic | 0 | 0 |
-| Empyrean | 125 | 187 |
+| AF | 115 | 3,365 |
+| Relic | 100 | 2,100 |
+| Empyrean | 2,125 | 125 |
 
 ## Collections
 
@@ -72,13 +72,14 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier IV Unlocked · Mark of 1,000 · Augment Novice.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 0s |
+| HL Rank I → V | 1d 18h |
 
 ---
 
@@ -87,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f3b07ea971e6 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 80444dcba7d5 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

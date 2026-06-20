@@ -1,18 +1,20 @@
 # Shadowsfall
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 1d 11h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 22h
+
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 2/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **MNK 2** |
-| Sub job | RDM 1 |
-| Time played | 0h |
-| Enemies defeated | 0 |
+| Main job | **MNK 99** |
+| Sub job | RDM 99 |
+| Time played | 4h |
+| Enemies defeated | 103 |
 | Deaths | 0 |
 
 ## Job levels
@@ -20,10 +22,10 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 2 | NIN | 1 |
+| **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| **RDM** | **99** | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -33,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 550
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 110
+- **Rank:** 2 / 5
+- **Marks (current):** 5,921
+- **Marks (lifetime):** 590
+- **Distinct NMs slain:** 3
+- **Total NM kills:** 118
 
 ## Augment Sage
 
@@ -59,11 +61,13 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**4** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Augment Novice.
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 16h 24m |
 
 ---
 
@@ -72,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8c1199e61458 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 5ffb10c559a4 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

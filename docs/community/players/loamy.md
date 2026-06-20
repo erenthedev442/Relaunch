@@ -1,8 +1,8 @@
 # Loamy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 13h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 7d
 
-`💪 7 jobs @99`
+`💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **PUP 99** |
 | Sub job | DNC 99 |
-| Time played | 35h |
-| Enemies defeated | 938 |
-| Deaths | 6 |
+| Time played | 48h |
+| Enemies defeated | 1,004 |
+| Deaths | 7 |
 
 ## Job levels
 
@@ -23,7 +23,7 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | **NIN** | **99** |
-| WHM | 84 | DRG | 1 |
+| **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | **SMN** | **99** |
 | RDM | 3 | BLU | 1 |
 | THF | 1 | COR | 1 |
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 9,309
-- **Marks (lifetime):** 2,555
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 1,861
+- **Marks (current):** 11,972
+- **Marks (lifetime):** 3,545
+- **Distinct NMs slain:** 4
+- **Total NM kills:** 697
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 36
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 54
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**5** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Mark of 1,000 · Augment Novice.
+**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 13h 20m |
+| HL Rank I → V | 3d 3h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 185973ecee51 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 085c358ba7ee -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

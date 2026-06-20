@@ -2,7 +2,7 @@
 
 These chat commands are available to every player on Legendary (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 58
+**Total player-accessible commands:** 59
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
@@ -52,6 +52,7 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!provenance` | — | Sends you to zone 222 (PROVENANCE), home of the Ascension Altar. Mirrors !gmhome (permission 0 = usable by everyone). The player lands at (0,0,0); Provenance's onZoneIn repositions them to the altar's doorstep at (-640, -20, -519.999) facing rot 192. |  |
 | `!pup` | string, string | Puppetmaster automaton quick-loadout manager. Save the full setup (frame + head + all 12 attachments) of your deployed automaton to a named slot, then swap to it instantly from anywhere -- no Automaton Trunk trip, no menu drag-and-drop. | :material-puzzle: **custom** |
 | `!reallevel` | string | Computes a player's "real level" -- a single fun number that reflects how far PAST the level-99 cap a character has actually progressed, by folding in every endgame power axis FFXI offers: gear (item level), Ascension (Prestige), Job Points, and merits. | :material-puzzle: **custom** |
+| `!rebirth` | — | _(no description)_ |  |
 | `!reforge` | — | Shows the player's Reforge AF, Relic, and Empy mark balances. | :material-puzzle: **custom** |
 | `!reforged` | — | Warps you to the Reforge Armor system NPCs in Gwora-Corridor. |  |
 | `!release` | string | Releases the player from current events. |  |
@@ -333,6 +334,10 @@ Computes a player's "real level" -- a single fun number that reflects how far PA
 
 **Parameter types:** string
 
+### `!rebirth`
+
+**Usage:** `rebirth`
+
 ### `!reforge`  _(custom)_
 
 Shows the player's Reforge AF, Relic, and Empy mark balances.
@@ -462,6 +467,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7b132a0b3fc6 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: f210d4bccaac -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

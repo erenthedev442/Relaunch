@@ -1,28 +1,28 @@
 # Sophia
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 8h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 20h
 
-`💪 2 jobs @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **MNK 45** |
-| Sub job | WAR 30 |
-| Time played | 18h |
-| Enemies defeated | 579 |
-| Deaths | 1 |
+| Main job | **MNK 99** |
+| Sub job | WAR 80 |
+| Time played | 23h |
+| Enemies defeated | 892 |
+| Deaths | 3 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 30 | SAM | 1 |
-| MNK | 45 | NIN | 1 |
+| WAR | 80 | SAM | 1 |
+| **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 4 / 5
-- **Marks (current):** 1,848
+- **Rank:** 5 / 5
+- **Marks (current):** 354
 - **Marks (lifetime):** 10
 - **Distinct NMs slain:** 2
-- **Total NM kills:** 369
+- **Total NM kills:** 2
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 74674d298d4d -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: ff584d97c4d0 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

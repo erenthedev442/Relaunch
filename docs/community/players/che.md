@@ -1,11 +1,11 @@
 # Che
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-18 · Character age 3d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-19 · Character age 3d 13h
 
 `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | NIN 99 |
-| Time played | 13h |
-| Enemies defeated | 922 |
-| Deaths | 1 |
+| Time played | 15h |
+| Enemies defeated | 930 |
+| Deaths | 2 |
 
 ## Job levels
 
@@ -35,16 +35,16 @@
 
 ## Hunting League
 
-- **Rank:** 2 / 5
-- **Marks (current):** 1
-- **Marks (lifetime):** 40
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 8
+- **Rank:** 3 / 5
+- **Marks (current):** 306
+- **Marks (lifetime):** 168
+- **Distinct NMs slain:** 8
+- **Total NM kills:** 17
 
 ## Augment Sage
 
 - **Mastery rank:** 1 / 5
-- **Augments crafted:** 31
+- **Augments crafted:** 42
 - **NM Affinities:** 1 / 13
 
 ## Reforge
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**2** unlocked — First Hunt · Augment Novice.
+**5** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e3647d57dff3 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 9da66d6ea8ab -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

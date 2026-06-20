@@ -1,6 +1,6 @@
 # Towoo
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 19h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 7h
 
 `💪 1 job @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 1,600
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 320
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d648f052ae33 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 375ad489c813 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

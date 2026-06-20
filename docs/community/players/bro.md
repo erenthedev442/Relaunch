@@ -1,8 +1,8 @@
 # Bro
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 21h
 
-`⭐ 7 Ascensions` `💪 22 jobs @99`
+`⭐ 11 Ascensions` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
+| Main job | **BLU 99** |
 | Sub job | NIN 99 |
-| Time played | 77h |
-| Enemies defeated | 1,966 |
-| Deaths | 44 |
+| Time played | 90h |
+| Enemies defeated | 1,984 |
+| Deaths | 47 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,964
-- **Marks (lifetime):** 4,949
+- **Marks (current):** 617
+- **Marks (lifetime):** 5,205
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 1,676
+- **Total NM kills:** 118
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
-- **Augments crafted:** 217
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 310
 - **NM Affinities:** 4 / 13
 
 ## Reforge
@@ -52,13 +52,13 @@
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 0 | 0 |
-| Relic | 1,500 | 2,250 |
+| Relic | 1,500 | 0 |
 | Empyrean | 0 | 0 |
 
 ## Prestige
 
-- **Total Ascensions:** 7
-- **Per-job prestige:** BLU P7
+- **Total Ascensions:** 11
+- **Per-job prestige:** BLU P11
 
 ## Collections
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert · Augment Master.
+**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Ascending Master · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -74,6 +74,7 @@
 |---|---:|
 | Fastest 1 → 99 | 0s |
 | HL Rank I → V | 15h 19m |
+| Augment Archon | 5d 15h |
 
 ---
 
@@ -82,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b435ceb3b014 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 632448912bc2 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

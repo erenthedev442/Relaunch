@@ -1,6 +1,6 @@
 # Katryna
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 3d 21h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-19 · Character age 4d 8h
 
 `💪 2 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 22h |
-| Enemies defeated | 749 |
-| Deaths | 18 |
+| Time played | 32h |
+| Enemies defeated | 1,593 |
+| Deaths | 22 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,175
-- **Marks (lifetime):** 4,291
-- **Distinct NMs slain:** 5
-- **Total NM kills:** 1,312
+- **Marks (current):** 8,703
+- **Marks (lifetime):** 5,219
+- **Distinct NMs slain:** 8
+- **Total NM kills:** 1,040
 
 ## Guild standing
 
@@ -54,31 +54,32 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 40
-- **NM Affinities:** 3 / 13
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 62
+- **NM Affinities:** 5 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,265 | 1,897 |
-| Relic | 0 | 0 |
-| Empyrean | 125 | 187 |
+| AF | 715 | 3,365 |
+| Relic | 1,600 | 2,100 |
+| Empyrean | 125 | 125 |
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 120
 
 ## Achievements
 
-**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier IV Unlocked · Mark of 1,000 · Augment Novice.
+**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 17h 7m |
+| HL Rank I → V | 2d 19h |
 
 ---
 
@@ -87,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 24b0b64ad88f -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 7ed113bdb102 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

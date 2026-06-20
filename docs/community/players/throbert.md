@@ -1,6 +1,6 @@
 # Throbert
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-16 · Character age 4d 1h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-16 · Character age 4d 12h
 
 `💪 5 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 252
 - **Marks (lifetime):** 165
 - **Distinct NMs slain:** 5
-- **Total NM kills:** 372
+- **Total NM kills:** 61
 
 ## Augment Sage
 
@@ -51,8 +51,8 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 2,300 | 3,450 |
-| Relic | 150 | 225 |
+| AF | 2,300 | 300 |
+| Relic | 150 | 150 |
 | Empyrean | 1,760 | 5,010 |
 
 ## Collections
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 052e50187780 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 714fb06aed03 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

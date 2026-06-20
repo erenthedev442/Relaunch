@@ -250,6 +250,6 @@ A **Home Point crystal** is placed near the dungeon exit warp. Examine it to set
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a550041f32db -->
-_Last updated: 2026-06-14 13:15 UTC_
+<!-- content-hash: d254abcd1180 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

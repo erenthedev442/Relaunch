@@ -1,26 +1,26 @@
 # Johnfantasy
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 5d 14h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 1h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 54/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 67/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **MNK 54** |
-| Sub job | WAR 45 |
+| Main job | **MNK 67** |
+| Sub job | WAR 58 |
 | Time played | 8h |
-| Enemies defeated | 195 |
+| Enemies defeated | 219 |
 | Deaths | 1 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 45 | SAM | 1 |
-| MNK | 54 | NIN | 1 |
+| WAR | 58 | SAM | 1 |
+| MNK | 67 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 11 | SMN | 1 |
 | RDM | 9 | BLU | 1 |
@@ -34,10 +34,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 3,400
+- **Marks (current):** 4,500
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 680
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c3432119f194 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: a794bab4c171 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

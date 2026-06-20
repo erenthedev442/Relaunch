@@ -1,6 +1,6 @@
 # Trene
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-18 · Character age 1d 4h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 15h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 41/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -11,7 +11,7 @@
 |---|---|
 | Main job | **GEO 41** |
 | Sub job | RDM 29 |
-| Time played | 6h |
+| Time played | 7h |
 | Enemies defeated | 115 |
 | Deaths | 0 |
 
@@ -34,10 +34,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 605
+- **Marks (current):** 1,105
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 121
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: df2f70cd3bf8 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: ee960a8d659d -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

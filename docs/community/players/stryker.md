@@ -1,8 +1,8 @@
 # Stryker
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 4d 13h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-19 · Character age 5d 1h
 
-`💪 1 job @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BLM 81** |
-| Sub job | RDM 68 |
-| Time played | 6h |
-| Enemies defeated | 415 |
-| Deaths | 7 |
+| Main job | **BLU 13** |
+| Sub job | RDM 13 |
+| Time played | 8h |
+| Enemies defeated | 513 |
+| Deaths | 11 |
 
 ## Job levels
 
@@ -24,8 +24,8 @@
 | **WAR** | **99** | SAM | 79 |
 | MNK | 38 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 81 | SMN | 1 |
-| RDM | 68 | BLU | 1 |
+| **BLM** | **99** | SMN | 1 |
+| **RDM** | **99** | BLU | 13 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 1,846
-- **Marks (lifetime):** 56
+- **Marks (current):** 2,006
+- **Marks (lifetime):** 61
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 369
+- **Total NM kills:** 8
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a79153b8947c -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: e58a0ca21683 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

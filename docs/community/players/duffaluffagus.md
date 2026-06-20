@@ -1,59 +1,59 @@
 # Duffaluffagus
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 6h
 
-`💪 13 jobs @99`
+`💪 17 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | WAR 99 |
-| Time played | 12h |
-| Enemies defeated | 6 |
-| Deaths | 0 |
+| Sub job | SAM 99 |
+| Time played | 16h |
+| Enemies defeated | 460 |
+| Deaths | 6 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 19 |
-| **MNK** | **99** | NIN | 1 |
-| **WHM** | **99** | DRG | 1 |
+| **WAR** | **99** | **SAM** | **99** |
+| **MNK** | **99** | **NIN** | **99** |
+| **WHM** | **99** | DRG | 9 |
 | **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | **COR** | **99** |
 | **PLD** | **99** | **PUP** | **99** |
 | **DRK** | **99** | **DNC** | **99** |
-| BST | 37 | SCH | 1 |
+| **BST** | **99** | SCH | 1 |
 | **BRD** | **99** | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| **RNG** | **99** | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 2,367
-- **Marks (lifetime):** 251
-- **Distinct NMs slain:** 8
-- **Total NM kills:** 483
+- **Rank:** 5 / 5
+- **Marks (current):** 4,796
+- **Marks (lifetime):** 643
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 73
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 50
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 196
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 70 | 270 |
+| AF | 10 | 60 |
+| Relic | 150 | 150 |
+| Empyrean | 200 | 700 |
 
 ## Collections
 
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**7** unlocked — First Hunt · Tier II Unlocked · Tier III Unlocked · Wave Rider · Star-Slayer · Augment Novice · Augment Expert.
+**10** unlocked — First Hunt · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 20h 6m |
+| HL Rank I → V | 3d 15h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 54bd7fb4ed95 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: db867692e4fb -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Regis
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 5h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 16h
 
-`⭐ 9 Ascensions` `💪 2 jobs @99`
+`⭐ 15 Ascensions` `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 27h |
-| Enemies defeated | 786 |
-| Deaths | 20 |
+| Time played | 36h |
+| Enemies defeated | 981 |
+| Deaths | 30 |
 
 ## Job levels
 
@@ -36,29 +36,29 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 16,589
+- **Marks (current):** 11,174
 - **Marks (lifetime):** 1,126
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 3,317
+- **Total NM kills:** 237
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 35
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 51
 - **NM Affinities:** 2 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| AF | 5,085 | 10,335 |
+| Relic | 65 | 3,815 |
+| Empyrean | 2,730 | 5,980 |
 
 ## Prestige
 
-- **Total Ascensions:** 9
-- **Per-job prestige:** DRK P9
+- **Total Ascensions:** 15
+- **Per-job prestige:** DRK P15
 
 ## Collections
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Star-Slayer · Sanctuary Defender · Augment Novice.
+**14** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 831bd374ee5e -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 8a7e1972dc49 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

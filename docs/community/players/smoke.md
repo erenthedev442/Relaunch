@@ -1,6 +1,6 @@
 # Smoke
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-18 · Character age 4d
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-18 · Character age 4d 11h
 
 `💪 1 job @99`
 
@@ -12,17 +12,17 @@
 | | |
 |---|---|
 | Main job | **COR 99** |
-| Sub job | NIN 75 |
-| Time played | 16h |
-| Enemies defeated | 341 |
-| Deaths | 8 |
+| Sub job | NIN 78 |
+| Time played | 22h |
+| Enemies defeated | 371 |
+| Deaths | 11 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 75 |
+| MNK | 1 | NIN | 78 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 372
-- **Marks (lifetime):** 226
+- **Marks (current):** 399
+- **Marks (lifetime):** 243
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 75
+- **Total NM kills:** 37
 
 ## Augment Sage
 
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 0 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 25 | 37 |
+| Empyrean | 25 | 25 |
 
 ## Collections
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 65a466014dfc -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: d9c7700d98c6 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

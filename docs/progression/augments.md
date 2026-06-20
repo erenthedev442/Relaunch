@@ -220,7 +220,6 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 
 | Catalyst | Item ID | Augment | Fresh ×1 | ×2 | ×3 | ×4 | ×5 | Max ×1 | ×2 | ×3 | ×4 | ×5 | Cap |
 |---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
-| <a class="item-link" href="https://www.ffxiah.com/item/921" data-img="https://static.ffxiah.com/images/icon/921.png" target="_blank" rel="noopener">Bottle Of Ahriman Tears</a> | 921 | INT | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/854" data-img="https://www.bg-wiki.com/images/6/6d/Cockatrice_Skin_description.png" target="_blank" rel="noopener">Cockatrice Skin</a> | 854 | Spell interruption rate down 1% | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/886" data-img="https://www.bg-wiki.com/images/2/26/Demon_Skull_description.png" target="_blank" rel="noopener">Demon Skull</a> | 886 | Mag. Acc | 2 | 4 | 6 | 8 | 10 | 64 | 128 | 192 | 256 | 320 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/905" data-img="https://www.bg-wiki.com/images/5/5e/Wyvern_Skull_description.png" target="_blank" rel="noopener">Wyvern Skull</a> | 905 | Mag. Acc. Mag.Atk.Bns | 2 | 4 | 6 | 8 | 10 | 64 | 128 | 192 | 256 | 320 | no cap |
@@ -237,6 +236,7 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/2776" data-img="https://www.bg-wiki.com/images/5/5d/Pumice_Stone_description.png" target="_blank" rel="noopener">Pumice Stone</a> | 2776 | Magic burst dmg | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | +40% |
 | <a class="item-link" href="https://www.ffxiah.com/item/2777" data-img="https://static.ffxiah.com/images/icon/2777.png" target="_blank" rel="noopener">Vial Of Magicked Blood</a> | 2777 | Mag. crit. hit dmg | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2943" data-img="https://www.bg-wiki.com/images/5/57/Balaur_Skull_description.png" target="_blank" rel="noopener">Balaur Skull</a> | 2943 | Augment | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/921" data-img="https://static.ffxiah.com/images/icon/921.png" target="_blank" rel="noopener">Bottle Of Ahriman Tears</a> | 921 | INT | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2338" data-img="https://www.bg-wiki.com/images/0/0d/Wamoura_Scale_description.png" target="_blank" rel="noopener">Wamoura Scale</a> | 2338 | Enspell Dmg | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 
 ### Mind / Healing / Cure
@@ -284,7 +284,7 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 |---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
 | <a class="item-link" href="https://www.ffxiah.com/item/841" data-img="https://www.bg-wiki.com/images/9/98/Yagudo_Feather_description.png" target="_blank" rel="noopener">Yagudo Feather</a> | 841 | MP | 4 | 8 | 12 | 16 | 20 | 128 | 256 | 384 | 512 | 640 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/919" data-img="https://static.ffxiah.com/images/icon/919.png" target="_blank" rel="noopener">Clump Of Boyahda Moss</a> | 919 | Refresh | 2 | 4 | 6 | 8 | 10 | 64 | 128 | 192 | 256 | 320 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1119" data-img="https://static.ffxiah.com/images/icon/1119.png" target="_blank" rel="noopener">Tonberry Coat</a> | 1119 | Conserve MP | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/1119" data-img="https://www.bg-wiki.com/images/5/5d/Tonberry_Coat_description.png" target="_blank" rel="noopener">Tonberry Coat</a> | 1119 | Conserve MP | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 
 ### Pet
 
@@ -460,6 +460,6 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1d0e703f0441 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 3e0ab745ef2e -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

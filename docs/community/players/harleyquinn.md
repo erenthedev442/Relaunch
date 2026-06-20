@@ -1,18 +1,20 @@
 # Harleyquinn
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-18 · Character age 23h 32m
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 10h
+
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 77/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **DNC 77** |
-| Sub job | THF 55 |
-| Time played | 4h |
-| Enemies defeated | 99 |
+| Main job | **DNC 99** |
+| Sub job | THF 82 |
+| Time played | 9h |
+| Enemies defeated | 167 |
 | Deaths | 2 |
 
 ## Job levels
@@ -24,20 +26,20 @@
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 55 | COR | 1 |
+| THF | 82 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 77 |
+| DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 475
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 95
+- **Rank:** 2 / 5
+- **Marks (current):** 3,497
+- **Marks (lifetime):** 117
+- **Distinct NMs slain:** 4
+- **Total NM kills:** 22
 
 ## Augment Sage
 
@@ -57,9 +59,15 @@
 
 - **Trusts learned:** 117
 
+## Achievements
+
+**3** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked.
+
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 0s |
 
 ---
 
@@ -68,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5464512f4ca5 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 6287666380ab -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

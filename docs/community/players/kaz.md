@@ -1,8 +1,8 @@
 # Kaz
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 3h
 
-`💪 2 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -12,21 +12,21 @@
 | | |
 |---|---|
 | Main job | **BLU 99** |
-| Sub job | WAR 74 |
-| Time played | 8h |
-| Enemies defeated | 696 |
+| Sub job | COR 43 |
+| Time played | 10h |
+| Enemies defeated | 834 |
 | Deaths | 6 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 74 | SAM | 75 |
+| **WAR** | **99** | **SAM** | **99** |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | **BLU** | **99** |
-| THF | 1 | COR | 1 |
+| THF | 1 | COR | 43 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 1,623
-- **Marks (lifetime):** 1,780
+- **Marks (current):** 671
+- **Marks (lifetime):** 2,666
 - **Distinct NMs slain:** 7
-- **Total NM kills:** 324
+- **Total NM kills:** 457
 
 ## Augment Sage
 
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 20064411e001 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: a4fc42a5ba46 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

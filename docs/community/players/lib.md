@@ -1,6 +1,6 @@
 # Lib
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 4h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 15h
 
 `💪 4 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 8
 - **Marks (lifetime):** 133
 - **Distinct NMs slain:** 5
-- **Total NM kills:** 71
+- **Total NM kills:** 25
 
 ## Augment Sage
 
@@ -51,9 +51,9 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,115 | 1,672 |
+| AF | 1,115 | 215 |
 | Relic | 0 | 0 |
-| Empyrean | 140 | 210 |
+| Empyrean | 140 | 140 |
 
 ## Collections
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 39eb4aa85a10 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 0290fadd5e8a -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

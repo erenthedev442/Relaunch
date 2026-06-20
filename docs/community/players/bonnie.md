@@ -1,6 +1,6 @@
 # Bonnie
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 3d 18h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-18 · Character age 4d 5h
 
 `💪 2 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 2,125
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 425
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 41e7ff13f680 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 1cf3dd68a55f -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

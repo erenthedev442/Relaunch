@@ -1,6 +1,6 @@
 # Giachia
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 4d 18h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 5d 6h
 
 `💪 1 job @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 1,600
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 320
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bcc783856588 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 3db8807c8a9e -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

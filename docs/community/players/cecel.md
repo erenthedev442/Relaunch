@@ -1,6 +1,6 @@
 # Cecel
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 20h
 
 `⭐ 14 Ascensions` `💪 10 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 63h |
-| Enemies defeated | 4,081 |
-| Deaths | 46 |
+| Time played | 67h |
+| Enemies defeated | 4,103 |
+| Deaths | 47 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 25,355
+- **Marks (current):** 26,105
 - **Marks (lifetime):** 2,424
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 5,325
+- **Total NM kills:** 254
 
 ## Guild standing
 
@@ -63,8 +63,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 288 | 748 |
-| Relic | 1,250 | 1,875 |
-| Empyrean | 2,825 | 4,237 |
+| Relic | 1,250 | 0 |
+| Empyrean | 2,825 | 605 |
 
 ## Prestige
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 361f9bd9a523 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 0c06335c04a2 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

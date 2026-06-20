@@ -1,6 +1,6 @@
 # Ekko
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 15h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 2h
 
 `💪 4 jobs @99`
 
@@ -12,16 +12,16 @@
 | | |
 |---|---|
 | Main job | **WAR 99** |
-| Sub job | SAM 70 |
-| Time played | 19h |
-| Enemies defeated | 957 |
+| Sub job | SAM 94 |
+| Time played | 20h |
+| Enemies defeated | 1,047 |
 | Deaths | 3 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 70 |
+| **WAR** | **99** | SAM | 94 |
 | **MNK** | **99** | NIN | 1 |
 | WHM | 76 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,630
-- **Marks (lifetime):** 1,948
+- **Marks (current):** 2,684
+- **Marks (lifetime):** 2,398
 - **Distinct NMs slain:** 10
-- **Total NM kills:** 357
+- **Total NM kills:** 447
 
 ## Augment Sage
 
@@ -51,13 +51,13 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 25 | 37 |
+| AF | 25 | 25 |
 | Relic | 0 | 0 |
 | Empyrean | 0 | 400 |
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a6e2ca4c6403 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 0c64a5b2894b -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

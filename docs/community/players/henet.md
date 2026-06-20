@@ -1,17 +1,17 @@
 # Henet
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-18 · Character age 1d 4h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 15h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 40/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 41/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **WAR 40** |
+| Main job | **WAR 41** |
 | Sub job | PLD 29 |
-| Time played | 6h |
+| Time played | 7h |
 | Enemies defeated | 73 |
 | Deaths | 0 |
 
@@ -19,7 +19,7 @@
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 40 | SAM | 1 |
+| WAR | 41 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -34,10 +34,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 95
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 52ff81124c03 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 8ffd701445a7 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

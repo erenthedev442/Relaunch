@@ -1,6 +1,6 @@
 # Mint
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 4d 17h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 5d 4h
 
 `💪 1 job @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 2,515
 - **Marks (lifetime):** 15
 - **Distinct NMs slain:** 2
-- **Total NM kills:** 503
+- **Total NM kills:** 11
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b3a3600333a9 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: c3d289183ff3 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

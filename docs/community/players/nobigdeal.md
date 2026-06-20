@@ -1,8 +1,8 @@
 # Nobigdeal
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-18 · Character age 2d 14h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 3d 1h
 
-`💪 2 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
@@ -11,18 +11,18 @@
 
 | | |
 |---|---|
-| Main job | **WAR 99** |
-| Sub job | RDM 99 |
-| Time played | 4h |
-| Enemies defeated | 101 |
-| Deaths | 0 |
+| Main job | **MNK 99** |
+| Sub job | NIN 99 |
+| Time played | 6h |
+| Enemies defeated | 157 |
+| Deaths | 2 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | SAM | 1 |
-| MNK | 1 | NIN | 1 |
+| **MNK** | **99** | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,550
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 310
+- **Marks (current):** 1,430
+- **Marks (lifetime):** 930
+- **Distinct NMs slain:** 3
+- **Total NM kills:** 186
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**4** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9d178f1d0256 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: dd203f7f2cc7 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

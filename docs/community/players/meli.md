@@ -1,6 +1,6 @@
 # Meli
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 5d 21h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 6d 8h
 
 `⭐ 2 Ascensions` `💪 2 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 35,577
 - **Marks (lifetime):** 907
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 7,309
+- **Total NM kills:** 109
 
 ## Augment Sage
 
@@ -51,9 +51,9 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 100 | 150 |
-| Relic | 900 | 1,350 |
-| Empyrean | 2,500 | 3,750 |
+| AF | 100 | 0 |
+| Relic | 900 | 0 |
+| Empyrean | 2,500 | 0 |
 
 ## Prestige
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c14fc8df3d9f -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: d809a4a968f6 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

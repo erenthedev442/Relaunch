@@ -1,6 +1,6 @@
 # Arthas
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 22h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 9h
 
 `💪 3 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 1,045
 - **Marks (lifetime):** 358
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 209
+- **Total NM kills:** 66
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3095cca9ed5f -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 2ed11457c26e -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

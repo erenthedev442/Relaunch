@@ -1,19 +1,19 @@
 # Aureal
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 2d 12h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 23h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 35/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 70/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BLU 35** |
-| Sub job | RDM 17 |
-| Time played | 4h |
-| Enemies defeated | 22 |
-| Deaths | 0 |
+| Main job | **BLU 70** |
+| Sub job | RDM 55 |
+| Time played | 8h |
+| Enemies defeated | 98 |
+| Deaths | 3 |
 
 ## Job levels
 
@@ -23,7 +23,7 @@
 | MNK | 18 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 17 | BLU | 35 |
+| RDM | 55 | BLU | 70 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -34,10 +34,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 975
+- **Marks (current):** 1,275
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 195
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cbf82bb0315a -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: cc9cf85fd8de -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

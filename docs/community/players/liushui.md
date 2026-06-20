@@ -1,6 +1,6 @@
 # Liushui
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 3d 2h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 3d 13h
 
 `💪 3 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 1,525
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 305
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 761a7e1c2ba1 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: a2fba01f587b -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

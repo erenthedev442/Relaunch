@@ -1,19 +1,19 @@
 # Ambrosa
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 18h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 5h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 39/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 55/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 39** |
-| Sub job | SCH 10 |
-| Time played | 3h |
-| Enemies defeated | 13 |
-| Deaths | 0 |
+| Main job | **RDM 55** |
+| Sub job | SCH 28 |
+| Time played | 6h |
+| Enemies defeated | 22 |
+| Deaths | 1 |
 
 ## Job levels
 
@@ -23,21 +23,21 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 39 | BLU | 1 |
+| RDM | 55 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 10 |
+| BST | 1 | SCH | 28 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 975
+- **Marks (current):** 1,525
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 195
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7aa3c0ad69d7 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 1f75a00b4e17 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

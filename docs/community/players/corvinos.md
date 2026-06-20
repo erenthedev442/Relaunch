@@ -1,8 +1,8 @@
 # Corvinos
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 3h
 
-`⭐ 1 Ascension` `💪 5 jobs @99`
+`⭐ 1 Ascension` `💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | NIN 99 |
-| Time played | 12h |
-| Enemies defeated | 994 |
-| Deaths | 5 |
+| Sub job | WAR 99 |
+| Time played | 17h |
+| Enemies defeated | 2,034 |
+| Deaths | 8 |
 
 ## Job levels
 
@@ -23,23 +23,23 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
-| WHM | 1 | DRG | 1 |
+| WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| **RDM** | **99** | BLU | 1 |
 | THF | 69 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| **RNG** | **99** | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,195
-- **Marks (lifetime):** 914
+- **Marks (current):** 5,933
+- **Marks (lifetime):** 1,530
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 298
+- **Total NM kills:** 154
 
 ## Guild standing
 
@@ -54,17 +54,17 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 24
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 70
 - **NM Affinities:** 8 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 55 | 105 |
-| Relic | 0 | 0 |
-| Empyrean | 1,005 | 1,507 |
+| AF | 2,245 | 195 |
+| Relic | 15 | 1,065 |
+| Empyrean | 1,005 | 1,105 |
 
 ## Prestige
 
@@ -77,7 +77,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · First Ascension · Augment Novice.
+**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f1c7cb85565f -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: c4a2930e3ca0 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

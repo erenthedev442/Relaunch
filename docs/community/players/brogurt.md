@@ -1,6 +1,6 @@
 # Brogurt
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 1h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 13h
 
 `⭐ 6 Ascensions` `💪 9 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 930
 - **Marks (lifetime):** 1,921
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 604
+- **Total NM kills:** 186
 
 ## Augment Sage
 
@@ -51,8 +51,8 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 302 | 453 |
-| Relic | 240 | 360 |
+| AF | 302 | 450 |
+| Relic | 240 | 240 |
 | Empyrean | 96 | 10,480 |
 
 ## Prestige
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e720ee487435 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: fc56598f5e07 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

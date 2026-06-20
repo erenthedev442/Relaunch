@@ -1,8 +1,8 @@
 # Brixton
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 5d 22h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 9h
 
-`⭐ 3 Ascensions` `💪 5 jobs @99`
+`⭐ 4 Ascensions` `💪 6 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | DNC 89 |
-| Time played | 41h |
-| Enemies defeated | 1,662 |
-| Deaths | 17 |
+| Main job | **BRD 67** |
+| Sub job | DNC 67 |
+| Time played | 52h |
+| Enemies defeated | 1,926 |
+| Deaths | 23 |
 
 ## Job levels
 
@@ -25,21 +25,21 @@
 | MNK | 1 | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| RDM | 1 | BLU | 28 |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
-| DRK | 1 | DNC | 89 |
+| DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| BRD | 67 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,353
-- **Marks (lifetime):** 15,792
+- **Marks (current):** 5,931
+- **Marks (lifetime):** 18,163
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 270
+- **Total NM kills:** 301
 
 ## Guild standing
 
@@ -55,8 +55,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 269
-- **NM Affinities:** 10 / 13
+- **Augments crafted:** 316
+- **NM Affinities:** 12 / 13
 
 ## Reforge
 
@@ -68,12 +68,12 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 3
-- **Per-job prestige:** THF P3
+- **Total Ascensions:** 4
+- **Per-job prestige:** THF P4
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e051314ead5f -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: faf399256765 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

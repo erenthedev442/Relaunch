@@ -1,20 +1,20 @@
 # Lunita
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 4d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-19 · Character age 4d 13h
 
-`💪 5 jobs @99`
+`💪 9 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
-| Sub job | BRD 99 |
-| Time played | 9h |
-| Enemies defeated | 505 |
+| Main job | **PUP 99** |
+| Sub job | SCH 99 |
+| Time played | 10h |
+| Enemies defeated | 509 |
 | Deaths | 15 |
 
 ## Job levels
@@ -24,22 +24,22 @@
 | **WAR** | **99** | **SAM** | **99** |
 | MNK | 10 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
-| RDM | 9 | **BLU** | **99** |
+| **BLM** | **99** | SMN | 1 |
+| **RDM** | **99** | **BLU** | **99** |
 | THF | 1 | COR | 68 |
-| PLD | 1 | PUP | 1 |
+| PLD | 1 | **PUP** | **99** |
 | DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 24 |
+| BST | 1 | **SCH** | **99** |
 | **BRD** | **99** | GEO | 1 |
 | **RNG** | **99** | RUN | 29 |
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 2,466
-- **Marks (lifetime):** 665
+- **Rank:** 4 / 5
+- **Marks (current):** 2,291
+- **Marks (lifetime):** 685
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 493
+- **Total NM kills:** 137
 
 ## Augment Sage
 
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0bcc5c92067c -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 77c3cda1242b -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

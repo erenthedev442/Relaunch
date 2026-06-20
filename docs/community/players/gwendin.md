@@ -1,6 +1,6 @@
 # Gwendin
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 18h
 
 `💪 5 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | BLU 99 |
-| Time played | 48h |
-| Enemies defeated | 869 |
+| Main job | **RUN 99** |
+| Sub job | DRK 99 |
+| Time played | 52h |
+| Enemies defeated | 884 |
 | Deaths | 20 |
 
 ## Job levels
@@ -36,24 +36,35 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,680
-- **Marks (lifetime):** 8,924
+- **Marks (current):** 2,416
+- **Marks (lifetime):** 8,936
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 469
+- **Total NM kills:** 114
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Journeyman | 2,500 | 2,500 to Veteran |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Journeyman | 2,500 | 2,500 to Veteran |
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 50
-- **NM Affinities:** 7 / 13
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 252
+- **NM Affinities:** 9 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,200 | 1,800 |
+| AF | 1,200 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 1,200 | 1,800 |
+| Empyrean | 1,200 | 0 |
 
 ## Collections
 
@@ -61,7 +72,7 @@
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
+**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -77,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fc545eca419b -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 48debca974e3 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

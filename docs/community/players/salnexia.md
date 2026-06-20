@@ -1,11 +1,11 @@
 # Salnexia
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 1d 12h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 23h
 
 `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 12h |
-| Enemies defeated | 293 |
-| Deaths | 5 |
+| Time played | 15h |
+| Enemies defeated | 381 |
+| Deaths | 8 |
 
 ## Job levels
 
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 2 / 5
-- **Marks (current):** 2,792
-- **Marks (lifetime):** 285
-- **Distinct NMs slain:** 2
-- **Total NM kills:** 558
+- **Rank:** 5 / 5
+- **Marks (current):** 274
+- **Marks (lifetime):** 367
+- **Distinct NMs slain:** 6
+- **Total NM kills:** 72
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**2** unlocked — First Hunt · Ten Hunts In.
+**5** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Wave Rider.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 333a762ec571 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 87d68afadb7f -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

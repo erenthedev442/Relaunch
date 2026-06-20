@@ -1,18 +1,20 @@
 # Mikeal
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 22h
+
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 69/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BLU 69** |
-| Sub job | NIN 55 |
-| Time played | 5h |
-| Enemies defeated | 254 |
+| Main job | **BLU 99** |
+| Sub job | NIN 81 |
+| Time played | 8h |
+| Enemies defeated | 493 |
 | Deaths | 6 |
 
 ## Job levels
@@ -20,10 +22,10 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 55 |
+| MNK | 1 | NIN | 81 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 69 |
+| RDM | 1 | **BLU** | **99** |
 | THF | 2 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -34,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,430
+- **Marks (current):** 1,940
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 286
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -59,7 +61,9 @@
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 5d 21h |
 
 ---
 
@@ -68,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 796e8a5c2e0b -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: fa999279a0c2 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

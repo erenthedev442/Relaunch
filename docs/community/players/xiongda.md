@@ -1,6 +1,6 @@
 # Xiongda
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 2h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 13h
 
 `💪 3 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 1,100
 - **Marks (lifetime):** 127
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 220
+- **Total NM kills:** 3
 
 ## Augment Sage
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6dc0eea3170c -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: a8784cb3983b -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Broken
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 3d 1h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-19 · Character age 3d 12h
 
-`💪 6 jobs @99`
+`💪 14 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,35 +11,35 @@
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | RDM 99 |
-| Time played | 17h |
-| Enemies defeated | 25 |
+| Main job | **DNC 80** |
+| Sub job | RUN 39 |
+| Time played | 25h |
+| Enemies defeated | 162 |
 | Deaths | 3 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 1 |
-| **MNK** | **99** | NIN | 1 |
-| WHM | 1 | DRG | 1 |
+| **WAR** | **99** | **SAM** | **99** |
+| **MNK** | **99** | **NIN** | **99** |
+| WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
-| **RDM** | **99** | BLU | 1 |
+| **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | **COR** | **99** |
-| PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| **PLD** | **99** | **PUP** | **99** |
+| **DRK** | **99** | DNC | 80 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | **GEO** | **99** |
-| RNG | 1 | RUN | 1 |
+| **BRD** | **99** | **GEO** | **99** |
+| RNG | 1 | RUN | 39 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 55,152
-- **Marks (lifetime):** 30,206
+- **Marks (current):** 98,972
+- **Marks (lifetime):** 32,828
 - **Distinct NMs slain:** 7
-- **Total NM kills:** 11,097
+- **Total NM kills:** 1,006
 
 ## Augment Sage
 
@@ -51,7 +51,7 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,200 | 1,800 |
+| AF | 1,200 | 0 |
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5626580a6fc1 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: bf7d9fa8212f -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

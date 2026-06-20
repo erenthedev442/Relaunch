@@ -1,18 +1,20 @@
 # Hooza
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-18 · Character age 3d 17h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-19 · Character age 4d 4h
+
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 76/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BST 76** |
-| Sub job | NIN 61 |
-| Time played | 12h |
-| Enemies defeated | 506 |
+| Main job | **BST 99** |
+| Sub job | NIN 89 |
+| Time played | 20h |
+| Enemies defeated | 921 |
 | Deaths | 3 |
 
 ## Job levels
@@ -20,24 +22,24 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 61 |
+| MNK | 1 | NIN | 89 |
 | WHM | 25 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 11 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
-| BST | 76 | SCH | 1 |
+| **BST** | **99** | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 2,125
+- **Marks (current):** 2,775
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 425
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -59,7 +61,9 @@
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 2d 18h |
 
 ---
 
@@ -68,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8b69b5dbf4f3 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: d607a3d2fca6 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,25 +1,25 @@
 # Nanafu
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 1d 14h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 2d 1h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 8/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 90/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **WAR 8** |
-| Sub job | SAM 5 |
-| Time played | 1h |
-| Enemies defeated | 3 |
-| Deaths | 2 |
+| Main job | **WAR 90** |
+| Sub job | SAM 70 |
+| Time played | 5h |
+| Enemies defeated | 232 |
+| Deaths | 5 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 8 | SAM | 5 |
+| WAR | 90 | SAM | 70 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -34,10 +34,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 95
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 116
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 01f32094c9eb -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: ae6f7a474963 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

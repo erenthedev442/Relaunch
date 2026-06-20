@@ -1,6 +1,6 @@
 # Alice
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 17h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 4h
 
 `💪 2 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 1,317
 - **Marks (lifetime):** 157
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 263
+- **Total NM kills:** 16
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8e2a3aa8a2fa -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 49486ac63fa7 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

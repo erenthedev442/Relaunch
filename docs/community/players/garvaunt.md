@@ -1,18 +1,18 @@
 # Garvaunt
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-18 · Character age 20h 56m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 8h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 27/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 70/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 27** |
-| Sub job | BLM 18 |
-| Time played | 2h |
-| Enemies defeated | 87 |
+| Main job | **RDM 70** |
+| Sub job | BLM 57 |
+| Time played | 4h |
+| Enemies defeated | 292 |
 | Deaths | 0 |
 
 ## Job levels
@@ -22,8 +22,8 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 18 | SMN | 1 |
-| RDM | 27 | BLU | 1 |
+| BLM | 57 | SMN | 1 |
+| RDM | 70 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -34,10 +34,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 95
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5da3208b2cb0 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: d3615dea288d -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

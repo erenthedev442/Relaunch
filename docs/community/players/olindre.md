@@ -1,6 +1,6 @@
 # Olindre
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 3h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 14h
 
 `⭐ 20 Ascensions` `💪 4 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 29,687
 - **Marks (lifetime):** 3,123
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 6,395
+- **Total NM kills:** 272
 
 ## Guild standing
 
@@ -62,9 +62,9 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 3,273 | 4,909 |
-| Relic | 3,000 | 4,500 |
-| Empyrean | 1,978 | 2,967 |
+| AF | 3,273 | 3,973 |
+| Relic | 3,000 | 2,100 |
+| Empyrean | 1,978 | 528 |
 
 ## Prestige
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8164d63c0e6a -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 8dd239cf0d45 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

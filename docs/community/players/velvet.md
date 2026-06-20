@@ -1,8 +1,8 @@
 # Velvet
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 8h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 20h
 
-`⭐ 2 Ascensions` `💪 6 jobs @99`
+`⭐ 5 Ascensions` `💪 6 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | NIN 99 |
-| Time played | 41h |
-| Enemies defeated | 2,131 |
+| Time played | 42h |
+| Enemies defeated | 2,256 |
 | Deaths | 12 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,020
-- **Marks (lifetime):** 5,422
+- **Marks (current):** 2,728
+- **Marks (lifetime):** 8,464
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 474
+- **Total NM kills:** 260
 
 ## Augment Sage
 
@@ -51,14 +51,14 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 2,150 | 3,225 |
+| AF | 2,150 | 515 |
 | Relic | 3 | 425 |
 | Empyrean | 241 | 3,650 |
 
 ## Prestige
 
-- **Total Ascensions:** 2
-- **Per-job prestige:** THF P2
+- **Total Ascensions:** 5
+- **Per-job prestige:** THF P5
 
 ## Collections
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dea8c1cb4825 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 8bf67141408a -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

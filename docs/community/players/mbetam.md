@@ -1,6 +1,6 @@
 # Mbetam
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-16 · Character age 3d 20h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-16 · Character age 4d 7h
 
 `💪 1 job @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 1,050
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 210
+- **Total NM kills:** 0
 
 ## Augment Sage
 
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e4ac9306b7f0 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: d5b4c2fa8cfc -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Ariel
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 8h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 20h
 
-`💪 2 jobs @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -11,18 +11,18 @@
 
 | | |
 |---|---|
-| Main job | **MNK 45** |
-| Sub job | WAR 30 |
-| Time played | 17h |
-| Enemies defeated | 199 |
+| Main job | **MNK 99** |
+| Sub job | WAR 80 |
+| Time played | 22h |
+| Enemies defeated | 318 |
 | Deaths | 2 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 30 | SAM | 1 |
-| MNK | 45 | NIN | 1 |
+| WAR | 80 | SAM | 1 |
+| **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 898
+- **Marks (current):** 853
 - **Marks (lifetime):** 10
 - **Distinct NMs slain:** 2
-- **Total NM kills:** 179
+- **Total NM kills:** 2
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b050f0dfe491 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 0c59310e5090 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

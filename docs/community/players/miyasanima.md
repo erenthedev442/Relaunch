@@ -1,8 +1,8 @@
 # Miyasanima
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 3h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 14h
 
-`💪 10 jobs @99`
+`💪 12 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | THF 1 |
-| Time played | 28h |
-| Enemies defeated | 3,117 |
-| Deaths | 12 |
+| Main job | **BLM 99** |
+| Sub job | RDM 99 |
+| Time played | 32h |
+| Enemies defeated | 3,994 |
+| Deaths | 17 |
 
 ## Job levels
 
@@ -25,8 +25,8 @@
 | **MNK** | **99** | NIN | 1 |
 | **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | **SMN** | **99** |
-| RDM | 1 | **BLU** | **99** |
-| THF | 1 | COR | 1 |
+| **RDM** | **99** | **BLU** | **99** |
+| **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | DRK | 1 | **DNC** | **99** |
 | BST | 1 | **SCH** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,201
-- **Marks (lifetime):** 245
-- **Distinct NMs slain:** 8
-- **Total NM kills:** 440
+- **Marks (current):** 4,465
+- **Marks (lifetime):** 828
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 43
 
 ## Guild standing
 
@@ -54,9 +54,9 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 62
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 78
+- **NM Affinities:** 6 / 13
 
 ## Reforge
 
@@ -68,17 +68,18 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 120
 
 ## Achievements
 
-**6** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Augment Novice · Augment Expert.
+**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 0s |
+| HL Rank I → V | 1d 19h |
 
 ---
 
@@ -87,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1385bf4265a1 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 3580f4d01c07 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

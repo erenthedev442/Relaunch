@@ -1,8 +1,8 @@
 # Yojin
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 15h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 2h
 
-`⭐ 1 Ascension` `💪 3 jobs @99`
+`⭐ 2 Ascensions` `💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | SAM 99 |
-| Time played | 16h |
-| Enemies defeated | 595 |
-| Deaths | 11 |
+| Time played | 17h |
+| Enemies defeated | 619 |
+| Deaths | 12 |
 
 ## Job levels
 
@@ -36,29 +36,29 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 34,557
+- **Marks (current):** 37,727
 - **Marks (lifetime):** 476
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 6,916
+- **Total NM kills:** 49
 
 ## Augment Sage
 
 - **Mastery rank:** 2 / 5
-- **Augments crafted:** 21
-- **NM Affinities:** 0 / 13
+- **Augments crafted:** 36
+- **NM Affinities:** 12 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 100 | 150 |
+| AF | 100 | 0 |
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
 ## Prestige
 
-- **Total Ascensions:** 1
-- **Per-job prestige:** WAR P1
+- **Total Ascensions:** 2
+- **Per-job prestige:** WAR P2
 
 ## Collections
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · First Ascension · X Marks the Spot · Star-Slayer · Augment Novice.
+**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · First Ascension · X Marks the Spot · Star-Slayer · Augment Novice.
 
 ## Speed records
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8923cd9709b4 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: a852d3d3fc8e -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

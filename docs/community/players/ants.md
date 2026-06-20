@@ -1,8 +1,8 @@
 # Ants
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 5d 11h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 22h
 
-`💪 1 job @99`
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RUN 76** |
-| Sub job | DRK 67 |
-| Time played | 5h |
-| Enemies defeated | 160 |
+| Main job | **BRD 99** |
+| Sub job | NIN 89 |
+| Time played | 7h |
+| Enemies defeated | 282 |
 | Deaths | 10 |
 
 ## Job levels
@@ -22,7 +22,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 74 |
+| MNK | 1 | NIN | 89 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
@@ -30,21 +30,21 @@
 | PLD | 1 | PUP | 1 |
 | DRK | 67 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| **BRD** | **99** | GEO | 1 |
 | RNG | 1 | RUN | 76 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,028
+- **Marks (current):** 2,678
 - **Marks (lifetime):** 12
 - **Distinct NMs slain:** 1
-- **Total NM kills:** 405
+- **Total NM kills:** 1
 
 ## Augment Sage
 
 - **Mastery rank:** 2 / 5
-- **Augments crafted:** 22
+- **Augments crafted:** 29
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9f0343dc03c7 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 34a73771b5e1 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

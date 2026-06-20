@@ -1,6 +1,6 @@
 # Azure
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-16 · Character age 6d
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-16 · Character age 6d 11h
 
 `💪 7 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 3,372
 - **Marks (lifetime):** 2,483
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 921
+- **Total NM kills:** 133
 
 ## Guild standing
 
@@ -63,7 +63,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 210 | 710 |
-| Relic | 730 | 1,095 |
+| Relic | 730 | 40 |
 | Empyrean | 20 | 4,865 |
 
 ## Collections
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7cf789d1bca9 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 05be35ee0a46 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

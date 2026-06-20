@@ -1,19 +1,19 @@
 # Nut
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 18h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 5h
 
 `💪 6 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
 | Main job | **BRD 99** |
-| Sub job | PLD 31 |
-| Time played | 27h |
+| Sub job | PLD 36 |
+| Time played | 32h |
 | Enemies defeated | 3,687 |
 | Deaths | 2 |
 
@@ -27,7 +27,7 @@
 | BLM | 1 | **SMN** | **99** |
 | RDM | 1 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
-| PLD | 31 | PUP | 1 |
+| PLD | 36 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | **BRD** | **99** | GEO | 1 |
@@ -35,17 +35,17 @@
 
 ## Hunting League
 
-- **Rank:** 4 / 5
-- **Marks (current):** 1,810
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 362
+- **Rank:** 5 / 5
+- **Marks (current):** 16
+- **Marks (lifetime):** 76
+- **Distinct NMs slain:** 2
+- **Total NM kills:** 2
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 17
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 332
+- **NM Affinities:** 1 / 13
 
 ## Reforge
 
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**5** unlocked — First Hunt · Tier IV Unlocked · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 0s |
+| Augment Archon | 4d 10h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0ef44775e42f -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 9ff29cd0a4ce -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

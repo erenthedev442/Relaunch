@@ -1,6 +1,6 @@
 # Nyanly
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 1h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 12h
 
 `💪 1 job @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 3,544
 - **Marks (lifetime):** 40
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 708
+- **Total NM kills:** 8
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d73228c0c08d -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 24ae93e98d16 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

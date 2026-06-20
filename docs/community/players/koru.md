@@ -1,8 +1,8 @@
 # Koru
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-18 · Character age 1d 19h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 7h
 
-`💪 6 jobs @99`
+`💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **SMN 99** |
-| Sub job | SCH 99 |
-| Time played | 11h |
-| Enemies defeated | 0 |
+| Main job | **GEO 99** |
+| Sub job | WHM 99 |
+| Time played | 15h |
+| Enemies defeated | 3 |
 | Deaths | 4 |
 
 ## Job levels
@@ -24,11 +24,11 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | **WHM** | **99** | DRG | 1 |
-| BLM | 1 | **SMN** | **99** |
+| **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
-| THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| THF | 1 | **COR** | **99** |
+| PLD | 1 | **PUP** | **99** |
+| DRK | 1 | **DNC** | **99** |
 | BST | 1 | **SCH** | **99** |
 | BRD | 1 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 35
-- **Marks (lifetime):** 861
+- **Marks (current):** 14,512
+- **Marks (lifetime):** 1,089
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 143
+- **Total NM kills:** 112
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 20
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 160
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 490 | 1,590 |
 | Relic | 200 | 1,950 |
-| Empyrean | 100 | 150 |
+| Empyrean | 100 | 0 |
 
 ## Collections
 
@@ -61,12 +61,13 @@
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Sanctuary Defender · Augment Novice.
+**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Sanctuary Defender · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
+| Fastest 1 → 99 | 23h 51m |
 | HL Rank I → V | 56m 15s |
 
 ---
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b0f46ffcdc6d -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 153784304914 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

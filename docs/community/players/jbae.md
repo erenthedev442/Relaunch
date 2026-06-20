@@ -1,6 +1,6 @@
 # Jbae
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-05-24 · Last seen 2026-06-18 · Character age 25d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-19 · Character age 26d 6h
 
 `⭐ 106 Ascensions` `💪 17 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 270h |
+| Time played | 274h |
 | Enemies defeated | 8,799 |
 | Deaths | 147 |
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 79,397
+- **Marks (current):** 79,747
 - **Marks (lifetime):** 1,375
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 16,139
+- **Total NM kills:** 6,069
 
 ## Guild standing
 
@@ -62,9 +62,9 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 360 | 540 |
+| AF | 360 | 360 |
 | Relic | 0 | 0 |
-| Empyrean | 4,330 | 6,495 |
+| Empyrean | 4,330 | 530 |
 
 ## Prestige
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d4e0ce305cfc -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: f89ca6354003 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

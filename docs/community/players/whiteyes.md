@@ -1,6 +1,6 @@
 # Whiteyes
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-18 · Character age 4d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-19 · Character age 4d 15h
 
 `💪 3 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **SAM 99** |
 | Sub job | DRG 99 |
 | Time played | 16h |
-| Enemies defeated | 131 |
+| Enemies defeated | 132 |
 | Deaths | 15 |
 
 ## Job levels
@@ -36,24 +36,24 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,596
-- **Marks (lifetime):** 4,852
+- **Marks (current):** 6,312
+- **Marks (lifetime):** 4,874
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 1,275
+- **Total NM kills:** 208
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
-- **Augments crafted:** 250
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 261
 - **NM Affinities:** 8 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 330 | 495 |
-| Relic | 490 | 735 |
-| Empyrean | 2,000 | 3,000 |
+| AF | 330 | 330 |
+| Relic | 490 | 490 |
+| Empyrean | 2,000 | 0 |
 
 ## Collections
 
@@ -69,6 +69,7 @@
 |---|---:|
 | Fastest 1 → 99 | 9h 11m |
 | HL Rank I → V | 1d 2h |
+| Augment Archon | 3d 20h |
 
 ---
 
@@ -77,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3f146a4ba51c -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 710e6b1e3465 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

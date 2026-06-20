@@ -1,8 +1,8 @@
 # Souls
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 13h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d
 
-`⭐ 3 Ascensions` `💪 8 jobs @99`
+`⭐ 3 Ascensions` `💪 11 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | THF 99 |
-| Time played | 31h |
-| Enemies defeated | 2,204 |
+| Main job | **BLU 99** |
+| Sub job | RDM 99 |
+| Time played | 35h |
+| Enemies defeated | 2,843 |
 | Deaths | 37 |
 
 ## Job levels
@@ -22,9 +22,9 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| **MNK** | **99** | NIN | 1 |
-| WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
+| **MNK** | **99** | **NIN** | **99** |
+| **WHM** | **99** | DRG | 1 |
+| **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 28,961
-- **Marks (lifetime):** 1,842
+- **Marks (current):** 22,655
+- **Marks (lifetime):** 1,880
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 6,338
+- **Total NM kills:** 357
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 106
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 259
 - **NM Affinities:** 9 / 13
 
 ## Reforge
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 451 | 9,535 |
 | Relic | 32 | 1,655 |
-| Empyrean | 2,370 | 3,555 |
+| Empyrean | 2,370 | 910 |
 
 ## Prestige
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert.
+**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -74,6 +74,7 @@
 |---|---:|
 | Fastest 1 → 99 | 9h 25m |
 | HL Rank I → V | 1d 11h |
+| Augment Archon | 4d 18h |
 
 ---
 
@@ -82,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e8715a297a09 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 844c74f81b79 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

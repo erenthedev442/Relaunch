@@ -1,11 +1,11 @@
 # Killface
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-18 · Character age 2d 11h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 23h
 
 `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 3h |
-| Enemies defeated | 106 |
-| Deaths | 0 |
+| Time played | 10h |
+| Enemies defeated | 294 |
+| Deaths | 4 |
 
 ## Job levels
 
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 525
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 105
+- **Rank:** 4 / 5
+- **Marks (current):** 4,100
+- **Marks (lifetime):** 1,519
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 257
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2bd9e8a75c6b -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 32aae5fe7413 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

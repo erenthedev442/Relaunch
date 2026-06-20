@@ -1,8 +1,8 @@
 # Cervantis
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-18 · Character age 6d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 13h
 
-`⭐ 6 Ascensions` `💪 5 jobs @99`
+`⭐ 15 Ascensions` `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | SAM 99 |
-| Time played | 37h |
-| Enemies defeated | 3,882 |
+| Time played | 39h |
+| Enemies defeated | 3,942 |
 | Deaths | 54 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 13,219
-- **Marks (lifetime):** 1,207
+- **Marks (current):** 2,809
+- **Marks (lifetime):** 2,971
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 3,196
+- **Total NM kills:** 222
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
-- **Augments crafted:** 193
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 250
 - **NM Affinities:** 2 / 13
 
 ## Reforge
@@ -52,13 +52,13 @@
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 3,265 | 5,465 |
-| Relic | 1,230 | 1,845 |
+| Relic | 1,230 | 1,830 |
 | Empyrean | 5 | 7,605 |
 
 ## Prestige
 
-- **Total Ascensions:** 6
-- **Per-job prestige:** SAM P6
+- **Total Ascensions:** 15
+- **Per-job prestige:** WAR P9 · SAM P6
 
 ## Collections
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Sanctuary Defender · Augment Novice · Augment Expert.
+**13** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Ascending Master · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -74,6 +74,7 @@
 |---|---:|
 | Fastest 1 → 99 | 0s |
 | HL Rank I → V | 3d 22h |
+| Augment Archon | 5d 18h |
 
 ---
 
@@ -82,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 26dd7ca650ec -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: f2aefd5dacaf -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

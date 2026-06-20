@@ -1,6 +1,6 @@
 # Ruin
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 4d 23h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 11h
 
 `⭐ 13 Ascensions` `💪 10 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 2,170
 - **Marks (lifetime):** 3,336
 - **Distinct NMs slain:** 7
-- **Total NM kills:** 766
+- **Total NM kills:** 219
 
 ## Guild standing
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3a1e1248cfd2 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 026f1e7272a1 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Daizu
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 8h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 19h
 
 `💪 6 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BLU 99** |
 | Sub job | RDM 99 |
-| Time played | 63h |
-| Enemies defeated | 3,703 |
+| Time played | 70h |
+| Enemies defeated | 4,090 |
 | Deaths | 3 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,060
+- **Marks (current):** 2,760
 - **Marks (lifetime):** 73
 - **Distinct NMs slain:** 7
-- **Total NM kills:** 412
+- **Total NM kills:** 7
 
 ## Guild standing
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1839d3f06638 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 646a17f82ad5 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

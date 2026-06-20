@@ -1,6 +1,6 @@
 # Sora
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 5d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 18h
 
 `💪 5 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | DRG 99 |
-| Time played | 12h |
-| Enemies defeated | 476 |
-| Deaths | 22 |
+| Time played | 17h |
+| Enemies defeated | 1,220 |
+| Deaths | 24 |
 
 ## Job levels
 
@@ -36,28 +36,28 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,071
-- **Marks (lifetime):** 615
+- **Marks (current):** 5,932
+- **Marks (lifetime):** 721
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 1,214
+- **Total NM kills:** 54
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 10
+- **Mastery rank:** 2 / 5
+- **Augments crafted:** 21
 - **NM Affinities:** 9 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| AF | 140 | 340 |
+| Relic | 1,500 | 0 |
+| Empyrean | 205 | 705 |
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 119
 
 ## Achievements
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4aa0fa3e04f3 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: fb04e9a16df1 -->
+_Last updated: 2026-06-20 03:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->
