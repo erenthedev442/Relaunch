@@ -162,11 +162,15 @@ REM          The box is tarball-synced (not a git clone) so git-diff won't
 REM          detect SQL changes; the fallback in _apply_changed_sql.sh
 REM          re-applies every zz_*.sql it finds in sql/ after this upload. ----
 echo  Uploading sql/zz_*.sql to box (via /tmp + sudo cp -- sql/ is xi:xi-owned, a plain scp gets Permission denied)...
-ssh -i "%KEY%" %SSHOPT% %HOST% "rm -rf /tmp/fjb_zz && mkdir -p /tmp/fjb_zz" >> "%LOG%" 2>&1
+REM Timeout-wrapped: the ssh session can stay open (keepalives keep succeeding)
+REM AFTER the remote command finishes -- a known hang that froze this deploy twice
+REM at exactly this step. Run it in a job and move on after 60s; the dir is created
+REM on the box before the stall, so the scp loop below still works.
+powershell -NoProfile -Command "$j=Start-Job { ssh -i '%KEY%' %SSHOPT% %HOST% 'rm -rf /tmp/fjb_zz && mkdir -p /tmp/fjb_zz' 2>&1 }; if (Wait-Job $j -Timeout 60) { Receive-Job $j } else { Stop-Job $j; 'WARNING: [3b] mkdir ssh stalled >60s - continuing (dir already created on box)' }; Remove-Job $j -Force" >> "%LOG%" 2>&1
 for %%F in ("%SRC%\sql\zz_*.sql") do (
     scp -i "%KEY%" %SSHOPT% "%%F" %HOST%:/tmp/fjb_zz/ >> "%LOG%" 2>&1
 )
-ssh -i "%KEY%" %SSHOPT% %HOST% "sudo cp /tmp/fjb_zz/*.sql %REMOTE%/sql/ && sudo chown xi:xi %REMOTE%/sql/zz_*.sql && rm -rf /tmp/fjb_zz && echo zz-sql-installed" >> "%LOG%" 2>&1
+powershell -NoProfile -Command "$j=Start-Job { ssh -i '%KEY%' %SSHOPT% %HOST% 'sudo cp /tmp/fjb_zz/*.sql %REMOTE%/sql/ && sudo chown xi:xi %REMOTE%/sql/zz_*.sql && rm -rf /tmp/fjb_zz && echo zz-sql-installed' 2>&1 }; if (Wait-Job $j -Timeout 60) { Receive-Job $j } else { Stop-Job $j; 'WARNING: [3b] sudo-cp ssh stalled >60s - continuing' }; Remove-Job $j -Force" >> "%LOG%" 2>&1
 (echo [%TIME%] [3b] zz_*.sql upload done)>> "%LOG%"
 
 REM ---- 4. Rebuild C++ + reload zz_*.sql + restart + health-check ----
