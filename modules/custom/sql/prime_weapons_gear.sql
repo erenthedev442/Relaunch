@@ -79,3 +79,67 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     (22155,  11, 40), (22155,   8, 30), (22155,  26, 60), (22155,  24, 60), (22155,  73, 10), (22155, 359, 10), (22155, 355, 204),
     -- 22159 Prime Gun -> Terminus  (ranged: AGI/DEX, Ranged Acc/Att, Rapid Shot)
     (22159,  11, 40), (22159,   9, 30), (22159,  26, 60), (22159,  24, 60), (22159,  73, 10), (22159, 359, 10), (22159, 355, 222);
+
+-- ============================================================================
+-- PRIME VENDOR weapons -- the 16 final "Level 119 III" forms sold by the Prime
+-- Vendor NPC (modules/custom/lua/PrimeVendor_NPC.lua). Added 2026-06-20.
+--
+-- SAME custom "strong functional package" style as above. These are NOT retail
+-- stat values: the real mods ship `TODO: Not implemented` in LSB and are
+-- image-only on BG-Wiki, so this is an original balanced package, tunable here.
+-- Extra ids used: VIT 10, CHR 14, HP 2, MP 5, MEVA 31, DEF 1; new-type WS
+-- Great Sword -> 60 Resolution, Axe -> 72 Decimation. Dokoku (Katana) +
+-- Kusanagi (Great Katana) get NO ADDS_WEAPONSKILL (their native Blade:/Tachi:
+-- WS already cover them); Duban (shield) + Loughnashade (harp) are non-WS
+-- support pieces (Duban has no item_weapon row; it's a shield).
+-- ============================================================================
+UPDATE `item_weapon` SET `dmg` = 240, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 21535; -- Varga Purnikawa (III)
+UPDATE `item_weapon` SET `dmg` = 195, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 21590; -- Mpu Gandring (III)
+UPDATE `item_weapon` SET `dmg` = 245, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 21646; -- Caliburnus
+UPDATE `item_weapon` SET `dmg` = 360, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 21653; -- Helheim
+UPDATE `item_weapon` SET `dmg` = 250, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 21730; -- Spalirisos
+UPDATE `item_weapon` SET `dmg` = 340, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 21785; -- Laphria
+UPDATE `item_weapon` SET `dmg` = 350, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 21837; -- Foenaria
+UPDATE `item_weapon` SET `dmg` = 340, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 21891; -- Gae Buide
+UPDATE `item_weapon` SET `dmg` = 230, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 21932; -- Dokoku
+UPDATE `item_weapon` SET `dmg` = 360, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 21986; -- Kusanagi
+UPDATE `item_weapon` SET `dmg` = 275, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 22002; -- Lorg Mor
+UPDATE `item_weapon` SET `dmg` = 295, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 22106; -- Opashoro
+UPDATE `item_weapon` SET `dmg` = 290, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 22163; -- Pinaka
+UPDATE `item_weapon` SET `dmg` = 160, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 22164; -- Earp
+
+DELETE FROM `item_mods` WHERE `itemId` IN (21535, 21590, 21646, 21653, 21730, 21785, 21837, 21891, 21932, 21986, 22002, 22106, 22163, 22164, 26495, 22307);
+
+INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
+    -- 21535 Varga Purnikawa (H2H) -> Maru Kala
+    (21535, 8, 40), (21535, 9, 40), (21535, 25, 60), (21535, 23, 60), (21535, 73, 10), (21535, 288, 10), (21535, 355, 231),
+    -- 21590 Mpu Gandring (Dagger) -> Merciless Strike
+    (21590, 9, 40), (21590, 11, 40), (21590, 25, 60), (21590, 23, 50), (21590, 73, 10), (21590, 288, 10), (21590, 355, 232),
+    -- 21646 Caliburnus (Sword) -> Imperator
+    (21646, 8, 40), (21646, 9, 40), (21646, 25, 60), (21646, 23, 60), (21646, 73, 10), (21646, 288, 10), (21646, 355, 233),
+    -- 21653 Helheim (Great Sword) -> Resolution
+    (21653, 8, 40), (21653, 10, 20), (21653, 25, 60), (21653, 23, 70), (21653, 73, 10), (21653, 288, 10), (21653, 355, 60),
+    -- 21730 Spalirisos (Axe) -> Decimation
+    (21730, 8, 40), (21730, 9, 20), (21730, 25, 60), (21730, 23, 60), (21730, 73, 10), (21730, 288, 10), (21730, 355, 72),
+    -- 21785 Laphria (Great Axe) -> Disaster
+    (21785, 8, 40), (21785, 10, 30), (21785, 25, 60), (21785, 23, 70), (21785, 73, 10), (21785, 288, 10), (21785, 355, 94),
+    -- 21837 Foenaria (Scythe) -> Origin
+    (21837, 8, 40), (21837, 12, 30), (21837, 25, 60), (21837, 23, 70), (21837, 73, 10), (21837, 288, 10), (21837, 355, 110),
+    -- 21891 Gae Buide (Polearm) -> Diarmuid
+    (21891, 8, 40), (21891, 10, 30), (21891, 25, 60), (21891, 23, 70), (21891, 73, 10), (21891, 288, 10), (21891, 355, 126),
+    -- 21932 Dokoku (Katana) -- native Blade: WS
+    (21932, 9, 40), (21932, 11, 30), (21932, 25, 60), (21932, 23, 60), (21932, 73, 10), (21932, 288, 10),
+    -- 21986 Kusanagi (Great Katana) -- native Tachi: WS
+    (21986, 8, 40), (21986, 9, 30), (21986, 25, 60), (21986, 23, 70), (21986, 73, 10), (21986, 288, 10),
+    -- 22002 Lorg Mor (Club) -> Dagda
+    (22002, 8, 40), (22002, 13, 40), (22002, 25, 60), (22002, 23, 60), (22002, 73, 10), (22002, 288, 10), (22002, 355, 234),
+    -- 22106 Opashoro (Staff) -> Oshala
+    (22106, 12, 40), (22106, 13, 40), (22106, 30, 60), (22106, 28, 40), (22106, 311, 200), (22106, 25, 50), (22106, 23, 50), (22106, 355, 235),
+    -- 22163 Pinaka (Archery) -> Sarv
+    (22163, 11, 40), (22163, 8, 30), (22163, 26, 60), (22163, 24, 60), (22163, 73, 10), (22163, 359, 10), (22163, 355, 204),
+    -- 22164 Earp (Marksmanship) -> Terminus
+    (22164, 11, 40), (22164, 9, 30), (22164, 26, 60), (22164, 24, 60), (22164, 73, 10), (22164, 359, 10), (22164, 355, 222),
+    -- 26495 Duban (Shield) -- defensive support, no WS / no item_weapon row
+    (26495, 1, 150), (26495, 10, 50), (26495, 2, 300), (26495, 31, 50),
+    -- 22307 Loughnashade (String/Harp) -- BRD song support, no WS
+    (22307, 14, 40), (22307, 30, 50), (22307, 5, 100), (22307, 2, 100);
