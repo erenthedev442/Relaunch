@@ -39,13 +39,18 @@ _GAP_MARK = "⚠"
 # When a new field is added to the catalog (e.g. for Augment Sage), the table
 # previously went silently empty because the regex required label to come
 # immediately after the optional base. The `(?:\w+\s*=\s*[^,}]+,\s*)*` arm now
-# absorbs zero-or-more intermediate `field = value,` pairs so the parser
-# survives future schema growth. The `generate()` function also asserts
-# non-zero matches to fail loudly if THIS regex ever stops matching too.
+# absorbs zero-or-more intermediate `field = value,` pairs BEFORE label, and the
+# trailing `(?:\s*,\s*\w+\s*=\s*[^,}]+)*` arm absorbs any fields AFTER label too
+# (e.g. `maxBoost`, added 2026-06-19 — it silently dropped 'All songs' from the
+# page until this arm was added). Together they let the parser survive a field
+# appearing in any position. The `generate()` function also asserts non-zero
+# matches to fail loudly if THIS regex ever stops matching too.
 _ENTRY_RE = re.compile(
     r"\[\s*(\d+)\s*\]\s*=\s*\{\s*augId\s*=\s*(\d+)\s*,\s*"
     r"(?:\w+\s*=\s*[^,}]+,\s*)*"
-    r"label\s*=\s*'((?:[^'\\]|\\.)*)'\s*\}",
+    r"label\s*=\s*'((?:[^'\\]|\\.)*)'"
+    r"(?:\s*,\s*\w+\s*=\s*[^,}]+)*"
+    r"\s*\}",
 )
 
 # Pulled separately from the body so the parser keeps working if `base`
