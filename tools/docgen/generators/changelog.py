@@ -42,10 +42,6 @@ from pathlib import Path
 # How far back to look (calendar days).
 _LOOKBACK_DAYS = 30
 
-# Cap notes shown per update; the launch / pre-launch sprints land hundreds of
-# commits in one deploy and would otherwise bury the page. Recent daily updates
-# (~15-25 notes) stay full; only the megablocks truncate with an overflow line.
-_MAX_NOTES_PER_UPDATE = 40
 
 _DEFAULT_SERVER_ROOT = r"D:\server"
 
@@ -307,10 +303,7 @@ def _render(weeks: list[dict]) -> str:
             lines.append(f'    **{_fmt_day(u["dt"])}**')
             lines.append("")
             notes = u["notes"]
-            for note in notes[:_MAX_NOTES_PER_UPDATE]:
+            for note in notes:
                 lines.append(f"    - {note}")
-            extra = len(notes) - _MAX_NOTES_PER_UPDATE
-            if extra > 0:
-                lines.append(f"    - *…and {extra} more change{'' if extra == 1 else 's'} this update*")
             lines.append("")
     return "\n".join(lines).rstrip() + "\n"
