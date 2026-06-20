@@ -1,6 +1,6 @@
 # Darrent
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 5d 8h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 5d 10h
 
 `💪 6 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **SCH 99** |
 | Sub job | BLM 99 |
 | Time played | 37h |
-| Enemies defeated | 1,193 |
+| Enemies defeated | 1,490 |
 | Deaths | 10 |
 
 ## Job levels
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 283
+- **Augments crafted:** 289
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: daf4d96a0aea -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: a55a7fac9b53 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

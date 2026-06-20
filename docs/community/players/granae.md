@@ -1,6 +1,6 @@
 # Granae
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-19 · Character age 3d 20h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 3d 22h
 
 `💪 6 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **MNK 99** |
 | Sub job | WAR 76 |
 | Time played | 13h |
-| Enemies defeated | 1,675 |
+| Enemies defeated | 1,696 |
 | Deaths | 12 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 25
-- **Marks (lifetime):** 1,776
+- **Marks (current):** 1,289
+- **Marks (lifetime):** 1,953
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 116
+- **Total NM kills:** 137
 
 ## Guild standing
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bbaa366a6924 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: af9845576432 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

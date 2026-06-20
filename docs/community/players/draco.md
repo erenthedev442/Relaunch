@@ -1,6 +1,6 @@
 # Draco
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 2d 22h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 1h
 
 `💪 10 jobs @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 196,732
-- **Marks (lifetime):** 74,996
+- **Marks (current):** 196,897
+- **Marks (lifetime):** 75,106
 - **Distinct NMs slain:** 4
-- **Total NM kills:** 1,173
+- **Total NM kills:** 1,174
 
 ## Augment Sage
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 86ec979b2a43 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: bb672fd6e934 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

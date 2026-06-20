@@ -1,6 +1,6 @@
 # Ariamys
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 5d 8h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 5d 10h
 
 `⭐ 3 Ascensions` `💪 10 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 19,052
 - **Marks (lifetime):** 19,263
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 1,046
+- **Total NM kills:** 1,072
 
 ## Augment Sage
 
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 0 | 0 |
 | Relic | 250 | 0 |
-| Empyrean | 40 | 4,240 |
+| Empyrean | 690 | 8,140 |
 
 ## Prestige
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9d2f96ac702f -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 597304f0df37 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

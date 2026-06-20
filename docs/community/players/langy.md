@@ -1,6 +1,6 @@
 # Langy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 6d 12h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 6d 14h
 
 `💪 10 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **MNK 99** |
 | Sub job | THF 67 |
 | Time played | 27h |
-| Enemies defeated | 2,243 |
+| Enemies defeated | 2,244 |
 | Deaths | 4 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 50
-- **Marks (lifetime):** 7,436
+- **Marks (current):** 55
+- **Marks (lifetime):** 7,441
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 1,293
+- **Total NM kills:** 1,294
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 274
+- **Augments crafted:** 282
 - **NM Affinities:** 9 / 13
 
 ## Reforge
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b04bc211e4d9 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: bcabc8064ada -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

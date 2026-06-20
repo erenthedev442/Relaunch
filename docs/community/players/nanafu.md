@@ -1,6 +1,6 @@
 # Nanafu
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 4h
 
 `💪 1 job @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 3,922
-- **Marks (lifetime):** 167
+- **Marks (current):** 6,380
+- **Marks (lifetime):** 1,168
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 25
+- **Total NM kills:** 109
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**3** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked.
+**5** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Mark of 1,000.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ca199d8f4656 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 0a97933c8930 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -3,7 +3,7 @@
 Live rankings pulled from the server's database. These tables refresh whenever the docs site is regenerated — typically a few times a day — so think of them as a snapshot, not a real-time scoreboard.
 
 <!-- DOCGEN:BEGIN id="lb-asof" -->
-**📊 Leaderboard data as of 2026-06-20 03:55 UTC**
+**📊 Leaderboard data as of 2026-06-20 06:26 UTC**
 <!-- DOCGEN:END id="lb-asof" -->
 
 !!! tip "Want to stay off these tables?"
@@ -26,7 +26,7 @@ _Lifetime count of successful Augment Moogle trades. Every confirmed trade bumps
 | 4 | [Olindre](players/olindre.md) | 382 |
 | 5 | [Mardukas](players/mardukas.md) | 379 |
 | 6 | [Cecel](players/cecel.md) | 357 |
-| 7 | [Brixton](players/brixton.md) | 347 |
+| 7 | [Brixton](players/brixton.md) | 352 |
 | 8 | [Herdofturtles](players/herdofturtles.md) | 337 |
 | 9 | [Zxj](players/zxj.md) | 332 |
 | 10 | [Nut](players/nut.md) | 332 |
@@ -81,16 +81,16 @@ _Points earned across all Hunting League NM kills. Lifetime total, not current s
 
 | Rank | Character | Pts |
 |---:|---|---:|
-| 🥇 | [Broken](players/broken.md) | 244,907 |
-| 🥈 | [Kyrie](players/kyrie.md) | 241,276 |
-| 🥉 | [Ken](players/ken.md) | 238,999 |
-| 4 | [Draco](players/draco.md) | 196,732 |
-| 5 | [Drbrule](players/drbrule.md) | 187,080 |
-| 6 | [Speedbump](players/speedbump.md) | 161,818 |
-| 7 | [Benton](players/benton.md) | 155,424 |
-| 8 | [Rtklm](players/rtklm.md) | 150,894 |
+| 🥇 | [Broken](players/broken.md) | 245,072 |
+| 🥈 | [Kyrie](players/kyrie.md) | 241,441 |
+| 🥉 | [Ken](players/ken.md) | 239,164 |
+| 4 | [Draco](players/draco.md) | 196,897 |
+| 5 | [Drbrule](players/drbrule.md) | 187,245 |
+| 6 | [Speedbump](players/speedbump.md) | 161,983 |
+| 7 | [Benton](players/benton.md) | 155,589 |
+| 8 | [Rtklm](players/rtklm.md) | 151,059 |
 | 9 | [Rtkhl](players/rtkhl.md) | 146,485 |
-| 10 | [Rtkle](players/rtkle.md) | 144,479 |
+| 10 | [Rtkle](players/rtkle.md) | 144,644 |
 <!-- DOCGEN:END id="lb-hl-points" -->
 
 <!-- DOCGEN:BEGIN id="lb-hl-lifetime" -->
@@ -100,16 +100,16 @@ _Cumulative Hunt Marks earned over the character's lifetime — does NOT decreas
 
 | Rank | Character | Marks |
 |---:|---|---:|
-| 🥇 | [Kyrie](players/kyrie.md) | 106,615 |
-| 🥈 | [Ken](players/ken.md) | 104,745 |
-| 🥉 | [Broken](players/broken.md) | 104,328 |
-| 4 | [Speedbump](players/speedbump.md) | 75,442 |
-| 5 | [Draco](players/draco.md) | 74,996 |
-| 6 | [Rtklm](players/rtklm.md) | 74,178 |
-| 7 | [Rtkhl](players/rtkhl.md) | 73,982 |
-| 8 | [Rtkle](players/rtkle.md) | 73,953 |
-| 9 | [Benton](players/benton.md) | 73,857 |
-| 10 | [Drbrule](players/drbrule.md) | 73,496 |
+| 🥇 | [Kyrie](players/kyrie.md) | 106,725 |
+| 🥈 | [Ken](players/ken.md) | 104,855 |
+| 🥉 | [Broken](players/broken.md) | 104,438 |
+| 4 | [Speedbump](players/speedbump.md) | 75,552 |
+| 5 | [Draco](players/draco.md) | 75,106 |
+| 6 | [Rtklm](players/rtklm.md) | 74,288 |
+| 7 | [Rtkle](players/rtkle.md) | 74,063 |
+| 8 | [Rtkhl](players/rtkhl.md) | 73,982 |
+| 9 | [Benton](players/benton.md) | 73,967 |
+| 10 | [Drbrule](players/drbrule.md) | 73,606 |
 <!-- DOCGEN:END id="lb-hl-lifetime" -->
 
 ---
@@ -186,14 +186,14 @@ _Total custom NMs defeated across the Hunting League and Reforge Spawner. Each s
 |---:|---|---:|
 | 🥇 | [Jbae](players/jbae.md) | 6,069 |
 | 🥈 | [Flcl](players/flcl.md) | 5,134 |
-| 🥉 | [Kyrie](players/kyrie.md) | 1,818 |
-| 4 | [Ken](players/ken.md) | 1,741 |
-| 5 | [Broken](players/broken.md) | 1,656 |
-| 6 | [Langy](players/langy.md) | 1,293 |
-| 7 | [Speedbump](players/speedbump.md) | 1,175 |
-| 8 | [Draco](players/draco.md) | 1,173 |
-| 9 | [Benton](players/benton.md) | 1,161 |
-| 10 | [Rtklm](players/rtklm.md) | 1,160 |
+| 🥉 | [Kyrie](players/kyrie.md) | 1,819 |
+| 4 | [Ken](players/ken.md) | 1,742 |
+| 5 | [Broken](players/broken.md) | 1,657 |
+| 6 | [Langy](players/langy.md) | 1,294 |
+| 7 | [Speedbump](players/speedbump.md) | 1,176 |
+| 8 | [Draco](players/draco.md) | 1,174 |
+| 9 | [Benton](players/benton.md) | 1,162 |
+| 10 | [Rtklm](players/rtklm.md) | 1,161 |
 <!-- DOCGEN:END id="lb-nm-kills" -->
 
 <!-- DOCGEN:BEGIN id="lb-nm-encyclopedia" -->
@@ -210,9 +210,9 @@ _Number of distinct custom NMs each character has personally killed at least onc
 | 5 | [Zxs](players/zxs.md) | 15 |
 | 6 | [Corvinos](players/corvinos.md) | 15 |
 | 7 | [Miss](players/miss.md) | 15 |
-| 8 | [Brixton](players/brixton.md) | 15 |
-| 9 | [Herdofturtles](players/herdofturtles.md) | 15 |
-| 10 | [Subpar](players/subpar.md) | 15 |
+| 8 | [Candycorns](players/candycorns.md) | 15 |
+| 9 | [Brixton](players/brixton.md) | 15 |
+| 10 | [Herdofturtles](players/herdofturtles.md) | 15 |
 <!-- DOCGEN:END id="lb-nm-encyclopedia" -->
 
 <!-- DOCGEN:BEGIN id="lb-affinities" -->
@@ -228,10 +228,10 @@ _How many of the 13 NM affinities the character has registered via the Augment S
 | 4 | [Ariamys](players/ariamys.md) | 13 |
 | 5 | [Burtgang](players/burtgang.md) | 13 |
 | 6 | [Kyrie](players/kyrie.md) | 13 |
-| 7 | [Candycorns](players/candycorns.md) | 13 |
-| 8 | [Ririn](players/ririn.md) | 13 |
-| 9 | [Olindre](players/olindre.md) | 13 |
-| 10 | [Jbae](players/jbae.md) | 13 |
+| 7 | [Ants](players/ants.md) | 13 |
+| 8 | [Candycorns](players/candycorns.md) | 13 |
+| 9 | [Ririn](players/ririn.md) | 13 |
+| 10 | [Olindre](players/olindre.md) | 13 |
 <!-- DOCGEN:END id="lb-affinities" -->
 
 ---
@@ -253,8 +253,8 @@ _How many of the 22 jobs the character has at level 99. Ties broken by the sum o
 | 6 | [Moss](players/moss.md) | 20 |
 | 7 | [Miss](players/miss.md) | 20 |
 | 8 | [Flcl](players/flcl.md) | 17 |
-| 9 | [Duffaluffagus](players/duffaluffagus.md) | 17 |
-| 10 | [Jbae](players/jbae.md) | 16 |
+| 9 | [Jbae](players/jbae.md) | 17 |
+| 10 | [Duffaluffagus](players/duffaluffagus.md) | 17 |
 <!-- DOCGEN:END id="lb-job-mastery" -->
 
 ---
@@ -272,12 +272,12 @@ _Count of distinct Trust alter-egos the character has learned. Read from the cha
 | 🥈 | [Miss](players/miss.md) | 120 |
 | 🥉 | [Yojin](players/yojin.md) | 120 |
 | 4 | [Gwendin](players/gwendin.md) | 120 |
-| 5 | [Spyro](players/spyro.md) | 120 |
-| 6 | [Flcl](players/flcl.md) | 120 |
-| 7 | [Ropraz](players/ropraz.md) | 120 |
-| 8 | [Ririn](players/ririn.md) | 120 |
-| 9 | [Herdofturtles](players/herdofturtles.md) | 120 |
-| 10 | [Zxj](players/zxj.md) | 120 |
+| 5 | [Flcl](players/flcl.md) | 120 |
+| 6 | [Spyro](players/spyro.md) | 120 |
+| 7 | [Herdofturtles](players/herdofturtles.md) | 120 |
+| 8 | [Ropraz](players/ropraz.md) | 120 |
+| 9 | [Ririn](players/ririn.md) | 120 |
+| 10 | [Stoney](players/stoney.md) | 120 |
 <!-- DOCGEN:END id="lb-trusts" -->
 
 <!-- DOCGEN:BEGIN id="lb-friendship" -->
@@ -310,11 +310,11 @@ _Hours the character has spent online. Read from `chars.playtime` (seconds). Bra
 
 | Rank | Character | Hours |
 |---:|---|---:|
-| 🥇 | [Jbae](players/jbae.md) | 276 |
+| 🥇 | [Jbae](players/jbae.md) | 277 |
 | 🥈 | [Bro](players/bro.md) | 96 |
 | 🥉 | [Daizu](players/daizu.md) | 70 |
-| 4 | [Cecel](players/cecel.md) | 67 |
-| 5 | [Sytara](players/sytara.md) | 67 |
+| 4 | [Sytara](players/sytara.md) | 68 |
+| 5 | [Cecel](players/cecel.md) | 67 |
 | 6 | [Stoney](players/stoney.md) | 66 |
 | 7 | [Bdr](players/bdr.md) | 61 |
 | 8 | [Flcl](players/flcl.md) | 57 |
@@ -333,7 +333,7 @@ _Times the character has been knocked unconscious. On Legendary you lose 3× ret
 | 🥈 | [Flcl](players/flcl.md) | 71 |
 | 🥉 | [Olindre](players/olindre.md) | 55 |
 | 4 | [Cervantis](players/cervantis.md) | 54 |
-| 5 | [Bro](players/bro.md) | 48 |
+| 5 | [Bro](players/bro.md) | 49 |
 | 6 | [Ropraz](players/ropraz.md) | 47 |
 | 7 | [Cecel](players/cecel.md) | 47 |
 | 8 | [Souls](players/souls.md) | 46 |
@@ -727,9 +727,9 @@ _Peak magic damage from a single spell landing on a Lv 100+ mob. Magic bursts al
 
 | Rank | Character | Damage |
 |---:|---|---:|
-| 🥇 | [Darrent](players/darrent.md) | 65,535 |
-| 🥈 | [Moss](players/moss.md) | 65,260 |
-| 🥉 | [Katryna](players/katryna.md) | 64,828 |
+| 🥇 | [Katryna](players/katryna.md) | 65,535 |
+| 🥈 | [Darrent](players/darrent.md) | 65,535 |
+| 🥉 | [Moss](players/moss.md) | 65,260 |
 | 4 | [Zxj](players/zxj.md) | 64,702 |
 | 5 | [Lyvia](players/lyvia.md) | 63,436 |
 | 6 | [Candycorns](players/candycorns.md) | 61,636 |
@@ -954,6 +954,6 @@ _Highest total damage dealt to Lv 100+ mobs in any rolling 30-second window, com
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 51ecca523883 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: d8a0ca8bb14c -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

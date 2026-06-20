@@ -1,6 +1,6 @@
 # Lunita
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-19 · Character age 4d 13h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-19 · Character age 4d 16h
 
 `💪 9 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b6a182011505 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: fcfd1d6e09cb -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

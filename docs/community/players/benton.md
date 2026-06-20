@@ -1,6 +1,6 @@
 # Benton
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 3h
 
 `💪 5 jobs @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 155,424
-- **Marks (lifetime):** 73,857
+- **Marks (current):** 155,589
+- **Marks (lifetime):** 73,967
 - **Distinct NMs slain:** 8
-- **Total NM kills:** 1,161
+- **Total NM kills:** 1,162
 
 ## Augment Sage
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 91f9546c4051 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: eefc3d67e8d5 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

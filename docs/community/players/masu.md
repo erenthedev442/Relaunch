@@ -1,6 +1,6 @@
 # Masu
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 6d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 6d 12h
 
 `💪 6 jobs @99`
 
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **THF 66** |
+| Main job | **THF 67** |
 | Sub job | BRD 59 |
-| Time played | 37h |
+| Time played | 38h |
 | Enemies defeated | 930 |
 | Deaths | 3 |
 
@@ -26,7 +26,7 @@
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | **BLU** | **99** |
-| THF | 66 | COR | 1 |
+| THF | 67 | COR | 1 |
 | PLD | 1 | PUP | 87 |
 | **DRK** | **99** | DNC | 1 |
 | BST | 1 | SCH | 1 |
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 087d89442120 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 1b1bee45726f -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Drbrule
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 1d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 1d 6h
 
 `💪 10 jobs @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 187,080
-- **Marks (lifetime):** 73,496
+- **Marks (current):** 187,245
+- **Marks (lifetime):** 73,606
 - **Distinct NMs slain:** 7
-- **Total NM kills:** 1,135
+- **Total NM kills:** 1,136
 
 ## Augment Sage
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e19eb26f3455 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 77dcaa22d99d -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

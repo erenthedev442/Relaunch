@@ -1,18 +1,18 @@
 # Phatdood
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 42m 23s
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 3h 13m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 12/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 1** |
+| Main job | **BLU 12** |
 | Sub job | BLM 1 |
 | Time played | 0h |
-| Enemies defeated | 1 |
+| Enemies defeated | 23 |
 | Deaths | 0 |
 
 ## Job levels
@@ -23,7 +23,7 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| RDM | 1 | BLU | 12 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d3a6bf7a1471 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: b8906922f6b5 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Kirin
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 1d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 1d 11h
 
 `💪 4 jobs @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 91,364
-- **Marks (lifetime):** 53,500
+- **Marks (current):** 91,501
+- **Marks (lifetime):** 53,610
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 534
+- **Total NM kills:** 535
 
 ## Augment Sage
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e917c731016b -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 91f7b4ad0729 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

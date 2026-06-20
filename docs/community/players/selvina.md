@@ -1,6 +1,6 @@
 # Selvina
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 1d 22h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 2d 1h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 45/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ff87ad2d6ce9 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: 95ba0b6c5cd7 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

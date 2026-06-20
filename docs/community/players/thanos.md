@@ -1,6 +1,6 @@
 # Thanos
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 3h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 6h
 
 `⭐ 11 Ascensions` `💪 4 jobs @99`
 
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 123
+- **Augments crafted:** 138
 - **NM Affinities:** 5 / 13
 
 ## Reforge
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4b56bc4dda91 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: cfca759c729f -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

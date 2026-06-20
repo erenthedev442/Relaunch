@@ -1,6 +1,6 @@
 # Kumiko
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-17 · Character age 2d 19h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-17 · Character age 2d 22h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 646cc14702d4 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 01525a1d44ef -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

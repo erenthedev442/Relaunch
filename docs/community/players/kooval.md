@@ -1,6 +1,6 @@
 # Kooval
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-17 · Character age 2d 5h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-17 · Character age 2d 7h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c03d059f73d6 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 08d2e6d7ef31 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Speedbump
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 2h
 
 `💪 5 jobs @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 161,818
-- **Marks (lifetime):** 75,442
+- **Marks (current):** 161,983
+- **Marks (lifetime):** 75,552
 - **Distinct NMs slain:** 7
-- **Total NM kills:** 1,175
+- **Total NM kills:** 1,176
 
 ## Augment Sage
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c3aed181f1bb -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 82194b73eec9 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

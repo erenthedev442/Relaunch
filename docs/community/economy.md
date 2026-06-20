@@ -18,12 +18,12 @@ A live snapshot of the server economy and population. All figures exclude GM / t
 
 | Metric | Value |
 |---|---:|
-| Gil in circulation | **8.59B** gil |
-| Players online now | **41** |
+| Gil in circulation | **8.72B** gil |
+| Players online now | **0** |
 | Characters (non-GM) | 370 |
 | Active in last 7 days | 369 |
-| AH listings (live) | 28,994 |
-| Cumulative playtime | 158 days, 21 hours |
+| AH listings (live) | 28,966 |
+| Cumulative playtime | 159 days, 9 hours |
 <!-- DOCGEN:END id="econ-overview" -->
 
 ---
@@ -35,11 +35,11 @@ Total gil held by player characters — the money supply. Gil sitting in Auction
 
 | Measure | Value |
 |---|---:|
-| Total gil in circulation | 8,592,550,005 gil |
+| Total gil in circulation | 8,723,919,595 gil |
 | Characters holding gil | 277 |
-| Average per character | 31,020,036 gil |
-| Median per character | 5,460,559 gil |
-| Wealthiest 10% hold | 68.2% of all gil |
+| Average per character | 31,494,294 gil |
+| Median per character | 5,478,358 gil |
+| Wealthiest 10% hold | 68.5% of all gil |
 <!-- DOCGEN:END id="econ-gil" -->
 
 The gap between the **average** and the **median** is the inequality signal:
@@ -55,11 +55,11 @@ Open Auction House listings right now. The market-maker (an NPC seller, **AH-Jeu
 
 | Measure | Value |
 |---|---:|
-| Live listings (total) | 28,994 |
-| — Market-maker (AH-Jeuno) | 28,926 |
-| — Player-listed | 68 |
-| Distinct items available | 5,805 |
-| Total shelf value (asking) | 13,865,775,603 gil |
+| Live listings (total) | 28,966 |
+| — Market-maker (AH-Jeuno) | 28,930 |
+| — Player-listed | 36 |
+| Distinct items available | 5,798 |
+| Total shelf value (asking) | 13,859,865,810 gil |
 <!-- DOCGEN:END id="econ-ah" -->
 
 The market-maker exists to keep gear **available** and to set a **price
@@ -75,9 +75,9 @@ Completed Auction House sales over recent windows. **Gil volume** is the total t
 
 | Window | Lots sold | Gil volume | Gil sunk to AH |
 |---|---:|---:|---:|
-| Last 24 hours | 1,674 | 1,009,560,249 gil | 196,366,000 gil |
-| Last 7 days | 4,777 | 2,174,649,925 gil | 889,146,000 gil |
-| Last 30 days | 4,777 | 2,174,649,925 gil | 889,146,000 gil |
+| Last 24 hours | 1,612 | 1,005,069,616 gil | 188,806,000 gil |
+| Last 7 days | 4,819 | 2,189,944,982 gil | 889,746,000 gil |
+| Last 30 days | 4,824 | 2,192,344,982 gil | 892,146,000 gil |
 <!-- DOCGEN:END id="econ-velocity" -->
 
 A healthy economy needs **gil sinks** — ways for gil to leave circulation so
@@ -99,7 +99,7 @@ The most actively traded items on the Auction House over the last 30 days, by nu
 | 4 | Gleaming Shield | 151 | 106,262,688 gil |
 | 5 | Ash Staff | 115 | 16,100,000 gil |
 | 6 | Revilers Helm | 114 | 54,180,520 gil |
-| 7 | Jug Of Bug Broth | 80 | 20,736,000 gil |
+| 7 | Jug Of Bug Broth | 85 | 22,036,000 gil |
 | 8 | Chirich Ring +1 | 69 | 69,000,000 gil |
 | 9 | Mache Earring +1 | 60 | 60,000,000 gil |
 | 10 | Moonlight Cape | 43 | 43,000,000 gil |
@@ -119,18 +119,18 @@ Who's around. **Active** counts characters that logged out within the window (a 
 
 | Measure | Value |
 |---|---:|
-| Online right now | 41 |
+| Online right now | 0 |
 | Total characters | 370 |
 | Active — last 7 days | 369 |
 | Active — last 30 days | 370 |
 | New — last 7 days | 369 |
 | New — last 30 days | 370 |
-| Cumulative playtime (all chars) | 158 days, 21 hours |
+| Cumulative playtime (all chars) | 159 days, 9 hours |
 <!-- DOCGEN:END id="econ-population" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a38c07ae0c1b -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 8f5a691ba441 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

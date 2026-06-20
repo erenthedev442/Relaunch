@@ -1,6 +1,6 @@
 # Katryna
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 4d 9h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 4d 11h
 
 `💪 2 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 41h |
-| Enemies defeated | 2,654 |
+| Time played | 42h |
+| Enemies defeated | 2,656 |
 | Deaths | 22 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,667
-- **Marks (lifetime):** 5,396
+- **Marks (current):** 7,738
+- **Marks (lifetime):** 5,461
 - **Distinct NMs slain:** 9
-- **Total NM kills:** 1,070
+- **Total NM kills:** 1,071
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 135
+- **Augments crafted:** 137
 - **NM Affinities:** 5 / 13
 
 ## Reforge
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 31ede7dd53a4 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: a00537c202d1 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

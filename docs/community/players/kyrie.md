@@ -1,6 +1,6 @@
 # Kyrie
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 5h
 
 `💪 5 jobs @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 241,276
-- **Marks (lifetime):** 106,615
+- **Marks (current):** 241,441
+- **Marks (lifetime):** 106,725
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 1,818
+- **Total NM kills:** 1,819
 
 ## Guild standing
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d23679a57dda -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 3e0bbf54653c -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Chunky
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-15 · Character age 4d 23h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-15 · Character age 5d 2h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 70/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: decefce84a39 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 6ce7db08f788 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

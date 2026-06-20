@@ -1,6 +1,6 @@
 # Ririn
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 4d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 4d 10h
 
 `⭐ 8 Ascensions` `💪 3 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | NIN 99 |
-| Time played | 24h |
-| Enemies defeated | 1,761 |
+| Time played | 25h |
+| Enemies defeated | 1,778 |
 | Deaths | 20 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,853
+- **Marks (current):** 4,063
 - **Marks (lifetime):** 1,356
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 213
+- **Total NM kills:** 230
 
 ## Guild standing
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fd8c4f634567 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 6e800e56d3d4 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

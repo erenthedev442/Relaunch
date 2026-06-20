@@ -1,6 +1,6 @@
 # Ericgamerguy
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-20 · Character age 4h 37m
+**Windurst citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-20 · Character age 7h 8m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 11/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: af0511f8dd37 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: cbcc39db4d3f -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

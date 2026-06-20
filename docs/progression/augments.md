@@ -70,7 +70,7 @@ So a maxed tank reaches **+640 HP on a single body piece**, and a sustain build 
 The table below lists **which catalyst maps to which augment**, grouped by stat family. **Fresh ×1–×5** is the total stat from trading that many catalysts with no Sage progress; **Max ×1–×5** is the same trade at full [Augment Sage](augment-sage.md) progress (rank 5 + affinity + a crit); **Cap** is the hard in-game ceiling where one exists — see [how scaling works](#how-augment-power-scales) above.
 
 <!-- DOCGEN:BEGIN id="augment-catalog" -->
-_306 catalyst items across 14 categories. Trade the catalyst to the Augment Moogle to apply the matching augment. Cost is **10,000 gil flat per trade** plus the catalyst items themselves._
+_275 catalyst items across 15 categories. Trade the catalyst to the Augment Moogle to apply the matching augment. Cost is **10,000 gil flat per trade** plus the catalyst items themselves._
 
 Each augment **scales with [Augment Sage](augment-sage.md) progress** and with how many catalysts you trade (**×N** = that many, 1–5; an item has 5 augment slots). **Fresh ×N** is a brand-new augment with **no Sage progress**; **Max ×N** is the ceiling at **rank-5 mastery + full affinity + a crit**. Your live value starts near Fresh and climbs toward Max as you rank Augment Sage up. Percentage augments (damage-taken, haste, etc.) show the raw value; the **Cap** column is the hard in-game ceiling for that stat (e.g. Phys. dmg. taken floors at -50%), or **no cap** for additive stats like Attack/HP — values above the Cap can't be reached no matter how many catalysts you stack.
 
@@ -258,6 +258,7 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/787" data-img="https://www.bg-wiki.com/images/6/6e/Diamond_description.png" target="_blank" rel="noopener">Diamond</a> | 787 | Enmity | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/901" data-img="https://www.bg-wiki.com/images/f/fb/Venomous_Claw_description.png" target="_blank" rel="noopener">Venomous Claw</a> | 901 | Enmity | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/902" data-img="https://www.bg-wiki.com/images/1/19/Demon_Horn_description.png" target="_blank" rel="noopener">Demon Horn</a> | 902 | Charm | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/1291" data-img="https://www.bg-wiki.com/images/9/96/Golden_Hktk._Eye_description.png" target="_blank" rel="noopener">Golden Hakutaku Eye</a> | 1291 | All songs | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1408" data-img="https://static.ffxiah.com/images/icon/1408.png" target="_blank" rel="noopener">Bottle Of Illuminink</a> | 1408 | Pet Enmity | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1453" data-img="https://www.bg-wiki.com/images/c/c6/M._Silverpiece_description.png" target="_blank" rel="noopener">Montiont Silverpiece</a> | 1453 | Pet Enmity | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1844" data-img="https://static.ffxiah.com/images/icon/1844.png" target="_blank" rel="noopener">Square Of Spectral Goldenrod</a> | 1844 | Treasure Hunter | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
@@ -407,41 +408,8 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/1110" data-img="https://static.ffxiah.com/images/icon/1110.png" target="_blank" rel="noopener">Vial Of Black Beetle Blood</a> | 1110 | Weapon Skill Acc | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1473" data-img="https://www.bg-wiki.com/images/5/5d/H.Q._Scp._Shell_description.png" target="_blank" rel="noopener">High-Quality Scorpion Shell</a> | 1473 | Weapon skill damage | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/865" data-img="https://static.ffxiah.com/images/icon/865.png" target="_blank" rel="noopener">Handful Of Nidhoggs Scales</a> | 865 | Sklchn.dmg | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1016" data-img="https://www.bg-wiki.com/images/1/1d/Remi_Shell_description.png" target="_blank" rel="noopener">Remi Shell</a> | 1016 | Backhand Blow DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2013" data-img="https://static.ffxiah.com/images/icon/2013.png" target="_blank" rel="noopener">Vial Of Lizard Blood</a> | 2013 | Spinning Attack DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2014" data-img="https://static.ffxiah.com/images/icon/2014.png" target="_blank" rel="noopener">Vial Of Bird Blood</a> | 2014 | Howling Fist DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2015" data-img="https://static.ffxiah.com/images/icon/2015.png" target="_blank" rel="noopener">Vial Of Beast Blood</a> | 2015 | Dragon Kick DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2229" data-img="https://static.ffxiah.com/images/icon/2229.png" target="_blank" rel="noopener">Vial Of Chimera Blood</a> | 2229 | Viper Bite DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2365" data-img="https://static.ffxiah.com/images/icon/2365.png" target="_blank" rel="noopener">Vial Of Demon Blood</a> | 2365 | Shadowstitch DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/843" data-img="https://www.bg-wiki.com/images/b/b6/G._Bird_Plume_description.png" target="_blank" rel="noopener">Giant Bird Plume</a> | 843 | Cyclone DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/866" data-img="https://static.ffxiah.com/images/icon/866.png" target="_blank" rel="noopener">Handful Of Wyvern Scales</a> | 866 | Evisceration DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1155" data-img="https://static.ffxiah.com/images/icon/1155.png" target="_blank" rel="noopener">Handful Of Iron Sand</a> | 1155 | Burning Blade DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1157" data-img="https://static.ffxiah.com/images/icon/1157.png" target="_blank" rel="noopener">Handful Of The Sands Of Silence</a> | 1157 | Shining Blade DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1455" data-img="https://www.bg-wiki.com/images/3/32/1_Byne_Bill_description.png" target="_blank" rel="noopener">One Byne Bill</a> | 1455 | Circle Blade DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1456" data-img="https://www.bg-wiki.com/images/1/13/100_Byne_Bill_description.png" target="_blank" rel="noopener">One Hundred Byne Bill</a> | 1456 | Savage Blade DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1466" data-img="https://static.ffxiah.com/images/icon/1466.png" target="_blank" rel="noopener">Pile Of Relic Iron</a> | 1466 | Freezebite DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1469" data-img="https://static.ffxiah.com/images/icon/1469.png" target="_blank" rel="noopener">Chunk Of Wootz Ore</a> | 1469 | Shockwave DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1517" data-img="https://www.bg-wiki.com/images/3/38/Giant_Frozen_Head_description.png" target="_blank" rel="noopener">Giant Frozen Head</a> | 1517 | Ground Strike DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1618" data-img="https://www.bg-wiki.com/images/9/94/Uragnite_Shell_description.png" target="_blank" rel="noopener">Uragnite Shell</a> | 1618 | Sickle Moon DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1626" data-img="https://static.ffxiah.com/images/icon/1626.png" target="_blank" rel="noopener">Bottle Of Avatar Blood</a> | 1626 | Gale Axe DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1650" data-img="https://static.ffxiah.com/images/icon/1650.png" target="_blank" rel="noopener">Chunk Of Kopparnickel Ore</a> | 1650 | Spinning Axe DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1700" data-img="https://static.ffxiah.com/images/icon/1700.png" target="_blank" rel="noopener">Spool Of Bloodthread</a> | 1700 | Calamity DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1703" data-img="https://static.ffxiah.com/images/icon/1703.png" target="_blank" rel="noopener">Chunk Of Kunwu Ore</a> | 1703 | Decimation DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1704" data-img="https://static.ffxiah.com/images/icon/1704.png" target="_blank" rel="noopener">Chunk Of Kunwu Iron</a> | 1704 | Iron Tempest DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1719" data-img="https://www.bg-wiki.com/images/6/65/Harajnite_Shell_description.png" target="_blank" rel="noopener">Harajnite Shell</a> | 1719 | Sturmwind DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1852" data-img="https://www.bg-wiki.com/images/c/cb/H.Q._Phuabo_Org._description.png" target="_blank" rel="noopener">High-Quality Phuabo Organ</a> | 1852 | Keen Edge DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1855" data-img="https://www.bg-wiki.com/images/f/fe/H.Q._Xzomit_Organ_description.png" target="_blank" rel="noopener">High-Quality Xzomit Organ</a> | 1855 | Steel Cyclone DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1871" data-img="https://www.bg-wiki.com/images/0/09/H.Q._Hpemde_Org._description.png" target="_blank" rel="noopener">High-Quality Hpemde Organ</a> | 1871 | Nightmare Scythe DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1875" data-img="https://www.bg-wiki.com/images/2/2d/Anct._Beastcoin_description.png" target="_blank" rel="noopener">Ancient Beastcoin</a> | 1875 | Spinning Scythe DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1885" data-img="https://static.ffxiah.com/images/icon/1885.png" target="_blank" rel="noopener">Chunk Of Zincite</a> | 1885 | Vorpal Scythe DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1899" data-img="https://www.bg-wiki.com/images/f/fa/H.Q._Euvhi_Organ_description.png" target="_blank" rel="noopener">High-Quality Euvhi Organ</a> | 1899 | Spiral Hell DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1900" data-img="https://www.bg-wiki.com/images/e/e5/H.Q._Aern_Organ_description.png" target="_blank" rel="noopener">High-Quality Aern Organ</a> | 1900 | Leg Sweep DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2175" data-img="https://static.ffxiah.com/images/icon/2175.png" target="_blank" rel="noopener">Chunk Of Flan Meat</a> | 2175 | Vorpal Thrust DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2488" data-img="https://static.ffxiah.com/images/icon/2488.png" target="_blank" rel="noopener">Piece Of Alexandrite</a> | 2488 | Skewer DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2849" data-img="https://www.bg-wiki.com/images/f/f7/Likho_Talon_description.png" target="_blank" rel="noopener">Likho Talon</a> | 2849 | Impulse Drive DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2851" data-img="https://www.bg-wiki.com/images/f/fa/Bukktooth_description.png" target="_blank" rel="noopener">Bukktooth</a> | 2851 | Blade To DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/2859" data-img="https://static.ffxiah.com/images/icon/2859.png" target="_blank" rel="noopener">Chunk Of Cobalt Ore</a> | 2859 | Blade Chi DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/3503" data-img="https://static.ffxiah.com/images/icon/3503.png" target="_blank" rel="noopener">Chunk Of Mulcibars Scoria</a> | 3503 | Blade Ten DMG | 9 | 18 | 27 | 36 | 45 | 40 | 80 | 120 | 160 | 200 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/889" data-img="https://www.bg-wiki.com/images/a/ab/Beetle_Shell_description.png" target="_blank" rel="noopener">Beetle Shell</a> | 889 | Dmg (melee,not ranged) | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/908" data-img="https://www.bg-wiki.com/images/2/26/Adamantoise_Shell_description.png" target="_blank" rel="noopener">Adamantoise Shell</a> | 908 | Dmg (ranged,not melee) | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 
 ### Progression (Exp / Cap)
 
@@ -449,6 +417,12 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 |---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
 | <a class="item-link" href="https://www.ffxiah.com/item/2523" data-img="https://www.bg-wiki.com/images/e/ec/Peiste_Skin_description.png" target="_blank" rel="noopener">Peiste Skin</a> | 2523 | Exp. Point +33% | 33 | 66 | 99 | 132 | 165 | 64 | 128 | 192 | 256 | 320 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/942" data-img="https://www.bg-wiki.com/images/9/90/Phil._Stone_description.png" target="_blank" rel="noopener">Philosophers Stone</a> | 942 | Cap. Point +33% | 33 | 66 | 99 | 132 | 165 | 64 | 128 | 192 | 256 | 320 | no cap |
+
+### Corsair (Phantom Roll)
+
+| Catalyst | Item ID | Augment | Fresh ×1 | ×2 | ×3 | ×4 | ×5 | Max ×1 | ×2 | ×3 | ×4 | ×5 | Cap |
+|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
+| <a class="item-link" href="https://www.ffxiah.com/item/1875" data-img="https://www.bg-wiki.com/images/2/2d/Anct._Beastcoin_description.png" target="_blank" rel="noopener">Ancient Beastcoin</a> | 1875 | Phantom Roll effect | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 <!-- DOCGEN:END id="augment-catalog" -->
 
 ## Notes
@@ -460,6 +434,6 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3e0ab745ef2e -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: a1e97726d428 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

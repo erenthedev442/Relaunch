@@ -1,6 +1,6 @@
 # Byakko
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 1d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 1d 9h
 
 `💪 6 jobs @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 99,228
-- **Marks (lifetime):** 52,671
+- **Marks (current):** 99,365
+- **Marks (lifetime):** 52,781
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 515
+- **Total NM kills:** 516
 
 ## Augment Sage
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 43911a90da97 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 15e74772bc89 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

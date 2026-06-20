@@ -1,6 +1,6 @@
 # Ken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 5h
 
 `💪 20 jobs @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 238,999
-- **Marks (lifetime):** 104,745
+- **Marks (current):** 239,164
+- **Marks (lifetime):** 104,855
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 1,741
+- **Total NM kills:** 1,742
 
 ## Augment Sage
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a9662fb5ac0c -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: bcc14bd40544 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

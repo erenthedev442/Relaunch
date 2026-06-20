@@ -1,6 +1,6 @@
 # Rtkle
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 2d 13h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 2d 16h
 
 `💪 4 jobs @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 144,479
-- **Marks (lifetime):** 73,953
+- **Marks (current):** 144,644
+- **Marks (lifetime):** 74,063
 - **Distinct NMs slain:** 12
-- **Total NM kills:** 1,157
+- **Total NM kills:** 1,158
 
 ## Augment Sage
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 255bf0b7a999 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: f993229cbc35 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

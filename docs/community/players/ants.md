@@ -1,6 +1,6 @@
 # Ants
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 5d 23h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 1h
 
 `💪 3 jobs @99`
 
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,606
-- **Marks (lifetime):** 313
-- **Distinct NMs slain:** 13
-- **Total NM kills:** 15
+- **Marks (current):** 1,924
+- **Marks (lifetime):** 488
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 17
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 43
-- **NM Affinities:** 10 / 13
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 50
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**7** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice.
+**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bb7ad0b3626e -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 86b4e90aea2c -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

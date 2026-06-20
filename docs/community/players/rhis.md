@@ -1,6 +1,6 @@
 # Rhis
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 7h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-19 · Character age 2d 10h
 
 `⭐ 2 Ascensions` `💪 9 jobs @99`
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 167291dad732 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 8a904414a45a -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

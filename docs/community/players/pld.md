@@ -1,6 +1,6 @@
 # Pld
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 1d 22h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 2d 1h
 
 `💪 4 jobs @99`
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5199eb33615e -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: b5e712e4b85d -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

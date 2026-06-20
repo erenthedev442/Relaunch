@@ -1,6 +1,6 @@
 # Yojin
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 3h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 5h
 
 `⭐ 3 Ascensions` `💪 4 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **DRK 71** |
+| Main job | **DRK 75** |
 | Sub job | BLM 1 |
-| Time played | 21h |
-| Enemies defeated | 938 |
+| Time played | 22h |
+| Enemies defeated | 974 |
 | Deaths | 14 |
 
 ## Job levels
@@ -28,7 +28,7 @@
 | RDM | 1 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 71 | DNC | 1 |
+| DRK | 75 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ce0662e0ab6f -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 666c95295c8c -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -2,13 +2,13 @@
 
 These chat commands are available to every player on Legendary (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 59
+**Total player-accessible commands:** 60
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    42 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    43 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -28,6 +28,7 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!dig` | — | Treasure Hunting - dig for the strongbox your treasure map points at. Maps drop from Hunting League kills. | :material-puzzle: **custom** |
 | `!events` | — | Lists upcoming and active seasonal bonus mark events from the catalog.  Shows event name, multiplier, start/end dates, and status (active / upcoming / expired). | :material-puzzle: **custom** |
 | `!featured` | — | Shows which NM is the Weekly Featured Hunt for each Hunting League tier.  Featured NMs award 2x base marks on the first kill of the week - the bonus stacks with the First-Kill bonus. | :material-puzzle: **custom** |
+| `!gainexp` | — | Player-facing on-demand version of RoE timed record 4013 ("Gain Experience"). Instantly credits the reward bundle: +1500 EXP, +300 sparks, +300 accolades, 1x Copper Aman Voucher | :material-puzzle: **custom** |
 | `!getstats` | string | prints stats of cursor target into chatlog, for debugging. |  |
 | `!gmhome` | — | Sends you to zone 210 (GM_HOME), if you are a GM |  |
 | `!help` | — | Lists all custom commands with a one-line description. | :material-puzzle: **custom** |
@@ -129,6 +130,12 @@ Grants the zone-appropriate regional buff (Signet / Sanction / Sigil / Ionis) pl
 **Usage:** `buff`
 
 **Parameter types:** string
+
+### `!gainexp`  _(custom)_
+
+Player-facing on-demand version of RoE timed record 4013 ("Gain Experience"). Instantly credits the reward bundle: +1500 EXP, +300 sparks, +300 accolades, 1x Copper Aman Voucher
+
+**Usage:** `gainexp`
 
 ## Information & Debug
 
@@ -467,6 +474,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f210d4bccaac -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: e46316fae26c -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Verz
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 6d 7h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 6d 9h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 31/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f15df0a9f841 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: adf2c2d617ec -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

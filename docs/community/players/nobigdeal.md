@@ -1,6 +1,6 @@
 # Nobigdeal
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 4h
 
 `💪 4 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
 | Time played | 7h |
-| Enemies defeated | 160 |
+| Enemies defeated | 191 |
 | Deaths | 3 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 2,573
-- **Marks (lifetime):** 1,146
+- **Marks (current):** 4,610
+- **Marks (lifetime):** 2,183
 - **Distinct NMs slain:** 4
-- **Total NM kills:** 204
+- **Total NM kills:** 291
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b620401d7975 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: d6abc2cc1e4e -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

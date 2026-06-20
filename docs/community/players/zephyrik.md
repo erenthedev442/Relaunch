@@ -1,6 +1,6 @@
 # Zephyrik
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-14 · Character age 5d 6h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-14 · Character age 5d 9h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 5/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ab82a2510966 -->
-_Last updated: 2026-06-20 03:17 UTC_
+<!-- content-hash: e76a149ed4f4 -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

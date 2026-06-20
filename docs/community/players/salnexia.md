@@ -1,6 +1,6 @@
 # Salnexia
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 3h
 
 `💪 2 jobs @99`
 
@@ -14,8 +14,8 @@
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
 | Time played | 16h |
-| Enemies defeated | 382 |
-| Deaths | 8 |
+| Enemies defeated | 383 |
+| Deaths | 9 |
 
 ## Job levels
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c3db9b8fc8be -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 6bbbccb2da0a -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

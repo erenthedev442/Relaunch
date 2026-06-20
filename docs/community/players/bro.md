@@ -1,6 +1,6 @@
 # Bro
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 6d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d
 
 `⭐ 11 Ascensions` `💪 22 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
+| Main job | **BLM 99** |
 | Sub job | NIN 99 |
 | Time played | 96h |
-| Enemies defeated | 2,164 |
-| Deaths | 48 |
+| Enemies defeated | 2,167 |
+| Deaths | 49 |
 
 ## Job levels
 
@@ -45,7 +45,7 @@
 
 - **Mastery rank:** 5 / 5
 - **Augments crafted:** 310
-- **NM Affinities:** 4 / 13
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 25160a3ed6f7 -->
-_Last updated: 2026-06-20 03:55 UTC_
+<!-- content-hash: 15e248b10c5a -->
+_Last updated: 2026-06-20 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->
