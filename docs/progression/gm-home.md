@@ -29,6 +29,15 @@ Each option asks for confirmation before applying. You can mix and match — the
 
 ---
 
+## Mog Moogle
+
+The **Mog Moogle** is a convenience NPC with two functions:
+
+- **Delivery Box** — opens your Mog House delivery box from anywhere in GM Home, so you can collect Auction House buy-back payments, send items between your own characters, and manage deliveries without travelling to a Mog House.
+- **Change Job...** — switch your main job to any of the 22 jobs on the spot. Pick a job from the paginated list and you swap to it immediately, kupo.
+
+---
+
 ## Mystery Mog
 
 The **Mystery Mog** is a gil-sink gacha with standard and premium pull tiers. You must have at least one free inventory slot before rolling. The menu shows your current gil balance before you commit.
@@ -250,6 +259,6 @@ A **Home Point crystal** is placed among the travel NPCs at GM Home. Examine it 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 80d488be3c64 -->
-_Last updated: 2026-06-20 21:09 UTC_
+<!-- content-hash: bef99e96aa44 -->
+_Last updated: 2026-06-20 21:25 UTC_
 <!-- DOCGEN:END id="last-updated" -->

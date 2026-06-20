@@ -45,7 +45,8 @@ HEADLINE = [
         "name": "Ascension",
         "page": "progression/prestige.md",
         "modules": ["Prestige_System.lua", "prestige_catalog.lua"],
-        "text": "**Ascension — a prestige ladder above the level cap.** Reach the Hunting League's Legend tier and the Altar in Provenance opens. Re-clear the Nightmare Court — three ascension-only superbosses that get harder *and change* as you climb — and spend Hunt Marks to *ascend*, earning Ascension Points: a Job-Points-style currency poured into permanent, stacking stat boosts. It's tracked per main job, never wipes anything you've earned, and the prestige levels are uncapped — an endless Paragon tail to chase on the leaderboards.",
+        "covers": ["progression/job-rebirth.md"],
+        "text": "**Ascension — a prestige ladder above the level cap.** Reach the Hunting League's Legend tier and the Altar in Provenance opens. Re-clear the Nightmare Court — three ascension-only superbosses that get harder *and change* as you climb — and spend Hunt Marks to *ascend*, earning Ascension Points: a Job-Points-style currency poured into permanent, stacking stat boosts. It's tracked per main job, never wipes anything you've earned, and the prestige levels are uncapped — an endless Paragon tail to chase on the leaderboards. Its per-job sibling, **Job Rebirth**, resets a mastered job to level 1 to bank permanent Rebirth Points.",
     },
     {
         "name": "Reforge system",
@@ -157,7 +158,9 @@ IGNORE_PAGES = {
     "progression/bis-guide.md",
     "progression/gear-finder.md",
     "progression/item-database.md",
+    "progression/item-finder.md",
     "community/status.md",
+    "community/economy.md",
     "community/faq.md",
     "community/highlights.md",
 }

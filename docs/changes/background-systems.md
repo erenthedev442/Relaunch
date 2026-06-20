@@ -98,7 +98,46 @@ On retail, regional NPCs disappear when their nation loses the region — leavin
 
 ---
 
+## Double-Duration Enhancing Magic
+
+Every Enhancing Magic spell lasts **twice as long** as it normally would. The 2× is applied on top of all the usual modifiers — gear "Enhancing Magic Duration", RDM merits and job points, Composure, Perpetuance, and Embolden all stack first, then the result is doubled.
+
+- A 5-minute Protect becomes **10 minutes**.
+- A Composure'd 5-minute buff (already ×3) becomes **30 minutes**.
+
+No NPC, no gear requirement — it applies to every player casting any enhancing spell.
+
+---
+
+## Blue Mage Auto-Learns Spells
+
+Blue Mage never has to hunt down and learn spells the hard way. As your BLU levels up, every spell it would normally have to learn from a monster is **granted automatically** at the appropriate level. Logging in also runs a full catch-up, so a BLU is always holding the complete spell list for its current level.
+
+You still set and arrange your own spells — this only removes the chore of farming each one off a mob.
+
+---
+
+## Auto-Buff at the Hunting League Hub
+
+Zone into **Escha - Zi'Tah** (the Hunting League hub, reached with `!hunt`) and the server applies your buffs automatically — the same package as the [`!buff`](../progression/server-features.md#the-buff-command) command: a regional buff plus Refresh, Regen, and Regain, for 30 minutes.
+
+You can start hunting the moment you arrive without typing anything. If the buffs drop mid-session, `!buff` re-applies them anywhere.
+
+---
+
+## Al Zahbi Loot Fountain
+
+Every monster killed in **Al Zahbi** drops one extra random item, rolled from across the whole item database, on top of its normal loot. It is pure novelty — you never know what you'll get — and it stacks with the [Scheduled Invasions](../endgame/invasions.md) that also take place there.
+
+---
+
+## GM Home Seal Drops
+
+Monsters killed inside **GM Home** (where the [Test Dummy](../progression/gm-home.md#test-dummy) lives) drop **gear-vendor seals** every kill — the currency the [Gear Vendors](../progression/gear-vendors.md) accept. The seal tier scales with the mob's level, NMs drop a tier higher, and the quantity varies per kill (with the occasional jackpot stack). It's a small bonus faucet for testing your damage on something that fights back.
+
+---
+
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 70fa46543714 -->
-_Last updated: 2026-06-04 08:52 UTC_
+<!-- content-hash: ea95f3a73a10 -->
+_Last updated: 2026-06-20 21:25 UTC_
 <!-- DOCGEN:END id="last-updated" -->

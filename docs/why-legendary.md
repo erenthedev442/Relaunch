@@ -31,7 +31,7 @@ The private server community is large and passionate, but most servers solve the
 
 - **Hunting League — a custom 5-tier progression system.** Retail FFXI has NMs. Legendary turns them into a structured progression ladder. Five ranks, each harder than the last, each with meaningful rewards and increasing HL Point rates. If you love the hunt, this server was built for you.
 
-- **Ascension — a prestige ladder above the level cap.** Reach the Hunting League's Legend tier and the Altar in Provenance opens. Re-clear the Nightmare Court — three ascension-only superbosses that get harder *and change* as you climb — and spend Hunt Marks to *ascend*, earning Ascension Points: a Job-Points-style currency poured into permanent, stacking stat boosts. It's tracked per main job, never wipes anything you've earned, and the prestige levels are uncapped — an endless Paragon tail to chase on the leaderboards.
+- **Ascension — a prestige ladder above the level cap.** Reach the Hunting League's Legend tier and the Altar in Provenance opens. Re-clear the Nightmare Court — three ascension-only superbosses that get harder *and change* as you climb — and spend Hunt Marks to *ascend*, earning Ascension Points: a Job-Points-style currency poured into permanent, stacking stat boosts. It's tracked per main job, never wipes anything you've earned, and the prestige levels are uncapped — an endless Paragon tail to chase on the leaderboards. Its per-job sibling, **Job Rebirth**, resets a mastered job to level 1 to bank permanent Rebirth Points.
 
 - **Reforge system — three NM ladders to +3 BiS.** Kill Sky Gods for AF Marks. Kill Unity NMs for Relic Marks. Kill Abyssea NMs for Empy Marks. Each currency line upgrades a full armor set across four tiers. No RNG boxes, no cash shop — just the satisfaction of killing your way to best-in-slot.
 
@@ -64,6 +64,6 @@ The private server community is large and passionate, but most servers solve the
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: df8ab8f063ec -->
-_Last updated: 2026-06-20 21:09 UTC_
+<!-- content-hash: 6d78e6b46fb4 -->
+_Last updated: 2026-06-20 21:24 UTC_
 <!-- DOCGEN:END id="last-updated" -->

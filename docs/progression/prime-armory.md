@@ -50,9 +50,18 @@ Talk to the Armory to open the menu. The weapons are browsed a page at a time �
 Browsing is free — you can read every weapon's stats and weapon skill before deciding. The voucher is only spent on the final confirm, so take your time picking the right Prime weapon for your job.
 <!-- DOCGEN:END id="prime-armory-claim" -->
 
+## The Prime Vendor — a trial-gated path
+
+Alongside the voucher-based Armory, a separate **Prime Vendor** NPC in GM Home hands out the **16 retail Prime weapons** (their final "Level 119 III" forms) — Caliburnus, Helheim, Kusanagi, Loughnashade, and the rest of the relic-prime line, one for every weapon type and shield.
+
+The Prime Vendor doesn't take a voucher. Instead it is gated behind the **four Prime Weapon Trials**: complete all four and the vendor opens, letting you claim your weapon **for free** — the trials themselves are the cost. Each weapon is Rare/Ex, so you're limited to one of each, and you'll need a free inventory slot to receive it.
+
+!!! note "Two separate Prime weapon sources"
+    The **Prime Armory** (above) trades a Prime Voucher for one of the 12 custom Prime weapons. The **Prime Vendor** rewards the 16 retail Prime weapons for finishing the Prime Trials. They are independent — the weapon lists don't overlap.
+
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 835a2ba8b5cc -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 159b48f65dd7 -->
+_Last updated: 2026-06-20 21:25 UTC_
 <!-- DOCGEN:END id="last-updated" -->

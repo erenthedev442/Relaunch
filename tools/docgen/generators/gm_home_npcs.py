@@ -99,8 +99,8 @@ _NPCS: list[dict] = [
     {
         "cluster":   "Activities cluster",
         "display":   "Infamy Vendor",
-        "file":      "modules/custom/lua/dungeon_catalog.lua",
-        "pos_field": "infamyVendorPos",
+        "file":      "modules/custom/lua/infamy_vendor_catalog.lua",
+        "pos_field": "npcPos",
         "desc":      "Spend infamy currency earned from Abyssea NM hunts, Invasions, and the weekly Raid on gear and rewards",
     },
     # ── Admin cluster (z ≈ −28) ───────────────────────────────────────────────

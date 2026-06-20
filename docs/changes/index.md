@@ -189,7 +189,7 @@ _All NPCs are in **GM Home** (zone 210). Positions shown as (x, y, z)._
 |---|---|---|
 | **EXP Camp Moogle** | `(0, 0, -15)` | Warp to one of 12 fixed EXP camp locations (Lv 10–75 tier list) |
 | **Hunt Board** | `(-1.5, 0, -25)` | Weekly hunt board — pick up and turn in weekly NM target bounties for marks |
-| **Infamy Vendor** | _unknown_ | Spend infamy currency earned from Abyssea NM hunts, Invasions, and the weekly Raid on gear and rewards |
+| **Infamy Vendor** | `(4.5, 0, -21)` | Spend infamy currency earned from Abyssea NM hunts, Invasions, and the weekly Raid on gear and rewards |
 
 **Admin cluster** — testing and meta systems (z ≈ −28)
 
