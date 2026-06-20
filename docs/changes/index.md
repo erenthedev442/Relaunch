@@ -172,6 +172,7 @@ _All NPCs are in **GM Home** (zone 210). Positions shown as (x, y, z)._
 | NPC | Position | What it does |
 |---|---|---|
 | **Gear Moogle** | `(-4.5, 0, -7)` | One-time starter gear kit for new characters (once per character) |
+| **Mog Moogle** | `(2, 0, -7)` | Delivery Box access plus change to any of the 22 jobs on the spot |
 | **Augment Moogle** | `(-4.5, 0, -7)` | Trade one equipment piece + 1–4 catalyst crystals for stacking augments |
 | **Augment Sage** | `(-1.5, 0, -5)` | Augment affinity system — unlock passive stat bonuses by spending hunt marks |
 
@@ -270,6 +271,6 @@ For reference, these are at retail defaults on this server:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: adb8b245dc47 -->
-_Last updated: 2026-06-20 21:09 UTC_
+<!-- content-hash: d1c12a2e83af -->
+_Last updated: 2026-06-20 21:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

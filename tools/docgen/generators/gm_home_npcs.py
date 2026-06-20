@@ -47,6 +47,13 @@ _NPCS: list[dict] = [
     },
     {
         "cluster":   "Progression cluster",
+        "display":   "Mog Moogle",
+        "file":      "modules/custom/lua/mog_moogle.lua",
+        "pos_field": None,   # parse position from the insertDynamicEntity NPC block
+        "desc":      "Delivery Box access plus change to any of the 22 jobs on the spot",
+    },
+    {
+        "cluster":   "Progression cluster",
         "display":   "Augment Moogle",
         "file":      "modules/custom/lua/Augment_Moogle.lua",
         "pos_field": None,

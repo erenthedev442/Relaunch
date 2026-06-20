@@ -112,6 +112,7 @@ def main() -> int:
         gil_exchange,
         home_point,
         prime_armory,
+        prime_vendor,
         race_changer,
         reforge_mark_exchange,
         sparks_exchange,
@@ -267,6 +268,7 @@ def main() -> int:
         ("home_point",           home_point),
         ("reforge_mark_exchange", reforge_mark_exchange),
         ("prime_armory",         prime_armory),
+        ("prime_vendor",         prime_vendor),
         # newly-documented systems (2026-06-20): Endless Tower + Job Mastery
         # (the two solo Prime-Weapon trials) and the Bibiki Bay Capacity farm.
         ("endless_tower",        endless_tower),

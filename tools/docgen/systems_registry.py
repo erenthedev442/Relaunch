@@ -106,6 +106,7 @@ HEADLINE = [
         "name": "Prime Armory",
         "page": "progression/prime-armory.md",
         "modules": ["PrimeArmory_NPC.lua"],
+        "covers": ["progression/prime-vendor.md"],
         "text": "**Prime Armory — claim an apex Prime weapon.** Trade a Prime Voucher at the Prime Armory for one of twelve **Prime weapons**, the server's top weapon tier. Browse the full set in the menu and take the one built for your job.",
     },
     {
