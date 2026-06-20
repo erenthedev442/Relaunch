@@ -204,6 +204,30 @@ findstr /c:"xi_map=active" "%OUT%" >nul
 if errorlevel 1 ( echo        WARNING: xi_map not confirmed active - check health output above.& set "SRVOK=PROBLEM" ) else if defined BUILDFAIL ( echo        ERROR: C++ REBUILD FAILED -- new binary NOT live; xi_map still up on the OLD binary. Fix the build + re-deploy.& set "SRVOK=BUILD FAILED" ) else ( echo        server live.& set "SRVOK=OK" )
 (echo [%TIME%] [4/5] rebuild+restart done - SRVOK=%SRVOK%)>> "%LOG%"
 
+REM ---- 4d. Clean banned + over-maxBoost augments from OFFLINE player gear.
+REM          Runs right after the restart on purpose: accounts_sessions is freshest
+REM          (most chars dropped = most cleaned), the box already has this deploy's
+REM          catalog (maxBoost ceilings), and it lands BEFORE [6/6] DB sync so the
+REM          laptop's synced copy matches. The tool zeroes banned/orphan augment
+REM          slots and caps any boost above its catalog maxBoost, KEEPING the item;
+REM          it backs up every touched row + writes a restore .sql on the box, and
+REM          SKIPS online chars (reported -> cleaned on a later deploy). Non-fatal +
+REM          timeout-wrapped so it can never stall the deploy. Gated on SRVOK=OK:
+REM          if the server didn't deploy cleanly we don't touch player gear.
+echo(
+if /i not "%SRVOK%"=="OK" goto :augclean_skip
+echo  [4d] Cleaning banned + over-cap augments from player gear (offline chars)...
+(echo [%TIME%] [4d] augment clean: start)>> "%LOG%"
+powershell -NoProfile -Command "$j=Start-Job { ssh -i '%KEY%' %SSHOPT% %HOST% 'DRY=0 python3 ~/server/tools/clean_banned_augments.py' 2>&1 }; if (Wait-Job $j -Timeout 300) { Receive-Job $j } else { Stop-Job $j; 'WARNING: [4d] augment clean stalled >300s - continuing' }; Remove-Job $j -Force" > "%OUT%" 2>&1
+type "%OUT%"
+type "%OUT%" >> "%LOG%"
+(echo [%TIME%] [4d] augment clean done)>> "%LOG%"
+goto :augclean_done
+:augclean_skip
+echo  [4d] Augment clean SKIPPED - server not healthy (SRVOK=%SRVOK%). Run it by hand after fixing the build.
+(echo [%TIME%] [4d] augment clean SKIPPED - SRVOK=%SRVOK%)>> "%LOG%"
+:augclean_done
+
 REM ---- 4c. Sync ALL doc pages to the box's publish checkout. The laptop's
 REM          Legendary docs are the source of truth; ship docs (minus the live-data
 REM          player pages the box regenerates) + nav + theme into ~/legendary-docs.
