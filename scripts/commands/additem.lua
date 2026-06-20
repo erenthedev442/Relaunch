@@ -1,5 +1,5 @@
 -----------------------------------
--- func: additem <itemId> <quantity> <aug1> <v1> <aug2> <v2> <aug3> <v3> <aug4> <v4> <trial>
+-- func: additem <itemId> <quantity> <aug1> <v1> <aug2> <v2> <aug3> <v3> <aug4> <v4> <aug5> <v5> <trial>
 -- desc: Adds an item to the GMs inventory.
 -----------------------------------
 ---@type TCommand
@@ -8,15 +8,15 @@ local commandObj = {}
 commandObj.cmdprops =
 {
     permission = 1,
-    parameters = 'siiiiiiiiii'
+    parameters = 'siiiiiiiiiiiii'
 }
 
 local function error(player, msg)
     player:printToPlayer(msg)
-    player:printToPlayer('!additem <itemId> (quantity) (aug1) (v1) (aug2) (v2) (aug3) (v3) (aug4) (v4) (trial)')
+    player:printToPlayer('!additem <itemId> (quantity) (aug1) (v1) (aug2) (v2) (aug3) (v3) (aug4) (v4) (aug5) (v5) (trial)')
 end
 
-commandObj.onTrigger = function(player, item, quantity, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val, trialId)
+commandObj.onTrigger = function(player, item, quantity, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val, aug4, aug4val, trialId)
     -- Early return
     if item == nil then
         -- No Item Provided
@@ -93,6 +93,7 @@ commandObj.onTrigger = function(player, item, quantity, aug0, aug0val, aug1, aug
         { aug1, aug1val },
         { aug2, aug2val },
         { aug3, aug3val },
+        { aug4, aug4val },
     }
 
     for _, augmentData in ipairs(augmentPairs) do
