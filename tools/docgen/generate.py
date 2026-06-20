@@ -115,6 +115,8 @@ def main() -> int:
         race_changer,
         reforge_mark_exchange,
         sparks_exchange,
+        # cosmetic Boutique daily-rotation page (2026-06-20)
+        cosmetics,
     )
 
     # Snapshot existing last-updated footers BEFORE any generator runs.
@@ -254,6 +256,7 @@ def main() -> int:
         ("corvus",              corvus),
         # economy/service NPCs (2026-06-14 follow-up)
         ("sparks_exchange",      sparks_exchange),
+        ("cosmetics",            cosmetics),
         ("gil_exchange",         gil_exchange),
         ("race_changer",         race_changer),
         ("home_point",           home_point),
