@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "total": 275,
+  "total": 297,
   "groups": [
     {
       "category": "Strength / Attack / Phys.dmg.taken",
@@ -654,6 +654,16 @@
           "itemId": 3941,
           "augId": 960,
           "label": "Fire Affinity Magic Accuracy Recast time",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 2,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2842,
+          "augId": 1793,
+          "label": "Pet DEX",
           "base": 1,
           "mult": 1,
           "disp": 1,
@@ -1406,6 +1416,16 @@
           "maxBoost": null
         },
         {
+          "itemId": 2498,
+          "augId": 362,
+          "label": "Magic Damage",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 5,
+          "maxBoost": null
+        },
+        {
           "itemId": 921,
           "augId": 516,
           "label": "INT",
@@ -1419,6 +1439,56 @@
           "itemId": 2338,
           "augId": 896,
           "label": "Enspell Dmg",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 5,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2834,
+          "augId": 1157,
+          "label": "Spell Interruption Rate Down 2%",
+          "base": 2,
+          "mult": 1,
+          "disp": 1,
+          "cat": 5,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2510,
+          "augId": 1248,
+          "label": "Enhancing Magic Effect Duration",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 5,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2640,
+          "augId": 1249,
+          "label": "Helix Effect Duration",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 5,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2711,
+          "augId": 1264,
+          "label": "Meditate Effect Duration",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 5,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2847,
+          "augId": 1796,
+          "label": "Pet INT",
           "base": 1,
           "mult": 1,
           "disp": 1,
@@ -1825,6 +1895,16 @@
     {
       "category": "Elemental resistance",
       "entries": [
+        {
+          "itemId": 2831,
+          "augId": 61,
+          "label": "Occ. inc. resist to stat ailments",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 11,
+          "maxBoost": null
+        },
         {
           "itemId": 1163,
           "augId": 176,
@@ -2729,6 +2809,106 @@
           "disp": 1,
           "cat": 12,
           "maxBoost": null
+        },
+        {
+          "itemId": 1725,
+          "augId": 288,
+          "label": "Divine magic skill",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 12,
+          "maxBoost": null
+        },
+        {
+          "itemId": 1740,
+          "augId": 290,
+          "label": "Enha.mag. skill",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 12,
+          "maxBoost": null
+        },
+        {
+          "itemId": 1817,
+          "augId": 291,
+          "label": "Enfb.mag. skill",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 12,
+          "maxBoost": null
+        },
+        {
+          "itemId": 1854,
+          "augId": 292,
+          "label": "Elem. magic skill",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 12,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2154,
+          "augId": 295,
+          "label": "Ninjutsu skill",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 12,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2155,
+          "augId": 296,
+          "label": "Singing skill",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 12,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2161,
+          "augId": 297,
+          "label": "String instrument skill",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 12,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2171,
+          "augId": 299,
+          "label": "Blue Magic skill",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 12,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2212,
+          "augId": 300,
+          "label": "Geomancy Skill",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 12,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2334,
+          "augId": 301,
+          "label": "Handbell Skill",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 12,
+          "maxBoost": null
         }
       ]
     },
@@ -2783,6 +2963,51 @@
           "mult": 1,
           "disp": 1,
           "cat": 13,
+          "maxBoost": null
+        }
+      ]
+    },
+    {
+      "category": "Other",
+      "entries": [
+        {
+          "itemId": 1269,
+          "augId": 215,
+          "label": "Ninja tool expertise",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 14,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2729,
+          "augId": 341,
+          "label": "Repair potency",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 14,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2507,
+          "augId": 351,
+          "label": "Occ. quickens spellcasting",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 14,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2641,
+          "augId": 1250,
+          "label": "Indi Effect Duration",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 14,
           "maxBoost": null
         }
       ]
