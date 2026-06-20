@@ -47,9 +47,9 @@ local function applyTrait(player, trait)
     -- NOTE: addTrait is NOT a binding on this build, so we can't set the engine
     -- trait bit that hasTrait() reads. For Dual Wield that bit gates the off-hand
     -- equip slot -- so charutils.cpp's 3 dual-wield equip checks were patched (FJB)
-    -- to ALSO accept a standalone DUAL_WIELD mod, which the addMod above sets and
-    -- the onGameIn re-apply keeps alive. So the mod alone now both grants the
-    -- +15% Dual Wield AND unlocks equipping an off-hand weapon on any job.
+    -- to also honor this trainer's purchase flag, the charVar CJTrait_dwield (=
+    -- cvPrefix .. 'dwield', set on buy below). That unlocks the off-hand for
+    -- BUYERS only (NOT DUAL_WIELD gear), while the addMod above grants the +15%.
 end
 
 -- Re-apply every owned trait (a zone-in/login wipes in-memory mods), then

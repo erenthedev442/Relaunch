@@ -2528,10 +2528,11 @@ bool EquipArmor(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 conta
                             CItemWeapon* PNewItemWeapon = dynamic_cast<CItemWeapon*>(PItem);
                             bool         isWeapon       = PItem->isType(ITEM_WEAPON);
 
-                            // FJB: a standalone DUAL_WIELD mod (e.g. the Cross-Job Trait Trainer's
-                            // borrowed Dual Wield, which can't set the trait bit -- addTrait isn't a
-                            // Lua binding on this fork) also unlocks the off-hand weapon slot.
-                            if (isWeapon && ((!charutils::hasTrait(PChar, TRAIT_DUAL_WIELD) && PChar->getMod(Mod::DUAL_WIELD) == 0) || (PNewItemWeapon && PNewItemWeapon->getSkillType() == SKILL_NONE)))
+                            // FJB: the Cross-Job Trait Trainer's borrowed Dual Wield can't set the
+                            // trait bit (addTrait isn't a Lua binding on this fork), so honor its
+                            // purchase flag (charVar CJTrait_dwield) to unlock the off-hand slot --
+                            // scoped to BUYERS only, NOT any DUAL_WIELD-mod gear.
+                            if (isWeapon && ((!charutils::hasTrait(PChar, TRAIT_DUAL_WIELD) && PChar->getCharVar("CJTrait_dwield") == 0) || (PNewItemWeapon && PNewItemWeapon->getSkillType() == SKILL_NONE)))
                             {
                                 return false;
                             }
@@ -3333,8 +3334,8 @@ void EquipItem(CCharEntity* PChar, uint8 slotID, uint8 equipSlotID, uint8 contai
         if (PItemWeapon && PItemWeapon->getSkillType() != SKILL_NONE)
         {
             // Don't attempt to equip item in equip menu if you don't have dual wield trait (client sees BLU, THF, DNC, NIN, /DNC or /NIN etc as able to equip sub weapons even if sub is too low or no trait on BLU)
-            // FJB: a standalone DUAL_WIELD mod (Cross-Job Trait Trainer) also unlocks the sub slot.
-            if (!PChar->hasTrait(TRAIT_DUAL_WIELD) && PChar->getMod(Mod::DUAL_WIELD) == 0)
+            // FJB: the Cross-Job Trait Trainer's purchase flag (CJTrait_dwield) also unlocks the sub slot.
+            if (!PChar->hasTrait(TRAIT_DUAL_WIELD) && PChar->getCharVar("CJTrait_dwield") == 0)
             {
                 PChar->pushPacket<GP_SERV_COMMAND_BATTLE_MESSAGE>(PChar, PChar, PItemWeapon->getID(), 0, MsgBasic::NeedDualWield);
                 return;
@@ -3478,8 +3479,8 @@ void CheckValidEquipment(CCharEntity* PChar)
 
         if (slotID == SLOT_SUB && !PItem->IsShield())
         {
-            // Unequip if no main weapon or a non-grip subslot without DW (trait OR FJB DUAL_WIELD mod)
-            if (!PChar->getEquip(SLOT_MAIN) || (!charutils::hasTrait(PChar, TRAIT_DUAL_WIELD) && PChar->getMod(Mod::DUAL_WIELD) == 0 && !(((CItemWeapon*)PItem)->getSkillType() == SKILL_NONE)))
+            // Unequip if no main weapon or a non-grip subslot without DW (trait OR FJB CJTrait_dwield flag)
+            if (!PChar->getEquip(SLOT_MAIN) || (!charutils::hasTrait(PChar, TRAIT_DUAL_WIELD) && PChar->getCharVar("CJTrait_dwield") == 0 && !(((CItemWeapon*)PItem)->getSkillType() == SKILL_NONE)))
             {
                 UnequipItem(PChar, SLOT_SUB);
                 continue;
