@@ -29,9 +29,21 @@ catalog.vendorItems =
     -- Naegling (a sword) and is now correctly labeled below -- it was previously
     -- mislabeled 'Daybreak' with shield stats. The real Daybreak (22040, a
     -- caster wand) lives in the auto list, so it is not duplicated here.
-    { id = 21632, name = 'Aeneas',         cost =  500, stats = { 'Dagger. Best Rudra Storm.', 'Aeonic weapon.' } },
+    { id = 20594, name = 'Aeneas',         cost =  500, stats = { 'Dagger (main/sub). THF/BRD/DNC. Aeonic.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
     { id = 20935, name = 'Trishula',       cost =  800, stats = { 'Polearm (main). Aeonic, DRG only. Grants Stardiver.', 'DMG 345, TP Bonus+500, Magic Dmg+155, Store TP+10.' } },
-    { id = 20890, name = 'Anguta',         cost =  800, stats = { 'Scythe (main). Aeonic, DRK only. Grants Entropy.', 'DMG 370, TP Bonus+500, Magic Dmg+155, Store TP+10.' } },
+    { id = 20890, name = 'Anguta',         cost =  800, stats = { 'Scythe (main). Aeonic, DRK only. Grants Entropy.', 'DMG 370, TP Bonus+500, Magic Dmg+186, Store TP+10.' } },
+    -- All 16 final-stage Aeonic weapons (stats via sql/zz_aeonic_weapon_mods.sql)
+    { id = 20515, name = 'Godhands',           cost =  800, stats = { 'H2H (main). MNK/PUP. Aeonic.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
+    { id = 20843, name = 'Chango',             cost =  800, stats = { 'Great Axe (main). WAR. Aeonic.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
+    { id = 20695, name = 'Sequence',           cost =  800, stats = { 'Sword (main/sub). RDM/PLD/BLU. Aeonic.', 'Magic Dmg+186, TP Bonus+500, Store TP+10.' } },
+    { id = 21694, name = 'Lionheart',          cost =  800, stats = { 'Great Sword (main). RUN. Aeonic.', 'Magic Dmg+186, TP Bonus+500, Store TP+10.' } },
+    { id = 21753, name = 'Tri-edge',           cost =  800, stats = { 'Dagger (main/sub). BST. Aeonic.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
+    { id = 20977, name = 'Heishi Shorinken',   cost =  800, stats = { 'Katana (main/sub). NIN. Aeonic.', 'Magic Dmg+186, TP Bonus+500, Store TP+10.' } },
+    { id = 21025, name = 'Dojikiri Yasutsuna', cost =  800, stats = { 'Great Katana (main). SAM. Aeonic.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
+    { id = 21082, name = 'Tishtrya',           cost =  800, stats = { 'Club (main). WHM/GEO. Aeonic.', 'Magic Dmg+217, TP Bonus+500, Store TP+10.' } },
+    { id = 21147, name = 'Khatvanga',          cost =  800, stats = { 'Staff (main). BLM/SMN/SCH. Aeonic.', 'Magic Dmg+279, TP Bonus+500, Occult Acumen+30.' } },
+    { id = 22117, name = 'Fail-Not',           cost =  800, stats = { 'Bow (ranged). RNG. Aeonic. MAcc+40.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
+    { id = 26403, name = 'Srivatsa',           cost =  800, stats = { 'Shield (sub). PLD. Aeonic.', 'DEF+150, HP+150, MP+150, Enmity+15.' } },
     { id = 21621, name = 'Naegling',       cost =  300, stats = { 'Sword (1-hand). Great Savage Blade.', 'iLvl 119, broad job access.' } },
 
     -- ----------------------------------------------------------------
