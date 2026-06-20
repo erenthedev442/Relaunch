@@ -7,6 +7,17 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 !!! note "Week of June 15–21, 2026"
     **Friday, June 19**
 
+    - **Merits** — Reset job-specific merits set by old !automerits + lowerMerit binding
+    - **Crossjob** — Cap borrowed-ability injection at the 30-entry recast packet limit
+    - **Reforge** — Enable pets + GEO at the Reforge arena (zone 278 missing MISC_PET)
+    - **Augments** — Generator emits maxBoost so the 4h cron stops wiping caps
+    - **Rebirth** — Make !rebirth a player command (permission 1->0)
+    - **EXP** — Set EXP_PARTY_GAP_NO_EXP=10 (no EXP if >10 levels below highest party member)
+    - **Augments** — Resolve INT/Conserve MP catalyst collision on Ahriman Tears (921)
+    - **Crash** — Guard CNotorietyContainer::hasEnmity against dangling-entity UAF
+    - **Damage** — Remove 99,999 hidden cap from handlePhalanx / handleOneForAll
+    - **WARP** — Update Bastok Markets warp destination coordinates
+    - **Test Dummy** — Replace generic tiers with Ascension Courts + Abyssea NMs
     - **Crash** — Guard CanAttack against dangling target ptr (mob enmity SIGQUIT)
     - **Augments** — Cap All songs augment at 75% of prior max
     - **Crash** — Make alive-entity registry thread-safe (real fix for NPC-load crash/hang)
@@ -338,10 +349,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2d298ad87f09 -->
-_Last updated: 2026-06-20 03:17 UTC_
-<!-- DOCGEN:END id="last-updated" -->
