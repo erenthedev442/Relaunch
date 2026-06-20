@@ -221,8 +221,10 @@ class AutoSpendBindingsModule : public CPPModule
             PChar->PMeritPoints->LowerMerit(meritType);
 
             // Refund the caller-supplied point cost into the unspent balance.
-            const int32 newBalance = static_cast<int32>(PChar->PMeritPoints->m_MeritPoints) + refundPoints;
-            PChar->PMeritPoints->m_MeritPoints = static_cast<uint8>(std::min(newBalance, 255));
+            // Use the public Get/SetMeritPoints accessors -- m_MeritPoints is private
+            // (MSVC let the direct poke slide; g++ on the box rejects it -> build break).
+            const int32 newBalance = static_cast<int32>(PChar->PMeritPoints->GetMeritPoints()) + refundPoints;
+            PChar->PMeritPoints->SetMeritPoints(static_cast<uint16>(std::min(newBalance, 255)));
 
             // Push updated balance + per-merit packets so the client UI
             // reflects the change without a relog. Then rebuild traits/skills
