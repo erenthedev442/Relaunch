@@ -7,6 +7,20 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 !!! note "Week of June 15–21, 2026"
     **Friday, June 19**
 
+    - **Equip** — Re-enable /equipset macros (revert the server-wide disable)
+    - **ROE** — Open !gainexp to all players (permission 0 not 1)
+    - **Corsair** — Add Phantom Roll potency augment, capped at +3/piece
+    - **Augments** — Deploy cleaner imports EXCLUDED_AUGS so it can never drift
+    - **Augments** — Cut All songs another 75% + remove the 35 specific-WS DMG augments
+    - **Dynamis** — Restore standard mobs to the 4 city Dynamis zones (185-188)
+    - **Trusts** — Give Gemma the Snow Bunny Hat (head model)
+    - **Trusts** — Re-dress Gemma (skoll) in Hume Top + Hume Shorts
+    - **Abyssea** — Killer gets 2x reward, party leader gets 0x
+    - **Economy** — Allied Notes drop from every mob in (S) zones
+    - **Cosmetic Shop** — Switch currency from gil to Allied Notes ((S) zones)
+    - **Augments** — Single source of truth for the website catalog (no more drift)
+    - **Shop** — Daily-rotating Seasonal Boutique NPC in GM Home
+    - **Augments** — Restore flat weapon DMG+ (top tier 743 melee / 749 ranged)
     - **Merits** — Reset job-specific merits set by old !automerits + lowerMerit binding
     - **Crossjob** — Cap borrowed-ability injection at the 30-entry recast packet limit
     - **Reforge** — Enable pets + GEO at the Reforge arena (zone 278 missing MISC_PET)
@@ -33,13 +47,7 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - **SMN** — Boost avatar Blood Pact damage x10 -> ~260x (BP_DAMAGE 2500->25900, owner request)
     - **Augments** — Activate INT+ augment via Ahriman Tears (item 921)
     - **Naegling** — Restore retail stats and correct WS to Savage Blade
-    - **Job Rebirth** — Rebirth a maxed job for power, reusing Ascension categories
-    - **Hunting League** — Rank IV unlock button was unclickable for long-named players (menu click round-trip exceeded Mes[128])
-    - **Augments** — Remove DEX/AGI + MND/CHR pairs and the 6 flat weapon-Dmg augments (owner request)
-    - **Augments** — Remove the six 2-stat STR augments + ban their catalysts (owner request)
-    - **Augments** — Show EXP/Cap Point at base=33 to match the live engine value
-    - **Hunting League** — NMs spawn aggroed onto the player who popped them
-    - **Equip** — Disable /equipset macros server-wide
+    - *…and 7 more changes this update*
 
     **Thursday, June 18**
 
@@ -349,10 +357,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6edc931ff3b3 -->
-_Last updated: 2026-06-20 06:26 UTC_
-<!-- DOCGEN:END id="last-updated" -->
