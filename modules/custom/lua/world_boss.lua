@@ -43,6 +43,13 @@ local m = Module:new('world_boss')
 -----------------------------------
 xi._wb = xi._wb or nil   -- nil = no boss; set in spawnBoss(), cleared in onMobDeath
 
+-- RETIRED 2026-06-20: World Bosses no longer drive any progression -- Prime
+-- Weapon Trial 3 is now a Riftborn Boulder turn-in (rare Abyssea NM drop). The
+-- whole system is disabled at the spawn choke point below (every path -- restart
+-- resume, Sunday auto-spawn, and the !worldboss GM command -- routes through
+-- spawnBoss). Code kept intact; flip RETIRED to false to bring it back.
+local RETIRED = true
+
 -----------------------------------
 -- Constants
 -----------------------------------
@@ -161,6 +168,7 @@ end
 --   savedHP  : HP to restore (nil or 0 = spawn at full HP)
 -----------------------------------
 local function spawnBoss(zone, bossData, bossIdx, savedHP)
+    if RETIRED then return end   -- World Bosses retired -- see flag above.
     local p = bossData.pos
 
     local mob = zone:insertDynamicEntity({
@@ -254,6 +262,7 @@ xi._wb_spawnBoss = spawnBoss
 m:addOverride('xi.zones.West_Ronfaure.Zone.onInitialize', function(zone)
     super(zone)
 
+    if RETIRED then return end   -- no boss to resume; system retired.
     if svGet('Active') ~= 1 then return end
 
     local savedHP  = svGet('HP')
@@ -277,6 +286,7 @@ end)
 -- onZoneIn: arm the per-player 30s tick and greet with current status.
 m:addOverride('xi.zones.West_Ronfaure.Zone.onZoneIn', function(player, prevZone)
     local cs = super(player, prevZone)
+    if RETIRED then return cs end   -- don't arm the boss tick; system retired.
 
     -- Re-arming 30s tick. Stops automatically once the player leaves HotG
     -- (zone check inside prevents re-arming from another zone).

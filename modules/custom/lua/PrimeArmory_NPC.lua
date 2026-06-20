@@ -3,9 +3,9 @@
 -- "Prime Armory" -- a GM Home NPC where players forge a Prime Weapon by
 -- completing the four Prime Weapon Trials:
 --
---   Trial 1 (PW_Trial1_Done)  10 Shadow Fragments from Nightmare dungeons
+--   Trial 1 (PW_Trial1_Done)  Turn in 12 each of the 20 Abyssea collectibles
 --   Trial 2 (PW_Trial2_Done)  Clear floor 50 of the Endless Tower
---   Trial 3 (PW_Trial3_Done)  Earn kill credit on 3 Weekly World Bosses
+--   Trial 3 (PW_Trial3_Done)  Turn in a Prime Sigil (rare Abyssea NM drop)
 --   Trial 4 (PW_Trial4_Done)  Defeat any Weapon Guardian (Job Mastery)
 --
 -- Once all four are complete the player may claim ONE Prime weapon of their
@@ -27,9 +27,9 @@ local m = Module:new('prime_armory')
 
 local TRIALS =
 {
-    { var = 'PW_Trial1_Done', label = 'Trial 1', desc = '10 Shadow Fragments (Nightmare dungeons)' },
+    { var = 'PW_Trial1_Done', label = 'Trial 1', desc = '12 each of all 20 Abyssea collectibles (turn in here)' },
     { var = 'PW_Trial2_Done', label = 'Trial 2', desc = 'Endless Tower floor 50' },
-    { var = 'PW_Trial3_Done', label = 'Trial 3', desc = '3 Weekly World Boss kills' },
+    { var = 'PW_Trial3_Done', label = 'Trial 3', desc = 'Prime Sigil — rare Abyssea NM drop (turn in here)' },
     { var = 'PW_Trial4_Done', label = 'Trial 4', desc = 'Weapon Guardian defeated (Job Mastery)' },
 }
 
@@ -48,6 +48,26 @@ local WEAPONS =
     { id = 22155, name = 'Prime Bow',       ws = 'Sarv',             info = 'Archery. AGI/STR, Ranged Acc/Att, Store TP, Rapid Shot. Needs arrows.' },
     { id = 22159, name = 'Prime Gun',       ws = 'Terminus',         info = 'Marksmanship. AGI/DEX, Ranged Acc/Att, Store TP, Rapid Shot. Needs bullets.' },
 }
+
+-----------------------------------
+-- Trial 1: collect 12 EACH of the 20 Abyssea "five elements" collectibles
+-- (Stone/Coin/Jewel/Card of Vision/Ardor/Wieldance/Balance/Voyage -- they drop
+-- from Abyssea NMs). Turned in at this NPC, which CONSUMES all 240 and stamps
+-- PW_Trial1_Done. itemIds are contiguous 3210..3229, grouped by element below.
+-----------------------------------
+local T1_REQUIRED = 12
+local T1_SETS =
+{
+    { name = 'Vision',    types = { { id = 3210, t = 'Stone' }, { id = 3211, t = 'Coin' }, { id = 3212, t = 'Jewel' }, { id = 3213, t = 'Card' } } },
+    { name = 'Ardor',     types = { { id = 3214, t = 'Stone' }, { id = 3215, t = 'Coin' }, { id = 3216, t = 'Jewel' }, { id = 3217, t = 'Card' } } },
+    { name = 'Wieldance', types = { { id = 3218, t = 'Stone' }, { id = 3219, t = 'Coin' }, { id = 3220, t = 'Jewel' }, { id = 3221, t = 'Card' } } },
+    { name = 'Balance',   types = { { id = 3222, t = 'Stone' }, { id = 3223, t = 'Coin' }, { id = 3224, t = 'Jewel' }, { id = 3225, t = 'Card' } } },
+    { name = 'Voyage',    types = { { id = 3226, t = 'Stone' }, { id = 3227, t = 'Coin' }, { id = 3228, t = 'Jewel' }, { id = 3229, t = 'Card' } } },
+}
+
+-- Trial 3: turn in ONE Riftborn Boulder (item 4061) -- a ~3% drop from Abyssea
+-- (Hunting League) NMs, wired in HuntingLeague.lua's NM onMobDeath.
+local T3_ITEM = 4061
 
 m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     super(zone)
@@ -83,6 +103,96 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             local icon  = done and '[+]' or '[ ]'
             player:printToPlayer(string.format('  %s %s — %s', icon, t.label, t.desc), xi.msg.channel.SYSTEM_3)
         end
+    end
+
+    -----------------------------------
+    -- Trial 1: per-element collectible progress (chat, not menu -- 20 lines
+    -- would blow the customMenu byte cap).
+    -----------------------------------
+    local function printTrial1Progress(player)
+        player:printToPlayer(string.format(
+            '[Prime Armory] Trial 1 — bring %d of EACH (Stone/Coin/Jewel/Card) for all five elements:', T1_REQUIRED),
+            xi.msg.channel.SYSTEM_3)
+        for _, set in ipairs(T1_SETS) do
+            local parts = {}
+            for _, ty in ipairs(set.types) do
+                local have = player:getItemCount(ty.id)
+                table.insert(parts, string.format('%s %s', ty.t, have >= T1_REQUIRED and '[+]' or tostring(have)))
+            end
+            player:printToPlayer(string.format('  %-10s %s', set.name .. ':', table.concat(parts, '  ')), xi.msg.channel.SYSTEM_3)
+        end
+    end
+
+    -----------------------------------
+    -- Trial 1 turn-in. Verifies 12 of every collectible, then consumes all 240.
+    -- delItem only debits the FIRST main-inventory stack, and getItemCount spans
+    -- ALL containers, so a split stack (some in satchel) could otherwise pass the
+    -- check but under-consume -> a partly-free trial. We measure the ACTUAL
+    -- removal via the count delta and REFUND on any shortfall (all-or-nothing).
+    -----------------------------------
+    local function turnInTrial1(player)
+        if (player:getCharVar('PW_Trial1_Done') or 0) == 1 then
+            player:printToPlayer('[Prime Armory] Trial 1 is already complete, kupo!', xi.msg.channel.SYSTEM_3)
+            return
+        end
+
+        -- Pass 1: every one of the 20 collectibles present in the required count.
+        for _, set in ipairs(T1_SETS) do
+            for _, ty in ipairs(set.types) do
+                if player:getItemCount(ty.id) < T1_REQUIRED then
+                    player:printToPlayer('[Prime Armory] Not yet — you still need more. Here is your tally:', xi.msg.channel.SYSTEM_3)
+                    printTrial1Progress(player)
+                    return
+                end
+            end
+        end
+
+        -- Pass 2: consume, measuring the real delta; refund all if any shortfall.
+        local removed = {}
+        local shortfall = false
+        for _, set in ipairs(T1_SETS) do
+            for _, ty in ipairs(set.types) do
+                local before = player:getItemCount(ty.id)
+                player:delItem(ty.id, T1_REQUIRED)
+                local got = before - player:getItemCount(ty.id)
+                removed[ty.id] = got
+                if got < T1_REQUIRED then shortfall = true end
+            end
+        end
+
+        if shortfall then
+            for id, qty in pairs(removed) do
+                if qty > 0 then player:addItem({ id = id, quantity = qty }) end
+            end
+            player:printToPlayer('[Prime Armory] I could not gather all of them — keep every collectible in your MAIN inventory (not satchel/case) and try again, kupo!', xi.msg.channel.SYSTEM_3)
+            return
+        end
+
+        player:setCharVar('PW_Trial1_Done', 1)
+        player:printToPlayer('[Prime Armory] The offering of all five elements is accepted! Trial 1 complete, kupo!', xi.msg.channel.SYSTEM_3)
+    end
+
+    -----------------------------------
+    -- Trial 3 turn-in: one Riftborn Boulder. Consume-and-verify so a split
+    -- stack can't credit the trial without actually handing the item over.
+    -----------------------------------
+    local function turnInTrial3(player)
+        if (player:getCharVar('PW_Trial3_Done') or 0) == 1 then
+            player:printToPlayer('[Prime Armory] Trial 3 is already complete, kupo!', xi.msg.channel.SYSTEM_3)
+            return
+        end
+        if player:getItemCount(T3_ITEM) < 1 then
+            player:printToPlayer('[Prime Armory] You need a Riftborn Boulder — a rare drop from Abyssea NMs — for Trial 3, kupo!', xi.msg.channel.SYSTEM_3)
+            return
+        end
+        local before = player:getItemCount(T3_ITEM)
+        player:delItem(T3_ITEM, 1)
+        if player:getItemCount(T3_ITEM) >= before then
+            player:printToPlayer('[Prime Armory] Keep the Riftborn Boulder in your MAIN inventory and try again, kupo!', xi.msg.channel.SYSTEM_3)
+            return
+        end
+        player:setCharVar('PW_Trial3_Done', 1)
+        player:printToPlayer('[Prime Armory] The Riftborn Boulder is accepted! Trial 3 complete, kupo!', xi.msg.channel.SYSTEM_3)
     end
 
     -----------------------------------
@@ -207,6 +317,20 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
             if not trialsComplete(player) then
                 printTrialStatus(player)
+                -- Trials 1 and 3 are turned in HERE; Trials 2 and 4 are earned out
+                -- in the world (Endless Tower / Weapon Guardian).
+                local opts = {}
+                if (player:getCharVar('PW_Trial1_Done') or 0) == 0 then
+                    table.insert(opts, { string.format('Trial 1: turn in (%d each x20)', T1_REQUIRED), function(p) turnInTrial1(p) end })
+                    table.insert(opts, { 'Trial 1: what do I still need?',                             function(p) printTrial1Progress(p) end })
+                end
+                if (player:getCharVar('PW_Trial3_Done') or 0) == 0 then
+                    table.insert(opts, { 'Trial 3: turn in Boulder', function(p) turnInTrial3(p) end })
+                end
+                table.insert(opts, { 'Close', function(p) end })
+                if #opts > 1 then
+                    sendMenu(player, { title = 'Prime Armory: Turn-ins', options = opts })
+                end
                 return
             end
 

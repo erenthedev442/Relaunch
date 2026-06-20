@@ -616,6 +616,23 @@ local function insertSpawnerNPC(zone)
                                 end
                             end)
 
+                            -- Prime Weapon TRIAL 3: a Riftborn Boulder (item 4061)
+                            -- drops ~3% from any Abyssea (Hunting League) NM. Turned
+                            -- in at the Prime Armory for Trial 3 credit. Only drops
+                            -- while the player still needs it, so it never clutters
+                            -- after Trial 3 is done. pcall-guarded.
+                            pcall(function()
+                                if (killer:getCharVar('PW_Trial3_Done') or 0) == 0
+                                    and math.random(100) <= 3
+                                    and killer:getFreeSlotsCount() > 0
+                                then
+                                    killer:addItem({ id = 4061, quantity = 1 })
+                                    killer:printToPlayer(
+                                        '[Prime Armory] A Riftborn Boulder dropped! Take it to the Prime Armory for Trial 3, kupo!',
+                                        xi.msg.channel.SYSTEM_3)
+                                end
+                            end)
+
                             -- Hunter's Guild integration (v2):
                             --   * marks awarded use the AMPLIFIED value, factoring
                             --     in League guild rank + Apex capstone bonus.

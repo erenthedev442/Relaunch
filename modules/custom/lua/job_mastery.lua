@@ -41,33 +41,46 @@ local EXIT_WARP = { zoneId = 210, x = -15, y = 0, z = -18, rot = 128 }
 -----------------------------------
 -- Boss affix pool (same as Endless Tower)
 -----------------------------------
+-- Trial 4 is meant to be BRUTAL (owner: "go even further"). Every affix now
+-- carries real offense on top of the flat floor applied in spawnGuardian, so
+-- there is no "safe" roll -- even the tank/regen affixes hit hard.
 local AFFIXES = {
-    { label = 'Fortified',    mods = { [xi.mod.DEF] = 600 },                                     hpMult = 1.3  },
-    { label = 'Frenzied',     mods = { [xi.mod.HASTE_GEAR] = 150, [xi.mod.DOUBLE_ATTACK] = 10 }, hpMult = 1.0  },
-    { label = 'Regenerating', mods = { [xi.mod.REGEN] = 80 },                                    hpMult = 1.0  },
-    { label = 'Empowered',    mods = { [xi.mod.ATT] = 2500, [xi.mod.STR] = 100 },                hpMult = 1.0  },
-    { label = 'Colossal',     mods = {},                                                           hpMult = 2.0  },
-    { label = 'Furious',      mods = { [xi.mod.ATT] = 3000, [xi.mod.HASTE_GEAR] = 100 },         hpMult = 1.2  },
+    { label = 'Fortified',    mods = { [xi.mod.DEF] = 2000, [xi.mod.ATT] = 4000 },                                    hpMult = 1.4  },
+    { label = 'Frenzied',     mods = { [xi.mod.HASTE_GEAR] = 300, [xi.mod.DOUBLE_ATTACK] = 35, [xi.mod.ATT] = 5000 }, hpMult = 1.1  },
+    { label = 'Regenerating', mods = { [xi.mod.REGEN] = 1500, [xi.mod.ATT] = 4000 },                                  hpMult = 1.1  },
+    { label = 'Empowered',    mods = { [xi.mod.ATT] = 9000, [xi.mod.STR] = 300 },                                     hpMult = 1.1  },
+    { label = 'Colossal',     mods = { [xi.mod.ATT] = 5000, [xi.mod.DOUBLE_ATTACK] = 15 },                            hpMult = 2.2  },
+    { label = 'Furious',      mods = { [xi.mod.ATT] = 10000, [xi.mod.HASTE_GEAR] = 200, [xi.mod.TRIPLE_ATTACK] = 20 }, hpMult = 1.3  },
 }
 
 -----------------------------------
 -- Guardian catalog (12 weapon types)
 -- groupId picks from existing HL mob_groups (registered in zone 210 / GM_Home).
 -----------------------------------
+-- "10x harder" baked straight into the stat block (owner: silent difficulty --
+-- no visible multiplier). Two real levers:
+--   * HP x10  (5M -> 50M, 5.5M -> 55M)
+--   * LEVEL the engine actually honors. mob level is uint8, so the old 260/265
+--     WRAPPED to level 4/9 -- the bosses were accidentally near-trivial in base
+--     stats (weak hits, weak TP). Set to a genuine 160/170 (above the 135-145
+--     Abyssea NMs): real accuracy to land on a 99, real auto/TP-move damage.
+--     This level fix is the main reason they go from "HP sponge" to "brutal".
+-- Tuning dials if it's too much/little: the level (130 easier .. 200 harder) and
+-- the HP. Higher level lowers the player's hit rate, so HP and level compound.
 local GUARDIANS =
 {
-    sword      = { label = 'Sword',      bossName = 'Guardian of the Blade',    level = 260, hp = 5000000, groupId = 11365 },
-    dagger     = { label = 'Dagger',     bossName = 'Guardian of the Shadow',   level = 260, hp = 5000000, groupId = 11362 },
-    greatsword = { label = 'Grt.Sword',  bossName = 'Guardian of Ruin',         level = 265, hp = 5500000, groupId = 11367 },
-    axe        = { label = 'Axe',        bossName = 'Guardian of the Axe',      level = 260, hp = 5000000, groupId = 11363 },
-    greataxe   = { label = 'Grt.Axe',   bossName = 'Guardian of the Vanguard', level = 265, hp = 5500000, groupId = 11368 },
-    scythe     = { label = 'Scythe',     bossName = 'Guardian of Catastrophe',  level = 265, hp = 5500000, groupId = 11366 },
-    polearm    = { label = 'Polearm',    bossName = 'Guardian of the Dragon',   level = 265, hp = 5500000, groupId = 11369 },
-    katana     = { label = 'Katana',     bossName = 'Void Blade Guardian',      level = 260, hp = 5000000, groupId = 11362 },
-    greatkatana = { label = 'Grt.Katana', bossName = 'Guardian of the Kensei', level = 265, hp = 5500000, groupId = 11367 },
-    club       = { label = 'Club',       bossName = 'Guardian of the Mace',     level = 260, hp = 5000000, groupId = 11364 },
-    staff      = { label = 'Staff',      bossName = 'Guardian of Elements',     level = 265, hp = 5500000, groupId = 11366 },
-    archery    = { label = 'Archery',    bossName = 'Guardian of the Hunt',     level = 260, hp = 5000000, groupId = 11363 },
+    sword      = { label = 'Sword',      bossName = 'Guardian of the Blade',    level = 160, hp = 50000000, groupId = 11365 },
+    dagger     = { label = 'Dagger',     bossName = 'Guardian of the Shadow',   level = 160, hp = 50000000, groupId = 11362 },
+    greatsword = { label = 'Grt.Sword',  bossName = 'Guardian of Ruin',         level = 170, hp = 55000000, groupId = 11367 },
+    axe        = { label = 'Axe',        bossName = 'Guardian of the Axe',      level = 160, hp = 50000000, groupId = 11363 },
+    greataxe   = { label = 'Grt.Axe',   bossName = 'Guardian of the Vanguard', level = 170, hp = 55000000, groupId = 11368 },
+    scythe     = { label = 'Scythe',     bossName = 'Guardian of Catastrophe',  level = 170, hp = 55000000, groupId = 11366 },
+    polearm    = { label = 'Polearm',    bossName = 'Guardian of the Dragon',   level = 170, hp = 55000000, groupId = 11369 },
+    katana     = { label = 'Katana',     bossName = 'Void Blade Guardian',      level = 160, hp = 50000000, groupId = 11362 },
+    greatkatana = { label = 'Grt.Katana', bossName = 'Guardian of the Kensei', level = 170, hp = 55000000, groupId = 11367 },
+    club       = { label = 'Club',       bossName = 'Guardian of the Mace',     level = 160, hp = 50000000, groupId = 11364 },
+    staff      = { label = 'Staff',      bossName = 'Guardian of Elements',     level = 170, hp = 55000000, groupId = 11366 },
+    archery    = { label = 'Archery',    bossName = 'Guardian of the Hunt',     level = 160, hp = 50000000, groupId = 11363 },
 }
 
 -- Page-ordered key list for the 2-page menu (6 per page).
@@ -191,6 +204,13 @@ local function spawnGuardian(player, weaponKey)
     mob:setModelSize(3)
 
     for modId, val in pairs(affix.mods) do mob:setMod(modId, val) end
+
+    -- Light flat floor on TOP of the affix. The real level (160/170) already
+    -- supplies high accuracy + attack + TP-move damage, so we DON'T pile on a big
+    -- ACC/ATT floor (that would push it into one-shot territory) -- just make its
+    -- TP moves come faster and add a couple of extra swings.
+    mob:addMod(xi.mod.STORETP, 200)
+    mob:addMod(xi.mod.DOUBLE_ATTACK, 10)
 
     local finalHp = math.floor(g.hp * affix.hpMult)
     mob:setMaxHP(finalHp)
