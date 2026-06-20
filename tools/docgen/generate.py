@@ -117,6 +117,11 @@ def main() -> int:
         sparks_exchange,
         # cosmetic Boutique daily-rotation page (2026-06-20)
         cosmetics,
+        # previously-undocumented systems given pages 2026-06-20 (each parses
+        # its own inline config / catalog, same shape as voidspire)
+        endless_tower,
+        job_mastery,
+        capacity_farm,
     )
 
     # Snapshot existing last-updated footers BEFORE any generator runs.
@@ -262,6 +267,11 @@ def main() -> int:
         ("home_point",           home_point),
         ("reforge_mark_exchange", reforge_mark_exchange),
         ("prime_armory",         prime_armory),
+        # newly-documented systems (2026-06-20): Endless Tower + Job Mastery
+        # (the two solo Prime-Weapon trials) and the Bibiki Bay Capacity farm.
+        ("endless_tower",        endless_tower),
+        ("job_mastery",          job_mastery),
+        ("capacity_farm",        capacity_farm),
         # differentiators renders why-legendary.md's "What Legendary Does
         # Differently" list from systems_registry.py and writes a drift report
         # of any system detail page that isn't featured. Runs before

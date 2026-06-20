@@ -54,7 +54,7 @@ If you want to watch a specific cutscene, talk to the relevant NPC manually.
 
 The Records of Eminence **"Gain Experience"** objective (earn 5,000 EXP in 4 hours) is active in every slot, every day. On retail it's limited to three slots per week.
 
-As a player, you earn this the normal way — just gain EXP and the reward fires on the natural cycle. There is a `!gainexp` command that triggers the reward instantly, but it's **GM-only** and not available to regular players.
+As a player, you earn this the normal way — just gain EXP and the reward fires on the natural cycle. You can also use the `!gainexp` command to claim the reward instantly — it's **open to every player** (no GM access needed).
 
 ---
 

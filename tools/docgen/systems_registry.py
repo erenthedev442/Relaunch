@@ -33,7 +33,7 @@ from __future__ import annotations
 HEADLINE = [
     {
         "name": "Fast progression, real endgame",
-        "text": "**Fast progression, real endgame.** <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP (and <!--setting:main.EXP_RATE:int-->10<!--/setting-->× from books, FoV/GoV & Records of Eminence) means you hit 99 in days, not months. But 99 is the *beginning*, not the finish line. The Hunting League, Dungeon system, Reforge gear, and augments are all designed to hold your interest for months. There's always a next thing.",
+        "text": "**Fast progression, real endgame.** <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP (and <!--setting:main.EXP_RATE:int-->10<!--/setting-->× from books, FoV/GoV & Records of Eminence) means you hit 99 in days, not months. But 99 is the *beginning*, not the finish line. The Hunting League, Reforge gear, augments, and a full tier of endgame events are all designed to hold your interest for months. There's always a next thing.",
     },
     {
         "name": "Hunting League",
@@ -46,12 +46,6 @@ HEADLINE = [
         "page": "progression/prestige.md",
         "modules": ["Prestige_System.lua", "prestige_catalog.lua"],
         "text": "**Ascension — a prestige ladder above the level cap.** Reach the Hunting League's Legend tier and the Altar in Provenance opens. Re-clear the Nightmare Court — three ascension-only superbosses that get harder *and change* as you climb — and spend Hunt Marks to *ascend*, earning Ascension Points: a Job-Points-style currency poured into permanent, stacking stat boosts. It's tracked per main job, never wipes anything you've earned, and the prestige levels are uncapped — an endless Paragon tail to chase on the leaderboards.",
-    },
-    {
-        "name": "Dungeon system",
-        "page": "progression/dungeons.md",
-        "modules": ["DungeonSystem.lua", "dungeon_catalog.lua"],
-        "text": "**Dungeon system — four dungeons, never the same twice.** Each dungeon has Normal, Hard, and Mythic difficulty tiers. Mythic is genuinely gated (five Hard clears + a weekly key). Random affixes mean every run is different. The best gear in the game drops in Mythic — and you have to *earn* it.",
     },
     {
         "name": "Reforge system",
@@ -93,6 +87,8 @@ HEADLINE = [
         "page": "endgame/star-devourer.md",
         "covers": [
             "endgame/voidspire.md",
+            "endgame/endless-tower.md",
+            "endgame/job-mastery.md",
             "endgame/colosseum.md",
             "endgame/invasions.md",
             "endgame/treasure-hunts.md",
@@ -127,6 +123,7 @@ HEADLINE = [
         "name": "A deep quality-of-life bench",
         "page": "progression/server-features.md",
         "covers": [
+            "progression/capacity-farm.md",
             "progression/subjob-exp.md",
             "progression/death-penalty.md",
             "progression/login-rewards.md",
