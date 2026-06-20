@@ -408,6 +408,16 @@ auto CMobController::MobSkill(int listId) -> bool
 
     auto* PMobSkill{ battleutils::GetMobSkill(chosenSkillId) };
 
+    // FJB crash guard: if the skill-list resolved to no valid skill -- every entry
+    // was undefined in mob_skills so chosenSkillId stayed 0, or the Lua override
+    // returned an invalid id -- GetMobSkill() returns nullptr. Bail before the
+    // deref below; without this the map SIGSEGV'd (live 2026-06-20 20:00: an
+    // Abyssea NM on skill-list 843 whose only skill, 2585, isn't in mob_skills).
+    if (!PMobSkill)
+    {
+        return false;
+    }
+
     if (PMobSkill->getValidTargets() & TARGET_ENEMY) // enemy
     {
         PActionTarget = PTarget;
