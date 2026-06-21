@@ -9,7 +9,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 1, -- GM only; set to 0 to let players use it
+    permission = 0, -- all players
     parameters = '',
 }
 
