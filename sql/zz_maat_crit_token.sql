@@ -8,8 +8,11 @@
 -- Flags: EX (16384) | RARE (32768) | NOAUCTION (64) | NOSALE (4096) | NODELIVERY (8192)
 --   = 61440
 
+-- Positional INSERT to match the working sql/item_basic.sql rows -- an explicit
+-- column list naming `jname` failed with "Unknown column 'jname'" (that column
+-- isn't in item_basic on this schema). Column order: itemId, subid, name,
+-- sortname, <jp name>, type, stackSize, flags, ahcat, basesell.
 INSERT IGNORE INTO `item_basic`
-    (itemId, subid, name, sortname, jname, `type`, stackSize, flags, ahcat, basesell)
 VALUES
     (29000, 0, 'maats_blessing', 'maats_blessing', 'マートの加護',
      1,   -- GENERAL_TYPE
