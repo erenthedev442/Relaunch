@@ -141,6 +141,15 @@ local function spawnTowerMob(owner, groupId, name, level, hpMult, extraMods)
         releaseIdOnDisappear = true,
 
         onMobDeath = function(deadMob, killer)
+            -- Allied Notes to the climber for each tower mob cleared, scaled by the
+            -- floor's mob level (same curve as allied_notes_drop.lua: floor(lvl/5),
+            -- clamped 5..50). Goes to the session owner so the climber is always
+            -- rewarded regardless of who/what lands the killing blow.
+            local climber = GetPlayerByName(ownerName)
+            if climber then
+                climber:addCurrency('allied_notes', math.max(5, math.min(50, math.floor(level / 5))))
+            end
+
             local sess = sessions[ownerName]
             if not sess then return end
             sess.mobsAlive[deadMob:getID()] = nil
