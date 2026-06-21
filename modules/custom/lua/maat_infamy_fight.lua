@@ -38,38 +38,38 @@ local DROP_CHANCE   = 0.25
 -- as the spawn template. Level is overridden to MAAT_LEVEL by min/maxLevel.
 local MAAT_GROUP_ID  = 12
 local MAAT_GROUP_ZID = 144
-local MAAT_LEVEL     = 250
+local MAAT_LEVEL     = 200
 
--- "Damn hard" Lv250 stat block. Level alone does NOT make a fight: LSB's stat
--- tables top out near 99, so a raw Lv250 mob is actually a pushover. Like every
--- other endgame encounter here (Prestige, Abyssea, the Test Dummy) we apply an
--- explicit profile AFTER spawn(). Tuned a notch ABOVE the toughest Prestige
--- apex (World's End / Provenance Watcher, Lv150) -- Maat is the single hardest
--- fight on the server. HP is the main difficulty dial; tune after a playtest.
-local MAAT_HP   = 15000000   -- 15M
+-- "Lv200-equivalent" stat block. Level alone does NOT make a fight: LSB's stat
+-- tables top out near 99, so the raw level is cosmetic -- this profile is the
+-- real difficulty. Like every other endgame encounter here (Prestige, Abyssea,
+-- the Test Dummy) we apply it AFTER spawn(). Scaled down ~20% from the old Lv250
+-- profile to a Lv200 target -- still a hard fight, a clear step easier than
+-- before. HP is the main difficulty dial; tune after a playtest.
+local MAAT_HP   = 12000000   -- 12M (Lv200 target; ~20% under the old 15M)
 local MAAT_MODS =
 {
-    [xi.mod.DEF]           = 9000,    -- mitigates your physical damage
-    [xi.mod.ATT]           = 50000,   -- hits hard even through tank DEF
-    [xi.mod.ACC]           = 11000,   -- rarely whiffs, even vs high-EVA tanks
-    [xi.mod.EVASION]       = 2800,    -- your melee misses a lot
-    [xi.mod.MATT]          = 5000,    -- Chainspell nukes HURT
-    [xi.mod.MACC]          = 5200,    -- nukes / debuffs land
-    [xi.mod.MEVA]          = 3800,    -- your spells resist
-    [xi.mod.MDEF]          = 3800,    -- mitigates your magic damage
-    [xi.mod.STR]           = 1200,
-    [xi.mod.INT]           = 1200,    -- feeds his nuke damage
-    [xi.mod.DOUBLE_ATTACK] = 45,
-    [xi.mod.TRIPLE_ATTACK] = 24,
-    [xi.mod.HASTE_GEAR]    = 500,     -- clamps to the 25% gear-haste cap
-    [xi.mod.REGEN]         = 3000,    -- soft DPS check: out-damage it or stall
+    [xi.mod.DEF]           = 7200,    -- mitigates your physical damage
+    [xi.mod.ATT]           = 40000,   -- hits hard even through tank DEF
+    [xi.mod.ACC]           = 8800,    -- rarely whiffs, even vs high-EVA tanks
+    [xi.mod.EVASION]       = 2250,    -- your melee misses a fair bit
+    [xi.mod.MATT]          = 4000,    -- Chainspell nukes HURT
+    [xi.mod.MACC]          = 4150,    -- nukes / debuffs land
+    [xi.mod.MEVA]          = 3050,    -- your spells resist
+    [xi.mod.MDEF]          = 3050,    -- mitigates your magic damage
+    [xi.mod.STR]           = 960,
+    [xi.mod.INT]           = 960,     -- feeds his nuke damage
+    [xi.mod.DOUBLE_ATTACK] = 36,
+    [xi.mod.TRIPLE_ATTACK] = 19,
+    [xi.mod.HASTE_GEAR]    = 400,     -- clamps to the 25% gear-haste cap
+    [xi.mod.REGEN]         = 2400,    -- soft DPS check: out-damage it or stall
 }
 
 -- Per-fight tick: holds Maat passive until the challenger approaches within
--- ENGAGE_DIST, then engages him; also despawns an abandoned Maat (owner left or
--- died and stayed away ~45s) so it doesn't loiter. Runs once a second.
+-- ENGAGE_DIST, then engages him; and despawns him QUICKLY once his owner is dead
+-- or gone, so a leftover Maat can't loiter near other challengers. 1s ticks.
 local TICK_MS    = 1000
-local IDLE_LIMIT = 45   -- 45 x 1s = 45s of the owner being absent/dead -> despawn
+local IDLE_LIMIT = 6   -- 6 x 1s = ~6s after the owner is dead/gone -> despawn
 
 -- Waughroon Shrine default zone-in point (matches Zone.lua onZoneIn default).
 local SHRINE_ENTRY_X =  -361.434
@@ -81,11 +81,11 @@ local SHRINE_ENTRY_R =     0
 -- PASSIVE until they walk within ENGAGE_DIST yalms -- so you load in safely
 -- instead of dying on the zone-in tile. A small random jitter keeps several
 -- challengers' (claim-locked, private) Maats from stacking on one model.
--- NOTE: MAAT_SPAWN_* is a best-guess point in the open entry floor; verify it
--- in-game and nudge it if Maat lands in a wall or still spawns too close.
-local MAAT_SPAWN_X = -339.434   -- ~22y toward +X (zone interior) from the entry
-local MAAT_SPAWN_Y =  101.798
-local MAAT_SPAWN_Z = -259.996
+-- MAAT_SPAWN_* is an owner-confirmed spot on the open entry floor (read off the
+-- in-game position display) -- ~27y from the SHRINE_ENTRY landing tile.
+local MAAT_SPAWN_X = -334.553
+local MAAT_SPAWN_Y =  104.824
+local MAAT_SPAWN_Z = -259.501
 local SPAWN_JITTER =    3.0
 local ENGAGE_DIST  =   15.0     -- Maat engages once the challenger is this close
 local MAAT_R       =  128       -- initial facing (cosmetic; he turns on engage)
@@ -123,9 +123,11 @@ local function maatTick(mob, ownerName)
             m:addEnmity(owner, 30000, 30000)              -- now he beelines them
         end
 
-        -- (2) Abandon watchdog: only counts while the owner is gone/dead AND Maat
-        -- isn't engaged; a present, living owner (loading or approaching) keeps him.
-        if m:isEngaged() or ownerActive then
+        -- (2) Despawn watchdog: keep Maat ONLY while his owner is alive + in the
+        -- shrine (loading, approaching, or fighting). The instant the owner is dead
+        -- or has left, count down and remove him fast -- even if he's still
+        -- "engaged" on the corpse -- so he can't linger and threaten other players.
+        if ownerActive then
             m:setLocalVar('maatIdle', 0)
         else
             local ticks = (m:getLocalVar('maatIdle') or 0) + 1
