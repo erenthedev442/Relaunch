@@ -1,6 +1,6 @@
 # Salnexia
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 3d
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 4h
 
 `💪 2 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
-| Sub job | SAM 99 |
-| Time played | 16h |
-| Enemies defeated | 383 |
-| Deaths | 9 |
+| Main job | **PLD 7** |
+| Sub job | DNC 6 |
+| Time played | 18h |
+| Enemies defeated | 396 |
+| Deaths | 10 |
 
 ## Job levels
 
@@ -27,8 +27,8 @@
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 1 |
-| **DRK** | **99** | DNC | 1 |
+| PLD | 7 | PUP | 1 |
+| **DRK** | **99** | DNC | 6 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 824
-- **Marks (lifetime):** 367
+- **Marks (current):** 51
+- **Marks (lifetime):** 403
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 72
+- **Total NM kills:** 85
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2cfad5138739 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 3a4c82a48076 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

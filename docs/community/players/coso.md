@@ -1,20 +1,20 @@
 # Coso
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 1d 23h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 3h
 
 `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BST 70** |
-| Sub job | DNC 70 |
-| Time played | 10h |
-| Enemies defeated | 360 |
+| Main job | **THF 99** |
+| Sub job | DNC 99 |
+| Time played | 12h |
+| Enemies defeated | 376 |
 | Deaths | 4 |
 
 ## Job levels
@@ -35,8 +35,8 @@
 
 ## Hunting League
 
-- **Rank:** 2 / 5
-- **Marks (current):** 2,165
+- **Rank:** 3 / 5
+- **Marks (current):** 180
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 12
+- **Augments crafted:** 19
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2598217f2d91 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: e52f7e5f28dc -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

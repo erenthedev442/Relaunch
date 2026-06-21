@@ -1,6 +1,6 @@
 # Joker
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-19 · Character age 3d 14h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-19 · Character age 3d 18h
 
 `💪 4 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 959a575d4265 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: c728692171ca -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

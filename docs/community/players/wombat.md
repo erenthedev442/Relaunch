@@ -1,18 +1,18 @@
-# Bosh
+# Wombat
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-15 · Character age 6d 4h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 7h 10m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 43/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **WAR 1** |
-| Sub job | — |
-| Time played | 0h |
-| Enemies defeated | 0 |
+| Main job | **GEO 43** |
+| Sub job | RDM 30 |
+| Time played | 1h |
+| Enemies defeated | 58 |
 | Deaths | 0 |
 
 ## Job levels
@@ -23,12 +23,12 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| RDM | 30 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| BRD | 1 | GEO | 43 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a7024ba85619 -->
+<!-- content-hash: 04c379d99282 -->
 _Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Rhis
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 7h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 3d 11h
 
-`⭐ 6 Ascensions` `💪 9 jobs @99`
+`⭐ 7 Ascensions` `💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 22h |
-| Enemies defeated | 1,671 |
+| Time played | 25h |
+| Enemies defeated | 1,736 |
 | Deaths | 4 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 30,502
+- **Marks (current):** 7,002
 - **Marks (lifetime):** 1,089
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 176
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 253
+- **Augments crafted:** 273
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -53,16 +53,16 @@
 |---|---:|---:|
 | AF | 590 | 1,590 |
 | Relic | 200 | 1,950 |
-| Empyrean | 100 | 0 |
+| Empyrean | 1,300 | 0 |
 
 ## Prestige
 
-- **Total Ascensions:** 6
-- **Per-job prestige:** BLM P6
+- **Total Ascensions:** 7
+- **Per-job prestige:** BLM P7
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 120
 
 ## Achievements
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8435588bfde0 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: d13e9c48a0b5 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

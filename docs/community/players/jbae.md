@@ -1,6 +1,6 @@
 # Jbae
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-21 · Character age 27d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-21 · Character age 27d 10h
 
 `⭐ 106 Ascensions` `💪 17 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **RDM 99** |
-| Sub job | NIN 99 |
-| Time played | 283h |
-| Enemies defeated | 9,175 |
-| Deaths | 149 |
+| Sub job | DRG 99 |
+| Time played | 286h |
+| Enemies defeated | 9,177 |
+| Deaths | 150 |
 
 ## Job levels
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: db282f90feb5 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 7d9f21882365 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

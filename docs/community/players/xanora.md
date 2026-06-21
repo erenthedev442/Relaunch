@@ -1,48 +1,50 @@
 # Xanora
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-17 · Character age 3d 22h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 2h
+
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 74/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **DRK 74** |
-| Sub job | SAM 61 |
-| Time played | 3h |
-| Enemies defeated | 167 |
+| Main job | **DRK 99** |
+| Sub job | SAM 84 |
+| Time played | 5h |
+| Enemies defeated | 254 |
 | Deaths | 2 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 61 |
+| WAR | 1 | SAM | 84 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 74 | DNC | 1 |
+| **DRK** | **99** | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 535
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 2 / 5
+- **Marks (current):** 0
+- **Marks (lifetime):** 15
+- **Distinct NMs slain:** 3
+- **Total NM kills:** 3
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 6
+- **Augments crafted:** 7
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -59,11 +61,13 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**2** unlocked — First Hunt · Augment Novice.
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 3d 14h |
 
 ---
 
@@ -72,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a2ec08750826 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: e4e66954034a -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

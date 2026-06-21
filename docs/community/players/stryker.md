@@ -1,11 +1,11 @@
 # Stryker
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 6d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 6d 5h
 
 `💪 6 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | WAR 99 |
-| Time played | 11h |
-| Enemies defeated | 641 |
-| Deaths | 16 |
+| Time played | 14h |
+| Enemies defeated | 644 |
+| Deaths | 17 |
 
 ## Job levels
 
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 2 / 5
-- **Marks (current):** 6,634
-- **Marks (lifetime):** 133
+- **Rank:** 3 / 5
+- **Marks (current):** 6,520
+- **Marks (lifetime):** 169
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 14
+- **Total NM kills:** 17
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1299fa8af8c9 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: e3753de29f6d -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

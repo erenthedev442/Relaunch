@@ -1,19 +1,21 @@
 # Kalystrin
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 8h 43m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 12h 54m
+
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 82/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 82** |
-| Sub job | BLM 68 |
-| Time played | 2h |
-| Enemies defeated | 174 |
-| Deaths | 0 |
+| Main job | **RDM 99** |
+| Sub job | BLM 99 |
+| Time played | 4h |
+| Enemies defeated | 306 |
+| Deaths | 1 |
 
 ## Job levels
 
@@ -22,8 +24,8 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 68 | SMN | 1 |
-| RDM | 82 | BLU | 1 |
+| **BLM** | **99** | SMN | 1 |
+| **RDM** | **99** | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -33,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 475
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 2 / 5
+- **Marks (current):** 1,737
+- **Marks (lifetime):** 120
+- **Distinct NMs slain:** 1
+- **Total NM kills:** 24
 
 ## Augment Sage
 
@@ -57,9 +59,15 @@
 
 - **Trusts learned:** 117
 
+## Achievements
+
+**2** unlocked — First Hunt · Ten Hunts In.
+
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 0s |
 
 ---
 
@@ -68,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 91563c1d96d3 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: f4e618039071 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

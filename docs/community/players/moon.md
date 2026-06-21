@@ -1,6 +1,6 @@
 # Moon
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 5d 8h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 5d 12h
 
 `💪 22 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **SAM 99** |
 | Sub job | WAR 99 |
-| Time played | 61h |
-| Enemies defeated | 155 |
+| Time played | 63h |
+| Enemies defeated | 178 |
 | Deaths | 11 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,301
+- **Marks (current):** 21,641
 - **Marks (lifetime):** 2,447
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 289
+- **Total NM kills:** 567
 
 ## Guild standing
 
@@ -48,9 +48,9 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
 | AF Hunters' Guild | Veteran | 7,500 | 17,500 to Master |
-| Relic Hunters' Guild | Veteran | 24,000 | 1,000 to Master |
+| Relic Hunters' Guild | Master | 36,000 | 19,000 to Champion |
 | Empyrean Hunters' Guild | Journeyman | 1,500 | 3,500 to Veteran |
-| League Hunters' Guild | Veteran | 18,000 | 7,000 to Master |
+| League Hunters' Guild | Master | 25,500 | 29,500 to Champion |
 
 ## Augment Sage
 
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4ea4be8a76f0 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 64f6d3b2d6a4 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

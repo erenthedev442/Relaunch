@@ -1,6 +1,6 @@
 # Nobigdeal
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 4d 1h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 6h
 
 `💪 4 jobs @99`
 
@@ -11,8 +11,8 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | RDM 99 |
+| Main job | **MNK 97** |
+| Sub job | RDM 97 |
 | Time played | 10h |
 | Enemies defeated | 273 |
 | Deaths | 5 |
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ffedb3a073b6 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: d6565c1ca787 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Candycorns
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 7h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 7d 11h
 
 `💪 11 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **NIN 99** |
-| Sub job | DRK 99 |
-| Time played | 62h |
-| Enemies defeated | 2,945 |
+| Main job | **RDM 99** |
+| Sub job | NIN 99 |
+| Time played | 63h |
+| Enemies defeated | 2,951 |
 | Deaths | 15 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 192
-- **Marks (lifetime):** 4,484
+- **Marks (current):** 1,080
+- **Marks (lifetime):** 4,522
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 149
+- **Total NM kills:** 150
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 310
+- **Augments crafted:** 318
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e5fd74f1cb75 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 78cc4f7f93a0 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

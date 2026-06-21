@@ -1,6 +1,6 @@
 # Rtkle
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 13h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 17h
 
 `💪 4 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 38h |
+| Time played | 39h |
 | Enemies defeated | 174 |
 | Deaths | 9 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 144,644
+- **Marks (current):** 145,294
 - **Marks (lifetime):** 74,063
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 1,200
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3f62ba903ce7 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 3d7922a1545e -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

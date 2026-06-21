@@ -1,8 +1,8 @@
 # Benton
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 5d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 4h
 
-`💪 9 jobs @99`
+`⭐ 15 Ascensions` `💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | GEO 99 |
-| Time played | 31h |
+| Main job | **MNK 99** |
+| Sub job | RDM 99 |
+| Time played | 33h |
 | Enemies defeated | 15 |
-| Deaths | 3 |
+| Deaths | 5 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 173,790
+- **Marks (current):** 137,790
 - **Marks (lifetime):** 84,857
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 3,316
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 271
+- **Augments crafted:** 274
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -55,13 +55,18 @@
 | Relic | 1,500 | 0 |
 | Empyrean | 0 | 0 |
 
+## Prestige
+
+- **Total Ascensions:** 15
+- **Per-job prestige:** MNK P15
+
 ## Collections
 
 - **Trusts learned:** 117
 
 ## Achievements
 
-**14** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**16** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · First Ascension · Ascending Master · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a3ce62854d87 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 91c81af4fe7b -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

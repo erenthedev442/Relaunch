@@ -1,6 +1,6 @@
 # Ariamys
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 7h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 12h
 
 `⭐ 12 Ascensions` `💪 10 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | NIN 99 |
-| Time played | 65h |
-| Enemies defeated | 4,450 |
+| Main job | **PLD 99** |
+| Sub job | WAR 99 |
+| Time played | 68h |
+| Enemies defeated | 4,468 |
 | Deaths | 32 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,531
+- **Marks (current):** 1,481
 - **Marks (lifetime):** 20,713
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 1,168
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 347
+- **Augments crafted:** 349
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 09e71aaf3ed9 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 84dc98700b25 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Subpar
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 10h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 14h
 
-`⭐ 2 Ascensions` `💪 6 jobs @99`
+`⭐ 2 Ascensions` `💪 7 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **WAR 99** |
-| Sub job | SAM 99 |
-| Time played | 23h |
-| Enemies defeated | 3,359 |
-| Deaths | 31 |
+| Main job | **DRG 99** |
+| Sub job | WAR 99 |
+| Time played | 25h |
+| Enemies defeated | 3,497 |
+| Deaths | 33 |
 
 ## Job levels
 
@@ -26,7 +26,7 @@
 | **WHM** | **99** | **DRG** | **99** |
 | BLM | 85 | SMN | 1 |
 | RDM | 1 | BLU | 57 |
-| THF | 1 | COR | 1 |
+| THF | 1 | **COR** | **99** |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 14
-- **Marks (lifetime):** 1,425
+- **Marks (current):** 734
+- **Marks (lifetime):** 1,645
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 281
+- **Total NM kills:** 288
 
 ## Guild standing
 
@@ -55,16 +55,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 170
-- **NM Affinities:** 6 / 13
+- **Augments crafted:** 184
+- **NM Affinities:** 7 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 875 | 1,275 |
-| Relic | 1,240 | 240 |
-| Empyrean | 2,570 | 15,970 |
+| Relic | 1,390 | 390 |
+| Empyrean | 3,170 | 16,570 |
 
 ## Prestige
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c7a539247655 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 8dc07a159120 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

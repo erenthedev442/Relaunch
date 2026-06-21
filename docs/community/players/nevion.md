@@ -1,6 +1,6 @@
 # Nevion
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 20h
 
 `💪 5 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | NIN 99 |
-| Time played | 23h |
-| Enemies defeated | 3,192 |
-| Deaths | 17 |
+| Sub job | DNC 99 |
+| Time played | 26h |
+| Enemies defeated | 3,264 |
+| Deaths | 22 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,538
-- **Marks (lifetime):** 396
-- **Distinct NMs slain:** 12
-- **Total NM kills:** 31
+- **Marks (current):** 7,272
+- **Marks (lifetime):** 527
+- **Distinct NMs slain:** 13
+- **Total NM kills:** 42
 
 ## Guild standing
 
@@ -49,13 +49,13 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---|---:|---|
 | AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| Empyrean Hunters' Guild | Veteran | 10,750 | 14,250 to Master |
+| Empyrean Hunters' Guild | Veteran | 14,500 | 10,500 to Master |
 | League Hunters' Guild | Journeyman | 500 | 4,500 to Veteran |
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 19
+- **Mastery rank:** 2 / 5
+- **Augments crafted:** 78
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -64,7 +64,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|---:|
 | AF | 0 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 49 | 249 |
+| Empyrean | 571 | 1,071 |
 
 ## Collections
 
@@ -72,13 +72,14 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**6** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Augment Novice.
+**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 1d 8h |
+| HL Rank I → V | 4d 23h |
 
 ---
 
@@ -87,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 773cfe1963aa -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 048cb1f4ebad -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

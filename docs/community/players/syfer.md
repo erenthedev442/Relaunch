@@ -1,16 +1,16 @@
 # Syfer
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 3h 57m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 8h 9m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 67/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 97/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **COR 67** |
-| Sub job | GEO 54 |
+| Main job | **COR 97** |
+| Sub job | GEO 78 |
 | Time played | 0h |
 | Enemies defeated | 0 |
 | Deaths | 0 |
@@ -24,11 +24,11 @@
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 1 | COR | 67 |
+| THF | 1 | COR | 97 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 54 |
+| BRD | 1 | GEO | 78 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c42d285ace07 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 8f1cbd365650 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

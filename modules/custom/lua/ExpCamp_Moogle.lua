@@ -41,9 +41,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         { label = '75-85 Mount Zhayolm',         zone = xi.zone.MOUNT_ZHAYOLM,         x =    0.00, y =   0.00, z =    0.00, r = 128 },
         { label = '80-90 Caedarva Mire',         zone = xi.zone.CAEDARVA_MIRE,         x =    0.00, y =   0.00, z =    0.00, r = 128 },
         { label = '85-95 Ceizak',                zone = xi.zone.CEIZAK_BATTLEGROUNDS,  x = -107.00, y =   3.00, z =  295.00, r = 128 },
-        { label = '90-99 Yorcia Weald',          zone = xi.zone.YORCIA_WEALD,          x = -420.00, y =   0.00, z =  -62.00, r =  64 },
-        { label = '90-99 Marjami Ravine',        zone = xi.zone.MARJAMI_RAVINE,        x =  -23.00, y =   0.00, z =  174.00, r =   0 },
-        { label = '95-99 Foret Hennetiel',       zone = xi.zone.FORET_DE_HENNETIEL,    x = -193.00, y =  -0.50, z = -252.00, r = 128 },
+        { label = '90-99 Yorcia Weald',          zone = xi.zone.YORCIA_WEALD,          x = -183.76, y =   1.54, z =   69.93, r =  29 },
+        { label = '90-99 Marjami Ravine',        zone = xi.zone.MARJAMI_RAVINE,        x =  367.30, y = -59.27, z =  145.73, r =  36 },
+        { label = '95-99 Foret Hennetiel',       zone = xi.zone.FORET_DE_HENNETIEL,    x = -420.14, y =  -6.17, z =  181.50, r = 249 },
         { label = '95-99 Kamihr Drifts',         zone = xi.zone.KAMIHR_DRIFTS,         x =  210.00, y =  20.30, z =  315.00, r = 192 },
     }
 

@@ -1,6 +1,6 @@
 # Brixton
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 7d 14h
 
 `⭐ 6 Ascensions` `💪 8 jobs @99`
 
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **SMN 82** |
-| Sub job | WHM 76 |
-| Time played | 61h |
+| Main job | **RNG 66** |
+| Sub job | NIN 66 |
+| Time played | 62h |
 | Enemies defeated | 2,308 |
 | Deaths | 27 |
 
@@ -31,12 +31,12 @@
 | **DRK** | **99** | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | **BRD** | **99** | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| RNG | 66 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,341
+- **Marks (current):** 3,191
 - **Marks (lifetime):** 19,760
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 328
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 381
+- **Augments crafted:** 388
 - **NM Affinities:** 12 / 13
 
 ## Reforge
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c7cf692b1e3f -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 88802a8254d3 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Zxs
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 20h
 
 `💪 3 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | BLU 99 |
-| Time played | 41h |
+| Time played | 43h |
 | Enemies defeated | 4,260 |
 | Deaths | 9 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,567
+- **Marks (current):** 9,317
 - **Marks (lifetime):** 22,398
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 432
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 28f794476d04 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 5ffcc4d5eea5 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

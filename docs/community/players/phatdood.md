@@ -1,6 +1,6 @@
 # Phatdood
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 1d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 4h
 
 `💪 6 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **WAR 99** |
+| Main job | **DRG 99** |
 | Sub job | RDM 99 |
-| Time played | 7h |
+| Time played | 8h |
 | Enemies defeated | 196 |
-| Deaths | 6 |
+| Deaths | 7 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 19,488
-- **Marks (lifetime):** 8,683
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 1,714
+- **Marks (current):** 4,743
+- **Marks (lifetime):** 8,911
+- **Distinct NMs slain:** 6
+- **Total NM kills:** 1,720
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Augment Novice.
+**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d3031b10b3ca -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 291975ae45a0 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

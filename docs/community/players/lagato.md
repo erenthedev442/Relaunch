@@ -1,19 +1,19 @@
 # Lagato
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 3h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 7h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 78/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 82/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **WHM 78** |
-| Sub job | DNC 32 |
-| Time played | 13h |
-| Enemies defeated | 247 |
-| Deaths | 0 |
+| Main job | **WHM 82** |
+| Sub job | DNC 48 |
+| Time played | 15h |
+| Enemies defeated | 335 |
+| Deaths | 3 |
 
 ## Job levels
 
@@ -21,12 +21,12 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 78 | DRG | 1 |
+| WHM | 82 | DRG | 1 |
 | BLM | 54 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 21 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 32 |
+| DRK | 1 | DNC | 48 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -79,6 +79,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 10181985eafa -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 84194cde06a2 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

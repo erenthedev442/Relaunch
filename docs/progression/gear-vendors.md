@@ -36,7 +36,7 @@ Tiered armor across the five main slots. Items are listed with the seal cost and
 ### Bronze tier (entry-level ilvl 119)
 
 <!-- DOCGEN:BEGIN id="armor-bronze" -->
-_66 pieces total. Cost is paid in Beastmens Medal._
+_67 pieces total. Cost is paid in Beastmens Medal._
 
 #### Head
 
@@ -70,6 +70,7 @@ _66 pieces total. Cost is paid in Beastmens Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/26960" data-img="https://www.bg-wiki.com/images/e/ef/Annoint._Kalasiris_description.png" target="_blank" rel="noopener">Annointed Kalasiris</a> | 12 | WHM/BLM/RDM/BRD/SMN/PUP/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/25690" data-img="https://www.bg-wiki.com/images/4/46/Kaykaus_Bliaut_description.png" target="_blank" rel="noopener">Kaykaus Bliaut</a> | 12 | WHM/RDM/BRD/SCH |
 | <a class="item-link" href="https://www.ffxiah.com/item/26886" data-img="https://www.bg-wiki.com/images/d/df/Reveal._Tunic_%2B1_description.png" target="_blank" rel="noopener">Revealers Tunic +1</a> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
+| <a class="item-link" href="https://www.ffxiah.com/item/26536" data-img="https://www.bg-wiki.com/images/c/c2/Pinga_Tunic_%2B1_description.png" target="_blank" rel="noopener">Pinga Tunic +1</a> | 12 | WHM/BLU/SCH |
 | <a class="item-link" href="https://www.ffxiah.com/item/26869" data-img="https://www.bg-wiki.com/images/a/ad/Ros._Jaseran_%2B1_description.png" target="_blank" rel="noopener">Rosette Jaseran +1</a> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 
 #### Hands
@@ -138,7 +139,7 @@ _66 pieces total. Cost is paid in Beastmens Medal._
 ### Silver tier (HQ +1 / +2 augmented gear)
 
 <!-- DOCGEN:BEGIN id="armor-silver" -->
-_58 pieces total. Cost is paid in Kindreds Medal._
+_60 pieces total. Cost is paid in Kindreds Medal._
 
 #### Head
 
@@ -155,6 +156,7 @@ _58 pieces total. Cost is paid in Kindreds Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/27710" data-img="https://www.bg-wiki.com/images/d/db/Sahip_Helm_description.png" target="_blank" rel="noopener">Sahip Helm</a> | 25 | WAR/PLD/DRK/BST/SAM/DRG |
 | <a class="item-link" href="https://www.ffxiah.com/item/25654" data-img="https://www.bg-wiki.com/images/3/33/Welkin_Crown_description.png" target="_blank" rel="noopener">Welkin Crown</a> | 25 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/25577" data-img="https://www.bg-wiki.com/images/2/28/Inyanga_Tiara_%2B2_description.png" target="_blank" rel="noopener">Inyanga Tiara +2</a> | 25 | WHM/BRD/SMN |
+| <a class="item-link" href="https://www.ffxiah.com/item/25616" data-img="https://www.bg-wiki.com/images/4/40/Amalric_Coif_%2B1_description.png" target="_blank" rel="noopener">Amalric Coif +1</a> | 25 | BLM/RDM/SMN/BLU/SCH/GEO |
 
 #### Body
 
@@ -162,6 +164,7 @@ _58 pieces total. Cost is paid in Kindreds Medal._
 |---|---:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/25796" data-img="https://static.ffxiah.com/images/icon/25796.png" target="_blank" rel="noopener">Taliah Manteel +2</a> | 25 | BST/SMN/PUP |
 | <a class="item-link" href="https://www.ffxiah.com/item/25717" data-img="https://www.bg-wiki.com/images/8/85/Valorous_Mail_description.png" target="_blank" rel="noopener">Valorous Mail</a> | 25 | WAR/PLD/DRK/BST/SAM/DRG |
+| <a class="item-link" href="https://www.ffxiah.com/item/25752" data-img="https://www.bg-wiki.com/images/7/79/Inyanga_Jubbah_%2B1_description.png" target="_blank" rel="noopener">Inyanga Jubbah +1</a> | 25 | WHM/BRD/SMN |
 | <a class="item-link" href="https://www.ffxiah.com/item/26880" data-img="https://www.bg-wiki.com/images/b/bb/Wretched_Coat_%2B1_description.png" target="_blank" rel="noopener">Wretched Coat +1</a> | 25 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/27887" data-img="https://www.bg-wiki.com/images/f/ff/Vanir_Cotehardie_description.png" target="_blank" rel="noopener">Vanir Cotehardie</a> | 25 | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/23762" data-img="https://www.bg-wiki.com/images/d/dd/Ikenga%27s_Vest_description.png" target="_blank" rel="noopener">Ikengas Vest</a> | 25 | RNG/COR |
@@ -191,10 +194,10 @@ _58 pieces total. Cost is paid in Kindreds Medal._
 
 | Item | Cost | Jobs |
 |---|---:|---|
+| <a class="item-link" href="https://www.ffxiah.com/item/25874" data-img="https://www.bg-wiki.com/images/d/dd/Flamma_Dirs_%2B1_description.png" target="_blank" rel="noopener">Flamma Dirs +1</a> | 25 | WAR/PLD/DRK/SAM/DRG |
 | <a class="item-link" href="https://www.ffxiah.com/item/25870" data-img="https://www.bg-wiki.com/images/3/33/Aya._Cosciales_%2B1_description.png" target="_blank" rel="noopener">Ayanmo Cosciales +1</a> | 25 | WHM/RDM/BRD/BLU/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25867" data-img="https://www.bg-wiki.com/images/8/89/Jhakri_Slops_description.png" target="_blank" rel="noopener">Jhakri Slops</a> | 25 | BLM/RDM/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/28152" data-img="https://www.bg-wiki.com/images/9/9b/Gor._Brayettes_%2B1_description.png" target="_blank" rel="noopener">Gorney Brayettes +1</a> | 25 | WAR/PLD/DRK/BST/SAM/DRG |
-| <a class="item-link" href="https://www.ffxiah.com/item/28157" data-img="https://www.bg-wiki.com/images/7/7b/Xaddi_Cuisses_description.png" target="_blank" rel="noopener">Xaddi Cuisses</a> | 25 | WAR/PLD/DRK/BST/SAM/DRG |
 | <a class="item-link" href="https://www.ffxiah.com/item/27227" data-img="https://www.bg-wiki.com/images/f/fa/Sombra_Tights_%2B1_description.png" target="_blank" rel="noopener">Sombra Tights +1</a> | 25 | MNK/THF/BST/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25856" data-img="https://www.bg-wiki.com/images/8/83/Tatena._Haidate_%2B1_description.png" target="_blank" rel="noopener">Tatenashi Haidate +1</a> | 25 | WAR/MNK/RNG/SAM/NIN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25860" data-img="https://www.bg-wiki.com/images/6/69/Meg._Chausses_description.png" target="_blank" rel="noopener">Meghanada Chausses</a> | 25 | THF/BST/RNG/COR/DNC/RUN |
@@ -236,7 +239,7 @@ _58 pieces total. Cost is paid in Kindreds Medal._
 <!-- DOCGEN:END id="gold-warning" -->
 
 <!-- DOCGEN:BEGIN id="armor-gold" -->
-_58 pieces total. Cost is paid in Demons Medal._
+_60 pieces total. Cost is paid in Demons Medal._
 
 #### Head
 
@@ -250,6 +253,7 @@ _58 pieces total. Cost is paid in Demons Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/24166" data-img="https://www.bg-wiki.com/images/c/c3/Magnif._Crown_description.png" target="_blank" rel="noopener">Magnificent Crown</a> | 50 | MNK/THF/BST/PUP/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/24182" data-img="https://www.bg-wiki.com/images/5/50/Clemen._Somen_description.png" target="_blank" rel="noopener">Clemency Somen</a> | 50 | RNG/SAM/DRG/COR |
 | <a class="item-link" href="https://www.ffxiah.com/item/23732" data-img="https://www.bg-wiki.com/images/8/8c/Malignance_Chapeau_description.png" target="_blank" rel="noopener">Malignance Chapeau</a> | 50 | MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC |
+| <a class="item-link" href="https://www.ffxiah.com/item/25575" data-img="https://www.bg-wiki.com/images/7/79/Meghanada_Visor_%2B2_description.png" target="_blank" rel="noopener">Meghanada Visor +2</a> | 50 | THF/BST/RNG/COR/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/23710" data-img="https://www.bg-wiki.com/images/1/18/Volte_Beret_description.png" target="_blank" rel="noopener">Volte Beret</a> | 50 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/23713" data-img="https://www.bg-wiki.com/images/1/10/Volte_Cap_description.png" target="_blank" rel="noopener">Volte Cap</a> | 50 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/27731" data-img="https://www.bg-wiki.com/images/7/72/Gende._Caubeen_%2B1_description.png" target="_blank" rel="noopener">Gendewitha Caubeen +1</a> | 50 | WHM/RDM/BRD/SCH |
@@ -266,6 +270,7 @@ _58 pieces total. Cost is paid in Demons Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/27857" data-img="https://www.bg-wiki.com/images/b/b4/Respite_Cloak_description.png" target="_blank" rel="noopener">Respite Cloak</a> | 50 | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/26544" data-img="https://www.bg-wiki.com/images/f/fa/Tu._Harness_%2B1_description.png" target="_blank" rel="noopener">Turms Harness +1</a> | 50 | THF/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/23733" data-img="https://www.bg-wiki.com/images/e/ec/Malignance_Tabard_description.png" target="_blank" rel="noopener">Malignance Tabard</a> | 50 | MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC |
+| <a class="item-link" href="https://www.ffxiah.com/item/23766" data-img="https://www.bg-wiki.com/images/c/cb/Agwu%27s_Robe_description.png" target="_blank" rel="noopener">Agwus Robe</a> | 50 | BLM/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25791" data-img="https://www.bg-wiki.com/images/e/e1/Meg._Cuirie_%2B2_description.png" target="_blank" rel="noopener">Meghanada Cuirie +2</a> | 50 | THF/BST/RNG/COR/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25787" data-img="https://www.bg-wiki.com/images/9/96/Shamash_Robe_description.png" target="_blank" rel="noopener">Shamash Robe</a> | 50 | WHM/BLM/RDM/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/25708" data-img="https://www.bg-wiki.com/images/5/5a/Gyve_Doublet_description.png" target="_blank" rel="noopener">Gyve Doublet</a> | 50 | WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO |
@@ -987,7 +992,7 @@ Per-job **+4 Reforge Sets** (AF/Relic/Empyrean +4) are also sold here.
 
 ### Curated picks
 
-_149 hand-picked items -- relic weapons, bard instruments, and other special weapons._
+_152 hand-picked items -- relic weapons, bard instruments, and other special weapons._
 
 | Item | Cost | Notes |
 |---|---:|---|
@@ -1054,6 +1059,9 @@ _149 hand-picked items -- relic weapons, bard instruments, and other special wea
 | <a class="item-link" href="https://www.ffxiah.com/item/21907" data-img="https://static.ffxiah.com/images/icon/21907.png" target="_blank" rel="noopener">Nagi</a> | 5000 | Katana (main/sub). NIN. Relic (Lv.119 III). · EX/RARE. Final relic form. |
 | <a class="item-link" href="https://www.ffxiah.com/item/22141" data-img="https://static.ffxiah.com/images/icon/22141.png" target="_blank" rel="noopener">Death Penalty</a> | 5000 | Gun (ranged). COR. Relic (Lv.119 III). · EX/RARE. Final relic form. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Tupsimati&go=Go" data-img="" target="_blank" rel="noopener">Tupsimati</a> | 5000 | Club (main). GEO. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.ffxiah.com/item/21372" data-img="https://www.bg-wiki.com/images/4/43/Dunna_description.png" target="_blank" rel="noopener">Dunna</a> | 500 | Handbell (main). GEO. Handbell skill+18, Geomancy+5. · Luopan: Damage taken -5%. |
+| <a class="item-link" href="https://www.ffxiah.com/item/21461" data-img="https://www.bg-wiki.com/images/c/cd/Filiae_Bell_description.png" target="_blank" rel="noopener">Filiae Bell</a> | 300 | Handbell (main). GEO. MP+30, Handbell skill+15. · GEO Luopan summon weapon. |
+| <a class="item-link" href="https://www.ffxiah.com/item/21462" data-img="https://www.bg-wiki.com/images/e/e3/Eminent_Bell_description.png" target="_blank" rel="noopener">Eminent Bell</a> | 300 | Handbell (main). GEO. Geomancy+3. · GEO Luopan summon weapon. |
 | <a class="item-link" href="https://www.ffxiah.com/item/23500" data-img="https://www.bg-wiki.com/images/9/93/Pelt._Plackart_%2B3_description.png" target="_blank" rel="noopener">Peltast's Plackart +3</a> | 400 | Body. RUN Relic +3 reforged. · Tank/hybrid stat block. |
 | <a class="item-link" href="https://www.ffxiah.com/item/23567" data-img="https://www.bg-wiki.com/images/f/f2/Pel._Vambraces_%2B3_description.png" target="_blank" rel="noopener">Peltast's Vambraces +3</a> | 400 | Hands. RUN Relic +3 reforged. · Tank/hybrid stat block. |
 | <a class="item-link" href="https://www.ffxiah.com/item/25953" data-img="https://www.bg-wiki.com/images/d/d6/Flam._Gambieras_%2B2_description.png" target="_blank" rel="noopener">Flamma Gambieras +2</a> | 400 | Feet. Ambuscade. · DA+6, Store TP+6, Haste+2%. |
@@ -1277,6 +1285,6 @@ _125 top armor, weapons, and Sortie earrings, refreshed from the live gear ranki
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 987e5dadc6a0 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 491d3a8650f1 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

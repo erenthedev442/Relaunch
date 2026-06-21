@@ -1,6 +1,6 @@
 # Ants
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 22h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 3h
 
 `💪 7 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **PLD 99** |
 | Sub job | BLU 99 |
-| Time played | 16h |
-| Enemies defeated | 828 |
+| Time played | 17h |
+| Enemies defeated | 833 |
 | Deaths | 14 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3
-- **Marks (lifetime):** 1,210
+- **Marks (current):** 4,635
+- **Marks (lifetime):** 1,553
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 36
+- **Total NM kills:** 41
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 287
+- **Augments crafted:** 302
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 120
 
 ## Achievements
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 734bd4f4f32c -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 43e211ae6333 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Rtkhl
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 5d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 7h
 
 `⭐ 20 Ascensions` `💪 4 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 44h |
+| Time played | 45h |
 | Enemies defeated | 322 |
 | Deaths | 9 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 95,173
+- **Marks (current):** 95,873
 - **Marks (lifetime):** 74,288
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 1,215
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8c484fdcb86c -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: c72bdb1c7843 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

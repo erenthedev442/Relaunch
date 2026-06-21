@@ -1,6 +1,6 @@
 # Burtgang
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 7d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 5h
 
 `⭐ 50 Ascensions` `💪 12 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **RDM 1** |
 | Sub job | NIN 1 |
-| Time played | 60h |
-| Enemies defeated | 9,460 |
-| Deaths | 25 |
+| Time played | 63h |
+| Enemies defeated | 11,960 |
+| Deaths | 32 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 139,810
+- **Marks (current):** 140,610
 - **Marks (lifetime):** 18,426
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 853
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 1,024
+- **Augments crafted:** 1,056
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Job Rebirth
 
-- **Total rebirths:** 7
-- **By job:** RDM ×7
+- **Total rebirths:** 16
+- **By job:** RDM ×16
 
 ## Prestige
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 382ef07da848 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 16ff6188e71d -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

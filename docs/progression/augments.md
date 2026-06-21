@@ -105,7 +105,7 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/1015" data-img="https://www.bg-wiki.com/images/1/1b/Sand_Bat_Fang_description.png" target="_blank" rel="noopener">Sand Bat Fang</a> | 1015 | Daken | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1108" data-img="https://static.ffxiah.com/images/icon/1108.png" target="_blank" rel="noopener">Pinch Of Sulfur</a> | 1108 | Conserve TP | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1199" data-img="https://www.bg-wiki.com/images/f/f2/Northern_Fur_description.png" target="_blank" rel="noopener">Northern Fur</a> | 1199 | Barrage | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
-| <a class="item-link" href="https://www.ffxiah.com/item/1271" data-img="https://www.bg-wiki.com/images/8/8a/Pigeon%27s_Blood_description.png" target="_blank" rel="noopener">Pigeons Blood Ruby</a> | 1271 | TP Bonus | 2 | 4 | 6 | 8 | 10 | 64 | 128 | 192 | 256 | 320 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/1271" data-img="https://www.bg-wiki.com/images/8/8a/Pigeon%27s_Blood_description.png" target="_blank" rel="noopener">Pigeons Blood Ruby</a> | 1271 | TP Bonus | 4 | 8 | 12 | 16 | 20 | 128 | 256 | 384 | 512 | 640 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1293" data-img="https://www.bg-wiki.com/images/1/1f/Narasimha_Hide_description.png" target="_blank" rel="noopener">Narasimha Hide</a> | 1293 | Quadruple Attack | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | 100%/swing |
 | <a class="item-link" href="https://www.ffxiah.com/item/1516" data-img="https://www.bg-wiki.com/images/4/49/Griffon_Hide_description.png" target="_blank" rel="noopener">Griffon Hide</a> | 1516 | Save TP | 10 | 20 | 30 | 40 | 50 | 41 | 82 | 123 | 164 | 205 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1591" data-img="https://www.bg-wiki.com/images/c/c9/H.Q._Coeurl_Hide_description.png" target="_blank" rel="noopener">High-Quality Coeurl Hide</a> | 1591 | Reverse Flourish | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
@@ -461,6 +461,6 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 51f7d7a53649 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 751c9e44f7e9 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

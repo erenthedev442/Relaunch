@@ -1,8 +1,8 @@
 # Koru
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 7h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 3d 11h
 
-`⭐ 6 Ascensions` `💪 10 jobs @99`
+`⭐ 7 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | WHM 99 |
-| Time played | 22h |
+| Time played | 24h |
 | Enemies defeated | 4 |
 | Deaths | 4 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 30,832
+- **Marks (current):** 17,832
 - **Marks (lifetime):** 1,089
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 179
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 264
+- **Augments crafted:** 267
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -53,12 +53,12 @@
 |---|---:|---:|
 | AF | 590 | 1,590 |
 | Relic | 200 | 1,950 |
-| Empyrean | 100 | 0 |
+| Empyrean | 1,300 | 0 |
 
 ## Prestige
 
-- **Total Ascensions:** 6
-- **Per-job prestige:** GEO P6
+- **Total Ascensions:** 7
+- **Per-job prestige:** GEO P7
 
 ## Collections
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 553b66b3bb3d -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 74707b422ab0 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

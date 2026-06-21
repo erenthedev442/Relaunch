@@ -1,6 +1,6 @@
 # Killface
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 3h
 
 `💪 2 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | RDM 99 |
-| Time played | 18h |
-| Enemies defeated | 696 |
+| Main job | **MNK 97** |
+| Sub job | RDM 97 |
+| Time played | 21h |
+| Enemies defeated | 860 |
 | Deaths | 10 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 1,545
-- **Marks (lifetime):** 10,075
-- **Distinct NMs slain:** 8
-- **Total NM kills:** 974
+- **Marks (current):** 6,037
+- **Marks (lifetime):** 11,931
+- **Distinct NMs slain:** 9
+- **Total NM kills:** 1,129
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Mark of 10,000 · Augment Novice.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Mark of 10,000 · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 63b828d335e5 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: f930ca273363 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

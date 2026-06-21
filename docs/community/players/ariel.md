@@ -1,6 +1,6 @@
 # Ariel
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 20h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d
 
 `💪 4 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 853
+- **Marks (current):** 3
 - **Marks (lifetime):** 10
 - **Distinct NMs slain:** 2
 - **Total NM kills:** 2
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ee3afbe35353 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: ce29c47c9b26 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

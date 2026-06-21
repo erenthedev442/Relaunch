@@ -1,6 +1,6 @@
 # Erenjaeger
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 2d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 2d 10h
 
 `💪 15 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | WHM 99 |
-| Time played | 25h |
-| Enemies defeated | 3 |
+| Time played | 28h |
+| Enemies defeated | 4 |
 | Deaths | 9 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 108,040
-- **Marks (lifetime):** 52,781
+- **Marks (current):** 108,395
+- **Marks (lifetime):** 53,009
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 803
+- **Total NM kills:** 809
 
 ## Augment Sage
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8c7d67544c3e -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 9a34753c02a8 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

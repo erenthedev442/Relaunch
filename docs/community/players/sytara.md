@@ -1,6 +1,6 @@
 # Sytara
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 5h
 
 `⭐ 12 Ascensions` `💪 22 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | RUN 99 |
-| Time played | 80h |
-| Enemies defeated | 9,858 |
-| Deaths | 43 |
+| Time played | 83h |
+| Enemies defeated | 10,395 |
+| Deaths | 44 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,719
+- **Marks (current):** 7,569
 - **Marks (lifetime):** 5,461
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 867
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 93a3b270fbd6 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 0439685d6efb -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

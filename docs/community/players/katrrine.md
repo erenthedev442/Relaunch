@@ -1,8 +1,8 @@
 # Katrrine
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 1h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 5h
 
-`💪 4 jobs @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
-| Sub job | PLD 1 |
-| Time played | 25h |
-| Enemies defeated | 1,159 |
+| Main job | **RDM 99** |
+| Sub job | BLU 99 |
+| Time played | 28h |
+| Enemies defeated | 1,413 |
 | Deaths | 6 |
 
 ## Job levels
@@ -27,7 +27,7 @@
 | **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
-| PLD | 1 | PUP | 1 |
+| **PLD** | **99** | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 15
+- **Augments crafted:** 20
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -54,6 +54,11 @@
 | AF | 0 | 0 |
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
+
+## Job Rebirth
+
+- **Total rebirths:** 2
+- **By job:** RDM ×2
 
 ## Collections
 
@@ -76,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 37e5aa8af554 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 9afcf453d4ab -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

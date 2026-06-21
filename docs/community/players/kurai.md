@@ -1,8 +1,8 @@
 # Kurai
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 7d 1h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 5h
 
-`💪 4 jobs @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,16 +12,16 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | WAR 99 |
-| Time played | 11h |
-| Enemies defeated | 669 |
-| Deaths | 7 |
+| Sub job | SAM 99 |
+| Time played | 12h |
+| Enemies defeated | 731 |
+| Deaths | 12 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 94 |
+| **WAR** | **99** | **SAM** | **99** |
 | MNK | 1 | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,726
-- **Marks (lifetime):** 84
+- **Marks (current):** 7,402
+- **Marks (lifetime):** 108
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 7
+- **Total NM kills:** 9
 
 ## Guild standing
 
@@ -54,8 +54,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 14
+- **Mastery rank:** 2 / 5
+- **Augments crafted:** 28
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 464daa2918ef -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: dcf854cfafe8 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

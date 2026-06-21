@@ -1,8 +1,8 @@
 # Drbrule
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 2d 8h
 
-`💪 22 jobs @99`
+`⭐ 14 Ascensions` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
-| Sub job | SMN 99 |
-| Time played | 20h |
+| Main job | **BRD 99** |
+| Sub job | WHM 99 |
+| Time played | 22h |
 | Enemies defeated | 15 |
 | Deaths | 2 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 213,814
+- **Marks (current):** 181,414
 - **Marks (lifetime):** 87,741
 - **Distinct NMs slain:** 9
 - **Total NM kills:** 3,939
@@ -55,13 +55,18 @@
 | Relic | 1,500 | 0 |
 | Empyrean | 0 | 0 |
 
+## Prestige
+
+- **Total Ascensions:** 14
+- **Per-job prestige:** BRD P14
+
 ## Collections
 
 - **Trusts learned:** 117
 
 ## Achievements
 
-**14** unlocked — First Hunt · Ten Hunts In · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Augment Novice · Augment Expert · Augment Master.
+**16** unlocked — First Hunt · Ten Hunts In · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · First Ascension · Ascending Master · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ede612f8e29d -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 2119979f02ba -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

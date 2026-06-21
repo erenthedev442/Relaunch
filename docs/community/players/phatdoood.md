@@ -1,6 +1,6 @@
 # Phatdoood
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 1d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 4h
 
 `💪 4 jobs @99`
 
@@ -11,7 +11,7 @@
 
 | | |
 |---|---|
-| Main job | **COR 99** |
+| Main job | **BRD 99** |
 | Sub job | GEO 99 |
 | Time played | 7h |
 | Enemies defeated | 16 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 17,718
-- **Marks (lifetime):** 8,701
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 1,719
+- **Marks (current):** 19,013
+- **Marks (lifetime):** 8,929
+- **Distinct NMs slain:** 6
+- **Total NM kills:** 1,725
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Augment Novice.
+**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3555c4c08415 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 6a617b2f0c59 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

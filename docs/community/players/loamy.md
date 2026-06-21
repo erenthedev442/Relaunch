@@ -1,6 +1,6 @@
 # Loamy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 4h
 
 `💪 8 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **NIN 99** |
-| Sub job | BLM 99 |
-| Time played | 52h |
-| Enemies defeated | 1,073 |
+| Main job | **GEO 60** |
+| Sub job | RDM 59 |
+| Time played | 55h |
+| Enemies defeated | 1,096 |
 | Deaths | 7 |
 
 ## Job levels
@@ -25,12 +25,12 @@
 | MNK | 1 | **NIN** | **99** |
 | **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | **SMN** | **99** |
-| RDM | 3 | BLU | 1 |
+| RDM | 59 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | **PUP** | **99** |
 | DRK | 1 | **DNC** | **99** |
 | BST | 1 | **SCH** | **99** |
-| **BRD** | **99** | GEO | 1 |
+| **BRD** | **99** | GEO | 60 |
 | RNG | 15 | RUN | 1 |
 
 ## Hunting League
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 60
+- **Augments crafted:** 66
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6a162618489f -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 208810cacefd -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

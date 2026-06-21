@@ -1,6 +1,6 @@
 # Herdofturtles
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 5h
 
 `⭐ 118 Ascensions` `💪 12 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **PLD 99** |
 | Sub job | BLU 99 |
-| Time played | 68h |
-| Enemies defeated | 7,265 |
-| Deaths | 32 |
+| Time played | 70h |
+| Enemies defeated | 7,431 |
+| Deaths | 34 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,934
+- **Marks (current):** 23,864
 - **Marks (lifetime):** 5,406
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 967
+- **Total NM kills:** 1,043
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 360
+- **Augments crafted:** 362
 - **NM Affinities:** 10 / 13
 
 ## Reforge
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e585d4ca194c -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 84adae6daaba -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

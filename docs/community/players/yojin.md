@@ -1,8 +1,8 @@
 # Yojin
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 2h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 7h
 
-`⭐ 3 Ascensions` `💪 8 jobs @99`
+`⭐ 3 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **DRK 11** |
-| Sub job | RDM 1 |
-| Time played | 28h |
-| Enemies defeated | 2,483 |
+| Main job | **DRK 68** |
+| Sub job | RUN 67 |
+| Time played | 31h |
+| Enemies defeated | 3,396 |
 | Deaths | 26 |
 
 ## Job levels
@@ -25,18 +25,18 @@
 | **MNK** | **99** | **NIN** | **99** |
 | **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
-| RDM | 1 | **BLU** | **99** |
+| **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
-| PLD | 1 | PUP | 1 |
-| DRK | 11 | DNC | 1 |
+| **PLD** | **99** | PUP | 1 |
+| DRK | 68 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| RNG | 1 | RUN | 67 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 12,652
+- **Marks (current):** 13,452
 - **Marks (lifetime):** 476
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 71
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 291
+- **Augments crafted:** 293
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Job Rebirth
 
-- **Total rebirths:** 4
-- **By job:** DRK ×4
+- **Total rebirths:** 6
+- **By job:** DRK ×6
 
 ## Prestige
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 68c2c1322f50 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: c3dc9a46741b -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

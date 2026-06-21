@@ -1,6 +1,6 @@
 # Souls
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 7d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 4h
 
 `⭐ 14 Ascensions` `💪 11 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 42h |
-| Enemies defeated | 2,996 |
+| Time played | 45h |
+| Enemies defeated | 3,222 |
 | Deaths | 47 |
 
 ## Job levels
@@ -36,24 +36,29 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,908
-- **Marks (lifetime):** 1,902
+- **Marks (current):** 12,242
+- **Marks (lifetime):** 2,552
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 469
+- **Total NM kills:** 505
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 286
+- **Augments crafted:** 307
 - **NM Affinities:** 10 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 451 | 9,535 |
-| Relic | 32 | 1,655 |
-| Empyrean | 270 | 4,060 |
+| AF | 101 | 9,535 |
+| Relic | 1,532 | 1,655 |
+| Empyrean | 2,720 | 6,160 |
+
+## Job Rebirth
+
+- **Total rebirths:** 1
+- **By job:** RDM ×1
 
 ## Prestige
 
@@ -66,7 +71,7 @@
 
 ## Achievements
 
-**14** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Augment Novice · Augment Expert · Augment Master.
+**16** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Wave Fighter · First Ascension · Ascending Master · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -83,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b487359bbdb7 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 2abdf8b2df4d -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Gwendin
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 18h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 22h
 
 `💪 5 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **RUN 99** |
 | Sub job | DRK 99 |
-| Time played | 52h |
+| Time played | 53h |
 | Enemies defeated | 884 |
 | Deaths | 20 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,416
+- **Marks (current):** 4,166
 - **Marks (lifetime):** 8,936
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 114
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5f82d19a8df4 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: b8e3a219fd62 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

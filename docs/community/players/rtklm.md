@@ -1,6 +1,6 @@
 # Rtklm
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 13h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 3d 17h
 
 `💪 4 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 35h |
+| Time played | 36h |
 | Enemies defeated | 163 |
 | Deaths | 10 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 152,914
+- **Marks (current):** 145,644
 - **Marks (lifetime):** 74,288
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 1,203
@@ -44,8 +44,8 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 290
-- **NM Affinities:** 8 / 13
+- **Augments crafted:** 298
+- **NM Affinities:** 9 / 13
 
 ## Reforge
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5a149fcf4b64 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: dfed8d2638f4 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

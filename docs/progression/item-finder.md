@@ -8,7 +8,7 @@ Every purchasable item on Legendary in one searchable list — armor, weapons, a
 Each **Item** links to its BG-Wiki page for full stats. The **Source** links to the exact vendor section where you buy it, and **Cost** spells out the currency, since each vendor tier is paid in a different seal or medal.
 
 <!-- DOCGEN:BEGIN id="item-finder" -->
-714 items in stock — **182** Armor · **138** Weapons · **120** Accessories · **274** Infamy.
+722 items in stock — **187** Armor · **138** Weapons · **120** Accessories · **277** Infamy.
 
 | Item | Source | Cost | For |
 |---|---|---:|---|
@@ -29,6 +29,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Agwus Cap](https://www.ffxiah.com/item/23759) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | BLM/SCH/GEO/RUN |
 | [Agwus Gages](https://www.ffxiah.com/item/23773) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 500 Infamy | — |
 | [Agwus Pigaches](https://www.ffxiah.com/item/23787) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 500 Infamy | — |
+| [Agwus Robe](https://www.ffxiah.com/item/23766) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Body | 50 Demons Medal | BLM/SCH/GEO/RUN |
 | [Agwus Slops](https://www.ffxiah.com/item/23780) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Legs | 50 Demons Medal | BLM/SCH/GEO/RUN |
 | [Aifes Annulet](https://www.ffxiah.com/item/10759) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
 | [Aifes Medal](https://www.ffxiah.com/item/10942) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | All |
@@ -49,6 +50,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Ajja Tachi](https://www.ffxiah.com/item/21972) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 250 Infamy | — |
 | [Alaunus's Cape](https://www.ffxiah.com/item/26248) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Almace](https://www.bg-wiki.com/index.php?search=Almace&go=Go) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Swords | 50 Demons Medal | RDM/PLD/BLU |
+| [Amalric Coif +1](https://www.ffxiah.com/item/25616) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | BLM/RDM/SMN/BLU/SCH/GEO |
 | [Amalric Doublet](https://www.ffxiah.com/item/25688) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | BLM/RDM/SMN/BLU/SCH/GEO |
 | [Amalric Gages +1](https://www.ffxiah.com/item/27120) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | BLM/RDM/SMN/BLU/SCH/GEO |
 | [Amalric Nails +1](https://www.ffxiah.com/item/27476) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Feet | 50 Demons Medal | BLM/RDM/SMN/BLU/SCH/GEO |
@@ -201,6 +203,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Dragoons Collar +2](https://www.ffxiah.com/item/25497) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 250 Infamy | — |
 | [Drepanum](https://www.ffxiah.com/item/21830) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 800 Infamy | — |
 | [Duban](https://www.bg-wiki.com/index.php?search=Duban&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
+| [Dunna](https://www.ffxiah.com/item/21372) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 500 Infamy | — |
 | [Ea Cuffs +1](https://www.ffxiah.com/item/25981) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Hands | 50 Demons Medal | BLM/RDM/GEO |
 | [Ea Pigaches +1](https://www.ffxiah.com/item/25961) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | BLM/RDM/GEO |
 | [Earp](https://www.bg-wiki.com/index.php?search=Earp&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
@@ -219,6 +222,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Emet Harness](https://www.ffxiah.com/item/26870) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Emicho Gambieras +1](https://www.ffxiah.com/item/27470) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | WAR/PLD/DRK/BST/DRG |
 | [Emicho Haubert +1](https://www.ffxiah.com/item/25683) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WAR/PLD/DRK/BST/DRG |
+| [Eminent Bell](https://www.ffxiah.com/item/21462) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
 | [Empowering Mantle](https://www.ffxiah.com/item/13633) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | MNK/WHM/RDM/THF/BST/BRD/RNG/SAM/NIN/BLU/COR/DNC/RUN |
 | [Emxgha](https://www.ffxiah.com/item/20813) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Axes | 12 Beastmens Medal | WAR/DRK/BST/RUN |
 | [Epeolatry](https://www.bg-wiki.com/index.php?search=Epeolatry&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
@@ -243,7 +247,9 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Fettering Blade](https://www.ffxiah.com/item/20698) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Swords | 50 Demons Medal | WAR/RDM/PLD/DRK/COR/RUN |
 | [Fickblix's Ring](https://www.ffxiah.com/item/26230) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
 | [Fili Earring +2](https://www.ffxiah.com/item/25476) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 300 Infamy | — |
+| [Filiae Bell](https://www.ffxiah.com/item/21461) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
 | [Flametongue](https://www.bg-wiki.com/index.php?search=Flametongue&go=Go) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Silver · Swords | 25 Kindreds Medal | WAR/RDM/PLD/BLU |
+| [Flamma Dirs +1](https://www.ffxiah.com/item/25874) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | WAR/PLD/DRK/SAM/DRG |
 | [Flamma Gambieras](https://www.ffxiah.com/item/25940) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | WAR/PLD/DRK/SAM/DRG |
 | [Flamma Gambieras +2](https://www.ffxiah.com/item/25953) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 400 Infamy | — |
 | [Flamma Korazin +1](https://www.ffxiah.com/item/25780) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WAR/PLD/DRK/SAM/DRG |
@@ -327,6 +333,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Inyanga Crackows +2](https://www.ffxiah.com/item/25949) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WHM/BRD/SMN |
 | [Inyanga Dastanas](https://www.ffxiah.com/item/25806) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WHM/BRD/SMN |
 | [Inyanga Dastanas +2](https://www.ffxiah.com/item/25831) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | WHM/BRD/SMN |
+| [Inyanga Jubbah +1](https://www.ffxiah.com/item/25752) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | WHM/BRD/SMN |
 | [Inyanga Shalwar](https://www.ffxiah.com/item/25865) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WHM/BRD/SMN |
 | [Inyanga Shalwar +1](https://www.ffxiah.com/item/25866) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | WHM/BRD/SMN |
 | [Inyanga Shalwar +2](https://www.ffxiah.com/item/25882) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Legs | 50 Demons Medal | WHM/BRD/SMN |
@@ -440,6 +447,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Meghanada Gloves +2](https://www.ffxiah.com/item/25829) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Hands | 50 Demons Medal | THF/BST/RNG/COR/DNC/RUN |
 | [Meghanada Jambeaux](https://www.ffxiah.com/item/25927) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | THF/BST/RNG/COR/DNC/RUN |
 | [Meghanada Jambeaux +2](https://www.ffxiah.com/item/25947) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Feet | 50 Demons Medal | THF/BST/RNG/COR/DNC/RUN |
+| [Meghanada Visor +2](https://www.ffxiah.com/item/25575) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | THF/BST/RNG/COR/DNC/RUN |
 | [Mesyohi Haubergeon](https://www.ffxiah.com/item/27886) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/NIN |
 | [Mesyohi Sword](https://www.ffxiah.com/item/20770) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Great Swords | 12 Beastmens Medal | WAR/PLD/DRK/RUN |
 | [Minuet Earring](https://www.ffxiah.com/item/14764) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Earring | 32 Kindreds Medal | All |
@@ -520,6 +528,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Pinga Mittens +1](https://www.ffxiah.com/item/25987) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WHM/BLU/SCH |
 | [Pinga Pants +1](https://www.ffxiah.com/item/25900) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WHM/BLU/SCH |
 | [Pinga Pumps +1](https://www.ffxiah.com/item/25967) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WHM/BLU/SCH |
+| [Pinga Tunic +1](https://www.ffxiah.com/item/26536) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WHM/BLU/SCH |
 | [Portus Annulet](https://www.ffxiah.com/item/10761) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
 | [Portus Ring](https://www.ffxiah.com/item/10760) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
 | [Premium Heart](https://www.ffxiah.com/item/21529) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Silver · Hand-to-Hand | 25 Kindreds Medal | MNK/PUP |
@@ -719,7 +728,6 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Wizards Rod](https://www.bg-wiki.com/index.php?search=Wizards+Rod&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 800 Infamy | — |
 | [Wochowsen](https://www.ffxiah.com/item/22119) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Silver · Marksmanship | 25 Kindreds Medal | RNG |
 | [Wretched Coat +1](https://www.ffxiah.com/item/26880) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
-| [Xaddi Cuisses](https://www.ffxiah.com/item/28157) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Xaddi Gauntlets](https://www.ffxiah.com/item/28015) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Xoanon](https://www.ffxiah.com/item/22086) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 800 Infamy | — |
 | [Yagrush](https://www.bg-wiki.com/index.php?search=Yagrush&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
@@ -736,6 +744,6 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f2a8981811cb -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: dd57c1be1c5e -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

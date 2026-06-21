@@ -1,8 +1,8 @@
 # Smoke
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 5d 12h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 5d 16h
 
-`💪 1 job @99`
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -11,23 +11,23 @@
 
 | | |
 |---|---|
-| Main job | **PLD 75** |
-| Sub job | WAR 62 |
-| Time played | 27h |
-| Enemies defeated | 405 |
+| Main job | **PLD 99** |
+| Sub job | WAR 80 |
+| Time played | 29h |
+| Enemies defeated | 482 |
 | Deaths | 11 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 62 | SAM | 1 |
+| WAR | 80 | SAM | 1 |
 | MNK | 1 | NIN | 81 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | **COR** | **99** |
-| PLD | 75 | PUP | 1 |
+| **PLD** | **99** | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 3,284
-- **Marks (lifetime):** 377
+- **Marks (current):** 3,229
+- **Marks (lifetime):** 382
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 54
+- **Total NM kills:** 55
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 86c9fce976d7 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 55ea06939b37 -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->

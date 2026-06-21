@@ -1,8 +1,8 @@
 # Broken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 13h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 4d 17h
 
-`💪 22 jobs @99`
+`⭐ 14 Ascensions` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
-| Sub job | BST 99 |
-| Time played | 42h |
-| Enemies defeated | 852 |
+| Main job | **THF 99** |
+| Sub job | PLD 99 |
+| Time played | 43h |
+| Enemies defeated | 861 |
 | Deaths | 3 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 270,400
+- **Marks (current):** 238,100
 - **Marks (lifetime):** 118,673
 - **Distinct NMs slain:** 11
 - **Total NM kills:** 4,459
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 272
+- **Augments crafted:** 274
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -55,13 +55,18 @@
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
+## Prestige
+
+- **Total Ascensions:** 14
+- **Per-job prestige:** MNK P14
+
 ## Collections
 
 - **Trusts learned:** 117
 
 ## Achievements
 
-**13** unlocked — Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Mark of 100,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**15** unlocked — Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Mark of 100,000 · Wave Rider · Wave Fighter · First Ascension · Ascending Master · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e011004fe6bf -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 5f85a579a0cc -->
+_Last updated: 2026-06-21 07:51 UTC_
 <!-- DOCGEN:END id="last-updated" -->
