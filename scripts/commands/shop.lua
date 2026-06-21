@@ -238,24 +238,26 @@ local stock =
         { 21383,  50 },  -- Eminent Sachet  (Lv99)
     },
 
-    -- Ninja tools at 1 gil. These three are the "universal" tools a MAIN-job NIN
-    -- can substitute for ANY elemental ninjutsu tool (see HasNinjaTool in
-    -- battleutils.cpp), so a NIN stocks every ninjutsu for next to nothing here.
-    -- (A NIN *subjob* still needs the specific tools, e.g. Shihei for Utsusemi.)
+    -- Ninja TOOLBAGS at 1 gil. Each toolbag, when USED, opens into a full stack of
+    -- 99 of that tool (scripts/items/toolbag_*.lua) -- so one 1-gil purchase = 99
+    -- charges, and toolbags stack to 12 (a NIN can carry ~1,188 charges of one tool
+    -- in a single inventory slot). The three "card" toolbags are the universal tools
+    -- a MAIN-job NIN can sub for ANY elemental ninjutsu (see HasNinjaTool in
+    -- battleutils.cpp). (A NIN *subjob* still needs the specific tool, e.g. Shihei.)
     ninja =
     {
-        -- Universal tools -- a MAIN-job NIN can use these for ANY elemental ninjutsu.
-        { 2971, 1 },  -- Inoshishinofuda
-        { 2972, 1 },  -- Shikanofuda
-        { 2973, 1 },  -- Chonofuda
-        -- Specific tools -- a SUBJOB ninja gets no substitution, so it needs these
+        -- Universal toolbags -- a MAIN-job NIN can use these for ANY elemental ninjutsu.
+        { 5867, 1 },  -- Toolbag (Ino)   -> 99x Inoshishinofuda
+        { 5868, 1 },  -- Toolbag (Shika) -> 99x Shikanofuda
+        { 5869, 1 },  -- Toolbag (Cho)   -> 99x Chonofuda
+        -- Specific toolbags -- a SUBJOB ninja gets no substitution, so it needs these
         -- by name (Shihei is the big one: Utsusemi). Also handy for main-NIN utility.
-        { 1179, 1 },  -- Shihei            -- Utsusemi: Ichi/Ni (shadows)
-        { 2553, 1 },  -- Sanjaku-tenugui   -- Tonko: Ichi/Ni (Invisible)
-        { 1188, 1 },  -- Sairui-ran        -- Monomi: Ichi (Sneak)
-        { 1182, 1 },  -- Jusatsu           -- Kurayami: Ichi/Ni (Blind)
-        { 1191, 1 },  -- Kodoku            -- Dokumori: Ichi (poison / enmity)
-        { 1185, 1 },  -- Kaginawa          -- Hojo: Ichi/Ni (Slow)
+        { 5314, 1 },  -- Toolbag (Shihe) -> 99x Shihei          -- Utsusemi: Ichi/Ni (shadows)
+        { 5417, 1 },  -- Toolbag (Sanja) -> 99x Sanjaku-tenugui -- Tonko: Ichi/Ni (Invisible)
+        { 5317, 1 },  -- Toolbag (Sai)   -> 99x Sairui-ran      -- Monomi: Ichi (Sneak)
+        { 5315, 1 },  -- Toolbag (Jusa)  -> 99x Jusatsu         -- Kurayami: Ichi/Ni (Blind)
+        { 5318, 1 },  -- Toolbag (Kodo)  -> 99x Kodoku          -- Dokumori: Ichi (poison / enmity)
+        { 5316, 1 },  -- Toolbag (Kagi)  -> 99x Kaginawa        -- Hojo: Ichi/Ni (Slow)
     },
 }
 
