@@ -26,10 +26,13 @@
 --       jobs = 'WAR/PLD/...'
 --   })
 --
--- FORCED ADDS (now pinned in tools/score_armor.py via FORCED_INCLUDE, so the
--- scorer KEEPS them on every regen -- no manual re-add needed anymore):
---   Gold feet: Malignance Boots (23736) -- completes the Malignance Gold set
---   (the other 4 pieces score into Gold; the Boots scored just under the cut).
+-- FORCED ADDS (pinned in tools/score_armor.py via FORCED_INCLUDE so the scorer
+-- KEEPS them on every regen -- a plain table.insert HERE is WIPED by the next
+-- re-score, so new pins MUST go in FORCED_INCLUDE, not in this file):
+--   Malignance Gold set on the Armor NPC: Chapeau (23732), Tabard (23733),
+--   Tights (23735), Boots (23736). All score into the gold band but fall below
+--   its per-slot top-N, so they need pinning. (Malignance Gloves live on the
+--   Infamy Vendor.) Chapeau + Tights were lost as table.inserts before this.
 -----------------------------------
 local catalog = {}
 
@@ -234,7 +237,7 @@ table.insert(s.feet, { id = 25940, name = "Flamma Gambieras", cost = 25, jobs = 
 catalog.gold = emptySlots()
 local g = catalog.gold
 
--- Head (10 picks, scored highest first)
+-- Head (11 picks, scored highest first)
 table.insert(g.head, { id = 25584, name = "Mallquis Chapeau +1", cost = 50, jobs = 'BLM/SCH/GEO' })  -- CASTER score 416
 table.insert(g.head, { id = 25629, name = "Genmei Kabuto", cost = 50, jobs = 'WAR/MNK/BST/BRD/RNG/SAM/NIN' })  -- TANK score 385
 table.insert(g.head, { id = 25592, name = "Hjarrandi Helm", cost = 50, jobs = 'WAR/PLD/DRK/DRG' })  -- TANK score 384
@@ -242,6 +245,7 @@ table.insert(g.head, { id = 23761, name = "Nyame Helm", cost = 50, jobs = 'WAR/M
 table.insert(g.head, { id = 23759, name = "Agwus Cap", cost = 50, jobs = 'BLM/SCH/GEO/RUN' })  -- CASTER score 375
 table.insert(g.head, { id = 24166, name = "Magnificent Crown", cost = 50, jobs = 'MNK/THF/BST/PUP/DNC' })  -- DPS score 373
 table.insert(g.head, { id = 24182, name = "Clemency Somen", cost = 50, jobs = 'RNG/SAM/DRG/COR' })  -- DPS score 372
+table.insert(g.head, { id = 23732, name = "Malignance Chapeau", cost = 50, jobs = 'MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC' })  -- TANK score 327
 table.insert(g.head, { id = 23710, name = "Volte Beret", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 304
 table.insert(g.head, { id = 23713, name = "Volte Cap", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- TANK score 273
 table.insert(g.head, { id = 27731, name = "Gendewitha Caubeen +1", cost = 50, jobs = 'WHM/RDM/BRD/SCH' })  -- HEAL score 259
@@ -272,7 +276,7 @@ table.insert(g.hands, { id = 25981, name = "Ea Cuffs +1", cost = 50, jobs = 'BLM
 table.insert(g.hands, { id = 23718, name = "Volte Gloves", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 307
 table.insert(g.hands, { id = 23721, name = "Volte Bracers", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- TANK score 261
 
--- Legs (10 picks, scored highest first)
+-- Legs (11 picks, scored highest first)
 table.insert(g.legs, { id = 25878, name = "Mallquis Trews +1", cost = 50, jobs = 'BLM/SCH/GEO' })  -- CASTER score 470
 table.insert(g.legs, { id = 24131, name = "Revelation Brais", cost = 50, jobs = 'WAR/BRD/NIN' })  -- TANK score 438
 table.insert(g.legs, { id = 23782, name = "Nyame Flanchard", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- TANK score 424
@@ -280,6 +284,7 @@ table.insert(g.legs, { id = 23780, name = "Agwus Slops", cost = 50, jobs = 'BLM/
 table.insert(g.legs, { id = 25908, name = "Turms Subligar +1", cost = 50, jobs = 'THF/DNC/RUN' })  -- TANK score 392
 table.insert(g.legs, { id = 25898, name = "Arke Cosciales +1", cost = 50, jobs = 'WAR/PLD/DRG' })  -- TANK score 382
 table.insert(g.legs, { id = 23722, name = "Volte Brais", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 356
+table.insert(g.legs, { id = 23735, name = "Malignance Tights", cost = 50, jobs = 'MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC' })  -- TANK score 345
 table.insert(g.legs, { id = 25880, name = "Meghanada Chausses +2", cost = 50, jobs = 'THF/BST/RNG/COR/DNC/RUN' })  -- DPS score 334
 table.insert(g.legs, { id = 23725, name = "Volte Hose", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- TANK score 285
 table.insert(g.legs, { id = 25882, name = "Inyanga Shalwar +2", cost = 50, jobs = 'WHM/BRD/SMN' })  -- CASTER score 251
