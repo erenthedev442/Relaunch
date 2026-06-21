@@ -112,8 +112,18 @@ void GP_CLI_COMMAND_ITEM_DUMP::process(MapSession* PSession, CCharEntity* PChar)
             {
                 PLinkshell = linkshell::LoadLinkshell(lsid);
             }
-            PLinkshell->BreakLinkshell();
-            linkshell::UnloadLinkshell(lsid);
+            // FJB: guard the deref. A pearlsack with no backing linkshells row --
+            // lsid 0 (an unestablished "New Linkshell", e.g. from the GM-Home
+            // Linkshell Concierge) or a deleted/broken shell -- makes LoadLinkshell
+            // return nullptr, and the stock code derefed it -> map SIGSEGV the moment
+            // such a pearl was DISCARDED (live crash 2026-06-21, player Loamy, lsid 0).
+            // If there's no live linkshell, there's nothing to break; the item still
+            // drops normally below.
+            if (PLinkshell)
+            {
+                PLinkshell->BreakLinkshell();
+                linkshell::UnloadLinkshell(lsid);
+            }
         }
     }
 
