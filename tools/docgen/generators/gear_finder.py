@@ -581,6 +581,21 @@ def _shop_ids(repo_root: Path) -> set[int]:
     return ids
 
 
+def _abyssea_su5_ids(repo_root: Path) -> set[int]:
+    """The Su5 (Dynamis Divergence) weapons that drop from ANY Abyssea mob kill via
+    modules/custom/lua/abyssea_su5_drops.lua (the SU5_WEAPONS pool). No droplist or
+    doc page, so tag them straight from the Lua like the reforge/!shop sources."""
+    text = _read(repo_root, 'modules/custom/lua/abyssea_su5_drops.lua')
+    if not text:
+        return set()
+    m = re.search(r'SU5_WEAPONS\s*=\s*\{(.*?)\}', text, re.DOTALL)
+    if not m:
+        return set()
+    # Each pool entry is a leading "<id>," at line start (an optional -- comment may
+    # follow); anchor to line-start so any numbers inside comments can't leak in.
+    return {int(x) for x in re.findall(r'^\s*(\d+)\s*,', m.group(1), re.MULTILINE)}
+
+
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
@@ -820,6 +835,11 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # doc page. Runs last so an item also sold by a medal vendor keeps its tag.
     for iid in _shop_ids(repo_root):
         obtainable.setdefault(iid, '!shop')
+    # Su5 (Dynamis Divergence) weapons drop from ANY Abyssea mob kill via the
+    # abyssea_su5_drops module (no droplist/doc page). Gap-fill: a Su5 weapon also
+    # sold somewhere keeps its more specific tag.
+    for iid in _abyssea_su5_ids(repo_root):
+        obtainable.setdefault(iid, 'Abyssea (Su5)')
     for obj in items:
         src = obtainable.get(obj['i'])
         if src:
