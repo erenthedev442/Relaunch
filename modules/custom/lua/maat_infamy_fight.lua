@@ -45,7 +45,7 @@ local MAAT_LEVEL     = 250
 -- explicit profile AFTER spawn(). Tuned a notch ABOVE the toughest Prestige
 -- apex (World's End / Provenance Watcher, Lv150) -- Maat is the single hardest
 -- fight on the server. HP is the main difficulty dial; tune after a playtest.
-local MAAT_HP   = 100000000   -- 100M
+local MAAT_HP   = 15000000   -- 15M
 local MAAT_MODS =
 {
     [xi.mod.DEF]           = 9000,    -- mitigates your physical damage
