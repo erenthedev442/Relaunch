@@ -45,7 +45,7 @@ return
     --   penalty(rebirths) = min(rebirths * expPenaltyPerRebirth, expPenaltyCap)
     -- e.g. 15/cap 90 -> R1 -15%, R2 -30%, ... R6 -90% (then plateau; always >=10% exp).
     expPenaltyPerRebirth = 15,
-    expPenaltyCap        = 90,
+    expPenaltyCap        = 133,
 
     -- Hard cap on rebirths per job. nil = uncapped.
     maxRebirths = nil,
