@@ -144,6 +144,16 @@ catalog.vendorItems =
     { id = 13566, name = 'Defending Ring', cost = 1500, stats = { 'Damage Taken -10%.', 'Locks itself once equipped.', 'The grand prize.' } },
 
     -- ----------------------------------------------------------------
+    -- BEST-IN-SLOT SHIELDS  (top picks from the gear scorer, 2026-06-21).
+    -- Srivatsa (Aeonic) + Duban (Aegis relic) sit in the weapon blocks above
+    -- and Ochain in the orphan block below; these three round out the slot.
+    -- Browser groups them under Weapons -> Grip-Shield (via itemTypeMap).
+    -- ----------------------------------------------------------------
+    { id = 26400, name = 'Culminus',           cost = 500, stats = { 'Shield (sub). Caster BiS - Magic Acc/Atk, Magic Dmg, MP.', 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO.' } },
+    { id = 26419, name = 'Ammurapi Shield',    cost = 500, stats = { 'Shield (sub). Caster BiS (Sortie) - Magic Acc, Magic Burst Dmg.', 'WHM/BLM/RDM/BRD/SMN/SCH/GEO.' } },
+    { id = 28654, name = 'Beatific Shield +1', cost = 500, stats = { 'Shield (sub). Hybrid - high DEF, Magic Acc/Atk, Cure potency.', 'WAR/RDM/PLD/BST/SAM.' } },
+
+    -- ----------------------------------------------------------------
     -- ORPHAN BiS GEAR - no other acquisition path on this server.
     -- These EX/RARE pieces are excluded by the auto-gen scorers
     -- (single-job / non-il119 / +1/+2 NM / REM weapons) and exist
@@ -881,6 +891,9 @@ catalog.itemTypeMap =
     [26259] = 'Accessories/Back',
     [27928] = 'Armor/Hands',
     [13566] = 'Accessories/Ring',
+    [26400] = 'Weapons/Grip-Shield',
+    [26419] = 'Weapons/Grip-Shield',
+    [28654] = 'Weapons/Grip-Shield',
     [21858] = 'Weapons/Polearm',
     [16199] = 'Weapons/Grip-Shield',
     [21602] = 'Weapons/Sword',
