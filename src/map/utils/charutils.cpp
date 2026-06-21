@@ -4086,6 +4086,21 @@ void BuildingCharTraitsTable(CCharEntity* PChar)
     battleutils::AddTraits(PChar, traits::GetTraits(mjob), mlvl);
     battleutils::AddTraits(PChar, traits::GetTraits(sjob), slvl);
 
+    // FJB: Cross-Job Trait Trainer "Dual Wield" purchasers get the real Dual Wield
+    // trait BIT so the CLIENT recognizes dual-wield and unlocks the off-hand slot on
+    // ANY job. The client gates the sub-weapon slot locally and only sends an equip
+    // attempt for jobs it believes can dual-wield; the server-side equip patches (which
+    // honor the CJTrait_dwield charVar) never get a chance otherwise. The trait bitfield
+    // m_TraitList is shipped to the client in the 0x0AC command-data packet, so setting
+    // this bit is what the client UI reads. This sets ONLY the bit -- the +15% delay
+    // reduction is applied separately as an addMod by the trainer's Lua, so there is no
+    // double-application. Buyers activate on their next login / job change (this runs in
+    // BuildingCharTraitsTable). getCharVar is DB-backed, so it resolves even early in login.
+    if (PChar->getCharVar("CJTrait_dwield") != 0)
+    {
+        addTrait(PChar, TRAIT_DUAL_WIELD);
+    }
+
     if (mjob == JOB_BLU || sjob == JOB_BLU)
     {
         blueutils::CalculateTraits(PChar);

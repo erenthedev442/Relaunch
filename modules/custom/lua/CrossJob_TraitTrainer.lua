@@ -44,12 +44,18 @@ local function applyTrait(player, trait)
     for _, mv in ipairs(trait.mods) do
         player:addMod(mv[1], mv[2])
     end
-    -- NOTE: addTrait is NOT a binding on this build, so we can't set the engine
-    -- trait bit that hasTrait() reads. For Dual Wield that bit gates the off-hand
-    -- equip slot -- so charutils.cpp's 3 dual-wield equip checks were patched (FJB)
-    -- to also honor this trainer's purchase flag, the charVar CJTrait_dwield (=
-    -- cvPrefix .. 'dwield', set on buy below). That unlocks the off-hand for
-    -- BUYERS only (NOT DUAL_WIELD gear), while the addMod above grants the +15%.
+    -- Traits that unlock an equipment slot (Dual Wield -> off-hand) set the real engine
+    -- trait BIT, which the CLIENT reads (via the 0x0AC command-data packet, pushed by the
+    -- caller's sendCommandData) to allow the slot on ANY job -- the client otherwise gates
+    -- the off-hand locally and never even sends the equip. addTrait/sendCommandData ARE
+    -- valid bindings on this build (an older build lacked them -- hence the prior notes).
+    -- C++ BuildingCharTraitsTable ALSO grants this bit on every trait rebuild (login/zone/
+    -- JOB CHANGE) for CJTrait_dwield owners, so it survives a /job swap (which onGameIn does
+    -- NOT catch); this Lua call covers the live-purchase moment + the zone/login re-apply.
+    -- addTrait sets ONLY the bit; the addMod above is the +15% delay reduction.
+    if trait.trait then
+        player:addTrait(trait.trait)
+    end
 end
 
 -- Re-apply every owned trait (a zone-in/login wipes in-memory mods), then
@@ -60,9 +66,10 @@ local function applyAll(player)
             applyTrait(player, trait)
         end
     end
-    -- sendCommandData is NOT a binding on this build -- it threw on EVERY login
-    -- (xi.player.onGameIn -> applyAll). The trait mods above apply regardless, so
-    -- the (non-functional) client-refresh call is dropped.
+    -- Push refreshed trait/command data so equip-slot unlocks (Dual Wield -> off-hand)
+    -- reach the client without a relog. sendCommandData IS a valid binding on the current
+    -- build (an earlier build lacked it -- hence the prior drop here).
+    player:sendCommandData()
 end
 
 local showMenu, showConfirm
@@ -122,6 +129,9 @@ showConfirm = function(player, trait)
                 applyTrait(p, trait)
                 p:sendCommandData()
                 p:printToPlayer(string.format('Learned %s! It now applies on every job, kupo.', trait.name), S)
+                if trait.id == 'dwield' then
+                    p:printToPlayer('Your off-hand slot is now unlocked -- equip a 1-handed weapon there. If it will not stick, change main job and back (or relog) once.', S)
+                end
                 showMenu(p)
             end,
         },
