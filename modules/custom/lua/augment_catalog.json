@@ -280,7 +280,7 @@
           "augId": 353,
           "label": "TP Bonus",
           "base": 1,
-          "mult": 2,
+          "mult": 4,
           "disp": 1,
           "cat": 1,
           "maxBoost": null

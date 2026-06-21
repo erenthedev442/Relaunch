@@ -45,7 +45,7 @@ UPDATE `augments` SET `value` = 1, `multiplier` = 2 WHERE `augmentId` = 63;   --
 UPDATE `augments` SET `value` = 1, `multiplier` = 2 WHERE `augmentId` = 64;   -- Mag. Acc.+
 UPDATE `augments` SET `value` = 1, `multiplier` = 2 WHERE `augmentId` = 70;   -- Mag.Acc.+ Mag.Atk.Bns+ (both rows)
 UPDATE `augments` SET `value` = 1, `multiplier` = 2 WHERE `augmentId` = 18;   -- HP+ MP+ (both rows)
-UPDATE `augments` SET `value` = 1, `multiplier` = 2 WHERE `augmentId` = 353;  -- TP Bonus+ (old cap 81 -> 64; engine caps TP Bonus at 1000)
+UPDATE `augments` SET `value` = 1, `multiplier` = 4 WHERE `augmentId` = 353;  -- TP Bonus+ -> max +128/slot ((1+31)*4). Bumped 2026-06-21: old +64/slot was too weak to matter (Vistrix bug report). WS effective TP still caps at 3000 (battleutils CalculateWeaponSkillTP), so this just lets you WS earlier for better -- not full -- damage.
 
 -- ---- RECOVERY / SUSTAIN (flat per-tick stats) ----
 -- All defaulted to multiplier 0/1 (the engine treats both as x1) so they capped

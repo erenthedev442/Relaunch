@@ -63,7 +63,7 @@ return {
     [1015] = { augId = 251,  base = 1,   mult = 1,  disp = 1,    cat = 1,  label = 'Daken' },
     [1108] = { augId = 333,  base = 1,   mult = 1,  disp = 1,    cat = 1,  label = 'Conserve TP' },
     [1199] = { augId = 338,  base = 1,   mult = 1,  disp = 1,    cat = 1,  label = 'Barrage' },
-    [1271] = { augId = 353,  base = 1,   mult = 2,  disp = 1,    cat = 1,  label = 'TP Bonus' },
+    [1271] = { augId = 353,  base = 1,   mult = 4,  disp = 1,    cat = 1,  label = 'TP Bonus' },
     [1293] = { augId = 354,  base = 1,   mult = 1,  disp = 1,    cat = 1,  label = 'Quadruple Attack' },
     [1516] = { augId = 360,  base = 10,  mult = 1,  disp = 1,    cat = 1,  label = 'Save TP' },
     [1591] = { augId = 370,  base = 1,   mult = 1,  disp = 1,    cat = 1,  label = 'Reverse Flourish' },
