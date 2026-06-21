@@ -7,6 +7,31 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 !!! note "Week of June 15–21, 2026"
     **Sunday, June 21**
 
+    - **Gear Scorer** — Tolerate spaces in item_mods rows; add Gleti armor to hunt vendor
+    - **Augments** — Add flat 'Spikes Dmg' augment (Mod::SPIKES_DMG / 344)
+    - **BST** — Pet over-cap readout says 'Ready move' for jug pets
+    - **Gear** — Add Ea Attire +1 head/body/legs to the Gold Armor vendor
+    - **Prestige** — Piecewise EXP penalty — floor at P.Lv 5, +10%/level after
+    - **CMD** — Add !maat warp to the Maat's Echo challenge NPC
+    - **Abyssea** — Su5 weapon drop chance 1%% -> 5%% per kill
+    - **BST** — FlatACC 2600 -> 4500
+    - **Abyssea** — 1% Su5 Divergence weapon drop on Abyssea mob kills
+    - **BST** — Double flat ATT/ACC/STR again (5600/2600/360)
+    - **BST** — DA/TA to 50%, double flat ATT/ACC/STR/HP floors
+    - **BST** — Endgame DD jug-pet overhaul (stat scaling + auto-Ready)
+    - **Prestige** — Sqrt EXP penalty curve (hits hard early, tapers, never stops)
+    - **Prestige** — EXP penalty scaling with prestige level (1% per P.Lv)
+    - **Rebirth** — Triangular EXP penalty scaling, no cap
+    - **Rebirth** — Raise expPenaltyCap 90->133 to neutralize EXP augment offset
+    - **Prestige** — One-time retroactive AP grant for tiers 51+ backfill
+    - **Dual Wield** — !offhand command + auto-restore for Cross-Job buyers
+    - **Prestige** — Tiered AP grants + Tier 5 Celestial Wardens (P.Lv 60+)
+    - **Prestige** — Clear FLAG_HIDE_MODEL from Provenance Watcher pool (4654)
+    - **Abyssea Menus** — Replace nil customMenu callbacks that threw 'attempt to call a nil value'
+    - **SQL** — Stop one-time zz_*.sql migrations from re-running every deploy
+    - **Maat Fight** — Switch crit-augment token to Maat's Cap (15194), a retail Rare/EX item
+    - **Infamy Vendor** — Add 12 Adoulin coalition rings (+1) at 10k Infamy
+    - **Eminence Broker** — Add Hunting Marks -> gil to the GM Home currency NPC
     - **Abyssea Marks** — Award marks-NM rewards per alliance member, drop buggy party walk
     - **Prestige** — Open !prov1/2/3 warps to all players (permission 0)
     - **Prestige** — Add !prov1/!prov2/!prov3 GM warps to the 3 Provenance altars
@@ -586,10 +611,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0899d014a10e -->
-_Last updated: 2026-06-21 21:57 UTC_
-<!-- DOCGEN:END id="last-updated" -->
