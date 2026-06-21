@@ -76,3 +76,21 @@ VALUES
     (11390, 6961, 222, 'Omega',                0, 128, 0, 105000, 30000, 0, NULL),  -- Odin Prime (apex doom)
     (11391, 5314, 222, 'Ultima',               0, 128, 0, 105000, 30000, 0, NULL),  -- Crystal_Fetter (native 222; ancient crystal weapon)
     (11392, 4654, 222, 'Provenance_Watcher',   0, 128, 0, 110000, 30000, 0, NULL);  -- native apex (unchanged)
+
+-- ============================================================================
+-- FJB 2026-06-21: Fix Provenance Watcher invisible + floating on dynamic spawn.
+-- Pool 4654's entityFlags = 391 (0x187) includes FLAG_HIDE_MODEL (0x080) and
+-- FLAG_HIDE_HP (0x100) -- battlefield-only flags set by retail so the mob is
+-- invisible outside a Walk of Echoes BC (handled by the BC system there).
+-- When we insertDynamicEntity these flags carry over: model hidden, HP bar gone.
+-- The "up in the air" symptom is the targeting cursor appearing at the mob's
+-- logical center (~15 units above the floor for this massive mob), with no
+-- visible body below it.
+-- Fix: clear both hide flags and set namevis=1 (normal cursor/name display).
+-- entityFlags:  391 & ~0x180 = 391 - 128 - 256 = 7  (0x007)
+-- Idempotent -- safe to re-run.
+-- ============================================================================
+UPDATE `mob_pools`
+SET    `entityFlags` = `entityFlags` & ~0x180,  -- clear FLAG_HIDE_MODEL + FLAG_HIDE_HP
+       `namevis`     = 1                         -- show targeting cursor + name
+WHERE  `poolid` = 4654;
