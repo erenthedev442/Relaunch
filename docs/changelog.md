@@ -7,6 +7,17 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 !!! note "Week of June 15–21, 2026"
     **Sunday, June 21**
 
+    - **Abyssea Marks** — Award marks-NM rewards per alliance member, drop buggy party walk
+    - **Prestige** — Open !prov1/2/3 warps to all players (permission 0)
+    - **Prestige** — Add !prov1/!prov2/!prov3 GM warps to the 3 Provenance altars
+    - **Aftermath** — Apply all Mythic mods regardless of TP tier
+    - **Gear** — Count the back slot (cape) in getMaxGearMod
+    - **Prestige** — Add Altar III at Provenance (-279, 0, -790) + refactor to AltIdx
+    - **Prestige** — Add secondary Altar II at Provenance (-161, -0, -685)
+    - **Crash** — Guard all notoriety-container loops against dangling-pointer UAF
+    - **Maat Fight** — Root Maat with NO_MOVE so he never charges the challenger
+    - **Crossjob** — Grant real Dual Wield trait so the client unlocks the off-hand on any job
+    - **Commands** — Add enspell damage readout (base/bonus/mult)
     - **Docs Deploy** — Hard-reset DOCS_REPO to remote instead of fragile ff-pull
     - **Gear** — Complete 8 near-finished armor sets on the Infamy + Medal vendors
     - **Gear Finder** — Ignore commented-out !shop entries in obtainability scan
@@ -575,10 +586,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 59d83bff1e70 -->
-_Last updated: 2026-06-21 17:40 UTC_
-<!-- DOCGEN:END id="last-updated" -->
