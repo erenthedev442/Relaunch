@@ -125,7 +125,11 @@ void GP_CLI_COMMAND_MYROOM_JOB::process(MapSession* PSession, CCharEntity* PChar
 
         if (subType > DAMAGE_TYPE::NONE && subType < DAMAGE_TYPE::HTH)
         {
-            charutils::UnequipItem(PChar, SLOT_SUB);
+            // FJB: Cross-Job Trait Trainer purchasers keep their sub weapon regardless of new subjob.
+            if (PChar->getCharVar("CJTrait_dwield") == 0)
+            {
+                charutils::UnequipItem(PChar, SLOT_SUB);
+            }
         }
     }
 
