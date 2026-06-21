@@ -54,8 +54,9 @@ VALUES
     -- ----- the other 5 weapon types ---------------------------------------
     -- Disaster (Great Axe / Prime Great Axe)
     ( 94, 'disaster',         0x00000000000000000000000000000000000000000000, 6, 0, 0, 102, 2000, 3, 0, 0,  9, 4,  1, 1, 0),
-    -- Origin (Scythe / Prime Scythe) -- absorbs HP/MP
-    (110, 'origin',           0x00000000000000000000000000000000000000000000, 7, 0, 0,  74, 2000, 3, 0, 0, 11, 7,  5, 1, 0),
+    -- Origin (Scythe / Prime Scythe) -- absorbs HP/MP. anim 70 (Catastrophe) so it
+    -- is visually DISTINCT from Entropy (109, anim 74); real Prime index uncaptured.
+    (110, 'origin',           0x00000000000000000000000000000000000000000000, 7, 0, 0,  70, 2000, 3, 0, 0, 11, 7,  5, 1, 0),
     -- Diarmuid (Polearm / Prime Lance)
     (126, 'diarmuid',         0x00000000000000000000000000000000000000000000, 8, 0, 0, 134, 2000, 3, 0, 0, 10, 4,  1, 1, 0),
     -- Sarv (Archery / Prime Bow) -- ranged
