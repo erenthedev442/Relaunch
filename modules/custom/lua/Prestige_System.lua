@@ -332,6 +332,10 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
     -- id) so the option can't stack adds; cleared in the boss's onMobDeath.
     local summonNextTrial
     local summonedTrial = {}
+    -- Spawn anchor for Altar II (secondary overflow position).
+    -- summonNextTrial reads PrestigeAlt2 localVar (set by Altar II onTrigger,
+    -- cleared by primary Altar onTrigger) to pick which anchor to spawn at.
+    local SECONDARY_SPAWN = { x = -161.7446, y = -0.0117, z = -685.5436 }
     xi._prestige_summonedTrial = summonedTrial  -- exposed for !spawntrialboss to clear stale entries
 
     -----------------------------------
@@ -684,11 +688,17 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
         -- ring around the player (random angle, cfg.trialSpawnGap yalms out) at the
         -- player's OWN Y -- which sits on the floor, never below it. trialSpawnPos
         -- stays as a fallback if the position read ever fails.
-        local sp = cfg.trialSpawnPos
-        local px = player:getXPos()
+        -- PrestigeAlt2==1 means Altar II was triggered; anchor spawn there
+        -- instead of near the player. Clear immediately (per-player localVar).
+        local useAlt2  = player:getLocalVar('PrestigeAlt2') == 1
+        player:setLocalVar('PrestigeAlt2', 0)
+
+        local sp     = cfg.trialSpawnPos
+        local anchor = useAlt2 and SECONDARY_SPAWN or nil
+        local px     = anchor and anchor.x or player:getXPos()
         if px then
-            local py    = player:getYPos()
-            local pz    = player:getZPos()
+            local py    = anchor and anchor.y or player:getYPos()
+            local pz    = anchor and anchor.z or player:getZPos()
             local angle = math.random() * math.pi * 2
             local dist  = cfg.trialSpawnGap or 2.5
             sp = {
@@ -925,6 +935,7 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
         end,
 
         onTrigger = function(player, npc)
+            player:setLocalVar('PrestigeAlt2', 0)   -- clear secondary-spawn flag
             -- Hard gate: the Altar only awakens at Hunting League Legend.
             local tier = getTier(player)
             if tier < cfg.unlockTier then
@@ -937,6 +948,42 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
         end,
     })
     utils.unused(Altar)
+
+    -----------------------------------
+    -- SECONDARY ALTAR (Altar II)
+    -- Overflow/crowded-area spawn anchor at (-161.7446, -0.0117, -685.5436).
+    -- Identical menu to the primary Altar; sets PrestigeAlt2=1 so summonNextTrial
+    -- anchors the boss spawn at this location instead of near the player.
+    -----------------------------------
+    local Altar2 = zone:insertDynamicEntity({
+        objtype    = xi.objType.NPC,
+        name       = 'Ascension_Altar_2',
+        packetName = string.format('%sAscension Altar II', xi.icon.STAR_LARGE),
+        look       = 2430,
+        x          = -161.7446,
+        y          =   -0.0117,
+        z          = -685.5436,
+        rotation   =  88,
+        widescan   =  1,
+
+        onTrade = function(player, npc, trade)
+            player:printToPlayer('The Altar accepts no offerings -- use the menu to ascend.',
+                xi.msg.channel.SYSTEM_3)
+        end,
+
+        onTrigger = function(player, npc)
+            local tier = getTier(player)
+            if tier < cfg.unlockTier then
+                player:printToPlayer(string.format(
+                    '[Ascension] The Altar lies dormant. Reach Hunting League tier %d (Legend) to awaken it. You are tier %d.',
+                    cfg.unlockTier, tier), xi.msg.channel.SYSTEM_3)
+                return
+            end
+            player:setLocalVar('PrestigeAlt2', 1)
+            player:timer(50, function(p) buildMainMenu(p) end)
+        end,
+    })
+    utils.unused(Altar2)
 end)
 
 -----------------------------------
