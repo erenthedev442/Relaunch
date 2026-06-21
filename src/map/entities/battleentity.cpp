@@ -2017,7 +2017,13 @@ int16 CBattleEntity::getMaxGearMod(Mod modID)
         return 0;
     }
 
-    for (uint8 i = 0; i < SLOT_BACK; ++i)
+    // FJB: include SLOT_BACK (cape). Stock LSB used `i < SLOT_BACK`, which silently
+    // excluded the back slot from EVERY max-gear-mod (Cure Potency II caps, Souleater
+    // Effect, the custom Phantom Roll potency augment, etc.) -- a cape's value never
+    // counted. `<=` covers slots 0..15 (main..back) and still stops before the
+    // linkshell slots (SLOT_LINK1/2 = 16/17), which are not gear. Matches retail,
+    // where back-slot gear contributes to these caps.
+    for (uint8 i = 0; i <= SLOT_BACK; ++i)
     {
         auto* PItem = PChar->getEquip((SLOTTYPE)i);
         if (PItem && (PItem->isType(ITEM_EQUIPMENT) || PItem->isType(ITEM_WEAPON)))
