@@ -1,6 +1,6 @@
 -----------------------------------
 -- mog_moogle.lua
--- Moogle NPC in GM Home: Delivery Box + Job Change
+-- Moogle NPC in GM Home: Delivery Box + Job Change + Subjob Change
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/GM_Home/Zone')
@@ -35,16 +35,47 @@ local JOBS =
     { id = xi.job.RUN, label = 'RUN (Rune Fencer)'  },
 }
 
-local NUM_PAGES = math.ceil(#JOBS / PAGE_SIZE)
+local SUB_JOBS =
+{
+    { id = 0,          label = 'None (no subjob)'   },
+    { id = xi.job.WAR, label = 'WAR (Warrior)'      },
+    { id = xi.job.MNK, label = 'MNK (Monk)'         },
+    { id = xi.job.WHM, label = 'WHM (White Mage)'   },
+    { id = xi.job.BLM, label = 'BLM (Black Mage)'   },
+    { id = xi.job.RDM, label = 'RDM (Red Mage)'     },
+    { id = xi.job.THF, label = 'THF (Thief)'        },
+    { id = xi.job.PLD, label = 'PLD (Paladin)'      },
+    { id = xi.job.DRK, label = 'DRK (Dark Knight)'  },
+    { id = xi.job.BST, label = 'BST (Beastmaster)'  },
+    { id = xi.job.BRD, label = 'BRD (Bard)'         },
+    { id = xi.job.RNG, label = 'RNG (Ranger)'       },
+    { id = xi.job.SAM, label = 'SAM (Samurai)'      },
+    { id = xi.job.NIN, label = 'NIN (Ninja)'        },
+    { id = xi.job.DRG, label = 'DRG (Dragoon)'      },
+    { id = xi.job.SMN, label = 'SMN (Summoner)'     },
+    { id = xi.job.BLU, label = 'BLU (Blue Mage)'    },
+    { id = xi.job.COR, label = 'COR (Corsair)'      },
+    { id = xi.job.PUP, label = 'PUP (Puppetmaster)' },
+    { id = xi.job.DNC, label = 'DNC (Dancer)'       },
+    { id = xi.job.SCH, label = 'SCH (Scholar)'      },
+    { id = xi.job.GEO, label = 'GEO (Geomancer)'    },
+    { id = xi.job.RUN, label = 'RUN (Rune Fencer)'  },
+}
 
-local showMainMenu, showJobPage
+local NUM_JOB_PAGES = math.ceil(#JOBS    / PAGE_SIZE)
+local NUM_SUB_PAGES = math.ceil(#SUB_JOBS / PAGE_SIZE)
+
+local S = xi.msg.channel.SYSTEM_3
+
+local showMainMenu, showJobPage, showSubJobPage
 
 showMainMenu = function(player)
     local opts =
     {
-        { 'Delivery Box',    function(p) p:sendMenu(xi.menuType.MOOGLE) end },
-        { 'Change Job...',   function(p) showJobPage(p, 1)              end },
-        { 'Goodbye, kupo!',  function(p) end                               },
+        { 'Delivery Box',      function(p) p:sendMenu(xi.menuType.MOOGLE) end },
+        { 'Change Job...',     function(p) showJobPage(p, 1)              end },
+        { 'Change Subjob...', function(p) showSubJobPage(p, 1)           end },
+        { 'Goodbye, kupo!',   function(p) end                               },
     }
     player:timer(30, function(p)
         p:customMenu({ title = 'Kupo! How can I help?', options = opts })
@@ -63,14 +94,13 @@ showJobPage = function(player, page)
             function(p)
                 p:changeJob(job.id)
                 p:printToPlayer(
-                    string.format('Changed to %s, kupo!', job.label),
-                    xi.msg.channel.SYSTEM_3)
+                    string.format('Changed to %s, kupo!', job.label), S)
                 showMainMenu(p)
             end,
         })
     end
 
-    if page < NUM_PAGES then
+    if page < NUM_JOB_PAGES then
         table.insert(opts, { 'Next ->',  function(p) showJobPage(p, page + 1) end })
     end
     if page > 1 then
@@ -79,7 +109,42 @@ showJobPage = function(player, page)
     table.insert(opts,     { 'Cancel',   function(p) showMainMenu(p) end })
 
     player:timer(30, function(p)
-        p:customMenu({ title = string.format('Change Job (%d/%d)', page, NUM_PAGES), options = opts })
+        p:customMenu({ title = string.format('Change Job (%d/%d)', page, NUM_JOB_PAGES), options = opts })
+    end)
+end
+
+showSubJobPage = function(player, page)
+    local opts  = {}
+    local first = (page - 1) * PAGE_SIZE + 1
+    local last  = math.min(first + PAGE_SIZE - 1, #SUB_JOBS)
+
+    for i = first, last do
+        local job = SUB_JOBS[i]
+        table.insert(opts, {
+            job.label,
+            function(p)
+                p:changesJob(job.id)
+                if job.id == 0 then
+                    p:printToPlayer('Subjob removed, kupo!', S)
+                else
+                    p:printToPlayer(
+                        string.format('Subjob changed to %s, kupo!', job.label), S)
+                end
+                showMainMenu(p)
+            end,
+        })
+    end
+
+    if page < NUM_SUB_PAGES then
+        table.insert(opts, { 'Next ->',  function(p) showSubJobPage(p, page + 1) end })
+    end
+    if page > 1 then
+        table.insert(opts, { 'Back',     function(p) showSubJobPage(p, page - 1) end })
+    end
+    table.insert(opts,     { 'Cancel',   function(p) showMainMenu(p) end })
+
+    player:timer(30, function(p)
+        p:customMenu({ title = string.format('Change Subjob (%d/%d)', page, NUM_SUB_PAGES), options = opts })
     end)
 end
 
