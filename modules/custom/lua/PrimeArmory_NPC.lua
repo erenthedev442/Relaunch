@@ -1,14 +1,15 @@
 -----------------------------------
 -- PrimeArmory_NPC.lua
 -- "Prime Armory" -- a GM Home NPC where players forge a Prime Weapon by
--- completing the four Prime Weapon Trials:
+-- completing the five Prime Weapon Trials:
 --
 --   Trial 1 (PW_Trial1_Done)  Turn in 12 each of the 20 Abyssea collectibles
 --   Trial 2 (PW_Trial2_Done)  Clear floor 50 of the Endless Tower
 --   Trial 3 (PW_Trial3_Done)  Turn in a Prime Sigil (rare Abyssea NM drop)
 --   Trial 4 (PW_Trial4_Done)  Defeat any Weapon Guardian (Job Mastery)
+--   Trial 5 (PW_Trial5_Done)  Turn in 99 each of three Aht Urhgan currencies
 --
--- Once all four are complete the player may claim ONE Prime weapon of their
+-- Once all five are complete the player may claim ONE Prime weapon of their
 -- choice. Claiming sets PW_WeaponClaimed = item_id (0 = none yet).
 --
 -- Each Prime weapon's ADDS_WEAPONSKILL mod unlocks its Prime weapon skill the
@@ -31,6 +32,7 @@ local TRIALS =
     { var = 'PW_Trial2_Done', label = 'Trial 2', desc = 'Endless Tower floor 50' },
     { var = 'PW_Trial3_Done', label = 'Trial 3', desc = 'Prime Sigil — rare Abyssea NM drop (turn in here)' },
     { var = 'PW_Trial4_Done', label = 'Trial 4', desc = 'Weapon Guardian defeated (Job Mastery)' },
+    { var = 'PW_Trial5_Done', label = 'Trial 5', desc = '99 each of Jadeshell, Silverpiece & 100 Byne Bill (turn in here)' },
 }
 
 local WEAPONS =
@@ -69,6 +71,16 @@ local T1_SETS =
 -- (Hunting League) NMs, wired in HuntingLeague.lua's NM onMobDeath.
 local T3_ITEM = 4061
 
+-- Trial 5: collect 99 EACH of three Aht Urhgan Assault currencies (stack to 99).
+-- Turned in here, which CONSUMES all 297 (99 x 3) and stamps PW_Trial5_Done.
+local T5_REQUIRED = 99
+local T5_ITEMS =
+{
+    { id = 1450, name = 'Lungo-Nango Jadeshell' },
+    { id = 1453, name = 'Montiont Silverpiece'  },
+    { id = 1456, name = '100 Byne Bill'         },
+}
+
 m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     super(zone)
 
@@ -84,7 +96,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     local PAGE_SIZE = 4
 
     -----------------------------------
-    -- Returns true if all four trials are complete.
+    -- Returns true if all trials are complete.
     -----------------------------------
     local function trialsComplete(player)
         for _, t in ipairs(TRIALS) do
@@ -97,7 +109,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     -- Print trial status to the player (used on first talk when incomplete).
     -----------------------------------
     local function printTrialStatus(player)
-        player:printToPlayer('[Prime Armory] Complete all four trials to forge a Prime Weapon:', xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format('[Prime Armory] Complete all %d trials to forge a Prime Weapon:', #TRIALS), xi.msg.channel.SYSTEM_3)
         for _, t in ipairs(TRIALS) do
             local done  = (player:getCharVar(t.var) or 0) == 1
             local icon  = done and '[+]' or '[ ]'
@@ -193,6 +205,64 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         end
         player:setCharVar('PW_Trial3_Done', 1)
         player:printToPlayer('[Prime Armory] The Riftborn Boulder is accepted! Trial 3 complete, kupo!', xi.msg.channel.SYSTEM_3)
+    end
+
+    -----------------------------------
+    -- Trial 5: per-currency progress (chat).
+    -----------------------------------
+    local function printTrial5Progress(player)
+        player:printToPlayer(string.format(
+            '[Prime Armory] Trial 5 — bring %d of EACH currency:', T5_REQUIRED),
+            xi.msg.channel.SYSTEM_3)
+        for _, it in ipairs(T5_ITEMS) do
+            local have = player:getItemCount(it.id)
+            player:printToPlayer(string.format('  %-22s %s', it.name .. ':',
+                have >= T5_REQUIRED and '[+]' or tostring(have)), xi.msg.channel.SYSTEM_3)
+        end
+    end
+
+    -----------------------------------
+    -- Trial 5 turn-in: 99 of each currency. Same consume-and-verify-with-refund
+    -- guard as Trial 1 -- delItem only debits the first MAIN-inventory stack while
+    -- getItemCount spans all containers, so a split/satchel stack can't credit the
+    -- trial without actually handing the currency over. All-or-nothing.
+    -----------------------------------
+    local function turnInTrial5(player)
+        if (player:getCharVar('PW_Trial5_Done') or 0) == 1 then
+            player:printToPlayer('[Prime Armory] Trial 5 is already complete, kupo!', xi.msg.channel.SYSTEM_3)
+            return
+        end
+
+        -- Pass 1: all three currencies present in the required count.
+        for _, it in ipairs(T5_ITEMS) do
+            if player:getItemCount(it.id) < T5_REQUIRED then
+                player:printToPlayer('[Prime Armory] Not yet — you still need more. Here is your tally:', xi.msg.channel.SYSTEM_3)
+                printTrial5Progress(player)
+                return
+            end
+        end
+
+        -- Pass 2: consume, measuring the real delta; refund all on any shortfall.
+        local removed = {}
+        local shortfall = false
+        for _, it in ipairs(T5_ITEMS) do
+            local before = player:getItemCount(it.id)
+            player:delItem(it.id, T5_REQUIRED)
+            local got = before - player:getItemCount(it.id)
+            removed[it.id] = got
+            if got < T5_REQUIRED then shortfall = true end
+        end
+
+        if shortfall then
+            for id, qty in pairs(removed) do
+                if qty > 0 then player:addItem({ id = id, quantity = qty }) end
+            end
+            player:printToPlayer('[Prime Armory] I could not gather all of them — keep each currency as a single 99 stack in your MAIN inventory (not satchel/case) and try again, kupo!', xi.msg.channel.SYSTEM_3)
+            return
+        end
+
+        player:setCharVar('PW_Trial5_Done', 1)
+        player:printToPlayer('[Prime Armory] The currency offering is accepted! Trial 5 complete, kupo!', xi.msg.channel.SYSTEM_3)
     end
 
     -----------------------------------
@@ -317,8 +387,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
             if not trialsComplete(player) then
                 printTrialStatus(player)
-                -- Trials 1 and 3 are turned in HERE; Trials 2 and 4 are earned out
-                -- in the world (Endless Tower / Weapon Guardian).
+                -- Trials 1, 3 and 5 are turned in HERE; Trials 2 and 4 are earned
+                -- out in the world (Endless Tower / Weapon Guardian).
                 local opts = {}
                 if (player:getCharVar('PW_Trial1_Done') or 0) == 0 then
                     table.insert(opts, { string.format('Trial 1: turn in (%d each x20)', T1_REQUIRED), function(p) turnInTrial1(p) end })
@@ -327,15 +397,20 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 if (player:getCharVar('PW_Trial3_Done') or 0) == 0 then
                     table.insert(opts, { 'Trial 3: turn in Boulder', function(p) turnInTrial3(p) end })
                 end
+                if (player:getCharVar('PW_Trial5_Done') or 0) == 0 then
+                    table.insert(opts, { 'Trial 5: turn in (x3)', function(p) turnInTrial5(p) end })
+                end
                 table.insert(opts, { 'Close', function(p) end })
                 if #opts > 1 then
-                    sendMenu(player, { title = 'Prime Armory: Turn-ins', options = opts })
+                    -- Short title so title + all labels stay under the ~150-byte
+                    -- customMenu cap even with every trial still pending.
+                    sendMenu(player, { title = 'Prime Trials', options = opts })
                 end
                 return
             end
 
             -- All trials done and no weapon claimed yet — show the forge menu.
-            player:printToPlayer('[Prime Armory] All four trials complete! Choose your Prime Weapon. Kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('[Prime Armory] All %d trials complete! Choose your Prime Weapon. Kupo!', #TRIALS), xi.msg.channel.SYSTEM_3)
             showMain(player)
         end,
     })

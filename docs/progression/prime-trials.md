@@ -1,19 +1,19 @@
 # Prime Weapon Trials
 
-The **Prime Weapon Trials** are the gateway to a Prime weapon. Clear all four and you can forge any Prime at the [Prime Armory](prime-armory.md) in GM Home, or claim a finished retail Prime from the [Prime Vendor](prime-vendor.md) — free, because the trials *are* the price.
+The **Prime Weapon Trials** are the gateway to a Prime weapon. Clear all five and you can forge any Prime at the [Prime Armory](prime-armory.md) in GM Home, or claim a finished retail Prime from the [Prime Vendor](prime-vendor.md) — free, because the trials *are* the price.
 
 !!! tip "Summary"
-    Four trials, done in any order: gather the Abyssea collectibles, climb the Endless Tower, win a Prime Sigil from Abyssea NMs, and master a job to beat a Weapon Guardian. Finish all four → forge your Prime.
+    Five trials, done in any order: gather the Abyssea collectibles, climb the Endless Tower, win a Prime Sigil from Abyssea NMs, master a job to beat a Weapon Guardian, and bank the three Aht Urhgan currencies. Finish all five → forge your Prime.
 
 ## The gate
 
 <!-- DOCGEN:BEGIN id="prime-trials-gate" -->
-The Prime Armory forge and the [Prime Vendor](prime-vendor.md) are both locked behind the **4 Prime Weapon Trials**. They are tracked independently, so you can chip away at them **in any order** -- clear all **4** and the Prime Armory will forge the Prime weapon of your choice (and the Prime Vendor opens for the retail line).
+The Prime Armory forge and the [Prime Vendor](prime-vendor.md) are both locked behind the **5 Prime Weapon Trials**. They are tracked independently, so you can chip away at them **in any order** -- clear all **5** and the Prime Armory will forge the Prime weapon of your choice (and the Prime Vendor opens for the retail line).
 
 Talk to the **Prime Armory** NPC in **GM Home** at any time to see which trials you've cleared and to hand in the collection trials.
 <!-- DOCGEN:END id="prime-trials-gate" -->
 
-## The four trials
+## The five trials
 
 <!-- DOCGEN:BEGIN id="prime-trials-table" -->
 | Trial | What it takes |
@@ -22,6 +22,7 @@ Talk to the **Prime Armory** NPC in **GM Home** at any time to see which trials 
 | **Trial 2** | Endless Tower floor 50 |
 | **Trial 3** | Prime Sigil — rare Abyssea NM drop (turn in here) |
 | **Trial 4** | Weapon Guardian defeated (Job Mastery) |
+| **Trial 5** | 99 each of Jadeshell, Silverpiece & 100 Byne Bill (turn in here) |
 <!-- DOCGEN:END id="prime-trials-table" -->
 
 The rest of this page walks through each one.
@@ -58,9 +59,13 @@ Win a **Prime Sigil** — a rare drop from [Abyssea NMs](../endgame/abyssea-nms.
 
 Defeat a **Weapon Guardian**, the boss at the end of the [Job Mastery](../endgame/job-mastery.md) path. Mastering a job summons its Guardian, and beating it is the proof-of-mastery trial. These fights are deliberately brutal — bring your best setup.
 
+## Trial 5 — Aht Urhgan currencies
+
+The other turn-in trial. You bank **99 each of three Aht Urhgan Assault currencies** — **Lungo-Nango Jadeshell**, **Montiont Silverpiece**, and **100 Byne Bill** — and hand all 297 to the Prime Armory in one go. As with Trial 1, keep each currency as a single 99-stack in your **main inventory** (not satchel or storage) so the turn-in can take it.
+
 ## The reward
 
-Once all four trials read complete, head to **GM Home**:
+Once all five trials read complete, head to **GM Home**:
 
 - The **[Prime Armory](prime-armory.md)** will forge the Prime weapon of your choice.
 - The **[Prime Vendor](prime-vendor.md)** opens its full line of retail Prime weapons — handed over free, since the trials were the cost.

@@ -2,7 +2,7 @@
 -- PrimeVendor_NPC.lua
 -- "Prime Vendor" -- a GM Home NPC that sells the 16 retail Prime Weapons
 -- (Level 119 III / final forms). PURCHASE IS GATED: a character may only buy
--- here once ALL FOUR Prime Weapon Trials are complete (PW_Trial1-4_Done) --
+-- here once ALL FIVE Prime Weapon Trials are complete (PW_Trial1-5_Done) --
 -- the trials ARE the cost, so the weapons themselves are handed over free.
 --
 -- Each weapon is EX/RARE, so the client naturally limits a character to one of
@@ -22,8 +22,8 @@ local m = Module:new('prime_vendor')
 
 local S = xi.msg.channel.SYSTEM_3
 
--- The four trial charVars shared with the Prime Armory.
-local TRIAL_VARS = { 'PW_Trial1_Done', 'PW_Trial2_Done', 'PW_Trial3_Done', 'PW_Trial4_Done' }
+-- The five trial charVars shared with the Prime Armory.
+local TRIAL_VARS = { 'PW_Trial1_Done', 'PW_Trial2_Done', 'PW_Trial3_Done', 'PW_Trial4_Done', 'PW_Trial5_Done' }
 
 -- The 16 Prime Weapons -- final ("Level 119 III") form id per weapon.
 -- { id, name, type } -- type is display-only.
@@ -67,7 +67,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     -- Hand over the chosen weapon (free; EX-limited to one per character).
     local function buy(player, weapon)
         if not trialsComplete(player) then
-            player:printToPlayer('[Prime Vendor] Complete all four Prime Trials first, kupo!', S)
+            player:printToPlayer('[Prime Vendor] Complete all five Prime Trials first, kupo!', S)
             return
         end
         if player:getItemCount(weapon.id) > 0 then
@@ -137,7 +137,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
         onTrigger = function(player, npc)
             if not trialsComplete(player) then
-                player:printToPlayer('[Prime Vendor] These Prime Weapons are for proven heroes only. Complete all FOUR Prime Trials, then return, kupo!', S)
+                player:printToPlayer('[Prime Vendor] These Prime Weapons are for proven heroes only. Complete all FIVE Prime Trials, then return, kupo!', S)
                 return
             end
             player:printToPlayer('[Prime Vendor] All trials cleared! Choose your Prime Weapon, kupo!', S)

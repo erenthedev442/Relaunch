@@ -3,7 +3,7 @@
 The **Prime Vendor** in GM Home hands out the **16 retail Prime weapons** — Caliburnus, Helheim, Kusanagi, Loughnashade, and the rest of the relic-prime line — in their final "Level 119 III" forms. Unlike the voucher-based [Prime Armory](prime-armory.md), the Vendor asks for no currency: it's the reward for finishing the Prime Weapon Trials.
 
 !!! tip "Summary"
-    Clear all **four Prime Weapon Trials**, then talk to the Prime Vendor in GM Home and claim any of the **16 retail Prime weapons** for **free**. Each is Rare/Ex (one per character) — just bring a free inventory slot.
+    Clear all **five Prime Weapon Trials**, then talk to the Prime Vendor in GM Home and claim any of the **16 retail Prime weapons** for **free**. Each is Rare/Ex (one per character) — just bring a free inventory slot.
 
 ## Where to find it
 
@@ -16,7 +16,7 @@ The **Prime Vendor** is in **GM Home**, alongside the Prime Armory. Talk to it o
 The Vendor doesn't take gil or a voucher. It opens only once you've proven yourself across the full Prime Weapon Trial line, and then it hands the weapon over for nothing.
 
 <!-- DOCGEN:BEGIN id="prime-vendor-gate" -->
-The Prime Vendor is gated behind the **4 Prime Weapon Trials**. Complete **all 4** and the vendor opens; until then it turns you away. There is no gil or voucher cost — the trials themselves are the price, so every weapon here is **free** once you've earned the right to it.
+The Prime Vendor is gated behind the **5 Prime Weapon Trials**. Complete **all 5** and the vendor opens; until then it turns you away. There is no gil or voucher cost — the trials themselves are the price, so every weapon here is **free** once you've earned the right to it.
 
 Each Prime weapon is **Rare/Ex**, so you can only hold one of each, and you'll need a free inventory slot for the vendor to hand it over.
 <!-- DOCGEN:END id="prime-vendor-gate" -->
