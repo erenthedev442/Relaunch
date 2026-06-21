@@ -187,6 +187,12 @@ PROGRESSION_AUGS = {
 #     groups it with the Phantom Roll ability-delay augment on the site.
 CUSTOM_AUGS = {
     2046: (1875, 1, 1, 1, 4, 'Phantom Roll effect', 0),  # ancient_beastcoin (a coin -> gambler's roll)
+    # 2045 -> Mod::SPIKES_DMG (344) "Spikes Dmg": flat Blaze/Ice/Shock spikes
+    #   damage, repointed by modules/custom/sql/aug_spikes_dmg.sql. base/mult = 1
+    #   + maxBoost = 31 => scales with the Augment Sage exactly like Enspell Dmg
+    #   (a fully-slotted 5-catalyst piece reaches ~+160 at max rank). cat 5 groups
+    #   it with the Enspell Dmg / Magic-offense augments. Owner request 2026-06-21.
+    2045: (2531, 1, 1, 1, 5, 'Spikes Dmg', 31),  # shard_of_obsidian (sharp volcanic shard)
 }
 
 # Augments to DROP from the catalog entirely, keyed by augId. The augment still

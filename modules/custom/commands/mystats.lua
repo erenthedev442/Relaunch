@@ -245,6 +245,14 @@ commandObj.onTrigger = function(player)
         player:getMod(xi.mod.ENSPELL_DMG),
         player:getMod(xi.mod.ENSPELL_DMG_BONUS),
         player:getMod(xi.mod.ENSPELL_DMG_PCT))
+    -- Spikes damage. SPIKES_DMG (344) = flat base of the ACTIVE spike (the spell's
+    -- own value + the 'Spikes Dmg' augment, which adds to this mod), so it reads 0
+    -- with no spike up; cast Blaze/Ice/Shock Spikes to see it populate. SPIKES_DMG_BONUS
+    -- (1079) = % bonus. Spikes ignore Magic Atk / elemental affinity -- these two
+    -- mods are the ONLY things that move spike damage.
+    line(player, 'Spikes: base dmg %d   dmg bonus +%d%%',
+        player:getMod(xi.mod.SPIKES_DMG),
+        player:getMod(xi.mod.SPIKES_DMG_BONUS))
 
     -- =========================================================
     -- Pet readout for ANY pet job: Automaton (PUP), Avatar (SMN), Jug/Charmed

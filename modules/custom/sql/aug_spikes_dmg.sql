@@ -1,0 +1,35 @@
+-- =====================================================================
+-- aug_spikes_dmg.sql
+-- Add a flat "Spikes Dmg" augment by repurposing a dead augment-ID slot
+-- (same pattern as aug_phantom_roll_potency.sql).
+--
+-- WHY REPURPOSE 2045
+--   The 11-bit augment-ID space (1..2047) is full, so a new augment reuses an
+--   existing ID. 2045 ships as pure filler in stock sql/augments.sql --
+--   `(2045,0,0,0,0,0)`, modId=0 (Mod::NONE) -- so it attaches nothing and is
+--   NOT offered by the Augment Moogle. Nothing on any gear references it, so
+--   repointing it is safe.
+--
+-- WHAT IT DOES
+--   Sets augId 2045 -> Mod::SPIKES_DMG (344), the FLAT base-damage mod for
+--   Blaze/Ice/Shock spikes. battleutils.cpp CalculateSpikeDamage starts from
+--   getMod(SPIKES_DMG), which SUMS the spell's own value AND any gear/augment
+--   carrying this mod -- so each point here adds flat spike damage. This is the
+--   direct analog of the Enspell Dmg augment (augId 896 / Mod 432); spikes
+--   ignore Magic Atk / elemental affinity entirely, so this is the only lever.
+--     value = 1   -> +1 SPIKES_DMG per augment slot (x the Augment Sage boost)
+--     multiplier = 1
+--   The catalog entry (augId 2045, catalyst Shard of Obsidian 2531) is pinned
+--   in tools/gen_augment_catalog.py CUSTOM_AUGS with maxBoost = 31, so it scales
+--   with Augment Sage rank exactly like Enspell Dmg.
+--
+-- APPLYING
+--   1) Import (the deploy's custom-SQL ledger does it on a content change), or:
+--      mysql xidb < modules/custom/sql/aug_spikes_dmg.sql
+--   2) RESTART THE MAP SERVER -- the augments table is cached at boot via
+--      CItemEquipment::LoadAugmentData(); there is no hot-reload.
+--
+-- Idempotent: a plain UPDATE keyed on the augmentId. Safe to re-run.
+-- =====================================================================
+
+UPDATE `augments` SET `multiplier` = 1, `modId` = 344, `value` = 1 WHERE `augmentId` = 2045;

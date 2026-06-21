@@ -373,5 +373,6 @@ return {
     ---   Phantom Roll effect (augId 2046) grants Mod::PHANTOM_ROLL (881) via
     ---   modules/custom/sql/aug_phantom_roll_potency.sql (repoints a dead modId=0
     ---   slot). +1 per augment slot, HARD-CAPPED at +3/piece in corsair.lua.
+    [2531] = { augId = 2045, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Spikes Dmg', maxBoost = 31 },  -- shard_of_obsidian
     [1875] = { augId = 2046, base = 1,   mult = 1,  disp = 1,    cat = 4,  label = 'Phantom Roll effect', maxBoost = 0 },  -- ancient_beastcoin
 }

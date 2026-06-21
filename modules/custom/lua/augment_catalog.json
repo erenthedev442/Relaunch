@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "total": 297,
+  "total": 298,
   "groups": [
     {
       "category": "Strength / Attack / Phys.dmg.taken",
@@ -3040,6 +3040,16 @@
     {
       "category": "Corsair (Phantom Roll)",
       "entries": [
+        {
+          "itemId": 2531,
+          "augId": 2045,
+          "label": "Spikes Dmg",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 5,
+          "maxBoost": 31
+        },
         {
           "itemId": 1875,
           "augId": 2046,
