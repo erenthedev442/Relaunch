@@ -2,8 +2,8 @@
 """Generate catalog.itemTypeMap for the Infamy Vendor's grouped browser.
 
 Maps each curated vendor item id (catalog.vendorItems + catalog.vendorItemsAuto
-in modules/custom/lua/dungeon_catalog.lua) to a 'Category/Subtype' string, so
-DungeonSystem.lua can present a Category -> Subtype -> items menu instead of one
+in modules/custom/lua/infamy_vendor_catalog.lua) to a 'Category/Subtype' string,
+so InfamyVendor.lua can present a Category -> Subtype -> items menu instead of one
 flat ~60-item paged list.
 
 Category/Subtype is derived from the live DB:
@@ -24,7 +24,7 @@ from __future__ import annotations
 import os, re
 
 REPO = os.path.normpath(os.path.join(os.path.dirname(__file__), ".."))
-CATALOG = os.path.join(REPO, "modules", "custom", "lua", "dungeon_catalog.lua")
+CATALOG = os.path.join(REPO, "modules", "custom", "lua", "infamy_vendor_catalog.lua")
 ITEM_EQUIP = os.path.join(REPO, "sql", "item_equipment.sql")
 ITEM_WEAPON = os.path.join(REPO, "sql", "item_weapon.sql")
 OUT = os.path.join(REPO, "tools", "_infamy_typemap.lua")
@@ -138,9 +138,7 @@ def main():
     lines.append("-- INFAMY_TYPEMAP:END")
     block = "\n".join(lines)
 
-    # Splice directly into dungeon_catalog.lua between the sentinels. (Was a
-    # manual copy-paste from tools/_infamy_typemap.lua; now automatic so
-    # rebalance_all.bat refreshes it whenever the vendor list changes.)
+    # Splice directly into infamy_vendor_catalog.lua between the sentinels.
     cat_txt = open(CATALOG, encoding="utf-8").read()
     sent = re.compile(r"-- INFAMY_TYPEMAP:BEGIN.*?-- INFAMY_TYPEMAP:END", re.DOTALL)
     if sent.search(cat_txt):
