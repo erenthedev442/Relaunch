@@ -9,10 +9,11 @@
 -- Flow:
 --   1. Player talks to "Maat's Echo" NPC in Ru'Lude Gardens.
 --   2. Cost: 150 Infamy.
---   3. Player is teleported to Waughroon Shrine; their OWN Maat spawns on
---      zone-in, claim-locked to them. MANY players can fight at once -- each
---      gets a private, claim-locked Maat that no one else can touch, the same
---      way Voidspire / Colosseum isolate per-player mobs in a shared zone.
+--   3. Player is teleported to Waughroon Shrine; their OWN Maat spawns FAR
+--      across the floor, claim-locked but PASSIVE, and only engages once they
+--      walk within ~15 yalms -- so you load in safely instead of dying on the
+--      zone-in tile. MANY players can fight at once; each gets a private,
+--      claim-locked Maat, the way Voidspire / Colosseum isolate per-player mobs.
 --   4. On Maat's death: 25% chance to receive Maat's Blessing (item 29000).
 --   5. Maat's Blessing guarantees a critical augment at the Augment Moogle
 --      and is consumed on that successful augment.
@@ -64,11 +65,11 @@ local MAAT_MODS =
     [xi.mod.REGEN]         = 3000,    -- soft DPS check: out-damage it or stall
 }
 
--- Idle watchdog: despawn a player's Maat if nobody fights it for 45s straight,
--- so an abandoned fight (the owner died or left) cleans itself up instead of
--- leaving an orphaned Maat loose in the shrine. Checks isEngaged() every 5s.
-local WATCH_INTERVAL_MS = 5000
-local IDLE_TICKS        = 9   -- 9 x 5s = 45s
+-- Per-fight tick: holds Maat passive until the challenger approaches within
+-- ENGAGE_DIST, then engages him; also despawns an abandoned Maat (owner left or
+-- died and stayed away ~45s) so it doesn't loiter. Runs once a second.
+local TICK_MS    = 1000
+local IDLE_LIMIT = 45   -- 45 x 1s = 45s of the owner being absent/dead -> despawn
 
 -- Waughroon Shrine default zone-in point (matches Zone.lua onZoneIn default).
 local SHRINE_ENTRY_X =  -361.434
@@ -76,11 +77,18 @@ local SHRINE_ENTRY_Y =   101.798
 local SHRINE_ENTRY_Z =  -259.996
 local SHRINE_ENTRY_R =     0
 
--- Maat materializes this far (yalms) from the challenger, at a random angle, so
--- several challengers landing on the same zone-in tile don't stack their Maats.
--- Each one claim-locks + beelines its owner anyway, so the exact spot is cosmetic.
-local SPAWN_DIST = 5.0
-local MAAT_R     = 128   -- initial facing; he turns to chase the owner immediately
+-- Maat spawns FAR from the challenger's landing tile (SHRINE_ENTRY) and stays
+-- PASSIVE until they walk within ENGAGE_DIST yalms -- so you load in safely
+-- instead of dying on the zone-in tile. A small random jitter keeps several
+-- challengers' (claim-locked, private) Maats from stacking on one model.
+-- NOTE: MAAT_SPAWN_* is a best-guess point in the open entry floor; verify it
+-- in-game and nudge it if Maat lands in a wall or still spawns too close.
+local MAAT_SPAWN_X = -339.434   -- ~22y toward +X (zone interior) from the entry
+local MAAT_SPAWN_Y =  101.798
+local MAAT_SPAWN_Z = -259.996
+local SPAWN_JITTER =    3.0
+local ENGAGE_DIST  =   15.0     -- Maat engages once the challenger is this close
+local MAAT_R       =  128       -- initial facing (cosmetic; he turns on engage)
 
 -- NPC position: alongside Maat's original retail NPC in Ru'Lude Gardens.
 -- Retail Maat is at x=8, y=3, z=118. Place the Echo a step to the side.
@@ -96,25 +104,41 @@ local function isAlive(entity)
     return ok and hp > 0
 end
 
--- Re-arming idle watchdog (see IDLE_TICKS). mob:timer is dropped automatically
--- when the mob dies, so this chain self-terminates on a real kill; we only have
--- to stop it ourselves on the idle-despawn path.
-local function armIdleWatch(mob, ownerName)
-    mob:timer(WATCH_INTERVAL_MS, function(m)
-        if not isAlive(m) then return end        -- killed / despawned / gone
-        if m:isEngaged() then
-            m:setLocalVar('maatIdle', 0)         -- the owner is on him; reset
+-- Re-arming per-fight tick: (1) engages Maat the moment the challenger gets
+-- within ENGAGE_DIST (he holds at his far spawn until then), and (2) despawns an
+-- abandoned Maat. mob:timer is dropped automatically when the mob dies, so the
+-- chain self-terminates on a real kill; we only stop it on the idle-despawn path.
+local function maatTick(mob, ownerName)
+    mob:timer(TICK_MS, function(m)
+        if not isAlive(m) then return end                 -- killed / despawned
+
+        local owner       = GetPlayerByName(ownerName)
+        local ownerActive = owner ~= nil
+            and owner:getZoneID() == MAAT_GROUP_ZID
+            and owner:getHP() > 0
+
+        -- (1) Proximity engage: stay passive until the owner walks up to him.
+        if ownerActive and not m:isEngaged() and m:checkDistance(owner) <= ENGAGE_DIST then
+            m:updateClaim(owner)                          -- (re)lock to the owner
+            m:addEnmity(owner, 30000, 30000)              -- now he beelines them
+        end
+
+        -- (2) Abandon watchdog: only counts while the owner is gone/dead AND Maat
+        -- isn't engaged; a present, living owner (loading or approaching) keeps him.
+        if m:isEngaged() or ownerActive then
+            m:setLocalVar('maatIdle', 0)
         else
             local ticks = (m:getLocalVar('maatIdle') or 0) + 1
             m:setLocalVar('maatIdle', ticks)
-            if ticks >= IDLE_TICKS then
+            if ticks >= IDLE_LIMIT then
                 activeFights[ownerName] = nil
-                m:setLocalVar('maatDespawn', 1)  -- tell onMobDeath this is NOT a kill
-                m:setHP(0)                        -- remove the orphaned Maat
+                m:setLocalVar('maatDespawn', 1)           -- onMobDeath: NOT a kill
+                m:setHP(0)                                 -- remove the orphaned Maat
                 return
             end
         end
-        armIdleWatch(m, ownerName)
+
+        maatTick(m, ownerName)
     end)
 end
 
@@ -122,11 +146,12 @@ local function spawnMaat(player)
     local ownerName = player:getName()
     local zone      = player:getZone()
 
-    -- Random point SPAWN_DIST yalms from the challenger (see SPAWN_DIST).
-    local angle = math.random() * 2 * math.pi
-    local sx    = player:getXPos() + SPAWN_DIST * math.cos(angle)
-    local sy    = player:getYPos()
-    local sz    = player:getZPos() + SPAWN_DIST * math.sin(angle)
+    -- Fixed FAR spawn (MAAT_SPAWN_*) + small jitter; NOT relative to the player,
+    -- who always lands on the same SHRINE_ENTRY tile -- this keeps Maat well away
+    -- on spawn so you load in before anything can touch you.
+    local sx = MAAT_SPAWN_X + (math.random() * 2 - 1) * SPAWN_JITTER
+    local sy = MAAT_SPAWN_Y
+    local sz = MAAT_SPAWN_Z + (math.random() * 2 - 1) * SPAWN_JITTER
 
     local mob = zone:insertDynamicEntity({
         objtype              = xi.objType.MOB,
@@ -139,8 +164,8 @@ local function spawnMaat(player)
         rotation             = MAAT_R,
         minLevel             = MAAT_LEVEL,
         maxLevel             = MAAT_LEVEL,
-        detection            = xi.detects.SIGHT_AND_HEARING,
-        isAggroable          = true,
+        detection            = 0,            -- no auto-aggro; engages on approach (maatTick)
+        isAggroable          = false,
         releaseIdOnDisappear = true,
 
         onMobDeath = function(deadMob, killer)
@@ -201,16 +226,18 @@ local function spawnMaat(player)
     end
     mob:setMaxHP(MAAT_HP)
     mob:setHP(MAAT_HP)
+    mob:setAggressive(false)   -- stays passive until the challenger approaches
 
-    -- Claim-lock this Maat to its challenger: updateClaim hands them the claim
-    -- (so no one else can tag or steal it) plus kill credit, and addEnmity makes
-    -- it beeline them immediately. Mirrors Voidspire's per-player isolation.
+    -- Claim-lock this Maat to its challenger (so no one else can tag or steal it)
+    -- but DO NOT give it enmity yet -- it holds at its far spawn until the owner
+    -- walks within ENGAGE_DIST (handled by maatTick). THIS is the fix for "spawns
+    -- on top of us and kills us before the screen loads". Per-player isolation as
+    -- in Voidspire.
     mob:updateClaim(player)
-    mob:addEnmity(player, 30000, 30000)
 
-    -- Start the abandon-despawn watchdog.
+    -- Start the per-fight tick (proximity-engage + abandon-despawn).
     mob:setLocalVar('maatIdle', 0)
-    armIdleWatch(mob, ownerName)
+    maatTick(mob, ownerName)
 
     return true
 end
