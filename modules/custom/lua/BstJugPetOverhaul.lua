@@ -36,9 +36,9 @@ local m = Module:new('bst_jugpet_overhaul')
 local CONFIG =
 {
     -- Flat endgame floors so even a fresh BST's pet is immediately viable.
-    flatATT = 2800,
-    flatACC = 1300,
-    flatSTR = 180,
+    flatATT = 5600,
+    flatACC = 2600,
+    flatSTR = 360,
     flatHP  = 140000,
 
     -- Gear-scaling: the pet inherits this share of the MASTER's stats, so it
