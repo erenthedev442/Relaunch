@@ -6,7 +6,6 @@
 -- p:setShopCurrencyVar(). Menu structure:
 --   Root (category picker)
 --     Weapons / Armor / Accessories / Other  -> native shop window (16 per page)
---     Curated Sets                           -> native shop window (per set)
 --     +4 Reforge   Job -> [Set ->] Slot      -> native shop window (5 slots)
 --
 -- All item data is in infamy_vendor_catalog.lua.
@@ -234,60 +233,6 @@ showCuratedSub = function(player, cat, sub)
     vendorMenu.title   = string.format('%s  [%d Inf]', trunc(sub, 12), getInfamy(player))
     vendorMenu.options = opts
     openMenu(player, vendorMenu)
-end
-
---------------------------------------------------------------------
--- CURATED SETS BROWSER
---------------------------------------------------------------------
-local SETS_PAGE_SIZE = 4
-
-showCuratedSetsMenu = function(player, page)
-    page = page or 1
-    local sets  = catalog.vendorSets or {}
-    local total = #sets
-    local pages = math.max(1, math.ceil(total / SETS_PAGE_SIZE))
-    page = math.max(1, math.min(page, pages))
-
-    local opts     = {}
-    local startIdx = (page - 1) * SETS_PAGE_SIZE + 1
-    local endIdx   = math.min(startIdx + SETS_PAGE_SIZE - 1, total)
-
-    for idx = startIdx, endIdx do
-        local s      = sets[idx]
-        local pcount = s.pieces and #s.pieces or 0
-        table.insert(opts, {
-            string.format('%s  (%d pc)', trunc(s.set, 16), pcount),
-            function(p) showCuratedSetDetail(p, idx) end,
-        })
-    end
-
-    if pages > 1 then
-        if page > 1 then
-            table.insert(opts, { '<< Prev', function(p) showCuratedSetsMenu(p, page - 1) end })
-        end
-        if page < pages then
-            table.insert(opts, { 'Next >>',  function(p) showCuratedSetsMenu(p, page + 1) end })
-        end
-    end
-    table.insert(opts, { '<< Back', function(p) showVendorRoot(p) end })
-
-    vendorMenu.title   = string.format('Sets  [%d Inf]', getInfamy(player))
-    vendorMenu.options = opts
-    openMenu(player, vendorMenu)
-end
-
-showCuratedSetDetail = function(player, setIdx)
-    local sets     = catalog.vendorSets or {}
-    local setEntry = sets[setIdx]
-    if not setEntry then
-        showCuratedSetsMenu(player, 1)
-        return
-    end
-    local items = {}
-    for _, piece in ipairs(setEntry.pieces or {}) do
-        items[#items + 1] = { id = piece.id, cost = piece.cost }
-    end
-    openInfamyShop(player, items, 1)
 end
 
 --------------------------------------------------------------------
