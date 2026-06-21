@@ -67,8 +67,20 @@ fi
 cd "$DOCS_REPO" || { echo "[FATAL] DOCS_REPO not found: $DOCS_REPO"; exit 1; }
 export LEGENDARY_LIVE_ROOT="$LIVE_ROOT"
 
-echo "[0/4] pulling latest docs..."
-git pull --ff-only 2>&1 | tail -1 || echo "[WARN] git pull failed -- building from current checkout"
+echo "[0/4] syncing docs to remote (hard reset; generated files are rebuilt below)..."
+# Use fetch + reset --hard, NOT `git pull --ff-only`. This DOCS_REPO tracks
+# GENERATED output (docs/ + site/) in git, so every regen leaves the working tree
+# dirty -> a fast-forward pull SILENTLY fails and the site FREEZES on a stale
+# checkout (found 57 commits behind on 2026-06-21, publishing months-old docs). A
+# hard reset to the remote always wins; the dirty generated files are regenerated
+# immediately below, and the canonical config (mkdocs.yml/overrides) comes from
+# the repo. Robust to the blobless partial clone (reset fetches only HEAD blobs).
+_lc_branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo Legendary)
+if git fetch origin "$_lc_branch" 2>&1 | tail -1 && git reset --hard "origin/${_lc_branch}" 2>&1 | tail -1; then
+    echo "[0/4] synced to origin/${_lc_branch}"
+else
+    echo "[WARN] remote sync failed -- building from current checkout"
+fi
 
 # Activate the docs venv so `python3` and `mkdocs` resolve to the ones that
 # have mkdocs + pymysql installed.
