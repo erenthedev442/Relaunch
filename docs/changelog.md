@@ -5,6 +5,29 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 ---
 
 !!! note "Week of June 15–21, 2026"
+    **Sunday, June 21**
+
+    - **Docs Deploy** — Hard-reset DOCS_REPO to remote instead of fragile ff-pull
+    - **Gear** — Complete 8 near-finished armor sets on the Infamy + Medal vendors
+    - **Gear Finder** — Ignore commented-out !shop entries in obtainability scan
+    - **Infamy** — Add Handbell to Weapons SUB_ORDER menu list
+    - **Gear Finder** — Flag !shop stock as obtainable
+    - Add armor-set gap scanner (vendor sets missing pieces)
+    - **AH** — Bump furniture stock to 5 per item
+    - **AH** — Stock all 270 auctionable furniture items at 250k each
+    - **Gm Home** — Augment Moogle -> Alexander model (1834)
+    - **Linkshell** — Implement Linkshell Concierge in the 3 nation capitals
+    - **Gm Home** — Move Augment Moogle to its own section + golem model
+    - **Crossjob** — Sub weapon no longer dropped on subjob change for CJTrait_dwield buyers
+    - **Augments** — TP Bonus augment x2 -> x4 (max +128/slot; Vistrix bug report)
+    - **Abyssea** — Lift ??? marks NMs into lower Ascension band + add elemental resist
+    - **Trusts** — Gemma/Skoll crashed on spawn -- '.' should be ',' in Dispel gambit
+    - **Abyssea** — Every ??? pop grants Infamy (drop KI gate on the marks-pop)
+    - **Trusts** — Gemma's Aquaveil gambit errored on every spawn (ai.l.AND is not a function)
+    - **Infamy/Shop** — Add GEO handbells - Dunna/Filiae/Eminent to Infamy, Nepote to !shop
+    - **MAAT** — Real spawn point + leftover-Maat safety + Lv200 rebalance
+    - **MAAT** — Spawn Maat far + passive; engage only within 15 yalms (no spawn-death)
+
     **Saturday, June 20**
 
     - **Infamy** — Add the top-5 BiS shields to the Infamy vendor
@@ -552,10 +575,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7af807b1c28c -->
-_Last updated: 2026-06-21 07:51 UTC_
-<!-- DOCGEN:END id="last-updated" -->
