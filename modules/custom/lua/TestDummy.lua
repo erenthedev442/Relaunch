@@ -7,7 +7,8 @@
 -- Player flow:
 --   1. Talk to the Test Dummy at GM Home (east end of NPC row).
 --   2. Pick a tier (Standard L99 / Endgame L150 / Insane L200).
---   3. A dummy with multi-million HP spawns 5 yalms east of the NPC.
+--   3. A dummy with multi-million HP spawns at a random spot in the
+--      open training area east of the NPC.
 --   4. Whack it. Use weaponskills. Check damage numbers.
 --   5. "Reset dummy HP" via menu to top off mid-test.
 --   6. "Despawn dummies" via menu when done.
@@ -22,7 +23,10 @@
 --     which is what we want for testing PDT / MDT mitigation.
 --
 -- Multiple dummies can coexist per player - just trigger Spawn N
--- times and a new dummy appears at the spawn point.
+-- times. Each new dummy lands at a RANDOM point within
+-- catalog.spawnArea.radius of the spawn point, so repeat spawns
+-- (and dummies from other players) scatter across the training area
+-- instead of stacking on one tile - several people can parse at once.
 --
 -- The dummy entities and per-player session state follow the same
 -- "only track CURRENT live dummies" rule as GameMaster.lua - we do
@@ -79,6 +83,26 @@ local showAbysseaMenu
 -- Dummy spawn / lifecycle
 -----------------------------------
 
+-- Pick a random point within catalog.spawnArea.radius of catalog.spawnPos so
+-- dummies don't stack on one tile -- repeat spawns and other players' dummies
+-- spread across the training area, letting several testers parse at once. GM
+-- Home is a flat lobby, so only x/z are jittered (y stays put) and each dummy
+-- faces a random way for natural variety. Returns x, z, rotation.
+local function randomSpawnPoint()
+    local sp     = catalog.spawnPos
+    local radius = (catalog.spawnArea and catalog.spawnArea.radius) or 0
+    if radius <= 0 then
+        return sp.x, sp.z, sp.rotation
+    end
+    -- Uniform over the disc: sqrt() keeps density even out to the rim
+    -- instead of bunching dummies toward the center.
+    local angle = math.random() * 2 * math.pi
+    local dist  = radius * math.sqrt(math.random())
+    return sp.x + dist * math.cos(angle),
+           sp.z + dist * math.sin(angle),
+           math.random(0, 255)
+end
+
 local function spawnDummy(player, tierName)
     local tier = catalog.tiers[tierName]
     if not tier then return end
@@ -94,15 +118,16 @@ local function spawnDummy(player, tierName)
     local tierLabel = tier.label or tierName
 
     local sp  = catalog.spawnPos
+    local px, pz, prot = randomSpawnPoint()
     local mob = zone:insertDynamicEntity({
         objtype              = xi.objType.MOB,
         groupId              = tier.groupId,
         groupZoneId          = catalog.npcPos.zoneId,
         name                 = string.format('Test_Dummy_%s', tierName),
-        x                    = sp.x,
+        x                    = px,
         y                    = sp.y,
-        z                    = sp.z,
-        rotation             = sp.rotation,
+        z                    = pz,
+        rotation             = prot,
         minLevel             = tier.minLevel,
         maxLevel             = tier.maxLevel,
         -- No detection field - we don't want this thing aggroing on
@@ -137,7 +162,7 @@ local function spawnDummy(player, tierName)
         return
     end
 
-    mob:setSpawn(sp.x, sp.y, sp.z, sp.rotation)
+    mob:setSpawn(px, sp.y, pz, prot)
     mob:spawn()
 
     -- Pacify the dummy. Order matters: spawn() recalculates stats

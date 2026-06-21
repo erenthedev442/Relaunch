@@ -68,6 +68,18 @@ catalog.spawnPos =
     rotation = 192,
 }
 
+-- How far a summoned dummy may land from spawnPos. Each summon picks a
+-- RANDOM point within this radius (in yalms) on the flat GM Home floor, so
+-- dummies from different players -- or repeat spawns by one player -- scatter
+-- instead of stacking on a single tile. Several people can park a dummy and
+-- parse at the same time. The training area sits in open space east of the
+-- NPC row; raise the radius for more spread, but not so far that dummies
+-- drift back into the lobby or off the zone edge (8 stays comfortably clear).
+catalog.spawnArea =
+{
+    radius = 8.0,
+}
+
 -- Every target entry sets:
 --   label    - display name (kept short for the customMenu byte cap)
 --   family   - 'asc' | 'aby' (drives which submenu it appears in)
