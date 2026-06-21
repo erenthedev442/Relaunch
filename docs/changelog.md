@@ -7,6 +7,32 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 !!! note "Week of June 15–21, 2026"
     **Saturday, June 20**
 
+    - **Infamy** — Add the top-5 BiS shields to the Infamy vendor
+    - **Weapon Skills** — Asuran Fists self-skillchains to Light (Chant du Cygne properties)
+    - **Gear** — Add shields to the Bronze/Silver/Gold Armor NPC tiers
+    - **MAAT** — Maat HP 100M -> 15M (owner call)
+    - **MAAT** — Concurrent + isolated Maat fight (per-player claim-locked spawns)
+    - **Commands** — Add !hunt1-5 tier warp commands
+    - **Armor** — Add missing item_mods for all 5 Trust armor pieces
+    - **Infamy** — Add Trust/Prestige/Sworn armor sets at 15k Infamy each
+    - **Infamy** — Add all 22 Mythic/Relic weapons at 5k Infamy each
+    - Gemma alteration  - changed remove sleep to CURAGA from CURE Changed Aquaveil logic so that she only casts IF the party has no tank AND she doens't have aquaveil up.
+    - **MAAT** — Tune Lv250 Maat into a real fight + idle-despawn + 150 Infamy
+    - **Gm Home** — Reorganize NPCs by player progression
+    - **Menus** — Strip player-facing non-ASCII from custom NPC modules (showed as CJK)
+    - **Gm Home** — Uniform 5-unit z-spacing for all NPC rows
+    - **Prime Weapons** — ASCII hyphens in Prime Armory menu -- em-dashes showed as CJK
+    - **Infamy** — Remove Curated Sets; move Nyame+Hjarrandi into slot browser
+    - **Prime Weapons** — Disable the outdated Prime Vendor NPC + purge its docs
+    - **Infamy** — Remove Other category from vendor browser
+    - **Prime Weapons** — Maat fight drops the Prime Voucher at 0.5% (2nd Trial 3 source)
+    - **Prime Weapons** — Trial 3 turns in the Prime Voucher (29699), not the Riftborn Boulder
+    - **Gear** — Pin Malignance Chapeau + Tights in FORCED_INCLUDE so re-score keeps them
+    - **Prime Weapons** — Add Trial 5 -- turn in 99 each of three Aht Urhgan currencies
+    - **Testdummy** — Scatter GM Home dummies to random points so testers don't stack
+    - **MAAT** — Maat's Echo uses Maat's real model (look=126), not invalid 2428
+    - **MAAT** — Maat's Echo NPC was invisible (invalid look 2428) -> 2401
+    - **Shop** — !shop ninja stocks toolbags (99 tools each) instead of single tools
     - **SQL** — Zz_maat_crit_token positional INSERT (item_basic has no 'jname' column)
     - **Infamy** — Sell the 22 JSE job capes at 4,000 Infamy each with baked stats
     - **Gear** — Add Malignance Chapeau + Tights to the Armor NPC (complete the set)
@@ -526,10 +552,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2a7ebdcf1bb4 -->
-_Last updated: 2026-06-21 03:39 UTC_
-<!-- DOCGEN:END id="last-updated" -->
