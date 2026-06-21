@@ -236,6 +236,15 @@ commandObj.onTrigger = function(player)
         player:getMod(xi.mod.ALL_WSDMG_ALL_HITS),
         player:getMod(xi.mod.ALL_WSDMG_FIRST_HIT),
         player:getMod(xi.mod.SKILLCHAINDMG) / 100)
+    -- Enspell damage. ENSPELL_DMG (343) = base dmg of the ACTIVE enspell, set
+    -- by the enspell effect itself, so it reads 0 with no enspell up; cast one
+    -- (e.g. Enfire) and re-run to see it populate. ENSPELL_DMG_BONUS (432) =
+    -- flat add to that base from gear/traits; ENSPELL_DMG_PCT (1195) = % mult
+    -- applied to enspell dmg from gear/traits. Both bonus mods show regardless.
+    line(player, 'Enspell: base dmg %d   +dmg %d   dmg mult +%d%%',
+        player:getMod(xi.mod.ENSPELL_DMG),
+        player:getMod(xi.mod.ENSPELL_DMG_BONUS),
+        player:getMod(xi.mod.ENSPELL_DMG_PCT))
 
     -- =========================================================
     -- Pet readout for ANY pet job: Automaton (PUP), Avatar (SMN), Jug/Charmed
