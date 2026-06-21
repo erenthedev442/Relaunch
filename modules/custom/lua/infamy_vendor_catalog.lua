@@ -225,6 +225,29 @@ catalog.vendorItems =
     -- HJARRANDI - Odyssey-augmented tank/DPS armor
     { id = 25592, name = 'Hjarrandi Helm',       cost =  400, stats = { 'Head. Tank/DD. DA+6, Store TP+7, DT-10%.' } },
     { id = 25766, name = 'Hjarrandi Breastplate',cost =  800, stats = { 'Body. Tank/DD. Store TP+10, Crit Rate+13%, DT-12%.' } },
+
+    -- ----------------------------------------------------------------
+    -- PRESTIGE ARMOR SETS  (WHM/RDM/PLD/DRK/BLU/RUN, Rank 30 required)
+    -- Three tiers: Trust (Su4), Prestige (Su4), Sworn (Su5).
+    -- Stats fixed via sql/zz_prestige_armor_mods.sql (if applicable).
+    -- ----------------------------------------------------------------
+    { id = 24135, name = 'Trust Crown',         cost = 15000, stats = { 'Head. Trust set (Su4). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+    { id = 24138, name = 'Trust Platemail',     cost = 15000, stats = { 'Body. Trust set (Su4). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+    { id = 24141, name = 'Trust Gauntlets',     cost = 15000, stats = { 'Hands. Trust set (Su4). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+    { id = 24144, name = 'Trust Brais',         cost = 15000, stats = { 'Legs. Trust set (Su4). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+    { id = 24147, name = 'Trust Sabatons',      cost = 15000, stats = { 'Feet. Trust set (Su4). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+
+    { id = 24136, name = 'Prestige Crown',      cost = 15000, stats = { 'Head. Prestige set (Su4). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+    { id = 24139, name = 'Prestige Platemail',  cost = 15000, stats = { 'Body. Prestige set (Su4). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+    { id = 24142, name = 'Prestige Gauntlets',  cost = 15000, stats = { 'Hands. Prestige set (Su4). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+    { id = 24145, name = 'Prestige Brais',      cost = 15000, stats = { 'Legs. Prestige set (Su4). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+    { id = 24148, name = 'Prestige Sabatons',   cost = 15000, stats = { 'Feet. Prestige set (Su4). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+
+    { id = 24137, name = 'Sworn Crown',         cost = 15000, stats = { 'Head. Sworn set (Su5). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+    { id = 24140, name = 'Sworn Platemail',     cost = 15000, stats = { 'Body. Sworn set (Su5). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+    { id = 24143, name = 'Sworn Gauntlets',     cost = 15000, stats = { 'Hands. Sworn set (Su5). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+    { id = 24146, name = 'Sworn Brais',         cost = 15000, stats = { 'Legs. Sworn set (Su5). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
+    { id = 24149, name = 'Sworn Sabatons',      cost = 15000, stats = { 'Feet. Sworn set (Su5). WHM/RDM/PLD/DRK/BLU/RUN.', 'Rank 30 required.' } },
 }
 
 -- DOCGEN:INFAMY_AUTO:BEGIN
@@ -911,6 +934,21 @@ catalog.itemTypeMap =
     [23789] = 'Armor/Feet',
     [25592] = 'Armor/Head',
     [25766] = 'Armor/Body',
+    [24135] = 'Armor/Head',
+    [24138] = 'Armor/Body',
+    [24141] = 'Armor/Hands',
+    [24144] = 'Armor/Legs',
+    [24147] = 'Armor/Feet',
+    [24136] = 'Armor/Head',
+    [24139] = 'Armor/Body',
+    [24142] = 'Armor/Hands',
+    [24145] = 'Armor/Legs',
+    [24148] = 'Armor/Feet',
+    [24137] = 'Armor/Head',
+    [24140] = 'Armor/Body',
+    [24143] = 'Armor/Hands',
+    [24146] = 'Armor/Legs',
+    [24149] = 'Armor/Feet',
     [20672] = 'Weapons/Sword',
     [22042] = 'Weapons/Club',
     [22055] = 'Weapons/Staff',
