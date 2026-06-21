@@ -21,6 +21,8 @@
 
 #include "0x063_miscdata_merits.h"
 
+#include <algorithm>
+
 #include "entities/charentity.h"
 #include "enums/key_items.h"
 #include "job_points.h"
@@ -62,5 +64,7 @@ GP_SERV_COMMAND_MISCDATA::MERITS::MERITS(CCharEntity* PChar)
     packet.canUseMeritMode     = PChar->jobs.job[PChar->GetMJob()] >= 75 && charutils::hasKeyItem(PChar, KeyItem::LIMIT_BREAKER);
     packet.xpCappedOrMeritMode = (atMaxLevelLimit && hasCappedXp) || PChar->MeritMode;
     packet.meritModeEnabled    = packet.canUseMeritMode && PChar->MeritMode;
-    packet.maxMeritPoints      = settings::get<uint8>("map.MAX_MERIT_POINTS") + PChar->PMeritPoints->GetMeritValue(MERIT_MAX_MERIT, PChar);
+    // FJB: 127 is a hard ceiling (the client renders the merit count as a signed
+    // int8); never advertise a cap above it or the menu shows a garbage maximum.
+    packet.maxMeritPoints      = static_cast<uint8>(std::min<int>(127, settings::get<uint8>("map.MAX_MERIT_POINTS") + PChar->PMeritPoints->GetMeritValue(MERIT_MAX_MERIT, PChar)));
 }

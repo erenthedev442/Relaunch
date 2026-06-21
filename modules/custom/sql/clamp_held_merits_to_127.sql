@@ -1,0 +1,20 @@
+-- ============================================================================
+-- clamp_held_merits_to_127.sql
+--
+-- One-time cleanup for the "merit point visual doesn't match reality" bug.
+--
+-- The FFXI client renders the held merit-point count (char_exp.merits) as a
+-- SIGNED int8, so any stored value above 127 displays as a NEGATIVE/garbage
+-- number in the merit menu. 81 chars had 128-255 held merits -- they got there
+-- because !automerits auto-bought the "Max Merit" merit (id 68), which raised
+-- their personal cap above 127.
+--
+-- The permanent fix is in C++ (merit.cpp hardCappedMeritMax + the 0x063 packet
+-- now cap the effective held/displayed merits at 127) and Lua (automerits.lua no
+-- longer buys Max Merit). This statement just cleans the already-stored values so
+-- offline chars are correct without waiting for the load-clamp on their next login.
+--
+-- Idempotent: re-running is a harmless no-op once nothing exceeds 127.
+-- The excess above 127 was unusable/undisplayable, so nothing of value is lost.
+-- ============================================================================
+UPDATE `char_exp` SET `merits` = 127 WHERE `merits` > 127;

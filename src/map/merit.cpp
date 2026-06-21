@@ -258,6 +258,17 @@ uint16 CMeritPoints::GetMeritCountInSameCategory(MERIT_TYPE merit)
 
 // true - If merit was added
 
+// FJB: the FFXI merit menu renders the held merit count as a SIGNED int8, so 127
+// is a HARD ceiling -- a held/max value above it displays as a NEGATIVE/garbage
+// number ("merit visual doesn't match reality"). Cap the configured cap
+// (MAX_MERIT_POINTS + the Max Merit bonus) here so a player can never hold, earn,
+// or be shown a value the client can't render. (Root cause: !automerits was
+// auto-buying Max Merit (merit id 68), inflating the cap past 127.)
+static uint8 hardCappedMeritMax(int maxMeritBonus)
+{
+    return static_cast<uint8>(std::min<int>(127, settings::get<uint8>("map.MAX_MERIT_POINTS") + maxMeritBonus));
+}
+
 bool CMeritPoints::AddLimitPoints(uint16 points)
 {
     m_LimitPoints += points;
@@ -265,13 +276,13 @@ bool CMeritPoints::AddLimitPoints(uint16 points)
     if (m_LimitPoints >= MAX_LIMIT_POINTS)
     {
         // check if player has reached cap
-        if (m_MeritPoints == settings::get<uint8>("map.MAX_MERIT_POINTS") + GetMeritValue(MERIT_MAX_MERIT, m_PChar))
+        if (m_MeritPoints == hardCappedMeritMax(GetMeritValue(MERIT_MAX_MERIT, m_PChar)))
         {
             m_LimitPoints = MAX_LIMIT_POINTS - 1;
             return false;
         }
 
-        uint8 MeritPoints = std::min(m_MeritPoints + m_LimitPoints / MAX_LIMIT_POINTS, settings::get<uint8>("map.MAX_MERIT_POINTS") + GetMeritValue(MERIT_MAX_MERIT, m_PChar));
+        uint8 MeritPoints = std::min<int>(m_MeritPoints + m_LimitPoints / MAX_LIMIT_POINTS, hardCappedMeritMax(GetMeritValue(MERIT_MAX_MERIT, m_PChar)));
 
         m_LimitPoints = m_LimitPoints % MAX_LIMIT_POINTS;
 
@@ -291,7 +302,7 @@ void CMeritPoints::SetLimitPoints(uint16 points)
 
 void CMeritPoints::SetMeritPoints(uint16 points)
 {
-    m_MeritPoints = std::min<uint8>((uint8)points, settings::get<uint8>("map.MAX_MERIT_POINTS") + GetMeritValue(MERIT_MAX_MERIT, m_PChar));
+    m_MeritPoints = std::min<uint8>((uint8)points, hardCappedMeritMax(GetMeritValue(MERIT_MAX_MERIT, m_PChar)));
 }
 
 /************************************************************************
