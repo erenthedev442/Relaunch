@@ -13,7 +13,7 @@ Think you can take on the master? Seek out **Maat's Echo** in **Ru'Lude Gardens*
 | Maat's Blessing drop chance | **25%** |
 | Entry NPC | **Maat's Echo** — Ru'Lude Gardens |
 | Fight zone | **Waughroon Shrine** |
-| Simultaneous fights | One at a time (server-wide) |
+| Simultaneous fights | Unlimited — every challenger gets their own |
 <!-- DOCGEN:END id="maat-stats" -->
 
 ## Where to find the NPC
@@ -28,8 +28,8 @@ Maat's Echo stands near the original Maat NPC in **Ru'Lude Gardens**, just to th
 4. Maat appears before you at **level 250** with a stat block tuned *above* our toughest Ascension boss: brutal melee, accuracy that punches through tank gear, and Chainspell nukes that delete the careless — come prepared.
 5. On death, Maat has a **25% chance** to drop **Maat's Blessing**.
 
-!!! warning "One fight at a time"
-    Only one player can challenge Maat at a time on the server. If someone else is already in the shrine fighting him, wait for the battle to conclude — or, if they abandon it, Maat despawns after about 45 seconds and the arena frees up for you.
+!!! info "Bring a crowd"
+    Every challenger gets their **own** Maat, claim-locked to them — many people can fight in the shrine at the same time without interfering. Your Maat is yours alone; no one else can tag it, steal it, or help kill it. If you leave or die, your Maat despawns on its own after about 45 seconds.
 
 ## The reward: Maat's Blessing
 
@@ -47,7 +47,7 @@ The item is **consumed on success**. It is not consumed if the augment fails (e.
 - **Come geared.** Maat carries an explicit Lv250 stat block cranked above the endgame Ascension bosses — his attacks, spell damage, and HP all reflect it. This is not a casual fight.
 - **Watch your MP.** Maat's RDM incarnation uses Chainspell + high-tier nukes. Magic defense, Stoneskin, and Utsusemi all help buy time.
 - **You keep the Infamy on his death.** Only the entry fee is spent; you don't lose more if you die.
-- **If you die without killing him**, Maat despawns after a short lull and the fight resets. The 150 Infamy entry cost is still spent — don't go in unprepared.
+- **If you die or leave without killing him**, your Maat despawns after a short lull. The 150 Infamy entry cost is still spent — don't go in unprepared.
 - **Stack up before augmenting.** Maat's Blessing lasts indefinitely while held. You can earn multiple blessings before redeeming them, but the item is RARE so you can only hold one at a time.
 
 ---

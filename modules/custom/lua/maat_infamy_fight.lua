@@ -8,15 +8,19 @@
 --
 -- Flow:
 --   1. Player talks to "Maat's Echo" NPC in Ru'Lude Gardens.
---   2. Cost: 150 Infamy. One fight active zone-wide at a time.
---   3. Player is teleported to Waughroon Shrine; Maat spawns on zone-in.
+--   2. Cost: 150 Infamy.
+--   3. Player is teleported to Waughroon Shrine; their OWN Maat spawns on
+--      zone-in, claim-locked to them. MANY players can fight at once -- each
+--      gets a private, claim-locked Maat that no one else can touch, the same
+--      way Voidspire / Colosseum isolate per-player mobs in a shared zone.
 --   4. On Maat's death: 25% chance to receive Maat's Blessing (item 29000).
 --   5. Maat's Blessing guarantees a critical augment at the Augment Moogle
 --      and is consumed on that successful augment.
 --
 -- SQL pre-req: sql/zz_maat_crit_token.sql must be applied to the DB.
--- Deploys: Lua hot-reload for NPC and onZoneIn; map restart required for
--- the new module file to register (one-time).
+-- Deploys: pure Lua. Edits to the NPC / onZoneIn / spawn logic hot-reload on a
+-- Lua sync; only the very first registration of this module file needed a
+-- restart (long since done).
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/RuLude_Gardens/Zone')
@@ -60,9 +64,9 @@ local MAAT_MODS =
     [xi.mod.REGEN]         = 3000,    -- soft DPS check: out-damage it or stall
 }
 
--- Idle watchdog: despawn Maat if no challenger fights him for 45s straight, so
--- an abandoned fight (someone died or left) clears the arena instead of leaving
--- the server-wide "occupied" guard stuck. Checks isEngaged() every 5s.
+-- Idle watchdog: despawn a player's Maat if nobody fights it for 45s straight,
+-- so an abandoned fight (the owner died or left) cleans itself up instead of
+-- leaving an orphaned Maat loose in the shrine. Checks isEngaged() every 5s.
 local WATCH_INTERVAL_MS = 5000
 local IDLE_TICKS        = 9   -- 9 x 5s = 45s
 
@@ -72,19 +76,19 @@ local SHRINE_ENTRY_Y =   101.798
 local SHRINE_ENTRY_Z =  -259.996
 local SHRINE_ENTRY_R =     0
 
--- Maat spawn: a few units forward from the player's landing spot.
-local MAAT_X = -361.0
-local MAAT_Y =  101.798
-local MAAT_Z = -252.0
-local MAAT_R =   128   -- facing toward entry
+-- Maat materializes this far (yalms) from the challenger, at a random angle, so
+-- several challengers landing on the same zone-in tile don't stack their Maats.
+-- Each one claim-locks + beelines its owner anyway, so the exact spot is cosmetic.
+local SPAWN_DIST = 5.0
+local MAAT_R     = 128   -- initial facing; he turns to chase the owner immediately
 
 -- NPC position: alongside Maat's original retail NPC in Ru'Lude Gardens.
 -- Retail Maat is at x=8, y=3, z=118. Place the Echo a step to the side.
 local NPC_X, NPC_Y, NPC_Z, NPC_ROT = 12.0, 3.0, 118.0, 200
 
--- Module-level ref to the active fight mob.
--- Cleared in onMobDeath; prevents double-spawning while a fight is running.
-local activeMaat = nil
+-- Per-challenger live Maat, keyed by character name. Each player may have at
+-- most one fight running; cleared in onMobDeath and on idle-despawn.
+local activeFights = {}
 
 local function isAlive(entity)
     if entity == nil then return false end
@@ -95,36 +99,43 @@ end
 -- Re-arming idle watchdog (see IDLE_TICKS). mob:timer is dropped automatically
 -- when the mob dies, so this chain self-terminates on a real kill; we only have
 -- to stop it ourselves on the idle-despawn path.
-local function armIdleWatch(mob)
+local function armIdleWatch(mob, ownerName)
     mob:timer(WATCH_INTERVAL_MS, function(m)
         if not isAlive(m) then return end        -- killed / despawned / gone
         if m:isEngaged() then
-            m:setLocalVar('maatIdle', 0)         -- a challenger is on him; reset
+            m:setLocalVar('maatIdle', 0)         -- the owner is on him; reset
         else
             local ticks = (m:getLocalVar('maatIdle') or 0) + 1
             m:setLocalVar('maatIdle', ticks)
             if ticks >= IDLE_TICKS then
-                activeMaat = nil
+                activeFights[ownerName] = nil
                 m:setLocalVar('maatDespawn', 1)  -- tell onMobDeath this is NOT a kill
-                m:setHP(0)                        -- remove him from the shrine
+                m:setHP(0)                        -- remove the orphaned Maat
                 return
             end
         end
-        armIdleWatch(m)
+        armIdleWatch(m, ownerName)
     end)
 end
 
 local function spawnMaat(player)
-    local zone = player:getZone()
+    local ownerName = player:getName()
+    local zone      = player:getZone()
+
+    -- Random point SPAWN_DIST yalms from the challenger (see SPAWN_DIST).
+    local angle = math.random() * 2 * math.pi
+    local sx    = player:getXPos() + SPAWN_DIST * math.cos(angle)
+    local sy    = player:getYPos()
+    local sz    = player:getZPos() + SPAWN_DIST * math.sin(angle)
 
     local mob = zone:insertDynamicEntity({
         objtype              = xi.objType.MOB,
         groupId              = MAAT_GROUP_ID,
         groupZoneId          = MAAT_GROUP_ZID,
         name                 = 'Maat',
-        x                    = MAAT_X,
-        y                    = MAAT_Y,
-        z                    = MAAT_Z,
+        x                    = sx,
+        y                    = sy,
+        z                    = sz,
         rotation             = MAAT_R,
         minLevel             = MAAT_LEVEL,
         maxLevel             = MAAT_LEVEL,
@@ -133,7 +144,7 @@ local function spawnMaat(player)
         releaseIdOnDisappear = true,
 
         onMobDeath = function(deadMob, killer)
-            activeMaat = nil
+            activeFights[ownerName] = nil
 
             -- The idle watchdog removes an abandoned Maat via setHP(0); that is
             -- NOT a kill, so don't hand out a reward for it.
@@ -141,29 +152,32 @@ local function spawnMaat(player)
                 return
             end
 
-            if killer and killer:isPC() then
-                if math.random() < DROP_CHANCE then
-                    local added = killer:addItem(CRIT_TOKEN_ID, 1)
-                    if added then
-                        killer:printToPlayer(
-                            "Maat relinquishes a Maat's Blessing! Bring it to the Augment Moogle for a guaranteed critical augment.",
-                            xi.msg.channel.SYSTEM_3)
-                    else
-                        killer:printToPlayer(
-                            "Maat dropped a Maat's Blessing, but your inventory is full!",
-                            xi.msg.channel.SYSTEM_3)
-                    end
-                end
+            -- Reward the OWNER. The Maat is claim-locked to them so they are the
+            -- only one who could have killed it, but resolve by name so a trust
+            -- or pet landing the final blow still credits the player.
+            local owner = GetPlayerByName(ownerName)
+            if not owner then return end
 
-                -- Prime Weapon TRIAL 3: a Prime Voucher (item 29699) drops 0.5%
-                -- from the Maat fight, on top of the Hunting League source. Gated
-                -- on PW_Trial3_Done so it stops once Trial 3 is cleared; the reward
-                -- helper prints its own message + handles a full inventory.
-                if (killer:getCharVar('PW_Trial3_Done') or 0) == 0 and math.random() < 0.005 then
-                    pcall(function()
-                        require('modules/custom/lua/prime_voucher_reward').award(killer, 1, 'Maat')
-                    end)
+            if math.random() < DROP_CHANCE then
+                if owner:addItem(CRIT_TOKEN_ID, 1) then
+                    owner:printToPlayer(
+                        "Maat relinquishes a Maat's Blessing! Bring it to the Augment Moogle for a guaranteed critical augment.",
+                        xi.msg.channel.SYSTEM_3)
+                else
+                    owner:printToPlayer(
+                        "Maat dropped a Maat's Blessing, but you couldn't carry it (inventory full, or you already hold one).",
+                        xi.msg.channel.SYSTEM_3)
                 end
+            end
+
+            -- Prime Weapon TRIAL 3: a Prime Voucher (item 29699) drops 0.5%
+            -- from the Maat fight, on top of the Hunting League source. Gated
+            -- on PW_Trial3_Done so it stops once Trial 3 is cleared; the reward
+            -- helper prints its own message + handles a full inventory.
+            if (owner:getCharVar('PW_Trial3_Done') or 0) == 0 and math.random() < 0.005 then
+                pcall(function()
+                    require('modules/custom/lua/prime_voucher_reward').award(owner, 1, 'Maat')
+                end)
             end
         end,
     })
@@ -174,8 +188,8 @@ local function spawnMaat(player)
         return false
     end
 
-    activeMaat = mob
-    mob:setSpawn(MAAT_X, MAAT_Y, MAAT_Z, MAAT_R)
+    activeFights[ownerName] = mob
+    mob:setSpawn(sx, sy, sz, MAAT_R)
     mob:spawn()
     mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
 
@@ -188,9 +202,15 @@ local function spawnMaat(player)
     mob:setMaxHP(MAAT_HP)
     mob:setHP(MAAT_HP)
 
+    -- Claim-lock this Maat to its challenger: updateClaim hands them the claim
+    -- (so no one else can tag or steal it) plus kill credit, and addEnmity makes
+    -- it beeline them immediately. Mirrors Voidspire's per-player isolation.
+    mob:updateClaim(player)
+    mob:addEnmity(player, 30000, 30000)
+
     -- Start the abandon-despawn watchdog.
     mob:setLocalVar('maatIdle', 0)
-    armIdleWatch(mob)
+    armIdleWatch(mob, ownerName)
 
     return true
 end
@@ -216,9 +236,10 @@ m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
             player:timer(50, function(p)
                 local infamy = p:getCharVar('Infamy') or 0
 
-                if isAlive(activeMaat) then
+                -- Per-challenger gate: one live Maat each (no server-wide lock).
+                if isAlive(activeFights[p:getName()]) then
                     p:printToPlayer(
-                        '[Maat] A challenger already faces Maat in the shrine. Wait for the battle to conclude.',
+                        '[Maat] Your echo of Maat still stands in the shrine. Finish that fight first.',
                         xi.msg.channel.SYSTEM_3)
                     return
                 end
@@ -232,7 +253,7 @@ m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
                 end
 
                 -- Deduct Infamy first; mark the pending fight so onZoneIn knows
-                -- to spawn Maat when the player lands in Waughroon Shrine.
+                -- to spawn this challenger's Maat when they land in the shrine.
                 p:setCharVar('Infamy', infamy - INFAMY_COST)
                 p:setCharVar('MaatFight_Pending', 1)
 
@@ -250,7 +271,7 @@ m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
 end)
 
 -----------------------------------
--- Waughroon Shrine: spawn Maat when a challenger zones in.
+-- Waughroon Shrine: spawn this challenger's own Maat when they zone in.
 -----------------------------------
 m:addOverride('xi.zones.Waughroon_Shrine.Zone.onZoneIn', function(player, prevZone)
     local cs = super(player, prevZone)

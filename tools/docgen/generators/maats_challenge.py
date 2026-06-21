@@ -33,7 +33,7 @@ def _render_stats(cost: int, level: int, drop_pct: int) -> str:
         f"| Maat's Blessing drop chance | **{drop_pct}%** |",
         "| Entry NPC | **Maat's Echo** — Ru'Lude Gardens |",
         "| Fight zone | **Waughroon Shrine** |",
-        "| Simultaneous fights | One at a time (server-wide) |",
+        "| Simultaneous fights | Unlimited — every challenger gets their own |",
     ]
     return "\n".join(lines)
 
