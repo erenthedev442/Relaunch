@@ -102,6 +102,17 @@ xi.pets.avatar.onMobSpawn = function(pet)
     if master:getMainJob() == xi.job.SMN and pet:getPetID() > xi.petId.DARK_SPIRIT then
         local skillOverCap = math.max(xi.summon.getSummoningSkillOverCap(pet), 0)
         pet:addMod(xi.mod.BP_DAMAGE, 25900 + skillOverCap * 40)
+
+        -- Big flat magic stats so MAGICAL Blood Pacts (Inferno, Judgment Bolt, Geocrush...)
+        -- aren't crushed by the avatar-MATT vs NM-MDEF mitigation. The engine gives avatars
+        -- only ~32 base MATT (petutils.cpp), so vs a 3000+ MDEF Legendary NM the
+        -- (100+MATT)/(100+MDEF) ratio is ~0.04 and the x260 BP_DAMAGE above is mostly wasted
+        -- on magical BPs. These lift that ratio to strongly favorable, land BPs unresisted,
+        -- and feed the magical base (dINT). Flat (not master-scaled) by owner request
+        -- 2026-06-21 -- tune the three numbers to taste.
+        pet:addMod(xi.mod.MATT, 6000)   -- magical BP damage vs high-MDEF NMs
+        pet:addMod(xi.mod.MACC, 2500)   -- land magical BPs vs high-MEVA NMs
+        pet:addMod(xi.mod.INT,  1000)   -- feeds the magical BP base (dINT)
     end
 
     if pet:getPetID() > xi.petId.DARK_SPIRIT then
