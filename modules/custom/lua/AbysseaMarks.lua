@@ -216,14 +216,27 @@ end
 -- Registered as a HOOK, not an addOverride: the stock
 -- xi.mob.onMobDeathEx calls this at the end (call baked into
 -- mobs.lua), so a Lua-sync reload of mobs.lua can't clobber it.
--- Awards Gil + Infamy + Cruor to every PC in the party on a
+-- The core calls this once per in-zone alliance/party member (ForAlliance in
+-- luautils OnMobDeath), so it awards Gil + Infamy + Cruor to EACH of them on a
 -- marks-popped NM kill, with multipliers for:
 --   x2.0  - 2+ real players in party
 --   x1.5  - no trusts in party
 -- Multipliers stack (solo no-trust = x1.5, party no-trust = x3).
 -- ============================================================
 xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)
-    if not isKiller or player == nil then return end
+    -- The core fans OnMobDeath out with ForAlliance and calls onMobDeathEx -> this
+    -- hook ONCE PER in-zone alliance/party member (luautils.cpp OnMobDeath;
+    -- mobentity.cpp: "called for all alliance / party members"). So we just award
+    -- to THIS member and let the engine decide who -- which covers the WHOLE
+    -- in-zone alliance, not only the killer's party.
+    --
+    -- The old version gated on isKiller (discarding every other member's call) and
+    -- then hand-walked the party via getPartyMember(i, 0). That walk only saw the
+    -- killer's OWN party (allianceparty = 0, never the rest of an alliance) and was
+    -- index-fragile (getPartyMember(0,0) returns self, not members[0]) -- which is
+    -- exactly why some members got no Infamy. Per-member award fixes it. Mirrors
+    -- allied_notes_drop.lua.  (isKiller / isWeaponSkillKill are unused now.)
+    if mob == nil or player == nil then return end
     if player:getObjType() ~= xi.objType.PC then return end
 
     local infamyBase = mob:getLocalVar(MARKS_INFAMY_LV)
@@ -239,7 +252,15 @@ xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)
         local gilEarned    = math.floor(gilBase    * totalMult)
         local cruorEarned  = math.floor(cruorBase  * totalMult)
 
-        -- Build reward message once; same for every member.
+        -- Award to THIS member (engine already calls us once per in-zone member).
+        if infamyEarned > 0 then
+            player:setCharVar(INFAMY_CV,      (player:getCharVar(INFAMY_CV)      or 0) + infamyEarned)
+            player:setCharVar(INFAMY_LIFE_CV, (player:getCharVar(INFAMY_LIFE_CV) or 0) + infamyEarned)
+        end
+        if gilEarned   > 0 then player:addGil(gilEarned)                 end
+        if cruorEarned > 0 then player:addCurrency('cruor', cruorEarned) end
+
+        -- Reward message for this member.
         local parts = {}
         if infamyEarned > 0 then table.insert(parts, string.format('+%d Infamy', infamyEarned)) end
         if gilEarned    > 0 then table.insert(parts, string.format('+%dg', gilEarned))           end
@@ -253,44 +274,7 @@ xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)
         if #bonusParts > 0 then
             msg = msg .. string.format('  (x%.1f: %s)', totalMult, table.concat(bonusParts, ' + '))
         end
-
-        -- Distribute to every online PC in the party.
-        --
-        -- getPartyMember(0, 0) always returns self (C++ special-case), while
-        -- getPartyMember(i, 0) for i >= 1 returns members[i] from the shared
-        -- 0-indexed party vector.  When the killer is NOT the party leader
-        -- (i.e. NOT at members[0]), looping i=0..N-1 double-grants to the
-        -- killer (hit at both i=0 and i=killer_index) and never visits
-        -- members[0] (the leader).  Fix: reference the killer directly,
-        -- pull the leader via getPartyLeader(), and dedup by player ID.
-        local seen = {}
-        local partySize = player:getPartySize() or 1
-
-        local function grantTo(mem)
-            if mem == nil then return end
-            if mem:getObjType() ~= xi.objType.PC then return end
-            local id = mem:getID()
-            if seen[id] then return end
-            seen[id] = true
-            if infamyEarned > 0 then
-                mem:setCharVar(INFAMY_CV,      (mem:getCharVar(INFAMY_CV)      or 0) + infamyEarned)
-                mem:setCharVar(INFAMY_LIFE_CV, (mem:getCharVar(INFAMY_LIFE_CV) or 0) + infamyEarned)
-            end
-            if gilEarned   > 0 then mem:addGil(gilEarned)                    end
-            if cruorEarned > 0 then mem:addCurrency('cruor', cruorEarned)     end
-            mem:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
-        end
-
-        -- Killer (always correct via direct parameter reference)
-        grantTo(player)
-        -- Party leader = members[0]; may differ from killer when killer is not leader
-        if partySize > 1 then
-            grantTo(player:getPartyLeader())
-        end
-        -- members[1]..members[N-1] from the shared party vector
-        for i = 1, partySize - 1 do
-            grantTo(player:getPartyMember(i, 0))
-        end
+        player:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
     end)
 end
 
