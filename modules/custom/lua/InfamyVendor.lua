@@ -107,7 +107,7 @@ local SUB_ORDER =
     Weapons     = { 'Hand-to-Hand', 'Dagger', 'Sword', 'Great Sword', 'Axe',
                     'Great Axe', 'Scythe', 'Polearm', 'Katana', 'Great Katana',
                     'Club', 'Staff', 'Archery', 'Marksmanship', 'Ammo', 'Instrument',
-                    'Grip-Shield', 'Other' },
+                    'Handbell', 'Grip-Shield', 'Other' },
     Armor       = { 'Head', 'Body', 'Hands', 'Legs', 'Feet', 'Other' },
     Accessories = { 'Neck', 'Ear', 'Ring', 'Waist', 'Back', 'Other' },
     Other       = { 'Other' },
