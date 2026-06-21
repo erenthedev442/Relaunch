@@ -552,6 +552,34 @@ def _prime_armory_ids(repo_root: Path) -> set[int]:
     return {int(m.group(1)) for m in _PA_ROW_RE.finditer(text)}
 
 
+# The !shop command (scripts/commands/shop.lua) sells gear from a `stock` table
+# of { itemId, price } rows -- raw numeric ids AND xi.item.CONSTANT refs. There is
+# no per-item doc page, so tag those ids straight from the Lua, exactly like the
+# reforge / prime-armory sources above. Bounded to the `stock` table so prices and
+# menu literals elsewhere can't leak in; a numeric first element is the item id
+# (prices are the 2nd element and are never captured), and consumable ids that
+# aren't equippable simply never match a Finder item, so they're harmless.
+_SHOP_NUM_RE   = re.compile(r'\{\s*(\d+)\s*,\s*\d')
+_SHOP_CONST_RE = re.compile(r'\{\s*xi\.item\.([A-Z0-9_]+)\s*,')
+_ITEM_ENUM_RE  = re.compile(r'^\s*([A-Z][A-Z0-9_]*)\s*=\s*(\d+)', re.MULTILINE)
+
+
+def _shop_ids(repo_root: Path) -> set[int]:
+    """Every item id sold through the !shop command (scripts/commands/shop.lua)."""
+    text = _read(repo_root, 'scripts/commands/shop.lua')
+    if not text:
+        return set()
+    sm = re.search(r'\nlocal stock\b(.*?)\nlocal ', text, re.DOTALL)
+    region = sm.group(1) if sm else text
+    ids: set[int] = {int(m.group(1)) for m in _SHOP_NUM_RE.finditer(region)}
+    consts = {m.group(1) for m in _SHOP_CONST_RE.finditer(region)}
+    if consts:
+        enum = {m.group(1): int(m.group(2))
+                for m in _ITEM_ENUM_RE.finditer(_read(repo_root, 'scripts/enum/item.lua') or '')}
+        ids.update(enum[c] for c in consts if c in enum)
+    return ids
+
+
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
@@ -785,6 +813,10 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # Prime weapon also sold by a vendor keeps its more specific vendor tag.
     for iid in _prime_armory_ids(repo_root):
         obtainable.setdefault(iid, 'Prime Armory')
+    # !shop command (scripts/commands/shop.lua): direct-purchase gear, no per-item
+    # doc page. Runs last so an item also sold by a medal vendor keeps its tag.
+    for iid in _shop_ids(repo_root):
+        obtainable.setdefault(iid, '!shop')
     for obj in items:
         src = obtainable.get(obj['i'])
         if src:
