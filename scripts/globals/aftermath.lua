@@ -699,8 +699,7 @@ xi.aftermath.onEffectGain = function(target, effect)
 
         -- Mythic
         [2] = function(x)
-            local tp = effect:getSubPower()
-            local mods = aftermath.mods[math.floor(tp / 1000)]
+            local tp  = effect:getSubPower()
             local pet = target:getPet()
             if pet then
                 -- pets gain same mods as the player, so give them the effect without a loss message
@@ -709,8 +708,12 @@ xi.aftermath.onEffectGain = function(target, effect)
                 pet:getStatusEffect(xi.effect.AFTERMATH):addEffectFlag(xi.effectFlag.NO_LOSS_MESSAGE)
             end
 
-            for i = 1, #mods, 2 do
-                effect:addMod(mods[i], mods[i + 1](tp))
+            -- each entry in aftermath.mods is a {modId, func[, modId2, func2...]} group;
+            -- iterate all groups and apply every pair so all mods land regardless of TP tier
+            for _, modGroup in ipairs(aftermath.mods) do
+                for i = 1, #modGroup, 2 do
+                    effect:addMod(modGroup[i], modGroup[i + 1](tp))
+                end
             end
         end,
 
