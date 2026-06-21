@@ -27,7 +27,7 @@ ITEM_EQUIP = os.path.join(REPO, "sql", "item_equipment.sql")
 
 ARMOR_SLOTS    = ["head", "body", "hands", "legs", "feet"]
 SLOT_BIT       = {16: "head", 32: "body", 64: "hands", 128: "legs", 256: "feet"}
-TWO_WORD_TAILS = ("finger gauntlets",)
+TWO_WORD_TAILS = ("finger gauntlets", "toe shoes")
 
 
 def norm(name):

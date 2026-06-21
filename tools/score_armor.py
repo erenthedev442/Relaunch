@@ -486,12 +486,15 @@ TIER_COST = {'bronze': 12, 'silver': 25, 'gold': 50, 'infamy': 500}
 # NOTE: a forced item is NOT removed from any higher tier it also auto-selects
 # into, so check for cross-tier family overlap when adding ids here.
 FORCED_INCLUDE = {
-    ('bronze', 'body'): [25790, 26849, 25683, 25780, 25702, 25686, 26870, 25684],
-    ('silver', 'body'): [25717, 25796],
-    ('gold',   'body'): [23733, 26943],
+    ('bronze', 'body'): [25790, 26849, 25683, 25780, 25702, 25686, 26870, 25684, 26536],  # +26536 Pinga Tunic +1 -- completes the bronze Pinga healer set (2026-06-21)
+    ('silver', 'body'): [25717, 25796, 25752],  # +25752 Inyanga Jubbah +1 -- completes the Inyanga caster set (2026-06-21)
+    ('gold',   'body'): [23733, 26943, 23766],  # +23766 Agwus Robe -- completes the gold Agwus SCH set (2026-06-21)
     ('gold',   'feet'): [23736],  # Malignance Boots -- pin to gold so the full Malignance gold set is buyable (it scores just under gold's cut). Added 2026-06-14.
-    ('gold',   'head'): [23732],  # Malignance Chapeau -- completes the Malignance gold set; scores into gold's band but below its per-slot top-N. Added 2026-06-20 (was a plain table.insert that every re-score wiped -- pins MUST live here, not in the catalog).
+    ('gold',   'head'): [23732, 25575],  # 23732 Malignance Chapeau + 25575 Meghanada Visor +2 -- each completes its gold set below the per-slot top-N. 2026-06-20 / 2026-06-21.
     ('gold',   'legs'): [23735],  # Malignance Tights  -- completes the Malignance gold set; scores into gold's band but below its per-slot top-N. Added 2026-06-20 (same wipe story as the Chapeau).
+    # ---- 2026-06-21: two near-finished sets that need a NEW (tier, slot) key ----
+    ('silver', 'head'): [25616, 25579],  # 25616 Amalric Coif +1 (completes Amalric); 25579 Flamma Zucchetto re-pinned -- forcing the Amalric caster head bumped this tank head from the per-job top-N, which would have broken the otherwise-complete Flamma set
+    ('silver', 'legs'): [25874],  # Flamma Dirs +1  -- completes the bronze/silver Flamma melee set
     # Taliah +2 set (BST/SMN/PUP): pin hands/feet/body +2 to silver alongside
     # the auto-scored Turban +2 (head) and Seraweels +2 (legs) so the full
     # 5-piece +2 set is buyable from the one Kindreds Medal tier. These three
