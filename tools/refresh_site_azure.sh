@@ -109,7 +109,12 @@ if [ "$players" -eq 0 ]; then
 fi
 
 echo "[3/4] deploy to Cloudflare Pages ($CF_PROJECT)..."
-npx --yes wrangler pages deploy site --project-name="$CF_PROJECT" --commit-dirty=true \
+# --branch=main maps to Cloudflare's PRODUCTION environment (legendary-ffxi.pages.dev).
+# WITHOUT it, wrangler tags the deploy with the box's checked-out git branch
+# ("Legendary") and Cloudflare treats that as a PREVIEW deployment
+# (legendary.legendary-ffxi.pages.dev) -- production never updates. That froze the
+# public site "since 6/19" until diagnosed 2026-06-20; do not remove this flag.
+npx --yes wrangler pages deploy site --project-name="$CF_PROJECT" --branch=main --commit-dirty=true \
     || { echo "[FATAL] wrangler deploy failed (CLOUDFLARE_API_TOKEN set?)"; exit 1; }
 
 echo "===== $(date '+%F %T')  refresh_site DONE ====="
