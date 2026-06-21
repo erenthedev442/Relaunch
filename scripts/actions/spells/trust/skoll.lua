@@ -411,10 +411,10 @@ spellObject.onMobSpawn = function(mob)
     mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.SLOW      }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.SLOW_II     }, 120)
     mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.PARALYSIS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.PARALYZE_II }, 120)
     mob:addGambit(ai.t.TARGET, { ai.c.NOT_STATUS, xi.effect.BLINDNESS }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.BLIND_II    }, 120)
-    -- Dispel -> strip a beneficial status off the enemy. No "enemy has a buff"
-    -- gambit condition exists, so it fires on a low 15% chance (a cast with nothing
-    -- to strip simply no-effects). Insurance, not a main lever.
-    mob:addGambit(ai.t.TARGET, { ai.c.STATUS_FLAG.xi.effectFlag.DISPELABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.DISPEL })
+    -- Dispel -> strip a beneficial status off the enemy, gated on it actually
+    -- HAVING a dispelable buff (ai.c.STATUS_FLAG + the DISPELABLE flag, exactly
+    -- like Koru-Moru's Dispel gambit). Insurance, not a main lever.
+    mob:addGambit(ai.t.TARGET, { ai.c.STATUS_FLAG, xi.effectFlag.DISPELABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.DISPEL })
 
     -- =====================================================
     -- FREE NUKE  (secondary DPS -- the LOWEST-priority gambit)
