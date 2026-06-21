@@ -3,7 +3,7 @@
 The **Prime Weapon Trials** are the gateway to a Prime weapon. Clear all five and you can forge any Prime at the [Prime Armory](prime-armory.md) in GM Home, or claim a finished retail Prime from the [Prime Vendor](prime-vendor.md) — free, because the trials *are* the price.
 
 !!! tip "Summary"
-    Five trials, done in any order: gather the Abyssea collectibles, climb the Endless Tower, win a Prime Sigil from Abyssea NMs, master a job to beat a Weapon Guardian, and bank the three Aht Urhgan currencies. Finish all five → forge your Prime.
+    Five trials, done in any order: gather the Abyssea collectibles, climb the Endless Tower, win a Prime Voucher from Hunting League NMs, master a job to beat a Weapon Guardian, and bank the three Aht Urhgan currencies. Finish all five → forge your Prime.
 
 ## The gate
 
@@ -20,7 +20,7 @@ Talk to the **Prime Armory** NPC in **GM Home** at any time to see which trials 
 |---|---|
 | **Trial 1** | 12 each of all 20 Abyssea collectibles (turn in here) |
 | **Trial 2** | Endless Tower floor 50 |
-| **Trial 3** | Prime Sigil — rare Abyssea NM drop (turn in here) |
+| **Trial 3** | Prime Voucher — rare Hunting League NM drop (turn in here) |
 | **Trial 4** | Weapon Guardian defeated (Job Mastery) |
 | **Trial 5** | 99 each of Jadeshell, Silverpiece & 100 Byne Bill (turn in here) |
 <!-- DOCGEN:END id="prime-trials-table" -->
@@ -51,9 +51,9 @@ Because every piece drops while you farm [Abyssea NMs](../endgame/abyssea-nms.md
 
 Reach **floor 50** of the [Endless Tower](../endgame/endless-tower.md). The Tower is a solo-friendly, ever-escalating gauntlet; floor 50 is the Prime checkpoint, and clearing it flags this trial automatically.
 
-## Trial 3 — The Prime Sigil
+## Trial 3 — The Prime Voucher
 
-Win a **Prime Sigil** — a rare drop from [Abyssea NMs](../endgame/abyssea-nms.md) — and turn it in at the Prime Armory. It's a low-rate drop, so this trial is mostly persistence: keep killing Abyssea NMs and one will eventually fall. A single Sigil is all you need.
+Win a **Prime Voucher** — a rare (~1%) drop from [Hunting League](index.md) NMs — and turn it in at the Prime Armory. It's a low-rate drop, so this trial is mostly persistence: keep clearing Hunting League NMs and one will eventually fall (it stops dropping once you've cleared Trial 3). A single Voucher is all you need.
 
 ## Trial 4 — Weapon Guardian
 

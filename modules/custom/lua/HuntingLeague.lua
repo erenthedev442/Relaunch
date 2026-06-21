@@ -606,30 +606,17 @@ local function insertSpawnerNPC(zone)
                                 return
                             end
 
-                            -- Prime Voucher: 1% drop from any Hunting League NM
-                            -- (the token redeemed at the Prime Armory NPC for a
-                            -- Prime weapon). pcall-guarded so a reward error can
-                            -- never break the mark-award logic below.
-                            pcall(function()
-                                if math.random(100) <= 1 then
-                                    require('modules/custom/lua/prime_voucher_reward').award(killer, 1, 'Hunting League')
-                                end
-                            end)
-
-                            -- Prime Weapon TRIAL 3: a Riftborn Boulder (item 4061)
-                            -- drops ~3% from any Abyssea (Hunting League) NM. Turned
-                            -- in at the Prime Armory for Trial 3 credit. Only drops
-                            -- while the player still needs it, so it never clutters
-                            -- after Trial 3 is done. pcall-guarded.
+                            -- Prime Voucher: the Prime Weapon TRIAL 3 turn-in
+                            -- (item 29699). ~1% drop from any Hunting League NM;
+                            -- only drops while the player still needs it, so it
+                            -- never clutters once Trial 3 is done. Also grantable
+                            -- via !primevoucher. pcall-guarded so a reward error
+                            -- can never break the mark-award logic below.
                             pcall(function()
                                 if (killer:getCharVar('PW_Trial3_Done') or 0) == 0
-                                    and math.random(100) <= 3
-                                    and killer:getFreeSlotsCount() > 0
+                                    and math.random(100) <= 1
                                 then
-                                    killer:addItem({ id = 4061, quantity = 1 })
-                                    killer:printToPlayer(
-                                        '[Prime Armory] A Riftborn Boulder dropped! Take it to the Prime Armory for Trial 3, kupo!',
-                                        xi.msg.channel.SYSTEM_3)
+                                    require('modules/custom/lua/prime_voucher_reward').award(killer, 1, 'Hunting League')
                                 end
                             end)
 

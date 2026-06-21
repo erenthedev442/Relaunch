@@ -5,7 +5,7 @@
 --
 --   Trial 1 (PW_Trial1_Done)  Turn in 12 each of the 20 Abyssea collectibles
 --   Trial 2 (PW_Trial2_Done)  Clear floor 50 of the Endless Tower
---   Trial 3 (PW_Trial3_Done)  Turn in a Prime Sigil (rare Abyssea NM drop)
+--   Trial 3 (PW_Trial3_Done)  Turn in a Prime Voucher (rare Hunting League drop)
 --   Trial 4 (PW_Trial4_Done)  Defeat any Weapon Guardian (Job Mastery)
 --   Trial 5 (PW_Trial5_Done)  Turn in 99 each of three Aht Urhgan currencies
 --
@@ -30,7 +30,7 @@ local TRIALS =
 {
     { var = 'PW_Trial1_Done', label = 'Trial 1', desc = '12 each of all 20 Abyssea collectibles (turn in here)' },
     { var = 'PW_Trial2_Done', label = 'Trial 2', desc = 'Endless Tower floor 50' },
-    { var = 'PW_Trial3_Done', label = 'Trial 3', desc = 'Prime Sigil — rare Abyssea NM drop (turn in here)' },
+    { var = 'PW_Trial3_Done', label = 'Trial 3', desc = 'Prime Voucher — rare Hunting League NM drop (turn in here)' },
     { var = 'PW_Trial4_Done', label = 'Trial 4', desc = 'Weapon Guardian defeated (Job Mastery)' },
     { var = 'PW_Trial5_Done', label = 'Trial 5', desc = '99 each of Jadeshell, Silverpiece & 100 Byne Bill (turn in here)' },
 }
@@ -67,9 +67,10 @@ local T1_SETS =
     { name = 'Voyage',    types = { { id = 3226, t = 'Stone' }, { id = 3227, t = 'Coin' }, { id = 3228, t = 'Jewel' }, { id = 3229, t = 'Card' } } },
 }
 
--- Trial 3: turn in ONE Riftborn Boulder (item 4061) -- a ~3% drop from Abyssea
--- (Hunting League) NMs, wired in HuntingLeague.lua's NM onMobDeath.
-local T3_ITEM = 4061
+-- Trial 3: turn in ONE Prime Voucher (item 29699, defined in
+-- modules/custom/sql/prime_voucher.sql) -- a ~1% drop from Hunting League NMs
+-- (HuntingLeague.lua onMobDeath), also grantable via the !primevoucher command.
+local T3_ITEM = 29699
 
 -- Trial 5: collect 99 EACH of three Aht Urhgan Assault currencies (stack to 99).
 -- Turned in here, which CONSUMES all 297 (99 x 3) and stamps PW_Trial5_Done.
@@ -185,7 +186,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     end
 
     -----------------------------------
-    -- Trial 3 turn-in: one Riftborn Boulder. Consume-and-verify so a split
+    -- Trial 3 turn-in: one Prime Voucher. Consume-and-verify so a split
     -- stack can't credit the trial without actually handing the item over.
     -----------------------------------
     local function turnInTrial3(player)
@@ -194,17 +195,17 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             return
         end
         if player:getItemCount(T3_ITEM) < 1 then
-            player:printToPlayer('[Prime Armory] You need a Riftborn Boulder — a rare drop from Abyssea NMs — for Trial 3, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Armory] You need a Prime Voucher — a rare drop from Hunting League NMs — for Trial 3, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
         local before = player:getItemCount(T3_ITEM)
         player:delItem(T3_ITEM, 1)
         if player:getItemCount(T3_ITEM) >= before then
-            player:printToPlayer('[Prime Armory] Keep the Riftborn Boulder in your MAIN inventory and try again, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Armory] Keep the Prime Voucher in your MAIN inventory and try again, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
         player:setCharVar('PW_Trial3_Done', 1)
-        player:printToPlayer('[Prime Armory] The Riftborn Boulder is accepted! Trial 3 complete, kupo!', xi.msg.channel.SYSTEM_3)
+        player:printToPlayer('[Prime Armory] The Prime Voucher is accepted! Trial 3 complete, kupo!', xi.msg.channel.SYSTEM_3)
     end
 
     -----------------------------------
@@ -395,7 +396,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                     table.insert(opts, { 'Trial 1: what do I still need?',                             function(p) printTrial1Progress(p) end })
                 end
                 if (player:getCharVar('PW_Trial3_Done') or 0) == 0 then
-                    table.insert(opts, { 'Trial 3: turn in Boulder', function(p) turnInTrial3(p) end })
+                    table.insert(opts, { 'Trial 3: turn in Voucher', function(p) turnInTrial3(p) end })
                 end
                 if (player:getCharVar('PW_Trial5_Done') or 0) == 0 then
                     table.insert(opts, { 'Trial 5: turn in (x3)', function(p) turnInTrial5(p) end })

@@ -48,7 +48,7 @@ function M.award(player, count, reason)
 
     local tag = reason and (' (' .. reason .. ')') or ''
     player:printToPlayer(
-        string.format('You earned %d Prime Voucher%s%s! Trade one at the Prime Armory in GM Home for a Prime weapon.',
+        string.format('You earned %d Prime Voucher%s%s! Turn one in at the Prime Armory in GM Home for Prime Weapon Trial 3.',
             count, count == 1 and '' or 's', tag),
         xi.msg.channel.SYSTEM_3)
 
