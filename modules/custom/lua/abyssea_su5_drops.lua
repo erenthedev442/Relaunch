@@ -2,7 +2,7 @@
 -- abyssea_su5_drops.lua
 -- Superior Lv5 (Dynamis Divergence) weapon drops in Abyssea. Owner request 2026-06-21.
 --
--- On ANY regular mob killed in an Abyssea zone: ONE 1% roll per kill; on a hit, a
+-- On ANY regular mob killed in an Abyssea zone: ONE 5% roll per kill; on a hit, a
 -- random one of the 22 NQ Su5 weapons (one per job) is added to the treasure pool
 -- (the whole alliance can lot it), exactly like the Al Zahbi loot fountain.
 --
@@ -21,7 +21,7 @@ require('scripts/globals/mobs')
 
 local m = Module:new('abyssea_su5_drops')
 
-local DROP_CHANCE = 0.01   -- 1% total per kill; on a hit, ONE random weapon below
+local DROP_CHANCE = 0.05   -- 5% total per kill; on a hit, ONE random weapon below
 
 -- The 22 NQ Superior Lv5 "Dynamis Divergence" weapons, one per job. All verified
 -- present + statted (item_mods) in this server's DB.
