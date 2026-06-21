@@ -1,8 +1,8 @@
 # Nanafu
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 22h
 
-`💪 1 job @99`
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -12,16 +12,16 @@
 | | |
 |---|---|
 | Main job | **WAR 99** |
-| Sub job | SAM 84 |
-| Time played | 8h |
-| Enemies defeated | 288 |
-| Deaths | 14 |
+| Sub job | SAM 99 |
+| Time played | 9h |
+| Enemies defeated | 306 |
+| Deaths | 15 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 84 |
+| **WAR** | **99** | **SAM** | **99** |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 6,380
-- **Marks (lifetime):** 1,168
+- **Marks (current):** 12,335
+- **Marks (lifetime):** 4,191
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 109
+- **Total NM kills:** 365
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0a97933c8930 -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: 98af4727f503 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

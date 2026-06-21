@@ -1,6 +1,6 @@
 # Loamy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-19 · Character age 7d 3h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-19 · Character age 7d 21h
 
 `💪 8 jobs @99`
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b752bdc2a578 -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: a7236117c3b2 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

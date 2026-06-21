@@ -1,6 +1,6 @@
 # Ariel
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 23h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 16h
 
 `💪 3 jobs @99`
 
@@ -11,8 +11,8 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | WAR 80 |
+| Main job | **WAR 85** |
+| Sub job | MNK 85 |
 | Time played | 22h |
 | Enemies defeated | 318 |
 | Deaths | 2 |
@@ -21,7 +21,7 @@
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 80 | SAM | 1 |
+| WAR | 85 | SAM | 1 |
 | **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 853
+- **Marks (current):** 1,553
 - **Marks (lifetime):** 10
 - **Distinct NMs slain:** 2
 - **Total NM kills:** 2
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 628f16fc5ccf -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: 8079ce607414 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

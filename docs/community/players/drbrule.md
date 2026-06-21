@@ -1,6 +1,6 @@
 # Drbrule
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 1d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d
 
 `💪 10 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **WHM 99** |
+| Main job | **BRD 99** |
 | Sub job | GEO 96 |
-| Time played | 10h |
-| Enemies defeated | 10 |
+| Time played | 11h |
+| Enemies defeated | 15 |
 | Deaths | 2 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 187,245
+- **Marks (current):** 188,245
 - **Marks (lifetime):** 73,606
 - **Distinct NMs slain:** 7
 - **Total NM kills:** 1,136
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
-- **Augments crafted:** 123
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 252
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Legendary Slayer · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Augment Novice · Augment Expert.
+**12** unlocked — First Hunt · Ten Hunts In · Legendary Slayer · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -69,6 +69,7 @@
 |---|---:|
 | Fastest 1 → 99 | 0s |
 | HL Rank I → V | 23h 19m |
+| Augment Archon | 22h 44m |
 
 ---
 
@@ -77,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 77dcaa22d99d -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: ae68e40e85ff -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Burtgang
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 4h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 21h
 
 `⭐ 47 Ascensions` `💪 13 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 53h |
+| Time played | 54h |
 | Enemies defeated | 7,340 |
 | Deaths | 24 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 142,560
+- **Marks (current):** 145,810
 - **Marks (lifetime):** 18,426
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 853
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 590e1a57bbd0 -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: 65e099e059c0 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
-# Bruce
+# Zhan
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 4d 16h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 19h 14m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -9,11 +9,11 @@
 
 | | |
 |---|---|
-| Main job | **WAR 1** |
+| Main job | **DRK 1** |
 | Sub job | — |
 | Time played | 0h |
 | Enemies defeated | 0 |
-| Deaths | 0 |
+| Deaths | 2 |
 
 ## Job levels
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c93f485b0b4d -->
+<!-- content-hash: 5a19140d0c5f -->
 _Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -133,3 +133,10 @@ _The **Boutique Moogle** at GM Home features **one** of these 59 cosmetics per d
 | <a class="item-link" href="https://www.ffxiah.com/item/25758" data-img="https://www.bg-wiki.com/images/3/3b/Rhapsody_Shirt_description.png" target="_blank" rel="noopener">Rhapsody Shirt</a> | 10k AN |
 | <a class="item-link" href="https://www.ffxiah.com/item/26517" data-img="https://www.bg-wiki.com/images/b/b7/Shadow_Lord_Shirt_description.png" target="_blank" rel="noopener">Shadow Lord Shirt</a> | 10k AN |
 <!-- DOCGEN:END id="cosmetic-catalog" -->
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: d7deab2f81b7 -->
+_Last updated: 2026-06-20 19:12 UTC_
+<!-- DOCGEN:END id="last-updated" -->

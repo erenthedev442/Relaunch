@@ -47,7 +47,13 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - **SMN** — Boost avatar Blood Pact damage x10 -> ~260x (BP_DAMAGE 2500->25900, owner request)
     - **Augments** — Activate INT+ augment via Ahriman Tears (item 921)
     - **Naegling** — Restore retail stats and correct WS to Savage Blade
-    - *…and 7 more changes this update*
+    - **Job Rebirth** — Rebirth a maxed job for power, reusing Ascension categories
+    - **Hunting League** — Rank IV unlock button was unclickable for long-named players (menu click round-trip exceeded Mes[128])
+    - **Augments** — Remove DEX/AGI + MND/CHR pairs and the 6 flat weapon-Dmg augments (owner request)
+    - **Augments** — Remove the six 2-stat STR augments + ban their catalysts (owner request)
+    - **Augments** — Show EXP/Cap Point at base=33 to match the live engine value
+    - **Hunting League** — NMs spawn aggroed onto the player who popped them
+    - **Equip** — Disable /equipset macros server-wide
 
     **Thursday, June 18**
 
@@ -131,7 +137,67 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Dungeon double-warp fix, Outer Bastion WP fix, Sortie rings, item fixes
     - **Capacity Farm** — Refresh campZone from deadMob to survive FileWatcher reloads
     - **Shop** — Add Angon and Throwing Tomahawk to !shop ammo
-    - *…and 61 more changes this update*
+    - **Dungeons** — Fix !dungeon abort reaching live session table
+    - **CMD** — Add !dungeon abort command
+    - **Dungeons** — Clamp mob scatter positions to navmesh
+    - **CMD** — Add !henge warp command to Reisenjima Henge
+    - **Dungeons** — Guard getZone() nil deref in mob-count PAI loop
+    - **Prestige** — Guard idle-watcher against freed mob entity after zone exit
+    - **BRD** — Add missing scroll script for Aria of Passion
+    - **Ranger** — Replace broken hover_shot JA with !hovershot command
+    - **Prestige** — Idle-despawn trial boss after 20s of no damage
+    - **World Boss** — Move spawn zone from Hall of the Gods to West Ronfaure
+    - **Endless Tower** — Disallow Trusts in Walk of Echoes (zone 182)
+    - **Job Mastery** — Use owner-verified Mastery warp coords (-519,36,236)
+    - **Job Mastery** — Correct Weapon Mastery warp-in (was off-map)
+    - **Leaderboard** — Record pre-cap WS damage for peak hit tracker
+    - **Endless Tower** — Hard-cap trusts at 1 (was honor-system)
+    - **Endless Tower** — Allow trusts in Walk of Echoes (zone 182)
+    - **Hunting League** — Idempotent mob_groups in escha migration (zone 288)
+    - Deploy (No Rebuild) Mon 06/15/2026 23:59:36.23
+    - **Capacity Farm** — Use DE_ prefix in queryEntitiesByName so mobs respawn
+    - **Vendor** — Add Gold-tier axes to Hunting League gear vendor
+    - **Dungeons** — Scaled gil reward on clear (1M easiest -> 10M hardest)
+    - **Dungeons** — Theme all 8 dungeons to distinct mob families
+    - **Trusts** — Meat now forces mob target-switch on every hate-pin tick
+    - **Crash** — Guard treasure.lua timers against freed NPC entity
+    - **Dungeons** — Paginate the Dungeon Master menu (8 dungeons overflowed)
+    - **CMD** — Show (X,Y,Z) world coords in !mobs listing
+    - **NPC** — Add Unity Accolades exchange to Eminence Broker
+    - **HL** — Increase affinity trophy drop quantity from 1 to 5
+    - **HL** — Nidhogg also drops Fafnir's Scale (Augment Sage rank 4 trophy)
+    - **Shop** — Split augments ws into ws/ws2 to stay under client 80-item cap
+    - **Shop** — Sort !shop augments by sortname to match client display
+    - **Shop** — Sort !shop augments by actual item name from item_basic
+    - **Augments** — Rename HQ Scorpion Shell label to sort first in !shop augments ws
+    - **Shop** — Make !shop augments live-reload via module command override
+    - **Dungeons** — Switch Maxixi +4 drops to first (Hume F/Taru F) race variant
+    - **Shop** — Sort augment catalysts alphabetically by label
+    - **Shop** — Force-reload augment_catalog on shop hot-reload
+    - **Reallevel** — Auto-populate the leaderboard via a login hook
+    - **Augments** — Add 10 missing magic/instrument skill catalysts
+    - **Weapon Skills** — Boost Asuran Fists fTP to 1.5/1.75/2.0 per hit
+    - **Weapon Skills** — Add per-hit crit chance to Asuran Fists
+    - **Reallevel** — Store Real Level in a CharVar for the website leaderboard
+    - **HL** — Add Augment Sage affinity trophy drops to all 13 HL NMs
+    - **HL** — Guaranteed Khimaira Horn drop from Pandemonium Warden
+    - **Tracker** — WSMaxDmg charVar - record peak weapon skill damage per player
+    - **Augments** — Full weapon skill coverage in augment catalog
+    - **CMD** — GM Ascension Trial tools - spawntrialboss / killtrial / cleartrial
+    - **Prime Weapons** — Enable Great Sword (Fimbulvetr) + Axe (Blitz) Prime WS + aftermath
+    - **CMD** — !fixboss - GM teleport any mob to player position
+    - **Prime Weapons** — Wire Prime aftermath onto the Prime Dagger too
+    - **Prime Weapons** — Implement faithful Prime Weapon Aftermath
+    - **CMD** — !spawntrialboss - GM force-spawn Ascension Trial boss in Provenance
+    - **BRD** — Add Aria of Passion + Honor March songs
+    - **Dungeons** — Self-heal boss spawn when zone is genuinely clear
+    - **CMD** — !mobs - list live mobs in your zone (GM debug)
+    - **Augments** — Restore HQ Scorpion Shell -> Weapon skill damage catalyst
+    - **AH** — Raise universal buyback cap 200 -> 1000 per pass
+    - **Dungeons** — Correct voidwalker_arena bossPos Y from 7.263 to 12.000
+    - **BRD** — Implement Honor March (spell 417) as tier-3 BRD march
+    - **Hunting League** — Scope Escha migration mob_spawn_points delete by zone
+    - **RNG** — Correct hover_shot to retail abilityId 289, recastId 55
 
     **Monday, June 15**
 
@@ -175,7 +241,9 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - **Expcamp** — Extend the GM Home EXP-camp Moogle through Lv99
     - **Capacity Farm** — Populate the whole Bibiki Bay zone with CP mobs
     - **Warpman** — Add Bibiki Bay (Capacity Farm) to the gil-warp NPC
-    - *…and 3 more changes this update*
+    - **Capacity Farm** — +2000 bonus CP per kill at the Bibiki Bay JP camp
+    - **Capacity Farm** — 3x mobs, -25% HP in the Bibiki Bay JP camp
+    - **Hl Vendor** — Add one-handed katanas (NIN) to the gear progression vendor
 
 ??? note "Week of June 8–14, 2026"
     **Sunday, June 14**
@@ -220,7 +288,37 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - **Invasion** — Expand to 5 waves, add all unused mob groups
     - **Invasion** — Fixed spawn anchor at Al Zahbi center (0, 0, 36)
     - **Invasion** — Add !iwarp command - warps player to Al Zahbi invasion zone
-    - *…and 31 more changes this update*
+    - **Invasion** — Move battleground from GM Home to Al Zahbi (zone 48)
+    - **Invasion** — Full-DB item drops per kill + auto-reraise at full HP
+    - **Trustattack** — Make it a toggle that auto-attacks your target until turned off
+    - **Ah Bot** — Universal buy-back (all AH items, 200%-NPC floor) + move to box cron
+    - **Invasion** — Move !invasion to modules/custom/commands/ (hot-reload path)
+    - **Invasion** — Add !invasion GM command (start/end/status)
+    - **Gear Vendor** — Add Malignance Boots to Gold feet (completes the set)
+    - **Invasion** — NonExclusive claim so the whole raid can fight every invader
+    - **RNG** — Implement Hover Shot (RNG L95 JA, stacking RACC+RATT)
+    - **Trusts** — Meat 50M->25M, Corvus 15M->75M (Gemma stays 50M default)
+    - **Shop** — Add Trizek Ring (27557) to general shop at 100k gil
+    - **Server** — Hide the disabled RoE/Sparks NPCs in the 3 capitals (DISAPPEAR)
+    - **Server** — Disable RoE + Sparks NPCs in the 3 starting capitals
+    - **Dungeons** — Add 4 parallel-track dungeons (D5-D8) to double concurrent capacity
+    - **PUP** — Automaton survivability buff (HP/DEF/regen) for lv150 NMs
+    - **Ascension** — Swap companion to LynxFamiliar (small non-avatar jug pet)
+    - **Ascension** — Swap shadow companion to Carbuncle (small pet); clear opt-out
+    - **Ascension** — Per-char opt-out for the shadow companion (Jbae off by request)
+    - **AEP** — Resolve duplicate CLuaBaseEntity::hasTrait blocking the C++ build
+    - **LUA** — Guard GetSystemTime() nil returns in setLocalVar calls
+    - **Prime Armory** — Reduce PAGE_SIZE 7->4 to fix pagination
+    - **Trusts** — Guard nil return from getPartyLastMemberJoinedTime
+    - **Trusts** — Guard nil skill/target in Valaineral WEAPONSKILL_USE listener (crash 2026-06-14)
+    - **Shop** — Add Antacid to consumables; ship PUP Animators + free reforge-set claim
+    - **Voidspire** — Bump depth-milestone bonus marks (200/500/1500/3000/6000 -> 2500/10000/25000/40000/70000)
+    - **Ascension** — Shadow companion for ascended; revert rejected stars+title
+    - **AEP** — Alter Ego Points system (March 2026 retail)
+    - **PUP** — Boost automaton weapon damage and ACC/ATT vs custom high-level NMs
+    - **PUP** — Keep loadout menu under the ~8-option cap
+    - **PUP** — Add 'Unlock all attachments' to !pup menu + !pup attachments (runs addallattachments)
+    - **Prime Weapons** — Open !primevoucher to all players (permission 0)
 
     **Saturday, June 13**
 
@@ -264,7 +362,53 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - **Weapons Vendor** — Add capped ranged weapons (archery + marksmanship)
     - **Trusts** — Block the retail San d'Oria Excenmille NPC from granting Meat (899)
     - **Trusts** — Exclude Meat (899) from the grant-all NPC + !addalltrusts
-    - *…and 47 more changes this update*
+    - **Augments** — Restore 37 dropped augments (magic/skill/utility) via FORCED_CATALYST
+    - **Commands** — Drop the per-line "SystemMessage" banner across all custom commands
+    - **PUP** — !pup unlock -- grant all automaton frames & heads instantly
+    - **Commands** — Drop the per-line "SystemMessage" banner spam
+    - **Hunting League** — Spread the Reisenjima Henge vendor NPCs (fix label overlap)
+    - **Hunting League** — Un-engaged NM despawn 180s -> 30s
+    - **GEO** — Allow GEO luopan (Geo- spells) across all Reisenjima zones
+    - **Reforge** — Idle-despawn un-engaged NMs after a few minutes
+    - **Gear Vendor** — Complete the Taliah +2 set in the Armor NPC (silver)
+    - **PUP** — !pup automaton quick-loadout manager (save/swap frames + attachments)
+    - **Crossjob** — Add Tier 1+2 abilities to the Cross-Job Trainer (39 -> 63)
+    - **Hunting League** — Idle-despawn un-engaged NMs after a few minutes
+    - **Shop** — Add subjob ninja tools to !shop ninja (1 gil)
+    - **Shop** — Add !shop ninja -- universal ninja tools at 1 gil
+    - **QOL** — Make Auction House usable in every zone (!ah anywhere)
+    - **Augments** — Remove Physical Damage Limit augment (redundant after cap raise)
+    - **Trusts** — Meat + Gemma 500M -> 50M gil (Void Keeper)
+    - **Shop** — Add Matre bell to !shop weapons
+    - **Links** — Correct Discord invite across docs, server message, announcer
+    - **Mysterymog** — Add Pupil set pieces to the gil-gamble prize pool
+    - **Gear Mods** — Refresh item-mods pipeline output
+    - **QOL** — Open !release to all players (permission 1 -> 0)
+    - **RAID** — Re-enable Star-Devourer stances (correct nil xi.mod names)
+    - **Shop** — Custom-currency shops deduct across all stacks/containers (no more free buys)
+    - **Hunting League** — Let pet jobs call pets in Reisenjima Henge
+    - **Hunting League** — Consume seals across all stacks/containers, not just the first inventory stack
+    - **Shop** — Add !shop ammo - leveling ladder of arrows/bolts/bullets/shuriken
+    - **Shop** — Add !shop pets -- curated BST jug pets + pet food
+    - **Custom Chat** — Move custom command/login output off linkshell channels
+    - **Gear Vendor** — Add Ryuo Domaru (bronze) + Agony Jerkin +1 (gold) bodies
+    - **Gear Vendor** — Fill body-slot coverage gaps (lean set)
+    - **WARP** — Use verified in-game !pos for Ra'Kaznar Inner Court warp
+    - **WARP** — Add Ra'Kaznar Inner Court to the Warpman (Endgame tier)
+    - **Gear Vendor** — Pull Argosy Hauberk base from silver + add gap-report tool
+    - **Gear Vendor** — Add 5 melee/tank body pieces to bronze tier
+    - **Shop** — Optional custom-currency shops (charge an item instead of gil)
+    - **Sparkshop** — Never leave the event menu hanging (Rolandienne lock-up)
+    - **QOL** — Personal per-character waypoints (!waypoint)
+    - **Crash** — Null-guard CLuaBaseEntity::getZoneID() (Abyssea casket crash)
+    - **Shop** — Add Mumeito to !shop weapons (15k gil)
+    - **Shop** — Add !shop dice - all 31 Corsair roll dice at 1 gil
+    - **Gm Home** — Buff GM-Home Serket HP to match the Hunt League fix
+    - **Hunting League** — Buff Serket HP (Rank III was too soft)
+    - **Shop** — Augment catalysts 1,000,000 -> 100,000 gil
+    - **Shop** — Surface EXP/Capacity augments as their own !shop group
+    - Fix(linkshell)!: remove global LS auto-grant entirely (was crash-looping server)
+    - Fix(linkshell)!: stop auto-equipping global LS - it crash-loops the server
 
     **Friday, June 12**
 
@@ -357,3 +501,10 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 4da7975352f2 -->
+_Last updated: 2026-06-20 19:18 UTC_
+<!-- DOCGEN:END id="last-updated" -->

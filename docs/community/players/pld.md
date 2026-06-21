@@ -1,11 +1,11 @@
 # Pld
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-19 · Character age 2d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 19h
 
 `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | DNC 99 |
-| Time played | 19h |
+| Time played | 20h |
 | Enemies defeated | 1,363 |
 | Deaths | 4 |
 
@@ -35,8 +35,8 @@
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 20
+- **Rank:** 4 / 5
+- **Marks (current):** 220
 - **Marks (lifetime):** 377
 - **Distinct NMs slain:** 9
 - **Total NM kills:** 38
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b5e712e4b85d -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: d6413a26037c -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

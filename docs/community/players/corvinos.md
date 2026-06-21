@@ -1,6 +1,6 @@
 # Corvinos
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 5d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d
 
 `⭐ 1 Ascension` `💪 8 jobs @99`
 
@@ -66,6 +66,11 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Relic | 15 | 2,115 |
 | Empyrean | 105 | 2,305 |
 
+## Job Rebirth
+
+- **Total rebirths:** 1
+- **By job:** MNK ×1
+
 ## Prestige
 
 - **Total Ascensions:** 1
@@ -93,6 +98,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 930a5c91ac39 -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: 5d507e8a138d -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

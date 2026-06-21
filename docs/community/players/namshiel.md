@@ -1,18 +1,18 @@
 # Namshiel
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 4d 12h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 5h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 32/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 70/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 32** |
-| Sub job | NIN 23 |
-| Time played | 1h |
-| Enemies defeated | 25 |
+| Main job | **RDM 70** |
+| Sub job | NIN 57 |
+| Time played | 2h |
+| Enemies defeated | 57 |
 | Deaths | 0 |
 
 ## Job levels
@@ -20,10 +20,10 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 23 |
+| MNK | 1 | NIN | 57 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 32 | BLU | 1 |
+| RDM | 70 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,525
+- **Marks (current):** 1,975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: df675f6f3605 -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: 8134c7569633 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -9,18 +9,12 @@
     skipped there (`IGNORE_PAGES`, or a bullet's `covers`).
 
 <!-- DOCGEN:BEGIN id="unfeatured" -->
-The following system detail pages exist but are **not** represented on the [Why Legendary?](../why-legendary.md) highlights list. For each, either feature it (add an entry to `HEADLINE` in `tools/docgen/systems_registry.py`) or mark it intentionally skipped (add it to `IGNORE_PAGES`, or to a featured bullet's `covers`).
-
-| Detail page | Lead blurb |
-|---|---|
-| [`progression/item-finder.md`](../progression/item-finder.md) | Every purchasable item on Legendary in one searchable list — armor, weapons, accessories, and the Infamy Vendor's stock. Use it to answer "where do I get X, and |
-| [`progression/job-rebirth.md`](../progression/job-rebirth.md) | !Phoenix rising{ .lgnd-emblem } |
-| [`community/economy.md`](../community/economy.md) | A live, anonymous snapshot of Legendary's economy and population — how much gil is in circulation, how busy the Auction House is, and how many hunters are aroun |
+_All system detail pages are represented on the highlights list — no drift detected._
 <!-- DOCGEN:END id="unfeatured" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ea13d4bf719a -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 116b0c86d3b3 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Langy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 6d 14h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 8h
 
-`💪 10 jobs @99`
+`💪 11 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | THF 67 |
-| Time played | 27h |
-| Enemies defeated | 2,244 |
-| Deaths | 4 |
+| Main job | **THF 99** |
+| Sub job | DNC 16 |
+| Time played | 30h |
+| Enemies defeated | 2,333 |
+| Deaths | 6 |
 
 ## Job levels
 
@@ -26,34 +26,34 @@
 | **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
-| THF | 67 | COR | 1 |
-| PLD | 1 | PUP | 1 |
-| **DRK** | **99** | DNC | 1 |
+| **THF** | **99** | COR | 1 |
+| PLD | 1 | PUP | 19 |
+| **DRK** | **99** | DNC | 16 |
 | BST | 1 | **SCH** | **99** |
-| BRD | 40 | **GEO** | **99** |
+| BRD | 73 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 55
-- **Marks (lifetime):** 7,441
+- **Marks (current):** 10,150
+- **Marks (lifetime):** 7,716
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 1,294
+- **Total NM kills:** 1,317
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 282
+- **Augments crafted:** 289
 - **NM Affinities:** 9 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 2,000 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 1,500 | 1,500 |
 
 ## Collections
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bcabc8064ada -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: 8d7782024f68 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

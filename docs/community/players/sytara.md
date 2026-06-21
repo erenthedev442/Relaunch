@@ -1,6 +1,6 @@
 # Sytara
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 4h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 22h
 
 `⭐ 12 Ascensions` `💪 11 jobs @99`
 
@@ -66,6 +66,11 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Relic | 7,980 | 8,020 |
 | Empyrean | 570 | 12,100 |
 
+## Job Rebirth
+
+- **Total rebirths:** 3
+- **By job:** THF ×3
+
 ## Prestige
 
 - **Total Ascensions:** 12
@@ -94,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1c882940ad71 -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: 3c69d8adb7e9 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Shizuku
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-19 · Character age 21h 54m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-20 · Character age 1d 15h
 
 `💪 2 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **DNC 18** |
-| Sub job | BLU 18 |
-| Time played | 10h |
-| Enemies defeated | 19 |
+| Main job | **DNC 25** |
+| Sub job | BLU 25 |
+| Time played | 12h |
+| Enemies defeated | 34 |
 | Deaths | 0 |
 
 ## Job levels
@@ -28,7 +28,7 @@
 | **RDM** | **99** | BLU | 60 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 18 |
+| DRK | 1 | DNC | 25 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 550
+- **Marks (current):** 1,050
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c28f8afe3a95 -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: dacba3c57670 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

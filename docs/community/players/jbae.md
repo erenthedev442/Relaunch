@@ -1,6 +1,6 @@
 # Jbae
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-20 · Character age 26d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-20 · Character age 27d 3h
 
 `⭐ 106 Ascensions` `💪 17 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 277h |
-| Enemies defeated | 8,872 |
+| Time played | 279h |
+| Enemies defeated | 9,034 |
 | Deaths | 147 |
 
 ## Job levels
@@ -24,7 +24,7 @@
 | **WAR** | **99** | SAM | 1 |
 | **MNK** | **99** | **NIN** | **99** |
 | WHM | 53 | **DRG** | **99** |
-| **BLM** | **99** | SMN | 1 |
+| **BLM** | **99** | SMN | 33 |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | **COR** | **99** |
 | **PLD** | **99** | **PUP** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 81,097
+- **Marks (current):** 94,237
 - **Marks (lifetime):** 1,375
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 6,069
+- **Total NM kills:** 6,097
 
 ## Guild standing
 
@@ -65,6 +65,11 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | AF | 360 | 360 |
 | Relic | 0 | 0 |
 | Empyrean | 4,330 | 530 |
+
+## Job Rebirth
+
+- **Total rebirths:** 2
+- **By job:** RDM ×2
 
 ## Prestige
 
@@ -94,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 18fc15584472 -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: 1a29538133b4 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

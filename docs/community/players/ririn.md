@@ -1,6 +1,6 @@
 # Ririn
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 4d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 3h
 
 `⭐ 8 Ascensions` `💪 3 jobs @99`
 
@@ -66,6 +66,11 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Relic | 0 | 5,250 |
 | Empyrean | 90 | 5,340 |
 
+## Job Rebirth
+
+- **Total rebirths:** 3
+- **By job:** RDM ×1 · THF ×2
+
 ## Prestige
 
 - **Total Ascensions:** 8
@@ -94,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6e800e56d3d4 -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: e403996060bd -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

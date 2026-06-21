@@ -78,17 +78,17 @@ Holding an affinity multiplies augments **in that category** by **1.5×**. Affin
 | Cat | Category | NM | Trophy | Catalysts available |
 |---:|---|---|---|---:|
 | 1 | Strength / Attack | Behemoth | Giant Femur | 37 |
-| 2 | Dexterity / Accuracy | King Arthro | Emperor Arthro's Shell | 28 |
+| 2 | Dexterity / Accuracy | King Arthro | Emperor Arthro's Shell | 29 |
 | 3 | Vitality / Defense | Adamantoise | Adamantoise Shell | 14 |
 | 4 | Agility / Evasion / Haste | Roc | Giant Bird Plume | 44 |
-| 5 | Intelligence / Magic offense | Ouryu (Guivre-tier wyrm) | Guivre's Skull | 18 |
+| 5 | Intelligence / Magic offense | Ouryu (Guivre-tier wyrm) | Guivre's Skull | 24 |
 | 6 | Mind / Healing / Cure | Phoenix | Phoenix Feather | 7 |
 | 7 | Charisma / Charm / Enmity | Lady Lilith (Khimaira-tier charmer) | Khimaira Mane | 12 |
 | 8 | HP / Regen | Fafnir | Wyvern Skin | 6 |
 | 9 | MP / Refresh | Vrtra | Vial of Dragon Blood | 3 |
 | 10 | Pet | King Vinegarroon | Sand Bat Fang | 9 |
-| 11 | Elemental resistance | Khimaira | Khimaira Horn | 70 |
-| 12 | Skill+ | Maat (proxy: a king-tier predator) | Gargantuan Black Tiger Fang | 23 |
+| 11 | Elemental resistance | Khimaira | Khimaira Horn | 71 |
+| 12 | Skill+ | Maat (proxy: a king-tier predator) | Gargantuan Black Tiger Fang | 33 |
 | 13 | Weaponskill DMG+ | Tiamat | High-Quality Scorpion Shell | 5 |
 <!-- DOCGEN:END id="sage-affinities" -->
 
@@ -122,6 +122,6 @@ Yes — both the Sage rank trophy and the affinity registration trophy are remov
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9f66f91c1fdc -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: 2fd0d4b87af9 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

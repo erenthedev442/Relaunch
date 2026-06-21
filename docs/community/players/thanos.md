@@ -1,6 +1,6 @@
 # Thanos
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 6h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 23h
 
 `⭐ 11 Ascensions` `💪 4 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | WAR 99 |
-| Time played | 38h |
+| Time played | 41h |
 | Enemies defeated | 2,601 |
 | Deaths | 22 |
 
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 138
+- **Augments crafted:** 145
 - **NM Affinities:** 5 / 13
 
 ## Reforge
@@ -54,6 +54,11 @@
 | AF | 440 | 4,590 |
 | Relic | 450 | 150 |
 | Empyrean | 120 | 4,570 |
+
+## Job Rebirth
+
+- **Total rebirths:** 1
+- **By job:** MNK ×1
 
 ## Prestige
 
@@ -82,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cfca759c729f -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: 675b964c83ec -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

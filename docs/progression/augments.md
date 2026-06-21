@@ -70,7 +70,7 @@ So a maxed tank reaches **+640 HP on a single body piece**, and a sustain build 
 The table below lists **which catalyst maps to which augment**, grouped by stat family. **Fresh ×1–×5** is the total stat from trading that many catalysts with no Sage progress; **Max ×1–×5** is the same trade at full [Augment Sage](augment-sage.md) progress (rank 5 + affinity + a crit); **Cap** is the hard in-game ceiling where one exists — see [how scaling works](#how-augment-power-scales) above.
 
 <!-- DOCGEN:BEGIN id="augment-catalog" -->
-_275 catalyst items across 15 categories. Trade the catalyst to the Augment Moogle to apply the matching augment. Cost is **10,000 gil flat per trade** plus the catalyst items themselves._
+_297 catalyst items across 16 categories. Trade the catalyst to the Augment Moogle to apply the matching augment. Cost is **10,000 gil flat per trade** plus the catalyst items themselves._
 
 Each augment **scales with [Augment Sage](augment-sage.md) progress** and with how many catalysts you trade (**×N** = that many, 1–5; an item has 5 augment slots). **Fresh ×N** is a brand-new augment with **no Sage progress**; **Max ×N** is the ceiling at **rank-5 mastery + full affinity + a crit**. Your live value starts near Fresh and climbs toward Max as you rank Augment Sage up. Percentage augments (damage-taken, haste, etc.) show the raw value; the **Cap** column is the hard in-game ceiling for that stat (e.g. Phys. dmg. taken floors at -50%), or **no cap** for additive stats like Attack/HP — values above the Cap can't be reached no matter how many catalysts you stack.
 
@@ -148,6 +148,7 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/3502" data-img="https://static.ffxiah.com/images/icon/3502.png" target="_blank" rel="noopener">Vial Of Umbral Marrow</a> | 3502 | Light Affinity Magic Accuracy | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/3930" data-img="https://www.bg-wiki.com/images/6/67/Twitherym_Wing_description.png" target="_blank" rel="noopener">Twitherym Wing</a> | 3930 | Dark Affinity Magic Accuracy | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/3941" data-img="https://www.bg-wiki.com/images/f/f7/Chapuli_Wing_description.png" target="_blank" rel="noopener">Chapuli Wing</a> | 3941 | Fire Affinity Magic Accuracy Recast time | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2842" data-img="https://www.bg-wiki.com/images/6/69/Flawed_Garnet_description.png" target="_blank" rel="noopener">Flawed Garnet</a> | 2842 | Pet DEX | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 
 ### Vitality / Defense / Stoneskin
 
@@ -236,8 +237,14 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/2776" data-img="https://www.bg-wiki.com/images/5/5d/Pumice_Stone_description.png" target="_blank" rel="noopener">Pumice Stone</a> | 2776 | Magic burst dmg | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | +40% |
 | <a class="item-link" href="https://www.ffxiah.com/item/2777" data-img="https://static.ffxiah.com/images/icon/2777.png" target="_blank" rel="noopener">Vial Of Magicked Blood</a> | 2777 | Mag. crit. hit dmg | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2943" data-img="https://www.bg-wiki.com/images/5/57/Balaur_Skull_description.png" target="_blank" rel="noopener">Balaur Skull</a> | 2943 | Drain/Aspir Potency | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2498" data-img="https://www.bg-wiki.com/images/5/5e/Briareus%27s_Sash_description.png" target="_blank" rel="noopener">Briareuss Sash</a> | 2498 | Magic Damage | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/921" data-img="https://static.ffxiah.com/images/icon/921.png" target="_blank" rel="noopener">Bottle Of Ahriman Tears</a> | 921 | INT | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2338" data-img="https://www.bg-wiki.com/images/0/0d/Wamoura_Scale_description.png" target="_blank" rel="noopener">Wamoura Scale</a> | 2338 | Enspell Dmg | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2834" data-img="https://www.bg-wiki.com/images/0/08/Immortal_Molt_description.png" target="_blank" rel="noopener">Immortal Molt</a> | 2834 | Spell Interruption Rate Down 2% | 2 | 4 | 6 | 8 | 10 | 33 | 66 | 99 | 132 | 165 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2510" data-img="https://www.bg-wiki.com/images/0/04/Orc_Helmet_description.png" target="_blank" rel="noopener">Orc Helmet</a> | 2510 | Enhancing Magic Effect Duration | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2640" data-img="https://www.bg-wiki.com/images/0/01/Murex_Spicule_description.png" target="_blank" rel="noopener">Murex Spicule</a> | 2640 | Helix Effect Duration | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2711" data-img="https://www.bg-wiki.com/images/b/b7/Khroma_Nugget_description.png" target="_blank" rel="noopener">Khroma Nugget</a> | 2711 | Meditate Effect Duration | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2847" data-img="https://www.bg-wiki.com/images/0/07/Blue_Jasper_description.png" target="_blank" rel="noopener">Blue Jasper</a> | 2847 | Pet INT | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 
 ### Mind / Healing / Cure
 
@@ -305,6 +312,7 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 
 | Catalyst | Item ID | Augment | Fresh ×1 | ×2 | ×3 | ×4 | ×5 | Max ×1 | ×2 | ×3 | ×4 | ×5 | Cap |
 |---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
+| <a class="item-link" href="https://www.ffxiah.com/item/2831" data-img="https://www.bg-wiki.com/images/b/b1/Yel._Brass_Chain_description.png" target="_blank" rel="noopener">Yellow Brass Chain</a> | 2831 | Occ. inc. resist to stat ailments | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1163" data-img="https://static.ffxiah.com/images/icon/1163.png" target="_blank" rel="noopener">Lock Of Manticore Hair</a> | 1163 | Resist Sleep | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1452" data-img="https://www.bg-wiki.com/images/4/48/O._Bronzepiece_description.png" target="_blank" rel="noopener">Ordelle Bronzepiece</a> | 1452 | Resist Poison | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1630" data-img="https://static.ffxiah.com/images/icon/1630.png" target="_blank" rel="noopener">Pinch Of Cluster Ash</a> | 1630 | Resist Paralyze | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
@@ -400,6 +408,16 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/2524" data-img="https://www.bg-wiki.com/images/e/e4/Peiste_Stinger_description.png" target="_blank" rel="noopener">Peiste Stinger</a> | 2524 | Throwing skill | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2936" data-img="https://www.bg-wiki.com/images/8/87/Chasmic_Stinger_description.png" target="_blank" rel="noopener">Chasmic Stinger</a> | 2936 | Shield skill | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2937" data-img="https://www.bg-wiki.com/images/d/d3/Raskovnik_Vine_description.png" target="_blank" rel="noopener">Raskovnik Vine</a> | 2937 | Parrying Skill | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/1725" data-img="https://www.bg-wiki.com/images/4/4a/Snow_Lily_description.png" target="_blank" rel="noopener">Snow Lily</a> | 1725 | Divine magic skill | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/1740" data-img="https://www.bg-wiki.com/images/1/1f/Iolite_description.png" target="_blank" rel="noopener">Iolite</a> | 1740 | Enha.mag. skill | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/1817" data-img="https://www.bg-wiki.com/images/f/f4/Cactus_Arm_description.png" target="_blank" rel="noopener">Cactus Arm</a> | 1817 | Enfb.mag. skill | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/1854" data-img="https://static.ffxiah.com/images/icon/1854.png" target="_blank" rel="noopener">Deed Of Moderation</a> | 1854 | Elem. magic skill | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2154" data-img="https://www.bg-wiki.com/images/1/17/Orobon_Lure_description.png" target="_blank" rel="noopener">Orobon Lure</a> | 2154 | Ninjutsu skill | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2155" data-img="https://www.bg-wiki.com/images/d/d4/Lesser_Chigoe_description.png" target="_blank" rel="noopener">Lesser Chigoe</a> | 2155 | Singing skill | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2161" data-img="https://www.bg-wiki.com/images/2/24/Troll_Vambrace_description.png" target="_blank" rel="noopener">Troll Vambrace</a> | 2161 | String instrument skill | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2171" data-img="https://www.bg-wiki.com/images/5/5f/Colibri_Beak_description.png" target="_blank" rel="noopener">Colibri Beak</a> | 2171 | Blue Magic skill | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2212" data-img="https://www.bg-wiki.com/images/0/0b/Gpwdr._Swathe_description.png" target="_blank" rel="noopener">Gunpowder Swathe</a> | 2212 | Geomancy Skill | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2334" data-img="https://www.bg-wiki.com/images/2/2e/Poroggo_Hat_description.png" target="_blank" rel="noopener">Poroggo Hat</a> | 2334 | Handbell Skill | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 
 ### Weaponskill DMG+
 
@@ -410,6 +428,15 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 | <a class="item-link" href="https://www.ffxiah.com/item/865" data-img="https://static.ffxiah.com/images/icon/865.png" target="_blank" rel="noopener">Handful Of Nidhoggs Scales</a> | 865 | Sklchn.dmg | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/889" data-img="https://www.bg-wiki.com/images/a/ab/Beetle_Shell_description.png" target="_blank" rel="noopener">Beetle Shell</a> | 889 | Dmg (melee,not ranged) | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/908" data-img="https://www.bg-wiki.com/images/2/26/Adamantoise_Shell_description.png" target="_blank" rel="noopener">Adamantoise Shell</a> | 908 | Dmg (ranged,not melee) | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+
+### Other
+
+| Catalyst | Item ID | Augment | Fresh ×1 | ×2 | ×3 | ×4 | ×5 | Max ×1 | ×2 | ×3 | ×4 | ×5 | Cap |
+|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
+| <a class="item-link" href="https://www.ffxiah.com/item/1269" data-img="https://www.bg-wiki.com/images/6/67/Mana_Barrel_description.png" target="_blank" rel="noopener">Mana Barrel</a> | 1269 | Ninja tool expertise | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2729" data-img="https://www.bg-wiki.com/images/b/b9/Hydrangea_description.png" target="_blank" rel="noopener">Hydrangea</a> | 2729 | Repair potency | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2507" data-img="https://www.bg-wiki.com/images/6/67/Lycopodium_Flower_description.png" target="_blank" rel="noopener">Lycopodium Flower</a> | 2507 | Occ. quickens spellcasting | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
+| <a class="item-link" href="https://www.ffxiah.com/item/2641" data-img="https://www.bg-wiki.com/images/4/4e/Amb._Pseudopod_description.png" target="_blank" rel="noopener">Amoeban Pseudopod</a> | 2641 | Indi Effect Duration | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 
 ### Progression (Exp / Cap)
 
@@ -434,6 +461,6 @@ Each augment **scales with [Augment Sage](augment-sage.md) progress** and with h
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f59815558737 -->
-_Last updated: 2026-06-20 18:50 UTC_
+<!-- content-hash: 51f7d7a53649 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -8,7 +8,7 @@ Every purchasable item on Legendary in one searchable list — armor, weapons, a
 Each **Item** links to its BG-Wiki page for full stats. The **Source** links to the exact vendor section where you buy it, and **Cost** spells out the currency, since each vendor tier is paid in a different seal or medal.
 
 <!-- DOCGEN:BEGIN id="item-finder" -->
-641 items in stock — **172** Armor · **138** Weapons · **120** Accessories · **211** Infamy.
+673 items in stock — **172** Armor · **138** Weapons · **120** Accessories · **243** Infamy.
 
 | Item | Source | Cost | For |
 |---|---|---:|---|
@@ -22,7 +22,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Adhemar Jacket](https://www.ffxiah.com/item/25686) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
 | [Adhemar Wristbands +1](https://www.ffxiah.com/item/27118) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
 | [Adorned Helm +1](https://www.ffxiah.com/item/26715) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WAR/THF/PLD/DRK/BST/BRD/DRG/RUN |
-| [Aeneas](https://www.ffxiah.com/item/20594) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 500 Infamy | — |
+| [Aeneas](https://www.ffxiah.com/item/20594) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Aenotherus Mantle +1](https://www.ffxiah.com/item/28591) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | WHM/BLM/RDM/PLD/DRK/SMN/BLU/SCH/GEO/RUN |
 | [Agony Jerkin +1](https://www.ffxiah.com/item/26943) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Body | 50 Demons Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Agwus Cap](https://www.ffxiah.com/item/23759) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | BLM/SCH/GEO/RUN |
@@ -46,6 +46,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Ajja Staff](https://www.ffxiah.com/item/22083) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Staves | 12 Beastmens Medal | WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO |
 | [Ajja Sword](https://www.ffxiah.com/item/21618) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Swords | 12 Beastmens Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN |
 | [Ajja Tachi](https://www.ffxiah.com/item/21972) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 250 Infamy | — |
+| [Alaunus's Cape](https://www.ffxiah.com/item/26248) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Almace](https://www.bg-wiki.com/index.php?search=Almace&go=Go) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Swords | 50 Demons Medal | RDM/PLD/BLU |
 | [Amalric Doublet](https://www.ffxiah.com/item/25688) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | BLM/RDM/SMN/BLU/SCH/GEO |
 | [Amalric Gages +1](https://www.ffxiah.com/item/27120) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | BLM/RDM/SMN/BLU/SCH/GEO |
@@ -55,9 +56,11 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Ames +1](https://www.ffxiah.com/item/22022) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Clubs | 50 Demons Medal | WHM/BLM/RDM/SMN/BLU/SCH/GEO |
 | [Amin Turban](https://www.ffxiah.com/item/24274) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | [Amini Earring +2](https://www.ffxiah.com/item/25482) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 300 Infamy | — |
+| [Andartia's Mantle](https://www.ffxiah.com/item/26258) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Andoaa Earring](https://www.ffxiah.com/item/28506) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
 | [Angantyr Beret](https://www.ffxiah.com/item/23740) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/PUP/SCH/GEO |
-| [Anguta](https://www.ffxiah.com/item/20890) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
+| [Anguta](https://www.ffxiah.com/item/20890) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
+| [Ankou's Mantle](https://www.ffxiah.com/item/26253) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Annointed Kalasiris](https://www.ffxiah.com/item/26960) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/PUP/SCH/GEO |
 | [Aput Mantle +1](https://www.ffxiah.com/item/28607) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 250 Infamy | — |
 | [Arasy Axe](https://www.ffxiah.com/item/21762) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Great Axes | 12 Beastmens Medal | WAR/DRK/RUN |
@@ -85,6 +88,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Arke Cosciales +1](https://www.ffxiah.com/item/25898) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Legs | 50 Demons Medal | WAR/PLD/DRG |
 | [Arke Crossbow](https://www.ffxiah.com/item/22148) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Marksmanship | 12 Beastmens Medal | RNG |
 | [Artemiss Medal](https://www.ffxiah.com/item/11607) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 250 Infamy | — |
+| [Artio's Mantle](https://www.ffxiah.com/item/26254) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Artsieq Boots](https://www.ffxiah.com/item/28296) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Aswang Sash](https://www.ffxiah.com/item/10840) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Waist | 32 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
 | [Atzintli Necklace](https://www.ffxiah.com/item/28385) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | All |
@@ -100,6 +104,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Barbarity +1](https://www.ffxiah.com/item/21707) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 350 Infamy | — |
 | [Bards Charm +2](https://www.ffxiah.com/item/25473) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | BRD |
 | [Beckoners Earring +2](https://www.ffxiah.com/item/25506) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 300 Infamy | — |
+| [Belenus's Cape](https://www.ffxiah.com/item/26256) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Belinkys Earring](https://www.ffxiah.com/item/14793) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Earring | 32 Kindreds Medal | All |
 | [Beryllium Mace +1](https://www.ffxiah.com/item/22024) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Clubs | 12 Beastmens Medal | WAR/WHM/PLD/GEO |
 | [Beryllium Pick](https://www.ffxiah.com/item/21708) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Axes | 12 Beastmens Medal | WAR/DRK/BST/RUN |
@@ -126,7 +131,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Bookworms Cape](https://www.ffxiah.com/item/28636) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | SCH |
 | [Brahmastra](https://www.ffxiah.com/item/21221) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 500 Infamy | — |
 | [Bravura](https://www.bg-wiki.com/index.php?search=Bravura&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 10,000 Infamy | — |
-| [Brigantia's Mantle](https://www.ffxiah.com/item/26259) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
+| [Brigantia's Mantle](https://www.ffxiah.com/item/26259) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Brisingamen +1](https://www.ffxiah.com/item/13162) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | All |
 | [Bunzis Gloves](https://www.ffxiah.com/item/23774) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 500 Infamy | — |
 | [Bunzis Hat](https://www.ffxiah.com/item/23760) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 500 Infamy | — |
@@ -139,16 +144,20 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Caliburnus](https://www.bg-wiki.com/index.php?search=Caliburnus&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
 | [Callers Earring](https://www.ffxiah.com/item/11717) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Earring | 15 Beastmens Medal | SMN |
 | [Callers Pendant](https://www.ffxiah.com/item/11619) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Neck | 32 Kindreds Medal | SMN |
+| [Campestres's Cape](https://www.ffxiah.com/item/26260) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
+| [Camulus's Mantle](https://www.ffxiah.com/item/26262) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Carnwenhan](https://www.bg-wiki.com/index.php?search=Carnwenhan&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 10,000 Infamy | — |
 | [Carriers Sash](https://www.ffxiah.com/item/10832) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Waist | 32 Kindreds Medal | All |
 | [Cath Palug Hammer](https://www.ffxiah.com/item/21071) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 800 Infamy | — |
 | [Celestial Earring](https://www.ffxiah.com/item/15992) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Earring | 32 Kindreds Medal | All |
+| [Chango](https://www.ffxiah.com/item/20843) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Chasseurs Earring +2](https://www.ffxiah.com/item/25518) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 300 Infamy | — |
 | [Chastisers](https://www.ffxiah.com/item/20523) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Hand-to-Hand | 12 Beastmens Medal | MNK/PUP |
 | [Chevaliers Earring +2](https://www.ffxiah.com/item/25458) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 300 Infamy | — |
 | [Chironic Hose](https://www.ffxiah.com/item/25844) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | WHM/RDM/BRD/SCH |
 | [Chocobo Knife](https://www.bg-wiki.com/index.php?search=Chocobo+Knife&go=Go) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Silver · Daggers | 25 Kindreds Medal | RDM/THF/BRD/RNG/DNC |
 | [Cibitshavore](https://www.ffxiah.com/item/21229) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Archery | 50 Demons Medal | RNG/SAM |
+| [Cichol's Mantle](https://www.ffxiah.com/item/26246) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Cichols Mantle](https://www.ffxiah.com/item/26246) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | WAR |
 | [Clemency Kote](https://www.ffxiah.com/item/24188) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Hands | 50 Demons Medal | RNG/SAM/DRG/COR |
 | [Clemency Somen](https://www.ffxiah.com/item/24182) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | RNG/SAM/DRG/COR |
@@ -177,6 +186,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Defending Ring](https://www.ffxiah.com/item/13566) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Ring | 60 Demons Medal | All |
 | [Defending Ring](https://www.ffxiah.com/item/13566) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 1,500 Infamy | — |
 | [Diaboloss Earring](https://www.ffxiah.com/item/14814) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Earring | 15 Beastmens Medal | All |
+| [Dojikiri Yasutsuna](https://www.ffxiah.com/item/21025) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Dokoku](https://www.bg-wiki.com/index.php?search=Dokoku&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
 | [Dolichenus](https://www.ffxiah.com/item/21722) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 350 Infamy | — |
 | [Donar Gun](https://www.ffxiah.com/item/21274) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Marksmanship | 12 Beastmens Medal | THF/RNG/NIN/COR |
@@ -217,6 +227,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Exalted Spear](https://www.ffxiah.com/item/21869) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Polearms | 50 Demons Medal | WAR/PLD/SAM/DRG |
 | [Exalted Spear +1](https://www.ffxiah.com/item/21870) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 350 Infamy | — |
 | [Exalted Staff +1](https://www.ffxiah.com/item/22079) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Staves | 50 Demons Medal | MNK/WHM/PLD/DRG |
+| [Fail-Not](https://www.bg-wiki.com/index.php?search=Fail-Not&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Falubeza](https://www.ffxiah.com/item/21228) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Silver · Archery | 25 Kindreds Medal | RNG |
 | [Farsha](https://www.bg-wiki.com/index.php?search=Farsha&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 250 Infamy | — |
 | [Ferine Mantle](https://www.ffxiah.com/item/11555) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | BST |
@@ -233,6 +244,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Flume Belt +1](https://www.ffxiah.com/item/28437) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Foenaria](https://www.bg-wiki.com/index.php?search=Foenaria&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
 | [Fomalhaut](https://www.bg-wiki.com/index.php?search=Fomalhaut&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 350 Infamy | — |
+| [Fomalhaut](https://www.bg-wiki.com/index.php?search=Fomalhaut&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Fomalhaut](https://www.bg-wiki.com/index.php?search=Fomalhaut&go=Go) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Marksmanship | 50 Demons Medal | RNG/COR |
 | [Fortified Chain](https://www.ffxiah.com/item/15524) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Fotia Belt](https://www.ffxiah.com/item/28420) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 250 Infamy | — |
@@ -259,6 +271,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Glanzfaust](https://www.bg-wiki.com/index.php?search=Glanzfaust&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 10,000 Infamy | — |
 | [Gletis Boots](https://www.ffxiah.com/item/23784) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Feet | 50 Demons Medal | THF/BST/DRG/BLU/DNC |
 | [Gletis Knife](https://www.ffxiah.com/item/21567) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 500 Infamy | — |
+| [Godhands](https://www.ffxiah.com/item/20515) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Goetia Mantle](https://www.ffxiah.com/item/16203) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | BLM |
 | [Goetic Torque](https://www.ffxiah.com/item/28393) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Gorney Brayettes +1](https://www.ffxiah.com/item/28152) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
@@ -273,6 +286,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Hashishin Earring +2](https://www.ffxiah.com/item/25512) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 300 Infamy | — |
 | [Hattori Earring +2](https://www.ffxiah.com/item/25494) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 300 Infamy | — |
 | [Heathens Earring +2](https://www.ffxiah.com/item/25464) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 300 Infamy | — |
+| [Heishi Shorinken](https://www.ffxiah.com/item/20977) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Helheim](https://www.bg-wiki.com/index.php?search=Helheim&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
 | [Helios Spats](https://www.ffxiah.com/item/27236) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WHM/BLM/RDM/SMN/BLU/SCH/GEO |
 | [Hepatizon Axe](https://www.ffxiah.com/item/21765) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Silver · Great Axes | 25 Kindreds Medal | WAR/DRK/RUN |
@@ -297,6 +311,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Imati](https://www.ffxiah.com/item/22120) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Marksmanship | 50 Demons Medal | RNG |
 | [Imati +1](https://www.ffxiah.com/item/22121) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 500 Infamy | — |
 | [Incanters Torque](https://www.ffxiah.com/item/26016) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | All |
+| [Intarabus's Cape](https://www.ffxiah.com/item/26255) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Inyanga Crackows +2](https://www.ffxiah.com/item/25949) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WHM/BRD/SMN |
 | [Inyanga Dastanas](https://www.ffxiah.com/item/25806) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WHM/BRD/SMN |
 | [Inyanga Dastanas +2](https://www.ffxiah.com/item/25831) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | WHM/BRD/SMN |
@@ -345,6 +360,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Kbiroj](https://www.ffxiah.com/item/20763) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Great Swords | 12 Beastmens Medal | WAR/PLD/DRK/RUN |
 | [Kenkonken](https://www.bg-wiki.com/index.php?search=Kenkonken&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 10,000 Infamy | — |
 | [Kerehcatl](https://www.ffxiah.com/item/20827) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Axes | 12 Beastmens Medal | WAR/BST |
+| [Khatvanga](https://www.ffxiah.com/item/21147) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Knights Bead Necklace +2](https://www.ffxiah.com/item/25455) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | PLD |
 | [Knobkierrie](https://www.ffxiah.com/item/22281) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 250 Infamy | — |
 | [Kobo Kote](https://www.ffxiah.com/item/27133) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WAR/MNK/BST/BRD/RNG/SAM/NIN |
@@ -362,10 +378,12 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Levante Dagger](https://www.ffxiah.com/item/20615) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Silver · Daggers | 25 Kindreds Medal | WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/SCH/GEO |
 | [Liberator](https://www.bg-wiki.com/index.php?search=Liberator&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 10,000 Infamy | — |
 | [Lieutenants Gorget](https://www.ffxiah.com/item/16271) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
+| [Lionheart](https://www.ffxiah.com/item/21694) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Lissome Necklace](https://www.ffxiah.com/item/26004) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 250 Infamy | — |
 | [Lorg Mor](https://www.bg-wiki.com/index.php?search=Lorg+Mor&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
 | [Loughnashade](https://www.bg-wiki.com/index.php?search=Loughnashade&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
 | [Lucidity Sash](https://www.ffxiah.com/item/28416) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | SMN |
+| [Lugh's Cape](https://www.ffxiah.com/item/26265) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Luminary Sash](https://www.ffxiah.com/item/26329) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Lunette Ring](https://www.ffxiah.com/item/10766) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Ring | 60 Demons Medal | All |
 | [Lustratio Subligar +1](https://www.ffxiah.com/item/27197) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WAR/THF/PLD/DRK/BST/BRD/DRG/DNC/RUN |
@@ -394,7 +412,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Mallquis Trews +1](https://www.ffxiah.com/item/25878) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Legs | 50 Demons Medal | BLM/SCH/GEO |
 | [Mallquis Trews +2](https://www.ffxiah.com/item/25888) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 500 Infamy | — |
 | [Mandau 119 Iii](https://www.ffxiah.com/item/20583) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Daggers | 12 Beastmens Medal | RDM/THF/BRD |
-| [Marsyas](https://www.ffxiah.com/item/21398) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 400 Infamy | — |
+| [Marsyas](https://www.ffxiah.com/item/21398) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Maulers Mantle](https://www.ffxiah.com/item/28617) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | WAR |
 | [Maxentius](https://www.ffxiah.com/item/22031) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 800 Infamy | — |
 | [Mecurial Earring](https://www.ffxiah.com/item/14757) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Earring | 15 Beastmens Medal | All |
@@ -438,6 +456,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Naegling](https://www.ffxiah.com/item/21621) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
 | [Nahtirah Hat](https://www.ffxiah.com/item/27775) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Nandaka](https://www.ffxiah.com/item/21674) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 500 Infamy | — |
+| [Nantosuelta's Cape](https://www.ffxiah.com/item/26266) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Nativus Halberd](https://www.ffxiah.com/item/20945) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Polearms | 12 Beastmens Medal | WAR/PLD/SAM/DRG |
 | [Navon Crackows](https://www.ffxiah.com/item/25922) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Nibiru Faussar](https://www.ffxiah.com/item/21699) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Great Swords | 12 Beastmens Medal | PLD/DRK/RUN |
@@ -453,6 +472,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Nyame Sollerets](https://www.ffxiah.com/item/23789) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Feet | 50 Demons Medal | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | [Ochain](https://www.bg-wiki.com/index.php?search=Ochain&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
 | [Odr Earring](https://www.ffxiah.com/item/26108) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 250 Infamy | — |
+| [Ogma's Cape](https://www.ffxiah.com/item/26267) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Onca Suit](https://www.ffxiah.com/item/26963) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 800 Infamy | — |
 | [Oneiros Cest](https://www.ffxiah.com/item/11774) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Onion Sword III](https://www.bg-wiki.com/index.php?search=Onion+Sword+III&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
@@ -520,7 +540,9 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Reverend Sash](https://www.ffxiah.com/item/15433) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Rhodium Ring +1](https://www.ffxiah.com/item/28543) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
 | [Rosette Jaseran +1](https://www.ffxiah.com/item/26869) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
+| [Rosmerta's Cape](https://www.ffxiah.com/item/26261) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Rubicundity](https://www.ffxiah.com/item/21089) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Clubs | 50 Demons Medal | WHM/BLM/RDM/SMN/SCH/GEO |
+| [Rudianos's Mantle](https://www.ffxiah.com/item/26252) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Ryunohige](https://www.ffxiah.com/item/21858) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
 | [Ryuo Domaru](https://www.ffxiah.com/item/25684) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | MNK/SAM/NIN/PUP |
 | [Ryuo Sune-Ate +1](https://www.ffxiah.com/item/27472) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | MNK/SAM/NIN/PUP |
@@ -541,6 +563,9 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Scouters Rope](https://www.ffxiah.com/item/15302) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | MNK/WHM/RDM/THF/BST/BRD/RNG/SAM/NIN/BLU/COR/DNC/RUN |
 | [Scouts Crossbow](https://www.ffxiah.com/item/22147) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Marksmanship | 12 Beastmens Medal | RNG |
 | [Scufflers Cosciales](https://www.ffxiah.com/item/28155) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WAR/PLD/DRK/SAM/DRG |
+| [Segomo's Mantle](https://www.ffxiah.com/item/26247) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
+| [Senuna's Mantle](https://www.ffxiah.com/item/26264) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
+| [Sequence](https://www.ffxiah.com/item/20695) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Sequence](https://www.ffxiah.com/item/20695) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Swords | 50 Demons Medal | RDM/PLD/BLU |
 | [Shamash Robe](https://www.ffxiah.com/item/25787) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Body | 50 Demons Medal | WHM/BLM/RDM/BLU/SCH/GEO |
 | [Sharanga](https://www.ffxiah.com/item/22149) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Marksmanship | 12 Beastmens Medal | RNG |
@@ -553,12 +578,14 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Skrymir Cord](https://www.ffxiah.com/item/26356) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | All |
 | [Skrymir Cord +1](https://www.ffxiah.com/item/26357) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 350 Infamy | — |
 | [Skulkers Earring +2](https://www.ffxiah.com/item/25452) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 300 Infamy | — |
+| [Smertrios's Mantle](https://www.ffxiah.com/item/26257) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Snow Pearl](https://www.ffxiah.com/item/11015) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Earring | 32 Kindreds Medal | All |
 | [Sombra Leggings +1](https://www.ffxiah.com/item/27399) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | MNK/THF/BST/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Sombra Tights +1](https://www.ffxiah.com/item/27227) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | MNK/THF/BST/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Sophia Ring](https://www.ffxiah.com/item/10779) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
 | [Sorcerers Stole +2](https://www.ffxiah.com/item/25437) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | BLM |
 | [Spalirisos](https://www.bg-wiki.com/index.php?search=Spalirisos&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
+| [Srivatsa](https://www.ffxiah.com/item/26403) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Sroda Earring](https://www.ffxiah.com/item/26118) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
 | [Staccato Staff](https://www.ffxiah.com/item/21166) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Staves | 12 Beastmens Medal | WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO |
 | [Steinthor](https://www.ffxiah.com/item/22114) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 500 Infamy | — |
@@ -566,6 +593,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Stikini Ring +1](https://www.ffxiah.com/item/26184) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 200 Infamy | — |
 | [Stormsoul Ring](https://www.ffxiah.com/item/11658) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
 | [Strendu Mantle](https://www.ffxiah.com/item/10971) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | WAR/PLD/DRK/BST/DRG |
+| [Sucellos's Cape](https://www.ffxiah.com/item/26250) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Sulevias Platemail +2](https://www.ffxiah.com/item/25790) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WAR/PLD/DRK/DRG |
 | [Summoning Belt](https://www.ffxiah.com/item/15942) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WHM/BLM/RDM/PLD/DRK/SMN/BLU/SCH/GEO/RUN |
 | [Summoning Earring](https://www.ffxiah.com/item/14777) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Earring | 32 Kindreds Medal | All |
@@ -583,6 +611,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Taliah Seraweels +2](https://www.ffxiah.com/item/25885) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | BST/SMN/PUP |
 | [Taliah Turban +2](https://www.ffxiah.com/item/25573) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | BST/SMN/PUP |
 | [Tandem Necklace +1](https://www.ffxiah.com/item/10919) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
+| [Taranus's Cape](https://www.ffxiah.com/item/26249) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Tatenashi Haidate +1](https://www.ffxiah.com/item/25856) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | WAR/MNK/RNG/SAM/NIN |
 | [Tauret](https://www.ffxiah.com/item/21565) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 800 Infamy | — |
 | [Telchine Gloves](https://www.ffxiah.com/item/27048) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
@@ -590,13 +619,15 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Ternion Dagger +1](https://www.ffxiah.com/item/20604) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Daggers | 12 Beastmens Medal | WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/DNC/SCH/GEO |
 | [Terpsichore](https://www.bg-wiki.com/index.php?search=Terpsichore&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 10,000 Infamy | — |
 | [Thrud Earring](https://www.ffxiah.com/item/26107) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | WAR/PLD/DRK/BST/SAM/DRG |
+| [Tishtrya](https://www.ffxiah.com/item/21082) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Tizona](https://www.bg-wiki.com/index.php?search=Tizona&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 10,000 Infamy | — |
 | [Tjukurrpa Annulet](https://www.ffxiah.com/item/10757) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
 | [Tjukurrpa Mantle](https://www.ffxiah.com/item/10984) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | THF/RNG |
 | [Tokko Tachi](https://www.ffxiah.com/item/21971) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Great Katana | 12 Beastmens Medal | SAM/NIN |
-| [Toutatis's Cape](https://www.ffxiah.com/item/26251) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
+| [Toutatis's Cape](https://www.ffxiah.com/item/26251) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Tramontane Axe](https://www.ffxiah.com/item/20808) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Axes | 12 Beastmens Medal | WAR/DRK/BST/RUN |
-| [Trishula](https://www.ffxiah.com/item/20935) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
+| [Tri-edge](https://www.ffxiah.com/item/21753) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
+| [Trishula](https://www.ffxiah.com/item/20935) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Tunglmyrkvi](https://www.ffxiah.com/item/20765) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Great Swords | 12 Beastmens Medal | WAR/PLD/DRK/RUN |
 | [Turms Harness +1](https://www.ffxiah.com/item/26544) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Body | 50 Demons Medal | THF/DNC/RUN |
 | [Turms Mittens +1](https://www.ffxiah.com/item/25995) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Hands | 50 Demons Medal | THF/DNC/RUN |
@@ -622,6 +653,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Verethragna 119 Iii](https://www.ffxiah.com/item/20512) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Hand-to-Hand | 12 Beastmens Medal | MNK/PUP |
 | [Viator Cape](https://www.ffxiah.com/item/16246) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | All |
 | [Vim Torque +1](https://www.ffxiah.com/item/26022) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
+| [Visucius's Mantle](https://www.ffxiah.com/item/26263) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Volte Beret](https://www.ffxiah.com/item/23710) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Volte Boots](https://www.ffxiah.com/item/23729) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | [Volte Bracers](https://www.ffxiah.com/item/23721) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Hands | 50 Demons Medal | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
@@ -663,6 +695,6 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 42ddbf216f59 -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 988ca23fb02d -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

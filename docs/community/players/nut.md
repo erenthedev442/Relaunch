@@ -1,6 +1,6 @@
 # Nut
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-19 · Character age 5d 8h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 2h
 
 `💪 6 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | WAR 99 |
-| Time played | 33h |
+| Time played | 34h |
 | Enemies defeated | 3,790 |
 | Deaths | 2 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 16
+- **Marks (current):** 3,266
 - **Marks (lifetime):** 76
 - **Distinct NMs slain:** 2
 - **Total NM kills:** 2
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f59491e68e26 -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: c892a365e1a4 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

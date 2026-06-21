@@ -1,8 +1,8 @@
 # Granae
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 3d 22h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 16h
 
-`💪 6 jobs @99`
+`💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,21 +11,21 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | WAR 76 |
-| Time played | 13h |
-| Enemies defeated | 1,696 |
+| Main job | **RDM 99** |
+| Sub job | WHM 95 |
+| Time played | 15h |
+| Enemies defeated | 2,261 |
 | Deaths | 12 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 76 | SAM | 82 |
+| **WAR** | **99** | SAM | 82 |
 | **MNK** | **99** | **NIN** | **99** |
-| WHM | 1 | **DRG** | **99** |
+| WHM | 95 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
-| RDM | 37 | BLU | 92 |
+| **RDM** | **99** | BLU | 92 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | **DNC** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,289
-- **Marks (lifetime):** 1,953
+- **Marks (current):** 1,890
+- **Marks (lifetime):** 3,533
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 137
+- **Total NM kills:** 413
 
 ## Guild standing
 
@@ -54,9 +54,9 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
-- **Augments crafted:** 142
-- **NM Affinities:** 12 / 13
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 264
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
+**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -80,6 +80,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|
 | Fastest 1 → 99 | 0s |
 | HL Rank I → V | 2d 22h |
+| Augment Archon | 3d 14h |
 
 ---
 
@@ -88,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: af9845576432 -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: 0a99d527587e -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->

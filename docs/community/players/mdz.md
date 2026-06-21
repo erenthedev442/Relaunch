@@ -1,8 +1,8 @@
 # Mdz
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-19 · Character age 3d 19h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 13h
 
-`💪 5 jobs @99`
+`💪 6 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **PUP 35** |
-| Sub job | MNK 35 |
-| Time played | 23h |
-| Enemies defeated | 1,575 |
+| Main job | **MNK 99** |
+| Sub job | PUP 99 |
+| Time played | 24h |
+| Enemies defeated | 1,740 |
 | Deaths | 10 |
 
 ## Job levels
@@ -27,7 +27,7 @@
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 17 |
 | **THF** | **99** | COR | 1 |
-| PLD | 1 | PUP | 35 |
+| PLD | 1 | **PUP** | **99** |
 | **DRK** | **99** | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 1,308
+- **Marks (current):** 6,958
 - **Marks (lifetime):** 2,278
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 429
+- **Total NM kills:** 531
 
 ## Guild standing
 
@@ -62,9 +62,9 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| AF | 635 | 2,785 |
+| Relic | 50 | 50 |
+| Empyrean | 125 | 125 |
 
 ## Collections
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1a2feb6579c3 -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: 67cb6c1d1af5 -->
+_Last updated: 2026-06-21 00:09 UTC_
 <!-- DOCGEN:END id="last-updated" -->
