@@ -213,11 +213,11 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Augment_Moogle',
         packetName = string.format('%sAugment Moogle', xi.icon.STAR_LARGE),
-        look       = 2401,
-        -- GM Home Progression cluster (z=-7): Gear / Augment Moogle / Augment Sage.
-        x          =  -4.500,
+        look       = 432,    -- Colossus/Golem model: large imposing figure in its own section
+        -- GM Home Augment Sanctum (z=-45): centered, standalone, far from the main NPC cluster.
+        x          =  0.000,
         y          =  0.000,
-        z          = -25.000,
+        z          = -45.000,
         rotation   =  128,
         widescan   =  1,
 
