@@ -378,7 +378,8 @@ spellObject.onMobSpawn = function(mob)
     -- (Refresh III removed -- the party doesn't need MP support.)
     -- Aquaveil on himself -> his cures / rez / nukes resist interruption when he
     -- eats an AoE. Self-only spell (validTargets 1), so SELF target.
-    mob:addGambit(ai.t.SELF, { ai.l.AND( { ai.c.NOT_STATUS, xi.effect.AQUAVEIL }, { ai.c.NOT_PT_HAS_TANK } )}, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.AQUAVEIL })
+    -- AND two conditions by listing them (implicit AND); ai.l has OR() but no AND() function.
+    mob:addGambit(ai.t.SELF, { { ai.c.NOT_STATUS, xi.effect.AQUAVEIL }, { ai.c.NOT_PT_HAS_TANK, 0 } }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.AQUAVEIL })
 
     -- (BARD SONGS + CORSAIR ROLLS were moved UP to PRIORITY #2, just beneath the
     --  life-saving heals near the top of this gambit list, so they stay up "at
