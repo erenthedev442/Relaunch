@@ -1,6 +1,6 @@
 # Phatdood
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 14h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 18h
 
 `💪 6 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **DRG 99** |
-| Sub job | RDM 99 |
-| Time played | 10h |
-| Enemies defeated | 255 |
-| Deaths | 13 |
+| Sub job | WAR 99 |
+| Time played | 15h |
+| Enemies defeated | 378 |
+| Deaths | 18 |
 
 ## Job levels
 
@@ -36,22 +36,22 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,542
-- **Marks (lifetime):** 9,151
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 1,776
+- **Marks (current):** 213
+- **Marks (lifetime):** 10,751
+- **Distinct NMs slain:** 10
+- **Total NM kills:** 1,889
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 43
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 250
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 2,040 | 1,040 |
+| AF | 6,570 | 5,570 |
 | Relic | 1,500 | 0 |
 | Empyrean | 1,200 | 0 |
 
@@ -61,13 +61,15 @@
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Augment Novice.
+**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 9h 46m |
+| HL Rank I → V | 16h 40m |
+| Augment Archon | 1d 7h |
 
 ---
 
@@ -76,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 831c30d2226e -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 87a817886c3b -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

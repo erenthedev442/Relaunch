@@ -1,6 +1,6 @@
 # Zxj
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 10h
 
 `⭐ 1 Ascension` `💪 22 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BLM 99** |
-| Sub job | RDM 99 |
-| Time played | 62h |
-| Enemies defeated | 3,002 |
-| Deaths | 44 |
+| Main job | **THF 99** |
+| Sub job | DNC 99 |
+| Time played | 68h |
+| Enemies defeated | 3,019 |
+| Deaths | 46 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 24,351
+- **Marks (current):** 20,351
 - **Marks (lifetime):** 26,477
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 479
@@ -55,8 +55,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 367
-- **NM Affinities:** 12 / 13
+- **Augments crafted:** 378
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 13e930662c3d -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 233d90b75472 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

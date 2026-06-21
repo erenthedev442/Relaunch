@@ -1,8 +1,8 @@
 # Velvet
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-20 · Character age 8d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 14h
 
-`⭐ 5 Ascensions` `💪 7 jobs @99`
+`⭐ 5 Ascensions` `💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **COR 99** |
-| Sub job | RDM 99 |
-| Time played | 44h |
-| Enemies defeated | 2,494 |
+| Main job | **BRD 99** |
+| Sub job | NIN 99 |
+| Time played | 45h |
+| Enemies defeated | 2,824 |
 | Deaths | 13 |
 
 ## Job levels
@@ -30,13 +30,13 @@
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 65 |
 | BST | 1 | SCH | 84 |
-| BRD | 31 | GEO | 1 |
+| **BRD** | **99** | GEO | 1 |
 | RNG | 24 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 11,068
+- **Marks (current):** 11,718
 - **Marks (lifetime):** 8,464
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 308
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 271
+- **Augments crafted:** 272
 - **NM Affinities:** 11 / 13
 
 ## Reforge
@@ -62,7 +62,7 @@
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f1b12074d3ee -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: e20ba5e3506d -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -28,8 +28,8 @@ Medals are earned from hunting-league content — there's no gil price here, onl
 <!-- DOCGEN:BEGIN id="gear-progression-tiers" -->
 | Tier | Weapon categories | Cost (per weapon) | Example weapons |
 |---|---|---|---|
-| **Bronze** | 14 categories (69 weapons) | 12 Beastmens Medals each | Comeuppances +1, Verethragna, Chastisers |
-| **Silver** | 11 categories (29 weapons) | 25 Kindreds Medals each | Premium Heart, Crepuscular Knife, Mpu Gandring |
+| **Bronze** | 14 categories (70 weapons) | 12 Beastmens Medals each | Tokko Knuckles, Comeuppances +1, Verethragna |
+| **Silver** | 11 categories (38 weapons) | 25 Kindreds Medals each | Premium Heart, Crepuscular Knife, Mpu Gandring |
 | **Gold** | 13 categories (40 weapons) | 50 Demons Medals each | Varga Purnikawa, Vanir Knife, Mpu Gandring |
 
 Each tier spreads its weapons across the major categories — swords, daggers, clubs, staves, great swords, axes, scythes, polearms, bows, guns, hand-to-hand and more — so almost every job has something to aim for. **Every weapon lists the jobs that can wield it**, and the menu only shows categories that actually have stock.
@@ -40,6 +40,6 @@ Bronze is your first upgrade off starter gear; Silver and Gold sharpen that into
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ff9653158676 -->
-_Last updated: 2026-06-15 19:59 UTC_
+<!-- content-hash: 178215dbd590 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

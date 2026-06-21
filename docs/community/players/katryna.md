@@ -1,8 +1,8 @@
 # Katryna
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 22h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 6d 3h
 
-`💪 2 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **DNC 48** |
-| Sub job | MNK 41 |
-| Time played | 43h |
-| Enemies defeated | 2,695 |
+| Main job | **DNC 99** |
+| Sub job | MNK 99 |
+| Time played | 45h |
+| Enemies defeated | 2,785 |
 | Deaths | 26 |
 
 ## Job levels
@@ -22,13 +22,13 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 41 | NIN | 1 |
+| **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 48 |
+| DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,833
+- **Marks (current):** 11,083
 - **Marks (lifetime):** 5,483
 - **Distinct NMs slain:** 10
 - **Total NM kills:** 1,072
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 14cf34327492 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: a6cd91465d88 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

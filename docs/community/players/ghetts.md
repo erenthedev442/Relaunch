@@ -1,17 +1,19 @@
 # Ghetts
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 12h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 16h
+
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 73/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BRD 69** |
-| Sub job | GEO 1 |
-| Time played | 2h |
+| Main job | **BRD 99** |
+| Sub job | GEO 91 |
+| Time played | 4h |
 | Enemies defeated | 0 |
 | Deaths | 0 |
 
@@ -22,19 +24,19 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
+| **BLM** | **99** | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 73 | GEO | 1 |
+| **BRD** | **99** | GEO | 91 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 3,715
+- **Marks (current):** 3,515
 - **Marks (lifetime):** 55
 - **Distinct NMs slain:** 1
 - **Total NM kills:** 49
@@ -51,7 +53,7 @@
 |---|---:|---:|
 | AF | 3,000 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 5,700 | 5,700 |
+| Empyrean | 450 | 5,700 |
 
 ## Collections
 
@@ -63,7 +65,9 @@
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 1d 1h |
 
 ---
 
@@ -72,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4e5ae2d06af4 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 5141c442ca4e -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

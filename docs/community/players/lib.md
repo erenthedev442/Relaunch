@@ -1,6 +1,6 @@
 # Lib
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 7d 5h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 7d 9h
 
 `💪 4 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fe99db8b853b -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 486501b4bb8d -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

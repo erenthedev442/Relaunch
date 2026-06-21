@@ -1,8 +1,8 @@
 # Yojin
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 17h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 21h
 
-`⭐ 3 Ascensions` `💪 10 jobs @99`
+`⭐ 3 Ascensions` `💪 13 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **DRK 68** |
-| Sub job | RUN 67 |
-| Time played | 31h |
-| Enemies defeated | 3,396 |
-| Deaths | 26 |
+| Main job | **DRK 99** |
+| Sub job | BRD 78 |
+| Time played | 33h |
+| Enemies defeated | 4,124 |
+| Deaths | 29 |
 
 ## Job levels
 
@@ -28,10 +28,10 @@
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
-| DRK | 68 | DNC | 1 |
-| BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 67 |
+| **DRK** | **99** | DNC | 1 |
+| BST | 1 | **SCH** | **99** |
+| BRD | 78 | GEO | 1 |
+| RNG | 1 | **RUN** | **99** |
 
 ## Hunting League
 
@@ -50,7 +50,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Journeyman | 2,000 | 3,000 to Veteran |
-| League Hunters' Guild | Journeyman | 1,000 | 4,000 to Veteran |
+| League Hunters' Guild | Journeyman | 1,500 | 3,500 to Veteran |
 
 ## Augment Sage
 
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Job Rebirth
 
-- **Total rebirths:** 6
-- **By job:** DRK ×6
+- **Total rebirths:** 8
+- **By job:** DRK ×8
 
 ## Prestige
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d4bd4a0f79a8 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: b4b1fe24db04 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

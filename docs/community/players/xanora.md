@@ -1,45 +1,45 @@
 # Xanora
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 12h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 16h
 
-`💪 1 job @99`
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
-| Sub job | DNC 78 |
-| Time played | 8h |
-| Enemies defeated | 489 |
-| Deaths | 10 |
+| Main job | **DNC 99** |
+| Sub job | THF 73 |
+| Time played | 11h |
+| Enemies defeated | 660 |
+| Deaths | 13 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 97 |
+| WAR | 53 | SAM | 97 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 29 | COR | 1 |
+| THF | 73 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| **DRK** | **99** | DNC | 78 |
+| **DRK** | **99** | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 253
-- **Marks (lifetime):** 471
+- **Rank:** 4 / 5
+- **Marks (current):** 27
+- **Marks (lifetime):** 1,103
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 83
+- **Total NM kills:** 208
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**4** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Augment Novice.
+**6** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 51b9bde2cf7f -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 1a56fec88fc0 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

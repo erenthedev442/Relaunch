@@ -1,6 +1,6 @@
 # Rtklm
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 7h
 
 `💪 4 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | RDM 99 |
-| Time played | 40h |
+| Time played | 42h |
 | Enemies defeated | 163 |
 | Deaths | 10 |
 
@@ -39,21 +39,21 @@
 - **Marks (current):** 145,644
 - **Marks (lifetime):** 74,288
 - **Distinct NMs slain:** 12
-- **Total NM kills:** 1,203
+- **Total NM kills:** 1,282
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 299
+- **Augments crafted:** 305
 - **NM Affinities:** 9 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 2,700 | 750 |
+| AF | 2,850 | 900 |
 | Relic | 0 | 0 |
-| Empyrean | 150 | 5,400 |
+| Empyrean | 11,040 | 16,290 |
 
 ## Collections
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6263a77567ee -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: df17d00dc8f8 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

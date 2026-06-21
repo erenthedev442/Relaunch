@@ -1,6 +1,6 @@
 # Regis
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 8d 6h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 11h
 
 `⭐ 20 Ascensions` `💪 10 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 54h |
-| Enemies defeated | 1,684 |
+| Time played | 58h |
+| Enemies defeated | 1,727 |
 | Deaths | 39 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 13,533
+- **Marks (current):** 9,133
 - **Marks (lifetime):** 1,619
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 293
+- **Total NM kills:** 303
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
-- **Augments crafted:** 191
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 257
 - **NM Affinities:** 3 / 13
 
 ## Reforge
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 5,185 | 10,335 |
 | Relic | 65 | 3,815 |
-| Empyrean | 2,730 | 5,980 |
+| Empyrean | 4,230 | 7,480 |
 
 ## Prestige
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**15** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · Devourer of the Devourer · Sanctuary Defender · Augment Novice · Augment Expert.
+**16** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · Devourer of the Devourer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -74,6 +74,7 @@
 |---|---:|
 | Fastest 1 → 99 | 21h 19m |
 | HL Rank I → V | 1d 5h |
+| Augment Archon | 7d 17h |
 
 ---
 
@@ -82,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 152025705f0c -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 59e59e8a0ffa -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

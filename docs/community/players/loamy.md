@@ -1,8 +1,8 @@
 # Loamy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 14h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 19h
 
-`💪 10 jobs @99`
+`💪 11 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **GEO 99** |
+| Main job | **BRD 99** |
 | Sub job | RDM 99 |
-| Time played | 58h |
-| Enemies defeated | 1,186 |
+| Time played | 66h |
+| Enemies defeated | 1,187 |
 | Deaths | 7 |
 
 ## Job levels
@@ -29,7 +29,7 @@
 | THF | 1 | COR | 1 |
 | PLD | 1 | **PUP** | **99** |
 | DRK | 1 | **DNC** | **99** |
-| BST | 1 | **SCH** | **99** |
+| **BST** | **99** | **SCH** | **99** |
 | **BRD** | **99** | **GEO** | **99** |
 | RNG | 15 | RUN | 1 |
 
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 74
+- **Augments crafted:** 88
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 78fa8709d83d -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 9d52a7b5c2de -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

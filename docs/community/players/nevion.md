@@ -1,8 +1,8 @@
 # Nevion
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 10h
 
-`💪 5 jobs @99`
+`⭐ 5 Ascensions` `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | NIN 99 |
-| Time played | 29h |
-| Enemies defeated | 4,160 |
-| Deaths | 25 |
+| Time played | 32h |
+| Enemies defeated | 4,719 |
+| Deaths | 28 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,550
-- **Marks (lifetime):** 722
-- **Distinct NMs slain:** 14
-- **Total NM kills:** 49
+- **Marks (current):** 1,736
+- **Marks (lifetime):** 1,447
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 75
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 78
+- **Augments crafted:** 104
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -63,16 +63,21 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 0 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 1,319 | 1,819 |
+| Relic | 1,500 | 0 |
+| Empyrean | 122 | 5,372 |
+
+## Prestige
+
+- **Total Ascensions:** 5
+- **Per-job prestige:** THF P5
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 120
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice · Augment Expert.
+**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -88,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a82330c20c94 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: c2aaad2e7fd4 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

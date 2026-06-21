@@ -1,6 +1,6 @@
 # Joker
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-19 · Character age 4d 4h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 8h
 
 `💪 4 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | DNC 99 |
-| Time played | 21h |
-| Enemies defeated | 617 |
-| Deaths | 9 |
+| Time played | 22h |
+| Enemies defeated | 628 |
+| Deaths | 11 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 11,140
-- **Marks (lifetime):** 244
+- **Marks (current):** 11,578
+- **Marks (lifetime):** 279
 - **Distinct NMs slain:** 4
-- **Total NM kills:** 46
+- **Total NM kills:** 53
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b727e615e3e3 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 85230c06eea2 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

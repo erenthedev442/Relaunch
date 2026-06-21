@@ -1,6 +1,6 @@
 # Benimaru
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 3d 15h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 3d 19h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 10/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c663cf448338 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 5b4aa759c4bd -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Che
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 8h
 
-`💪 5 jobs @99`
+`💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,20 +12,20 @@
 | | |
 |---|---|
 | Main job | **WAR 99** |
-| Sub job | NIN 99 |
-| Time played | 27h |
-| Enemies defeated | 2,225 |
-| Deaths | 13 |
+| Sub job | BLU 99 |
+| Time played | 30h |
+| Enemies defeated | 2,995 |
+| Deaths | 15 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 1 |
+| **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
-| WHM | 1 | DRG | 84 |
+| WHM | 1 | **DRG** | **99** |
 | **BLM** | **99** | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| RDM | 1 | **BLU** | **99** |
 | THF | 1 | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,031
-- **Marks (lifetime):** 3,528
+- **Marks (current):** 24
+- **Marks (lifetime):** 4,143
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 1,088
+- **Total NM kills:** 1,708
 
 ## Guild standing
 
@@ -62,13 +62,13 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 16,855 | 32,677 |
-| Relic | 0 | 0 |
+| AF | 35,710 | 51,532 |
+| Relic | 650 | 650 |
 | Empyrean | 2,389 | 715 |
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 120
 
 ## Achievements
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 19a24fa8c92d -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 33b845b828f5 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

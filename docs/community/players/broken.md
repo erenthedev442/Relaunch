@@ -1,6 +1,6 @@
 # Broken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 7h
 
 `⭐ 14 Ascensions` `💪 22 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | PLD 99 |
-| Time played | 43h |
-| Enemies defeated | 861 |
+| Main job | **MNK 99** |
+| Sub job | RDM 99 |
+| Time played | 49h |
+| Enemies defeated | 869 |
 | Deaths | 3 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 238,100
-- **Marks (lifetime):** 118,673
+- **Marks (current):** 241,634
+- **Marks (lifetime):** 121,973
 - **Distinct NMs slain:** 11
-- **Total NM kills:** 4,459
+- **Total NM kills:** 4,579
 
 ## Augment Sage
 
@@ -51,9 +51,9 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,200 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| AF | 1,350 | 150 |
+| Relic | 1,500 | 0 |
+| Empyrean | 13,680 | 12,480 |
 
 ## Prestige
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 05d45fa2a2d1 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 792feb1f6fb1 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

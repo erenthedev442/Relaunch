@@ -1,8 +1,8 @@
 # Alice
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 23h
 
-`💪 4 jobs @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -11,22 +11,22 @@
 
 | | |
 |---|---|
-| Main job | **COR 35** |
-| Sub job | SAM 35 |
-| Time played | 11h |
-| Enemies defeated | 670 |
+| Main job | **COR 99** |
+| Sub job | BLU 99 |
+| Time played | 13h |
+| Enemies defeated | 761 |
 | Deaths | 8 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 44 | SAM | 55 |
+| WAR | 44 | SAM | 85 |
 | MNK | 1 | NIN | 34 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
-| THF | 48 | COR | 35 |
+| THF | 48 | **COR** | **99** |
 | PLD | 1 | **PUP** | **99** |
 | DRK | 1 | DNC | 72 |
 | **BST** | **99** | SCH | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 344
+- **Marks (current):** 729
 - **Marks (lifetime):** 325
 - **Distinct NMs slain:** 6
 - **Total NM kills:** 30
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 116
+- **Trusts learned:** 117
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 667eb6c133b5 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 585f4dd4ee04 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

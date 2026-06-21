@@ -239,7 +239,7 @@ _60 pieces total. Cost is paid in Kindreds Medal._
 <!-- DOCGEN:END id="gold-warning" -->
 
 <!-- DOCGEN:BEGIN id="armor-gold" -->
-_60 pieces total. Cost is paid in Demons Medal._
+_67 pieces total. Cost is paid in Demons Medal._
 
 #### Head
 
@@ -252,8 +252,10 @@ _60 pieces total. Cost is paid in Demons Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/23759" data-img="https://www.bg-wiki.com/images/b/ba/Agwu%27s_Cap_description.png" target="_blank" rel="noopener">Agwus Cap</a> | 50 | BLM/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/24166" data-img="https://www.bg-wiki.com/images/c/c3/Magnif._Crown_description.png" target="_blank" rel="noopener">Magnificent Crown</a> | 50 | MNK/THF/BST/PUP/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/24182" data-img="https://www.bg-wiki.com/images/5/50/Clemen._Somen_description.png" target="_blank" rel="noopener">Clemency Somen</a> | 50 | RNG/SAM/DRG/COR |
+| <a class="item-link" href="https://www.ffxiah.com/item/25554" data-img="https://www.bg-wiki.com/images/4/4c/Ea_Hat_%2B1_description.png" target="_blank" rel="noopener">Ea Hat +1</a> | 50 | BLM/RDM/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/23732" data-img="https://www.bg-wiki.com/images/8/8c/Malignance_Chapeau_description.png" target="_blank" rel="noopener">Malignance Chapeau</a> | 50 | MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/25575" data-img="https://www.bg-wiki.com/images/7/79/Meghanada_Visor_%2B2_description.png" target="_blank" rel="noopener">Meghanada Visor +2</a> | 50 | THF/BST/RNG/COR/DNC/RUN |
+| <a class="item-link" href="https://www.ffxiah.com/item/23756" data-img="https://www.bg-wiki.com/images/8/8c/Gleti%27s_Mask_description.png" target="_blank" rel="noopener">Gletis Mask</a> | 50 | THF/BST/DRG/BLU/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/23710" data-img="https://www.bg-wiki.com/images/1/18/Volte_Beret_description.png" target="_blank" rel="noopener">Volte Beret</a> | 50 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/23713" data-img="https://www.bg-wiki.com/images/1/10/Volte_Cap_description.png" target="_blank" rel="noopener">Volte Cap</a> | 50 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/27731" data-img="https://www.bg-wiki.com/images/7/72/Gende._Caubeen_%2B1_description.png" target="_blank" rel="noopener">Gendewitha Caubeen +1</a> | 50 | WHM/RDM/BRD/SCH |
@@ -273,6 +275,8 @@ _60 pieces total. Cost is paid in Demons Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/23766" data-img="https://www.bg-wiki.com/images/c/cb/Agwu%27s_Robe_description.png" target="_blank" rel="noopener">Agwus Robe</a> | 50 | BLM/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25791" data-img="https://www.bg-wiki.com/images/e/e1/Meg._Cuirie_%2B2_description.png" target="_blank" rel="noopener">Meghanada Cuirie +2</a> | 50 | THF/BST/RNG/COR/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25787" data-img="https://www.bg-wiki.com/images/9/96/Shamash_Robe_description.png" target="_blank" rel="noopener">Shamash Robe</a> | 50 | WHM/BLM/RDM/BLU/SCH/GEO |
+| <a class="item-link" href="https://www.ffxiah.com/item/26530" data-img="https://www.bg-wiki.com/images/d/d3/Ea_Houppe._%2B1_description.png" target="_blank" rel="noopener">Ea Houppelande +1</a> | 50 | BLM/RDM/GEO |
+| <a class="item-link" href="https://www.ffxiah.com/item/23763" data-img="https://www.bg-wiki.com/images/f/f8/Gleti%27s_Cuirass_description.png" target="_blank" rel="noopener">Gletis Cuirass</a> | 50 | THF/BST/DRG/BLU/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/25708" data-img="https://www.bg-wiki.com/images/5/5a/Gyve_Doublet_description.png" target="_blank" rel="noopener">Gyve Doublet</a> | 50 | WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/26943" data-img="https://www.bg-wiki.com/images/0/0d/Agony_Jerkin_%2B1_description.png" target="_blank" rel="noopener">Agony Jerkin +1</a> | 50 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 
@@ -288,6 +292,7 @@ _60 pieces total. Cost is paid in Demons Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/25829" data-img="https://www.bg-wiki.com/images/8/81/Meg._Gloves_%2B2_description.png" target="_blank" rel="noopener">Meghanada Gloves +2</a> | 50 | THF/BST/RNG/COR/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25995" data-img="https://www.bg-wiki.com/images/d/d5/Turms_Mittens_%2B1_description.png" target="_blank" rel="noopener">Turms Mittens +1</a> | 50 | THF/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25981" data-img="https://www.bg-wiki.com/images/9/95/Ea_Cuffs_%2B1_description.png" target="_blank" rel="noopener">Ea Cuffs +1</a> | 50 | BLM/RDM/GEO |
+| <a class="item-link" href="https://www.ffxiah.com/item/23770" data-img="https://www.bg-wiki.com/images/d/d3/Gleti%27s_Gauntlets_description.png" target="_blank" rel="noopener">Gletis Gauntlets</a> | 50 | THF/BST/DRG/BLU/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/23718" data-img="https://www.bg-wiki.com/images/5/55/Volte_Gloves_description.png" target="_blank" rel="noopener">Volte Gloves</a> | 50 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/23721" data-img="https://www.bg-wiki.com/images/c/cc/Volte_Bracers_description.png" target="_blank" rel="noopener">Volte Bracers</a> | 50 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 
@@ -301,6 +306,7 @@ _60 pieces total. Cost is paid in Demons Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/23780" data-img="https://www.bg-wiki.com/images/1/1d/Agwu%27s_Slops_description.png" target="_blank" rel="noopener">Agwus Slops</a> | 50 | BLM/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25908" data-img="https://www.bg-wiki.com/images/3/30/Turms_Subligar_%2B1_description.png" target="_blank" rel="noopener">Turms Subligar +1</a> | 50 | THF/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25898" data-img="https://www.bg-wiki.com/images/7/7e/Arke_Cosc._%2B1_description.png" target="_blank" rel="noopener">Arke Cosciales +1</a> | 50 | WAR/PLD/DRG |
+| <a class="item-link" href="https://www.ffxiah.com/item/25894" data-img="https://www.bg-wiki.com/images/8/8d/Ea_Slops_%2B1_description.png" target="_blank" rel="noopener">Ea Slops +1</a> | 50 | BLM/RDM/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/23722" data-img="https://www.bg-wiki.com/images/1/17/Volte_Brais_description.png" target="_blank" rel="noopener">Volte Brais</a> | 50 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/23735" data-img="https://www.bg-wiki.com/images/e/e1/Malignance_Tights_description.png" target="_blank" rel="noopener">Malignance Tights</a> | 50 | MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/25880" data-img="https://www.bg-wiki.com/images/5/5e/Meg._Chausses_%2B2_description.png" target="_blank" rel="noopener">Meghanada Chausses +2</a> | 50 | THF/BST/RNG/COR/DNC/RUN |
@@ -315,6 +321,7 @@ _60 pieces total. Cost is paid in Demons Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/23728" data-img="https://www.bg-wiki.com/images/c/c5/Volte_Sollerets_description.png" target="_blank" rel="noopener">Volte Sollerets</a> | 50 | WAR/PLD/DRK |
 | <a class="item-link" href="https://www.ffxiah.com/item/23789" data-img="https://www.bg-wiki.com/images/a/a3/Nyame_Sollerets_description.png" target="_blank" rel="noopener">Nyame Sollerets</a> | 50 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/24178" data-img="https://www.bg-wiki.com/images/c/cf/Magnif._Soll._description.png" target="_blank" rel="noopener">Magnificent Sollerets</a> | 50 | MNK/THF/BST/PUP/DNC |
+| <a class="item-link" href="https://www.ffxiah.com/item/25959" data-img="https://www.bg-wiki.com/images/9/92/Ken._Sune-Ate_%2B1_description.png" target="_blank" rel="noopener">Kendatsuba Sune-Ate +1</a> | 50 | MNK/SAM/NIN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25948" data-img="https://www.bg-wiki.com/images/8/89/Hiza._Sune-Ate_%2B2_description.png" target="_blank" rel="noopener">Hizamaru Sune-Ate +2</a> | 50 | MNK/SAM/NIN/PUP |
 | <a class="item-link" href="https://www.ffxiah.com/item/23784" data-img="https://www.bg-wiki.com/images/0/01/Gleti%27s_Boots_description.png" target="_blank" rel="noopener">Gletis Boots</a> | 50 | THF/BST/DRG/BLU/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/25947" data-img="https://www.bg-wiki.com/images/b/b4/Meg._Jam._%2B2_description.png" target="_blank" rel="noopener">Meghanada Jambeaux +2</a> | 50 | THF/BST/RNG/COR/DNC/RUN |
@@ -341,18 +348,18 @@ Tiered weapons grouped by category. Empty categories are hidden — only categor
 ### Bronze tier (entry-level endgame ilvl 119)
 
 <!-- DOCGEN:BEGIN id="weapons-bronze" -->
-_69 weapons total. Cost is paid in Beastmens Medal._
+_70 weapons total. Cost is paid in Beastmens Medal._
 
 #### Swords
 
 | Item | Cost | Jobs |
 |---|---:|---|
+| <a class="item-link" href="https://www.ffxiah.com/item/21617" data-img="https://www.bg-wiki.com/images/6/61/Tokko_Sword_description.png" target="_blank" rel="noopener">Tokko Sword</a> | 12 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/20690" data-img="https://www.bg-wiki.com/images/4/4d/Reikiko_description.png" target="_blank" rel="noopener">Reikiko</a> | 12 | WAR/PLD/DRK/RUN |
+| <a class="item-link" href="https://www.ffxiah.com/item/21622" data-img="https://www.bg-wiki.com/images/1/1d/Voluspa_Sword_description.png" target="_blank" rel="noopener">Voluspa Sword</a> | 12 | WAR/RDM/PLD/DRK/BLU/COR/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/21615" data-img="https://www.bg-wiki.com/images/4/47/Hep._Sapara_%2B1_description.png" target="_blank" rel="noopener">Hepatizon Sapara +1</a> | 12 | WAR/THF/DRK/SAM/BLU/COR |
 | <a class="item-link" href="https://www.ffxiah.com/item/21635" data-img="https://www.bg-wiki.com/images/0/0b/Malignance_Sword_description.png" target="_blank" rel="noopener">Malignance Sword</a> | 12 | WAR/PLD/DRK/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/20612" data-img="https://www.bg-wiki.com/images/1/10/Sangarius_%2B1_description.png" target="_blank" rel="noopener">Sangarius +1</a> | 12 | WAR/DRK |
-| <a class="item-link" href="https://www.ffxiah.com/item/20738" data-img="https://static.ffxiah.com/images/icon/20738.png" target="_blank" rel="noopener">Buramenkah</a> | 12 | RDM/PLD/BLU |
-| <a class="item-link" href="https://www.ffxiah.com/item/20699" data-img="https://www.bg-wiki.com/images/e/ee/Koboto_description.png" target="_blank" rel="noopener">Koboto</a> | 12 | WAR/THF/DRK/BST/RNG/SAM |
 | <a class="item-link" href="https://www.ffxiah.com/item/21605" data-img="https://www.bg-wiki.com/images/9/90/Arasy_Sword_%2B1_description.png" target="_blank" rel="noopener">Arasy Sword +1</a> | 12 | RDM/PLD/BLU |
 | <a class="item-link" href="https://www.ffxiah.com/item/21618" data-img="https://www.bg-wiki.com/images/1/1a/Ajja_Sword_description.png" target="_blank" rel="noopener">Ajja Sword</a> | 12 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN |
 
@@ -361,11 +368,11 @@ _69 weapons total. Cost is paid in Beastmens Medal._
 | Item | Cost | Jobs |
 |---|---:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/21568" data-img="https://www.bg-wiki.com/images/2/28/Acrontica_description.png" target="_blank" rel="noopener">Acrontica</a> | 12 | THF/DNC |
+| <a class="item-link" href="https://www.ffxiah.com/item/21566" data-img="https://www.bg-wiki.com/images/8/8c/Voluspa_Knife_description.png" target="_blank" rel="noopener">Voluspa Knife</a> | 12 | WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Twashtar&go=Go" data-img="" target="_blank" rel="noopener">Twashtar</a> | 12 | THF/BRD/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/20583" data-img="https://static.ffxiah.com/images/icon/20583.png" target="_blank" rel="noopener">Mandau 119 Iii</a> | 12 | RDM/THF/BRD |
 | <a class="item-link" href="https://www.ffxiah.com/item/20604" data-img="https://www.bg-wiki.com/images/d/d7/Ternion_Dagger_%2B1_description.png" target="_blank" rel="noopener">Ternion Dagger +1</a> | 12 | WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/DNC/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/21555" data-img="https://www.bg-wiki.com/images/9/98/Arasy_Knife_%2B1_description.png" target="_blank" rel="noopener">Arasy Knife +1</a> | 12 | WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC |
-| <a class="item-link" href="https://www.ffxiah.com/item/20636" data-img="https://www.bg-wiki.com/images/c/cd/Izhiikoh_description.png" target="_blank" rel="noopener">Izhiikoh</a> | 12 | THF/BRD/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/21562" data-img="https://www.bg-wiki.com/images/a/aa/Ajja_Knife_description.png" target="_blank" rel="noopener">Ajja Knife</a> | 12 | RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/20620" data-img="https://www.bg-wiki.com/images/d/da/Sabebus_description.png" target="_blank" rel="noopener">Sabebus</a> | 12 | WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC |
 
@@ -404,13 +411,13 @@ _69 weapons total. Cost is paid in Beastmens Medal._
 
 | Item | Cost | Jobs |
 |---|---:|---|
+| <a class="item-link" href="https://www.ffxiah.com/item/21709" data-img="https://www.bg-wiki.com/images/1/1c/Beryllium_Pick_%2B1_description.png" target="_blank" rel="noopener">Beryllium Pick +1</a> | 12 | WAR/DRK/BST/RUN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Farsha&go=Go" data-img="" target="_blank" rel="noopener">Farsha</a> | 12 | WAR/BST |
 | <a class="item-link" href="https://www.ffxiah.com/item/21705" data-img="https://www.bg-wiki.com/images/3/30/Arasy_Tabar_%2B1_description.png" target="_blank" rel="noopener">Arasy Tabar +1</a> | 12 | WAR/BST |
 | <a class="item-link" href="https://www.ffxiah.com/item/21720" data-img="https://www.bg-wiki.com/images/c/c7/Eletta_Axe_description.png" target="_blank" rel="noopener">Eletta Axe</a> | 12 | WAR/DRK/BST/RNG/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/21708" data-img="https://www.bg-wiki.com/images/3/3b/Beryllium_Pick_description.png" target="_blank" rel="noopener">Beryllium Pick</a> | 12 | WAR/DRK/BST/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/20808" data-img="https://www.bg-wiki.com/images/f/f7/Tramontane_Axe_description.png" target="_blank" rel="noopener">Tramontane Axe</a> | 12 | WAR/DRK/BST/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/20827" data-img="https://www.bg-wiki.com/images/9/9b/Kerehcatl_description.png" target="_blank" rel="noopener">Kerehcatl</a> | 12 | WAR/BST |
 | <a class="item-link" href="https://www.ffxiah.com/item/21719" data-img="https://www.bg-wiki.com/images/e/ed/Ajja_Axe_description.png" target="_blank" rel="noopener">Ajja Axe</a> | 12 | WAR/DRK/BST/RNG/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/20803" data-img="https://www.bg-wiki.com/images/a/a5/Blurred_Axe_%2B1_description.png" target="_blank" rel="noopener">Blurred Axe +1</a> | 12 | WAR/DRK/BST/RNG/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/20813" data-img="https://www.bg-wiki.com/images/a/ad/Emxgha_description.png" target="_blank" rel="noopener">Emxgha</a> | 12 | WAR/DRK/BST/RUN |
 
 #### Great Axes
@@ -447,12 +454,13 @@ _69 weapons total. Cost is paid in Beastmens Medal._
 
 | Item | Cost | Jobs |
 |---|---:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21971" data-img="https://www.bg-wiki.com/images/7/79/Tokko_Tachi_description.png" target="_blank" rel="noopener">Tokko Tachi</a> | 12 | SAM/NIN |
+| <a class="item-link" href="https://www.ffxiah.com/item/21972" data-img="https://www.bg-wiki.com/images/4/4a/Ajja_Tachi_description.png" target="_blank" rel="noopener">Ajja Tachi</a> | 12 | SAM/NIN |
 
 #### Archery
 
 | Item | Cost | Jobs |
 |---|---:|---|
+| <a class="item-link" href="https://www.ffxiah.com/item/22108" data-img="https://www.bg-wiki.com/images/c/cd/Tokko_Bow_description.png" target="_blank" rel="noopener">Tokko Bow</a> | 12 | WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN |
 | <a class="item-link" href="https://www.ffxiah.com/item/22110" data-img="https://www.bg-wiki.com/images/1/1a/Eletta_Bow_description.png" target="_blank" rel="noopener">Eletta Bow</a> | 12 | WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN |
 | <a class="item-link" href="https://www.ffxiah.com/item/22109" data-img="https://www.bg-wiki.com/images/e/e9/Ajja_Bow_description.png" target="_blank" rel="noopener">Ajja Bow</a> | 12 | WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN |
 
@@ -473,20 +481,20 @@ _69 weapons total. Cost is paid in Beastmens Medal._
 
 | Item | Cost | Jobs |
 |---|---:|---|
+| <a class="item-link" href="https://www.ffxiah.com/item/21515" data-img="https://www.bg-wiki.com/images/d/d8/Tokko_Knuckles_description.png" target="_blank" rel="noopener">Tokko Knuckles</a> | 12 | WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/20508" data-img="https://www.bg-wiki.com/images/9/93/Comeuppances_%2B1_description.png" target="_blank" rel="noopener">Comeuppances +1</a> | 12 | MNK/PUP |
 | <a class="item-link" href="https://www.ffxiah.com/item/20512" data-img="https://static.ffxiah.com/images/icon/20512.png" target="_blank" rel="noopener">Verethragna 119 Iii</a> | 12 | MNK/PUP |
 | <a class="item-link" href="https://www.ffxiah.com/item/20523" data-img="https://www.bg-wiki.com/images/6/6b/Chastisers_description.png" target="_blank" rel="noopener">Chastisers</a> | 12 | MNK/PUP |
 | <a class="item-link" href="https://www.ffxiah.com/item/21514" data-img="https://static.ffxiah.com/images/icon/21514.png" target="_blank" rel="noopener">Pair Of Raetic Baghnakhs +1</a> | 12 | WAR/MNK/BLM/RDM/THF/DRK/BST/BRD/NIN/SMN/BLU/PUP/DNC/SCH |
-| <a class="item-link" href="https://www.ffxiah.com/item/21507" data-img="https://static.ffxiah.com/images/icon/21507.png" target="_blank" rel="noopener">Pair Of Jolt Counter +1</a> | 12 | MNK/PUP |
+| <a class="item-link" href="https://www.ffxiah.com/item/21510" data-img="https://www.bg-wiki.com/images/a/af/Voluspa_Knuckles_description.png" target="_blank" rel="noopener">Voluspa Knuckles</a> | 12 | WAR/MNK/RDM/THF/PLD/DRK/BST/PUP/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/21517" data-img="https://www.bg-wiki.com/images/1/16/Eletta_Knuckles_description.png" target="_blank" rel="noopener">Eletta Knuckles</a> | 12 | WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC |
-| <a class="item-link" href="https://www.ffxiah.com/item/21505" data-img="https://www.bg-wiki.com/images/3/3f/Arasy_Sainti_%2B1_description.png" target="_blank" rel="noopener">Arasy Sainti +1</a> | 12 | WAR/MNK/BST/NIN/PUP |
 | <a class="item-link" href="https://www.ffxiah.com/item/21516" data-img="https://www.bg-wiki.com/images/4/4d/Ajja_Knuckles_description.png" target="_blank" rel="noopener">Ajja Knuckles</a> | 12 | WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC |
 <!-- DOCGEN:END id="weapons-bronze" -->
 
 ### Silver tier (high-end event / Dynamis-D / Omen / Escha)
 
 <!-- DOCGEN:BEGIN id="weapons-silver" -->
-_29 weapons total. Cost is paid in Kindreds Medal._
+_38 weapons total. Cost is paid in Kindreds Medal._
 
 #### Swords
 
@@ -500,6 +508,7 @@ _29 weapons total. Cost is paid in Kindreds Medal._
 |---|---:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/21585" data-img="https://www.bg-wiki.com/images/f/fe/Crepuscular_Knife_description.png" target="_blank" rel="noopener">Crepuscular Knife</a> | 25 | WAR/RDM/THF/BST/BRD/RNG/NIN/COR/DNC |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Mpu+Gandring&go=Go" data-img="" target="_blank" rel="noopener">Mpu Gandring</a> | 25 | RDM/THF/BRD/DNC |
+| <a class="item-link" href="https://www.ffxiah.com/item/21561" data-img="https://www.bg-wiki.com/images/8/8f/Tokko_Knife_description.png" target="_blank" rel="noopener">Tokko Knife</a> | 25 | RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/20615" data-img="https://www.bg-wiki.com/images/2/28/Levante_Dagger_description.png" target="_blank" rel="noopener">Levante Dagger</a> | 25 | WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Chocobo+Knife&go=Go" data-img="" target="_blank" rel="noopener">Chocobo Knife</a> | 25 | RDM/THF/BRD/RNG/DNC |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Air+Knife&go=Go" data-img="" target="_blank" rel="noopener">Air Knife</a> | 25 | THF/DNC |
@@ -509,8 +518,10 @@ _29 weapons total. Cost is paid in Kindreds Medal._
 | Item | Cost | Jobs |
 |---|---:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/21662" data-img="https://www.bg-wiki.com/images/5/54/Raetic_Algol_description.png" target="_blank" rel="noopener">Raetic Algol</a> | 25 | WAR/PLD/DRK/RUN |
+| <a class="item-link" href="https://www.ffxiah.com/item/21670" data-img="https://www.bg-wiki.com/images/8/81/Tokko_Claymore_description.png" target="_blank" rel="noopener">Tokko Claymore</a> | 25 | WAR/PLD/DRK/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/21655" data-img="https://www.bg-wiki.com/images/3/35/Arasy_Claymore_%2B1_description.png" target="_blank" rel="noopener">Arasy Claymore +1</a> | 25 | WAR/PLD/DRK/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/21659" data-img="https://www.bg-wiki.com/images/d/de/Beryllium_Sword_description.png" target="_blank" rel="noopener">Beryllium Sword</a> | 25 | WAR/PLD/DRK/RUN |
+| <a class="item-link" href="https://www.ffxiah.com/item/21665" data-img="https://www.bg-wiki.com/images/6/6a/Voluspa_Blade_description.png" target="_blank" rel="noopener">Voluspa Blade</a> | 25 | PLD/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/20745" data-img="https://static.ffxiah.com/images/icon/20745.png" target="_blank" rel="noopener">Ragnarok 119</a> | 25 | WAR/PLD/DRK |
 | <a class="item-link" href="https://www.ffxiah.com/item/20746" data-img="https://static.ffxiah.com/images/icon/20746.png" target="_blank" rel="noopener">Ragnarok 119 Ii</a> | 25 | WAR/PLD/DRK |
 | <a class="item-link" href="https://www.ffxiah.com/item/21672" data-img="https://www.bg-wiki.com/images/5/59/Eletta_Claymore_description.png" target="_blank" rel="noopener">Eletta Claymore</a> | 25 | WAR/PLD/DRK/RUN |
@@ -526,6 +537,8 @@ _29 weapons total. Cost is paid in Kindreds Medal._
 | Item | Cost | Jobs |
 |---|---:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/21765" data-img="https://www.bg-wiki.com/images/a/a2/Hepatizon_Axe_description.png" target="_blank" rel="noopener">Hepatizon Axe</a> | 25 | WAR/DRK/RUN |
+| <a class="item-link" href="https://www.ffxiah.com/item/21777" data-img="https://www.bg-wiki.com/images/f/fa/Eletta_Chopper_description.png" target="_blank" rel="noopener">Eletta Chopper</a> | 25 | WAR/DRK/RUN |
+| <a class="item-link" href="https://www.ffxiah.com/item/21769" data-img="https://www.bg-wiki.com/images/0/09/Voluspa_Chopper_description.png" target="_blank" rel="noopener">Voluspa Chopper</a> | 25 | WAR/DRK/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/21763" data-img="https://www.bg-wiki.com/images/b/bf/Arasy_Axe_%2B1_description.png" target="_blank" rel="noopener">Arasy Axe +1</a> | 25 | WAR/DRK/RUN |
 
 #### Scythes
@@ -533,12 +546,14 @@ _29 weapons total. Cost is paid in Kindreds Medal._
 | Item | Cost | Jobs |
 |---|---:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/21815" data-img="https://www.bg-wiki.com/images/6/66/Maliya_Sickle_description.png" target="_blank" rel="noopener">Maliya Sickle</a> | 25 | WAR/BLM/DRK/BST |
+| <a class="item-link" href="https://www.ffxiah.com/item/21826" data-img="https://www.bg-wiki.com/images/f/fe/Tokko_Scythe_description.png" target="_blank" rel="noopener">Tokko Scythe</a> | 25 | WAR/BLM/DRK/BST |
 | <a class="item-link" href="https://www.ffxiah.com/item/20893" data-img="https://www.bg-wiki.com/images/d/db/Shukuyu%27s_Scythe_description.png" target="_blank" rel="noopener">Shukuyus Scythe</a> | 25 | WAR/DRK/BST |
 
 #### Polearms
 
 | Item | Cost | Jobs |
 |---|---:|---|
+| <a class="item-link" href="https://www.ffxiah.com/item/21881" data-img="https://www.bg-wiki.com/images/e/ea/Eletta_Lance_description.png" target="_blank" rel="noopener">Eletta Lance</a> | 25 | WAR/PLD/SAM/DRG |
 | <a class="item-link" href="https://www.ffxiah.com/item/21871" data-img="https://www.bg-wiki.com/images/8/82/Raetic_Halberd_description.png" target="_blank" rel="noopener">Raetic Halberd</a> | 25 | WAR/BLM/PLD/BRD/SAM/DRG/SMN/SCH |
 
 #### Katana
@@ -554,6 +569,7 @@ _29 weapons total. Cost is paid in Kindreds Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/22126" data-img="https://www.bg-wiki.com/images/1/18/Exalted_Bow_%2B1_description.png" target="_blank" rel="noopener">Exalted Bow +1</a> | 25 | WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN |
 | <a class="item-link" href="https://www.ffxiah.com/item/21228" data-img="https://www.bg-wiki.com/images/7/73/Falubeza_description.png" target="_blank" rel="noopener">Falubeza</a> | 25 | RNG |
 | <a class="item-link" href="https://www.ffxiah.com/item/22118" data-img="https://www.bg-wiki.com/images/3/31/Venery_Bow_description.png" target="_blank" rel="noopener">Venery Bow</a> | 25 | RNG |
+| <a class="item-link" href="https://www.ffxiah.com/item/22133" data-img="https://www.bg-wiki.com/images/8/81/Voluspa_Bow_description.png" target="_blank" rel="noopener">Voluspa Bow</a> | 25 | RNG |
 | <a class="item-link" href="https://www.ffxiah.com/item/22111" data-img="https://www.bg-wiki.com/images/5/51/Kaja_Bow_description.png" target="_blank" rel="noopener">Kaja Bow</a> | 25 | WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN |
 | <a class="item-link" href="https://www.ffxiah.com/item/22128" data-img="https://www.bg-wiki.com/images/e/e8/Raetic_Bow_%2B1_description.png" target="_blank" rel="noopener">Raetic Bow +1</a> | 25 | WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/SMN/BLU/SCH |
 
@@ -563,6 +579,7 @@ _29 weapons total. Cost is paid in Kindreds Medal._
 |---|---:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/22135" data-img="https://www.bg-wiki.com/images/9/92/Arasy_Gun_description.png" target="_blank" rel="noopener">Arasy Gun</a> | 25 | RNG/COR |
 | <a class="item-link" href="https://www.ffxiah.com/item/22134" data-img="https://www.bg-wiki.com/images/1/1c/Holliday_description.png" target="_blank" rel="noopener">Holliday</a> | 25 | RNG/COR |
+| <a class="item-link" href="https://www.ffxiah.com/item/22144" data-img="https://www.bg-wiki.com/images/7/77/Voluspa_Gun_description.png" target="_blank" rel="noopener">Voluspa Gun</a> | 25 | RNG/COR |
 | <a class="item-link" href="https://www.ffxiah.com/item/22119" data-img="https://www.bg-wiki.com/images/e/e5/Wochowsen_description.png" target="_blank" rel="noopener">Wochowsen</a> | 25 | RNG |
 | <a class="item-link" href="https://www.ffxiah.com/item/21256" data-img="https://www.bg-wiki.com/images/f/f9/Illapa_description.png" target="_blank" rel="noopener">Illapa</a> | 25 | RNG |
 
@@ -607,8 +624,8 @@ _40 weapons total. Cost is paid in Demons Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/22022" data-img="https://www.bg-wiki.com/images/7/76/Ames_%2B1_description.png" target="_blank" rel="noopener">Ames +1</a> | 50 | WHM/BLM/RDM/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/21089" data-img="https://www.bg-wiki.com/images/c/c3/Rubicundity_description.png" target="_blank" rel="noopener">Rubicundity</a> | 50 | WHM/BLM/RDM/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/22016" data-img="https://www.bg-wiki.com/images/7/74/Arasy_Rod_%2B1_description.png" target="_blank" rel="noopener">Arasy Rod +1</a> | 50 | WHM/BLM/SMN/SCH/GEO |
-| <a class="item-link" href="https://www.ffxiah.com/item/21094" data-img="https://www.bg-wiki.com/images/9/96/Blurred_Rod_%2B1_description.png" target="_blank" rel="noopener">Blurred Rod +1</a> | 50 | WAR/MNK/WHM/BLM/PLD/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/21103" data-img="https://www.bg-wiki.com/images/5/5c/Vadose_Rod_description.png" target="_blank" rel="noopener">Vadose Rod</a> | 50 | WHM/BLM/SMN/SCH/GEO |
+| <a class="item-link" href="https://www.ffxiah.com/item/22027" data-img="https://www.bg-wiki.com/images/b/b6/Tokko_Rod_description.png" target="_blank" rel="noopener">Tokko Rod</a> | 50 | WHM/BLM/RDM/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/21102" data-img="https://www.bg-wiki.com/images/2/23/Mafic_Cudgel_description.png" target="_blank" rel="noopener">Mafic Cudgel</a> | 50 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 
 #### Staves
@@ -992,7 +1009,7 @@ Per-job **+4 Reforge Sets** (AF/Relic/Empyrean +4) are also sold here.
 
 ### Curated picks
 
-_152 hand-picked items -- relic weapons, bard instruments, and other special weapons._
+_164 hand-picked items -- relic weapons, bard instruments, and other special weapons._
 
 | Item | Cost | Notes |
 |---|---:|---|
@@ -1126,6 +1143,18 @@ _152 hand-picked items -- relic weapons, bard instruments, and other special wea
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Lehko%27s+Ring&go=Go" data-img="" target="_blank" rel="noopener">Lehko's Ring</a> | 300 | Ring. DEX+10, AGI+10, Store TP+5, Haste+2%. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26230" data-img="https://www.bg-wiki.com/images/b/bd/Fickblix%27s_Ring_description.png" target="_blank" rel="noopener">Fickblix's Ring</a> | 300 | Ring. INT+15, Magic Atk+15, Magic Acc+20. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26231" data-img="https://www.bg-wiki.com/images/f/f8/Ephramad%27s_Ring_description.png" target="_blank" rel="noopener">Ephramad's Ring</a> | 300 | Ring. MND+15, Cure Potency+10%, Healing Skill+15. · EX/RARE. |
+| <a class="item-link" href="https://www.ffxiah.com/item/26192" data-img="https://www.bg-wiki.com/images/7/7e/Adoulin_Ring_%2B1_description.png" target="_blank" rel="noopener">Adoulin Ring +1</a> | 10000 | Ring. All-rounder: HP/MP+55, Atk/Rng.Atk+20, Acc/Rng.Acc/MAtk/MAcc+8. · EX/RARE. |
+| <a class="item-link" href="https://www.ffxiah.com/item/26197" data-img="https://www.bg-wiki.com/images/4/49/Gorney_Ring_%2B1_description.png" target="_blank" rel="noopener">Gorney Ring +1</a> | 10000 | Ring. THF utility: Steal+3, Treasure Hunter+1, Mug+2, Gilfinder+2. · EX/RARE. |
+| <a class="item-link" href="https://www.ffxiah.com/item/26198" data-img="https://www.bg-wiki.com/images/4/44/Haverton_Ring_%2B1_description.png" target="_blank" rel="noopener">Haverton Ring +1</a> | 10000 | Ring. Ranged/NIN: Rng.Acc+23, Ninjutsu+11, Dual Wield+6%, Snapshot+7%. · EX/RARE. |
+| <a class="item-link" href="https://www.ffxiah.com/item/26195" data-img="https://www.bg-wiki.com/images/4/4e/Jann._Ring_%2B1_description.png" target="_blank" rel="noopener">Janniston Ring +1</a> | 10000 | Ring. Healer: MP+44, Enmity-8, Cure Potency II+6%. · EX/RARE. |
+| <a class="item-link" href="https://www.ffxiah.com/item/26199" data-img="https://www.bg-wiki.com/images/7/79/Karieyh_Ring_%2B1_description.png" target="_blank" rel="noopener">Karieyh Ring +1</a> | 10000 | Ring. Weaponskill: WS Acc+10, Regain+5, WS damage+4%. · EX/RARE. |
+| <a class="item-link" href="https://www.ffxiah.com/item/26203" data-img="https://www.bg-wiki.com/images/a/a4/Orvail_Ring_%2B1_description.png" target="_blank" rel="noopener">Orvail Ring +1</a> | 10000 | Ring. Crafting: Synth success+2%, skill-up+6, material loss-2%, HQ+2. · EX/RARE. |
+| <a class="item-link" href="https://www.ffxiah.com/item/26196" data-img="https://www.bg-wiki.com/images/2/2d/Renaye_Ring_%2B1_description.png" target="_blank" rel="noopener">Renaye Ring +1</a> | 10000 | Ring. Magic skill (Singing/Blue/Geomancy)+11, Refresh+2. · EX/RARE. |
+| <a class="item-link" href="https://www.ffxiah.com/item/26202" data-img="https://www.bg-wiki.com/images/c/c7/Shneddick_Ring_%2B1_description.png" target="_blank" rel="noopener">Shneddick Ring +1</a> | 10000 | Ring. Movement+18%, Resist Petrify/Bind/Gravity+17. · EX/RARE. |
+| <a class="item-link" href="https://www.ffxiah.com/item/26201" data-img="https://www.bg-wiki.com/images/8/8a/Thur._Ring_%2B1_description.png" target="_blank" rel="noopener">Thurandaut Ring +1</a> | 10000 | Ring. Pet: Atk/Rng.Atk+23, Acc/Rng.Acc+22, Dmg taken-4%, Haste+4%. · EX/RARE. (BST/SMN/PUP/DRG) |
+| <a class="item-link" href="https://www.ffxiah.com/item/26200" data-img="https://www.bg-wiki.com/images/e/ef/Vocane_Ring_%2B1_description.png" target="_blank" rel="noopener">Vocane Ring +1</a> | 10000 | Ring. Tank: Damage taken-8%, Cure Potency Rcvd+6%, Knockback res+2. · EX/RARE. |
+| <a class="item-link" href="https://www.ffxiah.com/item/26194" data-img="https://www.bg-wiki.com/images/0/0e/Weather._Ring_%2B1_description.png" target="_blank" rel="noopener">Weatherspoon Ring +1</a> | 10000 | Ring. Caster: Magic Acc+13, Fast Cast+6%, Light magic+11%, Quick Magic+4%. · EX/RARE. |
+| <a class="item-link" href="https://www.ffxiah.com/item/26193" data-img="https://www.bg-wiki.com/images/8/8a/Woltaris_Ring_%2B1_description.png" target="_blank" rel="noopener">Woltaris Ring +1</a> | 10000 | Ring. Sustain: Refresh+2, Regen+2, Sublimation+2. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/23761" data-img="https://www.bg-wiki.com/images/2/2e/Nyame_Helm_description.png" target="_blank" rel="noopener">Nyame Helm</a> | 400 | Head. DEF:156 HP+91 STR+26 DEX+25 VIT+24 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+5, Magic Dmg+123, PDT-7%. All 22 jobs. |
 | <a class="item-link" href="https://www.ffxiah.com/item/23768" data-img="https://www.bg-wiki.com/images/d/d2/Nyame_Mail_description.png" target="_blank" rel="noopener">Nyame Mail</a> | 800 | Body. DEF:189 HP+136 STR+35 DEX+24 VIT+35 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+8, Magic Dmg+139, PDT-9%. All 22 jobs. |
 | <a class="item-link" href="https://www.ffxiah.com/item/23775" data-img="https://www.bg-wiki.com/images/2/21/Nyame_Gauntlets_description.png" target="_blank" rel="noopener">Nyame Gauntlets</a> | 400 | Hands. DEF:142 HP+91 STR+17 DEX+42 VIT+39 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+4, Magic Dmg+112, PDT-7%. All 22 jobs. |
@@ -1285,6 +1314,6 @@ _125 top armor, weapons, and Sortie earrings, refreshed from the live gear ranki
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 491d3a8650f1 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: cc41ccb27eac -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

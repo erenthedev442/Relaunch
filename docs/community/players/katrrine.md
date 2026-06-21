@@ -1,6 +1,6 @@
 # Katrrine
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 15h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 19h
 
 `💪 4 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RDM 10** |
-| Sub job | BLM 10 |
-| Time played | 32h |
-| Enemies defeated | 2,149 |
+| Main job | **RDM 1** |
+| Sub job | BLU 1 |
+| Time played | 40h |
+| Enemies defeated | 2,475 |
 | Deaths | 6 |
 
 ## Job levels
@@ -25,7 +25,7 @@
 | MNK | 18 | NIN | 1 |
 | WHM | 90 | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
-| RDM | 10 | **BLU** | **99** |
+| RDM | 1 | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -57,8 +57,8 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 6
-- **By job:** RDM ×6
+- **Total rebirths:** 9
+- **By job:** RDM ×9
 
 ## Collections
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d531b4399a17 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 5d1ce2d63f42 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

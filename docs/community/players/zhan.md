@@ -1,31 +1,33 @@
 # Zhan
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-20 · Character age 1d 12h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 17h
+
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 75/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **NIN 75** |
-| Sub job | WAR 63 |
-| Time played | 2h |
-| Enemies defeated | 162 |
-| Deaths | 3 |
+| Main job | **DRG 54** |
+| Sub job | PLD 40 |
+| Time played | 4h |
+| Enemies defeated | 336 |
+| Deaths | 4 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 63 | SAM | 1 |
-| MNK | 1 | NIN | 75 |
-| WHM | 1 | DRG | 1 |
+| WAR | 80 | SAM | 1 |
+| MNK | 1 | **NIN** | **99** |
+| WHM | 1 | DRG | 54 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 1 |
+| PLD | 40 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -34,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 550
+- **Marks (current):** 1,050
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -63,7 +65,9 @@
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 23h 51m |
 
 ---
 
@@ -72,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a68eca88007a -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 0e6e12f29b9c -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

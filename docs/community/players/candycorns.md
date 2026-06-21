@@ -1,8 +1,8 @@
 # Candycorns
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 7d 21h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 1h
 
-`💪 11 jobs @99`
+`⭐ 1 Ascension` `💪 11 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | NIN 99 |
-| Time played | 63h |
-| Enemies defeated | 2,951 |
+| Main job | **MNK 99** |
+| Sub job | RDM 99 |
+| Time played | 65h |
+| Enemies defeated | 2,972 |
 | Deaths | 15 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,080
-- **Marks (lifetime):** 4,522
+- **Marks (current):** 1,689
+- **Marks (lifetime):** 5,103
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 150
+- **Total NM kills:** 157
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 318
+- **Augments crafted:** 332
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -55,13 +55,18 @@
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
+## Prestige
+
+- **Total Ascensions:** 1
+- **Per-job prestige:** RDM P1
+
 ## Collections
 
 - **Trusts learned:** 119
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert · Augment Master.
+**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 15c1fbc28885 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 61977af47114 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

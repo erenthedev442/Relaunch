@@ -150,16 +150,19 @@ Boosts are **permanent and stacking** — they re-apply automatically every time
 ## The Trial of Mastery
 
 <!-- DOCGEN:BEGIN id="rebirth-exp-penalty" -->
-Each rebirth stacks a **−15% EXP penalty** on that job, capped at **−90%**. The penalty is **per-job** — it only slows the job that has been reborn, and disappears the instant you switch to anything else. You always keep at least **10%** of normal EXP, so the climb is always possible — but a many-times-reborn job is a true endgame grind.
+Each rebirth stacks a **−10% EXP penalty** on that job, capped at **−90%**. The penalty is **per-job** — it only slows the job that has been reborn, and disappears the instant you switch to anything else. You always keep at least **10%** of normal EXP, so the climb is always possible — but a many-times-reborn job is a true endgame grind.
 
 | Rebirth | EXP Penalty (that job) | Effective EXP |
 |---|---:|---:|
-| 1st | −15% | 85% |
-| 2nd | −30% | 70% |
-| 3rd | −45% | 55% |
-| 4th | −60% | 40% |
-| 5th | −75% | 25% |
-| 6th and beyond | **−90%** (cap) | 10% |
+| 1st | −10% | 90% |
+| 2nd | −20% | 80% |
+| 3rd | −30% | 70% |
+| 4th | −40% | 60% |
+| 5th | −50% | 50% |
+| 6th | −60% | 40% |
+| 7th | −70% | 30% |
+| 8th | −80% | 20% |
+| 9th and beyond | **−90%** (cap) | 10% |
 <!-- DOCGEN:END id="rebirth-exp-penalty" -->
 
 ---
@@ -190,6 +193,6 @@ Rebirth and [Ascension](prestige.md) are **separate systems that share one menu 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 11aa444e9abf -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 09e57b4a8a0e -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

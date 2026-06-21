@@ -81,7 +81,7 @@ Holding an affinity multiplies augments **in that category** by **1.5×**. Affin
 | 2 | Dexterity / Accuracy | King Arthro | Emperor Arthro's Shell | 29 |
 | 3 | Vitality / Defense | Adamantoise | Adamantoise Shell | 14 |
 | 4 | Agility / Evasion / Haste | Roc | Giant Bird Plume | 44 |
-| 5 | Intelligence / Magic offense | Ouryu (Guivre-tier wyrm) | Guivre's Skull | 24 |
+| 5 | Intelligence / Magic offense | Ouryu (Guivre-tier wyrm) | Guivre's Skull | 25 |
 | 6 | Mind / Healing / Cure | Phoenix | Phoenix Feather | 7 |
 | 7 | Charisma / Charm / Enmity | Lady Lilith (Khimaira-tier charmer) | Khimaira Mane | 12 |
 | 8 | HP / Regen | Fafnir | Wyvern Skin | 6 |
@@ -122,6 +122,6 @@ Yes — both the Sage rank trophy and the affinity registration trophy are remov
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 505966830afe -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 970cccc9c757 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

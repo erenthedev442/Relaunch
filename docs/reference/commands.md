@@ -2,13 +2,13 @@
 
 These chat commands are available to every player on Legendary (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 68
+**Total player-accessible commands:** 70
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    46 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    48 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -44,12 +44,14 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!huntrank` | string | Displays the player's Hunter's Guild status across all four guilds — current rank, rep, amplifier %, and progress to the next rank. Also shows Trinity / Apex capstone status, and the v2 Vana'diel hunt-target list per guild so the player knows what to go kill. |  |
 | `!iwarp` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!lfg` | string | Broadcasts a Looking-For-Group announcement server-wide so other players know you're looking for someone to play with. | :material-puzzle: **custom** |
+| `!maat` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!marks` | — | Quick Hunt Marks balance - current spendable balance plus an at-a-glance kill-streak summary. | :material-puzzle: **custom** |
 | `!mastery` | string, string, string | _(no description)_ | :material-puzzle: **custom** |
 | `!mobs` | string | Lists the LIVE (spawned, HP > 0) mobs in your current zone, nearest first, with HP%, rough distance, and (X, Y, Z) world position (same coords as !pos / Windower). Optional name filter: !mobs            -> everything alive nearby !mobs lizard     -> only names containing "lizard" | :material-puzzle: **custom** |
 | `!mobstats` | — | _(no description)_ |  |
 | `!mystats` | — | Self-targeted dump of EVERY stat the player has, with equipment and buff contributions baked into the totals. Single command, no arguments, no cursor-target needed. | :material-puzzle: **custom** |
 | `!nms` | — | Shows the player's NM Encyclopedia progress - which Hunting League NMs they have killed at least once, and which ones remain.  Lists up to 10 missing NMs to avoid flooding chat. | :material-puzzle: **custom** |
+| `!offhand` | string | _(no description)_ | :material-puzzle: **custom** |
 | `!optin` | — | Opts the player INTO leaderboards and Discord tracking. This is the default state for new characters. | :material-puzzle: **custom** |
 | `!optout` | — | Opts the player OUT of leaderboards and Discord tracking. This character is excluded from every leaderboard entirely. | :material-puzzle: **custom** |
 | `!primevoucher` | string, int | [GM] Grant Prime Voucher(s) (item 29699) to a player. They trade one at the Prime Armory NPC in GM Home to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it. | :material-puzzle: **custom** |
@@ -291,6 +293,10 @@ Broadcasts a Looking-For-Group announcement server-wide so other players know yo
 
 **Parameter types:** string
 
+### `!maat`  _(custom)_
+
+**Usage:** `maat`
+
 ### `!marks`  _(custom)_
 
 Quick Hunt Marks balance - current spendable balance plus an at-a-glance kill-streak summary.
@@ -320,6 +326,12 @@ Lists the LIVE (spawned, HP > 0) mobs in your current zone, nearest first, with 
 Shows the player's NM Encyclopedia progress - which Hunting League NMs they have killed at least once, and which ones remain.  Lists up to 10 missing NMs to avoid flooding chat.
 
 **Usage:** `nms`
+
+### `!offhand`  _(custom)_
+
+**Usage:** `offhand`
+
+**Parameter types:** string
 
 ### `!optin`  _(custom)_
 
@@ -524,6 +536,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4bc70c9a3414 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: b5608ca409cd -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

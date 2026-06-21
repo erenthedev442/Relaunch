@@ -1,6 +1,6 @@
 # Ironman
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 13h 30m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 17h 47m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -9,8 +9,8 @@
 
 | | |
 |---|---|
-| Main job | **THF 1** |
-| Sub job | — |
+| Main job | **GEO 1** |
+| Sub job | BRD 1 |
 | Time played | 0h |
 | Enemies defeated | 0 |
 | Deaths | 0 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 550
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -42,7 +42,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Augments crafted:** 5
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -55,7 +55,11 @@
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
+
+## Achievements
+
+**1** unlocked — Augment Novice.
 
 ## Speed records
 
@@ -68,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4b2551cfe645 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 07f33e2293bc -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

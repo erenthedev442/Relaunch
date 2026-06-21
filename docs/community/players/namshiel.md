@@ -1,8 +1,8 @@
 # Namshiel
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 5d 23h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 6d 3h
 
-`💪 6 jobs @99`
+`💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -11,20 +11,20 @@
 
 | | |
 |---|---|
-| Main job | **WAR 99** |
+| Main job | **DRG 99** |
 | Sub job | SAM 99 |
-| Time played | 14h |
-| Enemies defeated | 1,174 |
-| Deaths | 3 |
+| Time played | 21h |
+| Enemies defeated | 1,512 |
+| Deaths | 5 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| MNK | 1 | **NIN** | **99** |
+| **MNK** | **99** | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
-| BLM | 1 | SMN | 1 |
+| BLM | 1 | **SMN** | **99** |
 | **RDM** | **99** | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 7,377
-- **Marks (lifetime):** 3,194
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 625
+- **Marks (current):** 695
+- **Marks (lifetime):** 4,177
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 776
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 23
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 50
+- **NM Affinities:** 8 / 13
 
 ## Reforge
 
@@ -57,11 +57,11 @@
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Wave Rider · Augment Novice.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Wave Rider · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b5895ed3f156 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 75b3cda70c1f -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

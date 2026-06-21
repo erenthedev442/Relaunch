@@ -1,8 +1,8 @@
 # Corvinos
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 17h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 22h
 
-`⭐ 1 Ascension` `💪 8 jobs @99`
+`⭐ 1 Ascension` `💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **WAR 99** |
-| Sub job | NIN 99 |
-| Time played | 20h |
-| Enemies defeated | 2,790 |
+| Main job | **SAM 99** |
+| Sub job | DNC 99 |
+| Time played | 23h |
+| Enemies defeated | 3,050 |
 | Deaths | 8 |
 
 ## Job levels
@@ -28,7 +28,7 @@
 | **RDM** | **99** | BLU | 1 |
 | THF | 69 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| **DRK** | **99** | DNC | 1 |
+| **DRK** | **99** | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | **RNG** | **99** | RUN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,176
-- **Marks (lifetime):** 1,620
+- **Marks (current):** 10,527
+- **Marks (lifetime):** 1,834
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 203
+- **Total NM kills:** 257
 
 ## Guild standing
 
@@ -54,17 +54,17 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 81
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 129
 - **NM Affinities:** 8 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 95 | 1,095 |
+| AF | 95 | 2,145 |
 | Relic | 15 | 2,115 |
-| Empyrean | 105 | 2,305 |
+| Empyrean | 160 | 6,185 |
 
 ## Job Rebirth
 
@@ -82,7 +82,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert.
+**13** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Star-Slayer · Devourer of the Devourer · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -98,6 +98,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a3f3ce28cdb1 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: b269fa226b6c -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

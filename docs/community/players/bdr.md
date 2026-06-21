@@ -1,6 +1,6 @@
 # Bdr
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-04-30 · Last seen 2026-06-19 · Character age 51d 18h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-04-30 · Last seen 2026-06-19 · Character age 51d 22h
 
 `💪 4 jobs @99`
 
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 33cbc1a04775 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: d35f5ff46906 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

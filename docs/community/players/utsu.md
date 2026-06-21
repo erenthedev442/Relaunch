@@ -1,18 +1,18 @@
 # Utsu
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 4d 18h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 4d 22h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 16/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 19/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **PUP 16** |
-| Sub job | WHM 11 |
+| Main job | **PUP 19** |
+| Sub job | WHM 13 |
 | Time played | 2h |
-| Enemies defeated | 79 |
+| Enemies defeated | 89 |
 | Deaths | 0 |
 
 ## Job levels
@@ -21,11 +21,11 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 11 | DRG | 1 |
+| WHM | 13 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 7 | BLU | 1 |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 16 |
+| PLD | 1 | PUP | 19 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7eb39c17c13f -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: bc2dfa0e7eb7 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

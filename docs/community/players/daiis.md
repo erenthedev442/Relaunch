@@ -1,8 +1,8 @@
 # Daiis
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 8h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 12h
 
-`⭐ 1 Ascension` `💪 22 jobs @99`
+`⭐ 5 Ascensions` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **SAM 99** |
 | Sub job | WAR 99 |
-| Time played | 61h |
-| Enemies defeated | 3,588 |
-| Deaths | 4 |
+| Time played | 67h |
+| Enemies defeated | 3,737 |
+| Deaths | 8 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 8,541
+- **Marks (current):** 9,186
 - **Marks (lifetime):** 2,748
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 151
+- **Total NM kills:** 205
 
 ## Guild standing
 
@@ -56,7 +56,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 - **Mastery rank:** 5 / 5
 - **Augments crafted:** 254
-- **NM Affinities:** 1 / 13
+- **NM Affinities:** 2 / 13
 
 ## Reforge
 
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 1
-- **Per-job prestige:** SAM P1
+- **Total Ascensions:** 5
+- **Per-job prestige:** SAM P5
 
 ## Collections
 
@@ -77,7 +77,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert · Augment Master.
+**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 161aa8c87731 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 54dea339e320 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

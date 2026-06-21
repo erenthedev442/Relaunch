@@ -1,8 +1,8 @@
 # Duffaluffagus
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 1h
 
-`💪 20 jobs @99`
+`💪 21 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | SCH 99 |
-| Time played | 20h |
-| Enemies defeated | 1,238 |
-| Deaths | 10 |
+| Main job | **BLU 99** |
+| Sub job | RUN 59 |
+| Time played | 22h |
+| Enemies defeated | 1,487 |
+| Deaths | 11 |
 
 ## Job levels
 
@@ -30,13 +30,13 @@
 | **PLD** | **99** | **PUP** | **99** |
 | **DRK** | **99** | **DNC** | **99** |
 | **BST** | **99** | **SCH** | **99** |
-| **BRD** | **99** | GEO | 1 |
-| **RNG** | **99** | RUN | 1 |
+| **BRD** | **99** | **GEO** | **99** |
+| **RNG** | **99** | RUN | 59 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,146
+- **Marks (current):** 3,946
 - **Marks (lifetime):** 863
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 97
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 287
+- **Augments crafted:** 292
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f6ebfa57f5e0 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: ed56ac15e37e -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

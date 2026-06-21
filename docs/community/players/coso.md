@@ -1,6 +1,6 @@
 # Coso
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 13h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 17h
 
 `💪 5 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | DNC 99 |
-| Time played | 12h |
-| Enemies defeated | 376 |
-| Deaths | 4 |
+| Sub job | BLM 91 |
+| Time played | 13h |
+| Enemies defeated | 545 |
+| Deaths | 8 |
 
 ## Job levels
 
@@ -24,7 +24,7 @@
 | **WAR** | **99** | **SAM** | **99** |
 | MNK | 1 | NIN | 85 |
 | WHM | 1 | DRG | 1 |
-| BLM | 69 | SMN | 1 |
+| BLM | 91 | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 19
+- **Augments crafted:** 38
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -54,6 +54,11 @@
 | AF | 0 | 0 |
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
+
+## Job Rebirth
+
+- **Total rebirths:** 1
+- **By job:** THF ×1
 
 ## Collections
 
@@ -76,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 01242f6d25df -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 6dd997f6df12 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Clappinyocheeks
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 5d 7h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 5d 11h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 7/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d8c0090d960f -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: d7d770762860 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

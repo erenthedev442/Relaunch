@@ -1,8 +1,8 @@
 # Olindre
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 8d 5h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 9h
 
-`⭐ 20 Ascensions` `💪 4 jobs @99`
+`⭐ 20 Ascensions` `💪 7 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **WAR 99** |
-| Sub job | RUN 99 |
-| Time played | 57h |
-| Enemies defeated | 3,697 |
+| Main job | **RUN 99** |
+| Sub job | DRG 99 |
+| Time played | 61h |
+| Enemies defeated | 4,320 |
 | Deaths | 56 |
 
 ## Job levels
@@ -23,12 +23,12 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | MNK | 1 | **NIN** | **99** |
-| WHM | 1 | DRG | 1 |
+| WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| **PLD** | **99** | PUP | 1 |
+| **DRK** | **99** | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | **RUN** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 57,677
+- **Marks (current):** 61,057
 - **Marks (lifetime):** 3,123
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 320
+- **Total NM kills:** 374
 
 ## Guild standing
 
@@ -64,7 +64,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|---:|
 | AF | 3,273 | 3,973 |
 | Relic | 3,000 | 2,100 |
-| Empyrean | 1,978 | 528 |
+| Empyrean | 278 | 528 |
 
 ## Prestige
 
@@ -77,7 +77,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**17** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · X Marks the Spot · Sanctuary Defender · First Blood · Arena Regular · Augment Novice · Augment Expert · Augment Master.
+**18** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · X Marks the Spot · Star-Slayer · Sanctuary Defender · First Blood · Arena Regular · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d9bdf197fc7f -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: a8815f38fc71 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

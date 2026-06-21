@@ -1,21 +1,21 @@
 # Shizuku
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 9h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 13h
 
 `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
-| Sub job | RDM 99 |
-| Time played | 27h |
-| Enemies defeated | 1,188 |
-| Deaths | 1 |
+| Main job | **RDM 99** |
+| Sub job | DNC 99 |
+| Time played | 35h |
+| Enemies defeated | 1,959 |
+| Deaths | 4 |
 
 ## Job levels
 
@@ -35,16 +35,27 @@
 
 ## Hunting League
 
-- **Rank:** 2 / 5
-- **Marks (current):** 8,043
-- **Marks (lifetime):** 292
-- **Distinct NMs slain:** 4
-- **Total NM kills:** 29
+- **Rank:** 3 / 5
+- **Marks (current):** 8,602
+- **Marks (lifetime):** 644
+- **Distinct NMs slain:** 9
+- **Total NM kills:** 62
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Veteran | 5,000 | 20,000 to Master |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Veteran | 5,000 | 20,000 to Master |
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 53
+- **Mastery rank:** 2 / 5
+- **Augments crafted:** 92
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -61,7 +72,7 @@
 
 ## Achievements
 
-**5** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Augment Novice · Augment Expert.
+**6** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -76,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 86103b48ee1f -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 8567a19e5447 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

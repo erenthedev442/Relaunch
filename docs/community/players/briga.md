@@ -1,6 +1,6 @@
 # Briga
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 10h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 14h
 
 `💪 1 job @99`
 
@@ -11,18 +11,18 @@
 
 | | |
 |---|---|
-| Main job | **RNG 69** |
-| Sub job | DNC 1 |
-| Time played | 7h |
-| Enemies defeated | 259 |
+| Main job | **MNK 83** |
+| Sub job | WAR 71 |
+| Time played | 10h |
+| Enemies defeated | 261 |
 | Deaths | 1 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
+| WAR | 71 | SAM | 1 |
+| MNK | 83 | NIN | 1 |
 | WHM | 88 | DRG | 1 |
 | BLM | 49 | **SMN** | **99** |
 | RDM | 41 | BLU | 1 |
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Augments crafted:** 2
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 18d422571b13 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: ed037cdf4fba -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Ariamys
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 21h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 2h
 
-`⭐ 12 Ascensions` `💪 10 jobs @99`
+`⭐ 12 Ascensions` `💪 11 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **RDM 99** |
-| Sub job | NIN 99 |
-| Time played | 71h |
-| Enemies defeated | 4,477 |
-| Deaths | 32 |
+| Sub job | BLM 99 |
+| Time played | 74h |
+| Enemies defeated | 4,621 |
+| Deaths | 33 |
 
 ## Job levels
 
@@ -24,27 +24,27 @@
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
 | **WHM** | **99** | DRG | 1 |
-| BLM | 1 | SMN | 1 |
+| **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 1 |
+| BST | 1 | SCH | 84 |
 | **BRD** | **99** | GEO | 1 |
 | RNG | 1 | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 237
-- **Marks (lifetime):** 21,083
+- **Marks (current):** 409
+- **Marks (lifetime):** 21,433
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 1,173
+- **Total NM kills:** 1,182
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 373
+- **Augments crafted:** 380
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cd77e828b04c -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 91b845448c94 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

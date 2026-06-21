@@ -1,6 +1,6 @@
 # Sfen
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 13h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 17h
 
 `💪 10 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **THF 68** |
-| Sub job | DNC 68 |
-| Time played | 26h |
-| Enemies defeated | 2,821 |
+| Main job | **THF 1** |
+| Sub job | DNC 1 |
+| Time played | 27h |
+| Enemies defeated | 3,284 |
 | Deaths | 22 |
 
 ## Job levels
@@ -26,7 +26,7 @@
 | **WHM** | **99** | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 68 | COR | 1 |
+| THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | **DNC** | **99** |
 | BST | 1 | **SCH** | **99** |
@@ -57,8 +57,8 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 2
-- **By job:** THF ×2
+- **Total rebirths:** 3
+- **By job:** THF ×3
 
 ## Collections
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2c0ca8bcfee4 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: bf926ef0e00d -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

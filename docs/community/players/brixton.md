@@ -1,6 +1,6 @@
 # Brixton
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 4h
 
 `⭐ 6 Ascensions` `💪 9 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RNG 99** |
-| Sub job | NIN 99 |
-| Time played | 63h |
-| Enemies defeated | 2,370 |
+| Main job | **THF 99** |
+| Sub job | DNC 99 |
+| Time played | 64h |
+| Enemies defeated | 2,375 |
 | Deaths | 27 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,209
-- **Marks (lifetime):** 19,950
+- **Marks (current):** 1,427
+- **Marks (lifetime):** 20,140
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 333
+- **Total NM kills:** 338
 
 ## Guild standing
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9f0ac85b346e -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 12e2708455dd -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

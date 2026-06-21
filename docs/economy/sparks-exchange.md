@@ -72,6 +72,6 @@ The Broker won't let an exchange overflow your gil — if you're near the gil ca
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4b4ef733d8ba -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: dbc163b4eb5a -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

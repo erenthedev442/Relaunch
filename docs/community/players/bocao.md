@@ -1,6 +1,6 @@
 # Bocao
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 4d 18h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 4d 22h
 
 `💪 3 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **BLU 99** |
-| Sub job | NIN 53 |
-| Time played | 20h |
-| Enemies defeated | 385 |
+| Sub job | NIN 67 |
+| Time played | 23h |
+| Enemies defeated | 399 |
 | Deaths | 0 |
 
 ## Job levels
@@ -22,7 +22,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | SAM | 1 |
-| MNK | 1 | NIN | 53 |
+| MNK | 1 | NIN | 67 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | **BLU** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 2,999
-- **Marks (lifetime):** 70
+- **Marks (current):** 5,948
+- **Marks (lifetime):** 180
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 14
+- **Total NM kills:** 36
 
 ## Augment Sage
 
@@ -52,7 +52,7 @@
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 0 | 0 |
-| Relic | 0 | 0 |
+| Relic | 1,500 | 0 |
 | Empyrean | 0 | 0 |
 
 ## Collections
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1217acacc6c8 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 080e3533089a -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Mdz
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-20 · Character age 5d 6h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 11h
 
 `💪 6 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | WAR 99 |
-| Time played | 31h |
-| Enemies defeated | 2,182 |
-| Deaths | 14 |
+| Main job | **PLD 92** |
+| Sub job | GEO 77 |
+| Time played | 33h |
+| Enemies defeated | 2,326 |
+| Deaths | 15 |
 
 ## Job levels
 
@@ -27,16 +27,16 @@
 | BLM | 63 | SMN | 1 |
 | RDM | 1 | BLU | 17 |
 | **THF** | **99** | COR | 1 |
-| PLD | 1 | **PUP** | **99** |
+| PLD | 92 | **PUP** | **99** |
 | **DRK** | **99** | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| BRD | 1 | GEO | 77 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,796
+- **Marks (current):** 6,496
 - **Marks (lifetime):** 2,658
 - **Distinct NMs slain:** 7
 - **Total NM kills:** 628
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5d093cc8c9fc -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: c145b88c3bbc -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

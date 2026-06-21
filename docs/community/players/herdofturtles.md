@@ -1,8 +1,8 @@
 # Herdofturtles
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 15h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 19h
 
-`⭐ 118 Ascensions` `💪 12 jobs @99`
+`⭐ 119 Ascensions` `💪 12 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **PLD 99** |
 | Sub job | BLU 99 |
-| Time played | 70h |
-| Enemies defeated | 7,431 |
-| Deaths | 34 |
+| Time played | 73h |
+| Enemies defeated | 7,520 |
+| Deaths | 36 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 23,864
+- **Marks (current):** 26,204
 - **Marks (lifetime):** 5,406
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 1,043
+- **Total NM kills:** 1,091
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 362
+- **Augments crafted:** 377
 - **NM Affinities:** 10 / 13
 
 ## Reforge
@@ -73,8 +73,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 118
-- **Per-job prestige:** RDM P14 · PLD P44 · NIN P10 · RUN P50
+- **Total Ascensions:** 119
+- **Per-job prestige:** RDM P14 · PLD P45 · NIN P10 · RUN P50
 
 ## Collections
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d25d40e765db -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 9f4160196221 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

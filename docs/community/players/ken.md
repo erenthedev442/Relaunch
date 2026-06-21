@@ -1,6 +1,6 @@
 # Ken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 21h
 
 `⭐ 14 Ascensions` `💪 22 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 52h |
-| Enemies defeated | 1,845 |
+| Time played | 57h |
+| Enemies defeated | 1,868 |
 | Deaths | 10 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 222,449
-- **Marks (lifetime):** 115,745
+- **Marks (current):** 227,483
+- **Marks (lifetime):** 119,045
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 3,896
+- **Total NM kills:** 4,016
 
 ## Augment Sage
 
@@ -51,9 +51,9 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,200 | 0 |
+| AF | 2,350 | 150 |
 | Relic | 1,500 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 12,480 | 12,480 |
 
 ## Prestige
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 982d329ecf22 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: c09cba83db43 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

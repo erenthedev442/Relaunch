@@ -1,6 +1,6 @@
 # Rhis
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 3d 21h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 2h
 
 `⭐ 7 Ascensions` `💪 9 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BLM 99** |
-| Sub job | RDM 99 |
-| Time played | 25h |
-| Enemies defeated | 1,736 |
+| Main job | **SAM 99** |
+| Sub job | WAR 99 |
+| Time played | 29h |
+| Enemies defeated | 1,780 |
 | Deaths | 6 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,002
+- **Marks (current):** 9,194
 - **Marks (lifetime):** 1,089
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 176
+- **Total NM kills:** 228
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 273
+- **Augments crafted:** 299
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
+**14** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a5bab5717dd5 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 9cb62e00f541 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Miyasanima
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 7d 5h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 9h
 
-`💪 13 jobs @99`
+`💪 14 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | DNC 99 |
-| Time played | 35h |
-| Enemies defeated | 4,272 |
+| Main job | **BLM 99** |
+| Sub job | RDM 99 |
+| Time played | 37h |
+| Enemies defeated | 4,490 |
 | Deaths | 18 |
 
 ## Job levels
@@ -22,7 +22,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | SAM | 1 |
-| **MNK** | **99** | NIN | 1 |
+| **MNK** | **99** | **NIN** | **99** |
 | **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 8,147
-- **Marks (lifetime):** 1,188
+- **Marks (current):** 6,122
+- **Marks (lifetime):** 1,558
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 107
+- **Total NM kills:** 146
 
 ## Guild standing
 
@@ -54,8 +54,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 110
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 138
 - **NM Affinities:** 8 / 13
 
 ## Reforge
@@ -63,8 +63,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 25 | 5,275 |
-| Relic | 365 | 365 |
-| Empyrean | 0 | 0 |
+| Relic | 1,265 | 365 |
+| Empyrean | 15 | 1,865 |
 
 ## Collections
 
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Sanctuary Defender · Augment Novice · Augment Expert.
+**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Sanctuary Defender · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9a9d92c62097 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 1aedca19346b -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

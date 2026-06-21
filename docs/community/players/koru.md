@@ -1,6 +1,6 @@
 # Koru
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 3d 21h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 1h
 
 `⭐ 7 Ascensions` `💪 10 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | WHM 99 |
-| Time played | 25h |
+| Time played | 27h |
 | Enemies defeated | 4 |
 | Deaths | 5 |
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 17,832
+- **Marks (current):** 3,663
 - **Marks (lifetime):** 1,089
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 179
+- **Total NM kills:** 205
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 267
+- **Augments crafted:** 272
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
+**14** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bce911e97409 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: fedf4720f317 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

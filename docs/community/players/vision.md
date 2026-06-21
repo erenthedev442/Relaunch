@@ -1,19 +1,21 @@
 # Vision
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 14h 43m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 19h
+
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 42/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **GEO 42** |
-| Sub job | BRD 29 |
-| Time played | 0h |
-| Enemies defeated | 0 |
-| Deaths | 0 |
+| Main job | **GEO 99** |
+| Sub job | BRD 80 |
+| Time played | 3h |
+| Enemies defeated | 2 |
+| Deaths | 1 |
 
 ## Job levels
 
@@ -28,21 +30,21 @@
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 29 | GEO | 42 |
+| BRD | 80 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 550
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 4 / 5
+- **Marks (current):** 559
+- **Marks (lifetime):** 45
+- **Distinct NMs slain:** 2
+- **Total NM kills:** 14
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 7
+- **Augments crafted:** 21
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -59,11 +61,13 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**3** unlocked — First Hunt · Star-Slayer · Augment Novice.
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 5h 32m |
 
 ---
 
@@ -72,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 931fb5a13474 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 6148364bf775 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

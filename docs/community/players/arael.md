@@ -1,6 +1,6 @@
 # Arael
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 8h
 
 `💪 2 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BLU 99** |
 | Sub job | RDM 99 |
-| Time played | 15h |
-| Enemies defeated | 404 |
+| Time played | 23h |
+| Enemies defeated | 463 |
 | Deaths | 0 |
 
 ## Job levels
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 745a030f7ed2 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 7b2653d42af8 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

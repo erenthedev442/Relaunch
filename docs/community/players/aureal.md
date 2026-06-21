@@ -1,6 +1,6 @@
 # Aureal
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 14h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 18h
 
 `💪 1 job @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
-| Sub job | RDM 10 |
-| Time played | 29h |
-| Enemies defeated | 758 |
+| Main job | **RDM 1** |
+| Sub job | BLU 1 |
+| Time played | 37h |
+| Enemies defeated | 1,147 |
 | Deaths | 4 |
 
 ## Job levels
@@ -25,7 +25,7 @@
 | MNK | 18 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 76 | SMN | 1 |
-| RDM | 10 | **BLU** | **99** |
+| RDM | 1 | **BLU** | **99** |
 | THF | 53 | COR | 1 |
 | PLD | 91 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -57,8 +57,8 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 2
-- **By job:** RDM ×2
+- **Total rebirths:** 5
+- **By job:** RDM ×5
 
 ## Collections
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 36d0390a2679 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 61a75a8a7573 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

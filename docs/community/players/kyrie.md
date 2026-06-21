@@ -1,6 +1,6 @@
 # Kyrie
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 17h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 21h
 
 `⭐ 26 Ascensions` `💪 21 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
+| Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 73h |
-| Enemies defeated | 1,604 |
+| Time played | 79h |
+| Enemies defeated | 1,700 |
 | Deaths | 23 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 188,996
-- **Marks (lifetime):** 123,393
+- **Marks (current):** 201,530
+- **Marks (lifetime):** 126,693
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 4,648
+- **Total NM kills:** 4,768
 
 ## Guild standing
 
@@ -55,16 +55,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 287
+- **Augments crafted:** 293
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,200 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| AF | 4,362 | 162 |
+| Relic | 1,500 | 0 |
+| Empyrean | 8,430 | 12,480 |
 
 ## Prestige
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ed51d282129b -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 549e9e4606db -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

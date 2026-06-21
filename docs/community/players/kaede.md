@@ -1,6 +1,6 @@
 # Kaede
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-19 · Character age 2d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 15h
 
 `💪 2 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | WHM 99 |
-| Time played | 6h |
+| Time played | 7h |
 | Enemies defeated | 6 |
 | Deaths | 0 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 719248489990 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: cefaeda4fcb8 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Clambone
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 21h
 
 `💪 4 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | SAM 99 |
-| Time played | 11h |
-| Enemies defeated | 446 |
-| Deaths | 6 |
+| Time played | 12h |
+| Enemies defeated | 485 |
+| Deaths | 8 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 22
+- **Marks (current):** 2
 - **Marks (lifetime):** 1,207
 - **Distinct NMs slain:** 8
 - **Total NM kills:** 110
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e549a3526159 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: e3be87981569 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Masu
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 3h
 
-`💪 6 jobs @99`
+`💪 7 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **THF 67** |
-| Sub job | BRD 59 |
-| Time played | 38h |
-| Enemies defeated | 930 |
+| Main job | **DNC 37** |
+| Sub job | WHM 28 |
+| Time played | 39h |
+| Enemies defeated | 1,026 |
 | Deaths | 3 |
 
 ## Job levels
@@ -23,20 +23,20 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | NIN | 79 |
-| WHM | 1 | **DRG** | **99** |
+| WHM | 28 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | **BLU** | **99** |
-| THF | 67 | COR | 1 |
+| **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 87 |
-| **DRK** | **99** | DNC | 1 |
+| **DRK** | **99** | DNC | 37 |
 | BST | 1 | SCH | 1 |
-| BRD | 59 | GEO | 1 |
+| BRD | 81 | GEO | 1 |
 | RNG | 1 | RUN | 19 |
 
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 10,424
+- **Marks (current):** 11,274
 - **Marks (lifetime):** 172
 - **Distinct NMs slain:** 7
 - **Total NM kills:** 17
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d0d685ddd972 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 880d7da2c6f9 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

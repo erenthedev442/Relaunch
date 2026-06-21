@@ -1,6 +1,6 @@
 # Moss
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 5d 21h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 6d 1h
 
 `💪 22 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 63h |
-| Enemies defeated | 3,858 |
+| Time played | 67h |
+| Enemies defeated | 3,860 |
 | Deaths | 21 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 14,181
+- **Marks (current):** 13,681
 - **Marks (lifetime):** 2,447
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 564
@@ -47,15 +47,15 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Veteran | 7,500 | 17,500 to Master |
-| Relic Hunters' Guild | Master | 36,000 | 19,000 to Champion |
+| AF Hunters' Guild | Veteran | 15,000 | 10,000 to Master |
+| Relic Hunters' Guild | Champion | 60,000 | 40,000 to Grandmaster |
 | Empyrean Hunters' Guild | Journeyman | 1,500 | 3,500 to Veteran |
-| League Hunters' Guild | Master | 25,500 | 29,500 to Champion |
+| League Hunters' Guild | Master | 28,500 | 26,500 to Champion |
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 292
+- **Augments crafted:** 293
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: af20748377d1 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 53b03cd43b30 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

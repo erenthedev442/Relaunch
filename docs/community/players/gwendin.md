@@ -1,6 +1,6 @@
 # Gwendin
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 8h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 12h
 
 `💪 5 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **RUN 99** |
 | Sub job | DRK 99 |
-| Time played | 57h |
-| Enemies defeated | 921 |
+| Time played | 63h |
+| Enemies defeated | 948 |
 | Deaths | 20 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,762
-- **Marks (lifetime):** 12,961
+- **Marks (current):** 5,390
+- **Marks (lifetime):** 13,841
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 151
+- **Total NM kills:** 159
 
 ## Guild standing
 
@@ -50,13 +50,13 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | AF Hunters' Guild | Journeyman | 2,500 | 2,500 to Veteran |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| League Hunters' Guild | Journeyman | 2,500 | 2,500 to Veteran |
+| League Hunters' Guild | Journeyman | 4,000 | 1,000 to Veteran |
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 252
-- **NM Affinities:** 9 / 13
+- **Augments crafted:** 300
+- **NM Affinities:** 10 / 13
 
 ## Reforge
 
@@ -64,7 +64,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|---:|
 | AF | 1,200 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 1,200 | 0 |
+| Empyrean | 2,400 | 0 |
 
 ## Collections
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9e18daaec92b -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 80eb7e8d1bb0 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

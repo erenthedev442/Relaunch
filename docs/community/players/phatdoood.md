@@ -1,6 +1,6 @@
 # Phatdoood
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 14h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 18h
 
 `💪 4 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | WHM 99 |
-| Time played | 10h |
+| Time played | 15h |
 | Enemies defeated | 16 |
-| Deaths | 8 |
+| Deaths | 16 |
 
 ## Job levels
 
@@ -36,22 +36,22 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 155
-- **Marks (lifetime):** 9,157
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 1,780
+- **Marks (current):** 1,441
+- **Marks (lifetime):** 10,692
+- **Distinct NMs slain:** 10
+- **Total NM kills:** 1,892
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 6
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 183
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 240 | 1,040 |
+| AF | 320 | 5,570 |
 | Relic | 1,500 | 0 |
 | Empyrean | 0 | 0 |
 
@@ -61,11 +61,13 @@
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Augment Novice.
+**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| HL Rank I → V | 16h 56m |
 
 ---
 
@@ -74,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 295799963260 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 545fac8b7ee1 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

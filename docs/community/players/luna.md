@@ -1,6 +1,6 @@
 # Luna
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 8d 6h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 11h
 
 `⭐ 20 Ascensions` `💪 10 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | RDM 99 |
-| Time played | 54h |
-| Enemies defeated | 52 |
+| Time played | 58h |
+| Enemies defeated | 53 |
 | Deaths | 33 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 24,638
+- **Marks (current):** 26,038
 - **Marks (lifetime):** 1,619
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 286
+- **Total NM kills:** 296
 
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 70
+- **Augments crafted:** 78
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 11,435 | 10,335 |
 | Relic | 1,715 | 3,815 |
-| Empyrean | 730 | 5,980 |
+| Empyrean | 2,230 | 7,480 |
 
 ## Prestige
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d3fcec6f1710 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: f77594dc29bb -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

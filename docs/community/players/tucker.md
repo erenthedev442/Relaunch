@@ -1,6 +1,6 @@
 # Tucker
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 20h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d
 
 `💪 3 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **SMN 32** |
-| Sub job | SCH 30 |
-| Time played | 21h |
-| Enemies defeated | 501 |
+| Main job | **SMN 65** |
+| Sub job | SCH 59 |
+| Time played | 22h |
+| Enemies defeated | 526 |
 | Deaths | 7 |
 
 ## Job levels
@@ -24,12 +24,12 @@
 | WAR | 15 | **SAM** | **99** |
 | MNK | 15 | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
-| BLM | 1 | SMN | 32 |
+| BLM | 1 | SMN | 65 |
 | RDM | 1 | BLU | 1 |
 | THF | 61 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 84 |
-| BST | 1 | SCH | 30 |
+| BST | 1 | SCH | 59 |
 | BRD | 1 | GEO | 1 |
 | RNG | 55 | RUN | 1 |
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: df63b42c6c8b -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: aec3baeb4a64 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

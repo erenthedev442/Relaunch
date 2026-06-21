@@ -1,6 +1,6 @@
 # Dogs
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 6d 9h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 6d 13h
 
 `💪 2 jobs @99`
 
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9b3e93a4ade4 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 9cb9fa94545c -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

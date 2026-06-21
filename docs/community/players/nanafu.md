@@ -1,6 +1,6 @@
 # Nanafu
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 15h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 20h
 
 `💪 7 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,989
+- **Marks (current):** 1,189
 - **Marks (lifetime):** 4,649
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 375
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: adddc9032137 -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: bd23ed38bc54 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

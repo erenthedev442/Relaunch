@@ -73,7 +73,8 @@ The Nightmare Court is **not** a fixed wall — the bosses themselves **change**
 | **10–19** | The Voidwalkers | Sarameya, the Abyssal Hound &bull; Kaggen, the Devouring Swarm &bull; Qilin, the Tempest Beast |
 | **20–29** | The Jailers | Jailer of Justice &bull; Jailer of Fortitude &bull; Jailer of Temperance |
 | **30–39** | The Voidwalker Lords | Kreutzet, the Skydark &bull; Raja, the Voidfang &bull; Maere, the Living Nightmare |
-| **40+** | The World's End | Omega, the Final Engine &bull; Ultima, the First Weapon &bull; The Provenance Watcher |
+| **40–59** | The World's End | Omega, the Final Engine &bull; Ultima, the First Weapon &bull; The Provenance Watcher |
+| **60+** | The Celestial Wardens | Tiamat, the Planar Destroyer &bull; Kirin, the Celestial Sovereign &bull; Absolute Virtue, the Eternal Judge |
 <!-- DOCGEN:END id="prestige-scaling" -->
 
 Each new Court is built at full strength and escalates toward an apex roster by the top tier, so the difficulty curve holds as your AP grows. The Altar **announces** the Court you face, and its Status menu always shows your current tier. The top tier (**The World's End**) is the ceiling — it is tuned to stay beatable by a fully-invested character, so the Trial never soft-locks further ascension.
@@ -197,6 +198,6 @@ Boosts are **permanent and stacking** — they re-apply automatically every time
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 82a9a1315dbc -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: 3a3421b70af0 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

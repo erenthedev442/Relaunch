@@ -1,6 +1,6 @@
 # Erenyeager
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 2d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 3h
 
 `💪 13 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | NIN 99 |
-| Time played | 40h |
-| Enemies defeated | 2,651 |
-| Deaths | 17 |
+| Main job | **MNK 99** |
+| Sub job | BST 93 |
+| Time played | 44h |
+| Enemies defeated | 2,677 |
+| Deaths | 18 |
 
 ## Job levels
 
@@ -29,17 +29,17 @@
 | **THF** | **99** | COR | 1 |
 | PLD | 56 | PUP | 1 |
 | **DRK** | **99** | **DNC** | **99** |
-| BST | 1 | SCH | 1 |
+| BST | 93 | SCH | 1 |
 | **BRD** | **99** | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 58,022
-- **Marks (lifetime):** 54,498
+- **Marks (current):** 56,511
+- **Marks (lifetime):** 54,650
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 834
+- **Total NM kills:** 838
 
 ## Augment Sage
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c3c22260651e -->
-_Last updated: 2026-06-21 17:40 UTC_
+<!-- content-hash: 20cb4fadbe02 -->
+_Last updated: 2026-06-21 21:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->
