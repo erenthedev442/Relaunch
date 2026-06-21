@@ -70,7 +70,7 @@ catalog.goldExtraDrop = nil
 -- Helper: empty slot tables for a tier
 -----------------------------------
 local function emptySlots()
-    return { head = {}, body = {}, hands = {}, legs = {}, feet = {} }
+    return { head = {}, body = {}, hands = {}, legs = {}, feet = {}, shields = {} }
 end
 
 -----------------------------------
@@ -162,6 +162,10 @@ table.insert(b.feet, { id = 25967, name = "Pinga Pumps +1", cost = 12, jobs = 'W
 table.insert(b.feet, { id = 28274, name = "Regal Pumps +1", cost = 12, jobs = 'WHM/BLM/SMN/PUP/SCH/GEO' })  -- DPS score 109
 table.insert(b.feet, { id = 28296, name = "Artsieq Boots", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- DPS score 90
 
+-- Shields (2 picks, scored highest first)
+table.insert(b.shields, { id = 27644, name = "Blurred Shield +1", cost = 12, jobs = 'WAR/PLD/DRK' })  -- WS score 60
+table.insert(b.shields, { id = 26421, name = "Nusku Shield", cost = 12, jobs = 'RNG/COR' })  -- DPS score 6
+
 
 -- SILVER TIER
 catalog.silver = emptySlots()
@@ -231,6 +235,11 @@ table.insert(s.feet, { id = 25935, name = "Ayanmo Gambieras", cost = 25, jobs = 
 table.insert(s.feet, { id = 25922, name = "Navon Crackows", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 218
 table.insert(s.feet, { id = 27379, name = "Rao Sune-Ate +1", cost = 25, jobs = 'MNK/SAM/NIN/PUP' })  -- DPS score 218
 table.insert(s.feet, { id = 25940, name = "Flamma Gambieras", cost = 25, jobs = 'WAR/PLD/DRK/SAM/DRG' })  -- TANK score 212
+
+-- Shields (3 picks, scored highest first)
+table.insert(s.shields, { id = 28648, name = "Priwen", cost = 25, jobs = 'PLD' })  -- TANK score 150
+table.insert(s.shields, { id = 28649, name = "Rinda Shield", cost = 25, jobs = 'WAR/PLD/DRK' })  -- TANK score 126
+table.insert(s.shields, { id = 27645, name = "Genmei Shield", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- DPS score 68
 
 
 -- GOLD TIER
@@ -302,6 +311,11 @@ table.insert(g.feet, { id = 25950, name = "Jhakri Pigaches +2", cost = 50, jobs 
 table.insert(g.feet, { id = 23726, name = "Volte Gaiters", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 276
 table.insert(g.feet, { id = 27476, name = "Amalric Nails +1", cost = 50, jobs = 'BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 259
 
+-- Shields (3 picks, scored highest first)
+table.insert(g.shields, { id = 26487, name = "Sacro Bulwark", cost = 50, jobs = 'WAR/RDM/PLD/BST' })  -- TANK score 227
+table.insert(g.shields, { id = 27637, name = "Evalach +1", cost = 50, jobs = 'WAR/RDM/PLD/BST/SAM' })  -- TANK score 187
+table.insert(g.shields, { id = 26420, name = "Adapa Shield", cost = 50, jobs = 'WAR/DRK/BST' })  -- TANK score 153
+
 
 -- INFAMY TIER  (top-5-per-slot; promoted to the Dungeon Infamy
 --               Vendor by tools/build_infamy_top_picks.py. Inert here:
@@ -343,6 +357,13 @@ table.insert(inf.feet, { id = 23788, name = "Bunzis Sabots", cost = 500, jobs = 
 table.insert(inf.feet, { id = 23787, name = "Agwus Pigaches", cost = 500, jobs = 'BLM/SCH/GEO/RUN' })  -- CASTER score 361
 table.insert(inf.feet, { id = 23785, name = "Sakpatas Leggings", cost = 500, jobs = 'WAR/PLD/DRK' })  -- TANK score 359
 table.insert(inf.feet, { id = 23786, name = "Mpacas Boots", cost = 500, jobs = 'MNK/SAM/NIN/PUP' })  -- TANK score 358
+
+-- Shields (top 5 by score -> Infamy Vendor)
+table.insert(inf.shields, { id = 26400, name = "Culminus", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- CASTER score 368
+table.insert(inf.shields, { id = 26403, name = "Srivatsa", cost = 500, jobs = 'PLD' })  -- TANK score 357
+table.insert(inf.shields, { id = 26495, name = "Duban", cost = 500, jobs = 'PLD' })  -- TANK score 270
+table.insert(inf.shields, { id = 28654, name = "Beatific Shield +1", cost = 500, jobs = 'WAR/RDM/PLD/BST/SAM' })  -- TANK score 249
+table.insert(inf.shields, { id = 26419, name = "Ammurapi Shield", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 232
 
 
 return catalog

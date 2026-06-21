@@ -323,7 +323,7 @@ def score_item(iid: int, role: str) -> float:
 # --------------------------------------------------------------
 # 6. Build the candidate set
 # --------------------------------------------------------------
-SLOT_NAMES = {16: 'head', 32: 'body', 64: 'hands', 128: 'legs', 256: 'feet'}
+SLOT_NAMES = {16: 'head', 32: 'body', 64: 'hands', 128: 'legs', 256: 'feet', 2: 'shields'}
 
 candidates: list[dict] = []
 for iid, info in items_base.items():
@@ -343,8 +343,10 @@ for iid, info in items_base.items():
     # Multi-job filter: single-job pieces (AF / Relic / Empyrean reforged)
     # belong in the Reforged System catalog, not this Armor Vendor. Keep
     # only items equippable by 2+ jobs so the Armor Vendor stays focused
-    # on universal-utility gear that crosses jobs.
-    if bin(e['jobs']).count('1') < 2:
+    # on universal-utility gear that crosses jobs. EXCEPTION: shields (slot
+    # 2) are inherently job-specific (most tank shields are PLD-only), so
+    # single-job shields are kept -- they have nowhere else to go.
+    if bin(e['jobs']).count('1') < 2 and e['slot'] != 2:
         continue
     # Explicit +4 exclusion (belt-and-suspenders on top of the multi-job
     # filter above). +4 reforge sets are an Infamy Vendor exclusive (see
@@ -433,6 +435,19 @@ for c in candidates:
     else:
         c['tier'] = 'gold'
 
+# Shields carry few stat mods (mostly DEF), so the fixed score bands above
+# would dump every non-Infamy shield into Bronze. Re-tier the shield pool by
+# score RANK so the best shields reach Gold/Silver and the vendor offers
+# shields across all four tiers (the Infamy top-5 skim already took the cream).
+_shields = sorted((c for c in candidates
+                   if c['slot'] == 'shields' and c['id'] not in infamy_ids),
+                  key=lambda x: -x['ceiling'])
+_ns = len(_shields)
+for _i, _c in enumerate(_shields):
+    if   _i < _ns / 3:     _c['tier'] = 'gold'
+    elif _i < 2 * _ns / 3: _c['tier'] = 'silver'
+    else:                  _c['tier'] = 'bronze'
+
 print(f"Tier bands: Bronze<=200 | Silver 201-250 | Gold 251+ | "
       f"Infamy = top {INFAMY_TOP_PER_SLOT}/slot ({len(infamy_ids)} pieces -> Infamy Vendor)")
 
@@ -444,7 +459,7 @@ tier_slot_count = Counter((c['tier'], c['slot']) for c in candidates)
 print("\nPiece counts by tier x slot:")
 for tier in ('bronze', 'silver', 'gold'):
     row = "  " + tier.capitalize().ljust(8)
-    for slot in ('head', 'body', 'hands', 'legs', 'feet'):
+    for slot in ('head', 'body', 'hands', 'legs', 'feet', 'shields'):
         row += f"{slot}:{tier_slot_count[(tier, slot)]:>4}  "
     print(row)
 
@@ -636,7 +651,7 @@ def select_bucket(tier_name: str, slot: str) -> list[dict]:
 
 def tier_block(tier_name: str, var: str) -> str:
     lines = [f"catalog.{tier_name} = emptySlots()", f"local {var} = catalog.{tier_name}", ""]
-    for slot in ('head', 'body', 'hands', 'legs', 'feet'):
+    for slot in ('head', 'body', 'hands', 'legs', 'feet', 'shields'):
         rows = select_bucket(tier_name, slot)
         # Owner-forced additions: guaranteed present in this (tier, slot)
         # regardless of score band (see FORCED_INCLUDE).
@@ -676,7 +691,7 @@ def infamy_block(var: str) -> str:
     comment. NOT routed through select_bucket: no role-balancing or
     per-job padding — the Infamy tier is the raw top-5 per slot."""
     lines = ["catalog.infamy = emptySlots()", f"local {var} = catalog.infamy", ""]
-    for slot in ('head', 'body', 'hands', 'legs', 'feet'):
+    for slot in ('head', 'body', 'hands', 'legs', 'feet', 'shields'):
         rows = sorted(
             (c for c in candidates if c['tier'] == 'infamy' and c['slot'] == slot),
             key=lambda x: -x['ceiling'],
@@ -730,7 +745,7 @@ print(f"  ({len(all_selected)} buckets, MIN_PER_JOB={MIN_PER_JOB}, soft floor TO
 print("\nBucket sizes (tier x slot):")
 for tier in ('bronze', 'silver', 'gold'):
     row = "  " + tier.capitalize().ljust(8)
-    for slot in ('head', 'body', 'hands', 'legs', 'feet'):
+    for slot in ('head', 'body', 'hands', 'legs', 'feet', 'shields'):
         row += f"{slot}:{len(all_selected.get((tier, slot), [])):>3}  "
     print(row)
 

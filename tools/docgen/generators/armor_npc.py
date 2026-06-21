@@ -39,13 +39,14 @@ _INSERT_RE = re.compile(
 # Maps the local short var to its tier:  local b = catalog.bronze
 _BIND_RE = re.compile(r"local\s+(\w+)\s*=\s*catalog\.(\w+)\b")
 
-_SLOT_ORDER = ("head", "body", "hands", "legs", "feet")
+_SLOT_ORDER = ("head", "body", "hands", "legs", "feet", "shields")
 _SLOT_LABEL = {
     "head": "Head",
     "body": "Body",
     "hands": "Hands",
     "legs": "Legs",
     "feet": "Feet",
+    "shields": "Shields",
 }
 _TIER_ORDER = ("bronze", "silver", "gold")
 
