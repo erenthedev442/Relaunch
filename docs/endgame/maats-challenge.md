@@ -3,7 +3,7 @@
 Think you can take on the master? Seek out **Maat's Echo** in **Ru'Lude Gardens** and pay your Infamy for a chance to fight a level-250 incarnation of Maat in the very arena where the Genkai trials once took place — **Waughroon Shrine**. Win, and there's a chance he'll leave behind something that could change the outcome of your next augment.
 
 !!! tip "Summary"
-    Talk to **Maat's Echo** in Ru'Lude Gardens, pay **50 Infamy**, and you'll be teleported to Waughroon Shrine to face a level-250 Maat. Defeat him for a **25% chance** at a **Maat's Blessing** — an item that guarantees your next augment at the Augment Moogle will be a critical.
+    Talk to **Maat's Echo** in Ru'Lude Gardens, pay **50 Infamy**, and you'll be teleported to Waughroon Shrine to face a level-250 Maat. Defeat him for a **25% chance** at a **Maat's Blessing** — an item that guarantees your next augment at the Augment Moogle will be a critical. He also has a **0.5% chance** to drop a **Prime Voucher** ([Prime Weapon Trial 3](../progression/prime-trials.md)).
 
 <!-- DOCGEN:BEGIN id="maat-stats" -->
 | Stat | Value |

@@ -53,7 +53,7 @@ Reach **floor 50** of the [Endless Tower](../endgame/endless-tower.md). The Towe
 
 ## Trial 3 — The Prime Voucher
 
-Win a **Prime Voucher** — a rare (~1%) drop from [Hunting League](index.md) NMs — and turn it in at the Prime Armory. It's a low-rate drop, so this trial is mostly persistence: keep clearing Hunting League NMs and one will eventually fall (it stops dropping once you've cleared Trial 3). A single Voucher is all you need.
+Win a **Prime Voucher** — a rare drop from [Hunting League](index.md) NMs (~1%) or the custom [Maat](../endgame/maats-challenge.md) fight (0.5%) — and turn it in at the Prime Armory. It's a low-rate drop, so this trial is mostly persistence (and it stops dropping once you've cleared Trial 3). A single Voucher is all you need.
 
 ## Trial 4 — Weapon Guardian
 

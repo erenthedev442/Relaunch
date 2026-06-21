@@ -95,6 +95,16 @@ local function spawnMaat(player)
                             xi.msg.channel.SYSTEM_3)
                     end
                 end
+
+                -- Prime Weapon TRIAL 3: a Prime Voucher (item 29699) drops 0.5%
+                -- from the Maat fight, on top of the Hunting League source. Gated
+                -- on PW_Trial3_Done so it stops once Trial 3 is cleared; the reward
+                -- helper prints its own message + handles a full inventory.
+                if (killer:getCharVar('PW_Trial3_Done') or 0) == 0 and math.random() < 0.005 then
+                    pcall(function()
+                        require('modules/custom/lua/prime_voucher_reward').award(killer, 1, 'Maat')
+                    end)
+                end
             end
         end,
     })
