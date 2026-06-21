@@ -1,6 +1,6 @@
 # Prime Weapon Trials
 
-The **Prime Weapon Trials** are the gateway to a Prime weapon. Clear all five and you can forge any Prime at the [Prime Armory](prime-armory.md) in GM Home, or claim a finished retail Prime from the [Prime Vendor](prime-vendor.md) — free, because the trials *are* the price.
+The **Prime Weapon Trials** are the gateway to a Prime weapon. Clear all five and you can forge any Prime at the [Prime Armory](prime-armory.md) in GM Home — the trials *are* the price.
 
 !!! tip "Summary"
     Five trials, done in any order: gather the Abyssea collectibles, climb the Endless Tower, win a Prime Voucher from Hunting League NMs, master a job to beat a Weapon Guardian, and bank the three Aht Urhgan currencies. Finish all five → forge your Prime.
@@ -8,7 +8,7 @@ The **Prime Weapon Trials** are the gateway to a Prime weapon. Clear all five an
 ## The gate
 
 <!-- DOCGEN:BEGIN id="prime-trials-gate" -->
-The Prime Armory forge and the [Prime Vendor](prime-vendor.md) are both locked behind the **5 Prime Weapon Trials**. They are tracked independently, so you can chip away at them **in any order** -- clear all **5** and the Prime Armory will forge the Prime weapon of your choice (and the Prime Vendor opens for the retail line).
+The Prime Armory forge is locked behind the **5 Prime Weapon Trials**. They are tracked independently, so you can chip away at them **in any order** -- clear all **5** and the Prime Armory will forge the Prime weapon of your choice.
 
 Talk to the **Prime Armory** NPC in **GM Home** at any time to see which trials you've cleared and to hand in the collection trials.
 <!-- DOCGEN:END id="prime-trials-gate" -->
@@ -65,9 +65,6 @@ The other turn-in trial. You bank **99 each of three Aht Urhgan Assault currenci
 
 ## The reward
 
-Once all five trials read complete, head to **GM Home**:
-
-- The **[Prime Armory](prime-armory.md)** will forge the Prime weapon of your choice.
-- The **[Prime Vendor](prime-vendor.md)** opens its full line of retail Prime weapons — handed over free, since the trials were the cost.
+Once all five trials read complete, head to **GM Home** and the **[Prime Armory](prime-armory.md)** will forge the Prime weapon of your choice.
 
 Each Prime is Rare/Ex, so you carry one at a time. Pick the weapon that fits your main job and go.

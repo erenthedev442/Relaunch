@@ -1,6 +1,6 @@
 """Sync docs/progression/prime-trials.md with the Prime Weapon Trials.
 
-The four trials that gate the Prime Armory forge (and the Prime Vendor) are
+The five trials that gate the Prime Armory forge are
 defined in PrimeArmory_NPC.lua as a `TRIALS` table of `{ var, label, desc }`
 rows, plus the Trial-1 collectible set `T1_SETS` (five "elements", each in four
 types) and the per-item requirement `T1_REQUIRED`. We surface each trial's
@@ -49,11 +49,10 @@ def _parse(text: str) -> dict:
 def _render_gate(c: dict) -> str:
     n = len(c["trials"]) or 4
     return (
-        f"The Prime Armory forge and the [Prime Vendor](prime-vendor.md) are both "
-        f"locked behind the **{n} Prime Weapon Trials**. They are tracked "
-        f"independently, so you can chip away at them **in any order** -- clear all "
-        f"**{n}** and the Prime Armory will forge the Prime weapon of your choice "
-        f"(and the Prime Vendor opens for the retail line).\n\n"
+        f"The Prime Armory forge is locked behind the **{n} Prime Weapon Trials**. "
+        f"They are tracked independently, so you can chip away at them **in any "
+        f"order** -- clear all **{n}** and the Prime Armory will forge the Prime "
+        f"weapon of your choice.\n\n"
         f"Talk to the **Prime Armory** NPC in **GM Home** at any time to see which "
         f"trials you've cleared and to hand in the collection trials."
     )

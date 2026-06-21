@@ -159,8 +159,6 @@ end
 local showVendorRoot
 local showCuratedCat
 local showCuratedSub
-local showCuratedSetsMenu
-local showCuratedSetDetail
 local showPlus4JobMenu
 local showPlus4SetMenu
 local showPlus4SlotMenu
@@ -176,7 +174,6 @@ showVendorRoot = function(player)
                 function(p) showCuratedCat(p, c, 1) end })
         end
     end
-    table.insert(opts, { 'Curated Sets',  function(p) showCuratedSetsMenu(p, 1) end })
     table.insert(opts, { '+4 Reforge',    function(p) showPlus4JobMenu(p, 1) end })
     table.insert(opts, { 'Close',         function() end })
 

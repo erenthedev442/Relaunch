@@ -50,10 +50,6 @@ Talk to the Armory to open the menu. The weapons are browsed a page at a time �
 Browsing is free — you can read every weapon's stats and weapon skill before deciding. The voucher is only spent on the final confirm, so take your time picking the right Prime weapon for your job.
 <!-- DOCGEN:END id="prime-armory-claim" -->
 
-## The Prime Vendor — a trial-gated path
-
-Looking for the retail Prime weapons instead? See **[Prime Vendor](prime-vendor.md)** for the 16 trial-gated retail Prime weapons.
-
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->

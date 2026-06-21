@@ -208,43 +208,17 @@ catalog.vendorItems =
     { id = 26229, name = "Lehko's Ring",        cost =  300, stats = { 'Ring. DEX+10, AGI+10, Store TP+5, Haste+2%.', 'EX/RARE.' } },
     { id = 26230, name = "Fickblix's Ring",     cost =  300, stats = { 'Ring. INT+15, Magic Atk+15, Magic Acc+20.', 'EX/RARE.' } },
     { id = 26231, name = "Ephramad's Ring",     cost =  300, stats = { 'Ring. MND+15, Cure Potency+10%, Healing Skill+15.', 'EX/RARE.' } },
-}
 
--- ============================================================
--- CURATED SETS  (browsed via the "Curated Sets" vendor menu)
--- ============================================================
--- Full armor sets broken out piece-by-piece. Players can buy
--- whichever slots they still need without purchasing duplicates.
--- Each entry:  set (display name), desc (shown in root), pieces[]
--- Each piece:  id, name, cost, stats[]
--- To add a new set, append an entry and restart the server.
--- ============================================================
-catalog.vendorSets =
-{
-    -- NYAME - Su5 universal armor (all 22 jobs). Stats from item_mods.
-    {
-        set  = 'Nyame Universal',
-        desc = 'Su5 armor - wearable by all 22 jobs',
-        pieces =
-        {
-            { id = 23761, name = 'Nyame Helm',      cost =  400, stats = { 'DEF:156 HP+91 STR+26 DEX+25 VIT+24 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+5', 'Magic Dmg+123, Spell Interrupt-700, Phys Dmg Taken-7%', 'Su5 / all 22 jobs' } },
-            { id = 23768, name = 'Nyame Mail',      cost =  800, stats = { 'DEF:189 HP+136 STR+35 DEX+24 VIT+35 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+8', 'Magic Dmg+139, Spell Interrupt-900, Phys Dmg Taken-9%', 'Su5 / all 22 jobs' } },
-            { id = 23775, name = 'Nyame Gauntlets', cost =  400, stats = { 'DEF:142 HP+91 STR+17 DEX+42 VIT+39 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+4', 'Magic Dmg+112, Spell Interrupt-700, Phys Dmg Taken-7%', 'Su5 / all 22 jobs' } },
-            { id = 23782, name = 'Nyame Flanchard', cost =  400, stats = { 'DEF:169 HP+114 STR+43 VIT+30 AGI+34 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+6', 'Magic Dmg+150, Spell Interrupt-800, Phys Dmg Taken-8%', 'Su5 / all 22 jobs' } },
-            { id = 23789, name = 'Nyame Sollerets', cost =  400, stats = { 'DEF:122 HP+68 STR+23 DEX+26 AGI+38 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+5', 'Magic Dmg+150, Spell Interrupt-700, Phys Dmg Taken-7%', 'Su5 / all 22 jobs' } },
-        },
-    },
+    -- NYAME - Su5 universal armor (all 22 jobs)
+    { id = 23761, name = 'Nyame Helm',           cost =  400, stats = { 'Head. DEF:156 HP+91 STR+26 DEX+25 VIT+24 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+5, Magic Dmg+123, PDT-7%. All 22 jobs.' } },
+    { id = 23768, name = 'Nyame Mail',           cost =  800, stats = { 'Body. DEF:189 HP+136 STR+35 DEX+24 VIT+35 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+8, Magic Dmg+139, PDT-9%. All 22 jobs.' } },
+    { id = 23775, name = 'Nyame Gauntlets',      cost =  400, stats = { 'Hands. DEF:142 HP+91 STR+17 DEX+42 VIT+39 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+4, Magic Dmg+112, PDT-7%. All 22 jobs.' } },
+    { id = 23782, name = 'Nyame Flanchard',      cost =  400, stats = { 'Legs. DEF:169 HP+114 STR+43 VIT+30 AGI+34 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+6, Magic Dmg+150, PDT-8%. All 22 jobs.' } },
+    { id = 23789, name = 'Nyame Sollerets',      cost =  400, stats = { 'Feet. DEF:122 HP+68 STR+23 DEX+26 AGI+38 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+5, Magic Dmg+150, PDT-7%. All 22 jobs.' } },
 
-    -- HJARRANDI - Odyssey-augmented tank/DPS armor (head + body only)
-    {
-        set  = 'Hjarrandi Tank',
-        desc = 'Odyssey-augmented tank/DPS armor',
-        pieces =
-        {
-            { id = 25592, name = 'Hjarrandi Helm',        cost =  400, stats = { 'Tank/DD head. DA+6, Store TP+7, DT-10%.', 'Reforged Hjarrandi (fixed from 27637=evalach).' } },
-            { id = 25766, name = 'Hjarrandi Breastplate', cost =  800, stats = { 'Tank/DD body. Store TP+10, Crit+13%, DT-12%.', 'Reforged Hjarrandi (fixed from 27718=worm_masque).' } },
-        },
-    },
+    -- HJARRANDI - Odyssey-augmented tank/DPS armor
+    { id = 25592, name = 'Hjarrandi Helm',       cost =  400, stats = { 'Head. Tank/DD. DA+6, Store TP+7, DT-10%.' } },
+    { id = 25766, name = 'Hjarrandi Breastplate',cost =  800, stats = { 'Body. Tank/DD. Store TP+10, Crit Rate+13%, DT-12%.' } },
 }
 
 -- DOCGEN:INFAMY_AUTO:BEGIN
