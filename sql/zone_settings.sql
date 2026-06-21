@@ -223,7 +223,7 @@ INSERT INTO `zone_settings` VALUES (178,4,'127.0.0.1',54230,'The_Shrine_of_RuAvi
 INSERT INTO `zone_settings` VALUES (179,0,'127.0.0.1',54230,'Stellar_Fulcrum',0,0,193,193,0,0.00,6297);
 INSERT INTO `zone_settings` VALUES (180,0,'127.0.0.1',54230,'LaLoff_Amphitheater',0,0,196,196,0,0.00,6297);
 INSERT INTO `zone_settings` VALUES (181,0,'127.0.0.1',54230,'The_Celestial_Nexus',0,0,198,198,0,0.00,6297);
-INSERT INTO `zone_settings` VALUES (182,0,'127.0.0.1',54230,'Walk_of_Echoes',0,0,215,215,0,0.00,4096);
+INSERT INTO `zone_settings` VALUES (182,0,'127.0.0.1',54230,'Walk_of_Echoes',0,0,215,215,0,0.00,4224); -- FJB: 4096|MISC_PET(0x80)=4224 so GEO luopans / SMN avatars / BST jugs work in the Endless Tower (Prime Trial 2); MISC_TRUST(0x800) stays off = solo/no-trust rule preserved
 INSERT INTO `zone_settings` VALUES (183,256,'127.0.0.1',54230,'Maquette_Abdhaljs-Legion_A',0,0,143,143,0,0.00,6298);
 INSERT INTO `zone_settings` VALUES (184,4,'127.0.0.1',54230,'Lower_Delkfutts_Tower',0,0,115,102,0,0.00,6299);
 INSERT INTO `zone_settings` VALUES (185,128,'127.0.0.1',54230,'Dynamis-San_dOria',121,121,121,121,0,0.00,6296);
