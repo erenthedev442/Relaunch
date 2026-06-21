@@ -80,6 +80,29 @@ _ITEM_RE = re.compile(
 )
 
 
+# Category title -> the `!shop augments <token>` group that sells those catalysts.
+# Keep in sync with augmentGroups in scripts/commands/shop.lua (cat 1-13) + the
+# POINT_AUGMENTS group ('points') + the 'other' catch-all. Matched on the leading
+# stat-family word of each category header. "Corsair (Phantom Roll)" returns None
+# on purpose: its two custom catalysts are sold under their OWN stat group
+# (Phantom Roll effect -> agi, Spikes Dmg -> int), so it gets a per-item note.
+_SHOP_TOKENS = (
+    ("strength", "str"), ("dexterity", "dex"), ("vitality", "vit"),
+    ("agility", "agi"), ("intelligence", "int"), ("mind", "mnd"),
+    ("charisma", "chr"), ("hp", "hp"), ("mp", "mp"), ("pet", "pet"),
+    ("elemental", "resist"), ("skill", "skill"), ("weaponskill", "ws"),
+    ("progression", "points"), ("other", "other"),
+)
+
+
+def _shop_token(category: str):
+    c = category.strip().lower()
+    for kw, tok in _SHOP_TOKENS:
+        if c.startswith(kw):
+            return tok
+    return None
+
+
 def _unescape(s: str) -> str:
     return s.replace("\\'", "'").replace("\\\\", "\\")
 
@@ -304,15 +327,31 @@ def _render(groups, item_names, gap_set: set[int]) -> str:
         )
         lines.append("")
 
+    lines.append(
+        "Each category below is sold by a `!shop augments <group>` command — buy the "
+        "catalyst there (flat gil), then trade it to the Augment Moogle at GM Home to apply it."
+    )
+    lines.append("")
+
     for category, rows in groups:
         if not rows:
             continue
         cat_gap = sum(1 for r in rows if r[0] in gap_set)
+        token = _shop_token(category)
+        suffix = f"  — buy via `!shop augments {token}`" if token else ""
         if cat_gap > 0:
-            lines.append(f"### {category}  _({cat_gap}/{len(rows)} need GM spawn)_")
-        else:
-            lines.append(f"### {category}")
+            suffix += f"  _({cat_gap}/{len(rows)} need GM spawn)_"
+        lines.append(f"### {category}{suffix}")
         lines.append("")
+        if token is None:
+            # Custom "Corsair (Phantom Roll)" section -- its catalysts are sold under
+            # their own stat family, not one command (update if more are ever added).
+            lines.append(
+                "_Sold under their stat group: **Phantom Roll effect** (Ancient Beastcoin) "
+                "→ `!shop augments agi` · **Spikes Dmg** (Shard Of Obsidian) → "
+                "`!shop augments int`._"
+            )
+            lines.append("")
         lines.append("| Catalyst | Item ID | Augment | Fresh ×1 | ×2 | ×3 | ×4 | ×5 | Max ×1 | ×2 | ×3 | ×4 | ×5 | Cap |")
         lines.append("|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|")
         for item_id, aug_id, label, base, mult, disp, max_boost in rows:
