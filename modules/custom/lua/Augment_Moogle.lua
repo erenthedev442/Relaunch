@@ -213,7 +213,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Augment_Moogle',
         packetName = string.format('%sAugment Moogle', xi.icon.STAR_LARGE),
-        look       = 432,    -- Colossus/Golem model: large imposing figure in its own section
+        look       = 1834,   -- Alexander model: divine mechanical deity, colossal scale
         -- GM Home Augment Sanctum (z=-45): centered, standalone, far from the main NPC cluster.
         x          =  0.000,
         y          =  0.000,
