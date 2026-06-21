@@ -8,7 +8,7 @@
 --
 -- Flow:
 --   1. Player talks to "Maat's Echo" NPC in Ru'Lude Gardens.
---   2. Cost: 50 Infamy. One fight active zone-wide at a time.
+--   2. Cost: 150 Infamy. One fight active zone-wide at a time.
 --   3. Player is teleported to Waughroon Shrine; Maat spawns on zone-in.
 --   4. On Maat's death: 25% chance to receive Maat's Blessing (item 29000).
 --   5. Maat's Blessing guarantees a critical augment at the Augment Moogle
@@ -24,7 +24,7 @@ require('scripts/zones/Waughroon_Shrine/Zone')
 
 local m = Module:new('maat_infamy_fight')
 
-local INFAMY_COST   = 50
+local INFAMY_COST   = 150
 local CRIT_TOKEN_ID = 29000
 local DROP_CHANCE   = 0.25
 
@@ -34,6 +34,37 @@ local DROP_CHANCE   = 0.25
 local MAAT_GROUP_ID  = 12
 local MAAT_GROUP_ZID = 144
 local MAAT_LEVEL     = 250
+
+-- "Damn hard" Lv250 stat block. Level alone does NOT make a fight: LSB's stat
+-- tables top out near 99, so a raw Lv250 mob is actually a pushover. Like every
+-- other endgame encounter here (Prestige, Abyssea, the Test Dummy) we apply an
+-- explicit profile AFTER spawn(). Tuned a notch ABOVE the toughest Prestige
+-- apex (World's End / Provenance Watcher, Lv150) -- Maat is the single hardest
+-- fight on the server. HP is the main difficulty dial; tune after a playtest.
+local MAAT_HP   = 100000000   -- 100M
+local MAAT_MODS =
+{
+    [xi.mod.DEF]           = 9000,    -- mitigates your physical damage
+    [xi.mod.ATT]           = 50000,   -- hits hard even through tank DEF
+    [xi.mod.ACC]           = 11000,   -- rarely whiffs, even vs high-EVA tanks
+    [xi.mod.EVASION]       = 2800,    -- your melee misses a lot
+    [xi.mod.MATT]          = 5000,    -- Chainspell nukes HURT
+    [xi.mod.MACC]          = 5200,    -- nukes / debuffs land
+    [xi.mod.MEVA]          = 3800,    -- your spells resist
+    [xi.mod.MDEF]          = 3800,    -- mitigates your magic damage
+    [xi.mod.STR]           = 1200,
+    [xi.mod.INT]           = 1200,    -- feeds his nuke damage
+    [xi.mod.DOUBLE_ATTACK] = 45,
+    [xi.mod.TRIPLE_ATTACK] = 24,
+    [xi.mod.HASTE_GEAR]    = 500,     -- clamps to the 25% gear-haste cap
+    [xi.mod.REGEN]         = 3000,    -- soft DPS check: out-damage it or stall
+}
+
+-- Idle watchdog: despawn Maat if no challenger fights him for 45s straight, so
+-- an abandoned fight (someone died or left) clears the arena instead of leaving
+-- the server-wide "occupied" guard stuck. Checks isEngaged() every 5s.
+local WATCH_INTERVAL_MS = 5000
+local IDLE_TICKS        = 9   -- 9 x 5s = 45s
 
 -- Waughroon Shrine default zone-in point (matches Zone.lua onZoneIn default).
 local SHRINE_ENTRY_X =  -361.434
@@ -61,6 +92,28 @@ local function isAlive(entity)
     return ok and hp > 0
 end
 
+-- Re-arming idle watchdog (see IDLE_TICKS). mob:timer is dropped automatically
+-- when the mob dies, so this chain self-terminates on a real kill; we only have
+-- to stop it ourselves on the idle-despawn path.
+local function armIdleWatch(mob)
+    mob:timer(WATCH_INTERVAL_MS, function(m)
+        if not isAlive(m) then return end        -- killed / despawned / gone
+        if m:isEngaged() then
+            m:setLocalVar('maatIdle', 0)         -- a challenger is on him; reset
+        else
+            local ticks = (m:getLocalVar('maatIdle') or 0) + 1
+            m:setLocalVar('maatIdle', ticks)
+            if ticks >= IDLE_TICKS then
+                activeMaat = nil
+                m:setLocalVar('maatDespawn', 1)  -- tell onMobDeath this is NOT a kill
+                m:setHP(0)                        -- remove him from the shrine
+                return
+            end
+        end
+        armIdleWatch(m)
+    end)
+end
+
 local function spawnMaat(player)
     local zone = player:getZone()
 
@@ -81,6 +134,12 @@ local function spawnMaat(player)
 
         onMobDeath = function(deadMob, killer)
             activeMaat = nil
+
+            -- The idle watchdog removes an abandoned Maat via setHP(0); that is
+            -- NOT a kill, so don't hand out a reward for it.
+            if deadMob:getLocalVar('maatDespawn') == 1 then
+                return
+            end
 
             if killer and killer:isPC() then
                 if math.random() < DROP_CHANCE then
@@ -119,6 +178,20 @@ local function spawnMaat(player)
     mob:setSpawn(MAAT_X, MAAT_Y, MAAT_Z, MAAT_R)
     mob:spawn()
     mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
+
+    -- Apply the tuned Lv250 profile AFTER spawn() -- spawn() recomputes stats
+    -- from the mob pool and would wipe anything set earlier (same ordering the
+    -- Test Dummy and Prestige bosses use). Offense + defense first, then HP.
+    for mod, val in pairs(MAAT_MODS) do
+        mob:addMod(mod, val)
+    end
+    mob:setMaxHP(MAAT_HP)
+    mob:setHP(MAAT_HP)
+
+    -- Start the abandon-despawn watchdog.
+    mob:setLocalVar('maatIdle', 0)
+    armIdleWatch(mob)
+
     return true
 end
 
