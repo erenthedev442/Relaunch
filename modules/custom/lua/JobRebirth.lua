@@ -51,12 +51,17 @@ local function getCount(player, jobId)  return player:getCharVar(countKey(jobId)
 local function getRP(player, jobId)     return player:getCharVar(rpKey(jobId)) or 0 end
 local function getCatLv(player, jobId, id) return player:getCharVar(catKey(jobId, id)) or 0 end
 
--- exp penalty % for a given rebirth count (capped).
+-- exp penalty % for a given rebirth count.
+-- Triangular scaling: each new rebirth adds count*rate more than the last,
+-- so the penalty accelerates and eventually overwhelms any EXP augment stack.
+-- Formula: count*(count+1)/2 * expPenaltyPerRebirth
+-- e.g. rate=10 -> R1=10%, R2=30%, R3=60%, R4=100%, R5=150% ...
 local function expPenalty(count)
     if count <= 0 then
         return 0
     end
-    return math.min(count * cfg.expPenaltyPerRebirth, cfg.expPenaltyCap)
+    local pen = count * (count + 1) / 2 * cfg.expPenaltyPerRebirth
+    return cfg.expPenaltyCap and math.min(pen, cfg.expPenaltyCap) or pen
 end
 
 -- RP granted for the Nth rebirth (1-indexed). Scales +rpPerLevel each time, capped at rpMax.
@@ -179,8 +184,13 @@ local function doRebirth(player)
 
     player:printToPlayer(string.format('%s has been REBORN -- level 1, Job Points wiped.', jobName(job)), S)
     player:printToPlayer(string.format('  +%d Rebirth Points earned (spend them here). Rebirths: %d.', rpEarned, count), S)
-    if expPenalty(count) > 0 then
-        player:printToPlayer(string.format('  Trial of Mastery: this job now earns %d%% less EXP. Earn your power again.', expPenalty(count)), S)
+    local pen = expPenalty(count)
+    if pen > 0 then
+        if pen >= 100 then
+            player:printToPlayer(string.format('  Trial of Mastery: EXP penalty -%d%% (floor -- grind counts, augs or not). Earn it back.', pen), S)
+        else
+            player:printToPlayer(string.format('  Trial of Mastery: this job now earns %d%% less EXP. Earn your power again.', pen), S)
+        end
     end
 end
 
@@ -319,7 +329,7 @@ showMenu = function(player)
         function(p)
             p:printToPlayer('[ Rebirth ] Max a job (lv99 + Job Points maxed), then rebirth it:', S)
             p:printToPlayer(string.format('  level -> 1, Job Points WIPED, +%d~%d Rebirth Points (starts at %d, +%d each rebirth, cap %d) to spend here.', cfg.rpBase, cfg.rpMax, cfg.rpBase, cfg.rpPerLevel, cfg.rpMax), S)
-            p:printToPlayer(string.format('  Each rebirth stacks -%d%% EXP on THIS job (cap -%d%%) -- each grind is harder.', cfg.expPenaltyPerRebirth, cfg.expPenaltyCap), S)
+            p:printToPlayer(string.format('  EXP penalty scales each rebirth: R1=-%d%%, R2=-%d%%, R3=-%d%%, R4=-%d%% ... no ceiling.', expPenalty(1), expPenalty(2), expPenalty(3), expPenalty(4)), S)
             showMenu(p)
         end,
     })

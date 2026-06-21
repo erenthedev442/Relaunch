@@ -39,13 +39,15 @@ return
     rpMax      = 20,
 
     -- ===== Escalating exp penalty (the "harder each time" knob) =====
-    -- Per-job: each rebirth adds this many % to the exp penalty (a negative
-    -- EXP_BONUS mod applied only while that job is active). Capped so leveling
-    -- is always possible.
-    --   penalty(rebirths) = min(rebirths * expPenaltyPerRebirth, expPenaltyCap)
-    -- e.g. 15/cap 90 -> R1 -15%, R2 -30%, ... R6 -90% (then plateau; always >=10% exp).
-    expPenaltyPerRebirth = 15,
-    expPenaltyCap        = 133,
+    -- Triangular scaling: rebirth N adds N*expPenaltyPerRebirth% more than the
+    -- previous one, so the penalty accelerates and eventually overwhelms any EXP
+    -- augment stack. No cap: the engine's own floor (~0 EXP/kill) is the ceiling.
+    --   penalty(N) = N*(N+1)/2 * expPenaltyPerRebirth
+    --   R1: 10%   R2: 30%   R3: 60%   R4: 100% (floor w/o augs)
+    --   R5: 150%  R6: 210%  R7: 280%  R8: 360% ...
+    -- A player stacking 6 EXP augment pieces (+198%) still hits the floor at R6.
+    expPenaltyPerRebirth = 10,
+    expPenaltyCap        = nil,
 
     -- Hard cap on rebirths per job. nil = uncapped.
     maxRebirths = nil,
