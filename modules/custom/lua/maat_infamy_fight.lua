@@ -122,7 +122,7 @@ m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Maat_Echo',
         packetName = string.format("%sMaat's Echo", xi.icon.STAR_LARGE),
-        look       = 2401,  -- 2428 was not a valid model id -> NPC inserted but invisible. 2401 is a proven-visible model (same one JobRebirth uses in this very zone).
+        look       = 126,   -- Maat's actual model. Retail Maat (npc_list 17772593, zone 243) is size=0/modelid=126; insertDynamicEntity look=N -> SetModelId(N), so this renders the real Maat. (Original 2428 was an invalid model id -> NPC inserted but invisible.)
         x          = NPC_X,
         y          = NPC_Y,
         z          = NPC_Z,
