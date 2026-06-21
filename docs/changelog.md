@@ -5,6 +5,30 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 ---
 
 !!! note "Week of June 15–21, 2026"
+    **Saturday, June 20**
+
+    - **Infamy** — Sell the 22 JSE job capes at 4,000 Infamy each with baked stats
+    - **Gear** — Add Malignance Chapeau + Tights to the Armor NPC (complete the set)
+    - **Augments** — Offer 22 previously-dropped augments at the Moogle
+    - **Commands** — Extend !additem to support 5 augment slots
+    - **LUA** — Repair !resetjobmerits load + dancer Finishing Move null-deref
+    - **Crossjob** — Scope Dual Wield off-hand unlock to the purchased trait only
+    - **Combat** — Remove ranged distance penalty for players
+    - **Crossjob** — Dual Wield trait now unlocks the off-hand slot (equip check honors the mod)
+    - **Crash** — Null-guard CMobController::MobSkill + clear dangling mob-skill refs
+    - **Prime Weapons** — Stat package for the 16 Prime Vendor weapons
+    - **Changelog** — Show all notes per update, remove truncation
+    - **Prime Weapons** — Add Prime Vendor NPC (gated on all 4 trials)
+    - **Boutique** — Native shop window for the cosmetic boutique + named-currency shop hook
+    - **Prime Weapons** — Rework Prime Weapon trials 1/3/4
+    - **Augments** — Label augId 343 'Drain/Aspir Potency' (was generic 'Augment')
+    - **MAAT** — Custom level-250 Maat challenge fight + Maat's Blessing crit token
+    - **BLU** — Disable Fantod (spell 674) from being cast
+    - **Infamy** — Price all 16 Aeonic weapons at 5000 Infamy
+    - **Infamy** — Add all 16 final-stage Aeonic weapons to vendor
+    - **BLU** — Disable Pyric Bulwark (spell 741) from being cast
+    - **Boutique** — Show item name + price on the menu buttons
+
     **Friday, June 19**
 
     - **Equip** — Re-enable /equipset macros (revert the server-wide disable)
@@ -501,10 +525,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4da7975352f2 -->
-_Last updated: 2026-06-20 19:18 UTC_
-<!-- DOCGEN:END id="last-updated" -->
