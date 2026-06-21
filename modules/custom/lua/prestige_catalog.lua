@@ -69,14 +69,17 @@ return
 
     -- EXP penalty stacked on top of the Job Rebirth system's penalty.
     -- Applied per-job (only active while that job is your main job).
-    -- Square-root curve: hits hard early, decelerates as levels climb,
-    -- but always continues to grow (never plateaus).
-    --   penalty = floor(sqrt(prestigeLevel) * expPenaltyScale)
-    -- e.g. scale=10 -> P.Lv 1=-10%  P.Lv 4=-20%  P.Lv 9=-30%
-    --                   P.Lv 25=-50% P.Lv 50=-70% P.Lv 100=-100%
+    -- Piecewise: linear ramp from 0 to -100% over levels 1-floorLevel,
+    -- then +postScale% per level beyond that (no ceiling).
+    --   level <= floorLevel : floor(level / floorLevel * 100)
+    --   level >  floorLevel : 100 + (level - floorLevel) * postScale
+    -- e.g. floorLevel=5, postScale=10:
+    --   P.Lv 1=-20%  P.Lv 2=-40%  P.Lv 3=-60%  P.Lv 4=-80%
+    --   P.Lv 5=-100% (floor)
+    --   P.Lv 6=-110% P.Lv 10=-150% P.Lv 20=-250% ...
     -- Stacks additively with Rebirth's triangular penalty on Mod::EXP_BONUS.
-    -- Set to 0 to disable.
-    expPenaltyScale = 10,
+    expPenaltyFloorLevel = 5,
+    expPenaltyPostScale  = 10,
 
     -- =========================================================
     -- ASCENSION TRIAL  --  "The Nightmare Court"
