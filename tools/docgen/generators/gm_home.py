@@ -1,16 +1,18 @@
 """Generate GM Home feature reference tables inside docs/progression/gm-home.md.
 
-Reads four catalogs:
+Reads these catalogs:
   - modules/custom/lua/test_dummy_catalog.lua
   - modules/custom/lua/gil_mystery_box_catalog.lua
   - modules/custom/lua/gil_warp_npc_catalog.lua
   - modules/custom/lua/gil_title_vendor_catalog.lua
+  - modules/custom/lua/ExpCamp_Moogle.lua
 
 Marker IDs:
   - "gm-home-test-dummy"    -- Test Dummy tiers table
   - "gm-home-mystery-mog"   -- Mystery Mog pool tables + pull cost summary
   - "gm-home-warpman"       -- Warpman destinations table
   - "gm-home-title-broker"  -- Title Broker tiers + title list
+  - "gm-home-exp-camps"     -- EXP Camp Moogle level/destination table
 """
 from __future__ import annotations
 
@@ -426,6 +428,49 @@ def _render_gil_exchange(bundles: list[dict]) -> str:
 
 
 # ---------------------------------------------------------------------------
+# EXP Camp Moogle parser + renderer
+# ---------------------------------------------------------------------------
+
+def _parse_exp_camps(text: str) -> list[dict]:
+    """Return [{level, dest}] from the `camps = { {label=...}, ... }` table in
+    ExpCamp_Moogle.lua. Each label is 'NN-MM Zone Name'; split the leading
+    level range off the destination. Handles single- AND double-quoted labels
+    (e.g. "Crawler's Nest")."""
+    m = re.search(r'\bcamps\s*=\s*\{', text)
+    if not m:
+        return []
+    for start, end in _balanced_blocks(text[m.start():]):
+        camps_block = text[m.start():][start:end]
+        break
+    else:
+        return []
+
+    camps: list[dict] = []
+    for es, ee in _balanced_blocks(camps_block[1:-1]):
+        entry = camps_block[1:-1][es:ee]
+        label_m = re.search(r'''\blabel\s*=\s*(['"])(.*?)\1''', entry)
+        if not label_m:
+            continue
+        label = label_m.group(2)
+        lvl_m = re.match(r'\s*(\d+\s*-\s*\d+)\s+(.*)', label)
+        if lvl_m:
+            camps.append({"level": lvl_m.group(1).replace(" ", ""), "dest": lvl_m.group(2).strip()})
+        else:
+            camps.append({"level": "", "dest": label})
+    return camps
+
+
+def _render_exp_camps(camps: list[dict]) -> str:
+    lines = [
+        "| Level | Camp |",
+        "|---|---|",
+    ]
+    for c in camps:
+        lines.append(f"| {c['level']} | {c['dest']} |")
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
@@ -502,6 +547,20 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             print(f"[gm_home] title-broker: {total} titles across {len(title_tiers)} tiers written into marker")
         else:
             print(f"[gm_home] title-broker: marker 'gm-home-title-broker' not found in {page.name}")
+
+    # --- EXP Camp Moogle ---
+    camp_src = resolve_source(repo_root, "modules/custom/lua/ExpCamp_Moogle.lua")
+    if camp_src is None:
+        print("[gm_home] skip exp-camps: ExpCamp_Moogle.lua not found")
+    else:
+        camp_text    = camp_src.read_text(encoding="utf-8", errors="replace")
+        camps        = _parse_exp_camps(camp_text)
+        camp_content = _render_exp_camps(camps)
+        wrote = write_between_markers(page, "gm-home-exp-camps", camp_content)
+        if wrote:
+            print(f"[gm_home] exp-camps: {len(camps)} camps written into marker")
+        else:
+            print(f"[gm_home] exp-camps: marker 'gm-home-exp-camps' not found in {page.name}")
 
     # --- Gil Exchange (writes into the server-features overview page) ---
     # The Gil Exchange rate bundles live only in gil_exchange_npc.lua and have

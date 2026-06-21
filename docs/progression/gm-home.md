@@ -29,6 +29,30 @@ Each option asks for confirmation before applying. You can mix and match — the
 
 ---
 
+## Key Item Moogle
+
+The **Key Item Moogle** grants **every key item in the game** — roughly 4,000 of them — in a single transaction, so nothing is ever gated behind a key item you're missing. Choose "Yes" and it adds every key item you don't already have (it runs through them all, so give it a moment). One use per character.
+
+---
+
+## Mission Moogle
+
+The **Mission Moogle** instantly **completes every story mission** and sets your nation rank to 10. That covers all three starting nations plus Rise of the Zilart, Chains of Promathia, Treasures of Aht Urhgan, Wings of the Goddess, Seekers of Adoulin, and Rhapsodies of Vana'diel — so every mission-gated zone, key item, and unlock opens at once. Choose "Yes" to clear them all. One use per character.
+
+---
+
+## Gear Moogle
+
+The **Gear Moogle** hands a fresh character a **one-time starter kit** so any new job has something to fight in. Talk to it and it drops a full Level 1 loadout into your inventory:
+
+- **Weapons** covering every skill type — a Bronze Sword, Onion Dagger, Onion Staff, Bronze Knuckles, and Power Bow — so whatever job you rolled, you're armed.
+- **Armor** for every slot — Justice Badge, Justice Torque, Power Gi, Leather Gloves, Leather Trousers, Power Sandals, and a Rabbit Mantle.
+- **Consumables** — 12 Hi-Potions and 12 Ethers.
+
+Free up a few inventory slots before talking to it. One kit per character.
+
+---
+
 ## Mog Moogle
 
 The **Mog Moogle** is a convenience NPC with two functions:
@@ -106,6 +130,39 @@ Destinations are organized into four tiers by cost:
 Pick a tier, pick a destination, and you appear there instantly. Gil is deducted on warp.
 
 **Reforge Exchange:** The cross-mark conversion vendor (trades Hunt Marks for AF/Relic/Empyrean marks) is located at Reisenjima Henge, not in GM Home — warp there via the Endgame tier.
+
+---
+
+## EXP Camp Moogle
+
+The **EXP Camp Moogle** is a free warp to a **level-matched experience camp** — pick your bracket and it drops you right at a classic camping spot, no travel required. Destinations run from the starter zones all the way to the level-99 Adoulin fields:
+
+<!-- DOCGEN:BEGIN id="gm-home-exp-camps" -->
+| Level | Camp |
+|---|---|
+| 10-25 | La Theine Plateau |
+| 10-25 | Konschtat Highlands |
+| 10-25 | Tahrongi Canyon |
+| 15-30 | Valkurm Dunes |
+| 25-40 | Qufim Island |
+| 30-45 | Yuhtunga Jungle |
+| 35-50 | Yhoator Jungle |
+| 45-60 | Crawler's Nest |
+| 45-60 | Gustav Tunnel |
+| 50-60 | Kuftal Tunnel |
+| 50-60 | Western Altepa Desert |
+| 60-75 | The Boyahda Tree |
+| 75-85 | Bhaflau Thickets |
+| 75-85 | Mount Zhayolm |
+| 80-90 | Caedarva Mire |
+| 85-95 | Ceizak |
+| 90-99 | Yorcia Weald |
+| 90-99 | Marjami Ravine |
+| 95-99 | Foret Hennetiel |
+| 95-99 | Kamihr Drifts |
+<!-- DOCGEN:END id="gm-home-exp-camps" -->
+
+Pick a camp from the paginated menu and you warp there instantly — handy for power-leveling an alt or a freshly unlocked subjob.
 
 ---
 

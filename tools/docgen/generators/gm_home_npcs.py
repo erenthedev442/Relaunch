@@ -86,7 +86,7 @@ _NPCS: list[dict] = [
         "display":   "Mission Moogle",
         "file":      "modules/custom/lua/Mission_Moogle.lua",
         "pos_field": None,
-        "desc":      "Skip all missions at once, or per-expansion (RoZ, CoP, ToAU, Wings, SoA, RoV)",
+        "desc":      "Skip every story mission in one click (all nations + RoZ/CoP/ToAU/WotG/SoA/RoV); sets nation rank 10",
     },
     # ── Activities cluster (z ≈ −21) ──────────────────────────────────────────
     {
@@ -94,7 +94,7 @@ _NPCS: list[dict] = [
         "display":   "EXP Camp Moogle",
         "file":      "modules/custom/lua/ExpCamp_Moogle.lua",
         "pos_field": None,
-        "desc":      "Warp to one of 12 fixed EXP camp locations (Lv 10–75 tier list)",
+        "desc":      "Free warp to one of 20 level-matched EXP camps (Lv 10–99)",
     },
     {
         "cluster":   "Activities cluster",
