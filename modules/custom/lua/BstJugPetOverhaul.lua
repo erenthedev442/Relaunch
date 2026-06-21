@@ -37,7 +37,7 @@ local CONFIG =
 {
     -- Flat endgame floors so even a fresh BST's pet is immediately viable.
     flatATT = 5600,
-    flatACC = 2600,
+    flatACC = 4500,
     flatSTR = 360,
     flatHP  = 140000,
 
