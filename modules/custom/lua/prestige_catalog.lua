@@ -48,8 +48,14 @@ return
     -- Hunting League tier (5 = Legend, the current ceiling).
     unlockTier     = 5,
 
-    -- AP granted per ascension. Flat for the MVP.
-    apPerAscension = 10,
+    -- AP granted per ascension, tiered by the NEW prestige level after ascending.
+    -- Prestige_System.lua reads apTiers in order and uses the highest minLevel met.
+    apTiers =
+    {
+        { minLevel =  0, ap = 10 },   -- P.Lv 1-50
+        { minLevel = 51, ap = 15 },   -- P.Lv 51-80
+        { minLevel = 81, ap = 20 },   -- P.Lv 81+
+    },
 
     -- Hunt Marks cost to ascend, escalating with current Prestige_Level:
     --   cost(level) = min(markCostBase * (level + 1), markCostCap)
@@ -307,7 +313,7 @@ return
                   order  = { 11390, 11391, 11392 },
                   bosses =
                   {
-                      [11390] = { name = 'Omega', label = 'Omega, the Final Engine', level = 150, hpBoost = 72,
+                      [11390] = { name = 'Omega',  label = 'Omega, the Final Engine', level = 150, hpBoost = 72,
                                   cry = '"Directive: extinction. Target: all that draws breath."',
                                   mods = { [xi.mod.DEF] = 6600, [xi.mod.ATT] = 36900, [xi.mod.ACC] = 7920, [xi.mod.EVASION] = 2070, [xi.mod.MATT] = 3240, [xi.mod.MACC] = 3420, [xi.mod.MEVA] = 2880, [xi.mod.MDEF] = 2880, [xi.mod.STR] = 900, [xi.mod.INT] = 800, [xi.mod.DOUBLE_ATTACK] = 32, [xi.mod.TRIPLE_ATTACK] = 16, [xi.mod.HASTE_GEAR] = 450, [xi.mod.REGEN] = 1700 } },
                       [11391] = { name = 'Ultima', label = 'Ultima, the First Weapon', level = 150, hpBoost = 74,
@@ -316,6 +322,30 @@ return
                       [11392] = { name = 'Provenance_Watcher', label = 'The Provenance Watcher', level = 150, hpBoost = 75,
                                   cry = '"You stand in MY domain now. Provenance answers to me alone."',
                                   mods = { [xi.mod.DEF] = 6875, [xi.mod.ATT] = 37800, [xi.mod.ACC] = 8280, [xi.mod.EVASION] = 2340, [xi.mod.MATT] = 3600, [xi.mod.MACC] = 3780, [xi.mod.MEVA] = 3240, [xi.mod.MDEF] = 3240, [xi.mod.STR] = 900, [xi.mod.INT] = 900, [xi.mod.DOUBLE_ATTACK] = 32, [xi.mod.TRIPLE_ATTACK] = 18, [xi.mod.HASTE_GEAR] = 500, [xi.mod.REGEN] = 1800 } },
+                  },
+              },
+            },
+
+            -- ---- Tier 5 : The Celestial Wardens (P.Lv 60+) ---------------
+            -- The sky-gods that governed Vana'diel at the height of their
+            -- power.  Pools: Tiamat (3916), Kirin (2265), Absolute Virtue
+            -- (21).  All three have retail FLAG_HIDE_MODEL; cleared in
+            -- prestige_trial_mobs.sql so they render outside a battlefield.
+            { minLevel = 60, mult = 1.00, name = 'The Celestial Wardens',
+              roster =
+              {
+                  order  = { 11393, 11394, 11395 },
+                  bosses =
+                  {
+                      [11393] = { name = 'Tiamat', label = 'Tiamat, the Planar Destroyer', level = 150, hpBoost = 80,
+                                  cry = '"Five heads, five hungers. Which one finishes you is a matter of whim."',
+                                  mods = { [xi.mod.DEF] = 7562, [xi.mod.ATT] = 43200, [xi.mod.ACC] = 9000, [xi.mod.EVASION] = 2520, [xi.mod.MATT] = 4320, [xi.mod.MACC] = 4500, [xi.mod.MEVA] = 3600, [xi.mod.MDEF] = 3600, [xi.mod.STR] = 1000, [xi.mod.VIT] = 800, [xi.mod.DOUBLE_ATTACK] = 32, [xi.mod.TRIPLE_ATTACK] = 16, [xi.mod.HASTE_GEAR] = 500, [xi.mod.REGEN] = 2000 } },
+                      [11394] = { name = 'Kirin', label = 'Kirin, the Celestial Sovereign', level = 150, hpBoost = 83,
+                                  cry = '"I am the balance of heaven made manifest.  Tipping those scales is your last act."',
+                                  mods = { [xi.mod.DEF] = 7875, [xi.mod.ATT] = 45000, [xi.mod.ACC] = 9360, [xi.mod.EVASION] = 2700, [xi.mod.MATT] = 4500, [xi.mod.MACC] = 4680, [xi.mod.MEVA] = 3780, [xi.mod.MDEF] = 3780, [xi.mod.STR] = 900, [xi.mod.AGI] = 900, [xi.mod.INT] = 900, [xi.mod.DOUBLE_ATTACK] = 30, [xi.mod.TRIPLE_ATTACK] = 18, [xi.mod.HASTE_GEAR] = 550, [xi.mod.REGEN] = 2100 } },
+                      [11395] = { name = 'Absolute_Virtue', label = 'Absolute Virtue, the Eternal Judge', level = 150, hpBoost = 87,
+                                  cry = '"There is no passage beyond this point.  This is not a trial.  This is the end."',
+                                  mods = { [xi.mod.DEF] = 8250, [xi.mod.ATT] = 47700, [xi.mod.ACC] = 9900, [xi.mod.EVASION] = 2880, [xi.mod.MATT] = 5040, [xi.mod.MACC] = 5220, [xi.mod.MEVA] = 4140, [xi.mod.MDEF] = 4140, [xi.mod.STR] = 1100, [xi.mod.INT] = 1100, [xi.mod.MND] = 900, [xi.mod.DOUBLE_ATTACK] = 35, [xi.mod.TRIPLE_ATTACK] = 20, [xi.mod.HASTE_GEAR] = 600, [xi.mod.REGEN] = 2400 } },
                   },
               },
             },

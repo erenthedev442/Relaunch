@@ -87,6 +87,17 @@ local function getCatLevel(p, id)    return p:getCharVar(catKey(curJob(p), id)) 
 local function getMarks(player)      return player:getCharVar(cfg.markVar) or 0 end
 local function getTier(player)       return player:getCharVar('HL_Tier')   or 1 end
 
+-- AP granted when ascending to `level` (the level AFTER the ascension).
+-- Walks cfg.apTiers in order (ascending minLevel) and returns the ap for
+-- the highest bracket the new level satisfies. Falls back to 10 if unconfigured.
+local function apForLevel(level)
+    local ap = 10
+    for _, t in ipairs(cfg.apTiers or {}) do
+        if level >= t.minLevel then ap = t.ap end
+    end
+    return ap
+end
+
 -- Hunt Marks needed to perform the next ascension on a job. Escalates with
 -- THAT job's prestige level up to markCostCap (if set), so costs plateau
 -- rather than scaling forever.
@@ -397,10 +408,11 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
         end
 
         local newLevel = level + 1
+        local apGrant  = apForLevel(newLevel)
         player:setCharVar(levelKey(jobId), newLevel)
-        player:setCharVar(apKey(jobId), getAP(player) + cfg.apPerAscension)
+        player:setCharVar(apKey(jobId), getAP(player) + apGrant)
         player:setCharVar(apLifeKey(jobId),
-            (player:getCharVar(apLifeKey(jobId)) or 0) + cfg.apPerAscension)
+            (player:getCharVar(apLifeKey(jobId)) or 0) + apGrant)
         player:setCharVar('Prestige_Ascensions_Total',
             (player:getCharVar('Prestige_Ascensions_Total') or 0) + 1)
 
@@ -412,7 +424,7 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
 
         player:printToPlayer(string.format(
             '[Ascension] Your %s ascends to Prestige Level %d!  +%d %s to spend.',
-            jobTag(jobId), newLevel, cfg.apPerAscension, cfg.apName),
+            jobTag(jobId), newLevel, apGrant, cfg.apName),
             xi.msg.channel.SYSTEM_3)
         player:printToArea(string.format(
             '[Ascension] %s has ascended their %s to Prestige Level %d!',

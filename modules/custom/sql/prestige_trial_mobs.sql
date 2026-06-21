@@ -37,7 +37,7 @@
 -- ============================================================================
 
 DELETE FROM `mob_groups`
- WHERE `groupid` BETWEEN 11370 AND 11392
+ WHERE `groupid` BETWEEN 11370 AND 11395
    AND `zoneid` = 222;
 
 INSERT INTO `mob_groups`
@@ -75,7 +75,13 @@ VALUES
     -- ---- Tier 4 : The World's End (P.Lv 40+) ----------------------------
     (11390, 6961, 222, 'Omega',                0, 128, 0, 105000, 30000, 0, NULL),  -- Odin Prime (apex doom)
     (11391, 5314, 222, 'Ultima',               0, 128, 0, 105000, 30000, 0, NULL),  -- Crystal_Fetter (native 222; ancient crystal weapon)
-    (11392, 4654, 222, 'Provenance_Watcher',   0, 128, 0, 110000, 30000, 0, NULL);  -- native apex (unchanged)
+    (11392, 4654, 222, 'Provenance_Watcher',   0, 128, 0, 110000, 30000, 0, NULL),  -- native apex (unchanged)
+    -- ---- Tier 5 : The Celestial Wardens (P.Lv 60+) ----------------------
+    -- Tiamat (3916), Kirin (2265), Absolute Virtue (21).  All three have
+    -- retail FLAG_HIDE_MODEL; cleared below so they render as dynamic entities.
+    (11393, 3916, 222, 'Tiamat',              0, 128, 0, 115000, 30000, 0, NULL),  -- 5-headed sky dragon
+    (11394, 2265, 222, 'Kirin',               0, 128, 0, 120000, 30000, 0, NULL),  -- divine celestial sovereign
+    (11395,   21, 222, 'Absolute_Virtue',     0, 128, 0, 130000, 30000, 0, NULL);  -- the eternal apex judge
 
 -- ============================================================================
 -- FJB 2026-06-21: Fix Provenance Watcher invisible + floating on dynamic spawn.
@@ -94,3 +100,17 @@ UPDATE `mob_pools`
 SET    `entityFlags` = `entityFlags` & ~0x180,  -- clear FLAG_HIDE_MODEL + FLAG_HIDE_HP
        `namevis`     = 1                         -- show targeting cursor + name
 WHERE  `poolid` = 4654;
+
+-- ============================================================================
+-- FJB 2026-06-21: Tier 5 pools also carry retail FLAG_HIDE_MODEL (0x080).
+-- Same cause as above: all three are battlefield-exclusive bosses in retail.
+-- Clearing 0x80 so they render as dynamic entities in Provenance (zone 222).
+-- namevis 0->1 for normal cursor + HP bar.
+--   Tiamat (3916):          entityFlags 157 (0x9D) -> 29 (0x1D)
+--   Kirin  (2265):          entityFlags 159 (0x9F) -> 31 (0x1F)
+--   Absolute Virtue (21):   entityFlags 1183 (0x49F) -> 1055 (0x41F)
+-- ============================================================================
+UPDATE `mob_pools`
+SET    `entityFlags` = `entityFlags` & ~0x80,
+       `namevis`     = 1
+WHERE  `poolid` IN (3916, 2265, 21);
