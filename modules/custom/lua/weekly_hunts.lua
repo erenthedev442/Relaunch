@@ -128,7 +128,7 @@ local function rollNewWeek(player)
 
     -- C6a: reset partial-sweep CharVars so they can fire again this week
     -- (they are week-gated, but clearing them on rollover is clean)
-    -- (no action needed — they gate on weekId, so they auto-expire)
+    -- (no action needed - they gate on weekId, so they auto-expire)
 
     player:setCharVar('WH_Week', currentWeekId())
 end
@@ -186,7 +186,7 @@ local function completeSlot(player, slot, obj)
         xi.msg.channel.SYSTEM_3)
     payReward(player, obj.reward)
 
-    -- C6a: Partial sweep bonuses — 3/5 = +1000 HL, 4/5 = +2500 HL.
+    -- C6a: Partial sweep bonuses - 3/5 = +1000 HL, 4/5 = +2500 HL.
     -- Gated by week ID so they fire at most once per tier per week.
     local doneCount = 0
     for s = 1, SLOT_COUNT do
@@ -205,7 +205,7 @@ local function completeSlot(player, slot, obj)
             player:setCharVar(partialCv, weekId)
             payReward(player, pr)
             player:printToPlayer(
-                string.format('[Hunt Board] %d/5 cleared — partial sweep bonus!', doneCount),
+                string.format('[Hunt Board] %d/5 cleared - partial sweep bonus!', doneCount),
                 xi.msg.channel.SYSTEM_3)
         end
     end

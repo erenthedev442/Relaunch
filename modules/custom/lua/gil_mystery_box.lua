@@ -126,7 +126,7 @@ end
 -- =====================================================
 
 -- Rolls once from pool, applies pity, applies prize, returns the prize.
--- Does NOT deduct gil or check prerequisites — call-site handles those.
+-- Does NOT deduct gil or check prerequisites - call-site handles those.
 local function doSingleRoll(player, pool, rollIndex)
     local pity = getPity(player)
     local prize
@@ -137,7 +137,7 @@ local function doSingleRoll(player, pool, rollIndex)
             and string.format(' on pull #%d', rollIndex)
             or  ''
         player:printToPlayer(
-            string.format('[Mystery Mog] Pity triggered%s — Epic+ guaranteed!', pitySuffix),
+            string.format('[Mystery Mog] Pity triggered%s - Epic+ guaranteed!', pitySuffix),
             xi.msg.channel.SYSTEM_3)
     else
         prize = rollFromPool(pool)

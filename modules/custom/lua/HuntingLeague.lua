@@ -894,7 +894,7 @@ local function insertSpawnerNPC(zone)
     end
 
     -- One spawner NPC per tier, placed at each tier's cluster area.
-    -- Each NPC only shows mobs for its own tier — no tier-picker needed.
+    -- Each NPC only shows mobs for its own tier - no tier-picker needed.
     for _, tierDef in ipairs(catalog.tiers) do
         local td     = tierDef
         local pos    = td.spawnerPos or catalog.spawnerPos

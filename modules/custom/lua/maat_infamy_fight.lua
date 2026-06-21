@@ -28,7 +28,7 @@ local INFAMY_COST   = 50
 local CRIT_TOKEN_ID = 29000
 local DROP_CHANCE   = 0.25
 
--- Maat_rdm (groupId=12, zone=144) — the classic Chainspell-nuke version.
+-- Maat_rdm (groupId=12, zone=144) - the classic Chainspell-nuke version.
 -- All three Maat groups in zone 144 share the same model; this one is used
 -- as the spawn template. Level is overridden to MAAT_LEVEL by min/maxLevel.
 local MAAT_GROUP_ID  = 12

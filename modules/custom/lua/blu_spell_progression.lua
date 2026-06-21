@@ -6,8 +6,8 @@
 -- are retroactively granted to logged-in BLUs without a GM command).
 --
 -- Hook points:
---   xi.player.onPlayerLevelUp  — grant spells unlocked at new level
---   xi.player.onGameIn         — catch-up all spells <= current level
+--   xi.player.onPlayerLevelUp  - grant spells unlocked at new level
+--   xi.player.onGameIn         - catch-up all spells <= current level
 --
 -- No source edits required. Loaded automatically by the module system.
 -----------------------------------

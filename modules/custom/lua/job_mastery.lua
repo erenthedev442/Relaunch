@@ -5,7 +5,7 @@
 -- boss that spawns in Walk of Echoes. Defeating your chosen Guardian earns
 -- Prime Weapon Trial 4 credit (charVar PW_Trial4_Done = 1).
 --
--- The fight is solo (honor system — trusts are disabled zone-wide (Walk of Echoes MISC_TRUST off)).
+-- The fight is solo (honor system - trusts are disabled zone-wide (Walk of Echoes MISC_TRUST off)).
 -- Death ends the challenge with no reward and no save.
 --
 -- CharVars:
@@ -222,7 +222,7 @@ local function spawnGuardian(player, weaponKey)
     if sess then sess.boss = mob end
 
     player:printToPlayer(string.format(
-        '[Mastery] The %s appears! [%s — %d HP] Solo fight: defeat it to earn Trial 4.',
+        '[Mastery] The %s appears! [%s - %d HP] Solo fight: defeat it to earn Trial 4.',
         g.bossName, affix.label, finalHp), xi.msg.channel.SYSTEM_3)
 end
 

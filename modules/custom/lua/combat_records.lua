@@ -100,7 +100,7 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     -- ── WEAPONSKILL_USE: WS damage + skillchain ───────────────────────────
     -- `damage` = total weapon skill damage (pre-calculated by the engine).
     -- `action:getAddEffectParam(targetId)` = skillchain damage; requires C++ getter
-    -- (added in lua_action.cpp) — safe-fails via pcall until rebuild ships.
+    -- (added in lua_action.cpp) - safe-fails via pcall until rebuild ships.
     player:addListener('WEAPONSKILL_USE', 'COMBAT_RECORDS_WS', function(attacker, target, skill, tp, action, damage)
         if not damage or damage <= 0 then return end
         if target == nil then return end

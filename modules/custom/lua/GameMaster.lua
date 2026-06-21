@@ -156,7 +156,7 @@ local function spawnWaveMob(owner, mobDef, ring, diffDef)
             -- pendingSpawns tracks mobs that are scheduled but haven't
             -- materialised yet (staggered spawn). Don't advance the wave
             -- until BOTH all live mobs are dead AND all delayed spawns
-            -- have fired — otherwise the first kill in a multi-mob wave
+            -- have fired - otherwise the first kill in a multi-mob wave
             -- could end the wave before the later mobs even appear.
             local stillAlive = false
             for _ in pairs(sess.mobsAlive) do
@@ -291,7 +291,7 @@ startWave = function(player)
             sess.pendingSpawns = sess.pendingSpawns - 1
         else
             -- Subsequent mobs arrive after a stagger delay.
-            -- Capture loop variables explicitly — Lua closures capture by
+            -- Capture loop variables explicitly - Lua closures capture by
             -- reference, so using `mobDef` directly inside a timer would
             -- always see the LAST value of the loop variable, not the
             -- per-iteration value. Assign to locals here to freeze them.

@@ -205,8 +205,8 @@ end
 -- mobs.lua), so a Lua-sync reload of mobs.lua can't clobber it.
 -- Awards Gil + Infamy + Cruor to every PC in the party on a
 -- marks-popped NM kill, with multipliers for:
---   x2.0  — 2+ real players in party
---   x1.5  — no trusts in party
+--   x2.0  - 2+ real players in party
+--   x1.5  - no trusts in party
 -- Multipliers stack (solo no-trust = x1.5, party no-trust = x3).
 -- ============================================================
 xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)

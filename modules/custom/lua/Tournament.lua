@@ -149,8 +149,8 @@ local function onWaveClearedForTeam(teamName, waveNum)
     local rem      = teamsAlive()
 
     if not cfg then
-        -- Cleared all 8 waves — this team wins
-        announce(string.format('[Tournament] *** Team %s CLEARED ALL WAVES — Champions! *** (%d team(s) remain)',
+        -- Cleared all 8 waves - this team wins
+        announce(string.format('[Tournament] *** Team %s CLEARED ALL WAVES - Champions! *** (%d team(s) remain)',
             teamName, rem - 1))
         -- Warp survivors out
         for pname in pairs(sess.alive) do
@@ -197,7 +197,7 @@ startWaveForTeam = function(teamName, waveNum)
     for pname in pairs(sess.alive) do
         local p = GetPlayerByName(pname)
         if p then
-            p:printToPlayer(string.format('[Tournament] %s — %d mobs, level %d.',
+            p:printToPlayer(string.format('[Tournament] %s - %d mobs, level %d.',
                 cfg.label, cfg.count, cfg.level))
         end
     end
@@ -276,7 +276,7 @@ local function eliminateTeam(teamName, reason)
         local ws = sessions[winner]
         local names = {}
         if ws then for n in pairs(ws.alive) do names[#names+1] = n end end
-        announce(string.format('[Tournament] *** Team %s is the LAST TEAM STANDING — Champions! *** (%s)',
+        announce(string.format('[Tournament] *** Team %s is the LAST TEAM STANDING - Champions! *** (%s)',
             winner, table.concat(names, ', ')))
         -- Warp winners out after a moment
         if ws then
@@ -323,7 +323,7 @@ m:addOverride('xi.player.onPlayerDeath', function(player, ...)
     end)
 
     if membersLeft > 0 then
-        -- Team still has survivors — just announce the KO
+        -- Team still has survivors - just announce the KO
         announce(string.format('[Tournament] %s (Team %s) was KO\'d. %d teammate(s) remain.',
             pname, tname, membersLeft))
         -- Re-assert enmity on remaining members so mobs don't go idle
@@ -334,7 +334,7 @@ m:addOverride('xi.player.onPlayerDeath', function(player, ...)
             end
         end
     else
-        -- Last member down — team is out
+        -- Last member down - team is out
         eliminateTeam(tname, pname .. ' KO (last member)')
     end
 end)
@@ -380,7 +380,7 @@ tourney.handleCmd = function(player, sub, a2, a3)
             for tname, members in pairs(teams) do
                 lines[#lines+1] = string.format('  %s: %s', tname, table.concat(members, ', '))
             end
-            player:printToPlayer(string.format('[Tournament] SIGN-UPS OPEN — %d team(s):', #lines))
+            player:printToPlayer(string.format('[Tournament] SIGN-UPS OPEN - %d team(s):', #lines))
             for _, line in ipairs(lines) do player:printToPlayer(line) end
             player:printToPlayer('[Tournament] !tournament join [teamname] to enter.')
 
@@ -389,7 +389,7 @@ tourney.handleCmd = function(player, sub, a2, a3)
             for tname, sess in pairs(sessions) do
                 parts[#parts+1] = teamStatus(tname, sess)
             end
-            player:printToPlayer(string.format('[Tournament] RUNNING — %d team(s): %s',
+            player:printToPlayer(string.format('[Tournament] RUNNING - %d team(s): %s',
                 #parts, table.concat(parts, '  |  ')))
         end
 

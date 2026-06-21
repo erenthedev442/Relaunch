@@ -42,7 +42,7 @@ return
     -- clog the arena (and the duplicate-spawn guard frees up again). The
     -- countdown is cancelled the instant a player engages the NM, so an
     -- active fight is never interrupted. Set to 0 to disable.
-    unengagedDespawnSecs = 120,  -- 120s — players need time to walk to their arena in the large zone
+    unengagedDespawnSecs = 120,  -- 120s - players need time to walk to their arena in the large zone
 
     -- =========================================================
     -- TIER DEFINITIONS
@@ -578,7 +578,7 @@ return
                 { name = 'Silencega', id = 29696, cost = 200, learnSpell = 359,
                   stats = { 'WHM 40 / RDM 50 / SCH 50', 'AoE Silence (Wind)', 'Learned on purchase' } },
                 { name = 'Divine Aegis', id = 29697, cost = 400, learnSpell = 1020,
-                  stats = { 'PLD 50', 'Holy shield → AoE detonation', 'Learned on purchase' } },
+                  stats = { 'PLD 50', 'Holy shield -> AoE detonation', 'Learned on purchase' } },
                 { name = 'Convergence', id = 29698, cost = 350, learnSpell = 1021,
                   stats = { 'RDM 50', 'Random enfeeble + elemental damage', 'Learned on purchase' } },
             },

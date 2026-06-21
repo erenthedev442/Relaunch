@@ -19,7 +19,7 @@
 --   * Per-player sessions table; ownerName captured in mob onMobDeath
 --     closures so the mob entity reference is never used after its death.
 --   * releaseIdOnDisappear = true on every mob so IDs self-reclaim.
---   * mobsAlive reset to {} each floor — NO stale cross-floor refs.
+--   * mobsAlive reset to {} each floor - NO stale cross-floor refs.
 --   * Death hook via xi.player.onPlayerDeath override.
 --   * Timer-based floor advance (never re-entrant from mob callback).
 --
@@ -220,7 +220,7 @@ startFloor = function(player)
         local bossHp = band.bossHp
 
         player:printToPlayer(string.format(
-            '[Tower] FLOOR %d — BOSS: %s  [%s]', floor, band.bossName, affix.label),
+            '[Tower] FLOOR %d - BOSS: %s  [%s]', floor, band.bossName, affix.label),
             xi.msg.channel.SYSTEM_3)
 
         local mob = spawnTowerMob(
@@ -282,7 +282,7 @@ endTower = function(player, reason)
                 xi.msg.channel.SYSTEM_3)
         else
             player:printToPlayer(
-                '[Tower] Floor 50 cleared! Trial 2 already complete — you have bragging rights.',
+                '[Tower] Floor 50 cleared! Trial 2 already complete - you have bragging rights.',
                 xi.msg.channel.SYSTEM_3)
         end
     elseif reason == 'death' then
@@ -343,7 +343,7 @@ m:addOverride('xi.player.onPlayerDeath', function(player, ...)
 end)
 
 -----------------------------------
--- Module override: GM Home — place the NPC
+-- Module override: GM Home - place the NPC
 -----------------------------------
 m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     super(zone)

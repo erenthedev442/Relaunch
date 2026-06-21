@@ -3,7 +3,7 @@
 -- Config for the Reforge Mark Exchange vendor at Gwora-Corridor.
 -- Lets players convert between Reforge mark types at a 2:1 rate,
 -- removing the "dead inventory" feel when you have excess marks in
--- one track. Does not trivialize any track — the exchange tax is
+-- one track. Does not trivialize any track - the exchange tax is
 -- intentional friction.
 --
 -- Rates: 2 AF = 1 Relic, 2 Relic = 1 Empy, 3 AF = 1 Empy (direct).
