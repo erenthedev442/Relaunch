@@ -88,6 +88,12 @@ void GP_CLI_COMMAND_EVENTENDXZY::process(MapSession* PSession, CCharEntity* PCha
         // first collect the mobs with hate towards the formerly charmed mob
         for (auto* entityWithEnmity : *PPet->PNotorietyContainer)
         {
+            // FJB: skip dangling entries -- a freed pointer here would UAF-crash the
+            // dynamic_cast below (IsEntityAlive checks BY VALUE, safe on a dangling).
+            if (!CBaseEntity::IsEntityAlive(entityWithEnmity))
+            {
+                continue;
+            }
             if (auto* mobToPacify = dynamic_cast<CMobEntity*>(entityWithEnmity))
             {
                 mobsToPacify.emplace_back(mobToPacify);

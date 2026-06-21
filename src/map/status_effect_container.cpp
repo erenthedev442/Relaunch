@@ -1935,6 +1935,14 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
         {
             for (CBattleEntity* PTarget : *PEntity->PNotorietyContainer)
             { // Check for trust here so negitive effects wont affect trust
+                // FJB: skip dangling entries -- a despawned mob can linger here as a
+                // freed pointer and the PTarget-> derefs below would UAF-crash; the
+                // != nullptr check can't catch a dangling, non-null pointer.
+                // IsEntityAlive() checks the pointer BY VALUE, safe on a dangling.
+                if (!CBaseEntity::IsEntityAlive(PTarget))
+                {
+                    continue;
+                }
                 if (PTarget != nullptr &&
                     PTarget->loc.zone &&
                     PEntity->loc.zone &&

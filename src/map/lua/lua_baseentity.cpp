@@ -13867,6 +13867,12 @@ sol::table CLuaBaseEntity::getNotorietyList()
     auto table = lua.create_table();
     for (auto* entry : *notorietyContainer)
     {
+        // FJB: skip dangling entries -- don't hand Lua a wrapper around a freed
+        // pointer (IsEntityAlive checks BY VALUE, safe on a dangling pointer).
+        if (!CBaseEntity::IsEntityAlive(entry))
+        {
+            continue;
+        }
         table.add(CLuaBaseEntity(entry));
     }
 

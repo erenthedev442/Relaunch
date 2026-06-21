@@ -2030,6 +2030,18 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
         // Some mobs respond to abilities (ex. Absolute Virtue / Ob)
         for (CBattleEntity* PBattleEntity : *PNotorietyContainer)
         {
+            // FJB: skip dangling entries -- a despawned mob can linger in this
+            // notoriety set as a freed pointer, and the dynamic_cast below would
+            // then deref freed memory's vtable and SIGSEGV. This is the SAME
+            // use-after-free that hasEnmity() already guards against; this loop
+            // (mob ability-response, e.g. AV/Ob) never got the guard, so it was
+            // the recurring CCharEntity::OnAbility -> __dynamic_cast core-dump.
+            // IsEntityAlive() checks the pointer BY VALUE against the live-entity
+            // registry, so it is safe to call on a dangling pointer.
+            if (!CBaseEntity::IsEntityAlive(PBattleEntity))
+            {
+                continue;
+            }
             if (auto* PMob = dynamic_cast<CMobEntity*>(PBattleEntity))
             {
                 if (PMob->getMobMod(MOBMOD_ABILITY_RESPONSE) && PMob->getZone() == this->getZone())
