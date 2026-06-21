@@ -17,22 +17,34 @@ local MARKS_INFAMY_LV  = '[MarksPopInfamy]'
 local MARKS_GIL_LV     = '[MarksPopGil]'
 local MARKS_CRUOR_LV   = '[MarksPopCruor]'
 
--- Per zone tier: mark cost, rewards, spawn level, HP, and flat stat mods applied
--- at spawn time.  atkDef is added to ATT, DEF, MATT.  accEva is added to ACC,
--- EVA, MACC, MEVA.  Level drives the formula-based stat floor on top of these.
+-- Per zone tier: mark cost + rewards, then the spawn stat block applied at pop.
+--   level   drives the formula-based base-stat floor for that level
+--   maxHP   flat HP override (setMaxHP)
+--   att / def / matt           melee attack / defense / magic attack added
+--   acc / eva / macc / meva     accuracy / evasion / magic acc / magic eva added
+--   da      Double Attack % (extra swings)
+--   haste   HASTE_GEAR (100 = 1% faster attack round)
+--   eleRes  added to ALL 8 elemental magic-evasion mods (Fire..Dark) -- an
+--           elemental-nuke resistance layered on top of meva
+-- Rebalanced 2026-06-21: att was a ~4x gap below the Ascension-Trial NMs, so
+-- these were faceroll by comparison. att is now lifted into the LOWER Ascension
+-- band (the Trial runs att 12.6k-37.8k; these top out at 18k = the EASIEST Trial
+-- boss, Diabolos at 12.6k), and gain Double Attack, light haste, and a bit of
+-- elemental resistance. def/HP are unchanged (they were already tankier than the
+-- Trial) -- the goal is a real THREAT, still farmable, still under the gate.
 local zoneConfig =
 {
-    -- Visions of Abyssea
-    [xi.zone.ABYSSEA_KONSCHTAT]        = { cost = 200, infamy = 25, gil =   250000, cruor = 1000, level = 135, maxHP =  4000000, atkDef =  3333, accEva = 2000 },
-    [xi.zone.ABYSSEA_TAHRONGI]         = { cost = 200, infamy = 25, gil =   250000, cruor = 1000, level = 135, maxHP =  4000000, atkDef =  3333, accEva = 2000 },
-    [xi.zone.ABYSSEA_LA_THEINE]        = { cost = 200, infamy = 25, gil =   250000, cruor = 1000, level = 135, maxHP =  4000000, atkDef =  3333, accEva = 2000 },
-    -- Scars of Abyssea
-    [xi.zone.ABYSSEA_ATTOHWA]          = { cost = 350, infamy = 40, gil =   500000, cruor = 1500, level = 145, maxHP =  7000000, atkDef =  6000, accEva = 3333 },
-    [xi.zone.ABYSSEA_MISAREAUX]        = { cost = 350, infamy = 40, gil =   500000, cruor = 1500, level = 145, maxHP =  7000000, atkDef =  6000, accEva = 3333 },
-    [xi.zone.ABYSSEA_VUNKERL]          = { cost = 350, infamy = 40, gil =   500000, cruor = 1500, level = 145, maxHP =  7000000, atkDef =  6000, accEva = 3333 },
-    -- Heroes of Abyssea
-    [xi.zone.ABYSSEA_ALTEPA]           = { cost = 500, infamy = 60, gil =   750000, cruor = 2000, level = 155, maxHP = 10000000, atkDef =  8666, accEva = 5000 },
-    [xi.zone.ABYSSEA_GRAUBERG]         = { cost = 500, infamy = 60, gil =   750000, cruor = 2000, level = 155, maxHP = 10000000, atkDef =  8666, accEva = 5000 },
+    -- Visions of Abyssea  (Lv135 -- softest marks NMs)
+    [xi.zone.ABYSSEA_KONSCHTAT] = { cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 135, maxHP =  4000000, att = 10000, def = 3333, matt = 3333, acc = 2600, eva = 2000, macc = 2000, meva = 2000, da = 10, haste = 100, eleRes = 150 },
+    [xi.zone.ABYSSEA_TAHRONGI]  = { cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 135, maxHP =  4000000, att = 10000, def = 3333, matt = 3333, acc = 2600, eva = 2000, macc = 2000, meva = 2000, da = 10, haste = 100, eleRes = 150 },
+    [xi.zone.ABYSSEA_LA_THEINE] = { cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 135, maxHP =  4000000, att = 10000, def = 3333, matt = 3333, acc = 2600, eva = 2000, macc = 2000, meva = 2000, da = 10, haste = 100, eleRes = 150 },
+    -- Scars of Abyssea  (Lv145)
+    [xi.zone.ABYSSEA_ATTOHWA]   = { cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 145, maxHP =  7000000, att = 14000, def = 6000, matt = 6000, acc = 3500, eva = 3333, macc = 3333, meva = 3333, da = 16, haste = 150, eleRes = 250 },
+    [xi.zone.ABYSSEA_MISAREAUX] = { cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 145, maxHP =  7000000, att = 14000, def = 6000, matt = 6000, acc = 3500, eva = 3333, macc = 3333, meva = 3333, da = 16, haste = 150, eleRes = 250 },
+    [xi.zone.ABYSSEA_VUNKERL]   = { cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 145, maxHP =  7000000, att = 14000, def = 6000, matt = 6000, acc = 3500, eva = 3333, macc = 3333, meva = 3333, da = 16, haste = 150, eleRes = 250 },
+    -- Heroes of Abyssea  (Lv155 -- top marks NMs; still below the Ascension gate)
+    [xi.zone.ABYSSEA_ALTEPA]    = { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 10000000, att = 18000, def = 8666, matt = 8666, acc = 5000, eva = 5000, macc = 5000, meva = 5000, da = 20, haste = 200, eleRes = 350 },
+    [xi.zone.ABYSSEA_GRAUBERG]  = { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 10000000, att = 18000, def = 8666, matt = 8666, acc = 5000, eva = 5000, macc = 5000, meva = 5000, da = 20, haste = 200, eleRes = 350 },
 }
 
 local function spawnViaMark(p, mobId, cost, nmName, cfg)
@@ -63,13 +75,23 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     spawned:setLevel(cfg.level)
     spawned:setMaxHP(cfg.maxHP)
     spawned:setHP(cfg.maxHP)
-    spawned:addMod(xi.mod.ATT,  cfg.atkDef)
-    spawned:addMod(xi.mod.DEF,  cfg.atkDef)
-    spawned:addMod(xi.mod.MATT, cfg.atkDef)
-    spawned:addMod(xi.mod.ACC,  cfg.accEva)
-    spawned:addMod(xi.mod.EVA,  cfg.accEva)
-    spawned:addMod(xi.mod.MACC, cfg.accEva)
-    spawned:addMod(xi.mod.MEVA, cfg.accEva)
+    spawned:addMod(xi.mod.ATT,  cfg.att)
+    spawned:addMod(xi.mod.DEF,  cfg.def)
+    spawned:addMod(xi.mod.MATT, cfg.matt)
+    spawned:addMod(xi.mod.ACC,  cfg.acc)
+    spawned:addMod(xi.mod.EVA,  cfg.eva)
+    spawned:addMod(xi.mod.MACC, cfg.macc)
+    spawned:addMod(xi.mod.MEVA, cfg.meva)
+    spawned:addMod(xi.mod.DOUBLE_ATTACK, cfg.da)     -- extra swings -> a real melee threat
+    spawned:addMod(xi.mod.HASTE_GEAR,    cfg.haste)  -- faster attack round (100 = 1%)
+    -- Elemental-nuke resistance: raise magic evasion vs all 8 elements so
+    -- Fire/Blizzard/Thunder/etc. get resisted more often (on top of meva above).
+    for _, emod in ipairs({
+        xi.mod.FIRE_MEVA,    xi.mod.ICE_MEVA,   xi.mod.WIND_MEVA,  xi.mod.EARTH_MEVA,
+        xi.mod.THUNDER_MEVA, xi.mod.WATER_MEVA, xi.mod.LIGHT_MEVA, xi.mod.DARK_MEVA,
+    }) do
+        spawned:addMod(emod, cfg.eleRes)
+    end
     spawned:setLocalVar('[ClaimedBy]', p:getID())
     spawned:setLocalVar(MARKS_INFAMY_LV,  cfg.infamy)
     spawned:setLocalVar(MARKS_GIL_LV,    cfg.gil)
