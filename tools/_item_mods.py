@@ -34,7 +34,10 @@ SOURCES = [
     ("zz_tokko_voluspa_mods.sql", False),
     ("zzz_reforge_carryforward.sql", False),
 ]
-_TUPLE = re.compile(r"\((\d+),(\d+),(-?\d+)\)")
+# Tolerate spaces after commas: some item_mods rows are written "(23756, 1, 152)"
+# (e.g. the Gleti set) and the old no-space pattern silently skipped them -> the
+# scorer saw "no DB mods" and dropped those items from every vendor/finder.
+_TUPLE = re.compile(r"\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(-?\d+)\s*\)")
 
 
 def load_item_mod_map(sqldir: Path) -> dict[tuple[int, int], int]:

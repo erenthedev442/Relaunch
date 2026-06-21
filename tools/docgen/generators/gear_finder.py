@@ -648,7 +648,9 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ('sql/zz_tokko_voluspa_mods.sql', False),
         ('sql/zzz_reforge_carryforward.sql', False),   # tier carry-forward (loads last)
     ]
-    _tuple_re = re.compile(r'\((\d+),(\d+),(-?\d+)\)')
+    # Tolerate spaces after commas, e.g. "(23756, 1, 152)" (Gleti set) -- the
+    # old no-space pattern silently skipped those rows (mirrors _item_mods.py).
+    _tuple_re = re.compile(r'\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(-?\d+)\s*\)')
     mods: dict[int, dict[int, int]] = defaultdict(dict)
     for fn, override in mod_sources:
         t = _read(repo_root, fn)
