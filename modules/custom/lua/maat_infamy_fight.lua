@@ -11,8 +11,9 @@
 --   2. Cost: 150 Infamy.
 --   3. Player is teleported to Waughroon Shrine; their OWN Maat spawns FAR
 --      across the floor, claim-locked but PASSIVE, and only engages once they
---      walk within ~15 yalms -- so you load in safely instead of dying on the
---      zone-in tile. MANY players can fight at once; each gets a private,
+--      walk within ~15 yalms. He is ROOTED (NO_MOVE): he holds his spawn and
+--      never charges, so you load in safely and approach HIM, instead of dying
+--      on the zone-in tile. MANY players can fight at once; each gets a private,
 --      claim-locked Maat, the way Voidspire / Colosseum isolate per-player mobs.
 --   4. On Maat's death: 25% chance to receive Maat's Blessing (item 29000).
 --   5. Maat's Blessing guarantees a critical augment at the Augment Moogle
@@ -120,7 +121,7 @@ local function maatTick(mob, ownerName)
         -- (1) Proximity engage: stay passive until the owner walks up to him.
         if ownerActive and not m:isEngaged() and m:checkDistance(owner) <= ENGAGE_DIST then
             m:updateClaim(owner)                          -- (re)lock to the owner
-            m:addEnmity(owner, 30000, 30000)              -- now he beelines them
+            m:addEnmity(owner, 30000, 30000)              -- engages in place (NO_MOVE roots him; he never charges)
         end
 
         -- (2) Despawn watchdog: keep Maat ONLY while his owner is alive + in the
@@ -219,6 +220,11 @@ local function spawnMaat(player)
     mob:setSpawn(sx, sy, sz, MAAT_R)
     mob:spawn()
     mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
+    -- Root Maat to his spawn: he NEVER charges or chases. He still spawns hostile
+    -- + claim-locked and engages on approach (maatTick), but NO_MOVE makes him fight
+    -- in place where he stands instead of beelining the challenger on zone-in.
+    -- (Same stationary dial the Test Dummy and the custom DD trusts use.)
+    mob:setMobMod(xi.mobMod.NO_MOVE, 1)
 
     -- Apply the tuned Lv250 profile AFTER spawn() -- spawn() recomputes stats
     -- from the mob pool and would wipe anything set earlier (same ordering the
