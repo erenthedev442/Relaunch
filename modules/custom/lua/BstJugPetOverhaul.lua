@@ -36,10 +36,10 @@ local m = Module:new('bst_jugpet_overhaul')
 local CONFIG =
 {
     -- Flat endgame floors so even a fresh BST's pet is immediately viable.
-    flatATT = 1400,
-    flatACC = 650,
-    flatSTR = 90,
-    flatHP  = 70000,
+    flatATT = 2800,
+    flatACC = 1300,
+    flatSTR = 180,
+    flatHP  = 140000,
 
     -- Gear-scaling: the pet inherits this share of the MASTER's stats, so it
     -- gets stronger as the BST gears/augments up (the "scales toward the cap" bit).
@@ -55,8 +55,8 @@ local CONFIG =
     mdt = -2500,
 
     -- Melee throughput (percent).
-    doubleAttack = 30,
-    tripleAttack = 12,
+    doubleAttack = 50,
+    tripleAttack = 50,
 
     -- Auto-Ready: pet fires its TP move on its own once it caps TP.
     autoReady           = true,
