@@ -1,6 +1,6 @@
 # Miyasanima
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 11h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 12h
 
 `💪 13 jobs @99`
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dbc5d6339ccf -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 2c4fe9055887 -->
+_Last updated: 2026-06-21 00:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Rtkle
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 10h
 
 `💪 4 jobs @99`
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b09b042d899f -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: e3b4189d2962 -->
+_Last updated: 2026-06-21 00:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

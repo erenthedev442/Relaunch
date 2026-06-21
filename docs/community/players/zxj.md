@@ -1,6 +1,6 @@
 # Zxj
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 12h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 13h
 
 `⭐ 1 Ascension` `💪 22 jobs @99`
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 906089a9f65e -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 6a14804dbde6 -->
+_Last updated: 2026-06-21 00:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

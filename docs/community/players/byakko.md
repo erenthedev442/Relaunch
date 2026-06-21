@@ -1,6 +1,6 @@
 # Byakko
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 3h
 
 `💪 6 jobs @99`
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e9d535ce7ce6 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: b32b66e3e5f4 -->
+_Last updated: 2026-06-21 00:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

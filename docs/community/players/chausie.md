@@ -1,6 +1,6 @@
 # Chausie
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 19h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 20h
 
 `💪 2 jobs @99`
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: edd0d59f8824 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: c7e6bfdf77e9 -->
+_Last updated: 2026-06-21 00:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

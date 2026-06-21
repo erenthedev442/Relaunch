@@ -1,6 +1,6 @@
 # Skerxan
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-19 · Character age 1d 3h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-19 · Character age 1d 4h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 85/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fe5e5d9b9bb1 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: dbdfb97f73e7 -->
+_Last updated: 2026-06-21 00:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

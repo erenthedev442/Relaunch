@@ -1,6 +1,6 @@
 # Demonslayer
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 21h 13m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 21h 32m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: af2d98245f78 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: a36a259e26de -->
+_Last updated: 2026-06-21 00:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Varsh
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-14 · Character age 6d 3h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-14 · Character age 6d 4h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 8/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2f38e14f3fde -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 4554a6417e8b -->
+_Last updated: 2026-06-21 00:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

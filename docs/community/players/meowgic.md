@@ -1,6 +1,6 @@
 # Meowgic
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-17 · Character age 7d 1h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-17 · Character age 7d 2h
 
 `⭐ 3 Ascensions` `💪 6 jobs @99`
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0dfa394fab53 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 032b00501cf5 -->
+_Last updated: 2026-06-21 00:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

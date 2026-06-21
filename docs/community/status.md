@@ -36,7 +36,7 @@ _Snapshot taken at build time — timers drift after that. For live status, chec
 | **Roc** | Sauromugue Champaign | 6–8 h | 🟢 **Up now** |
 | **Serket** | Garlaige Citadel | 6–8 h | 🟢 **Up now** |
 | **Simurgh** | Rolanberry Fields | 6–8 h | 🟢 **Up now** |
-| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~1h 34m |
+| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~1h 15m |
 | **Spiny Spipi** | East Sarutabaruta | 4–6 h | ⚪ awaiting first spawn |
 | **King Arthro** | Jugner Forest | 8–10 h | ⚪ awaiting first spawn |
 <!-- DOCGEN:END id="status-hnm" -->
@@ -119,6 +119,6 @@ See the full list at [Hall of Fame](highlights.md).
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4bc839b5a129 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 52a471be5bbe -->
+_Last updated: 2026-06-21 00:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->
