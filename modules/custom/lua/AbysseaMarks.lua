@@ -174,28 +174,19 @@ xi.abyssea.marksPopHook = function(player, npc, mobId, kis, tradeReqs)
         return nil
     end
 
-    -- Mob is NOT spawned.  Offer marks pop when:
-    --   (a) #kis == 0: trade-pop NM or Misareaux/Vunkerl stub (no KI method exists)
-    --   (b) player is missing at least one required KI
-    local hasAllKis = type(kis) == 'table' and #kis > 0
-    if hasAllKis then
-        for _, ki in ipairs(kis) do
-            if ki ~= 0 and not player:hasKeyItem(ki) then
-                hasAllKis = false
-                break
-            end
-        end
+    -- Mob is NOT spawned: ALWAYS route through the marks-pop so every ??? pop in a
+    -- marks zone grants Infamy, regardless of whether the player holds the Abyssea
+    -- Key Items. (Previously this was gated on "missing a required KI", which
+    -- silently excluded every KI-holder from earning Infamy -- once a player got
+    -- the KIs, the ??? fell back to the stock free pop with no Infamy.) The marks
+    -- cost is now the price for everyone; the KI/trade isn't consumed for these NMs.
+    local ok = pcall(offerMarksPop, player, mobId, cfg)
+    if ok then
+        player:release()
+        return false
     end
 
-    if not hasAllKis then
-        local ok = pcall(offerMarksPop, player, mobId, cfg)
-        if ok then
-            player:release()
-            return false
-        end
-    end
-
-    return nil  -- KI pop path -> stock handles
+    return nil  -- offer errored -> let stock handle so the ??? still works
 end
 
 -- ============================================================
