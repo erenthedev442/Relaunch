@@ -67,6 +67,16 @@ return
     -- tail for leaderboard flex). Set a number to cap it.
     maxLevel       = nil,
 
+    -- EXP penalty stacked on top of the Job Rebirth system's penalty.
+    -- Applied per-job (only active while that job is your main job), and
+    -- scales linearly with prestige level:
+    --   penalty = prestigeLevel * expPenaltyPerLevel
+    -- e.g. 1% per level -> P.Lv 10=-10%, P.Lv 50=-50%, P.Lv 100=-100%.
+    -- Stacks additively with Rebirth's triangular penalty on Mod::EXP_BONUS
+    -- so a high-prestige, high-rebirth char hits the engine floor quickly.
+    -- Set to 0 to disable.
+    expPenaltyPerLevel = 1,
+
     -- =========================================================
     -- ASCENSION TRIAL  --  "The Nightmare Court"
     -- =========================================================

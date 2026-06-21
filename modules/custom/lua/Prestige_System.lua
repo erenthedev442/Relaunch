@@ -260,6 +260,13 @@ local function applyJobMods(player, jobId)
             _modAdd(player, cat, lv * cat.perLevel)
         end
     end
+    local rate = cfg.expPenaltyPerLevel or 0
+    if rate > 0 then
+        local pen = (player:getCharVar(levelKey(jobId)) or 0) * rate
+        if pen > 0 then
+            player:addMod(xi.mod.EXP_BONUS, -pen)
+        end
+    end
 end
 
 local function removeJobMods(player, jobId)
@@ -267,6 +274,13 @@ local function removeJobMods(player, jobId)
         local lv = player:getCharVar(catKey(jobId, cat.id)) or 0
         if lv > 0 then
             _modDel(player, cat, lv * cat.perLevel)
+        end
+    end
+    local rate = cfg.expPenaltyPerLevel or 0
+    if rate > 0 then
+        local pen = (player:getCharVar(levelKey(jobId)) or 0) * rate
+        if pen > 0 then
+            player:delMod(xi.mod.EXP_BONUS, -pen)
         end
     end
 end
