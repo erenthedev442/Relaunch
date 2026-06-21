@@ -68,3 +68,10 @@ The other turn-in trial. You bank **99 each of three Aht Urhgan Assault currenci
 Once all five trials read complete, head to **GM Home** and the **[Prime Armory](prime-armory.md)** will forge the Prime weapon of your choice.
 
 Each Prime is Rare/Ex, so you carry one at a time. Pick the weapon that fits your main job and go.
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 86e345ab4d29 -->
+_Last updated: 2026-06-21 01:54 UTC_
+<!-- DOCGEN:END id="last-updated" -->

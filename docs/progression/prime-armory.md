@@ -53,6 +53,6 @@ Browsing is free — you can read every weapon's stats and weapon skill before d
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cfd84ed03b9c -->
-_Last updated: 2026-06-20 21:36 UTC_
+<!-- content-hash: 835a2ba8b5cc -->
+_Last updated: 2026-06-21 01:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->
