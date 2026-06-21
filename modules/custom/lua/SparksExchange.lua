@@ -1,8 +1,8 @@
 -----------------------------------
 -- SparksExchange.lua
 -- "Eminence Broker" -- a GM Home NPC that buys Sparks of Eminence,
--- Unity Accolades, and Job Points for gil. All three cap easily;
--- this gives capped players a gil outlet.
+-- Unity Accolades, Job Points, and Hunting League "Hunt Marks" for gil.
+-- These all pile up on capped/endgame players; this gives them a gil outlet.
 -- Pure Lua, mirrors the gil_mystery_box / Casino menu pattern.
 --
 -- TUNE: edit xi.sparks_exchange below. All fields are hot-patchable
@@ -17,6 +17,9 @@ local m = Module:new('sparks_exchange')
 local S         = xi.msg.channel.SYSTEM_3
 local SPARKS    = 'spark_of_eminence'
 local ACCOLADES = 'unity_accolades'
+-- Hunting League "Hunt Marks" live in this charVar (see HuntingLeague.lua: CV_POINTS).
+-- HL_Points_Lifetime is the separate leaderboard total and is intentionally NOT touched.
+local HL_POINTS = 'HL_Points'
 local GIL_CAP   = 999999999
 
 -- Array index == xi.job numeric ID (WAR=1, MNK=2, …).
@@ -33,9 +36,11 @@ xi.sparks_exchange = {
     sp_rate  = 10,
     ac_rate  = 100,
     jp_rate  = 4000,
+    hm_rate  = 1000,  -- gil per Hunt Mark. Tune live: !exec xi.sparks_exchange.hm_rate = 1500
     sp_tiers = { 1000, 10000, 50000 },
     ac_tiers = { 500,  5000,  25000  },
     jp_tiers = { 1, 5, 20 },
+    hm_tiers = { 100, 1000, 5000 },
 }
 
 -- ===== static NPC config (requires restart to change) =====
@@ -55,7 +60,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     super(zone)
 
     local menu = { title = '', options = {} }
-    local mainScreen, sparksScreen, accoladesScreen, jobPointsScreen
+    local mainScreen, sparksScreen, accoladesScreen, jobPointsScreen, huntMarksScreen
 
     local function show(player)
         local snap = { title = menu.title, options = menu.options }
@@ -166,6 +171,52 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         show(player)
     end
 
+    -- Hunt Marks are the Hunting League currency, stored in the HL_Points charVar
+    -- (NOT a getCurrency/item type), so this mirrors convertJobPoints rather than
+    -- convertCurrency. Only the spendable HL_Points is reduced; HL_Points_Lifetime
+    -- (the leaderboard total) is deliberately left intact on a cash-out.
+    local function convertHuntMarks(player, amount, backFn)
+        local have = player:getCharVar(HL_POINTS)
+        if amount == 'all' then amount = have end
+        if have <= 0 then
+            player:printToPlayer('[Broker] You have no Hunt Marks to exchange, kupo.', S)
+            backFn(player)
+            return
+        end
+        if amount > have then
+            player:printToPlayer(string.format('[Broker] You only have %d Hunt Marks.', have), S)
+            backFn(player)
+            return
+        end
+        local gil = amount * xi.sparks_exchange.hm_rate
+        if player:getGil() + gil > GIL_CAP then
+            player:printToPlayer('[Broker] That would overflow your gil -- spend some first, kupo.', S)
+            backFn(player)
+            return
+        end
+        player:setCharVar(HL_POINTS, have - amount)
+        player:addGil(gil)
+        player:printToPlayer(string.format('[Broker] Exchanged %d Hunt Marks for %s gil. (Marks left: %d)',
+            amount, fmtGil(gil), have - amount), S)
+        backFn(player)
+    end
+
+    huntMarksScreen = function(player)
+        local have = player:getCharVar(HL_POINTS)
+        menu.title = string.format('Hunting Marks (%d)', have)
+        local opts = {}
+        for _, amt in ipairs(xi.sparks_exchange.hm_tiers) do
+            local a = amt
+            table.insert(opts, { string.format('Convert %d (%s gil)', a, fmtGil(a * xi.sparks_exchange.hm_rate)),
+                function(p) convertHuntMarks(p, a, huntMarksScreen) end })
+        end
+        table.insert(opts, { 'Convert ALL marks',
+            function(p) convertHuntMarks(p, 'all', huntMarksScreen) end })
+        table.insert(opts, { 'Back', function(p) mainScreen(p) end })
+        menu.options = opts
+        show(player)
+    end
+
     mainScreen = function(player)
         -- FJB: keep this title SHORT and fixed. The old title inlined Sparks/Accolades/JP;
         -- for high-balance players (e.g. Gwendin, 978k sparks) the extra digits pushed the
@@ -177,6 +228,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             { 'Exchange Sparks of Eminence',  function(p) sparksScreen(p) end },
             { 'Exchange Unity Accolades',      function(p) accoladesScreen(p) end },
             { 'Exchange Job Points',           function(p) jobPointsScreen(p) end },
+            { 'Exchange Hunting Marks',        function(p) huntMarksScreen(p) end },
             { 'Walk away',                     function(p) p:printToPlayer('[Broker] Safe travels, kupo!', S) end },
         }
         show(player)
