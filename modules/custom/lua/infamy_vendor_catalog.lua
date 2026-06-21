@@ -109,6 +109,13 @@ catalog.vendorItems =
     { id = 22061, name = 'Tupsimati',    cost =  5000, stats = { 'Club (main). GEO. i119 III Mythic.', 'EX/RARE. Aftermath weapon.' } },
 
     -- ----------------------------------------------------------------
+    -- GEO HANDBELLS  (Luopan summon weapons; stats already in item_mods.sql)
+    -- ----------------------------------------------------------------
+    { id = 21372, name = 'Dunna',        cost =  500, stats = { 'Handbell (main). GEO. Handbell skill+18, Geomancy+5.', 'Luopan: Damage taken -5%.' } },
+    { id = 21461, name = 'Filiae Bell',  cost =  300, stats = { 'Handbell (main). GEO. MP+30, Handbell skill+15.', 'GEO Luopan summon weapon.' } },
+    { id = 21462, name = 'Eminent Bell', cost =  300, stats = { 'Handbell (main). GEO. Geomancy+3.', 'GEO Luopan summon weapon.' } },
+
+    -- ----------------------------------------------------------------
     -- REQUESTED ENDGAME GEAR  (added on request)
     -- Naked/under-statted pieces are statted in sql/zz_infamy_extra_mods.sql
     -- (Peltast's +3, Pteroslaver Brais +4, Flamma Gambieras +2, Vim Torque +1,
@@ -876,6 +883,9 @@ catalog.itemTypeMap =
     [21907] = 'Weapons/Katana',
     [21268] = 'Weapons/Marksmanship',
     [22061] = 'Weapons/Staff',
+    [21372] = 'Weapons/Handbell',
+    [21461] = 'Weapons/Handbell',
+    [21462] = 'Weapons/Handbell',
     [23500] = 'Armor/Body',
     [23567] = 'Armor/Hands',
     [25953] = 'Armor/Feet',

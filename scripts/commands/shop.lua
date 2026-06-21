@@ -80,6 +80,7 @@ local stock =
 		    { 16878,   100000 },  --Darksteel Lance +1
 		    { 18175,   100000 },  --Optical Needle
         { 21460,   15000 },  --Matre bell (Lv.1 GEO handbell, MP+5)
+        { 21463,   150000 },  --Nepote bell (Lv.99 GEO handbell, Geomancy+5)
         { 17859,      10000 },  -- Animator      (PUP, Lv1)
         { 17857,      50000 },  -- Animator +1   (PUP, Lv71)
         { 21392,    1000000 },  -- Animator Z    (PUP, iLvl 119) -- Animator P / P+1 / P II line reserved for !hunt
