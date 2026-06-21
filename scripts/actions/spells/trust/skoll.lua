@@ -286,8 +286,8 @@ spellObject.onMobSpawn = function(mob)
 
     -- Emergency: cure anyone at critical HP, or wake sleeping allies
     mob:addGambit(ai.t.PARTY, { ai.c.HPP_LT, 25 }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.CURE })
-    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_I  }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE })
-    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_II }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURE })
+    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_I  }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURAGA })
+    mob:addGambit(ai.t.PARTY, { ai.c.STATUS, xi.effect.SLEEP_II }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.CURAGA })
 
     -- =====================================================
     -- RESCUE  (revive the fallen -- the hard counter to Zantetsuken)
@@ -367,18 +367,18 @@ spellObject.onMobSpawn = function(mob)
     -- so NOT_STATUS clears and the gambit won't fire again -- same pattern as songs.
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.PROTECT  }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.PROTECTRA })
     mob:addGambit(ai.t.SELF, { ai.c.NOT_STATUS, xi.effect.SHELL    }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.SHELLRA   })
-    mob:addGambit(ai.t.PARTY, { ai.c.NOT_STATUS, xi.effect.HASTE    }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.HASTE_II       })
+    mob:addGambit(ai.t.MASTER, { ai.c.NOT_STATUS, xi.effect.HASTE    }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.HASTE_II       })
     -- Phalanx II -> flat per-hit damage reduction on the whole party. Its
     -- validTargets allow allies (unlike self-only base Phalanx / Stoneskin), so
     -- ai.t.PARTY blankets the master + Skoll. Big vs Odin's Double/Triple Attack.
-    mob:addGambit(ai.t.PARTY, { ai.c.NOT_STATUS, xi.effect.PHALANX  }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.PHALANX_II     })
+    mob:addGambit(ai.t.MASTER, { ai.c.NOT_STATUS, xi.effect.PHALANX  }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.PHALANX_II     })
     -- Regen only when it has actually worn off (was: HPP_LT 95 alone, which
     -- re-cast Regen every tick a hurt ally sat below 95% -- a spam source).
     mob:addGambit(ai.t.PARTY, { { ai.c.HPP_LT, 95 }, { ai.c.NOT_STATUS, xi.effect.REGEN } }, { ai.r.MA, ai.s.HIGHEST, xi.magic.spellFamily.REGEN })
     -- (Refresh III removed -- the party doesn't need MP support.)
     -- Aquaveil on himself -> his cures / rez / nukes resist interruption when he
     -- eats an AoE. Self-only spell (validTargets 1), so SELF target.
-    mob:addGambit(ai.t.SELF,  { ai.c.NOT_STATUS, xi.effect.AQUAVEIL }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.AQUAVEIL      })
+    mob:addGambit(ai.t.SELF, { ai.l.AND( { ai.c.NOT_STATUS, xi.effect.AQUAVEIL }, { ai.c.NOT_PT_HAS_TANK } )}, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.AQUAVEIL })
 
     -- (BARD SONGS + CORSAIR ROLLS were moved UP to PRIORITY #2, just beneath the
     --  life-saving heals near the top of this gambit list, so they stay up "at
@@ -397,7 +397,9 @@ spellObject.onMobSpawn = function(mob)
     -- Dia III (tier 5) are mutually exclusive: the higher tier wins and the loser
     -- silently fails, so the NOT_STATUS BIO half stops Skoll wasting casts trying
     -- to overwrite a stronger Bio someone else applied (the old Dia-"spam" fix).
-    mob:addGambit(ai.t.TARGET, { { ai.c.NOT_STATUS, xi.effect.DIA }, { ai.c.NOT_STATUS, xi.effect.BIO } }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.DIA_III }, 120)
+    mob:addGambit(ai.t.TARGET, { ai.l.OR( { ai.c.NOT_STATUS, xi.effect.DIA }, 
+                                          { ai.c.NOT_STATUS, xi.effect.BIO } )
+                                }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.DIA_III }, 120)
 
     -- The rest -- applied whenever missing. The trailing 120 is retry_delay in
     -- SECONDS (gambits_container.cpp): after each cast she won't recast THAT spell
@@ -411,7 +413,7 @@ spellObject.onMobSpawn = function(mob)
     -- Dispel -> strip a beneficial status off the enemy. No "enemy has a buff"
     -- gambit condition exists, so it fires on a low 15% chance (a cast with nothing
     -- to strip simply no-effects). Insurance, not a main lever.
-    mob:addGambit(ai.t.TARGET, { ai.c.ALWAYS, 0 }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.DISPEL }, 15)
+    mob:addGambit(ai.t.TARGET, { ai.c.STATUS_FLAG.xi.effectFlag.DISPELABLE }, { ai.r.MA, ai.s.SPECIFIC, xi.magic.spell.DISPEL })
 
     -- =====================================================
     -- FREE NUKE  (secondary DPS -- the LOWEST-priority gambit)
