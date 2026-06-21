@@ -116,7 +116,7 @@ local function offerMarksPop(player, mobId, cfg)
         end
     else
         label    = string.format('Pop: %d marks (need %d more)', cost, cost - pts)
-        callback = nil
+        callback = function(pl) pl:printToPlayer('[Abyssea] Not enough Hunt Marks.', xi.msg.channel.SYSTEM_3) end
     end
 
     player:timer(30, function(p)
@@ -124,7 +124,7 @@ local function offerMarksPop(player, mobId, cfg)
             title   = nmName,
             options = {
                 { label, callback },
-                { 'Close', nil },
+                { 'Close', function() end },
             },
         })
     end)

@@ -63,7 +63,7 @@ showRoot = function(p)
                 { 'Visions', function(q) showVisions(q) end },
                 { 'Scars',   function(q) showScars(q)   end },
                 { 'Heroes',  function(q) showHeroes(q)  end },
-                { 'Close',   nil },
+                { 'Close',   function() end },
             },
         })
     end)
