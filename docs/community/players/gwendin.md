@@ -1,6 +1,6 @@
 # Gwendin
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 22h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 8h
 
 `💪 5 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **RUN 99** |
 | Sub job | DRK 99 |
-| Time played | 53h |
-| Enemies defeated | 884 |
+| Time played | 57h |
+| Enemies defeated | 921 |
 | Deaths | 20 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,166
-- **Marks (lifetime):** 8,936
+- **Marks (current):** 6,762
+- **Marks (lifetime):** 12,961
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 114
+- **Total NM kills:** 151
 
 ## Guild standing
 
@@ -54,7 +54,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
+- **Mastery rank:** 5 / 5
 - **Augments crafted:** 252
 - **NM Affinities:** 9 / 13
 
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert · Augment Master.
+**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -80,6 +80,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|
 | Fastest 1 → 99 | 1h 33m |
 | HL Rank I → V | 2d 13h |
+| Augment Archon | 6d 14h |
 
 ---
 
@@ -88,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b8e3a219fd62 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 9e18daaec92b -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

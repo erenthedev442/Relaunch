@@ -1,6 +1,6 @@
 # Che
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 18h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 4h
 
 `💪 5 jobs @99`
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 5,031
 - **Marks (lifetime):** 3,528
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 1,053
+- **Total NM kills:** 1,088
 
 ## Guild standing
 
@@ -62,7 +62,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 15,770 | 31,592 |
+| AF | 16,855 | 32,677 |
 | Relic | 0 | 0 |
 | Empyrean | 2,389 | 715 |
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 95a169af03d8 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 19a24fa8c92d -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

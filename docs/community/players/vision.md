@@ -1,6 +1,6 @@
 # Vision
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 4h 54m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 14h 43m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 42/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 407a3f54ef61 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 931fb5a13474 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

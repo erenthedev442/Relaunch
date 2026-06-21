@@ -1,6 +1,6 @@
 # Rinslei
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 18h 35m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 4h
 
 `💪 2 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
-| Sub job | RDM 99 |
-| Time played | 11h |
-| Enemies defeated | 141 |
+| Main job | **PLD 10** |
+| Sub job | BLM 1 |
+| Time played | 15h |
+| Enemies defeated | 248 |
 | Deaths | 3 |
 
 ## Job levels
@@ -27,7 +27,7 @@
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 1 |
+| PLD | 10 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 235a4210151e -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 7deaa3152ba3 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

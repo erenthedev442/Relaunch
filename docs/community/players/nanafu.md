@@ -1,6 +1,6 @@
 # Nanafu
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 5h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 15h
 
 `💪 7 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **WAR 99** |
 | Sub job | DRK 99 |
 | Time played | 14h |
-| Enemies defeated | 1,713 |
+| Enemies defeated | 1,716 |
 | Deaths | 17 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,622
-- **Marks (lifetime):** 4,474
-- **Distinct NMs slain:** 13
-- **Total NM kills:** 373
+- **Marks (current):** 1,989
+- **Marks (lifetime):** 4,649
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 375
 
 ## Augment Sage
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cdcfd853b468 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: adddc9032137 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

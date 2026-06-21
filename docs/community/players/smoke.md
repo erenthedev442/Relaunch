@@ -1,6 +1,6 @@
 # Smoke
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 5d 16h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 6d 2h
 
 `💪 2 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 55ea06939b37 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: d126eb2c5ad9 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

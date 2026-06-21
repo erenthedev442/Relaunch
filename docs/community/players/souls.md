@@ -1,6 +1,6 @@
 # Souls
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 14h
 
 `⭐ 14 Ascensions` `💪 11 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 45h |
-| Enemies defeated | 3,222 |
+| Time played | 46h |
+| Enemies defeated | 3,572 |
 | Deaths | 47 |
 
 ## Job levels
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 307
+- **Augments crafted:** 310
 - **NM Affinities:** 10 / 13
 
 ## Reforge
@@ -57,8 +57,8 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 1
-- **By job:** RDM ×1
+- **Total rebirths:** 2
+- **By job:** RDM ×2
 
 ## Prestige
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2abdf8b2df4d -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 01ce5b8cabf3 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

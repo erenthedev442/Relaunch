@@ -1,6 +1,6 @@
 # Velvet
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-20 · Character age 8d
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-20 · Character age 8d 10h
 
 `⭐ 5 Ascensions` `💪 7 jobs @99`
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ba7f8504afde -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: f1b12074d3ee -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

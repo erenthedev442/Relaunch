@@ -1,17 +1,17 @@
 # Ghetts
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-20 · Character age 1d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 12h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 73/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **WHM 1** |
-| Sub job | — |
-| Time played | 0h |
+| Main job | **BRD 69** |
+| Sub job | GEO 1 |
+| Time played | 2h |
 | Enemies defeated | 0 |
 | Deaths | 0 |
 
@@ -28,16 +28,16 @@
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| BRD | 73 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 2,215
+- **Marks (current):** 3,715
 - **Marks (lifetime):** 55
 - **Distinct NMs slain:** 1
-- **Total NM kills:** 11
+- **Total NM kills:** 49
 
 ## Augment Sage
 
@@ -49,13 +49,13 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 3,000 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 5,700 | 5,700 |
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
 
 ## Achievements
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 34ae1462a084 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 4e5ae2d06af4 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

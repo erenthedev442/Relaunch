@@ -1,6 +1,6 @@
 # Zxs
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 6h
 
 `💪 3 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | BLU 99 |
-| Time played | 43h |
+| Time played | 44h |
 | Enemies defeated | 4,260 |
 | Deaths | 9 |
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5ffcc4d5eea5 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 8889f36000d9 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

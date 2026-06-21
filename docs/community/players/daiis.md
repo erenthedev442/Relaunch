@@ -1,6 +1,6 @@
 # Daiis
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 22h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 8h
 
 `⭐ 1 Ascension` `💪 22 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **SAM 99** |
 | Sub job | WAR 99 |
-| Time played | 60h |
-| Enemies defeated | 3,587 |
+| Time played | 61h |
+| Enemies defeated | 3,588 |
 | Deaths | 4 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,624
-- **Marks (lifetime):** 2,710
+- **Marks (current):** 8,541
+- **Marks (lifetime):** 2,748
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 150
+- **Total NM kills:** 151
 
 ## Guild standing
 
@@ -54,9 +54,9 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 57
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 254
+- **NM Affinities:** 1 / 13
 
 ## Reforge
 
@@ -77,7 +77,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert.
+**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -85,6 +85,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|
 | Fastest 1 → 99 | 16h 43m |
 | HL Rank I → V | 3d 6h |
+| Augment Archon | 6d 15h |
 
 ---
 
@@ -93,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e5d12f9cb3d6 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 161aa8c87731 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

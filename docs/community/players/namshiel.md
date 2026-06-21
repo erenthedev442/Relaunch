@@ -1,8 +1,8 @@
 # Namshiel
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 13h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 5d 23h
 
-`💪 5 jobs @99`
+`💪 6 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **WAR 99** |
-| Sub job | DNC 88 |
-| Time played | 12h |
-| Enemies defeated | 953 |
-| Deaths | 2 |
+| Sub job | SAM 99 |
+| Time played | 14h |
+| Enemies defeated | 1,174 |
+| Deaths | 3 |
 
 ## Job levels
 
@@ -28,7 +28,7 @@
 | **RDM** | **99** | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 88 |
+| DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 5,179
-- **Marks (lifetime):** 1,990
-- **Distinct NMs slain:** 6
-- **Total NM kills:** 389
+- **Marks (current):** 7,377
+- **Marks (lifetime):** 3,194
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 625
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 8
+- **Augments crafted:** 23
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Augment Novice.
+**8** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Wave Rider · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8b8980e26986 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: b5895ed3f156 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

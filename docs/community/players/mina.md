@@ -1,6 +1,6 @@
-# Desimir
+# Mina
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 4d 17h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 10h 26m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -9,7 +9,7 @@
 
 | | |
 |---|---|
-| Main job | **WAR 1** |
+| Main job | **MNK 1** |
 | Sub job | — |
 | Time played | 0h |
 | Enemies defeated | 0 |
@@ -28,13 +28,13 @@
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| BRD | 1 | GEO | 0 |
+| RNG | 1 | RUN | 0 |
 
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 0
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 25663f3ad4fd -->
+<!-- content-hash: 717a3bdcff7f -->
 _Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

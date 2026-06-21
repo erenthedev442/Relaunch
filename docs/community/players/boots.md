@@ -1,6 +1,6 @@
 # Boots
 
-**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-13 · Last seen 2026-06-13 · Character age 7d 15h
+**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-13 · Last seen 2026-06-13 · Character age 8d 1h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4ca5021694eb -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 7a3d1a66da0d -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

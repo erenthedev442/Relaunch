@@ -1,6 +1,6 @@
 # Ropraz
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 12h
 
 `⭐ 42 Ascensions` `💪 9 jobs @99`
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c72a6b429429 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 2b785d70f30e -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

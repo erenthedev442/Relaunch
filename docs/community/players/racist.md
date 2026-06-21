@@ -1,6 +1,6 @@
 # Racist
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 4d 21h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 5d 7h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5e558467752e -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 0a0efb4f68f8 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

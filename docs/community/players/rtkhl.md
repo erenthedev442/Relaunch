@@ -1,6 +1,6 @@
 # Rtkhl
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 17h
 
 `⭐ 20 Ascensions` `💪 4 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 45h |
-| Enemies defeated | 322 |
+| Time played | 49h |
+| Enemies defeated | 328 |
 | Deaths | 9 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 95,873
+- **Marks (current):** 93,373
 - **Marks (lifetime):** 74,288
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 1,215
@@ -44,8 +44,8 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 327
-- **NM Affinities:** 9 / 13
+- **Augments crafted:** 328
+- **NM Affinities:** 10 / 13
 
 ## Reforge
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c72bdb1c7843 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: d3c9eeb82d65 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

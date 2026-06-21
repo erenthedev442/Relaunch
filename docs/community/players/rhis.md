@@ -1,6 +1,6 @@
 # Rhis
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 3d 11h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 3d 21h
 
 `⭐ 7 Ascensions` `💪 9 jobs @99`
 
@@ -15,7 +15,7 @@
 | Sub job | RDM 99 |
 | Time played | 25h |
 | Enemies defeated | 1,736 |
-| Deaths | 4 |
+| Deaths | 6 |
 
 ## Job levels
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d13e9c48a0b5 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: a5bab5717dd5 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

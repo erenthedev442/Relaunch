@@ -1,6 +1,6 @@
 # Koru
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 3d 11h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 3d 21h
 
 `⭐ 7 Ascensions` `💪 10 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | WHM 99 |
-| Time played | 24h |
+| Time played | 25h |
 | Enemies defeated | 4 |
-| Deaths | 4 |
+| Deaths | 5 |
 
 ## Job levels
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 74707b422ab0 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: bce911e97409 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

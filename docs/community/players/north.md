@@ -1,6 +1,6 @@
 # North
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 3d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 10h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 65/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -9,9 +9,9 @@
 
 | | |
 |---|---|
-| Main job | **PLD 32** |
-| Sub job | DNC 7 |
-| Time played | 11h |
+| Main job | **MNK 1** |
+| Sub job | NIN 1 |
+| Time played | 12h |
 | Enemies defeated | 257 |
 | Deaths | 0 |
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0cde4f840a04 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: e3bb5671b7b3 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

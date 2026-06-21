@@ -1,6 +1,6 @@
 # Towoo
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 7d 11h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 7d 21h
 
 `💪 1 job @99`
 
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2b353efd152c -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: a56b5454cec6 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

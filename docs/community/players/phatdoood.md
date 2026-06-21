@@ -1,6 +1,6 @@
 # Phatdoood
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 14h
 
 `💪 4 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **BRD 99** |
-| Sub job | GEO 99 |
-| Time played | 7h |
+| Sub job | WHM 99 |
+| Time played | 10h |
 | Enemies defeated | 16 |
-| Deaths | 1 |
+| Deaths | 8 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 19,013
-- **Marks (lifetime):** 8,929
-- **Distinct NMs slain:** 6
-- **Total NM kills:** 1,725
+- **Marks (current):** 155
+- **Marks (lifetime):** 9,157
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 1,780
 
 ## Augment Sage
 
@@ -51,8 +51,8 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
+| AF | 240 | 1,040 |
+| Relic | 1,500 | 0 |
 | Empyrean | 0 | 0 |
 
 ## Collections
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6a617b2f0c59 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 295799963260 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

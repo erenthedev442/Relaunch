@@ -1,6 +1,6 @@
 # Xiongda
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 18h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-20 · Character age 7d 4h
 
 `💪 22 jobs @99`
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1eb2a64360ec -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 69f7ac1a20cb -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

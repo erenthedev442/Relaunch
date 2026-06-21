@@ -1,19 +1,19 @@
 # Lakshmi
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-20 · Character age 3d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 13h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 76/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 80/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 76** |
-| Sub job | DNC 67 |
-| Time played | 13h |
-| Enemies defeated | 355 |
-| Deaths | 3 |
+| Main job | **RDM 80** |
+| Sub job | DNC 71 |
+| Time played | 16h |
+| Enemies defeated | 392 |
+| Deaths | 4 |
 
 ## Job levels
 
@@ -23,10 +23,10 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 76 | BLU | 1 |
+| RDM | 80 | BLU | 1 |
 | THF | 12 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 67 |
+| DRK | 1 | DNC | 71 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 2,101
+- **Marks (current):** 2,701
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d7c25e813a36 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: dd6f88ea21c7 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

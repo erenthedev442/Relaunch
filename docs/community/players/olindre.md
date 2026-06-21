@@ -1,6 +1,6 @@
 # Olindre
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 19h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 8d 5h
 
 `⭐ 20 Ascensions` `💪 4 jobs @99`
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 75e43e83b9c0 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: d9bdf197fc7f -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

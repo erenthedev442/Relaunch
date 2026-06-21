@@ -1,45 +1,45 @@
 # Xanora
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 2h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 12h
 
 `💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | SAM 84 |
-| Time played | 5h |
-| Enemies defeated | 254 |
-| Deaths | 2 |
+| Sub job | DNC 78 |
+| Time played | 8h |
+| Enemies defeated | 489 |
+| Deaths | 10 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 84 |
+| WAR | 1 | SAM | 97 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 1 | COR | 1 |
+| THF | 29 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| **DRK** | **99** | DNC | 1 |
+| **DRK** | **99** | DNC | 78 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 2 / 5
-- **Marks (current):** 0
-- **Marks (lifetime):** 15
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 3
+- **Rank:** 3 / 5
+- **Marks (current):** 253
+- **Marks (lifetime):** 471
+- **Distinct NMs slain:** 6
+- **Total NM kills:** 83
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**2** unlocked — First Hunt · Augment Novice.
+**4** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e4e66954034a -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 51b9bde2cf7f -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

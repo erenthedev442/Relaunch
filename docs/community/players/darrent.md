@@ -1,8 +1,8 @@
 # Darrent
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 12h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 22h
 
-`💪 6 jobs @99`
+`💪 7 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BLU 58** |
-| Sub job | WAR 58 |
-| Time played | 41h |
-| Enemies defeated | 2,092 |
-| Deaths | 11 |
+| Main job | **DRG 99** |
+| Sub job | RDM 92 |
+| Time played | 45h |
+| Enemies defeated | 2,958 |
+| Deaths | 12 |
 
 ## Job levels
 
@@ -23,9 +23,9 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | MNK | 1 | NIN | 1 |
-| WHM | 1 | DRG | 1 |
+| WHM | 1 | **DRG** | **99** |
 | **BLM** | **99** | SMN | 1 |
-| RDM | 1 | BLU | 58 |
+| RDM | 92 | BLU | 58 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,703
-- **Marks (lifetime):** 3,395
+- **Marks (current):** 3,499
+- **Marks (lifetime):** 3,691
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 112
+- **Total NM kills:** 116
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 294
+- **Augments crafted:** 312
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -64,7 +64,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|---:|
 | AF | 1,465 | 65 |
 | Relic | 2,350 | 0 |
-| Empyrean | 625 | 1,675 |
+| Empyrean | 1,825 | 1,675 |
 
 ## Collections
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 928840f57dcb -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 8279d8153c94 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

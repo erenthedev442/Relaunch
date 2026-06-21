@@ -1,6 +1,6 @@
 # Rtkle
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 17h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 3h
 
 `💪 4 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 39h |
-| Enemies defeated | 174 |
+| Time played | 42h |
+| Enemies defeated | 176 |
 | Deaths | 9 |
 
 ## Job levels
@@ -44,8 +44,8 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 292
-- **NM Affinities:** 7 / 13
+- **Augments crafted:** 293
+- **NM Affinities:** 8 / 13
 
 ## Reforge
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3d7922a1545e -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: cccac728172c -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

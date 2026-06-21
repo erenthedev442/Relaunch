@@ -1,11 +1,11 @@
 # Shizuku
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-20 · Character age 1d 23h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 9h
 
 `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BLU 99** |
 | Sub job | RDM 99 |
-| Time played | 24h |
-| Enemies defeated | 1,031 |
-| Deaths | 0 |
+| Time played | 27h |
+| Enemies defeated | 1,188 |
+| Deaths | 1 |
 
 ## Job levels
 
@@ -35,16 +35,16 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 1,050
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 2 / 5
+- **Marks (current):** 8,043
+- **Marks (lifetime):** 292
+- **Distinct NMs slain:** 4
+- **Total NM kills:** 29
 
 ## Augment Sage
 
 - **Mastery rank:** 1 / 5
-- **Augments crafted:** 39
+- **Augments crafted:** 53
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**5** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f4605ed6b3ea -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 86103b48ee1f -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

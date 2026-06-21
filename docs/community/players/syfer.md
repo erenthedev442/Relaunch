@@ -1,17 +1,19 @@
 # Syfer
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 8h 9m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 17h 58m
+
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 97/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **COR 97** |
-| Sub job | GEO 78 |
-| Time played | 0h |
+| Main job | **COR 99** |
+| Sub job | GEO 99 |
+| Time played | 3h |
 | Enemies defeated | 0 |
 | Deaths | 0 |
 
@@ -24,20 +26,20 @@
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 1 | COR | 97 |
+| THF | 1 | **COR** | **99** |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 78 |
+| BRD | 1 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 1,050
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 5 / 5
+- **Marks (current):** 1,966
+- **Marks (lifetime):** 1,238
+- **Distinct NMs slain:** 9
+- **Total NM kills:** 37
 
 ## Augment Sage
 
@@ -59,11 +61,14 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 0s |
+| HL Rank I → V | 27m 29s |
 
 ---
 
@@ -72,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8f1cbd365650 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: eb1ef52c6cef -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

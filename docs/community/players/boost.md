@@ -1,11 +1,11 @@
 # Boost
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 1d 12h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 1d 22h
 
 `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | WHM 99 |
-| Time played | 11h |
+| Time played | 14h |
 | Enemies defeated | 0 |
 | Deaths | 2 |
 
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 5,140
-- **Marks (lifetime):** 9,222
-- **Distinct NMs slain:** 5
-- **Total NM kills:** 775
+- **Rank:** 5 / 5
+- **Marks (current):** 7,968
+- **Marks (lifetime):** 10,520
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 812
 
 ## Augment Sage
 
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Augment Novice.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Augment Novice.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 0s |
+| HL Rank I → V | 1d 7h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e0c1e57aaf37 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 8f8757c60154 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

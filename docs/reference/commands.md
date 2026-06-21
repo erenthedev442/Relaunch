@@ -2,13 +2,13 @@
 
 These chat commands are available to every player on Legendary (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 65
+**Total player-accessible commands:** 68
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    43 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    46 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -55,6 +55,9 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!primevoucher` | string, int | [GM] Grant Prime Voucher(s) (item 29699) to a player. They trade one at the Prime Armory NPC in GM Home to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it. | :material-puzzle: **custom** |
 | `!profile` | string | Displays a competitive stat summary for a player.  With no argument shows your own stats; with a name shows that player's (they must be online - offline players can't be queried via Lua). | :material-puzzle: **custom** |
 | `!progress` | string | Prints a cross-system progression summary: Hunting League rank, Hunt Marks, Reforge Marks, weekly-hunt completion, Hunter's Guild standings, and Daily Board - all in one quick readout. | :material-puzzle: **custom** |
+| `!prov1` | — | _(no description)_ | :material-puzzle: **custom** |
+| `!prov2` | — | _(no description)_ | :material-puzzle: **custom** |
+| `!prov3` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!provenance` | — | Sends you to zone 222 (PROVENANCE), home of the Ascension Altar. Mirrors !gmhome (permission 0 = usable by everyone). The player lands at (0,0,0); Provenance's onZoneIn repositions them to the altar's doorstep at (-640, -20, -519.999) facing rot 192. |  |
 | `!pup` | string, string | Puppetmaster automaton quick-loadout manager. Save the full setup (frame + head + all 12 attachments) of your deployed automaton to a named slot, then swap to it instantly from anywhere -- no Automaton Trunk trip, no menu drag-and-drop. | :material-puzzle: **custom** |
 | `!reallevel` | string | Computes a player's "real level" -- a single fun number that reflects how far PAST the level-99 cap a character has actually progressed, by folding in every endgame power axis FFXI offers: gear (item level), Ascension (Prestige), Job Points, and merits. | :material-puzzle: **custom** |
@@ -354,6 +357,18 @@ Prints a cross-system progression summary: Hunting League rank, Hunt Marks, Refo
 
 **Parameter types:** string
 
+### `!prov1`  _(custom)_
+
+**Usage:** `prov1`
+
+### `!prov2`  _(custom)_
+
+**Usage:** `prov2`
+
+### `!prov3`  _(custom)_
+
+**Usage:** `prov3`
+
 ### `!provenance`
 
 Sends you to zone 222 (PROVENANCE), home of the Ascension Altar. Mirrors !gmhome (permission 0 = usable by everyone). The player lands at (0,0,0); Provenance's onZoneIn repositions them to the altar's doorstep at (-640, -20, -519.999) facing rot 192.
@@ -509,6 +524,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 73d1a5a8e550 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 4bc70c9a3414 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

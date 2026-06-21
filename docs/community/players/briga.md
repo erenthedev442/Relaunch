@@ -1,6 +1,6 @@
 # Briga
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 3d
+**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 10h
 
 `💪 1 job @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BLM 48** |
-| Sub job | RDM 39 |
-| Time played | 5h |
-| Enemies defeated | 256 |
+| Main job | **RNG 69** |
+| Sub job | DNC 1 |
+| Time played | 7h |
+| Enemies defeated | 259 |
 | Deaths | 1 |
 
 ## Job levels
@@ -23,23 +23,23 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 79 | DRG | 1 |
-| BLM | 48 | **SMN** | **99** |
-| RDM | 39 | BLU | 1 |
+| WHM | 88 | DRG | 1 |
+| BLM | 49 | **SMN** | **99** |
+| RDM | 41 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| RNG | 69 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 2,173
+- **Marks (current):** 7,723
 - **Marks (lifetime):** 60
 - **Distinct NMs slain:** 1
-- **Total NM kills:** 12
+- **Total NM kills:** 50
 
 ## Augment Sage
 
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 0 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 450 | 5,700 |
 
 ## Collections
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8d8e28c67e59 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 18d422571b13 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

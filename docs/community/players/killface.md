@@ -1,20 +1,20 @@
 # Killface
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 13h
 
 `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **MNK 97** |
-| Sub job | RDM 97 |
-| Time played | 21h |
-| Enemies defeated | 860 |
+| Main job | **MNK 99** |
+| Sub job | RDM 99 |
+| Time played | 24h |
+| Enemies defeated | 907 |
 | Deaths | 10 |
 
 ## Job levels
@@ -35,16 +35,16 @@
 
 ## Hunting League
 
-- **Rank:** 4 / 5
-- **Marks (current):** 6,037
-- **Marks (lifetime):** 11,931
-- **Distinct NMs slain:** 9
-- **Total NM kills:** 1,129
+- **Rank:** 5 / 5
+- **Marks (current):** 3,847
+- **Marks (lifetime):** 13,234
+- **Distinct NMs slain:** 14
+- **Total NM kills:** 1,167
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 12
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 73
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Mark of 10,000 · Augment Novice.
+**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 18h 35m |
+| HL Rank I → V | 2d 4h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f930ca273363 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 3876bf7b933b -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

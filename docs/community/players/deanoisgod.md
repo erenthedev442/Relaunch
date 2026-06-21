@@ -1,6 +1,6 @@
 # Deanoisgod
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 6d 20h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 7d 6h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 10/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1dcf6ff24175 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 16985b3bf08a -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

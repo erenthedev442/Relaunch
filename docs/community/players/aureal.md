@@ -1,8 +1,8 @@
 # Aureal
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 14h
 
-`💪 2 jobs @99`
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
     **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | BLU 99 |
-| Time played | 25h |
-| Enemies defeated | 574 |
+| Main job | **BLU 99** |
+| Sub job | RDM 10 |
+| Time played | 29h |
+| Enemies defeated | 758 |
 | Deaths | 4 |
 
 ## Job levels
@@ -25,7 +25,7 @@
 | MNK | 18 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 76 | SMN | 1 |
-| **RDM** | **99** | **BLU** | **99** |
+| RDM | 10 | **BLU** | **99** |
 | THF | 53 | COR | 1 |
 | PLD | 91 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 8
+- **Augments crafted:** 30
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -54,6 +54,11 @@
 | AF | 0 | 0 |
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
+
+## Job Rebirth
+
+- **Total rebirths:** 2
+- **By job:** RDM ×2
 
 ## Collections
 
@@ -76,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0dc148e5ca12 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 36d0390a2679 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

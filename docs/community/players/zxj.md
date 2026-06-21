@@ -1,6 +1,6 @@
 # Zxj
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 6h
 
 `⭐ 1 Ascension` `💪 22 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 61h |
+| Time played | 62h |
 | Enemies defeated | 3,002 |
 | Deaths | 44 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 23,551
+- **Marks (current):** 24,351
 - **Marks (lifetime):** 26,477
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 479
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c15653c46a6d -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 13e930662c3d -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

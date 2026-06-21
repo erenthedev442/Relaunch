@@ -1,6 +1,6 @@
 # Jbae
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-21 · Character age 27d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-21 · Character age 27d 20h
 
 `⭐ 106 Ascensions` `💪 17 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | DRG 99 |
-| Time played | 286h |
-| Enemies defeated | 9,177 |
-| Deaths | 150 |
+| Time played | 290h |
+| Enemies defeated | 9,337 |
+| Deaths | 155 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 94,137
+- **Marks (current):** 93,637
 - **Marks (lifetime):** 1,375
 - **Distinct NMs slain:** 13
 - **Total NM kills:** 6,097
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 678
+- **Augments crafted:** 772
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Job Rebirth
 
-- **Total rebirths:** 3
-- **By job:** RDM ×3
+- **Total rebirths:** 4
+- **By job:** RDM ×4
 
 ## Prestige
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7d9f21882365 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 20cbd681064b -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->

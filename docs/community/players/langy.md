@@ -1,8 +1,8 @@
 # Langy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 15h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 1h
 
-`⭐ 2 Ascensions` `💪 22 jobs @99`
+`⭐ 2 Ascensions` `💪 20 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | WAR 99 |
-| Time played | 35h |
-| Enemies defeated | 2,806 |
-| Deaths | 8 |
+| Main job | **MNK 69** |
+| Sub job | BLM 1 |
+| Time played | 38h |
+| Enemies defeated | 2,949 |
+| Deaths | 9 |
 
 ## Job levels
 
@@ -24,11 +24,11 @@
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
 | **WHM** | **99** | **DRG** | **99** |
-| **BLM** | **99** | **SMN** | **99** |
+| BLM | 1 | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | **COR** | **99** |
 | **PLD** | **99** | **PUP** | **99** |
-| **DRK** | **99** | **DNC** | **99** |
+| DRK | 1 | **DNC** | **99** |
 | **BST** | **99** | **SCH** | **99** |
 | **BRD** | **99** | **GEO** | **99** |
 | **RNG** | **99** | **RUN** | **99** |
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 10,555
+- **Marks (current):** 7,605
 - **Marks (lifetime):** 8,106
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 1,470
+- **Total NM kills:** 1,508
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 344
+- **Augments crafted:** 350
 - **NM Affinities:** 9 / 13
 
 ## Reforge
@@ -53,7 +53,12 @@
 |---|---:|---:|
 | AF | 2,050 | 50 |
 | Relic | 0 | 0 |
-| Empyrean | 9,300 | 20,850 |
+| Empyrean | 15,000 | 26,550 |
+
+## Job Rebirth
+
+- **Total rebirths:** 3
+- **By job:** MNK ×1 · BLM ×1 · DRK ×1
 
 ## Prestige
 
@@ -83,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0d32ac5c9863 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: 1bd4e7460ae6 -->
+_Last updated: 2026-06-21 17:40 UTC_
 <!-- DOCGEN:END id="last-updated" -->
