@@ -15,8 +15,9 @@
 --      never charges, so you load in safely and approach HIM, instead of dying
 --      on the zone-in tile. MANY players can fight at once; each gets a private,
 --      claim-locked Maat, the way Voidspire / Colosseum isolate per-player mobs.
---   4. On Maat's death: 25% chance to receive Maat's Blessing (item 29000).
---   5. Maat's Blessing guarantees a critical augment at the Augment Moogle
+--   4. On Maat's death: 25% chance to receive Maat's Cap (item 15194 -- a
+--      retail Rare/EX item, so it renders correctly on the client).
+--   5. Maat's Cap guarantees a critical augment at the Augment Moogle
 --      and is consumed on that successful augment.
 --
 -- SQL pre-req: sql/zz_maat_crit_token.sql must be applied to the DB.
@@ -31,7 +32,7 @@ require('scripts/zones/Waughroon_Shrine/Zone')
 local m = Module:new('maat_infamy_fight')
 
 local INFAMY_COST   = 150
-local CRIT_TOKEN_ID = 29000
+local CRIT_TOKEN_ID = 15194  -- Maat's Cap (retail Rare/EX; renders on the client, unlike the old custom 29000)
 local DROP_CHANCE   = 0.25
 
 -- Maat_rdm (groupId=12, zone=144) - the classic Chainspell-nuke version.
@@ -189,11 +190,11 @@ local function spawnMaat(player)
             if math.random() < DROP_CHANCE then
                 if owner:addItem(CRIT_TOKEN_ID, 1) then
                     owner:printToPlayer(
-                        "Maat relinquishes a Maat's Blessing! Bring it to the Augment Moogle for a guaranteed critical augment.",
+                        "Maat relinquishes his Cap! Bring Maat's Cap to the Augment Moogle for a guaranteed critical augment.",
                         xi.msg.channel.SYSTEM_3)
                 else
                     owner:printToPlayer(
-                        "Maat dropped a Maat's Blessing, but you couldn't carry it (inventory full, or you already hold one).",
+                        "Maat offered his Cap, but you couldn't carry it (inventory full, or you already hold one).",
                         xi.msg.channel.SYSTEM_3)
                 end
             end

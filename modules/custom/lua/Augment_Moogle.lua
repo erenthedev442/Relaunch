@@ -21,7 +21,8 @@ local m = Module:new('augment_moogle')
 
 local MAX_CATALYST_COUNT = 5       -- max catalyst items per trade = the engine's 5 augment slots (each catalyst writes one line; mix types or stack one)
 local GIL_COST           = 10000   -- flat per trade
-local CRIT_TOKEN_ID      = 29000   -- Maat's Blessing: guarantees a crit when held (consumed on success)
+local CRIT_TOKEN_ID      = 15194   -- Maat's Cap: guarantees a crit when held (consumed on success). Retail Rare/EX, so it renders on the client (the old custom 29000 had no client DAT).
+local CRIT_TOKEN_LEGACY  = 29000   -- old custom 'Maat's Blessing'; still honored so pre-swap drops aren't stranded
 
 -- Augment formula recap (from src/map/items/item_equipment.cpp:479):
 --   final_mod = (base + exdata) * (multiplier > 1 ? multiplier : 1)   -- positive base
@@ -144,10 +145,11 @@ showConfirmMenu = function(player)
 
                 playerArg:delGil(GIL_COST)
 
-                -- Consume Maat's Blessing if it guaranteed this crit.
+                -- Consume the crit token (Maat's Cap, or a legacy Maat's Blessing) if it guaranteed this crit.
                 if st2.usedCritToken then
-                    playerArg:delItem(CRIT_TOKEN_ID, 1)
-                    playerArg:printToPlayer("Maat's Blessing consumed by the augment's power.", xi.msg.channel.SYSTEM_3)
+                    local token = playerArg:getItemCount(CRIT_TOKEN_ID) > 0 and CRIT_TOKEN_ID or CRIT_TOKEN_LEGACY
+                    playerArg:delItem(token, 1)
+                    playerArg:printToPlayer("Maat's Cap consumed by the augment's power.", xi.msg.channel.SYSTEM_3)
                 end
 
                 -- Bump the lifetime augment counter - feeds Sage rank-ups.
@@ -294,8 +296,8 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             local rank        = player:getCharVar('Augment_Mastery') or 0
             local masteryMult = sage.masteryMult[rank + 1] or 1.0
             local critPct     = sage.critChance[rank + 1]  or 0.0
-            -- Maat's Blessing guarantees a crit; consumed after delGil on success.
-            local usedCritToken = player:getItemCount(CRIT_TOKEN_ID) > 0
+            -- Maat's Cap (or a legacy Maat's Blessing) guarantees a crit; consumed after delGil on success.
+            local usedCritToken = player:getItemCount(CRIT_TOKEN_ID) > 0 or player:getItemCount(CRIT_TOKEN_LEGACY) > 0
             local isCrit        = usedCritToken or (math.random() < critPct)
             local critMult      = isCrit and 2.0 or 1.0
 
