@@ -17,7 +17,7 @@
 --   xi._jm_endChallenge   endChallenge(player, reason) function
 --   xi._jm_guardians      GUARDIANS catalog (read-only)
 --
--- NPC: Weapon Mastery Sage in GM Home, z = -27.
+-- NPC: Weapon Mastery Sage in GM Home, z = -35.
 -- Needs map restart (addOverride hooks for GM_Home + WalkOfEchoes + onPlayerDeath).
 -----------------------------------
 require('modules/module_utils')
@@ -296,7 +296,7 @@ end
 -- Module overrides
 -----------------------------------
 
--- GM Home: place the Mastery Sage NPC at z = -30.
+-- GM Home: place the Mastery Sage NPC at z = -35.
 m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     super(zone)
 
@@ -305,9 +305,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         name       = 'Mastery_Sage',
         packetName = 'Weapon Mastery Sage',
         look       = 2401,
-        x          = -4.500,
+        x          = -1.500,
         y          =  0.000,
-        z          = -30.000,
+        z          = -35.000,
         rotation   =  128,
         widescan   =  1,
 

@@ -192,9 +192,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         name       = 'Home_Point',
         packetName = 'Home Point',
         look       = 51,        -- homepoint crystal model (modelid 0x0033)
-        x          =  -3.000,
+        x          =   4.500,
         y          =  0.000,
-        z          = -15.000,
+        z          =  -5.000,
         rotation   =  128,
         widescan   = 1,
 

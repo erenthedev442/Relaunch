@@ -23,7 +23,7 @@ catalog.zoneId    = xi.zone.GM_HOME
 catalog.zonePath  = 'xi.zones.GM_Home'
 catalog.npcName   = 'Mystery Mog'
 catalog.npcLook   = 2401
-catalog.npcPos    = { x = -1.500, y = 0.000, z = -35.000, rot = 128 }
+catalog.npcPos    = { x = -1.500, y = 0.000, z = -20.000, rot = 128 }
 
 -- Pull costs
 catalog.pullCost    = 100000  -- 100k  standard single pull

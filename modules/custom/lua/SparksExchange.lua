@@ -40,7 +40,7 @@ xi.sparks_exchange = {
 
 -- ===== static NPC config (requires restart to change) =====
 local cfg = {
-    npcPos = { x = -7.500, y = 0.000, z = -35.000, rot = 128 },
+    npcPos = { x =  1.500, y = 0.000, z = -15.000, rot = 128 },
     name   = 'Sparks Cash',
     look   = 3000,
 }

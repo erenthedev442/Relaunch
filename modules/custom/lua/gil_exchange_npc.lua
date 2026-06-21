@@ -27,7 +27,7 @@ local m = Module:new('gil_exchange_npc')
 local config = {
     npcName  = 'Gil Exchange',
     npcLook  = 2419,    -- moogle (same as ExpCamp)
-    npcPos   = { x = 4.500, y = 0.000, z = -35.000, rot = 128 },
+    npcPos   = { x = 4.500, y = 0.000, z = -20.000, rot = 128 },
     huntCv   = 'HL_Points',   -- matches CV_POINTS in HuntingLeague.lua
     -- conversion bundles: { gil, hunt_marks }
     bundles  =

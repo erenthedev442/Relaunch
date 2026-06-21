@@ -217,7 +217,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         -- GM Home Progression cluster (z=-7): Gear / Augment Moogle / Augment Sage.
         x          =  -4.500,
         y          =  0.000,
-        z          = -5.000,
+        z          = -25.000,
         rotation   =  128,
         widescan   =  1,
 

@@ -13,7 +13,7 @@ local catalog = {}
 catalog.zoneId  = xi.zone.GM_HOME
 catalog.npcName = 'Lady Luck'
 catalog.npcLook = 3000                                   -- reuse the proven Unlocker model; re-skin freely
-catalog.npcPos  = { x = -4.500, y = 0.000, z = -35.000, rot = 128 }  -- gambling corner, west of the Mystery Mog (x=1.5 is the Title Vendor)
+catalog.npcPos  = { x = -4.500, y = 0.000, z = -20.000, rot = 128 }
 
 -- Preset bet sizes. customMenu can't take a typed number, so bets are tiers.
 catalog.betTiers = { 5000, 25000, 100000, 500000 }

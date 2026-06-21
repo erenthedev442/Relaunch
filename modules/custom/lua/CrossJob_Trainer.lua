@@ -303,7 +303,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         --   Gear (-3) / Augment Moogle (0) / Augment Sage (+3) / Trainer (+6).
         x          =  1.500,
         y          =  0.000,
-        z          = -5.000,
+        z          = -25.000,
         rotation   =  128,
         widescan   =  1,
 
