@@ -1,18 +1,18 @@
 # Aldo
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-19 · Character age 2d 12h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 15h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 49/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 65/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **DNC 49** |
-| Sub job | RDM 28 |
-| Time played | 10h |
-| Enemies defeated | 60 |
+| Main job | **WHM 35** |
+| Sub job | PLD 1 |
+| Time played | 12h |
+| Enemies defeated | 87 |
 | Deaths | 0 |
 
 ## Job levels
@@ -23,10 +23,10 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 35 | DRG | 1 |
 | BLM | 11 | SMN | 1 |
-| RDM | 28 | BLU | 1 |
+| RDM | 47 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 49 |
+| DRK | 1 | DNC | 65 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 975
+- **Marks (current):** 1,525
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ac0e35d834be -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: f6b9dada03f6 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

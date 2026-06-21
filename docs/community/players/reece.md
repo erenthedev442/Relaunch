@@ -1,6 +1,6 @@
 # Reece
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-20 · Character age 1d
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 1d 3h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 40d27894afaf -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 6c3f8bf4b33e -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

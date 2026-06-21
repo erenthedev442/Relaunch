@@ -1,8 +1,8 @@
 # Granae
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 16h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 20h
 
-`💪 8 jobs @99`
+`💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | WHM 95 |
-| Time played | 15h |
-| Enemies defeated | 2,261 |
-| Deaths | 12 |
+| Main job | **MNK 99** |
+| Sub job | BLU 99 |
+| Time played | 17h |
+| Enemies defeated | 2,436 |
+| Deaths | 13 |
 
 ## Job levels
 
@@ -25,7 +25,7 @@
 | **MNK** | **99** | **NIN** | **99** |
 | WHM | 95 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
-| **RDM** | **99** | BLU | 92 |
+| **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | **DNC** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,890
-- **Marks (lifetime):** 3,533
-- **Distinct NMs slain:** 13
-- **Total NM kills:** 413
+- **Marks (current):** 6,044
+- **Marks (lifetime):** 5,988
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 588
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 264
+- **Augments crafted:** 266
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -68,7 +68,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 120
 
 ## Achievements
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0a99d527587e -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 926086a3d6f8 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

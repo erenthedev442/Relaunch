@@ -172,42 +172,42 @@ _All NPCs are in **GM Home** (zone 210). Positions shown as (x, y, z)._
 | NPC | Position | What it does |
 |---|---|---|
 | **Gear Moogle** | `(-4.5, 0, -7)` | One-time starter gear kit for new characters (once per character) |
-| **Mog Moogle** | `(2, 0, -7)` | Delivery Box access plus change to any of the 22 jobs on the spot |
+| **Mog Moogle** | `(-1.5, 0, -5)` | Delivery Box access plus change to any of the 22 jobs on the spot |
 | **Augment Moogle** | `(-4.5, 0, -7)` | Trade one equipment piece + 1–4 catalyst crystals for stacking augments |
-| **Augment Sage** | `(-1.5, 0, -5)` | Augment affinity system — unlock passive stat bonuses by spending hunt marks |
+| **Augment Sage** | `(-1.5, 0, -25)` | Augment affinity system — unlock passive stat bonuses by spending hunt marks |
 
 **Utility cluster** — one-time character setup (z ≈ −14)
 
 | NPC | Position | What it does |
 |---|---|---|
-| **Character Upgrader** | `(-1.5, 0, -14)` | Menu-driven: grants all weapon skills, spells, trusts, capped skills, outpost warps |
+| **Character Upgrader** | `(1.5, 0, -14)` | Menu-driven: grants all weapon skills, spells, trusts, capped skills, outpost warps |
 | **Key Item Moogle** | `(1.5, 0, -14)` | Grants all ~4,000 key items in one transaction (single-use, once per character) |
-| **Mission Moogle** | `(4.5, 0, -14)` | Skip all missions at once, or per-expansion (RoZ, CoP, ToAU, Wings, SoA, RoV) |
+| **Mission Moogle** | `(4.5, 0, -14)` | Skip every story mission in one click (all nations + RoZ/CoP/ToAU/WotG/SoA/RoV); sets nation rank 10 |
 
 **Activities cluster** — ongoing gameplay systems (z ≈ −21)
 
 | NPC | Position | What it does |
 |---|---|---|
-| **EXP Camp Moogle** | `(0, 0, -15)` | Warp to one of 12 fixed EXP camp locations (Lv 10–75 tier list) |
-| **Hunt Board** | `(-1.5, 0, -25)` | Weekly hunt board — pick up and turn in weekly NM target bounties for marks |
-| **Infamy Vendor** | `(4.5, 0, -21)` | Spend infamy currency earned from Abyssea NM hunts, Invasions, and the weekly Raid on gear and rewards |
+| **EXP Camp Moogle** | `(-4.5, 0, -10)` | Free warp to one of 20 level-matched EXP camps (Lv 10–99) |
+| **Hunt Board** | `(-1.5, 0, -15)` | Weekly hunt board — pick up and turn in weekly NM target bounties for marks |
+| **Infamy Vendor** | `(-4.5, 0, -30)` | Spend infamy currency earned from Abyssea NM hunts, Invasions, and the weekly Raid on gear and rewards |
 
 **Admin cluster** — testing and meta systems (z ≈ −28)
 
 | NPC | Position | What it does |
 |---|---|---|
 | **Game Master** | `(3, -34.3, -467)` | Wave-based fight challenge (Easy → Insane); earn hunt marks on full clear |
-| **Companion Master** | `(-3, 0, -30)` | Player companion system — link friends and summon them as trusts in your party |
-| **Test Dummy** | `(3, 0, -30)` | Interactive combat dummy for testing DPS and skill rotations |
+| **Companion Master** | `(7.5, 0, -10)` | Player companion system — link friends and summon them as trusts in your party |
+| **Test Dummy** | `(4.5, 0, -35)` | Interactive combat dummy for testing DPS and skill rotations |
 
 **Commerce row** — gil sinks and convenience services (z ≈ −35)
 
 | NPC | Position | What it does |
 |---|---|---|
-| **Warpman** | `(3, 0, -15)` | Paid warp service to city hubs (San d'Oria, Bastok, Windurst, Jeuno, and more) |
-| **Mystery Mog** | `(-1.5, 0, -35)` | Gacha box — spend hunt marks for a random pull from the reward table |
-| **Title Broker** | `(1.5, 0, -35)` | Buy cosmetic titles for gil; cheap flavor titles to rare endgame trophies |
-| **Gil Exchange** | `(4.5, 0, -35)` | Trade hunt marks for gil in bulk |
+| **Warpman** | `(-1.5, 0, -10)` | Paid warp service to city hubs (San d'Oria, Bastok, Windurst, Jeuno, and more) |
+| **Mystery Mog** | `(-1.5, 0, -20)` | Gacha box — spend hunt marks for a random pull from the reward table |
+| **Title Broker** | `(1.5, 0, -20)` | Buy cosmetic titles for gil; cheap flavor titles to rare endgame trophies |
+| **Gil Exchange** | `(4.5, 0, -20)` | Trade hunt marks for gil in bulk |
 <!-- DOCGEN:END id="gm-home-npcs" -->
 
 ## Custom HNM system
@@ -271,6 +271,6 @@ For reference, these are at retail defaults on this server:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d1c12a2e83af -->
-_Last updated: 2026-06-20 21:37 UTC_
+<!-- content-hash: 5a251667ee2a -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Katryna
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 5h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 8h
 
 `💪 2 jobs @99`
 
@@ -11,24 +11,24 @@
 
 | | |
 |---|---|
-| Main job | **BLM 99** |
-| Sub job | RDM 99 |
-| Time played | 42h |
-| Enemies defeated | 2,656 |
-| Deaths | 22 |
+| Main job | **DNC 48** |
+| Sub job | MNK 41 |
+| Time played | 43h |
+| Enemies defeated | 2,695 |
+| Deaths | 26 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
+| MNK | 41 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| DRK | 1 | DNC | 48 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,738
-- **Marks (lifetime):** 5,461
-- **Distinct NMs slain:** 9
-- **Total NM kills:** 1,071
+- **Marks (current):** 7,833
+- **Marks (lifetime):** 5,483
+- **Distinct NMs slain:** 10
+- **Total NM kills:** 1,072
 
 ## Guild standing
 
@@ -55,8 +55,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 137
-- **NM Affinities:** 5 / 13
+- **Augments crafted:** 151
+- **NM Affinities:** 6 / 13
 
 ## Reforge
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 91cbdc882a0a -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 25c5244af477 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

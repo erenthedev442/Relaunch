@@ -1,8 +1,8 @@
 # Draco
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 22h
 
-`💪 10 jobs @99`
+`💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | GEO 1 |
-| Time played | 20h |
+| Main job | **DRK 99** |
+| Sub job | DRG 99 |
+| Time played | 24h |
 | Enemies defeated | 14 |
 | Deaths | 0 |
 
@@ -21,25 +21,25 @@
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 1 |
-| **MNK** | **99** | NIN | 1 |
-| **WHM** | **99** | DRG | 1 |
-| **BLM** | **99** | SMN | 1 |
+| **WAR** | **99** | **SAM** | **99** |
+| **MNK** | **99** | **NIN** | **99** |
+| **WHM** | **99** | **DRG** | **99** |
+| **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
-| **THF** | **99** | COR | 1 |
-| **PLD** | **99** | PUP | 1 |
-| **DRK** | **99** | DNC | 1 |
-| BST | 69 | SCH | 1 |
-| **BRD** | **99** | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| **THF** | **99** | **COR** | **99** |
+| **PLD** | **99** | **PUP** | **99** |
+| **DRK** | **99** | **DNC** | **99** |
+| **BST** | **99** | **SCH** | **99** |
+| **BRD** | **99** | **GEO** | **99** |
+| **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 196,897
-- **Marks (lifetime):** 75,106
-- **Distinct NMs slain:** 4
-- **Total NM kills:** 1,174
+- **Marks (current):** 216,474
+- **Marks (lifetime):** 85,864
+- **Distinct NMs slain:** 9
+- **Total NM kills:** 3,305
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**12** unlocked — Ten Hunts In · Legendary Slayer · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**14** unlocked — Ten Hunts In · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ce6051a93982 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: e4017180c690 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

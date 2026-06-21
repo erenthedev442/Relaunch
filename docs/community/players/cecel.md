@@ -1,6 +1,6 @@
 # Cecel
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-19 · Character age 7d 17h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 21h
 
 `⭐ 14 Ascensions` `💪 10 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | SAM 99 |
-| Time played | 67h |
-| Enemies defeated | 4,103 |
+| Sub job | BLM 99 |
+| Time played | 68h |
+| Enemies defeated | 4,160 |
 | Deaths | 47 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 26,105
+- **Marks (current):** 26,905
 - **Marks (lifetime):** 2,424
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 254
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 357
+- **Augments crafted:** 358
 - **NM Affinities:** 12 / 13
 
 ## Reforge
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 43e58f844d63 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 3c5eb7eae058 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

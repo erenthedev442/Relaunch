@@ -1,6 +1,6 @@
 # Bro
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 18h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 21h
 
 `⭐ 11 Ascensions` `💪 22 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | NIN 99 |
-| Time played | 97h |
+| Time played | 100h |
 | Enemies defeated | 2,167 |
 | Deaths | 49 |
 
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 310
+- **Augments crafted:** 322
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5e9014047b08 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 436817234a75 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

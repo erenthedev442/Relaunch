@@ -1,6 +1,6 @@
 # Johnfantasy
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 22h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 7d 1h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 67/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2b1d80e68fdc -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 7f820e27ef3f -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Marques
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 4d 15h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 4d 18h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 346c3ebf41b4 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 99f9f6f98ac7 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

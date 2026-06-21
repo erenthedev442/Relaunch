@@ -316,6 +316,6 @@ A **Home Point crystal** is placed among the travel NPCs at GM Home. Examine it 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bef99e96aa44 -->
-_Last updated: 2026-06-20 21:25 UTC_
+<!-- content-hash: c020d29fdbab -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

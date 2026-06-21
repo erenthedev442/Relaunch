@@ -1,6 +1,6 @@
 # Nuupuu
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 2d 23h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 3d 2h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -9,8 +9,8 @@
 
 | | |
 |---|---|
-| Main job | **RDM 1** |
-| Sub job | — |
+| Main job | **BLU 1** |
+| Sub job | RDM 1 |
 | Time played | 0h |
 | Enemies defeated | 0 |
 | Deaths | 0 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c1ac680c9b48 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 58c0ed931574 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,27 +1,27 @@
 # Ariel
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 17h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 20h
 
-`💪 3 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **WAR 85** |
-| Sub job | MNK 85 |
-| Time played | 22h |
-| Enemies defeated | 318 |
+| Main job | **MNK 99** |
+| Sub job | WAR 99 |
+| Time played | 26h |
+| Enemies defeated | 356 |
 | Deaths | 2 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 85 | SAM | 1 |
+| **WAR** | **99** | SAM | 1 |
 | **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -35,8 +35,8 @@
 
 ## Hunting League
 
-- **Rank:** 4 / 5
-- **Marks (current):** 1,553
+- **Rank:** 5 / 5
+- **Marks (current):** 853
 - **Marks (lifetime):** 10
 - **Distinct NMs slain:** 2
 - **Total NM kills:** 2
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 33e92b84fdbb -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: ee3afbe35353 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

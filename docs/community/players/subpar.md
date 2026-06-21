@@ -1,8 +1,8 @@
 # Subpar
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-16 · Character age 6d 6h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 10h
 
-`⭐ 2 Ascensions` `💪 3 jobs @99`
+`⭐ 2 Ascensions` `💪 6 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,49 +11,60 @@
 
 | | |
 |---|---|
-| Main job | **DRG 99** |
-| Sub job | WAR 99 |
-| Time played | 16h |
-| Enemies defeated | 2,212 |
-| Deaths | 30 |
+| Main job | **WAR 99** |
+| Sub job | SAM 99 |
+| Time played | 23h |
+| Enemies defeated | 3,359 |
+| Deaths | 31 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| MNK | 1 | NIN | 1 |
-| WHM | 1 | **DRG** | **99** |
-| BLM | 1 | SMN | 1 |
+| MNK | 1 | **NIN** | **99** |
+| **WHM** | **99** | **DRG** | **99** |
+| BLM | 85 | SMN | 1 |
 | RDM | 1 | BLU | 57 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| BRD | 1 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 20,459
-- **Marks (lifetime):** 1,249
+- **Marks (current):** 14
+- **Marks (lifetime):** 1,425
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 168
+- **Total NM kills:** 281
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Journeyman | 2,500 | 2,500 to Veteran |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 130
-- **NM Affinities:** 2 / 13
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 170
+- **NM Affinities:** 6 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 450 | 450 |
+| AF | 875 | 1,275 |
 | Relic | 1,240 | 240 |
-| Empyrean | 6,830 | 11,830 |
+| Empyrean | 2,570 | 15,970 |
 
 ## Prestige
 
@@ -62,11 +73,11 @@
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 120
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Sanctuary Defender · Augment Novice · Augment Expert.
+**12** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Sanctuary Defender · First Blood · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -82,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e65c73127773 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: c7a539247655 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

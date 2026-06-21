@@ -1,16 +1,16 @@
 # Demonslayer
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 21h 32m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 1d
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 7/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **THF 1** |
-| Sub job | — |
+| Main job | **THF 7** |
+| Sub job | NIN 4 |
 | Time played | 0h |
 | Enemies defeated | 0 |
 | Deaths | 0 |
@@ -20,11 +20,11 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
+| MNK | 1 | NIN | 4 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 1 | COR | 1 |
+| THF | 7 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a36a259e26de -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 7c8adef99cca -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

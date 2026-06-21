@@ -1,21 +1,21 @@
 # Alice
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 1h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 5h
 
 `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BST 99** |
-| Sub job | BLU 99 |
-| Time played | 10h |
-| Enemies defeated | 620 |
-| Deaths | 5 |
+| Main job | **COR 35** |
+| Sub job | SAM 35 |
+| Time played | 11h |
+| Enemies defeated | 670 |
+| Deaths | 8 |
 
 ## Job levels
 
@@ -26,7 +26,7 @@
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
-| THF | 48 | COR | 1 |
+| THF | 48 | COR | 35 |
 | PLD | 1 | **PUP** | **99** |
 | DRK | 1 | DNC | 72 |
 | **BST** | **99** | SCH | 1 |
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 1,717
-- **Marks (lifetime):** 157
+- **Rank:** 4 / 5
+- **Marks (current):** 344
+- **Marks (lifetime):** 325
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 16
+- **Total NM kills:** 30
 
 ## Augment Sage
 
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 116
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 29b2534a0888 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 8d77ce2a3b6d -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

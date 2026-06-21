@@ -1,11 +1,11 @@
 # Boost
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-20 · Character age 1d 5h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-20 · Character age 1d 8h
 
 `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | WHM 99 |
-| Time played | 7h |
+| Time played | 8h |
 | Enemies defeated | 0 |
 | Deaths | 1 |
 
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 2 / 5
-- **Marks (current):** 13,357
-- **Marks (lifetime):** 7,392
-- **Distinct NMs slain:** 2
-- **Total NM kills:** 623
+- **Rank:** 3 / 5
+- **Marks (current):** 1,885
+- **Marks (lifetime):** 7,618
+- **Distinct NMs slain:** 3
+- **Total NM kills:** 641
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**6** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Mark of 1,000 · Augment Novice.
+**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a9118557a6da -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: ba6840188c47 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

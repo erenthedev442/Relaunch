@@ -1,8 +1,8 @@
 # Luna
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 13h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 16h
 
-`⭐ 20 Ascensions` `💪 7 jobs @99`
+`⭐ 20 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | RDM 99 |
-| Time played | 43h |
-| Enemies defeated | 49 |
+| Time played | 54h |
+| Enemies defeated | 52 |
 | Deaths | 33 |
 
 ## Job levels
@@ -26,20 +26,20 @@
 | **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | BLU | 96 |
-| THF | 1 | COR | 65 |
+| THF | 1 | **COR** | **99** |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| DRK | 1 | DNC | 86 |
 | BST | 1 | **SCH** | **99** |
 | **BRD** | **99** | **GEO** | **99** |
-| RNG | 1 | RUN | 86 |
+| **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 19,313
+- **Marks (current):** 24,638
 - **Marks (lifetime):** 1,619
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 270
+- **Total NM kills:** 286
 
 ## Augment Sage
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e1606f1f00bc -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 6a0312448420 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Aureal
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 4d
 
 `💪 2 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **THF 53** |
-| Sub job | BLM 42 |
-| Time played | 13h |
-| Enemies defeated | 238 |
+| Main job | **RDM 99** |
+| Sub job | BLU 99 |
+| Time played | 22h |
+| Enemies defeated | 527 |
 | Deaths | 4 |
 
 ## Job levels
@@ -24,10 +24,10 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 18 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 42 | SMN | 1 |
+| BLM | 76 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
 | THF | 53 | COR | 1 |
-| PLD | 1 | PUP | 1 |
+| PLD | 91 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 7
+- **Augments crafted:** 8
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 457a3f65a016 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 42d04afd943b -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

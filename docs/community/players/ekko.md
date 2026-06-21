@@ -1,6 +1,6 @@
 # Ekko
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 23h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 7d 2h
 
 `💪 5 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | SAM 99 |
-| Time played | 23h |
-| Enemies defeated | 1,143 |
+| Time played | 25h |
+| Enemies defeated | 1,175 |
 | Deaths | 3 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,199
-- **Marks (lifetime):** 3,286
+- **Marks (current):** 7,438
+- **Marks (lifetime):** 3,428
 - **Distinct NMs slain:** 11
-- **Total NM kills:** 543
+- **Total NM kills:** 575
 
 ## Augment Sage
 
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 25 | 25 |
 | Relic | 0 | 0 |
-| Empyrean | 125 | 925 |
+| Empyrean | 0 | 1,450 |
 
 ## Collections
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 225ee33d7211 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 91f0d57b3e40 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

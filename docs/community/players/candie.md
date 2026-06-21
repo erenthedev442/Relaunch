@@ -1,6 +1,6 @@
 # Candie
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 7d 16h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 7d 19h
 
 `💪 1 job @99`
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2e15e2a3fe87 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: a94d908cb118 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

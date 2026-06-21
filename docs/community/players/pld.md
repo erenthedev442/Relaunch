@@ -1,45 +1,45 @@
 # Pld
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 19h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 22h
 
-`💪 4 jobs @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | DNC 99 |
-| Time played | 20h |
-| Enemies defeated | 1,363 |
-| Deaths | 4 |
+| Main job | **PLD 55** |
+| Sub job | NIN 40 |
+| Time played | 30h |
+| Enemies defeated | 2,147 |
+| Deaths | 5 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| **MNK** | **99** | NIN | 37 |
+| **MNK** | **99** | NIN | 40 |
 | WHM | 1 | DRG | 1 |
 | BLM | 83 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
-| PLD | 54 | PUP | 1 |
+| PLD | 55 | PUP | 1 |
 | DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 93 |
+| BRD | 1 | **GEO** | **99** |
 | RNG | 1 | **RUN** | **99** |
 
 ## Hunting League
 
-- **Rank:** 4 / 5
-- **Marks (current):** 220
-- **Marks (lifetime):** 377
-- **Distinct NMs slain:** 9
-- **Total NM kills:** 38
+- **Rank:** 5 / 5
+- **Marks (current):** 18,171
+- **Marks (lifetime):** 9,990
+- **Distinct NMs slain:** 13
+- **Total NM kills:** 1,856
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Augments crafted:** 17
 - **NM Affinities:** 1 / 13
 
 ## Reforge
@@ -68,17 +68,18 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 120
 
 ## Achievements
 
-**4** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 1h 46m |
+| HL Rank I → V | 2d 3h |
 
 ---
 
@@ -87,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d6413a26037c -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: a938efd510b3 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

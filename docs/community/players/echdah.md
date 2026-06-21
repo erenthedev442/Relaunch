@@ -1,6 +1,6 @@
 # Echdah
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-19 · Character age 7d 22h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 8d 1h
 
 `⭐ 2 Ascensions` `💪 11 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,071
+- **Marks (current):** 31
 - **Marks (lifetime):** 4,252
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 222
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 203
+- **Augments crafted:** 228
 - **NM Affinities:** 1 / 13
 
 ## Reforge
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0d7042defa54 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: db28c9f5c863 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

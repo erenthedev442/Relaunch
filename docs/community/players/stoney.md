@@ -1,8 +1,8 @@
 # Stoney
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-19 · Character age 7d 15h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 18h
 
-`⭐ 7 Ascensions` `💪 10 jobs @99`
+`⭐ 12 Ascensions` `💪 11 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | WAR 99 |
-| Time played | 66h |
-| Enemies defeated | 6,233 |
-| Deaths | 12 |
+| Time played | 74h |
+| Enemies defeated | 7,244 |
+| Deaths | 13 |
 
 ## Job levels
 
@@ -24,11 +24,11 @@
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
 | **WHM** | **99** | DRG | 1 |
-| **BLM** | **99** | SMN | 1 |
+| **BLM** | **99** | SMN | 90 |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | PLD | 94 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | **RNG** | **99** | RUN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,556
-- **Marks (lifetime):** 5,201
+- **Marks (current):** 36,334
+- **Marks (lifetime):** 5,316
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 273
+- **Total NM kills:** 397
 
 ## Guild standing
 
@@ -50,12 +50,12 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | AF Hunters' Guild | Veteran | 8,500 | 16,500 to Master |
 | Relic Hunters' Guild | Journeyman | 2,500 | 2,500 to Veteran |
 | Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| League Hunters' Guild | Veteran | 6,500 | 18,500 to Master |
+| League Hunters' Guild | Veteran | 9,000 | 16,000 to Master |
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 294
+- **Augments crafted:** 298
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 7
-- **Per-job prestige:** MNK P7
+- **Total Ascensions:** 12
+- **Per-job prestige:** MNK P12
 
 ## Collections
 
@@ -77,7 +77,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**15** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · X Marks the Spot · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
+**17** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · X Marks the Spot · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 980d274c1708 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 79555bb46ff2 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

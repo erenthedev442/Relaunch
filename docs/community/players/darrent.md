@@ -1,6 +1,6 @@
 # Darrent
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 5h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 8h
 
 `💪 6 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **SCH 99** |
-| Sub job | BLM 99 |
-| Time played | 39h |
-| Enemies defeated | 1,498 |
-| Deaths | 10 |
+| Sub job | WAR 99 |
+| Time played | 41h |
+| Enemies defeated | 2,092 |
+| Deaths | 11 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 827
-- **Marks (lifetime):** 1,965
+- **Marks (current):** 4,903
+- **Marks (lifetime):** 3,395
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 98
+- **Total NM kills:** 112
 
 ## Guild standing
 
@@ -55,16 +55,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 292
+- **Augments crafted:** 294
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,365 | 65 |
+| AF | 1,465 | 65 |
 | Relic | 2,350 | 0 |
-| Empyrean | 475 | 1,525 |
+| Empyrean | 625 | 1,675 |
 
 ## Collections
 
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**9** unlocked — Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Augment Novice · Augment Expert · Augment Master.
+**10** unlocked — Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ffa71e5bfd31 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: c8abfa9b13f0 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

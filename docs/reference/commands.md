@@ -2,7 +2,7 @@
 
 These chat commands are available to every player on Legendary (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 60
+**Total player-accessible commands:** 65
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
@@ -36,6 +36,11 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!home` | string | Sends the target to their homepoint. |  |
 | `!hovershot` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!hunt` | — | Warps you to the Hunting League hub in Escha - Zi'Tah. The hub has three NPCs in a row: Seals (leftmost)  — tier info, rank-up, seal shop Zone Guide        — one-click teleport to any tier cluster area Accessories       — neck / earring / ring / back / waist shop From the Zone Guide, pick your tier to warp straight to that cluster's spawner NPC without crossing the zone on foot. Landing spot stays in sync with sealsPos in hunting_league_catalog. |  |
+| `!hunt1` | — | Warps you to the Tier 1 (Rank I - Initiate) hunt spawner in Escha - Zi'Tah. NMs: Leaping Lizzy, Valkurm Emperor, Tom Tit Tat. |  |
+| `!hunt2` | — | Warps you to the Tier 2 (Rank II - Hunter) hunt spawner in Escha - Zi'Tah. NMs: Roc, Bomb Queen, Aquarius. |  |
+| `!hunt3` | — | Warps you to the Tier 3 (Rank III - Elite) hunt spawner in Escha - Zi'Tah. NMs: Serket, Vrtra, Simurgh. |  |
+| `!hunt4` | — | Warps you to the Tier 4 (Rank IV - Champion) hunt spawner in Escha - Zi'Tah. NMs: Nidhogg, King Behemoth, Kirin. |  |
+| `!hunt5` | — | Warps you to the Tier 5 (Rank V - Legend) hunt spawner in Escha - Zi'Tah. NMs: Absolute Virtue, Pandemonium Warden, Shinryu. |  |
 | `!huntrank` | string | Displays the player's Hunter's Guild status across all four guilds — current rank, rep, amplifier %, and progress to the next rank. Also shows Trinity / Apex capstone status, and the v2 Vana'diel hunt-target list per guild so the player knows what to go kill. |  |
 | `!iwarp` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!lfg` | string | Broadcasts a Looking-For-Group announcement server-wide so other players know you're looking for someone to play with. | :material-puzzle: **custom** |
@@ -232,6 +237,36 @@ Lists all custom commands with a one-line description.
 Warps you to the Hunting League hub in Escha - Zi'Tah. The hub has three NPCs in a row: Seals (leftmost)  — tier info, rank-up, seal shop Zone Guide        — one-click teleport to any tier cluster area Accessories       — neck / earring / ring / back / waist shop From the Zone Guide, pick your tier to warp straight to that cluster's spawner NPC without crossing the zone on foot. Landing spot stays in sync with sealsPos in hunting_league_catalog.
 
 **Usage:** `hunt`
+
+### `!hunt1`
+
+Warps you to the Tier 1 (Rank I - Initiate) hunt spawner in Escha - Zi'Tah. NMs: Leaping Lizzy, Valkurm Emperor, Tom Tit Tat.
+
+**Usage:** `hunt1`
+
+### `!hunt2`
+
+Warps you to the Tier 2 (Rank II - Hunter) hunt spawner in Escha - Zi'Tah. NMs: Roc, Bomb Queen, Aquarius.
+
+**Usage:** `hunt2`
+
+### `!hunt3`
+
+Warps you to the Tier 3 (Rank III - Elite) hunt spawner in Escha - Zi'Tah. NMs: Serket, Vrtra, Simurgh.
+
+**Usage:** `hunt3`
+
+### `!hunt4`
+
+Warps you to the Tier 4 (Rank IV - Champion) hunt spawner in Escha - Zi'Tah. NMs: Nidhogg, King Behemoth, Kirin.
+
+**Usage:** `hunt4`
+
+### `!hunt5`
+
+Warps you to the Tier 5 (Rank V - Legend) hunt spawner in Escha - Zi'Tah. NMs: Absolute Virtue, Pandemonium Warden, Shinryu.
+
+**Usage:** `hunt5`
 
 ### `!huntrank`
 
@@ -474,6 +509,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e46316fae26c -->
-_Last updated: 2026-06-20 06:26 UTC_
+<!-- content-hash: 73d1a5a8e550 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

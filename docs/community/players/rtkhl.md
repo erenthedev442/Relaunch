@@ -1,8 +1,8 @@
 # Rtkhl
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 5d 3h
 
-`💪 4 jobs @99`
+`⭐ 20 Ascensions` `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 33h |
-| Enemies defeated | 264 |
-| Deaths | 6 |
+| Time played | 44h |
+| Enemies defeated | 322 |
+| Deaths | 9 |
 
 ## Job levels
 
@@ -36,24 +36,29 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 146,485
-- **Marks (lifetime):** 73,982
-- **Distinct NMs slain:** 12
-- **Total NM kills:** 1,157
+- **Marks (current):** 95,173
+- **Marks (lifetime):** 74,288
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 1,215
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 323
+- **Augments crafted:** 327
 - **NM Affinities:** 9 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 2,100 | 1,100 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 5,425 | 5,425 |
+
+## Prestige
+
+- **Total Ascensions:** 20
+- **Per-job prestige:** MNK P20
 
 ## Collections
 
@@ -61,7 +66,7 @@
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Augment Novice · Augment Expert · Augment Master.
+**15** unlocked — First Hunt · Ten Hunts In · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · First Ascension · Ascending Master · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a00c47f97fc1 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 8c484fdcb86c -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

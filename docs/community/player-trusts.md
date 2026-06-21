@@ -26,7 +26,7 @@ The unlock is permanent. Logout/zone changes don't undo it.
 ## The Companion Master NPC
 
 <!-- DOCGEN:BEGIN id="pt-npc-location" -->
-At GM Home, position **(x = -3.000, y = 0.000, z = -30.000, rot = 128)**.
+At GM Home, position **(x = 7.500, y = 0.000, z = -10.000, rot = 128)**.
 <!-- DOCGEN:END id="pt-npc-location" -->
 
 Talk to them to see a menu:
@@ -229,6 +229,6 @@ Reload the module after editing — no server restart required.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: defa9131a291 -->
-_Last updated: 2026-06-16 22:53 UTC_
+<!-- content-hash: fa8185e923d4 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

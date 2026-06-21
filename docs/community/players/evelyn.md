@@ -1,27 +1,27 @@
 # Evelyn
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 23h 18m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 1d 2h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 18/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **DRG 1** |
-| Sub job | WAR 1 |
+| Main job | **DRG 18** |
+| Sub job | WAR 12 |
 | Time played | 0h |
-| Enemies defeated | 0 |
+| Enemies defeated | 30 |
 | Deaths | 0 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
+| WAR | 12 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 1 | DRG | 1 |
+| WHM | 1 | DRG | 18 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b0b199d7a2b8 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 419a7e34b67b -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

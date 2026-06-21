@@ -9,12 +9,16 @@
     skipped there (`IGNORE_PAGES`, or a bullet's `covers`).
 
 <!-- DOCGEN:BEGIN id="unfeatured" -->
-_All system detail pages are represented on the highlights list — no drift detected._
+The following system detail pages exist but are **not** represented on the [Why Legendary?](../why-legendary.md) highlights list. For each, either feature it (add an entry to `HEADLINE` in `tools/docgen/systems_registry.py`) or mark it intentionally skipped (add it to `IGNORE_PAGES`, or to a featured bullet's `covers`).
+
+| Detail page | Lead blurb |
+|---|---|
+| [`progression/prime-trials.md`](../progression/prime-trials.md) | Five trials, done in any order: gather the Abyssea collectibles, climb the Endless Tower, win a Prime Voucher from Hunting League NMs, master a job to beat a We |
 <!-- DOCGEN:END id="unfeatured" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 116b0c86d3b3 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 6dcbe6bc3d66 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

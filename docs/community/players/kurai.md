@@ -1,8 +1,8 @@
 # Kurai
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 22h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 7d 1h
 
-`💪 3 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,17 +11,17 @@
 
 | | |
 |---|---|
-| Main job | **NIN 99** |
-| Sub job | WAR 92 |
-| Time played | 10h |
-| Enemies defeated | 628 |
+| Main job | **DRK 99** |
+| Sub job | WAR 99 |
+| Time played | 11h |
+| Enemies defeated | 669 |
 | Deaths | 7 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 92 | SAM | 94 |
+| **WAR** | **99** | SAM | 94 |
 | MNK | 1 | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8f813412fb1f -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 464daa2918ef -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

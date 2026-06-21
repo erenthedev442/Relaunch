@@ -1,8 +1,8 @@
 # Chanie
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-19 · Character age 1d 14h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-20 · Character age 1d 17h
 
-`💪 3 jobs @99`
+`💪 6 jobs @99`
 
 !!! tip "Recommended next step"
     **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
@@ -11,21 +11,21 @@
 
 | | |
 |---|---|
-| Main job | **BLM 55** |
-| Sub job | RDM 41 |
-| Time played | 9h |
-| Enemies defeated | 641 |
-| Deaths | 0 |
+| Main job | **NIN 99** |
+| Sub job | SAM 82 |
+| Time played | 17h |
+| Enemies defeated | 1,162 |
+| Deaths | 1 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 1 |
-| **MNK** | **99** | NIN | 1 |
+| **WAR** | **99** | SAM | 82 |
+| **MNK** | **99** | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
-| BLM | 55 | SMN | 1 |
-| RDM | 41 | BLU | 1 |
+| **BLM** | **99** | SMN | 1 |
+| **RDM** | **99** | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 81 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
 
 ## Speed records
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2beeaf3e643c -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 812e1f9d27c1 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Moon
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-19 · Character age 5d 5h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 5d 8h
 
 `💪 22 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
-| Sub job | GEO 99 |
-| Time played | 50h |
-| Enemies defeated | 137 |
-| Deaths | 9 |
+| Main job | **SAM 99** |
+| Sub job | WAR 99 |
+| Time played | 61h |
+| Enemies defeated | 155 |
+| Deaths | 11 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 14,021
+- **Marks (current):** 4,301
 - **Marks (lifetime):** 2,447
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 197
+- **Total NM kills:** 289
 
 ## Guild standing
 
@@ -47,24 +47,24 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| League Hunters' Guild | Journeyman | 3,000 | 2,000 to Veteran |
+| AF Hunters' Guild | Veteran | 7,500 | 17,500 to Master |
+| Relic Hunters' Guild | Veteran | 24,000 | 1,000 to Master |
+| Empyrean Hunters' Guild | Journeyman | 1,500 | 3,500 to Veteran |
+| League Hunters' Guild | Veteran | 18,000 | 7,000 to Master |
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 250
+- **Augments crafted:** 265
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 2,000 | 0 |
+| AF | 2,150 | 150 |
 | Relic | 1,500 | 0 |
-| Empyrean | 3,925 | 9,175 |
+| Empyrean | 11,030 | 21,530 |
 
 ## Collections
 
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert · Augment Master.
+**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 42d23b8f2f26 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 4ea4be8a76f0 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

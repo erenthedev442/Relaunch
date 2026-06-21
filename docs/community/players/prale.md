@@ -1,8 +1,8 @@
 # Prale
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 4d 12h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 16h
 
-`💪 1 job @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,21 +12,21 @@
 | | |
 |---|---|
 | Main job | **NIN 99** |
-| Sub job | WAR 88 |
-| Time played | 7h |
-| Enemies defeated | 247 |
-| Deaths | 3 |
+| Sub job | THF 99 |
+| Time played | 13h |
+| Enemies defeated | 674 |
+| Deaths | 4 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 88 | SAM | 1 |
+| **WAR** | **99** | SAM | 1 |
 | MNK | 1 | **NIN** | **99** |
 | WHM | 9 | DRG | 1 |
 | BLM | 11 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 1 | COR | 1 |
+| **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 0
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Marks (current):** 613
+- **Marks (lifetime):** 30
+- **Distinct NMs slain:** 3
+- **Total NM kills:** 6
 
 ## Augment Sage
 
@@ -57,11 +57,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**2** unlocked — First Hunt · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9c451c089f46 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 3cd382530692 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Ropraz
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 22h
 
 `⭐ 42 Ascensions` `💪 9 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **WAR 99** |
+| Main job | **MNK 99** |
 | Sub job | DRG 99 |
-| Time played | 54h |
-| Enemies defeated | 5,921 |
+| Time played | 55h |
+| Enemies defeated | 5,934 |
 | Deaths | 47 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 22,087
+- **Marks (current):** 21,377
 - **Marks (lifetime):** 1,840
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 597
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 308
+- **Augments crafted:** 315
 - **NM Affinities:** 5 / 13
 
 ## Reforge
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 191909bd9348 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 6e5744d17877 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

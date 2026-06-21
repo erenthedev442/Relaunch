@@ -1,8 +1,8 @@
 # Duffaluffagus
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 7h
 
-`💪 17 jobs @99`
+`💪 20 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | BRD 99 |
-| Time played | 19h |
-| Enemies defeated | 512 |
+| Sub job | SCH 99 |
+| Time played | 20h |
+| Enemies defeated | 1,238 |
 | Deaths | 10 |
 
 ## Job levels
@@ -23,20 +23,20 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
-| **WHM** | **99** | DRG | 9 |
-| **BLM** | **99** | SMN | 1 |
+| **WHM** | **99** | **DRG** | **99** |
+| **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | **COR** | **99** |
 | **PLD** | **99** | **PUP** | **99** |
 | **DRK** | **99** | **DNC** | **99** |
-| **BST** | **99** | SCH | 1 |
+| **BST** | **99** | **SCH** | **99** |
 | **BRD** | **99** | GEO | 1 |
 | **RNG** | **99** | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 246
+- **Marks (current):** 3,146
 - **Marks (lifetime):** 863
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 97
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 285
+- **Augments crafted:** 286
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 538117fb6a2a -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 34a6ad0a344e -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

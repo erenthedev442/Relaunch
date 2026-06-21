@@ -1,26 +1,26 @@
 # Zhan
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 19h 32m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-20 · Character age 22h 45m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 75/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **DRK 1** |
-| Sub job | — |
-| Time played | 0h |
-| Enemies defeated | 0 |
-| Deaths | 2 |
+| Main job | **NIN 75** |
+| Sub job | WAR 63 |
+| Time played | 2h |
+| Enemies defeated | 162 |
+| Deaths | 3 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
+| WAR | 63 | SAM | 1 |
+| MNK | 1 | NIN | 75 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 550
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -42,7 +42,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Augments crafted:** 5
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -55,7 +55,11 @@
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
+
+## Achievements
+
+**1** unlocked — Augment Novice.
 
 ## Speed records
 
@@ -68,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5c1da2e1388d -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 1276d392b5a1 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

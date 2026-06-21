@@ -1,11 +1,11 @@
 # Arthas
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 7h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 10h
 
 `💪 3 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BLU 99** |
 | Sub job | WAR 99 |
-| Time played | 14h |
-| Enemies defeated | 803 |
-| Deaths | 1 |
+| Time played | 16h |
+| Enemies defeated | 825 |
+| Deaths | 4 |
 
 ## Job levels
 
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 1,745
-- **Marks (lifetime):** 358
-- **Distinct NMs slain:** 6
-- **Total NM kills:** 66
+- **Rank:** 5 / 5
+- **Marks (current):** 3,555
+- **Marks (lifetime):** 2,019
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 91
 
 ## Augment Sage
 
@@ -57,17 +57,18 @@
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 120
 
 ## Achievements
 
-**3** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked.
+**7** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 0s |
+| HL Rank I → V | 1d 17h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ffdd34ae947b -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: d426ce65faa7 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

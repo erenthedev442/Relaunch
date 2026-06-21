@@ -1,6 +1,6 @@
 # Tucker
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 6d 2h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 6h
 
 `💪 3 jobs @99`
 
@@ -11,8 +11,8 @@
 
 | | |
 |---|---|
-| Main job | **SMN 3** |
-| Sub job | SCH 2 |
+| Main job | **SMN 11** |
+| Sub job | SCH 10 |
 | Time played | 19h |
 | Enemies defeated | 479 |
 | Deaths | 7 |
@@ -24,19 +24,19 @@
 | WAR | 15 | **SAM** | **99** |
 | MNK | 15 | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
-| BLM | 1 | SMN | 3 |
+| BLM | 1 | SMN | 11 |
 | RDM | 1 | BLU | 1 |
 | THF | 61 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 84 |
-| BST | 1 | SCH | 2 |
+| BST | 1 | SCH | 10 |
 | BRD | 1 | GEO | 1 |
 | RNG | 55 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 0
+- **Marks (current):** 2,450
 - **Marks (lifetime):** 51
 - **Distinct NMs slain:** 6
 - **Total NM kills:** 6
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6cd78985c6e3 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 0a8f720e9a43 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

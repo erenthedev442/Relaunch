@@ -1,6 +1,6 @@
 # Loamy
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-19 · Character age 7d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d
 
 `💪 8 jobs @99`
 
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **RNG 15** |
-| Sub job | DNC 15 |
-| Time played | 51h |
+| Main job | **NIN 99** |
+| Sub job | BLM 99 |
+| Time played | 52h |
 | Enemies defeated | 1,073 |
 | Deaths | 7 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 11,472
+- **Marks (current):** 13,122
 - **Marks (lifetime):** 3,545
 - **Distinct NMs slain:** 4
 - **Total NM kills:** 697
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 59
+- **Augments crafted:** 60
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a7236117c3b2 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 6a162618489f -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

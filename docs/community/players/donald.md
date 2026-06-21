@@ -1,6 +1,6 @@
 # Donald
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-15 · Character age 5d 20h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-15 · Character age 5d 23h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e6433ccd039d -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 563686d667fb -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

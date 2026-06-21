@@ -1,8 +1,8 @@
 # Kyrie
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 3h
 
-`💪 5 jobs @99`
+`⭐ 1 Ascension` `💪 21 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 57h |
+| Time played | 67h |
 | Enemies defeated | 1,505 |
 | Deaths | 19 |
 
@@ -21,25 +21,25 @@
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
-| **MNK** | **99** | NIN | 65 |
-| WHM | 1 | **DRG** | **99** |
-| BLM | 1 | SMN | 1 |
+| **WAR** | **99** | **SAM** | **99** |
+| **MNK** | **99** | **NIN** | **99** |
+| **WHM** | **99** | **DRG** | **99** |
+| **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
-| THF | 34 | COR | 71 |
-| PLD | 64 | PUP | 1 |
-| **DRK** | **99** | DNC | 1 |
-| BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| **THF** | **99** | **COR** | **99** |
+| **PLD** | **99** | **PUP** | **99** |
+| **DRK** | **99** | **DNC** | **99** |
+| **BST** | **99** | **SCH** | **99** |
+| **BRD** | **99** | **GEO** | **99** |
+| RNG | 98 | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 241,441
-- **Marks (lifetime):** 106,725
+- **Marks (current):** 267,685
+- **Marks (lifetime):** 120,855
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 1,819
+- **Total NM kills:** 4,621
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 284
+- **Augments crafted:** 286
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -66,13 +66,18 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
+## Prestige
+
+- **Total Ascensions:** 1
+- **Per-job prestige:** MNK P1
+
 ## Collections
 
 - **Trusts learned:** 117
 
 ## Achievements
 
-**16** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Mark of 100,000 · Wave Rider · Wave Fighter · Wave Legend · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**17** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Mark of 100,000 · Wave Rider · Wave Fighter · Wave Legend · First Ascension · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -89,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ebb25d88ba72 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 18ee2f984727 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

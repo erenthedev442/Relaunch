@@ -1,8 +1,8 @@
 # Souls
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 7d
 
-`⭐ 13 Ascensions` `💪 11 jobs @99`
+`⭐ 14 Ascensions` `💪 11 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 40h |
-| Enemies defeated | 2,960 |
-| Deaths | 46 |
+| Time played | 42h |
+| Enemies defeated | 2,996 |
+| Deaths | 47 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,858
+- **Marks (current):** 5,908
 - **Marks (lifetime):** 1,902
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 433
+- **Total NM kills:** 469
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 270
+- **Augments crafted:** 286
 - **NM Affinities:** 10 / 13
 
 ## Reforge
@@ -53,12 +53,12 @@
 |---|---:|---:|
 | AF | 451 | 9,535 |
 | Relic | 32 | 1,655 |
-| Empyrean | 2,370 | 910 |
+| Empyrean | 270 | 4,060 |
 
 ## Prestige
 
-- **Total Ascensions:** 13
-- **Per-job prestige:** RDM P10 · DRK P3
+- **Total Ascensions:** 14
+- **Per-job prestige:** RDM P11 · DRK P3
 
 ## Collections
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1e11a0b07ae8 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: b487359bbdb7 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

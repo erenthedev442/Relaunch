@@ -1,8 +1,8 @@
 # Sophia
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 17h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 20h
 
-`💪 3 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,17 +11,17 @@
 
 | | |
 |---|---|
-| Main job | **WAR 85** |
-| Sub job | MNK 85 |
-| Time played | 24h |
-| Enemies defeated | 892 |
+| Main job | **MNK 99** |
+| Sub job | WAR 99 |
+| Time played | 27h |
+| Enemies defeated | 1,073 |
 | Deaths | 3 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 85 | SAM | 1 |
+| **WAR** | **99** | SAM | 1 |
 | **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,604
+- **Marks (current):** 4
 - **Marks (lifetime):** 10
 - **Distinct NMs slain:** 2
 - **Total NM kills:** 2
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a620f50ae169 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 7b6d766b2bad -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

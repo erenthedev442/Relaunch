@@ -1,8 +1,8 @@
 # Ariamys
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 4h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 7h
 
-`⭐ 3 Ascensions` `💪 10 jobs @99`
+`⭐ 12 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 52h |
-| Enemies defeated | 4,163 |
-| Deaths | 29 |
+| Time played | 65h |
+| Enemies defeated | 4,450 |
+| Deaths | 32 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 14,492
-- **Marks (lifetime):** 19,263
+- **Marks (current):** 4,531
+- **Marks (lifetime):** 20,713
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 1,075
+- **Total NM kills:** 1,168
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 311
+- **Augments crafted:** 347
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -57,8 +57,8 @@
 
 ## Prestige
 
-- **Total Ascensions:** 3
-- **Per-job prestige:** RDM P1 · RUN P2
+- **Total Ascensions:** 12
+- **Per-job prestige:** RDM P9 · RUN P3
 
 ## Collections
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**14** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert · Augment Master.
+**15** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · First Ascension · Ascending Master · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b6533b801450 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 09e71aaf3ed9 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

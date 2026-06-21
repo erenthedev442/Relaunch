@@ -1,8 +1,8 @@
 # Shizuku
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-20 · Character age 1d 15h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-20 · Character age 1d 19h
 
-`💪 2 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **DNC 25** |
-| Sub job | BLU 25 |
-| Time played | 12h |
-| Enemies defeated | 34 |
+| Main job | **BLU 99** |
+| Sub job | RDM 99 |
+| Time played | 24h |
+| Enemies defeated | 1,031 |
 | Deaths | 0 |
 
 ## Job levels
@@ -25,10 +25,10 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
-| **RDM** | **99** | BLU | 60 |
+| **RDM** | **99** | **BLU** | **99** |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 25 |
+| DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -43,8 +43,8 @@
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 16
+- **Mastery rank:** 1 / 5
+- **Augments crafted:** 39
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 120
 
 ## Achievements
 
@@ -65,7 +65,9 @@
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 18h 57m |
 
 ---
 
@@ -74,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dacba3c57670 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: d94f135748e4 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Meli
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 7d 5h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 7d 9h
 
 `⭐ 2 Ascensions` `💪 2 jobs @99`
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 352a82a89995 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: f8d5d3a69f4c -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

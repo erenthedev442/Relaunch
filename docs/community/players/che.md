@@ -1,11 +1,11 @@
 # Che
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-19 · Character age 4d 11h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 14h
 
 `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | NIN 99 |
-| Time played | 19h |
-| Enemies defeated | 1,104 |
-| Deaths | 7 |
+| Time played | 27h |
+| Enemies defeated | 2,225 |
+| Deaths | 13 |
 
 ## Job levels
 
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 302
-- **Marks (lifetime):** 586
-- **Distinct NMs slain:** 8
-- **Total NM kills:** 78
+- **Rank:** 5 / 5
+- **Marks (current):** 5,031
+- **Marks (lifetime):** 3,528
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 1,053
 
 ## Guild standing
 
@@ -47,38 +47,39 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Journeyman | 2,500 | 2,500 to Veteran |
+| AF Hunters' Guild | Veteran | 5,000 | 20,000 to Master |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | League Hunters' Guild | Journeyman | 1,500 | 3,500 to Veteran |
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 51
-- **NM Affinities:** 1 / 13
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 121
+- **NM Affinities:** 2 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 1,599 |
+| AF | 15,770 | 31,592 |
 | Relic | 0 | 0 |
-| Empyrean | 288 | 205 |
+| Empyrean | 2,389 | 715 |
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
-**6** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Augment Novice · Augment Expert.
+**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 20h 10m |
+| HL Rank I → V | 1d 22h |
 
 ---
 
@@ -87,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8c69af877398 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: b27a09aa11f2 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

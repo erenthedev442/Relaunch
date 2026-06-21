@@ -1,6 +1,6 @@
 # Smoke
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 8h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 5d 12h
 
 `💪 1 job @99`
 
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **COR 99** |
-| Sub job | NIN 80 |
-| Time played | 26h |
+| Main job | **PLD 75** |
+| Sub job | WAR 62 |
+| Time played | 27h |
 | Enemies defeated | 405 |
 | Deaths | 11 |
 
@@ -21,13 +21,13 @@
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 80 |
+| WAR | 62 | SAM | 1 |
+| MNK | 1 | NIN | 81 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | **COR** | **99** |
-| PLD | 1 | PUP | 1 |
+| PLD | 75 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 34
+- **Marks (current):** 3,284
 - **Marks (lifetime):** 377
 - **Distinct NMs slain:** 6
 - **Total NM kills:** 54
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f4fa2a468c39 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 86c9fce976d7 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

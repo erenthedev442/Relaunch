@@ -1,8 +1,8 @@
 # Ririn
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 7h
 
-`⭐ 8 Ascensions` `💪 3 jobs @99`
+`⭐ 18 Ascensions` `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | NIN 99 |
-| Time played | 25h |
-| Enemies defeated | 1,778 |
-| Deaths | 20 |
+| Sub job | BLU 99 |
+| Time played | 33h |
+| Enemies defeated | 2,145 |
+| Deaths | 36 |
 
 ## Job levels
 
@@ -24,8 +24,8 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
-| **RDM** | **99** | BLU | 9 |
+| **BLM** | **99** | SMN | 1 |
+| **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,063
+- **Marks (current):** 1,603
 - **Marks (lifetime):** 1,356
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 230
+- **Total NM kills:** 283
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 284
+- **Augments crafted:** 309
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -68,13 +68,13 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Job Rebirth
 
-- **Total rebirths:** 3
-- **By job:** RDM ×1 · THF ×2
+- **Total rebirths:** 5
+- **By job:** RDM ×1 · THF ×4
 
 ## Prestige
 
-- **Total Ascensions:** 8
-- **Per-job prestige:** THF P8
+- **Total Ascensions:** 18
+- **Per-job prestige:** THF P18
 
 ## Collections
 
@@ -82,7 +82,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**14** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0437d5359988 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: d0aa2f14d5c5 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

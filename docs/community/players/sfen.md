@@ -1,21 +1,21 @@
 # Sfen
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-20 · Character age 1d 20h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 1d 23h
 
-`💪 3 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | DNC 92 |
-| Time played | 10h |
-| Enemies defeated | 480 |
-| Deaths | 14 |
+| Sub job | DRG 80 |
+| Time played | 19h |
+| Enemies defeated | 937 |
+| Deaths | 16 |
 
 ## Job levels
 
@@ -28,23 +28,23 @@
 | RDM | 1 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 92 |
+| DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 1,455
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 2 / 5
+- **Marks (current):** 2,485
+- **Marks (lifetime):** 15
+- **Distinct NMs slain:** 3
+- **Total NM kills:** 3
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 7
+- **Augments crafted:** 12
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -57,11 +57,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**2** unlocked — First Hunt · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d33806aaafff -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 6c543c05e16b -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

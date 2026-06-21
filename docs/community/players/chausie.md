@@ -1,33 +1,33 @@
 # Chausie
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 20h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 23h
 
-`💪 2 jobs @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **DNC 99** |
-| Sub job | THF 99 |
-| Time played | 25h |
-| Enemies defeated | 1,051 |
-| Deaths | 5 |
+| Main job | **DRG 29** |
+| Sub job | PUP 29 |
+| Time played | 34h |
+| Enemies defeated | 1,598 |
+| Deaths | 14 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 8 | SAM | 1 |
+| WAR | 81 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 1 | DRG | 1 |
+| WHM | 1 | DRG | 29 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
-| PLD | 1 | PUP | 1 |
+| PLD | 1 | **PUP** | **99** |
 | DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 2,775
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 5 / 5
+- **Marks (current):** 372
+- **Marks (lifetime):** 332
+- **Distinct NMs slain:** 8
+- **Total NM kills:** 47
 
 ## Guild standing
 
@@ -47,7 +47,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| AF Hunters' Guild | Journeyman | 1,000 | 4,000 to Veteran |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | League Hunters' Guild | Journeyman | 500 | 4,500 to Veteran |
@@ -70,6 +70,10 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 - **Trusts learned:** 117
 
+## Achievements
+
+**4** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked.
+
 ## Speed records
 
 | Record | Time |
@@ -83,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c7e6bfdf77e9 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 40e5e293cfda -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

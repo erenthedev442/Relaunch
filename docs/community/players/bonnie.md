@@ -1,6 +1,6 @@
 # Bonnie
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-19 · Character age 5d 2h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-19 · Character age 5d 6h
 
 `💪 2 jobs @99`
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 102c97dd8c13 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: ac928779ce3f -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

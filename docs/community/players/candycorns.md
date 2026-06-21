@@ -1,8 +1,8 @@
 # Candycorns
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 4h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 7h
 
-`💪 8 jobs @99`
+`💪 11 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **WAR 99** |
-| Sub job | SAM 99 |
-| Time played | 54h |
-| Enemies defeated | 2,663 |
-| Deaths | 14 |
+| Main job | **NIN 99** |
+| Sub job | DRK 99 |
+| Time played | 62h |
+| Enemies defeated | 2,945 |
+| Deaths | 15 |
 
 ## Job levels
 
@@ -25,26 +25,26 @@
 | **MNK** | **99** | **NIN** | **99** |
 | WHM | 82 | DRG | 84 |
 | BLM | 96 | SMN | 1 |
-| **RDM** | **99** | BLU | 1 |
+| **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | **DNC** | **99** |
+| **DRK** | **99** | **DNC** | **99** |
 | BST | 1 | SCH | 4 |
 | BRD | 4 | **GEO** | **99** |
-| RNG | 1 | RUN | 1 |
+| **RNG** | **99** | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3
-- **Marks (lifetime):** 1,911
+- **Marks (current):** 192
+- **Marks (lifetime):** 4,484
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 82
+- **Total NM kills:** 149
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 291
+- **Augments crafted:** 310
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert · Augment Master.
+**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ec466c64a935 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: e5fd74f1cb75 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

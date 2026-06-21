@@ -1,8 +1,8 @@
 # Regis
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 13h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 16h
 
-`⭐ 20 Ascensions` `💪 7 jobs @99`
+`⭐ 20 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 43h |
-| Enemies defeated | 1,552 |
-| Deaths | 37 |
+| Time played | 54h |
+| Enemies defeated | 1,684 |
+| Deaths | 39 |
 
 ## Job levels
 
@@ -25,27 +25,27 @@
 | **MNK** | **99** | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 67 |
+| RDM | 1 | **BLU** | **99** |
 | THF | 1 | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
-| **DRK** | **99** | DNC | 84 |
-| BST | 1 | SCH | 1 |
+| **DRK** | **99** | **DNC** | **99** |
+| **BST** | **99** | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| RNG | 85 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 15,168
+- **Marks (current):** 13,533
 - **Marks (lifetime):** 1,619
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 277
+- **Total NM kills:** 293
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 57
-- **NM Affinities:** 2 / 13
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 191
+- **NM Affinities:** 3 / 13
 
 ## Reforge
 
@@ -62,7 +62,7 @@
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 120
 
 ## Achievements
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ad6147f1d7ef -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: bb234a415cb6 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

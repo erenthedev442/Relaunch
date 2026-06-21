@@ -1,8 +1,8 @@
 # Nanafu
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 22h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 3d 1h
 
-`💪 2 jobs @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -12,18 +12,18 @@
 | | |
 |---|---|
 | Main job | **WAR 99** |
-| Sub job | SAM 99 |
-| Time played | 9h |
-| Enemies defeated | 306 |
-| Deaths | 15 |
+| Sub job | WHM 96 |
+| Time played | 11h |
+| Enemies defeated | 1,018 |
+| Deaths | 17 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| MNK | 1 | NIN | 1 |
-| WHM | 1 | DRG | 1 |
+| **MNK** | **99** | NIN | 1 |
+| WHM | 96 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 12,335
+- **Marks (current):** 375
 - **Marks (lifetime):** 4,191
 - **Distinct NMs slain:** 6
 - **Total NM kills:** 365
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 119
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 98af4727f503 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 632dfcad6306 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

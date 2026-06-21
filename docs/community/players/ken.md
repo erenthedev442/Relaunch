@@ -1,8 +1,8 @@
 # Ken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 5d 2h
 
-`💪 20 jobs @99`
+`💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BRD 99** |
-| Sub job | GEO 95 |
-| Time played | 46h |
-| Enemies defeated | 101 |
-| Deaths | 8 |
+| Main job | **MNK 99** |
+| Sub job | RDM 99 |
+| Time played | 50h |
+| Enemies defeated | 1,840 |
+| Deaths | 10 |
 
 ## Job levels
 
@@ -30,16 +30,16 @@
 | **PLD** | **99** | **PUP** | **99** |
 | **DRK** | **99** | **DNC** | **99** |
 | **BST** | **99** | **SCH** | **99** |
-| **BRD** | **99** | GEO | 95 |
-| RNG | 85 | **RUN** | **99** |
+| **BRD** | **99** | **GEO** | **99** |
+| **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 239,164
-- **Marks (lifetime):** 104,855
+- **Marks (current):** 254,749
+- **Marks (lifetime):** 115,745
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 1,742
+- **Total NM kills:** 3,896
 
 ## Augment Sage
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4fa0d88ab81b -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 37e2c29a955a -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

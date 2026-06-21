@@ -1,8 +1,8 @@
 # Herdofturtles
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 22h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 1h
 
-`⭐ 64 Ascensions` `💪 12 jobs @99`
+`⭐ 118 Ascensions` `💪 12 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **NIN 99** |
+| Main job | **PLD 99** |
 | Sub job | BLU 99 |
-| Time played | 57h |
-| Enemies defeated | 6,751 |
-| Deaths | 28 |
+| Time played | 68h |
+| Enemies defeated | 7,265 |
+| Deaths | 32 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 12,129
+- **Marks (current):** 3,934
 - **Marks (lifetime):** 5,406
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 546
+- **Total NM kills:** 967
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 337
+- **Augments crafted:** 360
 - **NM Affinities:** 10 / 13
 
 ## Reforge
@@ -73,8 +73,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 64
-- **Per-job prestige:** RDM P14 · PLD P4 · NIN P1 · RUN P45
+- **Total Ascensions:** 118
+- **Per-job prestige:** RDM P14 · PLD P44 · NIN P10 · RUN P50
 
 ## Collections
 
@@ -82,7 +82,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**15** unlocked — First Hunt · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Eternal Ascendant · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
+**18** unlocked — First Hunt · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Wave Fighter · First Ascension · Ascending Master · Eternal Ascendant · Star-Slayer · Sanctuary Defender · Voidsent Bane · First Blood · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9be5c50169be -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: e585d4ca194c -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

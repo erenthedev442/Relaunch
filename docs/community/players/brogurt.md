@@ -1,6 +1,6 @@
 # Brogurt
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 7d 10h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-18 · Character age 7d 13h
 
 `⭐ 6 Ascensions` `💪 9 jobs @99`
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 83b6f48b79fc -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: f97ef926d172 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

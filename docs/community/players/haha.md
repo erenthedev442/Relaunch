@@ -1,8 +1,8 @@
 # Haha
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 4d 12h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 16h
 
-`💪 1 job @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
-| Sub job | RDM 81 |
-| Time played | 6h |
+| Main job | **BLM 99** |
+| Sub job | WHM 99 |
+| Time played | 13h |
 | Enemies defeated | 0 |
 | Deaths | 1 |
 
@@ -23,9 +23,9 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 9 | DRG | 1 |
-| BLM | 11 | SMN | 1 |
-| RDM | 81 | **BLU** | **99** |
+| **WHM** | **99** | DRG | 1 |
+| **BLM** | **99** | SMN | 1 |
+| **RDM** | **99** | **BLU** | **99** |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,525
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Marks (current):** 2,238
+- **Marks (lifetime):** 30
+- **Distinct NMs slain:** 3
+- **Total NM kills:** 6
 
 ## Augment Sage
 
@@ -59,6 +59,10 @@
 
 - **Trusts learned:** 117
 
+## Achievements
+
+**1** unlocked — First Hunt.
+
 ## Speed records
 
 | Record | Time |
@@ -72,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 86f884ecc6e5 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 43a58ffadd88 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

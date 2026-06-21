@@ -1,19 +1,21 @@
 # Skerxan
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-19 · Character age 1d 4h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-20 · Character age 1d 7h
+
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 85/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **THF 85** |
-| Sub job | DNC 70 |
-| Time played | 2h |
-| Enemies defeated | 73 |
-| Deaths | 0 |
+| Main job | **THF 99** |
+| Sub job | DNC 99 |
+| Time played | 6h |
+| Enemies defeated | 127 |
+| Deaths | 3 |
 
 ## Job levels
 
@@ -24,20 +26,20 @@
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 85 | COR | 1 |
+| **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 70 |
+| DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 475
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 3 / 5
+- **Marks (current):** 1,175
+- **Marks (lifetime):** 613
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 52
 
 ## Augment Sage
 
@@ -57,9 +59,15 @@
 
 - **Trusts learned:** 117
 
+## Achievements
+
+**4** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked.
+
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 7h 52m |
 
 ---
 
@@ -68,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dbdfb97f73e7 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: a14e6935d6c4 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

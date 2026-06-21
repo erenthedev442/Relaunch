@@ -1,19 +1,19 @@
 # Ericgamerguy
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-20 · Character age 1d 1h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-20 · Character age 1d 4h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 11/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 56/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 11** |
+| Main job | **RDM 56** |
 | Sub job | — |
-| Time played | 0h |
-| Enemies defeated | 16 |
-| Deaths | 2 |
+| Time played | 3h |
+| Enemies defeated | 69 |
+| Deaths | 3 |
 
 ## Job levels
 
@@ -23,7 +23,7 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 11 | BLU | 1 |
+| RDM | 56 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 725
+- **Marks (current):** 975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 84a292b8fbe3 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 922d51a8a4eb -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

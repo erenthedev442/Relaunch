@@ -1,6 +1,6 @@
 # Bocao
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-19 · Character age 4d 1h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-19 · Character age 4d 4h
 
 `💪 2 jobs @99`
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e30a8881605a -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 9529b72da5ea -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

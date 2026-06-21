@@ -1,8 +1,8 @@
 # Rose
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 22h
 
-`💪 10 jobs @99`
+`💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | COR 1 |
-| Time played | 24h |
+| Main job | **DRK 99** |
+| Sub job | SCH 99 |
+| Time played | 28h |
 | Enemies defeated | 11 |
 | Deaths | 0 |
 
@@ -21,25 +21,25 @@
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| **WAR** | **99** | SAM | 1 |
-| **MNK** | **99** | NIN | 1 |
-| **WHM** | **99** | DRG | 1 |
-| **BLM** | **99** | SMN | 1 |
+| **WAR** | **99** | **SAM** | **99** |
+| **MNK** | **99** | **NIN** | **99** |
+| **WHM** | **99** | **DRG** | **99** |
+| **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
-| **THF** | **99** | COR | 1 |
-| **PLD** | **99** | PUP | 1 |
-| **DRK** | **99** | DNC | 1 |
-| BST | 69 | SCH | 1 |
-| **BRD** | **99** | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| **THF** | **99** | **COR** | **99** |
+| **PLD** | **99** | **PUP** | **99** |
+| **DRK** | **99** | **DNC** | **99** |
+| **BST** | **99** | **SCH** | **99** |
+| **BRD** | **99** | **GEO** | **99** |
+| **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 57,942
-- **Marks (lifetime):** 3,496
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 528
+- **Marks (current):** 80,023
+- **Marks (lifetime):** 14,261
+- **Distinct NMs slain:** 8
+- **Total NM kills:** 2,657
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**9** unlocked — Ten Hunts In · Tier IV Unlocked · Mark of 1,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**13** unlocked — Ten Hunts In · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b9b1db457c12 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: f4b76f62a8d4 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

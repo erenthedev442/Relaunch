@@ -1,6 +1,6 @@
 # Lyvia
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 4h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 7h
 
 `💪 4 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **BLM 99** |
-| Sub job | BLU 99 |
-| Time played | 28h |
-| Enemies defeated | 600 |
+| Sub job | RDM 99 |
+| Time played | 29h |
+| Enemies defeated | 648 |
 | Deaths | 17 |
 
 ## Job levels
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 55b45ba2b3de -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: f9721e61fbbe -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

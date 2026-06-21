@@ -1,8 +1,8 @@
-# Byakko
+# Erenjaeger
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 2d 6h
 
-`💪 6 jobs @99`
+`💪 15 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,47 +13,47 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | WHM 99 |
-| Time played | 14h |
-| Enemies defeated | 1 |
-| Deaths | 7 |
+| Time played | 25h |
+| Enemies defeated | 3 |
+| Deaths | 9 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
+| **WAR** | **99** | SAM | 1 |
+| **MNK** | **99** | **NIN** | **99** |
 | **WHM** | **99** | DRG | 1 |
-| **BLM** | **99** | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| **BLM** | **99** | **SMN** | **99** |
+| **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | **COR** | **99** |
-| PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 1 |
+| **PLD** | **99** | PUP | 1 |
+| **DRK** | **99** | DNC | 1 |
+| BST | 1 | **SCH** | **99** |
 | **BRD** | **99** | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 99,365
+- **Marks (current):** 108,040
 - **Marks (lifetime):** 52,781
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 516
+- **Total NM kills:** 803
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 1
-- **NM Affinities:** 1 / 13
+- **Augments crafted:** 12
+- **NM Affinities:** 3 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| AF | 8,350 | 12,600 |
+| Relic | 7,230 | 12,480 |
+| Empyrean | 9,300 | 14,550 |
 
 ## Collections
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Augment Novice.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b32b66e3e5f4 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 8c7d67544c3e -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

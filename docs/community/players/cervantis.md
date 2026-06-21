@@ -1,8 +1,8 @@
 # Cervantis
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-19 · Character age 7d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 13h
 
-`⭐ 15 Ascensions` `💪 5 jobs @99`
+`⭐ 17 Ascensions` `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | SAM 99 |
-| Time played | 43h |
-| Enemies defeated | 3,980 |
-| Deaths | 54 |
+| Time played | 50h |
+| Enemies defeated | 4,867 |
+| Deaths | 62 |
 
 ## Job levels
 
@@ -36,29 +36,29 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 839
-- **Marks (lifetime):** 5,346
+- **Marks (current):** 16,842
+- **Marks (lifetime):** 6,006
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 244
+- **Total NM kills:** 329
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 263
+- **Augments crafted:** 265
 - **NM Affinities:** 2 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 3,265 | 5,465 |
+| AF | 3,365 | 5,465 |
 | Relic | 1,230 | 1,830 |
 | Empyrean | 5 | 7,605 |
 
 ## Prestige
 
-- **Total Ascensions:** 15
-- **Per-job prestige:** WAR P9 · SAM P6
+- **Total Ascensions:** 17
+- **Per-job prestige:** WAR P11 · SAM P6
 
 ## Collections
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Ascending Master · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
+**14** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f2077b156276 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: bfe546d7677d -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

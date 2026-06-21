@@ -1,11 +1,11 @@
 # Nobigdeal
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 3d 22h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-20 · Character age 4d 1h
 
 `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 9h |
-| Enemies defeated | 270 |
+| Time played | 10h |
+| Enemies defeated | 273 |
 | Deaths | 5 |
 
 ## Job levels
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 2 / 5
-- **Marks (current):** 12,644
-- **Marks (lifetime):** 6,418
+- **Rank:** 3 / 5
+- **Marks (current):** 701
+- **Marks (lifetime):** 6,454
 - **Distinct NMs slain:** 4
-- **Total NM kills:** 648
+- **Total NM kills:** 651
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 55d36332653b -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: ffedb3a073b6 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

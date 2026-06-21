@@ -1,6 +1,6 @@
 # Zowoey
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-14 · Character age 7d 2h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-14 · Character age 7d 5h
 
 `💪 1 job @99`
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4f35a4faf04b -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 234f36360725 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

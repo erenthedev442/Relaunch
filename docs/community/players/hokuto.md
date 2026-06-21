@@ -1,6 +1,6 @@
 # Hokuto
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-19 · Character age 5d 12h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-20 · Character age 5d 15h
 
 `💪 3 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **MNK 99** |
 | Sub job | THF 99 |
 | Time played | 15h |
-| Enemies defeated | 620 |
+| Enemies defeated | 622 |
 | Deaths | 0 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 2,775
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Marks (current):** 8,219
+- **Marks (lifetime):** 340
+- **Distinct NMs slain:** 2
+- **Total NM kills:** 68
 
 ## Augment Sage
 
@@ -59,6 +59,10 @@
 
 - **Trusts learned:** 118
 
+## Achievements
+
+**2** unlocked — First Hunt · Ten Hunts In.
+
 ## Speed records
 
 | Record | Time |
@@ -72,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7c345eb131b0 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: f16d4c0b571d -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

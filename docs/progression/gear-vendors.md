@@ -36,7 +36,7 @@ Tiered armor across the five main slots. Items are listed with the seal cost and
 ### Bronze tier (entry-level ilvl 119)
 
 <!-- DOCGEN:BEGIN id="armor-bronze" -->
-_64 pieces total. Cost is paid in Beastmens Medal._
+_66 pieces total. Cost is paid in Beastmens Medal._
 
 #### Head
 
@@ -126,12 +126,19 @@ _64 pieces total. Cost is paid in Beastmens Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/25967" data-img="https://www.bg-wiki.com/images/7/7f/Pinga_Pumps_%2B1_description.png" target="_blank" rel="noopener">Pinga Pumps +1</a> | 12 | WHM/BLU/SCH |
 | <a class="item-link" href="https://www.ffxiah.com/item/28274" data-img="https://www.bg-wiki.com/images/a/ab/Regal_Pumps_%2B1_description.png" target="_blank" rel="noopener">Regal Pumps +1</a> | 12 | WHM/BLM/SMN/PUP/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/28296" data-img="https://www.bg-wiki.com/images/3/3f/Artsieq_Boots_description.png" target="_blank" rel="noopener">Artsieq Boots</a> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
+
+#### Shields
+
+| Item | Cost | Jobs |
+|---|---:|---|
+| <a class="item-link" href="https://www.ffxiah.com/item/27644" data-img="https://www.bg-wiki.com/images/c/c7/Blurred_Shield_%2B1_description.png" target="_blank" rel="noopener">Blurred Shield +1</a> | 12 | WAR/PLD/DRK |
+| <a class="item-link" href="https://www.ffxiah.com/item/26421" data-img="https://www.bg-wiki.com/images/9/9c/Nusku_Shield_description.png" target="_blank" rel="noopener">Nusku Shield</a> | 12 | RNG/COR |
 <!-- DOCGEN:END id="armor-bronze" -->
 
 ### Silver tier (HQ +1 / +2 augmented gear)
 
 <!-- DOCGEN:BEGIN id="armor-silver" -->
-_55 pieces total. Cost is paid in Kindreds Medal._
+_58 pieces total. Cost is paid in Kindreds Medal._
 
 #### Head
 
@@ -212,6 +219,14 @@ _55 pieces total. Cost is paid in Kindreds Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/25922" data-img="https://www.bg-wiki.com/images/2/2e/Navon_Crackows_description.png" target="_blank" rel="noopener">Navon Crackows</a> | 25 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/27379" data-img="https://www.bg-wiki.com/images/7/76/Rao_Sune-Ate_%2B1_description.png" target="_blank" rel="noopener">Rao Sune-Ate +1</a> | 25 | MNK/SAM/NIN/PUP |
 | <a class="item-link" href="https://www.ffxiah.com/item/25940" data-img="https://www.bg-wiki.com/images/4/4e/Flamma_Gambieras_description.png" target="_blank" rel="noopener">Flamma Gambieras</a> | 25 | WAR/PLD/DRK/SAM/DRG |
+
+#### Shields
+
+| Item | Cost | Jobs |
+|---|---:|---|
+| <a class="item-link" href="https://www.ffxiah.com/item/28648" data-img="https://www.bg-wiki.com/images/0/09/Priwen_description.png" target="_blank" rel="noopener">Priwen</a> | 25 | PLD |
+| <a class="item-link" href="https://www.ffxiah.com/item/28649" data-img="https://www.bg-wiki.com/images/0/06/Rinda_Shield_description.png" target="_blank" rel="noopener">Rinda Shield</a> | 25 | WAR/PLD/DRK |
+| <a class="item-link" href="https://www.ffxiah.com/item/27645" data-img="https://www.bg-wiki.com/images/6/66/Genmei_Shield_description.png" target="_blank" rel="noopener">Genmei Shield</a> | 25 | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
 <!-- DOCGEN:END id="armor-silver" -->
 
 ### Gold tier (BiS endgame — Nyame, Malignance, Sakpata's, +3)
@@ -221,7 +236,7 @@ _55 pieces total. Cost is paid in Kindreds Medal._
 <!-- DOCGEN:END id="gold-warning" -->
 
 <!-- DOCGEN:BEGIN id="armor-gold" -->
-_53 pieces total. Cost is paid in Demons Medal._
+_58 pieces total. Cost is paid in Demons Medal._
 
 #### Head
 
@@ -234,6 +249,7 @@ _53 pieces total. Cost is paid in Demons Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/23759" data-img="https://www.bg-wiki.com/images/b/ba/Agwu%27s_Cap_description.png" target="_blank" rel="noopener">Agwus Cap</a> | 50 | BLM/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/24166" data-img="https://www.bg-wiki.com/images/c/c3/Magnif._Crown_description.png" target="_blank" rel="noopener">Magnificent Crown</a> | 50 | MNK/THF/BST/PUP/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/24182" data-img="https://www.bg-wiki.com/images/5/50/Clemen._Somen_description.png" target="_blank" rel="noopener">Clemency Somen</a> | 50 | RNG/SAM/DRG/COR |
+| <a class="item-link" href="https://www.ffxiah.com/item/23732" data-img="https://www.bg-wiki.com/images/8/8c/Malignance_Chapeau_description.png" target="_blank" rel="noopener">Malignance Chapeau</a> | 50 | MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/23710" data-img="https://www.bg-wiki.com/images/1/18/Volte_Beret_description.png" target="_blank" rel="noopener">Volte Beret</a> | 50 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/23713" data-img="https://www.bg-wiki.com/images/1/10/Volte_Cap_description.png" target="_blank" rel="noopener">Volte Cap</a> | 50 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/27731" data-img="https://www.bg-wiki.com/images/7/72/Gende._Caubeen_%2B1_description.png" target="_blank" rel="noopener">Gendewitha Caubeen +1</a> | 50 | WHM/RDM/BRD/SCH |
@@ -281,6 +297,7 @@ _53 pieces total. Cost is paid in Demons Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/25908" data-img="https://www.bg-wiki.com/images/3/30/Turms_Subligar_%2B1_description.png" target="_blank" rel="noopener">Turms Subligar +1</a> | 50 | THF/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25898" data-img="https://www.bg-wiki.com/images/7/7e/Arke_Cosc._%2B1_description.png" target="_blank" rel="noopener">Arke Cosciales +1</a> | 50 | WAR/PLD/DRG |
 | <a class="item-link" href="https://www.ffxiah.com/item/23722" data-img="https://www.bg-wiki.com/images/1/17/Volte_Brais_description.png" target="_blank" rel="noopener">Volte Brais</a> | 50 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
+| <a class="item-link" href="https://www.ffxiah.com/item/23735" data-img="https://www.bg-wiki.com/images/e/e1/Malignance_Tights_description.png" target="_blank" rel="noopener">Malignance Tights</a> | 50 | MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/25880" data-img="https://www.bg-wiki.com/images/5/5e/Meg._Chausses_%2B2_description.png" target="_blank" rel="noopener">Meghanada Chausses +2</a> | 50 | THF/BST/RNG/COR/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/23725" data-img="https://www.bg-wiki.com/images/f/fc/Volte_Hose_description.png" target="_blank" rel="noopener">Volte Hose</a> | 50 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25882" data-img="https://www.bg-wiki.com/images/f/f0/Inyanga_Shalwar_%2B2_description.png" target="_blank" rel="noopener">Inyanga Shalwar +2</a> | 50 | WHM/BRD/SMN |
@@ -300,6 +317,14 @@ _53 pieces total. Cost is paid in Demons Medal._
 | <a class="item-link" href="https://www.ffxiah.com/item/25950" data-img="https://www.bg-wiki.com/images/0/0f/Jhakri_Pigaches_%2B2_description.png" target="_blank" rel="noopener">Jhakri Pigaches +2</a> | 50 | BLM/RDM/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/23726" data-img="https://www.bg-wiki.com/images/6/69/Volte_Gaiters_description.png" target="_blank" rel="noopener">Volte Gaiters</a> | 50 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/27476" data-img="https://www.bg-wiki.com/images/a/a8/Amalric_Nails_%2B1_description.png" target="_blank" rel="noopener">Amalric Nails +1</a> | 50 | BLM/RDM/SMN/BLU/SCH/GEO |
+
+#### Shields
+
+| Item | Cost | Jobs |
+|---|---:|---|
+| <a class="item-link" href="https://www.ffxiah.com/item/26487" data-img="https://www.bg-wiki.com/images/5/51/Sacro_Bulwark_description.png" target="_blank" rel="noopener">Sacro Bulwark</a> | 50 | WAR/RDM/PLD/BST |
+| <a class="item-link" href="https://www.ffxiah.com/item/27637" data-img="https://www.bg-wiki.com/images/c/cd/Evalach_%2B1_description.png" target="_blank" rel="noopener">Evalach +1</a> | 50 | WAR/RDM/PLD/BST/SAM |
+| <a class="item-link" href="https://www.ffxiah.com/item/26420" data-img="https://www.bg-wiki.com/images/7/7e/Adapa_Shield_description.png" target="_blank" rel="noopener">Adapa Shield</a> | 50 | WAR/DRK/BST |
 <!-- DOCGEN:END id="armor-gold" -->
 
 ---
@@ -947,7 +972,7 @@ _47 items across 3 categories. All costs are in Hunt Marks._
 | Item | Cost | Notes |
 |---|---:|---|
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Silencega&go=Go" data-img="" target="_blank" rel="noopener">Silencega</a> | 200 | WHM 40 / RDM 50 / SCH 50, AoE Silence (Wind), Learned on purchase |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Divine+Aegis&go=Go" data-img="" target="_blank" rel="noopener">Divine Aegis</a> | 400 | PLD 50, Holy shield → AoE detonation, Learned on purchase |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Divine+Aegis&go=Go" data-img="" target="_blank" rel="noopener">Divine Aegis</a> | 400 | PLD 50, Holy shield -> AoE detonation, Learned on purchase |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Convergence&go=Go" data-img="" target="_blank" rel="noopener">Convergence</a> | 350 | RDM 50, Random enfeeble + elemental damage, Learned on purchase |
 <!-- DOCGEN:END id="accessories" -->
 
@@ -962,7 +987,7 @@ Per-job **+4 Reforge Sets** (AF/Relic/Empyrean +4) are also sold here.
 
 ### Curated picks
 
-_118 hand-picked items -- relic weapons, bard instruments, and other special weapons._
+_149 hand-picked items -- relic weapons, bard instruments, and other special weapons._
 
 | Item | Cost | Notes |
 |---|---:|---|
@@ -1002,27 +1027,33 @@ _118 hand-picked items -- relic weapons, bard instruments, and other special wea
 | <a class="item-link" href="https://www.ffxiah.com/item/21403" data-img="https://www.bg-wiki.com/images/e/ef/Damani_Horn_%2B1_description.png" target="_blank" rel="noopener">Damani Horn +1</a> | 250 | Wind horn (BRD). MP+25, Wind Skill+4. · All Songs+3. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Loughnashade&go=Go" data-img="" target="_blank" rel="noopener">Loughnashade</a> | 800 | Horn relic (Lv.119 III). Gjallarhorn. · CHR+20, All Songs+4. (BRD) |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Daurdabla&go=Go" data-img="" target="_blank" rel="noopener">Daurdabla</a> | 800 | Harp relic (string). Singing+20, Str+20. · +2 song slots, Song dur+30%. (BRD) |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Bravura&go=Go" data-img="" target="_blank" rel="noopener">Bravura</a> | 10000 | Great Axe (main). WAR. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Glanzfaust&go=Go" data-img="" target="_blank" rel="noopener">Glanzfaust</a> | 10000 | H2H (main). MNK. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Yagrush&go=Go" data-img="" target="_blank" rel="noopener">Yagrush</a> | 10000 | Club (main/sub). WHM. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Laevateinn&go=Go" data-img="" target="_blank" rel="noopener">Laevateinn</a> | 10000 | Staff (main). BLM. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Murgleis&go=Go" data-img="" target="_blank" rel="noopener">Murgleis</a> | 10000 | Sword (main/sub). RDM. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Twashtar&go=Go" data-img="" target="_blank" rel="noopener">Twashtar</a> | 10000 | Dagger (main/sub). THF. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Burtgang&go=Go" data-img="" target="_blank" rel="noopener">Burtgang</a> | 10000 | Sword (main/sub). PLD. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Liberator&go=Go" data-img="" target="_blank" rel="noopener">Liberator</a> | 10000 | Weapon (main). DRK. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Aymur&go=Go" data-img="" target="_blank" rel="noopener">Aymur</a> | 10000 | Club (main/sub). BST. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Carnwenhan&go=Go" data-img="" target="_blank" rel="noopener">Carnwenhan</a> | 10000 | Dagger (main/sub). BRD. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Gandiva&go=Go" data-img="" target="_blank" rel="noopener">Gandiva</a> | 10000 | Bow (ranged). RNG. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.ffxiah.com/item/21955" data-img="https://static.ffxiah.com/images/icon/21955.png" target="_blank" rel="noopener">Kogarasumaru</a> | 10000 | Great Katana (main). SAM. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Kannagi&go=Go" data-img="" target="_blank" rel="noopener">Kannagi</a> | 10000 | Katana (main/sub). NIN. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Nirvana&go=Go" data-img="" target="_blank" rel="noopener">Nirvana</a> | 10000 | Staff (main). SMN. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Tizona&go=Go" data-img="" target="_blank" rel="noopener">Tizona</a> | 10000 | Sword (main/sub). BLU. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.ffxiah.com/item/21482" data-img="https://www.bg-wiki.com/images/9/93/Compensator_description.png" target="_blank" rel="noopener">Compensator</a> | 10000 | Gun (ranged). COR. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Kenkonken&go=Go" data-img="" target="_blank" rel="noopener">Kenkonken</a> | 10000 | H2H (main). PUP. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Terpsichore&go=Go" data-img="" target="_blank" rel="noopener">Terpsichore</a> | 10000 | Dagger (main/sub). DNC. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.ffxiah.com/item/22099" data-img="https://www.bg-wiki.com/images/5/5f/Musa_description.png" target="_blank" rel="noopener">Musa</a> | 10000 | Staff (main). SCH. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Idris&go=Go" data-img="" target="_blank" rel="noopener">Idris</a> | 10000 | Club (main/sub). GEO. i119 III Mythic. · EX/RARE. Aftermath weapon. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Epeolatry&go=Go" data-img="" target="_blank" rel="noopener">Epeolatry</a> | 10000 | Sword (main). RUN. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Bravura&go=Go" data-img="" target="_blank" rel="noopener">Bravura</a> | 5000 | Great Axe (main). WAR. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Glanzfaust&go=Go" data-img="" target="_blank" rel="noopener">Glanzfaust</a> | 5000 | H2H (main). MNK. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Yagrush&go=Go" data-img="" target="_blank" rel="noopener">Yagrush</a> | 5000 | Club (main/sub). WHM. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Laevateinn&go=Go" data-img="" target="_blank" rel="noopener">Laevateinn</a> | 5000 | Staff (main). BLM. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Murgleis&go=Go" data-img="" target="_blank" rel="noopener">Murgleis</a> | 5000 | Sword (main/sub). RDM. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Twashtar&go=Go" data-img="" target="_blank" rel="noopener">Twashtar</a> | 5000 | Dagger (main/sub). THF. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Burtgang&go=Go" data-img="" target="_blank" rel="noopener">Burtgang</a> | 5000 | Sword (main/sub). PLD. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Liberator&go=Go" data-img="" target="_blank" rel="noopener">Liberator</a> | 5000 | Weapon (main). DRK. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Aymur&go=Go" data-img="" target="_blank" rel="noopener">Aymur</a> | 5000 | Club (main/sub). BST. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Carnwenhan&go=Go" data-img="" target="_blank" rel="noopener">Carnwenhan</a> | 5000 | Dagger (main/sub). BRD. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Gandiva&go=Go" data-img="" target="_blank" rel="noopener">Gandiva</a> | 5000 | Bow (ranged). RNG. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.ffxiah.com/item/21955" data-img="https://static.ffxiah.com/images/icon/21955.png" target="_blank" rel="noopener">Kogarasumaru</a> | 5000 | Great Katana (main). SAM. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Kannagi&go=Go" data-img="" target="_blank" rel="noopener">Kannagi</a> | 5000 | Katana (main/sub). NIN. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Nirvana&go=Go" data-img="" target="_blank" rel="noopener">Nirvana</a> | 5000 | Staff (main). SMN. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Tizona&go=Go" data-img="" target="_blank" rel="noopener">Tizona</a> | 5000 | Sword (main/sub). BLU. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.ffxiah.com/item/21482" data-img="https://www.bg-wiki.com/images/9/93/Compensator_description.png" target="_blank" rel="noopener">Compensator</a> | 5000 | Gun (ranged). COR. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Kenkonken&go=Go" data-img="" target="_blank" rel="noopener">Kenkonken</a> | 5000 | H2H (main). PUP. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Terpsichore&go=Go" data-img="" target="_blank" rel="noopener">Terpsichore</a> | 5000 | Dagger (main/sub). DNC. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.ffxiah.com/item/22099" data-img="https://www.bg-wiki.com/images/5/5f/Musa_description.png" target="_blank" rel="noopener">Musa</a> | 5000 | Staff (main). SCH. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Idris&go=Go" data-img="" target="_blank" rel="noopener">Idris</a> | 5000 | Club (main/sub). GEO. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Epeolatry&go=Go" data-img="" target="_blank" rel="noopener">Epeolatry</a> | 5000 | Sword (main). RUN. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Conqueror&go=Go" data-img="" target="_blank" rel="noopener">Conqueror</a> | 5000 | Great Axe (main). WAR. Relic (Lv.119 III). · EX/RARE. Final relic form. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Vajra&go=Go" data-img="" target="_blank" rel="noopener">Vajra</a> | 5000 | Dagger (main/sub). THF. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.ffxiah.com/item/22139" data-img="https://static.ffxiah.com/images/icon/22139.png" target="_blank" rel="noopener">Gastraphetes</a> | 5000 | Crossbow (ranged). RNG. Relic (Lv.119 III). · EX/RARE. Final relic form. |
+| <a class="item-link" href="https://www.ffxiah.com/item/21907" data-img="https://static.ffxiah.com/images/icon/21907.png" target="_blank" rel="noopener">Nagi</a> | 5000 | Katana (main/sub). NIN. Relic (Lv.119 III). · EX/RARE. Final relic form. |
+| <a class="item-link" href="https://www.ffxiah.com/item/22141" data-img="https://static.ffxiah.com/images/icon/22141.png" target="_blank" rel="noopener">Death Penalty</a> | 5000 | Gun (ranged). COR. Relic (Lv.119 III). · EX/RARE. Final relic form. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Tupsimati&go=Go" data-img="" target="_blank" rel="noopener">Tupsimati</a> | 5000 | Club (main). GEO. i119 III Mythic. · EX/RARE. Aftermath weapon. |
 | <a class="item-link" href="https://www.ffxiah.com/item/23500" data-img="https://www.bg-wiki.com/images/9/93/Pelt._Plackart_%2B3_description.png" target="_blank" rel="noopener">Peltast's Plackart +3</a> | 400 | Body. RUN Relic +3 reforged. · Tank/hybrid stat block. |
 | <a class="item-link" href="https://www.ffxiah.com/item/23567" data-img="https://www.bg-wiki.com/images/f/f2/Pel._Vambraces_%2B3_description.png" target="_blank" rel="noopener">Peltast's Vambraces +3</a> | 400 | Hands. RUN Relic +3 reforged. · Tank/hybrid stat block. |
 | <a class="item-link" href="https://www.ffxiah.com/item/25953" data-img="https://www.bg-wiki.com/images/d/d6/Flam._Gambieras_%2B2_description.png" target="_blank" rel="noopener">Flamma Gambieras +2</a> | 400 | Feet. Ambuscade. · DA+6, Store TP+6, Haste+2%. |
@@ -1038,7 +1069,10 @@ _118 hand-picked items -- relic weapons, bard instruments, and other special wea
 | <a class="item-link" href="https://www.ffxiah.com/item/26259" data-img="https://www.bg-wiki.com/images/5/57/Brigantia%27s_Mantle_description.png" target="_blank" rel="noopener">Brigantia's Mantle</a> | 4000 | Back. DRG JSE cape. DEF+18. · All Jumps: DA+20%. Wyvern: Breath+15. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26184" data-img="https://www.bg-wiki.com/images/8/8b/Stikini_Ring_%2B1_description.png" target="_blank" rel="noopener">Stikini Ring +1</a> | 200 | INT+10, MND+10, MEVA+12. · Mage ring. |
 | <a class="item-link" href="https://www.ffxiah.com/item/13566" data-img="https://www.bg-wiki.com/images/b/b9/Defending_Ring_description.png" target="_blank" rel="noopener">Defending Ring</a> | 1500 | Damage Taken -10%. · Locks itself once equipped. · The grand prize. |
-| <a class="item-link" href="https://www.ffxiah.com/item/21858" data-img="https://static.ffxiah.com/images/icon/21858.png" target="_blank" rel="noopener">Ryunohige</a> | 800 | Polearm (main). DRG. i119 III Mythic. · EX/RARE. Aftermath weapon. |
+| <a class="item-link" href="https://www.ffxiah.com/item/26400" data-img="https://www.bg-wiki.com/images/8/88/Culminus_description.png" target="_blank" rel="noopener">Culminus</a> | 500 | Shield (sub). Caster BiS - Magic Acc/Atk, Magic Dmg, MP. · WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO. |
+| <a class="item-link" href="https://www.ffxiah.com/item/26419" data-img="https://www.bg-wiki.com/images/2/27/Ammurapi_Shield_description.png" target="_blank" rel="noopener">Ammurapi Shield</a> | 500 | Shield (sub). Caster BiS (Sortie) - Magic Acc, Magic Burst Dmg. · WHM/BLM/RDM/BRD/SMN/SCH/GEO. |
+| <a class="item-link" href="https://www.ffxiah.com/item/28654" data-img="https://www.bg-wiki.com/images/4/4d/Beatific_Shield_%2B1_description.png" target="_blank" rel="noopener">Beatific Shield +1</a> | 500 | Shield (sub). Hybrid - high DEF, Magic Acc/Atk, Cure potency. · WAR/RDM/PLD/BST/SAM. |
+| <a class="item-link" href="https://www.ffxiah.com/item/21858" data-img="https://static.ffxiah.com/images/icon/21858.png" target="_blank" rel="noopener">Ryunohige</a> | 5000 | Polearm (main). DRG. i119 III Mythic. · EX/RARE. Aftermath weapon. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Ochain&go=Go" data-img="" target="_blank" rel="noopener">Ochain</a> | 800 | Grip/shield (sub). Best PLD shield. · EX/RARE. High block rate / PDT. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Onion+Sword+III&go=Go" data-img="" target="_blank" rel="noopener">Onion Sword III</a> | 300 | Sword (main or sub), il119. · EX/RARE novelty blade. |
 | <a class="item-link" href="https://www.ffxiah.com/item/23734" data-img="https://www.bg-wiki.com/images/f/fa/Malignance_Gloves_description.png" target="_blank" rel="noopener">Malignance Gloves</a> | 500 | Hands, il119. DD/hybrid (DEX, Acc, M.Acc). · EX/RARE. Top-tier gloves. |
@@ -1084,6 +1118,28 @@ _118 hand-picked items -- relic weapons, bard instruments, and other special wea
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Lehko%27s+Ring&go=Go" data-img="" target="_blank" rel="noopener">Lehko's Ring</a> | 300 | Ring. DEX+10, AGI+10, Store TP+5, Haste+2%. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26230" data-img="https://www.bg-wiki.com/images/b/bd/Fickblix%27s_Ring_description.png" target="_blank" rel="noopener">Fickblix's Ring</a> | 300 | Ring. INT+15, Magic Atk+15, Magic Acc+20. · EX/RARE. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26231" data-img="https://www.bg-wiki.com/images/f/f8/Ephramad%27s_Ring_description.png" target="_blank" rel="noopener">Ephramad's Ring</a> | 300 | Ring. MND+15, Cure Potency+10%, Healing Skill+15. · EX/RARE. |
+| <a class="item-link" href="https://www.ffxiah.com/item/23761" data-img="https://www.bg-wiki.com/images/2/2e/Nyame_Helm_description.png" target="_blank" rel="noopener">Nyame Helm</a> | 400 | Head. DEF:156 HP+91 STR+26 DEX+25 VIT+24 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+5, Magic Dmg+123, PDT-7%. All 22 jobs. |
+| <a class="item-link" href="https://www.ffxiah.com/item/23768" data-img="https://www.bg-wiki.com/images/d/d2/Nyame_Mail_description.png" target="_blank" rel="noopener">Nyame Mail</a> | 800 | Body. DEF:189 HP+136 STR+35 DEX+24 VIT+35 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+8, Magic Dmg+139, PDT-9%. All 22 jobs. |
+| <a class="item-link" href="https://www.ffxiah.com/item/23775" data-img="https://www.bg-wiki.com/images/2/21/Nyame_Gauntlets_description.png" target="_blank" rel="noopener">Nyame Gauntlets</a> | 400 | Hands. DEF:142 HP+91 STR+17 DEX+42 VIT+39 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+4, Magic Dmg+112, PDT-7%. All 22 jobs. |
+| <a class="item-link" href="https://www.ffxiah.com/item/23782" data-img="https://www.bg-wiki.com/images/a/a8/Nyame_Flanchard_description.png" target="_blank" rel="noopener">Nyame Flanchard</a> | 400 | Legs. DEF:169 HP+114 STR+43 VIT+30 AGI+34 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+6, Magic Dmg+150, PDT-8%. All 22 jobs. |
+| <a class="item-link" href="https://www.ffxiah.com/item/23789" data-img="https://www.bg-wiki.com/images/a/a3/Nyame_Sollerets_description.png" target="_blank" rel="noopener">Nyame Sollerets</a> | 400 | Feet. DEF:122 HP+68 STR+23 DEX+26 AGI+38 Acc+30 Atk+30 MAcc+40 MAtk+40 MDB+5, Magic Dmg+150, PDT-7%. All 22 jobs. |
+| <a class="item-link" href="https://www.ffxiah.com/item/25592" data-img="https://www.bg-wiki.com/images/2/27/Hjarrandi_Helm_description.png" target="_blank" rel="noopener">Hjarrandi Helm</a> | 400 | Head. Tank/DD. DA+6, Store TP+7, DT-10%. |
+| <a class="item-link" href="https://www.ffxiah.com/item/25766" data-img="https://www.bg-wiki.com/images/4/40/Hjarrandi_Breast._description.png" target="_blank" rel="noopener">Hjarrandi Breastplate</a> | 800 | Body. Tank/DD. Store TP+10, Crit Rate+13%, DT-12%. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24135" data-img="https://www.bg-wiki.com/images/9/9b/Trust_Crown_description.png" target="_blank" rel="noopener">Trust Crown</a> | 15000 | Head. Trust set (Su4). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24138" data-img="https://www.bg-wiki.com/images/6/6e/Trust_Platemail_description.png" target="_blank" rel="noopener">Trust Platemail</a> | 15000 | Body. Trust set (Su4). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24141" data-img="https://www.bg-wiki.com/images/7/73/Trust_Gauntlets_description.png" target="_blank" rel="noopener">Trust Gauntlets</a> | 15000 | Hands. Trust set (Su4). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24144" data-img="https://www.bg-wiki.com/images/a/ab/Trust_Brais_description.png" target="_blank" rel="noopener">Trust Brais</a> | 15000 | Legs. Trust set (Su4). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24147" data-img="https://www.bg-wiki.com/images/b/be/Trust_Sabatons_description.png" target="_blank" rel="noopener">Trust Sabatons</a> | 15000 | Feet. Trust set (Su4). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24136" data-img="https://www.bg-wiki.com/images/2/28/Prestige_Crown_description.png" target="_blank" rel="noopener">Prestige Crown</a> | 15000 | Head. Prestige set (Su4). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24139" data-img="https://www.bg-wiki.com/images/1/17/Prestige_Plate._description.png" target="_blank" rel="noopener">Prestige Platemail</a> | 15000 | Body. Prestige set (Su4). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24142" data-img="https://www.bg-wiki.com/images/3/3b/Prestige_Gaunt._description.png" target="_blank" rel="noopener">Prestige Gauntlets</a> | 15000 | Hands. Prestige set (Su4). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24145" data-img="https://www.bg-wiki.com/images/f/f0/Prestige_Brais_description.png" target="_blank" rel="noopener">Prestige Brais</a> | 15000 | Legs. Prestige set (Su4). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24148" data-img="https://www.bg-wiki.com/images/6/66/Prestige_Sab._description.png" target="_blank" rel="noopener">Prestige Sabatons</a> | 15000 | Feet. Prestige set (Su4). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24137" data-img="https://www.bg-wiki.com/images/2/2d/Sworn_Crown_description.png" target="_blank" rel="noopener">Sworn Crown</a> | 15000 | Head. Sworn set (Su5). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24140" data-img="https://www.bg-wiki.com/images/e/e7/Sworn_Platemail_description.png" target="_blank" rel="noopener">Sworn Platemail</a> | 15000 | Body. Sworn set (Su5). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24143" data-img="https://www.bg-wiki.com/images/3/3c/Sworn_Gauntlets_description.png" target="_blank" rel="noopener">Sworn Gauntlets</a> | 15000 | Hands. Sworn set (Su5). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24146" data-img="https://www.bg-wiki.com/images/7/7c/Sworn_Brais_description.png" target="_blank" rel="noopener">Sworn Brais</a> | 15000 | Legs. Sworn set (Su5). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
+| <a class="item-link" href="https://www.ffxiah.com/item/24149" data-img="https://www.bg-wiki.com/images/b/ba/Sworn_Sabatons_description.png" target="_blank" rel="noopener">Sworn Sabatons</a> | 15000 | Feet. Sworn set (Su5). WHM/RDM/PLD/DRK/BLU/RUN. · Rank 30 required. |
 
 ### Best-in-slot (auto-promoted)
 
@@ -1221,6 +1277,6 @@ _125 top armor, weapons, and Sortie earrings, refreshed from the live gear ranki
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: caac9c15e2cf -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 987e5dadc6a0 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

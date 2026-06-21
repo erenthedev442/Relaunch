@@ -1,8 +1,8 @@
 # Daiis
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 14h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 18h
 
-`⭐ 1 Ascension` `💪 4 jobs @99`
+`⭐ 1 Ascension` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,33 +13,33 @@
 |---|---|
 | Main job | **SAM 99** |
 | Sub job | WAR 99 |
-| Time played | 49h |
-| Enemies defeated | 1,395 |
-| Deaths | 1 |
+| Time played | 60h |
+| Enemies defeated | 3,587 |
+| Deaths | 4 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| MNK | 1 | NIN | 1 |
-| WHM | 1 | **DRG** | **99** |
-| BLM | 63 | SMN | 1 |
-| **RDM** | **99** | BLU | 1 |
-| THF | 76 | COR | 1 |
-| PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| **MNK** | **99** | **NIN** | **99** |
+| **WHM** | **99** | **DRG** | **99** |
+| **BLM** | **99** | **SMN** | **99** |
+| **RDM** | **99** | **BLU** | **99** |
+| **THF** | **99** | **COR** | **99** |
+| **PLD** | **99** | **PUP** | **99** |
+| **DRK** | **99** | **DNC** | **99** |
+| **BST** | **99** | **SCH** | **99** |
+| **BRD** | **99** | **GEO** | **99** |
+| **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 714
-- **Marks (lifetime):** 2,328
-- **Distinct NMs slain:** 12
-- **Total NM kills:** 110
+- **Marks (current):** 6,624
+- **Marks (lifetime):** 2,710
+- **Distinct NMs slain:** 14
+- **Total NM kills:** 150
 
 ## Guild standing
 
@@ -54,17 +54,17 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 54
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 57
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| AF | 950 | 0 |
+| Relic | 1,515 | 0 |
+| Empyrean | 35 | 5,280 |
 
 ## Prestige
 
@@ -73,7 +73,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 120
 
 ## Achievements
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 79d5f2bf4609 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 4b113d72218a -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

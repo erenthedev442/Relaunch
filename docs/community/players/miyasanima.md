@@ -1,6 +1,6 @@
 # Miyasanima
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 12h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 15h
 
 `💪 13 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | DNC 99 |
-| Time played | 34h |
-| Enemies defeated | 4,220 |
-| Deaths | 17 |
+| Time played | 35h |
+| Enemies defeated | 4,272 |
+| Deaths | 18 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,382
+- **Marks (current):** 8,147
 - **Marks (lifetime):** 1,188
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 55
+- **Total NM kills:** 107
 
 ## Guild standing
 
@@ -55,15 +55,15 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 91
-- **NM Affinities:** 6 / 13
+- **Augments crafted:** 110
+- **NM Affinities:** 8 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
+| AF | 25 | 5,275 |
+| Relic | 365 | 365 |
 | Empyrean | 0 | 0 |
 
 ## Collections
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
+**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Sanctuary Defender · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2c4fe9055887 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 310b283f2276 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

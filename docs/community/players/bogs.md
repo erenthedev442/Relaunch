@@ -1,6 +1,6 @@
 # Bogs
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 5d 15h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 5d 18h
 
 `💪 2 jobs @99`
 
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8d1f0ca9f1ce -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 64d504b5f7a6 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

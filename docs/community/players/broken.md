@@ -1,8 +1,8 @@
 # Broken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 13h
 
-`💪 14 jobs @99`
+`💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | RDM 99 |
-| Time played | 33h |
-| Enemies defeated | 532 |
+| Main job | **DRK 99** |
+| Sub job | BST 99 |
+| Time played | 42h |
+| Enemies defeated | 852 |
 | Deaths | 3 |
 
 ## Job levels
@@ -23,28 +23,28 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
-| WHM | 1 | **DRG** | **99** |
-| BLM | 1 | SMN | 1 |
+| **WHM** | **99** | **DRG** | **99** |
+| **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | **COR** | **99** |
 | **PLD** | **99** | **PUP** | **99** |
-| **DRK** | **99** | DNC | 80 |
-| BST | 1 | SCH | 1 |
+| **DRK** | **99** | **DNC** | **99** |
+| **BST** | **99** | **SCH** | **99** |
 | **BRD** | **99** | **GEO** | **99** |
-| RNG | 1 | RUN | 39 |
+| **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 245,182
-- **Marks (lifetime):** 104,548
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 1,658
+- **Marks (current):** 270,400
+- **Marks (lifetime):** 118,673
+- **Distinct NMs slain:** 11
+- **Total NM kills:** 4,459
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 270
+- **Augments crafted:** 272
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**12** unlocked — Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Mark of 100,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**13** unlocked — Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Mark of 100,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 35004ff1a754 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: e011004fe6bf -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

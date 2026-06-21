@@ -20,7 +20,7 @@ Talk to the **Prime Armory** NPC in **GM Home** at any time to see which trials 
 |---|---|
 | **Trial 1** | 12 each of all 20 Abyssea collectibles (turn in here) |
 | **Trial 2** | Endless Tower floor 50 |
-| **Trial 3** | Prime Voucher — rare Hunting League NM drop (turn in here) |
+| **Trial 3** | Prime Voucher - rare Hunting League NM drop (turn in here) |
 | **Trial 4** | Weapon Guardian defeated (Job Mastery) |
 | **Trial 5** | 99 each of Jadeshell, Silverpiece & 100 Byne Bill (turn in here) |
 <!-- DOCGEN:END id="prime-trials-table" -->
@@ -72,6 +72,6 @@ Each Prime is Rare/Ex, so you carry one at a time. Pick the weapon that fits you
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 86e345ab4d29 -->
-_Last updated: 2026-06-21 01:54 UTC_
+<!-- content-hash: 867f7b218a65 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

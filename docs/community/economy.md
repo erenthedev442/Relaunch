@@ -18,12 +18,12 @@ A live snapshot of the server economy and population. All figures exclude GM / t
 
 | Metric | Value |
 |---|---:|
-| Gil in circulation | **8.73B** gil |
-| Players online now | **0** |
-| Characters (non-GM) | 372 |
-| Active in last 7 days | 363 |
-| AH listings (live) | 28,972 |
-| Cumulative playtime | 161 days, 9 hours |
+| Gil in circulation | **11.99B** gil |
+| Players online now | **1** |
+| Characters (non-GM) | 384 |
+| Active in last 7 days | 374 |
+| AH listings (live) | 898 |
+| Cumulative playtime | 186 days, 1 hour |
 <!-- DOCGEN:END id="econ-overview" -->
 
 ---
@@ -35,11 +35,11 @@ Total gil held by player characters — the money supply. Gil sitting in Auction
 
 | Measure | Value |
 |---|---:|
-| Total gil in circulation | 8,733,904,461 gil |
-| Characters holding gil | 279 |
-| Average per character | 31,304,317 gil |
-| Median per character | 5,520,005 gil |
-| Wealthiest 10% hold | 68.1% of all gil |
+| Total gil in circulation | 11,985,014,115 gil |
+| Characters holding gil | 290 |
+| Average per character | 41,327,634 gil |
+| Median per character | 6,696,420 gil |
+| Wealthiest 10% hold | 71.3% of all gil |
 <!-- DOCGEN:END id="econ-gil" -->
 
 The gap between the **average** and the **median** is the inequality signal:
@@ -55,11 +55,11 @@ Open Auction House listings right now. The market-maker (an NPC seller, **AH-Jeu
 
 | Measure | Value |
 |---|---:|
-| Live listings (total) | 28,972 |
-| — Market-maker (AH-Jeuno) | 28,928 |
-| — Player-listed | 44 |
-| Distinct items available | 5,801 |
-| Total shelf value (asking) | 13,858,725,818 gil |
+| Live listings (total) | 898 |
+| — Market-maker (AH-Jeuno) | 889 |
+| — Player-listed | 9 |
+| Distinct items available | 550 |
+| Total shelf value (asking) | 426,495,990 gil |
 <!-- DOCGEN:END id="econ-ah" -->
 
 The market-maker exists to keep gear **available** and to set a **price
@@ -75,9 +75,9 @@ Completed Auction House sales over recent windows. **Gil volume** is the total t
 
 | Window | Lots sold | Gil volume | Gil sunk to AH |
 |---|---:|---:|---:|
-| Last 24 hours | 229 | 115,534,234 gil | 45,110,000 gil |
-| Last 7 days | 4,769 | 2,168,121,018 gil | 865,896,000 gil |
-| Last 30 days | 4,864 | 2,209,651,018 gil | 907,426,000 gil |
+| Last 24 hours | 1,006 | 477,491,634 gil | 181,940,001 gil |
+| Last 7 days | 5,661 | 2,594,931,559 gil | 1,014,156,001 gil |
+| Last 30 days | 5,783 | 2,652,141,559 gil | 1,071,086,001 gil |
 <!-- DOCGEN:END id="econ-velocity" -->
 
 A healthy economy needs **gil sinks** — ways for gil to leave circulation so
@@ -93,21 +93,21 @@ The most actively traded items on the Auction House over the last 30 days, by nu
 
 | # | Item | Lots sold | Gil volume |
 |---:|---|---:|---:|
-| 1 | Eyra Baghnakhs | 696 | 532,830,381 gil |
-| 2 | Yataghan | 263 | 207,327,500 gil |
-| 3 | Robur Mace | 189 | 149,600,000 gil |
-| 4 | Gleaming Shield | 151 | 106,262,688 gil |
-| 5 | Ash Staff | 122 | 17,080,000 gil |
-| 6 | Revilers Helm | 115 | 54,820,520 gil |
-| 7 | Jug Of Bug Broth | 85 | 22,036,000 gil |
-| 8 | Chirich Ring +1 | 70 | 70,000,000 gil |
-| 9 | Mache Earring +1 | 60 | 60,000,000 gil |
-| 10 | Moonlight Cape | 46 | 46,000,000 gil |
-| 11 | Copy Of Noilluries Log | 32 | 32,000 gil |
-| 12 | Stikini Ring +1 | 31 | 31,000,000 gil |
-| 13 | Moonlight Ring | 30 | 30,000,000 gil |
-| 14 | Cassie Earring | 30 | 4,200,000 gil |
-| 15 | Onion Staff | 30 | 3,794,314 gil |
+| 1 | Eyra Baghnakhs | 797 | 613,630,381 gil |
+| 2 | Yataghan | 265 | 208,927,500 gil |
+| 3 | Gully | 240 | 153,600,000 gil |
+| 4 | Robur Mace | 189 | 149,600,000 gil |
+| 5 | Gleaming Shield | 151 | 106,262,688 gil |
+| 6 | Ash Staff | 128 | 17,920,000 gil |
+| 7 | Revilers Helm | 124 | 60,580,520 gil |
+| 8 | Jug Of Bug Broth | 85 | 22,036,000 gil |
+| 9 | Chirich Ring +1 | 74 | 74,000,000 gil |
+| 10 | Mache Earring +1 | 69 | 69,000,000 gil |
+| 11 | Moonlight Cape | 50 | 50,000,000 gil |
+| 12 | Bomb Arm | 42 | 5,460,900 gil |
+| 13 | Moonlight Ring | 35 | 35,000,000 gil |
+| 14 | Stikini Ring +1 | 33 | 33,000,000 gil |
+| 15 | Cassie Earring | 32 | 4,480,000 gil |
 <!-- DOCGEN:END id="econ-hot" -->
 
 ---
@@ -119,18 +119,18 @@ Who's around. **Active** counts characters that logged out within the window (a 
 
 | Measure | Value |
 |---|---:|
-| Online right now | 0 |
-| Total characters | 372 |
-| Active — last 7 days | 363 |
-| Active — last 30 days | 372 |
-| New — last 7 days | 335 |
-| New — last 30 days | 372 |
-| Cumulative playtime (all chars) | 161 days, 9 hours |
+| Online right now | 1 |
+| Total characters | 384 |
+| Active — last 7 days | 374 |
+| Active — last 30 days | 384 |
+| New — last 7 days | 341 |
+| New — last 30 days | 384 |
+| Cumulative playtime (all chars) | 186 days, 1 hour |
 <!-- DOCGEN:END id="econ-population" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2c1d1ec5f5f1 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: acc25252552f -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

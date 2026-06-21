@@ -1,18 +1,18 @@
 # Utsu
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 1h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 4h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 9/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 13/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **PUP 9** |
-| Sub job | WHM 6 |
-| Time played | 1h |
-| Enemies defeated | 49 |
+| Main job | **PUP 13** |
+| Sub job | WHM 8 |
+| Time played | 2h |
+| Enemies defeated | 71 |
 | Deaths | 0 |
 
 ## Job levels
@@ -21,11 +21,11 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 6 | DRG | 1 |
+| WHM | 8 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 7 | BLU | 1 |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 9 |
+| PLD | 1 | PUP | 13 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 95d10abc8850 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: e8e46a677e42 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

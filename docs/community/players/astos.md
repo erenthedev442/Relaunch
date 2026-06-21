@@ -1,6 +1,6 @@
 # Astos
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-17 · Character age 3d 22h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-17 · Character age 4d 1h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1e609a4b0989 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 435120511991 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

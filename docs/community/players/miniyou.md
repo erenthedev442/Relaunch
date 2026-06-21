@@ -1,6 +1,6 @@
 # Miniyou
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 2d 1h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 2d 4h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6db58ce21beb -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 14c7013c854e -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

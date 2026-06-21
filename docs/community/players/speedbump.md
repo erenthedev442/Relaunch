@@ -1,8 +1,8 @@
 # Speedbump
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 4d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-20 · Character age 5d
 
-`💪 5 jobs @99`
+`💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | SCH 93 |
-| Time played | 24h |
+| Main job | **THF 99** |
+| Sub job | PLD 99 |
+| Time played | 30h |
 | Enemies defeated | 4 |
 | Deaths | 1 |
 
@@ -23,12 +23,12 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | **MNK** | **99** | **NIN** | **99** |
-| WHM | 1 | DRG | 1 |
+| **WHM** | **99** | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| **RDM** | **99** | BLU | 1 |
+| **RDM** | **99** | BLU | 96 |
 | **THF** | **99** | COR | 1 |
-| PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| **PLD** | **99** | PUP | 1 |
+| **DRK** | **99** | DNC | 1 |
 | BST | 1 | SCH | 93 |
 | BRD | 1 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 161,983
-- **Marks (lifetime):** 75,552
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 1,176
+- **Marks (current):** 180,016
+- **Marks (lifetime):** 86,337
+- **Distinct NMs slain:** 11
+- **Total NM kills:** 3,309
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**14** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 49b7e6c71170 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 8fff5e575263 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

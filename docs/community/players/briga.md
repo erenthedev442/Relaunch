@@ -1,19 +1,21 @@
 # Briga
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 2d 17h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 20h
+
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 1** |
-| Sub job | — |
-| Time played | 0h |
-| Enemies defeated | 0 |
-| Deaths | 0 |
+| Main job | **BLM 48** |
+| Sub job | RDM 39 |
+| Time played | 5h |
+| Enemies defeated | 256 |
+| Deaths | 1 |
 
 ## Job levels
 
@@ -21,9 +23,9 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| WHM | 79 | DRG | 1 |
+| BLM | 48 | **SMN** | **99** |
+| RDM | 39 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -33,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 475
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 2 / 5
+- **Marks (current):** 2,173
+- **Marks (lifetime):** 60
+- **Distinct NMs slain:** 1
+- **Total NM kills:** 12
 
 ## Augment Sage
 
@@ -57,9 +59,15 @@
 
 - **Trusts learned:** 117
 
+## Achievements
+
+**2** unlocked — First Hunt · Ten Hunts In.
+
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 2d 7h |
 
 ---
 
@@ -68,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5416cee1ca3b -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 25e0279655d8 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

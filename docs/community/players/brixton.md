@@ -1,8 +1,8 @@
 # Brixton
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-20 · Character age 7d 10h
 
-`⭐ 5 Ascensions` `💪 7 jobs @99`
+`⭐ 6 Ascensions` `💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | DNC 99 |
-| Time played | 57h |
-| Enemies defeated | 2,105 |
-| Deaths | 26 |
+| Main job | **SMN 82** |
+| Sub job | WHM 76 |
+| Time played | 61h |
+| Enemies defeated | 2,308 |
+| Deaths | 27 |
 
 ## Job levels
 
@@ -23,12 +23,12 @@
 |---|---:|---|---:|
 | **WAR** | **99** | SAM | 93 |
 | MNK | 1 | **NIN** | **99** |
-| WHM | 54 | **DRG** | **99** |
-| BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 28 |
+| WHM | 76 | **DRG** | **99** |
+| BLM | 1 | SMN | 82 |
+| RDM | 1 | BLU | 84 |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
-| DRK | 1 | **DNC** | **99** |
+| **DRK** | **99** | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | **BRD** | **99** | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,311
-- **Marks (lifetime):** 19,342
+- **Marks (current):** 2,341
+- **Marks (lifetime):** 19,760
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 317
+- **Total NM kills:** 328
 
 ## Guild standing
 
@@ -55,21 +55,21 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 352
+- **Augments crafted:** 381
 - **NM Affinities:** 12 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 100 | 0 |
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
 ## Prestige
 
-- **Total Ascensions:** 5
-- **Per-job prestige:** THF P5
+- **Total Ascensions:** 6
+- **Per-job prestige:** THF P6
 
 ## Collections
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: af2e17921a35 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: c7cf692b1e3f -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

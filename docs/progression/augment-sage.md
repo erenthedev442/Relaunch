@@ -14,7 +14,7 @@ The **Augment Sage** is the side-quest progression layer on top of the [Augment 
 
 <!-- DOCGEN:BEGIN id="sage-location" -->
 **Zone:** GM Home  
-**Coordinates:** x = -1.50, y = 0.00, z = -5.00  
+**Coordinates:** x = -1.50, y = 0.00, z = -25.00  
 **Same row as:** the Augment Moogle (talk to either to start a trade or pursue a rank).
 <!-- DOCGEN:END id="sage-location" -->
 
@@ -122,6 +122,6 @@ Yes — both the Sage rank trophy and the affinity registration trophy are remov
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2fd0d4b87af9 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 505966830afe -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Nevion
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 13h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 16h
 
 `💪 5 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | NIN 99 |
-| Time played | 21h |
-| Enemies defeated | 2,796 |
-| Deaths | 16 |
+| Time played | 23h |
+| Enemies defeated | 3,192 |
+| Deaths | 17 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,238
+- **Marks (current):** 6,538
 - **Marks (lifetime):** 396
 - **Distinct NMs slain:** 12
-- **Total NM kills:** 27
+- **Total NM kills:** 31
 
 ## Guild standing
 
@@ -49,13 +49,13 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---|---:|---|
 | AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| Empyrean Hunters' Guild | Veteran | 7,000 | 18,000 to Master |
+| Empyrean Hunters' Guild | Veteran | 10,750 | 14,250 to Master |
 | League Hunters' Guild | Journeyman | 500 | 4,500 to Veteran |
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 11
+- **Mastery rank:** 1 / 5
+- **Augments crafted:** 19
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -64,7 +64,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|---:|
 | AF | 0 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 49 | 249 |
 
 ## Collections
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3d80e613a8e6 -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 773cfe1963aa -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

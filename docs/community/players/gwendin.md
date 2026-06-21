@@ -1,6 +1,6 @@
 # Gwendin
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 15h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 18h
 
 `💪 5 jobs @99`
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1751c957d503 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: 5f82d19a8df4 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

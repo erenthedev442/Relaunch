@@ -1,6 +1,6 @@
 # Shadowsfall
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 19h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-20 · Character age 2d 23h
 
 `💪 2 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 73b6a9e03ddb -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 73f0e1285141 -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

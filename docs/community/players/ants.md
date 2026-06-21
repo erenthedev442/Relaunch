@@ -1,8 +1,8 @@
 # Ants
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 19h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 22h
 
-`💪 3 jobs @99`
+`💪 7 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BRD 99** |
-| Sub job | NIN 99 |
-| Time played | 10h |
-| Enemies defeated | 345 |
-| Deaths | 13 |
+| Main job | **PLD 99** |
+| Sub job | BLU 99 |
+| Time played | 16h |
+| Enemies defeated | 828 |
+| Deaths | 14 |
 
 ## Job levels
 
@@ -24,27 +24,27 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
-| **RDM** | **99** | BLU | 1 |
+| **BLM** | **99** | SMN | 1 |
+| **RDM** | **99** | **BLU** | **99** |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 1 |
+| **PLD** | **99** | PUP | 1 |
 | DRK | 67 | DNC | 1 |
-| BST | 1 | SCH | 1 |
+| BST | 1 | **SCH** | **99** |
 | **BRD** | **99** | GEO | 1 |
 | RNG | 1 | RUN | 76 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,924
-- **Marks (lifetime):** 488
+- **Marks (current):** 3
+- **Marks (lifetime):** 1,210
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 17
+- **Total NM kills:** 36
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 50
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 287
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice · Augment Expert.
+**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -69,6 +69,7 @@
 |---|---:|
 | Fastest 1 → 99 | 12h 33m |
 | HL Rank I → V | 5d 2h |
+| Augment Archon | 6d 7h |
 
 ---
 
@@ -77,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 260bf289e3df -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: 734bd4f4f32c -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

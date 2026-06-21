@@ -1,6 +1,6 @@
 # Azuki
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-14 · Character age 6d 10h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-14 · Character age 6d 13h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 76bb10fd9ac0 -->
-_Last updated: 2026-06-21 00:27 UTC_
+<!-- content-hash: cb68ad04201f -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->

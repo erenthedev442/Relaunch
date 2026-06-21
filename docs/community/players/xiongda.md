@@ -1,8 +1,8 @@
 # Xiongda
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-19 · Character age 6d 10h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-20 · Character age 6d 14h
 
-`💪 3 jobs @99`
+`💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,8 +12,8 @@
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | SMN 99 |
-| Time played | 11h |
+| Sub job | RDM 99 |
+| Time played | 23h |
 | Enemies defeated | 488 |
 | Deaths | 3 |
 
@@ -21,39 +21,39 @@
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
-| WHM | 1 | DRG | 1 |
+| **WAR** | **99** | **SAM** | **99** |
+| **MNK** | **99** | **NIN** | **99** |
+| **WHM** | **99** | **DRG** | **99** |
 | **BLM** | **99** | **SMN** | **99** |
-| RDM | 63 | BLU | 1 |
-| **THF** | **99** | COR | 1 |
-| PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| **RDM** | **99** | **BLU** | **99** |
+| **THF** | **99** | **COR** | **99** |
+| **PLD** | **99** | **PUP** | **99** |
+| **DRK** | **99** | **DNC** | **99** |
+| **BST** | **99** | **SCH** | **99** |
+| **BRD** | **99** | **GEO** | **99** |
+| **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,100
+- **Marks (current):** 1,700
 - **Marks (lifetime):** 127
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 3
+- **Total NM kills:** 35
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 10
+- **Augments crafted:** 13
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 2,000 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 4,800 | 4,800 |
 
 ## Collections
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ff3ba809937d -->
-_Last updated: 2026-06-21 00:09 UTC_
+<!-- content-hash: f7cec938821e -->
+_Last updated: 2026-06-21 03:39 UTC_
 <!-- DOCGEN:END id="last-updated" -->
