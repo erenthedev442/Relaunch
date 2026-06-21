@@ -571,6 +571,7 @@ def _shop_ids(repo_root: Path) -> set[int]:
         return set()
     sm = re.search(r'\nlocal stock\b(.*?)\nlocal ', text, re.DOTALL)
     region = sm.group(1) if sm else text
+    region = re.sub(r'--[^\n]*', '', region)  # drop Lua line-comments so commented-out (disabled) entries aren't flagged
     ids: set[int] = {int(m.group(1)) for m in _SHOP_NUM_RE.finditer(region)}
     consts = {m.group(1) for m in _SHOP_CONST_RE.finditer(region)}
     if consts:
