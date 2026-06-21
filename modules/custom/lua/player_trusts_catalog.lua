@@ -7,13 +7,11 @@
 -----------------------------------
 local catalog = {}
 
--- GM Home Admin cluster (z=-28): Game Master / Companion Master /
--- Test Dummy.
 catalog.npcPos =
 {
     zone     = 'GM_Home',
     zoneId   = 210,
-    x        =  -3.000,
+    x        =  -7.500,
     y        =  0.000,
     z        = -30.000,
     rotation =  128,

@@ -73,7 +73,7 @@ local NPC_NAME  = 'Void_Keeper'
 local NPC_LOOK  = 3017          -- 3017 = Trust: Prishe — a silver-haired divine warrior model; far more fitting
                                 -- for a 50M-gil vendor of legendary Trusts than a generic Moogle.
                                 -- Change this value if you have a preferred divine/godlike NPC look ID.
-local NPC_POS   = { x = 5.000, y = 0.000, z = -28.000, rot = 192 }
+local NPC_POS   = { x = 4.500, y = 0.000, z = -30.000, rot = 128 }
 
 local function fmtGil(n)
     if n >= 1000000 then return string.format('%gM', n / 1000000)

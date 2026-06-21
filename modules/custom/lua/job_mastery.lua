@@ -296,7 +296,7 @@ end
 -- Module overrides
 -----------------------------------
 
--- GM Home: place the Mastery Sage NPC at z = -27.
+-- GM Home: place the Mastery Sage NPC at z = -30.
 m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     super(zone)
 
@@ -305,9 +305,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         name       = 'Mastery_Sage',
         packetName = 'Weapon Mastery Sage',
         look       = 2401,
-        x          =  0.000,
+        x          = -4.500,
         y          =  0.000,
-        z          = -27.000,
+        z          = -30.000,
         rotation   =  128,
         widescan   =  1,
 

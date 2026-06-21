@@ -91,9 +91,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         name       = 'Mog_Moogle',
         packetName = string.format('%sMog Moogle', xi.icon.STAR_LARGE),
         look       = 2308,
-        x          =  2.000,
+        x          =  7.500,
         y          =  0.000,
-        z          = -7.000,
+        z          = -10.000,
         rotation   =  128,
         widescan   = 1,
 
