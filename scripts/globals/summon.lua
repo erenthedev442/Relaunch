@@ -267,8 +267,9 @@ local attackTypeShields =
 -- 17-bit action-packet damage field can't render a number above 131,071 -- so the
 -- floating text lies and shows the cap. Mirror the PC weaponskill over-cap behaviour:
 -- when a player-owned pet over-caps, whisper the true number to its master in chat.
--- Called from avatarFinalAdjustments (physical BPs) and xi.mobskills.processDamage
--- (magical BPs). The dmg <= 131071 guard keeps this to one int compare on the hot path.
+-- Called from avatarFinalAdjustments (avatar physical BPs) and xi.mobskills.processDamage
+-- (ALL damaging mob skills -- magical BPs AND BST jug-pet Ready moves). The dmg <= 131071
+-- guard keeps this to one int compare on the hot path.
 ---@param pet CBaseEntity the avatar/pet that dealt the hit
 ---@param dmg number the full (possibly >131,071) damage that landed on HP
 xi.summon.reportPetOverCap = function(pet, dmg)
@@ -281,9 +282,11 @@ xi.summon.reportPetOverCap = function(pet, dmg)
         return
     end
 
+    -- Avatars over-cap via Blood Pacts; BST jug pets over-cap via Ready moves.
+    local moveLabel = pet:isAvatar() and 'Blood Pact' or 'Ready move'
     master:printToPlayer(string.format(
-        '%s\'s Blood Pact dealt %d damage! (the on-screen number caps at 131,071)',
-        pet:getName(), dmg), xi.msg.channel.SYSTEM_3)
+        '%s\'s %s dealt %d damage! (the on-screen number caps at 131,071)',
+        pet:getName(), moveLabel, dmg), xi.msg.channel.SYSTEM_3)
 end
 
 ---@param info magicalMobSkillRetVal|physicalAvatarSkillRetVal
