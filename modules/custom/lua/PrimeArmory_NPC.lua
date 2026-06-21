@@ -30,7 +30,7 @@ local TRIALS =
 {
     { var = 'PW_Trial1_Done', label = 'Trial 1', desc = '12 each of all 20 Abyssea collectibles (turn in here)' },
     { var = 'PW_Trial2_Done', label = 'Trial 2', desc = 'Endless Tower floor 50' },
-    { var = 'PW_Trial3_Done', label = 'Trial 3', desc = 'Prime Voucher — rare Hunting League NM drop (turn in here)' },
+    { var = 'PW_Trial3_Done', label = 'Trial 3', desc = 'Prime Voucher - rare Hunting League NM drop (turn in here)' },
     { var = 'PW_Trial4_Done', label = 'Trial 4', desc = 'Weapon Guardian defeated (Job Mastery)' },
     { var = 'PW_Trial5_Done', label = 'Trial 5', desc = '99 each of Jadeshell, Silverpiece & 100 Byne Bill (turn in here)' },
 }
@@ -114,7 +114,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         for _, t in ipairs(TRIALS) do
             local done  = (player:getCharVar(t.var) or 0) == 1
             local icon  = done and '[+]' or '[ ]'
-            player:printToPlayer(string.format('  %s %s — %s', icon, t.label, t.desc), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('  %s %s - %s', icon, t.label, t.desc), xi.msg.channel.SYSTEM_3)
         end
     end
 
@@ -124,7 +124,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     -----------------------------------
     local function printTrial1Progress(player)
         player:printToPlayer(string.format(
-            '[Prime Armory] Trial 1 — bring %d of EACH (Stone/Coin/Jewel/Card) for all five elements:', T1_REQUIRED),
+            '[Prime Armory] Trial 1 - bring %d of EACH (Stone/Coin/Jewel/Card) for all five elements:', T1_REQUIRED),
             xi.msg.channel.SYSTEM_3)
         for _, set in ipairs(T1_SETS) do
             local parts = {}
@@ -153,7 +153,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         for _, set in ipairs(T1_SETS) do
             for _, ty in ipairs(set.types) do
                 if player:getItemCount(ty.id) < T1_REQUIRED then
-                    player:printToPlayer('[Prime Armory] Not yet — you still need more. Here is your tally:', xi.msg.channel.SYSTEM_3)
+                    player:printToPlayer('[Prime Armory] Not yet - you still need more. Here is your tally:', xi.msg.channel.SYSTEM_3)
                     printTrial1Progress(player)
                     return
                 end
@@ -177,7 +177,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             for id, qty in pairs(removed) do
                 if qty > 0 then player:addItem({ id = id, quantity = qty }) end
             end
-            player:printToPlayer('[Prime Armory] I could not gather all of them — keep every collectible in your MAIN inventory (not satchel/case) and try again, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Armory] I could not gather all of them - keep every collectible in your MAIN inventory (not satchel/case) and try again, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
 
@@ -195,7 +195,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             return
         end
         if player:getItemCount(T3_ITEM) < 1 then
-            player:printToPlayer('[Prime Armory] You need a Prime Voucher — a rare drop from Hunting League NMs — for Trial 3, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Armory] You need a Prime Voucher - a rare drop from Hunting League NMs - for Trial 3, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
         local before = player:getItemCount(T3_ITEM)
@@ -213,7 +213,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     -----------------------------------
     local function printTrial5Progress(player)
         player:printToPlayer(string.format(
-            '[Prime Armory] Trial 5 — bring %d of EACH currency:', T5_REQUIRED),
+            '[Prime Armory] Trial 5 - bring %d of EACH currency:', T5_REQUIRED),
             xi.msg.channel.SYSTEM_3)
         for _, it in ipairs(T5_ITEMS) do
             local have = player:getItemCount(it.id)
@@ -237,7 +237,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         -- Pass 1: all three currencies present in the required count.
         for _, it in ipairs(T5_ITEMS) do
             if player:getItemCount(it.id) < T5_REQUIRED then
-                player:printToPlayer('[Prime Armory] Not yet — you still need more. Here is your tally:', xi.msg.channel.SYSTEM_3)
+                player:printToPlayer('[Prime Armory] Not yet - you still need more. Here is your tally:', xi.msg.channel.SYSTEM_3)
                 printTrial5Progress(player)
                 return
             end
@@ -258,7 +258,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             for id, qty in pairs(removed) do
                 if qty > 0 then player:addItem({ id = id, quantity = qty }) end
             end
-            player:printToPlayer('[Prime Armory] I could not gather all of them — keep each currency as a single 99 stack in your MAIN inventory (not satchel/case) and try again, kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Armory] I could not gather all of them - keep each currency as a single 99 stack in your MAIN inventory (not satchel/case) and try again, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
 
@@ -292,7 +292,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         end
         -- Inventory check.
         if player:getFreeSlotsCount() == 0 then
-            player:printToPlayer('[Prime Armory] Your inventory is full — free a slot first! Kupo!', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('[Prime Armory] Your inventory is full - free a slot first! Kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
         -- Forge!
@@ -307,7 +307,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     -- Per-weapon detail + confirm menu.
     -----------------------------------
     local function showWeapon(player, weapon, page)
-        player:printToPlayer(string.format('[Prime Armory] %s — Weapon Skill: %s', weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format('[Prime Armory] %s - Weapon Skill: %s', weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
         player:printToPlayer('  ' .. weapon.info, xi.msg.channel.SYSTEM_3)
         local claimed = player:getCharVar('PW_WeaponClaimed') or 0
         if claimed ~= 0 then
@@ -410,7 +410,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 return
             end
 
-            -- All trials done and no weapon claimed yet — show the forge menu.
+            -- All trials done and no weapon claimed yet - show the forge menu.
             player:printToPlayer(string.format('[Prime Armory] All %d trials complete! Choose your Prime Weapon. Kupo!', #TRIALS), xi.msg.channel.SYSTEM_3)
             showMain(player)
         end,
