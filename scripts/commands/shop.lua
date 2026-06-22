@@ -89,6 +89,8 @@ local stock =
     armor =
     {
         { 11009,  300000 }, --Shaper's Shawl (back, crafting/utility)
+        { 28509,  300000 }, --She-Slime Earring
+        { 28511,  300000 }, --Slime Earring
         { 10293,   50000 }, --Chocobo Shirt
         { 11811,   50000 }, --Destrier Beret
         { 12486,   50000 }, --seers crown +1
