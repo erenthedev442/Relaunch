@@ -4,7 +4,43 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 
 ---
 
-!!! note "Week of June 15–21, 2026"
+!!! note "Week of June 22–28, 2026"
+    **Monday, June 22**
+
+    - **Items** — Stack all three Deeds to 99 (Placidity/Moderation/Sensibility)
+    - **Items** — Make Deed of Moderation (1854) stack to 99
+    - **Commands** — Add Elemental Affinities section + SMN perp affinities
+    - **Discord** — Ls_bridge self-heals if audit_chat is recreated
+    - **Discord** — Point ls_bridge.service at docs-venv python (has pymysql)
+    - **Shop** — Add She-Slime Earring (28509) and Slime Earring (28511) to armor for 300k
+    - **Discord** — Real-time LinkShell -> Discord bridge (ls_bridge.py)
+    - **RNG** — Lionheart aftermath -- wrong WS + missing mod 256
+    - **Pets** — Dismiss active pet before job change in Mog Moogle
+    - **RNG** — Make Barrage a persistent 5-min buff (drop per-shot consume)
+    - **RNG** — Barrage recast 5min->6min + duration 1min->5min
+    - **DRG** — Lower Call Wyvern recast 1200s -> 30s
+    - **SMN** — Avatar stat boosts + gear mods for Beckoner's Earring and Opashoro
+    - **Pets** — Persist summoned pets through zoning into any zone
+    - **Shop** — Add Shaper's Shawl (11009) to !shop armor for 300k gil
+    - **DRG** — Allow Call Wyvern in all non-city zones
+    - **APEX** — Allow DRG Call Wyvern in Walk of Echoes arena
+    - **NPC** — Eliminate shared-menu table race in all custom NPCs
+    - **Infamy** — Add Yoichinoyumi (22129) to vendor for 10,000 Infamy
+    - **BST** — Bst_delay_uncap — redirect Call Beast delay augment to reduce Sic recast
+    - **Hl Vendor** — Add gold-tier axes to the Gear Progression vendor
+    - **BST** — Beast Affinity mod + magical pet damage on par with casters
+    - **BST** — Pet permanence, buff sharing, magical scaling
+    - **Rebirth** — Cap EXP penalty at -95% (raise from -50% per owner)
+    - **Rebirth** — Cap EXP penalty at -50% (was uncapped, floored EXP at R4)
+    - **Crash** — Zlib buffer overflow SIGSEGV + enfeebling nil + pet_hp overflow
+    - **Mastery** — Despawn Guardian after 45s if never attacked
+    - **Tower** — One-climber-at-a-time lock
+    - **CMD** — !warpty falsely says "not in a party" to the party LEADER
+    - **Gm Home** — Move TestDummy off Apex Arbiter collision (4.5,-35 → 0,-40)
+    - **Prime Weapons** — Fold AFTERMATH re-insert into prime_weapons_gear (stop ledger desync)
+    - **Prestige/Rebirth** — Defer onGameIn mod re-apply (boosts silently lost after zone)
+
+??? note "Week of June 15–21, 2026"
     **Sunday, June 21**
 
     - **DIAG** — !enspell GM command - dump live enspell mods vs expected
@@ -650,10 +686,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 237c56ae4688 -->
-_Last updated: 2026-06-22 20:44 UTC_
-<!-- DOCGEN:END id="last-updated" -->
