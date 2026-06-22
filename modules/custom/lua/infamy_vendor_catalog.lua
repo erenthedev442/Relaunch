@@ -1,6 +1,6 @@
 -----------------------------------
 -- infamy_vendor_catalog.lua
--- Config for the Infamy Vendor NPC (GM Home, x=4.5, z=-20).
+-- Config for the Infamy Vendor NPC (GM Home, x=-4.5, z=-30).
 -- Edit this file to add/change items. InfamyVendor.lua reads it.
 --
 -- AUTO-GENERATED sections (vendorItemsAuto, plus4Sets, itemTypeMap)

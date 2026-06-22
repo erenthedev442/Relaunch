@@ -49,9 +49,9 @@ catalog.npcPos =
 {
     zone     = 'GM_Home',
     zoneId   = 210,
-    x        =  4.500,
+    x        =  0.000,
     y        =  0.000,
-    z        = -35.000,
+    z        = -40.000,
     rotation =  128,
 }
 
