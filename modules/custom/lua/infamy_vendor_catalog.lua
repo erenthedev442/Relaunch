@@ -136,6 +136,7 @@ catalog.vendorItems =
     -- Accessories
     { id = 22212, name = 'Utu Grip',             cost = 300, stats = { 'Grip (sub). Acc/Atk + skill.', 'DD grip.' } },
     { id = 22298, name = 'Aurgelmir Orb +1',    cost = 250, stats = { 'Grip (sub). Lv.99. STR/DEX/VIT+7, ATT+10, Store TP+5.', 'Melee grip. WAR/MNK/THF/PLD/DRK/SAM/NIN/DRG and more.' } },
+    { id = 22300, name = 'Crepuscular Pebble',   cost = 10000, stats = { 'Ammo slot, all jobs (Lv.99). STR+3, VIT+3.', 'Ex/Rare melee stat-stick (the -300 DMG is ranged-only).' } },
     { id = 21431, name = 'Coiste Bodhar',        cost = 300, stats = { 'Earring. Double Attack + WS damage.', 'Top DD earring (Omen).' } },
     { id = 26022, name = 'Vim Torque +1',        cost = 300, stats = { 'Neck. DEF+15.', 'Regain+20 while weapon drawn (latent).' } },
     { id = 26118, name = 'Sroda Earring',        cost = 300, stats = { 'Earring. STR + WS damage.', 'DD earring.' } },
