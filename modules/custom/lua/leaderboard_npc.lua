@@ -128,6 +128,17 @@ m:addOverride('xi.zones.Escha_ZiTah.Zone.onInitialize', function(zone)
                     player:getCharVar('Derby_Wins') or 0, derbyRaces,
                     profit >= 0 and '+' or '', profit), B)
             end
+            local maatKills = player:getCharVar('Maat_Kills') or 0
+            if maatKills > 0 then
+                local maatBest = player:getCharVar('Maat_Best_Time') or 0
+                local bestStr
+                if maatBest > 0 then
+                    bestStr = string.format('%dm %02ds', math.floor(maatBest / 60), maatBest % 60)
+                else
+                    bestStr = 'N/A'
+                end
+                player:printToPlayer(string.format('  Maat kills: %d   Best time: %s', maatKills, bestStr), B)
+            end
             -- Combat records: show all-tier personal bests in a single line each.
             local maxNuke  = 0
             local maxBurst = 0

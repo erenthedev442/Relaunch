@@ -123,6 +123,10 @@ local function maatTick(mob, ownerName)
         if ownerActive and not m:isEngaged() and m:checkDistance(owner) <= ENGAGE_DIST then
             m:updateClaim(owner)                          -- (re)lock to the owner
             m:addEnmity(owner, 30000, 30000)              -- engages in place (NO_MOVE roots him; he never charges)
+            -- Start fight timer the first time Maat engages (measures pure fight time).
+            if m:getLocalVar('maatStartTime') == 0 then
+                m:setLocalVar('maatStartTime', os.time())
+            end
         end
 
         -- (2) Despawn watchdog: keep Maat ONLY while his owner is alive + in the
@@ -187,6 +191,18 @@ local function spawnMaat(player)
             local owner = GetPlayerByName(ownerName)
             if not owner then return end
 
+            -- Track kill count and best fight time.
+            local startTime = deadMob:getLocalVar('maatStartTime')
+            local elapsed   = (startTime and startTime > 0) and (os.time() - startTime) or 0
+            local kills     = (owner:getCharVar('Maat_Kills') or 0) + 1
+            owner:setCharVar('Maat_Kills', kills)
+            if elapsed > 0 then
+                local best = owner:getCharVar('Maat_Best_Time') or 0
+                if best == 0 or elapsed < best then
+                    owner:setCharVar('Maat_Best_Time', elapsed)
+                end
+            end
+
             if math.random() < DROP_CHANCE then
                 if owner:addItem(CRIT_TOKEN_ID, 1) then
                     owner:printToPlayer(
@@ -246,6 +262,7 @@ local function spawnMaat(player)
 
     -- Start the per-fight tick (proximity-engage + abandon-despawn).
     mob:setLocalVar('maatIdle', 0)
+    mob:setLocalVar('maatStartTime', 0)  -- set to os.time() on first engage in maatTick
     maatTick(mob, ownerName)
 
     return true

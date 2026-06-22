@@ -588,6 +588,26 @@ _Infamy currently held — drops when you buy from the Infamy Vendor. The hoarde
 
 ---
 
+## Maat's Challenge
+
+<!-- DOCGEN:BEGIN id="lb-maat-kills" -->
+### Most Maat Kills
+
+_Total victories against the level-200 Maat in Waughroon Shrine. Each attempt costs 150 Infamy — the most dedicated challengers rise here._
+
+_No qualifying characters yet — be the first!_
+<!-- DOCGEN:END id="lb-maat-kills" -->
+
+<!-- DOCGEN:BEGIN id="lb-maat-time" -->
+### Fastest Maat Kill
+
+_Shortest time from Maat's first swing to his defeat in Waughroon Shrine. Clocked from the moment he engages — pure fighting efficiency at Lv 200._
+
+_No qualifying characters yet — be the first!_
+<!-- DOCGEN:END id="lb-maat-time" -->
+
+---
+
 ## Combat
 
 ### Hardest Single Weapon Skill Hit

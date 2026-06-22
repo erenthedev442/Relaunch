@@ -760,6 +760,27 @@ def _query_speed_two_var(cur, start_var: str, end_var: str) -> list[tuple[str, i
     return [(r[0], int(r[1])) for r in cur.fetchall()]
 
 
+def _query_maat_best_time(cur) -> list[tuple[str, int]]:
+    """Top _TOP_N characters by fastest Maat kill. Maat_Best_Time is stored
+    as elapsed seconds from Maat's first engage to his death — lower is better."""
+    cur.execute(
+        """
+        SELECT c.charname, cv.value
+          FROM char_vars cv
+          JOIN chars c ON c.charid = cv.charid
+     LEFT JOIN char_vars opt ON opt.charid = cv.charid AND opt.varname = 'Leaderboard_OptOut'
+         WHERE cv.varname = 'Maat_Best_Time'
+           AND (cv.expiry = 0 OR cv.expiry > UNIX_TIMESTAMP())
+           AND cv.value > 0
+           AND (opt.value IS NULL OR opt.value = 0)
+      ORDER BY cv.value ASC
+         LIMIT %s
+        """,
+        (_TOP_N,),
+    )
+    return [(r[0], int(r[1])) for r in cur.fetchall()]
+
+
 def _query_real_level(cur) -> list[tuple[str, int]]:
     """Top characters by RealLevel CharVar (set by RealLevel_Tracker on login)."""
     cur.execute(
@@ -976,6 +997,34 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             boards_written += 1
         else:
             print("[leaderboards] lb-real-level: marker missing in leaderboards.md")
+
+        # Maat's Challenge boards
+        maat_kill_rows = _query_single_var(cur, "Maat_Kills", None)
+        content = _render_board(
+            "Most Maat Kills",
+            "Total victories against the level-200 Maat in Waughroon Shrine. "
+            "Each attempt costs 150 Infamy — the most dedicated challengers rise here.",
+            "kills",
+            maat_kill_rows,
+        )
+        if write_between_markers(page, "lb-maat-kills", content):
+            boards_written += 1
+        else:
+            print("[leaderboards] lb-maat-kills: marker missing in leaderboards.md")
+
+        maat_time_rows = _query_maat_best_time(cur)
+        content = _render_board(
+            "Fastest Maat Kill",
+            "Shortest time from Maat's first swing to his defeat in Waughroon Shrine. "
+            "Clocked from the moment he engages — pure fighting efficiency at Lv 200.",
+            "time",
+            maat_time_rows,
+            value_formatter=_format_duration,
+        )
+        if write_between_markers(page, "lb-maat-time", content):
+            boards_written += 1
+        else:
+            print("[leaderboards] lb-maat-time: marker missing in leaderboards.md")
 
         # Tiered combat records — 5 categories × 4 mob-level tiers
         for board in _TIERED_COMBAT_BOARDS:
