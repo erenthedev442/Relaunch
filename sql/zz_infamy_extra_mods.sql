@@ -157,4 +157,9 @@ INSERT INTO `item_mods` VALUES (26231,13,15) ON DUPLICATE KEY UPDATE `value`=VAL
 INSERT INTO `item_mods` VALUES (26231,374,10) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);  -- CURE_POTENCY: 10
 INSERT INTO `item_mods` VALUES (26231,112,15) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);  -- HEALING: 15 (Healing Magic Skill)
 
+-- 21535: Varga Purnikawa (i119 III, PUP Mythic) — Automaton: Lv.+3
+-- C++ reads AUTOMATON_LVL_BONUS (mod 1044) in petutils.cpp when summoning
+-- the automaton: mainLevel = PUP_level + getMod(AUTOMATON_LVL_BONUS).
+INSERT INTO `item_mods` VALUES (21535,1044,3) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);
+
 UNLOCK TABLES;
