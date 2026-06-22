@@ -39,15 +39,15 @@ return
     rpMax      = 20,
 
     -- ===== Escalating exp penalty (the "harder each time" knob) =====
-    -- Triangular scaling: rebirth N adds N*expPenaltyPerRebirth% more than the
-    -- previous one, so the penalty accelerates and eventually overwhelms any EXP
-    -- augment stack. No cap: the engine's own floor (~0 EXP/kill) is the ceiling.
-    --   penalty(N) = N*(N+1)/2 * expPenaltyPerRebirth
-    --   R1: 10%   R2: 30%   R3: 60%   R4: 100% (floor w/o augs)
-    --   R5: 150%  R6: 210%  R7: 280%  R8: 360% ...
-    -- A player stacking 6 EXP augment pieces (+198%) still hits the floor at R6.
+    -- Triangular ramp, CAPPED so re-leveling a reborn job is never floored.
+    --   penalty(N) = min(N*(N+1)/2 * expPenaltyPerRebirth, expPenaltyCap)
+    --   R1: -10%   R2: -30%   R3: -50% (cap)   R4+: -50%
+    -- Capped at -50% on 2026-06-22 (was uncapped -> hit -100% / zero EXP at R4,
+    -- which was too severe). Now re-leveling is ALWAYS at least half-speed, and
+    -- EXP augments push it back toward full. Recomputed from the rebirth count on
+    -- login, so lowering this applies RETROACTIVELY to everyone (incl. Jbae @ R7).
     expPenaltyPerRebirth = 10,
-    expPenaltyCap        = nil,
+    expPenaltyCap        = 50,
 
     -- Hard cap on rebirths per job. nil = uncapped.
     maxRebirths = nil,
