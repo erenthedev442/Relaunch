@@ -7,6 +7,7 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 !!! note "Week of June 15–21, 2026"
     **Sunday, June 21**
 
+    - **DIAG** — !enspell GM command - dump live enspell mods vs expected
     - **SQL** — Bst_callbeast_recast_0 -- abilities PK is abilityId not id
     - **CMD** — !warpty -- derive from !bring pattern
     - **CMD** — !warpty -- use getLeaderID() for party membership check
@@ -649,10 +650,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e75b469905c0 -->
-_Last updated: 2026-06-22 06:26 UTC_
-<!-- DOCGEN:END id="last-updated" -->
