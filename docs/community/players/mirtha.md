@@ -1,18 +1,18 @@
 # Mirtha
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-21 · Character age 4d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 10h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 67/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 77/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **MNK 67** |
-| Sub job | THF 53 |
-| Time played | 9h |
-| Enemies defeated | 202 |
+| Main job | **MNK 77** |
+| Sub job | THF 64 |
+| Time played | 12h |
+| Enemies defeated | 306 |
 | Deaths | 2 |
 
 ## Job levels
@@ -20,11 +20,11 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 67 | NIN | 1 |
+| MNK | 77 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 53 | COR | 1 |
+| THF | 64 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 2,125
+- **Marks (current):** 2,775
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4ca0f585e4e3 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 98a09a310d37 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

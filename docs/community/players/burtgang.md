@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **RDM 1** |
-| Sub job | NIN 1 |
-| Time played | 76h |
-| Enemies defeated | 13,084 |
-| Deaths | 41 |
+| Main job | **RDM 85** |
+| Sub job | NIN 85 |
+| Time played | 78h |
+| Enemies defeated | 13,346 |
+| Deaths | 45 |
 
 ## Job levels
 
@@ -25,7 +25,7 @@
 | **MNK** | **99** | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| RDM | 85 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 602298e0fda9 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 412494ba8ceb -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

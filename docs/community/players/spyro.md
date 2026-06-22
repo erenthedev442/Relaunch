@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **SMN 99** |
-| Sub job | BLU 99 |
-| Time played | 40h |
-| Enemies defeated | 7,810 |
-| Deaths | 23 |
+| Sub job | RDM 99 |
+| Time played | 48h |
+| Enemies defeated | 8,132 |
+| Deaths | 24 |
 
 ## Job levels
 
@@ -36,24 +36,24 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 8,135
-- **Marks (lifetime):** 27,852
+- **Marks (current):** 16,469
+- **Marks (lifetime):** 30,337
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 415
+- **Total NM kills:** 629
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 598
+- **Augments crafted:** 639
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 125 | 1,675 |
+| AF | 1,525 | 1,675 |
 | Relic | 800 | 350 |
-| Empyrean | 950 | 0 |
+| Empyrean | 15 | 3,065 |
 
 ## Job Rebirth
 
@@ -71,7 +71,7 @@
 
 ## Achievements
 
-**14** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · First Ascension · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
+**15** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · First Ascension · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: edee80011790 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 81eb6106e5a6 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

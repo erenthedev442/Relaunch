@@ -1,8 +1,8 @@
 # Clambone
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-21 · Character age 4d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 20h
 
-`💪 4 jobs @99`
+`💪 7 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **WAR 99** |
-| Sub job | SAM 99 |
-| Time played | 12h |
-| Enemies defeated | 485 |
-| Deaths | 8 |
+| Sub job | DRG 99 |
+| Time played | 15h |
+| Enemies defeated | 739 |
+| Deaths | 11 |
 
 ## Job levels
 
@@ -23,12 +23,12 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | NIN | 1 |
-| WHM | 1 | DRG | 77 |
+| WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | **BLU** | **99** |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 81 |
+| **PLD** | **99** | PUP | 1 |
+| **DRK** | **99** | DNC | 92 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 2
+- **Marks (current):** 1,102
 - **Marks (lifetime):** 1,207
 - **Distinct NMs slain:** 8
-- **Total NM kills:** 110
+- **Total NM kills:** 154
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Augment Novice.
+**8** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Wave Rider · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f8baaae17c30 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: eb0ad91ab43d -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

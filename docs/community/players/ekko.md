@@ -1,6 +1,6 @@
 # Ekko
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 19h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 20h
 
 `💪 7 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,313
+- **Marks (current):** 9,313
 - **Marks (lifetime):** 5,919
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 808
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Star-Slayer · Augment Novice.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cee8660e6660 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 9b0517867574 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

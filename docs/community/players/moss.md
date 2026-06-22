@@ -2,10 +2,10 @@
 
 **Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d
 
-`👑 Grandmaster` `💪 22 jobs @99`
+`👑 Grandmaster ×3` `⭐ 8 Ascensions` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
-    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Empyrean Hunters' Guild.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild.
 
 ## At a glance
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 73h |
-| Enemies defeated | 3,887 |
+| Time played | 84h |
+| Enemies defeated | 4,112 |
 | Deaths | 22 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 31,646
+- **Marks (current):** 74,406
 - **Marks (lifetime):** 2,447
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 609
+- **Total NM kills:** 815
 
 ## Guild standing
 
@@ -47,10 +47,10 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Master | 48,000 | 7,000 to Champion |
+| AF Hunters' Guild | Champion | 85,500 | 14,500 to Grandmaster |
 | Relic Hunters' Guild | Grandmaster | 108,000 | **maxed** |
-| Empyrean Hunters' Guild | Master | 51,000 | 4,000 to Champion |
-| League Hunters' Guild | Champion | 69,000 | 31,000 to Grandmaster |
+| Empyrean Hunters' Guild | Grandmaster | 103,500 | **maxed** |
+| League Hunters' Guild | Grandmaster | 100,500 | **maxed** |
 
 ## Augment Sage
 
@@ -66,13 +66,18 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Relic | 0 | 0 |
 | Empyrean | 18,280 | 21,530 |
 
+## Prestige
+
+- **Total Ascensions:** 8
+- **Per-job prestige:** BLM P8
+
 ## Collections
 
 - **Trusts learned:** 120
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**15** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Star-Slayer · Devourer of the Devourer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -89,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7249f325a8e0 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: eaf3620b47cf -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

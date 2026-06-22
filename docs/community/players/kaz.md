@@ -1,32 +1,32 @@
 # Kaz
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-19 · Character age 8d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 8d 21h
 
-`💪 4 jobs @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
-| Sub job | COR 43 |
-| Time played | 10h |
-| Enemies defeated | 834 |
-| Deaths | 6 |
+| Main job | **COR 99** |
+| Sub job | NIN 79 |
+| Time played | 14h |
+| Enemies defeated | 1,049 |
+| Deaths | 7 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| MNK | 1 | NIN | 1 |
+| MNK | 1 | NIN | 79 |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | **BLU** | **99** |
-| THF | 1 | COR | 43 |
+| THF | 1 | **COR** | **99** |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
@@ -35,17 +35,17 @@
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 671
-- **Marks (lifetime):** 2,666
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 457
+- **Rank:** 4 / 5
+- **Marks (current):** 1,646
+- **Marks (lifetime):** 4,817
+- **Distinct NMs slain:** 11
+- **Total NM kills:** 823
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 11
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 2 / 5
+- **Augments crafted:** 45
+- **NM Affinities:** 2 / 13
 
 ## Reforge
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Augment Novice.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Wave Rider · Star-Slayer · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0f1906f6b8cd -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 2fd26e46dcbb -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

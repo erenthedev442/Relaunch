@@ -2,7 +2,7 @@
 
 **Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 5d
 
-`⭐ 7 Ascensions` `💪 10 jobs @99`
+`⭐ 19 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **GEO 99** |
-| Sub job | WHM 99 |
-| Time played | 29h |
-| Enemies defeated | 5 |
-| Deaths | 5 |
+| Sub job | RDM 99 |
+| Time played | 34h |
+| Enemies defeated | 100 |
+| Deaths | 8 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 20,983
+- **Marks (current):** 22,293
 - **Marks (lifetime):** 1,089
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 230
+- **Total NM kills:** 277
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 272
+- **Augments crafted:** 290
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -55,10 +55,15 @@
 | Relic | 200 | 1,950 |
 | Empyrean | 1,300 | 0 |
 
+## Job Rebirth
+
+- **Total rebirths:** 2
+- **By job:** GEO ×2
+
 ## Prestige
 
-- **Total Ascensions:** 7
-- **Per-job prestige:** GEO P7
+- **Total Ascensions:** 19
+- **Per-job prestige:** GEO P19
 
 ## Collections
 
@@ -66,7 +71,7 @@
 
 ## Achievements
 
-**14** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
+**16** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Wave Fighter · First Ascension · Ascending Master · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -83,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 826145689fc1 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: adc7f243f775 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Cervantis
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-21 · Character age 9d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 6h
 
-`⭐ 20 Ascensions` `💪 9 jobs @99`
+`⭐ 25 Ascensions` `💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BLM 99** |
-| Sub job | SCH 99 |
-| Time played | 57h |
-| Enemies defeated | 5,785 |
-| Deaths | 64 |
+| Main job | **RDM 99** |
+| Sub job | BLU 99 |
+| Time played | 62h |
+| Enemies defeated | 6,014 |
+| Deaths | 69 |
 
 ## Job levels
 
@@ -36,29 +36,29 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,596
-- **Marks (lifetime):** 6,046
+- **Marks (current):** 7,069
+- **Marks (lifetime):** 6,418
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 340
+- **Total NM kills:** 370
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 274
-- **NM Affinities:** 2 / 13
+- **Augments crafted:** 294
+- **NM Affinities:** 4 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 7 | 5,465 |
-| Relic | 0 | 1,830 |
-| Empyrean | 231 | 8,055 |
+| Relic | 50 | 1,830 |
+| Empyrean | 66 | 11,140 |
 
 ## Prestige
 
-- **Total Ascensions:** 20
-- **Per-job prestige:** WAR P14 · SAM P6
+- **Total Ascensions:** 25
+- **Per-job prestige:** WAR P14 · RDM P5 · SAM P6
 
 ## Collections
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fd0d1bf92e34 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 8732f1e84fd6 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

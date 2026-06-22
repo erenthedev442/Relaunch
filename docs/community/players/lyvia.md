@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 33h |
-| Enemies defeated | 1,525 |
-| Deaths | 17 |
+| Time played | 41h |
+| Enemies defeated | 1,692 |
+| Deaths | 19 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 8,072
-- **Marks (lifetime):** 4,561
-- **Distinct NMs slain:** 8
-- **Total NM kills:** 905
+- **Marks (current):** 14,032
+- **Marks (lifetime):** 4,583
+- **Distinct NMs slain:** 9
+- **Total NM kills:** 940
 
 ## Guild standing
 
@@ -54,17 +54,17 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
-- **Augments crafted:** 137
-- **NM Affinities:** 5 / 13
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 270
+- **NM Affinities:** 7 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 115 | 3,365 |
-| Relic | 0 | 5,250 |
-| Empyrean | 2,125 | 125 |
+| Relic | 1,500 | 5,250 |
+| Empyrean | 25 | 3,275 |
 
 ## Job Rebirth
 
@@ -73,11 +73,11 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 119
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
+**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -85,6 +85,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|
 | Fastest 1 → 99 | 0s |
 | HL Rank I → V | 1d 18h |
+| Augment Archon | 4d 10h |
 
 ---
 
@@ -93,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7775f203c5d6 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 9a63c24877b7 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

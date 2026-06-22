@@ -2,25 +2,27 @@
 
 **Windurst citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 9h
 
+`💪 1 job @99`
+
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 69/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **MNK 69** |
-| Sub job | WAR 56 |
-| Time played | 5h |
-| Enemies defeated | 91 |
-| Deaths | 5 |
+| Main job | **MNK 99** |
+| Sub job | WAR 83 |
+| Time played | 8h |
+| Enemies defeated | 170 |
+| Deaths | 6 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 56 | SAM | 1 |
-| MNK | 69 | NIN | 1 |
+| WAR | 83 | SAM | 1 |
+| **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -33,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 1,025
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 3 / 5
+- **Marks (current):** 1,347
+- **Marks (lifetime):** 88
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 10
 
 ## Augment Sage
 
@@ -57,9 +59,15 @@
 
 - **Trusts learned:** 117
 
+## Achievements
+
+**4** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked.
+
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 15h 13m |
 
 ---
 
@@ -68,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1aee850bf1b0 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 7bd7a6699119 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

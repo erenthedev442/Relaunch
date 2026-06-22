@@ -17,7 +17,7 @@ Legendary's current state at a glance. Stats update daily via the auto-generatio
 ## Who's Online
 
 <!-- DOCGEN:BEGIN id="status-online" -->
-**18** online · **405** characters · _snapshot from the last site rebuild — the header badge shows live status._
+**44** online · **410** characters · _snapshot from the last site rebuild — the header badge shows live status._
 <!-- DOCGEN:END id="status-online" -->
 
 ---
@@ -31,12 +31,12 @@ _Snapshot taken at build time — timers drift after that. For live status, chec
 
 | NM | Zone | Respawn window | Status (snapshot) |
 |---|---|---:|---|
-| **Adamantoise** | Valley of Sorrows | 21–24 h | 🟢 **Up now** |
 | **Roc** | Sauromugue Champaign | 6–8 h | 🟢 **Up now** |
 | **Serket** | Garlaige Citadel | 6–8 h | 🟢 **Up now** |
-| **Simurgh** | Rolanberry Fields | 6–8 h | 🟢 **Up now** |
-| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~1h 46m |
-| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟠 pops in ~2h 18m |
+| **Simurgh** | Rolanberry Fields | 6–8 h | 🟠 pops in ~3h 18m |
+| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟠 pops in ~12h 31m |
+| **Adamantoise** | Valley of Sorrows | 21–24 h | 🟠 pops in ~13h 59m |
+| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~14h 59m |
 | **Spiny Spipi** | East Sarutabaruta | 4–6 h | ⚪ awaiting first spawn |
 | **King Arthro** | Jugner Forest | 8–10 h | ⚪ awaiting first spawn |
 <!-- DOCGEN:END id="status-hnm" -->
@@ -58,7 +58,7 @@ _Health snapshot from the last site rebuild._ 🟢 OK · 🟠 last run reported 
 
 | Background job | Schedule | Last run | Status (snapshot) |
 |---|---|---:|---|
-| **Auction House market-maker** | every 15 min | 8d 1h ago | 🔴 **STALE** — no run in 8d 1h |
+| **Auction House market-maker** | every 15 min | 8d 2h ago | 🔴 **STALE** — no run in 8d 2h |
 | **Discord notifier (webhook)** | every 5 min | — | ⚪ no signal yet |
 | **Discord bot (slash commands)** | daemon · 5 min beat | — | ⚪ no signal yet |
 | **Database backup + verify** | nightly 04:00 | 22d 8h ago | 🔴 **STALE** — no run in 22d 8h |
@@ -119,6 +119,6 @@ See the full list at [Hall of Fame](highlights.md).
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7dc0864d892f -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: bb5c6ea5797b -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

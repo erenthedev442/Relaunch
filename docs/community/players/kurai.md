@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | DNC 76 |
-| Time played | 14h |
-| Enemies defeated | 844 |
+| Sub job | DNC 85 |
+| Time played | 15h |
+| Enemies defeated | 877 |
 | Deaths | 14 |
 
 ## Job levels
@@ -28,7 +28,7 @@
 | RDM | 1 | BLU | 65 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| **DRK** | **99** | DNC | 76 |
+| **DRK** | **99** | DNC | 85 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 2 / 5
-- **Augments crafted:** 28
+- **Augments crafted:** 29
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f97a76e75a1b -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: a459a4c6b29e -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,21 +1,19 @@
-# Liushui
+# Bid
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 6d 7h
-
-`💪 3 jobs @99`
+**Windurst citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 4h 56m
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **SMN 99** |
-| Sub job | GEO 95 |
-| Time played | 9h |
-| Enemies defeated | 48 |
-| Deaths | 2 |
+| Main job | **BLM 1** |
+| Sub job | — |
+| Time played | 0h |
+| Enemies defeated | 0 |
+| Deaths | 0 |
 
 ## Job levels
 
@@ -23,20 +21,20 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| **WHM** | **99** | DRG | 1 |
-| **BLM** | **99** | **SMN** | **99** |
+| WHM | 1 | DRG | 1 |
+| BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 95 |
+| BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,525
+- **Marks (current):** 475
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -44,7 +42,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 4
+- **Augments crafted:** 0
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -57,13 +55,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 0
 
 ## Speed records
 
-| Record | Time |
-|---|---:|
-| Fastest 1 → 99 | 19h 48m |
+_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
 
 ---
 
@@ -72,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3cb4b7d3ef36 -->
+<!-- content-hash: ea88a869a731 -->
 _Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

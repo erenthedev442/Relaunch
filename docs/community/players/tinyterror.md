@@ -2,7 +2,7 @@
 
 **Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 9h
 
-`💪 8 jobs @99`
+`💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **BRD 99** |
-| Sub job | WHM 99 |
-| Time played | 3h |
-| Enemies defeated | 0 |
-| Deaths | 2 |
+| Sub job | DNC 99 |
+| Time played | 7h |
+| Enemies defeated | 3 |
+| Deaths | 7 |
 
 ## Job levels
 
@@ -26,9 +26,9 @@
 | **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | BLU | 1 |
-| THF | 1 | **COR** | **99** |
+| **THF** | **99** | **COR** | **99** |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| DRK | 1 | **DNC** | **99** |
 | BST | 1 | **SCH** | **99** |
 | **BRD** | **99** | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 350
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Marks (current):** 7,810
+- **Marks (lifetime):** 361
+- **Distinct NMs slain:** 14
+- **Total NM kills:** 19
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 36
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 50
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 19h 28m |
+| HL Rank I → V | 5h 55m |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a0a11a6e90e4 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 5dccabe88759 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

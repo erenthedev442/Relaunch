@@ -1,11 +1,11 @@
 # Joker
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-21 · Character age 5d 7h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 5d 7h
 
 `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | DNC 99 |
-| Time played | 22h |
-| Enemies defeated | 628 |
-| Deaths | 11 |
+| Time played | 24h |
+| Enemies defeated | 679 |
+| Deaths | 13 |
 
 ## Job levels
 
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 11,578
-- **Marks (lifetime):** 279
-- **Distinct NMs slain:** 4
-- **Total NM kills:** 53
+- **Rank:** 5 / 5
+- **Marks (current):** 8,682
+- **Marks (lifetime):** 355
+- **Distinct NMs slain:** 6
+- **Total NM kills:** 64
 
 ## Augment Sage
 
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 31e6c0774258 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 6fdfce7b873f -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Rtkle
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-21 · Character age 5d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 5d 6h
 
-`💪 4 jobs @99`
+`⭐ 28 Ascensions` `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 43h |
-| Enemies defeated | 178 |
-| Deaths | 9 |
+| Time played | 48h |
+| Enemies defeated | 230 |
+| Deaths | 15 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 145,294
+- **Marks (current):** 71,494
 - **Marks (lifetime):** 74,063
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 1,279
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 293
+- **Augments crafted:** 305
 - **NM Affinities:** 8 / 13
 
 ## Reforge
@@ -55,13 +55,18 @@
 | Relic | 1,500 | 0 |
 | Empyrean | 16,290 | 16,290 |
 
+## Prestige
+
+- **Total Ascensions:** 28
+- **Per-job prestige:** MNK P28
+
 ## Collections
 
 - **Trusts learned:** 117
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Augment Novice · Augment Expert · Augment Master.
+**15** unlocked — First Hunt · Ten Hunts In · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · First Ascension · Ascending Master · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ad97eabdfc14 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 55b4e63703a6 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

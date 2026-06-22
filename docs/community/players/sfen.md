@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | PLD 99 |
-| Time played | 34h |
-| Enemies defeated | 4,690 |
-| Deaths | 27 |
+| Sub job | DNC 99 |
+| Time played | 39h |
+| Enemies defeated | 5,377 |
+| Deaths | 35 |
 
 ## Job levels
 
@@ -36,29 +36,29 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 31
-- **Marks (lifetime):** 695
-- **Distinct NMs slain:** 13
-- **Total NM kills:** 22
+- **Marks (current):** 4,261
+- **Marks (lifetime):** 2,502
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 51
 
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 120
+- **Augments crafted:** 166
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| AF | 175 | 175 |
+| Relic | 1,500 | 0 |
+| Empyrean | 2,150 | 150 |
 
 ## Job Rebirth
 
-- **Total rebirths:** 5
-- **By job:** THF ×5
+- **Total rebirths:** 6
+- **By job:** THF ×6
 
 ## Collections
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice · Augment Expert.
+**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · X Marks the Spot · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6aba2f8c4370 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 3b07e09f8f89 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

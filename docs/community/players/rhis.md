@@ -1,8 +1,8 @@
 # Rhis
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 5d
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 5d 1h
 
-`⭐ 13 Ascensions` `💪 9 jobs @99`
+`⭐ 25 Ascensions` `💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | SCH 99 |
-| Time played | 31h |
-| Enemies defeated | 1,833 |
+| Time played | 36h |
+| Enemies defeated | 2,601 |
 | Deaths | 11 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 15,884
+- **Marks (current):** 17,084
 - **Marks (lifetime):** 1,089
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 251
+- **Total NM kills:** 301
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 312
+- **Augments crafted:** 330
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -55,10 +55,15 @@
 | Relic | 1,700 | 1,950 |
 | Empyrean | 1,300 | 0 |
 
+## Job Rebirth
+
+- **Total rebirths:** 2
+- **By job:** BLM ×2
+
 ## Prestige
 
-- **Total Ascensions:** 13
-- **Per-job prestige:** BLM P7 · SAM P6
+- **Total Ascensions:** 25
+- **Per-job prestige:** BLM P19 · SAM P6
 
 ## Collections
 
@@ -66,7 +71,7 @@
 
 ## Achievements
 
-**15** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
+**16** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Wave Fighter · First Ascension · Ascending Master · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -83,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a9bd8fdf1ba7 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 89008701f613 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Langy
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-21 · Character age 9d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 5h
 
-`⭐ 2 Ascensions` `💪 21 jobs @99`
+`⭐ 2 Ascensions` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | BLM 1 |
-| Time played | 42h |
-| Enemies defeated | 3,819 |
+| Main job | **BLM 99** |
+| Sub job | RDM 99 |
+| Time played | 46h |
+| Enemies defeated | 4,271 |
 | Deaths | 9 |
 
 ## Job levels
@@ -24,7 +24,7 @@
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
 | **WHM** | **99** | **DRG** | **99** |
-| BLM | 1 | **SMN** | **99** |
+| **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | **COR** | **99** |
 | **PLD** | **99** | **PUP** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 12,439
-- **Marks (lifetime):** 11,331
+- **Marks (current):** 8,365
+- **Marks (lifetime):** 12,926
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 2,153
+- **Total NM kills:** 2,472
 
 ## Augment Sage
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0c66e692aa50 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 37254c66bdbb -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

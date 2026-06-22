@@ -1,32 +1,32 @@
 # Badger
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-20 · Character age 2d 19h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 20h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 15/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 51/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **DRK 15** |
-| Sub job | SAM 12 |
-| Time played | 0h |
-| Enemies defeated | 23 |
+| Main job | **DRK 51** |
+| Sub job | SAM 35 |
+| Time played | 1h |
+| Enemies defeated | 55 |
 | Deaths | 0 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 12 |
+| WAR | 1 | SAM | 35 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 2 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 15 | DNC | 1 |
+| DRK | 51 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ed09bfdaa6b9 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 2e19f44a49e4 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

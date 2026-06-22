@@ -1,8 +1,8 @@
 # Chausie
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-20 · Character age 7d 16h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d 16h
 
-`💪 3 jobs @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,19 +11,19 @@
 
 | | |
 |---|---|
-| Main job | **DRG 29** |
-| Sub job | PUP 29 |
-| Time played | 34h |
-| Enemies defeated | 1,598 |
+| Main job | **RUN 1** |
+| Sub job | DRK 1 |
+| Time played | 40h |
+| Enemies defeated | 2,165 |
 | Deaths | 14 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 81 | SAM | 1 |
+| **WAR** | **99** | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 1 | DRG | 29 |
+| WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,072
-- **Marks (lifetime):** 332
+- **Marks (current):** 2,513
+- **Marks (lifetime):** 542
 - **Distinct NMs slain:** 8
-- **Total NM kills:** 47
+- **Total NM kills:** 89
 
 ## Guild standing
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3e2b7ad64c95 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: bc7693007b08 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

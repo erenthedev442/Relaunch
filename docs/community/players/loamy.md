@@ -1,8 +1,8 @@
 # Loamy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 17h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 18h
 
-`💪 11 jobs @99`
+`💪 12 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BST 99** |
+| Main job | **RNG 99** |
 | Sub job | DNC 99 |
-| Time played | 70h |
-| Enemies defeated | 1,187 |
-| Deaths | 8 |
+| Time played | 77h |
+| Enemies defeated | 1,280 |
+| Deaths | 9 |
 
 ## Job levels
 
@@ -31,21 +31,21 @@
 | DRK | 1 | **DNC** | **99** |
 | **BST** | **99** | **SCH** | **99** |
 | **BRD** | **99** | **GEO** | **99** |
-| RNG | 15 | RUN | 1 |
+| **RNG** | **99** | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 12,022
-- **Marks (lifetime):** 3,545
-- **Distinct NMs slain:** 4
-- **Total NM kills:** 697
+- **Marks (current):** 130
+- **Marks (lifetime):** 3,557
+- **Distinct NMs slain:** 5
+- **Total NM kills:** 698
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 99
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 110
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
+**8** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dc558f05d293 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: b84bcfcb9cef -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

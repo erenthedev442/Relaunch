@@ -2,7 +2,7 @@
 
 **San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 20h
 
-`⭐ 26 Ascensions` `💪 21 jobs @99`
+`⭐ 31 Ascensions` `💪 21 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 84h |
-| Enemies defeated | 1,988 |
+| Time played | 92h |
+| Enemies defeated | 2,265 |
 | Deaths | 23 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 206,780
+- **Marks (current):** 192,580
 - **Marks (lifetime):** 126,693
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 5,056
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 293
+- **Augments crafted:** 302
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 26
-- **Per-job prestige:** MNK P26
+- **Total Ascensions:** 31
+- **Per-job prestige:** MNK P31
 
 ## Collections
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d5067052ea1f -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 27bd5c43eae3 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

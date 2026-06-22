@@ -11,7 +11,7 @@
 |---|---|
 | Main job | **NIN 18** |
 | Sub job | WAR 18 |
-| Time played | 7h |
+| Time played | 10h |
 | Enemies defeated | 168 |
 | Deaths | 4 |
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 402db0e1bc59 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: a8781951d4d1 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

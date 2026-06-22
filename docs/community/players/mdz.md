@@ -1,6 +1,6 @@
 # Mdz
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 9h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 10h
 
 `💪 8 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | WAR 99 |
-| Time played | 34h |
-| Enemies defeated | 2,387 |
-| Deaths | 15 |
+| Sub job | PUP 99 |
+| Time played | 39h |
+| Enemies defeated | 2,502 |
+| Deaths | 17 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 9,746
-- **Marks (lifetime):** 2,658
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 628
+- **Marks (current):** 10,093
+- **Marks (lifetime):** 3,925
+- **Distinct NMs slain:** 13
+- **Total NM kills:** 705
 
 ## Guild standing
 
@@ -54,8 +54,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 40
+- **Mastery rank:** 2 / 5
+- **Augments crafted:** 48
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -68,17 +68,18 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
 
 ## Achievements
 
-**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Augment Novice.
+**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 17h 31m |
+| HL Rank I → V | 3d 1h |
 
 ---
 
@@ -87,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c0bca639ce95 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 15d08a230eeb -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

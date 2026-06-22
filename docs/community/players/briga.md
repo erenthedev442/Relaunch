@@ -1,45 +1,45 @@
 # Briga
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-21 · Character age 4d 13h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 13h
 
-`💪 1 job @99`
+`💪 6 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **MNK 83** |
-| Sub job | WAR 71 |
-| Time played | 10h |
-| Enemies defeated | 261 |
+| Main job | **RDM 91** |
+| Sub job | WHM 91 |
+| Time played | 14h |
+| Enemies defeated | 552 |
 | Deaths | 1 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 71 | SAM | 1 |
-| MNK | 83 | NIN | 1 |
-| WHM | 88 | DRG | 1 |
-| BLM | 49 | **SMN** | **99** |
-| RDM | 41 | BLU | 1 |
+| WAR | 89 | SAM | 1 |
+| **MNK** | **99** | NIN | 1 |
+| **WHM** | **99** | DRG | 1 |
+| **BLM** | **99** | **SMN** | **99** |
+| RDM | 91 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
-| RNG | 69 | RUN | 1 |
+| BST | 1 | **SCH** | **99** |
+| BRD | 1 | GEO | 2 |
+| **RNG** | **99** | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 2 / 5
-- **Marks (current):** 7,723
-- **Marks (lifetime):** 60
+- **Rank:** 5 / 5
+- **Marks (current):** 6
+- **Marks (lifetime):** 1,045
 - **Distinct NMs slain:** 1
-- **Total NM kills:** 50
+- **Total NM kills:** 247
 
 ## Augment Sage
 
@@ -57,11 +57,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
 
 ## Achievements
 
-**2** unlocked — First Hunt · Ten Hunts In.
+**4** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Mark of 1,000.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 11622ed27821 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 6ada355de3e7 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

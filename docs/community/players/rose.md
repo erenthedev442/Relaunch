@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | WHM 99 |
-| Time played | 34h |
+| Time played | 37h |
 | Enemies defeated | 11 |
 | Deaths | 0 |
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f4299acec1a8 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 81348e1c7593 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

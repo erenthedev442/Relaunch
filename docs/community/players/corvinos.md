@@ -1,6 +1,6 @@
 # Corvinos
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 7d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 7d 21h
 
 `⭐ 6 Ascensions` `💪 9 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | DRK 99 |
-| Time played | 25h |
-| Enemies defeated | 3,101 |
+| Time played | 26h |
+| Enemies defeated | 3,116 |
 | Deaths | 9 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,627
+- **Marks (current):** 5,627
 - **Marks (lifetime):** 1,834
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 284
+- **Total NM kills:** 297
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 137
+- **Augments crafted:** 138
 - **NM Affinities:** 8 / 13
 
 ## Reforge
@@ -64,7 +64,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|---:|
 | AF | 195 | 3,195 |
 | Relic | 115 | 3,165 |
-| Empyrean | 260 | 6,635 |
+| Empyrean | 50 | 8,525 |
 
 ## Job Rebirth
 
@@ -98,6 +98,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b37a609e58fc -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 4065edb7d31d -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

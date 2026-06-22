@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BLU 99** |
 | Sub job | SMN 69 |
-| Time played | 9h |
+| Time played | 10h |
 | Enemies defeated | 398 |
 | Deaths | 2 |
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 429da472af7d -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 17d8bec43775 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

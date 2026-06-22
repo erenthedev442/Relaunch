@@ -2,7 +2,7 @@
 
 **San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 17h
 
-`⭐ 6 Ascensions` `💪 5 jobs @99`
+`⭐ 21 Ascensions` `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | RDM 99 |
-| Time played | 24h |
-| Enemies defeated | 17 |
+| Time played | 26h |
+| Enemies defeated | 20 |
 | Deaths | 37 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 17,443
+- **Marks (current):** 14,993
 - **Marks (lifetime):** 29,306
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 2,503
+- **Total NM kills:** 2,580
 
 ## Augment Sage
 
@@ -57,8 +57,8 @@
 
 ## Prestige
 
-- **Total Ascensions:** 6
-- **Per-job prestige:** BRD P6
+- **Total Ascensions:** 21
+- **Per-job prestige:** BRD P21
 
 ## Collections
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**14** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · First Ascension · Augment Novice · Augment Expert · Augment Master.
+**17** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8eb4f1ab9509 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: ffcf5d589346 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

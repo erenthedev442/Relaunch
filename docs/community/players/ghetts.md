@@ -1,32 +1,32 @@
 # Ghetts
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-21 · Character age 2d 15h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 15h
 
-`💪 5 jobs @99`
+`💪 6 jobs @99`
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **PUP 99** |
-| Sub job | COR 1 |
-| Time played | 5h |
+| Main job | **BRD 99** |
+| Sub job | SCH 79 |
+| Time played | 9h |
 | Enemies defeated | 0 |
-| Deaths | 0 |
+| Deaths | 1 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
+| WAR | 60 | SAM | 1 |
+| MNK | 72 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | **BLM** | **99** | SMN | 39 |
-| **RDM** | **99** | BLU | 1 |
-| THF | 1 | COR | 1 |
+| **RDM** | **99** | **BLU** | **99** |
+| THF | 1 | COR | 66 |
 | PLD | 1 | **PUP** | **99** |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 79 |
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 9,154
-- **Marks (lifetime):** 3,280
+- **Rank:** 5 / 5
+- **Marks (current):** 14,280
+- **Marks (lifetime):** 4,875
 - **Distinct NMs slain:** 2
-- **Total NM kills:** 694
+- **Total NM kills:** 1,013
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**4** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Mark of 1,000.
+**5** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Mark of 1,000.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: eda3c20997c4 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: ac3ae81f4b54 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | BRD 13 |
-| Time played | 39h |
+| Time played | 40h |
 | Enemies defeated | 15 |
 | Deaths | 5 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 145,940
+- **Marks (current):** 146,340
 - **Marks (lifetime):** 84,857
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 3,604
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b2e32ce9ee4e -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 01496d340edc -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

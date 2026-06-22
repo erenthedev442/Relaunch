@@ -1,6 +1,6 @@
 # Nut
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-20 · Character age 7d 22h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-20 · Character age 7d 23h
 
 `💪 6 jobs @99`
 
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
+| Main job | **BRD 99** |
 | Sub job | WAR 99 |
-| Time played | 34h |
+| Time played | 38h |
 | Enemies defeated | 3,790 |
 | Deaths | 2 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,266
+- **Marks (current):** 4,101
 - **Marks (lifetime):** 76
 - **Distinct NMs slain:** 2
 - **Total NM kills:** 2
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 332
+- **Augments crafted:** 334
 - **NM Affinities:** 1 / 13
 
 ## Reforge
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fe744b2c0208 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: edb3abe19e7f -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

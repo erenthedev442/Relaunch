@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | RDM 99 |
-| Time played | 30h |
-| Enemies defeated | 488 |
-| Deaths | 3 |
+| Main job | **DRG 99** |
+| Sub job | WAR 99 |
+| Time played | 43h |
+| Enemies defeated | 545 |
+| Deaths | 5 |
 
 ## Job levels
 
@@ -36,24 +36,35 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,050
-- **Marks (lifetime):** 127
+- **Marks (current):** 5,589
+- **Marks (lifetime):** 152
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 35
+- **Total NM kills:** 46
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Journeyman | 1,000 | 4,000 to Veteran |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 13
+- **Augments crafted:** 15
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 2,000 | 0 |
+| AF | 2,300 | 300 |
 | Relic | 0 | 0 |
-| Empyrean | 4,800 | 4,800 |
+| Empyrean | 3,300 | 5,400 |
 
 ## Collections
 
@@ -77,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 258bd79cc978 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 324202c954d2 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

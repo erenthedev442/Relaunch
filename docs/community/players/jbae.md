@@ -2,7 +2,7 @@
 
 **San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-22 · Character age 28d 23h
 
-`⭐ 126 Ascensions` `💪 17 jobs @99`
+`⭐ 127 Ascensions` `💪 17 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 304h |
-| Enemies defeated | 10,253 |
-| Deaths | 177 |
+| Time played | 308h |
+| Enemies defeated | 10,259 |
+| Deaths | 178 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 39,498
-- **Marks (lifetime):** 1,680
+- **Marks (current):** 36,608
+- **Marks (lifetime):** 1,790
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 6,106
+- **Total NM kills:** 6,108
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 928
+- **Augments crafted:** 929
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -63,7 +63,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 260 | 360 |
-| Relic | 25 | 25 |
+| Relic | 175 | 175 |
 | Empyrean | 4,330 | 530 |
 
 ## Job Rebirth
@@ -73,8 +73,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 126
-- **Per-job prestige:** RDM P87 · PLD P12 · DRG P27
+- **Total Ascensions:** 127
+- **Per-job prestige:** RDM P88 · PLD P12 · DRG P27
 
 ## Collections
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 28c8b9f0cdc3 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 6e20c581d797 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

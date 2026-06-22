@@ -1,26 +1,28 @@
 # Herka
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 5h
+
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 78/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **WAR 78** |
-| Sub job | NIN 68 |
-| Time played | 4h |
-| Enemies defeated | 126 |
-| Deaths | 0 |
+| Main job | **WAR 99** |
+| Sub job | NIN 99 |
+| Time played | 12h |
+| Enemies defeated | 366 |
+| Deaths | 2 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 78 | SAM | 1 |
-| MNK | 1 | NIN | 68 |
+| **WAR** | **99** | SAM | 1 |
+| MNK | 1 | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -33,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 475
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 2 / 5
+- **Marks (current):** 13
+- **Marks (lifetime):** 115
+- **Distinct NMs slain:** 1
+- **Total NM kills:** 23
 
 ## Augment Sage
 
@@ -57,9 +59,15 @@
 
 - **Trusts learned:** 117
 
+## Achievements
+
+**2** unlocked — First Hunt · Ten Hunts In.
+
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 10h 43m |
 
 ---
 
@@ -68,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cfe41c5555b5 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 83c1734f7720 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Ericgamerguy
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 21h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 2d 21h
 
 `💪 1 job @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **WHM 1** |
-| Sub job | RDM 1 |
-| Time played | 5h |
-| Enemies defeated | 191 |
+| Main job | **WHM 55** |
+| Sub job | RDM 55 |
+| Time played | 6h |
+| Enemies defeated | 262 |
 | Deaths | 4 |
 
 ## Job levels
@@ -23,7 +23,7 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 1 | DRG | 1 |
+| WHM | 55 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
 | THF | 1 | COR | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,525
+- **Marks (current):** 2,125
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 502793f622b8 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 3c980e1a1aaf -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

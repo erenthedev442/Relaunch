@@ -1,6 +1,6 @@
 # Drbrule
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 3d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 3d 21h
 
 `⭐ 14 Ascensions` `💪 22 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | RDM 99 |
-| Time played | 28h |
+| Time played | 29h |
 | Enemies defeated | 15 |
 | Deaths | 2 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 188,464
+- **Marks (current):** 180,544
 - **Marks (lifetime):** 87,741
 - **Distinct NMs slain:** 9
 - **Total NM kills:** 4,227
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3b199cb57f4e -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 01988af54ef7 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

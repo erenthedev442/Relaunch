@@ -2,7 +2,7 @@
 
 **San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 6h
 
-`⭐ 14 Ascensions` `💪 22 jobs @99`
+`⭐ 15 Ascensions` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BRD 99** |
-| Sub job | WHM 99 |
-| Time played | 54h |
-| Enemies defeated | 869 |
-| Deaths | 3 |
+| Main job | **MNK 99** |
+| Sub job | RDM 99 |
+| Time played | 58h |
+| Enemies defeated | 873 |
+| Deaths | 4 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 250,884
+- **Marks (current):** 248,684
 - **Marks (lifetime):** 121,973
 - **Distinct NMs slain:** 11
 - **Total NM kills:** 4,867
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 275
+- **Augments crafted:** 292
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -53,12 +53,12 @@
 |---|---:|---:|
 | AF | 2,450 | 250 |
 | Relic | 3,000 | 0 |
-| Empyrean | 58,160 | 54,960 |
+| Empyrean | 52,910 | 54,960 |
 
 ## Prestige
 
-- **Total Ascensions:** 14
-- **Per-job prestige:** MNK P14
+- **Total Ascensions:** 15
+- **Per-job prestige:** MNK P15
 
 ## Collections
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 78c2c71e3339 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: ce64e63d88f4 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

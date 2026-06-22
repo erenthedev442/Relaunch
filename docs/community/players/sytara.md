@@ -1,6 +1,6 @@
 # Sytara
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 18h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 19h
 
 `⭐ 12 Ascensions` `💪 22 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | RDM 99 |
-| Time played | 96h |
-| Enemies defeated | 11,728 |
-| Deaths | 45 |
+| Sub job | BLU 99 |
+| Time played | 101h |
+| Enemies defeated | 11,787 |
+| Deaths | 49 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,474
+- **Marks (current):** 21,854
 - **Marks (lifetime):** 5,461
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 876
+- **Total NM kills:** 888
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 294
+- **Augments crafted:** 309
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -64,7 +64,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|---:|
 | AF | 28,053 | 28,053 |
 | Relic | 20,460 | 20,500 |
-| Empyrean | 15,120 | 26,650 |
+| Empyrean | 15,270 | 26,800 |
 
 ## Job Rebirth
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 02e9eb1fc7ff -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: a4cd5e5044f7 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

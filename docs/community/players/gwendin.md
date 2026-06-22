@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **RUN 99** |
 | Sub job | DRK 99 |
-| Time played | 68h |
-| Enemies defeated | 968 |
+| Time played | 75h |
+| Enemies defeated | 1,060 |
 | Deaths | 20 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 19,461
-- **Marks (lifetime):** 18,241
+- **Marks (current):** 15,432
+- **Marks (lifetime):** 22,421
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 199
+- **Total NM kills:** 237
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 300
+- **Augments crafted:** 304
 - **NM Affinities:** 10 / 13
 
 ## Reforge
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 35f3e6da584a -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: e1a0b6dfa182 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **BLM 99** |
+| Main job | **RUN 99** |
 | Sub job | NIN 99 |
-| Time played | 100h |
+| Time played | 104h |
 | Enemies defeated | 2,167 |
 | Deaths | 49 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,237
+- **Marks (current):** 3,087
 - **Marks (lifetime):** 5,676
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 133
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8568af1adc4c -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: dd5a3bf438f3 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

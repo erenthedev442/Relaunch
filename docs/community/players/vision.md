@@ -1,8 +1,8 @@
 # Vision
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 17h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 18h
 
-`💪 2 jobs @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **BLM 99** |
-| Sub job | SCH 83 |
-| Time played | 11h |
-| Enemies defeated | 92 |
-| Deaths | 2 |
+| Sub job | SCH 99 |
+| Time played | 13h |
+| Enemies defeated | 422 |
+| Deaths | 3 |
 
 ## Job levels
 
@@ -29,23 +29,23 @@
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 83 |
+| BST | 1 | **SCH** | **99** |
 | BRD | 87 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 132
-- **Marks (lifetime):** 293
-- **Distinct NMs slain:** 5
-- **Total NM kills:** 49
+- **Marks (current):** 721
+- **Marks (lifetime):** 413
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 53
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 48
-- **NM Affinities:** 1 / 13
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 57
+- **NM Affinities:** 3 / 13
 
 ## Reforge
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**4** unlocked — First Hunt · Tier IV Unlocked · Star-Slayer · Augment Novice.
+**6** unlocked — First Hunt · Tier III Unlocked · Tier IV Unlocked · Star-Slayer · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ded1c652be75 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 4c727d53fa86 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

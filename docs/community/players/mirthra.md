@@ -1,6 +1,6 @@
 # Mirthra
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-20 · Character age 4d 8h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-20 · Character age 4d 9h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 24/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 347d2efa4bea -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: c61680f4d2f7 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 28h |
-| Enemies defeated | 605 |
+| Time played | 29h |
+| Enemies defeated | 695 |
 | Deaths | 12 |
 
 ## Job levels
@@ -39,7 +39,7 @@
 - **Marks (current):** 685
 - **Marks (lifetime):** 1,359
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 299
+- **Total NM kills:** 389
 
 ## Augment Sage
 
@@ -51,13 +51,13 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 525 | 525 |
+| AF | 2,775 | 2,775 |
 | Relic | 1,500 | 0 |
 | Empyrean | 1,100 | 0 |
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8e35a1c5263b -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: f014e086fde2 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -11,8 +11,8 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | BLU 99 |
+| Main job | **BLU 99** |
+| Sub job | THF 99 |
 | Time played | 50h |
 | Enemies defeated | 4,437 |
 | Deaths | 50 |
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 82bf489798df -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: b0aabbcd13e6 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

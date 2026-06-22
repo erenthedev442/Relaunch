@@ -1,6 +1,6 @@
 # Flcl
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 9d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 7h
 
 `⭐ 46 Ascensions` `💪 18 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **SCH 99** |
-| Sub job | BLM 99 |
-| Time played | 66h |
-| Enemies defeated | 6,741 |
-| Deaths | 81 |
+| Sub job | RDM 99 |
+| Time played | 67h |
+| Enemies defeated | 6,780 |
+| Deaths | 82 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,351
+- **Marks (current):** 68,087
 - **Marks (lifetime):** 26,496
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 5,364
+- **Total NM kills:** 5,536
 
 ## Augment Sage
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a65b0ecfc322 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 8cde098822ec -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

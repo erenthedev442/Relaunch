@@ -2,7 +2,7 @@
 
 **San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 16h
 
-`⭐ 56 Ascensions` `💪 10 jobs @99`
+`⭐ 114 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | DRG 99 |
-| Time played | 61h |
-| Enemies defeated | 6,775 |
-| Deaths | 49 |
+| Sub job | NIN 99 |
+| Time played | 70h |
+| Enemies defeated | 7,638 |
+| Deaths | 64 |
 
 ## Job levels
 
@@ -26,9 +26,9 @@
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
-| **THF** | **99** | COR | 1 |
+| **THF** | **99** | COR | 82 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| DRK | 1 | DNC | 40 |
 | BST | 1 | SCH | 1 |
 | **BRD** | **99** | **GEO** | **99** |
 | **RNG** | **99** | RUN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 97,375
+- **Marks (current):** 35,825
 - **Marks (lifetime):** 3,270
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 847
+- **Total NM kills:** 1,096
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 317
+- **Augments crafted:** 327
 - **NM Affinities:** 5 / 13
 
 ## Reforge
@@ -68,13 +68,13 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Job Rebirth
 
-- **Total rebirths:** 1
-- **By job:** MNK ×1
+- **Total rebirths:** 2
+- **By job:** MNK ×2
 
 ## Prestige
 
-- **Total Ascensions:** 56
-- **Per-job prestige:** WAR P29 · MNK P14 · SAM P12 · DRG P1
+- **Total Ascensions:** 114
+- **Per-job prestige:** WAR P29 · MNK P72 · SAM P12 · DRG P1
 
 ## Collections
 
@@ -82,7 +82,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**18** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Eternal Ascendant · Star-Slayer · Sanctuary Defender · First Blood · Arena Regular · Augment Novice · Augment Expert · Augment Master.
+**19** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Wave Fighter · First Ascension · Ascending Master · Eternal Ascendant · Star-Slayer · Sanctuary Defender · First Blood · Arena Regular · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 72a9b743e8c7 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: a4784b1cabb1 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

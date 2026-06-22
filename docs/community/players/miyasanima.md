@@ -1,8 +1,8 @@
 # Miyasanima
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 8d 8h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 8h
 
-`💪 14 jobs @99`
+`💪 15 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **BLM 99** |
-| Sub job | RDM 99 |
-| Time played | 38h |
-| Enemies defeated | 4,494 |
-| Deaths | 18 |
+| Sub job | GEO 99 |
+| Time played | 43h |
+| Enemies defeated | 5,325 |
+| Deaths | 19 |
 
 ## Job levels
 
@@ -30,16 +30,16 @@
 | **PLD** | **99** | PUP | 1 |
 | DRK | 1 | **DNC** | **99** |
 | BST | 1 | **SCH** | **99** |
-| BRD | 1 | GEO | 1 |
+| BRD | 1 | **GEO** | **99** |
 | **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,218
+- **Marks (current):** 9,113
 - **Marks (lifetime):** 1,646
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 150
+- **Total NM kills:** 155
 
 ## Guild standing
 
@@ -55,8 +55,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 144
-- **NM Affinities:** 8 / 13
+- **Augments crafted:** 178
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
@@ -65,6 +65,11 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | AF | 25 | 5,275 |
 | Relic | 1,265 | 365 |
 | Empyrean | 15 | 1,865 |
+
+## Job Rebirth
+
+- **Total rebirths:** 1
+- **By job:** BLM ×1
 
 ## Collections
 
@@ -88,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f55f74d8250f -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 08e4ee1574e0 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

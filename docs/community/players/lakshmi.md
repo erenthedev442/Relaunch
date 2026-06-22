@@ -1,32 +1,34 @@
 # Lakshmi
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-21 · Character age 4d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 17h
+
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 80/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 80** |
-| Sub job | DNC 71 |
-| Time played | 16h |
-| Enemies defeated | 392 |
-| Deaths | 4 |
+| Main job | **WAR 15** |
+| Sub job | DNC 15 |
+| Time played | 21h |
+| Enemies defeated | 523 |
+| Deaths | 9 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
+| WAR | 15 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 80 | BLU | 1 |
+| **RDM** | **99** | BLU | 1 |
 | THF | 12 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 71 |
+| DRK | 1 | DNC | 83 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -34,10 +36,21 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 2,701
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Marks (current):** 3,434
+- **Marks (lifetime):** 15
+- **Distinct NMs slain:** 1
+- **Total NM kills:** 3
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Journeyman | 750 | 4,250 to Veteran |
+| League Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 
 ## Augment Sage
 
@@ -59,11 +72,13 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**2** unlocked — First Hunt · Augment Novice.
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 3d 23h |
 
 ---
 
@@ -72,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 605c9bd0c242 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 13aa59b81466 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

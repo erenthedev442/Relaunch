@@ -1,6 +1,6 @@
 # Hokuto
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-21 · Character age 7d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d 9h
 
 `💪 3 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 11,469
+- **Marks (current):** 12,269
 - **Marks (lifetime):** 340
 - **Distinct NMs slain:** 2
 - **Total NM kills:** 68
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0b334e0d80ee -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 875d3c61e57b -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

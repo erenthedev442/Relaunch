@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | PLD 99 |
-| Time played | 62h |
-| Enemies defeated | 3,192 |
+| Sub job | RDM 99 |
+| Time played | 63h |
+| Enemies defeated | 3,206 |
 | Deaths | 29 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 115
-- **Marks (lifetime):** 5,936
+- **Marks (current):** 3,479
+- **Marks (lifetime):** 6,845
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 494
+- **Total NM kills:** 510
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 291
+- **Augments crafted:** 297
 - **NM Affinities:** 5 / 13
 
 ## Reforge
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 244bc56ae1e1 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 960b751f974c -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

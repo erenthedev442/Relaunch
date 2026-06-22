@@ -1,6 +1,6 @@
 # Xxoo
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-20 · Character age 3d 17h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 3d 18h
 
 `💪 1 job @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | BLU 67 |
-| Time played | 7h |
-| Enemies defeated | 89 |
-| Deaths | 17 |
+| Sub job | BLU 70 |
+| Time played | 8h |
+| Enemies defeated | 98 |
+| Deaths | 18 |
 
 ## Job levels
 
@@ -25,7 +25,7 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 67 |
+| RDM | 1 | BLU | 70 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 1,751
+- **Marks (current):** 2,301
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dc3a13331280 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 506dd781cf07 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

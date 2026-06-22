@@ -1,50 +1,50 @@
 # Lunita
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-19 · Character age 7d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d 6h
 
-`💪 9 jobs @99`
+`💪 15 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **PUP 99** |
-| Sub job | SCH 99 |
-| Time played | 10h |
-| Enemies defeated | 509 |
-| Deaths | 15 |
+| Main job | **WAR 99** |
+| Sub job | MNK 99 |
+| Time played | 16h |
+| Enemies defeated | 864 |
+| Deaths | 22 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| MNK | 10 | NIN | 1 |
-| WHM | 1 | DRG | 1 |
+| **MNK** | **99** | **NIN** | **99** |
+| WHM | 1 | **DRG** | **99** |
 | **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
-| THF | 1 | COR | 68 |
+| **THF** | **99** | COR | 68 |
 | PLD | 1 | **PUP** | **99** |
-| DRK | 1 | DNC | 1 |
+| **DRK** | **99** | DNC | 1 |
 | BST | 1 | **SCH** | **99** |
 | **BRD** | **99** | GEO | 1 |
-| **RNG** | **99** | RUN | 29 |
+| **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
-- **Rank:** 4 / 5
-- **Marks (current):** 2,291
-- **Marks (lifetime):** 685
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 137
+- **Rank:** 5 / 5
+- **Marks (current):** 22
+- **Marks (lifetime):** 7,055
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 245
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 4
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 58
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -52,22 +52,23 @@
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 0 | 0 |
-| Relic | 0 | 0 |
+| Relic | 1,500 | 0 |
 | Empyrean | 0 | 0 |
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 120
 
 ## Achievements
 
-**3** unlocked — First Hunt · Ten Hunts In · Centennial Hunter.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 20h 45m |
+| HL Rank I → V | 5d 21h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5aa0c8005c29 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 8ada8541ff6b -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -2,7 +2,7 @@
 
 **San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 5d 21h
 
-`💪 3 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
-| Sub job | NIN 80 |
-| Time played | 27h |
-| Enemies defeated | 199 |
+| Main job | **BRD 99** |
+| Sub job | NIN 99 |
+| Time played | 32h |
+| Enemies defeated | 210 |
 | Deaths | 0 |
 
 ## Job levels
@@ -22,7 +22,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 80 |
+| MNK | 1 | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 3,843
-- **Marks (lifetime):** 390
+- **Marks (current):** 371
+- **Marks (lifetime):** 830
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 78
+- **Total NM kills:** 166
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**2** unlocked — First Hunt · Ten Hunts In.
+**3** unlocked — First Hunt · Ten Hunts In · Centennial Hunter.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e2f970972be2 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 0b148bb304d8 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

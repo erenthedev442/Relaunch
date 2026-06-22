@@ -1,6 +1,6 @@
 # Hooza
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-19 · Character age 6d 22h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 6d 22h
 
 `💪 1 job @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BLU 46** |
-| Sub job | NIN 46 |
-| Time played | 23h |
-| Enemies defeated | 1,037 |
+| Main job | **BLU 52** |
+| Sub job | NIN 52 |
+| Time played | 24h |
+| Enemies defeated | 1,058 |
 | Deaths | 5 |
 
 ## Job levels
@@ -25,7 +25,7 @@
 | MNK | 1 | NIN | 90 |
 | WHM | 25 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 46 |
+| RDM | 1 | BLU | 52 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 2,775
+- **Marks (current):** 3,225
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cfdfdffb491b -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 5ca741acd241 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

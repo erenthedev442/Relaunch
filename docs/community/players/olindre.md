@@ -2,7 +2,7 @@
 
 **Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 8h
 
-`⭐ 20 Ascensions` `💪 7 jobs @99`
+`⭐ 39 Ascensions` `💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **RUN 99** |
-| Sub job | DRG 99 |
-| Time played | 61h |
-| Enemies defeated | 4,320 |
-| Deaths | 56 |
+| Sub job | WAR 99 |
+| Time played | 70h |
+| Enemies defeated | 5,298 |
+| Deaths | 57 |
 
 ## Job levels
 
@@ -24,7 +24,7 @@
 | **WAR** | **99** | **SAM** | **99** |
 | MNK | 1 | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
-| BLM | 1 | SMN | 1 |
+| **BLM** | **99** | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 61,907
+- **Marks (current):** 48,917
 - **Marks (lifetime):** 3,123
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 374
+- **Total NM kills:** 421
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 382
+- **Augments crafted:** 409
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -66,14 +66,19 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Relic | 3,000 | 2,100 |
 | Empyrean | 278 | 528 |
 
+## Job Rebirth
+
+- **Total rebirths:** 5
+- **By job:** WAR ×3 · RUN ×2
+
 ## Prestige
 
-- **Total Ascensions:** 20
-- **Per-job prestige:** WAR P20
+- **Total Ascensions:** 39
+- **Per-job prestige:** WAR P20 · RUN P19
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 120
 
 ## Achievements
 
@@ -94,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 56f86cf6f441 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 5c7d7eb0369b -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

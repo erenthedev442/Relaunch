@@ -2,7 +2,7 @@
 
 **Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 20h
 
-`💪 8 jobs @99`
+`💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,17 +12,17 @@
 | | |
 |---|---|
 | Main job | **WAR 99** |
-| Sub job | SAM 99 |
-| Time played | 4h |
-| Enemies defeated | 1 |
-| Deaths | 3 |
+| Sub job | NIN 99 |
+| Time played | 7h |
+| Enemies defeated | 248 |
+| Deaths | 6 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| **MNK** | **99** | NIN | 1 |
+| **MNK** | **99** | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -31,43 +31,44 @@
 | **DRK** | **99** | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| RNG | 1 | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 700
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Marks (current):** 5,865
+- **Marks (lifetime):** 361
+- **Distinct NMs slain:** 14
+- **Total NM kills:** 20
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 35
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 50
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 100 | 0 |
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 120
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 1d 6h |
+| HL Rank I → V | 5h 55m |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d7f4646d4a21 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 887702f720ce -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

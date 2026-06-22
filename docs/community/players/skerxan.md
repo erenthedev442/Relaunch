@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | NIN 99 |
-| Time played | 16h |
+| Time played | 17h |
 | Enemies defeated | 2,149 |
 | Deaths | 15 |
 
@@ -43,8 +43,8 @@
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 18
+- **Mastery rank:** 2 / 5
+- **Augments crafted:** 43
 - **NM Affinities:** 10 / 13
 
 ## Reforge
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4616f6614b61 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 73828cb27163 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

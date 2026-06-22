@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **PUP 99** |
 | Sub job | BLU 99 |
-| Time played | 55h |
-| Enemies defeated | 4,324 |
-| Deaths | 10 |
+| Time played | 68h |
+| Enemies defeated | 4,402 |
+| Deaths | 12 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,117
+- **Marks (current):** 11,617
 - **Marks (lifetime):** 22,398
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 432
+- **Total NM kills:** 552
 
 ## Guild standing
 
@@ -55,16 +55,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 367
+- **Augments crafted:** 373
 - **NM Affinities:** 11 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 17 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 10,976 | 15,240 |
+| AF | 2,391 | 374 |
+| Relic | 1,500 | 0 |
+| Empyrean | 28,551 | 32,815 |
 
 ## Collections
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 509aebda5d92 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 5653877d21ea -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

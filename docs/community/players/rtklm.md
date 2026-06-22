@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | RDM 99 |
-| Time played | 44h |
+| Time played | 49h |
 | Enemies defeated | 163 |
 | Deaths | 10 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 146,344
+- **Marks (current):** 136,844
 - **Marks (lifetime):** 74,288
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 1,282
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6608abe643a4 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: ced262cbf7d7 -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

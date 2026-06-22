@@ -1,6 +1,6 @@
 # Stoney
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-21 · Character age 9d 11h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 12h
 
 `⭐ 12 Ascensions` `💪 11 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 37,184
+- **Marks (current):** 38,084
 - **Marks (lifetime):** 5,316
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 397
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d71a431a1ffe -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 380a9d4c42aa -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

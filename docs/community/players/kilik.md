@@ -1,18 +1,18 @@
 # Kilik
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 19h 59m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 20h 14m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 29/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 41/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RUN 29** |
-| Sub job | GEO 19 |
-| Time played | 1h |
-| Enemies defeated | 59 |
+| Main job | **RUN 41** |
+| Sub job | GEO 27 |
+| Time played | 3h |
+| Enemies defeated | 86 |
 | Deaths | 3 |
 
 ## Job levels
@@ -28,8 +28,8 @@
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 19 |
-| RNG | 1 | RUN | 29 |
+| BRD | 1 | GEO | 27 |
+| RNG | 1 | RUN | 41 |
 
 ## Hunting League
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2ad63547fdfb -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: ad4009083fbb -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -2,7 +2,7 @@
 
 **Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 11h
 
-`⭐ 5 Ascensions` `💪 22 jobs @99`
+`⭐ 6 Ascensions` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **SAM 99** |
 | Sub job | WAR 99 |
-| Time played | 68h |
-| Enemies defeated | 3,741 |
-| Deaths | 8 |
+| Time played | 82h |
+| Enemies defeated | 3,776 |
+| Deaths | 9 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,886
+- **Marks (current):** 1,437
 - **Marks (lifetime):** 2,748
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 205
+- **Total NM kills:** 211
 
 ## Guild standing
 
@@ -47,7 +47,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| AF Hunters' Guild | Journeyman | 1,000 | 4,000 to Veteran |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Journeyman | 750 | 4,250 to Veteran |
 | League Hunters' Guild | Journeyman | 3,000 | 2,000 to Veteran |
@@ -55,21 +55,21 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 254
-- **NM Affinities:** 2 / 13
+- **Augments crafted:** 260
+- **NM Affinities:** 3 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 950 | 0 |
+| AF | 1,250 | 300 |
 | Relic | 1,515 | 0 |
-| Empyrean | 35 | 5,280 |
+| Empyrean | 2,695 | 5,940 |
 
 ## Prestige
 
-- **Total Ascensions:** 5
-- **Per-job prestige:** SAM P5
+- **Total Ascensions:** 6
+- **Per-job prestige:** SAM P6
 
 ## Collections
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 561eb1a45ecc -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: a2be798c202b -->
+_Last updated: 2026-06-22 20:59 UTC_
 <!-- DOCGEN:END id="last-updated" -->
