@@ -51,6 +51,19 @@ local function applyAvatarBoost(master, pet)
     pet:addMod(xi.mod.MATT, 6000)
     pet:addMod(xi.mod.MACC, 2500)
     pet:addMod(xi.mod.INT,  1000)
+
+    -- Physical stats so PHYSICAL Blood Pacts (Predator Claws, Flaming Crush,
+    -- Mountain Buster, Chaotic Strike, Spinning Dive, Eclipse Bite...) work too.
+    -- A physical BP's damage is pDif = avatarATT / targetDEF, and a raw avatar's
+    -- ATT collapses against Legendary's 150-160 NM DEF -> ~0 damage. Without these
+    -- only the MAGICAL-BP avatars (Shiva's Heavenly Strike, Siren) held up, which
+    -- is why "only Shiva and Siren are coded correctly." These flat values max
+    -- pDif; the universal 260x BP_DAMAGE mult then lands the hit. +per-skill-over-
+    -- cap so gear/skillups matter (mirrors the magic boost above).
+    pet:addMod(xi.mod.ATT, 6000 + skillOverCap * 40)
+    pet:addMod(xi.mod.ACC, 4500 + skillOverCap * 10)
+    pet:addMod(xi.mod.STR, 500)
+    pet:addMod(xi.mod.DEX, 300) -- feeds avatar physical-BP crit rate (getDexCritRate)
 end
 
 m:addOverride('xi.pet.spawnPet', function(caster, petID, state, target)
