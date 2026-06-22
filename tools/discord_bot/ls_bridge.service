@@ -4,9 +4,9 @@
 #   1. settings/map.lua on the box: AUDIT_CHAT = true AND AUDIT_LINKSHELL = true,
 #      then restart the map (xi_map). Without these, audit_chat stays empty.
 #   2. tools/discord_bot/config.py exists with LS_BRIDGE_WEBHOOK_URL + LS_BRIDGE_NAME.
-#   3. The python below can import pymysql (same dep the docs/AH crons use). If
-#      your pymysql lives in a venv, point ExecStart at that venv's python, e.g.
-#      ExecStart=/home/azureuser/server/tools/docgen/venv/bin/python ...
+#   3. The python below must import pymysql. The box's system python3 does NOT
+#      have it; the docs venv (/home/azureuser/docs-venv) does, so ExecStart uses
+#      that interpreter -- same one the docs/AH crons use.
 #
 # Install (on the box):
 #   sudo cp /home/azureuser/server/tools/discord_bot/ls_bridge.service /etc/systemd/system/
@@ -27,7 +27,7 @@ Type=simple
 User=azureuser
 WorkingDirectory=/home/azureuser/server
 Environment=LEGENDARY_LIVE_ROOT=/home/azureuser/server
-ExecStart=/usr/bin/python3 /home/azureuser/server/tools/discord_bot/ls_bridge.py
+ExecStart=/home/azureuser/docs-venv/bin/python /home/azureuser/server/tools/discord_bot/ls_bridge.py
 Restart=always
 RestartSec=5
 
