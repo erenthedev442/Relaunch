@@ -3327,12 +3327,12 @@ void CBattleEntity::OnRangedAttack(CRangeState& state, action_t& action)
         }
     }
 
-    // Remove barrage/sange effects after firing
-    if (isBarrage)
-    {
-        StatusEffectContainer->DelStatusEffectSilent(EFFECT_BARRAGE);
-    }
-
+    // Remove sange effect after firing. FJB: Barrage is intentionally NO LONGER
+    // consumed per shot -- it now persists for its full status-effect duration
+    // (5:00, set in modules/custom/lua/barrage_tuning.lua) so EVERY ranged attack
+    // barrages, turning it into a timed RNG DD buff instead of a single shot. It
+    // still lapses on its own timer, and a throwing weapon still drops it via
+    // range_state.cpp (retail-accurate -- Barrage doesn't apply to throwing).
     if (isSange)
     {
         StatusEffectContainer->DelStatusEffectSilent(EFFECT_SANGE);

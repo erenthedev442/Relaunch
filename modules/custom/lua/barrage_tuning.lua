@@ -7,13 +7,13 @@
 -- full path at runtime, so this intercepts). Pairs with the recast bump to 6:00 in
 -- modules/custom/sql/zz_barrage_recast.sql.
 --
--- IMPORTANT -- what "duration" means here: Barrage is CONSUMED on the next ranged
--- attack (src/map/entities/battleentity.cpp checks EFFECT_BARRAGE, fires the extra
--- shots, then DelStatusEffectSilent removes it). So this 5:00 is the WINDOW you
--- have to fire that one barraged shot before the effect lapses unused -- it is NOT
--- 5 minutes of every-shot barraging. Turning Barrage into a persistent "barrage
--- every shot for 5 min" buff would additionally require dropping that per-shot
--- consume in battleentity.cpp (a C++ change + rebuild).
+-- DURATION SEMANTICS: paired with the C++ change that removed the per-shot consume
+-- (src/map/entities/battleentity.cpp -- "Barrage is intentionally NO LONGER consumed
+-- per shot"), Barrage now PERSISTS for this full 5:00 and EVERY ranged attack
+-- barrages -- a timed RNG DD buff (5:00 uptime vs the 6:00 recast). A throwing
+-- weapon still drops it (range_state.cpp, retail-accurate). The C++ consume removal
+-- needs a [REBUILD]; this duration override needs a map restart -- they ship
+-- together.
 --
 -- Override module -> needs a map RESTART to load.
 -----------------------------------
