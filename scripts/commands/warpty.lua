@@ -21,19 +21,19 @@ commandObj.onTrigger = function(player)
         return
     end
 
-    local leaderID = player:getLeaderID()
-    local leader   = GetPlayerByID(leaderID)
+    local leader = player:getPartyLeader()
 
     if not leader then
         player:printToPlayer('Party leader is not online.', xi.msg.channel.SYSTEM_3)
         return
     end
 
-    local lx   = leader:getXPos()
-    local ly   = leader:getYPos()
-    local lz   = leader:getZPos()
-    local lrot = leader:getRotPos()
-    local lzone = leader:getZoneID()
+    local leaderID = leader:getID()
+    local lx       = leader:getXPos()
+    local ly       = leader:getYPos()
+    local lz       = leader:getZPos()
+    local lrot     = leader:getRotPos()
+    local lzone    = leader:getZoneID()
 
     local warped = 0
     for _, member in ipairs(party) do
