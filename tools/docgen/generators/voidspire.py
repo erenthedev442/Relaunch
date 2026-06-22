@@ -154,8 +154,9 @@ def _render_rewards(c: dict) -> str:
                  f"your deepest floor is your score.")
     if c["milestones"]:
         lines.append("")
-        lines.append("Reaching certain depths for the first time pays a one-time "
-                     "bonus on top, announced server-wide:")
+        lines.append("Reaching certain depths pays a bonus on top — and it's "
+                     "awarded **every run** you descend that far, not just the "
+                     "first time:")
         lines.append("")
         lines.append("| Reach floor | Bonus marks |")
         lines.append("|---:|---:|")

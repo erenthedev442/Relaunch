@@ -211,17 +211,17 @@ onFloorCleared = function(player, sess)
         newBest = true
     end
 
-    -- One-time depth milestones (bonus marks; title via achievement hook).
+    -- Depth milestones (bonus marks; title via achievement hook). RE-AWARDABLE
+    -- PER RUN (2026-06-22, by request): the per-character flag check was dropped,
+    -- so the milestone bonus pays out EVERY descent past that floor, not once ever
+    -- -- this turns the Voidspire into a heavy repeatable mark farm. (The TITLE is
+    -- still one-time via the achievement hook below; granting an owned title no-ops.)
     for _, ms in ipairs(catalog.milestones) do
         if floor == ms.floor then
-            local flag = 'Voidspire_MS_' .. ms.floor
-            if (player:getCharVar(flag) or 0) == 0 then
-                player:setCharVar(flag, 1)
-                player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) + ms.marks)
-                player:printToPlayer(string.format(
-                    '[Voidspire] DEPTH %d -- milestone bonus +%d marks!', ms.floor, ms.marks),
-                    xi.msg.channel.SYSTEM_3)
-            end
+            player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) + ms.marks)
+            player:printToPlayer(string.format(
+                '[Voidspire] DEPTH %d -- milestone bonus +%d marks!', ms.floor, ms.marks),
+                xi.msg.channel.SYSTEM_3)
         end
     end
 
