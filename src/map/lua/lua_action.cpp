@@ -70,7 +70,7 @@ void CLuaAction::actionID(const uint16 actionid) const
     m_PLuaAction->actionid = actionid;
 }
 
-auto CLuaAction::getParam(const uint32 actionTargetId) const -> uint16
+auto CLuaAction::getParam(const uint32 actionTargetId) const -> int32
 {
     for (auto&& actionTarget : m_PLuaAction->targets)
     {

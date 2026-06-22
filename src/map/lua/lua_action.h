@@ -51,7 +51,7 @@ public:
     void setRecast(uint16 recast) const;
     auto getRecast() const -> uint16;
     void actionID(uint16 actionid) const;
-    auto getParam(uint32 actionTargetId) const -> uint16;
+    auto getParam(uint32 actionTargetId) const -> int32;
     void param(uint32 actionTargetId, int32 param) const;
     auto getAddEffectParam(uint32 actionTargetId) const -> int32;
     void messageId(uint32 actionTargetId, MsgBasic messageId) const;
