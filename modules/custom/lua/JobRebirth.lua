@@ -329,7 +329,7 @@ showMenu = function(player)
         function(p)
             p:printToPlayer('[ Rebirth ] Max a job (lv99 + Job Points maxed), then rebirth it:', S)
             p:printToPlayer(string.format('  level -> 1, Job Points WIPED, +%d~%d Rebirth Points (starts at %d, +%d each rebirth, cap %d) to spend here.', cfg.rpBase, cfg.rpMax, cfg.rpBase, cfg.rpPerLevel, cfg.rpMax), S)
-            p:printToPlayer(string.format('  EXP penalty scales each rebirth: R1=-%d%%, R2=-%d%%, R3=-%d%%, R4=-%d%% ... no ceiling.', expPenalty(1), expPenalty(2), expPenalty(3), expPenalty(4)), S)
+            p:printToPlayer(string.format('  EXP penalty scales each rebirth: R1=-%d%%, R2=-%d%%, R3=-%d%%, R4=-%d%% (capped at -%d%%).', expPenalty(1), expPenalty(2), expPenalty(3), expPenalty(4), cfg.expPenaltyCap), S)
             showMenu(p)
         end,
     })
