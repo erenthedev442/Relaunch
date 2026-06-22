@@ -1,0 +1,195 @@
+-----------------------------------
+-- Paragon.lua
+--
+-- THE PARAGON BOARD: the meta-progression that Apex Trials feeds. Paragon
+-- Points (banked by the Apex climb) are spent here on:
+--   * Paragon Levels -- an infinite prestige track (Paragon_Level), shown on
+--     !reallevel + the website leaderboard, with a scaling title flair.
+--   * Perks -- small, HARD-CAPPED permanent stat boosts (login-applied addMods):
+--       Vigor +HP (cap 5000), Might +ATT/RATT (1000), Precision +ACC/RACC
+--       (1000), Warding +DEF (2000).
+--   * Daily Might -- unlock once, then claim a 2-hour throughput/sustain surge
+--     once per UTC day (proven Henge-style status effects).
+--
+-- "Prestige + QoL + capped perks" posture: the caps are deliberately modest
+-- next to maxed gear / Apex boss stats, so this is flex-and-flavour, not power
+-- creep.
+--
+-- CharVars:
+--   Paragon_Points        unspent currency (banked by Apex Trials)
+--   Paragon_Level         prestige level (infinite)
+--   Paragon_Perk_<id>     rank in each perk (0..maxRank)
+--   Paragon_MightUnlock   1 once the Daily Might perk is bought
+--   Paragon_MightDay      UTC Julian day of the last Daily Might claim
+--
+-- Perk mods are re-applied on every game-in (login AND zone) because zoning
+-- wipes non-gear addMods -- same pattern as the cross-job trait trainer. NPC:
+-- Paragon Sage in GM Home, beside the Apex Arbiter (x 7.5, z -35).
+-----------------------------------
+require('modules/module_utils')
+require('scripts/zones/GM_Home/Zone')
+local C = require('modules/custom/lua/paragon_catalog')
+
+local m = Module:new('paragon')
+local SYS = xi.msg.channel.SYSTEM_3
+
+-----------------------------------
+-- Apply all owned perk mods (full totals). Safe to call on every game-in:
+-- zoning/relog wipe these addMods, so re-adding the full total re-establishes
+-- them without doubling.
+-----------------------------------
+local function applyPerks(player)
+    for _, perk in ipairs(C.PERKS) do
+        local rank = player:getCharVar('Paragon_Perk_' .. perk.id) or 0
+        if rank > 0 then
+            local total = rank * perk.perRank
+            for _, modId in ipairs(C.modIds(perk)) do
+                player:addMod(modId, total)
+            end
+        end
+    end
+end
+xi._paragon_applyPerks = applyPerks
+
+-----------------------------------
+-- Spending actions (each re-opens the menu afterwards)
+-----------------------------------
+local openMenu  -- forward decl
+
+local function reopen(player)
+    player:timer(30, function(p) openMenu(p) end)
+end
+
+local function ascend(player)
+    local lvl  = player:getCharVar('Paragon_Level') or 0
+    local pp   = player:getCharVar('Paragon_Points') or 0
+    local cost = C.levelCost(lvl)
+    if pp < cost then
+        player:printToPlayer(string.format('[Paragon] Ascending needs %d Paragon Points (you have %d).', cost, pp), SYS)
+        return
+    end
+    player:setCharVar('Paragon_Points', pp - cost)
+    player:setCharVar('Paragon_Level', lvl + 1)
+    player:printToPlayer(string.format(
+        '[Paragon] Ascended to Paragon Level %d!  Title: %s.', lvl + 1, C.titleFor(lvl + 1)), SYS)
+end
+
+local function buyPerk(player, perk)
+    local rank = player:getCharVar('Paragon_Perk_' .. perk.id) or 0
+    if rank >= perk.maxRank then
+        player:printToPlayer(string.format('[Paragon] %s is already maxed (%d/%d).', perk.label, rank, perk.maxRank), SYS)
+        return
+    end
+    local pp   = player:getCharVar('Paragon_Points') or 0
+    local cost = C.perkRankCost(perk, rank)
+    if pp < cost then
+        player:printToPlayer(string.format('[Paragon] %s rank %d needs %d Paragon Points (you have %d).',
+            perk.label, rank + 1, cost, pp), SYS)
+        return
+    end
+    player:setCharVar('Paragon_Points', pp - cost)
+    player:setCharVar('Paragon_Perk_' .. perk.id, rank + 1)
+    -- Live-apply this rank's delta (full set is re-applied on the next game-in).
+    for _, modId in ipairs(C.modIds(perk)) do
+        player:addMod(modId, perk.perRank)
+    end
+    player:printToPlayer(string.format('[Paragon] %s -> rank %d/%d  (total +%d each stat).',
+        perk.label, rank + 1, perk.maxRank, (rank + 1) * perk.perRank), SYS)
+end
+
+local function dailyMight(player)
+    local unlocked = (player:getCharVar('Paragon_MightUnlock') or 0) == 1
+    if not unlocked then
+        local pp = player:getCharVar('Paragon_Points') or 0
+        if pp < C.DAILY_MIGHT_UNLOCK then
+            player:printToPlayer(string.format('[Paragon] Unlocking Daily Might costs %d Paragon Points (you have %d).',
+                C.DAILY_MIGHT_UNLOCK, pp), SYS)
+            return
+        end
+        player:setCharVar('Paragon_Points', pp - C.DAILY_MIGHT_UNLOCK)
+        player:setCharVar('Paragon_MightUnlock', 1)
+        player:printToPlayer('[Paragon] Daily Might unlocked! Claim it here once per day.', SYS)
+        return
+    end
+
+    local today = tonumber(os.date('!%Y%j')) or 0  -- UTC Julian day (matches daily_login_bonus)
+    if (player:getCharVar('Paragon_MightDay') or 0) == today then
+        player:printToPlayer("[Paragon] You've already claimed Paragon's Might today. Come back tomorrow.", SYS)
+        return
+    end
+    player:setCharVar('Paragon_MightDay', today)
+
+    local dur   = C.DAILY_MIGHT_DURATION
+    local maxHP = player:getMaxHP()
+    local maxMP = player:getMaxMP()
+    player:addStatusEffect(xi.effect.MAX_HP_BOOST, { power = C.DAILY_MIGHT_HP,     duration = dur, origin = player, tick = 0, subType = 0, subPower = 0 })
+    player:addStatusEffect(xi.effect.REGAIN,       { power = C.DAILY_MIGHT_REGAIN, duration = dur, origin = player, tick = 3, subType = 0, subPower = 0 })
+    player:addStatusEffect(xi.effect.REFRESH,      { power = math.max(1, math.floor(maxMP * C.DAILY_MIGHT_REFRESH_PCT)), duration = dur, origin = player, tick = 3, subType = 0, subPower = 0 })
+    player:addStatusEffect(xi.effect.REGEN,        { power = math.max(1, math.floor(maxHP * C.DAILY_MIGHT_REGEN_PCT)),   duration = dur, origin = player, tick = 3, subType = 0, subPower = 0 })
+    player:printToPlayer("[Paragon] Paragon's Might surges through you! +HP, Regain, Refresh & Regen for 2 hours.", SYS)
+end
+
+-----------------------------------
+-- Menu
+-----------------------------------
+openMenu = function(player)
+    local lvl  = player:getCharVar('Paragon_Level') or 0
+    local pp   = player:getCharVar('Paragon_Points') or 0
+
+    player:printToPlayer(string.format(
+        '[Paragon] Level %d (%s).  Paragon Points: %d.  Next Ascend: %d PP.',
+        lvl, C.titleFor(lvl), pp, C.levelCost(lvl)), SYS)
+    for _, perk in ipairs(C.PERKS) do
+        local rank = player:getCharVar('Paragon_Perk_' .. perk.id) or 0
+        local cost = (rank < perk.maxRank) and tostring(C.perkRankCost(perk, rank)) .. ' PP' or 'MAX'
+        player:printToPlayer(string.format('   %-10s rank %d/%d  (next: %s)', perk.label, rank, perk.maxRank, cost), SYS)
+    end
+
+    local options = {
+        { 'Ascend',      function(p) ascend(p);                     reopen(p) end },
+        { 'Vigor',       function(p) buyPerk(p, C.perkById('vigor'));     reopen(p) end },
+        { 'Might',       function(p) buyPerk(p, C.perkById('might'));     reopen(p) end },
+        { 'Precision',   function(p) buyPerk(p, C.perkById('precision')); reopen(p) end },
+        { 'Warding',     function(p) buyPerk(p, C.perkById('warding'));   reopen(p) end },
+        { 'Daily Might', function(p) dailyMight(p);                  reopen(p) end },
+        { 'Close',       function(p) end },
+    }
+    player:customMenu({ title = 'Paragon', options = options })
+end
+xi._paragon_openMenu = openMenu
+
+-----------------------------------
+-- Re-apply perks on every game-in (login AND zone) -- mods are wiped on zone.
+-----------------------------------
+m:addOverride('xi.player.onGameIn', function(player, ...)
+    super(player, ...)
+    player:timer(2000, function(p) applyPerks(p) end)
+end)
+
+-----------------------------------
+-- NPC: Paragon Sage in GM Home
+-----------------------------------
+m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+    super(zone)
+
+    local npc = zone:insertDynamicEntity({
+        objtype    = xi.objType.NPC,
+        name       = 'Paragon_Sage',
+        packetName = string.format('%sParagon Sage', xi.icon.STAR_LARGE),
+        look       = 2401,
+        x          = C.NPC_POS.x,
+        y          = C.NPC_POS.y,
+        z          = C.NPC_POS.z,
+        rotation   = C.NPC_POS.rot,
+        widescan   = 1,
+
+        onTrigger = function(player, npc)
+            player:printToPlayer(
+                '[Paragon] Spend Paragon Points (earned in Apex Trials) on prestige levels, capped perks, and the Daily Might buff.', SYS)
+            player:timer(30, function(p) openMenu(p) end)
+        end,
+    })
+    utils.unused(npc)
+end)
+
+return m
