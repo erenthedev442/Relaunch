@@ -375,9 +375,17 @@ end)
 -- current job. checkForGearSet fires on job change (and gear change).
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
-    player:setLocalVar('RebirthModJob', 0)
     super(player, firstLogin, zoning)
-    refreshJobMods(player)
+    -- DEFER the re-apply ~3s. Applying addMods at the bare onGameIn moment gets
+    -- clobbered by the engine's post-login stat finalization (the same reason
+    -- RealLevel_Tracker and auto_buff_henge defer). Symptom when synchronous:
+    -- Ascension/Rebirth boosts silently vanish after a zone (e.g. enspell goes
+    -- to ~gear-only). The login/zone already wiped the old mods, so a clean
+    -- force-reapply here is correct -- never a double (the bug was MISSING mods).
+    player:timer(3000, function(p)
+        p:setLocalVar('RebirthModJob', 0)
+        refreshJobMods(p)
+    end)
 end)
 
 m:addOverride('xi.gear_sets.checkForGearSet', function(player)

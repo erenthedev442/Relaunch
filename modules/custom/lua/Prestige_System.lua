@@ -1062,9 +1062,17 @@ end)
 -- no-op safety net if that chain ever changes.
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
-    player:setLocalVar('PrestigeModJob', 0)
     super(player, firstLogin, zoning)
-    refreshJobMods(player)
+    -- DEFER the re-apply ~3s -- applying addMods at the bare onGameIn moment is
+    -- clobbered by the engine's post-login stat finalization (same reason
+    -- RealLevel_Tracker / auto_buff_henge defer; matches the JobRebirth fix).
+    -- Synchronous apply silently lost Ascension boosts after a zone (enspell etc.
+    -- dropping to ~gear-only). Login/zone wiped the old mods, so this clean
+    -- force-reapply is correct, never a double.
+    player:timer(3000, function(p)
+        p:setLocalVar('PrestigeModJob', 0)
+        refreshJobMods(p)
+    end)
 end)
 
 -----------------------------------
