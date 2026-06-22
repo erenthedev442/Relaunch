@@ -221,6 +221,24 @@ local function spawnGuardian(player, weaponKey)
     local sess = sessions[ownerName]
     if sess then sess.boss = mob end
 
+    -- Idle despawn: if the mob hasn't taken any damage after 45s, remove it.
+    -- Clear the session first so onMobDeath's completion guard fires and exits.
+    local spawnHp = finalHp
+    player:timer(45000, function(p)
+        local s = sessions[ownerName]
+        if not s or s.boss ~= mob then return end   -- session gone or boss replaced
+        local hp = 0
+        local ok = pcall(function() hp = mob:getHP() end)
+        if not ok then return end                    -- mob already gone
+        if hp < spawnHp then return end              -- player is fighting; leave it alone
+        sessions[ownerName] = nil
+        pcall(function() mob:setHP(0) end)
+        p:printToPlayer('[Mastery] The Guardian vanished — engage within 45 seconds next time.', xi.msg.channel.SYSTEM_3)
+        p:timer(2000, function(pp)
+            pp:setPos(EXIT_WARP.x, EXIT_WARP.y, EXIT_WARP.z, EXIT_WARP.rot, EXIT_WARP.zoneId)
+        end)
+    end)
+
     player:printToPlayer(string.format(
         '[Mastery] The %s appears! [%s - %d HP] Solo fight: defeat it to earn Trial 4.',
         g.bossName, affix.label, finalHp), xi.msg.channel.SYSTEM_3)
