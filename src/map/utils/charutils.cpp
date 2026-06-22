@@ -5717,7 +5717,14 @@ void AddExperiencePoints(bool expFromRaise, bool awardRegionPoints, bool fromScr
     // Incase player de-levels to 74 on the field
     if (PChar->MeritMode && PChar->jobs.job[PChar->GetMJob()] > 74 && !expFromRaise)
     {
-        onLimitMode = true;
+        // At the genkai cap, let the EXP bar fill to max before routing to limit mode
+        uint8  job        = PChar->jobs.job[PChar->GetMJob()];
+        bool   atCap      = (job >= PChar->jobs.genkai);
+        bool   barAtLimit = (PChar->jobs.exp[PChar->GetMJob()] >= GetExpNEXTLevel(job) - 1);
+        if (!atCap || barAtLimit)
+        {
+            onLimitMode = true;
+        }
     }
 
     // we check if the player is level capped and max exp..
