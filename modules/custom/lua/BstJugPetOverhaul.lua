@@ -68,6 +68,14 @@ local CONFIG =
     masterMATTShare = 1.0,   -- inherit 100% of master's MATT mods
     masterMACCShare = 1.0,   -- inherit 100% of master's MACC mods
 
+    -- Magical Ready-move power (Cursed Sphere / mobMagicalMove path only).
+    -- flatMagicDamage: flat additive to base damage before fTP (xi.mod.MAGIC_DAMAGE=311).
+    -- flatMagicDMGMult: gives the pet a blood-pact-style multiplier (xi.mod.BP_DAMAGE=126).
+    --   mobskills.lua line 1195 now applies this for any player-owned pet (not avatar-only).
+    --   Formula: finalDmg × (1 + BP_DAMAGE/100); e.g. 2000 → ×21.
+    flatMagicDamage  = 500,
+    flatMagicDMGMult = 2000,
+
     -- Auto-Ready: pet fires its TP move on its own once it caps TP.
     autoReady           = true,
     autoReadyTP         = 1000,
@@ -104,18 +112,31 @@ local function applyEndgameScaling(master, pet)
     local mMATT = master:getMod(xi.mod.MATT)
     local mMACC = master:getMod(xi.mod.MACC)
 
+    -- Beast Affinity: gear mod PET_BEAST_AFF (1200) scales all CONFIG.flat* values
+    -- proportionally. 100 points → +100% to every flat bonus (×2.0). The master-stat
+    -- share contributions are intentionally NOT scaled (they already track gear).
+    local beastAff     = math.max(0, master:getMod(xi.mod.PET_BEAST_AFF))
+    local beastAffMult = 1.0 + beastAff / 100
+
     local strFromMaster = math.floor(mSTR * CONFIG.masterSTRShare)
 
-    pet:addMod(xi.mod.ATT, CONFIG.flatATT + math.floor(mATT * CONFIG.masterATTShare) + strFromMaster)
-    pet:addMod(xi.mod.ACC, CONFIG.flatACC + math.floor(mACC * CONFIG.masterACCShare))
-    pet:addMod(xi.mod.STR, CONFIG.flatSTR + strFromMaster)
+    pet:addMod(xi.mod.ATT, math.floor(CONFIG.flatATT * beastAffMult) + math.floor(mATT * CONFIG.masterATTShare) + strFromMaster)
+    pet:addMod(xi.mod.ACC, math.floor(CONFIG.flatACC * beastAffMult) + math.floor(mACC * CONFIG.masterACCShare))
+    pet:addMod(xi.mod.STR, math.floor(CONFIG.flatSTR * beastAffMult) + strFromMaster)
     pet:addMod(xi.mod.ATTP, CONFIG.attp)
 
     pet:addMod(xi.mod.DMGPHYS, CONFIG.pdt)
     pet:addMod(xi.mod.DMGMAGIC, CONFIG.mdt)
 
-    pet:addMod(xi.mod.MATT, CONFIG.flatMAB  + math.floor(mMATT * CONFIG.masterMATTShare))
-    pet:addMod(xi.mod.MACC, CONFIG.flatMACC + math.floor(mMACC * CONFIG.masterMACCShare))
+    pet:addMod(xi.mod.MATT, math.floor(CONFIG.flatMAB  * beastAffMult) + math.floor(mMATT * CONFIG.masterMATTShare))
+    pet:addMod(xi.mod.MACC, math.floor(CONFIG.flatMACC * beastAffMult) + math.floor(mMACC * CONFIG.masterMACCShare))
+
+    -- Magical Ready-move damage: MAGIC_DAMAGE adds to base before fTP in mobMagicalMove;
+    -- BP_DAMAGE is a post-MAB multiplier (×21 at 2000) now enabled for player pets in
+    -- scripts/globals/mobskills.lua. Scales with beastAffMult so Beast Affinity boosts
+    -- magical output too.
+    pet:addMod(xi.mod.MAGIC_DAMAGE, math.floor(CONFIG.flatMagicDamage  * beastAffMult))
+    pet:addMod(xi.mod.BP_DAMAGE,    math.floor(CONFIG.flatMagicDMGMult * beastAffMult))
 
     pet:addMod(xi.mod.DOUBLE_ATTACK, CONFIG.doubleAttack)
     pet:addMod(xi.mod.TRIPLE_ATTACK, CONFIG.tripleAttack)
@@ -146,7 +167,7 @@ local function applyEndgameScaling(master, pet)
     end
 
     -- HP: raise max AND heal into it (setMaxHP alone doesn't refill the new room).
-    local bonusHP = CONFIG.flatHP + math.floor(master:getMaxHP() * CONFIG.masterHPShare)
+    local bonusHP = math.floor(CONFIG.flatHP * beastAffMult) + math.floor(master:getMaxHP() * CONFIG.masterHPShare)
     pet:setMaxHP(pet:getMaxHP() + bonusHP)
     pet:addHP(bonusHP)
 

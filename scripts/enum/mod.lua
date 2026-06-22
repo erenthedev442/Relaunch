@@ -39,6 +39,10 @@ xi.mod =
 
     EXP_LVL_MOD                     = 1196, -- Modifies level during /check, exp calculation and certain packets only
 
+    -- BST: Beast Affinity gear mod — % multiplier applied to all flat pet-stat bonuses
+    -- in BstJugPetOverhaul.lua. 100 points = +100% (×2.0) to all CONFIG.flat* values.
+    PET_BEAST_AFF                   = 1200,
+
     TWOHAND_STR                     = 218, -- Same as STR, but only active when using a two handed weapon (e.g. Hasso)
 
     -- Magic Evasion versus elements

@@ -14,7 +14,9 @@ mobskillObject.onMobWeaponSkill = function(mob, target, skill, action)
     local params = {}
 
     params.percentMultipier = 0.25
-    params.damageCap        = 600 -- TODO: Capture damage cap.
+    -- Player jug pets have 280k+ HP; lift the retail 600 cap to 50% of pet max HP.
+    local master = mob:getMaster()
+    params.damageCap = (master and master:isPC()) and math.floor(mob:getMaxHP() * 0.50) or 600
     params.bonusDamage      = 0
     params.mAccuracyBonus   = { 0, 0, 0 }
     params.resistStat       = xi.mod.INT
