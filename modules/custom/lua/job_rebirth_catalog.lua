@@ -39,15 +39,16 @@ return
     rpMax      = 20,
 
     -- ===== Escalating exp penalty (the "harder each time" knob) =====
-    -- Triangular ramp, CAPPED so re-leveling a reborn job is never floored.
+    -- Triangular ramp, CAPPED so re-leveling is never LITERALLY zero (impossible).
     --   penalty(N) = min(N*(N+1)/2 * expPenaltyPerRebirth, expPenaltyCap)
-    --   R1: -10%   R2: -30%   R3: -50% (cap)   R4+: -50%
-    -- Capped at -50% on 2026-06-22 (was uncapped -> hit -100% / zero EXP at R4,
-    -- which was too severe). Now re-leveling is ALWAYS at least half-speed, and
-    -- EXP augments push it back toward full. Recomputed from the rebirth count on
-    -- login, so lowering this applies RETROACTIVELY to everyone (incl. Jbae @ R7).
+    --   R1: -10%   R2: -30%   R3: -60%   R4+: -95% (cap)
+    -- Capped at -95% on 2026-06-22 (was UNCAPPED -> hit -100% / zero EXP at R4 and
+    -- ran away to -280% by R7, so re-leveling was impossible). -95% keeps rebirth a
+    -- brutal grind (only 5% EXP) but always leaves SOME progress; EXP augments help.
+    -- Recomputed from the rebirth count on login -> applies RETROACTIVELY to all
+    -- rebirthed jobs (incl. Jbae @ R7, previously -280%).
     expPenaltyPerRebirth = 10,
-    expPenaltyCap        = 50,
+    expPenaltyCap        = 95,
 
     -- Hard cap on rebirths per job. nil = uncapped.
     maxRebirths = nil,
