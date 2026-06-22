@@ -108,6 +108,7 @@ def main() -> int:
         title_vendor,
         treasure_hunts,
         voidspire,
+        apex_paragon,
         # economy/service NPCs (2026-06-14 follow-up): inline-config + a couple catalogs
         gil_exchange,
         home_point,
@@ -273,6 +274,8 @@ def main() -> int:
         # (the two solo Prime-Weapon trials) and the Bibiki Bay Capacity farm.
         ("endless_tower",        endless_tower),
         ("job_mastery",          job_mastery),
+        # Apex Trials + Paragon (2026-06-22): infinite post-cap chase + meta board.
+        ("apex_paragon",         apex_paragon),
         ("capacity_farm",        capacity_farm),
         # differentiators renders why-legendary.md's "What Legendary Does
         # Differently" list from systems_registry.py and writes a drift report
