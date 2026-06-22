@@ -1844,7 +1844,7 @@ INSERT INTO `item_basic` VALUES (1850,0,'first_virtue','first_virtue','第一の
 INSERT INTO `item_basic` VALUES (1851,0,'deed_of_placidity','deed_of_placidity','無瞋の善根',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
 INSERT INTO `item_basic` VALUES (1852,0,'high-quality_phuabo_organ','h.q._phuabo_org.','上質なフワボ器官',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
 INSERT INTO `item_basic` VALUES (1853,0,'second_virtue','second_virtue','第二の聖徳',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
-INSERT INTO `item_basic` VALUES (1854,0,'deed_of_moderation','deed_of_moder.','無貪の善根',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
+INSERT INTO `item_basic` VALUES (1854,0,'deed_of_moderation','deed_of_moder.','無貪の善根',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
 INSERT INTO `item_basic` VALUES (1855,0,'high-quality_xzomit_organ','h.q._xzomit_organ','上質なゾミト器官',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
 INSERT INTO `item_basic` VALUES (1856,0,'third_virtue','third_virtue','第三の聖徳',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
 INSERT INTO `item_basic` VALUES (1857,0,'cordial_invite','cordial_invite','戦餐会の招待状',@GENERAL_TYPE,1,@FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX,@NONE,0);
