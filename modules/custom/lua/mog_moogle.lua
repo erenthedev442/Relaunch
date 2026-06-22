@@ -92,6 +92,7 @@ showJobPage = function(player, page)
         table.insert(opts, {
             job.label,
             function(p)
+                if p:getPet() then p:despawnPet() end
                 p:changeJob(job.id)
                 p:printToPlayer(
                     string.format('Changed to %s, kupo!', job.label), S)
