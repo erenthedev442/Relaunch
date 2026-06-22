@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
+| Main job | **SMN 99** |
 | Sub job | BLU 99 |
-| Time played | 38h |
-| Enemies defeated | 7,394 |
+| Time played | 40h |
+| Enemies defeated | 7,810 |
 | Deaths | 23 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 10,485
+- **Marks (current):** 8,135
 - **Marks (lifetime):** 27,852
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 415
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 576
+- **Augments crafted:** 598
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -57,8 +57,8 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 7
-- **By job:** RDM ×7
+- **Total rebirths:** 8
+- **By job:** RDM ×8
 
 ## Prestige
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 60aaf5194cbf -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 8813e6ae7b1e -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

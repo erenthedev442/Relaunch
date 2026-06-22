@@ -1,6 +1,6 @@
 # Coso
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 3d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 3d 2h
 
 `💪 5 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | DNC 99 |
-| Time played | 16h |
-| Enemies defeated | 564 |
+| Time played | 19h |
+| Enemies defeated | 585 |
 | Deaths | 9 |
 
 ## Job levels
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,135
-- **Marks (lifetime):** 451
-- **Distinct NMs slain:** 11
-- **Total NM kills:** 12
+- **Marks (current):** 4,374
+- **Marks (lifetime):** 1,275
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 34
 
 ## Augment Sage
 
-- **Mastery rank:** 3 / 5
-- **Augments crafted:** 76
-- **NM Affinities:** 9 / 13
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 158
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**7** unlocked — First Hunt · Ten Hunts In · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice · Augment Expert.
+**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1ff85867bc2d -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: c41d2d293933 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

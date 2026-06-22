@@ -1,11 +1,11 @@
 # Shadowsfall
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-20 · Character age 4d 1h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 1h
 
 `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 3.** You're Rank 2/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 4h |
-| Enemies defeated | 107 |
+| Time played | 6h |
+| Enemies defeated | 114 |
 | Deaths | 0 |
 
 ## Job levels
@@ -35,16 +35,16 @@
 
 ## Hunting League
 
-- **Rank:** 2 / 5
-- **Marks (current):** 6,491
-- **Marks (lifetime):** 610
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 122
+- **Rank:** 5 / 5
+- **Marks (current):** 11,189
+- **Marks (lifetime):** 2,242
+- **Distinct NMs slain:** 7
+- **Total NM kills:** 149
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 12
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 86
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**4** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Augment Novice.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 16h 24m |
+| HL Rank I → V | 2d 23h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 81c32485c8e2 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: cf799fcbea7b -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

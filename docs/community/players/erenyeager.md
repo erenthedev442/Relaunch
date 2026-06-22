@@ -1,6 +1,6 @@
 # Erenyeager
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 11h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 3d 11h
 
 `💪 14 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | DRK 99 |
-| Time played | 47h |
-| Enemies defeated | 2,700 |
+| Time played | 48h |
+| Enemies defeated | 2,704 |
 | Deaths | 18 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 44,911
+- **Marks (current):** 44,061
 - **Marks (lifetime):** 54,650
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 967
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 292
+- **Augments crafted:** 293
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4ff57e036494 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: b10c092bb102 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

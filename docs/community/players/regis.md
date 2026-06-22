@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 61h |
-| Enemies defeated | 1,740 |
+| Time played | 63h |
+| Enemies defeated | 1,748 |
 | Deaths | 40 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 8,733
+- **Marks (current):** 7,683
 - **Marks (lifetime):** 1,619
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 303
@@ -44,8 +44,8 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 262
-- **NM Affinities:** 3 / 13
+- **Augments crafted:** 273
+- **NM Affinities:** 5 / 13
 
 ## Reforge
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d0fc77a39fcf -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: e995c4d70210 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | DRK 99 |
-| Time played | 18h |
-| Enemies defeated | 1,743 |
-| Deaths | 20 |
+| Time played | 22h |
+| Enemies defeated | 1,782 |
+| Deaths | 21 |
 
 ## Job levels
 
@@ -36,23 +36,23 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,503
-- **Marks (lifetime):** 6,585
+- **Marks (current):** 17,546
+- **Marks (lifetime):** 14,741
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 395
+- **Total NM kills:** 486
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 2 / 5
+- **Augments crafted:** 37
+- **NM Affinities:** 1 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 0 | 0 |
-| Relic | 1,500 | 0 |
+| Relic | 3,000 | 0 |
 | Empyrean | 0 | 0 |
 
 ## Collections
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Augment Novice.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f74e5b7297d7 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 3f5a0ddb3493 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

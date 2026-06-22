@@ -1,8 +1,8 @@
 # Phatdoood
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 3h
 
-`💪 4 jobs @99`
+`⭐ 6 Ascensions` `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **BRD 99** |
-| Sub job | WHM 99 |
-| Time played | 20h |
-| Enemies defeated | 16 |
-| Deaths | 20 |
+| Sub job | RDM 99 |
+| Time played | 24h |
+| Enemies defeated | 17 |
+| Deaths | 37 |
 
 ## Job levels
 
@@ -25,7 +25,7 @@
 | MNK | 1 | NIN | 1 |
 | **WHM** | **99** | DRG | 1 |
 | BLM | 82 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| **RDM** | **99** | BLU | 1 |
 | THF | 1 | **COR** | **99** |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,24 +36,29 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 922
-- **Marks (lifetime):** 11,761
+- **Marks (current):** 17,443
+- **Marks (lifetime):** 29,306
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 2,222
+- **Total NM kills:** 2,503
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 269
+- **Augments crafted:** 294
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 4,585 | 9,835 |
+| AF | 6,985 | 12,235 |
 | Relic | 1,525 | 25 |
-| Empyrean | 22,430 | 20,430 |
+| Empyrean | 15,980 | 20,430 |
+
+## Prestige
+
+- **Total Ascensions:** 6
+- **Per-job prestige:** BRD P6
 
 ## Collections
 
@@ -61,12 +66,13 @@
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Augment Novice · Augment Expert · Augment Master.
+**14** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · First Ascension · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
+| Fastest 1 → 99 | 1d 17h |
 | HL Rank I → V | 16h 56m |
 | Augment Archon | 1d 7h |
 
@@ -77,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0e35db56155c -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 19658ddc3e23 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

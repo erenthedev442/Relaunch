@@ -1,6 +1,6 @@
 # Duffaluffagus
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 7d 9h
 
 `💪 22 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **COR 99** |
 | Sub job | BLM 99 |
-| Time played | 24h |
-| Enemies defeated | 1,676 |
-| Deaths | 12 |
+| Time played | 27h |
+| Enemies defeated | 2,001 |
+| Deaths | 14 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 14,376
+- **Marks (current):** 1,306
 - **Marks (lifetime):** 863
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 168
@@ -44,8 +44,8 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 307
-- **NM Affinities:** 0 / 13
+- **Augments crafted:** 335
+- **NM Affinities:** 5 / 13
 
 ## Reforge
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e5bfcf2ff7c1 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: c6428b3b4be3 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

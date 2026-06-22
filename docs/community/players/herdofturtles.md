@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **PLD 99** |
 | Sub job | BLU 99 |
-| Time played | 76h |
-| Enemies defeated | 7,599 |
-| Deaths | 37 |
+| Time played | 78h |
+| Enemies defeated | 7,690 |
+| Deaths | 38 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 14,504
+- **Marks (current):** 5,654
 - **Marks (lifetime):** 5,406
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 1,091
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8b0c99d48003 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: a7b85b6e5ba7 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

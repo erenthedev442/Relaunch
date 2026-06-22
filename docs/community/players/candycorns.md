@@ -1,8 +1,8 @@
 # Candycorns
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 8d 9h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 8d 10h
 
-`⭐ 1 Ascension` `💪 11 jobs @99`
+`⭐ 1 Ascension` `💪 12 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,18 +11,18 @@
 
 | | |
 |---|---|
-| Main job | **MNK 25** |
-| Sub job | DRG 25 |
-| Time played | 71h |
-| Enemies defeated | 3,890 |
-| Deaths | 17 |
+| Main job | **MNK 99** |
+| Sub job | DRG 99 |
+| Time played | 74h |
+| Enemies defeated | 4,935 |
+| Deaths | 18 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| MNK | 25 | **NIN** | **99** |
+| **MNK** | **99** | **NIN** | **99** |
 | WHM | 82 | **DRG** | **99** |
 | BLM | 96 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,339
-- **Marks (lifetime):** 5,103
+- **Marks (current):** 9,528
+- **Marks (lifetime):** 7,452
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 157
+- **Total NM kills:** 273
 
 ## Augment Sage
 
@@ -57,8 +57,8 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 4
-- **By job:** MNK ×4
+- **Total rebirths:** 8
+- **By job:** MNK ×8
 
 ## Prestige
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 145406da6e14 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 433a98fd3f53 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

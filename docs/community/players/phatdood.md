@@ -1,8 +1,8 @@
 # Phatdood
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 3h
 
-`💪 7 jobs @99`
+`⭐ 6 Ascensions` `💪 7 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DRG 99** |
 | Sub job | DRK 99 |
-| Time played | 20h |
-| Enemies defeated | 753 |
-| Deaths | 23 |
+| Time played | 24h |
+| Enemies defeated | 1,086 |
+| Deaths | 39 |
 
 ## Job levels
 
@@ -36,24 +36,29 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 94
-- **Marks (lifetime):** 11,820
+- **Marks (current):** 20,475
+- **Marks (lifetime):** 29,365
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 2,224
+- **Total NM kills:** 2,505
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 288
+- **Augments crafted:** 294
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 12,835 | 9,835 |
-| Relic | 1,525 | 25 |
+| AF | 16,235 | 12,235 |
+| Relic | 3,025 | 25 |
 | Empyrean | 17,030 | 21,180 |
+
+## Prestige
+
+- **Total Ascensions:** 6
+- **Per-job prestige:** DRG P6
 
 ## Collections
 
@@ -61,7 +66,7 @@
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Augment Novice · Augment Expert · Augment Master.
+**14** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · First Ascension · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -78,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a238bea80273 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: b5eec93d2943 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

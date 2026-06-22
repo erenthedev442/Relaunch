@@ -1,26 +1,26 @@
 # Zetsubou
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 18h 40m
+**Windurst citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 19h 4m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 26/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 69/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **MNK 26** |
-| Sub job | WAR 18 |
-| Time played | 1h |
-| Enemies defeated | 42 |
-| Deaths | 3 |
+| Main job | **MNK 69** |
+| Sub job | WAR 56 |
+| Time played | 4h |
+| Enemies defeated | 89 |
+| Deaths | 5 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 18 | SAM | 1 |
-| MNK | 26 | NIN | 1 |
+| WAR | 56 | SAM | 1 |
+| MNK | 69 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 525
+- **Marks (current):** 1,025
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 69f2dc43b16e -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 94d5f00b07b3 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

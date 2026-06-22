@@ -1,8 +1,8 @@
 # Burtgang
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 8d 3h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 3h
 
-`⭐ 70 Ascensions` `💪 13 jobs @99`
+`⭐ 92 Ascensions` `💪 12 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | NIN 99 |
-| Time played | 71h |
-| Enemies defeated | 12,981 |
-| Deaths | 38 |
+| Main job | **RDM 1** |
+| Sub job | NIN 1 |
+| Time played | 76h |
+| Enemies defeated | 13,084 |
+| Deaths | 41 |
 
 ## Job levels
 
@@ -25,7 +25,7 @@
 | **MNK** | **99** | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
-| **RDM** | **99** | BLU | 1 |
+| RDM | 1 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 68,280
+- **Marks (current):** 2,630
 - **Marks (lifetime):** 18,426
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 854
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 1,133
+- **Augments crafted:** 1,147
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -68,13 +68,13 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Job Rebirth
 
-- **Total rebirths:** 19
-- **By job:** RDM ×19
+- **Total rebirths:** 20
+- **By job:** RDM ×20
 
 ## Prestige
 
-- **Total Ascensions:** 70
-- **Per-job prestige:** RDM P70
+- **Total Ascensions:** 92
+- **Per-job prestige:** RDM P92
 
 ## Collections
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f1aeaa629dae -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 99ac7849305f -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,26 +1,26 @@
 # Imfinnatank
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 7h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 3d 8h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 47/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 58/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RNG 47** |
-| Sub job | NIN 36 |
-| Time played | 6h |
-| Enemies defeated | 295 |
-| Deaths | 3 |
+| Main job | **RNG 58** |
+| Sub job | NIN 44 |
+| Time played | 7h |
+| Enemies defeated | 323 |
+| Deaths | 4 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 36 |
+| MNK | 1 | NIN | 44 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -29,12 +29,12 @@
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 47 | RUN | 1 |
+| RNG | 58 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,216
+- **Marks (current):** 2,866
 - **Marks (lifetime):** 65
 - **Distinct NMs slain:** 3
 - **Total NM kills:** 13
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9f2cbf8cbccb -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 4089cf71abf1 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

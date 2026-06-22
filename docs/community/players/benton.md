@@ -2,7 +2,7 @@
 
 **San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 2h
 
-`⭐ 15 Ascensions` `💪 9 jobs @99`
+`⭐ 15 Ascensions` `💪 11 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **WHM 99** |
-| Sub job | WAR 1 |
-| Time played | 34h |
+| Main job | **GEO 99** |
+| Sub job | BRD 13 |
+| Time played | 38h |
 | Enemies defeated | 15 |
 | Deaths | 5 |
 
@@ -21,7 +21,7 @@
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 1 |
+| **WAR** | **99** | SAM | 1 |
 | **MNK** | **99** | **NIN** | **99** |
 | **WHM** | **99** | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -29,17 +29,17 @@
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
-| BST | 1 | SCH | 96 |
-| BRD | 1 | **GEO** | **99** |
+| **BST** | **99** | SCH | 96 |
+| BRD | 13 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 138,190
+- **Marks (current):** 145,940
 - **Marks (lifetime):** 84,857
 - **Distinct NMs slain:** 12
-- **Total NM kills:** 3,316
+- **Total NM kills:** 3,604
 
 ## Augment Sage
 
@@ -51,9 +51,9 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,200 | 0 |
+| AF | 1,300 | 100 |
 | Relic | 1,500 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 44,480 | 42,480 |
 
 ## Prestige
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8e08b27fd5b9 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 53eb7ab54ee0 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

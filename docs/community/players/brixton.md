@@ -1,6 +1,6 @@
 # Brixton
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 12h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 8d 12h
 
 `⭐ 6 Ascensions` `💪 9 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **THF 99** |
 | Sub job | DNC 99 |
 | Time played | 64h |
-| Enemies defeated | 2,375 |
+| Enemies defeated | 2,401 |
 | Deaths | 27 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,427
+- **Marks (current):** 9,717
 - **Marks (lifetime):** 20,140
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 338
+- **Total NM kills:** 361
 
 ## Guild standing
 
@@ -55,14 +55,14 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 401
+- **Augments crafted:** 414
 - **NM Affinities:** 12 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 97 | 0 |
+| AF | 197 | 0 |
 | Relic | 0 | 0 |
 | Empyrean | 1 | 0 |
 
@@ -77,7 +77,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · First Ascension · Augment Novice · Augment Expert · Augment Master.
+**14** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a095393bd3b2 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 69c7fe561f4b -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

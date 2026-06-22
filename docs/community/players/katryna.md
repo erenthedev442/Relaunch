@@ -1,6 +1,6 @@
 # Katryna
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 6d 11h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 6d 11h
 
 `💪 4 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DNC 99** |
 | Sub job | MNK 99 |
-| Time played | 45h |
-| Enemies defeated | 2,790 |
-| Deaths | 26 |
+| Time played | 49h |
+| Enemies defeated | 3,049 |
+| Deaths | 33 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,429
-- **Marks (lifetime):** 5,508
-- **Distinct NMs slain:** 10
-- **Total NM kills:** 1,077
+- **Marks (current):** 2,259
+- **Marks (lifetime):** 5,525
+- **Distinct NMs slain:** 11
+- **Total NM kills:** 1,079
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 153
+- **Augments crafted:** 163
 - **NM Affinities:** 6 / 13
 
 ## Reforge
@@ -65,6 +65,11 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | AF | 715 | 3,365 |
 | Relic | 1,500 | 5,250 |
 | Empyrean | 125 | 125 |
+
+## Job Rebirth
+
+- **Total rebirths:** 2
+- **By job:** DNC ×2
 
 ## Collections
 
@@ -88,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b27696a91057 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 3dee24f83d8f -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

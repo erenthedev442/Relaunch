@@ -1,8 +1,8 @@
 # Vision
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 3h
 
-`💪 1 job @99`
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BLM 9** |
-| Sub job | SCH 8 |
-| Time played | 7h |
-| Enemies defeated | 2 |
+| Main job | **BLM 99** |
+| Sub job | SCH 83 |
+| Time played | 10h |
+| Enemies defeated | 92 |
 | Deaths | 2 |
 
 ## Job levels
@@ -24,28 +24,28 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 9 | SMN | 1 |
+| **BLM** | **99** | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 8 |
+| BST | 1 | SCH | 83 |
 | BRD | 87 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 9,541
-- **Marks (lifetime):** 197
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 43
+- **Marks (current):** 0
+- **Marks (lifetime):** 217
+- **Distinct NMs slain:** 4
+- **Total NM kills:** 47
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 24
-- **NM Affinities:** 0 / 13
+- **Augments crafted:** 48
+- **NM Affinities:** 1 / 13
 
 ## Reforge
 
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 0 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 2,515 | 3,565 |
+| Empyrean | 15 | 3,565 |
 
 ## Collections
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 82704d572a6c -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 39be232cd05b -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

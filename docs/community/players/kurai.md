@@ -1,6 +1,6 @@
 # Kurai
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-21 · Character age 8d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 4h
 
 `💪 5 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | SAM 99 |
-| Time played | 12h |
-| Enemies defeated | 731 |
-| Deaths | 12 |
+| Sub job | DNC 76 |
+| Time played | 14h |
+| Enemies defeated | 844 |
+| Deaths | 14 |
 
 ## Job levels
 
@@ -28,7 +28,7 @@
 | RDM | 1 | BLU | 65 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| **DRK** | **99** | DNC | 1 |
+| **DRK** | **99** | DNC | 76 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,402
-- **Marks (lifetime):** 108
+- **Marks (current):** 9,622
+- **Marks (lifetime):** 324
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 9
+- **Total NM kills:** 27
 
 ## Guild standing
 
@@ -72,7 +72,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**4** unlocked — First Hunt · Tier II Unlocked · X Marks the Spot · Augment Novice.
+**5** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · X Marks the Spot · Augment Novice.
 
 ## Speed records
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6d01efdd67d5 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 6a7a8cfb105e -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

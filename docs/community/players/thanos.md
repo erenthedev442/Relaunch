@@ -1,8 +1,8 @@
 # Thanos
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 8d 5h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 6h
 
-`⭐ 12 Ascensions` `💪 5 jobs @99`
+`⭐ 12 Ascensions` `💪 6 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | RDM 99 |
-| Time played | 58h |
-| Enemies defeated | 3,009 |
-| Deaths | 28 |
+| Sub job | PLD 99 |
+| Time played | 62h |
+| Enemies defeated | 3,192 |
+| Deaths | 29 |
 
 ## Job levels
 
@@ -27,7 +27,7 @@
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 1 |
+| **PLD** | **99** | PUP | 1 |
 | DRK | 1 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 82 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,321
+- **Marks (current):** 21
 - **Marks (lifetime):** 5,860
 - **Distinct NMs slain:** 13
 - **Total NM kills:** 492
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 287
+- **Augments crafted:** 291
 - **NM Affinities:** 5 / 13
 
 ## Reforge
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4e37f7a79880 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 1a9b099ffc73 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

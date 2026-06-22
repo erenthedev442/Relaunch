@@ -1,19 +1,19 @@
-# Velvetfox
+# Kilik
 
-**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-13 · Last seen 2026-06-13 · Character age 8d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 5h 34m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 29/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 1** |
-| Sub job | — |
-| Time played | 0h |
-| Enemies defeated | 0 |
-| Deaths | 0 |
+| Main job | **RUN 29** |
+| Sub job | GEO 19 |
+| Time played | 1h |
+| Enemies defeated | 59 |
+| Deaths | 3 |
 
 ## Job levels
 
@@ -28,8 +28,8 @@
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| BRD | 1 | GEO | 19 |
+| RNG | 1 | RUN | 29 |
 
 ## Hunting League
 
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 94af206bb640 -->
+<!-- content-hash: 198c72765dc4 -->
 _Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

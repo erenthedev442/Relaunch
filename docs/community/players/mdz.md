@@ -1,8 +1,8 @@
 # Mdz
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 19h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 5d 19h
 
-`💪 6 jobs @99`
+`💪 7 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **PLD 92** |
-| Sub job | GEO 77 |
+| Main job | **GEO 90** |
+| Sub job | BLM 63 |
 | Time played | 33h |
-| Enemies defeated | 2,326 |
+| Enemies defeated | 2,357 |
 | Deaths | 15 |
 
 ## Job levels
@@ -27,16 +27,16 @@
 | BLM | 63 | SMN | 1 |
 | RDM | 1 | BLU | 17 |
 | **THF** | **99** | COR | 1 |
-| PLD | 92 | **PUP** | **99** |
+| **PLD** | **99** | **PUP** | **99** |
 | **DRK** | **99** | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 77 |
+| BRD | 1 | GEO | 90 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,496
+- **Marks (current):** 9,746
 - **Marks (lifetime):** 2,658
 - **Distinct NMs slain:** 7
 - **Total NM kills:** 628
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 36
+- **Augments crafted:** 40
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1c8d96b79a17 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 333793e07003 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

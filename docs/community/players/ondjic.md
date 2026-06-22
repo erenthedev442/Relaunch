@@ -1,6 +1,6 @@
 # Ondjic
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 5d 6h
 
 `💪 3 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **BLU 99** |
-| Sub job | NIN 67 |
-| Time played | 23h |
-| Enemies defeated | 189 |
+| Sub job | NIN 80 |
+| Time played | 27h |
+| Enemies defeated | 199 |
 | Deaths | 0 |
 
 ## Job levels
@@ -22,7 +22,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 67 |
+| MNK | 1 | NIN | 80 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 4,053
-- **Marks (lifetime):** 180
+- **Marks (current):** 3,770
+- **Marks (lifetime):** 340
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 36
+- **Total NM kills:** 68
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b7b4d148d98d -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 112250aa4806 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

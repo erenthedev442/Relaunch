@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **COR 99** |
 | Sub job | WHM 99 |
-| Time played | 5h |
+| Time played | 6h |
 | Enemies defeated | 104 |
 | Deaths | 3 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 8,800
+- **Marks (current):** 9,300
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 117
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 2 / 5
-- **Augments crafted:** 50
+- **Augments crafted:** 51
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dc5b85ca41df -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 17cc595e21c7 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

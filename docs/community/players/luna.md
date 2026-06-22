@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | RDM 99 |
-| Time played | 61h |
+| Time played | 62h |
 | Enemies defeated | 53 |
 | Deaths | 34 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 26,688
+- **Marks (current):** 28,438
 - **Marks (lifetime):** 1,619
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 296
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 90da12873892 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: d9e4aeebf84d -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

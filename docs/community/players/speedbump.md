@@ -2,7 +2,7 @@
 
 **San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 2h
 
-`⭐ 15 Ascensions` `💪 8 jobs @99`
+`⭐ 15 Ascensions` `💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,8 +12,8 @@
 | | |
 |---|---|
 | Main job | **GEO 99** |
-| Sub job | BRD 1 |
-| Time played | 32h |
+| Sub job | RDM 99 |
+| Time played | 37h |
 | Enemies defeated | 4 |
 | Deaths | 2 |
 
@@ -29,17 +29,17 @@
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
-| BST | 1 | SCH | 93 |
-| BRD | 1 | **GEO** | **99** |
+| **BST** | **99** | SCH | 93 |
+| BRD | 95 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 144,416
+- **Marks (current):** 154,166
 - **Marks (lifetime):** 86,337
 - **Distinct NMs slain:** 11
-- **Total NM kills:** 3,309
+- **Total NM kills:** 3,597
 
 ## Augment Sage
 
@@ -51,9 +51,9 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,200 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| AF | 3,300 | 100 |
+| Relic | 1,500 | 0 |
+| Empyrean | 42,480 | 42,480 |
 
 ## Prestige
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3fe337e18c0c -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 902692b2fc60 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

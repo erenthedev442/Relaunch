@@ -1,6 +1,6 @@
 # Boost
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 2d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 2d 11h
 
 `💪 2 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | WHM 99 |
-| Time played | 14h |
+| Time played | 20h |
 | Enemies defeated | 0 |
 | Deaths | 2 |
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,968
-- **Marks (lifetime):** 10,520
+- **Marks (current):** 8,275
+- **Marks (lifetime):** 17,360
 - **Distinct NMs slain:** 12
-- **Total NM kills:** 812
+- **Total NM kills:** 908
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 12
+- **Mastery rank:** 1 / 5
+- **Augments crafted:** 15
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 83da62d2c82f -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 814dd6819b72 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

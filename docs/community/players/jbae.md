@@ -1,8 +1,8 @@
 # Jbae
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-21 · Character age 28d 8h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-22 · Character age 28d 9h
 
-`⭐ 125 Ascensions` `💪 17 jobs @99`
+`⭐ 126 Ascensions` `💪 17 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 298h |
-| Enemies defeated | 9,503 |
-| Deaths | 171 |
+| Time played | 303h |
+| Enemies defeated | 10,253 |
+| Deaths | 177 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 36,132
-- **Marks (lifetime):** 1,440
+- **Marks (current):** 39,498
+- **Marks (lifetime):** 1,680
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 6,099
+- **Total NM kills:** 6,106
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 842
+- **Augments crafted:** 928
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -68,13 +68,13 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Job Rebirth
 
-- **Total rebirths:** 4
-- **By job:** RDM ×4
+- **Total rebirths:** 7
+- **By job:** RDM ×7
 
 ## Prestige
 
-- **Total Ascensions:** 125
-- **Per-job prestige:** RDM P86 · PLD P12 · DRG P27
+- **Total Ascensions:** 126
+- **Per-job prestige:** RDM P87 · PLD P12 · DRG P27
 
 ## Collections
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a06efb029d0c -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 23bc1da6ff66 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

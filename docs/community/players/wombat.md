@@ -1,18 +1,20 @@
 # Wombat
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 5h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 5h
+
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 93/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 93** |
-| Sub job | BLU 69 |
-| Time played | 7h |
-| Enemies defeated | 289 |
+| Main job | **BLU 98** |
+| Sub job | SMN 67 |
+| Time played | 8h |
+| Enemies defeated | 398 |
 | Deaths | 2 |
 
 ## Job levels
@@ -22,8 +24,8 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 8 |
-| RDM | 93 | BLU | 69 |
+| BLM | 1 | SMN | 67 |
+| **RDM** | **99** | BLU | 98 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -34,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,475
+- **Marks (current):** 1,975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -70,7 +72,9 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 17h 10m |
 
 ---
 
@@ -79,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dc592c6d548e -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: d61df1b02d64 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -2,7 +2,7 @@
 
 **Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 5h
 
-`⭐ 3 Ascensions` `💪 15 jobs @99`
+`⭐ 3 Ascensions` `💪 17 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **DRK 19** |
-| Sub job | DRG 19 |
-| Time played | 38h |
-| Enemies defeated | 5,878 |
-| Deaths | 30 |
+| Main job | **DRK 99** |
+| Sub job | COR 99 |
+| Time played | 40h |
+| Enemies defeated | 6,353 |
+| Deaths | 31 |
 
 ## Job levels
 
@@ -26,9 +26,9 @@
 | **WHM** | **99** | DRG | 91 |
 | **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
-| **THF** | **99** | COR | 1 |
+| **THF** | **99** | **COR** | **99** |
 | **PLD** | **99** | PUP | 1 |
-| DRK | 19 | DNC | 1 |
+| **DRK** | **99** | DNC | 1 |
 | **BST** | **99** | **SCH** | **99** |
 | **BRD** | **99** | GEO | 1 |
 | **RNG** | **99** | **RUN** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 14,052
-- **Marks (lifetime):** 476
+- **Marks (current):** 27,237
+- **Marks (lifetime):** 856
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 71
+- **Total NM kills:** 104
 
 ## Guild standing
 
@@ -55,16 +55,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 293
+- **Augments crafted:** 303
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 200 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 401 | 401 |
+| AF | 1,200 | 0 |
+| Relic | 150 | 150 |
+| Empyrean | 286 | 3,536 |
 
 ## Job Rebirth
 
@@ -82,7 +82,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**14** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · First Ascension · X Marks the Spot · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
+**15** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Wave Rider · First Ascension · X Marks the Spot · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cdb51c28388e -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 16771f4ff078 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

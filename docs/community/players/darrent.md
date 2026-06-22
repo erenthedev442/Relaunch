@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 46h |
-| Enemies defeated | 3,127 |
-| Deaths | 13 |
+| Time played | 52h |
+| Enemies defeated | 3,890 |
+| Deaths | 14 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,244
-- **Marks (lifetime):** 3,691
+- **Marks (current):** 3,798
+- **Marks (lifetime):** 5,231
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 130
+- **Total NM kills:** 144
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 314
+- **Augments crafted:** 316
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -68,7 +68,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 120
 
 ## Achievements
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c9bf5e6def99 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: cd3dba0713f3 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

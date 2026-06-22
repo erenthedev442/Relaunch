@@ -1,8 +1,8 @@
 # Corvinos
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 7d 6h
 
-`⭐ 1 Ascension` `💪 9 jobs @99`
+`⭐ 6 Ascensions` `💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **SAM 99** |
-| Sub job | DNC 99 |
-| Time played | 23h |
-| Enemies defeated | 3,050 |
-| Deaths | 8 |
+| Main job | **MNK 99** |
+| Sub job | DRK 99 |
+| Time played | 25h |
+| Enemies defeated | 3,101 |
+| Deaths | 9 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 10,527
+- **Marks (current):** 6,627
 - **Marks (lifetime):** 1,834
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 257
+- **Total NM kills:** 284
 
 ## Guild standing
 
@@ -55,16 +55,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 129
+- **Augments crafted:** 137
 - **NM Affinities:** 8 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 95 | 2,145 |
-| Relic | 15 | 2,115 |
-| Empyrean | 160 | 6,185 |
+| AF | 195 | 3,195 |
+| Relic | 115 | 3,165 |
+| Empyrean | 260 | 6,635 |
 
 ## Job Rebirth
 
@@ -73,8 +73,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 1
-- **Per-job prestige:** MNK P1
+- **Total Ascensions:** 6
+- **Per-job prestige:** MNK P6
 
 ## Collections
 
@@ -98,6 +98,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6339f9bd92d0 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 531471eda309 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

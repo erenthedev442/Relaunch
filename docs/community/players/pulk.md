@@ -1,6 +1,6 @@
 # Pulk
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 20/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -9,10 +9,10 @@
 
 | | |
 |---|---|
-| Main job | **WAR 20** |
-| Sub job | — |
-| Time played | 5h |
-| Enemies defeated | 99 |
+| Main job | **NIN 17** |
+| Sub job | WAR 17 |
+| Time played | 7h |
+| Enemies defeated | 161 |
 | Deaths | 4 |
 
 ## Job levels
@@ -20,7 +20,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 20 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
+| MNK | 1 | NIN | 17 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 2,125
+- **Marks (current):** 2,775
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c7dc82c1fde1 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: a1974381d147 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

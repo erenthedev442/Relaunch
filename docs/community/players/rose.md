@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
-| Sub job | SCH 99 |
-| Time played | 29h |
+| Main job | **BRD 99** |
+| Sub job | WHM 99 |
+| Time played | 33h |
 | Enemies defeated | 11 |
 | Deaths | 0 |
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 80,823
+- **Marks (current):** 88,573
 - **Marks (lifetime):** 14,261
 - **Distinct NMs slain:** 8
-- **Total NM kills:** 2,657
+- **Total NM kills:** 2,945
 
 ## Augment Sage
 
@@ -51,9 +51,9 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,200 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| AF | 3,300 | 100 |
+| Relic | 1,500 | 0 |
+| Empyrean | 42,480 | 42,480 |
 
 ## Collections
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6c3a490e191a -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 8294d8273714 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,21 +1,21 @@
 # Reece
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 2d 5h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 6h
 
 `💪 8 jobs @99`
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
 | Main job | **WAR 99** |
-| Sub job | PLD 99 |
-| Time played | 3h |
-| Enemies defeated | 0 |
-| Deaths | 0 |
+| Sub job | SAM 99 |
+| Time played | 4h |
+| Enemies defeated | 1 |
+| Deaths | 3 |
 
 ## Job levels
 
@@ -35,8 +35,8 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 1,550
+- **Rank:** 5 / 5
+- **Marks (current):** 700
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cba94737333e -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: cfe76f6431a5 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

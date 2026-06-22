@@ -1,6 +1,6 @@
 # Olindre
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 17h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 8d 17h
 
 `⭐ 20 Ascensions` `💪 7 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 61,057
+- **Marks (current):** 61,907
 - **Marks (lifetime):** 3,123
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 374
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4146f0980344 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: dc09f1b25225 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Ropraz
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 8d 1h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 1h
 
-`⭐ 47 Ascensions` `💪 9 jobs @99`
+`⭐ 56 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | DRG 99 |
-| Time played | 56h |
-| Enemies defeated | 6,489 |
+| Time played | 61h |
+| Enemies defeated | 6,775 |
 | Deaths | 49 |
 
 ## Job levels
@@ -25,7 +25,7 @@
 | **MNK** | **99** | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| **RDM** | **99** | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 14,677
-- **Marks (lifetime):** 1,840
+- **Marks (current):** 69,965
+- **Marks (lifetime):** 3,270
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 597
+- **Total NM kills:** 790
 
 ## Guild standing
 
@@ -55,16 +55,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 316
+- **Augments crafted:** 317
 - **NM Affinities:** 5 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,299 | 5,399 |
-| Relic | 2,850 | 450 |
-| Empyrean | 1,810 | 2,760 |
+| AF | 39 | 6,389 |
+| Relic | 75 | 1,225 |
+| Empyrean | 1,410 | 5,610 |
 
 ## Job Rebirth
 
@@ -73,8 +73,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 47
-- **Per-job prestige:** WAR P29 · MNK P5 · SAM P12 · DRG P1
+- **Total Ascensions:** 56
+- **Per-job prestige:** WAR P29 · MNK P14 · SAM P12 · DRG P1
 
 ## Collections
 
@@ -82,7 +82,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**17** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · Sanctuary Defender · First Blood · Arena Regular · Augment Novice · Augment Expert · Augment Master.
+**18** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Eternal Ascendant · Star-Slayer · Sanctuary Defender · First Blood · Arena Regular · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 551019fc002a -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 9cb861795e88 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

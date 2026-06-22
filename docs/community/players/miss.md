@@ -2,10 +2,10 @@
 
 **Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 6d 11h
 
-`💪 22 jobs @99`
+`👑 Grandmaster` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
-    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
@@ -14,7 +14,7 @@
 | Main job | **PLD 99** |
 | Sub job | RDM 99 |
 | Time played | 74h |
-| Enemies defeated | 1,921 |
+| Enemies defeated | 1,922 |
 | Deaths | 27 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 19,390
+- **Marks (current):** 20,640
 - **Marks (lifetime):** 2,447
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 610
@@ -47,10 +47,10 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Master | 37,500 | 17,500 to Champion |
-| Relic Hunters' Guild | Champion | 96,000 | 4,000 to Grandmaster |
-| Empyrean Hunters' Guild | Master | 40,500 | 14,500 to Champion |
-| League Hunters' Guild | Champion | 61,500 | 38,500 to Grandmaster |
+| AF Hunters' Guild | Master | 48,000 | 7,000 to Champion |
+| Relic Hunters' Guild | Grandmaster | 108,000 | **maxed** |
+| Empyrean Hunters' Guild | Master | 51,000 | 4,000 to Champion |
+| League Hunters' Guild | Champion | 69,000 | 31,000 to Grandmaster |
 
 ## Augment Sage
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 90de09d652cd -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 199ffa6cfc29 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

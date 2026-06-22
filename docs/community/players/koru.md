@@ -1,6 +1,6 @@
 # Koru
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 9h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 4d 10h
 
 `⭐ 7 Ascensions` `💪 10 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | WHM 99 |
-| Time played | 27h |
-| Enemies defeated | 4 |
+| Time played | 29h |
+| Enemies defeated | 5 |
 | Deaths | 5 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,663
+- **Marks (current):** 20,983
 - **Marks (lifetime):** 1,089
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 205
+- **Total NM kills:** 230
 
 ## Augment Sage
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 870a23094614 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 0cbb24e6b6e1 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

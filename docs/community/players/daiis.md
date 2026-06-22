@@ -1,6 +1,6 @@
 # Daiis
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 20h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 7d 20h
 
 `⭐ 5 Ascensions` `💪 22 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **SAM 99** |
 | Sub job | WAR 99 |
 | Time played | 67h |
-| Enemies defeated | 3,737 |
+| Enemies defeated | 3,741 |
 | Deaths | 8 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 9,186
+- **Marks (current):** 5,486
 - **Marks (lifetime):** 2,748
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 205
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dd4ca7ec8928 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 11395dec61f7 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

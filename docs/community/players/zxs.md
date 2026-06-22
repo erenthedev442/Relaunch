@@ -1,6 +1,6 @@
 # Zxs
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 18h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 7d 19h
 
 `💪 3 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **PUP 99** |
 | Sub job | BLU 99 |
-| Time played | 49h |
-| Enemies defeated | 4,301 |
+| Time played | 55h |
+| Enemies defeated | 4,324 |
 | Deaths | 10 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,317
+- **Marks (current):** 6,117
 - **Marks (lifetime):** 22,398
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 432
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 357
+- **Augments crafted:** 367
 - **NM Affinities:** 11 / 13
 
 ## Reforge
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 36945d261742 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 695a7e862232 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->

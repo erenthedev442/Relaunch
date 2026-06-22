@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 23h |
-| Enemies defeated | 437 |
-| Deaths | 10 |
+| Time played | 27h |
+| Enemies defeated | 605 |
+| Deaths | 12 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 523
-- **Marks (lifetime):** 624
+- **Marks (current):** 685
+- **Marks (lifetime):** 1,359
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 126
+- **Total NM kills:** 294
 
 ## Augment Sage
 
@@ -51,7 +51,7 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 400 | 400 |
 | Relic | 1,500 | 0 |
 | Empyrean | 1,100 | 0 |
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**6** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Wave Rider.
+**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Wave Rider.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 23c98d49bf99 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 5915e9dd0983 -->
+_Last updated: 2026-06-22 06:18 UTC_
 <!-- DOCGEN:END id="last-updated" -->
