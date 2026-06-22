@@ -146,3 +146,27 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     (26495, 1, 150), (26495, 10, 50), (26495, 2, 300), (26495, 31, 50),
     -- 22307 Loughnashade (String/Harp) -- BRD song support, no WS
     (22307, 14, 40), (22307, 30, 50), (22307, 5, 100), (22307, 2, 100);
+
+-- ============================================================================
+-- AFTERMATH (mod 256) -- folded in here 2026-06-22 so it can NEVER desync from
+-- the DELETE blocks above again. Those DELETE+re-INSERTs drop mod 256; the
+-- standalone prime_weapons_zz_aftermath_fix.sql only restored it via the custom-
+-- sql CHANGE-LEDGER, so a deploy that re-ran THIS file (but skipped the unchanged
+-- fix file) wiped aftermath off every Prime/Aeonic weapon ("no aftermath on
+-- Caliburnus after the rebuild"; live: 21642/21646/21837 had 355 but no 256).
+-- Keeping the re-insert in the SAME file makes wipe + restore atomic.
+-- Aftermath value: 46 = physical, 47 = club (Dagda), 48 = staff (Oshala).
+-- Also (re)grants Origin (355=110) to Foenaria upgrade stages 21834-21836.
+-- ============================================================================
+INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
+    (21834, 355, 110), (21835, 355, 110), (21836, 355, 110),                       -- Foenaria stages -> Origin WS
+    (21833, 256, 46), (21834, 256, 46), (21835, 256, 46), (21836, 256, 46), (21837, 256, 46), -- Scythe / Foenaria
+    (21531, 256, 46),                                                              -- Prime Fists (Dragon Blow)
+    (21642, 256, 46), (21646, 256, 46),                                            -- Prime Sword / Caliburnus (Imperator)
+    (21781, 256, 46), (21785, 256, 46),                                            -- Prime Great Axe / Laphria (Disaster)
+    (21887, 256, 46), (21891, 256, 46),                                            -- Prime Lance / Gae Buide (Diarmuid)
+    (22155, 256, 46), (22163, 256, 46),                                            -- Prime Bow / Pinaka (Sarv)
+    (22159, 256, 46), (22164, 256, 46),                                            -- Prime Gun / Earp (Terminus)
+    (21999, 256, 47), (22002, 256, 47),                                            -- Prime Maul / Lorg Mor (club)
+    (22102, 256, 48), (22106, 256, 48)                                             -- Prime Staff / Opashoro (staff)
+ON DUPLICATE KEY UPDATE `value` = VALUES(`value`);
