@@ -45,6 +45,7 @@ local zoneConfig =
     -- Heroes of Abyssea  (Lv155 -- top marks NMs; still below the Ascension gate)
     [xi.zone.ABYSSEA_ALTEPA]    = { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 10000000, att = 18000, def = 8666, matt = 8666, acc = 5000, eva = 5000, macc = 5000, meva = 5000, da = 20, haste = 200, eleRes = 350 },
     [xi.zone.ABYSSEA_GRAUBERG]  = { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 10000000, att = 18000, def = 8666, matt = 8666, acc = 5000, eva = 5000, macc = 5000, meva = 5000, da = 20, haste = 200, eleRes = 350 },
+    [xi.zone.ABYSSEA_ULEGUERAND]= { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 10000000, att = 18000, def = 8666, matt = 8666, acc = 5000, eva = 5000, macc = 5000, meva = 5000, da = 20, haste = 200, eleRes = 350 },
 }
 
 local function spawnViaMark(p, mobId, cost, nmName, cfg)

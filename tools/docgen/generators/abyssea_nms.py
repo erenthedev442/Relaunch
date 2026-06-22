@@ -28,8 +28,9 @@ _ZONE_DISPLAY: dict[str, str] = {
     "ABYSSEA_MISAREAUX": "Misareaux",
     "ABYSSEA_VUNKERL":   "Vunkerl",
     # Heroes of Abyssea
-    "ABYSSEA_ALTEPA":    "Altepa",
-    "ABYSSEA_GRAUBERG":  "Grauberg",
+    "ABYSSEA_ALTEPA":     "Altepa",
+    "ABYSSEA_GRAUBERG":   "Grauberg",
+    "ABYSSEA_ULEGUERAND": "Uleguerand",
 }
 
 # Multipliers (mirrors the if-conditions in calcMultipliers())
