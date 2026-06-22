@@ -1,6 +1,6 @@
 # Sephrion
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 6h 13m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 6h 21m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 868ea6e8a819 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 8739863b1e19 -->
+_Last updated: 2026-06-22 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

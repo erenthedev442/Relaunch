@@ -9,8 +9,8 @@
 
 | | |
 |---|---|
-| Main job | **NIN 17** |
-| Sub job | WAR 17 |
+| Main job | **NIN 18** |
+| Sub job | WAR 18 |
 | Time played | 7h |
 | Enemies defeated | 161 |
 | Deaths | 4 |
@@ -20,7 +20,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 20 | SAM | 1 |
-| MNK | 1 | NIN | 17 |
+| MNK | 1 | NIN | 18 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a1974381d147 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 1276a44e1c7e -->
+_Last updated: 2026-06-22 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

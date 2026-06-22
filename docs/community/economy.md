@@ -18,12 +18,12 @@ A live snapshot of the server economy and population. All figures exclude GM / t
 
 | Metric | Value |
 |---|---:|
-| Gil in circulation | **19.79B** gil |
-| Players online now | **36** |
-| Characters (non-GM) | 404 |
-| Active in last 7 days | 381 |
+| Gil in circulation | **19.85B** gil |
+| Players online now | **38** |
+| Characters (non-GM) | 405 |
+| Active in last 7 days | 382 |
 | AH listings (live) | 30,293 |
-| Cumulative playtime | 225 days, 20 hours |
+| Cumulative playtime | 225 days, 21 hours |
 <!-- DOCGEN:END id="econ-overview" -->
 
 ---
@@ -35,10 +35,10 @@ Total gil held by player characters — the money supply. Gil sitting in Auction
 
 | Measure | Value |
 |---|---:|
-| Total gil in circulation | 19,788,293,787 gil |
-| Characters holding gil | 311 |
-| Average per character | 63,627,954 gil |
-| Median per character | 6,964,868 gil |
+| Total gil in circulation | 19,853,256,467 gil |
+| Characters holding gil | 312 |
+| Average per character | 63,632,232 gil |
+| Median per character | 6,901,201 gil |
 | Wealthiest 10% hold | 72.8% of all gil |
 <!-- DOCGEN:END id="econ-gil" -->
 
@@ -75,7 +75,7 @@ Completed Auction House sales over recent windows. **Gil volume** is the total t
 
 | Window | Lots sold | Gil volume | Gil sunk to AH |
 |---|---:|---:|---:|
-| Last 24 hours | 900 | 393,137,426 gil | 193,380,000 gil |
+| Last 24 hours | 894 | 387,137,426 gil | 187,380,000 gil |
 | Last 7 days | 6,406 | 2,994,800,165 gil | 1,156,179,001 gil |
 | Last 30 days | 6,941 | 3,166,900,901 gil | 1,321,149,001 gil |
 <!-- DOCGEN:END id="econ-velocity" -->
@@ -119,18 +119,18 @@ Who's around. **Active** counts characters that logged out within the window (a 
 
 | Measure | Value |
 |---|---:|
-| Online right now | 36 |
-| Total characters | 404 |
-| Active — last 7 days | 381 |
-| Active — last 30 days | 404 |
+| Online right now | 38 |
+| Total characters | 405 |
+| Active — last 7 days | 382 |
+| Active — last 30 days | 405 |
 | New — last 7 days | 303 |
-| New — last 30 days | 404 |
-| Cumulative playtime (all chars) | 225 days, 20 hours |
+| New — last 30 days | 405 |
+| Cumulative playtime (all chars) | 225 days, 21 hours |
 <!-- DOCGEN:END id="econ-population" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fb1e3b6defc5 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 010bee97c045 -->
+_Last updated: 2026-06-22 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

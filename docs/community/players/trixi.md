@@ -1,6 +1,6 @@
 # Trixi
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 20h 2m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 20h 10m
 
 `💪 4 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a9296c34eb19 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: ecb5b1799754 -->
+_Last updated: 2026-06-22 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

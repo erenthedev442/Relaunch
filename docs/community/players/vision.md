@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | SCH 83 |
-| Time played | 10h |
+| Time played | 11h |
 | Enemies defeated | 92 |
 | Deaths | 2 |
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 39be232cd05b -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 514c2850666d -->
+_Last updated: 2026-06-22 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

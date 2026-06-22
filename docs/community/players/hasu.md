@@ -1,6 +1,6 @@
-# Cheyn
+# Hasu
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-15 · Character age 7d
+**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 7m 58s
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -9,7 +9,7 @@
 
 | | |
 |---|---|
-| Main job | **WAR 1** |
+| Main job | **THF 1** |
 | Sub job | — |
 | Time played | 0h |
 | Enemies defeated | 0 |
@@ -28,13 +28,13 @@
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| BRD | 1 | GEO | 0 |
+| RNG | 1 | RUN | 0 |
 
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 0
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 810ed7eff8fa -->
+<!-- content-hash: 31694b373629 -->
 _Last updated: 2026-06-22 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -17,7 +17,7 @@ Legendary's current state at a glance. Stats update daily via the auto-generatio
 ## Who's Online
 
 <!-- DOCGEN:BEGIN id="status-online" -->
-**36** online · **404** characters · _snapshot from the last site rebuild — the header badge shows live status._
+**38** online · **405** characters · _snapshot from the last site rebuild — the header badge shows live status._
 <!-- DOCGEN:END id="status-online" -->
 
 ---
@@ -34,9 +34,9 @@ _Snapshot taken at build time — timers drift after that. For live status, chec
 | **Roc** | Sauromugue Champaign | 6–8 h | 🟢 **Up now** |
 | **Serket** | Garlaige Citadel | 6–8 h | 🟢 **Up now** |
 | **Simurgh** | Rolanberry Fields | 6–8 h | 🟢 **Up now** |
-| **Adamantoise** | Valley of Sorrows | 21–24 h | 🟠 pops in ~3h 43m |
-| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~16h 11m |
-| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟠 pops in ~16h 44m |
+| **Adamantoise** | Valley of Sorrows | 21–24 h | 🟠 pops in ~3h 35m |
+| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~16h 3m |
+| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟠 pops in ~16h 36m |
 | **Spiny Spipi** | East Sarutabaruta | 4–6 h | ⚪ awaiting first spawn |
 | **King Arthro** | Jugner Forest | 8–10 h | ⚪ awaiting first spawn |
 <!-- DOCGEN:END id="status-hnm" -->
@@ -119,6 +119,6 @@ See the full list at [Hall of Fame](highlights.md).
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0cfdb68e7656 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: c78a1d61003b -->
+_Last updated: 2026-06-22 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

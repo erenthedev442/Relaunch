@@ -2,7 +2,7 @@
 
 **San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 5d 2h
 
-`💪 2 jobs @99`
+`⭐ 1 Ascension` `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -14,7 +14,7 @@
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
 | Time played | 32h |
-| Enemies defeated | 978 |
+| Enemies defeated | 981 |
 | Deaths | 10 |
 
 ## Job levels
@@ -55,13 +55,18 @@
 | Relic | 1,500 | 0 |
 | Empyrean | 0 | 0 |
 
+## Prestige
+
+- **Total Ascensions:** 1
+- **Per-job prestige:** MNK P1
+
 ## Collections
 
 - **Trusts learned:** 119
 
 ## Achievements
 
-**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Augment Novice · Augment Expert.
+**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · First Ascension · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -77,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 84578302686e -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: e69f4bdb9ead -->
+_Last updated: 2026-06-22 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

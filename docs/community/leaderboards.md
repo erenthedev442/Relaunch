@@ -4,7 +4,7 @@ Live rankings pulled from the server's database. These tables refresh whenever t
 
 <div class="lb-asof" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-asof" -->
-**📊 Leaderboard data as of 2026-06-22 06:18 UTC**
+**📊 Leaderboard data as of 2026-06-22 06:26 UTC**
 <!-- DOCGEN:END id="lb-asof" -->
 </div>
 
@@ -112,7 +112,7 @@ _Points earned across all Hunting League NM kills. Lifetime total, not current s
 | 6 | [Rtklm](players/rtklm.md) | 146,344 |
 | 7 | [Benton](players/benton.md) | 145,940 |
 | 8 | [Rtkle](players/rtkle.md) | 145,294 |
-| 9 | [Draco](players/draco.md) | 113,724 |
+| 9 | [Draco](players/draco.md) | 112,224 |
 | 10 | [Erenjaeger](players/erenjaeger.md) | 101,439 |
 <!-- DOCGEN:END id="lb-hl-points" -->
 
@@ -595,14 +595,14 @@ _Cumulative Infamy earned across all endgame content —doesn't decrease when sp
 | Rank | Character | Infamy |
 |---:|---|---:|
 | 🥇 | [Bro](players/bro.md) | 57,040 |
-| 🥈 | [Kyrie](players/kyrie.md) | 42,800 |
-| 🥉 | [Broken](players/broken.md) | 42,800 |
-| 4 | [Ken](players/ken.md) | 42,800 |
-| 5 | [Draco](players/draco.md) | 41,180 |
-| 6 | [Speedbump](players/speedbump.md) | 41,180 |
-| 7 | [Rose](players/rose.md) | 41,180 |
-| 8 | [Benton](players/benton.md) | 41,180 |
-| 9 | [Drbrule](players/drbrule.md) | 40,680 |
+| 🥈 | [Kyrie](players/kyrie.md) | 43,340 |
+| 🥉 | [Broken](players/broken.md) | 43,340 |
+| 4 | [Ken](players/ken.md) | 43,340 |
+| 5 | [Draco](players/draco.md) | 41,720 |
+| 6 | [Speedbump](players/speedbump.md) | 41,720 |
+| 7 | [Rose](players/rose.md) | 41,720 |
+| 8 | [Benton](players/benton.md) | 41,720 |
+| 9 | [Drbrule](players/drbrule.md) | 41,220 |
 | 10 | [Herdofturtles](players/herdofturtles.md) | 25,805 |
 <!-- DOCGEN:END id="lb-infamy-lifetime" -->
 
@@ -613,14 +613,14 @@ _Infamy currently held — drops when you buy from the Infamy Vendor. The hoarde
 
 | Rank | Character | Infamy |
 |---:|---|---:|
-| 🥇 | [Kyrie](players/kyrie.md) | 42,800 |
-| 🥈 | [Broken](players/broken.md) | 42,800 |
-| 🥉 | [Ken](players/ken.md) | 42,500 |
-| 4 | [Draco](players/draco.md) | 41,180 |
-| 5 | [Speedbump](players/speedbump.md) | 41,180 |
-| 6 | [Rose](players/rose.md) | 41,180 |
-| 7 | [Benton](players/benton.md) | 41,180 |
-| 8 | [Drbrule](players/drbrule.md) | 40,680 |
+| 🥇 | [Kyrie](players/kyrie.md) | 43,340 |
+| 🥈 | [Broken](players/broken.md) | 43,340 |
+| 🥉 | [Ken](players/ken.md) | 43,040 |
+| 4 | [Draco](players/draco.md) | 41,720 |
+| 5 | [Speedbump](players/speedbump.md) | 41,720 |
+| 6 | [Rose](players/rose.md) | 41,720 |
+| 7 | [Benton](players/benton.md) | 41,720 |
+| 8 | [Drbrule](players/drbrule.md) | 41,220 |
 | 9 | [Bro](players/bro.md) | 28,090 |
 | 10 | [Moss](players/moss.md) | 18,860 |
 <!-- DOCGEN:END id="lb-infamy-balance" -->
@@ -999,8 +999,8 @@ _Largest single skillchain damage on a Lv 100+ mob. Triggered via weapon skills 
 | 🥇 | [Coso](players/coso.md) | 131,071 |
 | 🥈 | [Velvet](players/velvet.md) | 131,071 |
 | 🥉 | [Ariamys](players/ariamys.md) | 131,071 |
-| 4 | [Nobigdeal](players/nobigdeal.md) | 131,071 |
-| 5 | [Nevion](players/nevion.md) | 131,071 |
+| 4 | [Nevion](players/nevion.md) | 131,071 |
+| 5 | [Nobigdeal](players/nobigdeal.md) | 131,071 |
 | 6 | [Souls](players/souls.md) | 131,071 |
 | 7 | [Olindre](players/olindre.md) | 131,071 |
 | 8 | [Corvinos](players/corvinos.md) | 131,071 |
@@ -1102,6 +1102,6 @@ _Highest total damage dealt to Lv 100+ mobs in any rolling 30-second window, com
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8f4fcd835740 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 7aee4c8096c2 -->
+_Last updated: 2026-06-22 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

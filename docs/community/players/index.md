@@ -1,6 +1,6 @@
 # Player Profiles
 
-400 characters with public profiles on Legendary. Click a name for the full breakdown — jobs, hunt league progress, augment mastery, gear/play stats, speed records.
+401 characters with public profiles on Legendary. Click a name for the full breakdown — jobs, hunt league progress, augment mastery, gear/play stats, speed records.
 
 !!! tip "Want to hide your profile?"
     Set `Leaderboard_OptOut = 1` on your character and your page is removed on the next site refresh.
@@ -29,8 +29,8 @@
 | [Brixton](brixton.md) | San d'Oria | THF 99 | 64h | HL Rank 5 · Sage Rank 5 · 9 jobs@99 · ⭐6 |
 | [Regis](regis.md) | Bastok | DRK 99 | 63h | HL Rank 5 · Sage Rank 5 · 10 jobs@99 · ⭐20 |
 | [Luna](luna.md) | Bastok | GEO 99 | 62h | HL Rank 5 · Sage Rank 3 · 10 jobs@99 · ⭐20 |
-| [Ken](ken.md) | San d'Oria | MNK 99 | 62h | HL Rank 5 · Sage Rank 5 · 22 jobs@99 · ⭐14 |
 | [Thanos](thanos.md) | Bastok | MNK 99 | 62h | HL Rank 5 · Sage Rank 5 · 6 jobs@99 · ⭐12 |
+| [Ken](ken.md) | San d'Oria | MNK 99 | 62h | HL Rank 5 · Sage Rank 5 · 22 jobs@99 · ⭐14 |
 | [Bdr](bdr.md) | San d'Oria | NIN 99 | 61h | HL Rank 5 · 4 jobs@99 |
 | [Olindre](olindre.md) | Windurst | RUN 99 | 61h | HL Rank 5 · Sage Rank 5 · 7 jobs@99 · ⭐20 |
 | [Ropraz](ropraz.md) | San d'Oria | MNK 99 | 61h | HL Rank 5 · Sage Rank 5 · 10 jobs@99 · ⭐56 |
@@ -68,8 +68,8 @@
 | [Ekko](ekko.md) | Bastok | DRK 99 | 34h | HL Rank 5 · Sage Rank 2 · 7 jobs@99 |
 | [Lyvia](lyvia.md) | Windurst | BLM 99 | 33h | HL Rank 5 · Sage Rank 4 · 4 jobs@99 |
 | [Rose](rose.md) | San d'Oria | BRD 99 | 33h | HL Rank 5 · Sage Rank 5 · 22 jobs@99 |
-| [Mdz](mdz.md) | Bastok | GEO 90 | 33h | HL Rank 5 · 7 jobs@99 |
-| [Killface](killface.md) | San d'Oria | MNK 99 | 32h | HL Rank 5 · Sage Rank 3 · 2 jobs@99 |
+| [Mdz](mdz.md) | Bastok | GEO 94 | 33h | HL Rank 5 · 7 jobs@99 |
+| [Killface](killface.md) | San d'Oria | MNK 99 | 32h | HL Rank 5 · Sage Rank 3 · 2 jobs@99 · ⭐1 |
 | [Nevion](nevion.md) | San d'Oria | THF 99 | 32h | HL Rank 5 · Sage Rank 3 · 5 jobs@99 · ⭐5 |
 | [Rhis](rhis.md) | Windurst | BLM 99 | 31h | HL Rank 5 · Sage Rank 5 · 9 jobs@99 · ⭐13 |
 | [Azure](azure.md) | San d'Oria | RDM 99 | 30h | HL Rank 5 · Sage Rank 5 · 7 jobs@99 |
@@ -114,7 +114,7 @@
 | [Sora](sora.md) | San d'Oria | WAR 99 | 17h | HL Rank 5 · Sage Rank 2 · 5 jobs@99 |
 | [Whiteyes](whiteyes.md) | San d'Oria | SAM 99 | 17h | HL Rank 5 · Sage Rank 5 · 3 jobs@99 |
 | [Meli](meli.md) | Bastok | MNK 99 | 17h | HL Rank 5 · Sage Rank 3 · 2 jobs@99 · ⭐2 |
-| [Nobigdeal](nobigdeal.md) | San d'Oria | MNK 99 | 17h | HL Rank 5 · Sage Rank 3 · 4 jobs@99 |
+| [Nobigdeal](nobigdeal.md) | San d'Oria | MNK 99 | 17h | HL Rank 5 · Sage Rank 3 · 4 jobs@99 · ⭐1 |
 | [Granae](granae.md) | Windurst | MNK 99 | 17h | HL Rank 5 · Sage Rank 5 · 9 jobs@99 |
 | [Arthas](arthas.md) | Bastok | BLU 99 | 16h | HL Rank 5 · 3 jobs@99 |
 | [Meowgic](meowgic.md) | San d'Oria | RDM 99 | 16h | HL Rank 5 · Sage Rank 4 · 6 jobs@99 · ⭐3 |
@@ -131,10 +131,10 @@
 | [Haha](haha.md) | San d'Oria | BLM 99 | 13h | 4 jobs@99 |
 | [North](north.md) | San d'Oria | MNK 1 | 12h | — |
 | [Clambone](clambone.md) | San d'Oria | WAR 99 | 12h | HL Rank 4 · 4 jobs@99 |
+| [Vision](vision.md) | San d'Oria | BLM 99 | 11h | HL Rank 4 · 2 jobs@99 |
 | [Trixi](trixi.md) | Bastok | BLM 99 | 11h | Sage Rank 2 · 4 jobs@99 |
 | [Darinxi](darinxi.md) | Bastok | DRK 99 | 11h | HL Rank 3 · 1 jobs@99 |
 | [Izuri](izuri.md) | San d'Oria | BLM 74 | 10h | — |
-| [Vision](vision.md) | San d'Oria | BLM 99 | 10h | HL Rank 4 · 2 jobs@99 |
 | [Lunita](lunita.md) | San d'Oria | PUP 99 | 10h | HL Rank 4 · 9 jobs@99 |
 | [Kaz](kaz.md) | San d'Oria | BLU 99 | 10h | HL Rank 3 · 4 jobs@99 |
 | [Candie](candie.md) | San d'Oria | COR 99 | 10h | HL Rank 2 · 1 jobs@99 |
@@ -153,7 +153,7 @@
 | [Roids](roids.md) | Bastok | THF 71 | 8h | — |
 | [Xxoo](xxoo.md) | San d'Oria | DRK 99 | 7h | HL Rank 2 · 1 jobs@99 |
 | [Mint](mint.md) | Windurst | MNK 99 | 7h | HL Rank 3 · 1 jobs@99 |
-| [Pulk](pulk.md) | San d'Oria | NIN 17 | 7h | — |
+| [Pulk](pulk.md) | San d'Oria | NIN 18 | 7h | — |
 | [Imfinnatank](imfinnatank.md) | Windurst | RNG 58 | 7h | HL Rank 5 |
 | [Henet](henet.md) | Windurst | WAR 41 | 7h | — |
 | [Towoo](towoo.md) | Windurst | RDM 74 | 7h | 1 jobs@99 |
@@ -188,8 +188,8 @@
 | [Fenux](fenux.md) | Bastok | RUN 99 | 4h | HL Rank 3 · 1 jobs@99 |
 | [Mbetam](mbetam.md) | Windurst | NIN 76 | 4h | 1 jobs@99 |
 | [Jin](jin.md) | Bastok | RUN 68 | 4h | — |
+| [Nyx](nyx.md) | San d'Oria | SAM 57 | 3h | — |
 | [Tinyterror](tinyterror.md) | Bastok | BRD 99 | 3h | HL Rank 5 · Sage Rank 2 · 8 jobs@99 |
-| [Nyx](nyx.md) | San d'Oria | SAM 56 | 3h | — |
 | [Wira](wira.md) | Windurst | DNC 69 | 3h | — |
 | [Zowoey](zowoey.md) | Bastok | PLD 99 | 3h | HL Rank 3 · 1 jobs@99 |
 | [Utsu](utsu.md) | Windurst | PUP 30 | 3h | — |
@@ -407,6 +407,7 @@
 | [Phatboii](phatboii.md) | San d'Oria | WAR 1 | 0h | — |
 | [Sweetassassin](sweetassassin.md) | San d'Oria | RDM 1 | 0h | — |
 | [Jpmidnight](jpmidnight.md) | San d'Oria | MNK 1 | 0h | — |
+| [Hasu](hasu.md) | Bastok | THF 1 | 0h | — |
 
 ---
 
@@ -415,6 +416,6 @@ _The index re-sorts on each refresh by time played. The actual profile pages liv
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bc25e9e4f87f -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 6c69c15a715f -->
+_Last updated: 2026-06-22 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

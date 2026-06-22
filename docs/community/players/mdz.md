@@ -11,7 +11,7 @@
 
 | | |
 |---|---|
-| Main job | **GEO 90** |
+| Main job | **GEO 94** |
 | Sub job | BLM 63 |
 | Time played | 33h |
 | Enemies defeated | 2,357 |
@@ -30,7 +30,7 @@
 | **PLD** | **99** | **PUP** | **99** |
 | **DRK** | **99** | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 90 |
+| BRD | 1 | GEO | 94 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 333793e07003 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 21c37b52c625 -->
+_Last updated: 2026-06-22 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

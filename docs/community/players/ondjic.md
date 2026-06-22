@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 3,770
-- **Marks (lifetime):** 340
+- **Marks (current):** 3,783
+- **Marks (lifetime):** 350
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 68
+- **Total NM kills:** 70
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 112250aa4806 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 677d4863995a -->
+_Last updated: 2026-06-22 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->

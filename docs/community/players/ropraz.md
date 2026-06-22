@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 69,965
+- **Marks (current):** 71,915
 - **Marks (lifetime):** 3,270
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 790
+- **Total NM kills:** 805
 
 ## Guild standing
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9cb861795e88 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: d89f6c3056d7 -->
+_Last updated: 2026-06-22 06:26 UTC_
 <!-- DOCGEN:END id="last-updated" -->
