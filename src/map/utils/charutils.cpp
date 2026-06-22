@@ -6842,14 +6842,16 @@ float AddExpBonus(CCharEntity* PChar, float exp)
 
     bonus += (int32)(exp * ((PChar->getMod(Mod::EXP_BONUS) + rovBonus) / 100.0f));
 
-    if (bonus + (int32)exp < 0)
-    {
-        exp = 0;
-    }
-    else
-    {
-        exp = exp + bonus;
-    }
+    // FJB: stacking EXP penalties (Job Rebirth's triangular EXP_BONUS + Prestige's
+    // per-level one) can drive EXP_BONUS far past -100%, which would zero ALL exp
+    // and SOFT-LOCK a heavily-reborn job -- it could never reach 99 to rebirth or
+    // ascend again (e.g. RDM at Rebirth 20 + Prestige 92 = -3070% EXP_BONUS). Floor
+    // the gain at 5% of base (min 1 when base > 0) so the re-grind stays brutal but
+    // POSSIBLE. The floor only bites once the net penalty exceeds -95%; positive
+    // EXP_BONUS (gear/food/Dedication) and a zero-base gain are left untouched.
+    const int32 total    = bonus + (int32)exp;
+    const int32 floorExp = exp > 0 ? std::max<int32>(1, (int32)(exp * 0.05f)) : 0;
+    exp                  = (float)std::max(total, floorExp);
 
     return exp;
 }
