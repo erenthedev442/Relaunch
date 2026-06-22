@@ -1,0 +1,70 @@
+/* ─── Leaderboard page ─────────────────────────────────────────────────────
+   Classes here are leaderboard-specific; no other page uses them, so
+   loading this stylesheet globally is harmless.
+──────────────────────────────────────────────────────────────────────────── */
+
+/* ── Quick-jump pill bar ─────────────────────────────────────────────────── */
+nav.lb-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+  padding: .65rem .9rem;
+  margin: 1.5rem 0 0;
+  background: var(--md-code-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .5rem;
+}
+
+nav.lb-nav a {
+  display: inline-block;
+  padding: .18rem .65rem;
+  border-radius: 9999px;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--light);
+  text-decoration: none !important;
+  white-space: nowrap;
+  transition: color .12s, border-color .12s, background .12s;
+}
+
+nav.lb-nav a:hover {
+  color: var(--lgnd-wm-top);
+  border-color: var(--lgnd-wm-mid);
+  background: rgba(183, 140, 30, .1);
+}
+
+/* ── Section chapter headers ─────────────────────────────────────────────── */
+.md-typeset h2.lb-section {
+  margin-top: 2.2rem;
+  padding: .3rem 0 .3rem .85rem;
+  border-left: 3px solid var(--lgnd-wm-mid);
+  background: linear-gradient(90deg, rgba(183, 140, 30, .09) 0%, transparent 60%);
+  border-radius: 0 .3rem .3rem 0;
+}
+
+/* ── Medal row highlights (applied by leaderboards.js) ───────────────────── */
+.md-typeset table tr.lb-gold td,
+.md-typeset table tr.lb-gold th {
+  background: rgba(212, 175, 55, .17);
+}
+
+.md-typeset table tr.lb-silver td,
+.md-typeset table tr.lb-silver th {
+  background: rgba(175, 175, 195, .12);
+}
+
+.md-typeset table tr.lb-bronze td,
+.md-typeset table tr.lb-bronze th {
+  background: rgba(176, 118, 68, .11);
+}
+
+/* ── Freshness timestamp ─────────────────────────────────────────────────── */
+.lb-asof p {
+  text-align: center;
+  font-size: .82rem;
+  opacity: .72;
+  margin: -.25rem 0 1.25rem;
+}

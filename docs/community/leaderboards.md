@@ -2,16 +2,36 @@
 
 Live rankings pulled from the server's database. These tables refresh whenever the docs site is regenerated — typically a few times a day — so think of them as a snapshot, not a real-time scoreboard.
 
+<div class="lb-asof" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-asof" -->
 **📊 Leaderboard data as of 2026-06-22 00:11 UTC**
 <!-- DOCGEN:END id="lb-asof" -->
+</div>
 
 !!! tip "Want to stay off these tables?"
     Run `!optout` once and your character is excluded from every board below. Run `!optin` to opt back in.
 
+<nav class="lb-nav">
+  <a href="#augment-moogle">Augments</a>
+  <a href="#hunting-league">Hunting League</a>
+  <a href="#reforge-system">Reforge</a>
+  <a href="#nm-hunting">NM Hunting</a>
+  <a href="#job-mastery">Job Mastery</a>
+  <a href="#job-rebirth">Job Rebirth</a>
+  <a href="#collections">Collections</a>
+  <a href="#activity">Activity</a>
+  <a href="#speed-records">Speed Records</a>
+  <a href="#hunters-guild">Hunter's Guild</a>
+  <a href="#weekly-hunt-board">Weekly Hunts</a>
+  <a href="#infamy">Infamy</a>
+  <a href="#maats-challenge">Maat's Challenge</a>
+  <a href="#combat">Combat</a>
+  <a href="#combat-records">Combat Records</a>
+</nav>
+
 ---
 
-## Augment Moogle
+## Augment Moogle { .lb-section }
 
 <!-- DOCGEN:BEGIN id="lb-augments" -->
 ### Most Augments Crafted
@@ -53,7 +73,7 @@ _Highest Augment Sage rank achieved. Earned by hitting Augment_Count milestones 
 
 ---
 
-## Hunting League
+## Hunting League { .lb-section }
 
 <!-- DOCGEN:BEGIN id="lb-hl-tier" -->
 ### Hunting League — Highest Tier
@@ -114,7 +134,7 @@ _Cumulative Hunt Marks earned over the character's lifetime — does NOT decreas
 
 ---
 
-## Reforge System
+## Reforge System { .lb-section }
 
 <!-- DOCGEN:BEGIN id="lb-empy-marks" -->
 ### Reforge — Empyrean Marks (Current Balance)
@@ -175,7 +195,7 @@ _Total marks earned across AF + Relic + Empy tracks, all-time. Spending doesn't 
 
 ---
 
-## NM Hunting
+## NM Hunting { .lb-section }
 
 <!-- DOCGEN:BEGIN id="lb-nm-kills" -->
 ### Top NM Slayers
@@ -236,7 +256,7 @@ _How many of the 13 NM affinities the character has registered via the Augment S
 
 ---
 
-## Job Mastery
+## Job Mastery { .lb-section }
 
 <!-- DOCGEN:BEGIN id="lb-job-mastery" -->
 ### Job Mastery Champion
@@ -257,7 +277,7 @@ _How many of the 22 jobs the character has at level 99. Ties broken by the sum o
 | 10 | [Sytara](players/sytara.md) | 22 |
 <!-- DOCGEN:END id="lb-job-mastery" -->
 
-## Job Rebirth
+## Job Rebirth { .lb-section }
 
 <!-- DOCGEN:BEGIN id="lb-job-rebirths" -->
 ### Job Rebirths — Total Resets
@@ -280,7 +300,7 @@ _Total number of job rebirths across all jobs combined. Each rebirth wipes a job
 
 ---
 
-## Collections
+## Collections { .lb-section }
 
 <!-- DOCGEN:BEGIN id="lb-trusts" -->
 ### Trust Roll Call — Distinct Trusts Learned
@@ -322,7 +342,7 @@ _Distinct characters this player has unlocked as Player Trusts. Earned by partyi
 
 ---
 
-## Activity
+## Activity { .lb-section }
 
 <!-- DOCGEN:BEGIN id="lb-playtime" -->
 ### Most Time Played
@@ -364,7 +384,7 @@ _Times the character has been knocked unconscious. On Legendary you lose 3× ret
 
 ---
 
-## Speed Records
+## Speed Records { .lb-section }
 
 <!-- DOCGEN:BEGIN id="lb-fastest-99" -->
 ### Fastest 1 → 99 (Any Job)
@@ -425,7 +445,7 @@ _Time from character creation to reaching Augment Sage rank 5 (Augment Archon). 
 
 ---
 
-## Hunter's Guild
+## Hunter's Guild { .lb-section }
 
 <!-- DOCGEN:BEGIN id="lb-guild-af" -->
 ### AF Hunters' Guild — Top Reputation
@@ -523,7 +543,7 @@ _No achievers yet — be the first to make the list._
 
 ---
 
-## Weekly Hunt Board
+## Weekly Hunt Board { .lb-section }
 
 <!-- DOCGEN:BEGIN id="lb-weekly-sweeps" -->
 ### Most Weekly Hunt Sweeps
@@ -546,7 +566,7 @@ _How many distinct weeks this character has cleared ALL 5 Weekly Hunt Board obje
 
 ---
 
-## Infamy
+## Infamy { .lb-section }
 
 <!-- DOCGEN:BEGIN id="lb-infamy-lifetime" -->
 ### Infamy Earned (Lifetime)
@@ -588,7 +608,7 @@ _Infamy currently held — drops when you buy from the Infamy Vendor. The hoarde
 
 ---
 
-## Maat's Challenge
+## Maat's Challenge { .lb-section }
 
 <!-- DOCGEN:BEGIN id="lb-maat-kills" -->
 ### Most Maat Kills
@@ -608,7 +628,7 @@ _No qualifying characters yet — be the first!_
 
 ---
 
-## Combat
+## Combat { .lb-section }
 
 ### Hardest Single Weapon Skill Hit
 
@@ -654,7 +674,7 @@ _Real Level = job level + gear iLvl bonus + Ascension levels + Job Points + attr
 
 ---
 
-## Combat Records
+## Combat Records { .lb-section }
 
 _Personal combat bests recorded since tracking began. Split by mob level tier — **T1** = Lv 1–33 &ensp;|&ensp; **T2** = Lv 34–67 &ensp;|&ensp; **T3** = Lv 68–99 &ensp;|&ensp; **T4** = Lv 100+. Your all-tier personal bests appear in-game at The Chronicler NPC._
 

@@ -60,12 +60,14 @@ extra_css:
   - assets/status.css
   - assets/gear-finder.css
   - assets/item-search.css
+  - assets/leaderboards.css
 
 extra_javascript:
   - assets/item-tooltip.js
   - assets/status.js
   - assets/gear-finder.js
   - assets/item-search.js
+  - assets/leaderboards.js
 
 markdown_extensions:
   - admonition

@@ -2,6 +2,16 @@
   "version": "0.0.1",
   "configurations": [
     {
+      "name": "legendary-docs-main",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-m", "mkdocs", "serve",
+        "-a", "127.0.0.1:8000",
+        "--no-livereload"
+      ],
+      "port": 8000
+    },
+    {
       "name": "legendary-docs",
       "runtimeExecutable": "python",
       "runtimeArgs": [
