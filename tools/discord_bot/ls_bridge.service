@@ -27,6 +27,12 @@ Type=simple
 User=azureuser
 WorkingDirectory=/home/azureuser/server
 Environment=LEGENDARY_LIVE_ROOT=/home/azureuser/server
+# Unbuffer stdout/stderr so post failures (e.g. the Cloudflare 403 that silently
+# broke the bridge on 2026-06-22) actually reach journalctl instead of sitting in
+# Python's block buffer. The live box also has this as a drop-in
+# (/etc/systemd/system/ls_bridge.service.d/override.conf); baked in here so a fresh
+# `cp` install gets it too.
+Environment=PYTHONUNBUFFERED=1
 ExecStart=/home/azureuser/docs-venv/bin/python /home/azureuser/server/tools/discord_bot/ls_bridge.py
 Restart=always
 RestartSec=5
