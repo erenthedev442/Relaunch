@@ -89,8 +89,11 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
 -- image-only on BG-Wiki, so this is an original balanced package, tunable here.
 -- Extra ids used: VIT 10, CHR 14, HP 2, MP 5, MEVA 31, DEF 1; new-type WS
 -- Great Sword -> 60 Resolution, Axe -> 72 Decimation. Dokoku (Katana) +
--- Kusanagi (Great Katana) get NO ADDS_WEAPONSKILL (their native Blade:/Tachi:
--- WS already cover them); Duban (shield) + Loughnashade (harp) are non-WS
+-- Kusanagi (Great Katana): uses ADDS_WEAPONSKILL -> 159 (Tachi: Mumei) since
+-- Mumei is a custom Prime WS (commented out in stock weapon_skills.sql) and
+-- cannot be obtained any other way; enabled by tachi_mumei_ws.sql.
+-- Dokoku (Katana) is left with no ADDS_WEAPONSKILL (its native Blade: WS
+-- already cover it). Duban (shield) + Loughnashade (harp) are non-WS
 -- support pieces (Duban has no item_weapon row; it's a shield).
 -- ============================================================================
 UPDATE `item_weapon` SET `dmg` = 240, `ilvl_skill` = 269, `ilvl_parry` = 269, `ilvl_macc` = 269 WHERE `itemId` = 21535; -- Varga Purnikawa (III)
@@ -129,8 +132,8 @@ INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
     (21891, 8, 40), (21891, 10, 30), (21891, 25, 60), (21891, 23, 70), (21891, 73, 10), (21891, 288, 10), (21891, 355, 126),
     -- 21932 Dokoku (Katana) -- native Blade: WS
     (21932, 9, 40), (21932, 11, 30), (21932, 25, 60), (21932, 23, 60), (21932, 73, 10), (21932, 288, 10),
-    -- 21986 Kusanagi (Great Katana) -- native Tachi: WS
-    (21986, 8, 40), (21986, 9, 30), (21986, 25, 60), (21986, 23, 70), (21986, 73, 10), (21986, 288, 10),
+    -- 21986 Kusanagi (Great Katana) -> Tachi: Mumei (159)
+    (21986, 8, 40), (21986, 9, 30), (21986, 25, 60), (21986, 23, 70), (21986, 73, 10), (21986, 288, 10), (21986, 355, 159),
     -- 22002 Lorg Mor (Club) -> Dagda
     (22002, 8, 40), (22002, 13, 40), (22002, 25, 60), (22002, 23, 60), (22002, 73, 10), (22002, 288, 10), (22002, 355, 234),
     -- 22106 Opashoro (Staff) -> Oshala
