@@ -162,4 +162,11 @@ INSERT INTO `item_mods` VALUES (26231,112,15) ON DUPLICATE KEY UPDATE `value`=VA
 -- the automaton: mainLevel = PUP_level + getMod(AUTOMATON_LVL_BONUS).
 INSERT INTO `item_mods` VALUES (21535,1044,3) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);
 
+-- 22300: Crepuscular Pebble (ammo) -- add its signature Physical damage limit +5%.
+-- The base STR+3/VIT+3 (and the -300 ranged-only ammo DMG) live in sql/item_mods.sql;
+-- this adds the PDL that makes it a real melee ammo (raises the physical damage cap).
+-- DAMAGE_LIMITP (1081) is the percent directly: physical_utilities.lua applies
+-- 1 + getMod(1081)/100, so 5 = +5% (e.g. Amini Caban +2 stores 7 = +7%).
+INSERT INTO `item_mods` VALUES (22300,1081,5) ON DUPLICATE KEY UPDATE `value`=VALUES(`value`);    -- DAMAGE_LIMITP: 5 (Physical damage limit +5%)
+
 UNLOCK TABLES;
