@@ -75,6 +75,8 @@ local T3_ITEM = 29699
 -- Trial 5: collect 99 EACH of three Aht Urhgan Assault currencies (stack to 99).
 -- Turned in here, which CONSUMES all 297 (99 x 3) and stamps PW_Trial5_Done.
 local T5_REQUIRED = 99
+
+local GIL_COST = 750000000
 local T5_ITEMS =
 {
     { id = 1450, name = 'Lungo-Nango Jadeshell' },
@@ -110,7 +112,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     -- Print trial status to the player (used on first talk when incomplete).
     -----------------------------------
     local function printTrialStatus(player)
-        player:printToPlayer(string.format('[Prime Armory] Complete all %d trials to forge a Prime Weapon:', #TRIALS), xi.msg.channel.SYSTEM_3)
+        player:printToPlayer(string.format('[Prime Armory] Complete all %d trials and pay 750,000,000 gil to forge a Prime Weapon:', #TRIALS), xi.msg.channel.SYSTEM_3)
         for _, t in ipairs(TRIALS) do
             local done  = (player:getCharVar(t.var) or 0) == 1
             local icon  = done and '[+]' or '[ ]'
@@ -295,7 +297,15 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             player:printToPlayer('[Prime Armory] Your inventory is full - free a slot first! Kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
+        -- Gil cost.
+        if player:getGil() < GIL_COST then
+            player:printToPlayer(string.format(
+                '[Prime Armory] Forging requires 750,000,000 gil. You have %d gil. Kupo!',
+                player:getGil()), xi.msg.channel.SYSTEM_3)
+            return
+        end
         -- Forge!
+        player:delGil(GIL_COST)
         player:setCharVar('PW_WeaponClaimed', weapon.id)
         player:addItem({ id = weapon.id, quantity = 1 })
         player:printToPlayer(string.format(
@@ -312,6 +322,10 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         local claimed = player:getCharVar('PW_WeaponClaimed') or 0
         if claimed ~= 0 then
             player:printToPlayer('[Prime Armory] You have already forged a Prime Weapon. Each hero gets one.', xi.msg.channel.SYSTEM_3)
+        else
+            player:printToPlayer(string.format(
+                '[Prime Armory] Cost to forge: 750,000,000 gil  (you have %d)', player:getGil()),
+                xi.msg.channel.SYSTEM_3)
         end
 
         sendMenu(player, {
@@ -411,7 +425,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             end
 
             -- All trials done and no weapon claimed yet - show the forge menu.
-            player:printToPlayer(string.format('[Prime Armory] All %d trials complete! Choose your Prime Weapon. Kupo!', #TRIALS), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('[Prime Armory] All %d trials complete! Choose your Prime Weapon (costs 750,000,000 gil). Kupo!', #TRIALS), xi.msg.channel.SYSTEM_3)
             showMain(player)
         end,
     })
