@@ -13,8 +13,11 @@ commandObj.cmdprops =
 }
 
 commandObj.onTrigger = function(player)
-    -- getLeaderID() returns partyID (≠ charID) when in a party, own charID when solo.
-    if player:getLeaderID() == player:getID() then
+    -- "In a party" = party size > 1. Do NOT use getLeaderID()==getID(): in a
+    -- party getLeaderID() returns the PartyID, which IS the leader's charID, so
+    -- the PARTY LEADER's getLeaderID() equals getID() and the old check falsely
+    -- told the leader "you are not in a party" (the reported bug).
+    if player:getPartySize() <= 1 then
         player:printToPlayer('You are not in a party.', xi.msg.channel.SYSTEM_3)
         return
     end
