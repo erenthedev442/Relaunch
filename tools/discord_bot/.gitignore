@@ -4,6 +4,10 @@ config.py
 # Per-run state lives here. Regenerated on every run; don't commit.
 state.json
 
+# LinkShell->Discord bridge cursor (last-bridged lineID). Runtime state.
+ls_bridge_state.json
+ls_bridge_state.json.tmp
+
 # Discord<->character account links (token bot). Player data; never commit.
 links.json
 links.json.tmp
