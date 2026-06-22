@@ -345,13 +345,9 @@ end
 -----------------------------------
 -- The Voidspire Warden NPC + menu
 -----------------------------------
-local menu = { title = 'The Voidspire', options = {} }
-local function delaySendMenu(player)
-    -- Snapshot before the deferred send: `menu` is a shared scratch
-    -- table, and another player's interaction inside the 50ms window
-    -- would otherwise swap its contents mid-flight.
-    local snapshot = { title = menu.title, options = menu.options }
-    player:timer(30, function(p) p:customMenu(snapshot) end)
+local function sendMenu(player, options)
+    local m = { title = 'The Voidspire', options = options }
+    player:timer(30, function(p) p:customMenu(m) end)
 end
 
 showWardenMenu = function(player)
@@ -375,8 +371,7 @@ showWardenMenu = function(player)
         p:printToPlayer('[Voidspire] Endless floors, each harder than the last. Clear a floor to descend; wipe and the run ends. Your deepest floor is your score, ranked on the leaderboards. No top -- only how deep you dare.',
             xi.msg.channel.SYSTEM_3)
     end }
-    menu.options = options
-    delaySendMenu(player)
+    sendMenu(player, options)
 end
 
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)

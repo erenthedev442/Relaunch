@@ -89,7 +89,6 @@ end
 -----------------------------------
 local showConfirmMenu
 
-local menu = { title = '', options = {} }
 
 -----------------------------------
 -- Confirm menu
@@ -194,15 +193,15 @@ showConfirmMenu = function(player)
     -- item held in limbo. A fixed title fits no matter how many or how big the
     -- catalysts are.
     utils.unused(nameList)
-    menu.title = 'Apply this augment, kupo?'
-    menu.options = options
-    local snapshot = { title = menu.title, options = menu.options,
+    local m = {
+        title   = 'Apply this augment, kupo?',
+        options = options,
         onCancelled = function(p)
             returnAll(p)
             p:printToPlayer('Augmentation cancelled - items returned, kupo!', xi.msg.channel.SYSTEM_3)
         end,
     }
-    player:timer(30, function(p) p:customMenu(snapshot) end)
+    player:timer(30, function(p) p:customMenu(m) end)
 end
 
 -----------------------------------

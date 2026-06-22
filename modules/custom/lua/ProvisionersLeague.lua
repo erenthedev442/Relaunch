@@ -173,7 +173,6 @@ end
 -----------------------------------
 -- The League Steward NPC - weigh-ins by trade, info by trigger.
 -----------------------------------
-local menu = { title = 'League Steward', options = {} }
 
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)
     super(zone)
@@ -287,9 +286,8 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
                 end },
                 { 'Close', function(p) end },
             }
-            menu.options = options
-            local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-            player:timer(30, function(p) p:customMenu(snapshot) end)
+            local m = { title = 'League Steward', options = options }
+            player:timer(30, function(p) p:customMenu(m) end)
         end,
     })
     utils.unused(steward)

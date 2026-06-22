@@ -306,14 +306,9 @@ end
 -----------------------------------
 -- NPC menus
 -----------------------------------
-local menu = { title = 'Companion Master', options = {} }
-
-local function delaySendMenu(player)
-    -- Snapshot before the deferred send: `menu` is a shared scratch
-    -- table, and another player's interaction inside the 50ms window
-    -- would otherwise swap its contents mid-flight.
-    local snapshot = { title = menu.title, options = menu.options }
-    player:timer(30, function(p) p:customMenu(snapshot) end)
+local function sendMenu(player, title, options)
+    local m = { title = title, options = options }
+    player:timer(30, function(p) p:customMenu(m) end)
 end
 
 -- Convert internal spell name like "kuyin_hathdenna" to a readable
@@ -369,9 +364,7 @@ showMainMenu = function(player, page)
                     xi.msg.channel.SYSTEM_3)
             end,
         })
-        menu.title   = 'Companion Master'
-        menu.options = options
-        delaySendMenu(player)
+        sendMenu(player, 'Companion Master', options)
         return
     end
 
@@ -423,13 +416,9 @@ showMainMenu = function(player, page)
 
     -- Title shows page indicator only when paginated, keeping the
     -- single-page case unchanged for players with <=5 friends.
-    if nPages > 1 then
-        menu.title = string.format('Companion Master (%d/%d)', page, nPages)
-    else
-        menu.title = 'Companion Master'
-    end
-    menu.options = options
-    delaySendMenu(player)
+    local title = (nPages > 1) and string.format('Companion Master (%d/%d)', page, nPages)
+                                or 'Companion Master'
+    sendMenu(player, title, options)
 end
 
 -- Forward declaration so buildFriendMenu and buildSlotPickerMenu can
@@ -486,9 +475,7 @@ buildFriendMenu = function(player, otherId)
         function(p) showMainMenu(p) end,
     })
 
-    menu.title   = string.format('%s [%s]', name, tierDef.label)
-    menu.options = options
-    delaySendMenu(player)
+    sendMenu(player, string.format('%s [%s]', name, tierDef.label), options)
 end
 
 -- Slot picker submenu. Shown when the player picks "Slot N..." in the
@@ -553,9 +540,7 @@ buildSlotPickerMenu = function(player, otherId)
         function(p) buildFriendMenu(p, otherId) end,
     })
 
-    menu.title   = string.format('Assign %s', name)
-    menu.options = options
-    delaySendMenu(player)
+    sendMenu(player, string.format('Assign %s', name), options)
 end
 
 -----------------------------------

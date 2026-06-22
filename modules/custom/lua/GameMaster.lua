@@ -426,19 +426,16 @@ end
 -- Menus
 -----------------------------------
 
-local menu = { title = 'Game Master', options = {} }
-
-local function delaySendMenu(player)
-    -- Snapshot before the deferred send: `menu` is a shared scratch
-    -- table, and another player's interaction inside the 50ms window
-    -- would otherwise swap its contents mid-flight.
-    local snapshot = { title = menu.title, options = menu.options }
-    player:timer(30, function(p) p:customMenu(snapshot) end)
+-- Each call creates a fresh per-player table so concurrent interactions
+-- never share state.  The 30ms timer defers the send outside onTrigger.
+local function sendMenu(player, options)
+    local m = { title = 'Game Master', options = options }
+    player:timer(30, function(p) p:customMenu(m) end)
 end
 
 
 -- Confirm screen shown when a difficulty is picked.
-local function buildConfirmOptions(player, difficulty)
+local function buildConfirmOptions(difficulty)
     local diffDef = catalog.difficulties[difficulty]
     return {
         {
@@ -491,13 +488,11 @@ showStartMenu = function(player)
                     string.format('[ Game Master ] Clear all %d waves for %d marks! (+%d per kill along the way.)',
                         diffDef.wavesTotal, diffDef.completionBonus, diffDef.markBonus),
                     xi.msg.channel.SYSTEM_3)
-                menu.options = buildConfirmOptions(p, diff)
-                delaySendMenu(p)
+                sendMenu(p, buildConfirmOptions(diff))
             end,
         })
     end
-    menu.options = options
-    delaySendMenu(player)
+    sendMenu(player, options)
 end
 
 

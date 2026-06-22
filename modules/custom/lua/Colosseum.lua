@@ -469,13 +469,9 @@ end
 -----------------------------------
 -- Menus
 -----------------------------------
-local menu = { title = 'Arena Herald', options = {} }
-local function delaySendMenu(player)
-    -- Snapshot before the deferred send: `menu` is a shared scratch
-    -- table, and another player's interaction inside the 50ms window
-    -- would otherwise swap its contents mid-flight.
-    local snapshot = { title = menu.title, options = menu.options }
-    player:timer(30, function(p) p:customMenu(snapshot) end)
+local function sendMenu(player, title, options)
+    local m = { title = title, options = options }
+    player:timer(30, function(p) p:customMenu(m) end)
 end
 
 local function showOpponentMenu(player, page)
@@ -527,10 +523,9 @@ local function showOpponentMenu(player, page)
     end
     options[#options + 1] = { '<< Back', function(p) showHeraldMenu(p) end }
 
-    menu.title   = (nPages > 1) and string.format('Pick rival (%d/%d)', page, nPages)
-                                 or 'Pick your rival'
-    menu.options = options
-    delaySendMenu(player)
+    local title = (nPages > 1) and string.format('Pick rival (%d/%d)', page, nPages)
+                                or 'Pick your rival'
+    sendMenu(player, title, options)
 end
 
 showHeraldMenu = function(player)
@@ -568,9 +563,7 @@ showHeraldMenu = function(player)
     end
     options[#options + 1] = { 'Close', function(p) end }
 
-    menu.title   = 'Arena Herald'
-    menu.options = options
-    delaySendMenu(player)
+    sendMenu(player, 'Arena Herald', options)
 end
 
 -----------------------------------

@@ -175,13 +175,9 @@ end
 -----------------------------------
 -- Menus
 -----------------------------------
-local menu = { title = 'Race Caller', options = {} }
-local function sendMenu(player)
-    -- Snapshot before the deferred send: `menu` is a shared scratch
-    -- table, and another player's interaction inside the 50ms window
-    -- would otherwise swap its contents mid-flight.
-    local snapshot = { title = menu.title, options = menu.options }
-    player:timer(30, function(p) p:customMenu(snapshot) end)
+local function sendMenu(player, title, options)
+    local m = { title = title, options = options }
+    player:timer(30, function(p) p:customMenu(m) end)
 end
 
 local function showRunnerMenu(player, bet)
@@ -209,9 +205,7 @@ local function showRunnerMenu(player, bet)
             xi.msg.channel.SYSTEM_3)
     end
 
-    menu.title   = string.format('Field - %dk', math.floor(bet / 1000))
-    menu.options = options
-    sendMenu(player)
+    sendMenu(player, string.format('Field - %dk', math.floor(bet / 1000)), options)
 end
 
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)
@@ -252,9 +246,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
             end }
             options[#options + 1] = { 'Close', function(p) end }
 
-            menu.title   = 'Race Caller'
-            menu.options = options
-            sendMenu(player)
+            sendMenu(player, 'Race Caller', options)
         end,
     })
     utils.unused(caller)

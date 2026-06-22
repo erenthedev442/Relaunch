@@ -416,7 +416,10 @@ end
 -----------------------------------
 -- The Voidgate Sentinel NPC.
 -----------------------------------
-local menu = { title = 'Voidgate Sentinel', options = {} }
+local function sendMenu(player, options)
+    local m = { title = 'Voidgate Sentinel', options = options }
+    player:timer(30, function(p) p:customMenu(m) end)
+end
 
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)
     super(zone)
@@ -458,9 +461,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
             end }
             options[#options + 1] = { 'Close', function(p) end }
 
-            menu.options = options
-            local snapshot = { title = menu.title, options = menu.options }  -- shared table + deferred send
-            player:timer(30, function(p) p:customMenu(snapshot) end)
+            sendMenu(player, options)
         end,
     })
     utils.unused(sentinel)
