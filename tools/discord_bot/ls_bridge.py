@@ -128,7 +128,16 @@ def post(cfg, content: str) -> bool:
     req = urllib.request.Request(
         cfg["LS_BRIDGE_WEBHOOK_URL"],
         data=data,
-        headers={"Content-Type": "application/json"},
+        headers={
+            "Content-Type": "application/json",
+            # Discord sits behind Cloudflare, which 403s the default
+            # "Python-urllib/x.y" User-Agent as a bad bot ("error 1010") -- so every
+            # webhook POST silently failed and the cursor wedged at 0. Sending any
+            # real UA clears Cloudflare's Browser Integrity Check. Overridable via
+            # config.py (LS_BRIDGE_USER_AGENT) if Discord ever tightens it further.
+            "User-Agent": cfg.get("LS_BRIDGE_USER_AGENT")
+                or "Legendary-LS-Bridge/1.0 (+https://legendary-ffxi.pages.dev)",
+        },
         method="POST",
     )
     try:
