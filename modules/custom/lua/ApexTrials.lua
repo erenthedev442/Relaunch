@@ -23,14 +23,14 @@
 -- reused; releaseIdOnDisappear so IDs self-reclaim; timer-based tier advance
 -- (never re-entrant from the mob callback).
 --
--- Arena: Walk of Echoes (shared with the Tower -- our onZoneIn only fires for
--- players holding an Apex session, so the two never collide). Trusts are off in
--- that zone (solo), but pets work (commit 0495400f71).
+-- Arena: Walk of Echoes [P2] (zone 279) -- same geometry as Walk of Echoes
+-- but a dedicated, otherwise-unused zone so Apex never shares with the Tower.
+-- Trusts off (solo), pets on (zone misc 0x80=MISC_PET).
 --
 -- NPC: Apex Arbiter in GM Home, the endgame-challenge row (x 4.5, z -35).
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Walk_of_Echoes/Zone')
+require('scripts/zones/Walk_of_Echoes_[P2]/Zone')
 require('scripts/zones/GM_Home/Zone')
 local C = require('modules/custom/lua/apex_catalog')
 
@@ -238,7 +238,7 @@ xi._apex_enter = enterApex
 -----------------------------------
 -- Overrides: arena zone-in starts the climb
 -----------------------------------
-m:addOverride('xi.zones.Walk_of_Echoes.Zone.onZoneIn', function(player, prevZone)
+m:addOverride('xi.zones.Walk_of_Echoes_[P2].Zone.onZoneIn', function(player, prevZone)
     local cs = super(player, prevZone)
 
     local sess = getSession(player)

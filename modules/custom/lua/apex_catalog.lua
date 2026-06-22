@@ -15,11 +15,10 @@
 local C = {}
 
 -- ── Arena / placement ───────────────────────────────────────────────────────
--- Reuse the Endless Tower arena (Walk of Echoes, 182) + the GM Home mob groups
--- (registered under zone 210). Each climber gets their own dynamic boss; the
--- Apex onZoneIn only fires for players holding an Apex session, so it never
--- collides with a Tower run sharing the zone.
-C.ARENA_ZONE = 182          -- xi.zone.WALK_OF_ECHOES
+-- Uses Walk of Echoes [P2] (279) -- same geometry as Walk of Echoes but
+-- completely unused, giving Apex Trials its own dedicated zone separate from
+-- the Endless Tower (zone 182). GM Home mob groups (zone 210) spawn here.
+C.ARENA_ZONE = 279          -- xi.zone.WALK_OF_ECHOES_P2
 C.GROUP_ZONE = 210          -- GM Home (where the boss mob_groups live)
 C.WARP_IN    = { x = -420, y = 14, z = -49, rot = 192 }
 C.EXIT_WARP  = { zoneId = 210, x = -15, y = 0, z = -18, rot = 128 }
