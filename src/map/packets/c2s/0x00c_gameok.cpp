@@ -95,8 +95,15 @@ void GP_CLI_COMMAND_GAMEOK::process(MapSession* PSession, CCharEntity* PChar) co
     }
     PChar->loc.zone->SpawnTransport(PChar);
 
-    // respawn any pets from last zone
-    if (PChar->loc.zone->CanUseMisc(MISC_PET) && !PChar->inMogHouse())
+    // respawn any pets from last zone. FJB: dropped the stock CanUseMisc(MISC_PET)
+    // gate so an ALREADY-SUMMONED persisted pet (DRG wyvern, SMN avatar, PUP
+    // automaton) FOLLOWS its master into ANY zone instead of vanishing on entry to
+    // one that lacks the PET flag (custom endgame arenas -- Walk of Echoes, Escha,
+    // etc.). The pet was alive and saved at zone-out, so we just re-materialise it
+    // with its carried-over HP/TP/MP. Mog houses still exclude pets (and the pet is
+    // restored automatically when the master leaves the mog house, since the zoning
+    // info isn't reset there). Summoning a NEW pet still respects MISC_PET.
+    if (!PChar->inMogHouse())
     {
         if (PChar->shouldPetPersistThroughZoning())
         {
