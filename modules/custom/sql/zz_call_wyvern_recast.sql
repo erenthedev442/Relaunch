@@ -1,0 +1,18 @@
+-- ============================================================================
+-- zz_call_wyvern_recast.sql
+--
+-- Lower the DRG "Call Wyvern" job-ability recast from the retail 20:00 (1200s)
+-- down to 30s, so a dragoon can re-summon a downed wyvern almost immediately.
+-- Legendary buffs pets heavily and treats the wyvern as a core DD/utility pet,
+-- and with the zone-persistence fix the wyvern usually stays up anyway -- this
+-- just removes the painful re-summon wait when it does die.
+--
+--   abilityId 61 = Call Wyvern (recastId 163). `recastTime` is in SECONDS.
+--
+-- Abilities are loaded into memory at map boot, so this takes effect on the
+-- next MAP RESTART (not a hot-reload).
+--
+-- Idempotent config override (a fixed SET, not a one-time data migration), so
+-- it is safe to live in zz_*.sql, which re-applies on every deploy.
+-- ============================================================================
+UPDATE `abilities` SET `recastTime` = 30 WHERE `abilityId` = 61;
