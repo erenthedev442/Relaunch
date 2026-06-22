@@ -241,7 +241,7 @@ xi.job_utils.ranger.useCamouflage = function(player, target, ability, action)
 end
 
 xi.job_utils.ranger.useBarrage = function(player, target, ability, action)
-    player:addStatusEffect(xi.effect.BARRAGE, { duration = 60, origin = player })
+    player:addStatusEffect(xi.effect.BARRAGE, { duration = 900, origin = player })
 
     return xi.effect.BARRAGE
 end
