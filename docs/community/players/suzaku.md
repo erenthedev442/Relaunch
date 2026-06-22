@@ -1,6 +1,6 @@
 # Suzaku
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 2d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 1h
 
 `💪 8 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **COR 99** |
 | Sub job | RDM 99 |
-| Time played | 4h |
+| Time played | 5h |
 | Enemies defeated | 104 |
 | Deaths | 3 |
 
@@ -36,24 +36,24 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,000
+- **Marks (current):** 8,500
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Total NM kills:** 117
 
 ## Augment Sage
 
 - **Mastery rank:** 2 / 5
-- **Augments crafted:** 42
+- **Augments crafted:** 44
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 2,000 | 0 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 14,240 | 17,490 |
 
 ## Collections
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9a9101b5e812 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: a733b134e161 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,18 +1,18 @@
 # Wombat
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 21h 17m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 23h 31m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 77/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 82/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 77** |
-| Sub job | BLU 46 |
-| Time played | 6h |
-| Enemies defeated | 254 |
+| Main job | **RDM 82** |
+| Sub job | BLU 59 |
+| Time played | 7h |
+| Enemies defeated | 289 |
 | Deaths | 2 |
 
 ## Job levels
@@ -23,7 +23,7 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 8 |
-| RDM | 77 | BLU | 46 |
+| RDM | 82 | BLU | 59 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -34,10 +34,21 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 1,475
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Journeyman | 1,000 | 4,000 to Veteran |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 
 ## Augment Sage
 
@@ -68,6 +79,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7c22f0929bb9 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: bd36d7b7bc77 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

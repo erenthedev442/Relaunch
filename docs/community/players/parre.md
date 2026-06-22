@@ -1,6 +1,6 @@
 # Parre
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 7d 16h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-17 · Character age 7d 19h
 
 `💪 6 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 48598fd8a6a7 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: bb38e7a26f3a -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

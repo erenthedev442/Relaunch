@@ -1,8 +1,8 @@
 # Vistrix
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 14h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 16h
 
-`⭐ 8 Ascensions` `💪 2 jobs @99`
+`⭐ 14 Ascensions` `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DRG 99** |
 | Sub job | SAM 99 |
-| Time played | 36h |
-| Enemies defeated | 2,497 |
-| Deaths | 19 |
+| Time played | 39h |
+| Enemies defeated | 2,620 |
+| Deaths | 20 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,303
-- **Marks (lifetime):** 2,106
+- **Marks (current):** 42
+- **Marks (lifetime):** 2,896
 - **Distinct NMs slain:** 12
-- **Total NM kills:** 111
+- **Total NM kills:** 212
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 198
+- **Augments crafted:** 200
 - **NM Affinities:** 6 / 13
 
 ## Reforge
@@ -63,13 +63,13 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 10 | 0 |
-| Relic | 0 | 0 |
-| Empyrean | 10 | 1,780 |
+| Relic | 1,500 | 0 |
+| Empyrean | 1,110 | 1,780 |
 
 ## Prestige
 
-- **Total Ascensions:** 8
-- **Per-job prestige:** DRG P8
+- **Total Ascensions:** 14
+- **Per-job prestige:** DRG P14
 
 ## Collections
 
@@ -77,7 +77,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Achievements
 
-**12** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Star-Slayer · Augment Novice · Augment Expert.
+**14** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Ascending Master · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 761b9d060bf5 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 0ea3e36375b4 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

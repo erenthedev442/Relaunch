@@ -1,6 +1,6 @@
 # Phatdood
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 18h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 20h
 
 `💪 6 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DRG 99** |
 | Sub job | WAR 99 |
-| Time played | 15h |
-| Enemies defeated | 378 |
-| Deaths | 18 |
+| Time played | 19h |
+| Enemies defeated | 574 |
+| Deaths | 23 |
 
 ## Job levels
 
@@ -36,24 +36,24 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 213
-- **Marks (lifetime):** 10,751
-- **Distinct NMs slain:** 10
-- **Total NM kills:** 1,889
+- **Marks (current):** 2,544
+- **Marks (lifetime):** 11,820
+- **Distinct NMs slain:** 14
+- **Total NM kills:** 2,051
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 250
-- **NM Affinities:** 0 / 13
+- **Augments crafted:** 281
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 6,570 | 5,570 |
+| AF | 8,570 | 5,570 |
 | Relic | 1,500 | 0 |
-| Empyrean | 1,200 | 0 |
+| Empyrean | 16,730 | 20,880 |
 
 ## Collections
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 87a817886c3b -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: dd4242efc4dc -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

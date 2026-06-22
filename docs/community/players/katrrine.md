@@ -1,21 +1,21 @@
 # Katrrine
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 21h
 
-`💪 4 jobs @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 1** |
-| Sub job | BLU 1 |
-| Time played | 40h |
-| Enemies defeated | 2,475 |
-| Deaths | 6 |
+| Main job | **RDM 99** |
+| Sub job | BLU 99 |
+| Time played | 44h |
+| Enemies defeated | 2,846 |
+| Deaths | 7 |
 
 ## Job levels
 
@@ -25,7 +25,7 @@
 | MNK | 18 | NIN | 1 |
 | WHM | 90 | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
-| RDM | 1 | **BLU** | **99** |
+| **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 2,850
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 5 / 5
+- **Marks (current):** 3
+- **Marks (lifetime):** 2,094
+- **Distinct NMs slain:** 5
+- **Total NM kills:** 416
 
 ## Augment Sage
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**6** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5d1ce2d63f42 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 82bad3771fbc -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

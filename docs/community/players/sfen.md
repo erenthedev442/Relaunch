@@ -1,8 +1,8 @@
 # Sfen
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 17h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 19h
 
-`💪 10 jobs @99`
+`💪 12 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **THF 1** |
-| Sub job | DNC 1 |
-| Time played | 27h |
-| Enemies defeated | 3,284 |
-| Deaths | 22 |
+| Main job | **MNK 99** |
+| Sub job | THF 1 |
+| Time played | 29h |
+| Enemies defeated | 4,224 |
+| Deaths | 23 |
 
 ## Job levels
 
@@ -24,8 +24,8 @@
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
 | **WHM** | **99** | **DRG** | **99** |
-| BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| **BLM** | **99** | SMN | 1 |
+| **RDM** | **99** | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | **DNC** | **99** |
@@ -57,8 +57,8 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 3
-- **By job:** THF ×3
+- **Total rebirths:** 5
+- **By job:** THF ×5
 
 ## Collections
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bf926ef0e00d -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: c8f765c7bfce -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

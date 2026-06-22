@@ -1,6 +1,6 @@
 # Regis
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 11h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 13h
 
 `⭐ 20 Ascensions` `💪 10 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 58h |
+| Time played | 59h |
 | Enemies defeated | 1,727 |
 | Deaths | 39 |
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 59e59e8a0ffa -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: c7081e0d7543 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

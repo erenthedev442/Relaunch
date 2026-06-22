@@ -1,6 +1,6 @@
 # Ekko
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 21h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 23h
 
 `💪 7 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | PLD 85 |
-| Time played | 30h |
-| Enemies defeated | 1,554 |
+| Sub job | WAR 99 |
+| Time played | 32h |
+| Enemies defeated | 1,595 |
 | Deaths | 4 |
 
 ## Job levels
@@ -27,7 +27,7 @@
 | BLM | 50 | SMN | 1 |
 | RDM | 66 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
-| PLD | 85 | PUP | 1 |
+| PLD | 87 | PUP | 1 |
 | **DRK** | **99** | DNC | 82 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | **GEO** | **99** |
@@ -36,24 +36,24 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 507
-- **Marks (lifetime):** 3,689
-- **Distinct NMs slain:** 12
-- **Total NM kills:** 611
+- **Marks (current):** 1,729
+- **Marks (lifetime):** 4,090
+- **Distinct NMs slain:** 13
+- **Total NM kills:** 652
 
 ## Augment Sage
 
 - **Mastery rank:** 2 / 5
-- **Augments crafted:** 27
+- **Augments crafted:** 29
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 25 | 25 |
-| Relic | 0 | 0 |
-| Empyrean | 100 | 1,550 |
+| AF | 365 | 365 |
+| Relic | 1,565 | 65 |
+| Empyrean | 410 | 1,860 |
 
 ## Collections
 
@@ -61,13 +61,14 @@
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Augment Novice.
+**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 17h 5m |
+| HL Rank I → V | 5d 21h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b68c61f87860 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 44847a4bdbb9 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

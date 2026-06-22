@@ -1,6 +1,6 @@
 # Coso
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 17h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 19h
 
 `💪 5 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | BLM 91 |
-| Time played | 13h |
-| Enemies defeated | 545 |
+| Time played | 14h |
+| Enemies defeated | 553 |
 | Deaths | 8 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 180
+- **Marks (current):** 480
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -44,8 +44,8 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 38
-- **NM Affinities:** 0 / 13
+- **Augments crafted:** 52
+- **NM Affinities:** 9 / 13
 
 ## Reforge
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**2** unlocked — Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6dd997f6df12 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 4cd3c94a0775 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

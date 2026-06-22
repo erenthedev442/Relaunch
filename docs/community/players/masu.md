@@ -1,6 +1,6 @@
 # Masu
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 6h
 
 `💪 7 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **DNC 37** |
-| Sub job | WHM 28 |
+| Main job | **DNC 67** |
+| Sub job | WHM 61 |
 | Time played | 39h |
-| Enemies defeated | 1,026 |
-| Deaths | 3 |
+| Enemies defeated | 1,058 |
+| Deaths | 4 |
 
 ## Job levels
 
@@ -23,12 +23,12 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | NIN | 79 |
-| WHM | 28 | **DRG** | **99** |
+| WHM | 61 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 87 |
-| **DRK** | **99** | DNC | 37 |
+| **DRK** | **99** | DNC | 67 |
 | BST | 1 | SCH | 1 |
 | BRD | 81 | GEO | 1 |
 | RNG | 1 | RUN | 19 |
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 880d7da2c6f9 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: c64aad96fd16 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

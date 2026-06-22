@@ -1,11 +1,11 @@
 # Skerxan
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-20 · Character age 2d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 3h
 
 `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | DNC 99 |
-| Time played | 6h |
-| Enemies defeated | 127 |
-| Deaths | 3 |
+| Time played | 9h |
+| Enemies defeated | 580 |
+| Deaths | 7 |
 
 ## Job levels
 
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 1,175
-- **Marks (lifetime):** 613
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 52
+- **Rank:** 4 / 5
+- **Marks (current):** 334
+- **Marks (lifetime):** 679
+- **Distinct NMs slain:** 9
+- **Total NM kills:** 94
 
 ## Augment Sage
 
@@ -51,17 +51,17 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 265 | 665 |
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
 
 ## Achievements
 
-**4** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked.
+**5** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Wave Rider.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0a24f109a7d4 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 5f1407cf48c3 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

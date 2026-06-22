@@ -1,6 +1,6 @@
 # Luna
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 11h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 13h
 
 `⭐ 20 Ascensions` `💪 10 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | RDM 99 |
-| Time played | 58h |
+| Time played | 59h |
 | Enemies defeated | 53 |
 | Deaths | 33 |
 
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 78
+- **Augments crafted:** 84
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f77594dc29bb -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 785c3e88cd6b -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

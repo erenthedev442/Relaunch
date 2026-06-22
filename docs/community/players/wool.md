@@ -1,30 +1,30 @@
 # Wool
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 10h 24m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 12h 38m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 23/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 30/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **THF 23** |
-| Sub job | — |
-| Time played | 2h |
-| Enemies defeated | 61 |
-| Deaths | 2 |
+| Main job | **RDM 18** |
+| Sub job | NIN 6 |
+| Time played | 4h |
+| Enemies defeated | 130 |
+| Deaths | 3 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 1 |
+| MNK | 1 | NIN | 6 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
-| THF | 23 | COR | 1 |
+| RDM | 18 | BLU | 1 |
+| THF | 30 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7e67f2b78742 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 7f399a661244 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

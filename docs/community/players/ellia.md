@@ -1,6 +1,6 @@
 # Ellia
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 10h 3m
+**Windurst citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 12h 17m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 11/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a75b48c63d7a -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: d1339af92db5 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

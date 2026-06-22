@@ -169,6 +169,6 @@ A party running Heroes NMs without trusts earns **180 Infamy per kill** — enou
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7bea5ad8436d -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: 08d647e42749 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

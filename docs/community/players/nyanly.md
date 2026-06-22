@@ -1,6 +1,6 @@
 # Nyanly
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-20 · Character age 8d 7h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 9h
 
 `💪 1 job @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 7,594
+- **Marks (current):** 8,444
 - **Marks (lifetime):** 40
 - **Distinct NMs slain:** 3
 - **Total NM kills:** 8
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a245dc16796e -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 7a815553703e -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

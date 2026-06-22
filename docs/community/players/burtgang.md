@@ -1,8 +1,8 @@
 # Burtgang
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 19h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 21h
 
-`⭐ 66 Ascensions` `💪 13 jobs @99`
+`⭐ 70 Ascensions` `💪 13 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 67h |
-| Enemies defeated | 12,961 |
-| Deaths | 36 |
+| Time played | 71h |
+| Enemies defeated | 12,981 |
+| Deaths | 38 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 92,610
+- **Marks (current):** 74,280
 - **Marks (lifetime):** 18,426
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 853
+- **Total NM kills:** 854
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 1,077
+- **Augments crafted:** 1,094
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -73,8 +73,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 66
-- **Per-job prestige:** RDM P66
+- **Total Ascensions:** 70
+- **Per-job prestige:** RDM P70
 
 ## Collections
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cb739134d09d -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: a030a81e0baf -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

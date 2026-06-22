@@ -1,8 +1,8 @@
 # Ghetts
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 18h
 
-`💪 2 jobs @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **BRD 99** |
-| Sub job | GEO 91 |
-| Time played | 4h |
+| Main job | **PUP 99** |
+| Sub job | COR 1 |
+| Time played | 5h |
 | Enemies defeated | 0 |
 | Deaths | 0 |
 
@@ -24,22 +24,22 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| **BLM** | **99** | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| **BLM** | **99** | SMN | 39 |
+| **RDM** | **99** | BLU | 1 |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 1 |
+| PLD | 1 | **PUP** | **99** |
 | DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 1 |
-| **BRD** | **99** | GEO | 91 |
+| BST | 1 | SCH | 79 |
+| **BRD** | **99** | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 3,515
-- **Marks (lifetime):** 55
-- **Distinct NMs slain:** 1
-- **Total NM kills:** 49
+- **Marks (current):** 9,154
+- **Marks (lifetime):** 3,280
+- **Distinct NMs slain:** 2
+- **Total NM kills:** 694
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**2** unlocked — First Hunt · Ten Hunts In.
+**4** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Mark of 1,000.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5141c442ca4e -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 2ce9193c9135 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

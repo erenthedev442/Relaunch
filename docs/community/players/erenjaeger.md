@@ -1,6 +1,6 @@
 # Erenjaeger
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 3h
 
 `💪 15 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | RDM 99 |
-| Time played | 32h |
+| Time played | 34h |
 | Enemies defeated | 4 |
 | Deaths | 10 |
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 104,789
+- **Marks (current):** 103,289
 - **Marks (lifetime):** 53,161
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 813
+- **Total NM kills:** 942
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 12
+- **Augments crafted:** 16
 - **NM Affinities:** 3 / 13
 
 ## Reforge
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 8,350 | 12,600 |
 | Relic | 7,230 | 12,480 |
-| Empyrean | 9,300 | 14,550 |
+| Empyrean | 28,590 | 33,840 |
 
 ## Collections
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e509559c9582 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 81c1a640cf76 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

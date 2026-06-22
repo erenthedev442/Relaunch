@@ -1,6 +1,6 @@
 # Pld
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 16h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 19h
 
 `💪 7 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **THF 99** |
-| Sub job | DNC 99 |
-| Time played | 35h |
-| Enemies defeated | 2,521 |
-| Deaths | 7 |
+| Main job | **RDM 79** |
+| Sub job | BLU 66 |
+| Time played | 38h |
+| Enemies defeated | 2,707 |
+| Deaths | 9 |
 
 ## Job levels
 
@@ -25,7 +25,7 @@
 | **MNK** | **99** | **NIN** | **99** |
 | WHM | 1 | DRG | 1 |
 | BLM | 83 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| RDM | 79 | BLU | 66 |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | DRK | 1 | **DNC** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 8,008
-- **Marks (lifetime):** 10,540
-- **Distinct NMs slain:** 13
-- **Total NM kills:** 1,966
+- **Marks (current):** 4,750
+- **Marks (lifetime):** 11,069
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 1,982
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 271
+- **Augments crafted:** 280
 - **NM Affinities:** 7 / 13
 
 ## Reforge
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 853beb3705b8 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 6ff7a3dfb06c -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

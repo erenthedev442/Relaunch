@@ -1,8 +1,8 @@
 # Aureal
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 18h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 20h
 
-`💪 1 job @99`
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RDM 1** |
-| Sub job | BLU 1 |
-| Time played | 37h |
-| Enemies defeated | 1,147 |
+| Main job | **RDM 99** |
+| Sub job | BLU 99 |
+| Time played | 41h |
+| Enemies defeated | 1,482 |
 | Deaths | 4 |
 
 ## Job levels
@@ -25,7 +25,7 @@
 | MNK | 18 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 76 | SMN | 1 |
-| RDM | 1 | **BLU** | **99** |
+| **RDM** | **99** | **BLU** | **99** |
 | THF | 53 | COR | 1 |
 | PLD | 91 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 2,850
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Marks (current):** 32
+- **Marks (lifetime):** 2,070
+- **Distinct NMs slain:** 3
+- **Total NM kills:** 414
 
 ## Augment Sage
 
@@ -66,7 +66,7 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**5** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 61a75a8a7573 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: f272489c933d -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

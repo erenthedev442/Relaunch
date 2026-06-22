@@ -1,6 +1,6 @@
 # Moon
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 6d 2h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 6d 5h
 
 `💪 22 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 68h |
-| Enemies defeated | 198 |
-| Deaths | 11 |
+| Time played | 71h |
+| Enemies defeated | 235 |
+| Deaths | 12 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 21,641
+- **Marks (current):** 23,721
 - **Marks (lifetime):** 2,447
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 567
+- **Total NM kills:** 583
 
 ## Guild standing
 
@@ -47,10 +47,10 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Veteran | 15,000 | 10,000 to Master |
-| Relic Hunters' Guild | Champion | 60,000 | 40,000 to Grandmaster |
-| Empyrean Hunters' Guild | Journeyman | 1,500 | 3,500 to Veteran |
-| League Hunters' Guild | Master | 28,500 | 26,500 to Champion |
+| AF Hunters' Guild | Veteran | 22,500 | 2,500 to Master |
+| Relic Hunters' Guild | Champion | 72,000 | 28,000 to Grandmaster |
+| Empyrean Hunters' Guild | Veteran | 9,000 | 16,000 to Master |
+| League Hunters' Guild | Master | 36,000 | 19,000 to Champion |
 
 ## Augment Sage
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8303fbca70a1 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 823634dcd5d9 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

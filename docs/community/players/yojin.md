@@ -1,8 +1,8 @@
 # Yojin
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 21h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 23h
 
-`⭐ 3 Ascensions` `💪 13 jobs @99`
+`⭐ 3 Ascensions` `💪 16 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | BRD 78 |
-| Time played | 33h |
-| Enemies defeated | 4,124 |
-| Deaths | 29 |
+| Sub job | DRG 89 |
+| Time played | 37h |
+| Enemies defeated | 5,513 |
+| Deaths | 30 |
 
 ## Job levels
 
@@ -23,15 +23,15 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
-| **WHM** | **99** | DRG | 1 |
+| **WHM** | **99** | DRG | 89 |
 | **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
-| BST | 1 | **SCH** | **99** |
-| BRD | 78 | GEO | 1 |
-| RNG | 1 | **RUN** | **99** |
+| **BST** | **99** | **SCH** | **99** |
+| **BRD** | **99** | GEO | 1 |
+| **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
@@ -50,7 +50,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Journeyman | 2,000 | 3,000 to Veteran |
-| League Hunters' Guild | Journeyman | 1,500 | 3,500 to Veteran |
+| League Hunters' Guild | Journeyman | 2,000 | 3,000 to Veteran |
 
 ## Augment Sage
 
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Job Rebirth
 
-- **Total rebirths:** 8
-- **By job:** DRK ×8
+- **Total rebirths:** 11
+- **By job:** DRK ×11
 
 ## Prestige
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b4b1fe24db04 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: ff3aff7f7be2 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

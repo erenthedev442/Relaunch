@@ -1,8 +1,8 @@
 # Erenyeager
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 5h
 
-`💪 13 jobs @99`
+`💪 14 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | BST 93 |
-| Time played | 44h |
-| Enemies defeated | 2,677 |
+| Sub job | BST 99 |
+| Time played | 46h |
+| Enemies defeated | 2,694 |
 | Deaths | 18 |
 
 ## Job levels
@@ -29,22 +29,22 @@
 | **THF** | **99** | COR | 1 |
 | PLD | 56 | PUP | 1 |
 | **DRK** | **99** | **DNC** | **99** |
-| BST | 93 | SCH | 1 |
+| **BST** | **99** | SCH | 1 |
 | **BRD** | **99** | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 56,511
+- **Marks (current):** 49,911
 - **Marks (lifetime):** 54,650
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 838
+- **Total NM kills:** 967
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 283
+- **Augments crafted:** 287
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 8,350 | 12,600 |
 | Relic | 7,230 | 12,480 |
-| Empyrean | 9,300 | 14,550 |
+| Empyrean | 28,590 | 33,840 |
 
 ## Collections
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 20cb4fadbe02 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 1ab8fa5c47f1 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Zetsubou
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 10h 43m
+**Windurst citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 12h 57m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 26/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 285c84af7f23 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 9e31a72fad3d -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

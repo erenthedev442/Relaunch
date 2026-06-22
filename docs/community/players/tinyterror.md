@@ -1,6 +1,6 @@
 # Tinyterror
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 10h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 12h
 
 `💪 8 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e2f6eb1e8504 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: ebcc854ab0c5 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

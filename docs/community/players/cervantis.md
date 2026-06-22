@@ -1,8 +1,8 @@
 # Cervantis
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 10h
 
-`⭐ 20 Ascensions` `💪 7 jobs @99`
+`⭐ 20 Ascensions` `💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BLM 1** |
-| Sub job | SCH 1 |
-| Time played | 54h |
-| Enemies defeated | 5,406 |
-| Deaths | 63 |
+| Main job | **BLM 99** |
+| Sub job | SCH 99 |
+| Time played | 57h |
+| Enemies defeated | 5,785 |
+| Deaths | 64 |
 
 ## Job levels
 
@@ -24,22 +24,22 @@
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
+| **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| **DRK** | **99** | DNC | 24 |
-| BST | 1 | SCH | 1 |
+| **DRK** | **99** | DNC | 65 |
+| BST | 1 | **SCH** | **99** |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,742
-- **Marks (lifetime):** 6,006
+- **Marks (current):** 6,596
+- **Marks (lifetime):** 6,046
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 329
+- **Total NM kills:** 340
 
 ## Augment Sage
 
@@ -51,9 +51,9 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 3,365 | 5,465 |
-| Relic | 1,230 | 1,830 |
-| Empyrean | 1,205 | 7,605 |
+| AF | 7 | 5,465 |
+| Relic | 0 | 1,830 |
+| Empyrean | 231 | 8,055 |
 
 ## Prestige
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3b6e892d1955 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 8441e5e34a39 -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

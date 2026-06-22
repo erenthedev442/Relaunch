@@ -1,8 +1,8 @@
 # Candycorns
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 3h
 
-`⭐ 1 Ascension` `💪 11 jobs @99`
+`⭐ 1 Ascension` `💪 12 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | RDM 99 |
-| Time played | 65h |
-| Enemies defeated | 2,972 |
-| Deaths | 15 |
+| Sub job | DRG 99 |
+| Time played | 69h |
+| Enemies defeated | 3,254 |
+| Deaths | 17 |
 
 ## Job levels
 
@@ -23,7 +23,7 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
-| WHM | 82 | DRG | 84 |
+| WHM | 82 | **DRG** | **99** |
 | BLM | 96 | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 332
+- **Augments crafted:** 349
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -54,6 +54,11 @@
 | AF | 0 | 0 |
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
+
+## Job Rebirth
+
+- **Total rebirths:** 1
+- **By job:** MNK ×1
 
 ## Prestige
 
@@ -83,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 61977af47114 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 1eb763e0b70f -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Alice
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 6d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 1h
 
 `💪 5 jobs @99`
 
@@ -11,17 +11,17 @@
 
 | | |
 |---|---|
-| Main job | **COR 99** |
-| Sub job | BLU 99 |
-| Time played | 13h |
-| Enemies defeated | 761 |
+| Main job | **WAR 47** |
+| Sub job | SAM 47 |
+| Time played | 14h |
+| Enemies defeated | 809 |
 | Deaths | 8 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 44 | SAM | 85 |
+| WAR | 47 | SAM | 85 |
 | MNK | 1 | NIN | 34 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 18
+- **Augments crafted:** 20
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 585f4dd4ee04 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 9e5680590afb -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->

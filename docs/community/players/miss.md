@@ -1,6 +1,6 @@
 # Miss
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 6d 3h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 6d 5h
 
 `💪 22 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BLM 99** |
+| Main job | **PLD 99** |
 | Sub job | RDM 99 |
-| Time played | 68h |
-| Enemies defeated | 1,889 |
-| Deaths | 26 |
+| Time played | 72h |
+| Enemies defeated | 1,921 |
+| Deaths | 27 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 30,990
+- **Marks (current):** 5,070
 - **Marks (lifetime):** 2,447
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 565
+- **Total NM kills:** 581
 
 ## Guild standing
 
@@ -47,15 +47,15 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Veteran | 15,000 | 10,000 to Master |
-| Relic Hunters' Guild | Champion | 60,000 | 40,000 to Grandmaster |
-| Empyrean Hunters' Guild | Journeyman | 1,500 | 3,500 to Veteran |
-| League Hunters' Guild | Master | 28,500 | 26,500 to Champion |
+| AF Hunters' Guild | Veteran | 22,500 | 2,500 to Master |
+| Relic Hunters' Guild | Champion | 72,000 | 28,000 to Grandmaster |
+| Empyrean Hunters' Guild | Veteran | 9,000 | 16,000 to Master |
+| League Hunters' Guild | Master | 36,000 | 19,000 to Champion |
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 307
+- **Augments crafted:** 308
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9acfae5717eb -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 61fed54aa58c -->
+_Last updated: 2026-06-22 00:11 UTC_
 <!-- DOCGEN:END id="last-updated" -->
