@@ -210,12 +210,14 @@ local stock =
         { 21295,  50 },  -- Beryllium Arrow (Lv99, DMG 77)
         { 21302,  50 },  -- Eminent Arrow   (Lv99, EX, DMG 79)
         { 21310,  50 },  -- Raetic Arrow    (Lv99, DMG 80)
+        { 21307, 100 },  -- Achiyalabopa Arrow  (Lv99/iLvl119, RNG)
         -- Bolts (crossbows)
         { 17336,   2 },  -- Crossbow Bolt   (Lv1)
         { 17337,   5 },  -- Mythril Bolt    (Lv40)
         { 19197,  20 },  -- Fusion Bolt     (Lv79)
         { 21316,  50 },  -- Eminent Bolt    (Lv99)
         { 21311,  50 },  -- Quelling Bolt   (Lv99, RNG, Add. Effect: Slow)
+        { 21321, 100 },  -- Achiyalabopa Bolt   (Lv99/iLvl119, RNG)
         -- Bullets (guns)
         { 17343,   2 },  -- Bronze Bullet   (Lv1)
         { 17340,   3 },  -- Bullet          (Lv22)
@@ -223,6 +225,7 @@ local stock =
         { 17341,   8 },  -- Silver Bullet   (Lv50)
         { 18723,  20 },  -- Steel Bullet    (Lv66)
         { 21331,  50 },  -- Eminent Bullet  (Lv99)
+        { 21337, 100 },  -- Achiyalabopa Bullet (Lv99/iLvl119, RNG)
         -- Infinite-ammo WAIST pouches: wear one + a stack of any bullets and the
         -- bullets are never consumed (RECYCLE 100), plus ranged stats. RARE, hold
         -- 1. (See bullet_pouches_waist.sql.)
