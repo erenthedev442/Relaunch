@@ -374,6 +374,15 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 return
             end
 
+            -- One climber at a time: block if anyone else has an active session.
+            local activeClimber = next(sessions)
+            if activeClimber then
+                player:printToPlayer(
+                    string.format('[Tower] The Tower is currently being ascended by %s. Wait for their run to end.', activeClimber),
+                    xi.msg.channel.SYSTEM_3)
+                return
+            end
+
             local done = (player:getCharVar('PW_Trial2_Done') or 0) == 1
             local best = player:getCharVar('Tower_Best_Floor') or 0
 
@@ -390,6 +399,14 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 {
                     'Enter the Tower',
                     function(p)
+                        -- Re-check: another player may have entered between menu-open and click.
+                        local occupant = next(sessions)
+                        if occupant then
+                            p:printToPlayer(
+                                string.format('[Tower] %s just entered while your menu was open. Try again shortly.', occupant),
+                                xi.msg.channel.SYSTEM_3)
+                            return
+                        end
                         -- Create session and warp.
                         sessions[p:getName()] = {
                             floor     = 0,
