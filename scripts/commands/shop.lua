@@ -215,6 +215,7 @@ local stock =
         { 17337,   5 },  -- Mythril Bolt    (Lv40)
         { 19197,  20 },  -- Fusion Bolt     (Lv79)
         { 21316,  50 },  -- Eminent Bolt    (Lv99)
+        { 21311,  50 },  -- Quelling Bolt   (Lv99, RNG, Add. Effect: Slow)
         -- Bullets (guns)
         { 17343,   2 },  -- Bronze Bullet   (Lv1)
         { 17340,   3 },  -- Bullet          (Lv22)
