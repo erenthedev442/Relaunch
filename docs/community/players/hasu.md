@@ -1,6 +1,6 @@
 # Hasu
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 7m 58s
+**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 14h 25m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -28,13 +28,13 @@
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 0 |
-| RNG | 1 | RUN | 0 |
+| BRD | 1 | GEO | 1 |
+| RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 0
+- **Marks (current):** 450
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 0
+- **Trusts learned:** 117
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 31694b373629 -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: 25b5ea1f2ac9 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

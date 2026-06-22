@@ -1,6 +1,6 @@
 # Thanos
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 6h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 20h
 
 `⭐ 12 Ascensions` `💪 6 jobs @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 21
-- **Marks (lifetime):** 5,860
+- **Marks (current):** 115
+- **Marks (lifetime):** 5,936
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 492
+- **Total NM kills:** 494
 
 ## Augment Sage
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1a9b099ffc73 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 244bc56ae1e1 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

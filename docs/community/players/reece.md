@@ -1,6 +1,6 @@
 # Reece
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 6h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 20h
 
 `💪 8 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cfe76f6431a5 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: d7f4646d4a21 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

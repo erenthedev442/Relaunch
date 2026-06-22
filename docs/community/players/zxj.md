@@ -1,6 +1,6 @@
 # Zxj
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 7d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 9h
 
 `⭐ 1 Ascension` `💪 22 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | DNC 99 |
-| Time played | 73h |
+| Time played | 74h |
 | Enemies defeated | 3,038 |
 | Deaths | 46 |
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a7ef9750edd7 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: e1c5d2afff19 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

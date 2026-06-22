@@ -4,7 +4,7 @@ Live rankings pulled from the server's database. These tables refresh whenever t
 
 <div class="lb-asof" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-asof" -->
-**📊 Leaderboard data as of 2026-06-22 06:26 UTC**
+**📊 Leaderboard data as of 2026-06-22 20:44 UTC**
 <!-- DOCGEN:END id="lb-asof" -->
 </div>
 
@@ -112,7 +112,7 @@ _Points earned across all Hunting League NM kills. Lifetime total, not current s
 | 6 | [Rtklm](players/rtklm.md) | 146,344 |
 | 7 | [Benton](players/benton.md) | 145,940 |
 | 8 | [Rtkle](players/rtkle.md) | 145,294 |
-| 9 | [Draco](players/draco.md) | 112,224 |
+| 9 | [Draco](players/draco.md) | 107,224 |
 | 10 | [Erenjaeger](players/erenjaeger.md) | 101,439 |
 <!-- DOCGEN:END id="lb-hl-points" -->
 
@@ -362,10 +362,10 @@ _Hours the character has spent online. Read from `chars.playtime` (seconds). Bra
 
 | Rank | Character | Hours |
 |---:|---|---:|
-| 🥇 | [Jbae](players/jbae.md) | 303 |
+| 🥇 | [Jbae](players/jbae.md) | 304 |
 | 🥈 | [Bro](players/bro.md) | 100 |
 | 🥉 | [Sytara](players/sytara.md) | 96 |
-| 4 | [Kyrie](players/kyrie.md) | 83 |
+| 4 | [Kyrie](players/kyrie.md) | 84 |
 | 5 | [Ariamys](players/ariamys.md) | 78 |
 | 6 | [Herdofturtles](players/herdofturtles.md) | 78 |
 | 7 | [Burtgang](players/burtgang.md) | 76 |
@@ -595,14 +595,14 @@ _Cumulative Infamy earned across all endgame content —doesn't decrease when sp
 | Rank | Character | Infamy |
 |---:|---|---:|
 | 🥇 | [Bro](players/bro.md) | 57,040 |
-| 🥈 | [Kyrie](players/kyrie.md) | 43,340 |
-| 🥉 | [Broken](players/broken.md) | 43,340 |
-| 4 | [Ken](players/ken.md) | 43,340 |
-| 5 | [Draco](players/draco.md) | 41,720 |
-| 6 | [Speedbump](players/speedbump.md) | 41,720 |
-| 7 | [Rose](players/rose.md) | 41,720 |
-| 8 | [Benton](players/benton.md) | 41,720 |
-| 9 | [Drbrule](players/drbrule.md) | 41,220 |
+| 🥈 | [Kyrie](players/kyrie.md) | 45,140 |
+| 🥉 | [Broken](players/broken.md) | 45,140 |
+| 4 | [Ken](players/ken.md) | 45,140 |
+| 5 | [Draco](players/draco.md) | 43,520 |
+| 6 | [Speedbump](players/speedbump.md) | 43,520 |
+| 7 | [Rose](players/rose.md) | 43,520 |
+| 8 | [Benton](players/benton.md) | 43,520 |
+| 9 | [Drbrule](players/drbrule.md) | 43,020 |
 | 10 | [Herdofturtles](players/herdofturtles.md) | 25,805 |
 <!-- DOCGEN:END id="lb-infamy-lifetime" -->
 
@@ -613,14 +613,14 @@ _Infamy currently held — drops when you buy from the Infamy Vendor. The hoarde
 
 | Rank | Character | Infamy |
 |---:|---|---:|
-| 🥇 | [Kyrie](players/kyrie.md) | 43,340 |
-| 🥈 | [Broken](players/broken.md) | 43,340 |
-| 🥉 | [Ken](players/ken.md) | 43,040 |
-| 4 | [Draco](players/draco.md) | 41,720 |
-| 5 | [Speedbump](players/speedbump.md) | 41,720 |
-| 6 | [Rose](players/rose.md) | 41,720 |
-| 7 | [Benton](players/benton.md) | 41,720 |
-| 8 | [Drbrule](players/drbrule.md) | 41,220 |
+| 🥇 | [Kyrie](players/kyrie.md) | 45,140 |
+| 🥈 | [Broken](players/broken.md) | 45,140 |
+| 🥉 | [Ken](players/ken.md) | 44,840 |
+| 4 | [Draco](players/draco.md) | 43,520 |
+| 5 | [Speedbump](players/speedbump.md) | 43,520 |
+| 6 | [Rose](players/rose.md) | 43,520 |
+| 7 | [Benton](players/benton.md) | 43,520 |
+| 8 | [Drbrule](players/drbrule.md) | 43,020 |
 | 9 | [Bro](players/bro.md) | 28,090 |
 | 10 | [Moss](players/moss.md) | 18,860 |
 <!-- DOCGEN:END id="lb-infamy-balance" -->
@@ -679,16 +679,16 @@ _Real Level = job level + gear iLvl bonus + Ascension levels + Job Points + attr
 
 | Rank | Character | Real level |
 |---:|---|---:|
-| 🥇 | [Herdofturtles](players/herdofturtles.md) | 206 |
-| 🥈 | [Ririn](players/ririn.md) | 179 |
-| 🥉 | [Broken](players/broken.md) | 175 |
-| 4 | [Stoney](players/stoney.md) | 173 |
-| 5 | [Sytara](players/sytara.md) | 173 |
-| 6 | [Regis](players/regis.md) | 171 |
-| 7 | [Ruin](players/ruin.md) | 171 |
-| 8 | [Ken](players/ken.md) | 171 |
-| 9 | [Luna](players/luna.md) | 170 |
-| 10 | [Ariamys](players/ariamys.md) | 170 |
+| 🥇 | [Jbae](players/jbae.md) | 245 |
+| 🥈 | [Herdofturtles](players/herdofturtles.md) | 206 |
+| 🥉 | [Kyrie](players/kyrie.md) | 187 |
+| 4 | [Ririn](players/ririn.md) | 179 |
+| 5 | [Broken](players/broken.md) | 175 |
+| 6 | [Stoney](players/stoney.md) | 173 |
+| 7 | [Ropraz](players/ropraz.md) | 173 |
+| 8 | [Sytara](players/sytara.md) | 173 |
+| 9 | [Regis](players/regis.md) | 171 |
+| 10 | [Ruin](players/ruin.md) | 171 |
 <!-- DOCGEN:END id="lb-real-level" -->
 
 <!-- DOCGEN:BEGIN id="lb-apex-tier" -->
@@ -1102,6 +1102,6 @@ _Highest total damage dealt to Lv 100+ mobs in any rolling 30-second window, com
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7aee4c8096c2 -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: 11f6bd05730b -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

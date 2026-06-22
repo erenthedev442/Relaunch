@@ -1,6 +1,6 @@
 # Ariamys
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 7d 10h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d
 
 `⭐ 12 Ascensions` `💪 11 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **RDM 99** |
 | Sub job | BLM 99 |
 | Time played | 78h |
-| Enemies defeated | 4,753 |
+| Enemies defeated | 4,754 |
 | Deaths | 33 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 9,639
+- **Marks (current):** 9,139
 - **Marks (lifetime):** 21,433
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 1,262
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: de431c62a126 -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: 2380c4b06ee9 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

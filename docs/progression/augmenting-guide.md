@@ -66,3 +66,10 @@ A fresh augment sits at the floor; a **rank-5, affinity-unlocked, critical** aug
 ---
 
 **Ready for the details?** → [Augment Moogle](augments.md) (the full catalyst catalog & exact numbers) · [Augment Sage](augment-sage.md) (ranking up & affinities)
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 55a85bf8681f -->
+_Last updated: 2026-06-22 20:44 UTC_
+<!-- DOCGEN:END id="last-updated" -->

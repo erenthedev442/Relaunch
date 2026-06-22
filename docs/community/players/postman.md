@@ -1,6 +1,6 @@
 # Postman
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-20 · Character age 1d 8h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-20 · Character age 1d 22h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 8/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6daf2f73a194 -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: b115d2e6fb95 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

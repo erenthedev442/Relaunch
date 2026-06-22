@@ -1,6 +1,6 @@
 # Coso
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 3d 2h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 3d 16h
 
 `💪 5 jobs @99`
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c41d2d293933 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 33699887d46a -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

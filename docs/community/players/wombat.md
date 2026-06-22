@@ -1,8 +1,8 @@
 # Wombat
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 5h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 20h
 
-`💪 1 job @99`
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **BLU 98** |
-| Sub job | SMN 67 |
-| Time played | 8h |
+| Main job | **BLU 99** |
+| Sub job | SMN 69 |
+| Time played | 9h |
 | Enemies defeated | 398 |
 | Deaths | 2 |
 
@@ -24,8 +24,8 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 67 |
-| **RDM** | **99** | BLU | 98 |
+| BLM | 1 | SMN | 69 |
+| **RDM** | **99** | **BLU** | **99** |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d61df1b02d64 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 429da472af7d -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

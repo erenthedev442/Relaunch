@@ -8,7 +8,7 @@ Every purchasable item on Legendary in one searchable list — armor, weapons, a
 Each **Item** links to its BG-Wiki page for full stats. The **Source** links to the exact vendor section where you buy it, and **Cost** spells out the currency, since each vendor tier is paid in a different seal or medal.
 
 <!-- DOCGEN:BEGIN id="item-finder" -->
-751 items in stock — **194** Armor · **148** Weapons · **120** Accessories · **289** Infamy.
+755 items in stock — **194** Armor · **151** Weapons · **120** Accessories · **290** Infamy.
 
 | Item | Source | Cost | For |
 |---|---|---:|---|
@@ -103,6 +103,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Ayanmo Gambieras](https://www.ffxiah.com/item/25935) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | WHM/RDM/BRD/BLU/RUN |
 | [Ayanmo Manopolas +2](https://www.ffxiah.com/item/25833) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | WHM/RDM/BRD/BLU/RUN |
 | [Aymur](https://www.bg-wiki.com/index.php?search=Aymur&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
+| [Aymur](https://www.bg-wiki.com/index.php?search=Aymur&go=Go) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Axes | 50 Demons Medal | BST |
 | [Azimuth Earring +2](https://www.ffxiah.com/item/25542) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 300 Infamy | — |
 | [Baetyl Pendant](https://www.ffxiah.com/item/26003) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
 | [Barbarity](https://www.ffxiah.com/item/21706) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Silver · Axes | 25 Kindreds Medal | WAR/BST |
@@ -196,6 +197,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Dojikiri Yasutsuna](https://www.ffxiah.com/item/21025) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Dokoku](https://www.bg-wiki.com/index.php?search=Dokoku&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
 | [Dolichenus](https://www.ffxiah.com/item/21722) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 350 Infamy | — |
+| [Dolichenus](https://www.ffxiah.com/item/21722) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Axes | 50 Demons Medal | WAR/DRK/BST/RNG/RUN |
 | [Donar Gun](https://www.ffxiah.com/item/21274) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Marksmanship | 12 Beastmens Medal | THF/RNG/NIN/COR |
 | [Dragon Fangs](https://www.bg-wiki.com/index.php?search=Dragon+Fangs&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 350 Infamy | — |
 | [Dragoons Collar +2](https://www.ffxiah.com/item/25497) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 250 Infamy | — |
@@ -635,6 +637,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Sophia Ring](https://www.ffxiah.com/item/10779) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
 | [Sorcerers Stole +2](https://www.ffxiah.com/item/25437) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | BLM |
 | [Spalirisos](https://www.bg-wiki.com/index.php?search=Spalirisos&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
+| [Spalirisos](https://www.bg-wiki.com/index.php?search=Spalirisos&go=Go) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Axes | 50 Demons Medal | BST |
 | [Srivatsa](https://www.ffxiah.com/item/26403) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Sroda Earring](https://www.ffxiah.com/item/26118) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
 | [Staccato Staff](https://www.ffxiah.com/item/21166) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Staves | 12 Beastmens Medal | WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO |
@@ -761,6 +764,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Xoanon](https://www.ffxiah.com/item/22086) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 800 Infamy | — |
 | [Yagrush](https://www.bg-wiki.com/index.php?search=Yagrush&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Yagyu Darkblade](https://www.bg-wiki.com/index.php?search=Yagyu+Darkblade&go=Go) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Katana | 50 Demons Medal | NIN |
+| [Yoichinoyumi](https://www.bg-wiki.com/index.php?search=Yoichinoyumi&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 10,000 Infamy | — |
 | [Yorium Gauntlets](https://www.ffxiah.com/item/27045) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | WAR/PLD/DRK |
 | [Zoar Subligar](https://www.ffxiah.com/item/27230) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 <!-- DOCGEN:END id="item-finder" -->
@@ -773,6 +777,6 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3f0e4b41e5b5 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 73570c7a9855 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

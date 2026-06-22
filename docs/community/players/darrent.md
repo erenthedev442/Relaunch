@@ -1,6 +1,6 @@
 # Darrent
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 7d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 1h
 
 `💪 9 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
 | Time played | 52h |
-| Enemies defeated | 3,890 |
+| Enemies defeated | 3,891 |
 | Deaths | 14 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,448
+- **Marks (current):** 2,748
 - **Marks (lifetime):** 5,231
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 144
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e24f9d9f0f26 -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: 6fd8be1bd3de -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

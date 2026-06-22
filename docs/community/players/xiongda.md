@@ -1,6 +1,6 @@
 # Xiongda
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 7d 16h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 7h
 
 `💪 22 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | RDM 99 |
-| Time played | 29h |
+| Time played | 30h |
 | Enemies defeated | 488 |
 | Deaths | 3 |
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a2ba14fb47ae -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 258bd79cc978 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

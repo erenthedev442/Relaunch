@@ -1,6 +1,6 @@
 # Imfinnatank
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 3d 8h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 3d 22h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 58/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4089cf71abf1 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 964be72519a1 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

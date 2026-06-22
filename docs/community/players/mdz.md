@@ -1,8 +1,8 @@
 # Mdz
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 5d 19h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 9h
 
-`💪 7 jobs @99`
+`💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **GEO 94** |
-| Sub job | BLM 63 |
-| Time played | 33h |
-| Enemies defeated | 2,357 |
+| Main job | **MNK 99** |
+| Sub job | WAR 99 |
+| Time played | 34h |
+| Enemies defeated | 2,387 |
 | Deaths | 15 |
 
 ## Job levels
@@ -30,7 +30,7 @@
 | **PLD** | **99** | **PUP** | **99** |
 | **DRK** | **99** | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 94 |
+| BRD | 1 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 21c37b52c625 -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: c0bca639ce95 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Ruin
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 7d 14h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 8d 4h
 
 `⭐ 13 Ascensions` `💪 10 jobs @99`
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1f318cda1e44 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 6b5f31ab8fb8 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

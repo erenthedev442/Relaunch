@@ -198,7 +198,7 @@ _All NPCs are in **GM Home** (zone 210). Positions shown as (x, y, z)._
 |---|---|---|
 | **Game Master** | `(3, -34.3, -467)` | Wave-based fight challenge (Easy → Insane); earn hunt marks on full clear |
 | **Companion Master** | `(7.5, 0, -10)` | Player companion system — link friends and summon them as trusts in your party |
-| **Test Dummy** | `(4.5, 0, -35)` | Interactive combat dummy for testing DPS and skill rotations |
+| **Test Dummy** | `(0, 0, -40)` | Interactive combat dummy for testing DPS and skill rotations |
 
 **Commerce row** — gil sinks and convenience services (z ≈ −35)
 
@@ -271,6 +271,6 @@ For reference, these are at retail defaults on this server:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b94251712d26 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: f89debd95d53 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Vision
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 17h
 
 `💪 2 jobs @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 0
-- **Marks (lifetime):** 217
-- **Distinct NMs slain:** 4
-- **Total NM kills:** 47
+- **Marks (current):** 132
+- **Marks (lifetime):** 293
+- **Distinct NMs slain:** 5
+- **Total NM kills:** 49
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 514c2850666d -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: ded1c652be75 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Scorpiion
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-17 · Character age 8d 15h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-17 · Character age 9d 5h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 2/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 279b53f123ca -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: 846741a9b379 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

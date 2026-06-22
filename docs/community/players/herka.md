@@ -1,6 +1,6 @@
 # Herka
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 14h 34m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 4h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 78/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 50aeb3a23172 -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: cfe41c5555b5 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

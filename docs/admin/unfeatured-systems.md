@@ -13,12 +13,13 @@ The following system detail pages exist but are **not** represented on the [Why 
 
 | Detail page | Lead blurb |
 |---|---|
+| [`progression/augmenting-guide.md`](../progression/augmenting-guide.md) | !Augment gem{ .lgnd-emblem } |
 | [`progression/prime-trials.md`](../progression/prime-trials.md) | Five trials, done in any order: gather the Abyssea collectibles, climb the Endless Tower, win a Prime Voucher from Hunting League NMs, master a job to beat a We |
 <!-- DOCGEN:END id="unfeatured" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6dcbe6bc3d66 -->
-_Last updated: 2026-06-21 03:39 UTC_
+<!-- content-hash: 22016725be7a -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

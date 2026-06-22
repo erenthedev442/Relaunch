@@ -1,6 +1,6 @@
 # Wira
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 17h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-21 · Character age 4d 7h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 69/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4edd76bd68e9 -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: 7391661cb08e -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

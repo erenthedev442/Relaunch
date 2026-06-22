@@ -593,7 +593,7 @@ _38 weapons total. Cost is paid in Kindreds Medal._
 ### Gold tier (REMA + Aeonic — top-tier endgame)
 
 <!-- DOCGEN:BEGIN id="weapons-gold" -->
-_40 weapons total. Cost is paid in Demons Medal._
+_43 weapons total. Cost is paid in Demons Medal._
 
 #### Swords
 
@@ -646,6 +646,14 @@ _40 weapons total. Cost is paid in Demons Medal._
 | Item | Cost | Jobs |
 |---|---:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/21660" data-img="https://www.bg-wiki.com/images/5/57/Bery._Sword_%2B1_description.png" target="_blank" rel="noopener">Beryllium Sword +1</a> | 50 | WAR/PLD/DRK/RUN |
+
+#### Axes
+
+| Item | Cost | Jobs |
+|---|---:|---|
+| <a class="item-link" href="https://www.ffxiah.com/item/21722" data-img="https://www.bg-wiki.com/images/5/55/Dolichenus_description.png" target="_blank" rel="noopener">Dolichenus</a> | 50 | WAR/DRK/BST/RNG/RUN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Spalirisos&go=Go" data-img="" target="_blank" rel="noopener">Spalirisos</a> | 50 | BST |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Aymur&go=Go" data-img="" target="_blank" rel="noopener">Aymur</a> | 50 | BST |
 
 #### Great Axes
 
@@ -1009,7 +1017,7 @@ Per-job **+4 Reforge Sets** (AF/Relic/Empyrean +4) are also sold here.
 
 ### Curated picks
 
-_164 hand-picked items -- relic weapons, bard instruments, and other special weapons._
+_165 hand-picked items -- relic weapons, bard instruments, and other special weapons._
 
 | Item | Cost | Notes |
 |---|---:|---|
@@ -1042,6 +1050,7 @@ _164 hand-picked items -- relic weapons, bard instruments, and other special wea
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Lorg+Mor&go=Go" data-img="" target="_blank" rel="noopener">Lorg Mor</a> | 800 | Club relic (Lv.119 III). Mjollnir. · STR/MND+30, MAtk+50, Magic Dmg+248, DT-7%. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Opashoro&go=Go" data-img="" target="_blank" rel="noopener">Opashoro</a> | 800 | Staff relic (Lv.119 III). Claustrum. · INT/MND+35, MAtk+80, Magic Dmg+325. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Pinaka&go=Go" data-img="" target="_blank" rel="noopener">Pinaka</a> | 800 | Bow relic (Lv.119 III). Yoichinoyumi. · STR/AGI+35, Store TP+10, Archery skill+277. |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Yoichinoyumi&go=Go" data-img="" target="_blank" rel="noopener">Yoichinoyumi</a> | 10000 | Bow (ranged). Custom iLvl 119. RNG/SAM. Grants Namas Arrow. · RATT+45, RACC+60. Aftermath effect. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Earp&go=Go" data-img="" target="_blank" rel="noopener">Earp</a> | 800 | Gun relic (Lv.119 III). Annihilator. · DEX/AGI+35, Crit rate+15%, Mkmanship skill+277. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Duban&go=Go" data-img="" target="_blank" rel="noopener">Duban</a> | 800 | Shield relic (Lv.119 III). Aegis. · DEF+150, VIT/MND+30, Shield skill+129. |
 | <a class="item-link" href="https://www.ffxiah.com/item/21398" data-img="https://www.bg-wiki.com/images/4/4d/Marsyas_description.png" target="_blank" rel="noopener">Marsyas</a> | 5000 | Wind horn (BRD). Song duration+50%. · Top-tier BRD wind instrument. |
@@ -1314,6 +1323,6 @@ _125 top armor, weapons, and Sortie earrings, refreshed from the live gear ranki
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cc41ccb27eac -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 6d5ca3a813fc -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

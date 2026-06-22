@@ -1,6 +1,6 @@
 # Speedbump
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 17h
 
 `⭐ 15 Ascensions` `💪 9 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | RDM 99 |
-| Time played | 37h |
+| Time played | 38h |
 | Enemies defeated | 4 |
 | Deaths | 2 |
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 902692b2fc60 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 659c89e55f4a -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

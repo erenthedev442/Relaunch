@@ -1,6 +1,6 @@
 # Namshiel
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 6d 12h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-21 · Character age 7d 2h
 
 `💪 8 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: caab6aeb4acd -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: db6156aac404 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Lagato
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-21 · Character age 6d 5h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-21 · Character age 6d 20h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 82/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -79,6 +79,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 025e02765e41 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 1d3faea88caa -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

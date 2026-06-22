@@ -1,6 +1,6 @@
 # Drbrule
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 3d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 3d 20h
 
 `⭐ 14 Ascensions` `💪 22 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | RDM 99 |
-| Time played | 27h |
+| Time played | 28h |
 | Enemies defeated | 15 |
 | Deaths | 2 |
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e339acdec8b5 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 3b199cb57f4e -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

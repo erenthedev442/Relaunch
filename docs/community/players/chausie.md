@@ -1,6 +1,6 @@
 # Chausie
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-20 · Character age 7d 2h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-20 · Character age 7d 16h
 
 `💪 3 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 372
+- **Marks (current):** 1,072
 - **Marks (lifetime):** 332
 - **Distinct NMs slain:** 8
 - **Total NM kills:** 47
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 31b45c3440c8 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 3e2b7ad64c95 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

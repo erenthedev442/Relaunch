@@ -1,6 +1,6 @@
 # Cheyn
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-15 · Character age 7d
+**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-15 · Last seen 2026-06-15 · Character age 7d 14h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 810ed7eff8fa -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: b087412045c5 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

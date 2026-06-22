@@ -1,6 +1,6 @@
 # Nut
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-20 · Character age 7d 8h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-20 · Character age 7d 22h
 
 `💪 6 jobs @99`
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 88f144eae38a -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: fe744b2c0208 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

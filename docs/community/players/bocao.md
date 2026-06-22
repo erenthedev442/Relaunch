@@ -1,6 +1,6 @@
 # Bocao
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 5d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 5d 21h
 
 `💪 3 jobs @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 5,258
-- **Marks (lifetime):** 350
+- **Marks (current):** 5,318
+- **Marks (lifetime):** 390
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 70
+- **Total NM kills:** 78
 
 ## Augment Sage
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 44f8a6d43a54 -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: a56805504856 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

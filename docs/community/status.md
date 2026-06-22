@@ -17,7 +17,7 @@ Legendary's current state at a glance. Stats update daily via the auto-generatio
 ## Who's Online
 
 <!-- DOCGEN:BEGIN id="status-online" -->
-**38** online · **405** characters · _snapshot from the last site rebuild — the header badge shows live status._
+**18** online · **405** characters · _snapshot from the last site rebuild — the header badge shows live status._
 <!-- DOCGEN:END id="status-online" -->
 
 ---
@@ -31,12 +31,12 @@ _Snapshot taken at build time — timers drift after that. For live status, chec
 
 | NM | Zone | Respawn window | Status (snapshot) |
 |---|---|---:|---|
+| **Adamantoise** | Valley of Sorrows | 21–24 h | 🟢 **Up now** |
 | **Roc** | Sauromugue Champaign | 6–8 h | 🟢 **Up now** |
 | **Serket** | Garlaige Citadel | 6–8 h | 🟢 **Up now** |
 | **Simurgh** | Rolanberry Fields | 6–8 h | 🟢 **Up now** |
-| **Adamantoise** | Valley of Sorrows | 21–24 h | 🟠 pops in ~3h 35m |
-| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~16h 3m |
-| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟠 pops in ~16h 36m |
+| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~1h 46m |
+| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟠 pops in ~2h 18m |
 | **Spiny Spipi** | East Sarutabaruta | 4–6 h | ⚪ awaiting first spawn |
 | **King Arthro** | Jugner Forest | 8–10 h | ⚪ awaiting first spawn |
 <!-- DOCGEN:END id="status-hnm" -->
@@ -58,10 +58,10 @@ _Health snapshot from the last site rebuild._ 🟢 OK · 🟠 last run reported 
 
 | Background job | Schedule | Last run | Status (snapshot) |
 |---|---|---:|---|
-| **Auction House market-maker** | every 15 min | 7d 11h ago | 🔴 **STALE** — no run in 7d 11h |
+| **Auction House market-maker** | every 15 min | 8d 1h ago | 🔴 **STALE** — no run in 8d 1h |
 | **Discord notifier (webhook)** | every 5 min | — | ⚪ no signal yet |
 | **Discord bot (slash commands)** | daemon · 5 min beat | — | ⚪ no signal yet |
-| **Database backup + verify** | nightly 04:00 | 21d 18h ago | 🔴 **STALE** — no run in 21d 18h |
+| **Database backup + verify** | nightly 04:00 | 22d 8h ago | 🔴 **STALE** — no run in 22d 8h |
 <!-- DOCGEN:END id="status-jobs" -->
 
 ---
@@ -119,6 +119,6 @@ See the full list at [Hall of Fame](highlights.md).
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c78a1d61003b -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: 7dc0864d892f -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

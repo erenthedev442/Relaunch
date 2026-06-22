@@ -1,6 +1,6 @@
 # Badger
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-20 · Character age 2d 5h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-20 · Character age 2d 19h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 15/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fb6419050c30 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: ed09bfdaa6b9 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

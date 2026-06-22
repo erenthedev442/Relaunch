@@ -1,6 +1,6 @@
 # Edor
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-17 · Character age 4d 18h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-17 · Character age 5d 9h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e2f0683d1149 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: df310b447cdb -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

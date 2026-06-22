@@ -1,6 +1,6 @@
 # Kalystrin
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 11h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-21 · Character age 2d 1h
 
 `💪 2 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 21324658fb51 -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 77a12ab25284 -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

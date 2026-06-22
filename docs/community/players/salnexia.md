@@ -1,6 +1,6 @@
 # Salnexia
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 3h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 17h
 
 `💪 2 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 27h |
+| Time played | 28h |
 | Enemies defeated | 605 |
 | Deaths | 12 |
 
@@ -39,7 +39,7 @@
 - **Marks (current):** 685
 - **Marks (lifetime):** 1,359
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 294
+- **Total NM kills:** 299
 
 ## Augment Sage
 
@@ -51,7 +51,7 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 400 | 400 |
+| AF | 525 | 525 |
 | Relic | 1,500 | 0 |
 | Empyrean | 1,100 | 0 |
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ed9510a2175e -->
-_Last updated: 2026-06-22 06:26 UTC_
+<!-- content-hash: 8e35a1c5263b -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

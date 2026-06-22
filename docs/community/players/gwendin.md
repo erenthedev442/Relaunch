@@ -1,6 +1,6 @@
 # Gwendin
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 7d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 11h
 
 `💪 5 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **RUN 99** |
 | Sub job | DRK 99 |
-| Time played | 67h |
+| Time played | 68h |
 | Enemies defeated | 968 |
 | Deaths | 20 |
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 890c6e340aca -->
-_Last updated: 2026-06-22 06:18 UTC_
+<!-- content-hash: 35f3e6da584a -->
+_Last updated: 2026-06-22 20:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->
