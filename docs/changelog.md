@@ -7,6 +7,16 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 !!! note "Week of June 15–21, 2026"
     **Sunday, June 21**
 
+    - **Merits** — Hard-cap held merits at 127 (client int8 ceiling); stop !automerits buying Max Merit
+    - **Crash** — Null-guard linkshell break when discarding an orphaned pearl
+    - **Gm Home** — Add subjob change to Mog Moogle
+    - **Tower** — Allied Notes drop from Endless Tower mobs
+    - **GEO** — Enable pets in Walk of Echoes (Endless Tower) so GEO/SMN/BST work
+    - **Prime Weapons** — Give Origin a distinct animation (70 Catastrophe), was sharing Entropy's 74
+    - **Prime Weapons** — Re-apply AFTERMATH mod wiped by prime_weapons_gear (Foenaria + all Prime WS)
+    - **SMN** — Big flat MATT/MACC/INT on avatars so magical Blood Pacts land
+    - **Gear Finder** — Tag Su5 Divergence weapons as 'Abyssea (Su5)' source
+    - **SMN** — Apply the BP_DAMAGE x260 boost to AVATARS (it was spirit-gated)
     - **Gear Scorer** — Tolerate spaces in item_mods rows; add Gleti armor to hunt vendor
     - **Augments** — Add flat 'Spikes Dmg' augment (Mod::SPIKES_DMG / 344)
     - **BST** — Pet over-cap readout says 'Ready move' for jug pets
@@ -611,10 +621,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 775eec498892 -->
-_Last updated: 2026-06-22 00:11 UTC_
-<!-- DOCGEN:END id="last-updated" -->
