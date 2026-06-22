@@ -27,4 +27,24 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     end)
 end)
 
+-- Track peak pet WS / Blood Pact hit into the master's WSMaxDmg personal best.
+-- Avatars fire WEAPONSKILL_USE on the pet entity with true uncapped BP damage.
+-- Automatons and BST jug pets use the same path for their WS/Ready moves.
+m:addOverride('xi.pet.spawnPet', function(caster, petID, state, target)
+    super(caster, petID, state, target)
+    if not caster or not caster:isPC() then return end
+    local pet = caster:getPet()
+    if not pet then return end
+    pet:addListener('WEAPONSKILL_USE', 'WS_PET_DMG_TRACKER', function(petArg, tgt, skill, tp, action, damage)
+        if not damage or damage <= 0 then return end
+        local master = petArg:getMaster()
+        if not master or not master:isPC() then return end
+        local stored = master:getCharVar('WSMaxDmg')
+        if damage > stored then
+            master:setCharVar('WSMaxDmg', damage)
+            master:setCharVar('WSMaxDmgSkillId', skill:getID())
+        end
+    end)
+end)
+
 return m

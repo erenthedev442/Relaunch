@@ -127,4 +127,22 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     end)
 end)
 
+-- ── PET WEAPONSKILL_USE: avatars (Blood Pacts), automatons, BST jug pets ──
+-- Fired on the pet entity with true uncapped damage. Route into the master's
+-- MaxDmg30 rolling window so SMN/PUP/BST appear on the same leaderboard.
+m:addOverride('xi.pet.spawnPet', function(caster, petID, state, target)
+    super(caster, petID, state, target)
+    if not caster or not caster:isPC() then return end
+    local pet = caster:getPet()
+    if not pet then return end
+    pet:addListener('WEAPONSKILL_USE', 'COMBAT_RECORDS_PET_WS', function(petArg, tgt, skill, tp, action, damage)
+        if not damage or damage <= 0 then return end
+        if not tgt or tgt:getObjType() ~= xi.objType.MOB then return end
+        local master = petArg:getMaster()
+        if not master or not master:isPC() then return end
+        local tier = mobTier(tgt:getMainLvl())
+        updateWindow(master, damage, tier)
+    end)
+end)
+
 return m
