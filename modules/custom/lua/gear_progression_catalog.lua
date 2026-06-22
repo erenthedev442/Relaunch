@@ -307,6 +307,12 @@ do
     local greatswords = cat(catalog.gold.weapons, 'Great Swords')
     table.insert(greatswords, { id = 21660, name = "Beryllium Sword +1", cost = 50, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 253, DMG 290/Dly 431
 
+    -- Axes: 0 pick(s) + 3 manual
+    local axes = cat(catalog.gold.weapons, 'Axes')
+    table.insert(axes, { id = 21722, name = "Dolichenus", cost = 50, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- MANUAL, DMG 200/Dly 288
+    table.insert(axes, { id = 21730, name = "Spalirisos", cost = 50, jobs = 'BST' })  -- MANUAL, DMG 250/Dly 280
+    table.insert(axes, { id = 21751, name = "Aymur", cost = 50, jobs = 'BST' })  -- MANUAL, DMG 195/Dly 312
+
     -- Great Axes: 1 pick(s)
     local greataxes = cat(catalog.gold.weapons, 'Great Axes')
     table.insert(greataxes, { id = 21767, name = "Raetic Chopper", cost = 50, jobs = 'WAR/BLM/DRK/BRD/SMN/SCH/RUN' })  -- WS score 254, DMG 336/Dly 504
