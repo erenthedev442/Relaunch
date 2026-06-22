@@ -95,6 +95,12 @@ local function _awardSubExp(player, mob, exp)
     local sjob = player:getSubJob()
     if sjob == nil or sjob == xi.job.NONE then return end
 
+    -- Don't auto-level a REBORN subjob. A job that's been through Job Rebirth
+    -- (JobRebirth.lua sets Rebirth_Count_<job> > 0) is meant to be re-grinded as a
+    -- MAIN under its escalating EXP penalty; letting it ride the free 50% subjob
+    -- exp-share would bypass the rebirth challenge (and its penalty) entirely.
+    if (player:getCharVar('Rebirth_Count_' .. sjob) or 0) > 0 then return end
+
     local mainLvl = player:getMainLvl()
     local subLvl  = player:getJobLevel(sjob)
     if subLvl >= mainLvl then return end -- sub already at the main-level cap
