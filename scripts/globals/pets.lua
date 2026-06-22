@@ -138,6 +138,27 @@ xi.pet.spawnPet = function(caster, petID, state, target)
                 end
             end
         end
+
+        -- FJB: Apply avatar stat boosts for SMN players. smn_avatar_boost.lua
+        -- does the same via an addOverride (active after restart); the
+        -- smnBoostApplied guard prevents double-apply once both are live.
+        if caster:isPC() and caster:getMainJob() == xi.job.SMN then
+            local pet = caster:getPet()
+            if pet and pet:getLocalVar('smnBoostApplied') == 0 then
+                local sumSkill = caster:getSkillLevel(xi.skill.SUMMONING_MAGIC)
+                local maxSkill = caster:getMaxSkillLevel(pet:getMainLvl(), xi.job.SMN, xi.skill.SUMMONING_MAGIC)
+                local skillOC  = math.max(sumSkill - maxSkill, 0)
+                pet:addMod(xi.mod.BP_DAMAGE, 25900 + skillOC * 40)
+                pet:addMod(xi.mod.MATT, 6000)
+                pet:addMod(xi.mod.MACC, 2500)
+                pet:addMod(xi.mod.INT,  1000)
+                pet:addMod(xi.mod.ATT,  6000 + skillOC * 40)
+                pet:addMod(xi.mod.ACC,  4500 + skillOC * 10)
+                pet:addMod(xi.mod.STR,  500)
+                pet:addMod(xi.mod.DEX,  300)
+                pet:setLocalVar('smnBoostApplied', 1)
+            end
+        end
     end
 
     -- Nyzul Isle has Pathos set randomly on floors and is recorded as bits in a localvar of the instance
