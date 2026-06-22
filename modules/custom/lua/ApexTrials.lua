@@ -32,6 +32,7 @@
 require('modules/module_utils')
 require('scripts/zones/Walk_of_Echoes/Zone')
 require('scripts/zones/GM_Home/Zone')
+require('scripts/globals/job_utils/dragoon')
 local C = require('modules/custom/lua/apex_catalog')
 
 local m = Module:new('apex_trials')
@@ -306,6 +307,21 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         end,
     })
     utils.unused(npc)
+end)
+
+-- Walk of Echoes (zone 182) lacks xi.zoneMisc.PET, which makes
+-- abilityCheckCallWyvern return CANT_BE_USED_IN_AREA.  The arena
+-- explicitly allows pets, so bypass that flag check inside the arena.
+m:addOverride('xi.job_utils.dragoon.abilityCheckCallWyvern', function(player, target, ability)
+    if player:getZoneID() ~= C.ARENA_ZONE then
+        return super(player, target, ability)
+    end
+    if player:getPet() ~= nil then
+        return xi.msg.basic.ALREADY_HAS_A_PET, 0
+    elseif player:hasStatusEffect(xi.effect.SPIRIT_SURGE) then
+        return xi.msg.basic.UNABLE_TO_USE_JA, 0
+    end
+    return 0, 0
 end)
 
 return m
