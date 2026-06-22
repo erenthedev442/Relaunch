@@ -801,6 +801,26 @@ def _query_real_level(cur) -> list[tuple[str, int]]:
     return [(r[0], int(r[1])) for r in cur.fetchall()]
 
 
+def _query_charvar_top(cur, varname: str) -> list[tuple[str, int]]:
+    """Top characters by an arbitrary numeric CharVar (opt-out + expiry aware)."""
+    cur.execute(
+        """
+        SELECT c.charname, cv.value
+          FROM char_vars cv
+          JOIN chars c ON c.charid = cv.charid
+     LEFT JOIN char_vars opt ON opt.charid = cv.charid AND opt.varname = 'Leaderboard_OptOut'
+         WHERE cv.varname = %s
+           AND (cv.expiry = 0 OR cv.expiry > UNIX_TIMESTAMP())
+           AND cv.value > 0
+           AND (opt.value IS NULL OR opt.value = 0)
+      ORDER BY cv.value DESC
+         LIMIT %s
+        """,
+        (varname, _TOP_N),
+    )
+    return [(r[0], int(r[1])) for r in cur.fetchall()]
+
+
 def _query_ws_damage(cur) -> list[tuple[str, int, str]]:
     """Top characters by single weapon skill hit. Returns (charname, damage, ws_name)."""
     cur.execute(
@@ -997,6 +1017,34 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             boards_written += 1
         else:
             print("[leaderboards] lb-real-level: marker missing in leaderboards.md")
+
+        apex_rows = _query_charvar_top(cur, "Apex_HighestTier")
+        content = _render_board(
+            "Deepest Apex Trial",
+            "Apex Trials is an infinite, scaling solo climb — one Apex boss per tier, harder "
+            "forever. This is the highest tier ever cleared: the only number on the server with "
+            "no cap. Each new tier banks Paragon Points.",
+            "tier",
+            apex_rows,
+        )
+        if write_between_markers(page, "lb-apex-tier", content):
+            boards_written += 1
+        else:
+            print("[leaderboards] lb-apex-tier: marker missing in leaderboards.md")
+
+        paragon_rows = _query_charvar_top(cur, "Paragon_Level")
+        content = _render_board(
+            "Highest Paragon Level",
+            "Paragon Levels are bought with Paragon Points earned in Apex Trials — an infinite "
+            "prestige track layered on top of the level cap, unlocking capped perks and the "
+            "Daily Might buff along the way.",
+            "paragon level",
+            paragon_rows,
+        )
+        if write_between_markers(page, "lb-paragon-level", content):
+            boards_written += 1
+        else:
+            print("[leaderboards] lb-paragon-level: marker missing in leaderboards.md")
 
         # Maat's Challenge boards
         maat_kill_rows = _query_single_var(cur, "Maat_Kills", None)

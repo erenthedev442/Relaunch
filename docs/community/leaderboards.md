@@ -690,6 +690,12 @@ _Real Level = job level + gear iLvl bonus + Ascension levels + Job Points + attr
 | 9 | [Ruin](players/ruin.md) | 171 |
 | 10 | [Ken](players/ken.md) | 171 |
 <!-- DOCGEN:END id="lb-real-level" -->
+
+<!-- DOCGEN:BEGIN id="lb-apex-tier" -->
+<!-- DOCGEN:END id="lb-apex-tier" -->
+
+<!-- DOCGEN:BEGIN id="lb-paragon-level" -->
+<!-- DOCGEN:END id="lb-paragon-level" -->
 </div>
 
 ---

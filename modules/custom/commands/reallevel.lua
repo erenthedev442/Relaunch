@@ -88,6 +88,14 @@ commandObj.onTrigger = function(player, targetName)
         player:printToPlayer(string.format(
             '  Lifetime ascensions (all jobs): %d', lifeAsc), B)
     end
+
+    -- Paragon / Apex Trials flex tail (the uncapped post-cap track).
+    local pLvl = targ:getCharVar('Paragon_Level') or 0
+    local apex = targ:getCharVar('Apex_HighestTier') or 0
+    if pLvl > 0 or apex > 0 then
+        player:printToPlayer(string.format(
+            '  Paragon Level %d  |  Apex Trials record: Tier %d', pLvl, apex), B)
+    end
     player:printToPlayer('  (Full stat sheet: !mystats)', B)
 end
 
