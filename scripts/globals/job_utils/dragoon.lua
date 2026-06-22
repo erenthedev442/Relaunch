@@ -136,7 +136,7 @@ xi.job_utils.dragoon.abilityCheckCallWyvern = function(player, target, ability)
         return xi.msg.basic.ALREADY_HAS_A_PET, 0
     elseif player:hasStatusEffect(xi.effect.SPIRIT_SURGE) then
         return xi.msg.basic.UNABLE_TO_USE_JA, 0
-    elseif not player:canUseMisc(xi.zoneMisc.PET) then
+    elseif bit.band(player:getZone():getTypeMask(), xi.zoneType.CITY) ~= 0 then
         return xi.msg.basic.CANT_BE_USED_IN_AREA, 0
     else
         return 0, 0
