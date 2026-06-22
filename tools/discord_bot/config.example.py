@@ -176,3 +176,44 @@ ROLE_SYNC = {
     "trinity":     "",   # role ID for Trinity hunters
     "grandmaster": "",   # role ID for single-guild Grandmasters
 }
+
+# ============================================================
+# LINKSHELL -> DISCORD BRIDGE  (ls_bridge.py)  -- OPTIONAL, separate daemon
+# ============================================================
+# Mirrors ONE in-game LinkShell's chat into a Discord channel in near-real time
+# (~3s), one-way (game -> Discord). Independent of everything above: its own
+# webhook (usually its own channel) and its own state file. No bot token, no
+# rebuild -- it tails the server's built-in chat audit.
+#
+# REQUIRED on the server side (settings/map.lua, box-only + a map restart):
+#     AUDIT_CHAT      = true
+#     AUDIT_LINKSHELL = true
+# With those on, every LinkShell line lands in the `audit_chat` table; the
+# bridge tails it and POSTs new lines for your chosen shell to Discord.
+#
+# It runs as a long-lived daemon (like token_bot.py), NOT a Task Scheduler poll.
+# See README "LinkShell -> Discord bridge" + ls_bridge.service.
+
+# REQUIRED: a Discord webhook URL for the channel that should receive LS chat.
+# Make it the same way as WEBHOOK_URL (Channel -> Integrations -> Webhooks ->
+# New Webhook). Use a DIFFERENT channel than the hunter notifier unless you
+# actually want LS chat and achievement posts mixed together.
+LS_BRIDGE_WEBHOOK_URL = "https://discord.com/api/webhooks/REPLACE_ME"
+
+# REQUIRED: the exact in-game LinkShell name to mirror (case-sensitive -- the
+# decoded pearl name as it shows in-game, e.g. "Legendary"). Only this shell's
+# lines are bridged. Matches whether members equip it in LinkShell1 or 2.
+LS_BRIDGE_NAME = "REPLACE_ME"
+
+# Display name + avatar for the bridge's Discord posts.
+LS_BRIDGE_BOT_USERNAME = "Legendary Linkshell"
+LS_BRIDGE_AVATAR_URL   = ""   # optional; leave empty for the channel default
+
+# Poll cadence in seconds. Lower = snappier, more DB hits. 3 is the sweet spot
+# for "real-time-ish" chat without hammering MariaDB.
+LS_BRIDGE_POLL_SECONDS = 3
+
+# Prefix each post with the LinkShell name in `[brackets]`. Off by default --
+# one shell -> one channel makes it redundant. Turn on only if you ever point
+# two shells at the same Discord channel.
+LS_BRIDGE_SHOW_LSNAME = False

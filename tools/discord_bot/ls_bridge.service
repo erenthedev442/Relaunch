@@ -1,0 +1,35 @@
+# LinkShell -> Discord bridge (ls_bridge.py) as a systemd service on the box.
+#
+# Prereqs:
+#   1. settings/map.lua on the box: AUDIT_CHAT = true AND AUDIT_LINKSHELL = true,
+#      then restart the map (xi_map). Without these, audit_chat stays empty.
+#   2. tools/discord_bot/config.py exists with LS_BRIDGE_WEBHOOK_URL + LS_BRIDGE_NAME.
+#   3. The python below can import pymysql (same dep the docs/AH crons use). If
+#      your pymysql lives in a venv, point ExecStart at that venv's python, e.g.
+#      ExecStart=/home/azureuser/server/tools/docgen/venv/bin/python ...
+#
+# Install (on the box):
+#   sudo cp /home/azureuser/server/tools/discord_bot/ls_bridge.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now ls_bridge.service
+#   journalctl -u ls_bridge.service -f        # watch it live
+#
+# Stop / disable:
+#   sudo systemctl disable --now ls_bridge.service
+
+[Unit]
+Description=Legendary LinkShell -> Discord bridge
+After=network-online.target mariadb.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=azureuser
+WorkingDirectory=/home/azureuser/server
+Environment=LEGENDARY_LIVE_ROOT=/home/azureuser/server
+ExecStart=/usr/bin/python3 /home/azureuser/server/tools/discord_bot/ls_bridge.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

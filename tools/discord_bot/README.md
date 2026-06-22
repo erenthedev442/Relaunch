@@ -335,3 +335,84 @@ only default intents (it does, out of the box).
 in Server Settings → Roles. Sync runs every ~10 min and on startup, and skips
 members/roles it can't action rather than crashing — so a perms/hierarchy problem
 fails silently; fix the hierarchy and it self-heals on the next pass.
+
+---
+
+## LinkShell → Discord bridge (`ls_bridge.py`)
+
+A **third**, optional integration: mirror **one** in-game LinkShell's chat into a
+Discord channel in **near-real time (~3s)**, one-way (game → Discord). No bot
+token, no C++ change, no rebuild — it rides the server's **built-in chat audit**.
+
+### How it works
+
+When `AUDIT_CHAT` + `AUDIT_LINKSHELL` are on, the map server INSERTs every
+LinkShell line into the `audit_chat` table (`speaker, type='LINKSHELL', lsName,
+message, datetime`, auto-increment `lineID`). The bridge is a small daemon that
+tails that table by `lineID`, keeps only your chosen shell, and POSTs each new
+line to a Discord webhook as `**Speaker**: message`.
+
+The C++ stores the **decoded** shell name in `lsName`, so one shell is matched
+whether members equip it as LinkShell1 **or** LinkShell2.
+
+**Safety:** every post sets `allowed_mentions: {parse: []}` — a player typing
+`@everyone` / `@role` in LinkShell can **never** ping your Discord server.
+
+### Setup
+
+**1. Turn on the audit (server side — box-only, `settings/*.lua` is gitignored):**
+
+In `settings/map.lua` on the box:
+```lua
+AUDIT_CHAT      = true,
+AUDIT_LINKSHELL = true,
+```
+Make sure the `audit_chat` table exists (`sql/audit_chat.sql`), then **restart
+the map** (`xi_map`) — these settings are read at startup. Until this is done,
+`audit_chat` stays empty and the bridge has nothing to post.
+
+**2. Create the Discord webhook** for the channel you want LS chat in
+(Channel → Integrations → Webhooks → New Webhook → Copy URL). Use a channel
+*separate* from the hunter notifier unless you want them mixed.
+
+**3. Configure:**
+```
+cd /home/azureuser/server/tools/discord_bot
+cp config.example.py config.py     # if you don't already have one
+nano config.py
+```
+Set:
+```python
+LS_BRIDGE_WEBHOOK_URL = "https://discord.com/api/webhooks/…"
+LS_BRIDGE_NAME        = "Legendary"     # the exact in-game shell name
+```
+
+**4. Test one pass:**
+```
+python3 ls_bridge.py --once
+```
+The **first** run baselines at the newest `lineID` and posts nothing (so it
+never floods the channel with history). Say something in that LinkShell in-game,
+then run `--once` again — the line should appear in Discord.
+
+**5. Run it as a service** (keeps it alive + restarts on reboot/crash):
+```
+sudo cp ls_bridge.service /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now ls_bridge.service
+journalctl -u ls_bridge.service -f
+```
+(If your `pymysql` is in a venv rather than system Python, point the unit's
+`ExecStart` at that venv's `python` — see the comments in `ls_bridge.service`.)
+
+### Notes & limits
+
+- **One-way only.** Discord → game would need an in-game message-inject path
+  (a DB write / IPC the bridge deliberately avoids). Out of scope for v1.
+- **One shell per bridge.** To mirror a second shell to a second channel, run a
+  second copy with its own `config.py` + webhook (or extend `LS_BRIDGE_NAME` to
+  a list — easy follow-up if you want it).
+- **Auto-translate phrases** show as `�` (they're multi-byte FFXI codes, not
+  UTF-8). Plain text comes through fine.
+- `ls_bridge_state.json` (gitignored) holds the last-bridged `lineID`. Delete it
+  to re-baseline from the current newest line.
