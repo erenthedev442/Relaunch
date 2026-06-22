@@ -67,19 +67,17 @@ return
     -- tail for leaderboard flex). Set a number to cap it.
     maxLevel       = nil,
 
-    -- EXP penalty stacked on top of the Job Rebirth system's penalty.
-    -- Applied per-job (only active while that job is your main job).
-    -- Piecewise: linear ramp from 0 to -100% over levels 1-floorLevel,
-    -- then +postScale% per level beyond that (no ceiling).
-    --   level <= floorLevel : floor(level / floorLevel * 100)
-    --   level >  floorLevel : 100 + (level - floorLevel) * postScale
-    -- e.g. floorLevel=5, postScale=10:
-    --   P.Lv 1=-20%  P.Lv 2=-40%  P.Lv 3=-60%  P.Lv 4=-80%
-    --   P.Lv 5=-100% (floor)
-    --   P.Lv 6=-110% P.Lv 10=-150% P.Lv 20=-250% ...
-    -- Stacks additively with Rebirth's triangular penalty on Mod::EXP_BONUS.
-    expPenaltyFloorLevel = 5,
-    expPenaltyPostScale  = 10,
+    -- EXP penalty: MULTIPLICATIVE cut (the per-main-job [PrestigeExpCut] charVar the
+    -- ENGINE applies AFTER gear/augment EXP_BONUS, so +EXP augments can't cancel it).
+    -- Applied per-job (only while that job is your main). Stacks MULTIPLICATIVELY with
+    -- the Job Rebirth cut (e.g. -80% rebirth then -80% prestige = -96% off the boosted
+    -- total). Linear: caps at expPenaltyMaxCut% at expPenaltyMaxLevel, scaling to lv 1 --
+    -- mirrors the Rebirth cut (80% @ 20).
+    --   cut(L) = min(round(L / expPenaltyMaxLevel * expPenaltyMaxCut), expPenaltyMaxCut)
+    --   P.Lv 1 -4%, P.Lv 5 -20%, P.Lv 10 -40%, P.Lv 15 -60%, P.Lv 20+ -80% (cap).
+    -- The engine still floors EXP at 5% of base, so a job can never be soft-locked.
+    expPenaltyMaxCut   = 80,
+    expPenaltyMaxLevel = 20,
 
     -- =========================================================
     -- ASCENSION TRIAL  --  "The Nightmare Court"

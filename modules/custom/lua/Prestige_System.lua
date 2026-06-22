@@ -253,6 +253,14 @@ local function _modDel(player, cat, delta)
     end
 end
 
+-- Multiplicative EXP cut % for a prestige level: linear, caps at expPenaltyMaxCut
+-- at expPenaltyMaxLevel (mirrors Job Rebirth). The engine applies it AFTER additive
+-- EXP_BONUS via the [PrestigeExpCut] charVar, so +EXP augments can't cancel it.
+local function expCut(lv)
+    if (lv or 0) <= 0 then return 0 end
+    return math.min(math.floor(lv / cfg.expPenaltyMaxLevel * cfg.expPenaltyMaxCut + 0.5), cfg.expPenaltyMaxCut)
+end
+
 local function applyJobMods(player, jobId)
     for _, cat in ipairs(cfg.categories) do
         local lv = player:getCharVar(catKey(jobId, cat.id)) or 0
@@ -260,15 +268,10 @@ local function applyJobMods(player, jobId)
             _modAdd(player, cat, lv * cat.perLevel)
         end
     end
-    local pen = (function()
-        local lv      = player:getCharVar(levelKey(jobId)) or 0
-        local floorLv = cfg.expPenaltyFloorLevel or 5
-        local post    = cfg.expPenaltyPostScale   or 10
-        if lv <= 0 then return 0 end
-        if lv <= floorLv then return math.floor(lv / floorLv * 100) end
-        return 100 + (lv - floorLv) * post
-    end)()
-    if pen > 0 then player:addMod(xi.mod.EXP_BONUS, -pen) end
+    -- Multiplicative EXP cut for THIS job's prestige level -- the engine (AddExpBonus)
+    -- reads the [PrestigeExpCut] charVar and applies it AFTER gear/augment EXP_BONUS,
+    -- so augments can't cancel it. Stacks multiplicatively with the Rebirth cut.
+    player:setCharVar('[PrestigeExpCut]', expCut(player:getCharVar(levelKey(jobId)) or 0))
 end
 
 local function removeJobMods(player, jobId)
@@ -278,15 +281,8 @@ local function removeJobMods(player, jobId)
             _modDel(player, cat, lv * cat.perLevel)
         end
     end
-    local pen = (function()
-        local lv      = player:getCharVar(levelKey(jobId)) or 0
-        local floorLv = cfg.expPenaltyFloorLevel or 5
-        local post    = cfg.expPenaltyPostScale   or 10
-        if lv <= 0 then return 0 end
-        if lv <= floorLv then return math.floor(lv / floorLv * 100) end
-        return 100 + (lv - floorLv) * post
-    end)()
-    if pen > 0 then player:delMod(xi.mod.EXP_BONUS, -pen) end
+    -- Clear the EXP cut; the new main job's applyJobMods re-stamps its own.
+    player:setCharVar('[PrestigeExpCut]', 0)
 end
 
 -- Make the live mods match the current main job. Cheap no-op when unchanged

@@ -6846,18 +6846,22 @@ float AddExpBonus(CCharEntity* PChar, float exp)
     // Dedication, and Prestige's per-level penalty -- all still additive on EXP_BONUS).
     int32 total = bonus + (int32)exp;
 
-    // FJB: Job Rebirth's EXP penalty is MULTIPLICATIVE -- a true % cut applied AFTER
-    // the additive EXP_BONUS above, so stacking +EXP augments can NOT cancel it. (A
-    // maxed 16-piece set is ~+5,000% EXP_BONUS; an additive penalty could never catch
-    // that, but a multiplicative one always takes its share.) The cut is a 0..80
-    // reduction-percent in the per-main-job "[RebirthExpCut]" charVar, set by
-    // JobRebirth.lua: -80% ALWAYS means 80% less than you'd otherwise gain, any gear.
-    const int32 rebirthCut = std::clamp<int32>((int32)PChar->getCharVar("[RebirthExpCut]"), 0, 100);
-    if (rebirthCut > 0 && total > 0)
+    // FJB: Job Rebirth AND Prestige (Ascension) both impose MULTIPLICATIVE EXP cuts --
+    // true % reductions applied AFTER the additive EXP_BONUS above, so stacking +EXP
+    // augments can NOT cancel them (a maxed 16-piece set is ~+5,000% EXP_BONUS, which an
+    // additive penalty could never catch; a multiplicative one always takes its share).
+    // Each is a 0..80 reduction-percent in a per-main-job charVar set by its Lua module;
+    // they stack multiplicatively (e.g. -80% rebirth then -80% prestige = -96% off the
+    // boosted total). The 5% floor below still guarantees a job can never be soft-locked.
+    for (const auto* cutVar : { "[RebirthExpCut]", "[PrestigeExpCut]" })
     {
-        // Multiply by the float fraction (not int*int first) so a huge augment-
-        // boosted total can't overflow int32 before the reduction is applied.
-        total = (int32)(total * ((100 - rebirthCut) / 100.0f));
+        const int32 cut = std::clamp<int32>((int32)PChar->getCharVar(cutVar), 0, 100);
+        if (cut > 0 && total > 0)
+        {
+            // Multiply by the float fraction (not int*int first) so a huge augment-
+            // boosted total can't overflow int32 before the reduction is applied.
+            total = (int32)(total * ((100 - cut) / 100.0f));
+        }
     }
 
     // Hard floor at 5% of base (min 1 when base > 0): a deep Prestige EXP_BONUS or
