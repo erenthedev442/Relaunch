@@ -7,6 +7,33 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 !!! note "Week of June 15–21, 2026"
     **Sunday, June 21**
 
+    - **CMD** — !warpty -- derive from !bring pattern
+    - **CMD** — !warpty -- use getLeaderID() for party membership check
+    - **Leaderboard** — Route pet WEAPONSKILL_USE into master's damage records
+    - **Apex/Paragon** — Surface on !reallevel + add leaderboards (Phase 3)
+    - **Tracker** — GetParam returns int32 so magic/range damage records > 65k are accurate
+    - **Paragon** — Paragon board - spend Apex points on prestige + capped perks (Phase 2)
+    - **Rebirth/Exp** — Floor EXP gain at 5% so stacked penalties can't soft-lock leveling
+    - **CMD** — !warpty - use getPartyLeader() instead of getLeaderID()
+    - **Combat** — Uncap player-pet damage past 131,071 + true-damage readout
+    - **PUP** — Add Automaton Lv.+3 to Varga Purnikawa i119 III (item 21535)
+    - **CMD** — !warpty permission 0 (all players)
+    - **CMD** — !warpty -- warp all party members to the party leader
+    - **APEX** — Apex Trials - infinite top-tier chase (Phase 1)
+    - **Voidspire** — Make depth milestones re-awardable per run
+    - **EXP** — Fill level-99 EXP bar before merit-mode limit routing
+    - **Reallevel** — Add Rebirth count as a 5th Real Level axis (+1 each)
+    - **MAAT** — Track kill count + fastest time on leaderboard
+    - **Pets** — Script 7 dead non-BST pet TP moves (PUP automaton + DRG wyvern)
+    - **BST** — Give every jug-pet family a working damaging Ready move
+    - **Items** — Restore missing mods on Sancus Sachet + Sancus Sachet +1
+    - **SMN** — Physical-BP avatar scaling + uncap Blood Pact delay
+    - **Weapon Skills** — Enable Tachi: Mumei (159) + wire Kusanagi ADDS_WEAPONSKILL
+    - **BST** — Remove recast timers on Call Beast + Bestial Loyalty
+    - **BST** — Wire pet augments into jug pets + double overall scaling
+    - **SMN** — Apply avatar BP boost via xi.pet.spawnPet override (onMobSpawn not reliable for player pets)
+    - **RNG** — Massive ranged-DD boost for main-job Ranger (passive login buff)
+    - **Rebirth** — Subjob exp-share no longer auto-levels a reborn subjob
     - **Merits** — Hard-cap held merits at 127 (client int8 ceiling); stop !automerits buying Max Merit
     - **Crash** — Null-guard linkshell break when discarding an orphaned pearl
     - **Gm Home** — Add subjob change to Mog Moogle
@@ -621,10 +648,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bded94229015 -->
-_Last updated: 2026-06-22 05:55 UTC_
-<!-- DOCGEN:END id="last-updated" -->
