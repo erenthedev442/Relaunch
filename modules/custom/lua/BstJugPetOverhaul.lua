@@ -36,27 +36,30 @@ local m = Module:new('bst_jugpet_overhaul')
 local CONFIG =
 {
     -- Flat endgame floors so even a fresh BST's pet is immediately viable.
-    flatATT = 5600,
-    flatACC = 4500,
-    flatSTR = 360,
-    flatHP  = 140000,
+    -- (Doubled again 2026-06-22 per request: "another 100%" on overall stats/mods.)
+    flatATT = 11200,
+    flatACC = 9000,
+    flatSTR = 720,
+    flatHP  = 280000,
 
     -- Gear-scaling: the pet inherits this share of the MASTER's stats, so it
     -- gets stronger as the BST gears/augments up (the "scales toward the cap" bit).
-    masterSTRShare = 0.60,  -- + masterSTRShare * master STR  (into STR and ATT)
-    masterATTShare = 0.80,  -- + masterATTShare * master's ATT mods
-    masterACCShare = 0.70,  -- + masterACCShare * master's ACC mods
-    masterHPShare  = 1.00,  -- + masterHPShare  * master max HP
+    -- Doubled to >1.0, so the pet now inherits MORE than the master itself has.
+    masterSTRShare = 1.20,  -- + masterSTRShare * master STR  (into STR and ATT)
+    masterATTShare = 1.60,  -- + masterATTShare * master's ATT mods
+    masterACCShare = 1.40,  -- + masterACCShare * master's ACC mods
+    masterHPShare  = 2.00,  -- + masterHPShare  * master max HP
 
-    attp = 25,   -- +25% attack (Mod.ATTP, percent)
+    attp = 50,   -- +50% attack (Mod.ATTP, percent)
 
-    -- Survivability (DMGPHYS/DMGMAGIC are /100: -3000 = -30% damage taken).
-    pdt = -3000,
-    mdt = -2500,
+    -- Survivability. DMGPHYS/DMGMAGIC are /100 and the engine HARD-CAPS each at
+    -- -50% (-5000); doubling -3000/-2500 lands at that cap, so they sit at the max.
+    pdt = -5000,
+    mdt = -5000,
 
-    -- Melee throughput (percent).
-    doubleAttack = 50,
-    tripleAttack = 50,
+    -- Melee throughput (percent). 100/100 = effectively guaranteed multi-hit.
+    doubleAttack = 100,
+    tripleAttack = 100,
 
     -- Auto-Ready: pet fires its TP move on its own once it caps TP.
     autoReady           = true,
@@ -104,6 +107,31 @@ local function applyEndgameScaling(master, pet)
 
     pet:addMod(xi.mod.DOUBLE_ATTACK, CONFIG.doubleAttack)
     pet:addMod(xi.mod.TRIPLE_ATTACK, CONFIG.tripleAttack)
+
+    -- PET AUGMENTS: the engine only forwards the PET_* mods (990-995) to avatars,
+    -- wyverns, and automatons -- NEVER jug pets -- so a BST's "Pet: Attack/Accuracy/
+    -- Magic/Attributes/TP Bonus" augments + gear do nothing by default. Wire them
+    -- onto the jug pet here (mirrors CalculateAvatarStats:913-922) so the existing
+    -- catalog pet augments finally work for BST. addMod(x, 0) is a no-op when unrolled.
+    local petAtkDef   = master:getMod(xi.mod.PET_ATK_DEF)
+    local petAccEva   = master:getMod(xi.mod.PET_ACC_EVA)
+    local petMabMdb   = master:getMod(xi.mod.PET_MAB_MDB)
+    local petMaccMeva = master:getMod(xi.mod.PET_MACC_MEVA)
+    pet:addMod(xi.mod.ATT,      petAtkDef)
+    pet:addMod(xi.mod.DEF,      petAtkDef)
+    pet:addMod(xi.mod.ACC,      petAccEva)
+    pet:addMod(xi.mod.EVA,      petAccEva)
+    pet:addMod(xi.mod.MATT,     petMabMdb)
+    pet:addMod(xi.mod.MDEF,     petMabMdb)
+    pet:addMod(xi.mod.MACC,     petMaccMeva)
+    pet:addMod(xi.mod.MEVA,     petMaccMeva)
+    pet:addMod(xi.mod.TP_BONUS, master:getMod(xi.mod.PET_TP_BONUS))
+    local petAttr = master:getMod(xi.mod.PET_ATTR_BONUS) -- "Pet: Attributes" -> all 7
+    if petAttr ~= 0 then
+        for _, attr in ipairs({ xi.mod.STR, xi.mod.DEX, xi.mod.VIT, xi.mod.AGI, xi.mod.INT, xi.mod.MND, xi.mod.CHR }) do
+            pet:addMod(attr, petAttr)
+        end
+    end
 
     -- HP: raise max AND heal into it (setMaxHP alone doesn't refill the new room).
     local bonusHP = CONFIG.flatHP + math.floor(master:getMaxHP() * CONFIG.masterHPShare)
