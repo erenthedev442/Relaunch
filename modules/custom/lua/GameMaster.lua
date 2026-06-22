@@ -550,4 +550,12 @@ m:addOverride('xi.player.onPlayerDeath', function(player, ...)
     end
 end)
 
+-----------------------------------
+-- Exposed for the !gmreset GM command (clean up a stuck / leaked session).
+--   xi._gm_endSession(player, false) -> despawn this run's mobs + clear it.
+--   xi._gm_sessions[name] = nil       -> clear a leaked entry for an OFFLINE owner.
+-----------------------------------
+xi._gm_sessions   = sessions
+xi._gm_endSession = endSession
+
 return m
