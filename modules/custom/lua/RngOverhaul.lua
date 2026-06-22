@@ -38,9 +38,9 @@ local m = Module:new('rng_overhaul')
 local CONFIG =
 {
     ratt            = 6000,  -- Mod.RATT  (24)  : flat ranged attack (every shot + ranged WS)
-    rattp           = 30,    -- Mod.RATTP (66)  : +% ranged attack (scales with the RNG's own gear)
+    rattp           = 80,    -- Mod.RATTP (66)  : +% ranged attack (scales with the RNG's own gear)
     racc            = 4000,  -- Mod.RACC  (26)  : land on high-EVA Legendary NMs
-    rangedDmgRating = 300,   -- Mod.RANGED_DMG_RATING (376) : flat damage on every shot
+    rangedDmgRating = 500,   -- Mod.RANGED_DMG_RATING (376) : flat damage on every shot
     storeTP         = 100,   -- Mod.STORETP (73): faster TP gain -> more weaponskills
     snapshot        = 50,    -- Mod.SNAPSHOT (365) : % ranged-delay reduction (faster shots)
     rapidShot       = 50,    -- Mod.RAPID_SHOT (359) : % chance of an instant shot

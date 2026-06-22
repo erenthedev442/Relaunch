@@ -17,7 +17,7 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftpMod = { 5.0, 5.0, 5.0 }
+    params.ftpMod = { 7.5, 7.5, 7.5 }
     params.agi_wsc = 0.3
     params.accVaries = { -50, 0, 0 } -- TODO: verify 3,000 TP point. Data is unknown.
 

@@ -20,7 +20,7 @@ local weaponskillObject = {}
 
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
-    params.ftpMod = { 4.0, 4.25, 4.75 }
+    params.ftpMod = { 6.0, 6.375, 7.125 }
     params.agi_wsc = 0.3
     params.ele = xi.element.LIGHT
     params.skill = xi.skill.MARKSMANSHIP

@@ -17,7 +17,7 @@ local weaponskillObject = {}
 weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary, action, taChar)
     local params = {}
     params.numHits = 1
-    params.ftpMod = { 3, 3, 3 }
+    params.ftpMod = { 4.5, 4.5, 4.5 }
     params.agi_wsc = player:getMerit(xi.merit.APEX_ARROW) * 0.17
     params.ignoredDefense = { 0.15, 0.35, 0.5 }
 
