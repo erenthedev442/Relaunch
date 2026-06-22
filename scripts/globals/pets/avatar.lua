@@ -91,29 +91,9 @@ xi.pets.avatar.onMobSpawn = function(pet)
         return
     end
 
-    -- Legendary BP-damage boost for AVATARS. The original boost further down in this
-    -- function (the `if master:getMainJob() == xi.job.SMN` block) sits PAST the spirit
-    -- early-return just below, so for a long time only spirits (0-7) reached it and
-    -- AVATARS (8-20) -- the pets that actually do Blood Pact Rage -- got NONE of it
-    -- ("avatars do very weak damage"; fixed 2026-06-21). Apply the same bonus to avatars
-    -- HERE, above the spirit-return, so they actually get it. 25900 = +25900% = x260
-    -- BP-Rage multiplier; +40 per summoning-skill over-cap. BP damage is uncapped on HP;
-    -- only the on-screen number maxes at 131,071.
-    if master:getMainJob() == xi.job.SMN and pet:getPetID() > xi.petId.DARK_SPIRIT then
-        local skillOverCap = math.max(xi.summon.getSummoningSkillOverCap(pet), 0)
-        pet:addMod(xi.mod.BP_DAMAGE, 25900 + skillOverCap * 40)
-
-        -- Big flat magic stats so MAGICAL Blood Pacts (Inferno, Judgment Bolt, Geocrush...)
-        -- aren't crushed by the avatar-MATT vs NM-MDEF mitigation. The engine gives avatars
-        -- only ~32 base MATT (petutils.cpp), so vs a 3000+ MDEF Legendary NM the
-        -- (100+MATT)/(100+MDEF) ratio is ~0.04 and the x260 BP_DAMAGE above is mostly wasted
-        -- on magical BPs. These lift that ratio to strongly favorable, land BPs unresisted,
-        -- and feed the magical base (dINT). Flat (not master-scaled) by owner request
-        -- 2026-06-21 -- tune the three numbers to taste.
-        pet:addMod(xi.mod.MATT, 6000)   -- magical BP damage vs high-MDEF NMs
-        pet:addMod(xi.mod.MACC, 2500)   -- land magical BPs vs high-MEVA NMs
-        pet:addMod(xi.mod.INT,  1000)   -- feeds the magical BP base (dINT)
-    end
+    -- NOTE: Avatar BP-damage boost (BP_DAMAGE/MATT/MACC/INT) is applied by
+    -- smn_avatar_boost.lua via xi.pet.spawnPet override -- NOT here -- because
+    -- onMobSpawn is not reliably called for player-owned avatar pets.
 
     if pet:getPetID() > xi.petId.DARK_SPIRIT then
         return
