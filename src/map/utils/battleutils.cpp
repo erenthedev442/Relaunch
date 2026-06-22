@@ -101,25 +101,65 @@ std::unordered_map<uint32, CPetSkill*>        g_PPetSkillList;    // List of pet
 std::array<std::list<CWeaponSkill*>, MAX_SKILLTYPE> g_PWeaponSkillsList;
 std::unordered_map<uint16, std::vector<uint16>>     g_PMobSkillLists; // List of mob skills defined from mob_skill_lists.sql
 
-// Sends a SYSTEM_3 chat message to the attacker when a hit exceeds the 131,071
-// ceiling of the 17-bit action-packet damage field, so the player can read the
-// real value in their chat log without a client mod. This only REPORTS the
-// number -- whether the target actually loses that much HP is up to the caller:
-// PC weaponskills apply the full over-cap amount to HP (TakeWeaponskillDamage),
-// while the physical / other paths still clamp HP damage to 131,071. Keep the
-// message aligned with what each caller applies so it never overstates.
+// FJB true-damage helpers. A hit can exceed the 131,071 ceiling of the 17-bit
+// action-packet damage field; player-controlled sources land the FULL value on
+// HP and the real number is whispered to the controlling player in chat (the
+// floating combat number still caps -- no client field is wide enough for it).
 namespace
 {
+    // True when the damage source is PLAYER-CONTROLLED: a PC, or a pet / trust /
+    // charmed mob whose master is a PC (automaton, avatar, wyvern, jug pet...).
+    // These bypass the cap; genuine mob damage stays clamped so mobs can't punch
+    // through the ceiling onto players.
+    bool IsPlayerControlled(CBattleEntity* PAttacker)
+    {
+        return PAttacker != nullptr &&
+               (PAttacker->objtype == TYPE_PC ||
+                (PAttacker->PMaster != nullptr && PAttacker->PMaster->objtype == TYPE_PC));
+    }
+
+    // The PC who should receive the over-cap readout: the attacker itself if it is
+    // a PC, otherwise the PC master of a player-owned pet/trust. nullptr when the
+    // source isn't player-controlled (mobs get no message).
+    CCharEntity* OverCapReporter(CBattleEntity* PAttacker)
+    {
+        if (PAttacker == nullptr)
+        {
+            return nullptr;
+        }
+        if (PAttacker->objtype == TYPE_PC)
+        {
+            return static_cast<CCharEntity*>(PAttacker);
+        }
+        if (PAttacker->PMaster != nullptr && PAttacker->PMaster->objtype == TYPE_PC)
+        {
+            return static_cast<CCharEntity*>(PAttacker->PMaster);
+        }
+        return nullptr;
+    }
+
+    // Whisper the true (over-cap) damage to the controlling player so it's readable
+    // in chat without a client mod. For a pet/trust hit the source name is prefixed
+    // (e.g. "[Automaton WS] 250000") so the owner knows it wasn't their own swing.
+    // Whether the target actually loses that much HP is up to the caller -- keep
+    // the message aligned with what each path applies so it never overstates.
     void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_view type)
     {
-        if (damage <= 131071 || !PAttacker || PAttacker->objtype != TYPE_PC)
+        if (damage <= 131071)
         {
             return;
         }
-        auto* PChar = static_cast<CCharEntity*>(PAttacker);
+        CCharEntity* PChar = OverCapReporter(PAttacker);
+        if (PChar == nullptr)
+        {
+            return;
+        }
+        std::string label = (PAttacker->objtype == TYPE_PC)
+            ? std::string(type)
+            : fmt::format("{} {}", PAttacker->getName(), type);
         PChar->pushPacket<GP_SERV_COMMAND_CHAT_STD>(
             PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1,
-            fmt::format("[{}] {}", type, damage));
+            fmt::format("[{}] {}", label, damage));
     }
 } // namespace
 
@@ -2223,11 +2263,12 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
         damage = HandleStoneskin(PDefender, damage);
         HandleAfflatusMiseryDamage(PDefender, damage);
     }
-    // FJB true-damage: PC melee/ranged hits bypass the 131,071 packet ceiling and
-    // land the FULL value on HP, matching the WS/SC/Magic paths. Mob hits stay
-    // clamped so mobs can't punch through the cap onto players.
+    // FJB true-damage: player-controlled melee/ranged hits (PC + pets/trusts/
+    // charmed mobs, e.g. PUP automatons) bypass the 131,071 packet ceiling and
+    // land the FULL value on HP, matching the WS/SC/Magic paths. Genuine mob hits
+    // stay clamped so mobs can't punch through the cap onto players.
     NotifyOverCapDamage(PAttacker, damage, "Phys");
-    if (!PAttacker || PAttacker->objtype != TYPE_PC)
+    if (!IsPlayerControlled(PAttacker))
     {
         damage = std::clamp(damage, -131071, 131071);
     }
@@ -2404,15 +2445,15 @@ int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
     // and apply already reflects any per-NM cap.
     damage = CheckAndApplyDamageCap(damage, PDefender);
 
-    // FJB true-damage: a PC weaponskill is allowed to exceed the 131,071 per-hit
-    // packet ceiling and land the FULL value on the target's HP. The client's
-    // 17-bit action-packet damage field can't render >131,071, so we report the
-    // real number to the player via chat (NotifyOverCapDamage) and clamp ONLY the
-    // value handed back for the action packet / enmity (see the clamped return at
-    // the end of this function). Mob-sourced damage that funnels through here
-    // (some mobskills do) stays clamped, so mobs can't punch through the cap onto
-    // players.
-    if (PAttacker && PAttacker->objtype == TYPE_PC)
+    // FJB true-damage: a player-controlled weaponskill (PC or a pet/trust, e.g. a
+    // PUP automaton) is allowed to exceed the 131,071 per-hit packet ceiling and
+    // land the FULL value on the target's HP. The client's 17-bit action-packet
+    // damage field can't render >131,071, so we report the real number to the
+    // controlling player via chat (NotifyOverCapDamage) and clamp ONLY the value
+    // handed back for the action packet / enmity (see the clamped return at the
+    // end of this function). Mob-sourced damage that funnels through here (some
+    // mobskills do) stays clamped, so mobs can't punch through the cap onto players.
+    if (IsPlayerControlled(PAttacker))
     {
         NotifyOverCapDamage(PAttacker, damage, "WS");
     }
@@ -3849,10 +3890,11 @@ int32 TakeSkillchainDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, i
         damage = HandleStoneskin(PDefender, damage);
         HandleAfflatusMiseryDamage(PDefender, damage);
     }
-    // FJB: PC skillchain damage bypasses the 131,071 action-packet ceiling just
-    // like TakeWeaponskillDamage. Full damage lands on HP; the 17-bit client
-    // field caps the floating number. Mob-sourced skillchains stay clamped.
-    if (PAttacker && PAttacker->objtype == TYPE_PC)
+    // FJB: player-controlled skillchain damage (PC or a pet/trust) bypasses the
+    // 131,071 action-packet ceiling just like TakeWeaponskillDamage. Full damage
+    // lands on HP; the 17-bit client field caps the floating number. Mob-sourced
+    // skillchains stay clamped.
+    if (IsPlayerControlled(PAttacker))
     {
         NotifyOverCapDamage(PAttacker, damage, "SC");
     }
