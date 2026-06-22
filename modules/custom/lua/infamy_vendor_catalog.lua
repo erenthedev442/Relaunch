@@ -45,7 +45,7 @@ catalog.vendorItems =
     { id = 22117, name = 'Fail-Not',           cost = 5000, stats = { 'Bow (ranged). RNG. Aeonic. MAcc+40.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
     { id = 21485, name = 'Fomalhaut',          cost = 5000, stats = { 'Gun (ranged). RNG/COR. Aeonic.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
     { id = 26403, name = 'Srivatsa',           cost = 5000, stats = { 'Shield (sub). PLD. Aeonic.', 'DEF+150, HP+150, MP+150, Enmity+15.' } },
-    { id = 21621, name = 'Naegling',       cost =  300, stats = { 'Sword (1-hand). Great Savage Blade.', 'iLvl 119, broad job access.' } },
+    -- Naegling (21621) removed: it is a Prime Weapon, forge-only at the GM Home Prime Armory (trial-gated).
 
     -- ----------------------------------------------------------------
     -- STAGE-5 RELIC WEAPONS  (Level 119 III final forms)
@@ -853,7 +853,6 @@ catalog.itemTypeMap =
     [22117] = 'Weapons/Archery',
     [21485] = 'Weapons/Marksmanship',
     [26403] = 'Weapons/Grip-Shield',
-    [21621] = 'Weapons/Sword',
     [21535] = 'Weapons/Hand-to-Hand',
     [21590] = 'Weapons/Dagger',
     [21646] = 'Weapons/Sword',

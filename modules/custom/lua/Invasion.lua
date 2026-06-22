@@ -26,11 +26,22 @@ local LOOT_POOL_SIZE = #LOOT_POOL
 local DROP_CHANCE    = 15  -- % per mob kill
 require(string.format('scripts/zones/%s/Zone', catalog.zone))
 
+-- Prime Weapons are forge-ONLY (the GM Home Prime Armory, trial-gated). The
+-- auto-generated LOOT_POOL is a dump of ALL item_weapon/item_equipment, so it
+-- sweeps the 12 Prime IDs in -- skip them here so an invasion can never drop one.
+local PRIME_WEAPONS =
+{
+    [21531] = true, [21534] = true, [21589] = true, [21621] = true,
+    [21642] = true, [21781] = true, [21833] = true, [21887] = true,
+    [21999] = true, [22102] = true, [22155] = true, [22159] = true,
+}
+
 local function tryDrop(killer)
     if not killer then return end
     if killer:getObjType() ~= xi.objType.PC then return end
     if math.random(100) > DROP_CHANCE then return end
     local itemId = LOOT_POOL[math.random(LOOT_POOL_SIZE)]
+    if PRIME_WEAPONS[itemId] then return end  -- never drop a Prime Weapon (forge-only)
     pcall(function() killer:addItem(itemId, 1) end)
 end
 

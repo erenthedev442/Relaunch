@@ -31,6 +31,10 @@ ROOT = Path(r"D:/server")
 EXCLUDED_ITEM_IDS = frozenset({
     12332, 12523, 12551, 12679, 12807, 12935, 13074, 13215, 13358, 13505,
     13606, 16622, 17004, 17012, 17174, 17326, 17406, 17644, 19325,  # Judge* (Ballista)
+    # Prime Weapons -- forge-ONLY at the GM Home Prime Armory (5 trials + 750M gil).
+    # They reuse strong iLvl119 retail IDs (Naegling / Varga Purnikawa / Mpu Gandring
+    # / ...), so the scorer would otherwise shelve them into the Weapons/Infamy vendors.
+    21531, 21534, 21589, 21621, 21642, 21781, 21833, 21887, 21999, 22102, 22155, 22159,
 })
 EXCLUDED_NAME_PREFIXES = ('judge',)
 
