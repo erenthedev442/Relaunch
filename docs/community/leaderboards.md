@@ -33,6 +33,7 @@ Live rankings pulled from the server's database. These tables refresh whenever t
 
 ## Augment Moogle { .lb-section }
 
+<div class="lb-grid" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-augments" -->
 ### Most Augments Crafted
 
@@ -70,11 +71,13 @@ _Highest Augment Sage rank achieved. Earned by hitting Augment_Count milestones 
 | 9 | [Yojin](players/yojin.md) | 5 |
 | 10 | [Ririn](players/ririn.md) | 5 |
 <!-- DOCGEN:END id="lb-sage" -->
+</div>
 
 ---
 
 ## Hunting League { .lb-section }
 
+<div class="lb-grid lb-grid-3" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-hl-tier" -->
 ### Hunting League — Highest Tier
 
@@ -131,11 +134,13 @@ _Cumulative Hunt Marks earned over the character's lifetime — does NOT decreas
 | 9 | [Rtkhl](players/rtkhl.md) | 74,288 |
 | 10 | [Rtkle](players/rtkle.md) | 74,063 |
 <!-- DOCGEN:END id="lb-hl-lifetime" -->
+</div>
 
 ---
 
 ## Reforge System { .lb-section }
 
+<div class="lb-grid lb-grid-3" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-empy-marks" -->
 ### Reforge — Empyrean Marks (Current Balance)
 
@@ -192,11 +197,13 @@ _Total marks earned across AF + Relic + Empy tracks, all-time. Spending doesn't 
 | 9 | [Moss](players/moss.md) | 21,680 |
 | 10 | [Miss](players/miss.md) | 21,680 |
 <!-- DOCGEN:END id="lb-reforge-lifetime" -->
+</div>
 
 ---
 
 ## NM Hunting { .lb-section }
 
+<div class="lb-grid lb-grid-3" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-nm-kills" -->
 ### Top NM Slayers
 
@@ -253,6 +260,7 @@ _How many of the 13 NM affinities the character has registered via the Augment S
 | 9 | [Benton](players/benton.md) | 13 |
 | 10 | [Candycorns](players/candycorns.md) | 13 |
 <!-- DOCGEN:END id="lb-affinities" -->
+</div>
 
 ---
 
@@ -302,6 +310,7 @@ _Total number of job rebirths across all jobs combined. Each rebirth wipes a job
 
 ## Collections { .lb-section }
 
+<div class="lb-grid" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-trusts" -->
 ### Trust Roll Call — Distinct Trusts Learned
 
@@ -339,11 +348,13 @@ _Distinct characters this player has unlocked as Player Trusts. Earned by partyi
 | 9 | [Drunk](players/drunk.md) | 4 |
 | 10 | [Katrrine](players/katrrine.md) | 3 |
 <!-- DOCGEN:END id="lb-friendship" -->
+</div>
 
 ---
 
 ## Activity { .lb-section }
 
+<div class="lb-grid" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-playtime" -->
 ### Most Time Played
 
@@ -381,11 +392,13 @@ _Times the character has been knocked unconscious. On Legendary you lose 3× ret
 | 9 | [Zxj](players/zxj.md) | 46 |
 | 10 | [Mardukas](players/mardukas.md) | 45 |
 <!-- DOCGEN:END id="lb-deaths" -->
+</div>
 
 ---
 
 ## Speed Records { .lb-section }
 
+<div class="lb-grid lb-grid-3" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-fastest-99" -->
 ### Fastest 1 → 99 (Any Job)
 
@@ -442,11 +455,13 @@ _Time from character creation to reaching Augment Sage rank 5 (Augment Archon). 
 | 9 | [Draco](players/draco.md) | 1d 14h |
 | 10 | [Benton](players/benton.md) | 1d 15h |
 <!-- DOCGEN:END id="lb-fastest-archon" -->
+</div>
 
 ---
 
 ## Hunter's Guild { .lb-section }
 
+<div class="lb-grid" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-guild-af" -->
 ### AF Hunters' Guild — Top Reputation
 
@@ -520,11 +535,13 @@ _Cumulative League Hunters' Guild rep. Earned 1:1 from base Hunt Marks per HL ki
 | 9 | [Shizuku](players/shizuku.md) | 5,000 |
 | 10 | [Katryna](players/katryna.md) | 4,500 |
 <!-- DOCGEN:END id="lb-guild-hl" -->
+</div>
 
 ### Capstone Achievers
 
 The two cross-guild titles. Reaching either of these is a server event.
 
+<div class="lb-grid" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-trinity-hunters" -->
 ### Trinity Hunters
 
@@ -540,6 +557,7 @@ _Roll call of players who have reached Grandmaster in ALL FOUR Hunter's Guilds (
 
 _No achievers yet — be the first to make the list._
 <!-- DOCGEN:END id="lb-apex-hunters" -->
+</div>
 
 ---
 
@@ -568,6 +586,7 @@ _How many distinct weeks this character has cleared ALL 5 Weekly Hunt Board obje
 
 ## Infamy { .lb-section }
 
+<div class="lb-grid" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-infamy-lifetime" -->
 ### Infamy Earned (Lifetime)
 
@@ -605,11 +624,13 @@ _Infamy currently held — drops when you buy from the Infamy Vendor. The hoarde
 | 9 | [Meli](players/meli.md) | 9,548 |
 | 10 | [Erenyeager](players/erenyeager.md) | 9,535 |
 <!-- DOCGEN:END id="lb-infamy-balance" -->
+</div>
 
 ---
 
 ## Maat's Challenge { .lb-section }
 
+<div class="lb-grid" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-maat-kills" -->
 ### Most Maat Kills
 
@@ -625,13 +646,13 @@ _Shortest time from Maat's first swing to his defeat in Waughroon Shrine. Clocke
 
 _No qualifying characters yet — be the first!_
 <!-- DOCGEN:END id="lb-maat-time" -->
+</div>
 
 ---
 
 ## Combat { .lb-section }
 
-### Hardest Single Weapon Skill Hit
-
+<div class="lb-grid" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-ws-damage" -->
 ### Hardest Single Weapon Skill Hit
 
@@ -651,8 +672,6 @@ _Peak damage dealt by a single weapon skill, recorded server-wide since tracking
 | 10 | [Spyro](players/spyro.md) | chant_du_cygne | 4,506,754 |
 <!-- DOCGEN:END id="lb-ws-damage" -->
 
-### Highest Real Level
-
 <!-- DOCGEN:BEGIN id="lb-real-level" -->
 ### Highest Real Level
 
@@ -671,6 +690,7 @@ _Real Level = job level + gear iLvl bonus + Ascension levels + Job Points + attr
 | 9 | [Ruin](players/ruin.md) | 171 |
 | 10 | [Ken](players/ken.md) | 171 |
 <!-- DOCGEN:END id="lb-real-level" -->
+</div>
 
 ---
 
@@ -680,6 +700,7 @@ _Personal combat bests recorded since tracking began. Split by mob level tier �
 
 ### Highest Single Heal
 
+<div class="lb-grid lb-grid-4" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-MaxHeal-T1" -->
 ### Highest Single Heal — Lv 1–33
 
@@ -738,9 +759,11 @@ _Largest single cure or healing spell on any target at Lv 100+. Measured at the 
 
 _No qualifying characters yet — be the first!_
 <!-- DOCGEN:END id="lb-MaxHeal-T4" -->
+</div>
 
 ### Highest Single Nuke
 
+<div class="lb-grid lb-grid-4" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-MaxNuke-T1" -->
 ### Highest Single Nuke — Lv 1–33
 
@@ -816,9 +839,11 @@ _Peak magic damage from a single spell landing on a Lv 100+ mob. Magic bursts al
 | 9 | [Katryna](players/katryna.md) | 65,535 |
 | 10 | [Darrent](players/darrent.md) | 65,535 |
 <!-- DOCGEN:END id="lb-MaxNuke-T4" -->
+</div>
 
 ### Highest Magic Burst
 
+<div class="lb-grid lb-grid-4" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-MaxBurst-T1" -->
 ### Highest Magic Burst — Lv 1–33
 
@@ -885,9 +910,11 @@ _Largest magic burst damage on a single Lv 100+ mob target. Requires matching th
 | 9 | [Souls](players/souls.md) | 60,753 |
 | 10 | [Miyasanima](players/miyasanima.md) | 51,864 |
 <!-- DOCGEN:END id="lb-MaxBurst-T4" -->
+</div>
 
 ### Highest Skillchain
 
+<div class="lb-grid lb-grid-4" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-MaxSC-T1" -->
 ### Highest Skillchain — Lv 1–33
 
@@ -963,9 +990,11 @@ _Largest single skillchain damage on a Lv 100+ mob. Triggered via weapon skills 
 | 9 | [Bro](players/bro.md) | 131,071 |
 | 10 | [Subpar](players/subpar.md) | 131,071 |
 <!-- DOCGEN:END id="lb-MaxSC-T4" -->
+</div>
 
 ### Most Damage in 30 Seconds
 
+<div class="lb-grid lb-grid-4" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-MaxDmg30-T1" -->
 ### Most Damage in 30 Seconds — Lv 1–33
 
@@ -1041,6 +1070,7 @@ _Highest total damage dealt to Lv 100+ mobs in any rolling 30-second window, com
 | 9 | [Duffaluffagus](players/duffaluffagus.md) | 10,701,688 |
 | 10 | [Spyro](players/spyro.md) | 10,671,858 |
 <!-- DOCGEN:END id="lb-MaxDmg30-T4" -->
+</div>
 
 ---
 

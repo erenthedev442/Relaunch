@@ -3,6 +3,68 @@
    loading this stylesheet globally is harmless.
 ──────────────────────────────────────────────────────────────────────────── */
 
+/* ── Horizontal board grid ───────────────────────────────────────────────── */
+.lb-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: .9rem 1.1rem;
+  align-items: start;
+  margin-bottom: 1rem;
+}
+
+.lb-grid.lb-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.lb-grid.lb-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+/* Board cards — each h3+blurb+table group wrapped by leaderboards.js */
+.md-typeset .lb-board {
+  background: var(--md-code-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .4rem;
+  padding: .85rem 1rem 1rem;
+  min-width: 0;
+}
+
+.md-typeset .lb-board h3 {
+  margin: 0 0 .45rem;
+  font-size: .88rem;
+}
+
+.md-typeset .lb-board > p {
+  font-size: .78rem;
+  margin: 0 0 .55rem;
+  line-height: 1.4;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .lb-board table {
+  display: block;
+  overflow-x: auto;
+  font-size: .76rem;
+  margin: 0;
+  width: 100%;
+}
+
+.md-typeset .lb-board table th,
+.md-typeset .lb-board table td {
+  padding: .2rem .38rem;
+  white-space: nowrap;
+}
+
+/* Responsive breakpoints */
+@media (max-width: 1200px) {
+  .lb-grid.lb-grid-4 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .lb-grid.lb-grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .lb-grid, .lb-grid.lb-grid-3, .lb-grid.lb-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* ── Quick-jump pill bar ─────────────────────────────────────────────────── */
 nav.lb-nav {
   display: flex;
