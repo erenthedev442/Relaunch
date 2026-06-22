@@ -177,6 +177,25 @@ commandObj.onTrigger = function(player)
         player:getMod(19), player:getMod(20), player:getMod(21), player:getMod(22))
 
     -- =========================================================
+    -- Elemental affinities (per-element magic attack bonus).
+    -- FIRE_MAB (32) .. DARK_MAB (39) are the "Affinity" mods that appear on
+    -- gear as "Fire Affinity +X". All non-zero values are shown.
+    header(player, 'Elemental Affinities (Affinity / MAB per element)')
+    line(player, 'Fire %3d   Ice %3d   Wind %3d   Earth %3d',
+        player:getMod(xi.mod.FIRE_MAB),   player:getMod(xi.mod.ICE_MAB),
+        player:getMod(xi.mod.WIND_MAB),   player:getMod(xi.mod.EARTH_MAB))
+    line(player, 'Thunder %3d   Water %3d   Light %3d   Dark %3d',
+        player:getMod(xi.mod.THUNDER_MAB), player:getMod(xi.mod.WATER_MAB),
+        player:getMod(xi.mod.LIGHT_MAB),   player:getMod(xi.mod.DARK_MAB))
+
+    -- BLU chain/burst affinity enhancers (job-specific but shown for BLU only)
+    if mJob == xi.job.BLU then
+        line(player, 'Burst Affinity WSC +%d%%   Chain Affinity base dmg +%d',
+            player:getMod(xi.mod.ENHANCES_BURST_AFFINITY),
+            player:getMod(xi.mod.ENHANCES_CHAIN_AFFINITY))
+    end
+
+    -- =========================================================
     header(player, 'Tempo / Haste / Casting')
     -- Haste mods are in 0.01% units, so the raw value 2500 = 25%. The
     -- caps shown here are engine clamps from battleutils.cpp:5990-5991.
@@ -288,6 +307,12 @@ commandObj.onTrigger = function(player)
             elseif mJob == xi.job.SMN then
                 line(player, 'Summoning skill: %d   (drives blood-pact acc/potency)',
                     player:getSkillLevel(xi.skill.SUMMONING_MAGIC))
+                -- Perpetuation-cost reduction affinities (FIRE_AFFINITY_PERP 553..560)
+                line(player, 'Perp cost: Fire %d  Ice %d  Wind %d  Earth %d  Thunder %d  Water %d  Light %d  Dark %d',
+                    player:getMod(xi.mod.FIRE_AFFINITY_PERP),   player:getMod(xi.mod.ICE_AFFINITY_PERP),
+                    player:getMod(xi.mod.WIND_AFFINITY_PERP),   player:getMod(xi.mod.EARTH_AFFINITY_PERP),
+                    player:getMod(xi.mod.THUNDER_AFFINITY_PERP), player:getMod(xi.mod.WATER_AFFINITY_PERP),
+                    player:getMod(xi.mod.LIGHT_AFFINITY_PERP),  player:getMod(xi.mod.DARK_AFFINITY_PERP))
             end
             line(player, 'Offense:  ATT %4d   ACC %4d   RATT %4d   RACC %4d',
                 pet:getStat(xi.mod.ATT), pet:getStat(xi.mod.ACC),
