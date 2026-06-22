@@ -17,8 +17,10 @@
 -- capped, and applied is this module's own.
 --
 -- Boosts are PER-JOB (active only on the reborn job) and re-applied on zone-in
--- and job change. Each rebirth also stamps an escalating per-job EXP penalty
--- (a stacking negative EXP_BONUS) so every re-grind to 99 is harder.
+-- and job change. Each rebirth also stamps an escalating per-job EXP penalty --
+-- a MULTIPLICATIVE cut (the [RebirthExpCut] charVar the engine applies after
+-- gear/augment EXP_BONUS) so every re-grind to 99 is harder and augments can't
+-- buy past it.
 --
 -- Tunables: job_rebirth_catalog.lua. Zone: GM Home (zone 210).
 -----------------------------------
@@ -51,17 +53,16 @@ local function getCount(player, jobId)  return player:getCharVar(countKey(jobId)
 local function getRP(player, jobId)     return player:getCharVar(rpKey(jobId)) or 0 end
 local function getCatLv(player, jobId, id) return player:getCharVar(catKey(jobId, id)) or 0 end
 
--- exp penalty % for a given rebirth count.
--- Triangular scaling: each new rebirth adds count*rate more than the last,
--- so the penalty accelerates and eventually overwhelms any EXP augment stack.
--- Formula: count*(count+1)/2 * expPenaltyPerRebirth
--- e.g. rate=10 -> R1=10%, R2=30%, R3=60%, R4=100%, R5=150% ...
+-- Multiplicative EXP cut % for a given rebirth count -- a TRUE reduction the engine
+-- (charutils.cpp AddExpBonus) applies AFTER all additive EXP_BONUS, so +EXP augments
+-- can't cancel it. Linear: caps at expPenaltyMaxCut at expPenaltyMaxRebirth, scaling
+-- down to R1.  e.g. cap 80 @ R20 -> R1=4%, R5=20%, R10=40%, R20=80% (cap).
 local function expPenalty(count)
     if count <= 0 then
         return 0
     end
-    local pen = count * (count + 1) / 2 * cfg.expPenaltyPerRebirth
-    return cfg.expPenaltyCap and math.min(pen, cfg.expPenaltyCap) or pen
+    local cut = math.floor(count / cfg.expPenaltyMaxRebirth * cfg.expPenaltyMaxCut + 0.5)
+    return math.min(cut, cfg.expPenaltyMaxCut)
 end
 
 -- RP granted for the Nth rebirth (1-indexed). Scales +rpPerLevel each time, capped at rpMax.
@@ -70,10 +71,11 @@ local function rpForCount(count)
 end
 
 -----------------------------------
--- PER-JOB MODS: bought category boosts + the escalating exp penalty, applied
--- only while the reborn job is active. A category may carry a single mod or a
--- list (cat.mods); both get the same delta. EXP_BONUS is read live at exp-gain
--- time, so only the category boosts need a stat recompute.
+-- PER-JOB MODS: bought category boosts (real mods) + the escalating exp penalty
+-- (the [RebirthExpCut] charVar, NOT a mod), applied only while the reborn job is
+-- active. A category may carry a single mod or a list (cat.mods); both get the
+-- same delta. The EXP cut is a charVar the engine reads live at exp-gain time, so
+-- only the category boosts need a stat recompute.
 --
 -- Invariant: per-job CharVars (cat levels, rebirth count) only change while
 -- that job is live, so a later remove reads back exactly what was added --
@@ -106,10 +108,10 @@ local function applyJobMods(player, jobId)
             _modAdd(player, cat, lv * cat.perLevel)
         end
     end
-    local pen = expPenalty(getCount(player, jobId))
-    if pen > 0 then
-        player:addMod(xi.mod.EXP_BONUS, -pen)
-    end
+    -- Multiplicative EXP cut for THIS job's rebirth count. The engine (AddExpBonus)
+    -- reads this charVar and applies it AFTER gear/augment EXP_BONUS, so augments
+    -- can't cancel it. Not a mod -> no recalculateStats needed for the cut itself.
+    player:setCharVar('[RebirthExpCut]', expPenalty(getCount(player, jobId)))
 end
 
 local function removeJobMods(player, jobId)
@@ -119,10 +121,8 @@ local function removeJobMods(player, jobId)
             _modDel(player, cat, lv * cat.perLevel)
         end
     end
-    local pen = expPenalty(getCount(player, jobId))
-    if pen > 0 then
-        player:delMod(xi.mod.EXP_BONUS, -pen)
-    end
+    -- Clear the EXP cut; the new main job's applyJobMods re-stamps its own.
+    player:setCharVar('[RebirthExpCut]', 0)
 end
 
 -- Make the live mods match the current main job. Cheap no-op when unchanged
@@ -186,11 +186,7 @@ local function doRebirth(player)
     player:printToPlayer(string.format('  +%d Rebirth Points earned (spend them here). Rebirths: %d.', rpEarned, count), S)
     local pen = expPenalty(count)
     if pen > 0 then
-        if pen >= 100 then
-            player:printToPlayer(string.format('  Trial of Mastery: EXP penalty -%d%% (floor -- grind counts, augs or not). Earn it back.', pen), S)
-        else
-            player:printToPlayer(string.format('  Trial of Mastery: this job now earns %d%% less EXP. Earn your power again.', pen), S)
-        end
+        player:printToPlayer(string.format('  Trial of Mastery: EXP cut %d%% -- a TRUE cut taken after gear/augments (caps %d%% @ R%d). Earn your power again.', pen, cfg.expPenaltyMaxCut, cfg.expPenaltyMaxRebirth), S)
     end
 end
 
@@ -329,7 +325,7 @@ showMenu = function(player)
         function(p)
             p:printToPlayer('[ Rebirth ] Max a job (lv99 + Job Points maxed), then rebirth it:', S)
             p:printToPlayer(string.format('  level -> 1, Job Points WIPED, +%d~%d Rebirth Points (starts at %d, +%d each rebirth, cap %d) to spend here.', cfg.rpBase, cfg.rpMax, cfg.rpBase, cfg.rpPerLevel, cfg.rpMax), S)
-            p:printToPlayer(string.format('  EXP penalty scales each rebirth: R1=-%d%%, R2=-%d%%, R3=-%d%%, R4=-%d%% (capped at -%d%%).', expPenalty(1), expPenalty(2), expPenalty(3), expPenalty(4), cfg.expPenaltyCap), S)
+            p:printToPlayer(string.format('  EXP cut (taken AFTER gear/augments, so augs cannot cancel it): R1=-%d%%, R5=-%d%%, R10=-%d%%, R20=-%d%% (cap @ R%d).', expPenalty(1), expPenalty(5), expPenalty(10), expPenalty(20), cfg.expPenaltyMaxRebirth), S)
             showMenu(p)
         end,
     })

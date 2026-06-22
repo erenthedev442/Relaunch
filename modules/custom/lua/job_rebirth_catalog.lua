@@ -38,17 +38,20 @@ return
     rpPerLevel =  2,
     rpMax      = 20,
 
-    -- ===== Escalating exp penalty (the "harder each time" knob) =====
-    -- Triangular ramp, CAPPED so re-leveling is never LITERALLY zero (impossible).
-    --   penalty(N) = min(N*(N+1)/2 * expPenaltyPerRebirth, expPenaltyCap)
-    --   R1: -30%   R2: -90%   R3+: -95% (cap)   [rate tripled 10->30 on 2026-06-22]
-    -- Capped at -95% on 2026-06-22 (was UNCAPPED -> hit -100% / zero EXP at R4 and
-    -- ran away to -280% by R7, so re-leveling was impossible). -95% keeps rebirth a
-    -- brutal grind (only 5% EXP) but always leaves SOME progress; EXP augments help.
-    -- Recomputed from the rebirth count on login -> applies RETROACTIVELY to all
-    -- rebirthed jobs (incl. Jbae @ R7, previously -280%).
-    expPenaltyPerRebirth = 30,   -- tripled from 10 on 2026-06-22 (steeper "harder each time" ramp)
-    expPenaltyCap        = 95,   -- HARD floor: >=100% = zero EXP = impossible to level (do NOT raise to 100)
+    -- ===== Rebirth EXP penalty (MULTIPLICATIVE -- a true % cut, augment-proof) =====
+    -- Applied by the ENGINE (charutils.cpp AddExpBonus) AFTER all additive EXP_BONUS
+    -- (gear augments, food, RoV, Dedication), via the per-main-job [RebirthExpCut]
+    -- charVar that JobRebirth.lua sets. So NO amount of +EXP augments can cancel it --
+    -- the stated % is always taken off the top. (Switched from an additive EXP_BONUS
+    -- ramp on 2026-06-22: a maxed 16-piece augment set is ~+5,000% EXP_BONUS, which an
+    -- additive penalty couldn't touch; a multiplicative one always takes its share.)
+    -- Linear ramp: caps at expPenaltyMaxCut% reduction at rebirth expPenaltyMaxRebirth,
+    -- scaling straight down to rebirth 1.
+    --   cut(N) = min(round(N / expPenaltyMaxRebirth * expPenaltyMaxCut), expPenaltyMaxCut)
+    --   R1 -4%, R5 -20%, R10 -40%, R15 -60%, R20 -80% (cap), R20+ -80%.
+    -- The engine still floors EXP at 5% of base, so a job can never be soft-locked.
+    expPenaltyMaxCut     = 80,   -- max EXP reduction % (a true multiplicative cut)
+    expPenaltyMaxRebirth = 20,   -- rebirth count at which the cut reaches the cap
 
     -- Hard cap on rebirths per job. nil = uncapped.
     maxRebirths = nil,

@@ -6842,14 +6842,27 @@ float AddExpBonus(CCharEntity* PChar, float exp)
 
     bonus += (int32)(exp * ((PChar->getMod(Mod::EXP_BONUS) + rovBonus) / 100.0f));
 
-    // FJB: stacking EXP penalties (Job Rebirth's triangular EXP_BONUS + Prestige's
-    // per-level one) can drive EXP_BONUS far past -100%, which would zero ALL exp
-    // and SOFT-LOCK a heavily-reborn job -- it could never reach 99 to rebirth or
-    // ascend again (e.g. RDM at Rebirth 20 + Prestige 92 = -3070% EXP_BONUS). Floor
-    // the gain at 5% of base (min 1 when base > 0) so the re-grind stays brutal but
-    // POSSIBLE. The floor only bites once the net penalty exceeds -95%; positive
-    // EXP_BONUS (gear/food/Dedication) and a zero-base gain are left untouched.
-    const int32 total    = bonus + (int32)exp;
+    // Additive EXP gain: base + all EXP_BONUS sources (gear augments, food, RoV,
+    // Dedication, and Prestige's per-level penalty -- all still additive on EXP_BONUS).
+    int32 total = bonus + (int32)exp;
+
+    // FJB: Job Rebirth's EXP penalty is MULTIPLICATIVE -- a true % cut applied AFTER
+    // the additive EXP_BONUS above, so stacking +EXP augments can NOT cancel it. (A
+    // maxed 16-piece set is ~+5,000% EXP_BONUS; an additive penalty could never catch
+    // that, but a multiplicative one always takes its share.) The cut is a 0..80
+    // reduction-percent in the per-main-job "[RebirthExpCut]" charVar, set by
+    // JobRebirth.lua: -80% ALWAYS means 80% less than you'd otherwise gain, any gear.
+    const int32 rebirthCut = std::clamp<int32>((int32)PChar->getCharVar("[RebirthExpCut]"), 0, 100);
+    if (rebirthCut > 0 && total > 0)
+    {
+        // Multiply by the float fraction (not int*int first) so a huge augment-
+        // boosted total can't overflow int32 before the reduction is applied.
+        total = (int32)(total * ((100 - rebirthCut) / 100.0f));
+    }
+
+    // Hard floor at 5% of base (min 1 when base > 0): a deep Prestige EXP_BONUS or
+    // the rebirth cut must never zero ALL exp and SOFT-LOCK a job -- it must always
+    // be POSSIBLE to re-reach 99. Positive net gain and a zero base are untouched.
     const int32 floorExp = exp > 0 ? std::max<int32>(1, (int32)(exp * 0.05f)) : 0;
     exp                  = (float)std::max(total, floorExp);
 

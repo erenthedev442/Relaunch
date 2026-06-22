@@ -89,31 +89,31 @@ def _render_how_it_works(jp_req: int, rp_base: int, rp_per_level: int, rp_max: i
     return "\n".join(lines)
 
 
-def _render_exp_penalty(penalty_per: int, penalty_cap: int) -> str:
-    cap_at = penalty_cap // penalty_per  # rebirth number where cap is first hit
-    effective_floor = 100 - penalty_cap
+def _render_exp_penalty(max_cut: int, max_rebirth: int) -> str:
+    def cut(n: int) -> int:
+        return min(int(n / max_rebirth * max_cut + 0.5), max_cut)
 
     header_lines = [
-        f"Each rebirth stacks a **−{penalty_per}% EXP penalty** on that job, "
-        f"capped at **−{penalty_cap}%**. The penalty is **per-job** — it only "
-        "slows the job that has been reborn, and disappears the instant you "
-        "switch to anything else. You always keep at least "
-        f"**{effective_floor}%** of normal EXP, so the climb is always possible "
-        "— but a many-times-reborn job is a true endgame grind.",
+        f"Each rebirth deepens a **multiplicative EXP cut** on that job — a *true* "
+        "reduction taken **after** all of your gear, food, and augment EXP bonuses, so "
+        "no amount of +EXP augments can cancel it. It scales linearly to a cap of "
+        f"**−{max_cut}%** at the **{_ordinal(max_rebirth)} rebirth**. The cut is "
+        "**per-job** — it only slows the job that has been reborn, and disappears the "
+        "instant you switch to anything else. A job can never be locked out: EXP is "
+        "always floored at **5%** of base, so the climb stays possible — but a "
+        "many-times-reborn job is a true endgame grind.",
         "",
-        "| Rebirth | EXP Penalty (that job) | Effective EXP |",
+        "| Rebirth | EXP Cut (that job) | EXP kept (of what you'd otherwise earn) |",
         "|---|---:|---:|",
     ]
 
     rows = []
-    for n in range(1, cap_at):   # rows before the cap is first hit
-        p = n * penalty_per
-        eff = 100 - p
-        rows.append(f"| {_ordinal(n)} | −{p}% | {eff}% |")
-
-    # Final row: cap_at-th rebirth is where the cap first applies
+    for n in (1, 5, 10, 15):
+        if n < max_rebirth:
+            c = cut(n)
+            rows.append(f"| {_ordinal(n)} | −{c}% | {100 - c}% |")
     rows.append(
-        f"| {_ordinal(cap_at)} and beyond | **−{penalty_cap}%** (cap) | {effective_floor}% |"
+        f"| {_ordinal(max_rebirth)} and beyond | **−{max_cut}%** (cap) | {100 - max_cut}% |"
     )
 
     return "\n".join(header_lines + rows)
@@ -142,13 +142,13 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     rp_base      = _int_val(text, "rpBase")      or 10
     rp_per_level = _int_val(text, "rpPerLevel")  or 2
     rp_max       = _int_val(text, "rpMax")       or 20
-    exp_penalty  = _int_val(text, "expPenaltyPerRebirth") or 15
-    exp_cap      = _int_val(text, "expPenaltyCap")        or 90
+    max_cut      = _int_val(text, "expPenaltyMaxCut")     or 80
+    max_rebirth  = _int_val(text, "expPenaltyMaxRebirth") or 20
 
     results = [
         ("rebirth-location",     _render_location(npc_zone)),
         ("rebirth-how-it-works", _render_how_it_works(jp_required, rp_base, rp_per_level, rp_max)),
-        ("rebirth-exp-penalty",  _render_exp_penalty(exp_penalty, exp_cap)),
+        ("rebirth-exp-penalty",  _render_exp_penalty(max_cut, max_rebirth)),
     ]
 
     for marker_id, content in results:
