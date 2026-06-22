@@ -80,6 +80,7 @@ commandObj.onTrigger = function(player, targetName)
     player:printToPlayer(string.format('    Ascension .... +%-4d (Prestige rank %d)', bd.asc, bd.asc), B)
     player:printToPlayer(string.format('    Job Points ... +%-4d (%d JP spent)',   bd.jp, bd.jpSpent), B)
     player:printToPlayer(string.format('    Merits ....... +%-4d (attribute merits +%d)', bd.merit, bd.meritSum), B)
+    player:printToPlayer(string.format('    Rebirth ...... +%-4d (%d rebirths)', bd.rebirth, bd.rebirthCount), B)
 
     -- Account-wide flex tail: total ascensions across every job.
     local lifeAsc = targ:getCharVar('Prestige_Ascensions_Total') or 0

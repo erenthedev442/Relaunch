@@ -6,11 +6,12 @@
 -- colors instead of the fixed golden yellow.
 --
 -- Tier is floor(bonus_levels / 10), clamped to 0-7.
--- Bonus levels use the same four axes as !reallevel:
+-- Bonus levels use the same five axes as !reallevel:
 --   Gear  = getAverageItemLevel() - 99
 --   Asc   = Prestige_Level_<job> CharVar (ascension ranks)
 --   JP    = getSpentJobPoints() / 100
 --   Merit = sum of 7 attr merits / 5
+--   Reb   = Rebirth_Count_<job> * 1 (current-job Rebirths)
 --
 -- Tier → color rendered by the Ashita addon:
 --   0  silver  (bonus  0- 9)
@@ -31,6 +32,7 @@ local m = Module:new('master_star_color')
 
 local JP_PER_LEVEL         = 100
 local MERIT_ATTR_PER_LEVEL = 5
+local LEVELS_PER_REBIRTH   = 1
 local ATTR_MERITS = { 'STR', 'DEX', 'VIT', 'AGI', 'INT', 'MND', 'CHR' }
 
 local function computeTier(player)
@@ -46,7 +48,9 @@ local function computeTier(player)
     end
     local meritLv = math.floor(meritSum / MERIT_ATTR_PER_LEVEL)
 
-    local bonus = gearLv + ascLv + jpLv + meritLv
+    local rebirthLv = (player:getCharVar('Rebirth_Count_' .. job) or 0) * LEVELS_PER_REBIRTH
+
+    local bonus = gearLv + ascLv + jpLv + meritLv + rebirthLv
     return math.min(7, math.floor(bonus / 10))
 end
 

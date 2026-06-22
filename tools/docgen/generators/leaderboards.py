@@ -988,8 +988,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         content = _render_board(
             "Highest Real Level",
             "Real Level = job level + gear iLvl bonus + Ascension levels + Job Points + "
-            "attribute merits. Updates on each login via RealLevel_Tracker. The single "
-            "number that captures overall character power.",
+            "attribute merits + Rebirths (1 each). Updates on each login via "
+            "RealLevel_Tracker. The single number that captures overall character power.",
             "real level",
             rl_rows,
         )

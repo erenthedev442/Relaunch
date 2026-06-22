@@ -5,11 +5,12 @@
 -- website leaderboard ranks), so the formula lives in ONE place and the two
 -- can never drift apart.
 --
--- Real Level = base job level + the sum of four independent bonuses:
+-- Real Level = base job level + the sum of five independent bonuses:
 --   gear  = getAverageItemLevel() - 99         (weapon-weighted iLvl above 99)
 --   asc   = Prestige_Level_<job> CharVar        (completed Ascensions, cur. job)
 --   jp    = getSpentJobPoints() / JP_PER_LEVEL  (current-job Job Points)
 --   merit = sum(7 attribute merits) / MERIT_ATTR_PER_LEVEL
+--   reb   = Rebirth_Count_<job> * LEVELS_PER_REBIRTH (current-job Rebirths)
 --
 -- This is a plain require()-library (returns a table), NOT a Module. Everything
 -- under custom/lua/ is auto-loaded at startup, so NOTHING here may touch xi.* at
@@ -22,6 +23,9 @@ local M = {}
 -- more real-levels. Gear and Ascension are deliberately 1:1.
 M.JP_PER_LEVEL         = 100
 M.MERIT_ATTR_PER_LEVEL = 5
+-- Each Rebirth (current job reset 99->1 + Job Points wiped, then re-leveled) is
+-- worth this many real levels. 1:1 like gear/Ascension -- a flat, hard-earned +1.
+M.LEVELS_PER_REBIRTH   = 1
 -- The 7 base-attribute merits we can read exactly via getMerit(). HP/MP merits
 -- are excluded -- their values dwarf the attribute signal.
 M.ATTR_MERITS          = { 'STR', 'DEX', 'VIT', 'AGI', 'INT', 'MND', 'CHR' }
@@ -48,19 +52,24 @@ function M.compute(player)
     end
     local meritLv = math.floor(meritSum / M.MERIT_ATTR_PER_LEVEL)
 
-    local realLevel = base + gearLv + ascLv + jpLv + meritLv
+    local rebirthCount = player:getCharVar('Rebirth_Count_' .. job) or 0
+    local rebirthLv    = rebirthCount * M.LEVELS_PER_REBIRTH
+
+    local realLevel = base + gearLv + ascLv + jpLv + meritLv + rebirthLv
     return realLevel,
     {
-        job      = job,
-        base     = base,
-        gear     = gearLv,
-        asc      = ascLv,
-        jp       = jpLv,
-        merit    = meritLv,
-        bonus    = gearLv + ascLv + jpLv + meritLv,
-        ilvl     = ilvl,
-        jpSpent  = jpSpent,
-        meritSum = meritSum,
+        job          = job,
+        base         = base,
+        gear         = gearLv,
+        asc          = ascLv,
+        jp           = jpLv,
+        merit        = meritLv,
+        rebirth      = rebirthLv,
+        bonus        = gearLv + ascLv + jpLv + meritLv + rebirthLv,
+        ilvl         = ilvl,
+        jpSpent      = jpSpent,
+        meritSum     = meritSum,
+        rebirthCount = rebirthCount,
     }
 end
 
