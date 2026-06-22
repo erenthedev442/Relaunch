@@ -182,16 +182,23 @@ def poll_once(cfg, conn, state) -> int:
     target = str(cfg.get("LS_BRIDGE_NAME", "") or "")
     cur = conn.cursor()
 
-    # First ever run: baseline at the newest existing line so we don't replay
-    # the whole chat history into Discord. Only lines AFTER now are bridged.
-    if state.get("last_line") is None:
-        cur.execute("SELECT COALESCE(MAX(lineID), 0) FROM audit_chat")
-        row = cur.fetchone()
-        state["last_line"] = int((row and row[0]) or 0)
+    # Current high-water lineID -- cheap (PK index). Also lets us detect a table
+    # truncate/recreate (e.g. a full schema reimport drops + recreates audit_chat,
+    # resetting AUTO_INCREMENT) so we re-baseline instead of wedging forever above
+    # every new row.
+    cur.execute("SELECT COALESCE(MAX(lineID), 0) FROM audit_chat")
+    max_id = int((cur.fetchone() or [0])[0] or 0)
+
+    # First ever run, OR the table reset under us: baseline at the newest line so
+    # we never replay history into Discord and never sit dead above a reset table.
+    if state.get("last_line") is None or max_id < int(state["last_line"]):
+        if state.get("last_line") is not None and max_id < int(state["last_line"]):
+            print(f"[ls_bridge] audit_chat reset (max {max_id} < cursor {state['last_line']}); re-baselining")
+        state["last_line"] = max_id
         save_state(state)
         cur.close()
         _refresh(conn)
-        print(f"[ls_bridge] baseline at lineID {state['last_line']}; bridging \"{target}\" from here")
+        print(f"[ls_bridge] baseline at lineID {max_id}; bridging \"{target}\" from here")
         return 0
 
     last = int(state["last_line"])
