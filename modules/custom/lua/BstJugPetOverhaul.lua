@@ -61,6 +61,13 @@ local CONFIG =
     doubleAttack = 100,
     tripleAttack = 100,
 
+    -- Magical pet damage floor (for Fly/Funguar/Cactuar Ready moves like
+    -- Cursed Sphere, Dark Spore, 1000 Needles which use magic formulas).
+    flatMAB  = 5000,
+    flatMACC = 4000,
+    masterMATTShare = 1.0,   -- inherit 100% of master's MATT mods
+    masterMACCShare = 1.0,   -- inherit 100% of master's MACC mods
+
     -- Auto-Ready: pet fires its TP move on its own once it caps TP.
     autoReady           = true,
     autoReadyTP         = 1000,
@@ -91,9 +98,11 @@ local function applyEndgameScaling(master, pet)
     end
     pet:setLocalVar('bstOverhaulApplied', 1)
 
-    local mSTR = master:getStat(xi.mod.STR)
-    local mATT = master:getMod(xi.mod.ATT)
-    local mACC = master:getMod(xi.mod.ACC)
+    local mSTR  = master:getStat(xi.mod.STR)
+    local mATT  = master:getMod(xi.mod.ATT)
+    local mACC  = master:getMod(xi.mod.ACC)
+    local mMATT = master:getMod(xi.mod.MATT)
+    local mMACC = master:getMod(xi.mod.MACC)
 
     local strFromMaster = math.floor(mSTR * CONFIG.masterSTRShare)
 
@@ -104,6 +113,9 @@ local function applyEndgameScaling(master, pet)
 
     pet:addMod(xi.mod.DMGPHYS, CONFIG.pdt)
     pet:addMod(xi.mod.DMGMAGIC, CONFIG.mdt)
+
+    pet:addMod(xi.mod.MATT, CONFIG.flatMAB  + math.floor(mMATT * CONFIG.masterMATTShare))
+    pet:addMod(xi.mod.MACC, CONFIG.flatMACC + math.floor(mMACC * CONFIG.masterMACCShare))
 
     pet:addMod(xi.mod.DOUBLE_ATTACK, CONFIG.doubleAttack)
     pet:addMod(xi.mod.TRIPLE_ATTACK, CONFIG.tripleAttack)

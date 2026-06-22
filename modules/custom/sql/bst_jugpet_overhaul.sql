@@ -13,3 +13,7 @@
 -- Idempotent. pet_list is read into memory at map boot, so a restart applies it.
 -- ============================================================================
 UPDATE `pet_list` SET `maxLevel` = 99 WHERE `petid` >= 21 AND `maxLevel` < 99;
+
+-- Make all jug pets effectively permanent: 24h timer outlasts any play session.
+-- Retail timers (30-60 min) caused mid-fight despawns and sudden DPS loss.
+UPDATE `pet_list` SET `time` = 86400 WHERE `petid` >= 21;
