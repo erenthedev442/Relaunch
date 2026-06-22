@@ -371,7 +371,7 @@ int32 MapNetworking::recv_parse(uint8* buff, size_t* buffsize, MapSession* PSess
         uint32 PacketDataSize = ref<uint32>(buff, *buffsize - sizeof(int32) - 16);
 
         // it's decompressing data and getting new size
-        PacketDataSize = zlib_decompress((int8*)(buff + FFXI_HEADER_SIZE), PacketDataSize, (int8*)PScratchBuffer.data(), kMaxBufferSize);
+        PacketDataSize = zlib_decompress((int8*)(buff + FFXI_HEADER_SIZE), PacketDataSize, (int8*)PScratchBuffer.data(), static_cast<uint32>(PScratchBuffer.size()));
 
         // Not sure why zlib_decompress is defined to return a uint32 when it returns -1 in situations.
         if (static_cast<int32>(PacketDataSize) != -1)
@@ -663,7 +663,7 @@ auto MapNetworking::compressPacket(uint8* buff, size_t buffsize) -> Maybe<size_t
 
     // Compress the data without regard to the header
     // The returned size is 8 times the real data
-    int32 result = zlib_compress((int8*)(buff + FFXI_HEADER_SIZE), (uint32)(buffsize - FFXI_HEADER_SIZE), (int8*)PScratchBuffer.data(), kMaxBufferSize);
+    int32 result = zlib_compress((int8*)(buff + FFXI_HEADER_SIZE), (uint32)(buffsize - FFXI_HEADER_SIZE), (int8*)PScratchBuffer.data(), static_cast<uint32>(PScratchBuffer.size()));
 
     // handle compression error
     if (result == -1)
@@ -690,7 +690,7 @@ void MapNetworking::finalizePacket(uint8* buff, size_t* buffsize, size_t PacketS
     std::memcpy(PScratchBuffer.data() + PacketSize, hash, 16);
     PacketSize += 16;
 
-    if (PacketSize > kMaxBufferSize)
+    if (PacketSize > PScratchBuffer.size())
     {
         ShowCritical("Network: PScratchBuffer is overflowed (%u)", PacketSize);
     }

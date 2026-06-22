@@ -148,6 +148,9 @@ end
 xi.spells.enfeebling.useEnfeeblingSong = function(caster, target, spell)
     local spellId      = spell:getID()
     local spellElement = spell:getElement()
+    if not pTable[spellId] then
+        return xi.effect.NONE
+    end
     local spellEffect  = pTable[spellId][column.SONG_EFFECT]
     local spellTier    = pTable[spellId][column.SONG_TIER]
 
