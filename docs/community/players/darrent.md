@@ -1,8 +1,8 @@
 # Darrent
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 7d 10h
 
-`💪 7 jobs @99`
+`💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **DRG 99** |
-| Sub job | RDM 92 |
-| Time played | 45h |
-| Enemies defeated | 2,958 |
-| Deaths | 12 |
+| Main job | **BLM 99** |
+| Sub job | RDM 99 |
+| Time played | 46h |
+| Enemies defeated | 3,127 |
+| Deaths | 13 |
 
 ## Job levels
 
@@ -25,7 +25,7 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | **DRG** | **99** |
 | **BLM** | **99** | SMN | 1 |
-| RDM | 92 | BLU | 58 |
+| **RDM** | **99** | **BLU** | **99** |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,499
+- **Marks (current):** 4,244
 - **Marks (lifetime):** 3,691
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 116
+- **Total NM kills:** 130
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 312
+- **Augments crafted:** 314
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -64,7 +64,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|---:|
 | AF | 1,465 | 65 |
 | Relic | 2,350 | 0 |
-| Empyrean | 1,825 | 1,675 |
+| Empyrean | 2,925 | 1,675 |
 
 ## Collections
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 35e9830c2b9b -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: c9bf5e6def99 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

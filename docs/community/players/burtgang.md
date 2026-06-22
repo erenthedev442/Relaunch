@@ -1,6 +1,6 @@
 # Burtgang
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 21h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 8d 3h
 
 `⭐ 70 Ascensions` `💪 13 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 74,280
+- **Marks (current):** 68,280
 - **Marks (lifetime):** 18,426
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 854
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 1,094
+- **Augments crafted:** 1,133
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a030a81e0baf -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: f1aeaa629dae -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

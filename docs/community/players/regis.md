@@ -1,6 +1,6 @@
 # Regis
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 13h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 8d 19h
 
 `⭐ 20 Ascensions` `💪 10 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 59h |
-| Enemies defeated | 1,727 |
-| Deaths | 39 |
+| Time played | 61h |
+| Enemies defeated | 1,740 |
+| Deaths | 40 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 9,133
+- **Marks (current):** 8,733
 - **Marks (lifetime):** 1,619
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 303
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 257
+- **Augments crafted:** 262
 - **NM Affinities:** 3 / 13
 
 ## Reforge
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c7081e0d7543 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: d0fc77a39fcf -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

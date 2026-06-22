@@ -1,8 +1,8 @@
 # Phatdood
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 2h
 
-`💪 6 jobs @99`
+`💪 7 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **DRG 99** |
-| Sub job | WAR 99 |
-| Time played | 19h |
-| Enemies defeated | 574 |
+| Sub job | DRK 99 |
+| Time played | 20h |
+| Enemies defeated | 753 |
 | Deaths | 23 |
 
 ## Job levels
@@ -28,7 +28,7 @@
 | **RDM** | **99** | **BLU** | **99** |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| **DRK** | **99** | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,24 +36,24 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,544
+- **Marks (current):** 94
 - **Marks (lifetime):** 11,820
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 2,051
+- **Total NM kills:** 2,224
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 281
+- **Augments crafted:** 288
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 8,570 | 5,570 |
-| Relic | 1,500 | 0 |
-| Empyrean | 16,730 | 20,880 |
+| AF | 12,835 | 9,835 |
+| Relic | 1,525 | 25 |
+| Empyrean | 17,030 | 21,180 |
 
 ## Collections
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dd4242efc4dc -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: a238bea80273 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

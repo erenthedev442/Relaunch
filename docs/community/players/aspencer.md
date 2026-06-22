@@ -1,6 +1,6 @@
 # Aspencer
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-20 · Character age 8d 9h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-20 · Character age 8d 15h
 
 `💪 1 job @99`
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 826a50a6ccb1 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 80d4b2e006ff -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,11 +1,11 @@
 # Skerxan
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 3h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 2d 9h
 
 `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | DNC 99 |
-| Time played | 9h |
-| Enemies defeated | 580 |
-| Deaths | 7 |
+| Time played | 11h |
+| Enemies defeated | 860 |
+| Deaths | 8 |
 
 ## Job levels
 
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 4 / 5
-- **Marks (current):** 334
-- **Marks (lifetime):** 679
-- **Distinct NMs slain:** 9
-- **Total NM kills:** 94
+- **Rank:** 5 / 5
+- **Marks (current):** 3,538
+- **Marks (lifetime):** 793
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 104
 
 ## Augment Sage
 
@@ -51,17 +51,17 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 265 | 665 |
-| Relic | 0 | 0 |
+| AF | 65 | 1,265 |
+| Relic | 125 | 125 |
 | Empyrean | 0 | 0 |
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 119
 
 ## Achievements
 
-**5** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Wave Rider.
+**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Wave Rider.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5f1407cf48c3 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: fb31e9933a31 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

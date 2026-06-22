@@ -1,6 +1,6 @@
 # Nina
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 5h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 65/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c225b82b8bd4 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 70bc2bc27443 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

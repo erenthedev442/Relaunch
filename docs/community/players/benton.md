@@ -1,6 +1,6 @@
 # Benton
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 2h
 
 `⭐ 15 Ascensions` `💪 9 jobs @99`
 
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | RDM 99 |
-| Time played | 33h |
+| Main job | **WHM 99** |
+| Sub job | WAR 1 |
+| Time played | 34h |
 | Enemies defeated | 15 |
 | Deaths | 5 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 137,790
+- **Marks (current):** 138,190
 - **Marks (lifetime):** 84,857
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 3,316
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 274
+- **Augments crafted:** 276
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 47c5e36aafbf -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 8e08b27fd5b9 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Luna
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 13h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 8d 19h
 
 `⭐ 20 Ascensions` `💪 10 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | RDM 99 |
-| Time played | 59h |
+| Time played | 61h |
 | Enemies defeated | 53 |
-| Deaths | 33 |
+| Deaths | 34 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 26,038
+- **Marks (current):** 26,688
 - **Marks (lifetime):** 1,619
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 296
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 785c3e88cd6b -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 90da12873892 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

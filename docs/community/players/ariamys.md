@@ -1,6 +1,6 @@
 # Ariamys
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 4h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 10h
 
 `⭐ 12 Ascensions` `💪 11 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 16,749
+- **Marks (current):** 12,789
 - **Marks (lifetime):** 21,433
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 1,262
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 402
+- **Augments crafted:** 404
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 611027c16608 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 3c04faf6cbe3 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

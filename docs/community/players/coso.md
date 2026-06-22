@@ -1,21 +1,21 @@
 # Coso
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-21 · Character age 2d 19h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 3d 1h
 
 `💪 5 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | BLM 91 |
-| Time played | 14h |
-| Enemies defeated | 553 |
-| Deaths | 8 |
+| Sub job | DNC 99 |
+| Time played | 16h |
+| Enemies defeated | 564 |
+| Deaths | 9 |
 
 ## Job levels
 
@@ -24,7 +24,7 @@
 | **WAR** | **99** | **SAM** | **99** |
 | MNK | 1 | NIN | 85 |
 | WHM | 1 | DRG | 1 |
-| BLM | 91 | SMN | 1 |
+| BLM | 92 | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | PUP | 1 |
@@ -35,16 +35,16 @@
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 480
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 5 / 5
+- **Marks (current):** 2,135
+- **Marks (lifetime):** 451
+- **Distinct NMs slain:** 11
+- **Total NM kills:** 12
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 52
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 76
 - **NM Affinities:** 9 / 13
 
 ## Reforge
@@ -66,13 +66,14 @@
 
 ## Achievements
 
-**2** unlocked — Augment Novice · Augment Expert.
+**7** unlocked — First Hunt · Ten Hunts In · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 0s |
+| HL Rank I → V | 12m 22s |
 
 ---
 
@@ -81,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4cd3c94a0775 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 1ff85867bc2d -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

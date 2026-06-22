@@ -1,8 +1,8 @@
 # Yojin
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 23h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 5h
 
-`⭐ 3 Ascensions` `💪 16 jobs @99`
+`⭐ 3 Ascensions` `💪 15 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
-| Sub job | DRG 89 |
-| Time played | 37h |
-| Enemies defeated | 5,513 |
+| Main job | **DRK 19** |
+| Sub job | DRG 19 |
+| Time played | 38h |
+| Enemies defeated | 5,878 |
 | Deaths | 30 |
 
 ## Job levels
@@ -23,12 +23,12 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
-| **WHM** | **99** | DRG | 89 |
+| **WHM** | **99** | DRG | 91 |
 | **BLM** | **99** | SMN | 1 |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
-| **DRK** | **99** | DNC | 1 |
+| DRK | 19 | DNC | 1 |
 | **BST** | **99** | **SCH** | **99** |
 | **BRD** | **99** | GEO | 1 |
 | **RNG** | **99** | **RUN** | **99** |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 13,452
+- **Marks (current):** 14,052
 - **Marks (lifetime):** 476
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 71
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Job Rebirth
 
-- **Total rebirths:** 11
-- **By job:** DRK ×11
+- **Total rebirths:** 12
+- **By job:** DRK ×12
 
 ## Prestige
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ff3aff7f7be2 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: cdb51c28388e -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

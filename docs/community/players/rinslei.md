@@ -1,11 +1,11 @@
 # Rinslei
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-21 · Character age 1d 16h
 
 `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Enter the Hunting League.** Talk to the Hunt Master at Reisenjima Henge to register and start Rank I.
+    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BLU 99** |
 | Sub job | RDM 99 |
-| Time played | 27h |
+| Time played | 28h |
 | Enemies defeated | 328 |
 | Deaths | 3 |
 
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 32
-- **Marks (lifetime):** 2,070
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 414
+- **Rank:** 4 / 5
+- **Marks (current):** 921
+- **Marks (lifetime):** 2,530
+- **Distinct NMs slain:** 9
+- **Total NM kills:** 456
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**5** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Mark of 1,000 · Augment Novice.
+**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: aabc4bdb9a7f -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: e4176f3e7021 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

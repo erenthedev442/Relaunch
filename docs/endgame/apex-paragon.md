@@ -83,3 +83,10 @@ Unlock **Daily Might** once for **80 Paragon Points**, then claim it from the Pa
 ---
 
 *This page is generated directly from the live Apex Trials and Paragon configuration — every number above always matches the server.*
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 28c526f02100 -->
+_Last updated: 2026-06-22 05:55 UTC_
+<!-- DOCGEN:END id="last-updated" -->

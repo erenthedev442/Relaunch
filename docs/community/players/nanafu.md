@@ -1,6 +1,6 @@
 # Nanafu
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 22h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 4h
 
 `💪 7 jobs @99`
 
@@ -14,8 +14,8 @@
 | Main job | **WAR 99** |
 | Sub job | DRK 99 |
 | Time played | 18h |
-| Enemies defeated | 1,738 |
-| Deaths | 19 |
+| Enemies defeated | 1,743 |
+| Deaths | 20 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,303
+- **Marks (current):** 1,503
 - **Marks (lifetime):** 6,585
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 395
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8d8487335e34 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: f74e5b7297d7 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

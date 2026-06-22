@@ -1,6 +1,6 @@
 # Loamy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 2h
 
 `💪 11 jobs @99`
 
@@ -11,8 +11,8 @@
 
 | | |
 |---|---|
-| Main job | **BRD 99** |
-| Sub job | RDM 99 |
+| Main job | **RDM 99** |
+| Sub job | BLM 99 |
 | Time played | 66h |
 | Enemies defeated | 1,187 |
 | Deaths | 7 |
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 88
+- **Augments crafted:** 90
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c96562eb05f5 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 978d635f8154 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

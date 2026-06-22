@@ -1,6 +1,6 @@
 # Trixi
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 13h 55m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 19h 38m
 
 `💪 4 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 9h |
+| Time played | 11h |
 | Enemies defeated | 103 |
-| Deaths | 2 |
+| Deaths | 3 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 13,350
+- **Marks (current):** 11,200
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 45
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 15
+- **Mastery rank:** 2 / 5
+- **Augments crafted:** 20
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 465493e4e6b0 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 97e7f9e05ea3 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

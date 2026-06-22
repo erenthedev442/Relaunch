@@ -1,25 +1,25 @@
 # Nyx
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 13h 22m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 19h 5m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 23/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 25/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **WAR 23** |
-| Sub job | — |
-| Time played | 1h |
-| Enemies defeated | 29 |
+| Main job | **SAM 25** |
+| Sub job | WAR 23 |
+| Time played | 2h |
+| Enemies defeated | 71 |
 | Deaths | 0 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 23 | SAM | 1 |
+| WAR | 23 | SAM | 25 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2e39f32a25f0 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 6705caba08b5 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

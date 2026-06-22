@@ -1,8 +1,8 @@
 # Jbae
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-21 · Character age 28d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-05-24 · Last seen 2026-06-21 · Character age 28d 8h
 
-`⭐ 124 Ascensions` `💪 17 jobs @99`
+`⭐ 125 Ascensions` `💪 17 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 296h |
-| Enemies defeated | 9,379 |
-| Deaths | 168 |
+| Time played | 298h |
+| Enemies defeated | 9,503 |
+| Deaths | 171 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 39,132
+- **Marks (current):** 36,132
 - **Marks (lifetime):** 1,440
 - **Distinct NMs slain:** 13
 - **Total NM kills:** 6,099
@@ -73,8 +73,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 124
-- **Per-job prestige:** RDM P85 · PLD P12 · DRG P27
+- **Total Ascensions:** 125
+- **Per-job prestige:** RDM P86 · PLD P12 · DRG P27
 
 ## Collections
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 81db6a077306 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: a06efb029d0c -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,11 +1,11 @@
 # Rose
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-20 · Character age 4d 18h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 5d
 
 `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SCH 99 |
-| Time played | 28h |
+| Time played | 29h |
 | Enemies defeated | 11 |
 | Deaths | 0 |
 
@@ -35,8 +35,8 @@
 
 ## Hunting League
 
-- **Rank:** 4 / 5
-- **Marks (current):** 80,023
+- **Rank:** 5 / 5
+- **Marks (current):** 80,823
 - **Marks (lifetime):** 14,261
 - **Distinct NMs slain:** 8
 - **Total NM kills:** 2,657
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 254
+- **Augments crafted:** 257
 - **NM Affinities:** 12 / 13
 
 ## Reforge
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 79568ee2b835 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 6c3a490e191a -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

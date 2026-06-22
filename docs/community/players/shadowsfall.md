@@ -1,6 +1,6 @@
 # Shadowsfall
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-20 · Character age 3d 19h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-20 · Character age 4d 1h
 
 `💪 2 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 5,941
+- **Marks (current):** 6,491
 - **Marks (lifetime):** 610
 - **Distinct NMs slain:** 3
 - **Total NM kills:** 122
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b3cbcb633d56 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 81c32485c8e2 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

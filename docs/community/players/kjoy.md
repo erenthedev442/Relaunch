@@ -1,6 +1,6 @@
 # Kjoy
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 6h 31m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 12h 15m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 38/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: eadda75d6b62 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: adcf46e373c9 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

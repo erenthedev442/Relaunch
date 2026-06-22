@@ -1,6 +1,6 @@
 # Muahddib
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-20 · Character age 1d 9h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-20 · Character age 1d 15h
 
 `💪 2 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cd24907dc5b9 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: ad3b283757b5 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Velvet
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 8d 22h
 
 `⭐ 5 Ascensions` `💪 8 jobs @99`
 
@@ -11,7 +11,7 @@
 
 | | |
 |---|---|
-| Main job | **BRD 99** |
+| Main job | **THF 99** |
 | Sub job | NIN 99 |
 | Time played | 45h |
 | Enemies defeated | 2,824 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 11,718
+- **Marks (current):** 12,618
 - **Marks (lifetime):** 8,464
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 308
+- **Total NM kills:** 316
 
 ## Augment Sage
 
@@ -51,9 +51,9 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 2,150 | 515 |
+| AF | 4,150 | 515 |
 | Relic | 3 | 425 |
-| Empyrean | 241 | 3,650 |
+| Empyrean | 941 | 4,850 |
 
 ## Prestige
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 310e478bf818 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: d54fcb56fb56 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Speedbump
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 2h
 
 `⭐ 15 Ascensions` `💪 8 jobs @99`
 
@@ -11,8 +11,8 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | RDM 99 |
+| Main job | **GEO 99** |
+| Sub job | BRD 1 |
 | Time played | 32h |
 | Enemies defeated | 4 |
 | Deaths | 2 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 144,016
+- **Marks (current):** 144,416
 - **Marks (lifetime):** 86,337
 - **Distinct NMs slain:** 11
 - **Total NM kills:** 3,309
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 273
+- **Augments crafted:** 275
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 437d97582ba6 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 3fe337e18c0c -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

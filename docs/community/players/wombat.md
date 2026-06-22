@@ -1,16 +1,16 @@
 # Wombat
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 23h 31m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 5h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 82/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 93/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RDM 82** |
-| Sub job | BLU 59 |
+| Main job | **RDM 93** |
+| Sub job | BLU 69 |
 | Time played | 7h |
 | Enemies defeated | 289 |
 | Deaths | 2 |
@@ -23,7 +23,7 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 8 |
-| RDM | 82 | BLU | 59 |
+| RDM | 93 | BLU | 69 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -79,6 +79,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bd36d7b7bc77 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: dc592c6d548e -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

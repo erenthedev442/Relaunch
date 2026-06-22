@@ -1,6 +1,6 @@
 # Saebin
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-19 · Character age 3d 8h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-19 · Character age 3d 13h
 
 `💪 1 job @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 50c3b05c06f3 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: dcf9eeada434 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

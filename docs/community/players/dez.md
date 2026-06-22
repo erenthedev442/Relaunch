@@ -1,6 +1,6 @@
 # Dez
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 8d 21h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-15 · Character age 9d 2h
 
 `⭐ 11 Ascensions` `💪 4 jobs @99`
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7a58e22ac1e4 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 64f2dd6f9a2d -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

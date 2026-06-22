@@ -1,6 +1,6 @@
 # Souls
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 2h
 
 `⭐ 14 Ascensions` `💪 11 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | NIN 99 |
-| Time played | 46h |
-| Enemies defeated | 3,572 |
-| Deaths | 47 |
+| Time played | 48h |
+| Enemies defeated | 3,937 |
+| Deaths | 48 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 12,242
+- **Marks (current):** 13,592
 - **Marks (lifetime):** 2,552
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 505
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 310
+- **Augments crafted:** 323
 - **NM Affinities:** 10 / 13
 
 ## Reforge
@@ -57,8 +57,8 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 2
-- **By job:** RDM ×2
+- **Total rebirths:** 3
+- **By job:** RDM ×3
 
 ## Prestige
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: eb494a23bb9f -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 23f0296f93d0 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

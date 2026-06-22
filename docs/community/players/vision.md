@@ -1,6 +1,6 @@
 # Vision
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 21h 14m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 2h
 
 `💪 1 job @99`
 
@@ -11,8 +11,8 @@
 
 | | |
 |---|---|
-| Main job | **GEO 99** |
-| Sub job | BRD 87 |
+| Main job | **BLM 9** |
+| Sub job | SCH 8 |
 | Time played | 7h |
 | Enemies defeated | 2 |
 | Deaths | 2 |
@@ -24,12 +24,12 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
+| BLM | 9 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
-| BST | 1 | SCH | 1 |
+| BST | 1 | SCH | 8 |
 | BRD | 87 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 21
+- **Augments crafted:** 24
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 67174f85c5a4 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 82704d572a6c -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

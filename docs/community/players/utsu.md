@@ -1,18 +1,18 @@
 # Utsu
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d
+**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 5d 6h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 23/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 24/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **PUP 23** |
-| Sub job | WHM 15 |
+| Main job | **PUP 24** |
+| Sub job | WHM 16 |
 | Time played | 3h |
-| Enemies defeated | 102 |
+| Enemies defeated | 106 |
 | Deaths | 0 |
 
 ## Job levels
@@ -21,11 +21,11 @@
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
-| WHM | 15 | DRG | 1 |
+| WHM | 16 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 7 | BLU | 1 |
 | THF | 1 | COR | 1 |
-| PLD | 1 | PUP | 23 |
+| PLD | 1 | PUP | 24 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 2,775
+- **Marks (current):** 3,475
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a175885b248e -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: e694160aebc5 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

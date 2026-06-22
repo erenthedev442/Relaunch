@@ -58,7 +58,7 @@ Starting at **floor 10**, the Void layers extra modifiers onto every monster. On
 <!-- DOCGEN:BEGIN id="voidspire-rewards" -->
 Clearing a floor pays **5 + 2 × the floor number** in marks, so deeper floors are worth more each. The Voidspire's real prize, though, is the leaderboard — your deepest floor is your score.
 
-Reaching certain depths for the first time pays a one-time bonus on top, announced server-wide:
+Reaching certain depths pays a bonus on top — and it's awarded **every run** you descend that far, not just the first time:
 
 | Reach floor | Bonus marks |
 |---:|---:|
@@ -76,6 +76,6 @@ remembers how deep you dared to go.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a17bf6602110 -->
-_Last updated: 2026-06-14 13:15 UTC_
+<!-- content-hash: 01487ce32822 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

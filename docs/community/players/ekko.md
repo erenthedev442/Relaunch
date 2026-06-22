@@ -1,6 +1,6 @@
 # Ekko
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 23h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 4h
 
 `💪 7 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | WAR 99 |
-| Time played | 32h |
-| Enemies defeated | 1,595 |
+| Time played | 34h |
+| Enemies defeated | 1,743 |
 | Deaths | 4 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,729
-- **Marks (lifetime):** 4,090
-- **Distinct NMs slain:** 13
-- **Total NM kills:** 652
+- **Marks (current):** 6,313
+- **Marks (lifetime):** 5,919
+- **Distinct NMs slain:** 14
+- **Total NM kills:** 808
 
 ## Augment Sage
 
@@ -51,13 +51,13 @@
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 365 | 365 |
-| Relic | 1,565 | 65 |
-| Empyrean | 410 | 1,860 |
+| AF | 515 | 515 |
+| Relic | 1,865 | 365 |
+| Empyrean | 260 | 2,460 |
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 120
 
 ## Achievements
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 44847a4bdbb9 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: d3806c35d2be -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Broken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-21 · Character age 5d 15h
 
 `⭐ 14 Ascensions` `💪 22 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 241,634
+- **Marks (current):** 244,884
 - **Marks (lifetime):** 121,973
 - **Distinct NMs slain:** 11
 - **Total NM kills:** 4,579
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0583be0284f4 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 8712493356e9 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

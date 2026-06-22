@@ -1,6 +1,6 @@
 # Salnexia
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-21 · Character age 3d 20h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 2h
 
 `💪 2 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 22h |
-| Enemies defeated | 406 |
+| Time played | 23h |
+| Enemies defeated | 437 |
 | Deaths | 10 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 601
-- **Marks (lifetime):** 403
+- **Marks (current):** 523
+- **Marks (lifetime):** 624
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 95
+- **Total NM kills:** 126
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**5** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Wave Rider.
+**6** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Wave Rider.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a2f079c21820 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 23c98d49bf99 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

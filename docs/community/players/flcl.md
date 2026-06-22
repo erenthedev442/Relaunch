@@ -1,8 +1,8 @@
 # Flcl
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 11h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 8d 16h
 
-`⭐ 45 Ascensions` `💪 18 jobs @99`
+`⭐ 46 Ascensions` `💪 18 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **SMN 99** |
+| Main job | **SCH 99** |
 | Sub job | BLM 99 |
 | Time played | 66h |
-| Enemies defeated | 6,734 |
+| Enemies defeated | 6,741 |
 | Deaths | 81 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,351
+- **Marks (current):** 2,351
 - **Marks (lifetime):** 26,496
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 5,364
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 496
+- **Augments crafted:** 514
 - **NM Affinities:** 11 / 13
 
 ## Reforge
@@ -57,8 +57,8 @@
 
 ## Prestige
 
-- **Total Ascensions:** 45
-- **Per-job prestige:** SAM P20 · DRG P11 · DNC P3 · SCH P11
+- **Total Ascensions:** 46
+- **Per-job prestige:** SAM P20 · DRG P11 · DNC P3 · SCH P12
 
 ## Collections
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4371634780af -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 0e5f0059abe0 -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

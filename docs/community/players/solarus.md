@@ -1,19 +1,19 @@
 # Solarus
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 2h 16m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 7h 59m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 25/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **THF 1** |
+| Main job | **THF 25** |
 | Sub job | — |
 | Time played | 0h |
-| Enemies defeated | 0 |
-| Deaths | 0 |
+| Enemies defeated | 50 |
+| Deaths | 1 |
 
 ## Job levels
 
@@ -24,7 +24,7 @@
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 1 | COR | 1 |
+| THF | 25 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b4c2186fdc8b -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 22d5ef52b3df -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Katrrine
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 4d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-21 · Character age 5d 3h
 
 `💪 5 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | BLU 99 |
-| Time played | 44h |
-| Enemies defeated | 2,846 |
+| Time played | 45h |
+| Enemies defeated | 2,856 |
 | Deaths | 7 |
 
 ## Job levels
@@ -36,14 +36,14 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3
-- **Marks (lifetime):** 2,094
-- **Distinct NMs slain:** 5
-- **Total NM kills:** 416
+- **Marks (current):** 1,442
+- **Marks (lifetime):** 2,554
+- **Distinct NMs slain:** 11
+- **Total NM kills:** 458
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
+- **Mastery rank:** 2 / 5
 - **Augments crafted:** 30
 - **NM Affinities:** 0 / 13
 
@@ -62,11 +62,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 119
 
 ## Achievements
 
-**6** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Mark of 1,000 · Augment Novice.
+**8** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Augment Novice.
 
 ## Speed records
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 82bad3771fbc -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: fe2be16f5d7f -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Moss
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-21 · Character age 6d 3h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 6d 9h
 
 `💪 22 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 71h |
-| Enemies defeated | 3,871 |
+| Time played | 73h |
+| Enemies defeated | 3,882 |
 | Deaths | 22 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 16,076
+- **Marks (current):** 30,396
 - **Marks (lifetime):** 2,447
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 580
+- **Total NM kills:** 609
 
 ## Guild standing
 
@@ -47,10 +47,10 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Veteran | 22,500 | 2,500 to Master |
-| Relic Hunters' Guild | Champion | 72,000 | 28,000 to Grandmaster |
-| Empyrean Hunters' Guild | Veteran | 9,000 | 16,000 to Master |
-| League Hunters' Guild | Master | 36,000 | 19,000 to Champion |
+| AF Hunters' Guild | Master | 37,500 | 17,500 to Champion |
+| Relic Hunters' Guild | Champion | 96,000 | 4,000 to Grandmaster |
+| Empyrean Hunters' Guild | Master | 40,500 | 14,500 to Champion |
+| League Hunters' Guild | Champion | 61,500 | 38,500 to Grandmaster |
 
 ## Augment Sage
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7158ec9ba1de -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 212f75bbf86b -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

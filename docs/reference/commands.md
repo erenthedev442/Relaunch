@@ -2,13 +2,13 @@
 
 These chat commands are available to every player on Legendary (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 70
+**Total player-accessible commands:** 72
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    48 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    49 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -18,6 +18,7 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!achievements` | — | Shows all personal milestone achievements - earned and unearned - with their reward amounts and descriptions. | :material-puzzle: **custom** |
 | `!aegis` | — | Cast Divine Aegis (a PLD-only custom spell) on yourself: a Holy shield that absorbs physical damage and cuts physical damage taken by 20% for 30s, then detonates as a Holy AoE. Exposed as a command because the client cannot hard-cast custom spell IDs. | :material-puzzle: **custom** |
 | `!ah` | — | opens the Auction House menu anywhere in the world |  |
+| `!apex` | string | Apex Trials helper -- check your record / Paragon Points, start a climb, or bail out of one. | :material-puzzle: **custom** |
 | `!augstats` | — | Shows the true augment contributions on your equipped gear. |  |
 | `!autojp` | string | Auto-spends all unspent job points on whichever categories of the player's CURRENT MAIN JOB can still be upgraded, distributing breadth-first so every category grows evenly. | :material-puzzle: **custom** |
 | `!automerits` | string | Auto-spends all unspent merit points on whichever categories can still be upgraded, distributing breadth-first so every category grows evenly rather than one rank stack getting maxed first. | :material-puzzle: **custom** |
@@ -79,6 +80,7 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!trustattack` | — | Run once to turn ON: while on, you AUTO-ENGAGE whatever mob you have targeted (cursor target), so you and your trusts attack it hands-free -- point at the next mob and you all switch to it. Run again to turn OFF. Macro:  /console !trustattack | :material-puzzle: **custom** |
 | `!unstick` | — | Self-rescue from stuck event/sequence state. |  |
 | `!visitant` | — | _(no description)_ | :material-puzzle: **custom** |
+| `!warpty` | — | _(no description)_ |  |
 | `!wavemaster` | — | Warps you to Escha - Ru'Aun where the Wave Master NPC is located. The Wave Master runs themed enemy wave fights (Easy -> Nightmare) that reward Hunt Marks on full clear. | :material-puzzle: **custom** |
 | `!waypoint` | string, string | Personal, per-character warp points. Each player can save up to 10 positions (slots 1-10) wherever they stand and warp back later. Slots are overwritable -- saving over a slot just replaces it. | :material-puzzle: **custom** |
 | `!week` | — | Shows the player's current weekly objectives at a glance: Weekly Hunt Board progress and featured NMs killed. Resets each Monday 00:00 UTC. | :material-puzzle: **custom** |
@@ -180,6 +182,14 @@ Shows all personal milestone achievements - earned and unearned - with their rew
 Cast Divine Aegis (a PLD-only custom spell) on yourself: a Holy shield that absorbs physical damage and cuts physical damage taken by 20% for 30s, then detonates as a Holy AoE. Exposed as a command because the client cannot hard-cast custom spell IDs.
 
 **Usage:** `aegis`
+
+### `!apex`  _(custom)_
+
+Apex Trials helper -- check your record / Paragon Points, start a climb, or bail out of one.
+
+**Usage:** `apex`
+
+**Parameter types:** string
 
 ### `!augstats`
 
@@ -497,6 +507,10 @@ Self-rescue from stuck event/sequence state.
 
 **Usage:** `visitant`
 
+### `!warpty`
+
+**Usage:** `warpty`
+
 ### `!wavemaster`  _(custom)_
 
 Warps you to Escha - Ru'Aun where the Wave Master NPC is located. The Wave Master runs themed enemy wave fights (Easy -> Nightmare) that reward Hunt Marks on full clear.
@@ -536,6 +550,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b5608ca409cd -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: 52d88e132e1b -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

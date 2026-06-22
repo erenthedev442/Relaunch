@@ -1,6 +1,6 @@
 # Spyro
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 7d 6h
 
 `⭐ 9 Ascensions` `💪 22 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | BLU 99 |
-| Time played | 36h |
-| Enemies defeated | 5,914 |
-| Deaths | 21 |
+| Time played | 38h |
+| Enemies defeated | 7,394 |
+| Deaths | 23 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 9,710
-- **Marks (lifetime):** 27,677
+- **Marks (current):** 10,485
+- **Marks (lifetime):** 27,852
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 413
+- **Total NM kills:** 415
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 571
+- **Augments crafted:** 576
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -57,8 +57,8 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 1
-- **By job:** RDM ×1
+- **Total rebirths:** 7
+- **By job:** RDM ×7
 
 ## Prestige
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 11264dd73838 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 60aaf5194cbf -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

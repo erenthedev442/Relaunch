@@ -1,6 +1,6 @@
 # Miyasanima
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 11h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-21 · Character age 7d 17h
 
 `💪 14 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 37h |
-| Enemies defeated | 4,490 |
+| Time played | 38h |
+| Enemies defeated | 4,494 |
 | Deaths | 18 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 6,122
-- **Marks (lifetime):** 1,558
+- **Marks (current):** 6,218
+- **Marks (lifetime):** 1,646
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 146
+- **Total NM kills:** 150
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 138
+- **Augments crafted:** 144
 - **NM Affinities:** 8 / 13
 
 ## Reforge
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e887fecb0e5b -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: d8b0e205fdbf -->
+_Last updated: 2026-06-22 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->
