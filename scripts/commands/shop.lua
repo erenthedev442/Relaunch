@@ -354,6 +354,14 @@ do
     end
 end
 
+-- Maat's Cap (15194) = 100% critical augment guarantee; prepend to every group.
+do
+    local MAATS_CAP = { 15194, 10000000 }
+    for _, g in ipairs(augmentOrder) do
+        table.insert(augmentStock[g[1]], 1, MAATS_CAP)
+    end
+end
+
 -----------------------------------
 -- BST pets: jug broths (summon a pet) + pet food (heal/feed it).
 -- Split into two sub-pages because a FFXI shop window holds only 16 items:
