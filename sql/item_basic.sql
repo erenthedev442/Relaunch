@@ -1841,7 +1841,7 @@ INSERT INTO `item_basic` VALUES (1847,0,'fifth_virtue','fifth_virtue','第五の
 INSERT INTO `item_basic` VALUES (1848,0,'fourth_virtue','fourth_virtue','第四の聖徳',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
 INSERT INTO `item_basic` VALUES (1849,0,'sixth_virtue','sixth_virtue','第六の聖徳',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
 INSERT INTO `item_basic` VALUES (1850,0,'first_virtue','first_virtue','第一の聖徳',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
-INSERT INTO `item_basic` VALUES (1851,0,'deed_of_placidity','deed_of_placidity','無瞋の善根',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
+INSERT INTO `item_basic` VALUES (1851,0,'deed_of_placidity','deed_of_placidity','無瞋の善根',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
 INSERT INTO `item_basic` VALUES (1852,0,'high-quality_phuabo_organ','h.q._phuabo_org.','上質なフワボ器官',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
 INSERT INTO `item_basic` VALUES (1853,0,'second_virtue','second_virtue','第二の聖徳',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
 INSERT INTO `item_basic` VALUES (1854,0,'deed_of_moderation','deed_of_moder.','無貪の善根',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
@@ -1860,7 +1860,7 @@ INSERT INTO `item_basic` VALUES (1866,0,'set_of_quadav_barbut_parts','quadav_par
 INSERT INTO `item_basic` VALUES (1867,0,'yagudo_headdress_cutting','yagudo_cutting','ヤグード頭衣シート',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (1868,0,'goblin_coif_cutting','goblin_cutting','ゴブリン頭巾シート',@GENERAL_TYPE,1,@FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_RARE,@NONE,0);
 INSERT INTO `item_basic` VALUES (1869,0,'lamia_skin','lamia_skin','ラミアの抜け殻',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX,@LEATHERCRAFT,387);
-INSERT INTO `item_basic` VALUES (1870,0,'deed_of_sensibility','deed_of_sensib.','無痴の善根',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
+INSERT INTO `item_basic` VALUES (1870,0,'deed_of_sensibility','deed_of_sensib.','無痴の善根',@GENERAL_TYPE,99,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
 INSERT INTO `item_basic` VALUES (1871,0,'high-quality_hpemde_organ','h.q._hpemde_org.','上質なペミデ器官',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
 INSERT INTO `item_basic` VALUES (1872,0,'ghrah_m_chip','ghrah_m_chip','ゴラホＭチップ',@GENERAL_TYPE,12,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY,@NONE,0);
 INSERT INTO `item_basic` VALUES (1873,0,'brigands_chart','brigands_chart','山師の海図',@GENERAL_TYPE,1,@FLAG_MYSTERY_BOX | @FLAG_CAN_SEND_ACCT | @FLAG_NOAUCTION | @FLAG_NOSALE | @FLAG_NODELIVERY | @FLAG_EX | @FLAG_RARE,@NONE,0);
