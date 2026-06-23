@@ -132,7 +132,7 @@ local function spawnApexBoss(owner, tier)
     mob:addEnmity(owner, 30000, 30000)
 
     -- Attach tier-appropriate hardcore mechanics AFTER all stats/HP are set.
-    mechanics.attach(mob, C.mechCfg(tier))
+    mechanics.attach(mob, C.mechCfg(tier), ownerName)
 
     return mob, bossName, level, labels
 end

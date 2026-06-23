@@ -74,9 +74,13 @@ M.playersNear = playersNear
 
 local function shout(mob, msg, st)
     if not msg then return end
-    local tag = (st and st.name) and ('[%s] '):format(st.name) or '[NM] '
+    local tag   = (st and st.name) and ('[%s] '):format(st.name) or '[NM] '
+    local owner = st and st.ownerName
     for _, p in ipairs(playersNear(mob, 80.0)) do
-        pcall(function() p:printToPlayer(tag .. msg, xi.msg.channel.SYSTEM_3) end)
+        pcall(function()
+            if owner and p:getName() ~= owner then return end
+            p:printToPlayer(tag .. msg, xi.msg.channel.SYSTEM_3)
+        end)
     end
 end
 M.shout = shout
@@ -121,8 +125,10 @@ end
 -----------------------------------
 local function aoePulse(mob, aoeCfg, st)
     local radius = aoeCfg.radius or 30.0
+    local owner  = st and st.ownerName
     for _, p in ipairs(playersNear(mob, radius)) do
         pcall(function()
+            if owner and p:getName() ~= owner then return end
             local dmg = math.floor(p:getMaxHP() * (aoeCfg.dmgPct or 20) / 100)
             if dmg > 0 then
                 p:takeDamage(dmg, mob, xi.attackType.SPECIAL, xi.damageType.ELEMENTAL)
@@ -137,8 +143,10 @@ end
 -----------------------------------
 local function ccPulse(mob, ccCfg, st)
     local radius = ccCfg.radius or 25.0
+    local owner  = st and st.ownerName
     for _, p in ipairs(playersNear(mob, radius)) do
         pcall(function()
+            if owner and p:getName() ~= owner then return end
             p:addStatusEffect(ccCfg.effect or xi.effect.TERROR, ccCfg.power or 1, 0, ccCfg.dur or 5)
         end)
     end
@@ -150,8 +158,10 @@ end
 -----------------------------------
 local function applyDoom(mob, doomCfg, st)
     local radius = doomCfg.radius or 30.0
+    local owner  = st and st.ownerName
     for _, p in ipairs(playersNear(mob, radius)) do
         pcall(function()
+            if owner and p:getName() ~= owner then return end
             if not p:hasStatusEffect(xi.effect.DOOM) then
                 p:addStatusEffect(xi.effect.DOOM, 1, 3, doomCfg.dur or 30)
             end
@@ -256,7 +266,7 @@ end
 -----------------------------------
 -- PUBLIC: attach mechanics to a freshly-spawned mob (post-spawn, pre/post-claim).
 -----------------------------------
-function M.attach(mob, cfg)
+function M.attach(mob, cfg, ownerName)
     if not mob or not cfg then return end
     local id
     if not pcall(function() id = mob:getID() end) or not id then return end
@@ -264,6 +274,7 @@ function M.attach(mob, cfg)
     mechState[id] = {
         cfg          = cfg,
         name         = cfg.name,
+        ownerName    = ownerName or nil,  -- when set, AoE/CC/shout only targets this player
         startedAt    = now,
         firedPhases  = {},
         addsAlive    = {},
