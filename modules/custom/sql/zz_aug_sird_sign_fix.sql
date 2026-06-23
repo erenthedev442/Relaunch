@@ -1,0 +1,24 @@
+-- =====================================================================
+-- zz_aug_sird_sign_fix.sql
+-- Fix the SIGN of the "Spell interruption rate down 1%" augment (augId 53).
+--
+-- The engine REDUCES spell interruption with a POSITIVE SPELLINTERRUPT mod
+-- (src/map/utils/battleutils.cpp:2014 --
+--   SIRDRatio = (100 - merits - getMod(Mod::SPELLINTERRUPT)) / 100 ),
+-- so a SIRD ("rate DOWN") augment must apply a POSITIVE value. augId 53 ships as
+-- value = -1, which INCREASES interruption -- backwards from its own label. Its
+-- sibling, the 2% augment (augId 1157), is correctly +2. Flip augId 53 to +1 so
+-- the 1% augment reduces interruption like it says, and so it shows up the right
+-- way on the Spell Interrupt line in !mystats (which reads the same mod 168).
+--
+-- Existing augmented gear self-heals on the next augments-cache reload: the value
+-- lives in this `augments` table, not in the item's exdata (the exdata only stores
+-- the augId + boost; the engine looks the value up here at apply time).
+--
+-- zz_ = re-applied UNCONDITIONALLY on every deploy, so a stock augments.sql
+-- re-import can't silently reset it. Idempotent UPDATE keyed on augmentId.
+-- Needs a MAP RESTART -- the augments table is cached at boot via
+-- CItemEquipment::LoadAugmentData(); there is no hot-reload.
+-- =====================================================================
+
+UPDATE `augments` SET `value` = 1 WHERE `augmentId` = 53;
