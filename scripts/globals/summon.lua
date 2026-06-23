@@ -323,7 +323,7 @@ xi.summon.avatarFinalAdjustments = function(info, mob, skill, target, skilltype,
             skill:setMsg(xi.msg.basic.USES_JA_TAKE_DAMAGE)
         end
     else
-        skill:setMsg(xi.msg.basic.DAMAGE)
+        skill:setMsg(xi.msg.basic.USES_JA_TAKE_DAMAGE)
     end
 
     -- Handle shadows depending on shadow behavior / skilltype
@@ -394,8 +394,14 @@ xi.summon.avatarFinalAdjustments = function(info, mob, skill, target, skilltype,
         return 0
     end
 
-    -- Calculate Blood Pact Damage before stoneskin
-    dmg = math.floor(dmg + dmg * mob:getMod(xi.mod.BP_DAMAGE) / 100)
+    -- Calculate Blood Pact Damage before stoneskin.
+    -- Include the summoner's gear/augment BP_DAMAGE mods (avatar only gets JP-based BP_DAMAGE from C++).
+    local masterBpMod = 0
+    local bpMaster = mob:getMaster()
+    if bpMaster and bpMaster:isPC() then
+        masterBpMod = bpMaster:getMod(xi.mod.BP_DAMAGE)
+    end
+    dmg = math.floor(dmg + dmg * (mob:getMod(xi.mod.BP_DAMAGE) + masterBpMod) / 100)
 
     if dmg < 0 then
         return dmg

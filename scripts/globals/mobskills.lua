@@ -1193,7 +1193,9 @@ xi.mobskills.mobMagicalMove = function(mob, target, skill, action, skillParams)
         resistTier = xi.combat.magicHitRate.calculateResistRate(mob, target, 0, 0, 0, actionElement, dStatAttackerMod, 0, mAccuracyBonus)
 
         if mob:isAvatar() or (mob:getMaster() and mob:getMaster():isPC()) then
-            bloodPactMultiplier = 1 + mob:getMod(xi.mod.BP_DAMAGE) / 100
+            local mbpMaster = mob:getMaster()
+            local mbpMasterMod = (mbpMaster and mbpMaster:isPC()) and mbpMaster:getMod(xi.mod.BP_DAMAGE) or 0
+            bloodPactMultiplier = 1 + (mob:getMod(xi.mod.BP_DAMAGE) + mbpMasterMod) / 100
         end
 
         if
