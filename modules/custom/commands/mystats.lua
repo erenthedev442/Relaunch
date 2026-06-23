@@ -13,7 +13,7 @@
 --   * Crit / multihit: crit rate/dmg, magic crit, DA / TA / QA
 --   * Defensive     : DEF, EVA, MDEF, MEVA + damage-taken modifiers
 --   * Tempo / haste : Haste (gear/magic/ability), Dual Wield, Store TP,
---                     Fast Cast, Spell Interrupt, Quick Magic
+--                     Fast Cast, Spell Intp Down (SIRD), Quick Magic
 --   * Recovery      : Regen, Refresh, Regain, Cure Potency, Conv Healing
 --   * Misc / niche  : Subtle Blow I+II, Enmity, Treasure Hunter, TP Bonus,
 --                     WS dmg modifiers, Skillchain dmg
@@ -207,7 +207,7 @@ commandObj.onTrigger = function(player)
         player:getMod(xi.mod.DUAL_WIELD),
         player:getMod(xi.mod.STORETP),
         player:getMod(xi.mod.TP_BONUS))
-    line(player, 'Fast Cast %s%%   Quick Magic %d%%   Spell Interrupt %d%%',
+    line(player, 'Fast Cast %s%%   Quick Magic %d%%   Spell Intp Down %d%%',
         vcap(player, 'FASTCAST'),
         player:getMod(xi.mod.QUICK_MAGIC),
         player:getMod(xi.mod.SPELLINTERRUPT))
