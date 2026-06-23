@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "total": 301,
+  "total": 300,
   "groups": [
     {
       "category": "Strength / Attack / Phys.dmg.taken",
@@ -207,16 +207,6 @@
         },
         {
           "itemId": 897,
-          "augId": 146,
-          "label": "Dual Wield",
-          "base": 1,
-          "mult": 1,
-          "disp": 1,
-          "cat": 1,
-          "maxBoost": null
-        },
-        {
-          "itemId": 903,
           "augId": 151,
           "label": "Martial Arts",
           "base": 1,
@@ -226,7 +216,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 926,
+          "itemId": 903,
           "augId": 194,
           "label": "Kick Attacks Rate or Damage",
           "base": 1,
@@ -236,7 +226,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 947,
+          "itemId": 926,
           "augId": 198,
           "label": "Zanshin",
           "base": 1,
@@ -246,7 +236,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 1015,
+          "itemId": 947,
           "augId": 251,
           "label": "Daken",
           "base": 1,
@@ -1821,7 +1811,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 1156,
+          "itemId": 1015,
           "augId": 294,
           "label": "Summoning magic skill",
           "base": 1,
@@ -1831,7 +1821,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 1272,
+          "itemId": 1156,
           "augId": 321,
           "label": "Avatar perpetuation cost",
           "base": 1,
@@ -1841,7 +1831,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 1445,
+          "itemId": 1272,
           "augId": 339,
           "label": "Elemental Siphon",
           "base": 1,
@@ -1851,7 +1841,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 1830,
+          "itemId": 1445,
           "augId": 369,
           "label": "Avatar Blood Pact Dmg",
           "base": 1,
@@ -1861,7 +1851,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 1831,
+          "itemId": 1830,
           "augId": 956,
           "label": "Thunder Affinity Avatar perp. cost",
           "base": 1,
@@ -2536,7 +2526,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 1836,
+          "itemId": 1831,
           "augId": 1011,
           "label": "Earth Affinity",
           "base": 1,
@@ -2546,7 +2536,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 1843,
+          "itemId": 1836,
           "augId": 1012,
           "label": "Lightning Affinity",
           "base": 1,
@@ -2556,7 +2546,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 1847,
+          "itemId": 1843,
           "augId": 1013,
           "label": "Water Affinity",
           "base": 1,
@@ -2566,7 +2556,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 1848,
+          "itemId": 1847,
           "augId": 1014,
           "label": "Light Affinity",
           "base": 1,
@@ -2576,7 +2566,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 1849,
+          "itemId": 1848,
           "augId": 1015,
           "label": "Dark Affinity",
           "base": 1,
@@ -2586,7 +2576,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 1850,
+          "itemId": 1849,
           "augId": 1158,
           "label": "Occ. Resistance to Status Ailments",
           "base": 2,
@@ -2596,7 +2586,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 1853,
+          "itemId": 1850,
           "augId": 1370,
           "label": "Enhances",
           "base": 1,

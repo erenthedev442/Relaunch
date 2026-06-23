@@ -221,6 +221,16 @@ CUSTOM_AUGS = {
 #         to declutter cat 1 and free its catalyst.
 EXCLUDED_AUGS = {
     380,
+    # Dual Wield (146) KILLED 2026-06-23 (owner request). The off-hand delay
+    # multiplier saturates the engine's minDelay floor at ~80% DW, and gear +
+    # the cross-job DW trait (+15) + Ascension/Rebirth DW (+25 each) already
+    # reach that on their own -- so a stackable +1..32/slot Dual Wield augment
+    # (up to +160 on one piece via 5 slots) was pure overkill and the source of
+    # the "Dual Wield +105 -> attacks SLOWER" overflow report. Catalyst 897
+    # (Scorpion Claw) is freed back to the greedy pool. The engine row in
+    # augments.sql is left intact, so gear already carrying augId 146 keeps it
+    # (now harmless -- the multiplier is floored at 0 in battleentity.cpp).
+    146,
     # 2-stat "STR + X" augments removed 2026-06-19 by owner request (whole set):
     550,  # STR DEX  (Buffalo Hide 1628)
     551,  # STR VIT  (Bugard Skin 1640)
