@@ -7,6 +7,15 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 !!! note "Week of June 22–28, 2026"
     **Tuesday, June 23**
 
+    - **Augments** — Restore Immunobreak Chance+ / Beast Affinity (+ Parrying) -- pin in generator
+    - **Weapon Skills** — Make Scourge a real crit WS + buff Ragnarok's crit aftermath
+    - **Augments** — Add Beast Affinity augment (Gargantuan Black Tiger Fang / Lynx Hide catalysts)
+    - **Gauntlet** — The Gauntlet — 10-level solo NM challenge system
+    - **SMN** — Clamp avatar-boost mods so Blood Pacts can't int16-overflow
+    - **SMN** — Blood Pacts dealt ZERO damage -- bp_delay_uncap aborted the BP before super()
+    - **APEX** — Boss AoE/CC/shout bleeds onto other players in same zone
+    - **Gmhome** — Re-space the z=-35 endgame NPC row (overlapping nameplates)
+    - **RNG** — 10x ranged damage boost (shots + WSes)
     - **SMN** — Blood pact 0-damage + augment/gear BP_DAMAGE ignored
     - **Tower** — Self-heal a stale 'being ascended by X' lock
     - **Discord** — Wrap deploy patch notes in a code block (Ririn's request)
@@ -756,10 +765,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 065e80dd1a9a -->
-_Last updated: 2026-06-23 08:54 UTC_
-<!-- DOCGEN:END id="last-updated" -->
