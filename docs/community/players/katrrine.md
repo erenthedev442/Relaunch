@@ -1,6 +1,6 @@
 # Katrrine
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 7h
 
 `💪 5 jobs @99`
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ba17abf1182a -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 95a3d09646e0 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

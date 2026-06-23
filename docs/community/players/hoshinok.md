@@ -1,6 +1,6 @@
 # Hoshinok
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 5d 5h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 5d 7h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 9/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d301165518e1 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: bd72bf2c38f1 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

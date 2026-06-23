@@ -1,6 +1,6 @@
 # Shizuku
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-23 · Character age 4d
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-23 · Character age 4d 1h
 
 `💪 4 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BLU 99** |
 | Sub job | RDM 99 |
-| Time played | 57h |
-| Enemies defeated | 3,096 |
+| Time played | 59h |
+| Enemies defeated | 3,165 |
 | Deaths | 7 |
 
 ## Job levels
@@ -47,10 +47,10 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Veteran | 5,000 | 20,000 to Master |
-| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| AF Hunters' Guild | Veteran | 7,500 | 17,500 to Master |
+| Relic Hunters' Guild | Journeyman | 4,000 | 1,000 to Veteran |
 | Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| League Hunters' Guild | Veteran | 7,000 | 18,000 to Master |
+| League Hunters' Guild | Veteran | 9,500 | 15,500 to Master |
 
 ## Augment Sage
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5ad07f493427 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 0c634ca8508e -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Phatdoood
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 3d 5h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 3d 7h
 
 `⭐ 21 Ascensions` `💪 5 jobs @99`
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e492413ab1a3 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 587e01471dac -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

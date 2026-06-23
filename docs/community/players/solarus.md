@@ -1,6 +1,6 @@
 # Solarus
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 12h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 73/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b48800bd4423 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: b625b71c12a5 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

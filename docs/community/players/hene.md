@@ -1,6 +1,6 @@
 # Hene
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-19 · Character age 5d 10h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-19 · Character age 5d 12h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 53/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cfb5eae49883 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 2e8c31e83296 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Senta
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 7d 16h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 7d 18h
 
 `💪 2 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6495da122ebb -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 7819d1c24e7c -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

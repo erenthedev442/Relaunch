@@ -1,6 +1,6 @@
 # Wombat
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-23 · Character age 2d 8h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-23 · Character age 2d 9h
 
 `💪 2 jobs @99`
 
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **SMN 71** |
-| Sub job | GEO 71 |
-| Time played | 13h |
+| Main job | **SMN 73** |
+| Sub job | GEO 73 |
+| Time played | 14h |
 | Enemies defeated | 399 |
 | Deaths | 2 |
 
@@ -24,7 +24,7 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 71 |
+| BLM | 1 | SMN | 73 |
 | **RDM** | **99** | **BLU** | **99** |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 90d779cc7183 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 08cfbd1350aa -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

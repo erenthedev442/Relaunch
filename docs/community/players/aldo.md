@@ -1,25 +1,25 @@
 # Aldo
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 4d 22h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 81/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 82/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **WAR 81** |
+| Main job | **WAR 82** |
 | Sub job | PLD 68 |
 | Time played | 20h |
-| Enemies defeated | 435 |
+| Enemies defeated | 452 |
 | Deaths | 3 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 81 | SAM | 1 |
+| WAR | 82 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 35 | DRG | 1 |
 | BLM | 11 | SMN | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 2,775
+- **Marks (current):** 3,475
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7cc718c7d92e -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: fa3beea88239 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

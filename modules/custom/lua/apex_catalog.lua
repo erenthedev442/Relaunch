@@ -130,7 +130,6 @@ function C.mechCfg(tier)
             cc     = { periodSec = 18, effect = xi.effect.SILENCE, dur = 8, msg = 'silences the unworthy!' },
             drain  = { periodSec = 7, healPct = 3 },
             phases = {
-                { hp = 80, action = 'adds',   count = 4, addGroupId = ADDS_GROUP, addZoneId = ADDS_ZONE, addLevel = 165, regen = 22000, msg = 'tears servitors from the void -- sever them or it heals!' },
                 { hp = 60, action = 'dispel',  count = 5, msg = 'rips your enhancements away!' },
                 { hp = 45, action = 'nuke',    dmgPct = 40, msg = 'collapses reality in a blast!' },
                 { hp = 30, action = 'fury',    att = 4500, haste = 140, msg = 'enters a killing fury!' },
@@ -151,7 +150,6 @@ function C.mechCfg(tier)
             cc     = { periodSec = 22, effect = xi.effect.TERROR, dur = 6, msg = 'projects overwhelming dread!' },
             drain  = { periodSec = 8, healPct = 2 },
             phases = {
-                { hp = 70, action = 'adds',   count = 3, addGroupId = ADDS_GROUP, addZoneId = ADDS_ZONE, addLevel = 165, regen = 18000, msg = 'calls forth Apex Servitors!' },
                 { hp = 50, action = 'dispel',  count = 4, msg = 'strips your enhancements!' },
                 { hp = 30, action = 'nuke',    dmgPct = 35, msg = 'unleashes a void cataclysm!' },
                 { hp = 15, action = 'fury',    att = 4000, haste = 120, msg = 'enters a berserker state!' },
@@ -171,7 +169,6 @@ function C.mechCfg(tier)
             cc     = { periodSec = 24, effect = xi.effect.TERROR, dur = 5, msg = 'unleashes a wave of terror!' },
             drain  = { periodSec = 9, healPct = 2 },
             phases = {
-                { hp = 65, action = 'adds',   count = 3, addGroupId = ADDS_GROUP, addZoneId = ADDS_ZONE, addLevel = 165, regen = 15000, msg = 'calls reinforcements!' },
                 { hp = 40, action = 'dispel',  count = 3, msg = 'tears away your enhancements!' },
                 { hp = 20, action = 'nuke',    dmgPct = 30, msg = 'fires a void blast!' },
                 { hp = 10, action = 'enrage',  att = 7000, haste = 200, msg = 'screams and goes berserk!' },
@@ -189,8 +186,6 @@ function C.mechCfg(tier)
             aoe    = { periodSec = 13, dmgPct = 22, msg = 'shakes the arena with a shockwave!' },
             drain  = { periodSec = 10, healPct = 2 },
             phases = {
-                { hp = 60, action = 'adds',   count = 2, addGroupId = ADDS_GROUP, addZoneId = ADDS_ZONE, addLevel = 165, regen = 12000, msg = 'summons reinforcements -- kill them to stop the healing!' },
-                { hp = 35, action = 'adds',   count = 3, addGroupId = ADDS_GROUP, addZoneId = ADDS_ZONE, addLevel = 165, regen = 15000, msg = 'calls a second wave!' },
                 { hp = 15, action = 'fury',    att = 3500, haste = 100, msg = 'fights with renewed fury!' },
             },
         }

@@ -1,6 +1,6 @@
 # Moon
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d 13h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-23 · Character age 7d 15h
 
 `👑 Grandmaster ×3` `⭐ 8 Ascensions` `💪 22 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
 | Time played | 85h |
-| Enemies defeated | 355 |
+| Enemies defeated | 364 |
 | Deaths | 15 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 80,851
+- **Marks (current):** 81,701
 - **Marks (lifetime):** 2,447
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 818
@@ -47,7 +47,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Champion | 85,500 | 14,500 to Grandmaster |
+| AF Hunters' Guild | Champion | 91,500 | 8,500 to Grandmaster |
 | Relic Hunters' Guild | Grandmaster | 108,000 | **maxed** |
 | Empyrean Hunters' Guild | Grandmaster | 103,500 | **maxed** |
 | League Hunters' Guild | Grandmaster | 100,500 | **maxed** |
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d3c64ec613c0 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 78ffdd957f52 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

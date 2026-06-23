@@ -1,8 +1,8 @@
 # Loamy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 10d 5h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 10d 7h
 
-`⭐ 2 Ascensions` `💪 12 jobs @99`
+`⭐ 6 Ascensions` `💪 12 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **RNG 99** |
-| Sub job | DNC 99 |
-| Time played | 85h |
-| Enemies defeated | 1,334 |
-| Deaths | 10 |
+| Main job | **SMN 99** |
+| Sub job | BLM 99 |
+| Time played | 87h |
+| Enemies defeated | 1,345 |
+| Deaths | 11 |
 
 ## Job levels
 
@@ -36,15 +36,26 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,278
-- **Marks (lifetime):** 4,009
+- **Marks (current):** 21,000
+- **Marks (lifetime):** 4,074
 - **Distinct NMs slain:** 12
-- **Total NM kills:** 719
+- **Total NM kills:** 720
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Relic Hunters' Guild | Journeyman | 2,250 | 2,750 to Veteran |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 141
+- **Augments crafted:** 146
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -57,8 +68,8 @@
 
 ## Prestige
 
-- **Total Ascensions:** 2
-- **Per-job prestige:** RNG P2
+- **Total Ascensions:** 6
+- **Per-job prestige:** RNG P6
 
 ## Collections
 
@@ -82,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bd6d81ef3703 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 0b6cd221c4c3 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

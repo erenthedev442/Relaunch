@@ -1,6 +1,6 @@
 # Mdz
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 22h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 6d 23h
 
 `💪 8 jobs @99`
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 10,093
-- **Marks (lifetime):** 3,925
+- **Marks (current):** 7,488
+- **Marks (lifetime):** 4,280
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 705
+- **Total NM kills:** 776
 
 ## Guild standing
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 699317532128 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 65042671eeeb -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

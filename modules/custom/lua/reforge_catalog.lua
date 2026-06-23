@@ -1008,7 +1008,6 @@ catalog.mechCfgs[11402] = {
     aoe   = { periodSec = 12, dmgPct = 22, msg = 'surges with draconic energy!' },
     drain = { periodSec = 9,  healPct = 2 },
     phases = {
-        { hp = 75, action = 'adds',  count = 2, addGroupId = 11404, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 12000, msg = 'summons Genbu\'s spirit guards!' },
         { hp = 40, action = 'nuke',  dmgPct = 38, msg = 'channels Azure Dragon\'s final breath!' },
         { hp = 20, action = 'fury',  att = 3500, haste = 110, msg = 'enters Azure Dragon Fury!' },
     },
@@ -1026,7 +1025,6 @@ catalog.mechCfgs[11401] = {
     cc    = { periodSec = 20, effect = xi.effect.TERROR, dur = 6, msg = 'unleashes a blinding White Roar!' },
     drain = { periodSec = 8,  healPct = 3 },
     phases = {
-        { hp = 60, action = 'adds',   count = 3, addGroupId = 11404, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 14000, msg = 'summons the Four Gods\' envoys!' },
         { hp = 40, action = 'fury',   att = 4000, haste = 130, msg = 'enters White Tiger Fury!' },
         { hp = 25, action = 'dispel', count = 4, msg = 'strips your enhancements with Byakko\'s Rage!' },
     },
@@ -1047,9 +1045,7 @@ catalog.mechCfgs[11400] = {
     cc    = { periodSec = 19, effect = xi.effect.TERROR, dur = 7, msg = 'emanates a divine aura of terror!' },
     drain = { periodSec = 7,  healPct = 3 },
     phases = {
-        { hp = 80, action = 'adds',   count = 2, addGroupId = 11404, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 18000, msg = 'calls upon Genbu to defend the heavens!' },
         { hp = 60, action = 'fury',   att = 3500, haste = 120, msg = 'channels divine fury!' },
-        { hp = 40, action = 'adds',   count = 3, addGroupId = 11403, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 175, regen = 20000, msg = 'calls upon Suzaku to scorch the earth!' },
         { hp = 25, action = 'nuke',   dmgPct = 42, msg = 'unleashes Heavenly Judgment!' },
         { hp = 15, action = 'dispel', count = 5, msg = 'strips you bare with Five-God Seal!' },
         { hp = 10, action = 'enrage', att = 8000, haste = 250, msg = 'ascends beyond mortal limits!' },
@@ -1086,7 +1082,6 @@ catalog.mechCfgs[11405] = {
     aoe   = { periodSec = 12, dmgPct = 22, msg = 'unleashes Spectral Howl across the area!' },
     drain = { periodSec = 9,  healPct = 2 },
     phases = {
-        { hp = 75, action = 'adds',  count = 2, addGroupId = 11408, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 12000, msg = 'calls Bukhis to harry the hunt!' },
         { hp = 40, action = 'nuke',  dmgPct = 38, msg = 'channels Dark Maw!' },
         { hp = 20, action = 'fury',  att = 3500, haste = 110, msg = 'enters Spectral Fury!' },
     },
@@ -1104,7 +1099,6 @@ catalog.mechCfgs[11407] = {
     cc    = { periodSec = 20, effect = xi.effect.TERROR, dur = 6, msg = 'erupts from below with a terrifying shriek!' },
     drain = { periodSec = 8,  healPct = 3 },
     phases = {
-        { hp = 60, action = 'adds',   count = 3, addGroupId = 11408, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 14000, msg = 'spawns a swarm of Slug Spawn!' },
         { hp = 40, action = 'fury',   att = 4000, haste = 130, msg = 'enters Acidic Frenzy!' },
         { hp = 25, action = 'dispel', count = 4, msg = 'vomits Null Acid -- enhancements stripped!' },
     },
@@ -1125,9 +1119,7 @@ catalog.mechCfgs[11409] = {
     cc    = { periodSec = 19, effect = xi.effect.TERROR, dur = 7, msg = 'unleashes a Dragon\'s Roar of pure dominion!' },
     drain = { periodSec = 7,  healPct = 3 },
     phases = {
-        { hp = 80, action = 'adds',   count = 2, addGroupId = 11408, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 18000, msg = 'summons Bukhis to guard its flanks!' },
         { hp = 60, action = 'fury',   att = 3500, haste = 120, msg = 'enters Dragon Phase!' },
-        { hp = 40, action = 'adds',   count = 3, addGroupId = 11406, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 175, regen = 20000, msg = 'calls upon Khun to reinforce the lair!' },
         { hp = 25, action = 'nuke',   dmgPct = 42, msg = 'channels Tinnin\'s Final Darkness!' },
         { hp = 15, action = 'dispel', count = 5, msg = 'shatters enhancements with Wyrm\'s Negation!' },
         { hp = 10, action = 'enrage', att = 8000, haste = 250, msg = 'transcends mortality!' },
@@ -1164,7 +1156,6 @@ catalog.mechCfgs[11410] = {
     aoe   = { periodSec = 12, dmgPct = 22, msg = 'swings a Hundred-Arm Cyclone!' },
     drain = { periodSec = 9,  healPct = 2 },
     phases = {
-        { hp = 75, action = 'adds',  count = 2, addGroupId = 11413, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 12000, msg = 'tears a rift -- Aello\'s kin pour through!' },
         { hp = 40, action = 'nuke',  dmgPct = 38, msg = 'focuses all hundred fists into one Void Strike!' },
         { hp = 20, action = 'fury',  att = 3500, haste = 110, msg = 'enters Hecatoncheires Rage!' },
     },
@@ -1182,7 +1173,6 @@ catalog.mechCfgs[11412] = {
     cc    = { periodSec = 20, effect = xi.effect.TERROR, dur = 6, msg = 'shrieks with a Celestial Moth Scream!' },
     drain = { periodSec = 8,  healPct = 3 },
     phases = {
-        { hp = 60, action = 'adds',   count = 3, addGroupId = 11413, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 14000, msg = 'sheds Aello\'s hatchlings from its wings!' },
         { hp = 40, action = 'fury',   att = 4000, haste = 130, msg = 'enters Obsidian Butterfly Fury!' },
         { hp = 25, action = 'dispel', count = 4, msg = 'purges enhancements with Void Scatter!' },
     },
@@ -1203,9 +1193,7 @@ catalog.mechCfgs[11414] = {
     cc    = { periodSec = 18, effect = xi.effect.TERROR, dur = 7, msg = 'bellows a world-shaking Behemoth\'s Roar!' },
     drain = { periodSec = 7,  healPct = 4 },
     phases = {
-        { hp = 80, action = 'adds',   count = 2, addGroupId = 11413, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 18000, msg = 'draws Aello\'s kin from the Abyssite rift!' },
         { hp = 65, action = 'fury',   att = 3500, haste = 120, msg = 'enters Abyssal Phase -- attacks accelerate!' },
-        { hp = 45, action = 'adds',   count = 3, addGroupId = 11411, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 175, regen = 22000, msg = 'tears a deeper rift -- Iratham\'s shadows spill through!' },
         { hp = 30, action = 'nuke',   dmgPct = 44, msg = 'converges the Abyss into one Final Erasure!' },
         { hp = 15, action = 'dispel', count = 5, msg = 'unmakes your enhancements with Void Annihilation!' },
         { hp = 10, action = 'enrage', att = 8000, haste = 250, msg = 'becomes the Void itself!' },

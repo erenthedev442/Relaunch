@@ -169,8 +169,6 @@ catalog.floorMechanics =
         drain  = { periodSec = 10, healPct = 2 },
         enrage = { sec = 240, att = 3500, haste = 100, msg = 'feasts on spilled blood -- striking harder!' },
         phases = {
-            { hp = 60, action = 'adds', count = 2, addGroupId = 11404, addZoneId = 289, addLevel = 140, regen = 10000,
-              msg = 'tears open a void rift -- reinforcements pour through!' },
         },
     },
 
@@ -197,8 +195,6 @@ catalog.floorMechanics =
         aoe    = { periodSec = 12, dmgPct = 22, msg = 'detonates the void -- shockwave tears outward!' },
         enrage = { sec = 200, att = 6000, haste = 150, msg = 'unbinds its full power -- survive or be swept away!' },
         phases = {
-            { hp = 65, action = 'adds', count = 3, addGroupId = 11412, addZoneId = 289, addLevel = 150, regen = 15000,
-              msg = 'tears void-spawn from the abyss -- the swarm encircles you!' },
             { hp = 35, action = 'dispel', count = 4, msg = 'rips your blessings away!' },
         },
     },
@@ -215,8 +211,6 @@ catalog.floorMechanics =
         cc     = { periodSec = 25, effect = xi.effect.TERROR, dur = 5, msg = 'fills the air with ancient dread -- you freeze!' },
         enrage = { sec = 180, att = 7500, haste = 180, msg = "the World's End nears -- it goes all out!" },
         phases = {
-            { hp = 70, action = 'adds', count = 3, addGroupId = 11412, addZoneId = 289, addLevel = 155, regen = 20000,
-              msg = 'calls down void servitors -- the swarm descends!' },
             { hp = 50, action = 'nuke', dmgPct = 38, msg = 'collapses void-space in a cataclysmic blast!' },
             { hp = 25, action = 'fury', att = 3500, haste = 120, msg = 'erupts in a void frenzy!' },
         },
@@ -236,8 +230,6 @@ catalog.floorMechanics =
         drain  = { periodSec = 9, healPct = 2 },
         enrage = { sec = 165, att = 9000, haste = 220, msg = 'ascends beyond comprehension -- death approaches!' },
         phases = {
-            { hp = 75, action = 'adds', count = 4, addGroupId = 11412, addZoneId = 289, addLevel = 160, regen = 25000,
-              msg = 'tears nightmare spawn from the void -- they hunger!' },
             { hp = 50, action = 'nuke', dmgPct = 42, msg = 'collapses the void in a final cataclysm!' },
             { hp = 30, action = 'dispel', count = 5, msg = 'strips every blessing -- you stand naked before the nightmare!' },
             { hp = 15, action = 'fury', att = 5000, haste = 150, msg = 'the nightmare rages against its end!' },

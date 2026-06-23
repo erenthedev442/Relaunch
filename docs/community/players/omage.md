@@ -1,6 +1,6 @@
 # Omage
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 6d 20h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-16 · Character age 6d 21h
 
 `💪 1 job @99`
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7be146b83095 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: ee4195713587 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

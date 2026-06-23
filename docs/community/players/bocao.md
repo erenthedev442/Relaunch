@@ -1,6 +1,6 @@
 # Bocao
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 6d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 6d 11h
 
 `💪 4 jobs @99`
 
@@ -12,8 +12,8 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | NIN 99 |
-| Time played | 34h |
+| Sub job | SCH 4 |
+| Time played | 35h |
 | Enemies defeated | 478 |
 | Deaths | 0 |
 
@@ -29,7 +29,7 @@
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
-| BST | 1 | SCH | 1 |
+| BST | 1 | SCH | 4 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2911c79be99a -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 3175bfdb911f -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

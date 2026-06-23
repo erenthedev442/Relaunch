@@ -1,6 +1,6 @@
 # Zetsubou
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-23 · Character age 1d 21h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-23 · Character age 1d 23h
 
 `💪 1 job @99`
 
@@ -12,16 +12,16 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | WAR 94 |
-| Time played | 12h |
-| Enemies defeated | 209 |
+| Sub job | WAR 96 |
+| Time played | 13h |
+| Enemies defeated | 217 |
 | Deaths | 6 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 94 | SAM | 1 |
+| WAR | 96 | SAM | 1 |
 | **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 231
-- **Marks (lifetime):** 413
+- **Marks (current):** 350
+- **Marks (lifetime):** 453
 - **Distinct NMs slain:** 12
-- **Total NM kills:** 45
+- **Total NM kills:** 53
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 4
-- **NM Affinities:** 6 / 13
+- **Augments crafted:** 5
+- **NM Affinities:** 9 / 13
 
 ## Reforge
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**5** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked.
+**6** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7af4257ea4b0 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 2f1e571dc16c -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Daiis
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 8d 23h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d
 
 `⭐ 6 Ascensions` `💪 22 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **SAM 99** |
 | Sub job | WAR 99 |
-| Time played | 84h |
-| Enemies defeated | 3,789 |
+| Time played | 85h |
+| Enemies defeated | 3,793 |
 | Deaths | 9 |
 
 ## Job levels
@@ -48,8 +48,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
 | AF Hunters' Guild | Journeyman | 3,500 | 1,500 to Veteran |
-| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
-| Empyrean Hunters' Guild | Journeyman | 750 | 4,250 to Veteran |
+| Relic Hunters' Guild | Journeyman | 2,250 | 2,750 to Veteran |
+| Empyrean Hunters' Guild | Journeyman | 1,250 | 3,750 to Veteran |
 | League Hunters' Guild | Journeyman | 3,000 | 2,000 to Veteran |
 
 ## Augment Sage
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c5d5615dd857 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 037ce2118505 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

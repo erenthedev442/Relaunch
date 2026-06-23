@@ -1,6 +1,6 @@
 # Trene
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-19 · Character age 4d 21h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-19 · Character age 4d 22h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 41/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1f54d249a238 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 4a8efaaeba84 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

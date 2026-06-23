@@ -4,7 +4,7 @@ Live rankings pulled from the server's database. These tables refresh whenever t
 
 <div class="lb-asof" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-asof" -->
-**📊 Leaderboard data as of 2026-06-23 08:54 UTC**
+**📊 Leaderboard data as of 2026-06-23 10:27 UTC**
 <!-- DOCGEN:END id="lb-asof" -->
 </div>
 
@@ -95,7 +95,7 @@ _Points earned across all Hunting League NM kills. Lifetime total, not current s
 | 4 | [Benton](players/benton.md) | 302,309 |
 | 5 | [Speedbump](players/speedbump.md) | 291,576 |
 | 6 | [Draco](players/draco.md) | 248,332 |
-| 7 | [Rose](players/rose.md) | 229,291 |
+| 7 | [Rose](players/rose.md) | 235,491 |
 | 8 | [Drbrule](players/drbrule.md) | 201,758 |
 | 9 | [Rtklm](players/rtklm.md) | 133,594 |
 | 10 | [Erenjaeger](players/erenjaeger.md) | 102,139 |
@@ -140,7 +140,7 @@ _Current Empyrean Marks held. Earned from Abyssea NM spawns at the Reforge Spawn
 | 5 | [Benton](players/benton.md) | 44,480 |
 | 6 | [Speedbump](players/speedbump.md) | 42,480 |
 | 7 | [Drbrule](players/drbrule.md) | 42,480 |
-| 8 | [Rose](players/rose.md) | 38,930 |
+| 8 | [Rose](players/rose.md) | 37,230 |
 | 9 | [Erenjaeger](players/erenjaeger.md) | 28,590 |
 | 10 | [Erenyeager](players/erenyeager.md) | 28,590 |
 <!-- DOCGEN:END id="lb-empy-marks" -->
@@ -239,16 +239,16 @@ _How many of the 22 jobs the character has at level 99. Ties broken by the sum o
 
 | Rank | Character | Jobs at 99 |
 |---:|---|---:|
-| 🥇 | [Drbrule](players/drbrule.md) | 22 |
-| 🥈 | [Moon](players/moon.md) | 22 |
-| 🥉 | [Spyro](players/spyro.md) | 22 |
-| 4 | [Burtgang](players/burtgang.md) | 22 |
-| 5 | [Draco](players/draco.md) | 22 |
-| 6 | [Miss](players/miss.md) | 22 |
-| 7 | [Broken](players/broken.md) | 22 |
-| 8 | [Ken](players/ken.md) | 22 |
-| 9 | [Rose](players/rose.md) | 22 |
-| 10 | [Duffaluffagus](players/duffaluffagus.md) | 22 |
+| 🥇 | [Ken](players/ken.md) | 22 |
+| 🥈 | [Duffaluffagus](players/duffaluffagus.md) | 22 |
+| 🥉 | [Xiongda](players/xiongda.md) | 22 |
+| 4 | [Zxj](players/zxj.md) | 22 |
+| 5 | [Daiis](players/daiis.md) | 22 |
+| 6 | [Spyro](players/spyro.md) | 22 |
+| 7 | [Burtgang](players/burtgang.md) | 22 |
+| 8 | [Drbrule](players/drbrule.md) | 22 |
+| 9 | [Broken](players/broken.md) | 22 |
+| 10 | [Sytara](players/sytara.md) | 22 |
 <!-- DOCGEN:END id="lb-job-mastery" -->
 
 ## Job Rebirth { .lb-section }
@@ -264,9 +264,9 @@ _Total number of job rebirths across all jobs combined. Each rebirth wipes a job
 | 🥈 | [Candycorns](players/candycorns.md) | 18 |
 | 🥉 | [Yojin](players/yojin.md) | 14 |
 | 4 | [Katrrine](players/katrrine.md) | 13 |
-| 5 | [Aureal](players/aureal.md) | 9 |
-| 6 | [Spyro](players/spyro.md) | 8 |
-| 7 | [Jbae](players/jbae.md) | 7 |
+| 5 | [Jbae](players/jbae.md) | 9 |
+| 6 | [Aureal](players/aureal.md) | 9 |
+| 7 | [Spyro](players/spyro.md) | 8 |
 | 8 | [Sfen](players/sfen.md) | 7 |
 | 9 | [Olindre](players/olindre.md) | 7 |
 | 10 | [Herdofturtles](players/herdofturtles.md) | 6 |
@@ -288,12 +288,12 @@ _Count of distinct Trust alter-egos the character has learned. Read from the cha
 | 🥈 | [Moon](players/moon.md) | 118 |
 | 🥉 | [Yojin](players/yojin.md) | 118 |
 | 4 | [Duffaluffagus](players/duffaluffagus.md) | 118 |
-| 5 | [Gwendin](players/gwendin.md) | 118 |
-| 6 | [Darrent](players/darrent.md) | 118 |
-| 7 | [Pld](players/pld.md) | 118 |
-| 8 | [Skerxan](players/skerxan.md) | 118 |
-| 9 | [Flcl](players/flcl.md) | 118 |
-| 10 | [Arthas](players/arthas.md) | 118 |
+| 5 | [Kaz](players/kaz.md) | 118 |
+| 6 | [Gwendin](players/gwendin.md) | 118 |
+| 7 | [Darrent](players/darrent.md) | 118 |
+| 8 | [Pld](players/pld.md) | 118 |
+| 9 | [Skerxan](players/skerxan.md) | 118 |
+| 10 | [Flcl](players/flcl.md) | 118 |
 <!-- DOCGEN:END id="lb-trusts" -->
 </div>
 
@@ -309,16 +309,16 @@ _Hours the character has spent online. Read from `chars.playtime` (seconds). Bra
 
 | Rank | Character | Hours |
 |---:|---|---:|
-| 🥇 | [Jbae](players/jbae.md) | 315 |
+| 🥇 | [Jbae](players/jbae.md) | 317 |
 | 🥈 | [Bro](players/bro.md) | 108 |
-| 🥉 | [Sytara](players/sytara.md) | 104 |
+| 🥉 | [Sytara](players/sytara.md) | 105 |
 | 4 | [Kyrie](players/kyrie.md) | 98 |
 | 5 | [Zxj](players/zxj.md) | 87 |
-| 6 | [Loamy](players/loamy.md) | 85 |
-| 7 | [Miss](players/miss.md) | 85 |
-| 8 | [Ariamys](players/ariamys.md) | 85 |
-| 9 | [Moon](players/moon.md) | 85 |
-| 10 | [Burtgang](players/burtgang.md) | 84 |
+| 6 | [Loamy](players/loamy.md) | 87 |
+| 7 | [Miss](players/miss.md) | 86 |
+| 8 | [Moon](players/moon.md) | 85 |
+| 9 | [Moss](players/moss.md) | 85 |
+| 10 | [Ariamys](players/ariamys.md) | 85 |
 <!-- DOCGEN:END id="lb-playtime" -->
 
 <!-- DOCGEN:BEGIN id="lb-deaths" -->
@@ -328,15 +328,15 @@ _Times the character has been knocked unconscious. On Legendary you lose 3× ret
 
 | Rank | Character | Deaths |
 |---:|---|---:|
-| 🥇 | [Jbae](players/jbae.md) | 181 |
+| 🥇 | [Jbae](players/jbae.md) | 183 |
 | 🥈 | [Flcl](players/flcl.md) | 89 |
-| 🥉 | [Ropraz](players/ropraz.md) | 72 |
+| 🥉 | [Ropraz](players/ropraz.md) | 77 |
 | 4 | [Cervantis](players/cervantis.md) | 69 |
 | 5 | [Phatdood](players/phatdood.md) | 65 |
 | 6 | [Olindre](players/olindre.md) | 57 |
 | 7 | [Souls](players/souls.md) | 50 |
-| 8 | [Sytara](players/sytara.md) | 49 |
-| 9 | [Burtgang](players/burtgang.md) | 49 |
+| 8 | [Burtgang](players/burtgang.md) | 49 |
+| 9 | [Sytara](players/sytara.md) | 49 |
 | 10 | [Bro](players/bro.md) | 49 |
 <!-- DOCGEN:END id="lb-deaths" -->
 </div>
@@ -416,16 +416,16 @@ _Cumulative AF Hunters' Guild rep. Earned 1:1 from base AF Marks per Reforge Sky
 
 | Rank | Character | Rep |
 |---:|---|---:|
-| 🥇 | [Moon](players/moon.md) | 85,500 |
-| 🥈 | [Moss](players/moss.md) | 85,500 |
-| 🥉 | [Miss](players/miss.md) | 85,500 |
+| 🥇 | [Moon](players/moon.md) | 91,500 |
+| 🥈 | [Moss](players/moss.md) | 91,500 |
+| 🥉 | [Miss](players/miss.md) | 91,500 |
 | 4 | [Cecel](players/cecel.md) | 10,000 |
 | 5 | [Darrent](players/darrent.md) | 10,000 |
 | 6 | [Stoney](players/stoney.md) | 8,500 |
 | 7 | [Herdofturtles](players/herdofturtles.md) | 7,500 |
-| 8 | [Che](players/che.md) | 5,000 |
-| 9 | [Zxs](players/zxs.md) | 5,000 |
-| 10 | [Vistrix](players/vistrix.md) | 5,000 |
+| 8 | [Shizuku](players/shizuku.md) | 7,500 |
+| 9 | [Che](players/che.md) | 5,000 |
+| 10 | [Zxs](players/zxs.md) | 5,000 |
 <!-- DOCGEN:END id="lb-guild-af" -->
 
 <!-- DOCGEN:BEGIN id="lb-guild-relic" -->
@@ -435,15 +435,16 @@ _Cumulative Relic Hunters' Guild rep. Earned 1:1 from base Relic Marks per Refor
 
 | Rank | Character | Rep |
 |---:|---|---:|
-| 🥇 | [Moss](players/moss.md) | 108,000 |
-| 🥈 | [Miss](players/miss.md) | 108,000 |
-| 🥉 | [Moon](players/moon.md) | 108,000 |
+| 🥇 | [Miss](players/miss.md) | 108,000 |
+| 🥈 | [Moon](players/moon.md) | 108,000 |
+| 🥉 | [Moss](players/moss.md) | 108,000 |
 | 4 | [Mdz](players/mdz.md) | 7,500 |
-| 5 | [Mardukas](players/mardukas.md) | 5,000 |
-| 6 | [Pld](players/pld.md) | 4,000 |
-| 7 | [Zxj](players/zxj.md) | 3,000 |
-| 8 | [Stoney](players/stoney.md) | 2,500 |
-| 9 | [Cecel](players/cecel.md) | 1,500 |
+| 5 | [Pld](players/pld.md) | 6,250 |
+| 6 | [Mardukas](players/mardukas.md) | 5,000 |
+| 7 | [Shizuku](players/shizuku.md) | 4,000 |
+| 8 | [Zxj](players/zxj.md) | 3,000 |
+| 9 | [Stoney](players/stoney.md) | 2,500 |
+| 10 | [Loamy](players/loamy.md) | 2,250 |
 <!-- DOCGEN:END id="lb-guild-relic" -->
 
 <!-- DOCGEN:BEGIN id="lb-guild-empy" -->
@@ -462,7 +463,7 @@ _Cumulative Empyrean Hunters' Guild rep. Earned 1:1 from base Empy Marks per Ref
 | 7 | [Herdofturtles](players/herdofturtles.md) | 2,250 |
 | 8 | [Yojin](players/yojin.md) | 2,000 |
 | 9 | [Olindre](players/olindre.md) | 2,000 |
-| 10 | [Lagato](players/lagato.md) | 1,000 |
+| 10 | [Daiis](players/daiis.md) | 1,250 |
 <!-- DOCGEN:END id="lb-guild-empy" -->
 
 <!-- DOCGEN:BEGIN id="lb-guild-hl" -->
@@ -480,8 +481,8 @@ _Cumulative League Hunters' Guild rep. Earned 1:1 from base Hunt Marks per HL ki
 | 6 | [Nobigdeal](players/nobigdeal.md) | 11,000 |
 | 7 | [Killface](players/killface.md) | 11,000 |
 | 8 | [Pld](players/pld.md) | 10,500 |
-| 9 | [Stoney](players/stoney.md) | 9,000 |
-| 10 | [Ropraz](players/ropraz.md) | 7,500 |
+| 9 | [Shizuku](players/shizuku.md) | 9,500 |
+| 10 | [Stoney](players/stoney.md) | 9,000 |
 <!-- DOCGEN:END id="lb-guild-hl" -->
 </div>
 
@@ -522,12 +523,12 @@ _How many distinct weeks this character has cleared ALL 5 Weekly Hunt Board obje
 | 🥈 | [Olindre](players/olindre.md) | 2 |
 | 🥉 | [Miss](players/miss.md) | 1 |
 | 4 | [Yojin](players/yojin.md) | 1 |
-| 5 | [Pld](players/pld.md) | 1 |
+| 5 | [Nanafu](players/nanafu.md) | 1 |
 | 6 | [Ken](players/ken.md) | 1 |
 | 7 | [Subpar](players/subpar.md) | 1 |
 | 8 | [Cervantis](players/cervantis.md) | 1 |
-| 9 | [Rtklm](players/rtklm.md) | 1 |
-| 10 | [Moon](players/moon.md) | 1 |
+| 9 | [Sfen](players/sfen.md) | 1 |
+| 10 | [Rose](players/rose.md) | 1 |
 <!-- DOCGEN:END id="lb-weekly-sweeps" -->
 
 ---
@@ -548,7 +549,7 @@ _No qualifying characters yet — be the first!_
 
 _Every adventurer who has defeated Shinryu in The Gauntlet, sorted by total clears. No cutoff — this is the complete roll call. See [The Gauntlet](../endgame/the-gauntlet.md) for how to earn a spot here._
 
-_No achievers yet — be the first to make the list._
+_No qualifying characters yet — be the first!_
 <!-- DOCGEN:END id="lb-hall-of-champions" -->
 </div>
 
@@ -561,7 +562,18 @@ _No achievers yet — be the first to make the list._
 
 _Deepest floor ever reached in the Endless Tower. Each floor is a harder boss fight. The record is permanent — locked to the moment you hit it. Floor 50 grants the Prime Weapon Trial 2 clear._
 
-_No qualifying characters yet — be the first!_
+| Rank | Character | Floor |
+|---:|---|---:|
+| 🥇 | [Jbae](players/jbae.md) | 39 |
+| 🥈 | [Pld](players/pld.md) | 30 |
+| 🥉 | [Koru](players/koru.md) | 30 |
+| 4 | [Mardukas](players/mardukas.md) | 30 |
+| 5 | [Ropraz](players/ropraz.md) | 29 |
+| 6 | [Ariamys](players/ariamys.md) | 29 |
+| 7 | [Cecel](players/cecel.md) | 22 |
+| 8 | [Cervantis](players/cervantis.md) | 21 |
+| 9 | [Herdofturtles](players/herdofturtles.md) | 21 |
+| 10 | [Darrent](players/darrent.md) | 20 |
 <!-- DOCGEN:END id="lb-tower-floor" -->
 
 ---
@@ -603,8 +615,8 @@ _Infamy currently held — drops when you buy from the Infamy Vendor. The hoarde
 | 6 | [Rose](players/rose.md) | 89,260 |
 | 7 | [Broken](players/broken.md) | 88,020 |
 | 8 | [Ken](players/ken.md) | 82,570 |
-| 9 | [Moss](players/moss.md) | 26,320 |
-| 10 | [Miss](players/miss.md) | 21,320 |
+| 9 | [Loamy](players/loamy.md) | 29,050 |
+| 10 | [Moss](players/moss.md) | 28,960 |
 <!-- DOCGEN:END id="lb-infamy-balance" -->
 </div>
 
@@ -644,7 +656,18 @@ _No qualifying characters yet — be the first!_
 
 _Total Ascension completions across all jobs. Each Ascension resets a job's trial-NM circuit for permanent stat bonuses — stacking indefinitely. The grind metric for committed Prestige runners._
 
-_No qualifying characters yet — be the first!_
+| Rank | Character | Ascensions |
+|---:|---|---:|
+| 🥇 | [Ropraz](players/ropraz.md) | 142 |
+| 🥈 | [Jbae](players/jbae.md) | 141 |
+| 🥉 | [Herdofturtles](players/herdofturtles.md) | 119 |
+| 4 | [Burtgang](players/burtgang.md) | 92 |
+| 5 | [Flcl](players/flcl.md) | 79 |
+| 6 | [Olindre](players/olindre.md) | 40 |
+| 7 | [Kyrie](players/kyrie.md) | 37 |
+| 8 | [Rtkle](players/rtkle.md) | 28 |
+| 9 | [Rhis](players/rhis.md) | 26 |
+| 10 | [Cervantis](players/cervantis.md) | 25 |
 <!-- DOCGEN:END id="lb-prestige-total" -->
 
 <!-- DOCGEN:BEGIN id="lb-paragon-points" -->
@@ -652,7 +675,18 @@ _No qualifying characters yet — be the first!_
 
 _Unspent Paragon Points banked from Apex Trials and Gauntlet clears. Spent at the Paragon NPC on levels, perks, and the Daily Might buff. Big hoarders appear here; big spenders climb the Paragon Level board instead._
 
-_No qualifying characters yet — be the first!_
+| Rank | Character | Pts |
+|---:|---|---:|
+| 🥇 | [Phatdood](players/phatdood.md) | 65 |
+| 🥈 | [Thanos](players/thanos.md) | 52 |
+| 🥉 | [Rhis](players/rhis.md) | 39 |
+| 4 | [Flcl](players/flcl.md) | 31 |
+| 5 | [Spyro](players/spyro.md) | 30 |
+| 6 | [Corvinos](players/corvinos.md) | 10 |
+| 7 | [Jbae](players/jbae.md) | 10 |
+| 8 | [Phatdoood](players/phatdoood.md) | 10 |
+| 9 | [Yojin](players/yojin.md) | 10 |
+| 10 | [Velvet](players/velvet.md) | 10 |
 <!-- DOCGEN:END id="lb-paragon-points" -->
 </div>
 
@@ -665,7 +699,18 @@ _No qualifying characters yet — be the first!_
 
 _Current gil balance from the server's character table. Reflects what's in your inventory right now — not lifetime earned. The Auction House is a great place to spend it if you're embarrassed to be on this list._
 
-_No qualifying characters yet — be the first!_
+| Rank | Character | Gil |
+|---:|---|---:|
+| 🥇 | [Burtgang](players/burtgang.md) | 999,999,999 |
+| 🥈 | [Kyrie](players/kyrie.md) | 959,881,059 |
+| 🥉 | [Draco](players/draco.md) | 945,015,761 |
+| 4 | [Ken](players/ken.md) | 907,758,829 |
+| 5 | [Broken](players/broken.md) | 895,891,374 |
+| 6 | [Speedbump](players/speedbump.md) | 895,354,130 |
+| 7 | [Drbrule](players/drbrule.md) | 847,916,947 |
+| 8 | [Benton](players/benton.md) | 842,478,319 |
+| 9 | [Erenjaeger](players/erenjaeger.md) | 831,071,899 |
+| 10 | [Erenyeager](players/erenyeager.md) | 810,279,869 |
 <!-- DOCGEN:END id="lb-richest-gil" -->
 
 ---
@@ -699,8 +744,8 @@ _Real Level = job level + gear iLvl bonus + Ascension levels + Job Points + attr
 
 | Rank | Character | Real level |
 |---:|---|---:|
-| 🥇 | [Jbae](players/jbae.md) | 278 |
-| 🥈 | [Ropraz](players/ropraz.md) | 261 |
+| 🥇 | [Jbae](players/jbae.md) | 280 |
+| 🥈 | [Ropraz](players/ropraz.md) | 262 |
 | 🥉 | [Herdofturtles](players/herdofturtles.md) | 206 |
 | 4 | [Kyrie](players/kyrie.md) | 198 |
 | 5 | [Olindre](players/olindre.md) | 186 |
@@ -1040,12 +1085,12 @@ _Largest single skillchain damage on a Lv 100+ mob. Triggered via weapon skills 
 
 | Rank | Character | Damage |
 |---:|---|---:|
-| 🥇 | [Velvet](players/velvet.md) | 131,071 |
-| 🥈 | [Darrent](players/darrent.md) | 131,071 |
-| 🥉 | [Rhis](players/rhis.md) | 131,071 |
+| 🥇 | [Pld](players/pld.md) | 131,071 |
+| 🥈 | [Velvet](players/velvet.md) | 131,071 |
+| 🥉 | [Darrent](players/darrent.md) | 131,071 |
 | 4 | [Burtgang](players/burtgang.md) | 131,071 |
 | 5 | [Kyrie](players/kyrie.md) | 131,071 |
-| 6 | [Coso](players/coso.md) | 131,071 |
+| 6 | [Phatdood](players/phatdood.md) | 131,071 |
 | 7 | [Olindre](players/olindre.md) | 131,071 |
 | 8 | [Spyro](players/spyro.md) | 131,071 |
 | 9 | [Loamy](players/loamy.md) | 131,071 |
@@ -1146,6 +1191,6 @@ _Highest total damage dealt to Lv 100+ mobs in any rolling 30-second window, com
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fcf36488bb41 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 0c5df115cb9c -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

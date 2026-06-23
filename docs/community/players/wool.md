@@ -1,6 +1,6 @@
 # Wool
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 21h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 22h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 60/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8d973c6beab5 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 679a576fa966 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

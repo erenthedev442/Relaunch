@@ -765,3 +765,10 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: aecdca251f79 -->
+_Last updated: 2026-06-23 10:27 UTC_
+<!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Jin
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 18h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 19h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 76/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2a381136a3a1 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: de3a290f4be2 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

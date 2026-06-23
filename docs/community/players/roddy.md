@@ -1,6 +1,6 @@
 # Roddy
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-16 · Character age 7d 13h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-16 · Character age 7d 14h
 
 `💪 2 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 70db9dce3fee -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 31dabef2d0da -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Pulk
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 5d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 5d 4h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 23/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5590afb4ac82 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: b4e2cf52f9df -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

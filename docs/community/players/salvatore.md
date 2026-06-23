@@ -1,32 +1,32 @@
 # Salvatore
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-23 · Last seen 2026-06-23 · Character age 5h 10m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-23 · Last seen 2026-06-23 · Character age 6h 43m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 23/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 67/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **DRK 23** |
-| Sub job | WAR 16 |
-| Time played | 2h |
-| Enemies defeated | 43 |
+| Main job | **DRK 67** |
+| Sub job | WAR 54 |
+| Time played | 4h |
+| Enemies defeated | 105 |
 | Deaths | 0 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 16 | SAM | 1 |
+| WAR | 54 | SAM | 1 |
 | MNK | 9 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 23 | DNC | 1 |
+| DRK | 67 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 259f1b127c98 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 088db31e18ac -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

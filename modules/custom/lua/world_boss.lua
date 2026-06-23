@@ -149,7 +149,6 @@ local BOSS_MECH =
         aoe    = { periodSec = 14, dmgPct = 24, msg = 'EARTH TREMOR -- the ground heaves, shockwave outward!' },
         enrage = { sec = 300, att = 6000, haste = 150, msg = 'the Behemoth loses all restraint -- its fury becomes absolute!' },
         phases = {
-            { hp = 70, action = 'adds',  count = 3, addGroupId = 11363, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 18000, msg = 'the Behemoth calls its kin -- ancient beasts answer!' },
             { hp = 40, action = 'fury',  att = 4000, haste = 120, msg = 'the Behemoth enrages -- its strikes land like boulders!' },
             { hp = 20, action = 'doom',  dur = 28, msg = 'the Behemoth fixes its gaze on you -- marked for death!' },
             { hp = 10, action = 'enrage', att = 9000, haste = 250, msg = 'PRIMAL FURY -- the Behemoth becomes unkillable in its rage!' },
@@ -171,10 +170,8 @@ local BOSS_MECH =
         cc     = { periodSec = 20, effect = xi.effect.SILENCE, dur = 8, msg = 'Virtue silences the heretical -- no words, no spells!' },
         enrage = { sec = 240, att = 7000, haste = 180, msg = 'Absolute Virtue sheds all limitation -- the end draws near!' },
         phases = {
-            { hp = 75, action = 'adds',   count = 3, addGroupId = 11365, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 20000, msg = 'Absolute Virtue calls celestial guardians -- slay them first!' },
             { hp = 55, action = 'dispel', count = 4, msg = 'DIVINE STRIP -- Virtue tears your blessings away!' },
             { hp = 40, action = 'nuke',   dmgPct = 40, msg = 'RIGHTEOUS NOVA -- divine energy erupts from Virtue!' },
-            { hp = 25, action = 'adds',   count = 4, addGroupId = 11366, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 25000, msg = 'Virtue summons its final honor guard -- the last stand!' },
             { hp = 10, action = 'doom',   dur = 22, msg = 'Absolute Virtue passes final judgment -- doom upon you!' },
         },
         doom   = { startHpp = 10, dur = 22, msg = 'Absolute Virtue sentences you to death!' },
@@ -191,7 +188,6 @@ local BOSS_MECH =
         cc     = { periodSec = 25, effect = xi.effect.TERROR, dur = 6, msg = 'Grand Pandemonium exhales chaos -- you freeze in absolute dread!' },
         enrage = { sec = 270, att = 6500, haste = 160, msg = 'Grand Pandemonium ascends to its true form!' },
         phases = {
-            { hp = 65, action = 'adds',   count = 4, addGroupId = 11362, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 22000, msg = 'Grand Pandemonium spawns chaos constructs -- they fuel its recovery!' },
             { hp = 50, action = 'fury',   att = 3500, haste = 130, msg = 'Grand Pandemonium surges -- strikes intensify!' },
             { hp = 35, action = 'dispel', count = 5, msg = 'CHAOS ERASURE -- your enhancements are unmade!' },
             { hp = 20, action = 'nuke',   dmgPct = 38, msg = 'PANDEMONIUM COLLAPSE -- reality itself buckles!' },
@@ -214,10 +210,8 @@ local BOSS_MECH =
         drain  = { periodSec = 10, healPct = 2 },
         enrage = { sec = 210, att = 8000, haste = 200, msg = 'Shinryu crosses into legend -- absolute fury!' },
         phases = {
-            { hp = 75, action = 'adds',   count = 3, addGroupId = 11364, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 20000, msg = 'Shinryu tears servitors from the aether -- a new storm rises!' },
             { hp = 55, action = 'dispel', count = 5, msg = 'TIDAL WAVE BREATH -- your protections are annihilated!' },
             { hp = 40, action = 'nuke',   dmgPct = 42, msg = 'SHINRYU\'S JUDGMENT -- reality cracks under divine wrath!' },
-            { hp = 25, action = 'adds',   count = 4, addGroupId = 11363, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 28000, msg = 'Shinryu summons its eternal guard -- the final storm!' },
             { hp = 15, action = 'fury',   att = 5000, haste = 160, msg = 'Shinryu ascends -- you stand before a true god!' },
             { hp = 10, action = 'doom',   dur = 22, msg = 'Shinryu marks the unworthy for annihilation!' },
         },
@@ -235,7 +229,6 @@ local BOSS_MECH =
         enrage = { sec = 260, att = 5500, haste = 140, msg = 'Lord Kirin summons the full power of the heavens!' },
         phases = {
             { hp = 75, action = 'dispel', count = 4, msg = 'LORD KIRIN DISPELS -- the divine strips your enhancements!' },
-            { hp = 60, action = 'adds',   count = 3, addGroupId = 11362, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 15000, msg = 'Lord Kirin calls elemental servitors to his aid!' },
             { hp = 40, action = 'dispel', count = 6, msg = 'LORD KIRIN\'S PURGE -- everything is stripped bare!' },
             { hp = 25, action = 'nuke',   dmgPct = 38, msg = 'HEAVEN\'S WRATH -- the sky collapses on you!' },
             { hp = 10, action = 'doom',   dur = 26, msg = 'Lord Kirin decrees your end -- doom enacted!' },
@@ -257,7 +250,6 @@ local BOSS_MECH =
         cc     = { periodSec = 26, effect = xi.effect.TERROR, dur = 5, msg = 'Vrtra\'s presence crushes the soul -- all freeze!' },
         enrage = { sec = 280, att = 5500, haste = 130, msg = 'Vrtra the Unbound tears free of all restraint!' },
         phases = {
-            { hp = 60, action = 'adds',  count = 3, addGroupId = 11368, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 20000, msg = 'Vrtra spawns shadow clutchlings -- they drink your vitality!' },
             { hp = 45, action = 'nuke',  dmgPct = 35, msg = 'SHADOW NOVA -- void energy rips through the arena!' },
             { hp = 30, action = 'fury',  att = 4000, haste = 120, msg = 'Vrtra enters a killing frenzy -- strikes accelerate!' },
             { hp = 15, action = 'doom',  dur = 30, msg = 'Vrtra the Unbound marks you to be consumed!' },
@@ -275,9 +267,7 @@ local BOSS_MECH =
         drain  = { periodSec = 11, healPct = 2 },
         enrage = { sec = 230, att = 7500, haste = 180, msg = 'Nidhogg Unchained sheds all restraint -- pure berserker fury!' },
         phases = {
-            { hp = 70, action = 'adds',   count = 3, addGroupId = 11367, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 17000, msg = 'Nidhogg calls its kin -- a pack of ancient wyverns answers!' },
             { hp = 50, action = 'dispel', count = 4, msg = 'SAVAGE GUST -- Nidhogg\'s wings shear your enhancements away!' },
-            { hp = 40, action = 'adds',   count = 4, addGroupId = 11369, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 22000, msg = 'Nidhogg howls -- a second feral wave descends!' },
             { hp = 25, action = 'fury',   att = 4500, haste = 140, msg = 'Nidhogg enters its kill-frenzy -- the pace becomes merciless!' },
             { hp = 10, action = 'doom',   dur = 24, msg = 'Nidhogg locks onto you -- doom inescapable!' },
         },
@@ -294,7 +284,6 @@ local BOSS_MECH =
         cc     = { periodSec = 18, effect = xi.effect.SILENCE, dur = 9, msg = 'Simurgh\'s cry silences the storm -- no spells, only steel!' },
         enrage = { sec = 250, att = 5000, haste = 140, msg = 'Simurgh Eternal rides the eternal storm -- its power crests!' },
         phases = {
-            { hp = 65, action = 'adds',   count = 3, addGroupId = 11364, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 15000, msg = 'Simurgh summons storm roc servitors -- the skies darken!' },
             { hp = 45, action = 'nuke',   dmgPct = 36, msg = 'LIGHTNING JUDGMENT -- Simurgh calls down the full storm!' },
             { hp = 25, action = 'dispel', count = 5, msg = 'GALE STRIP -- the wind tears every buff from your body!' },
             { hp = 15, action = 'fury',   att = 3500, haste = 120, msg = 'Simurgh enters its final flight -- speed beyond reckoning!' },

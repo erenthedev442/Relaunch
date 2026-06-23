@@ -1,6 +1,6 @@
 # Ariamys
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 8d 13h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 8d 14h
 
 `⭐ 12 Ascensions` `💪 11 jobs @99`
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 51fb53e2a451 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 51f4f9c2bafa -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

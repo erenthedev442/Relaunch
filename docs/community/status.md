@@ -17,7 +17,7 @@ Legendary's current state at a glance. Stats update daily via the auto-generatio
 ## Who's Online
 
 <!-- DOCGEN:BEGIN id="status-online" -->
-**0** online · **417** characters · _snapshot from the last site rebuild — the header badge shows live status._
+**1** online · **417** characters · _snapshot from the last site rebuild — the header badge shows live status._
 <!-- DOCGEN:END id="status-online" -->
 
 ---
@@ -31,12 +31,12 @@ _Snapshot taken at build time — timers drift after that. For live status, chec
 
 | NM | Zone | Respawn window | Status (snapshot) |
 |---|---|---:|---|
-| **Adamantoise** | Valley of Sorrows | 21–24 h | 🟠 pops in ~2h 3m |
-| **Simurgh** | Rolanberry Fields | 6–8 h | 🟠 pops in ~2h 32m |
-| **Serket** | Garlaige Citadel | 6–8 h | 🟠 pops in ~3h 12m |
-| **Roc** | Sauromugue Champaign | 6–8 h | 🟠 pops in ~3h 51m |
-| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟠 pops in ~20h 1m |
-| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~21h 22m |
+| **Adamantoise** | Valley of Sorrows | 21–24 h | 🟠 pops in ~31m |
+| **Simurgh** | Rolanberry Fields | 6–8 h | 🟠 pops in ~59m |
+| **Serket** | Garlaige Citadel | 6–8 h | 🟠 pops in ~1h 40m |
+| **Roc** | Sauromugue Champaign | 6–8 h | 🟠 pops in ~2h 18m |
+| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟠 pops in ~19h 44m |
+| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~19h 46m |
 | **Spiny Spipi** | East Sarutabaruta | 4–6 h | ⚪ awaiting first spawn |
 | **King Arthro** | Jugner Forest | 8–10 h | ⚪ awaiting first spawn |
 <!-- DOCGEN:END id="status-hnm" -->
@@ -58,10 +58,10 @@ _Health snapshot from the last site rebuild._ 🟢 OK · 🟠 last run reported 
 
 | Background job | Schedule | Last run | Status (snapshot) |
 |---|---|---:|---|
-| **Auction House market-maker** | every 15 min | 8d 14h ago | 🔴 **STALE** — no run in 8d 14h |
+| **Auction House market-maker** | every 15 min | 8d 15h ago | 🔴 **STALE** — no run in 8d 15h |
 | **Discord notifier (webhook)** | every 5 min | — | ⚪ no signal yet |
 | **Discord bot (slash commands)** | daemon · 5 min beat | — | ⚪ no signal yet |
-| **Database backup + verify** | nightly 04:00 | 22d 20h ago | 🔴 **STALE** — no run in 22d 20h |
+| **Database backup + verify** | nightly 04:00 | 22d 22h ago | 🔴 **STALE** — no run in 22d 22h |
 <!-- DOCGEN:END id="status-jobs" -->
 
 ---
@@ -119,6 +119,6 @@ See the full list at [Hall of Fame](highlights.md).
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 782c000a126f -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: d5b1d68d56d1 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

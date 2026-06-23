@@ -1,6 +1,6 @@
 # Rose
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 5h
 
 `💪 22 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **COR 99** |
 | Sub job | WHM 99 |
-| Time played | 43h |
+| Time played | 44h |
 | Enemies defeated | 11 |
 | Deaths | 0 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 229,291
+- **Marks (current):** 235,491
 - **Marks (lifetime):** 83,468
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 3,579
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 262
+- **Augments crafted:** 275
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -53,7 +53,7 @@
 |---|---:|---:|
 | AF | 3,300 | 100 |
 | Relic | 450 | 0 |
-| Empyrean | 38,930 | 42,480 |
+| Empyrean | 37,230 | 42,480 |
 
 ## Collections
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fce590e2e15f -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: db8dfb98527e -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

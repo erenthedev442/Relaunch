@@ -1,6 +1,6 @@
 # Pld
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 5d 3h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 5d 5h
 
 `⭐ 6 Ascensions` `💪 9 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | BLU 99 |
-| Time played | 47h |
-| Enemies defeated | 3,240 |
+| Time played | 48h |
+| Enemies defeated | 3,250 |
 | Deaths | 14 |
 
 ## Job levels
@@ -48,7 +48,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
 | AF Hunters' Guild | Journeyman | 4,000 | 1,000 to Veteran |
-| Relic Hunters' Guild | Journeyman | 4,000 | 1,000 to Veteran |
+| Relic Hunters' Guild | Veteran | 6,250 | 18,750 to Master |
 | Empyrean Hunters' Guild | Journeyman | 3,750 | 1,250 to Veteran |
 | League Hunters' Guild | Veteran | 10,500 | 14,500 to Master |
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b158f01f3164 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: e2d069e1f2f0 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

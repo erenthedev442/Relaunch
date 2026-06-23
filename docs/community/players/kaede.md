@@ -1,6 +1,6 @@
 # Kaede
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-21 · Character age 4d 2h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-21 · Character age 4d 3h
 
 `💪 2 jobs @99`
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b621c59c0646 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 9a6fb28ea3b7 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Ekko
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 7h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 9h
 
 `💪 8 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | WAR 99 |
-| Time played | 36h |
-| Enemies defeated | 1,973 |
+| Time played | 37h |
+| Enemies defeated | 1,981 |
 | Deaths | 4 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,813
+- **Marks (current):** 7,213
 - **Marks (lifetime):** 5,919
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 808
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 423be5ab5665 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 45a5d349ec0c -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

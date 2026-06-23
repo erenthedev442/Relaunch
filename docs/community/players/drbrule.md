@@ -1,6 +1,6 @@
 # Drbrule
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 4d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 4d 10h
 
 `⭐ 14 Ascensions` `💪 22 jobs @99`
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d47858f9d350 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: c1a26f614066 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Burtgang
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 6h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 8h
 
 `⭐ 92 Ascensions` `💪 22 jobs @99`
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e04e2f5b47a9 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: e44918ff2f6a -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

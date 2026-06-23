@@ -106,11 +106,6 @@ local CHAMPION_MECH_CFG = {
     -- HP-gated phases.
     phases = {
         -- 75% HP: summons Wave-8 Heralds (adds regen hard until they die).
-        { hp = 75, action = 'adds', count = 3,
-          addGroupId = 11368, addZoneId = 210,
-          addName = 'Tournament Herald', addLevel = 250,
-          regen = 18000,
-          msg = 'The Champion summons its Heralds — cut them down!' },
 
         -- 50% HP: void-rift nuke (40% of each player's max HP AoE).
         { hp = 50, action = 'nuke', dmgPct = 40,

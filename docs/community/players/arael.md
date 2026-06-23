@@ -1,6 +1,6 @@
 # Arael
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 2d 19h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 2d 21h
 
 `💪 3 jobs @99`
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e94899fbba0c -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 5a0d0fa74f37 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

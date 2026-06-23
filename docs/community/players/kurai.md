@@ -1,6 +1,6 @@
 # Kurai
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 8h
 
 `💪 5 jobs @99`
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e8e065ec5921 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 4bcedc4987b4 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

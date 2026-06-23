@@ -100,7 +100,9 @@ Spend AP at the Altar on any of the categories below.
     So buying **1 level of Strength** changes `STR 125 +134` into `STR 125 +135`, and your **total** STR (the number that actually drives Attack and damage) goes from **259 → 260**. If a stat looks unchanged right after you spend AP, check the green **+N** — that's where your points land.
 
 <!-- DOCGEN:BEGIN id="prestige-ap-table" -->
-**Base Stats**
+<div class="milestone-grid" markdown="1">
+
+#### Base Stats
 
 | Stat | Per Level | Max Levels | AP Cost | Max Total |
 |---|---|---:|---:|---|
@@ -114,7 +116,7 @@ Spend AP at the Altar on any of the categories below.
 | Max HP | +20 HP / level (max +1000) [1 AP] | 50 | 1 AP | — |
 | Max MP | +20 MP / level (max +500) [1 AP] | 25 | 1 AP | — |
 
-**Melee & Magic**
+#### Melee & Magic
 
 | Stat | Per Level | Max Levels | AP Cost | Max Total |
 |---|---|---:|---:|---|
@@ -125,7 +127,7 @@ Spend AP at the Altar on any of the categories below.
 | Magic Acc | +20 Mag.Acc / level (max +1000) [1 AP] | 50 | 1 AP | — |
 | Magic Atk | +20 Mag.Atk / level (max +1000) [1 AP] | 50 | 1 AP | — |
 
-**Combat Traits**
+#### Combat Traits
 
 | Stat | Per Level | Max Levels | AP Cost | Max Total |
 |---|---|---:|---:|---|
@@ -141,14 +143,14 @@ Spend AP at the Altar on any of the categories below.
 | Dual Wield | +1% Dual Wield / level (max 25%) [2 AP] | 25 | 2 AP | — |
 | SC Dmg | +2% Skillchain Dmg / level (max 100%) [3 AP] | 50 | 3 AP | — |
 
-**Ranged**
+#### Ranged
 
 | Stat | Per Level | Max Levels | AP Cost | Max Total |
 |---|---|---:|---:|---|
 | Ranged Acc | +10 R.Acc / level (max +500) [1 AP] | 50 | 1 AP | — |
 | Ranged Att | +20 R.Att / level (max +1000) [1 AP] | 50 | 1 AP | — |
 
-**Mitigation**
+#### Mitigation
 
 | Stat | Per Level | Max Levels | AP Cost | Max Total |
 |---|---|---:|---:|---|
@@ -156,7 +158,7 @@ Spend AP at the Altar on any of the categories below.
 | Mag.DT- | -1% Mag.DT / level (max -25%) [3 AP] | 25 | 3 AP | — |
 | Haste | +1% Haste / level (max 25%) [3 AP] | 25 | 3 AP | — |
 
-**Magic Support**
+#### Magic Support
 
 | Stat | Per Level | Max Levels | AP Cost | Max Total |
 |---|---|---:|---:|---|
@@ -167,20 +169,22 @@ Spend AP at the Altar on any of the categories below.
 | Refresh | +1 Refresh / level (max +10 MP/tick) [3 AP] | 10 | 3 AP | — |
 | Magic Dmg | +10 Magic Dmg / level (max +250) [2 AP] | 25 | 2 AP | — |
 
-**Utility**
+#### Utility
 
 | Stat | Per Level | Max Levels | AP Cost | Max Total |
 |---|---|---:|---:|---|
 | Treas.Hunter | +1 TH / level (max +50) [2 AP] | 50 | 2 AP | — |
 | Gilfinder | +2% Gilfinder / level (max +100%) [1 AP] | 50 | 1 AP | — |
 
-**Resistances & Skills**
+#### Resistances & Skills
 
 | Stat | Per Level | Max Levels | AP Cost | Max Total |
 |---|---|---:|---:|---|
 | Status Res | +2 Status Res. / level (max +100) [1 AP] | 50 | 1 AP | — |
 | Ele. Resist | +10 Ele.Resist / level (max +500 each) [1 AP] | 50 | 1 AP | — |
 | All Skills | +2 All Skills / level (max +100 each) [1 AP] | 50 | 1 AP | — |
+
+</div>
 <!-- DOCGEN:END id="prestige-ap-table" -->
 
 Boosts are **permanent and stacking** — they re-apply automatically every time you zone in or change main jobs.
@@ -198,6 +202,6 @@ Boosts are **permanent and stacking** — they re-apply automatically every time
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3a3421b70af0 -->
-_Last updated: 2026-06-21 21:57 UTC_
+<!-- content-hash: e154e431db02 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Prale
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-20 · Character age 6d 21h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-20 · Character age 6d 22h
 
 `💪 3 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fe69eb2ceccd -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: d33d66a41bbf -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

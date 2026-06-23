@@ -77,7 +77,7 @@ Holding an affinity multiplies augments **in that category** by **1.5×**. Affin
 
 | Cat | Category | NM | Trophy | Catalysts available |
 |---:|---|---|---|---:|
-| 1 | Strength / Attack | Behemoth | Giant Femur | 37 |
+| 1 | Strength / Attack | Behemoth | Giant Femur | 36 |
 | 2 | Dexterity / Accuracy | King Arthro | Emperor Arthro's Shell | 29 |
 | 3 | Vitality / Defense | Adamantoise | Adamantoise Shell | 14 |
 | 4 | Agility / Evasion / Haste | Roc | Giant Bird Plume | 44 |
@@ -122,6 +122,6 @@ Yes — both the Sage rank trophy and the affinity registration trophy are remov
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 38b7c4416eb8 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 27f6081c530b -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

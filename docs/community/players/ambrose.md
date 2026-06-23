@@ -1,6 +1,6 @@
 # Ambrose
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 18h 22m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 19h 54m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 85/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 61a048ef15a5 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 1600c11cdab0 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

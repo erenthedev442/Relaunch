@@ -1,6 +1,6 @@
 # Kolleh
 
-**Bastok citizen** · 🟡 Seen this month · Created 2026-06-14 · Last seen 2026-06-15 · Character age 8d 11h
+**Bastok citizen** · 🟡 Seen this month · Created 2026-06-14 · Last seen 2026-06-15 · Character age 8d 13h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 67/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3a998666c101 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 994183e2648d -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

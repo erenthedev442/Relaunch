@@ -68,11 +68,6 @@ local WARLORD_MECH_CFG =
     -- HP phases.
     phases = {
         -- 75% HP: calls Voidsent Servitors (group 11368, same pool as the Warlord).
-        { hp = 75, action = 'adds', count = 3,
-          addGroupId = 11368, addZoneId = 210,
-          addName = 'Voidsent Servitor', addLevel = 155,
-          regen = 15000,
-          msg = 'The Warlord summons its Servitors!' },
 
         -- 50% HP: devastating nuke.
         { hp = 50, action = 'nuke', dmgPct = 40,

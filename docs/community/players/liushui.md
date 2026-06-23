@@ -1,6 +1,6 @@
 # Liushui
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 6d 19h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-18 · Character age 6d 20h
 
 `💪 3 jobs @99`
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e00452bb0e2d -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 43dc12134dd1 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

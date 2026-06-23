@@ -1,6 +1,6 @@
 # Kaz
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 9d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 9d 10h
 
 `💪 6 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **COR 99** |
 | Sub job | NIN 99 |
-| Time played | 15h |
-| Enemies defeated | 1,816 |
+| Time played | 16h |
+| Enemies defeated | 1,866 |
 | Deaths | 7 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 22,335
-- **Marks (lifetime):** 8,547
-- **Distinct NMs slain:** 11
-- **Total NM kills:** 1,600
+- **Marks (current):** 19,461
+- **Marks (lifetime):** 8,750
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 1,634
 
 ## Augment Sage
 
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 161d84d47375 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 236ef93c3d1c -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,18 +1,20 @@
 # Kxb
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 20h 55m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 22h 28m
+
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 92/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BLM 92** |
-| Sub job | GEO 76 |
-| Time played | 1h |
-| Enemies defeated | 156 |
+| Main job | **BLM 99** |
+| Sub job | GEO 99 |
+| Time played | 2h |
+| Enemies defeated | 214 |
 | Deaths | 2 |
 
 ## Job levels
@@ -22,22 +24,22 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 92 | SMN | 1 |
+| **BLM** | **99** | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 76 |
+| BRD | 1 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
-- **Rank:** 0 / 5
-- **Marks (current):** 1,050
-- **Marks (lifetime):** 0
-- **Distinct NMs slain:** 0
-- **Total NM kills:** 0
+- **Rank:** 5 / 5
+- **Marks (current):** 575
+- **Marks (lifetime):** 370
+- **Distinct NMs slain:** 1
+- **Total NM kills:** 74
 
 ## Augment Sage
 
@@ -59,11 +61,13 @@
 
 ## Achievements
 
-**1** unlocked — Augment Novice.
+**3** unlocked — First Hunt · Ten Hunts In · Augment Novice.
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 12h 14m |
 
 ---
 
@@ -72,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c11fe7117749 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: ced989215d0e -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -7,6 +7,8 @@ When you complete an achievement, a message appears in your system log showing t
 ---
 
 <!-- DOCGEN:BEGIN id="achievements-tables" -->
+<div class="milestone-grid cols-3" markdown="1">
+
 ## Hunting Milestones
 
 Trigger based on your total Hunting League NM kill count.
@@ -135,6 +137,8 @@ Trigger based on your total number of augmentation trades.
 | Arena Regular | wins >= 10 | +300 | — |
 | Contender | best >= 1400 | +500 | — |
 | Arena Champion | best >= 1600 | +1,500 | — |
+
+</div>
 <!-- DOCGEN:END id="achievements-tables" -->
 
 ---
@@ -149,6 +153,6 @@ Trigger based on your total number of augmentation trades.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a2c82d1df4a7 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: 132d09103ce8 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

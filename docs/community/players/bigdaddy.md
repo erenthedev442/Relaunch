@@ -1,6 +1,6 @@
 # Bigdaddy
 
-**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-05 · Last seen 2026-06-05 · Character age 18d 5h
+**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-05 · Last seen 2026-06-05 · Character age 18d 6h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 56158eb38e00 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: adf4b38f82da -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

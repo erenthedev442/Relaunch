@@ -1,6 +1,6 @@
 # Chausie
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-23 · Character age 8d 4h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-23 · Character age 8d 6h
 
 `💪 5 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RUN 45** |
-| Sub job | DRK 30 |
+| Main job | **RUN 51** |
+| Sub job | DRK 34 |
 | Time played | 45h |
-| Enemies defeated | 2,263 |
+| Enemies defeated | 2,277 |
 | Deaths | 14 |
 
 ## Job levels
@@ -28,10 +28,10 @@
 | RDM | 1 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | **PUP** | **99** |
-| DRK | 30 | **DNC** | **99** |
+| DRK | 34 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 45 |
+| RNG | 1 | RUN | 51 |
 
 ## Hunting League
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b6559fcf7ea9 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 508e6a294d02 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

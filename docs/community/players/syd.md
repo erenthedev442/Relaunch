@@ -1,6 +1,6 @@
 # Syd
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 14h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 16h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 4/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4acfb677799e -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: b5817e5f0a3a -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

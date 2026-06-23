@@ -1,6 +1,6 @@
 # Masu
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-21 · Character age 9d 14h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-21 · Character age 9d 16h
 
 `💪 7 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e3a7a12268d3 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 96cffaf9c991 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

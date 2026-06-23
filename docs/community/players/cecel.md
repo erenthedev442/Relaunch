@@ -1,6 +1,6 @@
 # Cecel
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 10d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 10d 3h
 
 `⭐ 21 Ascensions` `💪 10 jobs @99`
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 512ebb609118 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 3f5b79b13fd4 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

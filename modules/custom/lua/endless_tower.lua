@@ -134,8 +134,6 @@ local BOSS_MECHANICS = {
         phases = {
             -- 60%: spawns 3 adds from band-3 groups (zone 210 = GROUP_ZONE_ID); they
             --      feed the boss a regen boost while they breathe.
-            { hp = 60, action = 'adds', count = 3, addGroupId = 11363, addZoneId = 210, addLevel = 175, regen = 12000,
-              msg = 'calls eternal sentinels -- sever them or the Warden never falls!' },
             -- 40%: fury burst.
             { hp = 40, action = 'fury', att = 3000, haste = 100,
               msg = 'the Warden surges with eternal power -- its blows grow lethal!' },
@@ -160,14 +158,10 @@ local BOSS_MECHANICS = {
         enrage = { sec = 170, att = 5000, haste = 170, msg = 'the Lord of the Void loses all restraint -- RUN!' },
         phases = {
             -- 75%: first wave of void adds.
-            { hp = 75, action = 'adds', count = 3, addGroupId = 11365, addZoneId = 210, addLevel = 225, regen = 15000,
-              msg = 'summons void shards -- they feed its wounds!' },
             -- 50%: dispels your buffs.
             { hp = 50, action = 'dispel', count = 3,
               msg = 'the Void tears your protections away -- buffs stripped!' },
             -- 40%: second wave of adds.
-            { hp = 40, action = 'adds', count = 4, addGroupId = 11365, addZoneId = 210, addLevel = 230, regen = 18000,
-              msg = 'the Void fractures further -- more shards tear free!' },
             -- 25%: fury surge.
             { hp = 25, action = 'fury', att = 4000, haste = 120,
               msg = 'the Lord of the Void erupts -- its attacks are devastating!' },
@@ -197,8 +191,6 @@ local BOSS_MECHANICS = {
         enrage = { sec = 150, att = 5500, haste = 200, msg = 'the Sovereign has grown tired of you -- its assault becomes overwhelming!' },
         phases = {
             -- 75%: first servitor wave.
-            { hp = 75, action = 'adds', count = 3, addGroupId = 11367, addZoneId = 210, addLevel = 255, regen = 18000,
-              msg = 'the Sovereign commands its vanguard -- servitors flood the arena!' },
             -- 60%: dispel burst.
             { hp = 60, action = 'dispel', count = 4,
               msg = 'the Sovereign shatters your protections -- buffs annihilated!' },
@@ -206,8 +198,6 @@ local BOSS_MECHANICS = {
             { hp = 50, action = 'nuke', dmgPct = 45,
               msg = 'SOVEREIGN\'S JUDGEMENT -- a cataclysmic burst of power!' },
             -- 40%: second servitor wave, heavier regen.
-            { hp = 40, action = 'adds', count = 4, addGroupId = 11368, addZoneId = 210, addLevel = 260, regen = 24000,
-              msg = 'the Sovereign calls its honour guard -- more servitors pour in!' },
             -- 25%: fury -- the Sovereign enters its final reckoning.
             { hp = 25, action = 'fury', att = 5000, haste = 150,
               msg = 'the Pinnacle Sovereign enters its final reckoning -- attacks are lethal!' },

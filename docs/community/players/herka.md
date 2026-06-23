@@ -1,6 +1,6 @@
 # Herka
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 17h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-23 · Character age 1d 18h
 
 `💪 2 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | NIN 99 |
-| Time played | 12h |
-| Enemies defeated | 366 |
+| Time played | 13h |
+| Enemies defeated | 433 |
 | Deaths | 2 |
 
 ## Job levels
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 13
-- **Marks (lifetime):** 115
+- **Marks (current):** 1,094
+- **Marks (lifetime):** 450
 - **Distinct NMs slain:** 1
-- **Total NM kills:** 23
+- **Total NM kills:** 90
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Augments crafted:** 8
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**2** unlocked — First Hunt · Ten Hunts In.
+**3** unlocked — First Hunt · Ten Hunts In · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 82a8812003e8 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 1f8487b91a13 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

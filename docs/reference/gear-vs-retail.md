@@ -13,3 +13,10 @@ Three categories are tracked:
 <!-- DOCGEN:BEGIN id="gear-vs-retail-data" -->
 *Cache not yet populated — run `python3 tools/fetch_ffxiah_cache.py` to generate.*
 <!-- DOCGEN:END id="gear-vs-retail-data" -->
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: fa82cc24ac89 -->
+_Last updated: 2026-06-23 10:27 UTC_
+<!-- DOCGEN:END id="last-updated" -->

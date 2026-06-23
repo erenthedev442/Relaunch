@@ -738,9 +738,7 @@ return
             drain  = { periodSec = 7, healPct = 2 },
             enrage = { sec = 185, att = 5500, haste = 150, msg = 'Absolute Virtue abandons restraint -- it goes all out!' },
             phases = {
-                { hp = 75, action = 'adds', count = 3, addGroupId = 11355, addZoneId = 210, addLevel = 150, regen = 15000, msg = 'Absolute Virtue calls forth guardians -- slay them first!' },
                 { hp = 50, action = 'fury', att = 3000, haste = 100, msg = 'Absolute Virtue surges -- power escalates!' },
-                { hp = 25, action = 'adds', count = 4, addGroupId = 11357, addZoneId = 210, addLevel = 150, regen = 20000, msg = 'Absolute Virtue conjures a final bulwark!' },
             },
             doom   = { startHpp = 12, dur = 28, msg = 'Absolute Virtue marks you for oblivion!' },
         },
@@ -769,10 +767,8 @@ return
             drain  = { periodSec = 6, healPct = 2 },
             enrage = { sec = 165, att = 8000, haste = 200, msg = 'Shinryu crosses into legend -- unmatched fury!' },
             phases = {
-                { hp = 75, action = 'adds',   count = 3, addGroupId = 11355, addZoneId = 210, addLevel = 150, regen = 20000, msg = 'Shinryu tears servitors from the aether!' },
                 { hp = 55, action = 'dispel', count = 5, msg = 'Shinryu exhales tempest-breath -- buffs annihilated!' },
                 { hp = 40, action = 'nuke',   dmgPct = 42, msg = 'Shinryu\'s Judgment coalesces -- reality cracks!' },
-                { hp = 25, action = 'adds',   count = 4, addGroupId = 11357, addZoneId = 210, addLevel = 150, regen = 28000, msg = 'Shinryu summons its final guard!' },
                 { hp = 15, action = 'fury',   att = 5000, haste = 160, msg = 'Shinryu ascends -- you stand before a god!' },
                 { hp = 10, action = 'doom',   dur = 25, msg = 'Shinryu marks the unworthy for death!' },
             },

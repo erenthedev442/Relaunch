@@ -1,6 +1,6 @@
 # Frogs
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 8d
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 8d 2h
 
 `💪 2 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 858a7b107867 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 682e317e6f24 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

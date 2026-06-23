@@ -55,7 +55,7 @@ Capstone roll calls live on the [Leaderboards page](../community/leaderboards.md
 Reputation in each guild comes **exclusively** from killing the following Vana'diel NMs. Rep is shared with the **whole party/alliance** — every member present when the NM dies earns rep, regardless of who landed the killing blow.
 
 <!-- DOCGEN:BEGIN id="hunters-guild-hunt-targets" -->
-_Reputation in each guild comes exclusively from killing the following Vana'diel NMs. Rep is shared with your whole party/alliance — every member present earns it when the NM dies._
+<div class="milestone-grid" markdown="1">
 
 #### af
 
@@ -96,6 +96,8 @@ _Reputation in each guild comes exclusively from killing the following Vana'diel
 | ★★★ | Aspidochelone | Valley of Sorrows | 1,000 |
 | ★★★★ | Behemoth | Behemoths Dominion | 1,500 |
 | ★★★★★ | Jormungand | Uleguerand Range | 2,500 |
+
+</div>
 <!-- DOCGEN:END id="hunters-guild-hunt-targets" -->
 
 ## Where to check your rank
@@ -109,6 +111,6 @@ Retroactive backfill is **off by default** on Legendary. Under the current Vana'
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ac815ab95547 -->
-_Last updated: 2026-06-12 23:32 UTC_
+<!-- content-hash: 9c6df1d370b6 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

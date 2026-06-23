@@ -204,11 +204,6 @@ catalog.mechanicsElite =
     -- HP phases (full hardcore set).
     phases = {
         -- 75% HP: calls shadow clones from the same replica group.
-        { hp = 75, action = 'adds', count = 2,
-          addGroupId = 11361, addZoneId = 210,
-          addName = 'Shadow Clone', addLevel = 150,
-          regen = 12000,
-          msg = 'The Champion splits into Shadow Clones!' },
 
         -- 50% HP: devastating void-nuke.
         { hp = 50, action = 'nuke', dmgPct = 40,

@@ -1,6 +1,6 @@
 # Ken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 7d 8h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 7d 9h
 
 `⭐ 14 Ascensions` `💪 22 jobs @99`
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3f1f9e4b2204 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: f51c311cd077 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

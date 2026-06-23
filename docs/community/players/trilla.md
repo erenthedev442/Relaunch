@@ -1,6 +1,6 @@
 # Trilla
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-23 · Last seen 2026-06-23 · Character age 3h 46m
+**Windurst citizen** · 🟢 Active today · Created 2026-06-23 · Last seen 2026-06-23 · Character age 5h 18m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 51/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6e2785e0746f -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: b446d300acc9 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -75,17 +75,6 @@ local GUARDIAN_MECH_CFG = {
     },
     phases = {
         {
-            hp          = 75,
-            action      = 'adds',
-            count       = 3,
-            addGroupId  = 11363,
-            addZoneId   = 210,
-            addName     = 'Void Shard',
-            addLevel    = 155,
-            regen       = 18000,
-            msg         = 'The Guardian tears open the void -- fragments spill through!',
-        },
-        {
             hp  = 50,
             action  = 'nuke',
             dmgPct  = 40,

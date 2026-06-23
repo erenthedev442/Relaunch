@@ -1,8 +1,8 @@
 # Sytara
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 10d 6h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 10d 8h
 
-`⭐ 12 Ascensions` `💪 22 jobs @99`
+`⭐ 20 Ascensions` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | BLU 99 |
-| Time played | 104h |
+| Time played | 105h |
 | Enemies defeated | 11,791 |
 | Deaths | 49 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 34,564
+- **Marks (current):** 10,564
 - **Marks (lifetime):** 5,461
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 940
@@ -73,8 +73,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 12
-- **Per-job prestige:** THF P12
+- **Total Ascensions:** 20
+- **Per-job prestige:** THF P20
 
 ## Collections
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5646d65113aa -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: dd54624e6952 -->
+_Last updated: 2026-06-23 10:27 UTC_
 <!-- DOCGEN:END id="last-updated" -->
