@@ -104,35 +104,41 @@ nav:
     - Background Systems: changes/background-systems.md
   - Progression:
     - Hunting League: progression/index.md
-    - Gear Guide: progression/gear-guide.md
-    - Gear Finder (tool): progression/gear-finder.md
-    - Item Database (tool): progression/item-database.md
-    - HNM Kings: progression/hnm.md
-    - Prestige / Ascension: progression/prestige.md
-    - Job Rebirth: progression/job-rebirth.md
-    - Achievements: progression/achievements.md
-    - Quality of Life: progression/server-features.md
-    - Gear Vendors: progression/gear-vendors.md
-    - Reforge System: progression/reforge.md
-    - Hunter's Guild: progression/hunters-guild.md
-    - Subjob EXP Share: progression/subjob-exp.md
-    - Game Master (Wave Mode): progression/game-master.md
-    - Capacity Farm: progression/capacity-farm.md
-    - Weekly Hunt Board: progression/weekly-hunts.md
-    - Daily Board: progression/daily-board.md
-    - Login Rewards: progression/login-rewards.md
-    - Death Penalty: progression/death-penalty.md
-    - Best-in-Slot Guide: progression/bis-guide.md
-    - GM Home: progression/gm-home.md
-    - Gemma: progression/skoll.md
-    - Meat, the Immortal Tank: progression/meat.md
-    - Corvus, the Sharpshooter: progression/corvus.md
-    - Cross-Job Abilities: progression/cross-job-abilities.md
-    - Cross-Job Traits: progression/cross-job-traits.md
-    - Gear Progression: progression/gear-progression.md
-    - Prime Weapon Trials: progression/prime-trials.md
-    - Prime Armory: progression/prime-armory.md
-    - Title Broker: progression/title-vendor.md
+    - Gear:
+      - Gear Guide: progression/gear-guide.md
+      - Gear Vendors: progression/gear-vendors.md
+      - Gear Progression: progression/gear-progression.md
+      - Best-in-Slot Guide: progression/bis-guide.md
+      - Gear Finder (tool): progression/gear-finder.md
+      - Item Database (tool): progression/item-database.md
+    - Core Systems:
+      - HNM Kings: progression/hnm.md
+      - Reforge System: progression/reforge.md
+      - Hunter's Guild: progression/hunters-guild.md
+      - Prestige / Ascension: progression/prestige.md
+      - Job Rebirth: progression/job-rebirth.md
+      - Achievements: progression/achievements.md
+      - Prime Weapon Trials: progression/prime-trials.md
+      - Prime Armory: progression/prime-armory.md
+    - Regular Activities:
+      - Daily Board: progression/daily-board.md
+      - Weekly Hunt Board: progression/weekly-hunts.md
+      - Capacity Farm: progression/capacity-farm.md
+      - Game Master (Wave Mode): progression/game-master.md
+      - Login Rewards: progression/login-rewards.md
+    - Job & Build:
+      - Cross-Job Abilities: progression/cross-job-abilities.md
+      - Cross-Job Traits: progression/cross-job-traits.md
+      - Subjob EXP Share: progression/subjob-exp.md
+    - NPCs & Services:
+      - GM Home: progression/gm-home.md
+      - Gemma: progression/skoll.md
+      - Meat, the Immortal Tank: progression/meat.md
+      - Corvus, the Sharpshooter: progression/corvus.md
+      - Title Broker: progression/title-vendor.md
+    - Server Info:
+      - Quality of Life: progression/server-features.md
+      - Death Penalty: progression/death-penalty.md
   - Endgame & Events:
     - Abyssea NMs: endgame/abyssea-nms.md
     - Star-Devourer Raid: endgame/star-devourer.md
