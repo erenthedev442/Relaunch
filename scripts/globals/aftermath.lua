@@ -536,7 +536,8 @@ xi.aftermath.effects =
     -----------------------------------
     [44] =
     {
-        mod = xi.mod.REM_OCC_DO_DOUBLE_DMG,
+        mod       = xi.mod.REM_OCC_DO_DOUBLE_DMG,
+        rangedMod = xi.mod.REM_OCC_DO_DOUBLE_DMG_RANGED, -- ranged Empyreans (Gandiva/Armageddon) proc on shots, not melee
         power = { 30, 40, 50 },
         duration = { 30, 60, 90 },
     },
@@ -546,7 +547,8 @@ xi.aftermath.effects =
     -----------------------------------
     [45] =
     {
-        mod = xi.mod.REM_OCC_DO_TRIPLE_DMG,
+        mod       = xi.mod.REM_OCC_DO_TRIPLE_DMG,
+        rangedMod = xi.mod.REM_OCC_DO_TRIPLE_DMG_RANGED, -- ranged Empyreans (Gandiva/Armageddon) proc on shots, not melee
         power = { 30, 40, 50 },
         duration = { 60, 120, 180 },
     },
@@ -719,7 +721,20 @@ xi.aftermath.onEffectGain = function(target, effect)
 
         -- Empyrean
         [3] = function(x)
-            effect:addMod(aftermath.mod, aftermath.power[math.floor(effect:getSubPower() / 1000)])
+            local mod = aftermath.mod
+            -- FJB fix: ranged Empyreans (Gandiva bow / Armageddon gun) must proc
+            -- their "occasionally double/triple damage" aftermath on RANGED hits.
+            -- attackutils.cpp reads the *_RANGED proc mods for ranged attacks and
+            -- the melee variants for melee, so the shared [44]/[45] entries (built
+            -- for the many MELEE Empyreans) leave a bow/gun user with a dead AM.
+            -- If the granting weapon is the equipped RANGED weapon, use rangedMod.
+            if aftermath.rangedMod then
+                local rangedWeapon = target:getStorageItem(0, 0, xi.slot.RANGED)
+                if rangedWeapon and rangedWeapon:getMod(xi.mod.AFTERMATH) == effect:getPower() then
+                    mod = aftermath.rangedMod
+                end
+            end
+            effect:addMod(mod, aftermath.power[math.floor(effect:getSubPower() / 1000)])
         end,
 
         -- Prime (multi-mod, TP-tiered): apply every mod at the current Lv tier
