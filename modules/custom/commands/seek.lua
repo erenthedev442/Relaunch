@@ -8,6 +8,12 @@
 --       reveals everyone. (The real /sea can't be made GM-only: the xi_search
 --       process is separate + stateless and never learns who is searching.)
 --
+--       Data source: enumerates the live player list of every zone via
+--       GetZone(id):getPlayers(). This is the in-world ground truth -- unlike the
+--       !who online-tracker, it does NOT reset on a map restart and does NOT miss
+--       players who reconnected as a zone-in after a crash (the tracker only
+--       records non-zoning logins, so it reads empty for ~hours after each crash).
+--
 -- Usage:
 --   !seek            -- list every online player
 --   !seek <filter>   -- only players whose JOB or NAME matches <filter>
@@ -22,10 +28,8 @@ commandObj.cmdprops =
     parameters = 's',
 }
 
-local S = xi.msg.channel.SYSTEM_3
-
--- Same in-memory online list that powers !who (pruned via GetPlayerByName).
-local tracker = require('modules/custom/lua/online_tracker')
+local S          = xi.msg.channel.SYSTEM_3
+local MAX_ZONEID = 300   -- src/map/zone.h ZONEID::MAX_ZONEID; valid ids 0..299
 
 local JOB_ABBR =
 {
@@ -41,28 +45,42 @@ commandObj.onTrigger = function(player, filterArg)
     local filter = (filterArg and filterArg ~= '') and filterArg:lower() or nil
 
     local rows = {}
-    for _, info in ipairs(tracker.getOnline()) do
-        local p = GetPlayerByName(info.name)
-        if p then
-            local mj     = jobAbbr(p:getMainJob())
-            local sj     = p:getSubJob() or 0
-            local jobStr = (sj > 0)
-                and string.format('%s%d/%s%d', mj, p:getMainLvl(), jobAbbr(sj), p:getSubLvl())
-                or  string.format('%s%d', mj, p:getMainLvl())
-            local zone   = ((p:getZoneName() or '?'):gsub('_', ' '))
+    local seen = {}
+    for zid = 0, MAX_ZONEID - 1 do
+        local z = GetZone(zid)
+        if z then
+            local players = z:getPlayers()
+            if players and #players > 0 then
+                local zoneName = ((z:getName() or '?'):gsub('_', ' '))
+                for _, p in ipairs(players) do
+                    local name = p:getName()
+                    if name and not seen[name] then
+                        seen[name] = true
+                        local mj     = jobAbbr(p:getMainJob())
+                        local sj     = p:getSubJob() or 0
+                        local jobStr = (sj > 0)
+                            and string.format('%s%d/%s%d', mj, p:getMainLvl(), jobAbbr(sj), p:getSubLvl())
+                            or  string.format('%s%d', mj, p:getMainLvl())
 
-            local include = true
-            if filter then
-                include = info.name:lower():find(filter, 1, true) ~= nil
-                       or jobStr:lower():find(filter, 1, true) ~= nil
-            end
-            if include then
-                rows[#rows + 1] = { name = info.name, jobStr = jobStr, zone = zone }
+                        local include = true
+                        if filter then
+                            include = name:lower():find(filter, 1, true) ~= nil
+                                   or jobStr:lower():find(filter, 1, true) ~= nil
+                        end
+                        if include then
+                            rows[#rows + 1] = { name = name, jobStr = jobStr, zone = zoneName }
+                        end
+                    end
+                end
             end
         end
     end
 
-    table.sort(rows, function(a, b) return a.name < b.name end)
+    -- Group by zone, then alphabetical -- easiest for a GM to scan / !goto.
+    table.sort(rows, function(a, b)
+        if a.zone ~= b.zone then return a.zone < b.zone end
+        return a.name < b.name
+    end)
 
     if #rows == 0 then
         player:printToPlayer(filter
