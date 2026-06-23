@@ -260,11 +260,7 @@ def _render_capstones(capstones: list[dict], guilds: dict[str, dict]) -> str:
 
 
 def _render_hunt_targets(hunt_targets: dict[str, list[dict]], guilds: dict[str, dict], guild_order: list[str]) -> str:
-    lines = []
-    lines.append(
-        "_Reputation in each guild comes exclusively from killing the following "
-        "Vana'diel NMs. Rep is shared with your whole party/alliance — every member present earns it when the NM dies._"
-    )
+    lines = ['<div class="milestone-grid" markdown="1">', ""]
 
     for guild_key in guild_order:
         if guild_key not in hunt_targets:
@@ -272,7 +268,6 @@ def _render_hunt_targets(hunt_targets: dict[str, list[dict]], guilds: dict[str, 
         targets = hunt_targets[guild_key]
         guild_label = guilds[guild_key]["label"] if guild_key in guilds else guild_key
 
-        lines.append("")
         lines.append(f"#### {guild_label}")
         lines.append("")
         lines.append("| Tier | NM | Zone | Rep reward |")
@@ -282,6 +277,9 @@ def _render_hunt_targets(hunt_targets: dict[str, list[dict]], guilds: dict[str, 
             stars = "★" * t["tier"]
             lines.append(f"| {stars} | {t['label']} | {t['zone']} | {t['baseRep']:,} |")
 
+        lines.append("")
+
+    lines.append("</div>")
     return "\n".join(lines)
 
 

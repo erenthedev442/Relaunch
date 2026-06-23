@@ -68,6 +68,7 @@ extra_javascript:
   - assets/gear-finder.js
   - assets/item-search.js
   - assets/leaderboards.js
+  - assets/milestone-grid.js
 
 markdown_extensions:
   - admonition

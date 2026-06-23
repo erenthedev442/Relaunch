@@ -276,7 +276,7 @@ def _escape_md(s: str) -> str:
 
 
 def _render(rows: dict, milestones: dict) -> str:
-    out = []
+    out = ['<div class="milestone-grid cols-3" markdown="1">', ""]
     first = True
     for cat in _CATEGORY_ORDER:
         catrows = rows.get(cat) or []
@@ -305,6 +305,8 @@ def _render(rows: dict, milestones: dict) -> str:
                 f"| {_escape_md(title)} | {_escape_md(trigger)} "
                 f"| +{reward:,} | {_escape_md(tname) if tname else '—'} |"
             )
+    out.append("")
+    out.append("</div>")
     return "\n".join(out).rstrip()
 
 
