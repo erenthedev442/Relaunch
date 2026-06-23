@@ -1,0 +1,26 @@
+# xi_map crash hang-catcher: gcore the frozen process before systemd SIGKILLs it,
+# so the SIGABRT heap-corruption crashes (whose in-process handler hangs and dumps
+# no core) still leave a usable core for crash_capture.sh.
+#
+# Install (on the box):
+#   sudo cp /home/azureuser/server/tools/crash-hang-catcher.service /etc/systemd/system/
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now crash-hang-catcher.service
+#   journalctl -u crash-hang-catcher.service -f
+#
+# Disable once the debug_linux.cpp "dump core first" fix is rebuilt (then redundant):
+#   sudo systemctl disable --now crash-hang-catcher.service
+[Unit]
+Description=xi_map crash hang-catcher (gcore frozen process before SIGKILL)
+After=xi_map.service
+
+[Service]
+Type=simple
+ExecStart=/home/azureuser/server/tools/crash_hang_catcher.sh
+Restart=always
+RestartSec=5
+# root: needs ptrace/gcore on xi_map + write to /var/crash + read the journal.
+User=root
+
+[Install]
+WantedBy=multi-user.target
