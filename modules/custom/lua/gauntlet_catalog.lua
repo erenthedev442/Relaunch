@@ -44,15 +44,15 @@ end
 
 -- Stat scaling per level (0 at level 1, multiplied by (level-1))
 -- These are additive mods on top of the mob's template stats.
--- L10 totals: ATT 18k, DEF 13.5k, ACC 4.5k, EVA 3.6k — comparable to high Apex tiers.
-C.ATT_PER_LEVEL = 2000
-C.DEF_PER_LEVEL = 1500
-C.ACC_PER_LEVEL = 500
-C.EVA_PER_LEVEL = 400
-C.STR_PER_LEVEL = 200
-C.DEX_PER_LEVEL = 150
-C.VIT_PER_LEVEL = 175
-C.AGI_PER_LEVEL = 150
+-- L10 totals: ATT 36k, DEF 27k, ACC 9k, EVA 7.2k.
+C.ATT_PER_LEVEL = 4000
+C.DEF_PER_LEVEL = 3000
+C.ACC_PER_LEVEL = 1000
+C.EVA_PER_LEVEL = 800
+C.STR_PER_LEVEL = 400
+C.DEX_PER_LEVEL = 300
+C.VIT_PER_LEVEL = 350
+C.AGI_PER_LEVEL = 300
 
 -- Flat stat mod table for a given Gauntlet level (xi.mod.* resolved at call time)
 function C.nmMods(level)
