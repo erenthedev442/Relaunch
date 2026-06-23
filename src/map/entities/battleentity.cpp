@@ -500,6 +500,16 @@ uint32 CBattleEntity::GetWeaponDelay(bool tp)
         {
             weaponDelay         = weaponDelay + subweapon->getDelay();
             dualWieldMultiplier = 1.0f - getMod(Mod::DUAL_WIELD) / 100.0f;
+
+            // Floor the multiplier at 0: Dual Wield may reduce the combined
+            // off-hand delay all the way to zero, but never below. Without this
+            // floor a total DUAL_WIELD >= 100 -- trivially reached once gear,
+            // augments, the cross-job DW trait (+15) and Ascension DW (+25) stack
+            // -- makes this multiplier negative. finalDelay is a uint32, so a
+            // negative product wraps to ~4.29B and the clamp below pins it to
+            // maxDelay (2x weapon delay): the character attacks at HALF speed.
+            // The minDelay clamp still bounds the fast end (20% of combined delay).
+            dualWieldMultiplier = std::max(dualWieldMultiplier, 0.0f);
         }
 
         // Handle Hundred Fists directly.
