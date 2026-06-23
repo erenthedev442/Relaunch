@@ -53,16 +53,15 @@ local function getCount(player, jobId)  return player:getCharVar(countKey(jobId)
 local function getRP(player, jobId)     return player:getCharVar(rpKey(jobId)) or 0 end
 local function getCatLv(player, jobId, id) return player:getCharVar(catKey(jobId, id)) or 0 end
 
--- Multiplicative EXP cut % for a given rebirth count -- a TRUE reduction the engine
--- (charutils.cpp AddExpBonus) applies AFTER all additive EXP_BONUS, so +EXP augments
--- can't cancel it. Linear: caps at expPenaltyMaxCut at expPenaltyMaxRebirth, scaling
--- down to R1.  e.g. cap 80 @ R20 -> R1=4%, R5=20%, R10=40%, R20=80% (cap).
+-- Multiplicative EXP cut % for a given rebirth count. Mirrors the RP award curve:
+-- same rpPower exponent and same rpMilestoneEvery trigger so penalty and reward
+-- always accelerate in lock-step. Hard-capped at expPenaltyHardCap (engine floors
+-- EXP at 5% of base regardless, so 90% cap still lets the player level).
 local function expPenalty(count)
-    if count <= 0 then
-        return 0
-    end
-    local cut = math.floor(count / cfg.expPenaltyMaxRebirth * cfg.expPenaltyMaxCut + 0.5)
-    return math.min(cut, cfg.expPenaltyMaxCut)
+    if count <= 0 then return 0 end
+    local base  = math.floor(cfg.expPenaltyMin + cfg.expPenaltyScale * (count ^ cfg.rpPower - 1))
+    local bonus = (count % cfg.rpMilestoneEvery == 0) and cfg.expPenaltyMilestoneExtra or 0
+    return math.min(base + bonus, cfg.expPenaltyHardCap)
 end
 
 -- RP granted for the Nth rebirth (1-indexed). Accelerating curve + milestone bonus.
@@ -196,7 +195,7 @@ local function doRebirth(player)
     end
     local pen = expPenalty(count)
     if pen > 0 then
-        player:printToPlayer(string.format('  Trial of Mastery: EXP cut %d%% -- a TRUE cut taken after gear/augments (caps %d%% @ R%d). Earn your power again.', pen, cfg.expPenaltyMaxCut, cfg.expPenaltyMaxRebirth), S)
+        player:printToPlayer(string.format('  Trial of Mastery: EXP cut %d%% -- a TRUE cut taken after gear/augments (hard cap %d%%). Earn your power again.', pen, cfg.expPenaltyHardCap), S)
     end
 end
 
@@ -336,7 +335,8 @@ showMenu = function(player)
             p:printToPlayer('[ Rebirth ] Max a job (lv99 + Job Points maxed), then rebirth it:', S)
             p:printToPlayer(string.format('  level -> 1, Job Points WIPED, Rebirth Points on an accelerating curve: R1=%d, R5=%d, R10=%d, R20=%d, R30=%d.', rpForCount(1), rpForCount(5), rpForCount(10), rpForCount(20), rpForCount(30)), S)
             p:printToPlayer(string.format('  Milestone bonus: +%d RP at R%d, R%d, R%d, ... (included in figures above).', cfg.rpMilestoneBonus, cfg.rpMilestoneEvery, cfg.rpMilestoneEvery * 2, cfg.rpMilestoneEvery * 3), S)
-            p:printToPlayer(string.format('  EXP cut (taken AFTER gear/augments, so augs cannot cancel it): R1=-%d%%, R5=-%d%%, R10=-%d%%, R20=-%d%% (cap @ R%d).', expPenalty(1), expPenalty(5), expPenalty(10), expPenalty(20), cfg.expPenaltyMaxRebirth), S)
+            p:printToPlayer(string.format('  EXP cut (after gear/augments, can\'t be cancelled): R1=-%d%%, R5=-%d%%, R10=-%d%%, R20=-%d%%, hard cap -%d%%.', expPenalty(1), expPenalty(5), expPenalty(10), expPenalty(20), cfg.expPenaltyHardCap), S)
+            p:printToPlayer(string.format('  Milestone penalty: +%d%% extra at R%d, R%d, R%d, ... (same trigger as the RP bonus).', cfg.expPenaltyMilestoneExtra, cfg.rpMilestoneEvery, cfg.rpMilestoneEvery * 2, cfg.rpMilestoneEvery * 3), S)
             showMenu(p)
         end,
     })

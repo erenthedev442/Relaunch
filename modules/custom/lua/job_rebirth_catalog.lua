@@ -47,16 +47,19 @@ return
     -- Applied by the ENGINE (charutils.cpp AddExpBonus) AFTER all additive EXP_BONUS
     -- (gear augments, food, RoV, Dedication), via the per-main-job [RebirthExpCut]
     -- charVar that JobRebirth.lua sets. So NO amount of +EXP augments can cancel it --
-    -- the stated % is always taken off the top. (Switched from an additive EXP_BONUS
-    -- ramp on 2026-06-22: a maxed 16-piece augment set is ~+5,000% EXP_BONUS, which an
-    -- additive penalty couldn't touch; a multiplicative one always takes its share.)
-    -- Linear ramp: caps at expPenaltyMaxCut% reduction at rebirth expPenaltyMaxRebirth,
-    -- scaling straight down to rebirth 1.
-    --   cut(N) = min(round(N / expPenaltyMaxRebirth * expPenaltyMaxCut), expPenaltyMaxCut)
-    --   R1 -4%, R5 -20%, R10 -40%, R15 -60%, R20 -80% (cap), R20+ -80%.
-    -- The engine still floors EXP at 5% of base, so a job can never be soft-locked.
-    expPenaltyMaxCut     = 80,   -- max EXP reduction % (a true multiplicative cut)
-    expPenaltyMaxRebirth = 20,   -- rebirth count at which the cut reaches the cap
+    -- the stated % is always taken off the top.
+    --
+    -- Accelerating curve (mirrors the RP award curve):
+    --   cut(N) = min(floor(expPenaltyMin + expPenaltyScale*(N^rpPower - 1)) + milestone, expPenaltyHardCap)
+    -- rpPower and rpMilestoneEvery are SHARED with the RP curve -- both accelerate in
+    -- lock-step, so tuning the curve shape keeps penalty and reward correlated.
+    -- Milestone extra fires at the same rebirths as the RP bonus (R10, R20, R30, ...).
+    --   R1=-4%, R5=-11%, R10=-32% (milestone), R20=-64% (milestone), R30+→-90% (cap)
+    -- The engine floors EXP at 5% of base, so a job can never be truly soft-locked.
+    expPenaltyMin            =  4,   -- penalty % at R1 (curve always starts here)
+    expPenaltyScale          =  1.1, -- acceleration coefficient (mirrors rpScale shape)
+    expPenaltyMilestoneExtra =  8,   -- extra penalty % at each milestone (same trigger as RP bonus)
+    expPenaltyHardCap        = 90,   -- absolute ceiling
 
     -- Hard cap on rebirths per job. nil = uncapped.
     maxRebirths = nil,
