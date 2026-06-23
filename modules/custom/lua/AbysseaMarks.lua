@@ -73,7 +73,6 @@ local function spawnViaMark(p, mobId, cost, nmName, cfg)
     local spawned = SpawnMob(mobId)
     spawned:updateClaim(p)
     spawned:updateEnmity(p)  -- immediately engage spawner; no delay before attacking
-    spawned:setLevel(cfg.level)
     spawned:setMaxHP(cfg.maxHP)
     spawned:setHP(cfg.maxHP)
     spawned:addMod(xi.mod.ATT,  cfg.att)

@@ -48,6 +48,10 @@ for _, entry in pairs(nmsToPersist) do
         super(zone)
 
         local mob = zone:queryEntitiesByName(mobName)[1]
+        if mob == nil then
+            print(string.format('[persist_nm] %s not found in %s on init', mobName, zoneName))
+            return
+        end
         local respawn = GetServerVariable(varName)
         print(string.format('Getting respawn time from server vars: %s %i', mob:getName(), respawn))
 

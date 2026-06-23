@@ -1354,6 +1354,13 @@ bool CGambitsContainer::CheckTrigger(const CBattleEntity* triggerTarget, Predica
                                 break;
                             }
 
+                            // IsEntityAlive() checks the pointer BY VALUE against the live-entity
+                            // registry; must guard BEFORE dynamic_cast to avoid RTTI UAF on freed mobs.
+                            if (!CBaseEntity::IsEntityAlive(*it))
+                            {
+                                continue;
+                            }
+
                             auto* PZoneMob = dynamic_cast<CMobEntity*>(*it);
                             if (!PZoneMob || !PZoneMob->isAlive())
                             {
