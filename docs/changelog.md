@@ -7,6 +7,7 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 !!! note "Week of June 22–28, 2026"
     **Tuesday, June 23**
 
+    - **Notorious Monsters** — Remove all servitor (adds) spawns from every NM system
     - **Leaderboards** — Gil query uses char_inventory itemid=65535, not chars.gold
     - **Leaderboards** — Prune stale boards + add 6 new endgame/economy boards
     - **SMN** — Retarget all Blood Pacts to 500k-750k damage range
@@ -770,10 +771,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c663afcd9d94 -->
-_Last updated: 2026-06-23 10:43 UTC_
-<!-- DOCGEN:END id="last-updated" -->
