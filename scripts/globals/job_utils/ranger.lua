@@ -241,7 +241,7 @@ xi.job_utils.ranger.useCamouflage = function(player, target, ability, action)
 end
 
 xi.job_utils.ranger.useBarrage = function(player, target, ability, action)
-    player:addStatusEffect(xi.effect.BARRAGE, { duration = 3600, origin = player })
+    player:addStatusEffect(xi.effect.BARRAGE, { duration = 43200, origin = player })
 
     return xi.effect.BARRAGE
 end
@@ -291,7 +291,7 @@ xi.job_utils.ranger.useStealthShot = function(player, target, ability, action)
 end
 
 xi.job_utils.ranger.useDoubleShot = function(player, target, ability, action)
-    player:addStatusEffect(xi.effect.DOUBLE_SHOT, { power = 40, duration = 3600, origin = player })
+    player:addStatusEffect(xi.effect.DOUBLE_SHOT, { power = 40, duration = 43200, origin = player })
 
     return xi.effect.DOUBLE_SHOT
 end

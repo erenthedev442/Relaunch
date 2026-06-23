@@ -1,0 +1,24 @@
+-- =====================================================================
+-- rng_stance_recast.sql
+-- Barrage + Double Shot as near-permanent, instantly-recastable RNG stances.
+--
+-- Pairs with the DURATION bump in scripts/globals/job_utils/ranger.lua
+-- (BARRAGE / DOUBLE_SHOT addStatusEffect duration 3600 -> 43200s = 12h).
+--
+-- WHY THIS FILE EXISTS
+--   The `abilities` table is CACHED at map boot (no hot-reload), and the base
+--   sql/abilities.sql is NOT re-applied by a normal deploy -- so this custom
+--   SQL is what carries the recast change to the LIVE DB. The change-ledger
+--   runs it on deploy; or apply it by hand:
+--      mysql xidb < modules/custom/sql/rng_stance_recast.sql
+--   Then RESTART xi_map so the abilities cache reloads.
+--
+-- WHAT IT DOES
+--   recast 3600s (1h) -> 3s for Barrage (60) and Double Shot (257): minimal,
+--   so re-applying after a death / zone / dispel is instant. Combined with the
+--   12h duration above, both behave as effectively permanent buffs.
+--
+-- Idempotent: a plain UPDATE keyed on the abilityId. Safe to re-run.
+-- =====================================================================
+
+UPDATE `abilities` SET `recastTime` = 3 WHERE `abilityId` IN (60, 257);
