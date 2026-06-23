@@ -85,6 +85,21 @@ local function returnAll(player)
 end
 
 -----------------------------------
+-- Weapons that CANNOT take a standard augment: the trade would otherwise read as
+-- "success" (the item re-adds fine, passing the weak `if not augmented` check) but the
+-- augment never applies, so the player loses the gil + catalysts for nothing. These
+-- have fixed per-stage stats + aftermath and reject standard augments. Death Penalty
+-- (Mythic gun) -- all upgrade-stage ids. Rejected up front in onTrade. Extend this set
+-- as more REMA (Relic/Mythic/Empyrean/Aeonic) weapons turn up.
+-----------------------------------
+local NON_AUGMENTABLE =
+{
+    [18987] = true, [19007] = true, [19076] = true, [19096] = true,  -- Death Penalty: base / 75 / 80 / 85
+    [19628] = true, [19726] = true, [19835] = true, [19964] = true,  -- Death Penalty: 90 / 95 / 99 / 99 II
+    [21262] = true, [21263] = true, [21268] = true, [22141] = true,  -- Death Penalty: 119 / 119 II / 119 III / Aeonic
+}
+
+-----------------------------------
 -- Forward declaration
 -----------------------------------
 local showConfirmMenu
@@ -270,6 +285,15 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
 
             if gearId == nil then
                 player:printToPlayer('Include 1 equipment piece in the trade, kupo!', xi.msg.channel.SYSTEM_3)
+                return
+            end
+
+            -- Reject weapons that can't actually take a standard augment (Death Penalty
+            -- etc.). The trade would otherwise read as success -- the item re-adds fine so
+            -- the weak `if not augmented` check passes -- but the augment never applies and
+            -- the player loses the gil + catalysts. Bail here, before anything is taken.
+            if NON_AUGMENTABLE[gearId] then
+                player:printToPlayer('That weapon cannot be augmented, kupo! Mythic/Relic weapons (like Death Penalty) have fixed stats and reject augments.', xi.msg.channel.SYSTEM_3)
                 return
             end
 
