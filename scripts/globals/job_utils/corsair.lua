@@ -161,12 +161,12 @@ local function applyRoll(caster, target, inAbility, action, total, isDoubleup, c
     -- "Invalid Entity (Non-PC)" on every roll. A Trust has no gear, so 0 is the
     -- correct Phantom Roll+ multiplier anyway -- behavior is unchanged for players.
     local phantomBase = corsairRollMods[abilityId][2] -- Base increment buff
-    -- FJB cap: the custom "Phantom Roll effect" augment (catalog augId 2046,
-    -- Mod::PHANTOM_ROLL) grants +1 per augment slot, and a piece's 5 slots SUM,
-    -- so an unclamped fully-slotted piece would give +5. Clamp to +3 so a piece
-    -- (and the total -- getMaxGearMod is a cross-piece MAX) caps at +3. Retail
-    -- PHANTOM_ROLL gear maxes ~+2, so this only bites heavy augment stacking.
-    local phantomMult = (caster:isPC() and math.min(caster:getMaxGearMod(xi.mod.PHANTOM_ROLL), 3)) or 0
+    -- FJB: getMod sums PHANTOM_ROLL (mod 881) across ALL equipped pieces (each
+    -- piece holds up to 5 augment slots x +1 each = +5/piece). No cap -- players
+    -- can fill all 16 gear slots (16 x 5 = 80 max) and feel the full effect.
+    -- getMod is used (not getMaxGearMod) because getMaxGearMod is a cross-piece
+    -- MAX, not a sum, so multiple augmented pieces would otherwise not stack.
+    local phantomMult = (caster:isPC() and caster:getMod(xi.mod.PHANTOM_ROLL)) or 0
     effectpower       = effectpower + (phantomBase * phantomMult)
 
     -- Effect Power varies depending on COR level (Main vs Sub)

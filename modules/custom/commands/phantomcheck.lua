@@ -41,18 +41,18 @@ commandObj.onTrigger = function(player, name)
         end
     end
 
-    local raw    = targ:getMaxGearMod(xi.mod.PHANTOM_ROLL)
-    local capped = math.min(raw, 3)
+    local total   = targ:getMod(xi.mod.PHANTOM_ROLL)   -- sum across all equipped pieces
+    local perPiece = targ:getMaxGearMod(xi.mod.PHANTOM_ROLL) -- best single piece (diagnostic)
 
-    player:printToPlayer(string.format('[PhantomCheck] %s: Phantom Roll+ on gear = %d (effective x%d, cap 3).',
-        targ:getName(), raw, capped), S)
+    player:printToPlayer(string.format('[PhantomCheck] %s: Phantom Roll+ total = %d (best single piece = %d).',
+        targ:getName(), total, perPiece), S)
 
-    if raw <= 0 then
-        player:printToPlayer('  => NOT applying: augment not equipped, not on this char, on a cape (pre-fix build), or the augment cache is stale (needs a map restart).', S)
+    if total <= 0 then
+        player:printToPlayer('  => NOT applying: augment not equipped or augment cache is stale (needs a map restart).', S)
     else
-        player:printToPlayer(string.format('  => Applying. Each Phantom Roll gains +%d x its base increment (e.g. Chaos Roll +%d Attack, Hunters Roll +%d Acc).',
-            capped, 3 * capped, 5 * capped), S)
-        player:printToPlayer('  Note: the client augment label is always blank for this augment -- judge by the effect, not the tooltip.', S)
+        player:printToPlayer(string.format('  => Applying. Each Phantom Roll gains +%d x its base increment (e.g. Chaos Roll +%d%%ATT, Hunters Roll +%d ACC).',
+            total, 3 * total, 5 * total), S)
+        player:printToPlayer('  Note: the client augment label is always blank -- judge by the effect, not the tooltip.', S)
     end
 end
 
