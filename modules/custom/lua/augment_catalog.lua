@@ -238,6 +238,7 @@ return {
     [1831] = { augId = 956,  base = 1,   mult = 1,  disp = 1,    cat = 10, label = 'Thunder Affinity Avatar perp. cost' },
     [1979] = { augId = 1246, base = 1,   mult = 200, disp = 100,  cat = 10, label = 'Pet Phy. Dmg. Taken' },
     [2173] = { augId = 2040, base = 1,   mult = 1,  disp = 1,    cat = 10, label = 'Thunder Affinity' },
+    [748]  = { augId = 2100, base = 5,   mult = 1,  disp = 1,    cat = 10, label = 'Beast Affinity' },  -- gold_beastcoin
 
     -- Elemental resistance
     [2831] = { augId = 61,   base = 1,   mult = 1,  disp = 1,    cat = 11, label = 'Occ. inc. resist to stat ailments' },
