@@ -1,6 +1,6 @@
 # Benton
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 7d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 7d 5h
 
 `⭐ 15 Ascensions` `💪 11 jobs @99`
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 34c79493ad06 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 5167cee9bc73 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

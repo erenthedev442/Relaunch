@@ -1,6 +1,6 @@
 # Ondjic
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 6d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 6d 9h
 
 `💪 4 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | NIN 99 |
-| Time played | 33h |
+| Time played | 34h |
 | Enemies defeated | 210 |
 | Deaths | 0 |
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fb296a4d5f00 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: a231d7972bfb -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

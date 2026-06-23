@@ -1,6 +1,6 @@
 # Einung
 
-**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-15 · Last seen 2026-06-15 · Character age 8d
+**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-15 · Last seen 2026-06-15 · Character age 8d 2h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3a6d2c001f0f -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 74bd12b58c1f -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

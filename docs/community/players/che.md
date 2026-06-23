@@ -1,6 +1,6 @@
 # Che
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-21 · Character age 6d 17h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-21 · Character age 6d 19h
 
 `💪 8 jobs @99`
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5f97039e8ddd -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: c0cc0e3f0bce -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

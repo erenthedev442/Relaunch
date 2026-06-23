@@ -1,6 +1,6 @@
 # Nobigdeal
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 5h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 7h
 
 `⭐ 5 Ascensions` `💪 4 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 20h |
+| Time played | 21h |
 | Enemies defeated | 426 |
 | Deaths | 7 |
 
@@ -54,9 +54,9 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
-- **Augments crafted:** 224
-- **NM Affinities:** 1 / 13
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 250
+- **NM Affinities:** 6 / 13
 
 ## Reforge
 
@@ -85,6 +85,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|
 | Fastest 1 → 99 | 21h 3m |
 | HL Rank I → V | 2d 1h |
+| Augment Archon | 5d 21h |
 
 ---
 
@@ -93,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5757d661f1be -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 080b7ea1ce98 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

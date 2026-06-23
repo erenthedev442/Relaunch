@@ -1,6 +1,6 @@
 # Mardukas
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 9d 2h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-18 · Character age 9d 4h
 
 `⭐ 20 Ascensions` `💪 5 jobs @99`
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 48d2ae95ad52 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: fe8d90f0cbd4 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

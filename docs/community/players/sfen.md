@@ -1,8 +1,8 @@
 # Sfen
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-23 · Character age 4d 2h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-23 · Character age 4d 4h
 
-`⭐ 1 Ascension` `💪 14 jobs @99`
+`⭐ 3 Ascensions` `💪 14 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -14,8 +14,8 @@
 | Main job | **THF 99** |
 | Sub job | DNC 99 |
 | Time played | 44h |
-| Enemies defeated | 6,616 |
-| Deaths | 40 |
+| Enemies defeated | 6,634 |
+| Deaths | 45 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,561
+- **Marks (current):** 61
 - **Marks (lifetime):** 2,942
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 89
+- **Total NM kills:** 94
 
 ## Augment Sage
 
@@ -52,7 +52,7 @@
 | Track | Current | Lifetime |
 |---|---:|---:|
 | AF | 1,175 | 175 |
-| Relic | 0 | 1,650 |
+| Relic | 690 | 2,340 |
 | Empyrean | 75 | 3,325 |
 
 ## Job Rebirth
@@ -62,8 +62,8 @@
 
 ## Prestige
 
-- **Total Ascensions:** 1
-- **Per-job prestige:** THF P1
+- **Total Ascensions:** 3
+- **Per-job prestige:** THF P3
 
 ## Collections
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7724ab582658 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: fb9f5245afcb -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

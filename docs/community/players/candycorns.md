@@ -1,6 +1,6 @@
 # Candycorns
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 10h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 12h
 
 `⭐ 1 Ascension` `💪 12 jobs @99`
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4e40db731ffd -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: c4213edd65c1 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

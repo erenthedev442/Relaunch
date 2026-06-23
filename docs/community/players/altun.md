@@ -1,6 +1,6 @@
 # Altun
 
-**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-13 · Last seen 2026-06-13 · Character age 9d 11h
+**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-13 · Last seen 2026-06-13 · Character age 9d 13h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 3/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 213f3ab8a994 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 0d3b801db88b -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

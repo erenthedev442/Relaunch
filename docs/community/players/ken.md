@@ -1,6 +1,6 @@
 # Ken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 7d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 7d 8h
 
 `⭐ 14 Ascensions` `💪 22 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 72h |
+| Time played | 73h |
 | Enemies defeated | 1,918 |
 | Deaths | 11 |
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5d16ba1ee2e4 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 3f1f9e4b2204 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

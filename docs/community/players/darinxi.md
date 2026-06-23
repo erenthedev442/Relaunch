@@ -1,6 +1,6 @@
 # Darinxi
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-23 · Character age 8d 6h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-23 · Character age 8d 8h
 
 `💪 1 job @99`
 
@@ -12,16 +12,16 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | WAR 85 |
-| Time played | 13h |
-| Enemies defeated | 596 |
-| Deaths | 8 |
+| Sub job | WAR 87 |
+| Time played | 14h |
+| Enemies defeated | 618 |
+| Deaths | 13 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 85 | SAM | 1 |
+| WAR | 87 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -39,19 +39,19 @@
 - **Marks (current):** 2,602
 - **Marks (lifetime):** 240
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 83
+- **Total NM kills:** 105
 
 ## Augment Sage
 
 - **Mastery rank:** 1 / 5
-- **Augments crafted:** 10
+- **Augments crafted:** 11
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 503 | 905 |
+| AF | 3 | 1,455 |
 | Relic | 1 | 0 |
 | Empyrean | 0 | 0 |
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a97c132299c6 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 54d155288ad2 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

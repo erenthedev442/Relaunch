@@ -1,6 +1,6 @@
 # Whiteyes
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d 18h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d 20h
 
 `💪 3 jobs @99`
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e031a6d211ae -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: f9900ca74f19 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

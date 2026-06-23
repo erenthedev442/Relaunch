@@ -1,6 +1,6 @@
 # Clambone
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 5d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 5d 7h
 
 `💪 7 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 546cdbf8dc8b -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: b9cac1fb725e -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

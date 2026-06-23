@@ -1,18 +1,18 @@
 # Aleks
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 11h 32m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 13h 25m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 90/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 91/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **THF 90** |
+| Main job | **THF 91** |
 | Sub job | DNC 72 |
-| Time played | 7h |
-| Enemies defeated | 297 |
+| Time played | 8h |
+| Enemies defeated | 311 |
 | Deaths | 4 |
 
 ## Job levels
@@ -24,7 +24,7 @@
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 90 | COR | 1 |
+| THF | 91 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 72 |
 | BST | 1 | SCH | 1 |
@@ -38,6 +38,17 @@
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Journeyman | 3,000 | 2,000 to Veteran |
 
 ## Augment Sage
 
@@ -68,6 +79,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0679cd80a652 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 770babce6b58 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

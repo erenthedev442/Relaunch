@@ -1,6 +1,6 @@
 # Pld
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 5d 2h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 5d 3h
 
 `⭐ 6 Ascensions` `💪 9 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **RDM 99** |
 | Sub job | BLU 99 |
-| Time played | 46h |
-| Enemies defeated | 3,227 |
+| Time played | 47h |
+| Enemies defeated | 3,240 |
 | Deaths | 14 |
 
 ## Job levels
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4f6fe1ae104c -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: b158f01f3164 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

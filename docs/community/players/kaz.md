@@ -1,8 +1,8 @@
 # Kaz
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 9d 9h
 
-`💪 5 jobs @99`
+`💪 6 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **COR 99** |
-| Sub job | NIN 79 |
+| Sub job | NIN 99 |
 | Time played | 15h |
-| Enemies defeated | 1,255 |
+| Enemies defeated | 1,816 |
 | Deaths | 7 |
 
 ## Job levels
@@ -22,7 +22,7 @@
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| MNK | 1 | NIN | 79 |
+| MNK | 1 | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | **BLU** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 15,787
-- **Marks (lifetime):** 4,932
+- **Marks (current):** 22,335
+- **Marks (lifetime):** 8,547
 - **Distinct NMs slain:** 11
-- **Total NM kills:** 877
+- **Total NM kills:** 1,600
 
 ## Augment Sage
 
@@ -61,7 +61,7 @@
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice.
+**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6e3fb7d66465 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 161d84d47375 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

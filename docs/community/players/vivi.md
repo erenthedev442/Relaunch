@@ -1,6 +1,6 @@
 # Vivi
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-20 · Character age 6d 14h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-20 · Character age 6d 16h
 
 `💪 3 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 554e78fc38b5 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 036999abfa7e -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Shizuku
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-23 · Character age 3d 22h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-23 · Character age 4d
 
 `💪 4 jobs @99`
 
@@ -89,6 +89,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4c0a077b720f -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 5ad07f493427 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

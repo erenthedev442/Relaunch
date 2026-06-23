@@ -1,6 +1,6 @@
 # Regis
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 20h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 22h
 
 `⭐ 20 Ascensions` `💪 10 jobs @99`
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f0b1c7efe64b -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: c60b6d788110 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

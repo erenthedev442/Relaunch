@@ -1,6 +1,6 @@
 # Broken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 6d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 6d 18h
 
 `⭐ 15 Ascensions` `💪 22 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 62h |
+| Time played | 63h |
 | Enemies defeated | 887 |
 | Deaths | 4 |
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e57828e1ed58 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: d0f8ef93bfd9 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

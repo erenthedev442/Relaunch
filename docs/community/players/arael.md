@@ -1,8 +1,8 @@
 # Arael
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 2d 17h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 2d 19h
 
-`💪 1 job @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RDM 86** |
-| Sub job | BLU 86 |
-| Time played | 33h |
-| Enemies defeated | 760 |
+| Main job | **RDM 99** |
+| Sub job | BLU 99 |
+| Time played | 35h |
+| Enemies defeated | 768 |
 | Deaths | 1 |
 
 ## Job levels
@@ -24,8 +24,8 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 91 | SMN | 1 |
-| RDM | 86 | **BLU** | **99** |
+| **BLM** | **99** | SMN | 1 |
+| **RDM** | **99** | **BLU** | **99** |
 | THF | 1 | COR | 1 |
 | PLD | 10 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -57,8 +57,8 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 3
-- **By job:** RDM ×3
+- **Total rebirths:** 4
+- **By job:** RDM ×4
 
 ## Collections
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c878d0416a3e -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: e94899fbba0c -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

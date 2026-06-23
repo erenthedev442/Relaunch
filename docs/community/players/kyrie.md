@@ -1,6 +1,6 @@
 # Kyrie
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 7d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 7d 8h
 
 `⭐ 37 Ascensions` `💪 21 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 97h |
+| Time played | 98h |
 | Enemies defeated | 2,896 |
 | Deaths | 26 |
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 18d1586dac1a -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: f10eda741732 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

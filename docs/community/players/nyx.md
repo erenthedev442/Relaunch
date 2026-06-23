@@ -1,6 +1,6 @@
 # Nyx
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-23 · Character age 1d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-23 · Character age 1d 22h
 
 `💪 2 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BLU 64** |
-| Sub job | RDM 52 |
-| Time played | 17h |
-| Enemies defeated | 788 |
+| Main job | **BLU 80** |
+| Sub job | RDM 68 |
+| Time played | 18h |
+| Enemies defeated | 825 |
 | Deaths | 6 |
 
 ## Job levels
@@ -25,7 +25,7 @@
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 52 | BLU | 64 |
+| RDM | 68 | BLU | 80 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 1,138
+- **Marks (current):** 1,113
 - **Marks (lifetime):** 151
 - **Distinct NMs slain:** 6
 - **Total NM kills:** 19
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 59d866540d59 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 8adce267c8cd -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

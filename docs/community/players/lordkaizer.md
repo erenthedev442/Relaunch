@@ -1,6 +1,6 @@
 # Lordkaizer
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-19 · Character age 3d 16h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-19 · Character age 3d 18h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 21/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a2260dff8ebc -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 0854aea2d04b -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

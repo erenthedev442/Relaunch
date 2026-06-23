@@ -1,6 +1,6 @@
 # Zhan
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 3d 2h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 3d 4h
 
 `💪 1 job @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 95d70ec83b8c -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 2446efaa399d -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

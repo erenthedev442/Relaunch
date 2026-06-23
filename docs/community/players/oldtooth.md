@@ -1,6 +1,6 @@
 # Oldtooth
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 7h 2m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 8h 55m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a20d9a96d6ae -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 8f22f24391db -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

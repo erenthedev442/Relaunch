@@ -1,16 +1,16 @@
 # Trilla
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-23 · Last seen 2026-06-23 · Character age 1h 52m
+**Windurst citizen** · 🟢 Active today · Created 2026-06-23 · Last seen 2026-06-23 · Character age 3h 46m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 9/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 51/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BRD 9** |
-| Sub job | COR 1 |
+| Main job | **DNC 51** |
+| Sub job | COR 42 |
 | Time played | 0h |
 | Enemies defeated | 0 |
 | Deaths | 0 |
@@ -24,11 +24,11 @@
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
-| THF | 1 | COR | 1 |
+| THF | 1 | COR | 42 |
 | PLD | 1 | PUP | 1 |
-| DRK | 1 | DNC | 1 |
+| DRK | 1 | DNC | 51 |
 | BST | 1 | SCH | 1 |
-| BRD | 9 | GEO | 1 |
+| BRD | 50 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 115
+- **Trusts learned:** 114
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 578cc06b95b6 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 6e2785e0746f -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

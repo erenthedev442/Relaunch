@@ -1,6 +1,6 @@
 # Speedbump
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 7d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 7d 5h
 
 `⭐ 15 Ascensions` `💪 9 jobs @99`
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f998f27f95f2 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: bcfc45c1b829 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

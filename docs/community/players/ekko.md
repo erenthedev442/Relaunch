@@ -1,6 +1,6 @@
 # Ekko
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 6h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 7h
 
 `💪 8 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **DRG 99** |
-| Sub job | RDM 84 |
+| Main job | **DRK 99** |
+| Sub job | WAR 99 |
 | Time played | 36h |
-| Enemies defeated | 1,971 |
+| Enemies defeated | 1,973 |
 | Deaths | 4 |
 
 ## Job levels
@@ -26,17 +26,17 @@
 | WHM | 76 | **DRG** | **99** |
 | BLM | 50 | SMN | 1 |
 | RDM | 84 | BLU | 1 |
-| **THF** | **99** | COR | 1 |
+| **THF** | **99** | COR | 36 |
 | PLD | 87 | PUP | 1 |
 | **DRK** | **99** | DNC | 82 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | **GEO** | **99** |
+| BRD | 28 | **GEO** | **99** |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 10,213
+- **Marks (current):** 7,813
 - **Marks (lifetime):** 5,919
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 808
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 65acc4fbd50d -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 423be5ab5665 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

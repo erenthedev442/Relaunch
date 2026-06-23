@@ -1,6 +1,6 @@
 # Bid
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 14h 58m
+**Windurst citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 16h 52m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b9533f19cb8d -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 1ce88dd7fc2b -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -82,3 +82,10 @@ The Hall updates after the next map restart following a clear.
 
 !!! info "Commands"
     `!gauntlet abort` — exit your current run (no penalty, just ends the run) · `!gauntlet status` *(GM)* — list all active runs.
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 084b87d3eae3 -->
+_Last updated: 2026-06-23 08:54 UTC_
+<!-- DOCGEN:END id="last-updated" -->

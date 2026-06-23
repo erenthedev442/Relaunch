@@ -1,6 +1,6 @@
 # Killface
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 4h
 
 `⭐ 5 Ascensions` `💪 2 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 38h |
-| Enemies defeated | 1,029 |
+| Time played | 39h |
+| Enemies defeated | 1,033 |
 | Deaths | 12 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 73,813
-- **Marks (lifetime):** 20,716
+- **Marks (current):** 73,894
+- **Marks (lifetime):** 20,781
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 1,416
+- **Total NM kills:** 1,417
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 269
+- **Augments crafted:** 283
 - **NM Affinities:** 9 / 13
 
 ## Reforge
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3f188bab8f06 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 9332cec169e3 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

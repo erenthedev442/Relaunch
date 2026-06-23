@@ -1,6 +1,6 @@
 # Surtr
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-19 · Character age 3d 18h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-19 · Character age 3d 20h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 05f5d4ca5586 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: d362328ab9ed -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

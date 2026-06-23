@@ -1,6 +1,6 @@
 # Alice
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-21 · Character age 8d 8h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-21 · Character age 8d 10h
 
 `💪 5 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 941d569e881d -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 859690c7c220 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

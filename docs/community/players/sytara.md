@@ -1,6 +1,6 @@
 # Sytara
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 10d 5h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 10d 6h
 
 `⭐ 12 Ascensions` `💪 22 jobs @99`
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 44e0541af550 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 5646d65113aa -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

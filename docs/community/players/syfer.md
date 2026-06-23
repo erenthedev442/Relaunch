@@ -1,6 +1,6 @@
 # Syfer
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 2d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 2d 9h
 
 `💪 2 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **COR 99** |
 | Sub job | GEO 99 |
-| Time played | 8h |
+| Time played | 9h |
 | Enemies defeated | 0 |
 | Deaths | 0 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 88,408
+- **Marks (current):** 64,448
 - **Marks (lifetime):** 6,403
 - **Distinct NMs slain:** 9
 - **Total NM kills:** 250
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 46463f920e3d -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: b5f1672f90eb -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

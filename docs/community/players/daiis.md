@@ -1,6 +1,6 @@
 # Daiis
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 8d 21h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 8d 23h
 
 `⭐ 6 Ascensions` `💪 22 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **SAM 99** |
 | Sub job | WAR 99 |
-| Time played | 83h |
-| Enemies defeated | 3,776 |
+| Time played | 84h |
+| Enemies defeated | 3,789 |
 | Deaths | 9 |
 
 ## Job levels
@@ -47,7 +47,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Guild | Rank | Reputation | To next rank |
 |---|---|---:|---|
-| AF Hunters' Guild | Journeyman | 1,000 | 4,000 to Veteran |
+| AF Hunters' Guild | Journeyman | 3,500 | 1,500 to Veteran |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Journeyman | 750 | 4,250 to Veteran |
 | League Hunters' Guild | Journeyman | 3,000 | 2,000 to Veteran |
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 48e37e86893a -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: c5d5615dd857 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

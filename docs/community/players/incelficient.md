@@ -1,6 +1,6 @@
 # Incelficient
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 18h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 20h
 
 `💪 1 job @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0fac5fea4e4e -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: cdaeb444fe0e -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

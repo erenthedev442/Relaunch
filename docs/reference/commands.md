@@ -2,7 +2,7 @@
 
 These chat commands are available to every player on Legendary (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 73
+**Total player-accessible commands:** 74
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
@@ -31,6 +31,7 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!events` | — | Lists upcoming and active seasonal bonus mark events from the catalog.  Shows event name, multiplier, start/end dates, and status (active / upcoming / expired). | :material-puzzle: **custom** |
 | `!featured` | — | Shows which NM is the Weekly Featured Hunt for each Hunting League tier.  Featured NMs award 2x base marks on the first kill of the week - the bonus stacks with the First-Kill bonus. | :material-puzzle: **custom** |
 | `!gainexp` | — | Player-facing on-demand version of RoE timed record 4013 ("Gain Experience"). Instantly credits the reward bundle: +1500 EXP, +300 sparks, +300 accolades, 1x Copper Aman Voucher | :material-puzzle: **custom** |
+| `!gauntlet` | string | _(no description)_ |  |
 | `!getstats` | string | prints stats of cursor target into chatlog, for debugging. |  |
 | `!gmhome` | — | Sends you to zone 210 (GM_HOME), if you are a GM |  |
 | `!help` | — | Lists all custom commands with a one-line description. | :material-puzzle: **custom** |
@@ -241,6 +242,12 @@ Lists upcoming and active seasonal bonus mark events from the catalog.  Shows ev
 Shows which NM is the Weekly Featured Hunt for each Hunting League tier.  Featured NMs award 2x base marks on the first kill of the week - the bonus stacks with the First-Kill bonus.
 
 **Usage:** `featured`
+
+### `!gauntlet`
+
+**Usage:** `gauntlet`
+
+**Parameter types:** string
 
 ### `!help`  _(custom)_
 
@@ -559,6 +566,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2b15530f7d44 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 26a12e703606 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

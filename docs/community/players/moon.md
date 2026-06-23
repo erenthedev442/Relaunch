@@ -1,6 +1,6 @@
 # Moon
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d 12h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d 13h
 
 `👑 Grandmaster ×3` `⭐ 8 Ascensions` `💪 22 jobs @99`
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 01cd01e7fe7a -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: d3c64ec613c0 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

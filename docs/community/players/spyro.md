@@ -1,6 +1,6 @@
 # Spyro
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 8d 7h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 8d 9h
 
 `⭐ 11 Ascensions` `💪 22 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **RDM 99** |
 | Sub job | BLM 99 |
 | Time played | 54h |
-| Enemies defeated | 8,335 |
+| Enemies defeated | 8,514 |
 | Deaths | 26 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 14,629
+- **Marks (current):** 14,129
 - **Marks (lifetime):** 30,337
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 631
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: da78d0cf0121 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 145604d32ed5 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

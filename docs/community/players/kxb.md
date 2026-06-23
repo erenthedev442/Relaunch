@@ -1,19 +1,19 @@
 # Kxb
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 19h 2m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 20h 55m
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 92/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **BLM 1** |
-| Sub job | GEO 1 |
-| Time played | 0h |
-| Enemies defeated | 0 |
-| Deaths | 0 |
+| Main job | **BLM 92** |
+| Sub job | GEO 76 |
+| Time played | 1h |
+| Enemies defeated | 156 |
+| Deaths | 2 |
 
 ## Job levels
 
@@ -22,19 +22,19 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
+| BLM | 92 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
-| BRD | 1 | GEO | 1 |
+| BRD | 1 | GEO | 76 |
 | RNG | 1 | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 550
+- **Marks (current):** 1,050
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -42,7 +42,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 7
+- **Augments crafted:** 9
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d990d669ef6b -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: c11fe7117749 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

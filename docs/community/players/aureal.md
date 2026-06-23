@@ -1,8 +1,8 @@
 # Aureal
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 5h
 
-`💪 1 job @99`
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RDM 86** |
-| Sub job | BLU 86 |
-| Time played | 47h |
-| Enemies defeated | 2,086 |
+| Main job | **RDM 99** |
+| Sub job | BLM 98 |
+| Time played | 49h |
+| Enemies defeated | 2,186 |
 | Deaths | 4 |
 
 ## Job levels
@@ -24,8 +24,8 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 18 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 94 | SMN | 1 |
-| RDM | 86 | **BLU** | **99** |
+| BLM | 98 | SMN | 1 |
+| **RDM** | **99** | **BLU** | **99** |
 | THF | 53 | COR | 1 |
 | PLD | 91 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -57,8 +57,8 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 8
-- **By job:** RDM ×8
+- **Total rebirths:** 9
+- **By job:** RDM ×9
 
 ## Collections
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7996e835fec7 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: d466311fdd26 -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

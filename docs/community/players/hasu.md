@@ -1,6 +1,6 @@
 # Hasu
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 1d
+**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 1d 2h
 
 `💪 2 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | BLU 99 |
-| Time played | 4h |
+| Time played | 5h |
 | Enemies defeated | 135 |
-| Deaths | 0 |
+| Deaths | 1 |
 
 ## Job levels
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 584
+- **Marks (current):** 1,084
 - **Marks (lifetime):** 187
 - **Distinct NMs slain:** 9
 - **Total NM kills:** 14
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5d30dfafb726 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: bb76a0fd234b -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->

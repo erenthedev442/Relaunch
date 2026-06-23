@@ -1,8 +1,8 @@
 # Katrrine
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 6h
 
-`💪 4 jobs @99`
+`💪 5 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RDM 86** |
-| Sub job | BLU 86 |
-| Time played | 50h |
-| Enemies defeated | 3,179 |
+| Main job | **RDM 99** |
+| Sub job | BLU 99 |
+| Time played | 52h |
+| Enemies defeated | 3,390 |
 | Deaths | 7 |
 
 ## Job levels
@@ -25,7 +25,7 @@
 | MNK | 18 | NIN | 1 |
 | WHM | 90 | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
-| RDM | 86 | **BLU** | **99** |
+| **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -57,8 +57,8 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 12
-- **By job:** RDM ×12
+- **Total rebirths:** 13
+- **By job:** RDM ×13
 
 ## Collections
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9b625baa296c -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: ba17abf1182a -->
+_Last updated: 2026-06-23 08:54 UTC_
 <!-- DOCGEN:END id="last-updated" -->
