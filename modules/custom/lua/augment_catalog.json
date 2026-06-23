@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "total": 300,
+  "total": 301,
   "groups": [
     {
       "category": "Strength / Attack / Phys.dmg.taken",
@@ -2761,7 +2761,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 2513,
+          "itemId": 2361,
           "augId": 281,
           "label": "Archery skill",
           "base": 1,
@@ -2771,7 +2771,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 2524,
+          "itemId": 2513,
           "augId": 282,
           "label": "Marksmanship skill",
           "base": 1,
@@ -2781,7 +2781,7 @@
           "maxBoost": null
         },
         {
-          "itemId": 2936,
+          "itemId": 2524,
           "augId": 283,
           "label": "Throwing skill",
           "base": 1,
@@ -2791,9 +2791,19 @@
           "maxBoost": null
         },
         {
-          "itemId": 2937,
+          "itemId": 2936,
           "augId": 286,
           "label": "Shield skill",
+          "base": 1,
+          "mult": 1,
+          "disp": 1,
+          "cat": 12,
+          "maxBoost": null
+        },
+        {
+          "itemId": 2937,
+          "augId": 287,
+          "label": "Parrying Skill",
           "base": 1,
           "mult": 1,
           "disp": 1,
@@ -3061,7 +3071,7 @@
           "maxBoost": 0
         },
         {
-          "itemId": 2361,
+          "itemId": 2875,
           "augId": 2048,
           "label": "Immunobreak Chance+",
           "base": 1,
@@ -3071,7 +3081,7 @@
           "maxBoost": 31
         },
         {
-          "itemId": 2512,
+          "itemId": 2518,
           "augId": 2100,
           "label": "Beast Affinity",
           "base": 5,

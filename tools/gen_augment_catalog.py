@@ -208,8 +208,8 @@ CUSTOM_AUGS = {
     #   about). Pinned here so they survive future regens. Immunobreak Chance+ =
     #   Mod 1197 (sql/augments.sql 2048); Beast Affinity = Mod 1200 (modules/custom/
     #   sql/bst_beast_affinity_augment.sql 2100). Catalysts validated obtainable.
-    2048: (2361, 1, 1, 1, 5,  'Immunobreak Chance+', 31), # ameretat_vine
-    2100: (2512, 5, 1, 1, 10, 'Beast Affinity',      31), # lynx_hide -- orig catalyst gold_beastcoin(748) is below MIN_ITEM_ID(768) so re-catalysted to a valid beast drop
+    2048: (2875, 1, 1, 1, 5,  'Immunobreak Chance+', 31), # ethereal_squama -- SLACK catalyst (orig ameretat_vine 2361 is greedy-USED -> pinning it evicts Parrying Skill)
+    2100: (2518, 5, 1, 1, 10, 'Beast Affinity',      31), # smilodon_hide -- SLACK beast drop (orig gold_beastcoin 748 < MIN_ITEM_ID 768)
 }
 
 # Augments to DROP from the catalog entirely, keyed by augId. The augment still
