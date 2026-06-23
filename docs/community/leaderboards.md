@@ -23,8 +23,12 @@ Live rankings pulled from the server's database. These tables refresh whenever t
   <a href="#speed-records">Speed Records</a>
   <a href="#hunters-guild">Hunter's Guild</a>
   <a href="#weekly-hunt-board">Weekly Hunts</a>
+  <a href="#the-gauntlet">The Gauntlet</a>
+  <a href="#endless-tower">Endless Tower</a>
   <a href="#infamy">Infamy</a>
   <a href="#maats-challenge">Maat's Challenge</a>
+  <a href="#prestige--paragon">Prestige</a>
+  <a href="#economy">Economy</a>
   <a href="#combat">Combat</a>
   <a href="#combat-records">Combat Records</a>
 </nav>
@@ -52,25 +56,6 @@ _Lifetime count of successful Augment Moogle trades. Every confirmed trade bumps
 | 9 | [Mardukas](players/mardukas.md) | 379 |
 | 10 | [Herdofturtles](players/herdofturtles.md) | 377 |
 <!-- DOCGEN:END id="lb-augments" -->
-
-<!-- DOCGEN:BEGIN id="lb-sage" -->
-### Augment Sage Mastery
-
-_Highest Augment Sage rank achieved. Earned by hitting Augment_Count milestones via the Sage side-quest._
-
-| Rank | Character | Rank |
-|---:|---|---:|
-| 🥇 | [Olindre](players/olindre.md) | 5 |
-| 🥈 | [Darrent](players/darrent.md) | 5 |
-| 🥉 | [Lyvia](players/lyvia.md) | 5 |
-| 4 | [Bro](players/bro.md) | 5 |
-| 5 | [Nobigdeal](players/nobigdeal.md) | 5 |
-| 6 | [Ropraz](players/ropraz.md) | 5 |
-| 7 | [Benton](players/benton.md) | 5 |
-| 8 | [Phatdoood](players/phatdoood.md) | 5 |
-| 9 | [Thanos](players/thanos.md) | 5 |
-| 10 | [Miss](players/miss.md) | 5 |
-<!-- DOCGEN:END id="lb-sage" -->
 </div>
 
 ---
@@ -203,7 +188,7 @@ _Total marks earned across AF + Relic + Empy tracks, all-time. Spending doesn't 
 
 ## NM Hunting { .lb-section }
 
-<div class="lb-grid lb-grid-3" markdown="1">
+<div class="lb-grid" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-nm-kills" -->
 ### Top NM Slayers
 
@@ -241,25 +226,6 @@ _Number of distinct custom NMs each character has personally killed at least onc
 | 9 | [Che](players/che.md) | 15 |
 | 10 | [Rhis](players/rhis.md) | 15 |
 <!-- DOCGEN:END id="lb-nm-encyclopedia" -->
-
-<!-- DOCGEN:BEGIN id="lb-affinities" -->
-### NM Affinities Registered (out of 13)
-
-_How many of the 13 NM affinities the character has registered via the Augment Sage. Read as the bit-count of the `Augment_Affinities` bitfield._
-
-| Rank | Character | Affinities |
-|---:|---|---:|
-| 🥇 | [Erenyeager](players/erenyeager.md) | 13 |
-| 🥈 | [Bro](players/bro.md) | 13 |
-| 🥉 | [Ariamys](players/ariamys.md) | 13 |
-| 4 | [Broken](players/broken.md) | 13 |
-| 5 | [Stoney](players/stoney.md) | 13 |
-| 6 | [Rose](players/rose.md) | 13 |
-| 7 | [Speedbump](players/speedbump.md) | 13 |
-| 8 | [Phatdoood](players/phatdoood.md) | 13 |
-| 9 | [Moon](players/moon.md) | 13 |
-| 10 | [Lyvia](players/lyvia.md) | 13 |
-<!-- DOCGEN:END id="lb-affinities" -->
 </div>
 
 ---
@@ -329,25 +295,6 @@ _Count of distinct Trust alter-egos the character has learned. Read from the cha
 | 9 | [Flcl](players/flcl.md) | 118 |
 | 10 | [Arthas](players/arthas.md) | 118 |
 <!-- DOCGEN:END id="lb-trusts" -->
-
-<!-- DOCGEN:BEGIN id="lb-friendship" -->
-### Most Friends Unlocked (Player Trusts)
-
-_Distinct characters this player has unlocked as Player Trusts. Earned by partying with each friend for 30 in-zone minutes. Tracks the social mechanic — see [Player Trusts](player-trusts.md) for how to earn these and what they do._
-
-| Rank | Character | Friends |
-|---:|---|---:|
-| 🥇 | [Bogs](players/bogs.md) | 5 |
-| 🥈 | [Bro](players/bro.md) | 5 |
-| 🥉 | [Logs](players/logs.md) | 5 |
-| 4 | [Mogs](players/mogs.md) | 5 |
-| 5 | [Dogs](players/dogs.md) | 5 |
-| 6 | [Hogs](players/hogs.md) | 5 |
-| 7 | [Frogs](players/frogs.md) | 5 |
-| 8 | [Souls](players/souls.md) | 4 |
-| 9 | [Kyrie](players/kyrie.md) | 4 |
-| 10 | [Drunk](players/drunk.md) | 4 |
-<!-- DOCGEN:END id="lb-friendship" -->
 </div>
 
 ---
@@ -585,6 +532,40 @@ _How many distinct weeks this character has cleared ALL 5 Weekly Hunt Board obje
 
 ---
 
+## The Gauntlet { .lb-section }
+
+<div class="lb-grid" markdown="1">
+<!-- DOCGEN:BEGIN id="lb-gauntlet-clears" -->
+### The Gauntlet — Most Clears
+
+_Total completions of The Gauntlet — defeating Shinryu on the 10th floor. Each clear grants 500M gil and 50,000 Paragon Points; the counter never resets. Multiple clears mean maximum dedication (or a very large bank)._
+
+_No qualifying characters yet — be the first!_
+<!-- DOCGEN:END id="lb-gauntlet-clears" -->
+
+<!-- DOCGEN:BEGIN id="lb-hall-of-champions" -->
+### Hall of Champions
+
+_Every adventurer who has defeated Shinryu in The Gauntlet, sorted by total clears. No cutoff — this is the complete roll call. See [The Gauntlet](../endgame/the-gauntlet.md) for how to earn a spot here._
+
+_No achievers yet — be the first to make the list._
+<!-- DOCGEN:END id="lb-hall-of-champions" -->
+</div>
+
+---
+
+## Endless Tower { .lb-section }
+
+<!-- DOCGEN:BEGIN id="lb-tower-floor" -->
+### Endless Tower — Highest Floor
+
+_Deepest floor ever reached in the Endless Tower. Each floor is a harder boss fight. The record is permanent — locked to the moment you hit it. Floor 50 grants the Prime Weapon Trial 2 clear._
+
+_No qualifying characters yet — be the first!_
+<!-- DOCGEN:END id="lb-tower-floor" -->
+
+---
+
 ## Infamy { .lb-section }
 
 <div class="lb-grid" markdown="1">
@@ -652,6 +633,40 @@ _Shortest time from Maat's first swing to his defeat in Waughroon Shrine. Clocke
 _No qualifying characters yet — be the first!_
 <!-- DOCGEN:END id="lb-maat-time" -->
 </div>
+
+---
+
+## Prestige & Paragon { .lb-section }
+
+<div class="lb-grid" markdown="1">
+<!-- DOCGEN:BEGIN id="lb-prestige-total" -->
+### Prestige Ascensions (Total)
+
+_Total Ascension completions across all jobs. Each Ascension resets a job's trial-NM circuit for permanent stat bonuses — stacking indefinitely. The grind metric for committed Prestige runners._
+
+_No qualifying characters yet — be the first!_
+<!-- DOCGEN:END id="lb-prestige-total" -->
+
+<!-- DOCGEN:BEGIN id="lb-paragon-points" -->
+### Paragon Points (Current Balance)
+
+_Unspent Paragon Points banked from Apex Trials and Gauntlet clears. Spent at the Paragon NPC on levels, perks, and the Daily Might buff. Big hoarders appear here; big spenders climb the Paragon Level board instead._
+
+_No qualifying characters yet — be the first!_
+<!-- DOCGEN:END id="lb-paragon-points" -->
+</div>
+
+---
+
+## Economy { .lb-section }
+
+<!-- DOCGEN:BEGIN id="lb-richest-gil" -->
+### Richest Player (Gil)
+
+_Current gil balance from the server's character table. Reflects what's in your inventory right now — not lifetime earned. The Auction House is a great place to spend it if you're embarrassed to be on this list._
+
+_No qualifying characters yet — be the first!_
+<!-- DOCGEN:END id="lb-richest-gil" -->
 
 ---
 

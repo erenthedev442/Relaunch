@@ -61,14 +61,6 @@ _SINGLE_VAR_BOARDS = [
         "unit":    "augments",
     },
     {
-        "marker":  "lb-sage",
-        "heading": "Augment Sage Mastery",
-        "blurb":   "Highest Augment Sage rank achieved. Earned by hitting "
-                   "Augment_Count milestones via the Sage side-quest.",
-        "var":     "Augment_Mastery",
-        "unit":    "rank",
-    },
-    {
         "marker":  "lb-hl-tier",
         "heading": "Hunting League — Highest Tier",
         "blurb":   "Top tier any character has unlocked in the Hunting "
@@ -111,17 +103,6 @@ _SINGLE_VAR_BOARDS = [
                    "Big spenders surface here even after they've cashed out.",
         "var":     "HL_Points_Lifetime",
         "unit":    "marks",
-    },
-    {
-        "marker":  "lb-friendship",
-        "heading": "Most Friends Unlocked (Player Trusts)",
-        "blurb":   "Distinct characters this player has unlocked as Player "
-                   "Trusts. Earned by partying with each friend for 30 "
-                   "in-zone minutes. Tracks the social mechanic — see "
-                   "[Player Trusts](player-trusts.md) for how to earn "
-                   "these and what they do.",
-        "var":     "Trusts_Unlocked",
-        "unit":    "friends",
     },
     # ===== Hunter's Guild reputation, one board per guild ============
     {
@@ -167,6 +148,45 @@ _SINGLE_VAR_BOARDS = [
                    "showing up week after week.",
         "var":     "WH_AllCleared_Lifetime",
         "unit":    "sweeps",
+    },
+    # ===== The Gauntlet ==============================================
+    {
+        "marker":  "lb-gauntlet-clears",
+        "heading": "The Gauntlet — Most Clears",
+        "blurb":   "Total completions of The Gauntlet — defeating Shinryu on the 10th floor. "
+                   "Each clear grants 500M gil and 50,000 Paragon Points; the counter never "
+                   "resets. Multiple clears mean maximum dedication (or a very large bank).",
+        "var":     "Gauntlet_Clears",
+        "unit":    "clears",
+    },
+    # ===== Endless Tower =============================================
+    {
+        "marker":  "lb-tower-floor",
+        "heading": "Endless Tower — Highest Floor",
+        "blurb":   "Deepest floor ever reached in the Endless Tower. Each floor is a harder "
+                   "boss fight. The record is permanent — locked to the moment you hit it. "
+                   "Floor 50 grants the Prime Weapon Trial 2 clear.",
+        "var":     "Tower_Best_Floor",
+        "unit":    "floor",
+    },
+    # ===== Prestige & Paragon ========================================
+    {
+        "marker":  "lb-prestige-total",
+        "heading": "Prestige Ascensions (Total)",
+        "blurb":   "Total Ascension completions across all jobs. Each Ascension resets a "
+                   "job's trial-NM circuit for permanent stat bonuses — stacking indefinitely. "
+                   "The grind metric for committed Prestige runners.",
+        "var":     "Prestige_Total_Ascensions",
+        "unit":    "ascensions",
+    },
+    {
+        "marker":  "lb-paragon-points",
+        "heading": "Paragon Points (Current Balance)",
+        "blurb":   "Unspent Paragon Points banked from Apex Trials and Gauntlet clears. "
+                   "Spent at the Paragon NPC on levels, perks, and the Daily Might buff. "
+                   "Big hoarders appear here; big spenders climb the Paragon Level board instead.",
+        "var":     "Paragon_Points",
+        "unit":    "pts",
     },
     # ===== Infamy ====================================================
     {
@@ -280,15 +300,6 @@ _TABLE_BOARDS = [
                    "as a badge of honor (or shame).",
         "kind":    "deaths",
         "unit":    "deaths",
-    },
-    {
-        "marker":  "lb-affinities",
-        "heading": "NM Affinities Registered (out of 13)",
-        "blurb":   "How many of the 13 NM affinities the character has "
-                   "registered via the Augment Sage. Read as the bit-count "
-                   "of the `Augment_Affinities` bitfield.",
-        "kind":    "affinity_bits",
-        "unit":    "affinities",
     },
 ]
 
@@ -606,19 +617,34 @@ def _query_deaths(cur) -> list[tuple[str, int]]:
     return [(r[0], int(r[1])) for r in cur.fetchall()]
 
 
-def _query_affinity_bits(cur) -> list[tuple[str, int]]:
-    """BIT_COUNT of the existing Augment_Affinities CharVar bitfield."""
+def _query_gauntlet_all(cur) -> list[tuple[str, int]]:
+    """All players who have cleared The Gauntlet (no top-N cap), sorted by clears DESC."""
     cur.execute(
         """
-        SELECT c.charname, BIT_COUNT(cv.value) AS bits
+        SELECT c.charname, cv.value
           FROM char_vars cv
           JOIN chars c ON c.charid = cv.charid
-     LEFT JOIN char_vars opt ON opt.charid = cv.charid
-                            AND opt.varname = 'Leaderboard_OptOut'
-         WHERE cv.varname = 'Augment_Affinities'
+     LEFT JOIN char_vars opt ON opt.charid = cv.charid AND opt.varname = 'Leaderboard_OptOut'
+         WHERE cv.varname = 'Gauntlet_Clears'
+           AND (cv.expiry = 0 OR cv.expiry > UNIX_TIMESTAMP())
            AND cv.value > 0
            AND (opt.value IS NULL OR opt.value = 0)
-      ORDER BY bits DESC
+      ORDER BY cv.value DESC
+        """,
+    )
+    return [(r[0], int(r[1])) for r in cur.fetchall()]
+
+
+def _query_richest_gil(cur) -> list[tuple[str, int]]:
+    """Top _TOP_N characters by current gil balance from chars.gold."""
+    cur.execute(
+        """
+        SELECT c.charname, c.gold
+          FROM chars c
+     LEFT JOIN char_vars opt ON opt.charid = c.charid AND opt.varname = 'Leaderboard_OptOut'
+         WHERE (opt.value IS NULL OR opt.value = 0)
+           AND c.gold > 0
+      ORDER BY c.gold DESC
          LIMIT %s
         """,
         (_TOP_N,),
@@ -947,7 +973,6 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             "job_mastery":  _query_job_mastery,
             "playtime":     _query_playtime,
             "deaths":       _query_deaths,
-            "affinity_bits": _query_affinity_bits,
         }
         for board in _TABLE_BOARDS:
             fn = _TABLE_DISPATCH[board["kind"]]
@@ -1073,6 +1098,36 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             boards_written += 1
         else:
             print("[leaderboards] lb-maat-time: marker missing in leaderboards.md")
+
+        # Hall of Champions — all Gauntlet clearers (no cap)
+        hoc_rows = _query_gauntlet_all(cur)
+        content = _render_board(
+            "Hall of Champions",
+            "Every adventurer who has defeated Shinryu in The Gauntlet, sorted by total clears. "
+            "No cutoff — this is the complete roll call. See [The Gauntlet](../endgame/the-gauntlet.md) "
+            "for how to earn a spot here.",
+            "clears",
+            hoc_rows,
+        )
+        if write_between_markers(page, "lb-hall-of-champions", content):
+            boards_written += 1
+        else:
+            print("[leaderboards] lb-hall-of-champions: marker missing in leaderboards.md")
+
+        # Richest player in gil
+        gil_rows = _query_richest_gil(cur)
+        content = _render_board(
+            "Richest Player (Gil)",
+            "Current gil balance from the server's character table. Reflects what's in your "
+            "inventory right now — not lifetime earned. The Auction House is a great place to "
+            "spend it if you're embarrassed to be on this list.",
+            "gil",
+            gil_rows,
+        )
+        if write_between_markers(page, "lb-richest-gil", content):
+            boards_written += 1
+        else:
+            print("[leaderboards] lb-richest-gil: marker missing in leaderboards.md")
 
         # Tiered combat records — 5 categories × 4 mob-level tiers
         for board in _TIERED_COMBAT_BOARDS:
