@@ -431,7 +431,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         name       = 'Mastery_Sage',
         packetName = 'Weapon Mastery Sage',
         look       = 2401,
-        x          = -1.500,
+        x          = -9.000,
         y          =  0.000,
         z          = -35.000,
         rotation   =  128,

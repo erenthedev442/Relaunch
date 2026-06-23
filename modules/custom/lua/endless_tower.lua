@@ -506,7 +506,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         name       = 'Tower_Arbiter',
         packetName = 'Endless Tower Arbiter',
         look       = 2401,
-        x          = -4.500,
+        x          = -15.000,
         y          =  0.000,
         z          = -35.000,
         rotation   =  128,

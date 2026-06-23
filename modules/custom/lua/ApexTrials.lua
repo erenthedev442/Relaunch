@@ -27,7 +27,7 @@
 -- but a dedicated, otherwise-unused zone so Apex never shares with the Tower.
 -- Trusts off (solo), pets on (zone misc 0x80=MISC_PET).
 --
--- NPC: Apex Arbiter in GM Home, the endgame-challenge row (x 4.5, z -35).
+-- NPC: Apex Arbiter in GM Home, the endgame-challenge row (x 3, z -35).
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Walk_of_Echoes_[P2]/Zone')
@@ -284,7 +284,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         name       = 'Apex_Arbiter',
         packetName = string.format('%sApex Arbiter', xi.icon.STAR_LARGE),
         look       = 2401,
-        x          =  4.500,
+        x          =  3.000,
         y          =  0.000,
         z          = -35.000,
         rotation   =  128,

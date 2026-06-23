@@ -2,7 +2,7 @@
 -- AoE Weapon Skill
 --
 -- Players designate one WS to splash damage to enemies within 10y of primary target.
--- Unlock + upgrade at the Rupture Sage NPC in GM Home (x=4.5, z=-35).
+-- Unlock + upgrade at the Rupture Sage NPC in GM Home (x=9, z=-35).
 -- Choose WS once via !aoews <wsname> after unlock (permanent, no swapping).
 --
 -- CharVars:
@@ -183,7 +183,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         name       = 'Rupture_Sage',
         packetName = string.format('%sRupture Sage', xi.icon.SWORD),
         look       = 2419,
-        x          = 4.500,
+        x          = 9.000,
         y          = 0.000,
         z          = -35.000,
         rotation   = 128,
