@@ -311,15 +311,20 @@ xi.trust.canCast = function(caster, spell, notAllowedTrustIds)
         return -1
     end
 
-    -- Block summoning trusts if someone recently joined party (120s)
+    -- Block summoning trusts if someone recently joined party.
+    -- LEGENDARY (2026-06-23): retail forces a 120s wait after any party member
+    -- joins -- an anti-exploit annoyance on a QoL server. Made tunable below:
+    --   TRUST_NEW_MEMBER_DELAY = 0   -> ELIMINATE the wait (cast trusts instantly)
+    --   TRUST_NEW_MEMBER_DELAY = N   -> wait N seconds (retail = 120)
     -- GUARD (2026-06-14): getPartyLastMemberJoinedTime() can return nil (e.g. for
     -- characters whose party-join time wasn't initialized after a crash/relog),
     -- and `GetSystemTime() - nil` threw "arithmetic on a nil value" here, which
     -- broke trust casting SERVER-WIDE. Skip the recent-join block when either
     -- value is nil so trusts always cast.
+    local TRUST_NEW_MEMBER_DELAY   = 0 -- seconds after a party join; 0 = no wait (retail = 120)
     local lastPartyMemberAddedTime = caster:getPartyLastMemberJoinedTime()
     local nowTime = GetSystemTime()
-    if lastPartyMemberAddedTime and nowTime and (nowTime - lastPartyMemberAddedTime) < 120 then
+    if TRUST_NEW_MEMBER_DELAY > 0 and lastPartyMemberAddedTime and nowTime and (nowTime - lastPartyMemberAddedTime) < TRUST_NEW_MEMBER_DELAY then
         caster:messageSystem(xi.msg.system.TRUST_DELAY_NEW_PARTY_MEMBER)
         return -1
     end
