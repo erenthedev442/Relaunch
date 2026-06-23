@@ -833,23 +833,30 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
 
         summonedTrial[pid] = { alive = true, label = boss.label, gid = gid }
 
-        player:printToPlayer(string.format(
-            '[Ascension] You have summoned %s. Survive.', boss.label),
-            xi.msg.channel.SYSTEM_3)
-        if boss.cry then
-            player:printToPlayer('  ' .. boss.cry, xi.msg.channel.SYSTEM_3)
-        end
-        if tier then
-            local courtLine = string.format('  This Court: %s.', tier.name or '??')
-            if mult > 1 then
-                courtLine = courtLine .. string.format('  (Empowered x%.2f.)', mult)
+        -- Summon announcements: the summoner flavor ("You have summoned X.
+        -- Survive." + the boss cry + the Court line) AND the server-wide
+        -- "%s has summoned %s within Provenance!" broadcast. Silenced
+        -- 2026-06-23 by owner request (chat clutter). Set true to restore.
+        local ANNOUNCE_SUMMON = false
+        if ANNOUNCE_SUMMON then
+            player:printToPlayer(string.format(
+                '[Ascension] You have summoned %s. Survive.', boss.label),
+                xi.msg.channel.SYSTEM_3)
+            if boss.cry then
+                player:printToPlayer('  ' .. boss.cry, xi.msg.channel.SYSTEM_3)
             end
-            player:printToPlayer(courtLine, xi.msg.channel.SYSTEM_3)
+            if tier then
+                local courtLine = string.format('  This Court: %s.', tier.name or '??')
+                if mult > 1 then
+                    courtLine = courtLine .. string.format('  (Empowered x%.2f.)', mult)
+                end
+                player:printToPlayer(courtLine, xi.msg.channel.SYSTEM_3)
+            end
+            player:printToArea(string.format(
+                '[Ascension] %s has summoned %s within Provenance!',
+                player:getName(), boss.label),
+                xi.msg.channel.SYSTEM_3, xi.msg.area.SYSTEM, '', false)
         end
-        player:printToArea(string.format(
-            '[Ascension] %s has summoned %s within Provenance!',
-            player:getName(), boss.label),
-            xi.msg.channel.SYSTEM_3, xi.msg.area.SYSTEM, '', false)
 
         -- Idle-despawn: if no damage is dealt to the boss for 20 seconds it
         -- retreats without awarding kill credit, and the player's summon slot
