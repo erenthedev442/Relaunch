@@ -10,11 +10,11 @@
 --   1. Player talks to "Maat's Echo" NPC in Ru'Lude Gardens.
 --   2. Cost: 150 Infamy.
 --   3. Player is teleported to Waughroon Shrine; their OWN Maat spawns FAR
---      across the floor, claim-locked but PASSIVE, and only engages once they
---      walk within ~15 yalms. He is ROOTED (NO_MOVE): he holds his spawn and
---      never charges, so you load in safely and approach HIM, instead of dying
---      on the zone-in tile. MANY players can fight at once; each gets a private,
---      claim-locked Maat, the way Voidspire / Colosseum isolate per-player mobs.
+--      across the floor, claim-locked but PASSIVE -- he holds his far spawn with
+--      no enmity, so you load in safely. He then engages AND CHASES the moment you
+--      provoke him: either land a hit (damage enmity) or walk within ~15 yalms
+--      (maatTick). MANY players can fight at once; each gets a private, claim-locked
+--      Maat, the way Voidspire / Colosseum isolate per-player mobs.
 --   4. On Maat's death: 25% chance to receive Maat's Cap (item 15194 -- a
 --      retail Rare/EX item, so it renders correctly on the client).
 --   5. Maat's Cap guarantees a critical augment at the Augment Moogle
@@ -197,7 +197,7 @@ local function maatTick(mob, ownerName)
         -- (1) Proximity engage: stay passive until the owner walks up to him.
         if ownerActive and not m:isEngaged() and m:checkDistance(owner) <= ENGAGE_DIST then
             m:updateClaim(owner)                          -- (re)lock to the owner
-            m:addEnmity(owner, 30000, 30000)              -- engages in place (NO_MOVE roots him; he never charges)
+            m:addEnmity(owner, 30000, 30000)              -- engages + chases (damage enmity also engages him on its own)
             -- Start fight timer the first time Maat engages (measures pure fight time).
             if m:getLocalVar('maatStartTime') == 0 then
                 m:setLocalVar('maatStartTime', os.time())
@@ -317,11 +317,13 @@ local function spawnMaat(player)
     mob:setSpawn(sx, sy, sz, MAAT_R)
     mob:spawn()
     mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
-    -- Root Maat to his spawn: he NEVER charges or chases. He still spawns hostile
-    -- + claim-locked and engages on approach (maatTick), but NO_MOVE makes him fight
-    -- in place where he stands instead of beelining the challenger on zone-in.
-    -- (Same stationary dial the Test Dummy and the custom DD trusts use.)
-    mob:setMobMod(xi.mobMod.NO_MOVE, 1)
+    -- Maat CHASES once provoked (NO_MOVE intentionally NOT set): the instant the
+    -- challenger lands a hit (damage enmity is automatic) OR walks within
+    -- ENGAGE_DIST (maatTick), he engages AND beelines them, like a real duel.
+    -- The safe zone-in is preserved WITHOUT rooting him -- he spawns FAR with NO
+    -- enmity and passive (setAggressive(false) + detection 0 below), so he just
+    -- holds at his far spawn until you provoke him; he can't aggro you on the load
+    -- tile. Re-adding NO_MOVE would make him fight in place and never run at you.
 
     -- Apply the tuned Lv250 profile AFTER spawn() -- spawn() recomputes stats
     -- from the mob pool and would wipe anything set earlier (same ordering the
