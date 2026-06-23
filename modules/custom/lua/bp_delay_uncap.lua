@@ -40,10 +40,14 @@ m:addOverride('xi.job_utils.summoner.onUseBloodPact', function(target, petskill,
     -- Recompute only on the primary target (the original consumes recast there too)
     -- and only when the ability's base recast resolves. Setting bpRecastTime BEFORE
     -- super() means the original reads OUR uncapped value.
-    if target:getID() == action:getPrimaryTargetID() then
-        local ability = GetAbility(petskill:getID())
-        if ability then
-            local base  = ability:getRecastTime()
+    -- Recompute the BP recast with the per-mod cap effectively removed.
+    -- WRAPPED IN pcall so a binding hiccup can NEVER abort super() again. THE BUG:
+    -- the old `ability:getRecastTime()` binding does not exist -> it threw HERE,
+    -- BEFORE super(), so the original onUseBloodPact never ran and EVERY Blood Pact
+    -- did 0 damage (all avatars, not just Siren). super() must always fire.
+    pcall(function()
+        if target:getID() == action:getPrimaryTargetID() then
+            local base  = 60 -- Blood Pact base recast is 60s (constant; the value the C++ caps from). No binding needed.
 
             local favor = 0
             local fav   = summoner:getStatusEffect(xi.effect.AVATARS_FAVOR)
@@ -58,7 +62,7 @@ m:addOverride('xi.job_utils.summoner.onUseBloodPact', function(target, petskill,
 
             summoner:setLocalVar('bpRecastTime', math.max(CONFIG.floor, base - reduction))
         end
-    end
+    end)
 
     super(target, petskill, summoner, action)
 end)
