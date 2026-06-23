@@ -1,0 +1,27 @@
+-- ============================================================
+-- reenable_linkshell_merchants.sql  --  RESTORE the 3 city Linkshell Merchants
+-- ------------------------------------------------------------
+-- The bulk NPC-declutter pass (sql/npc_declutter.sql, applied 2026-06-14) hid
+-- these three FUNCTIONAL vendors as collateral -- they sell New Linkshell /
+-- Pendant Compass / etc. via guild shop 60432. This un-hides them (status 2 -> 0).
+--
+--   * Paunelie       17719488  Southern San d'Oria  (Paunelie.lua)
+--   * Ilita          17743974  Port Bastok          (Ilita.lua)
+--   * Khel Pahlhama  17760323  Port Windurst        (Khel_Pahlhama.lua)
+--
+-- They have ALSO been removed from npc_declutter(.sql / _ROLLBACK.sql) and added
+-- to tools/npc_audit/npc_disable_exclude.json, so a future re-apply or full regen
+-- of the declutter will NOT re-hide them. This file is the one-shot live fixup for
+-- the rows already sitting at status=2 in the DB (the file edits above don't touch
+-- the live npc_list table).
+--
+-- The entity already LOADS (the loader filters by zone only, never by status), so
+-- GetNPCByID references stay safe; status only controls render/interact. Takes
+-- effect on the next map restart.
+--
+-- Apply on the live box (from the server checkout root):
+--   sudo mysql xidb < sql/reenable_linkshell_merchants.sql
+--   sudo systemctl restart xi_map
+-- ============================================================
+
+UPDATE npc_list SET status = 0 WHERE status = 2 AND npcid IN (17719488, 17743974, 17760323);
