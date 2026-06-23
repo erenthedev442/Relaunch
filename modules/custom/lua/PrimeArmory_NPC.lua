@@ -49,6 +49,23 @@ local WEAPONS =
     { id = 21887, name = 'Prime Lance',     ws = 'Diarmuid',         info = 'Polearm. STR/VIT, Acc, Att, Store TP, Double Attack.' },
     { id = 22155, name = 'Prime Bow',       ws = 'Sarv',             info = 'Archery. AGI/STR, Ranged Acc/Att, Store TP, Rapid Shot. Needs arrows.' },
     { id = 22159, name = 'Prime Gun',       ws = 'Terminus',         info = 'Marksmanship. AGI/DEX, Ranged Acc/Att, Store TP, Rapid Shot. Needs bullets.' },
+    -- Stage-5 Relic weapons (Lv.119 III final forms, no custom WS).
+    { id = 21535, name = 'Varga Purnikawa', info = 'H2H relic (Lv.119 III). Spharai. DEX/STR+35, Store TP+10, Triple Attack+5%.' },
+    { id = 21590, name = 'Mpu Gandring',    info = 'Dagger relic (Lv.119 III). Mandau. DEX/AGI+35, Crit rate+15%, Acc+35.' },
+    { id = 21646, name = 'Caliburnus',      info = 'Sword relic (Lv.119 III). Excalibur. DEX/MND+35, MAcc, Magic Dmg+263, Refresh+4.' },
+    { id = 21653, name = 'Helheim',         info = 'Great Sword relic (Lv.119 III). Ragnarok. STR/VIT+30, Store TP+7, GS/Parry skill+269.' },
+    { id = 21730, name = 'Spalirisos',      info = 'Axe relic (Lv.119 III). Guttler. STR/DEX/CHR+35, Crit rate+15%, Acc+35.' },
+    { id = 21785, name = 'Laphria',         info = 'Great Axe relic (Lv.119 III). Bravura. STR/VIT+35, Double Atk+10%, GAxe skill+277.' },
+    { id = 21837, name = 'Foenaria',        info = 'Scythe relic (Lv.119 III). Apocalypse. STR/INT+35, Triple Atk+6%, Acc+35.' },
+    { id = 21891, name = 'Gae Buide',       info = 'Polearm relic (Lv.119 III). Gungnir. STR/VIT+35, Double Atk+10%, Acc+35.' },
+    { id = 21932, name = 'Dokoku',          info = 'Katana relic (Lv.119 III). Kikoku. DEX/AGI+35, Store TP+10, Magic Dmg+263.' },
+    { id = 21986, name = 'Kusanagi',        info = 'Great Katana relic (Lv.119 III). Amanomurakumo. STR/DEX+35, Double Atk+10%, GKat skill+277.' },
+    { id = 22002, name = 'Lorg Mor',        info = 'Club relic (Lv.119 III). Mjollnir. STR/MND+30, MAtk+50, Magic Dmg+248, DT-7%.' },
+    { id = 22106, name = 'Opashoro',        info = 'Staff relic (Lv.119 III). Claustrum. INT/MND+35, MAtk+80, Magic Dmg+325.' },
+    { id = 22163, name = 'Pinaka',          info = 'Bow relic (Lv.119 III). Yoichinoyumi. STR/AGI+35, Store TP+10, Archery skill+277.' },
+    { id = 22164, name = 'Earp',            info = 'Gun relic (Lv.119 III). Annihilator. DEX/AGI+35, Crit rate+15%, Mkmanship skill+277.' },
+    { id = 26495, name = 'Duban',           info = 'Shield relic (Lv.119 III). Aegis. DEF+150, VIT/MND+30, Shield skill+129.' },
+    { id = 22307, name = 'Loughnashade',    info = 'Horn relic (Lv.119 III). Gjallarhorn. CHR+20, All Songs+4. (BRD)' },
 }
 
 -----------------------------------
@@ -319,16 +336,25 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         player:delGil(GIL_COST)
         player:setCharVar('PW_WeaponClaimed', weapon.id)
         player:addItem({ id = weapon.id, quantity = 1 })
-        player:printToPlayer(string.format(
-            '[Prime Armory] %s has been forged! Equip it to unlock the weapon skill %s. Kupo!',
-            weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
+        if weapon.ws then
+            player:printToPlayer(string.format(
+                '[Prime Armory] %s has been forged! Equip it to unlock the weapon skill %s. Kupo!',
+                weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
+        else
+            player:printToPlayer(string.format(
+                '[Prime Armory] %s has been forged! Kupo!', weapon.name), xi.msg.channel.SYSTEM_3)
+        end
     end
 
     -----------------------------------
     -- Per-weapon detail + confirm menu.
     -----------------------------------
     local function showWeapon(player, weapon, page)
-        player:printToPlayer(string.format('[Prime Armory] %s - Weapon Skill: %s', weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
+        if weapon.ws then
+            player:printToPlayer(string.format('[Prime Armory] %s - Weapon Skill: %s', weapon.name, weapon.ws), xi.msg.channel.SYSTEM_3)
+        else
+            player:printToPlayer(string.format('[Prime Armory] %s (Stage-5 Relic)', weapon.name), xi.msg.channel.SYSTEM_3)
+        end
         player:printToPlayer('  ' .. weapon.info, xi.msg.channel.SYSTEM_3)
         local claimed = player:getCharVar('PW_WeaponClaimed') or 0
         if claimed ~= 0 then

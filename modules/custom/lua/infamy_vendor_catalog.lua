@@ -47,34 +47,11 @@ catalog.vendorItems =
     { id = 26403, name = 'Srivatsa',           cost = 5000, stats = { 'Shield (sub). PLD. Aeonic.', 'DEF+150, HP+150, MP+150, Enmity+15.' } },
     -- Naegling (21621) removed: it is a Prime Weapon, forge-only at the GM Home Prime Armory (trial-gated).
 
-    -- ----------------------------------------------------------------
-    -- STAGE-5 RELIC WEAPONS  (Level 119 III final forms)
-    -- Passive stat blocks added via sql/zz_relic_119iii_mods.sql (BG-Wiki
-    -- sourced, INSERT IGNORE). Relic Aftermath + relic WS are scripted and
-    -- NOT implemented here, so these are strong stat sticks, not full relics.
-    -- Varga/Mpu were already statted in item_mods.sql; Caliburnus in
-    -- zz_naked_dungeon_fix.sql. Loughnashade is ilvl 0 in item_equipment.
-    -- ----------------------------------------------------------------
-    { id = 21535, name = 'Varga Purnikawa', cost = 800, stats = { 'Hand-to-Hand relic (Lv.119 III). Spharai.', 'Final form. Full stat block.' } },
-    { id = 21590, name = 'Mpu Gandring',    cost = 800, stats = { 'Dagger relic (Lv.119 III). Mandau.', 'Final form. Full stat block.' } },
-    { id = 21646, name = 'Caliburnus',      cost = 800, stats = { 'Sword relic (Lv.119 III). Excalibur.', 'DEX/MND+35, Macc, Magic Dmg+263, Refresh+4.' } },
-    { id = 21653, name = 'Helheim',         cost = 800, stats = { 'Great Sword relic (Lv.119 III). Ragnarok.', 'STR/VIT+30, Store TP+7, GS/Parry skill+269.' } },
-    { id = 21730, name = 'Spalirisos',      cost = 800, stats = { 'Axe relic (Lv.119 III). Guttler.', 'STR/DEX/CHR+35, Crit rate+15%, Acc+35.' } },
-    { id = 21785, name = 'Laphria',         cost = 800, stats = { 'Great Axe relic (Lv.119 III). Bravura.', 'STR/VIT+35, Double Atk+10%, GAxe skill+277.' } },
-    { id = 21837, name = 'Foenaria',        cost = 800, stats = { 'Scythe relic (Lv.119 III). Apocalypse.', 'STR/INT+35, Triple Atk+6%, Acc+35.' } },
-    { id = 21891, name = 'Gae Buide',       cost = 800, stats = { 'Polearm relic (Lv.119 III). Gungnir.', 'STR/VIT+35, Double Atk+10%, Acc+35.' } },
-    { id = 21932, name = 'Dokoku',          cost = 800, stats = { 'Katana relic (Lv.119 III). Kikoku.', 'DEX/AGI+35, Store TP+10, Magic Dmg+263.' } },
-    { id = 21986, name = 'Kusanagi',        cost = 800, stats = { 'Great Katana relic (Lv.119 III). Amanomurakumo.', 'STR/DEX+35, Double Atk+10%, GKat skill+277.' } },
-    { id = 22002, name = 'Lorg Mor',        cost = 800, stats = { 'Club relic (Lv.119 III). Mjollnir.', 'STR/MND+30, MAtk+50, Magic Dmg+248, DT-7%.' } },
-    { id = 22106, name = 'Opashoro',        cost = 800, stats = { 'Staff relic (Lv.119 III). Claustrum.', 'INT/MND+35, MAtk+80, Magic Dmg+325.' } },
-    { id = 22163, name = 'Pinaka',          cost = 800, stats = { 'Bow relic (Lv.119 III). Yoichinoyumi.', 'STR/AGI+35, Store TP+10, Archery skill+277.' } },
+    -- Stage-5 Relic weapons moved to Prime Armory NPC (trial-gated forge-only).
     { id = 22129, name = 'Yoichinoyumi',   cost = 10000, stats = { 'Bow (ranged). Custom iLvl 119. RNG/SAM. Grants Namas Arrow.', 'RATT+45, RACC+60. Aftermath effect.' } },
-    { id = 22164, name = 'Earp',            cost = 800, stats = { 'Gun relic (Lv.119 III). Annihilator.', 'DEX/AGI+35, Crit rate+15%, Mkmanship skill+277.' } },
-    { id = 26495, name = 'Duban',           cost = 800, stats = { 'Shield relic (Lv.119 III). Aegis.', 'DEF+150, VIT/MND+30, Shield skill+129.' } },
     { id = 21398, name = 'Marsyas',          cost = 5000, stats = { 'Wind horn (BRD). Song duration+50%.', 'Top-tier BRD wind instrument.' } },
     { id = 21401, name = 'Blurred Harp +1', cost = 300, stats = { 'String harp (BRD). Lullaby+2, Ballad+2.', 'All Songs+2, +1 song slot.' } },
     { id = 21403, name = 'Damani Horn +1',  cost = 250, stats = { 'Wind horn (BRD). MP+25, Wind Skill+4.', 'All Songs+3.' } },
-    { id = 22307, name = 'Loughnashade',    cost = 800, stats = { 'Horn relic (Lv.119 III). Gjallarhorn.', 'CHR+20, All Songs+4. (BRD)' } },
     { id = 18839, name = 'Daurdabla',       cost = 800, stats = { 'Harp relic (string). Singing+20, Str+20.', '+2 song slots, Song dur+30%. (BRD)' } },
 
     -- ----------------------------------------------------------------
@@ -854,26 +831,10 @@ catalog.itemTypeMap =
     [22117] = 'Weapons/Archery',
     [21485] = 'Weapons/Marksmanship',
     [26403] = 'Weapons/Grip-Shield',
-    [21535] = 'Weapons/Hand-to-Hand',
-    [21590] = 'Weapons/Dagger',
-    [21646] = 'Weapons/Sword',
-    [21653] = 'Weapons/Great Sword',
-    [21730] = 'Weapons/Axe',
-    [21785] = 'Weapons/Great Axe',
-    [21837] = 'Weapons/Scythe',
-    [21891] = 'Weapons/Polearm',
-    [21932] = 'Weapons/Katana',
-    [21986] = 'Weapons/Great Katana',
-    [22002] = 'Weapons/Club',
-    [22106] = 'Weapons/Staff',
-    [22163] = 'Weapons/Archery',
     [22129] = 'Weapons/Archery',
-    [22164] = 'Weapons/Marksmanship',
-    [26495] = 'Weapons/Grip-Shield',
     [21398] = 'Weapons/Instrument',
     [21401] = 'Weapons/Instrument',
     [21403] = 'Weapons/Instrument',
-    [22307] = 'Weapons/Instrument',
     [18839] = 'Weapons/Instrument',
     [21756] = 'Weapons/Great Axe',
     [20510] = 'Weapons/Hand-to-Hand',
