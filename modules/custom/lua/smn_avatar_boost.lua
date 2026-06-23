@@ -34,6 +34,19 @@ local function isAvatarPet(petID)
     return (petID >= AVATAR_MIN and petID <= AVATAR_MAX) or petID == SIREN_ID
 end
 
+-- addMod that can't overflow the engine's int16 mod storage (max 32767). The big
+-- BP_DAMAGE / ATT / ACC / HP adds -- especially with a high summoning-skill-over-
+-- cap term -- would otherwise wrap NEGATIVE, and a negative BP_DAMAGE makes the
+-- Blood Pact multiplier negative (the pact HEALS / zeroes instead of hitting).
+-- Clamps the running total to 32000.
+local function safeAddMod(pet, modId, amount)
+    local cur = pet:getMod(modId)
+    local add = math.min(amount, 32000 - cur)
+    if add > 0 then
+        pet:addMod(modId, add)
+    end
+end
+
 local function applyAvatarBoost(master, pet)
     -- Guard: skip non-SMN masters and double-applies (zone-in respawn, etc.)
     if not master:isPC() or master:getMainJob() ~= xi.job.SMN then
@@ -49,7 +62,7 @@ local function applyAvatarBoost(master, pet)
     -- BP_DAMAGE: +25900 = 260x multiplier on Blood Pact Rage/Ward damage.
     -- +40 per summoning-skill point over cap so gear/skillups matter.
     -- BP damage bypasses the 131k on-screen cap; full value lands on HP.
-    pet:addMod(xi.mod.BP_DAMAGE, 25900 + skillOverCap * 40)
+    safeAddMod(pet, xi.mod.BP_DAMAGE, 25900 + skillOverCap * 40)
 
     -- Magic stats so magical BPs (Inferno, Judgment Bolt, Geocrush...) aren't
     -- crushed by the (100+MATT)/(100+MDEF) ratio vs Legendary NMs. Avatars have
@@ -66,8 +79,8 @@ local function applyAvatarBoost(master, pet)
     -- is why "only Shiva and Siren are coded correctly." These flat values max
     -- pDif; the universal 260x BP_DAMAGE mult then lands the hit. +per-skill-over-
     -- cap so gear/skillups matter (mirrors the magic boost above).
-    pet:addMod(xi.mod.ATT, 6000 + skillOverCap * 40)
-    pet:addMod(xi.mod.ACC, 4500 + skillOverCap * 10)
+    safeAddMod(pet, xi.mod.ATT, 6000 + skillOverCap * 40)
+    safeAddMod(pet, xi.mod.ACC, 4500 + skillOverCap * 10)
     pet:addMod(xi.mod.STR, 500)
     pet:addMod(xi.mod.DEX, 300) -- feeds avatar physical-BP crit rate (getDexCritRate)
 
@@ -88,7 +101,7 @@ local function applyAvatarBoost(master, pet)
     -- are /10000 and the engine HARD-CAPS each at -50% (-5000).
     pet:addMod(xi.mod.DMGPHYS,  -5000)
     pet:addMod(xi.mod.DMGMAGIC, -5000)
-    pet:addMod(xi.mod.HP,        150000)
+    safeAddMod(pet, xi.mod.HP, 150000)
 end
 
 m:addOverride('xi.pet.spawnPet', function(caster, petID, state, target)
