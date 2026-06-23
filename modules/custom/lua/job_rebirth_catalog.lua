@@ -27,16 +27,21 @@ return
     -- level. 2100 = the live MAX_JOB_POINTS ceiling.
     jpRequired = 2100,
 
-    -- ===== Reward currency =====
+    -- ===== Reward currency (accelerating curve + milestones) =====
     -- Rebirth Points granted per rebirth (this system's OWN currency, CharVar
     -- Rebirth_RP_<job>). Spent at the Rebirth NPC on the boost categories.
-    -- Categories reuse Ascension's per-level cost (apCost) so relative prices
-    -- stay sensible; tune these to set how many levels a rebirth buys.
-    -- Formula: min(rpBase + (rebirthNumber - 1) * rpPerLevel, rpMax)
-    --   Rebirth 1: 10, Rebirth 2: 12, Rebirth 3: 14, Rebirth 4: 16, Rebirth 5: 18, Rebirth 6+: 20
-    rpBase     = 10,
-    rpPerLevel =  2,
-    rpMax      = 20,
+    -- Later rebirths pay more to compensate for the escalating EXP penalty.
+    --
+    -- Formula: floor(rpMin + rpScale * (count^rpPower - 1)) + milestone bonus
+    --   rpMin   = RP at R1 (curve always starts here)
+    --   rpPower = exponent > 1 accelerates; = 1 is linear; < 1 is diminishing
+    -- Approx values: R1=10, R5=19, R10=34, R15=59, R20=73, R30=114
+    -- Milestones (R10, R20, R30, ...): add rpMilestoneBonus on top of the curve.
+    rpMin            = 10,   -- RP at first rebirth
+    rpScale          = 1.3,  -- acceleration coefficient
+    rpPower          = 1.3,  -- curve exponent (>1 = accelerating)
+    rpMilestoneEvery = 10,   -- milestone bonus every N rebirths
+    rpMilestoneBonus = 30,   -- extra RP at each milestone (R10: 64, R20: 103, R30: 144)
 
     -- ===== Rebirth EXP penalty (MULTIPLICATIVE -- a true % cut, augment-proof) =====
     -- Applied by the ENGINE (charutils.cpp AddExpBonus) AFTER all additive EXP_BONUS

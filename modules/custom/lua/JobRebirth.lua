@@ -65,9 +65,16 @@ local function expPenalty(count)
     return math.min(cut, cfg.expPenaltyMaxCut)
 end
 
--- RP granted for the Nth rebirth (1-indexed). Scales +rpPerLevel each time, capped at rpMax.
+-- RP granted for the Nth rebirth (1-indexed). Accelerating curve + milestone bonus.
+-- floor(rpMin + rpScale * (count^rpPower - 1)) + rpMilestoneBonus every rpMilestoneEvery.
 local function rpForCount(count)
-    return math.min(cfg.rpBase + (count - 1) * cfg.rpPerLevel, cfg.rpMax)
+    local base  = math.floor(cfg.rpMin + cfg.rpScale * (count ^ cfg.rpPower - 1))
+    local bonus = (count % cfg.rpMilestoneEvery == 0) and cfg.rpMilestoneBonus or 0
+    return base + bonus
+end
+
+local function isMilestone(count)
+    return count % cfg.rpMilestoneEvery == 0
 end
 
 -----------------------------------
@@ -184,6 +191,9 @@ local function doRebirth(player)
 
     player:printToPlayer(string.format('%s has been REBORN -- level 1, Job Points wiped.', jobName(job)), S)
     player:printToPlayer(string.format('  +%d Rebirth Points earned (spend them here). Rebirths: %d.', rpEarned, count), S)
+    if isMilestone(count) then
+        player:printToPlayer(string.format('  *** Milestone R%d! +%d bonus RP included above. Keep climbing.', count, cfg.rpMilestoneBonus), S)
+    end
     local pen = expPenalty(count)
     if pen > 0 then
         player:printToPlayer(string.format('  Trial of Mastery: EXP cut %d%% -- a TRUE cut taken after gear/augments (caps %d%% @ R%d). Earn your power again.', pen, cfg.expPenaltyMaxCut, cfg.expPenaltyMaxRebirth), S)
@@ -324,7 +334,8 @@ showMenu = function(player)
         'How Rebirth works',
         function(p)
             p:printToPlayer('[ Rebirth ] Max a job (lv99 + Job Points maxed), then rebirth it:', S)
-            p:printToPlayer(string.format('  level -> 1, Job Points WIPED, +%d~%d Rebirth Points (starts at %d, +%d each rebirth, cap %d) to spend here.', cfg.rpBase, cfg.rpMax, cfg.rpBase, cfg.rpPerLevel, cfg.rpMax), S)
+            p:printToPlayer(string.format('  level -> 1, Job Points WIPED, Rebirth Points on an accelerating curve: R1=%d, R5=%d, R10=%d, R20=%d, R30=%d.', rpForCount(1), rpForCount(5), rpForCount(10), rpForCount(20), rpForCount(30)), S)
+            p:printToPlayer(string.format('  Milestone bonus: +%d RP at R%d, R%d, R%d, ... (included in figures above).', cfg.rpMilestoneBonus, cfg.rpMilestoneEvery, cfg.rpMilestoneEvery * 2, cfg.rpMilestoneEvery * 3), S)
             p:printToPlayer(string.format('  EXP cut (taken AFTER gear/augments, so augs cannot cancel it): R1=-%d%%, R5=-%d%%, R10=-%d%%, R20=-%d%% (cap @ R%d).', expPenalty(1), expPenalty(5), expPenalty(10), expPenalty(20), cfg.expPenaltyMaxRebirth), S)
             showMenu(p)
         end,
