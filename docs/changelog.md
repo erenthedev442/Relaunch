@@ -5,6 +5,21 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 ---
 
 !!! note "Week of June 22–28, 2026"
+    **Tuesday, June 23**
+
+    - **SMN** — Blood pact 0-damage + augment/gear BP_DAMAGE ignored
+    - **Tower** — Self-heal a stale 'being ascended by X' lock
+    - **Discord** — Wrap deploy patch notes in a code block (Ririn's request)
+    - **RNG** — +50% overall damage via the ranged pDIF CAP (DAMAGE_LIMITP)
+    - **RNG** — Barrage + Double Shot -> minimal recast, 12h duration
+    - **Prime Weapons** — Move all 16 Stage-5 Relic weapons to Prime Armory only
+    - **Prestige** — Remove broken invisible servitor adds from Provenance trials
+    - **Aoews** — AoE Weapon Skill system — Rupture Sage + !aoews command
+    - **Gear** — Add missing retail PDL+ (mod 1081) to 69 items
+    - **Pets** — Raise Pet Boost cap to +2000 (perLevel 5->40, cap 50)
+    - **Pets** — Add Pet Boost category to Ascension + Rebirth
+    - **Gear** — Add retail PDL+ (DAMAGE_LIMITP) to Malignance armor set
+
     **Monday, June 22**
 
     - **Crossjob** — Defer trait re-apply 3s in onGameIn (same as Prestige fix)
@@ -741,10 +756,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2a5246b05aeb -->
-_Last updated: 2026-06-23 07:01 UTC_
-<!-- DOCGEN:END id="last-updated" -->
