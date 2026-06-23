@@ -29,7 +29,82 @@ require('modules/module_utils')
 require('scripts/zones/RuLude_Gardens/Zone')
 require('scripts/zones/Waughroon_Shrine/Zone')
 
+local mechanics = require('modules/custom/lua/mob_mechanics_library')
+
 local m = Module:new('maat_infamy_fight')
+
+-- Hardcore mechanics config for the Maat duel.
+-- 1v1 duel identity: no adds (thematically wrong for a solo skill-check).
+-- Pillars: stance dance (his melee vs Chainspell phases), AoE shockwave,
+-- CC terror, lifedrain regen pressure, tight 2.5-min enrage, low-HP doom.
+local MAAT_MECH_CFG = {
+    name    = 'Maat',
+
+    -- 2.5-min DPS check. If you can't kill a 12M-HP boss in 150s you die.
+    enrage  = {
+        sec   = 150,
+        att   = 5000,
+        haste = 200,
+        msg   = "You haven't proven yourself yet. Witness TRUE power!",
+    },
+
+    -- Stance dance: alternates between physical-resist (magic window) and
+    -- magic-resist (melee window). DMGPHYS/DMGMAGIC capped at -5000 (=-50%).
+    -- Starts immediately (startHpp=100) and swaps every 18s.
+    stance  = {
+        startHpp  = 100,
+        periodSec = 18,
+        stances   = {
+            {
+                mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0 },
+                msg  = 'Maat fortifies his body against weapons -- unleash your magic!',
+            },
+            {
+                mods = { [xi.mod.DMGPHYS] = 0, [xi.mod.DMGMAGIC] = -5000 },
+                msg  = 'Maat channels Chainspell -- steel cuts deeper than spells now!',
+            },
+        },
+    },
+
+    -- AoE shockwave every 14s: 20% of each nearby player's max HP.
+    aoe     = {
+        periodSec = 14,
+        dmgPct    = 20,
+        msg       = 'Maat releases a burst of concentrated aura!',
+    },
+
+    -- Terror CC every 25s: briefly locks out all actions (5s window).
+    cc      = {
+        periodSec = 25,
+        effect    = xi.effect.TERROR,
+        power     = 1,
+        dur       = 5,
+        msg       = "Maat's presence overwhelms you!",
+    },
+
+    -- Lifedrain every 9s: heals 2% max HP -- out-damage this or stall forever.
+    drain   = {
+        periodSec = 9,
+        healPct   = 2,
+    },
+
+    -- HP phases: escalating pressure as the duel progresses.
+    phases  = {
+        { hp = 50, action = 'fury',   att = 3000, haste = 120,
+          msg = 'Maat cries out -- his speed and power surge!' },
+        { hp = 25, action = 'nuke',   dmgPct = 38,
+          msg = 'Maat unleashes Chainspell -- brace yourself!' },
+        { hp = 15, action = 'dispel', count = 3,
+          msg = 'Maat tears your enhancements away!' },
+    },
+
+    -- Doom at 12% HP: the final execution window (25s to finish him).
+    doom    = {
+        startHpp = 12,
+        dur      = 25,
+        msg      = 'Maat marks you for oblivion -- end this NOW!',
+    },
+}
 
 local INFAMY_COST   = 150
 local CRIT_TOKEN_ID = 15194  -- Maat's Cap (retail Rare/EX; renders on the client, unlike the old custom 29000)
@@ -176,7 +251,12 @@ local function spawnMaat(player)
         isAggroable          = false,
         releaseIdOnDisappear = true,
 
+        onMobFight = function(mfMob, mfTarget)
+            mechanics.tick(mfMob, mfTarget)
+        end,
+
         onMobDeath = function(deadMob, killer)
+            mechanics.cleanup(deadMob)
             activeFights[ownerName] = nil
 
             -- The idle watchdog removes an abandoned Maat via setHP(0); that is
@@ -252,6 +332,9 @@ local function spawnMaat(player)
     mob:setMaxHP(MAAT_HP)
     mob:setHP(MAAT_HP)
     mob:setAggressive(false)   -- stays passive until the challenger approaches
+
+    -- Wire hardcore mechanics AFTER all stat/HP setup is complete.
+    mechanics.attach(mob, MAAT_MECH_CFG)
 
     -- Claim-lock this Maat to its challenger (so no one else can tag or steal it)
     -- but DO NOT give it enmity yet -- it holds at its far spawn until the owner

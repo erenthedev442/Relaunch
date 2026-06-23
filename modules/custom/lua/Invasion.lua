@@ -22,6 +22,79 @@
 require('modules/module_utils')
 local catalog   = require('modules/custom/lua/invasion_catalog')
 local LOOT_POOL = require('modules/custom/lua/invasion_loot_pool')
+local mechanics = require('modules/custom/lua/mob_mechanics_library')
+
+-----------------------------------
+-- Hardcore mechanics config for the Voidsent Warlord (final-wave boss only).
+-- Every other invader (trash, mini-bosses in waves 1-4) gets no mechanics —
+-- they are numerous enough that adding ticks to all of them would be spammy
+-- and chaotic. The Warlord alone gets the full treatment.
+--
+-- addGroupId = 11368 (w.boss.group, already in catalog.waves[5].groups + boss.group)
+-- addZoneId  = 210   (catalog.groupZoneId — all invasion groups live there)
+-----------------------------------
+local WARLORD_MECH_CFG =
+{
+    name = 'Voidsent Warlord',
+
+    -- If the raid fails to kill it in 3 min, the Warlord goes berserk.
+    enrage = { sec = 180, att = 5000, haste = 200,
+               msg = 'The Warlord howls — time is up, defenders!' },
+
+    -- Stance dance: alternates between hardening to physical or magical attacks.
+    -- DMGPHYS/DMGMAGIC cap at -5000 (=-50% taken) per library rules.
+    stance = {
+        startHpp  = 90,
+        periodSec = 16,
+        stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0 },
+              msg = 'The Warlord\'s skin hardens like iron — use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0, [xi.mod.DMGMAGIC] = -5000 },
+              msg = 'The Warlord\'s aura unravels spells — use weapons!' },
+        },
+    },
+
+    -- AoE shockwave every 12s.
+    aoe = { periodSec = 12, dmgPct = 22,
+            msg = 'The Warlord slams the earth — shockwave!' },
+
+    -- Terror pulse every 22s.
+    cc  = { periodSec = 22, effect = xi.effect.TERROR, dur = 5,
+            msg = 'The Warlord lets out a world-ending roar!' },
+
+    -- Anti-turtle drain: heals 2% max HP every 8s.
+    drain = { periodSec = 8, healPct = 2 },
+
+    -- HP phases.
+    phases = {
+        -- 75% HP: calls Voidsent Servitors (group 11368, same pool as the Warlord).
+        { hp = 75, action = 'adds', count = 3,
+          addGroupId = 11368, addZoneId = 210,
+          addName = 'Voidsent Servitor', addLevel = 155,
+          regen = 15000,
+          msg = 'The Warlord summons its Servitors!' },
+
+        -- 50% HP: devastating nuke.
+        { hp = 50, action = 'nuke', dmgPct = 40,
+          msg = 'The Warlord tears open a void-rift — evacuate!' },
+
+        -- 40% HP: strips buffs.
+        { hp = 40, action = 'dispel', count = 4,
+          msg = 'The Warlord\'s presence unravels your enhancements!' },
+
+        -- 25% HP: fury — speed and power surge.
+        { hp = 25, action = 'fury', att = 4000, haste = 120,
+          msg = 'The Warlord enters a blood-fury!' },
+
+        -- 10% HP: doom — execute pressure, finish it fast.
+        { hp = 10, action = 'doom', dur = 25,
+          msg = 'The Warlord marks you all for death!' },
+    },
+
+    -- Doom aura at 12% HP (overlaps the phase above for double pressure).
+    doom = { startHpp = 12, dur = 30,
+             msg = 'Darkness seeps into your soul — the Warlord claims you!' },
+}
 local LOOT_POOL_SIZE = #LOOT_POOL
 local DROP_CHANCE    = 15  -- % per mob kill
 require(string.format('scripts/zones/%s/Zone', catalog.zone))
@@ -145,6 +218,7 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
         releaseIdOnDisappear = true,
 
         onMobDeath = function(deadMob, killer)
+            mechanics.cleanup(deadMob)  -- free boss mechanics state + despawn its adds (no-op on trash)
             if not state then return end
 
             -- Per-kill item drop from full item DB.
@@ -184,6 +258,12 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
                 -- Nobody left in zone to carry the timer - call it off.
                 endInvasion(z, 'abandoned')
             end
+        end,
+
+        -- Mechanics tick: the library no-ops for any mob without an attached config
+        -- (all trash invaders), so it is safe to put the call here unconditionally.
+        onMobFight = function(mfMob, mfTarget)
+            mechanics.tick(mfMob, mfTarget)
         end,
     })
 
@@ -253,7 +333,16 @@ nextWave = function(zone)
             { groupId = w.boss.group, name = w.boss.name },
             w.boss.level, w.boss.mods, w.boss.hpMult,
             { modelSize = w.boss.modelSize })
-        if mob then state.mobsAlive[mob:getID()] = mob end
+        if mob then
+            state.mobsAlive[mob:getID()] = mob
+            -- Attach hardcore mechanics to the Warlord AFTER spawn + stat/HP setup
+            -- (spawnInvader sets mods + hpMult internally before returning).
+            -- Trash invaders in this and earlier waves get nothing — WARLORD_MECH_CFG
+            -- is the ONLY attach call in the whole system. The library's tick() is a
+            -- no-op for any mob without an attached state, so the unconditional
+            -- onMobFight in spawnInvader is safe for all trash.
+            mechanics.attach(mob, WARLORD_MECH_CFG)
+        end
     end
 
     -- Spawn sanity: an empty wave must not soft-lock the event.

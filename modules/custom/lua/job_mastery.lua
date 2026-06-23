@@ -24,7 +24,106 @@ require('modules/module_utils')
 require('scripts/zones/Walk_of_Echoes/Zone')
 require('scripts/zones/GM_Home/Zone')
 
-local m = Module:new('job_mastery')
+local m         = Module:new('job_mastery')
+local mechanics = require('modules/custom/lua/mob_mechanics_library')
+
+-----------------------------------
+-- Weapon Guardian hardcore-mechanics config.
+-- Applied ONCE after spawn + stat setup via mechanics.attach().
+-- addGroupId 11363 / addZoneId 210: Simurgh (Walk of Echoes mob_groups, zone 210),
+-- matching GROUP_ZONE_ID used by every Guardian spawn in this file.
+-- DMGPHYS/DMGMAGIC clamped at -5000 (library rule: -50% resistance cap).
+-- No mob:addMod(ATT) calls -- enrage/fury `att` handled internally by safeAddMod.
+-----------------------------------
+local GUARDIAN_MECH_CFG = {
+    name   = 'Weapon Guardian',
+    enrage = {
+        sec    = 150,
+        att    = 5000,
+        haste  = 200,
+        msg    = 'The Guardian grows impatient. Time is your enemy!',
+    },
+    stance = {
+        startHpp  = 90,
+        periodSec = 16,
+        stances   = {
+            {
+                mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0 },
+                msg  = 'The Guardian hardens its body -- steel cannot bite!',
+            },
+            {
+                mods = { [xi.mod.DMGPHYS] = 0, [xi.mod.DMGMAGIC] = -5000 },
+                msg  = 'The Guardian tears a rift in aether -- spells shatter!',
+            },
+        },
+    },
+    aoe = {
+        periodSec = 12,
+        dmgPct    = 22,
+        msg       = 'The Guardian releases a crushing shockwave!',
+    },
+    cc = {
+        periodSec = 22,
+        effect    = xi.effect.TERROR,
+        power     = 1,
+        dur       = 5,
+        msg       = 'The Guardian roars -- you cannot move!',
+    },
+    drain = {
+        periodSec = 8,
+        healPct   = 2,
+    },
+    phases = {
+        {
+            hp          = 75,
+            action      = 'adds',
+            count       = 3,
+            addGroupId  = 11363,
+            addZoneId   = 210,
+            addName     = 'Void Shard',
+            addLevel    = 155,
+            regen       = 18000,
+            msg         = 'The Guardian tears open the void -- fragments spill through!',
+        },
+        {
+            hp  = 50,
+            action  = 'nuke',
+            dmgPct  = 40,
+            msg     = 'The Guardian erupts in a pillar of annihilation!',
+        },
+        {
+            hp     = 40,
+            action = 'dispel',
+            count  = 4,
+            msg    = 'The Guardian unravels your enhancements!',
+        },
+        {
+            hp     = 25,
+            action = 'fury',
+            att    = 4000,
+            haste  = 120,
+            msg    = 'The Guardian enters a killing frenzy!',
+        },
+        {
+            hp  = 10,
+            action  = 'doom',
+            dur     = 25,
+            msg     = 'The Guardian marks you for death -- finish it NOW!',
+        },
+        {
+            hp     = 10,
+            action = 'enrage',
+            att    = 8000,
+            haste  = 250,
+            msg    = 'The Guardian has no mercy left!',
+        },
+    },
+    doom = {
+        startHpp = 12,
+        dur      = 30,
+        msg      = 'Doom descends -- the Guardian will not let you leave alive!',
+    },
+}
 
 -----------------------------------
 -- Constants
@@ -185,10 +284,15 @@ local function spawnGuardian(player, weaponKey)
         releaseIdOnDisappear = true,
 
         onMobDeath = function(deadMob, killer)
+            mechanics.cleanup(deadMob)
             if not sessions[ownerName] then return end
             sessions[ownerName] = nil
             local resolved = GetPlayerByName(ownerName)
             if resolved then completeChallenge(resolved, weaponKey) end
+        end,
+
+        onMobFight = function(mfMob, mfTarget)
+            mechanics.tick(mfMob, mfTarget)
         end,
     })
 
@@ -216,6 +320,10 @@ local function spawnGuardian(player, weaponKey)
     mob:setMaxHP(finalHp)
     mob:setHP(finalHp)
     mob:addEnmity(player, 30000, 30000)
+
+    -- Attach hardcore fight mechanics (stance dance / AoE / adds / CC / drain /
+    -- phases / doom / enrage). Must come AFTER all stat + HP setup.
+    mechanics.attach(mob, GUARDIAN_MECH_CFG)
 
     -- Store ref for abort/death cleanup.
     local sess = sessions[ownerName]

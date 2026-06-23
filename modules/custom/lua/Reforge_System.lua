@@ -16,9 +16,12 @@
 -- To configure: edit modules/custom/lua/reforge_catalog.lua only.
 -----------------------------------
 require('modules/module_utils')
-local catalog = require('modules/custom/lua/reforge_catalog')
-local hg      = require('modules/custom/lua/hunters_guild')
-local wh      = require('modules/custom/lua/weekly_hunts')
+local catalog    = require('modules/custom/lua/reforge_catalog')
+local hg         = require('modules/custom/lua/hunters_guild')
+local wh         = require('modules/custom/lua/weekly_hunts')
+-- Hardcore NM mechanics engine (stance dance / AoE / adds / drain / doom /
+-- enrage / phases). Shared library; per-NM configs live in catalog.mechCfgs.
+local mechanics  = require('modules/custom/lua/mob_mechanics_library')
 
 local huntZoneName = catalog.huntZonePath:match('xi%.zones%.(.+)')
 require(string.format('scripts/zones/%s/Zone', huntZoneName))
@@ -458,11 +461,19 @@ buildSourceNMMenu = function(player, srcDef)
                     onMobRoam = function(roamMob)
                         local deadline = roamMob:getLocalVar('RF_DespawnAt')
                         if deadline > 0 and os.time() >= deadline then
+                            -- Idle despawn: free mechanics state before removing
+                            -- (idempotent + pcall-safe in the library).
+                            mechanics.cleanup(roamMob)
                             DespawnMob(roamMob:getID())
                         end
                     end,
 
+                    onMobFight = function(mfMob, mfTarget)
+                        mechanics.tick(mfMob, mfTarget)
+                    end,
+
                     onMobDeath = function(deadMob, killer)
+                        mechanics.cleanup(deadMob)
                         if not killer then return end
                         rollLootDrop(killer, srcDef, md.label)
                         awardCurrency(killer, srcDef, md)
@@ -524,6 +535,12 @@ buildSourceNMMenu = function(player, srcDef)
                     mob:setMaxHP(newMax)
                     mob:setHP(newMax)
                 end
+
+                -- Attach hardcore mechanics AFTER spawn() + stat/HP setup so
+                -- the library records the correct starting HP. catalog.mechCfgs
+                -- is keyed by groupId; a missing entry is a no-op.
+                mechanics.attach(mob, catalog.mechCfgs and catalog.mechCfgs[md.groupId])
+
                 p:printToPlayer(
                     string.format('%s has appeared!  Slay it for %d %s + base piece, kupo!',
                         md.label, md.marks, srcDef.currencyName),

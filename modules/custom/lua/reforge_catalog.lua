@@ -960,6 +960,260 @@ catalog.pieces[xi.job.RUN] =
 }
 
 -- =========================================================
+-- HARDCORE MECHANICS CONFIGS  (mob_mechanics_library.lua)
+--
+-- Keyed by groupId so the spawner can look them up in O(1) after spawn().
+-- Each NM tier has a DISTINCT identity escalating in complexity and threat.
+-- addZoneId MUST equal catalog.huntZoneId (xi.zone.GWORA_CORRIDOR).
+-- addGroupId must be a groupId already in this system (entry-tier NMs used
+-- as minion adds so their AI/stats are already defined in the mob_groups rows).
+--
+-- Tier identities:
+--   Lv150 (entry)   - AoE pressure + drain (teaches the mechanics)
+--   Lv175 (mid-low) - stance dance + terror CC
+--   Lv200 (mid)     - AoE + drain + adds phase + nuke phase
+--   Lv225 (hard)    - stance + CC + drain + fury phase + dispel phase + doom
+--   Lv250 (apex)    - full suite: stance/AoE/CC/drain/doom/adds/fury/nuke/dispel/enrage
+--
+-- DMGPHYS/DMGMAGIC cap at -5000 per library rules (=-50% taken).
+-- =========================================================
+catalog.mechCfgs = {}
+
+-- -------------------------
+-- AF set (Sky Gods) groupIds: Genbu=11404, Suzaku=11403, Seiryu=11402, Byakko=11401, Kirin=11400
+-- -------------------------
+
+-- Genbu [Lv150] - entry: tremor shockwaves + tortoise drain
+catalog.mechCfgs[11404] = {
+    name  = 'Genbu',
+    aoe   = { periodSec = 14, dmgPct = 18, msg = 'unleashes a Tidal Wave!' },
+    drain = { periodSec = 10, healPct = 2 },
+}
+
+-- Suzaku [Lv175] - stance dance: fire phases, terror roar
+catalog.mechCfgs[11403] = {
+    name   = 'Suzaku',
+    stance = { startHpp = 100, periodSec = 18,
+        stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0    }, msg = 'is wreathed in vermilion flames -- use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'sheds the flames -- use steel!' },
+        }
+    },
+    cc = { periodSec = 22, effect = xi.effect.TERROR, dur = 5, msg = 'unleashes a terrifying Phoenix Cry!' },
+}
+
+-- Seiryu [Lv200] - mid-tier: AoE + drain + phase adds + phase nuke
+catalog.mechCfgs[11402] = {
+    name  = 'Seiryu',
+    aoe   = { periodSec = 12, dmgPct = 22, msg = 'surges with draconic energy!' },
+    drain = { periodSec = 9,  healPct = 2 },
+    phases = {
+        { hp = 75, action = 'adds',  count = 2, addGroupId = 11404, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 12000, msg = 'summons Genbu\'s spirit guards!' },
+        { hp = 40, action = 'nuke',  dmgPct = 38, msg = 'channels Azure Dragon\'s final breath!' },
+        { hp = 20, action = 'fury',  att = 3500, haste = 110, msg = 'enters Azure Dragon Fury!' },
+    },
+}
+
+-- Byakko [Lv225] - hard: stance + CC + drain + fury + dispel + doom
+catalog.mechCfgs[11401] = {
+    name   = 'Byakko',
+    stance = { startHpp = 100, periodSec = 16,
+        stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0    }, msg = 'bristles with White Tiger energy -- use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'deflects all magic -- use steel!' },
+        }
+    },
+    cc    = { periodSec = 20, effect = xi.effect.TERROR, dur = 6, msg = 'unleashes a blinding White Roar!' },
+    drain = { periodSec = 8,  healPct = 3 },
+    phases = {
+        { hp = 60, action = 'adds',   count = 3, addGroupId = 11404, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 14000, msg = 'summons the Four Gods\' envoys!' },
+        { hp = 40, action = 'fury',   att = 4000, haste = 130, msg = 'enters White Tiger Fury!' },
+        { hp = 25, action = 'dispel', count = 4, msg = 'strips your enhancements with Byakko\'s Rage!' },
+    },
+    doom = { startHpp = 18, dur = 28, msg = 'marks you with the Tiger\'s Curse!' },
+}
+
+-- Kirin [Lv250] - apex: full suite, tight enrage
+catalog.mechCfgs[11400] = {
+    name   = 'Kirin',
+    enrage = { sec = 180, att = 5000, haste = 200, msg = 'Kirin\'s patience shatters -- ENRAGE!' },
+    stance = { startHpp = 100, periodSec = 15,
+        stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0    }, msg = 'is hardened against weapons -- switch to magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'refracts all magic -- switch to weapons!' },
+        }
+    },
+    aoe   = { periodSec = 11, dmgPct = 24, msg = 'unleashes Heaven\'s Wrath across the battlefield!' },
+    cc    = { periodSec = 19, effect = xi.effect.TERROR, dur = 7, msg = 'emanates a divine aura of terror!' },
+    drain = { periodSec = 7,  healPct = 3 },
+    phases = {
+        { hp = 80, action = 'adds',   count = 2, addGroupId = 11404, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 18000, msg = 'calls upon Genbu to defend the heavens!' },
+        { hp = 60, action = 'fury',   att = 3500, haste = 120, msg = 'channels divine fury!' },
+        { hp = 40, action = 'adds',   count = 3, addGroupId = 11403, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 175, regen = 20000, msg = 'calls upon Suzaku to scorch the earth!' },
+        { hp = 25, action = 'nuke',   dmgPct = 42, msg = 'unleashes Heavenly Judgment!' },
+        { hp = 15, action = 'dispel', count = 5, msg = 'strips you bare with Five-God Seal!' },
+        { hp = 10, action = 'enrage', att = 8000, haste = 250, msg = 'ascends beyond mortal limits!' },
+    },
+    doom = { startHpp = 12, dur = 25, msg = 'brands you with the Seal of Heaven -- survive!' },
+}
+
+-- -------------------------
+-- Relic set (Unity NMs) groupIds: Bukhis=11408, Khun=11406, Padfoot=11405, Glavoid=11407, Tinnin=11409
+-- -------------------------
+
+-- Bukhis [Lv150] - entry: gale shockwaves + wind drain
+catalog.mechCfgs[11408] = {
+    name  = 'Bukhis',
+    aoe   = { periodSec = 14, dmgPct = 18, msg = 'beats its wings in a devastating Gale Blast!' },
+    drain = { periodSec = 10, healPct = 2 },
+}
+
+-- Khun [Lv175] - stance dance: sonic phases + terror
+catalog.mechCfgs[11406] = {
+    name   = 'Khun',
+    stance = { startHpp = 100, periodSec = 18,
+        stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0    }, msg = 'hardens its carapace -- use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'crackles with Thunder Shell -- use steel!' },
+        }
+    },
+    cc = { periodSec = 22, effect = xi.effect.TERROR, dur = 5, msg = 'emits a Sonic Roar of pure terror!' },
+}
+
+-- Padfoot [Lv200] - mid-tier: AoE + drain + adds + nuke
+catalog.mechCfgs[11405] = {
+    name  = 'Padfoot',
+    aoe   = { periodSec = 12, dmgPct = 22, msg = 'unleashes Spectral Howl across the area!' },
+    drain = { periodSec = 9,  healPct = 2 },
+    phases = {
+        { hp = 75, action = 'adds',  count = 2, addGroupId = 11408, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 12000, msg = 'calls Bukhis to harry the hunt!' },
+        { hp = 40, action = 'nuke',  dmgPct = 38, msg = 'channels Dark Maw!' },
+        { hp = 20, action = 'fury',  att = 3500, haste = 110, msg = 'enters Spectral Fury!' },
+    },
+}
+
+-- Glavoid [Lv225] - hard: stance + CC + drain + fury + dispel + doom
+catalog.mechCfgs[11407] = {
+    name   = 'Glavoid',
+    stance = { startHpp = 100, periodSec = 16,
+        stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0    }, msg = 'burrows into the earth -- it deflects weapons! Use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'surfaces coated in Null Slime -- magic slides off! Use steel!' },
+        }
+    },
+    cc    = { periodSec = 20, effect = xi.effect.TERROR, dur = 6, msg = 'erupts from below with a terrifying shriek!' },
+    drain = { periodSec = 8,  healPct = 3 },
+    phases = {
+        { hp = 60, action = 'adds',   count = 3, addGroupId = 11408, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 14000, msg = 'spawns a swarm of Slug Spawn!' },
+        { hp = 40, action = 'fury',   att = 4000, haste = 130, msg = 'enters Acidic Frenzy!' },
+        { hp = 25, action = 'dispel', count = 4, msg = 'vomits Null Acid -- enhancements stripped!' },
+    },
+    doom = { startHpp = 18, dur = 28, msg = 'marks you with Glavoid\'s Doom Slime!' },
+}
+
+-- Tinnin [Lv250] - apex: full suite, tight enrage
+catalog.mechCfgs[11409] = {
+    name   = 'Tinnin',
+    enrage = { sec = 180, att = 5000, haste = 200, msg = 'Tinnin\'s fury spirals out of control -- ENRAGE!' },
+    stance = { startHpp = 100, periodSec = 15,
+        stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0    }, msg = 'encases itself in Dragon Scales -- weapons useless! Use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'absorbs magic into Dragon Essence -- use steel!' },
+        }
+    },
+    aoe   = { periodSec = 11, dmgPct = 24, msg = 'releases a Crimson Breath nova!' },
+    cc    = { periodSec = 19, effect = xi.effect.TERROR, dur = 7, msg = 'unleashes a Dragon\'s Roar of pure dominion!' },
+    drain = { periodSec = 7,  healPct = 3 },
+    phases = {
+        { hp = 80, action = 'adds',   count = 2, addGroupId = 11408, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 18000, msg = 'summons Bukhis to guard its flanks!' },
+        { hp = 60, action = 'fury',   att = 3500, haste = 120, msg = 'enters Dragon Phase!' },
+        { hp = 40, action = 'adds',   count = 3, addGroupId = 11406, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 175, regen = 20000, msg = 'calls upon Khun to reinforce the lair!' },
+        { hp = 25, action = 'nuke',   dmgPct = 42, msg = 'channels Tinnin\'s Final Darkness!' },
+        { hp = 15, action = 'dispel', count = 5, msg = 'shatters enhancements with Wyrm\'s Negation!' },
+        { hp = 10, action = 'enrage', att = 8000, haste = 250, msg = 'transcends mortality!' },
+    },
+    doom = { startHpp = 12, dur = 25, msg = 'marks you with Wyrm\'s Brand -- run or die!' },
+}
+
+-- -------------------------
+-- Empy set (Abyssea NMs) groupIds: Aello=11413, Iratham=11411, Briareus=11410, Itzpapalotl=11412, Hadhayosh=11414
+-- -------------------------
+
+-- Aello [Lv150] - entry: storm shockwaves + harpy drain
+catalog.mechCfgs[11413] = {
+    name  = 'Aello',
+    aoe   = { periodSec = 14, dmgPct = 18, msg = 'summons a Storm Squall!' },
+    drain = { periodSec = 10, healPct = 2 },
+}
+
+-- Iratham [Lv175] - stance dance: shadow phases + terror
+catalog.mechCfgs[11411] = {
+    name   = 'Iratham',
+    stance = { startHpp = 100, periodSec = 18,
+        stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0    }, msg = 'veils itself in Abyssal Shadow -- use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'radiates Void Light -- magic cannot pierce it! Use steel!' },
+        }
+    },
+    cc = { periodSec = 22, effect = xi.effect.TERROR, dur = 5, msg = 'howls with an Abyssal Wail!' },
+}
+
+-- Briareus [Lv200] - mid-tier: AoE + drain + adds + nuke
+catalog.mechCfgs[11410] = {
+    name  = 'Briareus',
+    aoe   = { periodSec = 12, dmgPct = 22, msg = 'swings a Hundred-Arm Cyclone!' },
+    drain = { periodSec = 9,  healPct = 2 },
+    phases = {
+        { hp = 75, action = 'adds',  count = 2, addGroupId = 11413, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 12000, msg = 'tears a rift -- Aello\'s kin pour through!' },
+        { hp = 40, action = 'nuke',  dmgPct = 38, msg = 'focuses all hundred fists into one Void Strike!' },
+        { hp = 20, action = 'fury',  att = 3500, haste = 110, msg = 'enters Hecatoncheires Rage!' },
+    },
+}
+
+-- Itzpapalotl [Lv225] - hard: stance + CC + drain + fury + dispel + doom
+catalog.mechCfgs[11412] = {
+    name   = 'Itzpapalotl',
+    stance = { startHpp = 100, periodSec = 16,
+        stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0    }, msg = 'coats its obsidian wings in Abyssal Steel -- use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'unfurls Void Pinions -- magic is useless! Use steel!' },
+        }
+    },
+    cc    = { periodSec = 20, effect = xi.effect.TERROR, dur = 6, msg = 'shrieks with a Celestial Moth Scream!' },
+    drain = { periodSec = 8,  healPct = 3 },
+    phases = {
+        { hp = 60, action = 'adds',   count = 3, addGroupId = 11413, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 14000, msg = 'sheds Aello\'s hatchlings from its wings!' },
+        { hp = 40, action = 'fury',   att = 4000, haste = 130, msg = 'enters Obsidian Butterfly Fury!' },
+        { hp = 25, action = 'dispel', count = 4, msg = 'purges enhancements with Void Scatter!' },
+    },
+    doom = { startHpp = 18, dur = 28, msg = 'brands you with the Clipped Wing Curse!' },
+}
+
+-- Hadhayosh [Lv250] - apex: full suite, tight enrage
+catalog.mechCfgs[11414] = {
+    name   = 'Hadhayosh',
+    enrage = { sec = 180, att = 5000, haste = 200, msg = 'Hadhayosh loses all restraint -- ENRAGE!' },
+    stance = { startHpp = 100, periodSec = 15,
+        stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0    }, msg = 'bristles with Abyssal Hide -- blades cannot bite! Use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'absorbs the Void into its mass -- magic is void! Use steel!' },
+        }
+    },
+    aoe   = { periodSec = 11, dmgPct = 25, msg = 'pulses with a Void Shockwave across the earth!' },
+    cc    = { periodSec = 18, effect = xi.effect.TERROR, dur = 7, msg = 'bellows a world-shaking Behemoth\'s Roar!' },
+    drain = { periodSec = 7,  healPct = 4 },
+    phases = {
+        { hp = 80, action = 'adds',   count = 2, addGroupId = 11413, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 150, regen = 18000, msg = 'draws Aello\'s kin from the Abyssite rift!' },
+        { hp = 65, action = 'fury',   att = 3500, haste = 120, msg = 'enters Abyssal Phase -- attacks accelerate!' },
+        { hp = 45, action = 'adds',   count = 3, addGroupId = 11411, addZoneId = xi.zone.GWORA_CORRIDOR, addLevel = 175, regen = 22000, msg = 'tears a deeper rift -- Iratham\'s shadows spill through!' },
+        { hp = 30, action = 'nuke',   dmgPct = 44, msg = 'converges the Abyss into one Final Erasure!' },
+        { hp = 15, action = 'dispel', count = 5, msg = 'unmakes your enhancements with Void Annihilation!' },
+        { hp = 10, action = 'enrage', att = 8000, haste = 250, msg = 'becomes the Void itself!' },
+    },
+    doom = { startHpp = 12, dur = 25, msg = 'marks you with the Mark of Nothingness!' },
+}
+
+-- =========================================================
 -- LOOT POOL HELPER
 --   Returns a flat list of base item IDs for ONE set across all jobs.
 --   The Spawner uses this to roll a per-set random drop on each kill:
