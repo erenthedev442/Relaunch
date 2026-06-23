@@ -38,6 +38,8 @@ local POINT_TOKEN       = 'points'
 local POINT_NAME        = 'EXP / Capacity Points'
 local AUGMENT_PRICE     = 100000
 local AUGMENT_PRICE_STR = '100,000'
+local MAAT_CAP_ID       = 15194      -- Maat's Cap: the Augment Moogle crit-guarantee token
+local MAAT_CAP_PRICE    = 10000000   -- 10M gil; sold in EVERY augment group (Augment_Moogle.lua consumes it on a successful augment)
 
 local function buildAugmentStock()
     package.loaded['modules/custom/lua/augment_catalog'] = nil
@@ -115,6 +117,17 @@ local function buildAugmentStock()
 
     finalize(POINT_TOKEN, POINT_NAME)
     finalize('other', 'Other')
+
+    -- Maat's Cap (the crit-guarantee token) in EVERY augment window, so it can be
+    -- bought from whichever group you're shopping. Prepend it to each group's list
+    -- + bump that group's displayed count.
+    for _, entry in ipairs(order) do
+        local list = stock[entry[1]]
+        if list then
+            table.insert(list, 1, { MAAT_CAP_ID, MAAT_CAP_PRICE })
+            entry[3] = entry[3] + 1
+        end
+    end
 
     return stock, order
 end
