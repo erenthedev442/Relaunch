@@ -1,8 +1,14 @@
 -----------------------------------
 -- smn_avatar_boost.lua
 --
--- Applies endgame BP_DAMAGE / MATT / MACC / INT to player-summoned avatars at
--- spawn time, via xi.pet.spawnPet override.
+-- Turns player-summoned avatars into full endgame DD pets at spawn time (via the
+-- xi.pet.spawnPet override). So the boost lands on EVERY avatar action -- not just
+-- Blood Pacts -- it layers:
+--   * Blood Pacts: BP_DAMAGE mult + magical (MATT/MACC/INT) + physical (ATT/ACC/
+--     STR/DEX) stats.
+--   * Auto-attacks / melee: ATTP, Double/Triple Attack (+their damage), Haste.
+--   * Survivability: PDT/MDT (capped) + HP -- so it lives to keep swinging.
+-- (BP_DAMAGE is engine-gated to Blood-Pact damage; the melee mods cover the rest.)
 --
 -- WHY NOT onMobSpawn: avatar.lua defines xi.pets.avatar.onMobSpawn but it is
 -- not reliably called for player-summoned avatars (confirmed 2026-06-21 after
@@ -64,6 +70,25 @@ local function applyAvatarBoost(master, pet)
     pet:addMod(xi.mod.ACC, 4500 + skillOverCap * 10)
     pet:addMod(xi.mod.STR, 500)
     pet:addMod(xi.mod.DEX, 300) -- feeds avatar physical-BP crit rate (getDexCritRate)
+
+    -- ===== EVERY avatar action, not just Blood Pacts =====
+    -- The boosts above mainly land on Blood Pacts (BP_DAMAGE is BP-ONLY); a raw
+    -- avatar otherwise just auto-attacks once for chip damage. These make its
+    -- MELEE auto-attacks a real damage source and let it survive to keep swinging,
+    -- mirroring the BST jug-pet overhaul (BstJugPetOverhaul.lua) which proves the
+    -- model. (ATT above already maxes pDif vs NM DEF; ATTP adds headroom.)
+    pet:addMod(xi.mod.ATTP,              50)    -- +50% attack, on top of the flat ATT
+    pet:addMod(xi.mod.DOUBLE_ATTACK,     100)   -- guaranteed double...
+    pet:addMod(xi.mod.TRIPLE_ATTACK,     100)   -- ...and triple attack -> ~3 hits/round
+    pet:addMod(xi.mod.DOUBLE_ATTACK_DMG, 100)   -- +100% damage on those extra...
+    pet:addMod(xi.mod.TRIPLE_ATTACK_DMG, 100)   -- ...multi-hit swings
+    pet:addMod(xi.mod.HASTE_GEAR,        2500)  -- +25% attack speed (engine gear-haste cap)
+
+    -- Survivability so it lives to keep meleeing a Legendary NM. DMGPHYS/DMGMAGIC
+    -- are /10000 and the engine HARD-CAPS each at -50% (-5000).
+    pet:addMod(xi.mod.DMGPHYS,  -5000)
+    pet:addMod(xi.mod.DMGMAGIC, -5000)
+    pet:addMod(xi.mod.HP,        150000)
 end
 
 m:addOverride('xi.pet.spawnPet', function(caster, petID, state, target)
