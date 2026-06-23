@@ -15,6 +15,10 @@
 --                         131k damage, so more RATT = more WS.
 --   * RACC             -> land on Legendary's high-EVA endgame NMs.
 --   * RANGED_DMG_RATING-> flat damage added to the base D of every shot (compounds w/ RATT).
+--   * DAMAGE_LIMITP    -> +50% ranged pDIF CAP. The previous RATT/RATTP boosts were being
+--                         clamped at this cap (physical_utilities.lua); raising it +50%
+--                         (with RATTP lifted so the ratio reaches it) = +50% overall dmg on
+--                         BOTH auto-attacks and ranged weaponskills. 2026-06-23 owner +50%.
 --   * STORETP          -> more TP per shot = far more frequent weaponskills.
 --   * SNAPSHOT + RAPID_SHOT -> faster / occasionally-instant shots = more sustained DPS.
 --   * DOUBLE_SHOT_RATE -> Double Shot fires far more often (each extra arrow can WS-proc).
@@ -38,9 +42,10 @@ local m = Module:new('rng_overhaul')
 local CONFIG =
 {
     ratt            = 6000,  -- Mod.RATT  (24)  : flat ranged attack (every shot + ranged WS)
-    rattp           = 105,   -- Mod.RATTP (66)  : +% ranged attack (80 base + 25 overall dmg boost)
+    rattp           = 210,   -- Mod.RATTP (66)  : +% ranged attack. Raised 105->210 (~x1.5 the att ratio) so it reaches the +50% pDIF cap below = clean +50% overall dmg
     racc            = 4000,  -- Mod.RACC  (26)  : land on high-EVA Legendary NMs
     rangedDmgRating = 500,   -- Mod.RANGED_DMG_RATING (376) : flat damage on every shot
+    damageLimit     = 50,    -- Mod.DAMAGE_LIMITP (1081) : +50% ranged pDIF CAP. THE real ceiling -- combat/physical_utilities.lua:804 caps PC ranged pDIF at weaponCap*(1+DAMAGE_LIMITP/100), and BOTH auto-attacks AND ranged WS clamp to it. The big RATT/RATTP was hitting this wall; raising it +50% (ratio raised to match) = +50% on every shot and every ranged WS.
     storeTP         = 100,   -- Mod.STORETP (73): faster TP gain -> more weaponskills
     snapshot        = 50,    -- Mod.SNAPSHOT (365) : % ranged-delay reduction (faster shots)
     rapidShot       = 50,    -- Mod.RAPID_SHOT (359) : % chance of an instant shot
@@ -55,6 +60,7 @@ local function applyRngBoost(player)
     player:addMod(xi.mod.RATTP,             CONFIG.rattp)
     player:addMod(xi.mod.RACC,              CONFIG.racc)
     player:addMod(xi.mod.RANGED_DMG_RATING, CONFIG.rangedDmgRating)
+    player:addMod(xi.mod.DAMAGE_LIMITP,     CONFIG.damageLimit)
     player:addMod(xi.mod.STORETP,           CONFIG.storeTP)
     player:addMod(xi.mod.SNAPSHOT,          CONFIG.snapshot)
     player:addMod(xi.mod.RAPID_SHOT,        CONFIG.rapidShot)
