@@ -5,7 +5,7 @@
 -- Delivers an eightfold attack. Accuracy varies with TP.
 -- Physical hits + Light-elemental magic finisher that scales with MND.
 -- Element: Light
--- Modifiers: STR:10%  MND:20%
+-- Modifiers: STR:10%  VIT:10%
 -- Physical fTP   100%TP    200%TP    300%TP
 --                 4.0       4.25      4.5
 -- Magic fTP      100%TP    200%TP    300%TP
@@ -19,7 +19,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     params.numHits        = 8
     params.ftpMod         = { 4.0, 4.25, 4.5 }
     params.str_wsc        = 0.1
-    params.mnd_wsc        = 0.2
+    params.vit_wsc        = 0.1
     params.accVaries      = { 0, 30, 60 }
     params.critVaries     = { 0.10, 0.20, 0.30 }
     params.hybridWS       = true
@@ -31,7 +31,7 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.multiHitfTP    = true
         params.str_wsc        = 0.15
-        params.mnd_wsc        = 0.25
+        params.vit_wsc        = 0.15
         params.critVaries     = { 0.15, 0.25, 0.40 }
         params.hybridFtpMod   = { 0.35, 0.50, 0.65 }
     end
