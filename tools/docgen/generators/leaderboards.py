@@ -636,15 +636,18 @@ def _query_gauntlet_all(cur) -> list[tuple[str, int]]:
 
 
 def _query_richest_gil(cur) -> list[tuple[str, int]]:
-    """Top _TOP_N characters by current gil balance from chars.gold."""
+    """Top _TOP_N characters by current gil balance.
+    Gil is stored in char_inventory as itemid=65535 (one row per character)."""
     cur.execute(
         """
-        SELECT c.charname, c.gold
-          FROM chars c
-     LEFT JOIN char_vars opt ON opt.charid = c.charid AND opt.varname = 'Leaderboard_OptOut'
-         WHERE (opt.value IS NULL OR opt.value = 0)
-           AND c.gold > 0
-      ORDER BY c.gold DESC
+        SELECT c.charname, ci.quantity
+          FROM char_inventory ci
+          JOIN chars c ON c.charid = ci.charid
+     LEFT JOIN char_vars opt ON opt.charid = ci.charid AND opt.varname = 'Leaderboard_OptOut'
+         WHERE ci.itemid = 65535
+           AND ci.quantity > 0
+           AND (opt.value IS NULL OR opt.value = 0)
+      ORDER BY ci.quantity DESC
          LIMIT %s
         """,
         (_TOP_N,),
