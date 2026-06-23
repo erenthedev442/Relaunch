@@ -473,7 +473,11 @@ xi.job_utils.geomancer.doIndiSpell = function(caster, target, spell)
     local potency      = getEffectPotency(caster, effect)
     local targetType   = indiData[spellID].targetType
     local visualEffect = indiData[spellID].visualEffect
-    local duration = 180 + caster:getMod(xi.mod.INDI_DURATION)
+    -- LEGENDARY (2026-06-23): retail indi base is 180s (+ INDI_DURATION gear). Raised to a
+    -- long session-length base so indi-spells don't drop every 3 min. Tune INDI_BASE_DURATION
+    -- (keep it finite -- this is a timed status effect, not a pet like the luopan).
+    local INDI_BASE_DURATION = 7200 -- seconds (retail = 180); large = effectively uncapped
+    local duration = INDI_BASE_DURATION + caster:getMod(xi.mod.INDI_DURATION)
 
     -- set a local var to adjust potency values after an ability has worn off
     target:setLocalVar('INDI_POTENCY', potency)
