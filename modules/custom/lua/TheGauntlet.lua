@@ -171,6 +171,7 @@ spawnNM = function(player, session)
             local sess = sessions[ownerName]
             if not sess then return end
             sess.nm    = nil
+            sess.level = sess.level + 1
             sess.phase = 'advancing'
             local resolved = GetPlayerByName(ownerName)
             if not resolved then sessions[ownerName] = nil; return end
@@ -193,11 +194,11 @@ spawnNM = function(player, session)
     end
 
     mob:setSpawn(mx, py, mz, 0)
+    local hp = C.nmHp(level)
+    mob:setMaxHP(hp)    -- must be before spawn() or template resets it
     mob:spawn()
     mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
     mob:setModelSize(3)
-    local hp = C.nmHp(level)
-    mob:setMaxHP(hp)
     mob:setHP(hp)
     mob:addEnmity(player, 30000, 30000)
 
