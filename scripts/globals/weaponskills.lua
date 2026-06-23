@@ -236,7 +236,7 @@ end
 -- https://www.ffxiah.com/forum/topic/33470/the-sealed-dagger-a-ninja-guide/151/#3420836
 -- https://www.ffxiah.com/forum/topic/49614/blade-chi-damage-formula/2/#3171538
 local function calculateHybridMagicDamage(tp, physicaldmg, attacker, target, wsParams, calcParams, wsID)
-    local ftp      = xi.weaponskills.fTP(tp, wsParams.ftpMod)
+    local ftp      = xi.weaponskills.fTP(tp, wsParams.hybridFtpMod or wsParams.ftpMod)
     local magicdmg = math.floor(physicaldmg * ftp + attacker:getMod(xi.mod.MAGIC_DAMAGE))
     local wsd      = attacker:getMod(xi.mod.ALL_WSDMG_ALL_HITS)
 
