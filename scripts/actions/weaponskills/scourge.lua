@@ -12,6 +12,11 @@
 -- Modifiers: STR:40%  VIT:40%
 -- 100%TP    200%TP    300%TP
 -- 3.00      3.00      3.00
+--
+-- LEGENDARY (2026-06-23): Scourge is now a TRUE crit WS -- params.critVaries gives
+-- its hit +25%/+50%/+100% crit rate by TP (guaranteed crit at 300% TP). Ragnarok's
+-- aftermath was also buffed from retail +5/+10% crit to a real crit-rate +
+-- crit-damage cooldown (see aftermath.lua [4]/[18]).
 -----------------------------------
 ---@type TWeaponSkill
 local weaponskillObject = {}
@@ -21,6 +26,12 @@ weaponskillObject.onUseWeaponSkill = function(player, target, wsID, tp, primary,
     params.numHits = 1
     params.ftpMod = { 3.0, 3.0, 3.0 }
     params.mnd_wsc = 0.4 params.chr_wsc = 0.4
+
+    -- LEGENDARY: Scourge is now a TRUE crit WS -- its hit crit-scales with TP
+    -- (+25% crit @100% TP -> guaranteed crit @300% TP), like Evisceration. The
+    -- aftermath (applied below, BEFORE the hit) layers its crit-rate + crit-damage
+    -- on top, so a high-TP Scourge lands a hard crit and leaves the buff running.
+    params.critVaries = { 0.25, 0.50, 1.00 }
 
     if xi.settings.main.USE_ADOULIN_WEAPON_SKILL_CHANGES then
         params.str_wsc = 0.4 params.vit_wsc = 0.4 params.mnd_wsc = 0.0 params.chr_wsc = 0.0
