@@ -138,6 +138,13 @@ git -C "%SRC%" commit -m "docs(changelog): regenerate post-deploy-marker (includ
 powershell -NoProfile -Command "$j=Start-Job { git -C 'D:\server' push fjb HEAD 2>&1 }; if (Wait-Job $j -Timeout 90) { Receive-Job $j } else { Stop-Job $j; 'changelog push timed out - skipped' }; Remove-Job $j -Force" >> "%LOG%" 2>&1
 (echo [%TIME%] [2b] changelog regen done)>> "%LOG%"
 
+REM ---- 2c. Post the fresh changelog to Discord. Non-fatal: failure never blocks deploy. ----
+echo(
+echo  [2c] Posting changelog to Discord...
+(echo [%TIME%] [2c] discord post: start)>> "%LOG%"
+python "%SRC%\tools\discord_bot\post_deploy_notes.py" >> "%LOG%" 2>&1
+(echo [%TIME%] [2c] discord post done)>> "%LOG%"
+
 REM ---- 3. Ship the SAME catalogs to the Azure SERVER (file sync + custom SQL) ----
 echo(
 echo  [3/5] Shipping the same content to the Azure server (modules/custom + scripts + tools + src)...
