@@ -364,7 +364,7 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
         [1] = { x = -161.7446, y =  -0.0117, z = -685.5436 },  -- Altar II
         [2] = { x = -279.2352, y =   0.2092, z = -790.8884 },  -- Altar III
     }
-    xi._prestige_summonedTrial = summonedTrial  -- exposed for !spawntrialboss to clear stale entries
+    xi._prestige_summonedTrial = summonedTrial  -- exposed for !resettrial to clear stale/stuck entries (modules/custom/commands/resettrial.lua)
 
     -----------------------------------
     -- Ascension. Validates gate -> level cap -> trial -> mark cost, then
