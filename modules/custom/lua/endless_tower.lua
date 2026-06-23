@@ -518,7 +518,21 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 return
             end
 
-            -- One climber at a time: block if anyone else has an active session.
+            -- One climber at a time -- but lazily RELEASE a stale lock first. A session
+            -- sticks if a run ended abnormally (logout, warp/escape, or a server hiccup
+            -- that bumped the climber out without endTower firing). Without this, one
+            -- ghost run blocks the Tower for EVERYONE (e.g. the "ascended by X but X is
+            -- standing in the hub" report). A genuine climber never leaves the arena
+            -- (solo, death-ends-run), so "offline" or "not in the Tower zone" == stale.
+            -- Setting an existing key to nil mid-pairs() is safe in Lua.
+            for name in pairs(sessions) do
+                local climber = GetPlayerByName(name)
+                if not climber or climber:getZoneID() ~= TOWER_ZONE_ID then
+                    sessions[name] = nil
+                end
+            end
+
+            -- Block only if a GENUINE climber is still inside the arena.
             local activeClimber = next(sessions)
             if activeClimber then
                 player:printToPlayer(
