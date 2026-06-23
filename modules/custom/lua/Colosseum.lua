@@ -25,8 +25,9 @@
 --     this server; the replica's stat sheet assumes the help.
 -----------------------------------
 require('modules/module_utils')
-local catalog  = require('modules/custom/lua/colosseum_catalog')
-local ptCat    = require('modules/custom/lua/player_trusts_catalog')  -- raceModels
+local catalog   = require('modules/custom/lua/colosseum_catalog')
+local ptCat     = require('modules/custom/lua/player_trusts_catalog')  -- raceModels
+local mechanics = require('modules/custom/lua/mob_mechanics_library')
 require(string.format('scripts/zones/%s/Zone', catalog.npcPos.zone))
 
 local m = Module:new('colosseum')
@@ -345,6 +346,7 @@ local function startDuel(player, opp)
             releaseIdOnDisappear = true,
 
             onMobDeath = function(deadMob, killer)
+                mechanics.cleanup(deadMob)  -- free mechanics state + despawn any adds
                 local sess = sessions[ownerName]
                 if not sess then return end
                 sessions[ownerName] = nil  -- clear BEFORE result processing
@@ -357,6 +359,10 @@ local function startDuel(player, opp)
                 if owner then
                     applyResult(owner, sess.opp, true)
                 end
+            end,
+
+            onMobFight = function(mfMob, mfTarget)
+                mechanics.tick(mfMob, mfTarget)
             end,
         })
 
@@ -384,6 +390,13 @@ local function startDuel(player, opp)
         end
         mob:updateClaim(p)
         mob:addEnmity(p, 30000, 30000)
+
+        -- Every replica IS the boss-tier mob in Colosseum (no trash mobs).
+        -- Apply the full hardcore kit; tier scales with the champion's Elo rating.
+        local mechCfg = (rating >= catalog.mechanicsEliteThreshold)
+                        and catalog.mechanicsElite
+                        or  catalog.mechanicsStandard
+        mechanics.attach(mob, mechCfg)
 
         local startedAt = os.time()
         sessions[ownerName] = {

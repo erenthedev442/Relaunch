@@ -29,6 +29,8 @@
 
 require('modules/module_utils')
 
+local mechanics = require('modules/custom/lua/mob_mechanics_library')
+
 local m = Module:new('tournament')
 
 -- ─── config ───────────────────────────────────────────────────────────────────
@@ -60,6 +62,76 @@ local WAVES = {
     { label = 'Wave 6',  count = 6, level = 210, hpMult = 52,  groups = { 11365, 11366 } },
     { label = 'Wave 7',  count = 6, level = 230, hpMult = 72,  groups = { 11367, 11368 } },
     { label = 'Wave 8',  count = 7, level = 250, hpMult = 96,  groups = { 11368, 11369 } },
+}
+
+-- ─── Wave 8 Champion mechanics ────────────────────────────────────────────────
+-- The final wave (Wave 8) has no explicit boss entity — all 7 mobs are level-250
+-- juggernauts. The FIRST mob spawned in Wave 8 (i==1, waveNum==8) is designated
+-- the "Tournament Champion" and receives the full hardcore kit. The remaining 6
+-- are left vanilla (mechanics.tick() is a safe no-op on un-attached mobs).
+--
+-- addGroupId = 11368  (Wave 8 groups[1] — already spawned by this wave)
+-- addZoneId  = 210    (GROUP_ZONE — where all Tournament mob_groups are registered)
+local CHAMPION_MECH_CFG = {
+    name = 'Tournament Champion',
+
+    -- 3-minute DPS check: if it's still alive it enters a permanent frenzy.
+    enrage = { sec = 180, att = 5000, haste = 200,
+               msg = 'The Champion is ENRAGED — finish it NOW!' },
+
+    -- Stance dance: alternates physical/magical resist from 90% HP downward.
+    -- Caps at -5000 (=-50% taken) per library rules.
+    stance = {
+        startHpp  = 90,
+        periodSec = 16,
+        stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0 },
+              msg = 'The Champion fortifies against weapons — use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0, [xi.mod.DMGMAGIC] = -5000 },
+              msg = 'The Champion disperses spells — use weapons!' },
+        },
+    },
+
+    -- AoE shockwave every 12s (22% of each nearby player's max HP).
+    aoe   = { periodSec = 12, dmgPct = 22,
+              msg = 'The Champion unleashes a thunderous shockwave!' },
+
+    -- Terror roar every 22s.
+    cc    = { periodSec = 22, effect = xi.effect.TERROR, dur = 5,
+              msg = 'The Champion lets out a spine-shattering roar!' },
+
+    -- Anti-turtle drain: heals 2% max HP every 8s.
+    drain = { periodSec = 8, healPct = 2 },
+
+    -- HP-gated phases.
+    phases = {
+        -- 75% HP: summons Wave-8 Heralds (adds regen hard until they die).
+        { hp = 75, action = 'adds', count = 3,
+          addGroupId = 11368, addZoneId = 210,
+          addName = 'Tournament Herald', addLevel = 250,
+          regen = 18000,
+          msg = 'The Champion summons its Heralds — cut them down!' },
+
+        -- 50% HP: void-rift nuke (40% of each player's max HP AoE).
+        { hp = 50, action = 'nuke', dmgPct = 40,
+          msg = 'The Champion tears open the arena floor — evacuate!' },
+
+        -- 40% HP: dispels up to 4 buffs from every nearby player.
+        { hp = 40, action = 'dispel', count = 4,
+          msg = 'The Champion strips your enhancements!' },
+
+        -- 25% HP: fury — ATT surge + haste.
+        { hp = 25, action = 'fury', att = 4000, haste = 120,
+          msg = 'The Champion enters a blood-fury!' },
+
+        -- 10% HP: doom phase — finish it fast or die.
+        { hp = 10, action = 'doom', dur = 25,
+          msg = 'The Champion marks you for death — end this!' },
+    },
+
+    -- Doom aura at 12% HP (double pressure alongside the phase above).
+    doom = { startHpp = 12, dur = 30,
+             msg = 'The Champion\'s shadow consumes you!' },
 }
 
 -- ─── state ────────────────────────────────────────────────────────────────────
@@ -225,6 +297,7 @@ startWaveForTeam = function(teamName, waveNum)
             releaseIdOnDisappear = true,
 
             onMobDeath = function(deadMob, killer)
+                mechanics.cleanup(deadMob)  -- frees champion state + despawns its Heralds (no-op on non-champion mobs)
                 local s = sessions[teamName]
                 if not s then return end
                 s.mobs[deadMob:getID()]    = nil
@@ -232,6 +305,12 @@ startWaveForTeam = function(teamName, waveNum)
                 if not next(s.mobs) then
                     onWaveClearedForTeam(teamName, waveNum)
                 end
+            end,
+
+            -- Mechanics tick: no-op for any mob without an attached config
+            -- (all non-champion mobs), so safe to call unconditionally here.
+            onMobFight = function(mfMob, mfTarget)
+                mechanics.tick(mfMob, mfTarget)
             end,
         })
 
@@ -242,6 +321,13 @@ startWaveForTeam = function(teamName, waveNum)
             local newMax = math.floor(mob:getMaxHP() * hpScale)
             mob:setMaxHP(newMax)
             mob:setHP(newMax)
+            -- Wave 8, first mob spawned (i==1) is the Tournament Champion.
+            -- Attach the full hardcore kit AFTER spawn + HP setup so the library
+            -- reads the correct max HP. The other 6 Wave-8 mobs and ALL mobs in
+            -- waves 1-7 are left vanilla — mechanics.tick() no-ops for them.
+            if waveNum == 8 and i == 1 then
+                mechanics.attach(mob, CHAMPION_MECH_CFG)
+            end
             -- Aggro every alive member of this team
             for pname in pairs(sess.alive) do
                 local p = GetPlayerByName(pname)
