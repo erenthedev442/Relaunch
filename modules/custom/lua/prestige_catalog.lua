@@ -568,6 +568,28 @@ return
           },
           perLevel = 10, cap = 50, apCost = 1, note = '+10 Ele.Resist / level (max +500 each) [1 AP]' },
 
+        -- ---- Pet -----------------------------------------------------
+        -- PET_ATK_DEF  (990): pet physical ATK + RATT + DEF
+        -- PET_ACC_EVA  (991): pet physical ACC + RACC + EVA
+        -- PET_MAB_MDB  (992): pet magical ATK + MDB
+        -- PET_MACC_MEVA(993): pet magical ACC + MEVA
+        -- PET_ATTR_BONUS(994): all 7 pet attributes
+        -- PET_TP_BONUS (995): pet TP bonus
+        -- All six are engine-forwarded to every pet type (SMN/BST/DRG).
+        -- 5 pts/level × 50 levels = +250 to every pet stat bundle.
+        { id = 'PET', label = 'Pet Boost',
+          mods =
+          {
+              xi.mod.PET_ATK_DEF,
+              xi.mod.PET_ACC_EVA,
+              xi.mod.PET_MAB_MDB,
+              xi.mod.PET_MACC_MEVA,
+              xi.mod.PET_ATTR_BONUS,
+              xi.mod.PET_TP_BONUS,
+          },
+          perLevel = 5, cap = 50, apCost = 2,
+          note = '+5 all Pet stats / level (Atk/Def/Acc/Eva/MAtk/MAcc/Attr/TP, max +250 each) [2 AP]' },
+
         -- ---- Skills --------------------------------------------------
         -- Every weapon, ranged, defensive, and magic skill boosted at once.
         -- 2 pts/level × 50 levels = +100 to every skill.
