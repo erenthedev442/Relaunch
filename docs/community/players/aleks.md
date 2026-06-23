@@ -1,6 +1,6 @@
 # Aleks
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 14h 58m
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 15h 14m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 91/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -79,6 +79,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: daa66921f3ab -->
-_Last updated: 2026-06-23 10:27 UTC_
+<!-- content-hash: 56403f740fdc -->
+_Last updated: 2026-06-23 10:43 UTC_
 <!-- DOCGEN:END id="last-updated" -->

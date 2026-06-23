@@ -1,6 +1,6 @@
 # Arsalith
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-19 · Character age 3d 18h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-19 · Character age 3d 19h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 076904b24809 -->
-_Last updated: 2026-06-23 10:27 UTC_
+<!-- content-hash: da41bdcc1cf5 -->
+_Last updated: 2026-06-23 10:43 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Cake
 
-**Bastok citizen** · 🟡 Seen this month · Created 2026-06-13 · Last seen 2026-06-13 · Character age 10d 7h
+**Bastok citizen** · 🟡 Seen this month · Created 2026-06-13 · Last seen 2026-06-13 · Character age 10d 8h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 12/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a749e1a105b2 -->
-_Last updated: 2026-06-23 10:27 UTC_
+<!-- content-hash: f5dd4a005997 -->
+_Last updated: 2026-06-23 10:43 UTC_
 <!-- DOCGEN:END id="last-updated" -->

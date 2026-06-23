@@ -1,6 +1,6 @@
 # Harleyquinn
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-19 · Character age 4d 17h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-19 · Character age 4d 18h
 
 `💪 1 job @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 70ceb2ee64b6 -->
-_Last updated: 2026-06-23 10:27 UTC_
+<!-- content-hash: a4c6cd2ae93f -->
+_Last updated: 2026-06-23 10:43 UTC_
 <!-- DOCGEN:END id="last-updated" -->

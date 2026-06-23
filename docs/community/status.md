@@ -31,12 +31,12 @@ _Snapshot taken at build time — timers drift after that. For live status, chec
 
 | NM | Zone | Respawn window | Status (snapshot) |
 |---|---|---:|---|
-| **Adamantoise** | Valley of Sorrows | 21–24 h | 🟠 pops in ~31m |
-| **Simurgh** | Rolanberry Fields | 6–8 h | 🟠 pops in ~59m |
-| **Serket** | Garlaige Citadel | 6–8 h | 🟠 pops in ~1h 40m |
-| **Roc** | Sauromugue Champaign | 6–8 h | 🟠 pops in ~2h 18m |
-| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟠 pops in ~19h 44m |
-| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~19h 46m |
+| **Adamantoise** | Valley of Sorrows | 21–24 h | 🟠 pops in ~15m |
+| **Simurgh** | Rolanberry Fields | 6–8 h | 🟠 pops in ~44m |
+| **Serket** | Garlaige Citadel | 6–8 h | 🟠 pops in ~1h 24m |
+| **Roc** | Sauromugue Champaign | 6–8 h | 🟠 pops in ~2h 3m |
+| **Behemoth** | Behemoth's Dominion | 21–24 h | 🟠 pops in ~19h 29m |
+| **Fafnir** | Dragon's Aery | 21–24 h | 🟠 pops in ~19h 31m |
 | **Spiny Spipi** | East Sarutabaruta | 4–6 h | ⚪ awaiting first spawn |
 | **King Arthro** | Jugner Forest | 8–10 h | ⚪ awaiting first spawn |
 <!-- DOCGEN:END id="status-hnm" -->
@@ -119,6 +119,6 @@ See the full list at [Hall of Fame](highlights.md).
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d5b1d68d56d1 -->
-_Last updated: 2026-06-23 10:27 UTC_
+<!-- content-hash: 5e67c64612a4 -->
+_Last updated: 2026-06-23 10:43 UTC_
 <!-- DOCGEN:END id="last-updated" -->

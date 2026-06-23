@@ -4,7 +4,7 @@ Live rankings pulled from the server's database. These tables refresh whenever t
 
 <div class="lb-asof" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-asof" -->
-**📊 Leaderboard data as of 2026-06-23 10:27 UTC**
+**📊 Leaderboard data as of 2026-06-23 10:43 UTC**
 <!-- DOCGEN:END id="lb-asof" -->
 </div>
 
@@ -1191,6 +1191,6 @@ _Highest total damage dealt to Lv 100+ mobs in any rolling 30-second window, com
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0c5df115cb9c -->
-_Last updated: 2026-06-23 10:27 UTC_
+<!-- content-hash: 315fe2ee5d33 -->
+_Last updated: 2026-06-23 10:43 UTC_
 <!-- DOCGEN:END id="last-updated" -->
