@@ -124,6 +124,7 @@ def main() -> int:
         endless_tower,
         job_mastery,
         capacity_farm,
+        gear_vs_retail,
     )
 
     # Snapshot existing last-updated footers BEFORE any generator runs.
@@ -281,6 +282,7 @@ def main() -> int:
         # Differently" list from systems_registry.py and writes a drift report
         # of any system detail page that isn't featured. Runs before
         # settings_inject so the EXP_RATE marker it emits gets substituted.
+        ("gear_vs_retail",   gear_vs_retail),
         ("differentiators",  differentiators),
         # settings_inject MUST run after every generator that writes into
         # docs/, so its {{setting:X}} -> live-value substitutions land on
