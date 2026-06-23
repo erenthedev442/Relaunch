@@ -1,6 +1,6 @@
 # Vistrix
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-21 · Character age 9d 13h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-21 · Character age 9d 21h
 
 `⭐ 14 Ascensions` `💪 2 jobs @99`
 
@@ -93,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 61ad91e321ee -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 4a7308789ffc -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

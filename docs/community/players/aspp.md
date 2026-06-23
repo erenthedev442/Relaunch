@@ -1,6 +1,6 @@
 # Aspp
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-20 · Character age 9d 6h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-20 · Character age 9d 14h
 
 `💪 1 job @99`
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 60c098a0dabd -->
-_Last updated: 2026-06-22 20:59 UTC_
+<!-- content-hash: cf6aa5048e41 -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

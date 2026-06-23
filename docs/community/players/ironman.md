@@ -1,6 +1,6 @@
 # Ironman
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 16h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-21 · Last seen 2026-06-21 · Character age 2d 1h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c7849c4f14c6 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: c9fbe52b0c67 -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

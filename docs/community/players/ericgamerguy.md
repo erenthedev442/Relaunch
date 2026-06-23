@@ -1,6 +1,6 @@
 # Ericgamerguy
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 2d 21h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 3d 5h
 
 `💪 1 job @99`
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3c980e1a1aaf -->
-_Last updated: 2026-06-22 20:59 UTC_
+<!-- content-hash: 6895bc4a2801 -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

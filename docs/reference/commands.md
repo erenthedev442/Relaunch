@@ -8,7 +8,7 @@ These chat commands are available to every player on Legendary (no GM rank requi
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    49 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    50 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -55,13 +55,13 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!offhand` | string | _(no description)_ | :material-puzzle: **custom** |
 | `!optin` | — | Opts the player INTO leaderboards and Discord tracking. This is the default state for new characters. | :material-puzzle: **custom** |
 | `!optout` | — | Opts the player OUT of leaderboards and Discord tracking. This character is excluded from every leaderboard entirely. | :material-puzzle: **custom** |
-| `!primevoucher` | string, int | [GM] Grant Prime Voucher(s) (item 29699) to a player. They trade one at the Prime Armory NPC in GM Home to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it. | :material-puzzle: **custom** |
+| `!primevoucher` | string, int | [GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in GM Home to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it. | :material-puzzle: **custom** |
 | `!profile` | string | Displays a competitive stat summary for a player.  With no argument shows your own stats; with a name shows that player's (they must be online - offline players can't be queried via Lua). | :material-puzzle: **custom** |
 | `!progress` | string | Prints a cross-system progression summary: Hunting League rank, Hunt Marks, Reforge Marks, weekly-hunt completion, Hunter's Guild standings, and Daily Board - all in one quick readout. | :material-puzzle: **custom** |
 | `!prov1` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!prov2` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!prov3` | — | _(no description)_ | :material-puzzle: **custom** |
-| `!provenance` | — | Sends you to zone 222 (PROVENANCE), home of the Ascension Altar. Mirrors !gmhome (permission 0 = usable by everyone). The player lands at (0,0,0); Provenance's onZoneIn repositions them to the altar's doorstep at (-640, -20, -519.999) facing rot 192. |  |
+| `!provenance` | — | Overrides scripts/commands/provenance.lua to DISABLE the !provenance warp. Lives in modules/custom/commands/ so it HOT-RELOADS (no restart) and takes precedence over the stock command (same pattern as !shop). The stock command (warp to zone 222) is left intact; this just shadows it. | :material-puzzle: **custom** |
 | `!pup` | string, string | Puppetmaster automaton quick-loadout manager. Save the full setup (frame + head + all 12 attachments) of your deployed automaton to a named slot, then swap to it instantly from anywhere -- no Automaton Trunk trip, no menu drag-and-drop. | :material-puzzle: **custom** |
 | `!reallevel` | string | Computes a player's "real level" -- a single fun number that reflects how far PAST the level-99 cap a character has actually progressed, by folding in every endgame power axis FFXI offers: gear (item level), Ascension (Prestige), Job Points, and merits. | :material-puzzle: **custom** |
 | `!rebirth` | — | _(no description)_ |  |
@@ -357,7 +357,7 @@ Opts the player OUT of leaderboards and Discord tracking. This character is excl
 
 ### `!primevoucher`  _(custom)_
 
-[GM] Grant Prime Voucher(s) (item 29699) to a player. They trade one at the Prime Armory NPC in GM Home to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it.
+[GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in GM Home to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it.
 
 **Usage:** `primevoucher`
 
@@ -391,11 +391,11 @@ Prints a cross-system progression summary: Hunting League rank, Hunt Marks, Refo
 
 **Usage:** `prov3`
 
-### `!provenance`
+### `!provenance`  _(custom)_
 
-Sends you to zone 222 (PROVENANCE), home of the Ascension Altar. Mirrors !gmhome (permission 0 = usable by everyone). The player lands at (0,0,0); Provenance's onZoneIn repositions them to the altar's doorstep at (-640, -20, -519.999) facing rot 192.
+Overrides scripts/commands/provenance.lua to DISABLE the !provenance warp. Lives in modules/custom/commands/ so it HOT-RELOADS (no restart) and takes precedence over the stock command (same pattern as !shop). The stock command (warp to zone 222) is left intact; this just shadows it.
 
-**Usage:** `provenance`
+**Usage:** `provenance  (DISABLED)`
 
 ### `!pup`  _(custom)_
 
@@ -550,6 +550,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 52d88e132e1b -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: b8ec9d95f451 -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

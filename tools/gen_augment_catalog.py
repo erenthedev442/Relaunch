@@ -200,7 +200,7 @@ CUSTOM_AUGS = {
     #   (the uint16 effect-power cap). base=1 / mult=15 => +15%/boost, ~+480% at a
     #   maxed slot; maxBoost=31 scales with the Augment Sage. cat 5 (Magic offense).
     #   Owner request 2026-06-22.
-    2044: (2639, 1, 15, 1, 5, 'Helix Damage', 31),  # hardened_bone
+    2044: (2335, 1, 15, 1, 5, 'Helix Damage', 31),  # soulflayer_tentacle (dark/soul creature -> Helix dmg)
 }
 
 # Augments to DROP from the catalog entirely, keyed by augId. The augment still

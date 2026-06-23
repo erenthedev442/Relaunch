@@ -21,7 +21,7 @@ A live snapshot of the server economy and population. All figures exclude GM / t
 | Gil in circulation | **22.12B** gil |
 | Players online now | **44** |
 | Characters (non-GM) | 410 |
-| Active in last 7 days | 347 |
+| Active in last 7 days | 344 |
 | AH listings (live) | 30,299 |
 | Cumulative playtime | 245 days, 7 hours |
 <!-- DOCGEN:END id="econ-overview" -->
@@ -75,8 +75,8 @@ Completed Auction House sales over recent windows. **Gil volume** is the total t
 
 | Window | Lots sold | Gil volume | Gil sunk to AH |
 |---|---:|---:|---:|
-| Last 24 hours | 1,063 | 561,133,710 gil | 206,680,000 gil |
-| Last 7 days | 6,853 | 3,292,584,279 gil | 1,253,369,001 gil |
+| Last 24 hours | 687 | 367,660,886 gil | 159,470,000 gil |
+| Last 7 days | 6,593 | 3,236,735,735 gil | 1,198,579,001 gil |
 | Last 30 days | 7,574 | 3,511,107,517 gil | 1,463,589,001 gil |
 <!-- DOCGEN:END id="econ-velocity" -->
 
@@ -121,9 +121,9 @@ Who's around. **Active** counts characters that logged out within the window (a 
 |---|---:|
 | Online right now | 44 |
 | Total characters | 410 |
-| Active — last 7 days | 347 |
+| Active — last 7 days | 344 |
 | Active — last 30 days | 410 |
-| New — last 7 days | 257 |
+| New — last 7 days | 240 |
 | New — last 30 days | 410 |
 | Cumulative playtime (all chars) | 245 days, 7 hours |
 <!-- DOCGEN:END id="econ-population" -->
@@ -131,6 +131,6 @@ Who's around. **Active** counts characters that logged out within the window (a 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c0ba4197c862 -->
-_Last updated: 2026-06-22 20:59 UTC_
+<!-- content-hash: e75fd90bf8ff -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

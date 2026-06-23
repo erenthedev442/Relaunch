@@ -8,11 +8,12 @@ Every purchasable item on Legendary in one searchable list — armor, weapons, a
 Each **Item** links to its BG-Wiki page for full stats. The **Source** links to the exact vendor section where you buy it, and **Cost** spells out the currency, since each vendor tier is paid in a different seal or medal.
 
 <!-- DOCGEN:BEGIN id="item-finder" -->
-755 items in stock — **194** Armor · **151** Weapons · **120** Accessories · **290** Infamy.
+754 items in stock — **194** Armor · **150** Weapons · **120** Accessories · **290** Infamy.
 
 | Item | Source | Cost | For |
 |---|---|---:|---|
 | [Abyssal Bead Necklace +2](https://www.ffxiah.com/item/25461) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 250 Infamy | — |
+| [Acclimator](https://www.ffxiah.com/item/20715) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Swords | 50 Demons Medal | RDM/PLD/BLU |
 | [Accura Cape +1](https://www.ffxiah.com/item/11540) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Acro Gauntlets](https://www.ffxiah.com/item/27046) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Acro Helm](https://www.ffxiah.com/item/26734) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WAR/PLD/DRK/BST/SAM/DRG |
@@ -184,6 +185,7 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Creed Baudrier](https://www.ffxiah.com/item/11750) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | PLD |
 | [Crepuscular Knife](https://www.ffxiah.com/item/21585) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Silver · Daggers | 25 Kindreds Medal | WAR/RDM/THF/BST/BRD/RNG/NIN/COR/DNC |
 | [Crepuscular Mail](https://www.ffxiah.com/item/23798) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Body | 50 Demons Medal | WAR/PLD/DRK/BST/SAM/DRG |
+| [Crepuscular Pebble](https://www.ffxiah.com/item/22300) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 10,000 Infamy | — |
 | [Crobaci +2](https://www.ffxiah.com/item/20764) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Bronze · Great Swords | 12 Beastmens Medal | PLD/DRK/RUN |
 | [Cryptic Earring](https://www.ffxiah.com/item/28483) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
 | [Culminus](https://www.ffxiah.com/item/26400) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 500 Infamy | — |
@@ -222,7 +224,6 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Eletta Lance](https://www.ffxiah.com/item/21881) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Silver · Polearms | 25 Kindreds Medal | WAR/PLD/SAM/DRG |
 | [Eletta Rod](https://www.ffxiah.com/item/22029) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Clubs | 50 Demons Medal | WHM/BLM/RDM/SMN/BLU/SCH/GEO |
 | [Eletta Scythe](https://www.ffxiah.com/item/21828) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 800 Infamy | — |
-| [Eletta Sword](https://www.ffxiah.com/item/21619) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Swords | 50 Demons Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN |
 | [Eletta Tachi](https://www.ffxiah.com/item/21973) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 350 Infamy | — |
 | [Emet Harness](https://www.ffxiah.com/item/26870) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Emicho Gambieras +1](https://www.ffxiah.com/item/27470) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | WAR/PLD/DRK/BST/DRG |
@@ -480,14 +481,12 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 | [Mpacas Gloves](https://www.ffxiah.com/item/23772) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 500 Infamy | — |
 | [Mpacas Hose](https://www.ffxiah.com/item/23779) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 500 Infamy | — |
 | [Mpu Gandring](https://www.bg-wiki.com/index.php?search=Mpu+Gandring&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 800 Infamy | — |
-| [Mpu Gandring](https://www.bg-wiki.com/index.php?search=Mpu+Gandring&go=Go) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Gold · Daggers | 50 Demons Medal | RDM/THF/BRD/DNC |
 | [Mpu Gandring](https://www.bg-wiki.com/index.php?search=Mpu+Gandring&go=Go) | [Weapons Vendor](gear-vendors.md#weapons-vendor) · Silver · Daggers | 25 Kindreds Medal | RDM/THF/BRD/DNC |
 | [Mujin Band](https://www.ffxiah.com/item/11672) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Ring | 15 Beastmens Medal | All |
 | [Mummu Bonnet +1](https://www.ffxiah.com/item/25582) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | MNK/THF/RNG/NIN/COR/DNC |
 | [Murgleis](https://www.bg-wiki.com/index.php?search=Murgleis&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Musa](https://www.ffxiah.com/item/22099) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Myrddin Pearl](https://www.ffxiah.com/item/11049) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Earring | 32 Kindreds Medal | All |
-| [Naegling](https://www.ffxiah.com/item/21621) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
 | [Nagi](https://www.ffxiah.com/item/21907) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 5,000 Infamy | — |
 | [Nahtirah Hat](https://www.ffxiah.com/item/27775) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Nandaka](https://www.ffxiah.com/item/21674) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Auto BiS | 500 Infamy | — |
@@ -777,6 +776,6 @@ Each **Item** links to its BG-Wiki page for full stats. The **Source** links to 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 73570c7a9855 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 8f2ca8b12267 -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

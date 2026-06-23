@@ -283,20 +283,23 @@ end
 -----------------------------------
 catalog.gold = { weapons = emptyCategories() }
 do
-    -- Hand-to-Hand: 0 pick(s) (Varga Purnikawa removed -- Prime Weapon, forge-only)
-    -- Daggers: 1 pick(s) (Mpu Gandring removed -- Prime Weapon, forge-only)
+    -- Hand-to-Hand: 1 pick(s)
+    local h2h = cat(catalog.gold.weapons, 'Hand-to-Hand')
+    table.insert(h2h, { id = 21533, name = "Varga Purnikawa", cost = 50, jobs = 'MNK/PUP' })  -- WS score 254, DMG 192/Dly 596
+
+    -- Daggers: 1 pick(s)
     local daggers = cat(catalog.gold.weapons, 'Daggers')
     table.insert(daggers, { id = 20632, name = "Vanir Knife", cost = 50, jobs = 'WAR/RDM/THF/BST/BRD/RNG/NIN/COR/DNC' })  -- CASTER score 295, DMG 111/Dly 205
 
     -- Swords: 8 pick(s)
     local swords = cat(catalog.gold.weapons, 'Swords')
-    table.insert(swords, { id = 21619, name = "Eletta Sword", cost = 50, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' })  -- CASTER score 920, DMG 146/Dly 240
     table.insert(swords, { id = 20689, name = "Almace", cost = 50, jobs = 'RDM/PLD/BLU' })  -- CASTER score 744, DMG 158/Dly 224
     table.insert(swords, { id = 20695, name = "Sequence", cost = 50, jobs = 'RDM/PLD/BLU' })  -- CASTER score 744, DMG 168/Dly 240
     table.insert(swords, { id = 20677, name = "Colada", cost = 50, jobs = 'RDM/PLD/BLU' })  -- CASTER score 572, DMG 140/Dly 240
     table.insert(swords, { id = 20706, name = "Vampirism", cost = 50, jobs = 'WAR/RDM/THF/PLD/DRK/BRD/RNG/NIN/DRG/BLU/RUN' })  -- CASTER score 534, DMG 127/Dly 240
     table.insert(swords, { id = 20698, name = "Fettering Blade", cost = 50, jobs = 'WAR/RDM/PLD/DRK/COR/RUN' })  -- CASTER score 516, DMG 134/Dly 231
     table.insert(swords, { id = 21611, name = "Hepatizon Rapier +1", cost = 50, jobs = 'WAR/RDM/PLD/BRD/DRG/COR/DNC' })  -- CASTER score 482, DMG 147/Dly 218
+    table.insert(swords, { id = 20715, name = "Acclimator", cost = 50, jobs = 'RDM/PLD/BLU' })  -- CASTER score 414, DMG 130/Dly 240
     table.insert(swords, { id = 20717, name = "Arendsi Fleuret", cost = 50, jobs = 'WAR/RDM/PLD/BRD/DRG/COR/DNC' })  -- CASTER score 397, DMG 119/Dly 224
 
     -- Great Swords: 1 pick(s)
@@ -389,12 +392,13 @@ do
     table.insert(inf_daggers, { id = 21590, name = "Mpu Gandring", cost = 500, jobs = 'RDM/THF/BRD/DNC' })  -- DPS score 316, DMG 137/Dly 176
     table.insert(inf_daggers, { id = 21567, name = "Gletis Knife", cost = 500, jobs = 'RDM/THF/BRD/RNG/NIN/COR/DNC' })  -- DPS score 300, DMG 133/Dly 200
 
-    -- Swords: 4 pick(s) -> Infamy Vendor (Naegling removed -- Prime Weapon, forge-only)
+    -- Swords: 5 pick(s) -> Infamy Vendor
     local inf_swords = cat(catalog.infamy.weapons, 'Swords')
     table.insert(inf_swords, { id = 20672, name = "Ice Brand", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 1060, DMG 187/Dly 264
     table.insert(inf_swords, { id = 21637, name = "Sakpatas Sword", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 977, DMG 160/Dly 240
     table.insert(inf_swords, { id = 21620, name = "Kaja Sword", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' })  -- CASTER score 939, DMG 156/Dly 240
     table.insert(inf_swords, { id = 21646, name = "Caliburnus", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 935, DMG 181/Dly 233
+    table.insert(inf_swords, { id = 21619, name = "Eletta Sword", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' })  -- CASTER score 920, DMG 146/Dly 240
 
     -- Great Swords: 5 pick(s) -> Infamy Vendor
     local inf_greatswords = cat(catalog.infamy.weapons, 'Great Swords')

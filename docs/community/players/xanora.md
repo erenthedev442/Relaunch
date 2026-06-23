@@ -1,6 +1,6 @@
 # Xanora
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 5d 15h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 6d
 
 `💪 4 jobs @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d671d50d8a52 -->
-_Last updated: 2026-06-22 20:59 UTC_
+<!-- content-hash: 6ce969230409 -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

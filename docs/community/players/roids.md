@@ -1,6 +1,6 @@
 # Roids
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 7d 20h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 8d 5h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 71/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9c4c7281e213 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: d6c6e2e77187 -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

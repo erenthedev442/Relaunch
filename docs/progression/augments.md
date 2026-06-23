@@ -70,7 +70,7 @@ So a maxed tank reaches **+640 HP on a single body piece**, and a sustain build 
 The table below lists **which catalyst maps to which augment**, grouped by stat family. **Fresh ×1–×5** is the total stat from trading that many catalysts with no Sage progress; **Max ×1–×5** is the same trade at full [Augment Sage](augment-sage.md) progress (rank 5 + affinity + a crit); **Cap** is the hard in-game ceiling where one exists — see [how scaling works](#how-augment-power-scales) above.
 
 <!-- DOCGEN:BEGIN id="augment-catalog" -->
-_298 catalyst items across 16 categories. Trade the catalyst to the Augment Moogle to apply the matching augment. Cost is **10,000 gil flat per trade** plus the catalyst items themselves._
+_299 catalyst items across 16 categories. Trade the catalyst to the Augment Moogle to apply the matching augment. Cost is **10,000 gil flat per trade** plus the catalyst items themselves._
 
 Each augment **scales with [Augment Sage](augment-sage.md) progress** and with how many catalysts you trade (**×N** = that many, 1–5; an item has 5 augment slots). **Fresh ×N** is a brand-new augment with **no Sage progress**; **Max ×N** is the ceiling at **rank-5 mastery + full affinity + a crit**. Your live value starts near Fresh and climbs toward Max as you rank Augment Sage up. Percentage augments (damage-taken, haste, etc.) show the raw value; the **Cap** column is the hard in-game ceiling for that stat (e.g. Phys. dmg. taken floors at -50%), or **no cap** for additive stats like Attack/HP — values above the Cap can't be reached no matter how many catalysts you stack.
 
@@ -453,6 +453,7 @@ _Sold under their stat group: **Phantom Roll effect** (Ancient Beastcoin) → `!
 
 | Catalyst | Item ID | Augment | Fresh ×1 | ×2 | ×3 | ×4 | ×5 | Max ×1 | ×2 | ×3 | ×4 | ×5 | Cap |
 |---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|
+| <a class="item-link" href="https://www.ffxiah.com/item/2335" data-img="https://static.ffxiah.com/images/icon/2335.png" target="_blank" rel="noopener">Soulflayer Tentacle</a> | 2335 | Helix Damage | 15 | 30 | 45 | 60 | 75 | 480 | 960 | 1440 | 1920 | 2400 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/2531" data-img="https://static.ffxiah.com/images/icon/2531.png" target="_blank" rel="noopener">Shard Of Obsidian</a> | 2531 | Spikes Dmg | 1 | 2 | 3 | 4 | 5 | 32 | 64 | 96 | 128 | 160 | no cap |
 | <a class="item-link" href="https://www.ffxiah.com/item/1875" data-img="https://www.bg-wiki.com/images/2/2d/Anct._Beastcoin_description.png" target="_blank" rel="noopener">Ancient Beastcoin</a> | 1875 | Phantom Roll effect | 1 | 2 | 3 | 4 | 5 | 1 | 2 | 3 | 4 | 5 | no cap |
 <!-- DOCGEN:END id="augment-catalog" -->
@@ -466,6 +467,6 @@ _Sold under their stat group: **Phantom Roll effect** (Ancient Beastcoin) → `!
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b13b998966ec -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: 3835fe2e0a3f -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

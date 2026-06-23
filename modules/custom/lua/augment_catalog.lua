@@ -191,7 +191,6 @@ return {
     [2640] = { augId = 1249, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Helix Effect Duration' },
     [2711] = { augId = 1264, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Meditate Effect Duration' },
     [2847] = { augId = 1796, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Pet INT' },
-    [2361] = { augId = 2048, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Immunobreak Chance+' }, -- Ameretat Vine catalyst
 
     -- Mind / Healing / Cure
     [791]  = { augId = 52,   base = 1,   mult = 4,  disp = 1,    cat = 6,  label = 'MP recovered while healing' },
@@ -239,7 +238,6 @@ return {
     [1831] = { augId = 956,  base = 1,   mult = 1,  disp = 1,    cat = 10, label = 'Thunder Affinity Avatar perp. cost' },
     [1979] = { augId = 1246, base = 1,   mult = 200, disp = 100,  cat = 10, label = 'Pet Phy. Dmg. Taken' },
     [2173] = { augId = 2040, base = 1,   mult = 1,  disp = 1,    cat = 10, label = 'Thunder Affinity' },
-    [748]  = { augId = 2100, base = 5,   mult = 1,  disp = 1,    cat = 10, label = 'Beast Affinity' },  -- gold_beastcoin
 
     -- Elemental resistance
     [2831] = { augId = 61,   base = 1,   mult = 1,  disp = 1,    cat = 11, label = 'Occ. inc. resist to stat ailments' },
@@ -375,6 +373,7 @@ return {
     ---   Phantom Roll effect (augId 2046) grants Mod::PHANTOM_ROLL (881) via
     ---   modules/custom/sql/aug_phantom_roll_potency.sql (repoints a dead modId=0
     ---   slot). +1 per augment slot, HARD-CAPPED at +3/piece in corsair.lua.
+    [2335] = { augId = 2044, base = 1,   mult = 15, disp = 1,    cat = 5,  label = 'Helix Damage', maxBoost = 31 },  -- soulflayer_tentacle
     [2531] = { augId = 2045, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Spikes Dmg', maxBoost = 31 },  -- shard_of_obsidian
     [1875] = { augId = 2046, base = 1,   mult = 1,  disp = 1,    cat = 4,  label = 'Phantom Roll effect', maxBoost = 0 },  -- ancient_beastcoin
 }

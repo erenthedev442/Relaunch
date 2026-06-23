@@ -1,6 +1,6 @@
 # Luna
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 10h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 18h
 
 `⭐ 20 Ascensions` `💪 10 jobs @99`
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3d8da1f3dfd2 -->
-_Last updated: 2026-06-22 20:59 UTC_
+<!-- content-hash: 4997c78b943a -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

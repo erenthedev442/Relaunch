@@ -22,7 +22,7 @@
 --                                    => +15% per boost level, ~+480% at boost 31
 --   Wiring 478 ALSO finally makes Dark Arts (+level/4 %) / Tabula Rasa boost
 --   helix damage -- a latent stock gap. The catalog entry (augId 2044, catalyst
---   Hardened Bone 2639) is pinned in tools/gen_augment_catalog.py CUSTOM_AUGS
+--   Soulflayer Tentacle 2335) is pinned in tools/gen_augment_catalog.py CUSTOM_AUGS
 --   with maxBoost = 31, so it scales with the Augment Sage like Spikes/Enspell Dmg.
 --
 -- APPLYING

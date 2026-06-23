@@ -1,6 +1,6 @@
 # Felys
 
-**Windurst citizen** · 🟡 Seen this month · Created 2026-06-13 · Last seen 2026-06-13 · Character age 9d 17h
+**Windurst citizen** · 🟡 Seen this month · Created 2026-06-13 · Last seen 2026-06-13 · Character age 10d 2h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 13/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1bf5cc0a03e6 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: c848e8fc027a -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

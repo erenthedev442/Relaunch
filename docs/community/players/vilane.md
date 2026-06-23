@@ -1,6 +1,6 @@
 # Vilane
 
-**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-14 · Last seen 2026-06-15 · Character age 8d 1h
+**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-14 · Last seen 2026-06-15 · Character age 8d 9h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 42/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 128cf81e77a0 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: bc4a8c9c691e -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

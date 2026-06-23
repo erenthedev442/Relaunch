@@ -16,7 +16,7 @@ Abyssea is divided into three difficulty tiers based on the expansion each zone 
 |---|---|---|---|---|
 | **Visions** | Konschtat, Tahrongi, La Theine | 200 marks | 135 | 4,000,000 |
 | **Scars** | Attohwa, Misareaux, Vunkerl | 350 marks | 145 | 7,000,000 |
-| **Heroes** | Altepa, Grauberg | 500 marks | 155 | 10,000,000 |
+| **Heroes** | Altepa, Grauberg, Uleguerand | 500 marks | 155 | 10,000,000 |
 <!-- DOCGEN:END id="abyssea-tiers" -->
 
 !!! warning "These are not solo targets"
@@ -169,6 +169,6 @@ A party running Heroes NMs without trusts earns **180 Infamy per kill** — enou
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 08d647e42749 -->
-_Last updated: 2026-06-22 00:11 UTC_
+<!-- content-hash: aca407b6f7be -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

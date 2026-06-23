@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "total": 298,
+  "total": 299,
   "groups": [
     {
       "category": "Strength / Attack / Phys.dmg.taken",
@@ -3040,6 +3040,16 @@
     {
       "category": "Corsair (Phantom Roll)",
       "entries": [
+        {
+          "itemId": 2335,
+          "augId": 2044,
+          "label": "Helix Damage",
+          "base": 1,
+          "mult": 15,
+          "disp": 1,
+          "cat": 5,
+          "maxBoost": 31
+        },
         {
           "itemId": 2531,
           "augId": 2045,

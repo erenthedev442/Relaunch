@@ -1,6 +1,6 @@
 # Kevin
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 8h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 6/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 905c7e4217c5 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 3033ac07dfe2 -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

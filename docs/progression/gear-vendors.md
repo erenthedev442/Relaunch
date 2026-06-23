@@ -593,19 +593,19 @@ _38 weapons total. Cost is paid in Kindreds Medal._
 ### Gold tier (REMA + Aeonic — top-tier endgame)
 
 <!-- DOCGEN:BEGIN id="weapons-gold" -->
-_43 weapons total. Cost is paid in Demons Medal._
+_42 weapons total. Cost is paid in Demons Medal._
 
 #### Swords
 
 | Item | Cost | Jobs |
 |---|---:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21619" data-img="https://www.bg-wiki.com/images/9/98/Eletta_Sword_description.png" target="_blank" rel="noopener">Eletta Sword</a> | 50 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Almace&go=Go" data-img="" target="_blank" rel="noopener">Almace</a> | 50 | RDM/PLD/BLU |
 | <a class="item-link" href="https://www.ffxiah.com/item/20695" data-img="https://www.bg-wiki.com/images/a/ac/Sequence_description.png" target="_blank" rel="noopener">Sequence</a> | 50 | RDM/PLD/BLU |
 | <a class="item-link" href="https://www.ffxiah.com/item/20677" data-img="https://www.bg-wiki.com/images/3/31/Colada_description.png" target="_blank" rel="noopener">Colada</a> | 50 | RDM/PLD/BLU |
 | <a class="item-link" href="https://www.ffxiah.com/item/20706" data-img="https://www.bg-wiki.com/images/0/00/Vampirism_description.png" target="_blank" rel="noopener">Vampirism</a> | 50 | WAR/RDM/THF/PLD/DRK/BRD/RNG/NIN/DRG/BLU/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/20698" data-img="https://www.bg-wiki.com/images/b/b1/Fettering_Blade_description.png" target="_blank" rel="noopener">Fettering Blade</a> | 50 | WAR/RDM/PLD/DRK/COR/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/21611" data-img="https://www.bg-wiki.com/images/0/0d/Hep._Rapier_%2B1_description.png" target="_blank" rel="noopener">Hepatizon Rapier +1</a> | 50 | WAR/RDM/PLD/BRD/DRG/COR/DNC |
+| <a class="item-link" href="https://www.ffxiah.com/item/20715" data-img="https://www.bg-wiki.com/images/5/5f/Acclimator_description.png" target="_blank" rel="noopener">Acclimator</a> | 50 | RDM/PLD/BLU |
 | <a class="item-link" href="https://www.ffxiah.com/item/20717" data-img="https://www.bg-wiki.com/images/6/68/Arendsi_Fleuret_description.png" target="_blank" rel="noopener">Arendsi Fleuret</a> | 50 | WAR/RDM/PLD/BRD/DRG/COR/DNC |
 
 #### Daggers
@@ -613,7 +613,6 @@ _43 weapons total. Cost is paid in Demons Medal._
 | Item | Cost | Jobs |
 |---|---:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/20632" data-img="https://www.bg-wiki.com/images/7/73/Vanir_Knife_description.png" target="_blank" rel="noopener">Vanir Knife</a> | 50 | WAR/RDM/THF/BST/BRD/RNG/NIN/COR/DNC |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Mpu+Gandring&go=Go" data-img="" target="_blank" rel="noopener">Mpu Gandring</a> | 50 | RDM/THF/BRD/DNC |
 
 #### Clubs
 
@@ -1036,7 +1035,6 @@ _165 hand-picked items -- relic weapons, bard instruments, and other special wea
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Fail-Not&go=Go" data-img="" target="_blank" rel="noopener">Fail-Not</a> | 5000 | Bow (ranged). RNG. Aeonic. MAcc+40. · Magic Dmg+155, TP Bonus+500, Store TP+10. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Fomalhaut&go=Go" data-img="" target="_blank" rel="noopener">Fomalhaut</a> | 5000 | Gun (ranged). RNG/COR. Aeonic. · Magic Dmg+155, TP Bonus+500, Store TP+10. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26403" data-img="https://www.bg-wiki.com/images/f/fd/Srivatsa_description.png" target="_blank" rel="noopener">Srivatsa</a> | 5000 | Shield (sub). PLD. Aeonic. · DEF+150, HP+150, MP+150, Enmity+15. |
-| <a class="item-link" href="https://www.ffxiah.com/item/21621" data-img="https://www.bg-wiki.com/images/e/e8/Naegling_description.png" target="_blank" rel="noopener">Naegling</a> | 300 | Sword (1-hand). Great Savage Blade. · iLvl 119, broad job access. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Varga+Purnikawa&go=Go" data-img="" target="_blank" rel="noopener">Varga Purnikawa</a> | 800 | Hand-to-Hand relic (Lv.119 III). Spharai. · Final form. Full stat block. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Mpu+Gandring&go=Go" data-img="" target="_blank" rel="noopener">Mpu Gandring</a> | 800 | Dagger relic (Lv.119 III). Mandau. · Final form. Full stat block. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Caliburnus&go=Go" data-img="" target="_blank" rel="noopener">Caliburnus</a> | 800 | Sword relic (Lv.119 III). Excalibur. · DEX/MND+35, Macc, Magic Dmg+263, Refresh+4. |
@@ -1093,6 +1091,7 @@ _165 hand-picked items -- relic weapons, bard instruments, and other special wea
 | <a class="item-link" href="https://www.ffxiah.com/item/25953" data-img="https://www.bg-wiki.com/images/d/d6/Flam._Gambieras_%2B2_description.png" target="_blank" rel="noopener">Flamma Gambieras +2</a> | 400 | Feet. Ambuscade. · DA+6, Store TP+6, Haste+2%. |
 | <a class="item-link" href="https://www.ffxiah.com/item/22212" data-img="https://www.bg-wiki.com/images/c/ca/Utu_Grip_description.png" target="_blank" rel="noopener">Utu Grip</a> | 300 | Grip (sub). Acc/Atk + skill. · DD grip. |
 | <a class="item-link" href="https://www.ffxiah.com/item/22298" data-img="https://www.bg-wiki.com/images/0/00/Aurgelmir_Orb_%2B1_description.png" target="_blank" rel="noopener">Aurgelmir Orb +1</a> | 250 | Grip (sub). Lv.99. STR/DEX/VIT+7, ATT+10, Store TP+5. · Melee grip. WAR/MNK/THF/PLD/DRK/SAM/NIN/DRG and more. |
+| <a class="item-link" href="https://www.ffxiah.com/item/22300" data-img="https://www.bg-wiki.com/images/6/6c/Crepuscular_Pebble_description.png" target="_blank" rel="noopener">Crepuscular Pebble</a> | 10000 | Ammo, all jobs (Lv.99). STR+3, VIT+3, Phys. dmg. limit +5%. · Ex/Rare melee ammo -- raises the physical damage cap. (-300 DMG is ranged-only.) |
 | <a class="item-link" href="https://www.ffxiah.com/item/21431" data-img="https://www.bg-wiki.com/images/7/71/Coiste_Bodhar_description.png" target="_blank" rel="noopener">Coiste Bodhar</a> | 300 | Earring. Double Attack + WS damage. · Top DD earring (Omen). |
 | <a class="item-link" href="https://www.ffxiah.com/item/26022" data-img="https://www.bg-wiki.com/images/3/39/Vim_Torque_%2B1_description.png" target="_blank" rel="noopener">Vim Torque +1</a> | 300 | Neck. DEF+15. · Regain+20 while weapon drawn (latent). |
 | <a class="item-link" href="https://www.ffxiah.com/item/26118" data-img="https://www.bg-wiki.com/images/f/fe/Sroda_Earring_description.png" target="_blank" rel="noopener">Sroda Earring</a> | 300 | Earring. STR + WS damage. · DD earring. |
@@ -1323,6 +1322,6 @@ _125 top armor, weapons, and Sortie earrings, refreshed from the live gear ranki
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6d5ca3a813fc -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: 4ab6bdc57372 -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

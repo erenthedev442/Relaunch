@@ -150,19 +150,15 @@ Boosts are **permanent and stacking** — they re-apply automatically every time
 ## The Trial of Mastery
 
 <!-- DOCGEN:BEGIN id="rebirth-exp-penalty" -->
-Each rebirth stacks a **−10% EXP penalty** on that job, capped at **−95%**. The penalty is **per-job** — it only slows the job that has been reborn, and disappears the instant you switch to anything else. You always keep at least **5%** of normal EXP, so the climb is always possible — but a many-times-reborn job is a true endgame grind.
+Each rebirth deepens a **multiplicative EXP cut** on that job — a *true* reduction taken **after** all of your gear, food, and augment EXP bonuses, so no amount of +EXP augments can cancel it. It scales linearly to a cap of **−80%** at the **20th rebirth**. The cut is **per-job** — it only slows the job that has been reborn, and disappears the instant you switch to anything else. A job can never be locked out: EXP is always floored at **5%** of base, so the climb stays possible — but a many-times-reborn job is a true endgame grind.
 
-| Rebirth | EXP Penalty (that job) | Effective EXP |
+| Rebirth | EXP Cut (that job) | EXP kept (of what you'd otherwise earn) |
 |---|---:|---:|
-| 1st | −10% | 90% |
-| 2nd | −20% | 80% |
-| 3rd | −30% | 70% |
-| 4th | −40% | 60% |
-| 5th | −50% | 50% |
-| 6th | −60% | 40% |
-| 7th | −70% | 30% |
-| 8th | −80% | 20% |
-| 9th and beyond | **−95%** (cap) | 5% |
+| 1st | −4% | 96% |
+| 5th | −20% | 80% |
+| 10th | −40% | 60% |
+| 15th | −60% | 40% |
+| 20th and beyond | **−80%** (cap) | 20% |
 <!-- DOCGEN:END id="rebirth-exp-penalty" -->
 
 ---
@@ -193,6 +189,6 @@ Rebirth and [Ascension](prestige.md) are **separate systems that share one menu 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7623b7a54b4f -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: a86ca0baf5b3 -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->

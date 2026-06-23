@@ -1,6 +1,6 @@
 # Chanie
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-20 · Character age 3d 11h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-20 · Character age 3d 19h
 
 `💪 6 jobs @99`
 
@@ -72,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cfc4a90631c4 -->
-_Last updated: 2026-06-22 20:59 UTC_
+<!-- content-hash: 280a99a8df60 -->
+_Last updated: 2026-06-23 05:17 UTC_
 <!-- DOCGEN:END id="last-updated" -->
