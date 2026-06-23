@@ -587,8 +587,8 @@ return
               xi.mod.PET_ATTR_BONUS,
               xi.mod.PET_TP_BONUS,
           },
-          perLevel = 5, cap = 50, apCost = 2,
-          note = '+5 all Pet stats / level (Atk/Def/Acc/Eva/MAtk/MAcc/Attr/TP, max +250 each) [2 AP]' },
+          perLevel = 40, cap = 50, apCost = 2,
+          note = '+40 all Pet stats / level (Atk/Def/Acc/Eva/MAtk/MAcc/Attr/TP, max +2000 each) [2 AP]' },
 
         -- ---- Skills --------------------------------------------------
         -- Every weapon, ranged, defensive, and magic skill boosted at once.
