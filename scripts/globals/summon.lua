@@ -65,8 +65,9 @@ local function getRandRatio(wRatio)
         lowerLimit = (wRatio * (1176 / 1024)) - (755 / 1024)
     end
 
-    -- Randomly pick a value between lower and upper limits for qRatio
-    local qRatio = lowerLimit + (math.random() * (upperLimit - lowerLimit))
+    -- Pick near the midpoint of the retail range (50% spread) so consecutive BPs feel consistent
+    local mid    = (upperLimit + lowerLimit) * 0.5
+    local qRatio = mid + (math.random() - 0.5) * (upperLimit - lowerLimit) * 0.5
 
     return qRatio
 end
@@ -211,7 +212,7 @@ xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, acc
             end
 
             local qRatio = getRandRatio(wRatio)                  -- Get a random ratio from min and max
-            local pDif   = qRatio * (1 + (math.random() * 0.05)) -- Final pDif is qRatio randomized with a 1-1.05 multiplier
+            local pDif   = qRatio * (1 + (math.random() * 0.02)) -- ±1% noise; retail was ±2.5% but tightened for consistency
 
             if isCrit then
                 pDif = pDif * critAttackBonus
@@ -230,7 +231,7 @@ xi.summon.avatarPhysicalMove = function(avatar, target, skill, numberofhits, acc
             end
 
             local qRatio = getRandRatio(wRatio)                  -- Get a random ratio from min and max.
-            local pDif   = qRatio * (1 + math.random() * 0.05) -- Final pDif is qRatio randomized with a 1-1.05 multiplier.
+            local pDif   = qRatio * (1 + math.random() * 0.02) -- ±1% noise; retail was ±2.5% but tightened for consistency
 
             if isCrit then
                 pDif = pDif * critAttackBonus
