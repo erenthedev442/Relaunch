@@ -680,7 +680,16 @@ xi.effect =
     TOMAHAWK                 = 805, -- Silent status effect inflicted by a Warrior using the "Tomahawk" job ability
     NUKE_WALL                = 806, -- Custom effect for NM type mobs only.
 
-    -- 789
-    -- 807-1022
+    -- Element-specific Helix DoTs (807-814) -- allows multi-element stacking on the same target
+    HELIX_FIRE               = 807,
+    HELIX_ICE                = 808,
+    HELIX_WIND               = 809,
+    HELIX_EARTH              = 810,
+    HELIX_WATER              = 811,
+    HELIX_LIGHTNING          = 812,
+    HELIX_LIGHT              = 813,
+    HELIX_DARK               = 814,
+
+    -- 815-1022
     -- PLACEHOLDER           = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }

@@ -1239,7 +1239,11 @@ xi.spells.damage.useDamageSpell = function(caster, target, spell)
             finalDamage    = math.floor(finalDamage * 2) + flatBonus  -- 2× + tier flat bonus
             helixDetonated = true
             caster:setCharVar('HelixDetEl', 0)
-            target:delStatusEffect(xi.effect.HELIX)         -- consume on any outcome including absorb
+            -- consume element-specific helix (post-restart stacking IDs 807-814) or shared HELIX
+            local HELIX_EL_EFFECTS = { [1]=807, [2]=808, [3]=809, [4]=810, [5]=811, [6]=812, [7]=813, [8]=814 }
+            local elEffect = HELIX_EL_EFFECTS[lastEl]
+            if elEffect then target:delStatusEffect(elEffect) end
+            target:delStatusEffect(xi.effect.HELIX)
         end
     end
 

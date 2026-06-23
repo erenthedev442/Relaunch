@@ -1,0 +1,38 @@
+-- =====================================================================
+-- aug_helix_damage.sql
+-- Add a "Helix Damage" augment by repurposing a dead augment-ID slot
+-- (same pattern as aug_spikes_dmg.sql / aug_phantom_roll_potency.sql).
+--
+-- WHY REPURPOSE 2044
+--   The 11-bit augment-ID space (1..2047) is FULL, so a new augment reuses an
+--   existing ID. 2044 ships as pure filler in stock sql/augments.sql --
+--   `(2044,0,0,0,0,0)`, modId=0 (Mod::NONE) -- so it attaches nothing and is
+--   NOT offered by the Augment Moogle. Nothing on any gear references it, so
+--   repointing it is safe.
+--
+-- WHAT IT DOES
+--   Sets augId 2044 -> Mod::HELIX_EFFECT (478), a % bonus to SCH Helix-spell
+--   damage. The stock engine NEVER read HELIX_EFFECT (478) -- it was set by
+--   Dark Arts / Tabula Rasa / Addendum: Black but consumed nowhere. The helix
+--   spell scripts (scripts/actions/spells/black/*helix*.lua) were wired to scale
+--   the DoT power by (100 + getMod(HELIX_EFFECT)) / 100, AND the per-tick clamp
+--   was raised from 9999 to 65535 (the uint16 effect-power ceiling), so a large
+--   Helix Damage % is actually felt over the DoT.
+--     value = 1, multiplier = 15  -> finalMod = (1 + boost) * 15 per slot
+--                                    => +15% per boost level, ~+480% at boost 31
+--   Wiring 478 ALSO finally makes Dark Arts (+level/4 %) / Tabula Rasa boost
+--   helix damage -- a latent stock gap. The catalog entry (augId 2044, catalyst
+--   Hardened Bone 2639) is pinned in tools/gen_augment_catalog.py CUSTOM_AUGS
+--   with maxBoost = 31, so it scales with the Augment Sage like Spikes/Enspell Dmg.
+--
+-- APPLYING
+--   1) Import (the deploy's custom-SQL ledger does it on a content change), or:
+--      mysql xidb < modules/custom/sql/aug_helix_damage.sql
+--   2) RESTART THE MAP SERVER -- the augments table is cached at boot via
+--      CItemEquipment::LoadAugmentData(); there is no hot-reload. (The helix spell
+--      scripts hot-reload, but the augment->mod mapping needs the restart.)
+--
+-- Idempotent: a plain UPDATE keyed on the augmentId. Safe to re-run.
+-- =====================================================================
+
+UPDATE `augments` SET `multiplier` = 15, `modId` = 478, `value` = 1 WHERE `augmentId` = 2044;

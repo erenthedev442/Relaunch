@@ -193,6 +193,14 @@ CUSTOM_AUGS = {
     #   (a fully-slotted 5-catalyst piece reaches ~+160 at max rank). cat 5 groups
     #   it with the Enspell Dmg / Magic-offense augments. Owner request 2026-06-21.
     2045: (2531, 1, 1, 1, 5, 'Spikes Dmg', 31),  # shard_of_obsidian (sharp volcanic shard)
+    # 2044 -> Mod::HELIX_EFFECT (478) "Helix Damage": % bonus to SCH Helix-spell
+    #   damage, repointed by modules/custom/sql/aug_helix_damage.sql. The stock
+    #   engine NEVER read HELIX_EFFECT; the helix spell scripts now scale the DoT
+    #   by (100 + HELIX_EFFECT)% AND the per-tick clamp was raised 9999 -> 65535
+    #   (the uint16 effect-power cap). base=1 / mult=15 => +15%/boost, ~+480% at a
+    #   maxed slot; maxBoost=31 scales with the Augment Sage. cat 5 (Magic offense).
+    #   Owner request 2026-06-22.
+    2044: (2639, 1, 15, 1, 5, 'Helix Damage', 31),  # hardened_bone
 }
 
 # Augments to DROP from the catalog entirely, keyed by augId. The augment still
