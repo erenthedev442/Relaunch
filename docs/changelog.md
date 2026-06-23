@@ -7,6 +7,11 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 !!! note "Week of June 22–28, 2026"
     **Tuesday, June 23**
 
+    - **Leaderboards** — Gil query uses char_inventory itemid=65535, not chars.gold
+    - **Leaderboards** — Prune stale boards + add 6 new endgame/economy boards
+    - **SMN** — Retarget all Blood Pacts to 500k-750k damage range
+    - **Augments** — Kill the Dual Wield augment (overflow-prone + redundant)
+    - **Combat** — Floor Dual Wield delay multiplier at 0 (DW>=100 was halving attack speed)
     - **Augments** — Restore Immunobreak Chance+ / Beast Affinity (+ Parrying) -- pin in generator
     - **Weapon Skills** — Make Scourge a real crit WS + buff Ragnarok's crit aftermath
     - **Augments** — Add Beast Affinity augment (Gargantuan Black Tiger Fang / Lynx Hide catalysts)
@@ -765,10 +770,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: aecdca251f79 -->
-_Last updated: 2026-06-23 10:27 UTC_
-<!-- DOCGEN:END id="last-updated" -->
