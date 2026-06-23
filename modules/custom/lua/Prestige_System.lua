@@ -743,6 +743,10 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
         -- from prior enmity on the programmatic kill.
         local idleDespawned = false
 
+        -- Hardcore NM mechanics engine (stance dance / AoE / adds / drain / doom /
+        -- enrage / phases). Cached require; the per-Court config is attached below.
+        local mechanics = require('modules/custom/lua/mob_mechanics_library')
+
         local mob = zone:insertDynamicEntity({
             objtype              = xi.objType.MOB,
             groupId              = gid,
@@ -759,10 +763,16 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             releaseIdOnDisappear = true,
 
             onMobDeath = function(deadMob, killer, optParams)
+                mechanics.cleanup(deadMob)
                 summonedTrial[pid] = nil
                 if killer and not idleDespawned then
                     m.onLegendKill(killer, gid)
                 end
+            end,
+
+            -- Mechanics ride the combat tick (all pcall-guarded in the library).
+            onMobFight = function(mfMob, mfTarget)
+                mechanics.tick(mfMob, mfTarget)
             end,
         })
 
@@ -811,6 +821,14 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             local newMax = math.floor(mob:getMaxHP() * boss.hpBoost * mult)
             mob:setMaxHP(newMax)
             mob:setHP(newMax)
+        end
+
+        -- Attach this Court's hardcore mechanics (keyed by tier minLevel). `tier`
+        -- is nil at the baseline -> the Nightmare Court set ([0]). The library
+        -- no-ops on a nil config, so an untuned tier simply fights vanilla.
+        local tierMech = ts and ts.tierMechanics
+        if tierMech then
+            mechanics.attach(mob, tierMech[(tier and tier.minLevel) or 0])
         end
 
         summonedTrial[pid] = { alive = true, label = boss.label, gid = gid }

@@ -82,6 +82,29 @@ end
 M.shout = shout
 
 -----------------------------------
+-- addMod that won't overflow the engine's int16 modifier storage (max 32767).
+-- The custom bosses already carry large BASE mods (ATT in the 20k+ range, REGEN
+-- ~1000); a naive addMod on top can wrap to a huge NEGATIVE -> the boss hits for
+-- ~0 (or heals backwards). Clamps the running total to `cap`. Returns how much
+-- was actually added (so callers can peel exactly that much back off later).
+-----------------------------------
+local function safeAddMod(mob, modId, amount, cap)
+    cap = cap or 32000
+    local added = 0
+    pcall(function()
+        local cur  = mob:getMod(modId)
+        local room = cap - cur
+        local add  = math.min(amount, room)
+        if add > 0 then
+            mob:addMod(modId, add)
+            added = add
+        end
+    end)
+    return added
+end
+M.safeAddMod = safeAddMod
+
+-----------------------------------
 -- Stance dance: setMod is ABSOLUTE, so each swap just sets the stance's mods.
 -----------------------------------
 local function applyStance(mob, stanceCfg, idx, st)
@@ -169,9 +192,10 @@ local function spawnAdds(mob, phase, st)
                 if not st.addsAlive then return end
                 st.addsAlive[deadAdd:getID()] = nil
                 for _ in pairs(st.addsAlive) do return end   -- some still alive
-                if st.regenActive then                       -- last add down -> stop the regen
+                if st.regenActive then                       -- last add down -> peel the boost
                     st.regenActive = false
-                    pcall(function() mob:setMod(xi.mod.REGEN, 0) end)
+                    pcall(function() mob:addMod(xi.mod.REGEN, -(st.addedRegen or 0)) end)
+                    st.addedRegen = 0
                     shout(mob, 'The last servitor falls -- its wounds stay open!', st)
                 end
             end,
@@ -189,7 +213,11 @@ local function spawnAdds(mob, phase, st)
 
     if phase.regen then
         st.regenActive = true
-        pcall(function() mob:setMod(xi.mod.REGEN, phase.regen) end)
+        -- addMod (not setMod) so the boss's BASE regen survives -- the adds add a
+        -- heal-pressure layer on top, clamped to int16 and peeled back off (exactly
+        -- what was added) when the last add dies. Tracks the ACTUAL delta so a
+        -- clamp or a second overlapping adds-phase can't desync the removal.
+        st.addedRegen = (st.addedRegen or 0) + safeAddMod(mob, xi.mod.REGEN, phase.regen)
     end
 end
 
@@ -202,10 +230,8 @@ local function firePhase(mob, phase, st)
     if act == 'adds' then
         spawnAdds(mob, phase, st)
     elseif act == 'fury' then
-        pcall(function()
-            mob:addMod(xi.mod.ATT, phase.att or 2500)
-            mob:addMod(xi.mod.HASTE_GEAR, phase.haste or 100)
-        end)
+        safeAddMod(mob, xi.mod.ATT, phase.att or 2500)
+        pcall(function() mob:addMod(xi.mod.HASTE_GEAR, phase.haste or 100) end)
     elseif act == 'dispel' then
         for _, p in ipairs(playersNear(mob, phase.radius or 30.0)) do
             for _ = 1, (phase.count or 3) do
@@ -218,10 +244,8 @@ local function firePhase(mob, phase, st)
         pcall(function() mob:addHP(math.floor(mob:getMaxHP() * (phase.healPct or 15) / 100)) end)
     elseif act == 'enrage' then
         st.enraged = true
-        pcall(function()
-            mob:addMod(xi.mod.ATT, phase.att or 6000)
-            mob:addMod(xi.mod.HASTE_GEAR, phase.haste or 200)
-        end)
+        safeAddMod(mob, xi.mod.ATT, phase.att or 6000)
+        pcall(function() mob:addMod(xi.mod.HASTE_GEAR, phase.haste or 200) end)
     elseif act == 'doom' then
         applyDoom(mob, { dur = phase.dur or 30, radius = phase.radius }, st)
     elseif act == 'terror' then
@@ -271,10 +295,8 @@ function M.tick(mob, target)
     -- Soft enrage (time-based DPS check).
     if cfg.enrage and not st.enraged and now >= st.startedAt + (cfg.enrage.sec or 180) then
         st.enraged = true
-        pcall(function()
-            mob:addMod(xi.mod.ATT, cfg.enrage.att or 4000)
-            mob:addMod(xi.mod.HASTE_GEAR, cfg.enrage.haste or 150)
-        end)
+        safeAddMod(mob, xi.mod.ATT, cfg.enrage.att or 4000)
+        pcall(function() mob:addMod(xi.mod.HASTE_GEAR, cfg.enrage.haste or 150) end)
         shout(mob, cfg.enrage.msg, st)
     end
 

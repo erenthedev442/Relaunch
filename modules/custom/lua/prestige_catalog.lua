@@ -255,6 +255,84 @@ return
             xi.mod.MEVA, xi.mod.MDEF, xi.mod.EVASION,
         },
 
+        -- Per-Court HARDCORE mechanics (mob_mechanics_library.lua), keyed by tier
+        -- minLevel so each Court plays differently and intensity climbs with the
+        -- tier. Stance DMGPHYS/DMGMAGIC cap at -5000 (-50%), a heavy resist that
+        -- forces a damage-type switch. Adds reuse zone-222 groupId 11370 scaled
+        -- down. Every call is pcall-guarded in the library. Added 2026-06-22.
+        tierMechanics =
+        {
+            -- Nightmare Court: fear. Terror pulses + a soft enrage; sleep at low HP.
+            [0] = {
+                name   = 'Nightmare Court',
+                cc     = { periodSec = 22, effect = xi.effect.TERROR, dur = 5, msg = 'fills the air with dread -- you freeze in terror!' },
+                enrage = { sec = 240, att = 4000, haste = 120, msg = 'grows impatient -- its assault quickens!' },
+                phases = { { hp = 25, action = 'terror', effect = xi.effect.SLEEP_I, dur = 6, msg = 'drags you into nightmare!' } },
+            },
+            -- Voidwalkers: a feeding swarm. Adds heal it -- sever them or it never dies.
+            [10] = {
+                name   = 'Voidwalkers',
+                drain  = { periodSec = 8, healPct = 2 },
+                enrage = { sec = 220, att = 5000, haste = 130, msg = 'feasts -- its strikes land harder!' },
+                phases = {
+                    { hp = 60, action = 'adds', count = 3, addGroupId = 11370, addZoneId = 222, addLevel = 140, regen = 10000, msg = 'splits off devouring spawn -- they feed it!' },
+                    { hp = 25, action = 'adds', count = 4, addGroupId = 11370, addZoneId = 222, addLevel = 145, regen = 15000, msg = 'swarms anew -- sever the feed!' },
+                },
+            },
+            -- The Jailers: lockdown. Cycles a heavy physical-/magical-resist; switch type.
+            [20] = {
+                name   = 'The Jailers',
+                stance = { startHpp = 90, periodSec = 16, stances = {
+                    { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'locks its body against weapons -- strike with magic!' },
+                    { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards against magic -- cut it down with steel!' },
+                } },
+                enrage = { sec = 210, att = 5500, haste = 140, msg = 'tightens the chains -- it presses the attack!' },
+            },
+            -- Voidwalker Lords: pressure. AoE shockwaves + buff-stripping phases.
+            [30] = {
+                name   = 'Voidwalker Lords',
+                aoe    = { periodSec = 11, dmgPct = 22, msg = 'erupts -- a shockwave tears outward!' },
+                enrage = { sec = 200, att = 6500, haste = 150, msg = 'unbinds its full power!' },
+                phases = {
+                    { hp = 55, action = 'dispel', count = 4, msg = 'rips your blessings away!' },
+                    { hp = 25, action = 'dispel', count = 6, msg = 'strips you bare!' },
+                },
+            },
+            -- World's End: the full fight -- adds, nuke, resist dance, tight enrage, doom.
+            [40] = {
+                name   = "World's End",
+                stance = { startHpp = 70, periodSec = 14, stances = {
+                    { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'phases beyond steel -- magic only!' },
+                    { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'turns magic aside -- steel only!' },
+                } },
+                aoe    = { periodSec = 13, dmgPct = 25, msg = 'detonates the void around it!' },
+                enrage = { sec = 180, att = 8000, haste = 200, msg = 'the end nears -- it goes all out!' },
+                phases = {
+                    { hp = 75, action = 'adds', count = 3, addGroupId = 11370, addZoneId = 222, addLevel = 150, regen = 25000, msg = 'tears spawn from the void!' },
+                    { hp = 50, action = 'nuke', dmgPct = 40, msg = 'collapses reality in a blast!' },
+                    { hp = 25, action = 'fury', att = 4000, haste = 120, msg = 'rages against oblivion!' },
+                },
+                doom   = { startHpp = 12, dur = 30, msg = 'marks you to die with it!' },
+            },
+            -- Celestial Wardens: everything, faster and meaner. Silence + judgment.
+            [60] = {
+                name   = 'Celestial Wardens',
+                stance = { startHpp = 90, periodSec = 12, stances = {
+                    { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'deems your weapons unworthy -- magic only!' },
+                    { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'deems your magic unworthy -- steel only!' },
+                } },
+                aoe    = { periodSec = 10, dmgPct = 28, msg = 'looses a wave of judgment!' },
+                cc     = { periodSec = 20, effect = xi.effect.SILENCE, dur = 8, msg = 'silences the faithless!' },
+                enrage = { sec = 165, att = 10000, haste = 250, msg = 'ascends to its final form!' },
+                phases = {
+                    { hp = 70, action = 'adds', count = 4, addGroupId = 11370, addZoneId = 222, addLevel = 150, regen = 28000, msg = 'calls down celestial servitors!' },
+                    { hp = 45, action = 'nuke', dmgPct = 45, msg = 'unleashes a cataclysm!' },
+                    { hp = 20, action = 'doom', dur = 25, msg = 'passes final judgment -- doom upon you!' },
+                },
+                doom   = { startHpp = 10, dur = 25, msg = 'sentences you to death!' },
+            },
+        },
+
         -- minLevel ASCENDING. `name` is the Court shown in menus/announces.
         -- Tier 0 = no roster -> the top-level Nightmare Court. Tiers 1-4 each
         -- summon their own three bosses (one Court per 10 ascensions).
