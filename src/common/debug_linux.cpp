@@ -41,26 +41,19 @@ void safe_print(const char* str)
 
 void dumpBacktrace(int signal)
 {
-    safe_print("Crash detected, generating traceback (this may take a while)\n");
-
-    backward::StackTrace trace;
-    backward::Printer    printer;
-
-    trace.load_here();
-
-    printer.object     = true;
-    printer.color_mode = backward::ColorMode::always;
-    printer.address    = true;
-
-    for (auto& line : logging::GetBacktrace())
-    {
-        safe_print(line.c_str());
-    }
-
-    std::ostringstream traceStream;
-    printer.print(trace, traceStream);
-    safe_print(traceStream.str().c_str()); // This probably isn't safe?
-    raise(SIGQUIT);                        // Let OS dump the core file
+    // FJB: go STRAIGHT to a core dump and let the out-of-process watcher
+    // (tools/crash_capture.sh) symbolicate it offline with gdb. The in-process
+    // backward-cpp traceback we used to run here ALLOCATES, so it HUNG whenever
+    // the crash was heap corruption (the recurring "corrupted double-linked list"
+    // SIGABRTs) -- systemd's 90s stop timeout then SIGKILLed the process, leaving
+    // NO core and a ~90s outage. Dumping the core immediately fixes both: every
+    // crash (SIGSEGV and SIGABRT) leaves a usable, symbol-matching core AND
+    // recovery is back to ~5s. The crashing thread's stack is captured in the
+    // core, so nothing is lost vs the old (ANSI-garbled, often-truncated) live
+    // trace -- gdb on the core gives a better, full, all-threads backtrace.
+    safe_print("Crash detected -- dumping core (analyzed offline by tools/crash_capture.sh)\n");
+    std::signal(SIGQUIT, SIG_DFL);
+    raise(SIGQUIT); // Let the OS dump the core file
 }
 
 void debug::init()
