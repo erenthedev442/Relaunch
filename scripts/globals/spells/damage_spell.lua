@@ -710,11 +710,12 @@ xi.spells.damage.calculateMagicBonusDiff = function(caster, target, spellId, ski
     local finalCasterMAB = (100 + mab) * (1 + caster:getMod(xi.mod.AUTO_MAB_COEFFICIENT) / 100)
     local finalTargetMDB = math.max(100 + target:getMod(xi.mod.MDEF) + mDefBarBonus, 1) -- floor at 1: avoids div-by-zero on extreme MDEF debuffs
 
-    -- FJB: PC casters have NO upper cap on the MAB/MDB ratio (true uncapped magic,
-    -- mirrors the WS uncap). Mob casters keep the retail 10x ceiling so their nukes
-    -- can't scale absurdly against players.
+    -- FJB: PC casters and player-owned automatons have NO upper cap on the MAB/MDB
+    -- ratio (true uncapped magic, mirrors the WS uncap). Mob casters keep the retail
+    -- 10x ceiling so their nukes can't scale absurdly against players.
     local mabRatio = finalCasterMAB / finalTargetMDB
-    if caster:isPC() then
+    local isPlayerAutomaton = caster:isPet() and caster:getMaster() ~= nil and caster:getMaster():isPC()
+    if caster:isPC() or isPlayerAutomaton then
         magicBonusDiff = math.max(mabRatio, 0)
     else
         magicBonusDiff = utils.clamp(mabRatio, 0, 10)
