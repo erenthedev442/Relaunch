@@ -1,7 +1,7 @@
 -----------------------------------
 -- prime_voucher_reward.lua
 --
--- Reusable helper for awarding a Prime Voucher (item 29699) as an EARNED
+-- Reusable helper for awarding a Prime Voucher (the Maze Monger Crown, item 3038) as an EARNED
 -- reward from any source -- a Hunting League NM drop, a weekly board payout,
 -- a boss kill, a treasure dig, etc. Centralizes the inventory-space check and
 -- the player messaging so every source behaves identically. The granted
@@ -25,7 +25,7 @@
 -----------------------------------
 local M = {}
 
-local VOUCHER = 29699
+local VOUCHER = 3038   -- Maze Monger Crown (Rare/Ex); the Prime Voucher item (was the blank custom 29699)
 
 -----------------------------------
 -- Award `count` Prime Voucher(s) to `player`. `reason` is an optional short
@@ -48,7 +48,7 @@ function M.award(player, count, reason)
 
     local tag = reason and (' (' .. reason .. ')') or ''
     player:printToPlayer(
-        string.format('You earned %d Prime Voucher%s%s! Turn one in at the Prime Armory in GM Home for Prime Weapon Trial 3.',
+        string.format('You earned %d Maze Monger Crown%s%s -- your Prime Voucher! Turn one in at the Prime Armory in GM Home for Prime Weapon Trial 3.',
             count, count == 1 and '' or 's', tag),
         xi.msg.channel.SYSTEM_3)
 

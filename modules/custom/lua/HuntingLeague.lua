@@ -607,7 +607,7 @@ local function insertSpawnerNPC(zone)
                             end
 
                             -- Prime Voucher: the Prime Weapon TRIAL 3 turn-in
-                            -- (item 29699). ~1% drop from any Hunting League NM;
+                            -- (the Maze Monger Crown, item 3038). ~1% drop from any Hunting League NM;
                             -- only drops while the player still needs it, so it
                             -- never clutters once Trial 3 is done. Also grantable
                             -- via !primevoucher. pcall-guarded so a reward error

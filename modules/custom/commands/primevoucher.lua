@@ -1,6 +1,6 @@
 -----------------------------------
 -- func: primevoucher
--- desc: [GM] Grant Prime Voucher(s) (item 29699) to a player. They trade one
+-- desc: [GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one
 --       at the Prime Armory NPC in GM Home to claim a Prime weapon of their
 --       choice. The voucher is EX (bound), so a GM cannot trade it over by
 --       hand -- this command is how you grant it.
@@ -8,7 +8,7 @@
 -- Usage:  !primevoucher <player> [count]   -- give to a named online player
 --         !primevoucher                    -- give one to yourself
 -----------------------------------
-local VOUCHER = 29699
+local VOUCHER = 3038   -- Maze Monger Crown (Rare/Ex); the Prime Voucher item (was the blank custom 29699)
 
 ---@type TCommand
 local commandObj = {}

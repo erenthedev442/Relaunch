@@ -1,6 +1,13 @@
 -- ============================================================================
 -- prime_voucher.sql
 --
+-- LEGACY (2026-06-22): the Prime Voucher is now the Maze Monger Crown (item 3038, a
+-- real Rare/Ex item) -- the custom 29699 below rendered as a blank/nameless item with no
+-- client art. All sources (Hunting League / Maat drops + !primevoucher) now grant 3038;
+-- the Prime Armory turn-in accepts BOTH 3038 and this legacy 29699 so prior holders aren't
+-- stranded. This file is kept ONLY to keep 29699 a valid item for vouchers already in
+-- circulation -- nothing grants it anymore. (Item 3038 is stock, so no INSERT is needed.)
+--
 -- The "Prime Voucher" (item 29699) -- the token a GM grants at their
 -- discretion. A player trades one to the Prime Armory NPC at GM Home to claim
 -- a Prime weapon of their choice (see modules/custom/lua/PrimeArmory_NPC.lua).

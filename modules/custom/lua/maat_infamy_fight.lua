@@ -215,7 +215,7 @@ local function spawnMaat(player)
                 end
             end
 
-            -- Prime Weapon TRIAL 3: a Prime Voucher (item 29699) drops 0.5%
+            -- Prime Weapon TRIAL 3: a Prime Voucher (the Maze Monger Crown, item 3038) drops 0.5%
             -- from the Maat fight, on top of the Hunting League source. Gated
             -- on PW_Trial3_Done so it stops once Trial 3 is cleared; the reward
             -- helper prints its own message + handles a full inventory.

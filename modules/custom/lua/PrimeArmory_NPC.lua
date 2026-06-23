@@ -30,7 +30,7 @@ local TRIALS =
 {
     { var = 'PW_Trial1_Done', label = 'Trial 1', desc = '12 each of all 20 Abyssea collectibles (turn in here)' },
     { var = 'PW_Trial2_Done', label = 'Trial 2', desc = 'Endless Tower floor 50' },
-    { var = 'PW_Trial3_Done', label = 'Trial 3', desc = 'Prime Voucher - rare Hunting League NM drop (turn in here)' },
+    { var = 'PW_Trial3_Done', label = 'Trial 3', desc = 'Prime Voucher (Maze Monger Crown) - rare Hunting League NM drop (turn in here)' },
     { var = 'PW_Trial4_Done', label = 'Trial 4', desc = 'Weapon Guardian defeated (Job Mastery)' },
     { var = 'PW_Trial5_Done', label = 'Trial 5', desc = '99 each of Jadeshell, Silverpiece & 100 Byne Bill (turn in here)' },
 }
@@ -67,10 +67,13 @@ local T1_SETS =
     { name = 'Voyage',    types = { { id = 3226, t = 'Stone' }, { id = 3227, t = 'Coin' }, { id = 3228, t = 'Jewel' }, { id = 3229, t = 'Card' } } },
 }
 
--- Trial 3: turn in ONE Prime Voucher (item 29699, defined in
--- modules/custom/sql/prime_voucher.sql) -- a ~1% drop from Hunting League NMs
--- (HuntingLeague.lua onMobDeath), also grantable via the !primevoucher command.
-local T3_ITEM = 29699
+-- Trial 3: turn in ONE Prime Voucher -- now the Maze Monger Crown (item 3038, a real
+-- Rare/Ex item with proper client art; the old custom 29699 rendered as a blank item).
+-- A ~1% drop from Hunting League NMs (HuntingLeague.lua onMobDeath), also grantable via
+-- the !primevoucher command. The legacy 29699 voucher is still accepted at turn-in below
+-- so anyone who already earned one isn't stranded.
+local T3_ITEM        = 3038    -- Maze Monger Crown (Rare/Ex) -- the Prime Voucher
+local T3_ITEM_LEGACY = 29699   -- old blank custom voucher, still accepted at turn-in
 
 -- Trial 5: collect 99 EACH of three Aht Urhgan Assault currencies (stack to 99).
 -- Turned in here, which CONSUMES all 297 (99 x 3) and stamps PW_Trial5_Done.
@@ -196,13 +199,21 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
             player:printToPlayer('[Prime Armory] Trial 3 is already complete, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
-        if player:getItemCount(T3_ITEM) < 1 then
-            player:printToPlayer('[Prime Armory] You need a Prime Voucher - a rare drop from Hunting League NMs - for Trial 3, kupo!', xi.msg.channel.SYSTEM_3)
+        -- Accept the new Maze Monger Crown (T3_ITEM) OR the legacy blank voucher
+        -- (T3_ITEM_LEGACY), so anyone holding an old voucher isn't stranded.
+        local voucherId
+        if player:getItemCount(T3_ITEM) >= 1 then
+            voucherId = T3_ITEM
+        elseif player:getItemCount(T3_ITEM_LEGACY) >= 1 then
+            voucherId = T3_ITEM_LEGACY
+        end
+        if not voucherId then
+            player:printToPlayer('[Prime Armory] You need a Prime Voucher (a Maze Monger Crown) - a rare drop from Hunting League NMs - for Trial 3, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
-        local before = player:getItemCount(T3_ITEM)
-        player:delItem(T3_ITEM, 1)
-        if player:getItemCount(T3_ITEM) >= before then
+        local before = player:getItemCount(voucherId)
+        player:delItem(voucherId, 1)
+        if player:getItemCount(voucherId) >= before then
             player:printToPlayer('[Prime Armory] Keep the Prime Voucher in your MAIN inventory and try again, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
