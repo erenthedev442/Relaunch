@@ -200,6 +200,9 @@ spawnNM = function(player, session)
     mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
     mob:setModelSize(3)
     mob:setHP(hp)
+    for modId, val in pairs(C.nmMods(level)) do
+        if val ~= 0 then mob:setMod(modId, val) end
+    end
     mob:addEnmity(player, 30000, 30000)
 
     session.nm    = mob

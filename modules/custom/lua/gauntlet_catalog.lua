@@ -42,6 +42,32 @@ function C.nmLevel(level)
     return 72 + level * 8
 end
 
+-- Stat scaling per level (0 at level 1, multiplied by (level-1))
+-- These are additive mods on top of the mob's template stats.
+C.ATT_PER_LEVEL = 300
+C.DEF_PER_LEVEL = 250
+C.ACC_PER_LEVEL = 80
+C.EVA_PER_LEVEL = 60
+C.STR_PER_LEVEL = 30
+C.DEX_PER_LEVEL = 20
+C.VIT_PER_LEVEL = 25
+C.AGI_PER_LEVEL = 20
+
+-- Flat stat mod table for a given Gauntlet level (xi.mod.* resolved at call time)
+function C.nmMods(level)
+    local t = level - 1
+    return {
+        [xi.mod.ATT] = t * C.ATT_PER_LEVEL,
+        [xi.mod.DEF] = t * C.DEF_PER_LEVEL,
+        [xi.mod.ACC] = t * C.ACC_PER_LEVEL,
+        [xi.mod.EVA] = t * C.EVA_PER_LEVEL,
+        [xi.mod.STR] = t * C.STR_PER_LEVEL,
+        [xi.mod.DEX] = t * C.DEX_PER_LEVEL,
+        [xi.mod.VIT] = t * C.VIT_PER_LEVEL,
+        [xi.mod.AGI] = t * C.AGI_PER_LEVEL,
+    }
+end
+
 -- Human-readable HP display (e.g. "12.8M")
 function C.formatHp(hp)
     if hp >= 1000000 then
