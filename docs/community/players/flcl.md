@@ -1,8 +1,8 @@
 # Flcl
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 9d 17h
 
-`⭐ 46 Ascensions` `💪 18 jobs @99`
+`⭐ 79 Ascensions` `💪 19 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **SCH 99** |
-| Sub job | RDM 99 |
-| Time played | 67h |
-| Enemies defeated | 6,780 |
-| Deaths | 82 |
+| Main job | **COR 99** |
+| Sub job | SCH 99 |
+| Time played | 72h |
+| Enemies defeated | 7,315 |
+| Deaths | 89 |
 
 ## Job levels
 
@@ -26,7 +26,7 @@
 | **WHM** | **99** | **DRG** | **99** |
 | **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
-| **THF** | **99** | COR | 62 |
+| **THF** | **99** | **COR** | **99** |
 | **PLD** | **99** | PUP | 1 |
 | **DRK** | **99** | **DNC** | **99** |
 | BST | 1 | **SCH** | **99** |
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 68,087
-- **Marks (lifetime):** 26,496
+- **Marks (current):** 2,874
+- **Marks (lifetime):** 27,196
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 5,536
+- **Total NM kills:** 5,777
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 514
+- **Augments crafted:** 610
 - **NM Affinities:** 11 / 13
 
 ## Reforge
@@ -57,16 +57,16 @@
 
 ## Prestige
 
-- **Total Ascensions:** 46
-- **Per-job prestige:** SAM P20 · DRG P11 · DNC P3 · SCH P12
+- **Total Ascensions:** 79
+- **Per-job prestige:** SAM P20 · DRG P11 · COR P24 · DNC P3 · SCH P21
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
-**19** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · First Ascension · Ascending Master · Star-Slayer · Devourer of the Devourer · Augment Novice · Augment Expert · Augment Master.
+**20** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · First Ascension · Ascending Master · Eternal Ascendant · Star-Slayer · Devourer of the Devourer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1acfaf454d9f -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: bf170ed4692d -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

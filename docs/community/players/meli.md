@@ -1,6 +1,6 @@
 # Meli
 
-**Bastok citizen** · 🟡 Seen this month · Created 2026-06-13 · Last seen 2026-06-15 · Character age 9d 10h
+**Bastok citizen** · 🟡 Seen this month · Created 2026-06-13 · Last seen 2026-06-15 · Character age 9d 12h
 
 `⭐ 2 Ascensions` `💪 2 jobs @99`
 
@@ -62,7 +62,7 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -82,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cd0f8d0205fc -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 890a53126205 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

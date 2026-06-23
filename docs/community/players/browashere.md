@@ -1,6 +1,6 @@
 # Browashere
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 7d 6h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 7d 7h
 
 `💪 1 job @99`
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: aff4ee5ea176 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 6e18026956d0 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

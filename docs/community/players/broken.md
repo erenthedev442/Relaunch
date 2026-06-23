@@ -1,6 +1,6 @@
 # Broken
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 14h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 6d 16h
 
 `⭐ 15 Ascensions` `💪 22 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 58h |
-| Enemies defeated | 873 |
+| Time played | 62h |
+| Enemies defeated | 887 |
 | Deaths | 4 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 248,684
-- **Marks (lifetime):** 121,973
-- **Distinct NMs slain:** 11
-- **Total NM kills:** 4,867
+- **Marks (current):** 407,498
+- **Marks (lifetime):** 197,890
+- **Distinct NMs slain:** 14
+- **Total NM kills:** 5,562
 
 ## Augment Sage
 
@@ -62,7 +62,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f856904e13ef -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: e57828e1ed58 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

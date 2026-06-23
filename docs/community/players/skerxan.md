@@ -1,8 +1,8 @@
 # Skerxan
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 3d 9h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 3d 10h
 
-`💪 8 jobs @99`
+`💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,20 +12,20 @@
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | NIN 99 |
-| Time played | 17h |
-| Enemies defeated | 2,149 |
-| Deaths | 15 |
+| Sub job | MNK 79 |
+| Time played | 20h |
+| Enemies defeated | 2,266 |
+| Deaths | 16 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
-| MNK | 1 | **NIN** | **99** |
+| MNK | 79 | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| **RDM** | **99** | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | **DRK** | **99** | **DNC** | **99** |
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 9,667
-- **Marks (lifetime):** 853
-- **Distinct NMs slain:** 12
-- **Total NM kills:** 137
+- **Marks (current):** 9,920
+- **Marks (lifetime):** 1,207
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 143
 
 ## Augment Sage
 
-- **Mastery rank:** 2 / 5
-- **Augments crafted:** 43
-- **NM Affinities:** 10 / 13
+- **Mastery rank:** 3 / 5
+- **Augments crafted:** 53
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
@@ -57,17 +57,18 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Wave Rider · Augment Novice.
+**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Augment Novice · Augment Expert.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 7h 52m |
+| HL Rank I → V | 2d 11h |
 
 ---
 
@@ -76,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 91d26552ee5c -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 80ea7146f8be -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

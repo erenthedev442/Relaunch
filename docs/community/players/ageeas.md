@@ -1,6 +1,6 @@
 # Ageeas
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-19 · Character age 4d 4h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-19 · Character age 4d 5h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 47a35f922d57 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: dca650f736b4 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

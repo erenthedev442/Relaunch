@@ -1,8 +1,8 @@
 # Shadowsfall
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 5d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 5d 2h
 
-`💪 2 jobs @99`
+`⭐ 4 Ascensions` `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 6h |
-| Enemies defeated | 114 |
+| Time played | 8h |
+| Enemies defeated | 172 |
 | Deaths | 0 |
 
 ## Job levels
@@ -36,16 +36,27 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 11,189
+- **Marks (current):** 83,269
 - **Marks (lifetime):** 2,242
 - **Distinct NMs slain:** 7
-- **Total NM kills:** 149
+- **Total NM kills:** 286
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Veteran | 11,000 | 14,000 to Master |
 
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 86
-- **NM Affinities:** 0 / 13
+- **Augments crafted:** 256
+- **NM Affinities:** 1 / 13
 
 ## Reforge
 
@@ -55,13 +66,18 @@
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
+## Prestige
+
+- **Total Ascensions:** 4
+- **Per-job prestige:** MNK P4
+
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
+**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · First Ascension · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -77,6 +93,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f170a9d98e81 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 4d6dc6539b2a -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

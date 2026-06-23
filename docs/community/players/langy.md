@@ -1,6 +1,6 @@
 # Langy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 13h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 15h
 
 `⭐ 2 Ascensions` `💪 22 jobs @99`
 
@@ -67,7 +67,7 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 106305e62e7b -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 8402c425e369 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

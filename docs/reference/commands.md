@@ -2,7 +2,7 @@
 
 These chat commands are available to every player on Legendary (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 72
+**Total player-accessible commands:** 73
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
@@ -18,6 +18,7 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!achievements` | — | Shows all personal milestone achievements - earned and unearned - with their reward amounts and descriptions. | :material-puzzle: **custom** |
 | `!aegis` | — | Cast Divine Aegis (a PLD-only custom spell) on yourself: a Holy shield that absorbs physical damage and cuts physical damage taken by 20% for 30s, then detonates as a Holy AoE. Exposed as a command because the client cannot hard-cast custom spell IDs. | :material-puzzle: **custom** |
 | `!ah` | — | opens the Auction House menu anywhere in the world |  |
+| `!aoews` | string | Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (GM Home). Cannot be changed after setting. |  |
 | `!apex` | string | Apex Trials helper -- check your record / Paragon Points, start a climb, or bail out of one. | :material-puzzle: **custom** |
 | `!augstats` | — | Shows the true augment contributions on your equipped gear. |  |
 | `!autojp` | string | Auto-spends all unspent job points on whichever categories of the player's CURRENT MAIN JOB can still be upgraded, distributing breadth-first so every category grows evenly. | :material-puzzle: **custom** |
@@ -182,6 +183,14 @@ Shows all personal milestone achievements - earned and unearned - with their rew
 Cast Divine Aegis (a PLD-only custom spell) on yourself: a Holy shield that absorbs physical damage and cuts physical damage taken by 20% for 30s, then detonates as a Holy AoE. Exposed as a command because the client cannot hard-cast custom spell IDs.
 
 **Usage:** `aegis`
+
+### `!aoews`
+
+Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (GM Home). Cannot be changed after setting.
+
+**Usage:** `aoews`
+
+**Parameter types:** string
 
 ### `!apex`  _(custom)_
 
@@ -550,6 +559,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b8ec9d95f451 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 2b15530f7d44 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

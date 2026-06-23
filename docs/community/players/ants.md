@@ -1,6 +1,6 @@
 # Ants
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-22 · Character age 9d
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-22 · Character age 9d 2h
 
 `💪 8 jobs @99`
 
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cfdc4c012dcf -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: c57529638b77 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

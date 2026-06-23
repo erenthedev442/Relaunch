@@ -1,6 +1,6 @@
 # Salnexia
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 5d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 5d 3h
 
 `💪 2 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | SAM 99 |
-| Time played | 29h |
-| Enemies defeated | 695 |
-| Deaths | 12 |
+| Time played | 33h |
+| Enemies defeated | 725 |
+| Deaths | 16 |
 
 ## Job levels
 
@@ -36,32 +36,32 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 685
-- **Marks (lifetime):** 1,359
+- **Marks (current):** 7,685
+- **Marks (lifetime):** 1,529
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 389
+- **Total NM kills:** 454
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Augments crafted:** 6
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 2,775 | 2,775 |
-| Relic | 1,500 | 0 |
+| AF | 125 | 3,275 |
+| Relic | 2,375 | 25 |
 | Empyrean | 1,100 | 0 |
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 117
 
 ## Achievements
 
-**7** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Wave Rider.
+**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Wave Rider · Star-Slayer · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: db54e41062ce -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 5c39596de3e4 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Darrent
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 8d 11h
 
-`⭐ 3 Ascensions` `💪 9 jobs @99`
+`⭐ 8 Ascensions` `💪 9 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **DRG 99** |
-| Sub job | SAM 99 |
-| Time played | 58h |
-| Enemies defeated | 4,221 |
+| Main job | **BLM 99** |
+| Sub job | RDM 99 |
+| Time played | 62h |
+| Enemies defeated | 5,041 |
 | Deaths | 17 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,506
-- **Marks (lifetime):** 7,067
+- **Marks (current):** 1,045
+- **Marks (lifetime):** 9,487
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 172
+- **Total NM kills:** 203
 
 ## Guild standing
 
@@ -55,25 +55,25 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 328
+- **Augments crafted:** 330
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 2,515 | 65 |
-| Relic | 2,350 | 0 |
-| Empyrean | 1,575 | 2,425 |
+| AF | 415 | 65 |
+| Relic | 250 | 0 |
+| Empyrean | 525 | 2,425 |
 
 ## Prestige
 
-- **Total Ascensions:** 3
-- **Per-job prestige:** DRG P3
+- **Total Ascensions:** 8
+- **Per-job prestige:** BLM P2 · DRG P6
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3f6cacbbcc81 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 6a361e8fe670 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Yojin
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-22 · Character age 9d 4h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 6h
 
-`⭐ 3 Ascensions` `💪 17 jobs @99`
+`⭐ 4 Ascensions` `💪 18 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | COR 99 |
-| Time played | 40h |
-| Enemies defeated | 6,353 |
-| Deaths | 31 |
+| Sub job | DNC 88 |
+| Time played | 42h |
+| Enemies defeated | 6,935 |
+| Deaths | 32 |
 
 ## Job levels
 
@@ -23,12 +23,12 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
-| **WHM** | **99** | DRG | 91 |
-| **BLM** | **99** | SMN | 1 |
+| **WHM** | **99** | DRG | 98 |
+| **BLM** | **99** | **SMN** | **99** |
 | **RDM** | **99** | **BLU** | **99** |
 | **THF** | **99** | **COR** | **99** |
 | **PLD** | **99** | PUP | 1 |
-| **DRK** | **99** | DNC | 1 |
+| **DRK** | **99** | DNC | 88 |
 | **BST** | **99** | **SCH** | **99** |
 | **BRD** | **99** | GEO | 1 |
 | **RNG** | **99** | **RUN** | **99** |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 27,237
+- **Marks (current):** 31,637
 - **Marks (lifetime):** 856
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 104
+- **Total NM kills:** 130
 
 ## Guild standing
 
@@ -50,35 +50,35 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 | AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
 | Empyrean Hunters' Guild | Journeyman | 2,000 | 3,000 to Veteran |
-| League Hunters' Guild | Journeyman | 2,000 | 3,000 to Veteran |
+| League Hunters' Guild | Journeyman | 2,500 | 2,500 to Veteran |
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 303
+- **Augments crafted:** 305
 - **NM Affinities:** 13 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 1,200 | 0 |
-| Relic | 150 | 150 |
+| AF | 1,300 | 0 |
+| Relic | 1,000 | 150 |
 | Empyrean | 286 | 3,536 |
 
 ## Job Rebirth
 
-- **Total rebirths:** 12
-- **By job:** DRK ×12
+- **Total rebirths:** 14
+- **By job:** DRK ×14
 
 ## Prestige
 
-- **Total Ascensions:** 3
-- **Per-job prestige:** WAR P3
+- **Total Ascensions:** 4
+- **Per-job prestige:** WAR P3 · DRK P1
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9ad60507811d -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 5fd0f3aba194 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

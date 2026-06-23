@@ -1,6 +1,6 @@
 # Phatdood
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 3d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 3d 3h
 
 `⭐ 22 Ascensions` `💪 7 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **DRG 99** |
-| Sub job | DRK 99 |
-| Time played | 26h |
-| Enemies defeated | 1,223 |
-| Deaths | 42 |
+| Main job | **SAM 99** |
+| Sub job | RDM 99 |
+| Time played | 31h |
+| Enemies defeated | 1,394 |
+| Deaths | 65 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,455
-- **Marks (lifetime):** 29,475
+- **Marks (current):** 16,141
+- **Marks (lifetime):** 29,500
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 2,579
+- **Total NM kills:** 2,662
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 308
+- **Augments crafted:** 328
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -62,7 +62,7 @@
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 116
 
 ## Achievements
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 650965a62723 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: d71bac6522f2 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

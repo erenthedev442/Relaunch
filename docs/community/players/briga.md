@@ -1,8 +1,8 @@
 # Briga
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 22h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 23h
 
-`💪 6 jobs @99`
+`💪 7 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RDM 91** |
-| Sub job | WHM 91 |
+| Main job | **RDM 99** |
+| Sub job | WHM 99 |
 | Time played | 14h |
-| Enemies defeated | 552 |
+| Enemies defeated | 651 |
 | Deaths | 1 |
 
 ## Job levels
@@ -25,7 +25,7 @@
 | **MNK** | **99** | NIN | 1 |
 | **WHM** | **99** | DRG | 1 |
 | **BLM** | **99** | **SMN** | **99** |
-| RDM | 91 | BLU | 1 |
+| **RDM** | **99** | BLU | 1 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 118
+- **Trusts learned:** 116
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 92b00d8cdbc1 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: cfa9cadfeb90 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,8 +1,8 @@
 # Koru
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 5d 9h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 5d 10h
 
-`⭐ 19 Ascensions` `💪 10 jobs @99`
+`⭐ 20 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | RDM 99 |
-| Time played | 34h |
+| Time played | 35h |
 | Enemies defeated | 100 |
 | Deaths | 8 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 22,293
+- **Marks (current):** 22,543
 - **Marks (lifetime):** 1,089
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 277
@@ -62,12 +62,12 @@
 
 ## Prestige
 
-- **Total Ascensions:** 19
-- **Per-job prestige:** GEO P19
+- **Total Ascensions:** 20
+- **Per-job prestige:** GEO P20
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7c0d75ea2802 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: d6d2bec12c99 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

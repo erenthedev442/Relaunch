@@ -1,6 +1,6 @@
 # Thanos
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 9d 5h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 6h
 
 `⭐ 12 Ascensions` `💪 6 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | RDM 99 |
-| Time played | 63h |
-| Enemies defeated | 3,206 |
-| Deaths | 29 |
+| Sub job | PLD 99 |
+| Time played | 67h |
+| Enemies defeated | 3,303 |
+| Deaths | 33 |
 
 ## Job levels
 
@@ -36,16 +36,16 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,479
+- **Marks (current):** 14,209
 - **Marks (lifetime):** 6,845
 - **Distinct NMs slain:** 13
-- **Total NM kills:** 510
+- **Total NM kills:** 552
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 297
-- **NM Affinities:** 5 / 13
+- **Augments crafted:** 307
+- **NM Affinities:** 6 / 13
 
 ## Reforge
 
@@ -67,7 +67,7 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4283a832be68 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: e6df260ef2eb -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

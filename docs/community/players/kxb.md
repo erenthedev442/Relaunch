@@ -1,6 +1,6 @@
 # Kxb
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 17h 18m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-23 · Character age 19h 2m
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 550
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -42,7 +42,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Augments crafted:** 7
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -55,7 +55,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
+
+## Achievements
+
+**1** unlocked — Augment Novice.
 
 ## Speed records
 
@@ -68,6 +72,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5e77e93f9b42 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: d990d669ef6b -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

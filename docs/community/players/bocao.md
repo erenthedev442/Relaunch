@@ -1,6 +1,6 @@
 # Bocao
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 6h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 6d 8h
 
 `💪 4 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **DRK 99** |
 | Sub job | NIN 99 |
-| Time played | 32h |
+| Time played | 33h |
 | Enemies defeated | 478 |
 | Deaths | 0 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 2 / 5
-- **Marks (current):** 366
+- **Marks (current):** 2,116
 - **Marks (lifetime):** 830
 - **Distinct NMs slain:** 3
 - **Total NM kills:** 166
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 117
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fc4b8c6c9e68 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 2c45a3556128 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Phatdoood
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 3d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 3d 3h
 
 `⭐ 21 Ascensions` `💪 5 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | RDM 99 |
-| Time played | 26h |
+| Time played | 29h |
 | Enemies defeated | 20 |
 | Deaths | 37 |
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 14,993
+- **Marks (current):** 67,213
 - **Marks (lifetime):** 29,306
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 2,580
+- **Total NM kills:** 2,654
 
 ## Augment Sage
 
@@ -62,7 +62,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 41a1afe52547 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 59709f1f9fa2 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

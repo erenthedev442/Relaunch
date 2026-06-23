@@ -1,6 +1,6 @@
 # Lunita
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d 15h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-23 · Character age 7d 16h
 
 `💪 15 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **WAR 99** |
-| Sub job | MNK 99 |
-| Time played | 16h |
-| Enemies defeated | 864 |
-| Deaths | 22 |
+| Sub job | DRK 99 |
+| Time played | 19h |
+| Enemies defeated | 1,302 |
+| Deaths | 23 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 22
-- **Marks (lifetime):** 7,055
+- **Marks (current):** 15,053
+- **Marks (lifetime):** 12,555
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 245
+- **Total NM kills:** 340
 
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 58
+- **Augments crafted:** 72
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -57,11 +57,11 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
+**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2a4c7df953ff -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: a1f6055548f3 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

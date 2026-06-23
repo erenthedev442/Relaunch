@@ -1,6 +1,6 @@
 # Tinyterror
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 18h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 2d 19h
 
 `💪 10 jobs @99`
 
@@ -11,8 +11,8 @@
 
 | | |
 |---|---|
-| Main job | **BRD 99** |
-| Sub job | DNC 99 |
+| Main job | **COR 99** |
+| Sub job | RDM 99 |
 | Time played | 7h |
 | Enemies defeated | 3 |
 | Deaths | 7 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 7,810
+- **Marks (current):** 8,410
 - **Marks (lifetime):** 361
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 19
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3e226d6f37e1 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: f82746c33e83 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

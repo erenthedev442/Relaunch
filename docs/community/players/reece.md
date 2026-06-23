@@ -1,6 +1,6 @@
 # Reece
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 3d 5h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 3d 6h
 
 `💪 10 jobs @99`
 
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **WAR 99** |
+| Main job | **COR 99** |
 | Sub job | NIN 99 |
-| Time played | 7h |
+| Time played | 8h |
 | Enemies defeated | 248 |
 | Deaths | 6 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,865
+- **Marks (current):** 6,465
 - **Marks (lifetime):** 361
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 20
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9ea52db0af01 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: e84917057ae3 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

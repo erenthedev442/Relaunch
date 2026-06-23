@@ -1,6 +1,6 @@
 # Benton
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 7d 1h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 7d 3h
 
 `⭐ 15 Ascensions` `💪 11 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **GEO 99** |
-| Sub job | BRD 13 |
-| Time played | 40h |
+| Main job | **MNK 99** |
+| Sub job | RDM 99 |
+| Time played | 44h |
 | Enemies defeated | 15 |
-| Deaths | 5 |
+| Deaths | 6 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 146,340
-- **Marks (lifetime):** 84,857
-- **Distinct NMs slain:** 12
-- **Total NM kills:** 3,604
+- **Marks (current):** 302,309
+- **Marks (lifetime):** 159,784
+- **Distinct NMs slain:** 14
+- **Total NM kills:** 4,290
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 276
+- **Augments crafted:** 278
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -62,11 +62,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
-**16** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · First Ascension · Ascending Master · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**17** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Mark of 100,000 · First Ascension · Ascending Master · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 145d6a4f405e -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 34c79493ad06 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

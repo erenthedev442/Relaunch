@@ -1,11 +1,11 @@
 # Xanora
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 6d
+**Bastok citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 6d 1h
 
 `💪 4 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **DNC 99** |
 | Sub job | THF 99 |
-| Time played | 19h |
-| Enemies defeated | 1,064 |
-| Deaths | 29 |
+| Time played | 20h |
+| Enemies defeated | 1,068 |
+| Deaths | 30 |
 
 ## Job levels
 
@@ -35,11 +35,11 @@
 
 ## Hunting League
 
-- **Rank:** 4 / 5
-- **Marks (current):** 1,018
-- **Marks (lifetime):** 3,287
-- **Distinct NMs slain:** 9
-- **Total NM kills:** 616
+- **Rank:** 5 / 5
+- **Marks (current):** 666
+- **Marks (lifetime):** 3,347
+- **Distinct NMs slain:** 10
+- **Total NM kills:** 618
 
 ## Augment Sage
 
@@ -57,11 +57,11 @@
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 117
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Mark of 1,000 · Wave Rider · Augment Novice.
+**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Wave Rider · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6ce969230409 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 13bd00e97aed -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

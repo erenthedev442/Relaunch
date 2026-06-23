@@ -1,6 +1,6 @@
 # Speedbump
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 7d 1h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 7d 3h
 
 `⭐ 15 Ascensions` `💪 9 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **GEO 99** |
 | Sub job | RDM 99 |
-| Time played | 38h |
+| Time played | 43h |
 | Enemies defeated | 4 |
-| Deaths | 2 |
+| Deaths | 5 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 154,566
-- **Marks (lifetime):** 86,337
-- **Distinct NMs slain:** 11
-- **Total NM kills:** 3,597
+- **Marks (current):** 291,576
+- **Marks (lifetime):** 153,449
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 4,208
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 275
+- **Augments crafted:** 282
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -62,11 +62,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
-**16** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · First Ascension · Ascending Master · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**17** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Mark of 100,000 · First Ascension · Ascending Master · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 590b0b1bbe5a -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: f998f27f95f2 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

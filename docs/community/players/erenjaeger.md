@@ -1,6 +1,6 @@
 # Erenjaeger
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 8h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 4d 9h
 
 `💪 15 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 101,439
+- **Marks (current):** 102,139
 - **Marks (lifetime):** 53,161
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 942
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 396790c0bbd9 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 788abbe46168 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

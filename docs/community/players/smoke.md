@@ -1,27 +1,27 @@
 # Smoke
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-21 · Character age 7d 13h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-23 · Character age 7d 15h
 
 `💪 2 jobs @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
 | Main job | **PLD 99** |
-| Sub job | WAR 80 |
-| Time played | 29h |
-| Enemies defeated | 482 |
-| Deaths | 11 |
+| Sub job | WAR 89 |
+| Time played | 33h |
+| Enemies defeated | 522 |
+| Deaths | 12 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 80 | SAM | 1 |
+| WAR | 89 | SAM | 1 |
 | MNK | 1 | NIN | 81 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -35,16 +35,16 @@
 
 ## Hunting League
 
-- **Rank:** 4 / 5
-- **Marks (current):** 3,229
-- **Marks (lifetime):** 382
+- **Rank:** 5 / 5
+- **Marks (current):** 17
+- **Marks (lifetime):** 589
 - **Distinct NMs slain:** 6
-- **Total NM kills:** 55
+- **Total NM kills:** 95
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 4
+- **Augments crafted:** 7
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -57,11 +57,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
-**3** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked.
+**4** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: dd81702fb6ab -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 395372497bba -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

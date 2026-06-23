@@ -1,27 +1,27 @@
 # Zetsubou
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 18h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-23 · Character age 1d 19h
 
 `💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
+    **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
 
 ## At a glance
 
 | | |
 |---|---|
 | Main job | **MNK 99** |
-| Sub job | WAR 83 |
-| Time played | 8h |
-| Enemies defeated | 170 |
+| Sub job | WAR 94 |
+| Time played | 12h |
+| Enemies defeated | 209 |
 | Deaths | 6 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 83 | SAM | 1 |
+| WAR | 94 | SAM | 1 |
 | **MNK** | **99** | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -35,17 +35,17 @@
 
 ## Hunting League
 
-- **Rank:** 3 / 5
-- **Marks (current):** 1,347
-- **Marks (lifetime):** 88
-- **Distinct NMs slain:** 7
-- **Total NM kills:** 10
+- **Rank:** 4 / 5
+- **Marks (current):** 231
+- **Marks (lifetime):** 413
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 45
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
-- **NM Affinities:** 0 / 13
+- **Augments crafted:** 4
+- **NM Affinities:** 6 / 13
 
 ## Reforge
 
@@ -57,11 +57,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
-**4** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked.
+**5** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 87c061c2ecf7 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 236c1d316cd4 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

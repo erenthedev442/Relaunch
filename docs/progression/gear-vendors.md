@@ -1016,7 +1016,7 @@ Per-job **+4 Reforge Sets** (AF/Relic/Empyrean +4) are also sold here.
 
 ### Curated picks
 
-_165 hand-picked items -- relic weapons, bard instruments, and other special weapons._
+_149 hand-picked items -- relic weapons, bard instruments, and other special weapons._
 
 | Item | Cost | Notes |
 |---|---:|---|
@@ -1035,26 +1035,10 @@ _165 hand-picked items -- relic weapons, bard instruments, and other special wea
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Fail-Not&go=Go" data-img="" target="_blank" rel="noopener">Fail-Not</a> | 5000 | Bow (ranged). RNG. Aeonic. MAcc+40. · Magic Dmg+155, TP Bonus+500, Store TP+10. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Fomalhaut&go=Go" data-img="" target="_blank" rel="noopener">Fomalhaut</a> | 5000 | Gun (ranged). RNG/COR. Aeonic. · Magic Dmg+155, TP Bonus+500, Store TP+10. |
 | <a class="item-link" href="https://www.ffxiah.com/item/26403" data-img="https://www.bg-wiki.com/images/f/fd/Srivatsa_description.png" target="_blank" rel="noopener">Srivatsa</a> | 5000 | Shield (sub). PLD. Aeonic. · DEF+150, HP+150, MP+150, Enmity+15. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Varga+Purnikawa&go=Go" data-img="" target="_blank" rel="noopener">Varga Purnikawa</a> | 800 | Hand-to-Hand relic (Lv.119 III). Spharai. · Final form. Full stat block. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Mpu+Gandring&go=Go" data-img="" target="_blank" rel="noopener">Mpu Gandring</a> | 800 | Dagger relic (Lv.119 III). Mandau. · Final form. Full stat block. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Caliburnus&go=Go" data-img="" target="_blank" rel="noopener">Caliburnus</a> | 800 | Sword relic (Lv.119 III). Excalibur. · DEX/MND+35, Macc, Magic Dmg+263, Refresh+4. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Helheim&go=Go" data-img="" target="_blank" rel="noopener">Helheim</a> | 800 | Great Sword relic (Lv.119 III). Ragnarok. · STR/VIT+30, Store TP+7, GS/Parry skill+269. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Spalirisos&go=Go" data-img="" target="_blank" rel="noopener">Spalirisos</a> | 800 | Axe relic (Lv.119 III). Guttler. · STR/DEX/CHR+35, Crit rate+15%, Acc+35. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Laphria&go=Go" data-img="" target="_blank" rel="noopener">Laphria</a> | 800 | Great Axe relic (Lv.119 III). Bravura. · STR/VIT+35, Double Atk+10%, GAxe skill+277. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Foenaria&go=Go" data-img="" target="_blank" rel="noopener">Foenaria</a> | 800 | Scythe relic (Lv.119 III). Apocalypse. · STR/INT+35, Triple Atk+6%, Acc+35. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Gae+Buide&go=Go" data-img="" target="_blank" rel="noopener">Gae Buide</a> | 800 | Polearm relic (Lv.119 III). Gungnir. · STR/VIT+35, Double Atk+10%, Acc+35. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Dokoku&go=Go" data-img="" target="_blank" rel="noopener">Dokoku</a> | 800 | Katana relic (Lv.119 III). Kikoku. · DEX/AGI+35, Store TP+10, Magic Dmg+263. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Kusanagi&go=Go" data-img="" target="_blank" rel="noopener">Kusanagi</a> | 800 | Great Katana relic (Lv.119 III). Amanomurakumo. · STR/DEX+35, Double Atk+10%, GKat skill+277. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Lorg+Mor&go=Go" data-img="" target="_blank" rel="noopener">Lorg Mor</a> | 800 | Club relic (Lv.119 III). Mjollnir. · STR/MND+30, MAtk+50, Magic Dmg+248, DT-7%. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Opashoro&go=Go" data-img="" target="_blank" rel="noopener">Opashoro</a> | 800 | Staff relic (Lv.119 III). Claustrum. · INT/MND+35, MAtk+80, Magic Dmg+325. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Pinaka&go=Go" data-img="" target="_blank" rel="noopener">Pinaka</a> | 800 | Bow relic (Lv.119 III). Yoichinoyumi. · STR/AGI+35, Store TP+10, Archery skill+277. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Yoichinoyumi&go=Go" data-img="" target="_blank" rel="noopener">Yoichinoyumi</a> | 10000 | Bow (ranged). Custom iLvl 119. RNG/SAM. Grants Namas Arrow. · RATT+45, RACC+60. Aftermath effect. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Earp&go=Go" data-img="" target="_blank" rel="noopener">Earp</a> | 800 | Gun relic (Lv.119 III). Annihilator. · DEX/AGI+35, Crit rate+15%, Mkmanship skill+277. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Duban&go=Go" data-img="" target="_blank" rel="noopener">Duban</a> | 800 | Shield relic (Lv.119 III). Aegis. · DEF+150, VIT/MND+30, Shield skill+129. |
 | <a class="item-link" href="https://www.ffxiah.com/item/21398" data-img="https://www.bg-wiki.com/images/4/4d/Marsyas_description.png" target="_blank" rel="noopener">Marsyas</a> | 5000 | Wind horn (BRD). Song duration+50%. · Top-tier BRD wind instrument. |
 | <a class="item-link" href="https://www.ffxiah.com/item/21401" data-img="https://www.bg-wiki.com/images/0/04/Blurred_Harp_%2B1_description.png" target="_blank" rel="noopener">Blurred Harp +1</a> | 300 | String harp (BRD). Lullaby+2, Ballad+2. · All Songs+2, +1 song slot. |
 | <a class="item-link" href="https://www.ffxiah.com/item/21403" data-img="https://www.bg-wiki.com/images/e/ef/Damani_Horn_%2B1_description.png" target="_blank" rel="noopener">Damani Horn +1</a> | 250 | Wind horn (BRD). MP+25, Wind Skill+4. · All Songs+3. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Loughnashade&go=Go" data-img="" target="_blank" rel="noopener">Loughnashade</a> | 800 | Horn relic (Lv.119 III). Gjallarhorn. · CHR+20, All Songs+4. (BRD) |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Daurdabla&go=Go" data-img="" target="_blank" rel="noopener">Daurdabla</a> | 800 | Harp relic (string). Singing+20, Str+20. · +2 song slots, Song dur+30%. (BRD) |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Bravura&go=Go" data-img="" target="_blank" rel="noopener">Bravura</a> | 5000 | Great Axe (main). WAR. i119 III Mythic. · EX/RARE. Aftermath weapon. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Glanzfaust&go=Go" data-img="" target="_blank" rel="noopener">Glanzfaust</a> | 5000 | H2H (main). MNK. i119 III Mythic. · EX/RARE. Aftermath weapon. |
@@ -1322,6 +1306,6 @@ _125 top armor, weapons, and Sortie earrings, refreshed from the live gear ranki
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4ab6bdc57372 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 298e5d38fd47 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

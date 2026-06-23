@@ -1,6 +1,6 @@
 # Pld
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 5d
+**Bastok citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 5d 2h
 
 `⭐ 6 Ascensions` `💪 9 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 21,072
+- **Marks (current):** 21,772
 - **Marks (lifetime):** 11,269
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 2,096
@@ -73,7 +73,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 47fbd618a61e -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 4f6fe1ae104c -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

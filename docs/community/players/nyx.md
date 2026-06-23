@@ -1,8 +1,8 @@
 # Nyx
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 1d 18h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-23 · Character age 1d 20h
 
-`💪 1 job @99`
+`💪 2 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 4.** You're Rank 3/5 — keep clearing the tier roster to rank up.
@@ -11,21 +11,21 @@
 
 | | |
 |---|---|
-| Main job | **SAM 99** |
-| Sub job | WAR 83 |
-| Time played | 11h |
-| Enemies defeated | 478 |
-| Deaths | 4 |
+| Main job | **BLU 64** |
+| Sub job | RDM 52 |
+| Time played | 17h |
+| Enemies defeated | 788 |
+| Deaths | 6 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 83 | **SAM** | **99** |
+| **WAR** | **99** | **SAM** | **99** |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| RDM | 52 | BLU | 64 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 25
-- **Marks (lifetime):** 91
-- **Distinct NMs slain:** 4
-- **Total NM kills:** 14
+- **Marks (current):** 1,138
+- **Marks (lifetime):** 151
+- **Distinct NMs slain:** 6
+- **Total NM kills:** 19
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 0
+- **Augments crafted:** 14
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -57,11 +57,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
-**3** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked.
+**4** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2963340f039b -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 59d866540d59 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

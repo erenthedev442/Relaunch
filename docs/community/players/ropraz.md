@@ -1,8 +1,8 @@
 # Ropraz
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 9d
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 2h
 
-`⭐ 114 Ascensions` `💪 10 jobs @99`
+`⭐ 142 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | NIN 99 |
-| Time played | 70h |
-| Enemies defeated | 7,638 |
-| Deaths | 64 |
+| Time played | 75h |
+| Enemies defeated | 7,920 |
+| Deaths | 65 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 35,825
+- **Marks (current):** 84,405
 - **Marks (lifetime):** 3,270
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 1,096
+- **Total NM kills:** 1,342
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 327
+- **Augments crafted:** 330
 - **NM Affinities:** 5 / 13
 
 ## Reforge
@@ -73,12 +73,12 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 114
-- **Per-job prestige:** WAR P29 · MNK P72 · SAM P12 · DRG P1
+- **Total Ascensions:** 142
+- **Per-job prestige:** WAR P29 · MNK P100 · SAM P12 · DRG P1
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bbafd8daa9c6 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 501ba0e2ec6a -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

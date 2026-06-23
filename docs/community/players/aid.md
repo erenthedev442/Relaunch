@@ -1,8 +1,8 @@
 # Aid
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 20h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 2d 22h
 
-`💪 2 jobs @99`
+`💪 3 jobs @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -11,22 +11,22 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | BLU 88 |
-| Time played | 4h |
-| Enemies defeated | 256 |
+| Main job | **SAM 99** |
+| Sub job | DRG 38 |
+| Time played | 7h |
+| Enemies defeated | 421 |
 | Deaths | 2 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 68 |
+| WAR | 1 | **SAM** | **99** |
 | MNK | 1 | **NIN** | **99** |
-| WHM | 1 | DRG | 1 |
+| WHM | 1 | DRG | 38 |
 | BLM | 1 | SMN | 1 |
-| **RDM** | **99** | BLU | 88 |
-| THF | 1 | COR | 1 |
+| **RDM** | **99** | BLU | 90 |
+| THF | 97 | COR | 1 |
 | PLD | 1 | PUP | 1 |
 | DRK | 1 | DNC | 81 |
 | BST | 1 | SCH | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 575
+- **Marks (current):** 630
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d939a9135ec5 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: ebb6eaa4eddc -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

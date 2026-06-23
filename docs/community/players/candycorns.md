@@ -1,6 +1,6 @@
 # Candycorns
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 9h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 10h
 
 `⭐ 1 Ascension` `💪 12 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | DRG 99 |
-| Time played | 81h |
-| Enemies defeated | 7,412 |
+| Time played | 84h |
+| Enemies defeated | 7,944 |
 | Deaths | 22 |
 
 ## Job levels
@@ -57,8 +57,8 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 16
-- **By job:** MNK ×16
+- **Total rebirths:** 18
+- **By job:** MNK ×18
 
 ## Prestige
 
@@ -67,7 +67,7 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: eddd51ae665a -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 4e40db731ffd -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

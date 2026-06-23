@@ -1,8 +1,8 @@
 # Ekko
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 9d 4h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 6h
 
-`💪 7 jobs @99`
+`💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **DRK 99** |
-| Sub job | WAR 99 |
-| Time played | 34h |
-| Enemies defeated | 1,743 |
+| Main job | **DRG 99** |
+| Sub job | RDM 84 |
+| Time played | 36h |
+| Enemies defeated | 1,971 |
 | Deaths | 4 |
 
 ## Job levels
@@ -23,9 +23,9 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
-| WHM | 76 | DRG | 31 |
+| WHM | 76 | **DRG** | **99** |
 | BLM | 50 | SMN | 1 |
-| RDM | 66 | BLU | 1 |
+| RDM | 84 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | PLD | 87 | PUP | 1 |
 | **DRK** | **99** | DNC | 82 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 9,313
+- **Marks (current):** 10,213
 - **Marks (lifetime):** 5,919
 - **Distinct NMs slain:** 14
 - **Total NM kills:** 808
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d8d4b6854550 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 65acc4fbd50d -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

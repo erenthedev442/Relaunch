@@ -4,7 +4,7 @@ Live rankings pulled from the server's database. These tables refresh whenever t
 
 <div class="lb-asof" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-asof" -->
-**📊 Leaderboard data as of 2026-06-23 05:17 UTC**
+**📊 Leaderboard data as of 2026-06-23 07:01 UTC**
 <!-- DOCGEN:END id="lb-asof" -->
 </div>
 
@@ -42,12 +42,12 @@ _Lifetime count of successful Augment Moogle trades. Every confirmed trade bumps
 | Rank | Character | Augments |
 |---:|---|---:|
 | 🥇 | [Burtgang](players/burtgang.md) | 1,147 |
-| 🥈 | [Jbae](players/jbae.md) | 929 |
-| 🥉 | [Spyro](players/spyro.md) | 639 |
-| 4 | [Flcl](players/flcl.md) | 514 |
-| 5 | [Brixton](players/brixton.md) | 414 |
-| 6 | [Ariamys](players/ariamys.md) | 410 |
-| 7 | [Olindre](players/olindre.md) | 409 |
+| 🥈 | [Jbae](players/jbae.md) | 972 |
+| 🥉 | [Spyro](players/spyro.md) | 806 |
+| 4 | [Flcl](players/flcl.md) | 610 |
+| 5 | [Ariamys](players/ariamys.md) | 434 |
+| 6 | [Olindre](players/olindre.md) | 425 |
+| 7 | [Brixton](players/brixton.md) | 417 |
 | 8 | [Zxj](players/zxj.md) | 400 |
 | 9 | [Mardukas](players/mardukas.md) | 379 |
 | 10 | [Herdofturtles](players/herdofturtles.md) | 377 |
@@ -62,14 +62,14 @@ _Highest Augment Sage rank achieved. Earned by hitting Augment_Count milestones 
 |---:|---|---:|
 | 🥇 | [Olindre](players/olindre.md) | 5 |
 | 🥈 | [Darrent](players/darrent.md) | 5 |
-| 🥉 | [Rhis](players/rhis.md) | 5 |
+| 🥉 | [Lyvia](players/lyvia.md) | 5 |
 | 4 | [Bro](players/bro.md) | 5 |
 | 5 | [Ropraz](players/ropraz.md) | 5 |
-| 6 | [Speedbump](players/speedbump.md) | 5 |
-| 7 | [Thanos](players/thanos.md) | 5 |
-| 8 | [Moon](players/moon.md) | 5 |
-| 9 | [Langy](players/langy.md) | 5 |
-| 10 | [Spyro](players/spyro.md) | 5 |
+| 6 | [Benton](players/benton.md) | 5 |
+| 7 | [Phatdoood](players/phatdoood.md) | 5 |
+| 8 | [Thanos](players/thanos.md) | 5 |
+| 9 | [Miss](players/miss.md) | 5 |
+| 10 | [Coso](players/coso.md) | 5 |
 <!-- DOCGEN:END id="lb-sage" -->
 </div>
 
@@ -88,13 +88,13 @@ _Top tier any character has unlocked in the Hunting League progression. Ties bro
 | 🥇 | [Broken](players/broken.md) | 5 |
 | 🥈 | [Ken](players/ken.md) | 5 |
 | 🥉 | [Kyrie](players/kyrie.md) | 5 |
-| 4 | [Drbrule](players/drbrule.md) | 5 |
+| 4 | [Benton](players/benton.md) | 5 |
 | 5 | [Speedbump](players/speedbump.md) | 5 |
-| 6 | [Benton](players/benton.md) | 5 |
-| 7 | [Rtklm](players/rtklm.md) | 5 |
-| 8 | [Draco](players/draco.md) | 5 |
-| 9 | [Erenjaeger](players/erenjaeger.md) | 5 |
-| 10 | [Rtkhl](players/rtkhl.md) | 5 |
+| 6 | [Draco](players/draco.md) | 5 |
+| 7 | [Rose](players/rose.md) | 5 |
+| 8 | [Drbrule](players/drbrule.md) | 5 |
+| 9 | [Rtklm](players/rtklm.md) | 5 |
+| 10 | [Erenjaeger](players/erenjaeger.md) | 5 |
 <!-- DOCGEN:END id="lb-hl-tier" -->
 
 <!-- DOCGEN:BEGIN id="lb-hl-points" -->
@@ -104,16 +104,16 @@ _Points earned across all Hunting League NM kills. Lifetime total, not current s
 
 | Rank | Character | Pts |
 |---:|---|---:|
-| 🥇 | [Broken](players/broken.md) | 248,684 |
-| 🥈 | [Ken](players/ken.md) | 235,533 |
-| 🥉 | [Kyrie](players/kyrie.md) | 192,580 |
-| 4 | [Drbrule](players/drbrule.md) | 180,544 |
-| 5 | [Speedbump](players/speedbump.md) | 154,566 |
-| 6 | [Benton](players/benton.md) | 146,340 |
-| 7 | [Rtklm](players/rtklm.md) | 136,844 |
-| 8 | [Draco](players/draco.md) | 107,224 |
-| 9 | [Erenjaeger](players/erenjaeger.md) | 101,439 |
-| 10 | [Rtkhl](players/rtkhl.md) | 90,163 |
+| 🥇 | [Broken](players/broken.md) | 407,498 |
+| 🥈 | [Ken](players/ken.md) | 392,563 |
+| 🥉 | [Kyrie](players/kyrie.md) | 329,625 |
+| 4 | [Benton](players/benton.md) | 302,309 |
+| 5 | [Speedbump](players/speedbump.md) | 291,576 |
+| 6 | [Draco](players/draco.md) | 248,332 |
+| 7 | [Rose](players/rose.md) | 228,291 |
+| 8 | [Drbrule](players/drbrule.md) | 201,758 |
+| 9 | [Rtklm](players/rtklm.md) | 133,594 |
+| 10 | [Erenjaeger](players/erenjaeger.md) | 102,139 |
 <!-- DOCGEN:END id="lb-hl-points" -->
 
 <!-- DOCGEN:BEGIN id="lb-hl-lifetime" -->
@@ -123,16 +123,16 @@ _Cumulative Hunt Marks earned over the character's lifetime — does NOT decreas
 
 | Rank | Character | Marks |
 |---:|---|---:|
-| 🥇 | [Kyrie](players/kyrie.md) | 126,693 |
-| 🥈 | [Broken](players/broken.md) | 121,973 |
-| 🥉 | [Ken](players/ken.md) | 119,045 |
-| 4 | [Drbrule](players/drbrule.md) | 87,741 |
-| 5 | [Speedbump](players/speedbump.md) | 86,337 |
-| 6 | [Draco](players/draco.md) | 85,864 |
-| 7 | [Benton](players/benton.md) | 84,857 |
-| 8 | [Rtklm](players/rtklm.md) | 74,288 |
-| 9 | [Rtkhl](players/rtkhl.md) | 74,288 |
-| 10 | [Rtkle](players/rtkle.md) | 74,063 |
+| 🥇 | [Kyrie](players/kyrie.md) | 202,500 |
+| 🥈 | [Broken](players/broken.md) | 197,890 |
+| 🥉 | [Ken](players/ken.md) | 194,632 |
+| 4 | [Drbrule](players/drbrule.md) | 163,658 |
+| 5 | [Benton](players/benton.md) | 159,784 |
+| 6 | [Draco](players/draco.md) | 155,071 |
+| 7 | [Speedbump](players/speedbump.md) | 153,449 |
+| 8 | [Rose](players/rose.md) | 83,468 |
+| 9 | [Rtklm](players/rtklm.md) | 74,288 |
+| 10 | [Rtkhl](players/rtkhl.md) | 74,288 |
 <!-- DOCGEN:END id="lb-hl-lifetime" -->
 </div>
 
@@ -151,13 +151,13 @@ _Current Empyrean Marks held. Earned from Abyssea NM spawns at the Reforge Spawn
 | 🥇 | [Broken](players/broken.md) | 52,910 |
 | 🥈 | [Ken](players/ken.md) | 51,710 |
 | 🥉 | [Kyrie](players/kyrie.md) | 50,910 |
-| 4 | [Benton](players/benton.md) | 44,480 |
-| 5 | [Draco](players/draco.md) | 44,480 |
-| 6 | [Drbrule](players/drbrule.md) | 42,480 |
-| 7 | [Rose](players/rose.md) | 42,480 |
-| 8 | [Speedbump](players/speedbump.md) | 42,480 |
-| 9 | [Erenyeager](players/erenyeager.md) | 28,590 |
-| 10 | [Erenjaeger](players/erenjaeger.md) | 28,590 |
+| 4 | [Draco](players/draco.md) | 44,480 |
+| 5 | [Benton](players/benton.md) | 44,480 |
+| 6 | [Speedbump](players/speedbump.md) | 42,480 |
+| 7 | [Drbrule](players/drbrule.md) | 42,480 |
+| 8 | [Rose](players/rose.md) | 42,480 |
+| 9 | [Erenjaeger](players/erenjaeger.md) | 28,590 |
+| 10 | [Erenyeager](players/erenyeager.md) | 28,590 |
 <!-- DOCGEN:END id="lb-empy-marks" -->
 
 <!-- DOCGEN:BEGIN id="lb-reforge-total" -->
@@ -173,9 +173,9 @@ _Total Reforge marks held across all three currencies, right now. The Mark Hoard
 | 4 | [Broken](players/broken.md) | 58,360 |
 | 5 | [Draco](players/draco.md) | 49,280 |
 | 6 | [Drbrule](players/drbrule.md) | 48,780 |
-| 7 | [Benton](players/benton.md) | 47,280 |
-| 8 | [Speedbump](players/speedbump.md) | 47,280 |
-| 9 | [Rose](players/rose.md) | 47,280 |
+| 7 | [Speedbump](players/speedbump.md) | 47,280 |
+| 8 | [Rose](players/rose.md) | 47,280 |
+| 9 | [Benton](players/benton.md) | 47,280 |
 | 10 | [Erenyeager](players/erenyeager.md) | 44,170 |
 <!-- DOCGEN:END id="lb-reforge-total" -->
 
@@ -187,15 +187,15 @@ _Total marks earned across AF + Relic + Empy tracks, all-time. Spending doesn't 
 | Rank | Character | Marks |
 |---:|---|---:|
 | 🥇 | [Sytara](players/sytara.md) | 75,353 |
-| 🥈 | [Erenjaeger](players/erenjaeger.md) | 58,920 |
-| 🥉 | [Erenyeager](players/erenyeager.md) | 58,920 |
+| 🥈 | [Erenyeager](players/erenyeager.md) | 58,920 |
+| 🥉 | [Erenjaeger](players/erenjaeger.md) | 58,920 |
 | 4 | [Kyrie](players/kyrie.md) | 55,230 |
 | 5 | [Broken](players/broken.md) | 55,210 |
 | 6 | [Ken](players/ken.md) | 55,210 |
 | 7 | [Che](players/che.md) | 52,897 |
-| 8 | [Benton](players/benton.md) | 42,580 |
-| 9 | [Rose](players/rose.md) | 42,580 |
-| 10 | [Speedbump](players/speedbump.md) | 42,580 |
+| 8 | [Rose](players/rose.md) | 42,580 |
+| 9 | [Speedbump](players/speedbump.md) | 42,580 |
+| 10 | [Draco](players/draco.md) | 42,580 |
 <!-- DOCGEN:END id="lb-reforge-lifetime" -->
 </div>
 
@@ -211,16 +211,16 @@ _Total custom NMs defeated across the Hunting League and Reforge Spawner. Each s
 
 | Rank | Character | Kills |
 |---:|---|---:|
-| 🥇 | [Jbae](players/jbae.md) | 6,108 |
-| 🥈 | [Flcl](players/flcl.md) | 5,536 |
-| 🥉 | [Kyrie](players/kyrie.md) | 5,056 |
-| 4 | [Broken](players/broken.md) | 4,867 |
-| 5 | [Ken](players/ken.md) | 4,304 |
-| 6 | [Drbrule](players/drbrule.md) | 4,227 |
-| 7 | [Benton](players/benton.md) | 3,604 |
-| 8 | [Speedbump](players/speedbump.md) | 3,597 |
-| 9 | [Draco](players/draco.md) | 3,593 |
-| 10 | [Rose](players/rose.md) | 2,945 |
+| 🥇 | [Jbae](players/jbae.md) | 6,184 |
+| 🥈 | [Flcl](players/flcl.md) | 5,777 |
+| 🥉 | [Kyrie](players/kyrie.md) | 5,750 |
+| 4 | [Broken](players/broken.md) | 5,562 |
+| 5 | [Ken](players/ken.md) | 4,996 |
+| 6 | [Drbrule](players/drbrule.md) | 4,922 |
+| 7 | [Benton](players/benton.md) | 4,290 |
+| 8 | [Draco](players/draco.md) | 4,227 |
+| 9 | [Speedbump](players/speedbump.md) | 4,208 |
+| 10 | [Rose](players/rose.md) | 3,579 |
 <!-- DOCGEN:END id="lb-nm-kills" -->
 
 <!-- DOCGEN:BEGIN id="lb-nm-encyclopedia" -->
@@ -230,16 +230,16 @@ _Number of distinct custom NMs each character has personally killed at least onc
 
 | Rank | Character | Nms |
 |---:|---|---:|
-| 🥇 | [Olindre](players/olindre.md) | 15 |
-| 🥈 | [Miyasanima](players/miyasanima.md) | 15 |
-| 🥉 | [Moon](players/moon.md) | 15 |
-| 4 | [Nanafu](players/nanafu.md) | 15 |
-| 5 | [Stoney](players/stoney.md) | 15 |
-| 6 | [Zxs](players/zxs.md) | 15 |
-| 7 | [Corvinos](players/corvinos.md) | 15 |
-| 8 | [Che](players/che.md) | 15 |
-| 9 | [Rhis](players/rhis.md) | 15 |
-| 10 | [Sfen](players/sfen.md) | 15 |
+| 🥇 | [Moon](players/moon.md) | 15 |
+| 🥈 | [Nanafu](players/nanafu.md) | 15 |
+| 🥉 | [Skerxan](players/skerxan.md) | 15 |
+| 4 | [Olindre](players/olindre.md) | 15 |
+| 5 | [Miyasanima](players/miyasanima.md) | 15 |
+| 6 | [Corvinos](players/corvinos.md) | 15 |
+| 7 | [Che](players/che.md) | 15 |
+| 8 | [Rhis](players/rhis.md) | 15 |
+| 9 | [Sfen](players/sfen.md) | 15 |
+| 10 | [Stoney](players/stoney.md) | 15 |
 <!-- DOCGEN:END id="lb-nm-encyclopedia" -->
 
 <!-- DOCGEN:BEGIN id="lb-affinities" -->
@@ -249,16 +249,16 @@ _How many of the 13 NM affinities the character has registered via the Augment S
 
 | Rank | Character | Affinities |
 |---:|---|---:|
-| 🥇 | [Coso](players/coso.md) | 13 |
+| 🥇 | [Erenyeager](players/erenyeager.md) | 13 |
 | 🥈 | [Bro](players/bro.md) | 13 |
 | 🥉 | [Ariamys](players/ariamys.md) | 13 |
-| 4 | [Rhis](players/rhis.md) | 13 |
-| 5 | [Broken](players/broken.md) | 13 |
-| 6 | [Stoney](players/stoney.md) | 13 |
-| 7 | [Erenyeager](players/erenyeager.md) | 13 |
-| 8 | [Speedbump](players/speedbump.md) | 13 |
-| 9 | [Moon](players/moon.md) | 13 |
-| 10 | [Koru](players/koru.md) | 13 |
+| 4 | [Broken](players/broken.md) | 13 |
+| 5 | [Stoney](players/stoney.md) | 13 |
+| 6 | [Speedbump](players/speedbump.md) | 13 |
+| 7 | [Moon](players/moon.md) | 13 |
+| 8 | [Phatdoood](players/phatdoood.md) | 13 |
+| 9 | [Lyvia](players/lyvia.md) | 13 |
+| 10 | [Kyrie](players/kyrie.md) | 13 |
 <!-- DOCGEN:END id="lb-affinities" -->
 </div>
 
@@ -273,16 +273,16 @@ _How many of the 22 jobs the character has at level 99. Ties broken by the sum o
 
 | Rank | Character | Jobs at 99 |
 |---:|---|---:|
-| 🥇 | [Duffaluffagus](players/duffaluffagus.md) | 22 |
-| 🥈 | [Spyro](players/spyro.md) | 22 |
-| 🥉 | [Langy](players/langy.md) | 22 |
-| 4 | [Miss](players/miss.md) | 22 |
-| 5 | [Moon](players/moon.md) | 22 |
-| 6 | [Ken](players/ken.md) | 22 |
-| 7 | [Zxj](players/zxj.md) | 22 |
-| 8 | [Bro](players/bro.md) | 22 |
-| 9 | [Daiis](players/daiis.md) | 22 |
-| 10 | [Rose](players/rose.md) | 22 |
+| 🥇 | [Drbrule](players/drbrule.md) | 22 |
+| 🥈 | [Moon](players/moon.md) | 22 |
+| 🥉 | [Spyro](players/spyro.md) | 22 |
+| 4 | [Burtgang](players/burtgang.md) | 22 |
+| 5 | [Draco](players/draco.md) | 22 |
+| 6 | [Miss](players/miss.md) | 22 |
+| 7 | [Broken](players/broken.md) | 22 |
+| 8 | [Ken](players/ken.md) | 22 |
+| 9 | [Rose](players/rose.md) | 22 |
+| 10 | [Duffaluffagus](players/duffaluffagus.md) | 22 |
 <!-- DOCGEN:END id="lb-job-mastery" -->
 
 ## Job Rebirth { .lb-section }
@@ -294,16 +294,16 @@ _Total number of job rebirths across all jobs combined. Each rebirth wipes a job
 
 | Rank | Character | Rebirths |
 |---:|---|---:|
-| 🥇 | [Burtgang](players/burtgang.md) | 20 |
-| 🥈 | [Candycorns](players/candycorns.md) | 16 |
-| 🥉 | [Yojin](players/yojin.md) | 12 |
-| 4 | [Katrrine](players/katrrine.md) | 9 |
+| 🥇 | [Burtgang](players/burtgang.md) | 42 |
+| 🥈 | [Candycorns](players/candycorns.md) | 18 |
+| 🥉 | [Yojin](players/yojin.md) | 14 |
+| 4 | [Katrrine](players/katrrine.md) | 12 |
 | 5 | [Spyro](players/spyro.md) | 8 |
-| 6 | [Jbae](players/jbae.md) | 7 |
-| 7 | [Herdofturtles](players/herdofturtles.md) | 6 |
-| 8 | [Langy](players/langy.md) | 6 |
-| 9 | [Sfen](players/sfen.md) | 6 |
-| 10 | [Ririn](players/ririn.md) | 5 |
+| 6 | [Aureal](players/aureal.md) | 8 |
+| 7 | [Jbae](players/jbae.md) | 7 |
+| 8 | [Sfen](players/sfen.md) | 7 |
+| 9 | [Olindre](players/olindre.md) | 7 |
+| 10 | [Herdofturtles](players/herdofturtles.md) | 6 |
 <!-- DOCGEN:END id="lb-job-rebirths" -->
 
 ---
@@ -318,16 +318,16 @@ _Count of distinct Trust alter-egos the character has learned. Read from the cha
 
 | Rank | Character | Trusts |
 |---:|---|---:|
-| 🥇 | [Zxs](players/zxs.md) | 120 |
-| 🥈 | [Moon](players/moon.md) | 120 |
-| 🥉 | [Yojin](players/yojin.md) | 120 |
-| 4 | [Duffaluffagus](players/duffaluffagus.md) | 120 |
-| 5 | [Skerxan](players/skerxan.md) | 120 |
-| 6 | [Gwendin](players/gwendin.md) | 120 |
-| 7 | [Darrent](players/darrent.md) | 120 |
-| 8 | [Pld](players/pld.md) | 120 |
-| 9 | [Flcl](players/flcl.md) | 120 |
-| 10 | [Arthas](players/arthas.md) | 120 |
+| 🥇 | [Zxs](players/zxs.md) | 118 |
+| 🥈 | [Moon](players/moon.md) | 118 |
+| 🥉 | [Yojin](players/yojin.md) | 118 |
+| 4 | [Duffaluffagus](players/duffaluffagus.md) | 118 |
+| 5 | [Gwendin](players/gwendin.md) | 118 |
+| 6 | [Darrent](players/darrent.md) | 118 |
+| 7 | [Pld](players/pld.md) | 118 |
+| 8 | [Skerxan](players/skerxan.md) | 118 |
+| 9 | [Flcl](players/flcl.md) | 118 |
+| 10 | [Arthas](players/arthas.md) | 118 |
 <!-- DOCGEN:END id="lb-trusts" -->
 
 <!-- DOCGEN:BEGIN id="lb-friendship" -->
@@ -345,8 +345,8 @@ _Distinct characters this player has unlocked as Player Trusts. Earned by partyi
 | 6 | [Hogs](players/hogs.md) | 5 |
 | 7 | [Frogs](players/frogs.md) | 5 |
 | 8 | [Souls](players/souls.md) | 4 |
-| 9 | [Drunk](players/drunk.md) | 4 |
-| 10 | [Nobigdeal](players/nobigdeal.md) | 3 |
+| 9 | [Kyrie](players/kyrie.md) | 4 |
+| 10 | [Drunk](players/drunk.md) | 4 |
 <!-- DOCGEN:END id="lb-friendship" -->
 </div>
 
@@ -362,16 +362,16 @@ _Hours the character has spent online. Read from `chars.playtime` (seconds). Bra
 
 | Rank | Character | Hours |
 |---:|---|---:|
-| 🥇 | [Jbae](players/jbae.md) | 308 |
-| 🥈 | [Bro](players/bro.md) | 104 |
-| 🥉 | [Sytara](players/sytara.md) | 101 |
-| 4 | [Kyrie](players/kyrie.md) | 92 |
+| 🥇 | [Jbae](players/jbae.md) | 314 |
+| 🥈 | [Bro](players/bro.md) | 108 |
+| 🥉 | [Sytara](players/sytara.md) | 104 |
+| 4 | [Kyrie](players/kyrie.md) | 97 |
 | 5 | [Zxj](players/zxj.md) | 87 |
 | 6 | [Miss](players/miss.md) | 85 |
-| 7 | [Moon](players/moon.md) | 84 |
-| 8 | [Moss](players/moss.md) | 84 |
-| 9 | [Daiis](players/daiis.md) | 82 |
-| 10 | [Candycorns](players/candycorns.md) | 81 |
+| 7 | [Ariamys](players/ariamys.md) | 85 |
+| 8 | [Moon](players/moon.md) | 85 |
+| 9 | [Loamy](players/loamy.md) | 85 |
+| 10 | [Burtgang](players/burtgang.md) | 84 |
 <!-- DOCGEN:END id="lb-playtime" -->
 
 <!-- DOCGEN:BEGIN id="lb-deaths" -->
@@ -381,16 +381,16 @@ _Times the character has been knocked unconscious. On Legendary you lose 3× ret
 
 | Rank | Character | Deaths |
 |---:|---|---:|
-| 🥇 | [Jbae](players/jbae.md) | 178 |
-| 🥈 | [Flcl](players/flcl.md) | 82 |
+| 🥇 | [Jbae](players/jbae.md) | 181 |
+| 🥈 | [Flcl](players/flcl.md) | 89 |
 | 🥉 | [Cervantis](players/cervantis.md) | 69 |
-| 4 | [Ropraz](players/ropraz.md) | 64 |
-| 5 | [Olindre](players/olindre.md) | 57 |
-| 6 | [Souls](players/souls.md) | 50 |
-| 7 | [Bro](players/bro.md) | 49 |
-| 8 | [Sytara](players/sytara.md) | 49 |
-| 9 | [Cecel](players/cecel.md) | 47 |
-| 10 | [Zxj](players/zxj.md) | 46 |
+| 4 | [Phatdood](players/phatdood.md) | 65 |
+| 5 | [Ropraz](players/ropraz.md) | 65 |
+| 6 | [Olindre](players/olindre.md) | 57 |
+| 7 | [Souls](players/souls.md) | 50 |
+| 8 | [Burtgang](players/burtgang.md) | 49 |
+| 9 | [Bro](players/bro.md) | 49 |
+| 10 | [Sytara](players/sytara.md) | 49 |
 <!-- DOCGEN:END id="lb-deaths" -->
 </div>
 
@@ -528,13 +528,13 @@ _Cumulative League Hunters' Guild rep. Earned 1:1 from base Hunt Marks per HL ki
 | 🥇 | [Moon](players/moon.md) | 100,500 |
 | 🥈 | [Moss](players/moss.md) | 100,500 |
 | 🥉 | [Miss](players/miss.md) | 100,500 |
-| 4 | [Pld](players/pld.md) | 10,500 |
-| 5 | [Stoney](players/stoney.md) | 9,000 |
-| 6 | [Ropraz](players/ropraz.md) | 7,500 |
-| 7 | [Shizuku](players/shizuku.md) | 7,000 |
-| 8 | [Herdofturtles](players/herdofturtles.md) | 6,500 |
-| 9 | [Azure](players/azure.md) | 5,500 |
-| 10 | [Katryna](players/katryna.md) | 4,500 |
+| 4 | [Boost](players/boost.md) | 11,000 |
+| 5 | [Shadowsfall](players/shadowsfall.md) | 11,000 |
+| 6 | [Nobigdeal](players/nobigdeal.md) | 11,000 |
+| 7 | [Killface](players/killface.md) | 11,000 |
+| 8 | [Pld](players/pld.md) | 10,500 |
+| 9 | [Stoney](players/stoney.md) | 9,000 |
+| 10 | [Ropraz](players/ropraz.md) | 7,500 |
 <!-- DOCGEN:END id="lb-guild-hl" -->
 </div>
 
@@ -575,12 +575,12 @@ _How many distinct weeks this character has cleared ALL 5 Weekly Hunt Board obje
 | 🥈 | [Olindre](players/olindre.md) | 2 |
 | 🥉 | [Miss](players/miss.md) | 1 |
 | 4 | [Yojin](players/yojin.md) | 1 |
-| 5 | [Mdz](players/mdz.md) | 1 |
-| 6 | [Subpar](players/subpar.md) | 1 |
-| 7 | [Cervantis](players/cervantis.md) | 1 |
-| 8 | [Pld](players/pld.md) | 1 |
-| 9 | [Moon](players/moon.md) | 1 |
-| 10 | [Mardukas](players/mardukas.md) | 1 |
+| 5 | [Pld](players/pld.md) | 1 |
+| 6 | [Ken](players/ken.md) | 1 |
+| 7 | [Subpar](players/subpar.md) | 1 |
+| 8 | [Cervantis](players/cervantis.md) | 1 |
+| 9 | [Rtklm](players/rtklm.md) | 1 |
+| 10 | [Moon](players/moon.md) | 1 |
 <!-- DOCGEN:END id="lb-weekly-sweeps" -->
 
 ---
@@ -595,16 +595,16 @@ _Cumulative Infamy earned across all endgame content —doesn't decrease when sp
 
 | Rank | Character | Infamy |
 |---:|---|---:|
-| 🥇 | [Bro](players/bro.md) | 57,040 |
-| 🥈 | [Ken](players/ken.md) | 45,140 |
-| 🥉 | [Broken](players/broken.md) | 45,140 |
-| 4 | [Kyrie](players/kyrie.md) | 45,140 |
-| 5 | [Benton](players/benton.md) | 43,520 |
-| 6 | [Rose](players/rose.md) | 43,520 |
-| 7 | [Speedbump](players/speedbump.md) | 43,520 |
-| 8 | [Draco](players/draco.md) | 43,520 |
-| 9 | [Drbrule](players/drbrule.md) | 43,020 |
-| 10 | [Herdofturtles](players/herdofturtles.md) | 25,805 |
+| 🥇 | [Ken](players/ken.md) | 93,020 |
+| 🥈 | [Broken](players/broken.md) | 93,020 |
+| 🥉 | [Kyrie](players/kyrie.md) | 92,840 |
+| 4 | [Benton](players/benton.md) | 91,400 |
+| 5 | [Speedbump](players/speedbump.md) | 91,400 |
+| 6 | [Drbrule](players/drbrule.md) | 90,900 |
+| 7 | [Rose](players/rose.md) | 90,860 |
+| 8 | [Draco](players/draco.md) | 90,860 |
+| 9 | [Bro](players/bro.md) | 57,040 |
+| 10 | [Ariamys](players/ariamys.md) | 29,806 |
 <!-- DOCGEN:END id="lb-infamy-lifetime" -->
 
 <!-- DOCGEN:BEGIN id="lb-infamy-balance" -->
@@ -614,16 +614,16 @@ _Infamy currently held — drops when you buy from the Infamy Vendor. The hoarde
 
 | Rank | Character | Infamy |
 |---:|---|---:|
-| 🥇 | [Benton](players/benton.md) | 43,520 |
-| 🥈 | [Rose](players/rose.md) | 43,520 |
-| 🥉 | [Speedbump](players/speedbump.md) | 43,520 |
-| 4 | [Draco](players/draco.md) | 43,520 |
-| 5 | [Drbrule](players/drbrule.md) | 43,020 |
-| 6 | [Kyrie](players/kyrie.md) | 42,040 |
-| 7 | [Broken](players/broken.md) | 40,140 |
-| 8 | [Ken](players/ken.md) | 34,690 |
-| 9 | [Bro](players/bro.md) | 28,090 |
-| 10 | [Moss](players/moss.md) | 25,480 |
+| 🥇 | [Benton](players/benton.md) | 91,400 |
+| 🥈 | [Speedbump](players/speedbump.md) | 90,900 |
+| 🥉 | [Drbrule](players/drbrule.md) | 90,900 |
+| 4 | [Rose](players/rose.md) | 90,860 |
+| 5 | [Draco](players/draco.md) | 90,860 |
+| 6 | [Kyrie](players/kyrie.md) | 89,740 |
+| 7 | [Broken](players/broken.md) | 88,020 |
+| 8 | [Ken](players/ken.md) | 82,570 |
+| 9 | [Moss](players/moss.md) | 26,320 |
+| 10 | [Miss](players/miss.md) | 21,320 |
 <!-- DOCGEN:END id="lb-infamy-balance" -->
 </div>
 
@@ -639,9 +639,9 @@ _Total victories against the level-200 Maat in Waughroon Shrine. Each attempt co
 
 | Rank | Character | Kills |
 |---:|---|---:|
-| 🥇 | [Daiis](players/daiis.md) | 2 |
-| 🥈 | [Xiongda](players/xiongda.md) | 2 |
-| 🥉 | [Jbae](players/jbae.md) | 1 |
+| 🥇 | [Jbae](players/jbae.md) | 3 |
+| 🥈 | [Daiis](players/daiis.md) | 2 |
+| 🥉 | [Xiongda](players/xiongda.md) | 2 |
 <!-- DOCGEN:END id="lb-maat-kills" -->
 
 <!-- DOCGEN:BEGIN id="lb-maat-time" -->
@@ -665,16 +665,16 @@ _Peak damage dealt by a single weapon skill, recorded server-wide since tracking
 
 | Rank | Character | Weapon Skill | Damage |
 |---:|---|---|---:|
-| 🥇 | [Phatdood](players/phatdood.md) | diarmuid | 15,768,182 |
-| 🥈 | [Erenyeager](players/erenyeager.md) | maru_kala | 11,301,374 |
-| 🥉 | [Burtgang](players/burtgang.md) | savage_blade | 8,594,756 |
-| 4 | [Ken](players/ken.md) | maru_kala | 7,004,096 |
-| 5 | [Ropraz](players/ropraz.md) | maru_kala | 6,652,164 |
-| 6 | [Kyrie](players/kyrie.md) | asuran_fists | 6,378,442 |
-| 7 | [Flcl](players/flcl.md) | evisceration | 5,122,466 |
-| 8 | [Vistrix](players/vistrix.md) | impulse_drive | 5,041,434 |
-| 9 | [Langy](players/langy.md) | maru_kala | 4,844,818 |
-| 10 | [Duffaluffagus](players/duffaluffagus.md) | red_lotus_blade | 4,534,068 |
+| 🥇 | [Thanos](players/thanos.md) | asuran_fists | 16,674,200 |
+| 🥈 | [Phatdood](players/phatdood.md) | tachi_jinpu | 16,510,318 |
+| 🥉 | [Flcl](players/flcl.md) | leaden_salute | 16,279,006 |
+| 4 | [Nobigdeal](players/nobigdeal.md) | asuran_fists | 14,477,228 |
+| 5 | [Kyrie](players/kyrie.md) | asuran_fists | 12,486,150 |
+| 6 | [Erenyeager](players/erenyeager.md) | maru_kala | 11,301,374 |
+| 7 | [Broken](players/broken.md) | asuran_fists | 10,774,500 |
+| 8 | [Ropraz](players/ropraz.md) | maru_kala | 10,129,502 |
+| 9 | [Ken](players/ken.md) | asuran_fists | 10,071,168 |
+| 10 | [Burtgang](players/burtgang.md) | savage_blade | 8,594,756 |
 <!-- DOCGEN:END id="lb-ws-damage" -->
 
 <!-- DOCGEN:BEGIN id="lb-real-level" -->
@@ -684,16 +684,16 @@ _Real Level = job level + gear iLvl bonus + Ascension levels + Job Points + attr
 
 | Rank | Character | Real level |
 |---:|---|---:|
-| 🥇 | [Jbae](players/jbae.md) | 256 |
-| 🥈 | [Herdofturtles](players/herdofturtles.md) | 206 |
-| 🥉 | [Kyrie](players/kyrie.md) | 188 |
-| 4 | [Ropraz](players/ropraz.md) | 186 |
-| 5 | [Olindre](players/olindre.md) | 181 |
-| 6 | [Koru](players/koru.md) | 180 |
-| 7 | [Ririn](players/ririn.md) | 179 |
-| 8 | [Souls](players/souls.md) | 177 |
-| 9 | [Sytara](players/sytara.md) | 176 |
-| 10 | [Phatdood](players/phatdood.md) | 174 |
+| 🥇 | [Jbae](players/jbae.md) | 271 |
+| 🥈 | [Ropraz](players/ropraz.md) | 261 |
+| 🥉 | [Herdofturtles](players/herdofturtles.md) | 206 |
+| 4 | [Kyrie](players/kyrie.md) | 198 |
+| 5 | [Olindre](players/olindre.md) | 186 |
+| 6 | [Rhis](players/rhis.md) | 183 |
+| 7 | [Koru](players/koru.md) | 183 |
+| 8 | [Ririn](players/ririn.md) | 179 |
+| 9 | [Candycorns](players/candycorns.md) | 178 |
+| 10 | [Souls](players/souls.md) | 177 |
 <!-- DOCGEN:END id="lb-real-level" -->
 
 <!-- DOCGEN:BEGIN id="lb-apex-tier" -->
@@ -703,8 +703,16 @@ _Apex Trials is an infinite, scaling solo climb — one Apex boss per tier, hard
 
 | Rank | Character | Tier |
 |---:|---|---:|
-| 🥇 | [Phatdood](players/phatdood.md) | 9 |
-| 🥈 | [Ropraz](players/ropraz.md) | 5 |
+| 🥇 | [Phatdood](players/phatdood.md) | 33 |
+| 🥈 | [Rhis](players/rhis.md) | 19 |
+| 🥉 | [Ropraz](players/ropraz.md) | 10 |
+| 4 | [Thanos](players/thanos.md) | 10 |
+| 5 | [Flcl](players/flcl.md) | 8 |
+| 6 | [Spyro](players/spyro.md) | 7 |
+| 7 | [Jbae](players/jbae.md) | 5 |
+| 8 | [Olindre](players/olindre.md) | 5 |
+| 9 | [Shizuku](players/shizuku.md) | 1 |
+| 10 | [Corvinos](players/corvinos.md) | 1 |
 <!-- DOCGEN:END id="lb-apex-tier" -->
 
 <!-- DOCGEN:BEGIN id="lb-paragon-level" -->
@@ -714,7 +722,12 @@ _Paragon Levels are bought with Paragon Points earned in Apex Trials — an infi
 
 | Rank | Character | Paragon level |
 |---:|---|---:|
-| 🥇 | [Ropraz](players/ropraz.md) | 1 |
+| 🥇 | [Rhis](players/rhis.md) | 4 |
+| 🥈 | [Jbae](players/jbae.md) | 3 |
+| 🥉 | [Ropraz](players/ropraz.md) | 3 |
+| 4 | [Spyro](players/spyro.md) | 2 |
+| 5 | [Flcl](players/flcl.md) | 1 |
+| 6 | [Phatdood](players/phatdood.md) | 1 |
 <!-- DOCGEN:END id="lb-paragon-level" -->
 </div>
 
@@ -770,14 +783,14 @@ _Largest single cure or healing spell on any target at Lv 68–99. Measured at t
 |---:|---|---:|
 | 🥇 | [Erenjaeger](players/erenjaeger.md) | 3,756 |
 | 🥈 | [Phatdoood](players/phatdoood.md) | 1,783 |
-| 🥉 | [Jbae](players/jbae.md) | 1,280 |
-| 4 | [Luna](players/luna.md) | 1,280 |
-| 5 | [Rhis](players/rhis.md) | 1,238 |
-| 6 | [Ariamys](players/ariamys.md) | 1,220 |
-| 7 | [Shizuku](players/shizuku.md) | 1,220 |
-| 8 | [Miss](players/miss.md) | 1,214 |
-| 9 | [Souls](players/souls.md) | 1,202 |
-| 10 | [Rtkhl](players/rtkhl.md) | 1,186 |
+| 🥉 | [Thanos](players/thanos.md) | 1,336 |
+| 4 | [Lunita](players/lunita.md) | 1,310 |
+| 5 | [Speedbump](players/speedbump.md) | 1,306 |
+| 6 | [Phatdood](players/phatdood.md) | 1,300 |
+| 7 | [Jbae](players/jbae.md) | 1,280 |
+| 8 | [Luna](players/luna.md) | 1,280 |
+| 9 | [Rhis](players/rhis.md) | 1,238 |
+| 10 | [Ariamys](players/ariamys.md) | 1,220 |
 <!-- DOCGEN:END id="lb-MaxHeal-T3" -->
 
 <!-- DOCGEN:BEGIN id="lb-MaxHeal-T4" -->
@@ -799,16 +812,16 @@ _Peak magic damage from a single spell landing on a Lv 1–33 mob. Magic bursts 
 
 | Rank | Character | Damage |
 |---:|---|---:|
-| 🥇 | [Koru](players/koru.md) | 131,071 |
-| 🥈 | [Miss](players/miss.md) | 131,071 |
-| 🥉 | [Ariamys](players/ariamys.md) | 131,071 |
-| 4 | [Moon](players/moon.md) | 131,071 |
-| 5 | [Langy](players/langy.md) | 131,071 |
-| 6 | [Moss](players/moss.md) | 131,071 |
-| 7 | [Flcl](players/flcl.md) | 65,535 |
-| 8 | [Darrent](players/darrent.md) | 65,535 |
-| 9 | [Burtgang](players/burtgang.md) | 65,535 |
-| 10 | [Rhis](players/rhis.md) | 65,535 |
+| 🥇 | [Langy](players/langy.md) | 131,071 |
+| 🥈 | [Moss](players/moss.md) | 131,071 |
+| 🥉 | [Koru](players/koru.md) | 131,071 |
+| 4 | [Spyro](players/spyro.md) | 131,071 |
+| 5 | [Flcl](players/flcl.md) | 131,071 |
+| 6 | [Miss](players/miss.md) | 131,071 |
+| 7 | [Ariamys](players/ariamys.md) | 131,071 |
+| 8 | [Burtgang](players/burtgang.md) | 131,071 |
+| 9 | [Cecel](players/cecel.md) | 131,071 |
+| 10 | [Moon](players/moon.md) | 131,071 |
 <!-- DOCGEN:END id="lb-MaxNuke-T1" -->
 
 <!-- DOCGEN:BEGIN id="lb-MaxNuke-T2" -->
@@ -821,13 +834,13 @@ _Peak magic damage from a single spell landing on a Lv 34–67 mob. Magic bursts
 | 🥇 | [Miss](players/miss.md) | 65,535 |
 | 🥈 | [Souls](players/souls.md) | 43,970 |
 | 🥉 | [Rhis](players/rhis.md) | 40,106 |
-| 4 | [Moss](players/moss.md) | 22,976 |
-| 5 | [Burtgang](players/burtgang.md) | 13,025 |
-| 6 | [Miyasanima](players/miyasanima.md) | 8,586 |
-| 7 | [Gwendin](players/gwendin.md) | 7,474 |
-| 8 | [Shizuku](players/shizuku.md) | 5,078 |
-| 9 | [Ants](players/ants.md) | 3,246 |
-| 10 | [Vision](players/vision.md) | 1,938 |
+| 4 | [Burtgang](players/burtgang.md) | 32,940 |
+| 5 | [Moss](players/moss.md) | 22,976 |
+| 6 | [Aureal](players/aureal.md) | 12,148 |
+| 7 | [Katrrine](players/katrrine.md) | 9,714 |
+| 8 | [Miyasanima](players/miyasanima.md) | 8,586 |
+| 9 | [Gwendin](players/gwendin.md) | 7,474 |
+| 10 | [Shizuku](players/shizuku.md) | 5,078 |
 <!-- DOCGEN:END id="lb-MaxNuke-T2" -->
 
 <!-- DOCGEN:BEGIN id="lb-MaxNuke-T3" -->
@@ -837,16 +850,16 @@ _Peak magic damage from a single spell landing on a Lv 68–99 mob. Magic bursts
 
 | Rank | Character | Damage |
 |---:|---|---:|
-| 🥇 | [Langy](players/langy.md) | 131,071 |
-| 🥈 | [Moon](players/moon.md) | 131,071 |
-| 🥉 | [Moss](players/moss.md) | 131,071 |
-| 4 | [Darrent](players/darrent.md) | 131,071 |
-| 5 | [Lyvia](players/lyvia.md) | 131,071 |
-| 6 | [Ariamys](players/ariamys.md) | 131,071 |
+| 🥇 | [Moss](players/moss.md) | 131,071 |
+| 🥈 | [Darrent](players/darrent.md) | 131,071 |
+| 🥉 | [Langy](players/langy.md) | 131,071 |
+| 4 | [Lyvia](players/lyvia.md) | 131,071 |
+| 5 | [Ariamys](players/ariamys.md) | 131,071 |
+| 6 | [Flcl](players/flcl.md) | 131,071 |
 | 7 | [Miss](players/miss.md) | 131,071 |
-| 8 | [Flcl](players/flcl.md) | 65,535 |
-| 9 | [Luna](players/luna.md) | 65,535 |
-| 10 | [Zxj](players/zxj.md) | 65,535 |
+| 8 | [Moon](players/moon.md) | 131,071 |
+| 9 | [Zxj](players/zxj.md) | 65,535 |
+| 10 | [Luna](players/luna.md) | 65,535 |
 <!-- DOCGEN:END id="lb-MaxNuke-T3" -->
 
 <!-- DOCGEN:BEGIN id="lb-MaxNuke-T4" -->
@@ -857,15 +870,15 @@ _Peak magic damage from a single spell landing on a Lv 100+ mob. Magic bursts al
 | Rank | Character | Damage |
 |---:|---|---:|
 | 🥇 | [Darrent](players/darrent.md) | 604,772 |
-| 🥈 | [Langy](players/langy.md) | 131,071 |
-| 🥉 | [Moss](players/moss.md) | 131,071 |
-| 4 | [Rhis](players/rhis.md) | 131,071 |
-| 5 | [Flcl](players/flcl.md) | 131,071 |
-| 6 | [Miss](players/miss.md) | 131,071 |
-| 7 | [Miyasanima](players/miyasanima.md) | 131,071 |
-| 8 | [Koru](players/koru.md) | 131,071 |
-| 9 | [Ariamys](players/ariamys.md) | 131,071 |
-| 10 | [Lyvia](players/lyvia.md) | 131,071 |
+| 🥈 | [Aureal](players/aureal.md) | 155,856 |
+| 🥉 | [Katrrine](players/katrrine.md) | 144,980 |
+| 4 | [Lyvia](players/lyvia.md) | 131,071 |
+| 5 | [Burtgang](players/burtgang.md) | 131,071 |
+| 6 | [Langy](players/langy.md) | 131,071 |
+| 7 | [Flcl](players/flcl.md) | 131,071 |
+| 8 | [Cecel](players/cecel.md) | 131,071 |
+| 9 | [Moss](players/moss.md) | 131,071 |
+| 10 | [Spyro](players/spyro.md) | 131,071 |
 <!-- DOCGEN:END id="lb-MaxNuke-T4" -->
 </div>
 
@@ -880,13 +893,14 @@ _Largest magic burst damage on a single Lv 1–33 mob target. Requires matching 
 | Rank | Character | Damage |
 |---:|---|---:|
 | 🥇 | [Ariamys](players/ariamys.md) | 131,071 |
-| 🥈 | [Rhis](players/rhis.md) | 65,535 |
-| 🥉 | [Burtgang](players/burtgang.md) | 65,535 |
-| 4 | [Luna](players/luna.md) | 65,535 |
-| 5 | [Flcl](players/flcl.md) | 65,535 |
-| 6 | [Zxj](players/zxj.md) | 48,007 |
-| 7 | [Jbae](players/jbae.md) | 3,493 |
-| 8 | [Kalystrin](players/kalystrin.md) | 492 |
+| 🥈 | [Burtgang](players/burtgang.md) | 131,071 |
+| 🥉 | [Cecel](players/cecel.md) | 131,071 |
+| 4 | [Flcl](players/flcl.md) | 65,535 |
+| 5 | [Rhis](players/rhis.md) | 65,535 |
+| 6 | [Luna](players/luna.md) | 65,535 |
+| 7 | [Zxj](players/zxj.md) | 48,007 |
+| 8 | [Jbae](players/jbae.md) | 3,493 |
+| 9 | [Kalystrin](players/kalystrin.md) | 492 |
 <!-- DOCGEN:END id="lb-MaxBurst-T1" -->
 
 <!-- DOCGEN:BEGIN id="lb-MaxBurst-T2" -->
@@ -929,16 +943,16 @@ _Largest magic burst damage on a single Lv 100+ mob target. Requires matching th
 
 | Rank | Character | Damage |
 |---:|---|---:|
-| 🥇 | [Moss](players/moss.md) | 131,071 |
-| 🥈 | [Miyasanima](players/miyasanima.md) | 131,071 |
-| 🥉 | [Rhis](players/rhis.md) | 131,071 |
-| 4 | [Darrent](players/darrent.md) | 131,071 |
+| 🥇 | [Ariamys](players/ariamys.md) | 131,071 |
+| 🥈 | [Miss](players/miss.md) | 131,071 |
+| 🥉 | [Lyvia](players/lyvia.md) | 131,071 |
+| 4 | [Miyasanima](players/miyasanima.md) | 131,071 |
 | 5 | [Flcl](players/flcl.md) | 131,071 |
-| 6 | [Miss](players/miss.md) | 131,071 |
-| 7 | [Lyvia](players/lyvia.md) | 131,071 |
-| 8 | [Burtgang](players/burtgang.md) | 65,535 |
-| 9 | [Ariamys](players/ariamys.md) | 65,535 |
-| 10 | [Zxj](players/zxj.md) | 65,535 |
+| 6 | [Burtgang](players/burtgang.md) | 131,071 |
+| 7 | [Moss](players/moss.md) | 131,071 |
+| 8 | [Darrent](players/darrent.md) | 131,071 |
+| 9 | [Rhis](players/rhis.md) | 131,071 |
+| 10 | [Cecel](players/cecel.md) | 131,071 |
 <!-- DOCGEN:END id="lb-MaxBurst-T4" -->
 </div>
 
@@ -952,16 +966,16 @@ _Largest single skillchain damage on a Lv 1–33 mob. Triggered via weapon skill
 
 | Rank | Character | Damage |
 |---:|---|---:|
-| 🥇 | [Ariamys](players/ariamys.md) | 131,071 |
-| 🥈 | [Erenyeager](players/erenyeager.md) | 131,071 |
-| 🥉 | [Broken](players/broken.md) | 131,071 |
-| 4 | [Stoney](players/stoney.md) | 131,071 |
-| 5 | [Pld](players/pld.md) | 131,071 |
-| 6 | [Kyrie](players/kyrie.md) | 131,071 |
-| 7 | [Duffaluffagus](players/duffaluffagus.md) | 131,071 |
-| 8 | [Thanos](players/thanos.md) | 131,071 |
-| 9 | [Jbae](players/jbae.md) | 131,071 |
-| 10 | [Ririn](players/ririn.md) | 131,071 |
+| 🥇 | [Cervantis](players/cervantis.md) | 131,071 |
+| 🥈 | [Spyro](players/spyro.md) | 131,071 |
+| 🥉 | [Rtkhl](players/rtkhl.md) | 131,071 |
+| 4 | [Ariamys](players/ariamys.md) | 131,071 |
+| 5 | [Jbae](players/jbae.md) | 131,071 |
+| 6 | [Broken](players/broken.md) | 131,071 |
+| 7 | [Stoney](players/stoney.md) | 131,071 |
+| 8 | [Kyrie](players/kyrie.md) | 131,071 |
+| 9 | [Duffaluffagus](players/duffaluffagus.md) | 131,071 |
+| 10 | [Thanos](players/thanos.md) | 131,071 |
 <!-- DOCGEN:END id="lb-MaxSC-T1" -->
 
 <!-- DOCGEN:BEGIN id="lb-MaxSC-T2" -->
@@ -1011,14 +1025,14 @@ _Largest single skillchain damage on a Lv 100+ mob. Triggered via weapon skills 
 |---:|---|---:|
 | 🥇 | [Velvet](players/velvet.md) | 131,071 |
 | 🥈 | [Darrent](players/darrent.md) | 131,071 |
-| 🥉 | [Burtgang](players/burtgang.md) | 131,071 |
-| 4 | [Sfen](players/sfen.md) | 131,071 |
-| 5 | [Olindre](players/olindre.md) | 131,071 |
-| 6 | [Spyro](players/spyro.md) | 131,071 |
-| 7 | [Shadowsfall](players/shadowsfall.md) | 131,071 |
-| 8 | [Yojin](players/yojin.md) | 131,071 |
-| 9 | [Erenyeager](players/erenyeager.md) | 131,071 |
-| 10 | [Vistrix](players/vistrix.md) | 131,071 |
+| 🥉 | [Rhis](players/rhis.md) | 131,071 |
+| 4 | [Burtgang](players/burtgang.md) | 131,071 |
+| 5 | [Kyrie](players/kyrie.md) | 131,071 |
+| 6 | [Coso](players/coso.md) | 131,071 |
+| 7 | [Olindre](players/olindre.md) | 131,071 |
+| 8 | [Spyro](players/spyro.md) | 131,071 |
+| 9 | [Loamy](players/loamy.md) | 131,071 |
+| 10 | [Killface](players/killface.md) | 131,071 |
 <!-- DOCGEN:END id="lb-MaxSC-T4" -->
 </div>
 
@@ -1032,16 +1046,16 @@ _Highest total damage dealt to Lv 1–33 mobs in any rolling 30-second window, c
 
 | Rank | Character | Damage |
 |---:|---|---:|
-| 🥇 | [Phatdood](players/phatdood.md) | 27,675,404 |
-| 🥈 | [Erenyeager](players/erenyeager.md) | 15,642,182 |
-| 🥉 | [Kyrie](players/kyrie.md) | 14,164,242 |
-| 4 | [Spyro](players/spyro.md) | 8,135,066 |
-| 5 | [Cervantis](players/cervantis.md) | 7,129,775 |
-| 6 | [Herdofturtles](players/herdofturtles.md) | 7,121,381 |
-| 7 | [Rtkhl](players/rtkhl.md) | 5,635,623 |
-| 8 | [Stoney](players/stoney.md) | 5,489,044 |
-| 9 | [Duffaluffagus](players/duffaluffagus.md) | 5,400,073 |
-| 10 | [Regis](players/regis.md) | 5,246,647 |
+| 🥇 | [Phatdood](players/phatdood.md) | 51,953,360 |
+| 🥈 | [Thanos](players/thanos.md) | 23,295,508 |
+| 🥉 | [Broken](players/broken.md) | 19,814,800 |
+| 4 | [Erenyeager](players/erenyeager.md) | 17,375,174 |
+| 5 | [Kyrie](players/kyrie.md) | 16,679,888 |
+| 6 | [Ken](players/ken.md) | 16,503,852 |
+| 7 | [Spyro](players/spyro.md) | 8,135,066 |
+| 8 | [Cervantis](players/cervantis.md) | 7,129,775 |
+| 9 | [Herdofturtles](players/herdofturtles.md) | 7,121,381 |
+| 10 | [Rtkhl](players/rtkhl.md) | 5,635,623 |
 <!-- DOCGEN:END id="lb-MaxDmg30-T1" -->
 
 <!-- DOCGEN:BEGIN id="lb-MaxDmg30-T2" -->
@@ -1058,9 +1072,9 @@ _Highest total damage dealt to Lv 34–67 mobs in any rolling 30-second window, 
 | 5 | [Rhis](players/rhis.md) | 108,762 |
 | 6 | [Daiis](players/daiis.md) | 101,618 |
 | 7 | [Coso](players/coso.md) | 58,876 |
-| 8 | [Granae](players/granae.md) | 45,576 |
-| 9 | [Chanie](players/chanie.md) | 45,334 |
-| 10 | [Brixton](players/brixton.md) | 44,592 |
+| 8 | [Aureal](players/aureal.md) | 58,490 |
+| 9 | [Granae](players/granae.md) | 45,576 |
+| 10 | [Chanie](players/chanie.md) | 45,334 |
 <!-- DOCGEN:END id="lb-MaxDmg30-T2" -->
 
 <!-- DOCGEN:BEGIN id="lb-MaxDmg30-T3" -->
@@ -1079,7 +1093,7 @@ _Highest total damage dealt to Lv 68–99 mobs in any rolling 30-second window, 
 | 7 | [Thanos](players/thanos.md) | 4,700,160 |
 | 8 | [Regis](players/regis.md) | 4,479,203 |
 | 9 | [Langy](players/langy.md) | 4,121,537 |
-| 10 | [Ririn](players/ririn.md) | 3,441,796 |
+| 10 | [Brixton](players/brixton.md) | 3,556,829 |
 <!-- DOCGEN:END id="lb-MaxDmg30-T3" -->
 
 <!-- DOCGEN:BEGIN id="lb-MaxDmg30-T4" -->
@@ -1089,16 +1103,16 @@ _Highest total damage dealt to Lv 100+ mobs in any rolling 30-second window, com
 
 | Rank | Character | Damage |
 |---:|---|---:|
-| 🥇 | [Phatdood](players/phatdood.md) | 59,413,244 |
+| 🥇 | [Phatdood](players/phatdood.md) | 60,331,724 |
 | 🥈 | [Kyrie](players/kyrie.md) | 41,357,672 |
-| 🥉 | [Ropraz](players/ropraz.md) | 19,948,300 |
-| 4 | [Broken](players/broken.md) | 16,723,183 |
-| 5 | [Regis](players/regis.md) | 16,250,068 |
-| 6 | [Erenyeager](players/erenyeager.md) | 15,748,404 |
-| 7 | [Langy](players/langy.md) | 13,482,412 |
-| 8 | [Herdofturtles](players/herdofturtles.md) | 12,918,948 |
-| 9 | [Spyro](players/spyro.md) | 12,191,028 |
-| 10 | [Duffaluffagus](players/duffaluffagus.md) | 10,701,688 |
+| 🥉 | [Nobigdeal](players/nobigdeal.md) | 40,517,528 |
+| 4 | [Ropraz](players/ropraz.md) | 37,176,734 |
+| 5 | [Flcl](players/flcl.md) | 30,772,154 |
+| 6 | [Thanos](players/thanos.md) | 28,472,172 |
+| 7 | [Broken](players/broken.md) | 21,483,632 |
+| 8 | [Regis](players/regis.md) | 16,250,068 |
+| 9 | [Erenyeager](players/erenyeager.md) | 15,748,404 |
+| 10 | [Shadowsfall](players/shadowsfall.md) | 15,667,858 |
 <!-- DOCGEN:END id="lb-MaxDmg30-T4" -->
 </div>
 
@@ -1115,6 +1129,6 @@ _Highest total damage dealt to Lv 100+ mobs in any rolling 30-second window, com
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: be316e42022f -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 2c1af8fdbdc8 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

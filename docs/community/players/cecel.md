@@ -1,8 +1,8 @@
 # Cecel
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-20 · Character age 9d 22h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 10d
 
-`⭐ 14 Ascensions` `💪 10 jobs @99`
+`⭐ 21 Ascensions` `💪 10 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | BLM 99 |
-| Time played | 68h |
-| Enemies defeated | 4,160 |
-| Deaths | 47 |
+| Sub job | SAM 99 |
+| Time played | 70h |
+| Enemies defeated | 4,192 |
+| Deaths | 48 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 26,905
-- **Marks (lifetime):** 2,424
+- **Marks (current):** 10,249
+- **Marks (lifetime):** 2,814
 - **Distinct NMs slain:** 14
-- **Total NM kills:** 254
+- **Total NM kills:** 261
 
 ## Guild standing
 
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 358
+- **Augments crafted:** 364
 - **NM Affinities:** 12 / 13
 
 ## Reforge
@@ -68,12 +68,12 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 14
-- **Per-job prestige:** DRK P4 · NIN P10
+- **Total Ascensions:** 21
+- **Per-job prestige:** DRK P11 · NIN P10
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 117
 
 ## Achievements
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 65c83f1b2522 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: ff837b6684a8 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

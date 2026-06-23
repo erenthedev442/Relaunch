@@ -1,6 +1,6 @@
 # Runt
 
-**Bastok citizen** · 🟡 Seen this month · Created 2026-06-15 · Last seen 2026-06-15 · Character age 8d 1h
+**Bastok citizen** · 🟡 Seen this month · Created 2026-06-15 · Last seen 2026-06-15 · Character age 8d 3h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 72/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: eb0ac5a78e04 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: a8d33c59149d -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

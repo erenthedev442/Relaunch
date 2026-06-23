@@ -1,6 +1,6 @@
 # Izuri
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 5d 9h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 5d 11h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 76/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -9,9 +9,9 @@
 
 | | |
 |---|---|
-| Main job | **SMN 12** |
-| Sub job | WHM 8 |
-| Time played | 11h |
+| Main job | **BLM 76** |
+| Sub job | RDM 63 |
+| Time played | 12h |
 | Enemies defeated | 422 |
 | Deaths | 5 |
 
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 3,475
+- **Marks (current):** 6,725
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e03b41a1c15a -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: ad62d2d96d8b -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

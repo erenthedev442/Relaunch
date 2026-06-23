@@ -1,8 +1,8 @@
 # Arael
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-20 · Last seen 2026-06-21 · Character age 2d 16h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 2d 17h
 
-`💪 2 jobs @99`
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
     **Push to Hunting League Rank 5.** You're Rank 4/5 — keep clearing the tier roster to rank up.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
-| Sub job | RDM 99 |
-| Time played | 28h |
-| Enemies defeated | 546 |
-| Deaths | 0 |
+| Main job | **RDM 86** |
+| Sub job | BLU 86 |
+| Time played | 33h |
+| Enemies defeated | 760 |
+| Deaths | 1 |
 
 ## Job levels
 
@@ -24,8 +24,8 @@
 | WAR | 1 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
-| BLM | 1 | SMN | 1 |
-| **RDM** | **99** | **BLU** | **99** |
+| BLM | 91 | SMN | 1 |
+| RDM | 86 | **BLU** | **99** |
 | THF | 1 | COR | 1 |
 | PLD | 10 | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 921
-- **Marks (lifetime):** 2,530
+- **Marks (current):** 4,903
+- **Marks (lifetime):** 3,555
 - **Distinct NMs slain:** 9
-- **Total NM kills:** 456
+- **Total NM kills:** 661
 
 ## Augment Sage
 
 - **Mastery rank:** 0 / 5
-- **Augments crafted:** 8
+- **Augments crafted:** 18
 - **NM Affinities:** 0 / 13
 
 ## Reforge
@@ -55,9 +55,14 @@
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
+## Job Rebirth
+
+- **Total rebirths:** 3
+- **By job:** RDM ×3
+
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
@@ -76,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ae7dca0e222b -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: c878d0416a3e -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Arthas
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-20 · Character age 8d 11h
+**Bastok citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-20 · Character age 8d 13h
 
 `💪 3 jobs @99`
 
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -77,6 +77,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 607ba45b43c4 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 7f4bcba530ad -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

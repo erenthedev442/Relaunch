@@ -1,6 +1,6 @@
 # Lyvia
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 5d 9h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 5d 11h
 
 `💪 4 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
-| Time played | 41h |
-| Enemies defeated | 1,692 |
+| Time played | 43h |
+| Enemies defeated | 1,693 |
 | Deaths | 19 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 14,032
-- **Marks (lifetime):** 4,583
-- **Distinct NMs slain:** 9
-- **Total NM kills:** 940
+- **Marks (current):** 18,508
+- **Marks (lifetime):** 4,773
+- **Distinct NMs slain:** 11
+- **Total NM kills:** 944
 
 ## Guild standing
 
@@ -56,7 +56,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 - **Mastery rank:** 5 / 5
 - **Augments crafted:** 270
-- **NM Affinities:** 7 / 13
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
@@ -73,7 +73,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 117
 
 ## Achievements
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4c5876b543d3 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 516dd47db4fb -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

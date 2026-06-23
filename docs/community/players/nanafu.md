@@ -1,6 +1,6 @@
 # Nanafu
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 5d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 5d 5h
 
 `💪 7 jobs @99`
 
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **WAR 99** |
 | Sub job | DRK 99 |
-| Time played | 29h |
-| Enemies defeated | 1,794 |
-| Deaths | 21 |
+| Time played | 32h |
+| Enemies defeated | 1,821 |
+| Deaths | 22 |
 
 ## Job levels
 
@@ -36,28 +36,28 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 16,050
-- **Marks (lifetime):** 15,752
+- **Marks (current):** 20,054
+- **Marks (lifetime):** 15,803
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 504
+- **Total NM kills:** 535
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 258
-- **NM Affinities:** 6 / 13
+- **Augments crafted:** 259
+- **NM Affinities:** 9 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 1,000 | 0 |
 | Relic | 3,000 | 0 |
-| Empyrean | 2,425 | 425 |
+| Empyrean | 690 | 3,940 |
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 86ae25d3918c -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 976982258fe1 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

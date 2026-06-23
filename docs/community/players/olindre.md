@@ -1,8 +1,8 @@
 # Olindre
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 16h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 9d 18h
 
-`⭐ 39 Ascensions` `💪 8 jobs @99`
+`⭐ 40 Ascensions` `💪 8 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RUN 99** |
-| Sub job | WAR 99 |
-| Time played | 70h |
-| Enemies defeated | 5,298 |
+| Main job | **WAR 99** |
+| Sub job | RDM 86 |
+| Time played | 74h |
+| Enemies defeated | 5,900 |
 | Deaths | 57 |
 
 ## Job levels
@@ -25,7 +25,7 @@
 | MNK | 1 | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
 | **BLM** | **99** | SMN | 1 |
-| RDM | 1 | BLU | 1 |
+| RDM | 86 | BLU | 1 |
 | THF | 1 | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | **DRK** | **99** | DNC | 1 |
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 48,917
+- **Marks (current):** 43,557
 - **Marks (lifetime):** 3,123
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 421
@@ -55,7 +55,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 409
+- **Augments crafted:** 425
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -68,17 +68,17 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Job Rebirth
 
-- **Total rebirths:** 5
-- **By job:** WAR ×3 · RUN ×2
+- **Total rebirths:** 7
+- **By job:** WAR ×5 · RUN ×2
 
 ## Prestige
 
-- **Total Ascensions:** 39
-- **Per-job prestige:** WAR P20 · RUN P19
+- **Total Ascensions:** 40
+- **Per-job prestige:** WAR P20 · RUN P20
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2f47f13d73c0 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 88de0b641306 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

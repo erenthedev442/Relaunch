@@ -1,8 +1,8 @@
 # Loamy
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 10d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 10d 4h
 
-`💪 12 jobs @99`
+`⭐ 2 Ascensions` `💪 12 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **RNG 99** |
-| Sub job | DNC 99 |
-| Time played | 77h |
-| Enemies defeated | 1,280 |
-| Deaths | 9 |
+| Main job | **SCH 99** |
+| Sub job | BLM 99 |
+| Time played | 85h |
+| Enemies defeated | 1,334 |
+| Deaths | 10 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 130
-- **Marks (lifetime):** 3,557
-- **Distinct NMs slain:** 5
-- **Total NM kills:** 698
+- **Marks (current):** 1,278
+- **Marks (lifetime):** 4,009
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 719
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 110
+- **Augments crafted:** 138
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -55,13 +55,18 @@
 | Relic | 0 | 0 |
 | Empyrean | 0 | 0 |
 
+## Prestige
+
+- **Total Ascensions:** 2
+- **Per-job prestige:** RNG P2
+
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 117
 
 ## Achievements
 
-**8** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
+**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -77,6 +82,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5b7884586f87 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: c7259729c47b -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

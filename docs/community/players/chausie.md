@@ -1,6 +1,6 @@
 # Chausie
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 8d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-23 · Character age 8d 2h
 
 `💪 5 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RUN 1** |
-| Sub job | DRK 1 |
-| Time played | 40h |
-| Enemies defeated | 2,165 |
+| Main job | **RUN 31** |
+| Sub job | DRK 21 |
+| Time played | 44h |
+| Enemies defeated | 2,224 |
 | Deaths | 14 |
 
 ## Job levels
@@ -28,15 +28,15 @@
 | RDM | 1 | BLU | 1 |
 | **THF** | **99** | COR | 1 |
 | PLD | 1 | **PUP** | **99** |
-| DRK | 1 | **DNC** | **99** |
+| DRK | 21 | **DNC** | **99** |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 1 | RUN | 1 |
+| RNG | 1 | RUN | 31 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,513
+- **Marks (current):** 4,263
 - **Marks (lifetime):** 542
 - **Distinct NMs slain:** 8
 - **Total NM kills:** 89
@@ -68,7 +68,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 82bd0d098c61 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 9c84be5277c7 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Brd
 
-**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-14 · Last seen 2026-06-14 · Character age 8d 7h
+**San d'Oria citizen** · 🟡 Seen this month · Created 2026-06-14 · Last seen 2026-06-14 · Character age 8d 9h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e49e1282c9e9 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 5c74195e3d18 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

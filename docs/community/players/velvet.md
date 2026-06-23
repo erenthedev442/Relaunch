@@ -1,6 +1,6 @@
 # Velvet
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-22 · Character age 9d 22h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 9d 23h
 
 `⭐ 5 Ascensions` `💪 12 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | NIN 99 |
-| Time played | 53h |
-| Enemies defeated | 4,076 |
+| Time played | 55h |
+| Enemies defeated | 4,202 |
 | Deaths | 16 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 13,918
+- **Marks (current):** 11,268
 - **Marks (lifetime):** 8,464
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 341
@@ -62,7 +62,7 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bec29ea1dd8f -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 9df23588889c -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

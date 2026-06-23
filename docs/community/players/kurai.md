@@ -1,6 +1,6 @@
 # Kurai
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 9d 3h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 4h
 
 `💪 5 jobs @99`
 
@@ -12,10 +12,10 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | DNC 85 |
-| Time played | 15h |
-| Enemies defeated | 877 |
-| Deaths | 14 |
+| Sub job | SAM 99 |
+| Time played | 16h |
+| Enemies defeated | 912 |
+| Deaths | 16 |
 
 ## Job levels
 
@@ -28,7 +28,7 @@
 | RDM | 1 | BLU | 65 |
 | THF | 1 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| **DRK** | **99** | DNC | 85 |
+| **DRK** | **99** | DNC | 91 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 9,622
+- **Marks (current):** 10,522
 - **Marks (lifetime):** 324
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 27
+- **Total NM kills:** 36
 
 ## Guild standing
 
@@ -62,13 +62,13 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
+| AF | 235 | 335 |
 | Relic | 0 | 0 |
-| Empyrean | 0 | 0 |
+| Empyrean | 65 | 65 |
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
@@ -87,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b42d0c338e3a -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 5b3ed195ef01 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

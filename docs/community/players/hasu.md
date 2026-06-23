@@ -1,6 +1,6 @@
 # Hasu
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 22h 59m
+**Bastok citizen** · 🟢 Active today · Created 2026-06-22 · Last seen 2026-06-22 · Character age 1d
 
 `💪 2 jobs @99`
 
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 092efee48bae -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 5d30dfafb726 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

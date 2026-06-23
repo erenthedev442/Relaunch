@@ -1,8 +1,8 @@
 # Spyro
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 5h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 8d 7h
 
-`⭐ 9 Ascensions` `💪 22 jobs @99`
+`⭐ 11 Ascensions` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **SMN 99** |
-| Sub job | RDM 99 |
-| Time played | 48h |
-| Enemies defeated | 8,132 |
-| Deaths | 24 |
+| Main job | **RDM 99** |
+| Sub job | BLM 99 |
+| Time played | 54h |
+| Enemies defeated | 8,335 |
+| Deaths | 26 |
 
 ## Job levels
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 16,469
+- **Marks (current):** 14,629
 - **Marks (lifetime):** 30,337
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 629
+- **Total NM kills:** 631
 
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 639
+- **Augments crafted:** 806
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -62,16 +62,16 @@
 
 ## Prestige
 
-- **Total Ascensions:** 9
-- **Per-job prestige:** RDM P8 · BLU P1
+- **Total Ascensions:** 11
+- **Per-job prestige:** RDM P9 · SMN P1 · BLU P1
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
-**15** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · First Ascension · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
+**16** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · First Ascension · Ascending Master · Star-Slayer · Sanctuary Defender · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4582f96caccd -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: da78d0cf0121 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

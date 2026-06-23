@@ -1,6 +1,6 @@
 # Boost
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 3d 10h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-23 · Character age 3d 11h
 
 `💪 2 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | WHM 99 |
-| Time played | 20h |
-| Enemies defeated | 0 |
+| Time played | 25h |
+| Enemies defeated | 1 |
 | Deaths | 2 |
 
 ## Job levels
@@ -36,16 +36,27 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 8,275
-- **Marks (lifetime):** 17,360
+- **Marks (current):** 80,000
+- **Marks (lifetime):** 17,523
 - **Distinct NMs slain:** 12
-- **Total NM kills:** 908
+- **Total NM kills:** 1,049
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Veteran | 11,000 | 14,000 to Master |
 
 ## Augment Sage
 
-- **Mastery rank:** 1 / 5
-- **Augments crafted:** 15
-- **NM Affinities:** 0 / 13
+- **Mastery rank:** 4 / 5
+- **Augments crafted:** 201
+- **NM Affinities:** 2 / 13
 
 ## Reforge
 
@@ -57,11 +68,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Augment Novice.
+**13** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -77,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: da0b776cff1e -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 919795496457 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

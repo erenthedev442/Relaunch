@@ -1,6 +1,6 @@
 # Xxoo
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 4d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 4d 4h
 
 `💪 1 job @99`
 
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 116
+- **Trusts learned:** 114
 
 ## Achievements
 
@@ -74,6 +74,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f60442e303ca -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 5e61aabb2a64 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

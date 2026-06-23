@@ -1,8 +1,8 @@
 # Sfen
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-22 · Character age 4d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-23 · Character age 4d 2h
 
-`💪 14 jobs @99`
+`⭐ 1 Ascension` `💪 14 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **THF 99** |
 | Sub job | DNC 99 |
-| Time played | 39h |
-| Enemies defeated | 5,377 |
-| Deaths | 35 |
+| Time played | 44h |
+| Enemies defeated | 6,616 |
+| Deaths | 40 |
 
 ## Job levels
 
@@ -36,37 +36,42 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,261
-- **Marks (lifetime):** 2,502
+- **Marks (current):** 2,561
+- **Marks (lifetime):** 2,942
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 51
+- **Total NM kills:** 89
 
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 166
+- **Augments crafted:** 169
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 175 | 175 |
-| Relic | 1,500 | 0 |
-| Empyrean | 2,150 | 150 |
+| AF | 1,175 | 175 |
+| Relic | 0 | 1,650 |
+| Empyrean | 75 | 3,325 |
 
 ## Job Rebirth
 
-- **Total rebirths:** 6
-- **By job:** THF ×6
+- **Total rebirths:** 7
+- **By job:** THF ×7
+
+## Prestige
+
+- **Total Ascensions:** 1
+- **Per-job prestige:** THF P1
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
-**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · X Marks the Spot · Augment Novice · Augment Expert.
+**11** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · First Ascension · X Marks the Spot · Augment Novice · Augment Expert.
 
 ## Speed records
 
@@ -82,6 +87,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 731d950cb6d1 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 7724ab582658 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

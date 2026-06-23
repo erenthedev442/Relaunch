@@ -1,6 +1,6 @@
 # Duffaluffagus
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 8h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 8d 10h
 
 `💪 22 jobs @99`
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,306
+- **Marks (current):** 2,206
 - **Marks (lifetime):** 863
 - **Distinct NMs slain:** 12
 - **Total NM kills:** 168
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -78,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ebe729edbd7c -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 08049b94438a -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

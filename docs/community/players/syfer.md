@@ -1,6 +1,6 @@
 # Syfer
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 2d 5h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 2d 7h
 
 `💪 2 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **COR 99** |
 | Sub job | GEO 99 |
-| Time played | 6h |
+| Time played | 8h |
 | Enemies defeated | 0 |
 | Deaths | 0 |
 
@@ -36,10 +36,21 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 13,878
+- **Marks (current):** 88,408
 - **Marks (lifetime):** 6,403
 - **Distinct NMs slain:** 9
-- **Total NM kills:** 113
+- **Total NM kills:** 250
+
+## Guild standing
+
+Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks that guild pays out. Grandmaster (100,000 rep) is the cap.
+
+| Guild | Rank | Reputation | To next rank |
+|---|---|---:|---|
+| AF Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Relic Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| Empyrean Hunters' Guild | Apprentice | 0 | 500 to Journeyman |
+| League Hunters' Guild | Veteran | 5,000 | 20,000 to Master |
 
 ## Augment Sage
 
@@ -57,11 +68,11 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice.
+**10** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Wave Rider · Augment Novice.
 
 ## Speed records
 
@@ -77,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1f95fb48d548 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 46463f920e3d -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

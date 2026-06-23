@@ -1,6 +1,6 @@
 # Katryna
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d 10h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d 12h
 
 `💪 4 jobs @99`
 
@@ -13,8 +13,8 @@
 |---|---|
 | Main job | **DNC 99** |
 | Sub job | RDM 99 |
-| Time played | 57h |
-| Enemies defeated | 3,071 |
+| Time played | 58h |
+| Enemies defeated | 3,075 |
 | Deaths | 34 |
 
 ## Job levels
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 14,288
-- **Marks (lifetime):** 5,547
-- **Distinct NMs slain:** 11
-- **Total NM kills:** 1,101
+- **Marks (current):** 11,805
+- **Marks (lifetime):** 5,775
+- **Distinct NMs slain:** 13
+- **Total NM kills:** 1,106
 
 ## Guild standing
 
@@ -54,9 +54,9 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
-- **Augments crafted:** 180
-- **NM Affinities:** 6 / 13
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 257
+- **NM Affinities:** 13 / 13
 
 ## Reforge
 
@@ -73,11 +73,11 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
-**11** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
+**12** unlocked — First Hunt · Ten Hunts In · Centennial Hunter · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -85,6 +85,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 |---|---:|
 | Fastest 1 → 99 | 17h 7m |
 | HL Rank I → V | 2d 19h |
+| Augment Archon | 6d 21h |
 
 ---
 
@@ -93,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b157950511bf -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: ef8e9c483679 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

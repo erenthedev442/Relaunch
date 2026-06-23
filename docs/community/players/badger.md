@@ -1,32 +1,32 @@
 # Badger
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-22 · Character age 3d 4h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-20 · Last seen 2026-06-23 · Character age 3d 6h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 51/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 81/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **DRK 51** |
-| Sub job | SAM 35 |
-| Time played | 1h |
-| Enemies defeated | 55 |
+| Main job | **DRK 81** |
+| Sub job | SAM 67 |
+| Time played | 2h |
+| Enemies defeated | 117 |
 | Deaths | 0 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 1 | SAM | 35 |
+| WAR | 1 | SAM | 67 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 2 | COR | 1 |
 | PLD | 1 | PUP | 1 |
-| DRK | 51 | DNC | 1 |
+| DRK | 81 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
 | RNG | 1 | RUN | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 975
+- **Marks (current):** 1,525
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a0bbf601ae36 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: dcdff6e59a1a -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

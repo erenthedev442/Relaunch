@@ -1,6 +1,6 @@
 # Vision
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 2d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-23 · Character age 2d 4h
 
 `💪 3 jobs @99`
 
@@ -12,9 +12,9 @@
 | | |
 |---|---|
 | Main job | **BLM 99** |
-| Sub job | SCH 99 |
-| Time played | 13h |
-| Enemies defeated | 422 |
+| Sub job | BRD 87 |
+| Time played | 16h |
+| Enemies defeated | 426 |
 | Deaths | 3 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 4 / 5
-- **Marks (current):** 721
+- **Marks (current):** 271
 - **Marks (lifetime):** 413
 - **Distinct NMs slain:** 7
 - **Total NM kills:** 53
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 3 / 5
-- **Augments crafted:** 57
+- **Augments crafted:** 69
 - **NM Affinities:** 3 / 13
 
 ## Reforge
@@ -57,7 +57,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ca1917a19942 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: e393bad035b3 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

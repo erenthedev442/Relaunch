@@ -1,6 +1,6 @@
 # Coso
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-19 · Last seen 2026-06-22 · Character age 4d 1h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-19 · Last seen 2026-06-23 · Character age 4d 2h
 
 `💪 5 jobs @99`
 
@@ -12,8 +12,8 @@
 | | |
 |---|---|
 | Main job | **THF 99** |
-| Sub job | DNC 99 |
-| Time played | 19h |
+| Sub job | RDM 99 |
+| Time played | 22h |
 | Enemies defeated | 585 |
 | Deaths | 9 |
 
@@ -36,15 +36,15 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 4,374
+- **Marks (current):** 24
 - **Marks (lifetime):** 1,275
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 34
 
 ## Augment Sage
 
-- **Mastery rank:** 4 / 5
-- **Augments crafted:** 158
+- **Mastery rank:** 5 / 5
+- **Augments crafted:** 266
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -62,11 +62,11 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
-**9** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert.
+**10** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
@@ -74,6 +74,7 @@
 |---|---:|
 | Fastest 1 → 99 | 0s |
 | HL Rank I → V | 12m 22s |
+| Augment Archon | 3d 16h |
 
 ---
 
@@ -82,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8ba6e517d132 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 49d6eb0b0f03 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

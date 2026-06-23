@@ -1,8 +1,8 @@
 # Burtgang
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 9d 2h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 9d 4h
 
-`⭐ 92 Ascensions` `💪 12 jobs @99`
+`⭐ 92 Ascensions` `💪 22 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **RDM 85** |
-| Sub job | NIN 85 |
-| Time played | 78h |
-| Enemies defeated | 13,346 |
-| Deaths | 45 |
+| Main job | **RDM 99** |
+| Sub job | NIN 99 |
+| Time played | 84h |
+| Enemies defeated | 21,688 |
+| Deaths | 49 |
 
 ## Job levels
 
@@ -23,20 +23,20 @@
 |---|---:|---|---:|
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
-| WHM | 1 | **DRG** | **99** |
-| BLM | 1 | SMN | 1 |
-| RDM | 85 | BLU | 1 |
-| **THF** | **99** | COR | 1 |
-| **PLD** | **99** | PUP | 1 |
-| **DRK** | **99** | DNC | 1 |
-| BST | 1 | **SCH** | **99** |
+| **WHM** | **99** | **DRG** | **99** |
+| **BLM** | **99** | **SMN** | **99** |
+| **RDM** | **99** | **BLU** | **99** |
+| **THF** | **99** | **COR** | **99** |
+| **PLD** | **99** | **PUP** | **99** |
+| **DRK** | **99** | **DNC** | **99** |
+| **BST** | **99** | **SCH** | **99** |
 | **BRD** | **99** | **GEO** | **99** |
-| RNG | 1 | **RUN** | **99** |
+| **RNG** | **99** | **RUN** | **99** |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,630
+- **Marks (current):** 3,030
 - **Marks (lifetime):** 18,426
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 854
@@ -68,8 +68,8 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Job Rebirth
 
-- **Total rebirths:** 20
-- **By job:** RDM ×20
+- **Total rebirths:** 42
+- **By job:** RDM ×42
 
 ## Prestige
 
@@ -78,7 +78,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -99,6 +99,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 25cf2ca6f540 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: d4e92a4f3799 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

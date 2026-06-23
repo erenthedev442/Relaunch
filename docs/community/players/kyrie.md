@@ -1,8 +1,8 @@
 # Kyrie
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-22 · Character age 7d 4h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 7d 6h
 
-`⭐ 31 Ascensions` `💪 21 jobs @99`
+`⭐ 37 Ascensions` `💪 21 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -13,9 +13,9 @@
 |---|---|
 | Main job | **MNK 99** |
 | Sub job | RDM 99 |
-| Time played | 92h |
-| Enemies defeated | 2,265 |
-| Deaths | 23 |
+| Time played | 97h |
+| Enemies defeated | 2,896 |
+| Deaths | 26 |
 
 ## Job levels
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 192,580
-- **Marks (lifetime):** 126,693
-- **Distinct NMs slain:** 14
-- **Total NM kills:** 5,056
+- **Marks (current):** 329,625
+- **Marks (lifetime):** 202,500
+- **Distinct NMs slain:** 15
+- **Total NM kills:** 5,750
 
 ## Guild standing
 
@@ -68,12 +68,12 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Prestige
 
-- **Total Ascensions:** 31
-- **Per-job prestige:** MNK P31
+- **Total Ascensions:** 37
+- **Per-job prestige:** MNK P37
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b5f2725aba33 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 18d1586dac1a -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

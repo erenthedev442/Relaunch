@@ -1,6 +1,6 @@
 # Rose
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-22 · Character age 5d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 1h
 
 `💪 22 jobs @99`
 
@@ -13,7 +13,7 @@
 |---|---|
 | Main job | **BRD 99** |
 | Sub job | WHM 99 |
-| Time played | 37h |
+| Time played | 41h |
 | Enemies defeated | 11 |
 | Deaths | 0 |
 
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 88,573
-- **Marks (lifetime):** 14,261
-- **Distinct NMs slain:** 8
-- **Total NM kills:** 2,945
+- **Marks (current):** 228,291
+- **Marks (lifetime):** 83,468
+- **Distinct NMs slain:** 12
+- **Total NM kills:** 3,579
 
 ## Augment Sage
 
@@ -57,17 +57,18 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
-**13** unlocked — Ten Hunts In · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
+**14** unlocked — Ten Hunts In · Legendary Slayer · Tier II Unlocked · Tier III Unlocked · Tier IV Unlocked · Apex Hunter · Mark of 1,000 · Mark of 10,000 · Wave Rider · Wave Fighter · Star-Slayer · Augment Novice · Augment Expert · Augment Master.
 
 ## Speed records
 
 | Record | Time |
 |---|---:|
 | Fastest 1 → 99 | 1d 15h |
+| HL Rank I → V | 4d 2h |
 | Augment Archon | 1d 13h |
 
 ---
@@ -77,6 +78,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2c50a64744c9 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 80fb25f0d002 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,6 +1,6 @@
 # Bil
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 4d 10h
+**Windurst citizen** · 🟢 Active this week · Created 2026-06-18 · Last seen 2026-06-18 · Character age 4d 12h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c09d0eebd718 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: ebba08ce6899 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

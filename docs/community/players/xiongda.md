@@ -1,6 +1,6 @@
 # Xiongda
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 15h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 8d 17h
 
 `💪 22 jobs @99`
 
@@ -11,9 +11,9 @@
 
 | | |
 |---|---|
-| Main job | **DRG 99** |
-| Sub job | WAR 99 |
-| Time played | 43h |
+| Main job | **BRD 99** |
+| Sub job | SMN 99 |
+| Time played | 44h |
 | Enemies defeated | 545 |
 | Deaths | 5 |
 
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,589
+- **Marks (current):** 7,339
 - **Marks (lifetime):** 152
 - **Distinct NMs slain:** 3
 - **Total NM kills:** 46
@@ -68,7 +68,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7ca3d95cdbc6 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: efa1819ff32d -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

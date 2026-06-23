@@ -1,6 +1,6 @@
 # Cetrana
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-22 · Last seen 2026-06-22 · Character age 1d 4h
+**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-22 · Last seen 2026-06-22 · Character age 1d 6h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 1/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: df91073c7a6f -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 55d1edeb9b8c -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

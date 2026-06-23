@@ -1,6 +1,6 @@
 # Corvinos
 
-**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-22 · Character age 8d 5h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-14 · Last seen 2026-06-23 · Character age 8d 7h
 
 `⭐ 6 Ascensions` `💪 9 jobs @99`
 
@@ -11,11 +11,11 @@
 
 | | |
 |---|---|
-| Main job | **MNK 99** |
-| Sub job | DRK 99 |
-| Time played | 26h |
-| Enemies defeated | 3,116 |
-| Deaths | 9 |
+| Main job | **BLM 93** |
+| Sub job | RDM 93 |
+| Time played | 28h |
+| Enemies defeated | 3,206 |
+| Deaths | 10 |
 
 ## Job levels
 
@@ -24,7 +24,7 @@
 | **WAR** | **99** | **SAM** | **99** |
 | **MNK** | **99** | **NIN** | **99** |
 | WHM | 1 | **DRG** | **99** |
-| BLM | 1 | SMN | 1 |
+| BLM | 93 | SMN | 1 |
 | **RDM** | **99** | BLU | 1 |
 | THF | 69 | COR | 1 |
 | PLD | 1 | PUP | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 5,627
+- **Marks (current):** 6,027
 - **Marks (lifetime):** 1,834
 - **Distinct NMs slain:** 15
-- **Total NM kills:** 297
+- **Total NM kills:** 324
 
 ## Guild standing
 
@@ -55,16 +55,16 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 ## Augment Sage
 
 - **Mastery rank:** 4 / 5
-- **Augments crafted:** 138
+- **Augments crafted:** 141
 - **NM Affinities:** 8 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 195 | 3,195 |
-| Relic | 115 | 3,165 |
-| Empyrean | 50 | 8,525 |
+| AF | 1,095 | 4,095 |
+| Relic | 115 | 4,215 |
+| Empyrean | 50 | 10,625 |
 
 ## Job Rebirth
 
@@ -78,7 +78,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -98,6 +98,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 398178ad395a -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 768f798066e3 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

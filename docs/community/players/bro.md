@@ -1,6 +1,6 @@
 # Bro
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-13 · Last seen 2026-06-20 · Character age 9d 23h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-13 · Last seen 2026-06-23 · Character age 10d
 
 `⭐ 11 Ascensions` `💪 22 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RUN 99** |
-| Sub job | NIN 99 |
-| Time played | 104h |
-| Enemies defeated | 2,167 |
+| Main job | **NIN 99** |
+| Sub job | DNC 99 |
+| Time played | 108h |
+| Enemies defeated | 2,168 |
 | Deaths | 49 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 3,087
+- **Marks (current):** 4,487
 - **Marks (lifetime):** 5,676
 - **Distinct NMs slain:** 15
 - **Total NM kills:** 133
@@ -44,7 +44,7 @@
 ## Augment Sage
 
 - **Mastery rank:** 5 / 5
-- **Augments crafted:** 322
+- **Augments crafted:** 334
 - **NM Affinities:** 13 / 13
 
 ## Reforge
@@ -67,7 +67,7 @@
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -88,6 +88,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fb7137b6fe4d -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 0d2154ee6d6f -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

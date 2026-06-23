@@ -1,26 +1,28 @@
 # Imfinnatank
 
-**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-22 · Character age 4d 7h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-18 · Last seen 2026-06-23 · Character age 4d 8h
+
+`💪 1 job @99`
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 71/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **RNG 71** |
-| Sub job | NIN 59 |
-| Time played | 8h |
-| Enemies defeated | 368 |
-| Deaths | 4 |
+| Main job | **RNG 99** |
+| Sub job | NIN 83 |
+| Time played | 12h |
+| Enemies defeated | 645 |
+| Deaths | 13 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 1 | NIN | 59 |
+| MNK | 1 | NIN | 83 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
@@ -29,15 +31,15 @@
 | DRK | 1 | DNC | 1 |
 | BST | 1 | SCH | 1 |
 | BRD | 1 | GEO | 1 |
-| RNG | 71 | RUN | 1 |
+| **RNG** | **99** | RUN | 1 |
 
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 2,816
-- **Marks (lifetime):** 65
-- **Distinct NMs slain:** 3
-- **Total NM kills:** 13
+- **Marks (current):** 94
+- **Marks (lifetime):** 244
+- **Distinct NMs slain:** 4
+- **Total NM kills:** 39
 
 ## Augment Sage
 
@@ -55,15 +57,17 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
-**3** unlocked — First Hunt · Ten Hunts In · Augment Novice.
+**4** unlocked — First Hunt · Ten Hunts In · Tier II Unlocked · Augment Novice.
 
 ## Speed records
 
-_No locked-in speed records yet. They'll appear here once you trip the milestone events (level a job to 99, kill any Hunting League NM, hit Augment Archon)._
+| Record | Time |
+|---|---:|
+| Fastest 1 → 99 | 3d 21h |
 
 ---
 
@@ -72,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ec99da7f05c7 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 998fe6e9f297 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

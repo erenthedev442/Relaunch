@@ -1,27 +1,27 @@
 # Ellia
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-21 · Last seen 2026-06-21 · Character age 1d 17h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-23 · Character age 1d 19h
 
 !!! tip "Recommended next step"
-    **Hit level 99.** Your highest job is 11/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
+    **Hit level 99.** Your highest job is 75/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
 
 ## At a glance
 
 | | |
 |---|---|
-| Main job | **MNK 11** |
-| Sub job | — |
-| Time played | 0h |
-| Enemies defeated | 10 |
-| Deaths | 1 |
+| Main job | **MNK 75** |
+| Sub job | DRG 27 |
+| Time played | 2h |
+| Enemies defeated | 171 |
+| Deaths | 2 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
 | WAR | 1 | SAM | 1 |
-| MNK | 11 | NIN | 1 |
-| WHM | 1 | DRG | 1 |
+| MNK | 75 | NIN | 1 |
+| WHM | 1 | DRG | 27 |
 | BLM | 1 | SMN | 1 |
 | RDM | 1 | BLU | 1 |
 | THF | 1 | COR | 1 |
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 475
+- **Marks (current):** 975
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6893aaf0767f -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 4a6a34458d26 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

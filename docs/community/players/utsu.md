@@ -1,6 +1,6 @@
 # Utsu
 
-**Windurst citizen** · 🟢 Active this week · Created 2026-06-16 · Last seen 2026-06-22 · Character age 6d 5h
+**Windurst citizen** · 🟢 Active today · Created 2026-06-16 · Last seen 2026-06-23 · Character age 6d 7h
 
 !!! tip "Recommended next step"
     **Hit level 99.** Your highest job is 30/99 — cap a job to unlock the Hunting League at Reisenjima Henge.
@@ -34,7 +34,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 3,475
+- **Marks (current):** 5,225
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -55,7 +55,7 @@
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Speed records
 
@@ -68,6 +68,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 691363274775 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 08c882589a79 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

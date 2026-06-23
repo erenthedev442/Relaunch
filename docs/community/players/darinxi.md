@@ -1,6 +1,6 @@
 # Darinxi
 
-**Bastok citizen** · 🟢 Active this week · Created 2026-06-15 · Last seen 2026-06-17 · Character age 8d 5h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-23 · Character age 8d 6h
 
 `💪 1 job @99`
 
@@ -12,16 +12,16 @@
 | | |
 |---|---|
 | Main job | **DRK 99** |
-| Sub job | WAR 72 |
-| Time played | 11h |
-| Enemies defeated | 472 |
-| Deaths | 7 |
+| Sub job | WAR 85 |
+| Time played | 13h |
+| Enemies defeated | 596 |
+| Deaths | 8 |
 
 ## Job levels
 
 | Job | Lv | Job | Lv |
 |---|---:|---|---:|
-| WAR | 72 | SAM | 1 |
+| WAR | 85 | SAM | 1 |
 | MNK | 1 | NIN | 1 |
 | WHM | 1 | DRG | 1 |
 | BLM | 1 | SMN | 1 |
@@ -36,32 +36,32 @@
 ## Hunting League
 
 - **Rank:** 3 / 5
-- **Marks (current):** 616
-- **Marks (lifetime):** 180
+- **Marks (current):** 2,602
+- **Marks (lifetime):** 240
 - **Distinct NMs slain:** 3
-- **Total NM kills:** 36
+- **Total NM kills:** 83
 
 ## Augment Sage
 
-- **Mastery rank:** 0 / 5
-- **Augments crafted:** 4
+- **Mastery rank:** 1 / 5
+- **Augments crafted:** 10
 - **NM Affinities:** 0 / 13
 
 ## Reforge
 
 | Track | Current | Lifetime |
 |---|---:|---:|
-| AF | 0 | 0 |
-| Relic | 0 | 0 |
+| AF | 503 | 905 |
+| Relic | 1 | 0 |
 | Empyrean | 0 | 0 |
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Achievements
 
-**2** unlocked — First Hunt · Ten Hunts In.
+**3** unlocked — First Hunt · Ten Hunts In · Augment Novice.
 
 ## Speed records
 
@@ -76,6 +76,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 598905a0a304 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: a97c132299c6 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

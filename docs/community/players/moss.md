@@ -1,6 +1,6 @@
 # Moss
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d 8h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-15 · Last seen 2026-06-22 · Character age 7d 10h
 
 `👑 Grandmaster ×3` `⭐ 8 Ascensions` `💪 22 jobs @99`
 
@@ -14,7 +14,7 @@
 | Main job | **BLM 99** |
 | Sub job | RDM 99 |
 | Time played | 84h |
-| Enemies defeated | 4,112 |
+| Enemies defeated | 4,117 |
 | Deaths | 22 |
 
 ## Job levels
@@ -73,7 +73,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 120
+- **Trusts learned:** 118
 
 ## Achievements
 
@@ -94,6 +94,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 24d9655b4130 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: e33bc702f582 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

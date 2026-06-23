@@ -1,6 +1,6 @@
 # Wombat
 
-**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-22 · Character age 2d 4h
+**Bastok citizen** · 🟢 Active today · Created 2026-06-21 · Last seen 2026-06-23 · Character age 2d 6h
 
 `💪 2 jobs @99`
 
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **BLU 99** |
-| Sub job | SMN 69 |
-| Time played | 10h |
-| Enemies defeated | 398 |
+| Main job | **SMN 69** |
+| Sub job | GEO 69 |
+| Time played | 12h |
+| Enemies defeated | 399 |
 | Deaths | 2 |
 
 ## Job levels
@@ -36,7 +36,7 @@
 ## Hunting League
 
 - **Rank:** 0 / 5
-- **Marks (current):** 1,975
+- **Marks (current):** 2,525
 - **Marks (lifetime):** 0
 - **Distinct NMs slain:** 0
 - **Total NM kills:** 0
@@ -68,7 +68,7 @@ Reputation with each Hunters' Guild sets your rank, and rank amplifies the marks
 
 ## Collections
 
-- **Trusts learned:** 117
+- **Trusts learned:** 115
 
 ## Speed records
 
@@ -83,6 +83,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f87efcea182e -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 69d70cb08f47 -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->

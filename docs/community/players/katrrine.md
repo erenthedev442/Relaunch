@@ -1,8 +1,8 @@
 # Katrrine
 
-**San d'Oria citizen** · 🟢 Active this week · Created 2026-06-17 · Last seen 2026-06-21 · Character age 6d 2h
+**San d'Oria citizen** · 🟢 Active today · Created 2026-06-17 · Last seen 2026-06-23 · Character age 6d 4h
 
-`💪 5 jobs @99`
+`💪 4 jobs @99`
 
 !!! tip "Recommended next step"
     **Chase the Trinity Hunter title** (+25% marks). Reach Grandmaster in: AF Hunters' Guild, Relic Hunters' Guild, Empyrean Hunters' Guild.
@@ -11,10 +11,10 @@
 
 | | |
 |---|---|
-| Main job | **RDM 99** |
-| Sub job | BLU 99 |
-| Time played | 45h |
-| Enemies defeated | 2,856 |
+| Main job | **RDM 86** |
+| Sub job | BLU 86 |
+| Time played | 50h |
+| Enemies defeated | 3,179 |
 | Deaths | 7 |
 
 ## Job levels
@@ -25,7 +25,7 @@
 | MNK | 18 | NIN | 1 |
 | WHM | 90 | DRG | 1 |
 | **BLM** | **99** | SMN | 1 |
-| **RDM** | **99** | **BLU** | **99** |
+| RDM | 86 | **BLU** | **99** |
 | **THF** | **99** | COR | 1 |
 | **PLD** | **99** | PUP | 1 |
 | DRK | 1 | DNC | 1 |
@@ -36,10 +36,10 @@
 ## Hunting League
 
 - **Rank:** 5 / 5
-- **Marks (current):** 1,442
-- **Marks (lifetime):** 2,554
+- **Marks (current):** 1,804
+- **Marks (lifetime):** 3,579
 - **Distinct NMs slain:** 11
-- **Total NM kills:** 458
+- **Total NM kills:** 663
 
 ## Augment Sage
 
@@ -57,12 +57,12 @@
 
 ## Job Rebirth
 
-- **Total rebirths:** 9
-- **By job:** RDM ×9
+- **Total rebirths:** 12
+- **By job:** RDM ×12
 
 ## Collections
 
-- **Trusts learned:** 119
+- **Trusts learned:** 117
 
 ## Achievements
 
@@ -81,6 +81,6 @@ _This profile updates automatically from live server data. To opt out, use `!opt
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f904655b39cf -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 9b625baa296c -->
+_Last updated: 2026-06-23 07:01 UTC_
 <!-- DOCGEN:END id="last-updated" -->
