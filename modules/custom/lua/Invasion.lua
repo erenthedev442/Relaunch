@@ -67,8 +67,6 @@ local WARLORD_MECH_CFG =
 
     -- HP phases.
     phases = {
-        -- 75% HP: calls Voidsent Servitors (group 11368, same pool as the Warlord).
-
         -- 50% HP: devastating nuke.
         { hp = 50, action = 'nuke', dmgPct = 40,
           msg = 'The Warlord tears open a void-rift — evacuate!' },

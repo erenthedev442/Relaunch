@@ -111,7 +111,7 @@ end
 --   DMGPHYS/DMGMAGIC cap at -5000 (= -50% dmg taken -- heavy resist, not immunity).
 --   ATT/REGEN are always routed through the library's safeAddMod; never write them here.
 --   addGroupId reuses C.BOSS_GROUPS[1] (11366, zone 210/GM Home) so adds are always valid.
---   Low tiers: enrage + aoe.  Mid: +stance + adds.  High: +cc + dispel.  Max: full kit.
+--   Low tiers: enrage + aoe.  Mid: +stance.  High: +cc + dispel.  Max: full kit.
 local ADDS_GROUP = C.BOSS_GROUPS[1]  -- 11366, zone 210 (same zone the bosses come from)
 local ADDS_ZONE  = C.GROUP_ZONE      -- 210
 
@@ -175,7 +175,7 @@ function C.mechCfg(tier)
             },
         }
     elseif tier >= 10 then
-        -- ── TIER 10–14 "Apex Conqueror" ─ adds + drain added ────────────────────
+        -- ── TIER 10–14 "Apex Conqueror" ─ drain added ────────────────────
         return {
             name   = 'Apex Conqueror',
             enrage = { sec = 200, att = 5500, haste = 140, msg = 'grows impatient -- attacks accelerate!' },

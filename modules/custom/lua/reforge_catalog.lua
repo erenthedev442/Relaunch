@@ -971,9 +971,9 @@ catalog.pieces[xi.job.RUN] =
 -- Tier identities:
 --   Lv150 (entry)   - AoE pressure + drain (teaches the mechanics)
 --   Lv175 (mid-low) - stance dance + terror CC
---   Lv200 (mid)     - AoE + drain + adds phase + nuke phase
+--   Lv200 (mid)     - AoE + drain + nuke phase
 --   Lv225 (hard)    - stance + CC + drain + fury phase + dispel phase + doom
---   Lv250 (apex)    - full suite: stance/AoE/CC/drain/doom/adds/fury/nuke/dispel/enrage
+--   Lv250 (apex)    - full suite: stance/AoE/CC/drain/doom/fury/nuke/dispel/enrage
 --
 -- DMGPHYS/DMGMAGIC cap at -5000 per library rules (=-50% taken).
 -- =========================================================
@@ -1002,7 +1002,7 @@ catalog.mechCfgs[11403] = {
     cc = { periodSec = 22, effect = xi.effect.TERROR, dur = 5, msg = 'unleashes a terrifying Phoenix Cry!' },
 }
 
--- Seiryu [Lv200] - mid-tier: AoE + drain + phase adds + phase nuke
+-- Seiryu [Lv200] - mid-tier: AoE + drain + phase nuke
 catalog.mechCfgs[11402] = {
     name  = 'Seiryu',
     aoe   = { periodSec = 12, dmgPct = 22, msg = 'surges with draconic energy!' },
@@ -1076,7 +1076,7 @@ catalog.mechCfgs[11406] = {
     cc = { periodSec = 22, effect = xi.effect.TERROR, dur = 5, msg = 'emits a Sonic Roar of pure terror!' },
 }
 
--- Padfoot [Lv200] - mid-tier: AoE + drain + adds + nuke
+-- Padfoot [Lv200] - mid-tier: AoE + drain + nuke
 catalog.mechCfgs[11405] = {
     name  = 'Padfoot',
     aoe   = { periodSec = 12, dmgPct = 22, msg = 'unleashes Spectral Howl across the area!' },
@@ -1150,7 +1150,7 @@ catalog.mechCfgs[11411] = {
     cc = { periodSec = 22, effect = xi.effect.TERROR, dur = 5, msg = 'howls with an Abyssal Wail!' },
 }
 
--- Briareus [Lv200] - mid-tier: AoE + drain + adds + nuke
+-- Briareus [Lv200] - mid-tier: AoE + drain + nuke
 catalog.mechCfgs[11410] = {
     name  = 'Briareus',
     aoe   = { periodSec = 12, dmgPct = 22, msg = 'swings a Hundred-Arm Cyclone!' },

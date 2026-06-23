@@ -310,7 +310,7 @@ local function spawnGuardian(player, weaponKey)
     mob:setHP(finalHp)
     mob:addEnmity(player, 30000, 30000)
 
-    -- Attach hardcore fight mechanics (stance dance / AoE / adds / CC / drain /
+    -- Attach hardcore fight mechanics (stance dance / AoE / CC / drain /
     -- phases / doom / enrage). Must come AFTER all stat + HP setup.
     mechanics.attach(mob, GUARDIAN_MECH_CFG)
 

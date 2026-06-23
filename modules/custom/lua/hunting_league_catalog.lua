@@ -725,7 +725,7 @@ return
         -- =========================================================
         -- RANK V - LEGEND (full hardcore kit):
         -- Every mechanic. Escalating per-boss identity.
-        -- Absolute Virtue: stance + adds + doom + tight enrage.
+        -- Absolute Virtue: stance + doom + tight enrage.
         -- Pandemonium Warden: AoE + CC + dispel + nuke + enrage.
         -- Shinryu: the full kit -- all mechanics, hardest enrage.
         -- =========================================================

@@ -162,8 +162,7 @@ catalog.floorMechanics =
         enrage = { sec = 300, att = 2000, haste = 80, msg = 'grows impatient -- its assault quickens!' },
     },
 
-    -- Floors 10-24: adds + slow enrage. A feeding swarm: kill the adds or the
-    -- boss heals off them. First real mechanical identity.
+    -- Floors 10-24: slow enrage. First real mechanical identity.
     [10] = {
         name   = 'Voidwalker Scout',
         drain  = { periodSec = 10, healPct = 2 },
@@ -184,7 +183,7 @@ catalog.floorMechanics =
         enrage = { sec = 220, att = 4500, haste = 130, msg = 'tightens its chains -- it presses the assault!' },
     },
 
-    -- Floors 45-74: adds + stance + dispel. Full mid-game pressure.
+    -- Floors 45-74: stance + dispel. Full mid-game pressure.
     -- Adds use Insane-pool groupId (Bahamut) at reduced level.
     [45] = {
         name   = 'Voidwalker Lord',
@@ -218,7 +217,7 @@ catalog.floorMechanics =
     },
 
     -- Floors 100+: THE NIGHTMARE. Full kit, mean timers, tight doom.
-    -- Silence CC, heavy adds (int16-safe regen 25000), 165s enrage. No quarter.
+    -- Silence CC, 165s enrage. No quarter.
     [100] = {
         name   = 'The Nightmare Itself',
         stance = { startHpp = 90, periodSec = 12, stances = {

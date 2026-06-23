@@ -138,7 +138,7 @@ local BOSS_MECH =
 {
     -- [1] Ancient Behemoth  groupId=11365
     -- Identity: UNSTOPPABLE BRUISER. Stance dance from the start; tremor AoE;
-    -- adds at 70%; fury spike at 40%; doom + hard enrage at low HP. Melee-heavy
+    -- fury spike at 40%; doom + hard enrage at low HP. Melee-heavy
     -- but punishes magic turtling too.
     [1] = {
         name   = 'Ancient Behemoth',
@@ -178,9 +178,8 @@ local BOSS_MECH =
     },
 
     -- [3] Grand Pandemonium  groupId=11368
-    -- Identity: CHAOS FEEDER. Self-drains to survive; adds at 65% feed it regen;
-    -- AoE shockwaves; dispel at 35%; doom + enrage at 10%. No stance -- pure
-    -- sustained chaos. Kill the adds or the boss never falls.
+    -- Identity: CHAOS FEEDER. Self-drains to survive; AoE shockwaves; dispel
+    -- at 35%; doom + enrage at 10%. No stance -- pure sustained chaos.
     [3] = {
         name   = 'Grand Pandemonium',
         aoe    = { periodSec = 13, dmgPct = 22, msg = 'PANDEMONIUM WAVE -- chaos energy tears outward!' },
@@ -198,7 +197,7 @@ local BOSS_MECH =
 
     -- [4] Eternal Shinryu  groupId=11369
     -- Identity: APEX DRAGON. Full hardcore kit with the tightest enrage timer.
-    -- Stance dance, AoE breath, adds x2, dispel, nuke, fury, doom -- every
+    -- Stance dance, AoE breath, dispel, nuke, fury, doom -- every
     -- mechanic deployed. The hardest fight in the rotation.
     [4] = {
         name   = 'Eternal Shinryu',
@@ -220,7 +219,7 @@ local BOSS_MECH =
 
     -- [5] Lord Kirin Ascendant  groupId=11366
     -- Identity: ELEMENTAL TYRANT. No melee identity -- pure elemental assault.
-    -- AoE shockwaves; CC terror; dispel in two waves; adds; final nuke + doom.
+    -- AoE shockwaves; CC terror; dispel in two waves; final nuke + doom.
     -- The most caster-centric fight; melee must dodge waves.
     [5] = {
         name   = 'Lord Kirin Ascendant',
@@ -237,9 +236,9 @@ local BOSS_MECH =
     },
 
     -- [6] Vrtra the Unbound  groupId=11362
-    -- Identity: SHADOW TYRANT. Stance dance + drain combo; adds at 60%; fury
-    -- spike at 30%; doom. Uniquely punishing on tanks: constant self-healing
-    -- makes this a race to kill the adds before Vrtra out-sustains the raid.
+    -- Identity: SHADOW TYRANT. Stance dance + drain combo; fury spike at 30%;
+    -- doom. Uniquely punishing on tanks: constant self-healing makes this a
+    -- race to out-damage Vrtra before it out-sustains the raid.
     [6] = {
         name   = 'Vrtra the Unbound',
         stance = { startHpp = 95, periodSec = 20, stances = {
@@ -259,7 +258,7 @@ local BOSS_MECH =
 
     -- [7] Nidhogg Unchained  groupId=11364
     -- Identity: BERSERKER DRAGON. No stance -- just relentless aggression.
-    -- AoE every 9s (shortest in the rotation); adds at 70% and 40%; fury at 25%;
+    -- AoE every 9s (shortest in the rotation); fury at 25%;
     -- the tightest enrage + doom combo. The attrition fight.
     [7] = {
         name   = 'Nidhogg Unchained',

@@ -116,8 +116,7 @@ local BOSS_MECHANICS = {
     },
 
     -- Floor 30: "The Eternal Warden"
-    -- Stance dance forces damage-type switching; adds regen the boss while
-    -- they live; fury phase at 50 HP.
+    -- Stance dance forces damage-type switching; fury phase at 50 HP.
     [30] = {
         name   = 'The Eternal Warden',
         stance = {
@@ -132,8 +131,6 @@ local BOSS_MECHANICS = {
         aoe    = { periodSec = 12, dmgPct = 24, msg = 'unleashes an eternal shockwave -- brace yourself!' },
         enrage = { sec = 190, att = 4500, haste = 150, msg = 'the Warden\'s patience ends -- ruin quickens!' },
         phases = {
-            -- 60%: spawns 3 adds from band-3 groups (zone 210 = GROUP_ZONE_ID); they
-            --      feed the boss a regen boost while they breathe.
             -- 40%: fury burst.
             { hp = 40, action = 'fury', att = 3000, haste = 100,
               msg = 'the Warden surges with eternal power -- its blows grow lethal!' },
@@ -141,7 +138,7 @@ local BOSS_MECHANICS = {
     },
 
     -- Floor 40: "Lord of the Void"
-    -- Near-full kit: stance, AoE, CC, drain, adds x2, dispel, doom at low HP.
+    -- Near-full kit: stance, AoE, CC, drain, dispel, doom at low HP.
     [40] = {
         name   = 'Lord of the Void',
         stance = {
@@ -157,11 +154,9 @@ local BOSS_MECHANICS = {
         drain  = { periodSec = 7, healPct = 3 },
         enrage = { sec = 170, att = 5000, haste = 170, msg = 'the Lord of the Void loses all restraint -- RUN!' },
         phases = {
-            -- 75%: first wave of void adds.
             -- 50%: dispels your buffs.
             { hp = 50, action = 'dispel', count = 3,
               msg = 'the Void tears your protections away -- buffs stripped!' },
-            -- 40%: second wave of adds.
             -- 25%: fury surge.
             { hp = 25, action = 'fury', att = 4000, haste = 120,
               msg = 'the Lord of the Void erupts -- its attacks are devastating!' },
@@ -190,14 +185,12 @@ local BOSS_MECHANICS = {
         drain  = { periodSec = 6, healPct = 3 },
         enrage = { sec = 150, att = 5500, haste = 200, msg = 'the Sovereign has grown tired of you -- its assault becomes overwhelming!' },
         phases = {
-            -- 75%: first servitor wave.
             -- 60%: dispel burst.
             { hp = 60, action = 'dispel', count = 4,
               msg = 'the Sovereign shatters your protections -- buffs annihilated!' },
             -- 50%: nuke -- a 45% max-HP AoE execute burst.
             { hp = 50, action = 'nuke', dmgPct = 45,
               msg = 'SOVEREIGN\'S JUDGEMENT -- a cataclysmic burst of power!' },
-            -- 40%: second servitor wave, heavier regen.
             -- 25%: fury -- the Sovereign enters its final reckoning.
             { hp = 25, action = 'fury', att = 5000, haste = 150,
               msg = 'the Pinnacle Sovereign enters its final reckoning -- attacks are lethal!' },
@@ -373,7 +366,7 @@ startFloor = function(player)
             mob:setModelSize(3)
             mob:setMaxHP(bossHp)
             mob:setHP(bossHp)
-            -- Attach floor-specific hardcore mechanics (stance/AoE/adds/drain/doom/
+            -- Attach floor-specific hardcore mechanics (stance/AoE/drain/doom/
             -- enrage). The config is keyed by boss floor number; early floors get a
             -- light kit, floor 50 gets the full hardcore suite. No-ops on any floor
             -- not in BOSS_MECHANICS (library returns immediately if cfg is nil).
