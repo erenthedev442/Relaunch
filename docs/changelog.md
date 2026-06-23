@@ -7,6 +7,61 @@ Recent updates to Legendary, newest first — generated from our live deploy his
 !!! note "Week of June 22–28, 2026"
     **Monday, June 22**
 
+    - **Crossjob** — Defer trait re-apply 3s in onGameIn (same as Prestige fix)
+    - **SCH** — Helix uncap + element stacking + Helix Damage augment
+    - **PUP** — Uncap automaton MAB/MDB ratio (Magical Automaton)
+    - **Augments** — Add Immunobreak Chance+ augment (Ameretat Vine catalyst)
+    - **GEO** — Uncap Indi + Geo-luopan duration
+    - **BST** — Add Beast Affinity augment -- gold_beastcoin (748) -> augId 2100
+    - **Items** — Make Maat's Cap (15194) unequippable -- crit token only
+    - **MAAT** — Custom Maat now CHASES when you hit him (drop NO_MOVE root)
+    - **COR** — Uncap Phantom Roll augment -- sum across all gear slots
+    - **RNG** — Barrage/Double Shot → 1hr stances, +25% overall damage
+    - **Npc Declutter** — Re-enable the 3 city Linkshell Merchants + exclude the class
+    - **Augments** — Hide [boost 0/0] for fixed-power augments in moogle label
+    - **Trusts** — Eliminate the 120s post-party-join trust-cast lockout
+    - **Aftermath** — Ranged Empyrean aftermath (Gandiva/Armageddon) now procs on shots
+    - **Nm Mechanics** — Wave 3 - Colosseum + Tournament arenas
+    - **MNK** — Revert Asuran Fists WSC from MND back to VIT
+    - **Nm Mechanics** — Wave 2 - Reforge, Job Mastery, Maat, Invasion
+    - **MNK** — Add Light-elemental hybrid magic to Asuran Fists
+    - **Nm Mechanics** — Roll hardcore mechanics out to 5 more NM systems
+    - **Nm Mechanics** — Wire hardcore mechanics into Prestige/Ascension Courts + harden library
+    - **SMN** — Tighten blood pact physical damage variance
+    - **Notorious Monsters** — Reusable hardcore mob-mechanics library (foundation)
+    - **Shop** — Add Maat's Cap back to every augments group (10M gil)
+    - **SMN** — Extend avatar boost to auto-attacks + survivability (all actions)
+    - **Crash** — Hang-catcher to gcore frozen process (no-rebuild stopgap)
+    - **Prestige** — Add !resettrial to clear a stuck Ascension Trial spawn flag
+    - **Rebirth** — Correlate EXP penalty curve with RP awards
+    - **Rebirth** — Switch RP awards to accelerating curve with milestones
+    - **Commands** — Relabel 'Spell Interrupt' as 'Spell Intp Down' (SIRD) for clarity
+    - **Commands** — Disable !provenance via hot-reloadable module override
+    - **Augments** — Correct the sign on the 1% spell-interruption-down augment (augId 53)
+    - **Shop** — Restore Maat's Cap (15194) as augments crit-guarantee token
+    - **Augments** — Block Death Penalty (un-augmentable Mythic) from the Augment Moogle
+    - **Shop** — Switch augments crit-guarantee token to maats_blessing (29000)
+    - **Trusts** — Remove Trust Aldo from all players and block re-acquisition
+    - **Crash** — Unattended crash-core capture + fix the handler hang
+    - **Prime Weapons** — Re-base the Prime Voucher onto the Maze Monger Crown (Rare/Ex)
+    - **Items** — Make the 4 Bullet Pouches dual-purpose (equip + use)
+    - **RNG** — +50% overall damage -- RATTP/RANGED_DMG_RATING bump + fTP x1.5
+    - **Shop** — Add Achiyalabopa Arrow/Bolt/Bullet to !shop ammo
+    - **Infamy** — Give Crepuscular Pebble its Physical damage limit +5%
+    - **Infamy** — Add Crepuscular Pebble (22300) to the Infamy Vendor @ 10k
+    - **RNG** — Extend Barrage duration 1m -> 15m
+    - **Prestige** — Make the Ascension EXP penalty MULTIPLICATIVE too
+    - **Rebirth** — Make the EXP penalty MULTIPLICATIVE (augment-proof)
+    - **Prime Weapons** — Stop Prime Weapons leaking outside the trial-gated forge
+    - **Trueflight** — Correct fTP values and Gastraphetes 22139 item mods
+    - **Prime Weapons** — Add 750M gil cost to Prime Weapon forge
+    - **Shop** — Add Maat's Cap to every augments category at 10M gil
+    - **Rebirth** — Triple the per-rebirth EXP penalty rate (10 -> 30)
+    - **APEX** — Move Apex Trials arena to Walk_of_Echoes_[P2] (zone 279)
+    - **Shop** — Add Quelling Bolt to !shop ammo (bolts)
+    - **Ls Bridge** — Send a User-Agent so Cloudflare stops 403'ing Discord posts
+    - **Abyssea** — Add Abyssea-Uleguerand to the custom marks-NM content
+    - **Weapon Skills** — Add Mythic aftermath call to Resolution (Lionheart fix)
     - **Items** — Stack all three Deeds to 99 (Placidity/Moderation/Sensibility)
     - **Items** — Make Deed of Moderation (1854) stack to 99
     - **Commands** — Add Elemental Affinities section + SMN perp affinities
@@ -686,10 +741,3 @@ Recent updates to Legendary, newest first — generated from our live deploy his
     - Daily Board, 4th dungeon, !lfg, !progress, !gainexp cooldown
     - Add Curated Sets vendor category to Infamy Vendor
     - Infamy Vendor menus exceed 150-byte customMenu cap, silently dropping Buy
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5506b52167e6 -->
-_Last updated: 2026-06-23 05:17 UTC_
-<!-- DOCGEN:END id="last-updated" -->
