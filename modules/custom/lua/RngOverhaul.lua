@@ -41,11 +41,11 @@ local m = Module:new('rng_overhaul')
 -- == Tunables (all flat; "massive" tier -- dial any of these to taste) =========
 local CONFIG =
 {
-    ratt            = 6000,  -- Mod.RATT  (24)  : flat ranged attack (every shot + ranged WS)
-    rattp           = 210,   -- Mod.RATTP (66)  : +% ranged attack. Raised 105->210 (~x1.5 the att ratio) so it reaches the +50% pDIF cap below = clean +50% overall dmg
+    ratt            = 80000, -- Mod.RATT  (24)  : flat ranged attack. Must reach DEF*pDIF_cap; with damageLimit=1400 the cap is 48.75 so need RATT >= NM_DEF*48.75. 80k covers DEF up to ~1640; raise further if needed.
+    rattp           = 2100,  -- Mod.RATTP (66)  : +% ranged attack (10x previous 210). Adds to ratio margin.
     racc            = 4000,  -- Mod.RACC  (26)  : land on high-EVA Legendary NMs
-    rangedDmgRating = 500,   -- Mod.RANGED_DMG_RATING (376) : flat damage on every shot
-    damageLimit     = 50,    -- Mod.DAMAGE_LIMITP (1081) : +50% ranged pDIF CAP. THE real ceiling -- combat/physical_utilities.lua:804 caps PC ranged pDIF at weaponCap*(1+DAMAGE_LIMITP/100), and BOTH auto-attacks AND ranged WS clamp to it. The big RATT/RATTP was hitting this wall; raising it +50% (ratio raised to match) = +50% on every shot and every ranged WS.
+    rangedDmgRating = 5000,  -- Mod.RANGED_DMG_RATING (376) : flat damage on every shot (10x previous 500)
+    damageLimit     = 1400,  -- Mod.DAMAGE_LIMITP (1081) : 10x ranged pDIF CAP. Formula: 3.25*(100+DLP)/100 -- was 4.875 at DLP=50, now 48.75 at DLP=1400 = exactly 10x. Applies to BOTH auto-attacks AND ranged WS pDIF component.
     storeTP         = 100,   -- Mod.STORETP (73): faster TP gain -> more weaponskills
     snapshot        = 50,    -- Mod.SNAPSHOT (365) : % ranged-delay reduction (faster shots)
     rapidShot       = 50,    -- Mod.RAPID_SHOT (359) : % chance of an instant shot
