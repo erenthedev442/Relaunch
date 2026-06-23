@@ -59,26 +59,26 @@ local function applyAvatarBoost(master, pet)
 
     local skillOverCap = math.max(xi.summon.getSummoningSkillOverCap(pet), 0)
 
-    -- BP_DAMAGE: +25900 = 260x multiplier on Blood Pact Rage/Ward damage.
-    -- +40 per summoning-skill point over cap so gear/skillups matter.
+    -- BP_DAMAGE: +9400 = 95x multiplier on Blood Pact Rage/Ward damage.
+    -- Targets 500k-750k per use on the main endgame BPs (physical and magical).
+    -- +5 per summoning-skill point over cap for modest skill-gear progression.
     -- BP damage bypasses the 131k on-screen cap; full value lands on HP.
-    safeAddMod(pet, xi.mod.BP_DAMAGE, 25900 + skillOverCap * 40)
+    safeAddMod(pet, xi.mod.BP_DAMAGE, 9400 + skillOverCap * 5)
 
-    -- Magic stats so magical BPs (Inferno, Judgment Bolt, Geocrush...) aren't
-    -- crushed by the (100+MATT)/(100+MDEF) ratio vs Legendary NMs. Avatars have
-    -- ~32 base MATT from C++; these flat values lift that to strongly favourable.
-    pet:addMod(xi.mod.MATT, 6000)
+    -- Magic stats so magical BPs (Inferno, Judgment Bolt, Geocrush...) survive
+    -- the (100+MATT)/(100+MDEF) ratio vs Legendary NMs. MATT=500 gives a 1.25-
+    -- 2.5x magicBonusDiff against typical NM MDEF (300-400), landing magical BPs
+    -- in the same 500k-750k window as physical BPs with the 95x BP_DAMAGE above.
+    pet:addMod(xi.mod.MATT, 500)
     pet:addMod(xi.mod.MACC, 2500)
     pet:addMod(xi.mod.INT,  1000)
 
     -- Physical stats so PHYSICAL Blood Pacts (Predator Claws, Flaming Crush,
     -- Mountain Buster, Chaotic Strike, Spinning Dive, Eclipse Bite...) work too.
     -- A physical BP's damage is pDif = avatarATT / targetDEF, and a raw avatar's
-    -- ATT collapses against Legendary's 150-160 NM DEF -> ~0 damage. Without these
-    -- only the MAGICAL-BP avatars (Shiva's Heavenly Strike, Siren) held up, which
-    -- is why "only Shiva and Siren are coded correctly." These flat values max
-    -- pDif; the universal 260x BP_DAMAGE mult then lands the hit. +per-skill-over-
-    -- cap so gear/skillups matter (mirrors the magic boost above).
+    -- ATT collapses against Legendary's 150-160 NM DEF -> ~0 damage. These flat
+    -- values max pDif (hard-capped at 4.25x); the 95x BP_DAMAGE mult then lands
+    -- the hit. +per-skill-over-cap so gear/skillups matter.
     safeAddMod(pet, xi.mod.ATT, 6000 + skillOverCap * 40)
     safeAddMod(pet, xi.mod.ACC, 4500 + skillOverCap * 10)
     pet:addMod(xi.mod.STR, 500)
