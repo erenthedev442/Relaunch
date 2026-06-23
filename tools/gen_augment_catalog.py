@@ -201,6 +201,15 @@ CUSTOM_AUGS = {
     #   maxed slot; maxBoost=31 scales with the Augment Sage. cat 5 (Magic offense).
     #   Owner request 2026-06-22.
     2044: (2335, 1, 15, 1, 5, 'Helix Damage', 31),  # soulflayer_tentacle (dark/soul creature -> Helix dmg)
+    # 2048 / 2100: hand-added augments (commits 7e97e79a3b / 47756957f1) that a
+    #   catalog REGEN silently wiped on 2026-06-23 -- they were never in the
+    #   generator's source, so re-emitting the catalog dropped them (the exact
+    #   "every regeneration silently wiped" failure the PROGRESSION_AUGS note warns
+    #   about). Pinned here so they survive future regens. Immunobreak Chance+ =
+    #   Mod 1197 (sql/augments.sql 2048); Beast Affinity = Mod 1200 (modules/custom/
+    #   sql/bst_beast_affinity_augment.sql 2100). Catalysts validated obtainable.
+    2048: (2361, 1, 1, 1, 5,  'Immunobreak Chance+', 31), # ameretat_vine
+    2100: (2512, 5, 1, 1, 10, 'Beast Affinity',      31), # lynx_hide -- orig catalyst gold_beastcoin(748) is below MIN_ITEM_ID(768) so re-catalysted to a valid beast drop
 }
 
 # Augments to DROP from the catalog entirely, keyed by augId. The augment still

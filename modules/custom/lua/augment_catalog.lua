@@ -328,11 +328,10 @@ return {
     [1616] = { augId = 278,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Melee skill' },
     [1663] = { augId = 279,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Ranged skill' },
     [1864] = { augId = 280,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Magic skill' },
-    [2361] = { augId = 281,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Archery skill' },
-    [2513] = { augId = 282,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Marksmanship skill' },
-    [2524] = { augId = 283,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Throwing skill' },
-    [2936] = { augId = 286,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Shield skill' },
-    [2937] = { augId = 287,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Parrying Skill' },
+    [2513] = { augId = 281,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Archery skill' },
+    [2524] = { augId = 282,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Marksmanship skill' },
+    [2936] = { augId = 283,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Throwing skill' },
+    [2937] = { augId = 286,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Shield skill' },
     [1725] = { augId = 288,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Divine magic skill' },
     [1740] = { augId = 290,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Enha.mag. skill' },
     [1817] = { augId = 291,  base = 1,   mult = 1,  disp = 1,    cat = 12, label = 'Enfb.mag. skill' },
@@ -376,4 +375,6 @@ return {
     [2335] = { augId = 2044, base = 1,   mult = 15, disp = 1,    cat = 5,  label = 'Helix Damage', maxBoost = 31 },  -- soulflayer_tentacle
     [2531] = { augId = 2045, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Spikes Dmg', maxBoost = 31 },  -- shard_of_obsidian
     [1875] = { augId = 2046, base = 1,   mult = 1,  disp = 1,    cat = 4,  label = 'Phantom Roll effect', maxBoost = 0 },  -- ancient_beastcoin
+    [2361] = { augId = 2048, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Immunobreak Chance+', maxBoost = 31 },  -- ameretat_vine
+    [2512] = { augId = 2100, base = 5,   mult = 1,  disp = 1,    cat = 10, label = 'Beast Affinity', maxBoost = 31 },  -- lynx_hide
 }
