@@ -482,7 +482,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 local valStr     = (count > 1)
                     and string.format('  ->  %d/slot x%d = %d total', perSlotVal, count, perSlotVal * count)
                     or  string.format('  ->  %d', perSlotVal)
-                local boostStr   = string.format('  [boost %d/%d]', perSlotExdata, boostCap)
+                local boostStr   = (boostCap > 0)
+                    and string.format('  [boost %d/%d]', perSlotExdata, boostCap)
+                    or  ''
 
                 local label = string.format('%s%s%s', def.label, valStr, boostStr)
                 table.insert(labelSummary, label)
