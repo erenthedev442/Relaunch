@@ -357,13 +357,11 @@ do
     end
 end
 
--- Maat's Blessing (29000) = 100% critical augment guarantee; prepend to every group.
--- Using the custom general-type token (29000), not retail Maat's Cap (15194 = equipment
--- type 6) which silently fails to display in the shop window.
+-- Maat's Cap (15194) = 100% critical augment guarantee; prepend to every group.
 do
-    local MAATS_BLESSING = { 29000, 10000000 }
+    local MAATS_CAP = { 15194, 10000000 }
     for _, g in ipairs(augmentOrder) do
-        table.insert(augmentStock[g[1]], 1, MAATS_BLESSING)
+        table.insert(augmentStock[g[1]], 1, MAATS_CAP)
     end
 end
 
