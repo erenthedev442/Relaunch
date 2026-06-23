@@ -181,8 +181,10 @@ end)
 -- /job switch untouched. Only a zone reload wipes mods, which this re-applies.
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
-    applyAll(player)
     super(player, firstLogin, zoning)
+    -- Defer 3s: synchronous addMod in onGameIn is clobbered by post-login
+    -- stat finalization (same pattern as Prestige/JobRebirth fix 3aa33a2469).
+    player:timer(3000, function(p) applyAll(p) end)
 end)
 
 return m
