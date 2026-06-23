@@ -2350,3 +2350,6 @@ INSERT INTO `augments` VALUES (2046,0,0,0,0,0);
 -- End unused block
 
 INSERT INTO `augments` VALUES (2047,0,0,0,0,0); -- ??? (it literally just says "???")
+
+-- LEGENDARY CUSTOM AUGMENTS
+INSERT INTO `augments` VALUES (2048,0,1197,1,0,0); -- Immunobreak Chance +1% (per slot; scales via Augment Sage)

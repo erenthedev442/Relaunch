@@ -191,6 +191,7 @@ return {
     [2640] = { augId = 1249, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Helix Effect Duration' },
     [2711] = { augId = 1264, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Meditate Effect Duration' },
     [2847] = { augId = 1796, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Pet INT' },
+    [2361] = { augId = 2048, base = 1,   mult = 1,  disp = 1,    cat = 5,  label = 'Immunobreak Chance+' }, -- Ameretat Vine catalyst
 
     -- Mind / Healing / Cure
     [791]  = { augId = 52,   base = 1,   mult = 4,  disp = 1,    cat = 6,  label = 'MP recovered while healing' },

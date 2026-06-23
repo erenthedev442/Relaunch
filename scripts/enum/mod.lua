@@ -1114,6 +1114,10 @@ xi.mod =
 
     KNOCKBACK_REDUCTION = 1172, -- Reduces distance knocked back
 
+    -- [LEGENDARY-CUSTOM] Gear bonus for immunobreak chance. Read purely in Lua
+    -- (enfeebling_spell.lua executeImmunobreak). No C++ rebuild required.
+    IMMUNOBREAK_CHANCE = 1197, -- +N% per attempt, additive with RDM merit IMMUNOBREAK_CHANCE
+
     -- IF YOU ADD ANY NEW MODIFIER HERE, ADD IT IN src/map/modifier.h ASWELL!
 
     -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.

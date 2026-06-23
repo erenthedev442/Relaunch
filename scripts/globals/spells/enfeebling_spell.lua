@@ -178,8 +178,9 @@ local function executeImmunobreak(caster, target, spell, effectId)
         return
     end
 
-    -- Calculate Immunobreack chance.
-    local immunobreakChance = caster:getMerit(xi.merit.IMMUNOBREAK_CHANCE) + 20 / (immunobreakValue + 1) -- TODO: Add immunobreak gear?
+    -- Calculate immunobreak chance.
+    -- [LEGENDARY-CUSTOM] xi.mod.IMMUNOBREAK_CHANCE (1197) is a gear augment bonus (+N% flat).
+    local immunobreakChance = caster:getMerit(xi.merit.IMMUNOBREAK_CHANCE) + caster:getMod(xi.mod.IMMUNOBREAK_CHANCE) + 20 / (immunobreakValue + 1)
     if math.random(1, 100) > immunobreakChance then
         return
     end
