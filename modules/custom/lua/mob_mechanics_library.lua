@@ -72,7 +72,14 @@ local function playersNear(entity, radius)
 end
 M.playersNear = playersNear
 
+-- Set false to silence ALL boss mechanic telegraphs (the "[BossName] ..."
+-- SYSTEM_3 shouts) across every NM system in one place -- this is the single
+-- choke point every mechanic message routes through. Disabled 2026-06-23 by
+-- owner request (chat clutter). Flip back to true to restore the telegraphs.
+local SHOUTS_ENABLED = false
+
 local function shout(mob, msg, st)
+    if not SHOUTS_ENABLED then return end
     if not msg then return end
     local tag   = (st and st.name) and ('[%s] '):format(st.name) or '[NM] '
     local owner = st and st.ownerName
