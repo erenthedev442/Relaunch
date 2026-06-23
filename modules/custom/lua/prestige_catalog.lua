@@ -269,15 +269,13 @@ return
                 enrage = { sec = 240, att = 4000, haste = 120, msg = 'grows impatient -- its assault quickens!' },
                 phases = { { hp = 25, action = 'terror', effect = xi.effect.SLEEP_I, dur = 6, msg = 'drags you into nightmare!' } },
             },
-            -- Voidwalkers: a feeding swarm. Adds heal it -- sever them or it never dies.
+            -- Voidwalkers: a feeding swarm that drains your HP and hits harder over time.
+            -- (Servitor adds removed 2026-06-23 -- they spawned invisible/inert from a
+            -- mis-set add group [11370 = Diabolos pool]; the drain + enrage carry the fight.)
             [10] = {
                 name   = 'Voidwalkers',
                 drain  = { periodSec = 8, healPct = 2 },
                 enrage = { sec = 220, att = 5000, haste = 130, msg = 'feasts -- its strikes land harder!' },
-                phases = {
-                    { hp = 60, action = 'adds', count = 3, addGroupId = 11370, addZoneId = 222, addLevel = 140, regen = 10000, msg = 'splits off devouring spawn -- they feed it!' },
-                    { hp = 25, action = 'adds', count = 4, addGroupId = 11370, addZoneId = 222, addLevel = 145, regen = 15000, msg = 'swarms anew -- sever the feed!' },
-                },
             },
             -- The Jailers: lockdown. Cycles a heavy physical-/magical-resist; switch type.
             [20] = {
@@ -298,7 +296,8 @@ return
                     { hp = 25, action = 'dispel', count = 6, msg = 'strips you bare!' },
                 },
             },
-            -- World's End: the full fight -- adds, nuke, resist dance, tight enrage, doom.
+            -- World's End: the full fight -- nuke, resist dance, tight enrage, doom.
+            -- (Servitor adds removed 2026-06-23 -- broken invisible spawn, see [10].)
             [40] = {
                 name   = "World's End",
                 stance = { startHpp = 70, periodSec = 14, stances = {
@@ -308,7 +307,6 @@ return
                 aoe    = { periodSec = 13, dmgPct = 25, msg = 'detonates the void around it!' },
                 enrage = { sec = 180, att = 8000, haste = 200, msg = 'the end nears -- it goes all out!' },
                 phases = {
-                    { hp = 75, action = 'adds', count = 3, addGroupId = 11370, addZoneId = 222, addLevel = 150, regen = 25000, msg = 'tears spawn from the void!' },
                     { hp = 50, action = 'nuke', dmgPct = 40, msg = 'collapses reality in a blast!' },
                     { hp = 25, action = 'fury', att = 4000, haste = 120, msg = 'rages against oblivion!' },
                 },
@@ -325,7 +323,6 @@ return
                 cc     = { periodSec = 20, effect = xi.effect.SILENCE, dur = 8, msg = 'silences the faithless!' },
                 enrage = { sec = 165, att = 10000, haste = 250, msg = 'ascends to its final form!' },
                 phases = {
-                    { hp = 70, action = 'adds', count = 4, addGroupId = 11370, addZoneId = 222, addLevel = 150, regen = 28000, msg = 'calls down celestial servitors!' },
                     { hp = 45, action = 'nuke', dmgPct = 45, msg = 'unleashes a cataclysm!' },
                     { hp = 20, action = 'doom', dur = 25, msg = 'passes final judgment -- doom upon you!' },
                 },
