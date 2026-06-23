@@ -22,6 +22,8 @@ local m = Module:new('character_upgrader')
 local SKOLL_SPELL  = (xi.magic and xi.magic.spell and xi.magic.spell.SKOLL) or 901
 local MEAT_SPELL   = (xi.magic and xi.magic.spell and xi.magic.spell.EXCENMILLE) or 899
 local CORVUS_SPELL = (xi.magic and xi.magic.spell and xi.magic.spell.CURILLA) or 902
+local ALDO_SPELL   = (xi.magic and xi.magic.spell and xi.magic.spell.ALDO) or 930
+local ALDO_UC_SPELL = (xi.magic and xi.magic.spell and xi.magic.spell.ALDO_UC) or 1007
 
 m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     super(zone)
@@ -32,7 +34,7 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
     -- giveAllSpells / giveAllTrusts sweep, so exclude them by id -- otherwise the
     -- Void Keeper's 50M-gil trusts get handed out for free.
     -----------------------------------
-    local EXCLUDED_SPELLS = { [SKOLL_SPELL] = true, [MEAT_SPELL] = true, [CORVUS_SPELL] = true }
+    local EXCLUDED_SPELLS = { [SKOLL_SPELL] = true, [MEAT_SPELL] = true, [CORVUS_SPELL] = true, [ALDO_SPELL] = true, [ALDO_UC_SPELL] = true }
 
     local menu         = { title = 'Unlocker', options = {} }
     local mainMenu     = {}
@@ -703,7 +705,7 @@ m:addOverride('xi.commands.addalltrusts.onTrigger', function(player, target)
         if spellList then
             local filtered = {}
             for _, id in ipairs(spellList) do
-                if id ~= SKOLL_SPELL and id ~= MEAT_SPELL and id ~= CORVUS_SPELL then
+                if id ~= SKOLL_SPELL and id ~= MEAT_SPELL and id ~= CORVUS_SPELL and id ~= ALDO_SPELL and id ~= ALDO_UC_SPELL then
                     filtered[#filtered + 1] = id
                 end
             end
