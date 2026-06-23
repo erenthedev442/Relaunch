@@ -440,10 +440,16 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
             '[Ascension] Your %s ascends to Prestige Level %d!  +%d %s to spend.',
             jobTag(jobId), newLevel, apGrant, cfg.apName),
             xi.msg.channel.SYSTEM_3)
-        player:printToArea(string.format(
-            '[Ascension] %s has ascended their %s to Prestige Level %d!',
-            player:getName(), jobTag(jobId), newLevel),
-            xi.msg.channel.SYSTEM_3, xi.msg.area.SYSTEM, '', false)
+        -- Server-wide ascend broadcast silenced 2026-06-23 (owner request);
+        -- the personal "Your %s ascends..." line above is KEPT (reward feedback).
+        -- Set ANNOUNCE_ASCEND = true to restore the server-wide announcement.
+        local ANNOUNCE_ASCEND = false
+        if ANNOUNCE_ASCEND then
+            player:printToArea(string.format(
+                '[Ascension] %s has ascended their %s to Prestige Level %d!',
+                player:getName(), jobTag(jobId), newLevel),
+                xi.msg.channel.SYSTEM_3, xi.msg.area.SYSTEM, '', false)
+        end
 
         -- Warn the player when THIS ascension pushes the Trial into a harder
         -- difficulty tier (cfg.trialScaling). Compare the old level's bracket to
