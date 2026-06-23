@@ -65,12 +65,27 @@ notes = notes[:cap]
 role = str(getattr(cfg, "PING_ROLE_ON_PATCH", "") or "")
 prefix = f"<@&{role}>  " if role else ""
 
-lines = [f"{prefix}:scroll: **Server Update — {day_label}**"] + [f"• {n}" for n in notes]
+# Title + role-ping stay OUTSIDE the code block: emoji/bold only render outside a
+# ``` block, and a role mention won't fire (no ping) if it's wrapped inside one.
+header = f"{prefix}:scroll: **Server Update — {day_label}**"
+
+# The "full changelog" link also stays outside so it stays clickable.
+footer = ""
 if total > cap:
-    lines.append(f"…and {total - cap} more. Full changelog: https://legendary-ffxi.pages.dev/changelog/")
-msg = "\n".join(lines)
-if len(msg) > 1900:
-    msg = msg[:1897] + "…"
+    footer = f"\n…and {total - cap} more. Full changelog: https://legendary-ffxi.pages.dev/changelog/"
+
+# Per Ririn: wrap the notes in a triple-backtick code block so they render as a
+# clean monospace box in Discord.
+body = "\n".join(f"• {n}" for n in notes)
+
+# Stay under Discord's 2000-char webhook limit. Reserve room for header, footer and
+# the fences ("\n```\n" before + "\n```" after = 9 chars), then truncate the BODY
+# only — so the closing fence is never cut off (an unclosed ``` swallows the rest).
+max_body = 1990 - len(header) - len(footer) - 9
+if len(body) > max_body:
+    body = body[: max(0, max_body - 1)].rstrip() + "…"
+
+msg = f"{header}\n```\n{body}\n```{footer}"
 
 bot_name   = str(getattr(cfg, "BOT_USERNAME", "") or "Legendary")
 avatar_url = str(getattr(cfg, "BOT_AVATAR_URL", "") or "") or None
