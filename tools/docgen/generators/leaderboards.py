@@ -169,6 +169,14 @@ _SINGLE_VAR_BOARDS = [
         "var":     "Tower_Best_Floor",
         "unit":    "floor",
     },
+    {
+        "marker":  "lb-tower-climbs",
+        "heading": "Endless Tower — Most Full Clears",
+        "blurb":   "Total number of times the Pinnacle Sovereign (floor 50) has been defeated. "
+                   "Each full clear from floor 1 to 50 counts as one climb.",
+        "var":     "Tower_Climbs",
+        "unit":    "clears",
+    },
     # ===== Prestige & Paragon ========================================
     {
         "marker":  "lb-prestige-total",

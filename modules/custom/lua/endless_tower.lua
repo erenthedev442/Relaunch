@@ -13,7 +13,8 @@
 --
 -- CharVars:
 --   PW_Trial2_Done       1 when floor 50 boss was killed
---   Tower_Best_Floor     personal best floor ever cleared (optional leaderboard)
+--   Tower_Best_Floor     personal best floor ever cleared (leaderboard)
+--   Tower_Climbs         count of full floor-50 clears (leaderboard)
 --
 -- Architecture (mirrors Voidspire.lua):
 --   * Per-player sessions table; ownerName captured in mob onMobDeath
@@ -410,6 +411,8 @@ endTower = function(player, reason)
     end
 
     if reason == 'cleared' then
+        -- Count full clears for the leaderboard.
+        player:setCharVar('Tower_Climbs', (player:getCharVar('Tower_Climbs') or 0) + 1)
         -- Trial 2 complete.
         if (player:getCharVar('PW_Trial2_Done') or 0) == 0 then
             player:setCharVar('PW_Trial2_Done', 1)

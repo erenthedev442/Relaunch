@@ -557,6 +557,7 @@ _No qualifying characters yet — be the first!_
 
 ## Endless Tower { .lb-section }
 
+<div class="lb-grid" markdown="1">
 <!-- DOCGEN:BEGIN id="lb-tower-floor" -->
 ### Endless Tower — Highest Floor
 
@@ -575,6 +576,15 @@ _Deepest floor ever reached in the Endless Tower. Each floor is a harder boss fi
 | 9 | [Herdofturtles](players/herdofturtles.md) | 21 |
 | 10 | [Darrent](players/darrent.md) | 20 |
 <!-- DOCGEN:END id="lb-tower-floor" -->
+
+<!-- DOCGEN:BEGIN id="lb-tower-climbs" -->
+### Endless Tower — Most Full Clears
+
+_Total number of times the Pinnacle Sovereign (floor 50) has been defeated. Each full clear from floor 1 to 50 counts as one climb._
+
+_No qualifying characters yet — be the first to claim this title!_
+<!-- DOCGEN:END id="lb-tower-climbs" -->
+</div>
 
 ---
 
