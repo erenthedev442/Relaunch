@@ -32,7 +32,8 @@
 require('modules/module_utils')
 require('scripts/zones/Walk_of_Echoes_[P2]/Zone')
 require('scripts/zones/GM_Home/Zone')
-local C = require('modules/custom/lua/apex_catalog')
+local C         = require('modules/custom/lua/apex_catalog')
+local mechanics = require('modules/custom/lua/mob_mechanics_library')
 
 local m = Module:new('apex_trials')
 
@@ -78,6 +79,7 @@ local function spawnApexBoss(owner, tier)
         releaseIdOnDisappear = true,
 
         onMobDeath = function(deadMob, killer)
+            mechanics.cleanup(deadMob)
             local sess = sessions[ownerName]
             if not sess then return end
             sess.mobsAlive[deadMob:getID()] = nil
@@ -86,6 +88,11 @@ local function spawnApexBoss(owner, tier)
             local resolved = GetPlayerByName(ownerName)
             if not resolved then sessions[ownerName] = nil; return end
             onTierCleared(resolved, sess)
+        end,
+
+        -- Mechanics ride the combat tick (all pcall-guarded in the library).
+        onMobFight = function(mfMob, mfTarget)
+            mechanics.tick(mfMob, mfTarget)
         end,
     })
 
@@ -123,6 +130,9 @@ local function spawnApexBoss(owner, tier)
     mob:setMaxHP(hp)
     mob:setHP(hp)
     mob:addEnmity(owner, 30000, 30000)
+
+    -- Attach tier-appropriate hardcore mechanics AFTER all stats/HP are set.
+    mechanics.attach(mob, C.mechCfg(tier))
 
     return mob, bossName, level, labels
 end

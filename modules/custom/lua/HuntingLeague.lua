@@ -17,11 +17,14 @@
 --   HL_Tier    - highest tier unlocked (1-5, defaults to 1)
 -----------------------------------
 require('modules/module_utils')
-local catalog = require('modules/custom/lua/hunting_league_catalog')
-local hg      = require('modules/custom/lua/hunters_guild')
-local wh      = require('modules/custom/lua/weekly_hunts')
-local ach     = require('modules/custom/lua/achievements')
-local se      = require('modules/custom/lua/seasonal_events')
+local catalog    = require('modules/custom/lua/hunting_league_catalog')
+local hg         = require('modules/custom/lua/hunters_guild')
+local wh         = require('modules/custom/lua/weekly_hunts')
+local ach        = require('modules/custom/lua/achievements')
+local se         = require('modules/custom/lua/seasonal_events')
+-- Hardcore NM mechanics engine (stance dance / AoE / adds / drain / doom /
+-- enrage / phases). Shared library; per-NM configs live in catalog.mechCfgs.
+local mechanics  = require('modules/custom/lua/mob_mechanics_library')
 -- Ascension (Prestige) layer. One-directional require: Prestige_System pulls
 -- in only catalogs, never HuntingLeague, so there is no circular dependency.
 local prestige = require('modules/custom/lua/Prestige_System')
@@ -590,11 +593,19 @@ local function insertSpawnerNPC(zone)
                         onMobRoam = function(roamMob)
                             local deadline = roamMob:getLocalVar('HL_DespawnAt')
                             if deadline > 0 and os.time() >= deadline then
+                                -- Idle despawn uses DespawnMob (no onMobDeath), so free
+                                -- the mechanics state here too (idempotent; pcall-safe).
+                                mechanics.cleanup(roamMob)
                                 DespawnMob(roamMob:getID())
                             end
                         end,
 
+                        onMobFight = function(mfMob, mfTarget)
+                            mechanics.tick(mfMob, mfTarget)
+                        end,
+
                         onMobDeath = function(deadMob, killer, optParams)
+                            mechanics.cleanup(deadMob)
                             if not killer then return end
                             local playerTier = getTier(killer)
                             if playerTier < td.tier then
@@ -869,6 +880,12 @@ local function insertSpawnerNPC(zone)
                     -- despawn timer set above.
                     mob:updateClaim(playerArg)
                     mob:updateEnmity(playerArg)
+
+                    -- Attach hardcore mechanics AFTER spawn() + stat/HP setup +
+                    -- claim so the library records the correct starting HP.
+                    -- catalog.mechCfgs is keyed by groupId; a missing entry is a
+                    -- no-op (library returns immediately on nil cfg).
+                    mechanics.attach(mob, catalog.mechCfgs and catalog.mechCfgs[md.groupId])
 
                     playerArg:printToPlayer(
                         string.format('%s has appeared!  Slay it for %d %s, kupo!',

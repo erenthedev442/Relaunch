@@ -36,6 +36,8 @@
 require('modules/module_utils')
 require('scripts/zones/West_Ronfaure/Zone')
 
+local mechanics = require('modules/custom/lua/mob_mechanics_library')
+
 local m = Module:new('world_boss')
 
 -----------------------------------
@@ -121,6 +123,188 @@ local BOSSES =
 xi._wb_bosses = BOSSES
 
 -----------------------------------
+-- Hardcore mechanics configs (mob_mechanics_library.lua)
+-- One distinct full-kit identity per boss so each week plays differently.
+-- addGroupId/addZoneId: adds are inserted using GROUP_ZONE_ID (210) mob_groups,
+-- the same zone the bosses themselves come from. This mirrors the pattern used
+-- by Endless Tower and Hunting League. Each addGroupId reuses one of the 8
+-- world-boss groupIds (11362-11369) that already exist in zone 210.
+-- BOSS_ZONE_ID (100) is where the add mobs PHYSICALLY SPAWN (next to the boss);
+-- GROUP_ZONE_ID (210) is the DB zone the groupId rows are registered under.
+-- DMGPHYS/DMGMAGIC capped at -5000 (-50% resist) per library convention.
+-- ATT/REGEN only in enrage/fury/adds.regen -- never via mob:addMod directly.
+-----------------------------------
+local BOSS_MECH =
+{
+    -- [1] Ancient Behemoth  groupId=11365
+    -- Identity: UNSTOPPABLE BRUISER. Stance dance from the start; tremor AoE;
+    -- adds at 70%; fury spike at 40%; doom + hard enrage at low HP. Melee-heavy
+    -- but punishes magic turtling too.
+    [1] = {
+        name   = 'Ancient Behemoth',
+        stance = { startHpp = 100, periodSec = 18, stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'hardens its hide -- weapons glance off! Use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'shrugs off sorcery -- hack it down with steel!' },
+        } },
+        aoe    = { periodSec = 14, dmgPct = 24, msg = 'EARTH TREMOR -- the ground heaves, shockwave outward!' },
+        enrage = { sec = 300, att = 6000, haste = 150, msg = 'the Behemoth loses all restraint -- its fury becomes absolute!' },
+        phases = {
+            { hp = 70, action = 'adds',  count = 3, addGroupId = 11363, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 18000, msg = 'the Behemoth calls its kin -- ancient beasts answer!' },
+            { hp = 40, action = 'fury',  att = 4000, haste = 120, msg = 'the Behemoth enrages -- its strikes land like boulders!' },
+            { hp = 20, action = 'doom',  dur = 28, msg = 'the Behemoth fixes its gaze on you -- marked for death!' },
+            { hp = 10, action = 'enrage', att = 9000, haste = 250, msg = 'PRIMAL FURY -- the Behemoth becomes unkillable in its rage!' },
+        },
+        doom   = { startHpp = 15, dur = 30, msg = 'the Behemoth marks you for annihilation!' },
+    },
+
+    -- [2] Absolute Virtue Reborn  groupId=11367
+    -- Identity: DIVINE INQUISITOR. Silences casters; AoE judgment waves;
+    -- dispels your buffs in two waves; doom sentence at 10%; tight enrage.
+    -- Forces melee during silence windows, forces magic when DMGPHYS hits.
+    [2] = {
+        name   = 'Absolute Virtue Reborn',
+        stance = { startHpp = 85, periodSec = 16, stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Virtue deems blades unworthy -- the divine shields it. Use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Virtue wards sorcery -- your spells dissolve. Strike with steel!' },
+        } },
+        aoe    = { periodSec = 12, dmgPct = 28, msg = 'DIVINE RETRIBUTION -- a wave of judgment scours the arena!' },
+        cc     = { periodSec = 20, effect = xi.effect.SILENCE, dur = 8, msg = 'Virtue silences the heretical -- no words, no spells!' },
+        enrage = { sec = 240, att = 7000, haste = 180, msg = 'Absolute Virtue sheds all limitation -- the end draws near!' },
+        phases = {
+            { hp = 75, action = 'adds',   count = 3, addGroupId = 11365, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 20000, msg = 'Absolute Virtue calls celestial guardians -- slay them first!' },
+            { hp = 55, action = 'dispel', count = 4, msg = 'DIVINE STRIP -- Virtue tears your blessings away!' },
+            { hp = 40, action = 'nuke',   dmgPct = 40, msg = 'RIGHTEOUS NOVA -- divine energy erupts from Virtue!' },
+            { hp = 25, action = 'adds',   count = 4, addGroupId = 11366, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 25000, msg = 'Virtue summons its final honor guard -- the last stand!' },
+            { hp = 10, action = 'doom',   dur = 22, msg = 'Absolute Virtue passes final judgment -- doom upon you!' },
+        },
+        doom   = { startHpp = 10, dur = 22, msg = 'Absolute Virtue sentences you to death!' },
+    },
+
+    -- [3] Grand Pandemonium  groupId=11368
+    -- Identity: CHAOS FEEDER. Self-drains to survive; adds at 65% feed it regen;
+    -- AoE shockwaves; dispel at 35%; doom + enrage at 10%. No stance -- pure
+    -- sustained chaos. Kill the adds or the boss never falls.
+    [3] = {
+        name   = 'Grand Pandemonium',
+        aoe    = { periodSec = 13, dmgPct = 22, msg = 'PANDEMONIUM WAVE -- chaos energy tears outward!' },
+        drain  = { periodSec = 9, healPct = 3 },
+        cc     = { periodSec = 25, effect = xi.effect.TERROR, dur = 6, msg = 'Grand Pandemonium exhales chaos -- you freeze in absolute dread!' },
+        enrage = { sec = 270, att = 6500, haste = 160, msg = 'Grand Pandemonium ascends to its true form!' },
+        phases = {
+            { hp = 65, action = 'adds',   count = 4, addGroupId = 11362, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 22000, msg = 'Grand Pandemonium spawns chaos constructs -- they fuel its recovery!' },
+            { hp = 50, action = 'fury',   att = 3500, haste = 130, msg = 'Grand Pandemonium surges -- strikes intensify!' },
+            { hp = 35, action = 'dispel', count = 5, msg = 'CHAOS ERASURE -- your enhancements are unmade!' },
+            { hp = 20, action = 'nuke',   dmgPct = 38, msg = 'PANDEMONIUM COLLAPSE -- reality itself buckles!' },
+            { hp = 10, action = 'doom',   dur = 25, msg = 'Grand Pandemonium marks the end of all things -- doom falls!' },
+        },
+        doom   = { startHpp = 12, dur = 28, msg = 'Grand Pandemonium seals your fate!' },
+    },
+
+    -- [4] Eternal Shinryu  groupId=11369
+    -- Identity: APEX DRAGON. Full hardcore kit with the tightest enrage timer.
+    -- Stance dance, AoE breath, adds x2, dispel, nuke, fury, doom -- every
+    -- mechanic deployed. The hardest fight in the rotation.
+    [4] = {
+        name   = 'Eternal Shinryu',
+        stance = { startHpp = 90, periodSec = 14, stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Shinryu\'s scales turn to diamond -- magic only!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Shinryu warps the aether -- steel only!' },
+        } },
+        aoe    = { periodSec = 11, dmgPct = 26, msg = 'SHINRYU BREATH -- a torrent of destruction!' },
+        drain  = { periodSec = 10, healPct = 2 },
+        enrage = { sec = 210, att = 8000, haste = 200, msg = 'Shinryu crosses into legend -- absolute fury!' },
+        phases = {
+            { hp = 75, action = 'adds',   count = 3, addGroupId = 11364, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 20000, msg = 'Shinryu tears servitors from the aether -- a new storm rises!' },
+            { hp = 55, action = 'dispel', count = 5, msg = 'TIDAL WAVE BREATH -- your protections are annihilated!' },
+            { hp = 40, action = 'nuke',   dmgPct = 42, msg = 'SHINRYU\'S JUDGMENT -- reality cracks under divine wrath!' },
+            { hp = 25, action = 'adds',   count = 4, addGroupId = 11363, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 28000, msg = 'Shinryu summons its eternal guard -- the final storm!' },
+            { hp = 15, action = 'fury',   att = 5000, haste = 160, msg = 'Shinryu ascends -- you stand before a true god!' },
+            { hp = 10, action = 'doom',   dur = 22, msg = 'Shinryu marks the unworthy for annihilation!' },
+        },
+        doom   = { startHpp = 10, dur = 22, msg = 'Shinryu sentences you to death eternal!' },
+    },
+
+    -- [5] Lord Kirin Ascendant  groupId=11366
+    -- Identity: ELEMENTAL TYRANT. No melee identity -- pure elemental assault.
+    -- AoE shockwaves; CC terror; dispel in two waves; adds; final nuke + doom.
+    -- The most caster-centric fight; melee must dodge waves.
+    [5] = {
+        name   = 'Lord Kirin Ascendant',
+        aoe    = { periodSec = 10, dmgPct = 25, msg = 'KIRIN\'S TEMPEST -- elemental energy detonates around it!' },
+        cc     = { periodSec = 22, effect = xi.effect.TERROR, dur = 7, msg = 'Lord Kirin lets out a deific roar -- all freeze in terror!' },
+        enrage = { sec = 260, att = 5500, haste = 140, msg = 'Lord Kirin summons the full power of the heavens!' },
+        phases = {
+            { hp = 75, action = 'dispel', count = 4, msg = 'LORD KIRIN DISPELS -- the divine strips your enhancements!' },
+            { hp = 60, action = 'adds',   count = 3, addGroupId = 11362, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 15000, msg = 'Lord Kirin calls elemental servitors to his aid!' },
+            { hp = 40, action = 'dispel', count = 6, msg = 'LORD KIRIN\'S PURGE -- everything is stripped bare!' },
+            { hp = 25, action = 'nuke',   dmgPct = 38, msg = 'HEAVEN\'S WRATH -- the sky collapses on you!' },
+            { hp = 10, action = 'doom',   dur = 26, msg = 'Lord Kirin decrees your end -- doom enacted!' },
+        },
+        doom   = { startHpp = 12, dur = 28, msg = 'Lord Kirin marks you for divine judgment!' },
+    },
+
+    -- [6] Vrtra the Unbound  groupId=11362
+    -- Identity: SHADOW TYRANT. Stance dance + drain combo; adds at 60%; fury
+    -- spike at 30%; doom. Uniquely punishing on tanks: constant self-healing
+    -- makes this a race to kill the adds before Vrtra out-sustains the raid.
+    [6] = {
+        name   = 'Vrtra the Unbound',
+        stance = { startHpp = 95, periodSec = 20, stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Vrtra shrouds itself in shadow -- blades pass through. Use magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Vrtra disperses the aether -- spells dissolve. Strike with steel!' },
+        } },
+        drain  = { periodSec = 8, healPct = 3 },
+        cc     = { periodSec = 26, effect = xi.effect.TERROR, dur = 5, msg = 'Vrtra\'s presence crushes the soul -- all freeze!' },
+        enrage = { sec = 280, att = 5500, haste = 130, msg = 'Vrtra the Unbound tears free of all restraint!' },
+        phases = {
+            { hp = 60, action = 'adds',  count = 3, addGroupId = 11368, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 20000, msg = 'Vrtra spawns shadow clutchlings -- they drink your vitality!' },
+            { hp = 45, action = 'nuke',  dmgPct = 35, msg = 'SHADOW NOVA -- void energy rips through the arena!' },
+            { hp = 30, action = 'fury',  att = 4000, haste = 120, msg = 'Vrtra enters a killing frenzy -- strikes accelerate!' },
+            { hp = 15, action = 'doom',  dur = 30, msg = 'Vrtra the Unbound marks you to be consumed!' },
+        },
+        doom   = { startHpp = 15, dur = 32, msg = 'Vrtra will consume you -- doom sealed!' },
+    },
+
+    -- [7] Nidhogg Unchained  groupId=11364
+    -- Identity: BERSERKER DRAGON. No stance -- just relentless aggression.
+    -- AoE every 9s (shortest in the rotation); adds at 70% and 40%; fury at 25%;
+    -- the tightest enrage + doom combo. The attrition fight.
+    [7] = {
+        name   = 'Nidhogg Unchained',
+        aoe    = { periodSec = 9, dmgPct = 22, msg = 'NIDHOGG\'S RAMPAGE -- a savage shockwave tears outward!' },
+        drain  = { periodSec = 11, healPct = 2 },
+        enrage = { sec = 230, att = 7500, haste = 180, msg = 'Nidhogg Unchained sheds all restraint -- pure berserker fury!' },
+        phases = {
+            { hp = 70, action = 'adds',   count = 3, addGroupId = 11367, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 17000, msg = 'Nidhogg calls its kin -- a pack of ancient wyverns answers!' },
+            { hp = 50, action = 'dispel', count = 4, msg = 'SAVAGE GUST -- Nidhogg\'s wings shear your enhancements away!' },
+            { hp = 40, action = 'adds',   count = 4, addGroupId = 11369, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 22000, msg = 'Nidhogg howls -- a second feral wave descends!' },
+            { hp = 25, action = 'fury',   att = 4500, haste = 140, msg = 'Nidhogg enters its kill-frenzy -- the pace becomes merciless!' },
+            { hp = 10, action = 'doom',   dur = 24, msg = 'Nidhogg locks onto you -- doom inescapable!' },
+        },
+        doom   = { startHpp = 12, dur = 25, msg = 'Nidhogg marks you as prey -- doom!' },
+    },
+
+    -- [8] Simurgh Eternal  groupId=11363
+    -- Identity: STORM HERALD. Silence + AoE combo punishes clustered casters.
+    -- Adds at 65%; nuke at 45%; dispel at 25%; doom at 10%. Unique: the AoE
+    -- has the largest dmgPct of any non-Shinryu boss (30%) to punish zerg tactics.
+    [8] = {
+        name   = 'Simurgh Eternal',
+        aoe    = { periodSec = 12, dmgPct = 30, msg = 'SIMURGH\'S TEMPEST -- a storm of lightning and wind erupts!' },
+        cc     = { periodSec = 18, effect = xi.effect.SILENCE, dur = 9, msg = 'Simurgh\'s cry silences the storm -- no spells, only steel!' },
+        enrage = { sec = 250, att = 5000, haste = 140, msg = 'Simurgh Eternal rides the eternal storm -- its power crests!' },
+        phases = {
+            { hp = 65, action = 'adds',   count = 3, addGroupId = 11364, addZoneId = GROUP_ZONE_ID, addLevel = 250, regen = 15000, msg = 'Simurgh summons storm roc servitors -- the skies darken!' },
+            { hp = 45, action = 'nuke',   dmgPct = 36, msg = 'LIGHTNING JUDGMENT -- Simurgh calls down the full storm!' },
+            { hp = 25, action = 'dispel', count = 5, msg = 'GALE STRIP -- the wind tears every buff from your body!' },
+            { hp = 15, action = 'fury',   att = 3500, haste = 120, msg = 'Simurgh enters its final flight -- speed beyond reckoning!' },
+            { hp = 10, action = 'doom',   dur = 26, msg = 'Simurgh\'s eye fixes on you -- the storm follows!' },
+        },
+        doom   = { startHpp = 12, dur = 28, msg = 'Simurgh Eternal marks you to fall with the storm!' },
+    },
+}
+
+-----------------------------------
 -- Server-variable helpers
 -----------------------------------
 local function sv(name)         return '[WB]' .. name end
@@ -188,6 +372,7 @@ local function spawnBoss(zone, bossData, bossIdx, savedHP)
 
         -- On death: award Trial 3 credit to every player present.
         onMobDeath = function(deadMob, killer)
+            mechanics.cleanup(deadMob)
             local zone = deadMob:getZone()
 
             -- Snapshot participants now (zone:getPlayers at kill time).
@@ -222,6 +407,12 @@ local function spawnBoss(zone, bossData, bossIdx, savedHP)
             svSet('HP', 0)
             xi._wb = nil
         end,
+
+        -- Hardcore mechanics tick (stance dance, AoE, phases, drain, doom, etc.).
+        -- All calls are pcall-guarded inside the library.
+        onMobFight = function(mfMob, mfTarget)
+            mechanics.tick(mfMob, mfTarget)
+        end,
     })
 
     if not mob then
@@ -238,6 +429,10 @@ local function spawnBoss(zone, bossData, bossIdx, savedHP)
     local spawnHP = (savedHP and savedHP > 0 and savedHP < bossData.hp) and savedHP or bossData.hp
     mob:setMaxHP(bossData.hp)
     mob:setHP(spawnHP)
+
+    -- Attach hardcore mechanics AFTER stats/HP are set (library requirement).
+    -- Each boss index maps to a distinct full-kit identity in BOSS_MECH.
+    mechanics.attach(mob, BOSS_MECH[bossIdx])
 
     xi._wb = { boss = mob, bossIdx = bossIdx, maxHP = bossData.hp }
 

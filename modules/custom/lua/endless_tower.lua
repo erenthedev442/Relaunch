@@ -29,6 +29,8 @@ require('modules/module_utils')
 require('scripts/zones/Walk_of_Echoes/Zone')
 require('scripts/zones/GM_Home/Zone')
 
+local mechanics = require('modules/custom/lua/mob_mechanics_library')
+
 local m = Module:new('endless_tower')
 
 -----------------------------------
@@ -83,6 +85,138 @@ local BOSS_AFFIXES = {
     { label = 'Empowered',    mods = { [xi.mod.ATT] = 2500, [xi.mod.STR] = 100 },   hpMult = 1.0  },
     { label = 'Colossal',     mods = {},                                              hpMult = 2.0  },
     { label = 'Furious',      mods = { [xi.mod.ATT] = 3000, [xi.mod.HASTE_GEAR] = 100 }, hpMult = 1.2 },
+}
+
+-----------------------------------
+-- Per-boss-floor hardcore mechanics configs (mob_mechanics_library.lua).
+-- Keyed by floor number (10/20/30/40/50). Scale up with floor depth:
+-- early = light; late = punishing. addGroupId reuses this system's own
+-- mob_groups rows for the matching band so adds are always valid.
+-- DMGPHYS/DMGMAGIC are capped at -5000 by convention (= heavy resist, not
+-- immunity). ATT/REGEN are routed through safeAddMod inside the library.
+-----------------------------------
+local BOSS_MECHANICS = {
+    -- Floor 10: "Guardian of the Spire"
+    -- Light introduction -- a terror roar and a soft enrage are enough to
+    -- teach the player that bosses bite back.
+    [10] = {
+        name   = 'Guardian of the Spire',
+        cc     = { periodSec = 24, effect = xi.effect.TERROR, dur = 4, msg = 'lets out a thunderous roar -- you are frozen in terror!' },
+        enrage = { sec = 240, att = 3000, haste = 100, msg = 'grows impatient -- its assault quickens!' },
+    },
+
+    -- Floor 20: "Shadow of the Abyss"
+    -- Adds a self-heal drain (anti-turtle) and an AoE shockwave.
+    [20] = {
+        name   = 'Shadow of the Abyss',
+        drain  = { periodSec = 9, healPct = 2 },
+        aoe    = { periodSec = 14, dmgPct = 20, msg = 'erupts with void energy -- the shockwave tears at you!' },
+        cc     = { periodSec = 26, effect = xi.effect.TERROR, dur = 5, msg = 'releases a wave of dread -- you are gripped by terror!' },
+        enrage = { sec = 210, att = 4000, haste = 130, msg = 'seethes with shadow -- strikes grow punishing!' },
+    },
+
+    -- Floor 30: "The Eternal Warden"
+    -- Stance dance forces damage-type switching; adds regen the boss while
+    -- they live; fury phase at 50 HP.
+    [30] = {
+        name   = 'The Eternal Warden',
+        stance = {
+            startHpp  = 100,
+            periodSec = 18,
+            stances   = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0 },    msg = 'hardens its shell against weapons -- use magic!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards itself from sorcery -- use steel!' },
+            },
+        },
+        drain  = { periodSec = 8, healPct = 2 },
+        aoe    = { periodSec = 12, dmgPct = 24, msg = 'unleashes an eternal shockwave -- brace yourself!' },
+        enrage = { sec = 190, att = 4500, haste = 150, msg = 'the Warden\'s patience ends -- ruin quickens!' },
+        phases = {
+            -- 60%: spawns 3 adds from band-3 groups (zone 210 = GROUP_ZONE_ID); they
+            --      feed the boss a regen boost while they breathe.
+            { hp = 60, action = 'adds', count = 3, addGroupId = 11363, addZoneId = 210, addLevel = 175, regen = 12000,
+              msg = 'calls eternal sentinels -- sever them or the Warden never falls!' },
+            -- 40%: fury burst.
+            { hp = 40, action = 'fury', att = 3000, haste = 100,
+              msg = 'the Warden surges with eternal power -- its blows grow lethal!' },
+        },
+    },
+
+    -- Floor 40: "Lord of the Void"
+    -- Near-full kit: stance, AoE, CC, drain, adds x2, dispel, doom at low HP.
+    [40] = {
+        name   = 'Lord of the Void',
+        stance = {
+            startHpp  = 100,
+            periodSec = 16,
+            stances   = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0 },    msg = 'the Void hardens -- weapons skitter off! Use magic!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'the Void warps magic -- spells unravel! Use weapons!' },
+            },
+        },
+        aoe    = { periodSec = 11, dmgPct = 28, msg = 'the Void expands -- a crushing wave of dark energy!' },
+        cc     = { periodSec = 22, effect = xi.effect.TERROR, dur = 6, msg = 'the Lord peers into your soul -- terror takes hold!' },
+        drain  = { periodSec = 7, healPct = 3 },
+        enrage = { sec = 170, att = 5000, haste = 170, msg = 'the Lord of the Void loses all restraint -- RUN!' },
+        phases = {
+            -- 75%: first wave of void adds.
+            { hp = 75, action = 'adds', count = 3, addGroupId = 11365, addZoneId = 210, addLevel = 225, regen = 15000,
+              msg = 'summons void shards -- they feed its wounds!' },
+            -- 50%: dispels your buffs.
+            { hp = 50, action = 'dispel', count = 3,
+              msg = 'the Void tears your protections away -- buffs stripped!' },
+            -- 40%: second wave of adds.
+            { hp = 40, action = 'adds', count = 4, addGroupId = 11365, addZoneId = 210, addLevel = 230, regen = 18000,
+              msg = 'the Void fractures further -- more shards tear free!' },
+            -- 25%: fury surge.
+            { hp = 25, action = 'fury', att = 4000, haste = 120,
+              msg = 'the Lord of the Void erupts -- its attacks are devastating!' },
+            -- 10%: doom.
+            { hp = 10, action = 'doom', dur = 28,
+              msg = 'the Void brands you for annihilation!' },
+        },
+        doom = { startHpp = 12, dur = 30, msg = 'the Lord of the Void marks you for death!' },
+    },
+
+    -- Floor 50: "The Pinnacle Sovereign" -- FULL HARDCORE KIT.
+    -- Tightest enrage, all mechanics active, doom + execute pressure throughout
+    -- the final phase. This is the Trial 2 gate.
+    [50] = {
+        name   = 'The Pinnacle Sovereign',
+        stance = {
+            startHpp  = 100,
+            periodSec = 14,
+            stances   = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0 },    msg = 'the Sovereign forges an adamantine shell -- weapons are useless! Switch to magic!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'the Sovereign shrouds itself in runic wards -- magic falters! Switch to weapons!' },
+            },
+        },
+        aoe    = { periodSec = 10, dmgPct = 32, msg = 'the Pinnacle Sovereign unleashes Sovereign\'s Wrath -- everyone near takes grievous damage!' },
+        cc     = { periodSec = 20, effect = xi.effect.TERROR, dur = 7, msg = 'the Sovereign\'s gaze pierces your will -- you are paralysed with terror!' },
+        drain  = { periodSec = 6, healPct = 3 },
+        enrage = { sec = 150, att = 5500, haste = 200, msg = 'the Sovereign has grown tired of you -- its assault becomes overwhelming!' },
+        phases = {
+            -- 75%: first servitor wave.
+            { hp = 75, action = 'adds', count = 3, addGroupId = 11367, addZoneId = 210, addLevel = 255, regen = 18000,
+              msg = 'the Sovereign commands its vanguard -- servitors flood the arena!' },
+            -- 60%: dispel burst.
+            { hp = 60, action = 'dispel', count = 4,
+              msg = 'the Sovereign shatters your protections -- buffs annihilated!' },
+            -- 50%: nuke -- a 45% max-HP AoE execute burst.
+            { hp = 50, action = 'nuke', dmgPct = 45,
+              msg = 'SOVEREIGN\'S JUDGEMENT -- a cataclysmic burst of power!' },
+            -- 40%: second servitor wave, heavier regen.
+            { hp = 40, action = 'adds', count = 4, addGroupId = 11368, addZoneId = 210, addLevel = 260, regen = 24000,
+              msg = 'the Sovereign calls its honour guard -- more servitors pour in!' },
+            -- 25%: fury -- the Sovereign enters its final reckoning.
+            { hp = 25, action = 'fury', att = 5000, haste = 150,
+              msg = 'the Pinnacle Sovereign enters its final reckoning -- attacks are lethal!' },
+            -- 10%: phase enrage + doom for execute pressure.
+            { hp = 10, action = 'enrage', att = 8000, haste = 250,
+              msg = 'the Sovereign reaches its apex -- all restraint is gone!' },
+        },
+        doom = { startHpp = 12, dur = 25, msg = 'the Pinnacle Sovereign marks you for oblivion. Finish it!' },
+    },
 }
 
 -----------------------------------
@@ -141,6 +275,7 @@ local function spawnTowerMob(owner, groupId, name, level, hpMult, extraMods)
         releaseIdOnDisappear = true,
 
         onMobDeath = function(deadMob, killer)
+            mechanics.cleanup(deadMob)   -- free mechanics state + despawn any adds
             -- Allied Notes to the climber for each tower mob cleared, scaled by the
             -- floor's mob level (same curve as allied_notes_drop.lua: floor(lvl/5),
             -- clamped 5..50). Goes to the session owner so the climber is always
@@ -159,6 +294,10 @@ local function spawnTowerMob(owner, groupId, name, level, hpMult, extraMods)
             local resolved = GetPlayerByName(ownerName)
             if not resolved then sessions[ownerName] = nil; return end
             onFloorCleared(resolved, sess)
+        end,
+
+        onMobFight = function(mfMob, mfTarget)
+            mechanics.tick(mfMob, mfTarget)
         end,
     })
 
@@ -244,6 +383,11 @@ startFloor = function(player)
             mob:setModelSize(3)
             mob:setMaxHP(bossHp)
             mob:setHP(bossHp)
+            -- Attach floor-specific hardcore mechanics (stance/AoE/adds/drain/doom/
+            -- enrage). The config is keyed by boss floor number; early floors get a
+            -- light kit, floor 50 gets the full hardcore suite. No-ops on any floor
+            -- not in BOSS_MECHANICS (library returns immediately if cfg is nil).
+            mechanics.attach(mob, BOSS_MECHANICS[floor])
             sess.mobsAlive[mob:getID()] = mob
         end
     else

@@ -22,6 +22,7 @@
 require('modules/module_utils')
 local catalog   = require('modules/custom/lua/voidspire_catalog')
 local gmCatalog = require('modules/custom/lua/game_master_catalog')  -- mob pools by band
+local mechanics = require('modules/custom/lua/mob_mechanics_library')
 require(string.format('scripts/zones/%s/Zone', catalog.npcPos.zone))
 -----------------------------------
 local m = Module:new('voidspire')
@@ -127,9 +128,22 @@ local function rollAffixOrder()
 end
 
 -----------------------------------
+-- Pick the mechCfg for a given floor (highest floorMechanics key <= floor).
+-----------------------------------
+local function floorMechCfg(floor)
+    local best = nil
+    for key, cfg in pairs(catalog.floorMechanics or {}) do
+        if floor >= key and (best == nil or key > best) then
+            best = key
+        end
+    end
+    return best and catalog.floorMechanics[best] or nil
+end
+
+-----------------------------------
 -- Spawn one floor mob (mirrors GameMaster.spawnWaveMob)
 -----------------------------------
-local function spawnFloorMob(owner, mobDef, level, mods, hpMult)
+local function spawnFloorMob(owner, mobDef, level, mods, hpMult, floor)
     local px, py, pz = owner:getXPos(), owner:getYPos(), owner:getZPos()
     local angle = math.random() * math.pi * 2
     local ring  = catalog.spawnRing
@@ -152,6 +166,7 @@ local function spawnFloorMob(owner, mobDef, level, mods, hpMult)
         releaseIdOnDisappear = true,
 
         onMobDeath = function(deadMob, killer)
+            mechanics.cleanup(deadMob)              -- free mechanics state + despawn its adds
             local sess = sessions[ownerName]
             if not sess then return end
             sess.mobsAlive[deadMob:getID()] = nil
@@ -175,6 +190,11 @@ local function spawnFloorMob(owner, mobDef, level, mods, hpMult)
             if not resolved then sessions[ownerName] = nil; return end
             onFloorCleared(resolved, sess)
         end,
+
+        -- Mechanics ride the combat tick (all pcall-guarded in the library).
+        onMobFight = function(mfMob, mfTarget)
+            mechanics.tick(mfMob, mfTarget)
+        end,
     })
 
     if mob then
@@ -189,6 +209,9 @@ local function spawnFloorMob(owner, mobDef, level, mods, hpMult)
         end
         mob:updateClaim(owner)                 -- owner gets claim + kill credit
         mob:addEnmity(owner, 30000, 30000)     -- pursue the owner immediately
+
+        -- Attach hardcore mechanics AFTER stats/HP are finalized (library is pcall-safe).
+        mechanics.attach(mob, floorMechCfg(floor or 1))
     end
     return mob
 end
@@ -287,7 +310,7 @@ startFloor = function(player)
     -- Spawn the whole floor at once (<= mobsCap mobs -- no stagger needed).
     for _ = 1, count do
         local mobDef = pool[math.random(#pool)]
-        local mob = spawnFloorMob(player, mobDef, level, mods, hpMult)
+        local mob = spawnFloorMob(player, mobDef, level, mods, hpMult, floor)
         if mob then sess.mobsAlive[mob:getID()] = mob end
     end
 

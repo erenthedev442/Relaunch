@@ -142,6 +142,110 @@ catalog.milestones =
     { floor = 100, marks = 70000 },
 }
 
+-- ============================ FLOOR MECHANICS ============================
+-- Per-band hardcore mechanics (mob_mechanics_library.lua), keyed by the
+-- FIRST floor of each band. Voidspire.lua picks the highest key <= floor.
+-- Escalating identity: shallow floors feel manageable; deep floors punish.
+--   Zone 289 (Escha_RuAun) groupIds for adds:
+--     Easy   pool: 11400 (Argus)   -- floors 1-9
+--     Normal pool: 11404 (Boggelmann) -- floors 10-24
+--     Hard   pool: 11408 (Cerberus)   -- floors 25-44
+--     Insane pool: 11412 (Bahamut)    -- floors 45+
+-- addLevel kept lower than the floor-mob level so adds die first but still hurt.
+catalog.floorMechanics =
+{
+    -- Floors 1-9: shallow threat. Occasional self-heal + soft enrage if you
+    -- turtle. Easy entry -- there's barely a mechanic; just regen pressure.
+    [1] = {
+        name   = 'Nightmare Vanguard',
+        drain  = { periodSec = 12, healPct = 2 },
+        enrage = { sec = 300, att = 2000, haste = 80, msg = 'grows impatient -- its assault quickens!' },
+    },
+
+    -- Floors 10-24: adds + slow enrage. A feeding swarm: kill the adds or the
+    -- boss heals off them. First real mechanical identity.
+    [10] = {
+        name   = 'Voidwalker Scout',
+        drain  = { periodSec = 10, healPct = 2 },
+        enrage = { sec = 240, att = 3500, haste = 100, msg = 'feasts on spilled blood -- striking harder!' },
+        phases = {
+            { hp = 60, action = 'adds', count = 2, addGroupId = 11404, addZoneId = 289, addLevel = 140, regen = 10000,
+              msg = 'tears open a void rift -- reinforcements pour through!' },
+        },
+    },
+
+    -- Floors 25-44: stance dance begins. Must switch damage type every cycle.
+    -- AoE shockwave added; tighter enrage.
+    [25] = {
+        name   = 'Jailer of the Deep',
+        stance = { startHpp = 90, periodSec = 16, stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'hardens against weapons -- switch to magic!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards off magic -- cut it down with steel!' },
+        } },
+        aoe    = { periodSec = 14, dmgPct = 20, msg = 'erupts in a shockwave of void energy!' },
+        enrage = { sec = 220, att = 4500, haste = 130, msg = 'tightens its chains -- it presses the assault!' },
+    },
+
+    -- Floors 45-74: adds + stance + dispel. Full mid-game pressure.
+    -- Adds use Insane-pool groupId (Bahamut) at reduced level.
+    [45] = {
+        name   = 'Voidwalker Lord',
+        stance = { startHpp = 90, periodSec = 14, stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'phases beyond steel -- magic only!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'turns magic aside -- weapons only!' },
+        } },
+        aoe    = { periodSec = 12, dmgPct = 22, msg = 'detonates the void -- shockwave tears outward!' },
+        enrage = { sec = 200, att = 6000, haste = 150, msg = 'unbinds its full power -- survive or be swept away!' },
+        phases = {
+            { hp = 65, action = 'adds', count = 3, addGroupId = 11412, addZoneId = 289, addLevel = 150, regen = 15000,
+              msg = 'tears void-spawn from the abyss -- the swarm encircles you!' },
+            { hp = 35, action = 'dispel', count = 4, msg = 'rips your blessings away!' },
+        },
+    },
+
+    -- Floors 75-99: doom + nuke + tight enrage + CC. High pressure all game.
+    -- Kill it before enrage or it becomes a wall.
+    [75] = {
+        name   = "World's End Gate",
+        stance = { startHpp = 80, periodSec = 13, stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'phases beyond steel -- magic only!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards off magic -- weapons only!' },
+        } },
+        aoe    = { periodSec = 11, dmgPct = 25, msg = 'detonates the void around it!' },
+        cc     = { periodSec = 25, effect = xi.effect.TERROR, dur = 5, msg = 'fills the air with ancient dread -- you freeze!' },
+        enrage = { sec = 180, att = 7500, haste = 180, msg = "the World's End nears -- it goes all out!" },
+        phases = {
+            { hp = 70, action = 'adds', count = 3, addGroupId = 11412, addZoneId = 289, addLevel = 155, regen = 20000,
+              msg = 'calls down void servitors -- the swarm descends!' },
+            { hp = 50, action = 'nuke', dmgPct = 38, msg = 'collapses void-space in a cataclysmic blast!' },
+            { hp = 25, action = 'fury', att = 3500, haste = 120, msg = 'erupts in a void frenzy!' },
+        },
+        doom   = { startHpp = 12, dur = 28, msg = 'marks you for oblivion -- escape or perish!' },
+    },
+
+    -- Floors 100+: THE NIGHTMARE. Full kit, mean timers, tight doom.
+    -- Silence CC, heavy adds (int16-safe regen 25000), 165s enrage. No quarter.
+    [100] = {
+        name   = 'The Nightmare Itself',
+        stance = { startHpp = 90, periodSec = 12, stances = {
+            { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'deems your weapons unworthy -- magic only!' },
+            { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'deems your magic unworthy -- steel only!' },
+        } },
+        aoe    = { periodSec = 10, dmgPct = 28, msg = 'detonates reality -- a void-shockwave tears through you!' },
+        cc     = { periodSec = 20, effect = xi.effect.SILENCE, dur = 8, msg = 'silences the intruders -- magic cut!' },
+        drain  = { periodSec = 9, healPct = 2 },
+        enrage = { sec = 165, att = 9000, haste = 220, msg = 'ascends beyond comprehension -- death approaches!' },
+        phases = {
+            { hp = 75, action = 'adds', count = 4, addGroupId = 11412, addZoneId = 289, addLevel = 160, regen = 25000,
+              msg = 'tears nightmare spawn from the void -- they hunger!' },
+            { hp = 50, action = 'nuke', dmgPct = 42, msg = 'collapses the void in a final cataclysm!' },
+            { hp = 30, action = 'dispel', count = 5, msg = 'strips every blessing -- you stand naked before the nightmare!' },
+            { hp = 15, action = 'fury', att = 5000, haste = 150, msg = 'the nightmare rages against its end!' },
+        },
+        doom   = { startHpp = 10, dur = 25, msg = 'seals your doom -- the nightmare claims you!' },
+    },
+}
+
 -- Flavor banners announced the first time you cross into a new Court depth
 -- during a run (cosmetic only).
 catalog.depthBanners =

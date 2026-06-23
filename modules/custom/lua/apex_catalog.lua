@@ -105,4 +105,121 @@ function C.affixMods(key, tier)
     return {}
 end
 
+-- ── Hardcore mechanics configs (mob_mechanics_library.lua) ──────────────────
+-- Configs are BANDED by tier so the fight evolves as players climb.
+-- Added 2026-06-22. Rules:
+--   DMGPHYS/DMGMAGIC cap at -5000 (= -50% dmg taken -- heavy resist, not immunity).
+--   ATT/REGEN are always routed through the library's safeAddMod; never write them here.
+--   addGroupId reuses C.BOSS_GROUPS[1] (11366, zone 210/GM Home) so adds are always valid.
+--   Low tiers: enrage + aoe.  Mid: +stance + adds.  High: +cc + dispel.  Max: full kit.
+local ADDS_GROUP = C.BOSS_GROUPS[1]  -- 11366, zone 210 (same zone the bosses come from)
+local ADDS_ZONE  = C.GROUP_ZONE      -- 210
+
+-- Returns the mechCfg for a given Apex tier.
+function C.mechCfg(tier)
+    if tier >= 30 then
+        -- ── TIER 30+ "Apex Absolute" ─ full kit, tightest clock, punishing ──────
+        return {
+            name   = 'Apex Absolute',
+            enrage = { sec = 120, att = 9000, haste = 220, msg = 'transcends its limits -- the assault becomes absolute!' },
+            stance = { startHpp = 90, periodSec = 12, stances = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'turns impervious to steel -- magic only!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards every spell aside -- use steel!' },
+            } },
+            aoe    = { periodSec = 10, dmgPct = 30, msg = 'detonates the arena -- shockwave outward!' },
+            cc     = { periodSec = 18, effect = xi.effect.SILENCE, dur = 8, msg = 'silences the unworthy!' },
+            drain  = { periodSec = 7, healPct = 3 },
+            phases = {
+                { hp = 80, action = 'adds',   count = 4, addGroupId = ADDS_GROUP, addZoneId = ADDS_ZONE, addLevel = 165, regen = 22000, msg = 'tears servitors from the void -- sever them or it heals!' },
+                { hp = 60, action = 'dispel',  count = 5, msg = 'rips your enhancements away!' },
+                { hp = 45, action = 'nuke',    dmgPct = 40, msg = 'collapses reality in a blast!' },
+                { hp = 30, action = 'fury',    att = 4500, haste = 140, msg = 'enters a killing fury!' },
+                { hp = 15, action = 'enrage',  att = 9000, haste = 280, msg = 'screams -- final form unleashed!' },
+            },
+            doom   = { startHpp = 10, dur = 20, msg = 'marks you for absolute death!' },
+        }
+    elseif tier >= 20 then
+        -- ── TIER 20–29 "Apex Imperator" ─ doom added, tight enrage ──────────────
+        return {
+            name   = 'Apex Imperator',
+            enrage = { sec = 150, att = 7000, haste = 180, msg = 'surges with unstoppable force!' },
+            stance = { startHpp = 85, periodSec = 14, stances = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'hardens against all physical -- switch to magic!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'negates all magic -- cut it down!' },
+            } },
+            aoe    = { periodSec = 12, dmgPct = 26, msg = 'erupts with void energy!' },
+            cc     = { periodSec = 22, effect = xi.effect.TERROR, dur = 6, msg = 'projects overwhelming dread!' },
+            drain  = { periodSec = 8, healPct = 2 },
+            phases = {
+                { hp = 70, action = 'adds',   count = 3, addGroupId = ADDS_GROUP, addZoneId = ADDS_ZONE, addLevel = 165, regen = 18000, msg = 'calls forth Apex Servitors!' },
+                { hp = 50, action = 'dispel',  count = 4, msg = 'strips your enhancements!' },
+                { hp = 30, action = 'nuke',    dmgPct = 35, msg = 'unleashes a void cataclysm!' },
+                { hp = 15, action = 'fury',    att = 4000, haste = 120, msg = 'enters a berserker state!' },
+            },
+            doom   = { startHpp = 12, dur = 25, msg = 'passes judgment -- doom upon you!' },
+        }
+    elseif tier >= 15 then
+        -- ── TIER 15–19 "Apex Warlord" ─ CC + dispel added ───────────────────────
+        return {
+            name   = 'Apex Warlord',
+            enrage = { sec = 180, att = 6000, haste = 160, msg = 'reaches full battle-fury!' },
+            stance = { startHpp = 80, periodSec = 15, stances = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'locks body against weapons -- use magic!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'wards against all magic -- use steel!' },
+            } },
+            aoe    = { periodSec = 12, dmgPct = 24, msg = 'pulses with destructive energy!' },
+            cc     = { periodSec = 24, effect = xi.effect.TERROR, dur = 5, msg = 'unleashes a wave of terror!' },
+            drain  = { periodSec = 9, healPct = 2 },
+            phases = {
+                { hp = 65, action = 'adds',   count = 3, addGroupId = ADDS_GROUP, addZoneId = ADDS_ZONE, addLevel = 165, regen = 15000, msg = 'calls reinforcements!' },
+                { hp = 40, action = 'dispel',  count = 3, msg = 'tears away your enhancements!' },
+                { hp = 20, action = 'nuke',    dmgPct = 30, msg = 'fires a void blast!' },
+                { hp = 10, action = 'enrage',  att = 7000, haste = 200, msg = 'screams and goes berserk!' },
+            },
+        }
+    elseif tier >= 10 then
+        -- ── TIER 10–14 "Apex Conqueror" ─ adds + drain added ────────────────────
+        return {
+            name   = 'Apex Conqueror',
+            enrage = { sec = 200, att = 5500, haste = 140, msg = 'grows impatient -- attacks accelerate!' },
+            stance = { startHpp = 75, periodSec = 16, stances = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'resists all steel -- switch to magic!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'deflects all magic -- hit with weapons!' },
+            } },
+            aoe    = { periodSec = 13, dmgPct = 22, msg = 'shakes the arena with a shockwave!' },
+            drain  = { periodSec = 10, healPct = 2 },
+            phases = {
+                { hp = 60, action = 'adds',   count = 2, addGroupId = ADDS_GROUP, addZoneId = ADDS_ZONE, addLevel = 165, regen = 12000, msg = 'summons reinforcements -- kill them to stop the healing!' },
+                { hp = 35, action = 'adds',   count = 3, addGroupId = ADDS_GROUP, addZoneId = ADDS_ZONE, addLevel = 165, regen = 15000, msg = 'calls a second wave!' },
+                { hp = 15, action = 'fury',    att = 3500, haste = 100, msg = 'fights with renewed fury!' },
+            },
+        }
+    elseif tier >= 5 then
+        -- ── TIER 5–9 "Apex Champion" ─ stance dance added ───────────────────────
+        return {
+            name   = 'Apex Champion',
+            enrage = { sec = 220, att = 5000, haste = 130, msg = 'hardens its resolve -- intensifying its assault!' },
+            stance = { startHpp = 80, periodSec = 18, stances = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'armors itself against physical -- use magic!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'warps all spells aside -- use weapons!' },
+            } },
+            aoe    = { periodSec = 14, dmgPct = 20, msg = 'fires a shockwave in all directions!' },
+            phases = {
+                { hp = 50, action = 'dispel', count = 3, msg = 'rips your buffs away!' },
+                { hp = 20, action = 'fury',   att = 3000, haste = 100, msg = 'enters a fury state!' },
+            },
+        }
+    else
+        -- ── TIER 1–4 "Apex Challenger" ─ entry-level: enrage + AoE ─────────────
+        return {
+            name   = 'Apex Challenger',
+            enrage = { sec = 240, att = 4000, haste = 120, msg = 'grows restless -- pressing harder!' },
+            aoe    = { periodSec = 16, dmgPct = 18, msg = 'releases a burst of void energy!' },
+            phases = {
+                { hp = 35, action = 'fury', att = 2500, haste = 80, msg = 'surges with sudden power!' },
+            },
+        }
+    end
+end
+
 return C

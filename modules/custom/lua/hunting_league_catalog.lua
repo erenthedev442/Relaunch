@@ -584,4 +584,199 @@ return
             },
         },
     },
+
+    -- =========================================================
+    -- HARDCORE NM MECHANICS  (mob_mechanics_library.lua)
+    -- Keyed by groupId. Each NM gets a DISTINCT mechanic identity that
+    -- escalates with rank: Rank I = light; Rank V = the full kit.
+    -- Stance DMGPHYS/DMGMAGIC values cap at -5000 (=-50% damage taken,
+    -- a heavy resist -- not literal immunity). Only ATT/REGEN go through
+    -- safeAddMod inside the library; never set them here directly.
+    -- addGroupId values for "adds" reuse T1 groupIds (11355-11357) which
+    -- are real mob_groups rows in zone xi.zone.ESCHA_ZITAH (huntZoneId=210).
+    -- =========================================================
+    mechCfgs =
+    {
+        -- =========================================================
+        -- RANK I - INITIATE (light):  drain only -- they self-heal;
+        -- don't turtle.  A taste of what's coming.
+        -- =========================================================
+        [11355] = {  -- Leaping Lizzy
+            name   = 'Leaping Lizzy',
+            drain  = { periodSec = 10, healPct = 2 },
+            enrage = { sec = 240, att = 2000, haste = 80, msg = 'Leaping Lizzy quickens -- finish it fast!' },
+        },
+        [11356] = {  -- Valkurm Emperor
+            name   = 'Valkurm Emperor',
+            drain  = { periodSec = 10, healPct = 2 },
+            enrage = { sec = 240, att = 2000, haste = 80, msg = 'Valkurm Emperor\'s wings beat faster -- it enrages!' },
+        },
+        [11357] = {  -- Tom Tit Tat
+            name   = 'Tom Tit Tat',
+            drain  = { periodSec = 10, healPct = 2 },
+            enrage = { sec = 240, att = 2000, haste = 80, msg = 'Tom Tit Tat howls -- its assault intensifies!' },
+        },
+
+        -- =========================================================
+        -- RANK II - HUNTER (light+ / two mechanics):
+        -- CC pulses on a long timer + drain.  Players must
+        -- manage status and commit to DPS.
+        -- =========================================================
+        [11358] = {  -- Roc
+            name   = 'Roc',
+            drain  = { periodSec = 9, healPct = 2 },
+            cc     = { periodSec = 28, effect = xi.effect.PARALYZE, power = 40, dur = 8, msg = 'Roc hammers the air -- its wingbeat paralyses!' },
+            enrage = { sec = 220, att = 3000, haste = 100, msg = 'Roc unleashes its full fury!' },
+        },
+        [11359] = {  -- Bomb Queen
+            name   = 'Bomb Queen',
+            drain  = { periodSec = 9, healPct = 2 },
+            cc     = { periodSec = 26, effect = xi.effect.BIND, power = 1, dur = 6, msg = 'Bomb Queen erupts -- binding heat pins you down!' },
+            enrage = { sec = 220, att = 3000, haste = 100, msg = 'Bomb Queen\'s core flares -- it detonates with fury!' },
+        },
+        [11360] = {  -- Aquarius
+            name   = 'Aquarius',
+            drain  = { periodSec = 9, healPct = 2 },
+            cc     = { periodSec = 26, effect = xi.effect.SLOW, power = 512, dur = 10, msg = 'Aquarius surges -- water pressure slows you!' },
+            enrage = { sec = 220, att = 3000, haste = 100, msg = 'Aquarius roars -- tidal force builds!' },
+        },
+
+        -- =========================================================
+        -- RANK III - ELITE (medium / three mechanics):
+        -- Stance dance (forces damage-type switching) + AoE + drain.
+        -- Requires the group to co-ordinate and keep moving.
+        -- =========================================================
+        [11361] = {  -- Serket
+            name   = 'Serket',
+            drain  = { periodSec = 8, healPct = 2 },
+            stance = { startHpp = 90, periodSec = 18, stances = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Serket\'s carapace hardens -- use magic!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Serket wards the mystic arts -- strike with steel!' },
+            } },
+            enrage = { sec = 200, att = 3500, haste = 110, msg = 'Serket rears up in a frenzy!' },
+        },
+        [11362] = {  -- Vrtra
+            name   = 'Vrtra',
+            drain  = { periodSec = 8, healPct = 2 },
+            aoe    = { periodSec = 14, dmgPct = 20, msg = 'Vrtra breathes a torrent -- get clear!' },
+            enrage = { sec = 200, att = 3500, haste = 110, msg = 'Vrtra thrashes -- its breath weapon quickens!' },
+            phases = {
+                { hp = 50, action = 'fury', att = 2000, haste = 80, msg = 'Vrtra enters its second wind -- it grows fiercer!' },
+            },
+        },
+        [11363] = {  -- Simurgh
+            name   = 'Simurgh',
+            drain  = { periodSec = 8, healPct = 2 },
+            stance = { startHpp = 85, periodSec = 16, stances = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Simurgh\'s feathers become living armor -- use magic!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Simurgh shrugs off magic -- cut it with steel!' },
+            } },
+            aoe    = { periodSec = 13, dmgPct = 20, msg = 'Simurgh screams -- shockwaves tear outward!' },
+            enrage = { sec = 195, att = 4000, haste = 120, msg = 'Simurgh blazes with power -- the air ignites!' },
+        },
+
+        -- =========================================================
+        -- RANK IV - CHAMPION (hard / four mechanics):
+        -- Stance + AoE + dispel + CC + tighter enrage.
+        -- Punishing: buffs are stripped, stance forces adaptation,
+        -- AoE keeps pressure up throughout.
+        -- =========================================================
+        [11364] = {  -- Nidhogg
+            name   = 'Nidhogg',
+            stance = { startHpp = 85, periodSec = 15, stances = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Nidhogg scales turn adamantine -- magic only!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Nidhogg nullifies the arcane -- steel only!' },
+            } },
+            aoe    = { periodSec = 12, dmgPct = 22, msg = 'Nidhogg erupts -- draconic pressure crushes all!' },
+            drain  = { periodSec = 8, healPct = 2 },
+            enrage = { sec = 195, att = 4500, haste = 130, msg = 'Nidhogg\'s eyes go crimson -- it accelerates!' },
+            phases = {
+                { hp = 60, action = 'dispel', count = 3, msg = 'Nidhogg roars -- your enhancements are torn away!' },
+                { hp = 30, action = 'fury',   att = 2500, haste = 100, msg = 'Nidhogg convulses -- surging with draconic force!' },
+            },
+        },
+        [11365] = {  -- King Behemoth
+            name   = 'King Behemoth',
+            aoe    = { periodSec = 11, dmgPct = 23, msg = 'King Behemoth thunderclaps -- shockwaves ripple out!' },
+            cc     = { periodSec = 24, effect = xi.effect.TERROR, power = 1, dur = 5, msg = 'King Behemoth bellows -- you freeze in terror!' },
+            drain  = { periodSec = 8, healPct = 2 },
+            enrage = { sec = 190, att = 4500, haste = 130, msg = 'King Behemoth stamps the earth -- the assault peaks!' },
+            phases = {
+                { hp = 65, action = 'dispel', count = 3, msg = 'King Behemoth snorts -- blessings stripped!' },
+                { hp = 35, action = 'fury',   att = 2500, haste = 100, msg = 'King Behemoth enters a killing rage!' },
+            },
+        },
+        [11366] = {  -- Kirin
+            name   = 'Kirin',
+            stance = { startHpp = 80, periodSec = 14, stances = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Kirin\'s divine hide repels iron -- use sorcery!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Kirin wards the arcane -- pierce it with steel!' },
+            } },
+            cc     = { periodSec = 22, effect = xi.effect.SILENCE, power = 1, dur = 7, msg = 'Kirin\'s celestial scream silences the battlefield!' },
+            drain  = { periodSec = 8, healPct = 2 },
+            enrage = { sec = 185, att = 5000, haste = 140, msg = 'Kirin\'s mane ignites -- it ascends its true power!' },
+            phases = {
+                { hp = 70, action = 'dispel', count = 4, msg = 'Kirin exhales holy wind -- your enhancements dissolve!' },
+                { hp = 40, action = 'dispel', count = 4, msg = 'Kirin calls upon the heavens -- buffs erased!' },
+                { hp = 20, action = 'fury',   att = 3000, haste = 120, msg = 'Kirin rises to divine wrath!' },
+            },
+        },
+
+        -- =========================================================
+        -- RANK V - LEGEND (full hardcore kit):
+        -- Every mechanic. Escalating per-boss identity.
+        -- Absolute Virtue: stance + adds + doom + tight enrage.
+        -- Pandemonium Warden: AoE + CC + dispel + nuke + enrage.
+        -- Shinryu: the full kit -- all mechanics, hardest enrage.
+        -- =========================================================
+        [11367] = {  -- Absolute Virtue
+            name   = 'Absolute Virtue',
+            stance = { startHpp = 80, periodSec = 14, stances = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Absolute Virtue transcends flesh -- magic only!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Absolute Virtue banishes magic -- steel only!' },
+            } },
+            drain  = { periodSec = 7, healPct = 2 },
+            enrage = { sec = 185, att = 5500, haste = 150, msg = 'Absolute Virtue abandons restraint -- it goes all out!' },
+            phases = {
+                { hp = 75, action = 'adds', count = 3, addGroupId = 11355, addZoneId = 210, addLevel = 150, regen = 15000, msg = 'Absolute Virtue calls forth guardians -- slay them first!' },
+                { hp = 50, action = 'fury', att = 3000, haste = 100, msg = 'Absolute Virtue surges -- power escalates!' },
+                { hp = 25, action = 'adds', count = 4, addGroupId = 11357, addZoneId = 210, addLevel = 150, regen = 20000, msg = 'Absolute Virtue conjures a final bulwark!' },
+            },
+            doom   = { startHpp = 12, dur = 28, msg = 'Absolute Virtue marks you for oblivion!' },
+        },
+        [11368] = {  -- Pandemonium Warden
+            name   = 'Pandemonium Warden',
+            aoe    = { periodSec = 11, dmgPct = 24, msg = 'Pandemonium Warden erupts -- chaos tears outward!' },
+            cc     = { periodSec = 22, effect = xi.effect.TERROR, power = 1, dur = 5, msg = 'Pandemonium Warden unleashes pandemonium -- frozen in dread!' },
+            drain  = { periodSec = 7, healPct = 2 },
+            enrage = { sec = 180, att = 6000, haste = 160, msg = 'Pandemonium Warden reaches its true form!' },
+            phases = {
+                { hp = 70, action = 'dispel', count = 4, msg = 'Pandemonium Warden howls -- enhancements erased!' },
+                { hp = 50, action = 'nuke',   dmgPct = 38, msg = 'Pandemonium Warden collapses into a singularity!' },
+                { hp = 30, action = 'dispel', count = 5, msg = 'Pandemonium Warden strips you bare!' },
+                { hp = 15, action = 'fury',   att = 4000, haste = 130, msg = 'Pandemonium Warden rages without limit!' },
+            },
+            doom   = { startHpp = 10, dur = 25, msg = 'Pandemonium Warden sentences you to oblivion!' },
+        },
+        [11369] = {  -- Shinryu
+            name   = 'Shinryu',
+            stance = { startHpp = 90, periodSec = 12, stances = {
+                { mods = { [xi.mod.DMGPHYS] = -5000, [xi.mod.DMGMAGIC] = 0     }, msg = 'Shinryu\'s scales become diamond -- use sorcery!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,     [xi.mod.DMGMAGIC] = -5000 }, msg = 'Shinryu turns away the arcane -- pierce it with steel!' },
+            } },
+            aoe    = { periodSec = 10, dmgPct = 26, msg = 'Shinryu detonates -- dragonfire scours everything!' },
+            cc     = { periodSec = 20, effect = xi.effect.SILENCE, power = 1, dur = 8, msg = 'Shinryu roars -- the battlefield falls silent!' },
+            drain  = { periodSec = 6, healPct = 2 },
+            enrage = { sec = 165, att = 8000, haste = 200, msg = 'Shinryu crosses into legend -- unmatched fury!' },
+            phases = {
+                { hp = 75, action = 'adds',   count = 3, addGroupId = 11355, addZoneId = 210, addLevel = 150, regen = 20000, msg = 'Shinryu tears servitors from the aether!' },
+                { hp = 55, action = 'dispel', count = 5, msg = 'Shinryu exhales tempest-breath -- buffs annihilated!' },
+                { hp = 40, action = 'nuke',   dmgPct = 42, msg = 'Shinryu\'s Judgment coalesces -- reality cracks!' },
+                { hp = 25, action = 'adds',   count = 4, addGroupId = 11357, addZoneId = 210, addLevel = 150, regen = 28000, msg = 'Shinryu summons its final guard!' },
+                { hp = 15, action = 'fury',   att = 5000, haste = 160, msg = 'Shinryu ascends -- you stand before a god!' },
+                { hp = 10, action = 'doom',   dur = 25, msg = 'Shinryu marks the unworthy for death!' },
+            },
+            doom   = { startHpp = 8, dur = 22, msg = 'Shinryu judges you -- DOOM!' },
+        },
+    },
 }
