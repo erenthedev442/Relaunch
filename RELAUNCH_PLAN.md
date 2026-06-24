@@ -43,7 +43,7 @@ Every character starts with:
 
 There is no starter gear handed to you. The 50 marks + 300k gil is a runway, not a handout. You earn your kit.
 
-**Augment Sage (Day 1 — Tier 0):** The Augment Sage NPC is available immediately. Without any rank requirement, you can augment gear with the four base categories: HP/Regen, ATT/STR, ACC/DEX, and DEF/VIT — up to 8 boost/slot. It costs Hunt Marks. This is your first Marks sink and your first taste of the augment loop.
+**Augment Sage (Day 1 — Tier 0):** The Augment Sage NPC is available immediately. Without any rank requirement, you can augment gear with all job-specific and utility mods — ability delays, elemental resists and affinities, status resists, enmity, Treasure Hunter, Gilfinder, pet niche mods, and EXP/CP bonuses — up to 8 boost/slot. It costs Hunt Marks. This is your first Marks sink and your first taste of the augment loop.
 
 ---
 
@@ -82,7 +82,7 @@ Rank 2–3 NMs require duo or small group play. The jump in difficulty is real �
 - Upgrading to Gold gear (251+ item level) as marks accumulate
 - Hitting **HL Rank 3** at 225 marks — this unlocks **Augment Tier 1** at the Sage
 
-**Augment Tier 1 (Rank 3 gate):** The Sage now offers four additional categories: AGI/EVA/Haste, WS DMG, and Skill+. Max boost increases to 16/slot. This is a meaningful power jump — gear you've been wearing suddenly gets substantially better.
+**Augment Tier 1 (Rank 3 gate):** The Sage unlocks weapon and magic skill mods, pet combat stats, evasion, spell interruption, and healing utility. Max boost increases to 16/slot. This is a meaningful power jump — gear you've been wearing suddenly gets substantially better.
 
 **Colosseum** opens at this stage — PvP arena for marks. 15-win daily cap. If you enjoy structured PvP, this is a consistent supplemental mark source.
 
@@ -104,7 +104,7 @@ This is the longest stretch. Ranks 4 and 5 are intentional work. The jump from 2
 
 **What unlocks at Rank 5 (the big one):**
 - **Prestige entry** — you can now begin job-specific Ascension
-- **Augment Tier 2** — the Sage opens MP/Refresh, Elemental Resist, and INT/Magic categories; max boost increases to 24/slot
+- **Augment Tier 2** — the Sage opens core character stats (STR/DEX/VIT/AGI/INT/MND/CHR), accuracy and attack ratings, magic offense, Fast Cast, Store TP, Conserve, and Cure potency; max boost increases to 24/slot
 - **Abyssea T2/T3** — harder Abyssea content with better mark-per-mob rates (gated by Infamy as well)
 - **Prime Weapon Trial 1 actively completable** — Nightmare fragments drop from Nightmare Court, which is Prestige content gated by Rank 5 entry
 
@@ -125,7 +125,7 @@ Prestige is the second chapter of your character's power growth. You've maxed ou
 
 **The Prestige ladder:**
 - **Prestige Lv 1–14:** Nightmare Court and Voidwalker-tier content (T1 Prestige NMs). Power growing steadily.
-- **Prestige Lv 15:** **Augment Tier 3 unlocks** — the Sage's full catalog opens (MND/Healing, CHA/Enmity, Pet stats, all 13 categories). Max boost reaches 31/slot. This is the best gear augmentation available.
+- **Prestige Lv 15:** **Augment Tier 3 unlocks** — Attack, Double Attack, Crit rate, HP/MP pool, Regen, Refresh, WS/Skillchain/Magic burst damage, and delay reduction become available. Max boost reaches 28/slot. The final power multipliers (Haste, TA/QA, TP Bonus, Crit damage, Dmg+, PDT/MDT) are reserved for Tier 4.
 - **Prestige Lv 15–40:** Jailer-tier Prestige NMs (T2). Party of 4–6, 15–22 minute fights. Meaningful group content.
 - **Prestige Lv 40–60:** Voidwalker Lord and World's End tiers (T3–T4). These are raid-scale challenges. Prestige Level 60 is a true achievement.
 - **Prestige Lv 60+:** Celestial-tier Prestige NMs (T5). Alliance content. The upper reaches of non-Paragon power.
@@ -198,7 +198,8 @@ The Paragon board has **no ceiling**. ATT/ACC/DEF/HP max out, but infinite Prest
 | Late-mid | 500 marks (Rank 4) | HL Rank 4 NMs, Abyssea T1/T2 |
 | Hard cap | 1,000 marks (Rank 5) | HL Rank 5 NMs, **Prestige entry**, **Augment Tier 2** (24/slot), Abyssea T3, Prime Trial 1 |
 | Prestige | HL Rank 5 | Nightmare Court, Ascension AP board, Prestige NM tiers, Job Rebirth |
-| Prestige 15 | Prestige Level 15 | **Augment Tier 3** (31/slot, all 13 categories) |
+| Prestige 15 | Prestige Level 15 | **Augment Tier 3** (28/slot — Atk/DA/Crit/HP/Regen/Refresh/WS dmg/delay reduction) |
+| TBD gate | TBD (see admin vote) | **Augment Tier 4** (31/slot — Haste, TA, QA, TP Bonus, Crit dmg, Dmg+, PDT/MDT) |
 | Prime path | Parallel to Prestige | 4 trials → Prime Armory → forge Prime Weapon (750M gil) |
 | Endgame | Post-Prestige | Apex Trials, Paragon Board (infinite), leaderboards |
 
@@ -229,6 +230,7 @@ The Paragon board has **no ceiling**. ATT/ACC/DEF/HP max out, but infinite Prest
 | HL Rank 5 (Prestige entry, Tier 2 augments) | ~1,200 | ~3,200 | ~7,000 |
 | Prestige 20–40 (Ascension AP building) | ~1,600 | ~4,000 | ~8,500 |
 | Prestige 60+ (Max Paragon, Tier 3 augments) | ~2,200 | ~5,000 | ~10,000 |
+| TBD gate (Aug Tier 4 unlocks) | ~2,200+ | ~5,000+ | ~10,500+ |
 
 This curve represents what a player can expect at each stage with appropriate gear and augments. BST/SMN pets follow their own curve (BstJugPetOverhaul + smn_avatar_boost), scaled to be competitive but not dominant.
 
@@ -391,6 +393,7 @@ The first hour matters most. Here's what a brand-new player experiences:
 | Full Reforge set (1 track) | 4–6 weeks | Week 4–7 | Reforge Mark currency; 5 NMs per track at Lv150–250 |
 | **Prestige Lv 1** | ~2.5 weeks | Day 16–18 | First Nightmare Court kill + initial AP spend |
 | **Prestige Lv 15** (Augment Tier 3) | ~5–6 weeks | Week 5–6 | Nightmare Court + T1 Voidwalker AP grind; party required |
+| **Augment Tier 4** (TBD gate) | TBD | TBD | Gate pending admin vote — see Augment System section |
 | **Prestige Lv 40** | ~10–12 weeks | Month 3 | Jailer T2 content; deep party investment |
 | **Prestige Lv 60+** | ~4–5 months | Month 4–5 | T3–T4 raid-scale; Celestial T5 opens |
 | Prime Trial 1 done | ~3–4 weeks | Week 3–4 | Nightmare Frags; drops naturally during early Court farming |
@@ -469,7 +472,7 @@ Nightmare Court bosses (Diabolos, Medusa, Odin) are 4-person content at 10–15 
 
 The catch: finding and keeping a consistent 4-person party is the real rate limiter here. Players without a static will move slower.
 
-**Prestige 15 is the biggest single power milestone in the game.** It unlocks Augment Tier 3 — all 13 categories, 31 boost/slot. Every piece of gear you've been wearing gets substantially better overnight.
+**Prestige 15 is a massive power milestone.** It unlocks Augment Tier 3 — Attack, DA, Crit rate, HP/MP, Regen, Refresh, WS/Skillchain/Magic burst damage, and delay reduction — at 28 boost/slot. Every piece of gear you've been wearing gets substantially better overnight. The final tier (Haste, TA/QA, TP Bonus, Crit damage, Dmg+, PDT/MDT) unlocks at a later TBD gate.
 
 ---
 
@@ -527,7 +530,7 @@ The Paragon store selling infinite Prestige Levels means a player who's been on 
 | **Week 1** | Rank 1–3 NM grind · gear upgrades · Daily cadence | Silver → Gold armor · Augment Tier 1 · Rank 3 |
 | **Week 2** | Rank 4–5 push · party content · invasions | HL Rank 5 · Augment Tier 2 · Prestige entry |
 | **Week 3–4** | Nightmare Court intro · Prime Trials 1 & 3 · Endless Tower start | Prestige 1–10 · first Ascension AP perks · Trial 1 done |
-| **Week 5–6** | Nightmare Court + T1 Prestige NMs · Tower climb | **Prestige 15 · Augment Tier 3 (full catalog)** |
+| **Week 5–6** | Nightmare Court + T1 Prestige NMs · Tower climb | **Prestige 15 · Augment Tier 3** (Atk/DA/Crit/HP/Regen/Refresh/WS dmg) |
 | **Month 2** | T2 Prestige content · Prime Trial 4 progress · gil farming begins | Prestige 20–40 · Job Mastery approaching |
 | **Month 3–4** | T3–T4 Prestige · all Prime Trials complete · Apex entry | Prestige 40–60 · Paragon begins |
 | **Month 4–6** | 750M gil grind · Apex dailies · Paragon stat caps | **Prime Weapon forged** · Paragon filling |
@@ -733,7 +736,7 @@ Formula: `(1 + boost_0-31) × mult × masteryMult(2.0) × affinity(1.5)`.
 | HL Rank 4 | 1–2 | ~950 | +280 | ~1,230 | ~7,000 |  |  |  |  |
 | HL Rank 5 / Prestige entry | 2–3 | ~1,200 | +400 | ~1,600 | ~8,500 |  |  |  |  |
 | Prestige mid (Rank 20–40) | 3–4 | ~1,600 | +650 | ~2,250 | ~11,000 |  |  |  |  |
-| Max Paragon + Aug Tier 3 | 4–5 | ~2,200 | +900 | ~3,100 | ~14,000 |  |  |  |  |
+| Max Paragon + Aug Tier 4 (TBD gate) | 4–5 | ~2,200 | +900 | ~3,100 | ~14,000 |  |  |  |  |
 
 Player DEF is unchanged (most players augment offensively, not DEF). Mob ATT targets unchanged.
 
@@ -827,8 +830,8 @@ All three need ~50% ATT reduction and ~40% DEF reduction. Odin keeps its 180s ha
 | Hunter's Guild (4 guilds × 6 ranks) | ✓ | No changes needed |  |  |  |  |
 | Prestige / Ascension | ✓ | Phase 1 AP cap reduction + Phase 2 mob HP retune |  |  |  |  |
 | Apex Trials / Paragon | ✓ | Phase 1 base HP fix (9M → 1.1M) + Daily Might nerf |  |  |  |  |
-| Prime Weapon Trials (5 trials) | ✓ | No changes needed |  |  |  |  |
-| Augment System (4-tier Sage, redesigned) | ✓ | **REDESIGNED:** trophy+count gates replaced by content milestones (HL Rank 3/5 + Prestige 15); both category access AND max boost now tiered; add Sage NPC to Phase 1 deploy |  |  |  |  |
+| Prime Weapon Trials (4 trials) | ✓ | No changes needed |  |  |  |  |
+| Augment System (5-tier Sage, redesigned) | ✓ | **REDESIGNED:** trophy+count gates replaced by content milestones (HL Rank 3, HL Rank 5, Prestige 15, TBD Tier 4 gate); job-specific mods free (Tier 0); universal power-multipliers (Haste/TA/QA/TP Bonus/Crit dmg/Dmg+/PDT/MDT) gated to Tier 4; add Sage NPC to Phase 1 deploy |  |  |  |  |
 
 ### Instanced / Scheduled Content
 
@@ -929,7 +932,7 @@ Two axes scale with content achievement: **which augment mods are available** an
 
 **Design philosophy:** Job-specific and class-flavored mods are free from Day 1 — a COR's Phantom Roll delay or a BST's pet niche stats are never locked. Higher tiers gate the universal power-multipliers that benefit every job equally: Haste, TA/QA, TP Bonus, Crit damage, Dmg+, and damage-taken reductions.
 
-The Augment Sage tracks player rank in the `Augment_Mastery` CharVar (0–5: Unranked → Archon). Tiers 1–4 require the Sage to advance the player's rank, which happens at the content milestone listed.
+The Augment Sage tracks player rank in the `Augment_Mastery` CharVar (0–4: Unranked → Sage). Tiers 1–4 require the Sage to advance the player's rank, which happens at the content milestone listed. (Rank 5 "Archon" exists in the engine as a prestige title but gates no additional augment tier.)
 
 | Tier | Sage Rank | Gate | Max Boost/Slot | Bro | Ririn | Kirin | Sivart |
 |---|---|---|---|---|---|---|---|
@@ -1016,7 +1019,7 @@ The rarest, most universally powerful mods. Every job benefits equally — these
 | **Triple Attack** | Stacks with DA; extremely powerful for all melee |
 | **Quadruple Attack** | Rarer and more impactful than TA |
 | **TP Bonus** | Scales WS directly; universally valuable |
-| **Crit hit damage** | Multiplies all crit output — DPS, WS, and magic crits |
+| **Crit hit damage** | Multiplies physical crit output — DPS hits and WS crits (magic crit damage is Tier 3) |
 | **Dmg+ (melee)** | Flat damage bonus to all melee hits |
 | **Dmg+ (ranged)** | Flat damage bonus to all ranged hits |
 | **Physical Damage Taken** | Defensive analogue of Haste in importance |
