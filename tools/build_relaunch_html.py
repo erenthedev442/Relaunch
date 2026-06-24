@@ -85,12 +85,18 @@ def process_table(tbl, tidx):
         ridx = row_idx[0]; row_idx[0] += 1
         row_html = rm.group(0)
         tds = list(re.finditer(r'<td[^>]*>.*?</td>', row_html, re.DOTALL))
+        # Replace admin cells that pandoc kept
         for ci, td_m in reversed(list(enumerate(tds))):
             if ci in admin_map:
                 cid  = f't{tidx}r{ridx}c{ci}'
                 row_html = (row_html[:td_m.start()]
                             + admin_cell(admin_map[ci], cid)
                             + row_html[td_m.end():])
+        # Append admin cells pandoc dropped (trailing empty <td>s are omitted by pandoc)
+        for ci in sorted(admin_map.keys()):
+            if ci >= len(tds):
+                cid = f't{tidx}r{ridx}c{ci}'
+                row_html = row_html.replace('</tr>', admin_cell(admin_map[ci], cid) + '</tr>', 1)
         return row_html
 
     new_tbody = re.sub(r'<tr[^>]*>.*?</tr>', process_row,
@@ -706,7 +712,7 @@ def main():
     def do_table(m):
         i = tidx[0]; tidx[0] += 1
         return process_table(m.group(0), i)
-    html = re.sub(r'<table>.*?</table>', do_table, html, flags=re.DOTALL)
+    html = re.sub(r'<table[^>]*>.*?</table>', do_table, html, flags=re.DOTALL)
 
     print('Adding heading IDs...')
     html = add_heading_ids(html)
