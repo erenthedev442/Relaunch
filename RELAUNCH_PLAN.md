@@ -824,6 +824,295 @@ High-multiplier categories (HP/Regen mult 640, MP/Refresh mult 320) at Tier 3 bo
 
 ---
 
+## Job-Specific Armor — AF, Relic & Empyrean
+
+Job armor is a parallel gear track to HL vendor gear. Where HL vendor gear (Bronze/Silver/Gold) is generic and job-agnostic, the three Reforge tracks are **job-specific 5-piece sets** with role-tuned stats unique to each job.
+
+All three tracks are fully implemented and live. Acquisition happens through the **Reforge System** in Gwora-Corridor (Zone 278).
+
+---
+
+### The Three Armor Tracks
+
+| Track | Set Name | NM Source | Currency | Feel |
+|---|---|---|---|---|
+| **AF** | Artifact Armor | Sky Gods (Genbu / Suzaku / Seiryu / Byakko / Kirin) | AF Marks | Classic FFXI job identity — your job's signature look and stat profile |
+| **Relic** | Relic Armor | Unity NMs (Bukhis / Khun / Padfoot / Glavoid / Tinnin) | Relic Marks | Refined stats, heavier physical focus |
+| **Empyrean** | Empyrean Armor | Abyssea NMs (Aello / Iratham / Briareus / Itzpapalotl / Hadhayosh) | Empy Marks | Best-in-class job armor; hardest to obtain |
+
+Each track has 5 pieces per job (head / body / hands / legs / feet) for all 22 jobs.
+
+---
+
+### How to Earn Armor — Step by Step
+
+**1. Go to Gwora-Corridor and speak to the Reforge Spawner NPC.**
+Pop an NM from the track you want. NMs cost nothing to spawn.
+
+**2. Kill the NM and earn Marks.**
+
+NMs scale from Lv150 to Lv250. Higher levels pay more marks per kill and drop better base pieces.
+
+| NM Level | Mark Reward | Content Level |
+|---|---|---|
+| Lv150 | 25 marks | Solo / Duo |
+| Lv175 | 40 marks | Duo |
+| Lv200 | 60 marks | Duo / Trio |
+| Lv225 | 90 marks | Trio |
+| Lv250 (Apex) | 150 marks | Party of 4–6 · Enrage timer 180s |
+
+Each NM kill also drops a **random base armor piece** from that track, weighted 50% toward your currently equipped main job.
+
+**3. Upgrade at the Reforge Vendor.**
+
+Base pieces are weak on their own. Their power comes from upgrading.
+
+| Upgrade Step | Cost |
+|---|---|
+| Base → +1 | 100 Marks |
+| +1 → +2 | 300 Marks |
+| +2 → +3 | 650 Marks |
+| Full 5-piece set to +3 | 5,250 Marks total |
+
+**4. Convert excess marks at the Reforge Exchange NPC.**
+
+If you have surplus marks from one track, you can convert:
+- 2 AF Marks → 1 Relic Mark
+- 2 Relic Marks → 1 Empy Mark
+- 3 AF Marks → 1 Empy Mark (direct)
+
+Batch sizes: 1, 5, 10, 25, or 50 per transaction.
+
+**5. Salvage duplicate pieces.**
+
+Trade 5 identical base-tier duplicates to the vendor → +15 Hunt Marks. Keeps inventory clean and converts dead loot into something useful.
+
+---
+
+### NM Difficulty Mechanics
+
+Each NM has escalating mechanics by level:
+
+| Level | Mechanics |
+|---|---|
+| Lv150 | AoE pressure + drain · Tutorial difficulty |
+| Lv175 | Physical / magical phase swap (stance dance) + terror CC |
+| Lv200 | AoE + drain + nuke phase |
+| Lv225 | Phase swap + CC + drain + fury + dispel + doom |
+| Lv250 | Full suite + 180-second enrage timer |
+
+The Lv250 Apex NMs (Kirin / Tinnin / Hadhayosh) are the hardest non-HL content on the server — party content with a hard timer. Clearing them is a server achievement.
+
+---
+
+### How Reforge Gear Fits the Progression Curve
+
+Reforge armor is a **parallel track**, not a replacement for HL vendor gear. The intent:
+
+| HL Progress Stage | Recommended Gear Mix |
+|---|---|
+| Rank 1–2 | Bronze armor (HL vendor) + start farming AF Lv150–175 NMs |
+| Rank 3–4 | Silver/Gold HL gear · AF +1/+2 for key slots |
+| Rank 5 / Prestige entry | Gold HL gear · AF +3 or Relic +1/+2 for best-in-slot slots |
+| Prestige 15–40 | Relic +3 or Empy +1/+2 as primary set |
+| Prestige 40+ / Paragon | Full Empy +3 as base · augmented to the cap |
+
+Reforge and HL gear aren't competing — players mix and match, choosing whichever piece is better for each slot.
+
+> **Admin notes — Reforge system:** *(any track or NM difficulty concerns? Does the AF/Relic/Empy power differential need review against the new stat curve?)*
+
+---
+
+## Weapons — Relic, Empyrean, Mythic/Ergon, Aeonic & Prime
+
+Every job has a unique weapon in each tier below. These are the FFXI REMA (Relic / Empyrean / Mythic / Aeonic) lineage plus the server's custom Prime tier. Each category has a distinct acquisition path, a distinct power profile, and a distinct role in the progression arc.
+
+---
+
+### Weapon Tier Overview
+
+| Tier | Category | Weapon Count | Acquisition | Power Role |
+|---|---|---|---|---|
+| 1 | **Relic** | 16 weapons | Reforge Marks (AF track NMs) | First meaningful upgrade from stock AH weapons |
+| 2 | **Empyrean** | 16 weapons | Reforge Marks (Empy track NMs) | Strong all-rounder — best weapon for many jobs pre-Mythic |
+| 3 | **Mythic / Ergon** | 22 weapons | Dedicated Mythic trial system *(design pending)* | Specialized — best-in-slot for specific builds / caster supremacy |
+| 4 | **Aeonic** | 16 weapons | Late Prestige content + Aeonic Seals *(design pending)* | Best pre-Prime for most jobs · Aftermath effects |
+| 5 | **Prime** | 16 weapons | 4 trials + 750M gil forge | Server's ultimate weapon · Job-specific pinnacle |
+
+---
+
+### Relic Weapons
+
+One weapon per weapon type. Available to the jobs listed.
+
+| Weapon | Type | Jobs |
+|---|---|---|
+| Spharai | Hand-to-Hand | MNK |
+| Mandau | Dagger | THF / RDM / BRD |
+| Excalibur | Sword | RDM / PLD |
+| Ragnarok | Great Sword | WAR / PLD / DRK |
+| Guttler | Axe | BST |
+| Bravura | Great Axe | WAR |
+| Apocalypse | Scythe | DRK |
+| Gungnir | Polearm | DRG |
+| Kikoku | Katana | NIN |
+| Amanomurakumo | Great Katana | SAM |
+| Mjollnir | Club | WHM |
+| Claustrum | Staff | BLM / SMN |
+| Yoichinoyumi | Bow | RNG / SAM |
+| Annihilator | Gun | RNG |
+| Gjallarhorn | Instrument | BRD |
+| Aegis | Shield | PLD |
+
+**Proposed acquisition:** Relic weapons are purchased from the **Reforge Vendor** in Gwora-Corridor using **Relic Marks** — the same currency earned from killing Relic track NMs (Bukhis / Khun / Padfoot / Glavoid / Tinnin). Base weapon cost: ~500 Relic Marks. Upgrades follow the same +1/+2/+3 system as armor.
+
+**Gate:** HL Rank 3 (same point Relic armor NMs become accessible on the difficulty curve).
+
+> **Admin notes — Relic weapons:** *(approve acquisition path? Adjust mark cost? Any weapons that need special attention?)*
+
+---
+
+### Empyrean Weapons
+
+| Weapon | Type | Jobs |
+|---|---|---|
+| Verethragna | Hand-to-Hand | MNK / PUP |
+| Twashtar | Dagger | THF / BRD / DNC |
+| Almace | Sword | RDM / PLD / BLU |
+| Caladbolg | Great Sword | PLD / DRK |
+| Farsha | Axe | WAR / BST |
+| Ukonvasara | Great Axe | WAR |
+| Redemption | Scythe | DRK |
+| Rhongomiant | Polearm | DRG |
+| Kannagi | Katana | NIN |
+| Masamune | Great Katana | SAM |
+| Gambanteinn | Club | WHM |
+| Hvergelmir | Staff | BLM / SMN / SCH |
+| Gandiva | Bow | RNG |
+| Armageddon | Gun | RNG / COR |
+| Daurdabla | Instrument | BRD |
+| Ochain | Shield | PLD |
+
+**Proposed acquisition:** Empyrean weapons are purchased from the **Reforge Vendor** using **Empy Marks** — earned from Empyrean track NMs (Aello / Iratham / Briareus / Itzpapalotl / Hadhayosh). Base weapon cost: ~500 Empy Marks. Same +1/+2/+3 upgrade path.
+
+**Gate:** HL Rank 5 (same point Empyrean armor NMs scale into party content).
+
+> **Admin notes — Empyrean weapons:** *(approve acquisition path? Any cost adjustments?)*
+
+---
+
+### Mythic & Ergon Weapons
+
+The most specialized weapon tier. Mythic weapons are job-identity defining — DRK's Liberator, COR's Death Penalty, BRD's Carnwenhan. The two Ergon weapons (Idris for GEO, Epeolatry for RUN) are in this same tier as the GEO/RUN equivalents.
+
+| Weapon | Type | Jobs |
+|---|---|---|
+| Conqueror | Great Axe | WAR |
+| Glanzfaust | Hand-to-Hand | MNK |
+| Yagrush | Club | WHM |
+| Laevateinn | Staff | BLM |
+| Murgleis | Sword | RDM |
+| Vajra | Dagger | THF |
+| Burtgang | Sword | PLD |
+| Liberator | Scythe | DRK |
+| Aymur | Axe | BST |
+| Carnwenhan | Dagger | BRD |
+| Gastraphetes | Crossbow | RNG |
+| Kogarasumaru | Great Katana | SAM |
+| Nagi | Katana | NIN |
+| Ryunohige | Polearm | DRG |
+| Nirvana | Staff | SMN |
+| Tizona | Sword | BLU |
+| Death Penalty | Gun | COR |
+| Kenkonken | Hand-to-Hand | PUP |
+| Terpsichore | Dagger | DNC |
+| Tupsimati | Staff | SCH |
+| Idris *(Ergon)* | Club | GEO |
+| Epeolatry *(Ergon)* | Great Sword | RUN |
+
+**Proposed acquisition:** A dedicated **Mythic Trial system** — a short 2-to-3 trial quest chain gated behind Prestige entry (HL Rank 5). Trials use Nightmare Court drop materials and Prestige NM kills, culminating in a weapon forge at a Mythic Forge NPC. Cost is effort + materials, not gil. Ergon weapons (Idris / Epeolatry) follow the same path.
+
+**Gate:** Prestige Lv 1+ (requires having entered Prestige via HL Rank 5).
+
+> **Decision:** *(approve Mythic trial concept? Define trial structure — how many steps? What drop materials? Any Mythic weapons that need special handling?)*
+> **Admin notes:** *(leave name + comment)*
+
+---
+
+### Aeonic Weapons
+
+The top-tier REMA. Aeonic weapons are the best pre-Prime option for most jobs and carry **Aftermath** effects (proc-based bonuses that activate during combat). The Aftermath effect on Aeonics (mod 256) is what makes them genuinely feel different from lower tiers.
+
+| Weapon | Type | Jobs |
+|---|---|---|
+| Godhands | Hand-to-Hand | MNK / PUP |
+| Aeneas | Dagger | THF / BRD / DNC |
+| Sequence | Sword | RDM / PLD / BLU |
+| Lionheart | Great Sword | RUN |
+| Tri-edge | Axe | BST |
+| Chango | Great Axe | WAR |
+| Anguta | Scythe | DRK |
+| Trishula | Polearm | DRG |
+| Heishi Shorinken | Katana | NIN |
+| Dojikiri Yasutsuna | Great Katana | SAM |
+| Tishtrya | Club | WHM / GEO |
+| Khatvanga | Staff | BLM / SMN / SCH |
+| Fail-Not | Bow | RNG |
+| Fomalhaut | Gun | RNG / COR |
+| Marsyas | Instrument | BRD |
+| Srivatsa | Shield | PLD |
+
+**Proposed acquisition:** Aeonic weapons drop from **Prestige T4/T5 NMs** (World's End / Celestial tier) as rare but guaranteed-once-per-kill items, OR accumulated via **Aeonic Seals** dropped from those NMs and traded to a dedicated Aeonic Forge NPC. No gil cost — time and party coordination are the investment.
+
+**Gate:** Prestige Lv 40+ (T4 content).
+
+> **Decision:** *(approve Aeonic acquisition concept? Drop vs seal accumulation? Aftermath balance — do Aeonic Aftermaths need tuning vs the relaunch stat curve?)*
+> **Admin notes:** *(leave name + comment)*
+
+---
+
+### Prime Weapons *(Reference — Already Designed)*
+
+The server's ultimate weapon. One per weapon type, custom-made for this server.
+
+| Weapon | Type | Jobs |
+|---|---|---|
+| Varga Purnikawa | Hand-to-Hand | MNK / PUP |
+| Mpu Gandring | Dagger | RDM / THF / BRD / DNC |
+| Caliburnus | Sword | RDM / PLD / BLU |
+| Helheim | Great Sword | WAR / PLD / DRK / RUN |
+| Spalirisos | Axe | BST |
+| Laphria | Great Axe | WAR |
+| Foenaria | Scythe | DRK |
+| Gae Buide | Polearm | DRG |
+| Dokoku | Katana | NIN |
+| Kusanagi | Great Katana | SAM |
+| Lorg Mor | Club | WHM / GEO |
+| Opashoro | Staff | BLM / SMN / SCH |
+| Pinaka | Archery | RNG |
+| Earp | Marksmanship | RNG / COR |
+| Duban | Shield | PLD |
+| Loughnashade | Instrument | BRD |
+
+**Acquisition:** 4 trials (Nightmare frags → Endless Tower F50 → 3 World Boss kills → Job Mastery) + Prime Armory NPC forge at **750,000,000 gil**. See full trial breakdown in the progression section above.
+
+> **Admin notes — Prime weapons:** *(any balance concerns now that the stat curve is being retuned?)*
+
+---
+
+### Weapon Progression At a Glance
+
+| Stage | Weapon Tier | How You Get It |
+|---|---|---|
+| Day 1 | AH / Vendor stock weapon | Gil from starter pack |
+| HL Rank 3 | Relic weapon | Relic Marks (Reforge Vendor) |
+| HL Rank 5 | Empyrean weapon | Empy Marks (Reforge Vendor) |
+| Prestige entry | Mythic / Ergon weapon | Mythic Trial system (2–3 steps) |
+| Prestige 40+ | Aeonic weapon | T4/T5 Prestige NM drops / Aeonic Seals |
+| Late endgame | Prime weapon | 4 trials + 750M gil |
+
+---
+
 ## Job Rebirth — Stacking Analysis
 
 Job Rebirth borrows `prestige_catalog.categories` for its boost list — same stats, same perLevel values, same cap fields. The two tracks apply independently and additively. A player who maxes both systems on their main job gets double the flat stat contribution.
