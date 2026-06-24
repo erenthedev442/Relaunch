@@ -925,53 +925,104 @@ The augment system is a parallel progression axis that stacks on top of gear, Pr
 
 ### Augment Tier Structure (Redesigned)
 
-Two axes scale with content achievement: **which categories are available** and **how powerful augments can get** (max boost per slot, 0–31 engine cap). The previous trophy + lifetime-count gate system is replaced entirely by the same content milestone gates the rest of progression uses.
+Two axes scale with content achievement: **which augment mods are available** and **how powerful augments can get** (max boost per slot, 0–31 engine cap). The previous trophy + lifetime-count gate system is replaced entirely with content milestone gates.
 
-| Tier | Gate | Max Boost/Slot | Mastery Mult | Crit Chance | Bro | Ririn | Kirin | Sivart |
-|---|---|---|---|---|---|---|---|---|
-| 0 — Base | None (Day 1) | 8 | 1.00× | 5% |  |  |  |  |
-| 1 — Combat | HL Rank 3 | 16 | 1.33× | 10% |  |  |  |  |
-| 2 — Advanced | HL Rank 5 | 24 | 1.67× | 15% |  |  |  |  |
-| 3 — Master | Prestige Level 15 | 31 | 2.00× | 20% |  |  |  |  |
+**Design philosophy:** Job-specific and class-flavored mods are free from Day 1 — a COR's Phantom Roll delay or a BST's pet niche stats are never locked. Higher tiers gate the universal power-multipliers that benefit every job equally: Haste, TA/QA, TP Bonus, Crit damage, Dmg+, and damage-taken reductions.
 
-### All 13 Augment Categories — Full Breakdown
+The Augment Sage tracks player rank in the `Augment_Mastery` CharVar (0–5: Unranked → Archon). Tiers 1–4 require the Sage to advance the player's rank, which happens at the content milestone listed.
 
-Each category unlocks at a specific tier. Within a category, every listed mod is a possible roll on each augment slot.
+| Tier | Sage Rank | Gate | Max Boost/Slot | Bro | Ririn | Kirin | Sivart |
+|---|---|---|---|---|---|---|---|
+| 0 — Free | Unranked | None (Day 1) | 8 |  |  |  |  |
+| 1 — Skilled | Initiate | HL Rank 3 | 16 |  |  |  |  |
+| 2 — Veteran | Adept | HL Rank 5 | 24 |  |  |  |  |
+| 3 — Elite | Magus | Prestige Level 15 | 28 |  |  |  |  |
+| 4 — Legendary | Sage | TBD (see vote) | 31 |  |  |  |  |
 
-**Tier 0 — Available Day 1**
+> **Admin vote — Tier 4 gate:** What milestone should unlock Sage rank (Haste, TA/QA, TP Bonus, Crit dmg, Dmg+, PDT/MDT)? Prestige 30? Paragon 50? Apex milestone? *(leave your name + comment)*
 
-| # | Category | Key Mods |
-|---|---|---|
-| 1 | **STR / Physical Offense** | ATT, Rng.ATT, STR, Dbl.Atk, Triple Atk, QA, TP Bonus, Counter, Kick Attacks, Zanshin, Daken, Conserve TP, Barrage, Save TP, Reverse Flourish, Martial Arts; Pet: ATT, Dbl.Atk, TP Bonus, Phys.dmg.taken |
-| 2 | **DEX / Accuracy / Crit** | ACC, Rng.ACC, DEX, Crit.hit rate, Crit.hit damage, Store TP, Subtle Blow, Rapid Shot, Magic crit.hit rate, Enemy crit.hit rate; Pet: ACC, Rng.ACC, Crit.hit rate, Store TP, Subtle Blow, DEX |
-| 3 | **VIT / Defense** | DEF, VIT, Magic dmg.taken, Phys.dmg.taken, Breath dmg.taken, Mag.Def.Bns, Shield Mastery, Block chance, Phalanx, Parrying rate; Pet: DEF, Mag.Def.Bns, Magic dmg.taken, VIT |
-| 8 | **HP / Regen** | HP, HP+MP, Regen, Regen Potency, HP recovered while healing, Pet Regen |
+### Augment Mod Breakdown by Tier
 
-**Tier 1 — Unlocks at HL Rank 3**
+**Tier 0 — Free (Unranked, Day 1)**
 
-| # | Category | Key Mods |
-|---|---|---|
-| 4 | **AGI / Evasion / Haste** | Haste, AGI, Evasion, Mag.Evasion, Melee delay, Ranged delay, Snapshot, Recycle, Resist Slow; Ability delays: Blood Pact, Call Beast, Quick Draw, Phantom Roll, Waltz, Song, Healing/Elemental/Enfeebling/Enhancing magic recast; Pet: Haste, Evasion, Mag.Evasion, AGI |
-| 12 | **Weapon / Magic Skill+** | All weapon skills (H2H/Dagger/Sword/Great Sword/Axe/Great Axe/Scythe/Polearm/Katana/Great Katana/Club/Staff/Archery/Marksmanship/Throwing/Shield/Parrying); All magic skills (Divine/Enhancing/Enfeebling/Elemental/Ninjutsu/Singing/String/Blue/Geomancy/Handbell/Dark/Wind instrument); EXP +33%, CP +33% |
-| 13 | **Weaponskill DMG** | Weapon skill damage, WS Accuracy, Skillchain damage, Dmg (melee only), Dmg (ranged only) |
+Available to all players immediately. Focused on job identity, resistances, and utility — no universal DD multipliers here.
 
-**Tier 2 — Unlocks at HL Rank 5**
+| Group | Mods |
+|---|---|
+| **Job ability delays** | Phantom Roll, Quick Draw, Blood Pact, Call Beast (Sic/Ready), Waltz (delay + TP cost + potency), Song (delay + spellcast time) |
+| **Magic recast delays** | Elemental, Enfeebling, Enhancing, Healing magic recast |
+| **Status resists** | Sleep, Poison, Paralyze, Blind, Silence, Petrify, Bind, Curse, Gravity, Stun, Virus; occ. resist ailments |
+| **Elemental affinities** | All 8 elements (affinity, magic accuracy, Avatar perpetuation cost per element) |
+| **Elemental resists** | All 8 element resist ratings |
+| **Enmity / Control** | Enmity, Pet Enmity, Charm, Resist Charm |
+| **Utility / Profit** | Treasure Hunter, Gilfinder, EXP +33%, CP +33% |
+| **Pet niche** | Elemental Siphon, Blood Boon, Beast Affinity, Thunder Affinity, Blood Pact delay (SMN), Avatar perp. cost (SMN), Phantom Roll effect (COR) |
+| **Misc. combat utility** | Rapid Shot, Recycle, Barrage, Zanshin, Daken, Reverse Flourish, Ninja tool expertise, Repair potency, Indi Effect Duration, Slow (enemy), Occ. inc. resist status ailments |
+| **Pet TP Bonus** | Pet TP Bonus (separate from player TP Bonus, which is Tier 4) |
 
-| # | Category | Key Mods |
-|---|---|---|
-| 5 | **INT / Magic Offense** | INT, Mag.Acc, Mag.Atk.Bns, Mag.Acc./Mag.Dmg, Fast Cast, Enspell Dmg, Magic burst dmg, Mag.crit.hit dmg, Occult Acumen, Drain/Aspir potency, Spell interruption rate down, Helix duration, Meditate duration; Pet: Mag.Acc, Mag.Atk.Bns, Magic Damage, INT, Avatar Mag.Atk.Bns |
-| 9 | **MP / Refresh** | MP, Refresh, Conserve MP |
-| 11 | **Elemental / Status Resist** | All 8 elemental resists (Fire/Ice/Wind/Earth/Lightning/Water/Light/Dark); Status resists: Sleep, Poison, Paralyze, Blind, Silence, Petrify, Bind, Curse, Gravity, Stun; Resist status ailments (occ.); Element affinities (all 8); Avatar perpetuation cost (per element) |
+**Tier 1 — Skilled (Initiate, HL Rank 3)**
 
-**Tier 3 — Unlocks at Prestige Level 15**
+Weapon and magic proficiency. Pet combat specialization. Utility survivability mods.
 
-| # | Category | Key Mods |
-|---|---|---|
-| 6 | **MND / Healing** | MND, Cure potency, Cure spellcasting time, Potency of Cure received, Healing magic skill, MP recovered while healing |
-| 7 | **CHR / Enmity** | CHR, Enmity, Charm, All songs, All song effects, Song spellcasting time, Treasure Hunter, Gilfinder, Resist Charm; Pet: Enmity, CHR |
-| 10 | **Pet Specialization** | Blood Pact damage, Summoning magic skill, Avatar perpetuation cost, Elemental Siphon, Blood Boon, Beast Affinity, Thunder Affinity, Pet Phys.dmg.taken, Immunobreak Chance+ (COR Phantom Roll augment) |
+| Group | Mods |
+|---|---|
+| **All weapon skills** | H2H, Dagger, Sword, Great Sword, Axe, Great Axe, Scythe, Polearm, Katana, Great Katana, Club, Staff, Archery, Marksmanship, Throwing, Shield, Parrying |
+| **All magic skills** | Divine, Enhancing, Enfeebling, Elemental, Ninjutsu, Singing, String, Wind instrument, Blue Magic, Geomancy, Handbell, Dark, Summoning |
+| **Evasion / defense skills** | Evasion, Magic Evasion, Parrying rate, Shield Mastery, Block chance, Breath dmg taken |
+| **Healing utility** | Spell interruption rate down, HP/MP recovered while healing, Cure spellcasting time, Helix Effect Duration, Enhancing Magic Effect Duration, Meditate Duration |
+| **Melee utility** | Counter, Kick Attacks, Martial Arts |
+| **Pet combat stats** | Pet ATT/Rng.ATT, ACC/Rng.ACC, DEX/STR/VIT/AGI/INT/MND/CHR, DEF, Mag.Acc, Mag.Atk.Bns, Magic Damage, Mag.Def.Bns, Crit rate, Dbl.Atk, Store TP, Subtle Blow, Evasion, Mag.Evasion, Regen, Phys. dmg taken, Magic dmg taken, Haste (pet only), Enemy crit rate |
+| **Avatar combat** | Avatar Mag.Atk.Bns, Blood Pact damage |
+| **Drain/Aspir** | Drain/Aspir potency |
 
-**Implementation:** Gate checks `HL_Tier` CharVar for Tiers 1–2, and any `Prestige_Level_N >= 15` for Tier 3, in the Augment Sage NPC. Pure Lua — no rebuild. Add Augment Sage NPC to Phase 1 deploy list.
+**Tier 2 — Veteran (Adept, HL Rank 5)**
+
+Core character stats and offensive/defensive ratings. The "character sheet" tier.
+
+| Group | Mods |
+|---|---|
+| **Core stats** | STR, DEX, VIT, AGI, INT, MND, CHR |
+| **Offensive ratings** | Accuracy, Rng.Accuracy, Accuracy+Attack, Rng.Acc+Rng.Atk, Magic Accuracy, Mag.Acc+Mag.Atk.Bns, Mag.Acc./Mag.Dmg |
+| **Defensive ratings** | DEF, Mag.Def.Bns, Phalanx received |
+| **Magic offense** | Mag.Atk.Bns, Magic Damage, Enspell Dmg, Occult Acumen |
+| **TP/cast efficiency** | Store TP, Store TP + Subtle Blow, Conserve TP, Conserve MP, Fast Cast, Snapshot |
+| **Healing output** | Cure potency, Potency of Cure received, Regen Potency |
+| **WS support** | WS Accuracy, Save TP, Subtle Blow, Enemy crit rate |
+| **Pet Haste** | Pet Haste (player Haste remains Tier 4) |
+
+**Tier 3 — Elite (Magus, Prestige Level 15)**
+
+The damage multiplier tier. Attack, crit, WS damage, HP/MP pool — the stats that define endgame output.
+
+| Group | Mods |
+|---|---|
+| **Attack** | Attack, Rng.Attack, Attack+Rng.Atk |
+| **Crit** | Crit hit rate, Dbl.Atk+Crit rate, Magic crit hit rate |
+| **Double Attack** | Double Attack |
+| **HP / MP pool** | HP, HP+MP, MP |
+| **Sustain** | Regen, Refresh |
+| **WS / Skillchain damage** | Weapon skill damage, Skillchain damage, Magic burst damage |
+| **Delay reduction** | Melee delay (not ranged), Ranged delay (not melee) |
+| **Magic damage output** | Mag. crit hit dmg, Helix damage, Spikes damage, Enspell Dmg (moved from Tier 2 in some builds) |
+| **Special** | Immunobreak Chance+, Counter (offensive scaling variant) |
+
+**Tier 4 — Legendary (Sage, TBD gate)**
+
+The rarest, most universally powerful mods. Every job benefits equally — these are the last unlocks for a reason.
+
+| Mod | Notes |
+|---|---|
+| **Haste** | Single best DD mod in the game; player only (Pet Haste = Tier 2) |
+| **Triple Attack** | Stacks with DA; extremely powerful for all melee |
+| **Quadruple Attack** | Rarer and more impactful than TA |
+| **TP Bonus** | Scales WS directly; universally valuable |
+| **Crit hit damage** | Multiplies all crit output — DPS, WS, and magic crits |
+| **Dmg+ (melee)** | Flat damage bonus to all melee hits |
+| **Dmg+ (ranged)** | Flat damage bonus to all ranged hits |
+| **Physical Damage Taken** | Defensive analogue of Haste in importance |
+| **Magic Damage Taken** | Same — best-in-slot defensive stat for mages |
+
+**Implementation:** Gate reads `Augment_Mastery` CharVar (0–5) in `Augment_Moogle.lua`. The Augment Sage NPC advances the player's rank at each content milestone. Pure Lua — no rebuild. Add Augment Sage rank-up logic to Phase 1 deploy list.
 
 **Former trophy items** (Behemoth Horn, Nidhogg Scales, Khimaira Horn, Fafnir Scale, Kirin's Mane) no longer gate augment rank. Decision needed: repurpose as AH vendor items, collectible cosmetics, or remove from drop tables entirely.
 
@@ -981,16 +1032,19 @@ Each category unlocks at a specific tier. Within a category, every listed mod is
 
 | Milestone | Gear + Prestige ATT | With Augments | Gear + Prestige HP | With Augments | Bro | Ririn | Kirin | Sivart |
 |---|---|---|---|---|---|---|---|---|
-| Prestige entry / Aug Tier 2 | ~1,200 | ~1,350–1,500 | ~7,000 | ~8,000–9,000 |  |  |  |  |
-| Prestige mid / Aug Tier 3 | ~1,600 | ~1,900–2,100 | ~8,500 | ~10,500–12,000 |  |  |  |  |
-| Max Paragon / Aug Tier 3 max | ~2,200 | ~2,700–2,900 | ~10,000 | ~14,000–16,000 |  |  |  |  |
-| + Max Rebirth (main job, late endgame) | — | → ~3,700–3,900 | — | → ~15,000–17,000 |  |  |  |  |
+| Prestige entry / Aug Tier 2 (Adept) | ~1,200 | ~1,350–1,500 | ~7,000 | ~8,000–9,000 |  |  |  |  |
+| Prestige 15 / Aug Tier 3 (Magus) | ~1,600 | ~1,900–2,100 | ~8,500 | ~10,500–12,000 |  |  |  |  |
+| TBD gate / Aug Tier 4 (Sage) | ~1,800 | ~2,300–2,600 | ~9,000 | ~12,000–14,000 |  |  |  |  |
+| Max Paragon + Aug Tier 4 max | ~2,200 | ~2,900–3,200 | ~10,000 | ~15,000–17,000 |  |  |  |  |
+| + Max Rebirth (main job, late endgame) | — | → ~4,000–4,300 | — | → ~16,000–18,000 |  |  |  |  |
 
 ### Notes
 
-All 13 affinity categories span diverse mods — the ATT contribution above assumes a DPS-focused build, not full ATK stacking. Mob HP targets in Phase 2 already account for augmented players at each tier. Prestige T3+ targets include an additional 30% for Rebirth stacking — see Job Rebirth section.
+The tier split is intentional asymmetry: job-specific mods (Phantom Roll delay, Blood Pact delay, etc.) are free so no player is locked out of their class identity. The top tier (Haste, TA/QA, TP Bonus, Crit dmg, Dmg+, PDT/MDT) is reserved for the deepest endgame because these are job-agnostic multipliers that raise the power ceiling for every build equally — gating them creates a meaningful late progression milestone.
 
-High-multiplier categories (HP/Regen mult 640, MP/Refresh mult 320) at Tier 3 boost 31 produce large absolute values and may need individual `maxBoost` overrides in the catalog — validate during Phase 1 implementation.
+Mob HP targets in Phase 2 already account for augmented players at each tier. Prestige T3+ targets include an additional 30% for Rebirth stacking — see Job Rebirth section.
+
+High-multiplier augments (HP/Regen, MP/Refresh) at max boost 31 produce large absolute values — validate individual `maxBoost` caps in the catalog during Phase 1 implementation.
 
 ---
 

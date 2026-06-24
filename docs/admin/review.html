@@ -291,8 +291,8 @@ Retune — Current Values vs. Phase 2 Targets</a>
 — Interaction with the Power Curve</a>
 <a href="#augment-tier-structure-redesigned" class="nav-l3">Augment Tier Structure
 (Redesigned)</a>
-<a href="#all-13-augment-categories-full-breakdown" class="nav-l3">All 13 Augment
-Categories — Full Breakdown</a>
+<a href="#augment-mod-breakdown-by-tier" class="nav-l3">Augment Mod Breakdown by
+Tier</a>
 <a href="#impact-on-the-power-curve" class="nav-l3">Impact on the Power Curve</a>
 <a href="#notes" class="nav-l3">Notes</a>
 <a href="#job-specific-armor-af-relic-empyrean" class="nav-l2">Job-Specific Armor — AF,
@@ -4090,30 +4090,37 @@ in the player power curve</strong> above — actual player stats will be
 higher than the table shows for players who actively augment.</p>
 <h3 id="augment-tier-structure-redesigned">Augment Tier Structure
 (Redesigned)</h3>
-<p>Two axes scale with content achievement: <strong>which categories are
-available</strong> and <strong>how powerful augments can get</strong>
-(max boost per slot, 0–31 engine cap). The previous trophy +
-lifetime-count gate system is replaced entirely by the same content
-milestone gates the rest of progression uses.</p>
-<div class="tbl-wrap"><table style="width:100%;">
+<p>Two axes scale with content achievement: <strong>which augment mods
+are available</strong> and <strong>how powerful augments can
+get</strong> (max boost per slot, 0–31 engine cap). The previous trophy
++ lifetime-count gate system is replaced entirely with content milestone
+gates.</p>
+<p><strong>Design philosophy:</strong> Job-specific and class-flavored
+mods are free from Day 1 — a COR’s Phantom Roll delay or a BST’s pet
+niche stats are never locked. Higher tiers gate the universal
+power-multipliers that benefit every job equally: Haste, TA/QA, TP
+Bonus, Crit damage, Dmg+, and damage-taken reductions.</p>
+<p>The Augment Sage tracks player rank in the
+<code>Augment_Mastery</code> CharVar (0–5: Unranked → Archon). Tiers 1–4
+require the Sage to advance the player’s rank, which happens at the
+content milestone listed.</p>
+<div class="tbl-wrap"><table>
 <colgroup>
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
-<col style="width: 11%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
+<col style="width: 12%" />
 </colgroup>
 <thead>
 <tr>
 <th>Tier</th>
+<th>Sage Rank</th>
 <th>Gate</th>
 <th>Max Boost/Slot</th>
-<th>Mastery Mult</th>
-<th>Crit Chance</th>
 <th class="admin-th">Bro</th>
 <th class="admin-th">Ririn</th>
 <th class="admin-th">Kirin</th>
@@ -4122,220 +4129,351 @@ milestone gates the rest of progression uses.</p>
 </thead>
 <tbody>
 <tr>
-<td>0 — Base</td>
+<td>0 — Free</td>
+<td>Unranked</td>
 <td>None (Day 1)</td>
 <td>8</td>
-<td>1.00×</td>
-<td>5%</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t43r0c5"><select class="vote" data-cell-id="t43r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t43r0c6"><select class="vote" data-cell-id="t43r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t43r0c7"><select class="vote" data-cell-id="t43r0c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r0c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t43r0c8"><select class="vote" data-cell-id="t43r0c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r0c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t43r0c4"><select class="vote" data-cell-id="t43r0c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r0c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t43r0c5"><select class="vote" data-cell-id="t43r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t43r0c6"><select class="vote" data-cell-id="t43r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t43r0c7"><select class="vote" data-cell-id="t43r0c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r0c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
-<td>1 — Combat</td>
+<td>1 — Skilled</td>
+<td>Initiate</td>
 <td>HL Rank 3</td>
 <td>16</td>
-<td>1.33×</td>
-<td>10%</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t43r1c5"><select class="vote" data-cell-id="t43r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t43r1c6"><select class="vote" data-cell-id="t43r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t43r1c7"><select class="vote" data-cell-id="t43r1c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r1c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t43r1c8"><select class="vote" data-cell-id="t43r1c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r1c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t43r1c4"><select class="vote" data-cell-id="t43r1c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r1c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t43r1c5"><select class="vote" data-cell-id="t43r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t43r1c6"><select class="vote" data-cell-id="t43r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t43r1c7"><select class="vote" data-cell-id="t43r1c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r1c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
-<td>2 — Advanced</td>
+<td>2 — Veteran</td>
+<td>Adept</td>
 <td>HL Rank 5</td>
 <td>24</td>
-<td>1.67×</td>
-<td>15%</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t43r2c5"><select class="vote" data-cell-id="t43r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t43r2c6"><select class="vote" data-cell-id="t43r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t43r2c7"><select class="vote" data-cell-id="t43r2c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r2c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t43r2c8"><select class="vote" data-cell-id="t43r2c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r2c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t43r2c4"><select class="vote" data-cell-id="t43r2c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r2c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t43r2c5"><select class="vote" data-cell-id="t43r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t43r2c6"><select class="vote" data-cell-id="t43r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t43r2c7"><select class="vote" data-cell-id="t43r2c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r2c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
-<td>3 — Master</td>
+<td>3 — Elite</td>
+<td>Magus</td>
 <td>Prestige Level 15</td>
+<td>28</td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t43r3c4"><select class="vote" data-cell-id="t43r3c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r3c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t43r3c5"><select class="vote" data-cell-id="t43r3c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r3c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t43r3c6"><select class="vote" data-cell-id="t43r3c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r3c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t43r3c7"><select class="vote" data-cell-id="t43r3c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r3c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+</tr>
+<tr>
+<td>4 — Legendary</td>
+<td>Sage</td>
+<td>TBD (see vote)</td>
 <td>31</td>
-<td>2.00×</td>
-<td>20%</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t43r3c5"><select class="vote" data-cell-id="t43r3c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r3c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t43r3c6"><select class="vote" data-cell-id="t43r3c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r3c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t43r3c7"><select class="vote" data-cell-id="t43r3c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r3c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t43r3c8"><select class="vote" data-cell-id="t43r3c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r3c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t43r4c4"><select class="vote" data-cell-id="t43r4c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r4c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t43r4c5"><select class="vote" data-cell-id="t43r4c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r4c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t43r4c6"><select class="vote" data-cell-id="t43r4c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r4c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t43r4c7"><select class="vote" data-cell-id="t43r4c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t43r4c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 </tbody>
 </table></div>
-<h3 id="all-13-augment-categories-full-breakdown">All 13 Augment
-Categories — Full Breakdown</h3>
-<p>Each category unlocks at a specific tier. Within a category, every
-listed mod is a possible roll on each augment slot.</p>
-<p><strong>Tier 0 — Available Day 1</strong></p>
+<blockquote>
+<p><strong>Admin vote — Tier 4 gate:</strong> What milestone should
+unlock Sage rank (Haste, TA/QA, TP Bonus, Crit dmg, Dmg+, PDT/MDT)?
+Prestige 30? Paragon 50? Apex milestone? <em>(leave your name +
+comment)</em></p>
+</blockquote>
+<h3 id="augment-mod-breakdown-by-tier">Augment Mod Breakdown by
+Tier</h3>
+<p><strong>Tier 0 — Free (Unranked, Day 1)</strong></p>
+<p>Available to all players immediately. Focused on job identity,
+resistances, and utility — no universal DD multipliers here.</p>
 <div class="tbl-wrap"><table>
 <colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <thead>
 <tr>
-<th>#</th>
-<th>Category</th>
-<th>Key Mods</th>
+<th>Group</th>
+<th>Mods</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td><strong>STR / Physical Offense</strong></td>
-<td>ATT, Rng.ATT, STR, Dbl.Atk, Triple Atk, QA, TP Bonus, Counter, Kick
-Attacks, Zanshin, Daken, Conserve TP, Barrage, Save TP, Reverse
-Flourish, Martial Arts; Pet: ATT, Dbl.Atk, TP Bonus, Phys.dmg.taken</td>
+<td><strong>Job ability delays</strong></td>
+<td>Phantom Roll, Quick Draw, Blood Pact, Call Beast (Sic/Ready), Waltz
+(delay + TP cost + potency), Song (delay + spellcast time)</td>
 </tr>
 <tr>
-<td>2</td>
-<td><strong>DEX / Accuracy / Crit</strong></td>
-<td>ACC, Rng.ACC, DEX, Crit.hit rate, Crit.hit damage, Store TP, Subtle
-Blow, Rapid Shot, Magic crit.hit rate, Enemy crit.hit rate; Pet: ACC,
-Rng.ACC, Crit.hit rate, Store TP, Subtle Blow, DEX</td>
+<td><strong>Magic recast delays</strong></td>
+<td>Elemental, Enfeebling, Enhancing, Healing magic recast</td>
 </tr>
 <tr>
-<td>3</td>
-<td><strong>VIT / Defense</strong></td>
-<td>DEF, VIT, Magic dmg.taken, Phys.dmg.taken, Breath dmg.taken,
-Mag.Def.Bns, Shield Mastery, Block chance, Phalanx, Parrying rate; Pet:
-DEF, Mag.Def.Bns, Magic dmg.taken, VIT</td>
+<td><strong>Status resists</strong></td>
+<td>Sleep, Poison, Paralyze, Blind, Silence, Petrify, Bind, Curse,
+Gravity, Stun, Virus; occ. resist ailments</td>
 </tr>
 <tr>
-<td>8</td>
-<td><strong>HP / Regen</strong></td>
-<td>HP, HP+MP, Regen, Regen Potency, HP recovered while healing, Pet
-Regen</td>
+<td><strong>Elemental affinities</strong></td>
+<td>All 8 elements (affinity, magic accuracy, Avatar perpetuation cost
+per element)</td>
+</tr>
+<tr>
+<td><strong>Elemental resists</strong></td>
+<td>All 8 element resist ratings</td>
+</tr>
+<tr>
+<td><strong>Enmity / Control</strong></td>
+<td>Enmity, Pet Enmity, Charm, Resist Charm</td>
+</tr>
+<tr>
+<td><strong>Utility / Profit</strong></td>
+<td>Treasure Hunter, Gilfinder, EXP +33%, CP +33%</td>
+</tr>
+<tr>
+<td><strong>Pet niche</strong></td>
+<td>Elemental Siphon, Blood Boon, Beast Affinity, Thunder Affinity,
+Blood Pact delay (SMN), Avatar perp. cost (SMN), Phantom Roll effect
+(COR)</td>
+</tr>
+<tr>
+<td><strong>Misc. combat utility</strong></td>
+<td>Rapid Shot, Recycle, Barrage, Zanshin, Daken, Reverse Flourish,
+Ninja tool expertise, Repair potency, Indi Effect Duration, Slow
+(enemy), Occ. inc. resist status ailments</td>
+</tr>
+<tr>
+<td><strong>Pet TP Bonus</strong></td>
+<td>Pet TP Bonus (separate from player TP Bonus, which is Tier 4)</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Tier 1 — Unlocks at HL Rank 3</strong></p>
+<p><strong>Tier 1 — Skilled (Initiate, HL Rank 3)</strong></p>
+<p>Weapon and magic proficiency. Pet combat specialization. Utility
+survivability mods.</p>
 <div class="tbl-wrap"><table>
 <colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <thead>
 <tr>
-<th>#</th>
-<th>Category</th>
-<th>Key Mods</th>
+<th>Group</th>
+<th>Mods</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>4</td>
-<td><strong>AGI / Evasion / Haste</strong></td>
-<td>Haste, AGI, Evasion, Mag.Evasion, Melee delay, Ranged delay,
-Snapshot, Recycle, Resist Slow; Ability delays: Blood Pact, Call Beast,
-Quick Draw, Phantom Roll, Waltz, Song,
-Healing/Elemental/Enfeebling/Enhancing magic recast; Pet: Haste,
-Evasion, Mag.Evasion, AGI</td>
+<td><strong>All weapon skills</strong></td>
+<td>H2H, Dagger, Sword, Great Sword, Axe, Great Axe, Scythe, Polearm,
+Katana, Great Katana, Club, Staff, Archery, Marksmanship, Throwing,
+Shield, Parrying</td>
 </tr>
 <tr>
-<td>12</td>
-<td><strong>Weapon / Magic Skill+</strong></td>
-<td>All weapon skills (H2H/Dagger/Sword/Great Sword/Axe/Great
-Axe/Scythe/Polearm/Katana/Great
-Katana/Club/Staff/Archery/Marksmanship/Throwing/Shield/Parrying); All
-magic skills
-(Divine/Enhancing/Enfeebling/Elemental/Ninjutsu/Singing/String/Blue/Geomancy/Handbell/Dark/Wind
-instrument); EXP +33%, CP +33%</td>
+<td><strong>All magic skills</strong></td>
+<td>Divine, Enhancing, Enfeebling, Elemental, Ninjutsu, Singing, String,
+Wind instrument, Blue Magic, Geomancy, Handbell, Dark, Summoning</td>
 </tr>
 <tr>
-<td>13</td>
-<td><strong>Weaponskill DMG</strong></td>
-<td>Weapon skill damage, WS Accuracy, Skillchain damage, Dmg (melee
-only), Dmg (ranged only)</td>
+<td><strong>Evasion / defense skills</strong></td>
+<td>Evasion, Magic Evasion, Parrying rate, Shield Mastery, Block chance,
+Breath dmg taken</td>
+</tr>
+<tr>
+<td><strong>Healing utility</strong></td>
+<td>Spell interruption rate down, HP/MP recovered while healing, Cure
+spellcasting time, Helix Effect Duration, Enhancing Magic Effect
+Duration, Meditate Duration</td>
+</tr>
+<tr>
+<td><strong>Melee utility</strong></td>
+<td>Counter, Kick Attacks, Martial Arts</td>
+</tr>
+<tr>
+<td><strong>Pet combat stats</strong></td>
+<td>Pet ATT/Rng.ATT, ACC/Rng.ACC, DEX/STR/VIT/AGI/INT/MND/CHR, DEF,
+Mag.Acc, Mag.Atk.Bns, Magic Damage, Mag.Def.Bns, Crit rate, Dbl.Atk,
+Store TP, Subtle Blow, Evasion, Mag.Evasion, Regen, Phys. dmg taken,
+Magic dmg taken, Haste (pet only), Enemy crit rate</td>
+</tr>
+<tr>
+<td><strong>Avatar combat</strong></td>
+<td>Avatar Mag.Atk.Bns, Blood Pact damage</td>
+</tr>
+<tr>
+<td><strong>Drain/Aspir</strong></td>
+<td>Drain/Aspir potency</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Tier 2 — Unlocks at HL Rank 5</strong></p>
+<p><strong>Tier 2 — Veteran (Adept, HL Rank 5)</strong></p>
+<p>Core character stats and offensive/defensive ratings. The “character
+sheet” tier.</p>
 <div class="tbl-wrap"><table>
 <colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <thead>
 <tr>
-<th>#</th>
-<th>Category</th>
-<th>Key Mods</th>
+<th>Group</th>
+<th>Mods</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>5</td>
-<td><strong>INT / Magic Offense</strong></td>
-<td>INT, Mag.Acc, Mag.Atk.Bns, Mag.Acc./Mag.Dmg, Fast Cast, Enspell Dmg,
-Magic burst dmg, Mag.crit.hit dmg, Occult Acumen, Drain/Aspir potency,
-Spell interruption rate down, Helix duration, Meditate duration; Pet:
-Mag.Acc, Mag.Atk.Bns, Magic Damage, INT, Avatar Mag.Atk.Bns</td>
+<td><strong>Core stats</strong></td>
+<td>STR, DEX, VIT, AGI, INT, MND, CHR</td>
 </tr>
 <tr>
-<td>9</td>
-<td><strong>MP / Refresh</strong></td>
-<td>MP, Refresh, Conserve MP</td>
+<td><strong>Offensive ratings</strong></td>
+<td>Accuracy, Rng.Accuracy, Accuracy+Attack, Rng.Acc+Rng.Atk, Magic
+Accuracy, Mag.Acc+Mag.Atk.Bns, Mag.Acc./Mag.Dmg</td>
 </tr>
 <tr>
-<td>11</td>
-<td><strong>Elemental / Status Resist</strong></td>
-<td>All 8 elemental resists
-(Fire/Ice/Wind/Earth/Lightning/Water/Light/Dark); Status resists: Sleep,
-Poison, Paralyze, Blind, Silence, Petrify, Bind, Curse, Gravity, Stun;
-Resist status ailments (occ.); Element affinities (all 8); Avatar
-perpetuation cost (per element)</td>
+<td><strong>Defensive ratings</strong></td>
+<td>DEF, Mag.Def.Bns, Phalanx received</td>
+</tr>
+<tr>
+<td><strong>Magic offense</strong></td>
+<td>Mag.Atk.Bns, Magic Damage, Enspell Dmg, Occult Acumen</td>
+</tr>
+<tr>
+<td><strong>TP/cast efficiency</strong></td>
+<td>Store TP, Store TP + Subtle Blow, Conserve TP, Conserve MP, Fast
+Cast, Snapshot</td>
+</tr>
+<tr>
+<td><strong>Healing output</strong></td>
+<td>Cure potency, Potency of Cure received, Regen Potency</td>
+</tr>
+<tr>
+<td><strong>WS support</strong></td>
+<td>WS Accuracy, Save TP, Subtle Blow, Enemy crit rate</td>
+</tr>
+<tr>
+<td><strong>Pet Haste</strong></td>
+<td>Pet Haste (player Haste remains Tier 4)</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Tier 3 — Unlocks at Prestige Level 15</strong></p>
+<p><strong>Tier 3 — Elite (Magus, Prestige Level 15)</strong></p>
+<p>The damage multiplier tier. Attack, crit, WS damage, HP/MP pool — the
+stats that define endgame output.</p>
 <div class="tbl-wrap"><table>
 <colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
+<col style="width: 50%" />
+<col style="width: 50%" />
 </colgroup>
 <thead>
 <tr>
-<th>#</th>
-<th>Category</th>
-<th>Key Mods</th>
+<th>Group</th>
+<th>Mods</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>6</td>
-<td><strong>MND / Healing</strong></td>
-<td>MND, Cure potency, Cure spellcasting time, Potency of Cure received,
-Healing magic skill, MP recovered while healing</td>
+<td><strong>Attack</strong></td>
+<td>Attack, Rng.Attack, Attack+Rng.Atk</td>
 </tr>
 <tr>
-<td>7</td>
-<td><strong>CHR / Enmity</strong></td>
-<td>CHR, Enmity, Charm, All songs, All song effects, Song spellcasting
-time, Treasure Hunter, Gilfinder, Resist Charm; Pet: Enmity, CHR</td>
+<td><strong>Crit</strong></td>
+<td>Crit hit rate, Dbl.Atk+Crit rate, Magic crit hit rate</td>
 </tr>
 <tr>
-<td>10</td>
-<td><strong>Pet Specialization</strong></td>
-<td>Blood Pact damage, Summoning magic skill, Avatar perpetuation cost,
-Elemental Siphon, Blood Boon, Beast Affinity, Thunder Affinity, Pet
-Phys.dmg.taken, Immunobreak Chance+ (COR Phantom Roll augment)</td>
+<td><strong>Double Attack</strong></td>
+<td>Double Attack</td>
+</tr>
+<tr>
+<td><strong>HP / MP pool</strong></td>
+<td>HP, HP+MP, MP</td>
+</tr>
+<tr>
+<td><strong>Sustain</strong></td>
+<td>Regen, Refresh</td>
+</tr>
+<tr>
+<td><strong>WS / Skillchain damage</strong></td>
+<td>Weapon skill damage, Skillchain damage, Magic burst damage</td>
+</tr>
+<tr>
+<td><strong>Delay reduction</strong></td>
+<td>Melee delay (not ranged), Ranged delay (not melee)</td>
+</tr>
+<tr>
+<td><strong>Magic damage output</strong></td>
+<td>Mag. crit hit dmg, Helix damage, Spikes damage, Enspell Dmg (moved
+from Tier 2 in some builds)</td>
+</tr>
+<tr>
+<td><strong>Special</strong></td>
+<td>Immunobreak Chance+, Counter (offensive scaling variant)</td>
 </tr>
 </tbody>
 </table></div>
-<p><strong>Implementation:</strong> Gate checks <code>HL_Tier</code>
-CharVar for Tiers 1–2, and any <code>Prestige_Level_N &gt;= 15</code>
-for Tier 3, in the Augment Sage NPC. Pure Lua — no rebuild. Add Augment
-Sage NPC to Phase 1 deploy list.</p>
+<p><strong>Tier 4 — Legendary (Sage, TBD gate)</strong></p>
+<p>The rarest, most universally powerful mods. Every job benefits
+equally — these are the last unlocks for a reason.</p>
+<div class="tbl-wrap"><table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>Mod</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Haste</strong></td>
+<td>Single best DD mod in the game; player only (Pet Haste = Tier
+2)</td>
+</tr>
+<tr>
+<td><strong>Triple Attack</strong></td>
+<td>Stacks with DA; extremely powerful for all melee</td>
+</tr>
+<tr>
+<td><strong>Quadruple Attack</strong></td>
+<td>Rarer and more impactful than TA</td>
+</tr>
+<tr>
+<td><strong>TP Bonus</strong></td>
+<td>Scales WS directly; universally valuable</td>
+</tr>
+<tr>
+<td><strong>Crit hit damage</strong></td>
+<td>Multiplies all crit output — DPS, WS, and magic crits</td>
+</tr>
+<tr>
+<td><strong>Dmg+ (melee)</strong></td>
+<td>Flat damage bonus to all melee hits</td>
+</tr>
+<tr>
+<td><strong>Dmg+ (ranged)</strong></td>
+<td>Flat damage bonus to all ranged hits</td>
+</tr>
+<tr>
+<td><strong>Physical Damage Taken</strong></td>
+<td>Defensive analogue of Haste in importance</td>
+</tr>
+<tr>
+<td><strong>Magic Damage Taken</strong></td>
+<td>Same — best-in-slot defensive stat for mages</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Implementation:</strong> Gate reads
+<code>Augment_Mastery</code> CharVar (0–5) in
+<code>Augment_Moogle.lua</code>. The Augment Sage NPC advances the
+player’s rank at each content milestone. Pure Lua — no rebuild. Add
+Augment Sage rank-up logic to Phase 1 deploy list.</p>
 <p><strong>Former trophy items</strong> (Behemoth Horn, Nidhogg Scales,
 Khimaira Horn, Fafnir Scale, Kirin’s Mane) no longer gate augment rank.
 Decision needed: repurpose as AH vendor items, collectible cosmetics, or
@@ -4372,60 +4510,76 @@ remove from drop tables entirely.</p>
 </thead>
 <tbody>
 <tr>
-<td>Prestige entry / Aug Tier 2</td>
+<td>Prestige entry / Aug Tier 2 (Adept)</td>
 <td>~1,200</td>
 <td>~1,350–1,500</td>
 <td>~7,000</td>
 <td>~8,000–9,000</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t48r0c5"><select class="vote" data-cell-id="t48r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t48r0c6"><select class="vote" data-cell-id="t48r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t48r0c7"><select class="vote" data-cell-id="t48r0c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r0c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t48r0c8"><select class="vote" data-cell-id="t48r0c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r0c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t49r0c5"><select class="vote" data-cell-id="t49r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t49r0c6"><select class="vote" data-cell-id="t49r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t49r0c7"><select class="vote" data-cell-id="t49r0c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r0c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t49r0c8"><select class="vote" data-cell-id="t49r0c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r0c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
-<td>Prestige mid / Aug Tier 3</td>
+<td>Prestige 15 / Aug Tier 3 (Magus)</td>
 <td>~1,600</td>
 <td>~1,900–2,100</td>
 <td>~8,500</td>
 <td>~10,500–12,000</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t48r1c5"><select class="vote" data-cell-id="t48r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t48r1c6"><select class="vote" data-cell-id="t48r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t48r1c7"><select class="vote" data-cell-id="t48r1c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r1c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t48r1c8"><select class="vote" data-cell-id="t48r1c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r1c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t49r1c5"><select class="vote" data-cell-id="t49r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t49r1c6"><select class="vote" data-cell-id="t49r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t49r1c7"><select class="vote" data-cell-id="t49r1c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r1c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t49r1c8"><select class="vote" data-cell-id="t49r1c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r1c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
-<td>Max Paragon / Aug Tier 3 max</td>
+<td>TBD gate / Aug Tier 4 (Sage)</td>
+<td>~1,800</td>
+<td>~2,300–2,600</td>
+<td>~9,000</td>
+<td>~12,000–14,000</td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t49r2c5"><select class="vote" data-cell-id="t49r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t49r2c6"><select class="vote" data-cell-id="t49r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t49r2c7"><select class="vote" data-cell-id="t49r2c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r2c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t49r2c8"><select class="vote" data-cell-id="t49r2c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r2c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+</tr>
+<tr>
+<td>Max Paragon + Aug Tier 4 max</td>
 <td>~2,200</td>
-<td>~2,700–2,900</td>
+<td>~2,900–3,200</td>
 <td>~10,000</td>
-<td>~14,000–16,000</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t48r2c5"><select class="vote" data-cell-id="t48r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t48r2c6"><select class="vote" data-cell-id="t48r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t48r2c7"><select class="vote" data-cell-id="t48r2c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r2c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t48r2c8"><select class="vote" data-cell-id="t48r2c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r2c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td>~15,000–17,000</td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t49r3c5"><select class="vote" data-cell-id="t49r3c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r3c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t49r3c6"><select class="vote" data-cell-id="t49r3c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r3c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t49r3c7"><select class="vote" data-cell-id="t49r3c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r3c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t49r3c8"><select class="vote" data-cell-id="t49r3c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r3c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>+ Max Rebirth (main job, late endgame)</td>
 <td>—</td>
-<td>→ ~3,700–3,900</td>
+<td>→ ~4,000–4,300</td>
 <td>—</td>
-<td>→ ~15,000–17,000</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t48r3c5"><select class="vote" data-cell-id="t48r3c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r3c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t48r3c6"><select class="vote" data-cell-id="t48r3c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r3c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t48r3c7"><select class="vote" data-cell-id="t48r3c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r3c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t48r3c8"><select class="vote" data-cell-id="t48r3c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t48r3c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td>→ ~16,000–18,000</td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t49r4c5"><select class="vote" data-cell-id="t49r4c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r4c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t49r4c6"><select class="vote" data-cell-id="t49r4c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r4c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t49r4c7"><select class="vote" data-cell-id="t49r4c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r4c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t49r4c8"><select class="vote" data-cell-id="t49r4c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r4c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 </tbody>
 </table></div>
 <h3 id="notes">Notes</h3>
-<p>All 13 affinity categories span diverse mods — the ATT contribution
-above assumes a DPS-focused build, not full ATK stacking. Mob HP targets
-in Phase 2 already account for augmented players at each tier. Prestige
-T3+ targets include an additional 30% for Rebirth stacking — see Job
-Rebirth section.</p>
-<p>High-multiplier categories (HP/Regen mult 640, MP/Refresh mult 320)
-at Tier 3 boost 31 produce large absolute values and may need individual
-<code>maxBoost</code> overrides in the catalog — validate during Phase 1
+<p>The tier split is intentional asymmetry: job-specific mods (Phantom
+Roll delay, Blood Pact delay, etc.) are free so no player is locked out
+of their class identity. The top tier (Haste, TA/QA, TP Bonus, Crit dmg,
+Dmg+, PDT/MDT) is reserved for the deepest endgame because these are
+job-agnostic multipliers that raise the power ceiling for every build
+equally — gating them creates a meaningful late progression
+milestone.</p>
+<p>Mob HP targets in Phase 2 already account for augmented players at
+each tier. Prestige T3+ targets include an additional 30% for Rebirth
+stacking — see Job Rebirth section.</p>
+<p>High-multiplier augments (HP/Regen, MP/Refresh) at max boost 31
+produce large absolute values — validate individual
+<code>maxBoost</code> caps in the catalog during Phase 1
 implementation.</p>
 <hr />
 <h2 id="job-specific-armor-af-relic-empyrean">Job-Specific Armor — AF,
@@ -4473,10 +4627,10 @@ through the <strong>Reforge System</strong> in Gwora-Corridor (Zone
 <td>AF Marks</td>
 <td>Classic FFXI job identity — your job’s signature look and stat
 profile</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t49r0c5"><select class="vote" data-cell-id="t49r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t49r0c6"><select class="vote" data-cell-id="t49r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t49r0c7"><select class="vote" data-cell-id="t49r0c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r0c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t49r0c8"><select class="vote" data-cell-id="t49r0c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r0c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t50r0c5"><select class="vote" data-cell-id="t50r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t50r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t50r0c6"><select class="vote" data-cell-id="t50r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t50r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t50r0c7"><select class="vote" data-cell-id="t50r0c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t50r0c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t50r0c8"><select class="vote" data-cell-id="t50r0c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t50r0c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td><strong>Relic</strong></td>
@@ -4484,10 +4638,10 @@ profile</td>
 <td>Unity NMs (Bukhis / Khun / Padfoot / Glavoid / Tinnin)</td>
 <td>Relic Marks</td>
 <td>Refined stats, heavier physical focus</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t49r1c5"><select class="vote" data-cell-id="t49r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t49r1c6"><select class="vote" data-cell-id="t49r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t49r1c7"><select class="vote" data-cell-id="t49r1c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r1c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t49r1c8"><select class="vote" data-cell-id="t49r1c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r1c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t50r1c5"><select class="vote" data-cell-id="t50r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t50r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t50r1c6"><select class="vote" data-cell-id="t50r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t50r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t50r1c7"><select class="vote" data-cell-id="t50r1c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t50r1c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t50r1c8"><select class="vote" data-cell-id="t50r1c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t50r1c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td><strong>Empyrean</strong></td>
@@ -4496,10 +4650,10 @@ profile</td>
 Hadhayosh)</td>
 <td>Empy Marks</td>
 <td>Best-in-class job armor; hardest to obtain</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t49r2c5"><select class="vote" data-cell-id="t49r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t49r2c6"><select class="vote" data-cell-id="t49r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t49r2c7"><select class="vote" data-cell-id="t49r2c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r2c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t49r2c8"><select class="vote" data-cell-id="t49r2c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t49r2c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t50r2c5"><select class="vote" data-cell-id="t50r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t50r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t50r2c6"><select class="vote" data-cell-id="t50r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t50r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t50r2c7"><select class="vote" data-cell-id="t50r2c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t50r2c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t50r2c8"><select class="vote" data-cell-id="t50r2c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t50r2c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 </tbody>
 </table></div>
@@ -4716,10 +4870,10 @@ distinct power profile, and a distinct role in the progression arc.</p>
 <td>16 weapons</td>
 <td>Reforge Marks (AF track NMs)</td>
 <td>First meaningful upgrade from stock AH weapons</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t54r0c5"><select class="vote" data-cell-id="t54r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t54r0c6"><select class="vote" data-cell-id="t54r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t54r0c7"><select class="vote" data-cell-id="t54r0c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r0c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t54r0c8"><select class="vote" data-cell-id="t54r0c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r0c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t55r0c5"><select class="vote" data-cell-id="t55r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t55r0c6"><select class="vote" data-cell-id="t55r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t55r0c7"><select class="vote" data-cell-id="t55r0c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r0c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t55r0c8"><select class="vote" data-cell-id="t55r0c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r0c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>2</td>
@@ -4727,10 +4881,10 @@ distinct power profile, and a distinct role in the progression arc.</p>
 <td>16 weapons</td>
 <td>Reforge Marks (Empy track NMs)</td>
 <td>Strong all-rounder — best weapon for many jobs pre-Mythic</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t54r1c5"><select class="vote" data-cell-id="t54r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t54r1c6"><select class="vote" data-cell-id="t54r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t54r1c7"><select class="vote" data-cell-id="t54r1c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r1c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t54r1c8"><select class="vote" data-cell-id="t54r1c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r1c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t55r1c5"><select class="vote" data-cell-id="t55r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t55r1c6"><select class="vote" data-cell-id="t55r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t55r1c7"><select class="vote" data-cell-id="t55r1c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r1c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t55r1c8"><select class="vote" data-cell-id="t55r1c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r1c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>3</td>
@@ -4739,10 +4893,10 @@ distinct power profile, and a distinct role in the progression arc.</p>
 <td>Dedicated Mythic trial system <em>(design pending)</em></td>
 <td>Specialized — best-in-slot for specific builds / caster
 supremacy</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t54r2c5"><select class="vote" data-cell-id="t54r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t54r2c6"><select class="vote" data-cell-id="t54r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t54r2c7"><select class="vote" data-cell-id="t54r2c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r2c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t54r2c8"><select class="vote" data-cell-id="t54r2c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r2c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t55r2c5"><select class="vote" data-cell-id="t55r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t55r2c6"><select class="vote" data-cell-id="t55r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t55r2c7"><select class="vote" data-cell-id="t55r2c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r2c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t55r2c8"><select class="vote" data-cell-id="t55r2c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r2c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>4</td>
@@ -4750,10 +4904,10 @@ supremacy</td>
 <td>16 weapons</td>
 <td>Late Prestige content + Aeonic Seals <em>(design pending)</em></td>
 <td>Best pre-Prime for most jobs · Aftermath effects</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t54r3c5"><select class="vote" data-cell-id="t54r3c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r3c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t54r3c6"><select class="vote" data-cell-id="t54r3c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r3c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t54r3c7"><select class="vote" data-cell-id="t54r3c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r3c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t54r3c8"><select class="vote" data-cell-id="t54r3c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r3c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t55r3c5"><select class="vote" data-cell-id="t55r3c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r3c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t55r3c6"><select class="vote" data-cell-id="t55r3c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r3c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t55r3c7"><select class="vote" data-cell-id="t55r3c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r3c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t55r3c8"><select class="vote" data-cell-id="t55r3c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r3c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>5</td>
@@ -4761,10 +4915,10 @@ supremacy</td>
 <td>16 weapons</td>
 <td>4 trials + 750M gil forge</td>
 <td>Server’s ultimate weapon · Job-specific pinnacle</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t54r4c5"><select class="vote" data-cell-id="t54r4c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r4c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t54r4c6"><select class="vote" data-cell-id="t54r4c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r4c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t54r4c7"><select class="vote" data-cell-id="t54r4c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r4c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t54r4c8"><select class="vote" data-cell-id="t54r4c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t54r4c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t55r4c5"><select class="vote" data-cell-id="t55r4c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r4c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t55r4c6"><select class="vote" data-cell-id="t55r4c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r4c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t55r4c7"><select class="vote" data-cell-id="t55r4c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r4c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t55r4c8"><select class="vote" data-cell-id="t55r4c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t55r4c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 </tbody>
 </table></div>
@@ -5409,64 +5563,64 @@ systems on their main job gets double the flat stat contribution.</p>
 <td>Ascension (cap 50 × +20/level)</td>
 <td>+1,000</td>
 <td>+1,000</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t61r0c3"><select class="vote" data-cell-id="t61r0c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r0c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t61r0c4"><select class="vote" data-cell-id="t61r0c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r0c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t61r0c5"><select class="vote" data-cell-id="t61r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t61r0c6"><select class="vote" data-cell-id="t61r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t62r0c3"><select class="vote" data-cell-id="t62r0c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r0c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t62r0c4"><select class="vote" data-cell-id="t62r0c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r0c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t62r0c5"><select class="vote" data-cell-id="t62r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t62r0c6"><select class="vote" data-cell-id="t62r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>Job Rebirth (same catalog, same cap)</td>
 <td>+1,000</td>
 <td>+1,000</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t61r1c3"><select class="vote" data-cell-id="t61r1c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r1c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t61r1c4"><select class="vote" data-cell-id="t61r1c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r1c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t61r1c5"><select class="vote" data-cell-id="t61r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t61r1c6"><select class="vote" data-cell-id="t61r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t62r1c3"><select class="vote" data-cell-id="t62r1c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r1c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t62r1c4"><select class="vote" data-cell-id="t62r1c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r1c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t62r1c5"><select class="vote" data-cell-id="t62r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t62r1c6"><select class="vote" data-cell-id="t62r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>Paragon Might perk (10 ranks × +100)</td>
 <td>+1,000</td>
 <td>—</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t61r2c3"><select class="vote" data-cell-id="t61r2c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r2c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t61r2c4"><select class="vote" data-cell-id="t61r2c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r2c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t61r2c5"><select class="vote" data-cell-id="t61r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t61r2c6"><select class="vote" data-cell-id="t61r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t62r2c3"><select class="vote" data-cell-id="t62r2c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r2c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t62r2c4"><select class="vote" data-cell-id="t62r2c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r2c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t62r2c5"><select class="vote" data-cell-id="t62r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t62r2c6"><select class="vote" data-cell-id="t62r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>Paragon Vigor perk (10 ranks × +500)</td>
 <td>—</td>
 <td>+5,000</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t61r3c3"><select class="vote" data-cell-id="t61r3c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r3c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t61r3c4"><select class="vote" data-cell-id="t61r3c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r3c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t61r3c5"><select class="vote" data-cell-id="t61r3c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r3c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t61r3c6"><select class="vote" data-cell-id="t61r3c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r3c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t62r3c3"><select class="vote" data-cell-id="t62r3c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r3c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t62r3c4"><select class="vote" data-cell-id="t62r3c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r3c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t62r3c5"><select class="vote" data-cell-id="t62r3c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r3c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t62r3c6"><select class="vote" data-cell-id="t62r3c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r3c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>Gear (late endgame)</td>
 <td>~200</td>
 <td>~8,000</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t61r4c3"><select class="vote" data-cell-id="t61r4c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r4c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t61r4c4"><select class="vote" data-cell-id="t61r4c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r4c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t61r4c5"><select class="vote" data-cell-id="t61r4c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r4c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t61r4c6"><select class="vote" data-cell-id="t61r4c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r4c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t62r4c3"><select class="vote" data-cell-id="t62r4c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r4c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t62r4c4"><select class="vote" data-cell-id="t62r4c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r4c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t62r4c5"><select class="vote" data-cell-id="t62r4c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r4c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t62r4c6"><select class="vote" data-cell-id="t62r4c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r4c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>Augments (Rank 5, offensive build)</td>
 <td>+900</td>
 <td>+4,000</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t61r5c3"><select class="vote" data-cell-id="t61r5c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r5c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t61r5c4"><select class="vote" data-cell-id="t61r5c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r5c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t61r5c5"><select class="vote" data-cell-id="t61r5c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r5c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t61r5c6"><select class="vote" data-cell-id="t61r5c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r5c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t62r5c3"><select class="vote" data-cell-id="t62r5c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r5c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t62r5c4"><select class="vote" data-cell-id="t62r5c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r5c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t62r5c5"><select class="vote" data-cell-id="t62r5c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r5c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t62r5c6"><select class="vote" data-cell-id="t62r5c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r5c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td><strong>Peak total</strong></td>
 <td><strong>~4,100</strong></td>
 <td><strong>~19,000</strong></td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t61r6c3"><select class="vote" data-cell-id="t61r6c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r6c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t61r6c4"><select class="vote" data-cell-id="t61r6c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r6c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t61r6c5"><select class="vote" data-cell-id="t61r6c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r6c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t61r6c6"><select class="vote" data-cell-id="t61r6c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t61r6c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t62r6c3"><select class="vote" data-cell-id="t62r6c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r6c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t62r6c4"><select class="vote" data-cell-id="t62r6c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r6c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t62r6c5"><select class="vote" data-cell-id="t62r6c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r6c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t62r6c6"><select class="vote" data-cell-id="t62r6c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r6c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 </tbody>
 </table></div>
@@ -5522,39 +5676,39 @@ character at gmlevel &gt; 0 is excluded from all tiers).</p>
 <td>1</td>
 <td>Veteran of Legendary</td>
 <td>Account exists with any character</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t62r0c3"><select class="vote" data-cell-id="t62r0c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r0c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t62r0c4"><select class="vote" data-cell-id="t62r0c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r0c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t62r0c5"><select class="vote" data-cell-id="t62r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t62r0c6"><select class="vote" data-cell-id="t62r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t63r0c3"><select class="vote" data-cell-id="t63r0c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r0c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t63r0c4"><select class="vote" data-cell-id="t63r0c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r0c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t63r0c5"><select class="vote" data-cell-id="t63r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t63r0c6"><select class="vote" data-cell-id="t63r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>2</td>
 <td>Proven Hunter</td>
 <td>HL Rank 3+ <strong>OR</strong> 200+ lifetime marks</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t62r1c3"><select class="vote" data-cell-id="t62r1c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r1c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t62r1c4"><select class="vote" data-cell-id="t62r1c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r1c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t62r1c5"><select class="vote" data-cell-id="t62r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t62r1c6"><select class="vote" data-cell-id="t62r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t63r1c3"><select class="vote" data-cell-id="t63r1c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r1c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t63r1c4"><select class="vote" data-cell-id="t63r1c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r1c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t63r1c5"><select class="vote" data-cell-id="t63r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t63r1c6"><select class="vote" data-cell-id="t63r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>3</td>
 <td>League Legend</td>
 <td>HL Rank 5 <strong>OR</strong> any job at Prestige Level 1+
 <strong>OR</strong> 1,000+ lifetime marks</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t62r2c3"><select class="vote" data-cell-id="t62r2c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r2c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t62r2c4"><select class="vote" data-cell-id="t62r2c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r2c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t62r2c5"><select class="vote" data-cell-id="t62r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t62r2c6"><select class="vote" data-cell-id="t62r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t63r2c3"><select class="vote" data-cell-id="t63r2c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r2c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t63r2c4"><select class="vote" data-cell-id="t63r2c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r2c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t63r2c5"><select class="vote" data-cell-id="t63r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t63r2c6"><select class="vote" data-cell-id="t63r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>4</td>
 <td>The Unbroken</td>
 <td>Any job at Prestige Level 20+ <strong>OR</strong> Gauntlet L10
 cleared ≥1× <strong>OR</strong> Prime Weapon Trial 4 complete</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t62r3c3"><select class="vote" data-cell-id="t62r3c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r3c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t62r3c4"><select class="vote" data-cell-id="t62r3c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r3c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t62r3c5"><select class="vote" data-cell-id="t62r3c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r3c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t62r3c6"><select class="vote" data-cell-id="t62r3c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t62r3c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t63r3c3"><select class="vote" data-cell-id="t63r3c3" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r3c3" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t63r3c4"><select class="vote" data-cell-id="t63r3c4" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r3c4" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t63r3c5"><select class="vote" data-cell-id="t63r3c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r3c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t63r3c6"><select class="vote" data-cell-id="t63r3c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r3c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 </tbody>
 </table></div>
@@ -5595,10 +5749,10 @@ here — leave your name + comment)</em></p>
 <td>Proven Hunter</td>
 <td>League Legend</td>
 <td>The Unbroken</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t63r0c5"><select class="vote" data-cell-id="t63r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t63r0c6"><select class="vote" data-cell-id="t63r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t63r0c7"><select class="vote" data-cell-id="t63r0c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r0c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t63r0c8"><select class="vote" data-cell-id="t63r0c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r0c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t64r0c5"><select class="vote" data-cell-id="t64r0c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r0c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t64r0c6"><select class="vote" data-cell-id="t64r0c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r0c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t64r0c7"><select class="vote" data-cell-id="t64r0c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r0c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t64r0c8"><select class="vote" data-cell-id="t64r0c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r0c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>Starting gil (total incl. base 300k)</td>
@@ -5606,10 +5760,10 @@ here — leave your name + comment)</em></p>
 <td>700k</td>
 <td>1M</td>
 <td>1.5M</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t63r1c5"><select class="vote" data-cell-id="t63r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t63r1c6"><select class="vote" data-cell-id="t63r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t63r1c7"><select class="vote" data-cell-id="t63r1c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r1c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t63r1c8"><select class="vote" data-cell-id="t63r1c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r1c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t64r1c5"><select class="vote" data-cell-id="t64r1c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r1c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t64r1c6"><select class="vote" data-cell-id="t64r1c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r1c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t64r1c7"><select class="vote" data-cell-id="t64r1c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r1c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t64r1c8"><select class="vote" data-cell-id="t64r1c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r1c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>Bonus starting marks</td>
@@ -5617,10 +5771,10 @@ here — leave your name + comment)</em></p>
 <td>+100</td>
 <td>+250</td>
 <td>+500</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t63r2c5"><select class="vote" data-cell-id="t63r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t63r2c6"><select class="vote" data-cell-id="t63r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t63r2c7"><select class="vote" data-cell-id="t63r2c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r2c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t63r2c8"><select class="vote" data-cell-id="t63r2c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r2c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t64r2c5"><select class="vote" data-cell-id="t64r2c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r2c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t64r2c6"><select class="vote" data-cell-id="t64r2c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r2c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t64r2c7"><select class="vote" data-cell-id="t64r2c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r2c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t64r2c8"><select class="vote" data-cell-id="t64r2c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r2c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>Augment catalysts</td>
@@ -5628,10 +5782,10 @@ here — leave your name + comment)</em></p>
 <td>25</td>
 <td>60</td>
 <td>100</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t63r3c5"><select class="vote" data-cell-id="t63r3c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r3c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t63r3c6"><select class="vote" data-cell-id="t63r3c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r3c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t63r3c7"><select class="vote" data-cell-id="t63r3c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r3c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t63r3c8"><select class="vote" data-cell-id="t63r3c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r3c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t64r3c5"><select class="vote" data-cell-id="t64r3c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r3c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t64r3c6"><select class="vote" data-cell-id="t64r3c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r3c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t64r3c7"><select class="vote" data-cell-id="t64r3c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r3c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t64r3c8"><select class="vote" data-cell-id="t64r3c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r3c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>Death’s Pardons</td>
@@ -5639,10 +5793,10 @@ here — leave your name + comment)</em></p>
 <td>1</td>
 <td>2</td>
 <td>3</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t63r4c5"><select class="vote" data-cell-id="t63r4c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r4c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t63r4c6"><select class="vote" data-cell-id="t63r4c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r4c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t63r4c7"><select class="vote" data-cell-id="t63r4c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r4c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t63r4c8"><select class="vote" data-cell-id="t63r4c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r4c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t64r4c5"><select class="vote" data-cell-id="t64r4c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r4c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t64r4c6"><select class="vote" data-cell-id="t64r4c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r4c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t64r4c7"><select class="vote" data-cell-id="t64r4c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r4c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t64r4c8"><select class="vote" data-cell-id="t64r4c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r4c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>Starting Infamy</td>
@@ -5650,10 +5804,10 @@ here — leave your name + comment)</em></p>
 <td>—</td>
 <td>100</td>
 <td>200</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t63r5c5"><select class="vote" data-cell-id="t63r5c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r5c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t63r5c6"><select class="vote" data-cell-id="t63r5c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r5c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t63r5c7"><select class="vote" data-cell-id="t63r5c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r5c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t63r5c8"><select class="vote" data-cell-id="t63r5c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r5c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t64r5c5"><select class="vote" data-cell-id="t64r5c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r5c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t64r5c6"><select class="vote" data-cell-id="t64r5c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r5c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t64r5c7"><select class="vote" data-cell-id="t64r5c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r5c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t64r5c8"><select class="vote" data-cell-id="t64r5c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r5c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>Legacy cosmetic trust</td>
@@ -5661,10 +5815,10 @@ here — leave your name + comment)</em></p>
 <td>—</td>
 <td>—</td>
 <td>Yes</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t63r6c5"><select class="vote" data-cell-id="t63r6c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r6c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t63r6c6"><select class="vote" data-cell-id="t63r6c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r6c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t63r6c7"><select class="vote" data-cell-id="t63r6c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r6c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t63r6c8"><select class="vote" data-cell-id="t63r6c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r6c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t64r6c5"><select class="vote" data-cell-id="t64r6c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r6c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t64r6c6"><select class="vote" data-cell-id="t64r6c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r6c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t64r6c7"><select class="vote" data-cell-id="t64r6c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r6c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t64r6c8"><select class="vote" data-cell-id="t64r6c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r6c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>Hall of Legends recognition</td>
@@ -5672,10 +5826,10 @@ here — leave your name + comment)</em></p>
 <td>—</td>
 <td>Listed</td>
 <td>Named plaque</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t63r7c5"><select class="vote" data-cell-id="t63r7c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r7c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t63r7c6"><select class="vote" data-cell-id="t63r7c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r7c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t63r7c7"><select class="vote" data-cell-id="t63r7c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r7c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t63r7c8"><select class="vote" data-cell-id="t63r7c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r7c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t64r7c5"><select class="vote" data-cell-id="t64r7c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r7c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t64r7c6"><select class="vote" data-cell-id="t64r7c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r7c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t64r7c7"><select class="vote" data-cell-id="t64r7c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r7c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t64r7c8"><select class="vote" data-cell-id="t64r7c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r7c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 <tr>
 <td>Name reservation window</td>
@@ -5683,10 +5837,10 @@ here — leave your name + comment)</em></p>
 <td>24h</td>
 <td>48h</td>
 <td>48h</td>
-<td class="admin-cell" data-admin="Bro" data-cell-id="t63r8c5"><select class="vote" data-cell-id="t63r8c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r8c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Ririn" data-cell-id="t63r8c6"><select class="vote" data-cell-id="t63r8c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r8c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Kirin" data-cell-id="t63r8c7"><select class="vote" data-cell-id="t63r8c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r8c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
-<td class="admin-cell" data-admin="Sivart" data-cell-id="t63r8c8"><select class="vote" data-cell-id="t63r8c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t63r8c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Bro" data-cell-id="t64r8c5"><select class="vote" data-cell-id="t64r8c5" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r8c5" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Ririn" data-cell-id="t64r8c6"><select class="vote" data-cell-id="t64r8c6" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r8c6" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Kirin" data-cell-id="t64r8c7"><select class="vote" data-cell-id="t64r8c7" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r8c7" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
+<td class="admin-cell" data-admin="Sivart" data-cell-id="t64r8c8"><select class="vote" data-cell-id="t64r8c8" onchange="onVote(this)"><option value="">—</option><option value="agree">✓ Agree</option><option value="disagree">✗ Disagree</option></select><textarea class="notes" data-cell-id="t64r8c8" placeholder="Reason…" oninput="onNote(this)"></textarea></td>
 </tr>
 </tbody>
 </table></div>
