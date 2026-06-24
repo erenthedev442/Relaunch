@@ -39,33 +39,15 @@ The result: veteran players one-shot everything, gear had no meaning, and new pl
 
 ---
 
-## Progression Pace
-
-Target: **3–6 weeks** from fresh Lv99 to Prestige Tier 1 for a player doing 8–12 hours per week.
-
-| Week | Milestone | Activity |
-|---|---|---|
-| 1 | Full Bronze kit, HL Rank 1 | First-kills on 8 Rank 1 NMs + invasion participation |
-| 2–3 | HL Rank 2–3 | Escalating NMs, gear upgrading via medals |
-| 4–5 | HL Rank 4–5 | Party/trio content, Kindreds + Demons medals |
-| 5–6 | Prestige Entry | 1000 marks earned, Nightmare Court unlocked |
-| Month 2–3 | Prestige 20–40 | Jailers tier, Paragon board filling |
-| Month 4–6+ | Prestige 60 / Apex | Max Paragon perks, Apex infinite climb |
-
-**Hardcore pace (20h+/week): Rank 5 in ~3 weeks.  
-Casual pace (4h/week): Rank 5 in ~8–10 weeks.**
-
----
-
 ## Hunting League Rank Gates (Updated)
 
-| Rank | Mark Cost (OLD) | Mark Cost (NEW) | Unlock |
-|---|---|---|---|
-| Rank 1 | 0 | 0 | Day 1 — always available |
-| Rank 2 | 50 | 75 | ~Week 1 |
-| Rank 3 | 150 | 225 | ~Week 2–3 |
-| Rank 4 | 350 | 500 | ~Week 3–4 |
-| Rank 5 | 700 | 1,000 | ~Week 5–6 |
+| Rank | Mark Cost (OLD) | Mark Cost (NEW) |
+|---|---|---|
+| Rank 1 | 0 | 0 |
+| Rank 2 | 50 | 75 |
+| Rank 3 | 150 | 225 |
+| Rank 4 | 350 | 500 |
+| Rank 5 | 700 | 1,000 |
 
 Gates are cumulative. A player needs 1,000 total marks to unlock Rank 5.
 
@@ -233,12 +215,12 @@ Formula: `(1 + boost_0-31) × mult × masteryMult(2.0) × affinity(1.5)`.
 
 | Milestone | Augment Rank | Gear+Prestige ATT | +Augments | Total ATT | Total HP (w/aug) |
 |---|---|---|---|---|---|
-| Week 1 (Bronze gear) | 0–1 | ~500 | +75 | ~575 | ~3,800 |
-| Week 2–3 (HL Rank 2–3) | 1 | ~700 | +150 | ~850 | ~5,000 |
-| Week 4 (HL Rank 4) | 1–2 | ~950 | +280 | ~1,230 | ~7,000 |
-| Week 5–6 (HL Rank 5 / Prestige entry) | 2–3 | ~1,200 | +400 | ~1,600 | ~8,500 |
-| Month 2–3 (Prestige mid) | 3–4 | ~1,600 | +650 | ~2,250 | ~11,000 |
-| Month 4–6+ (Max Paragon + Aug Rank 5) | 4–5 | ~2,200 | +900 | ~3,100 | ~14,000 |
+| Bronze gear (HL Rank 1) | 0–1 | ~500 | +75 | ~575 | ~3,800 |
+| HL Rank 2–3 | 1 | ~700 | +150 | ~850 | ~5,000 |
+| HL Rank 4 | 1–2 | ~950 | +280 | ~1,230 | ~7,000 |
+| HL Rank 5 / Prestige entry | 2–3 | ~1,200 | +400 | ~1,600 | ~8,500 |
+| Prestige mid (Rank 20–40) | 3–4 | ~1,600 | +650 | ~2,250 | ~11,000 |
+| Max Paragon + Aug Tier 3 | 4–5 | ~2,200 | +900 | ~3,100 | ~14,000 |
 
 Player DEF is unchanged (most players augment offensively, not DEF). Mob ATT targets unchanged.
 
@@ -445,23 +427,14 @@ Two axes scale with content achievement: **which categories are available** and 
 
 > **Admin notes — trophy item fate:** *(leave your name + comment)*
 
-### Tier Unlock Timeline
-
-| Tier | When achievable | Player-facing milestone |
-|---|---|---|
-| 0 | Day 1 | Bronze gear augments are immediately available and useful |
-| 1 | Week 2–3 (HL Rank 3) | Reaching Rank 3 unlocks WS DMG and Haste augments |
-| 2 | Week 5–6 (HL Rank 5) | Rank 5 / Prestige entry opens Refresh, Magic, and Resist builds |
-| 3 | Month 2–3 (Prestige Level 15) | Prestige 15 hits max augment power; Pet/Healer/Enmity builds fully viable |
-
 ### Impact on the Power Curve
 
 | Milestone | Gear + Prestige ATT | With Augments | Gear + Prestige HP | With Augments |
 |---|---|---|---|---|
-| Week 5–6 (Prestige entry / Aug Tier 2) | ~1,200 | ~1,350–1,500 | ~7,000 | ~8,000–9,000 |
-| Month 2–3 (Prestige mid / Aug Tier 3) | ~1,600 | ~1,900–2,100 | ~8,500 | ~10,500–12,000 |
-| Month 6+ (Max Paragon / Aug Tier 3 max) | ~2,200 | ~2,700–2,900 | ~10,000 | ~14,000–16,000 |
-| + Max Rebirth (main job, Month 6+) | — | → ~3,700–3,900 | — | → ~15,000–17,000 |
+| Prestige entry / Aug Tier 2 | ~1,200 | ~1,350–1,500 | ~7,000 | ~8,000–9,000 |
+| Prestige mid / Aug Tier 3 | ~1,600 | ~1,900–2,100 | ~8,500 | ~10,500–12,000 |
+| Max Paragon / Aug Tier 3 max | ~2,200 | ~2,700–2,900 | ~10,000 | ~14,000–16,000 |
+| + Max Rebirth (main job, late endgame) | — | → ~3,700–3,900 | — | → ~15,000–17,000 |
 
 ### Notes
 
@@ -481,7 +454,7 @@ Job Rebirth borrows `prestige_catalog.categories` for its boost list — same st
 | Job Rebirth (same catalog, same cap) | +1,000 | +1,000 |
 | Paragon Might perk (10 ranks × +100) | +1,000 | — |
 | Paragon Vigor perk (10 ranks × +500) | — | +5,000 |
-| Gear (Month 6+ endgame) | ~200 | ~8,000 |
+| Gear (late endgame) | ~200 | ~8,000 |
 | Augments (Rank 5, offensive build) | +900 | +4,000 |
 | **Peak total** | **~4,100** | **~19,000** |
 
@@ -489,7 +462,7 @@ Job Rebirth borrows `prestige_catalog.categories` for its boost list — same st
 
 **Why flat stat stacking is acceptable (Option A):**
 - Each rebirth requires a full job re-grind (Lv1→99 + 2,100 JP) with an escalating EXP penalty: R1 = −4%, R10 = −32%, R20 = −64%, hard cap −90%
-- Max Rebirth investment on a single job reaches Month 6+; across multiple jobs it's effectively infinite grind
+- Max Rebirth investment on a single job is a deep endgame grind; across multiple jobs it's effectively infinite
 - pDIF caps limit how much raw ATT helps once mob DEF is set appropriately — at Prestige T5 DEF (3,200–3,800) a player with 4,100 ATT is at or near cap, not running away with multiplicative gains
 - The grind is per-job: a WAR has +1,000 Rebirth ATT, switching to PLD gives them none unless they've separately reborn PLD
 
@@ -719,7 +692,7 @@ Should the drastically-reduced login streak milestones still give Hunt Marks, or
 ---
 
 **G2. Voidspire early-game value collapses if milestones → Paragon Points**
-Paragon Points are only spendable once a player reaches the Apex Trials loop (endgame, Month 4+). Converting F25 milestones to Paragon Points makes Voidspire a dead zone for new players during their entire first month. Options:
+Paragon Points are only spendable once a player reaches the Apex Trials loop (deep endgame). Converting F25 milestones to Paragon Points makes Voidspire a dead zone for new players until they reach that stage. Options:
 - **Option A:** Keep a small Hunt Mark reward on early floors (F1–F10 range) and convert only the mid/late milestones (F25+) to Paragon Points.
 - **Option B:** Gate Voidspire entry by HL Rank 4+ so only near-endgame players enter.
 - **Option C:** Convert milestones to Paragon Points but add a non-endgame early-floor reward (gil, catalysts, augment materials) to retain value for new players.
@@ -740,7 +713,7 @@ The All Systems table lists both "Endless Tower (50 floors)" and "Voidspire (inf
 ### HIGH — Significant balance impact not addressed
 
 **G4. Hunter's Guild Grandmaster +100% mark amp — not in the economy model**
-All economy rate tables assume base kill rates (5–130/kill). Grandmaster doubles all mark income from that guild's NMs. At peak: T5 featured NM, full party, Grandmaster = ~500–580 marks/kill. Two open questions: (1) Does the amp apply globally to all HL kills, or only to that guild's specific NM pool? If global, it can halve the time to unlock rank gates. (2) At what pace can a dedicated player hit Grandmaster? If Grandmaster is achievable within the first 2 weeks, the rank gate math needs to account for it.
+All economy rate tables assume base kill rates (5–130/kill). Grandmaster doubles all mark income from that guild's NMs. At peak: T5 featured NM, full party, Grandmaster = ~500–580 marks/kill. Two open questions: (1) Does the amp apply globally to all HL kills, or only to that guild's specific NM pool? If global, it can halve the time to unlock rank gates. (2) At what pace can a dedicated player hit Grandmaster? If Grandmaster is achievable at HL Rank 2–3, the rank gate math needs to account for it.
 
 > **Decision:** *(pending — clarify amp scope + Grandmaster pace)*
 > **Admin notes:** *(leave your name + comment)*
@@ -950,7 +923,7 @@ Needs: server identity pitch, Day 1 instructions (Character Upgrader NPC, HL ven
 
 **G28. Docs overhaul scope**
 "Update player-facing docs" is Implementation Sequence step 5 but is not scoped. Non-generated narrative pages affected:
-- Progression guide (new pace: 3–6 weeks to Prestige)
+- Progression guide (new mark rates, rank gates, progression milestones)
 - Economy/marks page (all rate changes)
 - New player start guide (50 marks + 300k, no starter gear)
 - Paragon / Apex Trials page (Daily Might nerf + board value)
