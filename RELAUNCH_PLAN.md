@@ -249,6 +249,126 @@ The result: veteran players one-shot everything, gear had no meaning, and new pl
 
 ---
 
+## Player Engagement & Retention
+
+The relaunch isn't just a reset — it's a redesign of the reasons players log in. This section outlines every hook, from the first daily login to the endgame loop that keeps a two-year player still making progress.
+
+---
+
+### Daily Hooks — Reasons to Log In Every Day
+
+These systems create a daily pull that doesn't depend on finding a party or clearing content. A solo player can log in, run their dailies, and still feel like they made progress.
+
+| System | What It Does | Cap / Limits |
+|---|---|---|
+| **Daily Login Bonus** | 50 marks just for logging in | 50/day — enough to feel meaningful, not enough to shortcut ranks |
+| **Login Streak** | Escalating bonuses at Day 7 / 14 / 30 | Day 7: +75 marks · Day 14: +200 marks · Day 30: +750 marks |
+| **Daily Board** | 3–5 rotating objectives (kill X mob type, visit Y zone, etc.) | 750 mark hard cap/day across all objectives |
+| **Weekly Hunt Objectives** | Rank-gated weekly quest chains tied to HL progression | Locked by HL Rank — higher ranks get harder/better objectives; 5k completion bonus |
+| **Hunter's Guild** | 4 guilds × 6 ranks; Grandmaster = +100% mark bonus on all kills | Long-term passive — always earning Guild rank passively while hunting |
+| **Augment Sage** | Re-rolling augment slots costs marks; every re-roll feels like a small gamble | No cap — a daily or per-session sink for players who enjoy gear optimization |
+
+The login streak in particular is a strong retention tool — a player who logs in 14 days in a row isn't quitting on Day 15.
+
+---
+
+### World Events — Shared Reasons to Be Online at the Same Time
+
+These systems create overlap between players that naturally builds community.
+
+| Event | Frequency | What Happens | Primary Reward |
+|---|---|---|---|
+| **Invasions** | Multiple times/day | Open-world assault; any player can join; final boss = World Boss candidate | Infamy (primary), small marks, group drops |
+| **Star-Devourer Raid** | Weekly | Server-wide raid boss; requires coordination | 2,500 marks + 500 Infamy first clear/week |
+| **Treasure Hunts** | Random proc | Rare event; Tier 3 pays 1,500 marks | Marks windfall; pure excitement |
+| **Chocobo Derby** | On-demand | Race for gil | Gil; social fun |
+
+Invasions are particularly important — they happen often, anyone can join, and they generate spontaneous grouping between strangers. The World Boss inside invasions ties into the Prime Weapon Trial 3 (3 world boss kills), so veterans have a reason to help newcomers kill it.
+
+---
+
+### Competitive Systems — Reasons to Push Harder Than Anyone Else
+
+| System | What It Tracks | Resets at Wipe? |
+|---|---|---|
+| **Apex Leaderboard** | Highest Apex tier reached | Yes — fresh competition |
+| **Paragon Points Leaderboard** | Total Paragon Points earned | Yes |
+| **HL Real Level** | Composite progression score shown on website | Yes |
+| **WSTracker** | Personal best weapon skill damage (per WS) | Yes |
+| **Combat Records** | Highest heal / nuke / burst / SC damage on record | Yes |
+| **Gauntlet Champion** | Best Gauntlet floor cleared | Yes |
+| **Hunter's Guild Rank** | Guild standing — publicly visible | Yes |
+| **Hall of Legends** | Named permanent NPC for Tier 4 Legacy players | No — permanent monument |
+
+The Hall of Legends is the one thing that doesn't reset. Tier 4 pre-wipe players (The Unbroken) get a named NPC plaque in GM Home that new players discover. It's not a power advantage — it's a legacy.
+
+---
+
+### Long-Form Goals — Projects That Take Weeks or Months
+
+These are the systems that answer "what am I working toward?" and keep players engaged across multiple sessions.
+
+| Goal | What It Takes | Payoff |
+|---|---|---|
+| **Prime Weapon** | 4 trials across different content types + 750M gil forge | The server's ultimate item; permanent status symbol |
+| **HL Rank 5** | 1,000 lifetime marks of hunting | Unlocks Prestige, Augment Tier 2, and all T3 Abyssea content |
+| **Voidspire — Floor 25** | Progressive dungeon with milestone floors | Paragon Point windfall at milestone floors; Floor 50 for Prime Trial 2 |
+| **Endless Tower — Floor 50** | Incremental dungeon climb | Prime Weapon Trial 2 completion |
+| **Gauntlet L10** | An aspirational wall: 10M HP boss, 27k DEF, 36k ATT | Server first achievement; potentially never cleared — and that's fine |
+| **Prestige Level 60** | Long journey through Nightmare Court → Jailers → Celestials | Access to all Prestige content tiers; gateway to late-game Paragon |
+| **Job Mastery** | Mastery milestone requiring deep investment in a single job | Prime Weapon Trial 4 completion; unique title |
+| **Paragon Board — Full ATT/DEF/HP caps** | Hundreds of Apex Trials runs | Max capped stat bonuses; the "done" moment for Paragon perk track |
+
+---
+
+### Infinite Progression — What Keeps the Endgame Players Here
+
+The players who've done everything still need a reason to log in. These systems have no ceiling.
+
+| System | Why It Never Ends |
+|---|---|
+| **Apex Trials / Paragon** | Each Apex tier climbs indefinitely; Paragon Points buy infinite Prestige Levels beyond the job cap |
+| **Augment Sage** | Re-rolling for perfect augment combinations is endless — 5 slots × 13 categories × RNG |
+| **Job Rebirth** | Stack Rebirth on multiple jobs indefinitely; mob HP adjusts for T3+ to keep content relevant |
+| **Hunter's Guild** | 4 guilds, each with 6 ranks; Grandmaster on all 4 = significant mark income boost |
+| **Leaderboard chasing** | WSTracker personal bests, Apex rankings, and Paragon leaderboard are always improvable |
+
+---
+
+### Economy — Systems That Give Gil Purpose
+
+A healthy economy keeps players engaged because it creates goals outside of combat.
+
+| System | How It Works | Role |
+|---|---|---|
+| **Auction House** | Player-to-player trading; market maker bot keeps it stocked | The backbone of the economy; buying gear from other players feels good |
+| **AH Market Maker** | Bot sells 5,786 stock gear items at fair prices; buys back all AH items at a layered floor | Ensures the AH is never empty; stops deflation and item hoarding |
+| **Prime Weapon Forge** | 750,000,000 gil to forge | The single biggest planned gil sink in the game; gives rich players a goal |
+| **Augment Rolls** | Costs marks (but marks can be converted to/from gil indirectly) | Ongoing per-session sink |
+| **Casino (Lady Luck)** | Slots, high-low, roulette, dice in GM Home; 2.7–17% house edge | Pure gil sink; social fun; jackpot shouts create server moments |
+| **Sparks Exchange** | Convert Sparks to Gil | Alternative income for players farming older content |
+| **Chocobo Derby** | Race your chocobo; wager gil | Adds a non-combat economy layer |
+
+---
+
+### New Player Experience — Why Someone New Doesn't Feel Lost
+
+The first hour matters most. Here's what a brand-new player experiences:
+
+1. **Instant combat readiness** — All jobs Lv99, RUN/GEO auto-unlocked, subjob auto-levels alongside you
+2. **Immediate spending** — 50 marks + 300k gil means you buy your first armor set and weapon before you fight your first NM
+3. **A clear first objective** — Hunt League Rank 1 NMs are designed to be findable and killable solo. The path is obvious.
+4. **Visible progression** — The HL Rank bar fills. Gear items are itemized by Bronze/Silver/Gold. You see yourself getting stronger.
+5. **Daily rewards for existing** — The login streak starts on Day 1. Just showing up three days in a row feels rewarding.
+6. **A community that already exists** — Invasions happen near starter zones. New players bump into veterans naturally.
+7. **Legacy Reward recognition** — Pre-wipe players who earned Legacy status are visibly recognized via titles and the Hall of Legends. This signals to new players that the server has history and permanence.
+
+---
+
+> **Admin notes — engagement priorities:** *(which of these systems needs the most tuning before launch? Which daily hooks are missing?)*
+
+---
+
 ## What a New Character Gets at Launch
 
 | Resource | Amount | Why | Bro | Ririn | Kirin |
@@ -637,12 +757,49 @@ The augment system is a parallel progression axis that stacks on top of gear, Pr
 
 Two axes scale with content achievement: **which categories are available** and **how powerful augments can get** (max boost per slot, 0–31 engine cap). The previous trophy + lifetime-count gate system is replaced entirely by the same content milestone gates the rest of progression uses.
 
-| Tier | Gate | Max Boost/Slot | Mastery Mult | Crit Chance | Categories Available | Bro | Ririn | Kirin |
-|---|---|---|---|---|---|---|---|---|
-| 0 — Base | None (Day 1) | 8 | 1.00× | 5% | HP/Regen · ATT/STR · ACC/DEX · DEF/VIT |  |  |  |
-| 1 — Combat | HL Rank 3 | 16 | 1.33× | 10% | + AGI/EVA/Haste · WS DMG · Skill+ |  |  |  |
-| 2 — Advanced | HL Rank 5 | 24 | 1.67× | 15% | + MP/Refresh · Elemental Resist · INT/Magic |  |  |  |
-| 3 — Master | Prestige Level 15 | 31 | 2.00× | 20% | + MND/Healing · CHA/Enmity · Pet — all 13 unlocked |  |  |  |
+| Tier | Gate | Max Boost/Slot | Mastery Mult | Crit Chance | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|---|---|
+| 0 — Base | None (Day 1) | 8 | 1.00× | 5% |  |  |  |
+| 1 — Combat | HL Rank 3 | 16 | 1.33× | 10% |  |  |  |
+| 2 — Advanced | HL Rank 5 | 24 | 1.67× | 15% |  |  |  |
+| 3 — Master | Prestige Level 15 | 31 | 2.00× | 20% |  |  |  |
+
+### All 13 Augment Categories — Full Breakdown
+
+Each category unlocks at a specific tier. Within a category, every listed mod is a possible roll on each augment slot.
+
+**Tier 0 — Available Day 1**
+
+| # | Category | Key Mods |
+|---|---|---|
+| 1 | **STR / Physical Offense** | ATT, Rng.ATT, STR, Dbl.Atk, Triple Atk, QA, TP Bonus, Counter, Kick Attacks, Zanshin, Daken, Conserve TP, Barrage, Save TP, Reverse Flourish, Martial Arts; Pet: ATT, Dbl.Atk, TP Bonus, Phys.dmg.taken |
+| 2 | **DEX / Accuracy / Crit** | ACC, Rng.ACC, DEX, Crit.hit rate, Crit.hit damage, Store TP, Subtle Blow, Rapid Shot, Magic crit.hit rate, Enemy crit.hit rate; Pet: ACC, Rng.ACC, Crit.hit rate, Store TP, Subtle Blow, DEX |
+| 3 | **VIT / Defense** | DEF, VIT, Magic dmg.taken, Phys.dmg.taken, Breath dmg.taken, Mag.Def.Bns, Shield Mastery, Block chance, Phalanx, Parrying rate; Pet: DEF, Mag.Def.Bns, Magic dmg.taken, VIT |
+| 8 | **HP / Regen** | HP, HP+MP, Regen, Regen Potency, HP recovered while healing, Pet Regen |
+
+**Tier 1 — Unlocks at HL Rank 3**
+
+| # | Category | Key Mods |
+|---|---|---|
+| 4 | **AGI / Evasion / Haste** | Haste, AGI, Evasion, Mag.Evasion, Melee delay, Ranged delay, Snapshot, Recycle, Resist Slow; Ability delays: Blood Pact, Call Beast, Quick Draw, Phantom Roll, Waltz, Song, Healing/Elemental/Enfeebling/Enhancing magic recast; Pet: Haste, Evasion, Mag.Evasion, AGI |
+| 12 | **Weapon / Magic Skill+** | All weapon skills (H2H/Dagger/Sword/Great Sword/Axe/Great Axe/Scythe/Polearm/Katana/Great Katana/Club/Staff/Archery/Marksmanship/Throwing/Shield/Parrying); All magic skills (Divine/Enhancing/Enfeebling/Elemental/Ninjutsu/Singing/String/Blue/Geomancy/Handbell/Dark/Wind instrument); EXP +33%, CP +33% |
+| 13 | **Weaponskill DMG** | Weapon skill damage, WS Accuracy, Skillchain damage, Dmg (melee only), Dmg (ranged only) |
+
+**Tier 2 — Unlocks at HL Rank 5**
+
+| # | Category | Key Mods |
+|---|---|---|
+| 5 | **INT / Magic Offense** | INT, Mag.Acc, Mag.Atk.Bns, Mag.Acc./Mag.Dmg, Fast Cast, Enspell Dmg, Magic burst dmg, Mag.crit.hit dmg, Occult Acumen, Drain/Aspir potency, Spell interruption rate down, Helix duration, Meditate duration; Pet: Mag.Acc, Mag.Atk.Bns, Magic Damage, INT, Avatar Mag.Atk.Bns |
+| 9 | **MP / Refresh** | MP, Refresh, Conserve MP |
+| 11 | **Elemental / Status Resist** | All 8 elemental resists (Fire/Ice/Wind/Earth/Lightning/Water/Light/Dark); Status resists: Sleep, Poison, Paralyze, Blind, Silence, Petrify, Bind, Curse, Gravity, Stun; Resist status ailments (occ.); Element affinities (all 8); Avatar perpetuation cost (per element) |
+
+**Tier 3 — Unlocks at Prestige Level 15**
+
+| # | Category | Key Mods |
+|---|---|---|
+| 6 | **MND / Healing** | MND, Cure potency, Cure spellcasting time, Potency of Cure received, Healing magic skill, MP recovered while healing |
+| 7 | **CHR / Enmity** | CHR, Enmity, Charm, All songs, All song effects, Song spellcasting time, Treasure Hunter, Gilfinder, Resist Charm; Pet: Enmity, CHR |
+| 10 | **Pet Specialization** | Blood Pact damage, Summoning magic skill, Avatar perpetuation cost, Elemental Siphon, Blood Boon, Beast Affinity, Thunder Affinity, Pet Phys.dmg.taken, Immunobreak Chance+ (COR Phantom Roll augment) |
 
 **Implementation:** Gate checks `HL_Tier` CharVar for Tiers 1–2, and any `Prestige_Level_N >= 15` for Tier 3, in the Augment Sage NPC. Pure Lua — no rebuild. Add Augment Sage NPC to Phase 1 deploy list.
 
