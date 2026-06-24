@@ -369,6 +369,176 @@ The first hour matters most. Here's what a brand-new player experiences:
 
 ---
 
+## Progression Timeline — 6 Hours / Day
+
+> **Baseline assumptions:** 6 hours of active play per day · consistent party availability for group content · all daily bonuses claimed · casual participation in world events · no hardcore optimization (no-lifing the AH, pre-scheduling every spawn, etc.). A more casual 3 hr/day player should roughly double these timelines.
+
+---
+
+### Quick Reference — Milestone Table
+
+| Milestone | Time to Reach | Cumulative | What Limits the Rate |
+|---|---|---|---|
+| First NM kill | 10–30 min | Day 1 | Setup only — buy gear, zone in, find NM |
+| **HL Rank 2** (75 marks) | ~1 day | Day 1 | Starter 50 marks + login bonus nearly covers the gate |
+| **HL Rank 3** (225 marks) | ~3 days | Day 3–4 | Rank 2 NMs at 12 marks/kill + Daily Board filling |
+| Augment Tier 1 unlocks | ~3–4 days | Day 3–4 | Same gate as Rank 3 — automatic |
+| **HL Rank 4** (500 marks) | ~1 week | Day 7–9 | Rank 3 NMs at 22 marks/kill; first trio content |
+| **HL Rank 5** (1,000 marks) | ~2 weeks | Day 12–16 | Rank 4–5 NMs; party required; spawn timer caps pull rate |
+| Augment Tier 2 unlocks | ~2 weeks | Day 12–16 | Same gate as Rank 5 — automatic |
+| Silver → Gold gear transition | ~3–5 days | Day 3–5 | Mark accumulation for Gold vendor |
+| First Reforge armor piece | 2–3 weeks | Week 2–3 | Reforge Marks from dedicated NM track (parallel grind) |
+| Full Reforge set (1 track) | 4–6 weeks | Week 4–7 | Reforge Mark currency; 5 NMs per track at Lv150–250 |
+| **Prestige Lv 1** | ~2.5 weeks | Day 16–18 | First Nightmare Court kill + initial AP spend |
+| **Prestige Lv 15** (Augment Tier 3) | ~5–6 weeks | Week 5–6 | Nightmare Court + T1 Voidwalker AP grind; party required |
+| **Prestige Lv 40** | ~10–12 weeks | Month 3 | Jailer T2 content; deep party investment |
+| **Prestige Lv 60+** | ~4–5 months | Month 4–5 | T3–T4 raid-scale; Celestial T5 opens |
+| Prime Trial 1 done | ~3–4 weeks | Week 3–4 | Nightmare Frags; drops naturally during early Court farming |
+| Prime Trial 2 done | ~4–7 weeks | Week 4–7 | Endless Tower Floor 50; depends on solo vs group |
+| Prime Trial 3 done | ~2–4 weeks | Week 2–4 | 3× World Boss; capped by invasion event frequency |
+| Prime Trial 4 done | ~2–3 months | Month 2–3 | Job Mastery milestone; requires deep Prestige |
+| **Prime Weapon forged** | ~4–6 months | Month 4–6 | All 4 trials done + 750M gil accumulated |
+| Apex Trials entry | ~2–3 months | Month 2–3 | Post-Prestige gate (exact TBD); Paragon begins |
+| Paragon stat caps (ATT/DEF/HP) | ~5–8 months | Month 5–8 | Hundreds of Apex runs |
+| **True endgame** | Month 6+ | — | Celestial content · infinite Paragon levels · leaderboard war |
+
+---
+
+### Stage-by-Stage Breakdown
+
+#### Stage 0 → HL Rank 2 · ~1 day
+
+The starter kit almost covers the first gate by itself. The math:
+
+| Source | Marks |
+|---|---|
+| Starter kit | +50 |
+| Day 1 Login Bonus | +50 |
+| ~10 Rank 1 NM first kills (10 marks each) | +100 |
+| Daily Board objectives (new player, 2–3 easy ones) | +100 |
+| **Day 1 total** | **~300** |
+
+Rank 2 gate is 75. Most players hit it within the first session, probably within 2–3 hours of their first login.
+
+---
+
+#### HL Rank 2 → Rank 3 · ~2–3 additional days (Day 2–4)
+
+At Rank 2, kills pay 12 marks base (24 on first kills). Realistically a 6 hr/day player rotates through 6–10 Rank 2 NMs with ~15–20 min spawn windows, hitting roughly 18–24 kills per day. Combined with daily bonuses:
+
+| Source | Marks/Day |
+|---|---|
+| NM kills (20 kills × 12 avg) | ~240 |
+| Daily Login Bonus | 50 |
+| Daily Board (rank-limited objectives) | ~150 |
+| **Estimated daily total** | **~440** |
+
+The 150 additional marks needed (75 → 225 gate) arrive in well under a day of combat. The real pacing here is the Daily Board objectives gating by rank — a Rank 2 player can't access high-tier objectives, so the board pays less than its 750/day ceiling.
+
+**Rank 3 unlocks Augment Tier 1** — the first meaningful gear upgrade since Day 1. The Silver → Gold gear transition also becomes economically viable around this point.
+
+---
+
+#### HL Rank 3 → Rank 5 · ~8–12 additional days (Day 5–16)
+
+This is the designed effort zone — the stretch between casual player and serious hunter.
+
+**Rank 3 → Rank 4 (225 → 500, need 275 more):**
+Rank 3 NMs pay 22 marks/kill (44 first-kill). At 20 kills/day: ~440 marks/day from combat. The 275 additional marks arrive in 1–2 days, but real play includes spawn waits, party coordination, and gear optimization that stretches it to ~3–4 days.
+
+**Rank 4 → Rank 5 (500 → 1,000, need 500 more):**
+This is where difficulty ramps into party-required content. Rank 4 NMs pay 38 marks/kill but fights run 10–15 minutes. A solid trio in a 5.5-hour session completes ~18–22 pulls.
+
+| Source | Marks/Day |
+|---|---|
+| Rank 4 NMs (20 kills × 38 base) | ~760 |
+| Featured NM bonus (+200%) | +200 on 1 kill/day |
+| Daily Login Bonus | 50 |
+| Daily Board (now Rank 3+ objectives) | ~250 |
+| **Estimated daily total** | **~1,260** |
+
+Mathematically fast — but Rank 4 NMs require a consistent trio. Nights without a full party drop to duo or solo at lower rank NMs. Factor in 1–2 "off nights" per week and Rank 5 arrives around Day 12–16.
+
+**At Rank 5:** Prestige entry, Augment Tier 2, Abyssea T3, and Prime Trial 1 all unlock simultaneously. This is a major unlock cluster — the server's "Act 2" begins.
+
+---
+
+#### Prestige Lv 1–15 · ~3–4 weeks past Rank 5 (Week 5–6 total)
+
+Nightmare Court bosses (Diabolos, Medusa, Odin) are 4-person content at 10–15 minutes per kill. A consistent party of 4 running 5.5 hours hits ~22–33 boss pulls per day. AP rates per kill aren't finalized, but the design target is **Prestige Level 15 in 3–4 weeks** for a static-organized player.
+
+The catch: finding and keeping a consistent 4-person party is the real rate limiter here. Players without a static will move slower.
+
+**Prestige 15 is the biggest single power milestone in the game.** It unlocks Augment Tier 3 — all 13 categories, 31 boost/slot. Every piece of gear you've been wearing gets substantially better overnight.
+
+---
+
+#### Prestige Lv 15–60 · ~2–3 additional months (Month 3–5 total)
+
+T2–T5 Prestige content is designed to be a months-long project. Kill times, coordination requirements, and party size all increase:
+
+| Prestige Range | Content | Kill Time | Est. Duration |
+|---|---|---|---|
+| Lv 15–40 | Jailer T2 (party 4–6) | 15–22 min | 4–6 weeks |
+| Lv 40–60 | Voidwalker Lords + World's End T3–T4 | 18–30 min | 6–10 weeks |
+| Lv 60+ | Celestials T5 (alliance 6+) | 25–35 min | Ongoing |
+
+A 6 hr/day player in a committed alliance will move through these faster than average, but the content is **designed to take months** — not because of artificial timegates, but because the fights themselves are hard.
+
+---
+
+#### Prime Weapon · Month 4–6 total
+
+The four trials run in parallel throughout Prestige progression:
+
+| Trial | What It Requires | Realistic ETA |
+|---|---|---|
+| Trial 1 — Nightmare Frags | Drops from Nightmare Court farming | Week 3–4 (natural during early Prestige) |
+| Trial 2 — Endless Tower Floor 50 | Floor-by-floor climb; solo or group | Week 4–7 (depends on clear rate per run) |
+| Trial 3 — World Boss × 3 | Invasion event; ~2–4 invasions/day | Week 2–4 (event-frequency limited) |
+| Trial 4 — Job Mastery | Deep Prestige investment milestone | Month 2–3 |
+
+All four trials done → Prime Armory NPC unlocks → **750,000,000 gil forge cost**.
+
+The gil is the real gate. Even with the AH market maker, Chocobo Derby income, and mob drops, accumulating 750M takes sustained economic effort. A player who focuses on the economy in parallel can get there in 1–2 months after trials. A player who ignores the AH until trials are done might spend another 3–4 months farming gil. **Realistic window: Month 4–6 for a dedicated 6 hr/day player.**
+
+---
+
+#### Apex & Paragon · Month 2 onward, no ceiling
+
+Once the Apex entry gate is reached (post-Prestige, exact level TBD), the infinite ladder begins immediately. Early Paragon farming is fast — the first hundred Paragon Points per Apex run add up. Later climbs get harder as Apex difficulty scales up.
+
+| Paragon Milestone | Rough ETA from Apex Entry |
+|---|---|
+| First Paragon perk unlocked | Day 1 of Apex access |
+| ATT/ACC caps (+1,000 each) | 2–4 months of daily Apex |
+| DEF/HP caps (+2,000 / +5,000) | 4–6 months |
+| "Done with the board" feeling | Never — infinite Prestige Levels through Paragon store |
+
+The Paragon store selling infinite Prestige Levels means a player who's been on the server 2 years is still gaining something every session.
+
+---
+
+### Week-by-Week Summary
+
+| Timeframe | Primary Activity | Major Unlocks |
+|---|---|---|
+| **Day 1** | Setup · Rank 1 NMs · Daily Board | Bronze kit · Augment Tier 0 · HL Rank 2 |
+| **Week 1** | Rank 1–3 NM grind · gear upgrades · Daily cadence | Silver → Gold armor · Augment Tier 1 · Rank 3 |
+| **Week 2** | Rank 4–5 push · party content · invasions | HL Rank 5 · Augment Tier 2 · Prestige entry |
+| **Week 3–4** | Nightmare Court intro · Prime Trials 1 & 3 · Endless Tower start | Prestige 1–10 · first Ascension AP perks · Trial 1 done |
+| **Week 5–6** | Nightmare Court + T1 Prestige NMs · Tower climb | **Prestige 15 · Augment Tier 3 (full catalog)** |
+| **Month 2** | T2 Prestige content · Prime Trial 4 progress · gil farming begins | Prestige 20–40 · Job Mastery approaching |
+| **Month 3–4** | T3–T4 Prestige · all Prime Trials complete · Apex entry | Prestige 40–60 · Paragon begins |
+| **Month 4–6** | 750M gil grind · Apex dailies · Paragon stat caps | **Prime Weapon forged** · Paragon filling |
+| **Month 6+** | Celestial T5 · infinite Paragon levels · leaderboard war | No ceiling — this is where the server lives |
+
+---
+
+> **Tuning note for admins:** These timelines assume the rebalanced rates in this plan — HL gates 75/225/500/1,000, Daily Login 50 marks/day, Invasion marks nerfed to ~180/event. Under pre-relaunch rates (gates 50/150/350/700, login 250/day, invasions 1,725/event), a player could hit what is now "Week 2" content on the afternoon of Day 1. The new gates are designed so that Rank 5 at 2 weeks feels earned for a 6hr/day player. If admin consensus is that 2 weeks is too fast or too slow, the primary lever is the Daily Board cap (currently 750/day) — raising or lowering it shifts all these timelines proportionally.
+
+---
+
 ## What a New Character Gets at Launch
 
 | Resource | Amount | Why | Bro | Ririn | Kirin | Sivart |
