@@ -28,7 +28,8 @@
 --     stance = { startHpp=100, periodSec=18, stances={                   -- phys/mag immunity dance
 --                  { mods={[xi.mod.DMGPHYS]=-10000,[xi.mod.DMGMAGIC]=0},     msg='hardens against weapons!' },
 --                  { mods={[xi.mod.DMGPHYS]=0,[xi.mod.DMGMAGIC]=-10000},     msg='warps magic aside!' } } },
---     aoe    = { periodSec=12, dmgPct=22, msg='unleashes a shockwave!' }, -- % of victim max HP to all near
+--     targetPartyOnly = true,                                             -- hostile pulses hit hate target's party only
+--     aoe    = { periodSec=12, dmgPct=22, msg='unleashes a shockwave!' }, -- % of victim max HP
 --     cc     = { periodSec=24, effect=xi.effect.TERROR, power=1, dur=5, msg='lets out a paralysing roar!' },
 --     drain  = { periodSec=10, healPct=3 },                              -- self-heal % max HP (anti-turtle)
 --     phases = { { hp=75, action='adds',   count=3, addGroupId=..., addZoneId=210, addLevel=150, regen=120, msg='...' },
@@ -71,6 +72,98 @@ local function playersNear(entity, radius)
     return out
 end
 M.playersNear = playersNear
+
+local function entityName(entity)
+    local name
+    if entity then
+        pcall(function() name = entity:getName() end)
+    end
+    return name
+end
+
+local function entityId(entity)
+    local id
+    if entity then
+        pcall(function() id = entity:getID() end)
+    end
+    return id
+end
+
+local function playerOwner(entity)
+    if not entity then return nil end
+
+    local okPc, isPc = pcall(function() return entity:isPC() end)
+    if okPc and isPc then
+        return entity
+    end
+
+    local owner
+    pcall(function() owner = entity:getMaster() end)
+    if owner then
+        local okOwnerPc, ownerIsPc = pcall(function() return owner:isPC() end)
+        if okOwnerPc and ownerIsPc then
+            return owner
+        end
+    end
+
+    return nil
+end
+
+-- Hostile mechanics can opt into hitting the current hate target's party,
+-- instead of every unrelated player who happens to be near the mob.
+local function mechanicPlayersNear(mob, target, radius, st)
+    local nearby = playersNear(mob, radius)
+    local ownerName = st and st.ownerName
+
+    if ownerName then
+        local out = {}
+        for _, p in ipairs(nearby) do
+            if entityName(p) == ownerName then
+                out[#out + 1] = p
+            end
+        end
+        return out
+    end
+
+    if not (st and st.targetPartyOnly) then
+        return nearby
+    end
+
+    local owner = playerOwner(target)
+    if not owner then
+        return {}
+    end
+
+    local allowedIds = {}
+    local allowedNames = {}
+    local function allow(entity)
+        local id = entityId(entity)
+        local name = entityName(entity)
+        if id then allowedIds[id] = true end
+        if name then allowedNames[name] = true end
+    end
+
+    allow(owner)
+
+    local okParty, party = pcall(function() return owner:getParty() end)
+    if okParty and party then
+        for _, member in ipairs(party) do
+            allow(member)
+        end
+    end
+
+    local out = {}
+    for _, p in ipairs(nearby) do
+        local id = entityId(p)
+        local name = entityName(p)
+        if (id and allowedIds[id]) or (name and allowedNames[name]) then
+            out[#out + 1] = p
+        end
+    end
+
+    return out
+end
+M.mechanicPlayersNear = mechanicPlayersNear
 
 -- Set false to silence ALL boss mechanic telegraphs (the "[BossName] ..."
 -- SYSTEM_3 shouts) across every NM system in one place -- this is the single
@@ -128,14 +221,12 @@ local function applyStance(mob, stanceCfg, idx, st)
 end
 
 -----------------------------------
--- AoE pulse: a chunk of every nearby player's MAX HP. dmgPct is % (hardcore: 20-45).
+-- AoE pulse: a chunk of victim MAX HP. dmgPct is % (hardcore: 20-45).
 -----------------------------------
-local function aoePulse(mob, aoeCfg, st)
+local function aoePulse(mob, aoeCfg, st, target)
     local radius = aoeCfg.radius or 30.0
-    local owner  = st and st.ownerName
-    for _, p in ipairs(playersNear(mob, radius)) do
+    for _, p in ipairs(mechanicPlayersNear(mob, target, radius, st)) do
         pcall(function()
-            if owner and p:getName() ~= owner then return end
             local dmg = math.floor(p:getMaxHP() * (aoeCfg.dmgPct or 20) / 100)
             if dmg > 0 then
                 p:takeDamage(dmg, mob, xi.attackType.SPECIAL, xi.damageType.ELEMENTAL)
@@ -146,14 +237,12 @@ local function aoePulse(mob, aoeCfg, st)
 end
 
 -----------------------------------
--- CC pulse: a status effect on every nearby player (terror/silence/amnesia/etc.).
+-- CC pulse: a status effect on selected victims (terror/silence/amnesia/etc.).
 -----------------------------------
-local function ccPulse(mob, ccCfg, st)
+local function ccPulse(mob, ccCfg, st, target)
     local radius = ccCfg.radius or 25.0
-    local owner  = st and st.ownerName
-    for _, p in ipairs(playersNear(mob, radius)) do
+    for _, p in ipairs(mechanicPlayersNear(mob, target, radius, st)) do
         pcall(function()
-            if owner and p:getName() ~= owner then return end
             p:addStatusEffect(ccCfg.effect or xi.effect.TERROR, ccCfg.power or 1, 0, ccCfg.dur or 5)
         end)
     end
@@ -161,14 +250,12 @@ local function ccPulse(mob, ccCfg, st)
 end
 
 -----------------------------------
--- Doom: a stacking-death mark on nearby players (they must out-DPS / cleanse).
+-- Doom: a stacking-death mark on selected victims (they must out-DPS / cleanse).
 -----------------------------------
-local function applyDoom(mob, doomCfg, st)
+local function applyDoom(mob, doomCfg, st, target)
     local radius = doomCfg.radius or 30.0
-    local owner  = st and st.ownerName
-    for _, p in ipairs(playersNear(mob, radius)) do
+    for _, p in ipairs(mechanicPlayersNear(mob, target, radius, st)) do
         pcall(function()
-            if owner and p:getName() ~= owner then return end
             if not p:hasStatusEffect(xi.effect.DOOM) then
                 p:addStatusEffect(xi.effect.DOOM, 1, 3, doomCfg.dur or 30)
             end
@@ -241,7 +328,7 @@ end
 -----------------------------------
 -- HP-phase dispatcher.
 -----------------------------------
-local function firePhase(mob, phase, st)
+local function firePhase(mob, phase, st, target)
     if phase.message or phase.msg then shout(mob, phase.message or phase.msg, st) end
     local act = phase.action
     if act == 'adds' then
@@ -250,13 +337,13 @@ local function firePhase(mob, phase, st)
         safeAddMod(mob, xi.mod.ATT, phase.att or 2500)
         pcall(function() mob:addMod(xi.mod.HASTE_GEAR, phase.haste or 100) end)
     elseif act == 'dispel' then
-        for _, p in ipairs(playersNear(mob, phase.radius or 30.0)) do
+        for _, p in ipairs(mechanicPlayersNear(mob, target, phase.radius or 30.0, st)) do
             for _ = 1, (phase.count or 3) do
                 pcall(function() p:dispelStatusEffect() end)
             end
         end
     elseif act == 'nuke' then
-        aoePulse(mob, { dmgPct = phase.dmgPct or 35, radius = phase.radius, msg = nil }, st)
+        aoePulse(mob, { dmgPct = phase.dmgPct or 35, radius = phase.radius, msg = nil }, st, target)
     elseif act == 'heal' then
         pcall(function() mob:addHP(math.floor(mob:getMaxHP() * (phase.healPct or 15) / 100)) end)
     elseif act == 'enrage' then
@@ -264,9 +351,9 @@ local function firePhase(mob, phase, st)
         safeAddMod(mob, xi.mod.ATT, phase.att or 6000)
         pcall(function() mob:addMod(xi.mod.HASTE_GEAR, phase.haste or 200) end)
     elseif act == 'doom' then
-        applyDoom(mob, { dur = phase.dur or 30, radius = phase.radius }, st)
+        applyDoom(mob, { dur = phase.dur or 30, radius = phase.radius }, st, target)
     elseif act == 'terror' then
-        ccPulse(mob, { effect = phase.effect or xi.effect.TERROR, dur = phase.dur or 6, radius = phase.radius }, st)
+        ccPulse(mob, { effect = phase.effect or xi.effect.TERROR, dur = phase.dur or 6, radius = phase.radius }, st, target)
     end
 end
 
@@ -281,19 +368,20 @@ function M.attach(mob, cfg, ownerName)
     mechState[id] = {
         cfg          = cfg,
         name         = cfg.name,
-        ownerName    = ownerName or nil,  -- when set, AoE/CC/shout only targets this player
-        startedAt    = now,
-        firedPhases  = {},
-        addsAlive    = {},
-        stanceOn     = false,
-        stanceIdx    = 0,
-        nextStanceAt = nil,
-        nextAoeAt    = cfg.aoe   and (now + (cfg.aoe.periodSec   or 12)) or nil,
-        nextCcAt     = cfg.cc    and (now + (cfg.cc.periodSec    or 24)) or nil,
-        nextDrainAt  = cfg.drain and (now + (cfg.drain.periodSec or 10)) or nil,
-        enraged      = false,
-        doomFired    = false,
-        regenActive  = false,
+        ownerName       = ownerName or nil,  -- when set, AoE/CC/shout only targets this player
+        targetPartyOnly = cfg.targetPartyOnly == true,
+        startedAt       = now,
+        firedPhases     = {},
+        addsAlive       = {},
+        stanceOn        = false,
+        stanceIdx       = 0,
+        nextStanceAt    = nil,
+        nextAoeAt       = cfg.aoe   and (now + (cfg.aoe.periodSec   or 12)) or nil,
+        nextCcAt        = cfg.cc    and (now + (cfg.cc.periodSec    or 24)) or nil,
+        nextDrainAt     = cfg.drain and (now + (cfg.drain.periodSec or 10)) or nil,
+        enraged         = false,
+        doomFired       = false,
+        regenActive     = false,
     }
 end
 
@@ -335,13 +423,13 @@ function M.tick(mob, target)
     -- AoE pulse.
     if cfg.aoe and st.nextAoeAt and now >= st.nextAoeAt then
         st.nextAoeAt = now + (cfg.aoe.periodSec or 12)
-        aoePulse(mob, cfg.aoe, st)
+        aoePulse(mob, cfg.aoe, st, target)
     end
 
     -- CC pulse.
     if cfg.cc and st.nextCcAt and now >= st.nextCcAt then
         st.nextCcAt = now + (cfg.cc.periodSec or 24)
-        ccPulse(mob, cfg.cc, st)
+        ccPulse(mob, cfg.cc, st, target)
     end
 
     -- Self-heal / lifesteal (anti-turtle pressure).
@@ -355,7 +443,7 @@ function M.tick(mob, target)
         for idx, phase in ipairs(cfg.phases) do
             if not st.firedPhases[idx] and hpp <= phase.hp then
                 st.firedPhases[idx] = true
-                pcall(function() firePhase(mob, phase, st) end)
+                pcall(function() firePhase(mob, phase, st, target) end)
             end
         end
     end
@@ -363,7 +451,7 @@ function M.tick(mob, target)
     -- Doom at low HP (execute pressure).
     if cfg.doom and not st.doomFired and hpp <= (cfg.doom.startHpp or 15) then
         st.doomFired = true
-        applyDoom(mob, cfg.doom, st)
+        applyDoom(mob, cfg.doom, st, target)
     end
 end
 

@@ -537,9 +537,13 @@ buildSourceNMMenu = function(player, srcDef)
                 end
 
                 -- Attach hardcore mechanics AFTER spawn() + stat/HP setup so
-                -- the library records the correct starting HP. catalog.mechCfgs
-                -- is keyed by groupId; a missing entry is a no-op.
-                mechanics.attach(mob, catalog.mechCfgs and catalog.mechCfgs[md.groupId])
+                -- the library records the correct starting HP. Reforge NMs keep
+                -- hostile pulses limited to the current hate target's party.
+                local mechCfg = catalog.mechCfgs and catalog.mechCfgs[md.groupId]
+                if mechCfg then
+                    mechCfg.targetPartyOnly = true
+                end
+                mechanics.attach(mob, mechCfg)
 
                 p:printToPlayer(
                     string.format('%s has appeared!  Slay it for %d %s + base piece, kupo!',
