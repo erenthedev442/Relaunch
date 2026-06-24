@@ -312,11 +312,33 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
                 return
             end
 
+            -- Read sage rank early so the tier gate can use it.
+            local rank = player:getCharVar('Augment_Mastery') or 0
+
+            -- Tier gate: each catalyst has a minimum Sage rank required.
+            --   tier 0 = free, tier 1 = Initiate, tier 2 = Adept,
+            --   tier 3 = Magus, tier 4 = Sage.
+            -- Job-specific augments are tier 0; universally powerful ones
+            -- (Haste, DA, TP Bonus, Dmg+, PDT/MDT) are gated at tier 3-4.
+            local RANK_NAMES = { 'Unranked', 'Initiate', 'Adept', 'Magus', 'Sage', 'Archon' }
+            for _, itemId in ipairs(catalystOrder) do
+                local def2 = catalog[itemId]
+                local need = def2 and (def2.tier or 0) or 0
+                if need > rank then
+                    local needName = RANK_NAMES[need + 1] or ('rank ' .. need)
+                    local haveName = RANK_NAMES[rank + 1] or ('rank ' .. rank)
+                    player:printToPlayer(string.format(
+                        '[%s] requires Augment Sage rank %d (%s). Your rank: %d (%s). Speak with the Augment Sage to advance, kupo!',
+                        def2.label, need, needName, rank, haveName),
+                        xi.msg.channel.SYSTEM_3)
+                    return
+                end
+            end
+
             -- Read the player's Sage-quest state ONCE for the trade. The
             -- mastery rank dictates the global multiplier + the crit roll;
             -- the affinity bitfield is consulted per-augment because each
             -- selection may belong to a different category.
-            local rank        = player:getCharVar('Augment_Mastery') or 0
             local masteryMult = sage.masteryMult[rank + 1] or 1.0
             local critPct     = sage.critChance[rank + 1]  or 0.0
             -- Maat's Cap (or a legacy Maat's Blessing) guarantees a crit; consumed after delGil on success.
