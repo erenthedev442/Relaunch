@@ -28,12 +28,12 @@ The result: veteran players one-shot everything, gear had no meaning, and new pl
 
 ## What a New Character Gets at Launch
 
-| Resource | Amount | Why |
-|---|---|---|
-| Starting Gil | 300,000 | Covers 1–2 Bronze weapons from AH (140–210k each) |
-| Hunt Marks | 50 | Enough for a full Bronze armor set (5 marks/piece at HL vendor) |
-| All jobs | Lv99 | Standard server setting, unchanged |
-| RUN + GEO | Auto-unlocked | Login hook grants on first zone-in |
+| Resource | Amount | Why | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| Starting Gil | 300,000 | Covers 1–2 Bronze weapons from AH (140–210k each) |  |  |  |
+| Hunt Marks | 50 | Enough for a full Bronze armor set (5 marks/piece at HL vendor) |  |  |  |
+| All jobs | Lv99 | Standard server setting, unchanged |  |  |  |
+| RUN + GEO | Auto-unlocked | Login hook grants on first zone-in |  |  |  |
 
 **There is no starter gear.** All gear must be earned. The 50 marks + 300k gil gives a player enough to equip on Day 1 and immediately start hunting.
 
@@ -41,25 +41,25 @@ The result: veteran players one-shot everything, gear had no meaning, and new pl
 
 ## Hunting League Rank Gates (Updated)
 
-| Rank | Mark Cost (OLD) | Mark Cost (NEW) |
-|---|---|---|
-| Rank 1 | 0 | 0 |
-| Rank 2 | 50 | 75 |
-| Rank 3 | 150 | 225 |
-| Rank 4 | 350 | 500 |
-| Rank 5 | 700 | 1,000 |
+| Rank | Mark Cost (OLD) | Mark Cost (NEW) | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| Rank 1 | 0 | 0 |  |  |  |
+| Rank 2 | 50 | 75 |  |  |  |
+| Rank 3 | 150 | 225 |  |  |  |
+| Rank 4 | 350 | 500 |  |  |  |
+| Rank 5 | 700 | 1,000 |  |  |  |
 
 Gates are cumulative. A player needs 1,000 total marks to unlock Rank 5.
 
 ### Marks Per Kill (unchanged)
 
-| Rank | Base | First-Kill Bonus | Weekly Featured |
-|---|---|---|---|
-| 1 | 5 | +100% (10 total) | +200% (15 total) |
-| 2 | 12 | +100% (24 total) | +200% (36 total) |
-| 3 | 22 | +100% (44 total) | +200% (66 total) |
-| 4 | 38 | +100% (76 total) | +200% (114 total) |
-| 5 | 65 | +100% (130 total) | +200% (195 total) |
+| Rank | Base | First-Kill Bonus | Weekly Featured | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|---|
+| 1 | 5 | +100% (10 total) | +200% (15 total) |  |  |  |
+| 2 | 12 | +100% (24 total) | +200% (36 total) |  |  |  |
+| 3 | 22 | +100% (44 total) | +200% (66 total) |  |  |  |
+| 4 | 38 | +100% (76 total) | +200% (114 total) |  |  |  |
+| 5 | 65 | +100% (130 total) | +200% (195 total) |  |  |  |
 
 Party bonus: +25–50% on top of above.
 
@@ -69,14 +69,14 @@ Party bonus: +25–50% on top of above.
 
 **Critical fix:** Invasion events were awarding 1,725 marks per full clear (8 events/day = Rank 5 possible in a single day). This completely bypassed rank gating.
 
-| Source | Old Marks | New Marks | Notes |
-|---|---|---|---|
-| Invasion — per wave | 150 | 20 | |
-| Invasion — full victory | 1,125 | 100 | |
-| **Invasion — max per event** | **1,725** | **~180** | Primary reward shifts to Infamy |
-| Colosseum win | 150 | 150 (keep) | PvP — not farmable on demand |
-| Treasure Hunt Tier 3 | 1,500 | 1,500 (keep) | Rare windfall — healthy excitement |
-| HL kills | 5–130 | 5–130 (keep) | Primary marks source as intended |
+| Source | Old Marks | New Marks | Notes | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|---|
+| Invasion — per wave | 150 | 20 | |  |  |  |
+| Invasion — full victory | 1,125 | 100 | |  |  |  |
+| **Invasion — max per event** | **1,725** | **~180** | Primary reward shifts to Infamy |  |  |  |
+| Colosseum win | 150 | 150 (keep) | PvP — not farmable on demand |  |  |  |
+| Treasure Hunt Tier 3 | 1,500 | 1,500 (keep) | Rare windfall — healthy excitement |  |  |  |
+| HL kills | 5–130 | 5–130 (keep) | Primary marks source as intended |  |  |  |
 
 Invasions now primarily reward **Infamy**, which gates Abyssea Marks content. Marks remain an HL-primary economy.
 
@@ -96,12 +96,12 @@ At 250/day a player who only logs in hits Rank 5 (1,000 marks) **in 4 days of pu
 
 ### 2. Login Streak Milestones → Reduce Drastically
 
-| Day | Current | Problem | Proposed |
-|---|---|---|---|
-| 7 | 1,500 marks | Larger than Rank 3 gate (225) by itself | 75 marks |
-| 14 | 3,000 marks | Rank 5 achievable from Day 7 alone | 200 marks |
-| 21 | 4,500 marks | | 400 marks |
-| 30 | 10,500 marks | 10× the Rank 5 gate | 750 marks |
+| Day | Current | Problem | Proposed | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|---|
+| 7 | 1,500 marks | Larger than Rank 3 gate (225) by itself | 75 marks |  |  |  |
+| 14 | 3,000 marks | Rank 5 achievable from Day 7 alone | 200 marks |  |  |  |
+| 21 | 4,500 marks | | 400 marks |  |  |  |
+| 30 | 10,500 marks | 10× the Rank 5 gate | 750 marks |  |  |  |
 
 Day 7 streak currently gives more marks than unlocking all 5 ranks combined costs.
 
@@ -150,55 +150,55 @@ All 6 of the above are pure Lua config/script changes. Add to Phase 1 deploy lis
 These changes require only a Lua deploy + map restart. No rebuild, no SQL.
 
 ### Paragon Daily Might Buff
-| Stat | Current | New |
-|---|---|---|
-| REGAIN | 50 TP/tick | 5 TP/tick |
-| REGEN | 5% HP/tick | 15 HP/tick flat |
-| REFRESH | 10% MP/tick | 10 MP/tick flat |
-| HP Boost | +3,000 | +1,500 |
+| Stat | Current | New | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| REGAIN | 50 TP/tick | 5 TP/tick |  |  |  |
+| REGEN | 5% HP/tick | 15 HP/tick flat |  |  |  |
+| REFRESH | 10% MP/tick | 10 MP/tick flat |  |  |  |
+| HP Boost | +3,000 | +1,500 |  |  |  |
 
 ### Ascension AP Caps (Prestige)
-| Perk | Current Cap | New Cap |
-|---|---|---|
-| Critical Hit Rate | 50% | 20% |
-| Critical Damage | 100% | 40% |
-| WS Damage | 100% | 40% |
-| SC Damage | 100% | 40% |
-| Haste | 25% | 15% |
-| PDT / MDT | 25% | 15% |
-| Fast Cast | 50% | 30% |
+| Perk | Current Cap | New Cap | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| Critical Hit Rate | 50% | 20% |  |  |  |
+| Critical Damage | 100% | 40% |  |  |  |
+| WS Damage | 100% | 40% |  |  |  |
+| SC Damage | 100% | 40% |  |  |  |
+| Haste | 25% | 15% |  |  |  |
+| PDT / MDT | 25% | 15% |  |  |  |
+| Fast Cast | 50% | 30% |  |  |  |
 
 *Stat perks (ATT +1000, ACC +500, DEF +250, HP +1000, etc.) are unchanged.*
 
 ### BST Jug Pet Overhaul
-| Stat | Current | New |
-|---|---|---|
-| Flat ATT | +11,200 | +5,000 |
-| Master ATT Share | 1.60× | 0.80× |
-| Flat HP | +280,000 | +100,000 |
-| Double Attack | 100% | 20% |
-| Triple Attack | 100% | 5% |
-| PDT / MDT | 50% | 25% |
+| Stat | Current | New | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| Flat ATT | +11,200 | +5,000 |  |  |  |
+| Master ATT Share | 1.60× | 0.80× |  |  |  |
+| Flat HP | +280,000 | +100,000 |  |  |  |
+| Double Attack | 100% | 20% |  |  |  |
+| Triple Attack | 100% | 5% |  |  |  |
+| PDT / MDT | 50% | 25% |  |  |  |
 
 ### SMN Avatar Boost
-| Stat | Current | New |
-|---|---|---|
-| Double Attack | 100% | 10% |
-| Triple Attack | 100% | removed |
-| Haste | 2500 (gear) | 1000 |
-| Flat ATT | +6,000 | +3,000 |
-| Flat HP | +150,000 | +50,000 |
-| BP Damage Bonus | 9,400 | KEEP — this is SMN's identity |
+| Stat | Current | New | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| Double Attack | 100% | 10% |  |  |  |
+| Triple Attack | 100% | removed |  |  |  |
+| Haste | 2500 (gear) | 1000 |  |  |  |
+| Flat ATT | +6,000 | +3,000 |  |  |  |
+| Flat HP | +150,000 | +50,000 |  |  |  |
+| BP Damage Bonus | 9,400 | KEEP — this is SMN's identity |  |  |  |
 
 ### Gauntlet L10 (Aspirational Wall)
-| Level | Current HP | New HP |
-|---|---|---|
-| L1 | 100,000 | 20,000 |
-| L5 | 1,600,000 | 320,000 |
-| L7 | 6,400,000 | 1,280,000 |
-| L8 | 12,800,000 | 2,560,000 |
-| L9 | 25,600,000 | 5,120,000 |
-| **L10** | **51,200,000** | **10,240,000** |
+| Level | Current HP | New HP | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| L1 | 100,000 | 20,000 |  |  |  |
+| L5 | 1,600,000 | 320,000 |  |  |  |
+| L7 | 6,400,000 | 1,280,000 |  |  |  |
+| L8 | 12,800,000 | 2,560,000 |  |  |  |
+| L9 | 25,600,000 | 5,120,000 |  |  |  |
+| **L10** | **51,200,000** | **10,240,000** |  |  |  |
 
 *L10 ATT (36k) and DEF (27k) are unchanged — it still hits at cap constantly. Lowering HP from 51M to 10M makes L8–L9 clearable achievements while keeping L10 as the impossible wall.*
 
@@ -213,14 +213,14 @@ All HL/Prestige/Abyssea NM stats must be calibrated for the new player power cur
 Augment key offensive values (per slot, rank 5 + affinity, no crit): ATT +96, ACC +96, HP +192, WS DMG +32.
 Formula: `(1 + boost_0-31) × mult × masteryMult(2.0) × affinity(1.5)`.
 
-| Milestone | Augment Rank | Gear+Prestige ATT | +Augments | Total ATT | Total HP (w/aug) |
-|---|---|---|---|---|---|
-| Bronze gear (HL Rank 1) | 0–1 | ~500 | +75 | ~575 | ~3,800 |
-| HL Rank 2–3 | 1 | ~700 | +150 | ~850 | ~5,000 |
-| HL Rank 4 | 1–2 | ~950 | +280 | ~1,230 | ~7,000 |
-| HL Rank 5 / Prestige entry | 2–3 | ~1,200 | +400 | ~1,600 | ~8,500 |
-| Prestige mid (Rank 20–40) | 3–4 | ~1,600 | +650 | ~2,250 | ~11,000 |
-| Max Paragon + Aug Tier 3 | 4–5 | ~2,200 | +900 | ~3,100 | ~14,000 |
+| Milestone | Augment Rank | Gear+Prestige ATT | +Augments | Total ATT | Total HP (w/aug) | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|---|---|---|
+| Bronze gear (HL Rank 1) | 0–1 | ~500 | +75 | ~575 | ~3,800 |  |  |  |
+| HL Rank 2–3 | 1 | ~700 | +150 | ~850 | ~5,000 |  |  |  |
+| HL Rank 4 | 1–2 | ~950 | +280 | ~1,230 | ~7,000 |  |  |  |
+| HL Rank 5 / Prestige entry | 2–3 | ~1,200 | +400 | ~1,600 | ~8,500 |  |  |  |
+| Prestige mid (Rank 20–40) | 3–4 | ~1,600 | +650 | ~2,250 | ~11,000 |  |  |  |
+| Max Paragon + Aug Tier 3 | 4–5 | ~2,200 | +900 | ~3,100 | ~14,000 |  |  |  |
 
 Player DEF is unchanged (most players augment offensively, not DEF). Mob ATT targets unchanged.
 
@@ -228,47 +228,47 @@ Player DEF is unchanged (most players augment offensively, not DEF). Mob ATT tar
 
 HP bumped +10–50% by tier: augment contribution for all tiers; Abyssea T3, Prestige T1–T2 +15% extra, Prestige T3+ and Apex +30% extra for Rebirth stacking at those stages (see Job Rebirth section below).
 
-| Content | Group Size | Mob DEF | Mob ATT | Mob HP |
-|---|---|---|---|---|
-| HL Rank 1 | Solo/Duo | 550–650 | 2,800–3,500 | 130–200k |
-| HL Rank 2 | Duo | 700–850 | 3,500–4,500 | 240–360k |
-| HL Rank 3 | Duo/Trio | 850–1,000 | 4,000–5,500 | 375–565k |
-| HL Rank 4 | Trio | 1,000–1,200 | 5,000–7,000 | 575–830k |
-| HL Rank 5 | Trio/Party | 1,200–1,500 | 6,000–8,500 | 780k–1.2M |
-| Abyssea T1 | Trio | 900–1,100 | 4,000–5,500 | 375–565k |
-| Abyssea T2 | Party (4) | 1,200–1,500 | 5,500–7,500 | 780k–1.2M |
-| Abyssea T3 | Party (4–6) | 1,800–2,200 | 7,000–9,000 | 1.55–2.3M |
-| Prestige T0 (Nightmare Court) | Party (4) | 1,400–1,700 | 5,000–7,000 | 650k–975k |
-| Prestige T1 (Voidwalkers) | Party (4–6) | 1,800–2,100 | 6,500–8,500 | 1.1–1.65M |
-| Prestige T2 (Jailers) | Party (6) | 2,100–2,600 | 7,500–10,000 | 1.7–2.5M |
-| Prestige T3 (Voidwalker Lords) | Party (6) | 2,500–3,000 | 9,000–12,000 | 2.7–3.9M |
-| Prestige T4 (World's End) | Party (6) | 2,800–3,300 | 10,000–13,500 | 3.6–5.3M |
-| Prestige T5 (Celestials) | Alliance (6+) | 3,200–3,800 | 12,000–16,000 | 5.1–7.3M |
-| Apex T1 base | Duo/Trio | (additive) | (additive) | 1.4M |
-| Gauntlet L10 | Never | 27,000 | 36,000 | 10.24M |
+| Content | Group Size | Mob DEF | Mob ATT | Mob HP | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|---|---|
+| HL Rank 1 | Solo/Duo | 550–650 | 2,800–3,500 | 130–200k |  |  |  |
+| HL Rank 2 | Duo | 700–850 | 3,500–4,500 | 240–360k |  |  |  |
+| HL Rank 3 | Duo/Trio | 850–1,000 | 4,000–5,500 | 375–565k |  |  |  |
+| HL Rank 4 | Trio | 1,000–1,200 | 5,000–7,000 | 575–830k |  |  |  |
+| HL Rank 5 | Trio/Party | 1,200–1,500 | 6,000–8,500 | 780k–1.2M |  |  |  |
+| Abyssea T1 | Trio | 900–1,100 | 4,000–5,500 | 375–565k |  |  |  |
+| Abyssea T2 | Party (4) | 1,200–1,500 | 5,500–7,500 | 780k–1.2M |  |  |  |
+| Abyssea T3 | Party (4–6) | 1,800–2,200 | 7,000–9,000 | 1.55–2.3M |  |  |  |
+| Prestige T0 (Nightmare Court) | Party (4) | 1,400–1,700 | 5,000–7,000 | 650k–975k |  |  |  |
+| Prestige T1 (Voidwalkers) | Party (4–6) | 1,800–2,100 | 6,500–8,500 | 1.1–1.65M |  |  |  |
+| Prestige T2 (Jailers) | Party (6) | 2,100–2,600 | 7,500–10,000 | 1.7–2.5M |  |  |  |
+| Prestige T3 (Voidwalker Lords) | Party (6) | 2,500–3,000 | 9,000–12,000 | 2.7–3.9M |  |  |  |
+| Prestige T4 (World's End) | Party (6) | 2,800–3,300 | 10,000–13,500 | 3.6–5.3M |  |  |  |
+| Prestige T5 (Celestials) | Alliance (6+) | 3,200–3,800 | 12,000–16,000 | 5.1–7.3M |  |  |  |
+| Apex T1 base | Duo/Trio | (additive) | (additive) | 1.4M |  |  |  |
+| Gauntlet L10 | Never | 27,000 | 36,000 | 10.24M |  |  |  |
 
 ### HL NM Stat Retune — Current Values vs. Phase 2 Targets
 
 All stats are addMods in `hunting_league_catalog.lua`. Phase 2 edits these directly.
 
-| Tier | NMs | Current ATT | Target ATT | Current DEF | Target DEF | Current HPBoost | Current DA / TA | Action |
-|---|---|---|---|---|---|---|---|---|
-| T1 | Lizzy / Emperor / Tom Tit | 2,700 | 2,800–3,500 | 481 | 550–650 | 6× | 8% / 0% | Minor DEF bump only |
-| T2 | Roc / Bomb Queen / Aquarius | 4,500 | 3,500–4,500 | 825 | 700–850 | 9× | 15% / 0% | OK; minor DA reduction |
-| T3 | Serket / Vrtra / Simurgh | 7,200–7,920 | 4,000–5,500 | 1,238 | 850–1,000 | 15–18× | 23–30% / 5–8% | **−40% ATT, −25% DEF; DA→12%; remove TA** |
-| T4 | Nidhogg / King Behe / Kirin | 10,800 | 5,000–7,000 | 1,788 | 1,000–1,200 | 21× | 30% / 12% | **−45% ATT, −35% DEF; DA→15%; TA→5%** |
-| T5 (std) | AV / Pandemonium Warden | 16,200 | 6,000–8,500 | 2,750 | 1,200–1,500 | 36× | 38% / 18% | **−52% ATT, −50% DEF; DA→20%; TA→8%** |
-| T5 (elite) | Shinryu (Lv 225–250) | 27,000 | 8,000–12,000 | 11,000 | 2,000–2,500 | 72× | 53% / 23% | **Shinryu stays harder than AV/PW; −60% ATT; −78% DEF; DA→25%; TA→10%** |
+| Tier | NMs | Current ATT | Target ATT | Current DEF | Target DEF | Current HPBoost | Current DA / TA | Action | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| T1 | Lizzy / Emperor / Tom Tit | 2,700 | 2,800–3,500 | 481 | 550–650 | 6× | 8% / 0% | Minor DEF bump only |  |  |  |
+| T2 | Roc / Bomb Queen / Aquarius | 4,500 | 3,500–4,500 | 825 | 700–850 | 9× | 15% / 0% | OK; minor DA reduction |  |  |  |
+| T3 | Serket / Vrtra / Simurgh | 7,200–7,920 | 4,000–5,500 | 1,238 | 850–1,000 | 15–18× | 23–30% / 5–8% | **−40% ATT, −25% DEF; DA→12%; remove TA** |  |  |  |
+| T4 | Nidhogg / King Behe / Kirin | 10,800 | 5,000–7,000 | 1,788 | 1,000–1,200 | 21× | 30% / 12% | **−45% ATT, −35% DEF; DA→15%; TA→5%** |  |  |  |
+| T5 (std) | AV / Pandemonium Warden | 16,200 | 6,000–8,500 | 2,750 | 1,200–1,500 | 36× | 38% / 18% | **−52% ATT, −50% DEF; DA→20%; TA→8%** |  |  |  |
+| T5 (elite) | Shinryu (Lv 225–250) | 27,000 | 8,000–12,000 | 11,000 | 2,000–2,500 | 72× | 53% / 23% | **Shinryu stays harder than AV/PW; −60% ATT; −78% DEF; DA→25%; TA→10%** |  |  |  |
 
 *Shinryu is a separate elite T5 target (Lv 225–250, 110 marks). Phase 2 ATT/DEF targets are higher than standard T5 above.*
 
 **REGEN also needs reduction** (current values negate player damage at relaunch power levels):
 
-| Tier | Current REGEN | Target | Tier | Current REGEN | Target |
-|---|---|---|---|---|---|
-| T1 | 75/tick | 30/tick | T4 | 600/tick | 180/tick |
-| T2 | 150/tick | 60/tick | T5 AV/PW | 1,200/tick | 300/tick |
-| T3 | 300–413/tick | 100/tick | Shinryu | 3,000/tick | 500/tick |
+| Tier | Current REGEN | Target | Tier | Current REGEN | Target | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|---|---|---|
+| T1 | 75/tick | 30/tick | T4 | 600/tick | 180/tick |  |  |  |
+| T2 | 150/tick | 60/tick | T5 AV/PW | 1,200/tick | 300/tick |  |  |  |
+| T3 | 300–413/tick | 100/tick | Shinryu | 3,000/tick | 500/tick |  |  |  |
 
 **HPBoost:** Require base mob HP from mob_groups before computing target multipliers. ATT/DA/TA drop; HP targets went up (augment+Rebirth-adjusted), so HPBoost will increase on some tiers. Resolve during Phase 2 implementation.
 
@@ -276,11 +276,11 @@ All stats are addMods in `hunting_league_catalog.lua`. Phase 2 edits these direc
 
 Three bosses fought in sequence per Prestige ascension cycle.
 
-| Boss | Current ATT | Target ATT | Current DEF | Target DEF | Current HPBoost |
-|---|---|---|---|---|---|
-| Diabolos (Dream Devourer) | 12,600 | 5,000–7,000 | 2,475 | 1,400–1,700 | 39× |
-| Medusa (Gorgon Queen) | 15,300 | 5,000–7,000 | 2,887 | 1,400–1,700 | 44× |
-| Odin (Doombringer) | 18,000 | 5,000–7,000 | 3,300 | 1,400–1,700 | 51× |
+| Boss | Current ATT | Target ATT | Current DEF | Target DEF | Current HPBoost | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|---|---|---|
+| Diabolos (Dream Devourer) | 12,600 | 5,000–7,000 | 2,475 | 1,400–1,700 | 39× |  |  |  |
+| Medusa (Gorgon Queen) | 15,300 | 5,000–7,000 | 2,887 | 1,400–1,700 | 44× |  |  |  |
+| Odin (Doombringer) | 18,000 | 5,000–7,000 | 3,300 | 1,400–1,700 | 51× |  |  |  |
 
 All three need ~50% ATT reduction and ~40% DEF reduction. Odin keeps its 180s hard enrage. HPBoost targets pending base HP lookup.
 
@@ -288,17 +288,17 @@ All three need ~50% ATT reduction and ~40% DEF reduction. Odin keeps its 180s ha
 
 ## Currencies
 
-| Currency | Earned from | Spent on |
-|---|---|---|
-| Hunt Marks | HL kills, Invasions, Daily/Weekly boards, Login bonus, Achievements | HL rank gates, gear medals (Beastmens/Kindreds/Demons), Augment Sage seals, Abyssea Marks pops, Death Penalty loss |
-| Infamy | Invasion clears, Maat fight, specific content | Infamy Vendor (endgame gear + +4 Reforge sets) |
-| Allied Notes | Kills in Wings of the Goddess (S) zones | Cosmetic Shop (daily-rotating appearance items) |
-| Rebirth Points | Job Rebirth resets | Permanent stat boosts on the Rebirth board |
-| Ascension Points (AP) | Clearing Prestige trial NMs | Per-job Ascension stat upgrades + AP caps |
-| Paragon Points | Apex Trials climbs | Paragon board levels + perks + Daily Might unlock |
-| Reforge Marks (AF/Relic/Empy) | Farming Reforge NM pools (3 separate sets) | Reforge Armor upgrades (3 tiers per slot) |
-| Sparks / Accolades | Eminence objectives | Sparks Exchange → gil (outlet for capped players) |
-| Gil | Everything | Race Changer (100M), Title Broker, Warp NPC, Mystery Box, Casino, Cross-Job abilities (10M ea), Custom trusts (50M ea), Augment trades (10k/trade) |
+| Currency | Earned from | Spent on | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| Hunt Marks | HL kills, Invasions, Daily/Weekly boards, Login bonus, Achievements | HL rank gates, gear medals (Beastmens/Kindreds/Demons), Augment Sage seals, Abyssea Marks pops, Death Penalty loss |  |  |  |
+| Infamy | Invasion clears, Maat fight, specific content | Infamy Vendor (endgame gear + +4 Reforge sets) |  |  |  |
+| Allied Notes | Kills in Wings of the Goddess (S) zones | Cosmetic Shop (daily-rotating appearance items) |  |  |  |
+| Rebirth Points | Job Rebirth resets | Permanent stat boosts on the Rebirth board |  |  |  |
+| Ascension Points (AP) | Clearing Prestige trial NMs | Per-job Ascension stat upgrades + AP caps |  |  |  |
+| Paragon Points | Apex Trials climbs | Paragon board levels + perks + Daily Might unlock |  |  |  |
+| Reforge Marks (AF/Relic/Empy) | Farming Reforge NM pools (3 separate sets) | Reforge Armor upgrades (3 tiers per slot) |  |  |  |
+| Sparks / Accolades | Eminence objectives | Sparks Exchange → gil (outlet for capped players) |  |  |  |
+| Gil | Everything | Race Changer (100M), Title Broker, Warp NPC, Mystery Box, Casino, Cross-Job abilities (10M ea), Custom trusts (50M ea), Augment trades (10k/trade) |  |  |  |
 
 ---
 
@@ -306,103 +306,103 @@ All three need ~50% ATT reduction and ~40% DEF reduction. Odin keeps its 180s ha
 
 ### Core Progression
 
-| System | Ships Day 1 | Changes Needed |
-|---|---|---|
-| Hunting League (5 ranks) | ✓ | Phase 2 mob retune; invasion marks nerfed (Phase 1) |
-| Job Rebirth | ✓ | Verify stat boost values fit new power curve |
-| Reforge Armor (3 paths: AF/Relic/Empy) | ✓ | Verify mark costs and NM difficulty post-retune |
-| Hunter's Guild (4 guilds × 6 ranks) | ✓ | No changes needed |
-| Prestige / Ascension | ✓ | Phase 1 AP cap reduction + Phase 2 mob HP retune |
-| Apex Trials / Paragon | ✓ | Phase 1 base HP fix (9M → 1.1M) + Daily Might nerf |
-| Prime Weapon Trials (5 trials) | ✓ | No changes needed |
-| Augment System (4-tier Sage, redesigned) | ✓ | **REDESIGNED:** trophy+count gates replaced by content milestones (HL Rank 3/5 + Prestige 15); both category access AND max boost now tiered; add Sage NPC to Phase 1 deploy |
+| System | Ships Day 1 | Changes Needed | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| Hunting League (5 ranks) | ✓ | Phase 2 mob retune; invasion marks nerfed (Phase 1) |  |  |  |
+| Job Rebirth | ✓ | Verify stat boost values fit new power curve |  |  |  |
+| Reforge Armor (3 paths: AF/Relic/Empy) | ✓ | Verify mark costs and NM difficulty post-retune |  |  |  |
+| Hunter's Guild (4 guilds × 6 ranks) | ✓ | No changes needed |  |  |  |
+| Prestige / Ascension | ✓ | Phase 1 AP cap reduction + Phase 2 mob HP retune |  |  |  |
+| Apex Trials / Paragon | ✓ | Phase 1 base HP fix (9M → 1.1M) + Daily Might nerf |  |  |  |
+| Prime Weapon Trials (5 trials) | ✓ | No changes needed |  |  |  |
+| Augment System (4-tier Sage, redesigned) | ✓ | **REDESIGNED:** trophy+count gates replaced by content milestones (HL Rank 3/5 + Prestige 15); both category access AND max boost now tiered; add Sage NPC to Phase 1 deploy |  |  |  |
 
 ### Instanced / Scheduled Content
 
-| System | Ships Day 1 | Changes Needed |
-|---|---|---|
-| Invasions (3-hour cycle) | ✓ | Marks nerfed (Phase 1): 150 → 20/wave, 1125 → 100 victory |
-| Weekly World Boss (Star-Devourer) | ✓ | Structurally sound |
-| The Gauntlet (L1–L10) | ✓ | NM_BASE_HP 100k → 20k (Phase 1) |
-| Endless Tower (50 floors) | ✓ | No changes needed |
-| Voidspire (infinite floors) | ✓ | **Convert floor milestones to Paragon Points** (floor 25 = 10k Hunt Marks/run, re-awardable = unlimited farm); ATT scaling: floor 10 = 4,700 / floor 25 = 9,200 / floor 50 = 16,700 — verify entry tier post-Phase 2 |
-| Abyssea Marks (???) | ✓ | Phase 2 mob retune required |
-| Colosseum (async PvP) | ✓ | **Add 15-win/day cap** — per-opponent limit exists but no global daily cap; ~15k marks/day theoretical max with large roster |
-| Tournament (team PvE waves) | ✓ | No changes needed |
-| Game Master NPC (wave survival) | ✓ | No changes needed |
-| Maat Infamy Fight (Lv250) | ✓ | No changes needed |
-| Chocobo Derby | ✓ | No changes needed |
+| System | Ships Day 1 | Changes Needed | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| Invasions (3-hour cycle) | ✓ | Marks nerfed (Phase 1): 150 → 20/wave, 1125 → 100 victory |  |  |  |
+| Weekly World Boss (Star-Devourer) | ✓ | Structurally sound |  |  |  |
+| The Gauntlet (L1–L10) | ✓ | NM_BASE_HP 100k → 20k (Phase 1) |  |  |  |
+| Endless Tower (50 floors) | ✓ | No changes needed |  |  |  |
+| Voidspire (infinite floors) | ✓ | **Convert floor milestones to Paragon Points** (floor 25 = 10k Hunt Marks/run, re-awardable = unlimited farm); ATT scaling: floor 10 = 4,700 / floor 25 = 9,200 / floor 50 = 16,700 — verify entry tier post-Phase 2 |  |  |  |
+| Abyssea Marks (???) | ✓ | Phase 2 mob retune required |  |  |  |
+| Colosseum (async PvP) | ✓ | **Add 15-win/day cap** — per-opponent limit exists but no global daily cap; ~15k marks/day theoretical max with large roster |  |  |  |
+| Tournament (team PvE waves) | ✓ | No changes needed |  |  |  |
+| Game Master NPC (wave survival) | ✓ | No changes needed |  |  |  |
+| Maat Infamy Fight (Lv250) | ✓ | No changes needed |  |  |  |
+| Chocobo Derby | ✓ | No changes needed |  |  |  |
 
 ### Daily / Weekly Engagement
 
-| System | Ships Day 1 | Notes |
-|---|---|---|
-| Daily Login Bonus (250 marks/day) | ✓ | **CRITICAL FIX: Reduce to 50 marks/day** — at 250/day, Rank 5 is unlocked in 4 logins with zero play |
-| Login Streak (milestone rewards) | ✓ | **CRITICAL FIX: Reduce milestones** — Day 7 currently 1,500 marks (blows past Rank 5 gate alone); see Economy Audit |
-| Daily Board (3 objectives/day) | ✓ | **Add 750 marks/day hard cap** — objectives pay 400–1,000 each; current max ~3,500/day from board alone |
-| Weekly Hunts (5 objectives/week) | ✓ | Gate each objective by min HL rank to access content; 5,000 completion bonus stays (endgame reward) |
-| Seasonal Events (mark multipliers) | ✓ | No changes needed |
-| World First Announcements | ✓ | No changes needed |
+| System | Ships Day 1 | Notes | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| Daily Login Bonus (250 marks/day) | ✓ | **CRITICAL FIX: Reduce to 50 marks/day** — at 250/day, Rank 5 is unlocked in 4 logins with zero play |  |  |  |
+| Login Streak (milestone rewards) | ✓ | **CRITICAL FIX: Reduce milestones** — Day 7 currently 1,500 marks (blows past Rank 5 gate alone); see Economy Audit |  |  |  |
+| Daily Board (3 objectives/day) | ✓ | **Add 750 marks/day hard cap** — objectives pay 400–1,000 each; current max ~3,500/day from board alone |  |  |  |
+| Weekly Hunts (5 objectives/week) | ✓ | Gate each objective by min HL rank to access content; 5,000 completion bonus stays (endgame reward) |  |  |  |
+| Seasonal Events (mark multipliers) | ✓ | No changes needed |  |  |  |
+| World First Announcements | ✓ | No changes needed |  |  |  |
 
 ### Gear Acquisition
 
-| System | Ships Day 1 | Notes |
-|---|---|---|
-| Gear Progression NPC (weapons) | ✓ | Tiered weapons for seals |
-| Armor NPC (5-slot BiS) | ✓ | Medal-based BiS armor |
-| Accessory NPC (jewelry) | ✓ | Medal-based endgame accessories |
-| Infamy Vendor (endgame + Reforge +4) | ✓ | Infamy currency |
-| Crafting Exchange NPC | ✓ | HQ crafted items → marks; gives crafters a progression outlet |
+| System | Ships Day 1 | Notes | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| Gear Progression NPC (weapons) | ✓ | Tiered weapons for seals |  |  |  |
+| Armor NPC (5-slot BiS) | ✓ | Medal-based BiS armor |  |  |  |
+| Accessory NPC (jewelry) | ✓ | Medal-based endgame accessories |  |  |  |
+| Infamy Vendor (endgame + Reforge +4) | ✓ | Infamy currency |  |  |  |
+| Crafting Exchange NPC | ✓ | HQ crafted items → marks; gives crafters a progression outlet |  |  |  |
 
 ### Quality of Life & Services
 
-| System | Ships Day 1 | Notes |
-|---|---|---|
-| Character Upgrader | ✓ | Auto-grants WS/spells/skills/trusts on new chars |
-| Cross-Job Ability Trainer (10M ea) | ✓ | Borrowed abilities on any job |
-| Cross-Job Trait Trainer (10M ea) | ✓ | Borrowed passive traits on any job |
-| Custom Trusts — Gemma + Meat (50M ea) | ✓ | Void Keeper NPC |
-| Player Trusts (friend unlock system) | ✓ | 30 min party + same zone = permanent unlock |
-| Cosmetic Shop (Allied Notes) | ✓ | Daily-rotating seasonal appearance items |
-| Capacity Farm (CP mobs) | ✓ | ~100 always-up Lv150–160 mobs in Bibiki Bay |
-| Provisioners' League (fishing/crafting) | ✓ | Non-combat progression track |
-| Treasure Hunts | ✓ | Drop from HL kills; dig at zone for marks/gil/catalysts |
-| Mystery Box (gil pull) | ✓ | Weighted random rewards with pity system |
-| Casino (Lady Luck) | ✓ | Slots/High-Low/Roulette/Dice |
-| Sparks Exchange (sparks → gil) | ✓ | Outlet for capped players |
-| Gil Exchange (100k → 1 mark) | ✓ | Whale relief valve |
-| Warp NPC (tiered destinations) | ✓ | Pay gil for instant zone warps |
-| Race Changer (100M gil) | ✓ | Pay to change race/look |
-| Title Broker | ✓ | Vanity gil sink |
-| Death Penalty (–10 marks/death in HL) | ✓ | Applies in Hunting League zone only; new-player grace period |
-| Test Dummy NPC | ✓ | Spawn L99/L150/L200 targets at GM Home |
-| Abyssea Permanent Visitant | ✓ | No time limit anywhere in Abyssea |
-| Enhancing Magic ×2 Duration | ✓ | All Enhancing spells doubled |
-| Ranged No Distance Penalty | ✓ | RNG-class QoL |
-| Barrage 5-min Duration | ✓ | Up from 1 min |
-| Subjob EXP Share | ✓ | Sub levels to 50% of main passively |
-| Homepoint Full Heal | ✓ | Touch any homepoint to heal to full |
-| Home Point Crystal (GM Home) | ✓ | Warp to any homepoint free, no attunement |
+| System | Ships Day 1 | Notes | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| Character Upgrader | ✓ | Auto-grants WS/spells/skills/trusts on new chars |  |  |  |
+| Cross-Job Ability Trainer (10M ea) | ✓ | Borrowed abilities on any job |  |  |  |
+| Cross-Job Trait Trainer (10M ea) | ✓ | Borrowed passive traits on any job |  |  |  |
+| Custom Trusts — Gemma + Meat (50M ea) | ✓ | Void Keeper NPC |  |  |  |
+| Player Trusts (friend unlock system) | ✓ | 30 min party + same zone = permanent unlock |  |  |  |
+| Cosmetic Shop (Allied Notes) | ✓ | Daily-rotating seasonal appearance items |  |  |  |
+| Capacity Farm (CP mobs) | ✓ | ~100 always-up Lv150–160 mobs in Bibiki Bay |  |  |  |
+| Provisioners' League (fishing/crafting) | ✓ | Non-combat progression track |  |  |  |
+| Treasure Hunts | ✓ | Drop from HL kills; dig at zone for marks/gil/catalysts |  |  |  |
+| Mystery Box (gil pull) | ✓ | Weighted random rewards with pity system |  |  |  |
+| Casino (Lady Luck) | ✓ | Slots/High-Low/Roulette/Dice |  |  |  |
+| Sparks Exchange (sparks → gil) | ✓ | Outlet for capped players |  |  |  |
+| Gil Exchange (100k → 1 mark) | ✓ | Whale relief valve |  |  |  |
+| Warp NPC (tiered destinations) | ✓ | Pay gil for instant zone warps |  |  |  |
+| Race Changer (100M gil) | ✓ | Pay to change race/look |  |  |  |
+| Title Broker | ✓ | Vanity gil sink |  |  |  |
+| Death Penalty (–10 marks/death in HL) | ✓ | Applies in Hunting League zone only; new-player grace period |  |  |  |
+| Test Dummy NPC | ✓ | Spawn L99/L150/L200 targets at GM Home |  |  |  |
+| Abyssea Permanent Visitant | ✓ | No time limit anywhere in Abyssea |  |  |  |
+| Enhancing Magic ×2 Duration | ✓ | All Enhancing spells doubled |  |  |  |
+| Ranged No Distance Penalty | ✓ | RNG-class QoL |  |  |  |
+| Barrage 5-min Duration | ✓ | Up from 1 min |  |  |  |
+| Subjob EXP Share | ✓ | Sub levels to 50% of main passively |  |  |  |
+| Homepoint Full Heal | ✓ | Touch any homepoint to heal to full |  |  |  |
+| Home Point Crystal (GM Home) | ✓ | Warp to any homepoint free, no attunement |  |  |  |
 
 ### Job-Specific Overhauls
 
-| System | Ships Day 1 | Changes Needed |
-|---|---|---|
-| BST Jug Pet Overhaul | ✓ | Phase 1 stat reduction |
-| SMN Avatar Boost + BP Delay Uncap | ✓ | Phase 1 stat reduction |
-| RNG Overhaul (ranged DD) | ✓ | Verify vs new power curve |
-| BLU Auto Spell Progression | ✓ | No changes needed |
-| AoE Weapon Skill Upgrade | ✓ | No changes needed |
+| System | Ships Day 1 | Changes Needed | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| BST Jug Pet Overhaul | ✓ | Phase 1 stat reduction |  |  |  |
+| SMN Avatar Boost + BP Delay Uncap | ✓ | Phase 1 stat reduction |  |  |  |
+| RNG Overhaul (ranged DD) | ✓ | Verify vs new power curve |  |  |  |
+| BLU Auto Spell Progression | ✓ | No changes needed |  |  |  |
+| AoE Weapon Skill Upgrade | ✓ | No changes needed |  |  |  |
 
 ### Leaderboards & Records
 
-| System | Ships Day 1 | Notes |
-|---|---|---|
-| WSTracker (WS damage personal best) | ✓ | Resets at wipe — fresh competition |
-| Combat Records (healing/nuke/burst/SC) | ✓ | Resets at wipe |
-| Real Level Tracker (composite level) | ✓ | Feeds website leaderboard |
-| Apex Leaderboard | ✓ | Resets at wipe |
-| Gauntlet Champion Data | ✓ | Resets at wipe |
+| System | Ships Day 1 | Notes | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| WSTracker (WS damage personal best) | ✓ | Resets at wipe — fresh competition |  |  |  |
+| Combat Records (healing/nuke/burst/SC) | ✓ | Resets at wipe |  |  |  |
+| Real Level Tracker (composite level) | ✓ | Feeds website leaderboard |  |  |  |
+| Apex Leaderboard | ✓ | Resets at wipe |  |  |  |
+| Gauntlet Champion Data | ✓ | Resets at wipe |  |  |  |
 
 ---
 
@@ -414,12 +414,12 @@ The augment system is a parallel progression axis that stacks on top of gear, Pr
 
 Two axes scale with content achievement: **which categories are available** and **how powerful augments can get** (max boost per slot, 0–31 engine cap). The previous trophy + lifetime-count gate system is replaced entirely by the same content milestone gates the rest of progression uses.
 
-| Tier | Gate | Max Boost/Slot | Mastery Mult | Crit Chance | Categories Available |
-|---|---|---|---|---|---|
-| 0 — Base | None (Day 1) | 8 | 1.00× | 5% | HP/Regen · ATT/STR · ACC/DEX · DEF/VIT |
-| 1 — Combat | HL Rank 3 | 16 | 1.33× | 10% | + AGI/EVA/Haste · WS DMG · Skill+ |
-| 2 — Advanced | HL Rank 5 | 24 | 1.67× | 15% | + MP/Refresh · Elemental Resist · INT/Magic |
-| 3 — Master | Prestige Level 15 | 31 | 2.00× | 20% | + MND/Healing · CHA/Enmity · Pet — all 13 unlocked |
+| Tier | Gate | Max Boost/Slot | Mastery Mult | Crit Chance | Categories Available | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|---|---|---|
+| 0 — Base | None (Day 1) | 8 | 1.00× | 5% | HP/Regen · ATT/STR · ACC/DEX · DEF/VIT |  |  |  |
+| 1 — Combat | HL Rank 3 | 16 | 1.33× | 10% | + AGI/EVA/Haste · WS DMG · Skill+ |  |  |  |
+| 2 — Advanced | HL Rank 5 | 24 | 1.67× | 15% | + MP/Refresh · Elemental Resist · INT/Magic |  |  |  |
+| 3 — Master | Prestige Level 15 | 31 | 2.00× | 20% | + MND/Healing · CHA/Enmity · Pet — all 13 unlocked |  |  |  |
 
 **Implementation:** Gate checks `HL_Tier` CharVar for Tiers 1–2, and any `Prestige_Level_N >= 15` for Tier 3, in the Augment Sage NPC. Pure Lua — no rebuild. Add Augment Sage NPC to Phase 1 deploy list.
 
@@ -429,12 +429,12 @@ Two axes scale with content achievement: **which categories are available** and 
 
 ### Impact on the Power Curve
 
-| Milestone | Gear + Prestige ATT | With Augments | Gear + Prestige HP | With Augments |
-|---|---|---|---|---|
-| Prestige entry / Aug Tier 2 | ~1,200 | ~1,350–1,500 | ~7,000 | ~8,000–9,000 |
-| Prestige mid / Aug Tier 3 | ~1,600 | ~1,900–2,100 | ~8,500 | ~10,500–12,000 |
-| Max Paragon / Aug Tier 3 max | ~2,200 | ~2,700–2,900 | ~10,000 | ~14,000–16,000 |
-| + Max Rebirth (main job, late endgame) | — | → ~3,700–3,900 | — | → ~15,000–17,000 |
+| Milestone | Gear + Prestige ATT | With Augments | Gear + Prestige HP | With Augments | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|---|---|
+| Prestige entry / Aug Tier 2 | ~1,200 | ~1,350–1,500 | ~7,000 | ~8,000–9,000 |  |  |  |
+| Prestige mid / Aug Tier 3 | ~1,600 | ~1,900–2,100 | ~8,500 | ~10,500–12,000 |  |  |  |
+| Max Paragon / Aug Tier 3 max | ~2,200 | ~2,700–2,900 | ~10,000 | ~14,000–16,000 |  |  |  |
+| + Max Rebirth (main job, late endgame) | — | → ~3,700–3,900 | — | → ~15,000–17,000 |  |  |  |
 
 ### Notes
 
@@ -448,15 +448,15 @@ High-multiplier categories (HP/Regen mult 640, MP/Refresh mult 320) at Tier 3 bo
 
 Job Rebirth borrows `prestige_catalog.categories` for its boost list — same stats, same perLevel values, same cap fields. The two tracks apply independently and additively. A player who maxes both systems on their main job gets double the flat stat contribution.
 
-| Source | ATT | HP |
-|---|---|---|
-| Ascension (cap 50 × +20/level) | +1,000 | +1,000 |
-| Job Rebirth (same catalog, same cap) | +1,000 | +1,000 |
-| Paragon Might perk (10 ranks × +100) | +1,000 | — |
-| Paragon Vigor perk (10 ranks × +500) | — | +5,000 |
-| Gear (late endgame) | ~200 | ~8,000 |
-| Augments (Rank 5, offensive build) | +900 | +4,000 |
-| **Peak total** | **~4,100** | **~19,000** |
+| Source | ATT | HP | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| Ascension (cap 50 × +20/level) | +1,000 | +1,000 |  |  |  |
+| Job Rebirth (same catalog, same cap) | +1,000 | +1,000 |  |  |  |
+| Paragon Might perk (10 ranks × +100) | +1,000 | — |  |  |  |
+| Paragon Vigor perk (10 ranks × +500) | — | +5,000 |  |  |  |
+| Gear (late endgame) | ~200 | ~8,000 |  |  |  |
+| Augments (Rank 5, offensive build) | +900 | +4,000 |  |  |  |
+| **Peak total** | **~4,100** | **~19,000** |  |  |  |
 
 **Multiplier stacking is already addressed by Phase 1.** Phase 1 cap reductions apply to Rebirth automatically (it reads the same catalog), so combined CRIT = 40%, WSDMG = 80%, HASTE = 30% after nerf. The stacking concern is purely the flat stats.
 
@@ -476,28 +476,28 @@ Players who built this community are recognized at relaunch. Rewards are based o
 
 ### Tier Gates
 
-| Tier | Name | Gate — any one condition qualifies |
-|---|---|---|
-| 1 | Veteran of Legendary | Account exists with any character |
-| 2 | Proven Hunter | HL Rank 3+ **OR** 200+ lifetime marks |
-| 3 | League Legend | HL Rank 5 **OR** any job at Prestige Level 1+ **OR** 1,000+ lifetime marks |
-| 4 | The Unbroken | Any job at Prestige Level 20+ **OR** Gauntlet L10 cleared ≥1× **OR** Prime Weapon Trial 4 complete |
+| Tier | Name | Gate — any one condition qualifies | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|
+| 1 | Veteran of Legendary | Account exists with any character |  |  |  |
+| 2 | Proven Hunter | HL Rank 3+ **OR** 200+ lifetime marks |  |  |  |
+| 3 | League Legend | HL Rank 5 **OR** any job at Prestige Level 1+ **OR** 1,000+ lifetime marks |  |  |  |
+| 4 | The Unbroken | Any job at Prestige Level 20+ **OR** Gauntlet L10 cleared ≥1× **OR** Prime Weapon Trial 4 complete |  |  |  |
 
 > **Admin notes:** *(adjust tier gates / reward values here — leave your name + comment)*
 
 ### Rewards by Tier
 
-| Reward | Tier 1 | Tier 2 | Tier 3 | Tier 4 |
-|---|---|---|---|---|
-| Exclusive title | Veteran of Legendary | Proven Hunter | League Legend | The Unbroken |
-| Starting gil (total incl. base 300k) | 450k | 700k | 1M | 1.5M |
-| Bonus starting marks | — | +100 | +250 | +500 |
-| Augment catalysts | 5 | 25 | 60 | 100 |
-| Death's Pardons | — | 1 | 2 | 3 |
-| Starting Infamy | — | — | 100 | 200 |
-| Legacy cosmetic trust | — | — | — | Yes |
-| Hall of Legends recognition | — | — | Listed | Named plaque |
-| Name reservation window | 24h | 24h | 48h | 48h |
+| Reward | Tier 1 | Tier 2 | Tier 3 | Tier 4 | Bro | Ririn | Kirin |
+|---|---|---|---|---|---|---|---|
+| Exclusive title | Veteran of Legendary | Proven Hunter | League Legend | The Unbroken |  |  |  |
+| Starting gil (total incl. base 300k) | 450k | 700k | 1M | 1.5M |  |  |  |
+| Bonus starting marks | — | +100 | +250 | +500 |  |  |  |
+| Augment catalysts | 5 | 25 | 60 | 100 |  |  |  |
+| Death's Pardons | — | 1 | 2 | 3 |  |  |  |
+| Starting Infamy | — | — | 100 | 200 |  |  |  |
+| Legacy cosmetic trust | — | — | — | Yes |  |  |  |
+| Hall of Legends recognition | — | — | Listed | Named plaque |  |  |  |
+| Name reservation window | 24h | 24h | 48h | 48h |  |  |  |
 
 **Titles are permanent and exclusive** — they can never be earned post-relaunch. New players will see them as proof of original server history.
 
