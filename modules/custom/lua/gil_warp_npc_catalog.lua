@@ -54,7 +54,7 @@ catalog.tiers =
         destinations =
         {
             { label = "Aht Urhgan Whitegate", zone = xi.zone.AHT_URHGAN_WHITEGATE, x = -30.00, y = -6.00, z = -50.00, r = 192 },
-            { label = "Tavnazian Safehold",   zone = xi.zone.TAVNAZIAN_SAFEHOLD,   x = -85.00, y = 12.00, z =  40.00, r = 192 },
+            { label = "Tavnazian Safehold",   zone = xi.zone.TAVNAZIAN_SAFEHOLD,   x = 0.09, y = -23.50, z =  35.10, r = 26 },
             { label = "Norg",                 zone = xi.zone.NORG,                 x = -10.00, y = -3.00, z =  10.00, r = 192 },
             { label = "Selbina",              zone = xi.zone.SELBINA,              x =   0.00, y =  0.00, z =   0.00, r = 192 },
             { label = "Kazham",               zone = xi.zone.KAZHAM,               x =   0.00, y =  0.00, z =   0.00, r = 192 },
