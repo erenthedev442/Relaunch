@@ -344,10 +344,18 @@ void CLinkshell::BreakLinkshell()
 {
     uint32 lsid = m_id;
 
-    // break logged in and equipped members
-    while (!members.empty())
+    // Snapshot names before iterating: RemoveMemberByName mutates `members` and
+    // can free the entity, so calling members.at(0)->getName() after the first
+    // removal risks a dangling-pointer read (confirmed crash in GP_CLI_COMMAND_ITEM_DUMP).
+    std::vector<std::string> names;
+    names.reserve(members.size());
+    for (auto* m : members)
     {
-        RemoveMemberByName(members.at(0)->getName(), LSTYPE_LINKSHELL, true);
+        if (m) { names.push_back(m->getName()); }
+    }
+    for (const auto& name : names)
+    {
+        RemoveMemberByName(name, LSTYPE_LINKSHELL, true);
     }
     // set the linkshell as broken
     db::preparedStmt("UPDATE linkshells SET broken = 1 WHERE linkshellid = ? LIMIT 1", lsid);

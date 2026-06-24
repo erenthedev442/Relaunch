@@ -115,8 +115,10 @@ xi.escha.portals.eschanPortalOnTrigger = function(player, npc)
 
         -- Default message.
         elseif zonePortalsUnlocked == 0 then
-            player:messageSpecial(zones[zoneId].text.BLINDING_LIGHT_OBSCURES_YOUR_VISION)
-
+            local blindMsg = zones[zoneId].text.BLINDING_LIGHT_OBSCURES_YOUR_VISION
+            if blindMsg then
+                player:messageSpecial(blindMsg)
+            end
             return
         end
     end
