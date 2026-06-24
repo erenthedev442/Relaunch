@@ -59,6 +59,69 @@ def fail(msg):
     sys.exit(1)
 
 
+def incoming_summary():
+    """Show everything queued to ship since your last deploy, highlighting any
+    commits NOT authored by you (the collaborator's work) and dumping their full
+    diff to a file -- so a sequential edit to one of your files never ships unseen.
+    Baseline = the most recent 'Deploy Everything' marker the deploy itself writes.
+    """
+    owner = git("config", "user.name", check=False) or "Richard Knutz"
+    marker = git("rev-list", "-1", "--grep", "Deploy Everything", "HEAD", check=False)
+    if marker:
+        base, desc = marker, "since your last deploy"
+    else:
+        base = git("rev-parse", "HEAD~25", check=False) or git("rev-list", "--max-parents=0", "HEAD").split()[0]
+        desc = "(no prior deploy marker -- showing recent commits)"
+
+    lines = git("log", f"{base}..HEAD", "--format=%H%x1f%an%x1f%ar%x1f%s")
+    if not lines:
+        out()
+        out(f"  Nothing new to ship {desc}.")
+        return
+
+    banner(f"What's about to ship {desc}")
+    dev_hashes, dev_lines, mine = [], [], 0
+    for ln in lines.splitlines():
+        h, an, ar, s = ln.split("\x1f")
+        if an.strip().lower() == owner.strip().lower():
+            mine += 1
+        else:
+            dev_hashes.append(h)
+            dev_lines.append(f"  [DEV] {h[:9]}  {an[:16]:<16} {ar:<13} {s[:56]}")
+
+    if dev_lines:
+        out(f"  COLLABORATOR commit(s) ({len(dev_lines)}) -- REVIEW THESE:")
+        for dl in dev_lines:
+            out(dl)
+    if mine:
+        out(f"  (+ {mine} of your own commit(s) also queued this cycle -- not listed)")
+    if not dev_hashes:
+        out("  No collaborator changes this cycle -- all yours.")
+        return
+
+    out()
+    out("  Files the collaborator touched:")
+    seen = []
+    for f in git("show", "--name-only", "--format=", *dev_hashes).splitlines():
+        f = f.strip()
+        if f and f not in seen:
+            seen.append(f)
+            out(f"        {f}")
+
+    diff = subprocess.run(["git", "-c", "color.ui=false", "show", "--no-color", *dev_hashes],
+                          capture_output=True, text=True)
+    tmp = os.path.join(os.environ.get("TEMP") or os.environ.get("TMP") or ".", "dev_changes_since_deploy.diff")
+    try:
+        with open(tmp, "w", encoding="utf-8") as fh:
+            fh.write(diff.stdout)
+        out()
+        out("  Full line-by-line diff of the collaborator's work saved to:")
+        out(f"        {tmp}")
+        out("  Open it to review before you confirm the deploy prompt.")
+    except OSError:
+        out("  Review the full diff with:  git show " + " ".join(h[:9] for h in dev_hashes))
+
+
 # --- branch sanity -----------------------------------------------------------
 cur = git("rev-parse", "--abbrev-ref", "HEAD")
 if cur != BRANCH:
@@ -83,6 +146,7 @@ if os.path.exists(os.path.join(".git", "MERGE_HEAD")):
     # conflicts already resolved but the merge was never committed -> finish it
     git("commit", "--no-edit")
     out("  Finished a previously-resolved merge. Proceeding.")
+    incoming_summary()
     sys.exit(0)
 
 # --- 1. commit your own working-tree changes so the merge is clean -----------
@@ -103,6 +167,7 @@ counts = git("rev-list", "--left-right", "--count", f"HEAD...{TRACK}").split()
 ahead, behind = (int(counts[0]), int(counts[1])) if len(counts) == 2 else (0, 0)
 if behind == 0:
     out(f"  Already in sync with the collaborator (you are {ahead} ahead, 0 behind). Nothing to merge.")
+    incoming_summary()
     sys.exit(0)
 
 base   = git("merge-base", "HEAD", TRACK)
@@ -150,5 +215,6 @@ banner("Merge clean -- collaborator's work is integrated")
 if both:
     out("  NOTE: the REVIEW LIST files above were auto-merged (no line clash),")
     out("        but both of you touched them -- worth a quick look before it ships.")
+incoming_summary()
 out("  Proceeding with the deploy.")
 sys.exit(0)
