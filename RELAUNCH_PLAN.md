@@ -1,0 +1,1041 @@
+# Legendary FFXI — Relaunch Plan
+> Internal planning document · Last updated: 2026-06-23
+
+---
+
+## Server Identity
+
+**"Hunt. Rank. Ascend."**
+
+Legendary is a custom FFXI private server where every system is designed for endgame progression. Starting at Lv99 with a full Bronze kit, players hunt rare NMs through the Hunting League, earn Prestige through scaled trial bosses, and push the infinite Apex ladder. No retail grind — pure progression from day one.
+
+---
+
+## Why We're Relaunching
+
+The server accumulated power stacking that made almost all content trivial:
+
+- **Paragon Daily Might** granted 50 TP/tick REGAIN — full TP regenerated in ~2 ticks, enabling continuous weapon skill spam
+- **Ascension AP caps** allowed 100% WS damage bonus on top of 100% crit damage on top of 50% crit rate — expected WS damage ran ~3× baseline
+- **Pet classes** (BST/SMN) had 100% Double Attack and 100% Triple Attack — effectively 3× the hit rate of any other job
+- **HL and Prestige NM stats** were calibrated for this broken player power, not grounded game design
+
+The result: veteran players one-shot everything, gear had no meaning, and new players joining post-progression had nothing left to work toward.
+
+**The fix requires a full stat reckoning + a full character wipe.** Partial nerfs without a wipe would leave geared players with leftover power that still trivializes tuned content.
+
+---
+
+## What a New Character Gets at Launch
+
+| Resource | Amount | Why |
+|---|---|---|
+| Starting Gil | 300,000 | Covers 1–2 Bronze weapons from AH (140–210k each) |
+| Hunt Marks | 50 | Enough for a full Bronze armor set (5 marks/piece at HL vendor) |
+| All jobs | Lv99 | Standard server setting, unchanged |
+| RUN + GEO | Auto-unlocked | Login hook grants on first zone-in |
+
+**There is no starter gear.** All gear must be earned. The 50 marks + 300k gil gives a player enough to equip on Day 1 and immediately start hunting.
+
+---
+
+## Progression Pace
+
+Target: **3–6 weeks** from fresh Lv99 to Prestige Tier 1 for a player doing 8–12 hours per week.
+
+| Week | Milestone | Activity |
+|---|---|---|
+| 1 | Full Bronze kit, HL Rank 1 | First-kills on 8 Rank 1 NMs + invasion participation |
+| 2–3 | HL Rank 2–3 | Escalating NMs, gear upgrading via medals |
+| 4–5 | HL Rank 4–5 | Party/trio content, Kindreds + Demons medals |
+| 5–6 | Prestige Entry | 1000 marks earned, Nightmare Court unlocked |
+| Month 2–3 | Prestige 20–40 | Jailers tier, Paragon board filling |
+| Month 4–6+ | Prestige 60 / Apex | Max Paragon perks, Apex infinite climb |
+
+**Hardcore pace (20h+/week): Rank 5 in ~3 weeks.  
+Casual pace (4h/week): Rank 5 in ~8–10 weeks.**
+
+---
+
+## Hunting League Rank Gates (Updated)
+
+| Rank | Mark Cost (OLD) | Mark Cost (NEW) | Unlock |
+|---|---|---|---|
+| Rank 1 | 0 | 0 | Day 1 — always available |
+| Rank 2 | 50 | 75 | ~Week 1 |
+| Rank 3 | 150 | 225 | ~Week 2–3 |
+| Rank 4 | 350 | 500 | ~Week 3–4 |
+| Rank 5 | 700 | 1,000 | ~Week 5–6 |
+
+Gates are cumulative. A player needs 1,000 total marks to unlock Rank 5.
+
+### Marks Per Kill (unchanged)
+
+| Rank | Base | First-Kill Bonus | Weekly Featured |
+|---|---|---|---|
+| 1 | 5 | +100% (10 total) | +200% (15 total) |
+| 2 | 12 | +100% (24 total) | +200% (36 total) |
+| 3 | 22 | +100% (44 total) | +200% (66 total) |
+| 4 | 38 | +100% (76 total) | +200% (114 total) |
+| 5 | 65 | +100% (130 total) | +200% (195 total) |
+
+Party bonus: +25–50% on top of above.
+
+---
+
+## Economy — Marks Reward Changes
+
+**Critical fix:** Invasion events were awarding 1,725 marks per full clear (8 events/day = Rank 5 possible in a single day). This completely bypassed rank gating.
+
+| Source | Old Marks | New Marks | Notes |
+|---|---|---|---|
+| Invasion — per wave | 150 | 20 | |
+| Invasion — full victory | 1,125 | 100 | |
+| **Invasion — max per event** | **1,725** | **~180** | Primary reward shifts to Infamy |
+| Colosseum win | 150 | 150 (keep) | PvP — not farmable on demand |
+| Treasure Hunt Tier 3 | 1,500 | 1,500 (keep) | Rare windfall — healthy excitement |
+| HL kills | 5–130 | 5–130 (keep) | Primary marks source as intended |
+
+Invasions now primarily reward **Infamy**, which gates Abyssea Marks content. Marks remain an HL-primary economy.
+
+---
+
+## Economy Audit — Six Additional Critical Fixes
+
+Full catalog read found six more economy imbalances that bypass the rank gates as badly as invasions did. All are Lua-only fixes (Phase 1).
+
+### 1. Daily Login Bonus: 250 marks/day → Reduce to 50
+
+At 250/day a player who only logs in hits Rank 5 (1,000 marks) **in 4 days of pure AFK logins**. Should be supplemental.
+
+**Fix:** 50 marks/day. Rank 5 via login alone now requires 20+ days minimum — meaningful supplement, not a bypass.
+
+> **Admin notes:** *(leave your name + comment)*
+
+### 2. Login Streak Milestones → Reduce Drastically
+
+| Day | Current | Problem | Proposed |
+|---|---|---|---|
+| 7 | 1,500 marks | Larger than Rank 3 gate (225) by itself | 75 marks |
+| 14 | 3,000 marks | Rank 5 achievable from Day 7 alone | 200 marks |
+| 21 | 4,500 marks | | 400 marks |
+| 30 | 10,500 marks | 10× the Rank 5 gate | 750 marks |
+
+Day 7 streak currently gives more marks than unlocking all 5 ranks combined costs.
+
+> **Admin notes:** *(leave your name + comment)*
+
+### 3. Daily Board: Max ~3,500 marks/day → Add 750 marks/day Hard Cap
+
+Individual objectives pay 400–1,000 marks ("Kill 10 NMs" = 1,000 marks). With 3 high-value objectives plus the all-cleared bonus (+500), the board currently pays ~3,500 marks in a single day.
+
+**Fix:** Hard cap of 750 marks/day from the Daily Board. Objectives still rotate and reward engagement, the cap prevents it from being a primary mark farm.
+
+> **Admin notes:** *(leave your name + comment)*
+
+### 4. Weekly Board Completion Bonus: Gate Objectives by HL Rank
+
+All-5-cleared bonus (5,000 marks) is appropriate for endgame players. The risk is week-1 objectives being achievable at Rank 1 — a new player completes weeklies and skips all rank gates.
+
+**Fix:** Each objective requires the HL rank tier needed to access the content. "Kill 25 HL NMs" → requires Rank 2 unlock. "Kill 15 Lv175+ NMs" → Rank 3+. The 5,000 completion bonus value stays; it becomes an endgame reward by gating its prerequisites.
+
+> **Admin notes:** *(leave your name + comment)*
+
+### 5. Colosseum: No Daily Win Cap → Add 15-Win Daily Limit
+
+Per-opponent daily cap exists (can't farm the same replica twice), but there is **no global cap on total daily wins or marks**. With a roster of 100+ enrolled replicas, theoretical ceiling is 15,000+ marks/day — more than a full week of HL.
+
+**Fix:** `dailyWinCap = 15` → max 2,250 marks/day from Colosseum. Leaderboard climb is unaffected.
+
+> **Admin notes:** *(leave your name + comment)*
+
+### 6. Voidspire Floor 25 Milestone: 10,000 Hunt Marks/run → Convert to Paragon Points
+
+Floor 25 milestone pays 10,000 Hunt Marks and is **re-awardable every run**. An endgame party clears floor 25 in 20–30 minutes = 10k marks/run = an unlimited mark farm that makes HL irrelevant.
+
+**Two options (admin decision — see Open Questions):**
+- **Option A (preferred):** Convert Voidspire milestones to Paragon Points. Natural fit — Voidspire feeds the Apex ladder; Apex earns Paragon Points. Hunt Marks stay HL-primary.
+- **Option B:** Make milestones once-per-week-per-character instead of once-per-run.
+
+> **Admin notes:** *(leave your name + comment — see also Open Question #8)*
+
+All 6 of the above are pure Lua config/script changes. Add to Phase 1 deploy list.
+
+---
+
+## Phase 1 — Stat Reckoning (Pure Lua, One Restart)
+
+These changes require only a Lua deploy + map restart. No rebuild, no SQL.
+
+### Paragon Daily Might Buff
+| Stat | Current | New |
+|---|---|---|
+| REGAIN | 50 TP/tick | 5 TP/tick |
+| REGEN | 5% HP/tick | 15 HP/tick flat |
+| REFRESH | 10% MP/tick | 10 MP/tick flat |
+| HP Boost | +3,000 | +1,500 |
+
+### Ascension AP Caps (Prestige)
+| Perk | Current Cap | New Cap |
+|---|---|---|
+| Critical Hit Rate | 50% | 20% |
+| Critical Damage | 100% | 40% |
+| WS Damage | 100% | 40% |
+| SC Damage | 100% | 40% |
+| Haste | 25% | 15% |
+| PDT / MDT | 25% | 15% |
+| Fast Cast | 50% | 30% |
+
+*Stat perks (ATT +1000, ACC +500, DEF +250, HP +1000, etc.) are unchanged.*
+
+### BST Jug Pet Overhaul
+| Stat | Current | New |
+|---|---|---|
+| Flat ATT | +11,200 | +5,000 |
+| Master ATT Share | 1.60× | 0.80× |
+| Flat HP | +280,000 | +100,000 |
+| Double Attack | 100% | 20% |
+| Triple Attack | 100% | 5% |
+| PDT / MDT | 50% | 25% |
+
+### SMN Avatar Boost
+| Stat | Current | New |
+|---|---|---|
+| Double Attack | 100% | 10% |
+| Triple Attack | 100% | removed |
+| Haste | 2500 (gear) | 1000 |
+| Flat ATT | +6,000 | +3,000 |
+| Flat HP | +150,000 | +50,000 |
+| BP Damage Bonus | 9,400 | KEEP — this is SMN's identity |
+
+### Gauntlet L10 (Aspirational Wall)
+| Level | Current HP | New HP |
+|---|---|---|
+| L1 | 100,000 | 20,000 |
+| L5 | 1,600,000 | 320,000 |
+| L7 | 6,400,000 | 1,280,000 |
+| L8 | 12,800,000 | 2,560,000 |
+| L9 | 25,600,000 | 5,120,000 |
+| **L10** | **51,200,000** | **10,240,000** |
+
+*L10 ATT (36k) and DEF (27k) are unchanged — it still hits at cap constantly. Lowering HP from 51M to 10M makes L8–L9 clearable achievements while keeping L10 as the impossible wall.*
+
+---
+
+## Phase 2 — Mob Retune (Lua + SQL, One Restart)
+
+All HL/Prestige/Abyssea NM stats must be calibrated for the new player power curve. These are additive mods on top of base mob stats.
+
+### Target Player Power Curve (includes augment contribution)
+
+Augment key offensive values (per slot, rank 5 + affinity, no crit): ATT +96, ACC +96, HP +192, WS DMG +32.
+Formula: `(1 + boost_0-31) × mult × masteryMult(2.0) × affinity(1.5)`.
+
+| Milestone | Augment Rank | Gear+Prestige ATT | +Augments | Total ATT | Total HP (w/aug) |
+|---|---|---|---|---|---|
+| Week 1 (Bronze gear) | 0–1 | ~500 | +75 | ~575 | ~3,800 |
+| Week 2–3 (HL Rank 2–3) | 1 | ~700 | +150 | ~850 | ~5,000 |
+| Week 4 (HL Rank 4) | 1–2 | ~950 | +280 | ~1,230 | ~7,000 |
+| Week 5–6 (HL Rank 5 / Prestige entry) | 2–3 | ~1,200 | +400 | ~1,600 | ~8,500 |
+| Month 2–3 (Prestige mid) | 3–4 | ~1,600 | +650 | ~2,250 | ~11,000 |
+| Month 4–6+ (Max Paragon + Aug Rank 5) | 4–5 | ~2,200 | +900 | ~3,100 | ~14,000 |
+
+Player DEF is unchanged (most players augment offensively, not DEF). Mob ATT targets unchanged.
+
+### Mob Retune Targets (augment-adjusted HP)
+
+HP bumped +10–50% by tier: augment contribution for all tiers; Abyssea T3, Prestige T1–T2 +15% extra, Prestige T3+ and Apex +30% extra for Rebirth stacking at those stages (see Job Rebirth section below).
+
+| Content | Group Size | Mob DEF | Mob ATT | Mob HP |
+|---|---|---|---|---|
+| HL Rank 1 | Solo/Duo | 550–650 | 2,800–3,500 | 130–200k |
+| HL Rank 2 | Duo | 700–850 | 3,500–4,500 | 240–360k |
+| HL Rank 3 | Duo/Trio | 850–1,000 | 4,000–5,500 | 375–565k |
+| HL Rank 4 | Trio | 1,000–1,200 | 5,000–7,000 | 575–830k |
+| HL Rank 5 | Trio/Party | 1,200–1,500 | 6,000–8,500 | 780k–1.2M |
+| Abyssea T1 | Trio | 900–1,100 | 4,000–5,500 | 375–565k |
+| Abyssea T2 | Party (4) | 1,200–1,500 | 5,500–7,500 | 780k–1.2M |
+| Abyssea T3 | Party (4–6) | 1,800–2,200 | 7,000–9,000 | 1.55–2.3M |
+| Prestige T0 (Nightmare Court) | Party (4) | 1,400–1,700 | 5,000–7,000 | 650k–975k |
+| Prestige T1 (Voidwalkers) | Party (4–6) | 1,800–2,100 | 6,500–8,500 | 1.1–1.65M |
+| Prestige T2 (Jailers) | Party (6) | 2,100–2,600 | 7,500–10,000 | 1.7–2.5M |
+| Prestige T3 (Voidwalker Lords) | Party (6) | 2,500–3,000 | 9,000–12,000 | 2.7–3.9M |
+| Prestige T4 (World's End) | Party (6) | 2,800–3,300 | 10,000–13,500 | 3.6–5.3M |
+| Prestige T5 (Celestials) | Alliance (6+) | 3,200–3,800 | 12,000–16,000 | 5.1–7.3M |
+| Apex T1 base | Duo/Trio | (additive) | (additive) | 1.4M |
+| Gauntlet L10 | Never | 27,000 | 36,000 | 10.24M |
+
+### HL NM Stat Retune — Current Values vs. Phase 2 Targets
+
+All stats are addMods in `hunting_league_catalog.lua`. Phase 2 edits these directly.
+
+| Tier | NMs | Current ATT | Target ATT | Current DEF | Target DEF | Current HPBoost | Current DA / TA | Action |
+|---|---|---|---|---|---|---|---|---|
+| T1 | Lizzy / Emperor / Tom Tit | 2,700 | 2,800–3,500 | 481 | 550–650 | 6× | 8% / 0% | Minor DEF bump only |
+| T2 | Roc / Bomb Queen / Aquarius | 4,500 | 3,500–4,500 | 825 | 700–850 | 9× | 15% / 0% | OK; minor DA reduction |
+| T3 | Serket / Vrtra / Simurgh | 7,200–7,920 | 4,000–5,500 | 1,238 | 850–1,000 | 15–18× | 23–30% / 5–8% | **−40% ATT, −25% DEF; DA→12%; remove TA** |
+| T4 | Nidhogg / King Behe / Kirin | 10,800 | 5,000–7,000 | 1,788 | 1,000–1,200 | 21× | 30% / 12% | **−45% ATT, −35% DEF; DA→15%; TA→5%** |
+| T5 (std) | AV / Pandemonium Warden | 16,200 | 6,000–8,500 | 2,750 | 1,200–1,500 | 36× | 38% / 18% | **−52% ATT, −50% DEF; DA→20%; TA→8%** |
+| T5 (elite) | Shinryu (Lv 225–250) | 27,000 | 8,000–12,000 | 11,000 | 2,000–2,500 | 72× | 53% / 23% | **Shinryu stays harder than AV/PW; −60% ATT; −78% DEF; DA→25%; TA→10%** |
+
+*Shinryu is a separate elite T5 target (Lv 225–250, 110 marks). Phase 2 ATT/DEF targets are higher than standard T5 above.*
+
+**REGEN also needs reduction** (current values negate player damage at relaunch power levels):
+
+| Tier | Current REGEN | Target | Tier | Current REGEN | Target |
+|---|---|---|---|---|---|
+| T1 | 75/tick | 30/tick | T4 | 600/tick | 180/tick |
+| T2 | 150/tick | 60/tick | T5 AV/PW | 1,200/tick | 300/tick |
+| T3 | 300–413/tick | 100/tick | Shinryu | 3,000/tick | 500/tick |
+
+**HPBoost:** Require base mob HP from mob_groups before computing target multipliers. ATT/DA/TA drop; HP targets went up (augment+Rebirth-adjusted), so HPBoost will increase on some tiers. Resolve during Phase 2 implementation.
+
+### Prestige T0 (Nightmare Court) — Current Stats vs. Phase 2 Targets
+
+Three bosses fought in sequence per Prestige ascension cycle.
+
+| Boss | Current ATT | Target ATT | Current DEF | Target DEF | Current HPBoost |
+|---|---|---|---|---|---|
+| Diabolos (Dream Devourer) | 12,600 | 5,000–7,000 | 2,475 | 1,400–1,700 | 39× |
+| Medusa (Gorgon Queen) | 15,300 | 5,000–7,000 | 2,887 | 1,400–1,700 | 44× |
+| Odin (Doombringer) | 18,000 | 5,000–7,000 | 3,300 | 1,400–1,700 | 51× |
+
+All three need ~50% ATT reduction and ~40% DEF reduction. Odin keeps its 180s hard enrage. HPBoost targets pending base HP lookup.
+
+---
+
+## Currencies
+
+| Currency | Earned from | Spent on |
+|---|---|---|
+| Hunt Marks | HL kills, Invasions, Daily/Weekly boards, Login bonus, Achievements | HL rank gates, gear medals (Beastmens/Kindreds/Demons), Augment Sage seals, Abyssea Marks pops, Death Penalty loss |
+| Infamy | Invasion clears, Maat fight, specific content | Infamy Vendor (endgame gear + +4 Reforge sets) |
+| Allied Notes | Kills in Wings of the Goddess (S) zones | Cosmetic Shop (daily-rotating appearance items) |
+| Rebirth Points | Job Rebirth resets | Permanent stat boosts on the Rebirth board |
+| Ascension Points (AP) | Clearing Prestige trial NMs | Per-job Ascension stat upgrades + AP caps |
+| Paragon Points | Apex Trials climbs | Paragon board levels + perks + Daily Might unlock |
+| Reforge Marks (AF/Relic/Empy) | Farming Reforge NM pools (3 separate sets) | Reforge Armor upgrades (3 tiers per slot) |
+| Sparks / Accolades | Eminence objectives | Sparks Exchange → gil (outlet for capped players) |
+| Gil | Everything | Race Changer (100M), Title Broker, Warp NPC, Mystery Box, Casino, Cross-Job abilities (10M ea), Custom trusts (50M ea), Augment trades (10k/trade) |
+
+---
+
+## All Systems — Launch Status
+
+### Core Progression
+
+| System | Ships Day 1 | Changes Needed |
+|---|---|---|
+| Hunting League (5 ranks) | ✓ | Phase 2 mob retune; invasion marks nerfed (Phase 1) |
+| Job Rebirth | ✓ | Verify stat boost values fit new power curve |
+| Reforge Armor (3 paths: AF/Relic/Empy) | ✓ | Verify mark costs and NM difficulty post-retune |
+| Hunter's Guild (4 guilds × 6 ranks) | ✓ | No changes needed |
+| Prestige / Ascension | ✓ | Phase 1 AP cap reduction + Phase 2 mob HP retune |
+| Apex Trials / Paragon | ✓ | Phase 1 base HP fix (9M → 1.1M) + Daily Might nerf |
+| Prime Weapon Trials (5 trials) | ✓ | No changes needed |
+| Augment System (4-tier Sage, redesigned) | ✓ | **REDESIGNED:** trophy+count gates replaced by content milestones (HL Rank 3/5 + Prestige 15); both category access AND max boost now tiered; add Sage NPC to Phase 1 deploy |
+
+### Instanced / Scheduled Content
+
+| System | Ships Day 1 | Changes Needed |
+|---|---|---|
+| Invasions (3-hour cycle) | ✓ | Marks nerfed (Phase 1): 150 → 20/wave, 1125 → 100 victory |
+| Weekly World Boss (Star-Devourer) | ✓ | Structurally sound |
+| The Gauntlet (L1–L10) | ✓ | NM_BASE_HP 100k → 20k (Phase 1) |
+| Endless Tower (50 floors) | ✓ | No changes needed |
+| Voidspire (infinite floors) | ✓ | **Convert floor milestones to Paragon Points** (floor 25 = 10k Hunt Marks/run, re-awardable = unlimited farm); ATT scaling: floor 10 = 4,700 / floor 25 = 9,200 / floor 50 = 16,700 — verify entry tier post-Phase 2 |
+| Abyssea Marks (???) | ✓ | Phase 2 mob retune required |
+| Colosseum (async PvP) | ✓ | **Add 15-win/day cap** — per-opponent limit exists but no global daily cap; ~15k marks/day theoretical max with large roster |
+| Tournament (team PvE waves) | ✓ | No changes needed |
+| Game Master NPC (wave survival) | ✓ | No changes needed |
+| Maat Infamy Fight (Lv250) | ✓ | No changes needed |
+| Chocobo Derby | ✓ | No changes needed |
+
+### Daily / Weekly Engagement
+
+| System | Ships Day 1 | Notes |
+|---|---|---|
+| Daily Login Bonus (250 marks/day) | ✓ | **CRITICAL FIX: Reduce to 50 marks/day** — at 250/day, Rank 5 is unlocked in 4 logins with zero play |
+| Login Streak (milestone rewards) | ✓ | **CRITICAL FIX: Reduce milestones** — Day 7 currently 1,500 marks (blows past Rank 5 gate alone); see Economy Audit |
+| Daily Board (3 objectives/day) | ✓ | **Add 750 marks/day hard cap** — objectives pay 400–1,000 each; current max ~3,500/day from board alone |
+| Weekly Hunts (5 objectives/week) | ✓ | Gate each objective by min HL rank to access content; 5,000 completion bonus stays (endgame reward) |
+| Seasonal Events (mark multipliers) | ✓ | No changes needed |
+| World First Announcements | ✓ | No changes needed |
+
+### Gear Acquisition
+
+| System | Ships Day 1 | Notes |
+|---|---|---|
+| Gear Progression NPC (weapons) | ✓ | Tiered weapons for seals |
+| Armor NPC (5-slot BiS) | ✓ | Medal-based BiS armor |
+| Accessory NPC (jewelry) | ✓ | Medal-based endgame accessories |
+| Infamy Vendor (endgame + Reforge +4) | ✓ | Infamy currency |
+| Crafting Exchange NPC | ✓ | HQ crafted items → marks; gives crafters a progression outlet |
+
+### Quality of Life & Services
+
+| System | Ships Day 1 | Notes |
+|---|---|---|
+| Character Upgrader | ✓ | Auto-grants WS/spells/skills/trusts on new chars |
+| Cross-Job Ability Trainer (10M ea) | ✓ | Borrowed abilities on any job |
+| Cross-Job Trait Trainer (10M ea) | ✓ | Borrowed passive traits on any job |
+| Custom Trusts — Gemma + Meat (50M ea) | ✓ | Void Keeper NPC |
+| Player Trusts (friend unlock system) | ✓ | 30 min party + same zone = permanent unlock |
+| Cosmetic Shop (Allied Notes) | ✓ | Daily-rotating seasonal appearance items |
+| Capacity Farm (CP mobs) | ✓ | ~100 always-up Lv150–160 mobs in Bibiki Bay |
+| Provisioners' League (fishing/crafting) | ✓ | Non-combat progression track |
+| Treasure Hunts | ✓ | Drop from HL kills; dig at zone for marks/gil/catalysts |
+| Mystery Box (gil pull) | ✓ | Weighted random rewards with pity system |
+| Casino (Lady Luck) | ✓ | Slots/High-Low/Roulette/Dice |
+| Sparks Exchange (sparks → gil) | ✓ | Outlet for capped players |
+| Gil Exchange (100k → 1 mark) | ✓ | Whale relief valve |
+| Warp NPC (tiered destinations) | ✓ | Pay gil for instant zone warps |
+| Race Changer (100M gil) | ✓ | Pay to change race/look |
+| Title Broker | ✓ | Vanity gil sink |
+| Death Penalty (–10 marks/death in HL) | ✓ | Applies in Hunting League zone only; new-player grace period |
+| Test Dummy NPC | ✓ | Spawn L99/L150/L200 targets at GM Home |
+| Abyssea Permanent Visitant | ✓ | No time limit anywhere in Abyssea |
+| Enhancing Magic ×2 Duration | ✓ | All Enhancing spells doubled |
+| Ranged No Distance Penalty | ✓ | RNG-class QoL |
+| Barrage 5-min Duration | ✓ | Up from 1 min |
+| Subjob EXP Share | ✓ | Sub levels to 50% of main passively |
+| Homepoint Full Heal | ✓ | Touch any homepoint to heal to full |
+| Home Point Crystal (GM Home) | ✓ | Warp to any homepoint free, no attunement |
+
+### Job-Specific Overhauls
+
+| System | Ships Day 1 | Changes Needed |
+|---|---|---|
+| BST Jug Pet Overhaul | ✓ | Phase 1 stat reduction |
+| SMN Avatar Boost + BP Delay Uncap | ✓ | Phase 1 stat reduction |
+| RNG Overhaul (ranged DD) | ✓ | Verify vs new power curve |
+| BLU Auto Spell Progression | ✓ | No changes needed |
+| AoE Weapon Skill Upgrade | ✓ | No changes needed |
+
+### Leaderboards & Records
+
+| System | Ships Day 1 | Notes |
+|---|---|---|
+| WSTracker (WS damage personal best) | ✓ | Resets at wipe — fresh competition |
+| Combat Records (healing/nuke/burst/SC) | ✓ | Resets at wipe |
+| Real Level Tracker (composite level) | ✓ | Feeds website leaderboard |
+| Apex Leaderboard | ✓ | Resets at wipe |
+| Gauntlet Champion Data | ✓ | Resets at wipe |
+
+---
+
+## Augment System — Interaction with the Power Curve
+
+The augment system is a parallel progression axis that stacks on top of gear, Prestige perks, and Paragon buffs. It was **not included in the player power curve** above — actual player stats will be higher than the table shows for players who actively augment.
+
+### Augment Tier Structure (Redesigned)
+
+Two axes scale with content achievement: **which categories are available** and **how powerful augments can get** (max boost per slot, 0–31 engine cap). The previous trophy + lifetime-count gate system is replaced entirely by the same content milestone gates the rest of progression uses.
+
+| Tier | Gate | Max Boost/Slot | Mastery Mult | Crit Chance | Categories Available |
+|---|---|---|---|---|---|
+| 0 — Base | None (Day 1) | 8 | 1.00× | 5% | HP/Regen · ATT/STR · ACC/DEX · DEF/VIT |
+| 1 — Combat | HL Rank 3 | 16 | 1.33× | 10% | + AGI/EVA/Haste · WS DMG · Skill+ |
+| 2 — Advanced | HL Rank 5 | 24 | 1.67× | 15% | + MP/Refresh · Elemental Resist · INT/Magic |
+| 3 — Master | Prestige Level 15 | 31 | 2.00× | 20% | + MND/Healing · CHA/Enmity · Pet — all 13 unlocked |
+
+**Implementation:** Gate checks `HL_Tier` CharVar for Tiers 1–2, and any `Prestige_Level_N >= 15` for Tier 3, in the Augment Sage NPC. Pure Lua — no rebuild. Add Augment Sage NPC to Phase 1 deploy list.
+
+**Former trophy items** (Behemoth Horn, Nidhogg Scales, Khimaira Horn, Fafnir Scale, Kirin's Mane) no longer gate augment rank. Decision needed: repurpose as AH vendor items, collectible cosmetics, or remove from drop tables entirely.
+
+> **Admin notes — trophy item fate:** *(leave your name + comment)*
+
+### Tier Unlock Timeline
+
+| Tier | When achievable | Player-facing milestone |
+|---|---|---|
+| 0 | Day 1 | Bronze gear augments are immediately available and useful |
+| 1 | Week 2–3 (HL Rank 3) | Reaching Rank 3 unlocks WS DMG and Haste augments |
+| 2 | Week 5–6 (HL Rank 5) | Rank 5 / Prestige entry opens Refresh, Magic, and Resist builds |
+| 3 | Month 2–3 (Prestige Level 15) | Prestige 15 hits max augment power; Pet/Healer/Enmity builds fully viable |
+
+### Impact on the Power Curve
+
+| Milestone | Gear + Prestige ATT | With Augments | Gear + Prestige HP | With Augments |
+|---|---|---|---|---|
+| Week 5–6 (Prestige entry / Aug Tier 2) | ~1,200 | ~1,350–1,500 | ~7,000 | ~8,000–9,000 |
+| Month 2–3 (Prestige mid / Aug Tier 3) | ~1,600 | ~1,900–2,100 | ~8,500 | ~10,500–12,000 |
+| Month 6+ (Max Paragon / Aug Tier 3 max) | ~2,200 | ~2,700–2,900 | ~10,000 | ~14,000–16,000 |
+| + Max Rebirth (main job, Month 6+) | — | → ~3,700–3,900 | — | → ~15,000–17,000 |
+
+### Notes
+
+All 13 affinity categories span diverse mods — the ATT contribution above assumes a DPS-focused build, not full ATK stacking. Mob HP targets in Phase 2 already account for augmented players at each tier. Prestige T3+ targets include an additional 30% for Rebirth stacking — see Job Rebirth section.
+
+High-multiplier categories (HP/Regen mult 640, MP/Refresh mult 320) at Tier 3 boost 31 produce large absolute values and may need individual `maxBoost` overrides in the catalog — validate during Phase 1 implementation.
+
+---
+
+## Job Rebirth — Stacking Analysis
+
+Job Rebirth borrows `prestige_catalog.categories` for its boost list — same stats, same perLevel values, same cap fields. The two tracks apply independently and additively. A player who maxes both systems on their main job gets double the flat stat contribution.
+
+| Source | ATT | HP |
+|---|---|---|
+| Ascension (cap 50 × +20/level) | +1,000 | +1,000 |
+| Job Rebirth (same catalog, same cap) | +1,000 | +1,000 |
+| Paragon Might perk (10 ranks × +100) | +1,000 | — |
+| Paragon Vigor perk (10 ranks × +500) | — | +5,000 |
+| Gear (Month 6+ endgame) | ~200 | ~8,000 |
+| Augments (Rank 5, offensive build) | +900 | +4,000 |
+| **Peak total** | **~4,100** | **~19,000** |
+
+**Multiplier stacking is already addressed by Phase 1.** Phase 1 cap reductions apply to Rebirth automatically (it reads the same catalog), so combined CRIT = 40%, WSDMG = 80%, HASTE = 30% after nerf. The stacking concern is purely the flat stats.
+
+**Why flat stat stacking is acceptable (Option A):**
+- Each rebirth requires a full job re-grind (Lv1→99 + 2,100 JP) with an escalating EXP penalty: R1 = −4%, R10 = −32%, R20 = −64%, hard cap −90%
+- Max Rebirth investment on a single job reaches Month 6+; across multiple jobs it's effectively infinite grind
+- pDIF caps limit how much raw ATT helps once mob DEF is set appropriately — at Prestige T5 DEF (3,200–3,800) a player with 4,100 ATT is at or near cap, not running away with multiplicative gains
+- The grind is per-job: a WAR has +1,000 Rebirth ATT, switching to PLD gives them none unless they've separately reborn PLD
+
+**Compensation:** Mob HP targets for Prestige T1–T2, Abyssea T3, and Apex have been increased 15–30% above the augment-adjusted base to account for Rebirth investment at those stages.
+
+---
+
+## Legacy Reward Program
+
+Players who built this community are recognized at relaunch. Rewards are based on each **account's** best character, snapshotted at wipe date. **GMs excluded** (any account with any character at gmlevel > 0 is excluded from all tiers).
+
+### Tier Gates
+
+| Tier | Name | Gate — any one condition qualifies |
+|---|---|---|
+| 1 | Veteran of Legendary | Account exists with any character |
+| 2 | Proven Hunter | HL Rank 3+ **OR** 200+ lifetime marks |
+| 3 | League Legend | HL Rank 5 **OR** any job at Prestige Level 1+ **OR** 1,000+ lifetime marks |
+| 4 | The Unbroken | Any job at Prestige Level 20+ **OR** Gauntlet L10 cleared ≥1× **OR** Prime Weapon Trial 4 complete |
+
+> **Admin notes:** *(adjust tier gates / reward values here — leave your name + comment)*
+
+### Rewards by Tier
+
+| Reward | Tier 1 | Tier 2 | Tier 3 | Tier 4 |
+|---|---|---|---|---|
+| Exclusive title | Veteran of Legendary | Proven Hunter | League Legend | The Unbroken |
+| Starting gil (total incl. base 300k) | 450k | 700k | 1M | 1.5M |
+| Bonus starting marks | — | +100 | +250 | +500 |
+| Augment catalysts | 5 | 25 | 60 | 100 |
+| Death's Pardons | — | 1 | 2 | 3 |
+| Starting Infamy | — | — | 100 | 200 |
+| Legacy cosmetic trust | — | — | — | Yes |
+| Hall of Legends recognition | — | — | Listed | Named plaque |
+| Name reservation window | 24h | 24h | 48h | 48h |
+
+**Titles are permanent and exclusive** — they can never be earned post-relaunch. New players will see them as proof of original server history.
+
+**Bonus marks:** Tier 4 starts with 500 marks — enough to pre-unlock through Rank 4 (500 mark gate). They still fight every NM; they're just not paying the gate tax for ranks they already proved. Rank 5 (1,000 marks) always requires actual play.
+
+**Hall of Legends:** A named NPC board in GM Home. Tier 3 accounts appear in the "Roll of Veterans" scroll. Tier 4 accounts get a named plaque NPC. Permanent — new players discover it and learn who built the server.
+
+### Execution
+
+1. **Snapshot:** Run the query below on wipe day against the live Azure DB. Export to `legacy_tiers.csv`.
+2. **Store:** Keep the CSV on the Azure box (or insert into a `legacy_rewards` table) before wiping.
+3. **Apply:** A post-relaunch login hook reads the account's tier on first character creation, applies all rewards once, and sets `Legacy_Rewards_Applied = 1` to prevent reapplication.
+4. **Announce:** Post the tier list publicly (by character name) before the wipe goes live — drives hype and gives players something to flex before everything resets.
+
+### Database Query (Run on Azure Box at Wipe Date)
+
+**Step 1 — Verify CharVars exist in the live DB:**
+```sql
+SELECT DISTINCT varname
+FROM char_vars
+WHERE varname IN ('HL_Tier', 'HL_Points_Lifetime', 'Gauntlet_Clears', 'PW_Trial4_Done')
+   OR varname LIKE 'Prestige_Level_%'
+ORDER BY varname;
+```
+
+**Step 2 — Full tier assignment:**
+```sql
+-- Legacy reward tiers. Run: mysql -u root -p xidb < legacy_query.sql > legacy_tiers.txt
+-- GMs excluded: any account with any char at gmlevel > 0.
+-- Prestige is per-job (Prestige_Level_1..22); we take the highest job across all chars.
+
+WITH gm_accounts AS (
+    SELECT DISTINCT accid FROM chars WHERE gmlevel > 0
+),
+player_stats AS (
+    SELECT
+        a.id    AS account_id,
+        a.login AS account_name,
+        GROUP_CONCAT(DISTINCT c.charname ORDER BY c.charname SEPARATOR ', ') AS characters,
+        MAX(CASE WHEN cv.varname = 'HL_Tier'             THEN cv.value ELSE 0 END) AS hl_rank,
+        MAX(CASE WHEN cv.varname = 'HL_Points_Lifetime'  THEN cv.value ELSE 0 END) AS lifetime_marks,
+        MAX(CASE WHEN cv.varname LIKE 'Prestige_Level_%' THEN cv.value ELSE 0 END) AS best_prestige,
+        MAX(CASE WHEN cv.varname = 'Gauntlet_Clears'     THEN cv.value ELSE 0 END) AS gauntlet_clears,
+        MAX(CASE WHEN cv.varname = 'PW_Trial4_Done'      THEN cv.value ELSE 0 END) AS prime_weapon
+    FROM accounts a
+    JOIN chars c ON c.accid = a.id
+    LEFT JOIN char_vars cv ON cv.charid = c.charid
+        AND (cv.varname IN ('HL_Tier', 'HL_Points_Lifetime', 'Gauntlet_Clears', 'PW_Trial4_Done')
+             OR cv.varname LIKE 'Prestige_Level_%')
+    WHERE a.id NOT IN (SELECT accid FROM gm_accounts)
+    GROUP BY a.id, a.login
+)
+SELECT
+    account_id,
+    account_name,
+    characters,
+    hl_rank,
+    lifetime_marks,
+    best_prestige,
+    gauntlet_clears,
+    prime_weapon,
+    CASE
+        WHEN best_prestige >= 20 OR gauntlet_clears >= 1 OR prime_weapon = 1 THEN 4
+        WHEN hl_rank = 5 OR best_prestige >= 1 OR lifetime_marks >= 1000     THEN 3
+        WHEN hl_rank >= 3 OR lifetime_marks >= 200                           THEN 2
+        ELSE 1
+    END AS tier,
+    CASE
+        WHEN best_prestige >= 20 OR gauntlet_clears >= 1 OR prime_weapon = 1 THEN 'The Unbroken'
+        WHEN hl_rank = 5 OR best_prestige >= 1 OR lifetime_marks >= 1000     THEN 'League Legend'
+        WHEN hl_rank >= 3 OR lifetime_marks >= 200                           THEN 'Proven Hunter'
+        ELSE 'Veteran of Legendary'
+    END AS legacy_title
+FROM player_stats
+ORDER BY tier DESC, account_name;
+```
+
+**Step 3 — Summary count per tier:**
+```sql
+-- Wrap the Step 2 query as a subquery aliased `t`:
+SELECT
+    tier,
+    legacy_title,
+    COUNT(*)  AS total_accounts,
+    GROUP_CONCAT(account_name ORDER BY account_name SEPARATOR ', ') AS players
+FROM ( /* paste Step 2 here */ ) t
+GROUP BY tier, legacy_title
+ORDER BY tier DESC;
+```
+
+---
+
+## Open Questions for Admin Team
+
+*Leave your response below each question — add your name or initials. Once the team agrees, replace "pending" with the decision and mark it **[DECIDED]**.*
+
+---
+
+**1. Relaunch Date**
+When do we publicly announce and go live? Recommend at minimum 2 weeks of internal testing after all Phase 1+2 changes are deployed.
+
+> **Decision:** *(pending)*
+> **Notes:**
+
+---
+
+**2. Player Communication**
+How much advance notice do we give the current playerbase about the character wipe?
+- Option A: 2-week notice (standard for wipes)
+- Option B: 1-week notice with a "goodbye events" period
+- Option C: Announce and go live simultaneously
+
+> **Decision:** *(pending)*
+> **Notes:**
+
+---
+
+**3. Internal Playtest**
+Do we open a limited "alpha" to trusted admins/testers before full relaunch? Recommended: 3–5 days of internal playtesting to catch any obvious tuning errors before the full player base hits.
+
+> **Decision:** *(pending)*
+> **Notes:**
+
+---
+
+**4. Existing Player Data**
+Wipe is confirmed. Should we:
+- Archive a copy of player data (accounts, char names, etc.) in case of disputes?
+- Allow players to reclaim their original character name after relaunch?
+- Any legacy recognition for original players (a cosmetic title, etc.)?
+
+> **Decision:** *(pending)*
+> **Notes:**
+
+---
+
+**5. Hype / Announcement**
+What channels do we use to announce? Discord, in-game MOTD, the docs site? Is there content we want to tease/reveal to build excitement before the launch date?
+- **Tier list reveal:** Post the "Hall of Legends" publicly (showing which players hit each legacy tier) before the wipe goes live. Gives high-tier players bragging rights, gives mid-tier players a last window to grind for a higher tier. Good for 48–72h of organic hype leading into launch day.
+
+> **Decision:** *(pending)*
+> **Notes:**
+
+---
+
+**6. Job Rebirth Stat Values — RESOLVED (Option A)**
+Rebirth stacks fully with Ascension (same catalog, same caps). At theoretical peak: ATT ~4,100, HP ~19,000. Decision: **accept stacking** — the grind is measured in months per job with an escalating EXP penalty (90% cap). Mob HP for Prestige T3+, Abyssea T3, and Apex bumped 15–30% to compensate. No change to Rebirth values.
+
+---
+
+**7. GM Coverage on Launch Day**
+Who is on for launch day? Likely high activity, potential bugs, balance feedback all at once.
+
+> **Decision:** *(pending)*
+> **Notes:**
+
+---
+
+**8. Voidspire Milestone Currency**
+Floor milestones (10k marks at F25, 25k at F50, etc.) are re-awardable per run and will be the most efficient mark farm in the game for endgame players.
+- **Option A (preferred):** Convert to Paragon Points — endgame content rewards endgame currency, Hunt Marks stay HL-primary.
+- **Option B:** Make milestones once-per-week-per-character.
+Which do we go with?
+
+> **Decision:** *(pending)*
+> **Notes:**
+
+---
+
+**9. Login Streak Reward Type**
+Should the drastically-reduced login streak milestones still give Hunt Marks, or should they give a different reward that doesn't bypass rank gates at all (e.g., gil, catalysts, cosmetic titles)?
+
+> **Decision:** *(pending)*
+> **Notes:**
+
+---
+
+## Gap Audit — What the Plan Does Not Yet Cover
+
+*Comprehensive audit of content and rebalancing gaps identified 2026-06-24. Each item needs a decision or explicit "accepted as-is" sign-off before implementation begins. Admin notes field provided on each.*
+
+---
+
+### CRITICAL — Broken at launch if not fixed
+
+**G1. Star-Devourer (Weekly Raid) is currently disabled**
+`raid_catalog.lua:75 nil xi.mod` crashes the module on load. The plan lists it as "Structurally sound" — that is wrong. The weekly raid (2,500 marks + 500 Infamy first clear/week) will not fire at relaunch. No fix is in any phase.
+- **Action needed:** Fix raid_catalog.lua nil guard. Add to Phase 1 (Lua-only, hot-reload safe).
+
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G2. Voidspire early-game value collapses if milestones → Paragon Points**
+Paragon Points are only spendable once a player reaches the Apex Trials loop (endgame, Month 4+). Converting F25 milestones to Paragon Points makes Voidspire a dead zone for new players during their entire first month. Options:
+- **Option A:** Keep a small Hunt Mark reward on early floors (F1–F10 range) and convert only the mid/late milestones (F25+) to Paragon Points.
+- **Option B:** Gate Voidspire entry by HL Rank 4+ so only near-endgame players enter.
+- **Option C:** Convert milestones to Paragon Points but add a non-endgame early-floor reward (gil, catalysts, augment materials) to retain value for new players.
+
+> **Decision:** *(pending)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G3. Endless Tower vs. Voidspire — same system or different?**
+The All Systems table lists both "Endless Tower (50 floors)" and "Voidspire (infinite floors)" as separate rows. Prime Weapon Trial 2 requires "Endless Tower floor 50." If Voidspire IS the Endless Tower (different branding for the same content), converting Voidspire milestones is fine and Prime Trial 2 is unaffected. If they are separate systems, the plan may need two different entries in Phase 1. **Needs explicit confirmation before any code touches Voidspire milestones.**
+
+> **Decision:** *(same system / different systems)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+### HIGH — Significant balance impact not addressed
+
+**G4. Hunter's Guild Grandmaster +100% mark amp — not in the economy model**
+All economy rate tables assume base kill rates (5–130/kill). Grandmaster doubles all mark income from that guild's NMs. At peak: T5 featured NM, full party, Grandmaster = ~500–580 marks/kill. Two open questions: (1) Does the amp apply globally to all HL kills, or only to that guild's specific NM pool? If global, it can halve the time to unlock rank gates. (2) At what pace can a dedicated player hit Grandmaster? If Grandmaster is achievable within the first 2 weeks, the rank gate math needs to account for it.
+
+> **Decision:** *(pending — clarify amp scope + Grandmaster pace)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G5. PUP Automaton — not in Phase 1**
+BST jug pets and SMN avatars are both being retuned. PUP automaton uses `xi.pet.spawnPet` too, but `BstJugPetOverhaul.lua` filters by `petID >= 21` (jug pets only) and explicitly excludes automatons. If automaton stats were boosted alongside BST/SMN on the original server, PUP will be the one job still operating on the broken old power curve post-Phase 1. **Need to audit automaton stat mods and determine whether a Phase 1 nerf is required.**
+
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G6. DRG Wyvern — not in Phase 1**
+Same gap as PUP. Wyvern power is not mentioned anywhere in the plan. If wyverns were custom-buffed (DA, ATT flat adds, PDT reduction similar to BST/SMN), DRG carries broken pet power into relaunch while every other pet class is nerfed.
+
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G7. RNG "Verify vs new power curve" is not a plan**
+The All Systems table says "Verify vs new power curve" but does not say: what metric to verify, what the acceptable outcome is, or what fix to apply if it's wrong. The RNG overhaul involves `RANGED_DMG_RATING` and ATT flat mods. With mob DEF targets changing in Phase 2, RNG ranged damage shifts meaningfully. **Need a specific target** (e.g., "RNG should deal X% of equivalent-gear melee DPS per minute") and a documented fix if the number misses.
+
+> **Decision:** *(define success metric + fix path)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G8. Infamy economy — no numbers exist**
+Infamy is now the primary invasion reward and gates Abyssea access, but the plan contains no specific numbers:
+- What Infamy amount unlocks Abyssea T1 / T2 / T3?
+- How much Infamy does a full invasion clear award post-nerf?
+- What does the Maat fight award?
+- Is there an Infamy cap or decay?
+- How many weeks of invasions does a fresh player need before accessing Abyssea T1?
+
+Legacy Tier 3 gets 100 Infamy, Tier 4 gets 200 Infamy — but without knowing the T1 access gate, these numbers are meaningless. **Infamy is an entire sub-economy with zero tuning in the plan.**
+
+> **Decision:** *(set T1/T2/T3 access thresholds + per-invasion earn rate)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G9. Death's Pardons — no ongoing earn path for new players**
+Legacy rewards give 0–3 pardons. New players get 0. Post-wipe, there is no documented way to earn more. If a player burns through their pardons, the –10 mark death penalty becomes a permanent tax on every HL session. Either pardons need a purchase or earn path (AH, gil sink, rare NM drop, daily/weekly reward), or the death penalty grace period needs to cover the gap for players with no pardons left.
+
+> **Decision:** *(add earn path or adjust grace period)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G10. Invasion mob stats validated against old power, not new**
+The plan lists invasion mob ATT as 1,400–3,800 and calls it "OK — aligned with curve." That alignment was against the pre-nerf curve. Post-Phase 1, player ATT drops significantly (REGAIN gone = fewer WSes; AP caps halved). Invasion ATT 3,800 may now one-shot a player at equivalent progression. **Needs re-verification against the Phase 2 power curve after Phase 1 nerfs are finalized.**
+
+> **Admin notes:** *(flag for Phase 2 review alongside mob retune)*
+
+---
+
+**G11. Crafting Exchange NPC rate — undocumented and untuned**
+"HQ crafted items → marks" is listed as a progression outlet for crafters. But the exchange rate is completely absent from the plan. If the rate is generous, Provisioners' League + Crafting Exchange = a crafting-only path to Rank 5 that bypasses HL entirely. Rate must be set and documented. It should never pay more marks per hour than a comparably-invested HL player earns killing NMs.
+
+> **Decision:** *(set exchange rate + document it)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G12. NM respawn timers — no discussion**
+With many players competing for the same NMs at launch, respawn timers are a critical Day 1 bottleneck. If T1 NMs respawn every 45 minutes and 30 players need them to rank up, there are 2-hour+ wait queues on opening day. Options: reduce respawn timers, allow multiple concurrent spawns of the same NM, or create instanced NM pops. At minimum the current timer values need to be looked up and a decision made about whether they're acceptable for a high-population launch window.
+
+> **Decision:** *(review timer values; decide adjustment strategy)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G13. Paragon board value after Daily Might nerf**
+Daily Might goes from transformative (50 TP/tick REGAIN = continuous WS spam) to a mild passive (5 TP/tick, 15 HP/tick). The entire reason players grind Apex Trials is Paragon Points → board perks. With the signature perk gutted, only the stat upgrades (ATT/ACC/DEF/HP flat adds) justify the grind. Is that compelling enough to drive endgame engagement? A nerf this large to the board's flagship perk may need a compensating addition — a new perk with active gameplay value (a cooldown skill, a new type of combat effect, a Paragon-level cosmetic aura) — to keep the Apex loop worth doing.
+
+> **Decision:** *(accept as-is or design replacement perk)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G14. Apex Trials tier structure and Paragon Point earn rate — undefined**
+The plan fixes BASE_HP (9M → 1.4M) but the Apex Trials loop is otherwise undocumented:
+- How many tiers exist?
+- Paragon Points awarded per tier?
+- Total Paragon Points to fill the board?
+- Expected time to first perk unlock?
+
+Without these numbers, Apex Trials is mechanically present but economically undefined. Players need a visible progression arc, not just an infinite climb with no milestones.
+
+> **Decision:** *(document tier breakdown + PP earn rate)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G15. First-kill bonus reset timing**
+"+100% on first kill" — resets when? This has a major impact on mark economy:
+- **Weekly reset:** T1 first-kills (8 NMs × 10 marks) = 80 marks in one session → Rank 2 gate (75) passed day 1 every week
+- **Once-per-wipe:** First-kills are a launch celebration event; post-rush, mark income drops by 50% across the board permanently
+
+Neither is necessarily wrong but they produce very different economies. Currently ambiguous in every section of the plan.
+
+> **Decision:** *(weekly / monthly / once-per-wipe)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+### MEDIUM — Should be resolved before launch
+
+**G16. Prestige trial mechanics not documented**
+The plan covers boss stat nerfs but not the trial structure itself:
+- What triggers access? (HL Rank 5 + mark threshold? Automatic?)
+- Sequential fight: all 3 bosses per Prestige level, or one per?
+- Enrage is documented for Odin (180s) — what about Diabolos and Medusa?
+- AP awarded per kill, and total AP cost per perk tier
+- Failure/retry rules — immediate retry or lockout window?
+
+> **Admin notes:** *(document the trial flow here)*
+
+---
+
+**G17. Abyssea tier structure — specific content not documented**
+The plan has T1/T2/T3 mob stat targets but:
+- What specific NMs are in each tier?
+- What do they drop, and what is the reward loop?
+- How are NMs popped? (The currencies table references "Abyssea Marks pops" costing Hunt Marks — how many marks, and for which NMs?)
+- Is T1/T2/T3 access purely Infamy-gated, or are there additional prerequisites?
+
+> **Admin notes:** *(document content per tier)*
+
+---
+
+**G18. Trophy NM spawn integrity — CLOSED**
+~~Augment Rank 2–5 required specific trophy items from named NMs.~~ The augment tier redesign (see Augment System section) removes all trophy gates. Augment tiers are now gated purely by HL Rank and Prestige Level CharVars. Trophy items (Behemoth Horn, Nidhogg Scales, Khimaira Horn, Fafnir Scale, Kirin's Mane) still drop but their purpose is TBD — see trophy item fate note in Augment System section.
+
+---
+
+**G19. Party mark bonus — per-player vs. shared, exact formula**
+"+25–50% on top of above" is underspecified. Needs clarification:
+- Is it +25% duo, +50% trio/larger? Or per-additional-player linear?
+- Does each party member independently receive the bonus, or is it split/shared?
+- At maximum (6 players + Grandmaster + featured T5 first-kill): ~580 marks per player per kill — is this the intended peak?
+
+> **Admin notes:** *(document formula; confirm it matches the economy model)*
+
+---
+
+**G20. Colosseum replica power ceiling**
+Post-wipe, all replicas reset. Replicas enrolled from max-geared Rebirth + Prestige 50 + full Paragon characters will have very different power from a mid-tier player's replica. If the matchmaking doesn't filter by player tier, a Rank 2 player matched against a maxed replica has a 0% win rate. Confirm whether replica stat snapshots are capped or whether matchmaking tiers replicas by enrollment power.
+
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G21. Maat Infamy fight — stat unverified**
+Listed "No changes needed." Maat is Lv250. Post-Phase 1 nerfs, player damage is significantly lower. If Maat has high REGEN or an enrage, the fight may become a wall that blocks Infamy progression for non-endgame players — which matters because Infamy is now the primary invasion reward and gates Abyssea.
+
+> **Admin notes:** *(verify Maat fight is survivable at Prestige T0 entry power)*
+
+---
+
+**G22. Seasonal event mark multipliers — values undocumented**
+Listed "No changes needed" but no multiplier values appear anywhere in the plan. A 3× seasonal event over a weekend could let a fresh player hit Rank 5 during the event window, bypassing weeks of intended progression. Multiplier values need to be documented and capped if necessary.
+
+> **Decision:** *(document multiplier values; cap if > 2×)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G23. AH Market Maker prices — calibrated for mature economy**
+Prices were set when the playerbase had millions of gil accumulated. Fresh economy starts at 300,000 gil per character. If Bronze weapons at 140–210k (from the progression plan) represent 50–70% of starting capital, mid-tier gear and consumables could be entirely inaccessible for weeks. The market maker's SELL price list should be reviewed with "300k starting player, Day 1" as the target buyer.
+
+> **Admin notes:** *(review AH prices against 300k starting budget)*
+
+---
+
+**G24. Leaderboard wipe mechanism — not confirmed**
+Plan states leaderboards reset at wipe. Mechanism not confirmed: is there a `TRUNCATE` step in the wipe runbook, or do leaderboards self-clear from CharVar deletion? If stored in a separate table that doesn't reset with chars, old records survive into the new season.
+
+> **Admin notes:** *(confirm wipe mechanism per leaderboard table)*
+
+---
+
+**G25. Chocobo Derby prize pool vs. fresh economy**
+Listed "No changes needed." If prize pools were calibrated for a mature economy (e.g., 1M+ gil per race win), the Derby could be the fastest early gil source and distort the fresh economy. If prizes are modest, no concern.
+
+> **Admin notes:** *(confirm prize values are appropriate for 300k starting gil)*
+
+---
+
+### OPERATIONAL — Wipe runbook items
+
+**G26. Hall of Legends NPC population method**
+Tier 3 accounts appear on a scroll. Tier 4 accounts get a named plaque NPC. No mechanism exists to populate this from `legacy_tiers.csv`. A script or manual NPC-insert process needs to be built before launch day.
+
+> **Admin notes:** *(assign owner for this build)*
+
+---
+
+**G27. Server MOTD — needs relaunch content**
+Needs: server identity pitch, Day 1 instructions (Character Upgrader NPC, HL vendor, 50 marks + 300k starting), Discord link. Currently undefined.
+
+> **Admin notes:** *(draft MOTD here or assign owner)*
+
+---
+
+**G28. Docs overhaul scope**
+"Update player-facing docs" is Implementation Sequence step 5 but is not scoped. Non-generated narrative pages affected:
+- Progression guide (new pace: 3–6 weeks to Prestige)
+- Economy/marks page (all rate changes)
+- New player start guide (50 marks + 300k, no starter gear)
+- Paragon / Apex Trials page (Daily Might nerf + board value)
+- Infamy guide (invasion primary reward, Abyssea gate)
+- All system pages that reference old mark values
+
+The docgen auto-generates gear/NM data from the DB, but narrative economy/progression docs are handwritten and will be wrong at launch if not updated.
+
+> **Admin notes:** *(identify narrative doc files and assign owner)*
+
+---
+
+**G29. NM initial spawn state at launch**
+Should all NMs start alive at relaunch (immediate first-kill rush, maximum Day 1 energy) or on random respawn timers (staggered availability)? "All alive" risks a race-condition gold rush on the first hour; "random timers" risks players logging in to 0 available NMs. Decision needed and coded into the wipe runbook.
+
+> **Decision:** *(all alive / random timers / other)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G30. Daily/weekly board reset at wipe**
+If the wipe occurs mid-week, the daily/weekly board tables may have partial progress from pre-wipe play, or they may roll over into relaunch with a misleading "already completed" state. Wipe runbook must include explicit `TRUNCATE` or reset of board progress tables.
+
+> **Admin notes:** *(add to wipe runbook)*
+
+---
+
+**G31. Legacy snapshot timing — exact procedure**
+The plan says "run the query at wipe date." Needs to be specific:
+- Before or after the last maintenance patch?
+- While the server is live or during downtime?
+- Is there a maintenance window where the DB is locked read-only for the snapshot to prevent last-second CharVar changes?
+- Export confirmed to `legacy_tiers.csv` stored in `~/server/sql/backups/` on the Azure box before any wipe SQL runs
+
+> **Admin notes:** *(write exact procedure into wipe runbook)*
+
+---
+
+**G32. Login announcement flooding on launch day**
+The announce-player-login module fires on every login. Day 1 with 50–100 simultaneous logins will spam every channel. Options: set a threshold (suppress announcements if N players already online), batch announce every 5 minutes, or temporarily disable for the first hour.
+
+> **Decision:** *(suppress threshold / batch / disable on launch day)*
+> **Admin notes:** *(leave your name + comment)*
+
+---
+
+**G33. AP/PP/Rebirth Points — confirm all are CharVar-stored and wipe-safe**
+Ascension Points, Paragon Points, and Rebirth Points are all CharVar-keyed. Confirm none have a parallel storage path (e.g., a dedicated upgrade table) that would survive a chars-table wipe. If any survive, players enter the relaunch with existing power board progress — breaking the fresh start.
+
+> **Admin notes:** *(verify storage path for each currency before wipe)*
+
+---
+
+### NICE TO HAVE
+
+**G34. Cross-job trainer pricing vs. Day 1 economy**
+10M per ability/trait is 33× starting capital. Intentionally mid-game but worth confirming it's deliberate.
+
+**G35. AEP (Alter Ego Points) vs. new power curve**
+Retail trust upgrades via AEP. If a maxed AEP retail trust outperforms a 50M custom trust (Gemma/Meat), there's a value misalignment worth addressing.
+
+**G36. New player onboarding NPC**
+No in-game tutorial exists. A "Welcome to Legendary" NPC at the start zone explaining the HL system, the Character Upgrader, and the GM Home would significantly improve Day 1 retention for truly new players.
+
+**G37. Provisioners' League reward loop**
+Listed "No marks impact — OK." But if the rewards for fishing/crafting objectives are items that have no meaningful use in the new economy, no one engages with it. Confirm the reward loop is still interesting in a wiped economy.
+
+---
+
+*37 gaps catalogued. Resolve CRITICAL (G1–G3) before any Phase 1 deployment. Resolve HIGH (G4–G15) before internal playtest. MEDIUM (G16–G25) and OPERATIONAL (G26–G33) should all be closed before the announcement goes out.*
+
+---
+
+## Implementation Sequence
+
+When we're ready to implement (not yet):
+
+1. **Phase 1 deploy** — Stat nerfs (`paragon_catalog.lua`, `prestige_catalog.lua`, `BstJugPetOverhaul.lua`, `smn_avatar_boost.lua`, `gauntlet_catalog.lua`) + economy fixes (`invasion_catalog.lua`, `daily_login_bonus.lua`, `login_streak.lua`, `daily_board.lua`, `colosseum_catalog.lua`, `voidspire_catalog.lua`, `new_char_starter_marks.lua`, `hunting_league_catalog.lua` rank gates) + augment redesign (Augment Sage NPC Lua — tier gates replacing trophy+count) + one map restart
+2. **Internal playtest** — Admin/GM team plays fresh characters through week 1 content, verify progression pace feels right
+3. **Phase 2 deploy** — HL NM SQL retune + Prestige HPBoost tuning + Abyssea stat retune + one map restart
+4. **Playtest round 2** — Verify NM kill times against targets, adjust outliers
+5. **Docs update** — Update player-facing docs to reflect new gear tiers, progression pace, and system changes
+6. **Announcement** — Send player communication per team decision above
+7. **Wipe + relaunch**
+
+---
+
+*All changes in this document are hypothetical / approved design. No code has been changed yet.*
