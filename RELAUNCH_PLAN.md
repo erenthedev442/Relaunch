@@ -11,6 +11,229 @@ Legendary is a custom FFXI private server where every system is designed for end
 
 ---
 
+## How Progression Works — Complete Player Journey
+
+This section is the heart of the relaunch. Every system, every nerf, every number in this document exists to support this progression arc. Read this first.
+
+---
+
+### The Core Loop
+
+**Hunt NMs → Earn Marks → Rank Up → Access Harder Content → Prestige → Ascend Infinitely**
+
+Hunt Marks are the server's primary currency. Almost every unlock, reward, and power upgrade traces back to killing Hunting League NMs. Ranks are the gates between chapters of your character's story. Prestige is what begins when you've mastered the hunt. Paragon is what never ends.
+
+There are no levels to grind, no story to complete, no arbitrary timegates. You log in, you fight, you get stronger.
+
+---
+
+### Stage 0: First Login — Day 1
+
+Every character starts with:
+
+| Resource | Amount | Purpose |
+|---|---|---|
+| Gil | 300,000 | Buy 1–2 Bronze weapons from the Auction House (~140–210k each) |
+| Hunt Marks | 50 | Buy a full 10-piece Bronze armor set (5 marks/piece at HL vendor) |
+| All jobs | Lv99 | No leveling — you are always combat-ready |
+| RUN + GEO | Auto-unlocked | Granted on first login; no quest required |
+| Subjob | Auto-leveled | The subjob exp share system levels your sub alongside your main passively |
+
+**The first 10 minutes:** Spend your 50 marks at the HL vendor (Bronze armor set), buy a weapon from AH, zone into Reisenjima Henge. You are hunting.
+
+There is no starter gear handed to you. The 50 marks + 300k gil is a runway, not a handout. You earn your kit.
+
+**Augment Sage (Day 1 — Tier 0):** The Augment Sage NPC is available immediately. Without any rank requirement, you can augment gear with the four base categories: HP/Regen, ATT/STR, ACC/DEX, and DEF/VIT — up to 8 boost/slot. It costs Hunt Marks. This is your first Marks sink and your first taste of the augment loop.
+
+---
+
+### Stage 1: The Hunt Begins (HL Rank 1 → Rank 2)
+
+**Mark gate:** 0 → 75 lifetime marks
+
+HL Rank 1 NMs are tuned for solo or duo play. They hit like the entry tier they are — killable, but not trivial. Each first kill pays a **+100% bonus** (10 total marks instead of 5). The featured NM of the week pays **+200%** (15 total marks). Party play pays an additional +25–50%.
+
+**What you're doing:**
+- Killing Rank 1 NMs for marks and loot
+- Buying Silver gear from the HL vendor once you have enough (201–250 item level)
+- Augmenting Bronze or Silver gear at the Sage with Tier 0 categories
+- Joining the **Daily Login Bonus** cadence (50 marks/day) and **Daily Board** objectives for supplemental marks
+- Starting to build your **Login Streak** (7-day / 14-day / 30-day bonuses escalate)
+
+**Side content available from Day 1:**
+- **Hunter's Guild** — 4 guilds, 6 ranks each. Ranking up amplifies your mark earnings, capping at +100% at Grandmaster. No reason not to work on this in parallel.
+- **Invasions** — open-world assault events. Post-relaunch, Infamy is the primary invasion reward (not marks). Infamy gates Abyssea content and the Infamy vendor. Do these for Infamy, not marks.
+- **Treasure Hunts** — rare windfall events; Tier 3 pays 1,500 marks. Not farmable on demand, but exciting when they proc.
+- **Casino** — pure gil sink/source in GM Home. Slots, high-low, roulette, dice.
+- **Chocobo Derby** — race for gil.
+
+**75 marks in:** You are Rank 2. Rank 2 NMs open up. You now earn 12 marks per kill base (2.4× Rank 1 rate).
+
+---
+
+### Stage 2: Hitting Your Stride (HL Rank 2 → Rank 3)
+
+**Mark gate:** 75 → 225 lifetime marks
+
+Rank 2–3 NMs require duo or small group play. The jump in difficulty is real — these are tuned for players who've cleared Bronze and started Silver. Kill times 7–12 minutes for a competent duo.
+
+**What you're doing:**
+- Farming Rank 2–3 NMs (12–22 marks/kill base)
+- Upgrading to Gold gear (251+ item level) as marks accumulate
+- Hitting **HL Rank 3** at 225 marks — this unlocks **Augment Tier 1** at the Sage
+
+**Augment Tier 1 (Rank 3 gate):** The Sage now offers four additional categories: AGI/EVA/Haste, WS DMG, and Skill+. Max boost increases to 16/slot. This is a meaningful power jump — gear you've been wearing suddenly gets substantially better.
+
+**Colosseum** opens at this stage — PvP arena for marks. 15-win daily cap. If you enjoy structured PvP, this is a consistent supplemental mark source.
+
+**Voidspire** becomes available — a milestone-gated dungeon with escalating floor content. Progress here unlocks Paragon Point rewards at key milestones. Not a daily farm; a long-term project you chip away at.
+
+**225 marks in:** You are Rank 3. Rank 3 NMs open. You earn 22 marks/kill base. You've now spent a meaningful amount of time on the server and your character is starting to feel yours.
+
+---
+
+### Stage 3: The Hard Push (HL Rank 3 → Rank 5)
+
+**Mark gate:** 225 → 1,000 lifetime marks
+
+This is the longest stretch. Ranks 4 and 5 are intentional work. The jump from 225 to 1,000 is designed to take real effort — this is where dedicated hunters separate from casual players.
+
+**Rank 4 (500 marks):** Trio content. Rank 4 NMs pay 38 marks/kill base. First-kills pay 76. A party of 3 running featured NMs efficiently can earn 100–150 marks per session.
+
+**Rank 5 (1,000 marks):** The capstone of the Hunting League. Rank 5 NMs are full trio/party content. They pay 65 marks/kill base — 130 first-kill, 195 featured. Reaching Rank 5 is an accomplishment the whole server will notice.
+
+**What unlocks at Rank 5 (the big one):**
+- **Prestige entry** — you can now begin job-specific Ascension
+- **Augment Tier 2** — the Sage opens MP/Refresh, Elemental Resist, and INT/Magic categories; max boost increases to 24/slot
+- **Abyssea T2/T3** — harder Abyssea content with better mark-per-mob rates (gated by Infamy as well)
+- **Prime Weapon Trial 1 actively completable** — Nightmare fragments drop from Nightmare Court, which is Prestige content gated by Rank 5 entry
+
+---
+
+### Stage 4: Prestige — Job Mastery Begins
+
+**Gate:** HL Rank 5
+
+Prestige is the second chapter of your character's power growth. You've maxed out the Hunting League's rank structure — now you deepen into a specific job. Prestige is job-specific: you can have different Prestige Levels on different jobs.
+
+**How Prestige works:**
+- Fight **Nightmare Court** boss trials (Prestige-tier NMs: Diabolos, Medusa, Odin — tuned for parties of 4)
+- Earn **Ascension AP** from these kills
+- Spend AP at the Prestige board to unlock stat perks and multipliers
+- Each Ascension perk adds power: ATT, ACC, DEF, HP, crit chance, crit damage, WS damage, spell haste, and more
+- Ascension perks are **capped post-relaunch** (20% crit, 40% WSDMG, etc.) — the stacking abuse that broke the live server is gone
+
+**The Prestige ladder:**
+- **Prestige Lv 1–14:** Nightmare Court and Voidwalker-tier content (T1 Prestige NMs). Power growing steadily.
+- **Prestige Lv 15:** **Augment Tier 3 unlocks** — the Sage's full catalog opens (MND/Healing, CHA/Enmity, Pet stats, all 13 categories). Max boost reaches 31/slot. This is the best gear augmentation available.
+- **Prestige Lv 15–40:** Jailer-tier Prestige NMs (T2). Party of 4–6, 15–22 minute fights. Meaningful group content.
+- **Prestige Lv 40–60:** Voidwalker Lord and World's End tiers (T3–T4). These are raid-scale challenges. Prestige Level 60 is a true achievement.
+- **Prestige Lv 60+:** Celestial-tier Prestige NMs (T5). Alliance content. The upper reaches of non-Paragon power.
+
+**Job Rebirth** is a parallel system: reset a job's Ascension for stacking bonuses. Post-relaunch, stacking is allowed but mob HP scales up to compensate at T3+ — the loop stays meaningful.
+
+**Abyssea (runs parallel with Prestige):**
+- T1 Abyssea: trio-sized, 8–12 minute fights; earns Abyssea Marks
+- T2 Abyssea: party of 4, 10–15 minute fights
+- T3 Abyssea: party of 4–6, alliance-adjacent difficulty; 1.5–2.3M HP mobs
+- Abyssea Marks feed the Infamy vendor and specific gear drops — it's a parallel gear track, not a replacement for HL
+
+---
+
+### Stage 5: Prime Weapon — The Pinnacle Gear Quest
+
+**Gate:** Progresses through Prestige content
+
+The Prime Weapon is the server's ultimate item — a custom weapon forged specifically for your job that represents the culmination of everything you've done. There is exactly one path to it.
+
+**Four Trials:**
+
+| Trial | What You Do | Where |
+|---|---|---|
+| Trial 1 — Nightmare | Collect Nightmare Fragments from Nightmare Court | Prestige content (HL Rank 5 entry) |
+| Trial 2 — Endless Tower | Clear Endless Tower Floor 50 | Endless Tower (always-on) |
+| Trial 3 — World Boss | Defeat 3 World Boss kills (Invasion final boss) | Invasion events |
+| Trial 4 — Weapon Guardian | Complete Job Mastery milestone | Job Mastery system |
+
+Once all four trials are done, the **Prime Armory NPC** unlocks. The forge costs **750,000,000 gil**. This is intentional. The Prime Weapon is a server status symbol. The gil sink is part of the economy's long-term health.
+
+---
+
+### Stage 6: Apex & Paragon — The Infinite Endgame
+
+**Gate:** Post-Prestige content (exact entry gate: TBD — admin decision)
+
+For players who've hit the ceiling of Prestige progression, the Apex ladder is what never ends.
+
+**Apex Trials (`!apex` command or GM Home NPC):**
+- Greater Rift–style: you queue into a scaled boss fight, difficulty scaling up as you climb
+- Base HP 1.4M at Tier 1, increasing with each tier
+- Rewards: **Paragon Points** per clear, with bonus points for personal bests
+- Zone: Walk of Echoes [P2] (dedicated arena — separate from the Tower's arena)
+- Two leaderboards: Apex rank reached, Paragon Points earned
+
+**Paragon Board (NPC):**
+Spend Paragon Points on:
+
+| Upgrade | Effect | Cap |
+|---|---|---|
+| ATT | +1 per point | +1,000 |
+| ACC | +1 per point | +1,000 |
+| DEF | +2 per point | +2,000 |
+| HP | +5 per point | +5,000 |
+| Prestige Levels | Infinite levels beyond job cap | None |
+| Daily Might buff | Upgraded Paragon Daily buff | Unlocked perk |
+
+The Paragon board has **no ceiling**. ATT/ACC/DEF/HP max out, but infinite Prestige Levels through the Paragon store mean there is always something to work toward. A player a year into the relaunch is still making progress.
+
+---
+
+### The Full Unlock Tree — At a Glance
+
+| Stage | Gate | What Opens |
+|---|---|---|
+| Day 1 | None | HL Rank 1, Bronze vendor, Augment Tier 0 (8/slot), Daily Login, Hunter's Guild, Invasions, Casino, Chocobo Derby |
+| Early | 75 marks (Rank 2) | HL Rank 2 NMs, Silver gear vendor, Colosseum |
+| Mid | 225 marks (Rank 3) | HL Rank 3 NMs, Gold gear vendor, **Augment Tier 1** (16/slot), Voidspire, Abyssea T1 |
+| Late-mid | 500 marks (Rank 4) | HL Rank 4 NMs, Abyssea T1/T2 |
+| Hard cap | 1,000 marks (Rank 5) | HL Rank 5 NMs, **Prestige entry**, **Augment Tier 2** (24/slot), Abyssea T3, Prime Trial 1 |
+| Prestige | HL Rank 5 | Nightmare Court, Ascension AP board, Prestige NM tiers, Job Rebirth |
+| Prestige 15 | Prestige Level 15 | **Augment Tier 3** (31/slot, all 13 categories) |
+| Prime path | Parallel to Prestige | 4 trials → Prime Armory → forge Prime Weapon (750M gil) |
+| Endgame | Post-Prestige | Apex Trials, Paragon Board (infinite), leaderboards |
+
+---
+
+### Currencies — What They Are and What They Buy
+
+| Currency | Primary Source | What It Buys |
+|---|---|---|
+| **Hunt Marks** | HL NM kills | Gear (Bronze/Silver/Gold), rank gates, augment rolls, Colosseum entry |
+| **Infamy** | Invasions, Abyssea | Abyssea access tiers, Infamy vendor (top-tier gear picks), Reforge access |
+| **Paragon Points** | Apex Trials | Paragon board perks, infinite Prestige Levels |
+| **Ascension AP** | Prestige NM kills | Ascension stat perks (crit, WS dmg, haste, etc.) |
+| **Gil** | AH, Casino, mobs | Prime Weapon forge (750M), AH trades, Casino games |
+| **Reforge Marks** | AF/Relic/Empy system | Relic/Empy/Artifact armor upgrades (separate track) |
+| **Abyssea Marks** | Abyssea kills | Abyssea-specific gear and Infamy vendor items |
+
+---
+
+### Player Power Curve (Post-Relaunch)
+
+| Progression Stage | ATT | DEF | HP |
+|---|---|---|---|
+| Fresh Lv99 (no gear) | ~300 | ~1,500 | ~2,500 |
+| HL Rank 1 (Bronze set) | ~500 | ~2,000 | ~3,500 |
+| HL Rank 2 (Silver gear) | ~700 | ~2,500 | ~4,500 |
+| HL Rank 3–4 (Gold gear + Tier 1 augments) | ~950 | ~3,000 | ~6,000 |
+| HL Rank 5 (Prestige entry, Tier 2 augments) | ~1,200 | ~3,200 | ~7,000 |
+| Prestige 20–40 (Ascension AP building) | ~1,600 | ~4,000 | ~8,500 |
+| Prestige 60+ (Max Paragon, Tier 3 augments) | ~2,200 | ~5,000 | ~10,000 |
+
+This curve represents what a player can expect at each stage with appropriate gear and augments. BST/SMN pets follow their own curve (BstJugPetOverhaul + smn_avatar_boost), scaled to be competitive but not dominant.
+
+---
+
 ## Why We're Relaunching
 
 The server accumulated power stacking that made almost all content trivial:
