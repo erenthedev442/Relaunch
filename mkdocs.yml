@@ -52,7 +52,9 @@ validation:
 
 # Dev/admin-only pages: kept in the repo for maintainers but not published.
 exclude_docs: |
-  admin/
+  admin/gear-coverage/
+  admin/missing-spells.md
+  admin/unfeatured-systems.md
 
 extra_css:
   - assets/item-tooltip.css
