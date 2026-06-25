@@ -309,7 +309,7 @@ do
     -- Axes: 0 pick(s) + 3 manual
     local axes = cat(catalog.gold.weapons, 'Axes')
     table.insert(axes, { id = 21722, name = "Dolichenus", cost = 50, jobs = 'WAR/DRK/BST/RNG/RUN' })  -- MANUAL, DMG 200/Dly 288
-    table.insert(axes, { id = 21730, name = "Spalirisos", cost = 50, jobs = 'BST' })  -- MANUAL, DMG 250/Dly 280
+    -- RELIC (Dynamis-gated 2026-06-25; forge only): table.insert(axes, { id = 21730, name = "Spalirisos", cost = 50, jobs = 'BST' })  -- MANUAL, DMG 250/Dly 280
     table.insert(axes, { id = 21751, name = "Aymur", cost = 50, jobs = 'BST' })  -- MANUAL, DMG 195/Dly 312
 
     -- Great Axes: 1 pick(s)
@@ -378,7 +378,7 @@ catalog.infamy = { weapons = emptyCategories() }
 do
     -- Hand-to-Hand: 5 pick(s) -> Infamy Vendor
     local inf_h2h = cat(catalog.infamy.weapons, 'Hand-to-Hand')
-    table.insert(inf_h2h, { id = 21535, name = "Varga Purnikawa", cost = 500, jobs = 'MNK/PUP' })  -- WS score 329, DMG 213/Dly 596
+    -- RELIC (Dynamis-gated 2026-06-25; forge only): table.insert(inf_h2h, { id = 21535, name = "Varga Purnikawa", cost = 500, jobs = 'MNK/PUP' })  -- WS score 329, DMG 213/Dly 596
     table.insert(inf_h2h, { id = 21519, name = "Karambit", cost = 500, jobs = 'WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' })  -- WS score 275, DMG 180/Dly 576
     table.insert(inf_h2h, { id = 21527, name = "Sakpatas Fists", cost = 500, jobs = 'MNK/PUP' })  -- WS score 262, DMG 165/Dly 576
     table.insert(inf_h2h, { id = 21518, name = "Kaja Knuckles", cost = 500, jobs = 'WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' })  -- WS score 232, DMG 165/Dly 576
@@ -389,7 +389,7 @@ do
     table.insert(inf_daggers, { id = 21565, name = "Tauret", cost = 500, jobs = 'RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' })  -- CASTER score 973, DMG 125/Dly 180
     table.insert(inf_daggers, { id = 21564, name = "Kaja Knife", cost = 500, jobs = 'RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' })  -- CASTER score 939, DMG 117/Dly 180
     table.insert(inf_daggers, { id = 21563, name = "Eletta Knife", cost = 500, jobs = 'RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' })  -- CASTER score 890, DMG 110/Dly 180
-    table.insert(inf_daggers, { id = 21590, name = "Mpu Gandring", cost = 500, jobs = 'RDM/THF/BRD/DNC' })  -- DPS score 316, DMG 137/Dly 176
+    -- RELIC (Dynamis-gated 2026-06-25; forge only): table.insert(inf_daggers, { id = 21590, name = "Mpu Gandring", cost = 500, jobs = 'RDM/THF/BRD/DNC' })  -- DPS score 316, DMG 137/Dly 176
     table.insert(inf_daggers, { id = 21567, name = "Gletis Knife", cost = 500, jobs = 'RDM/THF/BRD/RNG/NIN/COR/DNC' })  -- DPS score 300, DMG 133/Dly 200
 
     -- Swords: 5 pick(s) -> Infamy Vendor
@@ -397,7 +397,7 @@ do
     table.insert(inf_swords, { id = 20672, name = "Ice Brand", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 1060, DMG 187/Dly 264
     table.insert(inf_swords, { id = 21637, name = "Sakpatas Sword", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 977, DMG 160/Dly 240
     table.insert(inf_swords, { id = 21620, name = "Kaja Sword", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' })  -- CASTER score 939, DMG 156/Dly 240
-    table.insert(inf_swords, { id = 21646, name = "Caliburnus", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 935, DMG 181/Dly 233
+    -- RELIC (Dynamis-gated 2026-06-25; forge only): table.insert(inf_swords, { id = 21646, name = "Caliburnus", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 935, DMG 181/Dly 233
     table.insert(inf_swords, { id = 21619, name = "Eletta Sword", cost = 500, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' })  -- CASTER score 920, DMG 146/Dly 240
 
     -- Great Swords: 5 pick(s) -> Infamy Vendor
@@ -405,7 +405,7 @@ do
     table.insert(inf_greatswords, { id = 21674, name = "Nandaka", cost = 500, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 312, DMG 333/Dly 480
     table.insert(inf_greatswords, { id = 21683, name = "Ragnarok 119 Iii", cost = 500, jobs = 'WAR/PLD/DRK' })  -- WS score 296, DMG 304/Dly 431
     table.insert(inf_greatswords, { id = 21673, name = "Kaja Claymore", cost = 500, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 276, DMG 313/Dly 480
-    table.insert(inf_greatswords, { id = 21653, name = "Helheim", cost = 500, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 264, DMG 318/Dly 431
+    -- RELIC (Dynamis-gated 2026-06-25; forge only): table.insert(inf_greatswords, { id = 21653, name = "Helheim", cost = 500, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 264, DMG 318/Dly 431
     table.insert(inf_greatswords, { id = 21663, name = "Raetic Algol +1", cost = 500, jobs = 'WAR/PLD/DRK/RUN' })  -- WS score 256, DMG 327/Dly 474
 
     -- Axes: 5 pick(s) -> Infamy Vendor
@@ -450,7 +450,7 @@ do
 
     -- Clubs: 5 pick(s) -> Infamy Vendor
     local inf_clubs = cat(catalog.infamy.weapons, 'Clubs')
-    table.insert(inf_clubs, { id = 22002, name = "Lorg Mor", cost = 500, jobs = 'WHM/GEO' })  -- CASTER score 1061, DMG 227/Dly 308
+    -- RELIC (Dynamis-gated 2026-06-25; forge only): table.insert(inf_clubs, { id = 22002, name = "Lorg Mor", cost = 500, jobs = 'WHM/GEO' })  -- CASTER score 1061, DMG 227/Dly 308
     table.insert(inf_clubs, { id = 22042, name = "Wizards Rod", cost = 500, jobs = 'BLM/RDM/SCH/GEO' })  -- CASTER score 1060, DMG 149/Dly 216
     table.insert(inf_clubs, { id = 22040, name = "Daybreak", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 1033, DMG 150/Dly 216
     table.insert(inf_clubs, { id = 21071, name = "Cath Palug Hammer", cost = 500, jobs = 'WHM/GEO' })  -- CASTER score 1013, DMG 212/Dly 300
@@ -458,7 +458,7 @@ do
 
     -- Staves: 5 pick(s) -> Infamy Vendor
     local inf_staves = cat(catalog.infamy.weapons, 'Staves')
-    table.insert(inf_staves, { id = 22106, name = "Opashoro", cost = 500, jobs = 'BLM/SMN/SCH' })  -- CASTER score 1215, DMG 304/Dly 390
+    -- RELIC (Dynamis-gated 2026-06-25; forge only): table.insert(inf_staves, { id = 22106, name = "Opashoro", cost = 500, jobs = 'BLM/SMN/SCH' })  -- CASTER score 1215, DMG 304/Dly 390
     table.insert(inf_staves, { id = 22055, name = "Oranyan", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 1054, DMG 230/Dly 366
     table.insert(inf_staves, { id = 22081, name = "Raetic Staff +1", cost = 500, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 1019, DMG 245/Dly 356
     table.insert(inf_staves, { id = 22086, name = "Xoanon", cost = 500, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' })  -- CASTER score 1018, DMG 254/Dly 366
@@ -474,7 +474,7 @@ do
 
     -- Marksmanship: 5 pick(s) -> Infamy Vendor
     local inf_marksmanship = cat(catalog.infamy.weapons, 'Marksmanship')
-    table.insert(inf_marksmanship, { id = 22164, name = "Earp", cost = 500, jobs = 'RNG/COR' })  -- WS score 448, DMG 162/Dly 582
+    -- RELIC (Dynamis-gated 2026-06-25; forge only): table.insert(inf_marksmanship, { id = 22164, name = "Earp", cost = 500, jobs = 'RNG/COR' })  -- WS score 448, DMG 162/Dly 582
     table.insert(inf_marksmanship, { id = 22121, name = "Imati +1", cost = 500, jobs = 'RNG' })  -- WS score 307, DMG 146/Dly 424
     table.insert(inf_marksmanship, { id = 21485, name = "Fomalhaut", cost = 500, jobs = 'RNG/COR' })  -- WS score 270, DMG 167/Dly 600
     table.insert(inf_marksmanship, { id = 22136, name = "Arasy Gun +1", cost = 500, jobs = 'RNG/COR' })  -- WS score 252, DMG 108/Dly 582

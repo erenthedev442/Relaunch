@@ -92,14 +92,21 @@ local LOOT_POOL_SIZE = #LOOT_POOL
 local DROP_CHANCE    = 15  -- % per mob kill
 require(string.format('scripts/zones/%s/Zone', catalog.zone))
 
--- Prime Weapons are forge-ONLY (the GM Home Prime Armory, trial-gated). The
--- auto-generated LOOT_POOL is a dump of ALL item_weapon/item_equipment, so it
--- sweeps the 12 Prime IDs in -- skip them here so an invasion can never drop one.
+-- Forge/Dynamis-only weapons must never drop from invasions. The auto-generated
+-- LOOT_POOL dumps ALL item_weapon/item_equipment, so it sweeps these IDs in --
+-- skip them here. Covers the 12 Prime weapons (Prime Armory, trial-gated) AND
+-- the 16 Stage-5 Relic weapons (now Dynamis-gated at the Relic Forge).
 local PRIME_WEAPONS =
 {
+    -- Prime weapons (12) -- forge-only
     [21531] = true, [21534] = true, [21589] = true, [21621] = true,
     [21642] = true, [21781] = true, [21833] = true, [21887] = true,
     [21999] = true, [22102] = true, [22155] = true, [22159] = true,
+    -- Stage-5 Relic weapons (16) -- Dynamis-gated (Relic Forge)
+    [21535] = true, [21590] = true, [21646] = true, [21653] = true,
+    [21730] = true, [21785] = true, [21837] = true, [21891] = true,
+    [21932] = true, [21986] = true, [22002] = true, [22106] = true,
+    [22163] = true, [22164] = true, [26495] = true, [22307] = true,
 }
 
 local function tryDrop(killer)
