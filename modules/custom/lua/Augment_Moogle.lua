@@ -11,7 +11,7 @@
 -- Zone: GM Home (zone 210)
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/GM_Home/Zone')
+require('scripts/zones/Leafallia/Zone')
 local catalog  = require('modules/custom/lua/augment_catalog')
 local sage     = require('modules/custom/lua/augment_sage_catalog')
 local affinity = require('modules/custom/lua/augment_affinity_catalog')
@@ -222,7 +222,7 @@ end
 -----------------------------------
 -- Module override
 -----------------------------------
-m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
     super(zone)
 
     local AugmentMoogle = zone:insertDynamicEntity({
@@ -231,9 +231,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         packetName = string.format('%sAugment Moogle', xi.icon.STAR_LARGE),
         look       = 1834,   -- Alexander model: divine mechanical deity, colossal scale
         -- GM Home Augment Sanctum (z=-45): centered, standalone, far from the main NPC cluster.
-        x          =  0.000,
-        y          =  0.000,
-        z          = -45.000,
+        x          = -20.000,
+        y          =   0.000,
+        z          =  10.000,
         rotation   =  128,
         widescan   =  1,
 

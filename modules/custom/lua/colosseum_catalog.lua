@@ -35,11 +35,11 @@ local catalog = {}
 -- / Arena Herald (7.5).
 catalog.npcPos =
 {
-    zone     = 'GM_Home',
-    zoneId   = 210,
-    x        = -1.500,
-    y        =  0.000,
-    z        = -30.000,
+    zone     = 'Leafallia',
+    zoneId   = 281,
+    x        = -20.000,
+    y        =   0.000,
+    z        =  15.000,
     rotation =  128,
 }
 

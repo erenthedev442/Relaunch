@@ -18,7 +18,7 @@
 -- Zone: GM Home (zone 210)
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/GM_Home/Zone')
+require('scripts/zones/Leafallia/Zone')
 local catalog = require('modules/custom/lua/cross_job_trait_catalog')
 
 local m = Module:new('crossjob_traittrainer')
@@ -149,7 +149,7 @@ end
 -----------------------------------
 -- NPC placement.
 -----------------------------------
-m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
     super(zone)
 
     local TraitTrainer = zone:insertDynamicEntity({

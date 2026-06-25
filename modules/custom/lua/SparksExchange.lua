@@ -10,7 +10,7 @@
 --   !exec xi.sparks_exchange.jp_rate = 4000
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/GM_Home/Zone')
+require('scripts/zones/Celennia_Memorial_Library/Zone')
 
 local m = Module:new('sparks_exchange')
 
@@ -45,7 +45,7 @@ xi.sparks_exchange = {
 
 -- ===== static NPC config (requires restart to change) =====
 local cfg = {
-    npcPos = { x =  1.500, y = 0.000, z = -15.000, rot = 128 },
+    npcPos = { x = -110.000, y = -2.150, z = -94.000, rot = 190 },
     name   = 'Sparks Cash',
     look   = 3000,
 }
@@ -56,7 +56,7 @@ local function fmtGil(n)
     return tostring(n)
 end
 
-m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
     super(zone)
 
     local menu = { title = '', options = {} }

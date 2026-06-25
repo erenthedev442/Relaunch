@@ -22,7 +22,7 @@
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Walk_of_Echoes/Zone')
-require('scripts/zones/GM_Home/Zone')
+require('scripts/zones/Leafallia/Zone')
 
 local m         = Module:new('job_mastery')
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
@@ -412,7 +412,7 @@ end
 -----------------------------------
 
 -- GM Home: place the Mastery Sage NPC at z = -35.
-m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
     super(zone)
 
     local npc = zone:insertDynamicEntity({
@@ -420,9 +420,9 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         name       = 'Mastery_Sage',
         packetName = 'Weapon Mastery Sage',
         look       = 2401,
-        x          = -9.000,
-        y          =  0.000,
-        z          = -35.000,
+        x          =  -8.000,
+        y          =   0.000,
+        z          =  15.000,
         rotation   =  128,
         widescan   =  1,
 

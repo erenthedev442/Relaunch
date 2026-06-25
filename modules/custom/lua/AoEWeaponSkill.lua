@@ -18,6 +18,7 @@
 --   -> 100%: 250M / 10000 / 10000
 -----------------------------------
 require('modules/module_utils')
+require('scripts/zones/Leafallia/Zone')
 require('scripts/enum/weaponskill')
 
 local m   = Module:new('aoe_weaponskill')
@@ -176,16 +177,16 @@ end
 --------------------------------------------------------------------
 -- GM Home NPC
 --------------------------------------------------------------------
-m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
     super(zone)
     zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Rupture_Sage',
         packetName = string.format('%sRupture Sage', xi.icon.SWORD),
         look       = 2419,
-        x          = 9.000,
+        x          = -16.000,
         y          = 0.000,
-        z          = -35.000,
+        z          = 20.000,
         rotation   = 128,
         widescan   = 1,
         onTrigger  = function(player, npc)

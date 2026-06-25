@@ -20,12 +20,12 @@ local catalog = {}
 -- this goes to x=-7.5 to continue the row westward).
 catalog.npcPos =
 {
-    zone     = 'GM_Home',
-    zoneId   = 210,
-    x        = -4.500,
-    y        =  0.000,
-    z        = -15.000,
-    rotation =  128,
+    zone     = 'Celennia_Memorial_Library',
+    zoneId   = 284,
+    x        = -98.000,
+    y        =  -2.150,
+    z        = -94.000,
+    rotation =  190,
 }
 
 -- How many objectives per day.

@@ -14,12 +14,12 @@ local catalog = {}
 -- Dungeon Master / Infamy Vendor.
 catalog.npcPos =
 {
-    zone     = 'GM_Home',
-    zoneId   = 210,
-    x        = -1.500,
-    y        =  0.000,
-    z        = -15.000,
-    rotation =  128,
+    zone     = 'Celennia_Memorial_Library',
+    zoneId   = 284,
+    x        = -102.000,
+    y        =   -2.150,
+    z        =  -94.000,
+    rotation =  190,
 }
 
 -- How many objectives are active per week (rolled from the pool).

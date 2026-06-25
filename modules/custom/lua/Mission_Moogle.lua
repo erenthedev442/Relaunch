@@ -4,11 +4,11 @@
 -- Zone: GM Home (zone 210)
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/GM_Home/Zone')
+require('scripts/zones/Celennia_Memorial_Library/Zone')
 -----------------------------------
 local m = Module:new('mission_moogle')
 
-m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
     super(zone)
 
     -----------------------------------
@@ -114,10 +114,10 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         packetName = string.format('%sMission Skip', xi.icon.STAR_LARGE),
         look       = 3017,
         -- GM Home Utility cluster (z=-14): Unlocker / KeyItem / Mission Skip.
-        x          =  4.500,
-        y          =  0.000,
-        z          = -10.000,
-        rotation   =  128,
+        x          = -110.000,
+        y          =   -2.150,
+        z          =  -88.000,
+        rotation   =  190,
         widescan   =  1,
 
         onTrade = function(player, npc, trade)

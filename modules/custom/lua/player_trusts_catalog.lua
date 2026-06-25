@@ -9,12 +9,12 @@ local catalog = {}
 
 catalog.npcPos =
 {
-    zone     = 'GM_Home',
-    zoneId   = 210,
-    x        =   7.500,
-    y        =  0.000,
-    z        = -10.000,
-    rotation =  128,
+    zone     = 'Celennia_Memorial_Library',
+    zoneId   = 284,
+    x        = -94.000,
+    y        =  -2.150,
+    z        = -94.000,
+    rotation =  190,
 }
 
 -- Minutes of shared party-in-zone time before a pair unlocks each other.

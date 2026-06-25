@@ -10,7 +10,7 @@
 -- no item slot (gil + charvar only).
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/GM_Home/Zone')
+require('scripts/zones/Celennia_Memorial_Library/Zone')
 
 local m = Module:new('gil_exchange_npc')
 
@@ -27,7 +27,7 @@ local m = Module:new('gil_exchange_npc')
 local config = {
     npcName  = 'Gil Exchange',
     npcLook  = 2419,    -- moogle (same as ExpCamp)
-    npcPos   = { x = 4.500, y = 0.000, z = -20.000, rot = 128 },
+    npcPos   = { x = -106.000, y = -2.150, z = -100.000, rot = 190 },
     huntCv   = 'HL_Points',   -- matches CV_POINTS in HuntingLeague.lua
     -- conversion bundles: { gil, hunt_marks }
     bundles  =
@@ -38,7 +38,7 @@ local config = {
     },
 }
 
-m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
     super(zone)
 
     local menu = { title = '', options = {} }

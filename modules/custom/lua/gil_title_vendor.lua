@@ -9,12 +9,12 @@
 -- scripts/enum/title.lua for available xi.title.* constants.
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/GM_Home/Zone')
+require('scripts/zones/Celennia_Memorial_Library/Zone')
 local catalog = require('modules/custom/lua/gil_title_vendor_catalog')
 
 local m = Module:new('gil_title_vendor')
 
-m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
     super(zone)
 
     local menu = { title = '', options = {} }

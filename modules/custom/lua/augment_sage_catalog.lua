@@ -25,10 +25,10 @@ local catalog = {}
 --   Lives in the same zone as the Augment Moogle (GM_Home) so players
 --   don't have to zone-hop between trade and rank-up.
 -----------------------------------
-catalog.zoneId    = xi.zone.GM_HOME
-catalog.zonePath  = 'xi.zones.GM_Home'
+catalog.zoneId    = xi.zone.LEAFALLIA
+catalog.zonePath  = 'xi.zones.Leafallia'
 -- GM Home Gear Progression cluster (z=-25): Augment Moogle / Augment Sage / CrossJob Trainers / Cosmetic Shop.
-catalog.vendorPos = { x = -1.500, y = 0.000, z = -25.000, rot = 128 }
+catalog.vendorPos = { x = -16.000, y = 0.000, z = 10.000, rot = 128 }
 
 -----------------------------------
 -- SEAL CURRENCY (shared with Armor / Weapons / Hunting League NPCs)

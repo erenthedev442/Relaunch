@@ -13,11 +13,11 @@ catalog.currencyCv = 'Infamy'
 
 catalog.npcPos =
 {
-    zone     = 'GM_Home',
-    zoneId   = 210,
-    x        = -4.500,
+    zone     = 'Leafallia',
+    zoneId   = 281,
+    x        =  0.000,
     y        =  0.000,
-    z        = -30.000,
+    z        = 10.000,
     rotation = 128,
 }
 

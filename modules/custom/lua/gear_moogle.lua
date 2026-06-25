@@ -3,11 +3,11 @@
 -- Starter Gear NPC in GM Home for testing
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/GM_Home/Zone')
+require('scripts/zones/Celennia_Memorial_Library/Zone')
 -----------------------------------
 local m = Module:new('gear_moogle')
 
-m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
     super(zone)
 
     local GearMoogle = zone:insertDynamicEntity({
@@ -16,10 +16,10 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         packetName = string.format('%sGear Moogle', xi.icon.STAR_LARGE),
         look       = 2308,
         -- GM Home Progression cluster (z=-7): Gear / Augment Moogle / Augment Sage.
-        x          = -4.500,
-        y          =  0.000,
-        z          =   -5.000,
-        rotation   =  128,
+        x          = -102.000,
+        y          =   -2.150,
+        z          =  -88.000,
+        rotation   =  190,
         widescan   = 1,
 
         onTrade = function(player, npc, trade)

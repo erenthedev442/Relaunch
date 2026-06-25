@@ -16,7 +16,7 @@
 require('modules/module_utils')
 local catalog = require('modules/custom/lua/infamy_vendor_catalog')
 
-require('scripts/zones/GM_Home/Zone')
+require('scripts/zones/Leafallia/Zone')
 
 local m = Module:new('infamy_vendor')
 
@@ -327,7 +327,7 @@ end
 --------------------------------------------------------------------
 -- NPC PLACEMENT
 --------------------------------------------------------------------
-m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
     super(zone)
 
     local p = catalog.npcPos

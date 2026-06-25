@@ -3,7 +3,7 @@
 -- Moogle NPC in GM Home: Delivery Box + Job Change + Subjob Change
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/GM_Home/Zone')
+require('scripts/zones/Celennia_Memorial_Library/Zone')
 
 local m = Module:new('mog_moogle')
 
@@ -149,7 +149,7 @@ showSubJobPage = function(player, page)
     end)
 end
 
-m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
     super(zone)
 
     zone:insertDynamicEntity({
@@ -157,10 +157,10 @@ m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
         name       = 'Mog_Moogle',
         packetName = string.format('%sMog Moogle', xi.icon.STAR_LARGE),
         look       = 2308,
-        x          = -1.500,
-        y          =  0.000,
-        z          =  -5.000,
-        rotation   =  128,
+        x          = -98.000,
+        y          =  -2.150,
+        z          = -88.000,
+        rotation   =  190,
         widescan   = 1,
 
         onTrigger = function(player, npc)

@@ -19,11 +19,11 @@
 -----------------------------------
 local catalog = {}
 
-catalog.zoneId    = xi.zone.GM_HOME
-catalog.zonePath  = 'xi.zones.GM_Home'
+catalog.zoneId    = xi.zone.CELENNIA_MEMORIAL_LIBRARY
+catalog.zonePath  = 'xi.zones.Celennia_Memorial_Library'
 catalog.npcName   = 'Warpman'
 catalog.npcLook   = 3000
-catalog.npcPos    = { x = -1.500, y = 0.000, z = -10.000, rot = 128 }
+catalog.npcPos    = { x = -114.000, y = -2.150, z = -88.000, rot = 190 }
 
 -- Pricing tiers used in the destinations below. Adjust globally here.
 catalog.pricing =

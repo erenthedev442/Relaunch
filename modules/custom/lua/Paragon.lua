@@ -27,7 +27,7 @@
 -- Paragon Sage in GM Home, beside the Apex Arbiter (x 7.5, z -35).
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/GM_Home/Zone')
+require('scripts/zones/Leafallia/Zone')
 local C = require('modules/custom/lua/paragon_catalog')
 
 local m = Module:new('paragon')
@@ -167,7 +167,7 @@ end)
 -----------------------------------
 -- NPC: Paragon Sage in GM Home
 -----------------------------------
-m:addOverride('xi.zones.GM_Home.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
     super(zone)
 
     local npc = zone:insertDynamicEntity({

@@ -17,12 +17,12 @@ local catalog = {}
 -- (7.5) / Race Caller (10.5).
 catalog.npcPos =
 {
-    zone     = 'GM_Home',
-    zoneId   = 210,
-    x        = 1.500,
-    y        =  0.000,
-    z        = -30.000,
-    rotation = 128,
+    zone     = 'Celennia_Memorial_Library',
+    zoneId   = 284,
+    x        = -114.000,
+    y        =   -2.150,
+    z        = -100.000,
+    rotation =  190,
 }
 
 -- Bet sizes offered in the menu (gil).
