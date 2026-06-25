@@ -571,26 +571,11 @@ return
         -- rewardCategories. Those slots are now served by the medal-paid
         -- Accessory NPC at Escha - Zi'Tah, x=-9.0, next to Armor/Weapons.)
 
-        -- ---------------------------------------------------------
-        -- Magic Scrolls  (spells custom to this server). The `learnSpell`
-        -- field makes the NPC TEACH the spell on purchase (addSpell) instead
-        -- of handing over a scroll item: the custom scroll item ids
-        -- (29696-29698) aren't in the client's item data, so a usable scroll
-        -- never shows a "Use" option and could never be learned. `id` is kept
-        -- only for reference (the item rows still exist, just unused).
-        -- ---------------------------------------------------------
-        {
-            label = 'Spells',
-            items =
-            {
-                { name = 'Silencega', id = 29696, cost = 200, learnSpell = 359,
-                  stats = { 'WHM 40 / RDM 50 / SCH 50', 'AoE Silence (Wind)', 'Learned on purchase' } },
-                { name = 'Divine Aegis', id = 29697, cost = 400, learnSpell = 1020,
-                  stats = { 'PLD 50', 'Holy shield -> AoE detonation', 'Learned on purchase' } },
-                { name = 'Convergence', id = 29698, cost = 350, learnSpell = 1021,
-                  stats = { 'RDM 50', 'Random enfeeble + elemental damage', 'Learned on purchase' } },
-            },
-        },
+        -- (The custom-spell "Spells" shop category was removed 2026-06-25 along
+        -- with the custom spells themselves -- !aegis/!convergence/!silencega and
+        -- spell ids 1020/1021 are gone, and the custom scroll items 29696-29698
+        -- were purged from the DB. Players already receive every spell free from
+        -- Character_Upgrader on first login, so the category was redundant.)
     },
 
     -- =========================================================
