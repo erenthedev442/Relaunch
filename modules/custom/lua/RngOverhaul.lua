@@ -38,26 +38,53 @@ require('modules/module_utils')
 
 local m = Module:new('rng_overhaul')
 
--- == Tunables (all flat; dial any of these to taste) ==========================
+-- == Tunables ================================================================
+-- HARD ENGINE LIMIT (the Lant "permanently 1 R-atk" overflow): ranged attack is
+-- computed in CBattleEntity::RATT() (battleentity.cpp:1200) and returned through
+--   std::max<int16>(1, RATT + RATT*RATTP/100 + ...)
+-- so the FINAL ranged attack is capped at int16 = 32,767, AND the Mod::RATT store
+-- is itself int16. Therefore:
+--   * the RATT mod (our flat + the player's gear) must stay < 32,767, and
+--   * the final attack (RATT mod + skill + STR + RATTP%) must stay < 32,767,
+-- or it WRAPS NEGATIVE and std::max floors it to 1. The old values (ratt 40000/
+-- 80000, rattp 800/2100) blew past BOTH ceilings -> negative/garbage -> R-atk 1.
+-- 28,000 flat RATT already MAXES ranged pDIF vs normal NM DEF; RNG's damage then
+-- comes from that capped pDIF + RANGED_DMG_RATING + ranged WS (which ride the
+-- uncapped 131k path) -- NOT from an impossible >32k attack number.
+local RATT_CAP = 29000  -- ceiling for the RATT mod (base + gear); leaves headroom
+                        -- for skill/STR so the final RATT() stays under int16.
+
 local CONFIG =
 {
-    ratt            = 40000, -- Mod.RATT  (24)  : flat ranged attack. Needs RATT >= NM_DEF*pDIF_cap; with damageLimit=600 the cap is 22.75 so 40k covers DEF up to ~1750.
-    rattp           = 800,   -- Mod.RATTP (66)  : +% ranged attack. Adds ratio margin above cap.
-    racc            = 4000,  -- Mod.RACC  (26)  : land on high-EVA Legendary NMs (unchanged)
+    ratt            = 28000, -- Mod.RATT  (24)  : flat ranged attack, CLAMPED to RATT_CAP
+    rattp           = 0,     -- Mod.RATTP (66)  : MUST be 0 -- it MULTIPLIES the whole
+                             --                   ~28k attack and instantly overflows int16
+    racc            = 4000,  -- Mod.RACC  (26)  : land on high-EVA Legendary NMs
     rangedDmgRating = 2000,  -- Mod.RANGED_DMG_RATING (376) : flat damage added to each shot
-    damageLimit     = 600,   -- Mod.DAMAGE_LIMITP (1081) : pDIF cap multiplier. Formula: 3.25*(100+DLP)/100 = 22.75 at DLP=600. Applies to BOTH auto-attacks AND ranged WS pDIF component.
+    damageLimit     = 600,   -- Mod.DAMAGE_LIMITP (1081) : pDIF cap 3.25*(100+600)/100 = 22.75x
     storeTP         = 100,   -- Mod.STORETP (73): faster TP gain -> more weaponskills
     snapshot        = 50,    -- Mod.SNAPSHOT (365) : % ranged-delay reduction (faster shots)
     rapidShot       = 50,    -- Mod.RAPID_SHOT (359) : % chance of an instant shot
     doubleShotRate  = 50,    -- Mod.DOUBLE_SHOT_RATE (422) : +% Double Shot proc (extra arrow)
 }
 
+-- Clamp the RATT mod's running TOTAL (our flat + the player's gear RATT) to
+-- RATT_CAP so it can never wrap the int16 mod store; also makes re-application
+-- idempotent (a second call adds 0).
+local function addRattCapped(player, amount)
+    local cur = player:getMod(xi.mod.RATT)
+    local add = math.min(amount, RATT_CAP - cur)
+    if add > 0 then
+        player:addMod(xi.mod.RATT, add)
+    end
+end
+
 -- Lay the whole bundle on a main-job Ranger. addMod is additive; the zone reload
 -- that fires before each onGameIn has already wiped the previous copy, so re-applying
 -- here keeps exactly one copy on the player (no growth across zones).
 local function applyRngBoost(player)
-    player:addMod(xi.mod.RATT,              CONFIG.ratt)
-    player:addMod(xi.mod.RATTP,             CONFIG.rattp)
+    addRattCapped(player, CONFIG.ratt)
+    if CONFIG.rattp > 0 then player:addMod(xi.mod.RATTP, CONFIG.rattp) end
     player:addMod(xi.mod.RACC,              CONFIG.racc)
     player:addMod(xi.mod.RANGED_DMG_RATING, CONFIG.rangedDmgRating)
     player:addMod(xi.mod.DAMAGE_LIMITP,     CONFIG.damageLimit)
