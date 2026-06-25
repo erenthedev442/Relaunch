@@ -773,6 +773,10 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
                 summonedTrial[pid] = nil
                 if killer and not idleDespawned then
                     m.onLegendKill(killer, gid)
+                    -- Tier-gated augment catalyst (soft gating): Prestige trial
+                    -- bosses (the Tier-3 augment gate is Prestige Lv15) drop
+                    -- Tier-3 catalysts. See augment_catalyst_pools.lua.
+                    require('modules/custom/lua/augment_catalyst_pools').roll(killer, 3)
                 end
             end,
 

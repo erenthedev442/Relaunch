@@ -822,6 +822,16 @@ local function insertSpawnerNPC(zone)
                                     end
                                 end
                             end
+
+                            -- Tier-gated augment catalyst (soft gating): drop one
+                            -- random catalyst from the pool matching this NM's HL
+                            -- rank (Rank 1-2 -> T0, Rank 3 -> T1, Rank 4-5 -> T2);
+                            -- Shinryu (groupId 11369) feeds the top tier (T4). The
+                            -- content that gates an augment tier now drops its
+                            -- catalysts. See augment_catalyst_pools.lua.
+                            local catalystPools = require('modules/custom/lua/augment_catalyst_pools')
+                            local augTier = (md.groupId == 11369) and 4 or catalystPools.HL_RANK_TIER[td.tier]
+                            catalystPools.roll(killer, augTier)
                         end,
                     })
 

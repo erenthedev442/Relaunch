@@ -278,6 +278,16 @@ xi.mob.marksRewardHook = function(mob, player, isKiller, isWeaponSkillKill)
         end
         player:printToPlayer(msg, xi.msg.channel.SYSTEM_3)
     end)
+
+    -- Tier-gated augment catalyst (soft gating): Abyssea HEROES marks-NMs
+    -- (Lv155, the hardest Abyssea band) drop a Tier-4 catalyst -- a second T4
+    -- source alongside Shinryu. Fires per in-zone member, like the rewards above.
+    pcall(function()
+        local cfg = zoneConfig[player:getZoneID()]
+        if cfg and cfg.level >= 155 then
+            require('modules/custom/lua/augment_catalyst_pools').roll(player, 4)
+        end
+    end)
 end
 
 return m
