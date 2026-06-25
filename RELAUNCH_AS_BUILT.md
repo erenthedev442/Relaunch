@@ -219,6 +219,7 @@ Catalog design rule: job/pet/resist/skill augments are free (tier 0); universall
 - **Endless Tower floor-50 boss level 275 → 250** → no longer wraps past uint8 255; the final boss has its intended high-level stats.
 - **`weekly_recap` onGameIn signature fixed** → now uses `(player, firstLogin, zoning)` and gates on the real `zoning` flag (was skipping true first logins).
 - **Stale comments corrected** — daily-login "250"→50, `auto_buff_henge` "30 min"→5 h (incl. the player message), `!gainexp` "GM-only/no cooldown"→all-players/24 h.
+- **Wardrobe `charCreate` conflict resolved** — removed `mission_wardrobe_unlocks.lua` (it zeroed all 8 wardrobes at creation to gate them behind missions, fighting the give-everything design, and its mission-grant hook was dead because missions are auto-completed via `setMissionStatus` not `npcUtil.completeMission`). `new_char_wardrobe_sizes.lua` is now the single deterministic charCreate owner; `Character_Upgrader` re-affirms on first login. New chars reliably get 8 full wardrobes.
 
 **Still disabled / stubbed (intentional or needs a design call):**
 - `Ascension_Companion` — **DISABLED** (`DISABLED=true`), intentional.
@@ -229,7 +230,6 @@ Catalog design rule: job/pet/resist/skill augments are free (tier 0); universall
 - Augment Sage `seals` and `Augment_Count` are dead under the new content-milestone gates.
 
 **Still open (needs care or a C++ rebuild):**
-- **Wardrobe `charCreate` conflict** — three modules fight over sizing; outcome is order-fragile (left alone — needs a deliberate dedup).
 - `combat_records` MaxSC and the Barrage no-per-shot-consume both depend on a **C++ rebuild** to fully work.
 - GEO "0 MP" depends on the C++/SQL GEO restore being deployed on the box (unconfirmable from Lua).
 

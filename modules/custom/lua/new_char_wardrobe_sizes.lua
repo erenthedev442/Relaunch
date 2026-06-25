@@ -7,6 +7,15 @@
 -- wardrobe slots either. Just hand them out at max on creation.
 --
 -- Pure-Lua override - survives upstream pulls.
+--
+-- CANONICAL wardrobe-sizing owner (2026-06-25). The old `mission_wardrobe_unlocks`
+-- module was REMOVED: it zeroed all 8 wardrobes at charCreate (gating them behind
+-- missions), which fought this module AND was dead on relaunch -- Character_Upgrader
+-- auto-completes every mission via setMissionStatus, not npcUtil.completeMission, so
+-- that module's grant hook never fired. Net effect was order-fragile (new chars could
+-- briefly end up with 0 wardrobe slots). Now there is one deterministic charCreate
+-- owner (this file); Character_Upgrader.bumpWardrobeSizes re-affirms the same target
+-- on first login as an idempotent safety net. Both fill to START_INVENTORY -- no conflict.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/globals/player')
