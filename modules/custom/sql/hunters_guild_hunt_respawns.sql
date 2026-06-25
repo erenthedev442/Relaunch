@@ -15,20 +15,18 @@
 --     Even with maximum patience that's one kill per day per
 --     player at most.
 --
--- This file flips them to NORMAL respawn (spawntype=0) and
--- gives them a tier-based timer:
---   tier 1 (easiest) → 1200s  (20 min)
---   tier 2           → 1500s  (25 min)
---   tier 3           → 1800s  (30 min)
---   tier 4           → 2400s  (40 min)
---   tier 5 (apex HNM)→ 3600s  (60 min)
--- so the Hunter's Guild grind is paced like other custom systems
--- on this server, while the apex NM still feels like an event.
+-- This file flips them ALL to NORMAL respawn (spawntype=0) on a flat
+-- 30-minute (1800s) timer.
 --
--- LOTTERY NMs (Lord of Onzozo, Despot — spawntype=32) keep their
--- lottery mechanic. We don't flip them to NORMAL because the
--- placeholder-roll feel is part of their identity. Just shorten
--- the respawn so the lottery wheel turns faster.
+-- Owner policy (2026-06-25): every custom-content NM you must kill to
+-- unlock things, and that isn't force-spawned, gets a uniform 30-min
+-- respawn (supersedes the earlier tier-based 20/25/30/40/60-min curve;
+-- the same flat rule is applied to the Spell & Skill Mastery rotation
+-- NMs in mastery_rotation_respawns.sql).
+--
+-- The two former LOTTERY NMs (Lord of Onzozo, Despot — spawntype=32)
+-- are now flipped to NORMAL too, so they reliably reappear every 30 min
+-- like the rest rather than rolling a placeholder.
 --
 -- Side effects to acknowledge:
 --   * Vanilla CoP / Zilart BCNMs that gate off these HNM mob_groups
@@ -50,60 +48,59 @@
 -- Pattern lifted from modules/custom/sql/hunting_league_gm_home_mobs.sql.
 -- ============================================================
 
+-- All 20 → flat 30-minute (1800s) NORMAL respawn (owner policy 2026-06-25).
 -- ------------------------------------------------------------
 -- AF Hunters' Guild — Wyrm Circuit
 -- ------------------------------------------------------------
-UPDATE `mob_groups` SET `respawntime` = 1200, `spawntype` = 0
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` = 205 AND `groupid` = 29;   -- Tarasque       (Ifrits Cauldron)
-UPDATE `mob_groups` SET `respawntime` = 1500, `spawntype` = 0
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` = 104 AND `groupid` = 76;   -- Capricornus    (Jugner Forest)
 UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` = 176 AND `groupid` = 51;   -- Charybdis      (Sea Serpent Grotto)
-UPDATE `mob_groups` SET `respawntime` = 2400, `spawntype` = 0
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` =   7 AND `groupid` = 46;   -- Tiamat         (Attohwa Chasm)
-UPDATE `mob_groups` SET `respawntime` = 3600, `spawntype` = 0
- WHERE `zoneid` = 154 AND `groupid` =  5;   -- Fafnir         (Dragon's Aery)  APEX
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
+ WHERE `zoneid` = 154 AND `groupid` =  5;   -- Fafnir         (Dragon's Aery)
 
 -- ------------------------------------------------------------
 -- Relic Hunters' Guild — TOAU / Desert Beasts
 -- ------------------------------------------------------------
-UPDATE `mob_groups` SET `respawntime` = 1200, `spawntype` = 0
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` = 114 AND `groupid` = 52;   -- Cactrot Rapido (Eastern Altepa Desert)
--- Lord of Onzozo: keep LOTTERY (spawntype=32), shorten the wheel only.
-UPDATE `mob_groups` SET `respawntime` = 1500
- WHERE `zoneid` = 213 AND `groupid` = 16;   -- Lord of Onzozo (Labyrinth of Onzozo)
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
+ WHERE `zoneid` = 213 AND `groupid` = 16;   -- Lord of Onzozo (Labyrinth of Onzozo) [was lottery]
 UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` = 125 AND `groupid` = 26;   -- King Vinegarroon (Western Altepa Desert)
-UPDATE `mob_groups` SET `respawntime` = 2400, `spawntype` = 0
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` =  79 AND `groupid` = 59;   -- Khimaira       (Caedarva Mire)
-UPDATE `mob_groups` SET `respawntime` = 3600, `spawntype` = 0
- WHERE `zoneid` =  61 AND `groupid` = 37;   -- Cerberus       (Mount Zhayolm)   APEX
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
+ WHERE `zoneid` =  61 AND `groupid` = 37;   -- Cerberus       (Mount Zhayolm)
 
 -- ------------------------------------------------------------
 -- Empy Hunters' Guild — Sky Court
 -- ------------------------------------------------------------
-UPDATE `mob_groups` SET `respawntime` = 1200, `spawntype` = 0
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` = 178 AND `groupid` =  6;   -- Faust          (Shrine of Ru'Avitau)
--- Despot: keep LOTTERY (spawntype=32) — classic placeholder-roll behavior.
-UPDATE `mob_groups` SET `respawntime` = 1500
- WHERE `zoneid` = 130 AND `groupid` = 13;   -- Despot         (Ru'Aun Gardens)
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
+ WHERE `zoneid` = 130 AND `groupid` = 13;   -- Despot         (Ru'Aun Gardens) [was lottery]
 UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` = 177 AND `groupid` = 15;   -- Steam Cleaner  (VeLugannon Palace)
-UPDATE `mob_groups` SET `respawntime` = 2400, `spawntype` = 0
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` = 177 AND `groupid` = 14;   -- Brigandish Blade (VeLugannon Palace)
-UPDATE `mob_groups` SET `respawntime` = 3600, `spawntype` = 0
- WHERE `zoneid` =  29 AND `groupid` = 17;   -- Bahamut        (Riverne Site B01) APEX
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
+ WHERE `zoneid` =  29 AND `groupid` = 17;   -- Bahamut        (Riverne Site B01)
 
 -- ------------------------------------------------------------
 -- League Hunters' Guild — Apex World Bosses
 -- ------------------------------------------------------------
-UPDATE `mob_groups` SET `respawntime` = 1200, `spawntype` = 0
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` = 212 AND `groupid` =  6;   -- Bune           (Gustav Tunnel)
-UPDATE `mob_groups` SET `respawntime` = 1500, `spawntype` = 0
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` =  30 AND `groupid` = 12;   -- Carmine Dobsonfly (Riverne Site A01)
 UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` = 128 AND `groupid` =  7;   -- Aspidochelone  (Valley of Sorrows)
-UPDATE `mob_groups` SET `respawntime` = 2400, `spawntype` = 0
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
  WHERE `zoneid` = 127 AND `groupid` =  9;   -- Behemoth       (Behemoth's Dominion)
-UPDATE `mob_groups` SET `respawntime` = 3600, `spawntype` = 0
- WHERE `zoneid` =   5 AND `groupid` = 40;   -- Jormungand     (Uleguerand Range) APEX
+UPDATE `mob_groups` SET `respawntime` = 1800, `spawntype` = 0
+ WHERE `zoneid` =   5 AND `groupid` = 40;   -- Jormungand     (Uleguerand Range)
