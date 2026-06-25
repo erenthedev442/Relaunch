@@ -26,26 +26,28 @@ local MARKS_CRUOR_LV   = '[MarksPopCruor]'
 --   haste   HASTE_GEAR (100 = 1% faster attack round)
 --   eleRes  added to ALL 8 elemental magic-evasion mods (Fire..Dark) -- an
 --           elemental-nuke resistance layered on top of meva
--- Rebalanced 2026-06-21: att was a ~4x gap below the Ascension-Trial NMs, so
--- these were faceroll by comparison. att is now lifted into the LOWER Ascension
--- band (the Trial runs att 12.6k-37.8k; these top out at 18k = the EASIEST Trial
--- boss, Diabolos at 12.6k), and gain Double Attack, light haste, and a bit of
--- elemental resistance. def/HP are unchanged (they were already tankier than the
--- Trial) -- the goal is a real THREAT, still farmable, still under the gate.
+-- RELAUNCH Phase 2 retune (2026-06-24): cut to the relaunch power curve
+-- (RELAUNCH_PLAN "Mob Retune Targets", Abyssea rows). att/def/maxHP land in
+-- the plan's per-tier ranges -- Visions(T1) def 900-1100 / att 4-5.5k / HP
+-- 375-565k, Scars(T2) def 1.2-1.5k / att 5.5-7.5k / HP 780k-1.2M, Heroes(T3)
+-- def 1.8-2.2k / att 7-9k / HP 1.55-2.3M -- and the secondary stats (matt/acc/
+-- eva/macc/meva/da/haste/eleRes) are scaled to match so the mob stays coherent
+-- (and hittable) at relaunch player power. Was the old Legendary band (att
+-- 10-18k, HP 4-10M), which one-shot and out-tanked a relaunch party.
 local zoneConfig =
 {
     -- Visions of Abyssea  (Lv135 -- softest marks NMs)
-    [xi.zone.ABYSSEA_KONSCHTAT] = { cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 135, maxHP =  4000000, att = 10000, def = 3333, matt = 3333, acc = 2600, eva = 2000, macc = 2000, meva = 2000, da = 10, haste = 100, eleRes = 150 },
-    [xi.zone.ABYSSEA_TAHRONGI]  = { cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 135, maxHP =  4000000, att = 10000, def = 3333, matt = 3333, acc = 2600, eva = 2000, macc = 2000, meva = 2000, da = 10, haste = 100, eleRes = 150 },
-    [xi.zone.ABYSSEA_LA_THEINE] = { cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 135, maxHP =  4000000, att = 10000, def = 3333, matt = 3333, acc = 2600, eva = 2000, macc = 2000, meva = 2000, da = 10, haste = 100, eleRes = 150 },
+    [xi.zone.ABYSSEA_KONSCHTAT] = { cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 135, maxHP =  500000, att =  5000, def = 1000, matt = 1667, acc = 1300, eva = 1000, macc = 1000, meva = 1000, da =  5, haste =  50, eleRes =  75 },
+    [xi.zone.ABYSSEA_TAHRONGI]  = { cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 135, maxHP =  500000, att =  5000, def = 1000, matt = 1667, acc = 1300, eva = 1000, macc = 1000, meva = 1000, da =  5, haste =  50, eleRes =  75 },
+    [xi.zone.ABYSSEA_LA_THEINE] = { cost = 200, infamy = 25, gil = 250000, cruor = 1000, level = 135, maxHP =  500000, att =  5000, def = 1000, matt = 1667, acc = 1300, eva = 1000, macc = 1000, meva = 1000, da =  5, haste =  50, eleRes =  75 },
     -- Scars of Abyssea  (Lv145)
-    [xi.zone.ABYSSEA_ATTOHWA]   = { cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 145, maxHP =  7000000, att = 14000, def = 6000, matt = 6000, acc = 3500, eva = 3333, macc = 3333, meva = 3333, da = 16, haste = 150, eleRes = 250 },
-    [xi.zone.ABYSSEA_MISAREAUX] = { cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 145, maxHP =  7000000, att = 14000, def = 6000, matt = 6000, acc = 3500, eva = 3333, macc = 3333, meva = 3333, da = 16, haste = 150, eleRes = 250 },
-    [xi.zone.ABYSSEA_VUNKERL]   = { cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 145, maxHP =  7000000, att = 14000, def = 6000, matt = 6000, acc = 3500, eva = 3333, macc = 3333, meva = 3333, da = 16, haste = 150, eleRes = 250 },
+    [xi.zone.ABYSSEA_ATTOHWA]   = { cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 145, maxHP = 1000000, att =  6500, def = 1350, matt = 3000, acc = 1750, eva = 1667, macc = 1667, meva = 1667, da =  8, haste =  75, eleRes = 125 },
+    [xi.zone.ABYSSEA_MISAREAUX] = { cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 145, maxHP = 1000000, att =  6500, def = 1350, matt = 3000, acc = 1750, eva = 1667, macc = 1667, meva = 1667, da =  8, haste =  75, eleRes = 125 },
+    [xi.zone.ABYSSEA_VUNKERL]   = { cost = 350, infamy = 40, gil = 500000, cruor = 1500, level = 145, maxHP = 1000000, att =  6500, def = 1350, matt = 3000, acc = 1750, eva = 1667, macc = 1667, meva = 1667, da =  8, haste =  75, eleRes = 125 },
     -- Heroes of Abyssea  (Lv155 -- top marks NMs; still below the Ascension gate)
-    [xi.zone.ABYSSEA_ALTEPA]    = { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 10000000, att = 18000, def = 8666, matt = 8666, acc = 5000, eva = 5000, macc = 5000, meva = 5000, da = 20, haste = 200, eleRes = 350 },
-    [xi.zone.ABYSSEA_GRAUBERG]  = { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 10000000, att = 18000, def = 8666, matt = 8666, acc = 5000, eva = 5000, macc = 5000, meva = 5000, da = 20, haste = 200, eleRes = 350 },
-    [xi.zone.ABYSSEA_ULEGUERAND]= { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 10000000, att = 18000, def = 8666, matt = 8666, acc = 5000, eva = 5000, macc = 5000, meva = 5000, da = 20, haste = 200, eleRes = 350 },
+    [xi.zone.ABYSSEA_ALTEPA]    = { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 1900000, att =  8000, def = 2000, matt = 4000, acc = 2500, eva = 2500, macc = 2500, meva = 2500, da = 10, haste = 100, eleRes = 175 },
+    [xi.zone.ABYSSEA_GRAUBERG]  = { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 1900000, att =  8000, def = 2000, matt = 4000, acc = 2500, eva = 2500, macc = 2500, meva = 2500, da = 10, haste = 100, eleRes = 175 },
+    [xi.zone.ABYSSEA_ULEGUERAND]= { cost = 500, infamy = 60, gil = 750000, cruor = 2000, level = 155, maxHP = 1900000, att =  8000, def = 2000, matt = 4000, acc = 2500, eva = 2500, macc = 2500, meva = 2500, da = 10, haste = 100, eleRes = 175 },
 }
 
 local function spawnViaMark(p, mobId, cost, nmName, cfg)
