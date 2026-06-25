@@ -390,6 +390,34 @@ xi.spells.enfeebling.useEnfeeblingSpell = function(caster, target, spell)
     local tier         = pTable[spellId][column.EFFECT_TIER] or 0
 
     ------------------------------
+    -- STEP 0: Saboteur persistence (FJB custom).
+    -- Stock behavior: the engine (src/map/entities/battleentity.cpp, right after
+    -- OnSpellCast) DelStatusEffect's EFFECT_SABOTEUR after EVERY enfeebling-magic cast,
+    -- so Saboteur only ever enhances ONE spell ("only lasts next cast"). Legendary wants
+    -- it to last its full duration and enhance every enfeeble cast within that window.
+    -- The consumption is C++ (can't change it without a rebuild), so we re-apply Saboteur
+    -- -- preserving its remaining time -- on a short timer that fires on the tick AFTER
+    -- the cast and the engine's removal resolve. Scheduled up here so it runs regardless
+    -- of which return path the cast takes below (resist / immune / land ALL trigger the
+    -- engine removal). Gated to ENFEEBLING_MAGIC (the only skill type the engine consumes
+    -- Saboteur on); re-adding with the DECREMENTED remaining time means it still expires
+    -- at ~the original 60s mark instead of refreshing forever.
+    if skillType == xi.skill.ENFEEBLING_MAGIC then
+        local saboteur = caster:getStatusEffect(xi.effect.SABOTEUR)
+        if saboteur then
+            local remainingMs = saboteur:getTimeRemaining() -- ms left before this cast consumes it
+            if remainingMs and remainingMs > 1500 then
+                local remainingSec = math.floor(remainingMs / 1000)
+                caster:timer(200, function(casterArg)
+                    if not casterArg:hasStatusEffect(xi.effect.SABOTEUR) then
+                        casterArg:addStatusEffect(xi.effect.SABOTEUR, { power = 1, duration = remainingSec, origin = casterArg })
+                    end
+                end)
+            end
+        end
+    end
+
+    ------------------------------
     -- STEP 1: Check spell nullification.
     ------------------------------
     if xi.data.statusEffect.isTargetImmune(target, spellEffect, spellElement) then
