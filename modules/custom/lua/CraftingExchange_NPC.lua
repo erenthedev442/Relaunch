@@ -63,7 +63,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
     zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = catalog.npcName or 'Crafting Exchange',
-        packetName = string.format('%sCrafting Exchange', xi.icon.STAR_LARGE),
+        packetName = string.format('%sCraft Exchange', xi.icon.STAR_LARGE),
         look       = NPC_LOOK,
         x          = catalog.npcPos.x,
         y          = catalog.npcPos.y,

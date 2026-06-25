@@ -490,7 +490,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
     local npc = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Tower_Arbiter',
-        packetName = 'Endless Tower Arbiter',
+        packetName = 'Tower Climb',
         look       = 2401,
         x          =   0.000,
         y          =   0.000,
