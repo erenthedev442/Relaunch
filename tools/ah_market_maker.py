@@ -238,7 +238,7 @@ def price_case(brackets, col="e.level"):
     return " ".join(parts)
 
 
-def gear_topup(cur, brackets, target, commit):
+def gear_topup(cur, brackets, target, commit, gear_where=None):
     """Keep `target` of the BOT's own (seller=0) listings per gear item.
 
     Counts only the bot's own unsold listings, independent of players, so a
@@ -246,6 +246,8 @@ def gear_topup(cur, brackets, target, commit):
     one row per under-stocked item; loops up to `target` times to fill from
     zero. Returns (rows_inserted, items_short_of_target).
     """
+    if gear_where is None:
+        gear_where = GEAR_WHERE
     pc = price_case(brackets)
     countsub = ("(SELECT COUNT(*) FROM auction_house ah "
                 "WHERE ah.itemid = e.itemId AND ah.stack = 0 "
@@ -256,7 +258,7 @@ def gear_topup(cur, brackets, target, commit):
             "SELECT COALESCE(SUM(GREATEST(0, {t} - cnt)), 0), "
             "       COALESCE(SUM(CASE WHEN cnt < {t} THEN 1 ELSE 0 END), 0) "
             "FROM (SELECT {sub} AS cnt FROM {frm} WHERE {w}) x".format(
-                t=int(target), sub=countsub, frm=GEAR_FROM, w=GEAR_WHERE))
+                t=int(target), sub=countsub, frm=GEAR_FROM, w=gear_where))
         row = cur.fetchone()
         return int(row[0]), int(row[1])
 
@@ -266,7 +268,7 @@ def gear_topup(cur, brackets, target, commit):
             "INSERT INTO auction_house (itemid, stack, seller, seller_name, date, price) "
             "SELECT e.itemId, 0, {sid}, %s, UNIX_TIMESTAMP(), {pc} "
             "FROM {frm} WHERE {w} AND {sub} < {t}".format(
-                sid=SELLER_ID, pc=pc, frm=GEAR_FROM, w=GEAR_WHERE,
+                sid=SELLER_ID, pc=pc, frm=GEAR_FROM, w=gear_where,
                 sub=countsub, t=int(target)),
             (SELLER_NAME,))
         added = cur.rowcount
@@ -276,13 +278,15 @@ def gear_topup(cur, brackets, target, commit):
     return inserted, inserted
 
 
-def gear_buyback(cur, brackets, cap, commit):
+def gear_buyback(cur, brackets, cap, commit, gear_where=None):
     """Buy the cheapest player gear listings priced <= the bot's bracket price.
 
     Pays each seller exactly the bracket price (the auction_house_buy trigger
     delivers the gil). At most `cap` listings per pass - a safety valve against
     a runaway gil faucet. Returns the number bought (or that would be bought).
     """
+    if gear_where is None:
+        gear_where = GEAR_WHERE
     pc = price_case(brackets)
     cur.execute(
         "SELECT ah.id, {pc} AS botprice "
@@ -290,7 +294,7 @@ def gear_buyback(cur, brackets, cap, commit):
         "WHERE ah.stack = 0 AND ah.buyer_name IS NULL AND ah.seller <> {sid} "
         "AND {w} AND ah.price <= ({pc}) "
         "ORDER BY ah.price ASC LIMIT {cap}".format(
-            pc=pc, frm=GEAR_FROM, sid=SELLER_ID, w=GEAR_WHERE, cap=int(cap)))
+            pc=pc, frm=GEAR_FROM, sid=SELLER_ID, w=gear_where, cap=int(cap)))
     rows = cur.fetchall()
     if not commit or not rows:
         return len(rows)
@@ -381,12 +385,15 @@ def process_rule(cur, rule, commit):
     do_buyback = rule.get("buyback", True)
     cap = rule.get("max_buyback_per_pass", 50)
 
-    added, short = gear_topup(cur, brackets, target, commit)
+    max_equip_level = rule.get("max_equip_level")
+    gear_where = GEAR_WHERE + (" AND e.level <= {}".format(int(max_equip_level)) if max_equip_level is not None else "")
+
+    added, short = gear_topup(cur, brackets, target, commit, gear_where=gear_where)
     print("  non_ilvl_gear: keep {} each -> +{} listings across {} item(s) short".format(
         target, added, short))
 
     if do_buyback:
-        bought = gear_buyback(cur, brackets, cap, commit)
+        bought = gear_buyback(cur, brackets, cap, commit, gear_where=gear_where)
         if bought:
             print("  non_ilvl_gear: buy {} player listing(s) at bot price (cap {}/pass)".format(bought, cap))
         else:

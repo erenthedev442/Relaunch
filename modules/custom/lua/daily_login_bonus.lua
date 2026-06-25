@@ -10,7 +10,7 @@ require('modules/module_utils')
 
 local m = Module:new('daily_login_bonus')
 
-local DAILY_BONUS = 250
+local DAILY_BONUS = 50
 local CV_POINTS   = 'HL_Points'
 
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
