@@ -234,17 +234,27 @@ onFloorCleared = function(player, sess)
         newBest = true
     end
 
-    -- Depth milestones (bonus marks; title via achievement hook). RE-AWARDABLE
-    -- PER RUN (2026-06-22, by request): the per-character flag check was dropped,
-    -- so the milestone bonus pays out EVERY descent past that floor, not once ever
-    -- -- this turns the Voidspire into a heavy repeatable mark farm. (The TITLE is
-    -- still one-time via the achievement hook below; granting an owned title no-ops.)
+    -- Depth milestones (bonus marks; title via achievement hook). RELAUNCH:
+    -- ONCE PER UTC WEEK PER CHARACTER. The bonus was re-awardable every descent
+    -- (floor 25 = 10k marks/run = an unlimited mark farm that bypassed HL); now
+    -- each floor's milestone pays only on its first clear of the current ISO week,
+    -- gated by VS_MS<floor>_Week. (The TITLE is still one-time via the achievement
+    -- hook below; granting an owned title no-ops.)
+    local msWeek = tonumber(os.date('!%G%V'))  -- ISO week-year+week, e.g. 202626
     for _, ms in ipairs(catalog.milestones) do
         if floor == ms.floor then
-            player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) + ms.marks)
-            player:printToPlayer(string.format(
-                '[Voidspire] DEPTH %d -- milestone bonus +%d marks!', ms.floor, ms.marks),
-                xi.msg.channel.SYSTEM_3)
+            local wkCv = string.format('VS_MS%d_Week', ms.floor)
+            if (player:getCharVar(wkCv) or 0) ~= msWeek then
+                player:setCharVar(wkCv, msWeek)
+                player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) + ms.marks)
+                player:printToPlayer(string.format(
+                    '[Voidspire] DEPTH %d -- weekly milestone bonus +%d marks!', ms.floor, ms.marks),
+                    xi.msg.channel.SYSTEM_3)
+            else
+                player:printToPlayer(string.format(
+                    '[Voidspire] Depth %d milestone already claimed this week.', ms.floor),
+                    xi.msg.channel.SYSTEM_1)
+            end
         end
     end
 

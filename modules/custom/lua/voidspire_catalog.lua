@@ -127,12 +127,11 @@ catalog.affixes =
 catalog.markBase     = 5
 catalog.markPerFloor = 2
 
--- Depth milestones: bonus marks awarded EACH time you clear that floor.
--- RE-AWARDABLE PER RUN (2026-06-22, by request) -- the per-character flag check
--- was dropped in Voidspire.lua onFloorCleared, so a deep run pays these bonuses
--- on EVERY descent (a heavy repeatable mark farm), not once per character.
--- Titles are still one-time, granted through the achievement system
--- (achievements.lua -> onVoidspireFloor); granting an owned title is a no-op.
+-- Depth milestones: bonus marks awarded the FIRST clear of that floor each
+-- UTC week. RELAUNCH: per-week-per-character gate (VS_MS<floor>_Week in
+-- Voidspire.lua onFloorCleared) -- closes the per-run mark farm where floor 25
+-- paid 10k marks on EVERY descent. Titles are still one-time, granted through
+-- the achievement system (achievements.lua -> onVoidspireFloor); owned title no-op.
 catalog.milestones =
 {
     { floor = 10,  marks = 2500  },
