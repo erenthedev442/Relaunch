@@ -24,10 +24,19 @@ catalog.npcPos =
 {
     zone     = 'Escha_RuAun',
     zoneId   = 289,
-    x        = -9.000,
-    y        = -34.277,
-    z        = -466.980,
-    rotation = 192,
+    x        = 177.0,
+    y        = -71.85,
+    z        = 513.5,
+    rotation = 128,
+}
+
+-- Three interchangeable copies of the Sentinel, spread ~8 units apart in the
+-- NORTH area, so several groups can find/pop the raid from different spots.
+catalog.npcPositions =
+{
+    { x = 177.0, y = -71.85, z = 513.5, rot = 128 },
+    { x = 185.0, y = -71.85, z = 521.5, rot = 128 },
+    { x = 193.0, y = -71.85, z = 513.5, rot = 128 },
 }
 
 -- Mob templates come from the Game Master pools (game_master_catalog,

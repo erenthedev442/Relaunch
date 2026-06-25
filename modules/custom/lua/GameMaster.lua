@@ -502,25 +502,29 @@ end
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)
     super(zone)
 
-    local GameMaster = zone:insertDynamicEntity({
-        objtype    = xi.objType.NPC,
-        name       = 'Game_Master',
-        packetName = string.format('%sGame Master', xi.icon.STAR_LARGE),
-        look       = 3017,                -- Trust: Prishe (visible/distinctive)
-        x          = catalog.npcPos.x,
-        y          = catalog.npcPos.y,
-        z          = catalog.npcPos.z,
-        rotation   = catalog.npcPos.rotation,
-        widescan   = 1,
+    -- One interchangeable Game Master per position so several players can each
+    -- run their own wave session at once. All copies share name/look/menu.
+    for _, pos in ipairs(catalog.npcPositions or { catalog.npcPos }) do
+        local GameMaster = zone:insertDynamicEntity({
+            objtype    = xi.objType.NPC,
+            name       = 'Game_Master',
+            packetName = string.format('%sGame Master', xi.icon.STAR_LARGE),
+            look       = 3017,                -- Trust: Prishe (visible/distinctive)
+            x          = pos.x,
+            y          = pos.y,
+            z          = pos.z,
+            rotation   = pos.rot or 128,
+            widescan   = 1,
 
-        onTrigger = function(player, npc)
-            player:printToPlayer(
-                '[ Game Master ] Choose your difficulty. Mobs will spawn around you, kupo!',
-                xi.msg.channel.SYSTEM_3)
-            showStartMenu(player)
-        end,
-    })
-    utils.unused(GameMaster)
+            onTrigger = function(player, npc)
+                player:printToPlayer(
+                    '[ Game Master ] Choose your difficulty. Mobs will spawn around you, kupo!',
+                    xi.msg.channel.SYSTEM_3)
+                showStartMenu(player)
+            end,
+        })
+        utils.unused(GameMaster)
+    end
 end)
 
 -- Player death hook: if a player dies mid-session, end the session and

@@ -115,7 +115,7 @@ catalog.duel =
 -- ============================================================
 catalog.reward =
 {
-    winBase      = 150,   -- flat marks per ladder win
+    winBase      = 10,   -- flat marks per ladder win
     underdogDiv  = 4,     -- + (oppRating - myRating)/this when punching up
     lossMarks    = 25,    -- consolation marks on a loss
 }

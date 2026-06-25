@@ -1,14 +1,20 @@
 -----------------------------------
 -- trust_skoll.lua
--- Void Keeper NPC in GM Home: the SINGLE vendor for all custom trusts.
--- Sells Gemma (901) and Meat (899) for 50,000,000 gil each. One purchase per
+-- Void Keeper NPC in GM Home: the SINGLE source for all custom trusts.
+-- The 3 custom trusts are EARNED through Hunting League progression -- NOT
+-- bought with gil. Each is gated on a Hunting League RANK (charvar HL_Tier,
+-- 1-5) and costs accumulated HUNT MARKS (charvar HL_Points). One unlock per
 -- character -- the spell is permanently added to the spell book on payment.
 --
+--   Meat   -> spell 899 : HL Rank 2, 2000 Hunt Marks
+--   Gemma  -> spell 901 : HL Rank 3, 3000 Hunt Marks
+--   Corvus -> spell 902 : HL Rank 4, 5000 Hunt Marks
+--
 -- (The standalone "Bulwark Keeper" Meat vendor was folded into this NPC on
---  2026-06-06 so champions buy every custom trust from one prominent place --
+--  2026-06-06 so champions earn every custom trust from one prominent place --
 --  see trust_meat_vendor.lua, now a retired no-op.)
 --
--- Custom trusts sold here (clientName = what the in-game Trust menu shows):
+-- Custom trusts here (clientName = what the in-game Trust menu shows):
 --   Gemma -> spell 901 (repurposed "Nanaa Mihgo"); pool 5901, Hume Female look
 --   Meat  -> spell 899 (repurposed "Excenmille");  pool 5899, tiny Tarutaru model
 -- SQL: modules/custom/sql/trust_skoll.sql, modules/custom/sql/trust_meat.sql
@@ -19,20 +25,22 @@ require('scripts/globals/combat/magic_aoe')   -- defines xi.combat.magicAoE.* (o
 
 local m = Module:new('trust_skoll')
 
-local GIL_COST = 50000000      -- 50,000,000 gil (50M) -- premium endgame trust
-
--- Every custom trust the Void Keeper sells. Add a row to sell another one.
+-- Every custom trust the Void Keeper grants. Add a row to offer another one.
 --   spellId    : the (repurposed) spell slot; also registered in custom_spell_ids.lua
 --   name       : display name used in menu labels / messages
 --   clientName : what the client's Trust menu shows (the repurposed slot's name)
---   bindLabel  : purchase menu label (the gil suffix is appended automatically)
+--   rankReq    : minimum Hunting League rank (charvar HL_Tier) required to unlock
+--   markCost   : Hunt Marks (charvar HL_Points) spent to unlock
+--   bindLabel  : purchase menu label (legacy; the rank/marks suffix is built below)
 --   boundMsg   : shown when the player already owns it
---   sealMsgs   : shown line-by-line on a successful purchase
+--   sealMsgs   : shown line-by-line on a successful unlock
 local TRUSTS = {
     {
         spellId    = 901,
         name       = 'Gemma',
         clientName = 'Nanaa Mihgo',
+        rankReq    = 3,
+        markCost   = 3000,
         bindLabel  = 'Bind Gemma to your service',
         boundMsg   = 'Gemma already stands with you. Cast "Nanaa Mihgo" from your Trust menu -- that is her.',
         sealMsgs   = {
@@ -45,7 +53,8 @@ local TRUSTS = {
         spellId    = 899,
         name       = 'Meat',
         clientName = 'Excenmille',
-        cost       = 25000000,   -- 25M: a budget tank, cheaper than the support pillar
+        rankReq    = 2,
+        markCost   = 2000,
         bindLabel  = 'Bind Meat to your service',
         boundMsg   = 'Meat already answers to you. Cast "Excenmille" from your Trust menu -- that is the little wall.',
         sealMsgs   = {
@@ -58,7 +67,8 @@ local TRUSTS = {
         spellId    = 902,
         name       = 'Corvus',
         clientName = 'Curilla',
-        cost       = 75000000,   -- 75M: apex ranged DD -- the priciest custom trust
+        rankReq    = 4,
+        markCost   = 5000,
         bindLabel  = 'Bind Corvus to your service',
         boundMsg   = 'Corvus already shadows you. Cast "Curilla" from your Trust menu -- the back line is his.',
         sealMsgs   = {
@@ -74,13 +84,6 @@ local NPC_LOOK  = 3017          -- 3017 = Trust: Prishe - a silver-haired divine
                                 -- for a 50M-gil vendor of legendary Trusts than a generic Moogle.
                                 -- Change this value if you have a preferred divine/godlike NPC look ID.
 local NPC_POS   = { x = -4.000, y = 0.000, z = 10.000, rot = 128 }
-
-local function fmtGil(n)
-    if n >= 1000000 then return string.format('%gM', n / 1000000)
-    elseif n >= 1000 then return string.format('%dk', n / 1000)
-    end
-    return tostring(n)
-end
 
 m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
     super(zone)
@@ -103,8 +106,8 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
             }
         end
 
-        local cost  = t.cost or GIL_COST   -- per-trust price; falls back to the shared 50M
-        local label = string.format('Bind %s (%s)', t.name, fmtGil(cost))
+        -- Earned, not bought: gated on Hunting League rank + Hunt Marks.
+        local label = string.format('Bind %s  R%d / %dmk', t.name, t.rankReq, t.markCost)
 
         return {
             label,
@@ -114,15 +117,21 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                         xi.msg.channel.SYSTEM_3)
                     return
                 end
-                if p:getGil() < cost then
+                if (p:getCharVar('HL_Tier') or 1) < t.rankReq then
                     p:printToPlayer(
-                        string.format('The binding demands %s gil. You carry only %s.',
-                            fmtGil(cost), fmtGil(p:getGil())),
+                        string.format('%s requires Hunting League Rank %d.', t.name, t.rankReq),
+                        xi.msg.channel.SYSTEM_3)
+                    return
+                end
+                local marks = p:getCharVar('HL_Points') or 0
+                if marks < t.markCost then
+                    p:printToPlayer(
+                        string.format('%s costs %d Hunt Marks (you have %d).', t.name, t.markCost, marks),
                         xi.msg.channel.SYSTEM_3)
                     return
                 end
 
-                p:delGil(cost)
+                p:setCharVar('HL_Points', marks - t.markCost)
                 p:addSpell(t.spellId)
 
                 local S = xi.msg.channel.SYSTEM_3
@@ -202,7 +211,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         end,
 
         onTrigger = function(player, npc)
-            player:printToPlayer(string.format('[ Void Keeper ]  Your gil: %s', fmtGil(player:getGil())), xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('[ Void Keeper ]  Hunting League Rank %d  -  %d Hunt Marks', player:getCharVar('HL_Tier') or 1, player:getCharVar('HL_Points') or 0), xi.msg.channel.SYSTEM_3)
             buildMenu(player)
         end,
     })

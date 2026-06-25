@@ -268,10 +268,10 @@ local function applyJobMods(player, jobId)
             _modAdd(player, cat, lv * cat.perLevel)
         end
     end
-    -- Multiplicative EXP cut for THIS job's prestige level -- the engine (AddExpBonus)
-    -- reads the [PrestigeExpCut] charVar and applies it AFTER gear/augment EXP_BONUS,
-    -- so augments can't cancel it. Stacks multiplicatively with the Rebirth cut.
-    player:setCharVar('[PrestigeExpCut]', expCut(player:getCharVar(levelKey(jobId)) or 0))
+    -- EXP penalty REMOVED (relaunch, owner request 2026-06-25): Ascension no longer
+    -- reduces EXP gain. Always clear [PrestigeExpCut] so the engine applies no prestige
+    -- exp malus. (expCut() above is now unused/dead; left in place for history.)
+    player:setCharVar('[PrestigeExpCut]', 0)
 end
 
 local function removeJobMods(player, jobId)

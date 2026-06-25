@@ -261,9 +261,9 @@ catalog.sourceOrder = { 'af', 'relic', 'empy' }
 -- =========================================================
 catalog.upgradeCost =
 {
-    af    = { plus1 = 100, plus2 = 300, plus3 = 650 },  -- AF Marks
-    relic = { plus1 = 100, plus2 = 300, plus3 = 650 },  -- Relic Marks
-    empy  = { plus1 = 100, plus2 = 300, plus3 = 650 },  -- Empyrean Marks
+    af    = { plus1 = 300, plus2 = 900, plus3 = 2000 },  -- AF Marks
+    relic = { plus1 = 300, plus2 = 900, plus3 = 2000 },  -- Relic Marks
+    empy  = { plus1 = 300, plus2 = 900, plus3 = 2000 },  -- Empyrean Marks
 }
 
 -- =========================================================

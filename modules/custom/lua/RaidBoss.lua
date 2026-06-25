@@ -423,13 +423,17 @@ end
 
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)
     super(zone)
+    -- One interchangeable Sentinel per position so groups can pop / check the
+    -- shared raid from several spots. All copies share name/look/menu; the boss
+    -- itself stays a single server-shared fight.
+    for _, pos in ipairs(catalog.npcPositions or { catalog.npcPos }) do
     local sentinel = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Voidgate_Sentinel',
         packetName = string.format('%sVoidgate Sentinel', xi.icon.STAR_LARGE),
         look       = 3017,
-        x = catalog.npcPos.x, y = catalog.npcPos.y, z = catalog.npcPos.z,
-        rotation   = catalog.npcPos.rotation,
+        x = pos.x, y = pos.y, z = pos.z,
+        rotation   = pos.rot or 128,
         widescan   = 1,
         onTrigger  = function(player, npc)
             local week    = currentIsoWeek()
@@ -465,6 +469,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
         end,
     })
     utils.unused(sentinel)
+    end
 end)
 
 return m

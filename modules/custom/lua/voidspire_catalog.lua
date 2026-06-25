@@ -31,10 +31,19 @@ catalog.npcPos =
 {
     zone     = 'Escha_RuAun',
     zoneId   = 289,
-    x        = -3.000,
-    y        = -34.277,
-    z        = -466.980,
-    rotation = 192,
+    x        = 2.0,
+    y        = -34.0,
+    z        = -463.0,
+    rotation = 128,
+}
+
+-- Three interchangeable copies of the Warden, spread ~8 units apart on the
+-- SOUTH/entry plaza, so several players can start independent runs at once.
+catalog.npcPositions =
+{
+    { x = 2.0,  y = -34.0, z = -463.0, rot = 128 },
+    { x = 10.0, y = -34.0, z = -471.0, rot = 128 },
+    { x = 18.0, y = -34.0, z = -463.0, rot = 128 },
 }
 
 -- Run tempo (seconds). Endless tempo is tighter than the GM's finite waves.
@@ -134,11 +143,11 @@ catalog.markPerFloor = 2
 -- the achievement system (achievements.lua -> onVoidspireFloor); owned title no-op.
 catalog.milestones =
 {
-    { floor = 10,  marks = 2500  },
-    { floor = 25,  marks = 10000 },
-    { floor = 50,  marks = 25000 },
-    { floor = 75,  marks = 40000 },
-    { floor = 100, marks = 70000 },
+    { floor = 10,  marks = 50  },
+    { floor = 25,  marks = 150 },
+    { floor = 50,  marks = 350 },
+    { floor = 75,  marks = 600 },
+    { floor = 100, marks = 1000 },
 }
 
 -- ============================ FLOOR MECHANICS ============================

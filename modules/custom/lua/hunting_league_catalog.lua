@@ -138,7 +138,7 @@ return
         {
             tier       = 2,
             name       = 'Rank II - Hunter',
-            unlockCost = 75,
+            unlockCost = 150,
             spawnerPos = { x = 40.9101, y = 0.4831, z = 132.8770, rot = 71 },
             warpPos    = { x = 40.9101, y = 0.4831, z = 132.8770, rot = 71 },
             mobs =
@@ -201,7 +201,7 @@ return
         {
             tier       = 3,
             name       = 'Rank III - Elite',
-            unlockCost = 225,
+            unlockCost = 650,
             spawnerPos = { x = 48.6277, y = 0.8776, z = 18.8663, rot = 215 },
             warpPos    = { x = 48.6277, y = 0.8776, z = 18.8663, rot = 215 },
             mobs =
@@ -272,7 +272,7 @@ return
         {
             tier       = 4,
             name       = 'Rank IV - Champion',
-            unlockCost = 500,
+            unlockCost = 1500,
             spawnerPos = { x = 22.0112, y = 0.8983, z = -121.4367, rot = 126 },
             warpPos    = { x = 22.0112, y = 0.8983, z = -121.4367, rot = 126 },
             mobs =
@@ -339,7 +339,7 @@ return
         {
             tier       = 5,
             name       = 'Rank V - Legend',
-            unlockCost = 1000,
+            unlockCost = 3000,
             spawnerPos = { x = 433.8451, y = 0.1066, z = -199.3157, rot = 119 },
             warpPos    = { x = 433.8451, y = 0.1066, z = -199.3157, rot = 119 },
             mobs =

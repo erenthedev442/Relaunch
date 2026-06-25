@@ -117,6 +117,28 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
             return
         end
 
+        -- Relaunch gate (2026-06-25, owner request): NM affinities are no longer a
+        -- free trophy turn-in. They now require Hunting League Rank 3 (Elite) AND a
+        -- Hunt Marks cost, on top of the NM trophy -- so affinities are gated behind
+        -- real HL progression + an economy sink.
+        local HL_AFF_RANK = 3
+        local HL_AFF_COST = 1000
+        if (player:getCharVar('HL_Tier') or 1) < HL_AFF_RANK then
+            player:printToPlayer(string.format(
+                'NM Affinity registration requires Hunting League Rank %d (Elite).', HL_AFF_RANK),
+                xi.msg.channel.SYSTEM_3)
+            buildAffinityMenu(player)
+            return
+        end
+        if (player:getCharVar('HL_Points') or 0) < HL_AFF_COST then
+            player:printToPlayer(string.format(
+                'NM Affinity registration costs %d Hunt Marks (you have %d).',
+                HL_AFF_COST, player:getCharVar('HL_Points') or 0),
+                xi.msg.channel.SYSTEM_3)
+            buildAffinityMenu(player)
+            return
+        end
+
         local has = player:getItemCount(row.trophy.id)
         if has < row.trophy.qty then
             player:printToPlayer(string.format(
@@ -128,6 +150,7 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
         end
 
         player:delItem(row.trophy.id, row.trophy.qty)
+        player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) - HL_AFF_COST)  -- spend Hunt Marks
         affinity.grantAffinity(player, row.cat)
 
         player:printToPlayer(string.format(

@@ -120,13 +120,6 @@ _NPCS: list[dict] = [
     },
     {
         "cluster":   "Admin cluster",
-        "display":   "Companion Master",
-        "file":      "modules/custom/lua/player_trusts_catalog.lua",
-        "pos_field": "npcPos",
-        "desc":      "Player companion system — link friends and summon them as trusts in your party",
-    },
-    {
-        "cluster":   "Admin cluster",
         "display":   "Test Dummy",
         "file":      "modules/custom/lua/test_dummy_catalog.lua",
         "pos_field": "npcPos",

@@ -409,23 +409,27 @@ end
 
 m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone), function(zone)
     super(zone)
-    local warden = zone:insertDynamicEntity({
-        objtype    = xi.objType.NPC,
-        name       = 'Voidspire_Warden',
-        packetName = string.format('%sThe Voidspire Warden', xi.icon.STAR_LARGE),
-        look       = 3017,   -- distinctive; swap for a darker model if you like
-        x = catalog.npcPos.x, y = catalog.npcPos.y, z = catalog.npcPos.z,
-        rotation   = catalog.npcPos.rotation,
-        widescan   = 1,
-        onTrigger  = function(player, npc)
-            local best = player:getCharVar('Voidspire_Best_Floor') or 0
-            player:printToPlayer(string.format(
-                '[ The Voidspire Warden ] The spire has no bottom -- only the depth you can survive. Your deepest descent: floor %d.', best),
-                xi.msg.channel.SYSTEM_3)
-            showWardenMenu(player)
-        end,
-    })
-    utils.unused(warden)
+    -- One interchangeable Warden per position so multiple players can each run
+    -- their own descent at once. All copies share name/look/menu.
+    for _, pos in ipairs(catalog.npcPositions or { catalog.npcPos }) do
+        local warden = zone:insertDynamicEntity({
+            objtype    = xi.objType.NPC,
+            name       = 'Voidspire_Warden',
+            packetName = string.format('%sThe Voidspire Warden', xi.icon.STAR_LARGE),
+            look       = 3017,   -- distinctive; swap for a darker model if you like
+            x = pos.x, y = pos.y, z = pos.z,
+            rotation   = pos.rot or 128,
+            widescan   = 1,
+            onTrigger  = function(player, npc)
+                local best = player:getCharVar('Voidspire_Best_Floor') or 0
+                player:printToPlayer(string.format(
+                    '[ The Voidspire Warden ] The spire has no bottom -- only the depth you can survive. Your deepest descent: floor %d.', best),
+                    xi.msg.channel.SYSTEM_3)
+                showWardenMenu(player)
+            end,
+        })
+        utils.unused(warden)
+    end
 end)
 
 -- Death -> end the run (despawns the live floor). Composes with other modules'

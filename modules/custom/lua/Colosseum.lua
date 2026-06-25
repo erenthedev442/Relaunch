@@ -26,7 +26,7 @@
 -----------------------------------
 require('modules/module_utils')
 local catalog   = require('modules/custom/lua/colosseum_catalog')
-local ptCat     = require('modules/custom/lua/player_trusts_catalog')  -- raceModels
+local raceModels = { [1] = 32, [2] = 37, [3] = 42, [4] = 47, [5] = 30, [6] = 31, [7] = 36, [8] = 1 }  -- inlined; player-trust content removed 2026-06-25
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
 require(string.format('scripts/zones/%s/Zone', catalog.npcPos.zone))
 
@@ -401,7 +401,7 @@ local function startDuel(player, opp)
         -- Wear the champion's face: PC-look model by race (shared map
         -- with the Player Trust system). Cosmetic - pcall'd because
         -- model packets on dynamic mobs are the least-proven part.
-        local model = ptCat.raceModels[race]
+        local model = raceModels[race]
         if model then
             pcall(function() mob:setModelId(model) end)
         end

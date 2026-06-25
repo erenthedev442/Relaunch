@@ -81,9 +81,9 @@ end
 
 -- Final clear reward (level 10 NM kill)
 C.FINAL_REWARD = {
-    gil    = 500000000,  -- 500M gil
-    pp     = 50000,      -- Paragon Points
-    infamy = 50000,      -- Infamy
+    gil    = 5000000,  -- 500M gil
+    pp     = 500,      -- Paragon Points
+    infamy = 500,      -- Infamy
 }
 
 -- Champion NPC appearance in Hall of Champions

@@ -52,7 +52,6 @@ def main() -> int:
         achievements,
         ah_prices,
         crafting_exchange,
-        custom_spells,
         hnm,
         abyssea_nms,
         tournament,
@@ -83,7 +82,6 @@ def main() -> int:
         leaderboards,
         login_rewards,
         player_profiles,
-        player_trusts,
         prestige,
         progression_order,
         rates_table,
@@ -238,13 +236,9 @@ def main() -> int:
         # pages are excluded from the nav tree via
         # `validation.nav.omitted_files: info` in mkdocs.yml.
         ("player_profiles",  player_profiles),
-        # player_trusts syncs every tier/cost/stat table on the
-        # community/player-trusts.md page with the live catalog.
-        ("player_trusts",    player_trusts),
         # --- new content generators (2026-06-04): fill formerly hand-written pages ---
         ("achievements",     achievements),
         ("ah_prices",        ah_prices),
-        ("custom_spells",    custom_spells),
         ("crafting_exchange", crafting_exchange),
         ("missing_spells",   missing_spells),
         # --- custom-systems pages (2026-06-14): each parses its own live catalog ---

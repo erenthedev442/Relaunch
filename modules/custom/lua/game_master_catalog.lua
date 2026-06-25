@@ -30,10 +30,19 @@ catalog.npcPos =
 {
     zone     = 'Escha_RuAun',
     zoneId   = 289,
-    x        =  3.000,
-    y        = -34.277,
-    z        = -466.980,
-    rotation =  192,
+    x        = -289.5,
+    y        = -3.5,
+    z        = 387.5,
+    rotation = 128,
+}
+
+-- Three interchangeable copies of the Game Master, spread ~8 units apart in the
+-- WEST area, so several players can each run their own wave session at once.
+catalog.npcPositions =
+{
+    { x = -289.5, y = -3.5, z = 387.5, rot = 128 },
+    { x = -281.5, y = -3.5, z = 395.5, rot = 128 },
+    { x = -273.5, y = -3.5, z = 387.5, rot = 128 },
 }
 
 -- Difficulty presets. Each preset is a self-contained spec:

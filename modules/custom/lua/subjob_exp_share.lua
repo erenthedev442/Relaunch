@@ -37,7 +37,7 @@ local m = Module:new('subjob_exp_share')
 -----------------------------------
 -- Config
 -----------------------------------
-local SHARE_RATE   = 0.5
+local SHARE_RATE   = 0.25
 local BANK_VAR     = 'SubExpBank'
 local BANK_JOB_VAR = 'SubExpBankJob'
 
