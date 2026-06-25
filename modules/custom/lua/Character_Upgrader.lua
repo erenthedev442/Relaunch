@@ -58,7 +58,7 @@ local function giveAllSpells(player)
     for i = 1, 1024 do
         pcall(function()
             if not EXCLUDED_SPELLS[i] and not player:hasSpell(i) then
-                player:addSpell(i)
+                player:addSpell(i, { silentLog = true })
             end
         end)
     end
