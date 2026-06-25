@@ -25,7 +25,7 @@ local catalog = {}
 catalog.CURRENCY_VAR  = 'MasterySigils'     -- charVar holding the player's sigils
 catalog.CURRENCY_NAME = 'Mastery Sigils'
 
--- NPC placement (Leafallia back row, beside Rupture Sage / Relic Forge) -------
+-- NPC placement (Leafallia back row, near the Relic Forge) -------------------
 catalog.npcPos = { x = -8.000, y = 0.000, z = 20.000, rot = 128 }
 
 -- ── Sigil faucet (secondary; the rotation below is the primary source) ──────
@@ -45,13 +45,15 @@ catalog.sigils =
 
 -- ── NM ROTATION (primary sigil source) ─────────────────────────────────────
 -- A time-based rotation: `activeCount` NMs from `pool` are "live" each period.
--- Killing a live target grants `reward` sigils, ONCE per target per period.
--- The active set is derived from the clock (no DB) and advances through the pool.
+-- Killing a live target grants `reward` sigils, ONCE per target per period. The
+-- active set is derived from the clock (no DB) and advances through the pool.
 -- Per-player claims tracked via charVars Mastery_RotPeriod + Mastery_RotMask.
 --
--- IMPORTANT: names MUST match mob:getName() exactly (case-insensitive match).
--- The list below is PLACEHOLDER -- replace with the NMs you want farmed on
--- relaunch (Hunting League NMs, notorious overworld NMs, etc.).
+-- Each entry: name (matches mob:getName(), underscored), label + zone (display).
+-- Matching is case-insensitive and underscore/space-insensitive, so either form
+-- of the in-game name resolves. The pool below is the set of REAL overworld NMs
+-- verified on disk (sourced from hunters_guild_catalog -- non-instanced, walkable
+-- zones with camp-viable respawns). Add/remove freely.
 catalog.rotation =
 {
     enabled     = true,
@@ -59,11 +61,29 @@ catalog.rotation =
     activeCount = 3,      -- how many NMs are live at once
     reward      = 50,     -- sigils per live target, once per period
     announce    = true,   -- chat line when a rotation target is claimed
+    partyWide   = true,   -- credit every same-zone party member, not just the killer
     pool =
     {
-        'Aquarius', 'Serket', 'Simurgh', 'Nidhogg', 'King Behemoth',
-        'Vrtra', 'Kirin', 'Behemoth', 'Adamantoise', 'Fafnir',
-        'Cerberus', 'Khimaira', 'Hydra', 'Tiamat', 'Jormungand',
+        { name = 'Tarasque',          label = 'Tarasque',          zone = 'Ifrits_Cauldron' },
+        { name = 'Capricornus',       label = 'Capricornus',       zone = 'Jugner_Forest' },
+        { name = 'Charybdis',         label = 'Charybdis',         zone = 'Sea_Serpent_Grotto' },
+        { name = 'Tiamat',            label = 'Tiamat',            zone = 'Attohwa_Chasm' },
+        { name = 'Fafnir',            label = 'Fafnir',            zone = 'Dragons_Aery' },
+        { name = 'Cactrot_Rapido',    label = 'Cactrot Rapido',    zone = 'Eastern_Altepa_Desert' },
+        { name = 'Lord_of_Onzozo',    label = 'Lord of Onzozo',    zone = 'Labyrinth_of_Onzozo' },
+        { name = 'King_Vinegarroon',  label = 'King Vinegarroon',  zone = 'Western_Altepa_Desert' },
+        { name = 'Khimaira',          label = 'Khimaira',          zone = 'Caedarva_Mire' },
+        { name = 'Cerberus',          label = 'Cerberus',          zone = 'Mount_Zhayolm' },
+        { name = 'Faust',             label = 'Faust',             zone = 'The_Shrine_of_RuAvitau' },
+        { name = 'Despot',            label = 'Despot',            zone = 'RuAun_Gardens' },
+        { name = 'Steam_Cleaner',     label = 'Steam Cleaner',     zone = 'VeLugannon_Palace' },
+        { name = 'Brigandish_Blade',  label = 'Brigandish Blade',  zone = 'VeLugannon_Palace' },
+        { name = 'Bahamut',           label = 'Bahamut',           zone = 'Riverne-Site_B01' },
+        { name = 'Bune',              label = 'Bune',              zone = 'Gustav_Tunnel' },
+        { name = 'Carmine_Dobsonfly', label = 'Carmine Dobsonfly', zone = 'Riverne-Site_A01' },
+        { name = 'Aspidochelone',     label = 'Aspidochelone',     zone = 'Valley_of_Sorrows' },
+        { name = 'Behemoth',          label = 'Behemoth',          zone = 'Behemoths_Dominion' },
+        { name = 'Jormungand',        label = 'Jormungand',        zone = 'Uleguerand_Range' },
     },
 }
 

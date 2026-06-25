@@ -26,8 +26,8 @@
 -- Currency faucet: xi.mob.onMobDeathEx (rotation + optional NM trickle).
 -- Command: !empower (view) / !empower give <n> (GM test grant).  commands/empower.lua
 -- Grant API for other systems: xi.spellSkillMastery.grant(player, n)
--- NOTE: rotation/trickle credit the KILLER only (per-player, per-period). If you
--- want party-wide credit, say so -- it's a small follow-up.
+-- Rotation credit is PARTY-WIDE (every same-zone party member claims once per
+-- period; catalog.rotation.partyWide). The small NM trickle stays killer-only.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Leafallia/Zone')
@@ -139,8 +139,13 @@ local function currentPeriod()
     return math.floor(t / (C.rotation.periodHours * 3600))
 end
 
--- The active target set this period: an ordered list of names + a lower-cased
--- name -> active-index (1..K) map for fast kill matching.
+-- Normalize a mob/pool name for matching: lower-case + underscores -> spaces, so
+-- 'Lord_of_Onzozo' and 'Lord of Onzozo' both resolve regardless of which form
+-- mob:getName() returns.
+local function normalizeName(s) return (s or ''):lower():gsub('_', ' ') end
+
+-- The active target set this period: the ordered list of pool ENTRIES plus a
+-- normalized name/label -> active-index (1..K) map for fast kill matching.
 local function currentActive()
     local pool = C.rotation.pool
     local n    = #pool
@@ -148,9 +153,10 @@ local function currentActive()
     local start = (currentPeriod() * K) % n
     local list, byName = {}, {}
     for k = 0, K - 1 do
-        local name = pool[((start + k) % n) + 1]
-        list[#list + 1] = name
-        byName[name:lower()] = k + 1
+        local entry = pool[((start + k) % n) + 1]
+        list[#list + 1] = entry
+        byName[normalizeName(entry.name)]  = k + 1
+        byName[normalizeName(entry.label)] = k + 1
     end
     return list, byName
 end
@@ -166,23 +172,17 @@ local function rotationMask(p)
     return p:getCharVar('Mastery_RotMask') or 0
 end
 
--- Called on every kill: if the mob is a live rotation target not yet claimed
--- this period, grant the reward. Returns true if the mob was a rotation target.
-local function tryRotationGrant(p, mobName)
-    if not C.rotation.enabled then return false end
-    local _, byName = currentActive()
-    local idx = byName[(mobName or ''):lower()]
-    if not idx then return false end
+-- Grant one player the reward for active-index `idx`, once per period.
+local function claimRotation(p, idx, label)
     local mask = rotationMask(p)
     local bit  = 2 ^ (idx - 1)
-    if (math.floor(mask / bit) % 2) == 1 then return true end  -- already claimed
+    if (math.floor(mask / bit) % 2) == 1 then return end  -- already claimed
     p:setCharVar('Mastery_RotMask', mask + bit)
     grantSigils(p, C.rotation.reward, false)
     if C.rotation.announce then
         p:printToPlayer(string.format('[Mastery] Rotation target %s defeated! +%d %s.',
-            mobName, C.rotation.reward, C.CURRENCY_NAME), SYS)
+            label, C.rotation.reward, C.CURRENCY_NAME), SYS)
     end
-    return true
 end
 
 -----------------------------------
@@ -217,9 +217,10 @@ openRotation = function(p)
     local mask = rotationMask(p)
     p:printToPlayer(string.format('[Mastery Sage] Rotation targets (reset every %dh) — %d %s each:',
         C.rotation.periodHours, C.rotation.reward, C.CURRENCY_NAME), SYS)
-    for i, name in ipairs(list) do
+    for i, entry in ipairs(list) do
         local claimed = (math.floor(mask / (2 ^ (i - 1))) % 2) == 1
-        p:printToPlayer(string.format('   %s  [%s]', name, claimed and 'claimed' or 'available'), SYS)
+        p:printToPlayer(string.format('   %s — %s  [%s]',
+            entry.label, (entry.zone:gsub('_', ' ')), claimed and 'claimed' or 'available'), SYS)
     end
     show(p, 'NM Rotation', { { 'Back', function(pp) openMain(pp) end } })
 end
@@ -401,9 +402,9 @@ xi.spellSkillMastery.report = function(p)
         local list = currentActive()
         local mask = rotationMask(p)
         local parts = {}
-        for i, name in ipairs(list) do
+        for i, entry in ipairs(list) do
             local claimed = (math.floor(mask / (2 ^ (i - 1))) % 2) == 1
-            parts[#parts + 1] = name .. (claimed and ' (done)' or '')
+            parts[#parts + 1] = entry.label .. (claimed and ' (done)' or '')
         end
         p:printToPlayer('  Rotation: ' .. table.concat(parts, ', '), SYS)
     end
@@ -420,11 +421,33 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
         if player:getObjType() ~= xi.objType.PC then return end
 
         -- Rotation target? (matched by name, independent of the isNM flag.)
-        local wasRotation = tryRotationGrant(player, mob:getName())
+        local idx, label
+        if C.rotation.enabled then
+            local list, byName = currentActive()
+            idx = byName[normalizeName(mob:getName())]
+            if idx then label = list[idx].label end
+        end
 
-        -- Secondary trickle.
+        if idx then
+            -- Credit every same-zone PC party member (or just the killer if
+            -- partyWide is off). Each member claims independently, once/period.
+            local zoneId  = mob:getZoneID()
+            local members = { player }
+            if C.rotation.partyWide then
+                local ok, party = pcall(function() return player:getParty() end)
+                if ok and party and #party > 0 then members = party end
+            end
+            for _, mem in ipairs(members) do
+                if mem and mem:getObjType() == xi.objType.PC and mem:getZoneID() == zoneId then
+                    claimRotation(mem, idx, label)
+                end
+            end
+            return  -- rotation NM handled; skip the trickle
+        end
+
+        -- Secondary trickle (killer only).
         local s = C.sigils
-        if not wasRotation and mob:isNM() and s.nmTrickle then
+        if mob:isNM() and s.nmTrickle then
             local amt = math.min(s.nmMax, math.floor(s.nmBase + (mob:getMainLvl() or 0) * s.nmPerLevel))
             if amt > 0 then grantSigils(player, amt, s.announceNM) end
         elseif s.mobChance > 0 and (mob:getMainLvl() or 0) >= s.mobMinLevel
@@ -437,8 +460,8 @@ end)
 -----------------------------------
 -- On login: (1) re-apply potency/trait mods (deferred 3s so post-login stat
 -- finalization does not clobber the addMods -- Prestige/CrossJob pattern), and
--- (2) register the WS Effects listener (reads charVars live; named so it is
--- idempotent across zone-ins, same as the Rupture Sage splash listener).
+-- (2) register the WS Effects listener (reads charVars live; the named listener
+-- is idempotent across zone-ins, so re-adding each login is safe).
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     super(player, firstLogin, zoning)
