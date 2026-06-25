@@ -52,7 +52,6 @@ local function giveAllWeaponSkills(player)
     for _, unlockId in pairs(xi.wsUnlock) do
         pcall(function() player:addLearnedWeaponskill(unlockId) end)
     end
-    player:printToPlayer('All weapon skills granted, kupo!', 0, 'Unlocker')
 end
 
 local function giveAllSpells(player)
@@ -63,12 +62,10 @@ local function giveAllSpells(player)
             end
         end)
     end
-    player:printToPlayer('All spells granted, kupo!', 0, 'Unlocker')
 end
 
 local function capAllSkills(player)
     player:capAllSkills()
-    player:printToPlayer('All skills capped, kupo!', 0, 'Unlocker')
 end
 
 local function giveAllTrusts(player)
@@ -80,7 +77,6 @@ local function giveAllTrusts(player)
             end
         end)
     end
-    player:printToPlayer(string.format('All trusts granted, kupo! Added: %d', added), 0, 'Unlocker')
 end
 
 local function completeAllMissions(player)
@@ -128,7 +124,6 @@ local function completeAllMissions(player)
     player:addMission(13, 227)
     -- Mirror the Mission Moogle charvar so it won't prompt existing chars who got this path
     player:setCharVar('MissionClearanceReceived', 1)
-    player:printToPlayer('All missions completed, kupo!', 0, 'Unlocker')
 end
 
 local function completeAllQuests(player)
@@ -147,7 +142,6 @@ local function completeAllQuests(player)
             end
         end
     end
-    player:printToPlayer(string.format('All %d quests unlocked and completed, kupo!', count), 0, 'Unlocker')
 end
 
 local function giveAllMaps(player)
@@ -160,7 +154,6 @@ local function giveAllMaps(player)
             end)
         end
     end
-    player:printToPlayer(string.format('All maps granted, kupo! Added: %d', added), 0, 'Unlocker')
 end
 
 local function giveAllOutpostWarps(player)
@@ -169,7 +162,6 @@ local function giveAllOutpostWarps(player)
             pcall(function() player:addTeleport(nation, region + 5) end)
         end
     end
-    player:printToPlayer('All outpost warps granted, kupo!', 0, 'Unlocker')
 end
 
 local function giveAllHomepoints(player)
@@ -178,7 +170,6 @@ local function giveAllHomepoints(player)
         local hpSet = math.floor(i / 32)
         pcall(function() player:addTeleport(xi.teleport.type.HOMEPOINT, hpBit, hpSet) end)
     end
-    player:printToPlayer('All homepoints granted, kupo!', 0, 'Unlocker')
 end
 
 local function giveAllSurvivalGuides(player)
@@ -204,14 +195,12 @@ local function bumpWardrobeSizes(player)
             bumped = bumped + 1
         end
     end
-    player:printToPlayer(string.format('%d wardrobe(s) bumped to %d slots, kupo!', bumped, target), 0, 'Unlocker')
 end
 
 local function giveAllAttachments(player)
     for _, id in ipairs(AUTOMATON_PARTS) do
         pcall(function() player:unlockAttachment(id) end)
     end
-    player:printToPlayer('All automaton frames, heads & attachments unlocked, kupo!', 0, 'Unlocker')
 end
 
 local function giveEverything(player)
