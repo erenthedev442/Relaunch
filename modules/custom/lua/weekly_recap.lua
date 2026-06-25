@@ -26,9 +26,12 @@ local function daysToMonday(now)
     return (8 - weekday) % 7
 end
 
-m:addOverride('xi.player.onGameIn', function(player, isZoning)
-    super(player, isZoning)
-    if isZoning then return end
+m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
+    super(player, firstLogin, zoning)
+    -- Real onGameIn signature is (player, firstLogin, zoning). The old code bound
+    -- the 2nd arg as "isZoning", so on a true first login (firstLogin=true) it
+    -- early-returned and skipped the recap. Gate on the actual `zoning` flag.
+    if zoning then return end
 
     local now     = os.time()
     local weekIdx = math.floor(now / 604800)

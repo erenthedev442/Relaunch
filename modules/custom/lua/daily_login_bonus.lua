@@ -1,6 +1,6 @@
 -----------------------------------
 -- daily_login_bonus.lua
--- Grants 250 Hunt Marks the first time a player logs in each UTC day.
+-- Grants 50 Hunt Marks (DAILY_BONUS) the first time a player logs in each UTC day.
 -- Creates a daily touchpoint reason to log in even on low-activity days.
 --
 -- CharVars:

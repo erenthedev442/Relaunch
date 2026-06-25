@@ -71,7 +71,7 @@ local BANDS = {
       bossGroup = 11367, bossHp = 4000000,
       names  = { 'Divine Revenant', 'Apex Inquisitor', 'Celestial Hulk' },
       bossName = 'Lord of the Void' },
-    { maxFloor = 50, level = 240, bossLevel = 275,
+    { maxFloor = 50, level = 240, bossLevel = 250,  -- 275 wrapped past uint8 255 -> ~lv20 (weak base stats); 250 is the safe ceiling (matches the Lv250 HL/Reforge apex NMs)
       groups = { 11366, 11367, 11368, 11369 },
       bossGroup = 11369, bossHp = 7000000,
       names  = { 'Pinnacle Revenant', 'Apex Guardian', 'Sovereign Watcher' },

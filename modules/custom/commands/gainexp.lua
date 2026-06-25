@@ -11,13 +11,13 @@
 -- the documented extension point and is already enabled in init.txt).
 --
 -- Notes:
---   - permission = 1 (GM-only).
+--   - permission = 0 (all players).
 --   - Calls setEminenceCompleted(4013); the engine grants whatever
 --     reward bundle record 4013 has in scripts/globals/roe_records.lua
 --     at the time of the call. If upstream changes the reward, this
 --     command stays in sync automatically.
---   - No cooldown is enforced. If players abuse it, add a charvar
---     timestamp check at the top of onTrigger -- pattern:
+--   - A 24-hour per-character cooldown IS enforced (COOLDOWN_SECS = 86400),
+--     via a charvar timestamp check at the top of onTrigger -- pattern:
 --       local now  = os.time()
 --       local last = player:getCharVar('gainexp_lastused')
 --       if now - last < 300 then return end  -- 5 min cooldown
