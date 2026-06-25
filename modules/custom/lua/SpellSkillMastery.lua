@@ -2,12 +2,16 @@
 -- SpellSkillMastery.lua
 --
 -- The "Mastery Sage" NPC in Leafallia. Players spend MASTERY SIGILS (a dedicated
--- currency earned from kills) to permanently empower their weapon skills and
--- magic -- tiered POTENCY plus one-time TRAIT riders.
+-- currency) to permanently empower their weapon skills and magic:
+--   * POTENCY  -- tiered % power-ups (additive mods, re-applied on login).
+--   * TRAITS   -- one-time passive riders (additive mods, re-applied on login).
+--   * WS EFFECTS -- per-player weapon-skill procs (crit burst / AoE splash /
+--                 lifesteal) run from a WEAPONSKILL_USE listener; read live from
+--                 charVars each WS, so they need NO login re-apply.
 --
--- All upgrades are additive modifiers stored in charVars, so they are re-applied
--- on every onGameIn (a zone-in wipes in-memory mods). Same proven pattern as the
--- Cross-Job Trait Trainer -- no per-cast hooks, no C++. Needs ONE map restart to
+-- Sigils come from an NM ROTATION (kill the active target NMs each period for a
+-- big chunk) plus an optional small trickle from any NM. The mod-based pattern
+-- mirrors the Cross-Job Trait Trainer -- no C++. Needs ONE map restart to
 -- activate (addOverride module); the catalog & this file hot-reload after that.
 --
 -- CharVars:
@@ -15,10 +19,15 @@
 --   Mastery_WSPot      (int) weapon-skill potency tier   (0..MAX_TIER)
 --   Mastery_SpellPot   (int) spell potency tier          (0..MAX_TIER)
 --   Mastery_T_<id>     (1)   owned trait rider
+--   Mastery_WSFx_<x>   (int) WS effect tier (crit/splash/drain)
+--   Mastery_RotPeriod  (int) last rotation period the player's mask is valid for
+--   Mastery_RotMask    (int) bitmask of rotation targets claimed this period
 --
--- Currency faucet: xi.mob.onMobDeathEx (NMs + high normal mobs). See catalog.
+-- Currency faucet: xi.mob.onMobDeathEx (rotation + optional NM trickle).
 -- Command: !empower (view) / !empower give <n> (GM test grant).  commands/empower.lua
 -- Grant API for other systems: xi.spellSkillMastery.grant(player, n)
+-- NOTE: rotation/trickle credit the KILLER only (per-player, per-period). If you
+-- want party-wide credit, say so -- it's a small follow-up.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Leafallia/Zone')
@@ -71,6 +80,8 @@ local function applyTrait(p, t)
 end
 
 -- Re-apply EVERYTHING the player owns (called on login after the mod wipe).
+-- NOTE: WS Effects are NOT re-applied here -- the WEAPONSKILL_USE listener reads
+-- their charVars live each weapon skill, so they need no login re-apply.
 local function applyAll(p)
     applyPotency(p, C.wsPotency,    tierOf(p, C.wsPotency))
     applyPotency(p, C.spellPotency, tierOf(p, C.spellPotency))
@@ -79,9 +90,106 @@ local function applyAll(p)
 end
 
 -----------------------------------
+-- WS Effects: applied from a WEAPONSKILL_USE listener (registered on login).
+-- Reads each effect's tier charVar live and runs its `kind` handler off the
+-- weapon skill's own `damage`. All numeric values come from the catalog.
+-----------------------------------
+local function applyWSEffects(attacker, target, damage)
+    if not damage or damage <= 0 then return end
+    if target == nil or target:isDead() then return end
+    local damType = attacker:getWeaponDamageType(xi.slot.MAIN)
+    for _, fx in ipairs(C.wsEffects) do
+        local tier = attacker:getCharVar(fx.var) or 0
+        if tier > 0 then
+            if fx.kind == 'crit' then
+                if math.random(100) <= tier * fx.chancePerTier then
+                    local bonus = math.floor(damage * fx.bonusPct / 100)
+                    if bonus > 0 then
+                        target:takeDamage(bonus, attacker, xi.attackType.PHYSICAL, damType)
+                    end
+                end
+            elseif fx.kind == 'splash' then
+                local splash = math.floor(damage * (tier * fx.pctPerTier) / 100)
+                if splash > 0 then
+                    local enemies = attacker:getEntitiesInRange(
+                        target, xi.aoeType.ROUND, xi.aoeRadius.TARGET, fx.radius or 10, 0, xi.targetType.ENEMY)
+                    for _, e in ipairs(enemies) do
+                        if not e:isDead() and e:getID() ~= target:getID() then
+                            e:takeDamage(splash, attacker, xi.attackType.PHYSICAL, damType)
+                        end
+                    end
+                end
+            elseif fx.kind == 'lifesteal' then
+                local heal = math.floor(damage * (tier * fx.pctPerTier) / 100)
+                if heal > 0 then attacker:addHP(heal) end
+            end
+        end
+    end
+end
+
+-----------------------------------
+-- NM rotation: a clock-derived set of `activeCount` target NMs from the pool.
+-- Killing a live target grants sigils once per period (tracked per player).
+-----------------------------------
+-- Current period index (real-world clock). pcall-guarded so a sandboxed os.time
+-- degrades to a single static rotation rather than erroring.
+local function currentPeriod()
+    local ok, t = pcall(os.time)
+    if not ok or not t then return 0 end
+    return math.floor(t / (C.rotation.periodHours * 3600))
+end
+
+-- The active target set this period: an ordered list of names + a lower-cased
+-- name -> active-index (1..K) map for fast kill matching.
+local function currentActive()
+    local pool = C.rotation.pool
+    local n    = #pool
+    local K    = math.min(C.rotation.activeCount, n)
+    local start = (currentPeriod() * K) % n
+    local list, byName = {}, {}
+    for k = 0, K - 1 do
+        local name = pool[((start + k) % n) + 1]
+        list[#list + 1] = name
+        byName[name:lower()] = k + 1
+    end
+    return list, byName
+end
+
+-- Reset a player's claim mask if the rotation has rolled over; returns the mask.
+local function rotationMask(p)
+    local period = currentPeriod()
+    if (p:getCharVar('Mastery_RotPeriod') or -1) ~= period then
+        p:setCharVar('Mastery_RotPeriod', period)
+        p:setCharVar('Mastery_RotMask', 0)
+        return 0
+    end
+    return p:getCharVar('Mastery_RotMask') or 0
+end
+
+-- Called on every kill: if the mob is a live rotation target not yet claimed
+-- this period, grant the reward. Returns true if the mob was a rotation target.
+local function tryRotationGrant(p, mobName)
+    if not C.rotation.enabled then return false end
+    local _, byName = currentActive()
+    local idx = byName[(mobName or ''):lower()]
+    if not idx then return false end
+    local mask = rotationMask(p)
+    local bit  = 2 ^ (idx - 1)
+    if (math.floor(mask / bit) % 2) == 1 then return true end  -- already claimed
+    p:setCharVar('Mastery_RotMask', mask + bit)
+    grantSigils(p, C.rotation.reward, false)
+    if C.rotation.announce then
+        p:printToPlayer(string.format('[Mastery] Rotation target %s defeated! +%d %s.',
+            mobName, C.rotation.reward, C.CURRENCY_NAME), SYS)
+    end
+    return true
+end
+
+-----------------------------------
 -- Menus
 -----------------------------------
 local openMain, openTrack, openPotency, openTraits, confirmPotency, confirmTrait
+local openEffects, confirmEffect, openRotation
 
 -- Defer + snapshot, matching the other Leafallia NPCs.
 local function show(p, title, options)
@@ -91,22 +199,43 @@ end
 
 openMain = function(p)
     p:printToPlayer(string.format('[Mastery Sage] You hold %d %s.', getSigils(p), C.CURRENCY_NAME), SYS)
-    show(p, 'Mastery Sage', {
+    local options = {
         { 'Weapon Skills', function(pp) openTrack(pp, 'ws') end },
         { 'Spells',        function(pp) openTrack(pp, 'sp') end },
-        { 'My Mastery',    function(pp) xi.spellSkillMastery.report(pp); openMain(pp) end },
-        { 'Close',         function(pp) end },
-    })
+    }
+    if C.rotation.enabled then
+        options[#options + 1] = { 'NM Rotation', function(pp) openRotation(pp) end }
+    end
+    options[#options + 1] = { 'My Mastery', function(pp) xi.spellSkillMastery.report(pp); openMain(pp) end }
+    options[#options + 1] = { 'Close',      function(pp) end }
+    show(p, 'Mastery Sage', options)
+end
+
+-- Show the current rotation targets + claim status; killing them grants sigils.
+openRotation = function(p)
+    local list = currentActive()
+    local mask = rotationMask(p)
+    p:printToPlayer(string.format('[Mastery Sage] Rotation targets (reset every %dh) — %d %s each:',
+        C.rotation.periodHours, C.rotation.reward, C.CURRENCY_NAME), SYS)
+    for i, name in ipairs(list) do
+        local claimed = (math.floor(mask / (2 ^ (i - 1))) % 2) == 1
+        p:printToPlayer(string.format('   %s  [%s]', name, claimed and 'claimed' or 'available'), SYS)
+    end
+    show(p, 'NM Rotation', { { 'Back', function(pp) openMain(pp) end } })
 end
 
 -- track = 'ws' | 'sp'
 openTrack = function(p, track)
     local label = (track == 'ws') and 'Weapon Skills' or 'Spells'
-    show(p, label, {
+    local options = {
         { 'Potency', function(pp) openPotency(pp, track) end },
         { 'Traits',  function(pp) openTraits(pp, track) end },
-        { 'Back',    function(pp) openMain(pp) end },
-    })
+    }
+    if track == 'ws' then
+        options[#options + 1] = { 'Effects', function(pp) openEffects(pp) end }
+    end
+    options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
+    show(p, label, options)
 end
 
 openPotency = function(p, track)
@@ -207,23 +336,82 @@ confirmTrait = function(p, track, t)
     })
 end
 
+-- WS Effects menu (tiered procs: Empowered Strike / Splash / Lifesteal).
+openEffects = function(p)
+    local options = {}
+    for _, fx in ipairs(C.wsEffects) do
+        local ff   = fx
+        local tier = p:getCharVar(ff.var) or 0
+        local label = (tier >= ff.max) and (ff.name .. ' MAX')
+            or string.format('%s T%d', ff.name, tier)
+        options[#options + 1] = { label, function(pp) confirmEffect(pp, ff) end }
+    end
+    options[#options + 1] = { 'Back', function(pp) openTrack(pp, 'ws') end }
+    show(p, 'WS Effects', options)
+end
+
+confirmEffect = function(p, fx)
+    local tier = p:getCharVar(fx.var) or 0
+    p:printToPlayer(string.format('%s: %s', fx.name, fx.desc), SYS)
+    if tier >= fx.max then
+        p:printToPlayer(string.format('[Mastery Sage] %s is maxed.', fx.name), SYS)
+        openEffects(p)
+        return
+    end
+    local cost = C.EFFECT_COST[tier + 1]
+    show(p, string.format('Buy %s T%d for %d?', fx.name, tier + 1, cost), {
+        {
+            string.format('Yes (%d sigils)', cost),
+            function(pp)
+                local cur = pp:getCharVar(fx.var) or 0
+                if cur >= fx.max then openEffects(pp); return end
+                local c = C.EFFECT_COST[cur + 1]
+                if getSigils(pp) < c then
+                    pp:printToPlayer(string.format('[Mastery Sage] You need %d %s (you have %d).',
+                        c, C.CURRENCY_NAME, getSigils(pp)), SYS)
+                    openEffects(pp)
+                    return
+                end
+                setSigils(pp, getSigils(pp) - c)
+                pp:setCharVar(fx.var, cur + 1)
+                pp:printToPlayer(string.format('[Mastery Sage] %s raised to tier %d!', fx.name, cur + 1), SYS)
+                openEffects(pp)
+            end,
+        },
+        { 'No', function(pp) openEffects(pp) end },
+    })
+end
+
 -- Chat report of everything owned (also used by !empower).
 xi.spellSkillMastery.report = function(p)
     p:printToPlayer(string.format('=== Mastery === %d %s', getSigils(p), C.CURRENCY_NAME), SYS)
     p:printToPlayer(string.format('  WS Potency: tier %d/%d   |   Spell Potency: tier %d/%d',
         tierOf(p, C.wsPotency), C.MAX_TIER, tierOf(p, C.spellPotency), C.MAX_TIER), SYS)
+    local fx = {}
+    for _, e in ipairs(C.wsEffects) do
+        local tier = p:getCharVar(e.var) or 0
+        if tier > 0 then fx[#fx + 1] = string.format('%s T%d', e.name, tier) end
+    end
+    p:printToPlayer('  WS Effects: ' .. (#fx > 0 and table.concat(fx, ', ') or 'none yet.'), SYS)
     local owned = {}
     for _, t in ipairs(C.wsTraits)    do if owns(p, t) then owned[#owned + 1] = t.name end end
     for _, t in ipairs(C.spellTraits) do if owns(p, t) then owned[#owned + 1] = t.name end end
-    if #owned > 0 then
-        p:printToPlayer('  Traits: ' .. table.concat(owned, ', '), SYS)
-    else
-        p:printToPlayer('  Traits: none yet.', SYS)
+    p:printToPlayer('  Traits: ' .. (#owned > 0 and table.concat(owned, ', ') or 'none yet.'), SYS)
+    if C.rotation.enabled then
+        local list = currentActive()
+        local mask = rotationMask(p)
+        local parts = {}
+        for i, name in ipairs(list) do
+            local claimed = (math.floor(mask / (2 ^ (i - 1))) % 2) == 1
+            parts[#parts + 1] = name .. (claimed and ' (done)' or '')
+        end
+        p:printToPlayer('  Rotation: ' .. table.concat(parts, ', '), SYS)
     end
 end
 
 -----------------------------------
--- Sigil faucet: NMs (and high normal mobs) drop Mastery Sigils.
+-- Sigil faucet: the NM ROTATION is the primary source; an optional small
+-- trickle on any NM keeps players from going fully dry between targets.
 -----------------------------------
 m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSkillKill)
     super(mob, player, isKiller, isWeaponSkillKill)
@@ -231,24 +419,34 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
         if not isKiller or player == nil then return end
         if player:getObjType() ~= xi.objType.PC then return end
 
-        local s   = C.sigils
-        local lvl = mob:getMainLvl() or 0
-        if mob:isNM() then
-            local amt = math.min(s.nmMax, math.floor(s.nmBase + lvl * s.nmPerLevel))
+        -- Rotation target? (matched by name, independent of the isNM flag.)
+        local wasRotation = tryRotationGrant(player, mob:getName())
+
+        -- Secondary trickle.
+        local s = C.sigils
+        if not wasRotation and mob:isNM() and s.nmTrickle then
+            local amt = math.min(s.nmMax, math.floor(s.nmBase + (mob:getMainLvl() or 0) * s.nmPerLevel))
             if amt > 0 then grantSigils(player, amt, s.announceNM) end
-        elseif lvl >= s.mobMinLevel and math.random(100) <= s.mobChance then
+        elseif s.mobChance > 0 and (mob:getMainLvl() or 0) >= s.mobMinLevel
+               and math.random(100) <= s.mobChance then
             grantSigils(player, s.mobAmount, false)
         end
     end)
 end)
 
 -----------------------------------
--- Re-apply on login (a zone-in wipes in-memory mods). Defer 3s so post-login
--- stat finalization does not clobber the addMods (Prestige/CrossJob pattern).
+-- On login: (1) re-apply potency/trait mods (deferred 3s so post-login stat
+-- finalization does not clobber the addMods -- Prestige/CrossJob pattern), and
+-- (2) register the WS Effects listener (reads charVars live; named so it is
+-- idempotent across zone-ins, same as the Rupture Sage splash listener).
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     super(player, firstLogin, zoning)
     player:timer(3000, function(p) pcall(function() applyAll(p) end) end)
+    player:addListener('WEAPONSKILL_USE', 'MASTERY_WS_FX',
+        function(attacker, target, skill, tp, action, damage)
+            pcall(function() applyWSEffects(attacker, target, damage) end)
+        end)
 end)
 
 -----------------------------------
