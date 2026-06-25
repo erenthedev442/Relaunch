@@ -6,7 +6,7 @@
 -- Blood Pacts -- it layers:
 --   * Blood Pacts: BP_DAMAGE mult + magical (MATT/MACC/INT) + physical (ATT/ACC/
 --     STR/DEX) stats.
---   * Auto-attacks / melee: ATTP, Double/Triple Attack (+their damage), Haste.
+--   * Auto-attacks / melee: ATTP, Double Attack (+damage), Haste.
 --   * Survivability: PDT/MDT (capped) + HP -- so it lives to keep swinging.
 -- (BP_DAMAGE is engine-gated to Blood-Pact damage; the melee mods cover the rest.)
 --
@@ -79,7 +79,7 @@ local function applyAvatarBoost(master, pet)
     -- ATT collapses against Legendary's 150-160 NM DEF -> ~0 damage. These flat
     -- values max pDif (hard-capped at 4.25x); the 95x BP_DAMAGE mult then lands
     -- the hit. +per-skill-over-cap so gear/skillups matter.
-    safeAddMod(pet, xi.mod.ATT, 6000 + skillOverCap * 40)
+    safeAddMod(pet, xi.mod.ATT, 3000 + skillOverCap * 40)  -- relaunch: flat 6000->3000
     safeAddMod(pet, xi.mod.ACC, 4500 + skillOverCap * 10)
     pet:addMod(xi.mod.STR, 500)
     pet:addMod(xi.mod.DEX, 300) -- feeds avatar physical-BP crit rate (getDexCritRate)
@@ -90,18 +90,18 @@ local function applyAvatarBoost(master, pet)
     -- MELEE auto-attacks a real damage source and let it survive to keep swinging,
     -- mirroring the BST jug-pet overhaul (BstJugPetOverhaul.lua) which proves the
     -- model. (ATT above already maxes pDif vs NM DEF; ATTP adds headroom.)
+    -- Relaunch: DA 100->10, Triple Attack removed (its damage mod with it),
+    -- gear-haste 2500->1000 (~+10%). Avatar leans on Blood Pacts, not melee storms.
     pet:addMod(xi.mod.ATTP,              50)    -- +50% attack, on top of the flat ATT
-    pet:addMod(xi.mod.DOUBLE_ATTACK,     100)   -- guaranteed double...
-    pet:addMod(xi.mod.TRIPLE_ATTACK,     100)   -- ...and triple attack -> ~3 hits/round
-    pet:addMod(xi.mod.DOUBLE_ATTACK_DMG, 100)   -- +100% damage on those extra...
-    pet:addMod(xi.mod.TRIPLE_ATTACK_DMG, 100)   -- ...multi-hit swings
-    pet:addMod(xi.mod.HASTE_GEAR,        2500)  -- +25% attack speed (engine gear-haste cap)
+    pet:addMod(xi.mod.DOUBLE_ATTACK,     10)    -- occasional double attack
+    pet:addMod(xi.mod.DOUBLE_ATTACK_DMG, 100)   -- +100% damage on a double-attack swing
+    pet:addMod(xi.mod.HASTE_GEAR,        1000)  -- ~+10% attack speed
 
     -- Survivability so it lives to keep meleeing a Legendary NM. DMGPHYS/DMGMAGIC
     -- are /10000 and the engine HARD-CAPS each at -50% (-5000).
     pet:addMod(xi.mod.DMGPHYS,  -5000)
     pet:addMod(xi.mod.DMGMAGIC, -5000)
-    safeAddMod(pet, xi.mod.HP, 150000)
+    safeAddMod(pet, xi.mod.HP, 50000)  -- relaunch: flat 150k->50k
 end
 
 m:addOverride('xi.pet.spawnPet', function(caster, petID, state, target)

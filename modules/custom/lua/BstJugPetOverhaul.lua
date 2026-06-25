@@ -36,30 +36,31 @@ local m = Module:new('bst_jugpet_overhaul')
 local CONFIG =
 {
     -- Flat endgame floors so even a fresh BST's pet is immediately viable.
-    -- (Doubled again 2026-06-22 per request: "another 100%" on overall stats/mods.)
-    flatATT = 11200,
+    -- (Relaunch economy pass: flatATT 11200->5000, flatHP 280k->100k to match
+    -- the tighter post-wipe power curve. ACC/STR floors unchanged.)
+    flatATT = 5000,
     flatACC = 9000,
     flatSTR = 720,
-    flatHP  = 280000,
+    flatHP  = 100000,
 
     -- Gear-scaling: the pet inherits this share of the MASTER's stats, so it
     -- gets stronger as the BST gears/augments up (the "scales toward the cap" bit).
     -- Doubled to >1.0, so the pet now inherits MORE than the master itself has.
     masterSTRShare = 1.20,  -- + masterSTRShare * master STR  (into STR and ATT)
-    masterATTShare = 1.60,  -- + masterATTShare * master's ATT mods
+    masterATTShare = 0.80,  -- + masterATTShare * master's ATT mods  (relaunch: 1.60->0.80)
     masterACCShare = 1.40,  -- + masterACCShare * master's ACC mods
     masterHPShare  = 2.00,  -- + masterHPShare  * master max HP
 
     attp = 50,   -- +50% attack (Mod.ATTP, percent)
 
     -- Survivability. DMGPHYS/DMGMAGIC are /100 and the engine HARD-CAPS each at
-    -- -50% (-5000); doubling -3000/-2500 lands at that cap, so they sit at the max.
-    pdt = -5000,
-    mdt = -5000,
+    -- -50% (-5000). Relaunch: -25% (-2500), half the old at-cap value.
+    pdt = -2500,
+    mdt = -2500,
 
-    -- Melee throughput (percent). 100/100 = effectively guaranteed multi-hit.
-    doubleAttack = 100,
-    tripleAttack = 100,
+    -- Melee throughput (percent). Relaunch: 20% DA / 5% TA (was 100/100).
+    doubleAttack = 20,
+    tripleAttack = 5,
 
     -- Magical pet damage floor (for Fly/Funguar/Cactuar Ready moves like
     -- Cursed Sphere, Dark Spore, 1000 Needles which use magic formulas).
