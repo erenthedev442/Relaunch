@@ -21,6 +21,7 @@
 | **Reforge marks** (AF/Relic/Empy) | charVars `RF_*_Marks` | Reforge NM kills, Daily Board | Reforge upgrades (+1/+2/+3), Mark Exchange |
 | **Paragon Points** | charVar `Paragon_Points` | Apex Trials clears, Gauntlet | Paragon board (infinite levels + capped perks) |
 | **Allied Notes** | engine | Endless Tower trash, [S]-zone kills | Cosmetic Shop |
+| **Mastery Sigils** | charVar `MasterySigils` | daily NM rotation (50 per live target) + small trickle on any NM | Spell & Skill Mastery — WS/spell potency, WS-effect procs, trait riders |
 
 **Where things live.** The Hunting League hub and gear vendors are in **Escha–Zi'Tah**. The old GM-Home service NPCs were relocated for relaunch (commit `a237cb84e4`): "beginner" services → **Celennia Memorial Library**, "endgame" services → **Leafallia**. The three **Escha-RuAun (zone 289)** content NPCs were spread far apart for relaunch so concurrent groups don't collide, and **each is now placed as 3 interchangeable copies** (~8 units apart) so several players can start independent runs at once: the **Voidspire Warden** sits on the **south / entry plaza**, the **Star-Devourer "Voidgate Sentinel" (Raid)** in the **north** area, and the **Game Master** (`!wavemaster` wave-survival system) in the **west** area. (Exact zone IDs/coords are in flux in the catalogs pending an in-game pass — treat NPC locations here as approximate.)
 
@@ -165,6 +166,17 @@ Catalog design rule: job/pet/resist/skill augments are free (tier 0); universall
 
 - **Void Keeper** custom trusts (one NPC, `trust_skoll.lua`): **Meat** (budget tank), **Gemma** (full support/heal), **Corvus** (apex ranged DD) — they repurpose stock trust spell IDs (899/901/902), so the client menu shows the old name (Excenmille / Nanaa Mihgo / Curilla). **Relaunch: these are EARNED through Hunting League, not bought with gil** — each is gated on an HL rank *and* a Hunt Marks cost (one unlock/char, spell permanently added on payment): **Meat = Rank 2 / 2,000 marks, Gemma = Rank 3 / 3,000 marks, Corvus = Rank 4 / 5,000 marks**. (The NPC's lore quips still say "50M gil" — flavor text only; the purchase path spends HL_Points.) The give-everything `Character_Upgrader` and the retail-NPC handlers still exclude these IDs so they can't leak free.
 
+### 4.4 Spell & Skill Mastery (relaunch-new — replaced the retired AoE Weapon Skill)
+
+A WS/spell empowerment system at the **Mastery Sage** NPC in **Leafallia** (x −8, z 20), spending a new currency — **Mastery Sigils** (charVar `MasterySigils`). Buy upgrades at the NPC; **`!empower`** shows your balance + everything you own (`!empower give <n>` is a GM test faucet). It absorbed the old AoE-WS "splash" mechanic (now a Mastery WS Effect) when the Rupture Sage was retired (`a22038d3b5`).
+
+- **Earning sigils** (`spell_skill_mastery_catalog.lua`): the primary source is a **daily NM rotation** — 3 of a 20-NM overworld pool (Jaggedy-Eared Jack, King Arthro, Kraken, Nue, Guivre…) are "live" each 24 h, derived from the clock (no DB); killing a live target = **50 sigils**, once per target per period, **party-wide** (every same-zone party member). The pool is deliberately distinct from the HL / Reforge / Hunters'-Guild NM sets. A small **trickle** (2 + 0.03×mob level, cap 10) drops on any NM so you're never fully dry between rotation targets.
+- **Potency** (5 tiers, cost 15/30/55/90/140 sigils; additive mods re-applied on login): **WS Potency** +8% all-WS damage per tier; **Spell Potency** +6 M.Atk / +8 magic dmg / +5% cure potency per tier.
+- **WS Effects** (5 tiers, cost 20/40/70/110/160; live `WEAPONSKILL_USE` procs, read from charVars so no re-apply): **Empowered Strike** (+8% crit-burst chance, +60% damage, per tier), **Splash** (+12% of WS damage to foes within 10 y per tier — the old AoE-WS mechanic), **Lifesteal** (heal +4% of WS damage per tier).
+- **Trait riders** (one-time, 40 sigils each): WS — Store TP +10, WS Acc +20, Crit Rate +6%, Crit Dmg +10%, TP Saver (20% chance no TP cost), Double Atk +5%; Spell — Fast Cast +10%, Conserve MP +20, Magic Acc +20, Regain, Enh. Duration +20%, Focus (−20% interrupt rate).
+
+Pure-Lua (`SpellSkillMastery.lua`): potency/traits via `addMod` + onGameIn re-apply; WS Effects read charVars live each weapon skill. All balance values are PLACEHOLDER pending playtest. LIVE on relaunch.
+
 ---
 
 ## 5. General play
@@ -212,7 +224,7 @@ Catalog design rule: job/pet/resist/skill augments are free (tier 0); universall
 ## 6. Status flags & known gaps (for review)
 
 **✅ Fixed in this pass (2026-06-25):**
-- **`!aoews` command added** (`modules/custom/commands/aoews.lua`) → the AoE-Weapon-Skill unlock now works: `!aoews <name>` binds the splash WS (was purchasable-but-inert). *Needs a map restart (new command file).*
+- **AoE Weapon Skill retired → folded into Spell & Skill Mastery** — the mastery rollout (`a22038d3b5`) removed the Rupture Sage / AoE-WS feature entirely; its splash is now a Mastery "Splash" WS Effect (see §4.4). *(An earlier standalone `!aoews` fix was therefore obsoleted and dropped with the feature.)*
 - **Endless Tower floor-50 boss level 275 → 250** → no longer wraps past uint8 255; the final boss has its intended high-level stats.
 - **`weekly_recap` onGameIn signature fixed** → now uses `(player, firstLogin, zoning)` and gates on the real `zoning` flag (was skipping true first logins).
 - **Stale comments corrected** — daily-login "250"→50, `auto_buff_henge` "30 min"→5 h (incl. the player message). *(The `!gainexp` comment-fix from this pass is now moot — the command was deleted in the later owner batch; see below.)*
