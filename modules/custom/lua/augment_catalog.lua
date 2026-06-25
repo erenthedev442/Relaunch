@@ -342,9 +342,10 @@ return {
     [2171] = { augId = 299,  base = 1,   mult = 1,   disp = 1,    cat = 12, tier = 1, label = 'Blue Magic skill' },
     [2212] = { augId = 300,  base = 1,   mult = 1,   disp = 1,    cat = 12, tier = 1, label = 'Geomancy Skill' },
     [2334] = { augId = 301,  base = 1,   mult = 1,   disp = 1,    cat = 12, tier = 1, label = 'Handbell Skill' },
-    -- Exp/Cap Point bonuses: free — always good to encourage augmenting
+    -- Exp Point: base tier (T0, Day 1) so early-game leveling stays easy.
+    -- Cap Point: tier 1 (T1, HL Rank 3) -- gated one step later (owner request 2026-06-25).
     [2523] = { augId = 73,   base = 33,  mult = 1,   disp = 1,    cat = 12, tier = 0, label = 'Exp. Point +33%' },
-    [942]  = { augId = 75,   base = 33,  mult = 1,   disp = 1,    cat = 12, tier = 0, label = 'Cap. Point +33%' },
+    [942]  = { augId = 75,   base = 33,  mult = 1,   disp = 1,    cat = 12, tier = 1, label = 'Cap. Point +33%' },
 
     -- ── Weaponskill DMG+ ──────────────────────────────────────────────────────
     [1110] = { augId = 326,  base = 1,   mult = 1,   disp = 1,    cat = 13, tier = 2, label = 'Weapon Skill Acc' },
