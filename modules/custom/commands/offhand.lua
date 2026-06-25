@@ -11,7 +11,7 @@
 -- GATED on having BOUGHT the Dual Wield trait from the Cross-Job Trait Trainer
 -- at GM Home (charVar CJTrait_dwield ~= 0). Non-buyers are told to buy it first.
 --
---   !offhand          -> list the 1-handed weapons in your inventory, numbered
+--   !offhand          -> list your 1-handed weapons (Inventory + Wardrobes), numbered
 --   !offhand <n>      -> equip list-entry n into your off-hand
 --   !offhand off      -> clear your off-hand
 --
@@ -42,15 +42,30 @@ commandObj.cmdprops =
     parameters = 's',
 }
 
--- Ordered list of sub-equippable 1H weapons in the player's main inventory.
--- Deterministic (by slot) so "!offhand <n>" re-derives the same numbering.
+-- Containers a weapon can be equipped FROM: the main Inventory + all 8 Wardrobes.
+-- (Mog Safe/Satchel/Sack/Case can hold gear but the client can't equip directly
+-- from them.) Endgame players keep their weapons in Wardrobes, so scanning ONLY
+-- INVENTORY found nothing and the command looked broken ("No 1-handed weapons").
+local EQUIP_CONTAINERS =
+{
+    xi.inv.INVENTORY,
+    xi.inv.WARDROBE,  xi.inv.WARDROBE2, xi.inv.WARDROBE3, xi.inv.WARDROBE4,
+    xi.inv.WARDROBE5, xi.inv.WARDROBE6, xi.inv.WARDROBE7, xi.inv.WARDROBE8,
+}
+
+-- Ordered list of sub-equippable 1H weapons across Inventory + every Wardrobe.
+-- Deterministic (container order, then slot) so "!offhand <n>" re-derives the
+-- same numbering. Records each weapon's container so we equip it from where it
+-- actually lives.
 local function listOneHanders(player)
     local list = {}
-    local size = player:getContainerSize(xi.inv.INVENTORY)
-    for slot = 1, size do
-        local item = player:getStorageItem(xi.inv.INVENTORY, slot, 255)
-        if item ~= nil and ONE_HAND_SKILLS[item:getSkillType()] then
-            list[#list + 1] = { id = item:getID(), name = item:getName() }
+    for _, cid in ipairs(EQUIP_CONTAINERS) do
+        local size = player:getContainerSize(cid)
+        for slot = 1, size do
+            local item = player:getStorageItem(cid, slot, 255)
+            if item ~= nil and ONE_HAND_SKILLS[item:getSkillType()] then
+                list[#list + 1] = { id = item:getID(), name = item:getName(), container = cid }
+            end
         end
     end
     return list
@@ -73,7 +88,7 @@ commandObj.onTrigger = function(player, arg)
 
     local list = listOneHanders(player)
     if #list == 0 then
-        player:printToPlayer('[Off-hand] No 1-handed weapons in your main inventory. Put one in your bag, then run !offhand.', CHANNEL)
+        player:printToPlayer('[Off-hand] No 1-handed weapons found in your Inventory or Wardrobes. Get a dagger/sword/axe/katana/club, then run !offhand.', CHANNEL)
         return
     end
 
@@ -95,7 +110,7 @@ commandObj.onTrigger = function(player, arg)
         return
     end
 
-    player:equipItem(w.id, xi.inv.INVENTORY, xi.slot.SUB)
+    player:equipItem(w.id, w.container, xi.slot.SUB)
     if player:getEquipID(xi.slot.SUB) == w.id then
         player:setCharVar('CJTrait_offhand', w.id)
         player:printToPlayer(string.format('[Off-hand] Equipped %s -- it will stay across jobs and logins, kupo!', w.name), CHANNEL)
