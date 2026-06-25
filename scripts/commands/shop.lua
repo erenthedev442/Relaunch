@@ -258,6 +258,15 @@ local stock =
         { 5867, 1 },  -- Toolbag (Ino)   -> 99x Inoshishinofuda
         { 5868, 1 },  -- Toolbag (Shika) -> 99x Shikanofuda
         { 5869, 1 },  -- Toolbag (Cho)   -> 99x Chonofuda
+        -- Elemental wheel toolbags -- the 6 per-element tools for Katon/Hyoton/Huton/
+        -- Raiton/Doton/Suiton ninjutsu. Main NIN can use the universal cards above
+        -- instead; these are needed when NIN is a subjob or for specific element choice.
+        { 5308, 1 },  -- Toolbag (Uchi)  -> 99x Uchitake       -- Katon (fire)
+        { 5309, 1 },  -- Toolbag (Tsura) -> 99x Tsurara        -- Hyoton (ice)
+        { 5310, 1 },  -- Toolbag (Kawa)  -> 99x Kawahori-ogi   -- Huton (wind)
+        { 5312, 1 },  -- Toolbag (Hira)  -> 99x Hiraishin      -- Raiton (lightning)
+        { 5311, 1 },  -- Toolbag (Maki)  -> 99x Makibishi      -- Doton (earth)
+        { 5313, 1 },  -- Toolbag (Mizu)  -> 99x Mizu-deppo     -- Suiton (water)
         -- Specific toolbags -- a SUBJOB ninja gets no substitution, so it needs these
         -- by name (Shihei is the big one: Utsusemi). Also handy for main-NIN utility.
         { 5314, 1 },  -- Toolbag (Shihe) -> 99x Shihei          -- Utsusemi: Ichi/Ni (shadows)
