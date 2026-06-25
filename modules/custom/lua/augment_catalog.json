@@ -1626,16 +1626,6 @@
           "maxBoost": null
         },
         {
-          "itemId": 1844,
-          "augId": 147,
-          "label": "Treasure Hunter",
-          "base": 1,
-          "mult": 1,
-          "disp": 1,
-          "cat": 7,
-          "maxBoost": null
-        },
-        {
           "itemId": 1858,
           "augId": 148,
           "label": "Gilfinder",

@@ -1,12 +1,10 @@
 -----------------------------------
 -- func: shop (category) (subcategory)
 -- desc: Opens an NPC-style item shop menu for players.
---       Categories: general, weapons, armor, consumables, food, augments
+--       Categories: general, weapons, armor, consumables, food
 --       Usage: !shop  OR  !shop weapons
---       Augment catalysts: "!shop augments" lists the thematic groups, then
---       "!shop augments <group>" (e.g. !shop augments str) opens that group.
---       Every augment catalyst is 1,000,000 gil -- buy it here, then trade it
---       to the Augment Moogle at GM Home to apply the augment.
+--       (Augment catalysts are NO LONGER sold for gil -- they drop from NMs.
+--        Farm them, then trade to the Augment Moogle at GM Home to apply.)
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
@@ -279,100 +277,12 @@ local stock =
 }
 
 -----------------------------------
--- Augment catalysts (custom gil sink)
--- Pulled live from the Augment Moogle catalog (augment_catalog.lua) so this
--- shop always matches what the moogle accepts. Every catalyst sells for a
--- flat 100,000 gil. The catalog holds ~379 catalysts -- far more than the
--- 255-item shop-window cap -- so they are split into the same 13 thematic
--- groups the catalog already tags via its `cat` field (1-13).
------------------------------------
-local AUGMENT_PRICE     = 100000
-local AUGMENT_PRICE_STR = '100,000'
-
--- cat index (1-13) -> { token for "!shop augments <token>", display name }
-local augmentGroups =
-{
-    [1]  = { 'str',    'STR / Attack / Phys.Dmg' },
-    [2]  = { 'dex',    'DEX / Accuracy / Crit'   },
-    [3]  = { 'vit',    'VIT / Defense'           },
-    [4]  = { 'agi',    'AGI / Evasion / Haste'   },
-    [5]  = { 'int',    'INT / Magic Offense'     },
-    [6]  = { 'mnd',    'MND / Healing'           },
-    [7]  = { 'chr',    'CHR / Charm / Enmity'    },
-    [8]  = { 'hp',     'HP / Regen'              },
-    [9]  = { 'mp',     'MP / Refresh'            },
-    [10] = { 'pet',    'Pet'                     },
-    [11] = { 'resist', 'Resist / Affinity'       },
-    [12] = { 'skill',  'Skill+'                  },
-    [13] = { 'ws',     'Weaponskill DMG'         },
-}
-
--- EXP / Capacity point augments are tagged cat 12 ('Skill+') in the catalog,
--- which buries them under 20 weapon/magic skill augments where nobody finds
--- them. Pull these specific catalysts into their own visible group instead.
--- (Shop-display only -- the catalog's cat tag is left alone so the Augment
--- Sage's per-NM affinity system and gen_augment_catalog.py are unaffected.)
-local POINT_AUGMENTS = { [2523] = true, [942] = true } -- peiste_skin (Exp+), philosophers_stone (Cap+)
-local POINT_TOKEN    = 'points'
-local POINT_NAME     = 'EXP / Capacity Points'
-
-local augmentStock = {} -- token -> { { itemId, price }, ... }
-local augmentOrder = {} -- ordered { token, name, count } for the index menu
-
-do
-    -- Force-reload the catalog so hot-reloading shop.lua always picks up the
-    -- latest augment_catalog.lua without a full map restart.
-    package.loaded['modules/custom/lua/augment_catalog'] = nil
-    local ok, catalog = pcall(require, 'modules/custom/lua/augment_catalog')
-    if ok and type(catalog) == 'table' then
-        local byToken = {}
-        for itemId, def in pairs(catalog) do
-            if type(def) == 'table' and def.cat then
-                -- Point augments get their own group; everything else uses its cat.
-                local token
-                if POINT_AUGMENTS[itemId] then
-                    token = POINT_TOKEN
-                else
-                    local grp = augmentGroups[def.cat]
-                    token = grp and grp[1] or 'other'
-                end
-                byToken[token] = byToken[token] or {}
-                table.insert(byToken[token], itemId)
-            end
-        end
-
-        local function finalize(token, name)
-            local ids = byToken[token]
-            if ids and #ids > 0 then
-                table.sort(ids, function(a, b)
-                    local la = catalog[a] and catalog[a].label or ''
-                    local lb = catalog[b] and catalog[b].label or ''
-                    return la < lb
-                end)
-                local list = {}
-                for _, itemId in ipairs(ids) do
-                    list[#list + 1] = { itemId, AUGMENT_PRICE }
-                end
-                augmentStock[token]             = list
-                augmentOrder[#augmentOrder + 1] = { token, name, #list }
-            end
-        end
-
-        for cat = 1, 13 do
-            finalize(augmentGroups[cat][1], augmentGroups[cat][2])
-        end
-        finalize(POINT_TOKEN, POINT_NAME) -- EXP / Capacity, pulled out of cat 12
-        finalize('other', 'Other') -- safety net for any cat outside 1-13
-    end
-end
-
--- Maat's Cap (15194) = 100% critical augment guarantee; prepend to every group.
-do
-    local MAATS_CAP = { 15194, 10000000 }
-    for _, g in ipairs(augmentOrder) do
-        table.insert(augmentStock[g[1]], 1, MAATS_CAP)
-    end
-end
+-- Augment catalysts: the gil-purchase shop was REMOVED for relaunch (owner
+-- request 2026-06-24). Catalysts must now be FARMED FROM NMs and traded to the
+-- Augment Moogle at GM Home -- there is no longer a gil shortcut. The whole
+-- "!shop augments" category (catalog pull, 13 thematic groups, the EXP/Capacity
+-- 'points' group, and the Maat's Cap prepend) is gone; see validCategories and
+-- the onTrigger handler below.
 
 -----------------------------------
 -- BST pets: jug broths (summon a pet) + pet food (heal/feed it).
@@ -430,40 +340,15 @@ do
     end
 end
 
-local validCategories = 'general, weapons, armor, consumables, food, dice, ammo, ninja, pets, augments, reforge'
+local validCategories = 'general, weapons, armor, consumables, food, dice, ammo, ninja, pets, reforge'
 
 commandObj.onTrigger = function(player, category, subcat)
     local cat = category and category:lower() or 'general'
 
-    -- Augment catalyst shop: split into thematic sub-groups.
+    -- Augment catalysts are no longer sold for gil (removed for relaunch) --
+    -- they now drop from NMs. Point players at the farm path.
     if cat == 'augments' then
-        if #augmentOrder == 0 then
-            player:printToPlayer('The augment catalyst shop is unavailable (catalog failed to load).')
-            return
-        end
-
-        -- No group given: print the index of groups.
-        if subcat == nil or subcat == '' then
-            player:printToPlayer(string.format('Augment catalysts -- %s gil each. Choose a group with  !shop augments <group>', AUGMENT_PRICE_STR), xi.msg.channel.SYSTEM_3)
-            for _, g in ipairs(augmentOrder) do
-                player:printToPlayer(string.format('  augments %-7s  %s (%d)', g[1], g[2], g[3]), xi.msg.channel.SYSTEM_3)
-            end
-            return
-        end
-
-        local sub  = subcat:lower()
-        local list = augmentStock[sub]
-        if not list then
-            local toks = {}
-            for _, g in ipairs(augmentOrder) do
-                toks[#toks + 1] = g[1]
-            end
-            player:printToPlayer(string.format('Unknown augment group "%s". Valid groups: %s', sub, table.concat(toks, ', ')), xi.msg.channel.SYSTEM_3)
-            return
-        end
-
-        player:printToPlayer(string.format('Augment catalysts -- %s gil each. Trade purchases to the Augment Moogle at GM Home to apply.', AUGMENT_PRICE_STR), xi.msg.channel.SYSTEM_3)
-        xi.shop.general(player, list)
+        player:printToPlayer('Augment catalysts are no longer sold for gil -- farm them from NMs, then trade them to the Augment Moogle at GM Home to apply.', xi.msg.channel.SYSTEM_3)
         return
     end
 

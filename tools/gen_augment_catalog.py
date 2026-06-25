@@ -260,6 +260,11 @@ EXCLUDED_AUGS = {
     # Skill Acc" (326), flat weapon Dmg+ (743/749). The 35 catalysts are banned in
     # EXCLUDED_ITEMS so this is a clean removal (no catalyst churn into other augs).
     *range(1024, 1059),
+    # Treasure Hunter (147) removed 2026-06-24 (owner request, relaunch): a
+    # stackable +1..32/slot Treasure Hunter augment trivializes drop rates across
+    # the whole game. Its catalyst (item 1844) is banned in EXCLUDED_ITEMS below
+    # so it isn't repurposed onto another augment -- a clean removal, not a swap.
+    147,
 }
 
 # Per-augment boost ceiling (0..31). The Augment Moogle clamps the baked boost
@@ -296,6 +301,9 @@ EXCLUDED_ITEMS = {
     1455, 1456, 1466, 1469, 1517, 1618, 1626, 1650, 1700, 1703,
     1704, 1719, 1852, 1855, 1871, 1875, 1885, 1899, 1900, 2175,
     2488, 2849, 2851, 2859, 3503,
+    # Treasure Hunter catalyst (item 1844) -- banned with its augment (augId 147,
+    # EXCLUDED_AUGS) so the removal is clean and 1844 isn't reassigned elsewhere.
+    1844,
 }
 
 MOB_DROPLIST = SQL / "mob_droplist.sql"

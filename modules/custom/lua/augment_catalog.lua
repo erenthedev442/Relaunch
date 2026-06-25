@@ -205,7 +205,6 @@ return {
     [1291] = { augId = 67,   base = 1,   mult = 1,   disp = 1,    cat = 7,  tier = 0, label = 'All songs', maxBoost = 1 },
     [1408] = { augId = 104,  base = 1,   mult = 1,   disp = 1,    cat = 7,  tier = 0, label = 'Pet Enmity' },
     [1453] = { augId = 105,  base = 1,   mult = 1,   disp = 1,    cat = 7,  tier = 0, label = 'Pet Enmity' },
-    [1844] = { augId = 147,  base = 1,   mult = 1,   disp = 1,    cat = 7,  tier = 0, label = 'Treasure Hunter' },
     [1858] = { augId = 148,  base = 1,   mult = 1,   disp = 1,    cat = 7,  tier = 0, label = 'Gilfinder' },
     [2372] = { augId = 188,  base = 1,   mult = 1,   disp = 1,    cat = 7,  tier = 0, label = 'Resist Charm' },
     [2827] = { augId = 322,  base = 1,   mult = 1,   disp = 1,    cat = 7,  tier = 0, label = 'Song spellcasting time' },
