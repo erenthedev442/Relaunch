@@ -40,6 +40,11 @@ catalog.allClearedReward =
 -- =========================================================
 -- Each entry:
 --   id          : stable string ID (for logs / docs)
+--   minHLRank   : Hunting League rank (HL_Tier, 1-5) required to make
+--                 progress on this objective. Below it the objective is
+--                 LOCKED - events don't count - so the all-5 sweep bonus
+--                 (5,000 marks) is gated behind real HL progression rather
+--                 than being clearable week 1. Defaults to 1 if omitted.
 --   label       : short menu name
 --   description : one-line text in NPC menu
 --   target      : numeric goal (counter type)
@@ -55,6 +60,7 @@ catalog.objectivePool =
 {
     {
         id          = 'slay_25',
+        minHLRank   = 2,
         label       = 'NM Slayer',
         description = 'Kill 25 custom NMs this week (any system).',
         target      = 25,
@@ -63,6 +69,7 @@ catalog.objectivePool =
     },
     {
         id          = 'apex_5',
+        minHLRank   = 5,
         label       = 'Apex Hunter',
         description = 'Slay 5 Lv250 apex NMs this week.',
         target      = 5,
@@ -72,6 +79,7 @@ catalog.objectivePool =
     },
     {
         id          = 'guild_rankup',
+        minHLRank   = 1,
         label       = 'Guild Climber',
         description = 'Earn one Hunter\'s Guild rank-up this week.',
         target      = 1,
@@ -80,6 +88,7 @@ catalog.objectivePool =
     },
     {
         id                = 'wave_clear',
+        minHLRank          = 2,
         label             = 'Wave Master',
         description       = 'Complete a GM wave session, OR kill 20 custom NMs this week.',
         target            = 1,
@@ -90,6 +99,7 @@ catalog.objectivePool =
     },
     {
         id          = 'augment_10',
+        minHLRank   = 3,
         label       = 'Sage\'s Hand',
         description = 'Successfully augment 10 items this week.',
         target      = 10,
@@ -98,6 +108,7 @@ catalog.objectivePool =
     },
     {
         id          = 'reforge_10',
+        minHLRank   = 3,
         label       = 'Reforge Devotee',
         description = 'Kill 10 Reforge NMs this week (any set).',
         target      = 10,
@@ -107,6 +118,7 @@ catalog.objectivePool =
     },
     {
         id          = 'hl_10',
+        minHLRank   = 2,
         label       = 'League Devotee',
         description = 'Kill 10 Hunting League NMs this week.',
         target      = 10,
@@ -116,6 +128,7 @@ catalog.objectivePool =
     },
     {
         id          = 'midtier_15',
+        minHLRank   = 3,
         label       = 'Climbing Force',
         description = 'Kill 15 Lv175+ NMs this week.',
         target      = 15,
@@ -125,6 +138,7 @@ catalog.objectivePool =
     },
     {
         id          = 'party_10',
+        minHLRank   = 2,
         label       = 'Pack Hunter',
         description = 'Slay 10 NMs while partied with another player.',
         target      = 10,
@@ -134,6 +148,7 @@ catalog.objectivePool =
     },
     {
         id          = 'speed_apex',
+        minHLRank   = 5,
         label       = 'Speed Demon',
         description = 'Kill an apex (Lv250) NM within 60 seconds of its spawn.',
         target      = 1,
@@ -146,6 +161,7 @@ catalog.objectivePool =
     },
     {
         id          = 'streak_15',
+        minHLRank   = 2,
         label       = 'Untouchable',
         description = 'Kill 15 custom NMs in a row without dying.',
         target      = 15,

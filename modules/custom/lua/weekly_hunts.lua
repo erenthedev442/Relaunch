@@ -69,6 +69,24 @@ local function setSlot(player, slot, objIdx, progress, done)
 end
 
 -----------------------------------
+-- HL-rank gate
+-----------------------------------
+-- An objective only accrues progress once the player has unlocked the
+-- Hunting League rank its content lives at (catalog minHLRank, vs the
+-- player's HL_Tier). Below that it is LOCKED and counts nothing - this is
+-- what turns the all-5 weekly sweep (5,000 marks) into an endgame reward
+-- instead of a week-1 freebie. Objectives with no minHLRank default to 1.
+local CV_HL_TIER = 'HL_Tier'
+
+local function rankFor(obj)
+    return (obj and obj.minHLRank) or 1
+end
+
+local function rankUnlocked(player, obj)
+    return (player:getCharVar(CV_HL_TIER) or 1) >= rankFor(obj)
+end
+
+-----------------------------------
 -- Objective rolling
 -----------------------------------
 
@@ -262,6 +280,11 @@ function wh.fire(player, eventType, metadata)
         if not isSlotDone(player, slot) then
             local objIdx = getSlotObjIdx(player, slot)
             local obj    = catalog.objectivePool[objIdx]
+            -- HL-rank gate: a locked objective (player below its minHLRank)
+            -- accrues no progress on either its main or alternate event.
+            if obj and not rankUnlocked(player, obj) then
+                obj = nil
+            end
             if obj and obj.eventType == eventType then
                 local matched = true
                 if obj.matches then
@@ -330,7 +353,14 @@ function wh.formatStatus(player)
             local prog = getSlotProgress(player, slot)
             local done = isSlotDone(player, slot)
             if done then cleared = cleared + 1 end
-            local marker = done and '[DONE]' or string.format('[%d / %d]', prog, obj.target)
+            local marker
+            if done then
+                marker = '[DONE]'
+            elseif not rankUnlocked(player, obj) then
+                marker = string.format('[LOCKED - HL Rank %d]', rankFor(obj))
+            else
+                marker = string.format('[%d / %d]', prog, obj.target)
+            end
             lines[#lines + 1] = string.format('  %d. %s %s - %s',
                 slot, marker, obj.label, obj.description)
         end
@@ -356,15 +386,25 @@ local function showBoardMenu(player)
         if obj then
             local prog = getSlotProgress(player, slot)
             local done = isSlotDone(player, slot)
+            local locked = not rankUnlocked(player, obj)
             local label
             if done then
                 label = string.format('[DONE] %s', obj.label)
+            elseif locked then
+                label = string.format('[Rank %d] %s', rankFor(obj), obj.label)
             else
                 label = string.format('[%d/%d] %s', prog, obj.target, obj.label)
             end
             opts[#opts + 1] = {
                 label,
-                function(p) p:printToPlayer(obj.description, xi.msg.channel.SYSTEM_3) end,
+                function(p)
+                    p:printToPlayer(obj.description, xi.msg.channel.SYSTEM_3)
+                    if locked then
+                        p:printToPlayer(string.format(
+                            'LOCKED - reach Hunting League Rank %d to make progress on this objective.',
+                            rankFor(obj)), xi.msg.channel.SYSTEM_3)
+                    end
+                end,
             }
         end
     end
