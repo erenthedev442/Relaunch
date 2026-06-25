@@ -10,9 +10,11 @@
 --
 -- Rules: No Trusts (cleared on zone-in). Pets OK. Death = expulsion.
 --
--- Architecture mirrors ApexTrials.lua: sessions keyed by player name;
--- closure-captured level makes stale NPCs inert (avoids needing to despawn);
--- phase guard prevents double-click; releaseIdOnDisappear self-reclaims IDs.
+-- Architecture: THREE singleton NPCs (Safe/Fight/Final) spawned ONCE per
+-- session via spawnSessionNPCs. Callbacks always read live sessions[ownerName]
+-- so they reflect the current level and phase — no per-level re-spawn, no NPC
+-- accumulation between levels. releaseIdOnDisappear reclaims entity IDs on
+-- zone restart.
 --
 -- Requires ONE map restart to activate (addOverride module).
 --
@@ -43,7 +45,7 @@ local function clearSession(player) sessions[player:getName()] = nil end
 -----------------------------------
 -- Forward declarations
 -----------------------------------
-local spawnChoiceNPCs, spawnFinalNPC, spawnNM, advanceLevel, endRun
+local spawnSessionNPCs, spawnNM, advanceLevel, endRun
 
 -----------------------------------
 -- Champion file persistence
@@ -237,29 +239,32 @@ advanceLevel = function(player, session)
     if level == 10 then
         player:printToPlayer('[The Gauntlet] Level 10: the final trial. No retreat.', SYS)
         player:printToPlayer('[The Gauntlet] Face Shinryu and earn your legend — or be expelled.', SYS)
-        spawnFinalNPC(player, session)
+        player:printToPlayer('[The Gauntlet] Approach the Final Trial NPC when ready.', SYS)
     else
+        local nm = C.NM_POOL[level]
         player:printToPlayer(string.format('[The Gauntlet] Level %d reached.', level), SYS)
-        spawnChoiceNPCs(player, session)
+        player:printToPlayer(string.format(
+            '[The Gauntlet] Safe Path (no combat) or Challenge: %s  (Lv%d / %s HP)?',
+            nm.name, C.nmLevel(level), C.formatHp(C.nmHp(level))), SYS)
     end
 end
 
 -----------------------------------
--- Spawn two choice NPCs for levels 1-9
+-- Spawn all three session NPCs exactly once.
+-- Safe/Fight respond at levels 1-9; Final responds only at level 10.
+-- All callbacks read live sessions[ownerName] for current state, so the same
+-- three NPCs handle every level transition without re-spawning.
 -----------------------------------
-spawnChoiceNPCs = function(player, session)
-    local level     = session.level
+spawnSessionNPCs = function(player, session)
     local ownerName = player:getName()
-    local nm        = C.NM_POOL[level]
-
     local px = C.WARP_IN.x
     local py = C.WARP_IN.y
     local pz = C.WARP_IN.z
 
-    -- Safe Path NPC
+    -- Safe Path NPC (levels 1-9)
     player:getZone():insertDynamicEntity({
         objtype              = xi.objType.NPC,
-        name                 = string.format('G_Safe%d_%s', level, ownerName),
+        name                 = string.format('G_Safe_%s', ownerName),
         packetName           = string.format('%sSafe Path', xi.icon.STAR_LARGE),
         look                 = 2419,
         x = px + C.SAFE_NPC_OFFSET.x, y = py, z = pz + C.SAFE_NPC_OFFSET.z,
@@ -270,9 +275,15 @@ spawnChoiceNPCs = function(player, session)
         onTrigger = function(trigPlayer, npc)
             if trigPlayer:getName() ~= ownerName then return end
             local sess = sessions[ownerName]
-            -- Guard: stale NPC (level advanced) or wrong phase
-            if not sess or sess.level ~= level or sess.phase ~= 'choose' then return end
+            if not sess then return end
+            if sess.level == 10 then
+                trigPlayer:printToPlayer(
+                    '[The Gauntlet] No safe path at level 10. Use the Final Trial NPC.', SYS)
+                return
+            end
+            if sess.phase ~= 'choose' then return end
 
+            local level = sess.level
             sess.phase = 'advancing'
             sess.level = sess.level + 1
 
@@ -287,10 +298,10 @@ spawnChoiceNPCs = function(player, session)
         end,
     })
 
-    -- Challenge NPC
+    -- Challenge NPC (levels 1-9)
     player:getZone():insertDynamicEntity({
         objtype              = xi.objType.NPC,
-        name                 = string.format('G_Fight%d_%s', level, ownerName),
+        name                 = string.format('G_Fight_%s', ownerName),
         packetName           = string.format('%sChallenge', xi.icon.SWORD),
         look                 = 2419,
         x = px + C.FIGHT_NPC_OFFSET.x, y = py, z = pz + C.FIGHT_NPC_OFFSET.z,
@@ -301,7 +312,7 @@ spawnChoiceNPCs = function(player, session)
         onTrigger = function(trigPlayer, npc)
             if trigPlayer:getName() ~= ownerName then return end
             local sess = sessions[ownerName]
-            if not sess or sess.level ~= level or sess.phase ~= 'choose' then return end
+            if not sess or sess.phase ~= 'choose' or sess.level > 9 then return end
 
             sess.phase = 'fight'
 
@@ -311,20 +322,7 @@ spawnChoiceNPCs = function(player, session)
         end,
     })
 
-    player:printToPlayer(string.format(
-        '[The Gauntlet] Level %d — Safe Path (no combat) or Challenge: %s  (Lv%d / %s HP)?',
-        level, nm.name, C.nmLevel(level), C.formatHp(C.nmHp(level))), SYS)
-end
-
------------------------------------
--- Spawn final NPC for level 10 (Shinryu only, no safe option)
------------------------------------
-spawnFinalNPC = function(player, session)
-    local ownerName = player:getName()
-    local px = C.WARP_IN.x
-    local py = C.WARP_IN.y
-    local pz = C.WARP_IN.z
-
+    -- Final Trial NPC (level 10 only)
     player:getZone():insertDynamicEntity({
         objtype              = xi.objType.NPC,
         name                 = string.format('G_Final_%s', ownerName),
@@ -338,7 +336,12 @@ spawnFinalNPC = function(player, session)
         onTrigger = function(trigPlayer, npc)
             if trigPlayer:getName() ~= ownerName then return end
             local sess = sessions[ownerName]
-            if not sess or sess.level ~= 10 or sess.phase ~= 'choose' then return end
+            if not sess or sess.phase ~= 'choose' then return end
+            if sess.level ~= 10 then
+                trigPlayer:printToPlayer(
+                    '[The Gauntlet] This path opens only at level 10.', SYS)
+                return
+            end
 
             sess.phase = 'fight'
 
@@ -358,7 +361,7 @@ local function enterGauntlet(player)
         player:printToPlayer('[The Gauntlet] You are already in a run. Use !gauntlet abort to reset.', SYS)
         return
     end
-    sessions[player:getName()] = { level = 1, phase = 'choose', nm = nil }
+    sessions[player:getName()] = { level = 1, phase = 'choose', nm = nil, npcsSpawned = false }
     player:printToPlayer('[The Gauntlet] Entering the arena. Trusts are not permitted.', SYS)
     player:setPos(C.WARP_IN.x, C.WARP_IN.y, C.WARP_IN.z, C.WARP_IN.rot, C.ARENA_ZONE)
 end
@@ -374,12 +377,23 @@ m:addOverride('xi.zones.Riverne-Site_A01.Zone.onZoneIn', function(player, prevZo
         player:timer(2000, function(p)
             local s = sessions[p:getName()]
             if not s then return end
-            if s.level == 10 then
-                spawnFinalNPC(p, s)
-            else
-                spawnChoiceNPCs(p, s)
+            -- Spawn once per session; npcsSpawned guards against reconnect re-spawning.
+            if not s.npcsSpawned then
+                s.npcsSpawned = true
+                spawnSessionNPCs(p, s)
             end
-            p:printToPlayer('[The Gauntlet] No Trusts. Defeat each level or take the safe path. Good luck.', SYS)
+            -- Announce current state
+            if s.level == 10 then
+                p:printToPlayer('[The Gauntlet] Level 10: defeat Shinryu. No retreat.', SYS)
+                p:printToPlayer('[The Gauntlet] Approach the Final Trial NPC when ready.', SYS)
+            else
+                local nm = C.NM_POOL[s.level]
+                p:printToPlayer(string.format(
+                    '[The Gauntlet] Level %d — Safe Path or Challenge: %s  (Lv%d / %s HP).',
+                    s.level, nm and nm.name or '?',
+                    C.nmLevel(s.level), C.formatHp(C.nmHp(s.level))), SYS)
+            end
+            p:printToPlayer('[The Gauntlet] No Trusts. Defeat each level or take the safe path.', SYS)
         end)
     end
     return cs
