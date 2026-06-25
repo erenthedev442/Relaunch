@@ -154,6 +154,34 @@ Trade gear + 1-5 NM-drop "catalyst" items to the **Augment Moogle** (flat **10,0
 
 Catalog design rule: job/pet/resist/skill augments are free (tier 0); universally-strong stats (Haste, DA/TA/QA, PDT/MDT, Dmg+, HP/MP, crit-dmg, TP/WS) are tier 3-4 (require higher Sage rank).
 
+**Where catalysts drop — the tier matrix.** Each catalyst carries a `tier` (0-4) that is *both* the Augment Sage rank needed to use it *and* its drop pool. An eligible NM rolls one random catalyst from the pool matching its difficulty (`augment_catalyst_pools.lua`, **50% per eligible kill**; *which* catalyst is uniform-random within the tier, so a specific augment is still a grind). This is *in addition* to any item's original droplist — it's the reliable farm that replaced the old `!shop` gil purchase.
+
+| Tier | Sage rank to use | Drops from | In the pool (examples) |
+|---|---|---|---|
+| **T0** | 0 (free) | HL Rank 1-2 NMs — Leaping Lizzy, Valkurm Emperor, Tom Tit Tat, Roc, Bomb Queen, Aquarius | all elemental resists & affinities, status resists, job ability-delay cuts (BP / Call Beast / Quick Draw / Waltz / song / magic recast), Exp/Cap +33%, Slow, Gilfinder, Enmity, Beast / Phantom-Roll / Thunder affinity |
+| **T1** | 1 Initiate | HL Rank 3 — Serket, Vrtra, Simurgh | every weapon/magic **Skill+**, most **Pet** stats, Counter, Martial Arts, Evasion / Mag.Eva, Drain/Aspir potency, Enhancing / Helix / Meditate duration, Shield Mastery / Block / Parry |
+| **T2** | 2 Adept | HL Rank 4-5 — Nidhogg, King Behemoth, Kirin, Absolute Virtue, Pandemonium Warden | the 7 base stats (STR/DEX/VIT/AGI/INT/MND/CHR), **Accuracy / Rng.Acc**, Store TP, Subtle Blow, **DEF**, **Mag.Acc / Mag.Atk.Bns**, **Fast Cast**, Cure potency, Magic Damage, Snapshot |
+| **T3** | 3 Magus | **Ascension / Prestige Trial bosses** (Prestige Lv 15+) | **Attack / Rng.Atk**, **Double Atk** & DA+crit, Crit rate, **HP / MP / Regen / Refresh**, **Weapon skill damage**, Skillchain / Magic-burst / Mag-crit dmg, weapon-delay cuts, Helix / Spikes dmg |
+| **T4** | 4 Sage | **Shinryu** (HL Rank-5 elite) + endgame | the BiS power augments: **Haste**, **Triple / Quadruple Attack**, **TP Bonus**, **Crit. hit damage**, **PDT / MDT** (−phys/magic dmg taken), **Dmg+** (melee/ranged) |
+
+**NM affinity trophies (×1.5 to a whole category).** A separate, *specific* drop: kill the signature NM and hand its trophy to the **Augment Sage** (plus the relaunch gate — HL Rank 3 + 1,000 Hunt Marks) to permanently ×1.5 that category's augments (`augment_affinity_catalog.lua`):
+
+| Category | NM | Trophy (item id) |
+|---|---|---|
+| 1 — STR / Attack | Behemoth | Giant Femur (893) |
+| 2 — DEX / Accuracy | King Arthro | Emperor Arthro's Shell (8983) |
+| 3 — VIT / Defense | Adamantoise | Adamantoise Shell (908) |
+| 4 — AGI / Eva / Haste | Roc | Giant Bird Plume (843) |
+| 5 — INT / Magic | Ouryu (Guivre-tier wyrm) | Guivre's Skull (909) |
+| 6 — MND / Healing | Phoenix | Phoenix Feather (844) |
+| 7 — CHR / Charm / Enmity | Lady Lilith (Khimaira-tier) | Khimaira Mane (2372) |
+| 8 — HP / Regen | Fafnir | Wyvern Skin (1122) |
+| 9 — MP / Refresh | Vrtra | Vial of Dragon Blood (1133) |
+| 10 — Pet | King Vinegarroon | Sand Bat Fang (1015) |
+| 11 — Elemental resist | Khimaira | Khimaira Horn (2371) |
+| 12 — Skill+ | Maat (proxy king-tier predator) | Gargantuan Black Tiger Fang (2893) |
+| 13 — Weaponskill DMG+ | Tiamat | H.Q. Scorpion Shell (1473) |
+
 ### 4.2 Combat / job overhauls (all LIVE; relaunch-nerfed where noted)
 
 - **BST jug pets** (`BstJugPetOverhaul`, player jugs only): flat ATT +5,000 / ACC +9,000 / HP +100,000 (relaunch, down from 11,200/280,000), master-stat sharing, PDT/MDT −25%, DA/TA 20/5%, magical-Ready ×21 BP damage, and **auto-Ready every 2.5 s once TP≥1000**. "Beast Affinity" augment scales the flats. Call Beast/Bestial Loyalty recast = 0.
