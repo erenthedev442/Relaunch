@@ -87,8 +87,8 @@ local function completeAllMissions(player)
     for i = 0, 23 do pcall(function() player:addMission(1, i) player:completeMission(1, i) end) end
     -- Windurst (log_id 2)
     for i = 0, 23 do pcall(function() player:addMission(2, i) player:completeMission(2, i) end) end
-    -- Rise of the Zilart (log_id 3)
-    for i = 0, 30 do pcall(function() player:addMission(3, i) player:completeMission(3, i) end) end
+    -- Rise of the Zilart (log_id 3) — final mission THE_LAST_VERSE = 31
+    for i = 0, 31 do pcall(function() player:addMission(3, i) player:completeMission(3, i) end) end
     -- Chains of Promathia (log_id 6) — completeMission resets CoP current to 0; push current to
     -- THE_LAST_VERSE=850 instead so every earlier mission reads as complete.
     player:addMission(6, 850)
@@ -96,6 +96,14 @@ local function completeAllMissions(player)
     for i = 0, 47 do pcall(function() player:addMission(4, i) player:completeMission(4, i) end) end
     -- Wings of the Goddess (log_id 5)
     for i = 0, 53 do pcall(function() player:addMission(5, i) player:completeMission(5, i) end) end
+    -- A Crystalline Prophecy (log_id 9) — final = A_CRYSTALLINE_PROPHECY_FIN = 11
+    for i = 0, 11 do pcall(function() player:addMission(9, i) player:completeMission(9, i) end) end
+    -- A Moogle Kupo d'Etat (log_id 10) — final = A_MOOGLE_KUPO_DETAT_FIN = 14
+    for i = 0, 14 do pcall(function() player:addMission(10, i) player:completeMission(10, i) end) end
+    -- A Shantotto Ascension (log_id 11) — final = A_SHANTOTTO_ASCENSION_FIN = 14
+    for i = 0, 14 do pcall(function() player:addMission(11, i) player:completeMission(11, i) end) end
+    -- The Voracious Resurgence (log_id 14) — final = EPILOGUE = 46
+    for i = 0, 46 do pcall(function() player:addMission(14, i) player:completeMission(14, i) end) end
     -- Seekers of Adoulin (log_id 12) — ids >=64 need current pushed past the last (130)
     local missionSOA = {
         0,1,3,5,6,7,8,9,11,12,13,14,15,16,17,18,19,20,21,23,26,27,29,
