@@ -214,12 +214,6 @@ local function giveAllAttachments(player)
     player:printToPlayer('All automaton frames, heads & attachments unlocked, kupo!', 0, 'Unlocker')
 end
 
-local function grantLinkpearl(player)
-    -- equip=false avoids the LoadEquip crash that hit the old new_player_linkshell.lua
-    pcall(function() player:addLinkpearl('Legendary', false) end)
-    player:printToPlayer('Linkpearl added to your inventory. Equip it in your Linkshell slot!', 0, 'Unlocker')
-end
-
 local function giveEverything(player)
     giveAllWeaponSkills(player)
     giveAllSpells(player)
@@ -233,7 +227,6 @@ local function giveEverything(player)
     giveAllSurvivalGuides(player)
     bumpWardrobeSizes(player)
     giveAllAttachments(player)
-    grantLinkpearl(player)
     player:printToPlayer('Welcome! You\'ve been set up with everything, kupo!', 0, 'Unlocker')
 end
 
