@@ -216,7 +216,7 @@ local function giveEverything(player)
     giveAllSurvivalGuides(player)
     bumpWardrobeSizes(player)
     giveAllAttachments(player)
-    player:printToPlayer('Welcome! You\'ve been set up with everything, kupo!', 0, 'Unlocker')
+    player:printToPlayer('Setup complete! Granted: all spells, weapon skills, job abilities, trusts, quest & mission completions, maps, homepoints, survival guides, outpost warps, full wardrobes, and automaton parts. Welcome!', 0, 'Unlocker')
 end
 
 -----------------------------------
