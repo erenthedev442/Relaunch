@@ -52,6 +52,13 @@ local CLEAR_DELAY = 6    -- seconds between cleared wave and the next one
 -- Player spawn jitter within their team's position (spread teammates slightly)
 local MEMBER_JITTER = 5
 
+-- ─── Champion rewards (winner-take-all) ───────────────────────────────────────
+-- Granted to each SURVIVING member of the winning team -- whether they cleared
+-- all 8 waves or were the last team standing. Losing teams get nothing. Tune
+-- these freely; both are per-survivor.
+local CHAMPION_MARKS  = 2500  -- Hunt Marks (charVar HL_Points) per surviving champion
+local CHAMPION_INFAMY = 500   -- Infamy (+ Infamy_Lifetime) per surviving champion
+
 -- Mob groups from GM_Home zone (same pool as Endless Tower).
 local WAVES = {
     { label = 'Wave 1',  count = 3, level = 110, hpMult = 6,   groups = { 11355, 11356 } },
@@ -184,6 +191,24 @@ local function warpOut(player)
     player:setPos(HOME_X, HOME_Y, HOME_Z, 0, HOME_ZONE)
 end
 
+-- Grant the champion reward to one surviving winner (winner-take-all): Hunt Marks
+-- + Infamy + a lifetime win stat. pcall-guarded so a stale handle can't abort the
+-- win/elimination loop mid-iteration.
+local function grantChampionReward(player)
+    if not player then return end
+    pcall(function()
+        player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) + CHAMPION_MARKS)
+        if CHAMPION_INFAMY > 0 then
+            player:setCharVar('Infamy',          (player:getCharVar('Infamy') or 0) + CHAMPION_INFAMY)
+            player:setCharVar('Infamy_Lifetime', (player:getCharVar('Infamy_Lifetime') or 0) + CHAMPION_INFAMY)
+        end
+        player:setCharVar('Tournament_Wins', (player:getCharVar('Tournament_Wins') or 0) + 1)
+        player:printToPlayer(string.format(
+            '[Tournament] CHAMPION! +%d Hunt Marks, +%d Infamy. The arena is yours, kupo!',
+            CHAMPION_MARKS, CHAMPION_INFAMY), xi.msg.channel.SYSTEM_3)
+    end)
+end
+
 -- Spread team spawn positions in a circle around the arena centre.
 -- With TEAM_SEP=60 and ring max 16 there is a ~28-unit buffer between rings.
 local function calcTeamSpawn(index, total)
@@ -219,8 +244,12 @@ local function onWaveClearedForTeam(teamName, waveNum)
         -- Cleared all 8 waves - this team wins
         announce(string.format('[Tournament] *** Team %s CLEARED ALL WAVES - Champions! *** (%d team(s) remain)',
             teamName, rem - 1))
-        -- Warp survivors out
+        announce(string.format('[Tournament] Each surviving champion is awarded %d Hunt Marks and %d Infamy!',
+            CHAMPION_MARKS, CHAMPION_INFAMY))
+        -- Reward + warp survivors (winner-take-all)
         for pname in pairs(sess.alive) do
+            local champ = GetPlayerByName(pname)
+            if champ then grantChampionReward(champ) end
             GetTimerManager():addTimer('tourney_warp_' .. pname, 5000, false, function()
                 local p = GetPlayerByName(pname)
                 if p then warpOut(p) end
@@ -359,9 +388,13 @@ local function eliminateTeam(teamName, reason)
         if ws then for n in pairs(ws.alive) do names[#names+1] = n end end
         announce(string.format('[Tournament] *** Team %s is the LAST TEAM STANDING - Champions! *** (%s)',
             winner, table.concat(names, ', ')))
-        -- Warp winners out after a moment
+        announce(string.format('[Tournament] Each surviving champion is awarded %d Hunt Marks and %d Infamy!',
+            CHAMPION_MARKS, CHAMPION_INFAMY))
+        -- Reward + warp winners after a moment (winner-take-all)
         if ws then
             for _, pname in ipairs(names) do
+                local champ = GetPlayerByName(pname)
+                if champ then grantChampionReward(champ) end
                 GetTimerManager():addTimer('tourney_warp_' .. pname, 8000, false, function()
                     local p = GetPlayerByName(pname)
                     if p then warpOut(p) end

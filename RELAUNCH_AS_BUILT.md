@@ -186,7 +186,7 @@ Catalog design rule: job/pet/resist/skill augments are free (tier 0); universall
 | **Provisioners' League** | League Steward (Reisenjima) | solo, fishing/crafting | 5 ranks, rank-up mark bonuses; weekly featured fish ×3 | LIVE |
 | **Maat Infamy Fight** | Maat's Echo (Ru'Lude), **150 Infamy** | solo | 25% → Maat's Cap (augment crit token); 0.5% → Prime Voucher | LIVE |
 | **Chocobo Derby** | Race Caller | solo, betting | gil payout (house edge); own raised bird +25% | LIVE |
-| **Tournament** | `!tournament`, GM-run | team waves | ⚠ **no reward coded** (bragging rights only) | LIVE |
+| **Tournament** | `!tournament`, GM-run | team waves | **2,500 marks + 500 Infamy** per surviving champion (winner-take-all) | LIVE |
 | **World Boss** | — | — | — | ⚠ **RETIRED** (disabled flag; Prime Trial 3 moved to a turn-in) |
 | **Seasonal events** | `!setbonus` (GM) | mark multiplier windows | — | LIVE engine, **dormant** (none scheduled) |
 
@@ -220,11 +220,11 @@ Catalog design rule: job/pet/resist/skill augments are free (tier 0); universall
 - **`weekly_recap` onGameIn signature fixed** → now uses `(player, firstLogin, zoning)` and gates on the real `zoning` flag (was skipping true first logins).
 - **Stale comments corrected** — daily-login "250"→50, `auto_buff_henge` "30 min"→5 h (incl. the player message), `!gainexp` "GM-only/no cooldown"→all-players/24 h.
 - **Wardrobe `charCreate` conflict resolved** — removed `mission_wardrobe_unlocks.lua` (it zeroed all 8 wardrobes at creation to gate them behind missions, fighting the give-everything design, and its mission-grant hook was dead because missions are auto-completed via `setMissionStatus` not `npcUtil.completeMission`). `new_char_wardrobe_sizes.lua` is now the single deterministic charCreate owner; `Character_Upgrader` re-affirms on first login. New chars reliably get 8 full wardrobes.
+- **Tournament rewards wired** — each surviving member of the winning team (cleared all 8 waves, or last team standing) now gets **2,500 Hunt Marks + 500 Infamy** + a `Tournament_Wins` stat (winner-take-all; losing teams get nothing). Amounts are tunable constants at the top of `Tournament.lua`.
 
 **Still disabled / stubbed (intentional or needs a design call):**
 - `Ascension_Companion` — **DISABLED** (`DISABLED=true`), intentional.
 - `world_boss` — **RETIRED** (`RETIRED=true`); Prime Trial 3 moved to a turn-in, intentional.
-- **Tournament** awards no rewards (bragging rights only) — needs a reward design before wiring.
 - **Seasonal events** engine works but nothing is scheduled (dormant until a GM runs `!setbonus`).
 - `trust_meat_vendor` — retired no-op (folded into Void Keeper).
 - Augment Sage `seals` and `Augment_Count` are dead under the new content-milestone gates.
