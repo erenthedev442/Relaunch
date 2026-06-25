@@ -16,6 +16,20 @@ xi.pets.automaton.onMobSpawn = function(mob)
 
     -- Barrage Turbine cannot be used unless the automaton has been active for at least 3 minutes.
     mob:addRecast(xi.recast.ABILITY, xi.automaton.abilities.BARRAGE_TURBINE, 60 * 3)
+
+    -- Apply owner's Job Point HP/MP bonus at every spawn (Activate AND zone-in re-summon).
+    -- delMod before addMod makes this idempotent if called on a persisted entity.
+    local owner = mob:getMaster()
+    if owner then
+        local jpValue = owner:getJobPointLevel(xi.jp.AUTOMATON_HP_MP_BONUS)
+        if jpValue > 0 then
+            mob:delMod(xi.mod.HP, jpValue * 10)
+            mob:addMod(xi.mod.HP, jpValue * 10)
+            mob:delMod(xi.mod.MP, jpValue * 5)
+            mob:addMod(xi.mod.MP, jpValue * 5)
+            mob:updateHealth()
+        end
+    end
 end
 
 xi.pets.automaton.onMobDeath = function(mob)

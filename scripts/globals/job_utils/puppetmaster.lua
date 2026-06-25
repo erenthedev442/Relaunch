@@ -82,14 +82,20 @@ xi.job_utils.puppetmaster.onAbilityUseActivate = function(player, target, abilit
     local pet = player:getPet()
 
     if pet then
+        -- JP HP/MP bonus is applied in xi.pets.automaton.onMobSpawn (covers zone-in
+        -- re-summons too). Idempotent del+add here in case ordering differs by build.
         local jpValue = player:getJobPointLevel(xi.jp.AUTOMATON_HP_MP_BONUS)
-        pet:addMod(xi.mod.HP, jpValue * 10)
-        pet:addMod(xi.mod.MP, jpValue * 5)
-        pet:updateHealth()
+        if jpValue > 0 then
+            pet:delMod(xi.mod.HP, jpValue * 10)
+            pet:addMod(xi.mod.HP, jpValue * 10)
+            pet:delMod(xi.mod.MP, jpValue * 5)
+            pet:addMod(xi.mod.MP, jpValue * 5)
+            pet:updateHealth()
+        end
 
-        -- ensure it spawns at full hp
-        pet:addHP(pet:getMod(xi.mod.HP))
-        pet:addMP(pet:getMod(xi.mod.MP))
+        -- Spawn at full HP/MP.
+        pet:addHP(pet:getMaxHP())
+        pet:addMP(pet:getMaxMP())
     end
 end
 
@@ -114,15 +120,20 @@ xi.job_utils.puppetmaster.onAbilityUseDeusExAutomata = function(player, target, 
     local pet = player:getPet()
 
     if pet then
+        -- JP HP/MP applied in onMobSpawn; idempotent del+add guards against ordering races.
         local jpValue = player:getJobPointLevel(xi.jp.AUTOMATON_HP_MP_BONUS)
-        pet:addMod(xi.mod.HP, jpValue * 10)
-        pet:addMod(xi.mod.MP, jpValue * 5)
-        pet:updateHealth()
+        if jpValue > 0 then
+            pet:delMod(xi.mod.HP, jpValue * 10)
+            pet:addMod(xi.mod.HP, jpValue * 10)
+            pet:delMod(xi.mod.MP, jpValue * 5)
+            pet:addMod(xi.mod.MP, jpValue * 5)
+            pet:updateHealth()
+        end
 
-        -- ensure it spawns at specific HPP/MPP based on level
+        -- Spawn at reduced HP/MP based on level (25% at lv75 retail design).
         local percent = math.floor((player:getMainLvl() / 3)) / 100
-        pet:setHP(math.max(pet:getMaxHP() * percent, 1))
-        pet:setMP(pet:getMaxMP() * percent)
+        pet:setHP(math.max(math.floor(pet:getMaxHP() * percent), 1))
+        pet:setMP(math.floor(pet:getMaxMP() * percent))
     end
 end
 
