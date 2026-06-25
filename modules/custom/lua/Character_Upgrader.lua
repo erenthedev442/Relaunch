@@ -186,7 +186,6 @@ local function giveAllSurvivalGuides(player)
             pcall(function() player:addTeleport(xi.teleport.type.SURVIVAL, groupIndex, group) end)
         end
     end
-    player:printToPlayer('All survival guides granted, kupo!', 0, 'Unlocker')
 end
 
 local function bumpWardrobeSizes(player)
@@ -224,7 +223,14 @@ local function giveEverything(player)
     giveAllSurvivalGuides(player)
     bumpWardrobeSizes(player)
     giveAllAttachments(player)
-    player:printToPlayer('Setup complete! Granted: all spells, weapon skills, job abilities, trusts, quest & mission completions, maps, homepoints, survival guides, outpost warps, full wardrobes, and automaton parts. Welcome!', 0, 'Unlocker')
+    local SYS = xi.msg.channel.SYSTEM_3
+    player:printToPlayer('[ Setup Complete ]', SYS)
+    player:printToPlayer('Spells, weapon skills & job abilities', SYS)
+    player:printToPlayer('All trusts', SYS)
+    player:printToPlayer('All quests & missions completed', SYS)
+    player:printToPlayer('Maps, homepoints, survival guides & outpost warps', SYS)
+    player:printToPlayer('Full wardrobes & automaton parts', SYS)
+    player:printToPlayer('Welcome! Type !help to get started.', SYS)
 end
 
 -----------------------------------
