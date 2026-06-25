@@ -83,6 +83,54 @@ local function giveAllTrusts(player)
     player:printToPlayer(string.format('All trusts granted, kupo! Added: %d', added), 0, 'Unlocker')
 end
 
+local function completeAllMissions(player)
+    -- San d'Oria (log_id 0)
+    for i = 0, 23 do pcall(function() player:addMission(0, i) player:completeMission(0, i) end) end
+    player:setRank(10)
+    -- Bastok (log_id 1)
+    for i = 0, 23 do pcall(function() player:addMission(1, i) player:completeMission(1, i) end) end
+    -- Windurst (log_id 2)
+    for i = 0, 23 do pcall(function() player:addMission(2, i) player:completeMission(2, i) end) end
+    -- Rise of the Zilart (log_id 3)
+    for i = 0, 30 do pcall(function() player:addMission(3, i) player:completeMission(3, i) end) end
+    -- Chains of Promathia (log_id 6) — completeMission resets CoP current to 0; push current to
+    -- THE_LAST_VERSE=850 instead so every earlier mission reads as complete.
+    player:addMission(6, 850)
+    -- Treasures of Aht Urhgan (log_id 4)
+    for i = 0, 47 do pcall(function() player:addMission(4, i) player:completeMission(4, i) end) end
+    -- Wings of the Goddess (log_id 5)
+    for i = 0, 53 do pcall(function() player:addMission(5, i) player:completeMission(5, i) end) end
+    -- Seekers of Adoulin (log_id 12) — ids >=64 need current pushed past the last (130)
+    local missionSOA = {
+        0,1,3,5,6,7,8,9,11,12,13,14,15,16,17,18,19,20,21,23,26,27,29,
+        30,31,34,35,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,
+        55,56,57,58,59,61,62,63,66,67,69,70,71,72,73,74,75,76,77,78,79,
+        80,81,82,84,85,86,87,88,89,90,91,92,93,94,95,96,98,99,100,101,
+        102,103,104,105,107,108,109,110,111,112,113,114,116,117,118,120,
+        121,123,125,129,
+    }
+    for _, id in ipairs(missionSOA) do
+        pcall(function() player:addMission(12, id) player:completeMission(12, id) end)
+    end
+    player:addMission(12, 130)
+    -- Rhapsodies of Vana'diel (log_id 13) — same current-pointer fix; push to 227
+    local missionROV = {
+        0,2,3,4,6,10,12,18,20,22,26,28,30,32,34,36,40,42,44,46,48,50,
+        52,54,56,60,62,64,66,68,70,72,78,80,83,86,92,94,96,98,100,102,
+        103,104,106,108,110,114,116,118,120,122,124,126,130,132,136,142,
+        144,146,150,152,154,155,156,158,160,161,162,164,166,170,172,174,
+        178,180,184,188,190,192,194,196,198,200,202,206,210,212,216,218,
+        220,222,224,226,
+    }
+    for _, id in ipairs(missionROV) do
+        pcall(function() player:addMission(13, id) player:completeMission(13, id) end)
+    end
+    player:addMission(13, 227)
+    -- Mirror the Mission Moogle charvar so it won't prompt existing chars who got this path
+    player:setCharVar('MissionClearanceReceived', 1)
+    player:printToPlayer('All missions completed, kupo!', 0, 'Unlocker')
+end
+
 local function completeAllQuests(player)
     local count = 0
     for logId, areaKey in pairs(xi.quest.area) do
@@ -172,6 +220,7 @@ local function giveEverything(player)
     capAllSkills(player)
     giveAllTrusts(player)
     completeAllQuests(player)
+    completeAllMissions(player)
     giveAllMaps(player)
     giveAllOutpostWarps(player)
     giveAllHomepoints(player)
@@ -195,6 +244,10 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
         player:setCharVar('AutoUnlock_Done', 1)
         player:printToPlayer('Setting up your new character -- one moment, kupo!', 0, 'Unlocker')
         player:timer(3000, function(p) giveEverything(p) end)
+    elseif isLogin and (player:getCharVar('AutoMissions_Done') or 0) == 0 then
+        -- Backfill missions for existing chars that were set up before missions were auto-granted.
+        player:setCharVar('AutoMissions_Done', 1)
+        player:timer(3000, function(p) completeAllMissions(p) end)
     end
 end)
 
