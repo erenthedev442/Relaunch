@@ -50,6 +50,14 @@ return
     --
     -- Power ladder (2026-05 rebalance - "too easy" pass):
     --
+    -- RELAUNCH Phase 2 retune (2026-06-24): ATT/DEF/DA/TA/REGEN cut to match
+    -- the lower relaunch player power curve (Legendary keeps the values above).
+    -- T1 minor DEF bump; T2 minor DA cut; T3 -40% ATT/-25% DEF, DA->12, TA
+    -- removed; T4 -45% ATT/-35% DEF, DA->15/TA->5; T5 (AV/PW) -52% ATT/-50%
+    -- DEF, DA->20/TA->8; Shinryu -60% ATT/-78% DEF, DA->25/TA->10. REGEN cut
+    -- per-tier (T1 75->30 ... Shinryu 3000->500). hpBoost is UNCHANGED here:
+    -- HP targets need base mob HP from mob_groups (DB) - resolve in a follow-up.
+    --
     --   Every tier now has hpBoost (was T5-only) so fights actually
     --   last. HASTE_GEAR (1024ths of 1%), DOUBLE_ATTACK / TRIPLE_ATTACK
     --   (% chance), and REGEN (HP/tick) are layered on so mobs swing
@@ -82,7 +90,7 @@ return
                   spawnPos = { x =  -56.6, y =  0.11, z =  73.8, rot =   0 },  -- T1 cluster: W
                   hpBoost = 6,
                   mods = {
-                      [xi.mod.DEF] = 481,
+                      [xi.mod.DEF] = 600,
                       [xi.mod.ATT] = 2700,
                       [xi.mod.ACC] = 270,   -- T1 normalized target
                       [xi.mod.EVASION] = 180,
@@ -91,7 +99,7 @@ return
                       [xi.mod.DEX] = 75,    -- DEX feeds ACC formula (~0.75 DEX = 1 ACC)
                       [xi.mod.HASTE_GEAR] = 150,   -- ~10%
                       [xi.mod.DOUBLE_ATTACK] = 8,
-                      [xi.mod.REGEN] = 75,
+                      [xi.mod.REGEN] = 30,
                   },
                 },
                 { name = 'Valkurm_Emperor',  label = 'Valkurm Emperor',  points = 5,  groupId = 11356, minLv = 150, maxLv = 150,
@@ -99,28 +107,28 @@ return
                   drops = { { id = 8983, qty = 5 } },  -- Emperor Arthro's Shell (Augment Affinity: DEX/Accuracy)
                   hpBoost = 6,
                   mods = {
-                      [xi.mod.DEF] = 481,
+                      [xi.mod.DEF] = 600,
                       [xi.mod.ATT] = 2700,
                       [xi.mod.ACC] = 270,   -- T1 normalized target
                       [xi.mod.EVASION] = 180,
                       [xi.mod.MEVA] = 180,
                       [xi.mod.HASTE_GEAR] = 150,
                       [xi.mod.DOUBLE_ATTACK] = 8,
-                      [xi.mod.REGEN] = 75,
+                      [xi.mod.REGEN] = 30,
                   },
                 },
                 { name = 'Tom_Tit_Tat',      label = 'Tom Tit Tat',      points = 5,  groupId = 11357, minLv = 150, maxLv = 150,
                   spawnPos = { x =  -26.6, y =  0.11, z =  73.8, rot = 192 },  -- T1 cluster: E
                   hpBoost = 6,
                   mods = {
-                      [xi.mod.DEF] = 481,
+                      [xi.mod.DEF] = 600,
                       [xi.mod.ATT] = 2700,
                       [xi.mod.ACC] = 270,   -- T1 normalized target
                       [xi.mod.EVASION] = 180,
                       [xi.mod.MEVA] = 180,
                       [xi.mod.HASTE_GEAR] = 150,
                       [xi.mod.DOUBLE_ATTACK] = 8,
-                      [xi.mod.REGEN] = 75,
+                      [xi.mod.REGEN] = 30,
                   },
                 },
             },
@@ -147,8 +155,8 @@ return
                       [xi.mod.MEVA] = 360,
                       [xi.mod.MDEF] = 180,
                       [xi.mod.HASTE_GEAR] = 225,   -- ~15%
-                      [xi.mod.DOUBLE_ATTACK] = 15,
-                      [xi.mod.REGEN] = 150,
+                      [xi.mod.DOUBLE_ATTACK] = 12,
+                      [xi.mod.REGEN] = 60,
                   },
                 },
                 { name = 'Bomb_Queen',  label = 'Bomb Queen',  points = 12, groupId = 11359, minLv = 150, maxLv = 150,
@@ -164,8 +172,8 @@ return
                       [xi.mod.STR] = 150,
                       [xi.mod.DEX] = 150,
                       [xi.mod.HASTE_GEAR] = 225,
-                      [xi.mod.DOUBLE_ATTACK] = 15,
-                      [xi.mod.REGEN] = 150,
+                      [xi.mod.DOUBLE_ATTACK] = 12,
+                      [xi.mod.REGEN] = 60,
                   },
                 },
                 { name = 'Aquarius',    label = 'Aquarius',    points = 12, groupId = 11360, minLv = 150, maxLv = 150,
@@ -182,8 +190,8 @@ return
                       [xi.mod.STR] = 150,
                       [xi.mod.DEX] = 150,
                       [xi.mod.HASTE_GEAR] = 225,
-                      [xi.mod.DOUBLE_ATTACK] = 15,
-                      [xi.mod.REGEN] = 150,
+                      [xi.mod.DOUBLE_ATTACK] = 12,
+                      [xi.mod.REGEN] = 60,
                   },
                 },
             },
@@ -203,16 +211,16 @@ return
                   drops = { { id = 1015, qty = 5 } },  -- Sand Bat Fang (Augment Affinity: Pet)
                   hpBoost = 15,
                   mods = {
-                      [xi.mod.DEF] = 1238,
-                      [xi.mod.ATT] = 7200,
+                      [xi.mod.DEF] = 929,
+                      [xi.mod.ATT] = 4320,
                       [xi.mod.ACC] = 1260,   -- T3 normalized target
                       [xi.mod.EVASION] = 450,
                       [xi.mod.MEVA] = 540,
                       [xi.mod.MDEF] = 360,
                       [xi.mod.HASTE_GEAR] = 300,   -- ~20%
-                      [xi.mod.DOUBLE_ATTACK] = 23,
-                      [xi.mod.TRIPLE_ATTACK] = 5,
-                      [xi.mod.REGEN] = 300,
+                      [xi.mod.DOUBLE_ATTACK] = 12,
+                      [xi.mod.TRIPLE_ATTACK] = 0,   -- relaunch: TA removed
+                      [xi.mod.REGEN] = 100,
                   },
                 },
                 { name = 'Vrtra',     label = 'Vrtra',     points = 22, groupId = 11362, minLv = 150, maxLv = 150,
@@ -220,8 +228,8 @@ return
                   drops = { { id = 909, qty = 5 } },  -- Guivre's Skull (Augment Affinity: INT/Magic)
                   hpBoost = 15,
                   mods = {
-                      [xi.mod.DEF] = 1238,
-                      [xi.mod.ATT] = 7200,
+                      [xi.mod.DEF] = 929,
+                      [xi.mod.ATT] = 4320,
                       [xi.mod.ACC] = 1260,   -- T3 normalized target
                       [xi.mod.EVASION] = 450,
                       [xi.mod.MEVA] = 540,
@@ -229,9 +237,9 @@ return
                       [xi.mod.STR] = 300,
                       [xi.mod.DEX] = 300,
                       [xi.mod.HASTE_GEAR] = 300,
-                      [xi.mod.DOUBLE_ATTACK] = 23,
-                      [xi.mod.TRIPLE_ATTACK] = 5,
-                      [xi.mod.REGEN] = 300,
+                      [xi.mod.DOUBLE_ATTACK] = 12,
+                      [xi.mod.TRIPLE_ATTACK] = 0,   -- relaunch: TA removed
+                      [xi.mod.REGEN] = 100,
                   },
                 },
                 { name = 'Simurgh',   label = 'Simurgh',   points = 22, groupId = 11363, minLv = 150, maxLv = 150,
@@ -243,8 +251,8 @@ return
                   -- so a group has to out-DPS the self-heal. Dial up/down here.
                   hpBoost = 18,
                   mods = {
-                      [xi.mod.DEF] = 1238,
-                      [xi.mod.ATT] = 7920,  -- T3+ (was 4000)
+                      [xi.mod.DEF] = 929,
+                      [xi.mod.ATT] = 4752,  -- T3+ notch (relaunch -40%, was 7920)
                       [xi.mod.ACC] = 1350,   -- T3+ (was 700)
                       [xi.mod.EVASION] = 450,
                       [xi.mod.MEVA] = 540,
@@ -252,9 +260,9 @@ return
                       [xi.mod.STR] = 300,
                       [xi.mod.DEX] = 300,
                       [xi.mod.HASTE_GEAR] = 345,   -- ~22% (was 200)
-                      [xi.mod.DOUBLE_ATTACK] = 30,    -- was 15
-                      [xi.mod.TRIPLE_ATTACK] = 8,     -- was 3
-                      [xi.mod.REGEN] = 413,   -- was 200
+                      [xi.mod.DOUBLE_ATTACK] = 12,    -- relaunch (was 30)
+                      [xi.mod.TRIPLE_ATTACK] = 0,     -- relaunch: TA removed
+                      [xi.mod.REGEN] = 100,   -- relaunch (was 413)
                   },
                 },
             },
@@ -274,16 +282,16 @@ return
                   drops = { { id = 1122, qty = 5 }, { id = 10037, qty = 5 }, { id = 865, qty = 5 } },  -- Wyvern Skin (Affinity: HP/Regen) + Fafnir's Scale (Augment Sage rank 4) + Handful of Nidhogg's Scales (Augment Sage rank 2)
                   hpBoost = 21,
                   mods = {
-                      [xi.mod.DEF] = 1788,
-                      [xi.mod.ATT] = 10800,
+                      [xi.mod.DEF] = 1162,
+                      [xi.mod.ATT] = 5940,
                       [xi.mod.ACC] = 1620,   -- T4 normalized target
                       [xi.mod.EVASION] = 630,
                       [xi.mod.MEVA] = 720,
                       [xi.mod.MDEF] = 630,
                       [xi.mod.HASTE_GEAR] = 375,   -- ~25%
-                      [xi.mod.DOUBLE_ATTACK] = 30,
-                      [xi.mod.TRIPLE_ATTACK] = 12,
-                      [xi.mod.REGEN] = 600,
+                      [xi.mod.DOUBLE_ATTACK] = 15,
+                      [xi.mod.TRIPLE_ATTACK] = 5,
+                      [xi.mod.REGEN] = 180,
                   },
                 },
                 { name = 'King_Behemoth', label = 'King Behemoth', points = 38, groupId = 11365, minLv = 150, maxLv = 150,
@@ -291,8 +299,8 @@ return
                   drops = { { id = 893, qty = 5 }, { id = 883, qty = 5 } },  -- Giant Femur (Affinity: STR/Attack) + Behemoth Horn (Augment Sage rank 1)
                   hpBoost = 21,
                   mods = {
-                      [xi.mod.DEF] = 1788,
-                      [xi.mod.ATT] = 10800,
+                      [xi.mod.DEF] = 1162,
+                      [xi.mod.ATT] = 5940,
                       [xi.mod.ACC] = 1620,   -- T4 normalized target
                       [xi.mod.EVASION] = 630,
                       [xi.mod.MEVA] = 720,
@@ -300,9 +308,9 @@ return
                       [xi.mod.STR] = 450,
                       [xi.mod.DEX] = 450,
                       [xi.mod.HASTE_GEAR] = 375,
-                      [xi.mod.DOUBLE_ATTACK] = 30,
-                      [xi.mod.TRIPLE_ATTACK] = 12,
-                      [xi.mod.REGEN] = 600,
+                      [xi.mod.DOUBLE_ATTACK] = 15,
+                      [xi.mod.TRIPLE_ATTACK] = 5,
+                      [xi.mod.REGEN] = 180,
                   },
                 },
                 { name = 'Kirin',         label = 'Kirin',         points = 38, groupId = 11366, minLv = 150, maxLv = 150,
@@ -310,8 +318,8 @@ return
                   drops = { { id = 2893, qty = 5 }, { id = 10038, qty = 5 } },  -- Gargantuan Black Tiger Fang (Affinity: Skill+) + Kirin's Mane (Augment Sage rank 5)
                   hpBoost = 21,
                   mods = {
-                      [xi.mod.DEF] = 1788,
-                      [xi.mod.ATT] = 10800,
+                      [xi.mod.DEF] = 1162,
+                      [xi.mod.ATT] = 5940,
                       [xi.mod.ACC] = 1620,   -- T4 normalized target
                       [xi.mod.EVASION] = 630,
                       [xi.mod.MEVA] = 720,
@@ -319,9 +327,9 @@ return
                       [xi.mod.STR] = 450,
                       [xi.mod.DEX] = 450,
                       [xi.mod.HASTE_GEAR] = 375,
-                      [xi.mod.DOUBLE_ATTACK] = 30,
-                      [xi.mod.TRIPLE_ATTACK] = 12,
-                      [xi.mod.REGEN] = 600,
+                      [xi.mod.DOUBLE_ATTACK] = 15,
+                      [xi.mod.TRIPLE_ATTACK] = 5,
+                      [xi.mod.REGEN] = 180,
                   },
                 },
             },
@@ -341,8 +349,8 @@ return
                   drops = { { id = 1473, qty = 5 } },  -- HQ Scorpion Shell (Augment Affinity: WS DMG+)
                   hpBoost = 36,
                   mods = {
-                      [xi.mod.DEF] = 2750,
-                      [xi.mod.ATT] = 16200,
+                      [xi.mod.DEF] = 1375,
+                      [xi.mod.ATT] = 7776,
                       [xi.mod.ACC] = 3240,  -- unmissable except vs huge EVA stacks
                       [xi.mod.EVASION] = 900,
                       [xi.mod.MEVA] = 1080,
@@ -350,9 +358,9 @@ return
                       [xi.mod.STR] = 750,
                       [xi.mod.DEX] = 750,
                       [xi.mod.HASTE_GEAR] = 450,   -- ~30% (capped by engine)
-                      [xi.mod.DOUBLE_ATTACK] = 38,
-                      [xi.mod.TRIPLE_ATTACK] = 18,
-                      [xi.mod.REGEN] = 1200,
+                      [xi.mod.DOUBLE_ATTACK] = 20,
+                      [xi.mod.TRIPLE_ATTACK] = 8,
+                      [xi.mod.REGEN] = 300,
                   },
                 },
                 { name = 'Pandemonium_Warden', label = 'Pandemonium Warden', points = 65, groupId = 11368, minLv = 150, maxLv = 150,
@@ -360,16 +368,16 @@ return
                   drops = { { id = xi.item.KHIMAIRA_HORN, qty = 5 }, { id = 2372, qty = 5 } },  -- Khimaira Horn + Khimaira Mane (Augment Affinity: CHR/Charm)
                   hpBoost = 36,
                   mods = {
-                      [xi.mod.DEF] = 2750,
-                      [xi.mod.ATT] = 16200,
+                      [xi.mod.DEF] = 1375,
+                      [xi.mod.ATT] = 7776,
                       [xi.mod.ACC] = 900,
                       [xi.mod.EVASION] = 900,
                       [xi.mod.MEVA] = 1080,
                       [xi.mod.MDEF] = 1080,
                       [xi.mod.HASTE_GEAR] = 450,
-                      [xi.mod.DOUBLE_ATTACK] = 38,
-                      [xi.mod.TRIPLE_ATTACK] = 18,
-                      [xi.mod.REGEN] = 1200,
+                      [xi.mod.DOUBLE_ATTACK] = 20,
+                      [xi.mod.TRIPLE_ATTACK] = 8,
+                      [xi.mod.REGEN] = 300,
                   },
                 },
                 { name = 'Shinryu',            label = 'Shinryu',            points = 110, groupId = 11369, minLv = 225, maxLv = 250,
@@ -377,18 +385,18 @@ return
                   drops = { { id = 1133, qty = 5 } },  -- Vial of Dragon Blood (Augment Affinity: MP/Refresh)
                   hpBoost = 72,
                   mods = {
-                      [xi.mod.DEF] = 11000,
+                      [xi.mod.DEF] = 2420,
                       [xi.mod.MDEF] = 9000,
-                      [xi.mod.ATT] = 27000,
+                      [xi.mod.ATT] = 10800,
                       [xi.mod.ACC] = 4500,  -- guaranteed hit even on full EVA stacks
                       [xi.mod.EVASION] = 7200,
                       [xi.mod.MEVA] = 3600,
                       [xi.mod.STR] = 1200,
                       [xi.mod.DEX] = 1200,
                       [xi.mod.HASTE_GEAR] = 600,
-                      [xi.mod.DOUBLE_ATTACK] = 53,
-                      [xi.mod.TRIPLE_ATTACK] = 23,
-                      [xi.mod.REGEN] = 3000,
+                      [xi.mod.DOUBLE_ATTACK] = 25,
+                      [xi.mod.TRIPLE_ATTACK] = 10,
+                      [xi.mod.REGEN] = 500,
                   },
                 },
             },
