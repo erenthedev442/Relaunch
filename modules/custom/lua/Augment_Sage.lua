@@ -39,9 +39,18 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
     local buildMainMenu, buildRankUpMenu, buildAffinityMenu, buildStatusMenu
 
     -----------------------------------
-    -- Rank-up handler. Validates all three requirements, consumes seal +
-    -- trophy on success, bumps Augment_Mastery, re-renders main menu.
+    -- Rank-up handler. Validates HL rank or Prestige level requirement,
+    -- bumps Augment_Mastery, re-renders main menu. No items consumed.
     -----------------------------------
+    local function getMaxPrestigeLevel(player)
+        local max = 0
+        for jobId = 1, 22 do
+            local lv = player:getCharVar(string.format('Prestige_Level_%d', jobId)) or 0
+            if lv > max then max = lv end
+        end
+        return max
+    end
+
     local function tryRankUp(player)
         local currentRank = player:getCharVar('Augment_Mastery') or 0
         local nextRank    = currentRank + 1
@@ -53,38 +62,29 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
             return
         end
 
-        local augCount = player:getCharVar('Augment_Count') or 0
-        if augCount < req.augCount then
-            player:printToPlayer(string.format(
-                'You need %d successful augments (you have %d). Keep augmenting!',
-                req.augCount, augCount), xi.msg.channel.SYSTEM_3)
-            buildMainMenu(player)
-            return
+        if req.hlRank then
+            local hlTier = player:getCharVar('HL_Tier') or 1
+            if hlTier < req.hlRank then
+                player:printToPlayer(string.format(
+                    'You need Hunting League Rank %d (you are Rank %d).',
+                    req.hlRank, hlTier), xi.msg.channel.SYSTEM_3)
+                buildMainMenu(player)
+                return
+            end
         end
 
-        local sealDef = sage.seals[req.seal.tier]
-        local sealHas = player:getItemCount(sealDef.id)
-        if sealHas < req.seal.qty then
-            player:printToPlayer(string.format(
-                'You need %d x %s (you have %d).',
-                req.seal.qty, sealDef.name, sealHas), xi.msg.channel.SYSTEM_3)
-            buildMainMenu(player)
-            return
+        if req.prestigeLevel then
+            local maxPL = getMaxPrestigeLevel(player)
+            if maxPL < req.prestigeLevel then
+                player:printToPlayer(string.format(
+                    'You need Prestige Level %d on any job (your best: %d).',
+                    req.prestigeLevel, maxPL), xi.msg.channel.SYSTEM_3)
+                buildMainMenu(player)
+                return
+            end
         end
 
-        local trophyHas = player:getItemCount(req.trophy.id)
-        if trophyHas < req.trophy.qty then
-            player:printToPlayer(string.format(
-                'You need %d x %s (you have %d). Slay %s and return!',
-                req.trophy.qty, req.trophy.name, trophyHas, req.nm),
-                xi.msg.channel.SYSTEM_3)
-            buildMainMenu(player)
-            return
-        end
-
-        -- All good - consume and promote.
-        player:delItem(sealDef.id,     req.seal.qty)
-        player:delItem(req.trophy.id,  req.trophy.qty)
+        -- All requirements met - promote.
         player:setCharVar('Augment_Mastery', nextRank)
 
         -- Speed-board anchor: stamp the timestamp when a player first reaches
@@ -206,28 +206,37 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
         if not req then
             table.insert(options, { 'Max rank reached!', function() end })
         else
-            local augCount = player:getCharVar('Augment_Count') or 0
-            local sealDef  = sage.seals[req.seal.tier]
-            local sealHas  = player:getItemCount(sealDef.id)
-            local trophyHas = player:getItemCount(req.trophy.id)
+            local met = true
 
+            if req.hlRank then
+                local hlTier = player:getCharVar('HL_Tier') or 1
+                local ok     = hlTier >= req.hlRank
+                if not ok then met = false end
+                table.insert(options, {
+                    string.format('HL Rank %d/%d %s', hlTier, req.hlRank, ok and '[OK]' or ''),
+                    function(p) buildRankUpMenu(p) end,
+                })
+            end
+
+            if req.prestigeLevel then
+                local maxPL = 0
+                for jobId = 1, 22 do
+                    local lv = player:getCharVar(string.format('Prestige_Level_%d', jobId)) or 0
+                    if lv > maxPL then maxPL = lv end
+                end
+                local ok = maxPL >= req.prestigeLevel
+                if not ok then met = false end
+                table.insert(options, {
+                    string.format('Prestige %d/%d %s', maxPL, req.prestigeLevel, ok and '[OK]' or ''),
+                    function(p) buildRankUpMenu(p) end,
+                })
+            end
+
+            local promoteLabel = met
+                and string.format('>> Promote to %s', req.title:gsub('Augment ', ''))
+                or  '(Requirements not met)'
             table.insert(options, {
-                string.format('Augs %d/%d', augCount, req.augCount),
-                function(p) buildRankUpMenu(p) end,
-            })
-            table.insert(options, {
-                string.format('%s %d/%d',
-                    sealDef.name:match('^(%S+)') or 'Seal',
-                    sealHas, req.seal.qty),
-                function(p) buildRankUpMenu(p) end,
-            })
-            table.insert(options, {
-                string.format('%s %d/%d',
-                    req.trophy.name:sub(1, 16), trophyHas, req.trophy.qty),
-                function(p) buildRankUpMenu(p) end,
-            })
-            table.insert(options, {
-                string.format('>> Promote to %s', req.title:gsub('Augment ', '')),
+                promoteLabel,
                 function(p) tryRankUp(p) end,
             })
         end

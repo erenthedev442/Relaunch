@@ -52,47 +52,38 @@ catalog.seals =
 -- every augment value at that rank. critChance[rank+1] is the per-trade
 -- probability of a 2x crit augment.
 -----------------------------------
+-- =========================================================
+-- RELAUNCH: Rank gates replaced with content milestones.
+--   hlRank         : requires HL_Tier >= this value
+--   prestigeLevel  : requires Prestige_Level_<mainJob> >= this value
+-- No seals, trophies, or augment counts required.
+-- =========================================================
 catalog.ranks =
 {
     {
-        rank      = 1,
-        title     = 'Augment Initiate',
-        augCount  = 10,
-        seal      = { tier = 'bronze', qty = 5  },
-        trophy    = { id  = 883,  qty = 1, name = 'Behemoth Horn'           },
-        nm        = 'Behemoth',
+        rank          = 1,
+        title         = 'Augment Initiate',
+        hlRank        = 2,    -- unlock at Hunting League Rank 2
     },
     {
-        rank      = 2,
-        title     = 'Augment Adept',
-        augCount  = 20,
-        seal      = { tier = 'silver', qty = 10 },
-        trophy    = { id  = 865,  qty = 1, name = "Handful of Nidhogg's Scales" },
-        nm        = 'Nidhogg',
+        rank          = 2,
+        title         = 'Augment Adept',
+        hlRank        = 3,    -- unlock at Hunting League Rank 3
     },
     {
-        rank      = 3,
-        title     = 'Augment Magus',
-        augCount  = 50,
-        seal      = { tier = 'silver', qty = 25 },
-        trophy    = { id  = 2371, qty = 1, name = 'Khimaira Horn'           },
-        nm        = 'Khimaira (Tiamat-tier dragon)',
+        rank          = 3,
+        title         = 'Augment Magus',
+        hlRank        = 5,    -- unlock at Hunting League Rank 5 (Legend)
     },
     {
-        rank      = 4,
-        title     = 'Augment Sage',
-        augCount  = 120,
-        seal      = { tier = 'gold',   qty = 50 },
-        trophy    = { id  = 10037, qty = 1, name = "Fafnir's Scale"         },
-        nm        = 'Fafnir',
+        rank          = 4,
+        title         = 'Augment Sage',
+        prestigeLevel = 15,   -- unlock at Prestige Level 15 (any main job)
     },
     {
-        rank      = 5,
-        title     = 'Augment Archon',
-        augCount  = 250,
-        seal      = { tier = 'gold',   qty = 100 },
-        trophy    = { id  = 10038, qty = 1, name = "Kirin's Mane"           },
-        nm        = 'Kirin (sky-god proxy for Absolute Virtue)',
+        rank          = 5,
+        title         = 'Augment Archon',
+        prestigeLevel = 30,   -- unlock at Prestige Level 30 (any main job)
     },
 }
 
