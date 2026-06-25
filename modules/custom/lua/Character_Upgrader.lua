@@ -152,14 +152,10 @@ local function completeAllQuests(player)
     end
 end
 
-local function giveAllMaps(player)
-    local added = 0
-    for name, kiId in pairs(xi.ki) do
-        if string.sub(name, 1, 7) == 'MAP_OF_' and not player:hasKeyItem(kiId) then
-            pcall(function()
-                player:addKeyItem(kiId)
-                added = added + 1
-            end)
+local function giveAllKeyItems(player)
+    for _, kiId in pairs(xi.ki) do
+        if not player:hasKeyItem(kiId) then
+            pcall(function() player:addKeyItem(kiId) end)
         end
     end
 end
@@ -217,7 +213,7 @@ local function giveEverything(player)
     giveAllTrusts(player)
     completeAllQuests(player)
     completeAllMissions(player)
-    giveAllMaps(player)
+    giveAllKeyItems(player)
     giveAllOutpostWarps(player)
     giveAllHomepoints(player)
     giveAllSurvivalGuides(player)
@@ -228,7 +224,7 @@ local function giveEverything(player)
     player:printToPlayer('Spells, weapon skills & job abilities', SYS)
     player:printToPlayer('All trusts', SYS)
     player:printToPlayer('All quests & missions completed', SYS)
-    player:printToPlayer('Maps, homepoints, survival guides & outpost warps', SYS)
+    player:printToPlayer('All key items, maps, homepoints, survival guides & outpost warps', SYS)
     player:printToPlayer('Full wardrobes & automaton parts', SYS)
     player:printToPlayer('Welcome! Type !help to get started.', SYS)
 end
