@@ -155,8 +155,8 @@ return
             cry     = '"Close your eyes... this nightmare is the last thing you will know."',
             mods =
             {
-                [xi.mod.DEF] = 2475,
-                [xi.mod.ATT] = 12600,
+                [xi.mod.DEF] = 1500,   -- relaunch Phase 2: -40% (was 2475)
+                [xi.mod.ATT] = 6000,   -- relaunch Phase 2: to 5-7k range (was 12600)
                 [xi.mod.ACC] = 2700,
                 [xi.mod.EVASION] = 720,
                 [xi.mod.MATT] = 900,
@@ -166,7 +166,7 @@ return
                 [xi.mod.INT]        = 500,
                 [xi.mod.MND]        = 400,
                 [xi.mod.HASTE_GEAR] = 250,
-                [xi.mod.REGEN]      = 600,
+                [xi.mod.REGEN]      = 180,   -- relaunch Phase 2 (was 600)
             },
         },
         [11373] =
@@ -178,8 +178,8 @@ return
             cry     = '"Look upon me... and be still, forever."',
             mods =
             {
-                [xi.mod.DEF] = 2887,
-                [xi.mod.ATT] = 15300,
+                [xi.mod.DEF] = 1600,   -- relaunch Phase 2: -40% to range (was 2887)
+                [xi.mod.ATT] = 6500,   -- relaunch Phase 2: to 5-7k range (was 15300)
                 [xi.mod.ACC] = 3060,
                 [xi.mod.EVASION] = 900,
                 [xi.mod.MEVA] = 900,
@@ -188,7 +188,7 @@ return
                 [xi.mod.DEX]           = 400,
                 [xi.mod.DOUBLE_ATTACK] = 22,
                 [xi.mod.HASTE_GEAR]    = 200,
-                [xi.mod.REGEN]         = 700,
+                [xi.mod.REGEN]         = 200,   -- relaunch Phase 2 (was 700)
             },
         },
         [11372] =
@@ -200,8 +200,8 @@ return
             cry     = '"Zantetsuken. There is no wound -- only the end."',
             mods =
             {
-                [xi.mod.DEF] = 3300,
-                [xi.mod.ATT] = 18000,
+                [xi.mod.DEF] = 1700,   -- relaunch Phase 2: -48% to range (was 3300)
+                [xi.mod.ATT] = 7000,   -- relaunch Phase 2: to 5-7k range (was 18000)
                 [xi.mod.ACC] = 3960,
                 [xi.mod.EVASION] = 1170,
                 [xi.mod.MEVA] = 1260,
@@ -211,7 +211,7 @@ return
                 [xi.mod.HASTE_GEAR]    = 300,
                 [xi.mod.DOUBLE_ATTACK] = 28,
                 [xi.mod.TRIPLE_ATTACK] = 15,
-                [xi.mod.REGEN]         = 900,
+                [xi.mod.REGEN]         = 300,   -- relaunch Phase 2 (was 900)
             },
         },
     },
