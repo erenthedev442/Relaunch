@@ -62,28 +62,31 @@ catalog.rotation =
     reward      = 50,     -- sigils per live target, once per period
     announce    = true,   -- chat line when a rotation target is claimed
     partyWide   = true,   -- credit every same-zone party member, not just the killer
+    -- Distinct from the Hunters' Guild / Reforge / Hunting League NM sets (those
+    -- pay their own currencies). Verified present in the relaunch DB (mobType is
+    -- NM, walkable overworld zones). `name` matches mob:getName() (underscored).
     pool =
     {
-        { name = 'Tarasque',          label = 'Tarasque',          zone = 'Ifrits_Cauldron' },
-        { name = 'Capricornus',       label = 'Capricornus',       zone = 'Jugner_Forest' },
-        { name = 'Charybdis',         label = 'Charybdis',         zone = 'Sea_Serpent_Grotto' },
-        { name = 'Tiamat',            label = 'Tiamat',            zone = 'Attohwa_Chasm' },
-        { name = 'Fafnir',            label = 'Fafnir',            zone = 'Dragons_Aery' },
-        { name = 'Cactrot_Rapido',    label = 'Cactrot Rapido',    zone = 'Eastern_Altepa_Desert' },
-        { name = 'Lord_of_Onzozo',    label = 'Lord of Onzozo',    zone = 'Labyrinth_of_Onzozo' },
-        { name = 'King_Vinegarroon',  label = 'King Vinegarroon',  zone = 'Western_Altepa_Desert' },
-        { name = 'Khimaira',          label = 'Khimaira',          zone = 'Caedarva_Mire' },
-        { name = 'Cerberus',          label = 'Cerberus',          zone = 'Mount_Zhayolm' },
-        { name = 'Faust',             label = 'Faust',             zone = 'The_Shrine_of_RuAvitau' },
-        { name = 'Despot',            label = 'Despot',            zone = 'RuAun_Gardens' },
-        { name = 'Steam_Cleaner',     label = 'Steam Cleaner',     zone = 'VeLugannon_Palace' },
-        { name = 'Brigandish_Blade',  label = 'Brigandish Blade',  zone = 'VeLugannon_Palace' },
-        { name = 'Bahamut',           label = 'Bahamut',           zone = 'Riverne-Site_B01' },
-        { name = 'Bune',              label = 'Bune',              zone = 'Gustav_Tunnel' },
-        { name = 'Carmine_Dobsonfly', label = 'Carmine Dobsonfly', zone = 'Riverne-Site_A01' },
-        { name = 'Aspidochelone',     label = 'Aspidochelone',     zone = 'Valley_of_Sorrows' },
-        { name = 'Behemoth',          label = 'Behemoth',          zone = 'Behemoths_Dominion' },
-        { name = 'Jormungand',        label = 'Jormungand',        zone = 'Uleguerand_Range' },
+        { name = 'Jaggedy-Eared_Jack', label = 'Jaggedy-Eared Jack', zone = 'West_Ronfaure' },
+        { name = 'Bigmouth_Billy',     label = 'Bigmouth Billy',     zone = 'East_Ronfaure' },
+        { name = 'King_Arthro',        label = 'King Arthro',        zone = 'Jugner_Forest' },
+        { name = 'Lumber_Jack',        label = 'Lumber Jack',        zone = 'Batallia_Downs' },
+        { name = 'Stray_Mary',         label = 'Stray Mary',         zone = 'Konschtat_Highlands' },
+        { name = 'Carnero',            label = 'Carnero',            zone = 'South_Gustaberg' },
+        { name = 'Serpopard_Ishtar',   label = 'Serpopard Ishtar',   zone = 'Tahrongi_Canyon' },
+        { name = 'Botulus_Rex',        label = 'Botulus Rex',        zone = 'Buburimu_Peninsula' },
+        { name = 'Orcus',              label = 'Orcus',              zone = 'Meriphataud_Mountains' },
+        { name = 'Old_Sabertooth',     label = 'Old Sabertooth',     zone = 'Sauromugue_Champaign' },
+        { name = 'Bastet',             label = 'Bastet',             zone = 'The_Sanctuary_of_ZiTah' },
+        { name = 'Voluptuous_Vilma',   label = 'Voluptuous Vilma',   zone = 'Yuhtunga_Jungle' },
+        { name = 'Powderer_Penny',     label = 'Powderer Penny',     zone = 'Yhoator_Jungle' },
+        { name = 'Kraken',             label = 'Kraken',             zone = 'Qufim_Island' },
+        { name = 'Nue',                label = 'Nue',                zone = 'Beaucedine_Glacier' },
+        { name = 'Gargantua',          label = 'Gargantua',          zone = 'Beaucedine_Glacier' },
+        { name = 'Koenigstiger',       label = 'Koenigstiger',       zone = 'Xarcabard' },
+        { name = 'Stolas',             label = 'Stolas',             zone = 'Cape_Teriggan' },
+        { name = 'Kreutzet',           label = 'Kreutzet',           zone = 'Cape_Teriggan' },
+        { name = 'Guivre',             label = 'Guivre',             zone = 'Kuftal_Tunnel' },
     },
 }
 
