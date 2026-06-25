@@ -54,6 +54,11 @@ end
 -- No-op if the pool is empty, the roll misses, or the player's inventory is
 -- full (with a heads-up in the latter case so the drop isn't silently eaten).
 function M.roll(player, augTier, rate)
+    -- DISABLED 2026-06-25: the random tier-pool roll was replaced by 1:1
+    -- specific-mob drops (augment_catalyst_drops.lua -- each catalyst comes from
+    -- one assigned mob, no mob drops two). Left as a no-op so the existing
+    -- HL / Prestige / Abyssea callers need no edits. Delete this line to restore.
+    do return end
     if player == nil or augTier == nil then return end
     build()
     local pool = pools[augTier]

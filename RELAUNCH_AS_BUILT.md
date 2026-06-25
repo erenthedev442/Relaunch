@@ -154,15 +154,15 @@ Trade gear + 1-5 NM-drop "catalyst" items to the **Augment Moogle** (flat **10,0
 
 Catalog design rule: job/pet/resist/skill augments are free (tier 0); universally-strong stats (Haste, DA/TA/QA, PDT/MDT, Dmg+, HP/MP, crit-dmg, TP/WS) are tier 3-4 (require higher Sage rank).
 
-**Where catalysts drop — the tier matrix.** Each catalyst carries a `tier` (0-4) that is *both* the Augment Sage rank needed to use it *and* its drop pool. An eligible NM rolls one random catalyst from the pool matching its difficulty (`augment_catalyst_pools.lua`, **50% per eligible kill**; *which* catalyst is uniform-random within the tier, so a specific augment is still a grind). This is *in addition* to any item's original droplist — it's the reliable farm that replaced the old `!shop` gil purchase.
+**Where catalysts drop — 1:1 specific mobs (2026-06-25).** Each catalyst drops from exactly **one mob**, and **no mob drops more than one catalyst** (`augment_catalyst_mobs.lua` — a tier-banded 1:1 auto-assignment — applied by the `augment_catalyst_drops.lua` global `onMobDeathEx` handler at **50%** on the assigned mob's death). The assignment is banded to **mob level** so farm difficulty matches the augment's power, and **297 of 299 sit on a mob that already dropped the item**. This **replaced the old random tier-pool roll** (`augment_catalyst_pools.roll`, now neutered) — so HL / Prestige / Abyssea NMs no longer drop random catalysts. The full catalyst → mob mapping is in the **appendix**.
 
-| Tier | Sage rank to use | Drops from | In the pool (examples) |
+| Tier | Sage rank to use | Mob-level band | Examples of augments at this tier |
 |---|---|---|---|
-| **T0** | 0 (free) | HL Rank 1-2 NMs — Leaping Lizzy, Valkurm Emperor, Tom Tit Tat, Roc, Bomb Queen, Aquarius | all elemental resists & affinities, status resists, job ability-delay cuts (BP / Call Beast / Quick Draw / Waltz / song / magic recast), Exp/Cap +33%, Slow, Gilfinder, Enmity, Beast / Phantom-Roll / Thunder affinity |
-| **T1** | 1 Initiate | HL Rank 3 — Serket, Vrtra, Simurgh | every weapon/magic **Skill+**, most **Pet** stats, Counter, Martial Arts, Evasion / Mag.Eva, Drain/Aspir potency, Enhancing / Helix / Meditate duration, Shield Mastery / Block / Parry |
-| **T2** | 2 Adept | HL Rank 4-5 — Nidhogg, King Behemoth, Kirin, Absolute Virtue, Pandemonium Warden | the 7 base stats (STR/DEX/VIT/AGI/INT/MND/CHR), **Accuracy / Rng.Acc**, Store TP, Subtle Blow, **DEF**, **Mag.Acc / Mag.Atk.Bns**, **Fast Cast**, Cure potency, Magic Damage, Snapshot |
-| **T3** | 3 Magus | **Ascension / Prestige Trial bosses** (Prestige Lv 15+) | **Attack / Rng.Atk**, **Double Atk** & DA+crit, Crit rate, **HP / MP / Regen / Refresh**, **Weapon skill damage**, Skillchain / Magic-burst / Mag-crit dmg, weapon-delay cuts, Helix / Spikes dmg |
-| **T4** | 4 Sage | **Shinryu** (HL Rank-5 elite) + endgame | the BiS power augments: **Haste**, **Triple / Quadruple Attack**, **TP Bonus**, **Crit. hit damage**, **PDT / MDT** (−phys/magic dmg taken), **Dmg+** (melee/ranged) |
+| **T0** | 0 (free) | ≤ 28 | elemental resists/affinities, status resists, job ability-delay cuts, Exp/Cap +33%, Slow, Gilfinder, Enmity |
+| **T1** | 1 Initiate | 29-48 | weapon/magic **Skill+**, **Pet** stats, Counter, Evasion / Mag.Eva, Drain/Aspir, Enh/Helix duration |
+| **T2** | 2 Adept | 49-72 | the 7 base stats, **Accuracy**, Store TP, **DEF**, **Mag.Acc / Mag.Atk.Bns**, **Fast Cast**, Magic Damage |
+| **T3** | 3 Magus | 73-95 | **Attack / Rng.Atk**, **Double Atk**, Crit rate, **HP / MP / Regen / Refresh**, **Weapon skill damage**, SC/MB dmg |
+| **T4** | 4 Sage | 96+ (incl. endgame NMs) | the BiS power augments: **Haste**, **Triple / Quadruple Attack**, **TP Bonus**, **Crit. hit damage**, **PDT / MDT**, **Dmg+** |
 
 **NM affinity trophies (×1.5 to a whole category).** A separate, *specific* drop: kill the signature NM and hand its trophy to the **Augment Sage** (plus the relaunch gate — HL Rank 3 + 1,000 Hunt Marks) to permanently ×1.5 that category's augments (`augment_affinity_catalog.lua`):
 
@@ -283,308 +283,308 @@ Pure-Lua (`SpellSkillMastery.lua`): potency/traits via `addMod` + onGameIn re-ap
 
 *Generated from a full read of the `relaunch` worktree. Every figure above is taken from the committed catalogs/modules; where a number reads from live `settings/*.lua` (absent here) it's flagged. NPC coordinates need an in-game `!pos` pass once the relaunch server is up.*
 
-## Appendix — Literal catalyst drop matrix
+## Appendix -- Literal catalyst drop matrix
 
-Every augment catalyst (`augment_catalog.lua`) with the actual mob(s) that drop it, joined from the relaunch DB (`mob_droplist` → `mob_groups` → `mob_pools`). **Reality check:** most catalysts are *common* items (the augment difficulty comes from the Augment Sage rank gate and the tier-pool roll, **not** catalyst rarity), so ubiquitous drops are collapsed to a count; catalysts from ≤6 mobs are listed in full. The thematic NM names in the §4.1 affinity table are flavor — the literal droplist (e.g. *Giant Femur* from dhalmels, not "Behemoth") is below. Sorted by tier, then stat.
+**1:1 assignment (2026-06-25).** Each augment catalyst is farmed from exactly one specific mob, and no mob drops more than one catalyst (implemented in `augment_catalyst_mobs.lua`). Assignment is tier-banded by mob level so difficulty tracks augment power: T0 catalysts on Lv1-28 mobs, T1 on Lv29-48, T2 on Lv49-72, T3 on Lv73-95, T4 on Lv96+. 297 of 299 assignments sit on a mob that already dropped the item in the base droplist (thematic). Two are marked *(fresh)* -- assigned to a same-tier mob with no prior droplist tie. Drop rate: **50%** on kill (one tuning knob in `augment_catalyst_drops.lua`). The old random tier-pool roll (`augment_catalyst_pools.lua M.roll`) is neutered; HL/Prestige/Abyssea NMs no longer yield random catalysts.
 
-| Catalyst item | Stat (augment) | Tier | Dropped by (literal) |
-|---|---|---|---|
-| square of raxa (1132) | All elemental resists | T0 | _common — 12 mobs_ (e.g. Aura Statue, Blobdingnag, Dawon, Krabkatoa, …) |
-| wandering bulb (1158) | All elemental resists | T0 | Utukku EN FY |
-| golden hakutaku eye (1291) | All songs | T0 | Mindgazer SSG |
-| crawler calculus (1156) | Avatar perpetuation cost | T0 | Crawler |
-| northern fur (1199) | Barrage | T0 | Giant Hunter, Giant Lobber |
-| smilodon hide (2518) | Beast Affinity | T0 | _common — 10 mobs_ (e.g. Ansherekh, Fierce Smilodon, Fighting Smilodon, Icefang Tiger, …) |
-| lizard skin (852) | Blood Boon | T0 | _common — 37 mobs_ (e.g. Ash Lizard, Bane Lizard, Burrow Antlion, Carriage Lizard, …) |
-| manta skin (876) | Blood Pact ability delay | T0 | Devil Manta, Devil Manta fished, Flying Manta |
-| beehive chip (912) | Call Beast ability delay | T0 | _common — 35 mobs_ (e.g. Belaboring Wasp, Bumblebee, Davoi Hornet, Davoi Wasp, …) |
-| demon horn (902) | Charm | T0 | _common — 56 mobs_ (e.g. Adjudicator Demon, Aestutaur, Baronet Romwe, Baron Vapula, …) |
-| jar of firesand (947) | Daken | T0 | _common — 16 mobs_ (e.g. Goblin Hangman, Goblin Headman, Goblin Junkman, Goblin Marksman, …) |
-| corse bracelet (1614) | Dark Affinity | T0 | Arch Corse, Citipati, Corse, Elel, Wiederganger |
-| eastern gem (1664) | Dark Affinity | T0 | Brook Sahagin, Lake Sahagin, Pond Sahagin, Riparian Sahagin, River Sahagin, Stream Sahagin |
-| fourth virtue (1848) | Dark Affinity | T0 | Jailer of Justice |
-| leshonki bulb (1263) | Dark Affinity | T0 | Leshonki |
-| soulflayer robe (1724) | Dark Affinity | T0 | Pneumaflayer, Psycheflayer, Soulflayer |
-| pinch of dried mugwort (1443) | Dark Affinity Avatar perp. cost | T0 | _common — 14 mobs_ (e.g. Beryl-footed Molberry, Carmine-tailed Janberry, Celeste-eyed Tozberry, Crimson-toothed Pawberry, …) |
-| twitherym wing (3930) | Dark Affinity Magic Accuracy | T0 | Careening Twitherym |
-| bag of poison flour (952) | Dark resist | T0 | _common — 26 mobs_ (e.g. Cryptonberry Cutter, Cryptonberry Harrier, Cryptonberry Occultist, Cryptonberry Occultist Small, …) |
-| lancewood log (1464) | Earth Affinity | T0 | _common — 53 mobs_ (e.g. Bhuu Wjato the Firepool, Caa Xaza the Madpiercer, Foo Peku the Bloodcloak, Fuu Tzapo the Blessed, …) |
-| moblin armor (1631) | Earth Affinity | T0 | _common — 24 mobs_ (e.g. Fleshflayer Killakriq, Goblin Aidman, Goblin Chapman, Moblin Aidman, …) |
-| piece of eastern pottery (1200) | Earth Affinity | T0 | Clockwork Pod FY, Clockwork Pod GC |
-| recollection of pain (1688) | Earth Affinity | T0 | _common — 8 mobs_ (e.g. Gorger PD, Gorger PV, Seether, Seether PV, …) |
-| sack of little worm mulch (1831) | Earth Affinity | T0 | Ziryu |
-| piece of oxblood (1311) | Earth Affinity Avatar perp. cost | T0 | _common — 9 mobs_ (e.g. Byakko, Charybdis, Genbu, Jormungand, …) |
-| gargouille eye (2749) | Earth Affinity Magic Accuracy | T0 | Benumbed Vodoriga, Dire Gargouille, Gargouille, Gnarled Gargouille, Gruesome Gargouille |
-| block of animal glue (937) | Earth resist | T0 | Goblin Ambusher, Goblin Bushwhacker, Goblin Trailblazer |
-| undead skin (849) | Elemental Magic Recast Delay | T0 | _common — 15 mobs_ (e.g. Addled Tumor, Decayed Flesh, Doom Toad, Fetid Flesh, …) |
-| arioch fang (1272) | Elemental Siphon | T0 | Arioch |
-| ram skin (859) | Enfeebling Magic Recast Delay | T0 | _common — 19 mobs_ (e.g. Amaltheia, Battering Ram, Blobdingnag, Bloodtear Baldurf, …) |
-| first virtue (1850) | Enhances | T0 | Jailer of Temperance |
-| handful of pugil scales (868) | Enhancing Magic Recast Delay | T0 | _common — 82 mobs_ (e.g. Abyssal Pugil, Aipaloovik, Apsaras, Beach Pugil, …) |
-| diamond (787) | Enmity | T0 | Diamond Quadav |
-| venomous claw (901) | Enmity | T0 | _common — 7 mobs_ (e.g. Amikiri, Genbu, King Vinegarroon, Lambton Worm, …) |
-| peiste skin (2523) | Exp. Point +33% | T0 | Kinepikwa, Maritime Peiste, Peiste, Virulent Peiste |
-| doll shard (1165) | Fire Affinity | T0 | _common — 18 mobs_ (e.g. Aura Butler, Aura Gear, Branding Iron, Caretaker, …) |
-| doll gizmo (1268) | Fire Affinity Avatar perp. cost | T0 | Manipulator |
-| ladybug wing (2506) | Fire Affinity Magic Accuracy | T0 | _common — 7 mobs_ (e.g. Biddybug, Coccinelle, Ladybug, Mariehene, …) |
-| chapuli wing (3941) | Fire Affinity Magic Accuracy Recast time | T0 | Fernfelling Chapuli |
-| spool of malboro fiber (837) | Fire resist | T0 | _common — 13 mobs_ (e.g. Byakko, Capricious Cassie, Eccentric Eve, Jormungand, …) |
-| golem shard (955) | Fire,Wind,Lightning,Light resists | T0 | _common — 13 mobs_ (e.g. Aura Sculpture, Aura Statue, Colossus, Darksteel Golem, …) |
-| moblumin ingot (1858) | Gilfinder | T0 | Goblin Freelance, Moblin Ashman |
-| spider web (838) | Healing Magic Recast Delay | T0 | _common — 18 mobs_ (e.g. Aht Urhgan Attercop, Aqueduct Spider, Bark Spider, Bark Tarantula, …) |
-| bomb queen core (1186) | Ice Affinity | T0 | Volcanic Bomb |
-| bugbear mask (1624) | Ice Affinity | T0 | _common — 7 mobs_ (e.g. Bugbear Bondman, Bugbear Deathsman, Bugbear Matman, Bugbear Servingman, …) |
-| pinch of hoary bomb ash (1669) | Ice Affinity | T0 | Ancient Bomb |
-| shakudo ingot (1738) | Ice Affinity | T0 | Fomor Ninja, Fomor Samurai |
-| tukuku whiteshell (1449) | Ice Affinity | T0 | _common — 242 mobs_ (e.g. Anvilix Sootwrists, Ascetox Ratgums, Avatar Icon, Baa Dava the Bibliophage, …) |
-| arachne web (1270) | Ice Affinity Avatar perp. cost | T0 | Arachne |
-| slug eye (2509) | Ice Affinity Magic Accuracy | T0 | _common — 8 mobs_ (e.g. Dyinyinga, Edible Slug, Gunge Slug, Gunge Slug Small, …) |
-| sprig of mistletoe (918) | Ice resist | T0 | _common — 10 mobs_ (e.g. Ahtu, Defoliate Treant, Knobby Treant, Knotty Treant, …) |
-| dahlia (959) | Ice,Earth,Water,Dark resists | T0 | Goobbue, Goobbue Farmer, Jolly Green |
-| amoeban pseudopod (2641) | Indi Effect Duration | T0 | _common — 7 mobs_ (e.g. Crevice Amoeban, Ephemeral Amoeban, Floe Amoeban, Oasis Amoeban, …) |
-| bag of tree cuttings (1237) | Light Affinity | T0 | _common — 10 mobs_ (e.g. Ancient Goobbue, Elder Goobbue, Goobbue, Goobbue Farmer, …) |
-| fifth virtue (1847) | Light Affinity | T0 | Jailer of Hope |
-| jar of goblin grease (1520) | Light Affinity | T0 | _common — 82 mobs_ (e.g. Anvilix Sootwrists, Ascetox Ratgums, Bandrix Rockjaw, Blazox Boneybod, …) |
-| spool of moblin thread (1651) | Light Affinity | T0 | Moblin Aidman, Moblin Chapman, Moblin Topsman, Moblin Witchman |
-| square of cashmere cloth (1714) | Light Affinity | T0 | Bahamut |
-| piece of wisteria lumber (1414) | Light Affinity Avatar perp. cost | T0 | Elder Goobbue |
-| vial of umbral marrow (3502) | Light Affinity Magic Accuracy | T0 | Arch Dynamis Lord |
-| carnation (948) | Light resist | T0 | Goblin Archaeologist |
-| item 1201 (1201) | Lightning Affinity | T0 | _(tier-pool roll only — no base droplist)_ |
-| marble slab (1836) | Lightning Affinity | T0 | Gigas Foreman, Gigas Stonecarrier, Gigas Stonegrinder, Gigas Stonemason |
-| moblin mail (1632) | Lightning Affinity | T0 | Moblin Ashman, Moblin Groundman |
-| recollection of guilt (1689) | Lightning Affinity | T0 | _common — 8 mobs_ (e.g. Craver PM, Craver PV, Gorger PD, Gorger PV, …) |
-| slab of granite (1465) | Lightning Affinity | T0 | _common — 9 mobs_ (e.g. Blobdingnag, Dawon, Goliath, Krabkatoa, …) |
-| clionid wing (2890) | Lightning Affinity Magic Accuracy | T0 | _common — 13 mobs_ (e.g. Desert Clionid, Ephemeral Clionid, Ephemeral Clionid Large, Ephemeral Clionid Small, …) |
-| sprig of papaka grass (938) | Lightning resist | T0 | _common — 8 mobs_ (e.g. Bull Dhalmel, Camelopardalis, Celphie, Desert Dhalmel, …) |
-| mana barrel (1269) | Ninja tool expertise | T0 | Sacrificial Goblet |
-| item 2831 (2831) | Occ. inc. resist to stat ailments | T0 | _(tier-pool roll only — no base droplist)_ |
-| sixth virtue (1849) | Occ. Resistance to Status Ailments | T0 | Jailer of Prudence |
-| bottle of illuminink (1408) | Pet Enmity | T0 | Cursed Puppet, Magic Flagon |
-| montiont silverpiece (1453) | Pet Enmity | T0 | _common — 139 mobs_ (e.g. Aitvaras, Alklha, Angra Mainyu, Antaeus, …) |
-| rabbit hide (856) | Pet TP Bonus | T0 | _common — 33 mobs_ (e.g. Beach Bunny, Bight Rarab, Blood Bunny, Bog Bunny, …) |
-| clump of sheep wool (832) | Phantom Roll ability delay | T0 | _common — 15 mobs_ (e.g. Battering Ram, Broo, Brutal Sheep, Brutal Sheep Small, …) |
-| eft skin (1623) | Quick Draw ability delay | T0 | _common — 10 mobs_ (e.g. Bellicose Tarichuk, Canyon Eft, Eft, Hypnos Eft, …) |
-| hippogryph feather (1619) | Rapid Shot | T0 | Cloud Hippogryph, Grauberg Hippogryph, Hippogryph, Nimbus Hippogryph, Strato Hippogryph |
-| ball of saruta cotton (834) | Recycle | T0 | _common — 18 mobs_ (e.g. Alraune, Blanched Mandragora, Fear Dearg, Hannequet, …) |
-| hydrangea (2729) | Repair potency | T0 | Hilltroll Red Mage, Hilltroll Warrior |
-| slab of plumbago (2860) | Resist Bind | T0 | _common — 8 mobs_ (e.g. Hilltroll Dark Knight, Hilltroll Warrior, Troll Cuirasser H, Troll Ironworker, …) |
-| moblin mask (1638) | Resist Blind | T0 | _common — 23 mobs_ (e.g. Fleshflayer Killakriq, Goblin Aidman, Goblin Chapman, Moblin Billionaire, …) |
-| khimaira mane (2372) | Resist Charm | T0 | _common — 9 mobs_ (e.g. Khimaira, Pandemonium Warden, Pandemonium Warden 2, Pandemonium Warden 3, …) |
-| jadeite (784) | Resist Curse | T0 | Droma GC, Skull of Envy |
-| painite (797) | Resist Gravity | T0 | Droma FY, Skull of Lust |
-| pinch of cluster ash (1630) | Resist Paralyze | T0 | _common — 7 mobs_ (e.g. Atomic Cluster, Cluster, Dynamo Cluster, Nitro Cluster, …) |
-| pinch of djinn ash (2549) | Resist Petrify | T0 | _common — 7 mobs_ (e.g. Djinn, Fulminator, Harum-scarum, Helter-skelter, …) |
-| ordelle bronzepiece (1452) | Resist Poison | T0 | _common — 243 mobs_ (e.g. Anvilix Sootwrists, Arch Overlord Tombstone, Ascetox Ratgums, Bandrix Rockjaw, …) |
-| cluster core (1667) | Resist Silence | T0 | Atomic Cluster, Cluster, Dynamo Cluster, Nitro Cluster, Odqan, Unstable Cluster |
-| lock of manticore hair (1163) | Resist Sleep | T0 | _common — 10 mobs_ (e.g. Desert Manticore, Dune Manticore, Frostmane, Greater Manticore, …) |
-| square of velvet cloth (828) | Resist Slow | T0 | Goblin Patrolman, Goblin Trader |
-| zircon (805) | Resist Stun | T0 | Clockwork Pod FY, Skull of Sloth |
-| clump of wamoura hair (2337) | Resist Virus | T0 | Wamoura |
-| high-quality coeurl hide (1591) | Reverse Flourish | T0 | Flauros, Ose, Torama |
-| fluorite (810) | Sic and Ready ability delay | T0 | Skull of Greed |
-| spool of rainbow thread (821) | Slow | T0 | _common — 17 mobs_ (e.g. Aht Urhgan Attercop, Aqueduct Spider, Bark Spider, Bark Tarantula, …) |
-| spool of grass thread (817) | Song recast delay | T0 | Goblin Weaver |
-| spool of rugged gold thread (2827) | Song spellcasting time | T0 | Bugbear Muscleman |
-| wamoura cocoon (2173) | Thunder Affinity | T0 | Gullycampa, Wamoura, Wamouracampa, Wamouracampa Small, Wamoura Prince |
-| sack of lugworm sand (1830) | Thunder Affinity Avatar perp. cost | T0 | Ziryu |
-| chrysoberyl (801) | Waltz ability delay | T0 | Clockwork Pod GC, Skull of Gluttony |
-| high-quality eft skin (1741) | Waltz potency | T0 | Eft, Hypnos Eft, Locus Hypnos Eft, Tartarus Eft, Terminus Eft |
-| square of damascene cloth (836) | Waltz TP cost | T0 | _common — 12 mobs_ (e.g. Jormungand, King Arthro, Lambton Worm, Ouryu, …) |
-| bag of cactus stems (1236) | Water Affinity | T0 | _common — 10 mobs_ (e.g. Cactrot Rapido, Cactuar Cantautor, Cuijatender, Leshonki, …) |
-| corse robe (1639) | Water Affinity | T0 | Arch Corse, Corse, Elel, Wiederganger |
-| infinity core (1474) | Water Affinity | T0 | _common — 12 mobs_ (e.g. Adamantking Effigy, Arch Goblin Golem, Arch GuDha Effigy, Arch Overlord Tombstone, …) |
-| square of spectral crimson (1843) | Water Affinity | T0 | Fomor Bard, Fomor Paladin, Fomor Red Mage |
-| lock of sirens hair (1313) | Water Affinity Avatar perp. cost | T0 | _common — 7 mobs_ (e.g. Bahamut, Jormungand, Ouryu, Ouryu Large, …) |
-| bakkas wing (2938) | Water Affinity Magic Accuracy | T0 | Bakka |
-| clump of cashmere wool (1712) | Water Affintiy | T0 | Vrtra |
-| pinch of poison dust (943) | Water resist | T0 | _common — 26 mobs_ (e.g. Cryptonberry Cutter, Cryptonberry Harrier, Cryptonberry Occultist, Cryptonberry Occultist Small, …) |
-| lungo-nango jadeshell (1450) | Wind Affinity | T0 | _common — 140 mobs_ (e.g. Aitvaras, Alklha, Angra Mainyu, Antaeus, …) |
-| moblin helm (1625) | Wind Affinity | T0 | Moblin Ashman, Moblin Groundman |
-| pinch of bomb queen ash (1187) | Wind Affinity | T0 | Volcanic Gas |
-| recollection of fear (1687) | Wind Affinity | T0 | _common — 8 mobs_ (e.g. Craver PM, Craver PV, Seether, Thinker PH, …) |
-| square of balloon cloth (1739) | Wind Affinity | T0 | Fomor Ranger, Fomor Ranger Large, Fomor Thief |
-| twincoon (1295) | Wind Affinity Avatar perp. cost | T0 | Habetrot |
-| gnat wing (2522) | Wind Affinity Magic Accuracy | T0 | Bloodlapper, Chasm Gnat, Gnat, Nematocera, Vorst Gnat |
-| pinch of bomb ash (928) | Wind resist | T0 | _common — 40 mobs_ (e.g. Ancient Bomb, Azer, Balloon, Balloon OHR, …) |
-| lizard tail (926) | Zanshin | T0 | _common — 34 mobs_ (e.g. Ash Lizard, Bane Lizard, Carriage Lizard, Chasm Lizard, …) |
-| ameretat vine (2361) | Archery skill | T1 | Ameretat, Ameretat NI, Great Ameretat, Jaded Jody |
-| freyas tear (1445) | Avatar Blood Pact Dmg | T1 | Olla Grande, Steam Cleaner |
-| vial of slime juice (1521) | Avatar Mag.Atk.Bns | T1 | _common — 53 mobs_ (e.g. BeZhe Keeprazer, BuBho Truesteel, DeBho Pyrohand, GaFho Venomtouch, …) |
-| malboro vine (920) | Axe skill | T1 | _common — 18 mobs_ (e.g. Anemone, Capricious Cassie, Demonic Rose, Demonic Rose past, …) |
-| colibri beak (2171) | Blue Magic skill | T1 | Coastal Colibri, Colibri, Colibri past, Lesser Colibri, Locus Colibri |
-| high-quality crab shell (1193) | Breath dmg. taken | T1 | _common — 21 mobs_ (e.g. Bigclaw noaggro, Bigclaw noaggro MC, Cyan Deep Crab, Dweomershell, …) |
-| philosophers stone (942) | Cap. Point +33% | T1 | _common — 12 mobs_ (e.g. Berried Chigoe, Blobdingnag, Dawon, Krabkatoa, …) |
-| yellow rock (771) | Chance of successful block | T1 | Bigmouth Billy |
-| lacquer tree log (1446) | Club skill | T1 | _common — 11 mobs_ (e.g. Ameretat, Ameretat NI, Anemone, Demonic Rose, …) |
-| ram horn (895) | Counter | T1 | _common — 20 mobs_ (e.g. Amaltheia, Battering Ram, Blobdingnag, Bloodtear Baldurf, …) |
-| black pearl (793) | Cure spellcasting time | T1 | Bog Sahagin, Marsh Sahagin, Swamp Sahagin |
-| handful of fish scales (864) | Dagger skill | T1 | _common — 79 mobs_ (e.g. Abyssal Pugil, Aipaloovik, Apsaras, Beach Pugil, …) |
-| square of grass cloth (824) | Dark magic skill | T1 | Goblin Weaver |
-| snow lily (1725) | Divine magic skill | T1 | Cwn Annwn, Uleguerand Tiger |
-| balaur skull (2943) | Drain/Aspir Potency | T1 | Balaur |
-| deed of moderation (1854) | Elem. magic skill | T1 | Ixaern drk |
-| cactus arm (1817) | Enfb.mag. skill | T1 | Cactrot Rapido, Cactuar, Sabotender, Sabotender Bailaor, Sabotender Sediendo, Spelunking Sabotender |
-| iolite (1740) | Enha.mag. skill | T1 | Arch Corse, Corse |
-| orc helmet (2510) | Enhancing Magic Effect Duration | T1 | _common — 14 mobs_ (e.g. Orcish Dreadnought CZKS, Orcish Dreadnought past, Orcish Fodder past, Orcish Footsoldier past, …) |
-| flytrap leaf (1617) | Evasion | T1 | _common — 13 mobs_ (e.g. Battrap, Battrap past, Birdtrap, Fishtrap, …) |
-| gunpowder swathe (2212) | Geomancy Skill | T1 | Bog Body |
-| giant stinger (925) | Great Axe skill | T1 | _common — 35 mobs_ (e.g. Belaboring Wasp, Bumblebee, Davoi Hornet, Davoi Wasp, …) |
-| clump of great boyahda moss (1264) | Great Katana skill | T1 | Ancient Goobbue, Elder Goobbue |
-| cactuar needle (916) | Great Sword skill | T1 | _common — 11 mobs_ (e.g. Cactrot Rapido, Cactuar, Cactuar Cantautor, Cuijatender, …) |
-| dryad root (923) | Hand-to-Hand skill | T1 | _common — 13 mobs_ (e.g. Ahtu, Barrens Treant, Defoliate Treant, Highland Treant, …) |
-| poroggo hat (2334) | Handbell Skill | T1 | _common — 8 mobs_ (e.g. Crapaudy, Flume Toad, Poroggo, Poroggo Excavator, …) |
-| pearl (792) | Healing magic skill | T1 | _common — 7 mobs_ (e.g. Brook Sahagin, Charybdis, Lake Sahagin, Peg Powler, …) |
-| murex spicule (2640) | Helix Effect Duration | T1 | _common — 7 mobs_ (e.g. Ephemeral Murex, Escarp Murex, Hillock Murex, Iceberg Murex, …) |
-| wyvern skin (1122) | HP recovered while healing | T1 | _common — 31 mobs_ (e.g. Aiatar, Ajattara, Ajattara Large, Blazedrake, …) |
-| treant bulb (953) | Katana skill | T1 | _common — 41 mobs_ (e.g. Barrens Treant, Boyahda Sapling, Caveberry, Cherry Sapling, …) |
-| dragon talon (903) | Kick Attacks Rate or Damage | T1 | _common — 8 mobs_ (e.g. Ash Dragon, Fafnir, Jormungand, Ouryu, …) |
-| spool of cashmere thread (1713) | Mag. Evasion | T1 | Bahamut, Vrtra |
-| high-quality antlion jaw (1864) | Magic skill | T1 | Cave Antlion, Trench Antlion |
-| rafflesia vine (2513) | Marksmanship skill | T1 | _common — 7 mobs_ (e.g. Blooming Rafflesia, Highland Rafflesia, Highland Rafflesia Small, Jumbo Rafflesia, …) |
-| scorpion claw (897) | Martial Arts | T1 | _common — 35 mobs_ (e.g. Akrab, Amikiri, Antares GT, Antares H, …) |
-| khroma nugget (2711) | Meditate Effect Duration | T1 | Hilltroll Monk, Hilltroll Ranger, Troll Artilleryman H, Troll Combatant |
-| antlion jaw (1616) | Melee skill | T1 | _common — 13 mobs_ (e.g. Ambusher Antlion, Antares H, Burrow Antlion, Cave Antlion, …) |
-| aquamarine (791) | MP recovered while healing | T1 | Skull of Pride |
-| orobon lure (2154) | Ninjutsu skill | T1 | Ancient Orobon, Deathmaw Orobon, Giant Orobon, Gugru Orobon, Primordial Orobon |
-| lycopodium flower (2507) | Occ. quickens spellcasting | T1 | Jeduah, Lycopodium, Tiny Lycopodium |
-| white rock (776) | Parrying rate | T1 | Bigmouth Billy, Earth Elemental, Meat Maggot |
-| raskovnik vine (2937) | Parrying Skill | T1 | Raskovnik |
-| piece of crawler cocoon (839) | Pet Acc R.Acc Atk. R.Atk | T1 | _common — 33 mobs_ (e.g. Berry Grub, Berry Grub past, Canyon Crawler, Carmine Eruca, …) |
-| bat wing (922) | Pet Accuracy Rng.Acc | T1 | _common — 138 mobs_ (e.g. Acro Bat, Ancient Bat, Ancient Bat LDT, Arioch, …) |
-| wyvern wing (1124) | Pet Accuracy Rng.Acc | T1 | _common — 25 mobs_ (e.g. Aiatar, Ajattara, Ajattara Large, Blazedrake, …) |
-| moblin sheepskin (1861) | Pet AGI | T1 | _common — 9 mobs_ (e.g. Goblin Aidman, Goblin Chapman, Moblin Aidman, Moblin Chapman, …) |
-| buffalo horn (1615) | Pet Attack Rng.Atk | T1 | Bluffalo, Giant Buffalo, King Buffalo |
-| bugard tusk (1622) | Pet Attack Rng.Atk | T1 | _common — 10 mobs_ (e.g. Abyssobugard, Battle Bugard, Bugard, Bull Bugard, …) |
-| ingot of sahagin gold (2850) | Pet CHR | T1 | Pyuu the Spatemaker |
-| ahriman wing (935) | Pet Crit.hit rate | T1 | _common — 15 mobs_ (e.g. Bat Eye, Deadly Iris, Deep Eye, Deep Eye Small, …) |
-| ruby (786) | Pet Damage taken | T1 | Ruby Quadav |
-| megalobugard tusk (1718) | Pet Dbl.Atk. Crit.hit rate | T1 | Megalobugard |
-| dhalmel hide (857) | Pet Dbl.Att | T1 | _common — 10 mobs_ (e.g. Bull Dhalmel, Camelopard, Camelopardalis, Catoblepas, …) |
-| stately crab shell (2854) | Pet DEF | T1 | Metal Shears |
-| flawed garnet (2842) | Pet DEX | T1 | Bedrock Barry |
-| hecteyes eye (939) | Pet Enemy crit. hit rate | T1 | _common — 19 mobs_ (e.g. Argus, Beholder, Blubber Eyes, Blubber Eyes PX, …) |
-| square of cotton cloth (825) | Pet Evasion | T1 | _common — 49 mobs_ (e.g. Asphyxiated Amsel, Banshee, Banshee GM, Bhoot, …) |
-| blue jasper (2847) | Pet INT | T1 | Supplespine Mujwuj |
-| square of wool cloth (827) | Pet Mag. Evasion | T1 | _common — 59 mobs_ (e.g. Bathyal Gigas, Blizzard Gigas, Cold Gigas, Demersal Gigas, …) |
-| vial of mercury (914) | Pet Mag.Acc | T1 | _common — 53 mobs_ (e.g. Argus, Aura Butler, Aura Gear, Aura Pot, …) |
-| colossal skull (1518) | Pet Mag.Acc. Mag.Atk.Bns | T1 | _common — 53 mobs_ (e.g. Bhuu Wjato the Firepool, Caa Xaza the Madpiercer, Foo Peku the Bloodcloak, Fuu Tzapo the Blessed, …) |
-| imp horn (2157) | Pet Mag.Acc. Mag.Dmg | T1 | _common — 11 mobs_ (e.g. Errand Imp, Glacial Imp, Heraldic Imp, Heraldic Imp CM, …) |
-| magic pot shard (954) | Pet Mag.Atk.Bns | T1 | _common — 22 mobs_ (e.g. Aura Pot, Clockwork Pod FY, Clockwork Pod GC, Demonic Millstone, …) |
-| flint stone (768) | Pet Mag.Def.Bns | T1 | _common — 30 mobs_ (e.g. Abyss Worm, Amphisbaena, Anemic Aloysius, Burrower Worm, …) |
-| imp wing (2163) | Pet Magic Damage | T1 | _common — 15 mobs_ (e.g. Clammy Imp, Dapifer Imp, Dapifer Imp Small, Ermit Imp, …) |
-| coeurl hide (863) | Pet Magic Damage Taken | T1 | _common — 11 mobs_ (e.g. Attohwa Coeurl, Champaign Coeurl, Chasm Coeurl, Coeurl, …) |
-| black rock (775) | Pet Magic Dmg. Taken | T1 | Bigmouth Billy |
-| water spiders web (2198) | Pet MND | T1 | Aqueduct Spider |
-| cup of leech saliva (1979) | Pet Phy. Dmg. Taken | T1 | Royal Leech |
-| square of black tiger leather (855) | Pet Phys. dmg. taken | T1 | Goblin Furrier, Goblin Tanner |
-| vial of dragon blood (1133) | Pet Regen | T1 | _common — 11 mobs_ (e.g. Ash Dragon, Jormungand, Nidhogg, Nightmare Bats Ifrits Cauldron, …) |
-| wooden hakutaku eye (1288) | Pet Rng.Acc | T1 | Million Eyes DR |
-| raptor skin (853) | Pet Rng.Atk | T1 | _common — 15 mobs_ (e.g. Adasaurus, Atrociraptor, Daggerclaw Dracos, Deinonychus, …) |
-| burning hakutaku eye (1289) | Pet Store TP | T1 | Gazer |
-| cerberus claw (2168) | Pet STR | T1 | _common — 10 mobs_ (e.g. Cerberus, Pandemonium Warden, Pandemonium Warden 2, Pandemonium Warden 3, …) |
-| cerberus hide (2169) | Pet STR DEX VIT | T1 | _common — 9 mobs_ (e.g. Cerberus, Pandemonium Warden, Pandemonium Warden 2, Pandemonium Warden 3, …) |
-| earthen hakutaku eye (1290) | Pet Subtle Blow | T1 | Blubber Eyes |
-| sunstone (803) | Pet VIT | T1 | Skull of Wrath |
-| ancient beastcoin (1875) | Phantom Roll effect | T1 | _common — 144 mobs_ (e.g. Abyssdweller Jhabdebb, Adamantshell, Aeshma, Airi, …) |
-| pinch of venom dust (944) | Polearm skill | T1 | _common — 25 mobs_ (e.g. Cryptonberry Cutter, Cryptonberry Harrier, Cryptonberry Occultist, Cryptonberry Occultist Small, …) |
-| arnica root (1663) | Ranged skill | T1 | Cactuar, Sabotender |
-| revival tree root (940) | Scythe skill | T1 | _common — 183 mobs_ (e.g. Accursed Soldier, Altedour I Tavnazia, Asphyxiated Amsel, Babaulas, …) |
-| blue rock (770) | Shield Mastery | T1 | Bigmouth Billy, Kraken fished, Kraken fished NM, Morgawr, Sea Bishop |
-| chasmic stinger (2936) | Shield skill | T1 | Chasmic Hornet |
-| lesser chigoe (2155) | Singing skill | T1 | Grand Marid, Marid, Morose Marid, Wild Karakul |
-| cockatrice skin (854) | Spell interruption rate down 1% | T1 | _common — 13 mobs_ (e.g. Amuckatrice, Axe Beak, Cluckatrice, Cockatrice, …) |
-| immortal molt (2834) | Spell Interruption Rate Down 2% | T1 | Highlander Lizard |
-| cactuar root (1592) | Staff skill | T1 | Cactrot Rapido, Sabotender Bailarin, Sabotender Bailarina, Sabotender Mariachi, Shinryu |
-| troll vambrace (2161) | String instrument skill | T1 | _common — 13 mobs_ (e.g. Hilltroll Dark Knight, Hilltroll Paladin, Hilltroll Warrior, Kirlirger the Abhorrent, …) |
-| sand bat fang (1015) | Summoning magic skill | T1 | Sand Bats |
-| beetle jaw (894) | Sword skill | T1 | _common — 30 mobs_ (e.g. Beady Beetle, Blazer Beetle, Borer Beetle, Chamber Beetle, …) |
-| peiste stinger (2524) | Throwing skill | T1 | Kinepikwa, Maritime Peiste, Peiste, Virulent Peiste |
-| square of shining cloth (831) | Wind instrument skill | T1 | King Behemoth, Kirin, Suzaku |
-| insect wing (846) | Accuracy | T2 | _common — 95 mobs_ (e.g. Antlion Fly, Assassin Fly, Assassin Fly Large, Beady Beetle, …) |
-| black tiger fang (884) | Accuracy Attack | T2 | _common — 11 mobs_ (e.g. Angler Tiger, Cave Tiger, Forest Tiger, Kirata, …) |
-| damp hakutaku eye (1292) | Accuracy Rng.Acc | T2 | Dodomeki |
-| karakul skin (878) | AGI | T2 | Black Merino, Peallaidh, Wild Karakul |
-| ingot of quadav silver (2841) | CHR | T2 | BeHya Hundredwall |
-| tonberry coat (1119) | Conserve MP | T2 | _common — 38 mobs_ (e.g. Beryl-footed Molberry, Bistre-hearted Malberry, Bloodeye Vileberry, Carmine-tailed Janberry, …) |
-| pinch of sulfur (1108) | Conserve TP | T2 | Stone Eater, Witchetty Grub |
-| clump of moko grass (833) | Cure potency | T2 | Goblin Archaeologist |
-| crab shell (881) | DEF | T2 | _common — 82 mobs_ (e.g. Angler Crab, Aquarius, Aydeewa Crab, Badlands Crab, …) |
-| purple rock (774) | DEF | T2 | Bigmouth Billy |
-| colibri feather (2150) | DEX | T2 | Coastal Colibri, Colibri, Colibri past, Lesser Colibri, Locus Colibri, Zoraal Jas Pkuucha |
-| peapuk wing (3504) | Enemy crit. hit rate | T2 | Jaculus, Peapuk, Putrid Peapuk, Snaggletooth Peapuk |
-| wamoura scale (2338) | Enspell Dmg | T2 | Gullycampa, Wamoura, Wamouracampa, Wamouracampa Small, Wamoura Prince |
-| wivre maul (2427) | Fast Cast | T2 | Glade Wivre, Lesser Wivre, Locus Wivre, Mesa Wivre, Mesa Wivre Small, Wivre past |
-| bottle of ahriman tears (921) | INT | T2 | _common — 16 mobs_ (e.g. Arimaspi, Bat Eye, Deadly Iris, Deep Eye, …) |
-| demon skull (886) | Mag. Acc | T2 | _common — 45 mobs_ (e.g. Adjudicator Demon, Aestutaur, Baronet Romwe, Baron Vapula, …) |
-| wyvern skull (905) | Mag. Acc. Mag.Atk.Bns | T2 | Hurricane Wyvern |
-| guivres skull (909) | Mag. Acc./Mag. Dmg | T2 | Guivre, Lambton Worm |
-| wivre horn (2426) | Mag.Atk.Bns | T2 | Glade Wivre, Lesser Wivre, Locus Wivre, Mesa Wivre, Mesa Wivre Small, Wivre past |
-| red rock (769) | Mag.Def.Bns | T2 | Bigmouth Billy |
-| briareuss sash (2498) | Magic Damage | T2 | Briareus |
-| seashell (888) | MND | T2 | _common — 39 mobs_ (e.g. Blanched Kraken, Bog Sahagin, Brook Sahagin, Coastal Sahagin, …) |
-| wivre hide (2428) | Occult Acumen | T2 | Glade Wivre, Locus Wivre, Mesa Wivre, Mesa Wivre Small |
-| square of linen cloth (826) | Pet Haste | T2 | Revenant SoZ ENS FY |
-| green rock (772) | Phalanx Received | T2 | Bigmouth Billy |
-| coral fragment (887) | Potency of Cure received | T2 | _common — 16 mobs_ (e.g. Blobdingnag, Coastal Sahagin, Dawon, Delta Sahagin, …) |
-| square of sheep leather (850) | Regen Potency | T2 | Goblin Furrier, Goblin Tanner |
-| manticore hide (1116) | Rng.Acc. Rng.Atk | T2 | _common — 16 mobs_ (e.g. Blobdingnag, Dawon, Desert Manticore, Dune Manticore, …) |
-| bird feather (847) | Rng.Accuracy | T2 | _common — 27 mobs_ (e.g. Akbaba LTP, Akbaba TC, Ba, Ba past, …) |
-| griffon hide (1516) | Save TP | T2 | _common — 37 mobs_ (e.g. Bladeburner Rokgevok, Bloodfist Voshgrosh, Cobraclaw Buchzvotch, Deathcaller Bidfbid, …) |
-| square of silk cloth (829) | Snapshot | T2 | Gespenst, Gespenst Large, Nachtmahr, Revenant NGS EN GC, Revenant SoZ ENS FY |
-| taurus wing (1621) | Store TP | T2 | _common — 8 mobs_ (e.g. Aestutaur, Brontotaur, Dryptotaur, Gorgotaur, …) |
-| chocobo feather (840) | Store TP Subtle Blow | T2 | Goblin Archaeologist |
-| taurus horn (1620) | STR | T2 | _common — 12 mobs_ (e.g. Aestutaur, Brontotaur, Dryptotaur, Gorgotaur, …) |
-| hippogryph tailfeather (1690) | Subtle Blow | T2 | Cloud Hippogryph, Grauberg Hippogryph, Heliodromos, Hippogryph, Nimbus Hippogryph, Strato Hippogryph |
-| translucent rock (773) | VIT | T2 | Bigmouth Billy |
-| vial of black beetle blood (1110) | Weapon Skill Acc | T2 | _common — 11 mobs_ (e.g. Genbu, Jormungand, Lumber Jack, Ouryu, …) |
-| black tiger hide (861) | Attack | T3 | _common — 11 mobs_ (e.g. Angler Tiger, Cave Tiger, Forest Tiger, Kirata, …) |
-| amaltheia hide (874) | Attack Rng.Atk | T3 | Amaltheia |
-| marid tusk (2147) | Counter | T3 | Grand Marid, Marid, Morose Marid, Olyphant |
-| puk wing (2148) | Crit.hit rate | T3 | _common — 10 mobs_ (e.g. Crepuscule Puk, Desert Puk, Peapuk, Puk M, …) |
-| sheep tooth (882) | Dbl.Atk | T3 | _common — 13 mobs_ (e.g. Black Merino, Broo, Brutal Sheep, Brutal Sheep Small, …) |
-| bone chip (880) | Dbl.Atk. Crit.hit rate | T3 | _common — 101 mobs_ (e.g. Accursed Soldier, Accursed Sorcerer, Babaulas, Blackbeard, …) |
-| amemet skin (1275) | Delay (melee,not ranged) | T3 | Amemet |
-| antican pauldron (1118) | Delay (melee,not ranged) | T3 | _common — 19 mobs_ (e.g. Antican Antesignanus, Antican Auxiliarius, Antican Centurio, Antican Consul, …) |
-| antican robe (1121) | Delay (melee,not ranged) | T3 | _common — 13 mobs_ (e.g. Antican Aedilis, Antican Essedarius, Antican Faber, Antican Funditor, …) |
-| coeurl whisker (927) | Delay (melee,not ranged) | T3 | _common — 7 mobs_ (e.g. Attohwa Coeurl, Champaign Coeurl, Coeurl, Flauros, …) |
-| four-leaf korrigan bud (1265) | Delay (melee,not ranged) | T3 | Korrigan |
-| lindwurm skin (1277) | Delay (melee,not ranged) | T3 | Lindwurm |
-| qiqirn cape (1196) | Delay (melee,not ranged) | T3 | _common — 14 mobs_ (e.g. Qiqirn Archaeologist, Qiqirn Diamantaire, Qiqirn Enterpriser, Qiqirn Goldsmith, …) |
-| spool of cotton thread (818) | Delay (melee,not ranged) | T3 | Goblin Weaver |
-| spool of silk thread (816) | Delay (melee,not ranged) | T3 | _common — 38 mobs_ (e.g. Awd Goggie, Berry Grub, Berry Grub past, Canyon Crawler, …) |
-| tarasque skin (1276) | Delay (melee,not ranged) | T3 | Tarasque |
-| flauros whisker (1282) | Delay (ranged,not melee) | T3 | Flauros |
-| ose whisker (1283) | Delay (ranged,not melee) | T3 | Ose |
-| piece of angel skin (1312) | Delay (ranged,not melee) | T3 | Devil Manta fished, Scylla |
-| sparkling stone (1470) | Delay (ranged,not melee) | T3 | _common — 162 mobs_ (e.g. Adamantking Effigy, Anvilix Sootwrists, Arch Goblin Golem, Arch GuDha Effigy, …) |
-| square of cheviot cloth (1281) | Delay (ranged,not melee) | T3 | Baobhan Sith, Ixtab |
-| square of sarcenet cloth (1280) | Delay (ranged,not melee) | T3 | Dame Blanche |
-| square of taffeta cloth (1279) | Delay (ranged,not melee) | T3 | Manes |
-| yowie skin (1296) | Delay (ranged,not melee) | T3 | Yowie |
-| soulflayer tentacle (2335) | Helix Damage | T3 | Pneumaflayer, Psycheflayer, Soulflayer |
-| behemoth hide (860) | HP | T3 | _common — 8 mobs_ (e.g. Behemoth, Byakko, Jormungand, King Behemoth, …) |
-| handful of dragon scales (867) | HP MP | T3 | Ash Dragon, Fafnir |
-| ethereal squama (2875) | Immunobreak Chance+ | T3 | Verthandi |
-| vial of magicked blood (2777) | Mag. crit. hit dmg | T3 | Seeker Bats, Stink Bats |
-| pumice stone (2776) | Magic burst dmg | T3 | Ghast blm GM, Ghoul blm GM, Ghoul war GM MoS, Wendigo war, Wight blm, Wight war GM |
-| giant bird feather (842) | Magic crit. hit rate | T3 | _common — 25 mobs_ (e.g. Abraxas, Amuckatrice, Axe Beak, Cluckatrice, …) |
-| yagudo feather (841) | MP | T3 | _common — 25 mobs_ (e.g. Yagudo Abbot indoor S, Yagudo Abbot outdoor S, Yagudo Acolyte, Yagudo Acolyte past, …) |
-| clump of boyahda moss (919) | Refresh | T3 | _common — 10 mobs_ (e.g. Ancient Goobbue, Elder Goobbue, Goobbue, Goobbue Farmer, …) |
-| square of dhalmel leather (848) | Regen | T3 | Goblin Furrier, Goblin Tanner |
-| behemoth horn (883) | Rng.Attack | T3 | Hadhayosh, King Behemoth |
-| handful of nidhoggs scales (865) | Sklchn.dmg | T3 | Nidhogg |
-| shard of obsidian (2531) | Spikes Dmg | T3 | _common — 36 mobs_ (e.g. Adaman Quadav past, Amber Quadav, Amethyst Quadav, Ancient Quadav past, …) |
-| high-quality scorpion shell (1473) | Weapon skill damage | T3 | _common — 10 mobs_ (e.g. Antares GT, Antares H, Cutlass Scorpion AC, Cutlass Scorpion DR, …) |
-| apkallu feather (2149) | Crit. hit damage | T4 | Apkallu, Arrapago Apkallu, Emperor Apkallu, King Apkallu, Overking Apkallu, Zhayolm Apkallu |
-| manticore fang (1123) | Damage Taken | T4 | _common — 10 mobs_ (e.g. Desert Manticore, Dune Manticore, Frostmane, Greater Manticore, …) |
-| beetle shell (889) | Dmg (melee,not ranged) | T4 | _common — 29 mobs_ (e.g. Beady Beetle, Blazer Beetle, Borer Beetle, Chamber Beetle, …) |
-| adamantoise shell (908) | Dmg (ranged,not melee) | T4 | Aspidochelone, Genbu |
-| spool of wool thread (820) | Haste | T4 | _common — 54 mobs_ (e.g. Bathyal Gigas, Blizzard Gigas, Cold Gigas, Demersal Gigas, …) |
-| hydra fang (2158) | Magic Damage Taken | T4 | _common — 9 mobs_ (e.g. Hydra, Pandemonium Warden, Pandemonium Warden 2, Pandemonium Warden 3, …) |
-| chunk of rock salt (936) | Magic dmg. taken | T4 | _common — 65 mobs_ (e.g. Angler Crab, Aydeewa Crab, Bigclaw aggro, Bigclaw fished, …) |
-| wolf hide (858) | Phys. dmg. taken | T4 | _common — 26 mobs_ (e.g. Bandersnatch, Barghest, Black Wolf, Bog Dog, …) |
-| marid hide (2151) | Physical Damage Taken | T4 | Grand Marid, Marid, Morose Marid, Olyphant |
-| narasimha hide (1293) | Quadruple Attack | T4 | Narasimha |
-| pigeons blood ruby (1271) | TP Bonus | T4 | Bloodsucker NM, Masan |
-| bat fang (891) | Triple Atk | T4 | _common — 78 mobs_ (e.g. Ancient Bat, Bastion Bats Castle Oztroja S, Big Bat, Black Triple Stars, …) |
+| Catalyst item | Stat (augment) | Tier | Assigned mob | Lv |
+|---|---|---|---|---|
+| square of raxa (1132) | All elemental resists | T0 | Armored Chariot | ? |
+| wandering bulb (1158) | All elemental resists | T0 | 1st Legion Reiter | ? |
+| golden hakutaku eye (1291) | All songs | T0 | AaBho Slashburner | ? |
+| crawler calculus (1156) | Avatar perpetuation cost | T0 | Axe Beak | 28 |
+| northern fur (1199) | Barrage | T0 | 2nd Legionnaire | 1 |
+| smilodon hide (2518) | Beast Affinity | T0 | Bartholomaus | 1 |
+| lizard skin (852) | Blood Boon | T0 | Bahamute | ? |
+| manta skin (876) | Blood Pact ability delay | T0 | Aquarian Caster | 1 |
+| beehive chip (912) | Call Beast ability delay | T0 | Azima | 1 |
+| demon horn (902) | Charm | T0 | Auroral Alicorn | ? |
+| jar of firesand (947) | Daken | T0 | Bastion Bats | 21 |
+| leshonki bulb (1263) | Dark Affinity | T0 | Anguished Roc | ? |
+| corse bracelet (1614) | Dark Affinity | T0 | Bia | ? |
+| eastern gem (1664) | Dark Affinity | T0 | Barbastelle | 19 |
+| soulflayer robe (1724) | Dark Affinity | T0 | 4th Legionnaire | 1 |
+| fourth virtue (1848) | Dark Affinity | T0 | Azure-toothed Clawberry | ? |
+| pinch of dried mugwort (1443) | Dark Affinity Avatar perp. cost | T0 | Allotaur | 1 |
+| twitherym wing (3930) | Dark Affinity Magic Accuracy | T0 | Arciela | ? |
+| bag of poison flour (952) | Dark resist | T0 | August | ? |
+| piece of eastern pottery (1200) | Earth Affinity | T0 | Batroika | ? |
+| lancewood log (1464) | Earth Affinity | T0 | Areuhat | 1 |
+| moblin armor (1631) | Earth Affinity | T0 | Balamors Sycophant | ? |
+| recollection of pain (1688) | Earth Affinity | T0 | Badlands Crab | ? |
+| sack of little worm mulch (1831) | Earth Affinity | T0 | Count Andromalius | ? |
+| piece of oxblood (1311) | Earth Affinity Avatar perp. cost | T0 | Ace of Cups | 1 |
+| gargouille eye (2749) | Earth Affinity Magic Accuracy | T0 | Alruna | ? |
+| block of animal glue (937) | Earth resist | T0 | Angoraq | ? |
+| undead skin (849) | Elemental Magic Recast Delay | T0 | Balamors Adumbration | ? |
+| arioch fang (1272) | Elemental Siphon | T0 | Ace of Coins | 1 |
+| ram skin (859) | Enfeebling Magic Recast Delay | T0 | Audumbla | ? |
+| first virtue (1850) | Enhances | T0 | Amber Quadav | 8 |
+| handful of pugil scales (868) | Enhancing Magic Recast Delay | T0 | Aconite Sibilus | ? |
+| diamond (787) | Enmity | T0 | Ashmaker Gotblut | 18 |
+| venomous claw (901) | Enmity | T0 | Astika | 1 |
+| peiste skin (2523) | Exp. Point +33% | T0 | Azeman | ? |
+| doll shard (1165) | Fire Affinity | T0 | Bedrock Barry | 12 |
+| doll gizmo (1268) | Fire Affinity Avatar perp. cost | T0 | Alluring Orobon | ? |
+| ladybug wing (2506) | Fire Affinity Magic Accuracy | T0 | Beady Beetle | 18 |
+| chapuli wing (3941) | Fire Affinity Magic Accuracy Recast time | T0 | Ancient Bat | 28 |
+| spool of malboro fiber (837) | Fire resist | T0 | Avalerion | ? |
+| golem shard (955) | Fire,Wind,Lightning,Light resists | T0 | Balamor | ? |
+| moblumin ingot (1858) | Gilfinder | T0 | Amarok | ? |
+| spider web (838) | Healing Magic Recast Delay | T0 | Arke | ? |
+| bomb queen core (1186) | Ice Affinity | T0 | Ace of Batons | 1 |
+| tukuku whiteshell (1449) | Ice Affinity | T0 | Arachne | ? |
+| bugbear mask (1624) | Ice Affinity | T0 | Ashmea B Greinner | ? |
+| pinch of hoary bomb ash (1669) | Ice Affinity | T0 | Acro Bat | 11 |
+| shakudo ingot (1738) | Ice Affinity | T0 | Antiphus | ? |
+| arachne web (1270) | Ice Affinity Avatar perp. cost | T0 | Allied Mantelet | 1 |
+| slug eye (2509) | Ice Affinity Magic Accuracy | T0 | Achtelle | 1 |
+| sprig of mistletoe (918) | Ice resist | T0 | Allocamelus | 1 |
+| dahlia (959) | Ice,Earth,Water,Dark resists | T0 | Amaranth | 1 |
+| amoeban pseudopod (2641) | Indi Effect Duration | T0 | Acrimonious Dullahan | ? |
+| bag of tree cuttings (1237) | Light Affinity | T0 | Abenzio | 1 |
+| jar of goblin grease (1520) | Light Affinity | T0 | Ark Angels Gnat | ? |
+| spool of moblin thread (1651) | Light Affinity | T0 | 3rd Legionnaire | 1 |
+| square of cashmere cloth (1714) | Light Affinity | T0 | Beach Pugil | 24 |
+| fifth virtue (1847) | Light Affinity | T0 | 1st Legionnaire | 1 |
+| piece of wisteria lumber (1414) | Light Affinity Avatar perp. cost | T0 | Barghest | 11 |
+| vial of umbral marrow (3502) | Light Affinity Magic Accuracy | T0 | Anamnestic Vault | ? |
+| carnation (948) | Light resist | T0 | Allied Belfry | 1 |
+| item 1201 (1201) | Lightning Affinity | T0 | 1st Gold Musketeer *(fresh)* | ? |
+| slab of granite (1465) | Lightning Affinity | T0 | Archaic Chariot | ? |
+| moblin mail (1632) | Lightning Affinity | T0 | Aberrant Uragnite | ? |
+| recollection of guilt (1689) | Lightning Affinity | T0 | Aquifer Leech | ? |
+| marble slab (1836) | Lightning Affinity | T0 | Balloon | 10 |
+| clionid wing (2890) | Lightning Affinity Magic Accuracy | T0 | Adam | ? |
+| sprig of papaka grass (938) | Lightning resist | T0 | Beach Monk | 23 |
+| mana barrel (1269) | Ninja tool expertise | T0 | Armsmaster Dekbuk | ? |
+| sixth virtue (1849) | Occ. Resistance to Status Ailments | T0 | Argent-eyed Orobon | ? |
+| item 2831 (2831) | Occ. inc. resist to stat ailments | T0 | 1st Legion Aidman *(fresh)* | ? |
+| bottle of illuminink (1408) | Pet Enmity | T0 | Anklebiter Slug | ? |
+| montiont silverpiece (1453) | Pet Enmity | T0 | Babban Ny Mheillea | ? |
+| rabbit hide (856) | Pet TP Bonus | T0 | Ancient Royal Knight | ? |
+| clump of sheep wool (832) | Phantom Roll ability delay | T0 | Bakru | 1 |
+| eft skin (1623) | Quick Draw ability delay | T0 | Aa Nawu the Thunderblade | ? |
+| hippogryph feather (1619) | Rapid Shot | T0 | Abrupta Spawn | ? |
+| ball of saruta cotton (834) | Recycle | T0 | Battue Bats | 5 |
+| hydrangea (2729) | Repair potency | T0 | Amanita | 6 |
+| slab of plumbago (2860) | Resist Bind | T0 | Adelheid | 1 |
+| moblin mask (1638) | Resist Blind | T0 | Archaic Rampart | ? |
+| khimaira mane (2372) | Resist Charm | T0 | Amhuluk | ? |
+| jadeite (784) | Resist Curse | T0 | Antiphuss Spawn | ? |
+| painite (797) | Resist Gravity | T0 | 2nd Legion Grenadier | ? |
+| pinch of cluster ash (1630) | Resist Paralyze | T0 | Archer Pugil | 19 |
+| pinch of djinn ash (2549) | Resist Petrify | T0 | Angler Crab | 1 |
+| ordelle bronzepiece (1452) | Resist Poison | T0 | Aynu-kaysey | ? |
+| cluster core (1667) | Resist Silence | T0 | Azrael | ? |
+| lock of manticore hair (1163) | Resist Sleep | T0 | Ankou | 21 |
+| square of velvet cloth (828) | Resist Slow | T0 | Ancestral Rage | ? |
+| zircon (805) | Resist Stun | T0 | Akbaba | 13 |
+| clump of wamoura hair (2337) | Resist Virus | T0 | Alpha Gnole Anders | ? |
+| high-quality coeurl hide (1591) | Reverse Flourish | T0 | Ace of Swords | 1 |
+| fluorite (810) | Sic and Ready ability delay | T0 | Alexander | ? |
+| spool of rainbow thread (821) | Slow | T0 | Arcus Blades | ? |
+| spool of grass thread (817) | Song recast delay | T0 | Abyssdiver | ? |
+| spool of rugged gold thread (2827) | Song spellcasting time | T0 | Crimson Wolf Esquire | ? |
+| wamoura cocoon (2173) | Thunder Affinity | T0 | Acrolith | ? |
+| sack of lugworm sand (1830) | Thunder Affinity Avatar perp. cost | T0 | Cantonment | ? |
+| square of damascene cloth (836) | Waltz TP cost | T0 | Battle Bat | 20 |
+| chrysoberyl (801) | Waltz ability delay | T0 | Barnacled Orobon | ? |
+| high-quality eft skin (1741) | Waltz potency | T0 | Archaic Gear | ? |
+| bag of cactus stems (1236) | Water Affinity | T0 | Alfons | 1 |
+| infinity core (1474) | Water Affinity | T0 | Astral Box | ? |
+| corse robe (1639) | Water Affinity | T0 | Amphitrite | ? |
+| square of spectral crimson (1843) | Water Affinity | T0 | Aldo | ? |
+| lock of sirens hair (1313) | Water Affinity Avatar perp. cost | T0 | 2nd Legion Scout | ? |
+| bakkas wing (2938) | Water Affinity Magic Accuracy | T0 | 8th Iron Musketeer | ? |
+| clump of cashmere wool (1712) | Water Affintiy | T0 | Allied Armored Belfry | ? |
+| pinch of poison dust (943) | Water resist | T0 | Adit Crab | ? |
+| pinch of bomb queen ash (1187) | Wind Affinity | T0 | Aquila | ? |
+| lungo-nango jadeshell (1450) | Wind Affinity | T0 | Azo | 1 |
+| moblin helm (1625) | Wind Affinity | T0 | 1st Legion Mercenary | ? |
+| recollection of fear (1687) | Wind Affinity | T0 | Baited Jagil | ? |
+| square of balloon cloth (1739) | Wind Affinity | T0 | Auspicious Entity | ? |
+| twincoon (1295) | Wind Affinity Avatar perp. cost | T0 | 1st Iron Musketeer | ? |
+| gnat wing (2522) | Wind Affinity Magic Accuracy | T0 | Bandersnatch | 24 |
+| pinch of bomb ash (928) | Wind resist | T0 | Battering Ram | 23 |
+| lizard tail (926) | Zanshin | T0 | Ashrakk | ? |
+| ameretat vine (2361) | Archery skill | T1 | Alraune | 40 |
+| freyas tear (1445) | Avatar Blood Pact Dmg | T1 | Bisan | 31 |
+| vial of slime juice (1521) | Avatar Mag.Atk.Bns | T1 | Cetic Parasite | 39 |
+| malboro vine (920) | Axe skill | T1 | BoWho Warmonger | 37 |
+| colibri beak (2171) | Blue Magic skill | T1 | Antican Auxiliarius | 39 |
+| high-quality crab shell (1193) | Breath dmg. taken | T1 | Bombast | 44 |
+| philosophers stone (942) | Cap. Point +33% | T1 | Aroma Leech | 38 |
+| yellow rock (771) | Chance of successful block | T1 | Buburimboo | 31 |
+| lacquer tree log (1446) | Club skill | T1 | Bronze Quadav | 36 |
+| ram horn (895) | Counter | T1 | Bullheaded Grosvez | 45 |
+| black pearl (793) | Cure spellcasting time | T1 | Clipper | 29 |
+| handful of fish scales (864) | Dagger skill | T1 | Carrion Crow | 40 |
+| square of grass cloth (824) | Dark magic skill | T1 | Big Leech | 29 |
+| snow lily (1725) | Divine magic skill | T1 | Ancient Sorcerer | 40 |
+| balaur skull (2943) | Drain/Aspir Potency | T1 | Brook Sahagin | 45 |
+| deed of moderation (1854) | Elem. magic skill | T1 | Air Elemental | 43 |
+| cactus arm (1817) | Enfb.mag. skill | T1 | Bat Eye | 42 |
+| iolite (1740) | Enha.mag. skill | T1 | Blubbery Bulge | 47 |
+| orc helmet (2510) | Enhancing Magic Effect Duration | T1 | Bugbear Servingman | 35 |
+| flytrap leaf (1617) | Evasion | T1 | Blanched Kraken | 45 |
+| gunpowder swathe (2212) | Geomancy Skill | T1 | Banshee | 33 |
+| giant stinger (925) | Great Axe skill | T1 | Cargo Crab Colin | 37 |
+| clump of great boyahda moss (1264) | Great Katana skill | T1 | Black Wolf | 39 |
+| cactuar needle (916) | Great Sword skill | T1 | Big Jaw | 39 |
+| wyvern skin (1122) | HP recovered while healing | T1 | Caedarva Toad | 45 |
+| dryad root (923) | Hand-to-Hand skill | T1 | Birdtrap | 33 |
+| poroggo hat (2334) | Handbell Skill | T1 | Amphisbaena | 30 |
+| pearl (792) | Healing magic skill | T1 | Attohwa Coeurl | 39 |
+| murex spicule (2640) | Helix Effect Duration | T1 | Apsaras | 31 |
+| treant bulb (953) | Katana skill | T1 | Carrion Dragon | 40 |
+| dragon talon (903) | Kick Attacks Rate or Damage | T1 | Asrai | 35 |
+| aquamarine (791) | MP recovered while healing | T1 | Abhac | 42 |
+| spool of cashmere thread (1713) | Mag. Evasion | T1 | Battrap | 37 |
+| high-quality antlion jaw (1864) | Magic skill | T1 | Bigclaw | 48 |
+| rafflesia vine (2513) | Marksmanship skill | T1 | Acrophies | 34 |
+| scorpion claw (897) | Martial Arts | T1 | Capelthwaite | 31 |
+| khroma nugget (2711) | Meditate Effect Duration | T1 | Azren Kuguza | 43 |
+| antlion jaw (1616) | Melee skill | T1 | Asphyxiated Amsel | 38 |
+| orobon lure (2154) | Ninjutsu skill | T1 | Antican Essedarius | 45 |
+| lycopodium flower (2507) | Occ. quickens spellcasting | T1 | Arcane Phantasm | 45 |
+| raskovnik vine (2937) | Parrying Skill | T1 | Evil Spirit | 43 |
+| white rock (776) | Parrying rate | T1 | Antican Funditor | 39 |
+| moblin sheepskin (1861) | Pet AGI | T1 | Argus | 37 |
+| piece of crawler cocoon (839) | Pet Acc R.Acc Atk. R.Atk | T1 | Canal Bats | 46 |
+| bat wing (922) | Pet Accuracy Rng.Acc | T1 | Cerebrator | 38 |
+| wyvern wing (1124) | Pet Accuracy Rng.Acc | T1 | Burrow Antlion | 44 |
+| buffalo horn (1615) | Pet Attack Rng.Atk | T1 | Ah Puch | 30 |
+| bugard tusk (1622) | Pet Attack Rng.Atk | T1 | Barakbok | 43 |
+| ingot of sahagin gold (2850) | Pet CHR | T1 | Eurymedon | 32 |
+| ahriman wing (935) | Pet Crit.hit rate | T1 | Broo | 41 |
+| stately crab shell (2854) | Pet DEF | T1 | Antican Faber | 39 |
+| flawed garnet (2842) | Pet DEX | T1 | Foul Meat | 47 |
+| ruby (786) | Pet Damage taken | T1 | Aipaloovik | 36 |
+| megalobugard tusk (1718) | Pet Dbl.Atk. Crit.hit rate | T1 | Goblin Swindler | 35 |
+| dhalmel hide (857) | Pet Dbl.Att | T1 | Bitoso | 33 |
+| hecteyes eye (939) | Pet Enemy crit. hit rate | T1 | Bugard | 37 |
+| square of cotton cloth (825) | Pet Evasion | T1 | Caveberry | 44 |
+| blue jasper (2847) | Pet INT | T1 | Duendes Amoroso | 45 |
+| water spiders web (2198) | Pet MND | T1 | Aroma Crawler | 40 |
+| square of wool cloth (827) | Pet Mag. Evasion | T1 | Cave Scorpion | 33 |
+| vial of mercury (914) | Pet Mag.Acc | T1 | Carrion Marabou | 38 |
+| colossal skull (1518) | Pet Mag.Acc. Mag.Atk.Bns | T1 | Caterchipillar | 31 |
+| imp horn (2157) | Pet Mag.Acc. Mag.Dmg | T1 | Bulwark Bat | 31 |
+| magic pot shard (954) | Pet Mag.Atk.Bns | T1 | Bugbear Bondman | 44 |
+| flint stone (768) | Pet Mag.Def.Bns | T1 | Carmine Dobsonfly | 46 |
+| imp wing (2163) | Pet Magic Damage | T1 | Burned Bergmann | 38 |
+| coeurl hide (863) | Pet Magic Damage Taken | T1 | Bogy | 32 |
+| black rock (775) | Pet Magic Dmg. Taken | T1 | Death Jacket | 48 |
+| cup of leech saliva (1979) | Pet Phy. Dmg. Taken | T1 | Amoebic Nodule | 36 |
+| square of black tiger leather (855) | Pet Phys. dmg. taken | T1 | Bavarois | 41 |
+| vial of dragon blood (1133) | Pet Regen | T1 | Big Bat | 31 |
+| wooden hakutaku eye (1288) | Pet Rng.Acc | T1 | Azren Kuba | 43 |
+| raptor skin (853) | Pet Rng.Atk | T1 | Borer Beetle | 44 |
+| cerberus claw (2168) | Pet STR | T1 | Balam-Agab | 36 |
+| cerberus hide (2169) | Pet STR DEX VIT | T1 | Aroma Fly | 40 |
+| burning hakutaku eye (1289) | Pet Store TP | T1 | Ancient Bomb | 40 |
+| earthen hakutaku eye (1290) | Pet Subtle Blow | T1 | Atomic Cluster | 46 |
+| sunstone (803) | Pet VIT | T1 | Addled Tumor | 38 |
+| ancient beastcoin (1875) | Phantom Roll effect | T1 | Blackbone Frazdiz | 41 |
+| pinch of venom dust (944) | Polearm skill | T1 | Backoo | 37 |
+| arnica root (1663) | Ranged skill | T1 | Blizzard Gigas | 48 |
+| revival tree root (940) | Scythe skill | T1 | Chahnameeds Intestines | 47 |
+| blue rock (770) | Shield Mastery | T1 | Ancient Warrior | 40 |
+| chasmic stinger (2936) | Shield skill | T1 | Badshah | 44 |
+| lesser chigoe (2155) | Singing skill | T1 | Ba | 37 |
+| immortal molt (2834) | Spell Interruption Rate Down 2% | T1 | Fledermaus | 47 |
+| cockatrice skin (854) | Spell interruption rate down 1% | T1 | Brass Quadav | 30 |
+| cactuar root (1592) | Staff skill | T1 | Archlich Taberquoan | 45 |
+| troll vambrace (2161) | String instrument skill | T1 | Bhuta | 48 |
+| sand bat fang (1015) | Summoning magic skill | T1 | Chaos Elemental | 42 |
+| beetle jaw (894) | Sword skill | T1 | Canal Leech | 47 |
+| peiste stinger (2524) | Throwing skill | T1 | BeHya Hundredwall | 30 |
+| square of shining cloth (831) | Wind instrument skill | T1 | Abyss Worm | 30 |
+| karakul skin (878) | AGI | T2 | Anemone | 54 |
+| insect wing (846) | Accuracy | T2 | Altedour I Tavnazia | 65 |
+| black tiger fang (884) | Accuracy Attack | T2 | Aht Urhgan Attercop | 65 |
+| damp hakutaku eye (1292) | Accuracy Rng.Acc | T2 | Ankabut | 53 |
+| ingot of quadav silver (2841) | CHR | T2 | Antican Antesignanus | 72 |
+| tonberry coat (1119) | Conserve MP | T2 | Agas | 66 |
+| pinch of sulfur (1108) | Conserve TP | T2 | Avatar Idol | 65 |
+| clump of moko grass (833) | Cure potency | T2 | Berried Chigoe | 60 |
+| purple rock (774) | DEF | T2 | Chamber Beetle | 58 |
+| crab shell (881) | DEF | T2 | Anautogenous Slug | 66 |
+| colibri feather (2150) | DEX | T2 | Acolnahuacatl | 68 |
+| peapuk wing (3504) | Enemy crit. hit rate | T2 | Aerns Elemental | 68 |
+| wamoura scale (2338) | Enspell Dmg | T2 | Acid Grease | 54 |
+| wivre maul (2427) | Fast Cast | T2 | Aragoneu Knight | 70 |
+| bottle of ahriman tears (921) | INT | T2 | Aiatar | 52 |
+| seashell (888) | MND | T2 | Agar Agar | 66 |
+| demon skull (886) | Mag. Acc | T2 | Agonizer | 55 |
+| wyvern skull (905) | Mag. Acc. Mag.Atk.Bns | T2 | Adamantking Image | 65 |
+| guivres skull (909) | Mag. Acc./Mag. Dmg | T2 | Blighting Brand | 55 |
+| wivre horn (2426) | Mag.Atk.Bns | T2 | Antlion Fly | 64 |
+| red rock (769) | Mag.Def.Bns | T2 | Adamantking Effigy | 65 |
+| briareuss sash (2498) | Magic Damage | T2 | Ahtu | 52 |
+| wivre hide (2428) | Occult Acumen | T2 | Amemet | 66 |
+| square of linen cloth (826) | Pet Haste | T2 | Antican Hoplomachus | 58 |
+| green rock (772) | Phalanx Received | T2 | Amethyst Quadav | 63 |
+| coral fragment (887) | Potency of Cure received | T2 | Ancilla Beetle | 65 |
+| square of sheep leather (850) | Regen Potency | T2 | Adamantoise | 70 |
+| manticore hide (1116) | Rng.Acc. Rng.Atk | T2 | Anderss Guard | 64 |
+| bird feather (847) | Rng.Accuracy | T2 | Ajido-Marujido | 60 |
+| taurus horn (1620) | STR | T2 | Aerns Xzomit | 69 |
+| griffon hide (1516) | Save TP | T2 | Alsha | 55 |
+| square of silk cloth (829) | Snapshot | T2 | Aerns Wynav | 68 |
+| taurus wing (1621) | Store TP | T2 | Aerns Euvhi | 68 |
+| chocobo feather (840) | Store TP Subtle Blow | T2 | Bilopdop | 55 |
+| hippogryph tailfeather (1690) | Subtle Blow | T2 | Abyssal Pugil | 55 |
+| translucent rock (773) | VIT | T2 | Boreal Hound | 53 |
+| vial of black beetle blood (1110) | Weapon Skill Acc | T2 | Ameretat | 68 |
+| black tiger hide (861) | Attack | T3 | Alkyoneus | 75 |
+| amaltheia hide (874) | Attack Rng.Atk | T3 | Amaltheia | 87 |
+| marid tusk (2147) | Counter | T3 | Abxzomit | 80 |
+| puk wing (2148) | Crit.hit rate | T3 | Abas | 85 |
+| sheep tooth (882) | Dbl.Atk | T3 | Adasaurus | 84 |
+| bone chip (880) | Dbl.Atk. Crit.hit rate | T3 | Abyssic Cluster | 90 |
+| spool of silk thread (816) | Delay (melee,not ranged) | T3 | Aither | 80 |
+| spool of cotton thread (818) | Delay (melee,not ranged) | T3 | Almighty Apkallu | 78 |
+| coeurl whisker (927) | Delay (melee,not ranged) | T3 | Abyssobugard | 85 |
+| antican pauldron (1118) | Delay (melee,not ranged) | T3 | Amikiri | 82 |
+| antican robe (1121) | Delay (melee,not ranged) | T3 | Abatwa | 81 |
+| qiqirn cape (1196) | Delay (melee,not ranged) | T3 | Abraxas | 86 |
+| four-leaf korrigan bud (1265) | Delay (melee,not ranged) | T3 | Aa Xalmo the Savage | 84 |
+| amemet skin (1275) | Delay (melee,not ranged) | T3 | Awaern | 84 |
+| tarasque skin (1276) | Delay (melee,not ranged) | T3 | Ancient Quadav | 79 |
+| lindwurm skin (1277) | Delay (melee,not ranged) | T3 | Black Merino | 80 |
+| square of taffeta cloth (1279) | Delay (ranged,not melee) | T3 | Accursed Soldier | 89 |
+| square of sarcenet cloth (1280) | Delay (ranged,not melee) | T3 | Atrociraptor | 84 |
+| square of cheviot cloth (1281) | Delay (ranged,not melee) | T3 | Annihilative Adenium | 92 |
+| flauros whisker (1282) | Delay (ranged,not melee) | T3 | Alectryon | 85 |
+| ose whisker (1283) | Delay (ranged,not melee) | T3 | Atkorkamuy | 73 |
+| yowie skin (1296) | Delay (ranged,not melee) | T3 | Adamastor | 85 |
+| piece of angel skin (1312) | Delay (ranged,not melee) | T3 | Ancient Goobbue | 80 |
+| sparkling stone (1470) | Delay (ranged,not melee) | T3 | Absolute Virtue | 92 |
+| behemoth hide (860) | HP | T3 | Agloolik | 80 |
+| handful of dragon scales (867) | HP MP | T3 | Archaic Gears | 82 |
+| soulflayer tentacle (2335) | Helix Damage | T3 | Ash Dragon | 82 |
+| ethereal squama (2875) | Immunobreak Chance+ | T3 | Adze | 85 |
+| yagudo feather (841) | MP | T3 | Airi | 79 |
+| vial of magicked blood (2777) | Mag. crit. hit dmg | T3 | Akvan | 95 |
+| pumice stone (2776) | Magic burst dmg | T3 | Adjudicator Demon | 83 |
+| giant bird feather (842) | Magic crit. hit rate | T3 | Aestutaur | 81 |
+| clump of boyahda moss (919) | Refresh | T3 | Albino Antlion | 92 |
+| square of dhalmel leather (848) | Regen | T3 | Accursed Sorcerer | 89 |
+| behemoth horn (883) | Rng.Attack | T3 | Apocalyptic Weapon | 80 |
+| handful of nidhoggs scales (865) | Sklchn.dmg | T3 | Adaman Quadav | 74 |
+| shard of obsidian (2531) | Spikes Dmg | T3 | Akrab | 83 |
+| high-quality scorpion shell (1473) | Weapon skill damage | T3 | Ajattara | 83 |
+| apkallu feather (2149) | Crit. hit damage | T4 | Appetent Umbril | 101 |
+| manticore fang (1123) | Damage Taken | T4 | Achuka | 117 |
+| beetle shell (889) | Dmg (melee,not ranged) | T4 | Aello | 110 |
+| adamantoise shell (908) | Dmg (ranged,not melee) | T4 | Apex Idle Drifter | 142 |
+| spool of wool thread (820) | Haste | T4 | Acuex | 106 |
+| hydra fang (2158) | Magic Damage Taken | T4 | Alfard | 105 |
+| chunk of rock salt (936) | Magic dmg. taken | T4 | Agitated Chapuli | 126 |
+| wolf hide (858) | Phys. dmg. taken | T4 | Acerbic Jagil | 104 |
+| marid hide (2151) | Physical Damage Taken | T4 | Abashed Heartwing | 109 |
+| narasimha hide (1293) | Quadruple Attack | T4 | Aellos Handmaiden | 100 |
+| pigeons blood ruby (1271) | TP Bonus | T4 | Alpine Rabbit | 113 |
+| bat fang (891) | Triple Atk | T4 | Amaranth Barrier | 116 |
