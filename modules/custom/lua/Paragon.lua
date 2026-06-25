@@ -119,13 +119,11 @@ local function dailyMight(player)
     end
     player:setCharVar('Paragon_MightDay', today)
 
-    local dur   = C.DAILY_MIGHT_DURATION
-    local maxHP = player:getMaxHP()
-    local maxMP = player:getMaxMP()
-    player:addStatusEffect(xi.effect.MAX_HP_BOOST, { power = C.DAILY_MIGHT_HP,     duration = dur, origin = player, tick = 0, subType = 0, subPower = 0 })
-    player:addStatusEffect(xi.effect.REGAIN,       { power = C.DAILY_MIGHT_REGAIN, duration = dur, origin = player, tick = 3, subType = 0, subPower = 0 })
-    player:addStatusEffect(xi.effect.REFRESH,      { power = math.max(1, math.floor(maxMP * C.DAILY_MIGHT_REFRESH_PCT)), duration = dur, origin = player, tick = 3, subType = 0, subPower = 0 })
-    player:addStatusEffect(xi.effect.REGEN,        { power = math.max(1, math.floor(maxHP * C.DAILY_MIGHT_REGEN_PCT)),   duration = dur, origin = player, tick = 3, subType = 0, subPower = 0 })
+    local dur = C.DAILY_MIGHT_DURATION
+    player:addStatusEffect(xi.effect.MAX_HP_BOOST, { power = C.DAILY_MIGHT_HP,      duration = dur, origin = player, tick = 0, subType = 0, subPower = 0 })
+    player:addStatusEffect(xi.effect.REGAIN,       { power = C.DAILY_MIGHT_REGAIN,  duration = dur, origin = player, tick = 3, subType = 0, subPower = 0 })
+    player:addStatusEffect(xi.effect.REFRESH,      { power = C.DAILY_MIGHT_REFRESH, duration = dur, origin = player, tick = 3, subType = 0, subPower = 0 })
+    player:addStatusEffect(xi.effect.REGEN,        { power = C.DAILY_MIGHT_REGEN,   duration = dur, origin = player, tick = 3, subType = 0, subPower = 0 })
     player:printToPlayer("[Paragon] Paragon's Might surges through you! +HP, Regain, Refresh & Regen for 2 hours.", SYS)
 end
 

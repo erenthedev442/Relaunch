@@ -31,8 +31,8 @@ C.NM_POOL = {
     [10] = { groupId = 11369, name = 'Shinryu' },
 }
 
--- HP doubles per level: level 1 = 100k, level 10 ≈ 51M
-C.NM_BASE_HP = 100000
+-- HP doubles per level: level 1 = 20k, level 10 ≈ 10M
+C.NM_BASE_HP = 20000
 function C.nmHp(level)
     return math.floor(C.NM_BASE_HP * (2 ^ (level - 1)))
 end

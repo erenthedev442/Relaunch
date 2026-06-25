@@ -510,35 +510,34 @@ return
         -- engine clamp, but it's practically capped by the attack-delay floor when
         -- stacked with Haste, so the perk is held to a sane +25%.
         { id = 'DW',     label = 'Dual Wield',  mod = xi.mod.DUAL_WIELD,         perLevel =  1, cap = 25, apCost = 2, note = '+1% Dual Wield / level (max 25%) [2 AP]'  },
-        { id = 'CRIT',   label = 'Crit Rate',   mod = xi.mod.CRITHITRATE,        perLevel =  1, cap = 50, apCost = 2, note = '+1% Crit / level (max 50%) [2 AP]'         },
+        { id = 'CRIT',   label = 'Crit Rate',   mod = xi.mod.CRITHITRATE,        perLevel =  1, cap = 20, apCost = 2, note = '+1% Crit / level (max 20%) [2 AP]'         },
         -- CRIT_DMG_INCREASE is WHOLE-% (engine: pDif*(100+mod)/100, clamped 100):
-        -- perLevel 2 = +2% crit damage; max +100% at 50 levels.
-        { id = 'CRITDMG',label = 'Crit Dmg',    mod = xi.mod.CRIT_DMG_INCREASE,  perLevel = 2, cap = 50, apCost = 3, note = '+2% Crit Dmg / level (max 100%) [3 AP]'   },
+        -- perLevel 2 = +2% crit damage; max +40% at 20 levels.
+        { id = 'CRITDMG',label = 'Crit Dmg',    mod = xi.mod.CRIT_DMG_INCREASE,  perLevel = 2, cap = 20, apCost = 3, note = '+2% Crit Dmg / level (max 40%) [3 AP]'   },
         { id = 'CTR',    label = 'Counter',      mod = xi.mod.COUNTER,            perLevel =  1, cap = 50, apCost = 2, note = '+1 Counter / level (max +50) [2 AP]'       },
         { id = 'PARRY',  label = 'Parry Rate',   mod = xi.mod.PARRY,              perLevel =  1, cap = 25, apCost = 1, note = '+1% Parry / level (max 25%) [1 AP]'        },
         { id = 'SBL',    label = 'Subtle Blow',  mod = xi.mod.SUBTLE_BLOW,        perLevel =  1, cap = 50, apCost = 1, note = '+1 Subtle Blow / level (max +50) [1 AP]'   },
         -- ALL_WSDMG_ALL_HITS is WHOLE-% (engine: dmg*(100+mod)/100):
-        -- perLevel 2 = +2% WS damage; max +100% at 50 levels.
-        { id = 'WSDMG',  label = 'WS Dmg',       mod = xi.mod.ALL_WSDMG_ALL_HITS, perLevel = 2, cap = 50, apCost = 3, note = '+2% WS Dmg / level (max 100%) [3 AP]'     },
-        -- SKILLCHAINBONUS 100:1 (engine: (100+mod)/100): perLevel 2 = +2% skillchain damage per level; max 100%
-        { id = 'SCDMG',  label = 'SC Dmg',       mod = xi.mod.SKILLCHAINBONUS,    perLevel =  2, cap = 50, apCost = 3, note = '+2% Skillchain Dmg / level (max 100%) [3 AP]' },
+        -- perLevel 2 = +2% WS damage; max +40% at 20 levels.
+        { id = 'WSDMG',  label = 'WS Dmg',       mod = xi.mod.ALL_WSDMG_ALL_HITS, perLevel = 2, cap = 20, apCost = 3, note = '+2% WS Dmg / level (max 40%) [3 AP]'      },
+        -- SKILLCHAINBONUS 100:1 (engine: (100+mod)/100): perLevel 2 = +2% skillchain damage per level; max 40%
+        { id = 'SCDMG',  label = 'SC Dmg',       mod = xi.mod.SKILLCHAINBONUS,    perLevel =  2, cap = 20, apCost = 3, note = '+2% Skillchain Dmg / level (max 40%) [3 AP]' },
 
         -- ---- Mitigation -----------------------------------------------
-        -- 10000:1 scale: perLevel -100 = -1% PDT per level; cap 25 = -25% max
-        { id = 'PDT',   label = 'Phys.DT-',  mod = xi.mod.DMGPHYS,    perLevel = -100, cap = 25, apCost = 3, note = '-1% Phys.DT / level (max -25%) [3 AP]'    },
-        -- DMGMAGIC mirrors DMGPHYS (same 100:1 scale). Engine HARD-CAPS damage
-        -- taken at -50%; perk maxes at -25%, leaving headroom for gear.
-        { id = 'MDT',   label = 'Mag.DT-',   mod = xi.mod.DMGMAGIC,   perLevel = -100, cap = 25, apCost = 3, note = '-1% Mag.DT / level (max -25%) [3 AP]'     },
-        -- 10000:1 scale: perLevel 100 = +1% haste per level; cap 25 = 25% max
-        { id = 'HASTE', label = 'Haste',      mod = xi.mod.HASTE_GEAR, perLevel =  100, cap = 25, apCost = 3, note = '+1% Haste / level (max 25%) [3 AP]'        },
+        -- 10000:1 scale: perLevel -100 = -1% PDT per level; cap 15 = -15% max
+        { id = 'PDT',   label = 'Phys.DT-',  mod = xi.mod.DMGPHYS,    perLevel = -100, cap = 15, apCost = 3, note = '-1% Phys.DT / level (max -15%) [3 AP]'    },
+        -- DMGMAGIC mirrors DMGPHYS (same 100:1 scale).
+        { id = 'MDT',   label = 'Mag.DT-',   mod = xi.mod.DMGMAGIC,   perLevel = -100, cap = 15, apCost = 3, note = '-1% Mag.DT / level (max -15%) [3 AP]'     },
+        -- 10000:1 scale: perLevel 100 = +1% haste per level; cap 15 = 15% max
+        { id = 'HASTE', label = 'Haste',      mod = xi.mod.HASTE_GEAR, perLevel =  100, cap = 15, apCost = 3, note = '+1% Haste / level (max 15%) [3 AP]'        },
 
         -- ---- Magic support -------------------------------------------
         -- SPELLINTERRUPT is WHOLE-% (engine: (100 - mod)/100 interrupt chance):
         -- perLevel 1 = +1% SIRD; max +50% at 50 levels.
         { id = 'INTP',  label = 'Spell Intp',   mod = xi.mod.SPELLINTERRUPT,    perLevel = 1, cap = 50, apCost = 2, note = '+1% SIRD / level (max 50%) [2 AP]'          },
         -- FASTCAST is WHOLE-% (engine reads it as a direct percent, clamped 50/80):
-        -- perLevel 1 = +1% fast cast; max +50% at 50 levels.
-        { id = 'FCAST', label = 'Fast Cast',     mod = xi.mod.FASTCAST,          perLevel = 1, cap = 50, apCost = 2, note = '+1% Fast Cast / level (max 50%) [2 AP]'     },
+        -- perLevel 1 = +1% fast cast; max +30% at 30 levels.
+        { id = 'FCAST', label = 'Fast Cast',     mod = xi.mod.FASTCAST,          perLevel = 1, cap = 30, apCost = 2, note = '+1% Fast Cast / level (max 30%) [2 AP]'     },
         { id = 'ENSP',  label = 'Enspell Dmg',   mod = xi.mod.ENSPELL_DMG_BONUS, perLevel = 10, cap = 50, apCost = 2, note = '+10 Enspell Dmg / level (max +500) [2 AP]'  },
         -- CURE_POTENCY is WHOLE-% (engine: cure*(100+mod)/100). Cure Potency
         -- HARD-CAPS at +50%, so the perk is capped there (cap 25 = +50%) -- buying

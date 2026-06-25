@@ -107,6 +107,7 @@ catalog.duel =
     timeLimitSec    = 300,  -- 5 minutes, then the duel is forfeit
     watchdogSec     = 5,    -- replica-side check that the player is still here
     perOpponentPerDay = true,  -- each champion can be challenged once per UTC day
+    dailyWinCap     = 15,   -- global wins-per-day ceiling (nil = no cap)
 }
 
 -- ============================================================

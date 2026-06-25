@@ -47,10 +47,10 @@ end
 -- auto-buff pattern). Distinct from the permanent perks -- no overlap.
 C.DAILY_MIGHT_UNLOCK   = 80
 C.DAILY_MIGHT_DURATION = 7200   -- seconds (2h)
-C.DAILY_MIGHT_HP       = 3000   -- MAX_HP_BOOST (flat)
-C.DAILY_MIGHT_REGAIN   = 50     -- REGAIN (TP/tick)
-C.DAILY_MIGHT_REFRESH_PCT = 0.10  -- REFRESH = this * maxMP / tick
-C.DAILY_MIGHT_REGEN_PCT   = 0.05  -- REGEN   = this * maxHP / tick
+C.DAILY_MIGHT_HP       = 1500   -- MAX_HP_BOOST (flat)
+C.DAILY_MIGHT_REGAIN   = 5      -- REGAIN (TP/tick)
+C.DAILY_MIGHT_REFRESH  = 10     -- REFRESH (flat MP/tick)
+C.DAILY_MIGHT_REGEN    = 15     -- REGEN   (flat HP/tick)
 
 -- ── Title flair by Paragon Level (displayed text, NOT a client title) ────────
 C.TITLE_TIERS = {

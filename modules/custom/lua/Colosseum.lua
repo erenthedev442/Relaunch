@@ -198,6 +198,12 @@ local function applyResult(player, opp, won)
         setRating(meId,  myR  + swing)
         setRating(opp.id, oppR - swing)
         player:setCharVar('Col_Wins', (player:getCharVar('Col_Wins') or 0) + 1)
+        -- Track daily wins for the cap
+        local today    = currentUtcDay()
+        local winDay   = player:getCharVar('Col_WinDay')   or 0
+        local dayWins  = winDay == today and (player:getCharVar('Col_DayWins') or 0) or 0
+        player:setCharVar('Col_WinDay',  today)
+        player:setCharVar('Col_DayWins', dayWins + 1)
     else
         swing = eloSwing(oppR, myR)
         setRating(meId,  myR  - swing)
@@ -300,6 +306,17 @@ local function startDuel(player, opp)
     if player:getHP() <= 0 then
         player:printToPlayer('[Colosseum] Revive first, then fight.', xi.msg.channel.SYSTEM_3)
         return
+    end
+    if catalog.duel.dailyWinCap then
+        local today   = currentUtcDay()
+        local winDay  = player:getCharVar('Col_WinDay')  or 0
+        local dayWins = winDay == today and (player:getCharVar('Col_DayWins') or 0) or 0
+        if dayWins >= catalog.duel.dailyWinCap then
+            player:printToPlayer(string.format(
+                '[Colosseum] Daily win limit reached (%d wins). Resets at 00:00 UTC.',
+                catalog.duel.dailyWinCap), xi.msg.channel.SYSTEM_3)
+            return
+        end
     end
     if catalog.duel.perOpponentPerDay
        and (player:getCharVar(lastFoughtCv(opp.id)) or 0) == currentUtcDay() then

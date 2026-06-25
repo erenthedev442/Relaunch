@@ -30,6 +30,9 @@ require(string.format('scripts/zones/%s/Zone', catalog.npcPos.zone))
 
 local m = Module:new('daily_board')
 
+local DAILY_HL_CAP  = 750        -- max Hunt Marks the board pays per UTC day
+local CV_HL_TODAY   = 'DB_HL_Today'   -- CharVar: HL earned from board today
+
 -----------------------------------
 -- Day helpers
 -----------------------------------
@@ -137,6 +140,9 @@ local function resetDay(player)
     player:setCharVar(catalog.cvAugmentsBase,
         player:getCharVar(catalog.baselines.augments) or 0)
 
+    -- Reset daily HL cap counter
+    player:setCharVar(CV_HL_TODAY, 0)
+
     -- Assign today's 3 objectives by pool index
     local objs = todaysObjectives()
     for slot, obj in ipairs(objs) do
@@ -159,10 +165,23 @@ end
 local function payCurrency(player, reward)
     local curr = catalog.currencies[reward.currency]
     if not curr then return end
+    local amount = reward.amount
+    if reward.currency == 'hl' then
+        local earned = player:getCharVar(CV_HL_TODAY) or 0
+        local remaining = math.max(0, DAILY_HL_CAP - earned)
+        if remaining <= 0 then
+            player:printToPlayer(
+                string.format('[Daily Board] Daily limit reached (%d Hunt Marks). Come back tomorrow!', DAILY_HL_CAP),
+                xi.msg.channel.SYSTEM_3)
+            return
+        end
+        amount = math.min(amount, remaining)
+        player:setCharVar(CV_HL_TODAY, earned + amount)
+    end
     local current = player:getCharVar(curr.cv) or 0
-    player:setCharVar(curr.cv, current + reward.amount)
+    player:setCharVar(curr.cv, current + amount)
     player:printToPlayer(
-        string.format('[Daily Board] +%d %s awarded!', reward.amount, curr.name),
+        string.format('[Daily Board] +%d %s awarded!', amount, curr.name),
         xi.msg.channel.SYSTEM_3)
 end
 

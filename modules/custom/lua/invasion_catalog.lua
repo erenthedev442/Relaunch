@@ -119,8 +119,8 @@ catalog.spawnRingMax = 14.0
 -- [was <pre-halving>; orig <launch>] for easy restore.
 catalog.reward =
 {
-    perWaveMarks  = 150,   -- on each wave clear (x4 waves = 600 across a full assault)  [was 300; orig 1200]
-    victoryMarks  = 1125,  -- on full clear (the Warlord falls), plus...                 [was 2250; orig 9000]
+    perWaveMarks  = 20,    -- on each wave clear (x4 waves = 80 across a full assault)
+    victoryMarks  = 100,   -- on full clear (the Warlord falls), plus...
     victoryInfamy = 100,   -- ...the only Infamy source outside dungeons (intentional)   [was 300; orig 2400]
     failMarks     = 150,   -- consolation if the clock beats the defense                 [was 300; orig 1200]
 
