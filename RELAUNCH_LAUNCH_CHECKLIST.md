@@ -2,49 +2,51 @@
 
 > Goal: bring the **relaunch** instance up on the Azure box for a controlled first playtest, without touching the live Legendary server. The relaunch runs as a *separate* instance: own DB (`xi_relaunch`), own ports (+10, MAP_PORT 54240), own services (`xi_*_relaunch`), own dir (`/home/azureuser/relaunch`). Starting it does **not** affect live.
 
-## Current state (verified on the box 2026-06-25)
+## Current state (verified on the box 2026-06-25 ~16:51 UTC)
 
 | Piece | State |
 |---|---|
 | C++ build (`xi_map`, `xi_connect`) | ✅ present, built **today 03:49** |
-| DB `xi_relaunch` | ✅ exists, **131 tables**, populated |
+| DB `xi_relaunch` | ✅ **131 tables**, GEO spells (26) ✓, mastery respawn SQL ✓ |
 | Config | ✅ `SQL_DATABASE=xi_relaunch`, `MAP_PORT=54240` (+10) |
-| Services `xi_*_relaunch` (world/connect/map/search) | ⚠ defined but **disabled + inactive** (not started) |
-| `/home/azureuser/relaunch` | ⚠ **NOT a git checkout** — code is synced by your deploy process, not `git pull` |
+| Services `xi_*_relaunch` (world/connect/map/search) | ✅ **all ACTIVE** — started ~16:35 UTC, restarted 16:51 after code sync |
+| Code on box | ✅ synced to branch HEAD `819935937b` via `git archive + rsync` |
+| New modules loaded | ✅ `augment_catalyst_drops`, `spell_skill_mastery`, `job_mastery` |
 
-**Bottom line:** the instance is provisioned and built. Launch = sync latest code → (apply DB) → start services → smoke-test.
-
----
-
-## Step 0 — Sync the latest relaunch code  ⚠ do this first
-
-The box's Lua is frozen at the 03:49 build. Everything committed to `fjb/relaunch` **after** that is NOT on the box yet (the dir isn't git, so nothing auto-pulls). Pending sync:
-
-- **New:** `modules/custom/commands/aoews.lua`
-- **Modified:** `endless_tower.lua`, `weekly_recap.lua`, `auto_buff_henge.lua`, `daily_login_bonus.lua`, `gainexp.lua`, `Tournament.lua`, `new_char_wardrobe_sizes.lua`
-- **Removed:** `modules/custom/lua/mission_wardrobe_unlocks.lua`  ← must be deleted on the box too, not just added
-- **Parallel session:** the Spell & Skill Mastery system (`spell_skill_mastery_catalog.lua` + its module/`!empower` command)
-
-Sync the **whole `modules/custom/` tree** from the latest `relaunch` branch via your deploy/sync path (e.g. `deploy-everything-sync.bat`, or an `rsync -a --delete` of `modules/custom/` to `/home/azureuser/relaunch/modules/custom/`). The `--delete`/explicit removal matters so `mission_wardrobe_unlocks.lua` actually leaves the box.
-
-> Recommendation: make `/home/azureuser/relaunch` a real git checkout of the `relaunch` branch (or document the rsync) so future syncs are one command and deletions propagate. Right now there's no reproducible deploy path for this instance.
+**Bottom line: server is UP.** Smoke-test (Steps 0–2 complete) → run Step 3 to gate human playtest.
 
 ---
 
-## Step 1 — Apply DB migrations to `xi_relaunch`
+## ✅ Step 0 — Sync the latest relaunch code  *(DONE 2026-06-25)*
 
-`sql/zz_*.sql` and `modules/custom/sql/` apply on a normal deploy. For a first playtest, the one that matters:
+Code on the box is at HEAD `819935937b`. Sync command (established as the standard deploy path):
 
-- **`modules/custom/sql/restore_geo_retail.sql`** → apply to `xi_relaunch`, or GEO mains have **0 MP**. (GEO also needs the build's `grades.cpp` to be stock/retail — the relaunch build inherits this from base; verify in Step 3.)
-
+```bash
+# From D:\server_relaunch on the laptop:
+git archive HEAD modules/custom/ | ssh -i "C:/Users/richa/Downloads/ffxi-server_key.pem" azureuser@172.215.213.23 \
+  "mkdir -p /tmp/rlstage && tar -C /tmp/rlstage -xf - && rsync -a --delete /tmp/rlstage/modules/custom/ ~/relaunch/modules/custom/ && rm -rf /tmp/rlstage && echo SYNC OK"
+# Then restart xi_map_relaunch if new addOverride modules were added:
+ssh ... "sudo systemctl restart xi_map_relaunch"
 ```
+
+`git archive HEAD` reads only committed state, so parallel-session WIP files never leak to the box.
+
+---
+
+## ✅ Step 1 — Apply DB migrations to `xi_relaunch`  *(DONE — confirmed)*
+
+- **`restore_geo_retail.sql`** ✅ applied — 26 GEO spells confirmed in `spell_list`
+- **`mastery_rotation_respawns.sql`** ✅ applied — Jaggedy-Eared Jack `respawntime=1800, spawntype=0` confirmed
+
+To apply a SQL file in future (e.g. new custom SQL after a playtest fix):
+```bash
 PW=$(grep -iE SQL_PASSWORD ~/relaunch/settings/network.lua | sed -E "s/.*'([^']*)'.*/\1/")
-mysql -u xiuser -p"$PW" xi_relaunch < ~/relaunch/modules/custom/sql/restore_geo_retail.sql
+mysql -u xiuser -p"$PW" xi_relaunch < ~/relaunch/modules/custom/sql/<file>.sql
 ```
 
 ---
 
-## Step 2 — Start the services (does not touch live)
+## ✅ Step 2 — Start the services  *(DONE 2026-06-25 ~16:35 UTC)*
 
 ```
 sudo systemctl start xi_world_relaunch
@@ -54,14 +56,12 @@ sudo systemctl start xi_search_relaunch
 # (xi_relaunch.service may be an umbrella that pulls these in — try it first if so)
 ```
 
-Verify:
-```
-systemctl is-active xi_world_relaunch xi_connect_relaunch xi_map_relaunch xi_search_relaunch
-tail -n 50 ~/relaunch/log/map-server.log          # expect the startup banner + module-load lines, 0 Lua errors
-grep -iE "lua_error|\.lua:|attempt to|traceback" ~/relaunch/log/map-server.log | tail
-```
+**Verified (2026-06-25 16:51 UTC):** all 4 services active, `The map-server is ready to work`, 118 NMs spawned, 0 Lua errors. Services remain **disabled** (won't auto-start on reboot) — keep it this way for controlled playtest.
 
-> Keep the services **disabled** (don't `systemctl enable`) for a controlled playtest — that way a box reboot won't auto-launch relaunch alongside live until you're ready.
+```bash
+# Re-start after a box reboot:
+sudo systemctl start xi_world_relaunch xi_connect_relaunch xi_map_relaunch xi_search_relaunch
+```
 
 ---
 
