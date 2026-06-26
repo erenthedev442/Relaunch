@@ -24,10 +24,13 @@ require('modules/module_utils')
 local m = Module:new('unlock_adoulin_jobs')
 
 -- Jobs auto-granted to every player. Add more here if ever desired.
+-- SMN is the repurposed slot for the custom job "Boom" (see BOOM_JOB.md), so it
+-- is auto-unlocked too; remove it here to gate Boom behind the retail unlock.
 local autoUnlockJobs =
 {
     xi.job.RUN,
     xi.job.GEO,
+    xi.job.SMN,  -- "Boom" custom job
 }
 
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
