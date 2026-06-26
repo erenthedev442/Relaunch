@@ -8,7 +8,7 @@
 --      Each rank raises the mastery multiplier and crit chance the
 --      Augment Moogle applies to every augment.
 --
---   2. NM Affinities (13 bits). Trading the right NM-drop trophy
+--   2. NM Affinities (24 bits). Trading the right NM-drop trophy
 --      permanently unlocks a per-category bonus multiplier (default 1.5x).
 --
 -- All numbers, trophies, and titles live in:
@@ -111,58 +111,21 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
     local function tryRegisterAffinity(player, row)
         if affinity.hasAffinity(player, row.cat) then
             player:printToPlayer(string.format(
-                'You already hold the %s affinity.', row.label),
+                '[Augment Sage] %s affinity already unlocked.', row.label),
                 xi.msg.channel.SYSTEM_3)
             buildAffinityMenu(player)
             return
         end
-
-        -- Relaunch gate (2026-06-25, owner request): NM affinities are no longer a
-        -- free trophy turn-in. They now require Hunting League Rank 3 (Elite) AND a
-        -- Hunt Marks cost, on top of the NM trophy -- so affinities are gated behind
-        -- real HL progression + an economy sink.
-        local HL_AFF_RANK = 3
-        local HL_AFF_COST = 1000
-        if (player:getCharVar('HL_Tier') or 1) < HL_AFF_RANK then
-            player:printToPlayer(string.format(
-                'NM Affinity registration requires Hunting League Rank %d (Elite).', HL_AFF_RANK),
-                xi.msg.channel.SYSTEM_3)
-            buildAffinityMenu(player)
-            return
-        end
-        if (player:getCharVar('HL_Points') or 0) < HL_AFF_COST then
-            player:printToPlayer(string.format(
-                'NM Affinity registration costs %d Hunt Marks (you have %d).',
-                HL_AFF_COST, player:getCharVar('HL_Points') or 0),
-                xi.msg.channel.SYSTEM_3)
-            buildAffinityMenu(player)
-            return
-        end
-
-        local has = player:getItemCount(row.trophy.id)
-        if has < row.trophy.qty then
-            player:printToPlayer(string.format(
-                'You need %d x %s (you have %d). Slay %s!',
-                row.trophy.qty, row.trophy.name, has, row.nm),
-                xi.msg.channel.SYSTEM_3)
-            buildAffinityMenu(player)
-            return
-        end
-
-        player:delItem(row.trophy.id, row.trophy.qty)
-        player:setCharVar('HL_Points', (player:getCharVar('HL_Points') or 0) - HL_AFF_COST)  -- spend Hunt Marks
-        affinity.grantAffinity(player, row.cat)
-
         player:printToPlayer(string.format(
-            '%s affinity registered! Augments in this category are now %.0f%% stronger.',
-            row.label, (affinity.affinityMult - 1.0) * 100),
+            '[Augment Sage] To unlock the %s affinity: defeat %s in %s.',
+            row.label, row.nm:gsub('_', ' '), row.nmZone),
             xi.msg.channel.SYSTEM_3)
         buildAffinityMenu(player)
     end
 
     -----------------------------------
     -- Affinity submenu (paginated). Shows unlocked-state on each row.
-    -- 13 entries + nav = need pagination to fit the 150-byte cap.
+    -- 24 entries + nav; AFF_PAGE_SZ=4 keeps each page under the 150-byte cap.
     -----------------------------------
     local AFF_PAGE_SZ = 4
 
