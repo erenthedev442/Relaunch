@@ -54,6 +54,14 @@ CHECKS = [
      "modules/init.txt", r"(?m)^\s*custom/sql/\s*$", "present", 1),
     ("Module loader: custom/commands enabled (init.txt) [CRITICAL]",
      "modules/init.txt", r"(?m)^\s*custom/commands/\s*$", "present", 1),
+    # Boom custom job (relaunch): the onJobChange hook spans 3 stock files; a
+    # merge reverting ANY link breaks instant /job-swap trait reconciliation.
+    ("Boom: onJobChange call in 0x100 job handler",
+     "src/map/packets/c2s/0x100_myroom_job.cpp", r"luautils::OnJobChange", "present", 1),
+    ("Boom: OnJobChange wired in luautils.cpp",
+     "src/map/lua/luautils.cpp", r"xi\.player\.onJobChange", "present", 1),
+    ("Boom: onJobChange Lua stub (player.lua)",
+     "scripts/globals/player.lua", r"xi\.player\.onJobChange", "present", 1),
     ("Patch markers present across src/ (broad-revert tripwire)",
      "src", r"FJB|LEGENDARY[- ]CUSTOM", "min", 30),
 ]
