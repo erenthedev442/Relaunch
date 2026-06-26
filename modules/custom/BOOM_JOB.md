@@ -19,16 +19,16 @@ spells with a chance to explode for significant damage**.
 
 Lua + SQL (no rebuild) EXCEPT the job-change hook (C++ — needs `relaunch-rebuild.bat`).
 
-- `modules/custom/lua/boom_job_catalog.lua` — ALL tuning (traits, spell set, detonation chance/damage, abilities).
-- `modules/custom/lua/BoomJob.lua` — applies job traits while SMN is MAIN job, grants the spells, runs the detonation (`MAGIC_USE` listener), exposes the abilities (`xi.boomJob.*`), and reconciles traits instantly on job change.
-- `modules/custom/commands/overload.lua` + `ignite.lua` — the two signature abilities (see below).
-- `modules/custom/sql/boom_job_spells.sql` — sets the SMN learn-level byte (byte 15 of `spell_list.jobs`) so the slot can cast the 6 nukes. Pattern from `restore_geo_retail.sql`.
+- `modules/custom/lua/boom_job_catalog.lua` — ALL tuning (traits, spell kit + per-spell detonation, Ignite window).
+- `modules/custom/lua/BoomJob.lua` — applies job traits while SMN is MAIN job, grants the spells, runs the per-spell detonation + Ignite window (`MAGIC_USE` listener), and reconciles traits instantly on job change.
+- `modules/custom/sql/boom_job_spells.sql` — sets the SMN learn-level byte (byte 15 of `spell_list.jobs`) so the slot can cast the 18 spells. Pattern from `restore_geo_retail.sql`.
 - `modules/custom/lua/unlock_adoulin_jobs.lua` — SMN added to the auto-unlock list so Boom is selectable by everyone (toggle: remove it to gate behind the retail unlock).
 - **Removed** the retail-SMN custom modules (avatars are gone): `smn_avatar_boost.lua`, `bp_delay_uncap.lua`, `smn_avatar_gear_mods.sql`.
 
-**Signature abilities** (delivered as commands — the avatar JA buttons are inert; gated on Boom = MAIN job, charVar cooldowns):
-- **`!overload`** — Astral-Flow ultimate: one massive elemental detonation on your target + AoE blast (×5 a normal detonation), long cooldown.
-- **`!ignite`** — coats your staff: a visible elemental enspell (melee add) + a window where your spells detonate far more often (15% → 45%).
+**The kit is ALL real spells (cast, no commands)** — everything runs from the one `MAGIC_USE` listener:
+- **Tier-III nukes** (Stone/Water/Aero/Fire/Blizzard III): small detonation (15%, ×1).
+- **Ancient Magic** (Flare/Freeze/Tornado/Quake/Burst/Flood): the BIG boom — higher chance (35%) + a far bigger blast (×5) with AoE. "Overload" is just casting a big spell.
+- **Enspells** (Enfire…Enwater): casting one is "Ignite" — opens a 60s window where every nuke detonates at ≥45%, and the enspell's melee enchant supports the hybrid.
 
 **Instant job swap (C++ hook, REBUILD):** added a generic `onJobChange` event —
 `luautils::OnJobChange` called from `0x100_myroom_job.cpp` (before `UpdateHealth`),
@@ -43,12 +43,11 @@ touch `skill_caps`/`grades.cpp`. STR/HP/Attack%/Acc/DA/Store TP/M.Atk/Fast Cast 
 via `addMod`. Re-applied on `onGameIn` (deferred 3s), same as the Cross-Job Trait Trainer.
 
 **Detonation:** `BoomJob.lua` registers a `MAGIC_USE` listener (signature
-`caster,target,spell,action`). When a Boom (main job 15) casts one of the listed
-spells, `boom.chance`% of the time it deals a big bonus magic hit of the spell's
-element to the target (optional AoE), with enmity. Single per-cast hook, fully tunable.
-
-**The handful (tier-III elemental nukes):** Stone III (146), Water III (151),
-Aero III (156), Fire III (161), Blizzard III (166), Thunder III (171).
+`caster,target,spell,action`). When a Boom (main job 15) casts a listed spell, it
+rolls that spell's `chance` (boosted to ≥`ignite.boostChance` during the Ignite
+window) and on success deals `boomDamage × spell.mult` of the spell's element to the
+target (optional AoE), with enmity. Casting an enspell instead opens the Ignite
+window. Single per-cast hook, fully tunable in `boom_job_catalog.lua`.
 
 ### Apply
 Lua hot-reloads on save; the spell-access SQL + auto-unlock + module removal need the

@@ -5,13 +5,17 @@
 -- a pet-less staff melee/hybrid DD whose elemental spells have a chance to
 -- DETONATE for big bonus damage. See BOOM_JOB.md + boom_job_catalog.lua.
 --
--- Pure Lua, no rebuild (EXCEPT the onJobChange hook, which needs the C++ event
--- added in 0x100_myroom_job.cpp + scripts/globals/player.lua -- see BOOM_JOB.md):
---   * Job traits applied while SMN is MAIN job; reconciled on login/zone AND
---     instantly on job change (addMod on enter, delMod on leave).
---   * The handful of nukes are granted (addSpell) + made castable via SQL.
---   * Detonation runs from a MAGIC_USE listener (boosted during !ignite).
---   * Abilities (!overload, !ignite) exposed as xi.boomJob.* for the commands.
+-- EVERYTHING is driven by CASTING real spells -- no chat commands:
+--   * Tier-III nukes -> small detonation. Ancient Magic (Flare/Freeze/...) ->
+--     big detonation + blast. Detonation is per-spell (chance/mult).
+--   * Casting an ENSPELL is "Ignite": opens a window where detonation chance is
+--     boosted (the enspell's own melee enchant supports the hybrid).
+--   * All run from one MAGIC_USE listener.
+--
+-- Job traits (incl. Staff + Elemental skill) are applied via addMod while SMN is
+-- the MAIN job, reconciled on login/zone AND instantly on job change (the C++
+-- onJobChange hook -- see BOOM_JOB.md; that part needs a rebuild). No skill_caps
+-- or grades.cpp touch.
 -----------------------------------
 require('modules/module_utils')
 
@@ -32,13 +36,11 @@ local ELEM_DT =
     [xi.element.DARK]    = xi.damageType.DARK,
 }
 
-local boomSet = {}
-for _, s in ipairs(C.spells) do boomSet[s.id] = true end
-
--- In-memory "are Boom's trait mods currently applied" flag, per player. A
--- zone-in wipes mods (reset to false in onGameIn); job change preserves standalone
--- addMods, so the flag drives delMod-on-leave / addMod-on-enter.
-local applied = {}
+-- spellid -> per-spell detonation config; and the set of enspell ids.
+local nukeCfg   = {}
+for _, s in ipairs(C.spells) do nukeCfg[s.id] = s end
+local enspellSet = {}
+for _, id in ipairs(C.enspells) do enspellSet[id] = true end
 
 local function isBoom(p) return p:getMainJob() == C.JOB end
 
@@ -49,9 +51,16 @@ local function grantSpells(p)
     for _, s in ipairs(C.spells) do
         if not p:hasSpell(s.id) then p:addSpell(s.id) end
     end
+    for _, id in ipairs(C.enspells) do
+        if not p:hasSpell(id) then p:addSpell(id) end
+    end
 end
 
--- Bring the player's trait state in line with their current job.
+-- In-memory "Boom trait mods currently applied" flag, per player. A zone-in
+-- wipes mods (reset to false in onGameIn); a job change preserves standalone
+-- addMods, so the flag drives delMod-on-leave / addMod-on-enter.
+local applied = {}
+
 local function reconcile(p)
     local name = p:getName()
     if isBoom(p) then
@@ -95,61 +104,38 @@ local function blast(caster, target, element, dmg, aoeRadius)
     end
 end
 
--- Seconds remaining on a charVar cooldown (0 if ready).
-local function cdLeft(p, var)
+-- Fires on every spell cast; gives Boom's spells their special behavior.
+local function onBoomCast(caster, target, spell)
+    if not isBoom(caster) then return end
+    local id = spell:getID()
+
+    -- Casting an enspell = Ignite: open the boosted-detonation window. (The
+    -- engine applies the actual enspell separately.)
+    if enspellSet[id] then
+        local ok, now = pcall(os.time)
+        if ok then caster:setCharVar(C.ignite.untilVar, now + C.ignite.duration) end
+        caster:printToPlayer(C.ignite.msg, SYS)
+        return
+    end
+
+    local cfg = nukeCfg[id]
+    if not cfg then return end
+
+    local chance = cfg.chance
     local ok, now = pcall(os.time)
-    if not ok then return 0 end
-    return math.max(0, (p:getCharVar(var) or 0) - now)
-end
-local function setCd(p, var, secs)
-    local ok, now = pcall(os.time)
-    if ok then p:setCharVar(var, now + secs) end
+    if ok and (caster:getCharVar(C.ignite.untilVar) or 0) > now then
+        chance = math.max(chance, C.ignite.boostChance)
+    end
+
+    if math.random(100) <= chance then
+        blast(caster, target, spell:getElement(), boomDamage(caster, cfg.mult), cfg.aoe or C.boom.aoeRadius)
+        caster:printToPlayer(C.boom.msg, SYS)
+    end
 end
 
 -----------------------------------
--- Public API for the command files (!overload / !ignite).
------------------------------------
-xi.boomJob = xi.boomJob or {}
-xi.boomJob.isBoom = isBoom
-
-xi.boomJob.overload = function(p)
-    if not isBoom(p) then
-        p:printToPlayer('[Boom] Overload only works on the Boom job.', SYS); return
-    end
-    local a    = C.abilities.overload
-    local left = cdLeft(p, a.cdVar)
-    if left > 0 then
-        p:printToPlayer(string.format('[Boom] Overload recasts in %ds.', left), SYS); return
-    end
-    local target = p:getTarget()
-    if target == nil or target:isDead() then
-        p:printToPlayer('[Boom] Overload needs a target -- engage an enemy first.', SYS); return
-    end
-    blast(p, target, a.element, boomDamage(p, a.mult), a.aoeRadius)
-    setCd(p, a.cdVar, a.cd)
-    p:printToPlayer(a.msg, SYS)
-end
-
-xi.boomJob.ignite = function(p)
-    if not isBoom(p) then
-        p:printToPlayer('[Boom] Ignite only works on the Boom job.', SYS); return
-    end
-    local a    = C.abilities.ignite
-    local left = cdLeft(p, a.cdVar)
-    if left > 0 then
-        p:printToPlayer(string.format('[Boom] Ignite recasts in %ds.', left), SYS); return
-    end
-    -- Visible enspell buff (best-effort) + the boosted-detonation window.
-    pcall(function() p:addStatusEffect(a.enspell, a.enspellPower, 0, a.duration) end)
-    local ok, now = pcall(os.time)
-    if ok then p:setCharVar(a.untilVar, now + a.duration) end
-    setCd(p, a.cdVar, a.cd)
-    p:printToPlayer(a.msg, SYS)
-end
-
------------------------------------
--- Login: reset the applied flag (zone wiped mods) then reconcile after the 3s
--- post-login stat finalization. Also register the detonation listener.
+-- Login: reset the applied flag (zone wiped mods), reconcile after the 3s
+-- post-login stat finalization, and register the cast listener.
 -----------------------------------
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     super(player, firstLogin, zoning)
@@ -157,18 +143,7 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     player:timer(3000, function(p) pcall(function() reconcile(p) end) end)
 
     player:addListener('MAGIC_USE', 'BOOM_EXPLODE', function(caster, target, spell, action)
-        pcall(function()
-            if not (isBoom(caster) and boomSet[spell:getID()]) then return end
-            local chance = C.boom.chance
-            local ok, now = pcall(os.time)
-            if ok and (caster:getCharVar(C.abilities.ignite.untilVar) or 0) > now then
-                chance = C.abilities.ignite.boostChance
-            end
-            if math.random(100) <= chance then
-                blast(caster, target, spell:getElement(), boomDamage(caster, 1), C.boom.aoeRadius)
-                caster:printToPlayer(C.boom.msg, SYS)
-            end
-        end)
+        pcall(function() onBoomCast(caster, target, spell) end)
     end)
 end)
 

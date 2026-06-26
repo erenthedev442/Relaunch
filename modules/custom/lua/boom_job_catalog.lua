@@ -34,65 +34,52 @@ catalog.traits =
     { xi.mod.FASTCAST,       25 },  -- hybrid: weave nukes between swings
 }
 
--- ── The "Boom" spells ───────────────────────────────────────────────────────
--- A handful of tier-III elemental nukes. Granted on login (addSpell) and made
--- castable by the SMN slot via boom_job_spells.sql (jobs-blob byte 15). Each has
--- catalog.boom.chance to DETONATE for big bonus damage when cast.
+-- ── The "Boom" spells (cast them -- detonation is per-spell) ─────────────────
+-- Granted on login (addSpell) + made castable by the SMN slot via
+-- boom_job_spells.sql (jobs-blob byte 15). On cast, each rolls `chance`% to
+-- DETONATE for `mult` x the base blast (see catalog.boom). Bigger spells boom
+-- bigger -- everything is a real cast, no commands.
 catalog.spells =
 {
-    { id = 146, name = 'Stone III'    },  -- earth
-    { id = 151, name = 'Water III'    },  -- water
-    { id = 156, name = 'Aero III'     },  -- wind
-    { id = 161, name = 'Fire III'     },  -- fire
-    { id = 166, name = 'Blizzard III' },  -- ice
-    { id = 171, name = 'Thunder III'  },  -- thunder
+    -- Tier-III nukes: the core handful, small detonation.
+    { id = 146, name = 'Stone III',    chance = 15, mult = 1 },
+    { id = 151, name = 'Water III',    chance = 15, mult = 1 },
+    { id = 156, name = 'Aero III',     chance = 15, mult = 1 },
+    { id = 161, name = 'Fire III',     chance = 15, mult = 1 },
+    { id = 166, name = 'Blizzard III', chance = 15, mult = 1 },
+    { id = 171, name = 'Thunder III',  chance = 15, mult = 1 },
+    -- Ancient Magic: the BIG boom -- higher chance, far bigger blast + AoE.
+    { id = 204, name = 'Flare',   chance = 35, mult = 5, aoe = 10 },
+    { id = 206, name = 'Freeze',  chance = 35, mult = 5, aoe = 10 },
+    { id = 208, name = 'Tornado', chance = 35, mult = 5, aoe = 10 },
+    { id = 210, name = 'Quake',   chance = 35, mult = 5, aoe = 10 },
+    { id = 212, name = 'Burst',   chance = 35, mult = 5, aoe = 10 },
+    { id = 214, name = 'Flood',   chance = 35, mult = 5, aoe = 10 },
 }
 
--- ── Detonation (the signature) ──────────────────────────────────────────────
--- On casting a listed spell, `chance`% to deal a big bonus magic hit of the
--- spell's element to the target. dmg = INT*intMult + M.Atk*mattMult + base,
--- capped. aoeRadius > 0 splashes the blast to nearby foes.
+-- Enspells -- casting ANY of these is "Ignite": it opens a window where every
+-- nuke's detonation chance is boosted, and the enspell's own melee enchant
+-- supports the hybrid. Cast, don't command.
+catalog.enspells = { 100, 101, 102, 103, 104, 105 }  -- Enfire/Enblizzard/Enaero/Enstone/Enthunder/Enwater
+catalog.ignite =
+{
+    duration    = 60,    -- seconds the boosted-detonation window lasts
+    boostChance = 45,    -- detonation % floor while Ignite is up
+    untilVar    = 'Boom_IgniteUntil',
+    msg         = 'IGNITE!! Your staff blazes -- spells now detonate readily!',
+}
+
+-- ── Detonation damage ───────────────────────────────────────────────────────
+-- dmg = (INT*intMult + M.Atk*mattMult + base) * spell.mult, capped. A spell's
+-- `aoe` radius > 0 (else aoeRadius) splashes the blast to nearby foes.
 catalog.boom =
 {
-    chance    = 15,       -- % per cast (base; raised to abilities.ignite.boostChance during Ignite)
     intMult   = 20,
     mattMult  = 12,
     base      = 3000,
     cap       = 99999,    -- engine damage display ceiling
-    aoeRadius = 0,        -- 0 = single target; e.g. 8 = blast radius (yalms)
+    aoeRadius = 0,        -- default single target (a spell's own `aoe` overrides)
     msg       = 'BOOM!! Your spell detonates!',
-}
-
--- ── Signature abilities (chat commands; client can't add JA buttons) ─────────
--- The avatar/Blood-Pact buttons are inert, so abilities are delivered as
--- commands (!overload, !ignite), gated on Boom = MAIN job, with charVar
--- cooldowns (os.time). Logic lives in BoomJob.lua (xi.boomJob.*).
-catalog.abilities =
-{
-    -- !overload — Astral-Flow-style ultimate: one massive detonation on your
-    -- target (+ blast), on a long cooldown.
-    overload =
-    {
-        cd        = 240,                 -- seconds
-        mult      = 5,                   -- x a normal detonation
-        aoeRadius = 12,                  -- blast radius (yalms)
-        element   = xi.element.FIRE,     -- damage element of the blast
-        cdVar     = 'Boom_Overload_CD',
-        msg       = 'OVERLOAD!! You unleash a cataclysmic blast!',
-    },
-    -- !ignite — coat your staff in volatile energy: a self enspell + a window
-    -- where your spells detonate far more often.
-    ignite =
-    {
-        cd           = 90,               -- seconds
-        duration     = 60,               -- seconds (enspell + boosted-detonation window)
-        enspell      = xi.effect.ENFIRE, -- elemental melee add (visible buff)
-        enspellPower = 60,
-        boostChance  = 45,               -- detonation % while Ignite is up
-        untilVar     = 'Boom_IgniteUntil',
-        cdVar        = 'Boom_Ignite_CD',
-        msg          = 'IGNITE!! Your staff blazes -- spells now detonate readily!',
-    },
 }
 
 return catalog
