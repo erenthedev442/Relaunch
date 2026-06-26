@@ -2,30 +2,34 @@
 -- fellow_companion.lua  --  "Adventuring Fellow", reimagined as an RPG companion
 --
 -- A personal, persistent companion ANY job can summon, that the player BUILDS:
--- it levels from your kills, and you spend the points it earns on the stats and
--- (later) abilities you choose. Inspired by retail's Adventuring Fellow, but the
--- progression is fully player-driven.
+-- it levels from your kills, and you spend the points it earns on the stats you
+-- choose, plus pick its NAME and APPEARANCE. Inspired by retail's Adventuring
+-- Fellow, but the progression is fully player-driven.
 --
 -- WHY A PET (not the retail fellow entity): the engine's CFellowEntity is an
 -- empty // TODO stub on this fork (no stats, no spawn, no Lua hook), so there is
--- nothing to drive. Pets, by contrast, are a proven, Lua-drivable companion:
--- Ascension_Companion already spawns one for any job via RAW player:spawnPet().
--- Crucially, raw spawnPet does NOT route through xi.pet.spawnPet, so the BST /
--- SMN / WSTracker spawn-overrides never touch the Fellow -- we apply its stats
--- directly after spawn, mirroring BstJugPetOverhaul's addMod-after-calc pattern.
+-- nothing to drive. Pets are a proven, Lua-drivable companion: Ascension_Companion
+-- already spawns one for any job via RAW player:spawnPet(). Crucially, raw spawnPet
+-- does NOT route through xi.pet.spawnPet, so the BST / SMN / WSTracker spawn-
+-- overrides never touch the Fellow -- we apply its stats directly after spawn,
+-- mirroring BstJugPetOverhaul's addMod-after-calc pattern.
 --
--- PHASE 1 (MVP) -- this file:
---   * !fellow menu: summon/dismiss, allocate stat points, pick role, status.
---   * Kill-XP -> levels -> stat points (xi.mob.onMobDeathEx faucet).
---   * Stat allocation layers real mods onto the live pet (instant + on re-summon).
---   * Keeper + onGameIn persistence (survives zoning; yields to real job pets).
---   * Roles: Vanguard (melee DD) + Bulwark (tank), both fully functional.
--- PHASE 2+ (later): ability/trait tree, Oracle/Magus/Hunter behaviours, respec,
---   custom name + humanoid appearance (dedicated entity), a physical Hall NPC.
+-- NAME + APPEARANCE:
+--   * NAME  -> pet:renameEntity(str, true). setPetName is a no-op for jug pets
+--     (it only writes char_pet wyvern/chocobo rows); renameEntity sets the LIVE
+--     displayed name to an arbitrary string on any pet. Re-applied each spawn.
+--   * MODEL -> we SWAP the spawned petId to a different jug familiar. That is the
+--     robust appearance lever (correct size / animations / skills); setModelId
+--     can't make a believable humanoid on a CPetEntity (look_t union). A humanoid
+--     "adventurer" look is future dedicated-entity work.
 --
--- ALL balance lives in CONFIG below -> tuning is a hot-reload, not a rebuild.
--- Override module (onGameIn / onMobDeathEx) -> needs ONE map restart to load;
--- after that, CONFIG edits and menu tweaks hot-reload.
+-- PHASE 1 (MVP): summon/dismiss, allocate stat points, pick role, name + model,
+--   kill-XP -> levels, keeper + onGameIn persistence. Roles: Vanguard / Bulwark.
+-- PHASE 2+: ability/trait tree, Oracle/Magus/Hunter behaviours, respec, humanoid
+--   appearance, a physical Hall NPC.
+--
+-- ALL balance + name/model lists live in CONFIG -> tuning is a hot-reload.
+-- Override module (onGameIn / onMobDeathEx) -> needs ONE map restart to load.
 -----------------------------------
 require('modules/module_utils')
 
@@ -35,11 +39,10 @@ local SYS = xi.msg.channel.SYSTEM_3
 -- ════════════════════════════════ CONFIG ════════════════════════════════════
 local CONFIG =
 {
-    -- Underlying pet chassis. Any jug familiar id (scripts/enum/pet_id.lua,
-    -- 21..127) works; jug pets auto-engage in melee. Re-skinned via setModelId.
-    -- LYNX_FAMILIAR is proven (Ascension_Companion uses it).
+    -- DEFAULT chassis (a jug familiar; auto-engages in melee). The Appearance
+    -- picker swaps this petId to another familiar. Spawned via RAW player:spawnPet,
+    -- so it bypasses the xi.pet.spawnPet overrides (no BST/SMN collision).
     petId = xi.petId.LYNX_FAMILIAR,
-    model = 0,                 -- 0 = keep the chassis model; set an id to re-skin (P3 work)
 
     maxLevel       = 50,
     startingPoints = 6,        -- granted once, when the Fellow is first created
@@ -54,7 +57,6 @@ local CONFIG =
     partyWideXp   = true,      -- party members with a Fellow out also earn from the kill
 
     -- Per-allocated-point -> mods. One point in a stat adds ALL of its mods.
-    -- (STR/DEX/... also raise the attribute itself so it reads correctly in-game.)
     statMods =
     {
         STR = { { xi.mod.STR, 6 }, { xi.mod.ATT, 12 } },
@@ -64,19 +66,16 @@ local CONFIG =
         INT = { { xi.mod.INT, 6 }, { xi.mod.MATT, 10 } },
         MND = { { xi.mod.MND, 6 }, { xi.mod.MDEF, 10 } },
     },
-    -- Order shown in the Allocate menu.
     statOrder = { 'STR', 'DEX', 'VIT', 'AGI', 'INT', 'MND' },
 
-    -- Flat base that scales with Fellow level (×level), so it stays relevant even
-    -- before you allocate. Survivability floors keep it alive at endgame.
+    -- Flat base that scales with Fellow level (×level), plus survivability floors.
     perLevel = { { xi.mod.ATT, 80 }, { xi.mod.ACC, 40 }, { xi.mod.DEF, 15 } },
     hpBase       = 5000,
     hpPerLevel   = 1500,
-    hpPerVitPt   = 120,        -- bonus HP per allocated VIT point
-    pdt          = -1500,      -- DMGPHYS (/100, engine caps each at -5000)
-    mdt          = -1500,      -- DMGMAGIC
+    hpPerVitPt   = 120,
+    pdt          = -1500,
+    mdt          = -1500,
 
-    -- Roles. mods apply on summon; autoReady = fires its TP move on its own.
     roles =
     {
         vanguard = { name = 'Vanguard', blurb = 'Melee damage dealer.',
@@ -87,21 +86,51 @@ local CONFIG =
     roleOrder   = { 'vanguard', 'bulwark' },
     defaultRole = 'vanguard',
 
+    -- NAME picker: curated person-names (lifted from the engine's dead fellowNames
+    -- table in fellowentity.cpp). renameEntity wire limit ~15 chars -> keep short.
+    names =
+    {
+        'Siegward', 'Theobald', 'Gunnar', 'Ferdinand', 'Beatrice', 'Henrietta',
+        'Karyn', 'Nanako', 'Gauldeval', 'Romidiant', 'Liabelle', 'Radille',
+        'Nokum-Akkum', 'Yawawa', 'Cupapa', 'Raka Maimhov', 'Voldai', 'Zoldof',
+    },
+
+    -- APPEARANCE picker: each entry is a jug-familiar chassis (petId). Swapping the
+    -- spawn petId is the robust "model" lever. All are proven JUG_PET looks.
+    models =
+    {
+        { name = 'Lynx',       petId = xi.petId.LYNX_FAMILIAR       },
+        { name = 'Tiger',      petId = xi.petId.TIGER_FAMILIAR      },
+        { name = 'Lizard',     petId = xi.petId.LIZARD_FAMILIAR     },
+        { name = 'Eft',        petId = xi.petId.EFT_FAMILIAR        },
+        { name = 'Beetle',     petId = xi.petId.BEETLE_FAMILIAR     },
+        { name = 'Crab',       petId = xi.petId.CRAB_FAMILIAR       },
+        { name = 'Spider',     petId = xi.petId.SPIDER_FAMILIAR     },
+        { name = 'Colibri',    petId = xi.petId.COLIBRI_FAMILIAR    },
+        { name = 'Hippogryph', petId = xi.petId.HIPPOGRYPH_FAMILIAR },
+        { name = 'Funguar',    petId = xi.petId.FUNGUAR_FAMILIAR    },
+        { name = 'Slime',      petId = xi.petId.SLIME_FAMILIAR      },
+        { name = 'Mayfly',     petId = xi.petId.MAYFLY_FAMILIAR     },
+    },
+
     autoReadyTP         = 1000,
     autoReadyIntervalMs = 3000,
-    keeperMs            = 10000,  -- re-check / re-spawn cadence
-    firstMs             = 4000,   -- delay before first spawn after a zone-in settles
+    keeperMs            = 10000,
+    firstMs             = 4000,
+    namesPerPage        = 6,   -- customMenu caps: keep page + nav <= 8 options / 150 bytes
 }
 
--- charVar keys (per-character).
+-- charVar keys (per-character; ALL INTEGER).
 local V =
 {
-    active = 'Fellow_Active',   -- 1 = the player wants their Fellow out
-    born   = 'Fellow_Born',     -- 1 = created (starting points granted once)
-    level  = 'Fellow_Level',
-    xp     = 'Fellow_XP',
-    points = 'Fellow_Points',   -- unspent stat points
-    role   = 'Fellow_Role',
+    active   = 'Fellow_Active',
+    born     = 'Fellow_Born',
+    level    = 'Fellow_Level',
+    xp       = 'Fellow_XP',
+    points   = 'Fellow_Points',
+    role     = 'Fellow_Role',     -- index into CONFIG.roleOrder
+    nameIdx  = 'Fellow_NameIdx',  -- index into CONFIG.names
+    modelPet = 'Fellow_ModelPet', -- index into CONFIG.models (each carries a petId)
 }
 local function statVar(stat) return 'Fellow_' .. stat end
 
@@ -112,6 +141,7 @@ local function setN(p, k, n)  p:setCharVar(k, math.max(0, math.floor(n))) end
 local function getLevel(p)  return math.max(1, getN(p, V.level)) end
 local function getPoints(p) return getN(p, V.points) end
 local function getStatPts(p, stat) return getN(p, statVar(stat)) end
+
 -- Role is stored as an INTEGER index into CONFIG.roleOrder (charVars are ints,
 -- not strings). 0/unset -> default.
 local function getRole(p)
@@ -121,22 +151,33 @@ local function getRole(p)
 end
 local function roleDef(p) return CONFIG.roles[getRole(p)] or CONFIG.roles[CONFIG.defaultRole] end
 
+-- Appearance = which jug chassis to spawn; Name = the live display name.
+local function chosenPetId(p)
+    local mdl = CONFIG.models[getN(p, V.modelPet)]
+    return (mdl and mdl.petId) or CONFIG.petId
+end
+local function chosenName(p)
+    return CONFIG.names[getN(p, V.nameIdx)]  -- nil if unset -> no rename
+end
+
 local function xpToNext(level) return CONFIG.xpBase * level end
 
--- Create-on-first-use: grant starting points exactly once.
+-- Create-on-first-use: grant starting points + sensible defaults exactly once.
 local function ensureBorn(p)
     if getN(p, V.born) == 1 then return end
     p:setCharVar(V.born, 1)
     setN(p, V.level, 1)
     setN(p, V.points, CONFIG.startingPoints)
-    setN(p, V.role, 1)  -- index into CONFIG.roleOrder (1 = defaultRole)
+    setN(p, V.role, 1)      -- defaultRole
+    setN(p, V.nameIdx, 1)   -- a proper name by default; player can re-pick
+    setN(p, V.modelPet, 1)  -- default chassis (Lynx)
 end
 
 -- ════════════════════════════ Stat application ══════════════════════════════
 local scheduleAutoReady -- fwd
 
--- Layer the Fellow's full stat block onto a freshly-spawned pet. Guarded so it
--- runs once per spawned entity (the keeper may re-check it repeatedly).
+-- Layer the Fellow's full stat block + chosen name onto a freshly-spawned pet.
+-- Guarded so it runs once per spawned entity.
 local function applyFellow(p, pet)
     if not pet or pet:getLocalVar('fellowApplied') ~= 0 then return end
     pet:setLocalVar('fellowApplied', 1)
@@ -161,9 +202,9 @@ local function applyFellow(p, pet)
     pet:setMaxHP(pet:getMaxHP() + bonusHP)
     pet:addHP(bonusHP)
 
-    if CONFIG.model and CONFIG.model > 0 then
-        pcall(function() pet:setModelId(CONFIG.model) end)
-    end
+    -- Live display name (arbitrary string; silent=true to avoid console spam).
+    local nm = chosenName(p)
+    if nm then pcall(function() pet:renameEntity(nm, true) end) end
 
     if role.autoReady then scheduleAutoReady(pet) end
 end
@@ -179,8 +220,7 @@ scheduleAutoReady = function(pet)
     end)
 end
 
--- Live-add a single allocated point's worth of mods to an out Fellow, so the
--- menu gives instant feedback without a re-summon.
+-- Live-add a single allocated point's worth of mods to an out Fellow.
 local function liveAddStat(p, stat)
     if not p:hasPet() then return end
     local pet = p:getPet()
@@ -196,22 +236,19 @@ end
 -- ════════════════════════════ Summon / keeper ═══════════════════════════════
 local genByName = {}
 
--- Is THIS pet our Fellow? (vs a real job pet the player summoned.)
 local function petIsFellow(pet)
     return pet ~= nil and pet:getLocalVar('fellowApplied') == 1
 end
 
--- Keeper: while active, (re)spawn the Fellow whenever the player has NO pet and
--- pets are allowed here -- so it survives zoning/death and YIELDS to real job
--- pets (a SMN/BST/etc. who calls their own pet simply replaces it; on dismiss,
--- the Fellow returns within keeperMs).
+-- Keeper: while active, (re)spawn the chosen chassis whenever the player has NO
+-- pet and pets are allowed here -- survives zoning/death, yields to real job pets.
 local function keeper(p, name, gen)
     if not p or genByName[name] ~= gen then return end
-    if getN(p, V.active) ~= 1 then return end          -- dismissed -> stop
+    if getN(p, V.active) ~= 1 then return end
 
     if not p:hasPet() and p:canUseMisc(xi.zoneMisc.PET) then
         pcall(function()
-            p:spawnPet(CONFIG.petId)
+            p:spawnPet(chosenPetId(p))
             local pet = p:getPet()
             if pet then applyFellow(p, pet) end
         end)
@@ -233,18 +270,27 @@ local function summon(p)
     if p:hasPet() and not petIsFellow(p:getPet()) then
         p:printToPlayer('[Fellow] Dismiss your current pet first; your Fellow will appear.', SYS)
     end
-    armKeeper(p, 30)  -- near-immediate first spawn
+    armKeeper(p, 30)
     p:printToPlayer('[Fellow] Your Adventuring Fellow heeds the call.', SYS)
 end
 
 local function dismiss(p)
     setN(p, V.active, 0)
-    genByName[p:getName()] = (genByName[p:getName()] or 0) + 1  -- invalidate keeper
+    genByName[p:getName()] = (genByName[p:getName()] or 0) + 1
     if p:hasPet() and petIsFellow(p:getPet()) then
         local pet = p:getPet()
         pcall(function() DespawnMob(pet:getID(), 0) end)
     end
     p:printToPlayer('[Fellow] Your Adventuring Fellow returns to rest.', SYS)
+end
+
+-- Re-spawn the live Fellow now (used after an appearance change). No-op if not out.
+local function respawnIfOut(p)
+    if getN(p, V.active) ~= 1 then return end
+    if p:hasPet() and petIsFellow(p:getPet()) then
+        pcall(function() DespawnMob(p:getPet():getID(), 0) end)
+    end
+    armKeeper(p, 700)  -- keeper re-spawns the new chassis shortly
 end
 
 -- ════════════════════════════════ XP / levels ═══════════════════════════════
@@ -273,7 +319,10 @@ local function statusReport(p)
     ensureBorn(p)
     local lvl  = getLevel(p)
     local role = roleDef(p)
-    p:printToPlayer(string.format('=== Adventuring Fellow ===  Lv.%d %s', lvl, role.name), SYS)
+    local nm   = chosenName(p) or '(unnamed)'
+    local mdl  = CONFIG.models[getN(p, V.modelPet)]
+    p:printToPlayer(string.format('=== %s ===  Lv.%d %s  (%s)',
+        nm, lvl, role.name, (mdl and mdl.name) or 'Lynx'), SYS)
     if lvl < CONFIG.maxLevel then
         p:printToPlayer(string.format('  XP: %d / %d to next level   |   Unspent points: %d',
             getN(p, V.xp), xpToNext(lvl), getPoints(p)), SYS)
@@ -288,7 +337,7 @@ local function statusReport(p)
 end
 
 -- ════════════════════════════════ Menus ═════════════════════════════════════
-local openMain, openAllocate, openRole
+local openMain, openAllocate, openRole, openName, openModel
 
 local function show(p, title, options)
     local snapshot = { title = title, options = options }
@@ -305,6 +354,8 @@ openMain = function(p)
           function(pp) if getN(pp, V.active) == 1 then dismiss(pp) else summon(pp) end end },
         { string.format('Allocate Points (%d)', getPoints(p)), function(pp) openAllocate(pp) end },
         { 'Choose Role',  function(pp) openRole(pp) end },
+        { 'Choose Name',  function(pp) openName(pp, 0) end },
+        { 'Appearance',   function(pp) openModel(pp, 0) end },
         { 'View Status',  function(pp) statusReport(pp); openMain(pp) end },
         { 'Close',        function(pp) end },
     }
@@ -361,10 +412,69 @@ openRole = function(p)
     show(p, 'Choose Role', options)
 end
 
+-- Paginated name picker -> renames the live Fellow instantly (and on next spawn).
+openName = function(p, page)
+    page = page or 0
+    local names = CONFIG.names
+    local per   = CONFIG.namesPerPage
+    local pages = math.max(1, math.ceil(#names / per))
+    page = page % pages
+    local cur   = getN(p, V.nameIdx)
+    local options = {}
+    for i = page * per + 1, math.min((page + 1) * per, #names) do
+        local idx = i
+        local label = (idx == cur) and (names[idx] .. ' *') or names[idx]
+        options[#options + 1] =
+        {
+            label,
+            function(pp)
+                setN(pp, V.nameIdx, idx)
+                if pp:hasPet() and petIsFellow(pp:getPet()) then
+                    pcall(function() pp:getPet():renameEntity(names[idx], true) end)
+                end
+                pp:printToPlayer(string.format('[Fellow] Name set: %s', names[idx]), SYS)
+                openName(pp, page)
+            end,
+        }
+    end
+    if pages > 1 then
+        options[#options + 1] = { 'More >>', function(pp) openName(pp, page + 1) end }
+    end
+    options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
+    show(p, 'Choose Name', options)
+end
+
+-- Paginated appearance picker -> swaps the spawn chassis (petId); re-summon to apply.
+openModel = function(p, page)
+    page = page or 0
+    local models = CONFIG.models
+    local per    = CONFIG.namesPerPage
+    local pages  = math.max(1, math.ceil(#models / per))
+    page = page % pages
+    local cur    = getN(p, V.modelPet)
+    local options = {}
+    for i = page * per + 1, math.min((page + 1) * per, #models) do
+        local idx = i
+        local label = (idx == cur) and (models[idx].name .. ' *') or models[idx].name
+        options[#options + 1] =
+        {
+            label,
+            function(pp)
+                setN(pp, V.modelPet, idx)
+                respawnIfOut(pp)  -- live-swap the chassis if the Fellow is out
+                pp:printToPlayer(string.format('[Fellow] Appearance set: %s.', models[idx].name), SYS)
+                openModel(pp, page)
+            end,
+        }
+    end
+    if pages > 1 then
+        options[#options + 1] = { 'More >>', function(pp) openModel(pp, page + 1) end }
+    end
+    options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
+    show(p, 'Appearance', options)
+end
+
 -- ════════════════════════════════ Faucet ════════════════════════════════════
--- Kills grant Fellow XP, but only while the player's Fellow is actually summoned
--- (rewards using it). Party-wide if enabled: same-zone members with a Fellow out
--- each earn from the kill.
 m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSkillKill)
     super(mob, player, isKiller, isWeaponSkillKill)
     pcall(function()
@@ -405,13 +515,12 @@ m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
 end)
 
 -- ════════════════════════════════ Public API ════════════════════════════════
--- Used by the !fellow command (commands/fellow.lua) and open to other systems.
 xi.fellow = xi.fellow or {}
-xi.fellow.openMenu = function(p) openMain(p) end
-xi.fellow.summon   = function(p) summon(p) end
-xi.fellow.dismiss  = function(p) dismiss(p) end
-xi.fellow.status   = function(p) statusReport(p) end
-xi.fellow.addXp    = function(p, n) addXp(p, n) end
+xi.fellow.openMenu    = function(p) openMain(p) end
+xi.fellow.summon      = function(p) summon(p) end
+xi.fellow.dismiss     = function(p) dismiss(p) end
+xi.fellow.status      = function(p) statusReport(p) end
+xi.fellow.addXp       = function(p, n) addXp(p, n) end
 xi.fellow.grantPoints = function(p, n) ensureBorn(p); setN(p, V.points, getPoints(p) + math.max(0, n)) end
 
 return m
