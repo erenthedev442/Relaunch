@@ -114,7 +114,7 @@ local CONFIG =
     },
 
     autoReadyTP         = 1000,
-    autoReadyIntervalMs = 3000,
+    combatLoopMs        = 2000,   -- auto-assist + auto-Ready tick cadence
     keeperMs            = 10000,
     firstMs             = 4000,
     namesPerPage        = 6,   -- customMenu caps: keep page + nav <= 8 options / 150 bytes
@@ -174,7 +174,7 @@ local function ensureBorn(p)
 end
 
 -- ════════════════════════════ Stat application ══════════════════════════════
-local scheduleAutoReady -- fwd
+local scheduleCombatLoop -- fwd
 
 -- Layer the Fellow's full stat block + chosen name onto a freshly-spawned pet.
 -- Guarded so it runs once per spawned entity.
@@ -206,17 +206,33 @@ local function applyFellow(p, pet)
     local nm = chosenName(p)
     if nm then pcall(function() pet:renameEntity(nm, true) end) end
 
-    if role.autoReady then scheduleAutoReady(pet) end
+    scheduleCombatLoop(p, pet)
 end
 
--- Self-rescheduling TP-move loop; bails when the pet dies/despawns.
-scheduleAutoReady = function(pet)
-    pet:timer(CONFIG.autoReadyIntervalMs, function(pp)
-        if not pp or not pp:isAlive() then return end
-        if pp:isEngaged() and pp:getTP() >= CONFIG.autoReadyTP then
-            pp:useMobAbility()
-        end
-        scheduleAutoReady(pp)
+-- Self-rescheduling COMBAT loop. Jug pets DON'T assist a non-BST master on their
+-- own, and a non-pet job has no Fight/Sic command -- so each tick we:
+--   * AUTO-ASSIST: if the master is engaged and the Fellow is idle, order it onto
+--     the master's battle target (master:petAttack = the BST Fight order, not
+--     job-gated; master:getTarget() = the battle target, same as allyassist).
+--   * AUTO-READY: if engaged with capped TP, fire its TP move.
+-- Bails when the pet dies/despawns. The master ref is captured in the closure; by
+-- the time it could go invalid the pet has already despawned (pets die with their
+-- master) so the loop has stopped -- and all master access is pcall-guarded.
+scheduleCombatLoop = function(master, pet)
+    pet:timer(CONFIG.combatLoopMs, function(p)
+        if not p or not p:isAlive() then return end
+        pcall(function()
+            if not (master and master:isAlive() and master:isEngaged()) then return end
+            if not p:isEngaged() then
+                local tgt = master:getTarget()
+                if tgt and not tgt:isDead() then
+                    master:petAttack(tgt)
+                end
+            elseif p:getTP() >= CONFIG.autoReadyTP then
+                p:useMobAbility()  -- no arg = pet picks from its Ready-move list
+            end
+        end)
+        scheduleCombatLoop(master, p)
     end)
 end
 
