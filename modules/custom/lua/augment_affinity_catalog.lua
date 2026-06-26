@@ -9,19 +9,19 @@
 -- by `catalog.affinityMult` (1.5x by default).
 --
 -- Bitfield layout:
---   bit 0  = Strength / Attack          (cat 1)
---   bit 1  = Dexterity / Accuracy       (cat 2)
---   bit 2  = Vitality / Defense         (cat 3)
---   bit 3  = Agility / Evasion / Haste  (cat 4)
---   bit 4  = Intelligence / Magic       (cat 5)
---   bit 5  = Mind / Healing / Cure      (cat 6)
---   bit 6  = Charisma / Charm / Enmity  (cat 7)
+--   bit 0  = STR / Attack               (cat 1)
+--   bit 1  = DEX / Accuracy             (cat 2)
+--   bit 2  = VIT / Defense              (cat 3)
+--   bit 3  = AGI / Evasion / Haste      (cat 4)
+--   bit 4  = INT / Magic Offense        (cat 5)
+--   bit 5  = MND / Healing              (cat 6)
+--   bit 6  = CHR / Charm / Enmity       (cat 7)
 --   bit 7  = HP / Regen                 (cat 8)
 --   bit 8  = MP / Refresh               (cat 9)
 --   bit 9  = Pet                        (cat 10)
---   bit 10 = Elemental resistance       (cat 11)
---   bit 11 = Skill+                     (cat 12)
---   bit 12 = Weaponskill DMG+           (cat 13)
+--   bit 10 = Ele Resist                 (cat 11)
+--   bit 11 = Skills                     (cat 12)
+--   bit 12 = WSD+                       (cat 13)
 --
 -- Each `bit = N` here MUST match `cat = N+1` in augment_catalog.lua.
 -- (Catalog uses 1-indexed cat, bitfield uses 0-indexed bit.)
@@ -52,43 +52,43 @@ catalog.affinities =
 {
     {
         cat    = 1, bit = 0,
-        label  = 'Strength / Attack',
+        label  = 'STR / Attack',
         nm     = 'Behemoth',
         trophy = { id = 893,   qty = 1, name = 'Giant Femur'        },
     },
     {
         cat    = 2, bit = 1,
-        label  = 'Dexterity / Accuracy',
+        label  = 'DEX / Accuracy',
         nm     = 'King Arthro',
         trophy = { id = 8983,  qty = 1, name = "Emperor Arthro's Shell" },
     },
     {
         cat    = 3, bit = 2,
-        label  = 'Vitality / Defense',
+        label  = 'VIT / Defense',
         nm     = 'Adamantoise',
         trophy = { id = 908,   qty = 1, name = 'Adamantoise Shell'  },
     },
     {
         cat    = 4, bit = 3,
-        label  = 'Agility / Evasion / Haste',
+        label  = 'AGI / Evasion / Haste',
         nm     = 'Roc',
         trophy = { id = 843,   qty = 1, name = 'Giant Bird Plume'   },
     },
     {
         cat    = 5, bit = 4,
-        label  = 'Intelligence / Magic offense',
+        label  = 'INT / Magic Offense',
         nm     = 'Ouryu (Guivre-tier wyrm)',
         trophy = { id = 909,   qty = 1, name = "Guivre's Skull"     },
     },
     {
         cat    = 6, bit = 5,
-        label  = 'Mind / Healing / Cure',
+        label  = 'MND / Healing',
         nm     = 'Phoenix',
         trophy = { id = 844,   qty = 1, name = 'Phoenix Feather'    },
     },
     {
         cat    = 7, bit = 6,
-        label  = 'Charisma / Charm / Enmity',
+        label  = 'CHR / Charm / Enmity',
         nm     = 'Lady Lilith (Khimaira-tier charmer)',
         trophy = { id = 2372,  qty = 1, name = 'Khimaira Mane'      },
     },
@@ -112,19 +112,19 @@ catalog.affinities =
     },
     {
         cat    = 11, bit = 10,
-        label  = 'Elemental resistance',
+        label  = 'Ele Resist',
         nm     = 'Khimaira',
         trophy = { id = 2371,  qty = 1, name = 'Khimaira Horn'      },
     },
     {
         cat    = 12, bit = 11,
-        label  = 'Skill+',
+        label  = 'Skills',
         nm     = 'Maat (proxy: a king-tier predator)',
         trophy = { id = 2893,  qty = 1, name = 'Gargantuan Black Tiger Fang' },
     },
     {
         cat    = 13, bit = 12,
-        label  = 'Weaponskill DMG+',
+        label  = 'WSD+',
         nm     = 'Tiamat',
         trophy = { id = 1473,  qty = 1, name = 'High-Quality Scorpion Shell' },
     },
