@@ -18,18 +18,20 @@ catalog.JOB = xi.job.SMN  -- 15
 -- skill_caps or grades.cpp. Values are PLACEHOLDER — tune in playtest.
 catalog.traits =
 {
-    { xi.mod.HP,            500 },  -- SMN base HP is low; bring it up
-    { xi.mod.STR,            30 },
-    { xi.mod.VIT,            15 },
-    { xi.mod.ATTP,           20 },  -- +20% melee attack
-    { xi.mod.ACC,            40 },
-    { xi.mod.DOUBLE_ATTACK,  10 },  -- +10%
-    { xi.mod.STORETP,        30 },
-    { xi.mod.STAFF,         200 },  -- staff combat skill (WS access + damage)
-    { xi.mod.ELEM,          200 },  -- elemental magic skill (nuke acc + damage)
-    { xi.mod.MATT,           30 },
-    { xi.mod.MACC,           30 },
-    { xi.mod.FASTCAST,       20 },  -- hybrid: cast between swings
+    { xi.mod.HP,            800 },  -- SMN base HP is very low; real melee survivability
+    { xi.mod.STR,            40 },
+    { xi.mod.DEX,            20 },
+    { xi.mod.VIT,            20 },
+    { xi.mod.ATTP,           25 },  -- +25% melee attack
+    { xi.mod.ACC,            50 },
+    { xi.mod.DOUBLE_ATTACK,  12 },  -- +12%
+    { xi.mod.CRITHITRATE,     8 },  -- +8% crit
+    { xi.mod.STORETP,        40 },
+    { xi.mod.STAFF,         250 },  -- staff combat skill (WS access + damage)
+    { xi.mod.ELEM,          250 },  -- elemental magic skill (nuke acc/damage + detonation scaling)
+    { xi.mod.MATT,           40 },
+    { xi.mod.MACC,           40 },
+    { xi.mod.FASTCAST,       25 },  -- hybrid: weave nukes between swings
 }
 
 -- ── The "Boom" spells ───────────────────────────────────────────────────────
@@ -52,13 +54,45 @@ catalog.spells =
 -- capped. aoeRadius > 0 splashes the blast to nearby foes.
 catalog.boom =
 {
-    chance    = 12,       -- % per cast
-    intMult   = 15,
-    mattMult  = 10,
-    base      = 2000,
-    cap       = 99999,
+    chance    = 15,       -- % per cast (base; raised to abilities.ignite.boostChance during Ignite)
+    intMult   = 20,
+    mattMult  = 12,
+    base      = 3000,
+    cap       = 99999,    -- engine damage display ceiling
     aoeRadius = 0,        -- 0 = single target; e.g. 8 = blast radius (yalms)
     msg       = 'BOOM!! Your spell detonates!',
+}
+
+-- ── Signature abilities (chat commands; client can't add JA buttons) ─────────
+-- The avatar/Blood-Pact buttons are inert, so abilities are delivered as
+-- commands (!overload, !ignite), gated on Boom = MAIN job, with charVar
+-- cooldowns (os.time). Logic lives in BoomJob.lua (xi.boomJob.*).
+catalog.abilities =
+{
+    -- !overload — Astral-Flow-style ultimate: one massive detonation on your
+    -- target (+ blast), on a long cooldown.
+    overload =
+    {
+        cd        = 240,                 -- seconds
+        mult      = 5,                   -- x a normal detonation
+        aoeRadius = 12,                  -- blast radius (yalms)
+        element   = xi.element.FIRE,     -- damage element of the blast
+        cdVar     = 'Boom_Overload_CD',
+        msg       = 'OVERLOAD!! You unleash a cataclysmic blast!',
+    },
+    -- !ignite — coat your staff in volatile energy: a self enspell + a window
+    -- where your spells detonate far more often.
+    ignite =
+    {
+        cd           = 90,               -- seconds
+        duration     = 60,               -- seconds (enspell + boosted-detonation window)
+        enspell      = xi.effect.ENFIRE, -- elemental melee add (visible buff)
+        enspellPower = 60,
+        boostChance  = 45,               -- detonation % while Ignite is up
+        untilVar     = 'Boom_IgniteUntil',
+        cdVar        = 'Boom_Ignite_CD',
+        msg          = 'IGNITE!! Your staff blazes -- spells now detonate readily!',
+    },
 }
 
 return catalog

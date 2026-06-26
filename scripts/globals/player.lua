@@ -256,6 +256,11 @@ end
 xi.player.onPlayerLevelUp = function(player)
 end
 
+-- FJB: fired on a /job swap (see luautils OnJobChange). Override to (re)apply or
+-- clear job-scoped mods instantly (e.g. the "Boom" custom job).
+xi.player.onJobChange = function(player)
+end
+
 xi.player.onPlayerLevelDown = function(player)
 end
 

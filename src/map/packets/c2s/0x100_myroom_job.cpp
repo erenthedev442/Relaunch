@@ -162,6 +162,11 @@ void GP_CLI_COMMAND_MYROOM_JOB::process(MapSession* PSession, CCharEntity* PChar
     });
     // clang-format on
 
+    // FJB: custom-job hook (e.g. "Boom" repurposed SMN). (Re)apply or clear
+    // job-scoped mods on a /job swap NOW -- placed before UpdateHealth + the
+    // status/stat packets below so the new mods are reflected this instant.
+    luautils::OnJobChange(PChar);
+
     PChar->UpdateHealth();
 
     PChar->health.hp = PChar->GetMaxHP();

@@ -435,6 +435,7 @@ auto GetFurthestValidPosition(CLuaBaseEntity* fromTarget, float distance, float 
 
 void OnPlayerDeath(CCharEntity* PChar);
 void OnPlayerLevelUp(CCharEntity* PChar);
+void OnJobChange(CCharEntity* PChar); // FJB: fired on /job swap (custom jobs e.g. "Boom")
 void OnPlayerLevelDown(CCharEntity* PChar);
 void OnPlayerMount(CCharEntity* PChar);
 void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID);

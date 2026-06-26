@@ -15,13 +15,27 @@ spells with a chance to explode for significant damage**.
 
 ---
 
-## Phase 1 — BUILT (all no-rebuild: Lua + one SQL)
+## Phase 1 — BUILT
 
-- `modules/custom/lua/boom_job_catalog.lua` — ALL tuning (traits, spell set, detonation chance/damage).
-- `modules/custom/lua/BoomJob.lua` — applies job traits on login (gated on SMN = MAIN job), grants the spells, and runs the detonation via a `MAGIC_USE` listener.
+Lua + SQL (no rebuild) EXCEPT the job-change hook (C++ — needs `relaunch-rebuild.bat`).
+
+- `modules/custom/lua/boom_job_catalog.lua` — ALL tuning (traits, spell set, detonation chance/damage, abilities).
+- `modules/custom/lua/BoomJob.lua` — applies job traits while SMN is MAIN job, grants the spells, runs the detonation (`MAGIC_USE` listener), exposes the abilities (`xi.boomJob.*`), and reconciles traits instantly on job change.
+- `modules/custom/commands/overload.lua` + `ignite.lua` — the two signature abilities (see below).
 - `modules/custom/sql/boom_job_spells.sql` — sets the SMN learn-level byte (byte 15 of `spell_list.jobs`) so the slot can cast the 6 nukes. Pattern from `restore_geo_retail.sql`.
 - `modules/custom/lua/unlock_adoulin_jobs.lua` — SMN added to the auto-unlock list so Boom is selectable by everyone (toggle: remove it to gate behind the retail unlock).
 - **Removed** the retail-SMN custom modules (avatars are gone): `smn_avatar_boost.lua`, `bp_delay_uncap.lua`, `smn_avatar_gear_mods.sql`.
+
+**Signature abilities** (delivered as commands — the avatar JA buttons are inert; gated on Boom = MAIN job, charVar cooldowns):
+- **`!overload`** — Astral-Flow ultimate: one massive elemental detonation on your target + AoE blast (×5 a normal detonation), long cooldown.
+- **`!ignite`** — coats your staff: a visible elemental enspell (melee add) + a window where your spells detonate far more often (15% → 45%).
+
+**Instant job swap (C++ hook, REBUILD):** added a generic `onJobChange` event —
+`luautils::OnJobChange` called from `0x100_myroom_job.cpp` (before `UpdateHealth`),
+the `xi.player.onJobChange` global stub in `scripts/globals/player.lua`, and
+`BoomJob.lua` overrides it to addMod-on-enter / delMod-on-leave (in-memory `applied`
+flag handles the zone-wipe). So Boom's traits apply/clear the instant you /job swap,
+not at next zone. **This is a core C++ patch — add to the core-patches checklist.**
 
 **Statline (no rebuild):** combat/magic power comes from trait `addMod`s — Staff skill
 (`xi.mod.STAFF`) + Elemental skill (`xi.mod.ELEM`) are granted directly, so we never
@@ -48,9 +62,6 @@ Lua hot-reloads on save; the spell-access SQL + auto-unlock + module removal nee
   suspenders only — the relaunch is a fresh wipe so no character knows any summon, and
   with no avatar the Blood Pact / Astral Flow buttons are inert. Add when convenient.
 - **`mystats.lua`** still has a SMN "Avatar (Pet)" readout block — harmless, strip later.
-- **Job-swap caveat:** traits apply on login/zone while SMN is main job. Switching jobs
-  mid-session without zoning won't re-apply/clear until the next zone (same limitation as
-  the other onGameIn systems). A `onJobChange` hook is the proper fix (Phase 2).
 - **`grades.cpp` base-stat re-rank** — clean per-level scaling (currently compensated by
   trait mods). C++ rebuild.
 - **AF/Empy/Prime re-stat** (item_mods: summoning → melee).

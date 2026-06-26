@@ -5136,6 +5136,16 @@ void OnPlayerLevelUp(CCharEntity* PChar)
     callGlobal<void>("xi.player.onPlayerLevelUp", PChar);
 }
 
+// FJB: fired by the 0x100 job-change handler so custom jobs (e.g. "Boom" on the
+// repurposed SMN slot) can (re)apply or clear job-scoped mods the instant a
+// player /job swaps, instead of waiting for the next zone.
+void OnJobChange(CCharEntity* PChar)
+{
+    TracyZoneScoped;
+
+    callGlobal<void>("xi.player.onJobChange", PChar);
+}
+
 void OnPlayerLevelDown(CCharEntity* PChar)
 {
     TracyZoneScoped;
