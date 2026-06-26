@@ -226,6 +226,9 @@ local function giveEverything(player)
     player:printToPlayer('All quests & missions completed', SYS)
     player:printToPlayer('All key items, maps, homepoints, survival guides & outpost warps', SYS)
     player:printToPlayer('Full wardrobes & automaton parts', SYS)
+    -- Starter accolades so new players can immediately try Unity Wanted Tier 1
+    player:addCurrency('unity_accolades', 500)
+    player:printToPlayer('Starter Unity Accolades granted (Unity Wanted Board in Library)', SYS)
     player:printToPlayer('Welcome! Type !help to get started.', SYS)
 end
 
