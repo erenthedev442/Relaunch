@@ -99,22 +99,21 @@ local CONFIG =
 
     -- APPEARANCE picker: each entry has a modelId applied via setModelId() right after
     -- spawn. The spawn chassis is always LYNX_FAMILIAR (combat AI); only the visual
-    -- is swapped. Avatar model IDs sourced from Fantoccini_Avatar.lua (791-798);
-    -- automaton IDs from Fantoccini_Automaton.lua; trust NPC from replace_trust_with_cornelia.lua.
+    -- is swapped. Model IDs derived from mob_pools.modelid bytes [2-3] little-endian.
     models =
     {
-        { name = 'Carbuncle',         modelId = 791  },  -- crystal cat avatar
-        { name = 'Fenrir',            modelId = 792  },  -- moon wolf avatar
-        { name = 'Ifrit',             modelId = 793  },  -- fire daemon avatar
-        { name = 'Titan',             modelId = 794  },  -- earth giant avatar
-        { name = 'Leviathan',         modelId = 795  },  -- sea serpent avatar
-        { name = 'Garuda',            modelId = 796  },  -- wind bird avatar
-        { name = 'Shiva',             modelId = 797  },  -- ice goddess avatar
-        { name = 'Ramuh',             modelId = 798  },  -- thunder sage avatar
-        { name = 'Automaton (Melee)', modelId = 1983 },  -- PUP puppet, melee type
-        { name = 'Automaton (Range)', modelId = 1990 },  -- PUP puppet, ranged type
-        { name = 'Automaton (Magic)', modelId = 1994 },  -- PUP puppet, magic type
-        { name = 'Adventurer',        modelId = 3119 },  -- trust: Cornelia NPC model
+        { name = 'Moogle',     modelId = 3035 },  -- mob_pools: moogle
+        { name = 'Mandragora', modelId = 300  },  -- mob_pools: Mandragora
+        { name = 'Coeurl',     modelId = 367  },  -- mob_pools: Coeurl
+        { name = 'Sabotender', modelId = 372  },  -- mob_pools: Sabotender (Cactuar)
+        { name = 'Cardian',    modelId = 431  },  -- mob_pools: Cardian_Prototype
+        { name = 'Goblin',     modelId = 292  },  -- mob_pools: Goblin_Gruel
+        { name = 'Yagudo',     modelId = 580  },  -- mob_pools: Yagudo_Initiate
+        { name = 'Tonberry',   modelId = 1177 },  -- mob_pools: Tonberry_Bedeviler
+        { name = 'Antican',    modelId = 1280 },  -- mob_pools: Antican_Quaestor
+        { name = 'Boggart',    modelId = 451  },  -- mob_pools: Boggart
+        { name = 'Goobbue',    modelId = 296  },  -- mob_pools: Goobbue
+        { name = 'Adventurer', modelId = 3119 },  -- trust: Cornelia humanoid NPC
     },
 
     autoReadyTP         = 1000,
@@ -345,7 +344,7 @@ local function statusReport(p)
     local nm   = chosenName(p) or '(unnamed)'
     local mdl  = CONFIG.models[getN(p, V.modelPet)]
     p:printToPlayer(string.format('=== %s ===  Lv.%d %s  (%s)',
-        nm, lvl, role.name, (mdl and mdl.name) or 'Carbuncle'), SYS)
+        nm, lvl, role.name, (mdl and mdl.name) or 'Moogle'), SYS)
     if lvl < CONFIG.maxLevel then
         p:printToPlayer(string.format('  XP: %d / %d to next level   |   Unspent points: %d',
             getN(p, V.xp), xpToNext(lvl), getPoints(p)), SYS)
