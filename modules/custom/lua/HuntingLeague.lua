@@ -902,7 +902,8 @@ local function insertSpawnerNPC(zone)
                             md.label, md.points, catalog.currencyName),
                         xi.msg.channel.SYSTEM_3
                     )
-                    backHere(playerArg)
+                    -- NM spawned: let the menu CLOSE (do not re-open it) so it
+                    -- disappears once the hunt begins.
                 end,
             })
         end -- for _, mobDef
