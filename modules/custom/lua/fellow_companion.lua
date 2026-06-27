@@ -294,8 +294,7 @@ local function dismiss(p)
     setN(p, V.active, 0)
     genByName[p:getName()] = (genByName[p:getName()] or 0) + 1
     if p:hasPet() and petIsFellow(p:getPet()) then
-        local pet = p:getPet()
-        pcall(function() DespawnMob(pet:getID(), 0) end)
+        pcall(function() p:despawnPet() end)  -- the proper pet-release call (BST Leave / SMN Release)
     end
     p:printToPlayer('[Fellow] Your Adventuring Fellow returns to rest.', SYS)
 end
@@ -304,7 +303,7 @@ end
 local function respawnIfOut(p)
     if getN(p, V.active) ~= 1 then return end
     if p:hasPet() and petIsFellow(p:getPet()) then
-        pcall(function() DespawnMob(p:getPet():getID(), 0) end)
+        pcall(function() p:despawnPet() end)
     end
     armKeeper(p, 700)  -- keeper re-spawns the new chassis shortly
 end
