@@ -78,14 +78,25 @@ local CONFIG =
     pdt          = -1500,
     mdt          = -1500,
 
+    -- A role applies its `mods` on spawn; an optional `behavior` ('heal'/'nuke'/
+    -- 'ranged') runs each combat-loop tick (see scheduleCombatLoop). Every role
+    -- still melee-assists + uses TP moves; behaviors are additive on top.
     roles =
     {
-        vanguard = { name = 'Vanguard', blurb = 'Melee damage dealer.',
-                     mods = { { xi.mod.ATTP, 30 }, { xi.mod.DOUBLE_ATTACK, 10 } }, autoReady = true },
-        bulwark  = { name = 'Bulwark',  blurb = 'Tank: more DEF, less damage taken.',
-                     mods = { { xi.mod.DEF, 300 }, { xi.mod.DMGPHYS, -1000 }, { xi.mod.ENMITY, 50 } }, autoReady = true },
+        vanguard  = { name = 'Vanguard',  blurb = 'Balanced melee damage dealer.',
+                      mods = { { xi.mod.ATTP, 30 }, { xi.mod.DOUBLE_ATTACK, 10 } } },
+        berserker = { name = 'Berserker', blurb = 'All-out melee offense; takes a bit more damage.',
+                      mods = { { xi.mod.ATTP, 60 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 10 }, { xi.mod.DMGPHYS, 1000 } } },
+        bulwark   = { name = 'Bulwark',   blurb = 'Tank: more DEF, less damage taken, holds hate.',
+                      mods = { { xi.mod.DEF, 300 }, { xi.mod.DMGPHYS, -1000 }, { xi.mod.ENMITY, 50 } } },
+        oracle    = { name = 'Oracle',    blurb = 'Battle-healer: fights and mends your wounds when hurt.',
+                      mods = { { xi.mod.MND, 150 }, { xi.mod.DEF, 150 }, { xi.mod.MDEF, 150 } }, behavior = 'heal' },
+        magus     = { name = 'Magus',     blurb = 'Battle-mage: fights and hurls elemental magic at your foe.',
+                      mods = { { xi.mod.INT, 150 }, { xi.mod.MATT, 400 }, { xi.mod.MACC, 200 } }, behavior = 'nuke' },
+        hunter    = { name = 'Hunter',    blurb = 'Ranger: fights and adds ranged strikes to your target.',
+                      mods = { { xi.mod.AGI, 150 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged' },
     },
-    roleOrder   = { 'vanguard', 'bulwark' },
+    roleOrder   = { 'vanguard', 'berserker', 'bulwark', 'oracle', 'magus', 'hunter' },
     defaultRole = 'vanguard',
 
     -- NAME picker: curated person-names (lifted from the engine's dead fellowNames
@@ -117,7 +128,17 @@ local CONFIG =
     },
 
     autoReadyTP         = 1000,
-    combatLoopMs        = 2000,   -- auto-assist + auto-Ready tick cadence
+    combatLoopMs        = 2000,   -- auto-assist + auto-Ready + role-behaviour tick cadence
+
+    -- Role behaviours, applied per combat-loop tick (placeholders -- tune in playtest):
+    healHpp        = 70,    -- Oracle heals the master while their HP% is at/below this
+    healBase       = 300,   -- Oracle: + healPerLevel*FellowLevel HP restored per tick while hurt
+    healPerLevel   = 60,
+    nukeBase       = 1500,  -- Magus: magic damage to the target per tick while engaged
+    nukePerLevel   = 300,
+    rangedBase     = 1500,  -- Hunter: ranged damage to the target per tick while engaged
+    rangedPerLevel = 300,
+
     keeperMs            = 10000,
     firstMs             = 4000,
     namesPerPage        = 6,   -- customMenu caps: keep page + nav <= 8 options / 150 bytes
@@ -229,14 +250,34 @@ scheduleCombatLoop = function(master, pet)
     pet:timer(CONFIG.combatLoopMs, function(p)
         if not p or not p:isAlive() then return end
         pcall(function()
-            if not (master and master:isAlive() and master:isEngaged()) then return end
-            if not p:isEngaged() then
-                local tgt = master:getTarget()
-                if tgt and not tgt:isDead() then
-                    master:petAttack(tgt)
+            if not (master and master:isAlive()) then return end
+            local beh = roleDef(master).behavior
+            local lvl = getLevel(master)
+
+            -- Oracle: mend the master whenever their HP is low (works in or out of combat).
+            if beh == 'heal' then
+                local maxhp = math.max(1, master:getMaxHP())
+                if (master:getHP() * 100 / maxhp) <= CONFIG.healHpp then
+                    master:addHP(CONFIG.healBase + CONFIG.healPerLevel * lvl)
                 end
-            elseif p:getTP() >= CONFIG.autoReadyTP then
-                p:useMobAbility()  -- no arg = pet picks from its Ready-move list
+            end
+
+            -- Combat: every role fights (assist when idle, Ready at TP cap).
+            if master:isEngaged() then
+                local tgt = master:getTarget()
+                if not p:isEngaged() then
+                    if tgt and not tgt:isDead() then master:petAttack(tgt) end
+                elseif p:getTP() >= CONFIG.autoReadyTP then
+                    p:useMobAbility()  -- no arg = pet picks from its Ready-move list
+                end
+                -- Magus / Hunter: bonus magic / ranged damage on the master's target.
+                if tgt and not tgt:isDead() then
+                    if beh == 'nuke' then
+                        tgt:takeDamage(CONFIG.nukeBase + CONFIG.nukePerLevel * lvl, p, xi.attackType.MAGICAL, xi.damageType.FIRE)
+                    elseif beh == 'ranged' then
+                        tgt:takeDamage(CONFIG.rangedBase + CONFIG.rangedPerLevel * lvl, p, xi.attackType.RANGED, xi.damageType.PIERCING)
+                    end
+                end
             end
         end)
         scheduleCombatLoop(master, p)
