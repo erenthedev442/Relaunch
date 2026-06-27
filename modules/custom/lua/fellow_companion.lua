@@ -124,18 +124,19 @@ local CONFIG =
     -- is swapped. Model IDs derived from mob_pools.modelid bytes [2-3] little-endian.
     models =
     {
-        { name = 'Moogle',     modelId = 3035 },  -- mob_pools: moogle
-        { name = 'Mandragora', modelId = 300  },  -- mob_pools: Mandragora
-        { name = 'Coeurl',     modelId = 367  },  -- mob_pools: Coeurl
-        { name = 'Sabotender', modelId = 372  },  -- mob_pools: Sabotender (Cactuar)
-        { name = 'Cardian',    modelId = 431  },  -- mob_pools: Cardian_Prototype
-        { name = 'Goblin',     modelId = 292  },  -- mob_pools: Goblin_Gruel
-        { name = 'Yagudo',     modelId = 580  },  -- mob_pools: Yagudo_Initiate
-        { name = 'Tonberry',   modelId = 1177 },  -- mob_pools: Tonberry_Bedeviler
-        { name = 'Antican',    modelId = 1280 },  -- mob_pools: Antican_Quaestor
-        { name = 'Boggart',    modelId = 451  },  -- mob_pools: Boggart
-        { name = 'Goobbue',    modelId = 296  },  -- mob_pools: Goobbue
-        { name = 'Adventurer', modelId = 3119 },  -- trust: Cornelia humanoid NPC
+        -- `ws` = this form's SIGNATURE TP move, forced at TP cap (useMobAbility).
+        { name = 'Moogle',     modelId = 3035, ws = xi.mobSkill.METEORITE          },  -- light burst
+        { name = 'Mandragora', modelId = 300,  ws = xi.mobSkill.AERO_IV            },  -- wind nuke
+        { name = 'Coeurl',     modelId = 367,  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder (coeurl signature)
+        { name = 'Sabotender', modelId = 372,  ws = xi.mobSkill.THOUSAND_NEEDLES_1 },  -- 1000 Needles (cactuar)
+        { name = 'Cardian',    modelId = 431,  ws = xi.mobSkill.FIRE_IV            },  -- fire nuke
+        { name = 'Goblin',     modelId = 292,  ws = xi.mobSkill.BOMB_TOSS_1        },  -- Bomb Toss (goblin)
+        { name = 'Yagudo',     modelId = 580,  ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit physical (yagudo)
+        { name = 'Tonberry',   modelId = 1177, ws = xi.mobSkill.CURSED_SPHERE_1    },  -- dark burst
+        { name = 'Antican',    modelId = 1280, ws = xi.mobSkill.ROCK_BUSTER        },  -- earth physical
+        { name = 'Boggart',    modelId = 451,  ws = xi.mobSkill.BLIZZARD_IV        },  -- ice nuke
+        { name = 'Goobbue',    modelId = 296,  ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- heavy uppercut
+        { name = 'Adventurer', modelId = 3119, ws = xi.mobSkill.CRESCENT_FANG      },  -- strong physical
     },
 
     autoReadyTP         = 1000,
@@ -190,6 +191,11 @@ local function roleDef(p) return CONFIG.roles[getRole(p)] or CONFIG.roles[CONFIG
 local function chosenModelId(p)
     local mdl = CONFIG.models[getN(p, V.modelPet)]
     return mdl and mdl.modelId
+end
+-- The chosen FORM's signature TP move (mob skill). nil -> fall back to a random Ready move.
+local function chosenWs(p)
+    local mdl = CONFIG.models[getN(p, V.modelPet)]
+    return mdl and mdl.ws
 end
 local function chosenName(p)
     return CONFIG.names[getN(p, V.nameIdx)]  -- nil if unset -> no rename
@@ -279,7 +285,13 @@ scheduleCombatLoop = function(master, pet)
                 if not p:isEngaged() then
                     if tgt and not tgt:isDead() then master:petAttack(tgt) end
                 elseif p:getTP() >= CONFIG.autoReadyTP then
-                    p:useMobAbility()  -- no arg = pet picks from its Ready-move list
+                    local ws = chosenWs(master)
+                    if ws and ws > 0 and tgt and not tgt:isDead() then
+                        p:useMobAbility(ws, tgt)  -- the chosen FORM's signature TP move (forced)
+                        p:setTP(0)                -- forced skills don't consume TP; reset for a cap-and-build cadence
+                    else
+                        p:useMobAbility()         -- fallback: chassis picks a Ready move (consumes TP itself)
+                    end
                 end
                 -- Magus / Hunter: bonus magic / ranged damage on the master's target.
                 if tgt and not tgt:isDead() then
