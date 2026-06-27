@@ -47,6 +47,8 @@ commandObj.onTrigger = function(player, sub, n)
         xi.fellow.dismiss(player)
     elseif sub == 'status' then
         xi.fellow.status(player)
+    elseif sub == 'debug' then
+        xi.fellow.debug(player)
     elseif sub == 'points' and isGM(player) then
         local amt = tonumber(n) or 10
         xi.fellow.grantPoints(player, amt)
@@ -55,7 +57,7 @@ commandObj.onTrigger = function(player, sub, n)
         local amt = tonumber(n) or 100
         xi.fellow.addXp(player, amt)
     else
-        player:printToPlayer('Usage: !fellow [menu | summon | dismiss | status]', SYS)
+        player:printToPlayer('Usage: !fellow [menu | summon | dismiss | status | debug]', SYS)
     end
 end
 

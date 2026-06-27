@@ -606,4 +606,26 @@ xi.fellow.status      = function(p) statusReport(p) end
 xi.fellow.addXp       = function(p, n) addXp(p, n) end
 xi.fellow.grantPoints = function(p, n) ensureBorn(p); setN(p, V.points, getPoints(p) + math.max(0, n)) end
 
+-- Diagnostic (!fellow debug): dump the LIVE Fellow's ACTUAL mods, read straight off
+-- the spawned pet. Spend a point (it applies instantly while the Fellow is out) and
+-- re-run to watch the matching number move -- verifiable proof the allocation lands.
+xi.fellow.debug = function(p)
+    if not (p:hasPet() and petIsFellow(p:getPet())) then
+        p:printToPlayer('[Fellow] Summon your Fellow first -- this reads mods off the live pet.', SYS)
+        return
+    end
+    local pet = p:getPet()
+    local function m(mod) return pet:getMod(mod) end
+    p:printToPlayer('=== Fellow live mods (straight off the spawned pet) ===', SYS)
+    p:printToPlayer(string.format('  ATT %d  ACC %d  DEF %d  EVA %d', m(xi.mod.ATT), m(xi.mod.ACC), m(xi.mod.DEF), m(xi.mod.EVA)), SYS)
+    p:printToPlayer(string.format('  MATT %d  MACC %d  MDEF %d', m(xi.mod.MATT), m(xi.mod.MACC), m(xi.mod.MDEF)), SYS)
+    p:printToPlayer(string.format('  ATK%% %d  Crit %d  DA %d  TA %d  StoreTP %d  HasteGear %d',
+        m(xi.mod.ATTP), m(xi.mod.CRITHITRATE), m(xi.mod.DOUBLE_ATTACK), m(xi.mod.TRIPLE_ATTACK), m(xi.mod.STORETP), m(xi.mod.HASTE_GEAR)), SYS)
+    p:printToPlayer(string.format('  PDT %d  MDT %d  Regen %d  Refresh %d', m(xi.mod.DMGPHYS), m(xi.mod.DMGMAGIC), m(xi.mod.REGEN), m(xi.mod.REFRESH)), SYS)
+    p:printToPlayer(string.format('  STR %d  DEX %d  VIT %d  AGI %d  INT %d  MND %d',
+        m(xi.mod.STR), m(xi.mod.DEX), m(xi.mod.VIT), m(xi.mod.AGI), m(xi.mod.INT), m(xi.mod.MND)), SYS)
+    p:printToPlayer(string.format('  MaxHP %d   TP %d/3000   Engaged %s   (fires a Ready move at TP>=%d)',
+        pet:getMaxHP(), pet:getTP(), tostring(pet:isEngaged()), CONFIG.autoReadyTP), SYS)
+end
+
 return m
