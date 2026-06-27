@@ -18,10 +18,12 @@
 --   * NAME  -> pet:renameEntity(str, true). setPetName is a no-op for jug pets
 --     (it only writes char_pet wyvern/chocobo rows); renameEntity sets the LIVE
 --     displayed name to an arbitrary string on any pet. Re-applied each spawn.
---   * MODEL -> we SWAP the spawned petId to a different jug familiar. That is the
---     robust appearance lever (correct size / animations / skills); setModelId
---     can't make a believable humanoid on a CPetEntity (look_t union). A humanoid
---     "adventurer" look is future dedicated-entity work.
+--   * MODEL -> we spawn a single combat chassis (LYNX_FAMILIAR) then immediately
+--     call pet:setModelId(id) to overlay an NPC/avatar model. This gives authentic
+--     NPC visuals while keeping jug-pet combat AI (auto-engages; SMN avatar AI
+--     only follows). Avatar model IDs 791-798 confirmed in Fantoccini_Avatar.lua.
+--     Note: player-character looks (race/face/equipment slots) are NOT supported
+--     via setModelId on CPetEntity -- NPC/mob model IDs work fine.
 --
 -- PHASE 1 (MVP): summon/dismiss, allocate stat points, pick role, name + model,
 --   kill-XP -> levels, keeper + onGameIn persistence. Roles: Vanguard / Bulwark.
@@ -95,22 +97,24 @@ local CONFIG =
         'Nokum-Akkum', 'Yawawa', 'Cupapa', 'Raka Maimhov', 'Voldai', 'Zoldof',
     },
 
-    -- APPEARANCE picker: each entry is a jug-familiar chassis (petId). Swapping the
-    -- spawn petId is the robust "model" lever. All are proven JUG_PET looks.
+    -- APPEARANCE picker: each entry has a modelId applied via setModelId() right after
+    -- spawn. The spawn chassis is always LYNX_FAMILIAR (combat AI); only the visual
+    -- is swapped. Avatar model IDs sourced from Fantoccini_Avatar.lua (791-798);
+    -- automaton IDs from Fantoccini_Automaton.lua; trust NPC from replace_trust_with_cornelia.lua.
     models =
     {
-        { name = 'Lynx',       petId = xi.petId.LYNX_FAMILIAR       },
-        { name = 'Tiger',      petId = xi.petId.TIGER_FAMILIAR      },
-        { name = 'Lizard',     petId = xi.petId.LIZARD_FAMILIAR     },
-        { name = 'Eft',        petId = xi.petId.EFT_FAMILIAR        },
-        { name = 'Beetle',     petId = xi.petId.BEETLE_FAMILIAR     },
-        { name = 'Crab',       petId = xi.petId.CRAB_FAMILIAR       },
-        { name = 'Spider',     petId = xi.petId.SPIDER_FAMILIAR     },
-        { name = 'Colibri',    petId = xi.petId.COLIBRI_FAMILIAR    },
-        { name = 'Hippogryph', petId = xi.petId.HIPPOGRYPH_FAMILIAR },
-        { name = 'Funguar',    petId = xi.petId.FUNGUAR_FAMILIAR    },
-        { name = 'Slime',      petId = xi.petId.SLIME_FAMILIAR      },
-        { name = 'Mayfly',     petId = xi.petId.MAYFLY_FAMILIAR     },
+        { name = 'Carbuncle',         modelId = 791  },  -- crystal cat avatar
+        { name = 'Fenrir',            modelId = 792  },  -- moon wolf avatar
+        { name = 'Ifrit',             modelId = 793  },  -- fire daemon avatar
+        { name = 'Titan',             modelId = 794  },  -- earth giant avatar
+        { name = 'Leviathan',         modelId = 795  },  -- sea serpent avatar
+        { name = 'Garuda',            modelId = 796  },  -- wind bird avatar
+        { name = 'Shiva',             modelId = 797  },  -- ice goddess avatar
+        { name = 'Ramuh',             modelId = 798  },  -- thunder sage avatar
+        { name = 'Automaton (Melee)', modelId = 1983 },  -- PUP puppet, melee type
+        { name = 'Automaton (Range)', modelId = 1990 },  -- PUP puppet, ranged type
+        { name = 'Automaton (Magic)', modelId = 1994 },  -- PUP puppet, magic type
+        { name = 'Adventurer',        modelId = 3119 },  -- trust: Cornelia NPC model
     },
 
     autoReadyTP         = 1000,
@@ -151,10 +155,10 @@ local function getRole(p)
 end
 local function roleDef(p) return CONFIG.roles[getRole(p)] or CONFIG.roles[CONFIG.defaultRole] end
 
--- Appearance = which jug chassis to spawn; Name = the live display name.
-local function chosenPetId(p)
+-- Appearance = NPC model ID applied via setModelId after spawn; Name = live display name.
+local function chosenModelId(p)
     local mdl = CONFIG.models[getN(p, V.modelPet)]
-    return (mdl and mdl.petId) or CONFIG.petId
+    return mdl and mdl.modelId
 end
 local function chosenName(p)
     return CONFIG.names[getN(p, V.nameIdx)]  -- nil if unset -> no rename
@@ -205,6 +209,10 @@ local function applyFellow(p, pet)
     -- Live display name (arbitrary string; silent=true to avoid console spam).
     local nm = chosenName(p)
     if nm then pcall(function() pet:renameEntity(nm, true) end) end
+
+    -- Visual NPC model overlay (combat chassis remains LYNX_FAMILIAR).
+    local mdlId = chosenModelId(p)
+    if mdlId then pcall(function() pet:setModelId(mdlId) end) end
 
     scheduleCombatLoop(p, pet)
 end
@@ -264,7 +272,7 @@ local function keeper(p, name, gen)
 
     if not p:hasPet() and p:canUseMisc(xi.zoneMisc.PET) then
         pcall(function()
-            p:spawnPet(chosenPetId(p))
+            p:spawnPet(CONFIG.petId)  -- always Lynx (combat AI); setModelId applied in applyFellow
             local pet = p:getPet()
             if pet then applyFellow(p, pet) end
         end)
@@ -337,7 +345,7 @@ local function statusReport(p)
     local nm   = chosenName(p) or '(unnamed)'
     local mdl  = CONFIG.models[getN(p, V.modelPet)]
     p:printToPlayer(string.format('=== %s ===  Lv.%d %s  (%s)',
-        nm, lvl, role.name, (mdl and mdl.name) or 'Lynx'), SYS)
+        nm, lvl, role.name, (mdl and mdl.name) or 'Carbuncle'), SYS)
     if lvl < CONFIG.maxLevel then
         p:printToPlayer(string.format('  XP: %d / %d to next level   |   Unspent points: %d',
             getN(p, V.xp), xpToNext(lvl), getPoints(p)), SYS)
