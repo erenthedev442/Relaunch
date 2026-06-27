@@ -61,14 +61,25 @@ local CONFIG =
     -- Per-allocated-point -> mods. One point in a stat adds ALL of its mods.
     statMods =
     {
+        -- Attributes: each point adds the attribute + a derived combat stat.
         STR = { { xi.mod.STR, 6 }, { xi.mod.ATT, 12 } },
         DEX = { { xi.mod.DEX, 6 }, { xi.mod.ACC, 10 } },
         VIT = { { xi.mod.VIT, 6 }, { xi.mod.DEF, 10 } },
         AGI = { { xi.mod.AGI, 6 }, { xi.mod.EVA, 10 } },
         INT = { { xi.mod.INT, 6 }, { xi.mod.MATT, 10 } },
         MND = { { xi.mod.MND, 6 }, { xi.mod.MDEF, 10 } },
+        -- Advanced categories: focused combat mods that STACK on top of the attributes.
+        Ferocity  = { { xi.mod.ATTP, 1 } },                                -- +1% attack
+        Critical  = { { xi.mod.CRITHITRATE, 1 } },                         -- +1% critical hit rate
+        Frenzy    = { { xi.mod.DOUBLE_ATTACK, 1 } },                       -- +1% Double Attack
+        Onslaught = { { xi.mod.TRIPLE_ATTACK, 1 }, { xi.mod.STORETP, 3 } },-- +1% Triple Attack, +3 Store TP
+        Sorcery   = { { xi.mod.MATT, 12 }, { xi.mod.MACC, 6 } },           -- magic atk + acc (boosts Magus)
+        Celerity  = { { xi.mod.HASTE_GEAR, 8 } },                          -- attack speed (engine-capped ~25%)
+        Warding   = { { xi.mod.DMGPHYS, -20 }, { xi.mod.DMGMAGIC, -20 } }, -- damage taken - (engine-capped -50%)
+        Vigor     = { { xi.mod.REGEN, 3 }, { xi.mod.REFRESH, 1 } },        -- HP + MP regen per tick
     },
-    statOrder = { 'STR', 'DEX', 'VIT', 'AGI', 'INT', 'MND' },
+    statOrder = { 'STR', 'DEX', 'VIT', 'AGI', 'INT', 'MND',
+                  'Ferocity', 'Critical', 'Frenzy', 'Onslaught', 'Sorcery', 'Celerity', 'Warding', 'Vigor' },
 
     -- Flat base that scales with Fellow level (×level), plus survivability floors.
     perLevel = { { xi.mod.ATT, 80 }, { xi.mod.ACC, 40 }, { xi.mod.DEF, 15 } },
@@ -394,9 +405,10 @@ local function statusReport(p)
     end
     local parts = {}
     for _, stat in ipairs(CONFIG.statOrder) do
-        parts[#parts + 1] = string.format('%s %d', stat, getStatPts(p, stat))
+        local v = getStatPts(p, stat)
+        if v > 0 then parts[#parts + 1] = string.format('%s %d', stat, v) end
     end
-    p:printToPlayer('  Allocation: ' .. table.concat(parts, '  '), SYS)
+    p:printToPlayer('  Allocation: ' .. (#parts > 0 and table.concat(parts, '  ') or 'none yet'), SYS)
 end
 
 -- ════════════════════════════════ Menus ═════════════════════════════════════
@@ -425,19 +437,24 @@ openMain = function(p)
     show(p, string.format('Fellow  Lv.%d', lvl), options)
 end
 
-openAllocate = function(p)
+openAllocate = function(p, page)
     local pts = getPoints(p)
     if pts <= 0 then
         p:printToPlayer('[Fellow] No unspent points. Defeat foes with your Fellow out to earn more.', SYS)
         openMain(p)
         return
     end
+    page = page or 0
+    local order = CONFIG.statOrder
+    local per   = CONFIG.namesPerPage
+    local pages = math.max(1, math.ceil(#order / per))
+    page = page % pages
     local options = {}
-    for _, stat in ipairs(CONFIG.statOrder) do
-        local s = stat
+    for i = page * per + 1, math.min((page + 1) * per, #order) do
+        local s = order[i]
         options[#options + 1] =
         {
-            string.format('%s  (now %d)', s, getStatPts(p, s)),
+            string.format('%s (%d)', s, getStatPts(p, s)),
             function(pp)
                 if getPoints(pp) <= 0 then openMain(pp); return end
                 setN(pp, V.points, getPoints(pp) - 1)
@@ -445,9 +462,12 @@ openAllocate = function(p)
                 liveAddStat(pp, s)
                 pp:printToPlayer(string.format('[Fellow] %s raised to %d. (%d points left)',
                     s, getStatPts(pp, s), getPoints(pp)), SYS)
-                openAllocate(pp)
+                openAllocate(pp, page)
             end,
         }
+    end
+    if pages > 1 then
+        options[#options + 1] = { 'More >>', function(pp) openAllocate(pp, page + 1) end }
     end
     options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
     show(p, string.format('Allocate (%d left)', pts), options)
