@@ -6,12 +6,12 @@
 --
 -- Zone-path notes (verify if a zone name errors on load):
 --   Behemoths_Dominion, Batallia_Downs, Kuftal_Tunnel,
---   Rolanberry_Fields, Valley_of_Sorrows, The_Hall_of_the_Gods,
---   Sauromugue_Champaign, The_Shrine_of_Ruavitau, Cape_Teriggan,
---   Riverne_Site_B01, The_Boyahda_Tree, Riverne_Site_A01,
+--   Rolanberry_Fields, Valley_of_Sorrows, Hall_of_the_Gods,
+--   Sauromugue_Champaign, The_Shrine_of_RuAvitau, Cape_Teriggan,
+--   Riverne-Site_B01, The_Boyahda_Tree, Riverne-Site_A01,
 --   Dragons_Aery, Ifrits_Cauldron, Uleguerand_Range,
---   Western_Altepa_Desert, King_Ranperres_Tomb, Ruaun_Gardens,
---   Temenos_Central_Tower (Proto-Omega)
+--   Western_Altepa_Desert, King_Ranperres_Tomb, RuAun_Gardens,
+--   Temenos (Proto-Omega)
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Batallia_Downs/Zone')
@@ -19,20 +19,20 @@ require('scripts/zones/Behemoths_Dominion/Zone')
 require('scripts/zones/Kuftal_Tunnel/Zone')
 require('scripts/zones/Rolanberry_Fields/Zone')
 require('scripts/zones/Valley_of_Sorrows/Zone')
-require('scripts/zones/The_Hall_of_the_Gods/Zone')
+require('scripts/zones/Hall_of_the_Gods/Zone')
 require('scripts/zones/Sauromugue_Champaign/Zone')
-require('scripts/zones/The_Shrine_of_Ruavitau/Zone')
+require('scripts/zones/The_Shrine_of_RuAvitau/Zone')
 require('scripts/zones/Cape_Teriggan/Zone')
-require('scripts/zones/Riverne_Site_B01/Zone')
+require('scripts/zones/Riverne-Site_B01/Zone')
 require('scripts/zones/The_Boyahda_Tree/Zone')
-require('scripts/zones/Riverne_Site_A01/Zone')
+require('scripts/zones/Riverne-Site_A01/Zone')
 require('scripts/zones/Dragons_Aery/Zone')
 require('scripts/zones/Ifrits_Cauldron/Zone')
 require('scripts/zones/Uleguerand_Range/Zone')
 require('scripts/zones/Western_Altepa_Desert/Zone')
 require('scripts/zones/King_Ranperres_Tomb/Zone')
-require('scripts/zones/Ruaun_Gardens/Zone')
-require('scripts/zones/Temenos_Central_Tower/Zone')
+require('scripts/zones/RuAun_Gardens/Zone')
+require('scripts/zones/Temenos/Zone')
 
 local m        = Module:new('augment_affinity_grants')
 local affinity = require('modules/custom/lua/augment_affinity_catalog')
@@ -81,7 +81,7 @@ m:addOverride('xi.zones.Sauromugue_Champaign.Zone.onMobDeath', function(mob, pla
     if player and isKiller then grantIfNew(player, mob:getName()) end
 end)
 
-m:addOverride('xi.zones.The_Shrine_of_Ruavitau.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
+m:addOverride('xi.zones.The_Shrine_of_RuAvitau.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
     if player and isKiller then grantIfNew(player, mob:getName()) end
 end)
@@ -91,7 +91,7 @@ m:addOverride('xi.zones.Cape_Teriggan.Zone.onMobDeath', function(mob, player, is
     if player and isKiller then grantIfNew(player, mob:getName()) end
 end)
 
-m:addOverride('xi.zones.Riverne_Site_B01.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
+m:addOverride('xi.zones.Riverne-Site_B01.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
     if player and isKiller then grantIfNew(player, mob:getName()) end
 end)
@@ -101,7 +101,7 @@ m:addOverride('xi.zones.The_Boyahda_Tree.Zone.onMobDeath', function(mob, player,
     if player and isKiller then grantIfNew(player, mob:getName()) end
 end)
 
-m:addOverride('xi.zones.Riverne_Site_A01.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
+m:addOverride('xi.zones.Riverne-Site_A01.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
     if player and isKiller then grantIfNew(player, mob:getName()) end
 end)
@@ -121,12 +121,12 @@ m:addOverride('xi.zones.Western_Altepa_Desert.Zone.onMobDeath', function(mob, pl
     if player and isKiller then grantIfNew(player, mob:getName()) end
 end)
 
-m:addOverride('xi.zones.Ruaun_Gardens.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
+m:addOverride('xi.zones.RuAun_Gardens.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
     if player and isKiller then grantIfNew(player, mob:getName()) end
 end)
 
-m:addOverride('xi.zones.Temenos_Central_Tower.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
+m:addOverride('xi.zones.Temenos.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
     if player and isKiller then grantIfNew(player, mob:getName()) end
 end)
@@ -134,7 +134,7 @@ end)
 -----------------------------------
 -- Multi-NM zones (Genbu, Seiryu, Suzaku, Kirin all in Hall of the Gods)
 -----------------------------------
-m:addOverride('xi.zones.The_Hall_of_the_Gods.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
+m:addOverride('xi.zones.Hall_of_the_Gods.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
     if player and isKiller then grantIfNew(player, mob:getName()) end
 end)
