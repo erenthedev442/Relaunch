@@ -31,21 +31,42 @@ function htbf.register(fightKey, tier)
         index            = f.baseIndex + (tier - 1),
         entryNpc         = f.entryNpc,
         exitNpc          = f.exitNpc,
+        exitNpcs         = f.exitNpcs,
+        allowedAreas     = f.allowedAreas,
         maxPlayers       = f.maxPlayers or 6,
         timeLimit        = f.timeLimit or utils.minutes(30),
         canLoseExp       = false,
-        requiredKeyItems = { f.gem },   -- consumed on entry (no keep)
+        requiredKeyItems = { f.gem },   -- consumed on entry (no keep); HTBF is gem-gated
     })
 
-    content.groups =
-    {
+    -- Groups. Simple single-boss fights name the boss (f.mobs). Complex fights
+    -- (multi-group, per-arena mobIds, skillchain AI, phase sections) instead
+    -- REUSE the base battlefield's full definition via f.reuseBaseId (the base's
+    -- xi.battlefield.id) -- we copy its groups + tick/section logic so the fight
+    -- runs identically; we only re-gate it (gem) + scale it. The base script
+    -- loads alphabetically before <key>_ht*.lua, so it is registered by now.
+    if f.reuseBaseId then
+        local base = xi.battlefield.contents[f.reuseBaseId]
+        if base then
+            content.groups = base.groups
+            if base.onBattlefieldTick then content.onBattlefieldTick = base.onBattlefieldTick end
+            if base.sections          then content.sections          = base.sections          end
+        else
+            print(string.format('[HTBF] %s tier %d: base id %s not registered (load order?)',
+                tostring(fightKey), tier, tostring(f.reuseBaseId)))
+            content.groups = {}
+        end
+    else
+        content.groups =
         {
-            mobs = f.mobs,
-            allDeath = function(battlefield, mob)
-                battlefield:setStatus(xi.battlefield.status.WON)
-            end,
-        },
-    }
+            {
+                mobs = f.mobs,
+                allDeath = function(battlefield, mob)
+                    battlefield:setStatus(xi.battlefield.status.WON)
+                end,
+            },
+        }
+    end
 
     -- Per-instance tier scaling of the reused base boss(es). Runs after the mobs
     -- are spawned for THIS battlefield instance, so concurrent tiers scale

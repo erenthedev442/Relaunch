@@ -23,14 +23,18 @@ local catalog = {}
 -- gem key-item id. The HTBF vendor (HTBF_Vendor.lua) sells these for gil.
 catalog.gemPrice =
 {
-    [xi.ki.AVATAR_PHANTOM_GEM] = 50000,  -- enters any of the 6 Avatar Prime trials
+    [xi.ki.AVATAR_PHANTOM_GEM]        = 50000,   -- enters any of the 6 Avatar Prime trials
+    [xi.ki.SAVAGES_PHANTOM_GEM]       = 100000,  -- The Savage (Monarch Linn)
+    [xi.ki.WARRIORS_PATH_PHANTOM_GEM] = 100000,  -- The Warrior's Path (Sealion's Den)
 }
 
 -- Display names for the gems the vendor sells (key item ids have no server-side
 -- name lookup; the client shows the real KI name in the inventory).
 catalog.gemName =
 {
-    [xi.ki.AVATAR_PHANTOM_GEM] = 'Avatar Phantom Gem',
+    [xi.ki.AVATAR_PHANTOM_GEM]        = 'Avatar Phantom Gem',
+    [xi.ki.SAVAGES_PHANTOM_GEM]       = "Savage's Phantom Gem",
+    [xi.ki.WARRIORS_PATH_PHANTOM_GEM] = "Warrior's Path Phantom Gem",
 }
 
 -- Per-tier scaling applied to the reused base boss(es) (silent difficulty -- no
@@ -109,6 +113,24 @@ catalog.fights =
         zone = xi.zone.CLOISTER_OF_TIDES,   entryNpc = 'WP_Entrance', exitNpc = 'Water_Protocrystal',
         gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 4, baseBattlefieldId = 4050,
         mobs = { 'Leviathan_Prime_TBW' }, label = 'Trial by Water',
+    },
+
+    -- ── CoP boss battlefields ───────────────────────────────────────────────
+    -- Complex multi-group / per-arena-mobId fights: reuse the base fight's full
+    -- groups (+ tick/section logic) via reuseBaseId, just re-gated on the fight's
+    -- own gem and scaled. baseIndex audited per entrance.
+    the_savage =
+    {
+        zone = xi.zone.MONARCH_LINN, entryNpc = 'SD_Entrance',
+        exitNpcs = { 'SD_BCNM_Exit_1', 'SD_BCNM_Exit_2', 'SD_BCNM_Exit_3' },
+        gem = xi.ki.SAVAGES_PHANTOM_GEM, baseIndex = 7, baseBattlefieldId = 4060,
+        reuseBaseId = xi.battlefield.id.SAVAGE, label = 'The Savage',
+    },
+    warriors_path =
+    {
+        zone = xi.zone.SEALIONS_DEN, entryNpc = '_0w0', exitNpc = 'Airship_Door',
+        gem = xi.ki.WARRIORS_PATH_PHANTOM_GEM, baseIndex = 2, baseBattlefieldId = 4070,
+        reuseBaseId = xi.battlefield.id.WARRIORS_PATH, label = "The Warrior's Path",
     },
 }
 
