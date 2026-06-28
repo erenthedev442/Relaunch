@@ -34,6 +34,11 @@ catalog.gemPrice =
     [xi.ki.STELLAR_FULCRUM_PHANTOM_GEM] = 150000, -- Return to Delkfutt's Tower (Stellar Fulcrum)
     [xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM] = 200000, -- The Celestial Nexus
     [xi.ki.DIVINE_PHANTOM_GEM]        = 200000,  -- Divine Might (La'Loff Amphitheater)
+    [xi.ki.PHANTOM_GEM_OF_APATHY]     = 150000,  -- Ark Angel battle 1 (La'Loff)
+    [xi.ki.PHANTOM_GEM_OF_COWARDICE]  = 150000,  -- Ark Angel battle 2
+    [xi.ki.PHANTOM_GEM_OF_ENVY]       = 150000,  -- Ark Angel battle 3
+    [xi.ki.PHANTOM_GEM_OF_ARROGANCE]  = 150000,  -- Ark Angel battle 4
+    [xi.ki.PHANTOM_GEM_OF_RAGE]       = 150000,  -- Ark Angel battle 5
 }
 
 -- Display names for the gems the vendor sells (key item ids have no server-side
@@ -51,6 +56,11 @@ catalog.gemName =
     [xi.ki.STELLAR_FULCRUM_PHANTOM_GEM] = 'Stellar Fulcrum Phantom Gem',
     [xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM] = 'Celestial Nexus Phantom Gem',
     [xi.ki.DIVINE_PHANTOM_GEM]        = 'Divine Phantom Gem',
+    [xi.ki.PHANTOM_GEM_OF_APATHY]     = 'Phantom Gem of Apathy',
+    [xi.ki.PHANTOM_GEM_OF_COWARDICE]  = 'Phantom Gem of Cowardice',
+    [xi.ki.PHANTOM_GEM_OF_ENVY]       = 'Phantom Gem of Envy',
+    [xi.ki.PHANTOM_GEM_OF_ARROGANCE]  = 'Phantom Gem of Arrogance',
+    [xi.ki.PHANTOM_GEM_OF_RAGE]       = 'Phantom Gem of Rage',
 }
 
 -- Per-tier scaling applied to the reused base boss(es) (silent difficulty -- no
@@ -216,6 +226,40 @@ catalog.fights =
         exitNpc = 'qm2',
         gem = xi.ki.DIVINE_PHANTOM_GEM, baseIndex = 13, baseBattlefieldId = 4150,
         reuseBaseId = xi.battlefield.id.DIVINE_MIGHT, maxPlayers = 18, label = 'Divine Might',
+    },
+
+    -- Ark Angels: 5 separate fights, each on its own La'Loff entrance (qm1_1..
+    -- qm1_5) with its own gem. Base uses idx 0-4 per entrance (+ Divine Might at
+    -- idx 5 / its HTBF at 13-15), so Ark Angel HTBF tiers sit at 10/11/12.
+    ark_angels_1 =
+    {
+        zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_1', exitNpc = 'qm2',
+        gem = xi.ki.PHANTOM_GEM_OF_APATHY, baseIndex = 10, baseBattlefieldId = 4160,
+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_1, label = 'Ark Angels I',
+    },
+    ark_angels_2 =
+    {
+        zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_2', exitNpc = 'qm2',
+        gem = xi.ki.PHANTOM_GEM_OF_COWARDICE, baseIndex = 10, baseBattlefieldId = 4170,
+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_2, label = 'Ark Angels II',
+    },
+    ark_angels_3 =
+    {
+        zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_3', exitNpc = 'qm2',
+        gem = xi.ki.PHANTOM_GEM_OF_ENVY, baseIndex = 10, baseBattlefieldId = 4180,
+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_3, label = 'Ark Angels III',
+    },
+    ark_angels_4 =
+    {
+        zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_4', exitNpc = 'qm2',
+        gem = xi.ki.PHANTOM_GEM_OF_ARROGANCE, baseIndex = 10, baseBattlefieldId = 4190,
+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_4, label = 'Ark Angels IV',
+    },
+    ark_angels_5 =
+    {
+        zone = xi.zone.LALOFF_AMPHITHEATER, entryNpc = 'qm1_5', exitNpc = 'qm2',
+        gem = xi.ki.PHANTOM_GEM_OF_RAGE, baseIndex = 10, baseBattlefieldId = 4200,
+        reuseBaseId = xi.battlefield.id.ARK_ANGELS_5, label = 'Ark Angels V',
     },
 }
 
