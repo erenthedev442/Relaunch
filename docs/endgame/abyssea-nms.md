@@ -146,7 +146,7 @@ Beyond the NMs, **every regular mob in an Abyssea zone has a 5% chance on death 
 
 ## What to Spend Infamy On
 
-Infamy is spent at the **Infamy Vendor** in GM Home. The full catalog includes accessories, armor, Relic/Mythic/Aeonic weapons, and more. A few reference points:
+Infamy is spent at the **Infamy Vendor** in <!--npc:infamy_vendor-->Leafallia<!--/npc-->. The full catalog includes accessories, armor, Relic/Mythic/Aeonic weapons, and more. A few reference points:
 
 | Item tier | Cost |
 |---|---|

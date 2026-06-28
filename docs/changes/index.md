@@ -160,9 +160,9 @@ Two NPCs at **Gwora Corridor** drive a parallel NM-farm-to-armor pipeline focuse
 
 Three currencies (AF Marks, Relic Marks, Empyrean Marks) track separately. Every kill drops a base piece **and** marks for its track. All 22 jobs supported. → [Full details](../progression/reforge.md)
 
-## GM Home NPCs
+## Custom service NPCs
 
-GM Home hosts five clusters of custom NPCs spanning starter setup, character upgrades, weekly activities, combat testing, and commerce. Use **`!gmhome`** from anywhere in-game to warp there instantly. Positions auto-update from the live Lua source files.
+The server's custom service NPCs are split across two hubs — **Leafallia** (endgame progression) and the **Celennia Memorial Library** (beginner services). The summary below auto-updates from the live source.
 
 <!-- DOCGEN:BEGIN id="gm-home-npcs" -->
 _All NPCs are in **GM Home** (zone 210). Positions shown as (x, y, z)._

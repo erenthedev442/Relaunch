@@ -1,14 +1,14 @@
 # Home Point Network — GM Home
 
-A **Home Point** crystal stands in GM Home that works like a full home-point terminal: set your home point here, then free-warp to home points all across Vana'diel — no attunement, no gil, no gates.
+A **Home Point** crystal stands in <!--npc:home_point-->the Celennia Memorial Library<!--/npc--> that works like a full home-point terminal: set your home point here, then free-warp to home points all across Vana'diel — no attunement, no gil, no gates.
 
 !!! tip "Summary"
-    A Home Point crystal in GM Home. Set your home point there and warp, for free, to home points across the whole world — every major city, the Adoulin and Aht Urhgan regions, the past, Sky, Sea, and dozens of dungeons and fields.
+    A Home Point crystal in <!--npc:home_point-->the Celennia Memorial Library<!--/npc-->. Set your home point there and warp, for free, to home points across the whole world — every major city, the Adoulin and Aht Urhgan regions, the past, Sky, Sea, and dozens of dungeons and fields.
 
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="home-point-access" -->
-The **Home Point** crystal sits in **GM Home**, in the travel-NPC cluster on the east side — alongside the other warp services. Using it is always **free**: no gil cost and no attunement, so every destination is open from your first visit.
+The **Home Point** crystal sits in <!--npc:home_point-->the Celennia Memorial Library<!--/npc-->, in the travel-NPC cluster on the east side — alongside the other warp services. Using it is always **free**: no gil cost and no attunement, so every destination is open from your first visit.
 <!-- DOCGEN:END id="home-point-access" -->
 
 ## Setting your home point

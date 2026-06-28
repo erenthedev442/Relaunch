@@ -3,12 +3,12 @@
 **Corvus** is a custom Trust: a silent archer who takes up the back line and pours ranged damage into whatever you point him at. Earn him once and he's a permanent addition to your Trust roster — a pure damage dealer who asks for nothing and says even less.
 
 !!! tip "Summary"
-    A one-time, permanent ranged-damage Trust earned through the Hunting League at the Void Keeper in GM Home — bind Corvus once, then summon him from your Trust menu as "Curilla".
+    A one-time, permanent ranged-damage Trust earned through the Hunting League at the Void Keeper in <!--npc:void_keeper-->Leafallia<!--/npc--> — bind Corvus once, then summon him from your Trust menu as "Curilla".
 
 ## At a glance
 
 <!-- DOCGEN:BEGIN id="corvus-summary" -->
-- **Where:** the **Void Keeper** at [GM Home](gm-home.md) (reach it with `!gmhome`) — the same NPC that grants [Meat](meat.md) and [Gemma](skoll.md)
+- **Where:** the **Void Keeper** in <!--npc:void_keeper-->Leafallia<!--/npc--> — the same NPC that grants [Meat](meat.md) and [Gemma](skoll.md)
 - **Unlock:** **Hunting League Rank 4 + 5,000 Hunt Marks** — one-time, permanent, per character
 - **Role:** ranged damage dealer — he stands at the back line and shoots
 - **To summon:** cast **Curilla** from your Trust menu — that slot *is* Corvus (the name **Corvus** appears over his head and in your party list)
@@ -25,7 +25,7 @@ Corvus is built around one job: ranged damage.
 ## How to unlock
 
 <!-- DOCGEN:BEGIN id="corvus-unlock" -->
-Reach **Hunting League Rank 4 + 5,000 Hunt Marks**, then travel to **GM Home** with `!gmhome`, find the **Void Keeper**, and bind Corvus. The marks are spent once; the binding is permanent and per character — earn him once and he's yours forever.
+Reach **Hunting League Rank 4 + 5,000 Hunt Marks**, then travel to <!--npc:void_keeper-->Leafallia<!--/npc-->, find the **Void Keeper**, and bind Corvus. The marks are spent once; the binding is permanent and per character — earn him once and he's yours forever.
 
 In your Trust menu he shows up as **"Curilla"** — that Trust slot was re-used, so the menu label is just cosmetic. Cast **Curilla**, and the archer who answers — named **Corvus** over his head — *is* him.
 

@@ -6,14 +6,14 @@ Walk Of Echoes. Beat the Guardian of any weapon and you complete the last trial
 on the Prime Weapon path.
 
 !!! tip "Summary"
-    Pick a weapon type at the Weapon Mastery Sage in GM Home, fight its Guardian
+    Pick a weapon type at the Weapon Mastery Sage in <!--npc:job_mastery-->Leafallia<!--/npc-->, fight its Guardian
     solo in Walk Of Echoes, and a single victory completes Trial 4 of the Prime
     Weapon path. Death ends the attempt with no reward.
 
 ## Where to start
 
 <!-- DOCGEN:BEGIN id="job-mastery-access" -->
-Find the **Weapon Mastery Sage** in **GM Home** and pick a weapon type. Choosing one warps you alone into **Walk Of Echoes**, where that weapon's Guardian appears moments later. There is no quest and no cost to attempt a challenge — just talk to the Sage and choose. If you ever need to bail out of an active attempt, use **`!mastery abort`**.
+Find the **Weapon Mastery Sage** in <!--npc:job_mastery-->Leafallia<!--/npc--> and pick a weapon type. Choosing one warps you alone into **Walk Of Echoes**, where that weapon's Guardian appears moments later. There is no quest and no cost to attempt a challenge — just talk to the Sage and choose. If you ever need to bail out of an active attempt, use **`!mastery abort`**.
 <!-- DOCGEN:END id="job-mastery-access" -->
 
 ## The Guardian fights

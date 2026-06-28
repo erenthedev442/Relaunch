@@ -260,36 +260,29 @@ def _fmt_pos(x: float, y: float, z: float) -> str:
 
 
 def _render(resolved: list[dict]) -> str:
-    if not resolved:
-        return "_No NPC data could be parsed from the Lua catalog._"
-
-    lines: list[str] = [
-        "_All NPCs are in **GM Home** (zone 210). Positions shown as (x, y, z)._",
+    # The custom NPCs were consolidated into two hubs — Leafallia (endgame) and
+    # the Celennia Memorial Library (beginner services); only the Test Dummy still
+    # stands in GM Home. Rather than enumerate stale GM-Home cluster positions
+    # (most NPCs moved, and the removed setup moogles linger as "unknown"), point
+    # at the two authoritative hub pages, whose locations are themselves kept live
+    # by the npc_location_inject generator. `resolved` is intentionally unused.
+    return "\n".join([
+        "Custom service NPCs live across two hubs:",
         "",
-    ]
-
-    current_cluster: str | None = None
-    for entry in resolved:
-        cluster = entry["cluster"]
-        if cluster != current_cluster:
-            if current_cluster is not None:
-                lines.append("")  # blank line between cluster sections
-            current_cluster = cluster
-            note = _CLUSTER_NOTES.get(cluster, "")
-            heading = f"**{cluster}**"
-            if note:
-                heading += f" — {note}"
-            lines.append(heading)
-            lines.append("")
-            lines.append("| NPC | Position | What it does |")
-            lines.append("|---|---|---|")
-
-        pos = entry.get("_pos")
-        pos_str = f"`{_fmt_pos(*pos)}`" if pos else "_unknown_"
-        desc = entry["desc"].replace("|", "\\|")
-        lines.append(f"| **{entry['display']}** | {pos_str} | {desc} |")
-
-    return "\n".join(lines)
+        "- **[Leafallia — Endgame Hub](../progression/leafallia.md)** — Prime Armory, "
+        "Relic Forge, Augment Moogle & Sage, the mastery trainers, Apex Trials, the "
+        "Gauntlet, Colosseum, Endless Tower, and the HTBF / Infamy / Voidwatch vendors.",
+        "- **[Celennia Memorial Library — Beginner Hub](../progression/library.md)** — "
+        "home point, Warpman, the Gil / Sparks / Crafting exchanges, Title Broker, "
+        "Cosmetic Shop, Daily & Hunt boards, Unity, Casino, Mystery Mog, Chocobo Derby, "
+        "and the Race Changer.",
+        "",
+        "The combat **Test Dummy** for DPS testing remains in **GM Home** (`!gmhome`). "
+        "New-character setup — weapon skills, spells, key items, missions, maps, and a "
+        "starter gear kit — is now granted **automatically at character creation**, so "
+        "the old setup moogles (Gear / Key Item / Mission / Character Upgrader / EXP "
+        "Camp) are gone.",
+    ])
 
 
 # ─── Main entrypoint ──────────────────────────────────────────────────────────

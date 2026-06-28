@@ -7,7 +7,7 @@
 
 ## Where to start
 
-Talk to **The Gauntlet** keeper (sword-and-shield icon) in **GM Home** — same row as the Apex Arbiter and Rupture Sage.  You can also use `!gauntlet` to check your clear count. When you're ready, choose *Enter The Gauntlet* and you're warped straight into the arena.
+Talk to **The Gauntlet** keeper (sword-and-shield icon) in <!--npc:gauntlet-->Leafallia<!--/npc--> — same row as the Apex Arbiter and Rupture Sage.  You can also use `!gauntlet` to check your clear count. When you're ready, choose *Enter The Gauntlet* and you're warped straight into the arena.
 
 **Rules:**
 

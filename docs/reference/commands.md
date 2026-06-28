@@ -17,6 +17,7 @@ These chat commands are available to every player on the Relaunch server (no GM 
 | `!abyssea` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!achievements` | — | Shows all personal milestone achievements - earned and unearned - with their reward amounts and descriptions. | :material-puzzle: **custom** |
 | `!aegis` | — | Cast Divine Aegis (a PLD-only custom spell) on yourself: a Holy shield that absorbs physical damage and cuts physical damage taken by 20% for 30s, then detonates as a Holy AoE. Exposed as a command because the client cannot hard-cast custom spell IDs. | :material-puzzle: **custom** |
+| `!affinitynm` | string | Warp to any of the 24 Augment-Sage affinity NMs — `!affinitynm` lists them, `!affinitynm 4` or `!affinitynm simurgh` warps. | :material-puzzle: **custom** |
 | `!ah` | — | opens the Auction House menu anywhere in the world |  |
 | `!aoews` | string | Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (GM Home). Cannot be changed after setting. |  |
 | `!apex` | string | Apex Trials helper -- check your record / Paragon Points, start a climb, or bail out of one. | :material-puzzle: **custom** |
@@ -24,7 +25,6 @@ These chat commands are available to every player on the Relaunch server (no GM 
 | `!autojp` | string | Auto-spends all unspent job points on whichever categories of the player's CURRENT MAIN JOB can still be upgraded, distributing breadth-first so every category grows evenly. | :material-puzzle: **custom** |
 | `!automerits` | string | Auto-spends all unspent merit points on whichever categories can still be upgraded, distributing breadth-first so every category grows evenly rather than one rank stack getting maxed first. | :material-puzzle: **custom** |
 | `!buff` | string | Grants the zone-appropriate regional buff (Signet / Sanction / Sigil / Ionis) plus Refresh, Regen, Regain, and Composure to the player. Refresh = 10% of max MP per tick Regen   = 10% of max HP per tick Regain  = scales with player level (1 per 10 levels, min 1) |  |
-| `!capacity` | — | Warps you to the Capacity Point farm camp in Bibiki Bay. Kill the always-up Lv150-160 mobs for Capacity/Job Points. Landing spot MUST stay in sync with warpPos in modules/custom/lua/capacity_farm_catalog.lua. | :material-puzzle: **custom** |
 | `!checkexpbonus` | — | Prints your current EXP_BONUS mod (gear/augments that boost EXP gain) and the per-kill effect it has. Useful for verifying that an EXP augment is actually attached to the player after equipping the piece. |  |
 | `!convergence` | — | Cast Convergence (an RDM-only custom spell) on your current target: a random element + enfeeble combo that deals magic damage plus one of six status effects (Slow, Blind, Paralyze, Silence, Gravity, or Bind). Exposed as a command because the client cannot hard-cast custom spell IDs. | :material-puzzle: **custom** |
 | `!dig` | — | Treasure Hunting - dig for the strongbox your treasure map points at. Maps drop from Hunting League kills. | :material-puzzle: **custom** |
@@ -90,6 +90,14 @@ These chat commands are available to every player on the Relaunch server (no GM 
 | `!who` | — | Lists players who have logged in during this server session, sorted by Hunting League tier (highest first), with their tier name shown.  Stale entries (crashed clients) are pruned lazily via GetPlayerByName at query time. | :material-puzzle: **custom** |
 
 ## Movement & Teleport
+
+### `!affinitynm`  _(custom)_
+
+Warp to any of the 24 Augment-Sage affinity NMs. Run `!affinitynm` with no argument to list them, then `!affinitynm 4` (by number) or `!affinitynm simurgh` (by name) to warp.
+
+**Usage:** `affinitynm [number|name]`
+
+**Parameter types:** string
 
 ### `!gmhome`
 
@@ -206,12 +214,6 @@ Apex Trials helper -- check your record / Paragon Points, start a climb, or bail
 Shows the true augment contributions on your equipped gear.
 
 **Usage:** `augstats`
-
-### `!capacity`  _(custom)_
-
-Warps you to the Capacity Point farm camp in Bibiki Bay. Kill the always-up Lv150-160 mobs for Capacity/Job Points. Landing spot MUST stay in sync with warpPos in modules/custom/lua/capacity_farm_catalog.lua.
-
-**Usage:** `capacity`
 
 ### `!checkexpbonus`
 

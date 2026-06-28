@@ -2,10 +2,10 @@
 
 ![Augment gem](../assets/emblems/augment.svg){ .lgnd-emblem }
 
-The **Augment Moogle** at GM Home lets you stamp custom augments onto any piece of equipment by trading a catalyst item that maps 1:1 to a specific augment.
+The **Augment Moogle** at <!--npc:augment_moogle-->Leafallia<!--/npc--> lets you stamp custom augments onto any piece of equipment by trading a catalyst item that maps 1:1 to a specific augment.
 
 !!! tip "Summary"
-    Talk to the **Augment Moogle** at **GM Home** (z = -15, in the row with the other GM Home moogles). Trade **1 gear piece + 1-5 catalyst items + 10,000 gil**. Each catalyst writes one augment line onto the gear. Up to 5 augments per piece — the engine's 5 augment slots.
+    Talk to the **Augment Moogle** at <!--npc:augment_moogle-->Leafallia<!--/npc--> (z = -15, in the row with the other moogles). Trade **1 gear piece + 1-5 catalyst items + 10,000 gil**. Each catalyst writes one augment line onto the gear. Up to 5 augments per piece — the engine's 5 augment slots.
 
 ## How it works
 
@@ -74,7 +74,7 @@ _300 catalyst items across 16 categories. Trade the catalyst to the Augment Moog
 
 Each augment **scales with [Augment Sage](augment-sage.md) progress** and with how many catalysts you trade (**×N** = that many, 1–5; an item has 5 augment slots). **Fresh ×N** is a brand-new augment with **no Sage progress**; **Max ×N** is the ceiling at **rank-5 mastery + full affinity + a crit**. Your live value starts near Fresh and climbs toward Max as you rank Augment Sage up. Percentage augments (damage-taken, haste, etc.) show the raw value; the **Cap** column is the hard in-game ceiling for that stat (e.g. Phys. dmg. taken floors at -50%), or **no cap** for additive stats like Attack/HP — values above the Cap can't be reached no matter how many catalysts you stack.
 
-Each category below is sold by a `!shop augments <group>` command — buy the catalyst there (flat gil), then trade it to the Augment Moogle at GM Home to apply it.
+Each category below is sold by a `!shop augments <group>` command — buy the catalyst there (flat gil), then trade it to the Augment Moogle at <!--npc:augment_moogle-->Leafallia<!--/npc--> to apply it.
 
 ### Strength / Attack / Phys.dmg.taken  — buy via `!shop augments str`
 

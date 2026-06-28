@@ -5,7 +5,7 @@
 New to augmenting and not sure where to begin? This is the plain-English guide. The two pages after it — [Augment Moogle](augments.md) and [Augment Sage](augment-sage.md) — are the full reference with every number; **this page is just how to start.**
 
 !!! tip "The one-sentence version"
-    Augmenting lets you **stamp custom stat bonuses onto any piece of gear** — up to 5 bonuses per piece — by trading a cheap "catalyst" item to the **Augment Moogle** in GM Home. It's the single biggest source of character power on the Relaunch server.
+    Augmenting lets you **stamp custom stat bonuses onto any piece of gear** — up to 5 bonuses per piece — by trading a cheap "catalyst" item to the **Augment Moogle** in <!--npc:augment_moogle-->Leafallia<!--/npc-->. It's the single biggest source of character power on the Relaunch server.
 
 ## What it is & what it does
 
@@ -19,7 +19,7 @@ Let's add some **Attack** to a piece of gear. (Any stat works the same way — t
 
 1. **Buy the catalysts.** Type `!shop augments str` and buy **5× Black Tiger Hide** (the "Attack" catalyst). Catalysts are cheap.
 2. **Have 10,000 gil** in your inventory (flat cost per trade, no matter how many catalysts).
-3. **Go to GM Home** and find the **Augment Moogle** (it's in the row of moogles).
+3. **Go to <!--npc:augment_moogle-->Leafallia<!--/npc-->** and find the **Augment Moogle** (it's in the row of moogles).
 4. **Trade** the gear piece **+ your 5 catalysts** to the Moogle. It shows you what's about to be applied.
 5. **Confirm.** It takes the 10,000 gil and hands your gear back with **5 lines of Attack** stamped on it.
 

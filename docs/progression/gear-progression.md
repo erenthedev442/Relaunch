@@ -1,9 +1,9 @@
 # Gear Progression Vendor
 
-A weapons vendor in **Reisenjima Henge** that sells gear across three tiers — **Bronze**, **Silver**, and **Gold** — bought with the medals you earn from hunting content. Work your way up the tiers to arm every job you play.
+A weapons vendor in **Escha ZiTah** that sells gear across three tiers — **Bronze**, **Silver**, and **Gold** — bought with the medals you earn from hunting content. Work your way up the tiers to arm every job you play.
 
 !!! tip "Summary"
-    Trade hunting-league medals for weapons across three tiers (Bronze → Silver → Gold) at the Gear Progression vendor in Reisenjima Henge — each tier covers most weapon categories, with job restrictions per weapon.
+    Trade hunting-league medals for weapons across three tiers (Bronze → Silver → Gold) at the Gear Progression vendor in Escha ZiTah — each tier covers most weapon categories, with job restrictions per weapon.
 
 ## Where to shop
 

@@ -1,14 +1,14 @@
 # Prime Armory
 
-The **Prime Armory** in GM Home hands out **Prime weapons** — the apex weapon tier on the server. Each one comes with its own signature weapon skill, unlocked the moment you equip it.
+The **Prime Armory** in <!--npc:prime_armory-->Leafallia<!--/npc--> hands out **Prime weapons** — the apex weapon tier on the server. Each one comes with its own signature weapon skill, unlocked the moment you equip it.
 
 !!! tip "Summary"
-    Bring **1 Prime Voucher** to the Prime Armory in GM Home and claim any one of the **12 Prime weapons** — best-in-slot gear, each with a unique weapon skill that unlocks on equip.
+    Bring **1 Prime Voucher** to the Prime Armory in <!--npc:prime_armory-->Leafallia<!--/npc--> and claim any one of the **12 Prime weapons** — best-in-slot gear, each with a unique weapon skill that unlocks on equip.
 
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="prime-armory-access" -->
-The **Prime Armory** is in **GM Home**, just south of the Unlocker cluster. Talk to it to browse the Prime weapons; you only need to bring a voucher when you're ready to claim one.
+The **Prime Armory** is in <!--npc:prime_armory-->Leafallia<!--/npc-->, just south of the Unlocker cluster. Talk to it to browse the Prime weapons; you only need to bring a voucher when you're ready to claim one.
 <!-- DOCGEN:END id="prime-armory-access" -->
 
 ## The cost

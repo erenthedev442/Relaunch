@@ -21,74 +21,37 @@ This teleports you instantly to **GM Home** — the server hub where almost ever
 
 ---
 
-## 2. Talk to Character Upgrader
+## 2. Your character is already set up
 
-Find the **Character Upgrader** NPC in the Utility cluster (middle section of GM Home).
+There's no setup NPC to visit on the Relaunch server — every new character is fully provisioned **the moment it's created**. Before you take a single step, you already have:
 
-This NPC sets up everything a new character needs in a few menu clicks:
-
-| Option | What it does |
+| What you get | Details |
 |---|---|
-| **Weapon Skills** | Unlocks all weapon skills for your current job |
-| **Spells** | Grants all magic spells appropriate to your job |
-| **Trusts** | Unlocks your full trust roster |
-| **Skills** | Caps all combat and magic skills to your level |
-| **Outpost Warps** | Unlocks all outpost warps, including Tu'Lia and Tavnazia |
-
-!!! tip
-    Do all of these now. There's no cost and no catch — it's all one-time setup. Skills capping manually would take hours; this takes seconds.
-
----
-
-## 3. Talk to Key Item Moogle
-
-Right next to the Character Upgrader, find the **Key Item Moogle**.
-
-One conversation grants you the full set of ~4,000 key items at once. This opens zone access, mission flags, teleport items, and everything else that key items gate.
+| **Weapon skills & spells** | Every weapon skill and every job-appropriate spell, granted automatically |
+| **Capped skills** | All combat and magic skills capped to your level |
+| **Trusts** | Your full trust roster |
+| **Key items** | The complete set of ~4,000 key items — zone access, teleports, and everything else key items gate |
+| **Missions & rank** | Every story mission completed (all nations + RoZ/CoP/ToAU/WotG/SoA/RoV); nation rank 10 |
+| **Maps & travel** | All maps, outpost warps (including Tu'Lia and Tavnazia), homepoints, and survival guides |
+| **Storage** | Full Mog Wardrobes |
+| **Pets** | Pet attachments (for the relevant jobs) |
+| **Starter gear** | A one-time starter gear kit — enough to survive your first few fights and get the Hunting League rolling |
 
 !!! note
-    This is a single-use NPC — you only need to talk to it once per character. After that first conversation, it's done.
+    None of this requires talking to anyone. You don't need to track down a Character Upgrader, Key Item Moogle, Mission Moogle, or Gear Moogle — it's all done for you at creation. Just play.
 
 ---
 
-## 4. Talk to Mission Moogle
-
-The **Mission Moogle** (also in the Utility cluster) lets you skip any story missions you don't want to play through.
-
-You can skip by expansion:
-
-- Rise of the Zilart
-- Chains of Promathia
-- Treasures of Aht Urhgan
-- Wings of the Goddess
-- Seekers of Adoulin
-- Return to Vana'diel
-
-Or skip all missions at once with a single menu option.
-
-!!! tip
-    If you want to play through some story content, skip only what you don't care about. You can always skip more later. Mission progress doesn't gate anything on this server — you're not missing out on gear or progression by keeping them open.
-
----
-
-## 5. Talk to Gear Moogle
-
-The **Gear Moogle** (Progression cluster, near the front of GM Home) hands out a one-time starter gear kit.
-
-This isn't BiS endgame gear — it's enough to survive your first few fights and get the Hunting League rolling. Pick it up before you head out.
-
----
-
-## 6. Level up to 99
+## 3. Level up to 99
 
 You start at level **1** — but with every job and subjob already unlocked and **<!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP** (plus <!--setting:main.EXP_RATE:int-->10<!--/setting-->× from books & RoE), the climb is hours, not weeks.
 
-- Talk to the **EXP Camp Moogle** (Utility cluster) to warp straight to a camp matched to your level — La Theine and Valkurm early, up through the Boyahda Tree at 60–75.
+- Type **`!expcamp`** to warp straight to one of 20 level-banded EXP camps — La Theine and Valkurm early, up through the Boyahda Tree at 60–75. Run `!expcamp` on its own to list the camps, then `!expcamp 4` to warp to one.
 - Or dive into the **Hunting League** below right away: the Rank I NMs are low-level, so you earn EXP *and* Hunt Marks at the same time.
 
 ---
 
-## 7. Head to Escha ZiTah — start the Hunting League
+## 4. Head to Escha ZiTah — start the Hunting League
 
 Once your character is set up, the next stop is the server's core progression system: **the Hunting League**.
 
@@ -107,7 +70,7 @@ The Hunting League is a custom rank-based NM hunting system with five ranks. You
 
 It's the primary path to endgame gear and the main thing to do on the Relaunch server. For full details — ranks, NMs, rewards, recommended order — see the **[Hunting League page](../progression/index.md)**.
 
-### Quick start at Henge
+### Quick start at Escha ZiTah
 
 1. Talk to **Hunt: Hub** to see your current rank and marks.
 2. Talk to **Hunt: Spawner** to pop a Rank I NM (Leaping Lizzy, Valkurm Emperor, or Tom Tit Tat).
@@ -121,12 +84,9 @@ It's the primary path to endgame gear and the main thing to do on the Relaunch s
 | Step | Action |
 |---|---|
 | 1 | `!gmhome` — warp to the server hub |
-| 2 | Character Upgrader — weapon skills, spells, trusts, capped skills, outpost warps |
-| 3 | Key Item Moogle — all key items at once |
-| 4 | Mission Moogle — skip story missions you don't want |
-| 5 | Gear Moogle — pick up your starter kit |
-| 6 | EXP Camp Moogle — warp to a camp and level to 99 (<!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP) |
-| 7 | `!hunt` — warp to Escha ZiTah and start the Hunting League |
+| 2 | Nothing to do — your character is fully set up at creation (weapon skills, spells, trusts, capped skills, key items, missions, maps, warps, wardrobes, starter gear) |
+| 3 | `!expcamp` — warp to a level-banded camp and level to 99 (<!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP) |
+| 4 | `!hunt` — warp to Escha ZiTah and start the Hunting League |
 
 ---
 
