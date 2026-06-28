@@ -229,11 +229,11 @@ def _render(
 
     # ---- Step 1: Visit GM Home ----------------------------------------
     lines.append(
-        "1. **Visit GM Home first.** Type `!gmhome` to warp there instantly. "
-        "Collect your starter gear from the Armor and Accessories NPCs, pick up "
-        "key items and any open missions, and configure your character. "
-        "Nearly every system — Weekly Hunts, the Game Master, the "
-        "Infamy Vendor, the Augment Sage — is accessible from GM Home."
+        "1. **Orient yourself at the two main hubs.** The **Celennia Memorial Library** (`!lib`) "
+        "is the economy hub — Hunt Board, Gil Exchange, Sparks Exchange, Race Changer, Home Point. "
+        "**Leafallia** (`!leaf`) is the endgame hub — Apex Trials, Prime Armory, Colosseum, "
+        "Infamy Vendor, Augment Sage, and the endgame NPC row. GM Home (`!gmhome`) still exists "
+        "but only the Test Dummy remains there for DPS testing."
     )
 
     # ---- Step 2: Hit level 99 -----------------------------------------
@@ -281,8 +281,8 @@ def _render(
             f"{currency}** meta-bonus on top of the per-objective rewards."
         )
     lines.append(
-        "5. **Pick up Weekly Hunt objectives.** Visit the Weekly Hunt Board at GM Home "
-        f"(`!gmhome`) or type `!weekly` for a status check. "
+        "5. **Pick up Weekly Hunt objectives.** Visit the Weekly Hunt Board at the **Celennia "
+        "Memorial Library** (`!lib`) or type `!weekly` for a status check. "
         f"Five random objectives roll fresh each Monday.{weekly_note} "
         "Completing these adds a big mark income boost alongside your regular NM grind."
     )
@@ -317,15 +317,15 @@ def _render(
             f" {easy['wavesTotal']} waves," if easy.get("wavesTotal") else ""
         )
         lines.append(
-            "7. **Try Game Master wave challenges at GM Home.** "
-            f"Talk to the Game Master NPC (`!gmhome`). "
+            "7. **Try Game Master wave challenges in Escha Ru'Aun.** "
+            f"Use `!wavemaster` to warp there and talk to the Game Master NPC. "
             f"Start with **Easy** difficulty:{waves_note} 1 mob per wave, manageable for a geared solo player.{bonus_note} "
             "Harder difficulties (Normal / Hard / Insane) pay progressively more marks "
             "and unlock tougher wave pools."
         )
     else:
         lines.append(
-            "7. **Try Game Master wave challenges at GM Home (`!gmhome`).** "
+            "7. **Try Game Master wave challenges in Escha Ru'Aun (`!wavemaster`).** "
             "Start on Easy difficulty. Full clear pays bonus Hunt Marks. "
             "Harder difficulties pay more and pull from tougher mob pools."
         )
@@ -366,10 +366,10 @@ def _render(
 
     # ---- Step 10: Augmentation -----------------------------------------
     lines.append(
-        "10. **Augment your gear.** Visit the Augment Moogle at GM Home (`!gmhome`) "
+        "10. **Augment your gear.** Visit the **Augment Moogle in Leafallia** (`!leaf`) "
         "to add random stats to equipment. "
         "For passive endgame bonuses, earn enough Infamy to unlock the "
-        "**Augment Sage** — Infamy comes from apex Reisenjima NMs, Scheduled "
+        "**Augment Sage** — also in Leafallia — Infamy comes from apex Reisenjima NMs, Scheduled "
         "Invasions, and the weekly Raid. "
         "The Sage applies permanent stat bonuses outside the normal augment RNG."
     )

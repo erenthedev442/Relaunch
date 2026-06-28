@@ -42,16 +42,16 @@ def _parse(text: str) -> dict:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return ("The **Home Point** crystal sits in **GM Home**, in the travel-NPC "
-            "cluster on the east side — alongside the other warp services. "
+    return ("The **Home Point** crystal sits in **the Celennia Memorial Library** (`!lib`), "
+            "in the services cluster — alongside the other warp services. "
             "Using it is always **free**: no gil cost and no attunement, so "
             "every destination is open from your first visit.")
 
 
 def _render_sethome(c: dict) -> str:
-    return ("Choose **Set home point here** and GM Home becomes your home point — "
+    return ("Choose **Set home point here** and the Celennia Memorial Library becomes your home point — "
             "you'll return here whenever you're knocked out and raised, or any "
-            "time you use a home-point warp. It also registers GM Home as a "
+            "time you use a home-point warp. It also registers the Celennia Memorial Library as a "
             "destination on the wider home-point network, so other crystals out "
             "in the world can send you back.")
 

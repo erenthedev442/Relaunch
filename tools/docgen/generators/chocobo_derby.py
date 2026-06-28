@@ -1,6 +1,6 @@
 """Sync docs/endgame/chocobo-derby.md with chocobo_derby_catalog.lua.
 
-Bet on chocobo races at the Race Caller in GM Home; if your own raised chocobo
+Bet on chocobo races at the Race Caller in the Celennia Memorial Library; if your own raised chocobo
 is strong enough, enter it as a runner. The bet tiers, the field, the
 house cut / payout floor, the own-bird requirement + win bonus, and the race
 length all come from the catalog so re-tuning the derby updates the guide.
@@ -60,7 +60,7 @@ def _stage_name(n: int) -> str:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return ("The **Race Caller** stands in the activities row of **GM Home**. "
+    return ("The **Race Caller** stands in **the Celennia Memorial Library** (`!lib`). "
             "Step up to check the odds board, place a bet, and watch the race "
             "play out.")
 
@@ -126,12 +126,12 @@ def _render_ownbird(c: dict) -> str:
 
 _PAGE = """# Chocobo Derby
 
-Down in GM Home, the **Race Caller** runs the races. Put gil on a runner and
+In the **Celennia Memorial Library**, the **Race Caller** runs the races. Put gil on a runner and
 watch it play out — and if you've raised a chocobo of your own that's tough
 enough, line it up at the gate and bet on yourself.
 
 !!! tip "Summary"
-    Bet gil on chocobo races at the Race Caller in GM Home; raise a strong
+    Bet gil on chocobo races at the Race Caller in the Celennia Memorial Library; raise a strong
     enough chocobo of your own and you can enter it as a runner for a bigger
     payout.
 

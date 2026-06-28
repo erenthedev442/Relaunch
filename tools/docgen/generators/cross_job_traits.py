@@ -1,6 +1,6 @@
 """Sync docs/progression/cross-job-traits.md with cross_job_trait_catalog.lua.
 
-The Cross-Job Trait Trainer (GM Home) sells permanent passive traits that
+The Cross-Job Trait Trainer (Leafallia) sells permanent passive traits that
 apply on every job. The flat gil price and the trait list (player-facing name
 + description) come from the catalog, so re-pricing or adding a trait updates
 the published page. Only the human-readable name/desc are surfaced — the raw

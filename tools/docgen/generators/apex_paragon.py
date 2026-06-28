@@ -93,7 +93,7 @@ def _render_apex_overview(a: dict) -> str:
     names = ", ".join(a["bosses"][:3]) + ("…" if len(a["bosses"]) > 3 else "")
     return (
         "**Apex Trials** is an **infinite, scaling solo climb** — the one chase on the server "
-        "with no summit. Talk to the **Apex Arbiter** in GM Home (the endgame row, beside the "
+        "with no summit. Talk to the **Apex Arbiter** in **Leafallia** (`!leaf`, endgame row, beside the "
         "Prime Armory) or type `!apex` to begin.\n\n"
         "Each **tier** pits you against a single scaled Apex boss "
         f"({names}). Clear it and you **bank Paragon Points** and raise your **record**, then the "
@@ -144,7 +144,7 @@ def _render_apex_affixes(a: dict) -> str:
 def _render_paragon_overview(p: dict) -> str:
     return (
         "**Paragon** is the meta-progression Apex Trials feeds. Spend the Paragon Points you bank "
-        "at the **Paragon Sage** in GM Home (next to the Apex Arbiter) on three things: an infinite "
+        "at the **Paragon Sage** in **Leafallia** (`!leaf`, next to the Apex Arbiter) on three things: an infinite "
         "**Paragon Level** prestige track, permanent **capped perks**, and the **Daily Might** buff. "
         "It's deliberately flex-and-flavour — the perk caps are modest next to maxed gear, so "
         "Paragon is a prestige climb, not a power treadmill."

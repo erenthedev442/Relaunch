@@ -55,8 +55,8 @@ def _gil_phrase(n: int) -> str:
 
 def _render_access(c: dict) -> str:
     return (
-        f"The **{c['name']}** stands at the end of the gil-services row in "
-        f"**GM Home**. Talk to it, choose a new race and face, then confirm."
+        f"The **{c['name']}** stands in the services row of "
+        f"**the Celennia Memorial Library** (`!lib`). Talk to it, choose a new race and face, then confirm."
     )
 
 

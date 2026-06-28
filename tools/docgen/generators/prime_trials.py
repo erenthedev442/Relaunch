@@ -53,7 +53,7 @@ def _render_gate(c: dict) -> str:
         f"They are tracked independently, so you can chip away at them **in any "
         f"order** -- clear all **{n}** and the Prime Armory will forge the Prime "
         f"weapon of your choice.\n\n"
-        f"Talk to the **Prime Armory** NPC in **GM Home** at any time to see which "
+        f"Talk to the **Prime Armory** NPC in **Leafallia** (`!leaf`) at any time to see which "
         f"trials you've cleared and to hand in the collection trials."
     )
 

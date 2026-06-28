@@ -329,7 +329,7 @@ def _render(groups, item_names, gap_set: set[int]) -> str:
 
     lines.append(
         "**Catalysts are FARMED, not bought** — each drops (~50%) from a specific assigned "
-        "monster, then you trade it to the Augment Moogle at GM Home to apply it. Every "
+        "monster, then you trade it to the **Augment Moogle in Leafallia** (`!leaf`) to apply it. Every "
         "augment has a **tier (T0–T4)**: higher tiers drop from tougher monsters and open up "
         "as you progress — **T0** Day 1 · **T1** Hunting League Rank 3 · **T2** HL Rank 5 · "
         "**T3** Prestige · **T4** endgame. See the "

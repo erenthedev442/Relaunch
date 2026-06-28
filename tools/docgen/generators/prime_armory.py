@@ -53,7 +53,7 @@ def _parse(text: str) -> dict:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return ("The **Prime Armory** is in **GM Home**, just south of the Unlocker "
+    return ("The **Prime Armory** is in **Leafallia** (`!leaf`), in the endgame NPC row. "
             "cluster. Talk to it to browse the Prime weapons; bring your **750M "
             "gil** when you're ready to forge (all 5 trials, including the "
             "voucher turn-in, must already be done).")

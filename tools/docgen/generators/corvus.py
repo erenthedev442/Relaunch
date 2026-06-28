@@ -1,6 +1,6 @@
 """Sync the custom-Trust doc pages with trust_skoll.lua.
 
-The Void Keeper in GM Home grants three custom Trusts — **Corvus, Meat, Gemma** —
+The Void Keeper in Leafallia grants three custom Trusts — **Corvus, Meat, Gemma** —
 configured in the `TRUSTS` table of trust_skoll.lua (NOT a `*_catalog` file).
 For each one we parse the display name, the in-game Trust-menu name (clientName)
 and the unlock gate (Hunting League rank + Hunt Marks) out of that table, then
@@ -97,8 +97,8 @@ def _gate(c: dict) -> str:
 
 def _render_summary(t: dict, c: dict) -> str:
     return (
-        f"- **Where:** the **Void Keeper** at [GM Home](gm-home.md) (reach it with "
-        f"`!gmhome`) — the same NPC that grants {t['siblings']}\n"
+        f"- **Where:** the **Void Keeper** in **Leafallia** (reach it with "
+        f"`!leaf`) — the same NPC that grants {t['siblings']}\n"
         f"- **Unlock:** **{_gate(c)}** — one-time, permanent, per character\n"
         f"- **Role:** {t['role']}\n"
         f"- **To summon:** cast **{c['client']}** from your Trust menu — that slot "
@@ -109,7 +109,7 @@ def _render_summary(t: dict, c: dict) -> str:
 
 def _render_unlock(t: dict, c: dict) -> str:
     return (
-        f"Reach **{_gate(c)}**, then travel to **GM Home** with `!gmhome`, find the "
+        f"Reach **{_gate(c)}**, then travel to **Leafallia** with `!leaf`, find the "
         f"**Void Keeper**, and bind {c['name']}. The marks are spent once; the binding "
         f"is permanent and per character — earn {t['obj']} once and {t['subj']}'s yours "
         f"forever.\n\n"

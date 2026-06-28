@@ -64,7 +64,7 @@ def _parse(text: str) -> dict:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return (f"Find the **{c['npc']}** in **GM Home** and pick a weapon type. "
+    return (f"Find the **{c['npc']}** in **Leafallia** (`!leaf`) and pick a weapon type. "
             f"Choosing one warps you alone into **{c['zone']}**, where that "
             f"weapon's Guardian appears moments later. There is no quest and no "
             f"cost to attempt a challenge — just talk to the Sage and choose. "
@@ -85,7 +85,7 @@ def _render_fights(c: dict) -> str:
                  "carry an enormous health pool — bring your strongest setup.")
     lines.append("")
     lines.append("**Death ends the challenge** with no reward and no save: you "
-                 "are returned to GM Home and must start over.")
+                 "are returned to Leafallia and must start over.")
     if c["guardians"]:
         lines.append("")
         lines.append("| Weapon type | Guardian |")
@@ -131,7 +131,7 @@ Each weapon type has a **Guardian** — a single, brutal boss you face solo in
 Prime Weapon path.
 
 !!! tip "Summary"
-    Pick a weapon type at the {npc} in GM Home, fight its Guardian solo in
+    Pick a weapon type at the {npc} in Leafallia (`!leaf`), fight its Guardian solo in
     {zone}, and a single victory completes Trial {trial} of the Prime Weapon
     path. Death ends the attempt with no reward.
 

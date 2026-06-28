@@ -86,7 +86,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
     lines: list[str] = []
     lines.append(
-        f"The **Infamy Vendor** stands at GM Home and is paid in **{currency}**, "
+        f"The **Infamy Vendor** stands at **Leafallia** (`!leaf`) and is paid in **{currency}**, "
         f"earned from endgame content -- Abyssea NM hunts, Invasions, and the weekly "
         f"Raid. It carries gear sold nowhere else -- relic-tier weapons, bard "
         f"instruments, and best-in-slot picks promoted from the top gear tier. All "

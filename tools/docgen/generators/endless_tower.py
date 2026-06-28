@@ -97,7 +97,7 @@ def _parse(text: str) -> dict:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return (f"Speak to the **{c['npc']}** in **GM Home** and choose *Enter the "
+    return (f"Speak to the **{c['npc']}** in **Leafallia** (`!leaf`) and choose *Enter the "
             f"Tower* to be warped into **{c['zone']}**. After a short breather "
             f"the first floor spawns, and each cleared floor leads straight into "
             f"the next.\n\n"
@@ -179,7 +179,7 @@ tenth floor. Fight your way to the top and the Pinnacle Sovereign falls — and
 with it, a piece of your Prime Weapon legend. One death, and the run is over.
 
 !!! tip "Summary"
-    A solo {max_floor}-floor climb from the {npc} in GM Home — a boss every
+    A solo {max_floor}-floor climb from the {npc} in Leafallia (`!leaf`) — a boss every
     {boss_every} floors, no Trusts allowed, one death ends the run, and reaching
     floor {max_floor} completes Prime Weapon Trial {trial_num}.
 

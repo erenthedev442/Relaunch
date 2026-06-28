@@ -1,6 +1,6 @@
 """Sync docs/progression/title-vendor.md with gil_title_vendor_catalog.lua.
 
-The Title Broker in GM Home sells cosmetic character titles for gil across four
+The Title Broker in the Celennia Memorial Library sells cosmetic character titles for gil across four
 price tiers. The NPC name, the four tier labels + gil costs, and the title
 labels in each tier all come from the catalog, so re-pricing a tier or swapping
 a title updates the published page.
@@ -66,7 +66,7 @@ def _parse(text: str) -> dict:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return (f"The **{c['npc']}** is set up in **GM Home** (reach it with `!gmhome`). "
+    return (f"The **{c['npc']}** is set up in **the Celennia Memorial Library** (reach it with `!lib`). "
             f"Talk to them, pick a price tier, then the title you want — pay the "
             f"gil and it's yours to wear.")
 

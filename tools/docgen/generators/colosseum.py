@@ -1,6 +1,6 @@
 """Sync docs/endgame/colosseum.md with colosseum_catalog.lua.
 
-The Colosseum is an asynchronous ranked arena in GM Home: enroll a champion,
+The Colosseum is an asynchronous ranked arena in Leafallia: enroll a champion,
 then duel level-scaled AI replicas of other champions to climb an Elo ladder.
 The NPC placement, the Elo numbers (start/floor), the duel rules (countdown,
 time limit, once-per-day), and the Hunt Mark payouts all come from the catalog
@@ -70,7 +70,7 @@ def _mins(seconds: int) -> str:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return (f"The **{c['npc']}** stands in **GM Home** — talk to them to enroll "
+    return (f"The **{c['npc']}** stands in **Leafallia** (`!leaf`) — talk to them to enroll "
             f"your champion on the ladder, browse the roster of rivals, and "
             f"accept a duel.")
 
