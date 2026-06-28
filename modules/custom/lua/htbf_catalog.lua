@@ -97,6 +97,42 @@ catalog.tierReward =
     [3] = { gil = 400000, marks = 600 },
 }
 
+-- Default armoury-crate loot (the chest that spawns on a win). Override per fight
+-- with catalog.fights[key].loot[tier] for retail-exact drops. Deliberately MODEST
+-- -- tier-scaled crafting spoils, NO gear/relics -- because these battlefields are
+-- REPEATABLE and dumping retail gear here would flood the AH economy; the gil +
+-- Hunt Marks reward is the real payout. Each tier rolls 1 material (quantity 1),
+-- value scaling I -> III. Raw weights used directly (xi.loot.weight enum values
+-- 140/100/70/50/30/10/2) so the catalog carries no module load-order dependency;
+-- itemId 0 = a "drop nothing" slot (a nil id would spam the error log -- never nil).
+catalog.tierLoot =
+{
+    [1] =
+    {
+        {
+            { itemId = xi.item.GOLD_INGOT,         weight = 140 },
+            { itemId = xi.item.PHILOSOPHERS_STONE, weight =  50 },
+            { itemId = xi.item.DAMASCUS_INGOT,     weight =  30 },
+        },
+    },
+    [2] =
+    {
+        {
+            { itemId = xi.item.PLATINUM_INGOT,     weight = 100 },
+            { itemId = xi.item.DAMASCUS_INGOT,     weight =  50 },
+            { itemId = xi.item.BEITETSU,           weight =  20 },
+        },
+    },
+    [3] =
+    {
+        {
+            { itemId = xi.item.ORICHALCUM_INGOT,   weight =  90 },
+            { itemId = xi.item.BEITETSU,           weight =  50 },
+            { itemId = xi.item.RIFTBORN_BOULDER,   weight =  30 },
+        },
+    },
+}
+
 -- ── Fights ──────────────────────────────────────────────────────────────────
 -- key              -> used by the tier files + vendor
 -- zone/entryNpc/exitNpc -> the existing burning-circle entrance (battlefield base)

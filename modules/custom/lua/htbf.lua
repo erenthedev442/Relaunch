@@ -129,8 +129,11 @@ function htbf.register(fightKey, tier)
         end)
     end
 
-    if f.loot and f.loot[tier] then
-        content.loot = f.loot[tier]
+    -- Armoury-crate loot: a fight's own retail table wins; otherwise the modest
+    -- tier-scaled default (catalog.tierLoot) so every fight drops a crate.
+    local loot = (f.loot and f.loot[tier]) or catalog.tierLoot[tier]
+    if loot then
+        content.loot = loot
     end
 
     return content:register()
