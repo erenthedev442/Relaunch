@@ -169,4 +169,68 @@ function C.mechCfg(tier)
     return cfg
 end
 
+-- ── Planar Rift placements (authentic retail rift coords per zone) ──────────
+-- One clickable Planar Rift NPC per zone; examining it opens a rift (this
+-- REPLACES the !voidwatch open command). Coords pulled from sql/npc_list.sql
+-- (the disabled retail rifts) so they're valid ground. Add/remove freely -- the
+-- engine just loops this table (require + onInitialize override per zone).
+C.RIFT_LOOK = 2415   -- authentic Planar Rift model (0x096F, from npc_list look 0x00006F09)
+C.RIFTS =
+{
+    { zone = 'West_Ronfaure',          x = -320.0,  y = -10.0,   z = -360.0, rot = 0   },
+    { zone = 'East_Ronfaure',          x =  183.0,  y = -20.0,   z = -315.0, rot = 64  },
+    { zone = 'La_Theine_Plateau',      x = -440.0,  y =  -8.0,   z =  440.0, rot = 0   },
+    { zone = 'Valkurm_Dunes',          x =  -75.0,  y =  -0.312, z =  -45.0, rot = 0   },
+    { zone = 'Jugner_Forest',          x = -325.0,  y =   0.0,   z = -124.0, rot = 32  },
+    { zone = 'Batallia_Downs',         x = -320.0,  y = -16.0,   z =  -42.0, rot = 0   },
+    { zone = 'North_Gustaberg',        x = -322.0,  y =  40.0,   z =  -42.0, rot = 128 },
+    { zone = 'South_Gustaberg',        x =  250.0,  y =  -0.018, z = -640.0, rot = 0   },
+    { zone = 'Konschtat_Highlands',    x = -125.0,  y =  72.046, z =  720.0, rot = 0   },
+    { zone = 'Pashhow_Marshlands',     x = -420.0,  y =  24.14,  z = -230.0, rot = 64  },
+    { zone = 'Rolanberry_Fields',      x = -360.0,  y =   8.0,   z =  279.0, rot = 0   },
+    { zone = 'Beaucedine_Glacier',     x = -135.0,  y = -60.5,   z = -200.0, rot = 0   },
+    { zone = 'West_Sarutabaruta',      x = -441.0,  y =   4.0,   z = -357.0, rot = 0   },
+    { zone = 'East_Sarutabaruta',      x = -120.0,  y =  -4.879, z = -415.0, rot = 0   },
+    { zone = 'Tahrongi_Canyon',        x =  200.0,  y = -24.0,   z = -160.0, rot = 0   },
+    { zone = 'Buburimu_Peninsula',     x = -360.0,  y =  -8.0,   z = -200.0, rot = 0   },
+    { zone = 'Meriphataud_Mountains',  x = -282.0,  y =  16.0,   z =  602.0, rot = 0   },
+    { zone = 'Sauromugue_Champaign',   x = -245.0,  y =   7.75,  z =  245.0, rot = 0   },
+    { zone = 'The_Sanctuary_of_ZiTah', x = -275.0,  y =   0.2,   z =   46.0, rot = 0   },
+    { zone = 'RoMaeve',                x = -114.0,  y =  -8.0,   z =   44.0, rot = 0   },
+    { zone = 'Yuhtunga_Jungle',        x = -242.0,  y =   0.55,  z =  405.0, rot = 0   },
+    { zone = 'Western_Altepa_Desert',  x = -170.0,  y =   0.001, z =  327.0, rot = 0   },
+    { zone = 'Qufim_Island',           x = -120.0,  y = -19.304, z =  375.0, rot = 0   },
+    { zone = 'Behemoths_Dominion',     x = -210.0,  y = -20.375, z =   70.0, rot = 0   },
+    { zone = 'RuAun_Gardens',          x = -117.0,  y = -40.0,   z =  436.0, rot = 0   },
+    { zone = 'Lufaise_Meadows',        x = -234.0,  y = -15.0,   z =  125.0, rot = 0   },
+    { zone = 'Misareaux_Coast',        x =  267.0,  y = -15.0,   z =  222.0, rot = 0   },
+    { zone = 'Attohwa_Chasm',          x =  361.0,  y =  21.0,   z =  222.0, rot = 0   },
+    { zone = 'Bibiki_Bay',             x = -120.0,  y =   0.3,   z = -629.0, rot = 0   },
+    { zone = 'Uleguerand_Range',       x = -141.0,  y = -19.0,   z = -325.0, rot = 0   },
+}
+
+-- ── Atmacite (charVar perks bought with shards at the Refiner) ──────────────
+-- All effects are Voidwatch-scoped + read at RUNTIME (no addMod, no login
+-- persistence, no stacking) -- atmacite empowers your Voidwatch runs, like retail.
+C.ATM_PREFIX = 'Voidwatch_Atm_'
+function C.atmCost(nextLevel) return nextLevel * 3 end   -- shards to reach nextLevel (cumulative to max5 = 45)
+C.ATMACITE =
+{
+    { key = 'FORTUNE',    name = 'Fortune',    desc = '+8% cruor per level',                  max = 5 },
+    { key = 'FERVOR',     name = 'Fervor',     desc = '+8% EXP per level',                    max = 5 },
+    { key = 'GREED',      name = 'Greed',      desc = '+1 loot roll per level',               max = 4 },
+    { key = 'INSIGHT',    name = 'Insight',    desc = '+1 max Light per colour per level',    max = 3 },
+    { key = 'ATTUNEMENT', name = 'Attunement', desc = '-0.5s weakness cooldown per level',    max = 4 },
+    { key = 'FLOW',       name = 'Flow',       desc = '+12% Voidstone regen speed per level', max = 5 },
+}
+C.ATM =   -- effect magnitudes
+{
+    FORTUNE_PCT = 0.08,
+    FERVOR_PCT  = 0.08,
+    GREED_ROLLS = 1,
+    INSIGHT_CAP = 1,
+    ATTUNE_CD   = 0.5,
+    FLOW_PCT    = 0.12,
+}
+
 return C

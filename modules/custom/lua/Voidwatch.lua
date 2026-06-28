@@ -5,31 +5,36 @@
 -- + insertDynamicEntity + customMenu + entity listeners), NOT the native client
 -- light/atmacite UI.
 --
--- LOOP:  Voidstones (regen over time / buy with cruor) gate rift opens. Open a
--- rift in the FIELD -> a Planar Rift tears open where you stand and spawns a
--- tier-scaled Voidwalker NM with hidden WEAKNESSES -> probe it with elemental
--- magic / weaponskills / ranged attacks to draw out coloured LIGHTS -> kill it
--- -> a Riftworn Pyxis pays out, shaped by your light alignment (cruor, EXP, loot
--- quality + quantity, atmacite shards). Your abyssite tier then advances (next
--- rift is tougher + pays more). Die, stray, or time out (30 min) and it fails.
+-- LOOP:  Voidstones (regen over time / buy with cruor) gate rift opens. Examine
+-- a PLANAR RIFT out in the field -> a tier-scaled Voidwalker NM with hidden
+-- WEAKNESSES claws out where you stand -> probe it with elemental magic /
+-- weaponskills / ranged attacks to draw out coloured LIGHTS -> kill it -> a
+-- Riftworn Pyxis pays out, shaped by your light alignment (cruor, EXP, loot
+-- quality + quantity, atmacite shards). Your abyssite tier then advances. Die,
+-- stray, or time out (30 min) and it fails.
 --
--- LIGHTS (Phase 2): on rift open, 5 of the weakness pool are mapped at random to
--- the 5 light colours. WEAPONSKILL_USE / MAGIC_USE / RANGE_STATE_EXIT listeners
--- on the player watch what you land on the NM; a match (off cooldown, under cap)
--- adds that colour's light + reveals the weakness. The tally at the kill weights
--- the reward (Green=cruor, Yellow=EXP, Red=quality, Blue=quantity, White=atmacite).
+-- LIGHTS: on rift open, 5 of the weakness pool are mapped at random to the 5
+-- light colours. WEAPONSKILL_USE / MAGIC_USE / RANGE_STATE_EXIT listeners on the
+-- player watch what lands on the NM; a match (off cooldown, under cap) adds that
+-- colour's light + reveals the weakness. The kill tally weights the reward
+-- (Green=cruor, Yellow=EXP, Red=quality, Blue=quantity, White=atmacite).
+--
+-- ATMACITE (Phase 2b): White lights bank atmacite shards; spend them at the
+-- Refiner (the Officer's menu) on permanent Voidwatch perks (Fortune/Fervor/
+-- Greed/Insight/Attunement/Flow). All perks are Voidwatch-scoped + read at
+-- runtime -- no addMod, so no login-persistence/stacking headaches.
 --
 -- Architecture mirrors ApexTrials.lua: per-player sessions keyed by name; the
--- ownerName captured in the onMobDeath closure (never reuse the dead mob ref);
--- reward fired on a timer (never re-entrant from the mob callback); the shared
--- mob_mechanics_library drives a tier-scaled hardcore fight.
+-- ownerName captured in the onMobDeath closure; reward fired on a timer (never
+-- re-entrant); the shared mob_mechanics_library drives a tier-scaled fight.
 --
--- NPC: Voidwatch Officer in Leafallia (GM Home). Command: !voidwatch [open].
+-- ENTRY: examine a Planar Rift (one per field zone, placed from C.RIFTS) to
+-- fight; visit the Voidwatch Officer in Leafallia (GM Home) for Voidstones,
+-- the Atmacite Refiner, and status. Command: !voidwatch (menu/status); GM
+-- !voidwatch open force-spawns a rift for testing.
+--
 -- Tunables in modules/custom/lua/voidwatch_catalog.lua (hot-reload). Uses
 -- addOverride -> ONE map restart to load; catalog/menu tweaks hot-reload after.
---
--- PHASE 2b (next): the Atmacite Refiner -- spend banked atmacite shards on
--- permanent Voidwatch perks. Shards bank now; the refiner menu comes next.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Leafallia/Zone')
@@ -48,10 +53,22 @@ local function clearSession(p) sessions[p:getName()] = nil end
 -- forward declarations
 local onRiftCleared, openRift, failRift, openMenu
 
--- ── Currency helpers ────────────────────────────────────────────────────────
+-- ── Currency + atmacite helpers ─────────────────────────────────────────────
 local function nowTs()
     local ok, t = pcall(os.time)
     return (ok and t) or 0
+end
+
+local function getCruor(p)  return p:getCharVar(C.V.cruor) or 0 end
+local function addCruor(p, n) p:setCharVar(C.V.cruor, math.max(0, getCruor(p) + math.floor(n))) end
+local function getTier(p)   return p:getCharVar(C.V.tier) or 0 end
+local function getShards(p) return p:getCharVar(C.V.shards) or 0 end
+local function getAtm(p, key) return p:getCharVar(C.ATM_PREFIX .. key) or 0 end
+
+-- atmacite Flow shortens the Voidstone regen interval.
+local function effRegenSeconds(p)
+    local r = C.REGEN_SECONDS * (1 - math.min(0.6, getAtm(p, 'FLOW') * C.ATM.FLOW_PCT))
+    return math.max(300, math.floor(r))
 end
 
 local function ensureBorn(p)
@@ -62,7 +79,7 @@ local function ensureBorn(p)
     p:setCharVar(C.V.tier, 0)
 end
 
--- Voidstones regenerate 1 per REGEN_SECONDS; reconciled lazily on read.
+-- Voidstones regenerate 1 per effRegenSeconds; reconciled lazily on read.
 local function getStones(p)
     ensureBorn(p)
     local stones = p:getCharVar(C.V.stones) or 0
@@ -70,34 +87,31 @@ local function getStones(p)
         p:setCharVar(C.V.stoneTs, nowTs())
         return C.MAX_STONES
     end
+    local regen = effRegenSeconds(p)
     local ts, now = p:getCharVar(C.V.stoneTs) or 0, nowTs()
-    if ts > 0 and now > ts and C.REGEN_SECONDS > 0 then
-        local gained = math.floor((now - ts) / C.REGEN_SECONDS)
+    if ts > 0 and now > ts and regen > 0 then
+        local gained = math.floor((now - ts) / regen)
         if gained > 0 then
             stones = math.min(C.MAX_STONES, stones + gained)
             p:setCharVar(C.V.stones, stones)
-            p:setCharVar(C.V.stoneTs, ts + gained * C.REGEN_SECONDS)
+            p:setCharVar(C.V.stoneTs, ts + gained * regen)
         end
     end
     return stones
 end
 
 local function setStones(p, n) p:setCharVar(C.V.stones, math.max(0, math.min(C.MAX_STONES, math.floor(n)))) end
-local function getCruor(p)     return p:getCharVar(C.V.cruor) or 0 end
-local function addCruor(p, n)  p:setCharVar(C.V.cruor, math.max(0, getCruor(p) + math.floor(n))) end
-local function getTier(p)      return p:getCharVar(C.V.tier) or 0 end
-local function getShards(p)    return p:getCharVar(C.V.shards) or 0 end
 
 local function secsToNextStone(p)
     if getStones(p) >= C.MAX_STONES then return 0 end
     local ts = p:getCharVar(C.V.stoneTs) or 0
-    if ts == 0 then return C.REGEN_SECONDS end
-    return math.max(0, (ts + C.REGEN_SECONDS) - nowTs())
+    if ts == 0 then return effRegenSeconds(p) end
+    return math.max(0, (ts + effRegenSeconds(p)) - nowTs())
 end
 
 -- ── Lights / weakness engine ────────────────────────────────────────────────
--- Map 5 random pool entries to the 5 colours; build a reverse lookup for fast
--- listener matching; zero the tallies + cooldowns.
+local function lightCap(player) return C.LIGHTS.cap + getAtm(player, 'INSIGHT') * C.ATM.INSIGHT_CAP end
+
 local function assignWeaknesses(sess)
     local pool = {}
     for i, t in ipairs(C.WEAKNESS_POOL) do pool[i] = t end
@@ -116,11 +130,10 @@ local function assignWeaknesses(sess)
 end
 
 local function announceLight(player, sess, color)
-    local cname = C.LIGHTS.names[color]
-    local trig  = sess.weak[color]
     player:printToPlayer(string.format(
         '[Voidwatch] Weakness struck by %s -- %s Light!  (%s %d/%d  ->  %s)',
-        trig.label, cname, cname, sess.lights[color], C.LIGHTS.cap, C.LIGHTS.boon[color]), SYS)
+        sess.weak[color].label, C.LIGHTS.names[color], C.LIGHTS.names[color],
+        sess.lights[color], lightCap(player), C.LIGHTS.boon[color]), SYS)
 end
 
 -- Called by the player listeners: trigKey is 'elem:N' / 'ws' / 'ranged'.
@@ -132,9 +145,10 @@ local function tryTrigger(player, target, trigKey)
     if not okId or tid ~= sess.mobId then return end
     local color = sess.trigMap[trigKey]
     if not color then return end                              -- not a weakness this rift
-    if (sess.lights[color] or 0) >= C.LIGHTS.cap then return end
+    if (sess.lights[color] or 0) >= lightCap(player) then return end
     local now = nowTs()
-    if (now - (sess.lastTrig[color] or 0)) < C.WEAKNESS_COOLDOWN then return end
+    local cd  = math.max(1, C.WEAKNESS_COOLDOWN - getAtm(player, 'ATTUNEMENT') * C.ATM.ATTUNE_CD)
+    if (now - (sess.lastTrig[color] or 0)) < cd then return end
     sess.lastTrig[color] = now
     sess.lights[color]   = (sess.lights[color] or 0) + 1
     announceLight(player, sess, color)
@@ -241,9 +255,9 @@ onRiftCleared = function(player)
     local white  = L.WHITE or 0
     local total  = red + blue + green + yellow + white
 
-    -- cruor (Verdant) + EXP (Amber)
-    local cruor = math.floor(C.cruorReward(tier) * (1 + green * C.CRUOR_PER_GREEN))
-    local exp   = math.floor(C.expReward(tier)   * (1 + yellow * C.EXP_PER_YELLOW))
+    -- cruor (Verdant + Fortune) + EXP (Amber + Fervor)
+    local cruor = math.floor(C.cruorReward(tier) * (1 + green * C.CRUOR_PER_GREEN + getAtm(player, 'FORTUNE') * C.ATM.FORTUNE_PCT))
+    local exp   = math.floor(C.expReward(tier)   * (1 + yellow * C.EXP_PER_YELLOW + getAtm(player, 'FERVOR') * C.ATM.FERVOR_PCT))
     addCruor(player, cruor)
     pcall(function() player:addExp(exp) end)
 
@@ -251,8 +265,8 @@ onRiftCleared = function(player)
     local shards = white * C.SHARD_PER_WHITE
     if shards > 0 then player:setCharVar(C.V.shards, getShards(player) + shards) end
 
-    -- loot: Cerulean = rolls, Vermillion = quality, Pearl >= N = bonus rare
-    local rolls = 1 + math.floor(blue / 2) * C.ROLLS_PER_2_BLUE
+    -- loot: Cerulean + Greed = rolls, Vermillion = quality, Pearl >= N = bonus rare
+    local rolls = 1 + math.floor(blue / 2) * C.ROLLS_PER_2_BLUE + getAtm(player, 'GREED') * C.ATM.GREED_ROLLS
     local got = 0
     for _ = 1, rolls do
         local q = math.random(100) + red * C.QUALITY_PER_RED
@@ -299,7 +313,7 @@ failRift = function(player, reason)
     end
 end
 
--- ── Open a rift here ────────────────────────────────────────────────────────
+-- ── Open a rift here (called by the Planar Rift NPC; GM via !voidwatch open) ──
 openRift = function(player)
     ensureBorn(player)
     if getSession(player) then
@@ -307,7 +321,7 @@ openRift = function(player)
         return
     end
     if not player:canUseMisc(xi.zoneMisc.PET) then
-        player:printToPlayer('[Voidwatch] A rift cannot be torn open in a safe area. Travel to the field first.', SYS)
+        player:printToPlayer('[Voidwatch] This rift will not stir in a safe area.', SYS)
         return
     end
     local stones = getStones(player)
@@ -347,6 +361,12 @@ openRift = function(player)
     end)
 end
 
+-- ── Menu helper ─────────────────────────────────────────────────────────────
+local function show(p, title, options)
+    local snap = { title = title, options = options }
+    p:timer(30, function(pp) pp:customMenu(snap) end)
+end
+
 -- ── Buy a Voidstone with cruor ──────────────────────────────────────────────
 local function buyStone(player)
     ensureBorn(player)
@@ -371,24 +391,56 @@ local function status(player)
                 or string.format('next in %dm', math.ceil(secsToNextStone(player) / 60))
     player:printToPlayer(string.format('  Voidstones: %d/%d (%s)    Cruor: %d    Atmacite shards: %d',
         getStones(player), C.MAX_STONES, nxtStr, getCruor(player), getShards(player)), SYS)
-    player:printToPlayer('  Go to the field and "!voidwatch open" to tear a rift. Probe weaknesses to build Lights.', SYS)
+    player:printToPlayer('  Examine a Planar Rift out in the field to open a rift. Probe weaknesses to build Lights.', SYS)
 end
 
--- ── Menu (shared by the NPC + the command) ──────────────────────────────────
-local function show(p, title, options)
-    local snap = { title = title, options = options }
-    p:timer(30, function(pp) pp:customMenu(snap) end)
+-- ── Atmacite Refiner ────────────────────────────────────────────────────────
+local function buyPerk(player, key)
+    ensureBorn(player)
+    local perk
+    for _, pk in ipairs(C.ATMACITE) do if pk.key == key then perk = pk break end end
+    if not perk then return end
+    local lvl = getAtm(player, key)
+    if lvl >= perk.max then
+        player:printToPlayer(string.format('[Atmacite] %s is already at max (%d).', perk.name, perk.max), SYS)
+        return
+    end
+    local cost = C.atmCost(lvl + 1)
+    if getShards(player) < cost then
+        player:printToPlayer(string.format('[Atmacite] %s Lv%d needs %d shards (you have %d).', perk.name, lvl + 1, cost, getShards(player)), SYS)
+        return
+    end
+    player:setCharVar(C.V.shards, getShards(player) - cost)
+    player:setCharVar(C.ATM_PREFIX .. key, lvl + 1)
+    player:printToPlayer(string.format('[Atmacite] %s -> Lv%d.  (%d shards left)', perk.name, lvl + 1, getShards(player)), SYS)
 end
 
+local function openRefiner(player)
+    ensureBorn(player)
+    player:printToPlayer(string.format('=== Atmacite Refiner ===   Shards: %d', getShards(player)), SYS)
+    local opts = {}
+    for _, pk in ipairs(C.ATMACITE) do
+        local lvl   = getAtm(player, pk.key)
+        local label = (lvl >= pk.max) and string.format('%s %d MAX', pk.name, lvl)
+                                       or  string.format('%s %d (%dsh)', pk.name, lvl, C.atmCost(lvl + 1))
+        player:printToPlayer(string.format('  %s [%d/%d] -- %s', pk.name, lvl, pk.max, pk.desc), SYS)
+        local key = pk.key
+        opts[#opts + 1] = { label, function(p) buyPerk(p, key); openRefiner(p) end }
+    end
+    opts[#opts + 1] = { 'Close', function(p) end }
+    show(player, 'Atmacite Refiner', opts)
+end
+
+-- ── Officer menu (shared by the NPC + the command) ──────────────────────────
 openMenu = function(player)
     ensureBorn(player)
     player:printToPlayer(string.format('[Voidwatch] Tier %d  |  Voidstones %d/%d  |  Cruor %d  |  Shards %d',
         getTier(player), getStones(player), C.MAX_STONES, getCruor(player), getShards(player)), SYS)
-    show(player, 'Voidwatch', {
-        { 'Open a Rift (here)', function(p) openRift(p) end },
+    show(player, 'Voidwatch Officer', {
         { string.format('Buy Voidstone (%d cruor)', C.STONE_CRUOR), function(p) buyStone(p); openMenu(p) end },
-        { 'Status',             function(p) status(p) end },
-        { 'Close',              function(p) end },
+        { 'Atmacite Refiner', function(p) openRefiner(p) end },
+        { 'Status',           function(p) status(p) end },
+        { 'Close',            function(p) end },
     })
 end
 
@@ -435,11 +487,38 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
     utils.unused(npc)
 end)
 
+-- ── Planar Rift NPCs (one per field zone; examine to open a rift) ───────────
+for _, r in ipairs(C.RIFTS) do
+    local okReq = pcall(function() require('scripts/zones/' .. r.zone .. '/Zone') end)
+    if okReq then
+        m:addOverride('xi.zones.' .. r.zone .. '.Zone.onInitialize', function(zone)
+            super(zone)
+            local npc = zone:insertDynamicEntity({
+                objtype    = xi.objType.NPC,
+                name       = 'Planar_Rift',
+                packetName = 'Planar Rift',
+                look       = C.RIFT_LOOK,
+                x          = r.x,
+                y          = r.y,
+                z          = r.z,
+                rotation   = r.rot,
+                widescan   = 1,
+                onTrigger  = function(player, npcEnt)
+                    openRift(player)
+                end,
+            })
+            utils.unused(npc)
+        end)
+    end
+end
+
 -- ── Public API (for commands/voidwatch.lua) ─────────────────────────────────
 xi.voidwatch = xi.voidwatch or {}
 xi.voidwatch.menu       = function(p) openMenu(p) end
-xi.voidwatch.open       = function(p) openRift(p) end
+xi.voidwatch.open       = function(p) openRift(p) end             -- GM-gated in the command
 xi.voidwatch.status     = function(p) status(p) end
+xi.voidwatch.refiner    = function(p) openRefiner(p) end
 xi.voidwatch.grantCruor = function(p, n) ensureBorn(p); addCruor(p, math.max(0, n)) end  -- GM test
+xi.voidwatch.grantShards = function(p, n) ensureBorn(p); p:setCharVar(C.V.shards, getShards(p) + math.max(0, n)) end  -- GM test
 
 return m

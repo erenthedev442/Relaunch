@@ -37,16 +37,22 @@ commandObj.onTrigger = function(player, sub, n)
 
     if sub == nil or sub == 'menu' then
         xi.voidwatch.menu(player)
-    elseif sub == 'open' then
-        xi.voidwatch.open(player)
     elseif sub == 'status' then
         xi.voidwatch.status(player)
+    elseif sub == 'refiner' then
+        xi.voidwatch.refiner(player)
+    elseif sub == 'open' and isGM(player) then
+        xi.voidwatch.open(player)   -- GM force-spawn; players open rifts by examining a Planar Rift
     elseif sub == 'cruor' and isGM(player) then
         local amt = tonumber(n) or 1000
         xi.voidwatch.grantCruor(player, amt)
         player:printToPlayer(string.format('[Voidwatch] (GM) granted %d cruor.', amt), SYS)
+    elseif sub == 'shards' and isGM(player) then
+        local amt = tonumber(n) or 20
+        xi.voidwatch.grantShards(player, amt)
+        player:printToPlayer(string.format('[Voidwatch] (GM) granted %d atmacite shards.', amt), SYS)
     else
-        player:printToPlayer('Usage: !voidwatch [menu | open | status]', SYS)
+        player:printToPlayer('Examine a Planar Rift out in the field to fight. !voidwatch = Officer menu (Voidstones / Atmacite Refiner), !voidwatch status = info.', SYS)
     end
 end
 
