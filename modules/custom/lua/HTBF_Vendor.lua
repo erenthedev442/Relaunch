@@ -22,27 +22,48 @@ local function commafy(n)
     return (s:reverse():gsub('(%d%d%d)', '%1,'):reverse():gsub('^,', ''))
 end
 
--- Stable list of sellable gems from the catalog.
-local gems = {}
-for id, price in pairs(catalog.gemPrice) do
-    gems[#gems + 1] = { id = id, price = price, name = catalog.gemName[id] or ('Phantom Gem ' .. id) }
+-- Short forms keep each customMenu under the client's 150-byte (title+labels)
+-- cap: drop the "Phantom Gem" boilerplate and abbreviate the price as "150k".
+local function shortName(name)
+    return (name:gsub(' Phantom Gem$', ''):gsub('^Phantom Gem of ', ''))
 end
-table.sort(gems, function(a, b) return a.id < b.id end)
 
-local showMenu, showBuy
+local function kPrice(n)
+    return string.format('%dk', math.floor(n / 1000))
+end
 
+local function gemOf(id)
+    return { id = id, price = catalog.gemPrice[id], name = catalog.gemName[id] or ('Phantom Gem ' .. id) }
+end
+
+local showMenu, showCategory, showBuy
+
+-- Top level: one button per expansion category. A flat 16-gem list would exceed
+-- both client caps (8 options / 150 bytes) and hide gems, so we drill down.
 showMenu = function(p)
     local options = {}
-    for _, g in ipairs(gems) do
-        local gg    = g
-        local owned = p:hasKeyItem(gg.id)
-        options[#options + 1] = {
-            string.format('%s (%s)%s', gg.name, commafy(gg.price), owned and ' *' or ''),
-            function(pp) showBuy(pp, gg) end,
-        }
+    for _, cat in ipairs(catalog.gemCategories) do
+        local cc = cat
+        options[#options + 1] = { cc.label, function(pp) showCategory(pp, cc) end }
     end
     options[#options + 1] = { 'Close', function(pp) end }
-    p:timer(30, function(pp) pp:customMenu({ title = 'Phantom Gems  (* = held)', options = options }) end)
+    p:timer(30, function(pp) pp:customMenu({ title = 'Phantom Gems', options = options }) end)
+end
+
+-- One category's gems (<= 8). "* " marks a gem already held. Short labels + kPrice
+-- keep the menu under the byte cap; the full name + exact price show on buy.
+showCategory = function(p, cat)
+    local options = {}
+    for _, id in ipairs(cat.gems) do
+        local g     = gemOf(id)
+        local owned = p:hasKeyItem(id)
+        options[#options + 1] = {
+            string.format('%s (%s)%s', shortName(g.name), kPrice(g.price), owned and ' *' or ''),
+            function(pp) showBuy(pp, g) end,
+        }
+    end
+    options[#options + 1] = { 'Back', function(pp) showMenu(pp) end }
+    p:timer(30, function(pp) pp:customMenu({ title = cat.label, options = options }) end)
 end
 
 showBuy = function(p, g)

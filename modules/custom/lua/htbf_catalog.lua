@@ -63,6 +63,18 @@ catalog.gemName =
     [xi.ki.PHANTOM_GEM_OF_RAGE]       = 'Phantom Gem of Rage',
 }
 
+-- The vendor groups gems by expansion so each customMenu stays under BOTH client
+-- caps (max 8 options + 150-byte title+labels). A flat 16-gem list would hide
+-- half the gems (incl. the headline Avatar gem) and blow the byte cap. Ordered.
+catalog.gemCategories =
+{
+    { label = 'Avatar Prime Trials',     gems = { xi.ki.AVATAR_PHANTOM_GEM } },
+    { label = 'Chains of Promathia',     gems = { xi.ki.SAVAGES_PHANTOM_GEM, xi.ki.WARRIORS_PATH_PHANTOM_GEM, xi.ki.FEARED_ONE_PHANTOM_GEM, xi.ki.HEAD_WIND_PHANTOM_GEM } },
+    { label = 'Treasures of Aht Urhgan', gems = { xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM, xi.ki.LEGACY_PHANTOM_GEM } },
+    { label = 'Rise of the Zilart',      gems = { xi.ki.SHADOW_LORD_PHANTOM_GEM, xi.ki.STELLAR_FULCRUM_PHANTOM_GEM, xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM, xi.ki.DIVINE_PHANTOM_GEM } },
+    { label = 'Ark Angels',              gems = { xi.ki.PHANTOM_GEM_OF_APATHY, xi.ki.PHANTOM_GEM_OF_COWARDICE, xi.ki.PHANTOM_GEM_OF_ENVY, xi.ki.PHANTOM_GEM_OF_ARROGANCE, xi.ki.PHANTOM_GEM_OF_RAGE } },
+}
+
 -- Per-tier scaling applied to the reused base boss(es) (silent difficulty -- no
 -- player-visible multiplier). lvl/hp are multipliers; att/def/macc/meva are flat
 -- mod adds layered on top. Tier I ~ a slightly-buffed base; III is the wall.
