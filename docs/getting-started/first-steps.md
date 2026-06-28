@@ -9,15 +9,14 @@ This page walks you through the first 15–20 minutes: getting your character se
 
 ---
 
-## 1. Warp to GM Home
+## 1. Orient yourself — two hub zones
 
-The moment you're in-game, type this in chat:
+The two main zones you'll return to constantly are:
 
-```
-!gmhome
-```
+- **Celennia Memorial Library** — type `!lib` to warp there. This is the entry hub: Hunt Board, Daily Board, economy NPCs (Gil Exchange, Sparks Exchange, Race Changer), the Casino, Home Point crystal, and the Warpman.
+- **Leafallia** — type `!leaf` to warp there. This is the endgame NPC row: Apex Trials, Prime Armory, Colosseum, Infamy Vendor, Augment Moogle and Sage, Job Mastery, Endless Tower, and Cross-Job Trainers.
 
-This teleports you instantly to **GM Home** — the server hub where almost every setup NPC lives. You'll come back here constantly. Bookmark the command.
+GM Home (`!gmhome`) still exists, but only the **Test Dummy** for DPS testing lives there now.
 
 ---
 

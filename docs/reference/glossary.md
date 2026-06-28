@@ -17,7 +17,7 @@ Catalyst
 :   An item bought from the Augment Moogle's catalyst shop (`!shop augments <group>`, flat gil), then traded back to the Moogle to unlock a specific augment option on your gear.
 
 Daily Board
-:   A three-objective board located in GM Home that resets at midnight UTC every day. Completing all three objectives earns bonus Hunt Marks.
+:   A three-objective board located in the Celennia Memorial Library (`!lib`) that resets at midnight UTC every day. Completing all three objectives earns bonus Hunt Marks.
 
 Empy Marks
 :   Reforge currency earned by killing Abyssea NMs, from Aello through Hadhayosh. Used to upgrade Empyrean armor sets from base through +3.

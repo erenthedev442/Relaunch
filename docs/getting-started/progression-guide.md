@@ -25,7 +25,7 @@ The Hunting League is a ladder of NM-hunting ranks at [Escha ZiTah](../progressi
 
 **Parallel tracks to start now:**
 - **[Login Rewards](../progression/login-rewards.md)** — log in daily for +50 marks, hit 7/14/21/30-day streaks for bonuses.
-- **[Daily Board](../progression/daily-board.md)** — the NPC at GM Home gives 3 daily objectives. Complete them for extra marks and a full-clear bonus.
+- **[Daily Board](../progression/daily-board.md)** — the NPC at the Celennia Memorial Library (`!lib`) gives 3 daily objectives. Complete them for extra marks and a full-clear bonus.
 
 ---
 
@@ -67,7 +67,7 @@ Spend marks at the Reforge NPCs in Gwora-Corridor to get job-specific AF/Relic/E
 
 **Goal:** Stamp custom augments onto your gear to push stats past their base caps.
 
-The [Augment Moogle](../progression/augments.md) at GM Home lets you trade catalyst items to apply custom stat augments to any piece of equipment. Hundreds of augment types are available across many stat families — Attack, Accuracy, Crit, TP Bonus, Cure Potency, and more. The full [catalyst → augment catalog](../progression/augments.md#catalyst-augment-catalog) lists every one.
+The [Augment Moogle](../progression/augments.md) in Leafallia (`!leaf`) lets you trade catalyst items to apply custom stat augments to any piece of equipment. Hundreds of augment types are available across many stat families — Attack, Accuracy, Crit, TP Bonus, Cure Potency, and more. The full [catalyst → augment catalog](../progression/augments.md#catalyst-augment-catalog) lists every one.
 
 **The Augment Sage** sits next to the Moogle and adds two multiplier tracks:
 
@@ -115,8 +115,8 @@ These systems don't have a fixed "unlock" point — run them alongside whatever 
 | **[Weekly Hunt Board](../progression/weekly-hunts.md)** | Weekly objectives with sweep bonus | Escha ZiTah NPC |
 | **[Hunter's Guild](../progression/hunters-guild.md)** | Kill NMs to earn rep; rep gives escalating mark multipliers | Passive |
 | **[Game Master (Wave Mode)](../progression/game-master.md)** | Themed wave fights of rising difficulty for bonus marks | `!wavemaster` |
-| **[Cross-Job Abilities](../progression/cross-job-abilities.md)** | Buy abilities from other jobs for a flat gil price each | GM Home |
-| **[Mystery Mog](../progression/gm-home.md#mystery-mog)** | Gil-sink gacha; rare prize = marks, Aman Voucher, or AP | GM Home |
+| **[Cross-Job Abilities](../progression/cross-job-abilities.md)** | Buy abilities from other jobs for a flat gil price each | Leafallia (`!leaf`) |
+| **[Mystery Mog](../progression/gm-home.md#mystery-mog)** | Gil-sink gacha; rare prize = marks, Aman Voucher, or AP | Celennia Memorial Library (`!lib`) |
 | **[Achievements](../progression/achievements.md)** | Milestone milestones across all systems | In-game menu |
 
 ---

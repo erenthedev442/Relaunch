@@ -18,13 +18,11 @@ There is no camping. There is no waiting on a lottery pop. Walk in, kill it, wal
 
 ---
 
-## Character Upgrader NPC
+## Character Upgrader (Automatic)
 
-Located in **GM Home** — type `!gmhome` from anywhere to get there.
+There is no setup NPC to visit. Every new character is fully provisioned **automatically on first login** — no interaction required.
 
-The Character Upgrader offers individual options or a single **"Give Me Everything"** option that chains all upgrades at once. One confirmation click and you're done.
-
-What it grants:
+What is granted automatically:
 
 - All weapon skills unlocked
 - All spells learned (job-appropriate)
@@ -35,11 +33,6 @@ What it grants:
 - All Outpost Warps and conquest points
 - All Homepoints and Survival Guides registered
 - Maximum Wardrobe slots unlocked
-
-!!! tip
-    New characters should hit "Give Me Everything" first. It saves hours of setup grinding and lets you focus on the content that actually matters.
-
-Confirmation menus are shown before applying anything — accidental upgrades are not possible.
 
 ---
 
@@ -53,9 +46,9 @@ This applies to every homepoint in every zone. Use them freely as rest stops whi
 
 ## Mystery Mog (Gil Gacha)
 
-Located in **GM Home** next to the other NPCs.
+Located in the **Celennia Memorial Library** (`!lib`).
 
-The Mystery Mog is a weighted gacha that converts excess gil into random rewards — standard and premium pull tiers, with prizes ranging from cure items up to Hunt Mark jackpots and Ascension Points. For live pull costs, the full prize pool, and exact drop odds, see [GM Home → Mystery Mog](gm-home.md#mystery-mog).
+The Mystery Mog is a weighted gacha that converts excess gil into random rewards — standard and premium pull tiers, with prizes ranging from cure items up to Hunt Mark jackpots and Ascension Points. For live pull costs, the full prize pool, and exact drop odds, see [Mystery Mog](gm-home.md#mystery-mog).
 
 !!! info "This is a gil sink, not a farming path"
     The Mystery Mog is not designed to replace NM farming. It exists as a fun outlet for gil you're sitting on. Expect to lose value most pulls — that's the point.
@@ -64,7 +57,7 @@ The Mystery Mog is a weighted gacha that converts excess gil into random rewards
 
 ## Gil to Marks Exchange
 
-The **Gil Exchange NPC** in GM Home converts raw gil into Hunt Marks in bulk bundles:
+The **Gil Exchange NPC** in the **Celennia Memorial Library** (`!lib`) converts raw gil into Hunt Marks in bulk bundles:
 
 <!-- DOCGEN:BEGIN id="server-features-gil-exchange" -->
 | Gil | Hunt Marks |
@@ -80,7 +73,7 @@ Bundle rates give modest discounts for larger purchases. This system is intentio
 
 ## Title Broker
 
-The **Title Broker NPC** in GM Home sells cosmetic titles for gil across several price tiers, from cheap flavor titles up to rare endgame trophies. For the full tier pricing and the complete title list, see [GM Home → Title Broker](gm-home.md#title-broker).
+The **Title Broker NPC** in the **Celennia Memorial Library** (`!lib`) sells cosmetic titles for gil across several price tiers, from cheap flavor titles up to rare endgame trophies. For the full tier pricing and the complete title list, see [GM Home → Title Broker](gm-home.md#title-broker).
 
 These are display titles — any player can buy any title regardless of whether they've earned it through gameplay.
 
