@@ -45,6 +45,14 @@ commandObj.onTrigger = function(player)
             mob:addListener('DESPAWN', 'AFFINITY_AUTOPOP', function(m)
                 m:setRespawnTime(RESPAWN_SECONDS)
             end)
+            -- Wire the registration-trophy grant on death (shared with the module).
+            -- The intended droplist (21000+) exceeds MAX_DROPID so the engine never
+            -- drops it; the module grants the trophy to the killer instead.
+            if xi.affinityAutopop and xi.affinityAutopop.grantTrophy then
+                mob:addListener('DEATH', 'AFFINITY_TROPHY', function(m, killer)
+                    xi.affinityAutopop.grantTrophy(m, killer)
+                end)
+            end
             mob:setRespawnTime(RESPAWN_SECONDS)
             if not mob:isSpawned() then
                 SpawnMob(mobid)

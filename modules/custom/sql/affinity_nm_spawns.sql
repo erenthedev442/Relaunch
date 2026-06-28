@@ -35,35 +35,40 @@ UPDATE `_phx` SET `poolid` = 30002, `name` = 'Phoenix', `packet_name` = 'Phoenix
 INSERT INTO `mob_pools` SELECT * FROM `_phx`;
 DROP TEMPORARY TABLE `_phx`;
 
--- ---- mob_groups: respawntime=900, spawntype=0 (NORMAL timed), dedicated trophy dropid, HP/MP=0 (calc) ----
+-- ---- mob_groups: respawntime=900, spawntype=0 (NORMAL timed), HP/MP=0 (calc) ----
 -- cols: groupid, poolid, zoneid, name, respawntime, spawntype, dropid, HP, MP, allegiance, content_tag
--- dropid = 21000 + (groupid - 20000) -> the dedicated 100% trophy droplist below.
+-- dropid = 0: the ENGINE droplist is intentionally NOT used. A droplist id must be
+-- < MAX_DROPID (5000, itemutils.h); the dedicated trophy lists below were created at
+-- 21000-21023, which GetDropList rejects ("DropID too big") so nothing ever dropped.
+-- The registration trophy is instead granted in Lua on death by
+-- modules/custom/lua/affinity_nm_autopop.lua (DEATH listener -> killer:addItem).
+-- The 21000-range droplist INSERT below is kept only for reference.
 DELETE FROM `mob_groups` WHERE `groupid` BETWEEN 20000 AND 20023;
 INSERT INTO `mob_groups` VALUES
- (20000,   387, 105, 'Behemoth',         900, 0, 21000, 0, 0, 0, NULL),
- (20001,  2255, 127, 'King_Behemoth',    900, 0, 21001, 0, 0, 0, NULL),
- (20002,  2254, 174, 'King_Arthro',      900, 0, 21002, 0, 0, 0, NULL),
- (20003,  3630, 110, 'Simurgh',          900, 0, 21003, 0, 0, 0, NULL),
- (20004,    44, 128, 'Adamantoise',      900, 0, 21004, 0, 0, 0, NULL),
- (20005,  1491, 178, 'Genbu',            900, 0, 21005, 0, 0, 0, NULL),
- (20006,  3376, 120, 'Roc',              900, 0, 21006, 0, 0, 0, NULL),
- (20007,  3540, 178, 'Seiryu',           900, 0, 21007, 0, 0, 0, NULL),
- (20008,   592, 178, 'Byakko',           900, 0, 21008, 0, 0, 0, NULL),
- (20009,   268, 113, 'Aspidochelone',    900, 0, 21009, 0, 0, 0, NULL),
- (20010,  3070,  29, 'Ouryu',            900, 0, 21010, 0, 0, 0, NULL),
- (20011,   584, 153, 'Bune',             900, 0, 21011, 0, 0, 0, NULL),
- (20012, 30002,  30, 'Phoenix',          900, 0, 21012, 0, 0, 0, NULL),
- (20013,  3816, 178, 'Suzaku',           900, 0, 21013, 0, 0, 0, NULL),
- (20014,  2265, 178, 'Kirin',            900, 0, 21014, 0, 0, 0, NULL),
- (20015,  1280, 154, 'Fafnir',           900, 0, 21015, 0, 0, 0, NULL),
- (20016,  2840, 154, 'Nidhogg',          900, 0, 21016, 0, 0, 0, NULL),
- (20017,  4261, 205, 'Vrtra',            900, 0, 21017, 0, 0, 0, NULL),
- (20018,  3916,   5, 'Tiamat',           900, 0, 21018, 0, 0, 0, NULL),
- (20019,  2262, 125, 'King_Vinegarroon', 900, 0, 21019, 0, 0, 0, NULL),
- (20020,  2220, 190, 'Khimaira',         900, 0, 21020, 0, 0, 0, NULL),
- (20021,   680, 190, 'Cerberus',         900, 0, 21021, 0, 0, 0, NULL),
- (20022,    21, 130, 'Absolute_Virtue',  900, 0, 21022, 0, 0, 0, NULL),
- (20023,  3208, 130, 'Proto-Omega',      900, 0, 21023, 0, 0, 0, NULL);
+ (20000,   387, 105, 'Behemoth',         900, 0, 0, 0, 0, 0, NULL),
+ (20001,  2255, 127, 'King_Behemoth',    900, 0, 0, 0, 0, 0, NULL),
+ (20002,  2254, 174, 'King_Arthro',      900, 0, 0, 0, 0, 0, NULL),
+ (20003,  3630, 110, 'Simurgh',          900, 0, 0, 0, 0, 0, NULL),
+ (20004,    44, 128, 'Adamantoise',      900, 0, 0, 0, 0, 0, NULL),
+ (20005,  1491, 178, 'Genbu',            900, 0, 0, 0, 0, 0, NULL),
+ (20006,  3376, 120, 'Roc',              900, 0, 0, 0, 0, 0, NULL),
+ (20007,  3540, 178, 'Seiryu',           900, 0, 0, 0, 0, 0, NULL),
+ (20008,   592, 178, 'Byakko',           900, 0, 0, 0, 0, 0, NULL),
+ (20009,   268, 113, 'Aspidochelone',    900, 0, 0, 0, 0, 0, NULL),
+ (20010,  3070,  29, 'Ouryu',            900, 0, 0, 0, 0, 0, NULL),
+ (20011,   584, 153, 'Bune',             900, 0, 0, 0, 0, 0, NULL),
+ (20012, 30002,  30, 'Phoenix',          900, 0, 0, 0, 0, 0, NULL),
+ (20013,  3816, 178, 'Suzaku',           900, 0, 0, 0, 0, 0, NULL),
+ (20014,  2265, 178, 'Kirin',            900, 0, 0, 0, 0, 0, NULL),
+ (20015,  1280, 154, 'Fafnir',           900, 0, 0, 0, 0, 0, NULL),
+ (20016,  2840, 154, 'Nidhogg',          900, 0, 0, 0, 0, 0, NULL),
+ (20017,  4261, 205, 'Vrtra',            900, 0, 0, 0, 0, 0, NULL),
+ (20018,  3916,   5, 'Tiamat',           900, 0, 0, 0, 0, 0, NULL),
+ (20019,  2262, 125, 'King_Vinegarroon', 900, 0, 0, 0, 0, 0, NULL),
+ (20020,  2220, 190, 'Khimaira',         900, 0, 0, 0, 0, 0, NULL),
+ (20021,   680, 190, 'Cerberus',         900, 0, 0, 0, 0, 0, NULL),
+ (20022,    21, 130, 'Absolute_Virtue',  900, 0, 0, 0, 0, 0, NULL),
+ (20023,  3208, 130, 'Proto-Omega',      900, 0, 0, 0, 0, 0, NULL);
 
 -- ---- dedicated 100% trophy droplists (21000-21023) ----
 -- Each affinity NM drops ONLY its unique registration trophy, GUARANTEED

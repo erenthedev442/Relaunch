@@ -46,6 +46,7 @@ affinityPop:setEnabled(true)
 -- Tuning
 -----------------------------------
 local RESPAWN_SECONDS = 30  -- repop delay after each death (matches always_popped_nms)
+local SYS             = xi.msg.channel.SYSTEM_3
 
 -----------------------------------
 -- The 24 affinity NMs grouped by zone (mobids = current affinity_nm_spawns.sql).
@@ -73,8 +74,38 @@ local ZONES =
     { 'xi.zones.RuAun_Gardens.Zone.onInitialize',           { 17310619, 17310620 } },                             -- Absolute Virtue/Proto-Omega
 }
 
+-- mobid -> Augment-Sage registration trophy item id. Granted directly to the
+-- killer on death: the intended droplists (21000-21023, dropid in mob_groups)
+-- exceed the engine's MAX_DROPID (5000), so GetDropList rejects them ("DropID
+-- too big") and no drop ever rolls. This Lua grant is the working substitute.
+local TROPHY =
+{
+    [17208197] = 860,   [17298310] = 883,   [17490823] = 8983,  [17228680] = 843,    -- Behemoth/K.Beh/K.Arthro/Simurgh
+    [17302409] = 908,   [17507210] = 1404,  [17269643] = 842,   [17507212] = 1405,   -- Adamantoise/Genbu/Roc/Seiryu
+    [17507213] = 1406,  [17240974] = 2421,  [16896911] = 903,   [17404816] = 2229,   -- Byakko/Aspidochelone/Ouryu/Bune
+    [16901009] = 844,   [17507218] = 1407,  [17507219] = 10038, [17408916] = 10037,  -- Phoenix/Suzaku/Kirin/Fafnir
+    [17408917] = 865,   [17617814] = 1526,  [16798615] = 1816,  [17290136] = 1017,   -- Nidhogg/Vrtra/Tiamat/K.Vinegarroon
+    [17556377] = 2372,  [17556378] = 2169,  [17310619] = 1567,  [17310620] = 15800,  -- Khimaira/Cerberus/AV/Proto-Omega
+}
+
+-- Grant the killer this NM's registration trophy (shared by the module + !affinitypop).
+local function grantTrophy(m, killer)
+    local trophy = TROPHY[m:getID()]
+    if not trophy or not killer or not killer:isPC() then
+        return
+    end
+    if killer:getFreeSlotsCount() > 0 then
+        killer:addItem(trophy, 1)
+        killer:printToPlayer('[Affinity] Obtained the affinity registration trophy!', SYS)
+    else
+        killer:printToPlayer('[Affinity] Inventory full -- affinity trophy NOT awarded. Make room and rekill.', SYS)
+    end
+end
+xi.affinityAutopop = xi.affinityAutopop or {}
+xi.affinityAutopop.grantTrophy = grantTrophy  -- reused by the !affinitypop command
+
 -----------------------------------
--- Force one affinity NM up and keep it on the short timer.
+-- Force one affinity NM up, keep it on the short timer, and wire the trophy grant.
 -----------------------------------
 local function configureMob(mobid)
     local mob = GetMobByID(mobid)
@@ -86,6 +117,11 @@ local function configureMob(mobid)
     -- runs after it, so it's the last writer of m_RespawnTime.
     mob:addListener('DESPAWN', 'AFFINITY_AUTOPOP', function(m)
         m:setRespawnTime(RESPAWN_SECONDS)
+    end)
+
+    -- Grant the registration trophy on death (droplist is unusable; see TROPHY note).
+    mob:addListener('DEATH', 'AFFINITY_TROPHY', function(m, killer)
+        grantTrophy(m, killer)
     end)
 
     mob:setRespawnTime(RESPAWN_SECONDS)
