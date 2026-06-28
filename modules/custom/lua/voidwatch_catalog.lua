@@ -233,4 +233,44 @@ C.ATM =   -- effect magnitudes
     FLOW_PCT    = 0.12,
 }
 
+-- ── Abyssite Stratums (retail Voidwatch progression) ───────────────────────
+-- Each stratum gates a group of zones + has its own abyssite tier (charVar
+-- Voidwatch_Strat_<KEY>, +1 per clear). 'base' makes higher strata start harder;
+-- effective NM tier = base + clears + 1. Rosters use authentic Voidwalker NM
+-- templates {name, group, zone} -- the dynamic spawn borrows that pool's model.
+-- Stratum abyssites exist as real KIs (key_item.lua: CRIMSON..AMBER 366-377 /
+-- 1444-1452 / 2060-2063); we track tier via charVars + name them for flavor.
+C.STRAT_PREFIX = 'Voidwatch_Strat_'
+C.STRATA =
+{
+    { key = 'CRIMSON', name = 'Crimson Stratum', base = 0,
+      zones  = { 'West_Ronfaure', 'East_Ronfaure', 'North_Gustaberg', 'South_Gustaberg', 'West_Sarutabaruta', 'East_Sarutabaruta' },
+      roster = { { name = 'Krabkatoa', group = 48, zone = 81 }, { name = 'Yacumama', group = 49, zone = 81 }, { name = 'Raker_Bee', group = 57, zone = 95 } } },
+    { key = 'INDIGO', name = 'Indigo Stratum', base = 3,
+      zones  = { 'La_Theine_Plateau', 'Konschtat_Highlands', 'Tahrongi_Canyon', 'Valkurm_Dunes', 'Buburimu_Peninsula' },
+      roster = { { name = 'Farruca_Fly', group = 54, zone = 95 }, { name = 'Skuld', group = 46, zone = 84 }, { name = 'Gorehound', group = 37, zone = 136 } } },
+    { key = 'JADE', name = 'Jade Stratum', base = 6,
+      zones  = { 'Jugner_Forest', 'Pashhow_Marshlands', 'Meriphataud_Mountains', 'Bibiki_Bay' },
+      roster = { { name = 'Blobdingnag', group = 56, zone = 88 }, { name = 'Shoggoth', group = 58, zone = 88 }, { name = 'Capricornus', group = 48, zone = 101 } } },
+    { key = 'WHITE', name = 'White Stratum', base = 9,
+      zones  = { 'Batallia_Downs', 'Rolanberry_Fields', 'Sauromugue_Champaign' },
+      roster = { { name = 'Lamprey_Lord', group = 59, zone = 88 }, { name = 'Jyeshtha', group = 55, zone = 95 }, { name = 'Dawon', group = 50, zone = 102 } } },
+    { key = 'ASHEN', name = 'Ashen Stratum', base = 12,
+      zones  = { 'Yuhtunga_Jungle', 'Western_Altepa_Desert', 'Qufim_Island' },
+      roster = { { name = 'Gjenganger', group = 36, zone = 136 }, { name = 'Feuerunke', group = 34, zone = 136 }, { name = 'Tammuz', group = 51, zone = 102 } } },
+    { key = 'HYACINTH', name = 'Hyacinth Stratum', base = 15,
+      zones  = { 'Beaucedine_Glacier', 'The_Sanctuary_of_ZiTah', 'RoMaeve', 'Lufaise_Meadows', 'Misareaux_Coast', 'Attohwa_Chasm' },
+      roster = { { name = 'Aglaophotis', group = 39, zone = 288 }, { name = 'Erebus', group = 35, zone = 136 }, { name = 'Gorehound', group = 37, zone = 136 } } },
+    { key = 'AMBER', name = 'Amber Stratum', base = 18,
+      zones  = { 'Behemoths_Dominion', 'Uleguerand_Range', 'RuAun_Gardens' },
+      roster = { { name = 'Yilbegan', group = 32, zone = 136 }, { name = 'Lord_Ruthven', group = 33, zone = 136 }, { name = 'Erebus', group = 35, zone = 136 } } },
+}
+-- Precomputed lookups.
+C.STRATUM_BY_KEY = {}
+C.ZONE_STRATUM   = {}
+for _, s in ipairs(C.STRATA) do
+    C.STRATUM_BY_KEY[s.key] = s
+    for _, z in ipairs(s.zones) do C.ZONE_STRATUM[z] = s.key end
+end
+
 return C

@@ -65,6 +65,10 @@ local function getTier(p)   return p:getCharVar(C.V.tier) or 0 end
 local function getShards(p) return p:getCharVar(C.V.shards) or 0 end
 local function getAtm(p, key) return p:getCharVar(C.ATM_PREFIX .. key) or 0 end
 
+-- Per-stratum clears (Voidwatch_Strat_<KEY>); effective NM tier = base + clears + 1.
+local function getStratClears(p, key) return p:getCharVar(C.STRAT_PREFIX .. key) or 0 end
+local function addStratClear(p, key)  p:setCharVar(C.STRAT_PREFIX .. key, getStratClears(p, key) + 1) end
+
 -- atmacite Flow shortens the Voidstone regen interval.
 local function effRegenSeconds(p)
     local r = C.REGEN_SECONDS * (1 - math.min(0.6, getAtm(p, 'FLOW') * C.ATM.FLOW_PCT))
@@ -185,14 +189,14 @@ local function giveItem(player, itemid)
     return (ok and res) and true or false
 end
 
--- ── Spawn one tier-scaled Voidwalker at the player ──────────────────────────
-local function spawnVoidwalker(owner, tier)
+-- ── Spawn one tier-scaled Voidwalker (from a stratum roster) at the player ──
+local function spawnVoidwalker(owner, tier, roster)
     local px, py, pz = owner:getXPos(), owner:getYPos(), owner:getZPos()
     local angle = math.random() * math.pi * 2
     local dist  = C.SPAWN_DIST_MIN + math.random() * (C.SPAWN_DIST_MAX - C.SPAWN_DIST_MIN)
     local mx, mz = px + math.cos(angle) * dist, pz + math.sin(angle) * dist
     local ownerName = owner:getName()
-    local entry = C.ROSTER[math.random(#C.ROSTER)]
+    local entry = roster[math.random(#roster)]
     local level = C.nmLevel(tier)
 
     local mob = owner:getZone():insertDynamicEntity({
@@ -245,7 +249,8 @@ onRiftCleared = function(player)
     removeListeners(player)
     clearSession(player)
     local tier = sess.tier
-    if tier > getTier(player) then player:setCharVar(C.V.tier, tier) end
+    local skey = sess.stratumKey or 'CRIMSON'
+    addStratClear(player, skey)
 
     local L      = sess.lights or {}
     local red    = L.RED or 0
@@ -289,9 +294,11 @@ onRiftCleared = function(player)
     player:printToPlayer(string.format('  Reward:  +%d cruor    +%d EXP    %d item%s%s',
         cruor, exp, got, (got == 1) and '' or 's',
         (shards > 0) and string.format('    +%d atmacite shard%s', shards, (shards == 1) and '' or 's') or ''), SYS)
+    local strat = C.STRATUM_BY_KEY[skey]
+    local sname = strat and strat.name or 'Voidwatch'
     player:printToPlayer(string.format(
-        '[Voidwatch] Tier %d cleared -- your abyssite resonates at tier %d. The next rift will be fiercer.',
-        tier, getTier(player)), SYS)
+        '[Voidwatch] %s cleared at Tier %d! Your %s abyssite advances to rank %d -- the next %s rift will be fiercer.',
+        sname, tier, sname, getStratClears(player, skey), sname), SYS)
 end
 
 -- ── Fail a rift (death / left / timeout) ────────────────────────────────────
@@ -314,7 +321,7 @@ failRift = function(player, reason)
 end
 
 -- ── Open a rift here (called by the Planar Rift NPC; GM via !voidwatch open) ──
-openRift = function(player)
+openRift = function(player, stratumKey)
     ensureBorn(player)
     if getSession(player) then
         player:printToPlayer('[Voidwatch] You are already locked in a rift battle.', SYS)
@@ -333,12 +340,13 @@ openRift = function(player)
     end
     setStones(player, stones - C.RIFT_COST)
 
-    local tier = getTier(player) + 1
-    local sess = { tier = tier, dead = false, zoneId = player:getZoneID() }
+    local stratum = C.STRATUM_BY_KEY[stratumKey] or C.STRATA[1]
+    local tier    = stratum.base + getStratClears(player, stratum.key) + 1
+    local sess = { tier = tier, stratumKey = stratum.key, dead = false, zoneId = player:getZoneID() }
     assignWeaknesses(sess)
     sessions[player:getName()] = sess
 
-    local mob, name, level = spawnVoidwalker(player, tier)
+    local mob, name, level = spawnVoidwalker(player, tier, stratum.roster)
     if not mob then
         clearSession(player)
         setStones(player, getStones(player) + C.RIFT_COST)
@@ -350,8 +358,8 @@ openRift = function(player)
     registerListeners(player)
 
     player:printToPlayer(string.format(
-        '[Voidwatch] A Planar Rift tears open!  TIER %d  --  %s (Lv.%d) claws its way out of the void!',
-        tier, (name:gsub('_', ' ')), level), SYS)
+        '[Voidwatch] A Planar Rift tears open!  %s, Tier %d  --  %s (Lv.%d) claws its way out of the void!',
+        stratum.name, tier, (name:gsub('_', ' ')), level), SYS)
     player:printToPlayer(
         '[Voidwatch] Five hidden weaknesses pulse within. Probe with elemental magic, weaponskills, and ranged attacks to draw out the Lights -- they shape your reward.', SYS)
 
@@ -386,12 +394,16 @@ end
 -- ── Status ──────────────────────────────────────────────────────────────────
 local function status(player)
     ensureBorn(player)
-    player:printToPlayer(string.format('=== Voidwatch ===  Abyssite tier %d   (next rift: tier %d)', getTier(player), getTier(player) + 1), SYS)
+    player:printToPlayer('=== Voidwatch ===', SYS)
     local nxtStr = (getStones(player) >= C.MAX_STONES) and 'capped'
                 or string.format('next in %dm', math.ceil(secsToNextStone(player) / 60))
     player:printToPlayer(string.format('  Voidstones: %d/%d (%s)    Cruor: %d    Atmacite shards: %d',
         getStones(player), C.MAX_STONES, nxtStr, getCruor(player), getShards(player)), SYS)
-    player:printToPlayer('  Examine a Planar Rift out in the field to open a rift. Probe weaknesses to build Lights.', SYS)
+    for _, s in ipairs(C.STRATA) do
+        local clears = getStratClears(player, s.key)
+        player:printToPlayer(string.format('  %-16s rank %d  (next rift: Tier %d)', s.name, clears, s.base + clears + 1), SYS)
+    end
+    player:printToPlayer('  Examine a Planar Rift in the field (each zone belongs to a stratum) to fight. Probe weaknesses to build Lights.', SYS)
 end
 
 -- ── Atmacite Refiner ────────────────────────────────────────────────────────
@@ -434,8 +446,8 @@ end
 -- ── Officer menu (shared by the NPC + the command) ──────────────────────────
 openMenu = function(player)
     ensureBorn(player)
-    player:printToPlayer(string.format('[Voidwatch] Tier %d  |  Voidstones %d/%d  |  Cruor %d  |  Shards %d',
-        getTier(player), getStones(player), C.MAX_STONES, getCruor(player), getShards(player)), SYS)
+    player:printToPlayer(string.format('[Voidwatch] Voidstones %d/%d  |  Cruor %d  |  Atmacite shards %d   (Status = per-stratum ranks)',
+        getStones(player), C.MAX_STONES, getCruor(player), getShards(player)), SYS)
     show(player, 'Voidwatch Officer', {
         { string.format('Buy Voidstone (%d cruor)', C.STONE_CRUOR), function(p) buyStone(p); openMenu(p) end },
         { 'Atmacite Refiner', function(p) openRefiner(p) end },
@@ -491,6 +503,7 @@ end)
 for _, r in ipairs(C.RIFTS) do
     local okReq = pcall(function() require('scripts/zones/' .. r.zone .. '/Zone') end)
     if okReq then
+        local stratumKey = C.ZONE_STRATUM[r.zone] or 'CRIMSON'
         m:addOverride('xi.zones.' .. r.zone .. '.Zone.onInitialize', function(zone)
             super(zone)
             local npc = zone:insertDynamicEntity({
@@ -504,7 +517,7 @@ for _, r in ipairs(C.RIFTS) do
                 rotation   = r.rot,
                 widescan   = 1,
                 onTrigger  = function(player, npcEnt)
-                    openRift(player)
+                    openRift(player, stratumKey)
                 end,
             })
             utils.unused(npc)
@@ -515,7 +528,7 @@ end
 -- ── Public API (for commands/voidwatch.lua) ─────────────────────────────────
 xi.voidwatch = xi.voidwatch or {}
 xi.voidwatch.menu       = function(p) openMenu(p) end
-xi.voidwatch.open       = function(p) openRift(p) end             -- GM-gated in the command
+xi.voidwatch.open       = function(p, key) openRift(p, key) end   -- GM-gated in the command (key optional)
 xi.voidwatch.status     = function(p) status(p) end
 xi.voidwatch.refiner    = function(p) openRefiner(p) end
 xi.voidwatch.grantCruor = function(p, n) ensureBorn(p); addCruor(p, math.max(0, n)) end  -- GM test
