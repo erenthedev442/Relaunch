@@ -328,8 +328,12 @@ def _render(groups, item_names, gap_set: set[int]) -> str:
         lines.append("")
 
     lines.append(
-        "Each category below is sold by a `!shop augments <group>` command — buy the "
-        "catalyst there (flat gil), then trade it to the Augment Moogle at GM Home to apply it."
+        "**Catalysts are FARMED, not bought** — each drops (~50%) from a specific assigned "
+        "monster, then you trade it to the Augment Moogle at GM Home to apply it. Every "
+        "augment has a **tier (T0–T4)**: higher tiers drop from tougher monsters and open up "
+        "as you progress — **T0** Day 1 · **T1** Hunting League Rank 3 · **T2** HL Rank 5 · "
+        "**T3** Prestige · **T4** endgame. See the "
+        "[Augmenting guide](augmenting-guide.md#catalyst-tiers-what-unlocks-when) for the tier breakdown."
     )
     lines.append("")
 
@@ -337,21 +341,9 @@ def _render(groups, item_names, gap_set: set[int]) -> str:
         if not rows:
             continue
         cat_gap = sum(1 for r in rows if r[0] in gap_set)
-        token = _shop_token(category)
-        suffix = f"  — buy via `!shop augments {token}`" if token else ""
-        if cat_gap > 0:
-            suffix += f"  _({cat_gap}/{len(rows)} need GM spawn)_"
+        suffix = f"  _({cat_gap}/{len(rows)} need GM spawn)_" if cat_gap > 0 else ""
         lines.append(f"### {category}{suffix}")
         lines.append("")
-        if token is None:
-            # Custom "Corsair (Phantom Roll)" section -- its catalysts are sold under
-            # their own stat family, not one command (update if more are ever added).
-            lines.append(
-                "_Sold under their stat group: **Phantom Roll effect** (Ancient Beastcoin) "
-                "→ `!shop augments agi` · **Spikes Dmg** (Shard Of Obsidian) → "
-                "`!shop augments int`._"
-            )
-            lines.append("")
         lines.append("| Catalyst | Item ID | Augment | Fresh ×1 | ×2 | ×3 | ×4 | ×5 | Max ×1 | ×2 | ×3 | ×4 | ×5 | Cap |")
         lines.append("|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|")
         for item_id, aug_id, label, base, mult, disp, max_boost in rows:

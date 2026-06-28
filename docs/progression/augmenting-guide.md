@@ -13,12 +13,12 @@ Every catalyst item maps to **one augment** (a stat bonus). Trade a catalyst to 
 
 This means **any** gear can become best-in-slot. That ring with no useful stats? Stamp it with +HP, +Attack, +Accuracy — whatever your build wants.
 
-## Your first augment, in 60 seconds
+## Your first augment
 
 Let's add some **Attack** to a piece of gear. (Any stat works the same way — this is just an example.)
 
-1. **Buy the catalysts.** Type `!shop augments str` and buy **5× Black Tiger Hide** (the "Attack" catalyst). Catalysts are cheap.
-2. **Have 10,000 gil** in your inventory (flat cost per trade, no matter how many catalysts).
+1. **Farm the catalysts.** Every catalyst **drops from one specific monster** (~50% per kill) — catalysts are **no longer bought for gil**. The "Attack" catalyst is **Black Tiger Hide**; kill its assigned mob until you have **5×**. Which catalysts you can farm scales with your progression — see [Catalyst tiers](#catalyst-tiers-what-unlocks-when) below.
+2. **Have 10,000 gil** in your inventory (the Augment Moogle's flat trade cost, no matter how many catalysts).
 3. **Go to <!--npc:augment_moogle-->Leafallia<!--/npc-->** and find the **Augment Moogle** (it's in the row of moogles).
 4. **Trade** the gear piece **+ your 5 catalysts** to the Moogle. It shows you what's about to be applied.
 5. **Confirm.** It takes the 10,000 gil and hands your gear back with **5 lines of Attack** stamped on it.
@@ -48,13 +48,27 @@ Three things multiply your augment power — stack all three to hit the ceiling:
 
 A fresh augment sits at the floor; a **rank-5, affinity-unlocked, critical** augment hits the cap. The [Augment Sage page](augment-sage.md) has the full rank table and NM list.
 
+## Catalyst tiers: what unlocks when
+
+Every augment belongs to a **tier (T0–T4)**. Higher tiers are stronger, and their catalysts drop from **tougher monsters** — so you naturally farm bigger augments as your character grows:
+
+| Tier | Opens up at | Catalysts drop from |
+|---|---|---|
+| **T0** | Day 1 — any character | low-level monsters |
+| **T1** | Hunting League **Rank 3** | mid-level monsters |
+| **T2** | Hunting League **Rank 5** | high-level monsters |
+| **T3** | **Prestige** progression | Prestige-tier (Nightmare Court) bosses |
+| **T4** | Endgame | Shinryu- / Abyssea-tier NMs |
+
+You don't *buy* a tier — you **progress your character** (Hunting League Rank, then Prestige), and the stronger monsters you can now beat are the ones that drop the higher-tier catalysts. Stack that with [Augment Sage](augment-sage.md) ranks (above) and the same catalyst writes a far bigger number.
+
 ## Good first moves
 
 - **Pick stats you actually use.** DD? Stack **Attack** and **Accuracy**. Tank? **HP**, **Defense**, and the **−Phys. dmg. taken** catalysts. Caster? **Magic Accuracy** / **Magic Atk**.
 - **Stack one stat for a big swing.** 5× the same catalyst on one piece concentrates the bonus where you want it.
 - **Start the Augment Sage early.** Mastery ranks unlock automatically as you hit Hunting League Rank / Prestige Level milestones — so just *progressing your character* unlocks bigger augments. Don't wait.
 - **Re-augment after every rank-up.** Same gear, same catalysts, bigger numbers.
-- **Browse the full catalog** on the [Augment Moogle page](augments.md#catalyst--augment-catalog) — ~300 catalysts across 16 stat families, each with a `!shop augments <family>` command to buy it.
+- **Browse the full catalog** on the [Augment Moogle page](augments.md#catalyst--augment-catalog) — ~300 catalysts across 16 stat families, each with its full per-trade stat values.
 
 ## A few rules to remember
 
