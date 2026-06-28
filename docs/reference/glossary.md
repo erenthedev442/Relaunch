@@ -14,7 +14,7 @@ Augment Sage
 :   A special NPC whose Mastery ranks improve augment strength. Ranks unlock at Hunting League Rank + Prestige Level milestones (nothing consumed), topping out at a 2× multiplier at rank 5. Per-category NM affinities require Hunting League Rank 3, 1,000 Hunt Marks, and the NM's trophy (consumed).
 
 Catalyst
-:   An item that drops from monsters throughout the game world. Traded to the Augment Moogle to unlock a specific augment option on your gear.
+:   An item bought from the Augment Moogle's catalyst shop (`!shop augments <group>`, flat gil), then traded back to the Moogle to unlock a specific augment option on your gear.
 
 Daily Board
 :   A three-objective board located in GM Home that resets at midnight UTC every day. Completing all three objectives earns bonus Hunt Marks.

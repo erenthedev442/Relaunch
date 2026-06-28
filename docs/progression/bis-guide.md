@@ -4,7 +4,7 @@ This guide explains the priority order for gearing up on the Relaunch server. Th
 
 **Reforge +3 > Reforge +2 > Reforge +1 > Reforge base > Silver/Gold weapon. Augments are additive on top.**
 
-If you're new to the server, read through this once before spending marks. Mistakes are recoverable, but spending 650 Relic Marks before you know your job's track is a painful lesson.
+If you're new to the server, read through this once before spending marks. Mistakes are recoverable, but spending 2,000 Relic Marks before you know your job's track is a painful lesson.
 
 ---
 
@@ -18,11 +18,11 @@ Follow this order regardless of job:
 
 3. **Start Reforge farming.** Talk to the Spawner NPC at Gwora Corridor and pick an NM ladder that suits your job (see below). Each kill drops a random armor piece from that set's pool and grants set-specific upgrade currency.
 
-4. **Upgrade Reforge pieces to +1, then +2, then +3.** The Reforge Vendor NPC at Gwora Corridor handles upgrades. Costs are in the set's own currency: 100 marks for +1, 300 for +2, 650 for +3. Each tier is a meaningful step up.
+4. **Upgrade Reforge pieces to +1, then +2, then +3.** The Reforge Vendor NPC at Gwora Corridor handles upgrades. Costs are in the set's own currency: 300 marks for +1, 900 for +2, 2,000 for +3. Each tier is a meaningful step up.
 
 5. **Augment your Reforge +3 pieces.** Trade the appropriate catalyst to the Augment Moogle. See the Augment Priorities section below.
 
-6. **Upgrade your Sortie earring to +1 or +2** once you have marks to spare. The +1 adds Acc/MACC +8~12 for 200 marks; the +2 improves that to +10~15 for 350 marks.
+6. **Upgrade your Sortie earring to +1, then +2** once you have currency to spare. The +1 adds Acc/MACC +8~12 for 200 Hunt Marks. The +2 (best-in-slot for your job) is an Infamy-exclusive reward — buy it from the Infamy Vendor for 300 Infamy.
 
 ---
 
@@ -40,7 +40,7 @@ Three NM ladders. Three separate currencies. Three distinct armor sets. You can 
 
 **Best for:** Jobs that benefit from the classic Sky endgame stat profile — strong melee DD sets and mage sets with balanced offense.
 
-**Upgrade costs:** 100 / 300 / 650 AF Marks per tier
+**Upgrade costs:** 300 / 900 / 2,000 AF Marks per tier
 
 ### Relic Track — Unity NMs (Relic Marks)
 
@@ -52,7 +52,7 @@ Three NM ladders. Three separate currencies. Three distinct armor sets. You can 
 
 **Best for:** Jobs that favor the Relic gear profile — many of these sets have strong TP-building, accuracy, and debuff-landing bonuses.
 
-**Upgrade costs:** 100 / 300 / 650 Relic Marks per tier
+**Upgrade costs:** 300 / 900 / 2,000 Relic Marks per tier
 
 ### Empy Track — Abyssea NMs (Empy Marks)
 
@@ -123,13 +123,13 @@ Augments from the [Augment Moogle](augments.md) stack on top of your Reforge gea
 
 ## Earring Tiers
 
-The Hunt Accessories NPC at Escha ZiTah sells Sortie earrings in three power tiers. All earrings are job-specific — you're buying the version for your job.
+Sortie earrings come in three power tiers. The NQ and +1 versions are sold by the Hunt Accessories NPC at Escha ZiTah for Hunt Marks; the +2 version is an Infamy-exclusive reward from the Infamy Vendor, paid in Infamy. All earrings are job-specific — you're buying the version for your job.
 
-| Tier | Cost | Acc/MACC Bonus |
-|---|---|---|
-| NQ | 100 Hunt Marks | Base stats only (job-specific bonus) |
-| +1 | 200 Hunt Marks | +8~12 Acc/MACC added |
-| +2 | 350 Hunt Marks | +10~15 Acc/MACC added |
+| Tier | Cost | Source | Acc/MACC Bonus |
+|---|---|---|---|
+| NQ | 100 Hunt Marks | Hunt Accessories NPC | Base stats only (job-specific bonus) |
+| +1 | 200 Hunt Marks | Hunt Accessories NPC | +8~12 Acc/MACC added |
+| +2 | 300 Infamy | Infamy Vendor | +10~15 Acc/MACC added |
 
 Every job has an earring. The base stat on the NQ version is job-specific (see examples below):
 
@@ -140,7 +140,7 @@ Every job has an earring. The base stat on the NQ version is job-specific (see e
 - **PLD:** Chevalier's Earring — DEF +20, Shield Skill +10, Cure +10%
 - **RDM:** Lethargy Earring — Fast Cast +7%, Enhancing Magic Duration +7%
 
-Buy the NQ version first, then upgrade when you have marks to spare. The +2 version is the clear endgame target but the NQ is a significant upgrade from nothing.
+Buy the NQ version first, then upgrade when you have currency to spare. The +2 version is the clear endgame target but the NQ is a significant upgrade from nothing.
 
 ---
 
