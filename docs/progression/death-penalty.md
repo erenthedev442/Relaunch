@@ -1,6 +1,6 @@
 # Death Penalty
 
-Dying inside **Reisenjima Henge** — the Hunting League zone — costs you **10 Hunt Marks**. This is the only zone on the server with a mark deduction on death.
+Dying inside **Escha ZiTah** — the Hunting League zone — costs you **10 Hunt Marks**. This is the only zone on the server with a mark deduction on death.
 
 ---
 
@@ -31,7 +31,7 @@ Once you cross 50 kills, the penalty activates and stays active.
 
 ## Death's Pardon
 
-The **Mystery Mog** occasionally awards a prize called **Death's Pardon**. While you're holding one, the next death penalty you would take in Reisenjima Henge is **absorbed** — you lose no marks, and the pardon is spent in your place. When it triggers, you'll see:
+The **Mystery Mog** occasionally awards a prize called **Death's Pardon**. While you're holding one, the next death penalty you would take in Escha ZiTah is **absorbed** — you lose no marks, and the pardon is spent in your place. When it triggers, you'll see:
 
 > *[Hunting League] The Mog's pardon absorbed the death penalty! (Your Hunt Marks are safe.)*
 

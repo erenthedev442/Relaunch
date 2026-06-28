@@ -1,11 +1,11 @@
 -----------------------------------
 -- death_penalty.lua
 -- Deducts a small number of Hunt Marks when a player dies inside the
--- Hunting League zone (Reisenjima Henge).  Adds stakes to hunts without
+-- Hunting League zone (Escha ZiTah).  Adds stakes to hunts without
 -- being punishing enough to discourage participation.
 --
 -- Penalty:  10 marks per death (floor 0 - balance never goes negative).
--- Scope:    Only fires in xi.zone.REISENJIMA_HENGE.
+-- Scope:    Only fires in xi.zone.ESCHA_ZITAH.
 -- Exempt:   Players with < EXEMPT_KILLS total NM kills (new-player grace).
 -----------------------------------
 require('modules/module_utils')
@@ -14,7 +14,7 @@ local m = Module:new('death_penalty')
 
 local PENALTY     = 10   -- marks lost per death
 local EXEMPT_KILLS = 50  -- players below this kill count are exempt
-local HUNT_ZONE   = xi.zone.REISENJIMA_HENGE
+local HUNT_ZONE   = xi.zone.ESCHA_ZITAH
 
 local PARDON_VAR = 'MysteryMog_Pardon'  -- set by Mystery Mog Death's Pardon prize
 

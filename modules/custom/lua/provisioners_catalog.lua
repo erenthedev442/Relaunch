@@ -15,15 +15,15 @@
 -----------------------------------
 local catalog = {}
 
--- The League Steward, posted beside The Chronicler at Reisenjima Henge.
+-- The League Steward, posted beside The Chronicler at Escha ZiTah.
 catalog.npcPos =
 {
-    zone     = 'Reisenjima_Henge',
-    zoneId   = 292,
-    x        = 10.500,
-    y        =  5.509,
-    z        = -12.183,
-    rotation = 230,
+    zone     = 'Escha_ZiTah',
+    zoneId   = 210,
+    x        = 29.000,
+    y        = -0.500,
+    z        = -30.000,
+    rotation = 128,
 }
 
 -- ============================================================

@@ -76,7 +76,7 @@ def _render_config(penalty: int, exempt_kills: int) -> str:
         "| Setting | Value |",
         "|---|---|",
         f"| Mark loss per death | **−{penalty} Hunt Marks** |",
-        "| Zone scope | Reisenjima Henge only |",
+        "| Zone scope | Escha ZiTah only |",
         f"| New-player grace | Players with fewer than **{exempt_kills} NM kills** are exempt |",
         "| Floor | Balance never goes below zero |",
     ]

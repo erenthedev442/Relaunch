@@ -54,17 +54,19 @@ def _parse(text: str) -> dict:
 
 def _render_access(c: dict) -> str:
     return ("The **Prime Armory** is in **GM Home**, just south of the Unlocker "
-            "cluster. Talk to it to browse the Prime weapons; you only need to "
-            "bring a voucher when you're ready to claim one.")
+            "cluster. Talk to it to browse the Prime weapons; bring your **750M "
+            "gil** when you're ready to forge (all 5 trials, including the "
+            "voucher turn-in, must already be done).")
 
 
 def _render_cost(c: dict) -> str:
-    return (f"Each weapon costs **1 {c['voucher']}**. The Armory takes the "
-            f"voucher and hands over the weapon you confirmed — one voucher, one "
-            f"Prime weapon. Vouchers are earned through the Prime Voucher system, "
-            f"so every Prime weapon you add to your arsenal is a milestone.\n\n"
-            f"Make sure you have a free inventory slot before you confirm, or the "
-            f"Armory won't be able to hand the weapon over.")
+    return ("Forging a Prime takes two things: **all 5 Prime Weapon Trials** "
+            "([see the trials](prime-trials.md)) complete — Trial 3 is where your "
+            "single **" + c['voucher'] + "** is consumed — and **750,000,000 gil** "
+            "paid at the forge. You claim **one Prime weapon per character**, so "
+            "choose the one that fits your main job.\n\n"
+            "Make sure you have the gil and a free inventory slot before you "
+            "confirm, or the Armory won't be able to hand the weapon over.")
 
 
 def _render_weapons(c: dict) -> str:
@@ -81,9 +83,9 @@ def _render_weapons(c: dict) -> str:
 
 def _render_claim(c: dict) -> str:
     return ("Browsing is free — you can read every weapon's stats and weapon "
-            "skill before deciding. The voucher is only spent on the final "
+            "skill before deciding. The **750M gil** is only spent on the final "
             "confirm, so take your time picking the right Prime weapon for your "
-            "job.")
+            "job — you only claim one.")
 
 
 # ---------------------------------------------------------------------------

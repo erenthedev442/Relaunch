@@ -1,9 +1,9 @@
 ﻿# Provisioners' League
 
-A non-combat league for anglers and crafters. The **League Steward** at Reisenjima Henge tracks your fishing weigh-ins and high-quality craft turn-ins, awarding **League Points** that climb a five-rank ladder — and every rank-up permanently boosts the marks you earn around the server.
+A non-combat league for anglers and crafters. The **League Steward** at Escha ZiTah tracks your fishing weigh-ins and high-quality craft turn-ins, awarding **League Points** that climb a five-rank ladder — and every rank-up permanently boosts the marks you earn around the server.
 
 !!! tip "Summary"
-    Fish and turn in HQ crafts at the League Steward in Reisenjima Henge to earn League Points; climbing the five-rank ladder grants a permanent, stacking mark bonus.
+    Fish and turn in HQ crafts at the League Steward in Escha ZiTah to earn League Points; climbing the five-rank ladder grants a permanent, stacking mark bonus.
 
 ## Where to join
 

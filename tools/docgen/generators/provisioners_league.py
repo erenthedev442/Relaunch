@@ -55,7 +55,7 @@ def _parse(text: str) -> dict:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return ("Seek out the **League Steward** at **Reisenjima Henge** — he keeps the "
+    return ("Seek out the **League Steward** at **Escha ZiTah** — he keeps the "
             "books for both anglers and crafters. Talk to him to check your rank, "
             "your League Point total, and this week's featured fish.")
 
