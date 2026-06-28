@@ -71,6 +71,102 @@ C.V =
     stones  = 'Voidwatch_Stones',
     stoneTs = 'Voidwatch_StoneTs',  -- unix ts the stone count was last reconciled (regen anchor)
     cruor   = 'Voidwatch_Cruor',
+    shards  = 'Voidwatch_Shards', -- atmacite shards (banked from Pearl lights; spend at the Refiner, Phase 2b)
 }
+
+-- ── Lights / Spectral Alignment ─────────────────────────────────────────────
+-- Each rift hides 5 weaknesses, one per Light colour. Probe the NM with magic
+-- elements / weaponskills / ranged attacks to draw the Lights out; the tally at
+-- the kill shapes the Riftworn Pyxis (retail's spectral-alignment reward model,
+-- surfaced through chat instead of the native on-screen light bar).
+C.LIGHTS =
+{
+    order = { 'RED', 'BLUE', 'GREEN', 'YELLOW', 'WHITE' },
+    names = { RED = 'Vermillion', BLUE = 'Cerulean', GREEN = 'Verdant', YELLOW = 'Amber', WHITE = 'Pearl' },
+    boon  = { RED = 'reward quality', BLUE = 'reward quantity', GREEN = 'cruor', YELLOW = 'EXP', WHITE = 'atmacite' },
+    cap   = 5,    -- max lights per colour
+}
+C.WEAKNESS_COOLDOWN = 5   -- seconds before the same Light can trigger again
+
+-- Trigger pool: 5 are chosen at random per rift and mapped to the 5 colours.
+-- 'elem:N' matches spell:getElement() (1=Fire, 2=Ice, 3=Wind, 4=Earth,
+-- 5=Lightning, 6=Water, 7=Light, 8=Dark). 'ws'/'ranged' let melee + ranged jobs
+-- draw Lights too, so every job can build alignment.
+C.WEAKNESS_POOL =
+{
+    { key = 'elem:1', label = 'Fire magic'      },
+    { key = 'elem:2', label = 'Ice magic'       },
+    { key = 'elem:3', label = 'Wind magic'      },
+    { key = 'elem:4', label = 'Earth magic'     },
+    { key = 'elem:5', label = 'Lightning magic' },
+    { key = 'elem:6', label = 'Water magic'     },
+    { key = 'elem:7', label = 'Light magic'     },
+    { key = 'elem:8', label = 'Dark magic'      },
+    { key = 'ws',     label = 'weaponskills'    },
+    { key = 'ranged', label = 'ranged attacks'  },
+}
+
+-- Reward weighting per Light (linear).
+C.CRUOR_PER_GREEN  = 0.25   -- +25% cruor per Verdant
+C.EXP_PER_YELLOW   = 0.25   -- +25% EXP per Amber
+C.ROLLS_PER_2_BLUE = 1      -- +1 loot roll per 2 Cerulean
+C.QUALITY_PER_RED  = 8      -- +8 to the d100 quality roll per Vermillion
+C.SHARD_PER_WHITE  = 1      -- atmacite shards per Pearl
+
+-- ── Loot (authentic Lord Ruthven / Yilbegan Voidwalker drops) ───────────────
+C.LOOT =
+{
+    common =   -- crafting materials (ores / ingots / logs / hides / cloth)
+    {
+        645, 1262, 1258, 1255, 737, 1256, 1259, 1261, 644, 738, 1260, 1257,
+        654, 702, 700, 703, 653, 866, 1116, 895, 859, 1122, 887, 1465, 823, 830,
+    },
+    uncommon = -- valuable mats + consumables
+    {
+        4172, 4173, 4174, 844, 942, 745, 746, 2883, 902, 2877, 1132, 2878,
+    },
+    rare =     -- gear + the good stuff (rings, belt, leggings, elixir+1, lucky coin)
+    {
+        11633, 11628, 11629, 15953, 14162, 4175, 19248,
+    },
+}
+C.QUALITY_RARE_AT     = 92   -- d100 (+ red bias) >= this -> rare
+C.QUALITY_UNCOMMON_AT = 60   -- >= this -> uncommon, else common
+C.WHITE_BONUS_RARE_AT = 3    -- Pearl lights >= this -> a guaranteed bonus rare roll
+
+-- ── Hardcore mechanics (mob_mechanics_library mechCfg, scales by tier) ──────
+-- Stance dance (phys/mag immunity windows) does NOT block Lights -- the weakness
+-- listeners fire on USE, not on damage, so you can keep probing through a stance.
+function C.mechCfg(tier)
+    local cfg =
+    {
+        name            = 'Voidwalker',
+        targetPartyOnly = true,
+        drain           = { periodSec = 12, healPct = 2 },   -- mild anti-turtle
+    }
+    if tier >= 2 then
+        cfg.stance =
+        {
+            startHpp = 100, periodSec = 22,
+            stances =
+            {
+                { mods = { [xi.mod.DMGPHYS] = -10000, [xi.mod.DMGMAGIC] = 0 },     msg = 'hardens -- weapons glance off!' },
+                { mods = { [xi.mod.DMGPHYS] = 0,      [xi.mod.DMGMAGIC] = -10000 }, msg = 'shimmers -- magic warps aside!' },
+            },
+        }
+    end
+    if tier >= 3 then cfg.aoe    = { periodSec = 14, dmgPct = 16, msg = 'unleashes a void shockwave!' } end
+    if tier >= 4 then cfg.cc     = { periodSec = 28, effect = xi.effect.TERROR, power = 1, dur = 4, msg = 'voids your courage!' } end
+    if tier >= 5 then cfg.enrage = { sec = 300, att = 3500, haste = 150, msg = 'the void begins to devour all!' } end
+    if tier >= 6 then cfg.doom   = { startHpp = 12, dur = 30, msg = 'marks you for the void!' } end
+    if tier >= 7 then
+        cfg.phases =
+        {
+            { hp = 50, action = 'fury', att = 2500, haste = 100, msg = 'enters a void frenzy!' },
+            { hp = 20, action = 'nuke', dmgPct = 35, msg = 'erupts with annihilating force!' },
+        }
+    end
+    return cfg
+end
 
 return C
