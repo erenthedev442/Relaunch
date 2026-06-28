@@ -70,19 +70,46 @@ catalog.tierReward =
 -- start at 3.
 catalog.fights =
 {
+    -- The 6 Avatar Prime trials. All share AVATAR_PHANTOM_GEM (retail: one gem
+    -- enters any trial). baseIndex = first FREE menu slot on that Cloister's
+    -- entrance (audited: each Cloister uses 0..3 or 0..4 for base/trial-size/
+    -- waking/sugar-coated/carbuncle/class-reunion/puppet). 30-min, 6-player.
     trial_by_fire =
     {
-        zone = xi.zone.CLOISTER_OF_FLAMES, entryNpc = 'FP_Entrance', exitNpc = 'Fire_Protocrystal',
-        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 3, baseBattlefieldId = 4000,
-        mobs = { 'Ifrit_Prime_TBF' }, maxPlayers = 6, label = 'Trial by Fire',
+        zone = xi.zone.CLOISTER_OF_FLAMES,  entryNpc = 'FP_Entrance', exitNpc = 'Fire_Protocrystal',
+        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 4, baseBattlefieldId = 4000,
+        mobs = { 'Ifrit_Prime_TBF' }, label = 'Trial by Fire',
     },
-    -- The other 5 Avatar Primes (same structure; fill mobs/entrance from each base
-    -- script, then add the 3 tier files). Kept here as the rollout list:
-    -- trial_by_ice      -> Cloister_of_Frost   / IP_Entrance  / Ifrit? (Shiva_Prime_TBI)
-    -- trial_by_wind     -> Cloister_of_Gales   / GP_Entrance  / Garuda_Prime_*
-    -- trial_by_earth    -> Cloister_of_Tremors / TP_Entrance  / Titan_Prime_*
-    -- trial_by_lightning-> Cloister_of_Storms  / SP_Entrance  / Ramuh_Prime_*
-    -- trial_by_water    -> Cloister_of_Tides   / WP_Entrance  / Leviathan_Prime_*
+    trial_by_ice =
+    {
+        zone = xi.zone.CLOISTER_OF_FROST,   entryNpc = 'IP_Entrance', exitNpc = 'Ice_Protocrystal',
+        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4010,
+        mobs = { 'Shiva_Prime_TBI' }, label = 'Trial by Ice',
+    },
+    trial_by_wind =
+    {
+        zone = xi.zone.CLOISTER_OF_GALES,   entryNpc = 'WP_Entrance', exitNpc = 'Wind_Protocrystal',
+        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4020,
+        mobs = { 'Garuda_Prime_TBW' }, label = 'Trial by Wind',
+    },
+    trial_by_earth =
+    {
+        zone = xi.zone.CLOISTER_OF_TREMORS, entryNpc = 'EP_Entrance', exitNpc = 'Earth_Protocrystal',
+        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4030,
+        mobs = { 'Titan_Prime_TBE' }, label = 'Trial by Earth',
+    },
+    trial_by_lightning =
+    {
+        zone = xi.zone.CLOISTER_OF_STORMS,  entryNpc = 'LP_Entrance', exitNpc = 'Lightning_Protocrystal',
+        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4040,
+        mobs = { 'Ramuh_Prime_TBL' }, label = 'Trial by Lightning',
+    },
+    trial_by_water =
+    {
+        zone = xi.zone.CLOISTER_OF_TIDES,   entryNpc = 'WP_Entrance', exitNpc = 'Water_Protocrystal',
+        gem = xi.ki.AVATAR_PHANTOM_GEM, baseIndex = 4, baseBattlefieldId = 4050,
+        mobs = { 'Leviathan_Prime_TBW' }, label = 'Trial by Water',
+    },
 }
 
 return catalog
