@@ -64,7 +64,9 @@ At higher tiers the NM gains additional mechanics (see below).
 
 ## Hidden weaknesses and Lights
 
-Every rift hides **5 weaknesses**, one per Light colour. Probe the NM during the fight by using magic elements, weaponskills, or ranged attacks — when you hit a weakness, a **Light** activates and is announced in chat. Stack up to 5 of each colour; more Lights = better reward from the Riftworn Pyxis.
+Every NM has **5–9 hidden weaknesses** from the weakness pool (elements, weaponskills, ranged attacks). Probe the NM during the fight by using magic elements, weaponskills, or ranged attacks — when you hit a weakness, a **Light** activates and is announced in chat. Stack up to 5 of each colour (up to 8 with Atmacite Insight); more Lights = better reward from the Riftworn Pyxis.
+
+Each NM's weaknesses are **fixed and learnable** — the same NM always has the same triggers, so skilled players can enter knowing exactly which elements and weapon skills to use.
 
 <!-- DOCGEN:BEGIN id="voidwatch-lights" -->
 | Light | Colour | Reward boon | Per-light weight |
@@ -76,7 +78,7 @@ Every rift hides **5 weaknesses**, one per Light colour. Probe the NM during the
 | **Pearl** | White | atmacite | 1 atmacite shard per light |
 <!-- DOCGEN:END id="voidwatch-lights" -->
 
-The 5 weaknesses are rolled fresh each rift from a pool of fire/ice/wind/earth/lightning/water/light/dark magic elements, weaponskills, and ranged attacks — every job can draw Lights.
+The weakness pool covers fire/ice/wind/earth/lightning/water/light/dark magic elements, weaponskills, and ranged attacks — every job can contribute Lights.
 
 ## NM mechanics by tier
 

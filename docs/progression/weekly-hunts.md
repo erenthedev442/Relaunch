@@ -3,11 +3,11 @@
 A rotating set of weekly objectives that *amplify* your normal hunting. Every Monday at midnight UTC, **5 random objectives** roll from a larger pool. Just play — kills, augments, rank-ups, and Game Master clears all push your progress automatically. Completion pays the reward instantly. Sweep all 5 in one week for a meta-bonus and a permanent sweep counter.
 
 !!! tip "Summary"
-    Walk to the **Hunt Board** NPC at GM Home (or type `!weekly` anywhere). See your 5 weekly objectives. Hunt as you normally would — progress is automatic. Each completion auto-claims its reward. Clear all 5 in a week for +5,000 Hunt Marks and a +1 to your lifetime sweep counter (leaderboard-tracked).
+    Talk to the **Hunt Board** NPC in **Celennia Memorial Library** (or type `!weekly` anywhere). See your 5 weekly objectives. Hunt as you normally would — progress is automatic. Each completion auto-claims its reward. Clear all 5 in a week for +5,000 Hunt Marks and a +1 to your lifetime sweep counter (leaderboard-tracked).
 
 ## How it works
 
-1. **Type `!gmhome`** to warp to GM Home, then **talk to the Hunt Board** (Activities cluster, z=−21) — or type `!weekly` anywhere to see your objectives without warping.
+1. **Talk to the Hunt Board** NPC in **Celennia Memorial Library** — or type `!weekly` anywhere to see your objectives without traveling.
 2. The board shows your 5 active objectives with progress bars.
 3. **Progress is automatic** — every NM kill, augment, rank-up, and Game Master clear that matches an active objective ticks up the counter.
 4. Hit an objective's target → instant completion + reward in chat. No menu interaction needed.

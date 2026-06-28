@@ -90,6 +90,7 @@ _SECTIONS = [
     ("Magic Support",     ["INTP", "FCAST", "ENSP", "CURE", "RFSH", "MDMG"]),
     ("Utility",           ["TH", "GIL"]),
     ("Resistances & Skills", ["STRES", "ELRES", "SKILL"]),
+    ("Pet Boost",         ["PET"]),
 ]
 
 # ---------------------------------------------------------------------------
@@ -112,6 +113,24 @@ def _parse_scalar(text: str, key: str) -> int | None:
     """Parse a top-level integer scalar from a Lua table text."""
     m = re.search(rf'\b{re.escape(key)}\s*=\s*(\d+)', text)
     return int(m.group(1)) if m else None
+
+
+def _parse_ap_tiers(text: str) -> list[dict]:
+    """Parse apTiers = { {minLevel=N, ap=N}, ... } from the catalog."""
+    m = re.search(r'\bapTiers\s*=\s*\{', text)
+    if not m:
+        return []
+    sub = text[m.end() - 1:]
+    block = None
+    for start, end in _balanced_blocks(sub):
+        block = sub[start:end]
+        break
+    if not block:
+        return []
+    tiers = []
+    for em in re.finditer(r'\{\s*minLevel\s*=\s*(\d+)\s*,\s*ap\s*=\s*(\d+)\s*\}', block):
+        tiers.append({"minLevel": int(em.group(1)), "ap": int(em.group(2))})
+    return tiers
 
 
 def _parse_nms(text: str) -> list[dict]:
@@ -280,7 +299,7 @@ def _parse_scaling_tiers(text: str, court0_bosses: list[str]) -> list[dict]:
 # Renderers
 # ---------------------------------------------------------------------------
 
-def _render_economy(mark_cost_base: int, mark_cost_cap: int, ap_per_ascension: int) -> str:
+def _render_economy(mark_cost_base: int, mark_cost_cap: int, ap_tiers: list[dict]) -> str:
     lines = []
     lines.append("| Ascension # | Mark cost |")
     lines.append("|---|---:|")
@@ -308,7 +327,20 @@ def _render_economy(mark_cost_base: int, mark_cost_cap: int, ap_per_ascension: i
         f"{_ordinal(cap_hit_at)} onward costs the same flat {mark_cost_cap:,}."
     )
     lines.append("")
-    lines.append(f"_Each ascension awards **{ap_per_ascension} AP** for your current main job._")
+    if ap_tiers and len(ap_tiers) > 1:
+        parts = []
+        for i, t in enumerate(ap_tiers):
+            lo = t["minLevel"] + 1 if t["minLevel"] > 0 else 1
+            if i + 1 < len(ap_tiers):
+                hi = ap_tiers[i + 1]["minLevel"]
+                parts.append(f"**{t['ap']} AP** (P.Lv {lo}–{hi})")
+            else:
+                parts.append(f"**{t['ap']} AP** (P.Lv {lo}+)")
+        lines.append(f"_Each ascension awards AP scaled by your Prestige Level: {', '.join(parts)}._")
+    elif ap_tiers:
+        lines.append(f"_Each ascension awards **{ap_tiers[0]['ap']} AP** for your current main job._")
+    else:
+        lines.append("_Each ascension awards **10 AP** for your current main job._")
     return "\n".join(lines)
 
 
@@ -426,9 +458,9 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     if has_ap_cost and not cats:
         raise RuntimeError("[prestige] apCost fields found but categories list parsed empty — check parser")
 
-    mark_cost_base   = _parse_scalar(text, "markCostBase")   or 500
-    mark_cost_cap    = _parse_scalar(text, "markCostCap")    or 3000
-    ap_per_ascension = _parse_scalar(text, "apPerAscension") or 10
+    mark_cost_base = _parse_scalar(text, "markCostBase") or 500
+    mark_cost_cap  = _parse_scalar(text, "markCostCap")  or 3000
+    ap_tiers       = _parse_ap_tiers(text)
 
     nms = _parse_nms(text)
 
@@ -436,7 +468,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     scaling_tiers = _parse_scaling_tiers(text, court0_bosses)
 
     # --- economy marker ---
-    economy_content = _render_economy(mark_cost_base, mark_cost_cap, ap_per_ascension)
+    economy_content = _render_economy(mark_cost_base, mark_cost_cap, ap_tiers)
     wrote = write_between_markers(page, "prestige-economy", economy_content)
     if wrote:
         print("[prestige] economy: written into marker")

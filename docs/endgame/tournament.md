@@ -47,7 +47,7 @@ Teams can have any number of members. Solo entrants are a team of one.
 | Wave 8 | 7 | 250 | ×96 |
 <!-- DOCGEN:END id="tournament-waves" -->
 
-_Difficulty is the HP multiplier applied to base mob HP. Larger teams additionally face mobs with +60% HP per extra member._
+_Difficulty is the HP multiplier applied to base mob HP. Larger teams face proportionally higher HP — mob HP is scaled by 0.6 × total team size (floor 1), so a 3-member team faces 1.8× base HP multiplier._
 
 ---
 

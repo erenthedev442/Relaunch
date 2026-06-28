@@ -1,9 +1,9 @@
 ﻿# Daily Board
 
-Talk to the **Daily Board** NPC at GM Home to pick up 3 objectives that reset every UTC midnight. Complete them and return to the NPC to claim marks. All 3 done in the same day? Grab a bonus reward on top.
+Talk to the **Daily Board** NPC in **Celennia Memorial Library** to pick up 3 objectives that reset every UTC midnight. Complete them and return to the NPC to claim marks. All 3 done in the same day? Grab a bonus reward on top.
 
 !!! tip "Summary"
-    Type **`!gmhome`** to get there. The **Daily Board** NPC is at the Activities cluster (z=−21, furthest west at x=−7.5). Talk to it, see today's 3 objectives, go do them, come back to claim. Resets at **00:00 UTC** every day.
+    The **Daily Board** NPC is in **Celennia Memorial Library** (the hub zone). Talk to it, see today's 3 objectives, go do them, come back to claim. Resets at **00:00 UTC** every day.
 
 ## How it works
 
@@ -15,6 +15,9 @@ Talk to the **Daily Board** NPC at GM Home to pick up 3 objectives that reset ev
 
 !!! note "Snapshot-based tracking"
     Progress is measured as **current value − baseline**, where the baseline is snapped the first time you talk to the NPC each day. Activities completed before your first visit that day don't count toward today's objectives. Just talk to the NPC before you start grinding.
+
+!!! note "Daily Hunt Mark cap"
+    The Daily Board pays a maximum of **750 Hunt Marks per UTC day** total across all three objectives. Objectives that would push you over the cap pay only the remainder.
 
 ## Objectives rotate daily
 
@@ -77,13 +80,7 @@ The Daily Board pays out the same four currencies used across the rest of the se
 
 ## NPC location
 
-The Daily Board NPC stands at GM Home, Activities cluster:
-
-| NPC | Position | Zone |
-|---|---|---|
-| **Daily Board** | `(-4.5, 0, -25)` | GM Home (zone 210) |
-
-It's the westernmost NPC in the row — just past the EXP Camp Moogle heading west.
+The Daily Board NPC is in **Celennia Memorial Library** (the main hub zone).
 
 ---
 

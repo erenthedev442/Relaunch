@@ -25,6 +25,9 @@ def _parse(text: str) -> dict:
     m = re.search(r"catalog\.npcName\s*=\s*'([^']+)'", text)
     c["npc"] = m.group(1) if m else "Lady Luck"
 
+    m = re.search(r"catalog\.zoneId\s*=\s*xi\.zone\.(\w+)", text)
+    c["zone"] = m.group(1).replace("_", " ").title() if m else "GM Home"
+
     m = re.search(r"catalog\.betTiers\s*=\s*\{([^}]*)\}", text)
     c["bets"] = ints(m.group(1)) if m else []
 
@@ -68,7 +71,8 @@ def _pct(edge: float) -> str:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return (f"**{c['npc']}** holds court in **GM Home** — step up to the table, "
+    zone = c.get("zone", "GM Home")
+    return (f"**{c['npc']}** holds court in **{zone}** — step up to the table, "
             f"pick a game, and place your stake.")
 
 

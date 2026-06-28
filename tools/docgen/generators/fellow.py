@@ -172,8 +172,8 @@ def _render_progression(c: dict) -> str:
         lines += [
             "",
             "If you are in a party, every party member who has their Fellow out "
-            "earns XP from the same kill — so grinding in a group levels "
-            "everyone's companion at once.",
+            "earns XP from every kill in the same zone — so grinding in a zone "
+            "levels everyone's companion at once.",
         ]
     return "\n".join(lines)
 

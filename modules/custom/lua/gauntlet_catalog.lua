@@ -81,7 +81,7 @@ end
 
 -- Final clear reward (level 10 NM kill)
 C.FINAL_REWARD = {
-    gil    = 5000000,  -- 500M gil
+    gil    = 5000000,  -- 5M gil
     pp     = 500,      -- Paragon Points
     infamy = 500,      -- Infamy
 }

@@ -35,7 +35,7 @@ CATEGORIES = [
     ("Items & Inventory",   {"additem", "ah", "shop", "delitem", "addkeyitem", "delkeyitem"}),
     ("Spawning",            {"fafnir", "spawnmob", "mobhere", "despawnmob"}),
     ("Buffs & Power",       {"buff", "godmode", "trustengage", "addeffect", "deleffect",
-                             "autojp", "automerits", "gainexp"}),  # last three: Legendary custom modules
+                             "autojp", "automerits"}),  # last two: Legendary custom modules
     ("Information & Debug", {"build", "geteffects", "getstats", "getmod", "getskill", "getfame", "getid", "getpool", "getmobmod", "getmobaction", "getmobflags", "getmobfamily", "getspecies", "getstats", "gettp", "getwspoints", "checkvar", "checklocalvar", "getlocalvars", "pos",
                              "mystats"}),  # mystats: Legendary custom module
 ]

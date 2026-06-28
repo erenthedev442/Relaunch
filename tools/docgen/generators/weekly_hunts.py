@@ -74,6 +74,7 @@ _LABEL_RE    = re.compile(r"\blabel\s*=\s*" + _QUOTED)
 _DESC_RE     = re.compile(r"\bdescription\s*=\s*" + _QUOTED)
 _TARGET_RE   = re.compile(r"\btarget\s*=\s*(\d+)")
 _EVENT_RE    = re.compile(r"\beventType\s*=\s*" + _QUOTED)
+_HL_RANK_RE  = re.compile(r"\bminHLRank\s*=\s*(\d+)")
 
 # Reward shape: { currency = '<X>', amount = N }
 _REWARD_CURRENCY_RE = re.compile(
@@ -128,13 +129,14 @@ def _extract_objectives(text: str) -> list[dict]:
     objectives: list[dict] = []
     for s, e in _balanced_blocks(inner):
         body = inner[s + 1: e - 1]
-        id_m     = _ID_RE.search(body)
-        label_m  = _LABEL_RE.search(body)
-        desc_m   = _DESC_RE.search(body)
-        target_m = _TARGET_RE.search(body)
-        event_m  = _EVENT_RE.search(body)
-        rcur_m   = _REWARD_CURRENCY_RE.search(body)
-        ramt_m   = _REWARD_AMOUNT_RE.search(body)
+        id_m      = _ID_RE.search(body)
+        label_m   = _LABEL_RE.search(body)
+        desc_m    = _DESC_RE.search(body)
+        target_m  = _TARGET_RE.search(body)
+        event_m   = _EVENT_RE.search(body)
+        rcur_m    = _REWARD_CURRENCY_RE.search(body)
+        ramt_m    = _REWARD_AMOUNT_RE.search(body)
+        hl_rank_m = _HL_RANK_RE.search(body)
 
         if not (label_m and target_m and event_m and rcur_m and ramt_m):
             continue
@@ -146,6 +148,7 @@ def _extract_objectives(text: str) -> list[dict]:
             "event":     _quoted_value(event_m),
             "reward_currency": _quoted_value(rcur_m),
             "reward_amount":   int(ramt_m.group(1)),
+            "min_hl_rank":     int(hl_rank_m.group(1)) if hl_rank_m else None,
         })
     return objectives
 
@@ -162,8 +165,8 @@ def _render_pool(objectives: list[dict], slots: int) -> str:
         f"**{slots}** are rolled randomly per player — your set may differ "
         "from your friends' sets._",
         "",
-        "| Objective | Target | Source | Reward |",
-        "|---|---:|---|---:|",
+        "| Objective | Target | Source | Min HL Rank | Reward |",
+        "|---|---:|---|---|---:|",
     ]
     for obj in objectives:
         currency_display = _CURRENCY_DISPLAY.get(
@@ -171,6 +174,7 @@ def _render_pool(objectives: list[dict], slots: int) -> str:
         )
         source = _EVENT_SOURCE.get(obj["event"], obj["event"])
         reward = f"{obj['reward_amount']:,} {currency_display}"
+        hl_rank = f"HL {obj['min_hl_rank']}" if obj.get("min_hl_rank") else "—"
         # Description goes BELOW the row title to keep the table narrow.
         # Markdown table cells don't render multi-line gracefully, so
         # we inline it as a sub-line via <br>.
@@ -178,7 +182,7 @@ def _render_pool(objectives: list[dict], slots: int) -> str:
         if obj["desc"]:
             title = f"{title}<br><sub>{_escape_md(obj['desc'])}</sub>"
         lines.append(
-            f"| {title} | {obj['target']} | {_escape_md(source)} | {reward} |"
+            f"| {title} | {obj['target']} | {_escape_md(source)} | {hl_rank} | {reward} |"
         )
     return "\n".join(lines)
 

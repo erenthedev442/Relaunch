@@ -23,16 +23,16 @@ The Gauntlet runs you through ten escalating trials. The first nine each offer a
 
 | Level | NM | Mob level | HP |
 |---:|---|---:|---:|
-| 1 | **Aquarius** | 80 | 100,000 |
-| 2 | **Serket** | 88 | 200,000 |
-| 3 | **Simurgh** | 96 | 400,000 |
-| 4 | **Nidhogg** | 104 | 800,000 |
-| 5 | **King Behemoth** | 112 | 1,600,000 |
-| 6 | **Vrtra** | 120 | 3,200,000 |
-| 7 | **Kirin** | 128 | 6,400,000 |
-| 8 | **Absolute Virtue** | 136 | 12,800,000 |
-| 9 | **Pandemonium Warden** | 144 | 25,600,000 |
-| 10 | **Shinryu** *(mandatory)* | 152 | 51,200,000 |
+| 1 | **Aquarius** | 80 | 20,000 |
+| 2 | **Serket** | 88 | 40,000 |
+| 3 | **Simurgh** | 96 | 80,000 |
+| 4 | **Nidhogg** | 104 | 160,000 |
+| 5 | **King Behemoth** | 112 | 320,000 |
+| 6 | **Vrtra** | 120 | 640,000 |
+| 7 | **Kirin** | 128 | 1,280,000 |
+| 8 | **Absolute Virtue** | 136 | 2,560,000 |
+| 9 | **Pandemonium Warden** | 144 | 5,120,000 |
+| 10 | **Shinryu** *(mandatory)* | 152 | 10,240,000 |
 
 HP **doubles** every level — a level 5 King Behemoth has 16× the HP of the level 1 Aquarius.
 
@@ -51,7 +51,7 @@ You can mix and match — take safe paths on levels 1–4, then fight every NM f
 
 ## Level 10: Shinryu
 
-At level 10 the Safe Path is gone. A single warp — **Final Trial** — stands between you and legend. Step through it to summon **Shinryu** at level 152 with **51,200,000 HP**.
+At level 10 the Safe Path is gone. A single warp — **Final Trial** — stands between you and legend. Step through it to summon **Shinryu** at level 152 with **10,240,000 HP**.
 
 There is no clock, no time limit. It's you, your pet if you brought one, and the dragon.
 
@@ -63,9 +63,9 @@ Defeating Shinryu triggers the reward instantly and you're warped back to GM Hom
 
 | Reward | Amount |
 |---|---:|
-| **Gil** | 500,000,000 (500M) |
-| **Paragon Points** | 50,000 |
-| **Infamy** | 50,000 |
+| **Gil** | 5,000,000 (5M) |
+| **Paragon Points** | 500 |
+| **Infamy** | 500 |
 | **Hall of Champions NPC** | Permanent |
 
 The reward is the same on every clear — repeated clears increment your clear count and update your champion statue's inscription, but the currency reward repeats each time.

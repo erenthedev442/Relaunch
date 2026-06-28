@@ -10,7 +10,7 @@ The **Cross-Job Ability Trainer** in <!--npc:cross_job_ability-->Leafallia<!--/n
 ## How It Works
 
 1. **Talk to the Cross-Job Ability Trainer** in the Utility cluster in <!--npc:cross_job_ability-->Leafallia<!--/npc-->.
-2. **Browse by job group** — the menu is organized into groups (Warrior, Monk, etc.).
+2. **Browse by job group** — the menu is organized into groups (Warrior, Samurai, etc.).
 3. **Confirm purchase** — 10,000,000 gil is deducted and the license is permanently recorded to your character.
 4. **Use a macro** — `/ja "Meditate" <me>` (or whichever ability). The server validates the macro against your unlocked licenses and fires the ability.
 

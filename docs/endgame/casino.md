@@ -1,9 +1,9 @@
 # Casino — Lady Luck
 
-Feeling lucky? **Lady Luck** runs a four-game casino in GM Home where you can gamble your gil on slots, high-low, roulette, and dice. Every game keeps a small house edge, so over time it's a gil sink — but a hot streak can pay out huge, and any single win big enough is shouted to the whole server.
+Feeling lucky? **Lady Luck** runs a four-game casino in **Celennia Memorial Library** where you can gamble your gil on slots, high-low, roulette, and dice. Every game keeps a small house edge, so over time it's a gil sink — but a hot streak can pay out huge, and any single win big enough is shouted to the whole server.
 
 !!! tip "Summary"
-    A four-game gil-sink casino — slots, high-low, roulette, and dice — run by Lady Luck in GM Home. Pick a stake and play; the biggest wins shout server-wide.
+    A four-game gil-sink casino — slots, high-low, roulette, and dice — run by Lady Luck in **Celennia Memorial Library**. Pick a stake and play; the biggest wins shout server-wide.
 
 ## Where to play
 
