@@ -5,7 +5,13 @@
 -- hunt is actually farmable. Each reuses the NM's real pool + droplist (full
 -- retail loot); HP/MP=0 -> engine calculates HP/MP from the spawn-point level.
 --
--- Reserved IDs:  groupid 20000-20023,  mobid = (zoneid<<12)|(3840+idx).
+-- Reserved IDs:  groupid 20000-20023,  mobid = 0x1000000 | (zoneid<<12) | targid.
+--   CRITICAL: a valid mob entity id MUST include the 0x1000000 (16777216) entity
+--   base, and its targid (low 12 bits) MUST be < 0x700 (1792). targids >= 0x700
+--   are the DYNAMIC-entity range (baseentity.cpp isDynamicEntity), so a static DB
+--   mob placed there is never instantiated ("Mob doesn't exist"). Real mobs in
+--   every affinity zone top out at targid <= 532, so we use targids 1537-1560
+--   (0x601-0x618): free in-zone AND below the dynamic boundary.
 -- Existing retail/custom/HL spawns of these NMs are LEFT UNTOUCHED (separate ids).
 --
 -- Relocations (the menu zone cannot host a static overworld spawn):
@@ -56,29 +62,30 @@ INSERT INTO `mob_groups` VALUES
 
 -- ---- mob_spawn_points: one timed spawn per NM at a valid in-zone coord ----
 -- cols: mobid, spawnslotid, mobname, polutils_name, groupid, minLevel, maxLevel, pos_x, pos_y, pos_z, pos_rot
+-- mobid = 16777216 + (zoneid<<12) + (1536+idx) -> 0x1000000 base + free targid below 0x700.
 DELETE FROM `mob_spawn_points` WHERE `groupid` BETWEEN 20000 AND 20023;
 INSERT INTO `mob_spawn_points` VALUES
- (433921, 0, 'Behemoth',         'Behemoth',          20000,  80,  80, -670.00, -23.00,  352.00, 0),
- (524034, 0, 'King_Behemoth',    'King Behemoth',     20001,  85,  85,  171.18,   4.29, -124.58, 0),
- (716547, 0, 'King_Arthro',      'King Arthro',       20002,  55,  55,  -27.91, -10.69, -185.26, 0),
- (454404, 0, 'Simurgh',          'Simurgh',           20003,  80,  80, -682.25, -31.61, -433.62, 0),
- (528133, 0, 'Adamantoise',      'Adamantoise',       20004,  80,  80,  -98.00,  -0.05,  -39.00, 0),
- (732934, 0, 'Genbu',            'Genbu',             20005, 125, 125,  892.85,  99.50,  718.02, 0),
- (495367, 0, 'Roc',              'Roc',               20006,  80,  80,  479.94,   7.67, -286.00, 0),
- (732936, 0, 'Seiryu',           'Seiryu',            20007, 125, 125,  901.36,  99.50,  695.60, 0),
- (732937, 0, 'Byakko',           'Byakko',            20008, 125, 125,  901.26,  99.50,  666.78, 0),
- (466698, 0, 'Aspidochelone',    'Aspidochelone',     20009,  85,  85, -175.33,   7.68, -247.30, 0),
- (122635, 0, 'Ouryu',            'Ouryu',             20010,  99,  99,  618.78,   0.56, -552.23, 0),
- (630540, 0, 'Bune',             'Bune',              20011,  83,  83,  405.43,  11.40,  -98.61, 0),
- (126733, 0, 'Phoenix',          'Phoenix',           20012,  90,  90,  682.74, -31.76, -500.81, 0),
- (732942, 0, 'Suzaku',           'Suzaku',            20013, 125, 125,  882.13,  99.79,  648.93, 0),
- (732943, 0, 'Kirin',            'Kirin',             20014, 124, 124,  866.85,  99.50,  622.56, 0),
- (634640, 0, 'Fafnir',           'Fafnir',            20015,  90,  90,  -63.39,  -1.56,   16.26, 0),
- (634641, 0, 'Nidhogg',          'Nidhogg',           20016,  90,  90,  -60.87,  -1.55,  -11.13, 0),
- (843538, 0, 'Vrtra',            'Vrtra',             20017,  95,  95,  168.79,   0.90,  -19.83, 0),
- ( 24339, 0, 'Tiamat',           'Tiamat',            20018,  95,  95, -242.35, -39.88, -415.62, 0),
- (515860, 0, 'King_Vinegarroon', 'King Vinegarroon',  20019,  80,  80,  683.42,  -0.78,  -41.82, 0),
- (782101, 0, 'Khimaira',         'Khimaira',          20020,  85,  85, -124.00,  -0.50,  249.52, 0),
- (782102, 0, 'Cerberus',         'Cerberus',          20021,  85,  85, -147.00,  -0.50,  250.00, 0),
- (536343, 0, 'Absolute_Virtue',  'Absolute Virtue',   20022,  92,  92,   -6.03, -40.52, -417.21, 0),
- (536344, 0, 'Proto-Omega',      'Proto-Omega',       20023,  99,  99,    6.84, -38.60, -444.97, 0);
+ (17208833, 0, 'Behemoth',         'Behemoth',          20000,  80,  80, -670.00, -23.00,  352.00, 0),
+ (17298946, 0, 'King_Behemoth',    'King Behemoth',     20001,  85,  85,  171.18,   4.29, -124.58, 0),
+ (17491459, 0, 'King_Arthro',      'King Arthro',       20002,  55,  55,  -27.91, -10.69, -185.26, 0),
+ (17229316, 0, 'Simurgh',          'Simurgh',           20003,  80,  80, -682.25, -31.61, -433.62, 0),
+ (17303045, 0, 'Adamantoise',      'Adamantoise',       20004,  80,  80,  -98.00,  -0.05,  -39.00, 0),
+ (17507846, 0, 'Genbu',            'Genbu',             20005, 125, 125,  892.85,  99.50,  718.02, 0),
+ (17270279, 0, 'Roc',              'Roc',               20006,  80,  80,  479.94,   7.67, -286.00, 0),
+ (17507848, 0, 'Seiryu',           'Seiryu',            20007, 125, 125,  901.36,  99.50,  695.60, 0),
+ (17507849, 0, 'Byakko',           'Byakko',            20008, 125, 125,  901.26,  99.50,  666.78, 0),
+ (17241610, 0, 'Aspidochelone',    'Aspidochelone',     20009,  85,  85, -175.33,   7.68, -247.30, 0),
+ (16897547, 0, 'Ouryu',            'Ouryu',             20010,  99,  99,  618.78,   0.56, -552.23, 0),
+ (17405452, 0, 'Bune',             'Bune',              20011,  83,  83,  405.43,  11.40,  -98.61, 0),
+ (16901645, 0, 'Phoenix',          'Phoenix',           20012,  90,  90,  682.74, -31.76, -500.81, 0),
+ (17507854, 0, 'Suzaku',           'Suzaku',            20013, 125, 125,  882.13,  99.79,  648.93, 0),
+ (17507855, 0, 'Kirin',            'Kirin',             20014, 124, 124,  866.85,  99.50,  622.56, 0),
+ (17409552, 0, 'Fafnir',           'Fafnir',            20015,  90,  90,  -63.39,  -1.56,   16.26, 0),
+ (17409553, 0, 'Nidhogg',          'Nidhogg',           20016,  90,  90,  -60.87,  -1.55,  -11.13, 0),
+ (17618450, 0, 'Vrtra',            'Vrtra',             20017,  95,  95,  168.79,   0.90,  -19.83, 0),
+ (16799251, 0, 'Tiamat',           'Tiamat',            20018,  95,  95, -242.35, -39.88, -415.62, 0),
+ (17290772, 0, 'King_Vinegarroon', 'King Vinegarroon',  20019,  80,  80,  683.42,  -0.78,  -41.82, 0),
+ (17557013, 0, 'Khimaira',         'Khimaira',          20020,  85,  85, -124.00,  -0.50,  249.52, 0),
+ (17557014, 0, 'Cerberus',         'Cerberus',          20021,  85,  85, -147.00,  -0.50,  250.00, 0),
+ (17311255, 0, 'Absolute_Virtue',  'Absolute Virtue',   20022,  92,  92,   -6.03, -40.52, -417.21, 0),
+ (17311256, 0, 'Proto-Omega',      'Proto-Omega',       20023,  99,  99,    6.84, -38.60, -444.97, 0);
