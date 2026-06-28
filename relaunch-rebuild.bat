@@ -48,6 +48,30 @@ set "GO="
 set /p GO="   Proceed? [Y/N]:  "
 if /i not "%GO%"=="Y" ( echo   Cancelled - nothing changed.& goto :end )
 
+REM ---- [push] Sync committed relaunch branch to origin BEFORE deploying, so the
+REM      website (which rebuilds from origin/relaunch) matches the exact code we
+REM      ship to the server in [1]. Without this, a committed-but-not-pushed deploy
+REM      leaves the server ahead of the site = content drift. A push failure means
+REM      the site would rebuild STALE, so ABORT before touching the server.
+echo(
+echo  [push] Syncing committed relaunch branch to origin (Relaunch repo)...
+(echo [%TIME%] [push] git push origin relaunch: start)>> "%LOG%"
+git -C "%SRC%" push origin relaunch > "%OUT%" 2>&1
+if errorlevel 1 (
+  type "%OUT%"
+  type "%OUT%" >> "%LOG%"
+  echo(
+  echo   *** ABORT: push to origin FAILED. The website rebuilds from origin/relaunch,
+  echo       so deploying now would DRIFT the site from the server. Fix the push
+  echo       ^(commit your work / resolve non-fast-forward^) and re-run. Nothing shipped.
+  set "SRVOK=PUSH-FAILED"
+  set "SITEOK=PUSH-FAILED"
+  goto :finish
+)
+type "%OUT%"
+type "%OUT%" >> "%LOG%"
+(echo [%TIME%] [push] origin synced OK)>> "%LOG%"
+
 REM ---- [1] Archive relaunch branch + ship + extract ----
 echo(
 echo  [1/7] Archiving relaunch branch and shipping to Azure...
