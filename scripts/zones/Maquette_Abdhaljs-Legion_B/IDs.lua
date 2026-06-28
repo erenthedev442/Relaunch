@@ -14,7 +14,14 @@ zones[xi.zone.MAQUETTE_ABDHALJS_LEGION_B] =
     },
     mob =
     {
-        17952867,
+        -- Ambuscade fight mobs (instance 30000 / zone 287)
+        -- DB entries: ambuscade_adds.sql
+        BOZZETTO_BREADWINNER  = 17952867,   -- pool 30000, group 38
+        BOZZETTO_URCHIN_1     = 17952868,   -- pool 30003, group 20024
+        BOZZETTO_URCHIN_2     = 17952869,
+        BOZZETTO_URCHIN_3     = 17952870,
+        BOZZETTO_URCHIN_4     = 17952871,
+        AMBUSCADE_HOUSEMAKER  = 17952872,   -- pool 30004, group 20025
     },
     npc =
     {

@@ -5,37 +5,55 @@
 -- Entry pos   : (137, 12.5, -137, rot 32)
 -- Exit zone   : 249 (Mhaura)
 --
--- Difficulty is stored in the player's Ambuscade_Difficulty charVar before
--- createInstance fires, then written to instance:setProgress() in the
--- callback so it survives for the lifetime of the instance.
--- Mob HP is scaled in onInstanceProgressUpdate (fires immediately after setProgress).
+-- Difficulty (1-15) stored in Ambuscade_Difficulty charVar → setProgress().
+-- onInstanceProgressUpdate fires immediately after setProgress(); that is
+-- where mob HP is scaled AND Urchins/Housemaker are spawned so difficulty
+-- is known before the player zones in.
 -----------------------------------
 local ID = zones[xi.zone.MAQUETTE_ABDHALJS_LEGION_B]
 -----------------------------------
 local instanceObject = {}
 
--- Matches the HP_SCALE table in scripts/globals/ambuscade.lua.
--- Applied as a multiplier to the mob's base HP from the DB.
-local HP_SCALE =
+-- HP multiplier for Bozzetto Breadwinner (party HP scaling is done at engage).
+-- Urchins are also scaled here; Housemaker HP comes from mob_groups.
+local DIFF_HP_SCALE =
 {
-    [1]  = 5.0,  [2]  = 3.5,  [3]  = 2.5,  [4]  = 1.8,  [5]  = 1.0,  -- Intense VD→VE
-    [6]  = 4.0,  [7]  = 2.8,  [8]  = 2.0,  [9]  = 1.5,  [10] = 1.0,  -- Regular VD→VE
+    -- Intense VD→VE
+    [1]  = 5.0,  [2]  = 3.5,  [3]  = 2.5,  [4]  = 1.8,  [5]  = 1.0,
+    -- Regular VD→VE
+    [6]  = 4.0,  [7]  = 2.8,  [8]  = 2.0,  [9]  = 1.5,  [10] = 1.0,
+    -- Light VD→VE
+    [11] = 1.3,  [12] = 1.2,  [13] = 1.0,  [14] = 0.9,  [15] = 0.8,
 }
 
--- Spawn all mobs defined for this zone's Ambuscade instance.
+-- How many Urchin adds to spawn (pre-spawned, never respawn during the fight).
+local URCHIN_COUNT =
+{
+    [1]=4, [2]=3, [3]=2, [4]=2, [5]=1,   -- Intense
+    [6]=3, [7]=2, [8]=2, [9]=1, [10]=1,  -- Regular
+    [11]=1,[12]=1,[13]=1,[14]=1,[15]=1,  -- Light
+}
+
+local URCHIN_IDS =
+{
+    ID.mob.BOZZETTO_URCHIN_1,
+    ID.mob.BOZZETTO_URCHIN_2,
+    ID.mob.BOZZETTO_URCHIN_3,
+    ID.mob.BOZZETTO_URCHIN_4,
+}
+
+-- Spawn only the Breadwinner here; Urchins and Housemaker are spawned
+-- in onInstanceProgressUpdate (once difficulty is known).
 instanceObject.onInstanceCreated = function(instance)
-    for _, mobId in pairs(ID.mob) do
-        SpawnMob(mobId, instance)
-    end
+    SpawnMob(ID.mob.BOZZETTO_BREADWINNER, instance)
 end
 
--- Transfer the chosen difficulty from the player's charVar to the instance,
--- then place the player inside.  setProgress triggers onInstanceProgressUpdate,
--- which scales mob HP before the player can engage.
+-- Read difficulty, persist to instance, warp player in.
+-- setProgress() triggers onInstanceProgressUpdate before returning.
 instanceObject.onInstanceCreatedCallback = function(player, instance)
     if not instance then return end
     local diff = player:getCharVar('Ambuscade_Difficulty')
-    if diff < 1 or diff > 10 then diff = 10 end  -- fallback: Regular VE (minimum rewards)
+    if diff < 1 or diff > 15 then diff = 10 end  -- default: Regular VE
     instance:setProgress(diff)
     player:setInstance(instance)
     player:setPos(137, 12.5, -137, 32, instance:getZone():getID())
@@ -48,32 +66,60 @@ instanceObject.afterInstanceRegister = function(player)
     end
 end
 
--- Scale mob HP to match the selected difficulty.
--- Fires right after onInstanceCreatedCallback calls instance:setProgress().
--- All mobs are already spawned (from onInstanceCreated) so getMobs() works here.
+-- Fires immediately after onInstanceCreatedCallback calls setProgress().
+-- Scale Breadwinner HP, spawn adds.
 instanceObject.onInstanceProgressUpdate = function(instance, progress)
-    local mult = HP_SCALE[progress] or 1.0
-    if mult == 1.0 then return end  -- no scaling needed for VE difficulties
-    for _, mob in pairs(instance:getMobs()) do
-        if mob:isAlive() then
-            local newHP = math.max(1, math.floor(mob:getMaxHP() * mult))
-            mob:setMaxHP(newHP)
-            mob:setHP(newHP)
+    local mult = DIFF_HP_SCALE[progress] or 1.0
+
+    -- Scale Breadwinner HP.
+    local bw = GetMobByID(ID.mob.BOZZETTO_BREADWINNER)
+    if bw and bw:isAlive() then
+        local newHP = math.max(1, math.floor(bw:getMaxHP() * mult))
+        bw:setMaxHP(newHP)
+        bw:setHP(newHP)
+    end
+
+    -- Spawn difficulty-appropriate number of Urchins.
+    local urchinCount = URCHIN_COUNT[progress] or 1
+    for i = 1, urchinCount do
+        SpawnMob(URCHIN_IDS[i], instance)
+    end
+
+    -- Scale Urchin HP.
+    for i = 1, urchinCount do
+        local u = GetMobByID(URCHIN_IDS[i])
+        if u and u:isAlive() then
+            local newHP = math.max(1, math.floor(u:getMaxHP() * mult))
+            u:setMaxHP(newHP)
+            u:setHP(newHP)
         end
     end
+
+    -- Always spawn one Housemaker.
+    SpawnMob(ID.mob.AMBUSCADE_HOUSEMAKER, instance)
 end
 
--- Polling fallback: detect when all mobs are dead and complete the instance.
--- The mob script's onMobDeath is the preferred trigger, but this catches any
--- edge cases where that callback doesn't fire (e.g., mob despawn vs. kill).
+-- Detect when all killable mobs are dead; record elapsed time for time bonus.
 instanceObject.onInstanceTimeUpdate = function(instance, elapsed)
     local mobs   = instance:getMobs()
     local anyMob = false
     for _, mob in pairs(mobs) do
-        anyMob = true
-        if mob:isAlive() then return end  -- still fighting
+        if mob:getName() ~= 'Ambuscade_Housemaker' then
+            -- Only count non-passive mobs toward the kill condition.
+            anyMob = true
+            if mob:isAlive() then return end
+        end
     end
     if anyMob then
+        -- Store clear time so onInstanceComplete can award the time bonus.
+        for _, player in pairs(instance:getChars()) do
+            player:setCharVar('Ambuscade_Clear_Time', math.floor(elapsed))
+        end
+        -- Despawn any surviving Housemaker cleanly.
+        pcall(function()
+            local hm = GetMobByID(ID.mob.AMBUSCADE_HOUSEMAKER)
+            if hm and hm:isAlive() then hm:setHP(0) end
+        end)
         instance:complete()
     end
 end
@@ -89,7 +135,7 @@ end
 instanceObject.onEventUpdate = function(player, csid, option, npc)
 end
 
--- csid 10001 is the generic instance-exit event; warp the player back to Mhaura.
+-- csid 10001 = generic instance-exit event; warp back to Mhaura.
 instanceObject.onEventFinish = function(player, csid, option, npc)
     if csid == 10001 then
         player:setPos(-34.2, -16, 58, 32, 249)
