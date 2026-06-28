@@ -314,7 +314,7 @@ DEFAULT_BRACKETS = [[10, 140000], [20, 170000], [30, 210000], [40, 260000],
                     [98, 800000], [99, 1000000]]
 
 
-def universal_buyback(cur, ub, commit):
+def universal_buyback(cur, ub, commit, marketed_gear_maxlvl=0):
     """Buy back ANY auctionable item a player lists, at a layered floor price.
 
     The SELL side is untouched (gear_topup still stocks only the non-iLvl gear).
@@ -357,13 +357,22 @@ def universal_buyback(cur, ub, commit):
            "          WHERE a.itemid=ah.itemid AND a.sale>0 AND a.seller<>{sid})>={ms} THEN 'sale' "
            "     WHEN b.BaseSell>0 THEN 'npc' ELSE 'floor' END").format(sid=SELLER_ID, ms=msales)
 
+    # Gear the non_ilvl_gear rule markets (<= marketed_gear_maxlvl) is bought back
+    # by gear_buyback at the SAME price the bot sells it for. Letting THIS function
+    # also buy it at the 2*BaseSell floor over-pays once price_multiplier drops the
+    # sell price below that floor -> buy-cheap-from-bot / sell-dear gil dupe. Exclude it.
+    gex = ""
+    if marketed_gear_maxlvl:
+        gex = (" AND NOT EXISTS (SELECT 1 FROM item_equipment ge "
+               "WHERE ge.itemId = ah.itemid AND ge.ilevel = 0 AND ge.level <= {})".format(
+                   int(marketed_gear_maxlvl)))
     cur.execute(
         "SELECT ah.id, ah.price, ({ref}) AS botprice, b.name, ({src}) AS src "
         "FROM auction_house ah JOIN item_basic b ON b.itemid=ah.itemid "
         "WHERE ah.buyer_name IS NULL AND ah.seller<>{sid} "
         "  AND b.aH<>0 AND (b.flags&64)=0 AND (b.flags&16384)=0 "
-        "  AND ah.price <= ({ref}) "
-        "ORDER BY ah.price ASC LIMIT {cap}".format(ref=ref, src=src, sid=SELLER_ID, cap=cap))
+        "  AND ah.price <= ({ref}){gex} "
+        "ORDER BY ah.price ASC LIMIT {cap}".format(ref=ref, src=src, sid=SELLER_ID, cap=cap, gex=gex))
     rows = cur.fetchall()
 
     if commit and rows:
@@ -458,8 +467,13 @@ def run_pass(db, cfg, commit):
     # (Stock stays the gear rule; this is the buy side for the whole AH.)
     ub = cfg.get("universal_buyback")
     if ub and ub.get("enabled", True):
+        # Exclude gear the non_ilvl_gear rule markets from universal buyback (see
+        # universal_buyback) so its discounted sell price can't be arbitraged
+        # against the 2*BaseSell buy floor.
+        gear_maxlvl = max([int(r.get("max_equip_level", 0))
+                           for r in cfg.get("rules", []) if r.get("type") == "non_ilvl_gear"] or [0])
         try:
-            rows = universal_buyback(cur, ub, commit)
+            rows = universal_buyback(cur, ub, commit, gear_maxlvl)
             if rows:
                 by_src, spend = {}, 0
                 for _id, _price, botprice, _name, s in rows:
