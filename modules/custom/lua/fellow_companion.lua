@@ -94,17 +94,19 @@ local CONFIG =
     -- still melee-assists + uses TP moves; behaviors are additive on top.
     roles =
     {
-        vanguard  = { name = 'Vanguard',  blurb = 'Balanced melee damage dealer.',
+        -- `defaultWs` = the role's signature TP move at TP cap when the player hasn't
+        -- picked a per-role override (see CONFIG.tpMoves / the Role menu's TP Move option).
+        vanguard  = { name = 'Vanguard',  blurb = 'Balanced melee damage dealer.', defaultWs = xi.mobSkill.DANCING_EDGE,
                       mods = { { xi.mod.ATTP, 30 }, { xi.mod.DOUBLE_ATTACK, 10 } } },
-        berserker = { name = 'Berserker', blurb = 'All-out melee offense; takes a bit more damage.',
+        berserker = { name = 'Berserker', blurb = 'All-out melee offense; takes a bit more damage.', defaultWs = xi.mobSkill.CRESCENT_FANG,
                       mods = { { xi.mod.ATTP, 60 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 10 }, { xi.mod.DMGPHYS, 1000 } } },
-        bulwark   = { name = 'Bulwark',   blurb = 'Tank: more DEF, less damage taken, holds hate.',
+        bulwark   = { name = 'Bulwark',   blurb = 'Tank: more DEF, less damage taken, holds hate.', defaultWs = xi.mobSkill.ROCK_BUSTER,
                       mods = { { xi.mod.DEF, 300 }, { xi.mod.DMGPHYS, -1000 }, { xi.mod.ENMITY, 50 } } },
-        oracle    = { name = 'Oracle',    blurb = 'Battle-healer: fights and mends your wounds when hurt.',
+        oracle    = { name = 'Oracle',    blurb = 'Battle-healer: fights and mends your wounds when hurt.', defaultWs = xi.mobSkill.METEORITE,
                       mods = { { xi.mod.MND, 150 }, { xi.mod.DEF, 150 }, { xi.mod.MDEF, 150 } }, behavior = 'heal' },
-        magus     = { name = 'Magus',     blurb = 'Battle-mage: fights and hurls elemental magic at your foe.',
+        magus     = { name = 'Magus',     blurb = 'Battle-mage: fights and hurls elemental magic at your foe.', defaultWs = xi.mobSkill.FIRE_IV,
                       mods = { { xi.mod.INT, 150 }, { xi.mod.MATT, 400 }, { xi.mod.MACC, 200 } }, behavior = 'nuke' },
-        hunter    = { name = 'Hunter',    blurb = 'Ranger: fights and adds ranged strikes to your target.',
+        hunter    = { name = 'Hunter',    blurb = 'Ranger: fights and adds ranged strikes to your target.', defaultWs = xi.mobSkill.THOUSAND_NEEDLES_1,
                       mods = { { xi.mod.AGI, 150 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged' },
     },
     roleOrder   = { 'vanguard', 'berserker', 'bulwark', 'oracle', 'magus', 'hunter' },
@@ -137,6 +139,25 @@ local CONFIG =
         { name = 'Boggart',    modelId = 451,  ws = xi.mobSkill.BLIZZARD_IV        },  -- ice nuke
         { name = 'Goobbue',    modelId = 296,  ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- heavy uppercut
         { name = 'Adventurer', modelId = 3119, ws = xi.mobSkill.CRESCENT_FANG      },  -- strong physical
+    },
+
+    -- TP MOVE picker: per-role list of selectable signature TP moves (forced at TP
+    -- cap via useMobAbility). Chosen per role in the Role menu; "(Default)" uses the
+    -- role's defaultWs. Stored in the Fellow_TP_<role> charVar (0 = default).
+    tpMoves =
+    {
+        { name = 'Fire IV',          ws = xi.mobSkill.FIRE_IV            },
+        { name = 'Blizzard IV',      ws = xi.mobSkill.BLIZZARD_IV        },
+        { name = 'Aero IV',          ws = xi.mobSkill.AERO_IV            },
+        { name = 'Charged Whisker',  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder
+        { name = 'Meteorite',        ws = xi.mobSkill.METEORITE          },  -- light
+        { name = 'Cursed Sphere',    ws = xi.mobSkill.CURSED_SPHERE_1    },  -- dark
+        { name = '1000 Needles',     ws = xi.mobSkill.THOUSAND_NEEDLES_1 },  -- ranged
+        { name = 'Dancing Edge',     ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit physical
+        { name = 'Crescent Fang',    ws = xi.mobSkill.CRESCENT_FANG      },  -- strong physical
+        { name = 'Rock Buster',      ws = xi.mobSkill.ROCK_BUSTER        },  -- earth physical
+        { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },
+        { name = 'Bomb Toss',        ws = xi.mobSkill.BOMB_TOSS_1        },
     },
 
     -- OUTFIT picker: humanoid job-class themes applied on top of Appearance.
@@ -217,8 +238,20 @@ local function getOutfitModelId(p)
     local entry = CONFIG.outfits[getN(p, V.outfit)]
     return entry and entry.modelId
 end
--- The chosen FORM's signature TP move (mob skill). nil -> fall back to a random Ready move.
+-- Per-role TP-move override charVar (0/unset = use the role's defaultWs).
+local function tpVar(roleKey) return 'Fellow_TP_' .. roleKey end
+-- The signature TP move fired at TP cap, resolved PER ROLE (not by appearance):
+--   per-role override (Fellow_TP_<role>) -> the role's defaultWs -> appearance ws.
+-- nil -> the combat loop falls back to a chassis-picked Ready move.
 local function chosenWs(p)
+    local roleKey = getRole(p)
+    local choice  = getN(p, tpVar(roleKey))
+    if choice > 0 then
+        local entry = CONFIG.tpMoves[choice]
+        if entry and entry.ws then return entry.ws end
+    end
+    local rd = CONFIG.roles[roleKey]
+    if rd and rd.defaultWs then return rd.defaultWs end
     local mdl = CONFIG.models[getN(p, V.modelPet)]
     return mdl and mdl.ws
 end
@@ -451,10 +484,16 @@ local function statusReport(p)
         if v > 0 then parts[#parts + 1] = string.format('%s %d', stat, v) end
     end
     p:printToPlayer('  Allocation: ' .. (#parts > 0 and table.concat(parts, '  ') or 'none yet'), SYS)
+    -- TP move in effect for the current role (per-role override, else role default).
+    local roleKey  = getRole(p)
+    local tpChoice = getN(p, tpVar(roleKey))
+    local tpName   = (tpChoice > 0 and CONFIG.tpMoves[tpChoice] and CONFIG.tpMoves[tpChoice].name)
+        or '(role default)'
+    p:printToPlayer(string.format('  TP move (%s): %s', role.name, tpName), SYS)
 end
 
 -- ════════════════════════════════ Menus ═════════════════════════════════════
-local openMain, openAllocate, openRole, openName, openModel, openOutfit
+local openMain, openAllocate, openRole, openName, openModel, openOutfit, openTpMove
 
 local function show(p, title, options)
     local snapshot = { title = title, options = options }
@@ -534,6 +573,8 @@ openRole = function(p)
             end,
         }
     end
+    -- TP move is configured PER ROLE; edit the current role's move here.
+    options[#options + 1] = { 'Set TP Move', function(pp) openTpMove(pp, 0) end }
     options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
     show(p, 'Choose Role', options)
 end
@@ -638,6 +679,47 @@ openOutfit = function(p, page)
     end
     options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
     show(p, 'Choose Outfit', options)
+end
+
+-- Paginated TP-move picker for the CURRENT role. "(Default)" at realIdx 0 uses the
+-- role's defaultWs; each numbered entry maps to CONFIG.tpMoves[N]. Applies live --
+-- the combat loop reads chosenWs() each tick, so no re-summon is needed.
+openTpMove = function(p, page)
+    page = page or 0
+    local roleKey  = getRole(p)
+    local roleName = (CONFIG.roles[roleKey] or {}).name or roleKey
+    -- Prepend "(Default)" so realIdx 0 = role default; realIdx N = CONFIG.tpMoves[N].
+    local all = { { name = '(Default)' } }
+    for _, t in ipairs(CONFIG.tpMoves) do all[#all + 1] = t end
+    local per   = CONFIG.namesPerPage
+    local pages = math.max(1, math.ceil(#all / per))
+    page = page % pages
+    local cur   = getN(p, tpVar(roleKey))
+    local options = {}
+    for i = page * per + 1, math.min((page + 1) * per, #all) do
+        local idx     = i
+        local entry   = all[idx]
+        local realIdx = idx - 1
+        local label   = (cur == realIdx) and (entry.name .. ' *') or entry.name
+        options[#options + 1] =
+        {
+            label,
+            function(pp)
+                setN(pp, tpVar(roleKey), realIdx)
+                if realIdx == 0 then
+                    pp:printToPlayer(string.format('[Fellow] %s TP move: Default.', roleName), SYS)
+                else
+                    pp:printToPlayer(string.format('[Fellow] %s TP move: %s.', roleName, entry.name), SYS)
+                end
+                openTpMove(pp, page)
+            end,
+        }
+    end
+    if pages > 1 then
+        options[#options + 1] = { 'More >>', function(pp) openTpMove(pp, page + 1) end }
+    end
+    options[#options + 1] = { 'Back', function(pp) openRole(pp) end }
+    show(p, string.format('TP Move: %s', roleName), options)
 end
 
 -- ════════════════════════════════ Faucet ════════════════════════════════════
