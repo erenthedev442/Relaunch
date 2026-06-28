@@ -7,11 +7,19 @@ Tears in the void have opened across Vana'diel. The **Voidwatch** system sends y
 
 ## Getting started
 
-The **Officer** NPC in **Leafallia** sells Voidstones (400 Cruor each) and runs the **Atmacite Refiner** where you spend Voidwatch_Shards on permanent perks. You start with **5 Voidstones** the first time you engage the system.
+The **Officer** NPC in **Leafallia** sells Voidstones and runs the **Atmacite Refiner** where you spend atmacite shards on permanent perks. You start with a stock of Voidstones the first time you engage the system.
 
-- **Carry cap:** 10 Voidstones
-- **Regen:** 1 Voidstone every hour, real time
-- **Rift cost:** 1 Voidstone per opening
+<!-- DOCGEN:BEGIN id="voidwatch-economy" -->
+| Voidstones | Detail |
+|---|---|
+| Carry cap | 10 Voidstones |
+| Regen | 1 Voidstone every 1 hour, real time |
+| Starting stock | 5 Voidstones, granted your first time |
+| Rift cost | 1 Voidstone per opening |
+| Buy price | 400 cruor each |
+| Battle timer | 30 minutes before the NM voids out |
+| Pyxis claim window | 3 minutes to open the chest |
+<!-- DOCGEN:END id="voidwatch-economy" -->
 
 Use `!voidwatch` at any time to check your Voidstones, cruor balance, and current tier.
 
@@ -21,15 +29,36 @@ Planar Rifts are clickable objects scattered across **30 overworld zones** — o
 
 The rift battle runs for up to **30 minutes**. If the NM survives, it voids out.
 
+## Abyssite strata
+
+The 30 rift zones are grouped into **seven abyssite strata**, each with its own starting tier and its own roster of Voidwalker NMs. Higher strata begin harder — your clears within a stratum push its tier up from there.
+
+<!-- DOCGEN:BEGIN id="voidwatch-strata" -->
+| Stratum | Starting tier | Zones | Voidwalker NMs |
+|---|---|---|---|
+| **Crimson Stratum** | 1 | 6 | Krabkatoa, Yacumama, Raker Bee |
+| **Indigo Stratum** | 4 | 5 | Farruca Fly, Skuld, Gorehound |
+| **Jade Stratum** | 7 | 4 | Blobdingnag, Shoggoth, Capricornus |
+| **White Stratum** | 10 | 3 | Lamprey Lord, Jyeshtha, Dawon |
+| **Ashen Stratum** | 13 | 3 | Gjenganger, Feuerunke, Tammuz |
+| **Hyacinth Stratum** | 16 | 6 | Aglaophotis, Erebus, Gorehound |
+| **Amber Stratum** | 19 | 3 | Yilbegan, Lord Ruthven, Erebus |
+<!-- DOCGEN:END id="voidwatch-strata" -->
+
 ## Tier scaling
 
-Your **abyssite rank** (your Voidwatch_Tier) determines the strength of the next rift. Clearing a tier increments it — every rift is tougher than your last. The scaling is continuous with no cap: level, HP, stats, and mechanics all climb together.
+Your **abyssite rank** determines the strength of the next rift. Clearing a tier increments it — every rift is tougher than your last. The scaling is continuous with no cap: level, HP, stats, and mechanics all climb together.
 
+<!-- DOCGEN:BEGIN id="voidwatch-scaling" -->
 | What scales | Formula |
 |---|---|
 | NM level | 78 + tier × 4 |
-| NM HP | ~180,000 + tier × 110,000 |
-| Attack / accuracy | Base 700–550, +200–110 per tier |
+| NM HP | 180,000 + tier × 110,000 |
+| Attack | 700 + tier × 200 |
+| Accuracy | 550 + tier × 110 |
+| Cruor reward | 800 + tier × 350 |
+| EXP reward | 1,500 + tier × 600 |
+<!-- DOCGEN:END id="voidwatch-scaling" -->
 
 At higher tiers the NM gains additional mechanics (see below).
 
@@ -37,13 +66,15 @@ At higher tiers the NM gains additional mechanics (see below).
 
 Every rift hides **5 weaknesses**, one per Light colour. Probe the NM during the fight by using magic elements, weaponskills, or ranged attacks — when you hit a weakness, a **Light** activates and is announced in chat. Stack up to 5 of each colour; more Lights = better reward from the Riftworn Pyxis.
 
-| Light | Colour | Boosted by | Reward boon |
+<!-- DOCGEN:BEGIN id="voidwatch-lights" -->
+| Light | Colour | Reward boon | Per-light weight |
 |---|---|---|---|
-| **Vermillion** | Red | (random trigger) | +8 to quality roll per light |
-| **Cerulean** | Blue | (random trigger) | +1 loot roll per 2 lights |
-| **Verdant** | Green | (random trigger) | +25% cruor per light |
-| **Amber** | Yellow | (random trigger) | +25% EXP per light |
-| **Pearl** | White | (random trigger) | 1 atmacite shard per light |
+| **Vermillion** | Red | reward quality | +8 to the quality roll per light |
+| **Cerulean** | Blue | reward quantity | +1 loot roll per 2 lights |
+| **Verdant** | Green | cruor | +25% cruor per light |
+| **Amber** | Yellow | EXP | +25% EXP per light |
+| **Pearl** | White | atmacite | 1 atmacite shard per light |
+<!-- DOCGEN:END id="voidwatch-lights" -->
 
 The 5 weaknesses are rolled fresh each rift from a pool of fire/ice/wind/earth/lightning/water/light/dark magic elements, weaponskills, and ranged attacks — every job can draw Lights.
 
@@ -79,11 +110,22 @@ Killing the NM opens a **Riftworn Pyxis** whose contents are shaped by your Ligh
 
 ## Atmacite Refiner
 
-The **Officer** NPC in Leafallia runs the **Atmacite Refiner** — spend **Voidwatch_Shards** (your accumulated Pearl-light atmacite) on six permanent perks that enhance your Voidwatch experience. Perks stack and persist across log-outs.
+The **Officer** NPC in Leafallia runs the **Atmacite Refiner** — spend the atmacite shards you bank from Pearl lights on six perks that empower your Voidwatch runs. Each perk levels up; the cost climbs with every level.
+
+<!-- DOCGEN:BEGIN id="voidwatch-atmacite" -->
+| Perk | Effect | Max level | Cost (shards) |
+|---|---|---|---|
+| **Fortune** | +8% cruor per level | 5 | 3 × next level (to 45 at max) |
+| **Fervor** | +8% EXP per level | 5 | 3 × next level (to 45 at max) |
+| **Greed** | +1 loot roll per level | 4 | 3 × next level (to 30 at max) |
+| **Insight** | +1 max Light per colour per level | 3 | 3 × next level (to 18 at max) |
+| **Attunement** | -0.5s weakness cooldown per level | 4 | 3 × next level (to 30 at max) |
+| **Flow** | +12% Voidstone regen speed per level | 5 | 3 × next level (to 45 at max) |
+<!-- DOCGEN:END id="voidwatch-atmacite" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 000000000000 -->
-_Last updated: 2026-06-27_
+<!-- content-hash: 376f28e72bc1 -->
+_Last updated: 2026-06-28 05:28 UTC_
 <!-- DOCGEN:END id="last-updated" -->

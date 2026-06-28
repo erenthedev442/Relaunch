@@ -4,7 +4,7 @@ Your subjob levels up in the background while you grind your main. No party-lead
 
 ## The mechanic
 
-Every EXP gain you earn — mob kills, FoV / GoV books, Records of Eminence, scripted sources — silently banks **half** of that EXP toward your current subjob (the `SHARE_RATE = 0.5` share of the EXP you already earned — there is no extra multiplier on top). When the bank crosses the per-level threshold, the sub levels up automatically with a chat message:
+Every EXP gain you earn — mob kills, FoV / GoV books, Records of Eminence, scripted sources — silently banks **one-quarter (25%)** of that EXP toward your current subjob, on top of the EXP you already earned. When the bank crosses the per-level threshold, the sub levels up automatically with a chat message:
 
 > _Subjob WAR reached level 47, kupo!_
 
@@ -14,12 +14,12 @@ The level-up triggers the full stat recalc — skills, traits, abilities, weapon
 
 | | Value |
 |---|---|
-| Sub EXP per main EXP | **0.5×** |
+| Sub EXP per main EXP | **0.25× (25%)** |
 | Cap | Sub never exceeds main job's current level |
 | EXP sources | Anything that awards main EXP — kills, books, ROE |
 | Auto level-up | Yes, in the background |
 
-So whatever mob EXP you earn on main, your sub banks half of that same amount per kill — no separate multiplier is applied. Roughly: every two main level-ups, your sub gains one level — except both ramp continuously instead of stepping.
+So whatever mob EXP you earn on main, your sub banks one-quarter of that same amount per kill. Your sub climbs steadily in the background while you focus on your main — both ramp continuously instead of stepping.
 
 ## How this differs from `SUBJOB_RATIO`
 
@@ -50,6 +50,6 @@ The bank is shared across subjobs — it doesn't reset when you change your sub.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d199dd677369 -->
-_Last updated: 2026-06-12 23:32 UTC_
+<!-- content-hash: d17df488f9bd -->
+_Last updated: 2026-06-28 05:28 UTC_
 <!-- DOCGEN:END id="last-updated" -->

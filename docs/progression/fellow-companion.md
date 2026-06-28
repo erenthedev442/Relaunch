@@ -18,30 +18,80 @@ Type `!fellow` at any time to open the main menu. Your Fellow doesn't exist unti
 
 ## Leveling and stat points
 
-Your Fellow earns XP from kills **while it is summoned**. If you are in a party, every party member whose Fellow is out earns from the kill. XP per kill scales with the mob's level (floor 5, cap 200). Your Fellow levels up to **50**, and each level grants **3 stat points** to spend. You start with **6 points** at creation.
+<!-- DOCGEN:BEGIN id="fellow-progression" -->
+Your Fellow earns XP from kills **while it is summoned**. XP per kill scales with the slain foe's level (a floor of 5, capped at 200).
 
-Spend points through the **Allocate Stats** menu — pick the stat you want to grow. Allocation applies instantly to the live companion.
+It levels up to **50**, and each level grants **3 stat points** to spend. You start with **6 points** when your Fellow is first created.
+
+If you are in a party, every party member who has their Fellow out earns XP from the same kill — so grinding in a group levels everyone's companion at once.
+<!-- DOCGEN:END id="fellow-progression" -->
+
+Spend points through the **Allocate Points** menu — pick the stat you want to grow. Allocation applies instantly to the live companion.
+
+Each stat track adds its own bundle of bonuses per point:
+
+<!-- DOCGEN:BEGIN id="fellow-stats" -->
+| Stat track | Each point grants |
+|---|---|
+| **STR** | +6 STR, +12 Attack |
+| **DEX** | +6 DEX, +10 Accuracy |
+| **VIT** | +6 VIT, +10 Defense |
+| **AGI** | +6 AGI, +10 Evasion |
+| **INT** | +6 INT, +10 Magic Attack |
+| **MND** | +6 MND, +10 Magic Defense |
+| **Ferocity** | +1% Attack |
+| **Critical** | +1% Critical Hit Rate |
+| **Frenzy** | +1% Double Attack |
+| **Onslaught** | +1% Triple Attack, +3 Store TP |
+| **Sorcery** | +12 Magic Attack, +6 Magic Accuracy |
+| **Celerity** | +8% Attack Speed (Haste) |
+| **Warding** | -20 Physical Damage Taken, -20 Magic Damage Taken |
+| **Vigor** | +3 HP Regen, +1 MP Refresh |
+<!-- DOCGEN:END id="fellow-stats" -->
 
 ## Roles
 
-Each Fellow follows a combat role that shapes how it fights:
+Each Fellow follows a combat role that shapes how it fights. Every role still melee-assists and uses its signature TP move; the role layers extra stats (and, for some, a battle behaviour) on top:
 
+<!-- DOCGEN:BEGIN id="fellow-roles" -->
 | Role | Behaviour |
 |---|---|
-| **Vanguard** | Front-line melee DD — charges in and auto-attacks aggressively |
-| **Bulwark** | Defensive anchor — holds position and absorbs hits |
-| **Berserker** | Reckless offense — maximum damage, minimal defence |
-| **Oracle** | Magic support — debuffs and back-line attacks |
-| **Magus** | Elemental caster — ranged magic damage |
-| **Hunter** | Ranged physical — stays back and fires from range |
+| **Vanguard** | Balanced melee damage dealer. |
+| **Berserker** | All-out melee offense; takes a bit more damage. |
+| **Bulwark** | Tank: more DEF, less damage taken, holds hate. |
+| **Oracle** | Battle-healer: fights and mends your wounds when hurt. |
+| **Magus** | Battle-mage: fights and hurls elemental magic at your foe. |
+| **Hunter** | Ranger: fights and adds ranged strikes to your target. |
+<!-- DOCGEN:END id="fellow-roles" -->
 
 Switch roles at any time through the menu; the change takes effect when you next summon.
 
 ## Name and appearance
 
-Set your Fellow's displayed name through **Set Name** in the menu (up to the engine's renameEntity limit). Pick its look through **Appearance** — choose from avatar and NPC model forms. Both apply the next time you summon.
+Set your Fellow's displayed name through **Choose Name** in the menu. Pick its look through **Appearance** — each form carries its own signature TP move. Apply an **Outfit** for a job-themed humanoid look; an outfit overrides the Appearance pick. Changes apply the next time you summon.
 
-If you have a saved **Outfit**, the outfit overrides the Appearance pick.
+<!-- DOCGEN:BEGIN id="fellow-customization" -->
+**Names** — choose from **18** curated names: Siegward, Theobald, Gunnar, Ferdinand, Beatrice, Henrietta, Karyn, Nanako, Gauldeval, Romidiant, Liabelle, Radille, Nokum-Akkum, Yawawa, Cupapa, Raka Maimhov, Voldai, Zoldof.
+
+**Appearances** — **12** forms to pick from, each with its own signature TP move:
+
+| Appearance | Signature move |
+|---|---|
+| Moogle | Meteorite |
+| Mandragora | Aero IV |
+| Coeurl | Charged Whisker |
+| Sabotender | Thousand Needles |
+| Cardian | Fire IV |
+| Goblin | Bomb Toss |
+| Yagudo | Dancing Edge |
+| Tonberry | Cursed Sphere |
+| Antican | Rock Buster |
+| Boggart | Blizzard IV |
+| Goobbue | Auroral Uppercut |
+| Adventurer | Crescent Fang |
+
+**Outfits** — **10** job-themed humanoid looks that override the chosen appearance when set: Thief, Monk, Red Mage, Ranger, Dark Knight, Warrior, Paladin, Black Mage, Scholar, Bard.
+<!-- DOCGEN:END id="fellow-customization" -->
 
 ## Party XP
 
@@ -50,6 +100,6 @@ With `Party-wide XP` enabled (the default), any party member who has their Fello
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 000000000000 -->
-_Last updated: 2026-06-27_
+<!-- content-hash: 75475086b4af -->
+_Last updated: 2026-06-28 05:28 UTC_
 <!-- DOCGEN:END id="last-updated" -->

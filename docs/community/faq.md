@@ -50,10 +50,6 @@ Kill the NMs at the [Hunting League](../progression/index.md) Spawner. Each NM g
 
 A complete dump of every stat your character has, including bonuses from gear and active buffs. Useful for verifying that a piece of gear is actually doing what its tooltip says. See the [`!mystats` entry](../reference/commands.md#mystats) for the full output format.
 
-### What does `!gainexp` do?
-
-Instantly claims the "Gain Experience" RoE timed record reward: +1500 EXP, +300 sparks, +300 accolades, and one Copper Aman Voucher. Available on demand — no cooldown. See [`!gainexp`](../reference/commands.md#gainexp).
-
 ### Can I auto-spend job points / merits?
 
 Yes — `!autojp` and `!automerits`. Both spread points breadth-first across categories on your current main job, so no single category gets maxed before others get a look-in. See [`!autojp`](../reference/commands.md#autojp) and [`!automerits`](../reference/commands.md#automerits).
@@ -67,10 +63,6 @@ Yes — `!autojp` and `!automerits`. Both spread points breadth-first across cat
 - [Leaderboards](leaderboards.md) — top players by Hunt Marks, NM kills, lifetime currency earned.
 - [Player Profiles](players/index.md) — browse individual character pages.
 - [Discord](https://discord.gg/ZKdYbAJF) — live chat, group-up posts, server announcements.
-
-### What are Player Trusts?
-
-A custom system where you can summon other registered players as Trust-style NPCs. See [Player Trusts](player-trusts.md) for unlock requirements and the registered-pair list.
 
 ### Can I play solo?
 
@@ -120,6 +112,6 @@ _Have a question that should be on this page? Ping a GM in [Discord](https://dis
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f18ef0dff97d -->
-_Last updated: 2026-06-20 21:09 UTC_
+<!-- content-hash: 074cd225ef11 -->
+_Last updated: 2026-06-28 05:28 UTC_
 <!-- DOCGEN:END id="last-updated" -->

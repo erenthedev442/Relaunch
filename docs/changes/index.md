@@ -171,43 +171,42 @@ _All NPCs are in **GM Home** (zone 210). Positions shown as (x, y, z)._
 
 | NPC | Position | What it does |
 |---|---|---|
-| **Gear Moogle** | `(-4.5, 0, -7)` | One-time starter gear kit for new characters (once per character) |
-| **Mog Moogle** | `(-1.5, 0, -5)` | Delivery Box access plus change to any of the 22 jobs on the spot |
-| **Augment Moogle** | `(0, 0, -45)` | Trade one equipment piece + 1–4 catalyst crystals for stacking augments |
-| **Augment Sage** | `(-1.5, 0, -25)` | Augment affinity system — unlock passive stat bonuses by spending hunt marks |
+| **Gear Moogle** | _unknown_ | One-time starter gear kit for new characters (once per character) |
+| **Mog Moogle** | _unknown_ | Delivery Box access plus change to any of the 22 jobs on the spot |
+| **Augment Moogle** | `(-20, 0, -45)` | Trade one equipment piece + 1–4 catalyst crystals for stacking augments |
+| **Augment Sage** | `(-16, 0, 10)` | Augment affinity system — unlock passive stat bonuses by spending hunt marks |
 
 **Utility cluster** — one-time character setup (z ≈ −14)
 
 | NPC | Position | What it does |
 |---|---|---|
-| **Character Upgrader** | `(1.5, 0, -14)` | Menu-driven: grants all weapon skills, spells, trusts, capped skills, outpost warps |
-| **Key Item Moogle** | `(1.5, 0, -14)` | Grants all ~4,000 key items in one transaction (single-use, once per character) |
-| **Mission Moogle** | `(4.5, 0, -14)` | Skip every story mission in one click (all nations + RoZ/CoP/ToAU/WotG/SoA/RoV); sets nation rank 10 |
+| **Character Upgrader** | _unknown_ | Menu-driven: grants all weapon skills, spells, trusts, capped skills, outpost warps |
+| **Key Item Moogle** | _unknown_ | Grants all ~4,000 key items in one transaction (single-use, once per character) |
+| **Mission Moogle** | _unknown_ | Skip every story mission in one click (all nations + RoZ/CoP/ToAU/WotG/SoA/RoV); sets nation rank 10 |
 
 **Activities cluster** — ongoing gameplay systems (z ≈ −21)
 
 | NPC | Position | What it does |
 |---|---|---|
-| **EXP Camp Moogle** | `(-4.5, 0, -10)` | Free warp to one of 20 level-matched EXP camps (Lv 10–99) |
-| **Hunt Board** | `(-1.5, 0, -15)` | Weekly hunt board — pick up and turn in weekly NM target bounties for marks |
-| **Infamy Vendor** | `(-4.5, 0, -30)` | Spend infamy currency earned from Abyssea NM hunts, Invasions, and the weekly Raid on gear and rewards |
+| **EXP Camp Moogle** | _unknown_ | Free warp to one of 20 level-matched EXP camps (Lv 10–99) |
+| **Hunt Board** | `(-102, -2.1, -94)` | Weekly hunt board — pick up and turn in weekly NM target bounties for marks |
+| **Infamy Vendor** | `(0, 0, 10)` | Spend infamy currency earned from Abyssea NM hunts, Invasions, and the weekly Raid on gear and rewards |
 
 **Admin cluster** — testing and meta systems (z ≈ −28)
 
 | NPC | Position | What it does |
 |---|---|---|
-| **Game Master** | `(3, -34.3, -467)` | Wave-based fight challenge (Easy → Insane); earn hunt marks on full clear |
-| **Companion Master** | `(7.5, 0, -10)` | Player companion system — link friends and summon them as trusts in your party |
+| **Game Master** | `(-289.5, -3.5, 387.5)` | Wave-based fight challenge (Easy → Insane); earn hunt marks on full clear |
 | **Test Dummy** | `(0, 0, -40)` | Interactive combat dummy for testing DPS and skill rotations |
 
 **Commerce row** — gil sinks and convenience services (z ≈ −35)
 
 | NPC | Position | What it does |
 |---|---|---|
-| **Warpman** | `(-1.5, 0, -10)` | Paid warp service to city hubs (San d'Oria, Bastok, Windurst, Jeuno, and more) |
-| **Mystery Mog** | `(-1.5, 0, -20)` | Gacha box — spend hunt marks for a random pull from the reward table |
-| **Title Broker** | `(1.5, 0, -20)` | Buy cosmetic titles for gil; cheap flavor titles to rare endgame trophies |
-| **Gil Exchange** | `(4.5, 0, -20)` | Trade hunt marks for gil in bulk |
+| **Warpman** | `(-114, -2.1, -88)` | Paid warp service to city hubs (San d'Oria, Bastok, Windurst, Jeuno, and more) |
+| **Mystery Mog** | `(-114, -2.1, -94)` | Gacha box — spend hunt marks for a random pull from the reward table |
+| **Title Broker** | `(-98, -2.1, -100)` | Buy cosmetic titles for gil; cheap flavor titles to rare endgame trophies |
+| **Gil Exchange** | `(-106, -2.1, -100)` | Trade hunt marks for gil in bulk |
 <!-- DOCGEN:END id="gm-home-npcs" -->
 
 ## Custom HNM system
@@ -242,7 +241,6 @@ System-level modules that change behavior server-wide without adding NPCs. You p
 | **Persistent NM Time of Death** | NM respawn timers survive crashes and restarts. Currently tracks Behemoth (21–24h window), with more NMs addable. |
 | **Disable Zone-In Cutscenes** | Suppresses every auto-cutscene that fires when you zone into an area with a mission/quest stage that would normally trigger one. Side effects (position resets, charvar updates, key item grants) still happen — only the cutscene playback is skipped. Talk to the NPC manually if you want to see it. |
 | **Auto Unstick** | Server-side watchdog that clears stuck event state from any character on zone-in. If your character is wedged in a "still in cutscene" state, just zone (or log out and back in) and the watchdog releases you. Also defuses the Mog House 2F unlock cutscene loop that traps some characters. |
-| **RoE "Gain Experience" Always On** | The Records of Eminence 4-hour timed reward for "gain 5000 EXP" is active in *every* slot, every day — was 3 slots per week by default. (There's also a GM-only `!gainexp` command for instant claim, but players earn this the normal way by gaining EXP.) |
 | **Conquest Regional NPCs Always Up** | Bastok, Windurst, and San d'Oria regional NPCs stay visible regardless of which nation owns conquest. No "come back next week" walls. |
 | **Mission Wardrobe Unlocks** | Hitting mission milestones unlocks Mog Wardrobe slots. Currently: Zilart completion → Mog Wardrobe 3 unlocked. |
 | **Max-Size Mog Wardrobes at Creation** | All 8 Mog Wardrobes are pre-sized to maximum capacity on character creation. By default, wardrobes 1-8 start at 0 slots until manually expanded; this skips that and gives every new character full storage from minute one. |
@@ -271,6 +269,6 @@ For reference, these are at retail defaults on this server:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f89debd95d53 -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: c398df8aed12 -->
+_Last updated: 2026-06-28 05:28 UTC_
 <!-- DOCGEN:END id="last-updated" -->

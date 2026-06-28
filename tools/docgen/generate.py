@@ -122,6 +122,13 @@ def main() -> int:
         endless_tower,
         job_mastery,
         capacity_farm,
+        # --- relaunch-only systems (2026-06-27): each parses its own catalog ---
+        htbf,
+        boom_job,
+        voidwatch,
+        dynamis_divergence,
+        fellow,
+        spell_skill_mastery,
         gear_vs_retail,
     )
 
@@ -272,6 +279,15 @@ def main() -> int:
         # Apex Trials + Paragon (2026-06-22): infinite post-cap chase + meta board.
         ("apex_paragon",         apex_paragon),
         ("capacity_farm",        capacity_farm),
+        # relaunch-only systems (2026-06-27): HTBF, Boom job, Voidwatch,
+        # Dynamis-Divergence, Fellow companion, Spell & Skill Mastery. Each
+        # parses its own *_catalog.lua / module CONFIG and fills marker blocks.
+        ("htbf",                 htbf),
+        ("boom_job",             boom_job),
+        ("voidwatch",            voidwatch),
+        ("dynamis_divergence",   dynamis_divergence),
+        ("fellow",               fellow),
+        ("spell_skill_mastery",  spell_skill_mastery),
         # differentiators renders why-legendary.md's "What Legendary Does
         # Differently" list from systems_registry.py and writes a drift report
         # of any system detail page that isn't featured. Runs before

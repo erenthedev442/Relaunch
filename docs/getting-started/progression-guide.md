@@ -24,7 +24,7 @@ The Hunting League is a ladder of NM-hunting ranks at [Reisenjima Henge](../prog
 **What to buy early:** The Bronze gear tier (Beastmens Medals) from the [Gear Vendors](../progression/gear-vendors.md) at Henge. Bronze pieces are inexpensive and cover the gear gap until you have Silver and Gold.
 
 **Parallel tracks to start now:**
-- **[Login Rewards](../progression/login-rewards.md)** — log in daily for +25 marks, hit 7/14/21/30-day streaks for bonuses.
+- **[Login Rewards](../progression/login-rewards.md)** — log in daily for +50 marks, hit 7/14/21/30-day streaks for bonuses.
 - **[Daily Board](../progression/daily-board.md)** — the NPC at GM Home gives 3 daily objectives. Complete them for extra marks and a full-clear bonus.
 
 ---
@@ -72,7 +72,7 @@ The [Augment Moogle](../progression/augments.md) at GM Home lets you trade catal
 **The Augment Sage** sits next to the Moogle and adds two multiplier tracks:
 
 - **Mastery ranks:** Earn a flat multiplier on every augment plus a crit-augment chance that doubles a random stat on each trade.
-- **NM Affinities:** Kill specific Vana'diel NMs (Behemoth, Fafnir, Tiamat, etc.) and trade their drops to register a permanent per-category bonus.
+- **NM Affinities:** Kill specific Vana'diel NMs (Behemoth, Fafnir, Tiamat, etc.) to automatically unlock a permanent per-category bonus.
 
 Stack max mastery + affinity + a crit and a single augment can be worth several times its base value.
 
@@ -136,6 +136,6 @@ On top of all of it, your **[Hunter's Guild](../progression/hunters-guild.md)** 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 86dce1138114 -->
-_Last updated: 2026-06-20 21:09 UTC_
+<!-- content-hash: 06b3141d6c8a -->
+_Last updated: 2026-06-28 05:28 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -50,14 +50,6 @@ If you want to watch a specific cutscene, talk to the relevant NPC manually.
 
 ---
 
-## RoE "Gain Experience" — Always Available
-
-The Records of Eminence **"Gain Experience"** objective (earn 5,000 EXP in 4 hours) is active in every slot, every day. On retail it's limited to three slots per week.
-
-As a player, you earn this the normal way — just gain EXP and the reward fires on the natural cycle. You can also use the `!gainexp` command to claim the reward instantly — it's **open to every player** (no GM access needed).
-
----
-
 ## World-First Announcements
 
 When a player achieves a server-first milestone, the server broadcasts it to everyone online. Tracked milestones include:
@@ -138,6 +130,6 @@ Monsters killed inside **GM Home** (where the [Test Dummy](../progression/gm-hom
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ea95f3a73a10 -->
-_Last updated: 2026-06-20 21:25 UTC_
+<!-- content-hash: 352a9e0857f9 -->
+_Last updated: 2026-06-28 05:28 UTC_
 <!-- DOCGEN:END id="last-updated" -->

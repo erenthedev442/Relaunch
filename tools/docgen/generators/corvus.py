@@ -1,16 +1,16 @@
 """Sync the custom-Trust doc pages with trust_skoll.lua.
 
-The Void Keeper in GM Home sells three custom Trusts — **Corvus, Meat, Gemma** —
+The Void Keeper in GM Home grants three custom Trusts — **Corvus, Meat, Gemma** —
 configured in the `TRUSTS` table of trust_skoll.lua (NOT a `*_catalog` file).
 For each one we parse the display name, the in-game Trust-menu name (clientName)
-and the gil cost out of that table, then fill the "At a glance" summary block on
-that Trust's page — so the documented price can never drift from the in-game
-price again (which is exactly what happened to Meat/Gemma when they were
-hand-written). Corvus additionally has a generated how-to-unlock paragraph.
+and the unlock gate (Hunting League rank + Hunt Marks) out of that table, then
+fill the "At a glance" summary block on that Trust's page — so the documented
+unlock can never drift from the in-game requirement again. Corvus additionally
+has a generated how-to-unlock paragraph.
 
-Cost note: a trust without its own `cost` field uses the shared 50M default
-(GIL_COST in the Lua). Gemma rides that default; Meat and Corvus carry their own
-`cost`. The default below MUST track GIL_COST in trust_skoll.lua.
+Unlock note: these Trusts are EARNED, not bought with gil. Each one is gated on
+a Hunting League rank (`rankReq`) and a one-time Hunt Marks cost (`markCost`)
+parsed live from the Lua. (The legacy gil price was removed in the relaunch.)
 
 Markers written: corvus-summary, corvus-unlock, meat-summary, gemma-summary
 (kept as `corvus.py` for import stability; it now covers all three trusts).
@@ -24,11 +24,7 @@ from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 from tools.docgen._luaparse import section, commafy
 
-# Shared fallback price — trusts without their own `cost` field use this.
-# Mirrors GIL_COST in modules/custom/lua/trust_skoll.lua.
-_DEFAULT_COST = 50000000
-
-# Per-trust doc config. name / clientName / cost are pulled LIVE from the Lua;
+# Per-trust doc config. name / clientName / rankReq / markCost are pulled LIVE from the Lua;
 # the role line, sibling links, pronouns and "who answers" noun are stable prose
 # authored here. `unlock` is the unlock-paragraph marker id, or None to skip it.
 _TRUSTS = [
@@ -75,7 +71,7 @@ def _entry_for_spell(trusts: str, spell_id: int) -> str:
 
 
 def _parse(trusts: str, spell_id: int) -> dict:
-    c = {"name": "?", "client": "?", "cost": _DEFAULT_COST}
+    c = {"name": "?", "client": "?", "rank": 0, "marks": 0}
     entry = _entry_for_spell(trusts, spell_id)
     if entry:
         m = re.search(r"name\s*=\s*'([^']+)'", entry)
@@ -84,17 +80,26 @@ def _parse(trusts: str, spell_id: int) -> dict:
         m = re.search(r"clientName\s*=\s*'([^']+)'", entry)
         if m:
             c["client"] = m.group(1)
-        # The trust's own `cost` overrides the shared default; fall back if absent.
-        m = re.search(r"cost\s*=\s*(\d+)", entry)
-        c["cost"] = int(m.group(1)) if m else _DEFAULT_COST
+        # Earned, not bought: gated on Hunting League rank + Hunt Marks.
+        m = re.search(r"rankReq\s*=\s*(\d+)", entry)
+        if m:
+            c["rank"] = int(m.group(1))
+        m = re.search(r"markCost\s*=\s*(\d+)", entry)
+        if m:
+            c["marks"] = int(m.group(1))
     return c
+
+
+def _gate(c: dict) -> str:
+    """Player-facing unlock requirement: 'Hunting League Rank N + X Hunt Marks'."""
+    return f"Hunting League Rank {c['rank']} + {commafy(c['marks'])} Hunt Marks"
 
 
 def _render_summary(t: dict, c: dict) -> str:
     return (
         f"- **Where:** the **Void Keeper** at [GM Home](gm-home.md) (reach it with "
-        f"`!gmhome`) — the same NPC that sells {t['siblings']}\n"
-        f"- **Cost:** **{commafy(c['cost'])} gil** — one-time, permanent, per character\n"
+        f"`!gmhome`) — the same NPC that grants {t['siblings']}\n"
+        f"- **Unlock:** **{_gate(c)}** — one-time, permanent, per character\n"
         f"- **Role:** {t['role']}\n"
         f"- **To summon:** cast **{c['client']}** from your Trust menu — that slot "
         f"*is* {c['name']} (the name **{c['name']}** appears over {t['poss']} head "
@@ -104,9 +109,10 @@ def _render_summary(t: dict, c: dict) -> str:
 
 def _render_unlock(t: dict, c: dict) -> str:
     return (
-        f"Travel to **GM Home** with `!gmhome`, find the **Void Keeper**, and bind "
-        f"{c['name']} for **{commafy(c['cost'])} gil**. The binding is permanent and "
-        f"per character — buy {t['obj']} once and {t['subj']}'s yours forever.\n\n"
+        f"Reach **{_gate(c)}**, then travel to **GM Home** with `!gmhome`, find the "
+        f"**Void Keeper**, and bind {c['name']}. The marks are spent once; the binding "
+        f"is permanent and per character — earn {t['obj']} once and {t['subj']}'s yours "
+        f"forever.\n\n"
         f"In your Trust menu {t['subj']} shows up as **\"{c['client']}\"** — that Trust "
         f"slot was re-used, so the menu label is just cosmetic. Cast **{c['client']}**, "
         f"and the {t['noun']} who answers — named **{c['name']}** over {t['poss']} head "
@@ -131,5 +137,5 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             written += 1
         if t["unlock"] and write_between_markers(page, t["unlock"], _render_unlock(t, c)):
             written += 1
-        print(f"[trusts] {t['page']}: name={c['name']} client={c['client']} cost={c['cost']}")
+        print(f"[trusts] {t['page']}: name={c['name']} client={c['client']} rank={c['rank']} marks={c['marks']}")
     print(f"[trusts] {written} marker block(s) written across {len(_TRUSTS)} custom-trust page(s)")

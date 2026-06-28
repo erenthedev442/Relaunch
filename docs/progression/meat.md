@@ -5,8 +5,8 @@
 ## At a glance
 
 <!-- DOCGEN:BEGIN id="meat-summary" -->
-- **Where:** the **Void Keeper** at [GM Home](gm-home.md) (reach it with `!gmhome`) — the same NPC that sells [Corvus](corvus.md) and [Gemma](skoll.md)
-- **Cost:** **25,000,000 gil** — one-time, permanent, per character
+- **Where:** the **Void Keeper** at [GM Home](gm-home.md) (reach it with `!gmhome`) — the same NPC that grants [Corvus](corvus.md) and [Gemma](skoll.md)
+- **Unlock:** **Hunting League Rank 2 + 2,000 Hunt Marks** — one-time, permanent, per character
 - **Role:** pure tank — soaks the damage, minimal DPS
 - **To summon:** cast **Excenmille** from your Trust menu — that slot *is* Meat (the name **Meat** appears over its head and in your party list)
 <!-- DOCGEN:END id="meat-summary" -->
@@ -24,11 +24,11 @@ Meat is the ultimate meat-shield:
 
 ## How to unlock
 
-Travel to **GM Home** with `!gmhome`, find the **Void Keeper**, and bind Meat to your service. The binding is permanent and per character. In your Trust menu it appears as **"Excenmille"** — cast it, and the tiny Tarutaru answers.
+Reach **Hunting League Rank 2 + 2,000 Hunt Marks**, then travel to **GM Home** with `!gmhome`, find the **Void Keeper**, and bind Meat to your service. The marks are spent once; the binding is permanent and per character. In your Trust menu it appears as **"Excenmille"** — cast it, and the tiny Tarutaru answers.
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 53062a0cd1ad -->
-_Last updated: 2026-06-14 19:40 UTC_
+<!-- content-hash: 04fe78934799 -->
+_Last updated: 2026-06-28 05:28 UTC_
 <!-- DOCGEN:END id="last-updated" -->

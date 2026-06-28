@@ -7,38 +7,97 @@ The **Mastery Sage** in Leafallia lets you permanently empower your weapon skill
 
 ## Mastery Sigils
 
-Sigils are the currency of the system. Two sources:
+Sigils are the currency of the system, earned by hunting NMs:
 
-**NM Rotation (primary):** A daily rotation of target NMs is active at any given time. Killing a live rotation target grants a large chunk of Sigils — once per target per rotation period. Use `!empower` to see what's currently live.
+<!-- DOCGEN:BEGIN id="mastery-sigils" -->
+**NM Rotation (primary):** A daily rotation keeps **3** target NMs live at once, drawn from a pool of **20**. Defeating a live target awards **50 Mastery Sigils** — once per target per rotation. Everyone in your party in the same zone shares the credit. Use `!empower` to see which targets are currently live.
 
-**NM Trickle (secondary):** Any NM kill grants a small flat bonus (scales slightly with level, capped per mob) so you are never fully dry between rotation windows.
+**NM Trickle (secondary):** Any NM kill grants a small bonus of **2 Mastery Sigils** (scaling slightly with the mob's level, up to **10 Mastery Sigils** per kill), so you are never fully dry between rotation windows.
+
+**Current rotation pool:**
+
+| NM | Zone |
+|---|---|
+| Jaggedy-Eared Jack | West Ronfaure |
+| Bigmouth Billy | East Ronfaure |
+| King Arthro | Jugner Forest |
+| Lumber Jack | Batallia Downs |
+| Stray Mary | Konschtat Highlands |
+| Carnero | South Gustaberg |
+| Serpopard Ishtar | Tahrongi Canyon |
+| Botulus Rex | Buburimu Peninsula |
+| Orcus | Meriphataud Mountains |
+| Old Sabertooth | Sauromugue Champaign |
+| Bastet | The Sanctuary of ZiTah |
+| Voluptuous Vilma | Yuhtunga Jungle |
+| Powderer Penny | Yhoator Jungle |
+| Kraken | Qufim Island |
+| Nue | Beaucedine Glacier |
+| Gargantua | Beaucedine Glacier |
+| Koenigstiger | Xarcabard |
+| Stolas | Cape Teriggan |
+| Kreutzet | Cape Teriggan |
+| Guivre | Kuftal Tunnel |
+<!-- DOCGEN:END id="mastery-sigils" -->
 
 ## Upgrades
 
-The Mastery Sage offers three kinds of permanent enhancement:
+The Mastery Sage offers three kinds of permanent enhancement.
 
 ### WS and Spell Potency
 
-Tiered percentage power-ups applied as additive mods and re-applied on login:
+<!-- DOCGEN:BEGIN id="mastery-potency" -->
+Two tiered tracks, each up to **Tier 5**. Buying a tier adds its bonus on top of the previous tiers, and the gains re-apply automatically every time you log in.
 
-- **Weapon skills** — All-WS damage on all hits
-- **Spells** — Magic Attack, base Magic Damage, or Cure potency depending on spell type
+| Track | Per tier | Affects |
+|---|---|---|
+| **Weapon Skill Potency** | +8% weapon skill damage | Damage on all of your weapon skills |
+| **Spell Potency** | +6 Magic Attack, +8 magic damage, +5% cure | Magic Attack, base magic damage, and Cure potency |
 
-Each potency tier costs more Sigils than the last. The gains stack across tiers.
-
-### Trait Riders
-
-One-time passive mods that attach to your character permanently once purchased. These are stat or effect riders that complement a playstyle rather than raw damage multipliers.
+**Tier costs (Mastery Sigils):** 15 / 30 / 55 / 90 / 140 — each tier costs more than the last.
+<!-- DOCGEN:END id="mastery-potency" -->
 
 ### WS Proc Effects
 
-Per-player weapon-skill procs active every time you use a WS. Options include:
+<!-- DOCGEN:BEGIN id="mastery-effects" -->
+Per-player procs that fire automatically on every weapon skill once purchased. Each effect is tiered (buy higher tiers for a stronger proc), and they take effect immediately — no re-apply needed.
 
-- **Crit burst** — chance to follow up a WS with a critical hit
-- **AoE splash** — WS damage splashes to nearby targets
-- **Lifesteal** — WS damage heals you for a portion of the hit
+| Effect | What it does |
+|---|---|
+| **Empowered Strike** | Per tier: +8% chance your weapon skill lands a critical burst (+60% damage). |
+| **Splash (AoE)** | Per tier: your weapon skill splashes +12% of its damage to foes within 10y. |
+| **Lifesteal** | Per tier: heal +4% of your weapon skill damage as HP. |
 
-Proc effects read live from your character variables on each WS — no re-apply needed, they activate immediately after purchase.
+Each effect tiers up to **Tier 5**. **Tier costs (Mastery Sigils):** 20 / 40 / 70 / 110 / 160.
+<!-- DOCGEN:END id="mastery-effects" -->
+
+### Trait Riders
+
+<!-- DOCGEN:BEGIN id="mastery-traits" -->
+One-time passive riders that attach to your character permanently. Each costs **40 Mastery Sigils**.
+
+**Weapon Skill traits:**
+
+| Trait | Effect |
+|---|---|
+| **Store TP** | Gain TP faster (+10 Store TP). |
+| **WS Accuracy** | Weapon skills land more often (+20 WS Acc). |
+| **Crit Rate** | Higher critical hit rate (+6%). |
+| **Crit Damage** | Critical hits deal more (+10%). |
+| **TP Saver** | 20% chance a weapon skill costs no TP. |
+| **Double Atk** | Chance to attack twice (+5%). |
+
+**Spell traits:**
+
+| Trait | Effect |
+|---|---|
+| **Fast Cast** | Cast spells faster (+10% Fast Cast). |
+| **Conserve MP** | Chance to spend less MP (+20). |
+| **Magic Acc** | Spells land more often (+20 Magic Acc). |
+| **Regain** | Auto-regain TP (+2%/tick). |
+| **Enh Duration** | Enhancing magic lasts longer (+20%). |
+| **Focus** | Resist spell interruption (-20% rate). |
+<!-- DOCGEN:END id="mastery-traits" -->
 
 ## Checking your status
 
@@ -51,6 +110,6 @@ Shows your current Mastery Sigil balance, every potency tier you own, and all tr
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 000000000000 -->
-_Last updated: 2026-06-27_
+<!-- content-hash: 921892e90c77 -->
+_Last updated: 2026-06-28 05:28 UTC_
 <!-- DOCGEN:END id="last-updated" -->

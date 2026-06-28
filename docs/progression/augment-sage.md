@@ -13,8 +13,8 @@ The **Augment Sage** is the side-quest progression layer on top of the [Augment 
 ## Where to find the Sage
 
 <!-- DOCGEN:BEGIN id="sage-location" -->
-**Zone:** GM Home  
-**Coordinates:** x = -1.50, y = 0.00, z = -25.00  
+**Zone:** Leafallia  
+**Coordinates:** x = -16.00, y = 0.00, z = 10.00  
 **Same row as:** the Augment Moogle (talk to either to start a trade or pursue a rank).
 <!-- DOCGEN:END id="sage-location" -->
 
@@ -55,11 +55,11 @@ Promotion is a one-time trade per rank. The Sage shows your live progress on the
 | Rank | Title | Mastery × | Crit chance | Augments | Seals | NM Trophy |
 |---:|---|---:|---:|---:|---|---|
 | 0 | Unranked | 1.00x | 5% | — | — | — |
-| 1 | Augment Initiate | 1.20x | 8% | 10 lifetime | 5 × Beastmens Medal (Bronze) | 1 × Behemoth Horn (drops from **Behemoth**) |
-| 2 | Augment Adept | 1.40x | 11% | 20 lifetime | 10 × Kindreds Medal (Silver) | 1 × Handful of Nidhogg's Scales (drops from **Nidhogg**) |
-| 3 | Augment Magus | 1.60x | 14% | 50 lifetime | 25 × Kindreds Medal (Silver) | 1 × Khimaira Horn (drops from **Khimaira (Tiamat-tier dragon)**) |
-| 4 | Augment Sage | 1.80x | 17% | 120 lifetime | 50 × Demons Medal (Gold) | 1 × Fafnir's Scale (drops from **Fafnir**) |
-| 5 | Augment Archon | 2.00x | 20% | 250 lifetime | 100 × Demons Medal (Gold) | 1 × Kirin's Mane (drops from **Kirin (sky-god proxy for Absolute Virtue)**) |
+| 1 | Augment Initiate | 1.20x | 8% | 0 lifetime | 0 × ? (?) | 1 × ? (drops from **?**) |
+| 2 | Augment Adept | 1.40x | 11% | 0 lifetime | 0 × ? (?) | 1 × ? (drops from **?**) |
+| 3 | Augment Magus | 1.60x | 14% | 0 lifetime | 0 × ? (?) | 1 × ? (drops from **?**) |
+| 4 | Augment Sage | 1.80x | 17% | 0 lifetime | 0 × ? (?) | 1 × ? (drops from **?**) |
+| 5 | Augment Archon | 2.00x | 20% | 0 lifetime | 0 × ? (?) | 1 × ? (drops from **?**) |
 
 _Augments-required counts the **total lifetime successful augments** the player has crafted at the Augment Moogle (tracked via `Augment_Count` charvar). Trophies + seals are **consumed** on promotion._
 <!-- DOCGEN:END id="sage-ranks" -->
@@ -68,28 +68,12 @@ The `Augment_Count` charvar is bumped by **+1 every time you confirm an augmenta
 
 ## Track 2 — NM Affinities
 
-Each augment in the catalog has a thematic `cat` (1–13). Defeating the signature NM for that category and trading its trophy at the Sage's _Register NM Affinity_ menu permanently sets the matching bit in your `Augment_Affinities` charvar. From that point on, any augment whose category matches one of your held affinities gets the bonus multiplier.
+Each augment in the catalog has a thematic category. **Defeating the signature NM for that category permanently unlocks its affinity** — the unlock fires automatically on the kill, with a chat message confirming the affinity is yours. From that point on, any augment whose category matches one of your unlocked affinities gets the bonus multiplier.
 
-You can register affinities in any order, at any rank. The trophy is single-use per affinity — once the bit is yours, the same NM's drops behave normally again (no double-registering).
+You can unlock affinities in any order, at any rank — just go beat the NM. Each affinity is permanent once earned, and re-killing the same NM does nothing extra.
 
 <!-- DOCGEN:BEGIN id="sage-affinities" -->
-Holding an affinity multiplies augments **in that category** by **1.5×**. Affinities stack with Sage Mastery and crit. Register an affinity by trading the corresponding NM drop to the Augment Sage's _Register NM Affinity_ menu — the trophy is consumed and the bit is yours forever.
-
-| Cat | Category | NM | Trophy | Catalysts available |
-|---:|---|---|---|---:|
-| 1 | Strength / Attack | Behemoth | Giant Femur | 36 |
-| 2 | Dexterity / Accuracy | King Arthro | Emperor Arthro's Shell | 29 |
-| 3 | Vitality / Defense | Adamantoise | Adamantoise Shell | 14 |
-| 4 | Agility / Evasion / Haste | Roc | Giant Bird Plume | 44 |
-| 5 | Intelligence / Magic offense | Ouryu (Guivre-tier wyrm) | Guivre's Skull | 27 |
-| 6 | Mind / Healing / Cure | Phoenix | Phoenix Feather | 7 |
-| 7 | Charisma / Charm / Enmity | Lady Lilith (Khimaira-tier charmer) | Khimaira Mane | 12 |
-| 8 | HP / Regen | Fafnir | Wyvern Skin | 6 |
-| 9 | MP / Refresh | Vrtra | Vial of Dragon Blood | 3 |
-| 10 | Pet | King Vinegarroon | Sand Bat Fang | 10 |
-| 11 | Elemental resistance | Khimaira | Khimaira Horn | 71 |
-| 12 | Skill+ | Maat (proxy: a king-tier predator) | Gargantuan Black Tiger Fang | 33 |
-| 13 | Weaponskill DMG+ | Tiamat | High-Quality Scorpion Shell | 5 |
+_Affinity rows not parsed from the catalog._
 <!-- DOCGEN:END id="sage-affinities" -->
 
 ## Charvars used
@@ -122,6 +106,6 @@ Yes — both the Sage rank trophy and the affinity registration trophy are remov
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 27f6081c530b -->
-_Last updated: 2026-06-23 10:27 UTC_
+<!-- content-hash: 280316d4f477 -->
+_Last updated: 2026-06-28 05:28 UTC_
 <!-- DOCGEN:END id="last-updated" -->

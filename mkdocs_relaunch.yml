@@ -136,6 +136,8 @@ nav:
       - Quality of Life: progression/server-features.md
       - Death Penalty: progression/death-penalty.md
   - Endgame & Events:
+    - High-Tier Battlefields: endgame/high-tier-battlefields.md
+    - Dynamis - Divergence: endgame/dynamis-divergence.md
     - Abyssea NMs: endgame/abyssea-nms.md
     - Voidwatch: endgame/voidwatch.md
     - Star-Devourer Raid: endgame/star-devourer.md
@@ -169,7 +171,6 @@ nav:
     - Server Status: community/status.md
     - Leaderboards: community/leaderboards.md
     - Hall of Fame: community/highlights.md
-    - Player Trusts: community/player-trusts.md
     - FAQ: community/faq.md
   - Player Commands: reference/commands.md
   - Reference:
@@ -185,6 +186,5 @@ nav:
       - Blue Magic: reference/spells/blue.md
       - Geomancy: reference/spells/geomancy.md
       - Trust: reference/spells/trust.md
-    - Custom Spells: reference/custom-spells.md
     - Gear vs Retail: reference/gear-vs-retail.md
   - Admin: admin/review.html
