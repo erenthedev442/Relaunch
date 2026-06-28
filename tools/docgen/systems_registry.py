@@ -118,7 +118,7 @@ HEADLINE = [
         "name": "Leaderboards",
         "page": "community/leaderboards.md",
         "modules": ["leaderboard_npc.lua", "online_tracker.lua", "level_99_tracker.lua"],
-        "text": "**Leaderboards — see where you rank.** The Chronicler at Reisenjima Henge tallies your kills, unique NMs, and competitive stats, and a live website ranks every player server-wide, refreshed from the database through the day. Whether you're chasing Paragon levels or the longest hunt streak, there's always a scoreboard watching.",
+        "text": "**Leaderboards — see where you rank.** The Chronicler at Escha ZiTah tallies your kills, unique NMs, and competitive stats, and a live website ranks every player server-wide, refreshed from the database through the day. Whether you're chasing Paragon levels or the longest hunt streak, there's always a scoreboard watching.",
     },
     {
         "name": "A deep quality-of-life bench",

@@ -5,7 +5,7 @@ entry in `rewardCategories` EXCEPT the "Seals" category (which is owned
 by the dedicated Seals NPC, not the Accessories NPC).
 
 The Accessories NPC sits on the same row as the Armor + Weapons vendors
-at Reisenjima Henge. Currency is **Hunt Marks** (NOT seals/medals), so
+at Escha ZiTah. Currency is **Hunt Marks** (NOT seals/medals), so
 the cost column reads as raw mark counts.
 
 Renders into a single DOCGEN marker block "accessories" — one H3 +

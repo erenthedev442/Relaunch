@@ -12,9 +12,9 @@ If you're new to the server, read through this once before spending marks. Mista
 
 Follow this order regardless of job:
 
-1. **Get a Gold-tier weapon** from the Weapons Vendor at Reisenjima Henge. Gold weapons cost 50 Demons Medals each. Demons Medals are purchased with Hunt Marks (40 marks each) — so expect roughly 2,000 Hunt Marks total for a Gold weapon. This is your damage foundation and it takes about 5–6 hours of T1/T2 farming to achieve.
+1. **Get a Gold-tier weapon** from the Weapons Vendor at Escha ZiTah. Gold weapons cost 50 Demons Medals each. Demons Medals are purchased with Hunt Marks (40 marks each) — so expect roughly 2,000 Hunt Marks total for a Gold weapon. This is your damage foundation and it takes about 5–6 hours of T1/T2 farming to achieve.
 
-2. **Buy your Sortie earring (NQ)** from the Hunt Accessories NPC at Reisenjima Henge. 100 Hunt Marks gets you the NQ version. This earring is job-specific and gives meaningful stats immediately.
+2. **Buy your Sortie earring (NQ)** from the Hunt Accessories NPC at Escha ZiTah. 100 Hunt Marks gets you the NQ version. This earring is job-specific and gives meaningful stats immediately.
 
 3. **Start Reforge farming.** Talk to the Spawner NPC at Gwora Corridor and pick an NM ladder that suits your job (see below). Each kill drops a random armor piece from that set's pool and grants set-specific upgrade currency.
 
@@ -123,7 +123,7 @@ Augments from the [Augment Moogle](augments.md) stack on top of your Reforge gea
 
 ## Earring Tiers
 
-The Hunt Accessories NPC at Reisenjima Henge sells Sortie earrings in three power tiers. All earrings are job-specific — you're buying the version for your job.
+The Hunt Accessories NPC at Escha ZiTah sells Sortie earrings in three power tiers. All earrings are job-specific — you're buying the version for your job.
 
 | Tier | Cost | Acc/MACC Bonus |
 |---|---|---|

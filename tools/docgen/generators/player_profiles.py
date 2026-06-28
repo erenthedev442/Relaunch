@@ -201,10 +201,10 @@ def _next_step(p: dict, meta: dict) -> str:
     if jobs99 == 0:
         best = max(p["jobs"].values()) if p["jobs"] else 1
         return (f"**Hit level 99.** Your highest job is {best}/99 — cap a job to "
-                "unlock the Hunting League at Reisenjima Henge.")
+                "unlock the Hunting League at Escha ZiTah.")
     if p["hl_tier"] <= 0:
         return ("**Enter the Hunting League.** Talk to the Hunt Master at "
-                "Reisenjima Henge to register and start Rank I.")
+                "Escha ZiTah to register and start Rank I.")
     if p["hl_tier"] < 5:
         return (f"**Push to Hunting League Rank {p['hl_tier'] + 1}.** "
                 f"You're Rank {p['hl_tier']}/5 — keep clearing the tier roster to rank up.")

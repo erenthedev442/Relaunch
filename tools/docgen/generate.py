@@ -121,7 +121,6 @@ def main() -> int:
         # its own inline config / catalog, same shape as voidspire)
         endless_tower,
         job_mastery,
-        capacity_farm,
         # --- relaunch-only systems (2026-06-27): each parses its own catalog ---
         htbf,
         boom_job,
@@ -278,7 +277,6 @@ def main() -> int:
         ("job_mastery",          job_mastery),
         # Apex Trials + Paragon (2026-06-22): infinite post-cap chase + meta board.
         ("apex_paragon",         apex_paragon),
-        ("capacity_farm",        capacity_farm),
         # relaunch-only systems (2026-06-27): HTBF, Boom job, Voidwatch,
         # Dynamis-Divergence, Fellow companion, Spell & Skill Mastery. Each
         # parses its own *_catalog.lua / module CONFIG and fills marker blocks.

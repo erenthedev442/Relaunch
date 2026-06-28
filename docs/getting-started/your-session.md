@@ -1,6 +1,6 @@
 ﻿# Your First Session
 
-You've finished [First Steps](first-steps.md) — your character is set up, you grabbed starter gear, and `!hunt` dropped you at Reisenjima Henge. This page is what comes next: the actual rhythm of playing on the Relaunch server, and the systems that quietly reward you just for showing up.
+You've finished [First Steps](first-steps.md) — your character is set up, you grabbed starter gear, and `!hunt` dropped you at Escha ZiTah. This page is what comes next: the actual rhythm of playing on the Relaunch server, and the systems that quietly reward you just for showing up.
 
 If you remember only one thing: **almost everything on the Relaunch server runs on Hunt Marks.** You earn them by killing NMs in the Hunting League, and you spend them on seals, gear, and rank unlocks. Learn that one loop and the rest falls into place.
 
@@ -20,7 +20,7 @@ That's the whole game in five beats. Everything else on this page just makes the
 
 ---
 
-## Your first 30 minutes at Henge
+## Your first 30 minutes at Escha ZiTah
 
 You arrived via `!hunt`. Before you swing at anything:
 
@@ -35,7 +35,7 @@ Then work the loop using the two NPCs standing side-by-side where you landed:
 1. **Talk to Hunt: Hub** — your rank board. It shows your current Hunting League rank, your Hunt Marks balance, and the reward shop. (Quick balance check anytime with `!marks`.)
 2. **Talk to Hunt: Spawner** — pop a Rank I NM: **Leaping Lizzy**, **Valkurm Emperor**, or **Tom Tit Tat**. It appears right in front of you — no map navigation, no cooldown.
 3. **Kill it.** You must land the killing blow (or be credited as the killer). Each Rank I kill pays **5 Hunt Marks**, and your very first kill also fires the **First Hunt** achievement for a bonus **+50**.
-4. **Spend at the Hub.** You were handed **100 Hunt Marks** at character creation — a real head start. Convert some into **Seals** at the reward shop and take them to the Armor & Weapons vendors at Henge for your first real upgrade. (Full breakdown: [Gear Vendors](../progression/gear-vendors.md).)
+4. **Spend at the Hub.** You were handed **100 Hunt Marks** at character creation — a real head start. Convert some into **Seals** at the reward shop and take them to the Armor & Weapons vendors at Escha ZiTah for your first real upgrade. (Full breakdown: [Gear Vendors](../progression/gear-vendors.md).)
 5. **Keep popping.** Rack up marks, return to **Hunt: Hub**, and unlock **Rank II** for **12 marks**. Each rank opens a tougher NM roster that pays more per kill — 5 at Rank I climbing to **65** at Rank V.
 
 Not sure what you need for the next rank? Ask the game directly:
@@ -103,7 +103,7 @@ You don't need to learn every command — these are the ones a new hunter actual
 
 | Command | What it does |
 |---|---|
-| `!hunt` | Warp to Reisenjima Henge (the Hunting League) |
+| `!hunt` | Warp to Escha ZiTah (the Hunting League) |
 | `!buff` | Refresh / Regen / Regain + your regional buff |
 | `!marks` | Hunt Marks balance — spendable and lifetime |
 | `!tier` | Current tier + exactly what's needed to rank up |
@@ -126,7 +126,7 @@ The Hunting League is the spine, but it isn't the whole skeleton. As you climb, 
 
 - **[Ascension (Prestige)](../progression/prestige.md)** — hit the top HL rank on a job, then reset it for permanent per-job bonuses.
 - **[Gear Guide](../progression/gear-guide.md)** and **[Best-in-Slot](../progression/bis-guide.md)** — where your marks are best spent as you gear up.
-- **[HNM Kings](../progression/hnm.md)** and the **[Hunter's Guild](../progression/hunters-guild.md)** — the endgame loops beyond the Henge.
+- **[HNM Kings](../progression/hnm.md)** and the **[Hunter's Guild](../progression/hunters-guild.md)** — the endgame loops beyond Escha ZiTah.
 
 To see your own trajectory, your character gets a public profile with a **personalized "recommended next step."** Browse the **[Player Profiles](../community/players/index.md)** list and click your name — it appears after your first stats sync.
 

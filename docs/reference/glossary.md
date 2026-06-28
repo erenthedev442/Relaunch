@@ -11,7 +11,7 @@ Augment
 :   A permanent stat bonus applied to a piece of gear by trading a catalyst to the Augment Moogle. Augments stack with the gear's base stats and can be stacked or replaced.
 
 Augment Sage
-:   A special NPC whose affinity bonuses improve augment strength based on your NM kill history. The more NMs you've killed, the stronger the bonuses the Sage can apply.
+:   A special NPC whose Mastery ranks improve augment strength. Ranks unlock at Hunting League Rank + Prestige Level milestones (nothing consumed), topping out at a 2× multiplier at rank 5. Per-category NM affinities require Hunting League Rank 3, 1,000 Hunt Marks, and the NM's trophy (consumed).
 
 Catalyst
 :   An item that drops from monsters throughout the game world. Traded to the Augment Moogle to unlock a specific augment option on your gear.

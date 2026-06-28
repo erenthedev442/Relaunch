@@ -244,9 +244,9 @@ def _render(
         "expect an afternoon."
     )
 
-    # ---- Step 3: Warp to Reisenjima Henge -----------------------------
+    # ---- Step 3: Warp to Escha ZiTah -----------------------------
     lines.append(
-        "3. **Warp to Reisenjima Henge** with `!hunt`. "
+        "3. **Warp to Escha ZiTah** with `!hunt`. "
         "The command drops you right at the Seals and Spawner NPCs. "
         "_(Without `!hunt` the zone is gated behind mid-Seekers progression — "
         "use the command.)_"

@@ -19,9 +19,9 @@ Every system on this server feeds marks into that path. The Hunting League is th
 
 **Goal:** Accumulate Hunt Marks and unlock Rank III.
 
-The Hunting League is a ladder of NM-hunting ranks at [Reisenjima Henge](../progression/index.md), from Initiate up to Legend. Each rank unlocks stronger NMs, better gear vendors, and higher marks-per-kill. Your first priority is climbing ranks quickly so the marks-per-hour improves. The full rank list — each rank's NMs, marks-per-kill, and unlock cost — is in [The Ranks](../progression/index.md#the-ranks).
+The Hunting League is a ladder of NM-hunting ranks at [Escha ZiTah](../progression/index.md), from Initiate up to Legend. Each rank unlocks stronger NMs, better gear vendors, and higher marks-per-kill. Your first priority is climbing ranks quickly so the marks-per-hour improves. The full rank list — each rank's NMs, marks-per-kill, and unlock cost — is in [The Ranks](../progression/index.md#the-ranks).
 
-**What to buy early:** The Bronze gear tier (Beastmens Medals) from the [Gear Vendors](../progression/gear-vendors.md) at Henge. Bronze pieces are inexpensive and cover the gear gap until you have Silver and Gold.
+**What to buy early:** The Bronze gear tier (Beastmens Medals) from the [Gear Vendors](../progression/gear-vendors.md) at Escha ZiTah. Bronze pieces are inexpensive and cover the gear gap until you have Silver and Gold.
 
 **Parallel tracks to start now:**
 - **[Login Rewards](../progression/login-rewards.md)** — log in daily for +50 marks, hit 7/14/21/30-day streaks for bonuses.
@@ -111,8 +111,8 @@ These systems don't have a fixed "unlock" point — run them alongside whatever 
 | System | What it does | Where |
 |---|---|---|
 | **[Login Rewards](../progression/login-rewards.md)** | Marks for each daily login; escalating streak milestones | Automatic |
-| **[Daily Board](../progression/daily-board.md)** | Daily kill/Infamy/wave objectives; full-clear bonus | Henge NPC |
-| **[Weekly Hunt Board](../progression/weekly-hunts.md)** | Weekly objectives with sweep bonus | Henge NPC |
+| **[Daily Board](../progression/daily-board.md)** | Daily kill/Infamy/wave objectives; full-clear bonus | Escha ZiTah NPC |
+| **[Weekly Hunt Board](../progression/weekly-hunts.md)** | Weekly objectives with sweep bonus | Escha ZiTah NPC |
 | **[Hunter's Guild](../progression/hunters-guild.md)** | Kill NMs to earn rep; rep gives escalating mark multipliers | Passive |
 | **[Game Master (Wave Mode)](../progression/game-master.md)** | Themed wave fights of rising difficulty for bonus marks | `!wavemaster` |
 | **[Cross-Job Abilities](../progression/cross-job-abilities.md)** | Buy abilities from other jobs for a flat gil price each | GM Home |

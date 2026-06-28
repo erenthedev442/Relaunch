@@ -42,8 +42,8 @@ Three things multiply your augment power — stack all three to hit the ceiling:
 
 | Booster | What it is | How to get it |
 |---|---|---|
-| **Sage Mastery rank** | Ranks 1→5; the global multiplier (×1.2 → ×2.0) and your crit chance (5% → 20%) | Craft augments + turn in seals & a signature NM trophy at the Augment Sage |
-| **Category affinity** | A +50% bonus for one stat family | Defeat that category's **signature NM** and register the affinity at the Sage |
+| **Sage Mastery rank** | Ranks 1→5; the global multiplier (×1.2 → ×2.0) and your crit chance (5% → 20%) | Unlocks automatically as you reach the required Hunting League Rank / Prestige Level milestones — nothing is consumed |
+| **Category affinity** | A +50% bonus for one stat family | Reach **Hunting League Rank 3**, then register the affinity at the Sage with **1,000 Hunt Marks** + that category's **signature NM trophy** (consumed) |
 | **Critical augment** | A per-trade roll that **doubles** the boost | Happens randomly each trade (chance rises with your rank). A **Maat's Blessing** (from [Maat's Challenge](../endgame/maats-challenge.md)) *guarantees* a crit on your next trade. |
 
 A fresh augment sits at the floor; a **rank-5, affinity-unlocked, critical** augment hits the cap. The [Augment Sage page](augment-sage.md) has the full rank table and NM list.
@@ -52,7 +52,7 @@ A fresh augment sits at the floor; a **rank-5, affinity-unlocked, critical** aug
 
 - **Pick stats you actually use.** DD? Stack **Attack** and **Accuracy**. Tank? **HP**, **Defense**, and the **−Phys. dmg. taken** catalysts. Caster? **Magic Accuracy** / **Magic Atk**.
 - **Stack one stat for a big swing.** 5× the same catalyst on one piece concentrates the bonus where you want it.
-- **Start the Augment Sage early.** Every augment you craft counts toward your Mastery ranks — so just *using* the Moogle is progress. Don't wait.
+- **Start the Augment Sage early.** Mastery ranks unlock automatically as you hit Hunting League Rank / Prestige Level milestones — so just *progressing your character* unlocks bigger augments. Don't wait.
 - **Re-augment after every rank-up.** Same gear, same catalysts, bigger numbers.
 - **Browse the full catalog** on the [Augment Moogle page](augments.md#catalyst--augment-catalog) — ~300 catalysts across 16 stat families, each with a `!shop augments <family>` command to buy it.
 

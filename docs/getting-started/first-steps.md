@@ -88,7 +88,7 @@ You start at level **1** — but with every job and subjob already unlocked and 
 
 ---
 
-## 7. Head to Reisenjima Henge — start the Hunting League
+## 7. Head to Escha ZiTah — start the Hunting League
 
 Once your character is set up, the next stop is the server's core progression system: **the Hunting League**.
 
@@ -96,10 +96,10 @@ Once your character is set up, the next stop is the server's core progression sy
 !hunt
 ```
 
-This command warps you directly to **Reisenjima Henge** and drops you next to the Hunt Hub and Spawner NPCs.
+This command warps you directly to **Escha ZiTah** and drops you next to the Hunt Hub and Spawner NPCs.
 
 !!! warning "Don't skip this step"
-    Without `!hunt`, Reisenjima Henge requires mid-Seekers of Adoulin mission progress to access. Use the command. It's always available.
+    Without `!hunt`, Escha ZiTah requires mid-Seekers of Adoulin mission progress to access. Use the command. It's always available.
 
 ### What is the Hunting League?
 
@@ -126,7 +126,7 @@ It's the primary path to endgame gear and the main thing to do on the Relaunch s
 | 4 | Mission Moogle — skip story missions you don't want |
 | 5 | Gear Moogle — pick up your starter kit |
 | 6 | EXP Camp Moogle — warp to a camp and level to 99 (<!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP) |
-| 7 | `!hunt` — warp to Reisenjima Henge and start the Hunting League |
+| 7 | `!hunt` — warp to Escha ZiTah and start the Hunting League |
 
 ---
 

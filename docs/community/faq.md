@@ -36,7 +36,7 @@ Kill the NMs at the [Hunting League](../progression/index.md) Spawner. Each NM g
 ### How does the [Augment Moogle](../progression/augments.md) differ from the [Augment Sage](../progression/augment-sage.md)?
 
 - **Augment Moogle** stamps a single augment from a catalyst item onto a piece of gear. One catalyst, one augment.
-- **Augment Sage** is a rank system that *multiplies* augment values (up to 5× at top rank) plus per-NM affinity bonuses. Talk to the Sage to track and rank up.
+- **Augment Sage** is a Mastery rank system that *multiplies* augment values (up to 2× at rank 5) plus per-NM affinity bonuses. Mastery ranks unlock at Hunting League Rank + Prestige Level milestones (nothing consumed); per-NM affinities require Hunting League Rank 3, 1,000 Hunt Marks, and the NM's trophy (consumed). Talk to the Sage to track and rank up.
 
 ---
 
@@ -98,7 +98,7 @@ The [What's Custom](../changes/index.md) page is the authoritative list. Highlig
 - Faster EXP / CP / drop rates (current multipliers shown on the [home page](../index.md))
 - Full subjob from character creation
 - 99 starting level cap, all maps + outpost warps granted at creation
-- Custom Hunting League, Reforge System, Augment Sage, Player Trusts, and Weekly Hunt Board systems
+- Custom Hunting League, Reforge System, Augment Sage, Job Rebirth, and Weekly Hunt Board systems
 - Every player command listed in [Reference → Player Commands](../reference/commands.md)
 
 ### Are character files / progress safe? Are there backups?

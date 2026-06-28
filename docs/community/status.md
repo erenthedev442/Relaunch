@@ -111,7 +111,7 @@ See the full list at [Hall of Fame](highlights.md).
 
 ## Quick Links
 
-- [Discord](https://discord.gg/the Relaunch server-ffxi) — announcements, #help, #suggestions
+- [Discord](https://discord.gg/MsZqvuDn) — announcements, #help, #suggestions
 - [Getting Started](../getting-started/index.md) — new player guide
 - [Hall of Fame](highlights.md) — server firsts and records
 - [Leaderboards](leaderboards.md) — live rankings

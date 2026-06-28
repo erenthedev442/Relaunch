@@ -5,7 +5,7 @@
 Forget what you know about retail progression on the Relaunch server. Story missions still exist, but the real path through the game runs through the **Hunting League** — a custom rank-based NM hunting system that drives both gear acquisition and endgame challenge.
 
 !!! tip "Summary"
-    Level to 99 (a couple of hours with <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP / <!--setting:main.EXP_RATE-->10<!--/setting-->× scripted), type **`!hunt`** to warp to **Reisenjima Henge**, find the **Hunt Seals** and **Spawner** NPCs, pop NMs, earn **Hunt Marks**, unlock the next rank, buy endgame gear. Repeat through 5 ranks until you take down Shinryu at the top.
+    Level to 99 (a couple of hours with <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP / <!--setting:main.EXP_RATE-->10<!--/setting-->× scripted), type **`!hunt`** to warp to **Escha ZiTah**, find the **Hunt Seals** and **Spawner** NPCs, pop NMs, earn **Hunt Marks**, unlock the next rank, buy endgame gear. Repeat through 5 ranks until you take down Shinryu at the top.
 
 ## Currencies at a glance
 
@@ -14,14 +14,14 @@ the Relaunch server layers a handful of custom currencies on top of gil. Here's 
 | Currency | How you earn it | Where you spend it |
 |---|---|---|
 | **Hunt Marks** | Killing Hunting League NMs (5–65 per kill by rank), Weekly Hunts, and the Wave Master | Hunt Hub reward shop — rank unlocks, seals, and Sortie job earrings |
-| **Seals** (Bronze / Silver / Gold) | Bought with Hunt Marks at the Seals NPC | [Armor & Weapons vendors](gear-vendors.md) at Reisenjima Henge |
+| **Seals** (Bronze / Silver / Gold) | Bought with Hunt Marks at the Seals NPC | [Armor & Weapons vendors](gear-vendors.md) at Escha ZiTah |
 | **AF / Relic / Empy Marks** | Killing Sky God / Unity / Abyssea NMs | [Reforge system](reforge.md) — upgrade AF/Relic/Empy armor from base to +3 |
 | **Infamy** | Endgame content — Abyssea NM hunts, Invasions, and the weekly Raid | [Infamy Vendor](gear-vendors.md#infamy-vendor) — relic weapons, instruments & best-in-slot gear; also unlocks the Augment Sage |
 | **Gil** | Quests (100× rate), crafting, and drops | Auction House, NPC vendors, consumables |
 
 ## The Hunting League at a glance
 
-The system has **two NPCs side-by-side** in Reisenjima Henge:
+The system has **two NPCs side-by-side** in Escha ZiTah:
 
 | NPC | Purpose |
 |---|---|
@@ -38,7 +38,7 @@ The system has **two NPCs side-by-side** in Reisenjima Henge:
 
 ## How it works in 6 steps
 
-1. Type **`!hunt`** in chat. You'll warp directly to Reisenjima Henge and land next to the Hunt Seals — no map navigation required.
+1. Type **`!hunt`** in chat. You'll warp directly to Escha ZiTah and land next to the Hunt Seals — no map navigation required.
 2. Talk to **Hunt: Spawner** (right next to the Seals).
 3. Pick an NM from your current rank's list.
 4. The NM appears at the spawn point. Engage and kill it (you must land the killing blow, or be the player credited as `killer`).
@@ -156,7 +156,7 @@ The Hunting League is the main game now, but retail content still has a role:
 
 - **Bring a party for Rank IV–V.** Tier 4 NMs (Kirin, King Behemoth, Nidhogg) are doable solo with strong gear. Tier 5 — especially Shinryu — is a real raid boss.
 - **Save marks.** Don't blow your first 150 on a Fotia Gorget if you haven't unlocked Rank III yet. Get the rank unlocks first; the gear stays available.
-- **Tier-gating cuts both ways.** If you stand around in Reisenjima Henge while someone else pops a higher-tier NM, you won't get credit unless you've unlocked that rank.
+- **Tier-gating cuts both ways.** If you stand around in Escha ZiTah while someone else pops a higher-tier NM, you won't get credit unless you've unlocked that rank.
 
 ---
 

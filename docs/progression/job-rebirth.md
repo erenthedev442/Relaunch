@@ -184,7 +184,7 @@ Rebirth and [Ascension](prestige.md) are **separate systems that share one menu 
 - **Permanent and self-restoring.** What you buy with RP re-applies automatically on every zone-in and job change, and survives every future rebirth.
 - **Stacks with Ascension.** The two systems cap independently, so a fully-invested character can raise the same stat through both.
 - **The EXP penalty is per-job.** A reborn job's penalty never touches your other jobs, and lifts the moment you switch off it.
-- **No rebirth cap.** Rebirth a job as many times as you are willing to re-level it. The EXP penalty plateaus at −90%, so the commitment stays steady from the sixth rebirth onward.
+- **No rebirth cap.** Rebirth a job as many times as you are willing to re-level it. The EXP penalty plateaus at −80% at the 20th rebirth, so the commitment stays steady once you reach the cap.
 
 ---
 

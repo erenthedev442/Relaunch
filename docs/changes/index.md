@@ -82,7 +82,7 @@ You move *fast*:
 
 **Subjob is full level**, not half. If your main is 99, your sub is 99 too. (Retail: sub is half main, so 99/49.)
 
-**Subjob also levels itself.** While you grind your main, your subjob banks half the EXP and levels up in the background, capped at main's current level. See [Subjob EXP Share](../progression/subjob-exp.md) for the full mechanic.
+**Subjob also levels itself.** While you grind your main, your subjob banks one-quarter (25%) of the EXP and levels up in the background, capped at main's current level. See [Subjob EXP Share](../progression/subjob-exp.md) for the full mechanic.
 
 ## Merits & currencies
 
@@ -135,16 +135,16 @@ Built for grinding:
 
 Beyond the settings tweaks above, the Relaunch server adds a stack of custom NPCs and hunt systems. The big ones each have their own page; the rest are summarized inline.
 
-## Reisenjima Henge hub
+## Escha ZiTah hub
 
-Three custom NPCs stand side-by-side at **Reisenjima Henge** — the endgame zone that anchors the bulk of the server's progression loop.
+Three custom NPCs stand side-by-side at **Escha ZiTah** — the endgame zone that anchors the bulk of the server's progression loop.
 
 | NPC | Position | What it does |
 |---|---|---|
 | **Hunt: Hub** | _see [Hunting League](../progression/index.md)_ | Shows rank & marks, unlocks ranks, reward shop |
 | **Hunt: Spawner** | _see [Hunting League](../progression/index.md)_ | Pops current-rank NMs on demand |
-| **Armor Vendor** | `(2.49, 5.51, -12.18)` | Endgame armor for seals — see [Gear Vendors](../progression/gear-vendors.md) |
-| **Weapons Vendor** | `(-0.51, 5.51, -12.18)` | Endgame weapons for seals — see [Gear Vendors](../progression/gear-vendors.md) |
+| **Armor Vendor** | next to the Hunting League NPCs | Endgame armor for seals — see [Gear Vendors](../progression/gear-vendors.md) |
+| **Weapons Vendor** | next to the Hunting League NPCs | Endgame weapons for seals — see [Gear Vendors](../progression/gear-vendors.md) |
 
 - **Hunting League** is the rank-based NM hunting system that drives all progression. Five ranks, ~3 NMs per rank, mark currency, reward shop. → [Full details](../progression/index.md)
 - **Armor Vendor** and **Weapons Vendor** sell tiered gear (Bronze / Silver / Gold) for the three seal currencies. → [Full catalogs](../progression/gear-vendors.md)
@@ -235,7 +235,7 @@ System-level modules that change behavior server-wide without adding NPCs. You p
 
 | Module | What it changes |
 |---|---|
-| **Always-Popped NMs** | Every NM in Abyssea (all 10 zones), Escha (Zi'Tah + Ru'Aun), Reisenjima, and Reisenjima Sanctorium auto-spawns at server start and respawns **30 seconds** after death. No trade pop, no key item, no atmacite, no cruor — just walk in and fight. HNMs and wave bosses included. Reisenjima Henge is excluded so the Hunting League's on-demand spawner can keep working. |
+| **Always-Popped NMs** | Every NM in Abyssea (all 10 zones), Escha (Zi'Tah + Ru'Aun), Reisenjima, and Reisenjima Sanctorium auto-spawns at server start and respawns **30 seconds** after death. No trade pop, no key item, no atmacite, no cruor — just walk in and fight. HNMs and wave bosses included. Escha ZiTah is excluded so the Hunting League's on-demand spawner can keep working. |
 | **Unlimited Visitant (Abyssea)** | Every player gets permanent Visitant status the moment they zone into any Abyssea area. No timer, no eject to Searing Ward, no pearl/atma farming just to stay alive. Same mechanism retail uses for GMs, applied to everyone. |
 | **Homepoint Heal** | Every homepoint visit restores full HP & MP. No more relying on a healer at the crystal. |
 | **Persistent NM Time of Death** | NM respawn timers survive crashes and restarts. Currently tracks Behemoth (21–24h window), with more NMs addable. |

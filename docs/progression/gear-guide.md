@@ -3,7 +3,7 @@
 New to the Relaunch server and wondering what to wear? This page answers "what gear should I be targeting right now?" at each stage of your character's journey.
 
 !!! info "Weapons come from the Weapons Vendor. Armor comes from Reforge and infamy vendors."
-    This page focuses on the **weapon progression** sold by the Weapons Vendor at Reisenjima Henge, and explains where armor fits in. For the full armor catalog, see [Gear Vendors](gear-vendors.md). For Reforge (AF/Relic/Empy sets), see [Reforge System](reforge.md).
+    This page focuses on the **weapon progression** sold by the Weapons Vendor at Escha ZiTah, and explains where armor fits in. For the full armor catalog, see [Gear Vendors](gear-vendors.md). For Reforge (AF/Relic/Empy sets), see [Reforge System](reforge.md).
 
 ---
 
@@ -16,13 +16,13 @@ New to the Relaunch server and wondering what to wear? This page answers "what g
 | **Reforge System** | AF/Relic/Empy armor sets, base through +3 | AF Marks, Relic Marks, or Empy Marks from Reforge NMs |
 | **Infamy Vendor** | Best-in-slot armor and weapons found nowhere else | Infamy earned from Abyssea NM hunts, Invasions, and the weekly Raid |
 | **Augmented gear** | Any piece with extra stats from the Augment Moogle | Catalysts from mob drops + Hunt Marks for seals |
-| **Hunting League rewards** | Currency and access to all of the above | Participate in Hunt spawns at Reisenjima Henge |
+| **Hunting League rewards** | Currency and access to all of the above | Participate in Hunt spawns at Escha ZiTah |
 
 ---
 
 ## Currency: how to turn Hunt Marks into medals
 
-All vendor gear (weapons and armor) is purchased with three medal tiers. You exchange Hunt Marks at the **Seals NPC** at Reisenjima Henge:
+All vendor gear (weapons and armor) is purchased with three medal tiers. You exchange Hunt Marks at the **Seals NPC** at Escha ZiTah:
 
 | Medal | Cost | Tier unlocked |
 |---|---:|---|
@@ -36,7 +36,7 @@ Hunt Marks come from participating in [Hunting League](index.md) spawns. The Sea
 
 ## The Weapons Vendor
 
-**Location:** Reisenjima Henge — `(-0.5139, 5.509, -12.1827)`  
+**Location:** Escha ZiTah — next to the Hunting League NPCs  
 This NPC sells weapons in all 14 categories across three tiers. All items are ilvl 119 and available immediately to any job that can equip them. Browse the menu by weapon type; the NPC filters to categories relevant to your current job.
 
 ---
@@ -132,7 +132,7 @@ Gold weapons are the top-end purchases from the vendor system. Many are best-in-
 
 Armor does not come from the Weapons Vendor — it comes from two other sources:
 
-**Gear Vendors (Reisenjima Henge):** The Armor Vendor and Accessories Vendor at the same cluster sell body armor and accessories using the same three medal tiers. See [Gear Vendors](gear-vendors.md) for the full catalog.
+**Gear Vendors (Escha ZiTah):** The Armor Vendor and Accessories Vendor at the same cluster sell body armor and accessories using the same three medal tiers. See [Gear Vendors](gear-vendors.md) for the full catalog.
 
 **Reforge System:** AF, Relic, and Empyrean armor sets are upgraded from base through +3 using Reforge marks earned from spawner NMs. This is your primary armor progression path alongside the medal vendors. See [Reforge System](reforge.md).
 
@@ -147,7 +147,7 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 ### Fresh character — first days
 
 - Reach level 99 via EXP camps or [Subjob EXP Share](subjob-exp.md).
-- Start collecting Hunt Marks by participating in [Hunting League](index.md) spawns at Reisenjima Henge.
+- Start collecting Hunt Marks by participating in [Hunting League](index.md) spawns at Escha ZiTah.
 - Convert early marks to Beastmens Medals and grab a **Bronze weapon** for your main job.
 - Pick up bronze-tier armor pieces from the Armor Vendor in the slots you're missing.
 
@@ -163,7 +163,7 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 - **Transition your main weapon to Silver tier.** 375 Hunt Marks per weapon is achievable with consistent play.
 - Focus Reforge marks on upgrading your armor set from base to +1 or +2 in your most impactful slots (typically body and head).
 - Start saving Kindreds Medals for Silver armor pieces in slots where Reforge hasn't caught up yet.
-- Begin the [Augment Sage](augment-sage.md) side-quest if you haven't — even Rank I (10 augments, 5 Bronze Medals, a Behemoth Horn) gives a 1.20x mastery multiplier that applies to every augment from here on.
+- Begin the [Augment Sage](augment-sage.md) side-quest if you haven't — Rank I unlocks automatically at Hunting League Rank 2 (nothing consumed) and gives a 1.20x mastery multiplier that applies to every augment from here on.
 
 ### Rank IV–V (one to two months)
 
@@ -177,7 +177,7 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 - Full Gold-tier weapons across main and offhand.
 - Reforge +3 armor in all five slots (head/body/hands/legs/feet) for your main set.
 - Infamy Vendor pieces in slots where they beat Reforge +3.
-- Augment Moogle with Rank 5 Augment Archon mastery (2.0x multiplier, 20% crit chance) and all 13 NM affinities registered.
+- Augment Moogle with Rank 5 Augment Archon mastery (2.0x multiplier, 20% crit chance) and all 24 NM affinities registered.
 - Register for [Hunter's Guild](hunters-guild.md) rep on all four guilds to maximize mark yield from future farming.
 
 ---

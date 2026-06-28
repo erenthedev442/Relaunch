@@ -58,7 +58,7 @@ Still not working? Ask in Discord.
 
 ## Lag / Rubber-Banding
 
-The server runs at **69.130.180.41**. Performance issues can come from a few sources:
+The server runs at **172.215.213.23**. Performance issues can come from a few sources:
 
 - **Server load.** If multiple players are reporting rubber-banding at the same time, the server is likely under load. Check `#server-status` in Discord.
 - **Your connection.** If it's only you, run a quick latency check to the server IP. High packet loss between you and the server will cause rubber-banding even if the server itself is healthy.

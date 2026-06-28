@@ -131,7 +131,7 @@ Five objectives, reset every week. Complete all five and you earn a significant 
 Three fresh objectives every day, reset at UTC midnight. Clear all three in one day for a bonus on top.
 
 **Custom Trusts**
-Summons you won't find on retail. **Gemma** heals, raises, buffs, debuffs, and magic-bursts your skillchains. **Meat** soaks every hit and refuses to let go of aggro. Both are 50M-gil permanent unlocks.
+Summons you won't find on retail. **Gemma** heals, raises, buffs, debuffs, and magic-bursts your skillchains. **Meat** soaks every hit and refuses to let go of aggro. Each unlocks permanently through Hunting League rank + Hunt Marks (Gemma: Rank 3 + 3,000 marks; Meat: Rank 2 + 2,000; Corvus: Rank 4 + 5,000) — no gil required.
 
 **Achievements (26 milestones)**
 Twenty-six personal milestones paying bonus Hunt Marks and titles, with the biggest ones triggering a server-wide announcement.

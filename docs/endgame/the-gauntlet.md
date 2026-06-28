@@ -1,7 +1,7 @@
 ﻿# The Gauntlet
 
 !!! tip "Summary"
-    A 10-level solo challenge hidden in **Riverne Site A01**. At each of the first nine levels you choose: take the **Safe Path** and advance without combat, or face a the Relaunch server NM that grows twice as deadly each level. **Level 10 has no safe option** — defeat **Shinryu** or be expelled. Clear the final trial and you earn one of the largest one-time rewards on the server and a permanent NPC in the **Hall of Champions**.
+    A 10-level solo challenge hidden in **Riverne Site A01**. At each of the first nine levels you choose: take the **Safe Path** and advance without combat, or face a Legendary NM that grows twice as deadly each level. **Level 10 has no safe option** — defeat **Shinryu** or be expelled. Clear the final trial and you earn one of the largest one-time rewards on the server and a permanent NPC in the **Hall of Champions**.
 
 ---
 

@@ -13,8 +13,8 @@ There is no camping. There is no waiting on a lottery pop. Walk in, kill it, wal
 !!! tip "Why does this matter?"
     On retail and most private servers, rare NMs have multi-hour windows, lottery pops, or ToD camps. on the Relaunch server you can chain kills continuously — making skill-ups, drops, and marks farming dramatically faster.
 
-!!! note "Reisenjima Henge is excluded"
-    The Hunting League spawner at Reisenjima Henge uses a separate on-demand pop system by design. Those NMs are managed through the Hunt Spawner NPC (`!hunt` to warp there).
+!!! note "Escha ZiTah is excluded"
+    The Hunting League spawner at Escha ZiTah uses a separate on-demand pop system by design. Those NMs are managed through the Hunt Spawner NPC (`!hunt` to warp there).
 
 ---
 
@@ -134,7 +134,7 @@ This command self-rescues you from any frozen state. The server also runs an aut
 
 ## Subjob EXP Share
 
-Your subjob gains **0.5× EXP** automatically as you gain EXP on your main job. You never need to grind a subjob separately.
+Your subjob gains **0.25× (25%) EXP** automatically as you gain EXP on your main job. You never need to grind a subjob separately.
 
 EXP banks across subjob swaps. If you switch subjobs, accumulated EXP carries over to the new one.
 

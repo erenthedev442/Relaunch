@@ -14,8 +14,8 @@ No pop requirements. No trade items. No key items. No atmacite. No cruor thresho
 
 This covers HNMs and wave bosses in those zones as well. If you're looking for a specific Abyssea NM, it's already up — or it'll be back in half a minute.
 
-!!! note "Reisenjima Henge excluded"
-    The Henge itself is excluded from the always-pop system so the Hunting League's on-demand Spawner keeps working correctly.
+!!! note "Escha ZiTah excluded"
+    The hub itself is excluded from the always-pop system so the Hunting League's on-demand Spawner keeps working correctly.
 
 ---
 

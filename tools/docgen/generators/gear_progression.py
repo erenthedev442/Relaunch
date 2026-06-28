@@ -1,6 +1,6 @@
 """Sync docs/progression/gear-progression.md with gear_progression_catalog.lua.
 
-The Gear Progression vendor in Reisenjima Henge sells weapons across three
+The Gear Progression vendor in Escha ZiTah sells weapons across three
 medal tiers (Bronze / Silver / Gold). Each tier covers a spread of weapon
 categories, every weapon has a flat medal price and a job list. The catalog is
 large (3 tiers x 14 categories x many weapons), so this generator *summarises*
@@ -102,7 +102,7 @@ def _parse(text: str) -> dict:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return ("The **Gear Progression** vendor stands in **Reisenjima Henge** — the "
+    return ("The **Gear Progression** vendor stands in **Escha ZiTah** — the "
             "hub all five hunting ranks lead back to. Bring the medals you earn "
             "from content, pick a tier, then a weapon category, and trade up.")
 
