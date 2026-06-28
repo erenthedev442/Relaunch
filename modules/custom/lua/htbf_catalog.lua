@@ -133,6 +133,11 @@ catalog.tierLoot =
     },
 }
 
+-- Per-fight RETAIL armoury-crate loot (bg-wiki-sourced, all ids verified). Keyed
+-- by fightKey; applied to every tier of that fight. Overrides tierLoot. Lives in
+-- its own file (one table per fight) -- tune individual fights there.
+catalog.fightLoot = require('modules/custom/lua/htbf_loot')
+
 -- ── Fights ──────────────────────────────────────────────────────────────────
 -- key              -> used by the tier files + vendor
 -- zone/entryNpc/exitNpc -> the existing burning-circle entrance (battlefield base)

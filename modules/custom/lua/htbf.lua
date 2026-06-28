@@ -129,9 +129,13 @@ function htbf.register(fightKey, tier)
         end)
     end
 
-    -- Armoury-crate loot: a fight's own retail table wins; otherwise the modest
-    -- tier-scaled default (catalog.tierLoot) so every fight drops a crate.
-    local loot = (f.loot and f.loot[tier]) or catalog.tierLoot[tier]
+    -- Armoury-crate loot. Priority: a fight's per-tier override (f.loot[tier]),
+    -- then its flat retail pool (catalog.fightLoot[fightKey], same pool across
+    -- tiers -- retail loot is per-fight, the tiers differ in difficulty + marks),
+    -- then the modest tier-scaled default so every fight always drops a crate.
+    local loot = (f.loot and f.loot[tier])
+        or (catalog.fightLoot and catalog.fightLoot[fightKey])
+        or catalog.tierLoot[tier]
     if loot then
         content.loot = loot
     end
