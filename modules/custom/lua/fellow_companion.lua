@@ -139,6 +139,25 @@ local CONFIG =
         { name = 'Adventurer', modelId = 3119, ws = xi.mobSkill.CRESCENT_FANG      },  -- strong physical
     },
 
+    -- OUTFIT picker: humanoid job-class themes applied on top of Appearance.
+    -- When an outfit is set it overrides the Appearance model entirely.
+    -- Model IDs are the trust-era (0C-range) npc_list look values for iconic FFXI
+    -- characters: bytes[2]|(bytes[3]<<8) from HEX(SUBSTR(look,1,4)) -- same LE formula
+    -- as mob_pools.modelid. Select "(None)" to revert to the Appearance model.
+    outfits =
+    {
+        { name = 'Thief',       modelId = 3128 },  -- Lion (trust era)
+        { name = 'Monk',        modelId = 3129 },  -- Prishe (trust era)
+        { name = 'Red Mage',    modelId = 3131 },  -- Lilisette (trust era)
+        { name = 'Ranger',      modelId = 3133 },  -- Aldo (trust era)
+        { name = 'Dark Knight', modelId = 3135 },  -- Zeid (trust era)
+        { name = 'Warrior',     modelId = 3136 },  -- Volker (trust era)
+        { name = 'Paladin',     modelId = 3137 },  -- Trion (trust era)
+        { name = 'Black Mage',  modelId = 3139 },  -- Shantotto (trust era)
+        { name = 'Scholar',     modelId = 3140 },  -- Ajido-Marujido (trust era)
+        { name = 'Bard',        modelId = 3147 },  -- Ulmia (trust era)
+    },
+
     autoReadyTP         = 1000,
     combatLoopMs        = 2000,   -- auto-assist + auto-Ready + role-behaviour tick cadence
 
@@ -167,6 +186,7 @@ local V =
     role     = 'Fellow_Role',     -- index into CONFIG.roleOrder
     nameIdx  = 'Fellow_NameIdx',  -- index into CONFIG.names
     modelPet = 'Fellow_ModelPet', -- index into CONFIG.models (each carries a petId)
+    outfit   = 'Fellow_Outfit',  -- 0 = none (use Appearance); N = CONFIG.outfits[N]
 }
 local function statVar(stat) return 'Fellow_' .. stat end
 
@@ -191,6 +211,11 @@ local function roleDef(p) return CONFIG.roles[getRole(p)] or CONFIG.roles[CONFIG
 local function chosenModelId(p)
     local mdl = CONFIG.models[getN(p, V.modelPet)]
     return mdl and mdl.modelId
+end
+-- Outfit overrides Appearance when set (0 = no outfit).
+local function getOutfitModelId(p)
+    local entry = CONFIG.outfits[getN(p, V.outfit)]
+    return entry and entry.modelId
 end
 -- The chosen FORM's signature TP move (mob skill). nil -> fall back to a random Ready move.
 local function chosenWs(p)
@@ -247,8 +272,8 @@ local function applyFellow(p, pet)
     local nm = chosenName(p)
     if nm then pcall(function() pet:renameEntity(nm, true) end) end
 
-    -- Visual NPC model overlay (combat chassis remains LYNX_FAMILIAR).
-    local mdlId = chosenModelId(p)
+    -- Visual NPC model overlay. Outfit overrides Appearance when set.
+    local mdlId = getOutfitModelId(p) or chosenModelId(p)
     if mdlId then pcall(function() pet:setModelId(mdlId) end) end
 
     scheduleCombatLoop(p, pet)
@@ -406,9 +431,11 @@ local function statusReport(p)
     local lvl  = getLevel(p)
     local role = roleDef(p)
     local nm   = chosenName(p) or '(unnamed)'
-    local mdl  = CONFIG.models[getN(p, V.modelPet)]
+    local outfitEntry = CONFIG.outfits[getN(p, V.outfit)]
+    local mdl         = CONFIG.models[getN(p, V.modelPet)]
+    local lookName    = (outfitEntry and outfitEntry.name) or (mdl and mdl.name) or 'Moogle'
     p:printToPlayer(string.format('=== %s ===  Lv.%d %s  (%s)',
-        nm, lvl, role.name, (mdl and mdl.name) or 'Moogle'), SYS)
+        nm, lvl, role.name, lookName), SYS)
     if lvl < CONFIG.maxLevel then
         p:printToPlayer(string.format('  XP: %d / %d to next level   |   Unspent points: %d',
             getN(p, V.xp), xpToNext(lvl), getPoints(p)), SYS)
@@ -424,7 +451,7 @@ local function statusReport(p)
 end
 
 -- ════════════════════════════════ Menus ═════════════════════════════════════
-local openMain, openAllocate, openRole, openName, openModel
+local openMain, openAllocate, openRole, openName, openModel, openOutfit
 
 local function show(p, title, options)
     local snapshot = { title = title, options = options }
@@ -443,6 +470,7 @@ openMain = function(p)
         { 'Choose Role',  function(pp) openRole(pp) end },
         { 'Choose Name',  function(pp) openName(pp, 0) end },
         { 'Appearance',   function(pp) openModel(pp, 0) end },
+        { 'Outfit',       function(pp) openOutfit(pp, 0) end },
         { 'View Status',  function(pp) statusReport(pp); openMain(pp) end },
         { 'Close',        function(pp) end },
     }
@@ -567,6 +595,46 @@ openModel = function(p, page)
     end
     options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
     show(p, 'Appearance', options)
+end
+
+-- Paginated outfit picker: humanoid job-class themes that override Appearance.
+-- "(None)" at index 0 reverts to the Appearance model; each numbered entry maps
+-- to CONFIG.outfits[N]. Re-spawns the Fellow live if it is currently out.
+openOutfit = function(p, page)
+    page = page or 0
+    -- Prepend "(None)" so realIdx 0 = clear outfit; realIdx N = CONFIG.outfits[N].
+    local all = { { name = '(None)' } }
+    for _, o in ipairs(CONFIG.outfits) do all[#all + 1] = o end
+    local per   = CONFIG.namesPerPage
+    local pages = math.max(1, math.ceil(#all / per))
+    page = page % pages
+    local cur   = getN(p, V.outfit)
+    local options = {}
+    for i = page * per + 1, math.min((page + 1) * per, #all) do
+        local idx      = i
+        local entry    = all[idx]
+        local realIdx  = idx - 1
+        local label    = (cur == realIdx) and (entry.name .. ' *') or entry.name
+        options[#options + 1] =
+        {
+            label,
+            function(pp)
+                setN(pp, V.outfit, realIdx)
+                respawnIfOut(pp)
+                if realIdx == 0 then
+                    pp:printToPlayer('[Fellow] Outfit cleared; using Appearance model.', SYS)
+                else
+                    pp:printToPlayer(string.format('[Fellow] Outfit: %s.', entry.name), SYS)
+                end
+                openOutfit(pp, page)
+            end,
+        }
+    end
+    if pages > 1 then
+        options[#options + 1] = { 'More >>', function(pp) openOutfit(pp, page + 1) end }
+    end
+    options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
+    show(p, 'Choose Outfit', options)
 end
 
 -- ════════════════════════════════ Faucet ════════════════════════════════════
