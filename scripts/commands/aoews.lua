@@ -1,7 +1,7 @@
 -----------------------------------
 -- !aoews <wsname>
 -- desc: Permanently binds a weapon skill as your AoE WS.
---       Requires the AoE unlock from the Rupture Sage (GM Home).
+--       Requires the AoE unlock from the Rupture Sage (Leafallia, !leaf).
 --       Cannot be changed after setting.
 --
 -- Examples:
@@ -25,7 +25,7 @@ cmdObj.onTrigger = function(player, arg)
     end
 
     if (player:getCharVar('AoEWSPct') or 0) < 50 then
-        player:printToPlayer('[AoE WS] You must unlock AoE WS from the Rupture Sage in GM Home first.', SYS)
+        player:printToPlayer('[AoE WS] You must unlock AoE WS from the Rupture Sage in Leafallia (!leaf) first.', SYS)
         return
     end
 

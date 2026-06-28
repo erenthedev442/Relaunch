@@ -1,4 +1,4 @@
-# Home Point Network — GM Home
+# Home Point Network — Celennia Memorial Library
 
 A **Home Point** crystal stands in <!--npc:home_point-->the Celennia Memorial Library<!--/npc--> that works like a full home-point terminal: set your home point here, then free-warp to home points all across Vana'diel — no attunement, no gil, no gates.
 

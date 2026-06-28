@@ -23,7 +23,7 @@ When you challenge a champion, you fight a level-scaled **replica** of them — 
 - You can challenge each champion **once per day** (resets at 00:00 UTC) — pick your matches and come back tomorrow for a rematch.
 <!-- DOCGEN:END id="colosseum-duel" -->
 
-Duels are fought in GM Home, with the replica spawning right next to you. There's no party play here — it's a one-on-one test of your champion.
+Duels are fought in **Leafallia** (`!leaf`), with the replica spawning right next to you. There's no party play here — it's a one-on-one test of your champion.
 
 ## The rating ladder
 

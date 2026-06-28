@@ -1,11 +1,11 @@
 # Chocobo Derby
 
-Down in GM Home, the **Race Caller** runs the races. Put gil on a runner and
+In the **Celennia Memorial Library** (`!lib`), the **Race Caller** runs the races. Put gil on a runner and
 watch it play out — and if you've raised a chocobo of your own that's tough
 enough, line it up at the gate and bet on yourself.
 
 !!! tip "Summary"
-    Bet gil on chocobo races at the Race Caller in GM Home; raise a strong
+    Bet gil on chocobo races at the Race Caller in the Celennia Memorial Library (`!lib`); raise a strong
     enough chocobo of your own and you can enter it as a runner for a bigger
     payout.
 
