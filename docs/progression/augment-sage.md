@@ -49,19 +49,19 @@ per_slot  = (base + boost) * multiplier           -- the engine formula
 
 ## Track 1 — Sage Mastery ranks
 
-Promotion is a one-time trade per rank. The Sage shows your live progress on the in-game menu (e.g. `Augs 12/10`, `Bronze 7/5`, `Behemoth Horn 1/1`). When all three requirements are met, the `>> Promote to {title}` row becomes the actionable step — pick it to consume the seal + trophy and bump your rank.
+Promotion is a free, one-time step per rank — gated on **content milestones**, not consumables. The Sage shows your live progress on the in-game menu (e.g. `HL Rank 2/3`, `Prestige 12/15`). Once you reach the required Hunting League Rank and/or Prestige Level, the `>> Promote to {title}` row becomes the actionable step — pick it to bump your rank. No seals, trophies, or augment counts are spent.
 
 <!-- DOCGEN:BEGIN id="sage-ranks" -->
-| Rank | Title | Mastery × | Crit chance | Augments | Seals | NM Trophy |
-|---:|---|---:|---:|---:|---|---|
-| 0 | Unranked | 1.00x | 5% | — | — | — |
-| 1 | Augment Initiate | 1.20x | 8% | 0 lifetime | 0 × ? (?) | 1 × ? (drops from **?**) |
-| 2 | Augment Adept | 1.40x | 11% | 0 lifetime | 0 × ? (?) | 1 × ? (drops from **?**) |
-| 3 | Augment Magus | 1.60x | 14% | 0 lifetime | 0 × ? (?) | 1 × ? (drops from **?**) |
-| 4 | Augment Sage | 1.80x | 17% | 0 lifetime | 0 × ? (?) | 1 × ? (drops from **?**) |
-| 5 | Augment Archon | 2.00x | 20% | 0 lifetime | 0 × ? (?) | 1 × ? (drops from **?**) |
+| Rank | Title | Mastery × | Crit chance | Hunting League Rank | Prestige Level |
+|---:|---|---:|---:|---:|---:|
+| 0 | Unranked | 1.00x | 5% | — | — |
+| 1 | Augment Initiate | 1.20x | 8% | 2 | — |
+| 2 | Augment Adept | 1.40x | 11% | 3 | — |
+| 3 | Augment Magus | 1.60x | 14% | 5 | — |
+| 4 | Augment Sage | 1.80x | 17% | — | 15 |
+| 5 | Augment Archon | 2.00x | 20% | — | 30 |
 
-_Augments-required counts the **total lifetime successful augments** the player has crafted at the Augment Moogle (tracked via `Augment_Count` charvar). Trophies + seals are **consumed** on promotion._
+_Ranks are **content milestones** — each unlocks automatically once you reach the listed Hunting League Rank and/or Prestige Level. Nothing is consumed: no seals, trophies, or augment counts._
 <!-- DOCGEN:END id="sage-ranks" -->
 
 The `Augment_Count` charvar is bumped by **+1 every time you confirm an augmentation at the Augment Moogle**. Cancelled trades and failed trades do not count.
@@ -109,7 +109,7 @@ Holding an affinity multiplies augments **in that category** by **1.5×**. Affin
 |---|---|---|
 | `Augment_Mastery`    | 0–5            | Highest Sage rank cleared. Drives the global multiplier + crit chance. |
 | `Augment_Affinities` | 24-bit field   | One bit per registered NM affinity. Drives the per-category bonus. |
-| `Augment_Count`      | 0–N            | Lifetime successful augments. Drives rank-up eligibility. |
+| `Augment_Count`      | 0–N            | Lifetime successful augments. Tracked for reference; no longer gates rank-up. |
 
 These three charvars are independent — nothing else on the server reads or writes them. You can inspect a player's progress with `!charvar Augment_Mastery` etc. from a GM account.
 
@@ -128,7 +128,7 @@ Each catalyst's augment is calculated independently for affinity (so only the ca
 No. Mastery and affinities are one-way. They're permanent rewards for completing the content.
 
 **Are the trophy items consumed?**
-Yes — both the Sage rank trophy and the affinity registration trophy are removed from inventory on success. You'll need to farm the NM again to do anything else with those items.
+Only the **affinity registration** trophy (Track 2) is removed from inventory on success. **Sage Mastery ranks (Track 1) consume nothing** — they unlock automatically from Hunting League Rank and Prestige Level milestones.
 
 ---
 

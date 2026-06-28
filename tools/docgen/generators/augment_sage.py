@@ -126,15 +126,15 @@ def _parse_ranks(text: str) -> list[dict]:
 
     # Sanity guard: if catalog.ranks block was found (anchor matched) but we
     # extracted zero rank rows, the per-block field extractor failed on every
-    # entry. Could be a renamed field (e.g. rank → tier) or restructured seal
-    # /trophy sub-blocks. Raise rather than wiping the published rank table.
+    # entry. Could be a renamed field (e.g. rank → tier) or restructured
+    # requirement fields. Raise rather than wiping the published rank table.
     inner_rank_signals = len(re.findall(r"\brank\s*=\s*\d+", text[anchor.end():]))
     if inner_rank_signals > 0 and not rows:
         raise RuntimeError(
             f"catalog.ranks block has {inner_rank_signals} `rank = N` "
             f"signals but _row_from_block extracted zero rows. A required "
-            f"field (rank/title/augCount/seal/trophy/nm) was probably "
-            f"renamed or restructured. Update _row_from_block in "
+            f"field (rank/title) was probably renamed or restructured. "
+            f"Update _row_from_block in "
             f"{Path(__file__).name}. Refusing to overwrite the rank table."
         )
 
@@ -143,6 +143,9 @@ def _parse_ranks(text: str) -> list[dict]:
 
 
 def _row_from_block(block: str) -> dict | None:
+    """RELAUNCH: rank gates are content milestones, not consumables. Each rank
+    carries `rank`, `title`, and an optional `hlRank` (Hunting League Rank
+    requirement) and/or `prestigeLevel` (Prestige Level requirement)."""
     def find(field, pattern=r"=\s*'([^']+)'"):
         m = re.search(rf"\b{re.escape(field)}\b\s*{pattern}", block)
         return m.group(1) if m else None
@@ -150,34 +153,15 @@ def _row_from_block(block: str) -> dict | None:
     rank = find("rank", r"=\s*(\d+)")
     if not rank:
         return None
-    title    = find("title")
-    augCount = find("augCount", r"=\s*(\d+)")
-    nm       = find("nm")
-    seal_m   = re.search(
-        r"seal\s*=\s*\{\s*tier\s*=\s*'([^']+)'\s*,\s*qty\s*=\s*(\d+)",
-        block,
-    )
-    # Quote-matched: handle "Handful of Nidhogg's Scales" without stopping
-    # on the inner apostrophe. \2 is the backreference to the opening quote.
-    trophy_m = re.search(
-        r"trophy\s*=\s*\{[^}]*?name\s*=\s*(['\"])(.+?)\1",
-        block,
-    )
-    trophy_qty_m = re.search(
-        r"trophy\s*=\s*\{\s*id\s*=\s*\d+\s*,\s*qty\s*=\s*(\d+)",
-        block,
-    )
+    title         = find("title")
+    hlRank        = find("hlRank", r"=\s*(\d+)")
+    prestigeLevel = find("prestigeLevel", r"=\s*(\d+)")
 
     return {
-        "rank":       int(rank),
-        "title":      title or f"Rank {rank}",
-        "augCount":   int(augCount) if augCount else 0,
-        "seal_tier":  seal_m.group(1) if seal_m else "?",
-        "seal_qty":   int(seal_m.group(2)) if seal_m else 0,
-        # group(2) is the captured name (group(1) is the quote character).
-        "trophy":     trophy_m.group(2) if trophy_m else "?",
-        "trophy_qty": int(trophy_qty_m.group(1)) if trophy_qty_m else 1,
-        "nm":         nm or "?",
+        "rank":          int(rank),
+        "title":         title or f"Rank {rank}",
+        "hlRank":        int(hlRank) if hlRank else None,
+        "prestigeLevel": int(prestigeLevel) if prestigeLevel else None,
     }
 
 
@@ -362,34 +346,31 @@ def _render_ranks(
     ranks:   list[dict],
     mastery: list[float],
     crit:    list[float],
-    seals:   dict[str, str],
 ) -> str:
     if not ranks:
         return "_Rank chain not parsed from the catalog._"
     lines = [
-        "| Rank | Title | Mastery × | Crit chance | Augments | Seals | NM Trophy |",
-        "|---:|---|---:|---:|---:|---|---|",
+        "| Rank | Title | Mastery × | Crit chance | Hunting League Rank | Prestige Level |",
+        "|---:|---|---:|---:|---:|---:|",
     ]
     # Row 0 = unranked starting state.
     lines.append(
-        f"| 0 | Unranked | {mastery[0]:.2f}x | {crit[0]*100:.0f}% | — | — | — |"
+        f"| 0 | Unranked | {mastery[0]:.2f}x | {crit[0]*100:.0f}% | — | — |"
     )
     for r in ranks:
         idx = r["rank"]
         mult = mastery[idx] if idx < len(mastery) else mastery[-1]
         cpct = crit[idx]    if idx < len(crit)    else crit[-1]
-        seal_label = seals.get(r["seal_tier"], r["seal_tier"].title())
-        tier_badge = _TIER_BADGE.get(r["seal_tier"], r["seal_tier"].title())
+        hl   = str(r["hlRank"]) if r["hlRank"] else "—"
+        pl   = str(r["prestigeLevel"]) if r["prestigeLevel"] else "—"
         lines.append(
-            f"| {idx} | {r['title']} | {mult:.2f}x | {cpct*100:.0f}% | "
-            f"{r['augCount']} lifetime | {r['seal_qty']} × {seal_label} ({tier_badge}) | "
-            f"{r['trophy_qty']} × {r['trophy']} (drops from **{r['nm']}**) |"
+            f"| {idx} | {r['title']} | {mult:.2f}x | {cpct*100:.0f}% | {hl} | {pl} |"
         )
     lines.append("")
     lines.append(
-        "_Augments-required counts the **total lifetime successful augments** "
-        "the player has crafted at the Augment Moogle (tracked via "
-        "`Augment_Count` charvar). Trophies + seals are **consumed** on promotion._"
+        "_Ranks are **content milestones** — each unlocks automatically once you "
+        "reach the listed Hunting League Rank and/or Prestige Level. Nothing is "
+        "consumed: no seals, trophies, or augment counts._"
     )
     return "\n".join(lines)
 
@@ -442,7 +423,6 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # Light parsers (regex match-or-none, no schema regression risk).
     zone     = _parse_zone_id(sage_text)
     pos      = _parse_vendor_pos(sage_text)
-    seals    = _parse_seals(sage_text)
     mastery  = _parse_mult_table(sage_text, "masteryMult")
     critPct  = _parse_mult_table(sage_text, "critChance")
     aff_mult = _parse_affinity_mult(aff_text)
@@ -475,5 +455,5 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
     _section("sage-location",   lambda: _render_location(zone, pos))
     _section("sage-formula",    lambda: _render_formula(mastery, critPct, aff_mult))
-    _section("sage-ranks",      lambda: _render_ranks(_parse_ranks(sage_text), mastery, critPct, seals))
+    _section("sage-ranks",      lambda: _render_ranks(_parse_ranks(sage_text), mastery, critPct))
     _section("sage-affinities", lambda: _render_affinities(_parse_affinities(aff_text), counts, aff_mult, aff_rank, aff_marks))
