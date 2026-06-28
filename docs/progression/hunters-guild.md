@@ -1,6 +1,6 @@
-# Hunter's Guild
+﻿# Hunter's Guild
 
-The Hunter's Guild is a passive reputation system layered on top of every NM-killing track on Legendary. Killing NMs earns reputation in the matching guild; rep-rank-ups boost the marks you earn from that same guild for the rest of your character's life.
+The Hunter's Guild is a passive reputation system layered on top of every NM-killing track on the Relaunch server. Killing NMs earns reputation in the matching guild; rep-rank-ups boost the marks you earn from that same guild for the rest of your character's life.
 
 !!! tip "Summary"
     Kill NMs → earn rep in the matching guild → rep ranks up → earned marks get amplified more at each rank (see the ladder below). Hit Grandmaster across multiple guilds for the **Trinity Hunter** or **Apex Hunter** capstone stacked on top. Use `!huntrank` to see your status anywhere.
@@ -106,7 +106,7 @@ In-game: `!huntrank` shows your current rank, rep, amplifier, and progress to th
 
 ## Backfill for existing players
 
-Retroactive backfill is **off by default** on Legendary. Under the current Vana'diel-hunt model, rep comes **only** from killing the listed open-world NMs — so everyone starts the guild ladder from zero and climbs it by hunting, even long-time players. Lifetime mark totals are *not* converted into starting rep.
+Retroactive backfill is **off by default** on the Relaunch server. Under the current Vana'diel-hunt model, rep comes **only** from killing the listed open-world NMs — so everyone starts the guild ladder from zero and climbs it by hunting, even long-time players. Lifetime mark totals are *not* converted into starting rep.
 
 ---
 

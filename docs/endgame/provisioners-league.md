@@ -1,4 +1,4 @@
-# Provisioners' League
+﻿# Provisioners' League
 
 A non-combat league for anglers and crafters. The **League Steward** at Reisenjima Henge tracks your fishing weigh-ins and high-quality craft turn-ins, awarding **League Points** that climb a five-rank ladder — and every rank-up permanently boosts the marks you earn around the server.
 
@@ -19,7 +19,7 @@ There are two ways to earn **League Points**:
 **Fishing weigh-ins** — every fish you catch is worth points that scale with the fish's skill: the tougher the catch, the more it pays. On top of that:
 
 - A **big fish** (the ruler-measured monsters) is worth **2×** points.
-- A **legendary** catch is league gold — worth **10×** points.
+- A **the Relaunch server** catch is league gold — worth **10×** points.
 - This week's **featured fish** pays a **3×** bonus — a rotating target that keeps the weekly race fresh and is always something a normal angler can land.
 
 **Crafting turn-ins** — every high-quality (HQ) item you hand in at the server's Crafting Exchange also credits League Points alongside its usual reward, so your crafting progress counts here too.

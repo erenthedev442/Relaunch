@@ -1,6 +1,6 @@
-# Gear Progression Guide
+﻿# Gear Progression Guide
 
-New to Legendary and wondering what to wear? This page answers "what gear should I be targeting right now?" at each stage of your character's journey.
+New to the Relaunch server and wondering what to wear? This page answers "what gear should I be targeting right now?" at each stage of your character's journey.
 
 !!! info "Weapons come from the Weapons Vendor. Armor comes from Reforge and infamy vendors."
     This page focuses on the **weapon progression** sold by the Weapons Vendor at Reisenjima Henge, and explains where armor fits in. For the full armor catalog, see [Gear Vendors](gear-vendors.md). For Reforge (AF/Relic/Empy sets), see [Reforge System](reforge.md).

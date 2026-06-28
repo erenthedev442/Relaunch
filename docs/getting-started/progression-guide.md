@@ -1,6 +1,6 @@
-# Progression Guide
+﻿# Progression Guide
 
-This page maps the full Legendary progression arc from a new character to endgame Prestige. If you haven't done setup yet, start with [First Steps](first-steps.md) — this guide picks up after your character is ready and you've made your first Hunting League kills.
+This page maps the full the Relaunch server progression arc from a new character to endgame Prestige. If you haven't done setup yet, start with [First Steps](first-steps.md) — this guide picks up after your character is ready and you've made your first Hunting League kills.
 
 ---
 
@@ -84,7 +84,7 @@ See [Augment Sage](../progression/augment-sage.md) for the full rank requirement
 
 **Goal:** Earn Infamy from endgame content and spend it at the Infamy Vendor.
 
-**Infamy** is earned across Legendary's endgame — Abyssea NM hunts, scheduled Invasions, and the weekly Raid, among others. Spend it at the [Infamy Vendor](../progression/gear-vendors.md#infamy-vendor), which sells gear found nowhere else: relic-tier weapons, bard instruments, best-in-slot armor, and per-job +4 Reforge Sets.
+**Infamy** is earned across the server's endgame — Abyssea NM hunts, scheduled Invasions, and the weekly Raid, among others. Spend it at the [Infamy Vendor](../progression/gear-vendors.md#infamy-vendor), which sells gear found nowhere else: relic-tier weapons, bard instruments, best-in-slot armor, and per-job +4 Reforge Sets.
 
 ---
 

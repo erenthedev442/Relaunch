@@ -1,6 +1,6 @@
 # Server Rules
 
-Legendary is a small, friendly community. We have a short list of rules designed to keep it that way. None of this is complicated — just be a reasonable person and you'll be fine.
+This is a small, friendly community. We have a short list of rules designed to keep it that way. None of this is complicated — just be a reasonable person and you'll be fine.
 
 ---
 

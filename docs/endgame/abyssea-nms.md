@@ -1,6 +1,6 @@
-# Abyssea NMs — Hunt Marks System
+﻿# Abyssea NMs — Hunt Marks System
 
-Abyssea is home to some of the most powerful Notorious Monsters on the server. Rather than hunting down rare key items to spawn them, Legendary replaces the retail pop system with a **Hunt Marks** spend: find the `???`, pay your marks, and the NM rises right in front of you.
+Abyssea is home to some of the most powerful Notorious Monsters on the server. Rather than hunting down rare key items to spawn them, the Relaunch server replaces the retail pop system with a **Hunt Marks** spend: find the `???`, pay your marks, and the NM rises right in front of you.
 
 !!! tip "Summary"
     Spend Hunt Marks at any Abyssea `???` to pop its NM on demand. Kill it with your party for a large Infamy and Gil payout — no key items required.

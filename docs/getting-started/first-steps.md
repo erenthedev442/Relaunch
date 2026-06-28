@@ -1,6 +1,6 @@
-# First Steps
+﻿# First Steps
 
-Welcome to Legendary. You've got the client running, you're in-game — now what?
+Welcome to the Relaunch server. You've got the client running, you're in-game — now what?
 
 This page walks you through the first 15–20 minutes: getting your character set up, picking up starter gear, and launching the core progression path. Follow these steps in order and you won't miss anything important.
 
@@ -105,7 +105,7 @@ This command warps you directly to **Reisenjima Henge** and drops you next to th
 
 The Hunting League is a custom rank-based NM hunting system with five ranks. You kill NMs, earn **Hunt Marks**, spend marks to unlock the next rank, and buy gear from the reward shop.
 
-It's the primary path to endgame gear and the main thing to do on Legendary. For full details — ranks, NMs, rewards, recommended order — see the **[Hunting League page](../progression/index.md)**.
+It's the primary path to endgame gear and the main thing to do on the Relaunch server. For full details — ranks, NMs, rewards, recommended order — see the **[Hunting League page](../progression/index.md)**.
 
 ### Quick start at Henge
 

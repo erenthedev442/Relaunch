@@ -1,6 +1,6 @@
-# Gemma
+﻿# Gemma
 
-Gemma is Legendary's flagship **premium Trust** — a tiny Hume woman who runs at your side as an entire support line *and* a second damage dealer. She heals, raises, buffs, debuffs, sings, rolls, and magic-bursts your skillchains, all while staying out of the way and never pulling hate.
+Gemma is the server's flagship **premium Trust** — a tiny Hume woman who runs at your side as an entire support line *and* a second damage dealer. She heals, raises, buffs, debuffs, sings, rolls, and magic-bursts your skillchains, all while staying out of the way and never pulling hate.
 
 ## At a glance
 

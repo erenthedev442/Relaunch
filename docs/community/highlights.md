@@ -1,6 +1,6 @@
-# Hall of Fame
+﻿# Hall of Fame
 
-This page celebrates Legendary's biggest moments — server firsts, record clears, and community milestones. As the server grows, so does this list.
+This page celebrates the server's biggest moments — server firsts, record clears, and community milestones. As the server grows, so does this list.
 
 !!! info "This page grows with the community."
     We're still early. The rows below will fill in fast. Check back often — and if you hit a milestone, post it in Discord so we can add it here.

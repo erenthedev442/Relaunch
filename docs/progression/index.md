@@ -1,15 +1,15 @@
-# Progression
+﻿# Progression
 
 ![Hunt beast crest](../assets/emblems/hunting-league.svg){ .lgnd-emblem }
 
-Forget what you know about retail progression on Legendary. Story missions still exist, but the real path through the game runs through the **Hunting League** — a custom rank-based NM hunting system that drives both gear acquisition and endgame challenge.
+Forget what you know about retail progression on the Relaunch server. Story missions still exist, but the real path through the game runs through the **Hunting League** — a custom rank-based NM hunting system that drives both gear acquisition and endgame challenge.
 
 !!! tip "Summary"
     Level to 99 (a couple of hours with <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP / <!--setting:main.EXP_RATE-->10<!--/setting-->× scripted), type **`!hunt`** to warp to **Reisenjima Henge**, find the **Hunt Seals** and **Spawner** NPCs, pop NMs, earn **Hunt Marks**, unlock the next rank, buy endgame gear. Repeat through 5 ranks until you take down Shinryu at the top.
 
 ## Currencies at a glance
 
-Legendary layers a handful of custom currencies on top of gil. Here's what each one is, how you earn it, and where it's spent:
+the Relaunch server layers a handful of custom currencies on top of gil. Here's what each one is, how you earn it, and where it's spent:
 
 | Currency | How you earn it | Where you spend it |
 |---|---|---|

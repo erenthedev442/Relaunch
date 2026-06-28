@@ -1,4 +1,4 @@
-# Subjob EXP Share
+﻿# Subjob EXP Share
 
 Your subjob levels up in the background while you grind your main. No party-leader hoops, no separate grinding sessions — just play your main and your sub catches up.
 
@@ -23,7 +23,7 @@ So whatever mob EXP you earn on main, your sub banks half of that same amount pe
 
 ## How this differs from `SUBJOB_RATIO`
 
-`SUBJOB_RATIO = 3` on Legendary (see [What's Custom](../changes/index.md#subjob)) raises the **effective sub level cap** to match main — but that setting doesn't grant EXP. Without the Subjob EXP Share module, a never-leveled SAM sub on a WAR/99 main still has actual sub level = 1, and `min(actual_sub_level, main_level) = 1` is what gets used for stats.
+`SUBJOB_RATIO = 3` on the Relaunch server (see [What's Custom](../changes/index.md#subjob)) raises the **effective sub level cap** to match main — but that setting doesn't grant EXP. Without the Subjob EXP Share module, a never-leveled SAM sub on a WAR/99 main still has actual sub level = 1, and `min(actual_sub_level, main_level) = 1` is what gets used for stats.
 
 This module is what actually fills the gap: as you play, the sub's real stored level climbs, and `SUBJOB_RATIO = 3` lets the full level apply once it's there.
 

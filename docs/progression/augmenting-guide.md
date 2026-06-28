@@ -1,11 +1,11 @@
-# Augmenting: Start Here
+﻿# Augmenting: Start Here
 
 ![Augment gem](../assets/emblems/augment.svg){ .lgnd-emblem }
 
 New to augmenting and not sure where to begin? This is the plain-English guide. The two pages after it — [Augment Moogle](augments.md) and [Augment Sage](augment-sage.md) — are the full reference with every number; **this page is just how to start.**
 
 !!! tip "The one-sentence version"
-    Augmenting lets you **stamp custom stat bonuses onto any piece of gear** — up to 5 bonuses per piece — by trading a cheap "catalyst" item to the **Augment Moogle** in GM Home. It's the single biggest source of character power on Legendary.
+    Augmenting lets you **stamp custom stat bonuses onto any piece of gear** — up to 5 bonuses per piece — by trading a cheap "catalyst" item to the **Augment Moogle** in GM Home. It's the single biggest source of character power on the Relaunch server.
 
 ## What it is & what it does
 
@@ -32,7 +32,7 @@ That's it. You just augmented your first piece. 🎉
 
 A brand-new augment lands at its **floor** (the minimum value). That Attack line might only be **+2 per slot** at first. **That's intentional, not broken.**
 
-On Legendary, augment power is **earned** through the **[Augment Sage](augment-sage.md)** (the NPC right next to the Moogle). As you progress with him, *the exact same catalyst* writes bigger and bigger numbers — that +2/slot Attack climbs all the way to **+64/slot** (i.e. **+320 Attack** on a 5-slot piece). So:
+on the Relaunch server, augment power is **earned** through the **[Augment Sage](augment-sage.md)** (the NPC right next to the Moogle). As you progress with him, *the exact same catalyst* writes bigger and bigger numbers — that +2/slot Attack climbs all the way to **+64/slot** (i.e. **+320 Attack** on a 5-slot piece). So:
 
 > **Augment early, augment often, and re-augment the same gear as you grow.** Your gear gets stronger every time you re-stamp it after a Sage rank-up.
 

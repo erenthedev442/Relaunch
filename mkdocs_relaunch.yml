@@ -82,7 +82,7 @@ markdown_extensions:
 
 nav:
   - Home: index.md
-  - Why Legendary?: why-legendary.md
+  - About the Relaunch: why-legendary.md
   - Getting Started:
     - getting-started/index.md
     - Install the Client: getting-started/install.md

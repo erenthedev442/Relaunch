@@ -1,6 +1,6 @@
-# FAQ
+﻿# FAQ
 
-Common questions about playing on Legendary FFXI. If you have a question that isn't answered here, ask in our [Discord](https://discord.gg/ZKdYbAJF) or open an issue on the [project repo](https://github.com/richardknutzjr/FFXI-Private-Server-FJB).
+Common questions about playing on the Relaunch server FFXI. If you have a question that isn't answered here, ask in our [Discord](https://discord.gg/ZKdYbAJF) or open an issue on the [project repo](https://github.com/richardknutzjr/FFXI-Private-Server-FJB).
 
 ## Getting Started
 
@@ -10,7 +10,7 @@ See [Getting Started → Install the Client](../getting-started/install.md) and 
 
 ### Do I need a Square Enix account or game license?
 
-No. Legendary runs against a private server built on [LandSandBoat](https://github.com/LandSandBoat/server). You only need the FFXI client itself, not an active SE subscription.
+No. the Relaunch server runs against a private server built on [LandSandBoat](https://github.com/LandSandBoat/server). You only need the FFXI client itself, not an active SE subscription.
 
 ### How do I create a character?
 

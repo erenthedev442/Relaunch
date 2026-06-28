@@ -1,6 +1,6 @@
-# Quality of Life Features
+﻿# Quality of Life Features
 
-Legendary ships with a set of quality-of-life improvements that aren't always obvious when you first log in. This page documents all of them so you don't spend hours discovering what's already there.
+the Relaunch server ships with a set of quality-of-life improvements that aren't always obvious when you first log in. This page documents all of them so you don't spend hours discovering what's already there.
 
 ---
 
@@ -11,7 +11,7 @@ Every named monster (NM) in **Abyssea** (10 zones), **Escha** (Escha-Zi'tah and 
 There is no camping. There is no waiting on a lottery pop. Walk in, kill it, walk back in 30 seconds.
 
 !!! tip "Why does this matter?"
-    On retail and most private servers, rare NMs have multi-hour windows, lottery pops, or ToD camps. On Legendary you can chain kills continuously — making skill-ups, drops, and marks farming dramatically faster.
+    On retail and most private servers, rare NMs have multi-hour windows, lottery pops, or ToD camps. on the Relaunch server you can chain kills continuously — making skill-ups, drops, and marks farming dramatically faster.
 
 !!! note "Reisenjima Henge is excluded"
     The Hunting League spawner at Reisenjima Henge uses a separate on-demand pop system by design. Those NMs are managed through the Hunt Spawner NPC (`!hunt` to warp there).
@@ -167,7 +167,7 @@ The server broadcasts a server-wide message when:
 - Any job reaches a significant **level milestone**
 - A player **logs in** — so you always know who's online
 
-First Blood moments are real on Legendary. If you're the first person to kill Absolute Virtue or land a server-first NM kill, the whole server sees it.
+First Blood moments are real on the Relaunch server. If you're the first person to kill Absolute Virtue or land a server-first NM kill, the whole server sees it.
 
 ---
 

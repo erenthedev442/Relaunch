@@ -1,4 +1,4 @@
-# Connect to the Server
+﻿# Connect to the Server
 
 ## Server details
 
@@ -22,7 +22,7 @@
 
 ## Windower
 
-Windower 4 has no "Login Server" field for private servers. Instead, you point a profile at **`xiloader.exe`** (the Legendary loader) and pass the server address as a launch argument — xiloader makes the connection and Windower hooks into it.
+Windower 4 has no "Login Server" field for private servers. Instead, you point a profile at **`xiloader.exe`** (the FJB loader) and pass the server address as a launch argument — xiloader makes the connection and Windower hooks into it.
 
 1. Make sure **`xiloader.exe`** is in your FFXI folder, next to `pol.exe` (usually `…\SquareEnix\PlayOnlineViewer\`). See [Get the loader](install.md#get-the-loader).
 2. Open the **Windower 4** launcher and create or edit a profile.
@@ -33,7 +33,7 @@ Windower 4 has no "Login Server" field for private servers. Instead, you point a
 Prefer to edit `Windower4/settings/settings.xml` by hand? The profile looks like this:
 
 ```xml
-<profile name="Legendary">
+<profile name="FJBRelaunch">
   <executable>xiloader.exe</executable>
   <args>--server 172.215.213.23</args>
 </profile>

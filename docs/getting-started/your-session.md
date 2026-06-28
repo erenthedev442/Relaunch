@@ -1,8 +1,8 @@
-# Your First Session
+﻿# Your First Session
 
-You've finished [First Steps](first-steps.md) — your character is set up, you grabbed starter gear, and `!hunt` dropped you at Reisenjima Henge. This page is what comes next: the actual rhythm of playing Legendary, and the systems that quietly reward you just for showing up.
+You've finished [First Steps](first-steps.md) — your character is set up, you grabbed starter gear, and `!hunt` dropped you at Reisenjima Henge. This page is what comes next: the actual rhythm of playing on the Relaunch server, and the systems that quietly reward you just for showing up.
 
-If you remember only one thing: **almost everything on Legendary runs on Hunt Marks.** You earn them by killing NMs in the Hunting League, and you spend them on seals, gear, and rank unlocks. Learn that one loop and the rest falls into place.
+If you remember only one thing: **almost everything on the Relaunch server runs on Hunt Marks.** You earn them by killing NMs in the Hunting League, and you spend them on seals, gear, and rank unlocks. Learn that one loop and the rest falls into place.
 
 ---
 
@@ -53,7 +53,7 @@ It shows your current tier, the NMs available to you, and exactly what's require
 
 ## Rewards just for showing up
 
-Legendary front-loads its generosity. You don't have to grind for hours to feel progress — Hunt Marks land in your lap for logging in and for hitting milestones:
+the Relaunch server front-loads its generosity. You don't have to grind for hours to feel progress — Hunt Marks land in your lap for logging in and for hitting milestones:
 
 | When | Reward |
 |---|---|

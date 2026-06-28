@@ -1,6 +1,6 @@
-# Server Economy
+﻿# Server Economy
 
-A live, anonymous snapshot of Legendary's economy and population — how much
+A live, anonymous snapshot of the server's economy and population — how much
 gil is in circulation, how busy the Auction House is, and how many hunters
 are around.
 

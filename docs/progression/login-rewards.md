@@ -1,6 +1,6 @@
-# Login Rewards
+﻿# Login Rewards
 
-Legendary rewards players who log in consistently. Two systems run side by side: a small daily bonus for any login, and escalating milestone bonuses for consecutive streaks.
+the Relaunch server rewards players who log in consistently. Two systems run side by side: a small daily bonus for any login, and escalating milestone bonuses for consecutive streaks.
 
 ---
 

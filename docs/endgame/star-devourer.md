@@ -1,6 +1,6 @@
-# The Star-Devourer — Weekly Raid Boss
+﻿# The Star-Devourer — Weekly Raid Boss
 
-The ultimate test on Legendary: a colossal, multi-phase raid boss lurking at the Voidgate in Escha-RuAun. The Star-Devourer is a server-shared fight anyone can join, but its richest rewards are locked to once per week — so rally a raid, learn the dance, and bring it down.
+The ultimate test on the Relaunch server: a colossal, multi-phase raid boss lurking at the Voidgate in Escha-RuAun. The Star-Devourer is a server-shared fight anyone can join, but its richest rewards are locked to once per week — so rally a raid, learn the dance, and bring it down.
 
 !!! tip "Summary"
     A weekly-lockout, multi-phase raid boss (The Star-Devourer) at Escha-RuAun — survive the stance dance, the tendril adds, the dispel sweep, and the enrage for marks and Infamy once a week.

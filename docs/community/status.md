@@ -1,6 +1,6 @@
-# Server Status
+﻿# Server Status
 
-Legendary's current state at a glance. Stats update daily via the auto-generation pipeline.
+the server's current state at a glance. Stats update daily via the auto-generation pipeline.
 
 ---
 
@@ -51,7 +51,7 @@ _Snapshot taken at build time — timers drift after that. For live status, chec
 
 ## Background Jobs
 
-Legendary runs several unattended jobs — the Auction House market-maker, the two Discord bots, and the nightly database backup. Each writes a heartbeat on every successful pass, and this panel flags any that have gone quiet so a silently-dead task gets noticed.
+the Relaunch server runs several unattended jobs — the Auction House market-maker, the two Discord bots, and the nightly database backup. Each writes a heartbeat on every successful pass, and this panel flags any that have gone quiet so a silently-dead task gets noticed.
 
 <!-- DOCGEN:BEGIN id="status-jobs" -->
 _Health snapshot from the last site rebuild._ 🟢 OK · 🟠 last run reported errors · 🔴 STALE (may be down) · ⚪ no signal yet.
@@ -111,7 +111,7 @@ See the full list at [Hall of Fame](highlights.md).
 
 ## Quick Links
 
-- [Discord](https://discord.gg/legendary-ffxi) — announcements, #help, #suggestions
+- [Discord](https://discord.gg/the Relaunch server-ffxi) — announcements, #help, #suggestions
 - [Getting Started](../getting-started/index.md) — new player guide
 - [Hall of Fame](highlights.md) — server firsts and records
 - [Leaderboards](leaderboards.md) — live rankings

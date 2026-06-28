@@ -1,4 +1,4 @@
-# Augment Moogle
+﻿# Augment Moogle
 
 ![Augment gem](../assets/emblems/augment.svg){ .lgnd-emblem }
 
@@ -27,7 +27,7 @@ Cancel at any time during the confirm menu to get everything (gear + catalysts) 
 ## Known display limitation
 
 !!! warning "Item examine window shows garbled values for boosted augments"
-    The FFXI client reads augment data from the packet and looks up each augment ID in its own retail data tables. Legendary uses custom augment IDs whose entries in the retail client table do not match the server's definitions — so the item examine window displays **incorrect values** (often a large negative number) on any piece augmented through the Moogle, especially after Augment Sage multipliers are in play.
+    The FFXI client reads augment data from the packet and looks up each augment ID in its own retail data tables. the Relaunch server uses custom augment IDs whose entries in the retail client table do not match the server's definitions — so the item examine window displays **incorrect values** (often a large negative number) on any piece augmented through the Moogle, especially after Augment Sage multipliers are in play.
 
     **The actual stat bonus is applied correctly.** Use **`!augstats`** to see your true augment contributions:
 

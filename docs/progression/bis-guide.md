@@ -1,6 +1,6 @@
-# Best-in-Slot Guide
+﻿# Best-in-Slot Guide
 
-This guide explains the priority order for gearing up on Legendary. The endgame gear hierarchy is:
+This guide explains the priority order for gearing up on the Relaunch server. The endgame gear hierarchy is:
 
 **Reforge +3 > Reforge +2 > Reforge +1 > Reforge base > Silver/Gold weapon. Augments are additive on top.**
 

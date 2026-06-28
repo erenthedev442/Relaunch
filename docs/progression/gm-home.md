@@ -1,6 +1,6 @@
-# GM Home
+﻿# GM Home
 
-GM Home is Legendary's private utility zone. It is the staging area between your logout point and the open world — use it to set up a new character, test gear stats, spend gil, or grab a fast warp.
+GM Home is the server's private utility zone. It is the staging area between your logout point and the open world — use it to set up a new character, test gear stats, spend gil, or grab a fast warp.
 
 To travel to GM Home, use the `!gmhome` command from anywhere in the game.
 
@@ -90,8 +90,8 @@ _Standard pull: **100,000 gil** per pull._
 | Rare | a bag of 20 Hunt Marks | 4.1% |
 | Epic | a chest of 50 Hunt Marks | 3.1% |
 | Epic | a TREASURE of 100 Hunt Marks | 1.5% |
-| Legendary | an Aman Voucher + 200 Hunt Marks | 0.4% |
-| Legendary | a JACKPOT! Full refund + 500 Hunt Marks | 0.1% |
+| the Relaunch server | an Aman Voucher + 200 Hunt Marks | 0.4% |
+| the Relaunch server | a JACKPOT! Full refund + 500 Hunt Marks | 0.1% |
 
 _Premium pull: **500,000 gil** per pull. No commons — higher odds on rare+ prizes._
 
@@ -104,9 +104,9 @@ _Premium pull: **500,000 gil** per pull. No commons — higher odds on rare+ pri
 | Epic | 75 Hunt Marks | 11.4% |
 | Epic | 150 Hunt Marks | 7.6% |
 | Epic | +1 Ascension Point (current job) | 1.9% |
-| Legendary | an Aman Voucher + 250 Hunt Marks | 5.7% |
-| Legendary | +3 Ascension Points (current job) | 1.9% |
-| Legendary | a JACKPOT! Full refund + 500 Hunt Marks | 1.0% |
+| the Relaunch server | an Aman Voucher + 250 Hunt Marks | 5.7% |
+| the Relaunch server | +3 Ascension Points (current job) | 1.9% |
+| the Relaunch server | a JACKPOT! Full refund + 500 Hunt Marks | 1.0% |
 <!-- DOCGEN:END id="gm-home-mystery-mog" -->
 
 ---
@@ -262,7 +262,7 @@ Titles are set immediately on purchase. You can change your active title by talk
 
 ## Crafting Exchange
 
-The **Crafting Exchange** NPC accepts high-quality synthesis results in exchange for Hunt Marks, giving crafters a progression outlet that feeds directly into the Legendary economy.
+The **Crafting Exchange** NPC accepts high-quality synthesis results in exchange for Hunt Marks, giving crafters a progression outlet that feeds directly into the the Relaunch server economy.
 
 ### How it works
 

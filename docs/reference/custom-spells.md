@@ -1,6 +1,6 @@
-# Custom Spells
+﻿# Custom Spells
 
-Three spells on Legendary do not exist on retail Final Fantasy XI. They are sold by the **[Accessories NPC](../progression/gear-vendors.md)** in Reisenjima Henge — choose its **Spells** option and pay with Hunt Marks. (Note: the similarly-named **Accessory** NPC is a different, medal-paid vendor — the scrolls are on the plural **Accessories** NPC.)
+Three spells on the Relaunch server do not exist on retail Final Fantasy XI. They are sold by the **[Accessories NPC](../progression/gear-vendors.md)** in Reisenjima Henge — choose its **Spells** option and pay with Hunt Marks. (Note: the similarly-named **Accessory** NPC is a different, medal-paid vendor — the scrolls are on the plural **Accessories** NPC.)
 
 Unlike standard spells, their mechanics are not documented on any external wiki. This page explains exactly what they do.
 

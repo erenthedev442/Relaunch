@@ -1,4 +1,4 @@
-# Glossary
+﻿# Glossary
 
 Server-specific terms, explained in plain language.
 
@@ -29,10 +29,10 @@ Hunter's Guild
 :   A parallel NM organization that tracks your kills across four guilds. Higher guild standing amplifies the HL Points you earn per kill — working toward Trinity status in all four guilds is a long-term goal.
 
 Hunting League
-:   The custom 5-tier NM hunting system that drives all long-term progression on Legendary. Advance through the ranks Initiate → Hunter → Elite → Champion → Legend by accumulating kills and HL Points.
+:   The custom 5-tier NM hunting system that drives all long-term progression on the Relaunch server. Advance through the ranks Initiate → Hunter → Elite → Champion → Legend by accumulating kills and HL Points.
 
 Infamy
-:   A premium endgame currency earned across Legendary's high-end content — Abyssea NM hunts, scheduled Invasions, and the weekly Raid. Spent at the Infamy Vendor for best-in-slot gear found nowhere else.
+:   A premium endgame currency earned across the server's high-end content — Abyssea NM hunts, scheduled Invasions, and the weekly Raid. Spent at the Infamy Vendor for best-in-slot gear found nowhere else.
 
 NM
 :   Notorious Monster — a named enemy that drops specific loot and earns Hunt Marks when killed. NMs are the primary activity of the Hunting League and Reforge systems.

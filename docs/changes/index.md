@@ -1,9 +1,9 @@
-# What's Custom
+﻿# What's Custom
 
-**Server name:** Legendary
+**Server name:** FJB Relaunch
 **Tagline:** _Extreme QoL & Fast Progression_
 
-Legendary is a heavily-customized FFXI server. Beyond the settings tweaks (rates, caps, durations), it adds custom NPCs, hunt systems, gear pipelines, and background overrides that don't exist on retail. This page is the index — every custom system is listed here. Detail pages link out for the big content.
+This is a heavily-customized FFXI server. Beyond the settings tweaks (rates, caps, durations), it adds custom NPCs, hunt systems, gear pipelines, and background overrides that don't exist on retail. This page is the index — every custom system is listed here. Detail pages link out for the big content.
 
 ## Rates at a glance
 
@@ -133,11 +133,11 @@ Built for grinding:
 
 # Custom NPCs and content
 
-Beyond the settings tweaks above, Legendary adds a stack of custom NPCs and hunt systems. The big ones each have their own page; the rest are summarized inline.
+Beyond the settings tweaks above, the Relaunch server adds a stack of custom NPCs and hunt systems. The big ones each have their own page; the rest are summarized inline.
 
 ## Reisenjima Henge hub
 
-Three custom NPCs stand side-by-side at **Reisenjima Henge** — the endgame zone that anchors the bulk of Legendary's progression loop.
+Three custom NPCs stand side-by-side at **Reisenjima Henge** — the endgame zone that anchors the bulk of the server's progression loop.
 
 | NPC | Position | What it does |
 |---|---|---|
@@ -212,7 +212,7 @@ _All NPCs are in **GM Home** (zone 210). Positions shown as (x, y, z)._
 
 ## Custom HNM system
 
-Legendary runs a **hybrid HNM pop system** that blends era-style timed rotation with retail-style QM pops:
+the Relaunch server runs a **hybrid HNM pop system** that blends era-style timed rotation with retail-style QM pops:
 
 - **NQ kings** (Fafnir, Behemoth, Aspidochelone, etc.) rotate on a timed window, persisting across server restarts.
 - **HQ kings** (Nidhogg, King Behemoth, etc.) drop via QM placeholders.

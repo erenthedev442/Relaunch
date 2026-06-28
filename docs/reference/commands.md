@@ -1,6 +1,6 @@
-# Player Commands
+﻿# Player Commands
 
-These chat commands are available to every player on Legendary (no GM rank required). Type them in any chat channel with the `!` prefix.
+These chat commands are available to every player on the Relaunch server (no GM rank required). Type them in any chat channel with the `!` prefix.
 
 **Total player-accessible commands:** 74
 
@@ -8,7 +8,7 @@ These chat commands are available to every player on Legendary (no GM rank requi
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    50 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    50 of the commands below are **unique to the Relaunch server** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -76,8 +76,8 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!streak` | — | Shows the current kill streak count, active bonus tier, and seconds remaining in the 5-minute window before reset. | :material-puzzle: **custom** |
 | `!tier` | — | Shows the player's current Hunting League tier, the NMs available at that tier, and exactly what is needed to unlock the next rank. | :material-puzzle: **custom** |
 | `!time` | — | Shows server time (UTC), hours until daily reset, days until weekly reset (Monday 00:00 UTC), and any active seasonal event. | :material-puzzle: **custom** |
-| `!top` | string | Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at legendary-ffxi.pages.dev | :material-puzzle: **custom** |
-| `!tournament` | string, string, string | Legendary Tournament — last-person-standing PvE wave event. | :material-puzzle: **custom** |
+| `!top` | string | Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at the Relaunch server-ffxi.pages.dev | :material-puzzle: **custom** |
+| `!tournament` | string, string, string | the Relaunch server Tournament — last-person-standing PvE wave event. | :material-puzzle: **custom** |
 | `!tower` | string, string | _(no description)_ | :material-puzzle: **custom** |
 | `!trustattack` | — | Run once to turn ON: while on, you AUTO-ENGAGE whatever mob you have targeted (cursor target), so you and your trusts attack it hands-free -- point at the next mob and you all switch to it. Run again to turn OFF. Macro:  /console !trustattack | :material-puzzle: **custom** |
 | `!unstick` | — | Self-rescue from stuck event/sequence state. |  |
@@ -487,7 +487,7 @@ Shows server time (UTC), hours until daily reset, days until weekly reset (Monda
 
 ### `!top`  _(custom)_
 
-Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at legendary-ffxi.pages.dev
+Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at the Relaunch server-ffxi.pages.dev
 
 **Usage:** `top`
 
@@ -495,7 +495,7 @@ Shows the top 5 currently online players ranked by a stat. Opted-out players are
 
 ### `!tournament`  _(custom)_
 
-Legendary Tournament — last-person-standing PvE wave event.
+the Relaunch server Tournament — last-person-standing PvE wave event.
 
 **Usage:** `tournament`
 

@@ -1,4 +1,4 @@
-# Background Systems
+﻿# Background Systems
 
 These are server-level systems that run silently in the background — no NPC to talk to, no command to type. Most players encounter them indirectly: you zone into Abyssea and an NM is already up, or you get stuck in a cutscene loop and zoning out fixes it.
 
@@ -21,7 +21,7 @@ This covers HNMs and wave bosses in those zones as well. If you're looking for a
 
 ## Unlimited Visitant
 
-In retail Abyssea, Visitant status has a time limit — your clock ticks down, and when it runs out you get ejected. On Legendary, every player receives **permanent Visitant status** the moment they zone into any Abyssea area.
+In retail Abyssea, Visitant status has a time limit — your clock ticks down, and when it runs out you get ejected. On this server, every player receives **permanent Visitant status** the moment they zone into any Abyssea area.
 
 No timer. No decay. No atma farming just to stay inside. Zone in and stay as long as you want.
 
@@ -94,7 +94,7 @@ If you've ever hit the Imprimatur wall on retail (or on a standard private serve
 
 Bastok, Windurst, and San d'Oria **regional NPCs** are permanently visible, regardless of which nation holds conquest standing in each region.
 
-On retail, regional NPCs disappear when their nation loses the region — leaving you to come back next week. On Legendary, they're always there.
+On retail, regional NPCs disappear when their nation loses the region — leaving you to come back next week. On this server, they're always there.
 
 ---
 

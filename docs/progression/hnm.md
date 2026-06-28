@@ -1,8 +1,8 @@
-# HNM Kings
+﻿# HNM Kings
 
 ![King's crown](../assets/emblems/hnm.svg){ .lgnd-emblem }
 
-Legendary runs a custom **HNM pop system** that keeps the classic Kings — plus a roster of lower-tier HNMs — available without the era-style waiting and placeholder camping that made retail painful.
+the Relaunch server runs a custom **HNM pop system** that keeps the classic Kings — plus a roster of lower-tier HNMs — available without the era-style waiting and placeholder camping that made retail painful.
 
 ---
 
@@ -37,7 +37,7 @@ Legendary runs a custom **HNM pop system** that keeps the classic Kings — plus
 
 ## How the Pop System Works
 
-Legendary uses a **hybrid timed/QM system** rather than pure lottery windows or pure placeholder camping:
+the Relaunch server uses a **hybrid timed/QM system** rather than pure lottery windows or pure placeholder camping:
 
 - **NQ kings** (the timed column above) rotate on a persistent window. The respawn clock is saved to disk via ServerVar — a crash or restart doesn't reset it.
 - **HQ kings** are popped on demand: trade the listed item to the zone's `???` while **neither** the NQ nor the HQ is currently up.

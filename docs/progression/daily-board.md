@@ -1,4 +1,4 @@
-# Daily Board
+﻿# Daily Board
 
 Talk to the **Daily Board** NPC at GM Home to pick up 3 objectives that reset every UTC midnight. Complete them and return to the NPC to claim marks. All 3 done in the same day? Grab a bonus reward on top.
 
@@ -66,7 +66,7 @@ Your lifetime all-cleared day count is tracked and shown in [`!progress`](../ref
 
 ## Currencies
 
-The Daily Board pays out the same four currencies used across the rest of Legendary's progression:
+The Daily Board pays out the same four currencies used across the rest of the server's progression:
 
 | Currency | How it's spent |
 |---|---|

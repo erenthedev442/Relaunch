@@ -1,6 +1,6 @@
-# Item Finder
+﻿# Item Finder
 
-Every purchasable item on Legendary in one searchable list — armor, weapons, accessories, and the Infamy Vendor's stock. Use it to answer "where do I get *X*, and what does it cost?"
+Every purchasable item on the Relaunch server in one searchable list — armor, weapons, accessories, and the Infamy Vendor's stock. Use it to answer "where do I get *X*, and what does it cost?"
 
 !!! tip "Fastest lookup"
     Press `/` (or click the search box at the top) and type the item name — search jumps straight to it. This page is the browse-everything fallback, sorted A → Z.

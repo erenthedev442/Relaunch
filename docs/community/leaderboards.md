@@ -1,4 +1,4 @@
-# Leaderboards
+﻿# Leaderboards
 
 Live rankings pulled from the server's database. These tables refresh whenever the docs site is regenerated — typically a few times a day — so think of them as a snapshot, not a real-time scoreboard.
 
@@ -324,7 +324,7 @@ _Hours the character has spent online. Read from `chars.playtime` (seconds). Bra
 <!-- DOCGEN:BEGIN id="lb-deaths" -->
 ### Most Deaths
 
-_Times the character has been knocked unconscious. On Legendary you lose 3× retail EXP per death — wear it as a badge of honor (or shame)._
+_Times the character has been knocked unconscious. on the Relaunch server you lose 3× retail EXP per death — wear it as a badge of honor (or shame)._
 
 | Rank | Character | Deaths |
 |---:|---|---:|

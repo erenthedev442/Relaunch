@@ -1,4 +1,4 @@
-# Achievement System
+﻿# Achievement System
 
 Achievements are personal milestones that award bonus **Hunt Marks** and occasionally an **in-game title** when you hit them for the first time. Every eligible player can earn each achievement — they are not server-first exclusives.
 
@@ -18,7 +18,7 @@ Trigger based on your total Hunting League NM kill count.
 | First Hunt | 1st HL kill | +50 | — |
 | Ten Hunts In | 10th HL kill | +100 | — |
 | Centennial Hunter | 100th HL kill | +300 | Desert Hunter |
-| Legendary Slayer | 1,000th HL kill | +1,000 | Hero Among Heroes |
+| the Relaunch server Slayer | 1,000th HL kill | +1,000 | Hero Among Heroes |
 
 ---
 
