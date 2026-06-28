@@ -9,7 +9,7 @@ end
 
 zoneObject.onInstanceZoneIn = function(player, instance)
     if player:getInstance() == nil then
-        player:setPos(0, 0, 0, 0, 72)
+        player:setPos(0, 0, 0, 0, xi.zone.SOUTHERN_SAN_DORIA)
         return
     end
 
