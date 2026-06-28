@@ -942,6 +942,21 @@ def is_eligible_catalyst(item_id: int, info: dict) -> bool:
 # Main generator.
 # =========================================================================
 def main():
+    # GUARD (2026-06-28): the relaunch augment_catalog.lua was HAND-MIGRATED to the
+    # 24-category scheme (cats 1-24, matching augment_affinity_catalog.lua) + a per-entry
+    # tier field after the affinity split. This generator still emits the OLD 14-category
+    # scheme and would silently clobber that work + drop tiers on a full regen. Refuse to
+    # overwrite a migrated catalog unless explicitly forced. See project_relaunch_server.
+    if OUT_LUA.exists():
+        _existing = OUT_LUA.read_text(encoding="utf-8", errors="ignore")
+        _cats = [int(c) for c in re.findall(r"\bcat\s*=\s*(\d+)", _existing)]
+        _migrated = (bool(_cats) and max(_cats) > 14) or bool(re.search(r"\btier\s*=", _existing))
+        if _migrated and os.environ.get("AUGMENT_REGEN_FORCE") != "1":
+            raise SystemExit(
+                f"[gen_augment_catalog] ABORT: {OUT_LUA} looks hand-migrated "
+                "(24-cat / tier field) and this generator emits the old 14-cat scheme -- a "
+                "regen would clobber it + drop tiers. Reconcile CATEGORIES/CAT_NAMES to 24 "
+                "cats first, or set AUGMENT_REGEN_FORCE=1 to override.")
     print("=" * 70)
     print("Building obtainable item set (mob drops only)...")
     drop_set = parse_mob_droplist()

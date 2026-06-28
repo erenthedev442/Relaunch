@@ -202,8 +202,10 @@ spawnNM = function(player, session)
     mob:setMobMod(xi.mobMod.NO_CAPACITY_POINTS, 1)
     mob:setModelSize(3)
     mob:setHP(hp)
+    -- Mods are int16: a value >32767 wraps NEGATIVE (the Lv10 boss ATT 36000 would
+    -- spawn at ~-29.5k = ~0 attack, not max). Clamp <=31000 so the apex is hard.
     for modId, val in pairs(C.nmMods(level)) do
-        if val ~= 0 then mob:setMod(modId, val) end
+        if val ~= 0 then mob:setMod(modId, math.min(val, 31000)) end
     end
     mob:addEnmity(player, 30000, 30000)
 

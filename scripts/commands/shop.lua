@@ -396,22 +396,47 @@ commandObj.onTrigger = function(player, category, subcat)
             return
         end
 
+        -- ONCE per character per job per set. The granted pieces are tradable
+        -- (NOAUCTION, not RARE/EX), so without a guard a player could claim, trade
+        -- to an alt, and re-claim forever = an unlimited free-gear faucet. Track
+        -- claimed sets in a per-job bitmask charvar.
+        local SETBIT     = { af = 1, relic = 2, empy = 4 }
+        local claimedVar = 'ReforgeClaimed_' .. tostring(job)
+        local claimed    = player:getCharVar(claimedVar)
+
         local toGrant = (sub == 'all') and { 'af', 'relic', 'empy' } or { sub }
-        local granted, owned, failed = 0, 0, 0
+        local granted, owned, already, failed = 0, 0, 0, 0
+        local newBits = 0
         for _, setKey in ipairs(toGrant) do
-            for _, itemId in ipairs(reforgeCatalog.buildJobLootPool(job, setKey)) do
-                if player:hasItem(itemId) then
-                    owned = owned + 1
-                elseif player:addItem(itemId) then
-                    granted = granted + 1
-                else
-                    failed = failed + 1
+            local b = SETBIT[setKey]
+            if bit.band(claimed, b) ~= 0 then
+                already = already + 1
+            else
+                local setFailed = false
+                for _, itemId in ipairs(reforgeCatalog.buildJobLootPool(job, setKey)) do
+                    if player:hasItem(itemId) then
+                        owned = owned + 1
+                    elseif player:addItem(itemId) then
+                        granted = granted + 1
+                    else
+                        failed = failed + 1
+                        setFailed = true
+                    end
+                end
+                -- Only lock the set once every piece landed; a full-inventory partial
+                -- can be freed up and re-run.
+                if not setFailed then
+                    newBits = bit.bor(newBits, b)
                 end
             end
         end
+        if newBits ~= 0 then
+            player:setCharVar(claimedVar, bit.bor(claimed, newBits))
+        end
 
         local label = (sub == 'all') and 'All reforged sets' or (setLabels[sub] .. ' set')
-        player:printToPlayer(string.format('[Reforge] %s -- %d granted, %d already owned.', label, granted, owned), H)
+        player:printToPlayer(string.format('[Reforge] %s -- %d granted, %d already owned%s.', label, granted, owned,
+            already > 0 and string.format(', %d set(s) already claimed', already) or ''), H)
         if failed > 0 then
             player:printToPlayer(string.format('  %d piece(s) could not be added -- free inventory space and re-run.', failed), H)
         end

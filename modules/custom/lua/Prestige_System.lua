@@ -824,7 +824,11 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
                 elseif scaleSet[modId] then
                     v = math.floor(value * mult)
                 end
-                mob:setMod(modId, v)
+                -- Mods are int16: a value >32767 wraps NEGATIVE (boss spawns weaker,
+                -- not harder -- Tier 4/5 ATT 36k-47k was hitting for ~0). Clamp <=31000,
+                -- leaving headroom for buffs/mechanics that addMod on top. Catches both
+                -- too-high catalog bases and scaled values.
+                mob:setMod(modId, math.min(v, 31000))
             end
         end
         if boss.hpBoost then
