@@ -72,7 +72,7 @@ The [Augment Moogle](../progression/augments.md) at GM Home lets you trade catal
 **The Augment Sage** sits next to the Moogle and adds two multiplier tracks:
 
 - **Mastery ranks:** Earn a flat multiplier on every augment plus a crit-augment chance that doubles a random stat on each trade.
-- **NM Affinities:** Kill specific Vana'diel NMs (Behemoth, Fafnir, Tiamat, etc.) to automatically unlock a permanent per-category bonus.
+- **NM Affinities:** Kill specific Vana'diel NMs (Behemoth, Fafnir, Tiamat, etc.) for their unique trophies, then register each at the Augment Sage (Hunting League Rank 3 + 1,000 Hunt Marks per affinity) for a permanent per-category bonus.
 
 Stack max mastery + affinity + a crit and a single augment can be worth several times its base value.
 
@@ -136,6 +136,6 @@ On top of all of it, your **[Hunter's Guild](../progression/hunters-guild.md)** 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 06b3141d6c8a -->
-_Last updated: 2026-06-28 05:28 UTC_
+<!-- content-hash: 876ef58c101d -->
+_Last updated: 2026-06-28 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

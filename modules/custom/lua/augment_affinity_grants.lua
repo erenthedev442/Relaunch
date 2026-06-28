@@ -1,6 +1,8 @@
 -----------------------------------
 -- augment_affinity_grants.lua
--- Grants augment affinities on NM kill. No trophy item required.
+-- Drops each NM's unique affinity trophy to the killer on death. The player
+-- then registers the affinity at the Augment Sage (costs a Hunting League
+-- rank + Hunt Marks, consumes the trophy) -- see Augment_Sage.lua.
 -- Each NM maps to one affinity cat in augment_affinity_catalog.lua.
 -- Zones with multiple NMs share one addOverride hook.
 --
@@ -38,14 +40,25 @@ local m        = Module:new('augment_affinity_grants')
 local affinity = require('modules/custom/lua/augment_affinity_catalog')
 local SYS      = xi.msg.channel.SYSTEM_3
 
-local function grantIfNew(player, nmName)
+-- On kill, hand the killer this NM's trophy so they can register the affinity
+-- at the Augment Sage. Skips if they already registered it, or already hold an
+-- unspent trophy (so trophies can't stack up from repeat kills).
+local function dropTrophy(player, nmName)
     local row = affinity.byNm(nmName)
     if not row then return end
-    if affinity.hasAffinity(player, row.cat) then return end
-    affinity.grantAffinity(player, row.cat)
+    if affinity.hasAffinity(player, row.cat) then return end          -- already registered
+    if not row.trophy then return end
+    if player:hasItem(row.trophy.id) then return end                  -- already holding one
+    if player:getFreeSlotsCount() < 1 then
+        player:printToPlayer(string.format(
+            '[Augment] %s dropped a trophy, but your inventory is full -- make room and defeat it again.',
+            nmName:gsub('_', ' ')), SYS)
+        return
+    end
+    player:addItem(row.trophy.id)
     player:printToPlayer(string.format(
-        '[Augment] %s affinity unlocked! Augments in this category are now %.0f%% stronger.',
-        row.label, (affinity.affinityMult - 1.0) * 100), SYS)
+        '[Augment] Obtained %s! Take it to the Augment Sage to register the %s affinity (Hunting League Rank %d + %d Hunt Marks).',
+        row.trophy.name, row.label, affinity.affinityRankReq, affinity.affinityMarkCost), SYS)
 end
 
 -----------------------------------
@@ -53,82 +66,82 @@ end
 -----------------------------------
 m:addOverride('xi.zones.Batallia_Downs.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.Behemoths_Dominion.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.Kuftal_Tunnel.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.Rolanberry_Fields.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.Valley_of_Sorrows.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.Sauromugue_Champaign.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.The_Shrine_of_RuAvitau.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.Cape_Teriggan.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.Riverne-Site_B01.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.The_Boyahda_Tree.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.Riverne-Site_A01.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.Ifrits_Cauldron.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.Uleguerand_Range.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.Western_Altepa_Desert.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.RuAun_Gardens.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 m:addOverride('xi.zones.Temenos.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 -----------------------------------
@@ -136,7 +149,7 @@ end)
 -----------------------------------
 m:addOverride('xi.zones.Hall_of_the_Gods.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 -----------------------------------
@@ -144,7 +157,7 @@ end)
 -----------------------------------
 m:addOverride('xi.zones.Dragons_Aery.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 -----------------------------------
@@ -152,7 +165,7 @@ end)
 -----------------------------------
 m:addOverride('xi.zones.King_Ranperres_Tomb.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
-    if player and isKiller then grantIfNew(player, mob:getName()) end
+    if player and isKiller then dropTrophy(player, mob:getName()) end
 end)
 
 return m

@@ -1,8 +1,10 @@
 -----------------------------------
 -- augment_affinity_catalog.lua
--- 24 NM affinities. Each is unlocked by killing the listed NM (no item drop
--- required). When the player augments an item whose cat matches an affinity
--- they hold, the Augment Moogle multiplies that augment's value by
+-- 24 NM affinities. Each NM drops a unique trophy (trophyId); the player
+-- takes that trophy to the Augment Sage and registers the affinity, which
+-- requires Hunting League Rank (affinityRankReq) and costs Hunt Marks
+-- (affinityMarkCost). When the player augments an item whose cat matches an
+-- affinity they hold, the Augment Moogle multiplies that augment's value by
 -- catalog.affinityMult (1.5x by default).
 --
 -- Bitfield layout (Augment_Affinities charvar):
@@ -39,6 +41,17 @@ local catalog = {}
 catalog.affinityMult = 1.5
 
 -----------------------------------
+-- REGISTRATION GATE (relaunch)
+--   Affinities are no longer granted free on kill. Each NM drops a unique
+--   trophy; the player takes it to the Augment Sage and registers the
+--   affinity, which costs Hunt Marks and requires a Hunting League rank.
+--     rankReq  : minimum Hunting League rank (charvar HL_Tier)
+--     markCost : Hunt Marks (charvar HL_Points) spent per registration
+-----------------------------------
+catalog.affinityRankReq  = 3
+catalog.affinityMarkCost = 1000
+
+-----------------------------------
 -- AFFINITY ROWS
 --   cat    : category index (matches augment_catalog cat field, 1..24)
 --   bit    : bit position in Augment_Affinities charvar (cat - 1)
@@ -46,32 +59,36 @@ catalog.affinityMult = 1.5
 --   nm     : NM name (must match mob:getName() exactly in the zone script)
 --   nmZone : human-readable zone name for the Sage menu info screen
 -----------------------------------
+-- trophy = { id, qty, name }: the unique NM-drop trophy that registers this
+-- affinity at the Augment Sage (all ids verified against sql/item_basic.sql).
+-- Field order (cat, bit, label, nm, trophy, nmZone) is what the docgen
+-- affinity-table regex expects -- keep trophy immediately after nm.
 catalog.affinities =
 {
-    { cat=1,  bit=0,  label='STR',        nm='Behemoth',          nmZone='Batallia Downs'          },
-    { cat=2,  bit=1,  label='Attack',     nm='King_Behemoth',     nmZone="Behemoth's Dominion"     },
-    { cat=3,  bit=2,  label='DEX',        nm='King_Arthro',       nmZone='Kuftal Tunnel'           },
-    { cat=4,  bit=3,  label='Accuracy',   nm='Simurgh',           nmZone='Rolanberry Fields'       },
-    { cat=5,  bit=4,  label='VIT',        nm='Adamantoise',       nmZone='Valley of Sorrows'       },
-    { cat=6,  bit=5,  label='Defense',    nm='Genbu',             nmZone="Shrine of Ru'Avitau"        },
-    { cat=7,  bit=6,  label='AGI',        nm='Roc',               nmZone='Sauromugue Champaign'    },
-    { cat=8,  bit=7,  label='Evasion',    nm='Seiryu',            nmZone="Shrine of Ru'Avitau"        },
-    { cat=9,  bit=8,  label='Haste',      nm='Byakko',            nmZone="Shrine of Ru'Avitau"     },
-    { cat=10, bit=9,  label='INT',        nm='Aspidochelone',     nmZone='Cape Teriggan'           },
-    { cat=11, bit=10, label='Magic ATK',  nm='Ouryu',             nmZone='Riverne Site B01'        },
-    { cat=12, bit=11, label='MND',        nm='Bune',              nmZone='The Boyahda Tree'        },
-    { cat=13, bit=12, label='Healing',    nm='Phoenix',           nmZone='Riverne Site A01'        },
-    { cat=14, bit=13, label='CHR',        nm='Suzaku',            nmZone="Shrine of Ru'Avitau"        },
-    { cat=15, bit=14, label='Enmity',     nm='Kirin',             nmZone="Shrine of Ru'Avitau"        },
-    { cat=16, bit=15, label='HP',         nm='Fafnir',            nmZone="Dragon's Aery"           },
-    { cat=17, bit=16, label='Regen',      nm='Nidhogg',           nmZone="Dragon's Aery"           },
-    { cat=18, bit=17, label='MP',         nm='Vrtra',             nmZone="Ifrit's Cauldron"        },
-    { cat=19, bit=18, label='Refresh',    nm='Tiamat',            nmZone='Uleguerand Range'        },
-    { cat=20, bit=19, label='Pet',        nm='King_Vinegarroon',  nmZone='Western Altepa Desert'   },
-    { cat=21, bit=20, label='Ele Resist', nm='Khimaira',          nmZone="King Ranperre's Tomb"    },
-    { cat=22, bit=21, label='Status',     nm='Cerberus',          nmZone="King Ranperre's Tomb"    },
-    { cat=23, bit=22, label='Skills',     nm='Absolute_Virtue',   nmZone="Ru'Aun Gardens"          },
-    { cat=24, bit=23, label='WSD+',       nm='Proto-Omega',       nmZone="Ru'Aun Gardens"                 },
+    { cat=1,  bit=0,  label='STR',        nm='Behemoth',          trophy={ id=860,   qty=1, name='Behemoth Hide'               }, nmZone='Batallia Downs'         },
+    { cat=2,  bit=1,  label='Attack',     nm='King_Behemoth',     trophy={ id=883,   qty=1, name='Behemoth Horn'               }, nmZone="Behemoth's Dominion"    },
+    { cat=3,  bit=2,  label='DEX',        nm='King_Arthro',       trophy={ id=8983,  qty=1, name="Emperor Arthro's Shell"      }, nmZone='Kuftal Tunnel'          },
+    { cat=4,  bit=3,  label='Accuracy',   nm='Simurgh',           trophy={ id=843,   qty=1, name='Giant Bird Plume'            }, nmZone='Rolanberry Fields'      },
+    { cat=5,  bit=4,  label='VIT',        nm='Adamantoise',       trophy={ id=908,   qty=1, name='Adamantoise Shell'           }, nmZone='Valley of Sorrows'      },
+    { cat=6,  bit=5,  label='Defense',    nm='Genbu',             trophy={ id=1404,  qty=1, name='Seal of Genbu'               }, nmZone="Shrine of Ru'Avitau"    },
+    { cat=7,  bit=6,  label='AGI',        nm='Roc',               trophy={ id=842,   qty=1, name='Giant Bird Feather'          }, nmZone='Sauromugue Champaign'   },
+    { cat=8,  bit=7,  label='Evasion',    nm='Seiryu',            trophy={ id=1405,  qty=1, name='Seal of Seiryu'              }, nmZone="Shrine of Ru'Avitau"    },
+    { cat=9,  bit=8,  label='Haste',      nm='Byakko',            trophy={ id=1406,  qty=1, name='Seal of Byakko'              }, nmZone="Shrine of Ru'Avitau"    },
+    { cat=10, bit=9,  label='INT',        nm='Aspidochelone',     trophy={ id=2421,  qty=1, name='Spirit Turtle Shell'         }, nmZone='Cape Teriggan'          },
+    { cat=11, bit=10, label='Magic ATK',  nm='Ouryu',             trophy={ id=903,   qty=1, name='Dragon Talon'                }, nmZone='Riverne Site B01'       },
+    { cat=12, bit=11, label='MND',        nm='Bune',              trophy={ id=2229,  qty=1, name='Vial of Chimera Blood'       }, nmZone='The Boyahda Tree'       },
+    { cat=13, bit=12, label='Healing',    nm='Phoenix',           trophy={ id=844,   qty=1, name='Phoenix Feather'             }, nmZone='Riverne Site A01'       },
+    { cat=14, bit=13, label='CHR',        nm='Suzaku',            trophy={ id=1407,  qty=1, name='Seal of Suzaku'              }, nmZone="Shrine of Ru'Avitau"    },
+    { cat=15, bit=14, label='Enmity',     nm='Kirin',             trophy={ id=10038, qty=1, name="Kirin's Mane"                }, nmZone="Shrine of Ru'Avitau"    },
+    { cat=16, bit=15, label='HP',         nm='Fafnir',            trophy={ id=10037, qty=1, name="Fafnir's Scale"              }, nmZone="Dragon's Aery"          },
+    { cat=17, bit=16, label='Regen',      nm='Nidhogg',           trophy={ id=865,   qty=1, name="Handful of Nidhogg's Scales" }, nmZone="Dragon's Aery"          },
+    { cat=18, bit=17, label='MP',         nm='Vrtra',             trophy={ id=1526,  qty=1, name='Wyrm Beard'                  }, nmZone="Ifrit's Cauldron"       },
+    { cat=19, bit=18, label='Refresh',    nm='Tiamat',            trophy={ id=1816,  qty=1, name='Wyrm Horn'                   }, nmZone='Uleguerand Range'       },
+    { cat=20, bit=19, label='Pet',        nm='King_Vinegarroon',  trophy={ id=1017,  qty=1, name='Scorpion Stinger'            }, nmZone='Western Altepa Desert'  },
+    { cat=21, bit=20, label='Ele Resist', nm='Khimaira',          trophy={ id=2372,  qty=1, name='Khimaira Mane'               }, nmZone="King Ranperre's Tomb"   },
+    { cat=22, bit=21, label='Status',     nm='Cerberus',          trophy={ id=2169,  qty=1, name='Cerberus Hide'               }, nmZone="King Ranperre's Tomb"   },
+    { cat=23, bit=22, label='Skills',     nm='Absolute_Virtue',   trophy={ id=1567,  qty=1, name='Attestation of Virtue'       }, nmZone="Ru'Aun Gardens"         },
+    { cat=24, bit=23, label='WSD+',       nm='Proto-Omega',       trophy={ id=15800, qty=1, name='Omega Ring'                  }, nmZone="Ru'Aun Gardens"         },
 }
 
 -----------------------------------

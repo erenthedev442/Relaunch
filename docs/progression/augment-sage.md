@@ -8,7 +8,7 @@ The **Augment Sage** is the side-quest progression layer on top of the [Augment 
     The "Mastery ×" and crit values on this page boost the **stat numbers written onto your gear** when you augment a piece at the Moogle — they fill an achievement **boost of 0–31** per slot, e.g. an Attack line climbs from **+2/slot fresh to +64/slot** at rank-5 + affinity + crit. They have **no effect on EXP gain, gil drops, or anything outside the augmentation trade itself.** If you want faster leveling, see [Subjob EXP Share](subjob-exp.md) or the EXP rates on [What's Custom](../changes/index.md#rates-at-a-glance).
 
 !!! tip "Summary"
-    Two parallel tracks. **Sage Mastery** (5 ranks) raises the achievement boost + crit chance on _every gear augment_. **NM Affinities** (13 bits) add a per-category bonus on top. Stack both to max the 0–31 boost; do neither and every augment sits at its floor.
+    Two parallel tracks. **Sage Mastery** (5 ranks) raises the achievement boost + crit chance on _every gear augment_. **NM Affinities** (24 bits) add a per-category bonus on top. Stack both to max the 0–31 boost; do neither and every augment sits at its floor.
 
 ## Where to find the Sage
 
@@ -27,7 +27,7 @@ written onto every augment slot in the trade:
 
 ```
 mastery   = masteryMult[Augment_Mastery + 1]      -- from Sage rank
-affinity  = hasAffinity(category) ? 1.5 : 1.0     -- from NM kills
+affinity  = hasAffinity(category) ? 1.5 : 1.0     -- from registered affinities
 crit_pct  = critChance[Augment_Mastery + 1]       -- chance per trade
 crit      = random() < crit_pct ? 2.0 : 1.0
 
@@ -68,12 +68,39 @@ The `Augment_Count` charvar is bumped by **+1 every time you confirm an augmenta
 
 ## Track 2 — NM Affinities
 
-Each augment in the catalog has a thematic category. **Defeating the signature NM for that category permanently unlocks its affinity** — the unlock fires automatically on the kill, with a chat message confirming the affinity is yours. From that point on, any augment whose category matches one of your unlocked affinities gets the bonus multiplier.
+Each augment in the catalog has a thematic category, unlocked by a **signature NM**. Defeating that NM drops its **unique trophy**; bring the trophy to the Augment Sage's _Register NM Affinity_ menu to permanently unlock the affinity. Registration **costs Hunting League Rank 3 and 1,000 Hunt Marks**, and consumes the trophy. From that point on, any augment whose category matches one of your unlocked affinities gets the bonus multiplier.
 
-You can unlock affinities in any order, at any rank — just go beat the NM. Each affinity is permanent once earned, and re-killing the same NM does nothing extra.
+You can register affinities in any order once you reach Hunting League Rank 3 — each costs 1,000 Hunt Marks plus the NM's trophy. Affinities are permanent once registered. In the menu, **[ ]** means locked, **[!]** means you're holding that NM's trophy and can register it, and **[*]** means already unlocked.
 
 <!-- DOCGEN:BEGIN id="sage-affinities" -->
-_Affinity rows not parsed from the catalog._
+Holding an affinity multiplies augments **in that category** by **1.5×**. Affinities stack with Sage Mastery and crit. Each NM drops a unique trophy; register the affinity at the Augment Sage's _Register NM Affinity_ menu — it requires **Hunting League Rank 3** and costs **1,000 Hunt Marks**, and the trophy is consumed.
+
+| Cat | Category | NM | Trophy | Catalysts available |
+|---:|---|---|---|---:|
+| 1 | STR | Behemoth | Behemoth Hide | 5 |
+| 2 | Attack | King_Behemoth | Behemoth Horn | 12 |
+| 3 | DEX | King_Arthro | Emperor Arthro's Shell | 8 |
+| 4 | Accuracy | Simurgh | Giant Bird Plume | 7 |
+| 5 | VIT | Adamantoise | Adamantoise Shell | 1 |
+| 6 | Defense | Genbu | Seal of Genbu | 14 |
+| 7 | AGI | Roc | Giant Bird Feather | 2 |
+| 8 | Evasion | Seiryu | Seal of Seiryu | 3 |
+| 9 | Haste | Byakko | Seal of Byakko | 25 |
+| 10 | INT | Aspidochelone | Spirit Turtle Shell | 3 |
+| 11 | Magic ATK | Ouryu | Dragon Talon | 30 |
+| 12 | MND | Bune | Vial of Chimera Blood | 1 |
+| 13 | Healing | Phoenix | Phoenix Feather | 8 |
+| 14 | CHR | Suzaku | Seal of Suzaku | 7 |
+| 15 | Enmity | Kirin | Kirin's Mane | 2 |
+| 16 | HP | Fafnir | Fafnir's Scale | 2 |
+| 17 | Regen | Nidhogg | Handful of Nidhogg's Scales | 3 |
+| 18 | MP | Vrtra | Wyrm Beard | 2 |
+| 19 | Refresh | Tiamat | Wyrm Horn | 2 |
+| 20 | Pet | King_Vinegarroon | Scorpion Stinger | 57 |
+| 21 | Ele Resist | Khimaira | Khimaira Mane | 49 |
+| 22 | Status | Cerberus | Cerberus Hide | 13 |
+| 23 | Skills | Absolute_Virtue | Attestation of Virtue | 38 |
+| 24 | WSD+ | Proto-Omega | Omega Ring | 5 |
 <!-- DOCGEN:END id="sage-affinities" -->
 
 ## Charvars used
@@ -81,7 +108,7 @@ _Affinity rows not parsed from the catalog._
 | Name | Range | Purpose |
 |---|---|---|
 | `Augment_Mastery`    | 0–5            | Highest Sage rank cleared. Drives the global multiplier + crit chance. |
-| `Augment_Affinities` | 13-bit field   | One bit per registered NM affinity. Drives the per-category bonus. |
+| `Augment_Affinities` | 24-bit field   | One bit per registered NM affinity. Drives the per-category bonus. |
 | `Augment_Count`      | 0–N            | Lifetime successful augments. Drives rank-up eligibility. |
 
 These three charvars are independent — nothing else on the server reads or writes them. You can inspect a player's progress with `!charvar Augment_Mastery` etc. from a GM account.
@@ -106,6 +133,6 @@ Yes — both the Sage rank trophy and the affinity registration trophy are remov
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 280316d4f477 -->
-_Last updated: 2026-06-28 05:28 UTC_
+<!-- content-hash: 75d6c08864fb -->
+_Last updated: 2026-06-28 05:55 UTC_
 <!-- DOCGEN:END id="last-updated" -->

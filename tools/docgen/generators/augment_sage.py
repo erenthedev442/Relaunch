@@ -267,6 +267,13 @@ def _parse_affinity_mult(text: str) -> float:
     return float(m.group(1)) if m else 1.5
 
 
+def _parse_affinity_gate(text: str) -> tuple[int, int]:
+    """Registration gate: (rankReq, markCost) from the affinity catalog."""
+    r = re.search(r"catalog\.affinityRankReq\s*=\s*(\d+)", text)
+    c = re.search(r"catalog\.affinityMarkCost\s*=\s*(\d+)", text)
+    return (int(r.group(1)) if r else 3, int(c.group(1)) if c else 1000)
+
+
 # =========================================================================
 # Catalog category counts (for "X catalysts available in this category")
 # =========================================================================
@@ -326,7 +333,7 @@ def _render_formula(
         "",
         "```",
         "mastery   = masteryMult[Augment_Mastery + 1]      -- from Sage rank",
-        f"affinity  = hasAffinity(category) ? {affinity_mult:.1f} : 1.0     -- from NM kills",
+        f"affinity  = hasAffinity(category) ? {affinity_mult:.1f} : 1.0     -- from registered affinities",
         "crit_pct  = critChance[Augment_Mastery + 1]       -- chance per trade",
         "crit      = random() < crit_pct ? 2.0 : 1.0",
         "",
@@ -391,15 +398,18 @@ def _render_affinities(
     affs:    list[dict],
     counts:  dict[int, int],
     aff_mult: float,
+    rank_req: int,
+    mark_cost: int,
 ) -> str:
     if not affs:
         return "_Affinity rows not parsed from the catalog._"
     lines = [
         f"Holding an affinity multiplies augments **in that category** by "
         f"**{aff_mult:.1f}×**. Affinities stack with Sage Mastery and crit. "
-        "Register an affinity by trading the corresponding NM drop to the "
-        "Augment Sage's _Register NM Affinity_ menu — the trophy is consumed "
-        "and the bit is yours forever.",
+        f"Each NM drops a unique trophy; register the affinity at the Augment "
+        f"Sage's _Register NM Affinity_ menu — it requires **Hunting League "
+        f"Rank {rank_req}** and costs **{mark_cost:,} Hunt Marks**, and the "
+        f"trophy is consumed.",
         "",
         "| Cat | Category | NM | Trophy | Catalysts available |",
         "|---:|---|---|---|---:|",
@@ -436,6 +446,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     mastery  = _parse_mult_table(sage_text, "masteryMult")
     critPct  = _parse_mult_table(sage_text, "critChance")
     aff_mult = _parse_affinity_mult(aff_text)
+    aff_rank, aff_marks = _parse_affinity_gate(aff_text)
     counts   = _parse_cat_counts(cat_text) if cat_text else {}
 
     # Per-section build: parsers with strict-regex risk (_parse_ranks,
@@ -465,4 +476,4 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     _section("sage-location",   lambda: _render_location(zone, pos))
     _section("sage-formula",    lambda: _render_formula(mastery, critPct, aff_mult))
     _section("sage-ranks",      lambda: _render_ranks(_parse_ranks(sage_text), mastery, critPct, seals))
-    _section("sage-affinities", lambda: _render_affinities(_parse_affinities(aff_text), counts, aff_mult))
+    _section("sage-affinities", lambda: _render_affinities(_parse_affinities(aff_text), counts, aff_mult, aff_rank, aff_marks))

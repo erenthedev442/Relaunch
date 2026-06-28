@@ -8,8 +8,10 @@
 --      Each rank raises the mastery multiplier and crit chance the
 --      Augment Moogle applies to every augment.
 --
---   2. NM Affinities (24 bits). Trading the right NM-drop trophy
---      permanently unlocks a per-category bonus multiplier (default 1.5x).
+--   2. NM Affinities (24 bits). Each NM drops a unique trophy; registering it
+--      here costs a Hunting League rank (affinityRankReq) + Hunt Marks
+--      (affinityMarkCost) and permanently unlocks a per-category bonus
+--      multiplier (default 1.5x). Trophy + marks are consumed on register.
 --
 -- All numbers, trophies, and titles live in:
 --   modules/custom/lua/augment_sage_catalog.lua
@@ -109,17 +111,54 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
     -- Try to register an NM affinity. Trades trophy for the affinity bit.
     -----------------------------------
     local function tryRegisterAffinity(player, row)
+        local S = xi.msg.channel.SYSTEM_3
+
         if affinity.hasAffinity(player, row.cat) then
             player:printToPlayer(string.format(
-                '[Augment Sage] %s affinity already unlocked.', row.label),
-                xi.msg.channel.SYSTEM_3)
+                '[Augment Sage] %s affinity already unlocked.', row.label), S)
             buildAffinityMenu(player)
             return
         end
+
+        local rankReq  = affinity.affinityRankReq
+        local markCost = affinity.affinityMarkCost
+
+        -- Hunting League rank gate.
+        local hlTier = player:getCharVar('HL_Tier') or 1
+        if hlTier < rankReq then
+            player:printToPlayer(string.format(
+                '[Augment Sage] The %s affinity requires Hunting League Rank %d (you are Rank %d).',
+                row.label, rankReq, hlTier), S)
+            buildAffinityMenu(player)
+            return
+        end
+
+        -- Trophy in inventory?
+        if not player:hasItem(row.trophy.id) then
+            player:printToPlayer(string.format(
+                '[Augment Sage] You need %s to register %s -- defeat %s in %s.',
+                row.trophy.name, row.label, row.nm:gsub('_', ' '), row.nmZone), S)
+            buildAffinityMenu(player)
+            return
+        end
+
+        -- Hunt Marks cost.
+        local marks = player:getCharVar('HL_Points') or 0
+        if marks < markCost then
+            player:printToPlayer(string.format(
+                '[Augment Sage] Registering %s costs %d Hunt Marks (you have %d).',
+                row.label, markCost, marks), S)
+            buildAffinityMenu(player)
+            return
+        end
+
+        -- All requirements met -- consume the trophy + marks, grant the bit.
+        player:delItem(row.trophy.id, 1)
+        player:setCharVar('HL_Points', marks - markCost)
+        affinity.grantAffinity(player, row.cat)
         player:printToPlayer(string.format(
-            '[Augment Sage] To unlock the %s affinity: defeat %s in %s.',
-            row.label, row.nm:gsub('_', ' '), row.nmZone),
-            xi.msg.channel.SYSTEM_3)
+            '[Augment Sage] %s affinity registered! Augments in this category are now %.0f%% stronger.',
+            row.label, (affinity.affinityMult - 1.0) * 100), S)
         buildAffinityMenu(player)
     end
 
@@ -140,7 +179,10 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
         local options = {}
         for i = startIdx, endIdx do
             local row    = affinity.affinities[i]
-            local marker = affinity.hasAffinity(player, row.cat) and '[*]' or '[ ]'
+            local has    = affinity.hasAffinity(player, row.cat)
+            -- [*] registered, [!] trophy in hand (ready to register), [ ] locked.
+            local marker = has and '[*]'
+                or ((player:hasItem(row.trophy.id) and '[!]') or '[ ]')
             -- Short label - 150-byte cap is tight with 4 rows + nav.
             local label  = string.format('%s %s', marker, row.label:sub(1, 18))
             table.insert(options, {
