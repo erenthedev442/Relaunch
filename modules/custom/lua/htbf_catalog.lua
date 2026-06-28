@@ -30,6 +30,10 @@ catalog.gemPrice =
     [xi.ki.HEAD_WIND_PHANTOM_GEM]     = 100000,  -- Head Wind (Boneyard Gully)
     [xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM] = 120000, -- Puppet in Peril (Jade Sepulcher)
     [xi.ki.LEGACY_PHANTOM_GEM]        = 120000,  -- Legacy of the Lost (Talacca Cove)
+    [xi.ki.SHADOW_LORD_PHANTOM_GEM]   = 150000,  -- Shadow Lord (Throne Room)
+    [xi.ki.STELLAR_FULCRUM_PHANTOM_GEM] = 150000, -- Return to Delkfutt's Tower (Stellar Fulcrum)
+    [xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM] = 200000, -- The Celestial Nexus
+    [xi.ki.DIVINE_PHANTOM_GEM]        = 200000,  -- Divine Might (La'Loff Amphitheater)
 }
 
 -- Display names for the gems the vendor sells (key item ids have no server-side
@@ -43,6 +47,10 @@ catalog.gemName =
     [xi.ki.HEAD_WIND_PHANTOM_GEM]     = 'Head Wind Phantom Gem',
     [xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM] = 'Puppet in Peril Phantom Gem',
     [xi.ki.LEGACY_PHANTOM_GEM]        = 'Legacy Phantom Gem',
+    [xi.ki.SHADOW_LORD_PHANTOM_GEM]   = 'Shadow Lord Phantom Gem',
+    [xi.ki.STELLAR_FULCRUM_PHANTOM_GEM] = 'Stellar Fulcrum Phantom Gem',
+    [xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM] = 'Celestial Nexus Phantom Gem',
+    [xi.ki.DIVINE_PHANTOM_GEM]        = 'Divine Phantom Gem',
 }
 
 -- Per-tier scaling applied to the reused base boss(es) (silent difficulty -- no
@@ -176,6 +184,38 @@ catalog.fights =
         gem = xi.ki.LEGACY_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4110,
         reuseBaseId = xi.battlefield.id.LEGACY_OF_THE_LOST, allowedAreas = { [2] = true, [3] = true },
         label = 'Legacy of the Lost',
+    },
+
+    -- ── Rise of the Zilart boss battlefields ────────────────────────────────
+    shadow_lord =
+    {
+        zone = xi.zone.THRONE_ROOM, entryNpc = '_4l1',
+        exitNpcs = { '_4l2', '_4l3', '_4l4' },
+        gem = xi.ki.SHADOW_LORD_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4120,
+        reuseBaseId = xi.battlefield.id.SHADOW_LORD_BATTLE, label = 'Shadow Lord',
+    },
+    stellar_fulcrum =
+    {
+        zone = xi.zone.STELLAR_FULCRUM, entryNpc = '_4z0',
+        exitNpcs = { '_4z1', '_4z2', '_4z3' },
+        gem = xi.ki.STELLAR_FULCRUM_PHANTOM_GEM, baseIndex = 1, baseBattlefieldId = 4130,
+        reuseBaseId = xi.battlefield.id.RETURN_TO_DELKFUTTS_TOWER, label = "Return to Delkfutt's Tower",
+    },
+    celestial_nexus =
+    {
+        zone = xi.zone.THE_CELESTIAL_NEXUS, entryNpc = '_513',
+        exitNpcs = { '_514', '_515' },
+        gem = xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM, baseIndex = 1, baseBattlefieldId = 4140,
+        reuseBaseId = xi.battlefield.id.CELESTIAL_NEXUS, label = 'The Celestial Nexus',
+    },
+    -- Divine Might: 18-player, multi-entrance (qm1_1..qm1_5). Base uses index 5
+    -- across them; HTBF at 13/14/15 (kept above the Ark Angel HTBF range 10-12).
+    divine_might =
+    {
+        zone = xi.zone.LALOFF_AMPHITHEATER, entryNpcs = { 'qm1_1', 'qm1_2', 'qm1_3', 'qm1_4', 'qm1_5' },
+        exitNpc = 'qm2',
+        gem = xi.ki.DIVINE_PHANTOM_GEM, baseIndex = 13, baseBattlefieldId = 4150,
+        reuseBaseId = xi.battlefield.id.DIVINE_MIGHT, maxPlayers = 18, label = 'Divine Might',
     },
 }
 

@@ -30,6 +30,7 @@ function htbf.register(fightKey, tier)
         battlefieldId    = f.baseBattlefieldId + (tier - 1),
         index            = f.baseIndex + (tier - 1),
         entryNpc         = f.entryNpc,
+        entryNpcs        = f.entryNpcs,
         exitNpc          = f.exitNpc,
         exitNpcs         = f.exitNpcs,
         allowedAreas     = f.allowedAreas,
