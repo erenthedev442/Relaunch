@@ -318,14 +318,17 @@ scheduleCombatLoop = function(master, pet)
                         p:useMobAbility()         -- fallback: chassis picks a Ready move (consumes TP itself)
                     end
                 end
-                -- Magus / Hunter: bonus magic / ranged damage on the master's target.
-                if tgt and not tgt:isDead() then
-                    if beh == 'nuke' then
-                        tgt:takeDamage(CONFIG.nukeBase + CONFIG.nukePerLevel * lvl, p, xi.attackType.MAGICAL, xi.damageType.FIRE)
-                    elseif beh == 'ranged' then
-                        tgt:takeDamage(CONFIG.rangedBase + CONFIG.rangedPerLevel * lvl, p, xi.attackType.RANGED, xi.damageType.PIERCING)
-                    end
-                end
+                -- NOTE (fix): Magus/Hunter formerly added silent per-tick damage via
+                -- bare tgt:takeDamage(). That bypasses the action system entirely, so
+                -- it produced NO "hits for X" message, AND at 1500+/tick of flat,
+                -- defense-ignoring damage it one-shot weak mobs the instant the master
+                -- engaged -- before the player (or the Fellow's own melee) could land a
+                -- blow, leaving only the "defeats" line and a "cannot attack" error.
+                -- Removed: every role now fights VISIBLY through melee (petAttack) + its
+                -- signature TP move (useMobAbility, above). Magus/Hunter stay distinct
+                -- via their stat block + elemental/physical signature move. Real per-tick
+                -- magic/ranged is a Phase-2 job, done through proper VISIBLE casts
+                -- (pet:castSpell / a ranged mob skill), not bare takeDamage.
             end
         end)
         scheduleCombatLoop(master, p)
