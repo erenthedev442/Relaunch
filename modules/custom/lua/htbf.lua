@@ -103,13 +103,30 @@ function htbf.register(fightKey, tier)
         end
     end
 
-    -- Reward on win. Placeholder gil per tier; the real retail per-fight LOOT
-    -- table goes in catalog.fights[key].loot[tier] (armoury-crate mechanism) as
-    -- it is sourced from bg-wiki.
+    -- Reward on win: gil + Hunt Marks per tier (catalog.tierReward). Hunt Marks
+    -- are the relaunch's HL_Points currency -- the very same marks the Hunting
+    -- League pays -- so HTBF clears feed the live progression economy and the
+    -- "Marks Earned (Lifetime)" leaderboard. The real retail per-fight item LOOT
+    -- still goes in catalog.fights[key].loot[tier] (armoury-crate) as it is
+    -- sourced from bg-wiki; this is the guaranteed completion reward on top.
     function content:onEventFinishWin(player, csid, option, npc)
-        if rew and rew.gil and rew.gil > 0 then
+        if not rew then return end
+        if rew.gil and rew.gil > 0 then
             pcall(function() player:addGil(rew.gil) end)
         end
+        if rew.marks and rew.marks > 0 then
+            pcall(function()
+                player:setCharVar('HL_Points',
+                    (player:getCharVar('HL_Points') or 0) + rew.marks)
+                player:setCharVar('HL_Points_Lifetime',
+                    (player:getCharVar('HL_Points_Lifetime') or 0) + rew.marks)
+            end)
+        end
+        pcall(function()
+            player:printToPlayer(string.format(
+                'High-Tier Battlefield cleared! Reward: %d gil and %d Hunt Marks.',
+                rew.gil or 0, rew.marks or 0), xi.msg.channel.SYSTEM_3)
+        end)
     end
 
     if f.loot and f.loot[tier] then
