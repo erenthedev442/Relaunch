@@ -25,11 +25,24 @@ local NPC_POS = { x = 155.0, y = -2.0, z = 162.0, rot = 96 }
 -- [traded item] = { result = upgraded item, slot, tier (2 or 3), name }
 local REFORGE =
 {
-    -- WAR Relic feet: Boii Calligae  (base 27411)
-    [27412] = { result = 23353, slot = 'feet', tier = 2, name = 'Boii Calligae +1' }, -- +1 -> +2
-    [23353] = { result = 23688, slot = 'feet', tier = 3, name = 'Boii Calligae +2' }, -- +2 -> +3
-    -- SCH Empyrean feet: Argute Loafers (base 11398)
-    [11399] = { result = 10749, slot = 'feet', tier = 2, name = 'Argute Loafers +1' }, -- +1 -> +2
+    -- WAR Relic set "Boii" -- one verified full set across every slot as the template.
+    -- Head (Mask)
+    [26741] = { result = 23085, slot = 'head',  tier = 2, name = 'Boii Mask +1' },
+    [23085] = { result = 23420, slot = 'head',  tier = 3, name = 'Boii Mask +2' },
+    -- Hands (Mufflers)
+    [27053] = { result = 23219, slot = 'hands', tier = 2, name = 'Boii Mufflers +1' },
+    [23219] = { result = 23554, slot = 'hands', tier = 3, name = 'Boii Mufflers +2' },
+    -- Legs (Cuisses)
+    [27238] = { result = 23286, slot = 'legs',  tier = 2, name = 'Boii Cuisses +1' },
+    [23286] = { result = 23621, slot = 'legs',  tier = 3, name = 'Boii Cuisses +2' },
+    -- Feet (Calligae)
+    [27412] = { result = 23353, slot = 'feet',  tier = 2, name = 'Boii Calligae +1' },
+    [23353] = { result = 23688, slot = 'feet',  tier = 3, name = 'Boii Calligae +2' },
+    -- Body (Lorica) -- gated on 'body' (all four slots cleared)
+    [26899] = { result = 23152, slot = 'body',  tier = 2, name = 'Boii Lorica +1' },
+    [23152] = { result = 23487, slot = 'body',  tier = 3, name = 'Boii Lorica +2' },
+    -- SCH Empyrean feet: Argute Loafers
+    [11399] = { result = 10749, slot = 'feet',  tier = 2, name = 'Argute Loafers +1' },
 }
 
 -- Medal cost by target tier. Medals drop from the [D] mobs (mob_droplist).

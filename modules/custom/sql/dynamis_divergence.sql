@@ -100,3 +100,144 @@ INSERT INTO `mob_droplist` VALUES (29403, 0, 0, 1000, 9541, @UNCOMMON);
 INSERT INTO `mob_droplist` VALUES (29404, 0, 0, 1000, 9541, @ALWAYS);
 INSERT INTO `mob_droplist` VALUES (29404, 0, 0, 1000, 9541, @COMMON);
 INSERT INTO `mob_droplist` VALUES (29404, 0, 0, 1000, 9543, @UNCOMMON);
+
+-- ============================================================================
+-- Bastok [D] (zone 295, instance 29500) -- Quadav, unlocks HANDS. mobid base 17985536.
+-- Reuses zone-186 Quadav pools; coords cluster the validated Gu'Dha Effigy anchor.
+-- ============================================================================
+REPLACE INTO `mob_groups` VALUES (1, 1855, 295, 'MushaEffigy_BastokD', 0, 128, 29501, 35000, 1000, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (2, 4197, 295, 'BastokD_Squadron_A',  0, 128, 29502,  8000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (3, 4163, 295, 'BastokD_Squadron_B',  0, 128, 29502,  8000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (4, 4139, 295, 'BastokD_Squadron_C',  0, 128, 29502,  8000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (5, 3548, 295, 'BastokD_Statue',      0, 128,     0,  6000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (6, 4177, 295, 'BastokD_Regiment_A',  0, 128, 29503, 11000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (7, 4178, 295, 'BastokD_Regiment_B',  0, 128, 29503, 11000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (8, 4191, 295, 'BastokD_Regiment_C',  0, 128, 29503, 11000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (9, 1859, 295, 'KaRhoFearsinger',     0, 128, 29504, 70000, 2000, 0, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17985537, 0, 'BastokD_Squadron_A', 'Quadav Squadron', 2, 95, 99, -12.5, -1.56, -118.0, 56);
+REPLACE INTO `mob_spawn_points` VALUES (17985538, 0, 'BastokD_Squadron_B', 'Quadav Squadron', 3, 95, 99,  -6.0, -1.56, -124.0, 56);
+REPLACE INTO `mob_spawn_points` VALUES (17985539, 0, 'BastokD_Squadron_C', 'Quadav Squadron', 4, 95, 99, -19.0, -1.56, -124.0, 56);
+REPLACE INTO `mob_spawn_points` VALUES (17985540, 0, 'BastokD_Squadron_A', 'Quadav Squadron', 2, 95, 99, -12.5, -1.56, -130.0, 56);
+REPLACE INTO `mob_spawn_points` VALUES (17985541, 0, 'BastokD_Statue', 'Adamantking Image', 5, 99, 99,  -4.0, -1.56, -116.0, 56);
+REPLACE INTO `mob_spawn_points` VALUES (17985542, 0, 'BastokD_Statue', 'Adamantking Image', 5, 99, 99, -21.0, -1.56, -116.0, 56);
+REPLACE INTO `mob_spawn_points` VALUES (17985543, 0, 'MushaEffigy_BastokD', 'Mu\'Sha Effigy', 1, 99, 99, -12.509, -1.559, -124.363, 56);
+REPLACE INTO `mob_spawn_points` VALUES (17985544, 0, 'BastokD_Regiment_A', 'Quadav Regiment', 6, 97, 99, -12.5, -1.56, -132.0, 56);
+REPLACE INTO `mob_spawn_points` VALUES (17985545, 0, 'BastokD_Regiment_B', 'Quadav Regiment', 7, 97, 99,  -6.0, -1.56, -130.0, 56);
+REPLACE INTO `mob_spawn_points` VALUES (17985546, 0, 'BastokD_Regiment_C', 'Quadav Regiment', 8, 97, 99, -19.0, -1.56, -130.0, 56);
+REPLACE INTO `mob_spawn_points` VALUES (17985547, 0, 'BastokD_Regiment_A', 'Quadav Regiment', 6, 97, 99, -12.5, -1.56, -136.0, 56);
+REPLACE INTO `mob_spawn_points` VALUES (17985548, 0, 'KaRhoFearsinger', 'Ka\'Rho Fearsinger', 9, 99, 99, -12.5, -1.56, -138.0, 56);
+REPLACE INTO `instance_list` VALUES (29500, 'dynamis_bastok_d', 295, 234, 60, 116.482, 0.994, -72.121, 128, NULL, NULL, NULL, NULL);
+REPLACE INTO `instance_entities` VALUES (29500, 17985537);
+REPLACE INTO `instance_entities` VALUES (29500, 17985538);
+REPLACE INTO `instance_entities` VALUES (29500, 17985539);
+REPLACE INTO `instance_entities` VALUES (29500, 17985540);
+REPLACE INTO `instance_entities` VALUES (29500, 17985541);
+REPLACE INTO `instance_entities` VALUES (29500, 17985542);
+REPLACE INTO `instance_entities` VALUES (29500, 17985543);
+REPLACE INTO `instance_entities` VALUES (29500, 17985544);
+REPLACE INTO `instance_entities` VALUES (29500, 17985545);
+REPLACE INTO `instance_entities` VALUES (29500, 17985546);
+REPLACE INTO `instance_entities` VALUES (29500, 17985547);
+REPLACE INTO `instance_entities` VALUES (29500, 17985548);
+DELETE FROM `mob_droplist` WHERE `dropId` IN (29501, 29502, 29503, 29504);
+INSERT INTO `mob_droplist` VALUES (29501, 0, 0, 1000, 9539, @ALWAYS);
+INSERT INTO `mob_droplist` VALUES (29501, 0, 0, 1000, 9539, @COMMON);
+INSERT INTO `mob_droplist` VALUES (29502, 0, 0, 1000, 9539, @UNCOMMON);
+INSERT INTO `mob_droplist` VALUES (29503, 0, 0, 1000, 9541, @UNCOMMON);
+INSERT INTO `mob_droplist` VALUES (29504, 0, 0, 1000, 9541, @ALWAYS);
+INSERT INTO `mob_droplist` VALUES (29504, 0, 0, 1000, 9541, @COMMON);
+INSERT INTO `mob_droplist` VALUES (29504, 0, 0, 1000, 9543, @UNCOMMON);
+
+-- ============================================================================
+-- Windurst [D] (zone 296, instance 29600) -- Yagudo, unlocks HEAD. mobid base 17989632.
+-- Reuses zone-187 Yagudo pools; coords cluster the validated Tzee Xicu Idol anchor.
+-- ============================================================================
+REPLACE INTO `mob_groups` VALUES (1, 4070, 296, 'EvincingIdol_WindyD', 0, 128, 29601, 35000, 1000, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (2, 4183, 296, 'WindyD_Squadron_A',   0, 128, 29602,  8000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (3, 4176, 296, 'WindyD_Squadron_B',   0, 128, 29602,  8000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (4, 4175, 296, 'WindyD_Squadron_C',   0, 128, 29602,  8000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (5, 3548, 296, 'WindyD_Statue',       0, 128,     0,  6000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (6, 4181, 296, 'WindyD_Regiment_A',   0, 128, 29603, 11000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (7, 4198, 296, 'WindyD_Regiment_B',   0, 128, 29603, 11000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (8, 4141, 296, 'WindyD_Regiment_C',   0, 128, 29603, 11000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (9, 2464, 296, 'FiiPexuTheEternal',   0, 128, 29604, 70000, 2000, 0, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17989633, 0, 'WindyD_Squadron_A', 'Yagudo Squadron', 2, 95, 99, 94.9, -3.17, -141.0, 64);
+REPLACE INTO `mob_spawn_points` VALUES (17989634, 0, 'WindyD_Squadron_B', 'Yagudo Squadron', 3, 95, 99, 101.0, -3.17, -147.0, 64);
+REPLACE INTO `mob_spawn_points` VALUES (17989635, 0, 'WindyD_Squadron_C', 'Yagudo Squadron', 4, 95, 99, 88.0, -3.17, -147.0, 64);
+REPLACE INTO `mob_spawn_points` VALUES (17989636, 0, 'WindyD_Squadron_A', 'Yagudo Squadron', 2, 95, 99, 94.9, -3.17, -153.0, 64);
+REPLACE INTO `mob_spawn_points` VALUES (17989637, 0, 'WindyD_Statue', 'Evincing Statue', 5, 99, 99, 103.0, -3.17, -140.0, 64);
+REPLACE INTO `mob_spawn_points` VALUES (17989638, 0, 'WindyD_Statue', 'Evincing Statue', 5, 99, 99, 86.0, -3.17, -140.0, 64);
+REPLACE INTO `mob_spawn_points` VALUES (17989639, 0, 'EvincingIdol_WindyD', 'Evincing Idol', 1, 99, 99, 94.944, -3.171, -147.770, 64);
+REPLACE INTO `mob_spawn_points` VALUES (17989640, 0, 'WindyD_Regiment_A', 'Yagudo Regiment', 6, 97, 99, 94.9, -3.17, -155.0, 64);
+REPLACE INTO `mob_spawn_points` VALUES (17989641, 0, 'WindyD_Regiment_B', 'Yagudo Regiment', 7, 97, 99, 101.0, -3.17, -153.0, 64);
+REPLACE INTO `mob_spawn_points` VALUES (17989642, 0, 'WindyD_Regiment_C', 'Yagudo Regiment', 8, 97, 99, 88.0, -3.17, -153.0, 64);
+REPLACE INTO `mob_spawn_points` VALUES (17989643, 0, 'WindyD_Regiment_A', 'Yagudo Regiment', 6, 97, 99, 94.9, -3.17, -159.0, 64);
+REPLACE INTO `mob_spawn_points` VALUES (17989644, 0, 'FiiPexuTheEternal', 'Fii Pexu the Eternal', 9, 99, 99, 94.9, -3.17, -161.0, 64);
+REPLACE INTO `instance_list` VALUES (29600, 'dynamis_windurst_d', 296, 239, 60, -221.988, 1.000, -120.184, 0, NULL, NULL, NULL, NULL);
+REPLACE INTO `instance_entities` VALUES (29600, 17989633);
+REPLACE INTO `instance_entities` VALUES (29600, 17989634);
+REPLACE INTO `instance_entities` VALUES (29600, 17989635);
+REPLACE INTO `instance_entities` VALUES (29600, 17989636);
+REPLACE INTO `instance_entities` VALUES (29600, 17989637);
+REPLACE INTO `instance_entities` VALUES (29600, 17989638);
+REPLACE INTO `instance_entities` VALUES (29600, 17989639);
+REPLACE INTO `instance_entities` VALUES (29600, 17989640);
+REPLACE INTO `instance_entities` VALUES (29600, 17989641);
+REPLACE INTO `instance_entities` VALUES (29600, 17989642);
+REPLACE INTO `instance_entities` VALUES (29600, 17989643);
+REPLACE INTO `instance_entities` VALUES (29600, 17989644);
+DELETE FROM `mob_droplist` WHERE `dropId` IN (29601, 29602, 29603, 29604);
+INSERT INTO `mob_droplist` VALUES (29601, 0, 0, 1000, 9539, @ALWAYS);
+INSERT INTO `mob_droplist` VALUES (29601, 0, 0, 1000, 9539, @COMMON);
+INSERT INTO `mob_droplist` VALUES (29602, 0, 0, 1000, 9539, @UNCOMMON);
+INSERT INTO `mob_droplist` VALUES (29603, 0, 0, 1000, 9541, @UNCOMMON);
+INSERT INTO `mob_droplist` VALUES (29604, 0, 0, 1000, 9541, @ALWAYS);
+INSERT INTO `mob_droplist` VALUES (29604, 0, 0, 1000, 9541, @COMMON);
+INSERT INTO `mob_droplist` VALUES (29604, 0, 0, 1000, 9543, @UNCOMMON);
+
+-- ============================================================================
+-- Jeuno [D] (zone 297, instance 29700) -- Goblins, unlocks LEGS. mobid base 17993728.
+-- Reuses zone-188 Goblin pools; coords cluster the validated Gabblox anchor.
+-- ============================================================================
+REPLACE INTO `mob_groups` VALUES (1, 1668, 297, 'ImpishGolem_JeunoD', 0, 128, 29701, 35000, 1000, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (2, 4184, 297, 'JeunoD_Squadron_A',  0, 128, 29702,  8000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (3, 4199, 297, 'JeunoD_Squadron_B',  0, 128, 29702,  8000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (4, 4170, 297, 'JeunoD_Squadron_C',  0, 128, 29702,  8000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (5, 3548, 297, 'JeunoD_Statue',      0, 128,     0,  6000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (6, 4182, 297, 'JeunoD_Regiment_A',  0, 128, 29703, 11000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (7, 4147, 297, 'JeunoD_Regiment_B',  0, 128, 29703, 11000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (8, 4192, 297, 'JeunoD_Regiment_C',  0, 128, 29703, 11000,    0, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (9, 1444, 297, 'Obstatrix_JeunoD',   0, 128, 29704, 70000, 2000, 0, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17993729, 0, 'JeunoD_Squadron_A', 'Goblin Squadron', 2, 95, 99, -0.25, 8.5, -47.0, 209);
+REPLACE INTO `mob_spawn_points` VALUES (17993730, 0, 'JeunoD_Squadron_B', 'Goblin Squadron', 3, 95, 99, 6.0, 8.5, -54.0, 209);
+REPLACE INTO `mob_spawn_points` VALUES (17993731, 0, 'JeunoD_Squadron_C', 'Goblin Squadron', 4, 95, 99, -7.0, 8.5, -54.0, 209);
+REPLACE INTO `mob_spawn_points` VALUES (17993732, 0, 'JeunoD_Squadron_A', 'Goblin Squadron', 2, 95, 99, -0.25, 8.5, -60.0, 209);
+REPLACE INTO `mob_spawn_points` VALUES (17993733, 0, 'JeunoD_Statue', 'Impish Statue', 5, 99, 99, 8.0, 8.5, -47.0, 209);
+REPLACE INTO `mob_spawn_points` VALUES (17993734, 0, 'JeunoD_Statue', 'Impish Statue', 5, 99, 99, -9.0, 8.5, -47.0, 209);
+REPLACE INTO `mob_spawn_points` VALUES (17993735, 0, 'ImpishGolem_JeunoD', 'Impish Golem', 1, 99, 99, -0.250, 8.500, -53.982, 209);
+REPLACE INTO `mob_spawn_points` VALUES (17993736, 0, 'JeunoD_Regiment_A', 'Goblin Regiment', 6, 97, 99, -0.25, 8.5, -62.0, 209);
+REPLACE INTO `mob_spawn_points` VALUES (17993737, 0, 'JeunoD_Regiment_B', 'Goblin Regiment', 7, 97, 99, 6.0, 8.5, -60.0, 209);
+REPLACE INTO `mob_spawn_points` VALUES (17993738, 0, 'JeunoD_Regiment_C', 'Goblin Regiment', 8, 97, 99, -7.0, 8.5, -60.0, 209);
+REPLACE INTO `mob_spawn_points` VALUES (17993739, 0, 'JeunoD_Regiment_A', 'Goblin Regiment', 6, 97, 99, -0.25, 8.5, -66.0, 209);
+REPLACE INTO `mob_spawn_points` VALUES (17993740, 0, 'Obstatrix_JeunoD', 'Obstatrix', 9, 99, 99, -0.25, 8.5, -68.0, 209);
+REPLACE INTO `instance_list` VALUES (29700, 'dynamis_jeuno_d', 297, 243, 60, 48.930, 10.002, -71.032, 195, NULL, NULL, NULL, NULL);
+REPLACE INTO `instance_entities` VALUES (29700, 17993729);
+REPLACE INTO `instance_entities` VALUES (29700, 17993730);
+REPLACE INTO `instance_entities` VALUES (29700, 17993731);
+REPLACE INTO `instance_entities` VALUES (29700, 17993732);
+REPLACE INTO `instance_entities` VALUES (29700, 17993733);
+REPLACE INTO `instance_entities` VALUES (29700, 17993734);
+REPLACE INTO `instance_entities` VALUES (29700, 17993735);
+REPLACE INTO `instance_entities` VALUES (29700, 17993736);
+REPLACE INTO `instance_entities` VALUES (29700, 17993737);
+REPLACE INTO `instance_entities` VALUES (29700, 17993738);
+REPLACE INTO `instance_entities` VALUES (29700, 17993739);
+REPLACE INTO `instance_entities` VALUES (29700, 17993740);
+DELETE FROM `mob_droplist` WHERE `dropId` IN (29701, 29702, 29703, 29704);
+INSERT INTO `mob_droplist` VALUES (29701, 0, 0, 1000, 9539, @ALWAYS);
+INSERT INTO `mob_droplist` VALUES (29701, 0, 0, 1000, 9539, @COMMON);
+INSERT INTO `mob_droplist` VALUES (29702, 0, 0, 1000, 9539, @UNCOMMON);
+INSERT INTO `mob_droplist` VALUES (29703, 0, 0, 1000, 9541, @UNCOMMON);
+INSERT INTO `mob_droplist` VALUES (29704, 0, 0, 1000, 9541, @ALWAYS);
+INSERT INTO `mob_droplist` VALUES (29704, 0, 0, 1000, 9541, @COMMON);
+INSERT INTO `mob_droplist` VALUES (29704, 0, 0, 1000, 9543, @UNCOMMON);

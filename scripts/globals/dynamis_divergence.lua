@@ -110,7 +110,22 @@ xi.divergence.onInstanceTimeUpdate = function(instance, elapsed, cfg)
         end
     elseif wave == 2 then
         if isDead(instance, cfg.megaBoss) then
-            instance:setLocalVar('divWave', 3)
+            if cfg.disjoined then
+                -- Wave 3: the Disjoined NM at the elemental circle. No time extension.
+                instance:setLocalVar('divWave', 3)
+                for _, mobId in ipairs(cfg.wave3Mobs or {}) do
+                    SpawnMob(mobId, instance)
+                end
+                SpawnMob(cfg.disjoined, instance)
+                tell(instance, '[Divergence] The Mega-Boss falls! The Disjoined manifests at the elemental circle -- no more time can be gained!')
+            else
+                instance:setLocalVar('divWave', 4)
+                instance:complete()
+            end
+        end
+    elseif wave == 3 then
+        if isDead(instance, cfg.disjoined) then
+            instance:setLocalVar('divWave', 4)
             instance:complete()
         end
     end
