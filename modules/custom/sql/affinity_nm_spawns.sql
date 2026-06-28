@@ -2,8 +2,10 @@
 -- affinity_nm_spawns.sql
 -- Places the 24 Augment-Sage affinity NMs (augment_affinity_catalog.lua) as
 -- 15-minute (900s) NORMAL timed spawns in their menu zones, so the affinity
--- hunt is actually farmable. Each reuses the NM's real pool + droplist (full
--- retail loot); HP/MP=0 -> engine calculates HP/MP from the spawn-point level.
+-- hunt is actually farmable. Each reuses the NM's real pool + a DEDICATED 100%
+-- trophy droplist (21000-21023): the affinity-register trophy MUST be guaranteed,
+-- and the old retail dropids did not even contain the trophy (e.g. Simurgh's
+-- 2255 had no Giant Bird Plume). HP/MP=0 -> engine calculates HP/MP from level.
 --
 -- Reserved IDs:  groupid 20000-20023,  mobid = 0x1000000 | (zoneid<<12) | targid.
 --   CRITICAL: a valid mob entity id MUST include the 0x1000000 (16777216) entity
@@ -31,34 +33,67 @@ UPDATE `_phx` SET `poolid` = 30002, `name` = 'Phoenix', `packet_name` = 'Phoenix
 INSERT INTO `mob_pools` SELECT * FROM `_phx`;
 DROP TEMPORARY TABLE `_phx`;
 
--- ---- mob_groups: respawntime=900, spawntype=0 (NORMAL timed), real dropid, HP/MP=0 (calc from level) ----
+-- ---- mob_groups: respawntime=900, spawntype=0 (NORMAL timed), dedicated trophy dropid, HP/MP=0 (calc) ----
 -- cols: groupid, poolid, zoneid, name, respawntime, spawntype, dropid, HP, MP, allegiance, content_tag
+-- dropid = 21000 + (groupid - 20000) -> the dedicated 100% trophy droplist below.
 DELETE FROM `mob_groups` WHERE `groupid` BETWEEN 20000 AND 20023;
 INSERT INTO `mob_groups` VALUES
- (20000,   387, 105, 'Behemoth',         900, 0,  251, 0, 0, 0, NULL),
- (20001,  2255, 127, 'King_Behemoth',    900, 0, 1450, 0, 0, 0, NULL),
- (20002,  2254, 174, 'King_Arthro',      900, 0, 1449, 0, 0, 0, NULL),
- (20003,  3630, 110, 'Simurgh',          900, 0, 2255, 0, 0, 0, NULL),
- (20004,    44, 128, 'Adamantoise',      900, 0,   21, 0, 0, 0, NULL),
- (20005,  1491, 178, 'Genbu',            900, 0,  946, 0, 0, 0, NULL),
- (20006,  3376, 120, 'Roc',              900, 0, 2112, 0, 0, 0, NULL),
- (20007,  3540, 178, 'Seiryu',           900, 0, 2196, 0, 0, 0, NULL),
- (20008,   592, 178, 'Byakko',           900, 0,  394, 0, 0, 0, NULL),
- (20009,   268, 113, 'Aspidochelone',    900, 0,  183, 0, 0, 0, NULL),
- (20010,  3070,  29, 'Ouryu',            900, 0, 1962, 0, 0, 0, NULL),
- (20011,   584, 153, 'Bune',             900, 0,  389, 0, 0, 0, NULL),
- (20012, 30002,  30, 'Phoenix',          900, 0, 2362, 0, 0, 0, NULL),
- (20013,  3816, 178, 'Suzaku',           900, 0, 2362, 0, 0, 0, NULL),
- (20014,  2265, 178, 'Kirin',            900, 0, 2819, 0, 0, 0, NULL),
- (20015,  1280, 154, 'Fafnir',           900, 0,  805, 0, 0, 0, NULL),
- (20016,  2840, 154, 'Nidhogg',          900, 0, 1781, 0, 0, 0, NULL),
- (20017,  4261, 205, 'Vrtra',            900, 0, 2592, 0, 0, 0, NULL),
- (20018,  3916,   5, 'Tiamat',           900, 0, 2416, 0, 0, 0, NULL),
- (20019,  2262, 125, 'King_Vinegarroon', 900, 0, 1451, 0, 0, 0, NULL),
- (20020,  2220, 190, 'Khimaira',         900, 0, 1437, 0, 0, 0, NULL),
- (20021,   680, 190, 'Cerberus',         900, 0,  446, 0, 0, 0, NULL),
- (20022,    21, 130, 'Absolute_Virtue',  900, 0,    3, 0, 0, 0, NULL),
- (20023,  3208, 130, 'Proto-Omega',      900, 0,    0, 0, 0, 0, NULL);
+ (20000,   387, 105, 'Behemoth',         900, 0, 21000, 0, 0, 0, NULL),
+ (20001,  2255, 127, 'King_Behemoth',    900, 0, 21001, 0, 0, 0, NULL),
+ (20002,  2254, 174, 'King_Arthro',      900, 0, 21002, 0, 0, 0, NULL),
+ (20003,  3630, 110, 'Simurgh',          900, 0, 21003, 0, 0, 0, NULL),
+ (20004,    44, 128, 'Adamantoise',      900, 0, 21004, 0, 0, 0, NULL),
+ (20005,  1491, 178, 'Genbu',            900, 0, 21005, 0, 0, 0, NULL),
+ (20006,  3376, 120, 'Roc',              900, 0, 21006, 0, 0, 0, NULL),
+ (20007,  3540, 178, 'Seiryu',           900, 0, 21007, 0, 0, 0, NULL),
+ (20008,   592, 178, 'Byakko',           900, 0, 21008, 0, 0, 0, NULL),
+ (20009,   268, 113, 'Aspidochelone',    900, 0, 21009, 0, 0, 0, NULL),
+ (20010,  3070,  29, 'Ouryu',            900, 0, 21010, 0, 0, 0, NULL),
+ (20011,   584, 153, 'Bune',             900, 0, 21011, 0, 0, 0, NULL),
+ (20012, 30002,  30, 'Phoenix',          900, 0, 21012, 0, 0, 0, NULL),
+ (20013,  3816, 178, 'Suzaku',           900, 0, 21013, 0, 0, 0, NULL),
+ (20014,  2265, 178, 'Kirin',            900, 0, 21014, 0, 0, 0, NULL),
+ (20015,  1280, 154, 'Fafnir',           900, 0, 21015, 0, 0, 0, NULL),
+ (20016,  2840, 154, 'Nidhogg',          900, 0, 21016, 0, 0, 0, NULL),
+ (20017,  4261, 205, 'Vrtra',            900, 0, 21017, 0, 0, 0, NULL),
+ (20018,  3916,   5, 'Tiamat',           900, 0, 21018, 0, 0, 0, NULL),
+ (20019,  2262, 125, 'King_Vinegarroon', 900, 0, 21019, 0, 0, 0, NULL),
+ (20020,  2220, 190, 'Khimaira',         900, 0, 21020, 0, 0, 0, NULL),
+ (20021,   680, 190, 'Cerberus',         900, 0, 21021, 0, 0, 0, NULL),
+ (20022,    21, 130, 'Absolute_Virtue',  900, 0, 21022, 0, 0, 0, NULL),
+ (20023,  3208, 130, 'Proto-Omega',      900, 0, 21023, 0, 0, 0, NULL);
+
+-- ---- dedicated 100% trophy droplists (21000-21023) ----
+-- Each affinity NM drops ONLY its unique registration trophy, GUARANTEED
+-- (dropType 0, itemRate 1000 = 100%). The trophy is the Augment-Sage registration
+-- gate, so it must always drop. Item ids mirror augment_affinity_catalog.lua.
+-- Isolated from retail (retail NM spawns keep their own mob_groups + dropids).
+DELETE FROM `mob_droplist` WHERE `dropId` BETWEEN 21000 AND 21023;
+INSERT INTO `mob_droplist` (`dropId`,`dropType`,`groupId`,`groupRate`,`itemId`,`itemRate`) VALUES
+ (21000, 0, 0, 1000,   860, 1000),  -- Behemoth          -> Behemoth Hide
+ (21001, 0, 0, 1000,   883, 1000),  -- King Behemoth     -> Behemoth Horn
+ (21002, 0, 0, 1000,  8983, 1000),  -- King Arthro       -> Emperor Arthro's Shell
+ (21003, 0, 0, 1000,   843, 1000),  -- Simurgh           -> Giant Bird Plume
+ (21004, 0, 0, 1000,   908, 1000),  -- Adamantoise       -> Adamantoise Shell
+ (21005, 0, 0, 1000,  1404, 1000),  -- Genbu             -> Seal of Genbu
+ (21006, 0, 0, 1000,   842, 1000),  -- Roc               -> Giant Bird Feather
+ (21007, 0, 0, 1000,  1405, 1000),  -- Seiryu            -> Seal of Seiryu
+ (21008, 0, 0, 1000,  1406, 1000),  -- Byakko            -> Seal of Byakko
+ (21009, 0, 0, 1000,  2421, 1000),  -- Aspidochelone     -> Spirit Turtle Shell
+ (21010, 0, 0, 1000,   903, 1000),  -- Ouryu             -> Dragon Talon
+ (21011, 0, 0, 1000,  2229, 1000),  -- Bune              -> Vial of Chimera Blood
+ (21012, 0, 0, 1000,   844, 1000),  -- Phoenix           -> Phoenix Feather
+ (21013, 0, 0, 1000,  1407, 1000),  -- Suzaku            -> Seal of Suzaku
+ (21014, 0, 0, 1000, 10038, 1000),  -- Kirin             -> Kirin's Mane
+ (21015, 0, 0, 1000, 10037, 1000),  -- Fafnir            -> Fafnir's Scale
+ (21016, 0, 0, 1000,   865, 1000),  -- Nidhogg           -> Handful of Nidhogg's Scales
+ (21017, 0, 0, 1000,  1526, 1000),  -- Vrtra             -> Wyrm Beard
+ (21018, 0, 0, 1000,  1816, 1000),  -- Tiamat            -> Wyrm Horn
+ (21019, 0, 0, 1000,  1017, 1000),  -- King Vinegarroon  -> Scorpion Stinger
+ (21020, 0, 0, 1000,  2372, 1000),  -- Khimaira          -> Khimaira Mane
+ (21021, 0, 0, 1000,  2169, 1000),  -- Cerberus          -> Cerberus Hide
+ (21022, 0, 0, 1000,  1567, 1000),  -- Absolute Virtue   -> Attestation of Virtue
+ (21023, 0, 0, 1000, 15800, 1000);  -- Proto-Omega       -> Omega Ring
 
 -- ---- mob_spawn_points: one timed spawn per NM at a valid in-zone coord ----
 -- cols: mobid, spawnslotid, mobname, polutils_name, groupid, minLevel, maxLevel, pos_x, pos_y, pos_z, pos_rot
