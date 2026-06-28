@@ -54,23 +54,23 @@ local RESPAWN_SECONDS = 30  -- repop delay after each death (matches always_popp
 -----------------------------------
 local ZONES =
 {
-    { 'xi.zones.Batallia_Downs.Zone.onInitialize',          { 17208833 } },                                       -- Behemoth
-    { 'xi.zones.Behemoths_Dominion.Zone.onInitialize',      { 17298946 } },                                       -- King Behemoth
-    { 'xi.zones.Kuftal_Tunnel.Zone.onInitialize',           { 17491459 } },                                       -- King Arthro
-    { 'xi.zones.Rolanberry_Fields.Zone.onInitialize',       { 17229316 } },                                       -- Simurgh
-    { 'xi.zones.Valley_of_Sorrows.Zone.onInitialize',       { 17303045 } },                                       -- Adamantoise
-    { 'xi.zones.The_Shrine_of_RuAvitau.Zone.onInitialize',  { 17507846, 17507848, 17507849, 17507854, 17507855 } }, -- Genbu/Seiryu/Byakko/Suzaku/Kirin
-    { 'xi.zones.Sauromugue_Champaign.Zone.onInitialize',    { 17270279 } },                                       -- Roc
-    { 'xi.zones.Cape_Teriggan.Zone.onInitialize',           { 17241610 } },                                       -- Aspidochelone
-    { 'xi.zones.Riverne-Site_B01.Zone.onInitialize',        { 16897547 } },                                       -- Ouryu
-    { 'xi.zones.The_Boyahda_Tree.Zone.onInitialize',        { 17405452 } },                                       -- Bune
-    { 'xi.zones.Riverne-Site_A01.Zone.onInitialize',        { 16901645 } },                                       -- Phoenix
-    { 'xi.zones.Dragons_Aery.Zone.onInitialize',            { 17409552, 17409553 } },                             -- Fafnir/Nidhogg
-    { 'xi.zones.Ifrits_Cauldron.Zone.onInitialize',         { 17618450 } },                                       -- Vrtra
-    { 'xi.zones.Uleguerand_Range.Zone.onInitialize',        { 16799251 } },                                       -- Tiamat
-    { 'xi.zones.Western_Altepa_Desert.Zone.onInitialize',   { 17290772 } },                                       -- King Vinegarroon
-    { 'xi.zones.King_Ranperres_Tomb.Zone.onInitialize',     { 17557013, 17557014 } },                             -- Khimaira/Cerberus
-    { 'xi.zones.RuAun_Gardens.Zone.onInitialize',           { 17311255, 17311256 } },                             -- Absolute Virtue/Proto-Omega
+    { 'xi.zones.Batallia_Downs.Zone.onInitialize',          { 17208197 } },                                       -- Behemoth
+    { 'xi.zones.Behemoths_Dominion.Zone.onInitialize',      { 17298310 } },                                       -- King Behemoth
+    { 'xi.zones.Kuftal_Tunnel.Zone.onInitialize',           { 17490823 } },                                       -- King Arthro
+    { 'xi.zones.Rolanberry_Fields.Zone.onInitialize',       { 17228680 } },                                       -- Simurgh
+    { 'xi.zones.Valley_of_Sorrows.Zone.onInitialize',       { 17302409 } },                                       -- Adamantoise
+    { 'xi.zones.The_Shrine_of_RuAvitau.Zone.onInitialize',  { 17507210, 17507212, 17507213, 17507218, 17507219 } }, -- Genbu/Seiryu/Byakko/Suzaku/Kirin
+    { 'xi.zones.Sauromugue_Champaign.Zone.onInitialize',    { 17269643 } },                                       -- Roc
+    { 'xi.zones.Cape_Teriggan.Zone.onInitialize',           { 17240974 } },                                       -- Aspidochelone
+    { 'xi.zones.Riverne-Site_B01.Zone.onInitialize',        { 16896911 } },                                       -- Ouryu
+    { 'xi.zones.The_Boyahda_Tree.Zone.onInitialize',        { 17404816 } },                                       -- Bune
+    { 'xi.zones.Riverne-Site_A01.Zone.onInitialize',        { 16901009 } },                                       -- Phoenix
+    { 'xi.zones.Dragons_Aery.Zone.onInitialize',            { 17408916, 17408917 } },                             -- Fafnir/Nidhogg
+    { 'xi.zones.Ifrits_Cauldron.Zone.onInitialize',         { 17617814 } },                                       -- Vrtra
+    { 'xi.zones.Uleguerand_Range.Zone.onInitialize',        { 16798615 } },                                       -- Tiamat
+    { 'xi.zones.Western_Altepa_Desert.Zone.onInitialize',   { 17290136 } },                                       -- King Vinegarroon
+    { 'xi.zones.King_Ranperres_Tomb.Zone.onInitialize',     { 17556377, 17556378 } },                             -- Khimaira/Cerberus
+    { 'xi.zones.RuAun_Gardens.Zone.onInitialize',           { 17310619, 17310620 } },                             -- Absolute Virtue/Proto-Omega
 }
 
 -----------------------------------
