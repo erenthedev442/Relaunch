@@ -952,11 +952,15 @@ def main():
         _cats = [int(c) for c in re.findall(r"\bcat\s*=\s*(\d+)", _existing)]
         _migrated = (bool(_cats) and max(_cats) > 14) or bool(re.search(r"\btier\s*=", _existing))
         if _migrated and os.environ.get("AUGMENT_REGEN_FORCE") != "1":
-            raise SystemExit(
-                f"[gen_augment_catalog] ABORT: {OUT_LUA} looks hand-migrated "
-                "(24-cat / tier field) and this generator emits the old 14-cat scheme -- a "
-                "regen would clobber it + drop tiers. Reconcile CATEGORIES/CAT_NAMES to 24 "
-                "cats first, or set AUGMENT_REGEN_FORCE=1 to override.")
+            # SKIP (not abort) so the hourly docs refresh never breaks on this: if a
+            # deploy puts the hand-migrated 24-cat .lua on the box, the generator just
+            # leaves it in place instead of clobbering it back to the 14-cat scheme +
+            # dropping tiers. Set AUGMENT_REGEN_FORCE=1 to regen anyway. The proper
+            # long-term fix is to reconcile CATEGORIES/CAT_NAMES to 24 cats.
+            print(f"[gen_augment_catalog] SKIP: {OUT_LUA} looks hand-migrated "
+                  "(24-cat / tier) and this generator emits the old 14-cat scheme -- "
+                  "preserving it (set AUGMENT_REGEN_FORCE=1 to override).")
+            return
     print("=" * 70)
     print("Building obtainable item set (mob drops only)...")
     drop_set = parse_mob_droplist()
