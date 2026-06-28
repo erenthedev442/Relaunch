@@ -104,8 +104,32 @@ end
 xi.affinityAutopop = xi.affinityAutopop or {}
 xi.affinityAutopop.grantTrophy = grantTrophy  -- reused by the !affinitypop command
 
+-- mobid -> proper display name. These reused-pool spawns show as "NPC" on the
+-- client; renameEntity sets ONLY packetName (+ flags UPDATE_NAME to push it live),
+-- it does NOT touch the entity's `name`, so mob:getName() -- which the affinity
+-- GRANT matches against -- is unchanged. Purely a display fix.
+local NAME =
+{
+    [17208197] = 'Behemoth',      [17298310] = 'King Behemoth',    [17490823] = 'King Arthro',
+    [17228680] = 'Simurgh',       [17302409] = 'Adamantoise',      [17507210] = 'Genbu',
+    [17269643] = 'Roc',           [17507212] = 'Seiryu',           [17507213] = 'Byakko',
+    [17240974] = 'Aspidochelone', [16896911] = 'Ouryu',            [17404816] = 'Bune',
+    [16901009] = 'Phoenix',       [17507218] = 'Suzaku',           [17507219] = 'Kirin',
+    [17408916] = 'Fafnir',        [17408917] = 'Nidhogg',          [17617814] = 'Vrtra',
+    [16798615] = 'Tiamat',        [17290136] = 'King Vinegarroon', [17556377] = 'Khimaira',
+    [17556378] = 'Cerberus',      [17310619] = 'Absolute Virtue',  [17310620] = 'Proto-Omega',
+}
+
+local function applyName(m)
+    local nm = NAME[m:getID()]
+    if nm then
+        m:renameEntity(nm, true)  -- silent; sets packetName only
+    end
+end
+xi.affinityAutopop.applyName = applyName  -- reused by the !affinitypop command
+
 -----------------------------------
--- Force one affinity NM up, keep it on the short timer, and wire the trophy grant.
+-- Force one affinity NM up, keep it on the short timer, and wire the trophy + name.
 -----------------------------------
 local function configureMob(mobid)
     local mob = GetMobByID(mobid)
@@ -123,6 +147,12 @@ local function configureMob(mobid)
     mob:addListener('DEATH', 'AFFINITY_TROPHY', function(m, killer)
         grantTrophy(m, killer)
     end)
+
+    -- Fix the "NPC" display name; re-apply on every spawn (packetName resets are cheap).
+    mob:addListener('SPAWN', 'AFFINITY_NAME', function(m)
+        applyName(m)
+    end)
+    if mob:isSpawned() then applyName(mob) end
 
     mob:setRespawnTime(RESPAWN_SECONDS)
     if not mob:isSpawned() then

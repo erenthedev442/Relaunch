@@ -53,6 +53,13 @@ commandObj.onTrigger = function(player)
                     xi.affinityAutopop.grantTrophy(m, killer)
                 end)
             end
+            -- Fix the "NPC" display name (re-apply each spawn). Display-only.
+            if xi.affinityAutopop and xi.affinityAutopop.applyName then
+                mob:addListener('SPAWN', 'AFFINITY_NAME', function(m)
+                    xi.affinityAutopop.applyName(m)
+                end)
+                if mob:isSpawned() then xi.affinityAutopop.applyName(mob) end
+            end
             mob:setRespawnTime(RESPAWN_SECONDS)
             if not mob:isSpawned() then
                 SpawnMob(mobid)
