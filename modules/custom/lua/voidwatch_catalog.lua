@@ -22,6 +22,8 @@ C.STONE_CRUOR   = 400     -- buy one Voidstone for this much cruor
 
 -- ── Battle ─────────────────────────────────────────────────────────────────
 C.BATTLE_SECONDS = 1800   -- 30-min battle timer (retail); then the NM voids out
+C.PYXIS_LOOK     = 969    -- authentic Riftworn Pyxis model (0x03C9, from npc_list look 0x0000C903)
+C.PYXIS_SECONDS  = 180    -- claim window for the physical Riftworn Pyxis chest (3 min)
 C.SPAWN_DIST_MIN = 8
 C.SPAWN_DIST_MAX = 13
 

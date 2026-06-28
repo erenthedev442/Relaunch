@@ -272,7 +272,64 @@ local function spawnVoidwalker(owner, tier, roster)
     return mob, entry.name, level
 end
 
--- ── Rift cleared -> light-weighted Riftworn Pyxis + tier advance ─────────────
+-- ── Riftworn Pyxis (physical reward chest; examine within PYXIS_SECONDS) ─────
+local pendingPyxis = {}   -- [playerName] = { reward, mob }
+
+local function deliverPyxis(player, reward)
+    addCruor(player, reward.cruor)
+    pcall(function() player:addExp(reward.exp) end)
+    if reward.shards  > 0 then player:setCharVar(C.V.shards, getShards(player) + reward.shards) end
+    if reward.periapt > 0 then player:setCharVar(C.V.periapts, (player:getCharVar(C.V.periapts) or 0) + reward.periapt) end
+    local got = 0
+    for _, itemid in ipairs(reward.items) do if giveItem(player, itemid) then got = got + 1 end end
+    player:printToPlayer(string.format(
+        '[Voidwatch] The Riftworn Pyxis yields:  +%d cruor    +%d EXP    %d item%s%s    +%d Periapt',
+        reward.cruor, reward.exp, got, (got == 1) and '' or 's',
+        (reward.shards > 0) and string.format('    +%d shard%s', reward.shards, (reward.shards == 1) and '' or 's') or '',
+        reward.periapt), SYS)
+end
+
+local function spawnPyxis(player, reward)
+    local name = player:getName()
+    local old  = pendingPyxis[name]
+    if old then                                  -- auto-claim + clear any stale Pyxis first
+        pendingPyxis[name] = nil
+        pcall(function() old.mob:setStatus(xi.status.DISAPPEAR) end)
+        deliverPyxis(player, old.reward)
+    end
+    local pyxis = player:getZone():insertDynamicEntity({
+        objtype              = xi.objType.NPC,
+        name                 = 'Riftworn_Pyxis',
+        packetName           = 'Riftworn Pyxis',
+        look                 = C.PYXIS_LOOK,
+        x = player:getXPos(), y = player:getYPos(), z = player:getZPos(),
+        rotation             = 0,
+        widescan             = 1,
+        releaseIdOnDisappear = true,
+        onTrigger            = function(trig, npc)
+            if trig:getName() ~= name or not pendingPyxis[name] then return end
+            pendingPyxis[name] = nil
+            deliverPyxis(trig, reward)
+            pcall(function() npc:setStatus(xi.status.DISAPPEAR) end)
+        end,
+    })
+    if not pyxis then deliverPyxis(player, reward); return end   -- spawn failed -> deliver inline
+    pendingPyxis[name] = { reward = reward, mob = pyxis }
+    player:printToPlayer(string.format(
+        '[Voidwatch] A Riftworn Pyxis coalesces from the rift -- examine it within %d min to claim your reward.',
+        math.floor(C.PYXIS_SECONDS / 60)), SYS)
+    player:timer(C.PYXIS_SECONDS * 1000, function(p)
+        local pend = pendingPyxis[p:getName()]
+        if pend and pend.reward == reward then                  -- still THIS Pyxis -> safety-net claim
+            pendingPyxis[p:getName()] = nil
+            pcall(function() pend.mob:setStatus(xi.status.DISAPPEAR) end)
+            deliverPyxis(p, reward)
+            p:printToPlayer('[Voidwatch] The Riftworn Pyxis dissolved -- its contents drift to you anyway.', SYS)
+        end
+    end)
+end
+
+-- ── Rift cleared -> roll the reward, advance the stratum, drop the Pyxis ─────
 onRiftCleared = function(player)
     local sess = getSession(player)
     if not sess then return end
@@ -290,48 +347,38 @@ onRiftCleared = function(player)
     local white  = L.WHITE or 0
     local total  = red + blue + green + yellow + white
 
-    -- cruor (Verdant + Fortune) + EXP (Amber + Fervor)
-    local cruor = math.floor(C.cruorReward(tier) * (1 + green * C.CRUOR_PER_GREEN + getAtm(player, 'FORTUNE') * C.ATM.FORTUNE_PCT))
-    local exp   = math.floor(C.expReward(tier)   * (1 + yellow * C.EXP_PER_YELLOW + getAtm(player, 'FERVOR') * C.ATM.FERVOR_PCT))
-    addCruor(player, cruor)
-    pcall(function() player:addExp(exp) end)
-
-    -- atmacite shards (Pearl)
-    local shards = white * C.SHARD_PER_WHITE
-    if shards > 0 then player:setCharVar(C.V.shards, getShards(player) + shards) end
-
-    -- Periapt of Emergence (+1 per clear; reveals an NM's weaknesses)
-    player:setCharVar(C.V.periapts, (player:getCharVar(C.V.periapts) or 0) + 1)
-
-    -- loot: Cerulean + Greed = rolls, Vermillion = quality, Pearl >= N = bonus rare
+    -- Roll the reward (delivered when the Pyxis is opened).
+    local reward =
+    {
+        cruor   = math.floor(C.cruorReward(tier) * (1 + green * C.CRUOR_PER_GREEN + getAtm(player, 'FORTUNE') * C.ATM.FORTUNE_PCT)),
+        exp     = math.floor(C.expReward(tier)   * (1 + yellow * C.EXP_PER_YELLOW + getAtm(player, 'FERVOR') * C.ATM.FERVOR_PCT)),
+        shards  = white * C.SHARD_PER_WHITE,
+        periapt = 1,
+        items   = {},
+    }
     local rolls = 1 + math.floor(blue / 2) * C.ROLLS_PER_2_BLUE + getAtm(player, 'GREED') * C.ATM.GREED_ROLLS
-    local got = 0
     for _ = 1, rolls do
         local q = math.random(100) + red * C.QUALITY_PER_RED
         local tbl = (q >= C.QUALITY_RARE_AT and C.LOOT.rare)
                  or (q >= C.QUALITY_UNCOMMON_AT and C.LOOT.uncommon)
                  or C.LOOT.common
-        if giveItem(player, tbl[math.random(#tbl)]) then got = got + 1 end
+        reward.items[#reward.items + 1] = tbl[math.random(#tbl)]
     end
     if white >= C.WHITE_BONUS_RARE_AT then
-        if giveItem(player, C.LOOT.rare[math.random(#C.LOOT.rare)]) then got = got + 1 end
+        reward.items[#reward.items + 1] = C.LOOT.rare[math.random(#C.LOOT.rare)]
     end
 
-    -- Riftworn Pyxis report
-    player:printToPlayer(string.format(
-        '[Voidwatch] The void recedes -- a Riftworn Pyxis forms from %d Light%s!',
-        total, (total == 1) and '' or 's'), SYS)
-    if total > 0 then
-        player:printToPlayer(string.format('  Alignment:  R%d  B%d  G%d  Y%d  W%d', red, blue, green, yellow, white), SYS)
-    end
-    player:printToPlayer(string.format('  Reward:  +%d cruor    +%d EXP    %d item%s%s    +1 Periapt',
-        cruor, exp, got, (got == 1) and '' or 's',
-        (shards > 0) and string.format('    +%d atmacite shard%s', shards, (shards == 1) and '' or 's') or ''), SYS)
+    -- Clear report, then drop the chest.
     local strat = C.STRATUM_BY_KEY[skey]
     local sname = strat and strat.name or 'Voidwatch'
     player:printToPlayer(string.format(
-        '[Voidwatch] %s cleared at Tier %d! Your %s abyssite advances to rank %d -- the next %s rift will be fiercer.',
-        sname, tier, sname, getStratClears(player, skey), sname), SYS)
+        '[Voidwatch] %s cleared at Tier %d! Your %s abyssite advances to rank %d.',
+        sname, tier, sname, getStratClears(player, skey)), SYS)
+    if total > 0 then
+        player:printToPlayer(string.format('  Alignment:  R%d  B%d  G%d  Y%d  W%d   (%d Lights shape the Pyxis)',
+            red, blue, green, yellow, white, total), SYS)
+    end
+    spawnPyxis(player, reward)
 end
 
 -- ── Fail a rift (death / left / timeout) ────────────────────────────────────
