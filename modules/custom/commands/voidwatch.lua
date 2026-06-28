@@ -39,6 +39,8 @@ commandObj.onTrigger = function(player, sub, n)
         xi.voidwatch.menu(player)
     elseif sub == 'status' then
         xi.voidwatch.status(player)
+    elseif sub == 'reveal' then
+        xi.voidwatch.reveal(player)
     elseif sub == 'refiner' then
         xi.voidwatch.refiner(player)
     elseif sub == 'open' and isGM(player) then

@@ -70,8 +70,9 @@ C.V =
     tier    = 'Voidwatch_Tier',     -- highest tier cleared (your abyssite rank); next rift = tier+1
     stones  = 'Voidwatch_Stones',
     stoneTs = 'Voidwatch_StoneTs',  -- unix ts the stone count was last reconciled (regen anchor)
-    cruor   = 'Voidwatch_Cruor',
-    shards  = 'Voidwatch_Shards', -- atmacite shards (banked from Pearl lights; spend at the Refiner, Phase 2b)
+    cruor    = 'Voidwatch_Cruor',
+    shards   = 'Voidwatch_Shards',   -- atmacite shards (banked from Pearl lights; spent at the Refiner)
+    periapts = 'Voidwatch_Periapts', -- Periapts of Emergence (reveal an NM's weaknesses; +1 per clear)
 }
 
 -- ── Lights / Spectral Alignment ─────────────────────────────────────────────
@@ -87,6 +88,13 @@ C.LIGHTS =
     cap   = 5,    -- max lights per colour
 }
 C.WEAKNESS_COOLDOWN = 5   -- seconds before the same Light can trigger again
+-- Each NM has its OWN fixed weakness set (5-9, deterministic from its name) -- a
+-- Periapt of Emergence reveals it. Synchronic Blitz: chain weakness triggers
+-- within BLITZ_WINDOW; every BLITZ_BONUS_EVERY in the chain grants a bonus Light.
+C.BLITZ_WINDOW      = 8   -- seconds between triggers to keep a Blitz chain alive
+C.BLITZ_BONUS_EVERY = 3   -- chain length per bonus Light
+C.NM_WEAK_MIN       = 5   -- min weaknesses per NM
+C.NM_WEAK_SPAN      = 5   -- + 0..(span-1) more -> 5..9
 
 -- Trigger pool: 5 are chosen at random per rift and mapped to the 5 colours.
 -- 'elem:N' matches spell:getElement() (1=Fire, 2=Ice, 3=Wind, 4=Earth,

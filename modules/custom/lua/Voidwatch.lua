@@ -116,28 +116,47 @@ end
 -- ── Lights / weakness engine ────────────────────────────────────────────────
 local function lightCap(player) return C.LIGHTS.cap + getAtm(player, 'INSIGHT') * C.ATM.INSIGHT_CAP end
 
-local function assignWeaknesses(sess)
-    local pool = {}
-    for i, t in ipairs(C.WEAKNESS_POOL) do pool[i] = t end
-    for i = #pool, 2, -1 do                       -- Fisher-Yates
-        local j = math.random(i)
-        pool[i], pool[j] = pool[j], pool[i]
-    end
-    sess.weak, sess.trigMap, sess.lights, sess.lastTrig = {}, {}, {}, {}
-    for idx, color in ipairs(C.LIGHTS.order) do
-        local trig = pool[idx]
-        sess.weak[color]       = trig
-        sess.trigMap[trig.key] = color
-        sess.lights[color]     = 0
-        sess.lastTrig[color]   = 0
-    end
+-- Each NM has its OWN fixed weakness set, derived deterministically from its name
+-- (so players can learn it; a Periapt reveals it). Returns trigMap {key -> {color,
+-- label}} + an ordered list for the reveal.
+local function nmSeed(name)
+    local h = 0
+    for i = 1, #name do h = (h * 31 + name:byte(i)) % 2147483647 end
+    return h
 end
 
-local function announceLight(player, sess, color)
+local function nmWeaknesses(name)
+    local base  = nmSeed(name)
+    local count = C.NM_WEAK_MIN + (base % C.NM_WEAK_SPAN)         -- 5..9, fixed per NM
+    local s     = base
+    local function rnd() s = (s * 1103515245 + 12345) % 2147483648; return s end
+    local pool = {}
+    for i, t in ipairs(C.WEAKNESS_POOL) do pool[i] = t end
+    for i = #pool, 2, -1 do local j = (rnd() % i) + 1; pool[i], pool[j] = pool[j], pool[i] end
+    local trigMap, ordered = {}, {}
+    for i = 1, math.min(count, #pool) do
+        local trig  = pool[i]
+        local color = C.LIGHTS.order[((i - 1) % #C.LIGHTS.order) + 1]
+        trigMap[trig.key]     = { color = color, label = trig.label }
+        ordered[#ordered + 1] = { color = color, label = trig.label }
+    end
+    return trigMap, ordered
+end
+
+-- Zero the light tallies + blitz state (after the NM's weaknesses are assigned).
+local function initLights(sess)
+    sess.lights, sess.lastTrig = {}, {}
+    for _, color in ipairs(C.LIGHTS.order) do
+        sess.lights[color]   = 0
+        sess.lastTrig[color] = 0
+    end
+    sess.blitz, sess.lastWeakTs = 0, 0
+end
+
+local function announceLight(player, color, label, n)
     player:printToPlayer(string.format(
         '[Voidwatch] Weakness struck by %s -- %s Light!  (%s %d/%d  ->  %s)',
-        sess.weak[color].label, C.LIGHTS.names[color], C.LIGHTS.names[color],
-        sess.lights[color], lightCap(player), C.LIGHTS.boon[color]), SYS)
+        label, C.LIGHTS.names[color], C.LIGHTS.names[color], n, lightCap(player), C.LIGHTS.boon[color]), SYS)
 end
 
 -- Called by the player listeners: trigKey is 'elem:N' / 'ws' / 'ranged'.
@@ -147,15 +166,26 @@ local function tryTrigger(player, target, trigKey)
     if not target then return end
     local okId, tid = pcall(function() return target:getID() end)
     if not okId or tid ~= sess.mobId then return end
-    local color = sess.trigMap[trigKey]
-    if not color then return end                              -- not a weakness this rift
-    if (sess.lights[color] or 0) >= lightCap(player) then return end
+    local entry = sess.trigMap[trigKey]
+    if not entry then return end                              -- not a weakness of this NM
+    local color, cap = entry.color, lightCap(player)
+    if (sess.lights[color] or 0) >= cap then return end
     local now = nowTs()
     local cd  = math.max(1, C.WEAKNESS_COOLDOWN - getAtm(player, 'ATTUNEMENT') * C.ATM.ATTUNE_CD)
     if (now - (sess.lastTrig[color] or 0)) < cd then return end
     sess.lastTrig[color] = now
     sess.lights[color]   = (sess.lights[color] or 0) + 1
-    announceLight(player, sess, color)
+    announceLight(player, color, entry.label, sess.lights[color])
+
+    -- Synchronic Blitz: chaining weaknesses quickly grants bonus Lights.
+    sess.blitz = ((now - (sess.lastWeakTs or 0)) <= C.BLITZ_WINDOW) and ((sess.blitz or 0) + 1) or 1
+    sess.lastWeakTs = now
+    if sess.blitz >= C.BLITZ_BONUS_EVERY and (sess.blitz % C.BLITZ_BONUS_EVERY == 0) then
+        local bc = C.LIGHTS.order[math.random(#C.LIGHTS.order)]
+        if (sess.lights[bc] or 0) < cap then sess.lights[bc] = (sess.lights[bc] or 0) + 1 end
+        player:printToPlayer(string.format(
+            '[Voidwatch] *** SYNCHRONIC BLITZ x%d -- bonus %s Light! ***', sess.blitz, C.LIGHTS.names[bc]), SYS)
+    end
 end
 
 local function registerListeners(player)
@@ -270,6 +300,9 @@ onRiftCleared = function(player)
     local shards = white * C.SHARD_PER_WHITE
     if shards > 0 then player:setCharVar(C.V.shards, getShards(player) + shards) end
 
+    -- Periapt of Emergence (+1 per clear; reveals an NM's weaknesses)
+    player:setCharVar(C.V.periapts, (player:getCharVar(C.V.periapts) or 0) + 1)
+
     -- loot: Cerulean + Greed = rolls, Vermillion = quality, Pearl >= N = bonus rare
     local rolls = 1 + math.floor(blue / 2) * C.ROLLS_PER_2_BLUE + getAtm(player, 'GREED') * C.ATM.GREED_ROLLS
     local got = 0
@@ -291,7 +324,7 @@ onRiftCleared = function(player)
     if total > 0 then
         player:printToPlayer(string.format('  Alignment:  R%d  B%d  G%d  Y%d  W%d', red, blue, green, yellow, white), SYS)
     end
-    player:printToPlayer(string.format('  Reward:  +%d cruor    +%d EXP    %d item%s%s',
+    player:printToPlayer(string.format('  Reward:  +%d cruor    +%d EXP    %d item%s%s    +1 Periapt',
         cruor, exp, got, (got == 1) and '' or 's',
         (shards > 0) and string.format('    +%d atmacite shard%s', shards, (shards == 1) and '' or 's') or ''), SYS)
     local strat = C.STRATUM_BY_KEY[skey]
@@ -343,7 +376,6 @@ openRift = function(player, stratumKey)
     local stratum = C.STRATUM_BY_KEY[stratumKey] or C.STRATA[1]
     local tier    = stratum.base + getStratClears(player, stratum.key) + 1
     local sess = { tier = tier, stratumKey = stratum.key, dead = false, zoneId = player:getZoneID() }
-    assignWeaknesses(sess)
     sessions[player:getName()] = sess
 
     local mob, name, level = spawnVoidwalker(player, tier, stratum.roster)
@@ -355,13 +387,15 @@ openRift = function(player, stratumKey)
     end
     sess.mob   = mob
     sess.mobId = mob:getID()
+    sess.trigMap, sess.weakList = nmWeaknesses(name)   -- this NM's specific weakness set
+    initLights(sess)
     registerListeners(player)
 
     player:printToPlayer(string.format(
         '[Voidwatch] A Planar Rift tears open!  %s, Tier %d  --  %s (Lv.%d) claws its way out of the void!',
         stratum.name, tier, (name:gsub('_', ' ')), level), SYS)
-    player:printToPlayer(
-        '[Voidwatch] Five hidden weaknesses pulse within. Probe with elemental magic, weaponskills, and ranged attacks to draw out the Lights -- they shape your reward.', SYS)
+    player:printToPlayer(string.format(
+        '[Voidwatch] %d hidden weaknesses lurk within. Probe with magic / weaponskills / ranged -- or "!voidwatch reveal" (spends a Periapt) to expose them. Chain weaknesses fast for a Synchronic Blitz.', #sess.weakList), SYS)
 
     player:timer(C.BATTLE_SECONDS * 1000, function(p)
         local s = sessions[p:getName()]
@@ -397,13 +431,32 @@ local function status(player)
     player:printToPlayer('=== Voidwatch ===', SYS)
     local nxtStr = (getStones(player) >= C.MAX_STONES) and 'capped'
                 or string.format('next in %dm', math.ceil(secsToNextStone(player) / 60))
-    player:printToPlayer(string.format('  Voidstones: %d/%d (%s)    Cruor: %d    Atmacite shards: %d',
-        getStones(player), C.MAX_STONES, nxtStr, getCruor(player), getShards(player)), SYS)
+    player:printToPlayer(string.format('  Voidstones: %d/%d (%s)    Cruor: %d    Shards: %d    Periapts: %d',
+        getStones(player), C.MAX_STONES, nxtStr, getCruor(player), getShards(player), player:getCharVar(C.V.periapts) or 0), SYS)
     for _, s in ipairs(C.STRATA) do
         local clears = getStratClears(player, s.key)
         player:printToPlayer(string.format('  %-16s rank %d  (next rift: Tier %d)', s.name, clears, s.base + clears + 1), SYS)
     end
     player:printToPlayer('  Examine a Planar Rift in the field (each zone belongs to a stratum) to fight. Probe weaknesses to build Lights.', SYS)
+end
+
+-- ── Periapt of Emergence: reveal the current NM's weaknesses ────────────────
+local function revealWeaknesses(player)
+    local sess = getSession(player)
+    if not sess or not sess.weakList then
+        player:printToPlayer('[Voidwatch] You are not in a rift battle.', SYS)
+        return
+    end
+    local per = player:getCharVar(C.V.periapts) or 0
+    if per < 1 then
+        player:printToPlayer('[Voidwatch] You have no Periapts of Emergence. (You earn 1 per rift cleared.)', SYS)
+        return
+    end
+    player:setCharVar(C.V.periapts, per - 1)
+    player:printToPlayer('[Voidwatch] You crack a Periapt of Emergence -- the void recoils, its weaknesses laid bare:', SYS)
+    for _, w in ipairs(sess.weakList) do
+        player:printToPlayer(string.format('   %-16s ->  %s Light  (%s)', w.label, C.LIGHTS.names[w.color], C.LIGHTS.boon[w.color]), SYS)
+    end
 end
 
 -- ── Atmacite Refiner ────────────────────────────────────────────────────────
@@ -530,6 +583,7 @@ xi.voidwatch = xi.voidwatch or {}
 xi.voidwatch.menu       = function(p) openMenu(p) end
 xi.voidwatch.open       = function(p, key) openRift(p, key) end   -- GM-gated in the command (key optional)
 xi.voidwatch.status     = function(p) status(p) end
+xi.voidwatch.reveal     = function(p) revealWeaknesses(p) end
 xi.voidwatch.refiner    = function(p) openRefiner(p) end
 xi.voidwatch.grantCruor = function(p, n) ensureBorn(p); addCruor(p, math.max(0, n)) end  -- GM test
 xi.voidwatch.grantShards = function(p, n) ensureBorn(p); p:setCharVar(C.V.shards, getShards(p) + math.max(0, n)) end  -- GM test
