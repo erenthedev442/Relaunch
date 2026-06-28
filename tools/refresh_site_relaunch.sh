@@ -42,8 +42,8 @@ fi
 cd "$DOCS_REPO" || { echo "[FATAL] DOCS_REPO not found: $DOCS_REPO"; exit 1; }
 export LEGENDARY_LIVE_ROOT="$LIVE_ROOT"
 
-echo "[0/4] syncing relaunch-docs to origin/Legendary..."
 _branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo Legendary)
+echo "[0/4] syncing relaunch-docs to origin/${_branch}..."
 if git fetch origin "$_branch" 2>&1 | tail -1 && git reset --hard "origin/${_branch}" 2>&1 | tail -1; then
     echo "[0/4] synced to origin/${_branch}"
 else
