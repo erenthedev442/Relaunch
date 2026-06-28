@@ -382,6 +382,14 @@ def process_rule(cur, rule, commit):
 
     target = rule.get("target_qty", 1)
     brackets = rule["level_price_brackets"]
+    # Flat discount on the gear price. Applies to BOTH the bot's sell price and
+    # the price it pays to buy player gear back, so the two stay equal (no
+    # buy-low/sell-high arbitrage). 0.10 = 90% off for players.
+    mult = float(rule.get("price_multiplier", 1.0))
+    if mult != 1.0:
+        brackets = [[lvl, max(1, int(round(price * mult)))] for lvl, price in brackets]
+        print("  non_ilvl_gear: price_multiplier {} -> top bracket (lvl<={}) now {}g".format(
+            mult, brackets[-1][0], brackets[-1][1]))
     do_buyback = rule.get("buyback", True)
     cap = rule.get("max_buyback_per_pass", 50)
 

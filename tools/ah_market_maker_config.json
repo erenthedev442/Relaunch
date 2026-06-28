@@ -1,5 +1,5 @@
 {
-    "_README": "Relaunch server AH config. Same as live but gear capped at level 90 (max_equip_level: 90 added to rule; brackets stop at 90). Universal buyback kept.",
+    "_README": "Relaunch server AH config. Same as live but gear capped at level 90 (max_equip_level: 90 added to rule; brackets stop at 90). ALL gear sold to players is discounted 90% via price_multiplier 0.10 on the non_ilvl_gear rule -- this scales the bot's SELL price AND its buy-back price together (they must stay equal or players could buy cheap from the bot and sell it back dear = gil dupe). Furniture items[] and universal_buyback are unaffected. Universal buyback kept.",
     "rules": [
         {
             "type": "non_ilvl_gear",
@@ -7,6 +7,7 @@
             "target_qty": 5,
             "buyback": true,
             "max_buyback_per_pass": 200,
+            "price_multiplier": 0.10,
             "level_price_brackets": [
                 [10, 140000],
                 [20, 170000],
