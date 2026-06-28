@@ -98,7 +98,16 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     super(player, firstLogin, zoning)
 
     if player:getMainJob() == xi.job.RNG then
-        applyRngBoost(player)
+        -- Defer past post-login stat finalization, which clobbers a synchronous
+        -- onGameIn addMod on a TRUE login (the boost silently fails to apply until
+        -- the next zone otherwise). See reference_ongamein_mod_defer; mirrors
+        -- CrossJob_TraitTrainer. The zone reload still wipes the prior copy before
+        -- onGameIn, so the deferred re-apply keeps exactly one copy (no growth).
+        player:timer(3000, function(p)
+            if p:getMainJob() == xi.job.RNG then
+                applyRngBoost(p)
+            end
+        end)
     end
 end)
 

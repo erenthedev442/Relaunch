@@ -91,9 +91,19 @@ m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
     super(zone)
 
     local function doReforge(player, entry)
-        -- Slot must be unlocked by clearing that zone.
-        local slotBit = xi.divergence.slotBit[entry.slot] or 0
-        if bit.band(player:getCharVar('DivergenceSlots'), slotBit) == 0 then
+        -- Slot must be unlocked by clearing that zone. Body is special: it is NOT a
+        -- single bit -- it unlocks only when all four slot bits (15) are set, mirroring
+        -- the engine's onInstanceComplete all-four check and unlockedSlots() above.
+        -- (slotBit['body'] is nil, so the old single-bit gate left Body unreachable.)
+        local slots = player:getCharVar('DivergenceSlots') or 0
+        local unlocked
+        if entry.slot == 'body' then
+            unlocked = bit.band(slots, 15) == 15
+        else
+            local slotBit = xi.divergence.slotBit[entry.slot] or 0
+            unlocked = slotBit ~= 0 and bit.band(slots, slotBit) ~= 0
+        end
+        if not unlocked then
             player:printToPlayer(string.format('[Reforge] Clear the Divergence zone that unlocks %s armor first, kupo!', entry.slot:upper()), xi.msg.channel.SYSTEM_3)
             return
         end
