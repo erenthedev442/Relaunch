@@ -45,12 +45,21 @@ function htbf.register(fightKey, tier)
     -- xi.battlefield.id) -- we copy its groups + tick/section logic so the fight
     -- runs identically; we only re-gate it (gem) + scale it. The base script
     -- loads alphabetically before <key>_ht*.lua, so it is registered by now.
+    local baseSetup = nil
     if f.reuseBaseId then
         local base = xi.battlefield.contents[f.reuseBaseId]
         if base then
             content.groups = base.groups
-            if base.onBattlefieldTick then content.onBattlefieldTick = base.onBattlefieldTick end
-            if base.sections          then content.sections          = base.sections          end
+            -- Carry the base fight's custom hooks so multi-phase / skillchain-AI /
+            -- event-driven fights run identically. We keep our OWN onEventFinishWin
+            -- (the reward) and chain setupBattlefield (below) for the tier scaling.
+            for _, hook in ipairs({
+                'onBattlefieldTick', 'sections', 'onExitTrigger', 'onEventFinishExit',
+                'onEventUpdate', 'onBattlefieldLoss', 'onBattlefieldRegister', 'paths',
+            }) do
+                if rawget(base, hook) ~= nil then content[hook] = base[hook] end
+            end
+            baseSetup = rawget(base, 'setupBattlefield')
         else
             print(string.format('[HTBF] %s tier %d: base id %s not registered (load order?)',
                 tostring(fightKey), tier, tostring(f.reuseBaseId)))
@@ -73,6 +82,8 @@ function htbf.register(fightKey, tier)
     -- independently. Silent (no player-visible multiplier). int16 mod cap honored
     -- by the catalog values; HP is the int32 lever.
     function content:setupBattlefield(battlefield)
+        -- Run the base fight's own setup first (spawns/positions/etc.), then scale.
+        if baseSetup then pcall(function() baseSetup(self, battlefield) end) end
         for _, mob in ipairs(battlefield:getMobs(true, true)) do
             pcall(function()
                 if scale.lvl and scale.lvl > 1.0 then

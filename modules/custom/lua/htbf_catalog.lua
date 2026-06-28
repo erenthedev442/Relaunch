@@ -26,6 +26,10 @@ catalog.gemPrice =
     [xi.ki.AVATAR_PHANTOM_GEM]        = 50000,   -- enters any of the 6 Avatar Prime trials
     [xi.ki.SAVAGES_PHANTOM_GEM]       = 100000,  -- The Savage (Monarch Linn)
     [xi.ki.WARRIORS_PATH_PHANTOM_GEM] = 100000,  -- The Warrior's Path (Sealion's Den)
+    [xi.ki.FEARED_ONE_PHANTOM_GEM]    = 150000,  -- One to be Feared (Sealion's Den)
+    [xi.ki.HEAD_WIND_PHANTOM_GEM]     = 100000,  -- Head Wind (Boneyard Gully)
+    [xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM] = 120000, -- Puppet in Peril (Jade Sepulcher)
+    [xi.ki.LEGACY_PHANTOM_GEM]        = 120000,  -- Legacy of the Lost (Talacca Cove)
 }
 
 -- Display names for the gems the vendor sells (key item ids have no server-side
@@ -35,6 +39,10 @@ catalog.gemName =
     [xi.ki.AVATAR_PHANTOM_GEM]        = 'Avatar Phantom Gem',
     [xi.ki.SAVAGES_PHANTOM_GEM]       = "Savage's Phantom Gem",
     [xi.ki.WARRIORS_PATH_PHANTOM_GEM] = "Warrior's Path Phantom Gem",
+    [xi.ki.FEARED_ONE_PHANTOM_GEM]    = 'Feared One Phantom Gem',
+    [xi.ki.HEAD_WIND_PHANTOM_GEM]     = 'Head Wind Phantom Gem',
+    [xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM] = 'Puppet in Peril Phantom Gem',
+    [xi.ki.LEGACY_PHANTOM_GEM]        = 'Legacy Phantom Gem',
 }
 
 -- Per-tier scaling applied to the reused base boss(es) (silent difficulty -- no
@@ -131,6 +139,43 @@ catalog.fights =
         zone = xi.zone.SEALIONS_DEN, entryNpc = '_0w0', exitNpc = 'Airship_Door',
         gem = xi.ki.WARRIORS_PATH_PHANTOM_GEM, baseIndex = 2, baseBattlefieldId = 4070,
         reuseBaseId = xi.battlefield.id.WARRIORS_PATH, label = "The Warrior's Path",
+    },
+    -- One to be Feared shares Sealion's Den entrance _0w0 (base 0/1, Warrior's
+    -- Path HTBF 2/3/4) -> this goes at 5/6/7. Event-driven Omega/Ultima phases
+    -- ride along via the reused sections + exit hooks. 45-min limit (2700s).
+    one_to_be_feared =
+    {
+        zone = xi.zone.SEALIONS_DEN, entryNpc = '_0w0', exitNpc = 'Airship_Door',
+        gem = xi.ki.FEARED_ONE_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4080,
+        reuseBaseId = xi.battlefield.id.ONE_TO_BE_FEARED, timeLimit = 2700,
+        label = 'One to be Feared',
+    },
+    head_wind =
+    {
+        zone = xi.zone.BONEYARD_GULLY, entryNpc = '_081',
+        exitNpcs = { '_082', '_084', '_086' },
+        gem = xi.ki.HEAD_WIND_PHANTOM_GEM, baseIndex = 7, baseBattlefieldId = 4090,
+        reuseBaseId = xi.battlefield.id.HEAD_WIND, label = 'Head Wind',
+    },
+
+    -- ── ToAU boss battlefields ──────────────────────────────────────────────
+    -- Bases restrict to arena 1; the HTBF uses arenas 2-3 (mobIds for all 3
+    -- arenas exist in the base groups) so it never blocks the base mission.
+    puppet_in_peril =
+    {
+        zone = xi.zone.JADE_SEPULCHER, entryNpc = '_1v0',
+        exitNpcs = { '_1v1', '_1v2', '_1v3' },
+        gem = xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4100,
+        reuseBaseId = xi.battlefield.id.PUPPET_IN_PERIL, allowedAreas = { [2] = true, [3] = true },
+        label = 'Puppet in Peril',
+    },
+    legacy_of_the_lost =
+    {
+        zone = xi.zone.TALACCA_COVE, entryNpc = '_1l0',
+        exitNpcs = { '_1l1', '_1l2', '_1l3' },
+        gem = xi.ki.LEGACY_PHANTOM_GEM, baseIndex = 5, baseBattlefieldId = 4110,
+        reuseBaseId = xi.battlefield.id.LEGACY_OF_THE_LOST, allowedAreas = { [2] = true, [3] = true },
+        label = 'Legacy of the Lost',
     },
 }
 
