@@ -46,9 +46,16 @@ local CONFIG =
     -- so it bypasses the xi.pet.spawnPet overrides (no BST/SMN collision).
     petId = xi.petId.LYNX_FAMILIAR,
 
-    maxLevel       = 50,
+    maxLevel       = 120,
     startingPoints = 6,        -- granted once, when the Fellow is first created
     pointsPerLevel = 3,        -- stat points granted per level-up
+    -- Post-cap progression: once the Fellow hits maxLevel you can BUY stat points
+    -- with gil (!fellow -> Allocate Points -> Buy Points) and keep dumping them.
+    buyPointsCost  = 50000,    -- gil per purchased point (tunable)
+    -- Overflow guard: a pet's mods are int16 and WRAP NEGATIVE past ~32k. STR adds
+    -- the biggest per-point mod (+12 ATT), so cap points-per-category to stay safe
+    -- (1500 STR = +18000 ATT; + ~9600 from levels = ~27.6k, under the wrap).
+    statCap        = 1500,
 
     -- XP: each kill grants clamp(mobLevel * xpPerMobLevel, xpMin, xpMax), but only
     -- while your Fellow is summoned. xpToNext(L) = xpBase * L (linear ramp).
@@ -493,7 +500,7 @@ local function statusReport(p)
 end
 
 -- ════════════════════════════════ Menus ═════════════════════════════════════
-local openMain, openAllocate, openRole, openName, openModel, openOutfit, openTpMove
+local openMain, openAllocate, openRole, openName, openModel, openOutfit, openTpMove, openBuyPoints
 
 local function show(p, title, options)
     local snapshot = { title = title, options = options }
@@ -520,15 +527,18 @@ openMain = function(p)
 end
 
 openAllocate = function(p, page)
-    local pts = getPoints(p)
-    if pts <= 0 then
+    local pts   = getPoints(p)
+    local atMax = getLevel(p) >= CONFIG.maxLevel
+    -- At max level you can buy points, so let players in even with 0 unspent.
+    if pts <= 0 and not atMax then
         p:printToPlayer('[Fellow] No unspent points. Defeat foes with your Fellow out to earn more.', SYS)
         openMain(p)
         return
     end
     page = page or 0
     local order = CONFIG.statOrder
-    local per   = CONFIG.namesPerPage
+    -- Reserve a slot for "Buy Points" at max level; keep each page within the 8-option cap.
+    local per   = atMax and 5 or CONFIG.namesPerPage
     local pages = math.max(1, math.ceil(#order / per))
     page = page % pages
     local options = {}
@@ -538,7 +548,14 @@ openAllocate = function(p, page)
         {
             string.format('%s (%d)', s, getStatPts(p, s)),
             function(pp)
-                if getPoints(pp) <= 0 then openMain(pp); return end
+                if getPoints(pp) <= 0 then
+                    pp:printToPlayer('[Fellow] No unspent points.' .. (atMax and ' Use Buy Points.' or ''), SYS)
+                    openAllocate(pp, page); return
+                end
+                if getStatPts(pp, s) >= CONFIG.statCap then
+                    pp:printToPlayer(string.format('[Fellow] %s is at the cap (%d).', s, CONFIG.statCap), SYS)
+                    openAllocate(pp, page); return
+                end
                 setN(pp, V.points, getPoints(pp) - 1)
                 setN(pp, statVar(s), getStatPts(pp, s) + 1)
                 liveAddStat(pp, s)
@@ -551,8 +568,40 @@ openAllocate = function(p, page)
     if pages > 1 then
         options[#options + 1] = { 'More >>', function(pp) openAllocate(pp, page + 1) end }
     end
+    if atMax then
+        options[#options + 1] = { 'Buy Points', function(pp) openBuyPoints(pp) end }
+    end
     options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
     show(p, string.format('Allocate (%d left)', pts), options)
+end
+
+-- Post-cap gil -> points exchange. Only reachable from openAllocate at max level.
+openBuyPoints = function(p)
+    local cost    = CONFIG.buyPointsCost
+    local bundles = { 1, 10, 50 }
+    local options = {}
+    for _, n in ipairs(bundles) do
+        local qty   = n
+        local price = cost * qty
+        options[#options + 1] =
+        {
+            string.format('Buy %d (%dg)', qty, price),
+            function(pp)
+                if pp:getGil() < price then
+                    pp:printToPlayer(string.format('[Fellow] Need %d gil (have %d).', price, pp:getGil()), SYS)
+                    openBuyPoints(pp); return
+                end
+                pp:delGil(price)
+                setN(pp, V.points, getPoints(pp) + qty)
+                pp:printToPlayer(string.format('[Fellow] Bought %d point(s) for %d gil. Unspent: %d.',
+                    qty, price, getPoints(pp)), SYS)
+                openBuyPoints(pp)
+            end,
+        }
+    end
+    options[#options + 1] = { 'Spend Points', function(pp) openAllocate(pp, 0) end }
+    options[#options + 1] = { 'Back',         function(pp) openMain(pp) end }
+    show(p, string.format('Buy Points (have %dg)', p:getGil()), options)
 end
 
 openRole = function(p)
