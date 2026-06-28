@@ -241,3 +241,30 @@ INSERT INTO `mob_droplist` VALUES (29703, 0, 0, 1000, 9541, @UNCOMMON);
 INSERT INTO `mob_droplist` VALUES (29704, 0, 0, 1000, 9541, @ALWAYS);
 INSERT INTO `mob_droplist` VALUES (29704, 0, 0, 1000, 9541, @COMMON);
 INSERT INTO `mob_droplist` VALUES (29704, 0, 0, 1000, 9543, @UNCOMMON);
+
+-- ============================================================================
+-- Wave 3: Disjoined NMs (Fomor, race-themed) -- spawn after the Mega-Boss falls.
+-- No time extension in wave 3; this is the toughest fight. Drops Demon's Medals.
+-- Reuses Fomor job pools (1382 BLM, 1385 MNK, 1387 PLD, 1388 RNG). groupid 10.
+-- ============================================================================
+REPLACE INTO `mob_groups` VALUES (10, 1387, 294, 'Disjoined_Elvaan_D',   0, 128, 29405, 80000, 2000, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (10, 1385, 295, 'Disjoined_Galka_D',    0, 128, 29505, 80000, 2000, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (10, 1382, 296, 'Disjoined_Tarutaru_D', 0, 128, 29605, 75000, 3000, 0, NULL);
+REPLACE INTO `mob_groups` VALUES (10, 1388, 297, 'Disjoined_Mithra_D',   0, 128, 29705, 80000, 2000, 0, NULL);
+REPLACE INTO `mob_spawn_points` VALUES (17981453, 0, 'Disjoined_Elvaan_D',   'Disjoined Elvaan',   10, 99, 99, 131.470, -0.499, 92.000, 215);
+REPLACE INTO `mob_spawn_points` VALUES (17985549, 0, 'Disjoined_Galka_D',    'Disjoined Galka',    10, 99, 99, -12.500, -1.560, -144.000, 56);
+REPLACE INTO `mob_spawn_points` VALUES (17989645, 0, 'Disjoined_Tarutaru_D', 'Disjoined Tarutaru', 10, 99, 99, 94.900, -3.170, -167.000, 64);
+REPLACE INTO `mob_spawn_points` VALUES (17993741, 0, 'Disjoined_Mithra_D',   'Disjoined Mithra',   10, 99, 99, -0.250, 8.500, -74.000, 209);
+REPLACE INTO `instance_entities` VALUES (29400, 17981453);
+REPLACE INTO `instance_entities` VALUES (29500, 17985549);
+REPLACE INTO `instance_entities` VALUES (29600, 17989645);
+REPLACE INTO `instance_entities` VALUES (29700, 17993741);
+DELETE FROM `mob_droplist` WHERE `dropId` IN (29405, 29505, 29605, 29705);
+INSERT INTO `mob_droplist` VALUES (29405, 0, 0, 1000, 9543, @ALWAYS);
+INSERT INTO `mob_droplist` VALUES (29405, 0, 0, 1000, 9541, @COMMON);
+INSERT INTO `mob_droplist` VALUES (29505, 0, 0, 1000, 9543, @ALWAYS);
+INSERT INTO `mob_droplist` VALUES (29505, 0, 0, 1000, 9541, @COMMON);
+INSERT INTO `mob_droplist` VALUES (29605, 0, 0, 1000, 9543, @ALWAYS);
+INSERT INTO `mob_droplist` VALUES (29605, 0, 0, 1000, 9541, @COMMON);
+INSERT INTO `mob_droplist` VALUES (29705, 0, 0, 1000, 9543, @ALWAYS);
+INSERT INTO `mob_droplist` VALUES (29705, 0, 0, 1000, 9541, @COMMON);

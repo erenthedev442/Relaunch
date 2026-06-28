@@ -17,6 +17,7 @@ local CONFIG =
     midBoss   = 17989639,                                   -- Evincing Idol
     wave2Mobs = { 17989640, 17989641, 17989642, 17989643 }, -- Yagudo Regiment
     megaBoss  = 17989644,                                   -- Fii Pexu the Eternal
+    disjoined = 17989645,                                   -- Disjoined Tarutaru (wave 3)
 }
 
 instanceObject.registryRequirements = function(player) return true end
@@ -25,7 +26,7 @@ instanceObject.onInstanceCreated         = function(instance) xi.divergence.onIn
 instanceObject.onInstanceCreatedCallback = function(player, instance) if instance then xi.divergence.placePlayer(player, instance, CONFIG) end end
 instanceObject.afterInstanceRegister     = function(player)
     xi.divergence.startCountdown(player)
-    player:printToPlayer('[Divergence] Windurst [D] -- clear two waves and fell Fii Pexu the Eternal!', xi.msg.channel.SYSTEM_3)
+    player:printToPlayer('[Divergence] Windurst [D] -- clear the waves, fell Fii Pexu the Eternal, then the Disjoined Tarutaru!', xi.msg.channel.SYSTEM_3)
 end
 instanceObject.onInstanceTimeUpdate = function(instance, elapsed) xi.divergence.onInstanceTimeUpdate(instance, elapsed, CONFIG) end
 instanceObject.onInstanceComplete   = function(instance) xi.divergence.onInstanceComplete(instance, CONFIG) end

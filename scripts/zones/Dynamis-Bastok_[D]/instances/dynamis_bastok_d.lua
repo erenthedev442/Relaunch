@@ -17,6 +17,7 @@ local CONFIG =
     midBoss   = 17985543,                                   -- Mu'Sha Effigy
     wave2Mobs = { 17985544, 17985545, 17985546, 17985547 }, -- Quadav Regiment
     megaBoss  = 17985548,                                   -- Ka'Rho Fearsinger
+    disjoined = 17985549,                                   -- Disjoined Galka (wave 3)
 }
 
 instanceObject.registryRequirements = function(player) return true end
@@ -25,7 +26,7 @@ instanceObject.onInstanceCreated         = function(instance) xi.divergence.onIn
 instanceObject.onInstanceCreatedCallback = function(player, instance) if instance then xi.divergence.placePlayer(player, instance, CONFIG) end end
 instanceObject.afterInstanceRegister     = function(player)
     xi.divergence.startCountdown(player)
-    player:printToPlayer('[Divergence] Bastok [D] -- clear two waves and fell Ka\'Rho Fearsinger!', xi.msg.channel.SYSTEM_3)
+    player:printToPlayer('[Divergence] Bastok [D] -- clear the waves, fell Ka\'Rho Fearsinger, then the Disjoined Galka!', xi.msg.channel.SYSTEM_3)
 end
 instanceObject.onInstanceTimeUpdate = function(instance, elapsed) xi.divergence.onInstanceTimeUpdate(instance, elapsed, CONFIG) end
 instanceObject.onInstanceComplete   = function(instance) xi.divergence.onInstanceComplete(instance, CONFIG) end
