@@ -7,13 +7,16 @@
 -- ---------------
 -- affinity_nm_spawns.sql places the 24 affinity NMs as 900s timed spawns,
 -- but each one REUSES a retail NM's zone + name, so it inherits that retail
--- mob script. Those scripts override our intent in two ways:
+-- mob script. Those scripts override our intent:
 --   * onMobInitialize calls mob:setRespawnTime(<hours>) -- e.g. Simurgh
---     random(3600,7200) = 1-2h; Behemoth/Fafnir/gods = up to 21-72h. So
---     after a server restart the NM sits on a multi-hour retail timer and
---     never appears on the 900s we wanted.
+--     random(3600,7200) = 1-2h; Behemoth/Fafnir/gods = up to 21-72h. That
+--     registers the mob with the spawn handler, so at zone boot it is NOT
+--     TrySpawn'd (zoneutils isRegistered check) -- it waits out the retail
+--     timer and never appears on the 900s we wanted.
 --   * onMobDespawn re-sets that long timer on every death, so a one-time
---     setRespawnTime at zone-init does NOT stick.
+--     setRespawnTime at zone-init would NOT stick.
+-- (Separately, the mobid bug that stopped them instantiating at all was
+--  fixed in 689a0a72d7 -- valid ids 0x1000000|(zone<<12)|targid, targid<0x700.)
 --
 -- FIX
 -- ---
@@ -24,7 +27,7 @@
 --      engine fires entity.onMobDespawn FIRST, then DESPAWN listeners
 --      (mobentity.cpp OnDespawn: OnMobDespawn -> triggerListener), so our
 --      listener is the LAST writer of m_RespawnTime and wins over the
---      retail 1-2h reset. Result: short repop that survives deaths.
+--      retail long-timer reset. Result: short repop that survives deaths.
 --
 -- Only the 24 affinity mobids are touched -- other NMs in these zones keep
 -- their retail behavior (unlike always_popped_nms, which pops EVERY NM in
@@ -45,30 +48,29 @@ affinityPop:setEnabled(true)
 local RESPAWN_SECONDS = 30  -- repop delay after each death (matches always_popped_nms)
 
 -----------------------------------
--- The 24 affinity NMs grouped by zone.
--- mobid = (zoneid << 12) | (3840 + nmNumber)  -- from affinity_nm_spawns.sql.
+-- The 24 affinity NMs grouped by zone (mobids = current affinity_nm_spawns.sql).
 -- Each entry: { Zone.onInitialize override path, { mobid, ... } }.
 -- Override path is a STRING, so dashes (Riverne-Site_*) are legal.
 -----------------------------------
 local ZONES =
 {
-    { 'xi.zones.Batallia_Downs.Zone.onInitialize',          { 433921 } },                                   -- Behemoth
-    { 'xi.zones.Behemoths_Dominion.Zone.onInitialize',      { 524034 } },                                   -- King Behemoth
-    { 'xi.zones.Kuftal_Tunnel.Zone.onInitialize',           { 716547 } },                                   -- King Arthro
-    { 'xi.zones.Rolanberry_Fields.Zone.onInitialize',       { 454404 } },                                   -- Simurgh
-    { 'xi.zones.Valley_of_Sorrows.Zone.onInitialize',       { 528133 } },                                   -- Adamantoise
-    { 'xi.zones.The_Shrine_of_RuAvitau.Zone.onInitialize',  { 732934, 732936, 732937, 732942, 732943 } },   -- Genbu/Seiryu/Byakko/Suzaku/Kirin
-    { 'xi.zones.Sauromugue_Champaign.Zone.onInitialize',    { 495367 } },                                   -- Roc
-    { 'xi.zones.Cape_Teriggan.Zone.onInitialize',           { 466698 } },                                   -- Aspidochelone
-    { 'xi.zones.Riverne-Site_B01.Zone.onInitialize',        { 122635 } },                                   -- Ouryu
-    { 'xi.zones.The_Boyahda_Tree.Zone.onInitialize',        { 630540 } },                                   -- Bune
-    { 'xi.zones.Riverne-Site_A01.Zone.onInitialize',        { 126733 } },                                   -- Phoenix
-    { 'xi.zones.Dragons_Aery.Zone.onInitialize',            { 634640, 634641 } },                            -- Fafnir/Nidhogg
-    { 'xi.zones.Ifrits_Cauldron.Zone.onInitialize',         { 843538 } },                                   -- Vrtra
-    { 'xi.zones.Uleguerand_Range.Zone.onInitialize',        { 24339 } },                                    -- Tiamat
-    { 'xi.zones.Western_Altepa_Desert.Zone.onInitialize',   { 515860 } },                                   -- King Vinegarroon
-    { 'xi.zones.King_Ranperres_Tomb.Zone.onInitialize',     { 782101, 782102 } },                           -- Khimaira/Cerberus
-    { 'xi.zones.RuAun_Gardens.Zone.onInitialize',           { 536343, 536344 } },                           -- Absolute Virtue/Proto-Omega
+    { 'xi.zones.Batallia_Downs.Zone.onInitialize',          { 17208833 } },                                       -- Behemoth
+    { 'xi.zones.Behemoths_Dominion.Zone.onInitialize',      { 17298946 } },                                       -- King Behemoth
+    { 'xi.zones.Kuftal_Tunnel.Zone.onInitialize',           { 17491459 } },                                       -- King Arthro
+    { 'xi.zones.Rolanberry_Fields.Zone.onInitialize',       { 17229316 } },                                       -- Simurgh
+    { 'xi.zones.Valley_of_Sorrows.Zone.onInitialize',       { 17303045 } },                                       -- Adamantoise
+    { 'xi.zones.The_Shrine_of_RuAvitau.Zone.onInitialize',  { 17507846, 17507848, 17507849, 17507854, 17507855 } }, -- Genbu/Seiryu/Byakko/Suzaku/Kirin
+    { 'xi.zones.Sauromugue_Champaign.Zone.onInitialize',    { 17270279 } },                                       -- Roc
+    { 'xi.zones.Cape_Teriggan.Zone.onInitialize',           { 17241610 } },                                       -- Aspidochelone
+    { 'xi.zones.Riverne-Site_B01.Zone.onInitialize',        { 16897547 } },                                       -- Ouryu
+    { 'xi.zones.The_Boyahda_Tree.Zone.onInitialize',        { 17405452 } },                                       -- Bune
+    { 'xi.zones.Riverne-Site_A01.Zone.onInitialize',        { 16901645 } },                                       -- Phoenix
+    { 'xi.zones.Dragons_Aery.Zone.onInitialize',            { 17409552, 17409553 } },                             -- Fafnir/Nidhogg
+    { 'xi.zones.Ifrits_Cauldron.Zone.onInitialize',         { 17618450 } },                                       -- Vrtra
+    { 'xi.zones.Uleguerand_Range.Zone.onInitialize',        { 16799251 } },                                       -- Tiamat
+    { 'xi.zones.Western_Altepa_Desert.Zone.onInitialize',   { 17290772 } },                                       -- King Vinegarroon
+    { 'xi.zones.King_Ranperres_Tomb.Zone.onInitialize',     { 17557013, 17557014 } },                             -- Khimaira/Cerberus
+    { 'xi.zones.RuAun_Gardens.Zone.onInitialize',           { 17311255, 17311256 } },                             -- Absolute Virtue/Proto-Omega
 }
 
 -----------------------------------
@@ -96,8 +98,8 @@ end
 local function configureZone(mobids, zoneLabel)
     local up = 0
     for _, mobid in ipairs(mobids) do
-        local ok = pcall(configureMob, mobid)
-        if ok then up = up + 1 end
+        local ok, found = pcall(configureMob, mobid)
+        if ok and found then up = up + 1 end
     end
     printf('[affinity_nm_autopop] %s: %d/%d affinity NM(s) configured', zoneLabel, up, #mobids)
 end
