@@ -62,7 +62,7 @@ def main() -> int:
         augment_sage,
         augments,
         catalog_json,
-        changelog,
+        changelog_relaunch,
         commands,
         cross_job_abilities,
         daily_board,
@@ -139,7 +139,7 @@ def main() -> int:
         ("spells",           spells),
         ("commands",         commands),
         ("rates_table",      rates_table),
-        ("changelog",        changelog),
+        ("changelog",        changelog_relaunch),
         # gm_home_npcs reads catalog Lua files and fills the GM Home NPC
         # position table in docs/changes/index.md.
         ("gm_home_npcs",     gm_home_npcs),
