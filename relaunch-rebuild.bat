@@ -81,6 +81,13 @@ type "%OUT%"
 type "%OUT%" >> "%LOG%"
 findstr /c:"files-OK" "%OUT%" >nul
 if errorlevel 1 ( echo   ERROR: git archive or extract failed.& set "SRVOK=PROBLEM"& goto :finish )
+REM -- also ship C++ source (src/) to ~/server so cmake picks up any relaunch-branch
+REM    changes. Lua/scripts go to ~/relaunch above; src must land in ~/server (build root).
+git -C "%SRC%" archive relaunch -- src | ssh -i "%KEY%" %SSHOPT% %HOST% "tar -xf - -C ~/server --no-same-owner --overwrite && echo   src-OK" >> "%OUT%" 2>&1
+type "%OUT%"
+type "%OUT%" >> "%LOG%"
+findstr /c:"src-OK" "%OUT%" >nul
+if errorlevel 1 ( echo   ERROR: C++ source archive or extract failed.& set "SRVOK=PROBLEM"& goto :finish )
 (echo [%TIME%] [1/7] files shipped OK)>> "%LOG%"
 
 REM ---- [2] Apply custom SQL to xi_relaunch ----
