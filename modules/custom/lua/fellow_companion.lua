@@ -110,11 +110,11 @@ local CONFIG =
             mods  = { { xi.mod.ATTP, 30 }, { xi.mod.DOUBLE_ATTACK, 10 } },
             moves =
             {
-                { name = 'Dancing Edge',     ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit physical
-                { name = 'Crescent Fang',    ws = xi.mobSkill.CRESCENT_FANG      },  -- strong single-target
-                { name = 'Rock Buster',      ws = xi.mobSkill.ROCK_BUSTER        },  -- earth physical
-                { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- heavy hit
-                { name = 'Charged Whisker',  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder burst
+                { name = 'Penta Thrust',     ws = xi.mobSkill.PENTA_THRUST       },  -- 5-hit barrage
+                { name = 'Vorpal Blade',     ws = xi.mobSkill.VORPAL_BLADE_1     },  -- fast slash
+                { name = 'Eclipse Bite',     ws = xi.mobSkill.ECLIPSE_BITE       },  -- heavy bite
+                { name = 'Spinning Attack',  ws = xi.mobSkill.SPINNING_ATTACK_1  },  -- spinning multi-hit
+                { name = 'Sonic Blade',      ws = xi.mobSkill.SONIC_BLADE        },  -- sonic cutting wave
             },
         },
         berserker =
@@ -123,11 +123,11 @@ local CONFIG =
             mods  = { { xi.mod.ATTP, 60 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 10 }, { xi.mod.DMGPHYS, 1000 } },
             moves =
             {
-                { name = 'Crescent Fang',    ws = xi.mobSkill.CRESCENT_FANG      },  -- max damage physical
-                { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- heavy single hit
-                { name = 'Dancing Edge',     ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit
-                { name = 'Charged Whisker',  ws = xi.mobSkill.CHARGED_WHISKER    },  -- elemental burst
-                { name = 'Bomb Toss',        ws = xi.mobSkill.BOMB_TOSS_1        },  -- AoE burst
+                { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- massive single hit
+                { name = 'Amorphic Scythe',  ws = xi.mobSkill.AMORPHIC_SCYTHE   },  -- heavy scythe
+                { name = 'Heavy Blow',       ws = xi.mobSkill.HEAVY_BLOW         },  -- raw impact
+                { name = 'Charged Whisker',  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder burst
+                { name = 'Nightmare Scythe', ws = xi.mobSkill.NIGHTMARE_SCYTHE   },  -- dark scythe
             },
         },
         bulwark   =
@@ -136,11 +136,11 @@ local CONFIG =
             mods  = { { xi.mod.DEF, 300 }, { xi.mod.DMGPHYS, -1000 }, { xi.mod.ENMITY, 50 } }, behavior = 'tank',
             moves =
             {
-                { name = 'Rock Buster',      ws = xi.mobSkill.ROCK_BUSTER        },  -- earth, consistent hate
-                { name = 'Dancing Edge',     ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit, steady enmity
-                { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- heavy single
-                { name = 'Bomb Toss',        ws = xi.mobSkill.BOMB_TOSS_1        },  -- AoE hate pull
-                { name = 'Crescent Fang',    ws = xi.mobSkill.CRESCENT_FANG      },  -- strong single-target
+                { name = 'Earth Crusher',    ws = xi.mobSkill.EARTH_CRUSHER      },  -- seismic smash
+                { name = 'Earth Pounder',    ws = xi.mobSkill.EARTH_POUNDER      },  -- ground slam
+                { name = 'Earthbreaker',     ws = xi.mobSkill.EARTHBREAKER_1     },  -- shockwave
+                { name = 'Maelstrom',        ws = xi.mobSkill.MAELSTROM_1        },  -- AoE hate pull
+                { name = 'Earth Shock',      ws = xi.mobSkill.EARTH_SHOCK        },  -- tremor
             },
         },
         oracle    =
@@ -149,11 +149,11 @@ local CONFIG =
             mods  = { { xi.mod.MND, 150 }, { xi.mod.DEF, 150 }, { xi.mod.MDEF, 150 } }, behavior = 'heal',
             moves =
             {
-                { name = 'Meteorite',     ws = xi.mobSkill.METEORITE       },  -- light burst
-                { name = 'Cursed Sphere', ws = xi.mobSkill.CURSED_SPHERE_1 },  -- dark burst
-                { name = 'Fire IV',       ws = xi.mobSkill.FIRE_IV         },
-                { name = 'Blizzard IV',   ws = xi.mobSkill.BLIZZARD_IV     },
-                { name = 'Aero IV',       ws = xi.mobSkill.AERO_IV         },
+                { name = 'Benediction',      ws = xi.mobSkill.BENEDICTION_1      },  -- major heal burst
+                { name = 'Divine Judgment',  ws = xi.mobSkill.DIVINE_JUDGMENT    },  -- holy strike
+                { name = 'Divine Spear',     ws = xi.mobSkill.DIVINE_SPEAR       },  -- holy lance
+                { name = 'Empty Salvation',  ws = xi.mobSkill.EMPTY_SALVATION_1  },  -- light nova
+                { name = 'Cursed Sphere',    ws = xi.mobSkill.CURSED_SPHERE_1    },  -- dark burst
             },
         },
         magus     =
@@ -162,12 +162,11 @@ local CONFIG =
             mods  = { { xi.mod.INT, 150 }, { xi.mod.MATT, 400 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',
             moves =
             {
-                { name = 'Fire IV',          ws = xi.mobSkill.FIRE_IV            },
-                { name = 'Blizzard IV',      ws = xi.mobSkill.BLIZZARD_IV        },
-                { name = 'Aero IV',          ws = xi.mobSkill.AERO_IV            },
-                { name = 'Charged Whisker',  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder
-                { name = 'Meteorite',        ws = xi.mobSkill.METEORITE          },  -- light
-                { name = 'Cursed Sphere',    ws = xi.mobSkill.CURSED_SPHERE_1    },  -- dark
+                { name = 'Blizzard IV',      ws = xi.mobSkill.BLIZZARD_IV        },  -- ice
+                { name = 'Thunder IV',       ws = xi.mobSkill.THUNDER_IV         },  -- lightning
+                { name = 'Aero IV',          ws = xi.mobSkill.AERO_IV            },  -- wind
+                { name = 'Stone IV',         ws = xi.mobSkill.STONE_IV           },  -- earth magic
+                { name = 'Actinic Burst',    ws = xi.mobSkill.ACTINIC_BURST      },  -- lightning AoE
             },
         },
         hunter    =
@@ -176,11 +175,11 @@ local CONFIG =
             mods  = { { xi.mod.AGI, 150 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged',
             moves =
             {
-                { name = '1000 Needles',     ws = xi.mobSkill.THOUSAND_NEEDLES_1 },  -- signature ranged
-                { name = 'Charged Whisker',  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder ranged
-                { name = 'Dancing Edge',     ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit physical
-                { name = 'Crescent Fang',    ws = xi.mobSkill.CRESCENT_FANG      },  -- strong physical
-                { name = 'Bomb Toss',        ws = xi.mobSkill.BOMB_TOSS_1        },  -- AoE ranged
+                { name = 'Barbed Crescent',  ws = xi.mobSkill.BARBED_CRESCENT_1      },  -- crescent projectile
+                { name = 'Barrage',          ws = xi.mobSkill.BARRAGE                },  -- rapid volley
+                { name = 'Eagle Eye Shot',   ws = xi.mobSkill.EAGLE_EYE_SHOT_HUMANOID },  -- sniper round
+                { name = 'Bomb Toss',        ws = xi.mobSkill.BOMB_TOSS_1            },  -- explosive throw
+                { name = 'Broadside Barrage',ws = xi.mobSkill.BROADSIDE_BARRAGE_1    },  -- wide volley
             },
         },
     },
