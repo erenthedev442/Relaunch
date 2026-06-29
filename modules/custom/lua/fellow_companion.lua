@@ -101,20 +101,88 @@ local CONFIG =
     -- still melee-assists + uses TP moves; behaviors are additive on top.
     roles =
     {
-        -- `defaultWs` = the role's signature TP move at TP cap when the player hasn't
-        -- picked a per-role override (see CONFIG.tpMoves / the Role menu's TP Move option).
-        vanguard  = { name = 'Vanguard',  blurb = 'Balanced melee damage dealer.', defaultWs = xi.mobSkill.DANCING_EDGE,
-                      mods = { { xi.mod.ATTP, 30 }, { xi.mod.DOUBLE_ATTACK, 10 } } },
-        berserker = { name = 'Berserker', blurb = 'All-out melee offense; takes a bit more damage.', defaultWs = xi.mobSkill.CRESCENT_FANG,
-                      mods = { { xi.mod.ATTP, 60 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 10 }, { xi.mod.DMGPHYS, 1000 } } },
-        bulwark   = { name = 'Bulwark',   blurb = 'Tank: more DEF, less damage taken, holds hate.', defaultWs = xi.mobSkill.ROCK_BUSTER,
-                      mods = { { xi.mod.DEF, 300 }, { xi.mod.DMGPHYS, -1000 }, { xi.mod.ENMITY, 50 } }, behavior = 'tank' },
-        oracle    = { name = 'Oracle',    blurb = 'Battle-healer: fights and mends your wounds when hurt.', defaultWs = xi.mobSkill.METEORITE,
-                      mods = { { xi.mod.MND, 150 }, { xi.mod.DEF, 150 }, { xi.mod.MDEF, 150 } }, behavior = 'heal' },
-        magus     = { name = 'Magus',     blurb = 'Battle-mage: fights and hurls elemental magic at your foe.', defaultWs = xi.mobSkill.FIRE_IV,
-                      mods = { { xi.mod.INT, 150 }, { xi.mod.MATT, 400 }, { xi.mod.MACC, 200 } }, behavior = 'nuke' },
-        hunter    = { name = 'Hunter',    blurb = 'Ranger: fights and adds ranged strikes to your target.', defaultWs = xi.mobSkill.THOUSAND_NEEDLES_1,
-                      mods = { { xi.mod.AGI, 150 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged' },
+        -- `defaultWs` = fired at TP cap when the player picks "(Default)" in the Role menu.
+        -- `moves`     = curated per-role list shown in the TP Move picker (replaces the old
+        --               shared global tpMoves pool). Index stored in Fellow_TP_<role> charVar.
+        vanguard  =
+        {
+            name = 'Vanguard', blurb = 'Balanced melee damage dealer.', defaultWs = xi.mobSkill.DANCING_EDGE,
+            mods  = { { xi.mod.ATTP, 30 }, { xi.mod.DOUBLE_ATTACK, 10 } },
+            moves =
+            {
+                { name = 'Dancing Edge',     ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit physical
+                { name = 'Crescent Fang',    ws = xi.mobSkill.CRESCENT_FANG      },  -- strong single-target
+                { name = 'Rock Buster',      ws = xi.mobSkill.ROCK_BUSTER        },  -- earth physical
+                { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- heavy hit
+                { name = 'Charged Whisker',  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder burst
+            },
+        },
+        berserker =
+        {
+            name = 'Berserker', blurb = 'All-out melee offense; takes a bit more damage.', defaultWs = xi.mobSkill.CRESCENT_FANG,
+            mods  = { { xi.mod.ATTP, 60 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 10 }, { xi.mod.DMGPHYS, 1000 } },
+            moves =
+            {
+                { name = 'Crescent Fang',    ws = xi.mobSkill.CRESCENT_FANG      },  -- max damage physical
+                { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- heavy single hit
+                { name = 'Dancing Edge',     ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit
+                { name = 'Charged Whisker',  ws = xi.mobSkill.CHARGED_WHISKER    },  -- elemental burst
+                { name = 'Bomb Toss',        ws = xi.mobSkill.BOMB_TOSS_1        },  -- AoE burst
+            },
+        },
+        bulwark   =
+        {
+            name = 'Bulwark', blurb = 'Tank: more DEF, less damage taken, holds hate.', defaultWs = xi.mobSkill.ROCK_BUSTER,
+            mods  = { { xi.mod.DEF, 300 }, { xi.mod.DMGPHYS, -1000 }, { xi.mod.ENMITY, 50 } }, behavior = 'tank',
+            moves =
+            {
+                { name = 'Rock Buster',      ws = xi.mobSkill.ROCK_BUSTER        },  -- earth, consistent hate
+                { name = 'Dancing Edge',     ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit, steady enmity
+                { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- heavy single
+                { name = 'Bomb Toss',        ws = xi.mobSkill.BOMB_TOSS_1        },  -- AoE hate pull
+                { name = 'Crescent Fang',    ws = xi.mobSkill.CRESCENT_FANG      },  -- strong single-target
+            },
+        },
+        oracle    =
+        {
+            name = 'Oracle', blurb = 'Battle-healer: fights and mends your wounds when hurt.', defaultWs = xi.mobSkill.METEORITE,
+            mods  = { { xi.mod.MND, 150 }, { xi.mod.DEF, 150 }, { xi.mod.MDEF, 150 } }, behavior = 'heal',
+            moves =
+            {
+                { name = 'Meteorite',     ws = xi.mobSkill.METEORITE       },  -- light burst
+                { name = 'Cursed Sphere', ws = xi.mobSkill.CURSED_SPHERE_1 },  -- dark burst
+                { name = 'Fire IV',       ws = xi.mobSkill.FIRE_IV         },
+                { name = 'Blizzard IV',   ws = xi.mobSkill.BLIZZARD_IV     },
+                { name = 'Aero IV',       ws = xi.mobSkill.AERO_IV         },
+            },
+        },
+        magus     =
+        {
+            name = 'Magus', blurb = 'Battle-mage: fights and hurls elemental magic at your foe.', defaultWs = xi.mobSkill.FIRE_IV,
+            mods  = { { xi.mod.INT, 150 }, { xi.mod.MATT, 400 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',
+            moves =
+            {
+                { name = 'Fire IV',          ws = xi.mobSkill.FIRE_IV            },
+                { name = 'Blizzard IV',      ws = xi.mobSkill.BLIZZARD_IV        },
+                { name = 'Aero IV',          ws = xi.mobSkill.AERO_IV            },
+                { name = 'Charged Whisker',  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder
+                { name = 'Meteorite',        ws = xi.mobSkill.METEORITE          },  -- light
+                { name = 'Cursed Sphere',    ws = xi.mobSkill.CURSED_SPHERE_1    },  -- dark
+            },
+        },
+        hunter    =
+        {
+            name = 'Hunter', blurb = 'Ranger: fights and adds ranged strikes to your target.', defaultWs = xi.mobSkill.THOUSAND_NEEDLES_1,
+            mods  = { { xi.mod.AGI, 150 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged',
+            moves =
+            {
+                { name = '1000 Needles',     ws = xi.mobSkill.THOUSAND_NEEDLES_1 },  -- signature ranged
+                { name = 'Charged Whisker',  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder ranged
+                { name = 'Dancing Edge',     ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit physical
+                { name = 'Crescent Fang',    ws = xi.mobSkill.CRESCENT_FANG      },  -- strong physical
+                { name = 'Bomb Toss',        ws = xi.mobSkill.BOMB_TOSS_1        },  -- AoE ranged
+            },
+        },
     },
     roleOrder   = { 'vanguard', 'berserker', 'bulwark', 'oracle', 'magus', 'hunter' },
     defaultRole = 'vanguard',
@@ -146,25 +214,6 @@ local CONFIG =
         { name = 'Boggart',    modelId = 451,  ws = xi.mobSkill.BLIZZARD_IV        },  -- ice nuke
         { name = 'Goobbue',    modelId = 296,  ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- heavy uppercut
         { name = 'Adventurer', modelId = 3119, ws = xi.mobSkill.CRESCENT_FANG      },  -- strong physical
-    },
-
-    -- TP MOVE picker: per-role list of selectable signature TP moves (forced at TP
-    -- cap via useMobAbility). Chosen per role in the Role menu; "(Default)" uses the
-    -- role's defaultWs. Stored in the Fellow_TP_<role> charVar (0 = default).
-    tpMoves =
-    {
-        { name = 'Fire IV',          ws = xi.mobSkill.FIRE_IV            },
-        { name = 'Blizzard IV',      ws = xi.mobSkill.BLIZZARD_IV        },
-        { name = 'Aero IV',          ws = xi.mobSkill.AERO_IV            },
-        { name = 'Charged Whisker',  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder
-        { name = 'Meteorite',        ws = xi.mobSkill.METEORITE          },  -- light
-        { name = 'Cursed Sphere',    ws = xi.mobSkill.CURSED_SPHERE_1    },  -- dark
-        { name = '1000 Needles',     ws = xi.mobSkill.THOUSAND_NEEDLES_1 },  -- ranged
-        { name = 'Dancing Edge',     ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit physical
-        { name = 'Crescent Fang',    ws = xi.mobSkill.CRESCENT_FANG      },  -- strong physical
-        { name = 'Rock Buster',      ws = xi.mobSkill.ROCK_BUSTER        },  -- earth physical
-        { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },
-        { name = 'Bomb Toss',        ws = xi.mobSkill.BOMB_TOSS_1        },
     },
 
     -- OUTFIT picker: humanoid job-class themes applied on top of Appearance.
@@ -257,7 +306,8 @@ local function chosenWs(p)
     local roleKey = getRole(p)
     local choice  = getN(p, tpVar(roleKey))
     if choice > 0 then
-        local entry = CONFIG.tpMoves[choice]
+        local rd    = CONFIG.roles[roleKey]
+        local entry = rd and rd.moves and rd.moves[choice]
         if entry and entry.ws then return entry.ws end
     end
     local rd = CONFIG.roles[roleKey]
@@ -509,8 +559,9 @@ local function statusReport(p)
     p:printToPlayer('  Allocation: ' .. (#parts > 0 and table.concat(parts, '  ') or 'none yet'), SYS)
     -- TP move in effect for the current role (per-role override, else role default).
     local roleKey  = getRole(p)
-    local tpChoice = getN(p, tpVar(roleKey))
-    local tpName   = (tpChoice > 0 and CONFIG.tpMoves[tpChoice] and CONFIG.tpMoves[tpChoice].name)
+    local tpChoice  = getN(p, tpVar(roleKey))
+    local roleMoves = (CONFIG.roles[roleKey] or {}).moves or {}
+    local tpName    = (tpChoice > 0 and roleMoves[tpChoice] and roleMoves[tpChoice].name)
         or '(role default)'
     p:printToPlayer(string.format('  TP move (%s): %s', role.name, tpName), SYS)
 end
@@ -747,15 +798,16 @@ openOutfit = function(p, page)
 end
 
 -- Paginated TP-move picker for the CURRENT role. "(Default)" at realIdx 0 uses the
--- role's defaultWs; each numbered entry maps to CONFIG.tpMoves[N]. Applies live --
+-- role's defaultWs; each numbered entry maps to that role's moves[N]. Applies live --
 -- the combat loop reads chosenWs() each tick, so no re-summon is needed.
 openTpMove = function(p, page)
     page = page or 0
     local roleKey  = getRole(p)
     local roleName = (CONFIG.roles[roleKey] or {}).name or roleKey
-    -- Prepend "(Default)" so realIdx 0 = role default; realIdx N = CONFIG.tpMoves[N].
+    local roleMoves = (CONFIG.roles[roleKey] or {}).moves or {}
+    -- Prepend "(Default)" so realIdx 0 = role default; realIdx N = role's moves[N].
     local all = { { name = '(Default)' } }
-    for _, t in ipairs(CONFIG.tpMoves) do all[#all + 1] = t end
+    for _, t in ipairs(roleMoves) do all[#all + 1] = t end
     local per   = CONFIG.namesPerPage
     local pages = math.max(1, math.ceil(#all / per))
     page = page % pages
