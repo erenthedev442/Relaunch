@@ -5,7 +5,7 @@ Welcome to the Relaunch server. You've got the client running, you're in-game �
 This page walks you through the first 15–20 minutes: getting your character set up, picking up starter gear, and launching the core progression path. Follow these steps in order and you won't miss anything important.
 
 !!! note "Not in-game yet?"
-    Get connected first: [install the client](install.md) — including the **`xiloader.exe`** loader — then point your launcher at **`172.215.213.23`** on the [Connect to the Server](connect.md) page.
+    Get connected first: [install the client](install.md) — including the **`xiloader.exe`** loader — then follow the [Connect to the Server](connect.md) page to configure your launcher with the correct IP and ports.
 
 ---
 
@@ -82,7 +82,7 @@ It's the primary path to endgame gear and the main thing to do on the Relaunch s
 
 | Step | Action |
 |---|---|
-| 1 | `!gmhome` — warp to the server hub |
+| 1 | `!lib` — warp to the Celennia Memorial Library (entry hub) |
 | 2 | Nothing to do — your character is fully set up at creation (weapon skills, spells, trusts, capped skills, key items, missions, maps, warps, wardrobes, starter gear) |
 | 3 | `!expcamp` — warp to a level-banded camp and level to 99 (<!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP) |
 | 4 | `!hunt` — warp to Escha ZiTah and start the Hunting League |
