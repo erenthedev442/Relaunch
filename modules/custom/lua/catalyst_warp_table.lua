@@ -103,6 +103,7 @@ return {
     [947] = { item='Jar Of Firesand', label='Daken', cat=3, tier=1, zone=12, zoneName='Newton Movalpolos', x=-7.159, y=15.410, z=6.127, mob='Moblin Engineman', lvl=75, rate=150 },
     [953] = { item='Treant Bulb', label='Katana skill', cat=23, tier=1, zone=105, zoneName='Batallia Downs', x=-255.542, y=-7.872, z=185.826, mob='Tottering Toby', lvl=27, rate=1000 },
     [954] = { item='Magic Pot Shard', label='Pet Mag.Atk.Bns', cat=20, tier=1, zone=122, zoneName='RoMaeve', x=-108.575, y=-5.699, z=-5.432, mob='Nightmare Vase', lvl=70, rate=1000 },
+    [1011] = { item='King Of Coins Card', label='Treasure Hunter', cat=23, tier=0, zone=108, zoneName='Konschtat Highlands', x=-204.271, y=8.118, z=36.959, mob='Haty', lvl=14, rate=500 },
     [1015] = { item='Sand Bat Fang', label='Summoning magic skill', cat=20, tier=1, zone=103, zoneName='Valkurm Dunes', x=773.021, y=-10.497, z=-261.473, mob='Sand Bats', lvl=12, rate=100 },
     [1108] = { item='Pinch Of Sulfur', label='Conserve TP', cat=2, tier=2, zone=191, zoneName='Dangruf Wadi', x=-59.778, y=3.590, z=-228.729, mob='Stone Eater', lvl=3, rate=150 },
     [1110] = { item='Vial Of Black Beetle Blood', label='Weapon Skill Acc', cat=24, tier=2, zone=30, zoneName='Riverne-Site A01', x=18.670, y=76.180, z=-740.650, mob='Ouryu', lvl=90, rate=150 },

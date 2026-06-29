@@ -83,3 +83,10 @@ INSERT INTO mob_droplist VALUES (1617, 0, 0, 1000, 2155, 300);
 -- -----------------------------------------------------------------------
 DELETE FROM mob_droplist WHERE dropid=1287 AND droptype=0 AND itemid=2831;
 INSERT INTO mob_droplist VALUES (1287, 0, 0, 1000, 2831, 200);
+
+-- -----------------------------------------------------------------------
+-- 1011 Treasure Hunter (Tier 0) → Haty (Goblin NM), Konschtat Highlands (dropId 253)
+--      augId 147 / xi.mod.TREASURE_HUNTER — always flat TH+1 (multiplier=0 in augments.sql)
+-- -----------------------------------------------------------------------
+DELETE FROM mob_droplist WHERE dropid=253 AND droptype=0 AND itemid=1011;
+INSERT INTO mob_droplist VALUES (253, 0, 0, 1000, 1011, 500);
