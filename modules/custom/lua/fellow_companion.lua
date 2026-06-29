@@ -161,7 +161,7 @@ local CONFIG =
             moves =
             {
                 { name = 'Blizzard IV',      ws = xi.mobSkill.BLIZZARD_IV        },
-                { name = 'Thunder IV',       ws = xi.mobSkill.THUNDER_IV         },
+                { name = 'Thunderstrike',    ws = xi.mobSkill.THUNDERSTRIKE      },  -- fTP 9, AoE stun
                 { name = 'Aero IV',          ws = xi.mobSkill.AERO_IV            },
                 { name = 'Stone IV',         ws = xi.mobSkill.STONE_IV           },
                 { name = 'Water IV',         ws = xi.mobSkill.WATER_IV           },
