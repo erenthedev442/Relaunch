@@ -197,8 +197,9 @@ local CONFIG =
     nukePerLevel   = 300,
     rangedBase     = 1500,  -- Hunter: ranged damage to the target per tick while engaged
     rangedPerLevel = 300,
-    tauntCE        = 300,   -- Bulwark: cumulative enmity spiked onto the mob per tick (toward the Fellow)
-    tauntVE        = 600,   -- Bulwark: volatile enmity spiked onto the mob per tick (toward the Fellow)
+    tauntCE        = 4000,  -- Bulwark: cumulative enmity spiked onto the mob per tick (toward the Fellow)
+    tauntVE        = 8000,  -- Bulwark: volatile enmity spiked onto the mob per tick (toward the Fellow)
+    tauntDrain     = 20,    -- Bulwark: % of player's enmity bled off the mob per tick (keeps WS spikes in check)
 
     keeperMs            = 10000,
     firstMs             = 4000,
@@ -346,13 +347,16 @@ scheduleCombatLoop = function(master, pet)
                 end
             end
 
-            -- Bulwark: spike hate toward the Fellow on every combat tick. Without this
-            -- the ENMITY mod is unreliable on a pet entity and the mob follows player DPS.
-            -- tgt:addEnmity(p, CE, VE) -- on this mob, add enmity toward the Fellow pet.
+            -- Bulwark: spike hate toward the Fellow + bleed the player's enmity every tick.
+            -- addEnmity(pet, CE, VE) raises the mob's hate toward the Fellow.
+            -- lowerEnmity(master, %) drains the player's enmity so WS spikes don't pull hate permanently.
             if beh == 'tank' and master:isEngaged() then
                 local tgt = master:getTarget()
                 if tgt and not tgt:isDead() and p:isEngaged() then
-                    pcall(function() tgt:addEnmity(p, CONFIG.tauntCE, CONFIG.tauntVE) end)
+                    pcall(function()
+                        tgt:addEnmity(p, CONFIG.tauntCE, CONFIG.tauntVE)
+                        tgt:lowerEnmity(master, CONFIG.tauntDrain)
+                    end)
                 end
             end
 
