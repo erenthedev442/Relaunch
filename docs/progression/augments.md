@@ -219,7 +219,6 @@ Opens at **Hunting League Rank 3**. Practical job abilities and defensive option
 | Blue Magic skill | <a class="item-link" href="https://www.ffxiah.com/item/2171" data-img="https://www.bg-wiki.com/images/5/5f/Colibri_Beak_description.png" target="_blank" rel="noopener">Colibri Beak</a> | 2171 | no cap | Magic skills |
 | Geomancy Skill | <a class="item-link" href="https://www.ffxiah.com/item/2212" data-img="https://www.bg-wiki.com/images/0/0b/Gpwdr._Swathe_description.png" target="_blank" rel="noopener">Gunpowder Swathe</a> | 2212 | no cap | Magic skills |
 | Handbell Skill | <a class="item-link" href="https://www.ffxiah.com/item/2334" data-img="https://www.bg-wiki.com/images/2/2e/Poroggo_Hat_description.png" target="_blank" rel="noopener">Poroggo Hat</a> | 2334 | no cap | Magic skills |
-| Cap. Point +33% | <a class="item-link" href="https://www.ffxiah.com/item/942" data-img="https://www.bg-wiki.com/images/9/90/Phil._Stone_description.png" target="_blank" rel="noopener">Philosophers Stone</a> | 942 | no cap | Exp/Cap points |
 
 ### T2 — Adept (Hunting League Rank 5)
 
@@ -243,6 +242,7 @@ Opens at **Hunting League Rank 5**. Core combat stats that nearly every job care
 | Enspell Dmg | <a class="item-link" href="https://www.ffxiah.com/item/2338" data-img="https://www.bg-wiki.com/images/0/0d/Wamoura_Scale_description.png" target="_blank" rel="noopener">Wamoura Scale</a> | 2338 | no cap | Magic ATK |
 | Pet Haste | <a class="item-link" href="https://www.ffxiah.com/item/826" data-img="https://static.ffxiah.com/images/icon/826.png" target="_blank" rel="noopener">Square Of Linen Cloth</a> | 826 | no cap | Pet stats pulled from old cat 4 |
 | Occ. inc. resist to stat ailments | <a class="item-link" href="https://www.ffxiah.com/item/2831" data-img="https://www.bg-wiki.com/images/b/b1/Yel._Brass_Chain_description.png" target="_blank" rel="noopener">Yellow Brass Chain</a> | 2831 | no cap | Status |
+| Cap. Point +33% | <a class="item-link" href="https://www.ffxiah.com/item/942" data-img="https://www.bg-wiki.com/images/9/90/Phil._Stone_description.png" target="_blank" rel="noopener">Philosophers Stone</a> | 942 | no cap | Exp/Cap points |
 | Weapon Skill Acc | <a class="item-link" href="https://www.ffxiah.com/item/1110" data-img="https://static.ffxiah.com/images/icon/1110.png" target="_blank" rel="noopener">Vial Of Black Beetle Blood</a> | 1110 | no cap | WSD+ |
 
 ### T3 — Magus (Prestige)
@@ -376,6 +376,6 @@ Opens via **Prestige** progression. Damage multipliers and sustain — Double At
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4c1d6632e845 -->
-_Last updated: 2026-06-29 04:48 UTC_
+<!-- content-hash: 5d7d0fc989fe -->
+_Last updated: 2026-06-29 04:52 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -365,7 +365,7 @@ return {
     [2334] = { augId = 301,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 1, label = 'Handbell Skill' },
     -- Exp/Cap points
     [2523] = { augId = 73,   base = 33,  mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Exp. Point +33%' },
-    [942]  = { augId = 75,   base = 33,  mult = 1,   disp = 1,    cat = 23, tier = 1, label = 'Cap. Point +33%' },
+    [942]  = { augId = 75,   base = 33,  mult = 1,   disp = 1,    cat = 23, tier = 2, label = 'Cap. Point +33%' },
     -- Job-specific niche utilities
     [1875] = { augId = 2046, base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 4, label = 'Phantom Roll effect',   maxBoost = 0 },
     [1269] = { augId = 215,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Ninja tool expertise' },
