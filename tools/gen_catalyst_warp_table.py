@@ -114,6 +114,7 @@ def _drops_from_db() -> _DropMap | None:
         SELECT d.itemid, g.groupid, g.zoneid, g.name AS mob, MAX(d.itemRate) AS rate
         FROM mob_droplist d
         JOIN mob_groups g ON g.dropid = d.dropid
+        WHERE d.dropType IN (0, 1)
         GROUP BY d.itemid, g.groupid, g.zoneid, g.name
     """
     out: _DropMap = {}
@@ -142,10 +143,13 @@ def _drops_from_sql() -> _DropMap:
 
     # itemId -> {dropId: itemRate}
     item_to_drops: dict[int, dict[int, int]] = {}
-    for m in re.finditer(r"VALUES \((\d+),\d+,\d+,\d+,(\d+),(@\w+|\d+)", dl_text):
-        drop_id  = int(m.group(1))
-        item_id  = int(m.group(2))
-        rate_tok = m.group(3)
+    for m in re.finditer(r"VALUES \((\d+),(\d+),\d+,\d+,(\d+),(@\w+|\d+)", dl_text):
+        drop_id   = int(m.group(1))
+        drop_type = int(m.group(2))
+        if drop_type not in (0, 1):   # skip Steal(2) and Despoil(4)
+            continue
+        item_id  = int(m.group(3))
+        rate_tok = m.group(4)
         rate = macros.get(rate_tok, 0) if rate_tok.startswith("@") else int(rate_tok)
         d = item_to_drops.setdefault(item_id, {})
         if rate > d.get(drop_id, -1):

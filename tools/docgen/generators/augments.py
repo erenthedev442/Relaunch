@@ -349,6 +349,7 @@ SELECT d.itemid, g.name AS mob, z.name AS zone, MAX(d.itemRate) AS rate
 FROM mob_droplist d
 JOIN mob_groups g       ON g.dropid  = d.dropid
 LEFT JOIN zone_settings z ON z.zoneid = g.zoneid
+WHERE d.dropType IN (0, 1)
 GROUP BY d.itemid, g.name, z.name
 """
 
