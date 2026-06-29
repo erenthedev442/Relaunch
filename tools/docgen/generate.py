@@ -60,6 +60,7 @@ def main() -> int:
         accessory_npc,
         armor_npc,
         augment_sage,
+        augment_calculator,
         augments,
         catalog_json,
         changelog_relaunch,
@@ -220,6 +221,7 @@ def main() -> int:
         ("reforge",          reforge),
         ("augments",         augments),
         ("augment_sage",     augment_sage),
+        ("augment_calculator", augment_calculator),
         # gear_finder builds docs/assets/gear-data.json for the interactive
         # Gear Finder page. Runs AFTER every item-granting source page so its
         # obtainability scan can see the freshly-generated item-links.
