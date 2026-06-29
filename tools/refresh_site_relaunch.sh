@@ -75,6 +75,15 @@ python3 "$LIVE_ROOT/tools/gen_augment_catalog.py" >> "$LOG" 2>&1 \
     && echo "[0c/4] augment catalog: OK" \
     || echo "[WARN] augment catalog regen failed -- using existing"
 
+echo "[0d/4] regenerating catalyst warp table from live DB..."
+if python3 tools/gen_catalyst_warp_table.py >> "$LOG" 2>&1; then
+    cp modules/custom/lua/catalyst_warp_table.lua "$LIVE_ROOT/modules/custom/lua/catalyst_warp_table.lua" \
+        && echo "[0d/4] warp table: OK (deployed to LIVE_ROOT)" \
+        || echo "[WARN] warp table: generated but copy to LIVE_ROOT failed"
+else
+    echo "[WARN] warp table regen failed -- !augwarp may be stale"
+fi
+
 echo "[1/4] docgen (leaderboards + player profiles from xi_relaunch)..."
 # shellcheck disable=SC2086
 $DOCGEN_CMD || { echo "[FATAL] docgen failed"; exit 1; }
