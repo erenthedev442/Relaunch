@@ -66,6 +66,12 @@ CInstance* CInstanceLoader::LoadInstance() const
 {
     TracyZoneScoped;
 
+    if (!m_PInstance)
+    {
+        ShowError("CInstanceLoader::LoadInstance: m_PInstance is null — zone invalid or not loaded");
+        return nullptr;
+    }
+
     auto rset = db::preparedStmt("SELECT mobname, mobid, pos_rot, pos_x, pos_y, pos_z, "
                                  "respawntime, spawntype, dropid, mob_groups.HP, mob_groups.MP, minLevel, maxLevel, "
                                  "modelid, mJob, sJob, cmbSkill, cmbDmgMult, cmbDelay, behavior, links, mobType, immunity, "
