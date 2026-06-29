@@ -53,6 +53,14 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
         return max
     end
 
+    local function getTotalRebirths(player)
+        local total = 0
+        for jobId = 1, 22 do
+            total = total + (player:getCharVar(string.format('Rebirth_Count_%d', jobId)) or 0)
+        end
+        return total
+    end
+
     local function tryRankUp(player)
         local currentRank = player:getCharVar('Augment_Mastery') or 0
         local nextRank    = currentRank + 1
@@ -81,6 +89,28 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
                 player:printToPlayer(string.format(
                     'You need Prestige Level %d on any job (your best: %d).',
                     req.prestigeLevel, maxPL), xi.msg.channel.SYSTEM_3)
+                buildMainMenu(player)
+                return
+            end
+        end
+
+        if req.rebirths then
+            local total = getTotalRebirths(player)
+            if total < req.rebirths then
+                player:printToPlayer(string.format(
+                    'You need %d total rebirths across all jobs (you have %d).',
+                    req.rebirths, total), xi.msg.channel.SYSTEM_3)
+                buildMainMenu(player)
+                return
+            end
+        end
+
+        if req.gauntletClears then
+            local clears = player:getCharVar('Gauntlet_Clears') or 0
+            if clears < req.gauntletClears then
+                player:printToPlayer(string.format(
+                    'You need %d Gauntlet clear(s) (you have %d).',
+                    req.gauntletClears, clears), xi.msg.channel.SYSTEM_3)
                 buildMainMenu(player)
                 return
             end
@@ -247,15 +277,31 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
             end
 
             if req.prestigeLevel then
-                local maxPL = 0
-                for jobId = 1, 22 do
-                    local lv = player:getCharVar(string.format('Prestige_Level_%d', jobId)) or 0
-                    if lv > maxPL then maxPL = lv end
-                end
+                local maxPL = getMaxPrestigeLevel(player)
                 local ok = maxPL >= req.prestigeLevel
                 if not ok then met = false end
                 table.insert(options, {
                     string.format('Prestige %d/%d %s', maxPL, req.prestigeLevel, ok and '[OK]' or ''),
+                    function(p) buildRankUpMenu(p) end,
+                })
+            end
+
+            if req.rebirths then
+                local total = getTotalRebirths(player)
+                local ok    = total >= req.rebirths
+                if not ok then met = false end
+                table.insert(options, {
+                    string.format('Rebirths %d/%d %s', total, req.rebirths, ok and '[OK]' or ''),
+                    function(p) buildRankUpMenu(p) end,
+                })
+            end
+
+            if req.gauntletClears then
+                local clears = player:getCharVar('Gauntlet_Clears') or 0
+                local ok     = clears >= req.gauntletClears
+                if not ok then met = false end
+                table.insert(options, {
+                    string.format('Gauntlet %d/%d %s', clears, req.gauntletClears, ok and '[OK]' or ''),
                     function(p) buildRankUpMenu(p) end,
                 })
             end

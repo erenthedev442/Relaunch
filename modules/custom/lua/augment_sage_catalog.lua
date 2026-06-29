@@ -61,29 +61,34 @@ catalog.seals =
 catalog.ranks =
 {
     {
-        rank          = 1,
-        title         = 'Augment Initiate',
-        hlRank        = 2,    -- unlock at Hunting League Rank 2
+        rank   = 1,
+        title  = 'Augment Initiate',
+        hlRank = 2,    -- HL Rank 2
     },
     {
-        rank          = 2,
-        title         = 'Augment Adept',
-        hlRank        = 3,    -- unlock at Hunting League Rank 3
+        rank   = 2,
+        title  = 'Augment Adept',
+        hlRank = 3,    -- HL Rank 3
     },
     {
         rank          = 3,
         title         = 'Augment Magus',
-        hlRank        = 5,    -- unlock at Hunting League Rank 5 (Legend)
+        hlRank        = 5,   -- HL Rank 5 (Legend)
+        prestigeLevel = 5,   -- Prestige Level 5 on any job
+        rebirths      = 1,   -- 1 total rebirth across all jobs
     },
     {
         rank          = 4,
         title         = 'Augment Sage',
-        prestigeLevel = 15,   -- unlock at Prestige Level 15 (any main job)
+        prestigeLevel = 15,  -- Prestige Level 15 on any job
+        rebirths      = 10,  -- 10 total rebirths across all jobs
     },
     {
-        rank          = 5,
-        title         = 'Augment Archon',
-        prestigeLevel = 30,   -- unlock at Prestige Level 30 (any main job)
+        rank           = 5,
+        title          = 'Augment Archon',
+        prestigeLevel  = 30,  -- Prestige Level 30 on any job
+        rebirths       = 20,  -- 20 total rebirths across all jobs
+        gauntletClears = 1,   -- at least 1 Gauntlet clear
     },
 }
 
@@ -99,7 +104,7 @@ catalog.ranks =
 -- Lua's typical indexing - add 1 to the charvar when looking up.
 -----------------------------------
 catalog.masteryMult = { 1.00, 1.20, 1.40, 1.60, 1.80, 2.00 }
-catalog.critChance  = { 0.05, 0.08, 0.11, 0.14, 0.17, 0.20 }
+catalog.critChance  = { 0.05, 0.10, 0.15, 0.20, 0.25, 0.30 }
 
 -----------------------------------
 -- DERIVED HELPER
