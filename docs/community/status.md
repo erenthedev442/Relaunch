@@ -58,10 +58,10 @@ _Health snapshot from the last site rebuild._ 🟢 OK · 🟠 last run reported 
 
 | Background job | Schedule | Last run | Status (snapshot) |
 |---|---|---:|---|
-| **Auction House market-maker** | every 15 min | 8d 15h ago | 🔴 **STALE** — no run in 8d 15h |
+| **Auction House market-maker** | every 15 min | — | ⚪ no signal yet |
 | **Discord notifier (webhook)** | every 5 min | — | ⚪ no signal yet |
 | **Discord bot (slash commands)** | daemon · 5 min beat | — | ⚪ no signal yet |
-| **Database backup + verify** | nightly 04:00 | 22d 22h ago | 🔴 **STALE** — no run in 22d 22h |
+| **Database backup + verify** | nightly 04:00 | — | ⚪ no signal yet |
 <!-- DOCGEN:END id="status-jobs" -->
 
 ---
@@ -119,6 +119,6 @@ See the full list at [Hall of Fame](highlights.md).
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5e67c64612a4 -->
-_Last updated: 2026-06-23 10:43 UTC_
+<!-- content-hash: df112ebe8840 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

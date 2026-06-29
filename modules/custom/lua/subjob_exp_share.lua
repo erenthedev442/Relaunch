@@ -7,15 +7,15 @@
 -- AddExperiencePoints() fires. No source edits, survives upstream
 -- LSB updates.
 --
--- HOW "50% of main" WORKS:
---   The sub banks SHARE_RATE (0.5) of every exp gain. To level a sub
---   at exactly half the main's pace, each sub-level must cost the SAME
---   exp the MAIN needs for that level (so half the inflow => half the
---   speed). EXP_TO_NEXT below therefore mirrors the server's real
+-- HOW "25% of main" WORKS:
+--   The sub banks SHARE_RATE (0.25) of every exp gain. To level a sub
+--   at exactly quarter the main's pace, each sub-level must cost the SAME
+--   exp the MAIN needs for that level (so 25% inflow => 25% speed).
+--   EXP_TO_NEXT below therefore mirrors the server's real
 --   `exp_base` table (what GetExpNEXTLevel reads), NOT an approximation.
 --   The old stepped formula (level*N) ran 2-4x HIGHER than the real
---   curve above level ~15, so subs stalled at ~13-25% of main instead
---   of 50% - that was the "subjobs stopped leveling" bug.
+--   curve above level ~15, so subs stalled at ~6-12% of main instead
+--   of 25% - that was the "subjobs stopped leveling" bug.
 --
 -- CATCH-UP: a single exp gain drains the bank across as MANY levels as
 --   it can afford (loop), so a big book/chain gain - or a backlog from
@@ -27,7 +27,7 @@
 --   bank exp on one sub and dump it into another.
 --
 -- Tuning:
---   SHARE_RATE - fraction of main EXP that banks toward sub (0.5 = half)
+--   SHARE_RATE - fraction of main EXP that banks toward sub (0.25 = quarter)
 -----------------------------------
 require('modules/module_utils')
 require('scripts/globals/player')
@@ -43,7 +43,7 @@ local BANK_JOB_VAR = 'SubExpBankJob'
 
 -- Exp to advance the sub from level L to L+1. Mirrors the live `exp_base`
 -- table exactly (EXP_TO_NEXT[L] = exp_base[L+1] = what the MAIN job needs
--- for that level), so the sub tracks 50% of the main's true pace at every
+-- for that level), so the sub tracks 25% of the main's true pace at every
 -- level. Update this if exp_base is ever retuned. No level-99 entry: the
 -- sub is hard-capped at the main's level (<= 99) before it could be used.
 local EXP_TO_NEXT = {

@@ -80,9 +80,9 @@ The Reforge Vendor sells progressive upgrades: trade in a base piece + marks for
 <!-- DOCGEN:BEGIN id="reforge-costs" -->
 | Set | base → +1 | +1 → +2 | +2 → +3 |
 |---|---:|---:|---:|
-| AF (Sky Gods) | 100 | 300 | 650 |
-| Relic (Unity NMs) | 100 | 300 | 650 |
-| Empyrean (Abyssea NMs) | 100 | 300 | 650 |
+| AF (Sky Gods) | 300 | 900 | 2000 |
+| Relic (Unity NMs) | 300 | 900 | 2000 |
+| Empyrean (Abyssea NMs) | 300 | 900 | 2000 |
 
 _Costs are paid in that set's marks (e.g. AF upgrades cost AF Marks)._
 <!-- DOCGEN:END id="reforge-costs" -->
@@ -121,6 +121,6 @@ The catalog covers every job. Each job has three named sets across the AF/Relic/
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 275bd829ab06 -->
-_Last updated: 2026-06-12 23:32 UTC_
+<!-- content-hash: a119c0d14735 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

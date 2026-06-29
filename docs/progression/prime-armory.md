@@ -8,15 +8,15 @@ The **Prime Armory** in <!--npc:prime_armory-->Leafallia<!--/npc--> hands out **
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="prime-armory-access" -->
-The **Prime Armory** is in <!--npc:prime_armory-->Leafallia<!--/npc-->, just south of the Unlocker cluster. Talk to it to browse the Prime weapons; you only need to bring a voucher when you're ready to claim one.
+The **Prime Armory** is in **Leafallia** (`!leaf`), in the endgame NPC row. cluster. Talk to it to browse the Prime weapons; bring your **750M gil** when you're ready to forge (all 5 trials, including the voucher turn-in, must already be done).
 <!-- DOCGEN:END id="prime-armory-access" -->
 
 ## The cost
 
 <!-- DOCGEN:BEGIN id="prime-armory-cost" -->
-Each weapon costs **1 Prime Voucher**. The Armory takes the voucher and hands over the weapon you confirmed — one voucher, one Prime weapon. Vouchers are earned through the Prime Voucher system, so every Prime weapon you add to your arsenal is a milestone.
+Forging a Prime takes two things: **all 5 Prime Weapon Trials** ([see the trials](prime-trials.md)) complete — Trial 3 is where your single **Prime Voucher** is consumed — and **750,000,000 gil** paid at the forge. You claim **one Prime weapon per character**, so choose the one that fits your main job.
 
-Make sure you have a free inventory slot before you confirm, or the Armory won't be able to hand the weapon over.
+Make sure you have the gil and a free inventory slot before you confirm, or the Armory won't be able to hand the weapon over.
 <!-- DOCGEN:END id="prime-armory-cost" -->
 
 ## The Prime weapons
@@ -47,12 +47,12 @@ All **12 Prime weapons**, one per weapon type:
 Talk to the Armory to open the menu. The weapons are browsed a page at a time — use **More weapons** and **Previous page** to scroll the full list. Select a weapon to read its full stat line and weapon skill, then confirm to trade your voucher and receive it.
 
 <!-- DOCGEN:BEGIN id="prime-armory-claim" -->
-Browsing is free — you can read every weapon's stats and weapon skill before deciding. The voucher is only spent on the final confirm, so take your time picking the right Prime weapon for your job.
+Browsing is free — you can read every weapon's stats and weapon skill before deciding. The **750M gil** is only spent on the final confirm, so take your time picking the right Prime weapon for your job — you only claim one.
 <!-- DOCGEN:END id="prime-armory-claim" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 835a2ba8b5cc -->
-_Last updated: 2026-06-21 01:54 UTC_
+<!-- content-hash: 734aae636f06 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

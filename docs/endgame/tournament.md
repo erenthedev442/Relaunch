@@ -67,6 +67,6 @@ GMs control the tournament lifecycle:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c6c1f9d0c75b -->
-_Last updated: 2026-06-19 16:09 UTC_
+<!-- content-hash: f008cc45de9b -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

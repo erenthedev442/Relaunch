@@ -39,6 +39,6 @@ Community milestones â€” total kills, total marks earned, total Infamy banked â€
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 733f5c5a0ce5 -->
-_Last updated: 2026-06-20 21:09 UTC_
+<!-- content-hash: 1abe26252b0b -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

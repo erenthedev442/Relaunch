@@ -330,9 +330,9 @@ def _render_economy(mark_cost_base: int, mark_cost_cap: int, ap_tiers: list[dict
     if ap_tiers and len(ap_tiers) > 1:
         parts = []
         for i, t in enumerate(ap_tiers):
-            lo = t["minLevel"] + 1 if t["minLevel"] > 0 else 1
+            lo = t["minLevel"] if t["minLevel"] > 0 else 1
             if i + 1 < len(ap_tiers):
-                hi = ap_tiers[i + 1]["minLevel"]
+                hi = ap_tiers[i + 1]["minLevel"] - 1
                 parts.append(f"**{t['ap']} AP** (P.Lv {lo}–{hi})")
             else:
                 parts.append(f"**{t['ap']} AP** (P.Lv {lo}+)")

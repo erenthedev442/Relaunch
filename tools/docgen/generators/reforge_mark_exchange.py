@@ -30,7 +30,7 @@ def _parse(text: str) -> dict:
     c: dict = {"exchanges": []}
 
     m = re.search(r"zone\s*=\s*'([^']+)'", text)
-    c["zone"] = _zone_label(m.group(1)) if m else "Reisenjima Henge"
+    c["zone"] = _zone_label(m.group(1)) if m else "Leafallia"
 
     block = section(text, "catalog.exchanges")
     # Each exchange is its own { ... } sub-table; pull the three fields we show.

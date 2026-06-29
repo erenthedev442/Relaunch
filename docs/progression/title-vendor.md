@@ -8,7 +8,7 @@ The **Title Broker** in <!--npc:title_broker-->the Celennia Memorial Library<!--
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="title-vendor-access" -->
-The **Title Broker** is in <!--npc:title_broker-->the Celennia Memorial Library<!--/npc-->. Talk to them, pick a price tier, then the title you want — pay the gil and it's yours to wear.
+The **Title Broker** is set up in **the Celennia Memorial Library** (reach it with `!lib`). Talk to them, pick a price tier, then the title you want — pay the gil and it's yours to wear.
 <!-- DOCGEN:END id="title-vendor-access" -->
 
 ## Price tiers
@@ -38,6 +38,6 @@ You can buy and display any title here regardless of whether you've earned it th
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bcde58db701f -->
-_Last updated: 2026-06-14 13:15 UTC_
+<!-- content-hash: e7c56bd27efa -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

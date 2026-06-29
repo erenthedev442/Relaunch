@@ -29,7 +29,15 @@ Rebirth is a three-step cycle:
 
 1. **Master the job** — Reach level 99 and spend all 2,100 Job Points.
 2. **Rebirth at the altar** — Choose **Rebirth this job** and confirm. The job resets to level 1 and its Job Points are fully wiped.
-3. **Earn Rebirth Points** — Each rebirth grants **10–20 RP**: 10 for your 1st rebirth, +2 per additional rebirth, capped at 20.
+3. **Earn Rebirth Points** — Each rebirth grants RP on an **accelerating curve**: your 1st rebirth pays **10 RP**, but later rebirths pay more as the curve steepens. Every 10th rebirth is a **milestone** and pays a bonus +30 RP on top of the curve value.
+
+| Rebirth | RP granted |
+|---|---:|
+| 1st | 10 |
+| 5th | 19 |
+| 10th _(milestone)_ | 64 |
+| 20th _(milestone)_ | 102 |
+| 30th+ | keeps growing… |
 
 !!! warning "Rebirth is permanent"
     A rebirth cannot be undone. Your level and Job Points on that job are wiped the moment you confirm. Everything you have bought with Rebirth Points — and the points themselves — are kept.
@@ -42,7 +50,7 @@ Rebirth is a three-step cycle:
 
 ### What You Gain
 
-- **10–20 Rebirth Points** banked for that job (base 10, +2 per rebirth, cap 20).
+- **Rebirth Points** banked for that job (more per rebirth as you go).
 - Spent on **permanent** per-job stat boosts that survive every future rebirth.
 <!-- DOCGEN:END id="rebirth-how-it-works" -->
 
@@ -150,15 +158,15 @@ Boosts are **permanent and stacking** — they re-apply automatically every time
 ## The Trial of Mastery
 
 <!-- DOCGEN:BEGIN id="rebirth-exp-penalty" -->
-Each rebirth deepens a **multiplicative EXP cut** on that job — a *true* reduction taken **after** all of your gear, food, and augment EXP bonuses, so no amount of +EXP augments can cancel it. It scales linearly to a cap of **−80%** at the **20th rebirth**. The cut is **per-job** — it only slows the job that has been reborn, and disappears the instant you switch to anything else. A job can never be locked out: EXP is always floored at **5%** of base, so the climb stays possible — but a many-times-reborn job is a true endgame grind.
+Each rebirth deepens a **multiplicative EXP cut** on that job — a *true* reduction taken **after** all of your gear, food, and augment EXP bonuses, so no amount of +EXP augments can cancel it. The cut starts small and grows on an accelerating curve, capping at **−90%** (reached around your 29th rebirth). The cut is **per-job** — it only slows the job that has been reborn, and disappears the instant you switch to anything else. A job can never be locked out: EXP is always floored at **5%** of base, so the climb stays possible — but a many-times-reborn job is a true endgame grind.
 
-| Rebirth | EXP Cut (that job) | EXP kept (of what you'd otherwise earn) |
+| Rebirth | EXP Cut (that job) | EXP kept |
 |---|---:|---:|
 | 1st | −4% | 96% |
-| 5th | −20% | 80% |
-| 10th | −40% | 60% |
-| 15th | −60% | 40% |
-| 20th and beyond | **−80%** (cap) | 20% |
+| 5th | −11% | 89% |
+| 10th _(milestone)_ | −32% | 68% |
+| 20th _(milestone)_ | −64% | 36% |
+| 29th+ | **−90%** _(cap)_ | 10% |
 <!-- DOCGEN:END id="rebirth-exp-penalty" -->
 
 ---
@@ -189,6 +197,6 @@ Rebirth and [Ascension](prestige.md) are **separate systems that share one menu 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a86ca0baf5b3 -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: 6f4915767eed -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

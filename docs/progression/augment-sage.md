@@ -85,7 +85,7 @@ Holding an affinity multiplies augments **in that category** by **1.5×**. Affin
 | 6 | Defense | Genbu | Seal of Genbu | 14 |
 | 7 | AGI | Roc | Giant Bird Feather | 2 |
 | 8 | Evasion | Seiryu | Seal of Seiryu | 3 |
-| 9 | Haste | Byakko | Seal of Byakko | 25 |
+| 9 | Haste | Byakko | Seal of Byakko | 7 |
 | 10 | INT | Aspidochelone | Spirit Turtle Shell | 3 |
 | 11 | Magic ATK | Ouryu | Dragon Talon | 30 |
 | 12 | MND | Bune | Vial of Chimera Blood | 1 |
@@ -97,8 +97,8 @@ Holding an affinity multiplies augments **in that category** by **1.5×**. Affin
 | 18 | MP | Vrtra | Wyrm Beard | 2 |
 | 19 | Refresh | Tiamat | Wyrm Horn | 2 |
 | 20 | Pet | King_Vinegarroon | Scorpion Stinger | 57 |
-| 21 | Ele Resist | Khimaira | Khimaira Mane | 49 |
-| 22 | Status | Cerberus | Cerberus Hide | 13 |
+| 21 | Ele Resist | Khimaira | Khimaira Mane | 39 |
+| 22 | Status | Cerberus | Cerberus Hide | 1 |
 | 23 | Skills | Absolute_Virtue | Attestation of Virtue | 38 |
 | 24 | WSD+ | Proto-Omega | Omega Ring | 5 |
 <!-- DOCGEN:END id="sage-affinities" -->
@@ -133,6 +133,6 @@ Only the **affinity registration** trophy (Track 2) is removed from inventory on
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 75d6c08864fb -->
-_Last updated: 2026-06-28 05:55 UTC_
+<!-- content-hash: 426d06064c84 -->
+_Last updated: 2026-06-29 04:48 UTC_
 <!-- DOCGEN:END id="last-updated" -->

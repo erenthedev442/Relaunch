@@ -7,7 +7,7 @@ the Relaunch server rewards players who log in consistently. Two systems run sid
 ## Daily Login Bonus
 
 <!-- DOCGEN:BEGIN id="login-daily-bonus" -->
-Every day you log in, you receive **+250 Hunt Marks** automatically. The bonus fires once per UTC day.
+Every day you log in, you receive **+50 Hunt Marks** automatically. The bonus fires once per UTC day.
 <!-- DOCGEN:END id="login-daily-bonus" -->
 
 Re-logging or zoning does not trigger it again.
@@ -27,10 +27,10 @@ On top of the daily bonus, the server tracks how many consecutive days you have 
 <!-- DOCGEN:BEGIN id="login-streak-milestones" -->
 | Streak | One-Time Bonus |
 |---|---|
-| 7 days in a row | +1500 Hunt Marks |
-| 14 days in a row | +3000 Hunt Marks |
-| 21 days in a row | +4500 Hunt Marks |
-| 30 days in a row | +10500 Hunt Marks |
+| 7 days in a row | +75 Hunt Marks |
+| 14 days in a row | +200 Hunt Marks |
+| 21 days in a row | +400 Hunt Marks |
+| 30 days in a row | +750 Hunt Marks |
 <!-- DOCGEN:END id="login-streak-milestones" -->
 
 Each milestone reward is granted **once per threshold**. Reaching 30 days also triggers the 7-day and 14-day rewards (if you have not already claimed them).
@@ -59,6 +59,6 @@ Streaks are a low-effort way to accumulate marks between active play sessions. E
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6814d95194ad -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: c08d49e1c26f -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

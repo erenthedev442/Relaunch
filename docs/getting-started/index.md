@@ -15,6 +15,6 @@ If you've played retail FFXI before, the client setup is the same — only the s
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6f539badef20 -->
-_Last updated: 2026-06-16 22:53 UTC_
+<!-- content-hash: b8fd8568cbc1 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

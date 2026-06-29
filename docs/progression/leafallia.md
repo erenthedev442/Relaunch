@@ -37,3 +37,10 @@ Leafallia is the relaunch's **endgame hub**. Once you're geared and into the mas
 ---
 
 *The combat **Test Dummy** for DPS testing remains in GM Home (reach it with `!gmhome`).*
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: a1a7872a4f8b -->
+_Last updated: 2026-06-29 04:19 UTC_
+<!-- DOCGEN:END id="last-updated" -->

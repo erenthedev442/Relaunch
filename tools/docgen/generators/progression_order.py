@@ -369,7 +369,7 @@ def _render(
         "10. **Augment your gear.** Visit the **Augment Moogle in Leafallia** (`!leaf`) "
         "to add random stats to equipment. "
         "For passive endgame bonuses, earn enough Infamy to unlock the "
-        "**Augment Sage** — also in Leafallia — Infamy comes from apex Reisenjima NMs, Scheduled "
+        "**Augment Sage** — also in Leafallia — Infamy comes from apex Escha - Ru'Aun NMs, Scheduled "
         "Invasions, and the weekly Raid. "
         "The Sage applies permanent stat bonuses outside the normal augment RNG."
     )

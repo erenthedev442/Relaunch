@@ -10,7 +10,7 @@ Dying inside **Escha ZiTah** — the Hunting League zone — costs you **10 Hunt
 | Setting | Value |
 |---|---|
 | Mark loss per death | **−10 Hunt Marks** |
-| Zone scope | Reisenjima Henge only |
+| Zone scope | Escha ZiTah only |
 | New-player grace | Players with fewer than **50 NM kills** are exempt |
 | Floor | Balance never goes below zero |
 <!-- DOCGEN:END id="death-penalty-config" -->
@@ -46,6 +46,6 @@ The Hunting League is built around high-level NM combat. A small mark cost on de
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f26eb5d5bc08 -->
-_Last updated: 2026-06-04 15:28 UTC_
+<!-- content-hash: 8435a648743a -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -24,7 +24,7 @@
 --   * Death hook via xi.player.onPlayerDeath override.
 --   * Timer-based floor advance (never re-entrant from mob callback).
 --
--- NPC: Endless Tower Arbiter in GM Home (zone 210), z = -35.
+-- NPC: Endless Tower Arbiter in Leafallia (zone 281).
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Walk_of_Echoes/Zone')

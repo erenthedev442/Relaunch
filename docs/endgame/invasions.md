@@ -44,8 +44,8 @@ The more defenders who answer the call, the **larger each wave** — bring frien
 <!-- DOCGEN:BEGIN id="invasions-rewards" -->
 Every defender present is paid out — credit goes to anyone in Al Zahbi at the relevant moment:
 
-- **150 Hunt Marks** for each wave cleared.
-- **1,125 Hunt Marks + 100 Infamy** on a full victory (the boss falls). This is a major source of Infamy.
+- **20 Hunt Marks** for each wave cleared.
+- **100 Hunt Marks + 100 Infamy** on a full victory (the boss falls). This is a major source of Infamy.
 - **150 Hunt Marks** as a consolation if the clock beats the defense.
 
 Victory also drops gear-vendor **medals** — a guaranteed Kindreds Medal haul, plus a **guaranteed Demons Medal** drop.
@@ -56,6 +56,6 @@ Those medals feed the Armor and Weapons gear vendors (see the `!hunt` gear loop)
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a4a0f6f93497 -->
-_Last updated: 2026-06-20 21:09 UTC_
+<!-- content-hash: 66aeb68bc944 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

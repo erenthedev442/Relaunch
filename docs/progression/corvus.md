@@ -8,7 +8,7 @@
 ## At a glance
 
 <!-- DOCGEN:BEGIN id="corvus-summary" -->
-- **Where:** the **Void Keeper** in <!--npc:void_keeper-->Leafallia<!--/npc--> — the same NPC that grants [Meat](meat.md) and [Gemma](skoll.md)
+- **Where:** the **Void Keeper** in **Leafallia** (reach it with `!leaf`) — the same NPC that grants [Meat](meat.md) and [Gemma](skoll.md)
 - **Unlock:** **Hunting League Rank 4 + 5,000 Hunt Marks** — one-time, permanent, per character
 - **Role:** ranged damage dealer — he stands at the back line and shoots
 - **To summon:** cast **Curilla** from your Trust menu — that slot *is* Corvus (the name **Corvus** appears over his head and in your party list)
@@ -25,7 +25,7 @@ Corvus is built around one job: ranged damage.
 ## How to unlock
 
 <!-- DOCGEN:BEGIN id="corvus-unlock" -->
-Reach **Hunting League Rank 4 + 5,000 Hunt Marks**, then travel to <!--npc:void_keeper-->Leafallia<!--/npc-->, find the **Void Keeper**, and bind Corvus. The marks are spent once; the binding is permanent and per character — earn him once and he's yours forever.
+Reach **Hunting League Rank 4 + 5,000 Hunt Marks**, then travel to **Leafallia** with `!leaf`, find the **Void Keeper**, and bind Corvus. The marks are spent once; the binding is permanent and per character — earn him once and he's yours forever.
 
 In your Trust menu he shows up as **"Curilla"** — that Trust slot was re-used, so the menu label is just cosmetic. Cast **Curilla**, and the archer who answers — named **Corvus** over his head — *is* him.
 
@@ -35,6 +35,6 @@ So: **cast Curilla → get Corvus.**
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 50b113bb158f -->
-_Last updated: 2026-06-28 05:28 UTC_
+<!-- content-hash: c6f1561030f5 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

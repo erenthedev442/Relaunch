@@ -1,5 +1,8 @@
 # Summoning
 
+!!! warning "Summoner is the Boom job on this server"
+    The relaunch repurposes the Summoner job slot into the custom **[Boom job](../../progression/boom-job.md)** — a pet-less staff DD whose elemental spells *detonate*. Avatar/spirit summoning is **not** the slot's function here, so the summoning spells below are legacy database entries and aren't used by Boom.
+
 _Spells are sorted by ID._
 
 **Spells in this category:** 22
@@ -32,6 +35,6 @@ _Spells are sorted by ID._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4586dca23037 -->
-_Last updated: 2026-06-12 23:32 UTC_
+<!-- content-hash: bc3c3165eb79 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

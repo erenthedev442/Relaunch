@@ -1,14 +1,14 @@
-﻿# Player Commands
+# Player Commands
 
-These chat commands are available to every player on the Relaunch server (no GM rank required). Type them in any chat channel with the `!` prefix.
+These chat commands are available to every player on Legendary (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 74
+**Total player-accessible commands:** 82
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    50 of the commands below are **unique to the Relaunch server** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    56 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -16,21 +16,25 @@ These chat commands are available to every player on the Relaunch server (no GM 
 |---|---|---|---|
 | `!abyssea` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!achievements` | — | Shows all personal milestone achievements - earned and unearned - with their reward amounts and descriptions. | :material-puzzle: **custom** |
-| `!aegis` | — | Cast Divine Aegis (a PLD-only custom spell) on yourself: a Holy shield that absorbs physical damage and cuts physical damage taken by 20% for 30s, then detonates as a Holy AoE. Exposed as a command because the client cannot hard-cast custom spell IDs. | :material-puzzle: **custom** |
-| `!affinitynm` | string | Warp to any of the 24 Augment-Sage affinity NMs — `!affinitynm` lists them, `!affinitynm 4` or `!affinitynm simurgh` warps. | :material-puzzle: **custom** |
+| `!affinitynm` | string | _(no description)_ | :material-puzzle: **custom** |
+| `!affinitypop` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!ah` | — | opens the Auction House menu anywhere in the world |  |
-| `!aoews` | string | Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (GM Home). Cannot be changed after setting. |  |
+| `!ambuscade` | string | _(no description)_ | :material-puzzle: **custom** |
+| `!aoews` | string | Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (Leafallia, !leaf). Cannot be changed after setting. |  |
 | `!apex` | string | Apex Trials helper -- check your record / Paragon Points, start a climb, or bail out of one. | :material-puzzle: **custom** |
 | `!augstats` | — | Shows the true augment contributions on your equipped gear. |  |
+| `!augwarp` | string | Warp to a zone that drops a catalyst for a given augment stat. Usage: !augwarp <stat or catalyst name> (e.g. !augwarp Haste). | :material-puzzle: **custom** |
 | `!autojp` | string | Auto-spends all unspent job points on whichever categories of the player's CURRENT MAIN JOB can still be upgraded, distributing breadth-first so every category grows evenly. | :material-puzzle: **custom** |
 | `!automerits` | string | Auto-spends all unspent merit points on whichever categories can still be upgraded, distributing breadth-first so every category grows evenly rather than one rank stack getting maxed first. | :material-puzzle: **custom** |
 | `!buff` | string | Grants the zone-appropriate regional buff (Signet / Sanction / Sigil / Ionis) plus Refresh, Regen, Regain, and Composure to the player. Refresh = 10% of max MP per tick Regen   = 10% of max HP per tick Regain  = scales with player level (1 per 10 levels, min 1) |  |
 | `!checkexpbonus` | — | Prints your current EXP_BONUS mod (gear/augments that boost EXP gain) and the per-kill effect it has. Useful for verifying that an EXP augment is actually attached to the player after equipping the piece. |  |
-| `!convergence` | — | Cast Convergence (an RDM-only custom spell) on your current target: a random element + enfeeble combo that deals magic damage plus one of six status effects (Slow, Blind, Paralyze, Silence, Gravity, or Bind). Exposed as a command because the client cannot hard-cast custom spell IDs. | :material-puzzle: **custom** |
 | `!dig` | — | Treasure Hunting - dig for the strongbox your treasure map points at. Maps drop from Hunting League kills. | :material-puzzle: **custom** |
+| `!empower` | string, string | View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC in Leafallia (see SpellSkillMastery.lua). | :material-puzzle: **custom** |
 | `!events` | — | Lists upcoming and active seasonal bonus mark events from the catalog.  Shows event name, multiplier, start/end dates, and status (active / upcoming / expired). | :material-puzzle: **custom** |
+| `!expcamp` | string | _(no description)_ | :material-puzzle: **custom** |
 | `!featured` | — | Shows which NM is the Weekly Featured Hunt for each Hunting League tier.  Featured NMs award 2x base marks on the first kill of the week - the bonus stacks with the First-Kill bonus. | :material-puzzle: **custom** |
-| `!gainexp` | — | Player-facing on-demand version of RoE timed record 4013 ("Gain Experience"). Instantly credits the reward bundle: +1500 EXP, +300 sparks, +300 accolades, 1x Copper Aman Voucher | :material-puzzle: **custom** |
+| `!fellow` | string, int | Opens the Adventuring Fellow menu (summon/dismiss, allocate stat points, choose role, view status). Your Fellow is a personal companion ANY job can summon; it levels from your kills and you build it as you like. | :material-puzzle: **custom** |
+| `!fellowstats` | — | Dumps live mod values straight off the spawned Fellow pet. Fellow must be summoned. Spend a point, re-run, watch the number move. | :material-puzzle: **custom** |
 | `!gauntlet` | string | _(no description)_ |  |
 | `!getstats` | string | prints stats of cursor target into chatlog, for debugging. |  |
 | `!gmhome` | — | Sends you to zone 210 (GM_HOME), if you are a GM |  |
@@ -46,7 +50,9 @@ These chat commands are available to every player on the Relaunch server (no GM 
 | `!hunt5` | — | Warps you to the Tier 5 (Rank V - Legend) hunt spawner in Escha - Zi'Tah. NMs: Absolute Virtue, Pandemonium Warden, Shinryu. |  |
 | `!huntrank` | string | Displays the player's Hunter's Guild status across all four guilds — current rank, rep, amplifier %, and progress to the next rank. Also shows Trinity / Apex capstone status, and the v2 Vana'diel hunt-target list per guild so the player knows what to go kill. |  |
 | `!iwarp` | — | _(no description)_ | :material-puzzle: **custom** |
+| `!leaf` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!lfg` | string | Broadcasts a Looking-For-Group announcement server-wide so other players know you're looking for someone to play with. | :material-puzzle: **custom** |
+| `!lib` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!maat` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!marks` | — | Quick Hunt Marks balance - current spendable balance plus an at-a-glance kill-streak summary. | :material-puzzle: **custom** |
 | `!mastery` | string, string, string | _(no description)_ | :material-puzzle: **custom** |
@@ -57,7 +63,8 @@ These chat commands are available to every player on the Relaunch server (no GM 
 | `!offhand` | string | _(no description)_ | :material-puzzle: **custom** |
 | `!optin` | — | Opts the player INTO leaderboards and Discord tracking. This is the default state for new characters. | :material-puzzle: **custom** |
 | `!optout` | — | Opts the player OUT of leaderboards and Discord tracking. This character is excluded from every leaderboard entirely. | :material-puzzle: **custom** |
-| `!primevoucher` | string, int | [GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in GM Home to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it. | :material-puzzle: **custom** |
+| `!pos` | string | Sets the players position. If none is given, prints out the position instead. |  |
+| `!primevoucher` | string, int | [GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in Leafallia (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it. | :material-puzzle: **custom** |
 | `!profile` | string | Displays a competitive stat summary for a player.  With no argument shows your own stats; with a name shows that player's (they must be online - offline players can't be queried via Lua). | :material-puzzle: **custom** |
 | `!progress` | string | Prints a cross-system progression summary: Hunting League rank, Hunt Marks, Reforge Marks, weekly-hunt completion, Hunter's Guild standings, and Daily Board - all in one quick readout. | :material-puzzle: **custom** |
 | `!prov1` | — | _(no description)_ | :material-puzzle: **custom** |
@@ -72,32 +79,25 @@ These chat commands are available to every player on the Relaunch server (no GM 
 | `!release` | string | Releases the player from current events. |  |
 | `!releaseme` | string, string | Force-clears stuck event / NPC-sequence state on a player. |  |
 | `!shop` | string, string | _(no description)_ | :material-puzzle: **custom** |
-| `!silencega` | — | Cast Silencega: an area Silence on your current target and nearby enemies. Since Silencega uses a standard spell ID you can also cast it normally with /ma "Silencega"; this command is a convenience. | :material-puzzle: **custom** |
 | `!streak` | — | Shows the current kill streak count, active bonus tier, and seconds remaining in the 5-minute window before reset. | :material-puzzle: **custom** |
 | `!tier` | — | Shows the player's current Hunting League tier, the NMs available at that tier, and exactly what is needed to unlock the next rank. | :material-puzzle: **custom** |
 | `!time` | — | Shows server time (UTC), hours until daily reset, days until weekly reset (Monday 00:00 UTC), and any active seasonal event. | :material-puzzle: **custom** |
-| `!top` | string | Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at the Relaunch server-ffxi.pages.dev | :material-puzzle: **custom** |
-| `!tournament` | string, string, string | the Relaunch server Tournament — last-person-standing PvE wave event. | :material-puzzle: **custom** |
+| `!top` | string | Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at legendary-ffxi.pages.dev | :material-puzzle: **custom** |
+| `!tournament` | string, string, string | Legendary Tournament — last-person-standing PvE wave event. | :material-puzzle: **custom** |
 | `!tower` | string, string | _(no description)_ | :material-puzzle: **custom** |
 | `!trustattack` | — | Run once to turn ON: while on, you AUTO-ENGAGE whatever mob you have targeted (cursor target), so you and your trusts attack it hands-free -- point at the next mob and you all switch to it. Run again to turn OFF. Macro:  /console !trustattack | :material-puzzle: **custom** |
 | `!unstick` | — | Self-rescue from stuck event/sequence state. |  |
 | `!visitant` | — | _(no description)_ | :material-puzzle: **custom** |
+| `!voidwatch` | string, int | Voidwatch-flavored rift battles. Open the menu, or tear a rift in the field. | :material-puzzle: **custom** |
 | `!warpty` | — | _(no description)_ |  |
 | `!wavemaster` | — | Warps you to Escha - Ru'Aun where the Wave Master NPC is located. The Wave Master runs themed enemy wave fights (Easy -> Nightmare) that reward Hunt Marks on full clear. | :material-puzzle: **custom** |
 | `!waypoint` | string, string | Personal, per-character warp points. Each player can save up to 10 positions (slots 1-10) wherever they stand and warp back later. Slots are overwritable -- saving over a slot just replaces it. | :material-puzzle: **custom** |
 | `!week` | — | Shows the player's current weekly objectives at a glance: Weekly Hunt Board progress and featured NMs killed. Resets each Monday 00:00 UTC. | :material-puzzle: **custom** |
 | `!weekly` | — | Displays the player's current Weekly Hunt Board progress — the 5 rolled objectives, per-objective progress, and the lifetime "Weekly Hunter" sweep counter. |  |
 | `!who` | — | Lists players who have logged in during this server session, sorted by Hunting League tier (highest first), with their tier name shown.  Stale entries (crashed clients) are pruned lazily via GetPlayerByName at query time. | :material-puzzle: **custom** |
+| `!zone` | bool/raw | Teleports a player to the given zone. |  |
 
 ## Movement & Teleport
-
-### `!affinitynm`  _(custom)_
-
-Warp to any of the 24 Augment-Sage affinity NMs. Run `!affinitynm` with no argument to list them, then `!affinitynm 4` (by number) or `!affinitynm simurgh` (by name) to warp.
-
-**Usage:** `affinitynm [number|name]`
-
-**Parameter types:** string
 
 ### `!gmhome`
 
@@ -112,6 +112,22 @@ Sends the target to their homepoint.
 **Usage:** `homepoint`
 
 **Parameter types:** string
+
+### `!pos`
+
+Sets the players position. If none is given, prints out the position instead.
+
+**Usage:** `pos <x> <y> <z> <optional zone> <optional target>`
+
+**Parameter types:** string
+
+### `!zone`
+
+Teleports a player to the given zone.
+
+**Usage:** `zone`
+
+**Parameter types:** bool/raw
 
 ## Items & Inventory
 
@@ -153,12 +169,6 @@ Grants the zone-appropriate regional buff (Signet / Sanction / Sigil / Ionis) pl
 
 **Parameter types:** string
 
-### `!gainexp`  _(custom)_
-
-Player-facing on-demand version of RoE timed record 4013 ("Gain Experience"). Instantly credits the reward bundle: +1500 EXP, +300 sparks, +300 accolades, 1x Copper Aman Voucher
-
-**Usage:** `gainexp`
-
 ## Information & Debug
 
 ### `!getstats`
@@ -187,15 +197,25 @@ Shows all personal milestone achievements - earned and unearned - with their rew
 
 **Usage:** `achievements`
 
-### `!aegis`  _(custom)_
+### `!affinitynm`  _(custom)_
 
-Cast Divine Aegis (a PLD-only custom spell) on yourself: a Holy shield that absorbs physical damage and cuts physical damage taken by 20% for 30s, then detonates as a Holy AoE. Exposed as a command because the client cannot hard-cast custom spell IDs.
+**Usage:** `affinitynm`
 
-**Usage:** `aegis`
+**Parameter types:** string
+
+### `!affinitypop`  _(custom)_
+
+**Usage:** `affinitypop`
+
+### `!ambuscade`  _(custom)_
+
+**Usage:** `ambuscade`
+
+**Parameter types:** string
 
 ### `!aoews`
 
-Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (GM Home). Cannot be changed after setting.
+Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (Leafallia, !leaf). Cannot be changed after setting.
 
 **Usage:** `aoews`
 
@@ -215,17 +235,19 @@ Shows the true augment contributions on your equipped gear.
 
 **Usage:** `augstats`
 
+### `!augwarp`  _(custom)_
+
+Warp to a zone that drops a catalyst for a given augment stat. Usage: !augwarp <stat or catalyst name> (e.g. !augwarp Haste).
+
+**Usage:** `augwarp`
+
+**Parameter types:** string
+
 ### `!checkexpbonus`
 
 Prints your current EXP_BONUS mod (gear/augments that boost EXP gain) and the per-kill effect it has. Useful for verifying that an EXP augment is actually attached to the player after equipping the piece.
 
 **Usage:** `checkexpbonus`
-
-### `!convergence`  _(custom)_
-
-Cast Convergence (an RDM-only custom spell) on your current target: a random element + enfeeble combo that deals magic damage plus one of six status effects (Slow, Blind, Paralyze, Silence, Gravity, or Bind). Exposed as a command because the client cannot hard-cast custom spell IDs.
-
-**Usage:** `convergence`
 
 ### `!dig`  _(custom)_
 
@@ -233,17 +255,45 @@ Treasure Hunting - dig for the strongbox your treasure map points at. Maps drop 
 
 **Usage:** `dig`
 
+### `!empower`  _(custom)_
+
+View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC in Leafallia (see SpellSkillMastery.lua).
+
+**Usage:** `empower`
+
+**Parameter types:** string, string
+
 ### `!events`  _(custom)_
 
 Lists upcoming and active seasonal bonus mark events from the catalog.  Shows event name, multiplier, start/end dates, and status (active / upcoming / expired).
 
 **Usage:** `events`
 
+### `!expcamp`  _(custom)_
+
+**Usage:** `expcamp`
+
+**Parameter types:** string
+
 ### `!featured`  _(custom)_
 
 Shows which NM is the Weekly Featured Hunt for each Hunting League tier.  Featured NMs award 2x base marks on the first kill of the week - the bonus stacks with the First-Kill bonus.
 
 **Usage:** `featured`
+
+### `!fellow`  _(custom)_
+
+Opens the Adventuring Fellow menu (summon/dismiss, allocate stat points, choose role, view status). Your Fellow is a personal companion ANY job can summon; it levels from your kills and you build it as you like.
+
+**Usage:** `fellow`
+
+**Parameter types:** string, int
+
+### `!fellowstats`  _(custom)_
+
+Dumps live mod values straight off the spawned Fellow pet. Fellow must be summoned. Spend a point, re-run, watch the number move.
+
+**Usage:** `fellowstats`
 
 ### `!gauntlet`
 
@@ -313,6 +363,10 @@ Displays the player's Hunter's Guild status across all four guilds — current r
 
 **Usage:** `iwarp`
 
+### `!leaf`  _(custom)_
+
+**Usage:** `leaf`
+
 ### `!lfg`  _(custom)_
 
 Broadcasts a Looking-For-Group announcement server-wide so other players know you're looking for someone to play with.
@@ -320,6 +374,10 @@ Broadcasts a Looking-For-Group announcement server-wide so other players know yo
 **Usage:** `lfg`
 
 **Parameter types:** string
+
+### `!lib`  _(custom)_
+
+**Usage:** `lib`
 
 ### `!maat`  _(custom)_
 
@@ -375,7 +433,7 @@ Opts the player OUT of leaderboards and Discord tracking. This character is excl
 
 ### `!primevoucher`  _(custom)_
 
-[GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in GM Home to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it.
+[GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in Leafallia (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it.
 
 **Usage:** `primevoucher`
 
@@ -463,12 +521,6 @@ Force-clears stuck event / NPC-sequence state on a player.
 
 **Parameter types:** string, string
 
-### `!silencega`  _(custom)_
-
-Cast Silencega: an area Silence on your current target and nearby enemies. Since Silencega uses a standard spell ID you can also cast it normally with /ma "Silencega"; this command is a convenience.
-
-**Usage:** `silencega`
-
 ### `!streak`  _(custom)_
 
 Shows the current kill streak count, active bonus tier, and seconds remaining in the 5-minute window before reset.
@@ -489,7 +541,7 @@ Shows server time (UTC), hours until daily reset, days until weekly reset (Monda
 
 ### `!top`  _(custom)_
 
-Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at the Relaunch server-ffxi.pages.dev
+Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at legendary-ffxi.pages.dev
 
 **Usage:** `top`
 
@@ -497,7 +549,7 @@ Shows the top 5 currently online players ranked by a stat. Opted-out players are
 
 ### `!tournament`  _(custom)_
 
-the Relaunch server Tournament — last-person-standing PvE wave event.
+Legendary Tournament — last-person-standing PvE wave event.
 
 **Usage:** `tournament`
 
@@ -524,6 +576,14 @@ Self-rescue from stuck event/sequence state.
 ### `!visitant`  _(custom)_
 
 **Usage:** `visitant`
+
+### `!voidwatch`  _(custom)_
+
+Voidwatch-flavored rift battles. Open the menu, or tear a rift in the field.
+
+**Usage:** `voidwatch`
+
+**Parameter types:** string, int
 
 ### `!warpty`
 
@@ -568,6 +628,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 26a12e703606 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 3cf1669d8133 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

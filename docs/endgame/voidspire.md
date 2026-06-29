@@ -62,11 +62,11 @@ Reaching certain depths pays a bonus on top — awarded on your **first clear of
 
 | Reach floor | Bonus marks |
 |---:|---:|
-| 10 | **2,500** |
-| 25 | **10,000** |
-| 50 | **25,000** |
-| 75 | **40,000** |
-| 100 | **70,000** |
+| 10 | **50** |
+| 25 | **150** |
+| 50 | **350** |
+| 75 | **600** |
+| 100 | **1,000** |
 <!-- DOCGEN:END id="voidspire-rewards" -->
 
 Marks spend across the same Hunting League economy as the rest of your
@@ -76,6 +76,6 @@ remembers how deep you dared to go.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 01487ce32822 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: d3a93418b1a2 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

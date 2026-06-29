@@ -8,7 +8,7 @@ Feeling lucky? **Lady Luck** runs a four-game casino in **Celennia Memorial Libr
 ## Where to play
 
 <!-- DOCGEN:BEGIN id="casino-access" -->
-**Lady Luck** holds court in **GM Home** — step up to the table, pick a game, and place your stake.
+**Lady Luck** holds court in **Celennia Memorial Library** — step up to the table, pick a game, and place your stake.
 <!-- DOCGEN:END id="casino-access" -->
 
 ## Placing a bet
@@ -37,6 +37,6 @@ All payouts are **total-return** multipliers: a 2× win on a 25,000 gil bet retu
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 720374808777 -->
-_Last updated: 2026-06-14 13:15 UTC_
+<!-- content-hash: 5ac5e4066b2c -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

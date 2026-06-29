@@ -8,7 +8,7 @@ A weapons vendor in **Escha ZiTah** that sells gear across three tiers — **Bro
 ## Where to shop
 
 <!-- DOCGEN:BEGIN id="gear-progression-access" -->
-The **Gear Progression** vendor stands in **Reisenjima Henge** — the hub all five hunting ranks lead back to. Bring the medals you earn from content, pick a tier, then a weapon category, and trade up.
+The **Gear Progression** vendor stands in **Escha ZiTah** — the hub all five hunting ranks lead back to. Bring the medals you earn from content, pick a tier, then a weapon category, and trade up.
 <!-- DOCGEN:END id="gear-progression-access" -->
 
 ## The three medal currencies
@@ -40,6 +40,6 @@ Bronze is your first upgrade off starter gear; Silver and Gold sharpen that into
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a507ab0e48dc -->
-_Last updated: 2026-06-23 05:17 UTC_
+<!-- content-hash: c806ef04c997 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -38,7 +38,7 @@ Ascending is a three-step cycle:
 
 The cost **caps at 3,000 marks** — every ascension from the 6th onward costs the same flat 3,000.
 
-_Each ascension awards **10 AP** for your current main job._
+_Each ascension awards AP scaled by your Prestige Level: **10 AP** (P.Lv 1–51), **15 AP** (P.Lv 52–81), **20 AP** (P.Lv 82+)._
 <!-- DOCGEN:END id="prestige-economy" -->
 
 ---
@@ -134,14 +134,14 @@ Spend AP at the Altar on any of the categories below.
 | Store TP | +2 Store TP / level (max +100) [2 AP] | 50 | 2 AP | — |
 | TP Bonus | +10 TP Bonus / level (max +500) [2 AP] | 50 | 2 AP | — |
 | Quad Atk | +1% Quad.Atk / level (max 50%) [2 AP] | 50 | 2 AP | — |
-| Crit Rate | +1% Crit / level (max 50%) [2 AP] | 50 | 2 AP | — |
-| Crit Dmg | +2% Crit Dmg / level (max 100%) [3 AP] | 50 | 3 AP | — |
+| Crit Rate | +1% Crit / level (max 20%) [2 AP] | 20 | 2 AP | — |
+| Crit Dmg | +2% Crit Dmg / level (max 40%) [3 AP] | 20 | 3 AP | — |
 | Counter | +1 Counter / level (max +50) [2 AP] | 50 | 2 AP | — |
 | Parry Rate | +1% Parry / level (max 25%) [1 AP] | 25 | 1 AP | — |
 | Subtle Blow | +1 Subtle Blow / level (max +50) [1 AP] | 50 | 1 AP | — |
-| WS Dmg | +2% WS Dmg / level (max 100%) [3 AP] | 50 | 3 AP | — |
+| WS Dmg | +2% WS Dmg / level (max 40%) [3 AP] | 20 | 3 AP | — |
 | Dual Wield | +1% Dual Wield / level (max 25%) [2 AP] | 25 | 2 AP | — |
-| SC Dmg | +2% Skillchain Dmg / level (max 100%) [3 AP] | 50 | 3 AP | — |
+| SC Dmg | +2% Skillchain Dmg / level (max 40%) [3 AP] | 20 | 3 AP | — |
 
 #### Ranged
 
@@ -154,16 +154,16 @@ Spend AP at the Altar on any of the categories below.
 
 | Stat | Per Level | Max Levels | AP Cost | Max Total |
 |---|---|---:|---:|---|
-| Phys.DT- | -1% Phys.DT / level (max -25%) [3 AP] | 25 | 3 AP | — |
-| Mag.DT- | -1% Mag.DT / level (max -25%) [3 AP] | 25 | 3 AP | — |
-| Haste | +1% Haste / level (max 25%) [3 AP] | 25 | 3 AP | — |
+| Phys.DT- | -1% Phys.DT / level (max -15%) [3 AP] | 15 | 3 AP | — |
+| Mag.DT- | -1% Mag.DT / level (max -15%) [3 AP] | 15 | 3 AP | — |
+| Haste | +1% Haste / level (max 15%) [3 AP] | 15 | 3 AP | — |
 
 #### Magic Support
 
 | Stat | Per Level | Max Levels | AP Cost | Max Total |
 |---|---|---:|---:|---|
 | Spell Intp | +1% SIRD / level (max 50%) [2 AP] | 50 | 2 AP | — |
-| Fast Cast | +1% Fast Cast / level (max 50%) [2 AP] | 50 | 2 AP | — |
+| Fast Cast | +1% Fast Cast / level (max 30%) [2 AP] | 30 | 2 AP | — |
 | Enspell Dmg | +10 Enspell Dmg / level (max +500) [2 AP] | 50 | 2 AP | — |
 | Cure Potency | +2% Cure Pot. / level (max +50%) [2 AP] | 25 | 2 AP | — |
 | Refresh | +1 Refresh / level (max +10 MP/tick) [3 AP] | 10 | 3 AP | — |
@@ -184,6 +184,12 @@ Spend AP at the Altar on any of the categories below.
 | Ele. Resist | +10 Ele.Resist / level (max +500 each) [1 AP] | 50 | 1 AP | — |
 | All Skills | +2 All Skills / level (max +100 each) [1 AP] | 50 | 1 AP | — |
 
+#### Pet Boost
+
+| Stat | Per Level | Max Levels | AP Cost | Max Total |
+|---|---|---:|---:|---|
+| Pet Boost | +40 all Pet stats / level (Atk/Def/Acc/Eva/MAtk/MAcc/Attr/TP, max +2000 each) [2 AP] | 50 | 2 AP | — |
+
 </div>
 <!-- DOCGEN:END id="prestige-ap-table" -->
 
@@ -202,6 +208,6 @@ Boosts are **permanent and stacking** — they re-apply automatically every time
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e154e431db02 -->
-_Last updated: 2026-06-23 10:27 UTC_
+<!-- content-hash: 57f77cea6c89 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

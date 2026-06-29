@@ -160,6 +160,6 @@ When all boxes are checked, you're at the ceiling of what gear can do for you. F
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c3f05bdea98a -->
-_Last updated: 2026-06-04 15:28 UTC_
+<!-- content-hash: 89ab8dc93b82 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

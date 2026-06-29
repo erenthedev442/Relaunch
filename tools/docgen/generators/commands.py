@@ -164,7 +164,7 @@ def _render(entries: list[dict]) -> str:
     lines = [
         "# Player Commands",
         "",
-        "These chat commands are available to every player on Legendary (no GM rank required). "
+        "These chat commands are available to every player on this server (no GM rank required). "
         "Type them in any chat channel with the `!` prefix.",
         "",
         f"**Total player-accessible commands:** {len(entries)}",
@@ -179,7 +179,7 @@ def _render(entries: list[dict]) -> str:
     if custom_total:
         lines += [
             "!!! note \"Custom commands\"",
-            f"    {custom_total} of the commands below are **unique to Legendary** "
+            f"    {custom_total} of the commands below are **unique to this server** "
             "and won't be found on a standard FFXI server. They're tagged "
             "**:material-puzzle: custom** in the table and their detail section, "
             "and every player can use them.",

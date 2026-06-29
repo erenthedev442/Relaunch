@@ -18,7 +18,7 @@ Trigger based on your total Hunting League NM kill count.
 | First Hunt | 1st HL kill | +50 | — |
 | Ten Hunts In | 10th HL kill | +100 | — |
 | Centennial Hunter | 100th HL kill | +300 | Desert Hunter |
-| the Relaunch server Slayer | 1,000th HL kill | +1,000 | Hero Among Heroes |
+| Legendary Slayer | 1,000th HL kill | +1,000 | Hero Among Heroes |
 
 ---
 
@@ -153,6 +153,6 @@ Trigger based on your total number of augmentation trades.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 132d09103ce8 -->
-_Last updated: 2026-06-23 10:27 UTC_
+<!-- content-hash: b7ef6d6b78f7 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -5,7 +5,7 @@
 -- player chooses between a safe advance (no combat) or a NM challenge.
 -- Level 10 has no safe option: defeat Shinryu or be expelled.
 --
--- Clearing level 10 grants a massive reward (500M gil / 50k PP / 50k Infamy)
+-- Clearing level 10 grants a reward (5M gil / 500 PP / 500 Infamy)
 -- and permanently spawns a named NPC champion in the Hall of Champions (B01).
 --
 -- Rules: No Trusts (cleared on zone-in). Pets OK. Death = expulsion.
@@ -482,7 +482,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
             player:printToPlayer(
                 '[The Gauntlet] Level 10: NO safe path — defeat Shinryu and earn your legend.', SYS)
             player:printToPlayer(
-                '[The Gauntlet] Reward: 500M gil | 50,000 Paragon Points | 50,000 Infamy.', SYS)
+                '[The Gauntlet] Reward: 5,000,000 gil | 500 Paragon Points | 500 Infamy.', SYS)
             if clears > 0 then
                 player:printToPlayer(string.format(
                     '[The Gauntlet] Your clear count: %d. The legend grows.', clears), SYS)

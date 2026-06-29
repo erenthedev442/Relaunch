@@ -130,6 +130,6 @@ Monsters killed inside **GM Home** (where the [Test Dummy](../progression/gm-hom
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 352a9e0857f9 -->
-_Last updated: 2026-06-28 05:28 UTC_
+<!-- content-hash: fec38e575fc2 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

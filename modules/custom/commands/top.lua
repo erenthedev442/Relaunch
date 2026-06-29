@@ -2,7 +2,7 @@
 -- func: top
 -- desc: Shows the top 5 currently online players ranked by a stat.
 --       Opted-out players are excluded.  For full server-wide rankings
---       see the website at legendary-ffxi.pages.dev
+--       see the website at fjb-relaunch.pages.dev
 --
 -- Usage:
 --   !top           - default: top by lifetime Hunt Marks
@@ -75,7 +75,7 @@ commandObj.onTrigger = function(player, arg)
     end
 
     player:printToPlayer(
-        '  Full server rankings: legendary-ffxi.pages.dev', B)
+        '  Full server rankings: fjb-relaunch.pages.dev', B)
 end
 
 return commandObj

@@ -1,7 +1,7 @@
 -----------------------------------
 -- unity_wanted_catalog.lua
 -- Unity Wanted NM definitions for the relaunch Unity Concord system.
--- All NMs spawn in zone 288 (Escha-Zi'tah / Reisenjima_Henge) via
+-- All NMs spawn in zone 288 (Escha-Zi'tah) via
 -- groupId/groupZoneId so mob_pools provides model + base stats.
 --
 -- Tiers:

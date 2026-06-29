@@ -198,6 +198,6 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 981124a16b26 -->
-_Last updated: 2026-06-20 21:09 UTC_
+<!-- content-hash: 170ae322ead0 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

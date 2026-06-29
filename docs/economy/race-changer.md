@@ -8,7 +8,7 @@ Want a fresh look? The **Race Changer** in <!--npc:race_changer-->the Celennia M
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="race-changer-access" -->
-The **Race Changer** stands at the end of the gil-services row in <!--npc:race_changer-->the Celennia Memorial Library<!--/npc-->. Talk to it, choose a new race and face, then confirm.
+The **Race Changer** stands in the services row of **the Celennia Memorial Library** (`!lib`). Talk to it, choose a new race and face, then confirm.
 <!-- DOCGEN:END id="race-changer-access" -->
 
 ## What it costs and what you get
@@ -22,6 +22,6 @@ Once you confirm, the fee is charged and you rezone for a moment so your new mod
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 64d9b33b3ce3 -->
-_Last updated: 2026-06-14 13:15 UTC_
+<!-- content-hash: b1be02b1da05 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

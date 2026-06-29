@@ -116,7 +116,7 @@ These systems don't have a fixed "unlock" point — run them alongside whatever 
 | **[Hunter's Guild](../progression/hunters-guild.md)** | Kill NMs to earn rep; rep gives escalating mark multipliers | Passive |
 | **[Game Master (Wave Mode)](../progression/game-master.md)** | Themed wave fights of rising difficulty for bonus marks | `!wavemaster` |
 | **[Cross-Job Abilities](../progression/cross-job-abilities.md)** | Buy abilities from other jobs for a flat gil price each | Leafallia (`!leaf`) |
-| **[Mystery Mog](../progression/gm-home.md#mystery-mog)** | Gil-sink gacha; rare prize = marks, Aman Voucher, or AP | Celennia Memorial Library (`!lib`) |
+| **[Mystery Mog](../progression/library.md)** | Gil-sink gacha; rare prize = marks, Aman Voucher, or AP | Celennia Memorial Library (`!lib`) |
 | **[Achievements](../progression/achievements.md)** | Milestone milestones across all systems | In-game menu |
 
 ---
@@ -136,6 +136,6 @@ On top of all of it, your **[Hunter's Guild](../progression/hunters-guild.md)** 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 876ef58c101d -->
-_Last updated: 2026-06-28 05:55 UTC_
+<!-- content-hash: 336c9567c17b -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

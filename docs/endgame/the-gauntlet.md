@@ -86,6 +86,6 @@ The Hall updates after the next map restart following a clear.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 084b87d3eae3 -->
-_Last updated: 2026-06-23 08:54 UTC_
+<!-- content-hash: 335c431f4f26 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

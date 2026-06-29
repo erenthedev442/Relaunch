@@ -304,7 +304,7 @@ _TABLE_BOARDS = [
         "marker":  "lb-deaths",
         "heading": "Most Deaths",
         "blurb":   "Times the character has been knocked unconscious. "
-                   "On Legendary you lose 3× retail EXP per death — wear it "
+                   "On this server you lose EXP per death — wear it "
                    "as a badge of honor (or shame).",
         "kind":    "deaths",
         "unit":    "deaths",

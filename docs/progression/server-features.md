@@ -98,8 +98,7 @@ Type `!ah` from anywhere to open the Auction House menu. You don't need to trave
 | 51–60 | 410,000 gil |
 | 61–70 | 510,000 gil |
 | 71–75 | 640,000 gil |
-| 76–98 | 800,000 gil |
-| 99 | 1,000,000 gil |
+| 76–90 | 800,000 gil |
 <!-- DOCGEN:END id="ah-prices" -->
 
 ### Guaranteed Buy-Back
@@ -165,6 +164,6 @@ First Blood moments are real on the Relaunch server. If you're the first person 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 18e90bcb312c -->
-_Last updated: 2026-06-20 21:09 UTC_
+<!-- content-hash: 176f37d14f26 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

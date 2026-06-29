@@ -624,7 +624,7 @@ def _render_index(rows: list[dict]) -> str:
     lines = [
         "# Player Profiles",
         "",
-        f"{len(rows)} characters with public profiles on Legendary. "
+        f"{len(rows)} characters with public profiles on the Relaunch server. "
         "Click a name for the full breakdown — jobs, hunt league progress, "
         "augment mastery, gear/play stats, speed records.",
         "",

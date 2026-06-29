@@ -34,3 +34,10 @@ The Celennia Memorial Library is the relaunch's **starting hub** — convenience
 ---
 
 *New-character set-up (weapon skills, spells, key items, missions, maps, etc.) is now granted **automatically at character creation** — there's no longer an Unlocker NPC to visit.*
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: cc97047963ca -->
+_Last updated: 2026-06-29 04:19 UTC_
+<!-- DOCGEN:END id="last-updated" -->

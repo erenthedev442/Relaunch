@@ -6,7 +6,7 @@
 ## Apex Trials
 
 <!-- DOCGEN:BEGIN id="apex-overview" -->
-**Apex Trials** is an **infinite, scaling solo climb** — the one chase on the server with no summit. Talk to the **Apex Arbiter** in <!--npc:apex-->Leafallia<!--/npc--> (the endgame row, beside the Prime Armory) or type `!apex` to begin.
+**Apex Trials** is an **infinite, scaling solo climb** — the one chase on the server with no summit. Talk to the **Apex Arbiter** in **Leafallia** (`!leaf`, endgame row, beside the Prime Armory) or type `!apex` to begin.
 
 Each **tier** pits you against a single scaled Apex boss (Apex Devourer, Paragon Sentinel, Ascendant Tyrant…). Clear it and you **bank Paragon Points** and raise your **record**, then the next tier spawns automatically — a little tougher. Keep climbing until you die or leave; **the run ends, but every Paragon Point you banked on the way up is kept.** Your next run resumes one tier above your record.
 
@@ -20,12 +20,12 @@ A taste of the curve (difficulty climbs forever — level is capped at **230**, 
 
 | Tier | Boss level | Boss HP | Paragon Points (first clear) |
 |---:|---:|---:|---:|
-| 1 | 165 | 9,000,000 | 10 |
-| 5 | 181 | 14,674,262 | 30 |
-| 10 | 201 | 27,036,377 | 55 |
-| 20 | 230 | 91,776,805 | 105 |
-| 30 | 230 | 311,542,550 | 155 |
-| 50 | 230 | 3,589,932,147 | 255 |
+| 1 | 165 | 1,100,000 | 10 |
+| 5 | 181 | 1,793,520 | 30 |
+| 10 | 201 | 3,304,446 | 55 |
+| 20 | 230 | 11,217,165 | 105 |
+| 30 | 230 | 38,077,422 | 155 |
+| 50 | 230 | 438,769,484 | 255 |
 
 HP multiplies by **×1.13** per tier, and the boss also gains roughly **+450 Attack / +380 Defense / +70 Accuracy / +50 Evasion** per tier on top.
 <!-- DOCGEN:END id="apex-scaling" -->
@@ -44,7 +44,7 @@ From tier 5 on, each boss rolls an extra **affix** every 5 tiers (up to **6** st
 ## Paragon
 
 <!-- DOCGEN:BEGIN id="paragon-overview" -->
-**Paragon** is the meta-progression Apex Trials feeds. Spend the Paragon Points you bank at the **Paragon Sage** in <!--npc:apex-->Leafallia<!--/npc--> (next to the Apex Arbiter) on three things: an infinite **Paragon Level** prestige track, permanent **capped perks**, and the **Daily Might** buff. It's deliberately flex-and-flavour — the perk caps are modest next to maxed gear, so Paragon is a prestige climb, not a power treadmill.
+**Paragon** is the meta-progression Apex Trials feeds. Spend the Paragon Points you bank at the **Paragon Sage** in **Leafallia** (`!leaf`, next to the Apex Arbiter) on three things: an infinite **Paragon Level** prestige track, permanent **capped perks**, and the **Daily Might** buff. It's deliberately flex-and-flavour — the perk caps are modest next to maxed gear, so Paragon is a prestige climb, not a power treadmill.
 <!-- DOCGEN:END id="paragon-overview" -->
 
 ### Perks
@@ -77,7 +77,7 @@ Ascending from Paragon Level *N* to *N+1* costs **25 + 5 × N** Paragon Points �
 ### Daily Might
 
 <!-- DOCGEN:BEGIN id="paragon-daily" -->
-Unlock **Daily Might** once for **80 Paragon Points**, then claim it from the Paragon Sage **once per day**. It grants a **2-hour surge**: **+3,000 max HP**, **Regain 50 TP/tick**, plus **Refresh** and **Regen** scaled to your max MP/HP. A daily reason to log in, and a head start on your next climb.
+Unlock **Daily Might** once for **80 Paragon Points**, then claim it from the Paragon Sage **once per day**. It grants a **2-hour surge**: **+1,500 max HP**, **Regain 5 TP/tick**, plus **Refresh** and **Regen** scaled to your max MP/HP. A daily reason to log in, and a head start on your next climb.
 <!-- DOCGEN:END id="paragon-daily" -->
 
 ---
@@ -87,6 +87,6 @@ Unlock **Daily Might** once for **80 Paragon Points**, then claim it from the Pa
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 28c526f02100 -->
-_Last updated: 2026-06-22 05:55 UTC_
+<!-- content-hash: 2296a9b3d4e2 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

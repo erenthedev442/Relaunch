@@ -10,7 +10,7 @@ Think you can take on the master? Seek out **Maat's Echo** in **Ru'Lude Gardens*
 |---|---|
 | Entry cost | **150 Infamy** |
 | Maat's level | **200** |
-| Maat's Blessing drop chance | **25%** |
+| Maat's Cap drop chance | **25%** |
 | Entry NPC | **Maat's Echo** — Ru'Lude Gardens |
 | Fight zone | **Waughroon Shrine** |
 | Simultaneous fights | Unlimited — every challenger gets their own |
@@ -53,6 +53,6 @@ The item is **consumed on success**. It is not consumed if the augment fails (e.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9844ffdd9668 -->
-_Last updated: 2026-06-21 07:51 UTC_
+<!-- content-hash: a30622e7968b -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -56,6 +56,6 @@ The weekly reset shares the same Monday 00:00 UTC anchor as the Weekly Hunt Boar
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cdabcaa1dda5 -->
-_Last updated: 2026-06-20 21:09 UTC_
+<!-- content-hash: d17aad6a6b86 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

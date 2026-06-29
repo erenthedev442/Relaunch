@@ -253,7 +253,7 @@ These may be bugs, pending additions, or LSB implementation differences.
 Both retail and server have the stat, but the values differ.
 
 {differ_tbl}
-## Server-Only Stats (Custom Legendary Buffs)
+## Server-Only Stats (Custom Buffs)
 
 Stats the server adds that don't exist on the retail item.
 

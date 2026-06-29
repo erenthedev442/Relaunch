@@ -1201,6 +1201,6 @@ _Highest total damage dealt to Lv 100+ mobs in any rolling 30-second window, com
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 315fe2ee5d33 -->
-_Last updated: 2026-06-23 10:43 UTC_
+<!-- content-hash: 7600d6728dad -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

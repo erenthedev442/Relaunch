@@ -128,6 +128,6 @@ The **Officer** NPC in Leafallia runs the **Atmacite Refiner** — spend the atm
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 376f28e72bc1 -->
-_Last updated: 2026-06-28 05:28 UTC_
+<!-- content-hash: da5195b29ca9 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

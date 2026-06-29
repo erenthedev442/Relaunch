@@ -131,6 +131,6 @@ Who's around. **Active** counts characters that logged out within the window (a 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a25effdd2dec -->
-_Last updated: 2026-06-23 10:43 UTC_
+<!-- content-hash: 26feb25f9942 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

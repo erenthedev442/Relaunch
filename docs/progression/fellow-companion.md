@@ -21,9 +21,9 @@ Type `!fellow` at any time to open the main menu. Your Fellow doesn't exist unti
 <!-- DOCGEN:BEGIN id="fellow-progression" -->
 Your Fellow earns XP from kills **while it is summoned**. XP per kill scales with the slain foe's level (a floor of 5, capped at 200).
 
-It levels up to **50**, and each level grants **3 stat points** to spend. You start with **6 points** when your Fellow is first created.
+It levels up to **120**, and each level grants **3 stat points** to spend. You start with **6 points** when your Fellow is first created.
 
-If you are in a party, every party member who has their Fellow out earns XP from the same kill — so grinding in a group levels everyone's companion at once.
+If you are in a party, every party member who has their Fellow out earns XP from every kill in the same zone — so grinding in a zone levels everyone's companion at once.
 <!-- DOCGEN:END id="fellow-progression" -->
 
 Spend points through the **Allocate Points** menu — pick the stat you want to grow. Allocation applies instantly to the live companion.
@@ -100,6 +100,6 @@ With `Party-wide XP` enabled (the default), any party member who has their Fello
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 75475086b4af -->
-_Last updated: 2026-06-28 05:28 UTC_
+<!-- content-hash: b06b3d37228c -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -62,7 +62,7 @@ Each rank has 3 NMs to hunt. You can repeatedly kill the same NM to farm marks. 
 
 ### Rank II - Hunter
 
-**Unlock cost:** 50 Hunt Marks  ·  **Hunt Marks per kill:** 12
+**Unlock cost:** 150 Hunt Marks  ·  **Hunt Marks per kill:** 12
 
 | NM | Points |
 |---|---:|
@@ -72,7 +72,7 @@ Each rank has 3 NMs to hunt. You can repeatedly kill the same NM to farm marks. 
 
 ### Rank III - Elite
 
-**Unlock cost:** 150 Hunt Marks  ·  **Hunt Marks per kill:** 22
+**Unlock cost:** 650 Hunt Marks  ·  **Hunt Marks per kill:** 22
 
 | NM | Points |
 |---|---:|
@@ -82,7 +82,7 @@ Each rank has 3 NMs to hunt. You can repeatedly kill the same NM to farm marks. 
 
 ### Rank IV - Champion
 
-**Unlock cost:** 350 Hunt Marks  ·  **Hunt Marks per kill:** 38
+**Unlock cost:** 1500 Hunt Marks  ·  **Hunt Marks per kill:** 38
 
 | NM | Points |
 |---|---:|
@@ -92,7 +92,7 @@ Each rank has 3 NMs to hunt. You can repeatedly kill the same NM to farm marks. 
 
 ### Rank V - Legend
 
-**Unlock cost:** 700 Hunt Marks
+**Unlock cost:** 3000 Hunt Marks
 
 | NM | Points |
 |---|---:|
@@ -110,14 +110,13 @@ Each rank has 3 NMs to hunt. You can repeatedly kill the same NM to farm marks. 
 Spend Hunt Marks at the Seals NPC. The shop is paginated (3 items per page). Inventory must have a free slot or the purchase fails.
 
 <!-- DOCGEN:BEGIN id="hunting-league-rewards" -->
-The reward shop is organized into 4 categories — 50 purchasable entries in all, every price in Hunt Marks. The **Seals** category converts marks into the Bronze/Silver/Gold seals you spend at the Armor and Weapons vendors, while the **Sortie** categories sell job earrings. The full per-item earring list lives on the [Gear Vendors](gear-vendors.md) page.
+The reward shop is organized into 3 categories — 47 purchasable entries in all, every price in Hunt Marks. The **Seals** category converts marks into the Bronze/Silver/Gold seals you spend at the Armor and Weapons vendors, while the **Sortie** categories sell job earrings. The full per-item earring list lives on the [Gear Vendors](gear-vendors.md) page.
 
 | Category | Items | Cost each (Hunt Marks) |
 |---|---:|---:|
 | Seals | 3 | 5–40 |
 | Sortie: NQ | 22 | 100 |
 | Sortie: +1 | 22 | 200 |
-| Spells | 3 | 200–400 |
 <!-- DOCGEN:END id="hunting-league-rewards" -->
 
 **Approximate full clear:** 1,250 marks for rank unlocks + ~5,500+ marks for every shop item.
@@ -125,16 +124,16 @@ The reward shop is organized into 4 categories — 50 purchasable entries in all
 ## Recommended progression order
 
 <!-- DOCGEN:BEGIN id="progression-order" -->
-1. **Visit GM Home first.** Type `!gmhome` to warp there instantly. Collect your starter gear from the Armor and Accessories NPCs, pick up key items and any open missions, and configure your character. Nearly every system — Weekly Hunts, the Game Master, the Infamy Vendor, the Augment Sage — is accessible from GM Home.
+1. **Orient yourself at the two main hubs.** The **Celennia Memorial Library** (`!lib`) is the economy hub — Hunt Board, Gil Exchange, Sparks Exchange, Race Changer, Home Point. **Leafallia** (`!leaf`) is the endgame hub — Apex Trials, Prime Armory, Colosseum, Infamy Vendor, Augment Sage, and the endgame NPC row. GM Home (`!gmhome`) still exists but only the Test Dummy remains there for DPS testing.
 2. **Hit level 99.** Use FoV books, ROE, trust grinding, or EXP rings. With <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP and <!--setting:main.EXP_RATE-->10<!--/setting-->× scripted EXP, expect an afternoon.
-3. **Warp to Reisenjima Henge** with `!hunt`. The command drops you right at the Seals and Spawner NPCs. _(Without `!hunt` the zone is gated behind mid-Seekers progression — use the command.)_
-4. **Start Rank I - Initiate.** Pop any of the three NMs from the Spawner: Leaping Lizzy, Valkurm Emperor, Tom Tit Tat. Each kill pays **5 Hunt Marks**. Grind until you have **50 Hunt Marks** to unlock Rank II — talk to the Seals NPC to advance.
-5. **Pick up Weekly Hunt objectives.** Visit the Weekly Hunt Board at GM Home (`!gmhome`) or type `!weekly` for a status check. Five random objectives roll fresh each Monday. Sweeping all 5 objectives in a single week pays a **5,000 Hunt Marks** meta-bonus on top of the per-objective rewards. Completing these adds a big mark income boost alongside your regular NM grind.
-6. **Push through Rank II - Hunter and Rank III - Elite.** Rank II unlocks at **50 Hunt Marks** spent; each kill pays **12 Hunt Marks** (Roc, Bomb Queen, Aquarius). Rank III unlocks at **150 Hunt Marks** — kills pay **22 Hunt Marks** (Serket, Vrtra, Simurgh). Use accumulated marks to buy core BiS accessories: Brutal Earring, Epona’s Ring, Rajas Ring, Suppanomimi, etc.
-7. **Try Game Master wave challenges at GM Home.** Talk to the Game Master NPC (`!gmhome`). Start with **Easy** difficulty: 3 waves, 1 mob per wave, manageable for a geared solo player. Full clear pays **50 Hunt Marks**. Harder difficulties (Normal / Hard / Insane) pay progressively more marks and unlock tougher wave pools.
-8. **Unlock Rank IV - Champion and Rank V - Legend.** Rank IV costs **350 Hunt Marks** total spent; kills pay **38 Hunt Marks** (Nidhogg, King Behemoth, Kirin). Rank V costs **700 Hunt Marks** total spent — endgame kills pay **65 Hunt Marks** (Absolute Virtue, Pandemonium Warden, Shinryu). Rank V is the gear-check wall. Bring a party.
+3. **Warp to Escha ZiTah** with `!hunt`. The command drops you right at the Seals and Spawner NPCs. _(Without `!hunt` the zone is gated behind mid-Seekers progression — use the command.)_
+4. **Start Rank I - Initiate.** Pop any of the three NMs from the Spawner: Leaping Lizzy, Valkurm Emperor, Tom Tit Tat. Each kill pays **5 Hunt Marks**. Grind until you have **150 Hunt Marks** to unlock Rank II — talk to the Seals NPC to advance.
+5. **Pick up Weekly Hunt objectives.** Visit the Weekly Hunt Board at the **Celennia Memorial Library** (`!lib`) or type `!weekly` for a status check. Five random objectives roll fresh each Monday. Sweeping all 5 objectives in a single week pays a **5,000 Hunt Marks** meta-bonus on top of the per-objective rewards. Completing these adds a big mark income boost alongside your regular NM grind.
+6. **Push through Rank II - Hunter and Rank III - Elite.** Rank II unlocks at **150 Hunt Marks** spent; each kill pays **12 Hunt Marks** (Roc, Bomb Queen, Aquarius). Rank III unlocks at **650 Hunt Marks** — kills pay **22 Hunt Marks** (Serket, Vrtra, Simurgh). Use accumulated marks to buy core BiS accessories: Brutal Earring, Epona’s Ring, Rajas Ring, Suppanomimi, etc.
+7. **Try Game Master wave challenges in Escha Ru'Aun.** Use `!wavemaster` to warp there and talk to the Game Master NPC. Start with **Easy** difficulty: 3 waves, 1 mob per wave, manageable for a geared solo player. Full clear pays **50 Hunt Marks**. Harder difficulties (Normal / Hard / Insane) pay progressively more marks and unlock tougher wave pools.
+8. **Unlock Rank IV - Champion and Rank V - Legend.** Rank IV costs **1500 Hunt Marks** total spent; kills pay **38 Hunt Marks** (Nidhogg, King Behemoth, Kirin). Rank V costs **3000 Hunt Marks** total spent — endgame kills pay **65 Hunt Marks** (Absolute Virtue, Pandemonium Warden, Shinryu). Rank V is the gear-check wall. Bring a party.
 9. **Start the Reforge track.** Farm Sky Gods, Unity NMs, and Abyssea NMs for AF Marks, Relic Marks, and Empy Marks. These currencies feed the Reforge system to upgrade your AF/Relic/Empy armor to +1 / +2 / +3 tiers. Type `!huntrank` to check your current Hunting League rank and overall progress.
-10. **Augment your gear.** Visit the Augment Moogle at GM Home (`!gmhome`) to add random stats to equipment. For passive endgame bonuses, earn enough Infamy to unlock the **Augment Sage** — Infamy comes from apex Reisenjima NMs, Scheduled Invasions, and the weekly Raid. The Sage applies permanent stat bonuses outside the normal augment RNG.
+10. **Augment your gear.** Visit the **Augment Moogle in Leafallia** (`!leaf`) to add random stats to equipment. For passive endgame bonuses, earn enough Infamy to unlock the **Augment Sage** — also in Leafallia — Infamy comes from apex Reisenjima NMs, Scheduled Invasions, and the weekly Raid. The Sage applies permanent stat bonuses outside the normal augment RNG.
 <!-- DOCGEN:END id="progression-order" -->
 
 ## Where retail content still matters
@@ -161,6 +160,6 @@ The Hunting League is the main game now, but retail content still has a role:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b1445768da98 -->
-_Last updated: 2026-06-20 21:09 UTC_
+<!-- content-hash: fc5366c9b5e8 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

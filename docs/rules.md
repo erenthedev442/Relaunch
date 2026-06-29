@@ -88,6 +88,6 @@ The goal is a fun server, not a perfectly policed one. Use good judgment, treat 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1fc744403965 -->
-_Last updated: 2026-06-12 23:32 UTC_
+<!-- content-hash: 8c013dc77b26 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

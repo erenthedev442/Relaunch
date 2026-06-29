@@ -85,6 +85,6 @@ There's no wrong choice — the 10M gil cost means you'll pick deliberately, but
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5795f585a137 -->
-_Last updated: 2026-06-18 01:47 UTC_
+<!-- content-hash: 7871e4cecb6e -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

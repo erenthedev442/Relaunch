@@ -113,20 +113,20 @@ _TIER_INFO: list[tuple[int, str, str]] = [
      "No progression gate — available from the first day on any character. These are **job-specific or "
      "class-specific** utilities that only meaningfully help a single playstyle: ability delays, pet-ability "
      "extensions, proc-chance passives most jobs ignore. Catalysts drop from low-level overworld mobs."),
-    (1, "T1 — Initiate (Hunting League Rank 3)",
-     "Opens at **Hunting League Rank 3**. Practical job abilities and defensive options useful to a wider range "
+    (1, "T1 — Initiate (Augment Sage rank 1)",
+     "Opens at **Augment Sage rank 1 (Initiate)**. Practical job abilities and defensive options useful to a wider range "
      "of jobs — counter/parry/evasion, spell interruption, elemental affinities, shield tech. "
      "Catalysts drop from mid-level mobs."),
-    (2, "T2 — Adept (Hunting League Rank 5)",
-     "Opens at **Hunting League Rank 5**. Core combat stats that nearly every job cares about — base attributes "
+    (2, "T2 — Adept (Augment Sage rank 2)",
+     "Opens at **Augment Sage rank 2 (Adept)**. Core combat stats that nearly every job cares about — base attributes "
      "(STR/DEX/VIT/AGI/INT), Accuracy, DEF, Store TP, Fast Cast, Mag.Acc., Snapshot. "
      "Catalysts drop from high-level mobs."),
-    (3, "T3 — Magus (Prestige)",
-     "Opens via **Prestige** progression. Damage multipliers and sustain — Double Attack, Crit rate, Magic burst "
+    (3, "T3 — Magus (Augment Sage rank 3)",
+     "Opens at **Augment Sage rank 3 (Magus)**. Damage multipliers and sustain — Double Attack, Crit rate, Magic burst "
      "damage, Mag.crit hit damage, weapon delay reductions, HP/MP pool expansions, Regen, Refresh. "
      "Catalysts drop from Prestige-tier (Nightmare Court) bosses."),
-    (4, "T4 — Sage (Endgame)",
-     "**Endgame only.** Top-tier universals that benefit every job without exception: Haste, Triple Attack, "
+    (4, "T4 — Sage (Augment Sage rank 4)",
+     "Opens at **Augment Sage rank 4 (Sage)**. Top-tier universals that benefit every job without exception: Haste, Triple Attack, "
      "Quadruple Attack, TP Bonus, critical hit damage, physical/magic/all damage-taken percentage reductions. "
      "Catalysts drop from Shinryu- and Abyssea-tier NMs."),
 ]

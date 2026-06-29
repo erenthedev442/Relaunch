@@ -39,7 +39,7 @@ HEADLINE = [
         "name": "Hunting League",
         "page": "progression/index.md",
         "modules": ["HuntingLeague.lua", "hunting_league_catalog.lua"],
-        "text": "**Hunting League — a custom 5-tier progression system.** Retail FFXI has NMs. Legendary turns them into a structured progression ladder. Five ranks, each harder than the last, each with meaningful rewards and increasing HL Point rates. If you love the hunt, this server was built for you.",
+        "text": "**Hunting League — a custom 5-tier progression system.** Retail FFXI has NMs. This server turns them into a structured progression ladder. Five ranks, each harder than the last, each with meaningful rewards and increasing HL Point rates. If you love the hunt, this server was built for you.",
     },
     {
         "name": "Ascension",
@@ -74,7 +74,7 @@ HEADLINE = [
         "covers": ["progression/cross-job-traits.md"],
         "modules": ["CrossJob_Trainer.lua", "cross_job_ability_catalog.lua",
                     "CrossJob_TraitTrainer.lua", "cross_job_trait_catalog.lua"],
-        "text": "**Cross-Job Abilities — borrow from other jobs.** The Cross-Job Trainer in GM Home sells a hand-curated set of job abilities — self and party buffs and utility, like Meditate — that you can then use on *any* job via macro, with the recast enforced server-side. No 2-hours, no build-breaking picks: just the smart cross-pollination retail never allowed.",
+        "text": "**Cross-Job Abilities — borrow from other jobs.** The Cross-Job Trainer in Leafallia sells a hand-curated set of job abilities — self and party buffs and utility, like Meditate — that you can then use on *any* job via macro, with the recast enforced server-side. No 2-hours, no build-breaking picks: just the smart cross-pollination retail never allowed.",
     },
     {
         "name": "No dead content",
@@ -141,7 +141,7 @@ HEADLINE = [
             "economy/reforge-mark-exchange.md",
             "community/player-trusts.md",
         ],
-        "text": "**A deep quality-of-life bench.** Always-popped NMs (no camping, no lottery), a Character Upgrader that hands a new character everything in one click, homepoint healing, zone-in cutscene skips, sub-job EXP share, gil-sink vendors, seasonal events, login streaks — dozens of friction-removers, all catalogued on the [Quality of Life Features](progression/server-features.md) page.",
+        "text": "**A deep quality-of-life bench.** Always-popped NMs (no camping, no lottery), automatic character setup at creation, homepoint healing, zone-in cutscene skips, sub-job EXP share, gil-sink vendors, seasonal events, login streaks — dozens of friction-removers, all catalogued on the [Quality of Life Features](progression/server-features.md) page.",
     },
     {
         "name": "Everything unlocked at character creation",

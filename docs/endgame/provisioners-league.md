@@ -8,7 +8,7 @@ A non-combat league for anglers and crafters. The **League Steward** at Escha Zi
 ## Where to join
 
 <!-- DOCGEN:BEGIN id="provisioners-league-access" -->
-Seek out the **League Steward** at **Reisenjima Henge** — he keeps the books for both anglers and crafters. Talk to him to check your rank, your League Point total, and this week's featured fish.
+Seek out the **League Steward** at **Escha ZiTah** — he keeps the books for both anglers and crafters. Talk to him to check your rank, your League Point total, and this week's featured fish.
 <!-- DOCGEN:END id="provisioners-league-access" -->
 
 ## Earning League Points
@@ -19,7 +19,7 @@ There are two ways to earn **League Points**:
 **Fishing weigh-ins** — every fish you catch is worth points that scale with the fish's skill: the tougher the catch, the more it pays. On top of that:
 
 - A **big fish** (the ruler-measured monsters) is worth **2×** points.
-- A **the Relaunch server** catch is league gold — worth **10×** points.
+- A **legendary** catch is league gold — worth **10×** points.
 - This week's **featured fish** pays a **3×** bonus — a rotating target that keeps the weekly race fresh and is always something a normal angler can land.
 
 **Crafting turn-ins** — every high-quality (HQ) item you hand in at the server's Crafting Exchange also credits League Points alongside its usual reward, so your crafting progress counts here too.
@@ -44,6 +44,6 @@ Your **lifetime** League Points decide your rank. Each rank you reach grants a p
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 1ac0292558bd -->
-_Last updated: 2026-06-14 13:15 UTC_
+<!-- content-hash: decc6ec68f20 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

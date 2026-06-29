@@ -712,7 +712,7 @@ _42 weapons total. Cost is paid in Demons Medal._
 
 ## Accessory NPC (medal-paid jewelry)
 
-A third member of the Reisenjima Henge gear-vendor row, paid in the **same Bronze/Silver/Gold medal economy** as the Armor and Weapons NPCs. Covers all 5 jewelry/accessory slots — **Neck, Waist, Earring, Ring, Back**. Items are auto-selected by `tools/score_accessories.py` from the live item DB using the same role-balanced scoring model that powers the Armor NPC, so a "DD score of 80" means the same thing on a head piece, an axe, and a ring.
+A third member of the Escha ZiTah gear-vendor row, paid in the **same Bronze/Silver/Gold medal economy** as the Armor and Weapons NPCs. Covers all 5 jewelry/accessory slots — **Neck, Waist, Earring, Ring, Back**. Items are auto-selected by `tools/score_accessories.py` from the live item DB using the same role-balanced scoring model that powers the Armor NPC, so a "DD score of 80" means the same thing on a head piece, an axe, and a ring.
 
 Re-run `tools/rebalance_all.bat` after any DB or scoring-weight change — that one batch refreshes Armor + Weapons + Accessory + +4 Reforge catalogs together.
 
@@ -940,7 +940,7 @@ Tiered jewelry / capes / belts paid for in **Hunt Marks** directly — no seal e
 <!-- DOCGEN:BEGIN id="accessories" -->
 The **Hunt Accessories NPC** stands at `(6, -0.5, -30)` on the same row as the Armor and Weapons vendors. Unlike those two, the Accessories vendor takes **Hunt Marks** directly — no seal exchange step. Marks are earned by killing NMs via the [Hunting League](index.md) Spawner.
 
-_47 items across 3 categories. All costs are in Hunt Marks._
+_44 items across 2 categories. All costs are in Hunt Marks._
 
 ### Sortie: NQ
 
@@ -995,14 +995,6 @@ _47 items across 3 categories. All costs are in Hunt Marks._
 | <a class="item-link" href="https://www.ffxiah.com/item/25535" data-img="https://www.bg-wiki.com/images/a/a2/Arbatel_Earring_%2B1_description.png" target="_blank" rel="noopener">Arbatel Earring +1</a> | 200 | SCH: MagATK+7, Mag Dmg+7, Acc/MACC +8~12 |
 | <a class="item-link" href="https://www.ffxiah.com/item/25541" data-img="https://www.bg-wiki.com/images/5/55/Azimuth_Earring_%2B1_description.png" target="_blank" rel="noopener">Azimuth Earring +1</a> | 200 | GEO: MagATK+7, Geomancy+10, Acc/MACC +8~12 |
 | <a class="item-link" href="https://www.ffxiah.com/item/25547" data-img="https://www.bg-wiki.com/images/b/ba/Erilaz_Earring_%2B1_description.png" target="_blank" rel="noopener">Erilaz Earring +1</a> | 200 | RUN: MagEva+10, Regen+10%, Acc/MACC +8~12 |
-
-### Spells
-
-| Item | Cost | Notes |
-|---|---:|---|
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Silencega&go=Go" data-img="" target="_blank" rel="noopener">Silencega</a> | 200 | WHM 40 / RDM 50 / SCH 50, AoE Silence (Wind), Learned on purchase |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Divine+Aegis&go=Go" data-img="" target="_blank" rel="noopener">Divine Aegis</a> | 400 | PLD 50, Holy shield -> AoE detonation, Learned on purchase |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Convergence&go=Go" data-img="" target="_blank" rel="noopener">Convergence</a> | 350 | RDM 50, Random enfeeble + elemental damage, Learned on purchase |
 <!-- DOCGEN:END id="accessories" -->
 
 ---
@@ -1010,7 +1002,7 @@ _47 items across 3 categories. All costs are in Hunt Marks._
 ## Infamy Vendor
 
 <!-- DOCGEN:BEGIN id="infamy-vendor" -->
-The **Infamy Vendor** stands at GM Home and is paid in **Infamy**, earned from endgame content -- Abyssea NM hunts, Invasions, and the weekly Raid. It carries gear sold nowhere else -- relic-tier weapons, bard instruments, and best-in-slot picks promoted from the top gear tier. All costs below are in Infamy.
+The **Infamy Vendor** stands at **Leafallia** (`!leaf`) and is paid in **Infamy**, earned from endgame content -- Abyssea NM hunts, Invasions, and the weekly Raid. It carries gear sold nowhere else -- relic-tier weapons, bard instruments, and best-in-slot picks promoted from the top gear tier. All costs below are in Infamy.
 
 Per-job **+4 Reforge Sets** (AF/Relic/Empyrean +4) are also sold here.
 
@@ -1306,6 +1298,6 @@ _125 top armor, weapons, and Sortie earrings, refreshed from the live gear ranki
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 298e5d38fd47 -->
-_Last updated: 2026-06-23 07:01 UTC_
+<!-- content-hash: 6a9384719b11 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

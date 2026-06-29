@@ -165,48 +165,12 @@ Three currencies (AF Marks, Relic Marks, Empyrean Marks) track separately. Every
 The server's custom service NPCs are split across two hubs — **Leafallia** (endgame progression) and the **Celennia Memorial Library** (beginner services). The summary below auto-updates from the live source.
 
 <!-- DOCGEN:BEGIN id="gm-home-npcs" -->
-_All NPCs are in **GM Home** (zone 210). Positions shown as (x, y, z)._
+Custom service NPCs live across two hubs:
 
-**Progression cluster** — gear upgrades and augments (z ≈ −7)
+- **[Leafallia — Endgame Hub](../progression/leafallia.md)** — Prime Armory, Relic Forge, Augment Moogle & Sage, the mastery trainers, Apex Trials, the Gauntlet, Colosseum, Endless Tower, and the HTBF / Infamy / Voidwatch vendors.
+- **[Celennia Memorial Library — Beginner Hub](../progression/library.md)** — home point, Warpman, the Gil / Sparks / Crafting exchanges, Title Broker, Cosmetic Shop, Daily & Hunt boards, Unity, Casino, Mystery Mog, Chocobo Derby, and the Race Changer.
 
-| NPC | Position | What it does |
-|---|---|---|
-| **Gear Moogle** | _unknown_ | One-time starter gear kit for new characters (once per character) |
-| **Mog Moogle** | _unknown_ | Delivery Box access plus change to any of the 22 jobs on the spot |
-| **Augment Moogle** | `(-20, 0, -45)` | Trade one equipment piece + 1–4 catalyst crystals for stacking augments |
-| **Augment Sage** | `(-16, 0, 10)` | Augment affinity system — unlock passive stat bonuses by spending hunt marks |
-
-**Utility cluster** — one-time character setup (z ≈ −14)
-
-| NPC | Position | What it does |
-|---|---|---|
-| **Character Upgrader** | _unknown_ | Menu-driven: grants all weapon skills, spells, trusts, capped skills, outpost warps |
-| **Key Item Moogle** | _unknown_ | Grants all ~4,000 key items in one transaction (single-use, once per character) |
-| **Mission Moogle** | _unknown_ | Skip every story mission in one click (all nations + RoZ/CoP/ToAU/WotG/SoA/RoV); sets nation rank 10 |
-
-**Activities cluster** — ongoing gameplay systems (z ≈ −21)
-
-| NPC | Position | What it does |
-|---|---|---|
-| **EXP Camp Moogle** | _unknown_ | Free warp to one of 20 level-matched EXP camps (Lv 10–99) |
-| **Hunt Board** | `(-102, -2.1, -94)` | Weekly hunt board — pick up and turn in weekly NM target bounties for marks |
-| **Infamy Vendor** | `(0, 0, 10)` | Spend infamy currency earned from Abyssea NM hunts, Invasions, and the weekly Raid on gear and rewards |
-
-**Admin cluster** — testing and meta systems (z ≈ −28)
-
-| NPC | Position | What it does |
-|---|---|---|
-| **Game Master** | `(-289.5, -3.5, 387.5)` | Wave-based fight challenge (Easy → Insane); earn hunt marks on full clear |
-| **Test Dummy** | `(0, 0, -40)` | Interactive combat dummy for testing DPS and skill rotations |
-
-**Commerce row** — gil sinks and convenience services (z ≈ −35)
-
-| NPC | Position | What it does |
-|---|---|---|
-| **Warpman** | `(-114, -2.1, -88)` | Paid warp service to city hubs (San d'Oria, Bastok, Windurst, Jeuno, and more) |
-| **Mystery Mog** | `(-114, -2.1, -94)` | Gacha box — spend hunt marks for a random pull from the reward table |
-| **Title Broker** | `(-98, -2.1, -100)` | Buy cosmetic titles for gil; cheap flavor titles to rare endgame trophies |
-| **Gil Exchange** | `(-106, -2.1, -100)` | Trade hunt marks for gil in bulk |
+The combat **Test Dummy** for DPS testing remains in **GM Home** (`!gmhome`). New-character setup — weapon skills, spells, key items, missions, maps, and a starter gear kit — is now granted **automatically at character creation**, so the old setup moogles (Gear / Key Item / Mission / Character Upgrader / EXP Camp) are gone.
 <!-- DOCGEN:END id="gm-home-npcs" -->
 
 ## Custom HNM system
@@ -269,6 +233,6 @@ For reference, these are at retail defaults on this server:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c398df8aed12 -->
-_Last updated: 2026-06-28 05:28 UTC_
+<!-- content-hash: 9c8e40d32ccf -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

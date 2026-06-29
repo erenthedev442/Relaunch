@@ -20,6 +20,6 @@ You need a working **retail FFXI client** plus a third-party launcher (Ashita or
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 09b1705d3cd9 -->
-_Last updated: 2026-05-31 00:24 UTC_
+<!-- content-hash: 007b55da4424 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

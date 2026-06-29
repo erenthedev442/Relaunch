@@ -44,7 +44,7 @@ Reforge
 :   The system of killing NM currency ladders to upgrade AF, Relic, or Empy armor from the base version through +1, +2, and +3. Each upgrade tier requires more marks and is visually and statistically distinct.
 
 Wave Master
-:   An NPC located in Balga's Dais who spawns themed NM waves for solo or group play. Scales with party size. Rewards Hunt Marks on completion and is useful for both marks farming and combat practice.
+:   An NPC located in Escha - Ru'Aun who spawns themed NM waves for solo or group play. Scales with party size. Rewards Hunt Marks on completion and is useful for both marks farming and combat practice.
 
 Weekly Hunt Board
 :   Five rotating objectives that reset each week. Objectives range from straightforward kill counts to tougher feats like speed kills and no-death streaks. Completing all five earns a large bonus mark payout.
@@ -52,6 +52,6 @@ Weekly Hunt Board
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3b89596c8ba2 -->
-_Last updated: 2026-06-20 21:09 UTC_
+<!-- content-hash: 5b0d43507549 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

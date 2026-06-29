@@ -13,7 +13,7 @@ on the Prime Weapon path.
 ## Where to start
 
 <!-- DOCGEN:BEGIN id="job-mastery-access" -->
-Find the **Weapon Mastery Sage** in <!--npc:job_mastery-->Leafallia<!--/npc--> and pick a weapon type. Choosing one warps you alone into **Walk Of Echoes**, where that weapon's Guardian appears moments later. There is no quest and no cost to attempt a challenge — just talk to the Sage and choose. If you ever need to bail out of an active attempt, use **`!mastery abort`**.
+Find the **Weapon Mastery Sage** in **Leafallia** (`!leaf`) and pick a weapon type. Choosing one warps you alone into **Walk Of Echoes**, where that weapon's Guardian appears moments later. There is no quest and no cost to attempt a challenge — just talk to the Sage and choose. If you ever need to bail out of an active attempt, use **`!mastery abort`**.
 <!-- DOCGEN:END id="job-mastery-access" -->
 
 ## The Guardian fights
@@ -23,7 +23,7 @@ There is one Guardian for each of the **12 weapon types**. Each is a **solo** fi
 
 Every Guardian rolls a random **affix** when it spawns, so the same fight plays differently each attempt. They hit hard and carry an enormous health pool — bring your strongest setup.
 
-**Death ends the challenge** with no reward and no save: you are returned to GM Home and must start over.
+**Death ends the challenge** with no reward and no save: you are returned to Leafallia and must start over.
 
 | Weapon type | Guardian |
 |---|---|
@@ -71,6 +71,6 @@ challenge its Guardian.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5e765c86e168 -->
-_Last updated: 2026-06-20 19:29 UTC_
+<!-- content-hash: ac15cf7a05f9 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -84,6 +84,6 @@ You don't *buy* a tier — you **progress your character** (Hunting League Rank,
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 55a85bf8681f -->
-_Last updated: 2026-06-22 20:44 UTC_
+<!-- content-hash: a2a92213f455 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

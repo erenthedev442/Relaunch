@@ -8,13 +8,13 @@ A **Home Point** crystal stands in <!--npc:home_point-->the Celennia Memorial Li
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="home-point-access" -->
-The **Home Point** crystal sits in <!--npc:home_point-->the Celennia Memorial Library<!--/npc-->, in the travel-NPC cluster on the east side — alongside the other warp services. Using it is always **free**: no gil cost and no attunement, so every destination is open from your first visit.
+The **Home Point** crystal sits in **the Celennia Memorial Library** (`!lib`), in the services cluster — alongside the other warp services. Using it is always **free**: no gil cost and no attunement, so every destination is open from your first visit.
 <!-- DOCGEN:END id="home-point-access" -->
 
 ## Setting your home point
 
 <!-- DOCGEN:BEGIN id="home-point-sethome" -->
-Choose **Set home point here** and GM Home becomes your home point — you'll return here whenever you're knocked out and raised, or any time you use a home-point warp. It also registers GM Home as a destination on the wider home-point network, so other crystals out in the world can send you back.
+Choose **Set home point here** and the Celennia Memorial Library becomes your home point — you'll return here whenever you're knocked out and raised, or any time you use a home-point warp. It also registers the Celennia Memorial Library as a destination on the wider home-point network, so other crystals out in the world can send you back.
 <!-- DOCGEN:END id="home-point-sethome" -->
 
 ## Where you can warp
@@ -44,6 +44,6 @@ The crystal reaches **121 home points** spread across **12 regions** — effecti
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c5848ce4b27a -->
-_Last updated: 2026-06-14 13:15 UTC_
+<!-- content-hash: f6669e01e14d -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

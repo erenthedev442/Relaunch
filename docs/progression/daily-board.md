@@ -85,6 +85,6 @@ The Daily Board NPC is in **Celennia Memorial Library** (the main hub zone).
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2249f19a7383 -->
-_Last updated: 2026-06-20 21:09 UTC_
+<!-- content-hash: abb0a2627c73 -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->

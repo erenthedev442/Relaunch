@@ -8,7 +8,7 @@ Think you're the strongest champion on the server? Enroll at the **Arena Herald*
 ## Where to fight
 
 <!-- DOCGEN:BEGIN id="colosseum-access" -->
-The **Arena Herald** stands in <!--npc:colosseum-->Leafallia<!--/npc--> — talk to them to enroll your champion on the ladder, browse the roster of rivals, and accept a duel.
+The **Arena Herald** stands in **Leafallia** (`!leaf`) — talk to them to enroll your champion on the ladder, browse the roster of rivals, and accept a duel.
 <!-- DOCGEN:END id="colosseum-access" -->
 
 Enrolling snapshots your champion's name, race, job, and level onto the ladder. From then on, anyone can challenge a replica of your champion — and you can challenge theirs — at any time.
@@ -40,7 +40,7 @@ Because the ladder is zero-sum, ratings stay honest and self-balancing: there's 
 <!-- DOCGEN:BEGIN id="colosseum-rewards" -->
 Duels pay out in **Hunt Marks**, the server's main currency:
 
-- **Win:** 150 marks — plus a bonus for **punching up** and beating a higher-rated champion.
+- **Win:** 10 marks — plus a bonus for **punching up** and beating a higher-rated champion.
 - **Loss:** 25 marks as a consolation, so a defeat is never a total loss.
 <!-- DOCGEN:END id="colosseum-rewards" -->
 
@@ -49,6 +49,6 @@ The bigger the gap when you beat someone rated above you, the sweeter the haul �
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 22d9967cfafc -->
-_Last updated: 2026-06-14 13:15 UTC_
+<!-- content-hash: 68838d8b6dbf -->
+_Last updated: 2026-06-29 04:19 UTC_
 <!-- DOCGEN:END id="last-updated" -->
