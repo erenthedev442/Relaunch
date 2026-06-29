@@ -90,9 +90,14 @@ INSERT INTO mob_droplist VALUES (1287, 0, 0, 1000, 2831, 200);
 DELETE FROM mob_droplist WHERE dropid=253 AND droptype=0 AND itemid=1011;
 
 -- -----------------------------------------------------------------------
--- 1525 Treasure Hunter (Tier 0) → Adamantoise (NM), Valley of Sorrows (dropId 21)
---      augId 147 / xi.mod.TREASURE_HUNTER — always flat TH+1 (multiplier=0 in augments.sql)
---      Aspidochelone (HNM) also drops 1525 at 24%; regular Adamantoise at 30%.
+-- 1525 Adamantoise Egg — removed as TH catalyst; clean up
 -- -----------------------------------------------------------------------
 DELETE FROM mob_droplist WHERE dropid=21 AND droptype=0 AND itemid=1525;
-INSERT INTO mob_droplist VALUES (21, 0, 0, 1000, 1525, 300);
+
+-- -----------------------------------------------------------------------
+-- 908 Treasure Hunter (Tier 0) → Adamantoise (NM), Valley of Sorrows (dropId 21)
+--     augId 147 / xi.mod.TREASURE_HUNTER — always flat TH+1 (multiplier=0 in augments.sql)
+--     Shell also drops from Aspidochelone (15%) and Genbu; regular Adamantoise at 30%.
+-- -----------------------------------------------------------------------
+DELETE FROM mob_droplist WHERE dropid=21 AND droptype=0 AND itemid=908;
+INSERT INTO mob_droplist VALUES (21, 0, 0, 1000, 908, 300);

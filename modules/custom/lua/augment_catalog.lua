@@ -371,12 +371,11 @@ return {
     [1269] = { augId = 215,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Ninja tool expertise' },
     [2729] = { augId = 341,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Repair potency' },
     [2641] = { augId = 1250, base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Indi Effect Duration' },
-    [1525] = { augId = 147,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Treasure Hunter', maxBoost = 0 },
+    [908]  = { augId = 147,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Treasure Hunter', maxBoost = 0 },
 
     -- ── cat 24: WSD+ ──────────────────────────────────────────────────────────
     [1110] = { augId = 326,  base = 1,   mult = 1,   disp = 1,    cat = 24, tier = 2, label = 'Weapon Skill Acc' },
     [1473] = { augId = 327,  base = 1,   mult = 1,   disp = 1,    cat = 24, tier = 4, label = 'Weapon skill damage' },
     [865]  = { augId = 332,  base = 1,   mult = 100, disp = 100,  cat = 24, tier = 4, label = 'Sklchn.dmg' },
     [889]  = { augId = 743,  base = 1,   mult = 1,   disp = 1,    cat = 24, tier = 4, label = 'Dmg (melee,not ranged)' },
-    [908]  = { augId = 749,  base = 1,   mult = 1,   disp = 1,    cat = 24, tier = 4, label = 'Dmg (ranged,not melee)' },
 }
