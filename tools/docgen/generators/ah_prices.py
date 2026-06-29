@@ -35,9 +35,11 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # The non_ilvl_gear rule carries the equip-level -> price brackets that the
     # bot lists (and buys back) the always-stocked leveling gear at.
     brackets = None
+    price_multiplier = 1.0
     for rule in cfg.get("rules", []):
         if rule.get("type") == "non_ilvl_gear" and rule.get("level_price_brackets"):
             brackets = rule["level_price_brackets"]
+            price_multiplier = float(rule.get("price_multiplier", 1.0))
             break
 
     if not brackets:
@@ -53,7 +55,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     prev = 0
     for maxlvl, price in brackets:
         hi = int(maxlvl)
-        lines.append(f"| {_level_label(prev + 1, hi)} | {int(price):,} gil |")
+        actual = round(price * price_multiplier)
+        lines.append(f"| {_level_label(prev + 1, hi)} | {actual:,} gil |")
         prev = hi
 
     content = "\n".join(lines)
