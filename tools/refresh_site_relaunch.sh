@@ -65,6 +65,11 @@ echo "[info] LIVE_ROOT=$LIVE_ROOT (xi_relaunch DB)"
 echo "[info] CF_PROJECT=$CF_PROJECT"
 echo "[info] venv=$DOCS_VENV  token_set=$([ -n "${CLOUDFLARE_API_TOKEN:-}" ] && echo yes || echo NO)"
 
+echo "[0b/4] syncing Lua modules from relaunch-docs → live server (keeps docgen in sync)..."
+rsync -rl "$DOCS_REPO/modules/" "$LIVE_ROOT/modules/" \
+    && echo "[0b/4] module sync complete" \
+    || echo "[WARN] module sync failed -- docgen may read stale Lua"
+
 echo "[0c/4] regenerating augment catalog from relaunch SQL..."
 python3 "$LIVE_ROOT/tools/gen_augment_catalog.py" >> "$LOG" 2>&1 \
     && echo "[0c/4] augment catalog: OK" \
