@@ -15,15 +15,16 @@ from pathlib import Path
 
 
 def resolve_source(repo_root: Path, sub_path: str) -> Path | None:
-    """Prefer LEGENDARY_LIVE_ROOT when set (so local gen reflects live state),
-    otherwise fall back to the repo. CI never sets the env var, so it always
+    """Prefer the committed repo file so docs always reflect what's in GitHub.
+    Falls back to LEGENDARY_LIVE_ROOT only for files not tracked in the repo
+    (e.g. gitignored settings/*.lua). CI never sets the env var so it always
     uses repo content."""
+    repo_path = repo_root / sub_path
+    if repo_path.exists():
+        return repo_path
     live = os.environ.get("LEGENDARY_LIVE_ROOT")
     if live:
         live_path = Path(live) / sub_path
         if live_path.exists():
             return live_path
-    repo_path = repo_root / sub_path
-    if repo_path.exists():
-        return repo_path
     return None
