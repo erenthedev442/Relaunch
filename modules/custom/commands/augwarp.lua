@@ -65,7 +65,8 @@ commandObj.onTrigger = function(player, arg)
             #matches, arg), SYS)
         for i = 1, math.min(#matches, 8) do
             local e = matches[i]
-            player:printToPlayer(string.format('  %-22s [%s, T%d] @ %s', e.item, e.label, e.tier, e.zoneName), SYS)
+            player:printToPlayer(string.format('  %-22s [%s, T%d] @ %s (%.1f%%)',
+                e.item, e.label, e.tier, e.zoneName, (e.rate or 0) / 10), SYS)
         end
         if #matches > 8 then
             player:printToPlayer(string.format('  ...and %d more.', #matches - 8), SYS)
@@ -74,14 +75,14 @@ commandObj.onTrigger = function(player, arg)
 
     if best.noWarp then
         player:printToPlayer(string.format(
-            '%s (%s augment) drops from %s in %s -- a notorious monster with no fixed spawn, so no warp. Hunt it there.',
-            best.item, best.label, best.mob, best.zoneName), SYS)
+            '%s (%s augment, %.1f%%) drops from %s in %s -- no fixed spawn point, so no warp. Hunt it there.',
+            best.item, best.label, (best.rate or 0) / 10, best.mob, best.zoneName), SYS)
         return
     end
 
     player:printToPlayer(string.format(
-        'Warping to %s -- %s drops %s (%s augment, Tier %d).',
-        best.zoneName, best.mob, best.item, best.label, best.tier), SYS)
+        'Warping to %s -- %s drops %s (%s augment, Tier %d, %.1f%% drop rate).',
+        best.zoneName, best.mob, best.item, best.label, best.tier, (best.rate or 0) / 10), SYS)
     player:setPos(best.x, best.y, best.z, 0, best.zone)
 end
 
