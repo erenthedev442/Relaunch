@@ -354,52 +354,80 @@ GROUP BY d.itemid, g.name, z.name
 
 # Hunting League trophy drops — scripted, not in mob_droplist.
 _HL_ZONE = "Escha Zi'Tah"
-_HL_DROPS: dict[int, str] = {
-    8983: "Valkurm Emperor (Hunting League)",
-    843:  "Roc (Hunting League)",
-    908:  "Aquarius (Hunting League)",
-    1015: "Serket (Hunting League)",
-    909:  "Vrtra (Hunting League)",
-    844:  "Simurgh (Hunting League)",
-    1122: "Nidhogg (Hunting League)",
-    10037:"Nidhogg (Hunting League)",
-    893:  "King Behemoth (Hunting League)",
-    2893: "Kirin (Hunting League)",
-    1473: "Absolute Virtue (Hunting League)",
-    2371: "Pandemonium Warden (Hunting League)",
-    2372: "Pandemonium Warden (Hunting League)",
-    1133: "Shinryu (Hunting League)",
+_HL_DROPS: dict[int, tuple[str, float]] = {
+    8983:  ("Valkurm Emperor (Hunting League)",    100.0),
+    843:   ("Roc (Hunting League)",                100.0),
+    908:   ("Aquarius (Hunting League)",           100.0),
+    1015:  ("Serket (Hunting League)",             100.0),
+    909:   ("Vrtra (Hunting League)",              100.0),
+    844:   ("Simurgh (Hunting League)",            100.0),
+    1122:  ("Nidhogg (Hunting League)",            100.0),
+    10037: ("Nidhogg (Hunting League)",            100.0),
+    893:   ("King Behemoth (Hunting League)",      100.0),
+    2893:  ("Kirin (Hunting League)",              100.0),
+    1473:  ("Absolute Virtue (Hunting League)",    100.0),
+    2371:  ("Pandemonium Warden (Hunting League)", 100.0),
+    2372:  ("Pandemonium Warden (Hunting League)", 100.0),
+    1133:  ("Shinryu (Hunting League)",            100.0),
 }
 
+# Each entry: list of (display_label, pct) sorted by pct descending.
+_DropList = list[tuple[str, float]]
 
-def _fetch_drops(repo_root: Path) -> dict[int, str] | None:
-    """Return {itemId: 'Mob Name (Zone)'} from the live DB, merged with HL
+
+def _fetch_drops(repo_root: Path) -> dict[int, _DropList] | None:
+    """Return {itemId: [(label, pct), ...]} sorted by pct desc, merged with HL
     trophy drops. Returns None if the DB is unreachable (CI / laptop)."""
     conn = connect(repo_root)
-    result: dict[int, str] = {}
+    raw: dict[int, dict[str, float]] = {}
     if conn is not None:
         try:
             cur = conn.cursor()
             cur.execute(_DROP_SQL)
-            best: dict[int, tuple[str, str, int]] = {}
             for itemid, mob, zone, rate in cur.fetchall():
-                iid, mob_s, zone_s = int(itemid), (mob or "").replace("_", " "), (zone or "").replace("_", " ")
-                if iid not in best or int(rate) > best[iid][2]:
-                    best[iid] = (mob_s, zone_s, int(rate))
+                iid = int(itemid)
+                mob_s  = (mob  or "").replace("_", " ")
+                zone_s = (zone or "").replace("_", " ")
+                label  = f"{mob_s} ({zone_s})" if zone_s else mob_s
+                pct    = round(int(rate) / 10.0, 1)
+                if pct > raw.get(iid, {}).get(label, -1.0):
+                    raw.setdefault(iid, {})[label] = pct
             cur.close()
-            for iid, (mob_s, zone_s, _) in best.items():
-                result[iid] = f"{mob_s} ({zone_s})" if zone_s else mob_s
         finally:
             conn.close()
     else:
         return None
-    # Overlay HL trophy drops (take precedence over mob_droplist entries).
-    for iid, label in _HL_DROPS.items():
-        result[iid] = f"{label} ({_HL_ZONE})"
+    result: dict[int, _DropList] = {
+        iid: sorted(entries.items(), key=lambda kv: -kv[1])
+        for iid, entries in raw.items()
+    }
+    # Overlay HL trophy drops at the front (100% always wins).
+    for iid, (label, pct) in _HL_DROPS.items():
+        hl_entry = (f"{label} ({_HL_ZONE})", pct)
+        existing = [e for e in result.get(iid, []) if e[0] != hl_entry[0]]
+        result[iid] = [hl_entry] + existing
     return result
 
 
-def _render(groups, item_names, gap_set: set[int], drops: dict[int, str] | None = None) -> str:
+def _drop_cell(sources: _DropList) -> str:
+    """Render a drop-source list as a table cell string.
+
+    Single source → plain text.  Multiple → <details> dropdown sorted by %.
+    """
+    if not sources:
+        return "—"
+    top_label, top_pct = sources[0]
+    top_str = f"{top_label} {top_pct:g}%"
+    if len(sources) == 1:
+        return top_str
+    rest = "".join(
+        f"<br>{lbl} {pct:g}%"
+        for lbl, pct in sources[1:]
+    )
+    return f"<details><summary>{top_str}</summary>{rest}</details>"
+
+
+def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] | None = None) -> str:
     lines: list[str] = []
     total = sum(len(rows) for _, rows in groups)
     gap_count = sum(1 for _, rs in groups for r in rs if r[0] in gap_set)
@@ -453,7 +481,7 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, str] | None 
                 display = f"{display} {_GAP_MARK}"
             cap = _CAP_BY_AUG.get(aug_id, "no cap")
             if drops is not None:
-                drop_src = _escape_md(drops.get(item_id, "—"))
+                drop_src = _drop_cell(drops.get(item_id, []))
             else:
                 drop_src = "—"
             lines.append(
