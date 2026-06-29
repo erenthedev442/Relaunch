@@ -236,8 +236,13 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
             for _ in pairs(state.mobsAlive) do return end  -- wave still up
 
             -- Wave cleared. Pay the room, breathe, escalate.
-            local z = deadMob:getZone()
-            local everyone = playersInZone(z)
+            -- Use the captured `zone` (the real spawn zone, 48/Al Zahbi), NOT
+            -- deadMob:getZone(): dynamic invaders carry groupZoneId 210 (GM
+            -- Home), so getZone() returns 210 -- the wrong zone. Advancing on
+            -- 210 floods waves onto GM-Home bystanders and, when 210 is empty,
+            -- wrongly ends the event ('abandoned') after wave 1, which clears
+            -- xi._any_invasion_active and kills the auto-reraise.
+            local everyone = playersInZone(zone)
             for _, p in ipairs(everyone) do
                 addMarks(p, catalog.reward.perWaveMarks)
                 p:printToPlayer(string.format(
@@ -251,12 +256,12 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
             if anyP then
                 anyP:timer(catalog.interWaveDelaySec * 1000, function(pp)
                     if state and state.startedAt == token then
-                        nextWave(pp:getZone())
+                        nextWave(zone)
                     end
                 end)
             else
                 -- Nobody left in zone to carry the timer - call it off.
-                endInvasion(z, 'abandoned')
+                endInvasion(zone, 'abandoned')
             end
         end,
 

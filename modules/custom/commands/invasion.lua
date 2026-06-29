@@ -91,9 +91,11 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
             state.mobsAlive[deadMob:getID()] = nil
             for _ in pairs(state.mobsAlive) do return end  -- wave still alive
 
-            -- Wave cleared.
-            local z = deadMob:getZone()
-            local everyone = z and z:getPlayers() or {}
+            -- Wave cleared. Use the captured `zone` (real spawn zone 48), NOT
+            -- deadMob:getZone() -- invaders carry groupZoneId 210 (GM Home), so
+            -- getZone() returns the wrong zone (empty player list -> the event
+            -- self-aborts after wave 1, clearing the reraise flag).
+            local everyone = zone:getPlayers()
             for _, p in ipairs(everyone) do
                 p:setCharVar('HL_Points', (p:getCharVar('HL_Points') or 0) + catalog.reward.perWaveMarks)
                 p:printToPlayer(string.format('[Invasion] Wave %d repelled! +%d marks.',
@@ -106,11 +108,11 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
             if anyP then
                 anyP:timer(catalog.interWaveDelaySec * 1000, function(pp)
                     if state and state.startedAt == token then
-                        nextWave(pp:getZone())
+                        nextWave(zone)
                     end
                 end)
             else
-                endLocalInvasion(z, 'abandoned')
+                endLocalInvasion(zone, 'abandoned')
             end
         end,
     })
