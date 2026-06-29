@@ -64,6 +64,7 @@ public:
 
     virtual auto ZoneServer(timer::time_point tick) -> Task<void> override;
     virtual auto CheckTriggerAreas() -> Task<void> override;
+    bool         IsZoneEmpty() override;
 
     void ForEachChar(const std::function<void(CCharEntity*)>& func) override;
     void ForEachCharInstance(CBaseEntity* PEntity, const std::function<void(CCharEntity*)>& func) override;
@@ -84,6 +85,8 @@ public:
     ~CZoneInstance() override;
 
 private:
+    bool IsHybrid();
+
     typedef std::vector<std::unique_ptr<CInstance>> instanceList_t;
 
     instanceList_t m_InstanceList;

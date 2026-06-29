@@ -736,7 +736,7 @@ auto CreateZone(Scheduler& scheduler, MapConfig config, uint16 ZoneID) -> CZone*
         const auto zoneType    = rset->get<ZONE_TYPE>("zonetype");
         const auto restriction = rset->get<uint8>("restriction");
 
-        if (zoneType & ZONE_TYPE::INSTANCED)
+        if (zoneType & (ZONE_TYPE::INSTANCED | ZONE_TYPE::HYBRID_INSTANCED))
         {
             return new CZoneInstance(scheduler, config, static_cast<ZONEID>(ZoneID), GetCurrentRegion(ZoneID), GetCurrentContinent(ZoneID), restriction);
         }

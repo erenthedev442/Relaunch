@@ -5,6 +5,7 @@ local ID = zones[xi.zone.KUFTAL_TUNNEL]
 -----------------------------------
 ---@type TZone
 local zoneObject = {}
+local dungeonZone = require('modules/custom/lua/dungeon_zone')
 
 zoneObject.onInitialize = function(zone)
     xi.treasure.initZone(zone)
@@ -25,8 +26,12 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:setPos(-20, -20, -241, 177)
     end
 
+    dungeonZone.recoverOrphan(player)
     return cs
 end
+
+zoneObject.onInstanceZoneIn = dungeonZone.onInstanceZoneIn
+zoneObject.onInstanceLoadFailed = dungeonZone.onInstanceLoadFailed
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end

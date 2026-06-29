@@ -5,6 +5,7 @@ local ID = zones[xi.zone.RANGUEMONT_PASS]
 -----------------------------------
 ---@type TZone
 local zoneObject = {}
+local dungeonZone = require('modules/custom/lua/dungeon_zone')
 
 zoneObject.onInitialize = function(zone)
     -- pick a random Taisaijin PH and set its do not disturb time
@@ -32,8 +33,12 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:setPos(302.778, -68.131, 257.759, 137)
     end
 
+    dungeonZone.recoverOrphan(player)
     return cs
 end
+
+zoneObject.onInstanceZoneIn = dungeonZone.onInstanceZoneIn
+zoneObject.onInstanceLoadFailed = dungeonZone.onInstanceLoadFailed
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end

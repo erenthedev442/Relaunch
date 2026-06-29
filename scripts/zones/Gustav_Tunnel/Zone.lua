@@ -3,6 +3,7 @@
 -----------------------------------
 ---@type TZone
 local zoneObject = {}
+local dungeonZone = require('modules/custom/lua/dungeon_zone')
 
 zoneObject.onInitialize = function(zone)
 end
@@ -22,8 +23,12 @@ zoneObject.onZoneIn = function(player, prevZone)
         player:setPos(-260.013, -21.802, -276.352, 205)
     end
 
+    dungeonZone.recoverOrphan(player)
     return cs
 end
+
+zoneObject.onInstanceZoneIn = dungeonZone.onInstanceZoneIn
+zoneObject.onInstanceLoadFailed = dungeonZone.onInstanceLoadFailed
 
 zoneObject.onTriggerAreaEnter = function(player, triggerArea)
 end

@@ -39,10 +39,19 @@ CZoneInstance::~CZoneInstance()
     TracyZoneScoped;
 }
 
+bool CZoneInstance::IsHybrid()
+{
+    return (GetTypeMask() & ZONE_TYPE::HYBRID_INSTANCED) != 0;
+}
+
 CCharEntity* CZoneInstance::GetCharByName(const std::string& name)
 {
     TracyZoneScoped;
-    CCharEntity* PEntity = nullptr;
+    CCharEntity* PEntity = IsHybrid() ? CZone::GetCharByName(name) : nullptr;
+    if (PEntity)
+    {
+        return PEntity;
+    }
     for (const auto& PInstance : m_InstanceList)
     {
         PEntity = PInstance->GetCharByName(name);
@@ -57,7 +66,11 @@ CCharEntity* CZoneInstance::GetCharByName(const std::string& name)
 CCharEntity* CZoneInstance::GetCharByID(uint32 id)
 {
     TracyZoneScoped;
-    CCharEntity* PEntity = nullptr;
+    CCharEntity* PEntity = IsHybrid() ? CZone::GetCharByID(id) : nullptr;
+    if (PEntity)
+    {
+        return PEntity;
+    }
     for (const auto& PInstance : m_InstanceList)
     {
         PEntity = PInstance->GetCharByID(id);
@@ -72,7 +85,11 @@ CCharEntity* CZoneInstance::GetCharByID(uint32 id)
 CBaseEntity* CZoneInstance::GetEntity(uint16 targid, uint8 filter)
 {
     TracyZoneScoped;
-    CBaseEntity* PEntity = nullptr;
+    CBaseEntity* PEntity = IsHybrid() ? CZone::GetEntity(targid, filter) : nullptr;
+    if (PEntity)
+    {
+        return PEntity;
+    }
     if (filter & TYPE_PC)
     {
         for (const auto& PInstance : m_InstanceList)
@@ -94,6 +111,10 @@ void CZoneInstance::InsertMOB(CBaseEntity* PMob)
     {
         PMob->PInstance->InsertMOB(PMob);
     }
+    else if (IsHybrid())
+    {
+        CZone::InsertMOB(PMob);
+    }
 }
 
 void CZoneInstance::InsertNPC(CBaseEntity* PNpc)
@@ -102,6 +123,10 @@ void CZoneInstance::InsertNPC(CBaseEntity* PNpc)
     if (PNpc->PInstance)
     {
         PNpc->PInstance->InsertNPC(PNpc);
+    }
+    else if (IsHybrid())
+    {
+        CZone::InsertNPC(PNpc);
     }
 }
 
@@ -112,6 +137,10 @@ void CZoneInstance::InsertPET(CBaseEntity* PPet)
     {
         PPet->PInstance->InsertPET(PPet);
     }
+    else if (IsHybrid())
+    {
+        CZone::InsertPET(PPet);
+    }
 }
 
 void CZoneInstance::InsertTRUST(CBaseEntity* PTrust)
@@ -120,6 +149,10 @@ void CZoneInstance::InsertTRUST(CBaseEntity* PTrust)
     if (PTrust->PInstance)
     {
         PTrust->PInstance->InsertTRUST(PTrust);
+    }
+    else if (IsHybrid())
+    {
+        CZone::InsertTRUST(PTrust);
     }
 }
 
@@ -130,11 +163,20 @@ void CZoneInstance::FindPartyForMob(CBaseEntity* PEntity)
     {
         PEntity->PInstance->FindPartyForMob(PEntity);
     }
+    else if (IsHybrid())
+    {
+        CZone::FindPartyForMob(PEntity);
+    }
 }
 
 void CZoneInstance::TransportDepart(uint16 boundary, uint16 prevZoneId, uint16 transportId)
 {
     TracyZoneScoped;
+    if (IsHybrid())
+    {
+        CZone::TransportDepart(boundary, prevZoneId, transportId);
+    }
+
     for (const auto& PInstance : m_InstanceList)
     {
         PInstance->TransportDepart(boundary, prevZoneId, transportId);
@@ -160,6 +202,10 @@ void CZoneInstance::DecreaseZoneCounter(CCharEntity* PChar)
                 PInstance->SetWipeTime(PInstance->GetElapsedTime(timer::now()));
             }
         }
+    }
+    else if (IsHybrid())
+    {
+        CZone::DecreaseZoneCounter(PChar);
     }
 }
 
@@ -226,6 +272,10 @@ void CZoneInstance::IncreaseZoneCounter(CCharEntity* PChar)
             PChar->PAI->QueueAction(queueAction_t(400ms, false, luautils::AfterInstanceRegister));
         }
     }
+    else if (IsHybrid())
+    {
+        CZone::IncreaseZoneCounter(PChar);
+    }
     else
     {
         ShowWarning(fmt::format("Failed to place {} in {} ({}). Placing them in that zone's instance exit area.",
@@ -269,6 +319,10 @@ void CZoneInstance::SpawnMOBs(CCharEntity* PChar)
     {
         PChar->PInstance->SpawnMOBs(PChar);
     }
+    else if (IsHybrid())
+    {
+        CZone::SpawnMOBs(PChar);
+    }
 }
 
 void CZoneInstance::SpawnPETs(CCharEntity* PChar)
@@ -277,6 +331,10 @@ void CZoneInstance::SpawnPETs(CCharEntity* PChar)
     if (PChar->PInstance)
     {
         PChar->PInstance->SpawnPETs(PChar);
+    }
+    else if (IsHybrid())
+    {
+        CZone::SpawnPETs(PChar);
     }
 }
 
@@ -287,6 +345,10 @@ void CZoneInstance::SpawnTRUSTs(CCharEntity* PChar)
     {
         PChar->PInstance->SpawnTRUSTs(PChar);
     }
+    else if (IsHybrid())
+    {
+        CZone::SpawnTRUSTs(PChar);
+    }
 }
 
 void CZoneInstance::SpawnNPCs(CCharEntity* PChar)
@@ -295,6 +357,10 @@ void CZoneInstance::SpawnNPCs(CCharEntity* PChar)
     if (PChar->PInstance)
     {
         PChar->PInstance->SpawnNPCs(PChar);
+    }
+    else if (IsHybrid())
+    {
+        CZone::SpawnNPCs(PChar);
     }
 }
 
@@ -305,6 +371,10 @@ void CZoneInstance::SpawnPCs(CCharEntity* PChar)
     {
         PChar->PInstance->SpawnPCs(PChar);
     }
+    else if (IsHybrid())
+    {
+        CZone::SpawnPCs(PChar);
+    }
 }
 
 void CZoneInstance::SpawnConditionalNPCs(CCharEntity* PChar)
@@ -313,6 +383,10 @@ void CZoneInstance::SpawnConditionalNPCs(CCharEntity* PChar)
     if (PChar->PInstance)
     {
         PChar->PInstance->SpawnConditionalNPCs(PChar);
+    }
+    else if (IsHybrid())
+    {
+        CZone::SpawnConditionalNPCs(PChar);
     }
 }
 
@@ -323,11 +397,20 @@ void CZoneInstance::SpawnTransport(CCharEntity* PChar)
     {
         PChar->PInstance->SpawnTransport(PChar);
     }
+    else if (IsHybrid())
+    {
+        CZone::SpawnTransport(PChar);
+    }
 }
 
 void CZoneInstance::TOTDChange(vanadiel_time::TOTD TOTD)
 {
     TracyZoneScoped;
+    if (IsHybrid())
+    {
+        CZone::TOTDChange(TOTD);
+    }
+
     for (const auto& PInstance : m_InstanceList)
     {
         PInstance->TOTDChange(TOTD);
@@ -344,9 +427,18 @@ void CZoneInstance::PushPacket(CBaseEntity* PEntity, GLOBAL_MESSAGE_TYPE message
         {
             PEntity->PInstance->PushPacket(PEntity, message_type, packet);
         }
+        else if (IsHybrid())
+        {
+            CZone::PushPacket(PEntity, message_type, packet);
+        }
     }
     else
     {
+        if (IsHybrid())
+        {
+            CZone::PushPacket(nullptr, message_type, packet);
+        }
+
         for (const auto& PInstance : m_InstanceList)
         {
             PInstance->PushPacket(PEntity, message_type, packet);
@@ -364,9 +456,18 @@ void CZoneInstance::UpdateEntityPacket(CBaseEntity* PEntity, ENTITYUPDATE type, 
         {
             PEntity->PInstance->UpdateEntityPacket(PEntity, type, updatemask, alwaysInclude);
         }
+        else if (IsHybrid())
+        {
+            CZone::UpdateEntityPacket(PEntity, type, updatemask, alwaysInclude);
+        }
     }
     else
     {
+        if (IsHybrid())
+        {
+            CZone::UpdateEntityPacket(nullptr, type, updatemask, alwaysInclude);
+        }
+
         for (const auto& PInstance : m_InstanceList)
         {
             PInstance->UpdateEntityPacket(PEntity, type, updatemask, alwaysInclude);
@@ -382,11 +483,20 @@ void CZoneInstance::WideScan(CCharEntity* PChar, uint16 radius)
     {
         PChar->PInstance->WideScan(PChar, radius);
     }
+    else if (IsHybrid())
+    {
+        CZone::WideScan(PChar, radius);
+    }
 }
 
 auto CZoneInstance::ZoneServer(timer::time_point tick) -> Task<void>
 {
     TracyZoneScoped;
+
+    if (IsHybrid())
+    {
+        co_await CZone::ZoneServer(tick);
+    }
 
     std::vector<CInstance*> instancesToRemove;
     for (const auto& PInstance : m_InstanceList)
@@ -415,52 +525,37 @@ auto CZoneInstance::ZoneServer(timer::time_point tick) -> Task<void>
     }
 }
 
-auto CZoneInstance::CheckTriggerAreas() -> Task<void>
+bool CZoneInstance::IsZoneEmpty()
 {
-    TracyZoneScoped;
+    if (IsHybrid() && !CZone::IsZoneEmpty())
+    {
+        return false;
+    }
 
     for (const auto& PInstance : m_InstanceList)
     {
-        PInstance->ForEachChar(
-            [&](CCharEntity* PChar)
-            {
-                // TODO: When we start to use octrees or spatial hashing to split up zones,
-                //     : use them here to make the search domain smaller.
-
-                // Do not enter trigger areas while loading in. Set in xi.player.onGameIn
-                if (PChar->GetLocalVar("ZoningIn") > 0)
-                {
-                    return;
-                }
-
-                for (const auto& triggerArea : m_triggerAreaList)
-                {
-                    const auto triggerAreaID = triggerArea->getTriggerAreaID();
-                    if (triggerArea->isPointInside(PChar->loc.p))
-                    {
-                        if (!PChar->isInTriggerArea(triggerAreaID))
-                        {
-                            // Add the TriggerArea to the players cache of current TriggerAreas
-                            PChar->onTriggerAreaEnter(triggerAreaID);
-                            luautils::OnTriggerAreaEnter(PChar, triggerArea);
-                        }
-                    }
-                    else if (PChar->isInTriggerArea(triggerAreaID))
-                    {
-                        // Remove the TriggerArea from the players cache of current TriggerAreas
-                        PChar->onTriggerAreaLeave(triggerAreaID);
-                        luautils::OnTriggerAreaLeave(PChar, triggerArea);
-                    }
-                }
-            });
+        if (!PInstance->CharListEmpty())
+        {
+            return false;
+        }
     }
 
-    co_return;
+    return true;
+}
+
+auto CZoneInstance::CheckTriggerAreas() -> Task<void>
+{
+    return CZone::CheckTriggerAreas();
 }
 
 void CZoneInstance::ForEachChar(const std::function<void(CCharEntity*)>& func)
 {
     TracyZoneScoped;
+
+    if (IsHybrid())
+    {
+        CZone::ForEachChar(func);
+    }
 
     for (const auto& PInstance : m_InstanceList)
     {
@@ -476,11 +571,20 @@ void CZoneInstance::ForEachCharInstance(CBaseEntity* PEntity, const std::functio
     {
         PEntity->PInstance->ForEachChar(func);
     }
+    else if (IsHybrid())
+    {
+        CZone::ForEachChar(func);
+    }
 }
 
 void CZoneInstance::ForEachMob(const std::function<void(CMobEntity*)>& func)
 {
     TracyZoneScoped;
+
+    if (IsHybrid())
+    {
+        CZone::ForEachMob(func);
+    }
 
     for (const auto& PInstance : m_InstanceList)
     {
@@ -496,11 +600,20 @@ void CZoneInstance::ForEachMobInstance(CBaseEntity* PEntity, const std::function
     {
         PEntity->PInstance->ForEachMob(func);
     }
+    else if (IsHybrid())
+    {
+        CZone::ForEachMob(func);
+    }
 }
 
 void CZoneInstance::ForEachNpc(const std::function<void(CNpcEntity*)>& func)
 {
     TracyZoneScoped;
+
+    if (IsHybrid())
+    {
+        CZone::ForEachNpc(func);
+    }
 
     for (const auto& PInstance : m_InstanceList)
     {
@@ -516,11 +629,20 @@ void CZoneInstance::ForEachNpcInstance(CBaseEntity* PEntity, const std::function
     {
         PEntity->PInstance->ForEachNpc(func);
     }
+    else if (IsHybrid())
+    {
+        CZone::ForEachNpc(func);
+    }
 }
 
 void CZoneInstance::ForEachTrust(const std::function<void(CTrustEntity*)>& func)
 {
     TracyZoneScoped;
+
+    if (IsHybrid())
+    {
+        CZone::ForEachTrust(func);
+    }
 
     for (const auto& PInstance : m_InstanceList)
     {
@@ -536,11 +658,20 @@ void CZoneInstance::ForEachTrustInstance(CBaseEntity* PEntity, const std::functi
     {
         PEntity->PInstance->ForEachTrust(func);
     }
+    else if (IsHybrid())
+    {
+        CZone::ForEachTrust(func);
+    }
 }
 
 void CZoneInstance::ForEachPet(const std::function<void(CPetEntity*)>& func)
 {
     TracyZoneScoped;
+
+    if (IsHybrid())
+    {
+        CZone::ForEachPet(func);
+    }
 
     for (const auto& PInstance : m_InstanceList)
     {
@@ -556,11 +687,20 @@ void CZoneInstance::ForEachPetInstance(CBaseEntity* PEntity, const std::function
     {
         PEntity->PInstance->ForEachPet(func);
     }
+    else if (IsHybrid())
+    {
+        CZone::ForEachPet(func);
+    }
 }
 
 void CZoneInstance::ForEachAlly(const std::function<void(CMobEntity*)>& func)
 {
     TracyZoneScoped;
+
+    if (IsHybrid())
+    {
+        CZone::ForEachAlly(func);
+    }
 
     for (const auto& PInstance : m_InstanceList)
     {
@@ -575,6 +715,10 @@ void CZoneInstance::ForEachAllyInstance(CBaseEntity* PEntity, const std::functio
     if (PEntity->PInstance)
     {
         PEntity->PInstance->ForEachAlly(func);
+    }
+    else if (IsHybrid())
+    {
+        CZone::ForEachAlly(func);
     }
 }
 

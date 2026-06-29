@@ -954,13 +954,18 @@ auto CZone::ZoneServer(timer::time_point tick) -> Task<void>
         m_BattlefieldHandler->HandleBattlefields(tick);
     }
 
-    if (zoneTimerToken_.has_value() && m_zoneEntities->CharListEmpty() && m_timeZoneEmpty + 5s < timer::now() && CheckMobsPathedBack())
+    if (zoneTimerToken_.has_value() && IsZoneEmpty() && m_timeZoneEmpty + 5s < timer::now() && CheckMobsPathedBack())
     {
         zoneTimerToken_.reset();
         zoneTimerTriggerAreasToken_.reset();
     }
 
     co_return;
+}
+
+bool CZone::IsZoneEmpty()
+{
+    return m_zoneEntities->CharListEmpty();
 }
 
 void CZone::ForEachChar(const std::function<void(CCharEntity*)>& func)
@@ -1117,7 +1122,8 @@ void CZone::CharZoneIn(CCharEntity* PChar)
         }
     }
 
-    if (!(m_zoneType & ZONE_TYPE::INSTANCED))
+    if (!(m_zoneType & ZONE_TYPE::INSTANCED) &&
+        (!(m_zoneType & ZONE_TYPE::HYBRID_INSTANCED) || PChar->PInstance == nullptr))
     {
         charutils::ClearTempItems(PChar);
         PChar->PInstance = nullptr;

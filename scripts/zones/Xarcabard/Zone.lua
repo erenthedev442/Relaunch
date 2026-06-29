@@ -3,6 +3,7 @@
 -----------------------------------
 ---@type TZone
 local zoneObject = {}
+local dungeonZone = require('modules/custom/lua/dungeon_zone')
 
 zoneObject.onInitialize = function(zone)
     xi.conquest.setRegionalConquestOverseers(zone:getRegionID())
@@ -45,8 +46,12 @@ zoneObject.onZoneIn = function(player, prevZone)
         end
     end
 
+    dungeonZone.recoverOrphan(player)
     return cs
 end
+
+zoneObject.onInstanceZoneIn = dungeonZone.onInstanceZoneIn
+zoneObject.onInstanceLoadFailed = dungeonZone.onInstanceLoadFailed
 
 zoneObject.onConquestUpdate = function(zone, updatetype, influence, owner, ranking, isConquestAlliance)
     xi.conquest.onConquestUpdate(zone, updatetype, influence, owner, ranking, isConquestAlliance)

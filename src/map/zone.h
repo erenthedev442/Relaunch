@@ -446,6 +446,9 @@ enum ZONE_TYPE : uint16
     IONIS     = 0x0040, // 64
     DYNAMIS   = 0x0080, // 128
     INSTANCED = 0x0100, // 256
+    // A normal public zone which can also host isolated CInstance copies.
+    // Unlike INSTANCED, the zone's ordinary NPCs/mobs are still loaded.
+    HYBRID_INSTANCED = 0x0200, // 512
 };
 DECLARE_FORMAT_AS_UNDERLYING(ZONE_TYPE);
 
@@ -654,6 +657,7 @@ public:
 
     virtual auto ZoneServer(timer::time_point tick) -> Task<void>;
     virtual auto CheckTriggerAreas() -> Task<void>;
+    virtual bool IsZoneEmpty();
 
     virtual void ForEachChar(const std::function<void(CCharEntity*)>& func);
     virtual void ForEachCharInstance(CBaseEntity* PEntity, const std::function<void(CCharEntity*)>& func);
