@@ -1,13 +1,31 @@
 -- unity_wanted_mobs.sql
--- Adds zone 288 (Escha-Zi'tah / Reisenjima_Henge) mob_groups rows for Unity
--- Wanted NMs that don't already have a zone-288 entry.
+-- Adds zone 288 (Escha-Zi'tah) mob_groups rows for Unity Wanted NMs.
 -- poolid is copied from each NM's natural-zone entry; stats come from mob_pools.
 -- NMs with poolid=0 lack a mob_pools entry in LSB - will spawn without proper
 -- model/stats until a mob_pools row is added (functional for system testing).
 -- respawntime=0 -> manual spawn only (insertDynamicEntity from unity_wanted.lua).
--- Idempotent: INSERT IGNORE skips rows that already exist (groupid+zoneid PK).
--- Already in zone 288: groupids 24-35 (Hugemaw_Harold, Prickly_Pitriv, etc.)
+-- spawntype=0 required for insertDynamicEntity; LSB baseline uses spawntype=128
+-- for the Unity NMs in zone 288, which prevents dynamic spawning.
+-- ON DUPLICATE KEY UPDATE ensures spawntype is fixed even if rows already exist.
 
+-- groupids 24-35: stock LSB Unity NMs that live in zone 288.
+-- LSB baseline has these with spawntype=128; we need spawntype=0.
+INSERT INTO mob_groups (groupid, poolid, zoneid, name, respawntime, spawntype, dropid, HP, MP, allegiance)
+VALUES
+(24, 4850, 288, 'Hugemaw_Harold',      0, 0, 0, 0, 0, 0),
+(25, 4851, 288, 'Prickly_Pitriv',      0, 0, 0, 0, 0, 0),
+(26, 4852, 288, 'Serpopard_Ninlil',    0, 0, 0, 0, 0, 0),
+(27, 4853, 288, 'Abyssdiver',          0, 0, 0, 0, 0, 0),
+(28, 4854, 288, 'Keeper_of_Heiligtum', 0, 0, 0, 0, 0, 0),
+(29, 6816, 288, 'Muut',                0, 0, 0, 0, 0, 0),
+(32, 6907, 288, 'Voso',                0, 0, 0, 0, 0, 0),
+(33, 4855, 288, 'Jester_Malatrix',     0, 0, 0, 0, 0, 0),
+(34, 4856, 288, 'Immanibugard',        0, 0, 0, 0, 0, 0),
+(35, 4857, 288, 'Beist',               0, 0, 0, 0, 0, 0)
+ON DUPLICATE KEY UPDATE spawntype = 0;
+
+-- Remaining Unity NMs inserted into zone 288 with their poolids.
+-- INSERT IGNORE is safe here because these groupids don't exist in LSB baseline.
 INSERT IGNORE INTO mob_groups (groupid, poolid, zoneid, name, respawntime, spawntype, dropid, HP, MP, allegiance)
 VALUES
 -- Tier 1 (lv 75-80) --

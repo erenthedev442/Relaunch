@@ -114,7 +114,11 @@ local function spawnWantedNm(player, nm)
             killer:setCharVar(CV_NM, 0)
         end,
     })
-    utils.unused(mob)
+    if not mob then
+        player:setCharVar(CV_NM, 0)
+        player:printToPlayer('[Unity] Spawn failed — zone may be full. Try again or contact a GM.', S)
+        return
+    end
     player:printToPlayer(string.format('[Unity] %s has appeared! Good luck, kupo!', nm.label), S)
 end
 
