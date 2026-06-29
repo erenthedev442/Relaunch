@@ -66,11 +66,23 @@ _DISP_RE = re.compile(r"\bdisp\s*=\s*(-?\d+(?:\.\d+)?)")
 # Per-entry boost ceiling (0-31). When set, the Max column uses this instead of
 # 31 so nerfed augments (e.g. All songs maxBoost=1) show their true max.
 _MAXBOOST_RE = re.compile(r"\bmaxBoost\s*=\s*(\d+)")
+# Tier gate (0-4 = Augment Sage rank required; 0 = free / no gate).
+_TIER_RE = re.compile(r"\btier\s*=\s*(\d+)")
 
-# Matches a category header comment, e.g.:
+# Matches a subcategory header comment, e.g.:
 #   -- HP / Regen
+#   -- Weapon delay (melee)
 # Captures the title text after the `--`.
 _HEADER_RE = re.compile(r"^\s*--\s*([A-Za-z][^\n]*?)\s*$", re.MULTILINE)
+
+# Matches the box-drawing cat-group header, e.g.:
+#   -- ── cat 1: STR ─────────────────────────────────────────────────
+# These start with unicode box chars so _HEADER_RE doesn't match them.
+# Captures the stat-family name after "cat N:".
+_CAT_HEADER_RE = re.compile(
+    r"^\s*--\s*─[^\n]*?cat\s*\d+:\s*([A-Za-z][^─\n]*?)\s*─*\s*$",
+    re.MULTILINE,
+)
 
 # item_basic INSERT row — capture id and the 3rd field (short_name).
 # Example:
@@ -95,6 +107,31 @@ _SHOP_TOKENS = (
 )
 
 
+# Per-tier heading + description rendered into the catalog section.
+_TIER_INFO: list[tuple[int, str, str]] = [
+    (0, "T0 — Free (Day 1)",
+     "No progression gate — available from the first day on any character. These are **job-specific or "
+     "class-specific** utilities that only meaningfully help a single playstyle: ability delays, pet-ability "
+     "extensions, proc-chance passives most jobs ignore. Catalysts drop from low-level overworld mobs."),
+    (1, "T1 — Initiate (Hunting League Rank 3)",
+     "Opens at **Hunting League Rank 3**. Practical job abilities and defensive options useful to a wider range "
+     "of jobs — counter/parry/evasion, spell interruption, elemental affinities, shield tech. "
+     "Catalysts drop from mid-level mobs."),
+    (2, "T2 — Adept (Hunting League Rank 5)",
+     "Opens at **Hunting League Rank 5**. Core combat stats that nearly every job cares about — base attributes "
+     "(STR/DEX/VIT/AGI/INT), Accuracy, DEF, Store TP, Fast Cast, Mag.Acc., Snapshot. "
+     "Catalysts drop from high-level mobs."),
+    (3, "T3 — Magus (Prestige)",
+     "Opens via **Prestige** progression. Damage multipliers and sustain — Double Attack, Crit rate, Magic burst "
+     "damage, Mag.crit hit damage, weapon delay reductions, HP/MP pool expansions, Regen, Refresh. "
+     "Catalysts drop from Prestige-tier (Nightmare Court) bosses."),
+    (4, "T4 — Sage (Endgame)",
+     "**Endgame only.** Top-tier universals that benefit every job without exception: Haste, Triple Attack, "
+     "Quadruple Attack, TP Bonus, critical hit damage, physical/magic/all damage-taken percentage reductions. "
+     "Catalysts drop from Shinryu- and Abyssea-tier NMs."),
+]
+
+
 def _shop_token(category: str):
     c = category.strip().lower()
     for kw, tok in _SHOP_TOKENS:
@@ -117,24 +154,33 @@ def _load_item_names(item_sql: Path) -> dict[int, str]:
     return names
 
 
-def _parse_catalog(text: str) -> list[tuple[str, list[tuple[int, int, str, int, int, int, int]]]]:
+def _parse_catalog(text: str) -> list[tuple[str, list[tuple[int, int, str, int, int, int, int, int]]]]:
     """Walk the catalog file linearly, tracking the most recent category
-    header comment. Returns [(category, [(itemId, augId, label, base, mult, disp, maxBoost), ...]), ...]
+    header comment. Returns [(category, [(itemId, augId, label, base, mult, disp, maxBoost, tier), ...]), ...]
     in source order. Entries with no preceding header land in 'Other'.
-    `base` defaults to 0, `mult`/`disp` to 1, `maxBoost` to 31 (uncapped) when omitted."""
-    groups: list[tuple[str, list[tuple[int, int, str, int, int, int, int]]]] = []
+    `base` defaults to 0, `mult`/`disp` to 1, `maxBoost` to 31 (uncapped), `tier` to 0 when omitted."""
+    groups: list[tuple[str, list[tuple[int, int, str, int, int, int, int, int]]]] = []
     current: str = "Other"
-    bucket: dict[str, list[tuple[int, int, str, int, int, int, int]]] = {}
+    bucket: dict[str, list[tuple[int, int, str, int, int, int, int, int]]] = {}
     order: list[str] = []
 
     for line in text.splitlines():
+        # Primary: box-drawing group header -- ── cat N: StatFamily ──
+        # Parsed first so the stat-family name wins over sub-comments.
+        g = _CAT_HEADER_RE.match(line)
+        if g:
+            current = g.group(1).strip()
+            continue
+        # Secondary: short sub-category comment (e.g. "-- Weapon delay (melee)")
         h = _HEADER_RE.match(line)
         if h:
             title = h.group(1).strip()
-            # Skip file-header descriptive comments (not category markers).
-            # Real category headers are short — stat family names. The file
-            # header lines are long sentences. Pick a length cutoff.
-            if len(title) <= 60 and not title.startswith("augment_catalog"):
+            # Skip file-header descriptive lines that aren't category markers:
+            # * lines containing "sql/" (e.g. "Generated from sql/augments.sql")
+            # * long file-level sentences (≥ 60 chars)
+            # * lines starting with "augment_catalog" (the file-name comment)
+            if ("sql/" not in title and len(title) <= 60
+                    and not title.startswith("augment_catalog")):
                 current = title
             continue
         m = _ENTRY_RE.search(line)
@@ -153,17 +199,19 @@ def _parse_catalog(text: str) -> list[tuple[str, list[tuple[int, int, str, int, 
         disp = float(dd.group(1)) if dd else 1
         mb = _MAXBOOST_RE.search(line)
         max_boost = int(mb.group(1)) if mb else 31
+        tt = _TIER_RE.search(line)
+        tier = int(tt.group(1)) if tt else 0
         if current not in bucket:
             bucket[current] = []
             order.append(current)
-        bucket[current].append((item_id, aug_id, label, base, mult, disp, max_boost))
+        bucket[current].append((item_id, aug_id, label, base, mult, disp, max_boost, tier))
 
     for cat in order:
         groups.append((cat, bucket[cat]))
     return groups
 
 
-def _groups_from_json(json_path: Path) -> list[tuple[str, list[tuple[int, int, str, int, int, int, int]]]]:
+def _groups_from_json(json_path: Path) -> list[tuple[str, list[tuple[int, int, str, int, int, int, int, int]]]]:
     """Build the same (category, rows) structure `_parse_catalog` returns, but
     from the structured `augment_catalog.json` the catalog generator emits in
     lockstep with the .lua. This is the PREFERRED path: no regex, so a new
@@ -173,15 +221,16 @@ def _groups_from_json(json_path: Path) -> list[tuple[str, list[tuple[int, int, s
         data = json.loads(json_path.read_text(encoding="utf-8"))
     except (json.JSONDecodeError, OSError):
         return []
-    groups: list[tuple[str, list[tuple[int, int, str, int, int, int, int]]]] = []
+    groups: list[tuple[str, list[tuple[int, int, str, int, int, int, int, int]]]] = []
     for g in data.get("groups", []):
-        rows: list[tuple[int, int, str, int, int, int, int]] = []
+        rows: list[tuple[int, int, str, int, int, int, int, int]] = []
         for e in g.get("entries", []):
             mb = e.get("maxBoost")
             rows.append((
                 int(e["itemId"]), int(e["augId"]), str(e["label"]),
                 int(e["base"]), int(e["mult"]), float(e["disp"]),
                 int(mb) if mb is not None else 31,
+                int(e.get("tier", 0)),
             ))
         groups.append((str(g.get("category", "Other")), rows))
     return groups
@@ -299,22 +348,12 @@ def _render(groups, item_names, gap_set: set[int]) -> str:
     total = sum(len(rows) for _, rows in groups)
     gap_count = sum(1 for _, rs in groups for r in rs if r[0] in gap_set)
     lines.append(
-        f"_{total} catalyst items across {len(groups)} categories. "
-        f"Trade the catalyst to the Augment Moogle to apply the matching augment. "
-        f"Cost is **10,000 gil flat per trade** plus the catalyst items themselves._"
-    )
-    lines.append("")
-    lines.append(
-        "Each augment **scales with [Augment Sage](augment-sage.md) progress** and "
-        "with how many catalysts you trade (**×N** = that many, 1–5; an item has 5 "
-        "augment slots). **Fresh ×N** is a brand-new augment with **no Sage "
-        "progress**; **Max ×N** is the ceiling at **rank-5 mastery + full affinity + "
-        "a crit**. Your live value starts near Fresh and climbs toward Max as you "
-        "rank Augment Sage up. Percentage augments (damage-taken, haste, etc.) "
-        "show the raw value; the **Cap** column is the hard in-game ceiling for "
-        "that stat (e.g. Phys. dmg. taken floors at -50%), or **no cap** for "
-        "additive stats like Attack/HP — values above the Cap can't be reached no "
-        "matter how many catalysts you stack."
+        f"_{total} catalyst items across 5 tiers. "
+        f"Each drops (~50%) from a specific monster; trade it to the "
+        f"**Augment Moogle in Leafallia** (`!leaf`) to apply the augment. "
+        f"Cost is **10,000 gil flat per trade** plus the catalyst itself. "
+        f"The **Cap** column is the hard engine ceiling for that stat where one exists "
+        f"(e.g. Haste caps at 25%, damage-taken floors at -50%), or **no cap** for additive stats._"
     )
     lines.append("")
     if gap_count > 0:
@@ -322,57 +361,47 @@ def _render(groups, item_names, gap_set: set[int]) -> str:
             f"!!! warning \"Some catalysts aren't farmable yet ({gap_count} of {total})\"\n"
             f"    Items marked with {_GAP_MARK} don't currently appear in any mob drop, "
             f"synth recipe, vendor inventory, fishing pool, gardening result, or synergy "
-            f"recipe in the server's data. For now, ask a GM to spawn them. "
-            f"This list will shrink as drops are filled in upstream."
+            f"recipe in the server's data. For now, ask a GM to spawn them."
         )
         lines.append("")
 
-    lines.append(
-        "**Catalysts are FARMED, not bought** — each drops (~50%) from a specific assigned "
-        "monster, then you trade it to the **Augment Moogle in Leafallia** (`!leaf`) to apply it. Every "
-        "augment has a **tier (T0–T4)**: higher tiers drop from tougher monsters and open up "
-        "as you progress — **T0** Day 1 · **T1** Hunting League Rank 3 · **T2** HL Rank 5 · "
-        "**T3** Prestige · **T4** endgame. See the "
-        "[Augmenting guide](augmenting-guide.md#catalyst-tiers-what-unlocks-when) for the tier breakdown."
-    )
-    lines.append("")
-
+    # Build a flat list per tier: (category, item_id, aug_id, label)
+    by_tier: dict[int, list[tuple]] = {}
     for category, rows in groups:
-        if not rows:
+        for row in rows:
+            item_id, aug_id, label, _base, _mult, _disp, _max_boost, tier = row
+            by_tier.setdefault(tier, []).append((category, item_id, aug_id, label))
+
+    for tier_num, tier_heading, tier_desc in _TIER_INFO:
+        tier_rows = by_tier.get(tier_num, [])
+        if not tier_rows:
             continue
-        cat_gap = sum(1 for r in rows if r[0] in gap_set)
-        suffix = f"  _({cat_gap}/{len(rows)} need GM spawn)_" if cat_gap > 0 else ""
-        lines.append(f"### {category}{suffix}")
+        lines.append(f"### {tier_heading}")
         lines.append("")
-        lines.append("| Catalyst | Item ID | Augment | Fresh ×1 | ×2 | ×3 | ×4 | ×5 | Max ×1 | ×2 | ×3 | ×4 | ×5 | Cap |")
-        lines.append("|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|:--:|")
-        for item_id, aug_id, label, base, mult, disp, max_boost in rows:
+        lines.append(tier_desc)
+        lines.append("")
+        tier_gap = sum(1 for _, iid, _, _ in tier_rows if iid in gap_set)
+        if tier_gap > 0:
+            lines.append(f"_({tier_gap}/{len(tier_rows)} catalysts in this tier need GM spawn)_")
+            lines.append("")
+        lines.append("| Catalyst | Item ID | Category | Augment | Cap |")
+        lines.append("|---|---:|---|---|:--:|")
+        for category, item_id, aug_id, label in tier_rows:
             name = item_names.get(item_id, f"item_{item_id}")
             readable = _format_item_name(name)
-            # Fall back to plain text for items without a name lookup —
-            # the "item_<id>" placeholder isn't a real BG-Wiki page.
             if name.startswith("item_") and name == f"item_{item_id}":
                 display = _escape_md(readable)
             else:
                 display = _item_link(readable, item_id)
             if item_id in gap_set:
                 display = f"{display} {_GAP_MARK}"
-            # Power at each trade size for 1–5 catalysts (= 1–5 augment slots).
-            # Fresh = no Sage (boost 0); Max = full Sage (boost max_boost, where
-            # 31 = fully uncapped and lower values reflect a catalog maxBoost cap).
-            # Per slot = (base + boost) * mult / display-scale; N catalysts sum N.
-            # int(x + 0.5) = round-half-up, matching the Lua math.floor(x+0.5).
-            m = mult if mult > 1 else 1
-            d = disp if disp > 1 else 1
-            fresh = [int(n * base * m / d + 0.5) for n in (1, 2, 3, 4, 5)]
-            maxv  = [int(n * (base + max_boost) * m / d + 0.5) for n in (1, 2, 3, 4, 5)]
-            cells = " | ".join(str(v) for v in (fresh + maxv))
             cap = _CAP_BY_AUG.get(aug_id, "no cap")
             lines.append(
                 f"| {display} "
                 f"| {item_id} "
+                f"| {_escape_md(category)} "
                 f"| {_escape_md(_truncate_label(label))} "
-                f"| {cells} | {cap} |"
+                f"| {cap} |"
             )
         lines.append("")
 

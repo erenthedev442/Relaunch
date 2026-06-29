@@ -1,37 +1,11 @@
-{
+﻿{
   "version": "0.0.1",
   "configurations": [
     {
-      "name": "legendary-docs-main",
+      "name": "mkdocs-relaunch",
       "runtimeExecutable": "python",
-      "runtimeArgs": [
-        "-m", "mkdocs", "serve",
-        "-a", "127.0.0.1:8000",
-        "--no-livereload"
-      ],
-      "port": 8000
-    },
-    {
-      "name": "legendary-docs",
-      "runtimeExecutable": "python",
-      "runtimeArgs": [
-        "-m", "mkdocs", "serve",
-        "-f", "D:/server/.claude/worktrees/legendary-logo/mkdocs.yml",
-        "-a", "127.0.0.1:8765",
-        "--no-livereload"
-      ],
+      "runtimeArgs": ["-m", "mkdocs", "serve", "--config-file", "D:/server_relaunch/mkdocs.yml", "--dev-addr", "127.0.0.1:8765"],
       "port": 8765
-    },
-    {
-      "name": "gear-finder",
-      "runtimeExecutable": "D:/server/.claude/worktrees/busy-johnson-c59e6e/.venv-docs/Scripts/mkdocs.exe",
-      "runtimeArgs": [
-        "serve",
-        "-f", "D:/server/.claude/worktrees/busy-johnson-c59e6e/mkdocs.yml",
-        "-a", "127.0.0.1:8766",
-        "--no-livereload"
-      ],
-      "port": 8766
     }
   ]
 }
