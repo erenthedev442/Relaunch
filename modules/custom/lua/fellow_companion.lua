@@ -112,31 +112,30 @@ local CONFIG =
             {
                 { name = 'Penta Thrust',     ws = xi.mobSkill.PENTA_THRUST       },  -- 5-hit barrage
                 { name = 'Vorpal Blade',     ws = xi.mobSkill.VORPAL_BLADE_1     },  -- fast slash
-                { name = 'Eclipse Bite',     ws = xi.mobSkill.ECLIPSE_BITE       },  -- heavy bite
+                { name = 'Brain Crush',      ws = xi.mobSkill.BRAIN_CRUSH_1      },  -- heavy crush (Antican)
                 { name = 'Spinning Attack',  ws = xi.mobSkill.SPINNING_ATTACK_1  },  -- spinning multi-hit
                 { name = 'Sonic Blade',      ws = xi.mobSkill.SONIC_BLADE        },  -- sonic cutting wave
             },
         },
         berserker =
         {
-            name = 'Berserker', blurb = 'All-out melee offense; takes a bit more damage.', defaultWs = xi.mobSkill.CRESCENT_FANG,
+            name = 'Berserker', blurb = 'All-out melee offense; takes a bit more damage.', defaultWs = xi.mobSkill.HEAVY_BLOW,
             mods  = { { xi.mod.ATTP, 60 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 10 }, { xi.mod.DMGPHYS, 1000 } },
             moves =
             {
                 { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- massive single hit
                 { name = 'Amorphic Scythe',  ws = xi.mobSkill.AMORPHIC_SCYTHE   },  -- heavy scythe
-                { name = 'Heavy Blow',       ws = xi.mobSkill.HEAVY_BLOW         },  -- raw impact
-                { name = 'Charged Whisker',  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder burst
                 { name = 'Nightmare Scythe', ws = xi.mobSkill.NIGHTMARE_SCYTHE   },  -- dark scythe
+                { name = 'Sickle Moon',      ws = xi.mobSkill.SICKLE_MOON_1      },  -- crescent slash
+                { name = 'Backhand Blow',    ws = xi.mobSkill.BACKHAND_BLOW_1    },  -- brutal backhand
             },
         },
         bulwark   =
         {
-            name = 'Bulwark', blurb = 'Tank: more DEF, less damage taken, holds hate.', defaultWs = xi.mobSkill.ROCK_BUSTER,
+            name = 'Bulwark', blurb = 'Tank: more DEF, less damage taken, holds hate.', defaultWs = xi.mobSkill.EARTH_CRUSHER,
             mods  = { { xi.mod.DEF, 300 }, { xi.mod.DMGPHYS, -1000 }, { xi.mod.ENMITY, 50 } }, behavior = 'tank',
             moves =
             {
-                { name = 'Earth Crusher',    ws = xi.mobSkill.EARTH_CRUSHER      },  -- seismic smash
                 { name = 'Earth Pounder',    ws = xi.mobSkill.EARTH_POUNDER      },  -- ground slam
                 { name = 'Earthbreaker',     ws = xi.mobSkill.EARTHBREAKER_1     },  -- shockwave
                 { name = 'Maelstrom',        ws = xi.mobSkill.MAELSTROM_1        },  -- AoE hate pull
@@ -145,12 +144,11 @@ local CONFIG =
         },
         oracle    =
         {
-            name = 'Oracle', blurb = 'Battle-healer: fights and mends your wounds when hurt.', defaultWs = xi.mobSkill.METEORITE,
+            name = 'Oracle', blurb = 'Battle-healer: fights and mends your wounds when hurt.', defaultWs = xi.mobSkill.DIVINE_JUDGMENT,
             mods  = { { xi.mod.MND, 150 }, { xi.mod.DEF, 150 }, { xi.mod.MDEF, 150 } }, behavior = 'heal',
             moves =
             {
                 { name = 'Benediction',      ws = xi.mobSkill.BENEDICTION_1      },  -- major heal burst
-                { name = 'Divine Judgment',  ws = xi.mobSkill.DIVINE_JUDGMENT    },  -- holy strike
                 { name = 'Divine Spear',     ws = xi.mobSkill.DIVINE_SPEAR       },  -- holy lance
                 { name = 'Empty Salvation',  ws = xi.mobSkill.EMPTY_SALVATION_1  },  -- light nova
                 { name = 'Cursed Sphere',    ws = xi.mobSkill.CURSED_SPHERE_1    },  -- dark burst
@@ -162,24 +160,24 @@ local CONFIG =
             mods  = { { xi.mod.INT, 150 }, { xi.mod.MATT, 400 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',
             moves =
             {
-                { name = 'Blizzard IV',      ws = xi.mobSkill.BLIZZARD_IV        },  -- ice
-                { name = 'Thunder IV',       ws = xi.mobSkill.THUNDER_IV         },  -- lightning
-                { name = 'Aero IV',          ws = xi.mobSkill.AERO_IV            },  -- wind
-                { name = 'Stone IV',         ws = xi.mobSkill.STONE_IV           },  -- earth magic
-                { name = 'Actinic Burst',    ws = xi.mobSkill.ACTINIC_BURST      },  -- lightning AoE
+                { name = 'Blizzard IV',      ws = xi.mobSkill.BLIZZARD_IV        },
+                { name = 'Thunder IV',       ws = xi.mobSkill.THUNDER_IV         },
+                { name = 'Aero IV',          ws = xi.mobSkill.AERO_IV            },
+                { name = 'Stone IV',         ws = xi.mobSkill.STONE_IV           },
+                { name = 'Water IV',         ws = xi.mobSkill.WATER_IV           },
             },
         },
         hunter    =
         {
-            name = 'Hunter', blurb = 'Ranger: fights and adds ranged strikes to your target.', defaultWs = xi.mobSkill.THOUSAND_NEEDLES_1,
+            name = 'Hunter', blurb = 'Ranger: fights and adds ranged strikes to your target.', defaultWs = xi.mobSkill.EAGLE_EYE_SHOT_HUMANOID,
             mods  = { { xi.mod.AGI, 150 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged',
             moves =
             {
-                { name = 'Barbed Crescent',  ws = xi.mobSkill.BARBED_CRESCENT_1      },  -- crescent projectile
-                { name = 'Barrage',          ws = xi.mobSkill.BARRAGE                },  -- rapid volley
-                { name = 'Eagle Eye Shot',   ws = xi.mobSkill.EAGLE_EYE_SHOT_HUMANOID },  -- sniper round
-                { name = 'Bomb Toss',        ws = xi.mobSkill.BOMB_TOSS_1            },  -- explosive throw
-                { name = 'Broadside Barrage',ws = xi.mobSkill.BROADSIDE_BARRAGE_1    },  -- wide volley
+                { name = 'Barbed Crescent',  ws = xi.mobSkill.BARBED_CRESCENT_1   },  -- crescent projectile
+                { name = 'Barrage',          ws = xi.mobSkill.BARRAGE             },  -- rapid volley
+                { name = 'Bomb Toss',        ws = xi.mobSkill.BOMB_TOSS_1         },  -- explosive throw
+                { name = 'Broadside Barrage',ws = xi.mobSkill.BROADSIDE_BARRAGE_1 },  -- wide volley
+                { name = 'Dark Shot',        ws = xi.mobSkill.DARK_SHOT           },  -- dark ranged
             },
         },
     },
