@@ -108,7 +108,7 @@ local CONFIG =
         berserker = { name = 'Berserker', blurb = 'All-out melee offense; takes a bit more damage.', defaultWs = xi.mobSkill.CRESCENT_FANG,
                       mods = { { xi.mod.ATTP, 60 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 10 }, { xi.mod.DMGPHYS, 1000 } } },
         bulwark   = { name = 'Bulwark',   blurb = 'Tank: more DEF, less damage taken, holds hate.', defaultWs = xi.mobSkill.ROCK_BUSTER,
-                      mods = { { xi.mod.DEF, 300 }, { xi.mod.DMGPHYS, -1000 }, { xi.mod.ENMITY, 50 } } },
+                      mods = { { xi.mod.DEF, 300 }, { xi.mod.DMGPHYS, -1000 }, { xi.mod.ENMITY, 50 } }, behavior = 'tank' },
         oracle    = { name = 'Oracle',    blurb = 'Battle-healer: fights and mends your wounds when hurt.', defaultWs = xi.mobSkill.METEORITE,
                       mods = { { xi.mod.MND, 150 }, { xi.mod.DEF, 150 }, { xi.mod.MDEF, 150 } }, behavior = 'heal' },
         magus     = { name = 'Magus',     blurb = 'Battle-mage: fights and hurls elemental magic at your foe.', defaultWs = xi.mobSkill.FIRE_IV,
@@ -197,6 +197,8 @@ local CONFIG =
     nukePerLevel   = 300,
     rangedBase     = 1500,  -- Hunter: ranged damage to the target per tick while engaged
     rangedPerLevel = 300,
+    tauntCE        = 300,   -- Bulwark: cumulative enmity spiked onto the mob per tick (toward the Fellow)
+    tauntVE        = 600,   -- Bulwark: volatile enmity spiked onto the mob per tick (toward the Fellow)
 
     keeperMs            = 10000,
     firstMs             = 4000,
@@ -341,6 +343,16 @@ scheduleCombatLoop = function(master, pet)
                 local maxhp = math.max(1, master:getMaxHP())
                 if (master:getHP() * 100 / maxhp) <= CONFIG.healHpp then
                     master:addHP(CONFIG.healBase + CONFIG.healPerLevel * lvl)
+                end
+            end
+
+            -- Bulwark: spike hate toward the Fellow on every combat tick. Without this
+            -- the ENMITY mod is unreliable on a pet entity and the mob follows player DPS.
+            -- tgt:addEnmity(p, CE, VE) -- on this mob, add enmity toward the Fellow pet.
+            if beh == 'tank' and master:isEngaged() then
+                local tgt = master:getTarget()
+                if tgt and not tgt:isDead() and p:isEngaged() then
+                    pcall(function() tgt:addEnmity(p, CONFIG.tauntCE, CONFIG.tauntVE) end)
                 end
             end
 
