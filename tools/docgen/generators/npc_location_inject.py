@@ -56,7 +56,8 @@ _NPC_FILES: dict[str, str] = {
     "crafting_exchange": "crafting_exchange_catalog.lua",
     "daily_board":       "daily_board_catalog.lua",
     "hunt_board":        "weekly_hunts_catalog.lua",
-    # GM Home (only the test dummy remains)
+    # GM Home
+    "dungeon_guide":     "DungeonInstances.lua",
     "test_dummy":        "test_dummy_catalog.lua",
 }
 
