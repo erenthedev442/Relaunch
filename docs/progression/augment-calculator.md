@@ -1,0 +1,205 @@
+# Augment Value Calculator
+
+Plug in an augment, choose how many catalyst slots you're filling, set your Sage rank, and toggle affinity / crit to see exactly what you'll get — and what the ceiling looks like.
+
+<div id="aug-calc-root">
+
+<style>
+#aug-calc-root{font-family:inherit;max-width:860px}
+.aug-label{display:block;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--md-default-fg-color--light,#555);margin-bottom:.45rem}
+.aug-select{width:100%;padding:.55rem .7rem;border:1px solid var(--md-default-fg-color--lightest,#ddd);border-radius:6px;font-size:.95rem;background:var(--md-default-bg-color,#fff);color:var(--md-default-fg-color,#222);margin-bottom:1.4rem;cursor:pointer}
+.aug-select:focus{outline:2px solid #5c6bc0;outline-offset:2px}
+.aug-btn-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.4rem}
+.aug-btn{padding:.42rem .9rem;border-radius:6px;border:1px solid var(--md-default-fg-color--lightest,#ddd);font-size:.88rem;cursor:pointer;background:var(--md-default-bg-color,#fff);color:var(--md-default-fg-color,#222);transition:background .12s,color .12s,border-color .12s}
+.aug-btn.active{background:#5c6bc0;color:#fff;border-color:#5c6bc0}
+.aug-btn:hover:not(.active){background:var(--md-accent-fg-color--transparent,#e8eaf6)}
+.aug-toggle-row{display:flex;gap:2.5rem;margin-bottom:1.6rem;flex-wrap:wrap}
+.aug-toggle-group{display:flex;flex-direction:column;gap:.35rem}
+.aug-toggle-label{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--md-default-fg-color--light,#555)}
+.aug-toggle-inner{display:flex;align-items:center;gap:.6rem}
+.aug-toggle-switch{position:relative;width:42px;height:24px;flex-shrink:0}
+.aug-toggle-switch input{opacity:0;width:0;height:0;position:absolute}
+.aug-toggle-track{position:absolute;inset:0;border-radius:12px;background:#ccc;cursor:pointer;transition:background .18s}
+.aug-toggle-switch input:checked+.aug-toggle-track{background:#5c6bc0}
+.aug-toggle-track::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .18s;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.aug-toggle-switch input:checked+.aug-toggle-track::after{transform:translateX(18px)}
+.aug-toggle-text{font-size:.92rem;color:var(--md-default-fg-color,#222)}
+.aug-toggle-hint{font-size:.8rem;color:var(--md-default-fg-color--light,#777);margin-top:.1rem}
+.aug-result{background:var(--md-default-fg-color--lightest,#f5f5f5);border-radius:10px;padding:1.4rem 1.6rem;margin-top:.4rem}
+.aug-big{font-size:2.5rem;font-weight:700;color:var(--md-default-fg-color,#222);line-height:1}
+.aug-sub{font-size:.9rem;color:var(--md-default-fg-color--light,#777);margin-top:.25rem}
+.aug-bar-wrap{height:4px;background:var(--md-default-fg-color--lightest,#ddd);border-radius:2px;margin:.85rem 0}
+.aug-bar{height:100%;background:#5c6bc0;border-radius:2px;transition:width .2s}
+.aug-stats{display:flex;gap:2rem;flex-wrap:wrap;margin-top:.2rem}
+.aug-stat{display:flex;flex-direction:column;gap:.2rem}
+.aug-stat-lbl{font-size:.7rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--md-default-fg-color--light,#999)}
+.aug-stat-val{font-size:.95rem;font-weight:600;color:var(--md-default-fg-color,#222)}
+</style>
+
+<div style="margin-bottom:1.4rem">
+  <label class="aug-label" for="aug-select">Augment</label>
+  <select id="aug-select" class="aug-select"></select>
+</div>
+
+<div>
+  <span class="aug-label">Catalysts traded (slots filled)</span>
+  <div class="aug-btn-row" id="slots-row"></div>
+</div>
+
+<div>
+  <span class="aug-label">Sage Rank</span>
+  <div class="aug-btn-row" id="rank-row"></div>
+</div>
+
+<div class="aug-toggle-row">
+  <div class="aug-toggle-group">
+    <span class="aug-toggle-label">Affinity unlocked</span>
+    <div class="aug-toggle-inner">
+      <label class="aug-toggle-switch">
+        <input type="checkbox" id="tog-affinity">
+        <span class="aug-toggle-track"></span>
+      </label>
+      <span id="tog-affinity-text" class="aug-toggle-text">No</span>
+    </div>
+    <span class="aug-toggle-hint">Defeat the category NM + trade trophy to Augment Sage</span>
+  </div>
+  <div class="aug-toggle-group">
+    <span class="aug-toggle-label">Critical Roll</span>
+    <div class="aug-toggle-inner">
+      <label class="aug-toggle-switch">
+        <input type="checkbox" id="tog-crit">
+        <span class="aug-toggle-track"></span>
+      </label>
+      <span id="tog-crit-text" class="aug-toggle-text">No</span>
+    </div>
+    <span id="crit-hint" class="aug-toggle-hint">5% chance at rank 0</span>
+  </div>
+</div>
+
+<div class="aug-result">
+  <div id="out-big" class="aug-big">—</div>
+  <div id="out-sub" class="aug-sub"></div>
+  <div class="aug-bar-wrap"><div id="out-bar" class="aug-bar" style="width:0%"></div></div>
+  <div class="aug-stats">
+    <div class="aug-stat"><span class="aug-stat-lbl">Per Slot</span><span id="out-per-slot" class="aug-stat-val">—</span></div>
+    <div class="aug-stat"><span class="aug-stat-lbl">Boost</span><span id="out-boost" class="aug-stat-val">—</span></div>
+    <div class="aug-stat"><span class="aug-stat-lbl">% of Max</span><span id="out-pct" class="aug-stat-val">—</span></div>
+    <div class="aug-stat"><span id="out-max-lbl" class="aug-stat-lbl">Max Possible (×5)</span><span id="out-max" class="aug-stat-val">—</span></div>
+  </div>
+</div>
+
+</div>
+
+<script>
+(function(){
+const AUGMENTS=[{"label":"AGI","base":1,"mult":1,"tier":1},{"label":"Accuracy","base":1,"mult":2,"tier":1},{"label":"Accuracy Attack","base":1,"mult":1,"tier":2},{"label":"Accuracy Rng.Acc","base":1,"mult":1,"tier":2},{"label":"All elemental resists","base":10,"mult":1,"tier":0},{"label":"All songs","base":1,"mult":1,"tier":4},{"label":"Archery skill","base":1,"mult":1,"tier":1},{"label":"Attack","base":1,"mult":2,"tier":1},{"label":"Attack Rng.Atk","base":1,"mult":1,"tier":1},{"label":"Avatar Blood Pact Dmg","base":1,"mult":1,"tier":1},{"label":"Avatar Mag.Atk.Bns","base":1,"mult":1,"tier":1},{"label":"Avatar perpetuation cost","base":1,"mult":1,"tier":0},{"label":"Axe skill","base":1,"mult":1,"tier":1},{"label":"Barrage","base":1,"mult":1,"tier":4},{"label":"Beast Affinity","base":5,"mult":1,"tier":4},{"label":"Blood Boon","base":1,"mult":1,"tier":0},{"label":"Blood Pact ability delay","base":1,"mult":1,"tier":4},{"label":"Blue Magic skill","base":1,"mult":1,"tier":1},{"label":"Breath dmg. taken","base":1,"mult":100,"tier":4},{"label":"CHR","base":1,"mult":1,"tier":1},{"label":"Call Beast ability delay","base":1,"mult":1,"tier":4},{"label":"Cap. Point +33%","base":33,"mult":1,"tier":2},{"label":"Chance of successful block","base":1,"mult":1,"tier":4},{"label":"Charm","base":1,"mult":1,"tier":1},{"label":"Club skill","base":1,"mult":1,"tier":1},{"label":"Conserve MP","base":1,"mult":1,"tier":1},{"label":"Conserve TP","base":1,"mult":1,"tier":2},{"label":"Counter","base":1,"mult":1,"tier":2},{"label":"Crit. hit damage","base":1,"mult":1,"tier":4},{"label":"Crit.hit rate","base":1,"mult":1,"tier":3},{"label":"Cure potency","base":1,"mult":1,"tier":1},{"label":"Cure spellcasting time","base":1,"mult":1,"tier":4},{"label":"DEF","base":1,"mult":1,"tier":1},{"label":"DEX","base":1,"mult":1,"tier":1},{"label":"Dagger skill","base":1,"mult":1,"tier":1},{"label":"Daken","base":1,"mult":1,"tier":1},{"label":"Damage Taken","base":1,"mult":100,"tier":4},{"label":"Dark magic skill","base":1,"mult":1,"tier":1},{"label":"Dbl.Atk","base":1,"mult":1,"tier":2},{"label":"Dbl.Atk. Crit.hit rate","base":1,"mult":1,"tier":3},{"label":"Divine magic skill","base":1,"mult":1,"tier":1},{"label":"Dmg (melee,not ranged)","base":1,"mult":1,"tier":4},{"label":"Dmg (ranged,not melee)","base":1,"mult":1,"tier":4},{"label":"Drain/Aspir Potency","base":1,"mult":1,"tier":1},{"label":"Elem. magic skill","base":1,"mult":1,"tier":1},{"label":"Elemental Magic Recast Delay","base":1,"mult":1,"tier":0},{"label":"Elemental Siphon","base":1,"mult":5,"tier":0},{"label":"Enemy crit. hit rate","base":1,"mult":1,"tier":1},{"label":"Enfb.mag. skill","base":1,"mult":1,"tier":1},{"label":"Enfeebling Magic Recast Delay","base":1,"mult":1,"tier":0},{"label":"Enha.mag. skill","base":1,"mult":1,"tier":1},{"label":"Enhances","base":1,"mult":10,"tier":0},{"label":"Enhancing Magic Effect Duration","base":1,"mult":1,"tier":1},{"label":"Enhancing Magic Recast Delay","base":1,"mult":1,"tier":0},{"label":"Enmity","base":1,"mult":1,"tier":1},{"label":"Enspell Dmg","base":1,"mult":1,"tier":2},{"label":"Evasion","base":3,"mult":1,"tier":0},{"label":"Exp. Point +33%","base":33,"mult":1,"tier":0},{"label":"Fast Cast","base":1,"mult":1,"tier":1},{"label":"Geomancy Skill","base":1,"mult":1,"tier":1},{"label":"Gilfinder","base":1,"mult":1,"tier":1},{"label":"Great Axe skill","base":1,"mult":1,"tier":1},{"label":"Great Katana skill","base":1,"mult":1,"tier":1},{"label":"Great Sword skill","base":1,"mult":1,"tier":1},{"label":"HP","base":1,"mult":4,"tier":1},{"label":"HP MP","base":1,"mult":2,"tier":3},{"label":"HP recovered while healing","base":1,"mult":4,"tier":0},{"label":"Hand-to-Hand skill","base":1,"mult":1,"tier":1},{"label":"Handbell Skill","base":1,"mult":1,"tier":1},{"label":"Haste","base":1,"mult":2,"tier":1},{"label":"Healing Magic Recast Delay","base":1,"mult":1,"tier":1},{"label":"Healing magic skill","base":1,"mult":1,"tier":1},{"label":"Helix Damage","base":1,"mult":15,"tier":4},{"label":"Helix Effect Duration","base":1,"mult":1,"tier":4},{"label":"INT","base":1,"mult":1,"tier":1},{"label":"Katana skill","base":1,"mult":1,"tier":1},{"label":"Kick Attacks Rate or Damage","base":1,"mult":1,"tier":2},{"label":"MND","base":1,"mult":1,"tier":1},{"label":"MP","base":1,"mult":4,"tier":1},{"label":"MP recovered while healing","base":1,"mult":4,"tier":0},{"label":"Mag. Acc","base":1,"mult":2,"tier":1},{"label":"Mag. Acc. Mag.Atk.Bns","base":1,"mult":2,"tier":4},{"label":"Mag. Acc./Mag. Dmg","base":1,"mult":1,"tier":2},{"label":"Mag. Evasion","base":3,"mult":1,"tier":1},{"label":"Mag. crit. hit dmg","base":1,"mult":1,"tier":3},{"label":"Mag.Atk.Bns","base":1,"mult":1,"tier":3},{"label":"Mag.Def.Bns","base":1,"mult":1,"tier":2},{"label":"Magic Damage","base":1,"mult":1,"tier":3},{"label":"Magic Damage Taken","base":1,"mult":200,"tier":3},{"label":"Magic burst dmg","base":1,"mult":1,"tier":3},{"label":"Magic crit. hit rate","base":1,"mult":1,"tier":3},{"label":"Magic dmg. taken","base":1,"mult":100,"tier":3},{"label":"Magic skill","base":1,"mult":1,"tier":1},{"label":"Marksmanship skill","base":1,"mult":1,"tier":1},{"label":"Martial Arts","base":1,"mult":1,"tier":2},{"label":"Meditate Effect Duration","base":1,"mult":1,"tier":4},{"label":"Melee skill","base":1,"mult":1,"tier":1},{"label":"Ninja tool expertise","base":1,"mult":1,"tier":0},{"label":"Ninjutsu skill","base":1,"mult":1,"tier":1},{"label":"Occ. inc. resist to stat ailments","base":1,"mult":1,"tier":2},{"label":"Occ. quickens spellcasting","base":1,"mult":1,"tier":4},{"label":"Occult Acumen","base":1,"mult":1,"tier":4},{"label":"Parrying Skill","base":1,"mult":1,"tier":1},{"label":"Parrying rate","base":1,"mult":1,"tier":3},{"label":"Pet AGI","base":1,"mult":1,"tier":1},{"label":"Pet Acc R.Acc Atk. R.Atk","base":1,"mult":1,"tier":1},{"label":"Pet Accuracy Rng.Acc","base":1,"mult":1,"tier":1},{"label":"Pet Attack Rng.Atk","base":1,"mult":1,"tier":1},{"label":"Pet CHR","base":1,"mult":1,"tier":1},{"label":"Pet Crit.hit rate","base":1,"mult":1,"tier":1},{"label":"Pet DEF","base":1,"mult":1,"tier":1},{"label":"Pet DEX","base":1,"mult":1,"tier":1},{"label":"Pet Damage taken","base":1,"mult":100,"tier":1},{"label":"Pet Dbl.Atk. Crit.hit rate","base":1,"mult":1,"tier":1},{"label":"Pet Dbl.Att","base":1,"mult":1,"tier":1},{"label":"Pet Enemy crit. hit rate","base":1,"mult":1,"tier":1},{"label":"Pet Enmity","base":1,"mult":1,"tier":0},{"label":"Pet Evasion","base":1,"mult":1,"tier":1},{"label":"Pet Haste","base":1,"mult":2,"tier":2},{"label":"Pet INT","base":1,"mult":1,"tier":1},{"label":"Pet MND","base":1,"mult":1,"tier":1},{"label":"Pet Mag. Evasion","base":1,"mult":1,"tier":1},{"label":"Pet Mag.Acc","base":1,"mult":1,"tier":1},{"label":"Pet Mag.Acc. Mag.Atk.Bns","base":1,"mult":1,"tier":1},{"label":"Pet Mag.Acc. Mag.Dmg","base":1,"mult":1,"tier":1},{"label":"Pet Mag.Atk.Bns","base":1,"mult":1,"tier":1},{"label":"Pet Mag.Def.Bns","base":1,"mult":1,"tier":1},{"label":"Pet Magic Damage","base":1,"mult":1,"tier":1},{"label":"Pet Magic Damage Taken","base":1,"mult":100,"tier":1},{"label":"Pet Magic Dmg. Taken","base":1,"mult":200,"tier":1},{"label":"Pet Phy. Dmg. Taken","base":1,"mult":200,"tier":1},{"label":"Pet Phys. dmg. taken","base":1,"mult":100,"tier":1},{"label":"Pet Regen","base":1,"mult":4,"tier":1},{"label":"Pet Rng.Acc","base":1,"mult":1,"tier":1},{"label":"Pet Rng.Atk","base":1,"mult":1,"tier":1},{"label":"Pet STR","base":1,"mult":1,"tier":1},{"label":"Pet STR DEX VIT","base":1,"mult":1,"tier":1},{"label":"Pet Store TP","base":1,"mult":1,"tier":1},{"label":"Pet Subtle Blow","base":1,"mult":1,"tier":1},{"label":"Pet TP Bonus","base":20,"mult":1,"tier":0},{"label":"Pet VIT","base":1,"mult":1,"tier":1},{"label":"Phalanx Received","base":1,"mult":1,"tier":4},{"label":"Phantom Roll ability delay","base":1,"mult":1,"tier":4},{"label":"Phantom Roll effect","base":1,"mult":1,"tier":4},{"label":"Phys. dmg. taken","base":1,"mult":100,"tier":3},{"label":"Physical Damage Taken","base":1,"mult":200,"tier":3},{"label":"Polearm skill","base":1,"mult":1,"tier":1},{"label":"Potency of Cure received","base":1,"mult":1,"tier":1},{"label":"Quadruple Attack","base":1,"mult":1,"tier":4},{"label":"Quick Draw ability delay","base":1,"mult":1,"tier":4},{"label":"Ranged skill","base":1,"mult":1,"tier":1},{"label":"Rapid Shot","base":1,"mult":1,"tier":4},{"label":"Recycle","base":1,"mult":1,"tier":1},{"label":"Refresh","base":1,"mult":2,"tier":1},{"label":"Regen","base":1,"mult":4,"tier":4},{"label":"Regen Potency","base":1,"mult":1,"tier":1},{"label":"Repair potency","base":1,"mult":1,"tier":0},{"label":"Resist Charm","base":1,"mult":1,"tier":1},{"label":"Resist Slow","base":1,"mult":1,"tier":4},{"label":"Reverse Flourish","base":1,"mult":1,"tier":1},{"label":"Rng.Acc. Rng.Atk","base":1,"mult":1,"tier":2},{"label":"Rng.Accuracy","base":1,"mult":2,"tier":1},{"label":"Rng.Attack","base":1,"mult":2,"tier":1},{"label":"STR","base":1,"mult":1,"tier":1},{"label":"Save TP","base":10,"mult":1,"tier":2},{"label":"Scythe skill","base":1,"mult":1,"tier":1},{"label":"Shield Mastery","base":1,"mult":1,"tier":4},{"label":"Shield skill","base":1,"mult":1,"tier":1},{"label":"Sic and Ready ability delay","base":1,"mult":1,"tier":3},{"label":"Singing skill","base":1,"mult":1,"tier":1},{"label":"Sklchn.dmg","base":1,"mult":100,"tier":4},{"label":"Slow","base":1,"mult":2,"tier":4},{"label":"Snapshot","base":1,"mult":1,"tier":2},{"label":"Song recast delay","base":1,"mult":1,"tier":1},{"label":"Song spellcasting time","base":1,"mult":1,"tier":1},{"label":"Spell Interruption Rate Down 2%","base":2,"mult":1,"tier":1},{"label":"Spell interruption rate down 1%","base":1,"mult":1,"tier":1},{"label":"Spikes Dmg","base":1,"mult":1,"tier":4},{"label":"Staff skill","base":1,"mult":1,"tier":1},{"label":"Store TP","base":1,"mult":1,"tier":3},{"label":"Store TP Subtle Blow","base":1,"mult":1,"tier":4},{"label":"String instrument skill","base":1,"mult":1,"tier":1},{"label":"STR","base":1,"mult":1,"tier":1},{"label":"Subtle Blow","base":1,"mult":1,"tier":3},{"label":"Summoning magic skill","base":1,"mult":1,"tier":1},{"label":"Sword skill","base":1,"mult":1,"tier":1},{"label":"TP Bonus","base":1,"mult":4,"tier":4},{"label":"Throwing skill","base":1,"mult":1,"tier":1},{"label":"Triple Atk","base":1,"mult":1,"tier":3},{"label":"VIT","base":1,"mult":1,"tier":1},{"label":"Waltz TP cost","base":1,"mult":1,"tier":4},{"label":"Waltz ability delay","base":1,"mult":1,"tier":4},{"label":"Waltz potency","base":1,"mult":1,"tier":1},{"label":"Weapon Skill Acc","base":1,"mult":1,"tier":2},{"label":"Weapon skill damage","base":1,"mult":1,"tier":4},{"label":"Wind instrument skill","base":1,"mult":1,"tier":1},{"label":"Zanshin","base":1,"mult":1,"tier":1}];
+
+const MASTERY_MULT=[1.00,1.20,1.40,1.60,1.80,2.00];
+const CRIT_CHANCE=[0.05,0.08,0.11,0.14,0.17,0.20];
+const RANK_NAMES=['0 — Unranked','1 — Initiate','2 — Adept','3 — Magus','4 — Sage','5 — Archon'];
+const MAX_SLOTS=5;
+
+let selAug=AUGMENTS.find(a=>a.label==='HP')||AUGMENTS[0];
+let slots=5,rank=0,affinity=false,crit=false;
+
+function calcBoost(r,aff,cr){
+  const totalMult=MASTERY_MULT[r]*(aff?1.5:1.0)*(cr?2.0:1.0);
+  const progress=Math.max(0,Math.min(1,(totalMult-1)/(6.0-1)));
+  return Math.round(progress*31);
+}
+function calcPerSlot(aug,r,aff,cr){
+  return (aug.base+calcBoost(r,aff,cr))*aug.mult;
+}
+
+function render(){
+  const boost=calcBoost(rank,affinity,crit);
+  const perSlot=calcPerSlot(selAug,rank,affinity,crit);
+  const total=perSlot*slots;
+  const maxBoost=31;
+  const maxPerSlot=(selAug.base+maxBoost)*selAug.mult;
+  const maxTotal=maxPerSlot*MAX_SLOTS;
+  const pct=maxTotal>0?Math.round((total/maxTotal)*100):0;
+  const barPct=Math.min(100,pct);
+
+  const sign=perSlot<0?'':'+';
+  document.getElementById('out-big').textContent=sign+total;
+  document.getElementById('out-sub').textContent=
+    selAug.label+' — '+slots+' slot'+(slots>1?'s':'')+', rank '+rank;
+  document.getElementById('out-bar').style.width=barPct+'%';
+  document.getElementById('out-per-slot').textContent=sign+perSlot;
+  document.getElementById('out-boost').textContent=boost+' / 31';
+  document.getElementById('out-pct').textContent=pct+'%';
+  document.getElementById('out-max-lbl').textContent='Max Possible (\xd7'+MAX_SLOTS+')';
+  document.getElementById('out-max').textContent=sign+maxTotal;
+
+  document.getElementById('crit-hint').textContent=
+    Math.round(CRIT_CHANCE[rank]*100)+'% chance at rank '+rank;
+}
+
+// Build augment dropdown
+(function(){
+  const sel=document.getElementById('aug-select');
+  // dedupe labels
+  const seen=new Set();
+  AUGMENTS.forEach((a,i)=>{
+    if(seen.has(a.label))return;
+    seen.add(a.label);
+    const opt=document.createElement('option');
+    opt.value=i;
+    opt.textContent=a.label;
+    if(a.label===selAug.label)opt.selected=true;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener('change',()=>{
+    selAug=AUGMENTS[parseInt(sel.value,10)];
+    render();
+  });
+})();
+
+// Build slot buttons
+(function(){
+  const row=document.getElementById('slots-row');
+  for(let s=1;s<=MAX_SLOTS;s++){
+    const btn=document.createElement('button');
+    btn.className='aug-btn'+(s===slots?' active':'');
+    btn.textContent='\xd7'+s;
+    btn.addEventListener('click',()=>{
+      slots=s;
+      row.querySelectorAll('.aug-btn').forEach((b,i)=>b.classList.toggle('active',i+1===s));
+      render();
+    });
+    row.appendChild(btn);
+  }
+})();
+
+// Build rank buttons
+(function(){
+  const row=document.getElementById('rank-row');
+  RANK_NAMES.forEach((name,r)=>{
+    const btn=document.createElement('button');
+    btn.className='aug-btn'+(r===rank?' active':'');
+    btn.textContent=name;
+    btn.addEventListener('click',()=>{
+      rank=r;
+      row.querySelectorAll('.aug-btn').forEach((b,i)=>b.classList.toggle('active',i===r));
+      render();
+    });
+    row.appendChild(btn);
+  });
+})();
+
+// Toggles
+document.getElementById('tog-affinity').addEventListener('change',function(){
+  affinity=this.checked;
+  document.getElementById('tog-affinity-text').textContent=affinity?'Yes':'No';
+  render();
+});
+document.getElementById('tog-crit').addEventListener('change',function(){
+  crit=this.checked;
+  document.getElementById('tog-crit-text').textContent=crit?'Yes':'No';
+  render();
+});
+
+render();
+})();
+</script>
