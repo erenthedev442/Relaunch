@@ -384,8 +384,8 @@ def _render(groups, item_names, gap_set: set[int]) -> str:
         if tier_gap > 0:
             lines.append(f"_({tier_gap}/{len(tier_rows)} catalysts in this tier need GM spawn)_")
             lines.append("")
-        lines.append("| Catalyst | Item ID | Category | Augment | Cap |")
-        lines.append("|---|---:|---|---|:--:|")
+        lines.append("| Augment | Catalyst | Item ID | Cap | Affinity Category |")
+        lines.append("|---|---|---:|:--:|---|")
         for category, item_id, aug_id, label in tier_rows:
             name = item_names.get(item_id, f"item_{item_id}")
             readable = _format_item_name(name)
@@ -397,11 +397,11 @@ def _render(groups, item_names, gap_set: set[int]) -> str:
                 display = f"{display} {_GAP_MARK}"
             cap = _CAP_BY_AUG.get(aug_id, "no cap")
             lines.append(
+                f"| {_escape_md(_truncate_label(label))} "
                 f"| {display} "
                 f"| {item_id} "
-                f"| {_escape_md(category)} "
-                f"| {_escape_md(_truncate_label(label))} "
-                f"| {cap} |"
+                f"| {cap} "
+                f"| {_escape_md(category)} |"
             )
         lines.append("")
 
