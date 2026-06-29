@@ -83,7 +83,7 @@ findstr /c:"files-OK" "%OUT%" >nul
 if errorlevel 1 ( echo   ERROR: git archive or extract failed.& set "SRVOK=PROBLEM"& goto :finish )
 REM -- also ship C++ source (src/) to ~/server so cmake picks up any relaunch-branch
 REM    changes. Lua/scripts go to ~/relaunch above; src must land in ~/server (build root).
-git -C "%SRC%" archive relaunch -- src | ssh -i "%KEY%" %SSHOPT% %HOST% "tar -xf - -C ~/server --no-same-owner --overwrite && echo   src-OK" >> "%OUT%" 2>&1
+git -C "%SRC%" archive relaunch -- src | ssh -i "%KEY%" %SSHOPT% %HOST% "tar -xf - -C ~/server --no-same-owner --no-same-permissions --touch --overwrite && echo   src-OK" >> "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
 findstr /c:"src-OK" "%OUT%" >nul
