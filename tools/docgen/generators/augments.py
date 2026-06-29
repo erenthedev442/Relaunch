@@ -23,6 +23,7 @@ from pathlib import Path
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 from tools.docgen._bgwiki import urls_for_item
+from tools.docgen._db import connect
 
 
 # Marker used in the markdown to flag unobtainable items.
@@ -343,7 +344,62 @@ _CAP_BY_AUG = {
 }
 
 
-def _render(groups, item_names, gap_set: set[int]) -> str:
+_DROP_SQL = """
+SELECT d.itemid, g.name AS mob, z.name AS zone, MAX(d.itemRate) AS rate
+FROM mob_droplist d
+JOIN mob_groups g       ON g.dropid  = d.dropid
+LEFT JOIN zone_settings z ON z.zoneid = g.zoneid
+GROUP BY d.itemid, g.name, z.name
+"""
+
+# Hunting League trophy drops — scripted, not in mob_droplist.
+_HL_ZONE = "Escha Zi'Tah"
+_HL_DROPS: dict[int, str] = {
+    8983: "Valkurm Emperor (Hunting League)",
+    843:  "Roc (Hunting League)",
+    908:  "Aquarius (Hunting League)",
+    1015: "Serket (Hunting League)",
+    909:  "Vrtra (Hunting League)",
+    844:  "Simurgh (Hunting League)",
+    1122: "Nidhogg (Hunting League)",
+    10037:"Nidhogg (Hunting League)",
+    893:  "King Behemoth (Hunting League)",
+    2893: "Kirin (Hunting League)",
+    1473: "Absolute Virtue (Hunting League)",
+    2371: "Pandemonium Warden (Hunting League)",
+    2372: "Pandemonium Warden (Hunting League)",
+    1133: "Shinryu (Hunting League)",
+}
+
+
+def _fetch_drops(repo_root: Path) -> dict[int, str] | None:
+    """Return {itemId: 'Mob Name (Zone)'} from the live DB, merged with HL
+    trophy drops. Returns None if the DB is unreachable (CI / laptop)."""
+    conn = connect(repo_root)
+    result: dict[int, str] = {}
+    if conn is not None:
+        try:
+            cur = conn.cursor()
+            cur.execute(_DROP_SQL)
+            best: dict[int, tuple[str, str, int]] = {}
+            for itemid, mob, zone, rate in cur.fetchall():
+                iid, mob_s, zone_s = int(itemid), (mob or "").replace("_", " "), (zone or "").replace("_", " ")
+                if iid not in best or int(rate) > best[iid][2]:
+                    best[iid] = (mob_s, zone_s, int(rate))
+            cur.close()
+            for iid, (mob_s, zone_s, _) in best.items():
+                result[iid] = f"{mob_s} ({zone_s})" if zone_s else mob_s
+        finally:
+            conn.close()
+    else:
+        return None
+    # Overlay HL trophy drops (take precedence over mob_droplist entries).
+    for iid, label in _HL_DROPS.items():
+        result[iid] = f"{label} ({_HL_ZONE})"
+    return result
+
+
+def _render(groups, item_names, gap_set: set[int], drops: dict[int, str] | None = None) -> str:
     lines: list[str] = []
     total = sum(len(rows) for _, rows in groups)
     gap_count = sum(1 for _, rs in groups for r in rs if r[0] in gap_set)
@@ -384,8 +440,8 @@ def _render(groups, item_names, gap_set: set[int]) -> str:
         if tier_gap > 0:
             lines.append(f"_({tier_gap}/{len(tier_rows)} catalysts in this tier need GM spawn)_")
             lines.append("")
-        lines.append("| Augment | Catalyst | Item ID | Cap | Affinity Category |")
-        lines.append("|---|---|---:|:--:|---|")
+        lines.append("| Augment | Catalyst | Drops from | Cap | Affinity Category |")
+        lines.append("|---|---|---|:--:|---|")
         for category, item_id, aug_id, label in tier_rows:
             name = item_names.get(item_id, f"item_{item_id}")
             readable = _format_item_name(name)
@@ -396,10 +452,14 @@ def _render(groups, item_names, gap_set: set[int]) -> str:
             if item_id in gap_set:
                 display = f"{display} {_GAP_MARK}"
             cap = _CAP_BY_AUG.get(aug_id, "no cap")
+            if drops is not None:
+                drop_src = _escape_md(drops.get(item_id, "—"))
+            else:
+                drop_src = "—"
             lines.append(
                 f"| {_escape_md(_truncate_label(label))} "
                 f"| {display} "
-                f"| {item_id} "
+                f"| {drop_src} "
                 f"| {cap} "
                 f"| {_escape_md(category)} |"
             )
@@ -462,9 +522,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         )
 
     item_names = _load_item_names(item_src)
+    drops = _fetch_drops(repo_root)
+    if drops is None:
+        print("[augments] no DB connection — 'Drops from' column will show '—'")
 
     page = docs_dir / "progression" / "augments.md"
-    content = _render(groups, item_names, gap_set)
+    content = _render(groups, item_names, gap_set, drops)
     wrote = write_between_markers(page, "augment-catalog", content)
     if wrote:
         total = sum(len(rs) for _, rs in groups)
