@@ -21,6 +21,7 @@ Talk to **The Gauntlet** keeper (sword-and-shield icon) in <!--npc:gauntlet-->Le
 
 The Gauntlet runs you through ten escalating trials. The first nine each offer a **choice**; the tenth is mandatory combat.
 
+<!-- DOCGEN:BEGIN id="gauntlet-levels" -->
 | Level | NM | Mob level | HP |
 |---:|---|---:|---:|
 | 1 | **Aquarius** | 80 | 20,000 |
@@ -34,7 +35,8 @@ The Gauntlet runs you through ten escalating trials. The first nine each offer a
 | 9 | **Pandemonium Warden** | 144 | 5,120,000 |
 | 10 | **Shinryu** *(mandatory)* | 152 | 10,240,000 |
 
-HP **doubles** every level — a level 5 King Behemoth has 16× the HP of the level 1 Aquarius.
+HP **doubles** every level — a level 6 Vrtra has 32× the HP of the level 1 Aquarius.
+<!-- DOCGEN:END id="gauntlet-levels" -->
 
 ---
 
@@ -61,12 +63,14 @@ Defeating Shinryu triggers the reward instantly and you're warped back to GM Hom
 
 ## Reward
 
+<!-- DOCGEN:BEGIN id="gauntlet-rewards" -->
 | Reward | Amount |
 |---|---:|
 | **Gil** | 5,000,000 (5M) |
 | **Paragon Points** | 500 |
 | **Infamy** | 500 |
 | **Hall of Champions NPC** | Permanent |
+<!-- DOCGEN:END id="gauntlet-rewards" -->
 
 The reward is the same on every clear — repeated clears increment your clear count and update your champion statue's inscription, but the currency reward repeats each time.
 
