@@ -114,12 +114,12 @@ end
 local function filtered()
     local out = {}
     for _, e in ipairs(sorted) do
-        if f_tier > 0 and e.tier ~= f_tier           then goto skip end
-        if f_cat  > 0 and e.cat  ~= f_cat            then goto skip end
-        if f_owned and (inv[e.id] or 0) == 0         then goto skip end
-        if f_avail and e.tier > info.rank             then goto skip end
-        out[#out+1] = e
-        ::skip::
+        if (f_tier == 0 or e.tier == f_tier) and
+           (f_cat  == 0 or e.cat  == f_cat ) and
+           (not f_owned or (inv[e.id] or 0) > 0) and
+           (not f_avail or e.tier <= info.rank) then
+            out[#out+1] = e
+        end
     end
     return out
 end
