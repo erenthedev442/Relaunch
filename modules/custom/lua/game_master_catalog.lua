@@ -3,8 +3,8 @@
 -- Data for the Game Master NPC (modules/custom/lua/GameMaster.lua).
 --
 -- Defines difficulty presets and which mob groupIds each difficulty
--- can pull from. The groupIds 11400-11415 live in
--- modules/custom/sql/gm_master_extra_mobs.sql (zone 210 / GM Home)
+-- can pull from. The groupIds 11400-11431 live in
+-- modules/custom/sql/gm_master_extra_mobs.sql (zone 289 / Escha - Ru'Aun)
 -- and are deliberately distinct from the Hunting League pool so wave
 -- fights have visual variety -- Easy uses classic camp NMs, Normal
 -- uses mid-tier classics, Hard uses HNM apex beasts, Insane uses
@@ -30,19 +30,22 @@ catalog.npcPos =
 {
     zone     = 'Escha_RuAun',
     zoneId   = 289,
-    x        = -289.5,
-    y        = -3.5,
-    z        = 387.5,
+    x        = -6.0,
+    y        = -34.0,
+    z        = -463.0,
     rotation = 128,
 }
 
--- Three interchangeable copies of the Game Master, spread ~8 units apart in the
--- WEST area, so several players can each run their own wave session at once.
+-- Three interchangeable copies of the Game Master on the ENTRY PLAZA, a few units
+-- WEST of the !wavemaster landing (-0.371, -34.277, -466.98) -- mirroring the
+-- Voidspire NPCs on the EAST side (x=2/10/18) so the two don't overlap. (The old
+-- coords here -289.5,-3.5,387.5 were stale Hall-of-the-Gods leftovers from before
+-- the move to Escha-RuAun, spawning the NPCs ~850 units from where players land.)
 catalog.npcPositions =
 {
-    { x = -289.5, y = -3.5, z = 387.5, rot = 128 },
-    { x = -281.5, y = -3.5, z = 395.5, rot = 128 },
-    { x = -273.5, y = -3.5, z = 387.5, rot = 128 },
+    { x = -6.0,  y = -34.0, z = -463.0, rot = 128 },
+    { x = -14.0, y = -34.0, z = -471.0, rot = 128 },
+    { x = -22.0, y = -34.0, z = -463.0, rot = 128 },
 }
 
 -- Difficulty presets. Each preset is a self-contained spec:
