@@ -24,10 +24,10 @@ commandObj.onTrigger = function(player)
     local SYS  = xi.msg.channel.SYSTEM_3
     local th   = player:getMod(xi.mod.TREASURE_HUNTER)
     local mjob = player:getMainJob()
-    local cap  = (mjob == xi.job.THF) and 8 or 4
+    local cap  = (mjob == xi.job.THF) and 14 or 12  -- RELAUNCH raised caps (was 8/4); needs the C++ rebuild live
 
     player:printToPlayer(string.format('[TH] Your Treasure Hunter (gear+augments): %d', th), SYS)
-    player:printToPlayer(string.format('[TH] Reaches mobs on claim/cast: capped at %d (%s main). Melee first-swings proc higher (up to ~12).',
+    player:printToPlayer(string.format('[TH] Reaches mobs on claim/cast: capped at %d (%s main). Melee first-swings proc up to ~14 (curve max).',
         cap, (mjob == xi.job.THF) and 'THF' or 'non-THF'), SYS)
 
     local ok, target = pcall(function() return player:getTarget() end)
