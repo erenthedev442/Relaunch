@@ -1,0 +1,28 @@
+-- Category metadata for the AugmentBrowser addon.
+-- Must stay in sync with the cat= comments in augment_catalog.lua.
+return {
+    [1]  = { name = 'STR',        nm = 'Behemoth'         },
+    [2]  = { name = 'Attack',     nm = 'King Behemoth'    },
+    [3]  = { name = 'DEX',        nm = 'King Arthro'      },
+    [4]  = { name = 'Accuracy',   nm = 'Simurgh'          },
+    [5]  = { name = 'VIT',        nm = 'Adamantoise'      },
+    [6]  = { name = 'Defense',    nm = 'Genbu'            },
+    [7]  = { name = 'AGI',        nm = 'Roc'              },
+    [8]  = { name = 'Evasion',    nm = 'Seiryu'           },
+    [9]  = { name = 'Haste',      nm = 'Byakko'           },
+    [10] = { name = 'INT',        nm = 'Aspidochelone'    },
+    [11] = { name = 'Magic ATK',  nm = 'Ouryu'            },
+    [12] = { name = 'MND',        nm = 'Bune'             },
+    [13] = { name = 'Healing',    nm = 'Phoenix'          },
+    [14] = { name = 'CHR',        nm = 'Suzaku'           },
+    [15] = { name = 'Enmity',     nm = 'Kirin'            },
+    [16] = { name = 'HP',         nm = 'Fafnir'           },
+    [17] = { name = 'Regen',      nm = 'Nidhogg'          },
+    [18] = { name = 'MP',         nm = 'Vrtra'            },
+    [19] = { name = 'Refresh',    nm = 'Tiamat'           },
+    [20] = { name = 'Pet',        nm = 'King Vinegarroon' },
+    [21] = { name = 'Ele Resist', nm = 'Khimaira'         },
+    [22] = { name = 'Status',     nm = 'Cerberus'         },
+    [23] = { name = 'Skills',     nm = 'Absolute Virtue'  },
+    [24] = { name = 'WSD+',       nm = 'Proto-Omega'      },
+}
