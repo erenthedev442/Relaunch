@@ -260,11 +260,12 @@ EXCLUDED_AUGS = {
     # Skill Acc" (326), flat weapon Dmg+ (743/749). The 35 catalysts are banned in
     # EXCLUDED_ITEMS so this is a clean removal (no catalyst churn into other augs).
     *range(1024, 1059),
-    # Treasure Hunter (147) removed 2026-06-24 (owner request, relaunch): a
-    # stackable +1..32/slot Treasure Hunter augment trivializes drop rates across
-    # the whole game. Its catalyst (item 1844) is banned in EXCLUDED_ITEMS below
-    # so it isn't repurposed onto another augment -- a clean removal, not a swap.
-    147,
+    # Treasure Hunter (147): removed 2026-06-24, then RE-ENABLED 2026-06-30
+    # (owner request, relaunch). TH is wanted endgame content now -- it's live in
+    # the catalog at [908], the engine caps were removed (uncapped TH, commit
+    # 62545389e5), and players augment it intentionally. So 147 is NOT excluded.
+    # (Its old alt-catalyst 1844 stays banned in EXCLUDED_ITEMS; 908 is the live
+    # catalyst, untouched.)
     # Pet STR (1792) removed 2026-06-30 (owner request, relaunch): a flat
     # single-stat Pet STR augment, redundant alongside the multi-stat "Pet STR
     # DEX VIT" (1806) and the rest of the pet-stat set. Catalyst 2168 (Cerberus
