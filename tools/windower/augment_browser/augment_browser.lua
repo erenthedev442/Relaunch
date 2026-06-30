@@ -36,8 +36,8 @@ local RANK_REQS  = {
     [4] = { title='Sage',                prestigeLevel=15, rebirths=10 },
     [5] = { title='Archon',              prestigeLevel=30, rebirths=20, gauntletClears=1 },
 }
-local PAGE_SIZE = 18
-local W         = 62   -- column ruler width
+local PAGE_SIZE = 14
+local W         = 60   -- column ruler width
 
 -----------------------------------
 -- State
@@ -60,10 +60,10 @@ local f_avail = false
 -- Text window
 -----------------------------------
 local win = texts.new({
-    pos        = { x=200, y=80 },
-    text       = { font='Courier New', size=11, alpha=255, red=220, green=215, blue=205 },
-    background = { alpha=215, red=8, green=8, blue=18, visible=true },
-    padding    = 8,
+    pos        = { x=180, y=60 },
+    text       = { font='Consolas', size=14, alpha=255, red=255, green=245, blue=210 },
+    background = { alpha=240, red=4, green=6, blue=22, visible=true },
+    padding    = 12,
     draggable  = true,
     visible    = false,
 })
@@ -139,16 +139,14 @@ local function make_header()
     local r    = info.rank
     local mult = MASTMULT[r+1] or 1.0
     local crit = (CRITPCT[r+1] or 0.05)*100
-    local tabs = { catalog='', rank='', mine='' }
-    tabs[cur_tab] = '* '
+    local function tab(name) return cur_tab==name and ('['..name:upper()..']') or name end
 
     local lines = {}
     lines[#lines+1] = SEP2
-    lines[#lines+1] = (' Augment Browser  |  Rank %d: %s  |  %.2fx  |  %.0f%% crit')
+    lines[#lines+1] = (' AUGMENT BROWSER    Rank %d: %s    %.2fx    %.0f%% crit')
                         :format(r, RANK_NAMES[r] or '?', mult, crit)
-    lines[#lines+1] = (' %sCatalog   %sRank Progress   %sMy Catalysts')
-                        :format(tabs.catalog, tabs.rank, tabs.mine)
-    lines[#lines+1] = (' //ab tab catalog / rank / mine')
+    lines[#lines+1] = ('  %s   %s   %s')
+                        :format(tab('catalog'), tab('rank'), tab('mine'))
     return lines
 end
 
@@ -167,9 +165,8 @@ local function render_catalog()
     local fc = f_cat ==0 and 'All' or cat_name(f_cat):sub(1,10)
 
     local L = make_header()
-    L[#L+1] = (' Filter: Tier:%-4s  Cat:%-12s  Owned:%-3s  Avail:%-3s')
+    L[#L+1] = (' Tier: %-5s  Cat: %-12s  Owned: %-3s  Avail: %-3s')
                 :format(fa, fc, f_owned and 'Yes' or 'No', f_avail and 'Yes' or 'No')
-    L[#L+1] = ' //ab tier 0-5  | //ab cat 0-24  | //ab owned  | //ab avail'
     L[#L+1] = SEP
     L[#L+1] = (' %-24s  %-12s  %-9s  %s'):format('Stat','Category','Tier','Bag')
     L[#L+1] = (' %-24s  %-12s  %-9s  %s')
@@ -185,9 +182,8 @@ local function render_catalog()
     end
 
     L[#L+1] = SEP
-    L[#L+1] = (' Page %d/%d  |  %d-%d of %d  |  //ab n  |  //ab p')
+    L[#L+1] = (' Page %d / %d   (%d-%d of %d)   //ab n  //ab p   ! = locked')
                 :format(cur_page, pages, first, last, total)
-    L[#L+1] = ' ! = locked (tier above your current rank)'
     L[#L+1] = SEP2
     return table.concat(L, '\n')
 end
