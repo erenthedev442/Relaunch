@@ -8,7 +8,7 @@ local commandObj = {}
 commandObj.cmdprops =
 {
     permission = 0,
-    parameters = 'false',
+    parameters = '',
 }
 
 local function getMaxPrestigeLevel(player)
