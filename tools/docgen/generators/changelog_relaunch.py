@@ -27,13 +27,27 @@ _LOOKBACK_DAYS = 90  # show up to 3 months of relaunch history
 _DEFAULT_SERVER_ROOT = r"D:\server_relaunch"
 
 _DROP_PREFIXES = ("Merge", "Auto-", "Revert", "wip", "WIP", "fixup", "squash")
-_DROP_SUBSTRINGS = ("pre-sync",)
+# Cosmetic / internal churn dropped from player notes (mirrors changelog.py).
+_DROP_SUBSTRINGS = (
+    "!shop attachments",   # retired feature
+    "pre-sync",            # dev_sync.py bookkeeping
+    "typo",                # typo / fix-of-a-fix -- not player news
+    "hub note",            # cosmetic text tweak
+    "github", "dev_sync",  # GitHub / tooling references
+    "reisenjima",          # retired hub name (rename churn) -- safe to drop
+    # NOTE: unlike the Legendary changelog we do NOT drop "escha zitah" here --
+    # Escha ZiTah is the relaunch's ACTIVE hub, so real Escha content must show.
+)
 
 _INTERNAL_TYPES  = {"docs", "chore", "ci", "build", "test", "style", "refactor"}
 _INTERNAL_SCOPES = {
     "deploy", "docgen", "docs", "tools", "tool", "ci", "build", "chore",
     "test", "tests", "infra", "site", "repo", "git", "meta", "release",
     "game-master", "gm", "perf",
+    # tooling / automation / bots / GitHub plumbing -- never player-facing
+    "discord", "discord-bot", "bot", "dev_sync", "dev-sync", "github",
+    "changelog", "patch-notes", "patchnotes", "webhook",
+    "crash-capture", "crash_capture",
 }
 
 _SCOPE_LABELS = {
