@@ -192,6 +192,10 @@ def _placeholder(x: float, y: float, z: float) -> bool:
 # resolution; only the warp destination coordinates are replaced.
 #
 # Format: itemId -> {zone, zoneName, x, y, z}
+# Abyssea zones get priority in candidate sorting — denser mob spawns make them
+# better farming destinations even if another zone has a higher drop rate.
+ABYSSEA_ZONES: frozenset[int] = frozenset({15, 45, 132, 215, 216, 217, 218, 253, 254, 255})
+
 WARP_OVERRIDES: dict[int, dict] = {
     # Attack catalyst: warp to Abyssea-La Theine (132) at -681 / 0 / 242 instead of
     # Beaucedine Glacier (better accessible spawn for farming).
@@ -252,8 +256,9 @@ def main() -> int:
                 unresolved.append(iid)
             continue
 
-        # Primary sort: highest drop rate. Tiebreak: real coords, then lowest level.
-        cands.sort(key=lambda c: (-c["rate"], c["ph"], c["lvl"]))
+        # Primary sort: Abyssea zones first (denser spawns), then highest drop rate.
+        # Tiebreak: real coords over placeholder (0,0,0), then lowest level.
+        cands.sort(key=lambda c: (0 if c["zone"] in ABYSSEA_ZONES else 1, -c["rate"], c["ph"], c["lvl"]))
         best = cands[0]
         ov = WARP_OVERRIDES.get(iid, {})
         rows[iid] = {
