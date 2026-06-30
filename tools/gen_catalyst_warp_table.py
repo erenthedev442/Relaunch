@@ -184,6 +184,22 @@ def _placeholder(x: float, y: float, z: float) -> bool:
 
 
 # ---------------------------------------------------------------------------
+# Manual warp-destination overrides
+# ---------------------------------------------------------------------------
+# Keyed by itemId. Overrides the auto-resolved zone+coordinates with a
+# hand-chosen spawn point (e.g. a more accessible location in the same zone,
+# or a different zone with a better drop mob). Mob/rate come from the auto-
+# resolution; only the warp destination coordinates are replaced.
+#
+# Format: itemId -> {zone, zoneName, x, y, z}
+WARP_OVERRIDES: dict[int, dict] = {
+    # Attack catalyst: warp to Abyssea-La Theine (132) at -681 / 0 / 242 instead of
+    # Beaucedine Glacier (better accessible spawn for farming).
+    861: {"zone": 132, "zoneName": "Abyssea-La Theine", "x": -681.5822, "y": 0.0, "z": 242.5282},
+}
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 
@@ -239,12 +255,13 @@ def main() -> int:
         # Primary sort: highest drop rate. Tiebreak: real coords, then lowest level.
         cands.sort(key=lambda c: (-c["rate"], c["ph"], c["lvl"]))
         best = cands[0]
+        ov = WARP_OVERRIDES.get(iid, {})
         rows[iid] = {
             "item": item_names.get(iid, f"item {iid}"),
             "label": meta["label"], "cat": meta["cat"], "tier": meta["tier"],
-            "zone": best["zone"],
-            "zoneName": zone_names.get(best["zone"], f"Zone {best['zone']}"),
-            "x": best["x"], "y": best["y"], "z": best["z"],
+            "zone":     ov.get("zone",     best["zone"]),
+            "zoneName": ov.get("zoneName", zone_names.get(best["zone"], f"Zone {best['zone']}")),
+            "x": ov.get("x", best["x"]), "y": ov.get("y", best["y"]), "z": ov.get("z", best["z"]),
             "mob": best["mob"], "lvl": best["lvl"],
             "rate": best["rate"],
         }

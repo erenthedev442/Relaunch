@@ -56,7 +56,7 @@ return {
     [858] = { item='Wolf Hide', label='Phys. dmg. taken', cat=6, tier=3, zone=167, zoneName='Bostaunieux Oubliette', x=-58.681, y=-0.500, z=-134.123, mob='Shii', lvl=70, rate=240 },
     [859] = { item='Ram Skin', label='Enfeebling Magic Recast Delay', cat=11, tier=0, zone=108, zoneName='Konschtat Highlands', x=21.000, y=50.000, z=514.000, mob='Tremor Ram', lvl=21, rate=1000 },
     [860] = { item='Behemoth Hide', label='HP', cat=16, tier=1, zone=127, zoneName='Behemoths Dominion', x=-267.469, y=-19.831, z=73.674, mob='King Behemoth', lvl=85, rate=1000 },
-    [861] = { item='Black Tiger Hide', label='Attack', cat=2, tier=1, zone=111, zoneName='Beaucedine Glacier', x=63.000, y=-0.500, z=-303.000, mob='Kirata', lvl=41, rate=240 },
+    [861] = { item='Black Tiger Hide', label='Attack', cat=2, tier=1, zone=132, zoneName='Abyssea-La Theine', x=-681.582, y=0.000, z=242.528, mob='Kirata', lvl=41, rate=240 },
     [863] = { item='Coeurl Hide', label='Pet Magic Damage Taken', cat=20, tier=1, zone=119, zoneName='Meriphataud Mountains', x=360.584, y=-15.848, z=158.942, mob='Coeurl', lvl=22, rate=100 },
     [864] = { item='Handful Of Fish Scales', label='Dagger skill', cat=23, tier=1, zone=81, zoneName='East Ronfaure [S]', x=227.000, y=-57.000, z=387.000, mob='Pugil', lvl=14, rate=300 },
     [865] = { item='Handful Of Nidhoggs Scales', label='Sklchn.dmg', cat=24, tier=4, zone=154, zoneName='Dragons Aery', x=78.000, y=6.000, z=34.000, mob='Nidhogg', lvl=90, rate=100 },
