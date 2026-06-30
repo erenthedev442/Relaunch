@@ -337,28 +337,27 @@ end)
 -----------------------------------
 -- Events
 -----------------------------------
+local function send_auginfo()
+    windower.send_command('input !auginfo')
+end
+
 windower.register_event('load', function()
     build_sorted()
     update_inventory()
     coroutine.sleep(3)
-    windower.ffxi.chat('!auginfo')
+    send_auginfo()
 end)
 
 windower.register_event('login', function()
     update_inventory()
     coroutine.sleep(5)
-    windower.ffxi.chat('!auginfo')
+    send_auginfo()
 end)
 
 windower.register_event('zone change', function()
     update_inventory()
     coroutine.sleep(3)
-    windower.ffxi.chat('!auginfo')
-end)
-
-windower.register_event('item change', function()
-    update_inventory()
-    if visible then render() end
+    send_auginfo()
 end)
 
 windower.register_event('unload', function()
@@ -394,7 +393,7 @@ windower.register_event('addon command', function(cmd, arg1)
 
     elseif cmd == 'sync' then
         update_inventory()
-        windower.ffxi.chat('!auginfo')
+        send_auginfo()
         windower.add_to_chat(207, '[AugmentBrowser] Syncing...')
 
     else
