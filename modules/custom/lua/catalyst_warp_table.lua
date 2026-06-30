@@ -204,7 +204,6 @@ return {
     [2158] = { item='Hydra Fang', label='Magic Damage Taken', cat=6, tier=3, zone=51, zoneName='Wajaom Woodlands', x=-282.000, y=-24.000, z=-1.000, mob='Hydra', lvl=80, rate=1000 },
     [2161] = { item='Troll Vambrace', label='String instrument skill', cat=23, tier=1, zone=62, zoneName='Halvung', x=-260.400, y=9.632, z=393.279, mob='Kirlirger the Abhorrent', lvl=80, rate=50 },
     [2163] = { item='Imp Wing', label='Pet Magic Damage', cat=20, tier=1, zone=15, zoneName='Abyssea-Konschtat', x=336.823, y=30.662, z=504.366, mob='Dapifer Imp', lvl=79, rate=150 },
-    [2168] = { item='Cerberus Claw', label='Pet STR', cat=20, tier=1, zone=61, zoneName='Mount Zhayolm', x=316.000, y=-23.000, z=-84.000, mob='Cerberus', lvl=85, rate=1000 },
     [2169] = { item='Cerberus Hide', label='Pet STR DEX VIT', cat=20, tier=1, zone=61, zoneName='Mount Zhayolm', x=316.000, y=-23.000, z=-84.000, mob='Cerberus', lvl=85, rate=1000 },
     [2171] = { item='Colibri Beak', label='Blue Magic skill', cat=23, tier=1, zone=216, zoneName='Abyssea-Misareaux', x=112.812, y=-15.740, z=114.920, mob='Coastal Colibri', lvl=80, rate=50 },
     [2173] = { item='Wamoura Cocoon', label='Thunder Affinity', cat=20, tier=4, zone=215, zoneName='Abyssea-Attohwa', x=406.667, y=20.125, z=-244.106, mob='Gullycampa', lvl=83, rate=50 },

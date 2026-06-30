@@ -265,6 +265,13 @@ EXCLUDED_AUGS = {
     # the whole game. Its catalyst (item 1844) is banned in EXCLUDED_ITEMS below
     # so it isn't repurposed onto another augment -- a clean removal, not a swap.
     147,
+    # Pet STR (1792) removed 2026-06-30 (owner request, relaunch): a flat
+    # single-stat Pet STR augment, redundant alongside the multi-stat "Pet STR
+    # DEX VIT" (1806) and the rest of the pet-stat set. Catalyst 2168 (Cerberus
+    # Claw) is freed back to the greedy pool. The augments.sql row is left intact
+    # so gear already carrying 1792 keeps it (harmless); clean_banned_augments.py
+    # zeroes it from inventories on the next run.
+    1792,
 }
 
 # Per-augment boost ceiling (0..31). The Augment Moogle clamps the baked boost

@@ -267,7 +267,6 @@ return {
     ['Ludwig'] = 901,  -- Enmity (T0, Ludwig L1)
     ['Luminous_Coalescence'] = 1474,  -- Water Affinity (T0, Luminous_Coalescence L1)
     ['Makara'] = 1193,  -- Breath dmg. taken (T1, Makara L29)
-    ['Mauthe_Doog'] = 2168,  -- Pet STR (T1, Mauthe_Doog L28)
     ['Maximilian'] = 859,  -- Enfeebling Magic Recast Delay (T0, Maximilian L1)
     ['Meat_Maggot'] = 771,  -- Chance of successful block (T1, Meat_Maggot L29)
     ['Momowa'] = 952,  -- Dark resist (T0, Momowa L1)

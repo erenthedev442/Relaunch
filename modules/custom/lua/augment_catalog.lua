@@ -224,7 +224,6 @@ return {
     [856]  = { augId = 122,  base = 20,  mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Pet TP Bonus' },
     [857]  = { augId = 123,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 1, label = 'Pet Dbl.Att' },
     [863]  = { augId = 127,  base = 1,   mult = 100, disp = 100,  cat = 20, tier = 1, label = 'Pet Magic Damage Taken' },
-    [2168] = { augId = 1792, base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 1, label = 'Pet STR' },
     [2169] = { augId = 1806, base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 1, label = 'Pet STR DEX VIT' },
     -- Pet stats pulled from old cat 2
     [922]  = { augId = 96,   base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 1, label = 'Pet Accuracy Rng.Acc' },
