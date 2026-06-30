@@ -36,7 +36,7 @@ Then work the loop using the two NPCs standing side-by-side where you landed:
 2. **Talk to Hunt: Spawner** — pop a Rank I NM: **Leaping Lizzy**, **Valkurm Emperor**, or **Tom Tit Tat**. It appears right in front of you — no map navigation, no cooldown.
 3. **Kill it.** You must land the killing blow (or be credited as the killer). Each Rank I kill pays **5 Hunt Marks**, and your very first kill also fires the **First Hunt** achievement for a bonus **+50**.
 4. **Spend at the Hub.** You were handed **100 Hunt Marks** at character creation — a real head start. Convert some into **Seals** at the reward shop and take them to the Armor & Weapons vendors at Escha ZiTah for your first real upgrade. (Full breakdown: [Gear Vendors](../progression/gear-vendors.md).)
-5. **Keep popping.** Rack up marks, return to **Hunt: Hub**, and unlock **Rank II** for **12 marks**. Each rank opens a tougher NM roster that pays more per kill — 5 at Rank I climbing to **65** at Rank V.
+5. **Keep popping.** Rack up marks, return to **Hunt: Hub**, and unlock **Rank II** for **150 marks**. Each rank opens a tougher NM roster that pays more per kill — 5 at Rank I climbing to **65** at Rank V.
 
 Not sure what you need for the next rank? Ask the game directly:
 
@@ -47,7 +47,7 @@ Not sure what you need for the next rank? Ask the game directly:
 It shows your current tier, the NMs available to you, and exactly what's required to rank up. For the full ladder — all five ranks, every NM, the reward shop — see the **[Hunting League page](../progression/index.md)**.
 
 !!! warning "Don't underestimate the starters"
-    Leaping Lizzy is buffed well beyond its retail stats (+1000 ATT, +200 DEF). The Rank I NMs are a real fight on fresh gear — that's what your starter marks and `!buff` are for.
+    Leaping Lizzy is buffed well beyond its retail stats (+2700 ATT, +600 DEF). The Rank I NMs are a real fight on fresh gear — that's what your starter marks and `!buff` are for.
 
 ---
 

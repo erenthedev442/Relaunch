@@ -102,8 +102,8 @@ Each rank has 3 NMs to hunt. You can repeatedly kill the same NM to farm marks. 
 <!-- DOCGEN:END id="hunting-league-tiers" -->
 
 !!! tip "Rank V notes"
-    **Shinryu** at Rank V is the explicit gear-check — level 225–250 with 40× HP, 8000 DEF, 15000 ATT. Bring a party.
-    **Leaping Lizzy** at Rank I is also buffed beyond its retail stats (+1500 ATT, +350 DEF). Don't underestimate the "starter."
+    **Shinryu** at Rank V is the explicit gear-check — level 225–250 with 72× HP, +2420 DEF, +10800 ATT. Bring a party.
+    **Leaping Lizzy** at Rank I is also buffed beyond its retail stats (+2700 ATT, +600 DEF). Don't underestimate the "starter."
 
 ## The Reward Shop
 

@@ -74,7 +74,7 @@ It's the primary path to endgame gear and the main thing to do on the Relaunch s
 1. Talk to **Hunt: Hub** to see your current rank and marks.
 2. Talk to **Hunt: Spawner** to pop a Rank I NM (Leaping Lizzy, Valkurm Emperor, or Tom Tit Tat).
 3. Kill the NM. Each kill pays **5 Hunt Marks**.
-4. Repeat until you have 50 marks, then return to Hunt: Hub to unlock Rank II.
+4. Repeat until you have 150 marks, then return to Hunt: Hub to unlock Rank II.
 
 ---
 
