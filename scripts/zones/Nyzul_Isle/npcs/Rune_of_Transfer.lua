@@ -62,7 +62,8 @@ entity.onEventFinish = function(player, csid, option, npc)
 
     if csid == 1 then
         for _, players in ipairs(chars) do
-            players:setPos(0, 0, 0, 0, xi.zone.ALZADAAL_UNDERSEA_RUINS)
+            -- RELAUNCH: return to the Mhaura hub instead of ToAU-locked zone 72.
+            players:setPos(-25.0, -15.99, 52.5, 100, xi.zone.MHAURA)
         end
     elseif
         csid == 201 and

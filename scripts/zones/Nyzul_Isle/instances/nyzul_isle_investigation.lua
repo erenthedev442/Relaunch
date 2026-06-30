@@ -173,7 +173,10 @@ instanceObject.onEventFinish = function(player, csid, option, npc)
 
     if csid == 1 then
         for _, players in ipairs(chars) do
-            players:setPos(0, 0, 0, 0, xi.zone.ALZADAAL_UNDERSEA_RUINS)
+            -- RELAUNCH: return to the Mhaura hub (Sorrowful Sage). Retail dumps
+            -- players in Alzadaal Undersea Ruins (72), which is ToAU-locked and
+            -- unreachable without the Runic Portal -- it would strand them.
+            players:setPos(-25.0, -15.99, 52.5, 100, xi.zone.MHAURA)
         end
     elseif csid == 95 then
         if instance:getLocalVar('runeHandler') == player:getID() then
