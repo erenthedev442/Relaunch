@@ -59,6 +59,38 @@ return {
     costs    = { [1] = 200,  [2] = 600,  [3] = 1500 },
     rewards  = { [1] = 400,  [2] = 1500, [3] = 4000 },
 
+    -- The 11 Unity leaders (xi.unityLeader). id = setUnityLeader() value.
+    -- Display names kept short to fit the customMenu 150-byte/menu cap.
+    leaders =
+    {
+        { id = 1,  name = 'Pieuje'      },
+        { id = 2,  name = 'Ayame'       },
+        { id = 3,  name = 'Inv. Shield' },
+        { id = 4,  name = 'Apururu'     },
+        { id = 5,  name = 'Maat'        },
+        { id = 6,  name = 'Aldo'        },
+        { id = 7,  name = 'Jakoh W.'    },
+        { id = 8,  name = 'Naja S.'     },
+        { id = 9,  name = 'Flaviria'    },
+        { id = 10, name = 'Yoran-Oran'  },
+        { id = 11, name = 'Sylvie'      },
+    },
+
+    -- Accolade reward shop (spend unity_accolades). Known-valid item ids reused
+    -- from the LSB Unity NPC shop (scripts/globals/unity.lua). Easily expanded --
+    -- add { item = xi.item.XXX, label = '...', cost = N } rows.
+    shop =
+    {
+        { item = xi.item.SCROLL_OF_INSTANT_PROTECT, label = 'Instant Protect',     cost = 50   },
+        { item = xi.item.SCROLL_OF_INSTANT_SHELL,   label = 'Instant Shell',       cost = 50   },
+        { item = xi.item.SCROLL_OF_INSTANT_WARP,    label = 'Instant Warp',        cost = 100  },
+        { item = xi.item.SCROLL_OF_INSTANT_RERAISE, label = 'Instant Reraise',     cost = 200  },
+        { item = xi.item.TRAINING_MANUAL,           label = 'Training Manual',     cost = 100  },
+        { item = xi.item.PINCH_OF_PRIZE_POWDER,     label = 'Prize Powder',        cost = 150  },
+        { item = xi.item.REFRACTIVE_CRYSTAL,        label = 'Refractive Crystal',  cost = 2000 },
+        { item = xi.item.SPECIAL_GOBBIEDIAL_KEY,    label = 'Gobbiedial Key',      cost = 3000 },
+    },
+
     -- Despawn idle NMs after this many seconds (no player engagement)
     despawnSecs = 120,
 

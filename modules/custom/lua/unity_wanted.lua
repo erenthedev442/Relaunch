@@ -129,24 +129,32 @@ m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(z
     super(zone)
 
     local menu = { title = '', options = {} }
-    local mainScreen, tierScreen, confirmScreen  -- forward declarations
+    local mainScreen, tierScreen, confirmScreen, pledgeScreen, rewardScreen  -- forward declarations
 
     local function show(player)
         showMenu(player, menu)
     end
 
+    local function leaderName(id)
+        for _, l in ipairs(catalog.leaders) do
+            if l.id == id then return l.name end
+        end
+        return 'none'
+    end
+
     mainScreen = function(player)
         local featuredId = weeklyFeaturedId()
         local featured   = nmById[featuredId]
-        menu.title   = string.format('%sUnity Wanted', ICON)
+        menu.title   = string.format('%sUnity Concord [%d acc]', ICON, player:getCurrency('unity_accolades'))
         menu.options = {
             { string.format('Weekly: %s (2x)', featured and featured.label or '?'),
               function(p) if featured then confirmScreen(p, featured) end end },
             { 'Tier 1  Lv 75-80',   function(p) tierScreen(p, 1, 1) end },
             { 'Tier 2  Lv 99-119',  function(p) tierScreen(p, 2, 1) end },
             { 'Tier 3  Lv 120+',    function(p) tierScreen(p, 3, 1) end },
-            { string.format('My accolades: %d', player:getCurrency('unity_accolades')),
-              function(p) mainScreen(p) end },
+            { string.format('Unity: %s', leaderName(player:getUnityLeader())),
+              function(p) pledgeScreen(p, 1) end },
+            { 'Unity Rewards',      function(p) rewardScreen(p, 1) end },
             { 'Leave', function(p) p:printToPlayer('[Unity] Safe hunting!', S) end },
         }
         show(player)
@@ -216,6 +224,92 @@ m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(z
             },
             { '<< Back', function(p) tierScreen(p, nm.tier, 1) end },
         }
+        show(player)
+    end
+
+    -----------------------------------
+    -- Pledge / change your Unity (all 11 leaders). Free, no RoE grind.
+    -----------------------------------
+    pledgeScreen = function(player, page)
+        local leaders = catalog.leaders
+        local per     = 6
+        local start   = (page - 1) * per + 1
+        local finish  = math.min(start + per - 1, #leaders)
+        local current = player:getUnityLeader()
+
+        menu.title = 'Pledge to a Unity'
+        local opts = {}
+        for i = start, finish do
+            local l    = leaders[i]
+            local mark = (l.id == current) and ' *' or ''
+            table.insert(opts, {
+                l.name .. mark,
+                function(p)
+                    p:setUnityLeader(l.id)
+                    -- Mark "All for One" (RoE 5) done so the retail service NPC and
+                    -- the force-join-leader-1 bypass respect this choice.
+                    if not p:getEminenceCompleted(5) then
+                        xi.roe.onRecordTrigger(p, 5)
+                    end
+                    p:printToPlayer(string.format('[Unity] You now stand with %s, kupo!', l.name), S)
+                    mainScreen(p)
+                end,
+            })
+        end
+        if page > 1 then
+            table.insert(opts, { '<< Prev', function(p) pledgeScreen(p, page - 1) end })
+        end
+        if finish < #leaders then
+            table.insert(opts, { 'Next >>', function(p) pledgeScreen(p, page + 1) end })
+        end
+        table.insert(opts, { '<< Back', function(p) mainScreen(p) end })
+        menu.options = opts
+        show(player)
+    end
+
+    -----------------------------------
+    -- Accolade reward shop. Spend unity_accolades on catalog.shop items.
+    -----------------------------------
+    rewardScreen = function(player, page)
+        local shop   = catalog.shop
+        local per    = 4  -- keep title + 4 'Label (cost)' rows + nav under the 150-byte menu cap
+        local start  = (page - 1) * per + 1
+        local finish = math.min(start + per - 1, #shop)
+
+        menu.title = 'Unity Rewards'
+        local opts = {}
+        for i = start, finish do
+            local s = shop[i]
+            table.insert(opts, {
+                string.format('%s (%d)', s.label, s.cost),
+                function(p)
+                    local have = p:getCurrency('unity_accolades')
+                    if have < s.cost then
+                        p:printToPlayer(string.format('[Unity] Need %d accolades (have %d), kupo.', s.cost, have), S)
+                        rewardScreen(p, page)
+                        return
+                    end
+                    if p:getFreeSlotsCount() < 1 then
+                        p:printToPlayer('[Unity] Your inventory is full, kupo!', S)
+                        rewardScreen(p, page)
+                        return
+                    end
+                    p:delCurrency('unity_accolades', s.cost)
+                    p:addItem(s.item, 1)
+                    p:printToPlayer(string.format('[Unity] Received %s. (%d accolades left)',
+                        s.label, p:getCurrency('unity_accolades')), S)
+                    rewardScreen(p, page)
+                end,
+            })
+        end
+        if page > 1 then
+            table.insert(opts, { '<< Prev', function(p) rewardScreen(p, page - 1) end })
+        end
+        if finish < #shop then
+            table.insert(opts, { 'Next >>', function(p) rewardScreen(p, page + 1) end })
+        end
+        table.insert(opts, { '<< Back', function(p) mainScreen(p) end })
+        menu.options = opts
         show(player)
     end
 
