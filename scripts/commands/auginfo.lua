@@ -2,10 +2,13 @@
 -- Triggered automatically by the addon on load and zone-in; players can also call it manually.
 -- Format: [AUGINFO]rank=N,count=N,aff=N,hl=N,prestige=N,rebirths=N,gauntlet=N
 
-local cmdprops = {
+---@type TCommand
+local commandObj = {}
+
+commandObj.cmdprops =
+{
     permission = 0,
     parameters = 'false',
-    help       = '',
 }
 
 local function getMaxPrestigeLevel(player)
@@ -25,7 +28,7 @@ local function getTotalRebirths(player)
     return total
 end
 
-cmdprops.exec = function(player, _)
+commandObj.onTrigger = function(player, _)
     local rank       = player:getCharVar('Augment_Mastery')    or 0
     local count      = player:getCharVar('Augment_Count')      or 0
     local affinities = player:getCharVar('Augment_Affinities') or 0
@@ -41,4 +44,4 @@ cmdprops.exec = function(player, _)
     )
 end
 
-return cmdprops
+return commandObj
