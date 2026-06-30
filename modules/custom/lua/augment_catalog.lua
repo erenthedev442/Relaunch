@@ -282,7 +282,6 @@ return {
 
     -- ── cat 21: Ele Resist ────────────────────────────────────────────────────
     [1132] = { augId = 796,  base = 10,  mult = 1,   disp = 1,    cat = 21, tier = 0, label = 'All elemental resists' },
-    [1158] = { augId = 797,  base = 1,   mult = 1,   disp = 1,    cat = 21, tier = 0, label = 'All elemental resists' },
     -- Element affinities (passive elemental identity, not resists)
     [1165] = { augId = 928,  base = 1,   mult = 1,   disp = 1,    cat = 21, tier = 4, label = 'Fire Affinity' },
     [1186] = { augId = 929,  base = 1,   mult = 1,   disp = 1,    cat = 21, tier = 4, label = 'Ice Affinity' },

@@ -273,6 +273,11 @@ EXCLUDED_AUGS = {
     # so gear already carrying 1792 keeps it (harmless); clean_banned_augments.py
     # zeroes it from inventories on the next run.
     1792,
+    # All elemental resists -1 (797) removed 2026-06-30 (owner request, relaunch):
+    # a pure-downside augment (-1 to every elemental resist) -- nothing a character
+    # would ever WANT. Its +10 twin (796 / Square of Raxa) is kept. Banned so
+    # clean_banned_augments.py strips the penalty from any gear already carrying it.
+    797,
 }
 
 # Per-augment boost ceiling (0..31). The Augment Moogle clamps the baked boost

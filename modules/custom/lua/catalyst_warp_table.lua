@@ -109,7 +109,6 @@ return {
     [1132] = { item='Square Of Raxa', label='All elemental resists', cat=21, tier=0, zone=178, zoneName='The Shrine of RuAvitau', x=713.000, y=-99.000, z=-588.000, mob='Aura Statue', lvl=81, rate=10 },
     [1133] = { item='Vial Of Dragon Blood', label='Pet Regen', cat=20, tier=1, zone=154, zoneName='Dragons Aery', x=78.000, y=6.000, z=34.000, mob='Nidhogg', lvl=90, rate=240 },
     [1156] = { item='Crawler Calculus', label='Avatar perpetuation cost', cat=20, tier=0, zone=115, zoneName='West Sarutabaruta', x=-72.222, y=-4.813, z=-389.866, mob='Crawler', lvl=3, rate=100 },
-    [1158] = { item='Wandering Bulb', label='All elemental resists', cat=21, tier=0, zone=204, zoneName='FeiYin', x=33.566, y=-0.112, z=111.750, mob='Utukku', lvl=55, rate=50 },
     [1165] = { item='Doll Shard', label='Fire Affinity', cat=21, tier=4, zone=218, zoneName='Abyssea-Altepa', x=-775.137, y=-7.574, z=-512.404, mob='Sand Sweeper', lvl=87, rate=50 },
     [1186] = { item='Bomb Queen Core', label='Ice Affinity', cat=21, tier=4, zone=205, zoneName='Ifrits Cauldron', x=-101.545, y=-0.622, z=-24.244, mob='Volcanic Bomb', lvl=71, rate=50 },
     [1187] = { item='Pinch Of Bomb Queen Ash', label='Wind Affinity', cat=21, tier=4, zone=205, zoneName='Ifrits Cauldron', x=37.842, y=3.999, z=-276.772, mob='Volcanic Gas', lvl=62, rate=50 },

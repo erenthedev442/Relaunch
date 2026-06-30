@@ -126,7 +126,6 @@ return {
     ['Bull_Bugard'] = 880,  -- Dbl.Atk. Crit.hit rate (T3, Bull_Bugard L70)
     ['Bullheaded_Grosvez'] = 895,  -- Counter (T1, Bullheaded Grosvez L45)
     ['Bulwark_Bat'] = 2157,  -- Pet Mag.Acc. Mag.Dmg (T1, Bulwark Bat L31)
-    ['Bumblebee'] = 1158,  -- All elemental resists (T0, Bumblebee L1)
     ['Burrow_Antlion'] = 1124,  -- Pet Accuracy Rng.Acc (T1, Burrow Antlion L44)
     ['Calf_[Herd3]'] = 1199,  -- Barrage (T0, Calf_[Herd3] L1)
     ['Canal_Bats'] = 839,  -- Pet Acc R.Acc Atk. R.Atk (T1, Canal Bats L46)
