@@ -89,7 +89,8 @@ local function update_inventory()
     for i = 0, 12 do
         local bag = bags[i]
         if type(bag) == 'table' then
-            for s = 0, (bag.count or 80) do
+            -- Iterate full slot range; slots are 1-indexed up to max 80
+            for s = 1, 80 do
                 local it = bag[s]
                 if type(it)=='table' and it.id and it.id > 0 then
                     inv[it.id] = (inv[it.id] or 0) + (it.count or 1)
