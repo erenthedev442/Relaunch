@@ -177,17 +177,12 @@ void CEnmityContainer::UpdateEnmity(CBattleEntity* PEntity, int32 CE, int32 VE, 
     // Apply TH only if this was a direct action
     if (directAction)
     {
-        // RELAUNCH: gear/augment Treasure Hunter caps raised so TH investment pays off.
-        // Curve (scripts/globals/combat/treasure_hunter.lua) maxes at TH14, so cap there.
-        // THF main reaches the full TH14 from gear; non-THF main reaches TH12 (THF keeps a
-        // small edge + the job trait). Was 8 / 4 retail.
-        int16 THlevel = std::min<int16>(14, PEntity->getMod(Mod::TREASURE_HUNTER));
+        // RELAUNCH: Treasure Hunter is UNCAPPED -- the player's full gear/augment TH
+        // applies to the mob, for every job (no THF/non-THF distinction). Drops scale
+        // via getDropRate, which now extends past TH14 (treasure_hunter.lua). Was 8/4
+        // retail, briefly 14/12.
+        int16 THlevel = PEntity->getMod(Mod::TREASURE_HUNTER);
         int16 GFlevel = PEntity->getMod(Mod::GILFINDER); // Is there a cap? Theoretical GF level cap could be GF 8 for 128/256 + 8*16 = 256/256
-
-        if (PEntity->GetMJob() != JOB_THF)
-        {
-            THlevel = std::min<int16>(12, PEntity->getMod(Mod::TREASURE_HUNTER));
-        }
 
         if (m_EnmityHolder->m_THLvl < THlevel)
         {
