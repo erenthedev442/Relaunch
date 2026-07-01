@@ -71,8 +71,18 @@ for _name, (_mid, _scale, _pct) in STAT_MAP.items():
     if _mid not in _MOD_DISPLAY:
         _MOD_DISPLAY[_mid] = (_name, _scale, _pct)
 
+# The relaunch customizes gear extensively (reforge tiers, +4 derivations,
+# rebalances), so a raw comparison of all il119 items yields thousands of
+# rows. Sort each section by magnitude (biggest differences first) and cap
+# it, with a truncation note, so the page stays scannable. Bump if you want
+# the full audit.
+MAX_ROWS_PER_SECTION = 800
+
 
 def _fmt(val: float | int, is_pct: bool, sign: bool = True) -> str:
+    # Round first: db_scale division (e.g. Haste 330/100) yields float noise
+    # like 0.2999999999999998 that must not leak into the table.
+    val = round(float(val), 2)
     n = int(val) if val == int(val) else val
     s = f'{n:+}' if sign else str(n)
     return s + '%' if is_pct else s
@@ -84,7 +94,7 @@ def _get_server_mods(conn, item_ids: list[int]) -> dict[int, dict[int, int]]:
     ph = ','.join(['%s'] * len(item_ids))
     cur = conn.cursor()
     cur.execute(
-        f'SELECT itemId, modId, modVal FROM item_mods WHERE itemId IN ({ph})',
+        f'SELECT itemId, modId, value FROM item_mods WHERE itemId IN ({ph})',
         item_ids,
     )
     out: dict[int, dict[int, int]] = {}
@@ -184,6 +194,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
                         'retail': _fmt(retail_val, is_pct),
                         'server': '—',
                         'id':     item_id,
+                        '_mag':   abs(retail_val),
                     })
             elif actual_db != expected_db:
                 actual_disp = actual_db / scale
@@ -195,6 +206,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
                     'server': _fmt(actual_disp, is_pct),
                     'diff':   _fmt(diff, is_pct),
                     'id':     item_id,
+                    '_mag':   abs(diff),
                 })
 
         # check server mods not present in retail
@@ -216,6 +228,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
                 'retail': '—',
                 'server': _fmt(actual_disp, is_pct),
                 'id':     item_id,
+                '_mag':   abs(actual_disp),
             })
 
     # Compute cache freshness
@@ -223,24 +236,43 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     cache_date = max(dates) if dates else 'unknown'
     n_compared = len(found)
 
+    # Full counts before capping (shown in the header + truncation notes).
+    tot_missing, tot_differ, tot_custom = len(rows_missing), len(rows_differ), len(rows_custom)
+
+    def _sort_cap(rows: list[dict]) -> tuple[list[dict], int]:
+        # Biggest differences first, then capped so the page stays scannable.
+        rows.sort(key=lambda r: r.get('_mag', 0), reverse=True)
+        return rows[:MAX_ROWS_PER_SECTION], max(0, len(rows) - MAX_ROWS_PER_SECTION)
+
+    rows_missing, miss_cut = _sort_cap(rows_missing)
+    rows_differ,  diff_cut = _sort_cap(rows_differ)
+    rows_custom,  cust_cut = _sort_cap(rows_custom)
+
+    def _note(cut: int) -> str:
+        return (f'\n*…and {cut} more, omitted for length (sorted biggest-first; '
+                f'raise `MAX_ROWS_PER_SECTION` for the full audit).*\n') if cut else ''
+
     missing_tbl = _mk_table(
         ['Item', 'Stat', 'Retail', 'Server'],
         ['item', 'stat', 'retail', 'server'],
         rows_missing,
-    )
+    ) + _note(miss_cut)
     differ_tbl = _mk_table(
         ['Item', 'Stat', 'Retail', 'Server', 'Diff'],
         ['item', 'stat', 'retail', 'server', 'diff'],
         rows_differ,
-    )
+    ) + _note(diff_cut)
     custom_tbl = _mk_table(
         ['Item', 'Stat', 'Server Value'],
         ['item', 'stat', 'server'],
         rows_custom,
-    )
+    ) + _note(cust_cut)
 
     content = f"""\
 *{n_compared} items compared · retail data from [FFXIAH.com](https://www.ffxiah.com) · cache date {cache_date}*
+
+*{tot_missing} missing/lower · {tot_differ} different · {tot_custom} server-only stats found. \
+Each section lists the biggest differences first; long tails are truncated.*
 
 ## Stats Missing or Lower on Server
 
@@ -262,8 +294,8 @@ Stats the server adds that don't exist on the retail item.
     if write_between_markers(out_page, 'gear-vs-retail-data', content):
         print(
             f'[gear_vs_retail] {n_compared} items compared — '
-            f'{len(rows_missing)} missing, {len(rows_differ)} differ, '
-            f'{len(rows_custom)} custom'
+            f'{tot_missing} missing, {tot_differ} differ, {tot_custom} custom '
+            f'(capped at {MAX_ROWS_PER_SECTION}/section)'
         )
     else:
         print('[gear_vs_retail] marker not found in page — skipping write')
