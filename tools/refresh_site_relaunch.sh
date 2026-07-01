@@ -84,6 +84,35 @@ else
     echo "[WARN] warp table regen failed -- !augwarp may be stale"
 fi
 
+echo "[0e/4] refreshing FFXIAH retail-stats cache (gear-vs-retail page)..."
+# The gear-vs-retail generator compares live item_mods to retail item stats
+# scraped from FFXIAH. That scrape is heavy (~3.2k il119 items @ 1.5s each), so
+# we keep a PERSISTENT master cache in $LIVE_ROOT/tools/ (survives the hourly
+# hard-reset of $DOCS_REPO) and only re-hit FFXIAH weekly, capped, incremental.
+# A committed baseline lives in the repo as the floor, so the page still renders
+# on a fresh box before the first fetch runs.
+FFXIAH_MASTER="$LIVE_ROOT/tools/ffxiah_item_cache.json"
+# Throttle: only scrape when the master is missing or older than 7 days.
+if [ -z "$(find "$FFXIAH_MASTER" -mtime -7 2>/dev/null)" ]; then
+    echo "[0e/4] master cache stale/missing -- incremental fetch (cap 600)..."
+    python3 "$LIVE_ROOT/tools/fetch_ffxiah_cache.py" \
+        --ilevel-min=119 --refresh-days=30 --max-items=600 >> "$LOG" 2>&1 \
+        && echo "[0e/4] FFXIAH fetch complete" \
+        || echo "[WARN] FFXIAH fetch failed -- using existing cache"
+else
+    echo "[0e/4] master cache fresh (<7d) -- skip scrape"
+fi
+# Stage the freshest cache into the docs checkout for docgen. The box-local
+# master (kept current above) overrides the committed baseline; this leaves a
+# dirty file in $DOCS_REPO which the next run's hard-reset cleans up harmlessly.
+if [ -f "$FFXIAH_MASTER" ]; then
+    cp "$FFXIAH_MASTER" tools/ffxiah_item_cache.json \
+        && echo "[0e/4] cache staged for docgen ($(wc -c < tools/ffxiah_item_cache.json) bytes)" \
+        || echo "[WARN] staging cache into docs checkout failed"
+else
+    echo "[0e/4] no master cache -- generator falls back to committed baseline"
+fi
+
 echo "[1/4] docgen (leaderboards + player profiles from xi_relaunch)..."
 # shellcheck disable=SC2086
 $DOCGEN_CMD || { echo "[FATAL] docgen failed"; exit 1; }
