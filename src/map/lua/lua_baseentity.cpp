@@ -14165,6 +14165,14 @@ bool CLuaBaseEntity::canGainStatusEffect(uint16 effect, const sol::object& power
 
 bool CLuaBaseEntity::hasStatusEffect(uint16 StatusID, const sol::object& SubType)
 {
+    // CORE PATCH [relaunch 2026-07-01]: guard against UAF — entity freed while
+    // OnMobFight combat tick still holds a Lua reference → dynamic_cast crashes.
+    // Ported from Legendary fix 2d42b59f9d.
+    if (!CBaseEntity::IsEntityAlive(m_PBaseEntity))
+    {
+        return false;
+    }
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
@@ -14202,6 +14210,12 @@ bool CLuaBaseEntity::hasStatusEffect(uint16 StatusID, const sol::object& SubType
 
 bool CLuaBaseEntity::hasStatusEffectByFlag(uint16 StatusID)
 {
+    // CORE PATCH [relaunch 2026-07-01]: same UAF guard as hasStatusEffect above.
+    if (!CBaseEntity::IsEntityAlive(m_PBaseEntity))
+    {
+        return false;
+    }
+
     if (m_PBaseEntity->objtype == TYPE_NPC)
     {
         ShowWarning("Invalid Entity (NPC: %s) calling function.", m_PBaseEntity->getName());
