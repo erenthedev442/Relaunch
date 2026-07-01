@@ -277,7 +277,11 @@ Each section lists the biggest differences first; long tails are truncated.*
 ## Stats Missing or Lower on Server
 
 Retail has these stats, but the server doesn't — or the server value is lower.
-These may be bugs, pending additions, or LSB implementation differences.
+**Most entries here are upstream LSB data gaps, not relaunch changes** — LSB
+ships many il119 items (e.g. the Arke set, Ajax, Angantyr) with empty stat
+data, so they read identically on a stock LSB server. The rest may be genuine
+gaps, pending additions, or implementation differences (e.g. "Damage taken"
+split across separate physical/magic mods).
 
 {missing_tbl}
 ## Stats with Different Values
