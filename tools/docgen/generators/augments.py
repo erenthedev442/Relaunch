@@ -354,6 +354,7 @@ FROM mob_droplist d
 JOIN mob_groups g       ON g.dropid  = d.dropid
 LEFT JOIN zone_settings z ON z.zoneid = g.zoneid
 WHERE d.dropType IN (0, 1)
+  AND NOT (g.spawntype & 8)
 GROUP BY d.itemid, g.name, z.name
 """
 
@@ -402,8 +403,12 @@ def _fetch_drops(repo_root: Path) -> dict[int, _DropList] | None:
             conn.close()
     else:
         return None
+    # Sort: Abyssea zones always first, then by drop rate descending.
     result: dict[int, _DropList] = {
-        iid: sorted(entries.items(), key=lambda kv: -kv[1])
+        iid: sorted(
+            entries.items(),
+            key=lambda kv: (0 if "abyssea" in kv[0].lower() else 1, -kv[1]),
+        )
         for iid, entries in raw.items()
     }
     # Overlay HL trophy drops at the front (100% always wins).

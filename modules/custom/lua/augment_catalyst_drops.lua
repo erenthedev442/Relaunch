@@ -42,6 +42,7 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
     -- onMobDeathEx fires once per alliance member; isKiller marks the killing blow,
     -- so we drop ONCE per kill (not per member).
     if not isKiller or player == nil then return end
+    if mob:isNM() then return end  -- catalysts never drop from NMs; farm regular mobs
 
     local name   = mob:getName()
     local itemId = name and MAP[name]
