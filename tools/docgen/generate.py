@@ -125,7 +125,6 @@ def main() -> int:
         job_mastery,
         # --- relaunch-only systems (2026-06-27): each parses its own catalog ---
         htbf,
-        boom_job,
         voidwatch,
         dungeon_instances,
         dynamis_divergence,
@@ -285,7 +284,6 @@ def main() -> int:
         # Dynamis-Divergence, Fellow companion, Spell & Skill Mastery. Each
         # parses its own *_catalog.lua / module CONFIG and fills marker blocks.
         ("htbf",                 htbf),
-        ("boom_job",             boom_job),
         ("voidwatch",            voidwatch),
         ("dungeon_instances",    dungeon_instances),
         ("dynamis_divergence",   dynamis_divergence),

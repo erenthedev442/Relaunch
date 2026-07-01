@@ -206,16 +206,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
 # Relaunch-specific per-page notes, keyed by page slug (path stem). Rendered as
 # an admonition directly under the page title.
-PAGE_NOTES = {
-    "summoning": (
-        '!!! warning "Summoner is the Boom job on this server"\n'
-        "    The relaunch repurposes the Summoner job slot into the custom "
-        "**[Boom job](../../progression/boom-job.md)** — a pet-less staff DD whose "
-        "elemental spells *detonate*. Avatar/spirit summoning is **not** the slot's "
-        "function here, so the summoning spells below are legacy database entries "
-        "and aren't used by Boom."
-    ),
-}
+PAGE_NOTES = {}
 
 
 def _write_group_page(path: Path, label: str, spells: list[dict]) -> None:

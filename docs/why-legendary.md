@@ -8,7 +8,7 @@ This is a **fresh-start server** — a clean wipe and rebuild of the FJB FFXI pr
 
 The original server proved the concept: FFXI with fast progression, a custom endgame, and a friendly community works. Players stayed for months. But over time, the economy inflated, veteran characters pulled far ahead of newcomers, and the gap between a day-one player and a year-one player became difficult to close.
 
-The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat balance has been redesigned from scratch. And the content lineup has been expanded with systems that weren't in the original — Voidwatch, the Adventuring Fellow, Boom Job, Spell & Skill Mastery, and more.
+The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat balance has been redesigned from scratch. And the content lineup has been expanded with systems that weren't in the original — Voidwatch, the Adventuring Fellow, Spell & Skill Mastery, and more.
 
 ---
 
@@ -20,7 +20,6 @@ The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat b
 
 - **Voidwatch** — Planar Rifts scattered across 30 overworld zones, tier-scaling Voidwalker NM fights, and a Spectral Alignment reward system
 - **Adventuring Fellow** — a personal companion any job can summon, leveled and built by the player
-- **Boom Job** — a custom job on the Summoner slot: a staff-swinging hybrid DD whose spells randomly detonate
 - **Spell & Skill Mastery** — permanent WS and spell power-ups earned from a rotating NM currency system
 - **Affinity NM timed spawns** — all 24 Augment Sage affinity NMs placed as real timed spawns in their zones
 
