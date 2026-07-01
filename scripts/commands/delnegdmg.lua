@@ -39,7 +39,7 @@ local commandObj = {}
 
 commandObj.cmdprops =
 {
-    permission = 0, -- GM (matches !delitem / !delcontaineritems); raise to lock down the 'all' sweep
+    permission = 1, -- GM (matches !delitem / !delcontaineritems); raise to lock down the 'all' sweep
     parameters = 'ss',
 }
 

@@ -22,7 +22,7 @@ local bagparam =
 
 commandObj.cmdprops =
 {
-    permission = 0,
+    permission = 1,
     parameters = 'i'
 }
 

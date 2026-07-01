@@ -11,7 +11,7 @@ local commandObject = {}
 local catalog = require('modules/custom/lua/invasion_catalog')
 
 commandObject.cmdprops = {
-    permission = 0,
+    permission = 1,
     parameters = 's',
 }
 
