@@ -118,7 +118,7 @@ INSERT INTO `mob_droplist` (`dropId`,`dropType`,`groupId`,`groupRate`,`itemId`,`
 DELETE FROM `mob_spawn_points` WHERE `groupid` BETWEEN 20000 AND 20023;
 INSERT INTO `mob_spawn_points` VALUES
  (17208197, 0, 'Behemoth',         'Behemoth',          20000,  80,  80, -670.00, -23.00,  352.00, 0),
- (17298310, 0, 'King_Behemoth',    'King Behemoth',     20001,  85,  85,  171.18,   4.29, -124.58, 0),
+ (17298310, 0, 'King_Behemoth',    'King Behemoth',     20001,  85,  85, -267.50, -19.80,   73.70, 0),
  (17490823, 0, 'King_Arthro',      'King Arthro',       20002,  55,  55,  -27.91, -10.69, -185.26, 0),
  (17228680, 0, 'Simurgh',          'Simurgh',           20003,  80,  80, -682.25, -31.61, -433.62, 0),
  (17302409, 0, 'Adamantoise',      'Adamantoise',       20004,  80,  80,  -98.00,  -0.05,  -39.00, 0),

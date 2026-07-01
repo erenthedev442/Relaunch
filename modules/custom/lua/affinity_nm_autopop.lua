@@ -49,6 +49,30 @@ local RESPAWN_SECONDS = 30  -- repop delay after each death (matches always_popp
 local SYS             = xi.msg.channel.SYSTEM_3
 
 -----------------------------------
+-- Difficulty (2026-06-30): the affinity NMs REUSE retail pools, so at their base
+-- level they are trivial for geared relaunch players. Bake in a stat block, applied
+-- on every spawn. TUNE HERE. Offensive mods are flat additions (setMod, idempotent);
+-- HP is scaled once per fresh spawn via setMaxHP.
+--   * Mob combat mods are int16 -- keep each < 31000 or they wrap NEGATIVE.
+--   * HP via setMaxHP is int32, so the multiplier is the safe "tankier" lever.
+--   * UNIFORM across all 24: the god-tier NMs (Kirin/AV/Proto-Omega/4 gods) may end
+--     up over-tuned for the HL-rank-3 audience -- add a per-mobid override if so.
+-----------------------------------
+local NM_HP_MULT = 6.0
+local NM_MODS =
+{
+    [xi.mod.ATT]           = 4000,
+    [xi.mod.ACC]           = 1200,
+    [xi.mod.DEF]           = 500,
+    [xi.mod.EVA]           = 400,
+    [xi.mod.MATT]          = 200,
+    [xi.mod.STR]           = 200,
+    [xi.mod.DEX]           = 200,
+    [xi.mod.HASTE_GEAR]    = 150,   -- ~15% (engine caps gear haste ~25%)
+    [xi.mod.DOUBLE_ATTACK] = 15,
+}
+
+-----------------------------------
 -- The 24 affinity NMs grouped by zone (mobids = current affinity_nm_spawns.sql).
 -- Each entry: { Zone.onInitialize override path, { mobid, ... } }.
 -- Override path is a STRING, so dashes (Riverne-Site_*) are legal.
@@ -128,6 +152,24 @@ local function applyName(m)
 end
 xi.affinityAutopop.applyName = applyName  -- reused by the !affinitypop command
 
+-- Apply the difficulty stat block. Offensive mods overwrite (idempotent); HP is
+-- scaled ONCE per fresh spawn (guarded by a localVar the SPAWN listener resets), so
+-- a re-configure (e.g. !affinitypop) never compounds the multiplier.
+local function applyStats(m)
+    for modId, val in pairs(NM_MODS) do
+        m:setMod(modId, val)
+    end
+    if NM_HP_MULT > 1.0 and m:getLocalVar('affHpScaled') == 0 then
+        local hp = math.floor(m:getMaxHP() * NM_HP_MULT)
+        if hp > 0 then
+            m:setMaxHP(hp)
+            m:setHP(hp)
+        end
+        m:setLocalVar('affHpScaled', 1)
+    end
+end
+xi.affinityAutopop.applyStats = applyStats  -- reused by the !affinitypop command
+
 -----------------------------------
 -- Force one affinity NM up, keep it on the short timer, and wire the trophy + name.
 -----------------------------------
@@ -153,6 +195,14 @@ local function configureMob(mobid)
         applyName(m)
     end)
     if mob:isSpawned() then applyName(mob) end
+
+    -- Difficulty stat block; re-apply on every spawn. Reset the HP-scale guard first
+    -- so each fresh spawn re-scales from base HP (SPAWN fires with the mob at base).
+    mob:addListener('SPAWN', 'AFFINITY_STATS', function(m)
+        m:setLocalVar('affHpScaled', 0)
+        applyStats(m)
+    end)
+    if mob:isSpawned() then applyStats(mob) end
 
     mob:setRespawnTime(RESPAWN_SECONDS)
     if not mob:isSpawned() then

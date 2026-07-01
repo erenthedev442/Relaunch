@@ -21,7 +21,7 @@ commandObj.cmdprops =
 local nms =
 {
     { 'Behemoth',         'STR',        'Batallia Downs',        105, -670.00, -23.00,  352.00 },
-    { 'King Behemoth',    'Attack',     "Behemoth's Dominion",   127,  171.18,   4.29, -124.58 },
+    { 'King Behemoth',    'Attack',     "Behemoth's Dominion",   127, -250.00, -20.00,   40.00 },
     { 'King Arthro',      'DEX',        'Kuftal Tunnel',         174,  -27.91, -10.69, -185.26 },
     { 'Simurgh',          'Accuracy',   'Rolanberry Fields',     110, -682.25, -31.61, -433.62 },
     { 'Adamantoise',      'VIT',        'Valley of Sorrows',     128,  -98.00,  -0.05,  -39.00 },
