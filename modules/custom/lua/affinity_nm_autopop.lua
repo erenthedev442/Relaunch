@@ -84,7 +84,7 @@ local ZONES =
     { 'xi.zones.Kuftal_Tunnel.Zone.onInitialize',           { 17490823 } },                                       -- King Arthro
     { 'xi.zones.Rolanberry_Fields.Zone.onInitialize',       { 17228680 } },                                       -- Simurgh
     { 'xi.zones.Valley_of_Sorrows.Zone.onInitialize',       { 17302409 } },                                       -- Adamantoise
-    { 'xi.zones.The_Shrine_of_RuAvitau.Zone.onInitialize',  { 17507210, 17507212, 17507213, 17507218, 17507219 } }, -- Genbu/Seiryu/Byakko/Suzaku/Kirin
+    { 'xi.zones.The_Shrine_of_RuAvitau.Zone.onInitialize',  { 17507219 } },                                       -- Kirin (retail Shrine; 4 gods moved to Ru'Aun Gardens)
     { 'xi.zones.Sauromugue_Champaign.Zone.onInitialize',    { 17269643 } },                                       -- Roc
     { 'xi.zones.Cape_Teriggan.Zone.onInitialize',           { 17240974 } },                                       -- Aspidochelone
     { 'xi.zones.Riverne-Site_B01.Zone.onInitialize',        { 16896911 } },                                       -- Ouryu
@@ -95,7 +95,7 @@ local ZONES =
     { 'xi.zones.Uleguerand_Range.Zone.onInitialize',        { 16798615 } },                                       -- Tiamat
     { 'xi.zones.Western_Altepa_Desert.Zone.onInitialize',   { 17290136 } },                                       -- King Vinegarroon
     { 'xi.zones.King_Ranperres_Tomb.Zone.onInitialize',     { 17556377, 17556378 } },                             -- Khimaira/Cerberus
-    { 'xi.zones.RuAun_Gardens.Zone.onInitialize',           { 17310619, 17310620 } },                             -- Absolute Virtue/Proto-Omega
+    { 'xi.zones.RuAun_Gardens.Zone.onInitialize',           { 17310619, 17310620, 17310621, 17310622, 17310623, 17310624 } }, -- AV/Proto-Omega + Genbu/Seiryu/Byakko/Suzaku (Sky god corners)
 }
 
 -- mobid -> Augment-Sage registration trophy item id. Granted directly to the
@@ -105,9 +105,9 @@ local ZONES =
 local TROPHY =
 {
     [17208197] = 860,   [17298310] = 883,   [17490823] = 8983,  [17228680] = 843,    -- Behemoth/K.Beh/K.Arthro/Simurgh
-    [17302409] = 908,   [17507210] = 1404,  [17269643] = 842,   [17507212] = 1405,   -- Adamantoise/Genbu/Roc/Seiryu
-    [17507213] = 1406,  [17240974] = 2421,  [16896911] = 903,   [17404816] = 2229,   -- Byakko/Aspidochelone/Ouryu/Bune
-    [16901009] = 844,   [17507218] = 1407,  [17507219] = 10038, [17408916] = 10037,  -- Phoenix/Suzaku/Kirin/Fafnir
+    [17302409] = 908,   [17310621] = 1404,  [17269643] = 842,   [17310622] = 1405,   -- Adamantoise/Genbu/Roc/Seiryu
+    [17310623] = 1406,  [17240974] = 2421,  [16896911] = 903,   [17404816] = 2229,   -- Byakko/Aspidochelone/Ouryu/Bune
+    [16901009] = 844,   [17310624] = 1407,  [17507219] = 10038, [17408916] = 10037,  -- Phoenix/Suzaku/Kirin/Fafnir
     [17408917] = 865,   [17617814] = 1526,  [16798615] = 1816,  [17290136] = 1017,   -- Nidhogg/Vrtra/Tiamat/K.Vinegarroon
     [17556377] = 2372,  [17556378] = 2169,  [17310619] = 1567,  [17310620] = 15800,  -- Khimaira/Cerberus/AV/Proto-Omega
 }
@@ -135,10 +135,10 @@ xi.affinityAutopop.grantTrophy = grantTrophy  -- reused by the !affinitypop comm
 local NAME =
 {
     [17208197] = 'Behemoth',      [17298310] = 'King Behemoth',    [17490823] = 'King Arthro',
-    [17228680] = 'Simurgh',       [17302409] = 'Adamantoise',      [17507210] = 'Genbu',
-    [17269643] = 'Roc',           [17507212] = 'Seiryu',           [17507213] = 'Byakko',
+    [17228680] = 'Simurgh',       [17302409] = 'Adamantoise',      [17310621] = 'Genbu',
+    [17269643] = 'Roc',           [17310622] = 'Seiryu',           [17310623] = 'Byakko',
     [17240974] = 'Aspidochelone', [16896911] = 'Ouryu',            [17404816] = 'Bune',
-    [16901009] = 'Phoenix',       [17507218] = 'Suzaku',           [17507219] = 'Kirin',
+    [16901009] = 'Phoenix',       [17310624] = 'Suzaku',           [17507219] = 'Kirin',
     [17408916] = 'Fafnir',        [17408917] = 'Nidhogg',          [17617814] = 'Vrtra',
     [16798615] = 'Tiamat',        [17290136] = 'King Vinegarroon', [17556377] = 'Khimaira',
     [17556378] = 'Cerberus',      [17310619] = 'Absolute Virtue',  [17310620] = 'Proto-Omega',

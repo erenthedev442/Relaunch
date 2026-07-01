@@ -25,8 +25,8 @@ commandObj.cmdprops =
 local AFFINITY_MOBIDS =
 {
     17208197, 17298310, 17490823, 17228680, 17302409,  -- Behemoth, K.Behemoth, K.Arthro, Simurgh, Adamantoise
-    17507210, 17269643, 17507212, 17507213, 17240974,  -- Genbu, Roc, Seiryu, Byakko, Aspidochelone
-    16896911, 17404816, 16901009, 17507218, 17507219,  -- Ouryu, Bune, Phoenix, Suzaku, Kirin
+    17310621, 17269643, 17310622, 17310623, 17240974,  -- Genbu, Roc, Seiryu, Byakko, Aspidochelone
+    16896911, 17404816, 16901009, 17310624, 17507219,  -- Ouryu, Bune, Phoenix, Suzaku, Kirin
     17408916, 17408917, 17617814, 16798615, 17290136,  -- Fafnir, Nidhogg, Vrtra, Tiamat, K.Vinegarroon
     17556377, 17556378, 17310619, 17310620,            -- Khimaira, Cerberus, Absolute Virtue, Proto-Omega
 }
