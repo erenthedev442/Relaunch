@@ -24,8 +24,14 @@
 -- Idempotent: groupid-range DELETE + re-insert.
 -- ============================================================
 
-DELETE FROM `mob_spawn_points` WHERE `groupid` BETWEEN 11400 AND 11431;
-DELETE FROM `mob_groups`       WHERE `groupid` BETWEEN 11400 AND 11431;
+-- Zone-scoped so re-applying NEVER wipes another zone's mobs that reuse these
+-- groupids. mob_groups PK is (zoneid, groupid), so the Reforge NMs at 11400-11414
+-- in zone 278 (reforge_nms.sql) coexist with the GM/Voidspire pool in zone 289.
+-- (Before 2026-06-30 this DELETE was unscoped and clobbered them cross-zone,
+-- leaving Voidspire/Wave NMs unable to spawn.) No mob_spawn_points cleanup: these
+-- mobs are DYNAMIC (insertDynamicEntity), have no spawn points, and the old
+-- unscoped spawn_points DELETE only harmed Reforge's static spawn points.
+DELETE FROM `mob_groups` WHERE `groupid` BETWEEN 11400 AND 11431 AND `zoneid` = 289;
 
 -- ----- Easy tier (Lv 125 target) ---------------------------------
 INSERT INTO `mob_groups` VALUES (11400,  228, 289, 'Argus',         0, 128, 0, 0, 0, 0, NULL);

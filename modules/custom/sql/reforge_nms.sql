@@ -15,7 +15,10 @@
 -- Safe to re-apply (DELETE then INSERT).
 -- ============================================================================
 
-DELETE FROM `mob_groups` WHERE `groupid` BETWEEN 11400 AND 11414;
+-- Zone-scoped (2026-06-30): these groupids are ALSO used by the Game Master /
+-- Voidspire pool in zone 289; mob_groups PK is (zoneid, groupid) so both coexist.
+-- Without the zoneid filter this DELETE wiped the zone-289 mobs on every re-apply.
+DELETE FROM `mob_groups` WHERE `groupid` BETWEEN 11400 AND 11414 AND `zoneid` = 278;
 
 -- --- Sky Gods (AF Marks) ----------------------------------------------------
 -- Pool IDs: Kirin=2265, Byakko=592, Seiryu=3540, Suzaku=3816, Genbu=1491

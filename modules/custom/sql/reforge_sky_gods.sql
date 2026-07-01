@@ -8,5 +8,9 @@
 -- without errors; the active rows are owned by reforge_nms.sql now.
 -- ============================================================================
 
-DELETE FROM `mob_groups` WHERE `groupid` BETWEEN 11400 AND 11404;
--- (rows moved to reforge_nms.sql)
+-- (rows moved to reforge_nms.sql -- this file is now a TRUE no-op.)
+-- REMOVED 2026-06-30: the old unscoped `DELETE FROM mob_groups WHERE groupid
+-- BETWEEN 11400 AND 11404` lived here and re-inserted NOTHING, so every re-apply
+-- silently wiped groupids 11400-11404 from EVERY zone -- both the Reforge NMs
+-- (zone 278) and the Game Master / Voidspire pool (zone 289). That is the direct
+-- cause of the missing zone-289 wave/Voidspire NMs. Deleting nothing now.
