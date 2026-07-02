@@ -131,6 +131,9 @@ def main() -> int:
         fellow,
         spell_skill_mastery,
         gear_vs_retail,
+        gauntlet,
+        unity_concord,
+        affinity_nms,
     )
 
     # Snapshot existing last-updated footers BEFORE any generator runs.
@@ -289,6 +292,9 @@ def main() -> int:
         ("dynamis_divergence",   dynamis_divergence),
         ("fellow",               fellow),
         ("spell_skill_mastery",  spell_skill_mastery),
+        ("gauntlet",             gauntlet),
+        ("unity_concord",        unity_concord),
+        ("affinity_nms",         affinity_nms),
         # differentiators renders why-legendary.md's "What Legendary Does
         # Differently" list from systems_registry.py and writes a drift report
         # of any system detail page that isn't featured. Runs before
