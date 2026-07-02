@@ -139,9 +139,11 @@ def _parse(text: str) -> dict:
         r"function\s+C\.atmCost\s*\(\s*nextLevel\s*\)\s*return\s+nextLevel\s*\*\s*(\d+)", text, 3)
     c["atmacite"] = _parse_atmacite(section(text, "C.ATMACITE"))
 
-    # ── Rift placements (zone + coords) and the shared Pyxis loot pool ──
+    # ── Rift placements (zone + coords) and loot ──
     c["rifts"] = _parse_rifts(section(text, "C.RIFTS"))
-    c["loot"] = _parse_loot_pool(section(text, "C.LOOT"))
+    c["loot"] = _parse_loot_pool(section(text, "C.LOOT"))          # generic fallback pool
+    c["nm_loot"] = _parse_nm_loot(text)                            # per-NM rare/uncommon
+    c["nm_common"] = [int(x) for x in re.findall(r"\d+", section(text, "C.NM_COMMON"))]
     c["rare_at"]     = _int(r"C\.QUALITY_RARE_AT\s*=\s*(\d+)", text, 92)
     c["uncommon_at"] = _int(r"C\.QUALITY_UNCOMMON_AT\s*=\s*(\d+)", text, 60)
 
@@ -220,6 +222,29 @@ def _zone_stratum_map(strata: list[dict]) -> dict:
         for z in s["zones"]:
             out[z] = s
     return out
+
+
+def _parse_nm_loot(text: str) -> dict[str, dict[str, list[int]]]:
+    """C.NM_LOOT: nmName -> { rare: [ids], uncommon: [ids] } (one entry per line)."""
+    block = re.sub(r"--[^\n]*", "", section(text, "C.NM_LOOT"))
+    out: dict[str, dict[str, list[int]]] = {}
+    for m in re.finditer(
+        r"(\w+)\s*=\s*\{\s*rare\s*=\s*\{([^}]*)\}\s*,\s*uncommon\s*=\s*\{([^}]*)\}", block):
+        out[m.group(1)] = {
+            "rare":     [int(x) for x in re.findall(r"\d+", m.group(2))],
+            "uncommon": [int(x) for x in re.findall(r"\d+", m.group(3))],
+        }
+    return out
+
+
+def _nm_tier_order(strata: list[dict]) -> dict[str, int]:
+    """nmName -> lowest stratum base (for tier-ordering the loot table)."""
+    order: dict[str, int] = {}
+    for s in strata:
+        for nm in s["roster"]:
+            if nm not in order or s["base"] < order[nm]:
+                order[nm] = s["base"]
+    return order
 
 
 # ---------------------------------------------------------------------------
@@ -328,19 +353,28 @@ def _render_rifts(c: dict) -> str:
     return "\n".join(rows)
 
 
-def _render_loot(c: dict, names: dict[int, str]) -> str:
-    """The shared Riftworn Pyxis pool. All Voidwalkers roll from the same three
-    quality tiers; the tier is picked by the d100 quality roll (Vermillion bias)."""
-    tiers = [
-        ("rare",     "Rare",     f"quality {c.get('rare_at', 92)}+ — gear & valuables"),
-        ("uncommon", "Uncommon", f"quality {c.get('uncommon_at', 60)}–{c.get('rare_at', 92) - 1} — valuable mats & consumables"),
-        ("common",   "Common",   f"quality 0–{c.get('uncommon_at', 60) - 1} — crafting materials"),
+def _render_nm_loot(c: dict, names: dict[int, str]) -> str:
+    """Per-NM drops: each Voidwalker's own rare (gear/chase) + uncommon (materials
+    & consumables), tier-ordered. The common crafting tier is shared, listed once
+    below the table."""
+    order = _nm_tier_order(c["strata"])
+
+    def namelist(ids):
+        return ", ".join(names.get(i, f"item #{i}") for i in ids) or "—"
+
+    rows = [
+        "| Voidwalker NM | Rare — gear & chase (quality 92+) | Uncommon — materials & consumables (60–91) |",
+        "|---|---|---|",
     ]
-    rows = ["| Rarity | Rolled when | Items in the pool |", "|---|---|---|"]
-    for key, label, when in tiers:
-        ids = c["loot"].get(key, [])
-        items = ", ".join(sorted(names.get(i, f"item #{i}") for i in ids)) or "—"
-        rows.append(f"| **{label}** | {when} | {items} |")
+    for nm in sorted(c["nm_loot"], key=lambda n: (order.get(n, 99), n)):
+        t = c["nm_loot"][nm]
+        rows.append(f"| **{_pretty_nm(nm)}** | {namelist(t['rare'])} | {namelist(t['uncommon'])} |")
+
+    common = ", ".join(sorted(names.get(i, f"item #{i}") for i in c["nm_common"]))
+    rows.append("")
+    rows.append(
+        f"**Shared common tier** (quality 0–59 — every Voidwalker also rolls these "
+        f"standard crafting materials): {common}")
     return "\n".join(rows)
 
 
@@ -355,8 +389,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     text = src.read_text(encoding="utf-8", errors="replace")
     c = _parse(text)
 
-    # Resolve the loot pool's item ids to names for the drops table.
-    loot_ids = {i for tier in c["loot"].values() for i in tier}
+    # Resolve every loot item id (per-NM rare/uncommon + shared common + fallback).
+    loot_ids: set[int] = set(c["nm_common"])
+    for t in c["nm_loot"].values():
+        loot_ids |= set(t["rare"]) | set(t["uncommon"])
+    for tier in c["loot"].values():
+        loot_ids |= set(tier)
     names = _item_name_map(repo_root, loot_ids)
 
     page = docs_dir / "endgame" / "voidwatch.md"
@@ -366,11 +404,11 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ("voidwatch-lights", _render_lights(c)),
         ("voidwatch-strata", _render_strata(c)),
         ("voidwatch-rifts", _render_rifts(c)),
-        ("voidwatch-loot", _render_loot(c, names)),
+        ("voidwatch-loot", _render_nm_loot(c, names)),
         ("voidwatch-atmacite", _render_atmacite(c)),
     ]
     written = sum(1 for marker, content in blocks if write_between_markers(page, marker, content))
     print(f"[voidwatch] {written}/{len(blocks)} marker block(s) written "
           f"(strata={len(c['strata'])}, rifts={len(c['rifts'])}, "
-          f"loot={sum(len(v) for v in c['loot'].values())}, "
+          f"nm_loot={len(c['nm_loot'])}, common={len(c['nm_common'])}, "
           f"named={len(names)}, perks={len(c['atmacite'])})")

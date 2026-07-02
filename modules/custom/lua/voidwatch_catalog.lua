@@ -144,6 +144,61 @@ C.QUALITY_RARE_AT     = 92   -- d100 (+ red bias) >= this -> rare
 C.QUALITY_UNCOMMON_AT = 60   -- >= this -> uncommon, else common
 C.WHITE_BONUS_RARE_AT = 3    -- Pearl lights >= this -> a guaranteed bonus rare roll
 
+-- ── Per-NM loot (retail-authentic, from the fork's own mob_droplist) ─────────
+-- Each Voidwalker rolls its OWN rare (signature GEAR / chase) + uncommon
+-- (signature MATERIAL + the shared consumables); the quality tier (d100 shaped by
+-- Lights) still picks which of the three tables the Pyxis opens. Item ids verified
+-- against the live VNM droplists (dropids 3168-3186). C.nmLoot(name) resolves an
+-- NM's table, falling back per-tier to the generic C.LOOT / shared common pool.
+--
+-- COMMON tier = the shared standard VNM crafting pool (C.NM_COMMON) that every
+-- Voidwalker with a material table drops at retail -- authentic, so it is shared.
+-- Retail note: the Tier-I trigger NMs (Gorehound, Gjenganger, Raker_Bee) and the
+-- fork-stub Aglaophotis have NO retail droplist; they get the shared pools + a
+-- modest valuable (Philosopher's Stone / Sattva Ring) so every NM has a full table.
+C.NM_COMMON =
+{
+    703, 700, 887, 702, 895, 902, 653, 644, 737, 745, 746, 866, 645, 654, 738,
+    823, 1132, 859, 830, 1116, 1122, 844, 1465, 942,
+    1255, 1256, 1257, 1258, 1259, 1260, 1261, 1262,
+}
+C.NM_LOOT =
+{
+    -- Rich pools (retail Tier-III Voidwalkers): gear + signature material.
+    Krabkatoa    = { rare = { 11502, 11632 },              uncommon = { 2884, 2879, 4172, 4174, 4173, 4175 } },
+    Blobdingnag  = { rare = { 11631, 11585 },              uncommon = { 2876, 2882, 4172, 4174, 4173, 4175 } },
+    Dawon        = { rare = { 15859, 16151 },              uncommon = { 2570, 4172, 4174, 4173, 4175 } },
+    Lord_Ruthven = { rare = { 11628, 15953 },              uncommon = { 2883, 2877, 4172, 4174, 4173, 4175 } },
+    Yilbegan     = { rare = { 11629, 11633, 14162, 19248 },uncommon = { 2878, 4172, 4174, 4173, 4175 } },
+    -- Single-gear pools (retail Tier-II): the signature equip + shared consumables.
+    Yacumama     = { rare = { 11586 },                     uncommon = { 4172, 4174, 4173, 4175 } },
+    Farruca_Fly  = { rare = { 11635 },                     uncommon = { 4172, 4174, 4173, 4175 } },
+    Skuld        = { rare = { 11544 },                     uncommon = { 4172, 4174, 4173, 4175 } },
+    Capricornus  = { rare = { 15954 },                     uncommon = { 4172, 4174, 4173, 4175 } },
+    Lamprey_Lord = { rare = { 16054 },                     uncommon = { 4172, 4174, 4173, 4175 } },
+    Jyeshtha     = { rare = { 15955 },                     uncommon = { 4172, 4174, 4173, 4175 } },
+    Feuerunke    = { rare = { 16056 },                     uncommon = { 4172, 4174, 4173, 4175 } },
+    Tammuz       = { rare = { 16307 },                     uncommon = { 4172, 4174, 4173, 4175 } },
+    Erebus       = { rare = { 11587 },                     uncommon = { 4172, 4174, 4173, 4175 } },
+    Shoggoth     = { rare = { 19245 },                     uncommon = { 4172, 4174, 4173, 4175 } },
+    -- Retail-empty NMs: seeded so every NM has a full table (see note above).
+    Aglaophotis  = { rare = { 15544 },                     uncommon = { 4172, 4174, 4173, 4175 } },
+    Gjenganger   = { rare = { 942 },                       uncommon = { 4172, 4174, 4173, 4175 } },
+    Gorehound    = { rare = { 942 },                       uncommon = { 4172, 4174, 4173, 4175 } },
+    Raker_Bee    = { rare = { 942 },                       uncommon = { 4172, 4174, 4173, 4175 } },
+}
+function C.nmLoot(name)
+    local t = C.NM_LOOT[name]
+    if not t then
+        return { rare = C.LOOT.rare, uncommon = C.LOOT.uncommon, common = C.NM_COMMON }
+    end
+    return {
+        rare     = (t.rare and #t.rare > 0)         and t.rare     or C.LOOT.rare,
+        uncommon = (t.uncommon and #t.uncommon > 0) and t.uncommon or C.LOOT.uncommon,
+        common   = t.common or C.NM_COMMON,
+    }
+end
+
 -- ── Hardcore mechanics (mob_mechanics_library mechCfg, scales by tier) ──────
 -- Stance dance (phys/mag immunity windows) does NOT block Lights -- the weakness
 -- listeners fire on USE, not on damage, so you can keep probing through a stance.

@@ -356,16 +356,17 @@ onRiftCleared = function(player)
         periapt = 1,
         items   = {},
     }
+    local loot  = C.nmLoot(sess.nmName)   -- this NM's own rare/uncommon (+ shared common)
     local rolls = 1 + math.floor(blue / 2) * C.ROLLS_PER_2_BLUE + getAtm(player, 'GREED') * C.ATM.GREED_ROLLS
     for _ = 1, rolls do
         local q = math.random(100) + red * C.QUALITY_PER_RED
-        local tbl = (q >= C.QUALITY_RARE_AT and C.LOOT.rare)
-                 or (q >= C.QUALITY_UNCOMMON_AT and C.LOOT.uncommon)
-                 or C.LOOT.common
+        local tbl = (q >= C.QUALITY_RARE_AT and loot.rare)
+                 or (q >= C.QUALITY_UNCOMMON_AT and loot.uncommon)
+                 or loot.common
         reward.items[#reward.items + 1] = tbl[math.random(#tbl)]
     end
     if white >= C.WHITE_BONUS_RARE_AT then
-        reward.items[#reward.items + 1] = C.LOOT.rare[math.random(#C.LOOT.rare)]
+        reward.items[#reward.items + 1] = loot.rare[math.random(#loot.rare)]
     end
 
     -- Clear report, then drop the chest.
@@ -432,8 +433,9 @@ openRift = function(player, stratumKey)
         player:printToPlayer('[Voidwatch] The rift collapsed before it formed (spawn failed). Voidstone refunded.', SYS)
         return
     end
-    sess.mob   = mob
-    sess.mobId = mob:getID()
+    sess.mob    = mob
+    sess.mobId  = mob:getID()
+    sess.nmName = name                                 -- for per-NM loot at reward time
     sess.trigMap, sess.weakList = nmWeaknesses(name)   -- this NM's specific weakness set
     initLights(sess)
     registerListeners(player)

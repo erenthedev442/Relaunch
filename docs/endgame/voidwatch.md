@@ -149,16 +149,34 @@ Killing the NM opens a **Riftworn Pyxis** whose contents are shaped by your Ligh
 - **Atmacite shards** — 1 per Pearl light, spend at the Atmacite Refiner for permanent perks
 - **3+ Pearl lights** → a guaranteed bonus rare roll
 
-### Riftworn Pyxis loot pool
+### Drops by NM
 
-Every Voidwalker draws from the **same** loot pool — the quality tier your Lights roll decides which table the Pyxis opens from (Cerulean lights add extra rolls). The rare table holds the gear and valuables:
+Each Voidwalker has its **own** drop table (retail-sourced from the fork's droplists). The quality tier your Lights roll decides which of its tables the Pyxis opens — **rare** holds that NM's signature gear and chase items, **uncommon** its signature material plus consumables, and every NM shares the standard **common** crafting pool. Vermillion lights bias toward rare; Cerulean lights add extra rolls.
 
 <!-- DOCGEN:BEGIN id="voidwatch-loot" -->
-| Rarity | Rolled when | Items in the pool |
+| Voidwalker NM | Rare — gear & chase (quality 92+) | Uncommon — materials & consumables (60–91) |
 |---|---|---|
-| **Rare** | quality 92+ — gear & valuables | Agronas Leggings, Galdr Ring, Lucky Coin, Marching Belt, Strigoi Ring, Vile Elixir +1, Zilant Ring |
-| **Uncommon** | quality 60–91 — valuable mats & consumables | Demon Horn, Gold Ingot, Hi-reraiser, Ingot of Befouled Silver, Philosophers Stone, Phoenix Feather, Platinum Ingot, Reraiser, Ruthvens Nail, Square of Raxa, Square of Scarlet Kadife, Vile Elixir |
-| **Common** | quality 0–59 — crafting materials | Chunk of Dark Ore, Chunk of Darksteel Ore, Chunk of Earth Ore, Chunk of Fire Ore, Chunk of Gold Ore, Chunk of Ice Ore, Chunk of Light Ore, Chunk of Lightning Ore, Chunk of Mythril Ore, Chunk of Platinum Ore, Chunk of Water Ore, Chunk of Wind Ore, Coral Fragment, Darksteel Ingot, Ebony Log, Handful of Wyvern Scales, Mahogany Log, Manticore Hide, Mythril Ingot, Petrified Log, Ram Horn, Ram Skin, Slab of Granite, Spool of Gold Thread, Square of Rainbow Cloth, Wyvern Skin |
+| **Krabkatoa** | Acubens Helm, Karka Ring | Krabkatoa Shell, Igneous Barnacle, Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Raker Bee** | Philosophers Stone | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Yacumama** | Backlash Torque | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Farruca Fly** | Alert Ring | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Gorehound** | Philosophers Stone | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Skuld** | Veela Cape | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Blobdingnag** | Blobnag Ring, Beguiling Collar | Muculent Ingot, Baby Blobdingnag, Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Capricornus** | Fierce Belt | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Shoggoth** | Jinx Ampulla | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Dawon** | Succor Ring, Leonine Mask | Pelt of Dawon, Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Jyeshtha** | Fatality Belt | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Lamprey Lord** | Hirudinea Earring | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Feuerunke** | Pagondas Earring | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Gjenganger** | Philosophers Stone | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Tammuz** | Repelling Collar | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Aglaophotis** | Sattva Ring | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Erebus** | Nyx Gorget | Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Lord Ruthven** | Strigoi Ring, Marching Belt | Ruthvens Nail, Ingot of Befouled Silver, Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+| **Yilbegan** | Zilant Ring, Galdr Ring, Agronas Leggings, Lucky Coin | Square of Scarlet Kadife, Reraiser, Vile Elixir, Hi-reraiser, Vile Elixir +1 |
+
+**Shared common tier** (quality 0–59 — every Voidwalker also rolls these standard crafting materials): Chunk of Dark Ore, Chunk of Darksteel Ore, Chunk of Earth Ore, Chunk of Fire Ore, Chunk of Gold Ore, Chunk of Ice Ore, Chunk of Light Ore, Chunk of Lightning Ore, Chunk of Mythril Ore, Chunk of Platinum Ore, Chunk of Water Ore, Chunk of Wind Ore, Coral Fragment, Darksteel Ingot, Demon Horn, Ebony Log, Gold Ingot, Handful of Wyvern Scales, Mahogany Log, Manticore Hide, Mythril Ingot, Petrified Log, Philosophers Stone, Phoenix Feather, Platinum Ingot, Ram Horn, Ram Skin, Slab of Granite, Spool of Gold Thread, Square of Rainbow Cloth, Square of Raxa, Wyvern Skin
 <!-- DOCGEN:END id="voidwatch-loot" -->
 
 ## Atmacite Refiner
