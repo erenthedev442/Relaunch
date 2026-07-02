@@ -17,6 +17,7 @@ The catalog is normally gitignored, so this generator runs against
 from __future__ import annotations
 
 import json
+import math
 import re
 from pathlib import Path
 
@@ -445,6 +446,29 @@ def _drop_cell(sources: _DropList) -> str:
     return f"<details><summary>{top_str}</summary>{rest}</details>"
 
 
+# The five Augment Tier roll bands (2026-06-30 tier revamp). MUST mirror
+# TIER_SLICES in modules/custom/lua/Augment_Moogle.lua.
+_TIER_BANDS = [(0, 5), (6, 11), (12, 17), (18, 24), (25, 31)]
+
+
+def _band_cell(base: int, mult, disp, max_boost: int, band_idx: int, cat_tier: int) -> str:
+    """One 'T{n} ×5' table cell: the FULL 5-CATALYST STACK's value range when
+    rolled at that Augment Tier. Mirrors the Moogle math per slot --
+    floor((base + min(roll, maxBoost)) * mult / disp + 0.5) -- times 5 slots.
+    A band below the catalyst's own tier can never be rolled -> em-dash."""
+    if (band_idx + 1) < max(cat_tier, 1):
+        return "—"
+    lo_roll, hi_roll = _TIER_BANDS[band_idx]
+    m = mult if mult and mult > 1 else 1
+    d = disp if disp and disp > 1 else 1
+
+    def slot(roll: int) -> int:
+        return int(math.floor((base + min(roll, max_boost)) * m / d + 0.5))
+
+    lo, hi = slot(lo_roll) * 5, slot(hi_roll) * 5
+    return str(lo) if lo == hi else f"{lo}–{hi}"
+
+
 def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] | None = None) -> str:
     lines: list[str] = []
     total = sum(len(rows) for _, rows in groups)
@@ -456,6 +480,9 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] |
         f"Cost is **10,000 gil flat per trade** plus the catalyst itself. "
         f"Every line is **rolled** within your [Augment Tier's band](augment-sage.md) "
         f"— higher tiers roll strictly higher values. "
+        f"The **T1–T5 columns** show the value range of a **full 5-catalyst stack** "
+        f"rolled at that Augment Tier (divide by 5 for one catalyst); an — means that "
+        f"catalyst can't be traded below its own tier. "
         f"The **Cap** column is the hard engine ceiling for that stat where one exists "
         f"(e.g. Haste caps at 25%, damage-taken floors at -50%), or **no cap** for additive stats._"
     )
@@ -469,12 +496,15 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] |
         )
         lines.append("")
 
-    # Build a flat list per tier: (category, item_id, aug_id, label)
+    # Build a flat list per tier, keeping the value fields so the table can
+    # render each Augment Tier's rolled band (2026-06-30 tier revamp).
     by_tier: dict[int, list[tuple]] = {}
     for category, rows in groups:
         for row in rows:
-            item_id, aug_id, label, _base, _mult, _disp, _max_boost, tier = row
-            by_tier.setdefault(tier, []).append((category, item_id, aug_id, label))
+            item_id, aug_id, label, base, mult, disp, max_boost, tier = row
+            by_tier.setdefault(tier, []).append(
+                (category, item_id, aug_id, label, base, mult, disp, max_boost)
+            )
 
     for tier_num, tier_heading, tier_desc in _TIER_INFO:
         tier_rows = by_tier.get(tier_num, [])
@@ -484,13 +514,16 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] |
         lines.append("")
         lines.append(tier_desc)
         lines.append("")
-        tier_gap = sum(1 for _, iid, _, _ in tier_rows if iid in gap_set)
+        tier_gap = sum(1 for row in tier_rows if row[1] in gap_set)
         if tier_gap > 0:
             lines.append(f"_({tier_gap}/{len(tier_rows)} catalysts in this tier need GM spawn)_")
             lines.append("")
-        lines.append("| Augment | Catalyst | Drops from | Cap | Affinity Category |")
-        lines.append("|---|---|---|:--:|---|")
-        for category, item_id, aug_id, label in tier_rows:
+        lines.append(
+            "| Augment | Catalyst | Drops from "
+            "| T1 ×5 | T2 ×5 | T3 ×5 | T4 ×5 | T5 ×5 | Cap | Affinity Category |"
+        )
+        lines.append("|---|---|---|--:|--:|--:|--:|--:|:--:|---|")
+        for category, item_id, aug_id, label, base, mult, disp, max_boost in tier_rows:
             name = item_names.get(item_id, f"item_{item_id}")
             readable = _format_item_name(name)
             if name.startswith("item_") and name == f"item_{item_id}":
@@ -504,10 +537,15 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] |
                 drop_src = _drop_cell(drops.get(item_id, []))
             else:
                 drop_src = "—"
+            band_cells = " | ".join(
+                _band_cell(base, mult, disp, max_boost, band_idx, tier_num)
+                for band_idx in range(5)
+            )
             lines.append(
                 f"| {_escape_md(_truncate_label(label))} "
                 f"| {display} "
                 f"| {drop_src} "
+                f"| {band_cells} "
                 f"| {cap} "
                 f"| {_escape_md(category)} |"
             )
