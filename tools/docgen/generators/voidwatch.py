@@ -46,6 +46,45 @@ def _pretty_nm(name: str) -> str:
     return name.replace("_", " ")
 
 
+# Field-zone tokens whose apostrophes the enum drops; fix the ones Voidwatch uses.
+_ZONE_PRETTY = {
+    "The_Sanctuary_of_ZiTah": "The Sanctuary of Zi'Tah",
+    "RoMaeve":                "Ro'Maeve",
+    "RuAun_Gardens":          "Ru'Aun Gardens",
+    "Behemoths_Dominion":     "Behemoth's Dominion",
+}
+
+
+def _zone_name(token: str) -> str:
+    return _ZONE_PRETTY.get(token, token.replace("_", " "))
+
+
+# Loot is stored as raw item ids; resolve to names from sql/item_basic.sql
+# (the internal name titleized — same source/convention as the drop_finder page).
+_ITEM_LOWER = {"of", "the", "no", "a", "an", "and", "in"}
+_BASIC_RE = re.compile(r"INSERT INTO `item_basic` VALUES \((\d+),\d+,'([^']*)'")
+
+
+def _item_display(internal: str) -> str:
+    parts = internal.split("_")
+    return " ".join(
+        w if (i > 0 and w in _ITEM_LOWER) else w.capitalize()
+        for i, w in enumerate(parts)
+    )
+
+
+def _item_name_map(repo_root: Path, needed: set[int]) -> dict[int, str]:
+    p = resolve_source(repo_root, "sql/item_basic.sql")
+    if p is None or not needed:
+        return {}
+    out: dict[int, str] = {}
+    for m in _BASIC_RE.finditer(p.read_text(encoding="utf-8", errors="replace")):
+        iid = int(m.group(1))
+        if iid in needed:
+            out[iid] = _item_display(m.group(2))
+    return out
+
+
 # ---------------------------------------------------------------------------
 # Parsing
 
@@ -100,6 +139,12 @@ def _parse(text: str) -> dict:
         r"function\s+C\.atmCost\s*\(\s*nextLevel\s*\)\s*return\s+nextLevel\s*\*\s*(\d+)", text, 3)
     c["atmacite"] = _parse_atmacite(section(text, "C.ATMACITE"))
 
+    # ── Rift placements (zone + coords) and the shared Pyxis loot pool ──
+    c["rifts"] = _parse_rifts(section(text, "C.RIFTS"))
+    c["loot"] = _parse_loot_pool(section(text, "C.LOOT"))
+    c["rare_at"]     = _int(r"C\.QUALITY_RARE_AT\s*=\s*(\d+)", text, 92)
+    c["uncommon_at"] = _int(r"C\.QUALITY_UNCOMMON_AT\s*=\s*(\d+)", text, 60)
+
     return c
 
 
@@ -142,6 +187,38 @@ def _parse_atmacite(block: str) -> list[dict]:
         block,
     ):
         out.append({"name": m.group(1), "desc": m.group(2), "max": int(m.group(3))})
+    return out
+
+
+def _parse_rifts(block: str) -> list[dict]:
+    """Each rift: { zone, x, y, z } from C.RIFTS."""
+    out: list[dict] = []
+    for m in re.finditer(
+        r"zone\s*=\s*'([^']+)'\s*,\s*x\s*=\s*(-?[\d.]+)\s*,\s*y\s*=\s*(-?[\d.]+)\s*,\s*z\s*=\s*(-?[\d.]+)",
+        block,
+    ):
+        out.append({"zone": m.group(1), "x": float(m.group(2)),
+                    "y": float(m.group(3)), "z": float(m.group(4))})
+    return out
+
+
+def _parse_loot_pool(block: str) -> dict[str, list[int]]:
+    """C.LOOT.common/uncommon/rare -> id lists. Word-boundary anchors keep
+    `common` from matching inside `uncommon`; comments are stripped first."""
+    block = re.sub(r"--[^\n]*", "", block)
+    out: dict[str, list[int]] = {}
+    for tier in ("common", "uncommon", "rare"):
+        m = re.search(rf"\b{tier}\s*=\s*\{{([^}}]*)\}}", block)
+        out[tier] = [int(x) for x in re.findall(r"\d+", m.group(1))] if m else []
+    return out
+
+
+def _zone_stratum_map(strata: list[dict]) -> dict:
+    """zone token -> its stratum dict (name + roster)."""
+    out = {}
+    for s in strata:
+        for z in s["zones"]:
+            out[z] = s
     return out
 
 
@@ -231,6 +308,42 @@ def _render_atmacite(c: dict) -> str:
     return "\n".join(rows)
 
 
+def _render_rifts(c: dict) -> str:
+    """Every rift by zone with its map coordinates and the Voidwalker NMs that
+    can emerge there (the NM is drawn from the zone's stratum roster). Ordered by
+    stratum tier so the list reads easiest-first."""
+    zmap = _zone_stratum_map(c["strata"])
+    rows = [
+        "| Stratum | Zone | Rift coordinates (X, Y, Z) | Voidwalker NMs (one emerges) |",
+        "|---|---|---|---|",
+    ]
+    for r in sorted(c["rifts"],
+                    key=lambda r: (zmap[r["zone"]]["base"] if r["zone"] in zmap else 99,
+                                   r["zone"])):
+        s = zmap.get(r["zone"])
+        stratum = s["name"] if s else "—"
+        nms = " · ".join(_pretty_nm(n) for n in s["roster"]) if s else "—"
+        coords = f"{_g(r['x'])}, {_g(r['y'])}, {_g(r['z'])}"
+        rows.append(f"| {stratum} | **{_zone_name(r['zone'])}** | {coords} | {nms} |")
+    return "\n".join(rows)
+
+
+def _render_loot(c: dict, names: dict[int, str]) -> str:
+    """The shared Riftworn Pyxis pool. All Voidwalkers roll from the same three
+    quality tiers; the tier is picked by the d100 quality roll (Vermillion bias)."""
+    tiers = [
+        ("rare",     "Rare",     f"quality {c.get('rare_at', 92)}+ — gear & valuables"),
+        ("uncommon", "Uncommon", f"quality {c.get('uncommon_at', 60)}–{c.get('rare_at', 92) - 1} — valuable mats & consumables"),
+        ("common",   "Common",   f"quality 0–{c.get('uncommon_at', 60) - 1} — crafting materials"),
+    ]
+    rows = ["| Rarity | Rolled when | Items in the pool |", "|---|---|---|"]
+    for key, label, when in tiers:
+        ids = c["loot"].get(key, [])
+        items = ", ".join(sorted(names.get(i, f"item #{i}") for i in ids)) or "—"
+        rows.append(f"| **{label}** | {when} | {items} |")
+    return "\n".join(rows)
+
+
 # ---------------------------------------------------------------------------
 
 def generate(repo_root: Path, docs_dir: Path) -> None:
@@ -242,15 +355,22 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     text = src.read_text(encoding="utf-8", errors="replace")
     c = _parse(text)
 
+    # Resolve the loot pool's item ids to names for the drops table.
+    loot_ids = {i for tier in c["loot"].values() for i in tier}
+    names = _item_name_map(repo_root, loot_ids)
+
     page = docs_dir / "endgame" / "voidwatch.md"
     blocks = [
         ("voidwatch-economy", _render_economy(c)),
         ("voidwatch-scaling", _render_scaling(c)),
         ("voidwatch-lights", _render_lights(c)),
         ("voidwatch-strata", _render_strata(c)),
+        ("voidwatch-rifts", _render_rifts(c)),
+        ("voidwatch-loot", _render_loot(c, names)),
         ("voidwatch-atmacite", _render_atmacite(c)),
     ]
     written = sum(1 for marker, content in blocks if write_between_markers(page, marker, content))
     print(f"[voidwatch] {written}/{len(blocks)} marker block(s) written "
-          f"(lights={len(c['light_order'])}, strata={len(c['strata'])}, "
-          f"perks={len(c['atmacite'])})")
+          f"(strata={len(c['strata'])}, rifts={len(c['rifts'])}, "
+          f"loot={sum(len(v) for v in c['loot'].values())}, "
+          f"named={len(names)}, perks={len(c['atmacite'])})")

@@ -29,6 +29,45 @@ Planar Rifts are clickable objects scattered across **30 overworld zones** — o
 
 The rift battle runs for up to **30 minutes**. If the NM survives, it voids out.
 
+### Rift locations
+
+Every Planar Rift by zone, with its exact map coordinates and the Voidwalker NMs that can emerge there (one is drawn from the zone's stratum roster each time). Coordinates are the in-game `X, Y, Z` — head to the spot and examine the rift.
+
+<!-- DOCGEN:BEGIN id="voidwatch-rifts" -->
+| Stratum | Zone | Rift coordinates (X, Y, Z) | Voidwalker NMs (one emerges) |
+|---|---|---|---|
+| Crimson Stratum | **East Ronfaure** | 183, -20, -315 | Krabkatoa · Yacumama · Raker Bee |
+| Crimson Stratum | **East Sarutabaruta** | -120, -4.879, -415 | Krabkatoa · Yacumama · Raker Bee |
+| Crimson Stratum | **North Gustaberg** | -322, 40, -42 | Krabkatoa · Yacumama · Raker Bee |
+| Crimson Stratum | **South Gustaberg** | 250, -0.018, -640 | Krabkatoa · Yacumama · Raker Bee |
+| Crimson Stratum | **West Ronfaure** | -320, -10, -360 | Krabkatoa · Yacumama · Raker Bee |
+| Crimson Stratum | **West Sarutabaruta** | -441, 4, -357 | Krabkatoa · Yacumama · Raker Bee |
+| Indigo Stratum | **Buburimu Peninsula** | -360, -8, -200 | Farruca Fly · Skuld · Gorehound |
+| Indigo Stratum | **Konschtat Highlands** | -125, 72.046, 720 | Farruca Fly · Skuld · Gorehound |
+| Indigo Stratum | **La Theine Plateau** | -440, -8, 440 | Farruca Fly · Skuld · Gorehound |
+| Indigo Stratum | **Tahrongi Canyon** | 200, -24, -160 | Farruca Fly · Skuld · Gorehound |
+| Indigo Stratum | **Valkurm Dunes** | -75, -0.312, -45 | Farruca Fly · Skuld · Gorehound |
+| Jade Stratum | **Bibiki Bay** | -120, 0.3, -629 | Blobdingnag · Shoggoth · Capricornus |
+| Jade Stratum | **Jugner Forest** | -325, 0, -124 | Blobdingnag · Shoggoth · Capricornus |
+| Jade Stratum | **Meriphataud Mountains** | -282, 16, 602 | Blobdingnag · Shoggoth · Capricornus |
+| Jade Stratum | **Pashhow Marshlands** | -420, 24.14, -230 | Blobdingnag · Shoggoth · Capricornus |
+| White Stratum | **Batallia Downs** | -320, -16, -42 | Lamprey Lord · Jyeshtha · Dawon |
+| White Stratum | **Rolanberry Fields** | -360, 8, 279 | Lamprey Lord · Jyeshtha · Dawon |
+| White Stratum | **Sauromugue Champaign** | -245, 7.75, 245 | Lamprey Lord · Jyeshtha · Dawon |
+| Ashen Stratum | **Qufim Island** | -120, -19.304, 375 | Gjenganger · Feuerunke · Tammuz |
+| Ashen Stratum | **Western Altepa Desert** | -170, 0.001, 327 | Gjenganger · Feuerunke · Tammuz |
+| Ashen Stratum | **Yuhtunga Jungle** | -242, 0.55, 405 | Gjenganger · Feuerunke · Tammuz |
+| Hyacinth Stratum | **Attohwa Chasm** | 361, 21, 222 | Aglaophotis · Erebus · Gorehound |
+| Hyacinth Stratum | **Beaucedine Glacier** | -135, -60.5, -200 | Aglaophotis · Erebus · Gorehound |
+| Hyacinth Stratum | **Lufaise Meadows** | -234, -15, 125 | Aglaophotis · Erebus · Gorehound |
+| Hyacinth Stratum | **Misareaux Coast** | 267, -15, 222 | Aglaophotis · Erebus · Gorehound |
+| Hyacinth Stratum | **Ro'Maeve** | -114, -8, 44 | Aglaophotis · Erebus · Gorehound |
+| Hyacinth Stratum | **The Sanctuary of Zi'Tah** | -275, 0.2, 46 | Aglaophotis · Erebus · Gorehound |
+| Amber Stratum | **Behemoth's Dominion** | -210, -20.375, 70 | Yilbegan · Lord Ruthven · Erebus |
+| Amber Stratum | **Ru'Aun Gardens** | -117, -40, 436 | Yilbegan · Lord Ruthven · Erebus |
+| Amber Stratum | **Uleguerand Range** | -141, -19, -325 | Yilbegan · Lord Ruthven · Erebus |
+<!-- DOCGEN:END id="voidwatch-rifts" -->
+
 ## Abyssite strata
 
 The 30 rift zones are grouped into **seven abyssite strata**, each with its own starting tier and its own roster of Voidwalker NMs. Higher strata begin harder — your clears within a stratum push its tier up from there.
@@ -109,6 +148,18 @@ Killing the NM opens a **Riftworn Pyxis** whose contents are shaped by your Ligh
     - **0–59** → common (crafting materials)
 - **Atmacite shards** — 1 per Pearl light, spend at the Atmacite Refiner for permanent perks
 - **3+ Pearl lights** → a guaranteed bonus rare roll
+
+### Riftworn Pyxis loot pool
+
+Every Voidwalker draws from the **same** loot pool — the quality tier your Lights roll decides which table the Pyxis opens from (Cerulean lights add extra rolls). The rare table holds the gear and valuables:
+
+<!-- DOCGEN:BEGIN id="voidwatch-loot" -->
+| Rarity | Rolled when | Items in the pool |
+|---|---|---|
+| **Rare** | quality 92+ — gear & valuables | Agronas Leggings, Galdr Ring, Lucky Coin, Marching Belt, Strigoi Ring, Vile Elixir +1, Zilant Ring |
+| **Uncommon** | quality 60–91 — valuable mats & consumables | Demon Horn, Gold Ingot, Hi-reraiser, Ingot of Befouled Silver, Philosophers Stone, Phoenix Feather, Platinum Ingot, Reraiser, Ruthvens Nail, Square of Raxa, Square of Scarlet Kadife, Vile Elixir |
+| **Common** | quality 0–59 — crafting materials | Chunk of Dark Ore, Chunk of Darksteel Ore, Chunk of Earth Ore, Chunk of Fire Ore, Chunk of Gold Ore, Chunk of Ice Ore, Chunk of Light Ore, Chunk of Lightning Ore, Chunk of Mythril Ore, Chunk of Platinum Ore, Chunk of Water Ore, Chunk of Wind Ore, Coral Fragment, Darksteel Ingot, Ebony Log, Handful of Wyvern Scales, Mahogany Log, Manticore Hide, Mythril Ingot, Petrified Log, Ram Horn, Ram Skin, Slab of Granite, Spool of Gold Thread, Square of Rainbow Cloth, Wyvern Skin |
+<!-- DOCGEN:END id="voidwatch-loot" -->
 
 ## Atmacite Refiner
 
