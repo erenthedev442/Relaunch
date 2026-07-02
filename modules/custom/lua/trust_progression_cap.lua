@@ -4,16 +4,20 @@
 -- SUMMON-COUNT progression for trusts: every trust stays learnable from day 1
 -- (Character_Upgrader's grant-all is untouched), but HOW MANY you can field at
 -- once climbs its OWN content ladder -- deliberately DIFFERENT content from
--- the Augment Tier ladder, and all three gates are the server's solo-arena
--- systems ("prove you can fight without a full party to earn a bigger one"):
+-- BOTH the Augment Tier gates (NM kills / HL rank / Voidspire+GM / Divergence
+-- / Maat) AND the five Prime Weapon trials (Abyssea collectibles / Endless
+-- Tower / HL voucher / Job Mastery / Aht Urhgan currencies):
 --
---   fresh character                       -> 2 trusts
---   win 3 Colosseum matches               -> 3 trusts   (Col_Wins)
---   reach Endless Tower floor 10          -> 4 trusts   (Tower_Best_Floor)
---   clear The Gauntlet (all 10 levels)    -> 5 trusts   (Gauntlet_Clears)
+--   fresh character                          -> 2 trusts
+--   earn 1,200 lifetime Unity accolades      -> 3 trusts (Unity_Accolades_Lifetime,
+--                                                ~3 tier-1 Wanted NM kills)
+--   clear a tier-5 Voidwatch rift            -> 4 trusts (Voidwatch_Tier)
+--   raise your Adventuring Fellow to the cap (Lv 120) -> 5 trusts (Fellow_Level)
 --
--- The ladder is CONSECUTIVE (like the augment gates): a Gauntlet clear
--- without the Tower floor still fields 3.
+-- Theme: your allies earn your allies -- hunt with the Concord, close the
+-- rifts, max your companion, and the full trust party follows.
+-- The ladder is CONSECUTIVE (like the augment gates): a capped Fellow without
+-- the Voidwatch tier still fields 3.
 --
 -- HOW: a pre-check in front of retail xi.trust.canCast (scripts/globals/
 -- trust.lua). If the caster's party already fields their cap, block with the
@@ -41,15 +45,26 @@ local m = Module:new('trust_progression_cap')
 
 local BASE_CAP = 2
 
+-- Proper English ordinal (3 -> "3rd", not "3th").
+local function ordinal(n)
+    local ones, tens = n % 10, n % 100
+    if tens >= 11 and tens <= 13 then
+        return n .. 'th'
+    end
+    return n .. (({ [1] = 'st', [2] = 'nd', [3] = 'rd' })[ones] or 'th')
+end
+
 -- Each gate buys the next simultaneous-trust slot. TUNE HERE.
 local TRUST_GATES =
 {
-    { cap = 3, unlock = 'win 3 Colosseum matches',
-      check = function(p) return (p:getCharVar('Col_Wins') or 0) >= 3 end },
-    { cap = 4, unlock = 'reach Endless Tower floor 10',
-      check = function(p) return (p:getCharVar('Tower_Best_Floor') or 0) >= 10 end },
-    { cap = 5, unlock = 'clear The Gauntlet (all 10 levels)',
-      check = function(p) return (p:getCharVar('Gauntlet_Clears') or 0) >= 1 end },
+    { cap = 3, unlock = 'earn 1,200 lifetime Unity accolades (Wanted NM hunts)',
+      check = function(p) return (p:getCharVar('Unity_Accolades_Lifetime') or 0) >= 1200 end },
+    { cap = 4, unlock = 'clear a tier-5 Voidwatch rift',
+      check = function(p) return (p:getCharVar('Voidwatch_Tier') or 0) >= 5 end },
+    -- 120 = the Fellow's level cap (fellow_companion.lua CONFIG.maxLevel);
+    -- keep in sync if the cap changes.
+    { cap = 5, unlock = 'raise your Adventuring Fellow to the level cap (120)',
+      check = function(p) return (p:getCharVar('Fellow_Level') or 0) >= 120 end },
 }
 
 local function trustCap(player)
@@ -95,12 +110,18 @@ m:addOverride('xi.trust.canCast', function(caster, spell, notAllowedTrustIds)
         end
 
         if numTrusts >= cap then
-            caster:messageSystem(xi.msg.system.TRUST_MAXIMUM_NUMBER)
-            local g = nextGate(caster)
-            if g then
-                caster:printToPlayer(string.format(
-                    '[Trusts] You can field %d trusts. Your %dth slot: %s.',
-                    cap, g.cap, g.unlock), xi.msg.channel.SYSTEM_3)
+            -- A trust macro fires canCast once per line, which would flood the
+            -- cap notice; show the pair at most once every few seconds per player.
+            local now = os.time()
+            if now - (caster:getLocalVar('trustCapMsgTs') or 0) >= 6 then
+                caster:setLocalVar('trustCapMsgTs', now)
+                caster:messageSystem(xi.msg.system.TRUST_MAXIMUM_NUMBER)
+                local g = nextGate(caster)
+                if g then
+                    caster:printToPlayer(string.format(
+                        '[Trusts] You can field %d trusts. Your %s slot: %s.',
+                        cap, ordinal(g.cap), g.unlock), xi.msg.channel.SYSTEM_3)
+                end
             end
             return -1
         end

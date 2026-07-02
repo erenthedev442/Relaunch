@@ -108,6 +108,10 @@ local function spawnWantedNm(player, nm)
                     string.format('[Unity] Weekly bonus! %s yields double accolades!', nmDef.label), S)
             end
             killer:addCurrency('unity_accolades', reward)
+            -- Lifetime EARNED accolades (never reduced by shop spending).
+            -- Read by trust_progression_cap.lua's 3rd-trust-slot gate.
+            killer:setCharVar('Unity_Accolades_Lifetime',
+                (killer:getCharVar('Unity_Accolades_Lifetime') or 0) + reward)
             killer:printToPlayer(
                 string.format('[Unity] %s defeated! +%d accolades (total: %d)', nmDef.label,
                     reward, killer:getCurrency('unity_accolades')), S)
