@@ -31,16 +31,78 @@ local CRIT_TOKEN_LEGACY  = 29000   -- old custom 'Maat's Blessing'; still honore
 -- multiplies the resulting stat by N. So 4 darkness spheres giving MP+97
 -- as a 1-catalyst trade now give MP+388 with exdata = 97*3 = 291.
 --
--- BOOST FORMULA (Augment Sage side-quest):
---   mastery   = sage.masteryMult[Augment_Mastery + 1]    -- 1.0 .. 2.0
---   affinity  = hasAffinity(cat) ? affinity.affinityMult : 1.0  -- 1.0 or 1.5
---   crit      = math.random() < sage.critChance[mastery_rank+1] ? 2.0 : 1.0
---   totalMult = mastery * affinity * crit
---   exdata    = base * (count * totalMult - 1)
--- The crit is rolled once per trade and applies to all selections that
--- trade (so the player sees one big "Critical augment!" message rather
--- than per-augment surprises). Affinity is per-augment, since each
--- selection may have a different `cat`.
+-- ROLL FORMULA (2026-06-30 TIER REVAMP -- rolled bands, content-gated):
+--   tier   = augmentTier(player)        -- 1..5, gated by CUSTOM CONTENT (TIER_GATES)
+--   slice  = TIER_SLICES[tier]          -- that tier's band of the 5-bit exdata space
+--   floor  = slice.min + sageRank       -- Sage mastery rank (0-5) raises the floor
+--   roll   = random(floor .. slice.max) -- rolled PER SLOT (each catalyst = own roll)
+--   affinity match (Sage)               -- roll twice, keep the better
+--   crit (sage.critChance by rank; Maat's Cap guarantees) -- slice.max: PERFECT roll
+--   final/slot = (value + roll) * multiplier      (engine math unchanged)
+-- Tier bands never overlap, and T5's ceiling (roll 31) == the old
+-- rank5 x affinity x crit cap -- no power creep vs the previous system.
+-- The crit is rolled once per trade and applies to all slots that trade
+-- (one big "Critical augment!" message). Affinity is per-augment, since
+-- each selection may have a different `cat`.
+
+-----------------------------------
+-- AUGMENT TIER (content progression). Your tier picks the roll band; each
+-- gate is a piece of custom content. LADDERED: tier = highest N with every
+-- gate 2..N passed (so you can't skip ahead).
+-- The catalog's per-catalyst `tier` field is the minimum Augment Tier needed
+-- to TRADE that catalyst (tier-0 catalysts are open to everyone).
+-----------------------------------
+local TIER_SLICES =
+{
+    { min =  0, max =  5 },   -- T1
+    { min =  6, max = 11 },   -- T2
+    { min = 12, max = 17 },   -- T3
+    { min = 18, max = 24 },   -- T4
+    { min = 25, max = 31 },   -- T5
+}
+
+local TIER_GATES =
+{
+    { tier = 2, unlock = 'reach Hunting League Rank 2',
+      check = function(p) return (p:getCharVar('HL_Tier') or 1) >= 2 end },
+    { tier = 3, unlock = 'clear Voidspire floor 10',
+      check = function(p) return (p:getCharVar('Voidspire_Best_Floor') or 0) >= 10 end },
+    { tier = 4, unlock = 'clear a Dynamis - Divergence city',
+      check = function(p) return (p:getCharVar('DivergenceSlots') or 0) >= 1 end },
+    { tier = 5, unlock = "defeat Maat's Echo (Ru'Lude Gardens, !maat)",
+      check = function(p) return (p:getCharVar('Maat_Kills') or 0) >= 1 end },
+}
+
+local function augmentTier(player)
+    local tier = 1
+    for _, g in ipairs(TIER_GATES) do
+        if g.check(player) then
+            tier = g.tier
+        else
+            break
+        end
+    end
+    return tier
+end
+
+-- What unlocks the player's NEXT tier (nil at T5). For gate messages + !augstats.
+local function nextUnlock(tier)
+    for _, g in ipairs(TIER_GATES) do
+        if g.tier == tier + 1 then
+            return g.unlock
+        end
+    end
+    return nil
+end
+
+-- Shared with !augstats (same Lua state; module loads at boot).
+xi.augmentTiers =
+{
+    tierOf     = augmentTier,
+    slices     = TIER_SLICES,
+    gates      = TIER_GATES,
+    nextUnlock = nextUnlock,
+}
 
 -----------------------------------
 -- Per-player state
@@ -312,49 +374,35 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                 return
             end
 
-            -- Read sage rank early so the tier gate can use it.
+            -- Read sage rank early (raises the roll floor + drives crit chance).
             local rank = player:getCharVar('Augment_Mastery') or 0
 
-            -- Tier gate: each catalyst has a minimum Sage rank required.
-            --   tier 0 = free, tier 1 = Initiate, tier 2 = Adept,
-            --   tier 3 = Magus, tier 4 = Sage, tier 5 = Archon.
-            -- Job-specific augments are tier 0; universally powerful ones
-            -- (Haste, DA, TP Bonus, Dmg+, PDT/MDT) are gated at tier 3-4.
-            -- Tier 5 ADDITIONALLY requires a win against Maat's Echo
-            -- (maat_infamy_fight.lua tracks wins in the Maat_Kills charVar).
-            local RANK_NAMES = { 'Unranked', 'Initiate', 'Adept', 'Magus', 'Sage', 'Archon' }
-            local maatKills  = player:getCharVar('Maat_Kills') or 0
+            -- AUGMENT TIER gate (content progression, not Sage rank): your tier
+            -- sets the roll band for every line in this trade, AND each catalyst's
+            -- catalog `tier` is the minimum Augment Tier required to trade it
+            -- (tier 0 = open; the old Maat's-Echo T5 gate is now the T5 ladder step).
+            local playerTier = augmentTier(player)
             for _, itemId in ipairs(catalystOrder) do
                 local def2 = catalog[itemId]
                 local need = def2 and (def2.tier or 0) or 0
-                if need > rank then
-                    local needName = RANK_NAMES[need + 1] or ('rank ' .. need)
-                    local haveName = RANK_NAMES[rank + 1] or ('rank ' .. rank)
+                if need > playerTier then
                     player:printToPlayer(string.format(
-                        '[%s] requires Augment Sage rank %d (%s). Your rank: %d (%s). Speak with the Augment Sage to advance, kupo!',
-                        def2.label, need, needName, rank, haveName),
-                        xi.msg.channel.SYSTEM_3)
-                    return
-                end
-                if need >= 5 and maatKills < 1 then
-                    player:printToPlayer(string.format(
-                        "[%s] is a Tier 5 catalyst -- you must first defeat Maat's Echo (Ru'Lude Gardens, !maat) to prove your mastery, kupo!",
-                        def2.label),
+                        '[%s] requires Augment Tier %d -- yours is %d. Next unlock: %s, kupo!',
+                        def2.label, need, playerTier,
+                        nextUnlock(playerTier) or '???'),
                         xi.msg.channel.SYSTEM_3)
                     return
                 end
             end
 
             -- Read the player's Sage-quest state ONCE for the trade. The
-            -- mastery rank dictates the global multiplier + the crit roll;
+            -- mastery rank raises the roll floor + drives the crit chance;
             -- the affinity bitfield is consulted per-augment because each
             -- selection may belong to a different category.
-            local masteryMult = sage.masteryMult[rank + 1] or 1.0
             local critPct     = sage.critChance[rank + 1]  or 0.0
             -- Maat's Cap (or a legacy Maat's Blessing) guarantees a crit; consumed after delGil on success.
             local usedCritToken = player:getItemCount(CRIT_TOKEN_ID) > 0 or player:getItemCount(CRIT_TOKEN_LEGACY) > 0
             local isCrit        = usedCritToken or (math.random() < critPct)
-            local critMult      = isCrit and 2.0 or 1.0
 
             -- IMPORTANT: the exdata Value field is 5 bits wide (max 31),
             -- defined in src/map/items/exdata/augment_standard.h. Stuffing
@@ -440,27 +488,30 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                 local mult   = (def.mult and def.mult > 1) and def.mult or 1
                 local disp   = (def.disp and def.disp > 1) and def.disp or 1
 
-                local affMult = (def.cat and affinity.hasAffinity(player, def.cat))
-                    and affinity.affinityMult or 1.0
-                local totalMult = masteryMult * affMult * critMult
+                local hasAff = def.cat and affinity.hasAffinity(player, def.cat) or false
 
-                -- Per-slot exdata = the ACHIEVEMENT boost only (Sage mastery x
-                -- affinity x crit), mapped linearly across the full 5-bit range
-                -- (0..EXDATA_VALUE_MAX). It NO LONGER scales off the augment's
-                -- base: a high base (e.g. HP 97) used to blow past 31 the instant
-                -- totalMult rose above ~1.3, pinning the boost and silently
-                -- wasting your rank / affinity / crit. Now the boost is pure
-                -- achievement progress, and each augment's floor + cap come from
-                -- its value+multiplier in sql/augments.sql:
-                --     final/slot = (value + boost) * multiplier
-                --     floor = value*mult  (no achievements)
-                --     cap   = (value+31)*mult  (rank5 + affinity + crit)
-                local maxTotalMult  = (sage.masteryMult[#sage.masteryMult] or 2.0)
-                                        * (affinity.affinityMult or 1.5) * 2.0  -- rank5 x affinity x crit
-                local progress      = (maxTotalMult > 1) and ((totalMult - 1) / (maxTotalMult - 1)) or 0
-                local rawExdata     = math.floor(progress * EXDATA_VALUE_MAX + 0.5)
-                local boostCap      = def.maxBoost and math.min(EXDATA_VALUE_MAX, def.maxBoost) or EXDATA_VALUE_MAX
-                local perSlotExdata = math.min(math.max(rawExdata, 0), boostCap)
+                -- TIER ROLL (per slot). Your Augment Tier's slice of the 5-bit
+                -- space is the band; every catalyst rolls its own number in it:
+                --   floor    = slice.min + Sage mastery rank (0-5)
+                --   affinity = roll twice, keep the better
+                --   crit     = slice.max (a PERFECT roll, all slots this trade)
+                -- Tier bands never overlap, so a T3 line always beats any T2 line.
+                -- maxBoost-capped stats (fixed augments like Treasure Hunter,
+                -- All songs) clamp the roll as before.
+                local slice     = TIER_SLICES[playerTier] or TIER_SLICES[1]
+                local rollFloor = math.min(slice.min + rank, slice.max)
+                local boostCap  = def.maxBoost and math.min(EXDATA_VALUE_MAX, def.maxBoost) or EXDATA_VALUE_MAX
+                local rolls     = {}
+                for _ = 1, count do
+                    local r = math.random(rollFloor, slice.max)
+                    if hasAff then
+                        r = math.max(r, math.random(rollFloor, slice.max))
+                    end
+                    if isCrit then
+                        r = slice.max
+                    end
+                    table.insert(rolls, math.min(r, boostCap))
+                end
 
                 -- Emit ONE augment slot PER CATALYST: 4 catalysts of one type
                 -- write 4 slots of the same augId. The engine sums each slot's
@@ -473,10 +524,10 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                 -- of making the client reject the item, but that was never proven
                 -- (the confirm-menu byte overflow, now fixed, was the real cause of
                 -- the "lost gear"). Re-testing the 4-slot path per owner request.
-                for _ = 1, count do
+                for _, r in ipairs(rolls) do
                     table.insert(exAugsBySlot, {
                         id    = def.augId,
-                        value = perSlotExdata,
+                        value = r,
                         cat   = def.cat,
                     })
                 end
@@ -510,15 +561,25 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                 --   live values from augment_catalog.lua (disp divides stored-xN mods
                 --   like damage-taken /100 back to a meaningful number). Show it so
                 --   the trade message matches reality, not the old flat label number.
-                local perSlotVal = math.floor((base + perSlotExdata) * mult / disp + 0.5)
-                local valStr     = (count > 1)
-                    and string.format('  ->  %d/slot x%d = %d total', perSlotVal, count, perSlotVal * count)
-                    or  string.format('  ->  %d', perSlotVal)
-                local boostStr   = (boostCap > 0)
-                    and string.format('  [boost %d/%d]', perSlotExdata, boostCap)
+                local vals, total = {}, 0
+                for _, r in ipairs(rolls) do
+                    local v = math.floor((base + r) * mult / disp + 0.5)
+                    table.insert(vals, tostring(v))
+                    total = total + v
+                end
+                local valStr = (count > 1)
+                    and string.format('  ->  %s = %d total', table.concat(vals, '+'), total)
+                    or  string.format('  ->  %s', vals[1])
+                local rollStr = (boostCap > 0)
+                    and string.format('  [T%d roll%s %s/%d%s]',
+                        playerTier,
+                        count > 1 and 's' or '',
+                        table.concat(rolls, ','),
+                        math.min(slice.max, boostCap),
+                        hasAff and ' +affinity' or '')
                     or  ''
 
-                local label = string.format('%s%s%s', def.label, valStr, boostStr)
+                local label = string.format('%s%s%s', def.label, valStr, rollStr)
                 table.insert(labelSummary, label)
                 table.insert(catalystsHeld, { id = itemId, qty = count })
 
@@ -539,7 +600,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
             -- Surface the crit and any boosts to the player BEFORE they
             -- confirm, so they know what they're committing to.
             if isCrit then
-                player:printToPlayer('** Critical augment! ** Catalyst potency doubled for this trade.',
+                player:printToPlayer('** Critical augment! ** PERFECT rolls -- every line hits the top of your tier band.',
                     xi.msg.channel.SYSTEM_3)
             end
 

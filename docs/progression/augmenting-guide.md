@@ -17,7 +17,7 @@ This means **any** gear can become best-in-slot. That ring with no useful stats?
 
 Let's add some **Attack** to a piece of gear. (Any stat works the same way — this is just an example.)
 
-1. **Farm the catalysts.** Every catalyst **drops from one specific monster** (~50% per kill) — catalysts are **no longer bought for gil**. The "Attack" catalyst is **Black Tiger Hide**; kill its assigned mob until you have **5×**. Which catalysts you can farm scales with your progression — see [Catalyst tiers](#catalyst-tiers-what-unlocks-when) below.
+1. **Farm the catalysts.** Every catalyst **drops from one specific monster** (~50% per kill) — catalysts are **no longer bought for gil**. The "Attack" catalyst is **Black Tiger Hide**; kill its assigned mob until you have **5×**. Which catalysts you can trade scales with your progression — see [Catalyst tiers](#catalyst-tiers-what-you-can-trade) below.
 2. **Have 10,000 gil** in your inventory (the Augment Moogle's flat trade cost, no matter how many catalysts).
 3. **Go to <!--npc:augment_moogle-->Leafallia<!--/npc-->** and find the **Augment Moogle** (it's in the row of moogles).
 4. **Trade** the gear piece **+ your 5 catalysts** to the Moogle. It shows you what's about to be applied.
@@ -28,46 +28,44 @@ That's it. You just augmented your first piece. 🎉
 !!! warning "Don't panic when the numbers look weird"
     The in-game **item examine window will show garbled/negative values** on augmented gear — that's a known client display quirk, **the stats are really there.** To see your *true* augment values, type **`!augstats`**. (For total gear stats use `!getstats offensive` / `defensive` / `base`.)
 
-## Why your first augment feels small — the most important thing to understand
+## Every augment is a ROLL — the most important thing to understand
 
-A brand-new augment lands at its **floor** (the minimum value). That Attack line might only be **+2 per slot** at first. **That's intentional, not broken.**
+Every line the Moogle writes is **rolled** inside your **Augment Tier's band**. Your tier (1–5) is earned through **custom content**, and each tier's band sits strictly above the one below it — a fresh character rolls small numbers, an endgame character rolls huge ones, **on the exact same catalyst**:
 
-on the Relaunch server, augment power is **earned** through the **[Augment Sage](augment-sage.md)** (the NPC right next to the Moogle). As you progress with him, *the exact same catalyst* writes bigger and bigger numbers — that +2/slot Attack climbs all the way to **+64/slot** (i.e. **+320 Attack** on a 5-slot piece). So:
-
-> **Augment early, augment often, and re-augment the same gear as you grow.** Your gear gets stronger every time you re-stamp it after a Sage rank-up.
-
-## How to make them stronger (maximizing)
-
-Three things multiply your augment power — stack all three to hit the ceiling:
-
-| Booster | What it is | How to get it |
+| Augment Tier | Roll band (of 0–31) | How you unlock it |
 |---|---|---|
-| **Sage Mastery rank** | Ranks 1→5; the global multiplier (×1.2 → ×2.0) and your crit chance (5% → 20%) | Unlocks automatically as you reach the required Hunting League Rank / Prestige Level milestones — nothing is consumed |
-| **Category affinity** | A +50% bonus for one stat family | Reach **Hunting League Rank 3**, then register the affinity at the Sage with **1,000 Hunt Marks** + that category's **signature NM trophy** (consumed) |
-| **Critical augment** | A per-trade roll that **doubles** the boost | Happens randomly each trade (chance rises with your rank). A **Maat's Blessing** (from [Maat's Challenge](../endgame/maats-challenge.md)) *guarantees* a crit on your next trade. |
+| **T1** | 0–5 | everyone starts here |
+| **T2** | 6–11 | reach **Hunting League Rank 2** |
+| **T3** | 12–17 | clear **[Voidspire](../endgame/voidspire.md) floor 10** |
+| **T4** | 18–24 | clear a **[Dynamis - Divergence](../endgame/dynamis-divergence.md) city** |
+| **T5** | 25–31 | defeat **Maat's Echo** ([Maat's Challenge](../endgame/maats-challenge.md), `!maat`) |
 
-A fresh augment sits at the floor; a **rank-5, affinity-unlocked, critical** augment hits the cap. The [Augment Sage page](augment-sage.md) has the full rank table and NM list.
+The ladder is **consecutive** — your tier is the highest step you've cleared in order. That +2/slot Attack roll at Tier 1 climbs all the way to **+64/slot** at a max Tier-5 roll (i.e. **+320 Attack** on a 5-slot piece). So:
 
-## Catalyst tiers: what unlocks when
+> **Augment early, augment often, and re-stamp the same gear each time you climb a tier.** Any T3 roll beats every T2 roll — re-rolling after a tier-up is always an upgrade. Within a tier, re-trade to fish for the top of the band.
 
-Every augment belongs to a **tier (T0–T4)**. Higher tiers are stronger, and their catalysts drop from **tougher monsters** — so you naturally farm bigger augments as your character grows:
+## How to roll higher (maximizing)
 
-| Tier | Opens up at | Catalysts drop from |
+Three things improve your rolls — stack all three to hit the ceiling:
+
+| Booster | What it does | How to get it |
 |---|---|---|
-| **T0** | Day 1 — any character | low-level monsters |
-| **T1** | Hunting League **Rank 3** | mid-level monsters |
-| **T2** | Hunting League **Rank 5** | high-level monsters |
-| **T3** | **Prestige** progression | Prestige-tier (Nightmare Court) bosses |
-| **T4** | Endgame | Shinryu- / Abyssea-tier NMs |
+| **Sage Mastery rank** | Ranks 1→5 **raise the roll floor** (+1 per rank within your band) and your crit chance (5% → 30%) | Unlocks automatically as you reach the required Hunting League Rank / Prestige Level milestones — nothing is consumed |
+| **Category affinity** | **Roll twice, keep the better** for that stat family | Reach **Hunting League Rank 3**, then register the affinity at the Sage with **1,000 Hunt Marks** + that category's **signature NM trophy** (consumed) |
+| **Critical augment** | A **PERFECT roll** — every line in the trade lands at the top of your band | Happens randomly each trade (chance rises with your rank). A **Maat's Cap** (from [Maat's Challenge](../endgame/maats-challenge.md)) *guarantees* a crit on your next trade. |
 
-You don't *buy* a tier — you **progress your character** (Hunting League Rank, then Prestige), and the stronger monsters you can now beat are the ones that drop the higher-tier catalysts. Stack that with [Augment Sage](augment-sage.md) ranks (above) and the same catalyst writes a far bigger number.
+A max-rank, affinity-held **crit at Tier 5** writes the absolute cap: `(base + 31) × multiplier` per slot. The [Augment Sage page](augment-sage.md) has the full formula, rank table, and NM list.
+
+## Catalyst tiers: what you can trade
+
+Separately from the roll band, each **catalyst** has a tier (T0–T5) — the minimum Augment Tier required to trade it. T0/T1 catalysts are open to everyone; the universally-powerful stats (Haste, Triple Attack, damage-taken reductions...) sit at T3–T5, so the strongest *stats* and the strongest *rolls* unlock together as you clear content. The [catalog](augments.md#catalyst--augment-catalog) groups every catalyst by tier.
 
 ## Good first moves
 
 - **Pick stats you actually use.** DD? Stack **Attack** and **Accuracy**. Tank? **HP**, **Defense**, and the **−Phys. dmg. taken** catalysts. Caster? **Magic Accuracy** / **Magic Atk**.
 - **Stack one stat for a big swing.** 5× the same catalyst on one piece concentrates the bonus where you want it.
-- **Start the Augment Sage early.** Mastery ranks unlock automatically as you hit Hunting League Rank / Prestige Level milestones — so just *progressing your character* unlocks bigger augments. Don't wait.
-- **Re-augment after every rank-up.** Same gear, same catalysts, bigger numbers.
+- **Start the Augment Sage early.** Mastery ranks unlock automatically as you hit Hunting League Rank / Prestige Level milestones — each rank lifts your worst rolls and raises crit chance. Don't wait.
+- **Re-augment after every tier-up.** Same gear, same catalysts, a strictly higher band — a tier-up re-roll is never a downgrade.
 - **Browse the full catalog** on the [Augment Moogle page](augments.md#catalyst--augment-catalog) — ~300 catalysts across 16 stat families, each with its full per-trade stat values.
 
 ## A few rules to remember

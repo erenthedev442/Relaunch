@@ -129,8 +129,8 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
             'You have been promoted to %s! (rank %d/5)',
             req.title, nextRank), xi.msg.channel.SYSTEM_3)
         player:printToPlayer(string.format(
-            'Your augments are now %.0f%% stronger and crit %.0f%% of trades.',
-            (sage.masteryMult[nextRank + 1] - 1.0) * 100,
+            'Your augment rolls now floor +%d within your tier band and crit (perfect roll) %.0f%% of trades.',
+            nextRank,
             sage.critChance[nextRank + 1] * 100),
             xi.msg.channel.SYSTEM_3)
 
@@ -344,9 +344,18 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
         player:printToPlayer(string.format(
             '[Augment Sage] Rank: %s (%d/5)',
             sage.titleFor(rank), rank), xi.msg.channel.SYSTEM_3)
+        if xi.augmentTiers then
+            local tier  = xi.augmentTiers.tierOf(player)
+            local slice = xi.augmentTiers.slices[tier]
+            local nxt   = xi.augmentTiers.nextUnlock(tier)
+            player:printToPlayer(string.format(
+                '  Augment Tier: %d/5 (rolls %d-%d)%s',
+                tier, slice.min, slice.max,
+                nxt and (' | next: ' .. nxt) or ' | MAX'), xi.msg.channel.SYSTEM_3)
+        end
         player:printToPlayer(string.format(
-            '  Mastery multiplier: %.2fx | Crit chance: %.0f%%',
-            mult, crit * 100), xi.msg.channel.SYSTEM_3)
+            '  Roll floor: +%d within your tier band | Crit chance: %.0f%%',
+            rank, crit * 100), xi.msg.channel.SYSTEM_3)
         player:printToPlayer(string.format(
             '  Lifetime augments: %d | Affinities unlocked: %d/%d',
             count, unlocked, #affinity.affinities), xi.msg.channel.SYSTEM_3)

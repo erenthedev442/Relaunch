@@ -302,40 +302,75 @@ def _render_location(zone: str | None, pos: dict | None) -> str:
     )
 
 
+def _parse_tier_system(moogle_text: str) -> tuple[list[tuple[int, int]], list[tuple[int, str]]]:
+    """Parse TIER_SLICES + TIER_GATES from Augment_Moogle.lua (2026-06-30 tier
+    revamp) so the docs can never drift from the live gates. Returns
+    (slices [(min,max) x5], gates [(tier, unlockText)]); raises if either
+    table is missing/short so _section() keeps the previous published block."""
+    slices = [
+        (int(a), int(b))
+        for a, b in re.findall(r"\{\s*min\s*=\s*(\d+)\s*,\s*max\s*=\s*(\d+)\s*\}", moogle_text)
+    ][:5]
+    gates = [
+        (int(t), sq if sq is not None and sq != "" else dq)
+        for t, sq, dq in re.findall(
+            r"\{\s*tier\s*=\s*(\d+)\s*,\s*unlock\s*=\s*(?:'([^']+)'|\"([^\"]+)\")",
+            moogle_text,
+        )
+    ]
+    if len(slices) != 5 or len(gates) != 4:
+        raise ValueError(
+            f"tier tables not parsed (slices={len(slices)}, gates={len(gates)}) -- "
+            "did TIER_SLICES/TIER_GATES change shape in Augment_Moogle.lua?"
+        )
+    return slices, gates
+
+
 def _render_formula(
-    mastery: list[float],
+    slices:  list[tuple[int, int]],
+    gates:   list[tuple[int, str]],
     crit:    list[float],
-    affinity_mult: float,
 ) -> str:
-    if not mastery or not crit:
+    if not crit:
         return "_Formula tables not parsed from the catalog._"
-    max_total = mastery[-1] * affinity_mult * 2.0
+    band_str = " | ".join(f"T{i + 1} {a}–{b}" for i, (a, b) in enumerate(slices))
     lines = [
-        "Every successful augment runs through this math at trade time. The three",
-        "Sage ingredients combine into an **achievement boost of 0–31** that is",
-        "written onto every augment slot in the trade:",
+        "Every augment line is **rolled** at trade time. Your **Augment Tier**",
+        "(1–5, gated by custom content) picks a band of the 0–31 roll space, and",
+        "every catalyst in the trade rolls its own number inside that band:",
         "",
         "```",
-        "mastery   = masteryMult[Augment_Mastery + 1]      -- from Sage rank",
-        f"affinity  = hasAffinity(category) ? {affinity_mult:.1f} : 1.0     -- from registered affinities",
-        "crit_pct  = critChance[Augment_Mastery + 1]       -- chance per trade",
-        "crit      = random() < crit_pct ? 2.0 : 1.0",
+        "tier   = your Augment Tier (content ladder below)",
+        f"band   = {band_str}",
         "",
-        "totalMult = mastery * affinity * crit",
-        f"progress  = (totalMult - 1) / ({max_total:.1f} - 1)        -- 0.0 .. 1.0",
-        "boost     = round(progress * 31)                  -- written per slot",
+        "floor  = band.min + sageRank              -- mastery rank lifts bad rolls",
+        "roll   = random(floor .. band.max)        -- rolled PER SLOT",
+        "affinity held (category match)  ->  roll twice, keep the better",
+        f"crit ({crit[0]*100:.0f}%–{crit[-1]*100:.0f}% by rank; Maat's Cap guarantees)  ->  roll = band.max (PERFECT)",
         "",
-        "per_slot  = (base + boost) * multiplier           -- the engine formula",
+        "per_slot = (base + roll) * multiplier     -- the engine formula",
         "```",
         "",
-        "**Floor** (rank 0, no affinity, no crit): boost = 0, so each slot lands at",
-        "`base × multiplier` — the augment's minimum value.",
+        "**The tier ladder** — each step is custom content; your tier is the highest",
+        "step you've cleared **consecutively** (you can't skip ahead):",
+        "",
+        "| Tier | Roll band | Unlock |",
+        "|---:|---|---|",
+        f"| 1 | {slices[0][0]}–{slices[0][1]} | open to everyone |",
+    ]
+    for t, unlock in gates:
+        a, b = slices[t - 1]
+        lines.append(f"| {t} | {a}–{b} | {unlock} |")
+    lines += [
+        "",
+        "**Floor** (T1, rank 0): a roll can land 0 — `base × multiplier`, the",
+        "augment's minimum value.",
         "",
         (
-            f"**Cap** (rank {len(mastery) - 1}, affinity held, crit lands): "
-            f"`{mastery[-1]} × {affinity_mult} × 2.0 = {max_total:.1f}` maxes the boost at **31**, "
-            "so each slot lands at `(base + 31) × multiplier` — the augment's ceiling. "
-            "The [catalog table](augments.md#catalyst--augment-catalog) lists every "
+            "**Ceiling** (T5 + a max roll): `(base + 31) × multiplier` — identical to "
+            "the old rank-5 + affinity + crit cap, so existing gear is never power-crept. "
+            "Tier bands never overlap: any T3 roll beats every T2 roll. The "
+            "[catalog table](augments.md#catalyst--augment-catalog) lists every "
             "augment's Fresh (floor) and Max (cap) values per trade size."
         ),
     ]
@@ -350,21 +385,22 @@ def _render_ranks(
     if not ranks:
         return "_Rank chain not parsed from the catalog._"
     lines = [
-        "| Rank | Title | Mastery × | Crit chance | Hunting League Rank | Prestige Level |",
+        "| Rank | Title | Roll floor | Crit chance | Hunting League Rank | Prestige Level |",
         "|---:|---|---:|---:|---:|---:|",
     ]
-    # Row 0 = unranked starting state.
+    # Row 0 = unranked starting state. "Roll floor" = the rank is ADDED to the
+    # bottom of your tier's roll band (2026-06-30 tier revamp), lifting the
+    # worst possible roll; crit = a perfect roll (band max).
     lines.append(
-        f"| 0 | Unranked | {mastery[0]:.2f}x | {crit[0]*100:.0f}% | — | — |"
+        f"| 0 | Unranked | +0 | {crit[0]*100:.0f}% | — | — |"
     )
     for r in ranks:
         idx = r["rank"]
-        mult = mastery[idx] if idx < len(mastery) else mastery[-1]
         cpct = crit[idx]    if idx < len(crit)    else crit[-1]
         hl   = str(r["hlRank"]) if r["hlRank"] else "—"
         pl   = str(r["prestigeLevel"]) if r["prestigeLevel"] else "—"
         lines.append(
-            f"| {idx} | {r['title']} | {mult:.2f}x | {cpct*100:.0f}% | {hl} | {pl} |"
+            f"| {idx} | {r['title']} | +{idx} | {cpct*100:.0f}% | {hl} | {pl} |"
         )
     lines.append("")
     lines.append(
@@ -385,8 +421,9 @@ def _render_affinities(
     if not affs:
         return "_Affinity rows not parsed from the catalog._"
     lines = [
-        f"Holding an affinity multiplies augments **in that category** by "
-        f"**{aff_mult:.1f}×**. Affinities stack with Sage Mastery and crit. "
+        f"Holding an affinity gives augments **in that category** roll "
+        f"advantage: the Moogle **rolls twice and keeps the better** result. "
+        f"It stacks with the Sage-rank roll floor and crits. "
         f"Each NM drops a unique trophy; register the affinity at the Augment "
         f"Sage's _Register NM Affinity_ menu — it requires **Hunting League "
         f"Rank {rank_req}** and costs **{mark_cost:,} Hunt Marks**, and the "
@@ -408,17 +445,19 @@ def _render_affinities(
 # =========================================================================
 
 def generate(repo_root: Path, docs_dir: Path) -> None:
-    sage_src = resolve_source(repo_root, "modules/custom/lua/augment_sage_catalog.lua")
-    aff_src  = resolve_source(repo_root, "modules/custom/lua/augment_affinity_catalog.lua")
-    cat_src  = resolve_source(repo_root, "modules/custom/lua/augment_catalog.lua")
+    sage_src   = resolve_source(repo_root, "modules/custom/lua/augment_sage_catalog.lua")
+    aff_src    = resolve_source(repo_root, "modules/custom/lua/augment_affinity_catalog.lua")
+    cat_src    = resolve_source(repo_root, "modules/custom/lua/augment_catalog.lua")
+    moogle_src = resolve_source(repo_root, "modules/custom/lua/Augment_Moogle.lua")
 
     if sage_src is None or aff_src is None:
         print("[augment_sage] skip: sage/affinity catalogs not found")
         return
 
-    sage_text = sage_src.read_text(encoding="utf-8", errors="replace")
-    aff_text  = aff_src.read_text(encoding="utf-8", errors="replace")
-    cat_text  = cat_src.read_text(encoding="utf-8", errors="replace") if cat_src else ""
+    sage_text   = sage_src.read_text(encoding="utf-8", errors="replace")
+    aff_text    = aff_src.read_text(encoding="utf-8", errors="replace")
+    cat_text    = cat_src.read_text(encoding="utf-8", errors="replace") if cat_src else ""
+    moogle_text = moogle_src.read_text(encoding="utf-8", errors="replace") if moogle_src else ""
 
     # Light parsers (regex match-or-none, no schema regression risk).
     zone     = _parse_zone_id(sage_text)
@@ -454,6 +493,6 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             print(f"[augment_sage] {marker}: skipped (markers not found in {page.name})")
 
     _section("sage-location",   lambda: _render_location(zone, pos))
-    _section("sage-formula",    lambda: _render_formula(mastery, critPct, aff_mult))
+    _section("sage-formula",    lambda: _render_formula(*_parse_tier_system(moogle_text), critPct))
     _section("sage-ranks",      lambda: _render_ranks(_parse_ranks(sage_text), mastery, critPct))
     _section("sage-affinities", lambda: _render_affinities(_parse_affinities(aff_text), counts, aff_mult, aff_rank, aff_marks))

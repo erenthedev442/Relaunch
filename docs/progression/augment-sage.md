@@ -21,27 +21,37 @@ The **Augment Sage** is the side-quest progression layer on top of the [Augment 
 ## How the boost is calculated
 
 <!-- DOCGEN:BEGIN id="sage-formula" -->
-Every successful augment runs through this math at trade time. The three
-Sage ingredients combine into an **achievement boost of 0–31** that is
-written onto every augment slot in the trade:
+Every augment line is **rolled** at trade time. Your **Augment Tier**
+(1–5, gated by custom content) picks a band of the 0–31 roll space, and
+every catalyst in the trade rolls its own number inside that band:
 
 ```
-mastery   = masteryMult[Augment_Mastery + 1]      -- from Sage rank
-affinity  = hasAffinity(category) ? 1.5 : 1.0     -- from registered affinities
-crit_pct  = critChance[Augment_Mastery + 1]       -- chance per trade
-crit      = random() < crit_pct ? 2.0 : 1.0
+tier   = your Augment Tier (content ladder below)
+band   = T1 0–5 | T2 6–11 | T3 12–17 | T4 18–24 | T5 25–31
 
-totalMult = mastery * affinity * crit
-progress  = (totalMult - 1) / (6.0 - 1)        -- 0.0 .. 1.0
-boost     = round(progress * 31)                  -- written per slot
+floor  = band.min + sageRank              -- mastery rank lifts bad rolls
+roll   = random(floor .. band.max)        -- rolled PER SLOT
+affinity held (category match)  ->  roll twice, keep the better
+crit (5%–30% by rank; Maat's Cap guarantees)  ->  roll = band.max (PERFECT)
 
-per_slot  = (base + boost) * multiplier           -- the engine formula
+per_slot = (base + roll) * multiplier     -- the engine formula
 ```
 
-**Floor** (rank 0, no affinity, no crit): boost = 0, so each slot lands at
-`base × multiplier` — the augment's minimum value.
+**The tier ladder** — each step is custom content; your tier is the highest
+step you've cleared **consecutively** (you can't skip ahead):
 
-**Cap** (rank 5, affinity held, crit lands): `2.0 × 1.5 × 2.0 = 6.0` maxes the boost at **31**, so each slot lands at `(base + 31) × multiplier` — the augment's ceiling. The [catalog table](augments.md#catalyst--augment-catalog) lists every augment's Fresh (floor) and Max (cap) values per trade size.
+| Tier | Roll band | Unlock |
+|---:|---|---|
+| 1 | 0–5 | open to everyone |
+| 2 | 6–11 | reach Hunting League Rank 2 |
+| 3 | 12–17 | clear Voidspire floor 10 |
+| 4 | 18–24 | clear a Dynamis - Divergence city |
+| 5 | 25–31 | defeat Maat's Echo (Ru'Lude Gardens, !maat) |
+
+**Floor** (T1, rank 0): a roll can land 0 — `base × multiplier`, the
+augment's minimum value.
+
+**Ceiling** (T5 + a max roll): `(base + 31) × multiplier` — identical to the old rank-5 + affinity + crit cap, so existing gear is never power-crept. Tier bands never overlap: any T3 roll beats every T2 roll. The [catalog table](augments.md#catalyst--augment-catalog) lists every augment's Fresh (floor) and Max (cap) values per trade size.
 <!-- DOCGEN:END id="sage-formula" -->
 
 !!! warning "Item examine window shows garbled values — use !augstats"
@@ -52,14 +62,14 @@ per_slot  = (base + boost) * multiplier           -- the engine formula
 Promotion is a free, one-time step per rank — gated on **content milestones**, not consumables. The Sage shows your live progress on the in-game menu (e.g. `HL Rank 2/3`, `Prestige 12/15`). Once you reach the required Hunting League Rank and/or Prestige Level, the `>> Promote to {title}` row becomes the actionable step — pick it to bump your rank. No seals, trophies, or augment counts are spent.
 
 <!-- DOCGEN:BEGIN id="sage-ranks" -->
-| Rank | Title | Mastery × | Crit chance | Hunting League Rank | Prestige Level |
+| Rank | Title | Roll floor | Crit chance | Hunting League Rank | Prestige Level |
 |---:|---|---:|---:|---:|---:|
-| 0 | Unranked | 1.00x | 5% | — | — |
-| 1 | Augment Initiate | 1.20x | 8% | 2 | — |
-| 2 | Augment Adept | 1.40x | 11% | 3 | — |
-| 3 | Augment Magus | 1.60x | 14% | 5 | — |
-| 4 | Augment Sage | 1.80x | 17% | — | 15 |
-| 5 | Augment Archon | 2.00x | 20% | — | 30 |
+| 0 | Unranked | +0 | 5% | — | — |
+| 1 | Augment Initiate | +1 | 10% | 2 | — |
+| 2 | Augment Adept | +2 | 15% | 3 | — |
+| 3 | Augment Magus | +3 | 20% | 5 | 5 |
+| 4 | Augment Sage | +4 | 25% | — | 15 |
+| 5 | Augment Archon | +5 | 30% | — | 30 |
 
 _Ranks are **content milestones** — each unlocks automatically once you reach the listed Hunting League Rank and/or Prestige Level. Nothing is consumed: no seals, trophies, or augment counts._
 <!-- DOCGEN:END id="sage-ranks" -->
@@ -73,7 +83,7 @@ Each augment in the catalog has a thematic category, unlocked by a **signature N
 You can register affinities in any order once you reach Hunting League Rank 3 — each costs 1,000 Hunt Marks plus the NM's trophy. Affinities are permanent once registered. In the menu, **[ ]** means locked, **[!]** means you're holding that NM's trophy and can register it, and **[*]** means already unlocked.
 
 <!-- DOCGEN:BEGIN id="sage-affinities" -->
-Holding an affinity multiplies augments **in that category** by **1.5×**. Affinities stack with Sage Mastery and crit. Each NM drops a unique trophy; register the affinity at the Augment Sage's _Register NM Affinity_ menu — it requires **Hunting League Rank 3** and costs **1,000 Hunt Marks**, and the trophy is consumed.
+Holding an affinity gives augments **in that category** roll advantage: the Moogle **rolls twice and keeps the better** result. It stacks with the Sage-rank roll floor and crits. Each NM drops a unique trophy; register the affinity at the Augment Sage's _Register NM Affinity_ menu — it requires **Hunting League Rank 3** and costs **1,000 Hunt Marks**, and the trophy is consumed.
 
 | Cat | Category | NM | Trophy | Catalysts available |
 |---:|---|---|---|---:|
@@ -96,11 +106,11 @@ Holding an affinity multiplies augments **in that category** by **1.5×**. Affin
 | 17 | Regen | Nidhogg | Handful of Nidhogg's Scales | 3 |
 | 18 | MP | Vrtra | Wyrm Beard | 2 |
 | 19 | Refresh | Tiamat | Wyrm Horn | 2 |
-| 20 | Pet | King_Vinegarroon | Scorpion Stinger | 57 |
-| 21 | Ele Resist | Khimaira | Khimaira Mane | 39 |
+| 20 | Pet | King_Vinegarroon | Scorpion Stinger | 54 |
+| 21 | Ele Resist | Khimaira | Khimaira Mane | 10 |
 | 22 | Status | Cerberus | Cerberus Hide | 1 |
-| 23 | Skills | Absolute_Virtue | Attestation of Virtue | 38 |
-| 24 | WSD+ | Proto-Omega | Omega Ring | 5 |
+| 23 | Skills | Absolute_Virtue | Attestation of Virtue | 39 |
+| 24 | WSD+ | Proto-Omega | Omega Ring | 4 |
 <!-- DOCGEN:END id="sage-affinities" -->
 
 ## Charvars used

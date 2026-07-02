@@ -93,12 +93,16 @@ catalog.ranks =
 }
 
 -----------------------------------
--- MULTIPLIER + CRIT TABLES (indexed by rank, 0..5)
+-- RANK EFFECT TABLES (indexed by rank, 0..5)
 --
---   Augment_Moogle math:
---     mastery   = catalog.masteryMult[Augment_Mastery + 1]
---     critPct   = catalog.critChance[Augment_Mastery + 1]
---     finalMult = mastery * affinityMult * (crit ? 2.0 : 1.0)
+-- 2026-06-30 TIER REVAMP (Augment_Moogle.lua): trades now ROLL within the
+-- player's content-gated Augment Tier band. Mastery rank's effects:
+--   * roll floor = tierSlice.min + rank   (rank 0-5 lifts the worst rolls)
+--   * critPct    = catalog.critChance[Augment_Mastery + 1]
+--       crit = a PERFECT roll (tier band max), once per trade
+--   * affinity (augment_affinity_catalog) = roll twice, keep the better
+-- catalog.masteryMult is RETIRED from the Moogle math (kept only so old
+-- readers don't nil-error; do not tune it expecting an effect).
 --
 -- Index 1 = rank 0 (default, no quest done). Tables are 1-based to match
 -- Lua's typical indexing - add 1 to the charvar when looking up.

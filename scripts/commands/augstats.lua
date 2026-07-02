@@ -69,15 +69,30 @@ commandObj.onTrigger = function(player)
         string.format('=== Augment Stats — %s ===', player:getName()),
         xi.msg.channel.SYSTEM_3)
 
+    -- Augment Tier header (2026-06-30 tier revamp). xi.augmentTiers is
+    -- published by the Augment Moogle module at boot; guard in case the
+    -- module is disabled.
+    if xi.augmentTiers then
+        local tier  = xi.augmentTiers.tierOf(player)
+        local slice = xi.augmentTiers.slices[tier]
+        local nxt   = xi.augmentTiers.nextUnlock(tier)
+        player:printToPlayer(string.format(
+            '  Augment Tier: %d/5  (rolls %d-%d of 31)%s',
+            tier, slice.min, slice.max,
+            nxt and ('  |  next: ' .. nxt) or '  |  MAX'),
+            xi.msg.channel.SYSTEM_3)
+    end
+
     local anyFound = false
 
     for equipSlot = 0, 15 do
         local item = player:getEquippedItem(equipSlot)
         if item ~= nil then
             -- Collect augment slots 0-4 for this item.
-            -- Group by augId: same catalyst type in multiple slots
-            -- adds to count (all slots have the same exdata value).
-            local augGroups = {}   -- augId -> { label, base, val, count }
+            -- Group by augId: same catalyst type in multiple slots appends its
+            -- own rolled value (the 2026-06-30 tier revamp rolls PER SLOT, so
+            -- stacked slots usually carry DIFFERENT values).
+            local augGroups = {}   -- augId -> { label, base, mult, disp, vals = {..} }
             local augOrder  = {}   -- insertion order for stable printing
 
             for augSlot = 0, 4 do
@@ -94,14 +109,11 @@ commandObj.onTrigger = function(player)
                             base  = def and def.base  or 0,
                             mult  = def and def.mult  or 1,
                             disp  = def and def.disp  or 1,
-                            val   = augVal,
-                            count = 1,
+                            vals  = { augVal },
                         }
                         table.insert(augOrder, augId)
                     else
-                        -- Same augId in another slot = another catalyst of the
-                        -- same type; just increment count (val is identical).
-                        augGroups[augId].count = augGroups[augId].count + 1
+                        table.insert(augGroups[augId].vals, augVal)
                     end
                 end
             end
@@ -118,27 +130,35 @@ commandObj.onTrigger = function(player)
 
                 -- Print one line per distinct augment type
                 for _, augId in ipairs(augOrder) do
-                    local g       = augGroups[augId]
+                    local g = augGroups[augId]
                     -- Mirror the engine (item_equipment.cpp:479), then divide by the
                     -- display scale so stored-xN mods (damage taken /100, ...) read as
                     -- the meaningful number:
-                    --   per_slot = (base + boost) * (mult>1 ? mult : 1) / disp
+                    --   per_slot = (base + roll) * (mult>1 ? mult : 1) / disp
                     -- (negative-stat augments show magnitude; label carries sign context)
-                    local m       = (g.mult and g.mult > 1) and g.mult or 1
-                    local d       = (g.disp and g.disp > 1) and g.disp or 1
-                    local perSlot = math.floor((g.base + g.val) * m / d + 0.5)
+                    local m = (g.mult and g.mult > 1) and g.mult or 1
+                    local d = (g.disp and g.disp > 1) and g.disp or 1
+
+                    local parts, rollParts, total = {}, {}, 0
+                    for _, v in ipairs(g.vals) do
+                        local perSlot = math.floor((g.base + v) * m / d + 0.5)
+                        total = total + perSlot
+                        table.insert(parts, tostring(perSlot))
+                        table.insert(rollParts, tostring(v))
+                    end
 
                     local line
-                    if g.count > 1 then
+                    if #g.vals > 1 then
                         line = string.format(
-                            '    %s  ->  %d/slot × %d slots = %d total',
-                            g.label, perSlot, g.count, perSlot * g.count)
-                    elseif g.val > 0 then
+                            '    %s  ->  %s = %d total  (rolls %s)',
+                            g.label, table.concat(parts, '+'), total,
+                            table.concat(rollParts, ','))
+                    elseif g.vals[1] > 0 then
                         line = string.format(
-                            '    %s  ->  %d  (boost %d/31)',
-                            g.label, perSlot, g.val)
+                            '    %s  ->  %d  (roll %d/31)',
+                            g.label, total, g.vals[1])
                     else
-                        line = string.format('    %s  ->  %d', g.label, perSlot)
+                        line = string.format('    %s  ->  %d', g.label, total)
                     end
 
                     player:printToPlayer(line, xi.msg.channel.SYSTEM_3)

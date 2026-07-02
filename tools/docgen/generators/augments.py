@@ -109,31 +109,36 @@ _SHOP_TOKENS = (
 
 
 # Per-tier heading + description rendered into the catalog section.
+# Catalyst tiers = the minimum AUGMENT TIER needed to trade that catalyst
+# (2026-06-30 tier revamp: gates are CONTENT progression, parsed live into the
+# Sage page's formula block; keep these headings in sync with TIER_GATES in
+# modules/custom/lua/Augment_Moogle.lua).
 _TIER_INFO: list[tuple[int, str, str]] = [
     (0, "T0 — Free (Day 1)",
      "No progression gate — available from the first day on any character. These are **job-specific or "
      "class-specific** utilities that only meaningfully help a single playstyle: ability delays, pet-ability "
      "extensions, proc-chance passives most jobs ignore. Catalysts drop from low-level overworld mobs."),
-    (1, "T1 — Initiate (Augment Sage rank 1)",
-     "Opens at **Augment Sage rank 1 (Initiate)**. Practical job abilities and defensive options useful to a wider range "
-     "of jobs — counter/parry/evasion, spell interruption, elemental affinities, shield tech. "
-     "Catalysts drop from mid-level mobs."),
-    (2, "T2 — Adept (Augment Sage rank 2)",
-     "Opens at **Augment Sage rank 2 (Adept)**. Core combat stats that nearly every job cares about — base attributes "
-     "(STR/DEX/VIT/AGI/INT), Accuracy, DEF, Store TP, Fast Cast, Mag.Acc., Snapshot. "
-     "Catalysts drop from high-level mobs."),
-    (3, "T3 — Magus (Augment Sage rank 3)",
-     "Opens at **Augment Sage rank 3 (Magus)**. Damage multipliers and sustain — Double Attack, Crit rate, Magic burst "
-     "damage, Mag.crit hit damage, weapon delay reductions, HP/MP pool expansions, Regen, Refresh. "
-     "Catalysts drop from Prestige-tier (Nightmare Court) bosses."),
-    (4, "T4 — Sage (Augment Sage rank 4)",
-     "Opens at **Augment Sage rank 4 (Sage)**. Top-tier universals that benefit every job without exception: Haste, Triple Attack, "
-     "Quadruple Attack, TP Bonus, critical hit damage, physical/magic/all damage-taken percentage reductions. "
+    (1, "T1 — Open from the start",
+     "Also available from day 1 (every character starts at **Augment Tier 1**). Practical job abilities and "
+     "defensive options useful to a wider range of jobs — counter/parry/evasion, spell interruption, "
+     "elemental affinities, shield tech. Catalysts drop from mid-level mobs."),
+    (2, "T2 — Hunting League Rank 2",
+     "Requires **Augment Tier 2** — reach **Hunting League Rank 2**. Core combat stats that nearly every job "
+     "cares about — base attributes (STR/DEX/VIT/AGI/INT), Accuracy, DEF, Store TP, Fast Cast, Mag.Acc., "
+     "Snapshot. Catalysts drop from high-level mobs."),
+    (3, "T3 — Voidspire floor 10",
+     "Requires **Augment Tier 3** — clear **[Voidspire](../endgame/voidspire.md) floor 10**. Damage multipliers "
+     "and sustain — Double Attack, Crit rate, Magic burst damage, Mag.crit hit damage, weapon delay reductions, "
+     "HP/MP pool expansions, Regen, Refresh. Catalysts drop from Prestige-tier (Nightmare Court) bosses."),
+    (4, "T4 — Dynamis - Divergence clear",
+     "Requires **Augment Tier 4** — clear a **[Dynamis - Divergence](../endgame/dynamis-divergence.md) city**. "
+     "Top-tier universals that benefit every job without exception: Haste, Triple Attack, Quadruple Attack, "
+     "TP Bonus, critical hit damage, physical/magic/all damage-taken percentage reductions. "
      "Catalysts drop from Shinryu- and Abyssea-tier NMs."),
-    (5, "T5 — Archon (Augment Sage rank 5 + a win over Maat's Echo)",
-     "Opens at **Augment Sage rank 5 (Archon)** — the highest rank — **and requires at least one victory in "
-     "[Maat's Challenge](../endgame/maats-challenge.md)**. Highly specialised endgame augments: "
-     "per-element Magic Accuracy, Weapon Skill Damage, Phantom Roll effect, All Songs, Spikes Dmg, and Immunobreak Chance+. "
+    (5, "T5 — Maat's Echo",
+     "Requires **Augment Tier 5** — defeat **Maat's Echo** in [Maat's Challenge](../endgame/maats-challenge.md) "
+     "(`!maat`). Highly specialised endgame augments: per-element Magic Accuracy, Weapon Skill Damage, "
+     "Phantom Roll effect, All Songs, Spikes Dmg, and Immunobreak Chance+. "
      "Catalysts drop from the hardest endgame NMs."),
 ]
 
@@ -447,6 +452,8 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] |
         f"Each drops (~50%) from a specific monster; trade it to the "
         f"**Augment Moogle in Leafallia** (`!leaf`) to apply the augment. "
         f"Cost is **10,000 gil flat per trade** plus the catalyst itself. "
+        f"Every line is **rolled** within your [Augment Tier's band](augment-sage.md) "
+        f"— higher tiers roll strictly higher values. "
         f"The **Cap** column is the hard engine ceiling for that stat where one exists "
         f"(e.g. Haste caps at 25%, damage-taken floors at -50%), or **no cap** for additive stats._"
     )
