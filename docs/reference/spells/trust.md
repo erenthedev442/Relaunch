@@ -1,7 +1,7 @@
 # Trust
 
 !!! info "How many trusts you can field scales with progression"
-    Every trust is learnable from day 1, but the number you can summon at once climbs its own ladder — your allies earn your allies: **2** trusts on a fresh character, **3** after earning 1,200 lifetime [Unity Concord](../../endgame/unity-concord.md) accolades, **4** after clearing a tier-5 [Voidwatch](../../endgame/voidwatch.md) rift, and **5** once your [Adventuring Fellow](../../progression/fellow-companion.md) reaches level 60. (Config: `trust_progression_cap.lua`.)
+    Every trust is learnable from day 1, but the number you can summon at once climbs its own ladder — your allies earn your allies: **2** trusts on a fresh character, **3** after earning 1,200 lifetime [Unity Concord](../../endgame/unity-concord.md) accolades, **4** after clearing a tier-5 [Voidwatch](../../endgame/voidwatch.md) rift, and **5** once your [Adventuring Fellow](../../progression/fellow-companion.md) reaches its level cap (120). (Config: `trust_progression_cap.lua`.)
 
 _Spells are sorted by ID._
 

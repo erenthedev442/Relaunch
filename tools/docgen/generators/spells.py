@@ -215,7 +215,7 @@ PAGE_NOTES = {
         "[Unity Concord](../../endgame/unity-concord.md) accolades, **4** after "
         "clearing a tier-5 [Voidwatch](../../endgame/voidwatch.md) rift, and "
         "**5** once your [Adventuring Fellow](../../progression/fellow-companion.md) "
-        "reaches level 60. (Config: `trust_progression_cap.lua`.)"
+        "reaches its level cap (120). (Config: `trust_progression_cap.lua`.)"
     ),
 }
 

@@ -12,11 +12,11 @@
 --   earn 1,200 lifetime Unity accolades      -> 3 trusts (Unity_Accolades_Lifetime,
 --                                                ~3 tier-1 Wanted NM kills)
 --   clear a tier-5 Voidwatch rift            -> 4 trusts (Voidwatch_Tier)
---   raise your Adventuring Fellow to Lv 60   -> 5 trusts (Fellow_Level)
+--   raise your Adventuring Fellow to the cap (Lv 120) -> 5 trusts (Fellow_Level)
 --
 -- Theme: your allies earn your allies -- hunt with the Concord, close the
--- rifts, raise your companion, and the full trust party follows.
--- The ladder is CONSECUTIVE (like the augment gates): a Lv60 Fellow without
+-- rifts, max your companion, and the full trust party follows.
+-- The ladder is CONSECUTIVE (like the augment gates): a capped Fellow without
 -- the Voidwatch tier still fields 3.
 --
 -- HOW: a pre-check in front of retail xi.trust.canCast (scripts/globals/
@@ -52,8 +52,10 @@ local TRUST_GATES =
       check = function(p) return (p:getCharVar('Unity_Accolades_Lifetime') or 0) >= 1200 end },
     { cap = 4, unlock = 'clear a tier-5 Voidwatch rift',
       check = function(p) return (p:getCharVar('Voidwatch_Tier') or 0) >= 5 end },
-    { cap = 5, unlock = 'raise your Adventuring Fellow to level 60',
-      check = function(p) return (p:getCharVar('Fellow_Level') or 0) >= 60 end },
+    -- 120 = the Fellow's level cap (fellow_companion.lua CONFIG.maxLevel);
+    -- keep in sync if the cap changes.
+    { cap = 5, unlock = 'raise your Adventuring Fellow to the level cap (120)',
+      check = function(p) return (p:getCharVar('Fellow_Level') or 0) >= 120 end },
 }
 
 local function trustCap(player)
