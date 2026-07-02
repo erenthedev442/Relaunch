@@ -66,10 +66,3 @@ _Spells are sorted by ID._
 | 825 | Geo-slow | Geomancy | Earth | 189 | 2.0s | 24.0s | GEO 52 |
 | 826 | Geo-paralysis | Geomancy | Ice | 215 | 2.0s | 24.0s | GEO 72 |
 | 827 | Geo-gravity | Geomancy | Wind | 348 | 2.0s | 24.0s | GEO 92 |
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 64550fc1529d -->
-_Last updated: 2026-06-12 23:32 UTC_
-<!-- DOCGEN:END id="last-updated" -->

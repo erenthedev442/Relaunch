@@ -28,10 +28,3 @@ _Spells are sorted by ID._
 | 307 | Cait Sith | Summoning | Light | — | 1.0s | 60.0s | SMN 1 |
 | 355 | Siren | Summoning | Wind | 7 | 5.0s | 5.0s | SMN 1 |
 | 847 | Atomos | Summoning | Dark | 50 | 5.0s | 60.0s | SMN 75 |
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bc3c3165eb79 -->
-_Last updated: 2026-06-29 04:19 UTC_
-<!-- DOCGEN:END id="last-updated" -->

@@ -119,10 +119,3 @@ _Spells are sorted by ID._
 | 877 | Light Threnody II | Singing | Dark | — | 2.0s | 24.0s | — |
 | 878 | Dark Threnody II | Singing | Light | — | 2.0s | 24.0s | — |
 | 1000 | Aria Of Passion | Singing | None | — | 8.0s | 24.0s | BRD 99 |
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5e5b8fdff81c -->
-_Last updated: 2026-06-18 01:05 UTC_
-<!-- DOCGEN:END id="last-updated" -->

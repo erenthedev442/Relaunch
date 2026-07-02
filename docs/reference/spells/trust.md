@@ -1,5 +1,8 @@
 # Trust
 
+!!! info "How many trusts you can field scales with progression"
+    Every trust is learnable from day 1, but the number you can summon at once climbs the server's content ladder — the same five gates as [Augment Tiers](../../progression/augment-sage.md): **2** trusts on a fresh character, **3** after your first 10 custom NM kills, **4** at Hunting League Rank 5, and **5** once you clear Voidspire floor 10 + every Game Master wave difficulty. (Config: `trust_progression_cap.lua`.)
+
 _Spells are sorted by ID._
 
 **Spells in this category:** 120
@@ -126,10 +129,3 @@ _Spells are sorted by ID._
 | 1017 | Arciela II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
 | 1018 | Iroha II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
 | 1019 | Shantotto II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: de017e851741 -->
-_Last updated: 2026-06-12 23:32 UTC_
-<!-- DOCGEN:END id="last-updated" -->

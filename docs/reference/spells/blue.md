@@ -163,10 +163,3 @@ _Spells are sorted by ID._
 | 741 | Pyric Bulwark | Blue | Light | 50 | 1.5s | 30.0s | BLU 98 |
 | 742 | Bilgestorm | Blue | None | 122 | 1.0s | 30.0s | BLU 99 |
 | 743 | Bloodrake | Blue | None | 99 | 0.5s | 30.0s | BLU 99 |
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9518ac921e67 -->
-_Last updated: 2026-06-12 23:32 UTC_
-<!-- DOCGEN:END id="last-updated" -->

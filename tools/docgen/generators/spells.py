@@ -206,7 +206,18 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
 # Relaunch-specific per-page notes, keyed by page slug (path stem). Rendered as
 # an admonition directly under the page title.
-PAGE_NOTES = {}
+PAGE_NOTES = {
+    "trust": (
+        '!!! info "How many trusts you can field scales with progression"\n'
+        "    Every trust is learnable from day 1, but the number you can summon "
+        "at once climbs the server's content ladder — the same five gates as "
+        "[Augment Tiers](../../progression/augment-sage.md): **2** trusts on a "
+        "fresh character, **3** after your first 10 custom NM kills, **4** at "
+        "Hunting League Rank 5, and **5** once you clear Voidspire floor 10 + "
+        "every Game Master wave difficulty. (Config: "
+        "`trust_progression_cap.lua`.)"
+    ),
+}
 
 
 def _write_group_page(path: Path, label: str, spells: list[dict]) -> None:

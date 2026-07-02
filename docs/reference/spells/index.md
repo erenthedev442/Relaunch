@@ -14,10 +14,3 @@ _Search the site (top right) to find a spell by name._
 | [White Magic](white.md) | 187 |
 | [Geomancy](geomancy.md) | 60 |
 | [Trust](trust.md) | 120 |
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 13bb8e51bdab -->
-_Last updated: 2026-06-18 01:05 UTC_
-<!-- DOCGEN:END id="last-updated" -->

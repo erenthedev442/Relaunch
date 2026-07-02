@@ -193,10 +193,3 @@ _Spells are sorted by ID._
 | 846 | Flurry II | Enhancing | Wind | 80 | 3.0s | 20.0s | RDM 96 |
 | 848 | Reraise IV | Healing | Light | 150 | 7.0s | 60.0s | — |
 | 895 | Temper II | Enhancing | Light | 72 | 7.0s | 36.0s | RDM 99 |
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bdb2723d79a3 -->
-_Last updated: 2026-06-12 23:32 UTC_
-<!-- DOCGEN:END id="last-updated" -->

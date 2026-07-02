@@ -49,10 +49,3 @@ _Spells are sorted by ID._
 | 508 | Yurin Ichi | Ninjutsu | Dark | 2643 | 4.0s | 30.0s | NIN 83 |
 | 509 | Kakka Ichi | Ninjutsu | Light | 2644 | 4.0s | 30.0s | NIN 93 |
 | 510 | Migawari Ichi | Ninjutsu | Earth | 2970 | 3.0s | 120.0s | NIN 88 |
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e55d6c34fb06 -->
-_Last updated: 2026-06-12 23:32 UTC_
-<!-- DOCGEN:END id="last-updated" -->

@@ -196,10 +196,3 @@ _Spells are sorted by ID._
 | 890 | Ionohelix II | Elemental | Thunder | 78 | 7.5s | 60.0s | SCH 99 |
 | 891 | Noctohelix II | Elemental | Dark | 78 | 7.5s | 60.0s | SCH 99 |
 | 892 | Luminohelix II | Elemental | Light | 78 | 7.5s | 60.0s | SCH 99 |
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c0729ec53500 -->
-_Last updated: 2026-06-12 23:32 UTC_
-<!-- DOCGEN:END id="last-updated" -->
