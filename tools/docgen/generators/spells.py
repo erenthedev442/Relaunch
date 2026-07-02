@@ -208,14 +208,15 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 # an admonition directly under the page title.
 PAGE_NOTES = {
     "trust": (
-        '!!! info "How many trusts you can field scales with progression"\n'
+        '!!! info "How many trusts you can field scales with the arena ladder"\n'
         "    Every trust is learnable from day 1, but the number you can summon "
-        "at once climbs the server's content ladder — the same five gates as "
-        "[Augment Tiers](../../progression/augment-sage.md): **2** trusts on a "
-        "fresh character, **3** after your first 10 custom NM kills, **4** at "
-        "Hunting League Rank 5, and **5** once you clear Voidspire floor 10 + "
-        "every Game Master wave difficulty. (Config: "
-        "`trust_progression_cap.lua`.)"
+        "at once climbs its own ladder — the three **solo-arena** systems, in "
+        "order: **2** trusts on a fresh character, **3** after winning 3 "
+        "[Colosseum](../../endgame/colosseum.md) matches, **4** at "
+        "[Endless Tower](../../endgame/endless-tower.md) floor 10, and **5** "
+        "after a full [Gauntlet](../../endgame/the-gauntlet.md) clear. "
+        "Prove you can fight without a full party to earn a bigger one. "
+        "(Config: `trust_progression_cap.lua`.)"
     ),
 }
 

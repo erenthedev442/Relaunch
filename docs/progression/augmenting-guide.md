@@ -42,7 +42,7 @@ Every line the Moogle writes is **rolled** inside your **Augment Tier's band**. 
 
 The ladder is **consecutive** — your tier is the highest step you've cleared in order, and a brand-new character is **Tier 0: the Moogle won't augment at all** until those first 10 NMs fall.
 
-The same ladder also sets **how many trusts you can field at once** — 2 at Tier 0, 3 at Tier 1, 4 at Tier 2, 5 from Tier 3 (see the [Trust page](../reference/spells/trust.md)). That +2/slot Attack roll at Tier 1 climbs all the way to **+64/slot** at a max Tier-5 roll (i.e. **+320 Attack** on a 5-slot piece). So:
+(Trust summon counts climb a **separate** ladder — the solo-arena systems: Colosseum, Endless Tower, and the Gauntlet. See the [Trust page](../reference/spells/trust.md).) That +2/slot Attack roll at Tier 1 climbs all the way to **+64/slot** at a max Tier-5 roll (i.e. **+320 Attack** on a 5-slot piece). So:
 
 > **Augment early, augment often, and re-stamp the same gear each time you climb a tier.** Any T3 roll beats every T2 roll — re-rolling after a tier-up is always an upgrade. Within a tier, re-trade to fish for the top of the band.
 
