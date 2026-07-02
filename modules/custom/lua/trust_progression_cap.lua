@@ -4,16 +4,20 @@
 -- SUMMON-COUNT progression for trusts: every trust stays learnable from day 1
 -- (Character_Upgrader's grant-all is untouched), but HOW MANY you can field at
 -- once climbs its OWN content ladder -- deliberately DIFFERENT content from
--- the Augment Tier ladder, and all three gates are the server's solo-arena
--- systems ("prove you can fight without a full party to earn a bigger one"):
+-- BOTH the Augment Tier gates (NM kills / HL rank / Voidspire+GM / Divergence
+-- / Maat) AND the five Prime Weapon trials (Abyssea collectibles / Endless
+-- Tower / HL voucher / Job Mastery / Aht Urhgan currencies):
 --
---   fresh character                       -> 2 trusts
---   win 3 Colosseum matches               -> 3 trusts   (Col_Wins)
---   reach Endless Tower floor 10          -> 4 trusts   (Tower_Best_Floor)
---   clear The Gauntlet (all 10 levels)    -> 5 trusts   (Gauntlet_Clears)
+--   fresh character                          -> 2 trusts
+--   earn 1,200 lifetime Unity accolades      -> 3 trusts (Unity_Accolades_Lifetime,
+--                                                ~3 tier-1 Wanted NM kills)
+--   clear a tier-5 Voidwatch rift            -> 4 trusts (Voidwatch_Tier)
+--   raise your Adventuring Fellow to Lv 60   -> 5 trusts (Fellow_Level)
 --
--- The ladder is CONSECUTIVE (like the augment gates): a Gauntlet clear
--- without the Tower floor still fields 3.
+-- Theme: your allies earn your allies -- hunt with the Concord, close the
+-- rifts, raise your companion, and the full trust party follows.
+-- The ladder is CONSECUTIVE (like the augment gates): a Lv60 Fellow without
+-- the Voidwatch tier still fields 3.
 --
 -- HOW: a pre-check in front of retail xi.trust.canCast (scripts/globals/
 -- trust.lua). If the caster's party already fields their cap, block with the
@@ -44,12 +48,12 @@ local BASE_CAP = 2
 -- Each gate buys the next simultaneous-trust slot. TUNE HERE.
 local TRUST_GATES =
 {
-    { cap = 3, unlock = 'win 3 Colosseum matches',
-      check = function(p) return (p:getCharVar('Col_Wins') or 0) >= 3 end },
-    { cap = 4, unlock = 'reach Endless Tower floor 10',
-      check = function(p) return (p:getCharVar('Tower_Best_Floor') or 0) >= 10 end },
-    { cap = 5, unlock = 'clear The Gauntlet (all 10 levels)',
-      check = function(p) return (p:getCharVar('Gauntlet_Clears') or 0) >= 1 end },
+    { cap = 3, unlock = 'earn 1,200 lifetime Unity accolades (Wanted NM hunts)',
+      check = function(p) return (p:getCharVar('Unity_Accolades_Lifetime') or 0) >= 1200 end },
+    { cap = 4, unlock = 'clear a tier-5 Voidwatch rift',
+      check = function(p) return (p:getCharVar('Voidwatch_Tier') or 0) >= 5 end },
+    { cap = 5, unlock = 'raise your Adventuring Fellow to level 60',
+      check = function(p) return (p:getCharVar('Fellow_Level') or 0) >= 60 end },
 }
 
 local function trustCap(player)
