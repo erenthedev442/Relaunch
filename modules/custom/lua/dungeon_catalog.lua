@@ -23,6 +23,7 @@ catalog.exit =
 }
 
 catalog.partyRange      = 50
+catalog.runTimeMinutes  = 30  -- per-run time limit displayed to players and in docs
 catalog.completionDelay = 30
 catalog.emptyCloseDelay = 30
 

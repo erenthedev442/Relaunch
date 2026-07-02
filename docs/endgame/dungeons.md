@@ -1,9 +1,11 @@
 # Dungeons
 
-Classic Vana'diel zones become private expedition grounds. Talk to the Dungeon Guide, pick a zone, and your party gets a personal copy of it — sealed off from the rest of the server — with 13 enemies standing between you and the exit.
+<!-- DOCGEN:BEGIN id="dungeon-intro" -->
+Classic Vana'diel zones become private expedition grounds. Talk to the **Dungeon Guide** in **GM Home**, pick a zone, and your party gets a personal copy of it — sealed off from the rest of the server — with **13 enemies** standing between you and the exit.
 
 !!! tip "Quick start"
-    Talk to the **Dungeon Guide** in {{npc:dungeon_guide}}, pick a category and a dungeon, and confirm. Clear all 13 mobs — including the boss — within 30 minutes.
+    Talk to the **Dungeon Guide** in {{npc:dungeon_guide}}, pick a category and a dungeon, and confirm. Clear all 13 mobs — including the boss — within **30 minutes**.
+<!-- DOCGEN:END id="dungeon-intro" -->
 
 ## How to Enter
 

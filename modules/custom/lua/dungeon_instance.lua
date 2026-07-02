@@ -197,7 +197,7 @@ runtime.create = function(dungeonKey)
 
         player:printToPlayer(
             string.format('[Dungeon] Private %s opened. Defeat all %d monsters within %d minutes.',
-                dungeon.label, instance:getLocalVar('DungeonMobsRemaining'), instance:getTimeLimit()),
+                dungeon.label, instance:getLocalVar('DungeonMobsRemaining'), catalog.runTimeMinutes),
             xi.msg.channel.SYSTEM_3)
         player:printToPlayer(
             '[Dungeon] Follow the marked route; the final three living targets will be tracked.',

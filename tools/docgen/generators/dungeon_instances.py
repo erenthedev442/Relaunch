@@ -83,6 +83,7 @@ def _parse(text: str) -> dict:
     raw = zone_raw.group(1) if zone_raw else "GM_Home"
     npc_zone = _FRIENDLY_ZONE.get(raw, raw.replace("_", " "))
 
+    run_time_minutes = _int_val(text, "catalog.runTimeMinutes")
     completion_delay = _int_val(text, "catalog.completionDelay")
 
     # Categories — preserve catalog ordering so the page matches the in-game menu
@@ -104,19 +105,31 @@ def _parse(text: str) -> dict:
         if not block:
             continue
         first, second, boss = _roster_names(block)
+        # Mob count: count { x, y, z, r } coordinate tuples inside buildRoster's route array.
+        # Each tuple is a single spawn point; the route always ends 6+6+1=13 for current dungeons.
+        mob_count = len(re.findall(
+            r"\{\s*-?[\d.]+\s*,\s*-?[\d.]+\s*,\s*-?[\d.]+\s*,\s*[\d.]+\s*\}",
+            block,
+        ))
         dungeons[key] = {
             "label":      _str_val(block, "label"),
             "level":      _int_val(block, "level"),
             "firstName":  first,
             "secondName": second,
             "bossName":   boss,
+            "mobCount":   mob_count,
         }
+
+    # Representative mob count: use max across all dungeons (almost always 13 = 6+6+1)
+    mob_count_repr = max((d["mobCount"] for d in dungeons.values()), default=13)
 
     return {
         "npc_zone":         npc_zone,
+        "run_time_minutes": run_time_minutes,
         "completion_delay": completion_delay,
         "categories":       categories,
         "dungeons":         dungeons,
+        "mob_count":        mob_count_repr,
         "n_total":          sum(len(c["dungeonKeys"]) for c in categories),
     }
 
@@ -124,14 +137,34 @@ def _parse(text: str) -> dict:
 # ---------------------------------------------------------------------------
 # Renderers
 
+def _render_intro(c: dict) -> str:
+    n   = c["mob_count"]
+    rt  = c["run_time_minutes"]
+    zone = c["npc_zone"]
+    time_clause = f" within **{rt} minutes**" if rt else ""
+    return (
+        f"Classic Vana'diel zones become private expedition grounds. "
+        f"Talk to the **Dungeon Guide** in **{zone}**, pick a zone, and your party "
+        f"gets a personal copy of it — sealed off from the rest of the server — "
+        f"with **{n} enemies** standing between you and the exit.\n\n"
+        f"!!! tip \"Quick start\"\n"
+        f"    Talk to the **Dungeon Guide** in {{{{npc:dungeon_guide}}}}, pick a category "
+        f"and a dungeon, and confirm. "
+        f"Clear all {n} mobs — including the boss —{time_clause}."
+    )
+
+
 def _render_overview(c: dict) -> str:
     delay = c["completion_delay"]
+    rt    = c["run_time_minutes"]
+    n     = c["mob_count"]
+    time_clause = f" **{rt} minutes**" if rt else " the time limit"
     return (
         f"Talk to the **Dungeon Guide** in **{c['npc_zone']}** to register. "
         "Choose a category, then a dungeon, and confirm — you must be the party leader "
         "and every member of your group must be in the same zone when you register "
         "(no one in transit, no one already in an active dungeon).\n\n"
-        f"Each run gives your party **30 minutes** to defeat all **13 mobs**, including "
+        f"Each run gives your party{time_clause} to defeat all **{n} mobs**, including "
         f"a final boss. When the last enemy falls a **{delay}-second exit countdown** "
         "begins — use the time to collect drops, then you're automatically warped back."
     )
@@ -160,15 +193,16 @@ def _render_list(c: dict) -> str:
 
 
 def _render_tips(c: dict) -> str:
-    delay = c["completion_delay"]
+    delay    = c["completion_delay"]
+    npc_zone = c["npc_zone"]
     return (
         "**Finding stragglers** — when 3 or fewer mobs remain, the server prints "
         "their map coordinates to your party chat so you can track them down without "
         "sweeping the whole zone.\n\n"
         f"**Exit window** — you have **{delay} seconds** after the last kill before "
         "the warp fires automatically. There's no manual exit command; just wait.\n\n"
-        "**Got stuck?** If you crashed mid-run and can't re-enter the zone on login, "
-        "use `!closedungeon` to force-close your session and return to GM Home. "
+        f"**Got stuck?** If you crashed mid-run and can't re-enter the zone on login, "
+        f"use `!closedungeon` to force-close your session and return to {npc_zone}. "
         "A GM can also run `!closedungeon YourName` to clear a stuck session remotely."
     )
 
@@ -186,6 +220,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
     page = docs_dir / "endgame" / "dungeons.md"
     blocks = [
+        ("dungeon-intro",    _render_intro(c)),
         ("dungeon-overview", _render_overview(c)),
         ("dungeon-list",     _render_list(c)),
         ("dungeon-tips",     _render_tips(c)),
