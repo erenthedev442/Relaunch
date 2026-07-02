@@ -6,7 +6,7 @@ Wanted NM in Escha-Zi'tah, and earn accolades on kill to spend in the shop.
 
 Markers written:
   unity-overview  — tier cost/reward table
-  unity-tiers     — full NM roster grouped by tier
+  unity-tiers     — full NM roster grouped by tier (includes item drops)
   unity-shop      — accolade shop item list
   unity-leaders   — the 11 Unity leaders
 """
@@ -34,6 +34,17 @@ def _parse_kv_ints(text: str) -> dict[int, int]:
     return {int(k): int(v) for k, v in re.findall(r"\[(\d+)\]\s*=\s*(\d+)", text)}
 
 
+def _extract_drops(nm_block: str) -> list[str]:
+    """Extract item names from a drops = { {id=X, name='...'}, ... } block."""
+    drops_m = re.search(r"drops\s*=\s*\{((?:[^{}]|\{[^{}]*\})*)\}", nm_block)
+    if not drops_m:
+        return []
+    results = []
+    for m in re.finditer(r"name\s*=\s*(?:'([^']*)'|\"([^\"]*)\")", drops_m.group(1)):
+        results.append(m.group(1) if m.group(1) is not None else m.group(2))
+    return results
+
+
 def _parse(text: str) -> dict:
     c: dict = {}
 
@@ -59,20 +70,56 @@ def _parse(text: str) -> dict:
         )
     ]
 
-    # NMs: { id=N, name='...', label='...', tier=T, minLv=X, maxLv=Y, groupId=G }
-    nms_blk = section(text, "nms")
+    # NMs: parse each { ... } entry in the nms section as a block.
+    # section() returns the outer { ... } of the nms array; we scan inside it
+    # (starting at position 1) so each NM entry is found at depth 0.
+    nms_blk = section(text, "nms") or ""
     c["nms"] = []
-    for m in re.finditer(
-        r"label\s*=\s*(?:'([^']*)'|\"([^\"]*)\")\s*,\s*tier\s*=\s*(\d)\s*,\s*minLv\s*=\s*(\d+)\s*,\s*maxLv\s*=\s*(\d+)",
-        nms_blk or "",
-    ):
-        label = m.group(1) if m.group(1) is not None else m.group(2)
-        c["nms"].append({
-            "label": label,
-            "tier":  int(m.group(3)),
-            "minLv": int(m.group(4)),
-            "maxLv": int(m.group(5)),
-        })
+    depth = 0
+    start = None
+    i = 1  # skip opening { of the nms array
+    n = max(0, len(nms_blk) - 1)  # stop before closing }
+    while i < n:
+        ch = nms_blk[i]
+        if ch == "-" and i + 1 < n and nms_blk[i + 1] == "-":  # line comment
+            nl = nms_blk.find("\n", i)
+            i = (nl + 1) if nl != -1 else n
+            continue
+        if ch in ("'", '"'):  # quoted string — skip braces inside
+            q = ch
+            i += 1
+            while i < n:
+                if nms_blk[i] == "\\" and i + 1 < n:
+                    i += 2
+                    continue
+                if nms_blk[i] == q:
+                    i += 1
+                    break
+                i += 1
+            continue
+        if ch == "{":
+            if depth == 0:
+                start = i
+            depth += 1
+        elif ch == "}":
+            depth -= 1
+            if depth == 0 and start is not None:
+                block = nms_blk[start:i + 1]
+                lbl_m = re.search(r"label\s*=\s*(?:'([^']*)'|\"([^\"]*)\")", block)
+                tier_m = re.search(r"tier\s*=\s*(\d)", block)
+                minlv_m = re.search(r"minLv\s*=\s*(\d+)", block)
+                maxlv_m = re.search(r"maxLv\s*=\s*(\d+)", block)
+                if lbl_m and tier_m and minlv_m and maxlv_m:
+                    label = lbl_m.group(1) if lbl_m.group(1) is not None else lbl_m.group(2)
+                    c["nms"].append({
+                        "label": label,
+                        "tier":  int(tier_m.group(1)),
+                        "minLv": int(minlv_m.group(1)),
+                        "maxLv": int(maxlv_m.group(1)),
+                        "drops": _extract_drops(block),
+                    })
+                start = None
+        i += 1
 
     c["despawn"] = _int(r"despawnSecs\s*=\s*(\d+)", text, 120)
     return c
@@ -109,11 +156,12 @@ def _render_tiers(c: dict) -> str:
         lines.append(f"### Tier {tier} — {lv_rng}")
         lines.append(f"*Spawn cost: {cost} · Kill reward: {reward} accolades*")
         lines.append("")
-        lines.append("| NM | Level |")
-        lines.append("|---|---:|")
+        lines.append("| NM | Level | Notable Drops (50% each) |")
+        lines.append("|---|---:|---|")
         for nm in tier_nms:
             lv = nm["minLv"] if nm["minLv"] == nm["maxLv"] else f"{nm['minLv']}–{nm['maxLv']}"
-            lines.append(f"| {nm['label']} | {lv} |")
+            drops_str = ", ".join(nm["drops"]) if nm["drops"] else "—"
+            lines.append(f"| {nm['label']} | {lv} | {drops_str} |")
         lines.append("")
     return "\n".join(lines).rstrip()
 
