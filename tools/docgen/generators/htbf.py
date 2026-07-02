@@ -52,6 +52,36 @@ def _zone_name(token: str) -> str:
     return _ZONE_PRETTY.get(token, _titleize(token))
 
 
+# ── Item token -> display name ──────────────────────────────────────────────
+# Loot references items as `xi.item.<TOKEN>` (= the item_basic internal name,
+# uppercased), so a smart titleize matches the real name for almost everything.
+# Lowercase Japanese/English connectives; override the few that need an
+# apostrophe the token can't carry.
+_LOWER_WORDS = {"of", "no", "the", "to", "in", "a", "an", "and", "for"}
+_ITEM_PRETTY = {
+    "COPY_OF_REMS_TALE_CHAPTER_6":  "Copy of Rem's Tale Chapter 6",
+    "COPY_OF_REMS_TALE_CHAPTER_7":  "Copy of Rem's Tale Chapter 7",
+    "COPY_OF_REMS_TALE_CHAPTER_8":  "Copy of Rem's Tale Chapter 8",
+    "COPY_OF_REMS_TALE_CHAPTER_9":  "Copy of Rem's Tale Chapter 9",
+    "COPY_OF_REMS_TALE_CHAPTER_10": "Copy of Rem's Tale Chapter 10",
+}
+
+
+def _item_name(token: str) -> str:
+    if token in _ITEM_PRETTY:
+        return _ITEM_PRETTY[token]
+    parts = token.lower().split("_")
+    return " ".join(
+        w if (i > 0 and w in _LOWER_WORDS) else w.capitalize()
+        for i, w in enumerate(parts)
+    )
+
+
+def _pct(chance: float) -> str:
+    r = round(chance, 1)
+    return f"{int(r)}%" if r == int(r) else f"{r}%"
+
+
 # ── Parse ───────────────────────────────────────────────────────────────────
 
 def _parse(text: str) -> dict:
@@ -146,6 +176,62 @@ def _parse_fights(block: str) -> list[dict]:
     return fights
 
 
+def _top_level_groups(body: str) -> list[str]:
+    """Given a fight's loot body `{ {group1}, {group2} }`, return the top-level
+    `{...}` group substrings. Skips `-- ...` line comments so a `}` inside one
+    can't throw off the depth counter (the loot entries carry no quotes)."""
+    groups: list[str] = []
+    i, n, depth, start = 0, len(body), 0, None
+    while i < n:
+        c = body[i]
+        if c == "-" and i + 1 < n and body[i + 1] == "-":
+            nl = body.find("\n", i)
+            i = n if nl == -1 else nl + 1
+            continue
+        if c == "{":
+            depth += 1
+            if depth == 2:
+                start = i
+        elif c == "}":
+            if depth == 2 and start is not None:
+                groups.append(body[start:i + 1])
+                start = None
+            depth -= 1
+        i += 1
+    return groups
+
+
+_ITEM_RE = re.compile(
+    r"itemId\s*=\s*(?:xi\.item\.(\w+)|0)\s*,\s*weight\s*=\s*(\d+)"
+    r"(?:\s*,\s*amount\s*=\s*(\d+))?"
+)
+
+
+def _parse_loot(text: str) -> dict:
+    """fightKey -> list of groups; each group = list of
+    { token (None = 'drop nothing'), weight, amount }."""
+    # Strip Lua line comments first: some entries carry an inline comment between
+    # `=` and `{` (e.g. `fightLoot.ark_angels_1 =  -- Ark Angel HM`) that would
+    # otherwise break the `= {` match. Safe — this file contains no strings.
+    text = re.sub(r"--[^\n]*", "", text)
+    out: dict = {}
+    for m in re.finditer(r"(?m)^fightLoot\.(\w+)\s*=\s*\{", text):
+        key = m.group(1)
+        body = section(text, f"fightLoot.{key}")
+        if not body:
+            continue
+        groups = []
+        for g in _top_level_groups(body):
+            items = [
+                {"token": tok or None, "weight": int(w), "amount": int(a) if a else 1}
+                for tok, w, a in _ITEM_RE.findall(g)
+            ]
+            if items:
+                groups.append(items)
+        out[key] = groups
+    return out
+
+
 # ── Render ──────────────────────────────────────────────────────────────────
 
 def _render_access(c: dict) -> str:
@@ -217,6 +303,40 @@ def _render_fights(c: dict) -> str:
     return "\n".join(rows)
 
 
+def _render_loot(c: dict, loot: dict) -> str:
+    """One row per fight: the common reward pool (one always drops) and the rare
+    gear pool (a slim per-clear roll). Chances are derived from the loot weights;
+    all three tiers of a fight share the pool."""
+    rows = [
+        "| Battlefield | Common reward (one drops) | Rare gear (chance per clear) |",
+        "|---|---|---|",
+    ]
+    for f in c["fights"]:
+        groups = loot.get(f["key"])
+        if not groups:
+            rows.append(f"| **{f['label']}** | *Tier-scaled crafting materials* | — |")
+            continue
+        common: list[tuple[int, str]] = []
+        rare: list[tuple[int, str]] = []
+        for items in groups:
+            total = sum(it["weight"] for it in items)
+            has_nothing = any(it["token"] is None for it in items)
+            for it in items:
+                if it["token"] is None or total == 0:
+                    continue
+                name = _item_name(it["token"])
+                if it["amount"] > 1:
+                    name += f" ×{it['amount']}"
+                bit = f"{name} ({_pct(it['weight'] / total * 100)})"
+                (rare if has_nothing else common).append((it["weight"], bit))
+        common.sort(key=lambda x: -x[0])
+        rare.sort(key=lambda x: -x[0])
+        common_s = " · ".join(b for _, b in common) or "—"
+        rare_s = " · ".join(b for _, b in rare) or "—"
+        rows.append(f"| **{f['label']}** | {common_s} | {rare_s} |")
+    return "\n".join(rows)
+
+
 # ── Entry point ─────────────────────────────────────────────────────────────
 
 def generate(repo_root: Path, docs_dir: Path) -> None:
@@ -228,15 +348,21 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     text = src.read_text(encoding="utf-8", errors="replace")
     c = _parse(text)
 
+    # Per-fight armoury-crate loot lives in its own file (catalog.fightLoot).
+    loot_src = resolve_source(repo_root, "modules/custom/lua/htbf_loot.lua")
+    loot = _parse_loot(loot_src.read_text(encoding="utf-8", errors="replace")) \
+        if loot_src is not None else {}
+
     page = docs_dir / "endgame" / "high-tier-battlefields.md"
     blocks = [
         ("htbf-access", _render_access(c)),
         ("htbf-gems", _render_gems(c)),
         ("htbf-tiers", _render_tiers(c)),
         ("htbf-fights", _render_fights(c)),
+        ("htbf-loot", _render_loot(c, loot)),
     ]
     written = sum(1 for marker, content in blocks
                   if write_between_markers(page, marker, content))
     print(f"[htbf] {written}/{len(blocks)} marker block(s) written "
           f"(gems={len(c['gem_price'])}, fights={len(c['fights'])}, "
-          f"tiers={len(c['tiers'])})")
+          f"tiers={len(c['tiers'])}, loot={len(loot)})")
