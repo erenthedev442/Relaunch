@@ -112,6 +112,14 @@ local function spawnWantedNm(player, nm)
             -- Read by trust_progression_cap.lua's 3rd-trust-slot gate.
             killer:setCharVar('Unity_Accolades_Lifetime',
                 (killer:getCharVar('Unity_Accolades_Lifetime') or 0) + reward)
+            -- Distinct-NM conquest tally (read by trust_progression_cap.lua's
+            -- 3rd-trust-slot gate). The per-NM flag dedupes so re-kills don't count.
+            local conqFlag = 'UW_Conq_' .. nmDef.id
+            if (killer:getCharVar(conqFlag) or 0) == 0 then
+                killer:setCharVar(conqFlag, 1)
+                killer:setCharVar('Unity_NMs_Conquered',
+                    (killer:getCharVar('Unity_NMs_Conquered') or 0) + 1)
+            end
             killer:printToPlayer(
                 string.format('[Unity] %s defeated! +%d accolades (total: %d)', nmDef.label,
                     reward, killer:getCurrency('unity_accolades')), S)

@@ -9,8 +9,8 @@
 -- Tower / HL voucher / Job Mastery / Aht Urhgan currencies):
 --
 --   fresh character                          -> 2 trusts
---   earn 1,200 lifetime Unity accolades      -> 3 trusts (Unity_Accolades_Lifetime,
---                                                ~3 tier-1 Wanted NM kills)
+--   conquer every Unity Wanted NM (all tiers)-> 3 trusts (Unity_NMs_Conquered,
+--                                                all 56 board NMs, dedup per NM)
 --   clear a tier-5 Voidwatch rift            -> 4 trusts (Voidwatch_Tier)
 --   raise your Adventuring Fellow to the cap (Lv 120) -> 5 trusts (Fellow_Level)
 --
@@ -43,6 +43,10 @@ require('scripts/globals/trust')
 
 local m = Module:new('trust_progression_cap')
 
+-- Total Unity Wanted NMs, derived from the catalog so the "conquer all" gate
+-- auto-tracks roster changes. (Swap `.nms` for a tier-1 filter to soften the gate.)
+local UNITY_TOTAL = #require('modules/custom/lua/unity_wanted_catalog').nms
+
 local BASE_CAP = 2
 
 -- Proper English ordinal (3 -> "3rd", not "3th").
@@ -57,8 +61,8 @@ end
 -- Each gate buys the next simultaneous-trust slot. TUNE HERE.
 local TRUST_GATES =
 {
-    { cap = 3, unlock = 'earn 1,200 lifetime Unity accolades (Wanted NM hunts)',
-      check = function(p) return (p:getCharVar('Unity_Accolades_Lifetime') or 0) >= 1200 end },
+    { cap = 3, unlock = 'conquer every Unity Wanted NM (all tiers)',
+      check = function(p) return (p:getCharVar('Unity_NMs_Conquered') or 0) >= UNITY_TOTAL end },
     { cap = 4, unlock = 'clear a tier-5 Voidwatch rift',
       check = function(p) return (p:getCharVar('Voidwatch_Tier') or 0) >= 5 end },
     -- 120 = the Fellow's level cap (fellow_companion.lua CONFIG.maxLevel);
