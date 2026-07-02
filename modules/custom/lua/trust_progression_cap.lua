@@ -45,6 +45,15 @@ local m = Module:new('trust_progression_cap')
 
 local BASE_CAP = 2
 
+-- Proper English ordinal (3 -> "3rd", not "3th").
+local function ordinal(n)
+    local ones, tens = n % 10, n % 100
+    if tens >= 11 and tens <= 13 then
+        return n .. 'th'
+    end
+    return n .. (({ [1] = 'st', [2] = 'nd', [3] = 'rd' })[ones] or 'th')
+end
+
 -- Each gate buys the next simultaneous-trust slot. TUNE HERE.
 local TRUST_GATES =
 {
@@ -101,12 +110,18 @@ m:addOverride('xi.trust.canCast', function(caster, spell, notAllowedTrustIds)
         end
 
         if numTrusts >= cap then
-            caster:messageSystem(xi.msg.system.TRUST_MAXIMUM_NUMBER)
-            local g = nextGate(caster)
-            if g then
-                caster:printToPlayer(string.format(
-                    '[Trusts] You can field %d trusts. Your %dth slot: %s.',
-                    cap, g.cap, g.unlock), xi.msg.channel.SYSTEM_3)
+            -- A trust macro fires canCast once per line, which would flood the
+            -- cap notice; show the pair at most once every few seconds per player.
+            local now = os.time()
+            if now - (caster:getLocalVar('trustCapMsgTs') or 0) >= 6 then
+                caster:setLocalVar('trustCapMsgTs', now)
+                caster:messageSystem(xi.msg.system.TRUST_MAXIMUM_NUMBER)
+                local g = nextGate(caster)
+                if g then
+                    caster:printToPlayer(string.format(
+                        '[Trusts] You can field %d trusts. Your %s slot: %s.',
+                        cap, ordinal(g.cap), g.unlock), xi.msg.channel.SYSTEM_3)
+                end
             end
             return -1
         end
