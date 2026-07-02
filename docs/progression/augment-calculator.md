@@ -107,9 +107,9 @@ const AUGMENTS=window._augCalcData||[];
 // modules/custom/lua/Augment_Moogle.lua + augment_sage_catalog.lua.
 const TIER_SLICES=[[0,5],[6,11],[12,17],[18,24],[25,31]];
 const TIER_UNLOCKS=[
-  'slay your first custom NM',
-  'Hunting League Rank 2',
-  'Voidspire floor 10',
+  'slay your first 10 custom NMs',
+  'Hunting League Rank 5',
+  'Voidspire floor 10 + all Game Master waves',
   'Dynamis - Divergence city clear',
   "Maat's Echo (!maat)"
 ];

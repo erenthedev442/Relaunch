@@ -72,9 +72,9 @@ The table below lists **which catalyst maps to which augment**, organized by tie
 <!-- DOCGEN:BEGIN id="augment-catalog" -->
 _227 catalyst items across 5 tiers. Each drops (~50%) from a specific monster; trade it to the **Augment Moogle in Leafallia** (`!leaf`) to apply the augment. Cost is **10,000 gil flat per trade** plus the catalyst itself. Every line is **rolled** within your [Augment Tier's band](augment-sage.md) — higher tiers roll strictly higher values. The **Cap** column is the hard engine ceiling for that stat where one exists (e.g. Haste caps at 25%, damage-taken floors at -50%), or **no cap** for additive stats._
 
-### T0 — First NM slain
+### T0 — First 10 NMs slain
 
-Requires **Augment Tier 1** — the Moogle won't augment at all until you **slay your first custom NM** (any Hunting League, Wave Mode, or Voidspire kill). These are **job-specific or class-specific** utilities that only meaningfully help a single playstyle: ability delays, pet-ability extensions, proc-chance passives most jobs ignore. Catalysts drop from low-level overworld mobs.
+Requires **Augment Tier 1** — the Moogle won't augment at all until you **slay your first 10 custom NMs** (Hunting League, Wave Mode, and Voidspire kills all count). These are **job-specific or class-specific** utilities that only meaningfully help a single playstyle: ability delays, pet-ability extensions, proc-chance passives most jobs ignore. Catalysts drop from low-level overworld mobs.
 
 | Augment | Catalyst | Drops from | Cap | Affinity Category |
 |---|---|---|:--:|---|
@@ -98,9 +98,9 @@ Requires **Augment Tier 1** — the Moogle won't augment at all until you **slay
 | Indi Effect Duration | <a class="item-link" href="https://www.ffxiah.com/item/2641" data-img="https://static.ffxiah.com/images/icon/2641.png" target="_blank" rel="noopener">Amoeban Pseudopod</a> | — | no cap | Job-specific niche utilities |
 | Treasure Hunter | <a class="item-link" href="https://www.ffxiah.com/item/908" data-img="https://static.ffxiah.com/images/icon/908.png" target="_blank" rel="noopener">Adamantoise Shell</a> | — | no cap | Job-specific niche utilities |
 
-### T1 — First NM slain
+### T1 — First 10 NMs slain
 
-Requires **Augment Tier 1** — slay your first custom NM. Practical job abilities and defensive options useful to a wider range of jobs — counter/parry/evasion, spell interruption, elemental affinities, shield tech. Catalysts drop from mid-level mobs.
+Requires **Augment Tier 1** — slay your first 10 custom NMs. Practical job abilities and defensive options useful to a wider range of jobs — counter/parry/evasion, spell interruption, elemental affinities, shield tech. Catalysts drop from mid-level mobs.
 
 | Augment | Catalyst | Drops from | Cap | Affinity Category |
 |---|---|---|:--:|---|
@@ -218,9 +218,9 @@ Requires **Augment Tier 1** — slay your first custom NM. Practical job abiliti
 | Geomancy Skill | <a class="item-link" href="https://www.ffxiah.com/item/2212" data-img="https://static.ffxiah.com/images/icon/2212.png" target="_blank" rel="noopener">Gunpowder Swathe</a> | — | no cap | Magic skills |
 | Handbell Skill | <a class="item-link" href="https://www.ffxiah.com/item/2334" data-img="https://static.ffxiah.com/images/icon/2334.png" target="_blank" rel="noopener">Poroggo Hat</a> | — | no cap | Magic skills |
 
-### T2 — Hunting League Rank 2
+### T2 — Hunting League Rank 5
 
-Requires **Augment Tier 2** — reach **Hunting League Rank 2**. Core combat stats that nearly every job cares about — base attributes (STR/DEX/VIT/AGI/INT), Accuracy, DEF, Store TP, Fast Cast, Mag.Acc., Snapshot. Catalysts drop from high-level mobs.
+Requires **Augment Tier 2** — reach **Hunting League Rank 5**. Core combat stats that nearly every job cares about — base attributes (STR/DEX/VIT/AGI/INT), Accuracy, DEF, Store TP, Fast Cast, Mag.Acc., Snapshot. Catalysts drop from high-level mobs.
 
 | Augment | Catalyst | Drops from | Cap | Affinity Category |
 |---|---|---|:--:|---|
@@ -243,9 +243,9 @@ Requires **Augment Tier 2** — reach **Hunting League Rank 2**. Core combat sta
 | Cap. Point +33% | <a class="item-link" href="https://www.ffxiah.com/item/942" data-img="https://static.ffxiah.com/images/icon/942.png" target="_blank" rel="noopener">Philosophers Stone</a> | — | no cap | Exp/Cap points |
 | Weapon Skill Acc | <a class="item-link" href="https://www.ffxiah.com/item/1110" data-img="https://static.ffxiah.com/images/icon/1110.png" target="_blank" rel="noopener">Vial Of Black Beetle Blood</a> | — | no cap | WSD+ |
 
-### T3 — Voidspire floor 10
+### T3 — Voidspire floor 10 + all Game Master waves
 
-Requires **Augment Tier 3** — clear **[Voidspire](../endgame/voidspire.md) floor 10**. Damage multipliers and sustain — Double Attack, Crit rate, Magic burst damage, Mag.crit hit damage, weapon delay reductions, HP/MP pool expansions, Regen, Refresh. Catalysts drop from Prestige-tier (Nightmare Court) bosses.
+Requires **Augment Tier 3** — clear **[Voidspire](../endgame/voidspire.md) floor 10** *and* full-clear **every [Game Master](game-master.md) wave difficulty** (Easy through Nightmare). Damage multipliers and sustain — Double Attack, Crit rate, Magic burst damage, Mag.crit hit damage, weapon delay reductions, HP/MP pool expansions, Regen, Refresh. Catalysts drop from Prestige-tier (Nightmare Court) bosses.
 
 | Augment | Catalyst | Drops from | Cap | Affinity Category |
 |---|---|---|:--:|---|

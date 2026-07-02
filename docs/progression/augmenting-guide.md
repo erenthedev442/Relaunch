@@ -34,13 +34,13 @@ Every line the Moogle writes is **rolled** inside your **Augment Tier's band**. 
 
 | Augment Tier | Roll band (of 0–31) | How you unlock it |
 |---|---|---|
-| **T1** | 0–5 | **slay your first custom NM** (any Hunting League / Wave Mode / Voidspire kill) |
-| **T2** | 6–11 | reach **Hunting League Rank 2** |
-| **T3** | 12–17 | clear **[Voidspire](../endgame/voidspire.md) floor 10** |
+| **T1** | 0–5 | **slay your first 10 custom NMs** (Hunting League / Wave Mode / Voidspire kills all count) |
+| **T2** | 6–11 | reach **Hunting League Rank 5** |
+| **T3** | 12–17 | clear **[Voidspire](../endgame/voidspire.md) floor 10** *and* **every [Game Master](game-master.md) wave difficulty** (Easy → Nightmare) |
 | **T4** | 18–24 | clear a **[Dynamis - Divergence](../endgame/dynamis-divergence.md) city** |
 | **T5** | 25–31 | defeat **Maat's Echo** ([Maat's Challenge](../endgame/maats-challenge.md), `!maat`) |
 
-The ladder is **consecutive** — your tier is the highest step you've cleared in order, and a brand-new character is **Tier 0: the Moogle won't augment at all** until that first NM falls. That +2/slot Attack roll at Tier 1 climbs all the way to **+64/slot** at a max Tier-5 roll (i.e. **+320 Attack** on a 5-slot piece). So:
+The ladder is **consecutive** — your tier is the highest step you've cleared in order, and a brand-new character is **Tier 0: the Moogle won't augment at all** until those first 10 NMs fall. That +2/slot Attack roll at Tier 1 climbs all the way to **+64/slot** at a max Tier-5 roll (i.e. **+320 Attack** on a 5-slot piece). So:
 
 > **Augment early, augment often, and re-stamp the same gear each time you climb a tier.** Any T3 roll beats every T2 roll — re-rolling after a tier-up is always an upgrade. Within a tier, re-trade to fish for the top of the band.
 

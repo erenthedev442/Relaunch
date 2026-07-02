@@ -44,9 +44,9 @@ until the first gate is cleared:
 
 | Tier | Roll band | Unlock |
 |---:|---|---|
-| 1 | 0–5 | slay your first custom NM (Hunting League, Wave Mode, Voidspire...) |
-| 2 | 6–11 | reach Hunting League Rank 2 |
-| 3 | 12–17 | clear Voidspire floor 10 |
+| 1 | 0–5 | slay your first 10 custom NMs (Hunting League, Wave Mode, Voidspire...) |
+| 2 | 6–11 | reach Hunting League Rank 5 |
+| 3 | 12–17 | clear Voidspire floor 10 + every Game Master wave difficulty |
 | 4 | 18–24 | clear a Dynamis - Divergence city |
 | 5 | 25–31 | defeat Maat's Echo (Ru'Lude Gardens, !maat) |
 

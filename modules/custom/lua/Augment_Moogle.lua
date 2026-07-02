@@ -65,12 +65,17 @@ local TIER_SLICES =
 
 local TIER_GATES =
 {
-    { tier = 1, unlock = 'slay your first custom NM (Hunting League, Wave Mode, Voidspire...)',
-      check = function(p) return (p:getCharVar('Custom_NM_Kills') or 0) >= 1 end },
-    { tier = 2, unlock = 'reach Hunting League Rank 2',
-      check = function(p) return (p:getCharVar('HL_Tier') or 1) >= 2 end },
-    { tier = 3, unlock = 'clear Voidspire floor 10',
-      check = function(p) return (p:getCharVar('Voidspire_Best_Floor') or 0) >= 10 end },
+    { tier = 1, unlock = 'slay your first 10 custom NMs (Hunting League, Wave Mode, Voidspire...)',
+      check = function(p) return (p:getCharVar('Custom_NM_Kills') or 0) >= 10 end },
+    { tier = 2, unlock = 'reach Hunting League Rank 5',
+      check = function(p) return (p:getCharVar('HL_Tier') or 1) >= 5 end },
+    -- T3 is a DOUBLE gate: Voidspire depth AND a full clear of every Game
+    -- Master wave difficulty (GM_Wave_Clears bitfield, Easy..Nightmare = 31).
+    { tier = 3, unlock = 'clear Voidspire floor 10 + every Game Master wave difficulty',
+      check = function(p)
+          return (p:getCharVar('Voidspire_Best_Floor') or 0) >= 10
+              and bit.band(p:getCharVar('GM_Wave_Clears') or 0, 31) == 31
+      end },
     { tier = 4, unlock = 'clear a Dynamis - Divergence city',
       check = function(p) return (p:getCharVar('DivergenceSlots') or 0) >= 1 end },
     { tier = 5, unlock = "defeat Maat's Echo (Ru'Lude Gardens, !maat)",

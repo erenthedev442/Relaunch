@@ -371,9 +371,27 @@ endSession = function(player, completed)
             end
         end
 
+        -- Per-difficulty FULL-CLEAR bit (Easy=1, Normal=2, Hard=4, Insane=8,
+        -- Nightmare=16; all five = 31). Stored in the GM_Wave_Clears charvar,
+        -- read by the Augment Moogle's tier gates. Derived from difficultyOrder
+        -- so a new difficulty automatically gets the next bit.
+        local diffBit = 0
+        for di, dname in ipairs(catalog.difficultyOrder) do
+            if dname == sess.difficulty then
+                diffBit = bit.lshift(1, di - 1)
+            end
+        end
+
         for i, recipient in ipairs(recipients) do
             recipient:setCharVar('HL_Points',
                 (recipient:getCharVar('HL_Points') or 0) + bonus)
+
+            if diffBit ~= 0 then
+                local clears = recipient:getCharVar('GM_Wave_Clears') or 0
+                if bit.band(clears, diffBit) == 0 then
+                    recipient:setCharVar('GM_Wave_Clears', bit.bor(clears, diffBit))
+                end
+            end
 
             if i == 1 then
                 -- Session owner gets the full kill-count summary.

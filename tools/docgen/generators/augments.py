@@ -114,21 +114,22 @@ _SHOP_TOKENS = (
 # Sage page's formula block; keep these headings in sync with TIER_GATES in
 # modules/custom/lua/Augment_Moogle.lua).
 _TIER_INFO: list[tuple[int, str, str]] = [
-    (0, "T0 — First NM slain",
-     "Requires **Augment Tier 1** — the Moogle won't augment at all until you **slay your first custom NM** "
-     "(any Hunting League, Wave Mode, or Voidspire kill). These are **job-specific or "
+    (0, "T0 — First 10 NMs slain",
+     "Requires **Augment Tier 1** — the Moogle won't augment at all until you **slay your first 10 custom NMs** "
+     "(Hunting League, Wave Mode, and Voidspire kills all count). These are **job-specific or "
      "class-specific** utilities that only meaningfully help a single playstyle: ability delays, pet-ability "
      "extensions, proc-chance passives most jobs ignore. Catalysts drop from low-level overworld mobs."),
-    (1, "T1 — First NM slain",
-     "Requires **Augment Tier 1** — slay your first custom NM. Practical job abilities and "
+    (1, "T1 — First 10 NMs slain",
+     "Requires **Augment Tier 1** — slay your first 10 custom NMs. Practical job abilities and "
      "defensive options useful to a wider range of jobs — counter/parry/evasion, spell interruption, "
      "elemental affinities, shield tech. Catalysts drop from mid-level mobs."),
-    (2, "T2 — Hunting League Rank 2",
-     "Requires **Augment Tier 2** — reach **Hunting League Rank 2**. Core combat stats that nearly every job "
+    (2, "T2 — Hunting League Rank 5",
+     "Requires **Augment Tier 2** — reach **Hunting League Rank 5**. Core combat stats that nearly every job "
      "cares about — base attributes (STR/DEX/VIT/AGI/INT), Accuracy, DEF, Store TP, Fast Cast, Mag.Acc., "
      "Snapshot. Catalysts drop from high-level mobs."),
-    (3, "T3 — Voidspire floor 10",
-     "Requires **Augment Tier 3** — clear **[Voidspire](../endgame/voidspire.md) floor 10**. Damage multipliers "
+    (3, "T3 — Voidspire floor 10 + all Game Master waves",
+     "Requires **Augment Tier 3** — clear **[Voidspire](../endgame/voidspire.md) floor 10** *and* full-clear "
+     "**every [Game Master](game-master.md) wave difficulty** (Easy through Nightmare). Damage multipliers "
      "and sustain — Double Attack, Crit rate, Magic burst damage, Mag.crit hit damage, weapon delay reductions, "
      "HP/MP pool expansions, Regen, Refresh. Catalysts drop from Prestige-tier (Nightmare Court) bosses."),
     (4, "T4 — Dynamis - Divergence clear",
