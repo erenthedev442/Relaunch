@@ -67,7 +67,7 @@ So a maxed tank reaches **+640 HP on a single body piece**, and a sustain build 
 
 ## Catalyst → augment catalog
 
-The table below lists **which catalyst maps to which augment**, organized by tier (T0–T4). Higher tiers drop from tougher monsters and open up as you progress. The **Cap** column shows the hard in-game ceiling where one exists — see [how scaling works](#how-augment-power-scales) above.
+The table below lists **which catalyst maps to which augment**, organized by tier (T0–T5). Higher tiers drop from tougher monsters and open up as you progress — the top tier (T5) additionally requires a victory in [Maat's Challenge](../endgame/maats-challenge.md). The **Cap** column shows the hard in-game ceiling where one exists — see [how scaling works](#how-augment-power-scales) above.
 
 <!-- DOCGEN:BEGIN id="augment-catalog" -->
 _259 catalyst items across 5 tiers. Each drops (~50%) from a specific monster; trade it to the **Augment Moogle in Leafallia** (`!leaf`) to apply the augment. Cost is **10,000 gil flat per trade** plus the catalyst itself. The **Cap** column is the hard engine ceiling for that stat where one exists (e.g. Haste caps at 25%, damage-taken floors at -50%), or **no cap** for additive stats._

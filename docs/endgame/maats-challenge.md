@@ -3,7 +3,7 @@
 Think you can take on the master? Seek out **Maat's Echo** in **Ru'Lude Gardens** and pay your Infamy for a chance to fight a level-200 incarnation of Maat in the very arena where the Genkai trials once took place — **Waughroon Shrine**. Win, and there's a chance he'll leave behind something that could change the outcome of your next augment.
 
 !!! tip "Summary"
-    Talk to **Maat's Echo** in Ru'Lude Gardens, pay **150 Infamy**, and you'll be teleported to Waughroon Shrine to face a level-200 Maat — now the **single hardest fight on the server**, tuned above the endgame Ascension bosses. Defeat him for a **25% chance** at a **Maat's Blessing** — an item that guarantees your next augment at the Augment Moogle will be a critical. He also has a **0.5% chance** to drop a **Prime Voucher** ([Prime Weapon Trial 3](../progression/prime-trials.md)).
+    Talk to **Maat's Echo** in Ru'Lude Gardens, pay **150 Infamy**, and you'll be teleported to Waughroon Shrine to face a level-200 Maat — now the **single hardest fight on the server**, tuned above the endgame Ascension bosses. Your **first victory permanently unlocks Tier 5 (Archon) augment catalysts** at the Augment Moogle. Defeat him for a **25% chance** at a **Maat's Blessing** — an item that guarantees your next augment at the Augment Moogle will be a critical. He also has a **0.5% chance** to drop a **Prime Voucher** ([Prime Weapon Trial 3](../progression/prime-trials.md)).
 
 <!-- DOCGEN:BEGIN id="maat-stats" -->
 | Stat | Value |
@@ -30,6 +30,10 @@ Maat's Echo stands near the original Maat NPC in **Ru'Lude Gardens**, just to th
 
 !!! info "Bring a crowd"
     Every challenger gets their **own** Maat, claim-locked to them — many people can fight in the shrine at the same time without interfering. Your Maat is yours alone; no one else can tag it, steal it, or help kill it. If you leave or die, your Maat despawns on its own after about 45 seconds.
+
+## The reward: Tier 5 augments unlocked
+
+Your **first win** against Maat's Echo permanently unlocks **Tier 5 (Archon) augment catalysts** at the Augment Moogle. Tier 5 is the top of the catalyst ladder — per-element Magic Accuracy, Weapon Skill Damage, Phantom Roll effect, All Songs, and more — and requires **both** Augment Sage rank 5 (Archon) **and** a Maat victory. See the [augment catalog](../progression/augments.md) for the full Tier 5 list.
 
 ## The reward: Maat's Blessing
 

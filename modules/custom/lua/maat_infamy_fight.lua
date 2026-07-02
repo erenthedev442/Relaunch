@@ -19,6 +19,9 @@
 --      retail Rare/EX item, so it renders correctly on the client).
 --   5. Maat's Cap guarantees a critical augment at the Augment Moogle
 --      and is consumed on that successful augment.
+--   6. The FIRST win (Maat_Kills >= 1) permanently unlocks Tier 5 (Archon)
+--      augment catalysts at the Augment Moogle -- Sage rank 5 alone is no
+--      longer enough (gate lives in Augment_Moogle.lua).
 --
 -- SQL pre-req: sql/zz_maat_crit_token.sql must be applied to the DB.
 -- Deploys: pure Lua. Edits to the NPC / onZoneIn / spawn logic hot-reload on a
@@ -276,6 +279,14 @@ local function spawnMaat(player)
             local elapsed   = (startTime and startTime > 0) and (os.time() - startTime) or 0
             local kills     = (owner:getCharVar('Maat_Kills') or 0) + 1
             owner:setCharVar('Maat_Kills', kills)
+
+            -- First win unlocks Tier 5 (Archon) catalysts at the Augment Moogle
+            -- (the gate reads Maat_Kills -- see Augment_Moogle.lua tier gate).
+            if kills == 1 then
+                owner:printToPlayer(
+                    'Maat acknowledges your mastery! Tier 5 augment catalysts are now unlocked at the Augment Moogle.',
+                    xi.msg.channel.SYSTEM_3)
+            end
             if elapsed > 0 then
                 local best = owner:getCharVar('Maat_Best_Time') or 0
                 if best == 0 or elapsed < best then

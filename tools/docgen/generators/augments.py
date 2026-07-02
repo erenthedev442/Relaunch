@@ -130,8 +130,9 @@ _TIER_INFO: list[tuple[int, str, str]] = [
      "Opens at **Augment Sage rank 4 (Sage)**. Top-tier universals that benefit every job without exception: Haste, Triple Attack, "
      "Quadruple Attack, TP Bonus, critical hit damage, physical/magic/all damage-taken percentage reductions. "
      "Catalysts drop from Shinryu- and Abyssea-tier NMs."),
-    (5, "T5 — Archon (Augment Sage rank 5)",
-     "Opens at **Augment Sage rank 5 (Archon)** — the highest rank. Highly specialised endgame augments: "
+    (5, "T5 — Archon (Augment Sage rank 5 + a win over Maat's Echo)",
+     "Opens at **Augment Sage rank 5 (Archon)** — the highest rank — **and requires at least one victory in "
+     "[Maat's Challenge](../endgame/maats-challenge.md)**. Highly specialised endgame augments: "
      "per-element Magic Accuracy, Weapon Skill Damage, Phantom Roll effect, All Songs, Spikes Dmg, and Immunobreak Chance+. "
      "Catalysts drop from the hardest endgame NMs."),
 ]

@@ -317,10 +317,13 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
 
             -- Tier gate: each catalyst has a minimum Sage rank required.
             --   tier 0 = free, tier 1 = Initiate, tier 2 = Adept,
-            --   tier 3 = Magus, tier 4 = Sage.
+            --   tier 3 = Magus, tier 4 = Sage, tier 5 = Archon.
             -- Job-specific augments are tier 0; universally powerful ones
             -- (Haste, DA, TP Bonus, Dmg+, PDT/MDT) are gated at tier 3-4.
+            -- Tier 5 ADDITIONALLY requires a win against Maat's Echo
+            -- (maat_infamy_fight.lua tracks wins in the Maat_Kills charVar).
             local RANK_NAMES = { 'Unranked', 'Initiate', 'Adept', 'Magus', 'Sage', 'Archon' }
+            local maatKills  = player:getCharVar('Maat_Kills') or 0
             for _, itemId in ipairs(catalystOrder) do
                 local def2 = catalog[itemId]
                 local need = def2 and (def2.tier or 0) or 0
@@ -330,6 +333,13 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                     player:printToPlayer(string.format(
                         '[%s] requires Augment Sage rank %d (%s). Your rank: %d (%s). Speak with the Augment Sage to advance, kupo!',
                         def2.label, need, needName, rank, haveName),
+                        xi.msg.channel.SYSTEM_3)
+                    return
+                end
+                if need >= 5 and maatKills < 1 then
+                    player:printToPlayer(string.format(
+                        "[%s] is a Tier 5 catalyst -- you must first defeat Maat's Echo (Ru'Lude Gardens, !maat) to prove your mastery, kupo!",
+                        def2.label),
                         xi.msg.channel.SYSTEM_3)
                     return
                 end
