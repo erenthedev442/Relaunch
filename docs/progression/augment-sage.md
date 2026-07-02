@@ -37,19 +37,22 @@ crit (5%–30% by rank; Maat's Cap guarantees)  ->  roll = band.max (PERFECT)
 per_slot = (base + roll) * multiplier     -- the engine formula
 ```
 
-**The tier ladder** — each step is custom content; your tier is the highest
-step you've cleared **consecutively** (you can't skip ahead):
+**The tier ladder** — every step (including Tier 1) is custom content; your
+tier is the highest step you've cleared **consecutively** (you can't skip
+ahead). A fresh character is **Tier 0: the Moogle won't augment at all**
+until the first gate is cleared:
 
 | Tier | Roll band | Unlock |
 |---:|---|---|
-| 1 | 0–5 | open to everyone |
+| 1 | 0–5 | slay your first custom NM (Hunting League, Wave Mode, Voidspire...) |
 | 2 | 6–11 | reach Hunting League Rank 2 |
 | 3 | 12–17 | clear Voidspire floor 10 |
 | 4 | 18–24 | clear a Dynamis - Divergence city |
 | 5 | 25–31 | defeat Maat's Echo (Ru'Lude Gardens, !maat) |
 
 **Floor** (T1, rank 0): a roll can land 0 — `base × multiplier`, the
-augment's minimum value.
+augment's minimum value. (At **Tier 0** — before the first gate — the
+Moogle refuses the trade entirely.)
 
 **Ceiling** (T5 + a max roll): `(base + 31) × multiplier` — identical to the old rank-5 + affinity + crit cap, so existing gear is never power-crept. Tier bands never overlap: any T3 roll beats every T2 roll. The [catalog table](augments.md#catalyst--augment-catalog) lists every augment's Fresh (floor) and Max (cap) values per trade size.
 <!-- DOCGEN:END id="sage-formula" -->

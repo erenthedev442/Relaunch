@@ -72,9 +72,9 @@ The table below lists **which catalyst maps to which augment**, organized by tie
 <!-- DOCGEN:BEGIN id="augment-catalog" -->
 _227 catalyst items across 5 tiers. Each drops (~50%) from a specific monster; trade it to the **Augment Moogle in Leafallia** (`!leaf`) to apply the augment. Cost is **10,000 gil flat per trade** plus the catalyst itself. Every line is **rolled** within your [Augment Tier's band](augment-sage.md) — higher tiers roll strictly higher values. The **Cap** column is the hard engine ceiling for that stat where one exists (e.g. Haste caps at 25%, damage-taken floors at -50%), or **no cap** for additive stats._
 
-### T0 — Free (Day 1)
+### T0 — First NM slain
 
-No progression gate — available from the first day on any character. These are **job-specific or class-specific** utilities that only meaningfully help a single playstyle: ability delays, pet-ability extensions, proc-chance passives most jobs ignore. Catalysts drop from low-level overworld mobs.
+Requires **Augment Tier 1** — the Moogle won't augment at all until you **slay your first custom NM** (any Hunting League, Wave Mode, or Voidspire kill). These are **job-specific or class-specific** utilities that only meaningfully help a single playstyle: ability delays, pet-ability extensions, proc-chance passives most jobs ignore. Catalysts drop from low-level overworld mobs.
 
 | Augment | Catalyst | Drops from | Cap | Affinity Category |
 |---|---|---|:--:|---|
@@ -98,9 +98,9 @@ No progression gate — available from the first day on any character. These are
 | Indi Effect Duration | <a class="item-link" href="https://www.ffxiah.com/item/2641" data-img="https://static.ffxiah.com/images/icon/2641.png" target="_blank" rel="noopener">Amoeban Pseudopod</a> | — | no cap | Job-specific niche utilities |
 | Treasure Hunter | <a class="item-link" href="https://www.ffxiah.com/item/908" data-img="https://static.ffxiah.com/images/icon/908.png" target="_blank" rel="noopener">Adamantoise Shell</a> | — | no cap | Job-specific niche utilities |
 
-### T1 — Open from the start
+### T1 — First NM slain
 
-Also available from day 1 (every character starts at **Augment Tier 1**). Practical job abilities and defensive options useful to a wider range of jobs — counter/parry/evasion, spell interruption, elemental affinities, shield tech. Catalysts drop from mid-level mobs.
+Requires **Augment Tier 1** — slay your first custom NM. Practical job abilities and defensive options useful to a wider range of jobs — counter/parry/evasion, spell interruption, elemental affinities, shield tech. Catalysts drop from mid-level mobs.
 
 | Augment | Catalyst | Drops from | Cap | Affinity Category |
 |---|---|---|:--:|---|

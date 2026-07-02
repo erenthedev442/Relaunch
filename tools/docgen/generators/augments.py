@@ -114,12 +114,13 @@ _SHOP_TOKENS = (
 # Sage page's formula block; keep these headings in sync with TIER_GATES in
 # modules/custom/lua/Augment_Moogle.lua).
 _TIER_INFO: list[tuple[int, str, str]] = [
-    (0, "T0 — Free (Day 1)",
-     "No progression gate — available from the first day on any character. These are **job-specific or "
+    (0, "T0 — First NM slain",
+     "Requires **Augment Tier 1** — the Moogle won't augment at all until you **slay your first custom NM** "
+     "(any Hunting League, Wave Mode, or Voidspire kill). These are **job-specific or "
      "class-specific** utilities that only meaningfully help a single playstyle: ability delays, pet-ability "
      "extensions, proc-chance passives most jobs ignore. Catalysts drop from low-level overworld mobs."),
-    (1, "T1 — Open from the start",
-     "Also available from day 1 (every character starts at **Augment Tier 1**). Practical job abilities and "
+    (1, "T1 — First NM slain",
+     "Requires **Augment Tier 1** — slay your first custom NM. Practical job abilities and "
      "defensive options useful to a wider range of jobs — counter/parry/evasion, spell interruption, "
      "elemental affinities, shield tech. Catalysts drop from mid-level mobs."),
     (2, "T2 — Hunting League Rank 2",

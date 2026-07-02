@@ -318,7 +318,7 @@ def _parse_tier_system(moogle_text: str) -> tuple[list[tuple[int, int]], list[tu
             moogle_text,
         )
     ]
-    if len(slices) != 5 or len(gates) != 4:
+    if len(slices) != 5 or len(gates) != 5:
         raise ValueError(
             f"tier tables not parsed (slices={len(slices)}, gates={len(gates)}) -- "
             "did TIER_SLICES/TIER_GATES change shape in Augment_Moogle.lua?"
@@ -351,12 +351,13 @@ def _render_formula(
         "per_slot = (base + roll) * multiplier     -- the engine formula",
         "```",
         "",
-        "**The tier ladder** — each step is custom content; your tier is the highest",
-        "step you've cleared **consecutively** (you can't skip ahead):",
+        "**The tier ladder** — every step (including Tier 1) is custom content; your",
+        "tier is the highest step you've cleared **consecutively** (you can't skip",
+        "ahead). A fresh character is **Tier 0: the Moogle won't augment at all**",
+        "until the first gate is cleared:",
         "",
         "| Tier | Roll band | Unlock |",
         "|---:|---|---|",
-        f"| 1 | {slices[0][0]}–{slices[0][1]} | open to everyone |",
     ]
     for t, unlock in gates:
         a, b = slices[t - 1]
@@ -364,7 +365,8 @@ def _render_formula(
     lines += [
         "",
         "**Floor** (T1, rank 0): a roll can land 0 — `base × multiplier`, the",
-        "augment's minimum value.",
+        "augment's minimum value. (At **Tier 0** — before the first gate — the",
+        "Moogle refuses the trade entirely.)",
         "",
         (
             "**Ceiling** (T5 + a max roll): `(base + 31) × multiplier` — identical to "

@@ -348,10 +348,16 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
             local tier  = xi.augmentTiers.tierOf(player)
             local slice = xi.augmentTiers.slices[tier]
             local nxt   = xi.augmentTiers.nextUnlock(tier)
-            player:printToPlayer(string.format(
-                '  Augment Tier: %d/5 (rolls %d-%d)%s',
-                tier, slice.min, slice.max,
-                nxt and (' | next: ' .. nxt) or ' | MAX'), xi.msg.channel.SYSTEM_3)
+            if slice then
+                player:printToPlayer(string.format(
+                    '  Augment Tier: %d/5 (rolls %d-%d)%s',
+                    tier, slice.min, slice.max,
+                    nxt and (' | next: ' .. nxt) or ' | MAX'), xi.msg.channel.SYSTEM_3)
+            else
+                player:printToPlayer(string.format(
+                    '  Augment Tier: 0/5 — augmenting locked | unlock: %s',
+                    nxt or '???'), xi.msg.channel.SYSTEM_3)
+            end
         end
         player:printToPlayer(string.format(
             '  Roll floor: +%d within your tier band | Crit chance: %.0f%%',

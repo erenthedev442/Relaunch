@@ -107,7 +107,7 @@ const AUGMENTS=window._augCalcData||[];
 // modules/custom/lua/Augment_Moogle.lua + augment_sage_catalog.lua.
 const TIER_SLICES=[[0,5],[6,11],[12,17],[18,24],[25,31]];
 const TIER_UNLOCKS=[
-  'open to everyone',
+  'slay your first custom NM',
   'Hunting League Rank 2',
   'Voidspire floor 10',
   'Dynamis - Divergence city clear',

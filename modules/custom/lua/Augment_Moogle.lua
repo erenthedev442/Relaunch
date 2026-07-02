@@ -46,11 +46,13 @@ local CRIT_TOKEN_LEGACY  = 29000   -- old custom 'Maat's Blessing'; still honore
 -- each selection may have a different `cat`.
 
 -----------------------------------
--- AUGMENT TIER (content progression). Your tier picks the roll band; each
--- gate is a piece of custom content. LADDERED: tier = highest N with every
--- gate 2..N passed (so you can't skip ahead).
+-- AUGMENT TIER (content progression). Your tier picks the roll band; EVERY
+-- tier -- including T1 -- is a piece of custom content. LADDERED: tier =
+-- highest N with every gate 1..N passed (so you can't skip ahead). A fresh
+-- character is TIER 0: the Moogle refuses to augment at all until the first
+-- gate (slay a custom NM) is cleared.
 -- The catalog's per-catalyst `tier` field is the minimum Augment Tier needed
--- to TRADE that catalyst (tier-0 catalysts are open to everyone).
+-- to TRADE that catalyst.
 -----------------------------------
 local TIER_SLICES =
 {
@@ -63,6 +65,8 @@ local TIER_SLICES =
 
 local TIER_GATES =
 {
+    { tier = 1, unlock = 'slay your first custom NM (Hunting League, Wave Mode, Voidspire...)',
+      check = function(p) return (p:getCharVar('Custom_NM_Kills') or 0) >= 1 end },
     { tier = 2, unlock = 'reach Hunting League Rank 2',
       check = function(p) return (p:getCharVar('HL_Tier') or 1) >= 2 end },
     { tier = 3, unlock = 'clear Voidspire floor 10',
@@ -74,7 +78,7 @@ local TIER_GATES =
 }
 
 local function augmentTier(player)
-    local tier = 1
+    local tier = 0
     for _, g in ipairs(TIER_GATES) do
         if g.check(player) then
             tier = g.tier
@@ -382,6 +386,13 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
             -- catalog `tier` is the minimum Augment Tier required to trade it
             -- (tier 0 = open; the old Maat's-Echo T5 gate is now the T5 ladder step).
             local playerTier = augmentTier(player)
+            if playerTier < 1 then
+                player:printToPlayer(string.format(
+                    'Augmenting is locked until you prove yourself, kupo! Unlock Tier 1: %s.',
+                    nextUnlock(0) or '???'),
+                    xi.msg.channel.SYSTEM_3)
+                return
+            end
             for _, itemId in ipairs(catalystOrder) do
                 local def2 = catalog[itemId]
                 local need = def2 and (def2.tier or 0) or 0

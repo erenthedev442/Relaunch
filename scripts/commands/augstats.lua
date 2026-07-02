@@ -76,11 +76,18 @@ commandObj.onTrigger = function(player)
         local tier  = xi.augmentTiers.tierOf(player)
         local slice = xi.augmentTiers.slices[tier]
         local nxt   = xi.augmentTiers.nextUnlock(tier)
-        player:printToPlayer(string.format(
-            '  Augment Tier: %d/5  (rolls %d-%d of 31)%s',
-            tier, slice.min, slice.max,
-            nxt and ('  |  next: ' .. nxt) or '  |  MAX'),
-            xi.msg.channel.SYSTEM_3)
+        if slice then
+            player:printToPlayer(string.format(
+                '  Augment Tier: %d/5  (rolls %d-%d of 31)%s',
+                tier, slice.min, slice.max,
+                nxt and ('  |  next: ' .. nxt) or '  |  MAX'),
+                xi.msg.channel.SYSTEM_3)
+        else
+            player:printToPlayer(string.format(
+                '  Augment Tier: 0/5 — augmenting LOCKED. Unlock Tier 1: %s.',
+                nxt or '???'),
+                xi.msg.channel.SYSTEM_3)
+        end
     end
 
     local anyFound = false
