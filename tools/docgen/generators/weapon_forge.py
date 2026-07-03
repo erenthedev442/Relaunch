@@ -111,16 +111,23 @@ def _render_costs(c: dict) -> str:
         5: "Rank V (Legend)",
     }
 
+    # Precompute the nested bits: f-strings can't contain backslash-escaped
+    # quotes in their expression part (SyntaxError on the box's Python), so the
+    # inner rank labels / marks clause are built as plain locals first.
+    t2_rank = rank_labels.get(t2['hl_rank'], f"Rank {t2['hl_rank']}")
+    t3_rank = rank_labels.get(t3['hl_rank'], f"Rank {t3['hl_rank']}")
+    t3_marks = f" + {t3['reforge_marks']:,} Reforge Marks (any pool)" if t3.get('reforge_marks') else ""
+
     lines = [
         "| Step | Consume | Materials | Gate |",
         "|---|---|---|---|",
         f"| 119I → 119II | Your 119I weapon | "
         f"{t2['med_qty']}× {t2['med_name']} | "
-        f"Hunting League {rank_labels.get(t2['hl_rank'], f'Rank {t2[\"hl_rank\"]}')} |",
+        f"Hunting League {t2_rank} |",
         f"| 119II → 119III | Your 119II weapon | "
         f"{t3['med_qty']}× {t3['med_name']}"
-        f"{f' + {t3[\"reforge_marks\"]:,} Reforge Marks (any pool)' if t3.get('reforge_marks') else ''} | "
-        f"Hunting League {rank_labels.get(t3['hl_rank'], f'Rank {t3[\"hl_rank\"]}')} |",
+        f"{t3_marks} | "
+        f"Hunting League {t3_rank} |",
     ]
     lines += [
         "",
