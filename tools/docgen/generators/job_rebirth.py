@@ -15,6 +15,9 @@ from pathlib import Path
 
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
+# JobRebirth reuses prestige_catalog.categories verbatim (JobRebirth.lua), so the
+# RP spend table is rendered from the SAME parser/renderer as the Prestige AP table.
+from tools.docgen.generators.prestige import _parse_categories, _render_ap_table
 
 # ---------------------------------------------------------------------------
 # Zone ID → player-facing name (only zones this system ever uses)
@@ -207,6 +210,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     ms_extra      = _int_val(text,   "expPenaltyMilestoneExtra") or 8
     hard_cap      = _int_val(text,   "expPenaltyHardCap")        or 90
 
+    # RP spend table — rendered from the shared prestige_catalog categories with an
+    # RP cost label, so caps/costs can never drift from what the code actually grants.
+    prestige_src = resolve_source(repo_root, "modules/custom/lua/prestige_catalog.lua")
+    rp_cats = _parse_categories(prestige_src.read_text(encoding="utf-8", errors="replace")) \
+        if prestige_src is not None else []
+
     results = [
         ("rebirth-location",
          _render_location(npc_zone)),
@@ -215,6 +224,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ("rebirth-exp-penalty",
          _render_exp_penalty(pen_min, pen_scale, rp_power, ms_every, ms_extra, hard_cap)),
     ]
+    if rp_cats:
+        results.append(("rebirth-rp-table", _render_ap_table(rp_cats, cost_label="RP")))
 
     for marker_id, content in results:
         wrote = write_between_markers(page, marker_id, content)

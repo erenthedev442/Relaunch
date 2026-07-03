@@ -74,82 +74,99 @@ RP is a **per-job** currency — each job earns and spends its own pool, and the
 
 The boost menu is the same catalog [Ascension](prestige.md) offers. Cheaper stats cost **1 RP** per level; premium combat perks cost up to **3 RP**.
 
-**Base Stats**
+<!-- DOCGEN:BEGIN id="rebirth-rp-table" -->
+<div class="milestone-grid" markdown="1">
 
-| Stat | Per Level | RP / Level |
-|---|---|---:|
-| Strength | +1 STR / level · max +50 | 1 |
-| Dexterity | +1 DEX / level · max +50 | 1 |
-| Vitality | +1 VIT / level · max +50 | 1 |
-| Agility | +1 AGI / level · max +50 | 1 |
-| Intelligence | +1 INT / level · max +50 | 1 |
-| Mind | +1 MND / level · max +50 | 1 |
-| Charisma | +1 CHR / level · max +50 | 1 |
-| Max HP | +20 HP / level · max +1,000 | 1 |
-| Max MP | +20 MP / level · max +500 | 1 |
+#### Base Stats
 
-**Melee & Magic**
+| Stat | Per Level | Max Levels | RP Cost | Max Total |
+|---|---|---:|---:|---|
+| Strength | +1 STR / level (max +50) [1 AP] | 50 | 1 RP | — |
+| Dexterity | +1 DEX / level (max +50) [1 AP] | 50 | 1 RP | — |
+| Vitality | +1 VIT / level (max +50) [1 AP] | 50 | 1 RP | — |
+| Agility | +1 AGI / level (max +50) [1 AP] | 50 | 1 RP | — |
+| Intelligence | +1 INT / level (max +50) [1 AP] | 50 | 1 RP | — |
+| Mind | +1 MND / level (max +50) [1 AP] | 50 | 1 RP | — |
+| Charisma | +1 CHR / level (max +50) [1 AP] | 50 | 1 RP | — |
+| Max HP | +20 HP / level (max +1000) [1 AP] | 50 | 1 RP | — |
+| Max MP | +20 MP / level (max +500) [1 AP] | 25 | 1 RP | — |
 
-| Stat | Per Level | RP / Level |
-|---|---|---:|
-| Accuracy | +10 Accuracy / level · max +500 | 1 |
-| Attack | +20 Attack / level · max +1,000 | 1 |
-| Defense | +5 Defense / level · max +250 | 1 |
-| Evasion | +5 Evasion / level · max +250 | 1 |
-| Magic Accuracy | +20 Mag.Acc / level · max +1,000 | 1 |
-| Magic Attack | +20 Mag.Atk / level · max +1,000 | 1 |
-| Magic Damage | +10 Magic Dmg / level · max +250 | 2 |
+#### Melee & Magic
 
-**Ranged**
+| Stat | Per Level | Max Levels | RP Cost | Max Total |
+|---|---|---:|---:|---|
+| Accuracy | +10 Accuracy / level (max +500) [1 AP] | 50 | 1 RP | — |
+| Attack | +20 Attack / level (max +1000) [1 AP] | 50 | 1 RP | — |
+| Defense | +5 Defense / level (max +250) [1 AP] | 50 | 1 RP | — |
+| Evasion | +5 Evasion / level (max +250) [1 AP] | 50 | 1 RP | — |
+| Magic Acc | +20 Mag.Acc / level (max +1000) [1 AP] | 50 | 1 RP | — |
+| Magic Atk | +20 Mag.Atk / level (max +1000) [1 AP] | 50 | 1 RP | — |
 
-| Stat | Per Level | RP / Level |
-|---|---|---:|
-| Ranged Accuracy | +10 R.Acc / level · max +500 | 1 |
-| Ranged Attack | +20 R.Att / level · max +1,000 | 1 |
+#### Combat Traits
 
-**Combat Traits**
+| Stat | Per Level | Max Levels | RP Cost | Max Total |
+|---|---|---:|---:|---|
+| Store TP | +2 Store TP / level (max +100) [2 AP] | 50 | 2 RP | — |
+| TP Bonus | +10 TP Bonus / level (max +500) [2 AP] | 50 | 2 RP | — |
+| Quad Atk | +1% Quad.Atk / level (max 50%) [2 AP] | 50 | 2 RP | — |
+| Crit Rate | +1% Crit / level (max 20%) [2 AP] | 20 | 2 RP | — |
+| Crit Dmg | +2% Crit Dmg / level (max 40%) [3 AP] | 20 | 3 RP | — |
+| Counter | +1 Counter / level (max +50) [2 AP] | 50 | 2 RP | — |
+| Parry Rate | +1% Parry / level (max 25%) [1 AP] | 25 | 1 RP | — |
+| Subtle Blow | +1 Subtle Blow / level (max +50) [1 AP] | 50 | 1 RP | — |
+| WS Dmg | +2% WS Dmg / level (max 40%) [3 AP] | 20 | 3 RP | — |
+| Dual Wield | +1% Dual Wield / level (max 25%) [2 AP] | 25 | 2 RP | — |
+| SC Dmg | +2% Skillchain Dmg / level (max 40%) [3 AP] | 20 | 3 RP | — |
 
-| Stat | Per Level | RP / Level |
-|---|---|---:|
-| Store TP | +2 Store TP / level · max +100 | 2 |
-| TP Bonus | +10 TP Bonus / level · max +500 | 2 |
-| Quad Attack | +1% Quad Attack / level · max 50% | 2 |
-| Dual Wield | +1% Dual Wield / level · max 25% | 2 |
-| Critical Rate | +1% Crit / level · max 20% | 2 |
-| Critical Damage | +2% Crit Dmg / level · max 40% | 3 |
-| Counter | +1 Counter / level · max +50 | 2 |
-| Parry Rate | +1% Parry / level · max 25% | 1 |
-| Subtle Blow | +1 Subtle Blow / level · max +50 | 1 |
-| Weaponskill Damage | +2% WS Dmg / level · max 40% | 3 |
-| Skillchain Damage | +2% SC Dmg / level · max 40% | 3 |
+#### Ranged
 
-**Mitigation**
+| Stat | Per Level | Max Levels | RP Cost | Max Total |
+|---|---|---:|---:|---|
+| Ranged Acc | +10 R.Acc / level (max +500) [1 AP] | 50 | 1 RP | — |
+| Ranged Att | +20 R.Att / level (max +1000) [1 AP] | 50 | 1 RP | — |
 
-| Stat | Per Level | RP / Level |
-|---|---|---:|
-| Physical Dmg Taken − | −1% Phys. DT / level · max −15% | 3 |
-| Magic Dmg Taken − | −1% Mag. DT / level · max −15% | 3 |
-| Haste | +1% Haste / level · max 15% | 3 |
+#### Mitigation
 
-**Magic Support**
+| Stat | Per Level | Max Levels | RP Cost | Max Total |
+|---|---|---:|---:|---|
+| Phys.DT- | -1% Phys.DT / level (max -15%) [3 AP] | 15 | 3 RP | — |
+| Mag.DT- | -1% Mag.DT / level (max -15%) [3 AP] | 15 | 3 RP | — |
+| Haste | +1% Haste / level (max 15%) [3 AP] | 15 | 3 RP | — |
 
-| Stat | Per Level | RP / Level |
-|---|---|---:|
-| Spell Interrupt Down | +1% SIRD / level · max 50% | 2 |
-| Fast Cast | +1% Fast Cast / level · max 30% | 2 |
-| Enspell Damage | +10 Enspell Dmg / level · max +500 | 2 |
-| Cure Potency | +2% Cure Potency / level · max +50% | 2 |
-| Refresh | +1 Refresh / level · max +10 MP/tick | 3 |
+#### Magic Support
 
-**Utility, Resistances & Skills**
+| Stat | Per Level | Max Levels | RP Cost | Max Total |
+|---|---|---:|---:|---|
+| Spell Intp | +1% SIRD / level (max 50%) [2 AP] | 50 | 2 RP | — |
+| Fast Cast | +1% Fast Cast / level (max 30%) [2 AP] | 30 | 2 RP | — |
+| Enspell Dmg | +10 Enspell Dmg / level (max +500) [2 AP] | 50 | 2 RP | — |
+| Cure Potency | +2% Cure Pot. / level (max +50%) [2 AP] | 25 | 2 RP | — |
+| Refresh | +1 Refresh / level (max +10 MP/tick) [3 AP] | 10 | 3 RP | — |
+| Magic Dmg | +10 Magic Dmg / level (max +250) [2 AP] | 25 | 2 RP | — |
 
-| Stat | Per Level | RP / Level |
-|---|---|---:|
-| Treasure Hunter | +1 TH / level · max +50 | 2 |
-| Gilfinder | +2% Gilfinder / level · max +100% | 1 |
-| Status Resistance | +2 Status Res. / level · max +100 | 1 |
-| Elemental Resistance | +10 to all 8 elements / level · max +500 each | 1 |
-| All Skills | +2 to every combat & magic skill / level · max +100 each | 1 |
+#### Utility
+
+| Stat | Per Level | Max Levels | RP Cost | Max Total |
+|---|---|---:|---:|---|
+| Treas.Hunter | +1 TH / level (max +50) [2 AP] | 50 | 2 RP | — |
+| Gilfinder | +2% Gilfinder / level (max +100%) [1 AP] | 50 | 1 RP | — |
+
+#### Resistances & Skills
+
+| Stat | Per Level | Max Levels | RP Cost | Max Total |
+|---|---|---:|---:|---|
+| Status Res | +2 Status Res. / level (max +100) [1 AP] | 50 | 1 RP | — |
+| Ele. Resist | +10 Ele.Resist / level (max +500 each) [1 AP] | 50 | 1 RP | — |
+| All Skills | +2 All Skills / level (max +100 each) [1 AP] | 50 | 1 RP | — |
+
+#### Pet Boost
+
+| Stat | Per Level | Max Levels | RP Cost | Max Total |
+|---|---|---:|---:|---|
+| Pet Boost | +40 all Pet stats / level (Atk/Def/Acc/Eva/MAtk/MAcc/Attr/TP, max +2000 each) [2 AP] | 50 | 2 RP | — |
+
+</div>
+<!-- DOCGEN:END id="rebirth-rp-table" -->
 
 Boosts are **permanent and stacking** — they re-apply automatically every time you zone in or change main jobs.
 

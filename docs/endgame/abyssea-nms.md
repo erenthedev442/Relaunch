@@ -146,16 +146,17 @@ Beyond the NMs, **every regular mob in an Abyssea zone has a 5% chance on death 
 
 ## What to Spend Infamy On
 
-Infamy is spent at the **Infamy Vendor** in <!--npc:infamy_vendor-->Leafallia<!--/npc-->. The full catalog includes accessories, armor, Relic/Mythic/Aeonic weapons, and more. A few reference points:
+<!-- DOCGEN:BEGIN id="abyssea-infamy-costs" -->
+Infamy is spent at the **Infamy Vendor** in <!--npc:infamy_vendor-->Leafallia<!--/npc-->. The full catalog — accessories, best-in-slot armor, and Relic / Mythic / Aeonic weapons — is listed with exact prices on the [Gear Vendors](../progression/gear-vendors.md#infamy-vendor) page. A few reference points, priced against the top **Heroes** payout:
 
-| Item tier | Cost |
-|---|---|
-| Accessories (Fotia Belt, earrings, rings) | 250–300 Infamy |
-| Armor pieces (Nyame, Jhakri) | 400–800 Infamy |
-| Relic / Aeonic weapons | 5,000 Infamy |
-| Mythic weapons | 5,000 Infamy |
+| Reward | Infamy | Heroes kills _(party, no trusts — ×3.0)_ |
+|---|---:|---:|
+| Cheapest item | 200 | 2 kills |
+| Standard endgame weapon _(Relic / Mythic / Aeonic)_ | 5,000 | 28 kills |
+| Most expensive item | 15,000 | 84 kills |
 
-A party running Heroes NMs without trusts earns **180 Infamy per kill** — enough for a full Nyame body in under 5 kills, and a Mythic weapon in roughly 28 kills.
+A full party clearing **Heroes** NMs without trusts earns **180 Infamy per kill** (the ×3.0 rate from the reward table above) — so a standard endgame weapon works out to roughly **28 kills**.
+<!-- DOCGEN:END id="abyssea-infamy-costs" -->
 
 ---
 

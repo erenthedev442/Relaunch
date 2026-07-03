@@ -396,7 +396,7 @@ def _render_scaling(tiers: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def _render_ap_table(cats: list[dict]) -> str:
+def _render_ap_table(cats: list[dict], cost_label: str = "AP") -> str:
     cats_by_id = {c["id"]: c for c in cats}
     lines = ['<div class="milestone-grid" markdown="1">', ""]
     first_section = True
@@ -412,7 +412,7 @@ def _render_ap_table(cats: list[dict]) -> str:
 
         lines.append(f"#### {section_name}")
         lines.append("")
-        lines.append("| Stat | Per Level | Max Levels | AP Cost | Max Total |")
+        lines.append(f"| Stat | Per Level | Max Levels | {cost_label} Cost | Max Total |")
         lines.append("|---|---|---:|---:|---|")
 
         for cat in section_cats:
@@ -427,7 +427,7 @@ def _render_ap_table(cats: list[dict]) -> str:
 
             lines.append(
                 f"| {cat['label']} | {per_level} | {cat['cap']} "
-                f"| {cat['apCost']} AP | {max_total} |"
+                f"| {cat['apCost']} {cost_label} | {max_total} |"
             )
 
     lines.append("")

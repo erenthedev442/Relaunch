@@ -8,7 +8,9 @@ Marker IDs:
 """
 from __future__ import annotations
 
+import math
 import re
+from collections import Counter
 from pathlib import Path
 
 from tools.docgen._paths import resolve_source
@@ -201,6 +203,79 @@ def _render_su5_drops(text: str) -> str | None:
 
 
 # ---------------------------------------------------------------------------
+# Infamy "reference points" — what your Infamy buys and how many Heroes kills
+# it takes. Every number is derived: per-kill from the reward config (Heroes
+# base x the full party/no-trust multiplier), item costs from the live Infamy
+# Vendor catalog. So it can never drift from a retune of either the rewards or
+# the vendor prices. The full per-item catalog lives on the Gear Vendors page
+# (infamy_npc.py) — this is just the headline economics, not a duplicate list.
+# ---------------------------------------------------------------------------
+
+_INFAMY_CATALOG = "modules/custom/lua/infamy_vendor_catalog.lua"
+# id -> 'Category/Sub' rows in catalog.itemTypeMap (e.g. [21621] = 'Weapons/Sword').
+_TYPEMAP_RE = re.compile(r"\[(\d+)\]\s*=\s*'([^']+)'")
+
+
+def _kills(cost: int, per_kill: int) -> str:
+    n = max(1, math.ceil(cost / per_kill))
+    return f"{n} kill" if n == 1 else f"{n} kills"
+
+
+def _render_infamy_reference(repo_root: Path, heroes_infamy: int) -> str | None:
+    # Import here (not at module load) to avoid any import-order coupling with
+    # the dungeons generator, whose vendor-item parser we reuse verbatim.
+    from tools.docgen.generators import dungeons
+
+    src = resolve_source(repo_root, _INFAMY_CATALOG)
+    if src is None or not heroes_infamy:
+        return None
+    text = src.read_text(encoding="utf-8", errors="replace")
+    items = (dungeons._extract_vendor_items_block(text, "catalog.vendorItems")
+             + dungeons._extract_vendor_items_block(text, "catalog.vendorItemsAuto"))
+    costs = [int(it["cost"]) for it in items if it.get("cost")]
+    if not costs:
+        return None
+
+    tmap = dict(_TYPEMAP_RE.findall(text))
+    # Canonical endgame-weapon price = the most common cost among vendor weapons
+    # priced >= 1,000 Infamy (the relic/mythic/aeonic tier, above the cheap
+    # top-5 leveling weapons). Ties resolve to the lower price.
+    weapon_costs = [int(it["cost"]) for it in items
+                    if it.get("cost")
+                    and tmap.get(str(it.get("id")), "").startswith("Weapons")
+                    and int(it["cost"]) >= 1000]
+    if weapon_costs:
+        top = Counter(weapon_costs).most_common()
+        top.sort(key=lambda kv: (-kv[1], kv[0]))
+        weapon_std = top[0][0]
+    else:
+        weapon_std = max(costs)
+
+    per_kill = int(round(heroes_infamy * _PARTY_MULT * _TRUST_MULT))
+    entry, dearest = min(costs), max(costs)
+
+    lines = [
+        "Infamy is spent at the **Infamy Vendor** in {{npc:infamy_vendor}}. The full "
+        "catalog — accessories, best-in-slot armor, and Relic / Mythic / Aeonic weapons — "
+        "is listed with exact prices on the "
+        "[Gear Vendors](../progression/gear-vendors.md#infamy-vendor) page. A few reference "
+        "points, priced against the top **Heroes** payout:",
+        "",
+        "| Reward | Infamy | Heroes kills _(party, no trusts — ×3.0)_ |",
+        "|---|---:|---:|",
+        f"| Cheapest item | {entry:,} | {_kills(entry, per_kill)} |",
+        f"| Standard endgame weapon _(Relic / Mythic / Aeonic)_ | {weapon_std:,} "
+        f"| {_kills(weapon_std, per_kill)} |",
+        f"| Most expensive item | {dearest:,} | {_kills(dearest, per_kill)} |",
+        "",
+        f"A full party clearing **Heroes** NMs without trusts earns **{per_kill} Infamy "
+        f"per kill** (the ×3.0 rate from the reward table above) — so a standard endgame "
+        f"weapon works out to roughly **{_kills(weapon_std, per_kill)}**.",
+    ]
+    return "\n".join(lines)
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
@@ -231,6 +306,17 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         wrote  = write_between_markers(page, marker_id, content)
         status = "written" if wrote else f"MARKER NOT FOUND: {marker_id}"
         print(f"[abyssea_nms] {marker_id}: {status}")
+
+    # Infamy "reference points" economics — derived from the Heroes reward and
+    # the live Infamy Vendor catalog (see _render_infamy_reference). Uses the
+    # highest-cost tier's infamy as "Heroes" so it tracks a tier rename/retune.
+    heroes_infamy = max((t["infamy"] for t in tiers), default=0)
+    ref = _render_infamy_reference(repo_root, heroes_infamy)
+    if ref:
+        wrote = write_between_markers(page, "abyssea-infamy-costs", ref)
+        print(f"[abyssea_nms] abyssea-infamy-costs: {'written' if wrote else 'MARKER NOT FOUND'}")
+    else:
+        print("[abyssea_nms] abyssea-infamy-costs: skip (no catalog/heroes infamy)")
 
     # Superior Lv5 (Dynamis Divergence) weapon drops — separate module.
     su5_src = resolve_source(repo_root, "modules/custom/lua/abyssea_su5_drops.lua")
