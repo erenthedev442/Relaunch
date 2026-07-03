@@ -127,11 +127,14 @@ local function grantUpToLevel(player, level)
 end
 
 -- ---- Hook: level-up ------------------------------------------------
--- Fires when main-job level increases. Only act for BLU main.
+-- Fires when main-job level increases. Act for BLU main; also handle
+-- /BLU sub since sub level = floor(main/2) and rises with main level.
 m:addOverride('xi.player.onPlayerLevelUp', function(player)
     super(player)
     if player:getMainJob() == xi.job.BLU then
         grantAtLevel(player, player:getMainLvl())
+    elseif player:getSubJob() == xi.job.BLU then
+        grantAtLevel(player, player:getSubLvl())
     end
 end)
 
@@ -139,10 +142,16 @@ end)
 -- On actual login (not zoning), do a full catch-up pass.  This makes
 -- retroactively adding new spells to the table propagate automatically
 -- the next time a BLU logs in, without any GM command.
+-- Also covers /BLU sub so players never have to swap main just to get
+-- their spell list populated before setting spells.
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     super(player, firstLogin, zoning)
-    if not zoning and player:getMainJob() == xi.job.BLU then
-        grantUpToLevel(player, player:getMainLvl())
+    if not zoning then
+        if player:getMainJob() == xi.job.BLU then
+            grantUpToLevel(player, player:getMainLvl())
+        elseif player:getSubJob() == xi.job.BLU then
+            grantUpToLevel(player, player:getSubLvl())
+        end
     end
 end)
 
