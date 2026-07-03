@@ -105,11 +105,6 @@ nav:
       - Best-in-Slot Guide: progression/bis-guide.md
       - Gear Finder (tool): progression/gear-finder.md
       - Item Database (tool): progression/item-database.md
-    - Augmenting:
-      - Start Here (Guide): progression/augmenting-guide.md
-      - Augment Moogle: progression/augments.md
-      - Augment Sage: progression/augment-sage.md
-      - Augment Calculator: progression/augment-calculator.md
     - Advancement:
       - Prestige / Ascension: progression/prestige.md
       - Job Rebirth: progression/job-rebirth.md
@@ -178,6 +173,11 @@ nav:
     - Server Info:
       - Quality of Life: progression/server-features.md
       - Death Penalty: progression/death-penalty.md
+  - Augmenting:
+    - Start Here (Guide): progression/augmenting-guide.md
+    - Augment Moogle: progression/augments.md
+    - Augment Sage: progression/augment-sage.md
+    - Augment Calculator: progression/augment-calculator.md
   - Community:
     - community/players/index.md
     - Server Status: community/status.md
