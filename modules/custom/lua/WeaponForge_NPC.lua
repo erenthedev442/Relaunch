@@ -120,6 +120,17 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
             return false
         end
 
+        -- Aeonic rank gate (HL_Tier; see note in doUpgrade below).
+        if stepCost.hlRank then
+            local hlRank = math.max(1, player:getCharVar('HL_Tier'))
+            if hlRank < stepCost.hlRank then
+                player:printToPlayer(
+                    string.format('[Weapon Forge] You need Hunting League Rank %d or higher (you are Rank %d).',
+                        stepCost.hlRank, hlRank), S)
+                return false
+            end
+        end
+
         local haveAtt = player:getItemCount(ae.attestationId)
         if haveAtt < stepCost.attestations then
             player:printToPlayer(
@@ -232,6 +243,27 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
             end
         end
 
+        -- Prime pinnacle gate: all five Prime Armory Trials must be complete
+        -- (same CharVars PrimeArmory_NPC checks).
+        if cost.requireTrials and catalog.primeTrialVars then
+            for _, tv in ipairs(catalog.primeTrialVars) do
+                if (player:getCharVar(tv) or 0) == 0 then
+                    player:printToPlayer(
+                        '[Weapon Forge] You must complete all five Prime Armory Trials before forging a Prime Weapon.',
+                        xi.msg.channel.SYSTEM_3)
+                    return false
+                end
+            end
+        end
+
+        if cost.gil and player:getGil() < cost.gil then
+            player:printToPlayer(
+                string.format('[Weapon Forge] You need %d gil to forge a Prime Weapon (you have %d).',
+                    cost.gil, player:getGil()),
+                xi.msg.channel.SYSTEM_3)
+            return false
+        end
+
         if player:getFreeInventorySlots() == 0 then
             player:printToPlayer(
                 '[Weapon Forge] Free an inventory slot before forging.',
@@ -244,6 +276,9 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         player:delItem(cost.medals.id, cost.medals.qty)
         if cost.reforgeMarks then
             drainMarks(player, cost.reforgeMarks)
+        end
+        if cost.gil then
+            player:delGil(cost.gil)
         end
 
         player:addItem({ id = toItem.id, quantity = 1 })
@@ -282,6 +317,12 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         if cost.reforgeMarks then
             parts[#parts + 1] = string.format('%d Reforge Marks (any pool)', cost.reforgeMarks)
         end
+        if cost.gil then
+            parts[#parts + 1] = string.format('%d gil', cost.gil)
+        end
+        if cost.requireTrials then
+            parts[#parts + 1] = 'All 5 Prime Armory Trials'
+        end
         return table.concat(parts, '  |  ')
     end
 
@@ -299,6 +340,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         }
         if sc.eschaSilt    then parts[#parts+1] = string.format('%d Escha Silt', sc.eschaSilt) end
         if sc.reforgeMarks then parts[#parts+1] = string.format('%d Reforge Marks', sc.reforgeMarks) end
+        if sc.hlRank       then parts[#parts+1] = string.format('HL Rank %d', sc.hlRank) end
         return table.concat(parts, '  |  ')
     end
 

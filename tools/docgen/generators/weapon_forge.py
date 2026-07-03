@@ -84,7 +84,8 @@ def _parse(text: str) -> dict:
     prime_cost = {
         "s2": {"rank": _i(to2, "hlRank"), "med": _s(to2, "name"), "qty": _i(to2, "qty")},
         "s3": {"rank": _i(to3, "hlRank"), "med": _s(to3, "name"), "qty": _i(to3, "qty"),
-               "marks": _i(to3, "reforgeMarks")},
+               "marks": _i(to3, "reforgeMarks"), "gil": _i(to3, "gil"),
+               "trials": "requireTrials" in to3},
     }
 
     # --- Aeonic costs (catalog.aeonicCosts) ---
@@ -93,6 +94,7 @@ def _parse(text: str) -> dict:
     a2 = _slice(ac_region, "toStage2", "toStage3")
     a3 = _slice(ac_region, "toStage3", "\n}")
     aeonic_cost = {
+        "rank": _i(a1, "hlRank"),
         "s1": {"att": _i(a1, "attestations"), "boulder": _i(a1, "riftbornBoulders")},
         "s2": {"att": _i(a2, "attestations"), "boulder": _i(a2, "riftbornBoulders"),
                "silt": _i(a2, "eschaSilt")},
@@ -125,7 +127,11 @@ def _build_real(c: dict) -> dict:
     pc, ac = c["prime_cost"], c["aeonic_cost"]
     gate_p2 = "Hunting League " + RANKS.get(pc["s2"]["rank"], f"Rank {pc['s2']['rank']}")
     gate_p3 = "Hunting League " + RANKS.get(pc["s3"]["rank"], f"Rank {pc['s3']['rank']}")
-    gate_ae = "Materials only — no rank gate"
+    if pc["s3"].get("trials"):
+        gate_p3 += " · All 5 Prime Armory Trials"
+    ae_rank = ac.get("rank", 0)
+    gate_ae = ("Hunting League " + RANKS.get(ae_rank, f"Rank {ae_rank}")
+               if ae_rank else "Materials only — no rank gate")
 
     prime, aeonic = {}, {}
     for ch in c["chains"]:
@@ -137,6 +143,8 @@ def _build_real(c: dict) -> dict:
         p3_mats = [[_qty(pc["s3"]["qty"]), pc["s3"]["med"]]]
         if pc["s3"]["marks"]:
             p3_mats.append([_num(pc["s3"]["marks"]), "Reforge Marks"])
+        if pc["s3"].get("gil"):
+            p3_mats.append([_num(pc["s3"]["gil"]), "gil"])
         prime[t] = {
             "names":  [ch["s1"], ch["s2"], ch["s3"]],
             "labels": ["Base · 119 I", "119 II", "119 III · Final"],

@@ -32,21 +32,32 @@
 local catalog = {}
 
 -- Forge costs (consumed from inventory).
+-- PRIME is the pinnacle path: HL Legend, all five Prime Armory Trials complete,
+-- 750M gil, 30k Reforge Marks, and the steepest medal cost on the server.
 catalog.costs =
 {
     -- 119I → 119II
     toStage2 =
     {
-        hlRank    = 3,
-        medals    = { id = 9541, qty = 25, name = 'Kindreds Medal' },
+        hlRank    = 5,
+        medals    = { id = 9541, qty = 50, name = 'Kindreds Medal' },
     },
-    -- 119II → 119III
+    -- 119II → 119III  (the Prime wall)
     toStage3 =
     {
-        hlRank       = 5,
-        medals       = { id = 9543, qty = 50, name = 'Demons Medal' },
-        reforgeMarks = 2000,   -- total across all three pools; drained AF→Relic→Empy
+        hlRank        = 5,
+        medals        = { id = 9543, qty = 100, name = 'Demons Medal' },
+        reforgeMarks  = 30000,   -- total across all three pools; drained AF→Relic→Empy
+        gil           = 750000000,
+        requireTrials = true,    -- all of PW_Trial1_Done .. PW_Trial5_Done must be 1
     },
+}
+
+-- Prime Armory Trial completion CharVars (shared with PrimeArmory_NPC.lua).
+-- The final Prime forge requires every one of these to be set.
+catalog.primeTrialVars = {
+    'PW_Trial1_Done', 'PW_Trial2_Done', 'PW_Trial3_Done',
+    'PW_Trial4_Done', 'PW_Trial5_Done',
 }
 
 -- Reforge-mark CharVar names, drained in order.
@@ -56,17 +67,20 @@ catalog.markVars = { 'RF_AF_Marks', 'RF_Relic_Marks', 'RF_Empy_Marks' }
 -- AEONIC FORGE COSTS
 -- All three upgrade steps; attestation qty/id resolved per weapon type.
 -- ===================================================================
+-- Aeonic is gated at HL Rank IV (Champion) throughout.
 catalog.aeonicCosts =
 {
     -- Malformed → 119I
     toStage1 =
     {
+        hlRank           = 4,
         attestations     = 1,
         riftbornBoulders = 25,   -- item 4061
     },
     -- 119I → 119II
     toStage2 =
     {
+        hlRank           = 4,
         attestations     = 3,
         riftbornBoulders = 100,
         eschaSilt        = 10000,  -- charVar Escha_Silt
@@ -74,10 +88,11 @@ catalog.aeonicCosts =
     -- 119II → Aeonic 119III
     toStage3 =
     {
+        hlRank           = 4,
         attestations     = 10,
         riftbornBoulders = 300,
         eschaSilt        = 50000,
-        reforgeMarks     = 20000,
+        reforgeMarks     = 24000,
     },
 }
 
