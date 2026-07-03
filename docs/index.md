@@ -141,4 +141,4 @@ See where you rank across the server — most augments crafted, top hunters, fas
 
 ---
 
-*Think this sounds good? [Get started now.](getting-started/index.md) Or read [What's Custom](changes/index.md) for the full breakdown — and check the [Changelog](changelog.md) for the latest updates.*
+*Think this sounds good? [Get started now.](getting-started/index.md) Or read [Retail Differences](changes/index.md) for the full breakdown — and check the [Changelog](changelog.md) for the latest updates.*

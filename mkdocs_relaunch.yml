@@ -94,7 +94,7 @@ nav:
     - Troubleshooting: getting-started/troubleshoot.md
   - Rules: rules.md
   - Changelog: changelog.md
-  - What's Custom:
+  - Retail Differences:
     - changes/index.md
     - Background Systems: changes/background-systems.md
   - Progression:
@@ -103,8 +103,6 @@ nav:
       - Gear Vendors: progression/gear-vendors.md
       - Gear Progression: progression/gear-progression.md
       - Best-in-Slot Guide: progression/bis-guide.md
-      - Gear Finder (tool): progression/gear-finder.md
-      - Item Database (tool): progression/item-database.md
     - Advancement:
       - Prestige / Ascension: progression/prestige.md
       - Job Rebirth: progression/job-rebirth.md
@@ -114,6 +112,7 @@ nav:
       - Achievements: progression/achievements.md
     - Prime Weapons:
       - Prime Weapon Trials: progression/prime-trials.md
+      - Endless Tower: endgame/endless-tower.md
       - Prime Armory: progression/prime-armory.md
       - Weapon Forge: progression/weapon-forge.md
     - Job & Build:
@@ -133,11 +132,10 @@ nav:
     - Star-Devourer Raid: endgame/star-devourer.md
     - Unity Concord: endgame/unity-concord.md
     - Dungeons: endgame/dungeons.md
+    - The Gauntlet: endgame/the-gauntlet.md
   - Activities & Events:
     - Solo Challenges:
-      - Endless Tower: endgame/endless-tower.md
       - Apex Trials & Paragon: endgame/apex-paragon.md
-      - The Gauntlet: endgame/the-gauntlet.md
       - Colosseum: endgame/colosseum.md
       - Maat's Challenge: endgame/maats-challenge.md
       - Game Master (Wave Mode): progression/game-master.md
@@ -177,6 +175,10 @@ nav:
     - Start Here (Guide): progression/augmenting-guide.md
     - Augment Moogle: progression/augments.md
     - Augment Sage: progression/augment-sage.md
+  - Tools:
+    - Gear Finder: progression/gear-finder.md
+    - Item Database: progression/item-database.md
+    - Item Finder: progression/item-finder.md
     - Augment Calculator: progression/augment-calculator.md
   - Community:
     - community/players/index.md

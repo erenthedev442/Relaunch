@@ -93,7 +93,7 @@ Ping a GM in [Discord](https://discord.gg/Yd3Kn3dN36). Specify your character na
 
 ### What's different about this server vs. retail / vs. plain LandSandBoat?
 
-The [What's Custom](../changes/index.md) page is the authoritative list. Highlights:
+The [Retail Differences](../changes/index.md) page is the authoritative list. Highlights:
 
 - Faster EXP / CP / drop rates (current multipliers shown on the [home page](../index.md))
 - Full subjob from character creation

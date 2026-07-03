@@ -1,4 +1,4 @@
-﻿# What's Custom
+﻿# Retail Differences
 
 **Server name:** FJB Relaunch
 **Tagline:** _Extreme QoL & Fast Progression_
