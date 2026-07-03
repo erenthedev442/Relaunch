@@ -97,7 +97,6 @@ nav:
     - changes/index.md
     - Background Systems: changes/background-systems.md
   - Progression:
-    - Hunting League: progression/index.md
     - Gear:
       - Gear Guide: progression/gear-guide.md
       - Gear Vendors: progression/gear-vendors.md
@@ -105,27 +104,69 @@ nav:
       - Best-in-Slot Guide: progression/bis-guide.md
       - Gear Finder (tool): progression/gear-finder.md
       - Item Database (tool): progression/item-database.md
-    - Core Systems:
-      - HNM Kings: progression/hnm.md
-      - Reforge System: progression/reforge.md
-      - Hunter's Guild: progression/hunters-guild.md
+    - Augmenting:
+      - Start Here (Guide): progression/augmenting-guide.md
+      - Augment Moogle: progression/augments.md
+      - Augment Sage: progression/augment-sage.md
+      - Augment Calculator: progression/augment-calculator.md
+    - Advancement:
       - Prestige / Ascension: progression/prestige.md
       - Job Rebirth: progression/job-rebirth.md
+      - Reforge System: progression/reforge.md
+      - Job Mastery: endgame/job-mastery.md
+      - Spell & Skill Mastery: progression/spell-mastery.md
       - Achievements: progression/achievements.md
+    - Prime Weapons:
       - Prime Weapon Trials: progression/prime-trials.md
       - Prime Armory: progression/prime-armory.md
-    - Regular Activities:
-      - Daily Board: progression/daily-board.md
-      - Weekly Hunt Board: progression/weekly-hunts.md
-      - Game Master (Wave Mode): progression/game-master.md
-      - Login Rewards: progression/login-rewards.md
     - Job & Build:
       - Cross-Job Abilities: progression/cross-job-abilities.md
       - Cross-Job Traits: progression/cross-job-traits.md
       - Subjob EXP Share: progression/subjob-exp.md
       - Adventuring Fellow: progression/fellow-companion.md
-      - Spell & Skill Mastery: progression/spell-mastery.md
-    - NPCs & Services:
+  - Endgame:
+    - HNM Kings: progression/hnm.md
+    - High-Tier Battlefields: endgame/high-tier-battlefields.md
+    - Dynamis - Divergence: endgame/dynamis-divergence.md
+    - Nyzul Isle: endgame/nyzul-isle.md
+    - Abyssea NMs: endgame/abyssea-nms.md
+    - Affinity NMs: endgame/affinity-nms.md
+    - Voidwatch: endgame/voidwatch.md
+    - Voidspire: endgame/voidspire.md
+    - Star-Devourer Raid: endgame/star-devourer.md
+    - Unity Concord: endgame/unity-concord.md
+    - Dungeons: endgame/dungeons.md
+  - Activities & Events:
+    - Solo Challenges:
+      - Endless Tower: endgame/endless-tower.md
+      - Apex Trials & Paragon: endgame/apex-paragon.md
+      - The Gauntlet: endgame/the-gauntlet.md
+      - Colosseum: endgame/colosseum.md
+      - Maat's Challenge: endgame/maats-challenge.md
+      - Game Master (Wave Mode): progression/game-master.md
+    - Tasks & Boards:
+      - Hunting League: progression/index.md
+      - Daily Board: progression/daily-board.md
+      - Weekly Hunt Board: progression/weekly-hunts.md
+      - Hunter's Guild: progression/hunters-guild.md
+      - Login Rewards: progression/login-rewards.md
+      - Treasure Hunts: endgame/treasure-hunts.md
+    - Scheduled Events:
+      - Scheduled Invasions: endgame/invasions.md
+      - Tournament: endgame/tournament.md
+      - Seasonal Events: endgame/seasonal-events.md
+    - Diversions:
+      - Chocobo Derby: endgame/chocobo-derby.md
+      - Casino: endgame/casino.md
+      - Provisioners' League: endgame/provisioners-league.md
+  - Economy & Services:
+    - Cosmetic Boutique: economy/cosmetic-boutique.md
+    - Sparks Exchange: economy/sparks-exchange.md
+    - Gil Exchange: economy/gil-exchange.md
+    - Reforge Mark Exchange: economy/reforge-mark-exchange.md
+    - Home Point Network: economy/home-point.md
+    - Race Changer: economy/race-changer.md
+    - NPCs & Hubs:
       - Leafallia (Endgame Hub): progression/leafallia.md
       - Celennia Library (Beginner Hub): progression/library.md
       - Gemma: progression/skoll.md
@@ -135,42 +176,6 @@ nav:
     - Server Info:
       - Quality of Life: progression/server-features.md
       - Death Penalty: progression/death-penalty.md
-  - Endgame & Events:
-    - Dungeons: endgame/dungeons.md
-    - High-Tier Battlefields: endgame/high-tier-battlefields.md
-    - Dynamis - Divergence: endgame/dynamis-divergence.md
-    - Nyzul Isle: endgame/nyzul-isle.md
-    - Abyssea NMs: endgame/abyssea-nms.md
-    - Affinity NMs: endgame/affinity-nms.md
-    - Voidwatch: endgame/voidwatch.md
-    - Unity Concord: endgame/unity-concord.md
-    - Star-Devourer Raid: endgame/star-devourer.md
-    - Maat's Challenge: endgame/maats-challenge.md
-    - Voidspire: endgame/voidspire.md
-    - Endless Tower: endgame/endless-tower.md
-    - Apex Trials & Paragon: endgame/apex-paragon.md
-    - The Gauntlet: endgame/the-gauntlet.md
-    - Job Mastery: endgame/job-mastery.md
-    - Colosseum: endgame/colosseum.md
-    - Scheduled Invasions: endgame/invasions.md
-    - Treasure Hunts: endgame/treasure-hunts.md
-    - Chocobo Derby: endgame/chocobo-derby.md
-    - Provisioners' League: endgame/provisioners-league.md
-    - Casino: endgame/casino.md
-    - Tournament: endgame/tournament.md
-    - Seasonal Events: endgame/seasonal-events.md
-  - Economy & Services:
-    - Cosmetic Boutique: economy/cosmetic-boutique.md
-    - Sparks Exchange: economy/sparks-exchange.md
-    - Gil Exchange: economy/gil-exchange.md
-    - Reforge Mark Exchange: economy/reforge-mark-exchange.md
-    - Home Point Network: economy/home-point.md
-    - Race Changer: economy/race-changer.md
-  - Augmenting:
-    - Start Here (Guide): progression/augmenting-guide.md
-    - Augment Moogle: progression/augments.md
-    - Augment Sage: progression/augment-sage.md
-    - Augment Calculator: progression/augment-calculator.md
   - Community:
     - community/players/index.md
     - Server Status: community/status.md
