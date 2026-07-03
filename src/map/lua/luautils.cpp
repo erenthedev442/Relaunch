@@ -136,8 +136,18 @@ void ReportErrorToPlayer(CBaseEntity* PEntity, const std::string& message = "") 
 namespace luautils
 {
 
-std::unique_ptr<Filewatcher>           filewatcher;
-std::unordered_map<uint32, sol::table> customMenuContext;
+std::unique_ptr<Filewatcher> filewatcher;
+
+// FJB CORE PATCH [2026-07-02]: never-destroyed on purpose — same shutdown-crash
+// class as moduleutils::overrides(). A namespace-scope map of sol::table runs
+// its destructor via __run_exit_handlers on any exit() path and luaL_unrefs
+// into the already-finalized LuaJIT state -> SIGSEGV during shutdown.
+// Construct-on-first-use + intentional leak; the OS reclaims memory at exit.
+std::unordered_map<uint32, sol::table>& customMenuContext()
+{
+    static auto* m = new std::unordered_map<uint32, sol::table>();
+    return *m;
+}
 
 namespace detail
 {
@@ -5299,7 +5309,7 @@ uint16 SelectDailyItem(CLuaBaseEntity* PLuaBaseEntity, uint8 dial)
 
 std::string SetCustomMenuContext(CCharEntity* PChar, sol::table table)
 {
-    customMenuContext[PChar->id] = table;
+    customMenuContext()[PChar->id] = table;
 
     auto onStart = table["onStart"];
     if (onStart.valid())
@@ -5328,8 +5338,8 @@ std::string SetCustomMenuContext(CCharEntity* PChar, sol::table table)
 
 bool HasCustomMenuContext(CCharEntity* PChar)
 {
-    auto context = customMenuContext.find(PChar->id);
-    return context != customMenuContext.end();
+    auto context = customMenuContext().find(PChar->id);
+    return context != customMenuContext().end();
 }
 
 void HandleCustomMenu(CCharEntity* PChar, const std::string& selection)
@@ -5410,7 +5420,7 @@ void HandleCustomMenu(CCharEntity* PChar, const std::string& selection)
         });
     // clang-format on
 
-    const auto context = customMenuContext[PChar->id];
+    const auto context = customMenuContext()[PChar->id];
 
     if (wasCancelled || wasCancelledEvent)
     {
@@ -5465,7 +5475,7 @@ void HandleCustomMenu(CCharEntity* PChar, const std::string& selection)
         onEnd(PChar);
     }
 
-    customMenuContext.erase(PChar->id);
+    customMenuContext().erase(PChar->id);
 }
 
 SendToDBoxReturnCode SendItemToDeliveryBox(const std::string& playerName, uint16 itemId, uint32 quantity, const std::string& senderText)

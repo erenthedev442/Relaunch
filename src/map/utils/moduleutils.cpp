@@ -138,7 +138,18 @@ struct Override
 // obj.overrides = {}
 // obj.enabled = false
 
-std::vector<Override> overrides;
+// FJB CORE PATCH [2026-07-02]: never-destroyed on purpose. Each Override holds
+// a sol::object; a namespace-scope vector runs its destructor inside
+// __run_exit_handlers on any exit() path, where luaL_unref hits the
+// already-finalized LuaJIT state -> SIGSEGV -> SIGQUIT -> ~2.2G core on every
+// systemctl stop (proven: core.xi_map.1782976389.4092 = exit ->
+// ~vector<Override> -> luaL_unref). Construct-on-first-use + intentional leak
+// means no static destructor ever runs; the OS reclaims the memory at exit.
+std::vector<Override>& overrides()
+{
+    static auto* v = new std::vector<Override>();
+    return *v;
+}
 
 void LoadLuaModules(IPP mapIPP)
 {
@@ -254,10 +265,10 @@ void LoadLuaModules(IPP mapIPP)
                         }
                     }
 
-                    overrides.emplace_back(Override{ filename, name, parts, func, false });
+                    overrides().emplace_back(Override{ filename, name, parts, func, false });
                 }
 
-                if (!skipOverrideCheck && overrides.empty())
+                if (!skipOverrideCheck && overrides().empty())
                 {
                     ShowError("No overrides found in module: %s", filename);
                 }
@@ -279,12 +290,12 @@ void LoadLuaModules(IPP mapIPP)
 
 void CleanupLuaModules()
 {
-    overrides.clear();
+    overrides().clear();
 }
 
 void TryApplyLuaModules()
 {
-    for (auto& override : overrides)
+    for (auto& override : overrides())
     {
         if (!override.applied)
         {
@@ -324,7 +335,7 @@ void TryApplyLuaModules()
 
 void ReportLuaModuleUsage()
 {
-    for (auto& override : overrides)
+    for (auto& override : overrides())
     {
         if (!override.applied)
         {
