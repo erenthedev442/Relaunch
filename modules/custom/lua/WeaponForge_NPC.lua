@@ -200,7 +200,10 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
             return false
         end
 
-        local hlRank = player:getCharVar('HL_Rank')
+        -- Hunting League rank is tracked in the 'HL_Tier' charVar (1-5), set by
+        -- HuntingLeague.lua's setTier(). ('HL_Rank' was a phantom var that was
+        -- never written, so this gate always failed and blocked every Prime forge.)
+        local hlRank = math.max(1, player:getCharVar('HL_Tier'))
         if hlRank < cost.hlRank then
             player:printToPlayer(
                 string.format('[Weapon Forge] You need Hunting League Rank %d or higher (you are Rank %d).',
