@@ -59,6 +59,7 @@ _NPC_FILES: dict[str, str] = {
     # GM Home
     "dungeon_guide":     "DungeonInstances.lua",
     "test_dummy":        "test_dummy_catalog.lua",
+    "weapon_forger":     "WeaponForge_NPC.lua",
 }
 
 # Raw zone id -> friendly display name (reads naturally after "in ...").

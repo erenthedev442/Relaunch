@@ -134,6 +134,7 @@ def main() -> int:
         gauntlet,
         unity_concord,
         affinity_nms,
+        weapon_forge,
     )
 
     # Snapshot existing last-updated footers BEFORE any generator runs.
@@ -295,6 +296,7 @@ def main() -> int:
         ("gauntlet",             gauntlet),
         ("unity_concord",        unity_concord),
         ("affinity_nms",         affinity_nms),
+        ("weapon_forge",         weapon_forge),
         # differentiators renders why-legendary.md's "What Legendary Does
         # Differently" list from systems_registry.py and writes a drift report
         # of any system detail page that isn't featured. Runs before
