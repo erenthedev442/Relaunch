@@ -1,48 +1,18 @@
 @echo off
-REM ============================================================
-REM  Legendary FFXI - Sync Lua content to Azure (no restart)
-REM ============================================================
-REM  Pushes modules/custom + scripts to the live Azure server.
-REM  NO restart, NO SQL, NO C++ rebuild, NO DB changes.
-REM
-REM  The Azure FileWatcher hot-reloads changed Lua files instantly.
-REM  Safe for: catalog edits, command files, script tweaks.
-REM
-REM  NOT sufficient for: new addOverride modules, C++ changes,
-REM  SQL schema/data changes -- use deploy-everything.bat for those.
-REM ============================================================
-setlocal
-set "KEY=C:\Users\richa\Downloads\ffxi-server_key.pem"
-set "HOST=azureuser@172.215.213.23"
-set "SRC=D:\server"
-set "REMOTE=/home/azureuser/server"
-set "TGZ=%TEMP%\fjb_lua.tgz"
-set "SSHOPT=-o StrictHostKeyChecking=accept-new"
-
 echo.
-echo  Packing modules/custom + scripts...
-REM --exclude=scripts/specs is REQUIRED: scripts/specs/ holds ---@meta tooling
-REM stubs (core/Globals.lua etc.). If extracted over the LIVE tree, the FileWatcher
-REM hot-reloads them and their empty `function GetSystemTime() end` stubs CLOBBER
-REM the real C++ global bindings -> GetSystemTime()/Vanadiel*/GetZone return nil
-REM server-wide (mob-roam + game-hour error flood). Never ship specs to a live box.
-tar -czf "%TGZ%" -C "%SRC%" --exclude=scripts/specs modules/custom scripts
-if errorlevel 1 ( echo  ERROR: tar failed. & pause & exit /b 1 )
-
-echo  Uploading to Azure...
-scp -i "%KEY%" %SSHOPT% "%TGZ%" %HOST%:/tmp/fjb_lua.tgz
-if errorlevel 1 ( echo  ERROR: upload failed. & pause & exit /b 1 )
-del "%TGZ%" >nul 2>&1
-
-echo  Extracting on Azure (no restart)...
-ssh -i "%KEY%" %SSHOPT% %HOST% "sudo tar -xzf /tmp/fjb_lua.tgz -C %REMOTE% --no-same-owner && sudo chown -R xi:xi %REMOTE%/modules/custom %REMOTE%/scripts && rm -f /tmp/fjb_lua.tgz && echo DONE"
-if errorlevel 1 ( echo  ERROR: extract failed. & pause & exit /b 1 )
-
+echo  =================================================================
+echo   DISABLED (2026-07-02) -- do not use from the RELAUNCH worktree.
 echo.
-echo  ============================================================
-echo   Content synced. FileWatcher will hot-reload Lua changes.
-echo   If you added a new addOverride module, a map restart is
-echo   still needed -- run deploy-everything.bat for that.
-echo  ============================================================
+echo   This bat was a stale copy from the Legendary branch and still
+echo   targeted the LIVE server (/home/azureuser/server). Running it
+echo   from D:\server_relaunch sprayed relaunch src/ into the live
+echo   tree, so every later live rebuild silently baked in relaunch
+echo   code (recurring Martial Wraps / Giuoco Grip regression).
+echo.
+echo   Deploy LIVE      from D:\server (Deploy Everything).
+echo   Deploy RELAUNCH  with relaunch-rebuild.bat / relaunch-*.bat
+echo                    (targets /home/azureuser/relaunch).
+echo  =================================================================
 echo.
 pause
+exit /b 1
