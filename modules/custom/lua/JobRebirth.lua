@@ -87,23 +87,51 @@ end
 -- that job is live, so a later remove reads back exactly what was added --
 -- keeping addMod/delMod balanced across job swaps.
 -----------------------------------
+-- Overflow-proof additive grant (ported from Legendary e605736222): clamp a
+-- mod's running TOTAL to +/-31000 so a raw addMod can never wrap the int16
+-- mod store (m_modStat). SIGN-AWARE by construction: positive amounts clamp
+-- toward +cap, negative amounts (Phys.DT-/Mag.DT-, perLevel -100) toward
+-- -cap. NOTE: Legendary's first version floored adds at 0 and silently
+-- discarded negative grants -- do not reintroduce a positive-only clamp.
+local function safeClampAdd(cur, amount, cap)
+    if amount >= 0 then
+        return math.max(0, math.min(amount, cap - cur))   -- never push above +cap
+    end
+    return math.min(0, math.max(amount, -cap - cur))      -- never push below -cap
+end
+
+local function safeAddMod(entity, modId, amount, cap)
+    cap = cap or 31000
+    local add = safeClampAdd(entity:getMod(modId), amount, cap)
+    if add ~= 0 then entity:addMod(modId, add) end
+end
+
+-- Clamp removal to this system's own contribution, sign-aware: never strip
+-- past 0 in either direction (a strip of a negative grant must not ADD).
+local function _delClamp(cur, delta)
+    if delta >= 0 then
+        return math.min(delta, math.max(0, cur))
+    end
+    return math.max(delta, math.min(0, cur))
+end
+
 local function _modAdd(player, cat, delta)
     if cat.mods then
         for _, mod in ipairs(cat.mods) do
-            player:addMod(mod, delta)
+            safeAddMod(player, mod, delta)
         end
     elseif cat.mod then
-        player:addMod(cat.mod, delta)
+        safeAddMod(player, cat.mod, delta)
     end
 end
 
 local function _modDel(player, cat, delta)
     if cat.mods then
         for _, mod in ipairs(cat.mods) do
-            player:delMod(mod, delta)
+            player:delMod(mod, _delClamp(player:getMod(mod), delta))
         end
     elseif cat.mod then
-        player:delMod(cat.mod, delta)
+        player:delMod(cat.mod, _delClamp(player:getMod(cat.mod), delta))
     end
 end
 
