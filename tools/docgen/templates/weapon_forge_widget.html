@@ -202,12 +202,21 @@ const EMPY_MAT = {
   'Shield':'Dragua\'s Scale','Instrument':'Glavoid Shell',
 };
 
+// Real Aeonic base items sold by Temprix (item_basic 29701-29714), keyed by weapon type.
+const MALFORMED = {
+  'Hand-to-Hand':'Malformed Knuckles','Dagger':'Malformed Knife','Sword':'Malformed Sword',
+  'Great Sword':'Malformed Claymore','Axe':'Malformed Axe','Great Axe':'Malformed Greataxe',
+  'Scythe':'Malformed Scythe','Polearm':'Malformed Lance','Katana':'Malformed Katana',
+  'Great Katana':'Malformed Tachi','Club':'Malformed Rod','Staff':'Malformed Staff',
+  'Archery':'Malformed Bow','Marksmanship':'Malformed Culverin',
+};
+
 const CATS = {
   prime: {
     label:'Prime', sub:'16 weapons · 4 stages',
     accent:'#c8a030', dim:'#806820',
     lore:'Weapons refined through the Prime Armory trials — the FJB-native five-trial legacy path. Earn the base weapon by clearing the Prime Trials, then upgrade it here.',
-    source:'<strong>Incomplete Prime</strong> weapons are the reward for completing all <strong>five Prime Armory Trials</strong> at the Prime Armory NPC in Leafallia. Each weapon type has its own trial chain — complete the final trial to receive your base weapon.',
+    source:'Your <strong>base Prime weapon</strong> is the reward for completing all <strong>five Prime Armory Trials</strong> at the Prime Armory NPC in Leafallia. Each weapon type has its own trial chain — complete the final trial to receive it, then forge it up through 119 / 119 II / 119 III.',
     s3lbl:'Stage III · Prime',
     forge:[
       {lbl:'Base → Stage I', mats:[['50×','Kindred\'s Seal'],['25×','High Kindred\'s Crest']], gate:'HL Rank II (Hunter)'},
@@ -237,7 +246,7 @@ const CATS = {
     label:'Relic', sub:'14 weapons · 4 stages',
     accent:'#aa2828', dim:'#621515',
     lore:'Ancient battle-relics recovered from Dynamis — the dreaming battlefield where history fights itself eternally. The oldest and most storied endgame path.',
-    source:'<strong>Incomplete Relic</strong> weapons drop from <strong>Dynamis – Divergence wave bosses</strong> (Waves 2 and 3). Each weapon type drops from a specific zone boss. Runs require a Dynamis Access Key and a full alliance. Drop rates increase at Wave 3.',
+    source:'<strong>Relic weapons</strong> drop from <strong>Dynamis – Divergence wave bosses</strong> (Waves 2 and 3). Each weapon type drops from a specific zone boss. Runs require a Dynamis Access Key and a full alliance. Drop rates increase at Wave 3. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III.',
     s3lbl:'Stage III · Relic',
     forge:[
       {lbl:'Base → Stage I', mats:[['100×','Byne Bill'],['25×','M. Silverpiece']], gate:'HL Rank III (Elite) · Dynamis – Divergence Wave 1 cleared'},
@@ -265,7 +274,7 @@ const CATS = {
     label:'Empyrean', sub:'14 weapons · 4 stages',
     accent:'#2060a0', dim:'#103860',
     lore:'Weapons shaped by the light of Abyssea — forged where the barriers between worlds grew thin and the strongest monsters walked unchecked.',
-    source:'<strong>Unfinished Empyrean</strong> weapons drop from <strong>Abyssea Marks NMs</strong> (high-tier ??? pops). Each weapon type has a corresponding NM that drops that weapon\'s specific material and the base weapon itself. Drop rates are rare at Tier I; much higher at Tier III.',
+    source:'<strong>Empyrean weapons</strong> drop from <strong>Abyssea Marks NMs</strong> (high-tier ??? pops). Each weapon type has a corresponding NM that drops that weapon\'s specific material and the weapon itself. Drop rates are rare at Tier I; much higher at Tier III. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III.',
     s3lbl:'Stage III · Empyrean',
     forge:[
       {lbl:'Base → Stage I', mats:[['2,000×','Cruor'],['50×','[see weapon]'],['10×','Ancient Beastcoin']], gate:'HL Rank III (Elite) · Abyssea Tier I NM killed'},
@@ -293,7 +302,7 @@ const CATS = {
     label:'Mythic', sub:'20 weapons · 4 stages',
     accent:'#6030a8', dim:'#3a1a68',
     lore:'Power extracted from Nyzul Isle\'s floors and the Assault campaigns — weapons older than the Crystal War. Multiple variants exist per weapon type, each aligned to a specific job.',
-    source:'<strong>Incomplete Mythic</strong> weapons drop from <strong>Nyzul Isle floor bosses</strong> (Floor 60 and above). Each floor boss drops weapon-type-specific base weapons. Floor 80 clears are required for Stage II; Floor 100 (all lamps lit) is required for Stage III. <strong>Imperial Standing</strong> is earned from all Assault missions.',
+    source:'<strong>Mythic weapons</strong> drop from <strong>Nyzul Isle floor bosses</strong> (Floor 60 and above). Each floor boss drops weapon-type-specific weapons. Floor 80 clears are required for 119 II; Floor 100 (all lamps lit) is required for 119 III. <strong>Imperial Standing</strong> is earned from all Assault missions.',
     s3lbl:'Stage III · Mythic',
     forge:[
       {lbl:'Base → Stage I', mats:[['1,000×','Imperial Standing'],['10×','Imperial Bronze Piece']], gate:'HL Rank III (Elite) · Nyzul Isle Floor 60 cleared'},
@@ -499,12 +508,15 @@ function clearChain() {
 }
 function updateChain(w) {
   const cat = CATS[activeCat];
-  const basePrefix = activeCat === 'aeonic' ? 'Malformed ' : 'Incomplete ';
+  // Base weapon: Aeonic uses the real Malformed item bought from Temprix;
+  // every other path keeps the weapon's real name (retail relics/mythics/empyreans
+  // never carry an "Incomplete" prefix — the item is named the same at every tier).
+  const baseName = activeCat === 'aeonic' ? (MALFORMED[w.type] || w.name) : w.name;
   renderCosts(cat, w.type);
-  fade(document.getElementById('wfn0'), basePrefix + w.name);
-  fade(document.getElementById('wfn1'), w.name + ' I');
-  fade(document.getElementById('wfn2'), w.name + ' II');
-  fade(document.getElementById('wfn3'), w.name);
+  fade(document.getElementById('wfn0'), baseName);
+  fade(document.getElementById('wfn1'), w.name + ' · 119');
+  fade(document.getElementById('wfn2'), w.name + ' · 119 II');
+  fade(document.getElementById('wfn3'), w.name + ' · 119 III');
   document.getElementById('wfnt0').textContent = w.type + ' · ' + w.jobs;
   document.getElementById('wfnt3').textContent = w.type + ' · ' + w.jobs;
   [0,1,2].forEach(i => {
