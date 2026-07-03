@@ -511,7 +511,7 @@ function updateChain(w) {
   document.getElementById('wfnt3').textContent = w.type + ' · ' + w.jobs;
   [0,1,2].forEach(i => {
     const m = cat.forge[i];
-    document.getElementById('wfan'+i).textContent = m ? m.mats[0][0]+'\n'+m.mats[0][1].split(' ').slice(0,2).join(' ') : '—';
+    document.getElementById('wfan'+i).textContent = m ? m.mats[0][0]+' '+m.mats[0][1].split(' ').slice(0,2).join(' ') : '—';
   });
 }
 
