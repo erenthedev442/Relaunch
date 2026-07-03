@@ -157,22 +157,10 @@
 </div>
 
 <div class="chain-wrap">
-  <div class="chain" id="wfChain">
-    <div class="stg s0" id="wfs0"><div class="stg-lbl">Base · Earned</div><div class="stg-name empty" id="wfn0">—</div><div class="stg-note" id="wfnt0"></div></div>
-    <div class="arr"><div class="al"></div><div class="ah"></div><div class="an" id="wfan0">—</div></div>
-    <div class="stg s1" id="wfs1"><div class="stg-lbl">Stage I</div><div class="stg-name empty" id="wfn1">—</div><div class="stg-note">First Forge</div></div>
-    <div class="arr"><div class="al"></div><div class="ah"></div><div class="an" id="wfan1">—</div></div>
-    <div class="stg s2" id="wfs2"><div class="stg-lbl">Stage II</div><div class="stg-name empty" id="wfn2">—</div><div class="stg-note">Second Forge</div></div>
-    <div class="arr"><div class="al"></div><div class="ah"></div><div class="an" id="wfan2">—</div></div>
-    <div class="stg s3" id="wfs3"><canvas id="wfEc"></canvas><div class="stg-lbl" id="wfS3lbl">Stage III · Final</div><div class="stg-name empty" id="wfn3">—</div><div class="stg-note" id="wfnt3" style="position:relative;z-index:1;"></div></div>
-  </div>
+  <div class="chain" id="wfChain"></div>
 </div>
 
-<div class="cost-row" id="wfCostRow">
-  <div class="cc"><div class="cc-hd h1">Base → Stage I</div><ul class="ml" id="wfc1"></ul><div class="mg" id="wfg1"></div></div>
-  <div class="cc"><div class="cc-hd h2">Stage I → Stage II</div><ul class="ml" id="wfc2"></ul><div class="mg" id="wfg2"></div></div>
-  <div class="cc"><div class="cc-hd h3">Stage II → Stage III</div><ul class="ml" id="wfc3"></ul><div class="mg" id="wfg3"></div></div>
-</div>
+<div class="cost-row" id="wfCostRow"></div>
 
 <div class="filt-row" id="wfFiltRow"></div>
 <div class="wg" id="wfWgrid"></div>
@@ -378,16 +366,26 @@ const CATS = {
   },
 };
 
+// ── REAL CATALOG DATA ─────────────────────────────────────────────────────────
+// Injected by tools/docgen/generators/weapon_forge.py from weapon_forge_catalog.lua.
+// Keyed REAL[category][weaponType] = { names:[...], labels:[...], forge:[{to,mats,gate}] }.
+// names.length === forge.length + 1 (base weapon + one result per forge step).
+// Only the two implemented paths (prime, aeonic) are populated; the rest fall back
+// to the generic retail-tier model built from the CATS[cat].forge display data.
+const REAL = /*__REAL_DATA__*/ {};
+
 // ── STATE ──────────────────────────────────────────────────────────────────────
 let activeCat = 'prime', activeFilter = 'All', selCard = null;
 const widget = document.querySelector('.wf-widget');
 
 // ── EMBER CANVAS ──────────────────────────────────────────────────────────────
-const ec = document.getElementById('wfEc');
+// Created once, moved into the last (final) chain box each time the chain rebuilds.
+const ec = document.createElement('canvas');
+ec.id = 'wfEc';
 const ex = ec.getContext('2d');
 const embers = [];
-function resizeEc() { const r = ec.parentElement.getBoundingClientRect(); ec.width=r.width; ec.height=r.height; }
-resizeEc(); window.addEventListener('resize', resizeEc);
+function resizeEc() { if (!ec.parentElement) return; const r = ec.parentElement.getBoundingClientRect(); ec.width=r.width || 160; ec.height=r.height || 110; }
+window.addEventListener('resize', resizeEc);
 class Ember {
   constructor() { this.reset(); }
   reset() { this.x=Math.random()*ec.width; this.y=ec.height+3; this.vx=(Math.random()-.5)*.5; this.vy=-(Math.random()*.65+.2); this.life=0; this.max=75+Math.random()*65; this.r=.7+Math.random()*1.3; }
@@ -428,8 +426,6 @@ function selectCat(k) {
   lore.classList.add('fading');
   setTimeout(() => { lore.innerHTML = cat.lore; lore.classList.remove('fading'); }, 160);
   document.getElementById('wfSrcText').innerHTML = cat.source;
-  document.getElementById('wfS3lbl').textContent = cat.s3lbl;
-  renderCosts(cat, null);
   activeFilter = 'All'; selCard = null;
   buildFilter(k); buildGrid(k, 'All');
   clearChain();
@@ -445,19 +441,48 @@ function resolveMatName(name, weaponType) {
   if (activeCat === 'empyrean') return EMPY_MAT[weaponType] || name;
   return RELIC_MAT[weaponType] || name;
 }
-function renderCosts(cat, weaponType) {
-  cat.forge.forEach((step, i) => {
-    const ml = document.getElementById('wfc' + (i+1));
-    ml.innerHTML = step.mats.map(([q,n]) => {
-      const resolved = weaponType ? resolveMatName(n, weaponType) : n;
-      const isResolved = weaponType && n === '[see weapon]';
-      return matLi(q, resolved, isResolved);
-    }).join('') + matLi('+','Previous stage weapon (consumed)');
-    document.getElementById('wfg' + (i+1)).textContent = 'GATE · ' + step.gate;
-  });
-  [0,1,2].forEach(i => {
-    const m = CATS[activeCat].forge[i];
-    document.getElementById('wfan'+i).textContent = m ? m.mats[0][0] : '—';
+// Build the unified chain model for a weapon: real catalog data where we have it
+// (prime, aeonic), otherwise the generic retail-tier model.
+function getChainModel(w) {
+  const real = REAL[activeCat] && REAL[activeCat][w.type];
+  if (real) {
+    return {
+      names:  real.names.slice(),
+      labels: real.labels.slice(),
+      forge:  real.forge.map(s => ({ to: s.to, mats: s.mats.map(m => m.slice()), gate: s.gate })),
+      sub:    w.type + ' · ' + w.jobs,
+    };
+  }
+  const cat = CATS[activeCat];
+  return {
+    names:  [ w.name, w.name + ' · 119', w.name + ' · 119 II', w.name + ' · 119 III' ],
+    labels: [ 'Base · Earned', 'Stage I', 'Stage II', cat.s3lbl ],
+    forge:  cat.forge.map(s => ({
+      to:   null,
+      mats: s.mats.map(([q,n]) => [q, resolveMatName(n, w.type)]),
+      gate: s.gate,
+    })),
+    sub: w.type + ' · ' + w.jobs,
+  };
+}
+
+function boxClass(i, n) { if (i === 0) return 's0'; if (i === n-1) return 's3'; if (i === 1) return 's1'; return 's2'; }
+
+function buildCosts(model) {
+  const row = document.getElementById('wfCostRow');
+  row.innerHTML = '';
+  model.forge.forEach((step, i) => {
+    const card = document.createElement('div');
+    card.className = 'cc';
+    const hcls = i === 0 ? 'h1' : (i === model.forge.length - 1 ? 'h3' : 'h2');
+    const from   = (model.labels[i]   || '').split(' · ')[0];
+    const target = (model.labels[i+1] || 'Next').split(' · ')[0];
+    const mats = step.mats.map(([q,n]) => matLi(q, n)).join('') + matLi('+', 'Previous stage weapon (consumed)');
+    card.innerHTML =
+      `<div class="cc-hd ${hcls}">${from} → ${target}</div>` +
+      `<ul class="ml">${mats}</ul>` +
+      `<div class="mg">GATE · ${step.gate}</div>`;
+    row.appendChild(card);
   });
 }
 
@@ -497,32 +522,46 @@ function buildGrid(k, filter) {
 }
 
 // ── CHAIN ─────────────────────────────────────────────────────────────────────
-function fade(el, html) {
-  el.style.opacity = '0';
-  setTimeout(() => { el.innerHTML = html; el.className = 'stg-name'; el.style.opacity = '1'; el.style.transition = 'opacity .18s .04s'; }, 130);
+// Renders a variable-length chain (base weapon + one box per forge step) into
+// #wfChain, moving the shared ember canvas into the final box.
+function buildChain(model, blank) {
+  const chain = document.getElementById('wfChain');
+  chain.innerHTML = '';
+  const n = model.names.length;
+  chain.style.gridTemplateColumns = '1fr' + ' 52px 1fr'.repeat(n - 1);
+  for (let i = 0; i < n; i++) {
+    const isLast = i === n - 1;
+    const box = document.createElement('div');
+    box.className = 'stg ' + boxClass(i, n);
+    const nm   = blank ? '—' : model.names[i];
+    const note = (i === 0 || isLast) ? (model.sub || '') : '';
+    box.innerHTML =
+      `<div class="stg-lbl">${model.labels[i] || ''}</div>` +
+      `<div class="stg-name${blank ? ' empty' : ''}" style="position:relative;z-index:1;">${nm}</div>` +
+      `<div class="stg-note" style="position:relative;z-index:1;">${note}</div>`;
+    if (isLast) box.insertBefore(ec, box.firstChild);
+    chain.appendChild(box);
+    if (!isLast) {
+      const arr = document.createElement('div');
+      arr.className = 'arr';
+      const qty = model.forge[i] ? model.forge[i].mats[0][0] : '';
+      arr.innerHTML = `<div class="al"></div><div class="ah"></div><div class="an">${blank ? '' : qty}</div>`;
+      chain.appendChild(arr);
+    }
+  }
+  resizeEc();
 }
 function clearChain() {
-  ['wfn0','wfn1','wfn2','wfn3'].forEach(id => { const el=document.getElementById(id); el.innerHTML='—'; el.className='stg-name empty'; });
-  ['wfnt0','wfnt3'].forEach(id => document.getElementById(id).textContent = '');
-  renderCosts(CATS[activeCat], null);
+  const rep = CATS[activeCat].weapons[0];
+  buildChain(getChainModel(rep), true);
+  document.getElementById('wfCostRow').innerHTML = '';
 }
 function updateChain(w) {
-  const cat = CATS[activeCat];
-  // Base weapon: Aeonic uses the real Malformed item bought from Temprix;
-  // every other path keeps the weapon's real name (retail relics/mythics/empyreans
-  // never carry an "Incomplete" prefix — the item is named the same at every tier).
-  const baseName = activeCat === 'aeonic' ? (MALFORMED[w.type] || w.name) : w.name;
-  renderCosts(cat, w.type);
-  fade(document.getElementById('wfn0'), baseName);
-  fade(document.getElementById('wfn1'), w.name + ' · 119');
-  fade(document.getElementById('wfn2'), w.name + ' · 119 II');
-  fade(document.getElementById('wfn3'), w.name + ' · 119 III');
-  document.getElementById('wfnt0').textContent = w.type + ' · ' + w.jobs;
-  document.getElementById('wfnt3').textContent = w.type + ' · ' + w.jobs;
-  [0,1,2].forEach(i => {
-    const m = cat.forge[i];
-    document.getElementById('wfan'+i).textContent = m ? m.mats[0][0] : '—';
-  });
+  const model = getChainModel(w);
+  const chain = document.getElementById('wfChain');
+  chain.style.transition = 'opacity .18s';
+  chain.style.opacity = '0';
+  setTimeout(() => { buildChain(model, false); buildCosts(model); chain.style.opacity = '1'; }, 120);
 }
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
