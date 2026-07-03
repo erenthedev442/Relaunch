@@ -10,7 +10,7 @@ spellObject.onMagicCastingCheck = function(caster, target, spell)
 end
 
 spellObject.onSpellCast = function(caster, target, spell)
-    local damage = xi.spells.damage.useDamageSpell(caster, target, spell)
+    local damage = caster:isPC() and xi.spells.damage.useDamageSpell(caster, target, spell) or 0
     local tier   = 3
 
     -- Check for Bio
