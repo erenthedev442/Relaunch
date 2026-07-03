@@ -32,10 +32,11 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
             local S = xi.msg.channel.SYSTEM_3
             local B = xi.msg.channel.SYSTEM_1
             playerArg:printToPlayer('[Legendary] -- Quick Tips -------------------------------------', S)
-            playerArg:printToPlayer('  LINKSHELL     - ask Jbae, Bdr, or Bro in-game for a linkpearl!', B)
+            playerArg:printToPlayer('  LINKSHELL     - ask Jbae, Bdr, Bro, Kahz or Kirin in-game for a linkpearl!', B)
             playerArg:printToPlayer('  !leaf', B)
             playerArg:printToPlayer('  !lib', B)
             playerArg:printToPlayer('  Visit the site for information ya noobs - https://www.ffxi-legendary.com/', B)
+            playerArg:printToPlayer('  If stuck logging in, message @admin in Discord', B)
         end)
     end
 end)
