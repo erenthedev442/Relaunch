@@ -74,6 +74,115 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
     -- Upgrade execution
     -- -------------------------------------------------------------------------
 
+    -- -------------------------------------------------------------------------
+    -- Item-resolution helpers shared by Prime and Aeonic paths.
+    -- -------------------------------------------------------------------------
+
+    -- Returns the item the player is trading in.
+    local function getFromItem(chain, fromStage, path)
+        if path == 'aeonic' then
+            if fromStage == 0 then return chain.aeonic.base
+            elseif fromStage == 1 then return chain.s1
+            else return chain.s2 end
+        end
+        return fromStage == 1 and chain.s1 or chain.s2
+    end
+
+    -- Returns the item the player will receive.
+    local function getToItem(chain, fromStage, path)
+        if path == 'aeonic' then
+            if fromStage == 0 then return chain.s1
+            elseif fromStage == 1 then return chain.s2
+            else return chain.aeonic.s3 end
+        end
+        return fromStage == 1 and chain.s2 or chain.s3
+    end
+
+    -- -------------------------------------------------------------------------
+    -- Aeonic upgrade execution
+    -- -------------------------------------------------------------------------
+
+    local RIFTBORN_BOULDER_ID = 4061
+
+    local function doAeonicUpgrade(player, chain, fromStage)
+        local ae       = chain.aeonic
+        local costs    = catalog.aeonicCosts
+        local stepCost = fromStage == 0 and costs.toStage1
+                      or fromStage == 1 and costs.toStage2
+                      or costs.toStage3
+        local fromItem = getFromItem(chain, fromStage, 'aeonic')
+        local toItem   = getToItem(chain, fromStage, 'aeonic')
+        local S        = xi.msg.channel.SYSTEM_3
+
+        if player:getItemCount(fromItem.id) < 1 then
+            player:printToPlayer(
+                string.format('[Weapon Forge] You no longer have the %s.', fromItem.name), S)
+            return false
+        end
+
+        local haveAtt = player:getItemCount(ae.attestationId)
+        if haveAtt < stepCost.attestations then
+            player:printToPlayer(
+                string.format('[Weapon Forge] Need %dx %s (you have %d).',
+                    stepCost.attestations, ae.attestationName, haveAtt), S)
+            return false
+        end
+
+        local haveRB = player:getItemCount(RIFTBORN_BOULDER_ID)
+        if haveRB < stepCost.riftbornBoulders then
+            player:printToPlayer(
+                string.format('[Weapon Forge] Need %dx Riftborn Boulder (you have %d).',
+                    stepCost.riftbornBoulders, haveRB), S)
+            return false
+        end
+
+        if stepCost.eschaSilt then
+            local silt = player:getCharVar('Escha_Silt')
+            if silt < stepCost.eschaSilt then
+                player:printToPlayer(
+                    string.format('[Weapon Forge] Need %d Escha Silt (you have %d).',
+                        stepCost.eschaSilt, silt), S)
+                return false
+            end
+        end
+
+        if stepCost.reforgeMarks then
+            if totalMarks(player) < stepCost.reforgeMarks then
+                player:printToPlayer(
+                    string.format('[Weapon Forge] Need %d Reforge Marks (you have %d).',
+                        stepCost.reforgeMarks, totalMarks(player)), S)
+                return false
+            end
+        end
+
+        if player:getFreeInventorySlots() == 0 then
+            player:printToPlayer('[Weapon Forge] Free an inventory slot before forging.', S)
+            return false
+        end
+
+        -- All checks passed — consume.
+        player:delItem(fromItem.id, 1)
+        player:delItem(ae.attestationId, stepCost.attestations)
+        player:delItem(RIFTBORN_BOULDER_ID, stepCost.riftbornBoulders)
+        if stepCost.eschaSilt then
+            player:setCharVar('Escha_Silt',
+                player:getCharVar('Escha_Silt') - stepCost.eschaSilt)
+        end
+        if stepCost.reforgeMarks then
+            drainMarks(player, stepCost.reforgeMarks)
+        end
+
+        player:addItem({ id = toItem.id, quantity = 1 })
+        player:printToPlayer(
+            string.format('[Weapon Forge] The %s resonates with ancient power — behold the %s!',
+                fromItem.name, toItem.name), S)
+        return true
+    end
+
+    -- -------------------------------------------------------------------------
+    -- Prime upgrade execution
+    -- -------------------------------------------------------------------------
+
     -- Check and execute the upgrade. Prints a failure reason on any shortfall;
     -- does NOT remove any items until all checks pass.
     local function doUpgrade(player, chain, fromStage)
@@ -175,18 +284,38 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
 
     local showUpgrades  -- forward decl
 
+    -- Aeonic cost line for chat print.
+    local function aeonicCostLine(chain, fromStage)
+        local ac = catalog.aeonicCosts
+        local sc = fromStage == 0 and ac.toStage1
+                or fromStage == 1 and ac.toStage2
+                or ac.toStage3
+        local parts = {
+            string.format('%dx %s', sc.attestations, chain.aeonic.attestationName),
+            string.format('%dx Riftborn Boulder', sc.riftbornBoulders),
+        }
+        if sc.eschaSilt    then parts[#parts+1] = string.format('%d Escha Silt', sc.eschaSilt) end
+        if sc.reforgeMarks then parts[#parts+1] = string.format('%d Reforge Marks', sc.reforgeMarks) end
+        return table.concat(parts, '  |  ')
+    end
+
     local function showConfirm(player, entry)
         local chain     = entry.chain
         local fromStage = entry.fromStage
-        local fromItem  = fromStage == 1 and chain.s1 or chain.s2
-        local toItem    = fromStage == 1 and chain.s2 or chain.s3
+        local path      = entry.path
+        local fromItem  = getFromItem(chain, fromStage, path)
+        local toItem    = getToItem(chain, fromStage, path)
 
         local options =
         {
             {
                 string.format('Forge %s into %s', fromItem.name, toItem.name),
                 function(p)
-                    doUpgrade(p, chain, fromStage)
+                    if path == 'aeonic' then
+                        doAeonicUpgrade(p, chain, fromStage)
+                    else
+                        doUpgrade(p, chain, fromStage)
+                    end
                     showUpgrades(p)
                 end,
             },
@@ -197,17 +326,26 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
             string.format('Forge %s?', fromItem.name),
             options)
 
-        -- Print chain + cost to chat so the player sees the full picture
-        -- before committing (customMenu title is too short for this).
-        player:printToPlayer(chainLine(chain, fromStage),   xi.msg.channel.SYSTEM_3)
-        player:printToPlayer('Cost: ' .. costLine(fromStage), xi.msg.channel.SYSTEM_3)
+        -- Print chain + cost to chat before player commits.
+        if path == 'aeonic' then
+            local ae = chain.aeonic
+            player:printToPlayer(
+                string.format('[Aeonic] %s > %s > %s > %s > %s',
+                    ae.base.name, chain.s1.name, chain.s2.name, ae.s3.name, ae.s3.name),
+                xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('Cost: ' .. aeonicCostLine(chain, fromStage), xi.msg.channel.SYSTEM_3)
+        else
+            player:printToPlayer(chainLine(chain, fromStage),   xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('Cost: ' .. costLine(fromStage), xi.msg.channel.SYSTEM_3)
+        end
     end
 
     local function showDetail(player, entry)
         local chain     = entry.chain
         local fromStage = entry.fromStage
-        local fromItem  = fromStage == 1 and chain.s1 or chain.s2
-        local toItem    = fromStage == 1 and chain.s2 or chain.s3
+        local path      = entry.path
+        local fromItem  = getFromItem(chain, fromStage, path)
+        local toItem    = getToItem(chain, fromStage, path)
 
         local options =
         {
@@ -216,10 +354,19 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                 function(p) showConfirm(p, entry) end,
             },
             { 'View full chain.', function(p)
-                p:printToPlayer(
-                    string.format('%s  |  Jobs: %s', chainLine(chain, fromStage), chain.type),
-                    xi.msg.channel.SYSTEM_3)
-                p:printToPlayer('Cost: ' .. costLine(fromStage), xi.msg.channel.SYSTEM_3)
+                if path == 'aeonic' then
+                    local ae = chain.aeonic
+                    p:printToPlayer(
+                        string.format('[Aeonic %s] %s > %s > %s > %s',
+                            chain.type, ae.base.name, chain.s1.name, chain.s2.name, ae.s3.name),
+                        xi.msg.channel.SYSTEM_3)
+                    p:printToPlayer('Cost: ' .. aeonicCostLine(chain, fromStage), xi.msg.channel.SYSTEM_3)
+                else
+                    p:printToPlayer(
+                        string.format('%s  |  Jobs: %s', chainLine(chain, fromStage), chain.type),
+                        xi.msg.channel.SYSTEM_3)
+                    p:printToPlayer('Cost: ' .. costLine(fromStage), xi.msg.channel.SYSTEM_3)
+                end
                 showDetail(p, entry)
             end },
             { 'Go back.', function(p) showUpgrades(p) end },
@@ -242,10 +389,8 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         if #upgradeable == 0 then
             player:printToPlayer(
                 '[Weapon Forge] I see no upgradeable weapons in your inventory. '
-                .. 'Begin a forge chain by obtaining a 119I weapon from the gear vendors in Escha - Zi\'Tah.',
-                xi.msg.channel.SYSTEM_3)
-            player:printToPlayer(
-                '[Weapon Forge] Chain overview: 119I (Bronze vendor) => 119II (forge) => 119III (Stage-5 Relic).',
+                .. 'Begin a Prime chain with a 119I weapon from the gear vendors in Escha - Zi\'Tah, '
+                .. 'or buy a Malformed weapon from Temprix in Reisenjima for the Aeonic path.',
                 xi.msg.channel.SYSTEM_3)
             return
         end
@@ -253,15 +398,21 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         local options = {}
         -- Sort by weapon type label for consistent ordering.
         table.sort(upgradeable, function(a, b)
-            return a.chain.type < b.chain.type
+            local ak = (a.path or '') .. a.chain.type
+            local bk = (b.path or '') .. b.chain.type
+            return ak < bk
         end)
         for _, entry in ipairs(upgradeable) do
-            local fromItem = entry.fromStage == 1 and entry.chain.s1 or entry.chain.s2
-            local toItem   = entry.fromStage == 1 and entry.chain.s2 or entry.chain.s3
+            local fromItem = getFromItem(entry.chain, entry.fromStage, entry.path)
+            local toItem   = getToItem(entry.chain, entry.fromStage, entry.path)
+            local label    = entry.path == 'aeonic'
+                and string.format('[Aeonic] %s > %s', fromItem.name, toItem.name)
+                or  string.format('%s > %s', fromItem.name, toItem.name)
+            local entryCapture = entry
             options[#options + 1] =
             {
-                string.format('%s > %s', fromItem.name, toItem.name),
-                function(p) showDetail(p, entry) end,
+                label,
+                function(p) showDetail(p, entryCapture) end,
             }
         end
         options[#options + 1] = { 'Not today.', function() end }

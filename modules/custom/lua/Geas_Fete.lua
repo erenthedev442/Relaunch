@@ -38,6 +38,26 @@ local RIFTBORN_BOULDER = 4061  -- riftborn boulder
 local RIFTCINDER       = 3499  -- pinch of riftcinder
 local ESCHALIXIR_2     = 9086  -- eschalixir +2
 
+-- Attestations (retail IDs 1556-1569) — weapon-type-specific Aeonic materials.
+-- Bosses (tier 4) drop 1-2 random Attestations; players collect the one
+-- matching their desired Aeonic weapon type.
+local ATTESTATIONS = {
+    1556, -- attestation_of_might          (H2H     / Godhands)
+    1557, -- attestation_of_celerity       (Dagger  / Aeneas)
+    1558, -- attestation_of_glory          (Sword   / Sequence)
+    1559, -- attestation_of_righteousness  (GSword  / Lionheart)
+    1560, -- attestation_of_bravery        (Axe     / Tri-edge)
+    1561, -- attestation_of_force          (GAxe    / Chango)
+    1562, -- attestation_of_vigor          (Scythe  / Anguta)
+    1563, -- attestation_of_fortitude      (Polearm / Trishula)
+    1564, -- attestation_of_legerity       (Katana  / Heishi Shorinken)
+    1565, -- attestation_of_decisiveness   (GKatana / Dojikiri Yasutsuna)
+    1566, -- attestation_of_sacrifice      (Club    / Tishtrya)
+    1567, -- attestation_of_virtue         (Staff   / Khatvanga)
+    1568, -- attestation_of_transcendence  (Archery / Fail-not)
+    1569, -- attestation_of_harmony        (Marks   / Fomalhaut)
+}
+
 -- ===================================================================
 -- NM CATALOG
 -- Fields:
@@ -171,6 +191,15 @@ local function awardDrops(player, zoneId, def)
     if rc  > 0 then player:addItem({ id = RIFTCINDER,       quantity = rc  }) end
     if rb  > 0 then player:addItem({ id = RIFTBORN_BOULDER, quantity = rb  }) end
     if lix > 0 then player:addItem({ id = ESCHALIXIR_2,     quantity = lix }) end
+
+    -- Boss only: 1 random Attestation (Aeonic path material).
+    -- 40% chance of a second random Attestation.
+    if t == 4 then
+        player:addItem({ id = ATTESTATIONS[math.random(#ATTESTATIONS)], quantity = 1 })
+        if math.random() < 0.40 then
+            player:addItem({ id = ATTESTATIONS[math.random(#ATTESTATIONS)], quantity = 1 })
+        end
+    end
 end
 
 -- ===================================================================
