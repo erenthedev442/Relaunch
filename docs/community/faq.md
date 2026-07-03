@@ -1,6 +1,6 @@
 ﻿# FAQ
 
-Common questions about playing on the Relaunch server FFXI. If you have a question that isn't answered here, ask in our [Discord](https://discord.gg/ZKdYbAJF) or open an issue on the [project repo](https://github.com/richardknutzjr/FFXI-Private-Server-FJB).
+Common questions about playing on the Relaunch server FFXI. If you have a question that isn't answered here, ask in our [Discord](https://discord.gg/Yd3Kn3dN36) or open an issue on the [project repo](https://github.com/richardknutzjr/FFXI-Private-Server-FJB).
 
 ## Getting Started
 
@@ -62,7 +62,7 @@ Yes — `!autojp` and `!automerits`. Both spread points breadth-first across cat
 
 - [Leaderboards](leaderboards.md) — top players by Hunt Marks, NM kills, lifetime currency earned.
 - [Player Profiles](players/index.md) — browse individual character pages.
-- [Discord](https://discord.gg/ZKdYbAJF) — live chat, group-up posts, server announcements.
+- [Discord](https://discord.gg/Yd3Kn3dN36) — live chat, group-up posts, server announcements.
 
 ### Can I play solo?
 
@@ -74,18 +74,18 @@ Yes. Almost all custom content (Hunting League, Reforge System, Weekly Hunts) ca
 
 ### The server's down / I can't connect. What do I do?
 
-1. Check the [Discord](https://discord.gg/ZKdYbAJF) #server-status channel first — outages and maintenance windows are announced there.
+1. Check the [Discord](https://discord.gg/Yd3Kn3dN36) #server-status channel first — outages and maintenance windows are announced there.
 2. If the server is up but you can't connect, verify your client is pointed at the right login server (see [Connect to Server](../getting-started/connect.md)).
 
 ### I think I found a bug. Where do I report it?
 
 Two options:
 - **[GitHub Issues](https://github.com/richardknutzjr/FFXI-Private-Server-FJB/issues)** — preferred for reproducible bugs with clear steps.
-- **[Discord](https://discord.gg/ZKdYbAJF) #bug-reports** — for quick reports or "is this intended?" questions.
+- **[Discord](https://discord.gg/Yd3Kn3dN36) #bug-reports** — for quick reports or "is this intended?" questions.
 
 ### My character got stuck / I lost an item / something broke. Can a GM help?
 
-Ping a GM in [Discord](https://discord.gg/ZKdYbAJF). Specify your character name, what happened, and roughly when. Most stuck-character and accidental-deletion situations can be resolved.
+Ping a GM in [Discord](https://discord.gg/Yd3Kn3dN36). Specify your character name, what happened, and roughly when. Most stuck-character and accidental-deletion situations can be resolved.
 
 ---
 
@@ -107,7 +107,7 @@ Yes — daily backups of the character database are taken. In a worst case, the 
 
 ---
 
-_Have a question that should be on this page? Ping a GM in [Discord](https://discord.gg/ZKdYbAJF) and we'll add it._
+_Have a question that should be on this page? Ping a GM in [Discord](https://discord.gg/Yd3Kn3dN36) and we'll add it._
 
 ---
 

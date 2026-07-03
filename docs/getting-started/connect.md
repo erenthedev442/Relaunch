@@ -63,7 +63,7 @@ Prefer to edit `Windower4/settings/settings.xml` by hand? The profile looks like
 : Your client needs to be the current retail version. Run the PlayOnline updater to patch up, then try again.
 
 **Stuck on the login screen / no response**
-: Check the [Discord](https://discord.gg/MsZqvuDn) #server-status channel — the server may be down for maintenance.
+: Check the [Discord](https://discord.gg/Yd3Kn3dN36) #server-status channel — the server may be down for maintenance.
 
 ---
 
