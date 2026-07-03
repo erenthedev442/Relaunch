@@ -120,11 +120,18 @@ $DOCGEN_CMD || { echo "[FATAL] docgen failed"; exit 1; }
 echo "[2/4] mkdocs build (config: $MKDOCS_CFG)..."
 mkdocs build --clean -f "$MKDOCS_CFG" || { echo "[FATAL] mkdocs build failed"; exit 1; }
 
-players=$(find site -path '*community/players*' -name '*.html' 2>/dev/null | wc -l)
-echo "[info] built $players player page(s)"
+# Count PROFILE pages only: each player renders to community/players/<name>/index.html
+# (depth >= 2). The roster placeholder is community/players/index.html (depth 1) and
+# is excluded, so this is 0 ONLY when xi_relaunch was unreachable during docgen.
+players=$(find site/community/players -mindepth 2 -name '*.html' 2>/dev/null | wc -l)
+echo "[info] built $players player profile page(s)"
 if [ "$players" -eq 0 ]; then
-    echo "[WARN] 0 player pages -- xi_relaunch DB unreachable or LIVE_ROOT wrong"
-    echo "[WARN] deploying anyway for doc-only changes"
+    # DB was down -> the DB-backed pages (players, leaderboards, status) still hold
+    # their last-committed content. Publishing that would republish stale/pre-wipe
+    # data. Keep the last-good live site instead and retry next cycle.
+    echo "[SKIP] 0 player profiles built -- xi_relaunch DB unreachable. Skipping deploy to"
+    echo "       avoid publishing stale data; last-good site stays live. Retrying next cycle."
+    exit 0
 fi
 
 echo "[2b/4] injecting site-wide auth gate (Basic Auth — all routes)..."

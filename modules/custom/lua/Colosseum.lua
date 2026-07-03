@@ -585,7 +585,7 @@ showHeraldMenu = function(player)
         options[#options + 1] = { 'My record', function(p)
             local w, l = p:getCharVar('Col_Wins') or 0, p:getCharVar('Col_Losses') or 0
             p:printToPlayer(string.format(
-                '[Colosseum] Rating %d (best %d) | %d-%d | Ladder size: %d. Rankings: legendary-ffxi.pages.dev',
+                '[Colosseum] Rating %d (best %d) | %d-%d | Ladder size: %d. Rankings: fjb-relaunch.pages.dev',
                 getRating(meId), p:getCharVar('Col_Best_Rating') or 0, w, l,
                 #listChampions(-1)),
                 xi.msg.channel.SYSTEM_3)

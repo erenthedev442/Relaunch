@@ -152,10 +152,10 @@ Infamy is spent at the **Infamy Vendor** in <!--npc:infamy_vendor-->Leafallia<!-
 |---|---|
 | Accessories (Fotia Belt, earrings, rings) | 250–300 Infamy |
 | Armor pieces (Nyame, Jhakri) | 400–800 Infamy |
-| Relic / Aeonic weapons | 800 Infamy |
-| Mythic weapons | 10,000 Infamy |
+| Relic / Aeonic weapons | 5,000 Infamy |
+| Mythic weapons | 5,000 Infamy |
 
-A party running Heroes NMs without trusts earns **180 Infamy per kill** — enough for a full Nyame body in under 5 kills, and a Mythic weapon in roughly 55 kills.
+A party running Heroes NMs without trusts earns **180 Infamy per kill** — enough for a full Nyame body in under 5 kills, and a Mythic weapon in roughly 28 kills.
 
 ---
 

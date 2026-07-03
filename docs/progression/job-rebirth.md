@@ -115,28 +115,28 @@ The boost menu is the same catalog [Ascension](prestige.md) offers. Cheaper stat
 | TP Bonus | +10 TP Bonus / level · max +500 | 2 |
 | Quad Attack | +1% Quad Attack / level · max 50% | 2 |
 | Dual Wield | +1% Dual Wield / level · max 25% | 2 |
-| Critical Rate | +1% Crit / level · max 50% | 2 |
-| Critical Damage | +2% Crit Dmg / level · max 100% | 3 |
+| Critical Rate | +1% Crit / level · max 20% | 2 |
+| Critical Damage | +2% Crit Dmg / level · max 40% | 3 |
 | Counter | +1 Counter / level · max +50 | 2 |
 | Parry Rate | +1% Parry / level · max 25% | 1 |
 | Subtle Blow | +1 Subtle Blow / level · max +50 | 1 |
-| Weaponskill Damage | +2% WS Dmg / level · max 100% | 3 |
-| Skillchain Damage | +2% SC Dmg / level · max 100% | 3 |
+| Weaponskill Damage | +2% WS Dmg / level · max 40% | 3 |
+| Skillchain Damage | +2% SC Dmg / level · max 40% | 3 |
 
 **Mitigation**
 
 | Stat | Per Level | RP / Level |
 |---|---|---:|
-| Physical Dmg Taken − | −1% Phys. DT / level · max −25% | 3 |
-| Magic Dmg Taken − | −1% Mag. DT / level · max −25% | 3 |
-| Haste | +1% Haste / level · max 25% | 3 |
+| Physical Dmg Taken − | −1% Phys. DT / level · max −15% | 3 |
+| Magic Dmg Taken − | −1% Mag. DT / level · max −15% | 3 |
+| Haste | +1% Haste / level · max 15% | 3 |
 
 **Magic Support**
 
 | Stat | Per Level | RP / Level |
 |---|---|---:|
 | Spell Interrupt Down | +1% SIRD / level · max 50% | 2 |
-| Fast Cast | +1% Fast Cast / level · max 50% | 2 |
+| Fast Cast | +1% Fast Cast / level · max 30% | 2 |
 | Enspell Damage | +10 Enspell Dmg / level · max +500 | 2 |
 | Cure Potency | +2% Cure Potency / level · max +50% | 2 |
 | Refresh | +1 Refresh / level · max +10 MP/tick | 3 |
@@ -192,7 +192,7 @@ Rebirth and [Ascension](prestige.md) are **separate systems that share one menu 
 - **Permanent and self-restoring.** What you buy with RP re-applies automatically on every zone-in and job change, and survives every future rebirth.
 - **Stacks with Ascension.** The two systems cap independently, so a fully-invested character can raise the same stat through both.
 - **The EXP penalty is per-job.** A reborn job's penalty never touches your other jobs, and lifts the moment you switch off it.
-- **No rebirth cap.** Rebirth a job as many times as you are willing to re-level it. The EXP penalty plateaus at −80% at the 20th rebirth, so the commitment stays steady once you reach the cap.
+- **No rebirth cap.** Rebirth a job as many times as you are willing to re-level it. The EXP penalty plateaus at −90% at the 29th rebirth, so the commitment stays steady once you reach the cap.
 
 ---
 

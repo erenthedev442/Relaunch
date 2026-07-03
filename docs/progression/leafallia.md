@@ -32,7 +32,7 @@ Leafallia is the relaunch's **endgame hub**. Once you're geared and into the mas
 | **HTBF Vendor** | Buy the phantom gems that open High-Tier Battlefields. |
 | **Infamy Vendor** | Spend infamy (from Abyssea hunts, Invasions, and the weekly Raid) on gear. |
 | **Voidwatch Officer** | Buy Voidstones and spend Voidwatch shards at the Atmacite Refiner. |
-| **Skoll** | Add the Skoll trust to your roster. |
+| **Gemma** | Add the Gemma trust to your roster. |
 
 ---
 

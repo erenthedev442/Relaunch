@@ -68,7 +68,7 @@ Separately from the roll band, each **catalyst** has a tier (T0–T5) — the mi
 - **Stack one stat for a big swing.** 5× the same catalyst on one piece concentrates the bonus where you want it.
 - **Start the Augment Sage early.** Mastery ranks unlock automatically as you hit Hunting League Rank / Prestige Level milestones — each rank lifts your worst rolls and raises crit chance. Don't wait.
 - **Re-augment after every tier-up.** Same gear, same catalysts, a strictly higher band — a tier-up re-roll is never a downgrade.
-- **Browse the full catalog** on the [Augment Moogle page](augments.md#catalyst--augment-catalog) — ~300 catalysts across 16 stat families, each with its full per-trade stat values.
+- **Browse the full catalog** on the [Augment Moogle page](augments.md#catalyst--augment-catalog) — 227 catalysts across a wide range of stat families, each with its full per-trade stat values.
 
 ## A few rules to remember
 

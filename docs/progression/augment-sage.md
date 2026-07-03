@@ -135,7 +135,7 @@ No. With every charvar at default 0, the boost is 0 and each augment lands at it
 All of them. The crit is rolled **once per trade**, before the catalysts are processed. If it lands, the achievement boost jumps sharply for every selection in that trade (a crit is one of the three ingredients of a maxed augment). If it doesn't, none of them get it. The Moogle prints `** Critical augment! **` so you know before you confirm.
 
 **What if I trade 5 catalysts from different categories?**
-Each catalyst's augment is calculated independently for affinity (so only the categories you have affinity for get the 1.5× boost), but the mastery multiplier and crit apply to all of them.
+Each catalyst's augment is calculated independently for affinity (so only the categories you have affinity for get the roll-twice-keep-the-better-result bonus), but the mastery multiplier and crit apply to all of them.
 
 **Can I rank down or unregister an affinity?**
 No. Mastery and affinities are one-way. They're permanent rewards for completing the content.

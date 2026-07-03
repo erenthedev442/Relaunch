@@ -14,7 +14,7 @@ Re-logging or zoning does not trigger it again.
 
 A system message confirms the bonus a few seconds after you connect:
 
-> *[Daily Bonus] +250 Hunt Marks for logging in today! Come back tomorrow for more.*
+> *[Daily Bonus] +50 Hunt Marks for logging in today! Come back tomorrow for more.*
 
 There is no action required. Just log in.
 
@@ -44,9 +44,9 @@ Each milestone reward is granted **once per threshold**. Reaching 30 days also t
 
 ### Example Nudge Messages
 
-> *[Login Streak] 3 days in a row — 7 days earns +1,500 marks!*
+> *[Login Streak] 3 days in a row — 7 days earns +75 marks!*
 >
-> *[Login Streak] 7-Day Streak — 7 days in a row! +1,500 bonus marks!*
+> *[Login Streak] 7-Day Streak — 7 days in a row! +75 bonus marks!*
 
 ---
 

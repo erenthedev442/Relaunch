@@ -3,7 +3,7 @@
 The **Prime Armory** in <!--npc:prime_armory-->Leafallia<!--/npc--> hands out **Prime weapons** — the apex weapon tier on the server. Each one comes with its own signature weapon skill, unlocked the moment you equip it.
 
 !!! tip "Summary"
-    Bring **1 Prime Voucher** to the Prime Armory in <!--npc:prime_armory-->Leafallia<!--/npc--> and claim any one of the **12 Prime weapons** — best-in-slot gear, each with a unique weapon skill that unlocks on equip.
+    Bring **1 Prime Voucher** and **750,000,000 gil** to the Prime Armory in <!--npc:prime_armory-->Leafallia<!--/npc--> and claim any one of the **12 Prime weapons** — best-in-slot gear, each with a unique weapon skill that unlocks on equip.
 
 ## Where to find it
 

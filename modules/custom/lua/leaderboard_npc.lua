@@ -166,7 +166,7 @@ m:addOverride('xi.zones.Escha_ZiTah.Zone.onInitialize', function(zone)
             end
             player:printToPlayer('[The Chronicler] -- Server Leaderboards ---------------', H)
             player:printToPlayer('  Full rankings at:', B)
-            player:printToPlayer('  legendary-ffxi.pages.dev/community/leaderboards/', B)
+            player:printToPlayer('  fjb-relaunch.pages.dev/community/leaderboards/', B)
             player:printToPlayer('  Tip: !nms  !progress  !achievements  !featured', B)
         end,
     })

@@ -6,7 +6,7 @@ the Relaunch server ships with a set of quality-of-life improvements that aren't
 
 ## Always-Popped NMs
 
-Every named monster (NM) in **Abyssea** (10 zones), **Escha** (Escha-Zi'tah and Escha-Ru'Aun), and **Reisenjima / Sanctorium** (2 zones) is permanently spawned with a 30-second respawn timer.
+Every named monster (NM) in **Reisenjima** and the **Reisenjima Sanctorium** (2 zones) is permanently spawned with a 30-second respawn timer. (Abyssea NMs are popped on demand by spending Hunt Marks at the zone `???` — see [Abyssea NMs](../endgame/abyssea-nms.md) — and Escha - Zi'Tah is the Hunting League hub.)
 
 There is no camping. There is no waiting on a lottery pop. Walk in, kill it, walk back in 30 seconds.
 

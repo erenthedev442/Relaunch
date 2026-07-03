@@ -119,7 +119,7 @@ The reward shop is organized into 3 categories — 47 purchasable entries in all
 | Sortie: +1 | 22 | 200 |
 <!-- DOCGEN:END id="hunting-league-rewards" -->
 
-**Approximate full clear:** 1,250 marks for rank unlocks + ~5,500+ marks for every shop item.
+**Approximate full clear:** 5,300 marks for rank unlocks + ~5,500+ marks for every shop item.
 
 ## Recommended progression order
 

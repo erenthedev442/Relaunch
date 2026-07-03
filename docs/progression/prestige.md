@@ -77,7 +77,7 @@ The Nightmare Court is **not** a fixed wall — the bosses themselves **change**
 | **60+** | The Celestial Wardens | Tiamat, the Planar Destroyer &bull; Kirin, the Celestial Sovereign &bull; Absolute Virtue, the Eternal Judge |
 <!-- DOCGEN:END id="prestige-scaling" -->
 
-Each new Court is built at full strength and escalates toward an apex roster by the top tier, so the difficulty curve holds as your AP grows. The Altar **announces** the Court you face, and its Status menu always shows your current tier. The top tier (**The World's End**) is the ceiling — it is tuned to stay beatable by a fully-invested character, so the Trial never soft-locks further ascension.
+Each new Court is built at full strength and escalates toward an apex roster by the top tier, so the difficulty curve holds as your AP grows. The Altar **announces** the Court you face, and its Status menu always shows your current tier. The top tier (**The Celestial Wardens**) is the ceiling — it is tuned to stay beatable by a fully-invested character, so the Trial never soft-locks further ascension.
 
 ---
 
