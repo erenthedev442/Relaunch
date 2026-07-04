@@ -1,5 +1,7 @@
 local customCrawlersNestDungeon = require('scripts/zones/Crawlers_Nest/instances/dungeon_crawlers_nest')
 local dungeonCatalog = require('modules/custom/lua/dungeon_catalog')
+local unityWantedInstance = require('scripts/zones/Ghelsba_Outpost/instances/unity_wanted_trial')
+local unityWantedRuntime = require('modules/custom/lua/unity_wanted_instance_runtime')
 
 describe('Instances', function()
     it("loads the custom Crawlers' Nest dungeon definition", function()
@@ -44,6 +46,20 @@ describe('Instances', function()
 
         assert(firstCopy ~= secondCopy)
         assert(firstCopy.onInstanceCreated ~= secondCopy.onInstanceCreated)
+    end)
+
+    it('loads the private Unity Wanted trial without replacing the Escha board', function()
+        assert(unityWantedRuntime.config.instanceId == 14000)
+        assert(unityWantedRuntime.config.zoneId == xi.zone.GHELSBA_OUTPOST)
+        assert(unityWantedRuntime.vars.nm == 'UWI_NM')
+        assert(unityWantedRuntime.vars.nm ~= 'UW_NM')
+        assert(type(unityWantedInstance.onInstanceCreatedCallback) == 'function')
+        assert(type(unityWantedInstance.onInstanceCreated) == 'function')
+        assert(type(unityWantedInstance.onInstanceTimeUpdate) == 'function')
+        assert(type(unityWantedInstance.onInstanceComplete) == 'function')
+        assert(type(unityWantedInstance.onInstanceFailure) == 'function')
+        assert(unityWantedRuntime.getNm(1).name == 'Hugemaw_Harold')
+        assert(unityWantedRuntime.getNm(56).name == 'Borealis_Shadow')
     end)
 
     it('Waking the Colossus spawns Alexander', function()
