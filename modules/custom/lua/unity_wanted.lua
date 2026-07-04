@@ -26,11 +26,9 @@ local PAGE    = 5  -- NMs per menu page (stay ≤ 7 to respect customMenu 150-by
 local CV_NM = 'UW_NM'  -- catalog NM id queued for spawn (0 = none)
 
 -- Lookup tables
-local nmById   = {}
-local nmByName = {}
+local nmById = {}
 for _, nm in ipairs(catalog.nms) do
-    nmById[nm.id]     = nm
-    nmByName[nm.name] = nm
+    nmById[nm.id] = nm
 end
 
 local function weeklyFeaturedId()
@@ -63,6 +61,7 @@ local function spawnWantedNm(player, nm)
 
     local spawnPos    = catalog.arena['T' .. nm.tier]
     local despawnSecs = catalog.despawnSecs
+    local ownerName   = player:getName()
 
     local mob = zone:insertDynamicEntity({
         objtype              = xi.objType.MOB,
@@ -96,34 +95,41 @@ local function spawnWantedNm(player, nm)
             end
         end,
 
-        onMobDeath = function(deadMob, killer)
-            if not killer then return end
-            local nmDef = nmByName[deadMob:getName()]
-            if not nmDef then return end
-            local reward = catalog.rewards[nmDef.tier]
-            local isWeekly = (nmDef.id == weeklyFeaturedId())
+        onMobDeath = function(deadMob)
+            -- LSB invokes onMobDeath once per eligible alliance member. Settle
+            -- this paid hunt exactly once against the player who purchased it;
+            -- do not rely on the runtime mob name or final-hit entity.
+            if deadMob:getLocalVar('UW_Rewarded') == 1 then return end
+
+            local owner = GetPlayerByName(ownerName)
+            if not owner or owner:getCharVar(CV_NM) ~= nm.id then return end
+
+            deadMob:setLocalVar('UW_Rewarded', 1)
+            owner:setCharVar(CV_NM, 0)
+
+            local reward = catalog.rewards[nm.tier]
+            local isWeekly = (nm.id == weeklyFeaturedId())
             if isWeekly then
                 reward = reward * 2
-                killer:printToPlayer(
-                    string.format('[Unity] Weekly bonus! %s yields double accolades!', nmDef.label), S)
+                owner:printToPlayer(
+                    string.format('[Unity] Weekly bonus! %s yields double accolades!', nm.label), S)
             end
-            killer:addCurrency('unity_accolades', reward)
+            owner:addCurrency('unity_accolades', reward)
             -- Lifetime EARNED accolades (never reduced by shop spending).
             -- Read by trust_progression_cap.lua's 3rd-trust-slot gate.
-            killer:setCharVar('Unity_Accolades_Lifetime',
-                (killer:getCharVar('Unity_Accolades_Lifetime') or 0) + reward)
+            owner:setCharVar('Unity_Accolades_Lifetime',
+                (owner:getCharVar('Unity_Accolades_Lifetime') or 0) + reward)
             -- Distinct-NM conquest tally (read by trust_progression_cap.lua's
             -- 3rd-trust-slot gate). The per-NM flag dedupes so re-kills don't count.
-            local conqFlag = 'UW_Conq_' .. nmDef.id
-            if (killer:getCharVar(conqFlag) or 0) == 0 then
-                killer:setCharVar(conqFlag, 1)
-                killer:setCharVar('Unity_NMs_Conquered',
-                    (killer:getCharVar('Unity_NMs_Conquered') or 0) + 1)
+            local conqFlag = 'UW_Conq_' .. nm.id
+            if (owner:getCharVar(conqFlag) or 0) == 0 then
+                owner:setCharVar(conqFlag, 1)
+                owner:setCharVar('Unity_NMs_Conquered',
+                    (owner:getCharVar('Unity_NMs_Conquered') or 0) + 1)
             end
-            killer:printToPlayer(
-                string.format('[Unity] %s defeated! +%d accolades (total: %d)', nmDef.label,
-                    reward, killer:getCurrency('unity_accolades')), S)
-            killer:setCharVar(CV_NM, 0)
+            owner:printToPlayer(
+                string.format('[Unity] %s defeated! +%d accolades (total: %d)', nm.label,
+                    reward, owner:getCurrency('unity_accolades')), S)
         end,
     })
     if not mob then
@@ -131,6 +137,17 @@ local function spawnWantedNm(player, nm)
         player:printToPlayer('[Unity] Spawn failed — zone may be full. Try again or contact a GM.', S)
         return
     end
+
+    -- insertDynamicEntity only allocates and registers the entity. As with the
+    -- other dynamic NM systems, set its spawn point and explicitly pop it.
+    mob:setSpawn(spawnPos.x, spawnPos.y, spawnPos.z, spawnPos.rot)
+    mob:spawn()
+
+    -- Start the initial idle timer after spawn(), which can reset mob state.
+    if despawnSecs > 0 then
+        mob:setLocalVar('UW_DespawnAt', os.time() + despawnSecs)
+    end
+
     player:printToPlayer(string.format('[Unity] %s has appeared! Good luck, kupo!', nm.label), S)
 end
 
@@ -349,13 +366,13 @@ end)
 -- Escha-Zi'tah zone-in: spawn queued NM
 -----------------------------------
 m:addOverride('xi.zones.Escha_ZiTah.Zone.onZoneIn', function(player, prevZone)
-    super(player, prevZone)
+    local cs = super(player, prevZone)
     local nmId = player:getCharVar(CV_NM)
-    if not nmId or nmId == 0 then return end
+    if not nmId or nmId == 0 then return cs end
     local nm = nmById[nmId]
     if not nm then
         player:setCharVar(CV_NM, 0)
-        return
+        return cs
     end
     -- 2-second delay: ensures client is stable before mob pop
     player:timer(2000, function(p)
@@ -363,6 +380,7 @@ m:addOverride('xi.zones.Escha_ZiTah.Zone.onZoneIn', function(player, prevZone)
             spawnWantedNm(p, nm)
         end
     end)
+    return cs
 end)
 
 -----------------------------------

@@ -23,7 +23,7 @@ local ZONE_288 = xi.zone.ESCHA_ZITAH  -- == 288
 -- TUNE: adjust after in-game map testing.
 local ARENA = {
     T1 = { x = -200.0, y = -0.5, z =  50.0, rot = 128 },
-    T2 = { x = -200.0, y = -0.5, z =  10.0, rot = 128 },
+    T2 = { x = -33.5, y = 0.5, z = -150.8, rot = 45 },
     T3 = { x = -250.0, y = -0.5, z =  30.0, rot = 128 },
 }
 
@@ -34,7 +34,7 @@ local BOARD_POS = { x = -110.000, y = -2.150, z = -106.000, rot = 190 }
 -- Position them slightly east of the mob spawn to face the NM.
 local WARP_POS = {
     T1 = { x = -195.0, y = -0.5, z =  50.0, rot = 128 },
-    T2 = { x = -195.0, y = -0.5, z =  10.0, rot = 128 },
+    T2 = { x = -26.5, y = 0.5, z = -165.5, rot = 171 },
     T3 = { x = -245.0, y = -0.5, z =  30.0, rot = 128 },
 }
 
