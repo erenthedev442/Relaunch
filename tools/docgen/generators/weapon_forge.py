@@ -74,6 +74,12 @@ def _name_in(block: str, sub: str) -> str:
     return m.group(1) if m else ""
 
 
+def _id_in(block: str, sub: str) -> int:
+    """ID of the `sub = { id = NNN, ... }` inline table within block."""
+    m = re.search(rf"{re.escape(sub)}\s*=\s*\{{[^}}]*\bid\s*=\s*(\d+)", block)
+    return int(m.group(1)) if m else 0
+
+
 # ---------------------------------------------------------------------------
 
 def _parse(text: str) -> dict:
@@ -115,9 +121,11 @@ def _parse(text: str) -> dict:
             "s1": _name_in(block, "s1"),
             "s2": _name_in(block, "s2"),
             "s3": _name_in(block, "s3"),           # first s3 = top-level (Prime final)
+            "s3_id": _id_in(block, "s3"),          # Prime final item ID
             "ae_base": _name_in(ae_block, "base"),
             "ae_att": _s(ae_block, "attestationName"),
             "ae_s3": _name_in(ae_block, "s3"),     # aeonic final
+            "ae_s3_id": _id_in(ae_block, "s3"),   # Aeonic final item ID
         })
 
     return {"prime_cost": prime_cost, "aeonic_cost": aeonic_cost, "chains": chains}
@@ -148,6 +156,7 @@ def _build_real(c: dict) -> dict:
         prime[t] = {
             "names":  [ch["s1"], ch["s2"], ch["s3"]],
             "labels": ["Base · 119 I", "119 II", "119 III · Final"],
+            "id":     ch["s3_id"] or None,
             "forge": [
                 {"mats": [[_qty(pc["s2"]["qty"]), pc["s2"]["med"]]], "gate": gate_p2},
                 {"mats": p3_mats, "gate": gate_p3},
@@ -160,6 +169,7 @@ def _build_real(c: dict) -> dict:
             aeonic[t] = {
                 "names":  [ch["ae_base"], ch["s1"], ch["s2"], ch["ae_s3"]],
                 "labels": ["Base · Malformed", "119 I", "119 II", "119 III · Aeonic"],
+                "id":     ch["ae_s3_id"] or None,
                 "forge": [
                     {"mats": [[_qty(ac["s1"]["att"]), att],
                               [_qty(ac["s1"]["boulder"]), "Riftborn Boulder"]], "gate": gate_ae},

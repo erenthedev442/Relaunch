@@ -134,6 +134,7 @@
 .wf-widget .wc-tp { font-family: "Courier New",monospace; font-size: .56rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
 .wf-widget .wc-nm { font-size: .85rem; color: var(--text); line-height: 1.2; }
 .wf-widget .wc-jb { font-family: "Courier New",monospace; font-size: .57rem; color: var(--muted); margin-top: 3px; }
+.wf-widget .wc-id { font-family: "Courier New",monospace; font-size: .52rem; color: var(--dim); margin-top: 2px; letter-spacing: .02em; }
 .wf-widget .empty-grid { grid-column: 1/-1; text-align: center; padding: 36px; color: var(--dim); font-style: italic; font-size: .84rem; }
 
 .wf-widget .div { display: flex; align-items: center; gap: 10px; max-width: 1080px; margin: 22px auto 0; padding: 0 20px; }
@@ -227,8 +228,8 @@ const CATS = {
       {type:'Staff',jobs:'BLM · SMN · SCH',name:'Opashoro'},
       {type:'Archery',jobs:'RNG',name:'Pinaka'},
       {type:'Marksmanship',jobs:'COR · RNG',name:'Earp'},
-      {type:'Shield',jobs:'PLD · RUN',name:'Duban'},
-      {type:'Instrument',jobs:'BRD',name:'Loughnashade'},
+      {type:'Shield',jobs:'PLD · RUN',name:'Duban',id:26495},
+      {type:'Instrument',jobs:'BRD',name:'Loughnashade',id:22307},
     ],
   },
   relic: {
@@ -243,20 +244,20 @@ const CATS = {
       {lbl:'Stage II → Stage III', mats:[['50×','Gallimaufry'],['300×','[see weapon]'],['10,000','Reforge Marks']], gate:'HL Rank V (Legend) · Dynamis – Divergence Wave 3 cleared'},
     ],
     weapons:[
-      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Spharai'},
-      {type:'Dagger',jobs:'THF · BRD · DNC',name:'Mandau'},
-      {type:'Sword',jobs:'RDM · PLD · BLU',name:'Excalibur'},
-      {type:'Great Sword',jobs:'WAR · DRK',name:'Ragnarok'},
-      {type:'Axe',jobs:'WAR · BST',name:'Guttler'},
-      {type:'Great Axe',jobs:'WAR',name:'Bravura'},
-      {type:'Scythe',jobs:'DRK',name:'Apocalypse'},
-      {type:'Polearm',jobs:'DRG',name:'Gungnir'},
-      {type:'Katana',jobs:'NIN',name:'Kikoku'},
-      {type:'Great Katana',jobs:'SAM',name:'Amanomurakumo'},
-      {type:'Club',jobs:'WHM · GEO',name:'Mjollnir'},
-      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Claustrum'},
-      {type:'Archery',jobs:'RNG',name:'Yoichinoyumi'},
-      {type:'Marksmanship',jobs:'COR · RNG',name:'Annihilator'},
+      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Spharai',id:20509},
+      {type:'Dagger',jobs:'THF · BRD · DNC',name:'Mandau',id:20583},
+      {type:'Sword',jobs:'RDM · PLD · BLU',name:'Excalibur',id:20685},
+      {type:'Great Sword',jobs:'WAR · DRK',name:'Ragnarok',id:21683},
+      {type:'Axe',jobs:'WAR · BST',name:'Guttler',id:21750},
+      {type:'Great Axe',jobs:'WAR',name:'Bravura',id:21756},
+      {type:'Scythe',jobs:'DRK',name:'Apocalypse',id:21808},
+      {type:'Polearm',jobs:'DRG',name:'Gungnir',id:21857},
+      {type:'Katana',jobs:'NIN',name:'Kikoku',id:21906},
+      {type:'Great Katana',jobs:'SAM',name:'Amanomurakumo',id:21954},
+      {type:'Club',jobs:'WHM · GEO',name:'Mjollnir',id:21077},
+      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Claustrum',id:22060},
+      {type:'Archery',jobs:'RNG',name:'Yoichinoyumi',id:22129},
+      {type:'Marksmanship',jobs:'COR · RNG',name:'Annihilator',id:22140},
     ],
   },
   empyrean: {
@@ -271,20 +272,20 @@ const CATS = {
       {lbl:'Stage II → Stage III', mats:[['5,000×','Riftborn Boulder'],['50×','Ancient Beastcoin'],['15,000','Reforge Marks']], gate:'All Abyssea Tier III bosses cleared'},
     ],
     weapons:[
-      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Verethragna'},
-      {type:'Dagger',jobs:'THF · BRD · DNC',name:'Twashtar'},
-      {type:'Sword',jobs:'RDM · PLD · BLU',name:'Almace'},
-      {type:'Great Sword',jobs:'WAR · DRK',name:'Caladbolg'},
-      {type:'Axe',jobs:'WAR · BST',name:'Farsha'},
-      {type:'Great Axe',jobs:'WAR',name:'Ukonvasara'},
-      {type:'Scythe',jobs:'DRK',name:'Redemption'},
-      {type:'Polearm',jobs:'DRG',name:'Rhongomiant'},
-      {type:'Katana',jobs:'NIN',name:'Kannagi'},
-      {type:'Great Katana',jobs:'SAM',name:'Masamune'},
-      {type:'Club',jobs:'WHM · GEO',name:'Gambanteinn'},
-      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Hvergelmir'},
-      {type:'Archery',jobs:'RNG',name:'Gandiva'},
-      {type:'Marksmanship',jobs:'COR · RNG',name:'Armageddon'},
+      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Verethragna',id:20512},
+      {type:'Dagger',jobs:'THF · BRD · DNC',name:'Twashtar',id:20587},
+      {type:'Sword',jobs:'RDM · PLD · BLU',name:'Almace',id:20689},
+      {type:'Great Sword',jobs:'WAR · DRK',name:'Caladbolg',id:21684},
+      {type:'Axe',jobs:'WAR · BST',name:'Farsha',id:21752},
+      {type:'Great Axe',jobs:'WAR',name:'Ukonvasara',id:21758},
+      {type:'Scythe',jobs:'DRK',name:'Redemption',id:21810},
+      {type:'Polearm',jobs:'DRG',name:'Rhongomiant',id:21859},
+      {type:'Katana',jobs:'NIN',name:'Kannagi',id:21908},
+      {type:'Great Katana',jobs:'SAM',name:'Masamune',id:21956},
+      {type:'Club',jobs:'WHM · GEO',name:'Gambanteinn',id:21079},
+      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Hvergelmir',id:22064},
+      {type:'Archery',jobs:'RNG',name:'Gandiva',id:22130},
+      {type:'Marksmanship',jobs:'COR · RNG',name:'Armageddon',id:22142},
     ],
   },
   mythic: {
@@ -299,26 +300,26 @@ const CATS = {
       {lbl:'Stage II → Stage III', mats:[['5×','Imperial Gold Piece'],['10,000×','Beitetsu'],['20,000','Reforge Marks']], gate:'HL Rank V (Legend) · Nyzul Floor 100 cleared (all lamps) · Nyzul boss killed'},
     ],
     weapons:[
-      {type:'Hand-to-Hand',jobs:'MNK',name:'Glanzfaust'},
-      {type:'Hand-to-Hand',jobs:'PUP',name:'Kenkonken'},
-      {type:'Dagger',jobs:'NIN',name:'Vajra'},
-      {type:'Dagger',jobs:'BRD',name:'Carnwenhan'},
-      {type:'Dagger',jobs:'DNC',name:'Terpsichore'},
-      {type:'Sword',jobs:'RDM',name:'Murgleis'},
-      {type:'Sword',jobs:'PLD',name:'Burtgang'},
-      {type:'Sword',jobs:'BLU',name:'Tizona'},
-      {type:'Great Sword',jobs:'WAR',name:'Conqueror'},
-      {type:'Axe',jobs:'WAR · BST',name:'Aymur'},
-      {type:'Scythe',jobs:'DRK',name:'Liberator'},
-      {type:'Polearm',jobs:'DRG',name:'Ryunohige'},
-      {type:'Katana',jobs:'NIN',name:'Nagi'},
-      {type:'Great Katana',jobs:'SAM',name:'Kogarasumaru'},
-      {type:'Club',jobs:'WHM',name:'Yagrush'},
-      {type:'Staff',jobs:'SMN',name:'Nirvana'},
-      {type:'Staff',jobs:'GEO',name:'Laevateinn'},
-      {type:'Staff',jobs:'SCH',name:'Tupsimati'},
-      {type:'Archery',jobs:'RNG',name:'Gastraphetes'},
-      {type:'Marksmanship',jobs:'COR',name:'Death Penalty'},
+      {type:'Hand-to-Hand',jobs:'MNK',name:'Glanzfaust',id:20510},
+      {type:'Hand-to-Hand',jobs:'PUP',name:'Kenkonken',id:20511},
+      {type:'Dagger',jobs:'NIN',name:'Vajra',id:20585},
+      {type:'Dagger',jobs:'BRD',name:'Carnwenhan',id:20586},
+      {type:'Dagger',jobs:'DNC',name:'Terpsichore',id:20584},
+      {type:'Sword',jobs:'RDM',name:'Murgleis',id:20686},
+      {type:'Sword',jobs:'PLD',name:'Burtgang',id:20687},
+      {type:'Sword',jobs:'BLU',name:'Tizona',id:20688},
+      {type:'Great Sword',jobs:'WAR',name:'Conqueror',id:21757},
+      {type:'Axe',jobs:'WAR · BST',name:'Aymur',id:21751},
+      {type:'Scythe',jobs:'DRK',name:'Liberator',id:21809},
+      {type:'Polearm',jobs:'DRG',name:'Ryunohige',id:21858},
+      {type:'Katana',jobs:'NIN',name:'Nagi',id:21907},
+      {type:'Great Katana',jobs:'SAM',name:'Kogarasumaru',id:21955},
+      {type:'Club',jobs:'WHM',name:'Yagrush',id:21078},
+      {type:'Staff',jobs:'SMN',name:'Nirvana',id:22063},
+      {type:'Staff',jobs:'GEO',name:'Laevateinn',id:22062},
+      {type:'Staff',jobs:'SCH',name:'Tupsimati',id:22061},
+      {type:'Archery',jobs:'RNG',name:'Gastraphetes',id:22139},
+      {type:'Marksmanship',jobs:'COR',name:'Death Penalty',id:22141},
     ],
   },
   aeonic: {
@@ -361,8 +362,8 @@ const CATS = {
       {lbl:'Stage II → Stage III', mats:[['200×','Wailing Stone'],['9,999×','High-Purity Bayld'],['10,000×','Beitetsu'],['28,000','Reforge Marks']], gate:'HL Rank V · Paragon Tier 5 cleared · Apex Floor 100 · All Coalition ranks at Legend'},
     ],
     weapons:[
-      {type:'Great Sword',jobs:'WAR · DRK',name:'Epeolatry'},
-      {type:'Club',jobs:'GEO',name:'Idris'},
+      {type:'Great Sword',jobs:'WAR · DRK',name:'Epeolatry',id:21685},
+      {type:'Club',jobs:'GEO',name:'Idris',id:21080},
     ],
   },
 };
@@ -516,7 +517,9 @@ function buildGrid(k, filter) {
   list.forEach(w => {
     const d = document.createElement('div');
     d.className = 'wc';
-    d.innerHTML = `<div class="wc-tp">${w.type}</div><div class="wc-nm">${w.name}</div><div class="wc-jb">${w.jobs}</div>`;
+    const real = REAL[k] && REAL[k][w.type];
+    const id = (real && real.id) ? real.id : (w.id || null);
+    d.innerHTML = `<div class="wc-tp">${w.type}</div><div class="wc-nm">${w.name}</div><div class="wc-jb">${w.jobs}</div>${id ? `<div class="wc-id">#${id}</div>` : ''}`;
     d.onclick = () => { if (selCard) selCard.classList.remove('sel'); d.classList.add('sel'); selCard = d; updateChain(w); };
     grid.appendChild(d);
   });
