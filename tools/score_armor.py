@@ -388,13 +388,13 @@ TIER_COST = {'bronze': 12, 'silver': 25, 'gold': 50, 'infamy': 500}
 # NOTE: a forced item is NOT removed from any higher tier it also auto-selects
 # into, so check for cross-tier family overlap when adding ids here.
 FORCED_INCLUDE = {
-    ('bronze', 'body'): [25790, 26849, 25683, 25780, 25702, 25686, 26870, 25684, 26536],  # +26536 Pinga Tunic +1 -- completes the bronze Pinga healer set (2026-06-21)
+    ('bronze', 'body'): [25790, 26849, 25683, 25780, 25702, 25686, 26870, 25684],  # 26536 Pinga Tunic +1 removed 2026-07 (craft / Invasion loot -- vendor exclusivity)
     ('silver', 'body'): [25717, 25796, 25752],  # +25752 Inyanga Jubbah +1 -- completes the Inyanga caster set (2026-06-21)
-    ('gold',   'body'): [23733, 26943, 23766, 26530, 23763],  # +26530 Ea Houppelande +1 (2026-06-21). +23763 Gletis Cuirass -- pin the Gleti (Sortie) set to gold (owner request 2026-06-21)
+    ('gold',   'body'): [23733, 23766, 23763],  # 2026-07 removed 26943 Agony Jerkin +1 (Unity/Voso drop) + 26530 Ea Houppelande +1 (craft/Invasion). +23763 Gletis Cuirass -- Gleti (Sortie) set
     ('gold',   'feet'): [23736],  # Malignance Boots -- pin to gold so the full Malignance gold set is buyable (it scores just under gold's cut). Added 2026-06-14. (Gletis Boots 23784 already auto-scores into gold/feet.)
     ('gold',   'hands'): [23770],  # +23770 Gletis Gauntlets -- Gleti (Sortie) set (owner request 2026-06-21)
-    ('gold',   'head'): [23732, 25575, 25554, 23756],  # +25554 Ea Hat +1 (2026-06-21). 23732 Malignance Chapeau + 25575 Meghanada Visor +2 complete their sets. +23756 Gletis Mask -- Gleti (Sortie) set (owner request 2026-06-21)
-    ('gold',   'legs'): [23735, 25894],  # +25894 Ea Slops +1 (2026-06-21). 23735 Malignance Tights completes its set. (Gletis Breeches 23777 is NAKED -- 0 item_mods -- so it is intentionally NOT pinned; it would be a stat-less piece.)
+    ('gold',   'head'): [23732, 25575, 23756],  # 2026-07 removed 25554 Ea Hat +1 (craft/Invasion). 23732 Malignance Chapeau + 25575 Meghanada Visor +2 + 23756 Gletis Mask
+    ('gold',   'legs'): [23735],  # 2026-07 removed 25894 Ea Slops +1 (craft/Invasion). 23735 Malignance Tights completes its set. (Gletis Breeches 23777 is NAKED -- not pinned.)
     # ---- 2026-06-21: two near-finished sets that need a NEW (tier, slot) key ----
     ('silver', 'head'): [25616, 25579],  # 25616 Amalric Coif +1 (completes Amalric); 25579 Flamma Zucchetto re-pinned -- forcing the Amalric caster head bumped this tank head from the per-job top-N, which would have broken the otherwise-complete Flamma set
     ('silver', 'legs'): [25874],  # Flamma Dirs +1  -- completes the bronze/silver Flamma melee set

@@ -250,8 +250,8 @@ assert len(SORTIE_EARRING_IDS) == 22, "expected 22 Sortie JSE +2 earrings"
 # and emitting them into the Accessory NPC's AMMO slot. Sancus Sachet +1
 # (21395) is the BiS -> gold; the rest -> silver. {id: tier}.
 SACHET_AMMO_TIER = {
-    21395: 'gold',     # sancus_sachet_+1  (BiS)
-    21394: 'silver',   # sancus_sachet
+    # 2026-07: removed sancus_sachet (21394) + sancus_sachet_+1 (21395) -- both
+    # craftable, so they violate the medal-vendor exclusivity rule.
     21393: 'silver',   # arasy_sachet
     21388: 'silver',   # dashavatara_sachet
     21383: 'silver',   # eminent_sachet

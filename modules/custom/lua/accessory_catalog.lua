@@ -176,7 +176,6 @@ table.insert(s.back, { id =  16203, name = 'Goetia Mantle'                     ,
 table.insert(s.ammo, { id =  21383, name = 'Eminent Sachet'                    , cost =  32, jobs = 'SMN' })  -- PET score 54 [RARE,EX]
 table.insert(s.ammo, { id =  21388, name = 'Dashavatara Sachet'                , cost =  32, jobs = 'SMN' })  -- PET score 50 [RARE,EX]
 table.insert(s.ammo, { id =  21393, name = 'Arasy Sachet'                      , cost =  32, jobs = 'SMN' })  -- PET score 50
-table.insert(s.ammo, { id =  21394, name = 'Sancus Sachet'                     , cost =  32, jobs = 'SMN' })  -- PET score 9
 
 
 -----------------------------------
@@ -234,9 +233,6 @@ table.insert(g.back, { id =  15471, name = 'Merciful Cape'                     ,
 table.insert(g.back, { id =  27618, name = 'Laic Mantle'                       , cost =  60, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 70 [RARE,EX]
 table.insert(g.back, { id =  10971, name = 'Strendu Mantle'                    , cost =  60, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- TANK score 73 [RARE,EX]
 table.insert(g.back, { id =  28636, name = 'Bookworms Cape'                    , cost =  60, jobs = 'SCH' })  -- CASTER score 74 [EX]
-
--- ammo
-table.insert(g.ammo, { id =  21395, name = 'Sancus Sachet +1'                  , cost =  60, jobs = 'SMN' })  -- PET score 10
 
 
 -----------------------------------

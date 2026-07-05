@@ -430,17 +430,11 @@ TIER_COST = {'bronze': 12, 'silver': 25, 'gold': 50, 'infamy': 500}
 # still want sold. {(tier, category): [ {id, name, jobs, dmg, delay}, ... ]}.
 # tier_block emits these AFTER the auto picks, so they survive a re-score.
 MANUAL_PICKS = {
-    ('bronze', 'Katana'): [{'id': 21919, 'name': 'Ajja Katana',        'jobs': 'NIN', 'dmg': 132, 'delay': 227}],
-    ('silver', 'Katana'): [{'id': 21915, 'name': 'Koga Shinobi-Gatana', 'jobs': 'NIN', 'dmg': 152, 'delay': 227}],
     ('gold',   'Katana'): [{'id': 21936, 'name': 'Yagyu Darkblade',     'jobs': 'NIN', 'dmg': 173, 'delay': 227}],
-    # Axes: the strongest 1H axes are single-job / EX so they score into bronze
-    # at best (great-axes dominate the 251+ band). Force the standout endgame axes
-    # into gold so WAR/BST etc. have a gold-tier option. (Owner request 2026-06-22.)
-    ('gold',   'Axes'): [
-        {'id': 21722, 'name': 'Dolichenus', 'jobs': 'WAR/DRK/BST/RNG/RUN', 'dmg': 200, 'delay': 288},
-        {'id': 21730, 'name': 'Spalirisos', 'jobs': 'BST',                 'dmg': 250, 'delay': 280},
-        {'id': 21751, 'name': 'Aymur',      'jobs': 'BST',                 'dmg': 195, 'delay': 312},
-    ],
+    # 2026-07: removed Ajja Katana (21919) + Koga Shinobi-Gatana (21915) [Weapon
+    # Forge] and the gold Axes Dolichenus (21722) / Spalirisos (21730) [Weapon
+    # Forge] / Aymur (21751) [Infamy Vendor] -- all obtainable elsewhere, so they
+    # violate the medal-vendor exclusivity rule.
 }
 TOP_PER_BUCKET = 8       # weapons need fewer slots than armor (skill specialisation)
 MIN_PER_JOB    = 1       # at least 1 weapon-cat option per applicable job

@@ -113,7 +113,6 @@ catalog.silver =
         { id = 21776, name = "Ajja Chopper", cost = 25, jobs = 'WAR/DRK/RUN' },
         { id = 21827, name = "Ajja Scythe", cost = 25, jobs = 'WAR/BLM/DRK/BST' },
         { id = 21880, name = "Ajja Lance", cost = 25, jobs = 'WAR/PLD/SAM/DRG' },
-        { id = 21919, name = "Ajja Katana", cost = 25, jobs = 'NIN' },
         { id = 21972, name = "Ajja Tachi", cost = 25, jobs = 'SAM/NIN' },
         { id = 22028, name = "Ajja Rod", cost = 25, jobs = 'WHM/BLM/RDM/SMN/BLU/SCH/GEO' },
         { id = 22083, name = "Ajja Staff", cost = 25, jobs = 'WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO' },
