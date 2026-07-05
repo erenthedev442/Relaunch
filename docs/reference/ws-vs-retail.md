@@ -58,21 +58,21 @@ The server enables **15 weapon skills** that retail FFXI ships as monster-only s
 
 | Weapon skill | Weapon | Prime weapon | On retail | On this server |
 |---|---|---|---|---|
-| **Blitz** | Axe | — | Monster skill only | Usable weapon skill |
+| **Sarv** | Archery | Prime Bow | Monster skill only | Usable weapon skill |
+| **Blitz** | Axe | Prime Pickaxe (Axe) | Monster skill only | Usable weapon skill |
 | **Dagda** | Club | Prime Maul | Monster skill only | Usable weapon skill |
 | **Merciless Strike** | Dagger | Mpu Gandring | Monster skill only | Usable weapon skill |
 | **Disaster** | Great Axe | Prime Great Axe | Monster skill only | Usable weapon skill |
-| **Tachi: Mumei** | Great Katana | weapon_skills.sql CREATE TABLE | Monster skill only | Usable weapon skill |
-| **Fimbulvetr** | Great Sword | weapon_skills.lua | Monster skill only | Usable weapon skill |
+| **Tachi: Mumei** | Great Katana | Kusanagi-no-Tsurugi | Monster skill only | Usable weapon skill |
+| **Fimbulvetr** | Great Sword | Prime Blade (Great Sword) | Monster skill only | Usable weapon skill |
 | **Dragon Blow** | Hand-to-Hand | Prime Fists | Monster skill only | Usable weapon skill |
-| **Maru Kala** | Hand-to-Hand | /www.bg-wiki.com/ffxi/Maru_Kala | Monster skill only | Usable weapon skill |
+| **Maru Kala** | Hand-to-Hand | Varga Purnikawa | Monster skill only | Usable weapon skill |
+| **Terminus** | Marksmanship | Prime Gun | Monster skill only | Usable weapon skill |
 | **Diarmuid** | Polearm | Prime Lance | Monster skill only | Usable weapon skill |
 | **Origin** | Scythe | Prime Scythe | Monster skill only | Usable weapon skill |
 | **Oshala** | Staff | Prime Staff | Monster skill only | Usable weapon skill |
 | **Fast Blade II** | Sword | Naegling | Monster skill only | Usable weapon skill |
 | **Imperator** | Sword | Prime Sword | Monster skill only | Usable weapon skill |
-| **Sarv** | type 25 | Prime Bow | Monster skill only | Usable weapon skill |
-| **Terminus** | type 26 | Prime Gun | Monster skill only | Usable weapon skill |
 <!-- DOCGEN:END id="ws-vs-retail-custom" -->
 
 Everything else about weapon skills — the fTP tables, hit counts, stat
@@ -82,5 +82,6 @@ mirrors retail. Only the two areas above are changed.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-_Last updated: pending first generation._
+<!-- content-hash: 99c7cd34a1d2 -->
+_Last updated: 2026-07-05 07:44 UTC_
 <!-- DOCGEN:END id="last-updated" -->

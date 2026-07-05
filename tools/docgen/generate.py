@@ -135,6 +135,7 @@ def main() -> int:
         fellow,
         spell_skill_mastery,
         gear_vs_retail,
+        ws_vs_retail,
         gauntlet,
         unity_concord,
         affinity_nms,
@@ -372,6 +373,9 @@ def main() -> int:
         # of any system detail page that isn't featured. Runs before
         # settings_inject so the EXP_RATE marker it emits gets substituted.
         ("gear_vs_retail",   gear_vs_retail),
+        # ws_vs_retail fills the custom player-WS table on reference/ws-vs-retail.md
+        # from the Prime/custom weapon_skills SQL. Fail-closed on an empty parse.
+        ("ws_vs_retail",     ws_vs_retail),
         ("differentiators",  differentiators),
         # settings_inject MUST run after every generator that writes into
         # docs/, so its {{setting:X}} -> live-value substitutions land on
