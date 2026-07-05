@@ -206,4 +206,6 @@ nav:
     - Weapon Skills vs Retail: reference/ws-vs-retail.md
     - Rules: rules.md
     - Changelog: changelog.md
-  - Admin: admin/review.html
+  - Admin:
+    - Page Index: admin/page-index.md
+    - Review: admin/review.html

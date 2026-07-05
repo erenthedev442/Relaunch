@@ -157,6 +157,7 @@ def main() -> int:
         gear_guide_page,
         augmenting_guide_page,
         highlights_page,
+        page_index,
     )
 
     # Snapshot existing last-updated footers BEFORE any generator runs.
@@ -412,6 +413,21 @@ def main() -> int:
         tb = traceback.format_exc()
         failures.append(("stamp", tb))
         print(f"[docgen] !!! stamp FAILED — continuing")
+        print(tb)
+
+    # page_index runs AFTER stamp so the "Last updated" dates it reports are
+    # the current ones. It reads the freshly-written footers from every page,
+    # then a second stamp pass gives its own page a footer (and preserves all
+    # the others, since their content didn't change). This is the relaunch
+    # site, so it reads the mkdocs_relaunch.yml nav.
+    try:
+        page_index.generate(REPO_ROOT, DOCS_DIR, config="mkdocs_relaunch.yml")
+        stamp.stamp_pages(DOCS_DIR)
+        successes.append("page_index")
+    except Exception:
+        tb = traceback.format_exc()
+        failures.append(("page_index", tb))
+        print(f"[docgen] !!! page_index FAILED — continuing")
         print(tb)
 
     print()
