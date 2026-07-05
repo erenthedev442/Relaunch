@@ -45,7 +45,19 @@ EXCLUDED_ITEM_IDS = frozenset({
     # / ...), so the scorer would otherwise shelve them into the Weapons/Infamy vendors.
     21531, 21534, 21589, 21621, 21642, 21781, 21833, 21887, 21999, 22102, 22155, 22159,
 })
-EXCLUDED_NAME_PREFIXES = ('judge',)
+EXCLUDED_NAME_PREFIXES = ('judge', 'prime_')   # 'prime_*' = generic Prime Armory forms
+
+# Every custom Prime weapon FORM is forge-only (GM Home Prime Armory), not just the base
+# id in EXCLUDED_ITEM_IDS above. The named forms reuse REMA/retail names and each has
+# several upgrade-stage ids that SHARE one item_basic name (e.g. mpu_gandring = 21587-
+# 21590), so exclude by exact name to catch every stage. See modules/custom/sql/
+# prime_weapons_gear.sql for the authoritative set.  (2026-07-05: 21588 mpu_gandring
+# leaked into the vendor because only the base id 21589 was id-excluded.)
+PRIME_WEAPON_NAMES = frozenset({
+    'caliburnus', 'dokoku', 'earp', 'foenaria', 'gae_buide', 'helheim',
+    'kusanagi-no-tsurugi', 'laphria', 'lorg_mor', 'loughnashade', 'mpu_gandring',
+    'naegling', 'opashoro', 'pinaka', 'spalirisos', 'varga_purnikawa',
+})
 
 
 # ============================================================================
@@ -79,8 +91,10 @@ with (ROOT / 'sql' / 'item_basic.sql').open(encoding='utf-8', errors='replace') 
             iid = int(fields[0])
         except ValueError:
             continue
-        if iid in EXCLUDED_ITEM_IDS or fields[2].strip("'").startswith(EXCLUDED_NAME_PREFIXES):
-            continue  # NPC-only / non-player junk (Judge* etc.) — never score it
+        _nm = fields[2].strip("'")
+        if (iid in EXCLUDED_ITEM_IDS or _nm.startswith(EXCLUDED_NAME_PREFIXES)
+                or _nm in PRIME_WEAPON_NAMES):
+            continue  # NPC-only junk (Judge*) or forge-only Prime weapon — never score it
         items_base[iid] = {
             'name':    fields[2].strip("'"),
             'is_rare': '@FLAG_RARE' in fields[7],

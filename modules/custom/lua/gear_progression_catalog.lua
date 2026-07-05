@@ -117,7 +117,6 @@ catalog.silver =
         { id = 21568, name = "Acrontica", cost = 25, jobs = 'THF/DNC' },
         { id = 21569, name = "Chocobo Knife", cost = 25, jobs = 'RDM/THF/BRD/RNG/DNC' },
         { id = 21570, name = "Air Knife", cost = 25, jobs = 'THF/DNC' },
-        { id = 21588, name = "Mpu Gandring", cost = 25, jobs = 'RDM/THF/BRD/DNC' },
         { id = 21665, name = "Voluspa Blade", cost = 25, jobs = 'PLD/RUN' },
         { id = 21769, name = "Voluspa Chopper", cost = 25, jobs = 'WAR/DRK/RUN' },
         { id = 22006, name = "Voluspa Hammer", cost = 25, jobs = 'WHM/GEO' },

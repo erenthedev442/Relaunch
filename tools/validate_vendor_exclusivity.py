@@ -83,6 +83,17 @@ for p in sorted(LUA.glob("*catalog*.lua")):
     for m in _idpat.finditer(p.read_text(encoding="utf-8", errors="replace")):
         _add(int(m.group(1)), p.stem)
 
+# Prime Armory weapons are forge-only earned rewards -- every upgrade stage id, keyed by
+# the shared item_basic name (a Prime weapon like Mpu Gandring spans several ids). They
+# are NOT a *catalog*.lua source, so add them explicitly (bypassing the ilvl gate).
+_PRIME_FAMS = {"caliburnus", "dokoku", "earp", "foenaria", "gae_buide", "helheim",
+               "kusanagi-no-tsurugi", "laphria", "lorg_mor", "loughnashade", "mpu_gandring",
+               "naegling", "opashoro", "pinaka", "spalirisos", "varga_purnikawa"}
+for line in (SQL / "item_basic.sql").read_text(encoding="utf-8", errors="replace").splitlines():
+    m = re.match(r"INSERT INTO `item_basic` VALUES \((\d+),[^,]*,'([^']*)'", line)
+    if m and (m.group(2) in _PRIME_FAMS or m.group(2).startswith("prime_")):
+        source.setdefault(int(m.group(1)), set()).add("Prime Armory (forge-only)")
+
 
 # ---- read each medal catalog's bronze/silver/gold segment (Infamy excluded) ----
 _INFAMY = re.compile(r"--+\s*INFAMY TIER", re.IGNORECASE)
