@@ -138,6 +138,7 @@ def main() -> int:
         unity_concord,
         affinity_nms,
         weapon_forge,
+        shop_command,
     )
 
     # Snapshot existing last-updated footers BEFORE any generator runs.
@@ -320,6 +321,9 @@ def main() -> int:
         ("unity_concord",        unity_concord),
         ("affinity_nms",         affinity_nms),
         ("weapon_forge",         weapon_forge),
+        # shop_command parses scripts/commands/shop.lua and renders the full
+        # catalog (all 10 categories + petStock) onto reference/shop-command.md.
+        ("shop_command",         shop_command),
         # differentiators renders why-legendary.md's "What Legendary Does
         # Differently" list from systems_registry.py and writes a drift report
         # of any system detail page that isn't featured. Runs before
