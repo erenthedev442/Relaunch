@@ -52,10 +52,28 @@ local function hasWyvern(player)
 end
 
 -- Generic Function for damage-based Jumps
--- TODO: implement Fly High attack +5 job points
 local function performWSJump(player, target, action, params, abilityID)
     local taChar = player:getTrickAttackChar(target)
+
+    -- DRG jump-attack job point gifts, applied as a temporary attack boost around the
+    -- jump's damage roll: Fly High (+5/level, all jumps), Jump (+3/level, Jump & Spirit
+    -- Jump), High Jump (+3/level, High Jump & Soul Jump).
+    local jumpAtk = player:getJobPointLevel(xi.jp.FLY_HIGH_EFFECT) * 5
+    if abilityID == xi.jobAbility.JUMP or abilityID == xi.jobAbility.SPIRIT_JUMP then
+        jumpAtk = jumpAtk + player:getJobPointLevel(xi.jp.JUMP_EFFECT) * 3
+    end
+    if abilityID == xi.jobAbility.HIGH_JUMP or abilityID == xi.jobAbility.SOUL_JUMP then
+        jumpAtk = jumpAtk + player:getJobPointLevel(xi.jp.HIGH_JUMP_EFFECT) * 3
+    end
+    if jumpAtk > 0 then
+        player:addMod(xi.mod.ATT, jumpAtk)
+    end
+
     local damage, criticalHit, tpHits, extraHits = xi.weaponskills.doPhysicalWeaponskill(player, target, 0, params, 1000, action, true, taChar)
+
+    if jumpAtk > 0 then
+        player:delMod(xi.mod.ATT, jumpAtk)
+    end
     local totalHits  = tpHits + extraHits
 
     if totalHits > 0 then

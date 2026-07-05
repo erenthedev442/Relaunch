@@ -11,8 +11,10 @@ effectObject.onEffectGain = function(target, effect)
             return
         end
 
+        -- MNK "Impetus Effect" job point gift: raises the maximum attack bonus by
+        -- +2 per level. Each stack is +2 ATT, so +1 stack of headroom per JP level.
         local mainPower = effectArg:getPower() + 1 -- Tracks stacks.
-        if mainPower > 50 then
+        if mainPower > 50 + actorArg:getJobPointLevel(xi.jp.IMPETUS_EFFECT) then
             return
         end
 
