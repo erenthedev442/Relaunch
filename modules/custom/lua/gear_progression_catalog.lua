@@ -105,7 +105,11 @@ catalog.silver =
     weapons =
     {
         { id = 20615, name = "Levante Dagger", cost = 25, jobs = 'WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/SCH/GEO' },
+        { id = 20808, name = "Tramontane Axe", cost = 25, jobs = 'WAR/DRK/BST/RUN' },
+        { id = 20827, name = "Kerehcatl", cost = 25, jobs = 'WAR/BST' },
         { id = 20893, name = "Shukuyus Scythe", cost = 25, jobs = 'WAR/DRK/BST' },
+        { id = 20945, name = "Nativus Halberd", cost = 25, jobs = 'WAR/PLD/SAM/DRG' },
+        { id = 21104, name = "Eosuchus Club", cost = 25, jobs = 'All' },
         { id = 21228, name = "Falubeza", cost = 25, jobs = 'RNG' },
         { id = 21256, name = "Illapa", cost = 25, jobs = 'RNG' },
         { id = 21529, name = "Premium Heart", cost = 25, jobs = 'MNK/PUP' },
@@ -116,6 +120,8 @@ catalog.silver =
         { id = 21588, name = "Mpu Gandring", cost = 25, jobs = 'RDM/THF/BRD/DNC' },
         { id = 21665, name = "Voluspa Blade", cost = 25, jobs = 'PLD/RUN' },
         { id = 21769, name = "Voluspa Chopper", cost = 25, jobs = 'WAR/DRK/RUN' },
+        { id = 22006, name = "Voluspa Hammer", cost = 25, jobs = 'WHM/GEO' },
+        { id = 22088, name = "Voluspa Pole", cost = 25, jobs = 'MNK/WHM/BLM/SMN/SCH/GEO' },
         { id = 22111, name = "Kaja Bow", cost = 25, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' },
         { id = 22118, name = "Venery Bow", cost = 25, jobs = 'RNG' },
         { id = 22119, name = "Wochowsen", cost = 25, jobs = 'RNG' },
