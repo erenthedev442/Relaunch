@@ -15,25 +15,25 @@ from __future__ import annotations
 
 ROLE_WEIGHTS = {
     'DPS': {
-        259: 8.0,     # DUAL_WIELD
-        302: 8.0,     # TRIPLE_ATTACK
-        430: 8.0,     # QUAD_ATTACK
-        288: 6.0,     # DOUBLE_ATTACK
+        259: 2,       # DUAL_WIELD
+        302: 6,       # TRIPLE_ATTACK
+        430: 12,      # QUAD_ATTACK
+        288: 3,       # DOUBLE_ATTACK
         62: 5.0,      # ATTP
         165: 4.0,     # CRITHITRATE
         387: -3.0,    # UDMGPHYS
         8: 2.0,       # STR
         9: 2.0,       # DEX
-        73: 2.0,      # STORETP
-        11: 1.5,      # AGI
+        73: 6,        # STORETP
+        11: 2,        # AGI
         25: 1.5,      # ACC
         421: 1.5,     # CRIT_DMG_INCREASE
-        23: 1.0,      # ATT
+        23: 2,        # ATT
         368: 1.0,     # REGAIN
         1039: 1.0,    # TRIPLE_ATTACK_DMG
         289: 0.5,     # SUBTLE_BLOW
         432: 0.3,     # ENSPELL_DMG_BONUS
-        113: 0.2,     # ENHANCE
+        113: 5,       # ENHANCE
         362: 0.1,     # JUMP_ATT_BONUS
         506: 0.1,     # EXTRA_DMG_CHANCE
         508: 0.1,     # THIRD_EYE_COUNTER_RATE
@@ -46,10 +46,10 @@ ROLE_WEIGHTS = {
     },
     'WS': {
         840: 5.0,     # ALL_WSDMG_ALL_HITS
-        949: 5.0,     # WS_NO_DEPLETE
+        949: 10,      # WS_NO_DEPLETE
         421: 3.0,     # CRIT_DMG_INCREASE
         841: 3.0,     # ALL_WSDMG_FIRST_HIT
-        1144: 3.0,    # ANY_FTP_BONUS
+        1144: 10,     # ANY_FTP_BONUS
         8: 2.0,       # STR
         9: 2.0,       # DEX
         165: 2.0,     # CRITHITRATE
