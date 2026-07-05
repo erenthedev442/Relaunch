@@ -46,6 +46,7 @@ exclude_docs: |
   admin/gear-coverage/
   admin/missing-spells.md
   admin/unfeatured-systems.md
+  admin/module-ownership.md
 
 extra_css:
   - assets/item-tooltip.css

@@ -59,6 +59,13 @@ end)
 hnmSystem:addOverride('xi.zones.Dragons_Aery.mobs.Fafnir.onMobDespawn', function(mob)
     super(mob)
 
+    -- Only the real HNM reschedules its own window. Affinity-NM replicas
+    -- reuse this retail name/script (affinity_nm_autopop.lua); without this
+    -- id check, killing a replica would stomp the real HNM's ToD/respawn.
+    if mob:getID() ~= dragonsAeryID.mob.FAFNIR then
+        return
+    end
+
     -- Server Variable work.
     local randomPopTime = 75600 + math.random(0, 6) * 1800
 
@@ -109,6 +116,13 @@ end)
 hnmSystem:addOverride('xi.zones.Valley_of_Sorrows.mobs.Adamantoise.onMobDespawn', function(mob)
     super(mob)
 
+    -- Only the real HNM reschedules its own window. Affinity-NM replicas
+    -- reuse this retail name/script (affinity_nm_autopop.lua); without this
+    -- id check, killing a replica would stomp the real HNM's ToD/respawn.
+    if mob:getID() ~= valleySorrowsID.mob.ADAMANTOISE then
+        return
+    end
+
     -- Server Variable work.
     local randomPopTime = 75600 + math.random(0, 6) * 1800
 
@@ -158,6 +172,13 @@ end)
 
 hnmSystem:addOverride('xi.zones.Behemoths_Dominion.mobs.Behemoth.onMobDespawn', function(mob)
     super(mob)
+
+    -- Only the real HNM reschedules its own window. Affinity-NM replicas
+    -- reuse this retail name/script (affinity_nm_autopop.lua); without this
+    -- id check, killing a replica would stomp the real HNM's ToD/respawn.
+    if mob:getID() ~= behemothDomID.mob.BEHEMOTH then
+        return
+    end
 
     -- Server Variable work.
     local randomPopTime = 75600 + math.random(0, 6) * 1800
@@ -225,6 +246,13 @@ end)
 hnmSystem:addOverride('xi.zones.Sauromugue_Champaign.mobs.Roc.onMobDespawn', function(mob)
     super(mob)
 
+    -- Only the real HNM reschedules its own window. Affinity-NM replicas
+    -- reuse this retail name/script (affinity_nm_autopop.lua); without this
+    -- id check, killing a replica would stomp the real HNM's ToD/respawn.
+    if mob:getID() ~= sauromugueID.mob.ROC then
+        return
+    end
+
     -- 6-8 hour window: 21600s + up to 4 * 1800s
     local randomPopTime = 21600 + math.random(0, 4) * 1800
 
@@ -259,6 +287,13 @@ end)
 
 hnmSystem:addOverride('xi.zones.Rolanberry_Fields.mobs.Simurgh.onMobDespawn', function(mob)
     super(mob)
+
+    -- Only the real HNM reschedules its own window. Affinity-NM replicas
+    -- reuse this retail name/script (affinity_nm_autopop.lua); without this
+    -- id check, killing a replica would stomp the real HNM's ToD/respawn.
+    if mob:getID() ~= rolanberryID.mob.SIMURGH then
+        return
+    end
 
     -- 6-8 hour window: 21600s + up to 4 * 1800s
     local randomPopTime = 21600 + math.random(0, 4) * 1800
@@ -295,6 +330,13 @@ end)
 hnmSystem:addOverride('xi.zones.Garlaige_Citadel.mobs.Serket.onMobDespawn', function(mob)
     super(mob)
 
+    -- Only the real HNM reschedules its own window. Affinity-NM replicas
+    -- reuse this retail name/script (affinity_nm_autopop.lua); without this
+    -- id check, killing a replica would stomp the real HNM's ToD/respawn.
+    if mob:getID() ~= garlaigeCitadelID.mob.SERKET then
+        return
+    end
+
     -- 6-8 hour window: 21600s + up to 4 * 1800s
     local randomPopTime = 21600 + math.random(0, 4) * 1800
 
@@ -330,6 +372,13 @@ end)
 hnmSystem:addOverride('xi.zones.Jugner_Forest.mobs.King_Arthro.onMobDespawn', function(mob)
     super(mob)
 
+    -- Only the real HNM reschedules its own window. Affinity-NM replicas
+    -- reuse this retail name/script (affinity_nm_autopop.lua); without this
+    -- id check, killing a replica would stomp the real HNM's ToD/respawn.
+    if mob:getID() ~= jugnerForestID.mob.KING_ARTHRO then
+        return
+    end
+
     -- 8-10 hour window: 28800s + up to 4 * 1800s
     local randomPopTime = 28800 + math.random(0, 4) * 1800
 
@@ -364,6 +413,13 @@ end)
 
 hnmSystem:addOverride('xi.zones.East_Sarutabaruta.mobs.Spiny_Spipi.onMobDespawn', function(mob)
     super(mob)
+
+    -- Only the real HNM reschedules its own window. Affinity-NM replicas
+    -- reuse this retail name/script (affinity_nm_autopop.lua); without this
+    -- id check, killing a replica would stomp the real HNM's ToD/respawn.
+    if mob:getID() ~= eastSarutabarutaID.mob.SPINY_SPIPI then
+        return
+    end
 
     -- 4-6 hour window: 14400s + up to 4 * 1800s
     local randomPopTime = 14400 + math.random(0, 4) * 1800

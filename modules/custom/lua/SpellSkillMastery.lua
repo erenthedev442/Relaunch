@@ -479,7 +479,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
     super(zone)
     zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
-        name       = 'Mastery_Sage',
+        name       = 'Spell_Mastery_Sage',
         packetName = string.format('%sMastery Sage', xi.icon.STAR_LARGE),
         look       = 2419,
         x          = C.npcPos.x,

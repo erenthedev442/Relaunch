@@ -22,6 +22,17 @@
 -- Remove any leftover static spawn points from prior approaches.
 DELETE FROM `mob_spawn_points` WHERE `groupid` BETWEEN 11355 AND 11369;
 
+-- Dedicate Escha - Zi'Tah (zone 288) to the Hunting League: clear every native
+-- mob spawn point in the zone so only the dynamic HL NMs live here. This clear
+-- previously lived in the one-time hunting_league_escha_migration.sql (now moved
+-- to sql-archive/); it is idempotent and belongs with the canonical definition.
+--   Scope by the zone encoded in the mobid: (mobid >> 12) & 0xFFF = zoneid.
+--   DO NOT join mob_spawn_points to mob_groups on groupid alone -- `groupid` is
+--   REUSED across zones, so a groupid join deleted mob_spawn_points server-wide
+--   and gutted the table 82,974 -> 11,879 rows on 2026-06-15. HL NMs are
+--   pure-dynamic (no spawn points), so this never touches them.
+DELETE FROM `mob_spawn_points` WHERE ((`mobid` >> 12) & 0xFFF) = 288;
+
 -- Idempotent mob_groups — safe to re-run.
 -- IMPORTANT: zoneid filter is REQUIRED. The same groupid range (11355-11369)
 -- is also registered at zoneid=210 (GM Home) by hunting_league_gm_home_mobs.sql
