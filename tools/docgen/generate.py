@@ -141,6 +141,21 @@ def main() -> int:
         weapon_forge,
         shop_command,
         nyzul_isle,
+        # --- full-page owners for formerly hand-written pages (2026-07-05):
+        # every one rewrites its whole page from live catalogs so nothing drifts.
+        home_page,
+        getting_started_pages,
+        rules_page,
+        faq_page,
+        glossary_page,
+        subjob_exp_page,
+        hub_pages,
+        nyzul_page,
+        background_systems_page,
+        progression_guide_page,
+        gear_guide_page,
+        augmenting_guide_page,
+        highlights_page,
     )
 
     # Snapshot existing last-updated footers BEFORE any generator runs.
@@ -329,9 +344,28 @@ def main() -> int:
         # shop_command parses scripts/commands/shop.lua and renders the full
         # catalog (all 10 categories + petStock) onto reference/shop-command.md.
         ("shop_command",         shop_command),
+        # --- full-page owners for formerly hand-written pages (2026-07-05) ---
+        # Each rewrites its whole page from live catalogs/settings so the page
+        # can't drift. They run BEFORE settings_inject/npc_location_inject so the
+        # {{setting:}}/{{npc:}} tokens they emit get resolved. nyzul_page MUST run
+        # before nyzul_isle: it emits the page skeleton with the two empty
+        # nyzul-floor100 / nyzul-nm-drops marker blocks that nyzul_isle then fills.
+        ("home_page",              home_page),
+        ("getting_started_pages",  getting_started_pages),
+        ("rules_page",             rules_page),
+        ("faq_page",               faq_page),
+        ("glossary_page",          glossary_page),
+        ("subjob_exp_page",        subjob_exp_page),
+        ("hub_pages",              hub_pages),
+        ("nyzul_page",             nyzul_page),
+        ("background_systems_page", background_systems_page),
+        ("progression_guide_page", progression_guide_page),
+        ("gear_guide_page",        gear_guide_page),
+        ("augmenting_guide_page",  augmenting_guide_page),
+        ("highlights_page",        highlights_page),
         # nyzul_isle parses armoury_crate.lua + appraisal.lua to render the
-        # per-NM drop table and floor-100 vigil-weapon pool on
-        # docs/endgame/nyzul-isle.md.
+        # per-NM drop table and floor-100 vigil-weapon pool into the two marker
+        # blocks nyzul_page just emitted on docs/endgame/nyzul-isle.md.
         ("nyzul_isle",           nyzul_isle),
         # differentiators renders why-legendary.md's "What Legendary Does
         # Differently" list from systems_registry.py and writes a drift report
