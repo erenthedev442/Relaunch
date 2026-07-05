@@ -171,8 +171,43 @@ xi.spells.absorb.doDrainingSpell = function(caster, target, spell)
 
     -- Drain II and Drain III increase max HP via effect.
     if absorbPointsData[spellId][5] then
-        -- Remove cap on damage displayed in log.
-        displayCap = 9999 - caster:getHP()
+        -- Remove the MaxHP headroom cap so the full absorbed amount shows in the log,
+        -- including the portion that extends MaxHP beyond its base value.
+        -- FJB: retail used 9999-currentHP here but player HP on this server exceeds 9999,
+        -- making displayCap negative → negative displayDamage → incorrect C++ behaviour.
+        displayCap = 131071
+
+        -- FJB: Drain III "bubble" (Discord QoL request): a landed player-cast
+        -- Drain III grants a PERCENT Max HP Boost, FF-style, since retail's
+        -- flat-overflow design below never triggers against this server's HP
+        -- pools. Percent power also avoids the int16 flat-HP mod ceiling, and
+        -- the overflow branch below already yields to %-power effects.
+        if
+            spellId == xi.magic.spell.DRAIN_III and
+            caster:isPC() and
+            finalDamage > 0 and
+            resistTier >= 0.5
+        then
+            local bubblePct = 50 -- Temp Max HP bonus (%). Tune here.
+            local apply     = true
+
+            if caster:hasStatusEffect(xi.effect.MAX_HP_BOOST) then
+                local bubble = caster:getStatusEffect(xi.effect.MAX_HP_BOOST)
+                if
+                    bubble:getPower() > bubblePct or    -- Stronger bubble up: keep it.
+                    (bubble:getPower() == bubblePct and -- Same bubble, still fresh: re-applying
+                    bubble:getTimeRemaining() > 60000)  -- would clamp away over-cap HP.
+                then
+                    apply = false
+                end
+            end
+
+            if apply then
+                local bubbleDuration = 180 + 180 * caster:getMod(xi.mod.DARK_MAGIC_DURATION) / 100
+                caster:delStatusEffect(xi.effect.MAX_HP_BOOST)
+                caster:addStatusEffect(xi.effect.MAX_HP_BOOST, { power = bubblePct, duration = bubbleDuration, origin = caster })
+            end
+        end
 
         -- Calculate overflow.
         local overflow = finalDamage + caster:getHP() - caster:getMaxHP()
