@@ -200,6 +200,23 @@ RANGED_EXCLUDE = (
     'prime', 'pinaka', 'mpacas', 'artemiss',
 )
 
+# Relic/Empyrean MELEE weapon families to keep OUT of the Weapons Vendor -- the melee
+# analogue of RANGED_EXCLUDE. Single-job melee REMA already route to the Reforge System
+# (the multi-job filter in the candidate loop), but relaunch gives several REMA multi-job
+# masks (e.g. Mandau = RDM/THF/BRD, Ragnarok = WAR/PLD/DRK, Claustrum, Verethragna,
+# Twashtar, Almace, Caladbolg, Farsha, Hvergelmir), so they slip past that filter and
+# must be named explicitly. Matched by name prefix ('-' -> '_'), single- AND multi-job.
+# Ranged REMA live in RANGED_EXCLUDE; Ambuscade families (Kaja / Voluspa / Fomalhaut /
+# Mpu Gandring / etc.) are NOT REMA and are intentionally left in.  (added 2026-07-05)
+MELEE_REMA_EXCLUDE = (
+    # Relic
+    'spharai', 'mandau', 'excalibur', 'ragnarok', 'guttler', 'bravura', 'apocalypse',
+    'gungnir', 'kikoku', 'amanomurakumo', 'mjollnir', 'claustrum', 'gjallarhorn',
+    # Empyrean
+    'verethragna', 'twashtar', 'almace', 'caladbolg', 'ukonvasara', 'farsha', 'redemption',
+    'rhongomiant', 'kannagi', 'kogarasumaru', 'gambanteinn', 'hvergelmir', 'daurdabla',
+)
+
 
 # ============================================================================
 # Job map + role classification -- mirrors score_armor.py
@@ -315,6 +332,11 @@ for iid, info in items_base.items():
         _rfam = items_base[iid]['name'].replace('-', '_')
         if any(_rfam.startswith(_r) for _r in RANGED_EXCLUDE):
             continue
+    # Melee Relic/Empyrean held back the same way (they carry multi-job masks on
+    # relaunch, so the single-job Reforge routing above doesn't catch them).
+    _mfam = items_base[iid]['name'].replace('-', '_')
+    if any(_mfam.startswith(_r) for _r in MELEE_REMA_EXCLUDE):
+        continue
     # Explicit +4 exclusion (belt-and-suspenders on top of the multi-job
     # filter above). +4 reforge sets are an Infamy Vendor exclusive (see
     # modules/custom/lua/dungeon_catalog.lua catalog.plus4Sets). Even if
