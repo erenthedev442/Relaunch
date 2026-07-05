@@ -104,6 +104,23 @@ catalog.silver =
 {
     weapons =
     {
+        { id = 20615, name = "Levante Dagger", cost = 25, jobs = 'WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/SCH/GEO' },
+        { id = 20893, name = "Shukuyus Scythe", cost = 25, jobs = 'WAR/DRK/BST' },
+        { id = 21228, name = "Falubeza", cost = 25, jobs = 'RNG' },
+        { id = 21256, name = "Illapa", cost = 25, jobs = 'RNG' },
+        { id = 21529, name = "Premium Heart", cost = 25, jobs = 'MNK/PUP' },
+        { id = 21566, name = "Voluspa Knife", cost = 25, jobs = 'WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC' },
+        { id = 21568, name = "Acrontica", cost = 25, jobs = 'THF/DNC' },
+        { id = 21569, name = "Chocobo Knife", cost = 25, jobs = 'RDM/THF/BRD/RNG/DNC' },
+        { id = 21570, name = "Air Knife", cost = 25, jobs = 'THF/DNC' },
+        { id = 21588, name = "Mpu Gandring", cost = 25, jobs = 'RDM/THF/BRD/DNC' },
+        { id = 21665, name = "Voluspa Blade", cost = 25, jobs = 'PLD/RUN' },
+        { id = 21769, name = "Voluspa Chopper", cost = 25, jobs = 'WAR/DRK/RUN' },
+        { id = 22111, name = "Kaja Bow", cost = 25, jobs = 'WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN' },
+        { id = 22118, name = "Venery Bow", cost = 25, jobs = 'RNG' },
+        { id = 22119, name = "Wochowsen", cost = 25, jobs = 'RNG' },
+        { id = 22133, name = "Voluspa Bow", cost = 25, jobs = 'RNG' },
+        { id = 22144, name = "Voluspa Gun", cost = 25, jobs = 'RNG/COR' },
         { id = 22215, name = "Ajja Grip", cost = 25, jobs = 'WAR/BLM/DRK/SAM/DRG/SMN/SCH/GEO/RUN' },
     },
 }
