@@ -85,6 +85,7 @@ def main() -> int:
         npc_location_inject,
         player_profiles,
         prestige,
+        progression_map,
         progression_order,
         rates_table,
         reforge,
@@ -169,6 +170,11 @@ def main() -> int:
         # progression_order reads rank/dungeon/GM-wave/weekly catalogs and
         # generates the Recommended progression order on docs/progression/index.md.
         ("progression_order", progression_order),
+        # progression_map regenerates the ENTIRE Progression Flow Map body on
+        # getting-started/progression-map.md from ten live catalogs (owner
+        # requirement 2026-07-05: the map must track the content). Fail-closed:
+        # a parse error keeps the last good page instead of publishing holes.
+        ("progression_map",  progression_map),
         ("armor_npc",        armor_npc),
         ("weapons_npc",      weapons_npc),
         # accessories_npc reads the same hunting_league_catalog as

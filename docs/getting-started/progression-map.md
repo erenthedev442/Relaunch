@@ -69,11 +69,12 @@ title: Progression Map
   .pmap footer{color:#8d96ab;font-size:12px;border-top:1px solid #334059;padding-top:14px;margin-top:8px}
   .pmap footer code{background:#1d2634;padding:1px 5px;border-radius:3px;font-size:11.5px;color:#d8dde8}
 </style>
+<!-- DOCGEN:BEGIN id="progression-map" -->
 <div class="pmap">
 <header>
   <div class="eyebrow">Legendary FFXI · Relaunch</div>
   <h1>Progression Flow Map</h1>
-  <p class="sub">Every gate, unlock, and currency from first login to the infinite endgame — audited against the relaunch branch's live catalogs, not the design plan.</p>
+  <p class="sub">Every gate, unlock, and currency from first login to the infinite endgame — regenerated from the live catalogs on every site publish.</p>
 </header>
 <div class="loop"><b>Hunt NMs</b><span>→</span><b>Earn Marks</b><span>→</span><b>Rank Up</b><span>→</span><b>Unlock Augment Tiers</b><span>→</span><b>Prestige &amp; Rebirth</b><span>→</span><b>Ascend Infinitely</b></div>
 <div class="spine">
@@ -84,19 +85,19 @@ title: Progression Map
     <div class="kit">
       <div><b>25</b> Hunt Marks starter stipend</div>
       <div><b>+50</b> marks first login each UTC day</div>
-      <div>Login streaks: 7/14/21/30 days → <b>+75/+200/+400/+750</b></div>
+      <div>Login streaks: 7d <b>+75</b> · 14d <b>+200</b> · 21d <b>+400</b> · 30d <b>+750</b></div>
       <div>All jobs ready — no leveling wall</div>
     </div>
-    <p class="dim">Open from day one, in parallel: HL Rank 1 camps · <b>Adventuring Fellow</b> (your build-a-companion — levels from your kills) · Hunter's Guild (rep amps your marks) · Affinity NM hunts (24 always-up — register Sage affinities) · Casino · Chocobo Derby · Colosseum PvP · Daily Board. <b>The Augment Moogle refuses fresh characters</b> — your first 10 custom NM kills open Augment Tier 1.</p>
+    <p class="dim">Open from day one, in parallel: HL Rank 1 camps · <b>Adventuring Fellow</b> · Hunter's Guild (rep amps your marks) · Affinity NM hunts · Casino · Chocobo Derby · Colosseum PvP · Daily Board. <b>The Augment Moogle refuses fresh characters</b> — slay your first 10 custom NMs (Hunting League, Wave Mode, Voidspire...) to open Augment Tier 1.</p>
   </div>
   <div class="node">
     <div class="stageno">Stage 1</div>
     <h2>The Hunt Begins</h2>
     <div class="gate">Rank 2 at 150 lifetime marks</div>
-    <p>Rank 1 NMs pay 5 marks base. <b>First-ever kill of each NM pays double</b>; the weekly <b>Featured Hunt pays 2× base</b> on your first kill (stacks with first-kill); kill streaks inside 5 minutes add <b>+10% at 3, +20% at 5, +50% at 10</b>; partied kills add a party bonus on top.</p>
+    <p>Rank 1 NMs pay 5 marks base. <b>First-ever kill of each NM pays double</b>; the weekly <b>Featured Hunt pays 2× base</b> on your first kill (stacks with first-kill); kill streaks inside 5 minutes add <b>+10% at 3, +20% at 5, +50% at 10</b>; partied kills add +25% with 2+ in party / +50% with 4+ in party.</p>
     <ul class="open">
       <li>Opens: Rank 2 NMs (12 marks/kill) · <b>Sage Mastery rank 1</b> (Augment Initiate — lifts your roll floor)</li>
-      <li>By now you've cleared 10 custom NMs → <b>Augment Tier 1</b> live (rolls in the 0–5 band)</li>
+      <li>Augment Tier 1 rolls live in the 0–5 band once the gate is cleared</li>
     </ul>
   </div>
   <div class="node">
@@ -106,14 +107,14 @@ title: Progression Map
     <p>Rank 2–3 NMs are duo/small-group fights. Gear climbs through the vendor tiers as marks accumulate.</p>
     <ul class="open">
       <li>Opens: Rank 3 NMs (22 marks/kill) · <b>Sage Mastery rank 2</b> (Augment Adept)</li>
-      <li>Start chipping: <b>Voidspire</b> floors (weekly milestone dungeon — floor 10 feeds Augment Tier 3 later) and <b>Game Master waves</b> (all five difficulties feed the same gate)</li>
+      <li>Start chipping the later augment-tier keys: clear Voidspire floor 10 + every Game Master wave difficulty</li>
     </ul>
   </div>
   <div class="node">
     <div class="stageno">Stage 3</div>
     <h2>The Hard Push</h2>
     <div class="gate">Rank 4 at 1,500 → Rank 5 at 3,000 lifetime marks</div>
-    <p>The long stretch by design. Rank 4 NMs pay 38 marks; Rank 5 pays 65 — and <b>Shinryu pays 110</b> as the Rank 5 server boss. Featured weeks and kill streaks matter most here.</p>
+    <p>The long stretch by design. Rank 4 NMs pay 38 marks; Rank 5 pays 65 — and Shinryu <b>110</b> as the Rank 5 server boss. Featured weeks and kill streaks matter most here.</p>
   </div>
   <div class="node hub">
     <div class="stageno">★ The Hub Gate</div>
@@ -121,8 +122,8 @@ title: Progression Map
     <div class="gate">3,000 lifetime marks — everything past this point fans out from here</div>
     <ul class="open">
       <li><b>Prestige entry</b> — the Ascension Altar accepts you; Nightmare Court trials begin</li>
-      <li><b>Augment Tier 2</b> — rolls move up to the 6–11 band</li>
-      <li><b>Sage Mastery rank 3</b> within reach (needs Prestige 5 + your first Rebirth)</li>
+      <li><b>Augment Tier 2</b> — rolls move up to the 6–11 band (reach Hunting League Rank 5)</li>
+      <li>Deeper Sage Mastery ranks come into reach as Prestige and Rebirth progress</li>
     </ul>
   </div>
 </div>
@@ -133,51 +134,51 @@ title: Progression Map
 <div class="lanes">
   <div class="lane">
     <h3>Prestige &amp; Rebirth <span class="chip c-ap">Ascension AP</span></h3>
-    <div class="who">Nightmare Court boss trials at the Ascension Altar (Diabolos, the Dream Devourer and his rotating court) · AP per kill scales with depth</div>
-    <div class="rung"><b>P.Lv 1–50</b><span>10 AP per Court kill · perks bought at the Prestige board</span></div>
-    <div class="rung"><b>P.Lv 51–80</b><span>15 AP per kill · deeper Courts</span></div>
-    <div class="rung"><b>P.Lv 81+</b><span>20 AP per kill · the long ladder</span></div>
-    <div class="rung"><b>Rebirth</b><span>Any job with <b>2,100 spent Job Points</b> can rebirth — restart at the bottom for permanent stacking category boosts; rebirth counts also gate Sage Mastery ranks 3–5</span></div>
+    <div class="who">Nightmare Court boss trials at the Ascension Altar · AP per kill scales with depth</div>
+    <div class="rung"><b>P.Lv 1–50</b><span>10 AP per Court kill</span></div>
+    <div class="rung"><b>P.Lv 51–80</b><span>15 AP per Court kill</span></div>
+    <div class="rung"><b>P.Lv 81+</b><span>20 AP per Court kill</span></div>
+    <div class="rung"><b>Rebirth</b><span>Any job with <b>2,100 spent Job Points</b> can rebirth — permanent stacking category boosts; rebirth counts also gate the deeper Sage Mastery ranks</span></div>
   </div>
   <div class="lane">
-    <h3>Prime Weapon — Five Trials <span class="chip c-gil">750M gil</span></h3>
-    <div class="who">All five trials in any order, then the forge opens — 16 Prime forms (14 weapons + Duban shield + Loughnashade horn)</div>
-    <div class="rung"><b>Trial 1</b><span>Turn in 12 each of the 20 Abyssea collectibles</span></div>
-    <div class="rung"><b>Trial 2</b><span>Clear Endless Tower floor 50</span></div>
-    <div class="rung"><b>Trial 3</b><span>Prime Voucher — rare Hunting League NM drop</span></div>
-    <div class="rung"><b>Trial 4</b><span>Defeat any Weapon Guardian (Job Mastery)</span></div>
-    <div class="rung"><b>Trial 5</b><span>99 each of Jadeshell, Silverpiece &amp; 100 Byne Bill</span></div>
+    <h3>Prime Weapon — 5 Trials <span class="chip c-gil">750,000,000 gil</span></h3>
+    <div class="who">All trials in any order, then the forge opens</div>
+    <div class="rung"><b>Trial 1</b><span>12 each of all 20 Abyssea collectibles (turn in here)</span></div>
+    <div class="rung"><b>Trial 2</b><span>Endless Tower floor 50</span></div>
+    <div class="rung"><b>Trial 3</b><span>Prime Voucher (Maze Monger Crown) - rare Hunting League NM drop (turn in here)</span></div>
+    <div class="rung"><b>Trial 4</b><span>Weapon Guardian defeated (Job Mastery)</span></div>
+    <div class="rung"><b>Trial 5</b><span>99 each of Jadeshell, Silverpiece &amp; 100 Byne Bill (turn in here)</span></div>
     <div class="rung"><b>The Forge</b><span>Prime Armory · 750,000,000 gil per weapon</span></div>
   </div>
   <div class="lane">
     <h3>The Gauntlet &amp; Apex <span class="chip c-paragon">Paragon Points</span></h3>
-    <div class="who">Solo boss ladders — the Gauntlet's champion climb (a clear also feeds Augment Archon) and the Apex arena in Walk of Echoes [P2]</div>
-    <div class="rung"><b>Apex Trials</b><span>Scaled boss tiers ("Apex Challenger" upward) · Paragon Points per clear</span></div>
-    <div class="rung"><b>Paragon board</b><span>Caps: <b>+1,000</b> ATT · <b>+1,000</b> ACC · <b>+2,000</b> DEF · <b>+5,000</b> HP · upgraded Daily Might buff</span></div>
+    <div class="who">Solo boss ladders — the Gauntlet's champion climb and the Apex arena in Walk of Echoes [P2]</div>
+    <div class="rung"><b>Apex Trials</b><span>Scaled boss tiers · Paragon Points per clear</span></div>
+    <div class="rung"><b>Paragon board</b><span>Caps: <b>+5,000</b> HP · <b>+1,000</b> ATT, RATT · <b>+1,000</b> ACC, RACC · <b>+2,000</b> DEF</span></div>
     <div class="rung"><b>No ceiling</b><span>The Apex ladder itself keeps scaling — the leaderboard war never ends</span></div>
   </div>
   <div class="lane">
     <h3>The Augment Ladder <span class="chip c-aug">Tiers 1–5</span></h3>
     <div class="who">Your roll band is gated by CONTENT; your Sage Mastery rank lifts the floor inside the band, and a crit = a perfect roll</div>
-    <div class="rung"><b>Tier 1 · 0–5</b><span>Slay your first 10 custom NMs</span></div>
-    <div class="rung"><b>Tier 2 · 6–11</b><span>Hunting League Rank 5</span></div>
-    <div class="rung"><b>Tier 3 · 12–17</b><span>Voidspire floor 10 <i>and</i> every Game Master wave difficulty</span></div>
-    <div class="rung"><b>Tier 4 · 18–24</b><span>Clear a Dynamis — Divergence city</span></div>
-    <div class="rung"><b>Tier 5 · 25–31</b><span>Defeat Maat's Echo (<code>!maat</code>)</span></div>
-    <div class="rung"><b>Mastery</b><span>Initiate@R2 · Adept@R3 · Magus@R5+P5+1 rebirth · Sage@P15+10 rebirths · Archon@P30+20 rebirths+Gauntlet clear</span></div>
+    <div class="rung"><b>Tier 1 · 0–5</b><span>slay your first 10 custom NMs (Hunting League, Wave Mode, Voidspire...)</span></div>
+    <div class="rung"><b>Tier 2 · 6–11</b><span>reach Hunting League Rank 5</span></div>
+    <div class="rung"><b>Tier 3 · 12–17</b><span>clear Voidspire floor 10 + every Game Master wave difficulty</span></div>
+    <div class="rung"><b>Tier 4 · 18–24</b><span>clear a Dynamis - Divergence city</span></div>
+    <div class="rung"><b>Tier 5 · 25–31</b><span>defeat Maat's Echo (Ru'Lude Gardens, !maat)</span></div>
+    <div class="rung"><b>Mastery</b><span>Initiate@HL R2 · Adept@HL R3 · Magus@HL R5+P5+1 rebirth · Sage@P15+10 rebirths · Archon@P30+20 rebirths+Gauntlet clear</span></div>
   </div>
   <div class="lane wide">
     <h3>The World-Content Band — feeds everything above</h3>
-    <div class="who">Independent tracks with their own currencies and loot; several are augment-tier keys</div>
+    <div class="who">Independent tracks with their own currencies and loot; several are augment-tier keys. A system only appears here while it exists in the live code.</div>
     <div class="wgrid">
-      <div class="wcell"><b>Dynamis — Divergence</b><span>Portals at the four city Dynamis entrances · wave battles · currency feeds the Divergence Reforger (armor +1 → +3) · a city clear = Augment Tier 4</span></div>
+      <div class="wcell"><b>Dynamis — Divergence</b><span>Portals at the four city Dynamis entrances · wave battles · currency feeds the Divergence Reforger (armor +1 → +3) · a city clear is an Augment Tier key</span></div>
       <div class="wcell"><b>Voidwatch</b><span>Rift battles — pop a Planar Rift, burn the Voidwalker, stack lights for the Pyxis loot roll</span></div>
       <div class="wcell"><b>High-Tier Battlefields</b><span>Retail HTBF fights via phantom gems, tiered difficulty, dedicated vendor</span></div>
       <div class="wcell"><b>Nyzul Isle</b><span>The Sorrowful Sage in Mhaura opens retail Nyzul runs — floor-climb loot</span></div>
       <div class="wcell"><b>Spell &amp; Skill Mastery</b><span>Spend <span class="chip c-sigil">Mastery Sigils</span> at the Mastery Sage in Leafallia to permanently empower weapon skills and spells</span></div>
-      <div class="wcell"><b>Voidspire &amp; GM Waves</b><span>Weekly milestone dungeon + five wave difficulties — together they are the Augment Tier 3 key</span></div>
-      <div class="wcell"><b>Affinity NM Hunts</b><span>24 always-up NMs · register Augment Sage affinities for better rolls in their category</span></div>
-      <div class="wcell"><b>Maat's Echo</b><span><code>!maat</code> — the solo super-fight · first kill = Augment Tier 5</span></div>
+      <div class="wcell"><b>Voidspire &amp; GM Waves</b><span>Weekly milestone dungeon + five wave difficulties — together an Augment Tier key</span></div>
+      <div class="wcell"><b>Affinity NM Hunts</b><span>Always-up affinity NMs · register Augment Sage affinities for better rolls in their category</span></div>
+      <div class="wcell"><b>Maat's Echo</b><span><code>!maat</code> — the solo super-fight · first kill is an Augment Tier key</span></div>
       <div class="wcell"><b>Adventuring Fellow</b><span>Your persistent companion — levels from your kills, build it toward the role you need</span></div>
     </div>
   </div>
@@ -193,7 +194,7 @@ title: Progression Map
       <tr><td>Rank 4</td><td>1,500</td><td>38</td></tr>
       <tr><td>Rank 5</td><td>3,000</td><td>65 · Shinryu <b>110</b></td></tr>
     </table></div>
-    <p class="dim" style="font-size:12px;margin-top:8px">Multipliers stack on base: first-kill ×2 · featured week ×2 · streak +10/20/50% · party bonus · Hunter's Guild rank amp.</p>
+    <p class="dim" style="font-size:12px;margin-top:8px">Multipliers stack on base: first-kill ×2 · featured week ×2 · streak +10% at 3, +20% at 5, +50% at 10 · +25% with 2+ in party / +50% with 4+ in party · Hunter's Guild rank amp.</p>
   </div>
   <div class="ref">
     <h3>Currencies at a glance</h3>
@@ -204,11 +205,12 @@ title: Progression Map
       <tr><td><span class="chip c-paragon">Paragon Pts</span></td><td>Apex Trials</td><td>Paragon board (capped stats + Daily Might)</td></tr>
       <tr><td><span class="chip c-sigil">Mastery Sigils</span></td><td>Mastery content</td><td>Permanent WS/spell empowerment</td></tr>
       <tr><td><span class="chip c-div">Divergence currency</span></td><td>Dynamis — Divergence waves</td><td>Armor reforge +1 → +3</td></tr>
-      <tr><td><span class="chip c-gil">Gil</span></td><td>AH, Casino, Derby, mobs</td><td>Prime forge (750M), AH, Casino</td></tr>
+      <tr><td><span class="chip c-gil">Gil</span></td><td>AH, Casino, Derby, mobs</td><td>Prime forge (750,000,000), AH, Casino</td></tr>
     </table></div>
   </div>
 </div>
 <footer>
-  Audited against the relaunch branch: <code>hunting_league_catalog.lua</code> · <code>Augment_Moogle.lua</code> (TIER_SLICES/TIER_GATES) · <code>augment_sage_catalog.lua</code> · <code>prestige_catalog.lua</code> · <code>job_rebirth_catalog.lua</code> · <code>PrimeArmory_NPC.lua</code> · <code>paragon_catalog.lua</code> · <code>daily_login_bonus.lua</code> · <code>login_streak.lua</code> and the world-content modules. Where <code>RELAUNCH_PLAN.md</code> disagrees with this page, the code wins — the plan predates the current catalogs.
+  Generated on every site publish from the live relaunch catalogs (hunting_league_catalog · Augment_Moogle TIER_SLICES/TIER_GATES · augment_sage_catalog · prestige_catalog · job_rebirth_catalog · PrimeArmory_NPC · paragon_catalog · daily_login_bonus · login_streak · HuntingLeague). If a number here disagrees with the game, the next hourly publish reconciles it.
 </footer>
 </div>
+<!-- DOCGEN:END id="progression-map" -->
