@@ -53,6 +53,14 @@ local function calculateWSC(attacker, params)
 
     local wsc = (wscSTR + wscDEX + wscVIT + wscAGI + wscINT + wscMND + wscCHR) * alpha
 
+    -- BLU "Blue Magic Effect" job point gift: bonus to the attribute value used by
+    -- physical blue magic, weighted by the spell's stat coefficients so it scales
+    -- like a real stat bump on whichever stats the spell uses.
+    local bmBonus = attacker:getMod(xi.mod.BLUE_MAGIC_EFFECT)
+    if bmBonus > 0 then
+        wsc = wsc + bmBonus * (params.str_wsc + params.dex_wsc + params.vit_wsc + params.agi_wsc + params.int_wsc + params.mnd_wsc + params.chr_wsc) * alpha
+    end
+
     return wsc
 end
 

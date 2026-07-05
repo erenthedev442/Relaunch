@@ -64,6 +64,9 @@ function getCureFinal(caster, spell, basecure, minCure, isBlueMagic)
     final       = math.floor(final * rapture)
     final       = math.floor(final * dSeal)
 
+    -- PLD "Cure Potency Bonus" job point gift: flat HP added after multipliers.
+    final = final + caster:getMod(xi.mod.CURE_POTENCY_BONUS)
+
     return final
 end
 

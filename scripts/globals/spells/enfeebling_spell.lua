@@ -377,6 +377,12 @@ xi.spells.enfeebling.calculateDuration = function(caster, target, spellId, spell
         duration = math.floor(duration * (1 + caster:getMod(xi.mod.ENF_MAG_DURATION) / 100))
     end
 
+    -- NIN "Ninjutsu Effect Duration" job point gift: extend enfeebling ninjutsu
+    -- debuffs (Hojo, Kurayami, Dokumori, Jubaku, etc.) by a flat number of seconds.
+    if skillType == xi.skill.NINJUTSU then
+        duration = duration + caster:getMod(xi.mod.NINJUTSU_DURATION)
+    end
+
     ---@cast duration integer
     return math.floor(duration)
 end

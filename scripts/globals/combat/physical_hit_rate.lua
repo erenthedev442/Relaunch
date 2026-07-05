@@ -29,7 +29,9 @@ xi.combat.physicalHitRate.checkAnticipated = function(attacker, defender)
         -- Other sources such as BG indicate it has a reduction -- https://www.bluegartr.com/threads/71538-Mythic-Weapon-Compiled-Information?p=2972086&highlight=#post2972086
 
         -- Increase scale by 100x to give more precision to the RNG
-        thirdEyeRetentionChance = utils.clamp(100 - timeInEffect * retentionLossPerMillisecond * retentionModifier, 0, 100) * 100
+        -- SAM "Third Eye Effect" job point gift: flat bonus to the per-hit chance
+        -- to retain Third Eye under Seigan (value x 5%; tune the scale as needed).
+        thirdEyeRetentionChance = utils.clamp(100 - timeInEffect * retentionLossPerMillisecond * retentionModifier + defender:getMod(xi.mod.THIRD_EYE_BONUS) * 5, 0, 100) * 100
     end
 
     -- Calculate if "Third Eye" is retained.

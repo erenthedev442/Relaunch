@@ -72,6 +72,13 @@ xi.spells.enhancing.useEnhancingNinjutsu = function(caster, target, spell)
     local duration        = pTable[spellId][column.EFFECT_DURATION]
     local alwaysOverwrite = pTable[spellId][column.EFFECT_WILL_OVERWRITE]
 
+    -- NIN "Ninjutsu Effect Duration" job point gift: extend enhancing ninjutsu
+    -- buffs (Gekka, Yain, Monomi/Tonko, etc.). Utsusemi (Copy Image) is excluded --
+    -- its buff timer is fixed and this base duration feeds its shadow tick.
+    if spellEffect ~= xi.effect.COPY_IMAGE then
+        duration = duration + caster:getMod(xi.mod.NINJUTSU_DURATION)
+    end
+
     -- Other
     local paramThree = 0
     --------------------------------------------------

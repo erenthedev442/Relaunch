@@ -708,7 +708,7 @@ INSERT INTO `job_point_gifts` VALUES (11,450,1053,2,'RNG_True Shot Effect');
 INSERT INTO `job_point_gifts` VALUES (11,500,1054,2,'RNG_Dead Aim Effect');
 INSERT INTO `job_point_gifts` VALUES (11,500,997,1,'RNG_Superior 3');
 INSERT INTO `job_point_gifts` VALUES (11,545,915,23,'RNG_Capacity Point Bonus');
-INSERT INTO `job_point_gifts` VALUES (11,550,976,1,'RNG_Barrage Effect');
+INSERT INTO `job_point_gifts` VALUES (11,550,138,1,'RNG_Barrage Effect');
 INSERT INTO `job_point_gifts` VALUES (11,605,1,6,'RNG_Physical Defense Bonus');
 INSERT INTO `job_point_gifts` VALUES (11,655,915,25,'RNG_Capacity Point Bonus');
 INSERT INTO `job_point_gifts` VALUES (11,660,23,20,'RNG_Attack Bonus');

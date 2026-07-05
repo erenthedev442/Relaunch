@@ -341,6 +341,10 @@ xi.spells.enhancing.calculateEnhancingFinalPower = function(caster, target, spel
             finalPower = finalPower + (tier * 2)
         end
 
+        -- PLD "Protect Effect" job point gift: enhances the DEF granted by the
+        -- caster's Protect spells (percent).
+        finalPower = finalPower + math.floor(finalPower * caster:getMod(xi.mod.ENHANCES_PROT_RCVD) / 100)
+
         -- Handle "Shield Barrier" Job Trait.
         if
             caster:isPC() and
