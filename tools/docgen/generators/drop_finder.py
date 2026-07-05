@@ -145,6 +145,106 @@ _HL_SUFFIX = " (Hunting League)"
 
 
 # ---------------------------------------------------------------------------
+# Augmentation Dungeon catalyst drops (Lua-scripted; NOT in mob_droplists)
+# 7 dungeons × (12 trash mobs @ 30% each + boss pool @ ~100%/pool daily).
+# ---------------------------------------------------------------------------
+
+_DUNGEON_TRASH_PCT = 30.0
+_LABEL_RE = re.compile(r'''label\s*=\s*(?:"([^"]*)"|'([^']*)')''')
+_ROSTER_CLOSE_RE = re.compile(r"\}\s*,\s*(.+)\s*,\s*\d+\s*\)")
+_DKEY_RE = re.compile(r"^    (\w+)\s*=\s*$")
+_ID_RE = re.compile(r"\bid\s*=\s*(\d+)")
+_SLOT_RE = re.compile(r"^\[(\d+)\]")
+
+
+def _dungeon_augment_drops(repo_root: Path) -> dict[int, list[dict]]:
+    """Augmentation Dungeon catalyst drops -> {item_id: [{mob, zone, pct}]}."""
+    cat_p = resolve_source(repo_root, "modules/custom/lua/dungeon_catalog.lua")
+    drop_p = resolve_source(repo_root, "modules/custom/lua/augment_dungeon_drops_data.lua")
+    if not cat_p or not drop_p:
+        return {}
+
+    # -- dungeon_catalog.lua: label + mob names per dungeon key --
+    meta: dict[str, dict] = {}
+    cur_key: str | None = None
+    cur_label: str | None = None
+    for line in cat_p.read_text(encoding="utf-8", errors="replace").splitlines():
+        s = line.strip()
+        km = re.match(r"^(\w+)\s*=$", s)
+        if km:
+            cur_key = km.group(1)
+            cur_label = None
+        lm = _LABEL_RE.search(s)
+        if lm and cur_key:
+            cur_label = lm.group(1) if lm.group(1) is not None else lm.group(2)
+        rm = _ROSTER_CLOSE_RE.search(s)
+        if rm and cur_key and cur_label:
+            parts = [p.strip().strip("'\"") for p in rm.group(1).split(",")]
+            if len(parts) == 3:
+                meta[cur_key] = {
+                    "label": cur_label,
+                    "first": parts[0], "second": parts[1], "boss": parts[2],
+                }
+            cur_key = None
+
+    # -- augment_dungeon_drops_data.lua: item IDs per dungeon --
+    parsed: dict[str, dict] = {}
+    dkey: str | None = None
+    section: str | None = None
+    for line in drop_p.read_text(encoding="utf-8", errors="replace").splitlines():
+        s = line.strip()
+        dm = _DKEY_RE.match(line)
+        if dm and dm.group(1) in meta:
+            dkey = dm.group(1)
+            parsed[dkey] = {"trash": [], "boss": []}
+            section = None
+            continue
+        if dkey is None:
+            continue
+        if s.startswith("trash"):
+            section = "trash"
+            continue
+        if s.startswith("boss"):
+            section = "boss"
+            continue
+        id_m = _ID_RE.search(s)
+        if not id_m or section is None:
+            continue
+        iid = int(id_m.group(1))
+        if section == "trash":
+            slot_m = _SLOT_RE.match(s)
+            parsed[dkey]["trash"].append(
+                (int(slot_m.group(1)) if slot_m else 0, iid))
+        else:
+            parsed[dkey]["boss"].append(iid)
+
+    # -- build drop entries --
+    out: dict[int, list[dict]] = {}
+    for key, data in parsed.items():
+        info = meta.get(key)
+        if not info:
+            continue
+        zone = info["label"]
+        for slot, iid in data["trash"]:
+            mob = info["first"] if slot <= 6 else info["second"]
+            out.setdefault(iid, []).append({
+                "mob": f"{mob} (Dungeon)",
+                "zone": zone,
+                "pct": _DUNGEON_TRASH_PCT,
+            })
+        pool = data["boss"]
+        if pool:
+            boss_pct = round(100.0 / len(pool), 1)
+            for iid in pool:
+                out.setdefault(iid, []).append({
+                    "mob": f"{info['boss']} (Dungeon Boss)",
+                    "zone": zone,
+                    "pct": boss_pct,
+                })
+    return out
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
@@ -167,6 +267,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             if not (d["mob"] == base_mob and "escha" in d["zone"].lower())
         ]
         drops[iid].insert(0, entry)
+
+    # Merge Augmentation Dungeon catalyst drops (scripted, absent from
+    # mob_droplists).  These ADD to any existing entries for the same item
+    # (catalysts are common crafting materials that also drop elsewhere).
+    for iid, entries in _dungeon_augment_drops(repo_root).items():
+        drops.setdefault(iid, []).extend(entries)
 
     names = _item_names(repo_root)
     uses = _used_for(repo_root)
