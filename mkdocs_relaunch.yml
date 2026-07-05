@@ -154,6 +154,7 @@ nav:
       - Casino: endgame/casino.md
       - Provisioners' League: endgame/provisioners-league.md
   - Economy & Services:
+    - Economy Overview: community/economy.md
     - Cosmetic Boutique: economy/cosmetic-boutique.md
     - Sparks Exchange: economy/sparks-exchange.md
     - Gil Exchange: economy/gil-exchange.md
@@ -161,6 +162,7 @@ nav:
     - Home Point Network: economy/home-point.md
     - Race Changer: economy/race-changer.md
     - NPCs & Hubs:
+      - GM Home: progression/gm-home.md
       - Leafallia (Endgame Hub): progression/leafallia.md
       - Celennia Library (Beginner Hub): progression/library.md
       - Gemma: progression/skoll.md
@@ -189,6 +191,7 @@ nav:
   - Reference:
     - reference/index.md
     - Glossary: reference/glossary.md
+    - Shop Command (!shop): reference/shop-command.md
     - Spells:
       - reference/spells/index.md
       - White Magic: reference/spells/white.md
