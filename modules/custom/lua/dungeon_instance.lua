@@ -1,7 +1,8 @@
 -----------------------------------
 -- Shared private-dungeon runtime
 -----------------------------------
-local catalog = require('modules/custom/lua/dungeon_catalog')
+local catalog      = require('modules/custom/lua/dungeon_catalog')
+local augmentDrops = require('modules/custom/lua/augment_dungeon_drops')
 
 local runtime = {}
 
@@ -112,7 +113,7 @@ runtime.create = function(dungeonKey)
     instanceObject.onInstanceCreated = function(instance)
         local spawned = 0
 
-        for _, def in ipairs(dungeon.mobs) do
+        for index, def in ipairs(dungeon.mobs) do
             local mob = instance:insertDynamicEntity({
                 objtype              = xi.objType.MOB,
                 groupId              = def.groupId,
@@ -128,12 +129,19 @@ runtime.create = function(dungeonKey)
                 isAggroable          = true,
                 releaseIdOnDisappear = true,
 
-                onMobDeath = function(deadMob)
+                onMobDeath = function(deadMob, player, optParams)
                     onDungeonMobDeath(instance, deadMob)
+                    -- Catalyst payouts (Augmentation Dungeons only; acts on
+                    -- the optParams.isKiller dispatch, no-op otherwise).
+                    augmentDrops.onDungeonMobDeath(dungeonKey, instance, deadMob, player, optParams)
                 end,
             })
 
             if mob then
+                mob:setLocalVar('DungeonMobIndex', index)
+                if index == #dungeon.mobs then
+                    mob:setLocalVar('DungeonBossMob', 1)
+                end
                 mob:setSpawn(def.x, def.y, def.z, def.r)
                 mob:spawn()
                 mob:setMobMod(xi.mobMod.CLAIM_TYPE, xi.claimType.NON_EXCLUSIVE)

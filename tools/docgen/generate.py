@@ -130,6 +130,7 @@ def main() -> int:
         htbf,
         voidwatch,
         dungeon_instances,
+        augment_dungeon_drops,
         dynamis_divergence,
         fellow,
         spell_skill_mastery,
@@ -315,6 +316,9 @@ def main() -> int:
         ("htbf",                 htbf),
         ("voidwatch",            voidwatch),
         ("dungeon_instances",    dungeon_instances),
+        # augment_dungeon_drops fills the catalyst drop tables on the same
+        # page; marker blocks are independent so order only groups them.
+        ("augment_dungeon_drops", augment_dungeon_drops),
         ("dynamis_divergence",   dynamis_divergence),
         ("fellow",               fellow),
         ("spell_skill_mastery",  spell_skill_mastery),
