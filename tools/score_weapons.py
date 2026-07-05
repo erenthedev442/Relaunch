@@ -21,7 +21,16 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-ROOT = Path(r"D:/server")
+import os, json as _json
+ROOT = Path(os.environ.get("SCORE_ROOT", r"D:/server"))
+
+# Owner exclusivity rule (2026-07): bronze/silver/gold may ONLY sell gear that is
+# EXCLUSIVE to the medal vendor. IDs obtainable elsewhere (mob drops, crafting, or
+# any other custom content/vendor/forge catalog) are dropped from those tiers; the
+# Infamy skim is exempt. Set built by tools/gen_vendor_exclusions.py.
+_excl_path = Path(__file__).with_name('vendor_obtainable_elsewhere.json')
+OBTAINABLE_ELSEWHERE = (frozenset(_json.loads(_excl_path.read_text(encoding='utf-8'))['ids'])
+                        if _excl_path.exists() else frozenset())
 
 # NPC-only / non-player junk to keep OUT of the scored vendor catalogs. Mirror
 # of the list in tools/docgen/generators/gear_finder.py and the sibling scorers
@@ -385,6 +394,15 @@ for c in candidates:
         c['tier'] = 'silver'
     else:
         c['tier'] = 'gold'
+
+# Owner exclusivity: mark obtainable-elsewhere weapons with a sentinel tier so
+# every selection path skips them in bronze/silver/gold (Infamy skim exempt).
+_excl_n = 0
+for c in candidates:
+    if c['tier'] != 'infamy' and c['id'] in OBTAINABLE_ELSEWHERE:
+        c['tier'] = '_excluded'
+        _excl_n += 1
+print(f"Vendor-exclusive filter: removed {_excl_n} obtainable-elsewhere weapons from bronze/silver/gold")
 
 print(f"Tier bands: Bronze<=200 | Silver 201-250 | Gold 251+ | "
       f"Infamy = top {INFAMY_TOP_PER_CAT}/category ({len(infamy_ids)} weapons -> Infamy Vendor)")

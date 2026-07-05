@@ -25,7 +25,8 @@ import re
 from collections import Counter, defaultdict
 from pathlib import Path
 
-ROOT = Path(r"D:/server")
+import os
+ROOT = Path(os.environ.get("SCORE_ROOT", r"D:/server"))
 
 # NPC-only / non-player junk to keep OUT of the scored vendor catalogs. Mirror
 # of the list in tools/docgen/generators/gear_finder.py (and the DB purge in
@@ -42,6 +43,16 @@ EXCLUDED_NAME_PREFIXES = ('judge',)
 # via FORCED_INCLUDE, so the base in silver was redundant (and made the +1
 # both better AND cheaper than the base).
 OWNER_EXCLUDE_IDS = frozenset({26848})
+
+# Owner exclusivity rule (2026-07): the medal vendor's bronze/silver/gold tiers may
+# ONLY sell gear that is EXCLUSIVE to it. Any ilvl119+ piece obtainable elsewhere
+# (mob drops, crafting, or another custom content/vendor/forge catalog) is dropped
+# from those tiers. The id set is built by tools/gen_vendor_exclusions.py.
+# FORCED_INCLUDE picks and the Infamy skim are exempt.
+import json as _json
+_excl_path = Path(__file__).with_name('vendor_obtainable_elsewhere.json')
+OBTAINABLE_ELSEWHERE = (frozenset(_json.loads(_excl_path.read_text(encoding='utf-8'))['ids'])
+                        if _excl_path.exists() else frozenset())
 
 
 # --------------------------------------------------------------
@@ -404,6 +415,16 @@ _forced_tier = {iid: t for (t, _slot), ids in FORCED_INCLUDE.items() for iid in 
 for _c in candidates:
     if _c['id'] in _forced_tier:
         _c['tier'] = _forced_tier[_c['id']]
+
+# Owner exclusivity: mark obtainable-elsewhere gear with a sentinel tier so every
+# selection path (candidates list AND per-slot pools that share these dicts) skips
+# it in bronze/silver/gold. Infamy and explicit FORCED_INCLUDE picks are exempt.
+_excl_n = 0
+for _c in candidates:
+    if _c['tier'] != 'infamy' and _c['id'] not in _forced_tier and _c['id'] in OBTAINABLE_ELSEWHERE:
+        _c['tier'] = '_excluded'
+        _excl_n += 1
+print(f"Vendor-exclusive filter: removed {_excl_n} obtainable-elsewhere pieces from bronze/silver/gold")
 
 # Starting size of each (tier, slot) bucket from role-balanced selection.
 # This is the FLOOR — the per-job coverage pass below may expand a bucket
