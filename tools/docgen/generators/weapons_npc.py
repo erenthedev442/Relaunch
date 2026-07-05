@@ -21,6 +21,7 @@ from pathlib import Path
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 from tools.docgen._bgwiki import urls_for_item
+from tools.docgen.generators._vendor_common import tier_pill, tier_legend, tier_summary
 
 
 _QUOTED = r"(?:'((?:[^'\\]|\\.)*)'|\"([^\"]*)\")"
@@ -68,6 +69,13 @@ _CATEGORY_ORDER = (
     "Polearms", "Katana", "Great Katana",
     "Archery", "Marksmanship", "Hand-to-Hand",
 )
+
+# Short per-tier descriptions shown in the legend under the Weapons heading.
+_WEAPONS_TIER_DESC = {
+    "bronze": "entry endgame ilvl 119",
+    "silver": "event / Dynamis-D / Omen / Escha",
+    "gold":   "REMA + Aeonic",
+}
 
 
 def _quoted_value(m: re.Match) -> str:
@@ -129,21 +137,13 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         })
 
     page = docs_dir / "progression" / "gear-vendors.md"
-    total = 0
-    for tier in _TIER_ORDER:
-        marker = f"weapons-{tier}"
-        content = _render_tier(tier, tiers[tier], tier_currency)
-        wrote = write_between_markers(page, marker, content)
-        if wrote:
-            n = sum(len(rs) for rs in tiers[tier].values())
-            cats = sum(1 for rs in tiers[tier].values() if rs)
-            print(f"[weapons_npc] {marker}: {n} weapons across {cats} categories")
-            total += 1
-        else:
-            print(f"[weapons_npc] {marker}: skipped (markers not found in {page.name})")
-
-    if total == 0:
-        print(f"[weapons_npc] no marker blocks updated; add DOCGEN markers to {page} to enable")
+    content = _render_weapons_slots(tiers, tier_currency)
+    if write_between_markers(page, "weapons-slots", content):
+        n = sum(len(rs) for cat_map in tiers.values() for rs in cat_map.values())
+        print(f"[weapons_npc] weapons-slots: {n} weapons written (category-first)")
+    else:
+        print(f"[weapons_npc] weapons-slots: skipped (marker not found in {page.name}); "
+              f"add DOCGEN markers to {page} to enable")
 
 
 def _escape_md(s: str) -> str:
@@ -160,43 +160,42 @@ def _item_link(name: str, wiki: str | None) -> str:
     )
 
 
-def _render_tier(tier: str, categories: dict[str, list[dict]], tier_currency: dict) -> str:
-    currency = tier_currency.get(tier, _FALLBACK_CURRENCY[tier])
-    total = sum(len(rs) for rs in categories.values())
+def _render_weapons_slots(tiers: dict[str, dict[str, list[dict]]], tier_currency: dict) -> str:
+    """Category-first render: one table per weapon category, all tiers
+    together, tier shown as a pill column. `tiers` is {tier: {category: [rows]}}."""
+    per_tier = {t: sum(len(rs) for rs in tiers[t].values()) for t in _TIER_ORDER}
+    total = sum(per_tier.values())
     if total == 0:
-        return f"_No {tier}-tier weapons defined in the catalog yet._"
+        return "_No weapons defined in the catalog yet._"
 
-    lines: list[str] = []
-    lines.append(f"_{total} weapons total. Cost is paid in {currency}._")
-    lines.append("")
+    lines: list[str] = [
+        tier_summary(per_tier, "weapons"),
+        "",
+        tier_legend(tier_currency, _WEAPONS_TIER_DESC),
+        "",
+    ]
 
-    for category in _CATEGORY_ORDER:
-        rows = categories.get(category) or []
-        if not rows:
+    # Known category order first, then any unexpected leftovers, so a new
+    # category added to the catalog still renders (at the end) rather than
+    # vanishing.
+    present = {c for t in _TIER_ORDER for c, rs in tiers[t].items() if rs}
+    ordered = [c for c in _CATEGORY_ORDER if c in present]
+    ordered += [c for c in present if c not in _CATEGORY_ORDER]
+
+    for category in ordered:
+        cat_rows = [(t, r) for t in _TIER_ORDER for r in tiers[t].get(category, [])]
+        if not cat_rows:
             continue
-        lines.append(f"#### {category}")
+        lines.append(f"### {category}")
         lines.append("")
-        lines.append("| Item | Cost | Jobs |")
-        lines.append("|---|---:|---|")
-        for row in rows:
+        lines.append("| Item | Tier | Cost | Jobs |")
+        lines.append("|---|---|--:|---|")
+        for tier, row in cat_rows:
             jobs = row["jobs"] if row["jobs"] else "all"
+            pill = tier_pill(tier, tier_currency.get(tier))
             lines.append(
-                f"| {_item_link(row['name'], row['wiki'])} | {row['cost']} | {_escape_md(jobs)} |"
-            )
-        lines.append("")
-
-    # Any unexpected category not in the standard order, still render at end.
-    leftover = [c for c in categories if c not in _CATEGORY_ORDER and categories[c]]
-    for category in leftover:
-        rows = categories[category]
-        lines.append(f"#### {category}")
-        lines.append("")
-        lines.append("| Item | Cost | Jobs |")
-        lines.append("|---|---:|---|")
-        for row in rows:
-            jobs = row["jobs"] if row["jobs"] else "all"
-            lines.append(
-                f"| {_item_link(row['name'], row['wiki'])} | {row['cost']} | {_escape_md(jobs)} |"
+                f"| {_item_link(row['name'], row['wiki'])} | {pill} "
+                f"| {row['cost']} | {_escape_md(jobs)} |"
             )
         lines.append("")
 

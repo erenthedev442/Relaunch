@@ -1,0 +1,36 @@
+/* Gear-vendors tier pills -------------------------------------------
+ *
+ * The Armor / Weapons / Accessory vendor tables are SLOT-FIRST: one table
+ * per gear slot, with the Bronze/Silver/Gold tier shown as a pill in the
+ * Tier column (rendered by tools/docgen/generators/_vendor_common.py).
+ * Colors are chosen to read on both the light and slate (dark) schemes. */
+
+.tier-pill {
+    display: inline-block;
+    padding: 1px 9px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    line-height: 1.5;
+    white-space: nowrap;
+    color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.tier-pill.tier-bronze { background: #b0722f; }
+.tier-pill.tier-silver { background: #7f8896; }
+.tier-pill.tier-gold   { background: #bd971d; }
+
+/* The legend line under each vendor heading. */
+.tier-legend {
+    font-size: 0.9rem;
+}
+.tier-legend .tier-pill {
+    margin-right: 2px;
+}
+
+/* Slightly brighter fills on the dark slate scheme so the pills keep
+ * their punch against the darker table background. */
+[data-md-color-scheme="slate"] .tier-pill.tier-bronze { background: #c4823a; }
+[data-md-color-scheme="slate"] .tier-pill.tier-silver { background: #939cab; }
+[data-md-color-scheme="slate"] .tier-pill.tier-gold   { background: #d1aa2b; }

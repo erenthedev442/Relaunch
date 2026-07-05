@@ -20,6 +20,7 @@ from pathlib import Path
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 from tools.docgen._bgwiki import urls_for_item
+from tools.docgen.generators._vendor_common import tier_pill, tier_legend, tier_summary
 
 
 # Lua string literal in single or double quotes; supports escapes inside
@@ -49,6 +50,14 @@ _SLOT_LABEL = {
     "shields": "Shields",
 }
 _TIER_ORDER = ("bronze", "silver", "gold")
+
+# Short per-tier descriptions shown in the legend under the Armor heading —
+# these carry the context the old per-tier `### <tier> tier (…)` headings did.
+_ARMOR_TIER_DESC = {
+    "bronze": "entry ilvl 119",
+    "silver": "HQ +1 / +2 augmented",
+    "gold":   "BiS (Nyame / Malignance / Sakpata's / +3)",
+}
 
 # Fallback if the catalog doesn't expose a seals table — these match the
 # upstream defaults so the page still renders something sensible.
@@ -298,29 +307,17 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     else:
         print(f"[armor_npc] currencies: skipped (markers not found in {page.name})")
 
-    # Fill the Gold-tier warning admonition so the quoted currency + extra
-    # drop track the catalog as well.
-    gold_currency = tier_currency.get("gold", _FALLBACK_CURRENCY["gold"])
-    warning_content = _render_gold_warning(gold_currency, gold_extra)
-    if write_between_markers(page, "gold-warning", warning_content):
-        print(f"[armor_npc] gold-warning: updated")
+    # Slot-first render: one table per slot (Head/Body/…/Shields) with the
+    # tier shown as a pill column. The Gold-tier extra-drop requirement moves
+    # into an admonition inside this block (there's no longer a Gold section
+    # to sit above), and it's also stated in the top-of-page Currencies table.
+    content = _render_armor_slots(tiers, tier_currency, gold_extra)
+    if write_between_markers(page, "armor-slots", content):
+        rows = sum(len(rs) for slot_map in tiers.values() for rs in slot_map.values())
+        print(f"[armor_npc] armor-slots: {rows} pieces written (slot-first)")
     else:
-        print(f"[armor_npc] gold-warning: skipped (markers not found in {page.name})")
-
-    total = 0
-    for tier in _TIER_ORDER:
-        marker = f"armor-{tier}"
-        content = _render_tier(tier, tiers[tier], tier_currency, gold_extra)
-        wrote = write_between_markers(page, marker, content)
-        if wrote:
-            rows = sum(len(rs) for rs in tiers[tier].values())
-            print(f"[armor_npc] {marker}: {rows} pieces written into markers")
-            total += 1
-        else:
-            print(f"[armor_npc] {marker}: skipped (markers not found in {page.name})")
-
-    if total == 0:
-        print(f"[armor_npc] no marker blocks updated; add DOCGEN markers to {page} to enable")
+        print(f"[armor_npc] armor-slots: skipped (marker not found in {page.name}); "
+              f"add DOCGEN markers to {page} to enable")
 
 
 def _escape_md(s: str) -> str:
@@ -432,56 +429,48 @@ def _render_currencies_table(
     return "\n".join(lines)
 
 
-def _render_gold_warning(
-    gold_currency: str,
-    gold_extra: tuple[int, str] | None,
-) -> str:
-    """The admonition above the Gold-tier table. Tracks both the live seal
-    name (Demons Medal etc.) and the live extra-drop (Riftborn Boulder etc.)
-    so the warning never goes stale relative to the catalog."""
-    if gold_extra is None:
-        # No extra requirement configured — emit an empty block so the
-        # markdown doesn't show a stale warning.
-        return ""
-    qty, name = gold_extra
-    return (
-        '!!! warning "Extra requirement"\n'
-        f'    Every Gold-tier purchase requires **{qty} {name}** in '
-        f'addition to the {gold_currency} cost. Bring them before shopping.'
-    )
-
-
-def _render_tier(
-    tier: str,
-    slots: dict[str, list[dict]],
+def _render_armor_slots(
+    tiers: dict[str, dict[str, list[dict]]],
     tier_currency: dict,
     gold_extra: tuple[int, str] | None,
 ) -> str:
-    currency = tier_currency.get(tier, _FALLBACK_CURRENCY[tier])
-    pieces_total = sum(len(rs) for rs in slots.values())
-    lines: list[str] = []
-    if tier == "gold" and gold_extra is not None:
+    """Slot-first render: one table per slot, all tiers together, tier shown
+    as a pill column. `tiers` is {tier: {slot: [rows]}}."""
+    per_tier = {t: sum(len(tiers[t][s]) for s in _SLOT_ORDER) for t in _TIER_ORDER}
+
+    lines: list[str] = [
+        tier_summary(per_tier, "pieces"),
+        "",
+        tier_legend(tier_currency, _ARMOR_TIER_DESC),
+        "",
+    ]
+
+    if gold_extra is not None:
         qty, name = gold_extra
+        gold_cur = tier_currency.get("gold", _FALLBACK_CURRENCY["gold"])
+        lines.append('!!! warning "Gold tier — extra cost"')
         lines.append(
-            f"_{pieces_total} pieces total. Gold-tier purchases also require "
-            f"**{qty} {name}** in addition to the {currency} cost._"
+            f"    Every \U0001F947 **Gold** piece also requires "
+            f"**{qty} {name}** on top of the {gold_cur} cost."
         )
-    else:
-        lines.append(f"_{pieces_total} pieces total. Cost is paid in {currency}._")
-    lines.append("")
+        lines.append("")
 
     for slot in _SLOT_ORDER:
-        rows = slots[slot]
-        if not rows:
+        # All tiers for this slot, ordered bronze -> silver -> gold so the
+        # table reads cheapest -> best top to bottom.
+        slot_rows = [(t, r) for t in _TIER_ORDER for r in tiers[t][slot]]
+        if not slot_rows:
             continue
-        lines.append(f"#### {_SLOT_LABEL[slot]}")
+        lines.append(f"### {_SLOT_LABEL[slot]}")
         lines.append("")
-        lines.append("| Item | Cost | Jobs |")
-        lines.append("|---|---:|---|")
-        for row in rows:
+        lines.append("| Item | Tier | Cost | Jobs |")
+        lines.append("|---|---|--:|---|")
+        for tier, row in slot_rows:
             jobs = row["jobs"] if row["jobs"] else "all"
+            pill = tier_pill(tier, tier_currency.get(tier))
             lines.append(
-                f"| {_item_link(row['name'], row['wiki'])} | {row['cost']} | {_escape_md(jobs)} |"
+                f"| {_item_link(row['name'], row['wiki'])} | {pill} "
+                f"| {row['cost']} | {_escape_md(jobs)} |"
             )
         lines.append("")
 

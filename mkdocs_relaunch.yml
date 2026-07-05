@@ -55,6 +55,7 @@ extra_css:
   - assets/gear-finder.css
   - assets/item-search.css
   - assets/leaderboards.css
+  - assets/gear-vendors.css
 
 extra_javascript:
   - assets/item-tooltip.js

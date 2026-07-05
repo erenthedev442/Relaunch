@@ -21,6 +21,7 @@ from pathlib import Path
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 from tools.docgen._bgwiki import urls_for_item
+from tools.docgen.generators._vendor_common import tier_pill, tier_legend, tier_summary
 
 
 _QUOTED = r"(?:'((?:[^'\\]|\\.)*)'|\"([^\"]*)\")"
@@ -55,6 +56,11 @@ _SLOT_LABEL = {
     "back":  "Back",
 }
 _TIER_ORDER = ("bronze", "silver", "gold")
+
+# Short per-tier descriptions for the legend under the Accessory heading.
+_ACCESSORY_TIER_DESC = {
+    "gold": "BiS",
+}
 
 
 def _quoted_value(m: re.Match) -> str:
@@ -141,30 +147,43 @@ def _parse_tier_currency(catalog_text: str) -> dict:
     return found
 
 
-def _render_tier(tier: str, by_slot: dict[str, list[dict]], currency: str) -> str:
-    total = sum(len(items) for items in by_slot.values())
+def _render_accessory_slots(by_tier: dict[str, dict[str, list[dict]]], tier_currency: dict) -> str:
+    """Slot-first render: one table per accessory slot, all tiers together,
+    tier shown as a pill column. Within a slot the tiers run Bronze -> Gold,
+    and within each tier the top pick reads first by ceiling score.
+    `by_tier` is {tier: {slot: [rows]}}."""
+    per_tier = {t: sum(len(items) for items in by_tier[t].values()) for t in _TIER_ORDER}
+    total = sum(per_tier.values())
     if total == 0:
-        return f"_No {tier} accessories parsed from the catalog._"
+        return "_No accessories parsed from the catalog._"
+
     lines = [
-        f"_{total} {tier.capitalize()}-tier accessories, paid in {currency}. "
-        "Top pick per slot is listed first by role-balanced ceiling score._",
+        tier_summary(per_tier, "accessories"),
+        "",
+        tier_legend(tier_currency, _ACCESSORY_TIER_DESC),
+        "",
+        "_Within each slot, tiers run Bronze → Gold; the top pick per tier is "
+        "listed first by role-balanced ceiling score._",
         "",
     ]
     for slot in _SLOT_ORDER:
-        items = by_slot.get(slot, [])
-        if not items:
+        # All tiers for this slot; within a tier sort by score desc.
+        slot_rows: list[tuple[str, dict]] = []
+        for t in _TIER_ORDER:
+            for it in sorted(by_tier[t].get(slot, []), key=lambda r: -r["score"]):
+                slot_rows.append((t, it))
+        if not slot_rows:
             continue
-        # Sort by score descending so the highest-impact pick reads first.
-        items_sorted = sorted(items, key=lambda r: -r["score"])
         lines.append(f"### {_SLOT_LABEL[slot]}")
         lines.append("")
-        lines.append("| Item | Cost | Jobs | Top role (score) | Flags |")
-        lines.append("|---|---:|---|---|:---:|")
-        for it in items_sorted:
+        lines.append("| Item | Tier | Cost | Jobs | Top role (score) | Flags |")
+        lines.append("|---|---|--:|---|---|:---:|")
+        for tier, it in slot_rows:
             role_cell = f"{it['role']} ({it['score']})" if it['role'] else "—"
             flag_cell = _escape_md(it["flags"]) if it["flags"] else "—"
+            pill = tier_pill(tier, tier_currency.get(tier))
             lines.append(
-                f"| {_item_link(it['name'])} | {it['cost']} {currency} | "
+                f"| {_item_link(it['name'])} | {pill} | {it['cost']} | "
                 f"{_escape_md(it['jobs'])} | {role_cell} | {flag_cell} |"
             )
         lines.append("")
@@ -203,11 +222,9 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         print(f"[accessory_npc] skip: page not found ({page})")
         return
 
-    for tier in _TIER_ORDER:
-        content = _render_tier(tier, by_tier[tier], tier_currency[tier])
-        marker = f"accessory-{tier}"
-        if write_between_markers(page, marker, content):
-            n = sum(len(items) for items in by_tier[tier].values())
-            print(f"[accessory_npc] {marker}: {n} items written")
-        else:
-            print(f"[accessory_npc] {marker}: marker missing in {page.name}")
+    content = _render_accessory_slots(by_tier, tier_currency)
+    if write_between_markers(page, "accessory-slots", content):
+        n = sum(len(items) for tmap in by_tier.values() for items in tmap.values())
+        print(f"[accessory_npc] accessory-slots: {n} items written (slot-first)")
+    else:
+        print(f"[accessory_npc] accessory-slots: marker missing in {page.name}")
