@@ -37,6 +37,9 @@
 #include "packets/s2c/0x017_chat_std.h"
 #include "enums/chat_message_type.h"
 
+// FJB: true-damage/over-cap + automaton-DPS helpers extracted from this file.
+#include "modules/custom/cpp/fjb_combat.h"
+
 #include "lua/luautils.h"
 
 #include "action/action.h"
@@ -105,63 +108,8 @@ std::unordered_map<uint16, std::vector<uint16>>     g_PMobSkillLists; // List of
 // action-packet damage field; player-controlled sources land the FULL value on
 // HP and the real number is whispered to the controlling player in chat (the
 // floating combat number still caps -- no client field is wide enough for it).
-namespace
-{
-    // True when the damage source is PLAYER-CONTROLLED: a PC, or a pet / trust /
-    // charmed mob whose master is a PC (automaton, avatar, wyvern, jug pet...).
-    // These bypass the cap; genuine mob damage stays clamped so mobs can't punch
-    // through the ceiling onto players.
-    bool IsPlayerControlled(CBattleEntity* PAttacker)
-    {
-        return PAttacker != nullptr &&
-               (PAttacker->objtype == TYPE_PC ||
-                (PAttacker->PMaster != nullptr && PAttacker->PMaster->objtype == TYPE_PC));
-    }
-
-    // The PC who should receive the over-cap readout: the attacker itself if it is
-    // a PC, otherwise the PC master of a player-owned pet/trust. nullptr when the
-    // source isn't player-controlled (mobs get no message).
-    CCharEntity* OverCapReporter(CBattleEntity* PAttacker)
-    {
-        if (PAttacker == nullptr)
-        {
-            return nullptr;
-        }
-        if (PAttacker->objtype == TYPE_PC)
-        {
-            return static_cast<CCharEntity*>(PAttacker);
-        }
-        if (PAttacker->PMaster != nullptr && PAttacker->PMaster->objtype == TYPE_PC)
-        {
-            return static_cast<CCharEntity*>(PAttacker->PMaster);
-        }
-        return nullptr;
-    }
-
-    // Whisper the true (over-cap) damage to the controlling player so it's readable
-    // in chat without a client mod. For a pet/trust hit the source name is prefixed
-    // (e.g. "[Automaton WS] 250000") so the owner knows it wasn't their own swing.
-    // Whether the target actually loses that much HP is up to the caller -- keep
-    // the message aligned with what each path applies so it never overstates.
-    void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_view type)
-    {
-        if (damage <= 131071)
-        {
-            return;
-        }
-        CCharEntity* PChar = OverCapReporter(PAttacker);
-        if (PChar == nullptr)
-        {
-            return;
-        }
-        std::string label = (PAttacker->objtype == TYPE_PC)
-            ? std::string(type)
-            : fmt::format("{} {}", PAttacker->getName(), type);
-        PChar->pushPacket<GP_SERV_COMMAND_CHAT_STD>(
-            PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1,
-            fmt::format("[{}] {}", label, damage));
-    }
-} // namespace
+// True-damage / over-cap helpers (IsPlayerControlled, OverCapReporter,
+// NotifyOverCapDamage) extracted to modules/custom/cpp/fjb_combat.cpp.
 
 namespace battleutils
 {
@@ -2048,24 +1996,8 @@ bool TryInterruptSpell(CBattleEntity* PAttacker, CBattleEntity* PDefender, CSpel
  *                                                                       *
  ************************************************************************/
 
-// FJB: Automatons are hard-capped at lv99 combat skill, but our custom NMs are
-// lv150 with massive DEF/EVA -- even with the petutils ATT/ACC boost their raw
-// output is a fraction of what a real DD does. This flat multiplier scales an
-// automaton's outgoing PHYSICAL damage: melee + ranged auto-attacks AND weapon-
-// skills, which all funnel through TakePhysicalDamage / TakeWeaponskillDamage.
-// Tune AUTOMATON_DMG_MULTIPLIER here (set to 20x). Does NOT touch magic-frame nukes
-// (those go through the spell path) or any non-automaton entity.
-static constexpr float AUTOMATON_DMG_MULTIPLIER = 20.0f;
-
-static inline int32 ApplyAutomatonDamageBonus(CBattleEntity* PAttacker, int32 damage)
-{
-    if (damage > 0 && PAttacker != nullptr && PAttacker->objtype == TYPE_PET &&
-        static_cast<CPetEntity*>(PAttacker)->getPetType() == PET_TYPE::AUTOMATON)
-    {
-        return static_cast<int32>(damage * AUTOMATON_DMG_MULTIPLIER);
-    }
-    return damage;
-}
+// FJB: ApplyAutomatonDamageBonus (+ AUTOMATON_DMG_MULTIPLIER) extracted to
+// modules/custom/cpp/fjb_combat.cpp.
 
 int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHYSICAL_ATTACK_TYPE physicalAttackType, int32 damage, bool isBlocked, uint8 slot, uint16 tpMultiplier, CBattleEntity* taChar, bool giveTPtoVictim, bool giveTPtoAttacker, bool isCounter, bool isCovered, CBattleEntity* POriginalTarget)
 {
