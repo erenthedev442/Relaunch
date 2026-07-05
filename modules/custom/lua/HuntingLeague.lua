@@ -895,7 +895,17 @@ local function insertSpawnerNPC(zone)
                     -- claim so the library records the correct starting HP.
                     -- catalog.mechCfgs is keyed by groupId; a missing entry is a
                     -- no-op (library returns immediately on nil cfg).
-                    mechanics.attach(mob, catalog.mechCfgs and catalog.mechCfgs[md.groupId])
+                    -- Hostile pulses (cc terror / doom) stay on the hate target's
+                    -- party (same as Reforge_System): HL NMs pop AT the Escha hub,
+                    -- and unscoped cc terror-locks bystanders at the NPC row --
+                    -- terror has no status icon, so victims just see "NPCs do
+                    -- nothing / can't buy / can't drop" until they zone away
+                    -- (2026-07-03 player report).
+                    local mechCfg = catalog.mechCfgs and catalog.mechCfgs[md.groupId]
+                    if mechCfg then
+                        mechCfg.targetPartyOnly = true
+                    end
+                    mechanics.attach(mob, mechCfg)
 
                     playerArg:printToPlayer(
                         string.format('%s has appeared!  Slay it for %d %s, kupo!',
