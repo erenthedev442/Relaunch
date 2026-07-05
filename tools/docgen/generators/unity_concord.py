@@ -18,6 +18,7 @@ from pathlib import Path
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 from tools.docgen._luaparse import section, commafy
+from tools.docgen._bgwiki import item_anchor
 
 
 def _first(pattern: str, text: str, default: str) -> str:
@@ -34,14 +35,18 @@ def _parse_kv_ints(text: str) -> dict[int, int]:
     return {int(k): int(v) for k, v in re.findall(r"\[(\d+)\]\s*=\s*(\d+)", text)}
 
 
-def _extract_drops(nm_block: str) -> list[str]:
-    """Extract item names from a drops = { {id=X, name='...'}, ... } block."""
+def _extract_drops(nm_block: str) -> list[tuple[int, str]]:
+    """Extract (item_id, name) from a drops = { {id=X, name='...'}, ... } block.
+    The explicit id makes every drop a bulletproof FFXIAH link."""
     drops_m = re.search(r"drops\s*=\s*\{((?:[^{}]|\{[^{}]*\})*)\}", nm_block)
     if not drops_m:
         return []
     results = []
-    for m in re.finditer(r"name\s*=\s*(?:'([^']*)'|\"([^\"]*)\")", drops_m.group(1)):
-        results.append(m.group(1) if m.group(1) is not None else m.group(2))
+    for m in re.finditer(
+        r"id\s*=\s*(\d+)\s*,\s*name\s*=\s*(?:'([^']*)'|\"([^\"]*)\")", drops_m.group(1)
+    ):
+        name = m.group(2) if m.group(2) is not None else m.group(3)
+        results.append((int(m.group(1)), name))
     return results
 
 
@@ -64,9 +69,10 @@ def _parse(text: str) -> dict:
     # Shop items: { item=..., label='...', cost=N }
     shop_blk = section(text, "shop")
     c["shop"] = [
-        {"label": lbl, "cost": int(cost)}
-        for lbl, cost in re.findall(
-            r'label\s*=\s*[\'"]([^\'"]+)[\'"]\s*,\s*cost\s*=\s*(\d+)', shop_blk or ""
+        {"token": tok, "label": lbl, "cost": int(cost)}
+        for tok, lbl, cost in re.findall(
+            r'item\s*=\s*xi\.item\.(\w+)\s*,\s*label\s*=\s*[\'"]([^\'"]+)[\'"]'
+            r'\s*,\s*cost\s*=\s*(\d+)', shop_blk or ""
         )
     ]
 
@@ -160,7 +166,9 @@ def _render_tiers(c: dict) -> str:
         lines.append("|---|---:|---|")
         for nm in tier_nms:
             lv = nm["minLv"] if nm["minLv"] == nm["maxLv"] else f"{nm['minLv']}–{nm['maxLv']}"
-            drops_str = ", ".join(nm["drops"]) if nm["drops"] else "—"
+            drops_str = ", ".join(
+                item_anchor(name, item_id=iid) for iid, name in nm["drops"]
+            ) if nm["drops"] else "—"
             lines.append(f"| {nm['label']} | {lv} | {drops_str} |")
         lines.append("")
     return "\n".join(lines).rstrip()
@@ -174,7 +182,9 @@ def _render_shop(c: dict) -> str:
         "|---|---:|",
     ]
     for it in c["shop"]:
-        lines.append(f"| {it['label']} | {commafy(it['cost'])} accolades |")
+        label = item_anchor(it["label"],
+                            resolve_key=it["token"].replace("_", " ").title())
+        lines.append(f"| {label} | {commafy(it['cost'])} accolades |")
     return "\n".join(lines)
 
 
