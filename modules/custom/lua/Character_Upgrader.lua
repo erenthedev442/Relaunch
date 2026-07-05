@@ -207,6 +207,10 @@ local function giveAllAttachments(player)
 end
 
 local function giveEverything(player)
+    player:setLevelCap(99)
+    player:printToPlayer('Level cap raised to 99, kupo!', 0, 'Unlocker')
+    player:unlockJob(0)
+    player:printToPlayer('Subjob unlocked, kupo!', 0, 'Unlocker')
     giveAllWeaponSkills(player)
     giveAllSpells(player)
     capAllSkills(player)

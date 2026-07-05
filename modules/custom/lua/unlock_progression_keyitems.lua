@@ -35,8 +35,21 @@ local autoGrantKeyItems =
     xi.ki.JOB_BREAKER,    -- 2544 -> Job Points menu
 }
 
+-- CharVar that guards the one-time subjob unlock grant so we don't write
+-- to the DB on every login for characters who already have it.
+local SUBJOB_UNLOCKED_VAR = 'SubjobAutoUnlocked'
+
 m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
     super(player, firstLogin, zoning)
+
+    -- ---------------------------------------------------------------
+    -- Subjob unlock — auto-grant so players never need to do the
+    -- retail quest (Vera/Isacio). One-time write, guarded by charvar.
+    -- ---------------------------------------------------------------
+    if player:getCharVar(SUBJOB_UNLOCKED_VAR) == 0 then
+        player:unlockJob(0)
+        player:setCharVar(SUBJOB_UNLOCKED_VAR, 1)
+    end
 
     -- Cheap pre-check: if the player already has everything, do nothing
     -- further (no timer, no packets) for the rest of this character's life.
