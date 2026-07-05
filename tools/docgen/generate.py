@@ -139,6 +139,7 @@ def main() -> int:
         affinity_nms,
         weapon_forge,
         shop_command,
+        nyzul_isle,
     )
 
     # Snapshot existing last-updated footers BEFORE any generator runs.
@@ -324,6 +325,10 @@ def main() -> int:
         # shop_command parses scripts/commands/shop.lua and renders the full
         # catalog (all 10 categories + petStock) onto reference/shop-command.md.
         ("shop_command",         shop_command),
+        # nyzul_isle parses armoury_crate.lua + appraisal.lua to render the
+        # per-NM drop table and floor-100 vigil-weapon pool on
+        # docs/endgame/nyzul-isle.md.
+        ("nyzul_isle",           nyzul_isle),
         # differentiators renders why-legendary.md's "What Legendary Does
         # Differently" list from systems_registry.py and writes a drift report
         # of any system detail page that isn't featured. Runs before
