@@ -613,13 +613,6 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                 player:printToPlayer('Returning your previous item and catalysts first, kupo!', xi.msg.channel.SYSTEM_3)
             end
 
-            -- Surface the crit and any boosts to the player BEFORE they
-            -- confirm, so they know what they're committing to.
-            if isCrit then
-                player:printToPlayer('** Critical augment! ** PERFECT rolls -- every line hits the top of your tier band.',
-                    xi.msg.channel.SYSTEM_3)
-            end
-
             -- Consume all items in the trade window. Using tradeComplete
             -- instead of confirmSlot+confirmTrade because tradeComplete
             -- explicitly setReserve(0) on every slot - the confirm pattern
@@ -640,10 +633,8 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                 usedCritToken = usedCritToken,   -- consume Maat's Blessing on success
             }
 
-            player:printToPlayer(
-                string.format('Catalysts accepted! Will apply: [%s], kupo!', table.concat(labelSummary, '] [')),
-                xi.msg.channel.SYSTEM_3
-            )
+            player:printToPlayer('Catalysts accepted! Confirm below to apply the augmentation -- results revealed on confirm, kupo!',
+                xi.msg.channel.SYSTEM_3)
 
             -- Engine-cap warnings - printed once per distinct warning,
             -- after the trade summary so the player can see them in
