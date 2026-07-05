@@ -32,6 +32,7 @@ broken-image icon.
 from __future__ import annotations
 
 import hashlib
+import html
 import json
 import re
 from pathlib import Path
@@ -150,6 +151,34 @@ def urls_for_item(item_name: str, override: str | None = None,
         return ffxiah_page_url(rid), image
     search_query = (override or item_name).replace("_", " ")
     return search_redirect_url(search_query), ""
+
+
+def item_anchor(display: str, resolve_key: str | None = None,
+                item_id: int | None = None) -> str:
+    """Render `display` as the standard hover-tooltip item link.
+
+    The SINGLE source of truth for the `<a class="item-link">` markup the
+    item-tooltip JS/CSS expect (data-img drives the hover stat-box image).
+    Any generator can call this instead of hand-rolling its own `_item_link`.
+
+      display     : the visible text (already pretty-cased).
+      resolve_key : the string used to look up the FFXIAH id — defaults to
+                    `display`. Pass the item_basic display-name form
+                    (`token.replace("_"," ").title()`) when the visible text
+                    differs (e.g. carries an apostrophe or a "×N" the index
+                    can't match).
+      item_id     : explicit id, wins over name resolution when known.
+
+    A resolved id links to FFXIAH with a hover image; an unresolved name
+    degrades to a BG-Wiki search link with no image — never a hard 404.
+    """
+    page_url, image_url = urls_for_item(resolve_key or display,
+                                        override=display, item_id=item_id)
+    safe = html.escape(display, quote=False)
+    return (
+        f'<a class="item-link" href="{page_url}" data-img="{image_url}" '
+        f'target="_blank" rel="noopener">{safe}</a>'
+    )
 
 
 # ---------------------------------------------------------------------------

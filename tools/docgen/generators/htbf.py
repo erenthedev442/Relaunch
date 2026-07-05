@@ -20,6 +20,7 @@ from pathlib import Path
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 from tools.docgen._luaparse import section, commafy
+from tools.docgen._bgwiki import item_anchor
 
 
 # ── Zone token -> player-facing name ────────────────────────────────────────
@@ -324,10 +325,15 @@ def _render_loot(c: dict, loot: dict) -> str:
             for it in items:
                 if it["token"] is None or total == 0:
                     continue
-                name = _item_name(it["token"])
-                if it["amount"] > 1:
-                    name += f" ×{it['amount']}"
-                bit = f"{name} ({_pct(it['weight'] / total * 100)})"
+                # Link the item name to FFXIAH (hover shows its stat box). The
+                # loot token IS the item_basic internal name, so its Title-Cased
+                # form is exactly the id-resolution key; the ×N / % stay outside
+                # the anchor so only the item text is the link.
+                token = it["token"]
+                link = item_anchor(_item_name(token),
+                                   resolve_key=token.replace("_", " ").title())
+                suffix = f" ×{it['amount']}" if it["amount"] > 1 else ""
+                bit = f"{link}{suffix} ({_pct(it['weight'] / total * 100)})"
                 (rare if has_nothing else common).append((it["weight"], bit))
         common.sort(key=lambda x: -x[0])
         rare.sort(key=lambda x: -x[0])
