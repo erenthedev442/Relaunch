@@ -37,6 +37,25 @@ local function labelFor(itemId)
     return labels[itemId] or 'augment'
 end
 
+-- itemId -> readable ITEM name ("black_tiger_hide" -> "Black Tiger Hide"),
+-- from augment_item_names.lua. Player request 2026-07-03: the drop message
+-- must say WHAT ITEM dropped, not just which stat it augments.
+local names
+local function itemNameFor(itemId)
+    if not names then
+        local ok, map = pcall(require, 'modules/custom/lua/augment_item_names')
+        names = (ok and type(map) == 'table') and map or {}
+    end
+    local n = names[itemId]
+    if not n then
+        return nil
+    end
+    n = n:gsub('_', ' ')
+    return (n:gsub("(%a[%w']*)", function(w)
+        return w:sub(1, 1):upper() .. w:sub(2)
+    end))
+end
+
 m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSkillKill)
     super(mob, player, isKiller, isWeaponSkillKill)
     -- onMobDeathEx fires once per alliance member; isKiller marks the killing blow,
@@ -49,13 +68,19 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
     if not itemId then return end
     if math.random(100) > DROP_RATE then return end
 
+    local itemName = itemNameFor(itemId)
+    local display  = itemName
+        and string.format('%s (%s)', itemName, labelFor(itemId))
+        or  labelFor(itemId)
+
     if player:getFreeSlotsCount() <= 0 then
-        player:printToPlayer('[Augments] A catalyst dropped, but your inventory is full!', SYS)
+        player:printToPlayer(string.format(
+            '[Augments] %s dropped, but your inventory is full!', display), SYS)
         return
     end
     pcall(function() player:addItem({ id = itemId, quantity = 1 }) end)
     player:printToPlayer(string.format(
-        '[Augments] Catalyst dropped: %s. Trade it to the Augment Moogle to apply.', labelFor(itemId)), SYS)
+        '[Augments] Catalyst dropped: %s. Trade it to the Augment Moogle to apply.', display), SYS)
 end)
 
 return m
