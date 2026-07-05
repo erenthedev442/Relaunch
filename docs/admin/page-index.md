@@ -29,6 +29,27 @@
 | [Troubleshooting](../getting-started/troubleshoot.md) | 2026-07-05 07:37 UTC |
 <!-- DOCGEN:END id="page-index-recent" -->
 
+## Least recently updated
+
+The inverse of the list above — the pages whose content has gone longest without a change. These are the best candidates for a review or refresh. (Undated pages aren't ranked here; find them in **All pages** below.)
+
+<!-- DOCGEN:BEGIN id="page-index-stale" -->
+| Page | Last updated |
+|---|---|
+| [Reference](../reference/index.md) | 2026-05-30 05:13 UTC |
+| [Item Database](../progression/item-database.md) | 2026-06-14 01:44 UTC |
+| [Tasks & Boards › Treasure Hunts](../endgame/treasure-hunts.md) | 2026-06-14 13:15 UTC |
+| [Scheduled Events › Seasonal Events](../endgame/seasonal-events.md) | 2026-06-14 13:15 UTC |
+| [Reforge Mark Exchange](../economy/reforge-mark-exchange.md) | 2026-06-14 20:53 UTC |
+| [Advancement › Spell & Skill Mastery](../progression/spell-mastery.md) | 2026-06-28 05:28 UTC |
+| [Advancement › Reforge System](../progression/reforge.md) | 2026-06-29 04:19 UTC |
+| [Advancement › Job Mastery](../endgame/job-mastery.md) | 2026-06-29 04:19 UTC |
+| [Advancement › Achievements](../progression/achievements.md) | 2026-06-29 04:19 UTC |
+| [Prime Weapons › Prime Weapon Trials](../progression/prime-trials.md) | 2026-06-29 04:19 UTC |
+| [Prime Weapons › Endless Tower](../endgame/endless-tower.md) | 2026-06-29 04:19 UTC |
+| [Job & Build › Adventuring Fellow](../progression/fellow-companion.md) | 2026-06-29 04:19 UTC |
+<!-- DOCGEN:END id="page-index-stale" -->
+
 ## All pages
 
 <!-- DOCGEN:BEGIN id="page-index-all" -->

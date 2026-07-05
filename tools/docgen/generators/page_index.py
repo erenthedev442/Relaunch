@@ -9,6 +9,8 @@ Reads:
 Writes markers on:
     docs/admin/page-index.md
         page-index-recent  — the 12 most-recently-updated pages
+        page-index-stale   — the 12 least-recently-updated pages (the inverse:
+                             review/refresh candidates that haven't changed)
         page-index-all     — every page grouped by nav section, with its date
 
 This generator is special: it must run AFTER `stamp.py` has written the
@@ -244,8 +246,18 @@ def _render_all(groups) -> tuple[str, list[dict]]:
     return "\n".join(out).rstrip(), flat
 
 
-def _render_recent(flat: list[dict], limit: int = 12) -> str:
-    ranked = sorted(flat, key=lambda r: r["sort"], reverse=True)[:limit]
+def _render_ranked(flat: list[dict], reverse: bool, limit: int = 12) -> str:
+    """Render a `Page | Last updated` table of the top `limit` pages by date.
+
+    reverse=True  -> most-recently-updated first (freshest pages).
+    reverse=False -> least-recently-updated first (stalest pages — the review
+                     candidates that haven't changed in a while).
+
+    `flat` already excludes undated pages, so neither list is polluted by
+    never-generated/placeholder footers; the ISO "sort" key orders correctly
+    lexicographically in either direction.
+    """
+    ranked = sorted(flat, key=lambda r: r["sort"], reverse=reverse)[:limit]
     if not ranked:
         return "_No timestamped pages found._"
     out = ["| Page | Last updated |", "|---|---|"]
@@ -288,12 +300,15 @@ def generate(repo_root: Path, docs_dir: Path, config: str | None = None) -> None
                 _CACHE[page_path] = _page_meta(docs_dir, page_path)
 
     all_md, flat = _render_all(groups)
-    recent_md = _render_recent(flat)
+    recent_md = _render_ranked(flat, reverse=True)
+    stale_md = _render_ranked(flat, reverse=False)
 
     ok_recent = write_between_markers(page, "page-index-recent", recent_md)
+    ok_stale = write_between_markers(page, "page-index-stale", stale_md)
     ok_all = write_between_markers(page, "page-index-all", all_md)
 
     n_pages = sum(len(p) for _t, p in groups)
     print(f"[page_index] {n_pages} nav pages indexed "
           f"({'recent ok' if ok_recent else 'recent MISS'}, "
+          f"{'stale ok' if ok_stale else 'stale MISS'}, "
           f"{'all ok' if ok_all else 'all MISS'})")
