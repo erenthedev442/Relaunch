@@ -81,9 +81,11 @@ type "%OUT%"
 type "%OUT%" >> "%LOG%"
 findstr /c:"files-OK" "%OUT%" >nul
 if errorlevel 1 ( echo   ERROR: git archive or extract failed.& set "SRVOK=PROBLEM"& goto :finish )
-REM -- also ship C++ source (src/) to ~/server so cmake picks up any relaunch-branch
-REM    changes. Lua/scripts go to ~/relaunch above; src must land in ~/server (build root).
-git -C "%SRC%" archive relaunch -- src | ssh -i "%KEY%" %SSHOPT% %HOST% "sudo tar -xf - -C ~/server --no-same-owner --touch --overwrite && echo   src-OK" >> "%OUT%" 2>&1
+REM -- also ship C++ source (src/) + custom C++ modules + init.txt to ~/server so
+REM    cmake picks up any relaunch-branch changes.  modules/custom/cpp/ and
+REM    modules/init.txt MUST land in ~/server (the build root) because battleutils
+REM    #includes custom headers and init.txt tells CMake which .cpp files to compile.
+git -C "%SRC%" archive relaunch -- src modules/custom/cpp modules/init.txt | ssh -i "%KEY%" %SSHOPT% %HOST% "sudo tar -xf - -C ~/server --no-same-owner --touch --overwrite && echo   src-OK" >> "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
 findstr /c:"src-OK" "%OUT%" >nul
@@ -106,7 +108,7 @@ echo(
 echo  [3-4/7] Rebuilding C++ on box then copying binaries to relaunch...
 echo          (live server stays UP during compile; only relaunch will restart)
 (echo [%TIME%] [3-4/7] rebuild+copy: start)>> "%LOG%"
-ssh -i "%KEY%" %SSHOPT% %HOST% "cd ~/server && echo '   [3/7] Compiling...' && cmake --build build -j2 && echo '   [4/7] Copying fresh binaries to relaunch...' && for bin in xi_map xi_connect xi_search xi_world; do if [ -f ~/server/$bin ]; then rm -f ~/relaunch/$bin && cp ~/server/$bin ~/relaunch/$bin && echo \"   copied $bin\"; fi; done && echo   binaries-OK" > "%OUT%" 2>&1
+ssh -i "%KEY%" %SSHOPT% %HOST% "cd ~/server && echo '   [3/7] Reconfiguring + compiling...' && cmake -B build -S . && cmake --build build -j2 && echo '   [4/7] Copying fresh binaries to relaunch...' && for bin in xi_map xi_connect xi_search xi_world; do if [ -f ~/server/$bin ]; then rm -f ~/relaunch/$bin && cp ~/server/$bin ~/relaunch/$bin && echo \"   copied $bin\"; fi; done && echo   binaries-OK" > "%OUT%" 2>&1
 type "%OUT%"
 type "%OUT%" >> "%LOG%"
 findstr /c:"binaries-OK" "%OUT%" >nul
