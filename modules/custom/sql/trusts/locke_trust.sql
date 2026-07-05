@@ -12,9 +12,8 @@ VALUES
 REPLACE INTO mob_skill_lists
     (skill_list_name, skill_list_id, mob_skill_id)
 VALUES
-    ('locke_dagger', 5930, 23),
-    ('locke_dagger', 5930, 24),
-    ('locke_dagger', 5930, 25);
+    ('locke_mandastab', 5930, 27),
+    ('locke_rudra', 5930, 31);
 
 REPLACE INTO mob_pools
     (poolid, name, packet_name, speciesid, modelid,
