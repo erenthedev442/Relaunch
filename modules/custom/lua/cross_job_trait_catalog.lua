@@ -29,10 +29,6 @@ catalog.traits =
       mods = { { xi.mod.FASTCAST, 15 } } },
     { id = 'attbonus', name = 'Attack Bonus',   desc = 'Boost melee attack (+10%).',
       mods = { { xi.mod.ATTP, 10 } } },
-    { id = 'accbonus', name = 'Accuracy Bonus', desc = 'Boost accuracy and ranged accuracy (+20).',
-      mods = { { xi.mod.ACC, 20 }, { xi.mod.RACC, 20 } } },
-    { id = 'maxhp',    name = 'Max HP Boost',   desc = 'Increase maximum HP (+150).',
-      mods = { { xi.mod.HP, 150 } } },
 }
 
 return catalog

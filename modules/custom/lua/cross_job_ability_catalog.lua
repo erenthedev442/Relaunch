@@ -58,18 +58,14 @@ catalog.groups =
         abilities =
         {
             { id =  62, name = 'Third Eye', job = 'SAM', lvl = 15, desc = 'Anticipate (evade) your next incoming attack.' },
-            { id =  63, name = 'Meditate',  job = 'SAM', lvl = 30, desc = 'Gradually builds TP over time.' },
         },
     },
     {
         name = 'Paladin/DRK',
         abilities =
         {
-            { id =  48, name = 'Sentinel',         job = 'PLD', lvl = 30, desc = 'Greatly boosts defense and enmity briefly.' },
-            { id =  51, name = 'Last Resort',      job = 'DRK', lvl = 15, desc = 'Boosts attack; lowers defense.' },
-            { id =  49, name = 'Souleater',        job = 'DRK', lvl = 30, desc = 'Adds part of your HP to melee damage, costing HP.' },
-            { id =  92, name = 'Rampart',          job = 'PLD', lvl = 62, desc = 'Party-wide damage-reduction ward (AoE).' },
-            { id = 280, name = 'Scarlet Delirium', job = 'DRK', lvl = 95, desc = 'Attack and magic attack rise as you take damage.' },
+            { id =  51, name = 'Last Resort', job = 'DRK', lvl = 15, desc = 'Boosts attack; lowers defense.' },
+            { id =  49, name = 'Souleater',   job = 'DRK', lvl = 30, desc = 'Adds part of your HP to melee damage, costing HP.' },
         },
     },
 }
