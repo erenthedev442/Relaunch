@@ -7,8 +7,7 @@
 --
 -- Menu flow:
 --   Main menu (tier picker)                   [customMenu - service navigation]
---     -> Category picker (Swords/Daggers/...)  [customMenu - service navigation]
---        -> Native shop window                 [setShopCurrency - full item previews]
+--     -> Native shop window                   [setShopCurrency - full item previews]
 --
 -- The native shop window charges sealDef.id items automatically via the
 -- C++ packet handler (setShopCurrency). No Lua purchase helper needed.
@@ -46,73 +45,10 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
         end)
     end
 
-    -- Weapon category picker, paginated so catalog growth doesn't overflow
-    -- the 150-byte customMenu budget.
-    local CAT_PG_SZ = 5
-
-    local function buildTierMenu(player, menu, tierKey, page, returnFunc)
+    local function openTierShop(player, tierKey)
         local tierData  = catalog[tierKey]
         local sealDef   = catalog.seals[tierKey]
-        local sealCount = player:getItemCount(sealDef.id)
-
-        local populated = {}
-        for _, group in ipairs(tierData.weapons or {}) do
-            if #group.items > 0 then
-                populated[#populated + 1] = group
-            end
-        end
-
-        local totalPages = math.max(1, math.ceil(#populated / CAT_PG_SZ))
-        page = math.max(1, math.min(page or 1, totalPages))
-        local startIdx = (page - 1) * CAT_PG_SZ + 1
-        local endIdx   = math.min(startIdx + CAT_PG_SZ - 1, #populated)
-
-        local options = {}
-
-        if #populated == 0 then
-            options[#options + 1] = { 'No weapons yet (catalog empty)', function() end }
-        else
-            for i = startIdx, endIdx do
-                local grp = populated[i]
-                local capturedItems   = grp.items
-                local capturedSealDef = sealDef
-                options[#options + 1] = {
-                    string.format('%s (%d)', grp.label, #grp.items),
-                    function(playerArg)
-                        openShop(playerArg, capturedSealDef, capturedItems)
-                    end,
-                }
-            end
-
-            if totalPages > 1 then
-                if page > 1 then
-                    options[#options + 1] = {
-                        string.format('<< %d/%d', page - 1, totalPages),
-                        function(playerArg)
-                            buildTierMenu(playerArg, menu, tierKey, page - 1, returnFunc)
-                        end,
-                    }
-                end
-                if page < totalPages then
-                    options[#options + 1] = {
-                        string.format('%d/%d >>', page + 1, totalPages),
-                        function(playerArg)
-                            buildTierMenu(playerArg, menu, tierKey, page + 1, returnFunc)
-                        end,
-                    }
-                end
-            end
-        end
-
-        options[#options + 1] = { '<< Back', function(playerArg) returnFunc(playerArg) end }
-
-        menu.title   = string.format('[%s] %d %s',
-            tierKey:sub(1,1):upper() .. tierKey:sub(2),
-            sealCount,
-            sealDef.name)
-        menu.options = options
-        local snapshot = { title = menu.title, options = menu.options }
-        player:timer(30, function(p) p:customMenu(snapshot) end)
+        openShop(player, sealDef, tierData.weapons or {})
     end
 
     local menu = { title = 'Gear Progression', options = {} }
@@ -126,7 +62,7 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
                     player:getItemCount(catalog.seals.bronze.id),
                     catalog.seals.bronze.name:match('^(%S+)') or 'seals'),
                 function(playerArg)
-                    buildTierMenu(playerArg, menu, 'bronze', 1, buildMainMenu)
+                    openTierShop(playerArg, 'bronze')
                 end,
             },
             {
@@ -134,7 +70,7 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
                     player:getItemCount(catalog.seals.silver.id),
                     catalog.seals.silver.name:match('^(%S+)') or 'seals'),
                 function(playerArg)
-                    buildTierMenu(playerArg, menu, 'silver', 1, buildMainMenu)
+                    openTierShop(playerArg, 'silver')
                 end,
             },
             {
@@ -142,7 +78,7 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
                     player:getItemCount(catalog.seals.gold.id),
                     catalog.seals.gold.name:match('^(%S+)') or 'seals'),
                 function(playerArg)
-                    buildTierMenu(playerArg, menu, 'gold', 1, buildMainMenu)
+                    openTierShop(playerArg, 'gold')
                 end,
             },
             {
