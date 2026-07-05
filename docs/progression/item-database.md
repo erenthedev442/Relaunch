@@ -5,6 +5,9 @@ Augment Sage) and see exactly **where it comes from** — which mob, which zone,
 and at what drop rate — plus **what it's used for**. All data is pulled straight
 from the live server, so the rates here are the ones the game actually uses.
 
+<!-- DOCGEN:BEGIN id="item-database-meta" -->
+<!-- DOCGEN:END id="item-database-meta" -->
+
 !!! tip "How to use it"
     - Type any item name to filter the list instantly.
     - Use **Drops from a mob** / **Augment catalysts** to narrow by kind.

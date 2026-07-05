@@ -24,6 +24,7 @@ from pathlib import Path
 
 from tools.docgen._paths import resolve_source
 from tools.docgen._db import connect
+from tools.docgen._markers import write_between_markers
 from tools.docgen.generators.gear_finder import display_name
 
 
@@ -196,3 +197,19 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     n_use = sum(1 for it in items if it["u"])
     print(f"[drop_finder] wrote {out.name}: {len(items)} items "
           f"({n_drop} with drops, {n_use} with uses, {out.stat().st_size // 1024} KB)")
+
+    # Stamp the live coverage counts into item-database.md. The page is otherwise
+    # static widget HTML (the data lives in the JSON above), which froze its
+    # "Last updated" stamp -- this marker bumps the content hash whenever the item
+    # coverage changes AND tells readers the dataset is regenerated every deploy.
+    page = docs_dir / "progression" / "item-database.md"
+    if page.exists():
+        meta = (
+            f"**{len(items):,} items** indexed straight from the live server — "
+            f"**{n_drop:,}** with drop sources, **{n_use:,}** with system uses. This "
+            f"dataset is **rebuilt from the live database on every deploy**, so it always "
+            f"reflects the current server (the \"Last updated\" date below tracks the "
+            f"page layout, not the data)."
+        )
+        if write_between_markers(page, "item-database-meta", meta):
+            print("[drop_finder] item-database-meta: written")
