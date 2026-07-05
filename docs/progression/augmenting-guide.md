@@ -7,6 +7,16 @@ New to augmenting and not sure where to begin? This is the plain-English guide. 
 !!! tip "The one-sentence version"
     Augmenting lets you **stamp custom stat bonuses onto any piece of gear** — up to 5 bonuses per piece — by trading a cheap "catalyst" item to the **Augment Moogle** in {{npc:augment_moogle}}. It's the single biggest source of character power on the Relaunch server.
 
+## How it works, at a glance
+
+- **Catalysts are stats.** Each *catalyst* item is one stat bonus (Attack, HP, Accuracy…), and each drops from one specific monster.
+- **Trade catalysts + gil to augment gear.** Bring a piece of gear and up to **5 catalysts** to the **Augment Moogle** in {{npc:augment_moogle}}, and it stamps those bonuses onto the gear — so *any* gear can become best-in-slot.
+- **Every bonus is a roll.** How *big* each line lands is rolled inside your **Augment Tier** (1–5, earned through content): the same catalyst rolls small for a new character and huge for an endgame one.
+- **Push the rolls higher** with your **Sage Mastery** rank, **category affinity** (roll twice, keep the better), and **critical** rolls (a perfect roll).
+- **Re-stamp as you climb.** A higher tier always rolls bigger, so re-augment — or **`!reroll`** — your favorite gear each time you rank up.
+
+The rest of this page walks through each step in detail.
+
 ## What it is & what it does
 
 Every catalyst item maps to **one augment** (a stat bonus). Trade a catalyst to the Augment Moogle along with a piece of gear, and that bonus gets **written onto the gear**. Each piece has **5 augment slots**, so you can stamp up to 5 bonuses on it — and you can stack the **same** catalyst to multiply one stat (5× Attack catalysts = 5 lines of Attack on one piece).
