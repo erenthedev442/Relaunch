@@ -135,6 +135,7 @@
 .wf-widget .wc-nm { font-size: .85rem; color: var(--text); line-height: 1.2; }
 .wf-widget .wc-jb { font-family: "Courier New",monospace; font-size: .57rem; color: var(--muted); margin-top: 3px; }
 .wf-widget .wc-id { font-family: "Courier New",monospace; font-size: .52rem; color: var(--dim); margin-top: 2px; letter-spacing: .02em; }
+.wf-widget .stg-id { font-family: "Courier New",monospace; font-size: .52rem; color: var(--dim); margin-top: 3px; letter-spacing: .02em; position: relative; z-index: 1; }
 .wf-widget .empty-grid { grid-column: 1/-1; text-align: center; padding: 36px; color: var(--dim); font-style: italic; font-size: .84rem; }
 
 .wf-widget .div { display: flex; align-items: center; gap: 10px; max-width: 1080px; margin: 22px auto 0; padding: 0 20px; }
@@ -451,6 +452,7 @@ function getChainModel(w) {
     return {
       names:  real.names.slice(),
       labels: real.labels.slice(),
+      ids:    real.ids ? real.ids.slice() : real.names.map((_, i) => i === real.names.length - 1 ? (real.id || null) : null),
       forge:  real.forge.map(s => ({ to: s.to, mats: s.mats.map(m => m.slice()), gate: s.gate })),
       sub:    w.type + ' · ' + w.jobs,
     };
@@ -459,6 +461,7 @@ function getChainModel(w) {
   return {
     names:  [ w.name, w.name + ' · 119', w.name + ' · 119 II', w.name + ' · 119 III' ],
     labels: [ 'Base · Earned', 'Stage I', 'Stage II', cat.s3lbl ],
+    ids:    [ null, null, null, w.id || null ],
     forge:  cat.forge.map(s => ({
       to:   null,
       mats: s.mats.map(([q,n]) => [q, resolveMatName(n, w.type)]),
@@ -537,11 +540,13 @@ function buildChain(model, blank) {
     const isLast = i === n - 1;
     const box = document.createElement('div');
     box.className = 'stg ' + boxClass(i, n);
-    const nm   = blank ? '—' : model.names[i];
-    const note = (i === 0 || isLast) ? (model.sub || '') : '';
+    const nm    = blank ? '—' : model.names[i];
+    const note  = (i === 0 || isLast) ? (model.sub || '') : '';
+    const stgId = (!blank && model.ids && model.ids[i]) ? model.ids[i] : null;
     box.innerHTML =
       `<div class="stg-lbl">${model.labels[i] || ''}</div>` +
       `<div class="stg-name${blank ? ' empty' : ''}" style="position:relative;z-index:1;">${nm}</div>` +
+      (stgId ? `<div class="stg-id">#${stgId}</div>` : '') +
       `<div class="stg-note" style="position:relative;z-index:1;">${note}</div>`;
     if (isLast) box.insertBefore(ec, box.firstChild);
     chain.appendChild(box);
