@@ -134,6 +134,16 @@ commandObj.onTrigger = function(player)
         player:getRangedDmg())
     line(player, 'Magic   MATT %3d   MACC %3d',
         player:getMod(xi.mod.MATT), player:getMod(xi.mod.MACC))
+    -- Physical Damage Limit (PDL). DAMAGE_LIMITP (1081) is the retail "Physical
+    -- damage limit +X%" gear/song/aftermath stat, stored AS the percent (Aria
+    -- +20% = mod 20; aftermath +6/9/12% = mod 6/9/12; the engine uses 1 + mod/100
+    -- in scripts/globals/combat/physical_utilities.lua:642) -- so show it RAW, do
+    -- NOT /100 (the modifier.h header comment's /100 formula is stale for the Lua
+    -- path). DAMAGE_LIMIT (1080) is the rarer FLAT max-pDIF add from traits (engine
+    -- uses mod/100). Requested by phatdood.
+    line(player, 'Phys. Dmg Limit (PDL) +%d%%   flat DL +%g',
+        player:getMod(xi.mod.DAMAGE_LIMITP),
+        player:getMod(xi.mod.DAMAGE_LIMIT) / 100)
 
     -- =========================================================
     header(player, 'Crit / Multihit')
