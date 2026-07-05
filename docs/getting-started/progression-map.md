@@ -13,14 +13,13 @@ title: Progression Map
   .pmap .loop span{color:#8d96ab;padding:0 6px}
   .pmap .chip{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:3px;border:1px solid;background:rgba(0,0,0,.18);vertical-align:middle}
   .pmap .c-marks{color:#d5ae45;border-color:#d5ae45}
-  .pmap .c-infamy{color:#c96a86;border-color:#c96a86}
+  .pmap .c-sigil{color:#c96a86;border-color:#c96a86}
   .pmap .c-ap{color:#5f9fd6;border-color:#5f9fd6}
   .pmap .c-paragon{color:#d3814f;border-color:#d3814f}
   .pmap .c-gil{color:#a8b064;border-color:#a8b064}
-  .pmap .c-reforge{color:#6fbfa0;border-color:#6fbfa0}
-  .pmap .c-abyssea{color:#a482d8;border-color:#a482d8}
+  .pmap .c-div{color:#6fbfa0;border-color:#6fbfa0}
+  .pmap .c-aug{color:#a482d8;border-color:#a482d8}
   .pmap .c-time{color:#8d96ab;border-color:#334059;text-transform:none;letter-spacing:.02em}
-  .pmap .c-tbd{color:#8d96ab;border-color:#8d96ab;border-style:dashed}
   .pmap .spine{position:relative;margin:0 0 8px;padding-left:34px}
   .pmap .spine::before{content:'';position:absolute;left:12px;top:14px;bottom:0;width:2px;background:#334059}
   .pmap .node{position:relative;margin:0 0 18px;background:#1d2634;border:1px solid #334059;border-radius:4px;padding:16px 18px}
@@ -30,7 +29,6 @@ title: Progression Map
   .pmap .stageno{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#8d96ab;font-weight:600}
   .pmap .node h2{font-family:'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif;font-size:21px;margin:2px 0 2px;font-weight:600;color:#d8dde8}
   .pmap .gate{font-size:13px;color:#d5ae45;margin:0 0 8px;font-weight:600}
-  .pmap .gate .c-time{margin-left:8px}
   .pmap .node p{margin:6px 0;color:#d8dde8}
   .pmap .dim{color:#8d96ab;font-size:13.5px}
   .pmap ul.open{margin:8px 0 2px;padding-left:18px}
@@ -42,17 +40,23 @@ title: Progression Map
   .pmap .fanlabel{position:relative;margin:26px 0 14px;padding-left:34px}
   .pmap .fanlabel h2{font-family:'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif;font-size:24px;margin:0;color:#d5ae45;font-weight:600}
   .pmap .fanlabel p{margin:2px 0 0;color:#8d96ab;max-width:70ch}
-  .pmap .lanes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:30px}
+  .pmap .lanes{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
   @media(max-width:900px){.pmap .lanes{grid-template-columns:1fr}}
   .pmap .lane{background:#1d2634;border:1px solid #334059;border-top:3px solid #8a7433;border-radius:4px;padding:14px 16px}
+  .pmap .lane.wide{grid-column:1/-1}
   .pmap .lane h3{font-family:'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif;font-size:18px;margin:0 0 2px;font-weight:600;color:#d8dde8}
   .pmap .lane .who{font-size:12px;color:#8d96ab;margin-bottom:10px}
   .pmap .rung{display:flex;gap:10px;padding:7px 0;border-top:1px solid #334059;font-size:13.5px;align-items:baseline}
   .pmap .rung:first-of-type{border-top:none}
-  .pmap .rung b{min-width:96px;color:#d5ae45;font-weight:600;font-variant-numeric:tabular-nums;flex-shrink:0}
+  .pmap .rung b{min-width:104px;color:#d5ae45;font-weight:600;font-variant-numeric:tabular-nums;flex-shrink:0}
   .pmap .rung span{color:#d8dde8}
   .pmap .rung .dim{color:#8d96ab}
-  .pmap .refs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:30px}
+  .pmap .wgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  @media(max-width:900px){.pmap .wgrid{grid-template-columns:1fr}}
+  .pmap .wcell{background:#232e40;border:1px solid #334059;border-radius:3px;padding:10px 12px;font-size:13px}
+  .pmap .wcell b{display:block;color:#d5ae45;font-weight:600;margin-bottom:2px;font-size:13.5px}
+  .pmap .wcell span{color:#8d96ab}
+  .pmap .refs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0 30px}
   @media(max-width:900px){.pmap .refs{grid-template-columns:1fr}}
   .pmap .ref{background:#1d2634;border:1px solid #334059;border-radius:4px;padding:14px 16px}
   .pmap .ref h3{font-family:'Palatino Linotype','Book Antiqua',Palatino,Georgia,serif;font-size:17px;margin:0 0 10px;font-weight:600;color:#d8dde8}
@@ -69,127 +73,142 @@ title: Progression Map
 <header>
   <div class="eyebrow">Legendary FFXI · Relaunch</div>
   <h1>Progression Flow Map</h1>
-  <p class="sub">Every gate, unlock, and currency from first login to the infinite endgame. Times assume the plan's 6&nbsp;hours/day reference pace.</p>
+  <p class="sub">Every gate, unlock, and currency from first login to the infinite endgame — audited against the relaunch branch's live catalogs, not the design plan.</p>
 </header>
-<div class="loop"><b>Hunt NMs</b><span>→</span><b>Earn Marks</b><span>→</span><b>Rank Up</b><span>→</span><b>Harder Content</b><span>→</span><b>Prestige</b><span>→</span><b>Ascend Infinitely</b></div>
+<div class="loop"><b>Hunt NMs</b><span>→</span><b>Earn Marks</b><span>→</span><b>Rank Up</b><span>→</span><b>Unlock Augment Tiers</b><span>→</span><b>Prestige &amp; Rebirth</b><span>→</span><b>Ascend Infinitely</b></div>
 <div class="spine">
   <div class="node">
     <div class="stageno">Stage 0</div>
     <h2>First Login</h2>
-    <div class="gate">No gate <span class="chip c-time">Day 1 · hunting within ~10 min</span></div>
+    <div class="gate">No gate — hunting within minutes</div>
     <div class="kit">
-      <div><b>300,000</b> gil — 1–2 Bronze weapons off the AH</div>
-      <div><b>50</b> Hunt Marks — full 10-piece Bronze armor set</div>
-      <div>All jobs <b>Lv99</b> · RUN+GEO auto-unlocked</div>
-      <div>Subjob levels itself (EXP share)</div>
+      <div><b>25</b> Hunt Marks starter stipend</div>
+      <div><b>+50</b> marks first login each UTC day</div>
+      <div>Login streaks: 7/14/21/30 days → <b>+75/+200/+400/+750</b></div>
+      <div>All jobs ready — no leveling wall</div>
     </div>
-    <p class="dim">No starter gear handout — the 50 marks + 300k gil is a runway. Augment Sage <b>Tier 0</b> open immediately (utility/job mods, 8 boost/slot). Open from day one, in parallel: Hunter's Guild (4 guilds → up to +100% mark amp) · Invasions (<span class="chip c-infamy">Infamy</span>) · Treasure Hunts · Casino · Chocobo Derby · Daily Login · Daily Board · Login Streaks.</p>
+    <p class="dim">Open from day one, in parallel: HL Rank 1 camps · <b>Adventuring Fellow</b> (your build-a-companion — levels from your kills) · Hunter's Guild (rep amps your marks) · Affinity NM hunts (24 always-up — register Sage affinities) · Casino · Chocobo Derby · Colosseum PvP · Daily Board. <b>The Augment Moogle refuses fresh characters</b> — your first 10 custom NM kills open Augment Tier 1.</p>
   </div>
   <div class="node">
     <div class="stageno">Stage 1</div>
     <h2>The Hunt Begins</h2>
-    <div class="gate">Rank 2 at 75 lifetime marks <span class="chip c-time">~Day 1</span></div>
-    <p>Rank 1 NMs: solo/duo, 5 marks base — first kill +100%, weekly featured +200%, party +25–50%. Buy into <b>Silver gear</b> (iLv 201–250) as marks come in.</p>
+    <div class="gate">Rank 2 at 150 lifetime marks</div>
+    <p>Rank 1 NMs pay 5 marks base. <b>First-ever kill of each NM pays double</b>; the weekly <b>Featured Hunt pays 2× base</b> on your first kill (stacks with first-kill); kill streaks inside 5 minutes add <b>+10% at 3, +20% at 5, +50% at 10</b>; partied kills add a party bonus on top.</p>
     <ul class="open">
-      <li>Opens: Rank 2 NMs (12 marks/kill) · Silver vendor · Colosseum (PvP marks, 15-win daily cap)</li>
+      <li>Opens: Rank 2 NMs (12 marks/kill) · <b>Sage Mastery rank 1</b> (Augment Initiate — lifts your roll floor)</li>
+      <li>By now you've cleared 10 custom NMs → <b>Augment Tier 1</b> live (rolls in the 0–5 band)</li>
     </ul>
   </div>
   <div class="node">
     <div class="stageno">Stage 2</div>
     <h2>Hitting Your Stride</h2>
-    <div class="gate">Rank 3 at 225 lifetime marks <span class="chip c-time">~Day 3–4</span></div>
-    <p>Rank 2–3 NMs are real duo/small-group fights (7–12 min). Transition into <b>Gold gear</b> (iLv 251+).</p>
+    <div class="gate">Rank 3 at 650 lifetime marks</div>
+    <p>Rank 2–3 NMs are duo/small-group fights. Gear climbs through the vendor tiers as marks accumulate.</p>
     <ul class="open">
-      <li>Opens: Rank 3 NMs (22 marks/kill) · Gold vendor · <b>Augment Tier 1</b> (weapon/magic skills, pet stats — 16/slot) · Voidspire (milestone dungeon → Paragon Points) · Abyssea T1 <span class="chip c-abyssea">Abyssea Marks</span></li>
+      <li>Opens: Rank 3 NMs (22 marks/kill) · <b>Sage Mastery rank 2</b> (Augment Adept)</li>
+      <li>Start chipping: <b>Voidspire</b> floors (weekly milestone dungeon — floor 10 feeds Augment Tier 3 later) and <b>Game Master waves</b> (all five difficulties feed the same gate)</li>
     </ul>
   </div>
   <div class="node">
     <div class="stageno">Stage 3</div>
     <h2>The Hard Push</h2>
-    <div class="gate">Rank 4 at 500 → Rank 5 at 1,000 marks <span class="chip c-time">Rank 4 ~Day 7–9 · Rank 5 ~Day 12–16</span></div>
-    <p>The long stretch by design. Rank 4 = trio content at 38 marks/kill; Rank 5 = full party at 65 (130 first-kill, 195 featured). Reforge armor track runs in parallel from Week 2–3 <span class="chip c-reforge">Reforge Marks</span>.</p>
+    <div class="gate">Rank 4 at 1,500 → Rank 5 at 3,000 lifetime marks</div>
+    <p>The long stretch by design. Rank 4 NMs pay 38 marks; Rank 5 pays 65 — and <b>Shinryu pays 110</b> as the Rank 5 server boss. Featured weeks and kill streaks matter most here.</p>
   </div>
   <div class="node hub">
     <div class="stageno">★ The Hub Gate</div>
     <h2>Hunting League Rank 5</h2>
-    <div class="gate">1,000 lifetime marks — everything past this point fans out from here</div>
+    <div class="gate">3,000 lifetime marks — everything past this point fans out from here</div>
     <ul class="open">
-      <li><b>Prestige entry</b> — job-specific Ascension begins</li>
-      <li><b>Augment Tier 2</b> — core stats, acc/att ratings, Fast Cast, Store TP, cures (24/slot)</li>
-      <li><b>Abyssea T2/T3</b> (Infamy-gated) · <b>Prime Trial 1</b> becomes actively completable</li>
+      <li><b>Prestige entry</b> — the Ascension Altar accepts you; Nightmare Court trials begin</li>
+      <li><b>Augment Tier 2</b> — rolls move up to the 6–11 band</li>
+      <li><b>Sage Mastery rank 3</b> within reach (needs Prestige 5 + your first Rebirth)</li>
     </ul>
   </div>
 </div>
 <div class="fanlabel">
-  <h2>After Rank 5 — four parallel tracks</h2>
-  <p>These run side by side. Prestige is the power spine; Prime is the trophy quest; Abyssea is the parallel gear track; Apex→Paragon is the ladder that never ends.</p>
+  <h2>After Rank 5 — the endgame fan</h2>
+  <p>Prestige is the power spine, the augment ladder is the thread through everything, Prime is the trophy quest, and Apex→Paragon never ends. The world-content band below feeds all of them.</p>
 </div>
 <div class="lanes">
   <div class="lane">
-    <h3>Prestige — Job Mastery <span class="chip c-ap">Ascension AP</span></h3>
-    <div class="who">Nightmare Court trials (Diabolos · Medusa · Odin), party of 4 · AP spent on capped perks (20% crit, 40% WSDMG…) · Job Rebirth stacks in parallel (mob HP scales up at T3+)</div>
-    <div class="rung"><b>Lv 1–14</b><span>Nightmare Court + T1 Voidwalker NMs <span class="dim">· Lv1 ~Day 16–18</span></span></div>
-    <div class="rung"><b>Lv 15</b><span><b>Augment Tier 3</b> — Atk, DA, crit, pools, WS dmg, delay (28/slot) <span class="dim">· ~Week 5–6</span></span></div>
-    <div class="rung"><b>Lv 15–40</b><span>Jailer-tier T2 · party 4–6, 15–22 min fights <span class="dim">· Lv40 ~Month 3</span></span></div>
-    <div class="rung"><b>Lv 40–60</b><span>Voidwalker Lord / World's End T3–T4 · raid scale <span class="dim">· ~Month 4–5</span></span></div>
-    <div class="rung"><b>Lv 60+</b><span>Celestial T5 · alliance content</span></div>
-    <div class="rung"><b>Aug Tier 4</b><span>Haste, TA/QA, TP Bonus, crit dmg, Dmg+, PDT/MDT (31/slot) <span class="chip c-tbd">gate TBD — admin vote</span></span></div>
+    <h3>Prestige &amp; Rebirth <span class="chip c-ap">Ascension AP</span></h3>
+    <div class="who">Nightmare Court boss trials at the Ascension Altar (Diabolos, the Dream Devourer and his rotating court) · AP per kill scales with depth</div>
+    <div class="rung"><b>P.Lv 1–50</b><span>10 AP per Court kill · perks bought at the Prestige board</span></div>
+    <div class="rung"><b>P.Lv 51–80</b><span>15 AP per kill · deeper Courts</span></div>
+    <div class="rung"><b>P.Lv 81+</b><span>20 AP per kill · the long ladder</span></div>
+    <div class="rung"><b>Rebirth</b><span>Any job with <b>2,100 spent Job Points</b> can rebirth — restart at the bottom for permanent stacking category boosts; rebirth counts also gate Sage Mastery ranks 3–5</span></div>
   </div>
   <div class="lane">
-    <h3>Prime Weapon — Pinnacle Quest <span class="chip c-gil">750M gil</span></h3>
-    <div class="who">One path, four trials, then the forge. A server status symbol and the economy's anchor gil sink.</div>
-    <div class="rung"><b>Trial 1</b><span>Nightmare Fragments from Nightmare Court <span class="dim">· ~Week 3–4</span></span></div>
-    <div class="rung"><b>Trial 2</b><span>Endless Tower Floor 50 <span class="dim">· ~Week 4–7</span></span></div>
-    <div class="rung"><b>Trial 3</b><span>3× World Boss kills (Invasion finale) <span class="dim">· ~Week 2–4</span></span></div>
-    <div class="rung"><b>Trial 4</b><span>Job Mastery milestone — needs deep Prestige <span class="dim">· ~Month 2–3</span></span></div>
-    <div class="rung"><b>The Forge</b><span>Prime Armory unlocks · 750,000,000 gil <span class="dim">· ~Month 4–6</span></span></div>
+    <h3>Prime Weapon — Five Trials <span class="chip c-gil">750M gil</span></h3>
+    <div class="who">All five trials in any order, then the forge opens — 16 Prime forms (14 weapons + Duban shield + Loughnashade horn)</div>
+    <div class="rung"><b>Trial 1</b><span>Turn in 12 each of the 20 Abyssea collectibles</span></div>
+    <div class="rung"><b>Trial 2</b><span>Clear Endless Tower floor 50</span></div>
+    <div class="rung"><b>Trial 3</b><span>Prime Voucher — rare Hunting League NM drop</span></div>
+    <div class="rung"><b>Trial 4</b><span>Defeat any Weapon Guardian (Job Mastery)</span></div>
+    <div class="rung"><b>Trial 5</b><span>99 each of Jadeshell, Silverpiece &amp; 100 Byne Bill</span></div>
+    <div class="rung"><b>The Forge</b><span>Prime Armory · 750,000,000 gil per weapon</span></div>
   </div>
   <div class="lane">
-    <h3>Abyssea — Parallel Gear Track <span class="chip c-abyssea">Abyssea Marks</span> <span class="chip c-infamy">Infamy</span></h3>
-    <div class="who">Runs alongside Prestige; feeds the Infamy vendor and its own gear drops — a complement to HL, not a replacement.</div>
-    <div class="rung"><b>Tier 1</b><span>Trio-sized · 8–12 min fights <span class="dim">· from HL Rank 3</span></span></div>
-    <div class="rung"><b>Tier 2</b><span>Party of 4 · 10–15 min <span class="dim">· HL Rank 4–5 + Infamy</span></span></div>
-    <div class="rung"><b>Tier 3</b><span>Party 4–6, alliance-adjacent · 1.5–2.3M HP <span class="dim">· HL Rank 5 + Infamy</span></span></div>
-    <div class="rung"><b>Feeds</b><span>Infamy vendor top-tier picks · Reforge access</span></div>
+    <h3>The Gauntlet &amp; Apex <span class="chip c-paragon">Paragon Points</span></h3>
+    <div class="who">Solo boss ladders — the Gauntlet's champion climb (a clear also feeds Augment Archon) and the Apex arena in Walk of Echoes [P2]</div>
+    <div class="rung"><b>Apex Trials</b><span>Scaled boss tiers ("Apex Challenger" upward) · Paragon Points per clear</span></div>
+    <div class="rung"><b>Paragon board</b><span>Caps: <b>+1,000</b> ATT · <b>+1,000</b> ACC · <b>+2,000</b> DEF · <b>+5,000</b> HP · upgraded Daily Might buff</span></div>
+    <div class="rung"><b>No ceiling</b><span>The Apex ladder itself keeps scaling — the leaderboard war never ends</span></div>
   </div>
   <div class="lane">
-    <h3>Apex &amp; Paragon — The Infinite <span class="chip c-paragon">Paragon Points</span></h3>
-    <div class="who">Greater-Rift-style scaled boss ladder in Walk of Echoes [P2] · two leaderboards (Apex rank · Paragon Points) <span class="chip c-tbd">entry gate TBD</span></div>
-    <div class="rung"><b>Apex Trials</b><span>1.4M HP at Tier 1, scaling per tier · PP per clear + personal-best bonus <span class="dim">· from ~Month 2–3</span></span></div>
-    <div class="rung"><b>Paragon caps</b><span>+1,000 ATT · +1,000 ACC · +2,000 DEF · +5,000 HP <span class="dim">· ~Month 5–8</span></span></div>
-    <div class="rung"><b>No ceiling</b><span>Infinite Prestige Levels via the Paragon board — a year in, still progressing</span></div>
+    <h3>The Augment Ladder <span class="chip c-aug">Tiers 1–5</span></h3>
+    <div class="who">Your roll band is gated by CONTENT; your Sage Mastery rank lifts the floor inside the band, and a crit = a perfect roll</div>
+    <div class="rung"><b>Tier 1 · 0–5</b><span>Slay your first 10 custom NMs</span></div>
+    <div class="rung"><b>Tier 2 · 6–11</b><span>Hunting League Rank 5</span></div>
+    <div class="rung"><b>Tier 3 · 12–17</b><span>Voidspire floor 10 <i>and</i> every Game Master wave difficulty</span></div>
+    <div class="rung"><b>Tier 4 · 18–24</b><span>Clear a Dynamis — Divergence city</span></div>
+    <div class="rung"><b>Tier 5 · 25–31</b><span>Defeat Maat's Echo (<code>!maat</code>)</span></div>
+    <div class="rung"><b>Mastery</b><span>Initiate@R2 · Adept@R3 · Magus@R5+P5+1 rebirth · Sage@P15+10 rebirths · Archon@P30+20 rebirths+Gauntlet clear</span></div>
+  </div>
+  <div class="lane wide">
+    <h3>The World-Content Band — feeds everything above</h3>
+    <div class="who">Independent tracks with their own currencies and loot; several are augment-tier keys</div>
+    <div class="wgrid">
+      <div class="wcell"><b>Dynamis — Divergence</b><span>Portals at the four city Dynamis entrances · wave battles · currency feeds the Divergence Reforger (armor +1 → +3) · a city clear = Augment Tier 4</span></div>
+      <div class="wcell"><b>Voidwatch</b><span>Rift battles — pop a Planar Rift, burn the Voidwalker, stack lights for the Pyxis loot roll</span></div>
+      <div class="wcell"><b>High-Tier Battlefields</b><span>Retail HTBF fights via phantom gems, tiered difficulty, dedicated vendor</span></div>
+      <div class="wcell"><b>Nyzul Isle</b><span>The Sorrowful Sage in Mhaura opens retail Nyzul runs — floor-climb loot</span></div>
+      <div class="wcell"><b>Spell &amp; Skill Mastery</b><span>Spend <span class="chip c-sigil">Mastery Sigils</span> at the Mastery Sage in Leafallia to permanently empower weapon skills and spells</span></div>
+      <div class="wcell"><b>Voidspire &amp; GM Waves</b><span>Weekly milestone dungeon + five wave difficulties — together they are the Augment Tier 3 key</span></div>
+      <div class="wcell"><b>Affinity NM Hunts</b><span>24 always-up NMs · register Augment Sage affinities for better rolls in their category</span></div>
+      <div class="wcell"><b>Maat's Echo</b><span><code>!maat</code> — the solo super-fight · first kill = Augment Tier 5</span></div>
+      <div class="wcell"><b>Adventuring Fellow</b><span>Your persistent companion — levels from your kills, build it toward the role you need</span></div>
+    </div>
   </div>
 </div>
 <div class="refs">
   <div class="ref">
+    <h3>Hunting League economics</h3>
+    <div class="tablewrap"><table>
+      <tr><th>Rank</th><th>Gate (lifetime marks)</th><th>Pay per kill</th></tr>
+      <tr><td>Rank 1</td><td>—</td><td>5</td></tr>
+      <tr><td>Rank 2</td><td>150</td><td>12</td></tr>
+      <tr><td>Rank 3</td><td>650</td><td>22</td></tr>
+      <tr><td>Rank 4</td><td>1,500</td><td>38</td></tr>
+      <tr><td>Rank 5</td><td>3,000</td><td>65 · Shinryu <b>110</b></td></tr>
+    </table></div>
+    <p class="dim" style="font-size:12px;margin-top:8px">Multipliers stack on base: first-kill ×2 · featured week ×2 · streak +10/20/50% · party bonus · Hunter's Guild rank amp.</p>
+  </div>
+  <div class="ref">
     <h3>Currencies at a glance</h3>
     <div class="tablewrap"><table>
       <tr><th>Currency</th><th>Source</th><th>Buys</th></tr>
-      <tr><td><span class="chip c-marks">Hunt Marks</span></td><td>HL NM kills</td><td>Gear tiers, rank gates, augment rolls, Colosseum</td></tr>
-      <tr><td><span class="chip c-infamy">Infamy</span></td><td>Invasions, Abyssea</td><td>Abyssea tiers, Infamy vendor, Reforge access</td></tr>
-      <tr><td><span class="chip c-ap">Ascension AP</span></td><td>Prestige NMs</td><td>Ascension stat perks</td></tr>
-      <tr><td><span class="chip c-paragon">Paragon Pts</span></td><td>Apex Trials</td><td>Paragon board, infinite Prestige Levels</td></tr>
-      <tr><td><span class="chip c-gil">Gil</span></td><td>AH, Casino, mobs</td><td>Prime forge (750M), AH, Casino</td></tr>
-      <tr><td><span class="chip c-reforge">Reforge Marks</span></td><td>AF/Relic/Empy NMs</td><td>Reforge armor upgrades</td></tr>
-      <tr><td><span class="chip c-abyssea">Abyssea Marks</span></td><td>Abyssea kills</td><td>Abyssea gear, Infamy vendor items</td></tr>
+      <tr><td><span class="chip c-marks">Hunt Marks</span></td><td>HL NM kills, daily/streak/boards</td><td>Gear tiers, rank gates, augment trades</td></tr>
+      <tr><td><span class="chip c-ap">Ascension AP</span></td><td>Nightmare Court kills</td><td>Prestige board perks</td></tr>
+      <tr><td><span class="chip c-paragon">Paragon Pts</span></td><td>Apex Trials</td><td>Paragon board (capped stats + Daily Might)</td></tr>
+      <tr><td><span class="chip c-sigil">Mastery Sigils</span></td><td>Mastery content</td><td>Permanent WS/spell empowerment</td></tr>
+      <tr><td><span class="chip c-div">Divergence currency</span></td><td>Dynamis — Divergence waves</td><td>Armor reforge +1 → +3</td></tr>
+      <tr><td><span class="chip c-gil">Gil</span></td><td>AH, Casino, Derby, mobs</td><td>Prime forge (750M), AH, Casino</td></tr>
     </table></div>
-  </div>
-  <div class="ref">
-    <h3>Power curve checkpoints</h3>
-    <div class="tablewrap"><table>
-      <tr><th>Stage</th><th>ATT</th><th>DEF</th><th>HP</th></tr>
-      <tr><td>Fresh Lv99</td><td>~300</td><td>~1,500</td><td>~2,500</td></tr>
-      <tr><td>Rank 1 · Bronze</td><td>~500</td><td>~2,000</td><td>~3,500</td></tr>
-      <tr><td>Rank 2 · Silver</td><td>~700</td><td>~2,500</td><td>~4,500</td></tr>
-      <tr><td>Rank 3–4 · Gold + T1 augs</td><td>~950</td><td>~3,000</td><td>~6,000</td></tr>
-      <tr><td>Rank 5 · T2 augs</td><td>~1,200</td><td>~3,200</td><td>~7,000</td></tr>
-      <tr><td>Prestige 20–40</td><td>~1,600</td><td>~4,000</td><td>~8,500</td></tr>
-      <tr><td>Prestige 60+ · max Paragon</td><td>~2,200</td><td>~5,000</td><td>~10,000</td></tr>
-    </table></div>
-    <p class="dim" style="font-size:12px;margin-top:8px">Pets follow their own curve (jug overhaul + avatar boost) — competitive, not dominant.</p>
   </div>
 </div>
 <footer>
-  Condensed from the relaunch design plan ("How Progression Works" · "Full Unlock Tree" · "Progression Timeline"). Two open decisions are flagged <span class="chip c-tbd">TBD</span> above: the Augment Tier 4 gate and the Apex entry gate. If the plan moves, update this map.
+  Audited against the relaunch branch: <code>hunting_league_catalog.lua</code> · <code>Augment_Moogle.lua</code> (TIER_SLICES/TIER_GATES) · <code>augment_sage_catalog.lua</code> · <code>prestige_catalog.lua</code> · <code>job_rebirth_catalog.lua</code> · <code>PrimeArmory_NPC.lua</code> · <code>paragon_catalog.lua</code> · <code>daily_login_bonus.lua</code> · <code>login_streak.lua</code> and the world-content modules. Where <code>RELAUNCH_PLAN.md</code> disagrees with this page, the code wins — the plan predates the current catalogs.
 </footer>
 </div>
