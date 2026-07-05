@@ -1,7 +1,24 @@
 # Trust
 
-!!! info "How many trusts you can field scales with progression"
-    Every trust is learnable from day 1, but the number you can summon at once climbs its own ladder — your allies earn your allies: **2** trusts on a fresh character, **3** after earning 1,200 lifetime [Unity Concord](../../endgame/unity-concord.md) accolades, **4** after clearing a tier-5 [Voidwatch](../../endgame/voidwatch.md) rift, and **5** once your [Adventuring Fellow](../../progression/fellow-companion.md) reaches its level cap (120). (Config: `trust_progression_cap.lua`.)
+<!-- DOCGEN:BEGIN id="trust-tiers" -->
+!!! info "How many trusts you can field at once"
+    Every trust is learnable from day 1 — the ladder below caps how many you can summon *simultaneously*. It is consecutive: you earn each slot in order. Your allies earn your allies.
+
+    **2** on a fresh character · **3** once you [conquer every Unity Wanted NM (all tiers)](../../endgame/unity-concord.md) · **4** once you [clear a tier-5 Voidwatch rift](../../endgame/voidwatch.md) · **5** once you [raise your Adventuring Fellow to the level cap (120)](../../progression/fellow-companion.md).
+
+    _Config: `trust_progression_cap.lua`._
+
+??? note "Locked trusts — the Void Keeper's marquee allies"
+    Three custom trusts aren't in the day-1 grant. The **Void Keeper** in GM Home binds them one at a time, each gated behind a Hunting League rank and paid for in Hunt Marks. They reuse retail spell slots, so in the table below they show as their **client name** — casting that name is what summons the custom trust.
+
+    | Trust | Cast in your menu as | Requires | Cost |
+    |---|---|---|---:|
+    | **Meat** | Excenmille (spell 899) | Hunting League Rank 2 | 2,000 Hunt Marks |
+    | **Gemma** | Nanaa Mihgo (spell 901) | Hunting League Rank 3 | 3,000 Hunt Marks |
+    | **Corvus** | Curilla (spell 902) | Hunting League Rank 4 | 5,000 Hunt Marks |
+
+    _Ranks 2–4 track your `HL_Tier`; the marks come from your `HL_Points` balance. Config: `trust_skoll.lua`._
+<!-- DOCGEN:END id="trust-tiers" -->
 
 _Spells are sorted by ID._
 

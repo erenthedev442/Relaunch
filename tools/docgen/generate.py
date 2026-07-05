@@ -92,6 +92,7 @@ def main() -> int:
         settings_inject,
         spells,
         status,
+        trust_tiers,
         weapons_npc,
         weekly_hunts,
         # --- custom-systems pages (2026-06-14): Endgame & Events + vendors/trust ---
@@ -150,6 +151,10 @@ def main() -> int:
         # Writes data only (no docs page); runs first, depends on nothing.
         ("catalog_json",     catalog_json),
         ("spells",           spells),
+        # trust_tiers fills the summon-count ladder + locked custom-trust table
+        # into the marker slot spells.py emits on reference/spells/trust.md.
+        # MUST run after spells (which rewrites that page each run).
+        ("trust_tiers",      trust_tiers),
         ("commands",         commands),
         ("rates_table",      rates_table),
         ("changelog",        changelog_relaunch),
