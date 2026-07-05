@@ -63,56 +63,22 @@ local stock =
 
     weapons =
     {
-        { xi.item.BRONZE_SWORD,    20000 },
-        { 17175,     15000 },--shortbow +1
-        { 21340,     150000 },--Halakaaala
-        { 18510,     15000 }, --vermeil bhuj
-        { 18171,     15000 }, --platoon disc
-        { xi.item.BRONZE_DAGGER,   15000 },
-        { 17809,     15000 }, --Mumeito (SAM great katana, DMG 12/Delay 420)
-		  { 16822,   100000 },  --crimson blade
-		  { 16923,   100000 },  --Kabutowari +1
-		  { 17440,   4000000 },  --Kraken Club
-		    { 16605,   100000 },  --Enhancing Sword
-		    { 19104,   100000 },  --Darksteel jambiya +1
-		    { 16878,   100000 },  --Darksteel Lance +1
-		    { 18175,   100000 },  --Optical Needle
-        { 21460,   15000 },  --Matre bell (Lv.1 GEO handbell, MP+5)
-        { 21463,   150000 },  --Nepote bell (Lv.99 GEO handbell, Geomancy+5)
-        { 17859,      10000 },  -- Animator      (PUP, Lv1)
-        { 17857,      50000 },  -- Animator +1   (PUP, Lv71)
-        { 21392,    1000000 },  -- Animator Z    (PUP, iLvl 119) -- Animator P / P+1 / P II line reserved for !hunt
+        { 21460,    15000 },  -- Matre Bell   (Lv.1 GEO handbell, MP+5)
+        { 21463,   150000 },  -- Nepote Bell  (Lv.99 GEO handbell, Geomancy+5)
+        { 17859,    10000 },  -- Animator     (PUP, Lv1)
+        { 17857,    50000 },  -- Animator +1  (PUP, Lv71)
+        { 21392,  1000000 },  -- Animator Z   (PUP, iLvl 119) -- Animator P / P+1 / P II line reserved for !hunt
     },
 
     armor =
     {
-        { 11009,  300000 }, --Shaper's Shawl (back, crafting/utility)
-        { 28509,  300000 }, --She-Slime Earring
-        { 28511,  300000 }, --Slime Earring
-        { 10293,   50000 }, --Chocobo Shirt
-        { 11811,   50000 }, --Destrier Beret
-        { 12486,   50000 }, --seers crown +1
-        { 11003,   500000 }, --prodigious mantle
-        { 28440,   500000 }, --wind buffet belt +1
-        { 28365,   500000 }, --nefarious collar +1
-        { 13014,   25000 },
-        { 13056,   50000 },
-        { 13281,   50000 },
-        { 26164,   100000 },
-        { 15457,   100000 }, --swift belt
-        { 12579,   100000 }, --Scorpion Harness
-        { 13122,    50000 }, --Miner's Pendant (lv1 neck, quest reward unreachable in-game)
---        { 15166,   5000 },
---        { xi.item.SHADE_HARNESS,     1200 },
---        { xi.item.SHADE_MITTENS,    800 },
- --       { xi.item.SHADE_TIGHTS, 1000 },
- --       { xi.item.SHADE_LEGGINGS,        6000 },
-        { xi.item.CASSIE_EARRING,          300000 },
-        { 14724,          600000 }, -- moldavite earring
-        { xi.item.CHAIN_MITTENS,    3000 },
-        { xi.item.CHAIN_HOSE,       4500 },
-        { xi.item.GREAVES,          3000 },
-        { xi.item.IRON_MASK,        4000 },
+        { 11009,  300000 }, -- Shaper's Shawl (back, crafting/utility)
+        { 28509,  300000 }, -- She-Slime Earring
+        { 28511,  300000 }, -- Slime Earring
+        { 10293,   50000 }, -- Chocobo Shirt
+        { 11811,   50000 }, -- Destrier Beret
+        { xi.item.CASSIE_EARRING, 300000 },
+        { 14724,  600000 }, -- Moldavite Earring
     },
 
     -- Absolute-best endgame foods (max 16 slots). One BiS per role; each
@@ -146,6 +112,15 @@ local stock =
 
         -- ===== Ranged DD =====
         { 5162,                                 5000 },  -- Squid Sushi +1       -- RACC+18, RATT+13% (RNG / COR)
+        { 5664,                                 5000 },  -- Salmon Sushi +1      -- RACC, DEX
+        { 5666,                                 5000 },  -- Fin Sushi +1         -- RACC, DEX+8
+
+        -- ===== Additional sushi +1 =====
+        { 5160,                                 5000 },  -- Urchin Sushi +1      -- MND, CHR (support)
+        { 5179,                                 5000 },  -- Dorado Sushi +1      -- DEX, AGI
+        { 5216,                                 5000 },  -- Tentacle Sushi +1    -- INT, Macc
+        { 5692,                                 5000 },  -- Shrimp Sushi +1      -- STR, DEX
+        { 5694,                                 5000 },  -- Octopus Sushi +1     -- STR, VIT
 
         -- ===== Hybrid =====
         { 5199,                                 5000 },  -- Spaghetti Carbonara +1 -- STR / VIT / HP (DD + survivability)
@@ -274,6 +249,14 @@ local stock =
         { 5315, 1 },  -- Toolbag (Jusa)  -> 99x Jusatsu         -- Kurayami: Ichi/Ni (Blind)
         { 5318, 1 },  -- Toolbag (Kodo)  -> 99x Kodoku          -- Dokumori: Ichi (poison / enmity)
         { 5316, 1 },  -- Toolbag (Kagi)  -> 99x Kaginawa        -- Hojo: Ichi/Ni (Slow)
+        { 5319, 1 },  -- Toolbag (Shino) -> 99x Shinobi-tabi    -- Tonko: Ichi/Ni (Sneak/Invisible)
+        { 5734, 1 },  -- Toolbag (Soshi) -> 99x Soshi           -- Kakka: Ichi (Enfire/etc.)
+        { 5863, 1 },  -- Toolbag (Kaben) -> 99x Kabenro         -- Yonin: Ichi (hate-down ninjutsu)
+        { 5864, 1 },  -- Toolbag (Jinko) -> 99x Jinko           -- Innin: Ichi (acc/eva from behind)
+        { 5865, 1 },  -- Toolbag (Ryuno) -> 99x Ryuno           -- Migawari: Ichi (1-hit dodge)
+        { 5866, 1 },  -- Toolbag (Moku)  -> 99x Mokujin         -- Sange (shurikenspam JA)
+        { 6265, 1 },  -- Toolbag (Ranka) -> 99x Ranka           -- Katon: San / higher-tier fire
+        { 6266, 1 },  -- Toolbag (Furu)  -> 99x Furusumi        -- Doton: San / higher-tier earth
     },
 }
 
