@@ -14918,7 +14918,7 @@ auto CLuaBaseEntity::addCorsairRoll(sol::variadic_args va) -> bool
     uint8 maxRolls = 6;
     if (casterJob != JOB_COR)
     {
-        maxRolls = 1;
+        maxRolls = 3;
     }
 
     return static_cast<CBattleEntity*>(m_PBaseEntity)->StatusEffectContainer->ApplyCorsairEffect(PEffect, maxRolls, bustDuration);
