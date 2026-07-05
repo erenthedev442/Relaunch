@@ -198,6 +198,10 @@ def _render(rows: list) -> str:
     lines = [
         f"{len(rows_sorted):,} items in stock — {summary}.",
         "",
+        "_This list is **rebuilt from the live vendor catalogs on every deploy**, so it "
+        "always reflects current stock (the \"Last updated\" date only moves when the "
+        "stock itself changes)._",
+        "",
         "| Item | Source | Cost | For |",
         "|---|---|---:|---|",
     ]
