@@ -177,124 +177,15 @@ ROLE_JOBS = {
 }
 ROLE_MASKS = {role: sum(JOB[j] for j in jobs) for role, jobs in ROLE_JOBS.items()}
 
-# Mod weights per role — modId -> multiplier
-ROLE_WEIGHTS = {
-    'DPS': {                                # sustained auto-attack damage
-        8: 2.0, 9: 2.0,                     # STR, DEX
-        23: 1.0, 25: 1.5,                   # ATT, ACC
-        62: 5.0,                            # ATTP (% atk)
-        73: 2.0,                            # STORETP
-        165: 4.0,                           # CRITHITRATE per 1%
-        259: 8.0,                           # DUAL_WIELD per 1%
-        288: 6.0,                           # DOUBLE_ATTACK
-        302: 8.0,                           # TRIPLE_ATTACK
-        384: 0.05,                          # HASTE_GEAR raw (~60 per 1%)
-        289: 0.5,                           # SUBTLE_BLOW
-        387: -3.0,                          # UDMGPHYS (negative = less dmg = good)
-        421: 1.5,                           # CRIT_DMG_INCREASE
-        160: -0.03, 161: -0.03,             # all/phys dmg taken /100 scale (neg = good)
-    },
-    'WS': {                                 # weapon-skill burst damage
-        8: 2.0, 9: 2.0,                     # STR, DEX (common WS attributes)
-        23: 1.5, 25: 1.5,                   # ATT, ACC (WS damage & accuracy)
-        165: 2.0,                           # CRITHITRATE (many WS can crit)
-        421: 3.0,                           # CRIT_DMG_INCREASE (big WS multiplier)
-        345: 0.04,                          # TP_BONUS (raw; ~250 -> 10)
-        840: 5.0, 841: 3.0,                 # WS dmg all-hits / first-hit per 1% (bumped — premium for WS)
-        570: 1.0,                           # WEAPONSKILL_DAMAGE_BASE (single WS)
-    },
-    'TANK': {
-        10: 2.0,                            # VIT
-        2: 0.5, 3: 3.0,                     # HP raw, HP%
-        1: 1.0, 63: 3.0,                    # DEF, DEFP
-        27: 3.0,                            # ENMITY
-        29: 3.0,                            # MDEF
-        387: -8.0, 389: -8.0,               # UDMGPHYS / UDMGMAGIC
-        160: -0.06, 161: -0.06, 162: -0.04, 163: -0.06, 164: -0.04,  # dmg taken /100 (neg = good)
-    },
-    'CASTER': {
-        12: 2.0, 13: 1.0,                   # INT, MND
-        28: 3.0,                            # MATT
-        30: 2.0,                            # MACC
-        311: 4.0,                           # MAGIC_DAMAGE
-        170: 2.0,                           # FASTCAST per 1%
-        5: 0.05, 6: 1.0,                    # MP, MPP
-        160: -0.03, 163: -0.03,             # all/magic dmg taken /100
-    },
-    'HEAL': {
-        13: 2.0, 14: 0.5,                   # MND, CHR
-        5: 0.05, 6: 1.5,                    # MP, MPP
-        369: 30.0,                          # REFRESH per 1 MP/tick
-        374: 2.0,                           # CURE_POTENCY per 1%
-        170: 2.0,                           # FASTCAST
-        30: 1.0,                            # MACC
-        160: -0.03, 163: -0.03,             # all/magic dmg taken /100
-    },
-    'PET': {                                # avatar / pet performance (SMN/BST/PUP)
-        126: 4.0,                           # BP_DAMAGE (Blood Pact: Rage dmg %) — key SMN DD stat
-        994: 3.0,                           # PET_ATTR_BONUS (pet attributes)
-        990: 1.5,                           # PET_ATK_DEF (pet atk/def)
-        991: 1.5,                           # PET_ACC_EVA (pet acc/eva)
-        992: 1.5,                           # PET_MAB_MDB (pet magic attack/def)
-        993: 1.5,                           # PET_MACC_MEVA (pet magic acc/eva)
-        995: 1.0,                           # PET_TP_BONUS
-        117: 2.0,                           # SUMMONING (summoning magic skill)
-        346: 2.0,                           # PERPETUATION_REDUCTION (MP/tick)
-        357: 1.5,                           # BP_DELAY
-        541: 1.5,                           # BP_DELAY_II
-        1040: 5.0,                          # AVATAR_LVL_BONUS
-        5: 0.03, 6: 0.5,                    # MP, MPP (perpetuation pool)
-    },
-}
-
-# Latents that count at FULL weight for DD (engaged/TP/WS contexts).
-DD_ALWAYS_LATENTS = {7, 10, 41}
-
-# Sanity caps on raw mod values. Some items in the DB have nonsense values
-# (Skormoth Mask has TRIPLE_ATTACK=400 and HASTE_GEAR=800 — those should be
-# ~5 and ~80). Clamp before applying weights so corrupt entries don't
-# dominate the rankings. Anything not listed uses the catch-all CAP_DEFAULT.
-CAP_DEFAULT = 200   # generous: high-budget stats like ATT/ACC can hit ~100
-MOD_SANITY_CAP = {
-    62: 30,    # ATTP (per 1%, retail max ~12)
-    63: 30,    # DEFP
-    165: 20,   # CRITHITRATE (per 1%)
-    170: 30,   # FASTCAST (per 1%)
-    259: 15,   # DUAL_WIELD (per 1%)
-    288: 20,   # DOUBLE_ATTACK
-    302: 20,   # TRIPLE_ATTACK
-    369: 10,   # REFRESH (per 1 MP/tick)
-    384: 300,  # HASTE_GEAR raw — single piece capped at ~5%
-    387: 30,   # UDMGPHYS (% damage taken — clamped magnitude)
-    389: 30,   # UDMGMAGIC
-    421: 30,   # CRIT_DMG_INCREASE
-    570: 50,   # WEAPONSKILL_DAMAGE_BASE (single WS)
-    840: 50,   # ALL_WSDMG_ALL_HITS (per 1%)
-    841: 50,   # ALL_WSDMG_FIRST_HIT (per 1%)
-    345: 500,  # TP_BONUS (raw)
-    160: 5000, 161: 5000, 162: 5000, 163: 5000, 164: 5000,  # dmg taken: /100, caps at 50%
-}
-
-# --- Player-specified additions: role assignments from the scoring workbook's
-# "Unscored on gear" tab. Weights scaled to each mod's storage units:
-#   506 EXTRA_DMG_CHANCE /10, 507 OCC_DO_EXTRA_DMG /100, 175 SKILLCHAINDMG /10000;
-#   all others ~integer. All "higher is better" on gear (no sign flips).
-_ADDED_WEIGHTS = {
-    'DPS':    {11: 1.5, 506: 0.1, 507: 0.05, 368: 1.0, 361: 0.05, 362: 0.1,
-               430: 8.0, 508: 0.1, 1039: 1.0, 432: 0.3, 954: 0.1, 113: 0.2},
-    'WS':     {11: 1.5, 506: 0.1, 507: 0.05, 48: 1.0, 175: 0.01, 113: 0.2, 1144: 3.0, 949: 5.0},  # fTP bonus (Fotia) + WS no-deplete
-    'TANK':   {68: 0.5, 31: 0.2, 370: 8.0, 110: 0.1, 168: 0.5, 291: 1.5,
-               109: 0.3, 108: 0.5, 166: 1.0, 113: 0.2},
-    'CASTER': {114: 0.5, 115: 0.5, 168: 0.5, 113: 0.2},
-    'HEAL':   {168: 0.5, 112: 0.5, 519: 0.5, 113: 0.2},
-    'PET':    {113: 0.2},   # shared baseline (CONVERSION etc.) carried by every role
-}
-for _r, _w in _ADDED_WEIGHTS.items():
-    ROLE_WEIGHTS[_r].update(_w)
-MOD_SANITY_CAP.update({31: 300, 507: 300, 175: 2000, 361: 300, 430: 20, 1144: 100, 949: 10})
-# PET-stat caps so a single outlier value can't dominate the ranking.
-MOD_SANITY_CAP.update({126: 50, 990: 50, 991: 50, 992: 50, 993: 50, 994: 50,
-                       995: 50, 117: 100, 346: 30, 357: 100, 541: 100, 1040: 10})
+# ---------------------------------------------------------------------------
+# Role weights, sanity caps and the DD-latent set live in ONE shared module
+# (tools/scoring_weights.py) so the four scorers can never drift. EDIT WEIGHTS
+# THERE, not here. (Previously each scorer kept its own hand-synced copy.)
+# ---------------------------------------------------------------------------
+try:
+    from tools.scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS
+except ImportError:  # run as `python tools/score_*.py` (tools/ is sys.path[0])
+    from scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS
 
 
 def _clamp(mid: int, val: int) -> int:

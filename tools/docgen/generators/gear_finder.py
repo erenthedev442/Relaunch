@@ -97,58 +97,15 @@ ROLE_JOBS = {
     'PET': ['SMN', 'BST', 'PUP'],   # SMN/BST/PUP pet/avatar gear (added 2026-06-14)
 }
 ROLE_MASKS = {r: sum(JOB_BIT[j] for j in js) for r, js in ROLE_JOBS.items()}
-ROLE_WEIGHTS = {
-    'DPS': {8: 2.0, 9: 2.0, 23: 1.0, 25: 1.5, 62: 5.0, 73: 2.0, 165: 4.0,
-            259: 8.0, 288: 6.0, 302: 8.0, 384: 0.05, 289: 0.5, 387: -3.0, 421: 1.5,
-            160: -0.03, 161: -0.03},                # all/phys dmg taken; /100 scale (neg = good)
-    'WS': {8: 2.0, 9: 2.0, 23: 1.5, 25: 1.5,   # STR, DEX, ATT, ACC
-           165: 2.0, 421: 3.0,                 # crit rate, crit damage
-           345: 0.04,                          # TP_BONUS
-           840: 5.0, 841: 3.0, 570: 1.0},      # WS damage mods (bumped — WSD% is premium for WS bursts)
-    'TANK': {10: 2.0, 2: 0.5, 3: 3.0, 1: 1.0, 63: 3.0, 27: 3.0, 29: 3.0,
-             387: -8.0, 389: -8.0,
-             160: -0.06, 161: -0.06, 162: -0.04, 163: -0.06, 164: -0.04},  # dmg taken /100 (neg = good)
-    'CASTER': {12: 2.0, 13: 1.0, 28: 3.0, 30: 2.0, 311: 4.0, 170: 2.0,
-               5: 0.05, 6: 1.0,
-               160: -0.03, 163: -0.03},             # all/magic dmg taken /100
-    'HEAL': {13: 2.0, 14: 0.5, 5: 0.05, 6: 1.5, 369: 30.0, 374: 2.0,
-             170: 2.0, 30: 1.0,
-             160: -0.03, 163: -0.03},             # all/magic dmg taken /100
-    'PET': {126: 4.0, 994: 3.0, 990: 1.5, 991: 1.5, 992: 1.5, 993: 1.5, 995: 1.0,
-            117: 2.0, 346: 2.0, 357: 1.5, 541: 1.5, 1040: 5.0,
-            5: 0.03, 6: 0.5},                    # SMN/BST/PUP pet/avatar: BP dmg, pet stats, summoning, perp, BP delay, avatar Lv
-}
-DD_ALWAYS_LATENTS = {7, 10, 41}
-# Skills that are real melee/ranged weapons — only these get the DPS bonus, and
-# only when slotted Main/Sub/Range with a sane delay. Keeps automaton ammo,
-# instruments and pet food (which live in item_weapon with delay ~1) from
-# producing absurd DPS scores.
-COMBAT_SKILLS = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 25, 26, 27}
-MOD_SANITY_CAP = {62: 30, 63: 30, 165: 20, 170: 30, 259: 15, 288: 20, 302: 20,
-                  369: 10, 384: 300, 387: 30, 389: 30, 421: 30,
-                  570: 50, 840: 50, 841: 50, 345: 500,
-                  160: 5000, 161: 5000, 162: 5000, 163: 5000, 164: 5000}
-
-# --- Player-specified additions: role assignments from the scoring workbook's
-# "Unscored on gear" tab. Weights scaled to each mod's storage units:
-#   506 EXTRA_DMG_CHANCE /10, 507 OCC_DO_EXTRA_DMG /100, 175 SKILLCHAINDMG /10000;
-#   all others ~integer. All "higher is better" on gear (no sign flips).
-_ADDED_WEIGHTS = {
-    'DPS':    {11: 1.5, 506: 0.1, 507: 0.05, 368: 1.0, 361: 0.05, 362: 0.1,
-               430: 8.0, 508: 0.1, 1039: 1.0, 432: 0.3, 954: 0.1, 113: 0.2},
-    'WS':     {11: 1.5, 506: 0.1, 507: 0.05, 48: 1.0, 175: 0.01, 113: 0.2, 1144: 3.0, 949: 5.0},  # fTP bonus (Fotia) + WS no-deplete
-    'TANK':   {68: 0.5, 31: 0.2, 370: 8.0, 110: 0.1, 168: 0.5, 291: 1.5,
-               109: 0.3, 108: 0.5, 166: 1.0, 113: 0.2},
-    'CASTER': {114: 0.5, 115: 0.5, 168: 0.5, 113: 0.2},
-    'HEAL':   {168: 0.5, 112: 0.5, 519: 0.5, 113: 0.2},
-    'PET':    {113: 0.2},   # shared baseline carried by every role
-}
-for _r, _w in _ADDED_WEIGHTS.items():
-    ROLE_WEIGHTS[_r].update(_w)
-MOD_SANITY_CAP.update({31: 300, 507: 300, 175: 2000, 361: 300, 430: 20, 1144: 100, 949: 10})
-# PET-stat caps (added 2026-06-14) so a single outlier value can't dominate.
-MOD_SANITY_CAP.update({126: 50, 990: 50, 991: 50, 992: 50, 993: 50, 994: 50,
-                       995: 50, 117: 100, 346: 30, 357: 100, 541: 100, 1040: 10})
+# ---------------------------------------------------------------------------
+# Role weights, sanity caps and the DD-latent set live in ONE shared module
+# (tools/scoring_weights.py) so the four scorers can never drift. EDIT WEIGHTS
+# THERE, not here. (Previously each scorer kept its own hand-synced copy.)
+# ---------------------------------------------------------------------------
+try:
+    from tools.scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS
+except ImportError:  # run as `python tools/score_*.py` (tools/ is sys.path[0])
+    from scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS
 
 # Some mods are stored at x10/x100/x10000 of their in-game value (skillchain +7%
 # is stored 700; PDT -10% is -1000; proc chance 13% is 130). Normalize to the
