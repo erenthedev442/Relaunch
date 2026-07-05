@@ -85,7 +85,7 @@ catalog.difficulties =
         minLevel        = 125,
         maxLevel        = 125,
         completionBonus = 50,
-        markBonus       = 5,
+        markBonus       = 20,
         hpBoost         = 4.0,   -- bumped from 1.5 (2026-05-30) -- Easy fights were ending in seconds.
         mods =
         {
@@ -119,8 +119,8 @@ catalog.difficulties =
         waveDelay       = 25,
         minLevel        = 150,
         maxLevel        = 150,
-        completionBonus = 200,
-        markBonus       = 15,
+        completionBonus = 100,
+        markBonus       = 20,
         hpBoost         = 6.0,   -- bumped from 2.0 (2026-05-30) -- mid-tier should feel meaningful, not paper.
         mods =
         {
@@ -155,8 +155,8 @@ catalog.difficulties =
         waveDelay       = 25,
         minLevel        = 175,
         maxLevel        = 175,
-        completionBonus = 800,
-        markBonus       = 30,
+        completionBonus = 200,
+        markBonus       = 20,
         hpBoost         = 8.0,   -- bumped from 2.5 (2026-05-30) -- Hard tier deserves a real endurance check.
         mods =
         {
@@ -207,8 +207,8 @@ catalog.difficulties =
         waveDelay       = 15,
         minLevel        = 200,
         maxLevel        = 200,
-        completionBonus = 3000,
-        markBonus       = 70,
+        completionBonus = 400,
+        markBonus       = 20,
         hpBoost         = 12.0,  -- bumped from 3.0 (2026-05-30) -- gods should feel like gods, not paper waves.
         mods =
         {
@@ -256,8 +256,8 @@ catalog.difficulties =
         spawnStagger    = 5,
         minLevel        = 225,
         maxLevel        = 225,
-        completionBonus = 10000,
-        markBonus       = 130,
+        completionBonus = 800,
+        markBonus       = 20,
         hpBoost         = 20.0,
         mods =
         {
