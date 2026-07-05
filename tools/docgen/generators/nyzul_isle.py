@@ -20,6 +20,7 @@ from pathlib import Path
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 from tools.docgen._luaparse import section
+from tools.docgen._bgwiki import item_anchor
 
 
 # ── Helpers ─────────────────────────────────────────────────────────────────
@@ -45,6 +46,20 @@ def _item_name(token: str) -> str:
     """xi.item.GUST_CLAYMORE -> Gust Claymore"""
     t = re.sub(r"^xi\.item\.", "", token).strip()
     return _titleize(t)
+
+
+def _item_link(token: str) -> str:
+    """Link a bare item token -> FFXIAH hover-tooltip anchor.
+
+    `token` is the item_basic internal name in Lua form (GUST_CLAYMORE, with
+    or without the xi.item. prefix). Its Title-Cased form is the exact
+    id-resolution key, so the hover stat-box image resolves — the same
+    pattern htbf/unity_concord use. Ambiguous names degrade to a BG-Wiki
+    search link with no image (never a hard 404).
+    """
+    bare = re.sub(r"^xi\.item\.", "", token).strip()
+    return item_anchor(_item_name(bare),
+                       resolve_key=bare.replace("_", " ").title())
 
 
 def _slot_name(token: str) -> str:
@@ -99,7 +114,11 @@ def _parse_crate(text: str) -> dict[str, str | list[str]]:
 # ── Parsing: appraisal.lua (NM -> weighted item list) ──────────────────────
 
 def _parse_appraisal(text: str) -> dict[str, list[tuple[int, str]]]:
-    """Return {NM_KEY: [(weight, item_display_name), ...]} sorted desc by weight."""
+    """Return {NM_KEY: [(weight, item_token), ...]} sorted desc by weight.
+
+    item_token is the bare item_basic internal name (e.g. GUST_CLAYMORE) so
+    the renderer can build both the display name and the FFXIAH id-resolution
+    key from it (see _item_link)."""
     result: dict[str, list[tuple[int, str]]] = {}
 
     # Find every [xi.appraisal.origin.NYZUL_X] block.
@@ -141,15 +160,16 @@ def _parse_appraisal(text: str) -> dict[str, list[tuple[int, str]]]:
         else:
             continue
 
-        # Extract items: { weight, xi.item.NAME }
+        # Extract items: { weight, xi.item.NAME } — keep the bare token so the
+        # renderer can build both the display name and the FFXIAH link key.
         items: list[tuple[int, str]] = []
         for row in re.finditer(
-            r"\{\s*(\d+)\s*,\s*(xi\.item\.\w+)\s*\}",
+            r"\{\s*(\d+)\s*,\s*xi\.item\.(\w+)\s*\}",
             block,
         ):
             weight = int(row.group(1))
-            name = _item_name(row.group(2))
-            items.append((weight, name))
+            token = row.group(2)
+            items.append((weight, token))
 
         if items:
             items.sort(key=lambda x: x[0], reverse=True)
@@ -161,17 +181,19 @@ def _parse_appraisal(text: str) -> dict[str, list[tuple[int, str]]]:
 # ── Parsing: nyzul.lua (floor-100 vigil weapons) ───────────────────────────
 
 def _parse_vigil_weapons(text: str) -> list[str]:
-    """Return list of job-weapon display names from baseWeapons."""
+    """Return list of job-weapon item tokens (bare internal names) from
+    baseWeapons, deduped in first-seen order. The renderer turns each into a
+    hover-tooltip FFXIAH link via _item_link."""
     block = section(text, "xi.nyzul.baseWeapons")
     if not block:
         return []
     weapons: list[str] = []
     seen: set[str] = set()
     for m in re.finditer(r"xi\.item\.(\w+)", block):
-        name = _item_name(f"xi.item.{m.group(1)}")
-        if name not in seen:
-            seen.add(name)
-            weapons.append(name)
+        token = m.group(1)
+        if token not in seen:
+            seen.add(token)
+            weapons.append(token)
     return weapons
 
 
@@ -201,7 +223,8 @@ def _render_nm_table(
             drops_str = "—"
         else:
             total = sum(w for w, _ in items)
-            parts = [f"{name} ({_pct(w, total)})" for w, name in items]
+            # Link only the item text; the (%) stays outside the anchor.
+            parts = [f"{_item_link(token)} ({_pct(w, total)})" for w, token in items]
             drops_str = ", ".join(parts)
 
         rows.append((nm_display, slot_display, drops_str))
@@ -222,7 +245,7 @@ def _render_nm_table(
 def _render_vigil_table(weapons: list[str]) -> str:
     if not weapons:
         return "_Vigil weapon list unavailable._\n"
-    items = ", ".join(f"**{w}**" for w in weapons)
+    items = ", ".join(_item_link(t) for t in weapons)
     return (
         "On a **floor 100** clear the boss drops one random Vigil Weapon from the "
         f"full pool, plus one targeted to the disk-holder's main job if the party "
