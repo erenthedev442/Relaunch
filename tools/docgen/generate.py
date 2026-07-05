@@ -87,6 +87,7 @@ def main() -> int:
         prestige,
         progression_map,
         progression_order,
+        systems_map,
         rates_table,
         reforge,
         settings_inject,
@@ -180,6 +181,12 @@ def main() -> int:
         # requirement 2026-07-05: the map must track the content). Fail-closed:
         # a parse error keeps the last good page instead of publishing holes.
         ("progression_map",  progression_map),
+        # systems_map regenerates the ENTIRE Systems Map body on
+        # getting-started/systems-map.md from the same live catalogs (owner
+        # requirement 2026-07-05: like progression-map, the page must be 100%
+        # connected to the content). Presence-gated rows drop retired systems;
+        # fail-closed parses keep the last good page on error.
+        ("systems_map",      systems_map),
         ("armor_npc",        armor_npc),
         ("weapons_npc",      weapons_npc),
         # accessories_npc reads the same hunting_league_catalog as
