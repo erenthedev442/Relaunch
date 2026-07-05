@@ -32,6 +32,7 @@ No last-updated footer — stamp.py owns that.
 """
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
@@ -53,81 +54,69 @@ from tools.docgen.generators.augment_sage import (
 _TAG = "[progression_guide_page]"
 
 
-# ------------------------------------------------------------------ endgame catalog
-# The endgame constellation, grouped for the guide. Each entry is a docs page
-# (relative to docs/); its title + one-liner are AUTO-EXTRACTED from that page's
-# H1 and `!!! "Summary"` admonition at build time, so this guide can never drift
-# from the systems' own pages. To add a system, drop its page into the right
-# group here (or, for anything under endgame/, the completeness guard below will
-# flag it if you forget). "how" is a short where/how hint shown after the blurb.
-_ENDGAME_GROUPS: list[tuple[str, str, list[tuple[str, str]]]] = [
-    (
-        "Weapons, Mastery & Companions",
-        "Permanent power that outlasts any single grind — forge apex weapons, "
-        "empower your job past the cap, and build a companion.",
-        [
-            ("progression/prime-armory.md",     "`!leaf`"),
-            ("progression/weapon-forge.md",     "`!leaf`"),
-            ("endgame/job-mastery.md",          "`!leaf`"),
-            ("progression/spell-mastery.md",    "`!leaf`"),
-            ("progression/cross-job-traits.md", "`!leaf`"),
-            ("progression/fellow-companion.md", "`!fellow`"),
-        ],
-    ),
-    (
-        "Infinite Chases (Leaderboard, No Ceiling)",
-        "Scaling content with no top — your depth is the score, and it goes on "
-        "the [leaderboards](../community/leaderboards.md).",
-        [
-            ("endgame/apex-paragon.md",   "`!apex`"),
-            ("endgame/voidspire.md",      "Escha-RuAun"),
-            ("endgame/endless-tower.md",  "`!leaf`"),
-            ("endgame/colosseum.md",      "`!leaf`"),
-        ],
-    ),
-    (
-        "Bosses & Battlefields",
-        "Set-piece fights with real mechanics — the server's hardest single "
-        "encounters, most on a repeatable or weekly cadence.",
-        [
-            ("endgame/star-devourer.md",          "Escha-RuAun (weekly)"),
-            ("endgame/the-gauntlet.md",           "Riverne A01"),
-            ("endgame/high-tier-battlefields.md", "`!leaf`"),
-            ("endgame/maats-challenge.md",        "Ru'Lude Gardens"),
-            ("endgame/nyzul-isle.md",             "Mhaura"),
-        ],
-    ),
-    (
-        "World-NM Systems",
-        "Reasons to leave the hub — tier-scaled notorious monsters and city "
-        "instances spread across Vana'diel.",
-        [
-            ("endgame/voidwatch.md",          "`!voidwatch`"),
-            ("endgame/unity-concord.md",      "`!lib`"),
-            ("endgame/abyssea-nms.md",        "Abyssea"),
-            ("endgame/affinity-nms.md",       "overworld"),
-            ("endgame/dynamis-divergence.md", "city Dynamis"),
-            ("endgame/invasions.md",          "scheduled"),
-            ("endgame/tournament.md",         "`!leaf`"),
-        ],
-    ),
-    (
-        "Activities & Gil Sinks",
-        "Lighter content for a change of pace — and where surplus gil goes.",
-        [
-            ("endgame/casino.md",               "`!gmhome`"),
-            ("endgame/chocobo-derby.md",        "`!lib`"),
-            ("endgame/treasure-hunts.md",       "overworld"),
-            ("endgame/provisioners-league.md",  "`!lib`"),
-            ("endgame/seasonal-events.md",      "seasonal"),
-            ("endgame/dungeons.md",             "instanced"),
-        ],
-    ),
+# ---------------------------------------------------------------- systems catalog
+# The full custom-systems constellation, grouped into filter buckets for the
+# interactive card grid (rendered by tools/docgen/templates/progression_systems_widget.html).
+# Each entry is a docs page (relative to docs/); its title + blurb are
+# AUTO-EXTRACTED from that page's H1 and `!!! "Summary"` admonition at build
+# time, so the guide can never drift from the systems' own pages. To add a
+# system, drop its page into a group (for anything under endgame/, the
+# completeness guard flags it if you forget). "where" is the short command/zone
+# shown on the card. Group label = the filter chip + the card's tag.
+_CATALOG_GROUPS: list[tuple[str, list[tuple[str, str]]]] = [
+    ("Weapons & Mastery", [
+        ("progression/prime-armory.md",     "!leaf"),
+        ("progression/weapon-forge.md",     "!leaf"),
+        ("endgame/job-mastery.md",          "!leaf"),
+        ("progression/spell-mastery.md",    "!leaf"),
+        ("progression/cross-job-traits.md", "!leaf"),
+        ("progression/fellow-companion.md", "!fellow"),
+    ]),
+    ("Infinite Chases", [
+        ("endgame/apex-paragon.md",   "!apex"),
+        ("endgame/voidspire.md",      "Escha-RuAun"),
+        ("endgame/endless-tower.md",  "!leaf"),
+        ("endgame/colosseum.md",      "!leaf"),
+    ]),
+    ("Bosses & Battlefields", [
+        ("endgame/star-devourer.md",          "Escha-RuAun · weekly"),
+        ("endgame/the-gauntlet.md",           "Riverne A01"),
+        ("endgame/high-tier-battlefields.md", "!leaf"),
+        ("endgame/maats-challenge.md",        "Ru'Lude Gardens"),
+        ("endgame/nyzul-isle.md",             "Mhaura"),
+    ]),
+    ("World NMs", [
+        ("endgame/voidwatch.md",          "!voidwatch"),
+        ("endgame/unity-concord.md",      "!lib"),
+        ("endgame/abyssea-nms.md",        "Abyssea"),
+        ("endgame/affinity-nms.md",       "overworld"),
+        ("endgame/dynamis-divergence.md", "city Dynamis"),
+        ("endgame/invasions.md",          "scheduled"),
+        ("endgame/tournament.md",         "!leaf"),
+    ]),
+    ("Activities", [
+        ("endgame/casino.md",               "!gmhome"),
+        ("endgame/chocobo-derby.md",        "!lib"),
+        ("endgame/treasure-hunts.md",       "overworld"),
+        ("endgame/provisioners-league.md",  "!lib"),
+        ("endgame/seasonal-events.md",      "seasonal"),
+        ("endgame/dungeons.md",             "instanced"),
+    ]),
+    # The former "Supporting Systems" table — now filterable cards alongside the rest.
+    ("Supporting", [
+        ("progression/login-rewards.md",       "automatic"),
+        ("progression/daily-board.md",         "!lib"),
+        ("progression/weekly-hunts.md",        "!lib"),
+        ("progression/hunters-guild.md",       "passive"),
+        ("progression/game-master.md",         "!wavemaster"),
+        ("progression/cross-job-abilities.md", "!leaf"),
+        ("progression/achievements.md",        "in-game"),
+    ]),
 ]
 
-# endgame/*.md pages intentionally NOT listed as their own endgame-catalog row
-# because the spine/supporting sections already own them. Keep this in sync so
-# the completeness guard stays quiet for genuinely-covered pages.
+# endgame/*.md pages intentionally NOT given their own card because the
+# spine/narrative already owns them. Keep in sync so the completeness guard
+# below stays quiet for genuinely-covered pages.
 _ENDGAME_COVERED_ELSEWHERE = {
     "endgame/index.md",
 }
@@ -349,45 +338,64 @@ def _extract_page_summary(docs_dir: Path, rel: str) -> tuple[str, str] | None:
     return title, _clean_blurb(blurb)
 
 
-def _render_endgame_catalog(docs_dir: Path) -> list[str]:
-    """Render the grouped endgame link-lists; warn on any endgame/*.md page not
-    represented so a newly-added system can't silently miss the guide."""
-    listed = {
-        rel for _title, _intro, rows in _ENDGAME_GROUPS for rel, _how in rows
-    }
+def _build_systems_widget(repo_root: Path, docs_dir: Path) -> str | None:
+    """Build the interactive systems card-grid widget: JSON data (one card per
+    system, auto-extracted title/blurb) injected into the shared widget template.
+
+    Runs a completeness guard: any endgame/*.md page not placed in a group (and
+    not covered elsewhere) prints a WARN so a newly-added system can't silently
+    miss the guide. Returns the widget HTML, or None if the template is missing
+    (caller falls back to a plain list so the page is never left widget-less).
+    """
+    listed = {rel for _chip, rows in _CATALOG_GROUPS for rel, _where in rows}
     for page in sorted((docs_dir / "endgame").glob("*.md")):
         rel = f"endgame/{page.name}"
         if rel not in listed and rel not in _ENDGAME_COVERED_ELSEWHERE:
-            print(f"{_TAG} WARN: {rel} is not in any endgame group or the "
+            print(f"{_TAG} WARN: {rel} is in neither a catalog group nor the "
                   f"covered-elsewhere set — it will be missing from the guide.")
 
-    L: list[str] = []
-    A = L.append
-    A("## Endgame Content — What to Chase at the Top")
-    A("")
-    A(
-        "The spine above (Hunting League → Reforge → Augments → Prestige) is the "
-        "backbone, but the top of the server is a whole constellation of custom "
-        "systems. Everything below is live content — dive into whichever fits your "
-        "mood. Each links to its own page with the full detail."
-    )
-    A("")
-    for group_title, intro, rows in _ENDGAME_GROUPS:
-        A(f"### {group_title}")
-        A("")
-        A(intro)
-        A("")
-        for rel, how in rows:
+    cards: list[dict] = []
+    for chip, rows in _CATALOG_GROUPS:
+        for rel, where in rows:
             got = _extract_page_summary(docs_dir, rel)
             if got is None:
-                continue  # page not present this run — skip rather than dead-link
+                continue  # page absent this run — skip rather than emit a dead card
             title, blurb = got
-            link = f"../{rel}"
-            tail = f" _({how})_" if how else ""
-            A(f"- **[{title}]({link})** — {blurb}{tail}")
-        A("")
-    A("---")
-    A("")
+            cards.append({
+                "groupLabel": chip,
+                "tag":        chip,
+                "name":       title,
+                "blurb":      blurb,
+                "where":      where,
+                "href":       f"../{rel}",
+            })
+
+    template = repo_root / "tools" / "docgen" / "templates" / "progression_systems_widget.html"
+    if not template.exists() or not cards:
+        return None
+    html = template.read_text(encoding="utf-8")
+    payload = json.dumps(cards, ensure_ascii=False, separators=(",", ":"))
+    if "/*__DATA__*/ []" not in html:
+        print(f"{_TAG} WARN: DATA placeholder not found in widget template")
+        return None
+    return html.replace("/*__DATA__*/ []", payload, 1)
+
+
+def _fallback_systems_list(docs_dir: Path) -> list[str]:
+    """Plain grouped link-list — used only if the widget template is missing, so
+    the systems catalog is never dropped entirely."""
+    L: list[str] = ["## Endgame Content — What to Chase at the Top", ""]
+    for chip, rows in _CATALOG_GROUPS:
+        L += [f"### {chip}", ""]
+        for rel, where in rows:
+            got = _extract_page_summary(docs_dir, rel)
+            if got is None:
+                continue
+            title, blurb = got
+            tail = f" _({where})_" if where else ""
+            L.append(f"- **[{title}](../{rel})** — {blurb}{tail}")
+        L.append("")
+    L += ["---", ""]
     return L
 
 
@@ -400,7 +408,7 @@ def _rank_word(tier: dict) -> str:
 # ---------------------------------------------------------------- render
 
 
-def _render(d: dict, docs_dir: Path) -> str:
+def _render(d: dict, docs_dir: Path, widget_html: str | None) -> str:
     hl        = d["hl"]                      # list of tier dicts (progression_order shape)
     currency  = d["currency"]                # 'Hunt Marks'
     hub       = d["hub_zone"]                # 'Escha ZiTah'
@@ -491,9 +499,9 @@ def _render(d: dict, docs_dir: Path) -> str:
     A(
         "Every system on this server feeds marks into that path. The Hunting League "
         "is the spine; everything else branches off it. Once you're geared and "
-        "into Prestige, the **[Endgame Content](#endgame-content--what-to-chase-at-the-top)** "
-        "section below is the full catalog of what to chase — apex weapons, "
-        "infinite leaderboard climbs, raid bosses, and world-NM systems."
+        "into Prestige, the **[Endgame Content](#endgame-content)** section below "
+        "is the full catalog of what to chase — apex weapons, infinite "
+        "leaderboard climbs, raid bosses, and world-NM systems."
     )
     A("")
     A("---")
@@ -735,53 +743,23 @@ def _render(d: dict, docs_dir: Path) -> str:
     A("---")
     A("")
 
-    # ---- Endgame constellation (auto-extracted from each system's page) ----
-    L += _render_endgame_catalog(docs_dir)
-
-    # ---- Supporting systems (constant frame) --------------------------
-    A("## Supporting Systems (Any Stage)")
+    # ---- Systems catalog: the interactive filter-chip card grid (matches the
+    # Weapon Forge widget's design language). The former "Supporting Systems"
+    # table is folded in as its own filter group, so it's gone from here. ----
+    A("## Endgame Content — What to Chase at the Top { #endgame-content }")
     A("")
     A(
-        "These systems don't have a fixed \"unlock\" point — run them alongside "
-        "whatever main content you're doing."
+        "The spine above (Hunting League → Reforge → Augments → Prestige) is the "
+        "backbone. The top of the server is a whole constellation of custom "
+        "systems — **filter by kind below, then pick one** to read what it is and "
+        "where to start. Each card links to its own page, where the numbers are "
+        "generated live."
     )
     A("")
-    A("| System | What it does | Where |")
-    A("|---|---|---|")
-    A(
-        "| **[Login Rewards](../progression/login-rewards.md)** | Marks for each "
-        "daily login; escalating streak milestones | Automatic |"
-    )
-    A(
-        "| **[Daily Board](../progression/daily-board.md)** | Daily "
-        "kill/Infamy/wave objectives; full-clear bonus | {{npc:daily_board}} "
-        "(`!lib`) |"
-    )
-    A(
-        "| **[Weekly Hunt Board](../progression/weekly-hunts.md)** | Weekly "
-        "objectives with sweep bonus | {{npc:hunt_board}} (`!lib`) |"
-    )
-    A(
-        "| **[Hunter's Guild](../progression/hunters-guild.md)** | Kill NMs to "
-        "earn rep; rep gives escalating mark multipliers | Passive |"
-    )
-    A(
-        "| **[Game Master (Wave Mode)](../progression/game-master.md)** | Themed "
-        "wave fights of rising difficulty for bonus marks | `!wavemaster` |"
-    )
-    A(
-        "| **[Cross-Job Abilities](../progression/cross-job-abilities.md)** | Buy "
-        "abilities from other jobs for a flat gil price each | "
-        "{{npc:cross_job_ability}} (`!leaf`) |"
-    )
-    A(
-        "| **[Mystery Mog](../progression/library.md)** | Gil-sink gacha; rare "
-        "prize = marks, Aman Voucher, or AP | {{npc:mystery_mog}} (`!lib`) |"
-    )
-    A(
-        "| **[Achievements](../progression/achievements.md)** | Milestone rewards "
-        "across all systems | In-game menu |"
-    )
+    if widget_html:
+        A(widget_html)
+    else:
+        L.extend(_fallback_systems_list(docs_dir))
     A("")
     A("---")
     A("")
@@ -920,7 +898,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         print(f"{_TAG} skip: {e}")
         return
 
-    content = _render(data, docs_dir)
+    widget_html = _build_systems_widget(repo_root, docs_dir)
+    content = _render(data, docs_dir, widget_html)
     page = docs_dir / "getting-started" / "progression-guide.md"
     page.parent.mkdir(parents=True, exist_ok=True)
     page.write_text(content, encoding="utf-8")

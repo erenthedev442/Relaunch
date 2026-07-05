@@ -1,0 +1,172 @@
+<div class="pg-widget">
+<style>
+.pg-widget *, .pg-widget *::before, .pg-widget *::after { box-sizing: border-box; margin: 0; padding: 0; }
+.pg-widget {
+  /* Design tokens shared with the Weapon Forge widget (weapon_forge_widget.html). */
+  --bg:     #06060e;
+  --surf:   #0f0f1b;
+  --raised: #161526;
+  --bdr:    #212038;
+  --text:   #ddd8cc;
+  --muted:  #9793ac;
+  --dim:    #605d7a;
+  --faint:  #b0acc4;
+  --arrow:  #c45a22;
+  --cat:    #c8a030;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  border: 1px solid var(--bdr);
+  padding: 20px 0 24px;
+  margin: 6px 0;
+}
+.pg-widget .pg-head { text-align: center; max-width: 640px; margin: 0 auto; padding: 0 20px; }
+.pg-widget .pg-title { font-size: 1.15rem; color: var(--cat); letter-spacing: .01em; }
+.pg-widget .pg-sub { font-size: .86rem; color: var(--muted); font-style: italic; line-height: 1.6; margin-top: 8px; }
+
+/* ── FILTER CHIPS ── (mirrors .filt-row/.fb) */
+.pg-widget .pg-filt { display: flex; flex-wrap: wrap; gap: 4px; justify-content: center; max-width: 1080px; margin: 18px auto 0; padding: 0 20px; }
+.pg-widget .pg-fb {
+  background: var(--surf); border: 1px solid var(--bdr); color: var(--dim);
+  font-family: "Courier New",monospace; font-size: .6rem; letter-spacing: .05em;
+  text-transform: uppercase; padding: 5px 11px; cursor: pointer; transition: all .1s;
+}
+.pg-widget .pg-fb:hover { color: var(--muted); border-color: var(--muted); }
+.pg-widget .pg-fb.on { color: var(--cat); border-color: var(--cat); background: var(--raised); }
+.pg-widget .pg-fb .pg-fb-n { color: var(--dim); margin-left: 5px; }
+.pg-widget .pg-fb.on .pg-fb-n { color: color-mix(in srgb, var(--cat) 60%, var(--muted)); }
+
+/* ── DETAIL PANEL ── (mirrors .src-banner/.src-inner) */
+.pg-widget .pg-detail { max-width: 1080px; margin: 16px auto 0; padding: 0 20px; }
+.pg-widget .pg-detail-inner {
+  border: 1px solid var(--bdr); border-left: 3px solid var(--cat);
+  background: color-mix(in srgb, var(--cat) 4%, var(--surf));
+  padding: 14px 18px; display: flex; align-items: flex-start; gap: 16px; min-height: 66px;
+}
+.pg-widget .pg-badge {
+  font-family: "Courier New",monospace; font-size: .58rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--cat); white-space: nowrap; margin-top: 3px;
+  line-height: 1; border: 1px solid color-mix(in srgb, var(--cat) 40%, transparent);
+  padding: 3px 6px;
+}
+.pg-widget .pg-detail-body { flex: 1; }
+.pg-widget .pg-detail-name { font-size: 1rem; color: var(--text); line-height: 1.25; margin-bottom: 4px; }
+.pg-widget .pg-detail-text { font-size: .86rem; color: var(--muted); line-height: 1.55; }
+.pg-widget .pg-detail-text.prompt { font-style: italic; color: var(--dim); }
+.pg-widget .pg-detail-link {
+  display: inline-block; margin-top: 9px; font-family: "Courier New",monospace;
+  font-size: .64rem; letter-spacing: .05em; text-transform: uppercase;
+  color: var(--cat); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--cat) 45%, transparent);
+  padding-bottom: 1px;
+}
+.pg-widget .pg-detail-link:hover { border-bottom-color: var(--cat); }
+
+/* ── DIVIDER ── (mirrors .div/.dg) */
+.pg-widget .pg-div { display: flex; align-items: center; gap: 10px; max-width: 1080px; margin: 20px auto 0; padding: 0 20px; }
+.pg-widget .pg-div::before, .pg-widget .pg-div::after { content: ''; flex: 1; height: 1px; background: var(--bdr); }
+.pg-widget .pg-dg { width: 6px; height: 6px; background: var(--cat); transform: rotate(45deg); opacity: .5; }
+
+/* ── CARD GRID ── (mirrors .wg/.wc) */
+.pg-widget .pg-grid { max-width: 1080px; margin: 14px auto 0; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 7px; }
+.pg-widget .pg-card {
+  background: var(--surf); border: 1px solid var(--bdr); border-left: 3px solid var(--dim);
+  padding: 12px 14px; cursor: pointer; transition: border-color .13s, background .13s;
+  text-align: left; width: 100%; font-family: inherit; color: inherit; display: block;
+}
+.pg-widget .pg-card:hover { border-color: var(--cat); border-left-color: var(--cat); }
+.pg-widget .pg-card.sel { border-color: var(--cat); border-left-color: var(--cat); background: color-mix(in srgb, var(--cat) 5%, var(--surf)); }
+.pg-widget .pg-card-tp { font-family: "Courier New",monospace; font-size: .55rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 5px; }
+.pg-widget .pg-card-nm { font-size: .92rem; color: var(--text); line-height: 1.2; }
+.pg-widget .pg-card-meta { font-family: "Courier New",monospace; font-size: .57rem; color: var(--muted); margin-top: 6px; letter-spacing: .02em; }
+.pg-widget .pg-empty { grid-column: 1/-1; text-align: center; padding: 34px; color: var(--dim); font-style: italic; font-size: .84rem; }
+
+.pg-widget .pg-foot { text-align: center; max-width: 640px; margin: 18px auto 0; padding: 0 20px; font-family: "Courier New",monospace; font-size: .58rem; letter-spacing: .04em; color: var(--dim); }
+</style>
+
+<div class="pg-filt" id="pgFilt"></div>
+
+<div class="pg-detail">
+  <div class="pg-detail-inner">
+    <div class="pg-badge" id="pgBadge">System</div>
+    <div class="pg-detail-body">
+      <div class="pg-detail-name" id="pgName" style="display:none"></div>
+      <div class="pg-detail-text prompt" id="pgText">Select a system below to read what it is and where to start it.</div>
+      <a class="pg-detail-link" id="pgLink" href="#" style="display:none">Open the full page →</a>
+    </div>
+  </div>
+</div>
+
+<div class="pg-div"><div class="pg-dg"></div></div>
+
+<div class="pg-grid" id="pgGrid"></div>
+
+<div class="pg-foot">Every card links to that system's own page, where the numbers are generated live from the server.</div>
+
+<script>
+(function () {
+  var DATA = /*__DATA__*/ [];
+  var root = document.currentScript.closest('.pg-widget');
+  if (!root) { var all = document.querySelectorAll('.pg-widget'); root = all[all.length - 1]; }
+  var filtEl = root.querySelector('#pgFilt');
+  var gridEl = root.querySelector('#pgGrid');
+  var badgeEl = root.querySelector('#pgBadge');
+  var nameEl = root.querySelector('#pgName');
+  var textEl = root.querySelector('#pgText');
+  var linkEl = root.querySelector('#pgLink');
+
+  // Ordered, de-duplicated group labels (preserve DATA order).
+  var groups = [];
+  DATA.forEach(function (s) { if (groups.indexOf(s.groupLabel) < 0) groups.push(s.groupLabel); });
+  var active = 'All';
+  var selected = null;
+
+  function esc(t) { return String(t == null ? '' : t).replace(/[&<>"]/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]; }); }
+
+  function buildFilters() {
+    var chips = ['All'].concat(groups);
+    filtEl.innerHTML = '';
+    chips.forEach(function (g) {
+      var n = g === 'All' ? DATA.length : DATA.filter(function (s) { return s.groupLabel === g; }).length;
+      var b = document.createElement('button');
+      b.className = 'pg-fb' + (g === active ? ' on' : '');
+      b.type = 'button';
+      b.innerHTML = esc(g) + '<span class="pg-fb-n">' + n + '</span>';
+      b.addEventListener('click', function () { active = g; buildFilters(); buildGrid(); });
+      filtEl.appendChild(b);
+    });
+  }
+
+  function select(s, cardEl) {
+    selected = s;
+    root.querySelectorAll('.pg-card.sel').forEach(function (c) { c.classList.remove('sel'); });
+    if (cardEl) cardEl.classList.add('sel');
+    badgeEl.textContent = s.groupLabel;
+    nameEl.textContent = s.name;
+    nameEl.style.display = '';
+    textEl.className = 'pg-detail-text';
+    textEl.textContent = s.blurb;
+    linkEl.href = s.href;
+    linkEl.style.display = '';
+  }
+
+  function buildGrid() {
+    var list = DATA.filter(function (s) { return active === 'All' || s.groupLabel === active; });
+    gridEl.innerHTML = '';
+    if (!list.length) { gridEl.innerHTML = '<div class="pg-empty">No systems in this group.</div>'; return; }
+    list.forEach(function (s) {
+      var c = document.createElement('button');
+      c.className = 'pg-card' + (selected && selected.href === s.href ? ' sel' : '');
+      c.type = 'button';
+      c.innerHTML = '<div class="pg-card-tp">' + esc(s.tag || s.groupLabel) + '</div>' +
+                    '<div class="pg-card-nm">' + esc(s.name) + '</div>' +
+                    (s.where ? '<div class="pg-card-meta">' + esc(s.where) + '</div>' : '');
+      c.addEventListener('click', function () { select(s, c); });
+      gridEl.appendChild(c);
+    });
+  }
+
+  buildFilters();
+  buildGrid();
+})();
+</script>
+</div>
