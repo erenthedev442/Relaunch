@@ -18,7 +18,7 @@ Footer format inserted at the bottom of every .md file:
 
     <!-- DOCGEN:BEGIN id="last-updated" -->
     <!-- content-hash: abcdef012345 -->
-    _Last updated: 2026-05-24 21:30 UTC_
+    _Last updated: 2026-05-24 14:30 PDT_
     <!-- DOCGEN:END id="last-updated" -->
 """
 from __future__ import annotations
@@ -26,7 +26,10 @@ from __future__ import annotations
 import datetime as _dt
 import hashlib
 import re
+import zoneinfo as _zi
 from pathlib import Path
+
+_PACIFIC = _zi.ZoneInfo("America/Los_Angeles")
 
 
 _MARKER_BEGIN = '<!-- DOCGEN:BEGIN id="last-updated" -->'
@@ -63,7 +66,7 @@ def _hash_body(body: str) -> str:
 
 
 def _now_utc() -> str:
-    return _dt.datetime.now(_dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
+    return _dt.datetime.now(_PACIFIC).strftime("%Y-%m-%d %H:%M %Z")
 
 
 _TRAILING_HRULE_RE = re.compile(r"(?:\n\s*-{3,}\s*)+\s*$")
