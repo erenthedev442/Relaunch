@@ -6,7 +6,7 @@ This is a **fresh-start server** — a clean wipe and rebuild of the FJB FFXI pr
 
 ## Why a Relaunch?
 
-The original server proved the concept: FFXI with fast progression, a custom endgame, and a friendly community works. Players stayed for months. But over time, the economy inflated, veteran characters pulled far ahead of newcomers, and the gap between a day-one player and a year-one player became difficult to close.
+The original server proved the concept: FFXI with fast progression, a custom endgame, and a friendly community works. Players loved the idea, but there were issues with balance.
 
 The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat balance has been redesigned from scratch. And the content lineup has been expanded with systems that weren't in the original — Voidwatch, the Adventuring Fellow, Spell & Skill Mastery, and more.
 
