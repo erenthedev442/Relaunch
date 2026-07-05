@@ -53,6 +53,86 @@ from tools.docgen.generators.augment_sage import (
 _TAG = "[progression_guide_page]"
 
 
+# ------------------------------------------------------------------ endgame catalog
+# The endgame constellation, grouped for the guide. Each entry is a docs page
+# (relative to docs/); its title + one-liner are AUTO-EXTRACTED from that page's
+# H1 and `!!! "Summary"` admonition at build time, so this guide can never drift
+# from the systems' own pages. To add a system, drop its page into the right
+# group here (or, for anything under endgame/, the completeness guard below will
+# flag it if you forget). "how" is a short where/how hint shown after the blurb.
+_ENDGAME_GROUPS: list[tuple[str, str, list[tuple[str, str]]]] = [
+    (
+        "Weapons, Mastery & Companions",
+        "Permanent power that outlasts any single grind — forge apex weapons, "
+        "empower your job past the cap, and build a companion.",
+        [
+            ("progression/prime-armory.md",     "`!leaf`"),
+            ("progression/weapon-forge.md",     "`!leaf`"),
+            ("endgame/job-mastery.md",          "`!leaf`"),
+            ("progression/spell-mastery.md",    "`!leaf`"),
+            ("progression/cross-job-traits.md", "`!leaf`"),
+            ("progression/fellow-companion.md", "`!fellow`"),
+        ],
+    ),
+    (
+        "Infinite Chases (Leaderboard, No Ceiling)",
+        "Scaling content with no top — your depth is the score, and it goes on "
+        "the [leaderboards](../community/leaderboards.md).",
+        [
+            ("endgame/apex-paragon.md",   "`!apex`"),
+            ("endgame/voidspire.md",      "Escha-RuAun"),
+            ("endgame/endless-tower.md",  "`!leaf`"),
+            ("endgame/colosseum.md",      "`!leaf`"),
+        ],
+    ),
+    (
+        "Bosses & Battlefields",
+        "Set-piece fights with real mechanics — the server's hardest single "
+        "encounters, most on a repeatable or weekly cadence.",
+        [
+            ("endgame/star-devourer.md",          "Escha-RuAun (weekly)"),
+            ("endgame/the-gauntlet.md",           "Riverne A01"),
+            ("endgame/high-tier-battlefields.md", "`!leaf`"),
+            ("endgame/maats-challenge.md",        "Ru'Lude Gardens"),
+            ("endgame/nyzul-isle.md",             "Mhaura"),
+        ],
+    ),
+    (
+        "World-NM Systems",
+        "Reasons to leave the hub — tier-scaled notorious monsters and city "
+        "instances spread across Vana'diel.",
+        [
+            ("endgame/voidwatch.md",          "`!voidwatch`"),
+            ("endgame/unity-concord.md",      "`!lib`"),
+            ("endgame/abyssea-nms.md",        "Abyssea"),
+            ("endgame/affinity-nms.md",       "overworld"),
+            ("endgame/dynamis-divergence.md", "city Dynamis"),
+            ("endgame/invasions.md",          "scheduled"),
+            ("endgame/tournament.md",         "`!leaf`"),
+        ],
+    ),
+    (
+        "Activities & Gil Sinks",
+        "Lighter content for a change of pace — and where surplus gil goes.",
+        [
+            ("endgame/casino.md",               "`!gmhome`"),
+            ("endgame/chocobo-derby.md",        "`!lib`"),
+            ("endgame/treasure-hunts.md",       "overworld"),
+            ("endgame/provisioners-league.md",  "`!lib`"),
+            ("endgame/seasonal-events.md",      "seasonal"),
+            ("endgame/dungeons.md",             "instanced"),
+        ],
+    ),
+]
+
+# endgame/*.md pages intentionally NOT listed as their own endgame-catalog row
+# because the spine/supporting sections already own them. Keep this in sync so
+# the completeness guard stays quiet for genuinely-covered pages.
+_ENDGAME_COVERED_ELSEWHERE = {
+    "endgame/index.md",
+}
+
+
 class _Skip(Exception):
     """Raised when a required source is missing/unparseable — fail closed."""
 
@@ -197,6 +277,120 @@ def _roman(n: int) -> str:
     return _ROMAN.get(n, str(n))
 
 
+# ------------------------------------------------------ endgame page extraction
+
+
+def _clean_blurb(text: str) -> str:
+    """Make a page summary safe + compact for a link list here:
+    - collapse resolved  <!--npc:KEY-->ZONE<!--/npc-->  to just ZONE
+    - drop any leftover {{setting:...}}/{{npc:...}} tokens' wrappers to text
+    - strip markdown links to their text (their relative paths are relative to
+      the SOURCE page and would break when quoted from getting-started/)
+    - collapse whitespace; keep the first 1–2 sentences.
+    """
+    text = re.sub(r"<!--npc:[^>]*?-->(.*?)<!--/npc-->", r"\1", text)
+    text = re.sub(r"\{\{npc:([^}|]+)(?:\|[^}]*)?\}\}", "", text)
+    text = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", text)   # [text](url) -> text
+    text = re.sub(r"\s+", " ", text).strip().lstrip("﻿").strip()
+    # Trim to the first two sentences so the list stays scannable.
+    parts = re.split(r"(?<=[.!?])\s+", text)
+    if len(parts) > 2:
+        text = " ".join(parts[:2])
+    return text
+
+
+def _extract_page_summary(docs_dir: Path, rel: str) -> tuple[str, str] | None:
+    """Return (title, blurb) for a docs page, or None if the file is absent.
+
+    title = first `# ` heading. blurb = the `!!! ... "Summary"` admonition body
+    if present, else the first prose paragraph after the H1.
+    """
+    page = docs_dir / rel
+    if not page.exists():
+        return None
+    raw = page.read_text(encoding="utf-8", errors="replace")
+
+    title_m = re.search(r"^﻿?#\s+(.+?)\s*$", raw, re.M)
+    title = title_m.group(1).strip() if title_m else Path(rel).stem.replace("-", " ").title()
+
+    # Primary: the Summary admonition (indented lines right after the marker).
+    blurb = ""
+    adm = re.search(r'^!!!\s+\w+\s+"Summary"\s*$', raw, re.M)
+    if adm:
+        body_lines = []
+        for line in raw[adm.end():].splitlines()[1:]:
+            if line.strip() == "":
+                if body_lines:
+                    break
+                continue
+            if line.startswith("    ") or line.startswith("\t"):
+                body_lines.append(line.strip())
+            else:
+                break
+        blurb = " ".join(body_lines)
+
+    # Fallback: first prose paragraph after the H1 (skip blanks/markers/tables).
+    if not blurb:
+        start = title_m.end() if title_m else 0
+        para: list[str] = []
+        for line in raw[start:].splitlines():
+            s = line.strip()
+            if not s:
+                if para:
+                    break
+                continue
+            if s.startswith(("#", "---", "<!--", "|", "!!!", "```", "![", "<div")):
+                if para:
+                    break
+                continue
+            para.append(s)
+        blurb = " ".join(para)
+
+    return title, _clean_blurb(blurb)
+
+
+def _render_endgame_catalog(docs_dir: Path) -> list[str]:
+    """Render the grouped endgame link-lists; warn on any endgame/*.md page not
+    represented so a newly-added system can't silently miss the guide."""
+    listed = {
+        rel for _title, _intro, rows in _ENDGAME_GROUPS for rel, _how in rows
+    }
+    for page in sorted((docs_dir / "endgame").glob("*.md")):
+        rel = f"endgame/{page.name}"
+        if rel not in listed and rel not in _ENDGAME_COVERED_ELSEWHERE:
+            print(f"{_TAG} WARN: {rel} is not in any endgame group or the "
+                  f"covered-elsewhere set — it will be missing from the guide.")
+
+    L: list[str] = []
+    A = L.append
+    A("## Endgame Content — What to Chase at the Top")
+    A("")
+    A(
+        "The spine above (Hunting League → Reforge → Augments → Prestige) is the "
+        "backbone, but the top of the server is a whole constellation of custom "
+        "systems. Everything below is live content — dive into whichever fits your "
+        "mood. Each links to its own page with the full detail."
+    )
+    A("")
+    for group_title, intro, rows in _ENDGAME_GROUPS:
+        A(f"### {group_title}")
+        A("")
+        A(intro)
+        A("")
+        for rel, how in rows:
+            got = _extract_page_summary(docs_dir, rel)
+            if got is None:
+                continue  # page not present this run — skip rather than dead-link
+            title, blurb = got
+            link = f"../{rel}"
+            tail = f" _({how})_" if how else ""
+            A(f"- **[{title}]({link})** — {blurb}{tail}")
+        A("")
+    A("---")
+    A("")
+    return L
+
+
 def _rank_word(tier: dict) -> str:
     """'Rank V - Legend' -> 'Legend' (the bare title used in prose)."""
     name = tier["name"]
@@ -206,7 +400,7 @@ def _rank_word(tier: dict) -> str:
 # ---------------------------------------------------------------- render
 
 
-def _render(d: dict) -> str:
+def _render(d: dict, docs_dir: Path) -> str:
     hl        = d["hl"]                      # list of tier dicts (progression_order shape)
     currency  = d["currency"]                # 'Hunt Marks'
     hub       = d["hub_zone"]                # 'Escha ZiTah'
@@ -296,7 +490,10 @@ def _render(d: dict) -> str:
     A("")
     A(
         "Every system on this server feeds marks into that path. The Hunting League "
-        "is the spine; everything else branches off it."
+        "is the spine; everything else branches off it. Once you're geared and "
+        "into Prestige, the **[Endgame Content](#endgame-content--what-to-chase-at-the-top)** "
+        "section below is the full catalog of what to chase — apex weapons, "
+        "infinite leaderboard climbs, raid bosses, and world-NM systems."
     )
     A("")
     A("---")
@@ -538,6 +735,9 @@ def _render(d: dict) -> str:
     A("---")
     A("")
 
+    # ---- Endgame constellation (auto-extracted from each system's page) ----
+    L += _render_endgame_catalog(docs_dir)
+
     # ---- Supporting systems (constant frame) --------------------------
     A("## Supporting Systems (Any Stage)")
     A("")
@@ -720,7 +920,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         print(f"{_TAG} skip: {e}")
         return
 
-    content = _render(data)
+    content = _render(data, docs_dir)
     page = docs_dir / "getting-started" / "progression-guide.md"
     page.parent.mkdir(parents=True, exist_ok=True)
     page.write_text(content, encoding="utf-8")
