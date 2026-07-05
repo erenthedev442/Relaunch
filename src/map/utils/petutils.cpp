@@ -630,6 +630,24 @@ void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats,
             // level-150 custom NMs. Skill is capped at lv99 but our NMs are lv150 with
             // large EVA/DEF mods — without this boost automatons miss constantly and do
             // near-zero damage even with optimal attachments.
+            //
+            // IDEMPOTENT RE-ENTRY GUARD (ported from Legendary): this block re-runs
+            // against the LIVING pet on every mid-life recalc — stock LSB calls
+            // puppetutils::LoadAutomaton on EVERY master level-up (charutils
+            // AddExperiencePoints), plus head/frame changes (0x102) and
+            // level-restriction recalcs. addModifier stacking wrapped the int16 HP mod
+            // negative after 1-2 level-ups and the automaton dropped dead the moment
+            // its master leveled. Strip the previous application (tracked in entity
+            // local vars, which live and die with the same entity the mods live on)
+            // before re-adding.
+            if (PPet->GetLocalVar("fjb_auto_boost") == 1)
+            {
+                PPet->delModifier(Mod::ATT, 400);
+                PPet->delModifier(Mod::ACC, 300);
+                PPet->delModifier(Mod::DEF, 400);
+                PPet->delModifier(Mod::REGEN, 100);
+                PPet->delModifier(Mod::HP, (int16)PPet->GetLocalVar("fjb_auto_hp"));
+            }
             PPet->addModifier(Mod::ATT, 400);
             PPet->addModifier(Mod::ACC, 300);
 
@@ -638,10 +656,13 @@ void LoadAutomatonStats(CCharEntity* PMaster, CPetEntity* PPet, Pet_t* petStats,
             // (partly scaled to the master's own max HP so the pet grows with your gear;
             // clamped to the int16 modifier ceiling), extra DEF on top of the frame's, and
             // light regen for between-Repair sustain. Spawn at full HP.
-            PPet->addModifier(Mod::HP, (int16)std::min(28000, 10000 + (int32)(PMaster->GetMaxHP() / 2)));
+            const int16 fjbAutoHp = (int16)std::min(28000, 10000 + (int32)(PMaster->GetMaxHP() / 2));
+            PPet->addModifier(Mod::HP, fjbAutoHp);
             PPet->addModifier(Mod::DEF, 400);
             PPet->addModifier(Mod::REGEN, 100);
-            PPet->health.hp = PPet->GetMaxHP(); // spawn at full boosted HP
+            PPet->SetLocalVar("fjb_auto_boost", 1);
+            PPet->SetLocalVar("fjb_auto_hp", (uint32)fjbAutoHp);
+            PPet->health.hp = PPet->GetMaxHP(); // full HP on (re)apply — mirrors the master's own level-up heal
         }
     }
 }
