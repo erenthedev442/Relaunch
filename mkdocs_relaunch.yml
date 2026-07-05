@@ -89,16 +89,15 @@ nav:
     - Connect to Server: getting-started/connect.md
     - First Steps: getting-started/first-steps.md
     - Your First Session: getting-started/your-session.md
-    - Systems Map: getting-started/systems-map.md
-    - Content Unlock Tree: getting-started/unlock-tree.md
-    - Progression Guide: getting-started/progression-guide.md
     - Troubleshooting: getting-started/troubleshoot.md
-  - Rules: rules.md
-  - Changelog: changelog.md
   - Retail Differences:
     - changes/index.md
     - Background Systems: changes/background-systems.md
   - Progression:
+    - Guides:
+      - Systems Map: getting-started/systems-map.md
+      - Content Unlock Tree: getting-started/unlock-tree.md
+      - Progression Guide: getting-started/progression-guide.md
     - Gear:
       - Gear Guide: progression/gear-guide.md
       - Gear Vendors: progression/gear-vendors.md
@@ -202,4 +201,6 @@ nav:
       - Geomancy: reference/spells/geomancy.md
       - Trust: reference/spells/trust.md
     - Gear vs Retail: reference/gear-vs-retail.md
+    - Rules: rules.md
+    - Changelog: changelog.md
   - Admin: admin/review.html
