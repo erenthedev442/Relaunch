@@ -369,6 +369,63 @@ const CATS = {
   },
 };
 
+// ── PER-STAGE ITEM IDS ────────────────────────────────────────────────────────
+// Static lookup for all 6 categories.  Prime/Aeonic keyed by weapon TYPE (one per
+// type); the other four keyed by weapon NAME (multiple weapons share a type).
+// Prime/Aeonic prefer real.ids injected by the Python generator; this block is
+// the static fallback and the sole source for the CATS-only four categories.
+const STAGE_IDS = {
+  prime: {
+    'Hand-to-Hand':[21516,21515,21535],'Dagger':[21562,21585,21590],'Sword':[21618,20673,21646],
+    'Great Sword':[21671,21662,21653],'Axe':[21719,21706,21730],'Great Axe':[21776,21765,21785],
+    'Scythe':[21827,21815,21837],'Polearm':[21880,21881,21891],'Katana':[21919,21915,21932],
+    'Great Katana':[21972,21963,21986],'Club':[22028,22030,22002],'Staff':[22083,22085,22106],
+    'Archery':[22109,22126,22163],'Marksmanship':[21276,22134,22164],
+  },
+  aeonic: {
+    'Hand-to-Hand':[29701,21516,21515,20515],'Dagger':[29702,21562,21585,20594],
+    'Sword':[29703,21618,20673,20695],'Great Sword':[29704,21671,21662,21694],
+    'Axe':[29705,21719,21706,21753],'Great Axe':[29706,21776,21765,20843],
+    'Scythe':[29707,21827,21815,20890],'Polearm':[29708,21880,21881,20935],
+    'Katana':[29709,21919,21915,20977],'Great Katana':[29710,21972,21963,21025],
+    'Club':[29711,22028,22030,21082],'Staff':[29712,22083,22085,21147],
+    'Archery':[29713,22109,22126,22117],'Marksmanship':[29714,21276,22134,21485],
+  },
+  relic: {
+    'Spharai':[19746,20480,20481,20509],'Mandau':[19747,20555,20556,20583],
+    'Excalibur':[19748,20645,20646,20685],'Ragnarok':[19749,20745,20746,21683],
+    'Guttler':[19750,20790,20791,21750],'Bravura':[19751,20835,20836,21756],
+    'Apocalypse':[19752,20880,20881,21808],'Gungnir':[19753,20925,20926,21857],
+    'Kikoku':[19754,20970,20971,21906],'Amanomurakumo':[19755,21015,21016,21954],
+    'Mjollnir':[19756,21060,21061,21077],'Claustrum':[19757,21135,21136,22060],
+    'Yoichinoyumi':[19759,21210,21211,22129],'Annihilator':[19758,21260,21261,22140],
+  },
+  empyrean: {
+    'Verethragna':[19805,20486,20487,20512],'Twashtar':[19806,20563,20564,20587],
+    'Almace':[19807,20653,20654,20689],'Caladbolg':[19808,20747,20748,21684],
+    'Farsha':[19809,20794,20795,21752],'Ukonvasara':[19810,20839,20840,21758],
+    'Redemption':[19811,20884,20885,21810],'Rhongomiant':[19812,20929,20930,21859],
+    'Kannagi':[19813,20974,20975,21908],'Masamune':[19814,21019,21020,21956],
+    'Gambanteinn':[19815,21064,21065,21079],'Hvergelmir':[19816,21143,21144,22064],
+    'Gandiva':[19817,21212,21213,22130],'Armageddon':[19818,21264,21265,22142],
+  },
+  mythic: {
+    'Glanzfaust':[19820,20482,20483,20510],'Kenkonken':[19836,20484,20485,20511],
+    'Vajra':[19824,20559,20560,20585],'Carnwenhan':[19828,20561,20562,20586],
+    'Terpsichore':[19837,20557,20558,20584],'Murgleis':[19823,20647,20648,20686],
+    'Burtgang':[19825,20649,20650,20687],'Tizona':[19834,20651,20652,20688],
+    'Conqueror':[19819,20837,20838,21757],'Aymur':[19827,20792,20793,21751],
+    'Liberator':[19826,20882,20883,21809],'Ryunohige':[19832,20927,20928,21858],
+    'Nagi':[19831,20972,20973,21907],'Kogarasumaru':[19830,21017,21018,21955],
+    'Yagrush':[19821,21062,21063,21078],'Nirvana':[19833,21141,21142,22063],
+    'Laevateinn':[19822,21139,21140,22062],'Tupsimati':[19838,21137,21138,22061],
+    'Gastraphetes':[19829,21246,21247,22139],'Death Penalty':[19835,21262,21263,22141],
+  },
+  ergon: {
+    'Epeolatry':[20753,null,null,21685],'Idris':[21070,null,null,21080],
+  },
+};
+
 // ── REAL CATALOG DATA ─────────────────────────────────────────────────────────
 // Injected by tools/docgen/generators/weapon_forge.py from weapon_forge_catalog.lua.
 // Keyed REAL[category][weaponType] = { names:[...], labels:[...], forge:[{to,mats,gate}] }.
@@ -448,11 +505,12 @@ function resolveMatName(name, weaponType) {
 // (prime, aeonic), otherwise the generic retail-tier model.
 function getChainModel(w) {
   const real = REAL[activeCat] && REAL[activeCat][w.type];
+  const sids = STAGE_IDS[activeCat] && (STAGE_IDS[activeCat][w.type] || STAGE_IDS[activeCat][w.name]);
   if (real) {
     return {
       names:  real.names.slice(),
       labels: real.labels.slice(),
-      ids:    real.ids ? real.ids.slice() : real.names.map((_, i) => i === real.names.length - 1 ? (real.id || null) : null),
+      ids:    real.ids ? real.ids.slice() : (sids || real.names.map((_, i) => i === real.names.length - 1 ? (real.id || null) : null)),
       forge:  real.forge.map(s => ({ to: s.to, mats: s.mats.map(m => m.slice()), gate: s.gate })),
       sub:    w.type + ' · ' + w.jobs,
     };
@@ -461,7 +519,7 @@ function getChainModel(w) {
   return {
     names:  [ w.name, w.name + ' · 119', w.name + ' · 119 II', w.name + ' · 119 III' ],
     labels: [ 'Base · Earned', 'Stage I', 'Stage II', cat.s3lbl ],
-    ids:    [ null, null, null, w.id || null ],
+    ids:    sids || [ null, null, null, w.id || null ],
     forge:  cat.forge.map(s => ({
       to:   null,
       mats: s.mats.map(([q,n]) => [q, resolveMatName(n, w.type)]),
