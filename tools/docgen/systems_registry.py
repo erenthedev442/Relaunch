@@ -155,7 +155,6 @@ HEADLINE = [
 IGNORE_PAGES = {
     "progression/gear-vendors.md",
     "progression/gear-guide.md",
-    "progression/bis-guide.md",
     "progression/gear-finder.md",
     "progression/item-database.md",
     "progression/item-finder.md",
