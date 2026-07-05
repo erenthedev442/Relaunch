@@ -1,9 +1,9 @@
 """Generate docs/changelog.md — player-facing patch notes, grouped by week.
 
-Reads ``git log`` from the server repo (D:\\server, or ``LEGENDARY_LIVE_ROOT``)
-and turns it into a readable changelog:
+Reads ``git log`` from the relaunch repo (D:\\server_relaunch, or
+``LEGENDARY_LIVE_ROOT``) and turns it into a readable changelog:
 
-  * "Deploy Everything" / "Live update" commits are treated as **deploy
+  * "Relaunch Deploy" / "Deploy Everything" commits are treated as **deploy
     markers** — each one shipped everything committed since the previous
     marker, so they delimit one live UPDATE.
   * Only **player-facing** changes are kept (internal tooling — deploy,
@@ -13,18 +13,16 @@ and turns it into a readable changelog:
   * Updates are bucketed by the deploy DAY and grouped by WEEK, newest first,
     in collapsible MkDocs admonitions (latest week open).
 
-On the Azure box ``LEGENDARY_LIVE_ROOT`` points at ``~/server``, which is NOT a
-git checkout, so ``git log`` fails and this generator SKIPS — leaving the
+On the Azure box ``LEGENDARY_LIVE_ROOT`` points at ``~/relaunch``, which is NOT
+a git checkout, so ``git log`` fails and this generator SKIPS — leaving the
 committed changelog.md in place. The changelog is therefore generated on the
-laptop (which has the history) and published as-is by the box. See
-[[reference_deploy_watermark]] / [[reference_docs_site]].
+laptop (which has the history) and published as-is by the box.
 
-TIMING: this generator drops commits NEWER than the latest "Deploy Everything"
+TIMING: this generator drops commits NEWER than the latest "Relaunch Deploy"
 marker (the not-live-yet guard in ``_build_updates``). So it MUST be run AFTER
 the current deploy's marker commit exists, or that deploy's own changes lag by
-one deploy. ``deploy-everything.bat`` step [2b] (``tools/regen_changelog.py``)
-re-runs it post-marker for exactly this reason; running it in [1/5] alone is a
-bug.
+one deploy. ``relaunch-rebuild.bat`` runs ``tools/regen_changelog.py``
+post-marker for exactly this reason.
 """
 from __future__ import annotations
 
@@ -43,12 +41,12 @@ from pathlib import Path
 _LOOKBACK_DAYS = 30
 
 
-_DEFAULT_SERVER_ROOT = r"D:\server"
+_DEFAULT_SERVER_ROOT = r"D:\server_relaunch"
 
 # A commit whose subject starts with one of these is a DEPLOY MARKER — it
 # delimits a live update (everything older, back to the previous marker, went
 # live with it). Never shown as a note itself.
-_MARKER_PREFIXES = ("Deploy Everything", "Live update")
+_MARKER_PREFIXES = ("Relaunch Deploy", "Deploy Everything", "Live update")
 
 # Subjects starting with these are never player-facing.
 _DROP_PREFIXES = ("Merge", "Auto-", "Revert", "wip", "WIP", "fixup", "squash")
@@ -61,10 +59,19 @@ _INTERNAL_SCOPES = {
     "deploy", "docgen", "docs", "tools", "tool", "ci", "build", "chore",
     "test", "tests", "infra", "site", "repo", "git", "meta", "release",
     "game-master", "gm", "perf",
+    "discord", "discord-bot", "bot", "dev_sync", "dev-sync", "github",
+    "changelog", "patch-notes", "patchnotes", "webhook",
+    "crash-capture", "crash_capture",
 }
 
 # Subjects CONTAINING any of these are dropped (retired-feature churn etc.).
-_DROP_SUBSTRINGS = ("!shop attachments",)
+_DROP_SUBSTRINGS = (
+    "!shop attachments",
+    "pre-sync",
+    "typo",
+    "hub note",
+    "github", "dev_sync",
+)
 
 # conventional-commit scope -> friendly category label shown to players.
 _SCOPE_LABELS = {
@@ -90,6 +97,17 @@ _SCOPE_LABELS = {
     "prime": "Prime Weapons", "dungeon": "Dungeons", "dungeons": "Dungeons",
     "always-popped-nms": "World NMs", "capacity": "Capacity Points",
     "subjob": "Subjobs", "merit": "Merits", "jobpoint": "Job Points",
+    "jobpoints": "Job Points",
+    "voidwatch": "Voidwatch", "dynamis": "Dynamis Divergence",
+    "divergence": "Dynamis Divergence",
+    "htbf": "High-Tier Battlefields", "nyzul": "Nyzul Isle",
+    "unity": "Unity", "fellow": "Adventuring Fellow",
+    "apex": "Apex Trials", "invasion": "Invasion",
+    "modules": "Systems", "drop_finder": "Item Database",
+    "drop-finder": "Item Database",
+    "gear-finder": "Gear Finder", "gear_finder": "Gear Finder",
+    "rebirth": "Rebirth", "mastery": "Mastery",
+    "affinity": "Affinity NMs", "catalyst": "Catalysts",
 }
 
 _CC_RE = re.compile(r"^(?P<type>[a-zA-Z]+)(?:\((?P<scope>[^)]+)\))?:\s*(?P<msg>.+)$")
@@ -291,7 +309,7 @@ def _render(weeks: list[dict]) -> str:
     lines = [
         "# Server Changelog",
         "",
-        "Recent updates to Legendary, newest first — generated from our live deploy history.",
+        "Recent updates to Relaunch, newest first — generated from our live deploy history.",
         "",
         "---",
         "",

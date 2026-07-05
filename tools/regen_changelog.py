@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
 """Regenerate docs/changelog.md from the current git history.
 
-Run this AFTER the "Deploy Everything" marker commit exists (see
-deploy-everything.bat step [2b]). The changelog generator drops commits that
-are NEWER than the latest deploy marker ("not live yet"), so regenerating the
-page BEFORE the current deploy's marker is committed makes every deploy's own
+Run this AFTER the "Relaunch Deploy" marker commit exists (see
+relaunch-rebuild.bat). The changelog generator drops commits that are NEWER
+than the latest deploy marker ("not live yet"), so regenerating the page
+BEFORE the current deploy's marker is committed makes every deploy's own
 changes lag by one deploy. Running it here -- once the marker is in history --
 puts this update on the page immediately.
-
-Only the changelog generator runs (no DB needed), so this is fast and safe to
-call from the deploy script. See [[reference_docs_site]] / changelog.py.
 """
 from __future__ import annotations
 

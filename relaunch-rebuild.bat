@@ -67,6 +67,41 @@ type "%OUT%"
 type "%OUT%" >> "%LOG%"
 (echo [%TIME%] [push] origin synced OK)>> "%LOG%"
 
+REM ---- [marker] Create deploy marker + regenerate changelog ----
+REM  An empty "Relaunch Deploy" commit marks what shipped. regen_changelog.py
+REM  reads git history after this marker exists, so the changelog includes THIS
+REM  deploy's changes immediately. The updated changelog is committed + pushed
+REM  so the box's docs cron picks it up and the site stays in sync.
+echo(
+echo  [marker] Creating deploy marker commit...
+(echo [%TIME%] [marker] deploy marker: start)>> "%LOG%"
+git -C "%SRC%" commit --allow-empty -m "Relaunch Deploy %DATE% %TIME%" > "%OUT%" 2>&1
+type "%OUT%"
+type "%OUT%" >> "%LOG%"
+if errorlevel 1 ( echo   WARNING: marker commit failed - changelog may lag by one deploy. )
+(echo [%TIME%] [marker] marker created)>> "%LOG%"
+
+echo  [marker] Regenerating changelog...
+python "%SRC%\tools\regen_changelog.py" > "%OUT%" 2>&1
+type "%OUT%"
+type "%OUT%" >> "%LOG%"
+
+REM  Stage + commit the updated changelog (if regen produced changes).
+git -C "%SRC%" add docs/changelog.md > nul 2>&1
+git -C "%SRC%" diff --cached --quiet docs/changelog.md > nul 2>&1
+if errorlevel 1 (
+  git -C "%SRC%" commit -m "docs(changelog): regenerate for deploy %DATE%" > "%OUT%" 2>&1
+  type "%OUT%"
+  type "%OUT%" >> "%LOG%"
+  git -C "%SRC%" push origin relaunch > "%OUT%" 2>&1
+  type "%OUT%"
+  type "%OUT%" >> "%LOG%"
+  echo   changelog updated + pushed.
+) else (
+  echo   changelog unchanged.
+)
+(echo [%TIME%] [marker] changelog done)>> "%LOG%"
+
 REM ---- [1] Archive FULL relaunch branch + ship + extract ----
 REM  Ships the entire repo snapshot (src, cmake, modules, scripts, tools, etc.)
 REM  to ~/relaunch/.  This gives relaunch its own complete source tree so the
