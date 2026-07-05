@@ -89,5 +89,5 @@ The goal is a fun server, not a perfectly policed one. Use good judgment, treat 
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
 <!-- content-hash: 8c013dc77b26 -->
-_Last updated: 2026-06-29 04:19 UTC_
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

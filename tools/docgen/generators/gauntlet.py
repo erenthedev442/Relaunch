@@ -1,14 +1,19 @@
 """Sync docs/endgame/the-gauntlet.md with gauntlet_catalog.lua.
 
-The Gauntlet is a 10-level solo challenge where HP doubles each level.
-Parses the catalog so re-tuning HP, rewards, or NM names auto-updates the page.
+The Gauntlet is a 10-level mandatory solo challenge (no safe path) in
+Riverne Site A01. HP grows by a fixed factor (HP_GROWTH) each level;
+all NMs are a fixed mob level (NM_LEVEL). Per-level rewards and milestone
+bonuses are also catalog-driven.
 
 Markers written:
-  gauntlet-levels   — 10-level NM roster with mob level + HP
-  gauntlet-rewards  — clear-10 reward table
+  gauntlet-levels         — NM roster (name, fixed mob level, HP)
+  gauntlet-rewards        — final clear (level-10) jackpot table
+  gauntlet-level-rewards  — per-level reward table (levels 1-9 NM kill)
+  gauntlet-milestones     — milestone bonus table (levels 3, 6, 9)
 """
 from __future__ import annotations
 
+import math
 import re
 from pathlib import Path
 
@@ -26,16 +31,36 @@ def _int(pattern: str, text: str, default: int) -> int:
     return int(float(_first(pattern, text, str(default))))
 
 
+def _float(pattern: str, text: str, default: float) -> float:
+    return float(_first(pattern, text, str(default)))
+
+
+def _fmt_hp(hp: int) -> str:
+    """Human-readable HP (e.g. 50,000,000 -> '50.0M')."""
+    if hp >= 1_000_000:
+        return f"{hp / 1_000_000:.1f}M"
+    if hp >= 1_000:
+        return f"{hp / 1_000:.0f}k"
+    return str(hp)
+
+
+def _fmt_gil(gil: int) -> str:
+    if gil >= 1_000_000:
+        v = gil / 1_000_000
+        if v == int(v):
+            return f"{int(v)}M"
+        return f"{v:.1f}M"
+    if gil >= 1_000:
+        return f"{gil // 1_000}k"
+    return str(gil)
+
+
 def _parse(text: str) -> dict:
     c: dict = {}
 
-    c["base_hp"] = _int(r"NM_BASE_HP\s*=\s*(\d+)", text, 20000)
-
-    # Level formula: return BASE + level * MULT
-    lv_base = _int(r"return\s+(\d+)\s*\+\s*level\s*\*\s*\d+", text, 72)
-    lv_mult = _int(r"return\s+\d+\s*\+\s*level\s*\*\s*(\d+)", text, 8)
-    c["lv_base"] = lv_base
-    c["lv_mult"] = lv_mult
+    c["base_hp"]   = _int(r"NM_BASE_HP\s*=\s*(\d+)", text, 50_000_000)
+    c["hp_growth"] = _float(r"HP_GROWTH\s*=\s*([\d.]+)", text, 1.166)
+    c["nm_level"]  = _int(r"NM_LEVEL\s*=\s*(\d+)", text, 99)
 
     # NM pool: [level] = { ..., name = 'Name' }
     nms: dict[int, str] = {}
@@ -43,21 +68,61 @@ def _parse(text: str) -> dict:
         nms[int(m.group(1))] = m.group(2)
     c["nms"] = nms
 
-    # Final reward
+    # Final (level-10) jackpot reward
     rw_blk = re.search(r"FINAL_REWARD\s*=\s*\{([^}]*)\}", text)
     blk = rw_blk.group(1) if rw_blk else ""
-    c["gil"]    = _int(r"gil\s*=\s*(\d+)", blk, 5000000)
-    c["pp"]     = _int(r"\bpp\s*=\s*(\d+)", blk, 500)
-    c["infamy"] = _int(r"infamy\s*=\s*(\d+)", blk, 500)
+    c["final_gil"]    = _int(r"gil\s*=\s*(\d+)", blk, 5_000_000)
+    c["final_pp"]     = _int(r"\bpp\s*=\s*(\d+)", blk, 500)
+    c["final_infamy"] = _int(r"infamy\s*=\s*(\d+)", blk, 500)
+
+    # LEVEL_REWARD(level): extract the per-unit multipliers
+    lr_blk = re.search(
+        r"function\s+C\.LEVEL_REWARD\s*\(level\)\s*\n\s*return\s*\{([^}]*)\}",
+        text, re.DOTALL,
+    )
+    lr_text = lr_blk.group(1) if lr_blk else ""
+    c["lr_gil"]    = _int(r"gil\s*=\s*level\s*\*\s*(\d+)",    lr_text, 50_000)
+    c["lr_infamy"] = _int(r"infamy\s*=\s*level\s*\*\s*(\d+)", lr_text, 10)
+    c["lr_pp"]     = _int(r"\bpp\s*=\s*level\s*\*\s*(\d+)",   lr_text, 1)
+
+    # MILESTONE_REWARDS: extract the outer brace block, then parse inner entries.
+    # A simple regex scan of everything-after-MILESTONE_REWARDS would also match
+    # the holdFireCfg messages table (which has [1]..[10] entries), so we must
+    # brace-balance to get only the MILESTONE_REWARDS block.
+    milestones: dict[int, dict] = {}
+    ms_hdr = re.search(r"C\.MILESTONE_REWARDS\s*=\s*\{", text)
+    if ms_hdr:
+        i, depth, start = ms_hdr.end() - 1, 0, ms_hdr.end() - 1
+        while i < len(text):
+            ch = text[i]
+            if ch == "{":
+                depth += 1
+            elif ch == "}":
+                depth -= 1
+                if depth == 0:
+                    ms_block = text[start + 1 : i]
+                    for blk_m in re.finditer(r"\[(\d+)\]\s*=\s*\{([^}]*)\}", ms_block):
+                        lv = int(blk_m.group(1))
+                        inner = blk_m.group(2)
+                        milestones[lv] = {
+                            "gil":    _int(r"gil\s*=\s*(\d+)", inner, 0),
+                            "pp":     _int(r"\bpp\s*=\s*(\d+)", inner, 0),
+                            "infamy": _int(r"infamy\s*=\s*(\d+)", inner, 0),
+                        }
+                    break
+            i += 1
+    c["milestones"] = milestones
 
     return c
 
 
+def _nm_hp(c: dict, level: int) -> int:
+    return math.floor(c["base_hp"] * (c["hp_growth"] ** (level - 1)))
+
+
 def _render_levels(c: dict) -> str:
-    base_hp  = c["base_hp"]
-    lv_base  = c["lv_base"]
-    lv_mult  = c["lv_mult"]
     nms      = c["nms"]
+    nm_level = c["nm_level"]
     n_levels = max(nms.keys()) if nms else 10
 
     lines = [
@@ -65,32 +130,90 @@ def _render_levels(c: dict) -> str:
         "|---:|---|---:|---:|",
     ]
     for lv in range(1, n_levels + 1):
-        name    = nms.get(lv, f"Level {lv} NM")
-        mob_lv  = lv_base + lv * lv_mult
-        hp      = base_hp * (2 ** (lv - 1))
-        suffix  = " *(mandatory)*" if lv == n_levels else ""
-        lines.append(f"| {lv} | **{name}**{suffix} | {mob_lv} | {commafy(hp)} |")
+        name   = nms.get(lv, f"Level {lv} NM")
+        hp     = _nm_hp(c, lv)
+        label  = " *(final)*" if lv == n_levels else ""
+        lines.append(f"| {lv} | **{name}**{label} | {nm_level} | {_fmt_hp(hp)} |")
 
-    mid_lv  = n_levels // 2 + 1
-    mid_hp  = base_hp * (2 ** (mid_lv - 1))
-    fold    = 2 ** (mid_lv - 1)
+    growth_pct = (c["hp_growth"] - 1) * 100
     lines.append("")
-    lines.append(f"HP **doubles** every level — a level {mid_lv} {nms.get(mid_lv, 'NM')} "
-                 f"has {fold:,}× the HP of the level 1 {nms.get(1, 'NM')}.")
+    lines.append(
+        f"HP grows **{growth_pct:.1f}%** each level. "
+        f"Every NM is **Lv{nm_level}**; difficulty scales through stats and hardcore mechanics."
+    )
     return "\n".join(lines)
 
 
 def _render_rewards(c: dict) -> str:
-    gil_str = commafy(c["gil"])
-    gil_m   = c["gil"] // 1_000_000
+    gil_str = f"{commafy(c['final_gil'])} ({_fmt_gil(c['final_gil'])})"
     lines = [
         "| Reward | Amount |",
         "|---|---:|",
-        f"| **Gil** | {gil_str} ({gil_m}M) |",
-        f"| **Paragon Points** | {c['pp']:,} |",
-        f"| **Infamy** | {c['infamy']:,} |",
+        f"| **Gil** | {gil_str} |",
+        f"| **Paragon Points** | {c['final_pp']:,} |",
+        f"| **Infamy** | {c['final_infamy']:,} |",
         "| **Hall of Champions NPC** | Permanent |",
     ]
+    return "\n".join(lines)
+
+
+def _render_level_rewards(c: dict) -> str:
+    nms      = c["nms"]
+    n_levels = max(nms.keys()) if nms else 10
+    n_fights = n_levels - 1  # levels 1-9 (level 10 pays final reward)
+    milestones = c["milestones"]
+
+    lines = [
+        "| Level | NM | Gil | PP | Infamy | Milestone bonus |",
+        "|---:|---|---:|---:|---:|---|",
+    ]
+    for lv in range(1, n_fights + 1):
+        name = nms.get(lv, f"Level {lv}")
+        gil    = lv * c["lr_gil"]
+        pp     = lv * c["lr_pp"]
+        infamy = lv * c["lr_infamy"]
+        ms = milestones.get(lv)
+        if ms:
+            ms_str = (
+                f"+{_fmt_gil(ms['gil'])} gil, "
+                f"+{ms['pp']} PP, "
+                f"+{ms['infamy']} Infamy"
+            )
+        else:
+            ms_str = "—"
+        lines.append(
+            f"| {lv} | {name} | {_fmt_gil(gil)} | {pp} | {infamy} | {ms_str} |"
+        )
+
+    lines.append("")
+    lines.append(
+        "Each NM kill in levels 1–9 grants a per-level reward. "
+        "Milestone bonuses stack on top at levels 3, 6, and 9."
+    )
+    return "\n".join(lines)
+
+
+def _render_milestones(c: dict) -> str:
+    milestones = c["milestones"]
+    nms = c["nms"]
+    if not milestones:
+        return "_No milestone data found._\n"
+
+    lines = [
+        "| Milestone | NM | Bonus gil | Bonus PP | Bonus Infamy |",
+        "|---:|---|---:|---:|---:|",
+    ]
+    for lv in sorted(milestones.keys()):
+        ms   = milestones[lv]
+        name = nms.get(lv, f"Level {lv}")
+        lines.append(
+            f"| Level {lv} | {name} | {_fmt_gil(ms['gil'])} | {ms['pp']} | {ms['infamy']} |"
+        )
+    lines.append("")
+    lines.append(
+        "Milestone bonuses are paid immediately after the per-level reward "
+        "when you defeat the milestone NM."
+    )
     return "\n".join(lines)
 
 
@@ -109,9 +232,17 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         return
 
     blocks = [
-        ("gauntlet-levels",  _render_levels(c)),
-        ("gauntlet-rewards", _render_rewards(c)),
+        ("gauntlet-levels",        _render_levels(c)),
+        ("gauntlet-rewards",       _render_rewards(c)),
+        ("gauntlet-level-rewards", _render_level_rewards(c)),
+        ("gauntlet-milestones",    _render_milestones(c)),
     ]
-    written = sum(1 for marker, content in blocks if write_between_markers(page, marker, content))
-    print(f"[gauntlet] {written}/{len(blocks)} marker block(s) written "
-          f"(nms={len(c['nms'])}, base_hp={c['base_hp']:,})")
+    written = sum(
+        1 for marker, content in blocks
+        if write_between_markers(page, marker, content)
+    )
+    print(
+        f"[gauntlet] {written}/{len(blocks)} marker block(s) written "
+        f"(nms={len(c['nms'])}, base_hp={c['base_hp']:,}, "
+        f"hp_growth={c['hp_growth']}, nm_level={c['nm_level']})"
+    )

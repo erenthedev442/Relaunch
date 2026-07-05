@@ -20,7 +20,7 @@ Each trait costs a flat **10,000,000 gil** — a one-time, per-character purchas
 ## Available traits
 
 <!-- DOCGEN:BEGIN id="cross-job-traits-catalog" -->
-_**6 traits** available — each one passive, permanent, and active on every job._
+_**4 traits** available — each one passive, permanent, and active on every job._
 
 | Trait | What it does |
 |---|---|
@@ -28,13 +28,11 @@ _**6 traits** available — each one passive, permanent, and active on every job
 | **Counter** | Chance to counter melee attacks (+5%). |
 | **Fast Cast** | Reduce spell casting time (+15%). |
 | **Attack Bonus** | Boost melee attack (+10%). |
-| **Accuracy Bonus** | Boost accuracy and ranged accuracy (+20). |
-| **Max HP Boost** | Increase maximum HP (+150). |
 <!-- DOCGEN:END id="cross-job-traits-catalog" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d0f332d7a2c0 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: a1da1ebd3faa -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

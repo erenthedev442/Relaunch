@@ -59,6 +59,6 @@ Streaks are a low-effort way to accumulate marks between active play sessions. E
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c08d49e1c26f -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: a054eb9de17c -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

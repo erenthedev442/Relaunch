@@ -7,7 +7,7 @@ The Celennia Memorial Library is the relaunch's **starting hub** — convenience
 | NPC | What it does |
 |---|---|
 | **Homepoint** | Set your home point and teleport between unlocked ones. |
-| **Warpman** | Paid warps to the city hubs (San d'Oria, Bastok, Windurst, Jeuno, and more). |
+| **Warpman** | Paid gil warps to the cities, expansion areas, remote zones, and endgame spots. |
 | **Race Changer** | Change your character's race for gil. |
 
 ## Currencies & exchanges
@@ -38,6 +38,6 @@ The Celennia Memorial Library is the relaunch's **starting hub** — convenience
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cc97047963ca -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 1eee29d2e3c0 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

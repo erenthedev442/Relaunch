@@ -38,7 +38,7 @@ Ascending is a three-step cycle:
 
 The cost **caps at 3,000 marks** — every ascension from the 6th onward costs the same flat 3,000.
 
-_Each ascension awards AP scaled by your Prestige Level: **10 AP** (P.Lv 1–51), **15 AP** (P.Lv 52–81), **20 AP** (P.Lv 82+)._
+_Each ascension awards AP scaled by your Prestige Level: **10 AP** (P.Lv 1–50), **15 AP** (P.Lv 51–80), **20 AP** (P.Lv 81+)._
 <!-- DOCGEN:END id="prestige-economy" -->
 
 ---
@@ -208,6 +208,6 @@ Boosts are **permanent and stacking** — they re-apply automatically every time
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 57f77cea6c89 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 88e2ad1c94f4 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

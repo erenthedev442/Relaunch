@@ -137,5 +137,9 @@ Pledge to one of the **11 Unity leaders** from the board. Your pledge is cosmeti
 **Pieuje**, **Ayame**, **Inv. Shield**, **Apururu**, **Maat**, **Aldo**, **Jakoh W.**, **Naja S.**, **Flaviria**, **Yoran-Oran**, **Sylvie**
 <!-- DOCGEN:END id="unity-leaders" -->
 
+---
+
 <!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 1f5ef15434fa -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

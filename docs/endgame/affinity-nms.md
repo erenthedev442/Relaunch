@@ -75,6 +75,6 @@ These NMs are **stat-boosted** beyond their retail versions: 6× base HP, +4,000
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: placeholder -->
-_Last updated: 2026-07-02 00:00 UTC_
+<!-- content-hash: df49d64e0039 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

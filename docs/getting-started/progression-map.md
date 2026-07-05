@@ -214,3 +214,10 @@ title: Progression Map
 </footer>
 </div>
 <!-- DOCGEN:END id="progression-map" -->
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 2735cce8c6ff -->
+_Last updated: 2026-07-05 07:37 UTC_
+<!-- DOCGEN:END id="last-updated" -->

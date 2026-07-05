@@ -31,3 +31,10 @@ Talk to the Test Dummy and pick an **Ascension Court** or an **Abyssea NM**:
 | Scars | L145 | 50,000,000 (50M) |
 | Heroes | L155 | 75,000,000 (75M) |
 <!-- DOCGEN:END id="gm-home-test-dummy" -->
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 944e72333055 -->
+_Last updated: 2026-07-05 07:37 UTC_
+<!-- DOCGEN:END id="last-updated" -->

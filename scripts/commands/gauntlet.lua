@@ -2,6 +2,8 @@
 -- !gauntlet abort        -- any player: cancel your own active run
 -- !gauntlet abort <name> -- GM (perm 1): cancel another player's run
 -- !gauntlet status       -- GM (perm 1): list all active sessions
+-- !gauntlet fix <name>   -- GM (perm 1): clear a stuck run and return player home
+-- !gauntlet set <name> <level> -- GM (perm 1): place player at a Gauntlet level
 -----------------------------------
 local cmdObj = {}
 
@@ -14,6 +16,7 @@ cmdObj.onTrigger = function(player, args)
 
     local endRun  = xi._gauntlet_endRun
     local sessions = xi._gauntlet_sessions
+    local C = require('modules/custom/lua/gauntlet_catalog')
 
     if sub == 'abort' then
         local target
@@ -60,13 +63,84 @@ cmdObj.onTrigger = function(player, args)
                 '[gauntlet] %s: level=%d phase=%s nm=%s',
                 nm, sess.level or 0, sess.phase or '?',
                 sess.nm and 'alive' or 'none'), SYS)
+            if sess.lane then
+                player:printToPlayer(string.format(
+                    '[gauntlet]   lane=%d slot=%d', sess.lane or 0, sess.laneSlot or 0), SYS)
+            end
         end
         if count == 0 then
             player:printToPlayer('[gauntlet] No active Gauntlet runs.', SYS)
         end
 
+    elseif sub == 'fix' then
+        if player:getGMLevel() < 1 then
+            player:printToPlayer('[gauntlet] GM permission required.', SYS)
+            return
+        end
+        if not sessions then
+            player:printToPlayer('[gauntlet] TheGauntlet module not loaded.', SYS)
+            return
+        end
+
+        local targetName = name and name ~= '' and name or player:getName()
+        local target = GetPlayerByName(targetName)
+        if not target then
+            player:printToPlayer(string.format('[gauntlet] Player %q not online.', targetName), SYS)
+            return
+        end
+
+        local sess = sessions[target:getName()]
+        if sess and sess.nm then
+            pcall(function() sess.nm:setHP(0) end)
+            pcall(function() sess.nm:despawn() end)
+        end
+
+        sessions[target:getName()] = nil
+        target:delStatusEffect(xi.effect.LEVEL_RESTRICTION)
+        target:setPos(C.EXIT_POS.x, C.EXIT_POS.y, C.EXIT_POS.z, C.EXIT_POS.rot, C.EXIT_POS.zoneId)
+        player:printToPlayer(string.format('[gauntlet] Cleared Gauntlet state for %s.', target:getName()), SYS)
+
+    elseif sub == 'set' then
+        if player:getGMLevel() < 1 then
+            player:printToPlayer('[gauntlet] GM permission required.', SYS)
+            return
+        end
+        if not sessions then
+            player:printToPlayer('[gauntlet] TheGauntlet module not loaded.', SYS)
+            return
+        end
+
+        local targetName, levelText = (name or ''):match('^(%S+)%s+(%d+)$')
+        local level = tonumber(levelText or '')
+        if not targetName or not level or level < 1 or level > 10 then
+            player:printToPlayer('[gauntlet] Usage: !gauntlet set <name> <level 1-10>', SYS)
+            return
+        end
+
+        local target = GetPlayerByName(targetName)
+        if not target then
+            player:printToPlayer(string.format('[gauntlet] Player %q not online.', targetName), SYS)
+            return
+        end
+
+        local old = sessions[target:getName()]
+        if old and old.nm then
+            pcall(function() old.nm:setHP(0) end)
+            pcall(function() old.nm:despawn() end)
+        end
+
+        sessions[target:getName()] = {
+            level = level,
+            phase = 'choose',
+            nm = nil,
+            clearedLevels = level - 1,
+        }
+        target:delStatusEffect(xi.effect.LEVEL_RESTRICTION)
+        target:setPos(C.WARP_IN.x, C.WARP_IN.y, C.WARP_IN.z, C.WARP_IN.rot, C.ARENA_ZONE)
+        player:printToPlayer(string.format('[gauntlet] Set %s to Gauntlet level %d.', target:getName(), level), SYS)
+
     else
-        player:printToPlayer('[gauntlet] Usage: !gauntlet abort  |  !gauntlet abort <name> (GM)  |  !gauntlet status (GM)', SYS)
+        player:printToPlayer('[gauntlet] Usage: !gauntlet abort | abort <name> | status | fix <name> | set <name> <level>', SYS)
     end
 end
 

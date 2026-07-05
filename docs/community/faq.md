@@ -1,6 +1,6 @@
-﻿# FAQ
+# FAQ
 
-Common questions about playing on the Relaunch server FFXI. If you have a question that isn't answered here, ask in our [Discord](https://discord.gg/Yd3Kn3dN36) or open an issue on the [project repo](https://github.com/richardknutzjr/FFXI-Private-Server-FJB).
+Common questions about playing on the Relaunch server. If you have a question that isn't answered here, ask in our [Discord](https://discord.gg/Yd3Kn3dN36) or open an issue on the [project repo](https://github.com/richardknutzjr/FFXI-Private-Server-FJB).
 
 ## Getting Started
 
@@ -10,11 +10,11 @@ See [Getting Started → Install the Client](../getting-started/install.md) and 
 
 ### Do I need a Square Enix account or game license?
 
-No. the Relaunch server runs against a private server built on [LandSandBoat](https://github.com/LandSandBoat/server). You only need the FFXI client itself, not an active SE subscription.
+No. The Relaunch server runs against a private server built on [LandSandBoat](https://github.com/LandSandBoat/server). You only need the FFXI client itself, not an active SE subscription.
 
 ### How do I create a character?
 
-Once connected, the standard FFXI character-creation flow runs as usual. Every new character starts at the configured starting level, full inventory, all maps + outpost warps, and the starting gil bundle listed on the [home page](../index.md).
+Once connected, the standard FFXI character-creation flow runs as usual. Your first login then triggers a one-time auto-setup that grants every weapon skill, every spell, capped combat/magic skills, every trust, all quests flagged complete, all missions flagged complete, all key items and maps, all outpost warps, every home point, all survival guides, expanded wardrobes, and all automaton attachments (the paid Void Keeper trusts stay locked), plus **500 starter Unity Accolades** for the Unity Wanted board. You begin with a **{{setting:START_GIL:comma}} gil** wallet, and first login adds a **300,000 gil** welcome gift and **25 Hunt Marks** — enough for a first Bronze-tier weapon. The level cap is {{setting:INITIAL_LEVEL_CAP}} from day one (no Limit Break quests); type `!gmhome` to visit the setup Moogles and start leveling at {{setting:map.EXP_RATE}}× EXP.
 
 ---
 
@@ -22,7 +22,7 @@ Once connected, the standard FFXI character-creation flow runs as usual. Every n
 
 ### Why does my character feel weak compared to retail at the same level?
 
-Stats are tuned for this server's faster progression curve, but combat is balanced around the level-99 cap with rebalanced gear. If you feel weak, check the [Gear Vendors](../progression/gear-vendors.md) page — the Hunt Mark currencies are the fastest path to iLvl 119 gear.
+Stats are tuned for this server's faster progression curve, but combat is balanced around the level-99 cap with rebalanced gear. If you feel weak, check the [Gear Vendors](../progression/gear-vendors.md) page — the Hunt Marks currencies are the fastest path to iLvl 119 gear.
 
 ### How do I earn Hunt Marks?
 
@@ -30,13 +30,13 @@ Kill the NMs at the [Hunting League](../progression/index.md) Spawner. Each NM g
 
 ### What's the difference between the Hunting League NPC and the Reforge System NPC?
 
-- **[Hunting League](../progression/index.md)** — entry-to-mid-tier gear sold for Hunt Marks (Bronze/Silver/Gold seals).
-- **[Reforge System](../progression/reforge.md)** — AF/Relic/Empyrean reforge upgrades. Drops base pieces + currency by killing categorized NMs (Sky Gods → AF Marks, Unity NMs → Relic Marks, Abyssea NMs → Empyrean Marks).
+- **[Hunting League](../progression/index.md)** — entry-to-mid-tier gear sold for Hunt Marks and the three League medals (Beastmens Medal (bronze) 5 / Kindreds Medal (silver) 15 / Demons Medal (gold) 40 — costs in Hunt Marks).
+- **[Reforge System](../progression/reforge.md)** — AF/Relic/Empyrean reforge upgrades. Drops base pieces + currency by killing categorized NMs (Sky Gods → AF Marks, Unity NMs → Relic Marks, Abyssea NMs → Empy Marks).
 
 ### How does the [Augment Moogle](../progression/augments.md) differ from the [Augment Sage](../progression/augment-sage.md)?
 
-- **Augment Moogle** stamps a single augment from a catalyst item onto a piece of gear. One catalyst, one augment.
-- **Augment Sage** is a Mastery rank system that *multiplies* augment values (up to 2× at rank 5) plus per-NM affinity bonuses. Mastery ranks unlock at Hunting League Rank + Prestige Level milestones (nothing consumed); per-NM affinities require Hunting League Rank 3, 1,000 Hunt Marks, and the NM's trophy (consumed). Talk to the Sage to track and rank up.
+- **Augment Moogle** (in <!--npc:augment_moogle-->Leafallia<!--/npc-->) stamps augments onto gear: trade one piece + up to 5 catalysts (10,000 gil flat per trade). Each catalyst writes one augment line, and every line's value is **rolled** inside your **Augment Tier** band — 5 tiers gated by content milestones, covering the 0–31 roll space.
+- **Augment Sage** improves your *rolls* (the old rank multiplier is retired): each Mastery rank raises the roll floor by +1 (up to +5) and lifts the perfect-roll crit chance from 5% to 30%. Ranks unlock automatically at content milestones (Hunting League rank, Prestige level, Job Rebirths, Gauntlet clears — nothing is consumed). Per-NM **affinities** make matching-category augments roll twice and keep the better; registering one takes Hunting League Rank 3, 1,000 Hunt Marks, and the NM's trophy (consumed). Talk to the Sage to track and rank up.
 
 ---
 
@@ -95,9 +95,10 @@ Ping a GM in [Discord](https://discord.gg/Yd3Kn3dN36). Specify your character na
 
 The [Retail Differences](../changes/index.md) page is the authoritative list. Highlights:
 
-- Faster EXP / CP / drop rates (current multipliers shown on the [home page](../index.md))
-- Full subjob from character creation
-- 99 starting level cap, all maps + outpost warps granted at creation
+- Faster rates — {{setting:map.EXP_RATE}}× mob EXP, {{setting:main.CAPACITY_RATE}}× capacity points, {{setting:DROP_RATE_MULTIPLIER}}× drops (full table on the [home page](../index.md))
+- Level cap {{setting:INITIAL_LEVEL_CAP}} from character creation — no Limit Break quests
+- Retail subjob ratio (half of main) plus a background [Subjob EXP Share](../progression/subjob-exp.md)
+- Everything unlocked at creation: spells, weapon skills, trusts, maps, outpost warps
 - Custom Hunting League, Reforge System, Augment Sage, Job Rebirth, and Weekly Hunt Board systems
 - Every player command listed in [Reference → Player Commands](../reference/commands.md)
 
@@ -112,6 +113,6 @@ _Have a question that should be on this page? Ping a GM in [Discord](https://dis
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 040cf919fcbf -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: cf124e430f11 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

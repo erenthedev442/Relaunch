@@ -29,7 +29,7 @@ The **Cross-Job Ability Trainer** in <!--npc:cross_job_ability-->Leafallia<!--/n
 <!-- DOCGEN:BEGIN id="cross-job-abilities-catalog" -->
 _Each ability costs **10,000,000 gil** — a one-time, per-character, per-ability purchase. After buying, activate via macro: `/ja "Ability Name" <me>`. Purchased abilities do **not** appear in the in-game Job Abilities menu (the menu is client-side); they are enforced server-side and their recast timers work normally._
 
-_**13 abilities** available across 4 job groups._
+_**9 abilities** available across 4 job groups._
 
 **Warrior**
 
@@ -52,17 +52,13 @@ _**13 abilities** available across 4 job groups._
 | Ability | Job | Lv. | Effect |
 |---|---|---:|---|
 | Third Eye | SAM | 15 | Anticipate (evade) your next incoming attack. |
-| Meditate | SAM | 30 | Gradually builds TP over time. |
 
 **Paladin/DRK**
 
 | Ability | Job | Lv. | Effect |
 |---|---|---:|---|
-| Sentinel | PLD | 30 | Greatly boosts defense and enmity briefly. |
 | Last Resort | DRK | 15 | Boosts attack; lowers defense. |
 | Souleater | DRK | 30 | Adds part of your HP to melee damage, costing HP. |
-| Rampart | PLD | 62 | Party-wide damage-reduction ward (AoE). |
-| Scarlet Delirium | DRK | 95 | Attack and magic attack rise as you take damage. |
 <!-- DOCGEN:END id="cross-job-abilities-catalog" -->
 
 ---
@@ -85,6 +81,6 @@ There's no wrong choice — the 10M gil cost means you'll pick deliberately, but
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7871e4cecb6e -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: e1e7fc29cb3e -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

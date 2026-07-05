@@ -1,4 +1,4 @@
-﻿# Augmenting: Start Here
+# Augmenting: Start Here
 
 ![Augment gem](../assets/emblems/augment.svg){ .lgnd-emblem }
 
@@ -17,7 +17,7 @@ This means **any** gear can become best-in-slot. That ring with no useful stats?
 
 Let's add some **Attack** to a piece of gear. (Any stat works the same way — this is just an example.)
 
-1. **Farm the catalysts.** Every catalyst **drops from one specific monster** (~50% per kill) — catalysts are **no longer bought for gil**. The "Attack" catalyst is **Black Tiger Hide**; kill its assigned mob until you have **5×**. Which catalysts you can trade scales with your progression — see [Catalyst tiers](#catalyst-tiers-what-you-can-trade) below.
+1. **Farm the catalysts.** Every catalyst **drops from one specific monster** (~50% per kill) — catalysts are **no longer bought for gil**. The "Attack" catalyst is **Black Tiger Hide**; its assigned mob is **Divine Inciter** (a level ~70 mob) — kill it until you have **5×**. Which catalysts you can trade scales with your progression — see [Catalyst tiers](#catalyst-tiers-what-you-can-trade) below.
 2. **Have 10,000 gil** in your inventory (the Augment Moogle's flat trade cost, no matter how many catalysts).
 3. **Go to <!--npc:augment_moogle-->Leafallia<!--/npc-->** and find the **Augment Moogle** (it's in the row of moogles).
 4. **Trade** the gear piece **+ your 5 catalysts** to the Moogle. It shows you what's about to be applied.
@@ -34,13 +34,13 @@ Every line the Moogle writes is **rolled** inside your **Augment Tier's band**. 
 
 | Augment Tier | Roll band (of 0–31) | How you unlock it |
 |---|---|---|
-| **T1** | 0–5 | **slay your first 10 custom NMs** (Hunting League / Wave Mode / Voidspire kills all count) |
-| **T2** | 6–11 | reach **Hunting League Rank 5** |
-| **T3** | 12–17 | clear **[Voidspire](../endgame/voidspire.md) floor 10** *and* **every [Game Master](game-master.md) wave difficulty** (Easy → Nightmare) |
-| **T4** | 18–24 | clear a **[Dynamis - Divergence](../endgame/dynamis-divergence.md) city** |
-| **T5** | 25–31 | defeat **Maat's Echo** ([Maat's Challenge](../endgame/maats-challenge.md), `!maat`) |
+| **T1** | 0–5 | slay your first 10 custom NMs ([Hunting League](index.md), Wave Mode, [Voidspire](../endgame/voidspire.md)...) |
+| **T2** | 6–11 | reach [Hunting League](index.md) Rank 5 |
+| **T3** | 12–17 | clear [Voidspire](../endgame/voidspire.md) floor 10 + every [Game Master](game-master.md) wave difficulty |
+| **T4** | 18–24 | clear a [Dynamis - Divergence](../endgame/dynamis-divergence.md) city |
+| **T5** | 25–31 | defeat [Maat's Echo](../endgame/maats-challenge.md) (Ru'Lude Gardens, !maat) |
 
-The ladder is **consecutive** — your tier is the highest step you've cleared in order, and a brand-new character is **Tier 0: the Moogle won't augment at all** until those first 10 NMs fall.
+The ladder is **consecutive** — your tier is the highest step you've cleared in order, and a brand-new character is **Tier 0: the Moogle won't augment at all** until the first gate is cleared.
 
 (Trust summon counts climb a **separate** ladder — Unity Concord accolades, Voidwatch rift tiers, and your Adventuring Fellow's level. See the [Trust page](../reference/spells/trust.md).) That +2/slot Attack roll at Tier 1 climbs all the way to **+64/slot** at a max Tier-5 roll (i.e. **+320 Attack** on a 5-slot piece). So:
 
@@ -60,7 +60,7 @@ A max-rank, affinity-held **crit at Tier 5** writes the absolute cap: `(base + 3
 
 ## Catalyst tiers: what you can trade
 
-Separately from the roll band, each **catalyst** has a tier (T0–T5) — the minimum Augment Tier required to trade it. T0/T1 catalysts are open to everyone; the universally-powerful stats (Haste, Triple Attack, damage-taken reductions...) sit at T3–T5, so the strongest *stats* and the strongest *rolls* unlock together as you clear content. The [catalog](augments.md#catalyst--augment-catalog) groups every catalyst by tier.
+Separately from the roll band, each **catalyst** has a tier (T0–T5) — the minimum Augment Tier required to trade it. T0/T1 catalysts (132 of them) are open to everyone; the universally-powerful stats (Triple Atk, Quadruple Attack, Damage Taken...) sit at T3–T5, so the strongest *stats* and the strongest *rolls* unlock together as you clear content. The [catalog](augments.md#catalyst--augment-catalog) groups every catalyst by tier (T0 ×19 · T1 ×113 · T2 ×18 · T3 ×17 · T4 ×47 · T5 ×13).
 
 ## Good first moves
 
@@ -84,6 +84,6 @@ Separately from the roll band, each **catalyst** has a tier (T0–T5) — the mi
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a2a92213f455 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: cdbcc80af57e -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -1,4 +1,4 @@
-﻿# First Steps
+# First Steps
 
 Welcome to the Relaunch server. You've got the client running, you're in-game — now what?
 
@@ -36,6 +36,8 @@ There's no setup NPC to visit on the Relaunch server — every new character is 
 | **Pets** | Pet attachments (for the relevant jobs) |
 | **Starter gear** | A one-time starter gear kit — enough to survive your first few fights and get the Hunting League rolling |
 
+You're also handed **25 Hunt Marks** as a starter stipend — the currency everything here runs on.
+
 !!! note
     None of this requires talking to anyone. You don't need to track down a Character Upgrader, Key Item Moogle, Mission Moogle, or Gear Moogle — it's all done for you at creation. Just play.
 
@@ -43,7 +45,7 @@ There's no setup NPC to visit on the Relaunch server — every new character is 
 
 ## 3. Level up to 99
 
-You start at level **1** — but with every job and subjob already unlocked and **<!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP** (plus <!--setting:main.EXP_RATE:int-->10<!--/setting-->× from books & RoE), the climb is hours, not weeks.
+You start at level **1** — but with every job and subjob already unlocked and **{{setting:map.EXP_RATE}}× mob EXP** (plus {{setting:main.EXP_RATE:int}}× from books & RoE), the climb is hours, not weeks.
 
 - Type **`!expcamp`** to warp straight to one of 20 level-banded EXP camps — La Theine and Valkurm early, up through the Boyahda Tree at 60–75. Run `!expcamp` on its own to list the camps, then `!expcamp 4` to warp to one.
 - Or dive into the **Hunting League** below right away: the Rank I NMs are low-level, so you earn EXP *and* Hunt Marks at the same time.
@@ -65,7 +67,7 @@ This command warps you directly to **Escha ZiTah** and drops you next to the Hun
 
 ### What is the Hunting League?
 
-The Hunting League is a custom rank-based NM hunting system with five ranks. You kill NMs, earn **Hunt Marks**, spend marks to unlock the next rank, and buy gear from the reward shop.
+The Hunting League is a custom rank-based NM hunting system with 5 ranks. You kill NMs, earn **Hunt Marks**, spend marks to unlock the next rank, and buy gear from the reward shop.
 
 It's the primary path to endgame gear and the main thing to do on the Relaunch server. For full details — ranks, NMs, rewards, recommended order — see the **[Hunting League page](../progression/index.md)**.
 
@@ -84,18 +86,18 @@ It's the primary path to endgame gear and the main thing to do on the Relaunch s
 |---|---|
 | 1 | `!lib` — warp to the Celennia Memorial Library (entry hub) |
 | 2 | Nothing to do — your character is fully set up at creation (weapon skills, spells, trusts, capped skills, key items, missions, maps, warps, wardrobes, starter gear) |
-| 3 | `!expcamp` — warp to a level-banded camp and level to 99 (<!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP) |
+| 3 | `!expcamp` — warp to a level-banded camp and level to 99 ({{setting:map.EXP_RATE}}× mob EXP) |
 | 4 | `!hunt` — warp to Escha ZiTah and start the Hunting League |
 
 ---
 
 ## Questions? Join Discord
 
-If something isn't working, you're not sure what to do next, or you just want to find people to group with — hop into the **Discord server**. The community is active and happy to help new players get going.
+If something isn't working, you're not sure what to do next, or you just want to find people to group with — hop into the **[Discord server](https://discord.gg/Yd3Kn3dN36)**. The community is active and happy to help new players get going.
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 86689d3a949d -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: e6e55eaf95ff -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

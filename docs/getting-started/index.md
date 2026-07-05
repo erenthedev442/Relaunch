@@ -1,4 +1,4 @@
-﻿# Getting Started
+# Getting Started
 
 ![Gateway](../assets/emblems/getting-started.svg){ .lgnd-emblem }
 
@@ -15,6 +15,6 @@ If you've played retail FFXI before, the client setup is the same — only the s
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b8fd8568cbc1 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 3a7a3564d807 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -28,7 +28,7 @@ The Relaunch is a fresh-start FFXI private server built around one idea: the gri
 
 Retail FFXI is a masterpiece buried under 20 years of time-gating. Most private servers swing the other direction and trivialize everything. This server splits the difference:
 
-- **Fast leveling, real endgame.** <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP (plus <!--setting:main.EXP_RATE-->10<!--/setting-->× from books, FoV/GoV & Records of Eminence) gets you to 99 in a few hours, not months. Then the actual game begins.
+- **Fast leveling, real endgame.** {{setting:map.EXP_RATE}}× mob EXP (plus {{setting:main.EXP_RATE}}× from books, FoV/GoV & Records of Eminence) gets you to 99 in a few hours, not months. Then the actual game begins.
 - **Everything unlocked at creation.** Advanced jobs, all outpost warps, all maps, full inventory — no arbitrary gates.
 - **Custom content built for long-term play.** The Hunting League, Reforge gear, Ascension, and weekly objectives give you a loop that doesn't expire.
 - **A small, friendly community.** No drama, no gatekeeping — just people who like this game.
@@ -37,13 +37,13 @@ Retail FFXI is a masterpiece buried under 20 years of time-gating. Most private 
 
 ## Feature highlights
 
-:crossed_swords: **Hunting League** — A custom 5-rank NM hunting system. Kill your way from Initiate to Legend, unlocking gear, titles, and HL Points at every tier.
+:crossed_swords: **Hunting League** — A custom 5-rank NM hunting system. Kill your way from Initiate → Hunter → Elite → Champion → Legend, unlocking gear, titles, and HL Points at every tier.
 
 :crown: **Ascension** — The endgame *above* the endgame. Reaching Legend opens a per-job, no-cap progression track: re-clear escalating superboss Courts to bank Ascension Points and spend them on permanent stat boosts. The gauntlet swaps to a deadlier roster every 10 ascensions, so the climb never goes stale.
 
 :shield: **Reforge system** — Three parallel NM ladders (AF, Relic, Empy) that upgrade your armor from base all the way to +3. Best-in-slot is earnable, not bought.
 
-:gem: **Augment Moogle** — 400+ augment options. Trade catalysts from NM kills to permanently customize your gear in ways retail never allowed.
+:gem: **Augment Moogle** — 228 augment options. Trade catalysts from NM kills to permanently customize your gear in ways retail never allowed.
 
 :calendar: **Weekly Hunt Board** — Five rotating objectives every week. Complete all five for a big bonus. Always something to do.
 
@@ -55,7 +55,7 @@ Retail FFXI is a masterpiece buried under 20 years of time-gating. Most private 
 
 :coin: **Living economy** — The auction house is never empty: a market-maker keeps thousands of gear listings stocked around the clock — a built-in price floor and gil sink — so you can actually *buy* your upgrades.
 
-:medal: **Achievements & Leaderboards** — 26 milestones that pay bonus marks and titles as you rack up first kills, tier climbs, and lifetime records — plus live server leaderboards (top hunters, fastest clears, most augments) to climb.
+:medal: **Achievements & Leaderboards** — 37 milestones that pay bonus marks and titles as you rack up first kills, tier climbs, and lifetime records — plus live server leaderboards (top hunters, fastest clears, most augments) to climb.
 
 :sparkles: **Adventuring Fellow** — A personal companion any job can summon. It levels from your kills, and you build it by spending stat points however you like.
 
@@ -67,15 +67,15 @@ Retail FFXI is a masterpiece buried under 20 years of time-gating. Most private 
 
 | Setting | Rate |
 |---|---|
-| EXP (mob kills) | <!--setting:map.EXP_RATE-->3<!--/setting-->× |
-| EXP (scripted: books, FoV/GoV, RoE) | <!--setting:main.EXP_RATE-->10<!--/setting-->× |
-| Capacity Points (scripted) | <!--setting:main.CAPACITY_RATE-->10<!--/setting-->× |
-| Sparks | <!--setting:SPARKS_RATE-->10<!--/setting-->× |
-| Gil from quests | <!--setting:GIL_RATE-->100<!--/setting-->× |
-| Magic / WS power | <!--setting:main.WEAPON_SKILL_POWER:int-->2<!--/setting-->× |
-| Mob drop rate | <!--setting:DROP_RATE_MULTIPLIER-->3<!--/setting-->× |
-| Starting level cap | <!--setting:INITIAL_LEVEL_CAP-->99<!--/setting--> (no Limit Break needed) |
-| Run speed | <!--setting:BASE_SPEED-->100<!--/setting--> base / <!--setting:SPEED_LIMIT-->500<!--/setting--> cap |
+| EXP (mob kills) | {{setting:map.EXP_RATE}}× |
+| EXP (scripted: books, FoV/GoV, RoE) | {{setting:main.EXP_RATE}}× |
+| Capacity Points (scripted) | {{setting:main.CAPACITY_RATE}}× |
+| Sparks | {{setting:SPARKS_RATE}}× |
+| Gil from quests | {{setting:GIL_RATE}}× |
+| Magic / WS power | {{setting:main.WEAPON_SKILL_POWER:int}}× |
+| Mob drop rate | {{setting:DROP_RATE_MULTIPLIER}}× |
+| Starting level cap | {{setting:INITIAL_LEVEL_CAP}} (no Limit Break needed) |
+| Run speed | {{setting:BASE_SPEED}} base / {{setting:SPEED_LIMIT}} cap |
 | Content | Through Seekers of Adoulin + Abyssea + all add-ons |
 
 ---
@@ -89,7 +89,7 @@ Retail FFXI is a masterpiece buried under 20 years of time-gating. Most private 
 
 Every new character starts with:
 
-- :moneybag: **<!--setting:START_GIL:comma-->5,000,000<!--/setting--> Gil** in your wallet
+- :moneybag: **{{setting:START_GIL:comma}} Gil** in your wallet
 - :school_satchel: **80 inventory slots** (the maximum)
 - :world_map: **All maps** for every zone
 - :round_pushpin: **All outpost warps** already unlocked
@@ -115,7 +115,7 @@ A passive reputation layer on top of every NM track. Each guild — AF, Relic, E
 **Reforge Gear (+3 from NM kills)**
 Three independent NM ladders — AF Marks from Sky Gods, Relic Marks from Unity NMs, Empy Marks from Abyssea NMs — each upgrades a full armor set from base to +1 to +2 to +3. No RNG. No gacha. Just kills.
 
-**Augment Moogle (400+ augment options)**
+**Augment Moogle (228 augment options)**
 Catalysts drop from monsters across the world. Trade them to the Augment Moogle to permanently apply stat bonuses to your gear. Pair with the Augment Sage to push augment strength even further.
 
 **Voidwatch**
@@ -131,10 +131,10 @@ Five objectives, reset every week. Complete all five and you earn a significant 
 Three fresh objectives every day, reset at UTC midnight. Clear all three in one day for a bonus on top.
 
 **Custom Trusts**
-Summons you won't find on retail. **Gemma** heals, raises, buffs, debuffs, and magic-bursts your skillchains. **Meat** soaks every hit and refuses to let go of aggro. Each unlocks permanently through Hunting League rank + Hunt Marks (Gemma: Rank 3 + 3,000 marks; Meat: Rank 2 + 2,000; Corvus: Rank 4 + 5,000) — no gil required.
+Summons you won't find on retail. **Gemma** heals, raises, buffs, debuffs, and magic-bursts your skillchains. **Meat** soaks every hit and refuses to let go of aggro. Each unlocks permanently through Hunting League rank + Hunt Marks (Gemma: Rank 3 + 3,000; Meat: Rank 2 + 2,000; Corvus: Rank 4 + 5,000) — no gil required.
 
-**Achievements (26 milestones)**
-Twenty-six personal milestones paying bonus Hunt Marks and titles, with the biggest ones triggering a server-wide announcement.
+**Achievements (37 milestones)**
+Personal milestones paying bonus Hunt Marks and titles, with the biggest ones triggering a server-wide announcement.
 
 **Leaderboards**
 See where you rank across the server — most augments crafted, top hunters, fastest clears — pulled live from the database and refreshed regularly.

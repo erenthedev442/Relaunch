@@ -133,7 +133,7 @@ The reward shop is organized into 3 categories — 47 purchasable entries in all
 7. **Try Game Master wave challenges in Escha Ru'Aun.** Use `!wavemaster` to warp there and talk to the Game Master NPC. Start with **Easy** difficulty: 3 waves, 1 mob per wave, manageable for a geared solo player. Full clear pays **50 Hunt Marks**. Harder difficulties (Normal / Hard / Insane) pay progressively more marks and unlock tougher wave pools.
 8. **Unlock Rank IV - Champion and Rank V - Legend.** Rank IV costs **1500 Hunt Marks** total spent; kills pay **38 Hunt Marks** (Nidhogg, King Behemoth, Kirin). Rank V costs **3000 Hunt Marks** total spent — endgame kills pay **65 Hunt Marks** (Absolute Virtue, Pandemonium Warden, Shinryu). Rank V is the gear-check wall. Bring a party.
 9. **Start the Reforge track.** Farm Sky Gods, Unity NMs, and Abyssea NMs for AF Marks, Relic Marks, and Empy Marks. These currencies feed the Reforge system to upgrade your AF/Relic/Empy armor to +1 / +2 / +3 tiers. Type `!huntrank` to check your current Hunting League rank and overall progress.
-10. **Augment your gear.** Visit the **Augment Moogle in Leafallia** (`!leaf`) to add random stats to equipment. For passive endgame bonuses, earn enough Infamy to unlock the **Augment Sage** — also in Leafallia — Infamy comes from apex Reisenjima NMs, Scheduled Invasions, and the weekly Raid. The Sage applies permanent stat bonuses outside the normal augment RNG.
+10. **Augment your gear.** Visit the **Augment Moogle in Leafallia** (`!leaf`) to add random stats to equipment. For passive endgame bonuses, earn enough Infamy to unlock the **Augment Sage** — also in Leafallia — Infamy comes from apex Escha - Ru'Aun NMs, Scheduled Invasions, and the weekly Raid. The Sage applies permanent stat bonuses outside the normal augment RNG.
 <!-- DOCGEN:END id="progression-order" -->
 
 ## Where retail content still matters
@@ -160,6 +160,6 @@ The Hunting League is the main game now, but retail content still has a role:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: fc5366c9b5e8 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: ec25d5076426 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

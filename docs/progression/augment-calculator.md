@@ -248,3 +248,10 @@ document.getElementById('tog-crit').addEventListener('change',function(){
 render();
 })();
 </script>
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: e68e159a3ec2 -->
+_Last updated: 2026-07-05 07:37 UTC_
+<!-- DOCGEN:END id="last-updated" -->

@@ -24,125 +24,125 @@ _Spells are sorted by ID._
 
 **Spells in this category:** 120
 
-| ID | Name | Skill | Element | MP | Cast | Recast | Jobs |
-|---:|---|---|---|---:|---:|---:|---|
-| 896 | Shantotto | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 897 | Naji | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 898 | Kupipi | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 899 | Excenmille | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 900 | Ayame | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 901 | Nanaa Mihgo | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 902 | Curilla | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 903 | Volker | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 904 | Ajido-marujido | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 905 | Trion | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 906 | Zeid | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 907 | Lion | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 908 | Tenzen | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 909 | Mihli Aliapoh | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 910 | Valaineral | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 911 | Joachim | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 912 | Naja Salaheem | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 913 | Prishe | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 914 | Ulmia | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 915 | Shikaree Z | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 916 | Cherukiki | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 917 | Iron Eater | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 918 | Gessho | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 919 | Gadalar | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 920 | Rainemard | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 921 | Ingrid | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 922 | Lehko Habhoka | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 923 | Nashmeira | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 924 | Zazarg | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 925 | Ovjang | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 926 | Mnejing | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 927 | Sakura | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 928 | Luzaf | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 929 | Najelith | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 930 | Aldo | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 931 | Moogle | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 932 | Fablinix | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 933 | Maat | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 934 | D Shantotto | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 935 | Star Sibyl | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 936 | Karaha-baruha | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 937 | Cid | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 938 | Gilgamesh | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 939 | Areuhat | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 940 | Semih Lafihna | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 941 | Elivira | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 942 | Noillurie | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 943 | Lhu Mhakaracca | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 944 | Ferreous Coffin | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 945 | Lilisette | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 946 | Mumor | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 947 | Uka Totlihn | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 948 | Klara | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 949 | Romaa Mihgo | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 950 | Kuyin Hathdenna | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 951 | Rahal | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 952 | Koru-moru | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 953 | Pieuje Uc | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 954 | I Shield Uc | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 955 | Apururu Uc | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 956 | Jakoh Uc | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 957 | Flaviria Uc | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 958 | Babban | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 959 | Abenzio | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 960 | Rughadjeen | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 961 | Kukki-chebukki | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 962 | Margret | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 963 | Chacharoon | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 964 | Lhe Lhangavo | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 965 | Arciela | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 966 | Mayakov | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 967 | Qultada | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 968 | Adelheid | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 969 | Amchuchu | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 970 | Brygid | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 971 | Mildaurion | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 972 | Halver | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 973 | Rongelouts | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 974 | Leonoyne | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 975 | Maximilian | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 976 | Kayeel-payeel | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 977 | Robel-akbel | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 978 | Kupofried | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 979 | Selh Teus | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 980 | Yoran-oran Uc | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 981 | Sylvie Uc | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 982 | Abquhbah | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 983 | Balamor | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 984 | August | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 985 | Rosulatia | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 986 | Teodor | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 987 | Ullegore | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 988 | Makki-chebukki | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 989 | King Of Hearts | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 990 | Morimar | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 991 | Darrcuiln | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 992 | Aahm | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 993 | Aaev | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 994 | Aamr | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 995 | Aatt | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 996 | Aagk | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 997 | Iroha | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 998 | Ygnas | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 999 | Monberaux | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1004 | Excenmille S | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1005 | Ayame Uc | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1006 | Maat Uc | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1007 | Aldo Uc | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1008 | Naja Uc | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1009 | Lion II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1010 | Zeid II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1011 | Prishe II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1012 | Nashmeira II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1013 | Lilisette II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1014 | Tenzen II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1015 | Mumor II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1016 | Ingrid II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1017 | Arciela II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1018 | Iroha II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
-| 1019 | Shantotto II | — | Light | — | 2.0s | 240.0s | WAR 1 / MNK 1 / WHM 1 / BLM 1 / RDM 1 / THF 1 / PLD 1 / DRK 1 / BST 1 / BRD 1 / RNG 1 / SAM 1 / NIN 1 / DRG 1 / SMN 1 / BLU 1 / COR 1 / PUP 1 / DNC 1 / SCH 1 / GEO 1 / RUN 1 |
+| ID | Name | Behaviors |
+|---:|---|---|
+| 896 | Shantotto | — |
+| 897 | Naji | — |
+| 898 | Kupipi | — |
+| 899 | Excenmille | — |
+| 900 | Ayame | — |
+| 901 | Nanaa Mihgo | — |
+| 902 | Curilla | — |
+| 903 | Volker | — |
+| 904 | Ajido-marujido | — |
+| 905 | Trion | — |
+| 906 | Zeid | — |
+| 907 | Lion | — |
+| 908 | Tenzen | — |
+| 909 | Mihli Aliapoh | — |
+| 910 | Valaineral | — |
+| 911 | Joachim | — |
+| 912 | Naja Salaheem | — |
+| 913 | Prishe | — |
+| 914 | Ulmia | — |
+| 915 | Shikaree Z | — |
+| 916 | Cherukiki | — |
+| 917 | Iron Eater | — |
+| 918 | Gessho | — |
+| 919 | Gadalar | — |
+| 920 | Rainemard | — |
+| 921 | Ingrid | — |
+| 922 | Lehko Habhoka | — |
+| 923 | Nashmeira | — |
+| 924 | Zazarg | — |
+| 925 | Ovjang | — |
+| 926 | Mnejing | — |
+| 927 | Sakura | — |
+| 928 | Luzaf | — |
+| 929 | Najelith | — |
+| 930 | Aldo | — |
+| 931 | Moogle | — |
+| 932 | Fablinix | — |
+| 933 | Maat | — |
+| 934 | D Shantotto | — |
+| 935 | Star Sibyl | — |
+| 936 | Karaha-baruha | — |
+| 937 | Cid | — |
+| 938 | Gilgamesh | — |
+| 939 | Areuhat | — |
+| 940 | Semih Lafihna | — |
+| 941 | Elivira | — |
+| 942 | Noillurie | — |
+| 943 | Lhu Mhakaracca | — |
+| 944 | Ferreous Coffin | — |
+| 945 | Lilisette | — |
+| 946 | Mumor | — |
+| 947 | Uka Totlihn | — |
+| 948 | Klara | — |
+| 949 | Romaa Mihgo | — |
+| 950 | Kuyin Hathdenna | — |
+| 951 | Rahal | — |
+| 952 | Koru-moru | — |
+| 953 | Pieuje Uc | — |
+| 954 | I Shield Uc | — |
+| 955 | Apururu Uc | — |
+| 956 | Jakoh Uc | — |
+| 957 | Flaviria Uc | — |
+| 958 | Babban | — |
+| 959 | Abenzio | — |
+| 960 | Rughadjeen | — |
+| 961 | Kukki-chebukki | — |
+| 962 | Margret | — |
+| 963 | Chacharoon | — |
+| 964 | Lhe Lhangavo | — |
+| 965 | Arciela | — |
+| 966 | Mayakov | — |
+| 967 | Qultada | — |
+| 968 | Adelheid | — |
+| 969 | Amchuchu | — |
+| 970 | Brygid | — |
+| 971 | Mildaurion | — |
+| 972 | Halver | — |
+| 973 | Rongelouts | — |
+| 974 | Leonoyne | — |
+| 975 | Maximilian | — |
+| 976 | Kayeel-payeel | — |
+| 977 | Robel-akbel | — |
+| 978 | Kupofried | — |
+| 979 | Selh Teus | — |
+| 980 | Yoran-oran Uc | — |
+| 981 | Sylvie Uc | — |
+| 982 | Abquhbah | — |
+| 983 | Balamor | — |
+| 984 | August | — |
+| 985 | Rosulatia | — |
+| 986 | Teodor | — |
+| 987 | Ullegore | — |
+| 988 | Makki-chebukki | — |
+| 989 | King Of Hearts | — |
+| 990 | Morimar | — |
+| 991 | Darrcuiln | — |
+| 992 | Aahm | — |
+| 993 | Aaev | — |
+| 994 | Aamr | — |
+| 995 | Aatt | — |
+| 996 | Aagk | — |
+| 997 | Iroha | — |
+| 998 | Ygnas | — |
+| 999 | Monberaux | — |
+| 1004 | Excenmille S | — |
+| 1005 | Ayame Uc | — |
+| 1006 | Maat Uc | — |
+| 1007 | Aldo Uc | — |
+| 1008 | Naja Uc | — |
+| 1009 | Lion II | — |
+| 1010 | Zeid II | — |
+| 1011 | Prishe II | — |
+| 1012 | Nashmeira II | — |
+| 1013 | Lilisette II | — |
+| 1014 | Tenzen II | — |
+| 1015 | Mumor II | — |
+| 1016 | Ingrid II | — |
+| 1017 | Arciela II | — |
+| 1018 | Iroha II | — |
+| 1019 | Shantotto II | — |

@@ -1298,6 +1298,6 @@ _125 top armor, weapons, and Sortie earrings, refreshed from the live gear ranki
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6a9384719b11 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: a9e7d790774e -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

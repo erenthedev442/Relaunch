@@ -1,4 +1,4 @@
-﻿# Your First Session
+# Your First Session
 
 You've finished [First Steps](first-steps.md) — your character is set up, you grabbed starter gear, and `!hunt` dropped you at Escha ZiTah. This page is what comes next: the actual rhythm of playing on the Relaunch server, and the systems that quietly reward you just for showing up.
 
@@ -11,7 +11,7 @@ If you remember only one thing: **almost everything on the Relaunch server runs 
 ```
 !buff        →  sustain (Refresh / Regen / Regain)
 pop an NM    →  Hunt: Spawner
-kill it      →  earn Hunt Marks
+kill it     →  earn Hunt Marks
 spend marks  →  seals, gear, next rank
 rank up      →  repeat — tougher NMs pay more
 ```
@@ -35,8 +35,8 @@ Then work the loop using the two NPCs standing side-by-side where you landed:
 1. **Talk to Hunt: Hub** — your rank board. It shows your current Hunting League rank, your Hunt Marks balance, and the reward shop. (Quick balance check anytime with `!marks`.)
 2. **Talk to Hunt: Spawner** — pop a Rank I NM: **Leaping Lizzy**, **Valkurm Emperor**, or **Tom Tit Tat**. It appears right in front of you — no map navigation, no cooldown.
 3. **Kill it.** You must land the killing blow (or be credited as the killer). Each Rank I kill pays **5 Hunt Marks**, and your very first kill also fires the **First Hunt** achievement for a bonus **+50**.
-4. **Spend at the Hub.** You were handed **100 Hunt Marks** at character creation — a real head start. Convert some into **Seals** at the reward shop and take them to the Armor & Weapons vendors at Escha ZiTah for your first real upgrade. (Full breakdown: [Gear Vendors](../progression/gear-vendors.md).)
-5. **Keep popping.** Rack up marks, return to **Hunt: Hub**, and unlock **Rank II** for **150 marks**. Each rank opens a tougher NM roster that pays more per kill — 5 at Rank I climbing to **65** at Rank V.
+4. **Spend at the Hub.** You were handed **25 Hunt Marks** at character creation — a head start. Convert some into **Seals** at the reward shop and take them to the Armor & Weapons vendors at Escha ZiTah for your first real upgrade. (Full breakdown: [Gear Vendors](../progression/gear-vendors.md).)
+5. **Keep popping.** Rack up marks, return to **Hunt: Hub**, and unlock **Rank II** for **150 marks**. Each rank opens a tougher NM roster that pays more per kill — 5 at Rank I climbing to **65** at Rank 5.
 
 Not sure what you need for the next rank? Ask the game directly:
 
@@ -44,28 +44,29 @@ Not sure what you need for the next rank? Ask the game directly:
 !tier
 ```
 
-It shows your current tier, the NMs available to you, and exactly what's required to rank up. For the full ladder — all five ranks, every NM, the reward shop — see the **[Hunting League page](../progression/index.md)**.
+It shows your current tier, the NMs available to you, and exactly what's required to rank up. For the full ladder — all 5 ranks, every NM, the reward shop — see the **[Hunting League page](../progression/index.md)**.
 
 !!! warning "Don't underestimate the starters"
-    Leaping Lizzy is buffed well beyond its retail stats (+2700 ATT, +600 DEF). The Rank I NMs are a real fight on fresh gear — that's what your starter marks and `!buff` are for.
+    The Rank I NMs are buffed well beyond their retail stats — they are a real fight on fresh gear. That's what your starter marks and `!buff` are for.
 
 ---
 
 ## Rewards just for showing up
 
-the Relaunch server front-loads its generosity. You don't have to grind for hours to feel progress — Hunt Marks land in your lap for logging in and for hitting milestones:
+The Relaunch server front-loads its generosity. You don't have to grind for hours to feel progress — Hunt Marks land in your lap for logging in and for hitting milestones:
 
 | When | Reward |
 |---|---|
-| Create your character | **+100** Hunt Marks (starter stipend) |
-| First login each day (UTC) | **+10** Hunt Marks |
-| 7 days logged in a row | **+50** Hunt Marks |
-| 14 days in a row | **+100** Hunt Marks |
-| 30 days in a row | **+200** Hunt Marks |
+| Create your character | **+25** Hunt Marks (starter stipend) |
+| First login each day (UTC) | **+50** Hunt Marks |
+| 7 days logged in a row | **+75** Hunt Marks |
+| 14 days logged in a row | **+200** Hunt Marks |
+| 21 days logged in a row | **+400** Hunt Marks |
+| 30 days logged in a row | **+750** Hunt Marks |
 | Your 1st NM kill | **+50** — *First Hunt* |
 | Your 10th NM kill | **+100** — *Ten Hunts In* |
-| Your 100th NM kill | **+300** + the *Desert Hunter* title |
-| Your 1,000th NM kill | **+1,000** + the *Hero Among Heroes* title |
+| Your 100th NM kill | **+300** — *Centennial Hunter* |
+| Your 1,000th NM kill | **+1000** — *Hero Among Heroes* |
 
 Login streaks reset if you skip a UTC day, so a quick daily login keeps them alive. There are plenty more milestones beyond the ones above — first kill at each tier, lifetime-marks landmarks, Infamy hauls — and you can see the whole list, earned and unearned, with:
 
@@ -134,13 +135,13 @@ To see your own trajectory, your character gets a public profile with a **person
 
 ## Stuck or solo? Join Discord
 
-The fastest way to find a group, ask a question, or report something broken is the **Discord server**. Use `!lfg` in-game to ping for a group, and check the live **[Server Status](../community/status.md)** page to see who's on before you log in.
+The fastest way to find a group, ask a question, or report something broken is the **[Discord server](https://discord.gg/Yd3Kn3dN36)**. Use `!lfg` in-game to ping for a group, and check the live **[Server Status](../community/status.md)** page to see who's on before you log in.
 
 Welcome to the hunt.
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 11741b293d73 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: c09afd0189e5 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

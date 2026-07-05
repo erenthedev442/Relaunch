@@ -34,7 +34,7 @@ Everything that made the original server worth playing:
 <!-- DOCGEN:BEGIN id="differentiators" -->
 - **Fast progression, real endgame.** <!--setting:map.EXP_RATE-->3<!--/setting-->× mob EXP (and <!--setting:main.EXP_RATE:int-->10<!--/setting-->× from books, FoV/GoV & Records of Eminence) means you hit 99 in days, not months. But 99 is the *beginning*, not the finish line. The Hunting League, Reforge gear, augments, and a full tier of endgame events are all designed to hold your interest for months. There's always a next thing.
 
-- **Hunting League — a custom 5-tier progression system.** Retail FFXI has NMs. Legendary turns them into a structured progression ladder. Five ranks, each harder than the last, each with meaningful rewards and increasing HL Point rates. If you love the hunt, this server was built for you.
+- **Hunting League — a custom 5-tier progression system.** Retail FFXI has NMs. This server turns them into a structured progression ladder. Five ranks, each harder than the last, each with meaningful rewards and increasing HL Point rates. If you love the hunt, this server was built for you.
 
 - **Ascension — a prestige ladder above the level cap.** Reach the Hunting League's Legend tier and the Altar in Provenance opens. Re-clear the Nightmare Court — three ascension-only superbosses that get harder *and change* as you climb — and spend Hunt Marks to *ascend*, earning Ascension Points: a Job-Points-style currency poured into permanent, stacking stat boosts. It's tracked per main job, never wipes anything you've earned, and the prestige levels are uncapped — an endless Paragon tail to chase on the leaderboards. Its per-job sibling, **Job Rebirth**, resets a mastered job to level 1 to bank permanent Rebirth Points.
 
@@ -44,7 +44,7 @@ Everything that made the original server worth playing:
 
 - **Augment Moogle — 400+ ways to customize your gear.** Catalysts drop from monsters all over the world. Trade them to the Augment Moogle to apply permanent stat bonuses to your gear. Stack them with the Augment Sage (whose power scales with your NM kill history) and you can push gear further than retail ever allowed.
 
-- **Cross-Job Abilities — borrow from other jobs.** The Cross-Job Trainer in GM Home sells a hand-curated set of job abilities — self and party buffs and utility, like Meditate — that you can then use on *any* job via macro, with the recast enforced server-side. No 2-hours, no build-breaking picks: just the smart cross-pollination retail never allowed.
+- **Cross-Job Abilities — borrow from other jobs.** The Cross-Job Trainer in Leafallia sells a hand-curated set of job abilities — self and party buffs and utility, like Meditate — that you can then use on *any* job via macro, with the recast enforced server-side. No 2-hours, no build-breaking picks: just the smart cross-pollination retail never allowed.
 
 - **No dead content — weekly objectives, daily board, Wave Master arena.** The Weekly Hunt Board resets every week with five fresh objectives. The Daily Board resets at midnight UTC. The Wave Master NPC in Escha - Ru'Aun spawns NM waves on demand. There is always a reason to log in.
 
@@ -56,7 +56,7 @@ Everything that made the original server worth playing:
 
 - **Leaderboards — see where you rank.** The Chronicler at Escha ZiTah tallies your kills, unique NMs, and competitive stats, and a live website ranks every player server-wide, refreshed from the database through the day. Whether you're chasing Paragon levels or the longest hunt streak, there's always a scoreboard watching.
 
-- **A deep quality-of-life bench.** Always-popped NMs (no camping, no lottery), a Character Upgrader that hands a new character everything in one click, homepoint healing, zone-in cutscene skips, sub-job EXP share, gil-sink vendors, seasonal events, login streaks — dozens of friction-removers, all catalogued on the [Quality of Life Features](progression/server-features.md) page.
+- **A deep quality-of-life bench.** Always-popped NMs (no camping, no lottery), automatic character setup at creation, homepoint healing, zone-in cutscene skips, sub-job EXP share, gil-sink vendors, seasonal events, login streaks — dozens of friction-removers, all catalogued on the [Quality of Life Features](progression/server-features.md) page.
 
 - **Everything unlocked at character creation.** No quest to unlock advanced jobs. No tour of outpost warps. No waiting for maps. You create a character and immediately have access to everything that retail made you spend weeks unlocking. The friction that doesn't make the game better is just gone.
 <!-- DOCGEN:END id="differentiators" -->
@@ -69,6 +69,6 @@ Everything that made the original server worth playing:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 129c55fdb587 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 3c538104df87 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

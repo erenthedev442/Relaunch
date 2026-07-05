@@ -94,3 +94,68 @@
   padding: 0; margin: -1px; overflow: hidden;
   clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
 }
+
+/* ── Milestone card grids ────────────────────────────────────────────────────
+   Used on: achievements (3-col), hunters-guild hunt targets (2-col),
+   prestige AP table (2-col). The JS in milestone-grid.js wraps each
+   H2/H3/H4 + its following content into .milestone-card wrappers at runtime.
+   ─────────────────────────────────────────────────────────────────────────── */
+.milestone-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 1.2rem;
+  align-items: start;
+  margin-bottom: 1.2rem;
+}
+.milestone-grid.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.md-typeset .milestone-card {
+  background: var(--md-code-bg-color);
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: .4rem;
+  padding: .85rem 1rem 1rem;
+  min-width: 0;
+}
+.md-typeset .milestone-card h2,
+.md-typeset .milestone-card h3,
+.md-typeset .milestone-card h4 {
+  margin: 0 0 .55rem;
+  font-size: .9rem;
+  font-weight: 700;
+  border: none;
+  padding: 0;
+}
+/* hide the ¶ permalink anchors — looks odd in small card headers */
+.md-typeset .milestone-card h2 .headerlink,
+.md-typeset .milestone-card h3 .headerlink,
+.md-typeset .milestone-card h4 .headerlink {
+  display: none;
+}
+.md-typeset .milestone-card > p {
+  font-size: .82rem;
+  margin: 0 0 .55rem;
+  line-height: 1.4;
+  color: var(--md-default-fg-color--light);
+}
+.md-typeset .milestone-card table {
+  display: block;
+  overflow-x: auto;
+  font-size: .78rem;
+  margin: 0;
+  width: 100%;
+}
+.md-typeset .milestone-card table th,
+.md-typeset .milestone-card table td {
+  padding: .22rem .4rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 960px) {
+  .milestone-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 620px) {
+  .milestone-grid,
+  .milestone-grid.cols-3 { grid-template-columns: 1fr; }
+}

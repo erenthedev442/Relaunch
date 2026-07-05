@@ -146,6 +146,6 @@ Only the **affinity registration** trophy (Track 2) is removed from inventory on
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 426d06064c84 -->
-_Last updated: 2026-06-29 04:48 UTC_
+<!-- content-hash: 7fb24c368e84 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

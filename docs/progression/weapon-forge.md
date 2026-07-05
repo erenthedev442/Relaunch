@@ -3,11 +3,582 @@
 Six legacy weapon paths. Earn the base weapon from its source content, then forge it through three stages to its final form. Click a category to explore its chain, costs, and weapons.
 
 <!-- DOCGEN:BEGIN id="weapon-forge-widget" -->
+<style>
+.wf-widget *, .wf-widget *::before, .wf-widget *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+.wf-widget {
+  --bg:     #06060e;
+  --surf:   #0f0f1b;
+  --raised: #161526;
+  --bdr:    #212038;
+  --text:   #ddd8cc;
+  --muted:  #9793ac;
+  --dim:    #605d7a;
+  --faint:  #b0acc4;
+  --arrow:  #c45a22;
+  --cat:    #c8a030;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
+  padding: 20px 0 60px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.wf-widget .tagline {
+  text-align: center; font-size: .88rem; color: var(--muted);
+  max-width: 460px; margin: 0 auto 4px; line-height: 1.6; padding: 0 20px;
+}
+
+/* ── CATEGORY TABS ── */
+.wf-widget .cat-strip { display: flex; gap: 4px; justify-content: center; flex-wrap: wrap; padding: 4px 20px 0; max-width: 1080px; margin: 0 auto; }
+.wf-widget .cbt {
+  background: var(--surf); border: 1px solid var(--bdr); color: var(--muted);
+  font-family: "Palatino Linotype",Georgia,serif; font-size: .8rem; letter-spacing: .04em;
+  padding: 8px 16px; cursor: pointer; transition: all .14s; position: relative;
+}
+.wf-widget .cbt:hover { border-color: var(--dim); color: var(--text); }
+.wf-widget .cbt.on { color: var(--cat); border-color: var(--cat); background: var(--raised); }
+.wf-widget .cbt.on::after { content: ''; position: absolute; left: 0; right: 0; bottom: -5px; height: 2px; background: var(--cat); }
+.wf-widget .cbt-sub { display: block; font-family: "Courier New",monospace; font-size: .55rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 2px; }
+.wf-widget .cbt.on .cbt-sub { color: var(--muted); }
+
+.wf-widget .cat-lore {
+  text-align: center; max-width: 560px; margin: 20px auto 0; padding: 0 20px;
+  font-size: .86rem; color: var(--muted); font-style: italic; line-height: 1.65; min-height: 3em;
+  transition: opacity .18s;
+}
+.wf-widget .cat-lore.fading { opacity: 0; }
+
+/* ── BASE SOURCE BANNER ── */
+.wf-widget .src-banner { max-width: 1080px; margin: 20px auto 0; padding: 0 20px; }
+.wf-widget .src-inner {
+  border: 1px solid var(--bdr); border-left: 3px solid var(--cat);
+  background: color-mix(in srgb, var(--cat) 4%, var(--surf));
+  padding: 14px 18px; display: flex; align-items: flex-start; gap: 16px;
+}
+.wf-widget .src-badge {
+  font-family: "Courier New",monospace; font-size: .58rem; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--cat); white-space: nowrap; margin-top: 2px;
+  line-height: 1; border: 1px solid color-mix(in srgb, var(--cat) 40%, transparent);
+  padding: 3px 6px;
+}
+.wf-widget .src-text { font-size: .86rem; color: var(--muted); line-height: 1.55; }
+.wf-widget .src-text strong { color: var(--text); font-weight: 400; }
+
+/* ── 4-STAGE CHAIN ── */
+.wf-widget .chain-wrap { max-width: 1080px; margin: 18px auto 0; padding: 0 20px; overflow-x: auto; }
+.wf-widget .chain {
+  display: grid;
+  grid-template-columns: 1fr 52px 1fr 52px 1fr 52px 1fr;
+  min-width: 620px;
+}
+.wf-widget .stg {
+  border: 1px solid var(--bdr); padding: 14px 12px 12px; text-align: center;
+  position: relative; overflow: hidden; background: var(--surf);
+}
+.wf-widget .stg.s0 { border-top: 2px solid var(--dim); }
+.wf-widget .stg.s1 { border-top: 2px solid color-mix(in srgb, var(--cat) 35%, var(--dim)); }
+.wf-widget .stg.s2 { border-top: 2px solid color-mix(in srgb, var(--cat) 65%, var(--dim)); }
+.wf-widget .stg.s3 { border-top: 2px solid var(--cat); background: color-mix(in srgb, var(--cat) 4%, var(--bg)); }
+
+.wf-widget .stg-lbl { font-family: "Courier New",monospace; font-size: .56rem; letter-spacing: .13em; text-transform: uppercase; margin-bottom: 6px; line-height: 1.3; }
+.wf-widget .s0 .stg-lbl { color: var(--dim); }
+.wf-widget .s1 .stg-lbl { color: color-mix(in srgb, var(--cat) 40%, var(--muted)); }
+.wf-widget .s2 .stg-lbl { color: color-mix(in srgb, var(--cat) 65%, var(--muted)); }
+.wf-widget .s3 .stg-lbl { color: var(--cat); }
+
+.wf-widget .stg-name {
+  font-size: .88rem; line-height: 1.2; min-height: 2.2em;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 1; transition: opacity .12s;
+}
+.wf-widget .stg-name.empty { color: var(--dim); font-style: italic; font-size: .72rem; }
+.wf-widget .s0 .stg-name { color: #7a94b0; }
+.wf-widget .s1 .stg-name { color: color-mix(in srgb, var(--cat) 55%, var(--text)); }
+.wf-widget .s2 .stg-name { color: color-mix(in srgb, var(--cat) 75%, var(--text)); }
+.wf-widget .s3 .stg-name { color: color-mix(in srgb, var(--cat) 85%, #fff); font-weight: 600; }
+
+.wf-widget .stg-note { font-family: "Courier New",monospace; font-size: .54rem; color: var(--muted); margin-top: 5px; position: relative; z-index: 1; letter-spacing: .02em; }
+.wf-widget .stg canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .35; }
+
+.wf-widget .arr { display: flex; flex-direction: column; align-items: center; padding-bottom: 14px; }
+.wf-widget .al  { width: 1px; height: 18px; background: linear-gradient(180deg, var(--bdr), var(--arrow)); }
+.wf-widget .ah  { border-left: 4px solid transparent; border-right: 4px solid transparent; border-top: 7px solid var(--arrow); }
+.wf-widget .an  { font-family: "Courier New",monospace; font-size: .68rem; color: var(--cat); text-align: center; margin-top: 5px; line-height: 1.3; max-width: 52px; white-space: nowrap; }
+
+/* ── COST CARDS ── */
+.wf-widget .cost-row { max-width: 1080px; margin: 12px auto 0; padding: 0 20px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+@media (max-width: 640px) { .wf-widget .cost-row { grid-template-columns: 1fr; } }
+.wf-widget .cc { background: var(--surf); border: 1px solid var(--bdr); padding: 13px 14px; }
+.wf-widget .cc-hd { font-family: "Courier New",monospace; font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 10px; }
+.wf-widget .cc-hd.h1 { color: color-mix(in srgb, var(--cat) 40%, var(--muted)); }
+.wf-widget .cc-hd.h2 { color: color-mix(in srgb, var(--cat) 65%, var(--muted)); }
+.wf-widget .cc-hd.h3 { color: var(--cat); }
+.wf-widget .ml { list-style: none; display: flex; flex-direction: column; gap: 5px; }
+.wf-widget .mi { display: flex; align-items: baseline; gap: 7px; font-size: .78rem; line-height: 1.3; }
+.wf-widget .mq { font-family: "Courier New",monospace; font-size: .68rem; color: var(--text); min-width: 26px; text-align: right; }
+.wf-widget .mn { color: var(--muted); }
+.wf-widget .mg { margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--bdr); font-family: "Courier New",monospace; font-size: .6rem; color: var(--faint); letter-spacing: .02em; line-height: 1.45; }
+
+/* ── FILTER ── */
+.wf-widget .filt-row { display: flex; flex-wrap: wrap; gap: 4px; max-width: 1080px; margin: 20px auto 0; padding: 0 20px; }
+.wf-widget .fb { background: var(--surf); border: 1px solid var(--bdr); color: var(--dim); font-family: "Courier New",monospace; font-size: .6rem; letter-spacing: .05em; text-transform: uppercase; padding: 4px 10px; cursor: pointer; transition: all .1s; }
+.wf-widget .fb:hover { color: var(--muted); border-color: var(--muted); }
+.wf-widget .fb.on { color: var(--cat); border-color: var(--cat); background: var(--raised); }
+
+/* ── WEAPON GRID ── */
+.wf-widget .wg { max-width: 1080px; margin: 12px auto 0; padding: 0 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(165px, 1fr)); gap: 7px; }
+.wf-widget .wc {
+  background: var(--surf); border: 1px solid var(--bdr); border-left: 3px solid var(--dim);
+  padding: 11px 13px; cursor: pointer; transition: border-color .13s, background .13s;
+}
+.wf-widget .wc:hover { border-color: var(--cat); border-left-color: var(--cat); }
+.wf-widget .wc.sel { border-color: var(--cat); border-left-color: var(--cat); background: color-mix(in srgb, var(--cat) 5%, var(--surf)); }
+.wf-widget .wc-tp { font-family: "Courier New",monospace; font-size: .56rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.wf-widget .wc-nm { font-size: .85rem; color: var(--text); line-height: 1.2; }
+.wf-widget .wc-jb { font-family: "Courier New",monospace; font-size: .57rem; color: var(--muted); margin-top: 3px; }
+.wf-widget .empty-grid { grid-column: 1/-1; text-align: center; padding: 36px; color: var(--dim); font-style: italic; font-size: .84rem; }
+
+.wf-widget .div { display: flex; align-items: center; gap: 10px; max-width: 1080px; margin: 22px auto 0; padding: 0 20px; }
+.wf-widget .div::before, .wf-widget .div::after { content: ''; flex: 1; height: 1px; background: var(--bdr); }
+.wf-widget .dg { width: 6px; height: 6px; background: var(--cat); transform: rotate(45deg); opacity: .5; }
+</style>
+
+<div class="wf-widget">
+
+<p class="tagline">Six legacies. Earn the base weapon from its source content — then forge it through three stages to its final form.</p>
+
+<div class="cat-strip" id="wfCatStrip"></div>
+<div class="cat-lore" id="wfCatLore"></div>
+
+<div class="div"><div class="dg"></div></div>
+
+<div class="src-banner">
+  <div class="src-inner" id="wfSrcInner">
+    <div class="src-badge">Base Source</div>
+    <div class="src-text" id="wfSrcText">Select a category above.</div>
+  </div>
+</div>
+
+<div class="chain-wrap">
+  <div class="chain" id="wfChain"></div>
+</div>
+
+<div class="cost-row" id="wfCostRow"></div>
+
+<div class="filt-row" id="wfFiltRow"></div>
+<div class="wg" id="wfWgrid"></div>
+
+</div><!-- /.wf-widget -->
+
+<script>
+(function() {
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const RELIC_MAT = {
+  'Hand-to-Hand':'Beitetsu','Great Sword':'Beitetsu','Polearm':'Beitetsu',
+  'Scythe':'Beitetsu','Great Katana':'Beitetsu',
+  'Dagger':'Pluton','Sword':'Pluton','Axe':'Pluton','Great Axe':'Pluton','Katana':'Pluton',
+  'Club':'Pluton','Staff':'Pluton','Archery':'Pluton','Marksmanship':'Pluton',
+  'Shield':'Pluton','Instrument':'Pluton',
+};
+
+const EMPY_MAT = {
+  'Hand-to-Hand':'Glavoid Shell','Dagger':'Orthrus\'s Claw',
+  'Sword':'Dragua\'s Scale','Great Sword':'Itzpapalotl\'s Scale',
+  'Axe':'Ulhuadshi\'s Fang','Great Axe':'Chloris Bud',
+  'Scythe':'Riftcinder','Polearm':'Riftdross',
+  'Katana':'Riftcinder','Great Katana':'Riftdross',
+  'Club':'Chloris Bud','Staff':'Riftcinder',
+  'Archery':'Ulhuadshi\'s Fang','Marksmanship':'Orthrus\'s Claw',
+  'Shield':'Dragua\'s Scale','Instrument':'Glavoid Shell',
+};
+
+// Real Aeonic base items sold by Temprix (item_basic 29701-29714), keyed by weapon type.
+const MALFORMED = {
+  'Hand-to-Hand':'Malformed Knuckles','Dagger':'Malformed Knife','Sword':'Malformed Sword',
+  'Great Sword':'Malformed Claymore','Axe':'Malformed Axe','Great Axe':'Malformed Greataxe',
+  'Scythe':'Malformed Scythe','Polearm':'Malformed Lance','Katana':'Malformed Katana',
+  'Great Katana':'Malformed Tachi','Club':'Malformed Rod','Staff':'Malformed Staff',
+  'Archery':'Malformed Bow','Marksmanship':'Malformed Culverin',
+};
+
+const CATS = {
+  prime: {
+    label:'Prime', sub:'16 weapons · 4 stages',
+    accent:'#c8a030', dim:'#806820',
+    lore:'Weapons refined through the Prime Armory trials — the FJB-native five-trial legacy path. Earn the base weapon by clearing the Prime Trials, then upgrade it here.',
+    source:'The <strong>Prime</strong> path is the pinnacle of the server. Earn the base weapon by completing all <strong>five Prime Armory Trials</strong> at the Prime Armory NPC in Leafallia, then forge it up through 119 / 119 II / 119 III. The final forge is the hardest step anywhere: it demands <strong>Legend rank</strong>, <strong>all five Trials</strong>, <strong>750,000,000 gil</strong>, 30,000 Reforge Marks, and the steepest medal cost on the board.',
+    s3lbl:'Stage III · Prime',
+    forge:[
+      {lbl:'Base → Stage I', mats:[['50×','Kindred\'s Seal'],['25×','High Kindred\'s Crest']], gate:'HL Rank II (Hunter)'},
+      {lbl:'Stage I → Stage II', mats:[['100×','High Kindred\'s Crest'],['50×','Demon\'s Medal'],['1,500','Reforge Marks']], gate:'HL Rank IV (Champion)'},
+      {lbl:'Stage II → Stage III', mats:[['100×','Demon\'s Medal'],['5×','Ancient Beastcoin'],['5,000','Reforge Marks']], gate:'HL Rank V (Legend) · All five trials cleared'},
+    ],
+    weapons:[
+      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Varga Purnikawa'},
+      {type:'Dagger',jobs:'THF · BRD · DNC',name:'Mpu Gandring'},
+      {type:'Sword',jobs:'RDM · PLD · BLU · RUN',name:'Caliburnus'},
+      {type:'Great Sword',jobs:'WAR · DRK',name:'Helheim'},
+      {type:'Axe',jobs:'WAR · BST',name:'Spalirisos'},
+      {type:'Great Axe',jobs:'WAR',name:'Laphria'},
+      {type:'Scythe',jobs:'DRK',name:'Foenaria'},
+      {type:'Polearm',jobs:'DRG',name:'Gae Buide'},
+      {type:'Katana',jobs:'NIN',name:'Dokoku'},
+      {type:'Great Katana',jobs:'SAM',name:'Kusanagi'},
+      {type:'Club',jobs:'WHM · GEO',name:'Lorg Mor'},
+      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Opashoro'},
+      {type:'Archery',jobs:'RNG',name:'Pinaka'},
+      {type:'Marksmanship',jobs:'COR · RNG',name:'Earp'},
+      {type:'Shield',jobs:'PLD · RUN',name:'Duban'},
+      {type:'Instrument',jobs:'BRD',name:'Loughnashade'},
+    ],
+  },
+  relic: {
+    label:'Relic', sub:'14 weapons · 4 stages',
+    accent:'#aa2828', dim:'#621515',
+    lore:'Ancient battle-relics recovered from Dynamis — the dreaming battlefield where history fights itself eternally. The oldest and most storied endgame path.',
+    source:'<strong>Relic weapons</strong> drop from the <strong>Mega-Boss</strong> (Wave 2) and <strong>Disjoined NM</strong> (Wave 3) in any of the four Divergence city runs — <strong>San d\'Oria [D]</strong>, <strong>Bastok [D]</strong>, <strong>Windurst [D]</strong>, and <strong>Jeuno [D]</strong>. Enter via the Divergence Portal in each city; no alliance required, solo and small groups welcome. Drop rates improve at Wave 3. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III.',
+    s3lbl:'Stage III · Relic',
+    forge:[
+      {lbl:'Base → Stage I', mats:[['100×','Byne Bill'],['25×','M. Silverpiece']], gate:'HL Rank V (Legend) · Dynamis – Divergence Wave 1 cleared'},
+      {lbl:'Stage I → Stage II', mats:[['300×','Byne Bill'],['50×','L. Jadeshell'],['100×','[see weapon]']], gate:'HL Rank V (Legend) · Dynamis – Divergence Wave 2 cleared'},
+      {lbl:'Stage II → Stage III', mats:[['50×','Gallimaufry'],['300×','[see weapon]'],['10,000','Reforge Marks']], gate:'HL Rank V (Legend) · Dynamis – Divergence Wave 3 cleared'},
+    ],
+    weapons:[
+      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Spharai'},
+      {type:'Dagger',jobs:'THF · BRD · DNC',name:'Mandau'},
+      {type:'Sword',jobs:'RDM · PLD · BLU',name:'Excalibur'},
+      {type:'Great Sword',jobs:'WAR · DRK',name:'Ragnarok'},
+      {type:'Axe',jobs:'WAR · BST',name:'Guttler'},
+      {type:'Great Axe',jobs:'WAR',name:'Bravura'},
+      {type:'Scythe',jobs:'DRK',name:'Apocalypse'},
+      {type:'Polearm',jobs:'DRG',name:'Gungnir'},
+      {type:'Katana',jobs:'NIN',name:'Kikoku'},
+      {type:'Great Katana',jobs:'SAM',name:'Amanomurakumo'},
+      {type:'Club',jobs:'WHM · GEO',name:'Mjollnir'},
+      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Claustrum'},
+      {type:'Archery',jobs:'RNG',name:'Yoichinoyumi'},
+      {type:'Marksmanship',jobs:'COR · RNG',name:'Annihilator'},
+    ],
+  },
+  empyrean: {
+    label:'Empyrean', sub:'14 weapons · 4 stages',
+    accent:'#2060a0', dim:'#103860',
+    lore:'Weapons shaped by the light of Abyssea — forged where the barriers between worlds grew thin and the strongest monsters walked unchecked.',
+    source:'<strong>Empyrean weapons</strong> drop from <strong>Abyssea Marks NMs</strong> (high-tier ??? pops). Each weapon type has a corresponding NM that drops that weapon\'s specific material and the weapon itself. Drop rates are rare at Tier I; much higher at Tier III. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III.',
+    s3lbl:'Stage III · Empyrean',
+    forge:[
+      {lbl:'Base → Stage I', mats:[['2,000×','Cruor'],['50×','[see weapon]'],['10×','Ancient Beastcoin']], gate:'HL Rank III (Elite) · Abyssea Tier I NM killed'},
+      {lbl:'Stage I → Stage II', mats:[['10,000×','Cruor'],['300×','Riftborn Boulder'],['30×','Ancient Beastcoin']], gate:'HL Rank IV (Champion) · Abyssea Tier II NM killed'},
+      {lbl:'Stage II → Stage III', mats:[['5,000×','Riftborn Boulder'],['50×','Ancient Beastcoin'],['15,000','Reforge Marks']], gate:'All Abyssea Tier III bosses cleared'},
+    ],
+    weapons:[
+      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Verethragna'},
+      {type:'Dagger',jobs:'THF · BRD · DNC',name:'Twashtar'},
+      {type:'Sword',jobs:'RDM · PLD · BLU',name:'Almace'},
+      {type:'Great Sword',jobs:'WAR · DRK',name:'Caladbolg'},
+      {type:'Axe',jobs:'WAR · BST',name:'Farsha'},
+      {type:'Great Axe',jobs:'WAR',name:'Ukonvasara'},
+      {type:'Scythe',jobs:'DRK',name:'Redemption'},
+      {type:'Polearm',jobs:'DRG',name:'Rhongomiant'},
+      {type:'Katana',jobs:'NIN',name:'Kannagi'},
+      {type:'Great Katana',jobs:'SAM',name:'Masamune'},
+      {type:'Club',jobs:'WHM · GEO',name:'Gambanteinn'},
+      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Hvergelmir'},
+      {type:'Archery',jobs:'RNG',name:'Gandiva'},
+      {type:'Marksmanship',jobs:'COR · RNG',name:'Armageddon'},
+    ],
+  },
+  mythic: {
+    label:'Mythic', sub:'20 weapons · 4 stages',
+    accent:'#6030a8', dim:'#3a1a68',
+    lore:'Power extracted from Nyzul Isle\'s floors and the Assault campaigns — weapons older than the Crystal War. Multiple variants exist per weapon type, each aligned to a specific job.',
+    source:'<strong>Mythic weapons</strong> drop from <strong>Nyzul Isle floor bosses</strong> (Floor 60 and above). Each floor boss drops weapon-type-specific weapons. Floor 80 clears are required for 119 II; Floor 100 (all lamps lit) is required for 119 III. <strong>Imperial Standing</strong> is earned from all Assault missions.',
+    s3lbl:'Stage III · Mythic',
+    forge:[
+      {lbl:'Base → Stage I', mats:[['1,000×','Imperial Standing'],['10×','Imperial Bronze Piece']], gate:'HL Rank III (Elite) · Nyzul Isle Floor 60 cleared'},
+      {lbl:'Stage I → Stage II', mats:[['3,000×','Imperial Standing'],['25×','Imperial Silver Piece'],['300×','Beitetsu']], gate:'HL Rank IV (Champion) · Nyzul Isle Floor 80 cleared'},
+      {lbl:'Stage II → Stage III', mats:[['5×','Imperial Gold Piece'],['10,000×','Beitetsu'],['20,000','Reforge Marks']], gate:'HL Rank V (Legend) · Nyzul Floor 100 cleared (all lamps) · Nyzul boss killed'},
+    ],
+    weapons:[
+      {type:'Hand-to-Hand',jobs:'MNK',name:'Glanzfaust'},
+      {type:'Hand-to-Hand',jobs:'PUP',name:'Kenkonken'},
+      {type:'Dagger',jobs:'NIN',name:'Vajra'},
+      {type:'Dagger',jobs:'BRD',name:'Carnwenhan'},
+      {type:'Dagger',jobs:'DNC',name:'Terpsichore'},
+      {type:'Sword',jobs:'RDM',name:'Murgleis'},
+      {type:'Sword',jobs:'PLD',name:'Burtgang'},
+      {type:'Sword',jobs:'BLU',name:'Tizona'},
+      {type:'Great Sword',jobs:'WAR',name:'Conqueror'},
+      {type:'Axe',jobs:'WAR · BST',name:'Aymur'},
+      {type:'Scythe',jobs:'DRK',name:'Liberator'},
+      {type:'Polearm',jobs:'DRG',name:'Ryunohige'},
+      {type:'Katana',jobs:'NIN',name:'Nagi'},
+      {type:'Great Katana',jobs:'SAM',name:'Kogarasumaru'},
+      {type:'Club',jobs:'WHM',name:'Yagrush'},
+      {type:'Staff',jobs:'SMN',name:'Nirvana'},
+      {type:'Staff',jobs:'GEO',name:'Laevateinn'},
+      {type:'Staff',jobs:'SCH',name:'Tupsimati'},
+      {type:'Archery',jobs:'RNG',name:'Gastraphetes'},
+      {type:'Marksmanship',jobs:'COR',name:'Death Penalty'},
+    ],
+  },
+  aeonic: {
+    label:'Aeonic', sub:'14 weapons · 4 stages',
+    accent:'#158a78', dim:'#0a5248',
+    lore:'Forged from Animated Weapons risen in Dynamis – Xarcabard and proved against the HNM Kings — the most process-intensive path on the server, using currencies found nowhere else.',
+    source:'The <strong>Malformed</strong> base weapon is purchased from <strong>Temprix</strong> in Reisenjima for <strong>50,000 Escha Beads</strong>. Escha Beads drop from Geas Fete NMs in Escha – Zi\'Tah and Escha – Ru\'Aun. <strong>Attestations</strong> are weapon-type-specific drops from the Geas Fete zone bosses (Azi Dahaka and Warder of Courage).',
+    s3lbl:'Stage III · Aeonic',
+    forge:[
+      {lbl:'Base → Stage I', mats:[['1×','Attestation (weapon-specific)'],['25×','Riftborn Boulder']], gate:'HL Rank IV (Champion) · 3 Geas Fete NMs killed'},
+      {lbl:'Stage I → Stage II', mats:[['3×','Attestation (weapon-specific)'],['100×','Riftborn Boulder'],['10,000×','Escha Silt']], gate:'HL Rank V (Legend) · All Geas Fete NMs cleared (Zi\'Tah + Ru\'Aun)'},
+      {lbl:'Stage II → Stage III', mats:[['10×','Attestation (weapon-specific)'],['300×','Riftborn Boulder'],['50,000×','Escha Silt'],['20,000','Reforge Marks']], gate:'HL Rank V · All Geas Fete NMs cleared (all 3 zones)'},
+    ],
+    weapons:[
+      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Godhands'},
+      {type:'Dagger',jobs:'THF · DNC',name:'Aeneas'},
+      {type:'Sword',jobs:'RDM · BLU · RUN',name:'Sequence'},
+      {type:'Great Sword',jobs:'WAR · DRK',name:'Lionheart'},
+      {type:'Axe',jobs:'WAR · BST',name:'Tri-edge'},
+      {type:'Great Axe',jobs:'WAR',name:'Chango'},
+      {type:'Scythe',jobs:'DRK',name:'Anguta'},
+      {type:'Polearm',jobs:'DRG',name:'Trishula'},
+      {type:'Katana',jobs:'NIN',name:'Heishi Shorinken'},
+      {type:'Great Katana',jobs:'SAM',name:'Dojikiri Yasutsuna'},
+      {type:'Club',jobs:'WHM · GEO',name:'Tishtrya'},
+      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Khatvanga'},
+      {type:'Archery',jobs:'RNG',name:'Fail-Not'},
+      {type:'Marksmanship',jobs:'COR · RNG',name:'Fomalhaut'},
+    ],
+  },
+  ergon: {
+    label:'Ergon', sub:'2 weapons · 4 stages',
+    accent:'#b89010', dim:'#786010',
+    lore:'The rarest weapons on the server. Ergon weapons are the physical manifestation of total job mastery — acquiring the base weapon alone is a months-long journey. Only two exist.',
+    source:'The <strong>base Ergon weapon</strong> requires completing a <strong>job-specific BCNM</strong> (either "Saved by the Bell" for GEO/Idris or "Quiescence" for WAR-DRK/Epeolatry) with 100 <strong>High-Purity Bayld</strong>. High-Purity Bayld drops from Delve Megabosses. <strong>Legend rank</strong> in all Coalitions is required to begin the questline.',
+    s3lbl:'Stage III · Ergon',
+    forge:[
+      {lbl:'Base → Stage I', mats:[['200×','Ghastly Stone'],['500×','High-Purity Bayld']], gate:'HL Rank IV (Champion) · Delve I Megaboss cleared'},
+      {lbl:'Stage I → Stage II', mats:[['200×','Verdigris Stone'],['2,500×','High-Purity Bayld'],['1×','Pristine Yggrete Shard']], gate:'HL Rank V (Legend) · Delve II Megaboss cleared · Paragon Tier 3 cleared'},
+      {lbl:'Stage II → Stage III', mats:[['200×','Wailing Stone'],['9,999×','High-Purity Bayld'],['10,000×','Beitetsu'],['28,000','Reforge Marks']], gate:'HL Rank V · Paragon Tier 5 cleared · Apex Floor 100 · All Coalition ranks at Legend'},
+    ],
+    weapons:[
+      {type:'Great Sword',jobs:'WAR · DRK',name:'Epeolatry'},
+      {type:'Club',jobs:'GEO',name:'Idris'},
+    ],
+  },
+};
+
+// ── REAL CATALOG DATA ─────────────────────────────────────────────────────────
+// Injected by tools/docgen/generators/weapon_forge.py from weapon_forge_catalog.lua.
+// Keyed REAL[category][weaponType] = { names:[...], labels:[...], forge:[{to,mats,gate}] }.
+// names.length === forge.length + 1 (base weapon + one result per forge step).
+// Only the two implemented paths (prime, aeonic) are populated; the rest fall back
+// to the generic retail-tier model built from the CATS[cat].forge display data.
+const REAL = {"prime":{"Hand-to-Hand":{"names":["Ajja Knuckles","Tokko Knuckles","Varga Purnikawa"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Dagger":{"names":["Ajja Knife","Crepuscular Knife","Mpu Gandring"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Sword":{"names":["Ajja Sword","Flametongue","Caliburnus"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Great Sword":{"names":["Ajja Claymore","Raetic Algol","Helheim"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Axe":{"names":["Ajja Axe","Barbarity","Spalirisos"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Great Axe":{"names":["Ajja Chopper","Hepatizon Axe","Laphria"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Scythe":{"names":["Ajja Scythe","Maliya Sickle","Foenaria"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Polearm":{"names":["Ajja Lance","Eletta Lance","Gae Buide"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Katana":{"names":["Ajja Katana","Koga Shinobi-Gatana","Dokoku"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Great Katana":{"names":["Ajja Tachi","Beryllium Tachi","Kusanagi"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Club":{"names":["Ajja Rod","Kaja Rod","Lorg Mor"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Staff":{"names":["Ajja Staff","Kaja Staff","Opashoro"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Archery":{"names":["Ajja Bow","Exalted Bow +1","Pinaka"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Marksmanship":{"names":["Pulfanxa","Holliday","Earp"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]}},"aeonic":{"Hand-to-Hand":{"names":["Malformed Knuckles","Ajja Knuckles","Tokko Knuckles","Godhands"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Might"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Might"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Might"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Dagger":{"names":["Malformed Knife","Ajja Knife","Crepuscular Knife","Aeneas"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Celerity"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Celerity"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Celerity"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Sword":{"names":["Malformed Sword","Ajja Sword","Flametongue","Sequence"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Glory"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Glory"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Glory"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Great Sword":{"names":["Malformed Claymore","Ajja Claymore","Raetic Algol","Lionheart"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Righteousness"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Righteousness"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Righteousness"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Axe":{"names":["Malformed Axe","Ajja Axe","Barbarity","Tri-edge"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Bravery"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Bravery"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Bravery"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Great Axe":{"names":["Malformed Greataxe","Ajja Chopper","Hepatizon Axe","Chango"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Force"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Force"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Force"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Scythe":{"names":["Malformed Scythe","Ajja Scythe","Maliya Sickle","Anguta"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Vigor"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Vigor"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Vigor"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Polearm":{"names":["Malformed Lance","Ajja Lance","Eletta Lance","Trishula"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Fortitude"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Fortitude"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Fortitude"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Katana":{"names":["Malformed Katana","Ajja Katana","Koga Shinobi-Gatana","Heishi Shorinken"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Legerity"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Legerity"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Legerity"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Great Katana":{"names":["Malformed Tachi","Ajja Tachi","Beryllium Tachi","Dojikiri Yasutsuna"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Decisiveness"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Decisiveness"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Decisiveness"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Club":{"names":["Malformed Rod","Ajja Rod","Kaja Rod","Tishtrya"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Sacrifice"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Sacrifice"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Sacrifice"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Staff":{"names":["Malformed Staff","Ajja Staff","Kaja Staff","Khatvanga"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Virtue"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Virtue"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Virtue"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Archery":{"names":["Malformed Bow","Ajja Bow","Exalted Bow +1","Fail-not"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Transcendence"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Transcendence"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Transcendence"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Marksmanship":{"names":["Malformed Culverin","Pulfanxa","Holliday","Fomalhaut"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Harmony"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Harmony"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Harmony"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]}}};
+
+// ── STATE ──────────────────────────────────────────────────────────────────────
+let activeCat = 'prime', activeFilter = 'All', selCard = null;
+const widget = document.querySelector('.wf-widget');
+
+// ── EMBER CANVAS ──────────────────────────────────────────────────────────────
+// Created once, moved into the last (final) chain box each time the chain rebuilds.
+const ec = document.createElement('canvas');
+ec.id = 'wfEc';
+const ex = ec.getContext('2d');
+const embers = [];
+function resizeEc() { if (!ec.parentElement) return; const r = ec.parentElement.getBoundingClientRect(); ec.width=r.width || 160; ec.height=r.height || 110; }
+window.addEventListener('resize', resizeEc);
+class Ember {
+  constructor() { this.reset(); }
+  reset() { this.x=Math.random()*ec.width; this.y=ec.height+3; this.vx=(Math.random()-.5)*.5; this.vy=-(Math.random()*.65+.2); this.life=0; this.max=75+Math.random()*65; this.r=.7+Math.random()*1.3; }
+  tick() { this.x+=this.vx; this.y+=this.vy; this.life++; if(this.life>this.max) this.reset(); }
+  draw(a) { const t=this.life/this.max,op=t<.2?t/.2:1-t; ex.beginPath(); ex.arc(this.x,this.y,this.r*(1-t*.4),0,Math.PI*2); ex.fillStyle=`${a}${Math.round(op*.5*255).toString(16).padStart(2,'0')}`; ex.fill(); }
+}
+for(let i=0;i<22;i++){const e=new Ember();e.life=Math.random()*e.max;embers.push(e);}
+let animRunning = true;
+function tick(){ if(!animRunning) return; ex.clearRect(0,0,ec.width,ec.height); const a=CATS[activeCat].accent; embers.forEach(e=>{e.tick();e.draw(a);}); requestAnimationFrame(tick); }
+tick();
+
+// ── ACCENT ────────────────────────────────────────────────────────────────────
+function setAccent(cat) {
+  if (widget) widget.style.setProperty('--cat', cat.accent);
+}
+
+// ── CATEGORY TABS ─────────────────────────────────────────────────────────────
+const strip = document.getElementById('wfCatStrip');
+const cbtns = {};
+Object.entries(CATS).forEach(([k,cat]) => {
+  const b = document.createElement('button');
+  b.className = 'cbt';
+  b.style.setProperty('--cat', cat.accent);
+  b.innerHTML = cat.label + `<span class="cbt-sub">${cat.sub}</span>`;
+  b.onclick = () => selectCat(k);
+  strip.appendChild(b);
+  cbtns[k] = b;
+});
+
+function selectCat(k) {
+  Object.values(cbtns).forEach(b => b.classList.remove('on'));
+  cbtns[k].classList.add('on');
+  cbtns[k].style.setProperty('--cat', CATS[k].accent);
+  activeCat = k;
+  setAccent(CATS[k]);
+  const cat = CATS[k];
+  const lore = document.getElementById('wfCatLore');
+  lore.classList.add('fading');
+  setTimeout(() => { lore.innerHTML = cat.lore; lore.classList.remove('fading'); }, 160);
+  document.getElementById('wfSrcText').innerHTML = cat.source;
+  activeFilter = 'All'; selCard = null;
+  buildFilter(k); buildGrid(k, 'All');
+  clearChain();
+}
+
+// ── COSTS ─────────────────────────────────────────────────────────────────────
+function matLi(q, n, highlight) {
+  const cls = highlight ? ' style="color:var(--cat)"' : '';
+  return `<li class="mi"><span class="mq"${cls}>${q}</span><span class="mn"${cls}>${n}</span></li>`;
+}
+function resolveMatName(name, weaponType) {
+  if (name !== '[see weapon]') return name;
+  if (activeCat === 'empyrean') return EMPY_MAT[weaponType] || name;
+  return RELIC_MAT[weaponType] || name;
+}
+// Build the unified chain model for a weapon: real catalog data where we have it
+// (prime, aeonic), otherwise the generic retail-tier model.
+function getChainModel(w) {
+  const real = REAL[activeCat] && REAL[activeCat][w.type];
+  if (real) {
+    return {
+      names:  real.names.slice(),
+      labels: real.labels.slice(),
+      forge:  real.forge.map(s => ({ to: s.to, mats: s.mats.map(m => m.slice()), gate: s.gate })),
+      sub:    w.type + ' · ' + w.jobs,
+    };
+  }
+  const cat = CATS[activeCat];
+  return {
+    names:  [ w.name, w.name + ' · 119', w.name + ' · 119 II', w.name + ' · 119 III' ],
+    labels: [ 'Base · Earned', 'Stage I', 'Stage II', cat.s3lbl ],
+    forge:  cat.forge.map(s => ({
+      to:   null,
+      mats: s.mats.map(([q,n]) => [q, resolveMatName(n, w.type)]),
+      gate: s.gate,
+    })),
+    sub: w.type + ' · ' + w.jobs,
+  };
+}
+
+function boxClass(i, n) { if (i === 0) return 's0'; if (i === n-1) return 's3'; if (i === 1) return 's1'; return 's2'; }
+
+function buildCosts(model) {
+  const row = document.getElementById('wfCostRow');
+  row.innerHTML = '';
+  model.forge.forEach((step, i) => {
+    const card = document.createElement('div');
+    card.className = 'cc';
+    const hcls = i === 0 ? 'h1' : (i === model.forge.length - 1 ? 'h3' : 'h2');
+    const from   = (model.labels[i]   || '').split(' · ')[0];
+    const target = (model.labels[i+1] || 'Next').split(' · ')[0];
+    const mats = step.mats.map(([q,n]) => matLi(q, n)).join('') + matLi('+', 'Previous stage weapon (consumed)');
+    card.innerHTML =
+      `<div class="cc-hd ${hcls}">${from} → ${target}</div>` +
+      `<ul class="ml">${mats}</ul>` +
+      `<div class="mg">GATE · ${step.gate}</div>`;
+    row.appendChild(card);
+  });
+}
+
+// ── FILTER ────────────────────────────────────────────────────────────────────
+function buildFilter(k) {
+  const row = document.getElementById('wfFiltRow');
+  row.innerHTML = '';
+  const types = ['All', ...new Set(CATS[k].weapons.map(w => w.type))];
+  types.forEach(t => {
+    const b = document.createElement('button');
+    b.className = 'fb' + (t === 'All' ? ' on' : '');
+    b.textContent = t;
+    b.onclick = () => {
+      row.querySelectorAll('.fb').forEach(x => x.classList.remove('on'));
+      b.classList.add('on');
+      activeFilter = t;
+      buildGrid(activeCat, t);
+    };
+    row.appendChild(b);
+  });
+}
+
+// ── WEAPON GRID ───────────────────────────────────────────────────────────────
+function buildGrid(k, filter) {
+  const grid = document.getElementById('wfWgrid');
+  grid.innerHTML = '';
+  selCard = null;
+  const list = CATS[k].weapons.filter(w => filter === 'All' || w.type === filter);
+  if (!list.length) { grid.innerHTML = '<div class="empty-grid">No weapons match this filter.</div>'; return; }
+  list.forEach(w => {
+    const d = document.createElement('div');
+    d.className = 'wc';
+    d.innerHTML = `<div class="wc-tp">${w.type}</div><div class="wc-nm">${w.name}</div><div class="wc-jb">${w.jobs}</div>`;
+    d.onclick = () => { if (selCard) selCard.classList.remove('sel'); d.classList.add('sel'); selCard = d; updateChain(w); };
+    grid.appendChild(d);
+  });
+}
+
+// ── CHAIN ─────────────────────────────────────────────────────────────────────
+// Renders a variable-length chain (base weapon + one box per forge step) into
+// #wfChain, moving the shared ember canvas into the final box.
+function buildChain(model, blank) {
+  const chain = document.getElementById('wfChain');
+  chain.innerHTML = '';
+  const n = model.names.length;
+  chain.style.gridTemplateColumns = '1fr' + ' 52px 1fr'.repeat(n - 1);
+  for (let i = 0; i < n; i++) {
+    const isLast = i === n - 1;
+    const box = document.createElement('div');
+    box.className = 'stg ' + boxClass(i, n);
+    const nm   = blank ? '—' : model.names[i];
+    const note = (i === 0 || isLast) ? (model.sub || '') : '';
+    box.innerHTML =
+      `<div class="stg-lbl">${model.labels[i] || ''}</div>` +
+      `<div class="stg-name${blank ? ' empty' : ''}" style="position:relative;z-index:1;">${nm}</div>` +
+      `<div class="stg-note" style="position:relative;z-index:1;">${note}</div>`;
+    if (isLast) box.insertBefore(ec, box.firstChild);
+    chain.appendChild(box);
+    if (!isLast) {
+      const arr = document.createElement('div');
+      arr.className = 'arr';
+      const qty = model.forge[i] ? model.forge[i].mats[0][0] : '';
+      arr.innerHTML = `<div class="al"></div><div class="ah"></div><div class="an">${blank ? '' : qty}</div>`;
+      chain.appendChild(arr);
+    }
+  }
+  resizeEc();
+}
+function clearChain() {
+  const rep = CATS[activeCat].weapons[0];
+  buildChain(getChainModel(rep), true);
+  document.getElementById('wfCostRow').innerHTML = '';
+}
+function updateChain(w) {
+  const model = getChainModel(w);
+  const chain = document.getElementById('wfChain');
+  chain.style.transition = 'opacity .18s';
+  chain.style.opacity = '0';
+  setTimeout(() => { buildChain(model, false); buildCosts(model); chain.style.opacity = '1'; }, 120);
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+selectCat('prime');
+})();
+</script>
 <!-- DOCGEN:END id="weapon-forge-widget" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: placeholder -->
-_Last updated: 2026-07-02 00:00 UTC_
+<!-- content-hash: 919d63db563a -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

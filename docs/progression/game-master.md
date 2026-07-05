@@ -23,11 +23,11 @@ The roster below reflects what's currently live on the server.
 <!-- DOCGEN:BEGIN id="game-master-difficulty" -->
 | Difficulty | Waves | Mobs/wave | Wave delay | Per-kill bonus | Completion bonus |
 |---|---:|---:|---:|---:|---:|
-| Easy | 3 | 1 | 20s | +5 marks | **+50 marks** |
-| Normal | 5 | 1 | 25s | +15 marks | **+200 marks** |
-| Hard | 5 | 2 | 25s | +30 marks | **+800 marks** |
-| Insane | 5 | 3 | 15s | +70 marks | **+3000 marks** |
-| Nightmare | 7 | 4 | 10s | +130 marks | **+10000 marks** |
+| Easy | 3 | 1 | 20s | +20 marks | **+50 marks** |
+| Normal | 5 | 1 | 25s | +20 marks | **+100 marks** |
+| Hard | 5 | 2 | 25s | +20 marks | **+200 marks** |
+| Insane | 5 | 3 | 15s | +20 marks | **+400 marks** |
+| Nightmare | 7 | 4 | 10s | +20 marks | **+800 marks** |
 <!-- DOCGEN:END id="game-master-difficulty" -->
 
 ## Mob roster per difficulty
@@ -63,6 +63,6 @@ The pool can grow or shrink over time; the in-game options always reflect what's
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: ed6167b54d29 -->
-_Last updated: 2026-06-14 05:50 UTC_
+<!-- content-hash: 40ab96dbca42 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

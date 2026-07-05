@@ -90,15 +90,15 @@ Type `!ah` from anywhere to open the Auction House menu. You don't need to trave
 <!-- DOCGEN:BEGIN id="ah-prices" -->
 | Equip Level | Price |
 |---|---|
-| 1–10 | 140,000 gil |
-| 11–20 | 170,000 gil |
-| 21–30 | 210,000 gil |
-| 31–40 | 260,000 gil |
-| 41–50 | 330,000 gil |
-| 51–60 | 410,000 gil |
-| 61–70 | 510,000 gil |
-| 71–75 | 640,000 gil |
-| 76–90 | 800,000 gil |
+| 1–10 | 14,000 gil |
+| 11–20 | 17,000 gil |
+| 21–30 | 21,000 gil |
+| 31–40 | 26,000 gil |
+| 41–50 | 33,000 gil |
+| 51–60 | 41,000 gil |
+| 61–70 | 51,000 gil |
+| 71–75 | 64,000 gil |
+| 76–90 | 80,000 gil |
 <!-- DOCGEN:END id="ah-prices" -->
 
 ### Guaranteed Buy-Back
@@ -164,6 +164,6 @@ First Blood moments are real on the Relaunch server. If you're the first person 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 176f37d14f26 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 8f6580291137 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

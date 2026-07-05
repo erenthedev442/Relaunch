@@ -68,6 +68,6 @@ Prefer to edit `Windower4/settings/settings.xml` by hand? The profile looks like
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 78f396f43492 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 7c73955962f6 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

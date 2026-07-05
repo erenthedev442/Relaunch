@@ -8,60 +8,58 @@
 
 1. Travel to **Mhaura** (use a Home Point or standard travel).
 2. Find the **Sorrowful Sage** NPC — he stands near the Ambuscade NPCs at the docks.
-3. Talk to him to register and enter the Nyzul Isle Investigation instance.
+3. Talk to him and pick **Begin assault** — you (and nearby party members) are transported straight into the Nyzul staging room.
 
 No Assault rank, no Imperial Standing, no prior quest chain — just talk and enter.
 
-!!! note "Retail NPC still exists"
-    The standard Nyzul Isle Investigation entry point (via Azouph Isle Staging Point) still works if you have the retail Assault access. The Sorrowful Sage is simply an additional shortcut.
+!!! note "The Sage is the supported way in"
+    The retail entry chain (Assault rank, Nyzul Isle Assault Orders, the Azouph Isle staging point) is **not wired up** on this server — the retail mission NPC never hands out assault orders. Use the Sorrowful Sage. Finishing or leaving a run returns the party to Mhaura.
 
 ---
 
 ## What is Nyzul Isle?
 
-A 100-floor dungeon you climb within a **30-minute timer**. Each run starts from floor 1 (or a previously saved floor), and every five floors you'll find a **Rune of Transfer** — a crystal that lets you save your current floor progress and warp up or down.
+A 100-floor dungeon you climb within a **30-minute timer**. Each run starts from floor 1 (or a floor you've unlocked — see below), and every floor holds a **Rune of Transfer** — the crystal that carries you up to the next floor once the floor's objective is complete.
 
 ### Floor objectives
 
-Each floor presents one of several mission types before you can proceed to the next Rune of Transfer:
+Each floor presents one of these mission types before the Rune of Transfer will move you on:
 
 | Objective | What to do |
 |---|---|
-| **Smite all enemies** | Kill every mob on the floor |
+| **Eliminate enemy leader** | Hunt down and kill the floor's leader — also the fixed objective on every boss floor |
+| **Eliminate specified enemies** | Several specific targets are called out — kill all of them |
+| **Activate all lamps** | Locate and light the runic lamps scattered on the floor |
 | **Eliminate specified enemy** | One specific target is called out — kill that mob |
-| **Eliminate specified enemies** | Several specific targets — kill all of them |
-| **Exterminate** | Kill a quota of enemies (count shown on screen) |
-| **No objective** | Lamps already lit — proceed straight to the next floor |
-| **Lamp floor** | Locate and illuminate the lamps scattered on the floor |
+| **Eliminate all enemies** | Kill every mob on the floor |
+| **Free floor** | A rare lucky floor with no objective — proceed straight to the Rune of Transfer |
 
-**Lamps** are a recurring mechanic: certain floors have brazier-style lamps that must all be illuminated before the floor unlocks. Lamps may also power switches that open gates to the next Rune.
+**Lamps** come in 3 variants: register every party member on a lamp; light all lamps at the same time; light the lamps in the correct order.
+
+Some floors also carry a bonus discipline on top of the main objective — **Avoid agro** (don't be detected), **Do not destroy** (spare the flagged mobs) — breaking it costs you time or tokens.
 
 ### Boss floors
 
-Every 20 floors there is a boss fight. These are harder than regular floor mobs and gate your progress to the next 20-floor block.
+Every **20 floors** (20, 40, 60, ...) is a boss floor: the objective is always **Eliminate enemy leader** in a dedicated arena layout. Bosses are harder than regular floor mobs and gate your progress to the next 20-floor block.
 
-| Floor | Boss tier |
-|---|---|
-| 20 | Archaic Rampart (Archaic) |
-| 40 | Second boss tier |
-| 60 | Third boss tier |
-| 80 | Fourth boss tier |
-| 100 | Floor 100 boss — the final challenge |
+Floor 100 is the final challenge — its bosses carry guaranteed weapon drops (see Rewards).
 
 ### Saving your progress
 
-The **Rune of Transfer** on each floor lets you:
+Your first visit to the staging-room Rune of Transfer hands you the **Runic Disc** key item, which records your progress:
 
-- **Save** your current floor so future runs can start here.
-- **Warp** to a previously saved floor, skipping already-cleared content.
-
-Your saved floor persists between runs. Work up the tower session by session.
+- Progress is banked in **5-floor blocks** — climbing unlocks starting floors 1, 6, 11, ... up to 96.
+- Starting above floor 1 costs **tokens** earned on previous runs (500–1900 per entry, rising with the floor).
+- Use the Rune of Transfer to **leave before the timer expires** and your progress (and tokens) are banked for next time.
 
 ---
 
 ## Rewards
 
-Nyzul Isle drops gear from the **Nyzul armor sets** — the Askar, Denali, Goliard, Ares, and Usukane lines — along with various other items. Defeating a floor NM spawns a treasure coffer; take the Unappraised item inside to the appraiser in the instance to reveal the actual gear.
+- **Vigil weapons** — every NM on the climb has a 20% chance to drop one, and floor-100 bosses **guarantee** a random vigil weapon plus one for the disc-holder's job.
+- **Nyzul armor** — the Askar, Denali, and Goliard lines from floor NMs and bosses.
+- **Nyzul tokens** — earned per cleared floor; spend them to resume from saved floors and buy supplies from the in-run Vending Box.
+- **Runic Key** — clearing floor 100 grants the key item.
 
 ### Floor-100 Vigil Weapons
 
@@ -73,7 +71,7 @@ On a **floor 100** clear the boss drops one random Vigil Weapon from the full po
 
 ### NM drop table
 
-Each NM drops one Unappraised chest of the listed type. The gear you receive is drawn from the weighted pool shown below (percentages are rounded).
+Each floor NM drops one Unappraised chest; take it to the in-instance appraiser to reveal the gear, drawn from the weighted pool below (percentages rounded).
 
 <!-- DOCGEN:BEGIN id="nyzul-nm-drops" -->
 | NM | Chest type | Possible drops |
@@ -165,9 +163,14 @@ Each NM drops one Unappraised chest of the listed type. The gear you receive is 
 | Zizzy Zillah | Sword | Bronze Sword (60%), Uchigatana P1 (35%), Namikirimaru (5%) |
 <!-- DOCGEN:END id="nyzul-nm-drops" -->
 
+??? quote "The Sage's own briefing (in-game text)"
+    - 100 floors, 30-min limit. Clear each floor objective, ride the Rune of Transfer upward.
+    - Bosses every 20 floors drop vigil weapons (Mythic path) + Askar/Denali/Goliard gear. Floor 100 grants the Runic Key.
+    - Earn Nyzul tokens to resume from saved floors and buy supplies. Exit any time before the timer to bank your progress.
+
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: placeholder -->
-_Last updated: 2026-07-02 00:00 UTC_
+<!-- content-hash: 9a09020639c4 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

@@ -214,6 +214,6 @@ Rebirth and [Ascension](prestige.md) are **separate systems that share one menu 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6f4915767eed -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 55dce0b1de11 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

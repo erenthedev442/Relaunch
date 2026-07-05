@@ -1,14 +1,14 @@
 # Player Commands
 
-These chat commands are available to every player on Legendary (no GM rank required). Type them in any chat channel with the `!` prefix.
+These chat commands are available to every player on this server (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 82
+**Total player-accessible commands:** 88
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    56 of the commands below are **unique to Legendary** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    59 of the commands below are **unique to this server** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -22,11 +22,14 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!ambuscade` | string | _(no description)_ | :material-puzzle: **custom** |
 | `!aoews` | string | Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (Leafallia, !leaf). Cannot be changed after setting. |  |
 | `!apex` | string | Apex Trials helper -- check your record / Paragon Points, start a climb, or bail out of one. | :material-puzzle: **custom** |
+| `!auginfo` | — | _(no description)_ |  |
+| `!augment` | t, r, u, e | _(no description)_ |  |
 | `!augstats` | — | Shows the true augment contributions on your equipped gear. |  |
 | `!augwarp` | string | Warp to a zone that drops a catalyst for a given augment stat. Usage: !augwarp <stat or catalyst name> (e.g. !augwarp Haste). | :material-puzzle: **custom** |
 | `!autojp` | string | Auto-spends all unspent job points on whichever categories of the player's CURRENT MAIN JOB can still be upgraded, distributing breadth-first so every category grows evenly. | :material-puzzle: **custom** |
 | `!automerits` | string | Auto-spends all unspent merit points on whichever categories can still be upgraded, distributing breadth-first so every category grows evenly rather than one rank stack getting maxed first. | :material-puzzle: **custom** |
 | `!buff` | string | Grants the zone-appropriate regional buff (Signet / Sanction / Sigil / Ionis) plus Refresh, Regen, Regain, and Composure to the player. Refresh = 10% of max MP per tick Regen   = 10% of max HP per tick Regain  = scales with player level (1 per 10 levels, min 1) |  |
+| `!capacity` | string | Warps you to a Capacity Point farm camp. Usage: !capacity            -> Bibiki Bay (default) !capacity bibiki     -> Bibiki Bay !capacity ranperre   -> King Ranperre's Tomb Landing spots MUST stay in sync with warpPos in the corresponding catalog files (capacity_farm_catalog.lua / ranperre_farm_catalog.lua). | :material-puzzle: **custom** |
 | `!checkexpbonus` | — | Prints your current EXP_BONUS mod (gear/augments that boost EXP gain) and the per-kill effect it has. Useful for verifying that an EXP augment is actually attached to the player after equipping the piece. |  |
 | `!dig` | — | Treasure Hunting - dig for the strongbox your treasure map points at. Maps drop from Hunting League kills. | :material-puzzle: **custom** |
 | `!empower` | string, string | View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC in Leafallia (see SpellSkillMastery.lua). | :material-puzzle: **custom** |
@@ -42,6 +45,7 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!henge` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!home` | string | Sends the target to their homepoint. |  |
 | `!hovershot` | — | _(no description)_ | :material-puzzle: **custom** |
+| `!hub` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!hunt` | — | Warps you to the Hunting League hub in Escha - Zi'Tah. The hub has three NPCs in a row: Seals (leftmost)  — tier info, rank-up, seal shop Zone Guide        — one-click teleport to any tier cluster area Accessories       — neck / earring / ring / back / waist shop From the Zone Guide, pick your tier to warp straight to that cluster's spawner NPC without crossing the zone on foot. Landing spot stays in sync with sealsPos in hunting_league_catalog. |  |
 | `!hunt1` | — | Warps you to the Tier 1 (Rank I - Initiate) hunt spawner in Escha - Zi'Tah. NMs: Leaping Lizzy, Valkurm Emperor, Tom Tit Tat. |  |
 | `!hunt2` | — | Warps you to the Tier 2 (Rank II - Hunter) hunt spawner in Escha - Zi'Tah. NMs: Roc, Bomb Queen, Aquarius. |  |
@@ -63,6 +67,7 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!offhand` | string | _(no description)_ | :material-puzzle: **custom** |
 | `!optin` | — | Opts the player INTO leaderboards and Discord tracking. This is the default state for new characters. | :material-puzzle: **custom** |
 | `!optout` | — | Opts the player OUT of leaderboards and Discord tracking. This character is excluded from every leaderboard entirely. | :material-puzzle: **custom** |
+| `!paragon` | — | _(no description)_ |  |
 | `!pos` | string | Sets the players position. If none is given, prints out the position instead. |  |
 | `!primevoucher` | string, int | [GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in Leafallia (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it. | :material-puzzle: **custom** |
 | `!profile` | string | Displays a competitive stat summary for a player.  With no argument shows your own stats; with a name shows that player's (they must be online - offline players can't be queried via Lua). | :material-puzzle: **custom** |
@@ -80,9 +85,10 @@ These chat commands are available to every player on Legendary (no GM rank requi
 | `!releaseme` | string, string | Force-clears stuck event / NPC-sequence state on a player. |  |
 | `!shop` | string, string | _(no description)_ | :material-puzzle: **custom** |
 | `!streak` | — | Shows the current kill streak count, active bonus tier, and seconds remaining in the 5-minute window before reset. | :material-puzzle: **custom** |
+| `!thcheck` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!tier` | — | Shows the player's current Hunting League tier, the NMs available at that tier, and exactly what is needed to unlock the next rank. | :material-puzzle: **custom** |
 | `!time` | — | Shows server time (UTC), hours until daily reset, days until weekly reset (Monday 00:00 UTC), and any active seasonal event. | :material-puzzle: **custom** |
-| `!top` | string | Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at legendary-ffxi.pages.dev | :material-puzzle: **custom** |
+| `!top` | string | Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at fjb-relaunch.pages.dev | :material-puzzle: **custom** |
 | `!tournament` | string, string, string | Legendary Tournament — last-person-standing PvE wave event. | :material-puzzle: **custom** |
 | `!tower` | string, string | _(no description)_ | :material-puzzle: **custom** |
 | `!trustattack` | — | Run once to turn ON: while on, you AUTO-ENGAGE whatever mob you have targeted (cursor target), so you and your trusts attack it hands-free -- point at the next mob and you all switch to it. Run again to turn OFF. Macro:  /console !trustattack | :material-puzzle: **custom** |
@@ -229,6 +235,16 @@ Apex Trials helper -- check your record / Paragon Points, start a climb, or bail
 
 **Parameter types:** string
 
+### `!auginfo`
+
+**Usage:** `auginfo`
+
+### `!augment`
+
+**Usage:** `augment`
+
+**Parameter types:** t, r, u, e
+
 ### `!augstats`
 
 Shows the true augment contributions on your equipped gear.
@@ -240,6 +256,14 @@ Shows the true augment contributions on your equipped gear.
 Warp to a zone that drops a catalyst for a given augment stat. Usage: !augwarp <stat or catalyst name> (e.g. !augwarp Haste).
 
 **Usage:** `augwarp`
+
+**Parameter types:** string
+
+### `!capacity`  _(custom)_
+
+Warps you to a Capacity Point farm camp. Usage: !capacity            -> Bibiki Bay (default) !capacity bibiki     -> Bibiki Bay !capacity ranperre   -> King Ranperre's Tomb Landing spots MUST stay in sync with warpPos in the corresponding catalog files (capacity_farm_catalog.lua / ranperre_farm_catalog.lua).
+
+**Usage:** `capacity`
 
 **Parameter types:** string
 
@@ -314,6 +338,10 @@ Lists all custom commands with a one-line description.
 ### `!hovershot`  _(custom)_
 
 **Usage:** `hovershot`
+
+### `!hub`  _(custom)_
+
+**Usage:** `hub`
 
 ### `!hunt`
 
@@ -431,6 +459,10 @@ Opts the player OUT of leaderboards and Discord tracking. This character is excl
 
 **Usage:** `optout`
 
+### `!paragon`
+
+**Usage:** `paragon`
+
 ### `!primevoucher`  _(custom)_
 
 [GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in Leafallia (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it.
@@ -527,6 +559,10 @@ Shows the current kill streak count, active bonus tier, and seconds remaining in
 
 **Usage:** `streak`
 
+### `!thcheck`  _(custom)_
+
+**Usage:** `thcheck`
+
 ### `!tier`  _(custom)_
 
 Shows the player's current Hunting League tier, the NMs available at that tier, and exactly what is needed to unlock the next rank.
@@ -541,7 +577,7 @@ Shows server time (UTC), hours until daily reset, days until weekly reset (Monda
 
 ### `!top`  _(custom)_
 
-Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at legendary-ffxi.pages.dev
+Shows the top 5 currently online players ranked by a stat. Opted-out players are excluded.  For full server-wide rankings see the website at fjb-relaunch.pages.dev
 
 **Usage:** `top`
 
@@ -628,6 +664,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3cf1669d8133 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: a870fbf51070 -->
+_Last updated: 2026-07-05 07:37 UTC_
 <!-- DOCGEN:END id="last-updated" -->

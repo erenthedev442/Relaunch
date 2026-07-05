@@ -317,6 +317,6 @@ Trade catalysts to the **Augment Moogle** to apply them. The **T-number** is the
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e8006ef621b6 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 489eeaf0c878 -->
+_Last updated: 2026-07-05 07:43 UTC_
 <!-- DOCGEN:END id="last-updated" -->
