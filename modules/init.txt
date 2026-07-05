@@ -45,3 +45,4 @@ custom/lua/
 # (ah_announcement.cpp, ah_pagination.cpp) stay opted out.
 custom/cpp/auto_spend_bindings.cpp
 custom/cpp/cross_job_ability_bindings.cpp
+custom/cpp/fjb_entity_bindings.cpp

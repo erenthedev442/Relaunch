@@ -4937,65 +4937,6 @@ void CLuaBaseEntity::addShopItem(uint16 itemID, double rawPrice, const sol::obje
 }
 
 /************************************************************************
- *  Function: setShopCurrency()
- *  Purpose : Make the currently-built shop charge an inventory item instead of
- *            gil (FJB custom -- used by the Hunting League seal/medal vendors).
- *  Example : player:setShopCurrency(xi.item.SOME_SEAL)   -- 0 restores gil
- *  Notes   : Call after createShop(); reset to gil (0) by the shop's Clean().
- ************************************************************************/
-
-void CLuaBaseEntity::setShopCurrency(uint16 itemID)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return;
-    }
-
-    static_cast<CCharEntity*>(m_PBaseEntity)->Container->setShopCurrency(itemID);
-}
-
-/************************************************************************
- *  Function: setShopCurrencyVar()
- *  Purpose : Make the currently-built shop charge a CharVar (e.g. the dungeon
- *            "Infamy" currency) instead of gil or an inventory item, letting a
- *            non-inventory currency use the native shop window (FJB custom).
- *  Example : player:setShopCurrencyVar("Infamy")   -- "" restores gil/item
- *  Notes   : Call after createShop(); reset by the shop's Clean().
- ************************************************************************/
-
-void CLuaBaseEntity::setShopCurrencyVar(std::string varName)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return;
-    }
-
-    static_cast<CCharEntity*>(m_PBaseEntity)->Container->setShopCurrencyVar(varName);
-}
-
-/************************************************************************
- *  Function: setShopCurrencyName()
- *  Purpose : Make the currently-built shop charge a named char_points currency
- *            (e.g. "allied_notes") instead of gil/item/CharVar, so a points
- *            currency still uses the native shop window (FJB custom).
- *  Example : player:setShopCurrencyName("allied_notes")   -- "" restores gil
- *  Notes   : Call after createShop(); reset by the shop's Clean().
- ************************************************************************/
-
-void CLuaBaseEntity::setShopCurrencyName(std::string curName)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling function (%s).", m_PBaseEntity->getName());
-        return;
-    }
-
-    static_cast<CCharEntity*>(m_PBaseEntity)->Container->setShopCurrencyName(curName);
-}
-
-/************************************************************************
  *  Function: getCurrentGPItem()
  *  Purpose : Returns the current Guild Point Item needed
  *  Example : player:getCurrentGPItem(guildID)
@@ -9474,24 +9415,6 @@ void CLuaBaseEntity::setJobPoints(uint16 amount)
     PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::JOB_POINTS>(PChar);
 }
 
-/************************************************************************
- *  Function: resetJobPoints()
- *  Purpose : Fully wipes the player's CURRENT main job's Job Points
- *  Example : player:resetJobPoints()
- *  Notes   : FJB custom -- used by the Job Rebirth system
- ************************************************************************/
-void CLuaBaseEntity::resetJobPoints()
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Attempt to reset Job Points for non-PC (%s).", m_PBaseEntity->getName());
-        return;
-    }
-
-    auto* PChar = static_cast<CCharEntity*>(m_PBaseEntity);
-    PChar->PJobPoints->ResetJobPoints();
-    PChar->pushPacket<GP_SERV_COMMAND_MISCDATA::JOB_POINTS>(PChar);
-}
 
 /************************************************************************
  *  Function: addJobPoints()
@@ -9794,22 +9717,6 @@ void CLuaBaseEntity::delCurrency(const std::string& currencyType, int32 amount)
     charutils::AddPoints(PChar, currencyType.c_str(), -amount);
 }
 
-/************************************************************************
- *  Function: resetAlterEgoUpgrades()
- *  Purpose : Clears all alter ego upgrade ranks (March 2026 AEP system).
- *  Example : player:resetAlterEgoUpgrades()
- *  Notes   : Does not refund spent AEP. GM use only.
- ************************************************************************/
-
-void CLuaBaseEntity::resetAlterEgoUpgrades()
-{
-    auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
-    if (PChar == nullptr)
-    {
-        return;
-    }
-    charutils::ResetAlterEgoUpgrades(PChar);
-}
 
 /************************************************************************
  *  Function: getCP()
@@ -14658,43 +14565,6 @@ void CLuaBaseEntity::printAllMods()
     };
 }
 
-/************************************************************************
- *  Function: addTrait() / delTrait() / hasTrait()
- *  Purpose : Set/clear/query a trait bit in m_TraitList (player only).
- *  Example : player:addTrait(xi.trait.DUAL_WIELD)
- *  Notes   : Trait bits are in-memory only; re-apply on every zone-in.
- ************************************************************************/
-
-void CLuaBaseEntity::addTrait(uint16 traitID)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling addTrait (%s).", m_PBaseEntity->getName());
-        return;
-    }
-    charutils::addTrait(dynamic_cast<CCharEntity*>(m_PBaseEntity), traitID);
-}
-
-void CLuaBaseEntity::delTrait(uint16 traitID)
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling delTrait (%s).", m_PBaseEntity->getName());
-        return;
-    }
-    charutils::delTrait(dynamic_cast<CCharEntity*>(m_PBaseEntity), traitID);
-}
-
-void CLuaBaseEntity::sendCommandData()
-{
-    if (m_PBaseEntity->objtype != TYPE_PC)
-    {
-        ShowWarning("Invalid entity type calling sendCommandData (%s).", m_PBaseEntity->getName());
-        return;
-    }
-    auto* PChar = dynamic_cast<CCharEntity*>(m_PBaseEntity);
-    PChar->pushPacket<GP_SERV_COMMAND_COMMAND_DATA>(PChar);
-}
 
 /************************************************************************
  *  Function: addLatent()
@@ -20209,9 +20079,6 @@ void CLuaBaseEntity::Register()
 
     SOL_REGISTER("createShop", CLuaBaseEntity::createShop);
     SOL_REGISTER("addShopItem", CLuaBaseEntity::addShopItem);
-    SOL_REGISTER("setShopCurrency", CLuaBaseEntity::setShopCurrency);
-    SOL_REGISTER("setShopCurrencyVar", CLuaBaseEntity::setShopCurrencyVar);
-    SOL_REGISTER("setShopCurrencyName", CLuaBaseEntity::setShopCurrencyName);
     SOL_REGISTER("getCurrentGPItem", CLuaBaseEntity::getCurrentGPItem);
     SOL_REGISTER("breakLinkshell", CLuaBaseEntity::breakLinkshell);
     SOL_REGISTER("addLinkpearl", CLuaBaseEntity::addLinkpearl);
@@ -20413,7 +20280,6 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("addCapacityPoints", CLuaBaseEntity::addCapacityPoints);
     SOL_REGISTER("setCapacityPoints", CLuaBaseEntity::setCapacityPoints);
     SOL_REGISTER("setJobPoints", CLuaBaseEntity::setJobPoints);
-    SOL_REGISTER("resetJobPoints", CLuaBaseEntity::resetJobPoints);
     SOL_REGISTER("addJobPoints", CLuaBaseEntity::addJobPoints);
     SOL_REGISTER("delJobPoints", CLuaBaseEntity::delJobPoints);
     SOL_REGISTER("getJobPoints", CLuaBaseEntity::getJobPoints);
@@ -20437,7 +20303,6 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("setCurrency", CLuaBaseEntity::setCurrency);
     SOL_REGISTER("delCurrency", CLuaBaseEntity::delCurrency);
 
-    SOL_REGISTER("resetAlterEgoUpgrades", CLuaBaseEntity::resetAlterEgoUpgrades);
 
     SOL_REGISTER("getAssaultPoint", CLuaBaseEntity::getAssaultPoint);
     SOL_REGISTER("addAssaultPoint", CLuaBaseEntity::addAssaultPoint);
@@ -20658,9 +20523,6 @@ void CLuaBaseEntity::Register()
     SOL_REGISTER("getMaxGearMod", CLuaBaseEntity::getMaxGearMod);
     SOL_REGISTER("getGearModFromSlot", CLuaBaseEntity::getGearModFromSlot);
 
-    SOL_REGISTER("addTrait", CLuaBaseEntity::addTrait);
-    SOL_REGISTER("delTrait", CLuaBaseEntity::delTrait);
-    SOL_REGISTER("sendCommandData", CLuaBaseEntity::sendCommandData);
 
     SOL_REGISTER("addLatent", CLuaBaseEntity::addLatent);
     SOL_REGISTER("delLatent", CLuaBaseEntity::delLatent);

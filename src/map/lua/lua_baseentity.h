@@ -267,9 +267,6 @@ public:
 
     void createShop(uint8 size, const sol::object& arg1);
     void addShopItem(uint16 itemID, double rawPrice, const sol::object& arg2, const sol::object& arg3);
-    void setShopCurrency(uint16 itemID); // FJB: open shop charges this item instead of gil
-    void setShopCurrencyVar(std::string varName); // FJB: open shop charges this CharVar instead of gil
-    void setShopCurrencyName(std::string curName); // FJB: open shop charges this named char_points currency
     auto getCurrentGPItem(uint8 guildId) const -> std::tuple<uint16, uint16>;
     bool breakLinkshell(const std::string& lsname);
     bool addLinkpearl(const std::string& lsname, bool equip);
@@ -473,7 +470,6 @@ public:
     uint16 getSpentJobPoints();
     uint8  getJobPointLevel(uint16 jpType);
     void   setJobPoints(uint16 amount);
-    void   resetJobPoints();
     void   addJobPoints(uint8 jobID, uint16 amount);
     void   delJobPoints(uint8 jobID, uint16 amount);
     uint16 getJobPoints(JOBTYPE jobID);
@@ -490,7 +486,6 @@ public:
     void  setCurrency(const std::string& currencyType, int32 amount);
     void  delCurrency(const std::string& currencyType, int32 amount);
 
-    void  resetAlterEgoUpgrades();
 
     int32 getCP(); // Conquest points, not to be confused with Capacity Points
     void  addCP(int32 cp);
@@ -719,10 +714,7 @@ public:
     void  delMod(uint16 modID, int16 value);
     void  printAllMods();
 
-    void addTrait(uint16 traitID);
-    void delTrait(uint16 traitID);
     bool hasTrait(uint16 traitID);
-    void sendCommandData();
     int16 getMaxGearMod(Mod modId);
     int16 getGearModFromSlot(uint8 slot, Mod modId);
 
