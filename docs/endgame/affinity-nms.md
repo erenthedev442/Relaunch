@@ -2,26 +2,25 @@
 
 Twenty-four of Vana'diel's most legendary Notorious Monsters — HNMs, Sky Gods, Wyrms, and world bosses — are permanently spawned throughout the overworld as **Affinity NMs**. Defeating each one yields a guaranteed **registration trophy** that unlocks an augment affinity at the **Augment Sage** in Leafallia.
 
+<!-- DOCGEN:BEGIN id="affinity-overview" -->
 **What affinities do:** once registered, any gear you augment whose stat falls in your registered category gets a **1.5× multiplier** on that augment roll — so a registered STR affinity turns an STR+10 augment into STR+15.
+<!-- DOCGEN:END id="affinity-overview" -->
 
 ---
 
 ## How it works
 
+<!-- DOCGEN:BEGIN id="affinity-how-it-works" -->
 1. **Find the NM in its zone.** Every Affinity NM is a 15-minute timed spawn — no pop item, no window. Navigate to the zone listed in the table below and look for the NM.
 
-2. **Kill it.** The trophy is granted **directly to the killer** — it does not drop on the floor. You must land the killing blow. If your inventory is full you'll get a warning and the trophy is **lost permanently** — clear a free slot first.
+2. **Kill it.** The trophy is granted straight to **everyone in your party or alliance who is in the zone** — it does not drop on the floor, and it no longer matters who lands the killing blow. Keep a free inventory slot: any member whose inventory is full is warned and skipped, so make room and defeat it again.
 
 3. **Take the trophy to the Augment Sage** at Leafallia (`!leaf`).
 
-4. **Register the affinity.** Each registration costs:
-   - **Hunting League Rank III** (Elite) or higher
-   - **1,000 Hunt Marks**
+4. **Register the affinity.** Each registration costs **Hunting League Rank III (Elite)** or higher and **1,000 Hunt Marks**.
 
 5. **Augment.** Affinities apply automatically through the Augment Moogle. Any roll in a registered category gets ×1.5.
-
-!!! warning "Trophy goes to the killer only"
-    Only the player who lands the killing blow receives the trophy. Coordinate who gets kill credit if hunting in a party.
+<!-- DOCGEN:END id="affinity-how-it-works" -->
 
 ---
 
@@ -40,11 +39,11 @@ Twenty-four of Vana'diel's most legendary Notorious Monsters — HNMs, Sky Gods,
 | Seiryu | Ru'Aun Gardens | Seal of Seiryu | Evasion |
 | Byakko | Ru'Aun Gardens | Seal of Byakko | Haste |
 | Aspidochelone | Cape Teriggan | Spirit Turtle Shell | INT |
-| Ouryu | Riverne - Site B01 | Dragon Talon | Magic ATK |
+| Ouryu | Riverne Site B01 | Dragon Talon | Magic ATK |
 | Bune | The Boyahda Tree | Vial of Chimera Blood | MND |
-| Phoenix | Riverne - Site A01 | Phoenix Feather | Healing |
+| Phoenix | Riverne Site A01 | Phoenix Feather | Healing |
 | Suzaku | Ru'Aun Gardens | Seal of Suzaku | CHR |
-| Kirin | The Shrine of Ru'Avitau | Kirin's Mane | Enmity |
+| Kirin | Shrine of Ru'Avitau | Kirin's Mane | Enmity |
 | Fafnir | Dragon's Aery | Fafnir's Scale | HP |
 | Nidhogg | Dragon's Aery | Handful of Nidhogg's Scales | Regen |
 | Vrtra | Ifrit's Cauldron | Wyrm Beard | MP |
@@ -71,7 +70,7 @@ These NMs are **stat-boosted** beyond their retail versions: 6× base HP, +4,000
 
 **Respawn is 15 minutes.** After a kill the NM reappears at the same point. You can chain multiple kills in one zone session.
 
-**All 24 trophies are 100% guaranteed** to drop for the killer. No lottery, no bad luck.
+**All 24 trophies are 100% guaranteed** to drop for every party/alliance member in the zone. No lottery, no bad luck.
 
 ---
 
