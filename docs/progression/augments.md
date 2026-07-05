@@ -62,6 +62,8 @@ So a maxed tank reaches **+640 HP on a single body piece**, and a sustain build 
 !!! note "Why a fresh augment looks weak — and what to do about it"
     Your first stamp on a piece gives the **floor** (e.g. HP +4/slot). That's intentional. As your mastery rank climbs, **re-augment the same gear** to push every slot toward its cap. Augment early, augment often, re-augment as you rank up.
 
+    Already happy with *which* augments are on a piece and just want bigger numbers? Skip the re-trade and **`!reroll`** it in place — it re-gambles the magnitudes on an equipped item for gil + a single catalyst. See [Re-rolling in place with `!reroll`](augmenting-guide.md#re-rolling-in-place-with-reroll).
+
 !!! tip "See your real values with `!augstats`"
     The item examine window shows garbled numbers (above); `!augstats` reports the true per-slot and total bonus on every augmented piece.
 
@@ -351,6 +353,6 @@ Requires **Augment Tier 5** — defeat **Maat's Echo** in [Maat's Challenge](../
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6cfb66912d9d -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: 5336459b0c06 -->
+_Last updated: 2026-07-05 03:51 PDT_
 <!-- DOCGEN:END id="last-updated" -->

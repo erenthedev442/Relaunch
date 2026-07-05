@@ -186,6 +186,7 @@ def _render(d: dict) -> str:
     crit      = d["crit"]
     n_ranks   = d["n_ranks"]
     aff_rank, aff_cost = d["aff_gate"]
+    reroll_gil = d["reroll_gil"]      # [gil per tier] | None
 
     t_last = len(slices)
     roll_top = slices[-1][1]
@@ -367,6 +368,71 @@ def _render(d: dict) -> str:
         f"and NM list."
     )
     A("")
+    if reroll_gil:
+        A("## Re-rolling in place with `!reroll`")
+        A("")
+        A(
+            "Once a piece already has the augment **types** you want, you don't "
+            "have to re-farm five catalysts just to chase bigger numbers. The "
+            "**`!reroll`** command re-gambles the *magnitudes* of the augments "
+            "already on an **equipped** item — the same roll math as the Moogle "
+            "(your tier band, mastery floor, affinity double-roll, and crits all "
+            "apply), but it keeps your existing lines and costs only **gil + one "
+            "catalyst**."
+        )
+        A("")
+        A("| | Augment Moogle (trade in {{npc:augment_moogle}}) | `!reroll <slot>` (equipped item) |")
+        A("|---|---|---|")
+        A("| **Changes** | Overwrites lines with the catalyst **types** you trade "
+          "| Keeps the types, re-rolls the **numbers** |")
+        A(f"| **Cost** | {_fmt(gil)} gil flat + up to {max_cats} catalysts "
+          f"| Per-tier gil (below) + **1** matching catalyst |")
+        A("| **Reach for it to** | Add or change *which* stats sit on the gear "
+          "| Fish for higher rolls on gear you already like |")
+        A("")
+        A(
+            "Both are **rank-floor protected** (never roll below `band min + your "
+            "mastery rank`) and **capped at your tier band**, so neither can "
+            "power-creep past your tier's ceiling — reroll is purely a cheaper way "
+            "to re-fish the numbers you already have."
+        )
+        A("")
+        A("**How to use it:**")
+        A("")
+        A("1. **Equip** the item you want to improve.")
+        A(
+            "2. Type **`!reroll <slot>`** (e.g. `!reroll head`) to **preview** — it "
+            "lists each augment, the roll range, your floor, your crit %, and the "
+            "cost. Nothing is charged."
+        )
+        A(
+            "3. Type **`!reroll <slot> confirm`** to commit — it charges the gil + "
+            "1 catalyst and re-rolls every line at once."
+        )
+        A("4. **Re-equip** the item to apply the fresh values.")
+        A("")
+        A(
+            "Slots: `main sub ranged ammo head body hands legs feet neck waist "
+            "ear1 ear2 ring1 ring2 back`. The catalyst it consumes must match "
+            "**one of the augments already on the item** — and you have to be "
+            "holding it."
+        )
+        A("")
+        A("**Reroll cost by Augment Tier** (plus the one matching catalyst):")
+        A("")
+        A("| Augment Tier | Reroll cost |")
+        A("|---|---:|")
+        for i, cost in enumerate(reroll_gil, start=1):
+            A(f"| **T{i}** | {_fmt(cost)} gil |")
+        A("")
+        A(
+            "Because every line re-rolls together, a **crit** (or a guaranteed one "
+            "from a **Maat's Cap**) turns a single reroll into a perfect roll of "
+            "the *whole piece*. And since rolls are floor-protected, rerolling "
+            "after a **tier-up** or a **mastery rank-up** only ever lifts your "
+            "weakest lines — it's the cheap way to keep already-good gear current."
+        )
+        A("")
     A("## Catalyst tiers: what you can trade")
     A("")
     open_count = tier_dist.get(0, 0) + tier_dist.get(1, 0)
@@ -445,6 +511,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         sage_text = _read(repo_root, "modules/custom/lua/augment_sage_catalog.lua")
         aff_text = _read(repo_root, "modules/custom/lua/augment_affinity_catalog.lua")
         drops_text = _read(repo_root, "modules/custom/lua/augment_catalyst_drops.lua", required=False)
+        reroll_text = _read(repo_root, "modules/custom/commands/reroll.lua", required=False)
 
         gil_m = re.search(r"^\s*local\s+GIL_COST\s*=\s*(\d+)", moogle_text, re.MULTILINE)
         max_m = re.search(r"^\s*local\s+MAX_CATALYST_COUNT\s*=\s*(\d+)", moogle_text, re.MULTILINE)
@@ -484,6 +551,16 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
         example = _resolve_example(repo_root, entries)
 
+        # !reroll gil cost ladder (per Augment Tier). Fail-safe: if the command
+        # or its GIL_BY_TIER table is missing, the reroll section is dropped
+        # rather than invented.
+        reroll_gil = None
+        if reroll_text:
+            rm = re.search(r"GIL_BY_TIER\s*=\s*\{([^}]*)\}", reroll_text)
+            if rm:
+                nums = [int(x) for x in re.findall(r"\d+", rm.group(1))]
+                reroll_gil = nums or None
+
         data = {
             "gil":              int(gil_m.group(1)),
             "max_cats":         int(max_m.group(1)),
@@ -497,6 +574,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             "crit":             _parse_mult_table(sage_text, "critChance"),
             "n_ranks":          len(_parse_sage_ranks(sage_text)),
             "aff_gate":         _parse_affinity_gate(aff_text),
+            "reroll_gil":       reroll_gil,
         }
     except (_Skip, RuntimeError, ValueError) as e:
         # RuntimeError/ValueError = a reused parser's own schema-regression
@@ -514,8 +592,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         f"example={ex['name']} <- {ex['mob']} @ {data['drop_rate']}%"
         if ex else "example=GENERIC (catalyst/mob resolution failed)"
     )
+    reroll_txt = (
+        f"reroll={'/'.join(_fmt(g) for g in data['reroll_gil'])}"
+        if data["reroll_gil"] else "reroll=OMITTED (reroll.lua not parsed)"
+    )
     print(
         f"{_TAG} wrote progression/augmenting-guide.md "
         f"(gil={_fmt(data['gil'])}, slots={data['max_cats']}, "
-        f"{len(data['gates'])} tier gates, {data['catalyst_count']} catalysts, {ex_txt})"
+        f"{len(data['gates'])} tier gates, {data['catalyst_count']} catalysts, {ex_txt}, {reroll_txt})"
     )
