@@ -53,6 +53,17 @@ from tools.docgen.generators.augment_sage import (
 
 _TAG = "[progression_guide_page]"
 
+# This generator rewrites the whole page, so — unlike marker-based pages — it
+# must emit the last-updated footer marker itself. stamp.py (runs last) strips
+# this block, hashes the body, and rewrites it with the real timestamp +
+# content-hash, so the placeholder below is only ever seen pre-stamp.
+_FOOTER_STUB = (
+    "---\n\n"
+    '<!-- DOCGEN:BEGIN id="last-updated" -->\n'
+    "_Last updated: pending first generation._\n"
+    '<!-- DOCGEN:END id="last-updated" -->'
+)
+
 
 # ---------------------------------------------------------------- systems catalog
 # The full custom-systems constellation, grouped into filter buckets for the
@@ -899,7 +910,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         return
 
     widget_html = _build_systems_widget(repo_root, docs_dir)
-    content = _render(data, docs_dir, widget_html)
+    content = _render(data, docs_dir, widget_html).rstrip() + "\n\n" + _FOOTER_STUB + "\n"
     page = docs_dir / "getting-started" / "progression-guide.md"
     page.parent.mkdir(parents=True, exist_ok=True)
     page.write_text(content, encoding="utf-8")
