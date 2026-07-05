@@ -122,6 +122,17 @@ local function corsairSetup(caster, ability, action, effect, job)
     caster:setLocalVar('corsairDuEffect', effect)
     caster:setLocalVar('corsairActiveRoll', ability:getID())
     action:info(caster:getID(), roll)
+	
+	-- Crooked Cards applies to the next initial Phantom Roll, after the
+    -- normal roll value, job bonus, and Phantom Roll+ gear/augments.  Store
+    -- its percentage on the active roll so every AoE target and subsequent
+    -- Double-Up uses the same bonus, then consume the one-shot status.
+    local crookedCards = caster:getStatusEffect(xi.effect.CROOKED_CARDS)
+    caster:setLocalVar('corsairCrookedCardsPower', crookedCards and crookedCards:getPower() or 0)
+
+    if crookedCards then
+        caster:delStatusEffectSilent(xi.effect.CROOKED_CARDS)
+    end
 
     local recastReduction = utils.clamp(caster:getMerit(xi.merit.PHANTOM_ROLL_RECAST) + caster:getMod(xi.mod.PHANTOM_RECAST), 0, 45)
     local recastTime      = ability:getRecast()
@@ -168,6 +179,14 @@ local function applyRoll(caster, target, inAbility, action, total, isDoubleup, c
     -- MAX, not a sum, so multiple augmented pieces would otherwise not stack.
     local phantomMult = (caster:isPC() and caster:getMod(xi.mod.PHANTOM_ROLL)) or 0
     effectpower       = effectpower + (phantomBase * phantomMult)
+	
+	-- Crooked Cards is a percentage multiplier, not Phantom Roll+ 100.
+    -- Applying it here places it after the roll table value, job bonus, and
+    -- stacking gear/augment bonus.  It also correctly scales a Bust penalty.
+    local crookedCardsPower = caster:getLocalVar('corsairCrookedCardsPower')
+    if crookedCardsPower > 0 then
+        effectpower = effectpower * (100 + crookedCardsPower) / 100
+    end
 
     -- Effect Power varies depending on COR level (Main vs Sub)
     local actorLevel  = utils.getActiveJobLevel(caster, xi.job.COR)
