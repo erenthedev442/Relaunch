@@ -509,6 +509,17 @@ return
         -- ---------------------------------------------------------
         {
             label = 'Sortie: +1',
+            -- The advertised 'Acc/MACC +8~12' line is a REAL augment roll
+            -- applied at purchase (doBuyReward in HuntingLeague.lua). Engine
+            -- math per augment_catalog.lua: value = (base 1 + boost) x mult 2,
+            -- so boost 3..5 = +8/+10/+12. augId 62 = Accuracy, 64 = Mag. Acc.
+            -- (2026-07-04 player report: the line was display-only text and
+            -- purchases granted a bare earring.)
+            augs =
+            {
+                { id = 62, minBoost = 3, maxBoost = 5 },  -- Accuracy  +8~12
+                { id = 64, minBoost = 3, maxBoost = 5 },  -- Mag. Acc. +8~12
+            },
             items =
             {
                 { name = "Boii Earring +1",        id = 25421, cost = 200,

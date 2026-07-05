@@ -406,7 +406,33 @@ local function doBuyReward(p, reward, qty, catIdx, itemPage)
     end
 
     local totalCost = reward.cost * qty
-    local added = p:addItem({ id = reward.id, quantity = qty })
+
+    -- Advertised augment rolls: a category- or item-level `augs` spec
+    -- (e.g. Sortie +1 'Acc/MACC +8~12') is rolled per purchase and baked
+    -- into the granted item's exdata -- same addItem shape the Augment
+    -- Moogle uses. Without this the stat line was display-only text and
+    -- the earring arrived bare (2026-07-04 player report). These entries
+    -- are single-buy Rare gear, so qty is always 1 on this path.
+    local catDef  = catalog.rewardCategories[catIdx]
+    local augSpec = reward.augs or (catDef and catDef.augs)
+    local added
+    if augSpec then
+        local rolled = {}
+        for _, aug in ipairs(augSpec) do
+            table.insert(rolled, { id = aug.id, value = math.random(aug.minBoost, aug.maxBoost) })
+        end
+        added = p:addItem({
+            id     = reward.id,
+            exdata =
+            {
+                augmentKind    = xi.augment.kind.HAS_AUGMENTS,
+                augmentSubKind = xi.augment.subKind.STANDARD,
+                augments       = rolled,
+            },
+        })
+    else
+        added = p:addItem({ id = reward.id, quantity = qty })
+    end
     if not added then
         p:printToPlayer('Inventory full! Free a slot first, kupo!', xi.msg.channel.SYSTEM_3)
         buildItemPreviewMenu(p, reward, catIdx, itemPage)
