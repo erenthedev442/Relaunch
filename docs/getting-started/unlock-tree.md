@@ -1,5 +1,6 @@
 # Content Unlock Tree
 
+<!-- DOCGEN:BEGIN id="unlock-tree" -->
 Every piece of content on the Relaunch server depends on something else. This diagram maps those dependencies: click any node to highlight what gates it (orange) and what it enables (teal).
 
 Scroll the diagram left–right to see the full progression from Day 1 through Vertical Progression.
@@ -30,112 +31,9 @@ const CC={
   vert:    {bg:'#2A1A08',bd:'#E8956A',tx:'#FFCC88'},
 };
 
-const nodes=[
-  {id:'start',    x:70,  y:45,  lbl:'New Character',         t:'start',   desc:'<strong>New Character</strong>Auto-setup: spells, skills, trusts, starter gear, 100 Hunt Marks. Everything branches from here.'},
-  {id:'boards',   x:70,  y:140, lbl:'Daily & Weekly Boards', t:'always',  desc:'<strong>Daily & Weekly Boards</strong>Daily: Hunt Marks + Gil objectives. Weekly: sweep all 5 → +5,000 mark meta-bonus.'},
-  {id:'augmog',   x:70,  y:215, lbl:'Augment Moogle',        t:'always',  desc:'<strong>Augment Moogle</strong>Random stat augments on any gear. No gate. Registered affinities add ×1.5 to matching rolls.'},
-  {id:'coloss',   x:70,  y:290, lbl:'Colosseum',             t:'always',  desc:'<strong>Colosseum</strong>Async PvP duels vs player replicas. 10 Hunt Marks per win, 15 wins/day cap.'},
-  {id:'gauntlet', x:70,  y:365, lbl:'Gauntlet (10 levels)',  t:'always',  desc:'<strong>Gauntlet</strong>Solo NM climb. HP doubles per level. L10 clear: 5M gil + 500 Infamy + 500 PP + Prime Armory flag.'},
-  {id:'apex',     x:70,  y:440, lbl:'Apex Trials',           t:'always',  desc:'<strong>Apex Trials</strong>Infinite scaling post-cap NMs at Walk of Echoes (zone 279). Infamy + Paragon Points per kill.'},
-  {id:'etower',   x:70,  y:515, lbl:'Endless Tower',         t:'always',  desc:'<strong>Endless Tower</strong>50 floors solo, trusts disabled. Floor 50 clear sets Prime Armory unlock flag.'},
-  {id:'voidwatch',x:70,  y:590, lbl:'Voidwatch',             t:'always',  desc:'<strong>Voidwatch</strong>5 free Voidstones on first visit, 1/hr regen, cap 10. Open Planar Rifts → Voidwalker NM → Pyxis loot.'},
-  {id:'dungeons', x:70,  y:665, lbl:'Dungeons (13)',         t:'always',  desc:'<strong>Dungeons</strong>13 custom instanced zones, 30-min timer, no rank gate, curated boss drops.'},
-  {id:'affnm',    x:70,  y:740, lbl:'Affinity NMs (24)',     t:'always',  desc:'<strong>Affinity NMs</strong>Classic HNMs permanently spawned, 15-min respawn. Trophy drops 100% to the kill-blow player.'},
-  {id:'sigils',   x:70,  y:815, lbl:'Mastery Sigils',        t:'curr',    desc:'<strong>Mastery Sigils</strong>Granted by !buff (zone regional buff). Spent at Mastery Sage for Spell & Skill Mastery tiers.'},
-  {id:'lv99',     x:245, y:45,  lbl:'Level 99',              t:'mile',    desc:'<strong>Level 99</strong>Reach via !expcamp (20 level-banded camps, 3× mob EXP). Unlocks Hunting League Rank I.'},
-  {id:'mastery',  x:245, y:815, lbl:'Spell & Skill Mastery', t:'vert',    desc:'<strong>Spell & Skill Mastery</strong>Mastery Sage at !leaf. Spend Sigils to empower WS/spells. 15→30→55→90→140 sigils per power tier.'},
-  {id:'rank1',    x:420, y:45,  lbl:'HL Rank I — Initiate',  t:'rank',    desc:'<strong>HL Rank I — Initiate</strong>Starting HL rank. Pop NMs from Hunt: Spawner. Earn 5 Hunt Marks per kill.'},
-  {id:'marks',    x:420, y:150, lbl:'Hunt Marks',            t:'curr',    desc:'<strong>Hunt Marks</strong>Primary currency. Earned per NM kill (5→12→22→38→110 by rank). Buy seals, register affinities, unlock ranks.'},
-  {id:'seals',    x:420, y:255, lbl:'Seals (Bronze/Sv/Gd)',  t:'curr',    desc:'<strong>Seals</strong>Bought with Hunt Marks at Seals Vendor. Bronze/Silver/Gold tier determines gear tier available.'},
-  {id:'gear',     x:420, y:360, lbl:'Seal Vendors (Gear)',   t:'reward',  desc:'<strong>Seal Vendors</strong>Armor, Weapons, and Accessories vendors in Escha Zi\'Tah. Seal tier gates the gear tier.'},
-  {id:'rank2',    x:600, y:45,  lbl:'HL Rank II — Hunter',   t:'rank',    desc:'<strong>HL Rank II — Hunter</strong>Unlock: 150 total marks spent. 12 marks/kill. Same NM pool, higher mark income.'},
-  {id:'rank3',    x:780, y:45,  lbl:'HL Rank III — Elite',   t:'rank',    desc:'<strong>HL Rank III — Elite</strong>Unlock: 650 total marks spent. 22 marks/kill. Gates: Abyssea, Unity, Augment Sage R2, Affinity Registration.'},
-  {id:'abyssea',  x:780, y:155, lbl:'Abyssea NMs',           t:'content', desc:'<strong>Abyssea NMs</strong>3 tiers (Visions/Scars/Heroes). Pop cost: 200/350/500 Hunt Marks. Drops AF/Relic/Empy Marks + Infamy (25/40/60/kill).'},
-  {id:'unity',    x:780, y:250, lbl:'Unity Concord',         t:'content', desc:'<strong>Unity Concord</strong>Wanted NMs (3 tiers). Produces Accolades for Unity Shop. 50 Sigils bonus on rotation kills.'},
-  {id:'augsage1', x:780, y:345, lbl:'Augment Sage R1–2',     t:'reward',  desc:'<strong>Augment Sage R1–2</strong>HL Rank III unlocks Sage Rank 2. Higher roll floors, better augment value caps on all gear.'},
-  {id:'affreg',   x:780, y:440, lbl:'Affinity Registration', t:'reward',  desc:'<strong>Affinity Registration</strong>Trophy + HL Rank III + 1,000 marks. Registers one of 24 stat affinities permanently.'},
-  {id:'affmult',  x:780, y:535, lbl:'1.5× Augment Bonus',    t:'reward',  desc:'<strong>1.5× Augment Bonus</strong>Per registered affinity: every augment roll in that stat category gets ×1.5 value at the Moogle.'},
-  {id:'rank4',    x:960, y:45,  lbl:'HL Rank IV — Champion', t:'rank',    desc:'<strong>HL Rank IV — Champion</strong>Unlock: 1,500 total marks spent. 38 marks/kill. Contextually opens group boss content.'},
-  {id:'hnm',      x:960, y:155, lbl:'HNM Kings / Sky Gods',  t:'content', desc:'<strong>HNM Kings / Sky Gods</strong>Land kings and Sky Gods. Produce AF/Relic/Empy Marks for the Reforge system.'},
-  {id:'htbf',     x:960, y:250, lbl:'HTBF (Phantom Gem)',    t:'content', desc:'<strong>HTBF</strong>3 tiers, gem-based entry (50k–200k gil). No rank gate — buy gem, enter anytime. Drops 50–600 marks/clear.'},
-  {id:'dynamis',  x:960, y:345, lbl:'Dynamis – Divergence',  t:'content', desc:'<strong>Dynamis – Divergence</strong>4 cities × 3 waves. One Byne Bill entry. Medal drops → Divergence armor → Reforge path.'},
-  {id:'nyzul',    x:960, y:440, lbl:'Nyzul Isle',            t:'content', desc:'<strong>Nyzul Isle</strong>100 floors, 30-min timer. Enter via Sorrowful Sage at Mhaura (no Assault rank needed). Nyzul armor rewards.'},
-  {id:'stardv',   x:960, y:535, lbl:'Star-Devourer Raid',    t:'content', desc:'<strong>Star-Devourer Raid</strong>Weekly server-wide raid boss. Produces Infamy on kill.'},
-  {id:'invasions',x:960, y:630, lbl:'Scheduled Invasions',   t:'content', desc:'<strong>Scheduled Invasions</strong>Server-wide wave events. Watch for announcement. Produces Infamy per event cleared.'},
-  {id:'rfmarks',  x:960, y:725, lbl:'AF/Relic/Empy Marks',   t:'curr',    desc:'<strong>AF/Relic/Empy Marks</strong>Produced by Abyssea NMs, HNM Kings, Dynamis-D medals. Spent at Reforge Vendor for +1/+2/+3 armor.'},
-  {id:'reforge',  x:960, y:820, lbl:'Reforge (+1/+2/+3)',    t:'reward',  desc:'<strong>Reforge Vendor</strong>Upgrades AF, Relic, and Empy armor from base to +1, +2, +3. Spend marks at Reforge Vendor at !leaf.'},
-  {id:'rank5',    x:1140,y:45,  lbl:'HL Rank V — Legend',    t:'rank',    desc:'<strong>HL Rank V — Legend</strong>Unlock: 3,000 total marks spent. 110 marks/kill. Gates Prestige system.'},
-  {id:'infamy',   x:1140,y:155, lbl:'Infamy',                 t:'curr',    desc:'<strong>Infamy</strong>Produced by Invasions, Apex Trials, Star-Devourer, Gauntlet L10 (500), Abyssea (25–60/kill).'},
-  {id:'infamyv',  x:1140,y:250, lbl:'Infamy Vendor (BiS)',    t:'reward',  desc:'<strong>Infamy Vendor</strong>Best-in-slot gear, relic weapons, instruments. Spend Infamy directly. No rank gate.'},
-  {id:'pp',       x:1140,y:350, lbl:'Paragon Points',         t:'curr',    desc:'<strong>Paragon Points</strong>Produced by Apex Trials (per kill) and Gauntlet L10 clear (500 PP). Spent on Paragon Board.'},
-  {id:'parboard', x:1140,y:445, lbl:'Paragon Board',          t:'reward',  desc:'<strong>Paragon Board</strong>Permanent account-wide stat bonuses. Never resets. Bought with Paragon Points.'},
-  {id:'accolades',x:1140,y:540, lbl:'Accolades → Unity Shop', t:'reward',  desc:'<strong>Accolades</strong>Produced by Unity Concord kills. Spent in Unity Shop for gear and special rewards.'},
-  {id:'prestige', x:1300,y:45,  lbl:'Prestige / Ascension',  t:'vert',    desc:'<strong>Prestige / Ascension</strong>Requires HL Rank V on a job → reset it for a permanent per-job bonus. Cost: 500–3,000 marks. Stackable across 22 jobs.'},
-  {id:'rebirth',  x:1300,y:190, lbl:'Job Rebirth',            t:'vert',    desc:'<strong>Job Rebirth</strong>After Prestige: re-grind RP (enemy kills) for larger permanent per-job stat bonuses.'},
-  {id:'augsage2', x:1300,y:360, lbl:'Augment Sage R3–5',     t:'reward',  desc:'<strong>Augment Sage R3–5</strong>R3: HL V + Prestige≥5 + Rebirths≥1. R4: P≥15 + R≥10. R5: P≥30 + R≥20 + Gauntlet L10.'},
-  {id:'prime',    x:1300,y:530, lbl:'Prime Armory',           t:'vert',    desc:'<strong>Prime Armory</strong>Unlock: Gauntlet L10 clear OR Endless Tower Fl.50 clear. Forge 1 of 16 named Prime Weapon III forms.'},
-];
+const nodes=[{"id": "start", "x": 70, "y": 45, "lbl": "New Character", "t": "start", "desc": "<strong>New Character</strong>Starter setup + <strong>25 Hunt Marks</strong>. Everything on this map branches from here."}, {"id": "boards", "x": 70, "y": 140, "lbl": "Daily & Weekly Boards", "t": "always", "desc": "<strong>Daily & Weekly Boards</strong>Daily: Hunt Marks + Gil objectives. Weekly: sweep all objectives → +5,000 mark meta-bonus."}, {"id": "augmog", "x": 70, "y": 215, "lbl": "Augment Moogle", "t": "always", "desc": "<strong>Augment Moogle</strong>Random stat augments on any gear. No gate. A registered affinity makes every matching roll happen twice and keep the better result."}, {"id": "coloss", "x": 70, "y": 290, "lbl": "Colosseum", "t": "always", "desc": "<strong>Colosseum</strong>Async duels vs player replicas. 10 Hunt Marks per win, 15 wins/day cap."}, {"id": "gauntlet", "x": 70, "y": 365, "lbl": "Gauntlet (10 levels)", "t": "always", "desc": "<strong>The Gauntlet</strong>Solo NM climb, HP doubles per level. Level 10 clear: 5M gil + 500 Infamy + 500 PP + Prime Armory flag."}, {"id": "apex", "x": 70, "y": 440, "lbl": "Apex Trials", "t": "always", "desc": "<strong>Apex Trials</strong>Infinite scaling post-cap NMs. Infamy + Paragon Points per kill."}, {"id": "etower", "x": 70, "y": 515, "lbl": "Endless Tower", "t": "always", "desc": "<strong>Endless Tower</strong>50 floors solo, trusts disabled. Floor 50 clear sets the Prime Armory unlock flag."}, {"id": "voidwatch", "x": 70, "y": 590, "lbl": "Voidwatch", "t": "always", "desc": "<strong>Voidwatch</strong>5 free Voidstones on first visit, 1/hr regen, cap 10. Open Planar Rifts → Voidwalker NM → Pyxis loot."}, {"id": "dungeons", "x": 70, "y": 665, "lbl": "Dungeons (10)", "t": "always", "desc": "<strong>Dungeons</strong>10 custom instanced zones, no rank gate, curated boss drops."}, {"id": "affnm", "x": 70, "y": 740, "lbl": "Affinity NMs (24)", "t": "always", "desc": "<strong>Affinity NMs</strong>24 classic HNMs permanently spawned, 30s respawn. Trophy drops to the kill-blow player."}, {"id": "sigils", "x": 70, "y": 815, "lbl": "Mastery Sigils", "t": "curr", "desc": "<strong>Mastery Sigils</strong>Granted by !buff (the zone's regional buff). Spent at the Mastery Sage for Spell & Skill Mastery."}, {"id": "lv99", "x": 245, "y": 45, "lbl": "Level 99", "t": "mile", "desc": "<strong>Level 99</strong>Reach level 99 to unlock Hunting League Rank I."}, {"id": "mastery", "x": 245, "y": 815, "lbl": "Spell & Skill Mastery", "t": "vert", "desc": "<strong>Spell & Skill Mastery</strong>Mastery Sage at !leaf. Spend Mastery Sigils to empower weapon skills and spells beyond their normal caps."}, {"id": "rank1", "x": 420, "y": 45, "lbl": "HL Rank I — Initiate", "t": "rank", "desc": "<strong>Rank I - Initiate</strong>Starting HL rank. Pop NMs from Hunt: Spawner. 5 Hunt Marks per kill."}, {"id": "marks", "x": 420, "y": 150, "lbl": "Hunt Marks", "t": "curr", "desc": "<strong>Hunt Marks</strong>Primary currency. 5→65 per kill by rank. Buy seals, register affinities, unlock ranks."}, {"id": "seals", "x": 420, "y": 255, "lbl": "Seals (Bronze/Sv/Gd)", "t": "curr", "desc": "<strong>Seals</strong>Bought with Hunt Marks at the Seals Vendor. Bronze/Silver/Gold tier determines the gear tier available."}, {"id": "gear", "x": 420, "y": 360, "lbl": "Seal Vendors (Gear)", "t": "reward", "desc": "<strong>Seal Vendors</strong>Armor, Weapons, and Accessories vendors in Escha - Zi'Tah. Seal tier gates the gear tier."}, {"id": "rank2", "x": 600, "y": 45, "lbl": "HL Rank II — Hunter", "t": "rank", "desc": "<strong>Rank II - Hunter</strong>Unlock: 150 total marks spent. 12 marks/kill."}, {"id": "rank3", "x": 780, "y": 45, "lbl": "HL Rank III — Elite", "t": "rank", "desc": "<strong>Rank III - Elite</strong>Unlock: 650 total marks spent. 22 marks/kill. Gates: Abyssea, Unity, Augment Sage R2, Affinity Registration."}, {"id": "abyssea", "x": 780, "y": 155, "lbl": "Abyssea NMs", "t": "content", "desc": "<strong>Abyssea NMs</strong>3 tiers (Visions/Scars/Heroes). Pop cost: 200/350/500 Hunt Marks. Drops AF/Relic/Empy Marks + Infamy (25–60/kill)."}, {"id": "unity", "x": 780, "y": 250, "lbl": "Unity Concord", "t": "content", "desc": "<strong>Unity Concord</strong>Wanted NMs across tiers. Produces Accolades for the Unity Shop."}, {"id": "augsage1", "x": 780, "y": 345, "lbl": "Augment Sage R1–2", "t": "reward", "desc": "<strong>Augment Sage R1–2</strong>HL Rank 3 unlocks Sage Rank 2 (Augment Adept). Higher roll floors on all gear."}, {"id": "affreg", "x": 780, "y": 440, "lbl": "Affinity Registration", "t": "reward", "desc": "<strong>Affinity Registration</strong>Trophy + HL Rank 3 + 1,000 marks. Registers one of 24 stat affinities permanently."}, {"id": "affmult", "x": 780, "y": 535, "lbl": "Affinity Reroll", "t": "reward", "desc": "<strong>Affinity Reroll</strong>Per registered affinity: every augment roll in that stat category is rolled twice, keeping the better result."}, {"id": "rank4", "x": 960, "y": 45, "lbl": "HL Rank IV — Champion", "t": "rank", "desc": "<strong>Rank IV - Champion</strong>Unlock: 1,500 total marks spent. 38 marks/kill. Opens group boss content."}, {"id": "hnm", "x": 960, "y": 155, "lbl": "HNM Kings / Sky Gods", "t": "content", "desc": "<strong>HNM Kings / Sky Gods</strong>Land kings and Sky Gods. Produce AF/Relic/Empy Marks for the Reforge system."}, {"id": "htbf", "x": 960, "y": 250, "lbl": "HTBF (Phantom Gem)", "t": "content", "desc": "<strong>HTBF</strong>3 tiers, Phantom Gem entry (50,000–200,000 gil). No rank gate — buy a gem, enter anytime."}, {"id": "dynamis", "x": 960, "y": 345, "lbl": "Dynamis – Divergence", "t": "content", "desc": "<strong>Dynamis – Divergence</strong>4 cities × wave battles. Medal drops → Divergence armor → Reforge path."}, {"id": "nyzul", "x": 960, "y": 440, "lbl": "Nyzul Isle", "t": "content", "desc": "<strong>Nyzul Isle</strong>Floor-climb runs. Enter via the Sorrowful Sage at Mhaura (no Assault rank needed). Nyzul armor rewards."}, {"id": "invasions", "x": 960, "y": 630, "lbl": "Scheduled Invasions", "t": "content", "desc": "<strong>Scheduled Invasions</strong>Server-wide wave events — watch for the announcement. Produces Infamy per event."}, {"id": "rfmarks", "x": 960, "y": 725, "lbl": "AF/Relic/Empy Marks", "t": "curr", "desc": "<strong>AF/Relic/Empy Marks</strong>Produced by Abyssea NMs, HNM Kings, and Dynamis-D medals. Spent at the Reforge Vendor for +1/+2/+3 armor."}, {"id": "reforge", "x": 960, "y": 820, "lbl": "Reforge (+1/+2/+3)", "t": "reward", "desc": "<strong>Reforge Vendor</strong>Upgrades AF, Relic, and Empy armor from base to +1, +2, +3. Spend marks at the Reforge Vendor at !leaf."}, {"id": "rank5", "x": 1140, "y": 45, "lbl": "HL Rank V — Legend", "t": "rank", "desc": "<strong>Rank V - Legend</strong>Unlock: 3,000 total marks spent. 65 marks/kill (top NM 110). Gates the Prestige system."}, {"id": "infamy", "x": 1140, "y": 155, "lbl": "Infamy", "t": "curr", "desc": "<strong>Infamy</strong>Produced by Invasions, Apex Trials, the Gauntlet (500 on full clear), and Abyssea (25–60/kill)."}, {"id": "infamyv", "x": 1140, "y": 250, "lbl": "Infamy Vendor (BiS)", "t": "reward", "desc": "<strong>Infamy Vendor</strong>Best-in-slot gear, relic weapons, instruments. Spend Infamy directly. No rank gate."}, {"id": "pp", "x": 1140, "y": 350, "lbl": "Paragon Points", "t": "curr", "desc": "<strong>Paragon Points</strong>Produced by Apex Trials and the Gauntlet (500 PP on full clear). Spent on the Paragon Board."}, {"id": "parboard", "x": 1140, "y": 445, "lbl": "Paragon Board", "t": "reward", "desc": "<strong>Paragon Board</strong>Permanent account-wide stat bonuses. Never resets. Bought with Paragon Points."}, {"id": "accolades", "x": 1140, "y": 540, "lbl": "Accolades → Unity Shop", "t": "reward", "desc": "<strong>Accolades</strong>Produced by Unity Concord kills. Spent in the Unity Shop for gear and rewards."}, {"id": "prestige", "x": 1300, "y": 45, "lbl": "Prestige / Ascension", "t": "vert", "desc": "<strong>Prestige / Ascension</strong>Requires HL Rank 5 on a job → reset it for a permanent per-job bonus. Cost: 500–3,000 marks, escalating. Stackable across all 22 jobs."}, {"id": "rebirth", "x": 1300, "y": 190, "lbl": "Job Rebirth", "t": "vert", "desc": "<strong>Job Rebirth</strong>After Prestige: any job with 2,100 spent Job Points can rebirth — re-grind RP for larger permanent per-job stat bonuses."}, {"id": "augsage2", "x": 1300, "y": 360, "lbl": "Augment Sage R3–5", "t": "reward", "desc": "<strong>Augment Sage R3–5</strong>R3: HL Rank 5 + Prestige 5 + 1 rebirth. R4: Prestige 15 + 10 rebirths. R5: Prestige 30 + 20 rebirths + Gauntlet clear."}, {"id": "prime", "x": 1300, "y": 530, "lbl": "Prime Armory", "t": "vert", "desc": "<strong>Prime Armory</strong>Unlock: Gauntlet full clear OR Endless Tower top-floor clear. Complete 5 trials, then forge 1 of 12 named Prime forms (750M gil each)."}];
 
-const edges=[
-  {f:'start',    t:'lv99',     lb:'!expcamp'},
-  {f:'lv99',     t:'rank1'},
-  {f:'rank1',    t:'rank2',    lb:'150 marks'},
-  {f:'rank2',    t:'rank3',    lb:'650 marks'},
-  {f:'rank3',    t:'rank4',    lb:'1,500 marks'},
-  {f:'rank4',    t:'rank5',    lb:'3,000 marks'},
-  {f:'rank5',    t:'prestige'},
-  {f:'start',    t:'boards'},
-  {f:'start',    t:'augmog'},
-  {f:'start',    t:'coloss'},
-  {f:'start',    t:'gauntlet'},
-  {f:'start',    t:'apex'},
-  {f:'start',    t:'etower'},
-  {f:'start',    t:'voidwatch',lb:'5 free stones'},
-  {f:'start',    t:'dungeons'},
-  {f:'start',    t:'affnm'},
-  {f:'start',    t:'sigils',   lb:'!buff'},
-  {f:'rank1',    t:'marks',    lb:'5/kill'},
-  {f:'marks',    t:'seals',    lb:'buy'},
-  {f:'seals',    t:'gear'},
-  {f:'boards',   t:'marks',    lb:'daily bonus'},
-  {f:'coloss',   t:'marks',    lb:'10/clear'},
-  {f:'htbf',     t:'marks',    lb:'50–600/clear'},
-  {f:'rank3',    t:'abyssea',  lb:'200–500 marks/pop'},
-  {f:'rank3',    t:'unity'},
-  {f:'rank3',    t:'augsage1'},
-  {f:'rank3',    t:'affreg',   lb:'HL III req.'},
-  {f:'affnm',    t:'affreg',   lb:'trophy + 1k marks'},
-  {f:'marks',    t:'affreg',   lb:'1,000 marks'},
-  {f:'affreg',   t:'affmult'},
-  {f:'affmult',  t:'augmog',   lb:'×1.5 on match'},
-  {f:'abyssea',  t:'rfmarks',  lb:'AF/Rel/Emp'},
-  {f:'hnm',      t:'rfmarks'},
-  {f:'dynamis',  t:'rfmarks',  lb:'medals'},
-  {f:'rfmarks',  t:'reforge'},
-  {f:'rank4',    t:'hnm'},
-  {f:'rank4',    t:'htbf',     lb:'gem/gil only'},
-  {f:'rank4',    t:'dynamis'},
-  {f:'rank4',    t:'nyzul'},
-  {f:'rank4',    t:'stardv'},
-  {f:'rank4',    t:'invasions'},
-  {f:'abyssea',  t:'infamy',   lb:'25–60/kill'},
-  {f:'gauntlet', t:'infamy',   lb:'500 on L10'},
-  {f:'apex',     t:'infamy'},
-  {f:'stardv',   t:'infamy'},
-  {f:'invasions',t:'infamy'},
-  {f:'infamy',   t:'infamyv'},
-  {f:'gauntlet', t:'pp',       lb:'500 on L10'},
-  {f:'apex',     t:'pp'},
-  {f:'pp',       t:'parboard'},
-  {f:'unity',    t:'accolades'},
-  {f:'prestige', t:'rebirth'},
-  {f:'rank5',    t:'augsage2', lb:'HL V + P≥5 + R≥1'},
-  {f:'prestige', t:'augsage2', lb:'Prestige ≥5'},
-  {f:'rebirth',  t:'augsage2', lb:'Rebirth ≥1'},
-  {f:'gauntlet', t:'prime',    lb:'L10 clears flag'},
-  {f:'etower',   t:'prime',    lb:'Fl.50 clears flag'},
-  {f:'sigils',   t:'mastery'},
-];
+const edges=[{"f": "start", "t": "lv99"}, {"f": "lv99", "t": "rank1"}, {"f": "rank1", "t": "rank2", "lb": "150 marks"}, {"f": "rank2", "t": "rank3", "lb": "650 marks"}, {"f": "rank3", "t": "rank4", "lb": "1,500 marks"}, {"f": "rank4", "t": "rank5", "lb": "3,000 marks"}, {"f": "rank5", "t": "prestige"}, {"f": "start", "t": "boards"}, {"f": "start", "t": "augmog"}, {"f": "start", "t": "coloss"}, {"f": "start", "t": "gauntlet"}, {"f": "start", "t": "apex"}, {"f": "start", "t": "etower"}, {"f": "start", "t": "voidwatch", "lb": "5 free stones"}, {"f": "start", "t": "dungeons"}, {"f": "start", "t": "affnm"}, {"f": "start", "t": "sigils", "lb": "!buff"}, {"f": "rank1", "t": "marks", "lb": "5/kill"}, {"f": "marks", "t": "seals", "lb": "buy"}, {"f": "seals", "t": "gear"}, {"f": "boards", "t": "marks", "lb": "daily bonus"}, {"f": "coloss", "t": "marks", "lb": "10/win"}, {"f": "htbf", "t": "marks"}, {"f": "rank3", "t": "abyssea", "lb": "200–500 marks/pop"}, {"f": "rank3", "t": "unity"}, {"f": "rank3", "t": "augsage1"}, {"f": "rank3", "t": "affreg", "lb": "HL 3 req."}, {"f": "affnm", "t": "affreg", "lb": "trophy + 1,000"}, {"f": "marks", "t": "affreg", "lb": "1,000 marks"}, {"f": "affreg", "t": "affmult"}, {"f": "affmult", "t": "augmog", "lb": "reroll on match"}, {"f": "abyssea", "t": "rfmarks", "lb": "AF/Rel/Emp"}, {"f": "hnm", "t": "rfmarks"}, {"f": "dynamis", "t": "rfmarks", "lb": "medals"}, {"f": "rfmarks", "t": "reforge"}, {"f": "rank4", "t": "hnm"}, {"f": "rank4", "t": "htbf", "lb": "gem/gil only"}, {"f": "rank4", "t": "dynamis"}, {"f": "rank4", "t": "nyzul"}, {"f": "rank4", "t": "invasions"}, {"f": "abyssea", "t": "infamy", "lb": "25–60/kill"}, {"f": "gauntlet", "t": "infamy", "lb": "500 on L10"}, {"f": "apex", "t": "infamy"}, {"f": "invasions", "t": "infamy"}, {"f": "infamy", "t": "infamyv"}, {"f": "gauntlet", "t": "pp", "lb": "500 on L10"}, {"f": "apex", "t": "pp"}, {"f": "pp", "t": "parboard"}, {"f": "unity", "t": "accolades"}, {"f": "prestige", "t": "rebirth"}, {"f": "rank5", "t": "augsage2", "lb": "HL 5 gate"}, {"f": "prestige", "t": "augsage2", "lb": "Prestige ≥5"}, {"f": "rebirth", "t": "augsage2", "lb": "Rebirth ≥1"}, {"f": "gauntlet", "t": "prime", "lb": "L10 clears flag"}, {"f": "etower", "t": "prime", "lb": "Fl.50 clears flag"}, {"f": "sigils", "t": "mastery"}];
 
 const nmap={};nodes.forEach(n=>nmap[n.id]=n);
 function nr(n){return{x:n.x-NW/2,y:n.y-NH/2,w:NW,h:NH};}
@@ -299,14 +197,19 @@ draw();
 
 | If you want… | You need… |
 |---|---|
-| Augment Sage R3–5 | HL Rank V + Prestige ≥5 + Rebirths ≥1 (escalating) |
-| Prime Armory | Gauntlet L10 clear **or** Endless Tower floor 50 clear |
-| Affinity Registration | Affinity NM trophy + HL Rank III + 1,000 Hunt Marks |
-| Reforge +3 gear | Abyssea NMs or HNM Kings or Dynamis-D → AF/Relic/Empy marks |
-| Infamy Vendor (BiS) | Accumulate Infamy (Invasions, Apex, Gauntlet, Star-Devourer) |
-| Paragon Board | Paragon Points from Apex Trials or Gauntlet L10 clear |
+| Augment Sage R3–5 | HL Rank 5 + Prestige 5 + 1 rebirth (R3), escalating to Prestige 30 + 20 rebirths + Gauntlet clear (R5) |
+| Prime Armory | Gauntlet full clear **or** Endless Tower top-floor clear |
+| Affinity Registration | Affinity NM trophy + HL Rank 3 + 1,000 Hunt Marks |
+| Reforge +3 gear | Abyssea NMs / HNM Kings / Dynamis-D → AF/Relic/Empy marks |
+| Infamy Vendor (BiS) | Accumulate Infamy (Invasions, Apex, Gauntlet) |
+| Paragon Board | Paragon Points from Apex Trials or Gauntlet full clear |
+
+*Every node, edge, and number in this diagram is regenerated from the live server catalogs on each site publish — if it disagrees with the game, the next hourly publish reconciles it.*
+<!-- DOCGEN:END id="unlock-tree" -->
+
+---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: placeholder -->
-_Last updated: 2026-07-02 00:00 UTC_
+<!-- content-hash: 81fb13c7ffd2 -->
+_Last updated: 2026-07-05 06:57 UTC_
 <!-- DOCGEN:END id="last-updated" -->

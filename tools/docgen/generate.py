@@ -88,6 +88,7 @@ def main() -> int:
         progression_map,
         progression_order,
         systems_map,
+        unlock_tree,
         rates_table,
         reforge,
         settings_inject,
@@ -186,6 +187,12 @@ def main() -> int:
         # connected to the content). Presence-gated rows drop retired systems;
         # fail-closed parses keep the last good page on error.
         ("systems_map",      systems_map),
+        # unlock_tree regenerates the interactive Content Unlock Tree canvas on
+        # getting-started/unlock-tree.md from the same live catalogs (owner
+        # requirement 2026-07-05). Node/edge NUMBERS are all parsed live; content
+        # nodes are presence-gated (a removed system drops off the graph); the
+        # diagram layout is hand-authored structure. Fail-closed like the others.
+        ("unlock_tree",      unlock_tree),
         ("armor_npc",        armor_npc),
         ("weapons_npc",      weapons_npc),
         # accessories_npc reads the same hunting_league_catalog as
