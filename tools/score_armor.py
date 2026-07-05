@@ -650,11 +650,20 @@ new_middle.append("--               the Armor NPC only sells bronze/silver/gold.
 new_middle.append(infamy_block('inf'))
 new_middle.append("\n")
 
-catalog_path.write_text(before + "\n".join(new_middle) + after, encoding='utf-8', newline='\n')
+# Vendor placement is human-curated; scoring is advisory (recommendation tool only).
+# The catalog is NOT overwritten unless you explicitly re-seed from scores. [decoupled 2026-07]
+_wrote = bool(os.environ.get("WRITE_VENDOR_CATALOG"))
+if _wrote:
+    catalog_path.write_text(before + "\n".join(new_middle) + after, encoding='utf-8', newline='\n')
 
 # Final summary
 total = sum(len(rows) for rows in all_selected.values())
-print(f"\nWrote {catalog_path}")
+if _wrote:
+    print(f"\nWrote {catalog_path}")
+else:
+    print(f"\n[scoring-only] {catalog_path.name} left untouched -- vendor placement is human-curated.")
+    print(f"               Scores above feed the gear recommendation tool only.")
+    print(f"               Re-seed a catalog from scores only with WRITE_VENDOR_CATALOG=1.")
 print(f"Total items in catalog: {total}")
 print(f"  ({len(all_selected)} buckets, MIN_PER_JOB={MIN_PER_JOB}, soft floor TOP_PER_BUCKET={TOP_PER_BUCKET})")
 

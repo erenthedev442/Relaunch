@@ -766,7 +766,14 @@ lines.append("")
 lines.append("return catalog")
 lines.append("")
 
-OUT_LUA.write_text("\n".join(lines), encoding="utf-8")
-print(f"\nWrote {OUT_LUA}")
+# Vendor placement is human-curated; scoring is advisory (recommendation tool only).
+# The catalog is NOT overwritten unless you explicitly re-seed from scores. [decoupled 2026-07]
+if os.environ.get("WRITE_VENDOR_CATALOG"):
+    OUT_LUA.write_text("\n".join(lines), encoding="utf-8")
+    print(f"\nWrote {OUT_LUA}")
+else:
+    print(f"\n[scoring-only] {OUT_LUA.name} left untouched -- vendor placement is human-curated.")
+    print(f"               Scores above feed the gear recommendation tool only.")
+    print(f"               Re-seed a catalog from scores only with WRITE_VENDOR_CATALOG=1.")
 print(f"  ({sum(len(v) for v in buckets.values())} items across "
       f"{len(buckets)} tier×slot buckets)")
