@@ -104,7 +104,7 @@ REPLACE INTO mob_pools
      modelSize, modelHitboxSize)
 VALUES
     (5901, 'skoll', 'Gemma', 246, UNHEX('010000028E009D0000009D000000000000000000'), -- FJB Gemma look (per AltanaView): Hume Female (race 2), face F1A (0), Snow Bunny Hat (head 142) + Hume Top (body 157) + Hume Shorts (legs 157), no weapon. (Hume Top/Shorts share model 157 -- it's the Hume beachwear set; the equip SLOT picks top vs shorts.) look_t byte order = size(u16=1 MODEL_EQUIPPED), face(u8), race(u8), head/body/hands/legs/feet/main/sub/ranged(u16 LE). Name shows via renameEntity in skoll.lua (isRenamed branch handles the equipped-look name collision).
-     10, 3, 3, 240, 0,
+     10, 3, 3, 240, 40,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,
      901, 0, 0, 0, 153,

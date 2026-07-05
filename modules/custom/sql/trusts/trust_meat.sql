@@ -69,7 +69,7 @@ REPLACE INTO mob_pools
      modelSize, modelHitboxSize)
 VALUES
     (5899, 'meat', 'Meat', 255, UNHEX('01000001990199014F004F004F003F0100000000'), -- FJB Meat look: Hume Male (race 1), face M1A (0, hidden by helm), Terminal Helm + Terminal Plate (head/body model 409), Abyss gauntlets/flanchard/sollerets (hands/legs/feet model 79), Ragnarok great sword (main 319), no sub/ranged. size=1 (MODEL_EQUIPPED). NOTE: "Terminal" only exists as helm+plate (no hands/legs/feet mesh), so the dark Abyss set completes the look. look_t byte order = size(u16),face(u8),race(u8),head/body/hands/legs/feet/main/sub/ranged(u16 LE). Name shows via renameEntity in meat.lua.
-     7, 1, 3, 240, 10,
+     7, 1, 3, 240, 100,
      0, 0, 0, 0, 0, 0,
      32, 0, 3, 0, 0,
      899, 0, 0, 0, 153,
@@ -90,6 +90,11 @@ VALUES
 	('meat', 899,   2, 17, 255),   -- Cure II
 	('meat', 899,   3, 30, 255),   -- Cure III
     ('meat', 899,   4, 55, 255);   -- Cure IV    (backup self-heal; rarely needed)
+	
+REPLACE INTO mob_skill_lists
+    (skill_list_name, skill_list_id, mob_skill_id)
+VALUES
+    ('meat_origin', 5899, 110);
 
 -- =====================================================================
 -- REVERSE (manual rollback -- restores the stock Excenmille trust):
