@@ -11,9 +11,9 @@ the Relaunch server runs a custom **HNM pop system** that keeps the classic King
 <!-- DOCGEN:BEGIN id="hnm-kings" -->
 | Zone | NQ King | HQ King | HQ pop item | Respawn window |
 |---|---|---|---|---|
-| Dragon's Aery | **Fafnir** | **Nidhogg** | Cup of Sweet Tea | 21–24 h |
-| Valley of Sorrows | **Adamantoise** | **Aspidochelone** | Clump of Red Pondweed | 21–24 h |
-| Behemoth's Dominion | **Behemoth** | **King Behemoth** | Savory Shank | 21–24 h |
+| Dragon's Aery | **Fafnir** | **Nidhogg** | <a class="item-link" href="https://www.ffxiah.com/item/3340" data-img="https://static.ffxiah.com/images/icon/3340.png" target="_blank" rel="noopener">Cup of Sweet Tea</a> | 21–24 h |
+| Valley of Sorrows | **Adamantoise** | **Aspidochelone** | <a class="item-link" href="https://www.ffxiah.com/item/3344" data-img="https://static.ffxiah.com/images/icon/3344.png" target="_blank" rel="noopener">Clump of Red Pondweed</a> | 21–24 h |
+| Behemoth's Dominion | **Behemoth** | **King Behemoth** | <a class="item-link" href="https://www.ffxiah.com/item/3342" data-img="https://static.ffxiah.com/images/icon/3342.png" target="_blank" rel="noopener">Savory Shank</a> | 21–24 h |
 <!-- DOCGEN:END id="hnm-kings" -->
 
 !!! note "Nidhogg and King Behemoth in the Hunting League"

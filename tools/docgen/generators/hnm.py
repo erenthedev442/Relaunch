@@ -28,6 +28,7 @@ from pathlib import Path
 
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
+from tools.docgen._bgwiki import item_anchor
 
 
 # ---------------------------------------------------------------------------
@@ -225,6 +226,7 @@ def parse(text: str) -> dict:
         hq_by_zone[zkey] = {
             "hq": _titleize(pq.group(1)),
             "hq_item": _pretty_item(ti.group(1)) if ti else None,
+            "hq_item_token": ti.group(1) if ti else None,
         }
 
     # 4) Resolve a display zone name per zone token. The override path token
@@ -244,6 +246,7 @@ def parse(text: str) -> dict:
                 "nq": nq["nm"],
                 "hq": hq["hq"],
                 "hq_item": hq["hq_item"],
+                "hq_item_token": hq["hq_item_token"],
                 "win_min": nq["win_min"],
                 "win_max": nq["win_max"],
             })
@@ -290,10 +293,14 @@ def _render_kings(kings: list[dict]) -> str:
         "|---|---|---|---|---|",
     ]
     for k in kings:
-        item = k["hq_item"] or "—"
+        if k["hq_item"] and k.get("hq_item_token"):
+            item = item_anchor(k["hq_item"],
+                               resolve_key=k["hq_item_token"].replace("_", " ").title())
+        else:
+            item = "—"
         lines.append(
             f"| {_esc(k['zone'])} | **{_esc(k['nq'])}** | **{_esc(k['hq'])}** | "
-            f"{_esc(item)} | {_window_str(k['win_min'], k['win_max'])} |"
+            f"{item} | {_window_str(k['win_min'], k['win_max'])} |"
         )
     return "\n".join(lines)
 

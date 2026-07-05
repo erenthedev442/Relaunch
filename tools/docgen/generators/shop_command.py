@@ -227,7 +227,7 @@ function gil(p){{
 }}
 function link(id,name){{
   if(!id)return name;
-  return`<a href="https://www.ffxiah.com/item/${{id}}" target="_blank" rel="noopener">${{name}}</a>`;
+  return`<a class="item-link" href="https://www.ffxiah.com/item/${{id}}" data-img="https://static.ffxiah.com/images/icon/${{id}}.png" target="_blank" rel="noopener">${{name}}</a>`;
 }}
 function table(rows){{
   if(!rows.length)return'<p class="st-empty">No items.</p>';

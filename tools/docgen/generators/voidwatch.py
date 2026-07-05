@@ -23,6 +23,7 @@ from pathlib import Path
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 from tools.docgen._luaparse import section, commafy
+from tools.docgen._bgwiki import item_anchor
 
 
 def _first(pattern: str, text: str, default: str) -> str:
@@ -360,7 +361,9 @@ def _render_nm_loot(c: dict, names: dict[int, str]) -> str:
     order = _nm_tier_order(c["strata"])
 
     def namelist(ids):
-        return ", ".join(names.get(i, f"item #{i}") for i in ids) or "—"
+        # Link each drop to FFXIAH by its explicit item id (hover = stat box).
+        return ", ".join(item_anchor(names.get(i, f"item #{i}"), item_id=i)
+                         for i in ids) or "—"
 
     rows = [
         "| Voidwalker NM | Rare — gear & chase (quality 92+) | Uncommon — materials & consumables (60–91) |",
@@ -370,7 +373,8 @@ def _render_nm_loot(c: dict, names: dict[int, str]) -> str:
         t = c["nm_loot"][nm]
         rows.append(f"| **{_pretty_nm(nm)}** | {namelist(t['rare'])} | {namelist(t['uncommon'])} |")
 
-    common = ", ".join(sorted(names.get(i, f"item #{i}") for i in c["nm_common"]))
+    common = ", ".join(item_anchor(names.get(i, f"item #{i}"), item_id=i)
+                       for i in sorted(c["nm_common"], key=lambda i: names.get(i, "")))
     rows.append("")
     rows.append(
         f"**Shared common tier** (quality 0–59 — every Voidwalker also rolls these "

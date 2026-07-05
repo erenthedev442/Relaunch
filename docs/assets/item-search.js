@@ -68,8 +68,9 @@
 
     function card(it) {
       var name = it.i
-        ? '<a class="is-name" href="https://www.ffxiah.com/item/' + it.i +
-          '" target="_blank" rel="noopener">' + esc(it.n) + "</a>"
+        ? '<a class="is-name item-link" href="https://www.ffxiah.com/item/' + it.i +
+          '" data-img="https://static.ffxiah.com/images/icon/' + it.i +
+          '.png" target="_blank" rel="noopener">' + esc(it.n) + "</a>"
         : '<span class="is-name">' + esc(it.n) + "</span>";
       var h = '<div class="is-card">' + name;
       if (it.d && it.d.length) {

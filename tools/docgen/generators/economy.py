@@ -33,6 +33,7 @@ from pathlib import Path
 
 from tools.docgen._db import connect
 from tools.docgen._markers import write_between_markers
+from tools.docgen._bgwiki import item_anchor
 
 
 _GIL_ITEM_ID = 65535
@@ -309,7 +310,8 @@ def _render_hot(d: dict) -> str:
     lines.append("| # | Item | Lots sold | Gil volume |")
     lines.append("|---:|---|---:|---:|")
     for i, (_itemid, name, units, gil) in enumerate(hot, start=1):
-        lines.append(f"| {i} | {_pretty_item(name)} | {units:,} | {gil:,} gil |")
+        item = item_anchor(_pretty_item(name), item_id=_itemid)
+        lines.append(f"| {i} | {item} | {units:,} | {gil:,} gil |")
     return "\n".join(lines)
 
 
