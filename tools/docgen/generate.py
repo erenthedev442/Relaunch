@@ -103,7 +103,6 @@ def main() -> int:
         maats_challenge,
         corvus,
         cross_job_traits,
-        gear_progression,
         invasions,
         provisioners_league,
         seasonal_events,
@@ -284,7 +283,6 @@ def main() -> int:
         ("provisioners_league", provisioners_league),
         ("seasonal_events",     seasonal_events),
         ("cross_job_traits",    cross_job_traits),
-        ("gear_progression",    gear_progression),
         ("title_vendor",        title_vendor),
         ("corvus",              corvus),
         # economy/service NPCs (2026-06-14 follow-up)
