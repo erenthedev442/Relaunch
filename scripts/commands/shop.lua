@@ -100,7 +100,8 @@ local stock =
         { 13281,   50000 },
         { 26164,   100000 },
         { 15457,   100000 }, --swift belt
-        { 12579,   100000 }, --Scorpion Harness      
+        { 12579,   100000 }, --Scorpion Harness
+        { 13122,    50000 }, --Miner's Pendant (lv1 neck, quest reward unreachable in-game)
 --        { 15166,   5000 },
 --        { xi.item.SHADE_HARNESS,     1200 },
 --        { xi.item.SHADE_MITTENS,    800 },
