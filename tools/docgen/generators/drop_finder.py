@@ -245,6 +245,174 @@ def _dungeon_augment_drops(repo_root: Path) -> dict[int, list[dict]]:
 
 
 # ---------------------------------------------------------------------------
+# xi.item enum lookup (resolves symbolic names used in HTBF loot tables)
+# ---------------------------------------------------------------------------
+
+_ENUM_RE = re.compile(r"^\s+(\w+)\s*=\s*(\d+)")
+
+
+def _xi_item_enum(repo_root: Path) -> dict[str, int]:
+    p = resolve_source(repo_root, "scripts/enum/item.lua")
+    if not p:
+        return {}
+    out: dict[str, int] = {}
+    for ln in p.read_text(encoding="utf-8", errors="replace").splitlines():
+        m = _ENUM_RE.match(ln)
+        if m:
+            out[m.group(1)] = int(m.group(2))
+    return out
+
+
+# ---------------------------------------------------------------------------
+# HTBF (High-Tier Battlefield) armoury-crate loot
+# G1 = guaranteed common reward, G2 = rare gear (heavy 0-weight whiff slot).
+# ---------------------------------------------------------------------------
+
+def _htbf_drops(repo_root: Path) -> dict[int, list[dict]]:
+    p = resolve_source(repo_root, "modules/custom/lua/htbf_loot.lua")
+    if not p:
+        return {}
+    enum = _xi_item_enum(repo_root)
+    text = p.read_text(encoding="utf-8", errors="replace")
+
+    fights: dict[str, list[tuple[int, int]]] = {}
+    fight: str | None = None
+    for line in text.splitlines():
+        fm = re.match(r"^fightLoot\.(\w+)\s*=", line)
+        if fm:
+            fight = fm.group(1)
+            fights[fight] = []
+            continue
+        if fight is None:
+            continue
+        im = re.search(r"itemId\s*=\s*(?:xi\.item\.(\w+)|(\d+))", line)
+        wm = re.search(r"weight\s*=\s*(\d+)", line)
+        if im and wm:
+            iid = enum.get(im.group(1), 0) if im.group(1) else int(im.group(2))
+            fights[fight].append((iid, int(wm.group(1))))
+
+    out: dict[int, list[dict]] = {}
+    for key, items in fights.items():
+        label = key.replace("_", " ").title()
+        zero_idx = next(
+            (i for i, (iid, _) in enumerate(items) if iid == 0), len(items))
+        for group in (items[:zero_idx], items[zero_idx:]):
+            total = sum(w for _, w in group)
+            if total == 0:
+                continue
+            for iid, w in group:
+                if iid == 0:
+                    continue
+                out.setdefault(iid, []).append({
+                    "mob": f"HTBF: {label}",
+                    "zone": "Battlefield",
+                    "pct": round(w / total * 100, 1),
+                })
+    return out
+
+
+# ---------------------------------------------------------------------------
+# Abyssea Su5 weapon drops (5% per kill, 1 random of 22 weapons)
+# ---------------------------------------------------------------------------
+
+def _abyssea_su5_drops(repo_root: Path) -> dict[int, list[dict]]:
+    p = resolve_source(repo_root, "modules/custom/lua/abyssea_su5_drops.lua")
+    if not p:
+        return {}
+    m = re.search(r"SU5_WEAPONS\s*=\s*\{([^}]+)\}",
+                  p.read_text(encoding="utf-8", errors="replace"))
+    if not m:
+        return {}
+    ids = [int(x) for x in re.findall(r"(\d+)", m.group(1))]
+    pct = round(5.0 / max(len(ids), 1), 1)
+    return {iid: [{"mob": "Any mob (Abyssea)", "zone": "Abyssea",
+                    "pct": pct}] for iid in ids}
+
+
+# ---------------------------------------------------------------------------
+# Open-world augment catalyst drops (1:1 mob -> catalyst, 50%)
+# ---------------------------------------------------------------------------
+
+_CAT_MOB_RE = re.compile(r"\['([^']+)'\]\s*=\s*(\d+)")
+
+
+def _catalyst_mob_drops(repo_root: Path) -> dict[int, list[dict]]:
+    p = resolve_source(repo_root, "modules/custom/lua/augment_catalyst_mobs.lua")
+    if not p:
+        return {}
+    out: dict[int, list[dict]] = {}
+    for m in _CAT_MOB_RE.finditer(
+            p.read_text(encoding="utf-8", errors="replace")):
+        out.setdefault(int(m.group(2)), []).append({
+            "mob": m.group(1).replace("_", " "),
+            "zone": "Open World",
+            "pct": 50.0,
+        })
+    return out
+
+
+# ---------------------------------------------------------------------------
+# Voidwatch Riftworn Pyxis loot (quality-tiered: 60% common / 32% unc / 8% rare)
+# ---------------------------------------------------------------------------
+
+def _voidwatch_drops(repo_root: Path) -> dict[int, list[dict]]:
+    p = resolve_source(repo_root, "modules/custom/lua/voidwatch_catalog.lua")
+    if not p:
+        return {}
+    text = p.read_text(encoding="utf-8", errors="replace")
+
+    def nums(s: str) -> list[int]:
+        return [int(x) for x in re.findall(r"\b(\d{3,})\b", s)]
+
+    TIER_PCT = {"common": 60.0, "uncommon": 32.0, "rare": 8.0}
+    out: dict[int, list[dict]] = {}
+
+    loot_start = text.find("C.LOOT")
+    loot_end = text.find("\nC.", loot_start + 6) if loot_start >= 0 else -1
+    if loot_start >= 0:
+        block = text[loot_start:(loot_end if loot_end > loot_start else len(text))]
+        for tier, base in TIER_PCT.items():
+            tm = re.search(rf"{tier}.*?\{{([^}}]+)\}}", block, re.DOTALL)
+            if not tm:
+                continue
+            ids = nums(tm.group(1))
+            pct = round(base / max(len(ids), 1), 1)
+            for iid in ids:
+                out.setdefault(iid, []).append({
+                    "mob": "Voidwalker NM", "zone": "Voidwatch",
+                    "pct": max(pct, 0.1),
+                })
+
+    for m in re.finditer(
+            r"(\w+)\s*=\s*\{\s*rare\s*=\s*\{([^}]*)\}", text):
+        nm = m.group(1)
+        if nm in TIER_PCT:
+            continue
+        ids = nums(m.group(2))
+        if not ids:
+            continue
+        pct = round(8.0 / len(ids), 1)
+        for iid in ids:
+            out.setdefault(iid, []).append({
+                "mob": f"{nm.replace('_', ' ')} (Voidwatch)",
+                "zone": "Voidwatch",
+                "pct": max(pct, 0.1),
+            })
+    return out
+
+
+# ---------------------------------------------------------------------------
+# GM Home mob seal drops (100% from mobs in zone 210)
+# ---------------------------------------------------------------------------
+
+_SEAL_DROPS: dict[int, dict] = {
+    9539: {"mob": "Any mob",   "zone": "GM Home", "pct": 100.0},
+    9541: {"mob": "Lv90+ mob", "zone": "GM Home", "pct": 100.0},
+    9543: {"mob": "Lv90+ NM",  "zone": "GM Home", "pct": 100.0},
+}
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
@@ -273,6 +441,14 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # (catalysts are common crafting materials that also drop elsewhere).
     for iid, entries in _dungeon_augment_drops(repo_root).items():
         drops.setdefault(iid, []).extend(entries)
+
+    # Merge remaining scripted drop sources.
+    for src in (_htbf_drops, _abyssea_su5_drops, _catalyst_mob_drops,
+                _voidwatch_drops):
+        for iid, entries in src(repo_root).items():
+            drops.setdefault(iid, []).extend(entries)
+    for iid, entry in _SEAL_DROPS.items():
+        drops.setdefault(iid, []).append(entry)
 
     names = _item_names(repo_root)
     uses = _used_for(repo_root)
