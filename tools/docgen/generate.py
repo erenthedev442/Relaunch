@@ -142,6 +142,7 @@ def main() -> int:
         weapon_forge,
         shop_command,
         nyzul_isle,
+        domain_invasion,
         # --- full-page owners for formerly hand-written pages (2026-07-05):
         # every one rewrites its whole page from live catalogs so nothing drifts.
         home_page,
@@ -369,6 +370,9 @@ def main() -> int:
         # per-NM drop table and floor-100 vigil-weapon pool into the two marker
         # blocks nyzul_page just emitted on docs/endgame/nyzul-isle.md.
         ("nyzul_isle",           nyzul_isle),
+        # domain_invasion syncs docs/endgame/domain-invasion.md from
+        # domain_invasion_catalog.lua (schedule, zone wave tables, rewards).
+        ("domain_invasion",      domain_invasion),
         # differentiators renders why-legendary.md's "What Legendary Does
         # Differently" list from systems_registry.py and writes a drift report
         # of any system detail page that isn't featured. Runs before
