@@ -1,8 +1,33 @@
-"""Generate spells reference pages from sql/spell_list.sql."""
+"""Generate spells reference pages from sql/spell_list.sql.
+
+The Trust page is a special case: instead of the mechanical spell columns
+(Skill/Element/MP/Cast/Recast/Jobs) it shows each alter ego's BG-wiki
+behavior/role (Tank, Healer, Melee Fighter, ...), read from
+tools/docgen/data/trust_behaviors.json.
+"""
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
+
+# Trust behaviors live in a committed data file next to the generators, keyed by
+# the trust's DISPLAY name (same string _pretty_name produces). Missing/renamed
+# entries fall back to "—" rather than erroring.
+_TRUST_BEHAVIORS_PATH = Path(__file__).resolve().parent.parent / "data" / "trust_behaviors.json"
+
+
+def _load_trust_behaviors() -> dict[str, str]:
+    if not _TRUST_BEHAVIORS_PATH.exists():
+        print(f"[spells] note: {_TRUST_BEHAVIORS_PATH.name} not found — Behaviors show as '—'")
+        return {}
+    try:
+        data = json.loads(_TRUST_BEHAVIORS_PATH.read_text(encoding="utf-8"))
+    except (ValueError, OSError) as exc:
+        print(f"[spells] WARN: could not read {_TRUST_BEHAVIORS_PATH.name}: {exc}")
+        return {}
+    # Accept either a flat {name: role} map or {"behaviors": {...}, ...}.
+    return data.get("behaviors", data) if isinstance(data, dict) else {}
 
 ELEMENTS = {
     0: "None", 1: "Fire", 2: "Ice", 3: "Wind", 4: "Earth",
@@ -237,20 +262,41 @@ def _write_group_page(path: Path, label: str, spells: list[dict]) -> None:
         "",
         f"**Spells in this category:** {len(spells)}",
         "",
-        "| ID | Name | Skill | Element | MP | Cast | Recast | Jobs |",
-        "|---:|---|---|---|---:|---:|---:|---|",
     ])
-    for s in sorted(spells, key=lambda s: s["spellid"]):
-        jobs_blob = s["jobs"] if isinstance(s["jobs"], (bytes, bytearray)) else b""
-        mp = s["mpCost"] if s["mpCost"] else "—"
-        skill_id = s["skill"]
-        elem_id = s["element"]
-        skill = SKILLS.get(skill_id, f"#{skill_id}")
-        element = ELEMENTS.get(elem_id, f"#{elem_id}")
-        pretty = _escape_md(_pretty_name(s["name"]))
-        lines.append(
-            f"| {s['spellid']} | {pretty} | {skill} | {element} | {mp} "
-            f"| {_ms(s['castTime'])} | {_ms(s['recastTime'])} | {_format_jobs(jobs_blob)} |"
-        )
+
+    if path.stem == "trust":
+        # Trust page: drop the mechanical spell columns; show each alter ego's
+        # BG-wiki behavior/role instead. Behaviors keyed by display name.
+        behaviors = _load_trust_behaviors()
+        matched = 0
+        lines.extend([
+            "| ID | Name | Behaviors |",
+            "|---:|---|---|",
+        ])
+        for s in sorted(spells, key=lambda s: s["spellid"]):
+            pretty = _pretty_name(s["name"])
+            beh = behaviors.get(pretty) or behaviors.get(s["name"]) or "—"
+            if beh != "—":
+                matched += 1
+            lines.append(f"| {s['spellid']} | {_escape_md(pretty)} | {_escape_md(beh)} |")
+        print(f"[spells] trust: {matched}/{len(spells)} behaviors matched")
+    else:
+        lines.extend([
+            "| ID | Name | Skill | Element | MP | Cast | Recast | Jobs |",
+            "|---:|---|---|---|---:|---:|---:|---|",
+        ])
+        for s in sorted(spells, key=lambda s: s["spellid"]):
+            jobs_blob = s["jobs"] if isinstance(s["jobs"], (bytes, bytearray)) else b""
+            mp = s["mpCost"] if s["mpCost"] else "—"
+            skill_id = s["skill"]
+            elem_id = s["element"]
+            skill = SKILLS.get(skill_id, f"#{skill_id}")
+            element = ELEMENTS.get(elem_id, f"#{elem_id}")
+            pretty = _escape_md(_pretty_name(s["name"]))
+            lines.append(
+                f"| {s['spellid']} | {pretty} | {skill} | {element} | {mp} "
+                f"| {_ms(s['castTime'])} | {_ms(s['recastTime'])} | {_format_jobs(jobs_blob)} |"
+            )
+
     lines.append("")
     path.write_text("\n".join(lines), encoding="utf-8")

@@ -26,123 +26,123 @@ _Spells are sorted by ID._
 
 | ID | Name | Behaviors |
 |---:|---|---|
-| 896 | Shantotto | — |
-| 897 | Naji | — |
-| 898 | Kupipi | — |
-| 899 | Excenmille | — |
-| 900 | Ayame | — |
-| 901 | Nanaa Mihgo | — |
-| 902 | Curilla | — |
-| 903 | Volker | — |
-| 904 | Ajido-marujido | — |
-| 905 | Trion | — |
-| 906 | Zeid | — |
-| 907 | Lion | — |
-| 908 | Tenzen | — |
-| 909 | Mihli Aliapoh | — |
-| 910 | Valaineral | — |
-| 911 | Joachim | — |
-| 912 | Naja Salaheem | — |
-| 913 | Prishe | — |
-| 914 | Ulmia | — |
-| 915 | Shikaree Z | — |
-| 916 | Cherukiki | — |
-| 917 | Iron Eater | — |
-| 918 | Gessho | — |
-| 919 | Gadalar | — |
-| 920 | Rainemard | — |
-| 921 | Ingrid | — |
-| 922 | Lehko Habhoka | — |
-| 923 | Nashmeira | — |
-| 924 | Zazarg | — |
-| 925 | Ovjang | — |
-| 926 | Mnejing | — |
-| 927 | Sakura | — |
-| 928 | Luzaf | — |
-| 929 | Najelith | — |
-| 930 | Aldo | — |
-| 931 | Moogle | — |
-| 932 | Fablinix | — |
-| 933 | Maat | — |
-| 934 | D Shantotto | — |
-| 935 | Star Sibyl | — |
-| 936 | Karaha-baruha | — |
-| 937 | Cid | — |
-| 938 | Gilgamesh | — |
-| 939 | Areuhat | — |
-| 940 | Semih Lafihna | — |
-| 941 | Elivira | — |
-| 942 | Noillurie | — |
-| 943 | Lhu Mhakaracca | — |
-| 944 | Ferreous Coffin | — |
-| 945 | Lilisette | — |
-| 946 | Mumor | — |
-| 947 | Uka Totlihn | — |
-| 948 | Klara | — |
-| 949 | Romaa Mihgo | — |
-| 950 | Kuyin Hathdenna | — |
-| 951 | Rahal | — |
-| 952 | Koru-moru | — |
-| 953 | Pieuje Uc | — |
-| 954 | I Shield Uc | — |
-| 955 | Apururu Uc | — |
-| 956 | Jakoh Uc | — |
-| 957 | Flaviria Uc | — |
-| 958 | Babban | — |
-| 959 | Abenzio | — |
-| 960 | Rughadjeen | — |
-| 961 | Kukki-chebukki | — |
-| 962 | Margret | — |
-| 963 | Chacharoon | — |
-| 964 | Lhe Lhangavo | — |
-| 965 | Arciela | — |
-| 966 | Mayakov | — |
-| 967 | Qultada | — |
-| 968 | Adelheid | — |
-| 969 | Amchuchu | — |
-| 970 | Brygid | — |
-| 971 | Mildaurion | — |
-| 972 | Halver | — |
-| 973 | Rongelouts | — |
-| 974 | Leonoyne | — |
-| 975 | Maximilian | — |
-| 976 | Kayeel-payeel | — |
-| 977 | Robel-akbel | — |
-| 978 | Kupofried | — |
-| 979 | Selh Teus | — |
-| 980 | Yoran-oran Uc | — |
-| 981 | Sylvie Uc | — |
-| 982 | Abquhbah | — |
-| 983 | Balamor | — |
-| 984 | August | — |
-| 985 | Rosulatia | — |
-| 986 | Teodor | — |
-| 987 | Ullegore | — |
-| 988 | Makki-chebukki | — |
-| 989 | King Of Hearts | — |
-| 990 | Morimar | — |
-| 991 | Darrcuiln | — |
-| 992 | Aahm | — |
-| 993 | Aaev | — |
-| 994 | Aamr | — |
-| 995 | Aatt | — |
-| 996 | Aagk | — |
-| 997 | Iroha | — |
-| 998 | Ygnas | — |
-| 999 | Monberaux | — |
-| 1004 | Excenmille S | — |
-| 1005 | Ayame Uc | — |
-| 1006 | Maat Uc | — |
-| 1007 | Aldo Uc | — |
-| 1008 | Naja Uc | — |
-| 1009 | Lion II | — |
-| 1010 | Zeid II | — |
-| 1011 | Prishe II | — |
-| 1012 | Nashmeira II | — |
-| 1013 | Lilisette II | — |
-| 1014 | Tenzen II | — |
-| 1015 | Mumor II | — |
-| 1016 | Ingrid II | — |
-| 1017 | Arciela II | — |
-| 1018 | Iroha II | — |
-| 1019 | Shantotto II | — |
+| 896 | Shantotto | Offensive Caster |
+| 897 | Naji | Melee Fighter |
+| 898 | Kupipi | Healer |
+| 899 | Excenmille | Melee Fighter |
+| 900 | Ayame | Melee Fighter |
+| 901 | Nanaa Mihgo | Melee Fighter |
+| 902 | Curilla | Tank |
+| 903 | Volker | Melee Fighter |
+| 904 | Ajido-marujido | Offensive Caster |
+| 905 | Trion | Tank |
+| 906 | Zeid | Melee Fighter |
+| 907 | Lion | Melee Fighter |
+| 908 | Tenzen | Melee Fighter |
+| 909 | Mihli Aliapoh | Healer |
+| 910 | Valaineral | Tank |
+| 911 | Joachim | Support |
+| 912 | Naja Salaheem | Melee Fighter |
+| 913 | Prishe | Melee Fighter |
+| 914 | Ulmia | Support |
+| 915 | Shikaree Z | Melee Fighter |
+| 916 | Cherukiki | Healer |
+| 917 | Iron Eater | Melee Fighter |
+| 918 | Gessho | Tank |
+| 919 | Gadalar | Offensive Caster |
+| 920 | Rainemard | Melee Fighter |
+| 921 | Ingrid | Offensive Caster |
+| 922 | Lehko Habhoka | Melee Fighter |
+| 923 | Nashmeira | Melee Fighter |
+| 924 | Zazarg | Melee Fighter |
+| 925 | Ovjang | Offensive Caster |
+| 926 | Mnejing | Tank |
+| 927 | Sakura | Special |
+| 928 | Luzaf | Melee Fighter |
+| 929 | Najelith | Ranged Fighter |
+| 930 | Aldo | Melee Fighter |
+| 931 | Moogle | Special |
+| 932 | Fablinix | Melee Fighter |
+| 933 | Maat | Melee Fighter |
+| 934 | D Shantotto | Offensive Caster |
+| 935 | Star Sibyl | Special |
+| 936 | Karaha-baruha | Healer |
+| 937 | Cid | Melee Fighter |
+| 938 | Gilgamesh | Melee Fighter |
+| 939 | Areuhat | Melee Fighter |
+| 940 | Semih Lafihna | Ranged Fighter |
+| 941 | Elivira | Ranged Fighter |
+| 942 | Noillurie | Melee Fighter |
+| 943 | Lhu Mhakaracca | Melee Fighter |
+| 944 | Ferreous Coffin | Healer |
+| 945 | Lilisette | Melee Fighter |
+| 946 | Mumor | Melee Fighter |
+| 947 | Uka Totlihn | Melee Fighter |
+| 948 | Klara | Melee Fighter |
+| 949 | Romaa Mihgo | Melee Fighter |
+| 950 | Kuyin Hathdenna | Special |
+| 951 | Rahal | Tank |
+| 952 | Koru-moru | Support |
+| 953 | Pieuje Uc | Healer |
+| 954 | I Shield Uc | Melee Fighter |
+| 955 | Apururu Uc | Healer |
+| 956 | Jakoh Uc | Melee Fighter |
+| 957 | Flaviria Uc | Melee Fighter |
+| 958 | Babban | Melee Fighter |
+| 959 | Abenzio | Melee Fighter |
+| 960 | Rughadjeen | Tank |
+| 961 | Kukki-chebukki | Offensive Caster |
+| 962 | Margret | Ranged Fighter |
+| 963 | Chacharoon | Melee Fighter |
+| 964 | Lhe Lhangavo | Melee Fighter |
+| 965 | Arciela | Support |
+| 966 | Mayakov | Melee Fighter |
+| 967 | Qultada | Support |
+| 968 | Adelheid | Offensive Caster |
+| 969 | Amchuchu | Tank |
+| 970 | Brygid | Special |
+| 971 | Mildaurion | Melee Fighter |
+| 972 | Halver | Melee Fighter |
+| 973 | Rongelouts | Melee Fighter |
+| 974 | Leonoyne | Offensive Caster |
+| 975 | Maximilian | Melee Fighter |
+| 976 | Kayeel-payeel | Offensive Caster |
+| 977 | Robel-akbel | Offensive Caster |
+| 978 | Kupofried | Special |
+| 979 | Selh Teus | Melee Fighter |
+| 980 | Yoran-oran Uc | Healer |
+| 981 | Sylvie Uc | Support |
+| 982 | Abquhbah | Melee Fighter |
+| 983 | Balamor | Melee Fighter |
+| 984 | August | Tank |
+| 985 | Rosulatia | Offensive Caster |
+| 986 | Teodor | Melee Fighter |
+| 987 | Ullegore | Offensive Caster |
+| 988 | Makki-chebukki | Ranged Fighter |
+| 989 | King Of Hearts | Support |
+| 990 | Morimar | Melee Fighter |
+| 991 | Darrcuiln | Melee Fighter |
+| 992 | Aahm | Tank |
+| 993 | Aaev | Tank |
+| 994 | Aamr | Melee Fighter |
+| 995 | Aatt | Offensive Caster |
+| 996 | Aagk | Melee Fighter |
+| 997 | Iroha | Melee Fighter |
+| 998 | Ygnas | Healer |
+| 999 | Monberaux | Healer |
+| 1004 | Excenmille S | Melee Fighter |
+| 1005 | Ayame Uc | Melee Fighter |
+| 1006 | Maat Uc | Melee Fighter |
+| 1007 | Aldo Uc | Melee Fighter |
+| 1008 | Naja Uc | Melee Fighter |
+| 1009 | Lion II | Melee Fighter |
+| 1010 | Zeid II | Melee Fighter |
+| 1011 | Prishe II | Melee Fighter |
+| 1012 | Nashmeira II | Melee Fighter |
+| 1013 | Lilisette II | Melee Fighter |
+| 1014 | Tenzen II | Ranged Fighter |
+| 1015 | Mumor II | Offensive Caster |
+| 1016 | Ingrid II | Melee Fighter |
+| 1017 | Arciela II | Support |
+| 1018 | Iroha II | Melee Fighter |
+| 1019 | Shantotto II | Offensive Caster |
