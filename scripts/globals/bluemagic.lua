@@ -407,7 +407,9 @@ xi.spells.blue.useMagicalSpell = function(caster, target, spell, params)
     wsc = wsc * wscMultiplier -- Bonus WSC from AF3/BA
 
     -- INT/MND/CHR dmg bonuses
-    params.diff     = caster:getStat(params.attribute) - target:getStat(params.attribute)
+    -- BLU "Blue Magic Effect" job point gift also boosts magical blue magic:
+    -- add the attribute-value bonus to the caster's stat in the dStat spread.
+    params.diff     = (caster:getStat(params.attribute) + caster:getMod(xi.mod.BLUE_MAGIC_EFFECT)) - target:getStat(params.attribute)
     local statBonus = params.diff * params.tMultiplier
 
     -- Azure Lore
