@@ -334,32 +334,7 @@
       ]
     }
   ],
-  "dungeons": [
-    {
-      "clearCv": "Dungeon_Clears_whispering_halls",
-      "id": "whispering_halls",
-      "infamyBase": 50,
-      "label": "The Outer Bastion"
-    },
-    {
-      "clearCv": "Dungeon_Clears_voidwalker_arena",
-      "id": "voidwalker_arena",
-      "infamyBase": 270,
-      "label": "The Voidwalker Arena"
-    },
-    {
-      "clearCv": "Dungeon_Clears_cloister_of_sorrow",
-      "id": "cloister_of_sorrow",
-      "infamyBase": 600,
-      "label": "The Empyreal Paradox"
-    },
-    {
-      "clearCv": "Dungeon_Clears_eternal_throne",
-      "id": "eternal_throne",
-      "infamyBase": 1400,
-      "label": "The Eternal Throne"
-    }
-  ],
+  "dungeons": [],
   "guild_ranks": [
     {
       "amplifier": 0.0,
