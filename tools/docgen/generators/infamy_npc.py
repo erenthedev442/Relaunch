@@ -90,8 +90,9 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     lines.append(
         f"The **Infamy Vendor** stands at **Leafallia** (`!leaf`) and is paid in **{currency}**, "
         f"earned from endgame content -- Abyssea NM hunts, Invasions, and the weekly "
-        f"Raid. It carries gear sold nowhere else -- relic-tier weapons, bard "
-        f"instruments, and best-in-slot picks promoted from the top gear tier. All "
+        f"Raid. It is a hand-curated **accessory shop** -- best-in-slot neck, ear, "
+        f"ring, waist, and back pieces. Weapons and armor are no longer sold here; "
+        f"they drop from the [Voidwatch](../endgame/voidwatch.md) NMs instead. All "
         f"costs below are in {currency}."
     )
     lines.append("")
@@ -99,16 +100,16 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         "Looking for **+4 armor**? That's no longer bought here — the +4 tier is an "
         "earned upgrade at the [Dynamis-Divergence Forge](../endgame/dynamis-divergence.md) "
         "(trade a reforged +3 AF/Relic piece plus [D] materials). The Infamy Vendor "
-        "sells weapons, armor, and accessories."
+        "sells accessories only."
     )
     lines.append("")
 
     if curated:
-        lines.append("### Curated picks")
+        lines.append("### Accessories")
         lines.append("")
         lines.append(
-            f"_{len(curated)} hand-picked items -- relic weapons, bard instruments, "
-            f"and other special weapons._"
+            f"_{len(curated)} hand-picked accessories -- neck, ear, ring, waist, and "
+            f"back pieces._"
         )
         lines.append("")
         lines.extend(_render_table(curated))

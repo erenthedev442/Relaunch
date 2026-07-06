@@ -4,14 +4,13 @@
 --
 -- The native shop window charges the Infamy CharVar instead of gil via
 -- p:setShopCurrencyVar(). Menu structure:
---   Root (category picker)
---     Weapons / Armor / Accessories / Other  -> native shop window (16 per page)
---     +4 Reforge   Job -> [Set ->] Slot      -> native shop window (5 slots)
+--   Root (accessory slot picker)
+--     Accessories  Neck / Ear / Ring / Waist / Back  -> native shop window
 --
--- All item data is in infamy_vendor_catalog.lua.
--- Run tools/build_infamy_top_picks.py to refresh vendorItemsAuto.
--- Run tools/build_infamy_plus4_catalog.py to refresh plus4Sets.
--- Run tools/build_infamy_typemap.py to refresh itemTypeMap.
+-- Accessories-only, hand-curated. All item data is in
+-- infamy_vendor_catalog.lua (each item carries its own `sub` slot). The old
+-- auto-generated sections + build_infamy_*.py generators were retired; weapons
+-- and armor moved to the Voidwatch NM loot tables.
 -----------------------------------
 require('modules/module_utils')
 local catalog = require('modules/custom/lua/infamy_vendor_catalog')
@@ -116,20 +115,17 @@ local SUBTYPE_PAGE_SIZE = 6
 
 local function buildCuratedItems()
     local out = {}
-    for _, it in ipairs(catalog.vendorItems     or {}) do table.insert(out, it) end
-    for _, it in ipairs(catalog.vendorItemsAuto or {}) do table.insert(out, it) end
+    for _, it in ipairs(catalog.vendorItems or {}) do table.insert(out, it) end
     return out
 end
 
 local function groupCurated()
     local items = buildCuratedItems()
-    local map   = catalog.itemTypeMap or {}
     local g     = {}
     for _, it in ipairs(items) do
-        local cs       = map[it.id] or 'Other/Other'
-        local cat, sub = cs:match('^(.-)/(.+)$')
-        cat = cat or 'Other'
-        sub = sub or 'Other'
+        -- Accessories-only vendor: category is fixed; each item carries its own
+        -- slot sub-category (Neck/Ear/Ring/Waist/Back) in catalog.vendorItems.
+        local cat, sub = 'Accessories', (it.sub or 'Other')
         g[cat]      = g[cat] or {}
         g[cat][sub] = g[cat][sub] or {}
         table.insert(g[cat][sub], { item = it })
@@ -158,9 +154,6 @@ end
 local showVendorRoot
 local showCuratedCat
 local showCuratedSub
-local showPlus4JobMenu
-local showPlus4SetMenu
-local showPlus4SlotMenu
 
 showVendorRoot = function(player)
     local g    = groupCurated()
@@ -173,10 +166,9 @@ showVendorRoot = function(player)
                 function(p) showCuratedCat(p, c, 1) end })
         end
     end
-    -- +4 moved to Dynamis-D Forge (Dynamis_Plus4_Forge.lua); the [D] materials
-    -- are the gate now. Re-enable this line to surface the +4 browser here again.
-    -- (catalog.plus4Sets and the showPlus4* menus below are left intact.)
-    -- table.insert(opts, { '+4 Reforge',    function(p) showPlus4JobMenu(p, 1) end })
+    -- +4 upgrades live at the Dynamis-D Forge (Dynamis_Plus4_Forge.lua); the
+    -- [D] materials are the gate. The old in-vendor +4 browser was removed with
+    -- the auto-generated catalog sections.
     table.insert(opts, { 'Close',         function() end })
 
     vendorMenu.title   = string.format('Infamy Vendor  [%d Infamy]', getInfamy(player))
@@ -236,95 +228,6 @@ showCuratedSub = function(player, cat, sub)
     vendorMenu.title   = string.format('%s  [%d Inf]', trunc(sub, 12), getInfamy(player))
     vendorMenu.options = opts
     openMenu(player, vendorMenu)
-end
-
---------------------------------------------------------------------
--- +4 REFORGE BROWSER  (Job -> [Set ->] Slot -> native shop)
---------------------------------------------------------------------
-local plus4Jobs = {}
-for job, _ in pairs(catalog.plus4Sets or {}) do
-    table.insert(plus4Jobs, job)
-end
-table.sort(plus4Jobs)
-
-local JOB_PAGE_SIZE = 6
-
-showPlus4JobMenu = function(player, page)
-    page = page or 1
-    local total = #plus4Jobs
-    local pages = math.max(1, math.ceil(total / JOB_PAGE_SIZE))
-    page = math.max(1, math.min(page, pages))
-
-    local opts     = {}
-    local startIdx = (page - 1) * JOB_PAGE_SIZE + 1
-    local endIdx   = math.min(startIdx + JOB_PAGE_SIZE - 1, total)
-
-    for idx = startIdx, endIdx do
-        local job  = plus4Jobs[idx]
-        local sets = catalog.plus4Sets[job] or {}
-        if #sets == 1 then
-            table.insert(opts, {
-                string.format('%s  (5 pc)', job),
-                function(p) showPlus4SlotMenu(p, job, 1, page) end,
-            })
-        else
-            table.insert(opts, {
-                string.format('%s  (%d sets)', job, #sets),
-                function(p) showPlus4SetMenu(p, job, page) end,
-            })
-        end
-    end
-
-    if pages > 1 then
-        if page > 1 then
-            table.insert(opts, { '<< Prev', function(p) showPlus4JobMenu(p, page - 1) end })
-        end
-        if page < pages then
-            table.insert(opts, { 'Next >>', function(p) showPlus4JobMenu(p, page + 1) end })
-        end
-    end
-    table.insert(opts, { '<< Back', function(p) showVendorRoot(p) end })
-
-    vendorMenu.title   = string.format('+4 Reforge  [%d Infamy]', getInfamy(player))
-    vendorMenu.options = opts
-    openMenu(player, vendorMenu)
-end
-
-showPlus4SetMenu = function(player, job, jobPage)
-    local sets = catalog.plus4Sets[job] or {}
-    local opts = {}
-    for setIdx, setEntry in ipairs(sets) do
-        local pieceCount = 0
-        for _ in pairs(setEntry.pieces or {}) do pieceCount = pieceCount + 1 end
-        table.insert(opts, {
-            string.format('%s  (%d pc)', setEntry.set, pieceCount),
-            function(p) showPlus4SlotMenu(p, job, setIdx, jobPage) end,
-        })
-    end
-    table.insert(opts, { '<< Back', function(p) showPlus4JobMenu(p, jobPage) end })
-
-    vendorMenu.title   = string.format('%s Sets  [%d Infamy]', job, getInfamy(player))
-    vendorMenu.options = opts
-    openMenu(player, vendorMenu)
-end
-
-local PLUS4_SLOT_ORDER = { 'head', 'body', 'hands', 'legs', 'feet' }
-
-showPlus4SlotMenu = function(player, job, setIdx, jobPage)
-    local setEntry = (catalog.plus4Sets[job] or {})[setIdx]
-    if not setEntry then
-        showPlus4SetMenu(player, job, jobPage)
-        return
-    end
-    local cost  = catalog.plus4Cost or 200
-    local items = {}
-    for _, slot in ipairs(PLUS4_SLOT_ORDER) do
-        local piece = (setEntry.pieces or {})[slot]
-        if piece then
-            items[#items + 1] = { id = piece.id, cost = cost }
-        end
-    end
-    openInfamyShop(player, items, 1)
 end
 
 --------------------------------------------------------------------
