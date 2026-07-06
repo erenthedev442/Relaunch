@@ -399,7 +399,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Prime_Armory',
         packetName = string.format('%sPrime Armory', xi.icon.STAR_LARGE),
-        look       = 3000,
+        look       = 216,
         x          =  -4.000,
         y          =   0.000,
         z          =  15.000,

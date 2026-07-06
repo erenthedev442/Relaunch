@@ -410,7 +410,7 @@ m:addOverride(sage.zonePath .. '.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Augment_Sage',
         packetName = string.format('%sAugment Sage', xi.icon.STAR_LARGE),
-        look       = 2401,
+        look       = 82,
         x          = _p.x,
         y          = _p.y,
         z          = _p.z,

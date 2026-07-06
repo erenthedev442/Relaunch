@@ -241,7 +241,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Infamy_Vendor',
         packetName = string.format('%sInfamy Vendor', xi.icon.STAR_LARGE),
-        look       = 2419,
+        look       = 211,
         x          = p.x,
         y          = p.y,
         z          = p.z,

@@ -10,7 +10,7 @@ local catalog = {}
 
 catalog.zoneId    = xi.zone.LEAFALLIA
 catalog.zonePath  = 'xi.zones.Leafallia'
-catalog.npcPos    = { x = -22.000, y = 0.000, z = 10.000, rot = 128 }  -- Sage/Moogle row (vendorPos x=-16); !pos-verify after restart
+catalog.npcPos    = { x = 8.500, y = -0.434, z = 8.133, rot = 73 }  -- 2026-07-06 moved off the Sage/Moogle row to beside the Leafallia homepoint (hp at 5.539,-0.434,8.133); !pos-verify after restart
 catalog.npcName   = 'Survival_Guide'
 catalog.packet    = 'Survival Guide'
 -- Retail Survival Guide book model (npc_list look 0x0981 = 2433). If it

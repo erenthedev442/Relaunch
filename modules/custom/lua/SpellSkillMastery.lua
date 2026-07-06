@@ -481,7 +481,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Spell_Mastery_Sage',
         packetName = string.format('%sMastery Sage', xi.icon.STAR_LARGE),
-        look       = 2419,
+        look       = 225,
         x          = C.npcPos.x,
         y          = C.npcPos.y,
         z          = C.npcPos.z,

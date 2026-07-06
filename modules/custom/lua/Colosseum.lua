@@ -605,7 +605,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
         objtype    = xi.objType.NPC,
         name       = 'Arena_Herald',
         packetName = string.format('%sArena Herald', xi.icon.STAR_LARGE),
-        look       = 3017,
+        look       = 164,
         x = catalog.npcPos.x, y = catalog.npcPos.y, z = catalog.npcPos.z,
         rotation   = catalog.npcPos.rotation,
         widescan   = 1,

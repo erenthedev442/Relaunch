@@ -199,7 +199,7 @@ m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(z
         objtype    = xi.objType.NPC,
         name       = 'Unity_Instance_Board',
         packetName = string.format('%sUnity Instances', ICON),
-        look       = 2419,
+        look       = 233,
         x          = pos.x,
         y          = pos.y,
         z          = pos.z,

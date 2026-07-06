@@ -491,7 +491,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Tower_Arbiter',
         packetName = 'Tower Climb',
-        look       = 2401,
+        look       = 169,
         x          =   0.000,
         y          =   0.000,
         z          =  15.000,

@@ -431,7 +431,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
         objtype    = xi.objType.NPC,
         name       = 'Voidgate_Sentinel',
         packetName = string.format('%sVoidgate Sentinel', xi.icon.STAR_LARGE),
-        look       = 3017,
+        look       = 18,
         x = pos.x, y = pos.y, z = pos.z,
         rotation   = pos.rot or 128,
         widescan   = 1,

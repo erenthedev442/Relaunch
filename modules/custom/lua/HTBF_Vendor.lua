@@ -106,7 +106,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'HTBF_Gem_Vendor',
         packetName = string.format('%sPhantom Gems', xi.icon.STAR_LARGE),
-        look       = 2419,
+        look       = 200,
         x          = NPCPOS.x,
         y          = NPCPOS.y,
         z          = NPCPOS.z,

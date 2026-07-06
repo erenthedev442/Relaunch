@@ -369,7 +369,7 @@ local function spawnWardingCircle(zone, zoneId, x, y, z, rot)
         objtype    = xi.objType.NPC,
         name       = string.format('GF_WardingCircle_%d', zoneId),
         packetName = string.format('%sWarding Circle', xi.icon.STAR_LARGE),
-        look       = 2430,
+        look       = 171,
         x          = x,
         y          = y,
         z          = z,

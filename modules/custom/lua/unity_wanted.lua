@@ -346,7 +346,7 @@ m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(z
         objtype    = xi.objType.NPC,
         name       = 'Unity_Wanted_Board',
         packetName = string.format('%sUnity Wanted', ICON),
-        look       = 2419,
+        look       = 234,
         x          = catalog.boardPos.x,
         y          = catalog.boardPos.y,
         z          = catalog.boardPos.z,

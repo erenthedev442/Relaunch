@@ -197,7 +197,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = NPC_NAME,
         packetName = string.format('%sVoid Keeper', xi.icon.STAR_LARGE),
-        look       = NPC_LOOK,
+        look       = 232,
         x          = NPC_POS.x,
         y          = NPC_POS.y,
         z          = NPC_POS.z,

@@ -64,7 +64,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
         objtype    = xi.objType.NPC,
         name       = catalog.npcName or 'Crafting Exchange',
         packetName = string.format('%sCraft Exchange', xi.icon.STAR_LARGE),
-        look       = NPC_LOOK,
+        look       = 166,
         x          = catalog.npcPos.x,
         y          = catalog.npcPos.y,
         z          = catalog.npcPos.z,

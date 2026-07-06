@@ -389,7 +389,7 @@ m:addOverride('xi.zones.RuLude_Gardens.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'JobRebirth_Altar',
         packetName = string.format('%sJob Rebirth', xi.icon.STAR_LARGE),
-        look       = 2401,
+        look       = 69,
         x          = cfg.npcPos.x,
         y          = cfg.npcPos.y,
         z          = cfg.npcPos.z,

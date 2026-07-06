@@ -124,7 +124,7 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = catalog.npcName,
         packetName = string.format('%s%s', xi.icon.STAR_LARGE, catalog.packet),
-        look       = catalog.npcLook,
+        look       = 228,
         x          = catalog.npcPos.x,
         y          = catalog.npcPos.y,
         z          = catalog.npcPos.z,

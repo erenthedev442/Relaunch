@@ -136,7 +136,7 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Accessory_NPC',
         packetName = string.format('%sAccessory', xi.icon.STAR_LARGE),
-        look       = 2430,
+        look       = 74,
         x          = _p.x,
         y          = _p.y,
         z          = _p.z,

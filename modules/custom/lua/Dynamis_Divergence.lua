@@ -83,7 +83,7 @@ for _, portal in ipairs(PORTALS) do
             objtype    = xi.objType.NPC,
             name       = 'Divergence_Portal',
             packetName = string.format('%sDivergence Portal', xi.icon.STAR_LARGE),
-            look       = 3000,
+            look       = 60,
             x          = pos[1],
             y          = pos[2],
             z          = pos[3],

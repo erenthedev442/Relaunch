@@ -92,7 +92,7 @@ m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(z
         objtype    = xi.objType.NPC,
         name       = 'Gil_Exchange',
         packetName = string.format('%s%s', xi.icon.STAR_LARGE, config.npcName),
-        look       = config.npcLook,
+        look       = 172,
         x          = config.npcPos.x,
         y          = config.npcPos.y,
         z          = config.npcPos.z,

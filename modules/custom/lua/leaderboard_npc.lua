@@ -33,7 +33,7 @@ m:addOverride('xi.zones.Escha_ZiTah.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'The Chronicler',
         packetName = string.format('%sThe Chronicler', xi.icon.STAR_LARGE),
-        look       = 3017,
+        look       = 213,
         -- Right end of the Hunting League vendor row in Escha Zi'Tah hub.
         x          = 32.0000,
         y          = -0.5000,

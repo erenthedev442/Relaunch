@@ -134,7 +134,7 @@ m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Divergence_Forge',
         packetName = string.format('%sDivergence Forge', xi.icon.STAR_LARGE),
-        look       = 3000,
+        look       = 63,
         x          = NPC_POS.x,
         y          = NPC_POS.y,
         z          = NPC_POS.z,

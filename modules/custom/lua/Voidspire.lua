@@ -416,7 +416,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
             objtype    = xi.objType.NPC,
             name       = 'Voidspire_Warden',
             packetName = string.format('%sThe Voidspire Warden', xi.icon.STAR_LARGE),
-            look       = 3017,   -- distinctive; swap for a darker model if you like
+            look       = 19,   -- distinctive; swap for a darker model if you like
             x = pos.x, y = pos.y, z = pos.z,
             rotation   = pos.rot or 128,
             widescan   = 1,

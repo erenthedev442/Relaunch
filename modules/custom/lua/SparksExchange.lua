@@ -47,7 +47,7 @@ xi.sparks_exchange = {
 local cfg = {
     npcPos = { x = -110.000, y = -2.150, z = -94.000, rot = 190 },
     name   = 'Me Like Gil',
-    look   = 3000,
+    look   = 220,
 }
 
 local function fmtGil(n)
@@ -238,7 +238,7 @@ m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(z
         objtype    = xi.objType.NPC,
         name       = 'Sparks_Exchange',
         packetName = string.format('%s%s', xi.icon.STAR_LARGE, cfg.name),
-        look       = cfg.look,
+        look       = 221,
         x          = cfg.npcPos.x,
         y          = cfg.npcPos.y,
         z          = cfg.npcPos.z,

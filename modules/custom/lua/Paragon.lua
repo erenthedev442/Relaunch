@@ -174,7 +174,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Paragon_Sage',
         packetName = string.format('%sParagon Sage', xi.icon.STAR_LARGE),
-        look       = 2401,
+        look       = 215,
         x          = C.NPC_POS.x,
         y          = C.NPC_POS.y,
         z          = C.NPC_POS.z,

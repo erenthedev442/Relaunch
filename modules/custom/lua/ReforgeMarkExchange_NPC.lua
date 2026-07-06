@@ -22,7 +22,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
         objtype    = xi.objType.NPC,
         name       = catalog.npcName,
         packetName = string.format('%sReforge Exchange', xi.icon.STAR_LARGE),
-        look       = catalog.npcLook,
+        look       = 72,
         x          = catalog.npcPos.x,
         y          = catalog.npcPos.y,
         z          = catalog.npcPos.z,

@@ -298,7 +298,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'CrossJob_Trainer',
         packetName = string.format('%sBuy: Abilities', xi.icon.STAR_LARGE),
-        look       = 2401,
+        look       = 167,
         -- Extends the GM Home progression row at z=-7:
         --   Gear (-3) / Augment Moogle (0) / Augment Sage (+3) / Trainer (+6).
         x          = -12.000,

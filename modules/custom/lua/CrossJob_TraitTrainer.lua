@@ -156,7 +156,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'CrossJob_TraitTrainer',
         packetName = string.format('%sBuy: Traits', xi.icon.STAR_LARGE),
-        look       = 2401,
+        look       = 168,
         x          = catalog.npcPos.x,
         y          = catalog.npcPos.y,
         z          = catalog.npcPos.z,

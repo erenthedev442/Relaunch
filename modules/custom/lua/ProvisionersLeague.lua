@@ -180,7 +180,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
         objtype    = xi.objType.NPC,
         name       = 'League_Steward',
         packetName = string.format('%sLeague Steward', xi.icon.STAR_LARGE),
-        look       = 3017,
+        look       = 218,
         x = catalog.npcPos.x, y = catalog.npcPos.y, z = catalog.npcPos.z,
         rotation   = catalog.npcPos.rotation,
         widescan   = 1,

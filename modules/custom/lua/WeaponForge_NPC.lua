@@ -638,7 +638,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Weapon_Forger',
         packetName = string.format('%sWeapon Forger', xi.icon.STAR_LARGE),
-        look       = 3000,
+        look       = 245,
         x          = NPC_POS.x,
         y          = NPC_POS.y,
         z          = NPC_POS.z,

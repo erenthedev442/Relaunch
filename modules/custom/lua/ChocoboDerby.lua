@@ -214,7 +214,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
         objtype    = xi.objType.NPC,
         name       = 'Race_Caller',
         packetName = string.format('%sRace Caller', xi.icon.STAR_LARGE),
-        look       = 3017,
+        look       = 162,
         x = catalog.npcPos.x, y = catalog.npcPos.y, z = catalog.npcPos.z,
         rotation   = catalog.npcPos.rotation,
         widescan   = 1,

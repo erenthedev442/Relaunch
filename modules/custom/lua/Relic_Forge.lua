@@ -162,7 +162,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Relic_Forge',
         packetName = string.format('%sRelic Forge', xi.icon.STAR_LARGE),
-        look       = 3000,
+        look       = 219,
         x          = NPC_POS.x,
         y          = NPC_POS.y,
         z          = NPC_POS.z,

@@ -527,7 +527,7 @@ m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', catalog.npcPos.zone
             objtype    = xi.objType.NPC,
             name       = 'Game_Master',
             packetName = string.format('%sGame Master', xi.icon.STAR_LARGE),
-            look       = 3017,                -- Trust: Prishe (visible/distinctive)
+            look       = 64,                -- Trust: Prishe (visible/distinctive)
             x          = pos.x,
             y          = pos.y,
             z          = pos.z,

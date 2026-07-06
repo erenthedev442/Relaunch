@@ -595,7 +595,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Voidwatch_Officer',
         packetName = string.format('%sVoidwatch Officer', xi.icon.STAR_LARGE),
-        look       = 2401,
+        look       = 244,
         x          = -13.000,
         y          =   0.000,
         z          =  15.000,

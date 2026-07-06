@@ -61,7 +61,7 @@ m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(z
         objtype    = xi.objType.NPC,
         name       = 'Cosmetic_Boutique',
         packetName = string.format('%s%s', xi.icon.STAR_LARGE, catalog.npcName),
-        look       = catalog.npcLook,
+        look       = 165,
         x          = catalog.npcPos.x,
         y          = catalog.npcPos.y,
         z          = catalog.npcPos.z,

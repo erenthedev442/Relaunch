@@ -597,7 +597,7 @@ m:addOverride(catalog.huntZonePath .. '.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Reforge_Spawner',
         packetName = string.format('%sNM Spawner', xi.icon.STAR_LARGE),
-        look       = 2430,
+        look       = 92,
         x = sPos.x, y = sPos.y, z = sPos.z, rotation = sPos.rot,
         widescan   = 1,
         onTrade    = function(p) p:printToPlayer('No trades, kupo!', xi.msg.channel.SYSTEM_3) end,
@@ -610,7 +610,7 @@ m:addOverride(catalog.huntZonePath .. '.Zone.onInitialize', function(zone)
         objtype    = xi.objType.NPC,
         name       = 'Reforge_Vendor',
         packetName = string.format('%sGear Sets', xi.icon.STAR_LARGE),
-        look       = 2430,
+        look       = 93,
         x = vPos.x, y = vPos.y, z = vPos.z, rotation = vPos.rot,
         widescan   = 1,
         onTrade    = function(p, npc, trade)
