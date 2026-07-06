@@ -360,10 +360,17 @@ onRiftCleared = function(player)
     local rolls = 1 + math.floor(blue / 2) * C.ROLLS_PER_2_BLUE + getAtm(player, 'GREED') * C.ATM.GREED_ROLLS
     for _ = 1, rolls do
         local q = math.random(100) + red * C.QUALITY_PER_RED
-        local tbl = (q >= C.QUALITY_RARE_AT and loot.rare)
-                 or (q >= C.QUALITY_UNCOMMON_AT and loot.uncommon)
-                 or loot.common
-        reward.items[#reward.items + 1] = tbl[math.random(#tbl)]
+        -- A top-quality roll on an abyssite-unlocked band yields a gear piece
+        -- (the infamy-unique weapons/armor); otherwise a mat from this NM's table.
+        local gear = (q >= C.GEAR_QUALITY_AT) and C.gearRoll(tier) or nil
+        if gear then
+            reward.items[#reward.items + 1] = gear
+        else
+            local tbl = (q >= C.QUALITY_RARE_AT and loot.rare)
+                     or (q >= C.QUALITY_UNCOMMON_AT and loot.uncommon)
+                     or loot.common
+            reward.items[#reward.items + 1] = tbl[math.random(#tbl)]
+        end
     end
     if white >= C.WHITE_BONUS_RARE_AT then
         reward.items[#reward.items + 1] = loot.rare[math.random(#loot.rare)]
