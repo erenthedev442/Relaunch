@@ -250,6 +250,103 @@ catalog.chains =
     },
 }
 
+-- ============================================================================
+-- EMPYREAN / MYTHIC / RELIC forge paths (added 2026-07-06)
+-- The 119 III weapons are now forgeable. Recipes/gates match the weapon-forge
+-- docs (tools/docgen/templates/weapon_forge_widget.html). Base weapons are
+-- issued by the forge (their retail NM-drop sources are WIP) gated by HL rank +
+-- the entry currency. Chains + per-weapon materials verified against item_basic.
+-- Reforge Marks drain the shared RF_*_Marks pools (catalog.markVars).
+-- ============================================================================
+catalog.forgeMats = { beastcoin = 1875, riftbornBoulder = 4061, byneBill = 1455,
+    silverpiece = 1453, jadeshell = 1450, pluton = 4059, imperialBronze = 2184,
+    imperialSilver = 2185, imperialGold = 2187, beitetsu = 4060 }
+
+-- Per-step: hlRank gate + material amounts. currency drained via delCurrency.
+catalog.empyreanCosts =
+{
+    { hlRank = 3, cruor =  2000, mat = 50, beastcoin = 10 },              -- base -> 119 I
+    { hlRank = 4, cruor = 10000, boulder = 300, beastcoin = 30 },         -- 119 I -> II
+    { hlRank = 5, boulder = 5000, beastcoin = 50, marks = 15000 },        -- 119 II -> III
+}
+catalog.mythicCosts =
+{
+    { hlRank = 3, standing = 1000, bronze = 10 },                         -- base -> 119 I
+    { hlRank = 4, standing = 3000, silver = 25, beitetsu = 300 },         -- 119 I -> II
+    { hlRank = 5, gold = 5, beitetsu = 10000, marks = 20000 },            -- 119 II -> III
+}
+catalog.relicCosts =
+{
+    { hlRank = 5, byne = 100, silverpiece = 25 },                         -- base -> 119 I
+    { hlRank = 5, byne = 300, jadeshell = 50, pluton = 100 },             -- 119 I -> II
+    { hlRank = 5, pluton = 300, marks = 10000 },                          -- 119 II -> III (Gallimaufry omitted: absent on server)
+}
+-- Base provision (forge issues the base; retail NM drops are WIP).
+catalog.empyreanBase = { hlRank = 3, cruor = 2000 }
+catalog.mythicBase   = { hlRank = 3, standing = 1000 }
+catalog.relicBase    = { hlRank = 5, byne = 100 }
+
+catalog.empyreanChains =
+{
+    { type = 'Hand-to-Hand', jobs = 'MNK/PUP', name = 'Verethragna', base = 19805, s1 = 20486, s2 = 20487, s3 = 20512, mat = 2927 },
+    { type = 'Dagger', jobs = 'THF/BRD/DNC', name = 'Twashtar', base = 19806, s1 = 20563, s2 = 20564, s3 = 20587, mat = 3287 },
+    { type = 'Sword', jobs = 'RDM/PLD/BLU', name = 'Almace', base = 19807, s1 = 20653, s2 = 20654, s3 = 20689, mat = 3288 },
+    { type = 'Great Sword', jobs = 'WAR/DRK', name = 'Caladbolg', base = 19808, s1 = 20747, s2 = 20748, s3 = 21684, mat = 2962 },
+    { type = 'Axe', jobs = 'WAR/BST', name = 'Farsha', base = 19809, s1 = 20794, s2 = 20795, s3 = 21752, mat = 2963 },
+    { type = 'Great Axe', jobs = 'WAR', name = 'Ukonvasara', base = 19810, s1 = 20839, s2 = 20840, s3 = 21758, mat = 2928 },
+    { type = 'Scythe', jobs = 'DRK', name = 'Redemption', base = 19811, s1 = 20884, s2 = 20885, s3 = 21810, mat = 3499 },
+    { type = 'Polearm', jobs = 'DRG', name = 'Rhongomiant', base = 19812, s1 = 20929, s2 = 20930, s3 = 21859, mat = 3498 },
+    { type = 'Katana', jobs = 'NIN', name = 'Kannagi', base = 19813, s1 = 20974, s2 = 20975, s3 = 21908, mat = 3499 },
+    { type = 'Great Katana', jobs = 'SAM', name = 'Masamune', base = 19814, s1 = 21019, s2 = 21020, s3 = 21956, mat = 3498 },
+    { type = 'Club', jobs = 'WHM/GEO', name = 'Gambanteinn', base = 19815, s1 = 21064, s2 = 21065, s3 = 21079, mat = 2928 },
+    { type = 'Staff', jobs = 'BLM/SMN/SCH', name = 'Hvergelmir', base = 19816, s1 = 21143, s2 = 21144, s3 = 22064, mat = 3499 },
+    { type = 'Archery', jobs = 'RNG', name = 'Gandiva', base = 19817, s1 = 21213, s2 = 22116, s3 = 22130, mat = 2963 },
+    { type = 'Marksmanship', jobs = 'COR/RNG', name = 'Armageddon', base = 19818, s1 = 21265, s2 = 21269, s3 = 22142, mat = 3287 },
+}
+
+catalog.mythicChains =
+{
+    { type = 'Hand-to-Hand', jobs = 'MNK', name = 'Glanzfaust', base = 19820, s1 = 20482, s2 = 20483, s3 = 20510 },
+    { type = 'Hand-to-Hand', jobs = 'PUP', name = 'Kenkonken', base = 19836, s1 = 20484, s2 = 20485, s3 = 20511 },
+    { type = 'Dagger', jobs = 'NIN', name = 'Vajra', base = 19824, s1 = 20559, s2 = 20560, s3 = 20585 },
+    { type = 'Dagger', jobs = 'BRD', name = 'Carnwenhan', base = 19828, s1 = 20561, s2 = 20562, s3 = 20586 },
+    { type = 'Dagger', jobs = 'DNC', name = 'Terpsichore', base = 19837, s1 = 20557, s2 = 20558, s3 = 20584 },
+    { type = 'Sword', jobs = 'RDM', name = 'Murgleis', base = 19823, s1 = 20647, s2 = 20648, s3 = 20686 },
+    { type = 'Sword', jobs = 'PLD', name = 'Burtgang', base = 19825, s1 = 20649, s2 = 20650, s3 = 20687 },
+    { type = 'Sword', jobs = 'BLU', name = 'Tizona', base = 19834, s1 = 20651, s2 = 20652, s3 = 20688 },
+    { type = 'Great Sword', jobs = 'WAR', name = 'Conqueror', base = 19819, s1 = 20837, s2 = 20838, s3 = 21757 },
+    { type = 'Axe', jobs = 'WAR/BST', name = 'Aymur', base = 19827, s1 = 20792, s2 = 20793, s3 = 21751 },
+    { type = 'Scythe', jobs = 'DRK', name = 'Liberator', base = 19826, s1 = 20882, s2 = 20883, s3 = 21809 },
+    { type = 'Polearm', jobs = 'DRG', name = 'Ryunohige', base = 19832, s1 = 20927, s2 = 20928, s3 = 21858 },
+    { type = 'Katana', jobs = 'NIN', name = 'Nagi', base = 19831, s1 = 20972, s2 = 20973, s3 = 21907 },
+    { type = 'Great Katana', jobs = 'SAM', name = 'Kogarasumaru', base = 19830, s1 = 21017, s2 = 21018, s3 = 21955 },
+    { type = 'Club', jobs = 'WHM', name = 'Yagrush', base = 19821, s1 = 21062, s2 = 21063, s3 = 21078 },
+    { type = 'Staff', jobs = 'SMN', name = 'Nirvana', base = 19833, s1 = 21141, s2 = 21142, s3 = 22063 },
+    { type = 'Staff', jobs = 'GEO', name = 'Laevateinn', base = 19822, s1 = 21139, s2 = 21140, s3 = 22062 },
+    { type = 'Staff', jobs = 'SCH', name = 'Tupsimati', base = 19838, s1 = 21137, s2 = 21138, s3 = 22061 },
+    { type = 'Archery', jobs = 'RNG', name = 'Gastraphetes', base = 19829, s1 = 21247, s2 = 21266, s3 = 22139 },
+    { type = 'Marksmanship', jobs = 'COR', name = 'Death Penalty', base = 19835, s1 = 21263, s2 = 21268, s3 = 22141 },
+}
+
+catalog.relicChains =
+{
+    { type = 'Hand-to-Hand', jobs = 'MNK/PUP', name = 'Spharai', base = 19746, s1 = 20480, s2 = 20481, s3 = 20509 },
+    { type = 'Dagger', jobs = 'THF/BRD/DNC', name = 'Mandau', base = 19747, s1 = 20555, s2 = 20556, s3 = 20583 },
+    { type = 'Sword', jobs = 'RDM/PLD/BLU', name = 'Excalibur', base = 19748, s1 = 20645, s2 = 20646, s3 = 20685 },
+    { type = 'Great Sword', jobs = 'WAR/DRK', name = 'Ragnarok', base = 19749, s1 = 20745, s2 = 20746, s3 = 21683 },
+    { type = 'Axe', jobs = 'WAR/BST', name = 'Guttler', base = 19750, s1 = 20790, s2 = 20791, s3 = 21750 },
+    { type = 'Great Axe', jobs = 'WAR', name = 'Bravura', base = 19751, s1 = 20835, s2 = 20836, s3 = 21756 },
+    { type = 'Scythe', jobs = 'DRK', name = 'Apocalypse', base = 19753, s1 = 20880, s2 = 20881, s3 = 21808 },
+    { type = 'Polearm', jobs = 'DRG', name = 'Gungnir', base = 19752, s1 = 20925, s2 = 20926, s3 = 21857 },
+    { type = 'Katana', jobs = 'NIN', name = 'Kikoku', base = 19754, s1 = 20970, s2 = 20971, s3 = 21906 },
+    { type = 'Great Katana', jobs = 'SAM', name = 'Amanomurakumo', base = 19755, s1 = 21015, s2 = 21016, s3 = 21954 },
+    { type = 'Club', jobs = 'WHM/GEO', name = 'Mjollnir', base = 19756, s1 = 21060, s2 = 21061, s3 = 21077 },
+    { type = 'Staff', jobs = 'BLM/SMN/SCH', name = 'Claustrum', base = 19757, s1 = 21135, s2 = 21136, s3 = 22060 },
+    { type = 'Archery', jobs = 'RNG', name = 'Yoichinoyumi', base = 19759, s1 = 21211, s2 = 22115, s3 = 22129 },
+    { type = 'Marksmanship', jobs = 'COR/RNG', name = 'Annihilator', base = 19758, s1 = 21261, s2 = 21267, s3 = 22140 },
+}
+
+
 -- ===================================================================
 -- LOOKUP TABLES (keyed by item id for fast inventory scanning)
 -- ===================================================================

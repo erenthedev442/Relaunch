@@ -465,6 +465,171 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         sendMenu(player, 'Weapon Forge -- choose a weapon', options)
     end
 
+
+    -- =====================================================================
+    -- EMPYREAN / MYTHIC / RELIC forge (flat chains from weapon_forge_catalog;
+    -- base provision + 3 upgrade steps; recipes/gates match the docs). Added
+    -- 2026-07-06 so the 119 III weapons (Twashtar etc.) are actually earnable.
+    -- =====================================================================
+    local FM       = catalog.forgeMats
+    local NEW_CATS =
+    {
+        { key = 'empyrean', label = 'Empyrean', chains = catalog.empyreanChains, costs = catalog.empyreanCosts, base = catalog.empyreanBase },
+        { key = 'mythic',   label = 'Mythic',   chains = catalog.mythicChains,   costs = catalog.mythicCosts,   base = catalog.mythicBase   },
+        { key = 'relic',    label = 'Relic',    chains = catalog.relicChains,    costs = catalog.relicCosts,    base = catalog.relicBase    },
+    }
+    local STAGE_LBL = { [0] = 'not started', [1] = 'base', [2] = '119 I', [3] = '119 II', [4] = '119 III (complete)' }
+    local showForgeRoot  -- forward decl (assigned below; referenced by showNewCat)
+
+    -- Build the requirement list for one step. Each req: {have,take,qty,name}.
+    -- Reforge Marks are returned separately (drained across the RF_* pools).
+    local function stepReqs(chain, step)
+        local list = {}
+        local function item(id, qty, name)
+            if id and qty and qty > 0 then
+                list[#list + 1] = {
+                    have = function(p) return p:getItemCount(id) end,
+                    take = function(p) p:delItem(id, qty) end, qty = qty, name = name }
+            end
+        end
+        local function cur(c, qty, name)
+            if qty and qty > 0 then
+                list[#list + 1] = {
+                    have = function(p) return p:getCurrency(c) end,
+                    take = function(p) p:delCurrency(c, qty) end, qty = qty, name = name }
+            end
+        end
+        cur('cruor',             step.cruor,       'Cruor')
+        cur('imperial_standing', step.standing,    'Imperial Standing')
+        item(FM.beastcoin,       step.beastcoin,   'Ancient Beastcoin')
+        item(FM.riftbornBoulder, step.boulder,     'Riftborn Boulder')
+        item(FM.byneBill,        step.byne,        'Byne Bill')
+        item(FM.silverpiece,     step.silverpiece, 'M. Silverpiece')
+        item(FM.jadeshell,       step.jadeshell,   'L. Jadeshell')
+        item(FM.pluton,          step.pluton,      'Pluton')
+        item(FM.imperialBronze,  step.bronze,      'Imperial Bronze Piece')
+        item(FM.imperialSilver,  step.silver,      'Imperial Silver Piece')
+        item(FM.imperialGold,    step.gold,        'Imperial Gold Piece')
+        item(FM.beitetsu,        step.beitetsu,    'Beitetsu')
+        if step.mat then item(chain.mat, step.mat, chain.name .. ' material') end
+        return list, step.marks
+    end
+
+    -- Held stage: 0 none, 1 base, 2 s1(119I), 3 s2(119II), 4 s3(119III/done).
+    local function heldStage(player, chain)
+        if player:getItemCount(chain.s3) > 0 then return 4 end
+        if player:getItemCount(chain.s2) > 0 then return 3 end
+        if player:getItemCount(chain.s1) > 0 then return 2 end
+        if player:getItemCount(chain.base) > 0 then return 1 end
+        return 0
+    end
+
+    local function doNewForge(player, def, chain)
+        local S = xi.msg.channel.SYSTEM_3
+        local k = heldStage(player, chain)
+        if k == 4 then
+            player:printToPlayer(string.format('[Weapon Forge] Your %s is already fully forged, kupo!', chain.name), S)
+            return
+        end
+        local fromId, toId, step
+        if k == 0 then
+            step, toId = def.base, chain.base          -- issue the base weapon
+        else
+            step   = def.costs[k]                       -- k=1 base->119I, 2 ->II, 3 ->III
+            fromId = ({ chain.base, chain.s1, chain.s2 })[k]
+            toId   = ({ chain.s1, chain.s2, chain.s3 })[k]
+        end
+        local hl = math.max(1, player:getCharVar('HL_Tier'))
+        if step.hlRank and hl < step.hlRank then
+            player:printToPlayer(string.format('[Weapon Forge] Need Hunting League Rank %d (you are Rank %d).', step.hlRank, hl), S)
+            return
+        end
+        local reqs, marks = stepReqs(chain, step)
+        for _, req in ipairs(reqs) do
+            if req.have(player) < req.qty then
+                player:printToPlayer(string.format('[Weapon Forge] Need %dx %s (you have %d).', req.qty, req.name, req.have(player)), S)
+                return
+            end
+        end
+        if marks and totalMarks(player) < marks then
+            player:printToPlayer(string.format('[Weapon Forge] Need %d Reforge Marks (you have %d).', marks, totalMarks(player)), S)
+            return
+        end
+        if fromId and player:getItemCount(fromId) < 1 then
+            player:printToPlayer('[Weapon Forge] You no longer have the weapon to forge.', S)
+            return
+        end
+        if player:getFreeInventorySlots() == 0 then
+            player:printToPlayer('[Weapon Forge] Free an inventory slot before forging.', S)
+            return
+        end
+        for _, req in ipairs(reqs) do req.take(player) end
+        if marks then drainMarks(player, marks) end
+        if fromId then player:delItem(fromId, 1) end
+        player:addItem({ id = toId, quantity = 1 })
+        player:printToPlayer(string.format('[Weapon Forge] Your %s advances to %s!', chain.name, STAGE_LBL[k + 1]), S)
+    end
+
+    local function printNewRecipe(player, def, chain)
+        local S = xi.msg.channel.SYSTEM_3
+        local k = heldStage(player, chain)
+        player:printToPlayer(string.format('[%s] %s (%s) -- you hold: %s', def.label, chain.name, chain.jobs, STAGE_LBL[k]), S)
+        if k == 4 then return end
+        local step        = (k == 0) and def.base or def.costs[k]
+        local reqs, marks = stepReqs(chain, step)
+        local parts       = { string.format('HL Rank %d', step.hlRank or 1) }
+        for _, req in ipairs(reqs) do parts[#parts + 1] = string.format('%dx %s', req.qty, req.name) end
+        if marks then parts[#parts + 1] = string.format('%d Reforge Marks', marks) end
+        local what = (k == 0) and 'Obtain base' or ('-> ' .. STAGE_LBL[k + 1])
+        player:printToPlayer('  ' .. what .. ':  ' .. table.concat(parts, '  |  '), S)
+    end
+
+    local showNewCat  -- forward decl
+
+    local function showNewWeapon(player, def, chain)
+        local k    = heldStage(player, chain)
+        local opts = {}
+        if k < 4 then
+            local verb = (k == 0) and ('Obtain base ' .. chain.name) or ('Forge -> ' .. STAGE_LBL[k + 1])
+            opts[#opts + 1] = { verb, function(p) doNewForge(p, def, chain); showNewWeapon(p, def, chain) end }
+        end
+        opts[#opts + 1] = { 'Show recipe', function(p) printNewRecipe(p, def, chain); showNewWeapon(p, def, chain) end }
+        opts[#opts + 1] = { 'Back', function(p) showNewCat(p, def, 1) end }
+        sendMenu(player, string.format('%s [%s]', chain.name, STAGE_LBL[k]), opts)
+    end
+
+    local CAT_PAGE = 7
+    showNewCat = function(player, def, page)
+        page = page or 1
+        local n     = #def.chains
+        local pages = math.max(1, math.ceil(n / CAT_PAGE))
+        page = math.max(1, math.min(page, pages))
+        local a, b  = (page - 1) * CAT_PAGE + 1, math.min(page * CAT_PAGE, n)
+        local opts  = {}
+        for i = a, b do
+            local chain = def.chains[i]
+            opts[#opts + 1] = { string.format('%s (%s)', chain.name, chain.jobs),
+                function(p) showNewWeapon(p, def, chain) end }
+        end
+        if pages > 1 and page > 1     then opts[#opts + 1] = { '<< Prev', function(p) showNewCat(p, def, page - 1) end } end
+        if pages > 1 and page < pages then opts[#opts + 1] = { 'Next >>', function(p) showNewCat(p, def, page + 1) end } end
+        opts[#opts + 1] = { 'Back', function(p) showForgeRoot(p) end }
+        sendMenu(player, string.format('%s Forge (%d/%d)', def.label, page, pages), opts)
+    end
+
+    showForgeRoot = function(player)
+        local opts = {
+            { 'My upgradeable weapons (Prime / Aeonic)', function(p) showUpgrades(p) end },
+        }
+        for _, def in ipairs(NEW_CATS) do
+            local d = def
+            opts[#opts + 1] = { string.format('%s weapons (%d)', def.label, #def.chains),
+                function(p) showNewCat(p, d, 1) end }
+        end
+        opts[#opts + 1] = { 'Not today.', function() end }
+        sendMenu(player, 'Weapon Forge', opts)
+    end
+
     -- -------------------------------------------------------------------------
     -- NPC placement
     -- -------------------------------------------------------------------------
@@ -488,11 +653,11 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
 
         onTrigger = function(player, npc)
             player:printToPlayer(
-                '[Weapon Forge] Bring me your weapon and the required materials and I will reforge it into a more powerful form. '
-                .. 'The path: 119I (Bronze vendor) => 119II (25 Kindreds Medals, HL Rank III) '
-                .. '=> 119III / Stage-5 Relic (50 Demons Medals + 2000 Reforge Marks, HL Rank V).',
+                '[Weapon Forge] I forge every endgame weapon path. Prime and Aeonic upgrade '
+                .. 'from a weapon in your bag; Empyrean, Mythic, and Relic I can start from the '
+                .. 'base and forge up through 119 / 119 II / 119 III. Choose a path.',
                 xi.msg.channel.SYSTEM_3)
-            showUpgrades(player)
+            showForgeRoot(player)
         end,
     })
     utils.unused(WeaponForger)
