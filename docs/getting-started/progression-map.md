@@ -171,7 +171,7 @@ title: Progression Map
     <h3>The World-Content Band — feeds everything above</h3>
     <div class="who">Independent tracks with their own currencies and loot; several are augment-tier keys. A system only appears here while it exists in the live code.</div>
     <div class="wgrid">
-      <div class="wcell"><b>Dynamis — Divergence</b><span>Portals at the four city Dynamis entrances · wave battles · currency feeds the Divergence Reforger (armor +1 → +3) · a city clear is an Augment Tier key</span></div>
+      <div class="wcell"><b>Dynamis — Divergence</b><span>Portals at the four city Dynamis entrances · wave battles · the +3 → +4 Forge (trade a reforged +3 AF/Relic piece + [D] materials → +4) · a city clear is an Augment Tier key</span></div>
       <div class="wcell"><b>Voidwatch</b><span>Rift battles — pop a Planar Rift, burn the Voidwalker, stack lights for the Pyxis loot roll</span></div>
       <div class="wcell"><b>High-Tier Battlefields</b><span>Retail HTBF fights via phantom gems, tiered difficulty, dedicated vendor</span></div>
       <div class="wcell"><b>Nyzul Isle</b><span>The Sorrowful Sage in Mhaura opens retail Nyzul runs — floor-climb loot</span></div>
@@ -204,7 +204,7 @@ title: Progression Map
       <tr><td><span class="chip c-ap">Ascension AP</span></td><td>Nightmare Court kills</td><td>Prestige board perks</td></tr>
       <tr><td><span class="chip c-paragon">Paragon Pts</span></td><td>Apex Trials</td><td>Paragon board (capped stats + Daily Might)</td></tr>
       <tr><td><span class="chip c-sigil">Mastery Sigils</span></td><td>Mastery content</td><td>Permanent WS/spell empowerment</td></tr>
-      <tr><td><span class="chip c-div">Divergence currency</span></td><td>Dynamis — Divergence waves</td><td>Armor reforge +1 → +3</td></tr>
+      <tr><td><span class="chip c-div">Divergence materials</span></td><td>Dynamis — Divergence waves (Rusted/Black ID Cards + Mega-Boss Paragon Card)</td><td>The +3 → +4 Forge — upgrade a reforged +3 AF/Relic piece to +4</td></tr>
       <tr><td><span class="chip c-gil">Gil</span></td><td>AH, Casino, Derby, mobs</td><td>Prime forge (750,000,000), AH, Casino</td></tr>
     </table></div>
   </div>
@@ -218,6 +218,6 @@ title: Progression Map
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2735cce8c6ff -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: eb71338a11db -->
+_Last updated: 2026-07-06 06:28 PDT_
 <!-- DOCGEN:END id="last-updated" -->

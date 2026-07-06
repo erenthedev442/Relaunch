@@ -1,23 +1,18 @@
 # Dynamis — Divergence
 
-A custom take on Dynamis built for the relaunch. Each of the four nations has a **Divergence Portal** at its old Dynamis entrance that tears open an alternate-timeline instance. Pay a single Dynamis currency, step through — solo is fine — and fight through escalating waves of Beastmen to fell the zone's Mega-Boss. Clearing a zone unlocks one **Reforge** slot, and the medals you farm inside let the **Divergence Smith** push your Reforged Artifact, Relic, and Empyrean armor up the **+1 → +2 → +3** ladder.
+A custom take on Dynamis built for the relaunch. Each of the four nations has a **Divergence Portal** at its old Dynamis entrance that tears open an alternate-timeline instance. Pay a single Dynamis currency, step through — solo is fine — and fight through escalating waves of Beastmen to fell the zone's Mega-Boss. Dynamis-Divergence is the **+3 → +4 Forge**: the tail of the reforged-armor ladder. The base [Reforge System](../progression/reforge.md) takes AF/Relic/Empyrean armor to **+3** with marks; the materials you farm here take a reforged **+3 AF or Relic** piece the rest of the way to **+4** at the **Divergence Forge**. (Empyrean caps at +3 — only AF and Relic reach +4.)
 
 !!! tip "Summary"
-    Four city Dynamis instances reached through entry portals for one Dynamis currency each. Clear the waves to unlock armor slots and farm medals, then reforge AF/Relic/Empyrean gear +1 → +2 → +3 at the Divergence Smith in San d'Oria.
+    Four city Dynamis instances reached through entry portals for one Dynamis currency each. Clear the waves to farm the +4 materials (Rusted/Black ID Cards + a Mega-Boss Paragon Card), then trade a reforged **+3** AF/Relic piece at the **Divergence Forge** in San d'Oria to make it **+4**. Empyrean has no +4.
 
 ## Getting in
 
 <!-- DOCGEN:BEGIN id="divergence-access" -->
 A **Divergence Portal** stands at each city's Dynamis entrance. Trade the toll, confirm, and you're warped — solo is fine — into that city's alternate-timeline instance:
 
-| Portal | Unlocks (Reforge slot) |
-|---|---|
-| **San d'Oria [D]** | Feet |
-| **Bastok [D]** | Hands |
-| **Windurst [D]** | Head |
-| **Jeuno [D]** | Legs |
+**San d'Oria [D]** · **Bastok [D]** · **Windurst [D]** · **Jeuno [D]**.
 
-**Entry toll:** a One Byne Bill per run.
+**Entry toll:** a One Byne Bill per run. There is no rank or slot gate — the only gate on the +4 upgrade is farming the [D] materials (below).
 <!-- DOCGEN:END id="divergence-access" -->
 
 ## How a run plays out
@@ -29,89 +24,89 @@ Each run is a timed push through escalating waves. The clock can be extended by 
 2. **Wave 2 — Regiment.** Felling the Mid-Boss advances the wave (**+30 min**): fresh trash plus the **Mega-Boss**.
 3. **Wave 3 — The Disjoined.** In zones that have one, the **Disjoined NM** manifests at the elemental circle after the Mega-Boss falls. No more time can be gained here — finish it to win.
 
-Clearing the run unlocks that city's Reforge slot. Beastmen's, Kindred's, and Demon's Medals drop from the mobs inside — bank them for the smith.
+The mobs inside drop the **+4 Forge materials**: **Rusted ID Cards** off wave trash and **Black ID Cards** off the bosses. Felling the **Mega-Boss** also hands the killer their **main-job Paragon Card** — the job-matched key the forge needs. (The Beastmen's / Kindred's / Demon's Medals that also drop are the Gear-Vendor Seals, not a Divergence currency.)
 <!-- DOCGEN:END id="divergence-waves" -->
 
 ## Loot by zone
 
 <!-- DOCGEN:BEGIN id="divergence-loot" -->
-Every mob inside a Divergence run drops toward the medals you spend at the **Divergence Smith**. Each zone reuses the same six-role chain — only the Beastmen change — so here is exactly who drops what, city by city. Percentages are the live drop rates.
+Every zone reuses the same six-role chain — only the Beastmen change. The **Rusted** and **Black ID Cards** here are the +4 Forge materials; the Beastmen's / Kindred's / Demon's Medals are the Gear-Vendor Seals. Here is exactly who drops what, city by city — percentages are the live drop rates.
 
 ### San d'Oria [D]
 
 | Mob | Role | Drops |
 |---|---|---|
-| **Overseer's Tombstone** | Mid-Boss | Beastmen's Medal (100%) |
-| Orcish Squadron | Wave 1 — Squadron | Beastmen's Medal (10%) |
+| **Overseer's Tombstone** | Mid-Boss | Beastmens Medal (100%), Black ID Card (10%) |
+| Orcish Squadron | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
 | Corporal Tombstone | Time-extension statue | — (fell it for **+1 min** on the clock) |
-| Orcish Regiment | Wave 2 — Regiment | Kindred's Medal (10%) |
-| **Halphas** | Mega-Boss | Kindred's Medal (100%), Demon's Medal (10%) |
-| **Disjoined Elvaan** | Disjoined NM | Demon's Medal (100%), Kindred's Medal (15%) |
+| Orcish Regiment | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| **Halphas** | Mega-Boss | Kindreds Medal (100%), Demons Medal (10%), Black ID Card (10%) |
+| **Disjoined Elvaan** | Disjoined NM | Demons Medal (100%), Kindreds Medal (15%) |
 
 ### Bastok [D]
 
 | Mob | Role | Drops |
 |---|---|---|
-| **Mu'Sha Effigy** | Mid-Boss | Beastmen's Medal (100%) |
-| Quadav Squadron | Wave 1 — Squadron | Beastmen's Medal (10%) |
+| **Mu'Sha Effigy** | Mid-Boss | Beastmens Medal (100%), Black ID Card (10%) |
+| Quadav Squadron | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
 | Adamantking Image | Time-extension statue | — (fell it for **+1 min** on the clock) |
-| Quadav Regiment | Wave 2 — Regiment | Kindred's Medal (10%) |
-| **Ka'Rho Fearsinger** | Mega-Boss | Kindred's Medal (100%), Demon's Medal (10%) |
-| **Disjoined Galka** | Disjoined NM | Demon's Medal (100%), Kindred's Medal (15%) |
+| Quadav Regiment | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| **Ka'Rho Fearsinger** | Mega-Boss | Kindreds Medal (100%), Demons Medal (10%), Black ID Card (10%) |
+| **Disjoined Galka** | Disjoined NM | Demons Medal (100%), Kindreds Medal (15%) |
 
 ### Windurst [D]
 
 | Mob | Role | Drops |
 |---|---|---|
-| **Evincing Idol** | Mid-Boss | Beastmen's Medal (100%) |
-| Yagudo Squadron | Wave 1 — Squadron | Beastmen's Medal (10%) |
+| **Evincing Idol** | Mid-Boss | Beastmens Medal (100%), Black ID Card (10%) |
+| Yagudo Squadron | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
 | Evincing Statue | Time-extension statue | — (fell it for **+1 min** on the clock) |
-| Yagudo Regiment | Wave 2 — Regiment | Kindred's Medal (10%) |
-| **Fii Pexu the Eternal** | Mega-Boss | Kindred's Medal (100%), Demon's Medal (10%) |
-| **Disjoined Tarutaru** | Disjoined NM | Demon's Medal (100%), Kindred's Medal (15%) |
+| Yagudo Regiment | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| **Fii Pexu the Eternal** | Mega-Boss | Kindreds Medal (100%), Demons Medal (10%), Black ID Card (10%) |
+| **Disjoined Tarutaru** | Disjoined NM | Demons Medal (100%), Kindreds Medal (15%) |
 
 ### Jeuno [D]
 
 | Mob | Role | Drops |
 |---|---|---|
-| **Impish Golem** | Mid-Boss | Beastmen's Medal (100%) |
-| Goblin Squadron | Wave 1 — Squadron | Beastmen's Medal (10%) |
+| **Impish Golem** | Mid-Boss | Beastmens Medal (100%), Black ID Card (10%) |
+| Goblin Squadron | Wave 1 — Squadron | Rusted ID Card (15%), Beastmens Medal (10%) |
 | Impish Statue | Time-extension statue | — (fell it for **+1 min** on the clock) |
-| Goblin Regiment | Wave 2 — Regiment | Kindred's Medal (10%) |
-| **Obstatrix** | Mega-Boss | Kindred's Medal (100%), Demon's Medal (10%) |
-| **Disjoined Mithra** | Disjoined NM | Demon's Medal (100%), Kindred's Medal (15%) |
+| Goblin Regiment | Wave 2 — Regiment | Rusted ID Card (15%), Kindreds Medal (10%) |
+| **Obstatrix** | Mega-Boss | Kindreds Medal (100%), Demons Medal (10%), Black ID Card (10%) |
+| **Disjoined Mithra** | Disjoined NM | Demons Medal (100%), Kindreds Medal (15%) |
 
-Bank the medals, then take a Reforged Artifact, Relic, or Empyrean piece to the smith — see **Reforging your armor** below.
+Collect the Rusted/Black ID Cards and your Mega-Boss Paragon Card, then take a reforged +3 AF/Relic piece to the Divergence Forge — see **The +3 → +4 Forge** below.
 <!-- DOCGEN:END id="divergence-loot" -->
 
-## Reforging your armor
+## The +3 → +4 Forge
 
 <!-- DOCGEN:BEGIN id="divergence-reforge" -->
-Clear a city's zone to unlock its armor slot; clear **all four** to unlock **Body**. Then bring the **Divergence Smith** in Southern San d'Oria a Reforged Artifact, Relic, or Empyrean piece and the medals to push it up a tier — **+1 → +2 → +3**.
+Dynamis-Divergence is the **+3 → +4 Forge**. The base [Reforge System](../progression/reforge.md) takes armor to **+3** with marks; the **Divergence Forge** (an NPC in **Southern San d'Oria**, where the old Divergence Smith stood) takes a reforged **+3** piece the rest of the way to **+4**. The forge covers **220 pieces** — every AF and Relic slot across all 22 jobs.
 
-**Slots, and the city that unlocks each:**
+Trade a reforged **+3 AF or Relic** piece together with the materials below, and it comes back **+4**:
 
-| Slot | Unlocked by |
-|---|---|
-| **Head** | Windurst [D] |
-| **Hands** | Bastok [D] |
-| **Legs** | Jeuno [D] |
-| **Feet** | San d'Oria [D] |
-| **Body** | Clearing **all four** city zones |
+| Material | Non-body | Body |
+|---|---:|---:|
+| Your job's **Paragon Card** | 1× | 1× |
+| **Rusted ID Card** | 8× | 12× |
+| **Black ID Card** | 2× | 4× |
 
-**Medal cost per upgrade:**
+**Where the materials come from** — all inside the [D] zones:
 
-| Upgrade | Cost |
-|---|---|
-| **→ +2** | 3× Beastmen's Medal |
-| **→ +3** | 3× Kindred's Medal, 1× Demon's Medal |
+- **Rusted ID Card** — drops off wave-trash mobs.
+- **Black ID Card** — drops off the bosses (mid-boss and mega-boss).
+- **Paragon Card** — the **Mega-Boss** hands the killer their own main-job card, so bring the job you want to upgrade.
+
+!!! warning "Empyrean has no +4"
+    Only **AF and Relic** armor reach +4. Empyrean armor caps at +3 in the game data (matching retail), so there is no Empyrean +4 to forge here — finish Empyrean sets on the [Reforge System](../progression/reforge.md).
 <!-- DOCGEN:END id="divergence-reforge" -->
 
-The smith only takes pieces for a slot you've already unlocked, and only when you're holding the full medal cost — trade a reforged piece to push it one tier higher.
+The Forge only takes a reforged **+3** AF or Relic piece, and only when you're holding the full material cost (your job's Paragon Card + the Rusted/Black ID Cards) — trade the +3 piece and it comes back +4.
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 74ba47549c9f -->
-_Last updated: 2026-07-05 07:23 UTC_
+<!-- content-hash: 8c72f9b39826 -->
+_Last updated: 2026-07-06 06:28 PDT_
 <!-- DOCGEN:END id="last-updated" -->

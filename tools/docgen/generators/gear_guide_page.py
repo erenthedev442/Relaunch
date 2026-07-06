@@ -457,8 +457,15 @@ def _render(d: dict) -> str:
         f"**Infamy gear:** High-end armor and weapons are sold by the "
         f"[Infamy Vendor](gear-vendors.md#infamy-vendor) for **{infamy}** earned "
         f"from endgame content — including {infamy_weapons} weapons auto-promoted "
-        f"from the top of the scored catalogs and the per-job +4 Reforge Sets. "
-        f"These compete with or surpass Reforge +3 in some slots."
+        f"from the top of the scored catalogs. These compete with or surpass "
+        f"Reforge +3 in some slots."
+    )
+    A("")
+    A(
+        f"**+4 armor:** The top armor tier is **+4** AF/Relic, forged from a reforged "
+        f"**+3** piece at the Dynamis-Divergence Forge (materials farmed in the [D] "
+        f"zones). Empyrean caps at +3. See "
+        f"[Dynamis – Divergence](../endgame/dynamis-divergence.md)."
     )
     A("")
     A("---")

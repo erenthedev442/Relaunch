@@ -184,7 +184,7 @@ def _world_cells(repo_root: Path) -> str:
     module exists in the live tree."""
     cells = [
         ("modules/custom/lua/Dynamis_Divergence.lua", "Dynamis — Divergence",
-         "Portals at the four city Dynamis entrances · wave battles · currency feeds the Divergence Reforger (armor +1 → +3) · a city clear is an Augment Tier key"),
+         "Portals at the four city Dynamis entrances · wave battles · the +3 → +4 Forge (trade a reforged +3 AF/Relic piece + [D] materials → +4) · a city clear is an Augment Tier key"),
         ("modules/custom/lua/Voidwatch.lua", "Voidwatch",
          "Rift battles — pop a Planar Rift, burn the Voidwalker, stack lights for the Pyxis loot roll"),
         ("modules/custom/lua/htbf.lua", "High-Tier Battlefields",
@@ -380,7 +380,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
       <tr><td><span class="chip c-ap">Ascension AP</span></td><td>Nightmare Court kills</td><td>Prestige board perks</td></tr>
       <tr><td><span class="chip c-paragon">Paragon Pts</span></td><td>Apex Trials</td><td>Paragon board (capped stats + Daily Might)</td></tr>
       <tr><td><span class="chip c-sigil">Mastery Sigils</span></td><td>Mastery content</td><td>Permanent WS/spell empowerment</td></tr>
-      <tr><td><span class="chip c-div">Divergence currency</span></td><td>Dynamis — Divergence waves</td><td>Armor reforge +1 → +3</td></tr>
+      <tr><td><span class="chip c-div">Divergence materials</span></td><td>Dynamis — Divergence waves (Rusted/Black ID Cards + Mega-Boss Paragon Card)</td><td>The +3 → +4 Forge — upgrade a reforged +3 AF/Relic piece to +4</td></tr>
       <tr><td><span class="chip c-gil">Gil</span></td><td>AH, Casino, Derby, mobs</td><td>Prime forge ({_fmt(gil_cost)}), AH, Casino</td></tr>
     </table></div>
   </div>

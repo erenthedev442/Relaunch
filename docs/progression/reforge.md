@@ -7,6 +7,9 @@ The Reforge System is a custom NM-hunting + armor-upgrade pipeline that takes yo
 !!! tip "Summary"
     Talk to the **Reforge Spawner** at **Gwora Corridor** `(10, 0, 0)`. Pop one of three NM pools. Each kill drops a random base armor piece from that pool's set plus marks for that set. Take base pieces to the **Reforge Vendor** at `(15, 0, 0)` to upgrade base → +1 → +2 → +3 using the same marks.
 
+!!! info "Want +4?"
+    This system caps at **+3**. The **+4** tier for **AF and Relic** armor is a separate, endgame upgrade forged at the [Dynamis-Divergence Forge](../endgame/dynamis-divergence.md) — trade a reforged **+3** piece plus materials farmed in the [D] zones. (Empyrean has no +4.)
+
 ## How it works
 
 Three parallel tracks. Each track ties one **NM pool**, one **currency**, and one **armor set** together:
@@ -121,6 +124,6 @@ The catalog covers every job. Each job has three named sets across the AF/Relic/
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a119c0d14735 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 982be665ed1e -->
+_Last updated: 2026-07-06 06:28 PDT_
 <!-- DOCGEN:END id="last-updated" -->

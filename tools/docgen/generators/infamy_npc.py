@@ -10,8 +10,10 @@ with two tables:
                       scored catalogs by tools/build_infamy_top_picks.py, plus
                       the Sortie JSE +2 earrings).
 
-The per-job +4 Reforge Sets (catalog.plus4Sets) are documented on the Dungeons
-page and are not duplicated here.
+The Infamy Vendor no longer sells +4 armor: the "+4 Reforge" menu was removed
+(the +4 tier is now an earned upgrade at the Dynamis-Divergence Forge, not a
+direct Infamy buy). The catalog's ``plus4Sets`` data is left in place for a
+possible revert but is intentionally NOT documented as buyable here.
 
 Reuses ``dungeons._extract_vendor_items_block`` so this can't drift from the
 parser ``item_index`` uses on the same catalog. The catalog is normally
@@ -94,7 +96,10 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     )
     lines.append("")
     lines.append(
-        f"Per-job **+4 Reforge Sets** (AF/Relic/Empyrean +4) are also sold here."
+        "Looking for **+4 armor**? That's no longer bought here — the +4 tier is an "
+        "earned upgrade at the [Dynamis-Divergence Forge](../endgame/dynamis-divergence.md) "
+        "(trade a reforged +3 AF/Relic piece plus [D] materials). The Infamy Vendor "
+        "sells weapons, armor, and accessories."
     )
     lines.append("")
 

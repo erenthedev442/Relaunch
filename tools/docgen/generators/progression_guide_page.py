@@ -703,8 +703,9 @@ def _render(d: dict, docs_dir: Path, widget_html: str | None) -> str:
         f"NM hunts, scheduled Invasions, and the weekly Raid, among others. Spend "
         f"it at the [Infamy Vendor](../progression/gear-vendors.md#infamy-vendor) "
         f"in {{{{npc:infamy_vendor}}}}, which sells gear found nowhere else: "
-        f"relic-tier weapons, bard instruments, best-in-slot armor, and per-job "
-        f"+4 Reforge Sets."
+        f"relic-tier weapons, bard instruments, and best-in-slot armor. (The **+4** "
+        f"armor tier is not sold here — it's an earned upgrade at the "
+        f"[Dynamis-Divergence Forge](../endgame/dynamis-divergence.md).)"
     )
     A("")
     A("---")

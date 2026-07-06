@@ -588,7 +588,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
          "modules/custom/lua/htbf_catalog.lua"),
         ("dynamis", 960, 345, "Dynamis – Divergence", "content",
          _desc("Dynamis – Divergence",
-               "4 cities × wave battles. Medal drops → Divergence armor → Reforge path."),
+               "4 cities × wave battles. Drops the +4 Forge materials — Rusted/Black ID "
+               "Cards, and a main-job Paragon Card off the Mega-Boss."),
          "modules/custom/lua/Dynamis_Divergence.lua"),
         ("nyzul", 960, 440, "Nyzul Isle", "content",
          _desc("Nyzul Isle",
@@ -601,14 +602,19 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
          "modules/custom/lua/Invasion.lua"),
         ("rfmarks", 960, 725, "AF/Relic/Empy Marks", "curr",
          _desc("AF/Relic/Empy Marks",
-               "Produced by Abyssea NMs, HNM Kings, and Dynamis-D medals. Spent at the Reforge "
-               "Vendor for +1/+2/+3 armor."),
+               "Produced by Abyssea NMs and HNM Kings. Spent at the Reforge Vendor for "
+               "+1/+2/+3 armor."),
          "modules/custom/lua/Reforge_System.lua"),
         ("reforge", 960, 820, "Reforge (+1/+2/+3)", "reward",
          _desc("Reforge Vendor",
                "Upgrades AF, Relic, and Empy armor from base to +1, +2, +3. Spend marks at the "
-               "Reforge Vendor at !leaf."),
+               "Reforge Vendor at !leaf. (+4 is the separate Dynamis-D Forge.)"),
          "modules/custom/lua/Reforge_System.lua"),
+        ("plus4forge", 1140, 635, "Divergence +4 Forge", "reward",
+         _desc("Divergence +4 Forge",
+               "Trade a reforged +3 AF/Relic piece + your job's Paragon Card + Rusted/Black "
+               "ID Cards → the +4. AF & Relic only (Empy caps at +3)."),
+         "modules/custom/lua/Dynamis_Plus4_Forge.lua"),
         ("rank5", 1140, 45, f"HL {tmap[5]['name'].replace(' - ', ' — ')}", "rank",
          _desc(tmap[5]["name"],
                f"Unlock: {_fmt(r5['cost'])} total marks spent. {pays[4]} marks/kill"
@@ -708,8 +714,9 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ("affmult", "augmog", "reroll on match"),
         ("abyssea", "rfmarks", "AF/Rel/Emp"),
         ("hnm", "rfmarks", ""),
-        ("dynamis", "rfmarks", "medals"),
         ("rfmarks", "reforge", ""),
+        ("dynamis", "plus4forge", "ID cards + P.Card"),
+        ("reforge", "plus4forge", "+3 piece"),
         ("rank4", "hnm", ""),
         ("rank4", "htbf", "gem/gil only"),
         ("rank4", "dynamis", ""),
@@ -785,7 +792,10 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         L.append(f"| Affinity Registration | Affinity NM trophy + HL Rank {aff['rank']} + "
                  f"{_fmt(aff['cost'])} Hunt Marks |")
     if n("modules/custom/lua/Reforge_System.lua"):
-        L.append("| Reforge +3 gear | Abyssea NMs / HNM Kings / Dynamis-D → AF/Relic/Empy marks |")
+        L.append("| Reforge +3 gear | Abyssea NMs / HNM Kings → AF/Relic/Empy marks |")
+    if n("modules/custom/lua/Dynamis_Plus4_Forge.lua"):
+        L.append("| +4 AF/Relic gear | A reforged **+3** piece + Dynamis-D materials "
+                 "(Rusted/Black ID Cards + Paragon Card) at the Divergence Forge |")
     L.append("| Infamy Vendor (BiS) | Accumulate Infamy (Invasions, Apex"
              + (", Gauntlet" if gaunt else "") + ") |")
     if n("modules/custom/lua/paragon_catalog.lua"):

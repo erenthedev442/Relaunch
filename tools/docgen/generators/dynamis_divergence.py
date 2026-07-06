@@ -1,28 +1,42 @@
 """Sync docs/endgame/dynamis-divergence.md with the Divergence modules.
 
-Two committed sources drive this page:
-  modules/custom/lua/Dynamis_Divergence.lua  — the four city entry portals
-                                                (instance + label) + the entry toll.
-  modules/custom/lua/Divergence_Reforger.lua — the reforge map (traded +1/+2 piece
-                                                -> upgraded result, slot, tier) and
-                                                the per-tier medal cost.
+Dynamis-Divergence is the **+3 -> +4 Forge**: the tail of the reforged-armor
+ladder. The base Reforge System (docs/progression/reforge.md) takes armor to +3
+with marks; Dynamis-D takes a reforged **+3** AF/Relic piece to **+4** using
+materials farmed inside the [D] zones. (The old "Divergence Smith" that made
++1/+2/+3 for medals was retired — that overlapped the Reforge System.)
+
+Committed sources that drive this page:
+  modules/custom/lua/Dynamis_Divergence.lua   — the four city entry portals
+                                                 (instance + label) + the entry toll.
+  modules/custom/lua/Dynamis_Plus4_Forge.lua  — the "Divergence Forge" NPC: the
+                                                 recipe knobs (Paragon Card + Rusted/
+                                                 Black ID Card quantities, body tax)
+                                                 and the mega-boss Paragon-Card hook.
+  modules/custom/lua/reforge_plus4_map.lua     — the 220 reforged +3 -> +4 pairs
+                                                 (job/slot per entry) that gate what
+                                                 the forge accepts. Empyrean is absent
+                                                 by design (retail caps Empy at +3).
 The wave *structure* (statues -> Mid-Boss -> Mega-Boss -> Disjoined NM, plus the
 time-extension rules) is universal and lives in the shared engine
 scripts/globals/dynamis_divergence.lua; we read its constants so the published
 wave summary tracks any retune.
 
-A third source drives the new per-zone loot table:
-  modules/custom/sql/dynamis_divergence.sql — mob_groups (each mob's dropId),
-                                               mob_droplist (dropId -> item + rate),
-                                               mob_spawn_points (player-facing names).
-Item ids are resolved to names via the reforger config first, sql/item_basic.sql
-as a fallback, so the loot table follows any drop/boss/zone change on republish.
+Two SQL sources drive the per-zone loot table:
+  modules/custom/sql/dynamis_divergence.sql        — mob_groups (each mob's dropId),
+                                                      mob_droplist (dropId -> item),
+                                                      mob_spawn_points (mob names).
+  modules/custom/sql/dynamis_plus4_materials.sql   — the additive Rusted/Black ID
+                                                      Card rows hung on the same [D]
+                                                      dropIds (the +4 forge materials).
+Item ids are resolved to names via sql/item_basic.sql, so the loot table follows
+any drop/boss/zone change on republish.
 
 Markers written:
   divergence-access  — the four city portals + entry cost
   divergence-waves   — the per-run wave structure + time rules
   divergence-loot    — per-city loot table: which mob drops which item (+ rate)
-  divergence-reforge — the reforge progression (sets/slots, +1->+2->+3, medal costs)
+  divergence-reforge — the +3 -> +4 Forge: recipe, [D] materials, Empy-capped note
 
 Player-facing language only: item IDs are translated to the `name=` fields the
 configs carry; no .lua names, raw IDs, or charVar jargon reach the page.
@@ -34,24 +48,7 @@ from pathlib import Path
 
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
-from tools.docgen._luaparse import section, commafy
-
-
-# --- slot -> the city whose [D] zone unlocks it (from the reforger header) ---
-SLOT_CITY = {
-    "feet": "San d'Oria",
-    "hands": "Bastok",
-    "head": "Windurst",
-    "legs": "Jeuno",
-}
-SLOT_ORDER = ["head", "hands", "legs", "feet", "body"]
-SLOT_LABEL = {
-    "head": "Head",
-    "hands": "Hands",
-    "legs": "Legs",
-    "feet": "Feet",
-    "body": "Body",
-}
+from tools.docgen._luaparse import section
 
 
 # ---------------------------------------------------------------------------
@@ -88,71 +85,30 @@ def _parse_portals(text: str) -> dict:
     return c
 
 
-def _parse_reforge(text: str) -> dict:
+def _parse_forge(forge_text: str, map_text: str) -> dict:
+    """Read the +3 -> +4 Forge recipe knobs from Dynamis_Plus4_Forge.lua and the
+    covered job/slot counts from reforge_plus4_map.lua."""
     c: dict = {}
 
-    # REFORGE: [tradedId] = { result, slot, tier, name }
-    block = section(text, "REFORGE")
-    entries = []
-    for m in re.finditer(
-        r"\[\s*\d+\s*\]\s*=\s*\{([^{}]*)\}", block
-    ):
-        body = m.group(1)
-        slot = re.search(r"slot\s*=\s*'([^']+)'", body)
-        tier = re.search(r"tier\s*=\s*(\d+)", body)
-        name = re.search(r"name\s*=\s*'([^']+)'", body)
-        if slot and tier and name:
-            entries.append({
-                "slot": slot.group(1),
-                "tier": int(tier.group(1)),
-                "name": name.group(1).strip(),
-            })
-    c["reforge"] = entries
+    def _knob(name: str, default: int) -> int:
+        m = re.search(rf"\b{name}\s*=\s*(\d+)", forge_text)
+        return int(m.group(1)) if m else default
 
-    # COST: [tier] = { { id, qty, name }, ... }. Each tier's value is a
-    # brace-balanced table (tier 3 holds two inner cost tables), so walk braces
-    # per tier rather than relying on a non-greedy regex.
-    costs: dict = {}
-    cost_block = section(text, "COST")
-    for tm in re.finditer(r"\[\s*(\d+)\s*\]\s*=\s*\{", cost_block):
-        tier = int(tm.group(1))
-        body = _balanced(cost_block, tm.end() - 1)
-        parts = []
-        # Quote-aware name: "Beastmen's Medal" holds an apostrophe inside double
-        # quotes -- anchor the close on the same quote char via backref.
-        for cm in re.finditer(
-            r"qty\s*=\s*(\d+)\s*,\s*name\s*=\s*([\"'])(.*?)\2", body
-        ):
-            parts.append((int(cm.group(1)), cm.group(3).strip()))
-        if parts:
-            costs[tier] = parts
-    c["costs"] = costs
+    c["pcard_qty"]       = _knob("PCARD_QTY", 1)
+    c["rusted_qty"]      = _knob("RUSTED_QTY", 8)
+    c["rusted_qty_body"] = _knob("RUSTED_QTY_BODY", 12)
+    c["black_qty"]       = _knob("BLACK_QTY", 2)
+    c["black_qty_body"]  = _knob("BLACK_QTY_BODY", 4)
 
-    # id -> player-facing name, harvested from every { id=, ..., name= } the
-    # COST tables carry (the medals). These names have proper apostrophes
-    # ("Beastmen's Medal") that item_basic lacks, so they win in the loot table.
-    id_names: dict = {}
-    for m in re.finditer(
-        r"id\s*=\s*(\d+)\s*,\s*qty\s*=\s*\d+\s*,\s*name\s*=\s*([\"'])(.*?)\2",
-        cost_block
-    ):
-        id_names[int(m.group(1))] = m.group(3).strip()
-    c["id_names"] = id_names
+    # Map coverage: how many +3 -> +4 pairs, and which slots/jobs they span.
+    # Each entry line: [id] = { result=..., slot='body', job='WAR', pcard=..., name=... }
+    entries = re.findall(
+        r"slot\s*=\s*'([a-z]+)'\s*,\s*job\s*=\s*'([A-Z]{3})'", map_text
+    )
+    c["pair_count"] = len(entries)
+    c["slots"] = sorted({s for s, _ in entries})
+    c["jobs"]  = sorted({j for _, j in entries})
     return c
-
-
-def _balanced(text: str, open_idx: int) -> str:
-    """Return the substring from the brace at `open_idx` to its match."""
-    depth, i, n = 0, open_idx, len(text)
-    while i < n:
-        if text[i] == "{":
-            depth += 1
-        elif text[i] == "}":
-            depth -= 1
-            if depth == 0:
-                return text[open_idx:i + 1]
-        i += 1
-    return text[open_idx:]
 
 
 def _parse_engine(text: str) -> dict:
@@ -174,21 +130,17 @@ def _render_access(c: dict) -> str:
     qty = c["cost_qty"]
     name = c["cost_name"]
     toll = f"{qty} {name}" if qty != 1 else f"a {name}"
+    portals = " · ".join(f"**{label}**" for label in c["portals"]) if c["portals"] else "the four city instances"
     lines = [
         "A **Divergence Portal** stands at each city's Dynamis entrance. Trade the "
         f"toll, confirm, and you're warped — solo is fine — into that city's "
         "alternate-timeline instance:",
         "",
-        "| Portal | Unlocks (Reforge slot) |",
-        "|---|---|",
+        portals + ".",
+        "",
+        f"**Entry toll:** {toll} per run. There is no rank or slot gate — the only "
+        "gate on the +4 upgrade is farming the [D] materials (below).",
     ]
-    for label in c["portals"]:
-        city = _city_of_label(label)
-        slot = _slot_for_city(city)
-        unlock = SLOT_LABEL.get(slot, "—") if slot else "—"
-        lines.append(f"| **{label}** | {unlock} |")
-    lines.append("")
-    lines.append(f"**Entry toll:** {toll} per run.")
     return "\n".join(lines)
 
 
@@ -209,53 +161,56 @@ def _render_waves(c: dict) -> str:
         "manifests at the elemental circle after the Mega-Boss falls. No more time "
         "can be gained here — finish it to win.",
         "",
-        "Clearing the run unlocks that city's Reforge slot. Beastmen's, Kindred's, and "
-        "Demon's Medals drop from the mobs inside — bank them for the smith.",
+        "The mobs inside drop the **+4 Forge materials**: **Rusted ID Cards** off wave "
+        "trash and **Black ID Cards** off the bosses. Felling the **Mega-Boss** also "
+        "hands the killer their **main-job Paragon Card** — the job-matched key the "
+        "forge needs. (The Beastmen's / Kindred's / Demon's Medals that also drop are "
+        "the Gear-Vendor Seals, not a Divergence currency.)",
     ])
 
 
-def _render_reforge(c: dict) -> str:
-    costs = c["costs"]
-    by_slot: dict = {}
-    sets = set()
-    for e in c["reforge"]:
-        # "Boii Mask +1" -> set name "Boii", base piece "Mask"
-        base = re.sub(r"\s*\+\d+\s*$", "", e["name"])
-        m = re.match(r"(\S+)\s+(.*)", base)
-        if m:
-            sets.add(m.group(1))
-        by_slot.setdefault(e["slot"], set()).add(e["tier"])
+def _render_forge(c: dict) -> str:
+    """The +3 -> +4 Divergence Forge: recipe (from the forge knobs) + [D] materials,
+    with the Empyrean-capped-at-+3 note."""
+    pcard = c.get("pcard_qty", 1)
+    rusted, rusted_b = c.get("rusted_qty", 8), c.get("rusted_qty_body", 12)
+    black, black_b   = c.get("black_qty", 2), c.get("black_qty_body", 4)
+    pairs = c.get("pair_count", 0)
+    jobs  = len(c.get("jobs", []))
+
+    coverage = ""
+    if pairs and jobs:
+        coverage = (f" The forge covers **{pairs} pieces** — every AF and Relic slot "
+                    f"across all {jobs} jobs.")
 
     lines = [
-        "Clear a city's zone to unlock its armor slot; clear **all four** to unlock "
-        "**Body**. Then bring the **Divergence Smith** in Southern San d'Oria a "
-        "Reforged Artifact, Relic, or Empyrean piece and the medals to push it up a "
-        "tier — **+1 → +2 → +3**.",
+        "Dynamis-Divergence is the **+3 → +4 Forge**. The base [Reforge System]"
+        "(../progression/reforge.md) takes armor to **+3** with marks; the "
+        "**Divergence Forge** (an NPC in **Southern San d'Oria**, where the old "
+        "Divergence Smith stood) takes a reforged **+3** piece the rest of the way "
+        "to **+4**." + coverage,
         "",
-        "**Slots, and the city that unlocks each:**",
+        "Trade a reforged **+3 AF or Relic** piece together with the materials below, "
+        "and it comes back **+4**:",
         "",
-        "| Slot | Unlocked by |",
-        "|---|---|",
+        "| Material | Non-body | Body |",
+        "|---|---:|---:|",
+        f"| Your job's **Paragon Card** | {pcard}× | {pcard}× |",
+        f"| **Rusted ID Card** | {rusted}× | {rusted_b}× |",
+        f"| **Black ID Card** | {black}× | {black_b}× |",
+        "",
+        "**Where the materials come from** — all inside the [D] zones:",
+        "",
+        "- **Rusted ID Card** — drops off wave-trash mobs.",
+        "- **Black ID Card** — drops off the bosses (mid-boss and mega-boss).",
+        "- **Paragon Card** — the **Mega-Boss** hands the killer their own main-job "
+        "card, so bring the job you want to upgrade.",
+        "",
+        "!!! warning \"Empyrean has no +4\"",
+        "    Only **AF and Relic** armor reach +4. Empyrean armor caps at +3 in the "
+        "game data (matching retail), so there is no Empyrean +4 to forge here — "
+        "finish Empyrean sets on the [Reforge System](../progression/reforge.md).",
     ]
-    for slot in SLOT_ORDER:
-        if slot not in by_slot:
-            continue
-        if slot == "body":
-            unlock = "Clearing **all four** city zones"
-        else:
-            city = SLOT_CITY.get(slot, "—")
-            unlock = f"{city} [D]"
-        lines.append(f"| **{SLOT_LABEL[slot]}** | {unlock} |")
-
-    lines.append("")
-    lines.append("**Medal cost per upgrade:**")
-    lines.append("")
-    lines.append("| Upgrade | Cost |")
-    lines.append("|---|---|")
-    for tier in sorted(costs):
-        cost_str = ", ".join(f"{qty}× {name}" for qty, name in costs[tier])
-        lines.append(f"| **→ +{tier}** | {cost_str} |")
-
     return "\n".join(lines)
 
 
@@ -351,10 +306,10 @@ def _render_loot(cities: list, statue_extend: int) -> str:
         return ("Loot data is generated from the live drop tables and will appear here "
                 "once the Divergence zones are seeded.")
     lines = [
-        "Every mob inside a Divergence run drops toward the medals you spend at the "
-        "**Divergence Smith**. Each zone reuses the same six-role chain — only the "
-        "Beastmen change — so here is exactly who drops what, city by city. "
-        "Percentages are the live drop rates.",
+        "Every zone reuses the same six-role chain — only the Beastmen change. The "
+        "**Rusted** and **Black ID Cards** here are the +4 Forge materials; the "
+        "Beastmen's / Kindred's / Demon's Medals are the Gear-Vendor Seals. Here is "
+        "exactly who drops what, city by city — percentages are the live drop rates.",
         "",
     ]
     for city in cities:
@@ -373,17 +328,23 @@ def _render_loot(cities: list, statue_extend: int) -> str:
             name = f"**{mob['name']}**" if boss else mob["name"]
             lines.append(f"| {name} | {mob['role']} | {drops} |")
         lines.append("")
-    lines.append("Bank the medals, then take a Reforged Artifact, Relic, or Empyrean "
-                 "piece to the smith — see **Reforging your armor** below.")
+    lines.append("Collect the Rusted/Black ID Cards and your Mega-Boss Paragon Card, then "
+                 "take a reforged +3 AF/Relic piece to the Divergence Forge — see "
+                 "**The +3 → +4 Forge** below.")
     return "\n".join(lines).rstrip()
 
 
-def _make_id_to_name(reforge_cfg: dict, item_basic_text: str):
-    """id -> player-facing item name. Prefer the exact names the reforger config
-    already carries (proper apostrophes); fall back to item_basic (title-cased)."""
-    id_name: dict = {}
-    id_name.update(reforge_cfg.get("id_names", {}))
+# Friendly names for the two +4-material item ids, so the loot table reads well
+# even if sql/item_basic.sql only has the underscored internal name.
+_MATERIAL_NAMES = {
+    9538: "Rusted ID Card",
+    9540: "Black ID Card",
+}
 
+
+def _make_id_to_name(item_basic_text: str):
+    """id -> player-facing item name from sql/item_basic.sql (title-cased),
+    with friendly overrides for the +4-material cards."""
     basic: dict = {}
     if item_basic_text:
         for m in re.finditer(
@@ -393,20 +354,13 @@ def _make_id_to_name(reforge_cfg: dict, item_basic_text: str):
             basic[int(m.group(1))] = m.group(2).replace("_", " ").title()
 
     def lookup(item_id: int):
-        return id_name.get(item_id) or basic.get(item_id)
+        return _MATERIAL_NAMES.get(item_id) or basic.get(item_id)
     return lookup
 
 
 def _city_of_label(label: str) -> str:
     # "San d'Oria [D]" -> "San d'Oria"; "Jeuno [D]" -> "Jeuno"
     return re.sub(r"\s*\[D\]\s*$", "", label).strip()
-
-
-def _slot_for_city(city: str) -> str | None:
-    for slot, c in SLOT_CITY.items():
-        if c.lower() == city.lower():
-            return slot
-    return None
 
 
 # ---------------------------------------------------------------------------
@@ -416,33 +370,39 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     if portals_src is None:
         print("[dynamis_divergence] skip: Dynamis_Divergence.lua not found")
         return
-    reforge_src = resolve_source(repo_root, "modules/custom/lua/Divergence_Reforger.lua")
+    # The +3 -> +4 Forge recipe knobs + the covered job/slot map (retired the old
+    # Divergence_Reforger.lua +1/+2/+3 smith source).
+    forge_src = resolve_source(repo_root, "modules/custom/lua/Dynamis_Plus4_Forge.lua")
+    map_src   = resolve_source(repo_root, "modules/custom/lua/reforge_plus4_map.lua")
     engine_src = resolve_source(repo_root, "scripts/globals/dynamis_divergence.lua")
 
     c: dict = {}
     c.update(_parse_portals(portals_src.read_text(encoding="utf-8", errors="replace")))
-    if reforge_src is not None:
-        c.update(_parse_reforge(reforge_src.read_text(encoding="utf-8", errors="replace")))
-    else:
-        c.setdefault("reforge", [])
-        c.setdefault("costs", {})
+    forge_text = forge_src.read_text(encoding="utf-8", errors="replace") if forge_src else ""
+    map_text   = map_src.read_text(encoding="utf-8", errors="replace") if map_src else ""
+    c.update(_parse_forge(forge_text, map_text))
     if engine_src is not None:
         c.update(_parse_engine(engine_src.read_text(encoding="utf-8", errors="replace")))
     else:
         c.update(_parse_engine(""))  # defaults
 
     # Loot: which mob in which [D] zone drops which item. Reads the live drop
-    # tables (mob_groups/mob_droplist/mob_spawn_points) and resolves item ids to
-    # names (reforger config first, item_basic fallback). Skips cleanly if the
-    # SQL isn't present, leaving the loot marker's prior content intact.
+    # tables (mob_groups/mob_droplist/mob_spawn_points) from BOTH the base
+    # dynamis_divergence.sql (medals/gear) and the additive dynamis_plus4_materials.sql
+    # (the Rusted/Black ID Card rows), so the +4 materials show up alongside the
+    # medals. Resolves item ids to names via item_basic. Skips cleanly if the SQL
+    # isn't present, leaving the loot marker's prior content intact.
     loot_src = resolve_source(repo_root, "modules/custom/sql/dynamis_divergence.sql")
+    mats_src = resolve_source(repo_root, "modules/custom/sql/dynamis_plus4_materials.sql")
     item_basic_src = resolve_source(repo_root, "sql/item_basic.sql")
     cities = []
     if loot_src is not None:
         sql_text = loot_src.read_text(encoding="utf-8", errors="replace")
+        if mats_src is not None:
+            sql_text += "\n" + mats_src.read_text(encoding="utf-8", errors="replace")
         item_basic_text = (item_basic_src.read_text(encoding="utf-8", errors="replace")
                            if item_basic_src is not None else "")
-        id_to_name = _make_id_to_name(c, item_basic_text)
+        id_to_name = _make_id_to_name(item_basic_text)
         cities = _parse_loot(sql_text, id_to_name, c["statue_extend"], c.get("zone_labels", {}))
 
     page = docs_dir / "endgame" / "dynamis-divergence.md"
@@ -450,10 +410,10 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ("divergence-access", _render_access(c)),
         ("divergence-waves", _render_waves(c)),
         ("divergence-loot", _render_loot(cities, c["statue_extend"])),
-        ("divergence-reforge", _render_reforge(c)),
+        ("divergence-reforge", _render_forge(c)),
     ]
     written = sum(1 for marker, content in blocks if write_between_markers(page, marker, content))
     mob_total = sum(len(city["mobs"]) for city in cities)
     print(f"[dynamis_divergence] {written}/{len(blocks)} marker block(s) written "
-          f"(portals={len(c.get('portals', []))}, reforge entries={len(c.get('reforge', []))}, "
-          f"cost tiers={len(c.get('costs', {}))}, loot cities={len(cities)}, mobs={mob_total})")
+          f"(portals={len(c.get('portals', []))}, +4 pairs={c.get('pair_count', 0)}, "
+          f"jobs={len(c.get('jobs', []))}, loot cities={len(cities)}, mobs={mob_total})")

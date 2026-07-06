@@ -139,7 +139,9 @@ Armor does not come from the Weapons Vendor — it comes from two other sources:
 
 **Reforge System:** AF, Relic, and Empyrean armor sets are upgraded from base through +3 using Reforge marks earned from spawner NMs in Gwora-Corridor (+1 300 / +2 900 / +3 2,000 marks per piece, in that set's own currency). This is your primary armor progression path alongside the medal vendors. See [Reforge System](reforge.md).
 
-**Infamy gear:** High-end armor and weapons are sold by the [Infamy Vendor](gear-vendors.md#infamy-vendor) for **Infamy** earned from endgame content — including 65 weapons auto-promoted from the top of the scored catalogs and the per-job +4 Reforge Sets. These compete with or surpass Reforge +3 in some slots.
+**Infamy gear:** High-end armor and weapons are sold by the [Infamy Vendor](gear-vendors.md#infamy-vendor) for **Infamy** earned from endgame content — including 65 weapons auto-promoted from the top of the scored catalogs. These compete with or surpass Reforge +3 in some slots.
+
+**+4 armor:** The top armor tier is **+4** AF/Relic, forged from a reforged **+3** piece at the Dynamis-Divergence Forge (materials farmed in the [D] zones). Empyrean caps at +3. See [Dynamis – Divergence](../endgame/dynamis-divergence.md).
 
 ---
 

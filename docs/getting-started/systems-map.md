@@ -123,7 +123,7 @@ Your Sage Mastery rank lifts the roll floor inside the unlocked band — see [Au
 | System | What you get |
 | --- | --- |
 | **[High-Tier Battlefields](../endgame/high-tier-battlefields.md)** | Retail HTBF fights via phantom gem entry, tiered difficulty, dedicated vendor |
-| **[Dynamis – Divergence](../endgame/dynamis-divergence.md)** | 4 cities × wave battles. Medal drops → Divergence armor → Reforge to +3. |
+| **[Dynamis – Divergence](../endgame/dynamis-divergence.md)** | 4 cities × wave battles. The **+3 → +4 Forge**: farm Rusted/Black ID Cards + a Mega-Boss Paragon Card, trade a reforged +3 AF/Relic piece → **+4** (AF & Relic only; Empy caps at +3). |
 | **[Voidwatch](../endgame/voidwatch.md)** | Planar Rifts → Voidwalker NM → collect lights → Pyxis loot chest |
 | **[Nyzul Isle](../endgame/nyzul-isle.md)** | Floor-climb dungeon runs with Nyzul armor rewards |
 | **[The Gauntlet](../endgame/the-gauntlet.md)** | Solo NM climb. Full clear: **250,000 Gil + 25 Paragon Pts + 25 Infamy**. |
@@ -191,6 +191,6 @@ The **Prime Armory** at `!leaf` forges a Prime Weapon after **5 trials** — 12 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 234d4a30603e -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: a88945588934 -->
+_Last updated: 2026-07-06 06:28 PDT_
 <!-- DOCGEN:END id="last-updated" -->

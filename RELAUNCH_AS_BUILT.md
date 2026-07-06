@@ -120,7 +120,7 @@ All share the medal trio; debited safely across all stacks (`hl_seal_currency.ta
 | **Weapons** (Gear Progression) | 12 | 25 | 50 | 15 weapon categories |
 | **Accessory** | 15 | 32 | 60 | Neck/Waist/Ear/Ring/Back/Ammo |
 
-**Infamy Vendor** (the BiS sink — spends the `Infamy` charVar): Aeonics/Mythics/Srivatsa **5,000**, top auto-promoted weapons/armor 500-800, JSE/Ambuscade capes **4,000**, Nyame 400-800, Adoulin "…Ring +1" **10,000**, Prestige/Trust/Sworn sets **15,000** (Rank-30 gated), Sortie +2 earrings 300, +4 Reforge sets. **Gear Moogle** gives a free one-time Lv1 starter kit.
+**Infamy Vendor** (the BiS sink — spends the `Infamy` charVar): Aeonics/Mythics/Srivatsa **5,000**, top auto-promoted weapons/armor 500-800, JSE/Ambuscade capes **4,000**, Nyame 400-800, Adoulin "…Ring +1" **10,000**, Prestige/Trust/Sworn sets **15,000** (Rank-30 gated), Sortie +2 earrings 300 (**+4 reforged armor is no longer sold here — it's an earned upgrade at the Dynamis-Divergence Forge**). **Gear Moogle** gives a free one-time Lv1 starter kit.
 
 ### 3.2 Gil sinks (all LIVE and wired)
 

@@ -441,8 +441,13 @@ def _extract_vendor_items(text: str) -> list[dict]:
 
 
 # ============================================================
-# +4 REFORGE SETS — catalog.plus4Sets (accessible via the +4
-# Reforge Sets menu option on the Infamy Vendor NPC)
+# +4 REFORGE SETS — catalog.plus4Sets  (LEGACY / UNUSED)
+#
+# The Infamy Vendor's "+4 Reforge" menu was REMOVED: the +4 armor tier is now an
+# earned upgrade at the Dynamis-Divergence Forge (Dynamis_Plus4_Forge.lua), not a
+# direct Infamy buy. catalog.plus4Sets survives only for a possible revert, and
+# this extractor/renderer is dead code (generate() below is a no-op). It is kept
+# here for that revert path only — nothing calls _render_plus4 anymore.
 #
 # Structure in the catalog:
 #   catalog.plus4Sets = {
