@@ -29,21 +29,7 @@ catalog.vendorItems =
     -- Naegling (a sword) and is now correctly labeled below -- it was previously
     -- mislabeled 'Daybreak' with shield stats. The real Daybreak (22040, a
     -- caster wand) lives in the auto list, so it is not duplicated here.
-    { id = 20594, name = 'Aeneas',         cost = 5000, stats = { 'Dagger (main/sub). THF/BRD/DNC. Aeonic.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
-    { id = 20935, name = 'Trishula',       cost = 5000, stats = { 'Polearm (main). Aeonic, DRG only. Grants Stardiver.', 'DMG 345, TP Bonus+500, Magic Dmg+155, Store TP+10.' } },
-    { id = 20890, name = 'Anguta',         cost = 5000, stats = { 'Scythe (main). Aeonic, DRK only. Grants Entropy.', 'DMG 370, TP Bonus+500, Magic Dmg+186, Store TP+10.' } },
     -- All 16 final-stage Aeonic weapons (stats via sql/zz_aeonic_weapon_mods.sql)
-    { id = 20515, name = 'Godhands',           cost = 5000, stats = { 'H2H (main). MNK/PUP. Aeonic.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
-    { id = 20843, name = 'Chango',             cost = 5000, stats = { 'Great Axe (main). WAR. Aeonic.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
-    { id = 20695, name = 'Sequence',           cost = 5000, stats = { 'Sword (main/sub). RDM/PLD/BLU. Aeonic.', 'Magic Dmg+186, TP Bonus+500, Store TP+10.' } },
-    { id = 21694, name = 'Lionheart',          cost = 5000, stats = { 'Great Sword (main). RUN. Aeonic.', 'Magic Dmg+186, TP Bonus+500, Store TP+10.' } },
-    { id = 21753, name = 'Tri-edge',           cost = 5000, stats = { 'Dagger (main/sub). BST. Aeonic.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
-    { id = 20977, name = 'Heishi Shorinken',   cost = 5000, stats = { 'Katana (main/sub). NIN. Aeonic.', 'Magic Dmg+186, TP Bonus+500, Store TP+10.' } },
-    { id = 21025, name = 'Dojikiri Yasutsuna', cost = 5000, stats = { 'Great Katana (main). SAM. Aeonic.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
-    { id = 21082, name = 'Tishtrya',           cost = 5000, stats = { 'Club (main). WHM/GEO. Aeonic.', 'Magic Dmg+217, TP Bonus+500, Store TP+10.' } },
-    { id = 21147, name = 'Khatvanga',          cost = 5000, stats = { 'Staff (main). BLM/SMN/SCH. Aeonic.', 'Magic Dmg+279, TP Bonus+500, Occult Acumen+30.' } },
-    { id = 22117, name = 'Fail-Not',           cost = 5000, stats = { 'Bow (ranged). RNG. Aeonic. MAcc+40.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
-    { id = 21485, name = 'Fomalhaut',          cost = 5000, stats = { 'Gun (ranged). RNG/COR. Aeonic.', 'Magic Dmg+155, TP Bonus+500, Store TP+10.' } },
     { id = 26403, name = 'Srivatsa',           cost = 5000, stats = { 'Shield (sub). PLD. Aeonic.', 'DEF+150, HP+150, MP+150, Enmity+15.' } },
     -- Naegling (21621) removed: it is a Prime Weapon, forge-only at the GM Home Prime Armory (trial-gated).
 
@@ -104,8 +90,6 @@ catalog.vendorItems =
     -- Hjarrandi Helm/Breastplate live in the fixed 'Hjarrandi Tank' set below.
     -- ----------------------------------------------------------------
     -- Armor
-    { id = 23500, name = "Peltast's Plackart +3", cost = 400, stats = { 'Body. RUN Relic +3 reforged.', 'Tank/hybrid stat block.' } },
-    { id = 23567, name = "Peltast's Vambraces +3",cost = 400, stats = { 'Hands. RUN Relic +3 reforged.', 'Tank/hybrid stat block.' } },
     -- Pteroslaver Brais +4 (24066) is ALREADY sold via the +4 reforge browser
     -- (catalog.plus4Sets, DRG) -- not re-listed here to avoid a duplicate. Its
     -- stats are still fixed by sql/zz_infamy_extra_mods.sql (same item id).
