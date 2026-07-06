@@ -226,11 +226,16 @@ def _parse_reforge(text: str) -> dict:
 
 
 def _parse_seal_names(gear_text: str) -> dict[str, str]:
-    """gear_progression_catalog.seals: tier -> medal display name."""
+    """gear_progression_catalog.seals: tier -> medal display name. Scope to the
+    `catalog.seals` block FIRST — the tier keys are reused as the weapon tables
+    below, so a whole-file scan grabbed the first weapon's name (e.g. "Tokko
+    Knife") as the medal, which then failed the HL-shop price lookup."""
+    block = re.search(r"catalog\.seals\s*=\s*\{(.*?)\n\}", gear_text, re.DOTALL)
+    scope = block.group(1) if block else gear_text
     out = {}
     for tier, name in re.findall(
         r"(bronze|silver|gold)\s*=\s*\{[^}]*?name\s*=\s*['\"]([^'\"]+)['\"]",
-        gear_text,
+        scope,
     ):
         out[tier] = name
     return out
@@ -703,9 +708,8 @@ def _render(d: dict, docs_dir: Path, widget_html: str | None) -> str:
         f"NM hunts, scheduled Invasions, and the weekly Raid, among others. Spend "
         f"it at the [Infamy Vendor](../progression/gear-vendors.md#infamy-vendor) "
         f"in {{{{npc:infamy_vendor}}}}, which sells gear found nowhere else: "
-        f"relic-tier weapons, bard instruments, and best-in-slot armor. (The **+4** "
-        f"armor tier is not sold here — it's an earned upgrade at the "
-        f"[Dynamis-Divergence Forge](../endgame/dynamis-divergence.md).)"
+        f"relic-tier weapons, bard instruments, best-in-slot armor, and per-job "
+        f"+4 Reforge Sets."
     )
     A("")
     A("---")

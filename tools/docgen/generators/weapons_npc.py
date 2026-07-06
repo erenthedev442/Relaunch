@@ -51,14 +51,20 @@ _FALLBACK_CURRENCY = {
 
 # Parse `catalog.seals = { bronze = { id = N, name = "X" }, ... }` from the
 # Lua catalog source so renaming Bronze/Silver/Gold currencies in
-# gear_progression_catalog.lua propagates here automatically.
+# gear_progression_catalog.lua propagates here automatically. We isolate the
+# `catalog.seals` block FIRST: the tier keys (bronze/silver/gold) are ALSO the
+# `catalog.bronze/silver/gold` weapon tables further down, so a whole-file scan
+# used to grab the first weapon's name (e.g. "Tokko Knife") as the currency.
+_SEALS_BLOCK_RE = re.compile(r"catalog\.seals\s*=\s*\{(.*?)\n\}", re.DOTALL)
 _SEAL_TIER_RE = re.compile(
     r"(bronze|silver|gold)\s*=\s*\{[^}]*?name\s*=\s*['\"]([^'\"]+)['\"]",
 )
 
 def _parse_tier_currency(catalog_text: str) -> dict:
+    block_m = _SEALS_BLOCK_RE.search(catalog_text)
+    scope = block_m.group(1) if block_m else catalog_text
     found = {}
-    for m in _SEAL_TIER_RE.finditer(catalog_text):
+    for m in _SEAL_TIER_RE.finditer(scope):
         found[m.group(1)] = m.group(2)
     return found
 # Display order for weapon categories on the page. Mirrors the order in
@@ -83,6 +89,111 @@ def _quoted_value(m: re.Match) -> str:
     return raw.replace("\\'", "'").replace('\\"', '"').replace("\\\\", "\\")
 
 
+# item_weapon.skill id -> weapon category label (matches _CATEGORY_ORDER). The
+# flat bronze/silver/gold catalog tiers are plain weapon lists with no category,
+# so we derive each weapon's category from its skill to keep the category-grouped
+# tables. Instruments and grips (skill 0) get their own buckets so they render.
+_SKILL_CATEGORY = {
+    1: "Hand-to-Hand", 2: "Daggers", 3: "Swords", 4: "Great Swords",
+    5: "Axes", 6: "Great Axes", 7: "Scythes", 8: "Polearms",
+    9: "Katana", 10: "Great Katana", 11: "Clubs", 12: "Staves",
+    25: "Archery", 26: "Marksmanship", 27: "Marksmanship",
+    40: "Instruments", 41: "Instruments", 42: "Instruments", 45: "Instruments",
+    0: "Grips",
+}
+_WEAPON_SKILL_RE = re.compile(
+    r"^INSERT INTO `item_weapon` VALUES \((\d+),'[^']*',(\d+),", re.M)
+_ID_RE = re.compile(r"\bid\s*=\s*(\d+)")
+
+# The CURRENT bronze/silver/gold tiers are flat literal lists:
+#   catalog.bronze = { weapons = { { id=.., name=.., cost=.., jobs=.. }, ... } }
+# (The legacy `cat()` + `table.insert` shape is now used ONLY by the inert
+# `catalog.infamy` export.) Capture each tier's weapons block, then each entry.
+_TIER_WEAPONS_RE = re.compile(
+    r"catalog\.(bronze|silver|gold)\s*=\s*\{\s*weapons\s*=\s*\{(.*?)\n\s*\},",
+    re.DOTALL,
+)
+_ENTRY_RE = re.compile(r"\{([^{}]*\bid\s*=\s*\d+[^{}]*)\}")
+
+
+def _item_categories(repo_root: Path) -> dict:
+    """item id -> weapon category label, from sql/item_weapon.sql's skill column."""
+    p = resolve_source(repo_root, "sql/item_weapon.sql")
+    out: dict[int, str] = {}
+    if p is not None:
+        for m in _WEAPON_SKILL_RE.finditer(p.read_text(encoding="utf-8", errors="replace")):
+            out[int(m.group(1))] = _SKILL_CATEGORY.get(int(m.group(2)), "Other")
+    return out
+
+
+def _row(body: str) -> dict | None:
+    name_m = _NAME_RE.search(body)
+    cost_m = _COST_RE.search(body)
+    if not (name_m and cost_m):
+        return None
+    id_m = _ID_RE.search(body)
+    jobs_m = _JOBS_RE.search(body)
+    wiki_m = _WIKI_RE.search(body)
+    return {
+        "name": _quoted_value(name_m),
+        "cost": int(cost_m.group(1)),
+        "jobs": _quoted_value(jobs_m) if jobs_m else "",
+        "wiki": _quoted_value(wiki_m) if wiki_m else None,
+        "id":   int(id_m.group(1)) if id_m else None,
+    }
+
+
+def _parse_flat_tiers(text: str, item_cat: dict) -> dict:
+    """bronze/silver/gold flat catalog -> {tier: {category: [rows]}}."""
+    tiers = {t: {} for t in _TIER_ORDER}
+    for tm in _TIER_WEAPONS_RE.finditer(text):
+        tier, body = tm.group(1), tm.group(2)
+        for em in _ENTRY_RE.finditer(body):
+            row = _row(em.group(1))
+            if row is None:
+                continue
+            category = item_cat.get(row["id"], "Other")
+            tiers[tier].setdefault(category, []).append(row)
+    return tiers
+
+
+def _parse_legacy_tiers(text: str, tier_names: tuple) -> dict:
+    """Legacy `local x = cat(catalog.<tier>.weapons, '<cat>')` + `table.insert`
+    shape (now only the inert `infamy` export uses it)."""
+    bindings = []
+    for m in _CAT_BIND_RE.finditer(text):
+        var, tier = m.group(1), m.group(2)
+        category = m.group(3) if m.group(3) is not None else m.group(4)
+        if tier in tier_names:
+            bindings.append((m.start(), var, tier, category))
+    tiers = {t: {} for t in tier_names}
+    for m in _INSERT_RE.finditer(text):
+        var, body = m.group(1), m.group(2)
+        best = None
+        for pos, b_var, b_tier, b_cat in bindings:
+            if b_var == var and pos < m.start():
+                best = (b_tier, b_cat)
+        if best is None:
+            continue
+        tier, category = best
+        row = _row(body)
+        if row is not None:
+            tiers[tier].setdefault(category, []).append(row)
+    return tiers
+
+
+def parse_weapon_tiers(text: str, repo_root: Path, include_infamy: bool = False) -> dict:
+    """{tier: {category: [rows]}} for bronze/silver/gold (flat catalog format,
+    category derived from each weapon's skill). With include_infamy, also adds the
+    legacy `infamy` tier. Shared by weapons_npc (vendor page) and gear_guide_page
+    so the two can never disagree about the weapon tiers."""
+    item_cat = _item_categories(repo_root)
+    tiers = _parse_flat_tiers(text, item_cat)
+    if include_infamy:
+        tiers["infamy"] = _parse_legacy_tiers(text, ("infamy",)).get("infamy", {})
+    return tiers
+
+
 def generate(repo_root: Path, docs_dir: Path) -> None:
     src = resolve_source(repo_root, "modules/custom/lua/gear_progression_catalog.lua")
     if src is None:
@@ -98,43 +209,10 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     }
     print(f"[weapons_npc] tier currencies: {tier_currency}")
 
-    # The catalog reuses `local swords = cat(...)` inside multiple
-    # do/end blocks — one per tier — so a flat var -> tier map collapses
-    # them all to the last binding. Walk linearly and resolve each insert
-    # against the most recent prior `local X = cat(catalog.<tier>.weapons, '<cat>')`.
-    bindings: list[tuple[int, str, str, str]] = []  # (pos, var, tier, category)
-    for m in _CAT_BIND_RE.finditer(text):
-        var = m.group(1)
-        tier = m.group(2)
-        category = m.group(3) if m.group(3) is not None else m.group(4)
-        if tier in _TIER_ORDER:
-            bindings.append((m.start(), var, tier, category))
-
-    tiers: dict[str, dict[str, list[dict]]] = {t: {} for t in _TIER_ORDER}
-
-    for m in _INSERT_RE.finditer(text):
-        var, body = m.group(1), m.group(2)
-        # Find the latest binding for this var whose position precedes
-        # the insert.
-        best: tuple[str, str] | None = None
-        for pos, b_var, b_tier, b_cat in bindings:
-            if b_var == var and pos < m.start():
-                best = (b_tier, b_cat)
-        if best is None:
-            continue
-        tier, category = best
-        name_m = _NAME_RE.search(body)
-        cost_m = _COST_RE.search(body)
-        jobs_m = _JOBS_RE.search(body)
-        wiki_m = _WIKI_RE.search(body)
-        if not (name_m and cost_m):
-            continue
-        tiers[tier].setdefault(category, []).append({
-            "name": _quoted_value(name_m),
-            "cost": int(cost_m.group(1)),
-            "jobs": _quoted_value(jobs_m) if jobs_m else "",
-            "wiki": _quoted_value(wiki_m) if wiki_m else None,
-        })
+    # bronze/silver/gold weapon tiers (flat catalog format; each weapon's
+    # category derived from its skill). Shared with gear_guide_page via
+    # parse_weapon_tiers so the vendor page and the gear guide never disagree.
+    tiers = parse_weapon_tiers(text, repo_root)
 
     page = docs_dir / "progression" / "gear-vendors.md"
     content = _render_weapons_slots(tiers, tier_currency)

@@ -84,43 +84,11 @@ def _item_link(name: str, wiki: str | None, item_id: int | None) -> str:
 # ---------------------------------------------------------------- parsers
 
 
-def _parse_weapon_tiers(text: str) -> dict[str, dict[str, list[dict]]]:
-    """Reuses weapons_npc's binding+insert regexes so this page can never
-    disagree with the generated gear-vendors tables. Adds the item id and
-    also collects the auto-promoted 'infamy' tier."""
-    tier_names = weapons_npc._TIER_ORDER + ("infamy",)
-    bindings: list[tuple[int, str, str, str]] = []
-    for m in weapons_npc._CAT_BIND_RE.finditer(text):
-        var, tier = m.group(1), m.group(2)
-        category = m.group(3) if m.group(3) is not None else m.group(4)
-        if tier in tier_names:
-            bindings.append((m.start(), var, tier, category))
-
-    tiers: dict[str, dict[str, list[dict]]] = {t: {} for t in tier_names}
-    for m in weapons_npc._INSERT_RE.finditer(text):
-        var, body = m.group(1), m.group(2)
-        best: tuple[str, str] | None = None
-        for pos, b_var, b_tier, b_cat in bindings:
-            if b_var == var and pos < m.start():
-                best = (b_tier, b_cat)
-        if best is None:
-            continue
-        tier, category = best
-        name_m = weapons_npc._NAME_RE.search(body)
-        cost_m = weapons_npc._COST_RE.search(body)
-        jobs_m = weapons_npc._JOBS_RE.search(body)
-        wiki_m = weapons_npc._WIKI_RE.search(body)
-        id_m = _ID_RE.search(body)
-        if not (name_m and cost_m):
-            continue
-        tiers[tier].setdefault(category, []).append({
-            "name": weapons_npc._quoted_value(name_m),
-            "cost": int(cost_m.group(1)),
-            "jobs": weapons_npc._quoted_value(jobs_m) if jobs_m else "",
-            "wiki": weapons_npc._quoted_value(wiki_m) if wiki_m else None,
-            "id":   int(id_m.group(1)) if id_m else None,
-        })
-    return tiers
+def _parse_weapon_tiers(text: str, repo_root: Path) -> dict[str, dict[str, list[dict]]]:
+    """Delegates to weapons_npc.parse_weapon_tiers so this guide and the generated
+    gear-vendors tables always agree. bronze/silver/gold come from the flat catalog
+    (category derived from item skill); the auto-promoted 'infamy' tier is included."""
+    return weapons_npc.parse_weapon_tiers(text, repo_root, include_infamy=True)
 
 
 def _tier_cost(items_by_cat: dict[str, list[dict]]) -> tuple[int, int]:
@@ -457,15 +425,8 @@ def _render(d: dict) -> str:
         f"**Infamy gear:** High-end armor and weapons are sold by the "
         f"[Infamy Vendor](gear-vendors.md#infamy-vendor) for **{infamy}** earned "
         f"from endgame content — including {infamy_weapons} weapons auto-promoted "
-        f"from the top of the scored catalogs. These compete with or surpass "
-        f"Reforge +3 in some slots."
-    )
-    A("")
-    A(
-        f"**+4 armor:** The top armor tier is **+4** AF/Relic, forged from a reforged "
-        f"**+3** piece at the Dynamis-Divergence Forge (materials farmed in the [D] "
-        f"zones). Empyrean caps at +3. See "
-        f"[Dynamis – Divergence](../endgame/dynamis-divergence.md)."
+        f"from the top of the scored catalogs and the per-job +4 Reforge Sets. "
+        f"These compete with or surpass Reforge +3 in some slots."
     )
     A("")
     A("---")
@@ -626,7 +587,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         aff_text = _read(repo_root, "modules/custom/lua/augment_affinity_catalog.lua", required=False)
         hl_module = _read(repo_root, "modules/custom/lua/HuntingLeague.lua", required=False)
 
-        tiers = _parse_weapon_tiers(gear_text)
+        tiers = _parse_weapon_tiers(gear_text, repo_root)
         for t in ("bronze", "silver", "gold"):
             if not any(tiers[t].values()):
                 raise _Skip(f"gear_progression_catalog.lua: {t} tier parsed empty")
