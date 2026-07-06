@@ -78,6 +78,12 @@
 .gf-detail .gf-modlist { display: flex; flex-wrap: wrap; gap: 0.3rem 0.7rem; }
 .gf-detail .gf-mod { font-variant-numeric: tabular-nums; }
 .gf-detail .gf-latent { color: var(--gf-muted); font-style: italic; }
+/* ---- sources (where-to-get list in the detail row) ---- */
+.gf-detail .gf-sources { display: flex; flex-wrap: wrap; align-items: center; gap: 0.3rem 0.4rem; margin-top: 0.5rem; }
+.gf-detail .gf-src-h { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--gf-muted); font-weight: 700; margin-right: 0.15rem; }
+.gf-detail .gf-src { display: inline-block; font-size: 0.72rem; padding: 0.08rem 0.4rem; border-radius: 4px; border: 1px solid var(--gf-border); font-variant-numeric: tabular-nums; }
+.gf-detail .gf-src-sys { background: #2e8b5722; color: #2e8b57; border-color: #2e8b5744; font-weight: 700; }
+.gf-detail .gf-src-drop { background: var(--md-code-bg-color); color: var(--md-default-fg-color); }
 .gf-empty { padding: 1.2rem; text-align: center; color: var(--gf-muted); }
 
 /* ---- pagination ---- */

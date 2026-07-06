@@ -6,6 +6,7 @@ and at what drop rate — plus **what it's used for**. All data is pulled straig
 from the live server, so the rates here are the ones the game actually uses.
 
 <!-- DOCGEN:BEGIN id="item-database-meta" -->
+**3,680 items** indexed straight from the live server — **3,680** with drop sources, **170** with system uses. This dataset is **rebuilt from the live database on every deploy**, so it always reflects the current server (the "Last updated" date below tracks the page layout, not the data).
 <!-- DOCGEN:END id="item-database-meta" -->
 
 !!! tip "How to use it"

@@ -33,6 +33,7 @@ from collections import defaultdict
 from pathlib import Path
 
 from tools.docgen._paths import resolve_source
+from tools.docgen._item_sources import collect_drop_sources
 
 # ---------------------------------------------------------------------------
 # Static maps
@@ -113,6 +114,16 @@ try:
     from tools.scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS
 except ImportError:  # run as `python tools/score_*.py` (tools/ is sys.path[0])
     from scoring_weights import ROLE_WEIGHTS, MOD_SANITY_CAP, CAP_DEFAULT, DD_ALWAYS_LATENTS
+
+# Weapon-skill ids that count as real melee/ranged COMBAT weapons: weapon_bonus
+# only credits dmg/delay DPS for these (1-12 melee, 25/26/27 ranged) -- excludes
+# instruments/handbells so a harp never scores as a DPS weapon.
+# NOTE: this constant was accidentally swept out when the scoring constants moved
+# into scoring_weights.py (a9e43e567a, 2026-07-05) -- it sat next to MOD_SANITY_CAP.
+# Leaving it undefined made weapon_bonus raise NameError as soon as any item_weapon
+# row loaded, CRASHING gear_finder every docs build and freezing gear-data.json
+# (the Gear Finder stopped updating on 2026-07-05). Restored here, verbatim.
+COMBAT_SKILLS = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 25, 26, 27}
 
 # Some mods are stored at x10/x100/x10000 of their in-game value (skillchain +7%
 # is stored 700; PDT -10% is -1000; proc chance 13% is 130). Normalize to the
@@ -804,11 +815,38 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # sold somewhere keeps its more specific tag.
     for iid in _abyssea_su5_ids(repo_root):
         obtainable.setdefault(iid, 'Abyssea (Su5)')
+    # Full source list per item: merge the coarse system label (vendor /
+    # reforge / !shop / dungeon / augment-moogle, from obtainable[iid]) with the
+    # COMPLETE drop-source list (live mob_droplist + every scripted drop table)
+    # shared with the Item Database via collect_drop_sources -- so each item
+    # shows ALL of its real sources, not just one, and the two pages never
+    # disagree. obj['src'] is a list of {'s': "System label"} and/or drop rows
+    # {'m': mob, 'z': zone, 'p': pct}. The compact obj['o'] (Source column) is
+    # the system tag when there is one, else the top drop's mob; bit2 of obj['f']
+    # (= obtainable) is set whenever EITHER kind of source exists (so drop-only
+    # gear is no longer wrongly shown/filtered as unobtainable).
+    SRC_CAP = 15  # cap drop rows per item so gear-data.json stays compact
+    drop_sources, _db_ok = collect_drop_sources(repo_root)
     for obj in items:
-        src = obtainable.get(obj['i'])
-        if src:
-            obj['o'] = src
-            obj['f'] = obj.get('f', 0) | 4  # bit2 = obtainable
+        iid = obj['i']
+        sys_label = obtainable.get(iid)
+        rows = sorted(drop_sources.get(iid, []),
+                      key=lambda d: -(d.get('pct') or 0))
+        src: list = []
+        if sys_label:
+            src.append({'s': sys_label})
+        for d in rows[:SRC_CAP]:
+            e = {'m': d['mob']}
+            if d.get('zone'):
+                e['z'] = d['zone']
+            if d.get('pct') is not None:
+                e['p'] = d['pct']
+            src.append(e)
+        if not src:
+            continue  # no vendor tag and no drop -> genuinely unobtainable
+        obj['src'] = src
+        obj['o'] = sys_label or ('Drop: ' + rows[0]['mob'])
+        obj['f'] = obj.get('f', 0) | 4  # bit2 = obtainable
 
     # --- mod labels (only the ones actually used) ---------------------------
     mod_labels = {}
@@ -841,6 +879,9 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(payload, separators=(',', ':')), encoding='utf-8')
     n_obt = sum(1 for it in items if 'o' in it)
+    n_src = sum(1 for it in items if 'src' in it)
+    n_drop = sum(1 for it in items if any('m' in s for s in it.get('src', [])))
     size_kb = out.stat().st_size // 1024
     print(f'[gear_finder] wrote {out.name}: {len(items)} items '
-          f'({n_obt} obtainable, {len(mod_labels)} mods, {size_kb} KB)')
+          f'({n_obt} obtainable, {n_src} with sources, {n_drop} with drops, '
+          f'{len(mod_labels)} mods, {size_kb} KB)')
