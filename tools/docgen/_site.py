@@ -18,10 +18,10 @@ from pathlib import Path
 from tools.docgen._paths import resolve_source
 
 SERVER_NAME = "the Relaunch server"
-SERVER_HOST = "172.215.213.23"
-DATA_PORT = 54240
-AUTH_PORT = 54241
-VIEW_PORT = 54011
+SERVER_HOST = "15.204.112.102"   # OVH VPS (moved off Azure 172.215.213.23 on 2026-07-06)
+DATA_PORT = 54230
+AUTH_PORT = 54231
+VIEW_PORT = 54001
 
 DISCORD_URL = "https://discord.gg/Yd3Kn3dN36"
 REPO_URL = "https://github.com/richardknutzjr/FFXI-Private-Server-FJB"
@@ -29,8 +29,9 @@ REPO_URL = "https://github.com/richardknutzjr/FFXI-Private-Server-FJB"
 
 def connection(repo_root: Path) -> tuple[str, int, int, int]:
     """(host, data_port, auth_port, view_port) — live network.lua wins,
-    the constants above fall back. Never reads settings/default (stock LSB
-    ports would be wrong for the relaunch's +10 port block)."""
+    the constants above fall back. Since the OVH move (2026-07-06) the
+    relaunch uses the standard login ports (54230/54231/54001), not the
+    old Azure +10 block."""
     host, data, auth, view = SERVER_HOST, DATA_PORT, AUTH_PORT, VIEW_PORT
     src = resolve_source(repo_root, "settings/network.lua")
     if src is not None:
