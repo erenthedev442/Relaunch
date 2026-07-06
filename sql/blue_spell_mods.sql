@@ -1002,3 +1002,28 @@ INSERT INTO `blue_spell_mods` VALUES (745,0,0); --
 -- Blistering Roar
 -- ----------------------------
 INSERT INTO `blue_spell_mods` VALUES (746,0,0); --
+
+
+-- ----------------------------
+-- Blue Magic net-new spells 715-753
+-- ----------------------------
+INSERT INTO `blue_spell_mods` VALUES (715,0,0); -- Molting Plumage
+INSERT INTO `blue_spell_mods` VALUES (716,0,0); -- Nectarous Deluge
+INSERT INTO `blue_spell_mods` VALUES (717,0,0); -- Sweeping Gouge
+INSERT INTO `blue_spell_mods` VALUES (719,0,0); -- Searing Tempest
+INSERT INTO `blue_spell_mods` VALUES (720,0,0); -- Spectral Floe
+INSERT INTO `blue_spell_mods` VALUES (721,0,0); -- Anvil Lightning
+INSERT INTO `blue_spell_mods` VALUES (722,0,0); -- Entomb
+INSERT INTO `blue_spell_mods` VALUES (723,0,0); -- Saurian Slide
+INSERT INTO `blue_spell_mods` VALUES (724,0,0); -- Palling Salvo
+INSERT INTO `blue_spell_mods` VALUES (725,0,0); -- Blinding Fulgor
+INSERT INTO `blue_spell_mods` VALUES (726,0,0); -- Scouring Spate
+INSERT INTO `blue_spell_mods` VALUES (727,0,0); -- Silent Storm
+INSERT INTO `blue_spell_mods` VALUES (728,0,0); -- Tenebral Crush
+INSERT INTO `blue_spell_mods` VALUES (747,0,0); -- Uproot
+INSERT INTO `blue_spell_mods` VALUES (748,0,0); -- Crashing Thunder
+INSERT INTO `blue_spell_mods` VALUES (749,0,0); -- Polar Roar
+INSERT INTO `blue_spell_mods` VALUES (750,0,0); -- Mighty Guard
+INSERT INTO `blue_spell_mods` VALUES (751,0,0); -- Cruel Joke
+INSERT INTO `blue_spell_mods` VALUES (752,0,0); -- Cesspool
+INSERT INTO `blue_spell_mods` VALUES (753,0,0); -- Tearing Gust

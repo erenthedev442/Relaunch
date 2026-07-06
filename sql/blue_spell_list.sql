@@ -186,7 +186,6 @@ INSERT INTO `blue_spell_list` VALUES (711,256,0,0,0,0,0,0,NULL); -- Restoral
 INSERT INTO `blue_spell_list` VALUES (712,256,0,0,0,0,0,0,NULL); -- Rail Cannon
 INSERT INTO `blue_spell_list` VALUES (713,2054,0,0,0,0,0,0,NULL); -- Diffusion Ray
 INSERT INTO `blue_spell_list` VALUES (714,2073,0,0,0,9,5,0,NULL); -- Sinker Drill
--- INSERT INTO `blue_spell_list` VALUES (723,0,0,0,0,12,10,0,NULL); -- Saurian Slide
 INSERT INTO `blue_spell_list` VALUES (736,629,0,0,0,0,0,0,NULL); -- Thunderbolt
 INSERT INTO `blue_spell_list` VALUES (737,807,0,0,0,0,0,0,NULL); -- Harden Shell
 INSERT INTO `blue_spell_list` VALUES (738,1305,0,0,0,0,0,0,NULL); -- Absolute Terror
@@ -198,3 +197,26 @@ INSERT INTO `blue_spell_list` VALUES (743,2106,0,0,0,14,10,0,NULL); -- Bloodrake
 INSERT INTO `blue_spell_list` VALUES (744,3005,0,0,0,0,0,0,NULL); -- Droning Whirlwind
 INSERT INTO `blue_spell_list` VALUES (745,3014,0,0,0,0,0,0,NULL); -- Carcharian Verve
 INSERT INTO `blue_spell_list` VALUES (746,3020,0,0,0,0,0,0,NULL); -- Blistering Roar
+
+
+-- Blue Magic net-new spells 715-753 (see spell_list.sql)
+INSERT INTO `blue_spell_list` VALUES (715,3063,6,0,0,0,0,0,NULL); -- Molting Plumage
+INSERT INTO `blue_spell_list` VALUES (716,3099,6,0,0,0,0,0,NULL); -- Nectarous Deluge
+INSERT INTO `blue_spell_list` VALUES (717,3931,6,0,0,0,0,0,NULL); -- Sweeping Gouge
+INSERT INTO `blue_spell_list` VALUES (719,2735,0,0,0,0,0,0,NULL); -- Searing Tempest
+INSERT INTO `blue_spell_list` VALUES (720,2737,0,0,0,0,0,0,NULL); -- Spectral Floe
+INSERT INTO `blue_spell_list` VALUES (721,2739,0,0,0,0,0,0,NULL); -- Anvil Lightning
+INSERT INTO `blue_spell_list` VALUES (722,2741,0,0,0,0,0,0,NULL); -- Entomb
+INSERT INTO `blue_spell_list` VALUES (723,2991,7,0,0,0,0,0,NULL); -- Saurian Slide
+INSERT INTO `blue_spell_list` VALUES (724,3153,0,0,0,0,0,0,NULL); -- Palling Salvo
+INSERT INTO `blue_spell_list` VALUES (725,2736,0,0,0,0,0,0,NULL); -- Blinding Fulgor
+INSERT INTO `blue_spell_list` VALUES (726,2738,0,0,0,0,0,0,NULL); -- Scouring Spate
+INSERT INTO `blue_spell_list` VALUES (727,2740,0,0,0,0,0,0,NULL); -- Silent Storm
+INSERT INTO `blue_spell_list` VALUES (728,2742,0,0,0,0,0,0,NULL); -- Tenebral Crush
+INSERT INTO `blue_spell_list` VALUES (747,3059,4,0,0,0,0,0,NULL); -- Uproot
+INSERT INTO `blue_spell_list` VALUES (748,3072,0,0,0,0,0,0,NULL); -- Crashing Thunder
+INSERT INTO `blue_spell_list` VALUES (749,3137,0,0,0,0,0,0,NULL); -- Polar Roar
+INSERT INTO `blue_spell_list` VALUES (750,2667,0,0,0,0,0,0,NULL); -- Mighty Guard
+INSERT INTO `blue_spell_list` VALUES (751,3304,0,0,0,0,0,0,NULL); -- Cruel Joke
+INSERT INTO `blue_spell_list` VALUES (752,3372,0,0,0,0,0,0,NULL); -- Cesspool
+INSERT INTO `blue_spell_list` VALUES (753,3363,0,0,0,0,0,0,NULL); -- Tearing Gust
