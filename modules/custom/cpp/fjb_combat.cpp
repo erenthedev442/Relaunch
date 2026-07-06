@@ -48,7 +48,8 @@ namespace
     // Automaton physical-damage multiplier (melee + ranged auto-attacks AND
     // weaponskills, which all funnel through TakePhysical/TakeWeaponskillDamage).
     // Does NOT touch magic-frame nukes or any non-automaton entity.
-    constexpr float AUTOMATON_DMG_MULTIPLIER = 20.0f;
+    // 2026-07-06: turned down 20 -> 5 (relaunch PUP power reduction).
+    constexpr float AUTOMATON_DMG_MULTIPLIER = 5.0f;
 } // namespace
 
 bool IsPlayerControlled(CBattleEntity* PAttacker)
