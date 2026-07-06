@@ -115,10 +115,11 @@ xi.settings.map =
     ALL_JOBS_WIDESCAN = true,
 
     -- Base player movement speed
-    BASE_SPEED = 50,
+    BASE_SPEED = 150,
 
     -- Player movement speed limit
-    SPEED_LIMIT = 80,
+    -- (must be >= BASE_SPEED or the base gets clamped down -- see battleentity.cpp:407)
+    SPEED_LIMIT = 150,
 
     -- Mount speed, expressed as player speed. Can surpass speed limit.
     MOUNT_SPEED = 80,
