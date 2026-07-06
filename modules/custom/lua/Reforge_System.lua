@@ -549,7 +549,10 @@ buildSourceNMMenu = function(player, srcDef)
                     string.format('%s has appeared!  Slay it for %d %s + base piece, kupo!',
                         md.label, md.marks, srcDef.currencyName),
                     xi.msg.channel.SYSTEM_3)
-                buildSourceNMMenu(p, srcDef)
+                -- Close the spawner on a successful pop. Selecting the option
+                -- already dismisses the client menu; re-showing the NM list here
+                -- (as the "already up" / "failed to spawn" error paths do) left
+                -- the menu stuck open and forced a manual dismiss. Just return.
             end,
         })
     end
