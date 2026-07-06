@@ -171,21 +171,21 @@ INSERT INTO `blue_spell_list` VALUES (696,2201,5,21,1,0,0,0,NULL); -- Orcish Cou
 INSERT INTO `blue_spell_list` VALUES (697,1824,4,28,1,9,0,0,NULL); -- Amorphic Spikes
 INSERT INTO `blue_spell_list` VALUES (698,644,2,22,1,0,0,0,NULL); -- Wind breath
 INSERT INTO `blue_spell_list` VALUES (699,253,2,25,1,10,4,0,NULL); -- Barbed Crescent
--- INSERT INTO `blue_spell_list` VALUES (700,2945,6,16,8,0,0,0,NULL); -- Natures Meditation
--- INSERT INTO `blue_spell_list` VALUES (701,2950,6,18,8,0,0,0,NULL); -- Tempestuous Upheaval
--- INSERT INTO `blue_spell_list` VALUES (702,2958,6,13,8,0,0,0,NULL); -- Rending Deluge
--- INSERT INTO `blue_spell_list` VALUES (703,2967,6,8,8,0,0,0,NULL); -- Embalming Earth
--- INSERT INTO `blue_spell_list` VALUES (704,2970,6,23,8,9,0,0,NULL); -- Paralyzing Triad
--- INSERT INTO `blue_spell_list` VALUES (705,2974,4,29,8,0,0,0,NULL); -- Foul Waters
--- INSERT INTO `blue_spell_list` VALUES (706,2988,2,15,8,12,0,0,NULL); -- Glutinous Dart
--- INSERT INTO `blue_spell_list` VALUES (707,3030,5,17,8,0,0,0,NULL); -- Retinal Glare
--- INSERT INTO `blue_spell_list` VALUES (708,2930,6,24,8,0,0,0,NULL); -- Subduction
--- INSERT INTO `blue_spell_list` VALUES (709,256,7,24,3,11,0,0,NULL); -- Thrashing Assault
--- INSERT INTO `blue_spell_list` VALUES (710,1952,4,17,2,0,0,0,NULL); -- Erratic Flutter
--- INSERT INTO `blue_spell_list` VALUES (711,256,0,0,0,0,0,0,NULL); -- Restoral
--- INSERT INTO `blue_spell_list` VALUES (712,256,0,0,0,0,0,0,NULL); -- Rail Cannon
--- INSERT INTO `blue_spell_list` VALUES (713,2054,0,0,0,0,0,0,NULL); -- Diffusion Ray
--- INSERT INTO `blue_spell_list` VALUES (714,2073,0,0,0,9,5,0,NULL); -- Sinker Drill
+INSERT INTO `blue_spell_list` VALUES (700,2945,6,16,8,0,0,0,NULL); -- Natures Meditation
+INSERT INTO `blue_spell_list` VALUES (701,2950,6,18,8,0,0,0,NULL); -- Tempestuous Upheaval
+INSERT INTO `blue_spell_list` VALUES (702,2958,6,13,8,0,0,0,NULL); -- Rending Deluge
+INSERT INTO `blue_spell_list` VALUES (703,2967,6,8,8,0,0,0,NULL); -- Embalming Earth
+INSERT INTO `blue_spell_list` VALUES (704,2970,6,23,8,9,0,0,NULL); -- Paralyzing Triad
+INSERT INTO `blue_spell_list` VALUES (705,2974,4,29,8,0,0,0,NULL); -- Foul Waters
+INSERT INTO `blue_spell_list` VALUES (706,2988,2,15,8,12,0,0,NULL); -- Glutinous Dart
+INSERT INTO `blue_spell_list` VALUES (707,3030,5,17,8,0,0,0,NULL); -- Retinal Glare
+INSERT INTO `blue_spell_list` VALUES (708,2930,6,24,8,0,0,0,NULL); -- Subduction
+INSERT INTO `blue_spell_list` VALUES (709,256,7,24,3,11,0,0,NULL); -- Thrashing Assault
+INSERT INTO `blue_spell_list` VALUES (710,1952,4,17,2,0,0,0,NULL); -- Erratic Flutter
+INSERT INTO `blue_spell_list` VALUES (711,256,0,0,0,0,0,0,NULL); -- Restoral
+INSERT INTO `blue_spell_list` VALUES (712,256,0,0,0,0,0,0,NULL); -- Rail Cannon
+INSERT INTO `blue_spell_list` VALUES (713,2054,0,0,0,0,0,0,NULL); -- Diffusion Ray
+INSERT INTO `blue_spell_list` VALUES (714,2073,0,0,0,9,5,0,NULL); -- Sinker Drill
 -- INSERT INTO `blue_spell_list` VALUES (723,0,0,0,0,12,10,0,NULL); -- Saurian Slide
 INSERT INTO `blue_spell_list` VALUES (736,629,0,0,0,0,0,0,NULL); -- Thunderbolt
 INSERT INTO `blue_spell_list` VALUES (737,807,0,0,0,0,0,0,NULL); -- Harden Shell
