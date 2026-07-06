@@ -321,7 +321,7 @@ Analysis</a>
 <a href="#rewards-by-tier" class="nav-l3">Rewards by Tier</a>
 <a href="#execution" class="nav-l3">Execution</a>
 <a href="#database-query-run-on-azure-box-at-wipe-date" class="nav-l3">Database Query
-(Run on Azure Box at Wipe Date)</a>
+(Run on the OVH VPS at Wipe Date)</a>
 <a href="#open-questions-for-admin-team" class="nav-l2">Open Questions for Admin
 Team</a>
 <a href="#gap-audit-what-the-plan-does-not-yet-cover" class="nav-l2">Gap Audit — What the
@@ -5889,8 +5889,8 @@ built the server.</p>
 <h3 id="execution">Execution</h3>
 <ol type="1">
 <li><strong>Snapshot:</strong> Run the query below on wipe day against
-the live Azure DB. Export to <code>legacy_tiers.csv</code>.</li>
-<li><strong>Store:</strong> Keep the CSV on the Azure box (or insert
+the live relaunch DB (now on the OVH VPS). Export to <code>legacy_tiers.csv</code>.</li>
+<li><strong>Store:</strong> Keep the CSV on the OVH VPS (or insert
 into a <code>legacy_rewards</code> table) before wiping.</li>
 <li><strong>Apply:</strong> A post-relaunch login hook reads the
 account’s tier on first character creation, applies all rewards once,
@@ -5901,7 +5901,7 @@ name) before the wipe goes live — drives hype and gives players
 something to flex before everything resets.</li>
 </ol>
 <h3 id="database-query-run-on-azure-box-at-wipe-date">Database Query
-(Run on Azure Box at Wipe Date)</h3>
+(Run on the OVH VPS at Wipe Date)</h3>
 <p><strong>Step 1 — Verify CharVars exist in the live DB:</strong></p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode sql"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="kw">DISTINCT</span> varname</span>
@@ -6461,7 +6461,7 @@ or after the last maintenance patch? - While the server is live or
 during downtime? - Is there a maintenance window where the DB is locked
 read-only for the snapshot to prevent last-second CharVar changes? -
 Export confirmed to <code>legacy_tiers.csv</code> stored in
-<code>~/server/sql/backups/</code> on the Azure box before any wipe SQL
+<code>C:\server\sql\backups\</code> on the OVH VPS before any wipe SQL
 runs</p>
 <blockquote>
 <p><strong>Admin notes:</strong> <em>(write exact procedure into wipe

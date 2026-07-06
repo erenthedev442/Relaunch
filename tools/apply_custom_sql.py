@@ -6,7 +6,7 @@ No more hand-typing `mysql < file.sql` per file per server.
 Credentials come from settings/network.lua (the same keys dbtool uses:
 SQL_HOST / SQL_PORT / SQL_LOGIN / SQL_PASSWORD / SQL_DATABASE) and are
 overridable via XI_NETWORK_SQL_* environment variables -- so you can point at
-another server (e.g. the Azure box) without editing any file. The password is
+another server (e.g. any box whose MySQL port is reachable) without editing any file. The password is
 handed to mysql via the MYSQL_PWD env var, so it never appears on the command
 line, in the process list, or in this script's output.
 
@@ -21,9 +21,9 @@ Usage:
     python tools/apply_custom_sql.py sql/zz_relic_119iii_mods.sql sql/zz_infamy_extra_mods.sql
 
     # target a remote DB whose MySQL port is reachable from here:
-    set XI_NETWORK_SQL_HOST=172.215.213.23
+    set XI_NETWORK_SQL_HOST=<db-host>
     set XI_NETWORK_SQL_PASSWORD=...    & python tools/apply_custom_sql.py
-    (on the Azure box itself, just run it there -- network.lua already points at localhost.)
+    (the OVH relaunch box's DB is firewalled to localhost, so run this ON that box -- network.lua already points at 127.0.0.1.)
 
 The zz_ files are INSERT IGNORE / ON DUPLICATE KEY UPDATE, so re-running is safe
 and idempotent. item_mods / item_latents are cached at map-server boot, so
