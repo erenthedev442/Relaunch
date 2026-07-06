@@ -383,18 +383,29 @@ def _render_ranks(
     ranks:   list[dict],
     mastery: list[float],
     crit:    list[float],
+    crystal: list[float] | None = None,
 ) -> str:
     if not ranks:
         return "_Rank chain not parsed from the catalog._"
+    crystal = crystal or []
+
+    def _xz(idx: int) -> str:
+        """Crystalize chance for a rank index, or '—' if the table is missing."""
+        if not crystal:
+            return "—"
+        c = crystal[idx] if idx < len(crystal) else crystal[-1]
+        return f"{c*100:.0f}%"
+
     lines = [
-        "| Rank | Title | Roll floor | Crit chance | Hunting League Rank | Prestige Level |",
-        "|---:|---|---:|---:|---:|---:|",
+        "| Rank | Title | Roll floor | Crit chance | Crystalize chance | Hunting League Rank | Prestige Level |",
+        "|---:|---|---:|---:|---:|---:|---:|",
     ]
     # Row 0 = unranked starting state. "Roll floor" = the rank is ADDED to the
     # bottom of your tier's roll band (2026-06-30 tier revamp), lifting the
-    # worst possible roll; crit = a perfect roll (band max).
+    # worst possible roll; crit = a perfect roll (band max); crystalize = the
+    # chance a max roll LOCKS (2026-07-06 crystalized augments).
     lines.append(
-        f"| 0 | Unranked | +0 | {crit[0]*100:.0f}% | — | — |"
+        f"| 0 | Unranked | +0 | {crit[0]*100:.0f}% | {_xz(0)} | — | — |"
     )
     for r in ranks:
         idx = r["rank"]
@@ -402,13 +413,18 @@ def _render_ranks(
         hl   = str(r["hlRank"]) if r["hlRank"] else "—"
         pl   = str(r["prestigeLevel"]) if r["prestigeLevel"] else "—"
         lines.append(
-            f"| {idx} | {r['title']} | +{idx} | {cpct*100:.0f}% | {hl} | {pl} |"
+            f"| {idx} | {r['title']} | +{idx} | {cpct*100:.0f}% | {_xz(idx)} | {hl} | {pl} |"
         )
     lines.append("")
     lines.append(
         "_Ranks are **content milestones** — each unlocks automatically once you "
         "reach the listed Hunting League Rank and/or Prestige Level. Nothing is "
         "consumed: no seals, trophies, or augment counts._"
+    )
+    lines.append("")
+    lines.append(
+        "_**Crystalize chance** is the odds a **max (perfect) roll** locks that "
+        "slot forever — see [Crystalize](augmenting-guide.md#crystalize-lock-in-your-best-rolls)._"
     )
     return "\n".join(lines)
 
@@ -470,6 +486,15 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     aff_rank, aff_marks = _parse_affinity_gate(aff_text)
     counts   = _parse_cat_counts(cat_text) if cat_text else {}
 
+    # Crystalize chance by Sage rank (Augment_Mastery), from the Moogle Lua.
+    # Fail-safe: an unparsed table renders the column as '—'.
+    crystal: list[float] = []
+    if moogle_text:
+        cm = re.search(r"CRYSTAL_CHANCE\s*=\s*\{([^}]*)\}", moogle_text)
+        if cm:
+            by = {int(i): float(v) for i, v in re.findall(r"\[(\d+)\]\s*=\s*([\d.]+)", cm.group(1))}
+            crystal = [by[k] for k in sorted(by)]
+
     # Per-section build: parsers with strict-regex risk (_parse_ranks,
     # _parse_affinities) raise on suspected schema regressions. We catch
     # those here so ONE broken section doesn't skip the writes for the OTHER
@@ -496,5 +521,5 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
     _section("sage-location",   lambda: _render_location(zone, pos))
     _section("sage-formula",    lambda: _render_formula(*_parse_tier_system(moogle_text), critPct))
-    _section("sage-ranks",      lambda: _render_ranks(_parse_ranks(sage_text), mastery, critPct))
+    _section("sage-ranks",      lambda: _render_ranks(_parse_ranks(sage_text), mastery, critPct, crystal))
     _section("sage-affinities", lambda: _render_affinities(_parse_affinities(aff_text), counts, aff_mult, aff_rank, aff_marks))

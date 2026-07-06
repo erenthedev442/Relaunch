@@ -58,6 +58,16 @@ Three things improve your rolls — stack all three to hit the ceiling:
 
 A max-rank, affinity-held **crit at Tier 5** writes the absolute cap: `(base + 31) × multiplier` per slot. The [Augment Sage page](augment-sage.md) has the full formula, rank table, and NM list.
 
+## Crystalize: lock in your best rolls
+
+When a line lands on a **perfect (max) roll** — the top of your tier band, which a **crit guarantees** — it gets a *second* roll to **crystalize**. A crystalized slot is **locked**: re-augmenting and `!reroll` can no longer change or remove it, and it's **kept for free** on future trades (you don't re-supply its catalyst, and it doesn't use up one of your 5 slots).
+
+The crystalize chance rises with your **Augment Sage rank** — from **5%** at rank 1 up to **50%** at rank 5. (Rank 0 can't crystalize.)
+
+- **`!augstats`** marks crystalized slots with a **`*`**.
+- Build a perfect piece by **locking good slots one at a time**, then re-rolling only the slots that haven't crystalized yet.
+- **Scour to start over:** trade the gear **alone** at the Augment Moogle to **strip every augment — crystalized or not — for 25,000 gil**. That's the only way to remove a crystalized augment.
+
 ## Re-rolling in place with `!reroll`
 
 Once a piece already has the augment **types** you want, you don't have to re-farm five catalysts just to chase bigger numbers. The **`!reroll`** command re-gambles the *magnitudes* of the augments already on an **equipped** item — the same roll math as the Moogle (your tier band, mastery floor, affinity double-roll, and crits all apply), but it keeps your existing lines and costs only **gil + one catalyst**.
@@ -69,6 +79,8 @@ Once a piece already has the augment **types** you want, you don't have to re-fa
 | **Reach for it to** | Add or change *which* stats sit on the gear | Fish for higher rolls on gear you already like |
 
 Both are **rank-floor protected** (never roll below `band min + your mastery rank`) and **capped at your tier band**, so neither can power-creep past your tier's ceiling — reroll is purely a cheaper way to re-fish the numbers you already have.
+
+Both also **respect crystalized slots** — a locked line is never re-rolled or overwritten, and a fresh max roll from either can itself crystalize.
 
 **How to use it:**
 
@@ -107,7 +119,7 @@ Every augment catalyst (146 total) is available at **every Augment Tier**. Your 
 
 - **5 catalysts max per trade** (5 augment slots per piece).
 - **Catalysts are consumed; gear is not** — your gear comes back stamped.
-- **Re-augmenting overwrites** the piece's existing augments — that's how you upgrade them as you rank up, but it means you re-apply all 5 lines each time.
+- **Re-augmenting overwrites** the piece's *non-crystalized* augments — that's how you upgrade them as you rank up; you re-apply each un-locked line, but **crystalized slots are kept** and don't need re-supplying.
 - **Cancel any time** during the confirm menu to get everything back.
 
 ---

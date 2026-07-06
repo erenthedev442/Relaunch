@@ -8,6 +8,29 @@
 -- See modules/custom/lua/augment_catalog.lua for the full catalyst -> augment
 -- mapping (2047 entries, one per augmentId in sql/augments.sql).
 --
+-- CRYSTALIZED AUGMENTS (2026-07-06 -- "lock your best rolls"):
+--   Re-augmenting an item now REBUILDS only its non-crystalized slots -- any
+--   slot that has crystalized is preserved verbatim and its catalyst is not
+--   required again. When a freshly rolled slot lands on its MAXIMUM value
+--   (a perfect roll -- crit or lucky), it gets a second roll, by Augment Sage
+--   rank (Augment_Mastery), to CRYSTALIZE. A crystalized slot can no longer be
+--   changed or removed by normal augmenting -- only a full SCOUR (trade the
+--   gear alone, or the configured scour item) strips everything and starts anew.
+--
+--   Crystalize chance by Augment Sage rank (Augment_Mastery 0..5):
+--     0% / 5% / 15% / 30% / 45% / 50%
+--
+--   Storage: the per-slot lock bitmask lives ON THE ITEM, in exdata byte 13
+--   (the second signature byte). Byte 12 (the first signature byte) is kept
+--   zero, so the item's signature decodes to an empty string and renders blank
+--   on the client (DecodeStringSignature terminates on the leading null char).
+--   The full 24-byte `extra` blob round-trips through char_inventory, so the
+--   mask survives relog/zone/restart for normal gear. Items with the
+--   Inscribable flag (0x20) get their signature bytes re-encoded from the
+--   `signature` DB column on load (charutils.cpp LoadInventory), which would
+--   wipe the mask -- so crystalize is DISABLED on Inscribable gear and the
+--   player is told.
+--
 -- Zone: GM Home (zone 210)
 -----------------------------------
 require('modules/module_utils')
@@ -21,8 +44,28 @@ local m = Module:new('augment_moogle')
 
 local MAX_CATALYST_COUNT = 5       -- max catalyst items per trade = the engine's 5 augment slots (each catalyst writes one line; mix types or stack one)
 local GIL_COST           = 10000   -- flat per trade
+local SCOUR_GIL_COST     = 25000   -- flat to scour (strip ALL augments incl. crystalized)
 local CRIT_TOKEN_ID      = 15194   -- Maat's Cap: guarantees a crit when held (consumed on success). Retail Rare/EX, so it renders on the client (the old custom 29000 had no client DAT).
 local CRIT_TOKEN_LEGACY  = 29000   -- old custom 'Maat's Blessing'; still honored so pre-swap drops aren't stranded
+
+-----------------------------------
+-- CRYSTALIZED AUGMENTS config
+-----------------------------------
+-- Lock bitmask storage: exdata byte 13 (signature[1]). Byte 12 stays 0 so the
+-- signature decodes blank. Bit (slot-1) set => that FINAL augment slot is
+-- crystalized (locked).
+local LOCK_MASK_BYTE = 13
+local SIG_HEAD_BYTE  = 12          -- must stay 0 for a blank-decoding signature
+local INSCRIBABLE    = 0x20        -- ItemFlag::INSCRIBABLE (scripts/enum/item_flag.lua)
+
+-- Crystalize chance indexed by Augment Sage rank (Augment_Mastery, 0..5).
+-- Mirrors the design post: T0 0% / T1 5% / T2 15% / T3 30% / T4 45% / T5 50%.
+local CRYSTAL_CHANCE = { [0] = 0.00, [1] = 0.05, [2] = 0.15, [3] = 0.30, [4] = 0.45, [5] = 0.50 }
+
+-- Optional dedicated scour item. When set to a real itemId, trading it with a
+-- piece of gear strips ALL augments (including crystalized) and starts anew.
+-- Leave nil to use only the always-available "trade the gear alone" scour path.
+local SCOUR_ITEM_ID = nil
 
 -- Augment formula recap (from src/map/items/item_equipment.cpp:479):
 --   final_mod = (base + exdata) * (multiplier > 1 ? multiplier : 1)   -- positive base
@@ -111,18 +154,75 @@ xi.augmentTiers =
     slices     = TIER_SLICES,
     gates      = TIER_GATES,
     nextUnlock = nextUnlock,
+    crystalChance = CRYSTAL_CHANCE,
 }
+
+-----------------------------------
+-- Crystalize helpers
+-----------------------------------
+-- Read the crystalize state off a piece of gear held in the trade window.
+-- Returns:
+--   mask   : 5-bit lock bitmask (bit s-1 => slot s crystalized), 0 if none
+--   augs   : { {id=, value=}, ... } for all 5 slots (id 0 == empty slot)
+--   locked : ordered list of the currently-crystalized {id, value} pairs
+--   canCrystalize : false for Inscribable gear (mask can't persist there)
+local function readCrystalState(gearItem)
+    local canCrystalize = true
+    if gearItem.getFlag then
+        local ok, flags = pcall(function() return gearItem:getFlag() end)
+        if ok and flags and bit.band(flags, INSCRIBABLE) ~= 0 then
+            canCrystalize = false
+        end
+    end
+
+    local augs = {}
+    for i = 1, 5 do
+        augs[i] = { id = 0, value = 0 }
+    end
+
+    local ex = nil
+    if gearItem.getExData then
+        local ok, res = pcall(function() return gearItem:getExData() end)
+        if ok then ex = res end
+    end
+    if ex and ex.augments then
+        for i = 1, 5 do
+            local a = ex.augments[i]
+            if a then
+                augs[i] = { id = a.id or 0, value = a.value or 0 }
+            end
+        end
+    end
+
+    local mask = 0
+    if canCrystalize and gearItem.getExDataRaw then
+        local raw = gearItem:getExDataRaw()
+        mask = (raw and raw[LOCK_MASK_BYTE]) or 0
+    end
+
+    local locked = {}
+    for i = 1, 5 do
+        if bit.band(mask, bit.lshift(1, i - 1)) ~= 0 and augs[i].id ~= 0 then
+            table.insert(locked, { id = augs[i].id, value = augs[i].value })
+        end
+    end
+
+    return mask, augs, locked, canCrystalize
+end
 
 -----------------------------------
 -- Per-player state
 -- playerState[charName] = {
 --   itemId        = gear item ID held by the moogle
---   exAugsBySlot  = { {id, value, cat}, ... }   (one entry per slot;
---                   passed straight to addItem.exdata.augments)
---   labelSummary  = { 'Accuracy +33 x4', ... }   (one string per unique
---                   catalyst type; used for player-facing messaging)
+--   exAugsBySlot  = { {id, value, cat}, ... }   (one entry per FINAL slot;
+--                   passed straight to addItem.exdata.augments -- locked slots
+--                   first, then freshly rolled slots)
+--   labelSummary  = { 'Accuracy +33 x4', ... }
 --   catalystsHeld = { {id, qty}, ... }   (for return on cancel)
---   isCrit        = bool                  (whether this trade rolled a crit)
+--   isCrit        = bool
+--   newMask       = int   (lock bitmask to stamp onto the rebuilt item)
+--   crystalNews   = { 'Accuracy +33', ... }  (labels that crystalized this trade)
+--   scour         = bool  (this pending action strips ALL augments)
 -- }
 -----------------------------------
 local playerState = {}
@@ -174,6 +274,7 @@ local NON_AUGMENTABLE =
 -- Forward declaration
 -----------------------------------
 local showConfirmMenu
+local showScourMenu
 
 
 -----------------------------------
@@ -228,6 +329,14 @@ showConfirmMenu = function(player)
                     return
                 end
 
+                -- Stamp the crystalize lock bitmask onto the rebuilt item.
+                -- Written AFTER addItem so the augment bytes (0-11) are already
+                -- in place; we only touch byte 13 (mask) and keep byte 12 (the
+                -- first signature byte) at 0 so the signature renders blank.
+                if (st2.newMask or 0) ~= 0 and augmented.setExDataRaw then
+                    augmented:setExDataRaw({ [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = st2.newMask })
+                end
+
                 playerArg:delGil(GIL_COST)
 
                 -- Consume the crit token (Maat's Cap, or a legacy Maat's Blessing) if it guaranteed this crit.
@@ -257,6 +366,11 @@ showConfirmMenu = function(player)
                     playerArg:printToPlayer('Critical augment locked in - your catalysts hit twice as hard!',
                         xi.msg.channel.SYSTEM_3)
                 end
+                -- Crystalize results.
+                for _, lbl in ipairs(st2.crystalNews or {}) do
+                    playerArg:printToPlayer(string.format('%s CRYSTALIZED: [%s] is now locked at max -- re-rolls can no longer touch it, kupo!', xi.icon.STAR_LARGE, lbl),
+                        xi.msg.channel.SYSTEM_3)
+                end
                 clearState(playerArg)
             end,
         },
@@ -279,7 +393,7 @@ showConfirmMenu = function(player)
     -- item held in limbo. A fixed title fits no matter how many or how big the
     -- catalysts are.
     utils.unused(nameList)
-    local m = {
+    local menu = {
         title   = 'Apply this augment, kupo?',
         options = options,
         onCancelled = function(p)
@@ -287,7 +401,65 @@ showConfirmMenu = function(player)
             p:printToPlayer('Augmentation cancelled - items returned, kupo!', xi.msg.channel.SYSTEM_3)
         end,
     }
-    player:timer(30, function(p) p:customMenu(m) end)
+    player:timer(30, function(p) p:customMenu(menu) end)
+end
+
+-----------------------------------
+-- Scour menu (strip ALL augments, including crystalized, and start anew)
+-----------------------------------
+showScourMenu = function(player)
+    local options =
+    {
+        {
+            string.format('Yes - scour (%d gil)', SCOUR_GIL_COST),
+            function(playerArg)
+                if playerArg:getFreeSlotsCount() == 0 then
+                    playerArg:printToPlayer('Inventory full! Free a slot first, kupo!', xi.msg.channel.SYSTEM_3)
+                    showScourMenu(playerArg)
+                    return
+                end
+                if playerArg:getGil() < SCOUR_GIL_COST then
+                    playerArg:printToPlayer(string.format('Need %d gil to scour, kupo! Returning your gear.', SCOUR_GIL_COST), xi.msg.channel.SYSTEM_3)
+                    returnAll(playerArg)
+                    return
+                end
+
+                local st2 = getState(playerArg)
+                -- Re-add the gear with NO exdata: a blank, un-augmented item.
+                local stripped = playerArg:addItem({ id = st2.itemId })
+                if not stripped then
+                    returnAll(playerArg)
+                    playerArg:printToPlayer('Scour failed - gear returned, no gil charged, kupo!', xi.msg.channel.SYSTEM_3)
+                    return
+                end
+                -- Belt-and-suspenders: zero the lock mask byte too.
+                if stripped.setExDataRaw then
+                    stripped:setExDataRaw({ [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = 0 })
+                end
+
+                playerArg:delGil(SCOUR_GIL_COST)
+                playerArg:printToPlayer('Scoured! All augments -- crystalized or not -- are gone. Start anew, kupo!', xi.msg.channel.SYSTEM_3)
+                clearState(playerArg)
+            end,
+        },
+        {
+            'Cancel - return gear',
+            function(playerArg)
+                returnAll(playerArg)
+                playerArg:printToPlayer('Gear returned, nothing scoured, kupo!', xi.msg.channel.SYSTEM_3)
+            end,
+        },
+    }
+
+    local menu = {
+        title   = 'Scour ALL augments, kupo?',
+        options = options,
+        onCancelled = function(p)
+            returnAll(p)
+            p:printToPlayer('Scour cancelled - gear returned, kupo!', xi.msg.channel.SYSTEM_3)
+        end,
+    }
+    player:timer(30, function(p) p:customMenu(menu) end)
 end
 
 -----------------------------------
@@ -312,19 +484,27 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
             local st = getState(player)
             if st.itemId ~= 0 then
                 player:printToPlayer('You have an item awaiting augmentation, kupo!', xi.msg.channel.SYSTEM_3)
-                showConfirmMenu(player)
+                if st.scour then
+                    showScourMenu(player)
+                else
+                    showConfirmMenu(player)
+                end
                 return
             end
             player:printToPlayer(string.format('[ Augment Moogle ] Trade me 1 piece of gear + up to %d catalyst items (incl. stacks), kupo!', MAX_CATALYST_COUNT), xi.msg.channel.SYSTEM_3)
             player:printToPlayer('  Each catalyst = 1 augment line, up to 5 per item -- stack one type (5 of one = 5x) or mix several. Cost: 10,000 gil.', xi.msg.channel.SYSTEM_3)
             player:printToPlayer('  See the full catalyst -> augment list on the wiki: fjb-relaunch.pages.dev/progression/augments', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer('  Perfect (max) rolls can CRYSTALIZE (lock forever, by Sage rank). Crystalized slots are kept free on re-rolls.', xi.msg.channel.SYSTEM_3)
+            player:printToPlayer(string.format('  Trade the gear ALONE to SCOUR it (strip every augment, incl. crystalized, for %d gil) and start anew.', SCOUR_GIL_COST), xi.msg.channel.SYSTEM_3)
         end,
 
         onTrade = function(player, npc, trade)
             local gearId         = nil
+            local gearItemObj    = nil   -- CLuaItem for the gear (for crystalize state)
             local catalystCounts = {}    -- itemId -> total count (sums across slots + stack qty)
             local catalystOrder  = {}    -- first-seen order so the menu reads naturally
             local totalCatalysts = 0     -- sum of all catalyst counts
+            local hasScourItem   = false -- dedicated scour item present in the trade
 
             -- Scan slots. Multiple slots of the same catalyst stack into one
             -- selection; a slot containing a stack of N counts as N catalysts.
@@ -336,7 +516,10 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                     if qty == nil or qty < 1 then qty = 1 end
                     local def    = catalog[itemId]
 
-                    if def then
+                    if SCOUR_ITEM_ID and itemId == SCOUR_ITEM_ID then
+                        hasScourItem = true
+
+                    elseif def then
                         if not catalystCounts[itemId] then
                             catalystCounts[itemId] = 0
                             table.insert(catalystOrder, itemId)
@@ -345,7 +528,8 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                         totalCatalysts         = totalCatalysts + qty
 
                     elseif gearId == nil then
-                        gearId = itemId
+                        gearId      = itemId
+                        gearItemObj = tradeItem
 
                     else
                         player:printToPlayer('Trade 1 equipment piece + catalyst items only, kupo! (one of those items is not a catalyst)', xi.msg.channel.SYSTEM_3)
@@ -368,13 +552,55 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                 return
             end
 
+            -- Read the gear's current crystalize state up front (needed for both
+            -- the scour path and the free-slot budget).
+            local _, _, lockedAugs, canCrystalize = readCrystalState(gearItemObj)
+            local lockedCount = #lockedAugs
+
+            -- SCOUR: either the dedicated scour item was traded, or the gear was
+            -- traded ALONE and it carries crystalized augments the player wants to
+            -- clear. Strip everything and start anew.
+            if hasScourItem or (totalCatalysts == 0 and lockedCount > 0) then
+                -- Clear any previous pending session first.
+                local existing = getState(player)
+                if existing.itemId ~= 0 then
+                    returnAll(player)
+                    player:printToPlayer('Returning your previous item and catalysts first, kupo!', xi.msg.channel.SYSTEM_3)
+                end
+
+                player:tradeComplete()
+                playerState[player:getName()] =
+                {
+                    itemId        = gearId,
+                    exAugsBySlot  = {},
+                    labelSummary  = {},
+                    catalystsHeld = {},
+                    scour         = true,
+                }
+                player:printToPlayer(string.format('This will STRIP all augments (including %d crystalized), kupo! Confirm below.', lockedCount), xi.msg.channel.SYSTEM_3)
+                showScourMenu(player)
+                return
+            end
+
             if totalCatalysts == 0 then
-                player:printToPlayer('Include at least 1 catalyst item, kupo!', xi.msg.channel.SYSTEM_3)
+                player:printToPlayer('Include at least 1 catalyst item, kupo! (Or trade the gear alone once it has crystalized augments to scour it.)', xi.msg.channel.SYSTEM_3)
                 return
             end
 
             if totalCatalysts > MAX_CATALYST_COUNT then
                 player:printToPlayer(string.format('Max %d catalysts per trade (you traded %d), kupo!', MAX_CATALYST_COUNT, totalCatalysts), xi.msg.channel.SYSTEM_3)
+                return
+            end
+
+            -- Crystalized slots are preserved for free; new catalysts fill the
+            -- remaining slots. Reject if there isn't room.
+            local freeSlots = MAX_CATALYST_COUNT - lockedCount
+            if totalCatalysts > freeSlots then
+                player:printToPlayer(string.format(
+                    'This item has %d crystalized slot%s -- only %d free. You traded %d catalyst%s. Scour it (trade alone) to free crystalized slots, kupo!',
+                    lockedCount, lockedCount == 1 and '' or 's', freeSlots,
+                    totalCatalysts, totalCatalysts == 1 and '' or 's'),
+                    xi.msg.channel.SYSTEM_3)
                 return
             end
 
@@ -420,6 +646,9 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
             local usedCritToken = player:getItemCount(CRIT_TOKEN_ID) > 0 or player:getItemCount(CRIT_TOKEN_LEGACY) > 0
             local isCrit        = usedCritToken or (math.random() < critPct)
 
+            -- Crystalize chance for THIS trade, by Augment Sage rank.
+            local crystalPct = canCrystalize and (CRYSTAL_CHANCE[rank] or 0.0) or 0.0
+
             -- IMPORTANT: the exdata Value field is 5 bits wide (max 31),
             -- defined in src/map/items/exdata/augment_standard.h. Stuffing
             -- a stacked value > 31 into one slot causes silent overflow:
@@ -442,10 +671,20 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
             -- for negative base it subtracts. We always pass a positive
             -- exdata magnitude.
             local EXDATA_VALUE_MAX = 31
-            local exAugsBySlot     = {}    -- one entry per slot, ready for addItem
+            -- FINAL augment layout: crystalized (locked) slots first, then the
+            -- freshly rolled catalyst slots. The lock bitmask is built to match.
+            local exAugsBySlot     = {}    -- one entry per FINAL slot, ready for addItem
             local labelSummary     = {}    -- one human-readable string per catalyst type
             local catalystsHeld    = {}
             local capWarnings      = {}    -- de-duped engine-cap warnings to show after the trade summary
+            local crystalNews      = {}    -- labels that crystalized this trade
+            local newMask          = 0
+
+            -- Preserve crystalized slots verbatim; their mask bits carry forward.
+            for _, la in ipairs(lockedAugs) do
+                table.insert(exAugsBySlot, { id = la.id, value = la.value, cat = nil })
+                newMask = bit.bor(newMask, bit.lshift(1, #exAugsBySlot - 1))
+            end
 
             -- Engine-mod cap lookup: augId -> human-readable warning string.
             -- Populated from a manual cross-reference of sql/augments.sql
@@ -517,6 +756,7 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                 local slice     = TIER_SLICES[playerTier] or TIER_SLICES[1]
                 local rollFloor = math.min(slice.min + rank, slice.max)
                 local boostCap  = def.maxBoost and math.min(EXDATA_VALUE_MAX, def.maxBoost) or EXDATA_VALUE_MAX
+                local slotMax   = math.min(slice.max, boostCap)   -- the achievable "perfect" roll for this slot
                 local rolls     = {}
                 for _ = 1, count do
                     local r = math.random(rollFloor, slice.max)
@@ -529,54 +769,33 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
                     table.insert(rolls, math.min(r, boostCap))
                 end
 
-                -- Emit ONE augment slot PER CATALYST: 4 catalysts of one type
-                -- write 4 slots of the same augId. The engine sums each slot's
-                -- modValue, so N catalysts deliver N x (base + boost) * mult --
-                -- the "4-slot piece" the docs + !augstats assume (e.g. HP base 1
-                -- mult 4 at rank-5: 4 x (1+31) x 4 = 512). Equipment has 5 augment
-                -- slots; MAX_CATALYST_COUNT keeps us within that budget.
+                -- Emit ONE augment slot PER CATALYST into the FINAL layout (after
+                -- the preserved crystalized slots). The engine sums each slot's
+                -- modValue, so N catalysts deliver N x (base + boost) * mult.
                 --
-                -- NOTE: writing the same augId across multiple slots was suspected
-                -- of making the client reject the item, but that was never proven
-                -- (the confirm-menu byte overflow, now fixed, was the real cause of
-                -- the "lost gear"). Re-testing the 4-slot path per owner request.
+                -- CRYSTALIZE (two-part, per the design post):
+                --   (1) the slot must roll its MAXIMUM value (slotMax, > 0), then
+                --   (2) a second roll at the Sage-rank crystalize chance locks it.
+                -- A crystalized slot's bit is set in newMask so it's preserved on
+                -- future re-rolls until scoured.
                 for _, r in ipairs(rolls) do
                     table.insert(exAugsBySlot, {
                         id    = def.augId,
                         value = r,
                         cat   = def.cat,
                     })
+                    local slotIndex0 = #exAugsBySlot - 1
+                    if slotMax > 0 and r == slotMax and math.random() < crystalPct then
+                        newMask = bit.bor(newMask, bit.lshift(1, slotIndex0))
+                        table.insert(crystalNews, def.label)
+                    end
                 end
 
                 -- Build the label so the player sees what actually lands.
-                --
-                -- Old behavior (pre-2026-05-29 audit):
-                --   "Attack +33 x4 (6.0x)" - implied 4 * 33 * 6 = 792 ATT.
-                -- Actual delivery:
-                --   the exdata Value field is 5 bits wide (uint16_t Value : 5
-                --   in src/map/items/exdata/augment_standard.h:34), max 31.
-                --   For base=33 at 6.0x, rawExdata=165 clips to 31, so each
-                --   slot writes only (33 + 31) = 64. The "6.0x" claim is a
-                --   ~1.94x reality.
-                --
-                -- New labeling rule:
-                --   * No boost (totalMult ~ 1) -> simple "Label xN" line.
-                --   * Boost fits within the 5-bit cap -> keep "(Mx)" so the
-                --     veteran-eye intuition holds.
-                --   * Boost CLIPPED by the 5-bit cap -> drop the (Mx) lie
-                --     and show the per-slot magnitude that will actually
-                --     be written, plus the total. Player can decide
-                --     whether to commit knowing the real return.
-                -- Honest mastery-charge meter: how much of the 0..EXDATA_VALUE_MAX
-                -- achievement boost (rank x affinity x crit) THIS trade landed.
-                -- Replaces the old "(6.0x)" multiplier claim -- the boost is an
-                -- ADDITIVE 0..31, not a multiplier; each augment's value +
-                -- multiplier (sql/augments.sql) set the real floor and cap.
                 -- Real per-slot value the engine will apply (matches !augstats):
                 --   (base + boost) * mult / disp, with base/mult/disp the EFFECTIVE
                 --   live values from augment_catalog.lua (disp divides stored-xN mods
-                --   like damage-taken /100 back to a meaningful number). Show it so
-                --   the trade message matches reality, not the old flat label number.
+                --   like damage-taken /100 back to a meaningful number).
                 local vals, total = {}, 0
                 for _, r in ipairs(rolls) do
                     local v = math.floor((base + r) * mult / disp + 0.5)
@@ -626,15 +845,25 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
             playerState[player:getName()] =
             {
                 itemId        = gearId,
-                exAugsBySlot  = exAugsBySlot,    -- {id,value,cat} per slot
+                exAugsBySlot  = exAugsBySlot,    -- {id,value,cat} per FINAL slot (locked first)
                 labelSummary  = labelSummary,    -- one string per catalyst type
                 catalystsHeld = catalystsHeld,
                 isCrit        = isCrit,          -- for the confirm screen
                 usedCritToken = usedCritToken,   -- consume Maat's Blessing on success
+                newMask       = newMask,         -- lock bitmask to stamp on the rebuilt item
+                crystalNews   = crystalNews,     -- crystalized labels to announce
             }
 
-            player:printToPlayer('Catalysts accepted! Confirm below to apply the augmentation -- results revealed on confirm, kupo!',
-                xi.msg.channel.SYSTEM_3)
+            if lockedCount > 0 then
+                player:printToPlayer(string.format('%d crystalized slot%s preserved. New rolls fill the rest -- results revealed on confirm, kupo!',
+                    lockedCount, lockedCount == 1 and '' or 's'), xi.msg.channel.SYSTEM_3)
+            else
+                player:printToPlayer('Catalysts accepted! Confirm below to apply the augmentation -- results revealed on confirm, kupo!',
+                    xi.msg.channel.SYSTEM_3)
+            end
+            if not canCrystalize then
+                player:printToPlayer('  (This piece is inscribable, so its augments cannot crystalize/lock, kupo.)', xi.msg.channel.SYSTEM_3)
+            end
 
             -- Engine-cap warnings - printed once per distinct warning,
             -- after the trade summary so the player can see them in

@@ -99,13 +99,26 @@ commandObj.onTrigger = function(player)
             -- Group by augId: same catalyst type in multiple slots appends its
             -- own rolled value (the 2026-06-30 tier revamp rolls PER SLOT, so
             -- stacked slots usually carry DIFFERENT values).
-            local augGroups = {}   -- augId -> { label, base, mult, disp, vals = {..} }
+            local augGroups = {}   -- augId -> { label, base, mult, disp, vals = {..}, locks = {..} }
             local augOrder  = {}   -- insertion order for stable printing
+
+            -- CRYSTALIZED AUGMENTS: the per-slot lock bitmask lives in exdata
+            -- byte 13 (see Augment_Moogle.lua). Bit i set => augment slot i is
+            -- crystalized (locked). The Moogle writes slots in order, so the
+            -- augment slot index matches the mask bit index directly.
+            local lockMask = 0
+            if item.getExDataRaw then
+                local ok, raw = pcall(function() return item:getExDataRaw() end)
+                if ok and raw then
+                    lockMask = raw[13] or 0
+                end
+            end
 
             for augSlot = 0, 4 do
                 local aug    = item:getAugment(augSlot)
                 local augId  = aug[1]
                 local augVal = aug[2]
+                local locked = bit.band(lockMask, bit.lshift(1, augSlot)) ~= 0
 
                 if augId ~= 0 then
                     if augGroups[augId] == nil then
@@ -117,10 +130,12 @@ commandObj.onTrigger = function(player)
                             mult  = def and def.mult  or 1,
                             disp  = def and def.disp  or 1,
                             vals  = { augVal },
+                            locks = { locked },
                         }
                         table.insert(augOrder, augId)
                     else
                         table.insert(augGroups[augId].vals, augVal)
+                        table.insert(augGroups[augId].locks, locked)
                     end
                 end
             end
@@ -146,12 +161,15 @@ commandObj.onTrigger = function(player)
                     local m = (g.mult and g.mult > 1) and g.mult or 1
                     local d = (g.disp and g.disp > 1) and g.disp or 1
 
-                    local parts, rollParts, total = {}, {}, 0
-                    for _, v in ipairs(g.vals) do
+                    local parts, rollParts, total, anyLocked = {}, {}, 0, false
+                    for i, v in ipairs(g.vals) do
                         local perSlot = math.floor((g.base + v) * m / d + 0.5)
                         total = total + perSlot
-                        table.insert(parts, tostring(perSlot))
-                        table.insert(rollParts, tostring(v))
+                        -- A trailing '*' flags a crystalized (locked) slot.
+                        local mark = g.locks[i] and '*' or ''
+                        if g.locks[i] then anyLocked = true end
+                        table.insert(parts, tostring(perSlot) .. mark)
+                        table.insert(rollParts, tostring(v) .. mark)
                     end
 
                     local line
@@ -162,10 +180,11 @@ commandObj.onTrigger = function(player)
                             table.concat(rollParts, ','))
                     elseif g.vals[1] > 0 then
                         line = string.format(
-                            '    %s  ->  %d  (roll %d/31)',
-                            g.label, total, g.vals[1])
+                            '    %s  ->  %d  (roll %d/31)%s',
+                            g.label, total, g.vals[1], anyLocked and ' *crystalized' or '')
                     else
-                        line = string.format('    %s  ->  %d', g.label, total)
+                        line = string.format('    %s  ->  %d%s',
+                            g.label, total, anyLocked and ' *crystalized' or '')
                     end
 
                     player:printToPlayer(line, xi.msg.channel.SYSTEM_3)
@@ -183,6 +202,9 @@ commandObj.onTrigger = function(player)
         xi.msg.channel.SYSTEM_3)
     player:printToPlayer(
         '  [!] For reduction stats (Delay, PDT, MDT) the number is the reduction magnitude.',
+        xi.msg.channel.SYSTEM_3)
+    player:printToPlayer(
+        '  [*] = crystalized (locked at max). Re-rolls keep it; only a full Scour removes it.',
         xi.msg.channel.SYSTEM_3)
 end
 

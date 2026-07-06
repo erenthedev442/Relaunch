@@ -2,6 +2,9 @@
 
 Plug in an augment, pick your **Augment Tier** (content-gated — see the [Sage page](augment-sage.md) ladder), how many catalyst slots you're filling, your Sage rank, and toggle affinity / crit to see your **roll band** — worst case, expected, best case — and how it compares to the absolute ceiling.
 
+!!! tip "Crystalize is a separate layer"
+    These numbers are the roll *magnitudes*. When a line hits its **max** value it can **crystalize** (lock) — a chance that scales with your Sage rank — so you can protect a perfect roll while re-rolling the rest. See [Crystalize: lock in your best rolls](augmenting-guide.md#crystalize-lock-in-your-best-rolls).
+
 <div id="aug-calc-root">
 
 <style>

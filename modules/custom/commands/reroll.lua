@@ -46,6 +46,36 @@ local TIER_SLICES =
 -- Gil cost per reroll, indexed by Augment Tier (1-5).
 local GIL_BY_TIER = { 25000, 50000, 100000, 175000, 250000 }
 
+-- CRYSTALIZED AUGMENTS (mirror Augment_Moogle.lua). The per-slot lock bitmask
+-- lives in exdata byte 13 (byte 12 stays 0 for a blank-decoding signature); a
+-- crystalized slot is preserved verbatim and never re-rolled. A fresh MAX roll
+-- can itself crystalize, by Augment Sage rank (Augment_Mastery 0..5).
+local LOCK_MASK_BYTE = 13
+local SIG_HEAD_BYTE  = 12
+local INSCRIBABLE    = 0x20   -- ItemFlag::INSCRIBABLE (mask can't persist there)
+local CRYSTAL_CHANCE = { [0] = 0.00, [1] = 0.05, [2] = 0.15, [3] = 0.30, [4] = 0.45, [5] = 0.50 }
+
+-- Read the lock bitmask + crystalize-eligibility off an item. Inscribable gear
+-- can't hold a persistent mask (its signature bytes are re-encoded on load), so
+-- crystalize is disabled there.
+local function crystalState(item)
+    local canCrystalize = true
+    if item.getFlag then
+        local ok, flags = pcall(function() return item:getFlag() end)
+        if ok and flags and bit.band(flags, INSCRIBABLE) ~= 0 then
+            canCrystalize = false
+        end
+    end
+    local mask = 0
+    if canCrystalize and item.getExDataRaw then
+        local ok, raw = pcall(function() return item:getExDataRaw() end)
+        if ok and raw then
+            mask = raw[LOCK_MASK_BYTE] or 0
+        end
+    end
+    return mask, canCrystalize
+end
+
 -- augId -> def reverse map (the catalog is keyed by catalyst itemId).
 local byAug = {}
 for catId, def in pairs(catalog) do
@@ -101,16 +131,25 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
         return
     end
 
-    -- Collect occupied augment slots (each rolls independently).
+    -- Collect occupied augment slots (each rolls independently). Crystalized
+    -- slots (mask bit set) are flagged so they're preserved, not re-rolled.
+    local lockMask, canCrystalize = crystalState(item)
     local lines = {}
+    local rerollable = 0
     for augSlot = 0, 4 do
         local a = item:getAugment(augSlot)
         if a[1] ~= 0 then
-            lines[#lines + 1] = { augSlot = augSlot, augId = a[1], oldVal = a[2], def = byAug[a[1]] }
+            local locked = bit.band(lockMask, bit.lshift(1, augSlot)) ~= 0
+            lines[#lines + 1] = { augSlot = augSlot, augId = a[1], oldVal = a[2], def = byAug[a[1]], locked = locked }
+            if not locked then rerollable = rerollable + 1 end
         end
     end
     if #lines == 0 then
         player:printToPlayer('[Reroll] That item has no augments to reroll.', CHANNEL)
+        return
+    end
+    if rerollable == 0 then
+        player:printToPlayer('[Reroll] Every augment on this item is crystalized (locked). Scour it at the Augment Moogle to change them.', CHANNEL)
         return
     end
 
@@ -141,7 +180,14 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
             item:getName(), tier, slice.min, slice.max, rollFloor, math.floor(critChance(rank) * 100)), CHANNEL)
         for _, ln in ipairs(lines) do
             local lbl = ln.def and ln.def.label or ('#' .. tostring(ln.augId))
-            player:printToPlayer(string.format('  %s : %d  ->  will roll %d-%d', lbl, ln.oldVal, rollFloor, slice.max), CHANNEL)
+            if ln.locked then
+                player:printToPlayer(string.format('  %s : %d  ->  CRYSTALIZED (locked, kept)', lbl, ln.oldVal), CHANNEL)
+            else
+                player:printToPlayer(string.format('  %s : %d  ->  will roll %d-%d', lbl, ln.oldVal, rollFloor, slice.max), CHANNEL)
+            end
+        end
+        if canCrystalize and (CRYSTAL_CHANCE[rank] or 0) > 0 then
+            player:printToPlayer(string.format('A max roll can crystalize (lock) at %d%% (Sage rank %d).', math.floor((CRYSTAL_CHANCE[rank] or 0) * 100), rank), CHANNEL)
         end
         player:printToPlayer(string.format('Cost: %d gil + 1 catalyst. Rank-floor protected (never below %d).', gilCost, rollFloor), CHANNEL)
         if payCatId then
@@ -162,30 +208,51 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
         return
     end
 
-    -- Crit is rolled once and applies to every line this reroll.
-    local isCrit = math.random() < critChance(rank)
+    -- Crit is rolled once and applies to every non-locked line this reroll.
+    local isCrit     = math.random() < critChance(rank)
+    local crystalPct = canCrystalize and (CRYSTAL_CHANCE[rank] or 0) or 0
 
-    -- Roll + write each line.
-    local summary = {}
+    -- Roll + write each line. Crystalized lines are preserved untouched; a fresh
+    -- MAX roll can itself crystalize (two-part gate: max value, then Sage-rank %).
+    local summary     = {}
+    local crystalNews = {}
+    local newMask     = lockMask
     for _, ln in ipairs(lines) do
-        local hasAff = (ln.def and ln.def.cat and affinity.hasAffinity(player, ln.def.cat)) or false
-        local cap    = (ln.def and ln.def.maxBoost) and math.min(EXDATA_VALUE_MAX, ln.def.maxBoost) or EXDATA_VALUE_MAX
+        if ln.locked then
+            summary[#summary + 1] = { lbl = (ln.def and ln.def.label) or ('#' .. tostring(ln.augId)), old = ln.oldVal, new = ln.oldVal, locked = true }
+        else
+            local hasAff  = (ln.def and ln.def.cat and affinity.hasAffinity(player, ln.def.cat)) or false
+            local cap     = (ln.def and ln.def.maxBoost) and math.min(EXDATA_VALUE_MAX, ln.def.maxBoost) or EXDATA_VALUE_MAX
+            local slotMax = math.min(slice.max, cap)
 
-        local r = math.random(rollFloor, slice.max)
-        if hasAff then
-            r = math.max(r, math.random(rollFloor, slice.max))
+            local r = math.random(rollFloor, slice.max)
+            if hasAff then
+                r = math.max(r, math.random(rollFloor, slice.max))
+            end
+            if isCrit then
+                r = slice.max
+            end
+            r = math.min(r, cap)
+
+            -- Pack: Augment { Id:11 | Value:5 } -> word = id + value*2048.
+            local word = ln.augId + r * 2048
+            local b    = 2 + ln.augSlot * 2
+            item:setExDataRaw({ [b] = word % 256, [b + 1] = math.floor(word / 256) })
+
+            local crystalized = false
+            if slotMax > 0 and r == slotMax and math.random() < crystalPct then
+                newMask     = bit.bor(newMask, bit.lshift(1, ln.augSlot))
+                crystalized = true
+                crystalNews[#crystalNews + 1] = (ln.def and ln.def.label) or ('#' .. tostring(ln.augId))
+            end
+
+            summary[#summary + 1] = { lbl = (ln.def and ln.def.label) or ('#' .. tostring(ln.augId)), old = ln.oldVal, new = r, crystalized = crystalized }
         end
-        if isCrit then
-            r = slice.max
-        end
-        r = math.min(r, cap)
+    end
 
-        -- Pack: Augment { Id:11 | Value:5 } -> word = id + value*2048.
-        local word = ln.augId + r * 2048
-        local b    = 2 + ln.augSlot * 2
-        item:setExDataRaw({ [b] = word % 256, [b + 1] = math.floor(word / 256) })
-
-        summary[#summary + 1] = { lbl = (ln.def and ln.def.label) or ('#' .. tostring(ln.augId)), old = ln.oldVal, new = r }
+    -- Persist any new crystalize locks (byte 12 kept 0 for a blank signature).
+    if newMask ~= lockMask then
+        item:setExDataRaw({ [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = newMask })
     end
 
     -- Charge.
@@ -200,8 +267,13 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
     player:printToPlayer(string.format('[Reroll]%s %s reforged for %d gil + 1x %s:',
         isCrit and ' *CRITICAL!*' or '', item:getName(), gilCost, payCatName), CHANNEL)
     for _, s in ipairs(summary) do
-        local arrow = (s.new > s.old) and '^ up' or ((s.new < s.old) and 'v down' or '= same')
-        player:printToPlayer(string.format('  %s : %d -> %d   (%s)', s.lbl, s.old, s.new, arrow), CHANNEL)
+        if s.locked then
+            player:printToPlayer(string.format('  %s : %d   (crystalized, kept)', s.lbl, s.old), CHANNEL)
+        else
+            local arrow = (s.new > s.old) and '^ up' or ((s.new < s.old) and 'v down' or '= same')
+            local tag   = s.crystalized and '   *** CRYSTALIZED -- locked! ***' or ''
+            player:printToPlayer(string.format('  %s : %d -> %d   (%s)%s', s.lbl, s.old, s.new, arrow, tag), CHANNEL)
+        end
     end
     player:printToPlayer('Re-equip the item to apply the new augments.', CHANNEL)
 end

@@ -22,7 +22,8 @@ Cancel at any time during the confirm menu to get everything (gear + catalysts) 
 - **Maximum 5 catalysts per trade.** This matches the engine cap of 5 augment slots per item.
 - **Duplicates are allowed — and encouraged.** Each catalyst writes one augment line, so stacking the same catalyst multiplies that stat (5 of one catalyst = 5 lines of that augment), or mix different catalysts on one piece.
 - **The catalyst is consumed** on apply. Gear is not consumed; it's stamped and returned.
-- **Stacks with existing augments**: the moogle replaces the equipment's exdata block, so any augments already on the piece are overwritten. Bring fresh gear or expect a replacement.
+- **Re-augmenting keeps crystalized slots.** The moogle rebuilds the piece's *non-crystalized* augments from the catalysts you trade — any slot that has **crystalized** (locked) is preserved and doesn't need its catalyst again. Every other augment already on the piece is replaced, so bring a catalyst for each line you still want.
+- **Perfect rolls can crystalize (lock).** When a fresh line rolls its **maximum** value (a crit guarantees this), it gets a second roll — by **Augment Sage rank**, 5% → 50% — to **crystalize**, locking it so neither re-augmenting nor `!reroll` can change or remove it. **Scour** (trade the gear *alone*, 25,000 gil) strips every augment, crystalized included, to start anew. Full details: [Crystalize: lock in your best rolls](augmenting-guide.md#crystalize-lock-in-your-best-rolls).
 
 ## Known display limitation
 

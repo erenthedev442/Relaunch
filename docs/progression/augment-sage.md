@@ -65,16 +65,18 @@ Moogle refuses the trade entirely.)
 Promotion is a free, one-time step per rank — gated on **content milestones**, not consumables. The Sage shows your live progress on the in-game menu (e.g. `HL Rank 2/3`, `Prestige 12/15`). Once you reach the required Hunting League Rank and/or Prestige Level, the `>> Promote to {title}` row becomes the actionable step — pick it to bump your rank. No seals, trophies, or augment counts are spent.
 
 <!-- DOCGEN:BEGIN id="sage-ranks" -->
-| Rank | Title | Roll floor | Crit chance | Hunting League Rank | Prestige Level |
-|---:|---|---:|---:|---:|---:|
-| 0 | Unranked | +0 | 5% | — | — |
-| 1 | Augment Initiate | +1 | 10% | 2 | — |
-| 2 | Augment Adept | +2 | 15% | 3 | — |
-| 3 | Augment Magus | +3 | 20% | 5 | 5 |
-| 4 | Augment Sage | +4 | 25% | — | 15 |
-| 5 | Augment Archon | +5 | 30% | — | 30 |
+| Rank | Title | Roll floor | Crit chance | Crystalize chance | Hunting League Rank | Prestige Level |
+|---:|---|---:|---:|---:|---:|---:|
+| 0 | Unranked | +0 | 5% | 0% | — | — |
+| 1 | Augment Initiate | +1 | 10% | 5% | 2 | — |
+| 2 | Augment Adept | +2 | 15% | 15% | 3 | — |
+| 3 | Augment Magus | +3 | 20% | 30% | 5 | 5 |
+| 4 | Augment Sage | +4 | 25% | 45% | — | 15 |
+| 5 | Augment Archon | +5 | 30% | 50% | — | 30 |
 
 _Ranks are **content milestones** — each unlocks automatically once you reach the listed Hunting League Rank and/or Prestige Level. Nothing is consumed: no seals, trophies, or augment counts._
+
+_**Crystalize chance** is the odds a **max (perfect) roll** locks that slot forever — see [Crystalize](augmenting-guide.md#crystalize-lock-in-your-best-rolls)._
 <!-- DOCGEN:END id="sage-ranks" -->
 
 The `Augment_Count` charvar is bumped by **+1 every time you confirm an augmentation at the Augment Moogle**. Cancelled trades and failed trades do not count.

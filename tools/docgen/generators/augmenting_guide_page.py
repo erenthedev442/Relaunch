@@ -9,7 +9,9 @@ parsed from:
                                                   MAX_CATALYST_COUNT (slots),
                                                   TIER_SLICES + TIER_GATES
                                                   (parsed via augment_sage's
-                                                  _parse_tier_system)
+                                                  _parse_tier_system),
+                                                  CRYSTAL_CHANCE (crystalize %
+                                                  by Sage rank) + SCOUR_GIL_COST
   modules/custom/lua/augment_catalog.lua          catalyst count, per-catalyst
                                                   tier spread, and the worked
                                                   example's base/mult math
@@ -187,6 +189,8 @@ def _render(d: dict) -> str:
     n_ranks   = d["n_ranks"]
     aff_rank, aff_cost = d["aff_gate"]
     reroll_gil = d["reroll_gil"]      # [gil per tier] | None
+    crystal    = d["crystal"]         # [chance per Sage rank 0..N] | []
+    scour_gil  = d["scour_gil"]       # int | None
 
     t_last = len(slices)
     roll_top = slices[-1][1]
@@ -368,6 +372,46 @@ def _render(d: dict) -> str:
         f"and NM list."
     )
     A("")
+    if crystal and any(c > 0 for c in crystal):
+        nonzero = [c for c in crystal if c > 0]
+        cr_lo = f"{nonzero[0] * 100:.0f}%"
+        cr_hi = f"{max(crystal) * 100:.0f}%"
+        top_rank = len(crystal) - 1
+        A("## Crystalize: lock in your best rolls")
+        A("")
+        A(
+            "When a line lands on a **perfect (max) roll** — the top of your tier "
+            "band, which a **crit guarantees** — it gets a *second* roll to "
+            "**crystalize**. A crystalized slot is **locked**: re-augmenting and "
+            "`!reroll` can no longer change or remove it, and it's **kept for "
+            "free** on future trades (you don't re-supply its catalyst, and it "
+            "doesn't use up one of your 5 slots)."
+        )
+        A("")
+        A(
+            f"The crystalize chance rises with your **Augment Sage rank** — from "
+            f"**{cr_lo}** at rank 1 up to **{cr_hi}** at rank {top_rank}. (Rank 0 "
+            f"can't crystalize.)"
+        )
+        A("")
+        A("- **`!augstats`** marks crystalized slots with a **`*`**.")
+        A(
+            "- Build a perfect piece by **locking good slots one at a time**, then "
+            "re-rolling only the slots that haven't crystalized yet."
+        )
+        if scour_gil is not None:
+            A(
+                f"- **Scour to start over:** trade the gear **alone** at the Augment "
+                f"Moogle to **strip every augment — crystalized or not — for "
+                f"{_fmt(scour_gil)} gil**. That's the only way to remove a "
+                f"crystalized augment."
+            )
+        else:
+            A(
+                "- **Scour to start over:** trade the gear **alone** at the Augment "
+                "Moogle to strip every augment, crystalized or not, and start anew."
+            )
+        A("")
     if reroll_gil:
         A("## Re-rolling in place with `!reroll`")
         A("")
@@ -395,6 +439,12 @@ def _render(d: dict) -> str:
             "mastery rank`) and **capped at your tier band**, so neither can "
             "power-creep past your tier's ceiling — reroll is purely a cheaper way "
             "to re-fish the numbers you already have."
+        )
+        A("")
+        A(
+            "Both also **respect crystalized slots** — a locked line is never "
+            "re-rolled or overwritten, and a fresh max roll from either can itself "
+            "crystalize."
         )
         A("")
         A("**How to use it:**")
@@ -495,9 +545,9 @@ def _render(d: dict) -> str:
     A(f"- **{max_cats} catalysts max per trade** ({max_cats} augment slots per piece).")
     A("- **Catalysts are consumed; gear is not** — your gear comes back stamped.")
     A(
-        f"- **Re-augmenting overwrites** the piece's existing augments — that's "
-        f"how you upgrade them as you rank up, but it means you re-apply all "
-        f"{max_cats} lines each time."
+        f"- **Re-augmenting overwrites** the piece's *non-crystalized* augments — "
+        f"that's how you upgrade them as you rank up; you re-apply each un-locked "
+        f"line, but **crystalized slots are kept** and don't need re-supplying."
     )
     A("- **Cancel any time** during the confirm menu to get everything back.")
     A("")
@@ -534,6 +584,17 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             slices, gates = _parse_tier_system(moogle_text)
         except ValueError as e:
             raise _Skip(f"Augment_Moogle.lua: {e}")
+
+        # Crystalize chances by Sage rank (Augment_Mastery) + scour cost.
+        # Fail-safe: a missing table simply drops the crystalize section.
+        crystal_by_rank: dict[int, float] = {}
+        cm = re.search(r"CRYSTAL_CHANCE\s*=\s*\{([^}]*)\}", moogle_text)
+        if cm:
+            for idx, v in re.findall(r"\[(\d+)\]\s*=\s*([\d.]+)", cm.group(1)):
+                crystal_by_rank[int(idx)] = float(v)
+        crystal = [crystal_by_rank[k] for k in sorted(crystal_by_rank)]
+        scour_m = re.search(r"^\s*local\s+SCOUR_GIL_COST\s*=\s*(\d+)", moogle_text, re.MULTILINE)
+        scour_gil = int(scour_m.group(1)) if scour_m else None
 
         entries = _parse_catalog_entries(catalog_text)
         if len(entries) < 50:
@@ -587,6 +648,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             "n_ranks":          len(_parse_sage_ranks(sage_text)),
             "aff_gate":         _parse_affinity_gate(aff_text),
             "reroll_gil":       reroll_gil,
+            "crystal":          crystal,
+            "scour_gil":        scour_gil,
         }
     except (_Skip, RuntimeError, ValueError) as e:
         # RuntimeError/ValueError = a reused parser's own schema-regression
