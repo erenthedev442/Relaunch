@@ -64,6 +64,13 @@ WEAPON_SKILLS = {
     40: 'Singing', 41: 'String', 42: 'Wind', 45: 'Handbell',
 }
 
+# Combat weapon skills (melee 1-12 + ranged 25/26/27) used to gate the Main/Sub/
+# Range DPS+WS output term in weapon_bonus(). Instruments (40-45) are excluded --
+# they're weapons but not damage sources. Restored after a9e43e567a's role-weight
+# dedupe accidentally dropped this constant (broke the whole generator -> stale
+# gear-data.json since 2026-07-05).
+COMBAT_SKILLS = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 25, 26, 27}
+
 # ---------------------------------------------------------------------------
 # NPC-only / non-player junk — NEVER list these in the Gear Finder.
 # These rows live in item_equipment (so they're technically equippable) but are
