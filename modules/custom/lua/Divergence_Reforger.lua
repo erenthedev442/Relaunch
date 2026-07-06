@@ -132,33 +132,39 @@ m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
         player:printToPlayer(string.format('[Reforge] %s reforged to +%d! Kupo!', entry.name, entry.tier), xi.msg.channel.SYSTEM_3)
     end
 
-    local smith = zone:insertDynamicEntity({
-        objtype    = xi.objType.NPC,
-        name       = 'Divergence_Smith',
-        packetName = string.format('%sDivergence Smith', xi.icon.STAR_LARGE),
-        look       = 3000,
-        x          = NPC_POS.x,
-        y          = NPC_POS.y,
-        z          = NPC_POS.z,
-        rotation   = NPC_POS.rot,
-        widescan   = 1,
-
-        onTrade = function(player, npc, trade)
-            for tradedId, entry in pairs(REFORGE) do
-                if npcUtil.tradeHasExactly(trade, { tradedId }) then
-                    doReforge(player, entry)
-                    return
-                end
-            end
-            player:printToPlayer('[Reforge] Trade me a reforged +1 or +2 piece for a slot you have unlocked, kupo!', xi.msg.channel.SYSTEM_3)
-        end,
-
-        onTrigger = function(player, npc)
-            player:printToPlayer(string.format('[Reforge] I upgrade Reforged armor with Divergence medals. Slots you have unlocked: %s. Kupo!', unlockedSlots(player)), xi.msg.channel.SYSTEM_3)
-            player:printToPlayer('[Reforge] Trade a reforged +1 (or +2) piece to upgrade it. +2 costs Beastmen\'s Medals; +3 costs Kindred\'s + Demon\'s Medals.', xi.msg.channel.SYSTEM_3)
-        end,
-    })
-    utils.unused(smith)
+    -- Retired 2026-07-06; replaced by Dynamis_Plus4_Forge.lua, which takes this
+    -- exact spot (the "+4 Reforge Forge"). The Divergence Smith no longer spawns.
+    -- The doReforge closure, REFORGE/COST tables, and helpers above are left in
+    -- place so re-enabling is just restoring the insertDynamicEntity call below.
+    --
+    -- local smith = zone:insertDynamicEntity({
+    --     objtype    = xi.objType.NPC,
+    --     name       = 'Divergence_Smith',
+    --     packetName = string.format('%sDivergence Smith', xi.icon.STAR_LARGE),
+    --     look       = 3000,
+    --     x          = NPC_POS.x,
+    --     y          = NPC_POS.y,
+    --     z          = NPC_POS.z,
+    --     rotation   = NPC_POS.rot,
+    --     widescan   = 1,
+    --
+    --     onTrade = function(player, npc, trade)
+    --         for tradedId, entry in pairs(REFORGE) do
+    --             if npcUtil.tradeHasExactly(trade, { tradedId }) then
+    --                 doReforge(player, entry)
+    --                 return
+    --             end
+    --         end
+    --         player:printToPlayer('[Reforge] Trade me a reforged +1 or +2 piece for a slot you have unlocked, kupo!', xi.msg.channel.SYSTEM_3)
+    --     end,
+    --
+    --     onTrigger = function(player, npc)
+    --         player:printToPlayer(string.format('[Reforge] I upgrade Reforged armor with Divergence medals. Slots you have unlocked: %s. Kupo!', unlockedSlots(player)), xi.msg.channel.SYSTEM_3)
+    --         player:printToPlayer('[Reforge] Trade a reforged +1 (or +2) piece to upgrade it. +2 costs Beastmen\'s Medals; +3 costs Kindred\'s + Demon\'s Medals.', xi.msg.channel.SYSTEM_3)
+    --     end,
+    -- })
+    -- utils.unused(smith)
+    utils.unused(doReforge)
 end)
 
 return m

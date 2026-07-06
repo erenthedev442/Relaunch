@@ -173,7 +173,10 @@ showVendorRoot = function(player)
                 function(p) showCuratedCat(p, c, 1) end })
         end
     end
-    table.insert(opts, { '+4 Reforge',    function(p) showPlus4JobMenu(p, 1) end })
+    -- +4 moved to Dynamis-D Forge (Dynamis_Plus4_Forge.lua); the [D] materials
+    -- are the gate now. Re-enable this line to surface the +4 browser here again.
+    -- (catalog.plus4Sets and the showPlus4* menus below are left intact.)
+    -- table.insert(opts, { '+4 Reforge',    function(p) showPlus4JobMenu(p, 1) end })
     table.insert(opts, { 'Close',         function() end })
 
     vendorMenu.title   = string.format('Infamy Vendor  [%d Infamy]', getInfamy(player))
