@@ -141,23 +141,13 @@ return {
     [842]  = { augId = 57,   base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Magic crit. hit rate' },
     [2943] = { augId = 343,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Drain/Aspir Potency' },
     [2338] = { augId = 896,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Enspell Dmg' },
-    [854]  = { augId = 53,   base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Spell interruption rate down 1%' },
-    [2834] = { augId = 1157, base = 2,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Spell Interruption Rate Down 2%' },
+    [2834] = { augId = 1157, base = 2,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Spell Interruption Rate Down' },
     [2507] = { augId = 351,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Occ. quickens spellcasting' },
     -- Elemental / Enfeebling / Enhancing magic recast delays
     [849]  = { augId = 348,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Elemental Magic Recast Delay' },
     [859]  = { augId = 349,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Enfeebling Magic Recast Delay' },
     [868]  = { augId = 355,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Enhancing Magic Recast Delay' },
-    -- Element affinity + magic accuracy
-    [2506] = { augId = 936,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 5, label = 'Fire Affinity Magic Accuracy' },
-    [2509] = { augId = 937,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 5, label = 'Ice Affinity Magic Accuracy' },
-    [2522] = { augId = 938,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 5, label = 'Wind Affinity Magic Accuracy' },
-    [2749] = { augId = 939,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 5, label = 'Earth Affinity Magic Accuracy' },
-    [2890] = { augId = 940,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 5, label = 'Lightning Affinity Magic Accuracy' },
-    [2938] = { augId = 941,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 5, label = 'Water Affinity Magic Accuracy' },
-    [3502] = { augId = 942,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 5, label = 'Light Affinity Magic Accuracy' },
-    [3930] = { augId = 943,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 5, label = 'Dark Affinity Magic Accuracy' },
-    [3941] = { augId = 960,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Fire Affinity Magic Accuracy Recast time' },
+    -- 8x per-element Affinity Magic Accuracy + recast REMOVED (redundant with Mag. Acc)
     -- Custom magic augments
     [2335] = { augId = 2044, base = 1,   mult = 15,  disp = 1,    cat = 11, tier = 0, label = 'Helix Damage',          maxBoost = 31 },
     [2531] = { augId = 2045, base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 5, label = 'Spikes Dmg',            maxBoost = 31 },
@@ -169,7 +159,6 @@ return {
     -- ── cat 13: Healing ───────────────────────────────────────────────────────
     [833]  = { augId = 329,  base = 1,   mult = 1,   disp = 1,    cat = 13, tier = 0, label = 'Cure potency' },
     [887]  = { augId = 356,  base = 1,   mult = 1,   disp = 1,    cat = 13, tier = 0, label = 'Potency of Cure received' },
-    [792]  = { augId = 289,  base = 1,   mult = 1,   disp = 1,    cat = 13, tier = 0, label = 'Healing magic skill' },
     [793]  = { augId = 323,  base = 1,   mult = 1,   disp = 1,    cat = 13, tier = 0, label = 'Cure spellcasting time' },
     [1741] = { augId = 330,  base = 1,   mult = 1,   disp = 1,    cat = 13, tier = 0, label = 'Waltz potency' },
     [801]  = { augId = 331,  base = 1,   mult = 1,   disp = 1,    cat = 13, tier = 0, label = 'Waltz ability delay' },
@@ -187,7 +176,6 @@ return {
 
     -- ── cat 15: Enmity ────────────────────────────────────────────────────────
     [787]  = { augId = 39,   base = 1,   mult = 1,   disp = 1,    cat = 15, tier = 0, label = 'Enmity' },
-    [901]  = { augId = 40,   base = 1,   mult = 1,   disp = 1,    cat = 15, tier = 0, label = 'Enmity' },
 
     -- ── cat 16: HP ────────────────────────────────────────────────────────────
     [860]  = { augId = 4,    base = 1,   mult = 4,   disp = 1,    cat = 16, tier = 0, label = 'HP' },
@@ -221,7 +209,6 @@ return {
     [922]  = { augId = 96,   base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Pet Accuracy Rng.Acc' },
     [935]  = { augId = 102,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Pet Crit.hit rate' },
     [939]  = { augId = 103,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Pet Enemy crit. hit rate' },
-    [1124] = { augId = 106,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Pet Accuracy Rng.Acc' },
     [1288] = { augId = 113,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Pet Rng.Acc' },
     [1289] = { augId = 115,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Pet Store TP' },
     [1290] = { augId = 116,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Pet Subtle Blow' },
@@ -256,74 +243,30 @@ return {
     -- Core pet utilities (old cat 10)
     [839]  = { augId = 124,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Pet Acc R.Acc Atk. R.Atk' },
     [852]  = { augId = 233,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Blood Boon' },
-    [1015] = { augId = 294,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Summoning magic skill' },
     [1156] = { augId = 321,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Avatar perpetuation cost' },
     [1272] = { augId = 339,  base = 1,   mult = 5,   disp = 1,    cat = 20, tier = 0, label = 'Elemental Siphon' },
     [1445] = { augId = 369,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Avatar Blood Pact Dmg' },
     [1979] = { augId = 1246, base = 1,   mult = 200, disp = 100,  cat = 20, tier = 0, label = 'Pet Phy. Dmg. Taken' },
-    -- Avatar element affinities (old cat 11)
-    [1268] = { augId = 952,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Fire Affinity Avatar perp. cost' },
-    [1270] = { augId = 953,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Ice Affinity Avatar perp. cost' },
-    [1295] = { augId = 954,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Wind Affinity Avatar perp. cost' },
-    [1311] = { augId = 955,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Earth Affinity Avatar perp. cost' },
-    [1313] = { augId = 957,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Water Affinity Avatar perp. cost' },
-    [1414] = { augId = 958,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Light Affinity Avatar perp. cost' },
-    [1443] = { augId = 959,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Dark Affinity Avatar perp. cost' },
-    [1830] = { augId = 956,  base = 1,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Thunder Affinity Avatar perp. cost' },
+    -- 8x per-element Avatar perp. cost REMOVED (redundant with Avatar perpetuation cost)
     -- Beast affinity
     [2518] = { augId = 2100, base = 5,   mult = 1,   disp = 1,    cat = 20, tier = 0, label = 'Beast Affinity',        maxBoost = 31 },
 
     -- ── cat 21: Ele Resist ────────────────────────────────────────────────────
     [1132] = { augId = 796,  base = 10,  mult = 1,   disp = 1,    cat = 21, tier = 0, label = 'All elemental resists' },
-    -- Element affinities (passive elemental identity, not resists)
-    [1165] = { augId = 928,  base = 1,   mult = 1,   disp = 1,    cat = 21, tier = 0, label = 'Fire Affinity' },
-    [1186] = { augId = 929,  base = 1,   mult = 1,   disp = 1,    cat = 21, tier = 0, label = 'Ice Affinity' },
-    [1187] = { augId = 930,  base = 1,   mult = 1,   disp = 1,    cat = 21, tier = 0, label = 'Wind Affinity' },
-    [1200] = { augId = 931,  base = 1,   mult = 1,   disp = 1,    cat = 21, tier = 0, label = 'Earth Affinity' },
-    [1201] = { augId = 932,  base = 1,   mult = 1,   disp = 1,    cat = 21, tier = 0, label = 'Lightning Affinity' },
-    [1236] = { augId = 933,  base = 1,   mult = 1,   disp = 1,    cat = 21, tier = 0, label = 'Water Affinity' },
-    [1237] = { augId = 934,  base = 1,   mult = 1,   disp = 1,    cat = 21, tier = 0, label = 'Light Affinity' },
-    [1263] = { augId = 935,  base = 1,   mult = 1,   disp = 1,    cat = 21, tier = 0, label = 'Dark Affinity' },
+    -- 8x individual element Affinities REMOVED (redundant with All elemental resists)
     [1850] = { augId = 1370, base = 1,   mult = 10,  disp = 1,    cat = 21, tier = 0, label = 'Enhances' },
 
     -- ── cat 22: Status ────────────────────────────────────────────────────────
     [2831] = { augId = 61,   base = 1,   mult = 1,   disp = 1,    cat = 22, tier = 0, label = 'Occ. inc. resist to stat ailments' },
 
     -- ── cat 23: Skills ────────────────────────────────────────────────────────
-    -- Weapon skills
-    [923]  = { augId = 257,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Hand-to-Hand skill' },
-    [864]  = { augId = 258,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Dagger skill' },
-    [894]  = { augId = 259,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Sword skill' },
-    [916]  = { augId = 260,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Great Sword skill' },
-    [920]  = { augId = 261,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Axe skill' },
-    [925]  = { augId = 262,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Great Axe skill' },
-    [940]  = { augId = 263,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Scythe skill' },
-    [944]  = { augId = 264,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Polearm skill' },
-    [953]  = { augId = 265,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Katana skill' },
-    [1264] = { augId = 266,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Great Katana skill' },
-    [1446] = { augId = 267,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Club skill' },
-    [1592] = { augId = 268,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Staff skill' },
+    -- Umbrella skills (individual weapon/magic skills REMOVED — covered by these)
     [1616] = { augId = 278,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Melee skill' },
     [1663] = { augId = 279,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Ranged skill' },
     [1864] = { augId = 280,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Magic skill' },
-    [2361] = { augId = 281,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Archery skill' },
-    [2513] = { augId = 282,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Marksmanship skill' },
-    [2524] = { augId = 283,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Throwing skill' },
+    -- Defensive skills (not covered by umbrella)
     [2936] = { augId = 286,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Shield skill' },
     [2937] = { augId = 287,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Parrying Skill' },
-    -- Magic skills
-    [1725] = { augId = 288,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Divine magic skill' },
-    [824]  = { augId = 293,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Dark magic skill' },
-    [1740] = { augId = 290,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Enha.mag. skill' },
-    [1817] = { augId = 291,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Enfb.mag. skill' },
-    [1854] = { augId = 292,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Elem. magic skill' },
-    [2154] = { augId = 295,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Ninjutsu skill' },
-    [2155] = { augId = 296,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Singing skill' },
-    [2161] = { augId = 297,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'String instrument skill' },
-    [831]  = { augId = 298,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Wind instrument skill' },
-    [2171] = { augId = 299,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Blue Magic skill' },
-    [2212] = { augId = 300,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Geomancy Skill' },
-    [2334] = { augId = 301,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Handbell Skill' },
     -- Exp/Cap points
     [2523] = { augId = 73,   base = 33,  mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Exp. Point +33%' },
     [942]  = { augId = 75,   base = 33,  mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Cap. Point +33%' },
