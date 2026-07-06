@@ -10,6 +10,15 @@
 -- Each NM maps to one affinity cat in augment_affinity_catalog.lua.
 -- Zones with multiple NMs share one addOverride hook.
 --
+-- 2026-07-06 rework: the affinity catalog went from 24 stat-family cats to 11
+-- functional categories (Base stats / Melee / Magic / Defense / Delays /
+-- Duration / Pets / Potency / Skills / Exp-Cap / Job niche). Only those 11 NMs
+-- now register (Behemoth, King_Behemoth, Ouryu, Genbu, Byakko, Aspidochelone,
+-- King_Vinegarroon, Phoenix, Absolute_Virtue, Proto-Omega, Kirin). The wider
+-- zone-hook set below is retained deliberately: dropTrophy() no-ops via
+-- affinity.byNm for any NM not in the current list, so extra hooks are inert
+-- and an NM re-added later works again with no code change.
+--
 -- Zone-path notes (verify if a zone name errors on load):
 --   Behemoths_Dominion, Batallia_Downs, Kuftal_Tunnel,
 --   Rolanberry_Fields, Valley_of_Sorrows, Hall_of_the_Gods,
@@ -150,7 +159,8 @@ m:addOverride('xi.zones.Temenos.Zone.onMobDeath', function(mob, player, isKiller
 end)
 
 -----------------------------------
--- Multi-NM zones (Genbu, Seiryu, Suzaku, Kirin all in Hall of the Gods)
+-- Hall of the Gods (registers Genbu=Defense, Kirin=Job niche; Seiryu/Suzaku
+-- inert since the 2026-07-06 rework -- hook retained, see header)
 -----------------------------------
 m:addOverride('xi.zones.Hall_of_the_Gods.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
@@ -158,7 +168,7 @@ m:addOverride('xi.zones.Hall_of_the_Gods.Zone.onMobDeath', function(mob, player,
 end)
 
 -----------------------------------
--- Multi-NM zone (Fafnir cat 16, Nidhogg cat 17 both in Dragon's Aery)
+-- Dragon's Aery (Fafnir/Nidhogg -- inert since the 2026-07-06 rework; retained)
 -----------------------------------
 m:addOverride('xi.zones.Dragons_Aery.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)
@@ -166,7 +176,7 @@ m:addOverride('xi.zones.Dragons_Aery.Zone.onMobDeath', function(mob, player, isK
 end)
 
 -----------------------------------
--- Multi-NM zone (Khimaira cat 21, Cerberus cat 22 both in King Ranperre's Tomb)
+-- King Ranperre's Tomb (Khimaira/Cerberus -- inert since the 2026-07-06 rework; retained)
 -----------------------------------
 m:addOverride('xi.zones.King_Ranperres_Tomb.Zone.onMobDeath', function(mob, player, isKiller, noKillIncrement)
     super(mob, player, isKiller, noKillIncrement)

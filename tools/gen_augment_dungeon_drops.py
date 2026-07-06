@@ -7,10 +7,10 @@ Reads (relative to repo root):
 Writes:
     modules/custom/lua/augment_dungeon_drops_data.lua   (AUTO-GENERATED)
 
-Strategy (owner-approved 2026-07-03): each of the seven "Augmentation
-Dungeons" (dungeon_catalog.lua categories) owns a FAMILY of augment-catalog
-categories (`cat` 1..24), so players pick a dungeon by the kind of augment
-they want:
+Strategy (owner-approved 2026-07-03; remapped 2026-07-06 to the 11-category
+scheme): each of the seven "Augmentation Dungeons" (dungeon_catalog.lua
+categories) owns a FAMILY of augment-catalog categories (`cat` 1..11), so
+players pick a dungeon by the kind of augment they want:
 
   * trash slots 1-12 : the family's twelve lowest-tier catalysts (tier asc,
                        cat asc, itemId asc) -- one FIXED catalyst per trash
@@ -42,14 +42,19 @@ OUT_PATH     = REPO_ROOT / "modules/custom/lua/augment_dungeon_drops_data.lua"
 TRASH_SLOTS = 12
 
 # dungeonKey (dungeon_catalog.lua) -> (family label, augment_catalog `cat` list)
+# 11-category scheme (2026-07-06). Every cat 1..11 is claimed by exactly one
+# dungeon and every family holds >= TRASH_SLOTS (12) catalysts; the script
+# fails loudly otherwise. Catalyst counts per cat at remap time:
+#   1 Base stats 10 | 2 Melee 23 | 3 Magic 17 | 4 Defense 18 | 5 Delays 14
+#   6 Duration 4 | 7 Pets 24 | 8 Potency 12 | 9 Skills 5 | 10 Exp/Cap 2 | 11 Niche 17
 FAMILIES: list[tuple[str, str, list[int]]] = [
-    ("ordellesCaves",  "Melee Offense",             [1, 2, 3]),
-    ("gusgenMines",    "Survival & Defense",        [5, 6, 8, 16, 22]),
-    ("kuftalTunnel",   "Weapon Mastery & Speed",    [9, 23, 24]),
-    ("gustavTunnel",   "Ranged & Pet",              [4, 20]),
-    ("ifritsCauldron", "Nuking & Magic Offense",    [10, 11]),
-    ("feiYin",         "Healing & MP Support",      [12, 13, 17, 18, 19]),
-    ("ranguemontPass", "Songs, Utility & Affinity", [7, 14, 15, 21]),
+    ("ordellesCaves",  "Melee Offense",          [2]),        # Melee (23)
+    ("ifritsCauldron", "Magic Offense",          [3]),        # Magic (17)
+    ("gusgenMines",    "Survival & Defense",     [4]),        # Defense (18)
+    ("gustavTunnel",   "Pet Mastery",            [7]),        # Pets (24)
+    ("kuftalTunnel",   "Speed, Skills & Growth", [5, 9, 10]), # Delays+Skills+Exp/Cap (21)
+    ("feiYin",         "Potency & Duration",     [8, 6]),     # Potency+Duration (16)
+    ("ranguemontPass", "Foundations & Utility",  [1, 11]),    # Base stats+Niche (27)
 ]
 
 ENTRY_RE = re.compile(

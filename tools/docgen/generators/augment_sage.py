@@ -2,7 +2,7 @@
 
 Reads three sources:
   - `modules/custom/lua/augment_sage_catalog.lua`     (5-rank chain + tables)
-  - `modules/custom/lua/augment_affinity_catalog.lua` (13 NM affinities)
+  - `modules/custom/lua/augment_affinity_catalog.lua` (11 NM affinities)
   - `modules/custom/lua/augment_catalog.lua`          (catalyst pool per cat,
                                                        used for size context)
 
@@ -10,7 +10,7 @@ Writes into `docs/progression/augment-sage.md` between DOCGEN markers:
   - "sage-location"   — zone + coordinates
   - "sage-formula"    — the multiplier formula at trade time
   - "sage-ranks"      — 5-rank promotion table (mult / crit / requirements)
-  - "sage-affinities" — 13-row NM/category/trophy table
+  - "sage-affinities" — 11-row NM/category/trophy table
 
 The catalogs are gitignored (live-only), so this generator skips cleanly on
 CI without `$LEGENDARY_LIVE_ROOT`.

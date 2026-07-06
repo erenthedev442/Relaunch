@@ -90,30 +90,17 @@ Holding an affinity gives augments **in that category** roll advantage: the Moog
 
 | Cat | Category | NM | Trophy | Catalysts available |
 |---:|---|---|---|---:|
-| 1 | STR | Behemoth | Behemoth Hide | 5 |
-| 2 | Attack | King_Behemoth | Behemoth Horn | 12 |
-| 3 | DEX | King_Arthro | Emperor Arthro's Shell | 8 |
-| 4 | Accuracy | Simurgh | Giant Bird Plume | 7 |
-| 5 | VIT | Adamantoise | Adamantoise Shell | 1 |
-| 6 | Defense | Genbu | Seal of Genbu | 14 |
-| 7 | AGI | Roc | Giant Bird Feather | 2 |
-| 8 | Evasion | Seiryu | Seal of Seiryu | 3 |
-| 9 | Haste | Byakko | Seal of Byakko | 7 |
-| 10 | INT | Aspidochelone | Spirit Turtle Shell | 3 |
-| 11 | Magic ATK | Ouryu | Dragon Talon | 30 |
-| 12 | MND | Bune | Vial of Chimera Blood | 1 |
-| 13 | Healing | Phoenix | Phoenix Feather | 8 |
-| 14 | CHR | Suzaku | Seal of Suzaku | 7 |
-| 15 | Enmity | Kirin | Kirin's Mane | 2 |
-| 16 | HP | Fafnir | Fafnir's Scale | 2 |
-| 17 | Regen | Nidhogg | Handful of Nidhogg's Scales | 3 |
-| 18 | MP | Vrtra | Wyrm Beard | 2 |
-| 19 | Refresh | Tiamat | Wyrm Horn | 2 |
-| 20 | Pet | King_Vinegarroon | Scorpion Stinger | 54 |
-| 21 | Ele Resist | Khimaira | Khimaira Mane | 10 |
-| 22 | Status | Cerberus | Cerberus Hide | 1 |
-| 23 | Skills | Absolute_Virtue | Attestation of Virtue | 39 |
-| 24 | WSD+ | Proto-Omega | Omega Ring | 4 |
+| 1 | Base stats | Behemoth | Behemoth Hide | 10 |
+| 2 | Melee | King_Behemoth | Behemoth Horn | 23 |
+| 3 | Magic | Ouryu | Dragon Talon | 17 |
+| 4 | Defense | Genbu | Seal of Genbu | 18 |
+| 5 | Delays | Byakko | Seal of Byakko | 14 |
+| 6 | Duration | Aspidochelone | Spirit Turtle Shell | 4 |
+| 7 | Pets | King_Vinegarroon | Scorpion Stinger | 24 |
+| 8 | Potency | Phoenix | Phoenix Feather | 12 |
+| 9 | Skills | Absolute_Virtue | Attestation of Virtue | 5 |
+| 10 | Exp/Cap Points | Proto-Omega | Omega Ring | 2 |
+| 11 | Job specific niche utilities | Kirin | Kirin's Mane | 17 |
 <!-- DOCGEN:END id="sage-affinities" -->
 
 ## Charvars used
