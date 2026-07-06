@@ -76,13 +76,30 @@ if ($curBranch -ne $branch) {
       Say ("   $ahead local commit(s) ahead of origin - will push after a good build") 'Green'
     } else {
       Say ("   diverged ($ahead local / $behind origin) - rebasing local work onto origin...") 'Yellow'
-      git rebase "origin/$branch"
-      if ($LASTEXITCODE -ne 0) {
-        git rebase --abort 2>$null | Out-Null
-        $rebaseConflict = $true
-        Say '   REBASE CONFLICT - aborted, building on-disk code. Resolve by hand, then rebuild.' 'Red'
+      # Auto-reconcile: rebase local onto origin, auto-resolving conflicts in
+      # GENERATED files (docs/*.md + docs/assets/*.json) -- docgen regenerates
+      # them, so taking origin's copy is harmless. A real conflict in code
+      # (.py/.lua/.sql/.html/etc.) still aborts + warns for a human. Empty
+      # commits (changes already upstream) are skipped, not left hanging.
+      git rebase "origin/$branch" 2>$null | Out-Null
+      $guard = 0
+      while ((Test-Path .git/rebase-merge) -or (Test-Path .git/rebase-apply)) {
+        if ((++$guard) -gt 60) { git rebase --abort 2>$null | Out-Null; $rebaseConflict = $true; break }
+        $conf = @(git ls-files -u | ForEach-Object { ($_ -split "`t")[-1] } | Sort-Object -Unique)
+        if ($conf.Count -gt 0) {
+          $bad = @($conf | Where-Object { $_ -notmatch '\.md$' -and $_ -notmatch '^docs/assets/.*\.json$' })
+          if ($bad.Count -gt 0) { git rebase --abort 2>$null | Out-Null; $rebaseConflict = $true; break }
+          foreach ($f in $conf) { git checkout --theirs -- $f 2>$null | Out-Null; git add -- $f 2>$null | Out-Null }
+        }
+        git -c core.editor=true rebase --continue 2>$null | Out-Null
+        if ($LASTEXITCODE -ne 0 -and ((Test-Path .git/rebase-merge) -or (Test-Path .git/rebase-apply))) {
+          git rebase --skip 2>$null | Out-Null
+        }
+      }
+      if ($rebaseConflict) {
+        Say '   REBASE CONFLICT in code - aborted, building on-disk code. Resolve by hand, then rebuild.' 'Red'
       } else {
-        Say '   rebase clean - local work replayed on top of origin' 'Green'
+        Say '   rebase clean - local work replayed on top of origin (generated docs auto-resolved)' 'Green'
       }
     }
   }

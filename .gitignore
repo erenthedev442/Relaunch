@@ -162,6 +162,7 @@ src/common/stamp-h1
 *.sw?
 
 navmeshes/
+losmeshes/
 ximeshes/*.ximesh
 tags
 log/**
