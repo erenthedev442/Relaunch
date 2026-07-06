@@ -277,13 +277,14 @@ table.insert(g.hands, { id = 27023, name = "Souveran Handschuhs +1", cost = 50, 
 table.insert(g.hands, { id = 23721, name = "Volte Bracers", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- TANK score 261
 table.insert(g.hands, { id = 25833, name = "Ayanmo Manopolas +2", cost = 50, jobs = 'WHM/RDM/BRD/BLU/RUN' })  -- DPS score 253
 
--- Legs (11 picks, scored highest first)
+-- Legs (12 picks, scored highest first)
 table.insert(g.legs, { id = 25878, name = "Mallquis Trews +1", cost = 50, jobs = 'BLM/SCH/GEO' })  -- CASTER score 470
 table.insert(g.legs, { id = 24131, name = "Revelation Brais", cost = 50, jobs = 'WAR/BRD/NIN' })  -- TANK score 438
 table.insert(g.legs, { id = 23780, name = "Agwus Slops", cost = 50, jobs = 'BLM/SCH/GEO/RUN' })  -- CASTER score 412
 table.insert(g.legs, { id = 25880, name = "Meghanada Chausses +2", cost = 50, jobs = 'THF/BST/RNG/COR/DNC/RUN' })  -- DPS score 390
 table.insert(g.legs, { id = 23722, name = "Volte Brais", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 356
 table.insert(g.legs, { id = 25883, name = "Jhakri Slops +2", cost = 50, jobs = 'BLM/RDM/BLU/SCH/GEO' })  -- CASTER score 352
+table.insert(g.legs, { id = 23777, name = "Gletis Breeches", cost = 50, jobs = 'THF/BST/DRG/BLU/DNC' })  -- DPS score 380
 table.insert(g.legs, { id = 23735, name = "Malignance Tights", cost = 50, jobs = 'MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC' })  -- DPS score 345
 table.insert(g.legs, { id = 25879, name = "Sulevias Cuisses +2", cost = 50, jobs = 'WAR/PLD/DRK/DRG' })  -- DPS score 342
 table.insert(g.legs, { id = 25886, name = "Flamma Dirs +2", cost = 50, jobs = 'WAR/PLD/DRK/SAM/DRG' })  -- TANK score 322
