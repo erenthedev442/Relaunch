@@ -119,14 +119,14 @@ def _render(drops: dict[str, dict], dungeons: dict[str, dict]) -> str:
         f"open-world catalyst mobs, so you can target a specific augment.")
     lines.append(
         f"- **Boss** — **every party member** rolls a catalyst from the family's "
-        f"high-tier pool and receives **×{BOSS_QTY}** of it, straight to inventory: "
+        f"boss pool and receives **×{BOSS_QTY}** of it, straight to inventory: "
         f"**guaranteed on your first boss kill of that dungeon each day** (UTC), "
         f"**{BOSS_REPEAT_RATE}%** on repeat clears.")
     lines.append("")
     lines.append(
-        "Trade catalysts to the **Augment Moogle** to apply them. The **T-number** is "
-        "the minimum **Augment Sage rank** needed to use the catalyst — see the "
-        "[Augment Sage](../progression/augment-sage.md) page.")
+        "Trade catalysts to the **Augment Moogle** to apply them. Every augment is "
+        "available at every Augment Tier — your tier determines the **power** of the "
+        "roll, not which augments you can access.")
 
     for key, d in drops.items():
         info = dungeons.get(key)

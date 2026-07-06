@@ -150,8 +150,8 @@ return {
     -- 8x per-element Affinity Magic Accuracy + recast REMOVED (redundant with Mag. Acc)
     -- Custom magic augments
     [2335] = { augId = 2044, base = 1,   mult = 15,  disp = 1,    cat = 11, tier = 0, label = 'Helix Damage',          maxBoost = 31 },
-    [2531] = { augId = 2045, base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 5, label = 'Spikes Dmg',            maxBoost = 31 },
-    [2875] = { augId = 2048, base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 5, label = 'Immunobreak Chance+',   maxBoost = 31 },
+    [2531] = { augId = 2045, base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Spikes Dmg',            maxBoost = 31 },
+    [2875] = { augId = 2048, base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Immunobreak Chance+',   maxBoost = 31 },
 
     -- ── cat 12: MND ───────────────────────────────────────────────────────────
     [888]  = { augId = 517,  base = 1,   mult = 1,   disp = 1,    cat = 12, tier = 0, label = 'MND' },
@@ -169,7 +169,7 @@ return {
     [2841] = { augId = 518,  base = 1,   mult = 1,   disp = 1,    cat = 14, tier = 0, label = 'CHR' },
     [902]  = { augId = 43,   base = 1,   mult = 1,   disp = 1,    cat = 14, tier = 0, label = 'Charm' },
     [2372] = { augId = 188,  base = 1,   mult = 1,   disp = 1,    cat = 14, tier = 0, label = 'Resist Charm' },
-    [1291] = { augId = 67,   base = 1,   mult = 1,   disp = 1,    cat = 14, tier = 5, label = 'All songs',             maxBoost = 1 },
+    [1291] = { augId = 67,   base = 1,   mult = 1,   disp = 1,    cat = 14, tier = 0, label = 'All songs',             maxBoost = 1 },
     [817]  = { augId = 337,  base = 1,   mult = 1,   disp = 1,    cat = 14, tier = 0, label = 'Song recast delay' },
     [2827] = { augId = 322,  base = 1,   mult = 1,   disp = 1,    cat = 14, tier = 0, label = 'Song spellcasting time' },
     [1858] = { augId = 148,  base = 1,   mult = 1,   disp = 1,    cat = 14, tier = 0, label = 'Gilfinder' },
@@ -271,7 +271,7 @@ return {
     [2523] = { augId = 73,   base = 33,  mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Exp. Point +33%' },
     [942]  = { augId = 75,   base = 33,  mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Cap. Point +33%' },
     -- Job-specific niche utilities
-    [1875] = { augId = 2046, base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 5, label = 'Phantom Roll effect',   maxBoost = 0 },
+    [1875] = { augId = 2046, base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Phantom Roll effect',   maxBoost = 0 },
     [1269] = { augId = 215,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Ninja tool expertise' },
     [2729] = { augId = 341,  base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Repair potency' },
     [2641] = { augId = 1250, base = 1,   mult = 1,   disp = 1,    cat = 23, tier = 0, label = 'Indi Effect Duration' },
@@ -279,7 +279,7 @@ return {
 
     -- ── cat 24: WSD+ ──────────────────────────────────────────────────────────
     [1110] = { augId = 326,  base = 1,   mult = 1,   disp = 1,    cat = 24, tier = 0, label = 'Weapon Skill Acc' },
-    [1473] = { augId = 327,  base = 1,   mult = 1,   disp = 1,    cat = 24, tier = 5, label = 'Weapon skill damage' },
+    [1473] = { augId = 327,  base = 1,   mult = 1,   disp = 1,    cat = 24, tier = 0, label = 'Weapon skill damage' },
     [865]  = { augId = 332,  base = 1,   mult = 100, disp = 100,  cat = 24, tier = 0, label = 'Sklchn.dmg' },
     [889]  = { augId = 743,  base = 1,   mult = 1,   disp = 1,    cat = 24, tier = 0, label = 'Dmg (melee,not ranged)' },
 }

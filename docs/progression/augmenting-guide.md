@@ -7,16 +7,6 @@ New to augmenting and not sure where to begin? This is the plain-English guide. 
 !!! tip "The one-sentence version"
     Augmenting lets you **stamp custom stat bonuses onto any piece of gear** — up to 5 bonuses per piece — by trading a cheap "catalyst" item to the **Augment Moogle** in {{npc:augment_moogle}}. It's the single biggest source of character power on the Relaunch server.
 
-## How it works, at a glance
-
-- **Catalysts are stats.** Each *catalyst* item is one stat bonus (Attack, HP, Accuracy…), and each drops from one specific monster.
-- **Trade catalysts + gil to augment gear.** Bring a piece of gear and up to **5 catalysts** to the **Augment Moogle** in {{npc:augment_moogle}}, and it stamps those bonuses onto the gear — so *any* gear can become best-in-slot.
-- **Every bonus is a roll.** How *big* each line lands is rolled inside your **Augment Tier** (1–5, earned through content): the same catalyst rolls small for a new character and huge for an endgame one.
-- **Push the rolls higher** with your **Sage Mastery** rank, **category affinity** (roll twice, keep the better), and **critical** rolls (a perfect roll).
-- **Re-stamp as you climb.** A higher tier always rolls bigger, so re-augment — or **`!reroll`** — your favorite gear each time you rank up.
-
-The rest of this page walks through each step in detail.
-
 ## What it is & what it does
 
 Every catalyst item maps to **one augment** (a stat bonus). Trade a catalyst to the Augment Moogle along with a piece of gear, and that bonus gets **written onto the gear**. Each piece has **5 augment slots**, so you can stamp up to 5 bonuses on it — and you can stack the **same** catalyst to multiply one stat (5× Attack catalysts = 5 lines of Attack on one piece).
@@ -27,7 +17,7 @@ This means **any** gear can become best-in-slot. That ring with no useful stats?
 
 Let's add some **Attack** to a piece of gear. (Any stat works the same way — this is just an example.)
 
-1. **Farm the catalysts.** Every catalyst **drops from one specific monster** (~50% per kill) — catalysts are **no longer bought for gil**. The "Attack" catalyst is **Black Tiger Hide**; its assigned mob is **Divine Inciter** (a level ~70 mob) — kill it until you have **5×**. Which catalysts you can trade scales with your progression — see [Catalyst tiers](#catalyst-tiers-what-you-can-trade) below.
+1. **Farm the catalysts.** Every catalyst **drops from one specific monster** (~50% per kill) — catalysts are **no longer bought for gil**. The "Attack" catalyst is **Black Tiger Hide**; its assigned mob is **Divine Inciter** (a level ~70 mob) — kill it until you have **5×**. Every augment is available at every tier — see [Catalyst access](#catalyst-access) below.
 2. **Have 10,000 gil** in your inventory (the Augment Moogle's flat trade cost, no matter how many catalysts).
 3. **Go to {{npc:augment_moogle}}** and find the **Augment Moogle** (it's in the row of moogles).
 4. **Trade** the gear piece **+ your 5 catalysts** to the Moogle. It shows you what's about to be applied.
@@ -101,9 +91,9 @@ Slots: `main sub ranged ammo head body hands legs feet neck waist ear1 ear2 ring
 
 Because every line re-rolls together, a **crit** (or a guaranteed one from a **Maat's Cap**) turns a single reroll into a perfect roll of the *whole piece*. And since rolls are floor-protected, rerolling after a **tier-up** or a **mastery rank-up** only ever lifts your weakest lines — it's the cheap way to keep already-good gear current.
 
-## Catalyst tiers: what you can trade
+## Catalyst access
 
-Separately from the roll band, each **catalyst** has a tier (T0–T5) — the minimum Augment Tier required to trade it. T0/T1 catalysts (132 of them) are open to everyone; the universally-powerful stats (Triple Atk, Quadruple Attack, Damage Taken...) sit at T3–T5, so the strongest *stats* and the strongest *rolls* unlock together as you clear content. The [catalog](augments.md#catalyst--augment-catalog) groups every catalyst by tier (T0 ×19 · T1 ×113 · T2 ×18 · T3 ×17 · T4 ×47 · T5 ×13).
+Every augment catalyst (170 total) is available at **every Augment Tier**. Your tier determines the **power** of the roll (via the roll band above), not which augments you can access — a Tier 1 player can trade the same catalysts as a Tier 5 player, just with weaker rolls. Browse the full [catalog](augments.md#catalyst--augment-catalog) to see every available stat.
 
 ## Good first moves
 
@@ -111,7 +101,7 @@ Separately from the roll band, each **catalyst** has a tier (T0–T5) — the mi
 - **Stack one stat for a big swing.** 5× the same catalyst on one piece concentrates the bonus where you want it.
 - **Start the Augment Sage early.** Mastery ranks unlock automatically as you hit Hunting League Rank / Prestige Level milestones — each rank lifts your worst rolls and raises crit chance. Don't wait.
 - **Re-augment after every tier-up.** Same gear, same catalysts, a strictly higher band — a tier-up re-roll is never a downgrade.
-- **Browse the full catalog** on the [Augment Moogle page](augments.md#catalyst--augment-catalog) — 227 catalysts across a wide range of stat families, each with its full per-trade stat values.
+- **Browse the full catalog** on the [Augment Moogle page](augments.md#catalyst--augment-catalog) — 170 catalysts across a wide range of stat families, each with its full per-trade stat values.
 
 ## A few rules to remember
 
@@ -123,10 +113,3 @@ Separately from the roll band, each **catalyst** has a tier (T0–T5) — the mi
 ---
 
 **Ready for the details?** → [Augment Moogle](augments.md) (the full catalyst catalog & exact numbers) · [Augment Sage](augment-sage.md) (ranking up & affinities)
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2d5ac592d09e -->
-_Last updated: 2026-07-05 03:51 PDT_
-<!-- DOCGEN:END id="last-updated" -->

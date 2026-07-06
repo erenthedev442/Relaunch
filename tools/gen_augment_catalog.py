@@ -278,6 +278,25 @@ EXCLUDED_AUGS = {
     # would ever WANT. Its +10 twin (796 / Square of Raxa) is kept. Banned so
     # clean_banned_augments.py strips the penalty from any gear already carrying it.
     797,
+    # Redundant augments removed 2026-07-05 (owner request, relaunch tier redesign):
+    # replaced by "all-in-one" versions that cover the same stat categories.
+    #
+    # 9x per-element Affinity Magic Accuracy (covered by "Magic Accuracy" augId 79):
+    *range(936, 944), 960,
+    # 8x per-element Avatar perpetuation cost (covered by "Avatar perpetuation cost" augId 80):
+    *range(952, 960),
+    # 8x individual element Affinities (covered by umbrella resist augments):
+    *range(928, 936),
+    # 15x individual weapon skills (covered by "Melee skill" 285 / "Ranged skill" 284):
+    *range(257, 269), 281, 282, 283,
+    # 14x individual magic skills (covered by "Magic skill" 302; Shield 286 + Parrying 287 KEPT):
+    *range(288, 302),
+    # Spell interruption rate down 1% (53) — 2% version (augId 54) kept:
+    53,
+    # Duplicate Enmity (40) — augId 39 kept:
+    40,
+    # Duplicate Pet Accuracy Rng.Acc (106) — augId 96 kept:
+    106,
 }
 
 # Per-augment boost ceiling (0..31). The Augment Moogle clamps the baked boost
@@ -317,6 +336,20 @@ EXCLUDED_ITEMS = {
     # Treasure Hunter catalyst (item 1844) -- banned with its augment (augId 147,
     # EXCLUDED_AUGS) so the removal is clean and 1844 isn't reassigned elsewhere.
     1844,
+    # Catalysts of redundant augments removed 2026-07-05 (owner request, relaunch
+    # tier redesign). Banned so they aren't reassigned to other augments.
+    # Per-element Affinity Magic Accuracy (9):
+    2506, 2509, 2522, 2749, 2890, 2938, 3502, 3930, 3941,
+    # Per-element Avatar perpetuation cost (8):
+    1268, 1270, 1295, 1311, 1313, 1414, 1443, 1830,
+    # Individual element Affinities (8):
+    1165, 1186, 1187, 1200, 1201, 1236, 1237, 1263,
+    # Individual weapon skills (15):
+    923, 864, 894, 916, 920, 925, 940, 944, 953, 1264, 1446, 1592, 2361, 2513, 2524,
+    # Individual magic skills (12) + Healing (792) + Summoning (1015):
+    1725, 824, 1740, 1817, 1854, 2154, 2155, 2161, 831, 2171, 2212, 2334, 792, 1015,
+    # Spell interruption 1% (854), duplicate Enmity (901), duplicate Pet Acc (1124):
+    854, 901, 1124,
 }
 
 MOB_DROPLIST = SQL / "mob_droplist.sql"

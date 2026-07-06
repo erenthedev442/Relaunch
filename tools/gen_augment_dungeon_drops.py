@@ -128,12 +128,9 @@ def main() -> int:
 
         trash = fam_entries[:TRASH_SLOTS]
         trash_ids = {e["id"] for e in trash}
-        boss = [e for e in fam_entries if e["id"] not in trash_ids and e["tier"] >= 3]
+        boss = [e for e in fam_entries if e["id"] not in trash_ids]
         if not boss:
-            # Fallback: highest remaining tier so every boss pays something.
-            rest = [e for e in fam_entries if e["id"] not in trash_ids]
-            top = max(e["tier"] for e in rest)
-            boss = [e for e in rest if e["tier"] == top]
+            boss = fam_entries[-(min(4, len(fam_entries))):]
 
         def fmt(e: dict) -> str:
             item = f", item = '{lua_quote(e['item'])}'" if e["item"] else ""

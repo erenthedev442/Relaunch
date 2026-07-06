@@ -248,8 +248,8 @@ def _render(d: dict) -> str:
             f"monster** ({rate_txt}) — catalysts are **no longer bought for gil**. "
             f"The \"Attack\" catalyst is **{ex['name']}**; its assigned mob is "
             f"**{ex['mob']}**{lvl_txt} — kill it until you have **{max_cats}×**. "
-            f"Which catalysts you can trade scales with your progression — see "
-            f"[Catalyst tiers](#catalyst-tiers-what-you-can-trade) below."
+            f"Every augment is available at every tier — see "
+            f"[Catalyst access](#catalyst-access) below."
         )
     else:
         A(
@@ -257,9 +257,9 @@ def _render(d: dict) -> str:
             f"monster** ({rate_txt}) — catalysts are **no longer bought for gil**. "
             f"Look the Attack catalyst up in the "
             f"[catalog](augments.md#catalyst--augment-catalog), then kill its "
-            f"assigned mob until you have **{max_cats}×**. Which catalysts you "
-            f"can trade scales with your progression — see "
-            f"[Catalyst tiers](#catalyst-tiers-what-you-can-trade) below."
+            f"assigned mob until you have **{max_cats}×**. Every augment is "
+            f"available at every tier — see "
+            f"[Catalyst access](#catalyst-access) below."
         )
     A(
         f"2. **Have {_fmt(gil)} gil** in your inventory (the Augment Moogle's "
@@ -433,23 +433,35 @@ def _render(d: dict) -> str:
             "weakest lines — it's the cheap way to keep already-good gear current."
         )
         A("")
-    A("## Catalyst tiers: what you can trade")
+    A("## Catalyst access")
     A("")
-    open_count = tier_dist.get(0, 0) + tier_dist.get(1, 0)
-    hi_txt = ", ".join(hi_labels) if hi_labels else "the top universal stats"
-    dist_txt = " · ".join(
-        f"T{t} ×{tier_dist[t]}" for t in sorted(tier_dist) if tier_dist[t]
-    )
-    A(
-        f"Separately from the roll band, each **catalyst** has a tier "
-        f"(T0–T{max(tier_dist) if tier_dist else t_last}) — the minimum Augment "
-        f"Tier required to trade it. T0/T1 catalysts ({open_count} of them) are "
-        f"open to everyone; the universally-powerful stats ({hi_txt}...) sit at "
-        f"T3–T5, so the strongest *stats* and the strongest *rolls* unlock "
-        f"together as you clear content. The "
-        f"[catalog](augments.md#catalyst--augment-catalog) groups every catalyst "
-        f"by tier ({dist_txt})."
-    )
+    all_open = all(t == 0 for t in tier_dist)
+    if all_open:
+        A(
+            f"Every augment catalyst ({n_cats} total) is available at **every "
+            f"Augment Tier**. Your tier determines the **power** of the roll "
+            f"(via the roll band above), not which augments you can access — a "
+            f"Tier 1 player can trade the same catalysts as a Tier 5 player, "
+            f"just with weaker rolls. Browse the full "
+            f"[catalog](augments.md#catalyst--augment-catalog) to see every "
+            f"available stat."
+        )
+    else:
+        open_count = tier_dist.get(0, 0) + tier_dist.get(1, 0)
+        hi_txt = ", ".join(hi_labels) if hi_labels else "the top universal stats"
+        dist_txt = " · ".join(
+            f"T{t} ×{tier_dist[t]}" for t in sorted(tier_dist) if tier_dist[t]
+        )
+        A(
+            f"Separately from the roll band, each **catalyst** has a tier "
+            f"(T0–T{max(tier_dist) if tier_dist else t_last}) — the minimum Augment "
+            f"Tier required to trade it. T0/T1 catalysts ({open_count} of them) are "
+            f"open to everyone; the universally-powerful stats ({hi_txt}...) sit at "
+            f"T3–T5, so the strongest *stats* and the strongest *rolls* unlock "
+            f"together as you clear content. The "
+            f"[catalog](augments.md#catalyst--augment-catalog) groups every catalyst "
+            f"by tier ({dist_txt})."
+        )
     A("")
     A("## Good first moves")
     A("")
@@ -542,7 +554,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             "Weapon skill damage", "Crit. hit damage", "Haste",
         ]
         by_label = {e["label"]: e for e in entries.values()}
-        hi_labels = [p for p in preferred if p in by_label and by_label[p]["tier"] >= 3][:3]
+        hi_labels = [p for p in preferred if p in by_label][:3]
 
         drop_rate = None
         if drops_text:
