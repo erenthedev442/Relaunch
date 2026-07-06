@@ -109,41 +109,9 @@ _SHOP_TOKENS = (
 )
 
 
-# Per-tier heading + description rendered into the catalog section.
-# Catalyst tiers = the minimum AUGMENT TIER needed to trade that catalyst
-# (2026-06-30 tier revamp: gates are CONTENT progression, parsed live into the
-# Sage page's formula block; keep these headings in sync with TIER_GATES in
-# modules/custom/lua/Augment_Moogle.lua).
-_TIER_INFO: list[tuple[int, str, str]] = [
-    (0, "T0 — First 10 NMs slain",
-     "Requires **Augment Tier 1** — the Moogle won't augment at all until you **slay your first 10 custom NMs** "
-     "(Hunting League, Wave Mode, and Voidspire kills all count). These are **job-specific or "
-     "class-specific** utilities that only meaningfully help a single playstyle: ability delays, pet-ability "
-     "extensions, proc-chance passives most jobs ignore. Catalysts drop from low-level overworld mobs."),
-    (1, "T1 — First 10 NMs slain",
-     "Requires **Augment Tier 1** — slay your first 10 custom NMs. Practical job abilities and "
-     "defensive options useful to a wider range of jobs — counter/parry/evasion, spell interruption, "
-     "elemental affinities, shield tech. Catalysts drop from mid-level mobs."),
-    (2, "T2 — Hunting League Rank 5",
-     "Requires **Augment Tier 2** — reach **Hunting League Rank 5**. Core combat stats that nearly every job "
-     "cares about — base attributes (STR/DEX/VIT/AGI/INT), Accuracy, DEF, Store TP, Fast Cast, Mag.Acc., "
-     "Snapshot. Catalysts drop from high-level mobs."),
-    (3, "T3 — Voidspire floor 10 + all Game Master waves",
-     "Requires **Augment Tier 3** — clear **[Voidspire](../endgame/voidspire.md) floor 10** *and* full-clear "
-     "**every [Game Master](game-master.md) wave difficulty** (Easy through Nightmare). Damage multipliers "
-     "and sustain — Double Attack, Crit rate, Magic burst damage, Mag.crit hit damage, weapon delay reductions, "
-     "HP/MP pool expansions, Regen, Refresh. Catalysts drop from Prestige-tier (Nightmare Court) bosses."),
-    (4, "T4 — Dynamis - Divergence clear",
-     "Requires **Augment Tier 4** — clear a **[Dynamis - Divergence](../endgame/dynamis-divergence.md) city**. "
-     "Top-tier universals that benefit every job without exception: Haste, Triple Attack, Quadruple Attack, "
-     "TP Bonus, critical hit damage, physical/magic/all damage-taken percentage reductions. "
-     "Catalysts drop from Shinryu- and Abyssea-tier NMs."),
-    (5, "T5 — Maat's Echo",
-     "Requires **Augment Tier 5** — defeat **Maat's Echo** in [Maat's Challenge](../endgame/maats-challenge.md) "
-     "(`!maat`). Highly specialised endgame augments: per-element Magic Accuracy, Weapon Skill Damage, "
-     "Phantom Roll effect, All Songs, Spikes Dmg, and Immunobreak Chance+. "
-     "Catalysts drop from the hardest endgame NMs."),
-]
+# RELAUNCH: all augments are available at every tier — power scales via roll
+# bands. The catalog page is grouped by affinity category, not by tier.
+# The old _TIER_INFO tier-grouped headings are removed.
 
 
 def _shop_token(category: str):
@@ -474,15 +442,15 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] |
     total = sum(len(rows) for _, rows in groups)
     gap_count = sum(1 for _, rs in groups for r in rs if r[0] in gap_set)
     lines.append(
-        f"_{total} catalyst items across 5 tiers. "
-        f"Each drops (~50%) from a specific monster; trade it to the "
-        f"**Augment Moogle in Leafallia** (`!leaf`) to apply the augment. "
+        f"_{total} augments across {len(groups)} categories. "
+        f"**Every augment is available at every Augment Tier** — your tier determines the "
+        f"**power** of the roll, not which augments you can access. "
+        f"Trade catalysts to the **Augment Moogle in Leafallia** (`!leaf`). "
         f"Cost is **10,000 gil flat per trade** plus the catalyst itself. "
         f"Every line is **rolled** within your [Augment Tier's band](augment-sage.md) "
         f"— higher tiers roll strictly higher values. "
         f"The **T1–T5 columns** show the value range of a **full 5-catalyst stack** "
-        f"rolled at that Augment Tier (divide by 5 for one catalyst); an — means that "
-        f"catalyst can't be traded below its own tier. "
+        f"rolled at that Augment Tier (divide by 5 for one catalyst). "
         f"The **Cap** column is the hard engine ceiling for that stat where one exists "
         f"(e.g. Haste caps at 25%, damage-taken floors at -50%), or **no cap** for additive stats._"
     )
@@ -496,34 +464,21 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] |
         )
         lines.append("")
 
-    # Build a flat list per tier, keeping the value fields so the table can
-    # render each Augment Tier's rolled band (2026-06-30 tier revamp).
-    by_tier: dict[int, list[tuple]] = {}
     for category, rows in groups:
-        for row in rows:
-            item_id, aug_id, label, base, mult, disp, max_boost, tier = row
-            by_tier.setdefault(tier, []).append(
-                (category, item_id, aug_id, label, base, mult, disp, max_boost)
-            )
-
-    for tier_num, tier_heading, tier_desc in _TIER_INFO:
-        tier_rows = by_tier.get(tier_num, [])
-        if not tier_rows:
+        if not rows:
             continue
-        lines.append(f"### {tier_heading}")
+        lines.append(f"### {_escape_md(category)}")
         lines.append("")
-        lines.append(tier_desc)
-        lines.append("")
-        tier_gap = sum(1 for row in tier_rows if row[1] in gap_set)
-        if tier_gap > 0:
-            lines.append(f"_({tier_gap}/{len(tier_rows)} catalysts in this tier need GM spawn)_")
+        cat_gap = sum(1 for row in rows if row[0] in gap_set)
+        if cat_gap > 0:
+            lines.append(f"_({cat_gap}/{len(rows)} catalysts in this category need GM spawn)_")
             lines.append("")
         lines.append(
             "| Augment | Catalyst | Drops from "
-            "| T1 ×5 | T2 ×5 | T3 ×5 | T4 ×5 | T5 ×5 | Cap | Affinity Category |"
+            "| T1 ×5 | T2 ×5 | T3 ×5 | T4 ×5 | T5 ×5 | Cap |"
         )
-        lines.append("|---|---|---|--:|--:|--:|--:|--:|:--:|---|")
-        for category, item_id, aug_id, label, base, mult, disp, max_boost in tier_rows:
+        lines.append("|---|---|---|--:|--:|--:|--:|--:|:--:|")
+        for item_id, aug_id, label, base, mult, disp, max_boost, tier in rows:
             name = item_names.get(item_id, f"item_{item_id}")
             readable = _format_item_name(name)
             if name.startswith("item_") and name == f"item_{item_id}":
@@ -538,7 +493,7 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] |
             else:
                 drop_src = "—"
             band_cells = " | ".join(
-                _band_cell(base, mult, disp, max_boost, band_idx, tier_num)
+                _band_cell(base, mult, disp, max_boost, band_idx, 0)
                 for band_idx in range(5)
             )
             lines.append(
@@ -546,8 +501,7 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] |
                 f"| {display} "
                 f"| {drop_src} "
                 f"| {band_cells} "
-                f"| {cap} "
-                f"| {_escape_md(category)} |"
+                f"| {cap} |"
             )
         lines.append("")
 
