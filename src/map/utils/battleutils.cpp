@@ -2104,6 +2104,12 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
         {
             uint8 absorb = 100;
 
+            // Hit magnitude at the moment of the block, captured before shield-def-bonus / absorb.
+            // Used by Shield Mastery so that Stoneskin/Phalanx soaking the post-block damage does
+            // not retroactively cancel the block's TP gain (Mod::STONESKIN is the whole remaining
+            // absorb pool, so subtracting it below zeroed out TP whenever Stoneskin was up).
+            const int32 blockedHitDamage = damage;
+
             // shield def bonus is a flat raw damage reduction that occurs before absorb
             // however do not reduce below 0 or if damage is negative
             if (damage > 0)
@@ -2119,11 +2125,11 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
                     absorb = std::clamp(100 - slotSub->getShieldAbsorption(), 0, 100);
 
                     // Shield Mastery
-                    if ((std::max(damage - (PDefender->getMod(Mod::PHALANX) + PDefender->getMod(Mod::STONESKIN)), 0) > 0) &&
-                        PDefender->getMod(Mod::SHIELD_MASTERY_TP))
+                    if ((blockedHitDamage > 0) && PDefender->getMod(Mod::SHIELD_MASTERY_TP))
                     {
-                        // If the player blocked with a shield and has shield mastery, add shield mastery TP bonus
-                        // unblocked damage (before block but as if affected by stoneskin/phalanx) must be greater than zero
+                        // If the player blocked with a shield and has shield mastery, add shield mastery TP bonus.
+                        // The blocked hit must have connected (damage > 0); Stoneskin/Phalanx absorbing it
+                        // afterward does not negate the block's TP.
                         PDefender->addTP(PDefender->getMod(Mod::SHIELD_MASTERY_TP));
                     }
                 }
@@ -2133,11 +2139,11 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
                 absorb = 50;
 
                 // Shield Mastery
-                if ((std::max(damage - (PDefender->getMod(Mod::PHALANX) + PDefender->getMod(Mod::STONESKIN)), 0) > 0) &&
-                    (PDefender->getMod(Mod::SHIELD_MASTERY_TP)))
+                if ((blockedHitDamage > 0) && (PDefender->getMod(Mod::SHIELD_MASTERY_TP)))
                 {
-                    // If the pet blocked with a shield and has shield mastery, add shield mastery TP bonus
-                    // unblocked damage (before block but as if affected by stoneskin/phalanx) must be greater than zero
+                    // If the pet blocked with a shield and has shield mastery, add shield mastery TP bonus.
+                    // The blocked hit must have connected (damage > 0); Stoneskin/Phalanx absorbing it
+                    // afterward does not negate the block's TP.
                     PDefender->addTP(PDefender->getMod(Mod::SHIELD_MASTERY_TP));
                 }
             }
@@ -2146,11 +2152,11 @@ int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHY
                 absorb = 50;
 
                 // Shield Mastery
-                if ((std::max(damage - (PDefender->getMod(Mod::PHALANX) + PDefender->getMod(Mod::STONESKIN)), 0) > 0) &&
-                    (PDefender->getMod(Mod::SHIELD_MASTERY_TP)))
+                if ((blockedHitDamage > 0) && (PDefender->getMod(Mod::SHIELD_MASTERY_TP)))
                 {
-                    // If the trust blocked with a shield and has shield mastery, add shield mastery TP bonus
-                    // unblocked damage (before block but as if affected by stoneskin/phalanx) must be greater than zero
+                    // If the trust blocked with a shield and has shield mastery, add shield mastery TP bonus.
+                    // The blocked hit must have connected (damage > 0); Stoneskin/Phalanx absorbing it
+                    // afterward does not negate the block's TP.
                     PDefender->addTP(PDefender->getMod(Mod::SHIELD_MASTERY_TP));
                 }
             }
