@@ -192,9 +192,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         name       = 'Home_Point',
         packetName = 'Home Point',
         look       = 51,        -- homepoint crystal model (modelid 0x0033)
-        x          =  517.000,
-        y          =  -3.000,
-        z          =  550.000,
+        x          =  566.971,
+        y          =  -3.360,
+        z          =  514.586,
         rotation   =  64,
         widescan   = 1,
 

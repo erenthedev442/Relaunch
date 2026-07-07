@@ -124,7 +124,7 @@ local GROUP_ZONE_ID     = 210
 -- never overlap. The original (-380,14,10) was off the map. The boss spawns at
 -- player+12 (x), so it lands just east on the same platform.
 local WARP_IN  = { x = -519.013, y = 36.000, z = 235.893, rot = 226 }
-local EXIT_WARP = { zoneId = 44, x = 521.5, y = -3.0, z = 548.0, rot = 65 }
+local EXIT_WARP = { zoneId = 44, x = 571.471, y = -3.360, z = 512.586, rot = 65 }
 
 -----------------------------------
 -- Boss affix pool (same as Endless Tower)
@@ -420,9 +420,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         name       = 'Weapon_Mastery_Sage',
         packetName = 'Weapon Mastery Sage',
         look       = 212,
-        x          =  523.000,
-        y          =   -3.000,
-        z          =  568.000,
+        x          =  572.971,
+        y          =   -3.360,
+        z          =  532.586,
         rotation   =  192,
         widescan   =  1,
 

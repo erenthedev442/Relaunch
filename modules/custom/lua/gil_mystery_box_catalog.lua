@@ -23,7 +23,7 @@ catalog.zoneId    = xi.zone.ABDHALJS_ISLE_PURGONORGO
 catalog.zonePath  = 'xi.zones.Abdhaljs_Isle-Purgonorgo'
 catalog.npcName   = 'Mystery Mog'
 catalog.npcLook   = 2401
-catalog.npcPos    = { x = 517.000, y = -3.000, z = 556.000, rot = 64 }
+catalog.npcPos    = { x = 566.971, y = -3.360, z = 520.586, rot = 64 }
 
 -- Pull costs
 catalog.pullCost    = 100000  -- 100k  standard single pull

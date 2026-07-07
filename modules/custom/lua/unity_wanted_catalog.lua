@@ -28,7 +28,7 @@ local ARENA = {
 }
 
 -- Board NPC location in Celennia Memorial Library.
-local BOARD_POS = { x = 511.000, y = -3.000, z = 580.000, rot = 64 }
+local BOARD_POS = { x = 560.971, y = -3.360, z = 544.586, rot = 64 }
 
 -- Warp landing point for players entering the Unity Arena in zone 288.
 -- Position them slightly east of the mob spawn to face the NM.

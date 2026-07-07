@@ -21,7 +21,7 @@ local C = {}
 C.ARENA_ZONE = 279          -- xi.zone.WALK_OF_ECHOES_P2
 C.GROUP_ZONE = 210          -- GM Home (where the boss mob_groups live)
 C.WARP_IN    = { x = -420, y = 14, z = -49, rot = 192 }
-C.EXIT_WARP  = { zoneId = 44, x = 521.5, y = -3.0, z = 548.0, rot = 65 }
+C.EXIT_WARP  = { zoneId = 44, x = 571.471, y = -3.360, z = 512.586, rot = 65 }
 
 -- Boss visual pool (we reuse the Tower's top-band groups and scale stats on
 -- top -- the group only supplies the model + mobskills).
