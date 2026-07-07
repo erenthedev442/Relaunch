@@ -92,8 +92,13 @@ local function completeAllMissions(player)
     -- Chains of Promathia (log_id 6) — completeMission resets CoP current to 0; push current to
     -- THE_LAST_VERSE=850 instead so every earlier mission reads as complete.
     player:addMission(6, 850)
-    -- Treasures of Aht Urhgan (log_id 4)
+    -- Treasures of Aht Urhgan (log_id 4) — final = ETERNAL_MERCENARY = 47.
+    -- Like CoP/SoA above, completeMission resets ToAU current to 0. That trips
+    -- Rytaal's gate (getCurrentMission(TOAU) <= IMMORTAL_SENTRIES=1 -> "authorized
+    -- mercenaries of level 50 or above" reject), locking Assault out entirely.
+    -- Push current past PRESIDENT_SALAHEEM(2) so the mercenary content unlocks.
     for i = 0, 47 do pcall(function() player:addMission(4, i) player:completeMission(4, i) end) end
+    player:addMission(4, 47)
     -- Wings of the Goddess (log_id 5)
     for i = 0, 53 do pcall(function() player:addMission(5, i) player:completeMission(5, i) end) end
     -- A Crystalline Prophecy (log_id 9) — final = A_CRYSTALLINE_PROPHECY_FIN = 11
@@ -254,6 +259,17 @@ m:addOverride('xi.player.onGameIn', function(player, firstLogin, zoning)
         -- Backfill missions for existing chars that were set up before missions were auto-granted.
         player:setCharVar('AutoMissions_Done', 1)
         player:timer(3000, function(p) completeAllMissions(p) end)
+    end
+
+    -- One-time ToAU current-mission backfill. Chars set up before the ToAU fix
+    -- above were left at getCurrentMission(TOAU)=0, which locks them out of
+    -- Assault (Rytaal's "authorized mercenaries" reject). Runs on any login,
+    -- independent of AutoMissions_Done, so already-set-up chars self-heal.
+    if isLogin and (player:getCharVar('ToAUMissionFix') or 0) == 0 then
+        player:setCharVar('ToAUMissionFix', 1)
+        if player:getCurrentMission(xi.mission.log_id.TOAU) <= xi.mission.id.toau.PRESIDENT_SALAHEEM then
+            player:addMission(xi.mission.log_id.TOAU, xi.mission.id.toau.ETERNAL_MERCENARY)
+        end
     end
 end)
 
