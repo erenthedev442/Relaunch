@@ -35,7 +35,7 @@ _ENTRY_BARE_RE = re.compile(
 _ENUM_RE = re.compile(r'^\s*(\w+)\s*=\s*(\d+)\s*,', re.MULTILINE)
 
 _CATS_MAIN = ("general", "consumables", "weapons", "armor", "food",
-               "dice", "ammo", "ninja")
+               "dice", "ammo", "ninja", "cards", "scrolls", "crystals", "keys")
 _CATS_PET  = {"jugs": "pets_jugs", "food": "pets_food"}
 
 
@@ -163,13 +163,21 @@ _META = [
     ("armor",       "Armor",
      "Earrings, belts, capes, and utility armor pieces."),
     ("food",        "Food",
-     "Best-in-slot endgame food for every role. All items are 5,000 gil."),
+     "Best-in-slot endgame food for every role. All items are 2,000 gil."),
     ("dice",        "COR Dice",
      "All 32 Phantom Roll dice at 1 gil each. Using a die on a Corsair of the right level teaches that roll permanently."),
     ("ammo",        "Ammo",
      "Arrows, bolts, bullets, waist bullet pouches (infinite-ammo / RECYCLE 100), throwing weapons, and shuriken. Leveling ladder plus Lv99 endgame options."),
     ("ninja",       "Ninja Tools",
      "All ninja toolbags at 1 gil each. One purchase gives 99 charges of that tool. Toolbags stack to 12 (≈1,188 charges per slot). The three card toolbags (Ino/Shika/Cho) can substitute for ANY elemental ninjutsu on a main-job NIN."),
+    ("cards",       "COR Cards",
+     "Corsair Quick Draw cards — one of each element, plus Trump Card. Consumed on Quick Draw, so keep a stack. 50 gil each."),
+    ("scrolls",     "Scrolls",
+     "Instant scrolls — self Warp, Reraise, and Retrace, plus instant Protect / Shell / Stoneskin."),
+    ("crystals",    "Crystals",
+     "Elemental crafting crystals (100–200 gil) and clusters (500–1,000 gil), one of each element."),
+    ("keys",        "Keys",
+     "Dungeon coffer keys for the ??? coffers — niche treasure-hunting convenience. 5,000 gil each."),
     ("pets_jugs",   "BST Pets",
      "Jug broths for Beastmaster. Buy a broth, then use Call Beast or Bestial Loyalty to summon the pet. Pet food is on a separate sub-page (!shop pets food)."),
     ("pets_food",   "BST Pet Food",

@@ -227,6 +227,75 @@ local stock =
         { 5309, 1 },  -- Toolbag (Tsura) -> 99x Tsurara         -- Hyoton (ice)
         { 5308, 1 },  -- Toolbag (Uchi)  -> 99x Uchitake        -- Katon (fire)
     },
+
+    -- Corsair Quick Draw cards (ammo slot, consumed on Quick Draw). Cheap --
+    -- a COR burns through these fast, so keep a stack handy.  (!shop cards)
+    cards =
+    {
+        { 2176, 50 },  -- Fire Card
+        { 2177, 50 },  -- Ice Card
+        { 2178, 50 },  -- Wind Card
+        { 2179, 50 },  -- Earth Card
+        { 2180, 50 },  -- Thunder Card
+        { 2181, 50 },  -- Water Card
+        { 2182, 50 },  -- Light Card
+        { 2183, 50 },  -- Dark Card
+        { 2974, 50 },  -- Trump Card
+    },
+
+    -- QoL "Instant" scrolls: self-warp, reraise, and instant buffs.  (!shop scrolls)
+    scrolls =
+    {
+        { 4181, 500 },  -- Instant Warp
+        { 4182, 500 },  -- Instant Reraise
+        { 5428, 500 },  -- Instant Retrace
+        { 5988, 300 },  -- Instant Protect
+        { 5989, 300 },  -- Instant Shell
+        { 5990, 300 },  -- Instant Stoneskin
+    },
+
+    -- Crafting crystals + clusters, one of each element.  (!shop crystals)
+    crystals =
+    {
+        { 4096, 100 },   -- Fire Crystal
+        { 4097, 100 },   -- Ice Crystal
+        { 4098, 100 },   -- Wind Crystal
+        { 4099, 100 },   -- Earth Crystal
+        { 4100, 100 },   -- Lightning Crystal
+        { 4101, 100 },   -- Water Crystal
+        { 4102, 200 },   -- Light Crystal
+        { 4103, 200 },   -- Dark Crystal
+        { 4104, 500 },   -- Fire Cluster
+        { 4105, 500 },   -- Ice Cluster
+        { 4106, 500 },   -- Wind Cluster
+        { 4107, 500 },   -- Earth Cluster
+        { 4108, 500 },   -- Lightning Cluster
+        { 4109, 500 },   -- Water Cluster
+        { 4110, 1000 },  -- Light Cluster
+        { 4111, 1000 },  -- Dark Cluster
+    },
+
+    -- Dungeon coffer keys -- open the ??? coffers for gear/mats/gil. Niche,
+    -- for treasure-hunters (16-slot window cap, so this is the coffer set).  (!shop keys)
+    keys =
+    {
+        { 1042, 5000 },  -- Davoi Coffer Key
+        { 1043, 5000 },  -- Beadeaux Coffer Key
+        { 1044, 5000 },  -- Oztroja Coffer Key
+        { 1045, 5000 },  -- Nest Coffer Key
+        { 1046, 5000 },  -- Eldieme Coffer Key
+        { 1047, 5000 },  -- Garlaige Coffer Key
+        { 1048, 5000 },  -- Zvahl Coffer Key
+        { 1049, 5000 },  -- Uggalepih Coffer Key
+        { 1050, 5000 },  -- Den Coffer Key
+        { 1051, 5000 },  -- Kuftal Coffer Key
+        { 1052, 5000 },  -- Boyahda Coffer Key
+        { 1053, 5000 },  -- Cauldron Coffer Key
+        { 1054, 5000 },  -- Quicksand Coffer Key
+        { 1057, 5000 },  -- Toraimarai Coffer Key
+        { 1058, 5000 },  -- Ru'Aun Coffer Key
+        { 1060, 5000 },  -- Ve'Lugannon Coffer Key
+    },
 }
 
 -----------------------------------
@@ -293,7 +362,7 @@ do
     end
 end
 
-local validCategories = 'general, weapons, armor, consumables, food, dice, ammo, ninja, pets, reforge'
+local validCategories = 'general, weapons, armor, consumables, food, dice, ammo, ninja, cards, scrolls, crystals, keys, pets, reforge'
 
 commandObj.onTrigger = function(player, category, subcat)
     local cat = category and category:lower() or 'general'
