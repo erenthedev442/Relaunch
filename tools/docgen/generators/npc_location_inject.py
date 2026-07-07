@@ -52,12 +52,16 @@ _NPC_FILES: dict[str, str] = {
     "casino":            "Casino.lua",
     "mystery_mog":       "gil_mystery_box.lua",
     "unity":             "unity_wanted.lua",
+    "unity_board":       "unity_wanted.lua",
     "chocobo_derby":     "chocobo_derby_catalog.lua",
     "crafting_exchange": "crafting_exchange_catalog.lua",
     "daily_board":       "daily_board_catalog.lua",
     "hunt_board":        "weekly_hunts_catalog.lua",
     # GM Home
-    "dungeon_guide":     "DungeonInstances.lua",
+    # dungeon_catalog.lua (not DungeonInstances.lua) holds the literal
+    # npc.zone = 'Abdhaljs_Isle-Purgonorgo'; DungeonInstances builds the zone via
+    # string.format(..., catalog.npc.zone), which the zone patterns can't parse.
+    "dungeon_guide":     "dungeon_catalog.lua",
     "test_dummy":        "test_dummy_catalog.lua",
     "weapon_forger":     "WeaponForge_NPC.lua",
 }
