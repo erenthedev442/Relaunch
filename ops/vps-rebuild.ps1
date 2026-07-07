@@ -144,6 +144,16 @@ if ($buildOk) {
   foreach($e in $exes){ if(Test-Path "$root\$e.bak"){ Copy-Item "$root\$e.bak" "$root\$e" -Force -EA SilentlyContinue } }
 }
 
+# ---- ensure runtime output dirs exist before the map server boots ----
+# navmeshes/ is where xi_map caches per-zone pathfinding meshes it builds at
+# first zone load. If the folder is MISSING, CNavMesh::save fails ("Could not
+# open file for writing navmeshes/<Zone>.nav") and the server rebuilds every
+# zone's navmesh on EVERY start (slow boot + CPU + red error spam). It's
+# untracked (not in git) so a fresh/cleaned C:\server can lack it; create if
+# absent. There is no git clean in this deploy, so once built it persists.
+$null = New-Item -ItemType Directory -Force -Path (Join-Path $root 'navmeshes')
+Say '   navmeshes/ ensured (mob pathfinding cache)' 'DarkGray'
+
 # ---- [5] restart + health check ----
 Say '[5/5] Restarting servers via FFXIRelaunch task...' 'Cyan'
 schtasks /run /tn 'FFXIRelaunch' 2>$null | Out-Null
