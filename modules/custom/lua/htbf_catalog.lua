@@ -81,9 +81,14 @@ catalog.gemCategories =
 -- Keep mob mods < 31k (int16); HP is int32 so the big lever is hp.
 catalog.tierScale =
 {
-    [1] = { name = 'I',   lvl = 1.00, hp = 1.5,  att = 1000,  def = 600,  macc = 200, meva = 200 },
-    [2] = { name = 'II',  lvl = 1.10, hp = 4.0,  att = 2500,  def = 1400, macc = 500, meva = 500 },
-    [3] = { name = 'III', lvl = 1.20, hp = 10.0, att = 4500,  def = 2400, macc = 900, meva = 900 },
+    -- Big-bump tuning 2026-07-06 (owner: cloister fights "pretty easy"). HP is the
+    -- primary lever (int32, safe to go large -> longer DPS checks); lvl scaling
+    -- lifts the mob's whole stat/accuracy curve; the flat ATT/DEF/MACC/MEVA adds
+    -- stay well under the int16 mob-mod cap (~31k) even after stacking on base.
+    -- Aimed at organized endgame groups; re-tune here freely (restart-gated).
+    [1] = { name = 'I',   lvl = 1.25, hp = 3.0,  att = 2000,  def = 1200, macc = 400,  meva = 400  },
+    [2] = { name = 'II',  lvl = 1.50, hp = 9.0,  att = 5000,  def = 3000, macc = 1000, meva = 1000 },
+    [3] = { name = 'III', lvl = 1.75, hp = 22.0, att = 9000,  def = 5000, macc = 2000, meva = 2000 },
 }
 
 -- Reward: gil + Hunt Marks per tier on a win (placeholder economy hook; the real

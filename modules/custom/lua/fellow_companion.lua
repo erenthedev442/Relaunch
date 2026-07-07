@@ -52,10 +52,13 @@ local CONFIG =
     -- Post-cap progression: once the Fellow hits maxLevel you can BUY stat points
     -- with gil (!fellow -> Allocate Points -> Buy Points) and keep dumping them.
     buyPointsCost  = 50000,    -- gil per purchased point (tunable)
-    -- Overflow guard: a pet's mods are int16 and WRAP NEGATIVE past ~32k. STR adds
-    -- the biggest per-point mod (+12 ATT), so cap points-per-category to stay safe
-    -- (1500 STR = +18000 ATT; + ~9600 from levels = ~27.6k, under the wrap).
-    statCap        = 1500,
+    -- Overflow guard: a pet's mods are int16 and WRAP NEGATIVE past 32767. The
+    -- binding constraint is MATT, which is fed by TWO categories at once -- INT
+    -- (+10/pt) and Sorcery (+12/pt) -- PLUS the Magus role (+400). Worst case at
+    -- cap: 1400*(10+12) + 400 = 31200, safely under the wrap. (STR->ATT is looser:
+    -- 1400*12 + 9600 from levels = 26.4k.) Do NOT raise this past ~1436 or a
+    -- fully-invested Magus wraps MATT negative and does pathetic magic damage.
+    statCap        = 1400,
 
     -- XP: each kill grants clamp(mobLevel * xpPerMobLevel, xpMin, xpMax), but only
     -- while your Fellow is summoned. xpToNext(L) = xpBase * L (linear ramp).
@@ -88,17 +91,25 @@ local CONFIG =
     statOrder = { 'STR', 'DEX', 'VIT', 'AGI', 'INT', 'MND',
                   'Ferocity', 'Critical', 'Frenzy', 'Onslaught', 'Sorcery', 'Celerity', 'Warding', 'Vigor' },
 
-    -- Flat base that scales with Fellow level (×level), plus survivability floors.
+    -- Flat base that scales with Fellow level (×level). ATT/ACC are shared (all
+    -- roles melee); DEF is a small shared floor. Survivability is NOT shared -- it
+    -- is owned by each role's `survival` block (hpMult / pdt / mdt) below.
     perLevel = { { xi.mod.ATT, 80 }, { xi.mod.ACC, 40 }, { xi.mod.DEF, 15 } },
+    -- HP = (hpBase + hpPerLevel*level) * role.survival.hpMult + VITpts*hpPerVitPt.
     hpBase       = 5000,
     hpPerLevel   = 1500,
     hpPerVitPt   = 120,
+    -- pdt/mdt are ONLY fallbacks if a role omits survival.pdt/mdt. Every role below
+    -- sets its own, so the durability of a Fellow is defined by its role: a Bulwark
+    -- is a wall, a Magus is glass. Values are % damage taken (100 = 1%; - reduces).
     pdt          = -1500,
     mdt          = -1500,
 
-    -- A role applies its `mods` on spawn; an optional `behavior` ('heal'/'nuke'/
-    -- 'ranged') runs each combat-loop tick (see scheduleCombatLoop). Every role
-    -- still melee-assists + uses TP moves; behaviors are additive on top.
+    -- Each role owns:
+    --   mods     = flat OFFENSE/utility mods applied on spawn (identity of the role).
+    --   survival = { hpMult, pdt, mdt } -> its DURABILITY (see HP formula above).
+    --   behavior = optional per-tick ('heal'/'tank'/...) in scheduleCombatLoop.
+    -- Every role still melee-assists + uses its signature TP move.
     roles =
     {
         -- `defaultWs` = fired at TP cap when the player picks "(Default)" in the Role menu.
@@ -107,7 +118,8 @@ local CONFIG =
         vanguard  =
         {
             name = 'Vanguard', blurb = 'Balanced melee damage dealer.', defaultWs = xi.mobSkill.DANCING_EDGE,
-            mods  = { { xi.mod.ATTP, 30 }, { xi.mod.DOUBLE_ATTACK, 10 } },
+            mods     = { { xi.mod.ATTP, 30 }, { xi.mod.DOUBLE_ATTACK, 10 } },
+            survival = { hpMult = 1.0, pdt = -1500, mdt = -1500 },  -- sturdy bruiser; the baseline
             moves =
             {
                 { name = 'Penta Thrust',     ws = xi.mobSkill.PENTA_THRUST       },  -- 5-hit barrage
@@ -119,8 +131,9 @@ local CONFIG =
         },
         berserker =
         {
-            name = 'Berserker', blurb = 'All-out melee offense; takes a bit more damage.', defaultWs = xi.mobSkill.HEAVY_BLOW,
-            mods  = { { xi.mod.ATTP, 60 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 10 }, { xi.mod.DMGPHYS, 1000 } },
+            name = 'Berserker', blurb = 'All-out melee offense; hits like a truck but fragile.', defaultWs = xi.mobSkill.HEAVY_BLOW,
+            mods     = { { xi.mod.ATTP, 60 }, { xi.mod.DOUBLE_ATTACK, 20 }, { xi.mod.TRIPLE_ATTACK, 10 } },
+            survival = { hpMult = 0.7, pdt = 1000, mdt = -1000 },  -- glass cannon: LOW HP + takes +10% phys
             moves =
             {
                 { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- massive single hit
@@ -132,8 +145,9 @@ local CONFIG =
         },
         bulwark   =
         {
-            name = 'Bulwark', blurb = 'Tank: more DEF, less damage taken, holds hate.', defaultWs = xi.mobSkill.EARTH_CRUSHER,
-            mods  = { { xi.mod.DEF, 300 }, { xi.mod.DMGPHYS, -1000 }, { xi.mod.ENMITY, 50 } }, behavior = 'tank',
+            name = 'Bulwark', blurb = 'Tank: huge HP, heavy mitigation, holds hate. The only real tank.', defaultWs = xi.mobSkill.EARTH_CRUSHER,
+            mods     = { { xi.mod.DEF, 300 }, { xi.mod.ENMITY, 50 } }, behavior = 'tank',
+            survival = { hpMult = 1.6, pdt = -5000, mdt = -4000 },  -- wall: big HP + phys at the -50% cap
             moves =
             {
                 { name = 'Earth Pounder',    ws = xi.mobSkill.EARTH_POUNDER      },  -- ground slam
@@ -145,7 +159,8 @@ local CONFIG =
         oracle    =
         {
             name = 'Oracle', blurb = 'Battle-healer: fights and mends your wounds when hurt.', defaultWs = xi.mobSkill.DIVINE_JUDGMENT,
-            mods  = { { xi.mod.MND, 150 }, { xi.mod.DEF, 150 }, { xi.mod.MDEF, 150 } }, behavior = 'heal',
+            mods     = { { xi.mod.MND, 150 }, { xi.mod.DEF, 150 }, { xi.mod.MDEF, 150 } }, behavior = 'heal',
+            survival = { hpMult = 1.0, pdt = -2500, mdt = -2500 },  -- durable support, but well below a tank
             moves =
             {
                 { name = 'Benediction',      ws = xi.mobSkill.BENEDICTION_1      },  -- major heal burst
@@ -156,8 +171,9 @@ local CONFIG =
         },
         magus     =
         {
-            name = 'Magus', blurb = 'Battle-mage: fights and hurls elemental magic at your foe.', defaultWs = xi.mobSkill.FIRE_IV,
-            mods  = { { xi.mod.INT, 150 }, { xi.mod.MATT, 400 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',
+            name = 'Magus', blurb = 'Battle-mage: elemental power, but glass -- keep it off the tank spot.', defaultWs = xi.mobSkill.FIRE_IV,
+            mods     = { { xi.mod.INT, 150 }, { xi.mod.MATT, 400 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',
+            survival = { hpMult = 0.45, pdt = 0, mdt = -1000 },  -- glass: lowest HP + takes FULL phys. Cannot tank.
             moves =
             {
                 { name = 'Blizzard IV',      ws = xi.mobSkill.BLIZZARD_IV        },
@@ -169,8 +185,9 @@ local CONFIG =
         },
         hunter    =
         {
-            name = 'Hunter', blurb = 'Ranger: fights and adds ranged strikes to your target.', defaultWs = xi.mobSkill.EAGLE_EYE_SHOT_HUMANOID,
-            mods  = { { xi.mod.AGI, 150 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged',
+            name = 'Hunter', blurb = 'Ranger: high accuracy and evasion; survives by dodging, not soaking.', defaultWs = xi.mobSkill.EAGLE_EYE_SHOT_HUMANOID,
+            mods     = { { xi.mod.AGI, 150 }, { xi.mod.ACC, 200 }, { xi.mod.EVA, 100 } }, behavior = 'ranged',
+            survival = { hpMult = 0.55, pdt = -1000, mdt = -1000 },  -- fragile; leans on EVA to avoid hits
             moves =
             {
                 { name = 'Barbed Crescent',  ws = xi.mobSkill.BARBED_CRESCENT_1   },  -- crescent projectile
@@ -351,10 +368,16 @@ local function applyFellow(p, pet)
         end
     end
 
-    pet:addMod(xi.mod.DMGPHYS,  CONFIG.pdt)
-    pet:addMod(xi.mod.DMGMAGIC, CONFIG.mdt)
+    -- Durability is ROLE-OWNED: each role's `survival` sets its damage-taken and an
+    -- HP multiplier. This is what stops a Magus from tanking -- it takes full phys
+    -- and gets ~45% of the HP a Bulwark gets. Falls back to CONFIG defaults if a
+    -- role omits survival. VIT points add flat HP on top for every role.
+    local surv   = role.survival or {}
+    local hpMult = surv.hpMult or 1.0
+    pet:addMod(xi.mod.DMGPHYS,  surv.pdt or CONFIG.pdt)
+    pet:addMod(xi.mod.DMGMAGIC, surv.mdt or CONFIG.mdt)
 
-    local bonusHP = CONFIG.hpBase + CONFIG.hpPerLevel * lvl + getStatPts(p, 'VIT') * CONFIG.hpPerVitPt
+    local bonusHP = math.floor((CONFIG.hpBase + CONFIG.hpPerLevel * lvl) * hpMult) + getStatPts(p, 'VIT') * CONFIG.hpPerVitPt
     pet:setMaxHP(pet:getMaxHP() + bonusHP)
     pet:addHP(bonusHP)
 
