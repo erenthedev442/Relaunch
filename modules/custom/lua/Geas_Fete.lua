@@ -212,6 +212,7 @@ local function spawnNM(player, zone, zoneId, def)
     local mx    = px + math.cos(angle) * dist
     local mz    = pz + math.sin(angle) * dist
 
+    local rot        = math.random(0, 255)
     local defCapture = def
 
     local mob = zone:insertDynamicEntity({
@@ -222,7 +223,7 @@ local function spawnNM(player, zone, zoneId, def)
         x                    = mx,
         y                    = py,
         z                    = mz,
-        rotation             = math.random(0, 255),
+        rotation             = rot,
         minLevel             = 149,
         maxLevel             = 149,
         detection            = xi.detects.SIGHT_AND_HEARING,
@@ -243,6 +244,12 @@ local function spawnNM(player, zone, zoneId, def)
     })
 
     if mob then
+        -- A dynamically-inserted MOB is created but INACTIVE until spawned.
+        -- Without setSpawn()+spawn() the entity exists (so the caller's
+        -- "emerges from the darkness!" message fires) but never appears in the
+        -- world -- which is exactly the "it said it spawned but didn't" bug.
+        mob:setSpawn(mx, py, mz, rot)
+        mob:spawn()
         if def.hp and def.hp > 0 then
             mob:setMaxHP(def.hp)
             mob:setHP(def.hp)
