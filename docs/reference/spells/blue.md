@@ -2,7 +2,7 @@
 
 _Spells are sorted by ID._
 
-**Spells in this category:** 157
+**Spells in this category:** 195
 
 | ID | Name | Skill | Element | MP | Cast | Recast | Jobs |
 |---:|---|---|---|---:|---:|---:|---|
@@ -155,6 +155,34 @@ _Spells are sorted by ID._
 | 697 | Amorphic Spikes | Blue | None | 79 | 0.5s | 58.2s | BLU 98 |
 | 698 | Wind Breath | Blue | Wind | 26 | 1.0s | 29.5s | BLU 99 |
 | 699 | Barbed Crescent | Blue | None | 52 | 0.5s | 22.0s | BLU 99 |
+| 700 | Natures Meditation | Blue | Fire | 38 | 0.5s | 60.0s | BLU 99 |
+| 701 | Tempestuous Upheaval | Blue | Wind | 133 | 0.5s | 7.0s | BLU 99 |
+| 702 | Rending Deluge | Blue | Water | 118 | 1.5s | 30.0s | BLU 99 |
+| 703 | Embalming Earth | Blue | Earth | 57 | 0.5s | 30.0s | BLU 99 |
+| 704 | Paralyzing Triad | Blue | None | 33 | 0.5s | 30.0s | BLU 99 |
+| 705 | Foul Waters | Blue | Water | 76 | 4.5s | 30.0s | BLU 99 |
+| 706 | Glutinous Dart | Blue | None | 16 | 1.0s | 10.0s | BLU 99 |
+| 707 | Retinal Glare | Blue | Light | 26 | 1.0s | 30.0s | BLU 99 |
+| 708 | Subduction | Blue | Wind | 27 | 0.5s | 30.0s | BLU 99 |
+| 709 | Thrashing Assault | Blue | None | 99 | 0.5s | 30.0s | BLU 99 |
+| 710 | Erratic Flutter | Blue | Wind | 63 | 0.5s | 30.0s | BLU 99 |
+| 711 | Restoral | Blue | Light | 127 | 2.5s | 22.5s | BLU 99 |
+| 712 | Rail Cannon | Blue | Light | 200 | 0.5s | 22.0s | BLU 99 |
+| 713 | Diffusion Ray | Blue | Light | 238 | 0.5s | 22.0s | BLU 99 |
+| 714 | Sinker Drill | Blue | None | 91 | 0.5s | 22.0s | BLU 99 |
+| 715 | Molting Plumage | Blue | Wind | 146 | 1.0s | 25.0s | BLU 99 |
+| 716 | Nectarous Deluge | Blue | Water | 97 | 3.0s | 45.0s | BLU 99 |
+| 717 | Sweeping Gouge | Blue | None | 29 | 0.5s | 120.0s | BLU 99 |
+| 719 | Searing Tempest | Blue | Fire | 116 | 6.0s | 60.0s | BLU 99 |
+| 720 | Spectral Floe | Blue | Ice | 116 | 6.0s | 60.0s | BLU 99 |
+| 721 | Anvil Lightning | Blue | Thunder | 116 | 6.0s | 60.0s | BLU 99 |
+| 722 | Entomb | Blue | Earth | 116 | 6.0s | 60.0s | BLU 99 |
+| 723 | Saurian Slide | Blue | None | 109 | 0.5s | 35.0s | BLU 99 |
+| 724 | Palling Salvo | Blue | Dark | 175 | 3.0s | 45.0s | BLU 99 |
+| 725 | Blinding Fulgor | Blue | Light | 116 | 6.0s | 60.0s | BLU 99 |
+| 726 | Scouring Spate | Blue | Water | 116 | 6.0s | 60.0s | BLU 99 |
+| 727 | Silent Storm | Blue | Wind | 116 | 6.0s | 60.0s | BLU 99 |
+| 728 | Tenebral Crush | Blue | Dark | 116 | 6.0s | 60.0s | BLU 99 |
 | 736 | Thunderbolt | Blue | Thunder | 138 | 3.5s | 30.0s | BLU 95 |
 | 737 | Harden Shell | Blue | Earth | 20 | 1.5s | 30.0s | BLU 95 |
 | 738 | Absolute Terror | Blue | Dark | 29 | 0.5s | 30.0s | BLU 96 |
@@ -163,3 +191,20 @@ _Spells are sorted by ID._
 | 741 | Pyric Bulwark | Blue | Light | 50 | 1.5s | 30.0s | BLU 98 |
 | 742 | Bilgestorm | Blue | None | 122 | 1.0s | 30.0s | BLU 99 |
 | 743 | Bloodrake | Blue | None | 99 | 0.5s | 30.0s | BLU 99 |
+| 744 | Droning Whirlwind | Blue | Wind | 76 | 3.0s | 30.0s | BLU 96 |
+| 745 | Carcharian Verve | Blue | Water | 52 | 3.0s | 30.0s | BLU 96 |
+| 746 | Blistering Roar | Blue | Dark | 28 | 3.0s | 30.0s | BLU 96 |
+| 747 | Uproot | Blue | Light | 88 | 1.5s | 30.0s | BLU 99 |
+| 748 | Crashing Thunder | Blue | Thunder | 172 | 1.0s | 30.0s | BLU 99 |
+| 749 | Polar Roar | Blue | Ice | 126 | 3.0s | 30.0s | BLU 99 |
+| 750 | Mighty Guard | Blue | Light | 299 | 3.0s | 30.0s | BLU 99 |
+| 751 | Cruel Joke | Blue | Dark | 187 | 3.0s | 30.0s | BLU 99 |
+| 752 | Cesspool | Blue | Water | 166 | 3.0s | 30.0s | BLU 99 |
+| 753 | Tearing Gust | Blue | Wind | 202 | 3.0s | 30.0s | BLU 99 |
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: a5461375bc0f -->
+_Last updated: 2026-07-06 17:42 PDT_
+<!-- DOCGEN:END id="last-updated" -->

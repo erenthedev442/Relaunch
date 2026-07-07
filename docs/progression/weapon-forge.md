@@ -139,6 +139,8 @@ Six legacy weapon paths. Earn the base weapon from its source content, then forg
 .wf-widget .wc-tp { font-family: "Courier New",monospace; font-size: .56rem; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
 .wf-widget .wc-nm { font-size: .85rem; color: var(--text); line-height: 1.2; }
 .wf-widget .wc-jb { font-family: "Courier New",monospace; font-size: .57rem; color: var(--muted); margin-top: 3px; }
+.wf-widget .wc-id { font-family: "Courier New",monospace; font-size: .52rem; color: var(--dim); margin-top: 2px; letter-spacing: .02em; }
+.wf-widget .stg-id { font-family: "Courier New",monospace; font-size: .52rem; color: var(--dim); margin-top: 3px; letter-spacing: .02em; position: relative; z-index: 1; }
 .wf-widget .empty-grid { grid-column: 1/-1; text-align: center; padding: 36px; color: var(--dim); font-style: italic; font-size: .84rem; }
 
 .wf-widget .div { display: flex; align-items: center; gap: 10px; max-width: 1080px; margin: 22px auto 0; padding: 0 20px; }
@@ -232,15 +234,15 @@ const CATS = {
       {type:'Staff',jobs:'BLM · SMN · SCH',name:'Opashoro'},
       {type:'Archery',jobs:'RNG',name:'Pinaka'},
       {type:'Marksmanship',jobs:'COR · RNG',name:'Earp'},
-      {type:'Shield',jobs:'PLD · RUN',name:'Duban'},
-      {type:'Instrument',jobs:'BRD',name:'Loughnashade'},
+      {type:'Shield',jobs:'PLD · RUN',name:'Duban',id:26495},
+      {type:'Instrument',jobs:'BRD',name:'Loughnashade',id:22307},
     ],
   },
   relic: {
     label:'Relic', sub:'14 weapons · 4 stages',
     accent:'#aa2828', dim:'#621515',
     lore:'Ancient battle-relics recovered from Dynamis — the dreaming battlefield where history fights itself eternally. The oldest and most storied endgame path.',
-    source:'<strong>Relic weapons</strong> drop from the <strong>Mega-Boss</strong> (Wave 2) and <strong>Disjoined NM</strong> (Wave 3) in any of the four Divergence city runs — <strong>San d\'Oria [D]</strong>, <strong>Bastok [D]</strong>, <strong>Windurst [D]</strong>, and <strong>Jeuno [D]</strong>. Enter via the Divergence Portal in each city; no alliance required, solo and small groups welcome. Drop rates improve at Wave 3. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III.',
+    source:'<strong>Relic weapons</strong> drop from the <strong>Mega-Boss</strong> (Wave 2) and <strong>Disjoined NM</strong> (Wave 3) in any of the four Divergence city runs — <strong>San d\'Oria [D]</strong>, <strong>Bastok [D]</strong>, <strong>Windurst [D]</strong>, and <strong>Jeuno [D]</strong>. Enter via the Divergence Portal in each city; no alliance required, solo and small groups welcome. Drop rates improve at Wave 3. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III Bring the materials to the <strong>Weapon Forge</strong> in Leafallia: it issues the base weapon and forges each stage (gated by HL Rank V + Divergence progress)..',
     s3lbl:'Stage III · Relic',
     forge:[
       {lbl:'Base → Stage I', mats:[['100×','Byne Bill'],['25×','M. Silverpiece']], gate:'HL Rank V (Legend) · Dynamis – Divergence Wave 1 cleared'},
@@ -248,27 +250,27 @@ const CATS = {
       {lbl:'Stage II → Stage III', mats:[['50×','Gallimaufry'],['300×','[see weapon]'],['10,000','Reforge Marks']], gate:'HL Rank V (Legend) · Dynamis – Divergence Wave 3 cleared'},
     ],
     weapons:[
-      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Spharai'},
-      {type:'Dagger',jobs:'THF · BRD · DNC',name:'Mandau'},
-      {type:'Sword',jobs:'RDM · PLD · BLU',name:'Excalibur'},
-      {type:'Great Sword',jobs:'WAR · DRK',name:'Ragnarok'},
-      {type:'Axe',jobs:'WAR · BST',name:'Guttler'},
-      {type:'Great Axe',jobs:'WAR',name:'Bravura'},
-      {type:'Scythe',jobs:'DRK',name:'Apocalypse'},
-      {type:'Polearm',jobs:'DRG',name:'Gungnir'},
-      {type:'Katana',jobs:'NIN',name:'Kikoku'},
-      {type:'Great Katana',jobs:'SAM',name:'Amanomurakumo'},
-      {type:'Club',jobs:'WHM · GEO',name:'Mjollnir'},
-      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Claustrum'},
-      {type:'Archery',jobs:'RNG',name:'Yoichinoyumi'},
-      {type:'Marksmanship',jobs:'COR · RNG',name:'Annihilator'},
+      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Spharai',id:20509},
+      {type:'Dagger',jobs:'THF · BRD · DNC',name:'Mandau',id:20583},
+      {type:'Sword',jobs:'RDM · PLD · BLU',name:'Excalibur',id:20685},
+      {type:'Great Sword',jobs:'WAR · DRK',name:'Ragnarok',id:21683},
+      {type:'Axe',jobs:'WAR · BST',name:'Guttler',id:21750},
+      {type:'Great Axe',jobs:'WAR',name:'Bravura',id:21756},
+      {type:'Scythe',jobs:'DRK',name:'Apocalypse',id:21808},
+      {type:'Polearm',jobs:'DRG',name:'Gungnir',id:21857},
+      {type:'Katana',jobs:'NIN',name:'Kikoku',id:21906},
+      {type:'Great Katana',jobs:'SAM',name:'Amanomurakumo',id:21954},
+      {type:'Club',jobs:'WHM · GEO',name:'Mjollnir',id:21077},
+      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Claustrum',id:22060},
+      {type:'Archery',jobs:'RNG',name:'Yoichinoyumi',id:22129},
+      {type:'Marksmanship',jobs:'COR · RNG',name:'Annihilator',id:22140},
     ],
   },
   empyrean: {
     label:'Empyrean', sub:'14 weapons · 4 stages',
     accent:'#2060a0', dim:'#103860',
     lore:'Weapons shaped by the light of Abyssea — forged where the barriers between worlds grew thin and the strongest monsters walked unchecked.',
-    source:'<strong>Empyrean weapons</strong> drop from <strong>Abyssea Marks NMs</strong> (high-tier ??? pops). Each weapon type has a corresponding NM that drops that weapon\'s specific material and the weapon itself. Drop rates are rare at Tier I; much higher at Tier III. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III.',
+    source:'<strong>Empyrean weapons</strong> drop from <strong>Abyssea Marks NMs</strong> (high-tier ??? pops). Each weapon type has a corresponding NM that drops that weapon\'s specific material and the weapon itself. Drop rates are rare at Tier I; much higher at Tier III. The weapon keeps its name as you forge it up through 119 / 119 II / 119 III Bring the material to the <strong>Weapon Forge</strong> in Leafallia: it issues the base weapon and forges each stage (gated by HL Rank + Abyssea progress)..',
     s3lbl:'Stage III · Empyrean',
     forge:[
       {lbl:'Base → Stage I', mats:[['2,000×','Cruor'],['50×','[see weapon]'],['10×','Ancient Beastcoin']], gate:'HL Rank III (Elite) · Abyssea Tier I NM killed'},
@@ -276,27 +278,27 @@ const CATS = {
       {lbl:'Stage II → Stage III', mats:[['5,000×','Riftborn Boulder'],['50×','Ancient Beastcoin'],['15,000','Reforge Marks']], gate:'All Abyssea Tier III bosses cleared'},
     ],
     weapons:[
-      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Verethragna'},
-      {type:'Dagger',jobs:'THF · BRD · DNC',name:'Twashtar'},
-      {type:'Sword',jobs:'RDM · PLD · BLU',name:'Almace'},
-      {type:'Great Sword',jobs:'WAR · DRK',name:'Caladbolg'},
-      {type:'Axe',jobs:'WAR · BST',name:'Farsha'},
-      {type:'Great Axe',jobs:'WAR',name:'Ukonvasara'},
-      {type:'Scythe',jobs:'DRK',name:'Redemption'},
-      {type:'Polearm',jobs:'DRG',name:'Rhongomiant'},
-      {type:'Katana',jobs:'NIN',name:'Kannagi'},
-      {type:'Great Katana',jobs:'SAM',name:'Masamune'},
-      {type:'Club',jobs:'WHM · GEO',name:'Gambanteinn'},
-      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Hvergelmir'},
-      {type:'Archery',jobs:'RNG',name:'Gandiva'},
-      {type:'Marksmanship',jobs:'COR · RNG',name:'Armageddon'},
+      {type:'Hand-to-Hand',jobs:'MNK · PUP',name:'Verethragna',id:20512},
+      {type:'Dagger',jobs:'THF · BRD · DNC',name:'Twashtar',id:20587},
+      {type:'Sword',jobs:'RDM · PLD · BLU',name:'Almace',id:20689},
+      {type:'Great Sword',jobs:'WAR · DRK',name:'Caladbolg',id:21684},
+      {type:'Axe',jobs:'WAR · BST',name:'Farsha',id:21752},
+      {type:'Great Axe',jobs:'WAR',name:'Ukonvasara',id:21758},
+      {type:'Scythe',jobs:'DRK',name:'Redemption',id:21810},
+      {type:'Polearm',jobs:'DRG',name:'Rhongomiant',id:21859},
+      {type:'Katana',jobs:'NIN',name:'Kannagi',id:21908},
+      {type:'Great Katana',jobs:'SAM',name:'Masamune',id:21956},
+      {type:'Club',jobs:'WHM · GEO',name:'Gambanteinn',id:21079},
+      {type:'Staff',jobs:'BLM · SMN · SCH',name:'Hvergelmir',id:22064},
+      {type:'Archery',jobs:'RNG',name:'Gandiva',id:22130},
+      {type:'Marksmanship',jobs:'COR · RNG',name:'Armageddon',id:22142},
     ],
   },
   mythic: {
     label:'Mythic', sub:'20 weapons · 4 stages',
     accent:'#6030a8', dim:'#3a1a68',
     lore:'Power extracted from Nyzul Isle\'s floors and the Assault campaigns — weapons older than the Crystal War. Multiple variants exist per weapon type, each aligned to a specific job.',
-    source:'<strong>Mythic weapons</strong> drop from <strong>Nyzul Isle floor bosses</strong> (Floor 60 and above). Each floor boss drops weapon-type-specific weapons. Floor 80 clears are required for 119 II; Floor 100 (all lamps lit) is required for 119 III. <strong>Imperial Standing</strong> is earned from all Assault missions.',
+    source:'<strong>Mythic weapons</strong> drop from <strong>Nyzul Isle floor bosses</strong> (Floor 60 and above). Each floor boss drops weapon-type-specific weapons. Floor 80 clears are required for 119 II; Floor 100 (all lamps lit) is required for 119 III. <strong>Imperial Standing</strong> is earned from all Assault missions Bring the materials to the <strong>Weapon Forge</strong> in Leafallia: it issues the base weapon and forges each stage (gated by HL Rank + Nyzul progress)..',
     s3lbl:'Stage III · Mythic',
     forge:[
       {lbl:'Base → Stage I', mats:[['1,000×','Imperial Standing'],['10×','Imperial Bronze Piece']], gate:'HL Rank III (Elite) · Nyzul Isle Floor 60 cleared'},
@@ -304,26 +306,26 @@ const CATS = {
       {lbl:'Stage II → Stage III', mats:[['5×','Imperial Gold Piece'],['10,000×','Beitetsu'],['20,000','Reforge Marks']], gate:'HL Rank V (Legend) · Nyzul Floor 100 cleared (all lamps) · Nyzul boss killed'},
     ],
     weapons:[
-      {type:'Hand-to-Hand',jobs:'MNK',name:'Glanzfaust'},
-      {type:'Hand-to-Hand',jobs:'PUP',name:'Kenkonken'},
-      {type:'Dagger',jobs:'NIN',name:'Vajra'},
-      {type:'Dagger',jobs:'BRD',name:'Carnwenhan'},
-      {type:'Dagger',jobs:'DNC',name:'Terpsichore'},
-      {type:'Sword',jobs:'RDM',name:'Murgleis'},
-      {type:'Sword',jobs:'PLD',name:'Burtgang'},
-      {type:'Sword',jobs:'BLU',name:'Tizona'},
-      {type:'Great Sword',jobs:'WAR',name:'Conqueror'},
-      {type:'Axe',jobs:'WAR · BST',name:'Aymur'},
-      {type:'Scythe',jobs:'DRK',name:'Liberator'},
-      {type:'Polearm',jobs:'DRG',name:'Ryunohige'},
-      {type:'Katana',jobs:'NIN',name:'Nagi'},
-      {type:'Great Katana',jobs:'SAM',name:'Kogarasumaru'},
-      {type:'Club',jobs:'WHM',name:'Yagrush'},
-      {type:'Staff',jobs:'SMN',name:'Nirvana'},
-      {type:'Staff',jobs:'GEO',name:'Laevateinn'},
-      {type:'Staff',jobs:'SCH',name:'Tupsimati'},
-      {type:'Archery',jobs:'RNG',name:'Gastraphetes'},
-      {type:'Marksmanship',jobs:'COR',name:'Death Penalty'},
+      {type:'Hand-to-Hand',jobs:'MNK',name:'Glanzfaust',id:20510},
+      {type:'Hand-to-Hand',jobs:'PUP',name:'Kenkonken',id:20511},
+      {type:'Dagger',jobs:'NIN',name:'Vajra',id:20585},
+      {type:'Dagger',jobs:'BRD',name:'Carnwenhan',id:20586},
+      {type:'Dagger',jobs:'DNC',name:'Terpsichore',id:20584},
+      {type:'Sword',jobs:'RDM',name:'Murgleis',id:20686},
+      {type:'Sword',jobs:'PLD',name:'Burtgang',id:20687},
+      {type:'Sword',jobs:'BLU',name:'Tizona',id:20688},
+      {type:'Great Sword',jobs:'WAR',name:'Conqueror',id:21757},
+      {type:'Axe',jobs:'WAR · BST',name:'Aymur',id:21751},
+      {type:'Scythe',jobs:'DRK',name:'Liberator',id:21809},
+      {type:'Polearm',jobs:'DRG',name:'Ryunohige',id:21858},
+      {type:'Katana',jobs:'NIN',name:'Nagi',id:21907},
+      {type:'Great Katana',jobs:'SAM',name:'Kogarasumaru',id:21955},
+      {type:'Club',jobs:'WHM',name:'Yagrush',id:21078},
+      {type:'Staff',jobs:'SMN',name:'Nirvana',id:22063},
+      {type:'Staff',jobs:'GEO',name:'Laevateinn',id:22062},
+      {type:'Staff',jobs:'SCH',name:'Tupsimati',id:22061},
+      {type:'Archery',jobs:'RNG',name:'Gastraphetes',id:22139},
+      {type:'Marksmanship',jobs:'COR',name:'Death Penalty',id:22141},
     ],
   },
   aeonic: {
@@ -366,9 +368,66 @@ const CATS = {
       {lbl:'Stage II → Stage III', mats:[['200×','Wailing Stone'],['9,999×','High-Purity Bayld'],['10,000×','Beitetsu'],['28,000','Reforge Marks']], gate:'HL Rank V · Paragon Tier 5 cleared · Apex Floor 100 · All Coalition ranks at Legend'},
     ],
     weapons:[
-      {type:'Great Sword',jobs:'WAR · DRK',name:'Epeolatry'},
-      {type:'Club',jobs:'GEO',name:'Idris'},
+      {type:'Great Sword',jobs:'WAR · DRK',name:'Epeolatry',id:21685},
+      {type:'Club',jobs:'GEO',name:'Idris',id:21080},
     ],
+  },
+};
+
+// ── PER-STAGE ITEM IDS ────────────────────────────────────────────────────────
+// Static lookup for all 6 categories.  Prime/Aeonic keyed by weapon TYPE (one per
+// type); the other four keyed by weapon NAME (multiple weapons share a type).
+// Prime/Aeonic prefer real.ids injected by the Python generator; this block is
+// the static fallback and the sole source for the CATS-only four categories.
+const STAGE_IDS = {
+  prime: {
+    'Hand-to-Hand':[21516,21515,21535],'Dagger':[21562,21585,21590],'Sword':[21618,20673,21646],
+    'Great Sword':[21671,21662,21653],'Axe':[21719,21706,21730],'Great Axe':[21776,21765,21785],
+    'Scythe':[21827,21815,21837],'Polearm':[21880,21881,21891],'Katana':[21919,21915,21932],
+    'Great Katana':[21972,21963,21986],'Club':[22028,22030,22002],'Staff':[22083,22085,22106],
+    'Archery':[22109,22126,22163],'Marksmanship':[21276,22134,22164],
+  },
+  aeonic: {
+    'Hand-to-Hand':[29701,21516,21515,20515],'Dagger':[29702,21562,21585,20594],
+    'Sword':[29703,21618,20673,20695],'Great Sword':[29704,21671,21662,21694],
+    'Axe':[29705,21719,21706,21753],'Great Axe':[29706,21776,21765,20843],
+    'Scythe':[29707,21827,21815,20890],'Polearm':[29708,21880,21881,20935],
+    'Katana':[29709,21919,21915,20977],'Great Katana':[29710,21972,21963,21025],
+    'Club':[29711,22028,22030,21082],'Staff':[29712,22083,22085,21147],
+    'Archery':[29713,22109,22126,22117],'Marksmanship':[29714,21276,22134,21485],
+  },
+  relic: {
+    'Spharai':[19746,20480,20481,20509],'Mandau':[19747,20555,20556,20583],
+    'Excalibur':[19748,20645,20646,20685],'Ragnarok':[19749,20745,20746,21683],
+    'Guttler':[19750,20790,20791,21750],'Bravura':[19751,20835,20836,21756],
+    'Apocalypse':[19752,20880,20881,21808],'Gungnir':[19753,20925,20926,21857],
+    'Kikoku':[19754,20970,20971,21906],'Amanomurakumo':[19755,21015,21016,21954],
+    'Mjollnir':[19756,21060,21061,21077],'Claustrum':[19757,21135,21136,22060],
+    'Yoichinoyumi':[19759,21210,21211,22129],'Annihilator':[19758,21260,21261,22140],
+  },
+  empyrean: {
+    'Verethragna':[19805,20486,20487,20512],'Twashtar':[19806,20563,20564,20587],
+    'Almace':[19807,20653,20654,20689],'Caladbolg':[19808,20747,20748,21684],
+    'Farsha':[19809,20794,20795,21752],'Ukonvasara':[19810,20839,20840,21758],
+    'Redemption':[19811,20884,20885,21810],'Rhongomiant':[19812,20929,20930,21859],
+    'Kannagi':[19813,20974,20975,21908],'Masamune':[19814,21019,21020,21956],
+    'Gambanteinn':[19815,21064,21065,21079],'Hvergelmir':[19816,21143,21144,22064],
+    'Gandiva':[19817,21212,21213,22130],'Armageddon':[19818,21264,21265,22142],
+  },
+  mythic: {
+    'Glanzfaust':[19820,20482,20483,20510],'Kenkonken':[19836,20484,20485,20511],
+    'Vajra':[19824,20559,20560,20585],'Carnwenhan':[19828,20561,20562,20586],
+    'Terpsichore':[19837,20557,20558,20584],'Murgleis':[19823,20647,20648,20686],
+    'Burtgang':[19825,20649,20650,20687],'Tizona':[19834,20651,20652,20688],
+    'Conqueror':[19819,20837,20838,21757],'Aymur':[19827,20792,20793,21751],
+    'Liberator':[19826,20882,20883,21809],'Ryunohige':[19832,20927,20928,21858],
+    'Nagi':[19831,20972,20973,21907],'Kogarasumaru':[19830,21017,21018,21955],
+    'Yagrush':[19821,21062,21063,21078],'Nirvana':[19833,21141,21142,22063],
+    'Laevateinn':[19822,21139,21140,22062],'Tupsimati':[19838,21137,21138,22061],
+    'Gastraphetes':[19829,21246,21247,22139],'Death Penalty':[19835,21262,21263,22141],
+  },
+  ergon: {
+    'Epeolatry':[20753,null,null,21685],'Idris':[21070,null,null,21080],
   },
 };
 
@@ -378,7 +437,7 @@ const CATS = {
 // names.length === forge.length + 1 (base weapon + one result per forge step).
 // Only the two implemented paths (prime, aeonic) are populated; the rest fall back
 // to the generic retail-tier model built from the CATS[cat].forge display data.
-const REAL = {"prime":{"Hand-to-Hand":{"names":["Ajja Knuckles","Tokko Knuckles","Varga Purnikawa"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Dagger":{"names":["Ajja Knife","Crepuscular Knife","Mpu Gandring"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Sword":{"names":["Ajja Sword","Flametongue","Caliburnus"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Great Sword":{"names":["Ajja Claymore","Raetic Algol","Helheim"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Axe":{"names":["Ajja Axe","Barbarity","Spalirisos"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Great Axe":{"names":["Ajja Chopper","Hepatizon Axe","Laphria"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Scythe":{"names":["Ajja Scythe","Maliya Sickle","Foenaria"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Polearm":{"names":["Ajja Lance","Eletta Lance","Gae Buide"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Katana":{"names":["Ajja Katana","Koga Shinobi-Gatana","Dokoku"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Great Katana":{"names":["Ajja Tachi","Beryllium Tachi","Kusanagi"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Club":{"names":["Ajja Rod","Kaja Rod","Lorg Mor"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Staff":{"names":["Ajja Staff","Kaja Staff","Opashoro"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Archery":{"names":["Ajja Bow","Exalted Bow +1","Pinaka"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Marksmanship":{"names":["Pulfanxa","Holliday","Earp"],"labels":["Base · 119 I","119 II","119 III · Final"],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]}},"aeonic":{"Hand-to-Hand":{"names":["Malformed Knuckles","Ajja Knuckles","Tokko Knuckles","Godhands"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Might"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Might"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Might"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Dagger":{"names":["Malformed Knife","Ajja Knife","Crepuscular Knife","Aeneas"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Celerity"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Celerity"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Celerity"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Sword":{"names":["Malformed Sword","Ajja Sword","Flametongue","Sequence"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Glory"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Glory"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Glory"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Great Sword":{"names":["Malformed Claymore","Ajja Claymore","Raetic Algol","Lionheart"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Righteousness"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Righteousness"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Righteousness"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Axe":{"names":["Malformed Axe","Ajja Axe","Barbarity","Tri-edge"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Bravery"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Bravery"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Bravery"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Great Axe":{"names":["Malformed Greataxe","Ajja Chopper","Hepatizon Axe","Chango"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Force"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Force"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Force"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Scythe":{"names":["Malformed Scythe","Ajja Scythe","Maliya Sickle","Anguta"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Vigor"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Vigor"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Vigor"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Polearm":{"names":["Malformed Lance","Ajja Lance","Eletta Lance","Trishula"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Fortitude"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Fortitude"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Fortitude"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Katana":{"names":["Malformed Katana","Ajja Katana","Koga Shinobi-Gatana","Heishi Shorinken"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Legerity"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Legerity"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Legerity"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Great Katana":{"names":["Malformed Tachi","Ajja Tachi","Beryllium Tachi","Dojikiri Yasutsuna"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Decisiveness"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Decisiveness"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Decisiveness"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Club":{"names":["Malformed Rod","Ajja Rod","Kaja Rod","Tishtrya"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Sacrifice"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Sacrifice"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Sacrifice"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Staff":{"names":["Malformed Staff","Ajja Staff","Kaja Staff","Khatvanga"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Virtue"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Virtue"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Virtue"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Archery":{"names":["Malformed Bow","Ajja Bow","Exalted Bow +1","Fail-not"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Transcendence"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Transcendence"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Transcendence"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Marksmanship":{"names":["Malformed Culverin","Pulfanxa","Holliday","Fomalhaut"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"forge":[{"mats":[["1×","Attestation of Harmony"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Harmony"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Harmony"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]}}};
+const REAL = {"prime":{"Hand-to-Hand":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Dagger":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Sword":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Great Sword":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Axe":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Great Axe":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Scythe":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Polearm":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Katana":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Great Katana":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Club":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Staff":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Archery":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]},"Marksmanship":{"names":["","",""],"labels":["Base · 119 I","119 II","119 III · Final"],"id":null,"ids":[null,null,null],"forge":[{"mats":[["50×","Kindreds Medal"]],"gate":"Hunting League Rank V (Legend)"},{"mats":[["100×","Demons Medal"],["30,000","Reforge Marks"],["750,000,000","gil"]],"gate":"Hunting League Rank V (Legend) · All 5 Prime Armory Trials"}]}},"aeonic":{"Hand-to-Hand":{"names":["Malformed Knuckles","Ajja Knuckles","Tokko Knuckles","Godhands"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":20515,"ids":[29701,21516,21515,20515],"forge":[{"mats":[["1×","Attestation of Might"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Might"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Might"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Dagger":{"names":["Malformed Knife","Ajja Knife","Crepuscular Knife","Aeneas"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":20594,"ids":[29702,21562,21585,20594],"forge":[{"mats":[["1×","Attestation of Celerity"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Celerity"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Celerity"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Sword":{"names":["Malformed Sword","Ajja Sword","Flametongue","Sequence"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":20695,"ids":[29703,21618,20673,20695],"forge":[{"mats":[["1×","Attestation of Glory"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Glory"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Glory"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Great Sword":{"names":["Malformed Claymore","Ajja Claymore","Raetic Algol","Lionheart"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":21694,"ids":[29704,21671,21662,21694],"forge":[{"mats":[["1×","Attestation of Righteousness"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Righteousness"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Righteousness"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Axe":{"names":["Malformed Axe","Ajja Axe","Barbarity","Tri-edge"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":21753,"ids":[29705,21719,21706,21753],"forge":[{"mats":[["1×","Attestation of Bravery"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Bravery"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Bravery"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Great Axe":{"names":["Malformed Greataxe","Ajja Chopper","Hepatizon Axe","Chango"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":20843,"ids":[29706,21776,21765,20843],"forge":[{"mats":[["1×","Attestation of Force"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Force"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Force"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Scythe":{"names":["Malformed Scythe","Ajja Scythe","Maliya Sickle","Anguta"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":20890,"ids":[29707,21827,21815,20890],"forge":[{"mats":[["1×","Attestation of Vigor"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Vigor"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Vigor"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Polearm":{"names":["Malformed Lance","Ajja Lance","Eletta Lance","Trishula"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":20935,"ids":[29708,21880,21881,20935],"forge":[{"mats":[["1×","Attestation of Fortitude"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Fortitude"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Fortitude"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Katana":{"names":["Malformed Katana","Ajja Katana","Koga Shinobi-Gatana","Heishi Shorinken"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":20977,"ids":[29709,21919,21915,20977],"forge":[{"mats":[["1×","Attestation of Legerity"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Legerity"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Legerity"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Great Katana":{"names":["Malformed Tachi","Ajja Tachi","Beryllium Tachi","Dojikiri Yasutsuna"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":21025,"ids":[29710,21972,21963,21025],"forge":[{"mats":[["1×","Attestation of Decisiveness"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Decisiveness"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Decisiveness"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Club":{"names":["Malformed Rod","Ajja Rod","Kaja Rod","Tishtrya"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":21082,"ids":[29711,22028,22030,21082],"forge":[{"mats":[["1×","Attestation of Sacrifice"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Sacrifice"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Sacrifice"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Staff":{"names":["Malformed Staff","Ajja Staff","Kaja Staff","Khatvanga"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":21147,"ids":[29712,22083,22085,21147],"forge":[{"mats":[["1×","Attestation of Virtue"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Virtue"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Virtue"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Archery":{"names":["Malformed Bow","Ajja Bow","Exalted Bow +1","Fail-not"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":22117,"ids":[29713,22109,22126,22117],"forge":[{"mats":[["1×","Attestation of Transcendence"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Transcendence"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Transcendence"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]},"Marksmanship":{"names":["Malformed Culverin","Pulfanxa","Holliday","Fomalhaut"],"labels":["Base · Malformed","119 I","119 II","119 III · Aeonic"],"id":21485,"ids":[29714,21276,22134,21485],"forge":[{"mats":[["1×","Attestation of Harmony"],["25×","Riftborn Boulder"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["3×","Attestation of Harmony"],["100×","Riftborn Boulder"],["10,000×","Escha Silt"]],"gate":"Hunting League Rank IV (Champion)"},{"mats":[["10×","Attestation of Harmony"],["300×","Riftborn Boulder"],["50,000×","Escha Silt"],["24,000","Reforge Marks"]],"gate":"Hunting League Rank IV (Champion)"}]}}};
 
 // ── STATE ──────────────────────────────────────────────────────────────────────
 let activeCat = 'prime', activeFilter = 'All', selCard = null;
@@ -451,10 +510,12 @@ function resolveMatName(name, weaponType) {
 // (prime, aeonic), otherwise the generic retail-tier model.
 function getChainModel(w) {
   const real = REAL[activeCat] && REAL[activeCat][w.type];
+  const sids = STAGE_IDS[activeCat] && (STAGE_IDS[activeCat][w.type] || STAGE_IDS[activeCat][w.name]);
   if (real) {
     return {
       names:  real.names.slice(),
       labels: real.labels.slice(),
+      ids:    real.ids ? real.ids.slice() : (sids || real.names.map((_, i) => i === real.names.length - 1 ? (real.id || null) : null)),
       forge:  real.forge.map(s => ({ to: s.to, mats: s.mats.map(m => m.slice()), gate: s.gate })),
       sub:    w.type + ' · ' + w.jobs,
     };
@@ -463,6 +524,7 @@ function getChainModel(w) {
   return {
     names:  [ w.name, w.name + ' · 119', w.name + ' · 119 II', w.name + ' · 119 III' ],
     labels: [ 'Base · Earned', 'Stage I', 'Stage II', cat.s3lbl ],
+    ids:    sids || [ null, null, null, w.id || null ],
     forge:  cat.forge.map(s => ({
       to:   null,
       mats: s.mats.map(([q,n]) => [q, resolveMatName(n, w.type)]),
@@ -521,7 +583,9 @@ function buildGrid(k, filter) {
   list.forEach(w => {
     const d = document.createElement('div');
     d.className = 'wc';
-    d.innerHTML = `<div class="wc-tp">${w.type}</div><div class="wc-nm">${w.name}</div><div class="wc-jb">${w.jobs}</div>`;
+    const real = REAL[k] && REAL[k][w.type];
+    const id = (real && real.id) ? real.id : (w.id || null);
+    d.innerHTML = `<div class="wc-tp">${w.type}</div><div class="wc-nm">${w.name}</div><div class="wc-jb">${w.jobs}</div>${id ? `<div class="wc-id">#${id}</div>` : ''}`;
     d.onclick = () => { if (selCard) selCard.classList.remove('sel'); d.classList.add('sel'); selCard = d; updateChain(w); };
     grid.appendChild(d);
   });
@@ -539,11 +603,13 @@ function buildChain(model, blank) {
     const isLast = i === n - 1;
     const box = document.createElement('div');
     box.className = 'stg ' + boxClass(i, n);
-    const nm   = blank ? '—' : model.names[i];
-    const note = (i === 0 || isLast) ? (model.sub || '') : '';
+    const nm    = blank ? '—' : model.names[i];
+    const note  = (i === 0 || isLast) ? (model.sub || '') : '';
+    const stgId = (!blank && model.ids && model.ids[i]) ? model.ids[i] : null;
     box.innerHTML =
       `<div class="stg-lbl">${model.labels[i] || ''}</div>` +
       `<div class="stg-name${blank ? ' empty' : ''}" style="position:relative;z-index:1;">${nm}</div>` +
+      (stgId ? `<div class="stg-id">#${stgId}</div>` : '') +
       `<div class="stg-note" style="position:relative;z-index:1;">${note}</div>`;
     if (isLast) box.insertBefore(ec, box.firstChild);
     chain.appendChild(box);
@@ -579,6 +645,6 @@ selectCat('prime');
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 919d63db563a -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: dd920b064bc4 -->
+_Last updated: 2026-07-06 17:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

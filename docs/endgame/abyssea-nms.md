@@ -151,11 +151,11 @@ Infamy is spent at the **Infamy Vendor** in <!--npc:infamy_vendor-->Leafallia<!-
 
 | Reward | Infamy | Heroes kills _(party, no trusts — ×3.0)_ |
 |---|---:|---:|
-| Cheapest item | 200 | 2 kills |
-| Standard endgame weapon _(Relic / Mythic / Aeonic)_ | 5,000 | 28 kills |
-| Most expensive item | 15,000 | 84 kills |
+| Cheapest item | 250 | 2 kills |
+| Standard endgame weapon _(Relic / Mythic / Aeonic)_ | 10,000 | 56 kills |
+| Most expensive item | 10,000 | 56 kills |
 
-A full party clearing **Heroes** NMs without trusts earns **180 Infamy per kill** (the ×3.0 rate from the reward table above) — so a standard endgame weapon works out to roughly **28 kills**.
+A full party clearing **Heroes** NMs without trusts earns **180 Infamy per kill** (the ×3.0 rate from the reward table above) — so a standard endgame weapon works out to roughly **56 kills**.
 <!-- DOCGEN:END id="abyssea-infamy-costs" -->
 
 ---
@@ -170,6 +170,6 @@ A full party clearing **Heroes** NMs without trusts earns **180 Infamy per kill*
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c978a2d9918f -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: 33b2a5f3fc94 -->
+_Last updated: 2026-07-06 17:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

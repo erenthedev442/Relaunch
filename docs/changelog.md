@@ -1009,3 +1009,10 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **Combat** — Raise magic/spell damage cap 99,999 -> 131,071
     - **Combat** — Raise damage cap 99,999 -> 131,071 (FFXIAH client packet max)
     - **Infamy** — Remove phantom 'Knobkierrie' vendor entry (id 26072 doesn't exist)
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: bb465561e1e6 -->
+_Last updated: 2026-07-06 17:42 PDT_
+<!-- DOCGEN:END id="last-updated" -->

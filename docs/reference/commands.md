@@ -2,13 +2,13 @@
 
 These chat commands are available to every player on this server (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 88
+**Total player-accessible commands:** 91
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    59 of the commands below are **unique to this server** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    62 of the commands below are **unique to this server** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -32,6 +32,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!capacity` | string | Warps you to a Capacity Point farm camp. Usage: !capacity            -> Bibiki Bay (default) !capacity bibiki     -> Bibiki Bay !capacity ranperre   -> King Ranperre's Tomb Landing spots MUST stay in sync with warpPos in the corresponding catalog files (capacity_farm_catalog.lua / ranperre_farm_catalog.lua). | :material-puzzle: **custom** |
 | `!checkexpbonus` | — | Prints your current EXP_BONUS mod (gear/augments that boost EXP gain) and the per-kill effect it has. Useful for verifying that an EXP augment is actually attached to the player after equipping the piece. |  |
 | `!dig` | — | Treasure Hunting - dig for the strongbox your treasure map points at. Maps drop from Hunting League kills. | :material-puzzle: **custom** |
+| `!diwarp` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!empower` | string, string | View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC in Leafallia (see SpellSkillMastery.lua). | :material-puzzle: **custom** |
 | `!events` | — | Lists upcoming and active seasonal bonus mark events from the catalog.  Shows event name, multiplier, start/end dates, and status (active / upcoming / expired). | :material-puzzle: **custom** |
 | `!expcamp` | string | _(no description)_ | :material-puzzle: **custom** |
@@ -68,6 +69,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!optin` | — | Opts the player INTO leaderboards and Discord tracking. This is the default state for new characters. | :material-puzzle: **custom** |
 | `!optout` | — | Opts the player OUT of leaderboards and Discord tracking. This character is excluded from every leaderboard entirely. | :material-puzzle: **custom** |
 | `!paragon` | — | _(no description)_ |  |
+| `!petstats` | — | Prints a detailed stat snapshot for your cursor-targeted mob, Trust, or player-owned pet. | :material-puzzle: **custom** |
 | `!pos` | string | Sets the players position. If none is given, prints out the position instead. |  |
 | `!primevoucher` | string, int | [GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in Leafallia (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it. | :material-puzzle: **custom** |
 | `!profile` | string | Displays a competitive stat summary for a player.  With no argument shows your own stats; with a name shows that player's (they must be online - offline players can't be queried via Lua). | :material-puzzle: **custom** |
@@ -83,6 +85,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!reforged` | — | Warps you to the Reforge Armor system NPCs in Gwora-Corridor. |  |
 | `!release` | string | Releases the player from current events. |  |
 | `!releaseme` | string, string | Force-clears stuck event / NPC-sequence state on a player. |  |
+| `!reroll` | string, string | Gamble-reroll the augment magnitudes on an EQUIPPED item. | :material-puzzle: **custom** |
 | `!shop` | string, string | _(no description)_ | :material-puzzle: **custom** |
 | `!streak` | — | Shows the current kill streak count, active bonus tier, and seconds remaining in the 5-minute window before reset. | :material-puzzle: **custom** |
 | `!thcheck` | — | _(no description)_ | :material-puzzle: **custom** |
@@ -279,6 +282,10 @@ Treasure Hunting - dig for the strongbox your treasure map points at. Maps drop 
 
 **Usage:** `dig`
 
+### `!diwarp`  _(custom)_
+
+**Usage:** `diwarp`
+
 ### `!empower`  _(custom)_
 
 View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC in Leafallia (see SpellSkillMastery.lua).
@@ -463,6 +470,12 @@ Opts the player OUT of leaderboards and Discord tracking. This character is excl
 
 **Usage:** `paragon`
 
+### `!petstats`  _(custom)_
+
+Prints a detailed stat snapshot for your cursor-targeted mob, Trust, or player-owned pet.
+
+**Usage:** `targetstats`
+
 ### `!primevoucher`  _(custom)_
 
 [GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in Leafallia (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it.
@@ -550,6 +563,14 @@ Releases the player from current events.
 Force-clears stuck event / NPC-sequence state on a player.
 
 **Usage:** `releaseme [target] [mode]`
+
+**Parameter types:** string, string
+
+### `!reroll`  _(custom)_
+
+Gamble-reroll the augment magnitudes on an EQUIPPED item.
+
+**Usage:** `reroll`
 
 **Parameter types:** string, string
 
@@ -664,6 +685,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a870fbf51070 -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: c21c7ec4383e -->
+_Last updated: 2026-07-06 17:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

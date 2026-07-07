@@ -171,6 +171,6 @@ Each floor NM drops one Unappraised chest; take it to the in-instance appraiser 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9a09020639c4 -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: 849fc84faafc -->
+_Last updated: 2026-07-06 17:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -2,7 +2,7 @@
 
 _Spells are sorted by ID._
 
-**Spells in this category:** 190
+**Spells in this category:** 193
 
 | ID | Name | Skill | Element | MP | Cast | Recast | Jobs |
 |---:|---|---|---|---:|---:|---:|---|
@@ -188,6 +188,9 @@ _Spells are sorted by ID._
 | 854 | Water VI | Elemental | Water | 266 | 10.5s | 60.0s | — |
 | 856 | Endark II | Dark | Dark | 36 | 3.0s | 30.0s | DRK 99 |
 | 880 | Drain III | Dark | Dark | 53 | 5.0s | 180.0s | DRK 99 |
+| 881 | Aspir III | Dark | Dark | 5 | 3.0s | 75.0s | — |
+| 882 | Distract III | Enfeebling | Ice | 68 | 3.0s | 10.0s | — |
+| 883 | Frazzle III | Enfeebling | Dark | 74 | 3.0s | 10.0s | — |
 | 885 | Geohelix II | Elemental | Earth | 78 | 7.5s | 60.0s | SCH 99 |
 | 886 | Hydrohelix II | Elemental | Water | 78 | 7.5s | 60.0s | SCH 99 |
 | 887 | Anemohelix II | Elemental | Wind | 78 | 7.5s | 60.0s | SCH 99 |
@@ -196,3 +199,10 @@ _Spells are sorted by ID._
 | 890 | Ionohelix II | Elemental | Thunder | 78 | 7.5s | 60.0s | SCH 99 |
 | 891 | Noctohelix II | Elemental | Dark | 78 | 7.5s | 60.0s | SCH 99 |
 | 892 | Luminohelix II | Elemental | Light | 78 | 7.5s | 60.0s | SCH 99 |
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: f1b602a17890 -->
+_Last updated: 2026-07-06 17:42 PDT_
+<!-- DOCGEN:END id="last-updated" -->

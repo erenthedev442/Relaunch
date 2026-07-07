@@ -76,4 +76,6 @@ Domain Points spend at the exchange NPC in the hub. Check the NPC's menu for the
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 5c3f9ad88f16 -->
+_Last updated: 2026-07-06 17:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

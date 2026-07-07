@@ -2,7 +2,7 @@
 
 _Spells are sorted by ID._
 
-**Spells in this category:** 187
+**Spells in this category:** 189
 
 | ID | Name | Skill | Element | MP | Cast | Recast | Jobs |
 |---:|---|---|---|---:|---:|---:|---|
@@ -192,4 +192,13 @@ _Spells are sorted by ID._
 | 845 | Flurry | Enhancing | Wind | 40 | 3.0s | 20.0s | RDM 48 |
 | 846 | Flurry II | Enhancing | Wind | 80 | 3.0s | 20.0s | RDM 96 |
 | 848 | Reraise IV | Healing | Light | 150 | 7.0s | 60.0s | — |
+| 884 | Addle II | Enfeebling | Fire | 46 | 2.0s | 20.0s | — |
+| 894 | Refresh III | Enhancing | Light | 65 | 5.0s | 27.0s | — |
 | 895 | Temper II | Enhancing | Light | 72 | 7.0s | 36.0s | RDM 99 |
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 67b448fc38e6 -->
+_Last updated: 2026-07-06 17:42 PDT_
+<!-- DOCGEN:END id="last-updated" -->

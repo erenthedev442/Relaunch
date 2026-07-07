@@ -43,7 +43,7 @@ Retail FFXI is a masterpiece buried under 20 years of time-gating. Most private 
 
 :shield: **Reforge system** — Three parallel NM ladders (AF, Relic, Empy) that upgrade your armor from base all the way to +3. Best-in-slot is earnable, not bought.
 
-:gem: **Augment Moogle** — 228 augment options. Trade catalysts from NM kills to permanently customize your gear in ways retail never allowed.
+:gem: **Augment Moogle** — 147 augment options. Trade catalysts from NM kills to permanently customize your gear in ways retail never allowed.
 
 :calendar: **Weekly Hunt Board** — Five rotating objectives every week. Complete all five for a big bonus. Always something to do.
 
@@ -115,7 +115,7 @@ A passive reputation layer on top of every NM track. Each guild — AF, Relic, E
 **Reforge Gear (+3 from NM kills)**
 Three independent NM ladders — AF Marks from Sky Gods, Relic Marks from Unity NMs, Empy Marks from Abyssea NMs — each upgrades a full armor set from base to +1 to +2 to +3. No RNG. No gacha. Just kills.
 
-**Augment Moogle (228 augment options)**
+**Augment Moogle (147 augment options)**
 Catalysts drop from monsters across the world. Trade them to the Augment Moogle to permanently apply stat bonuses to your gear. Pair with the Augment Sage to push augment strength even further.
 
 **Voidwatch**

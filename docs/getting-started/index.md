@@ -12,8 +12,6 @@ New here? Here's the path from zero to playing:
 
 If you've played retail FFXI before, the client setup is the same — only the server you point at changes.
 
-Once you're in, the **[Player Portal](https://portal.ffxi-legendary.com)** lets you view your profile, inventory, and character status from any browser — no game client needed.
-
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->

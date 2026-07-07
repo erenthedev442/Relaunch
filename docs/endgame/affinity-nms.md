@@ -29,30 +29,17 @@ Twenty-four of Vana'diel's most legendary Notorious Monsters — HNMs, Sky Gods,
 <!-- DOCGEN:BEGIN id="affinity-nm-roster" -->
 | NM | Zone | Trophy Item | Augment Category |
 |---|---|---|---|
-| Behemoth | Batallia Downs | Behemoth Hide | STR |
-| King Behemoth | Behemoth's Dominion | Behemoth Horn | Attack |
-| King Arthro | Kuftal Tunnel | Emperor Arthro's Shell | DEX |
-| Simurgh | Rolanberry Fields | Giant Bird Plume | Accuracy |
-| Adamantoise | Valley of Sorrows | Adamantoise Shell | VIT |
+| Behemoth | Batallia Downs | Behemoth Hide | Base stats |
+| King Behemoth | Behemoth's Dominion | Behemoth Horn | Melee |
+| Ouryu | Riverne Site B01 | Dragon Talon | Magic |
 | Genbu | Ru'Aun Gardens | Seal of Genbu | Defense |
-| Roc | Sauromugue Champaign | Giant Bird Feather | AGI |
-| Seiryu | Ru'Aun Gardens | Seal of Seiryu | Evasion |
-| Byakko | Ru'Aun Gardens | Seal of Byakko | Haste |
-| Aspidochelone | Cape Teriggan | Spirit Turtle Shell | INT |
-| Ouryu | Riverne Site B01 | Dragon Talon | Magic ATK |
-| Bune | The Boyahda Tree | Vial of Chimera Blood | MND |
-| Phoenix | Riverne Site A01 | Phoenix Feather | Healing |
-| Suzaku | Ru'Aun Gardens | Seal of Suzaku | CHR |
-| Kirin | Shrine of Ru'Avitau | Kirin's Mane | Enmity |
-| Fafnir | Dragon's Aery | Fafnir's Scale | HP |
-| Nidhogg | Dragon's Aery | Handful of Nidhogg's Scales | Regen |
-| Vrtra | Ifrit's Cauldron | Wyrm Beard | MP |
-| Tiamat | Uleguerand Range | Wyrm Horn | Refresh |
-| King Vinegarroon | Western Altepa Desert | Scorpion Stinger | Pet |
-| Khimaira | King Ranperre's Tomb | Khimaira Mane | Ele Resist |
-| Cerberus | King Ranperre's Tomb | Cerberus Hide | Status |
+| Byakko | Ru'Aun Gardens | Seal of Byakko | Delays |
+| Aspidochelone | Cape Teriggan | Spirit Turtle Shell | Duration |
+| King Vinegarroon | Western Altepa Desert | Scorpion Stinger | Pets |
+| Phoenix | Riverne Site A01 | Phoenix Feather | Potency |
 | Absolute Virtue | Ru'Aun Gardens | Attestation of Virtue | Skills |
-| Proto-Omega | Ru'Aun Gardens | Omega Ring | WSD+ |
+| Proto-Omega | Temenos | Omega Ring | Exp/Cap Points |
+| Kirin | Shrine of Ru'Avitau | Kirin's Mane | Job specific niche utilities |
 <!-- DOCGEN:END id="affinity-nm-roster" -->
 
 ---
@@ -75,6 +62,6 @@ These NMs are **stat-boosted** beyond their retail versions: 6× base HP, +4,000
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: df49d64e0039 -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: b86aad551790 -->
+_Last updated: 2026-07-06 17:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -5,7 +5,7 @@
 New to augmenting and not sure where to begin? This is the plain-English guide. The two pages after it — [Augment Moogle](augments.md) and [Augment Sage](augment-sage.md) — are the full reference with every number; **this page is just how to start.**
 
 !!! tip "The one-sentence version"
-    Augmenting lets you **stamp custom stat bonuses onto any piece of gear** — up to 5 bonuses per piece — by trading a cheap "catalyst" item to the **Augment Moogle** in {{npc:augment_moogle}}. It's the single biggest source of character power on the Relaunch server.
+    Augmenting lets you **stamp custom stat bonuses onto any piece of gear** — up to 5 bonuses per piece — by trading a cheap "catalyst" item to the **Augment Moogle** in <!--npc:augment_moogle-->Leafallia<!--/npc-->. It's the single biggest source of character power on the Relaunch server.
 
 ## What it is & what it does
 
@@ -19,7 +19,7 @@ Let's add some **Attack** to a piece of gear. (Any stat works the same way — t
 
 1. **Farm the catalysts.** Every catalyst **drops from one specific monster** (~50% per kill) — catalysts are **no longer bought for gil**. The "Attack" catalyst is **Black Tiger Hide**; its assigned mob is **Divine Inciter** (a level ~70 mob) — kill it until you have **5×**. Every augment is available at every tier — see [Catalyst access](#catalyst-access) below.
 2. **Have 10,000 gil** in your inventory (the Augment Moogle's flat trade cost, no matter how many catalysts).
-3. **Go to {{npc:augment_moogle}}** and find the **Augment Moogle** (it's in the row of moogles).
+3. **Go to <!--npc:augment_moogle-->Leafallia<!--/npc-->** and find the **Augment Moogle** (it's in the row of moogles).
 4. **Trade** the gear piece **+ your 5 catalysts** to the Moogle. It shows you what's about to be applied.
 5. **Confirm.** It takes the 10,000 gil and hands your gear back with **5 lines of Attack** stamped on it.
 
@@ -70,12 +70,12 @@ The crystalize chance rises with your **Augment Sage rank** — from **5%** at r
 
 ## Re-rolling in place with `!reroll`
 
-Once a piece already has the augment **types** you want, you don't have to re-farm five catalysts just to chase bigger numbers. The **`!reroll`** command re-gambles the *magnitudes* of the augments already on an **equipped** item — the same roll math as the Moogle (your tier band, mastery floor, affinity double-roll, and crits all apply), but it keeps your existing lines and costs only **gil + one catalyst**.
+Once a piece already has the augment **types** you want, you don't have to re-farm five catalysts just to chase bigger numbers. The **`!reroll`** command re-gambles the *magnitudes* of the augments already on an **equipped** item — the same roll math as the Moogle (your tier band, mastery floor, affinity double-roll, and crits all apply), but it keeps your existing lines and costs **only Infamy** — no gil, no catalyst.
 
-| | Augment Moogle (trade in {{npc:augment_moogle}}) | `!reroll <slot>` (equipped item) |
+| | Augment Moogle (trade in <!--npc:augment_moogle-->Leafallia<!--/npc-->) | `!reroll <slot>` (equipped item) |
 |---|---|---|
 | **Changes** | Overwrites lines with the catalyst **types** you trade | Keeps the types, re-rolls the **numbers** |
-| **Cost** | 10,000 gil flat + up to 5 catalysts | Per-tier gil (below) + **1** matching catalyst |
+| **Cost** | 10,000 gil flat + up to 5 catalysts | Per-tier **Infamy** (below) — no gil, no catalyst |
 | **Reach for it to** | Add or change *which* stats sit on the gear | Fish for higher rolls on gear you already like |
 
 Both are **rank-floor protected** (never roll below `band min + your mastery rank`) and **capped at your tier band**, so neither can power-creep past your tier's ceiling — reroll is purely a cheaper way to re-fish the numbers you already have.
@@ -86,20 +86,20 @@ Both also **respect crystalized slots** — a locked line is never re-rolled or 
 
 1. **Equip** the item you want to improve.
 2. Type **`!reroll <slot>`** (e.g. `!reroll head`) to **preview** — it lists each augment, the roll range, your floor, your crit %, and the cost. Nothing is charged.
-3. Type **`!reroll <slot> confirm`** to commit — it charges the gil + 1 catalyst and re-rolls every line at once.
+3. Type **`!reroll <slot> confirm`** to commit — it charges the Infamy and re-rolls every line at once.
 4. **Re-equip** the item to apply the fresh values.
 
-Slots: `main sub ranged ammo head body hands legs feet neck waist ear1 ear2 ring1 ring2 back`. The catalyst it consumes must match **one of the augments already on the item** — and you have to be holding it.
+Slots: `main sub ranged ammo head body hands legs feet neck waist ear1 ear2 ring1 ring2 back`.
 
-**Reroll cost by Augment Tier** (plus the one matching catalyst):
+**Reroll cost by Augment Tier** (Infamy only):
 
 | Augment Tier | Reroll cost |
 |---|---:|
-| **T1** | 25,000 gil |
-| **T2** | 50,000 gil |
-| **T3** | 100,000 gil |
-| **T4** | 175,000 gil |
-| **T5** | 250,000 gil |
+| **T1** | 50 Infamy |
+| **T2** | 100 Infamy |
+| **T3** | 200 Infamy |
+| **T4** | 350 Infamy |
+| **T5** | 500 Infamy |
 
 Because every line re-rolls together, a **crit** (or a guaranteed one from a **Maat's Cap**) turns a single reroll into a perfect roll of the *whole piece*. And since rolls are floor-protected, rerolling after a **tier-up** or a **mastery rank-up** only ever lifts your weakest lines — it's the cheap way to keep already-good gear current.
 
@@ -125,3 +125,10 @@ Every augment catalyst (146 total) is available at **every Augment Tier**. Your 
 ---
 
 **Ready for the details?** → [Augment Moogle](augments.md) (the full catalyst catalog & exact numbers) · [Augment Sage](augment-sage.md) (ranking up & affinities)
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 5962c92f1387 -->
+_Last updated: 2026-07-06 17:42 PDT_
+<!-- DOCGEN:END id="last-updated" -->

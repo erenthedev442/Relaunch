@@ -4,10 +4,10 @@
 
 | | |
 |---|---|
-| **Server IP** | `172.215.213.23` |
-| **Data port** | `54240` |
-| **Auth port** | `54241` |
-| **View port** | `54011` |
+| **Server IP** | `15.204.112.102` |
+| **Data port** | `54230` |
+| **Auth port** | `54231` |
+| **View port** | `54001` |
 
 ---
 
@@ -20,7 +20,7 @@ Windower 4 has no "Login Server" field for private servers. Instead, you point a
 3. Set **Executable** to `xiloader.exe` (use the full path if Windower can't find it).
 4. Set **Arguments** to:
    ```
-   --server 172.215.213.23 --dataport 54240 --authport 54241 --viewport 54011
+   --server 15.204.112.102 --dataport 54230 --authport 54231 --viewport 54001
    ```
 5. Save and launch.
 
@@ -29,14 +29,14 @@ Prefer to edit `Windower4/settings/settings.xml` by hand? The profile looks like
 ```xml
 <profile name="FJBRelaunch">
   <executable>xiloader.exe</executable>
-  <args>--server 172.215.213.23 --dataport 54240 --authport 54241 --viewport 54011</args>
+  <args>--server 15.204.112.102 --dataport 54230 --authport 54231 --viewport 54001</args>
 </profile>
 ```
 
 !!! tip "Skip the login prompt"
     Add your credentials to log in automatically:
     ```
-    --server 172.215.213.23 --dataport 54240 --authport 54241 --viewport 54011 --user YOURNAME --pass YOURPASSWORD
+    --server 15.204.112.102 --dataport 54230 --authport 54231 --viewport 54001 --user YOURNAME --pass YOURPASSWORD
     ```
 
 ---
@@ -45,12 +45,12 @@ Prefer to edit `Windower4/settings/settings.xml` by hand? The profile looks like
 
 1. Open the **Ashita** launcher.
 2. Select your profile (or create a new one) and click **Edit**.
-3. Under **Login Server**, enter `172.215.213.23`.
-4. Set the **Data port** to `54240`, **Auth port** to `54241`, and **View port** to `54011`.
+3. Under **Login Server**, enter `15.204.112.102`.
+4. Set the **Data port** to `54230`, **Auth port** to `54231`, and **View port** to `54001`.
 5. Save the profile and launch.
 
 !!! tip
-    If Ashita uses a `boot.ini` or boot script, set `--server 172.215.213.23 --dataport 54240 --authport 54241 --viewport 54011`.
+    If Ashita uses a `boot.ini` or boot script, set `--server 15.204.112.102 --dataport 54230 --authport 54231 --viewport 54001`.
 
 ---
 
@@ -68,6 +68,6 @@ Prefer to edit `Windower4/settings/settings.xml` by hand? The profile looks like
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7c73955962f6 -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: f3516db0333f -->
+_Last updated: 2026-07-06 17:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -3,7 +3,7 @@
 -- desc: Gamble-reroll the augment magnitudes on an EQUIPPED item.
 --
 --   !reroll <slot>          -> preview: shows current lines, cost, odds
---   !reroll <slot> confirm  -> commit the reroll (charges gil + 1 catalyst)
+--   !reroll <slot> confirm  -> commit the reroll (charges Infamy)
 --
 -- Keeps the item's existing augment TYPES and re-rolls each line's magnitude
 -- over the player's current tier band, RANK-FLOOR PROTECTED:
@@ -16,7 +16,7 @@
 -- your mastery floor. No power creep: capped at the tier-band ceiling, exactly
 -- like the Augment Moogle.
 --
--- Cost: gil (scales by tier) + 1 catalyst matching one of the item's augments.
+-- Cost: Infamy (scales by tier). Purely Infamy -- no gil, no catalyst.
 --
 -- Write path: exdata is patched in place via setExDataRaw (there is no Lua
 -- setAugment binding), matching the AugmentStandard layout:
@@ -43,8 +43,11 @@ local TIER_SLICES =
     { min = 25, max = 31 },   -- T5
 }
 
--- Gil cost per reroll, indexed by Augment Tier (1-5).
-local GIL_BY_TIER = { 25000, 50000, 100000, 175000, 250000 }
+-- Infamy cost per reroll, indexed by Augment Tier (1-5). PURELY INFAMY now --
+-- no gil, no catalyst (owner request 2026-07-06): rerolling high-tier augments
+-- is gated entirely behind farming Infamy. Tune to your Infamy economy.
+local INFAMY_CV      = 'Infamy'
+local INFAMY_BY_TIER = { 50, 100, 200, 350, 500 }
 
 -- CRYSTALIZED AUGMENTS (mirror Augment_Moogle.lua). The per-slot lock bitmask
 -- lives in exdata byte 13 (byte 12 stays 0 for a blank-decoding signature); a
@@ -159,20 +162,11 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
         return
     end
 
-    local rank     = player:getCharVar('Augment_Mastery') or 0
-    local slice    = TIER_SLICES[tier] or TIER_SLICES[1]
-    local rollFloor = math.min(slice.min + rank, slice.max)
-    local gilCost  = GIL_BY_TIER[tier] or GIL_BY_TIER[#GIL_BY_TIER]
-
-    -- Find one catalyst the player holds that matches one of the item's lines.
-    local payCatId, payCatName
-    for _, ln in ipairs(lines) do
-        if ln.def and ln.def.catId and player:getItemCount(ln.def.catId) > 0 then
-            payCatId   = ln.def.catId
-            payCatName = ln.def.label
-            break
-        end
-    end
+    local rank       = player:getCharVar('Augment_Mastery') or 0
+    local slice      = TIER_SLICES[tier] or TIER_SLICES[1]
+    local rollFloor  = math.min(slice.min + rank, slice.max)
+    local infamyCost = INFAMY_BY_TIER[tier] or INFAMY_BY_TIER[#INFAMY_BY_TIER]
+    local haveInfamy = player:getCharVar(INFAMY_CV) or 0
 
     -- PREVIEW (anything other than an explicit "confirm").
     if tostring(confirmArg or ''):lower() ~= 'confirm' then
@@ -189,22 +183,14 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
         if canCrystalize and (CRYSTAL_CHANCE[rank] or 0) > 0 then
             player:printToPlayer(string.format('A max roll can crystalize (lock) at %d%% (Sage rank %d).', math.floor((CRYSTAL_CHANCE[rank] or 0) * 100), rank), CHANNEL)
         end
-        player:printToPlayer(string.format('Cost: %d gil + 1 catalyst. Rank-floor protected (never below %d).', gilCost, rollFloor), CHANNEL)
-        if payCatId then
-            player:printToPlayer(string.format('Consumes 1x %s.  Type  !reroll %s confirm  to gamble.', payCatName, tostring(slotArg)), CHANNEL)
-        else
-            player:printToPlayer('You hold no catalyst matching this item -- reroll is blocked.', CHANNEL)
-        end
+        player:printToPlayer(string.format('Cost: %d Infamy (you have %d). Rank-floor protected (never below %d).', infamyCost, haveInfamy, rollFloor), CHANNEL)
+        player:printToPlayer(string.format('Type  !reroll %s confirm  to gamble.', tostring(slotArg)), CHANNEL)
         return
     end
 
-    -- CONFIRM: validate cost.
-    if payCatId == nil then
-        player:printToPlayer('[Reroll] You need a catalyst matching one of this item\'s augments.', CHANNEL)
-        return
-    end
-    if player:getGil() < gilCost then
-        player:printToPlayer(string.format('[Reroll] You need %d gil (you have %d).', gilCost, player:getGil()), CHANNEL)
+    -- CONFIRM: validate cost (purely Infamy).
+    if haveInfamy < infamyCost then
+        player:printToPlayer(string.format('[Reroll] You need %d Infamy (you have %d).', infamyCost, haveInfamy), CHANNEL)
         return
     end
 
@@ -255,17 +241,16 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
         item:setExDataRaw({ [SIG_HEAD_BYTE] = 0, [LOCK_MASK_BYTE] = newMask })
     end
 
-    -- Charge.
-    player:delGil(gilCost)
-    player:delItem(payCatId, 1)
+    -- Charge (purely Infamy).
+    player:setCharVar(INFAMY_CV, haveInfamy - infamyCost)
 
     -- Force a fresh mod application: drop the item to inventory so re-equipping
     -- re-reads the patched exdata (there is no in-place mod-refresh binding).
     pcall(function() player:unequipItem(slot) end)
 
     -- Report.
-    player:printToPlayer(string.format('[Reroll]%s %s reforged for %d gil + 1x %s:',
-        isCrit and ' *CRITICAL!*' or '', item:getName(), gilCost, payCatName), CHANNEL)
+    player:printToPlayer(string.format('[Reroll]%s %s reforged for %d Infamy:',
+        isCrit and ' *CRITICAL!*' or '', item:getName(), infamyCost), CHANNEL)
     for _, s in ipairs(summary) do
         if s.locked then
             player:printToPlayer(string.format('  %s : %d   (crystalized, kept)', s.lbl, s.old), CHANNEL)

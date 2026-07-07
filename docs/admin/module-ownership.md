@@ -178,3 +178,9 @@ Deep chains are not inherently bugs — most are legitimate `super()` chains —
 | `world_boss.lua` | 2 | — | — |
 | `world_first_announcements.lua` | 5 | — | — |
 
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 8be05ade27b6 -->
+_Last updated: 2026-07-06 17:42 PDT_
+<!-- DOCGEN:END id="last-updated" -->

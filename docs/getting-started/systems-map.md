@@ -89,7 +89,7 @@ Killing these NMs earns **AF / Relic / Empy Marks** — the currency for the Ref
 
 The **Affinity NM** system bridges boss content and augmenting:
 
-1. Kill one of the **24 always-up Affinity NMs** (classic HNMs, back up 30 seconds after each kill)
+1. Kill one of the **11 always-up Affinity NMs** (classic HNMs, back up 30 seconds after each kill)
 2. The NM drops its unique **trophy**
 3. Take the trophy to the **Augment Sage** at `!leaf` and register the affinity (requires Hunting League Rank 3, costs 1,000 Hunt Marks)
 4. Every augment roll in that stat category now **rolls twice and keeps the better result**
@@ -181,7 +181,7 @@ The **Prime Armory** at `!leaf` forges a Prime Weapon after **5 trials** — 12 
 | **AF / Relic / Empy Marks** | Abyssea NMs, Unity Concord, HNM Kings | Reforge Vendor — upgrade armor to +1 / +2 / +3 |
 | **Infamy** | Invasions, Apex Trials, The Gauntlet | Infamy Vendor (BiS gear) |
 | **Paragon Points** | Apex Trials, The Gauntlet (25/clear) | Paragon Board — permanent account-wide stat bonuses |
-| **Affinity Trophies** | Kill one of the 24 Affinity NMs | Augment Sage registration — better rolls in that stat category |
+| **Affinity Trophies** | Kill one of the 11 Affinity NMs | Augment Sage registration — better rolls in that stat category |
 | **Mastery Sigils** | Regional buff via `!buff` grants the current zone's Sigil | Prime Armory trials, Spell & Skill Mastery empowers |
 | **Gil** | Quests, crafting, drops, The Gauntlet (250,000 on full clear) | AH, consumables, crafting materials, NPC vendors |
 
@@ -191,6 +191,6 @@ The **Prime Armory** at `!leaf` forges a Prime Weapon after **5 trials** — 12 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a88945588934 -->
-_Last updated: 2026-07-06 06:28 PDT_
+<!-- content-hash: d92111383db5 -->
+_Last updated: 2026-07-06 17:42 PDT_
 <!-- DOCGEN:END id="last-updated" -->

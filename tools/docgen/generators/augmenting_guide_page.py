@@ -188,7 +188,7 @@ def _render(d: dict) -> str:
     crit      = d["crit"]
     n_ranks   = d["n_ranks"]
     aff_rank, aff_cost = d["aff_gate"]
-    reroll_gil = d["reroll_gil"]      # [gil per tier] | None
+    reroll_infamy = d["reroll_infamy"]      # [gil per tier] | None
     crystal    = d["crystal"]         # [chance per Sage rank 0..N] | []
     scour_gil  = d["scour_gil"]       # int | None
 
@@ -412,7 +412,7 @@ def _render(d: dict) -> str:
                 "Moogle to strip every augment, crystalized or not, and start anew."
             )
         A("")
-    if reroll_gil:
+    if reroll_infamy:
         A("## Re-rolling in place with `!reroll`")
         A("")
         A(
@@ -421,8 +421,8 @@ def _render(d: dict) -> str:
             "**`!reroll`** command re-gambles the *magnitudes* of the augments "
             "already on an **equipped** item — the same roll math as the Moogle "
             "(your tier band, mastery floor, affinity double-roll, and crits all "
-            "apply), but it keeps your existing lines and costs only **gil + one "
-            "catalyst**."
+            "apply), but it keeps your existing lines and costs **only Infamy** — "
+            "no gil, no catalyst."
         )
         A("")
         A("| | Augment Moogle (trade in {{npc:augment_moogle}}) | `!reroll <slot>` (equipped item) |")
@@ -430,7 +430,7 @@ def _render(d: dict) -> str:
         A("| **Changes** | Overwrites lines with the catalyst **types** you trade "
           "| Keeps the types, re-rolls the **numbers** |")
         A(f"| **Cost** | {_fmt(gil)} gil flat + up to {max_cats} catalysts "
-          f"| Per-tier gil (below) + **1** matching catalyst |")
+          f"| Per-tier **Infamy** (below) — no gil, no catalyst |")
         A("| **Reach for it to** | Add or change *which* stats sit on the gear "
           "| Fish for higher rolls on gear you already like |")
         A("")
@@ -456,24 +456,22 @@ def _render(d: dict) -> str:
             "cost. Nothing is charged."
         )
         A(
-            "3. Type **`!reroll <slot> confirm`** to commit — it charges the gil + "
-            "1 catalyst and re-rolls every line at once."
+            "3. Type **`!reroll <slot> confirm`** to commit — it charges the Infamy "
+            "and re-rolls every line at once."
         )
         A("4. **Re-equip** the item to apply the fresh values.")
         A("")
         A(
             "Slots: `main sub ranged ammo head body hands legs feet neck waist "
-            "ear1 ear2 ring1 ring2 back`. The catalyst it consumes must match "
-            "**one of the augments already on the item** — and you have to be "
-            "holding it."
+            "ear1 ear2 ring1 ring2 back`."
         )
         A("")
-        A("**Reroll cost by Augment Tier** (plus the one matching catalyst):")
+        A("**Reroll cost by Augment Tier** (Infamy only):")
         A("")
         A("| Augment Tier | Reroll cost |")
         A("|---|---:|")
-        for i, cost in enumerate(reroll_gil, start=1):
-            A(f"| **T{i}** | {_fmt(cost)} gil |")
+        for i, cost in enumerate(reroll_infamy, start=1):
+            A(f"| **T{i}** | {_fmt(cost)} Infamy |")
         A("")
         A(
             "Because every line re-rolls together, a **crit** (or a guaranteed one "
@@ -624,15 +622,15 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
         example = _resolve_example(repo_root, entries)
 
-        # !reroll gil cost ladder (per Augment Tier). Fail-safe: if the command
-        # or its GIL_BY_TIER table is missing, the reroll section is dropped
+        # !reroll Infamy cost ladder (per Augment Tier). Fail-safe: if the command
+        # or its INFAMY_BY_TIER table is missing, the reroll section is dropped
         # rather than invented.
-        reroll_gil = None
+        reroll_infamy = None
         if reroll_text:
-            rm = re.search(r"GIL_BY_TIER\s*=\s*\{([^}]*)\}", reroll_text)
+            rm = re.search(r"INFAMY_BY_TIER\s*=\s*\{([^}]*)\}", reroll_text)
             if rm:
                 nums = [int(x) for x in re.findall(r"\d+", rm.group(1))]
-                reroll_gil = nums or None
+                reroll_infamy = nums or None
 
         data = {
             "gil":              int(gil_m.group(1)),
@@ -647,7 +645,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             "crit":             _parse_mult_table(sage_text, "critChance"),
             "n_ranks":          len(_parse_sage_ranks(sage_text)),
             "aff_gate":         _parse_affinity_gate(aff_text),
-            "reroll_gil":       reroll_gil,
+            "reroll_infamy":       reroll_infamy,
             "crystal":          crystal,
             "scour_gil":        scour_gil,
         }
@@ -668,8 +666,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         if ex else "example=GENERIC (catalyst/mob resolution failed)"
     )
     reroll_txt = (
-        f"reroll={'/'.join(_fmt(g) for g in data['reroll_gil'])}"
-        if data["reroll_gil"] else "reroll=OMITTED (reroll.lua not parsed)"
+        f"reroll={'/'.join(_fmt(g) for g in data['reroll_infamy'])}"
+        if data["reroll_infamy"] else "reroll=OMITTED (reroll.lua not parsed)"
     )
     print(
         f"{_TAG} wrote progression/augmenting-guide.md "
