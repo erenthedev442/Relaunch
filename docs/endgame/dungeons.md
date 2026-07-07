@@ -71,7 +71,7 @@ _Trash: **30%** · **×1** · dropped to the treasure pool (whole party can lot)
 | <a class="item-link" href="https://www.ffxiah.com/item/1292" data-img="https://www.bg-wiki.com/images/b/bc/Damp_Hktk._Eye_description.png" target="_blank" rel="noopener">Damp Hktk. Eye</a> | Accuracy Rng.Acc | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/2149" data-img="https://www.bg-wiki.com/images/4/4e/Apkallu_Feather_description.png" target="_blank" rel="noopener">Apkallu Feather</a> | Crit. hit damage | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/2148" data-img="https://www.bg-wiki.com/images/2/2b/Puk_Wing_description.png" target="_blank" rel="noopener">Puk Wing</a> | Crit.hit rate | T0 |
-| <a class="item-link" href="https://www.ffxiah.com/item/1293" data-img="https://www.bg-wiki.com/images/1/1f/Narasimha_Hide_description.png" target="_blank" rel="noopener">Narasimha Hide</a> | Quadruple Attack | T0 |
+| <a class="item-link" href="https://www.ffxiah.com/item/1591" data-img="https://www.bg-wiki.com/images/c/c9/H.Q._Coeurl_Hide_description.png" target="_blank" rel="noopener">H.q. Coeurl Hide</a> | Quadruple Attack | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/1116" data-img="https://www.bg-wiki.com/images/9/97/Manticore_Hide_description.png" target="_blank" rel="noopener">Manticore Hide</a> | Rng.Acc. Rng.Atk | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/1516" data-img="https://www.bg-wiki.com/images/4/49/Griffon_Hide_description.png" target="_blank" rel="noopener">Griffon Hide</a> | Save TP | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/1621" data-img="https://www.bg-wiki.com/images/5/53/Taurus_Wing_description.png" target="_blank" rel="noopener">Taurus Wing</a> | Store TP | T0 |
@@ -282,7 +282,7 @@ _Trash: **30%** · **×1** · dropped to the treasure pool (whole party can lot)
 | _(catalyst)_ | Ninja tool expertise | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/1619" data-img="https://www.bg-wiki.com/images/8/8b/Hippogryph_Fthr._description.png" target="_blank" rel="noopener">Hippogryph Fthr.</a> | Rapid Shot | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/834" data-img="https://static.ffxiah.com/images/icon/834.png" target="_blank" rel="noopener">Saruta Cotton</a> | Recycle | T0 |
-| <a class="item-link" href="https://www.ffxiah.com/item/1591" data-img="https://www.bg-wiki.com/images/c/c9/H.Q._Coeurl_Hide_description.png" target="_blank" rel="noopener">H.q. Coeurl Hide</a> | Reverse Flourish | T0 |
+| <a class="item-link" href="https://www.ffxiah.com/item/1293" data-img="https://www.bg-wiki.com/images/1/1f/Narasimha_Hide_description.png" target="_blank" rel="noopener">Narasimha Hide</a> | Reverse Flourish | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/908" data-img="https://www.bg-wiki.com/images/2/26/Adamantoise_Shell_description.png" target="_blank" rel="noopener">Adamantoise Shell</a> | Treasure Hunter | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/836" data-img="https://static.ffxiah.com/images/icon/836.png" target="_blank" rel="noopener">Damascene Cloth</a> | Waltz TP cost | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/926" data-img="https://www.bg-wiki.com/images/0/0a/Lizard_Tail_description.png" target="_blank" rel="noopener">Lizard Tail</a> | Zanshin | T0 |
