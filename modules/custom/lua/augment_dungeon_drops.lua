@@ -33,7 +33,8 @@
 -- makes edits (e.g. a rate tweak) go live WITHOUT a map restart. On first load
 -- package.loaded is nil, so this is just `{}`.
 -----------------------------------
-local M = package.loaded['modules/custom/lua/augment_dungeon_drops'] or {}
+local M = package.loaded['modules/custom/lua/augment_dungeon_drops']
+if type(M) ~= 'table' then M = {} end
 
 local TRASH_RATE       = 30 -- % chance the assigned trash catalyst drops to the killer (rolled once, on the killing blow)
 local BOSS_REPEAT_RATE = 35 -- % per member on repeat boss kills (first kill of the UTC day is guaranteed)
@@ -81,7 +82,7 @@ end
 
 -- Called once per alliance member per kill; we act only on the killing-blow
 -- dispatch (optParams.isKiller is true exactly once per kill).
-M.onDungeonMobDeath = function(dungeonKey, instance, deadMob, player, optParams)
+M.onDungeonMobDeath = function(dungeonKey, instance, deadMob, player, optParams, slotArg, isBossArg)
     if player == nil or type(optParams) ~= 'table' or not optParams.isKiller then
         return
     end
@@ -91,8 +92,13 @@ M.onDungeonMobDeath = function(dungeonKey, instance, deadMob, player, optParams)
         return -- not an Augmentation Dungeon (Challenge/Progression run)
     end
 
-    local slot = deadMob:getLocalVar('DungeonMobIndex')
-    if slot == 0 then
+    -- Roster slot + boss flag are passed straight from dungeon_instance's spawn
+    -- closure. The DungeonMobIndex / DungeonBossMob localvars do NOT survive on
+    -- these dynamic mobs (they read 0 at death -> nothing ever dropped), so the
+    -- passed args are authoritative; the localvar reads are only a fallback.
+    local slot = slotArg or deadMob:getLocalVar('DungeonMobIndex')
+    print(string.format('[augchk] key=%s slot=%s isBoss=%s', tostring(dungeonKey), tostring(slot), tostring(isBossArg)))
+    if not slot or slot == 0 then
         return
     end
 
@@ -102,7 +108,11 @@ M.onDungeonMobDeath = function(dungeonKey, instance, deadMob, player, optParams)
     end
     deadMob:setLocalVar('DungeonAugRolled', 1)
 
-    if deadMob:getLocalVar('DungeonBossMob') == 1 then
+    local isBoss = isBossArg
+    if isBoss == nil then
+        isBoss = (deadMob:getLocalVar('DungeonBossMob') == 1)
+    end
+    if isBoss then
         if #d.boss == 0 then
             return
         end
@@ -123,6 +133,7 @@ M.onDungeonMobDeath = function(dungeonKey, instance, deadMob, player, optParams)
     else
         local entry = d.trash[slot]
         if entry and math.random(100) <= TRASH_RATE then
+            print('[augchk] TRASH AWARD slot=' .. tostring(slot) .. ' id=' .. tostring(entry.id) .. ' -> ' .. player:getName())
             awardDirect(player, entry, 1)  -- straight to the killer (see note on awardDirect)
         end
     end
