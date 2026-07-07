@@ -74,13 +74,17 @@ catalog.dungeons =
             { 259.954, -32.979, -53.917, 51  },
             { 258.524, -32.700, -44.000, 127 },
             { 251.000, -32.000, -17.000, 39  },
-            { 218.000, -32.787, -18.000, 127 },
-            { 189.705, -32.861, -18.955, 92  },
-            { 173.000, -32.000, -20.000, 13  },
-            { 139.119, -32.817, -23.193, 127 },
-            { 124.462, -32.974, -97.487, 6   },
-            { 124.000, -32.000, -82.000, 127 },
-            { 116.000, -32.000, -78.000, 127 },
+            -- Wasps 07-12 + Nestblight Exoray boss (13) trailed deep into the nest
+            -- (X 116-218 -- likely disconnected rooms). Proactively pulled into the
+            -- reachable entrance run beside Crawlers 01-06 (adjacent midpoints, same
+            -- -32 floor). PROACTIVE/UNVERIFIED in-game -- report if a straggler remains.
+            { 324.000, -32.950, -17.900, 127 },
+            { 307.000, -32.390, -22.500, 127 },
+            { 279.500, -32.490, -41.000, 127 },
+            { 259.200, -32.840, -49.000, 127 },
+            { 254.800, -32.350, -30.500, 127 },
+            { 328.000, -33.000, -18.300, 127 },
+            { 299.000, -32.000, -25.000, 127 }, -- Nestblight Exoray (boss), centered
         }, 'Dungeon Crawler', 'Dungeon Wasp', 'Nestblight Exoray', 8),
     },
 
@@ -122,10 +126,15 @@ catalog.dungeons =
         hpScale    = 4,
         mobs       = buildRoster(
         {
-            { 417.910, 11.119, -99.093, 205 },
-            { 405.430, 11.399, -98.606, 135 },
-            { 364.360, 11.605, -99.154, 141 },
-            { 345.310, 11.482, -100.750, 27 },
+            -- Crawlers 01-04 were on the UPPER Y~11 ledge (X 345-418, Z -99), but the
+            -- instance drops players onto the Y~8.5 level (start_y 8.81), so these four
+            -- were stranded overhead and unreachable. Moved down to the Y~8.5 floor
+            -- beside Crawler 06/07. 05-13 (incl. the Ancient Guardian boss) already sit
+            -- on the reachable level. PROACTIVE/UNVERIFIED -- report if a straggler remains.
+            { 301.000, 8.450, -85.000, 205 },
+            { 298.000, 8.450, -80.000, 135 },
+            { 299.500, 8.500, -70.000, 141 },
+            { 296.000, 8.500, -76.000, 27  },
             { 303.380, 8.358, -102.750, 164 },
             { 299.610, 8.395, -83.037, 62   },
             { 297.220, 8.540, -73.097, 185  },
