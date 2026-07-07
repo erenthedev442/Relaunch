@@ -16,6 +16,37 @@ local catalog = require('modules/custom/lua/htbf_catalog')
 
 local htbf = {}
 
+-- ---------------------------------------------------------------------------
+-- Let players field Trusts inside HTBF battlefields.
+-- The engine gates battlefield trust summons on
+--   xi.trust.checkBattlefieldTrustCount = (players + trusts) < maxParticipants
+-- (enforced both in scripts/globals/trust.lua and in the C++ magic_state).
+-- HTBF fights hit that limit, so a summon is rejected with the yellow
+--   "You are unable to use Trust magic at this time."
+-- We tag HTBF battlefields (localVar HTBF=1, set in setupBattlefield) and, for
+-- those only, allow Trusts up to a flat cap regardless of maxParticipants --
+-- the same escape-hatch idea the stock code already uses for RoV KI fights.
+-- Installed once, the first time this module is required at battlefield load.
+-- ---------------------------------------------------------------------------
+if xi.trust and xi.trust.checkBattlefieldTrustCount and not xi.trust._htbfTrustPatched then
+    xi.trust._htbfTrustPatched = true
+    local HTBF_TRUST_CAP = 5   -- max Trusts a party may field inside an HTBF fight
+    local _origCheck = xi.trust.checkBattlefieldTrustCount
+    xi.trust.checkBattlefieldTrustCount = function(caster)
+        local bf = caster:getBattlefield()
+        if bf and bf:getLocalVar('HTBF') == 1 then
+            local numTrusts = 0
+            for _, entity in ipairs(bf:getPlayersAndTrusts()) do
+                if entity:getObjType() == xi.objType.TRUST then
+                    numTrusts = numTrusts + 1
+                end
+            end
+            return numTrusts < HTBF_TRUST_CAP
+        end
+        return _origCheck(caster)
+    end
+end
+
 function htbf.register(fightKey, tier)
     local f     = catalog.fights[fightKey]
     local scale = catalog.tierScale[tier]
@@ -83,6 +114,9 @@ function htbf.register(fightKey, tier)
     -- independently. Silent (no player-visible multiplier). int16 mod cap honored
     -- by the catalog values; HP is the int32 lever.
     function content:setupBattlefield(battlefield)
+        -- Tag as an HTBF battlefield so the trust-count patch above lets players
+        -- summon Trusts here (the engine's default cap would reject them).
+        battlefield:setLocalVar('HTBF', 1)
         -- Run the base fight's own setup first (spawns/positions/etc.), then scale.
         if baseSetup then pcall(function() baseSetup(self, battlefield) end) end
         for _, mob in ipairs(battlefield:getMobs(true, true)) do
