@@ -102,8 +102,16 @@ function htbf.register(fightKey, tier)
         {
             {
                 mobs = f.mobs,
+                -- Route the win through handleAllMonstersDefeated (NOT a bare
+                -- setStatus(WON)) so the Armoury Crate spawns and rolls
+                -- content.loot. HTBF fights use a custom battlefieldId that has
+                -- no C++ retail-treasure entry, so a bare WON gives an empty
+                -- crate -- this Lua loot path (crate -> handleOpenArmouryCrate ->
+                -- handleLootRolls(self.loot)) is what drops the htbf_loot.lua
+                -- tables. If no crate is detected it falls back to WON, so the
+                -- fight always still completes.
                 allDeath = function(battlefield, mob)
-                    battlefield:setStatus(xi.battlefield.status.WON)
+                    content:handleAllMonstersDefeated(battlefield, mob)
                 end,
             },
         }
