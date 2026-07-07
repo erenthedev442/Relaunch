@@ -14,11 +14,11 @@ catalog.currencyCv = 'Infamy'
 
 catalog.npcPos =
 {
-    zone     = 'Leafallia',
-    zoneId   = 281,
-    x        =  0.000,
-    y        =  0.000,
-    z        = 10.000,
+    zone     = 'Abdhaljs_Isle-Purgonorgo',
+    zoneId   = 44,
+    x        =  505.000,
+    y        =  -3.000,
+    z        = 556.000,
     rotation = 128,
 }
 

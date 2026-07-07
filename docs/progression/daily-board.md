@@ -1,9 +1,9 @@
 ﻿# Daily Board
 
-Talk to the **Daily Board** NPC in **Celennia Memorial Library** to pick up 3 objectives that reset every UTC midnight. Complete them and return to the NPC to claim marks. All 3 done in the same day? Grab a bonus reward on top.
+Talk to the **Daily Board** NPC in **Purgonorgo Isle** to pick up 3 objectives that reset every UTC midnight. Complete them and return to the NPC to claim marks. All 3 done in the same day? Grab a bonus reward on top.
 
 !!! tip "Summary"
-    The **Daily Board** NPC is in **Celennia Memorial Library** (the hub zone). Talk to it, see today's 3 objectives, go do them, come back to claim. Resets at **00:00 UTC** every day.
+    The **Daily Board** NPC is in **Purgonorgo Isle** (the hub zone). Talk to it, see today's 3 objectives, go do them, come back to claim. Resets at **00:00 UTC** every day.
 
 ## How it works
 
@@ -80,7 +80,7 @@ The Daily Board pays out the same four currencies used across the rest of the se
 
 ## NPC location
 
-The Daily Board NPC is in **Celennia Memorial Library** (the main hub zone).
+The Daily Board NPC is in **Purgonorgo Isle** (the main hub zone).
 
 ---
 

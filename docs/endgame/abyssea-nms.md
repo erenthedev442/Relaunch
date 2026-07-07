@@ -147,7 +147,7 @@ Beyond the NMs, **every regular mob in an Abyssea zone has a 5% chance on death 
 ## What to Spend Infamy On
 
 <!-- DOCGEN:BEGIN id="abyssea-infamy-costs" -->
-Infamy is spent at the **Infamy Vendor** in <!--npc:infamy_vendor-->Leafallia<!--/npc-->. The full catalog — accessories, best-in-slot armor, and Relic / Mythic / Aeonic weapons — is listed with exact prices on the [Gear Vendors](../progression/gear-vendors.md#infamy-vendor) page. A few reference points, priced against the top **Heroes** payout:
+Infamy is spent at the **Infamy Vendor** in <!--npc:infamy_vendor-->Purgonorgo Isle<!--/npc-->. The full catalog — accessories, best-in-slot armor, and Relic / Mythic / Aeonic weapons — is listed with exact prices on the [Gear Vendors](../progression/gear-vendors.md#infamy-vendor) page. A few reference points, priced against the top **Heroes** payout:
 
 | Reward | Infamy | Heroes kills _(party, no trusts — ×3.0)_ |
 |---|---:|---:|

@@ -5,7 +5,7 @@ Gemma is the server's flagship **premium Trust** — a tiny Hume woman who runs 
 ## At a glance
 
 <!-- DOCGEN:BEGIN id="gemma-summary" -->
-- **Where:** the **Void Keeper** in **Leafallia** (reach it with `!leaf`) — the same NPC that grants [Corvus](corvus.md) and [Meat](meat.md)
+- **Where:** the **Void Keeper** on **Purgonorgo Isle** (reach it with `!leaf`) — the same NPC that grants [Corvus](corvus.md) and [Meat](meat.md)
 - **Unlock:** **Hunting League Rank 3 + 3,000 Hunt Marks** — one-time, permanent, per character
 - **Role:** primary support **+** secondary nuker; she never tanks
 - **To summon:** cast **Nanaa Mihgo** from your Trust menu — that slot *is* Gemma (the name **Gemma** appears over her head and in your party list)
@@ -62,7 +62,7 @@ She's also extremely durable — near-maxed HP and MP, and **immune to status ai
 ## How to unlock her
 
 1. Reach **Hunting League Rank 3 + 3,000 Hunt Marks**.
-2. Travel to <!--npc:void_keeper-->Leafallia<!--/npc-->.
+2. Travel to <!--npc:void_keeper-->Purgonorgo Isle<!--/npc-->.
 3. Find the **Void Keeper** and speak with him.
 4. Choose to bind Gemma to your service.
 

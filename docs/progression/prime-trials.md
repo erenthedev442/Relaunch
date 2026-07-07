@@ -1,6 +1,6 @@
 # Prime Weapon Trials
 
-The **Prime Weapon Trials** are the gateway to a Prime weapon. Clear all five, then pay **750,000,000 gil** at the [Prime Armory](prime-armory.md) in Leafallia (`!leaf`) to forge the Prime weapon of your choice — one per character.
+The **Prime Weapon Trials** are the gateway to a Prime weapon. Clear all five, then pay **750,000,000 gil** at the [Prime Armory](prime-armory.md) on Purgonorgo Isle (`!hub`) to forge the Prime weapon of your choice — one per character.
 
 !!! tip "Summary"
     Five trials, done in any order: gather the Abyssea collectibles, climb the Endless Tower, win a Prime Voucher from Hunting League NMs, master a job to beat a Weapon Guardian, and bank the three Aht Urhgan currencies. Finish all five, then pay **750M gil** to forge your Prime (one per character).
@@ -10,7 +10,7 @@ The **Prime Weapon Trials** are the gateway to a Prime weapon. Clear all five, t
 <!-- DOCGEN:BEGIN id="prime-trials-gate" -->
 The Prime Armory forge is locked behind the **5 Prime Weapon Trials**. They are tracked independently, so you can chip away at them **in any order** -- clear all **5** and the Prime Armory will forge the Prime weapon of your choice.
 
-Talk to the **Prime Armory** NPC in **Leafallia** (`!leaf`) at any time to see which trials you've cleared and to hand in the collection trials.
+Talk to the **Prime Armory** NPC in **Purgonorgo Isle** (`!hub`) at any time to see which trials you've cleared and to hand in the collection trials.
 <!-- DOCGEN:END id="prime-trials-gate" -->
 
 ## The five trials
@@ -65,7 +65,7 @@ The other turn-in trial. You bank **99 each of three Aht Urhgan Assault currenci
 
 ## The reward
 
-Once all five trials read complete, head to **Leafallia** (`!leaf`) and the **[Prime Armory](prime-armory.md)** will forge the Prime weapon of your choice for **750,000,000 gil**.
+Once all five trials read complete, head to **Purgonorgo Isle** (`!hub`) and the **[Prime Armory](prime-armory.md)** will forge the Prime weapon of your choice for **750,000,000 gil**.
 
 You claim **one Prime per character**, so pick the weapon that fits your main job and go.
 

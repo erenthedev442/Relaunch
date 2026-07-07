@@ -1,13 +1,13 @@
 # Cross-Job Traits
 
-The **Cross-Job Trait Trainer** in <!--npc:cross_job_trait-->Leafallia<!--/npc--> sells permanent **passive traits** that stay active on **every job you play** — no macro, no activation, no subjob required. It's the sibling of the [Cross-Job Ability Trainer](cross-job-abilities.md): that one sells abilities you trigger with a macro, while this one sells always-on traits that just work.
+The **Cross-Job Trait Trainer** in <!--npc:cross_job_trait-->Purgonorgo Isle<!--/npc--> sells permanent **passive traits** that stay active on **every job you play** — no macro, no activation, no subjob required. It's the sibling of the [Cross-Job Ability Trainer](cross-job-abilities.md): that one sells abilities you trigger with a macro, while this one sells always-on traits that just work.
 
 !!! tip "Summary"
-    Find the Trait Trainer in <!--npc:cross_job_trait-->Leafallia<!--/npc-->. Pay a flat gil price per trait (one-time, per-character). Each trait is passive and applies automatically on every job — no macro needed.
+    Find the Trait Trainer in <!--npc:cross_job_trait-->Purgonorgo Isle<!--/npc-->. Pay a flat gil price per trait (one-time, per-character). Each trait is passive and applies automatically on every job — no macro needed.
 
 ## How it works
 
-1. **Talk to the Cross-Job Trait Trainer** in <!--npc:cross_job_trait-->Leafallia<!--/npc-->, next to the Ability Trainer.
+1. **Talk to the Cross-Job Trait Trainer** in <!--npc:cross_job_trait-->Purgonorgo Isle<!--/npc-->, next to the Ability Trainer.
 2. **Pick a trait** from the menu and confirm the purchase.
 3. **That's it** — the trait is permanently recorded to your character and is always on. It re-applies automatically every time you log in or change zones, on whatever job you're playing.
 

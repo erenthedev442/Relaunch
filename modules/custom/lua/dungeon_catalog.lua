@@ -5,20 +5,20 @@ local catalog = {}
 
 catalog.npc =
 {
-    zone     = 'GM_Home',
-    zoneId   = 210,
-    x        = 1.500,
-    y        = 0.000,
-    z        = -15.000,
+    zone     = 'Abdhaljs_Isle-Purgonorgo',
+    zoneId   = 44,
+    x        = 535.000,
+    y        = -3.000,
+    z        = 574.000,
     rotation = 128,
 }
 
 catalog.exit =
 {
-    zoneId   = 210,
-    x        = 1.500,
-    y        = 0.000,
-    z        = -15.000,
+    zoneId   = 44,
+    x        = 521.500,
+    y        = -3.000,
+    z        = 548.000,
     rotation = 128,
 }
 

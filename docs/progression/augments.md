@@ -2,10 +2,10 @@
 
 ![Augment gem](../assets/emblems/augment.svg){ .lgnd-emblem }
 
-The **Augment Moogle** at <!--npc:augment_moogle-->Leafallia<!--/npc--> lets you stamp custom augments onto any piece of equipment by trading a catalyst item that maps 1:1 to a specific augment.
+The **Augment Moogle** at <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc--> lets you stamp custom augments onto any piece of equipment by trading a catalyst item that maps 1:1 to a specific augment.
 
 !!! tip "Summary"
-    Talk to the **Augment Moogle** at <!--npc:augment_moogle-->Leafallia<!--/npc--> (z = -15, in the row with the other moogles). Trade **1 gear piece + 1-5 catalyst items + 10,000 gil**. Each catalyst writes one augment line onto the gear. Up to 5 augments per piece — the engine's 5 augment slots.
+    Talk to the **Augment Moogle** at <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc--> (z = -15, in the row with the other moogles). Trade **1 gear piece + 1-5 catalyst items + 10,000 gil**. Each catalyst writes one augment line onto the gear. Up to 5 augments per piece — the engine's 5 augment slots.
 
 ## How it works
 
@@ -73,7 +73,7 @@ So a maxed tank reaches **+640 HP on a single body piece**, and a sustain build 
 The table below lists **every catalyst and its augment**, organized by category. All augments are available at every Augment Tier — your tier determines the **power** of the roll, not which augments you can access. The **T1–T5 columns** show the value range at each tier. The **Cap** column shows the hard in-game ceiling where one exists — see [how scaling works](#how-augment-power-scales) above.
 
 <!-- DOCGEN:BEGIN id="augment-catalog" -->
-_146 augments across 11 categories. **Every augment is available at every Augment Tier** — your tier determines the **power** of the roll, not which augments you can access. Trade catalysts to the **Augment Moogle in Leafallia** (`!leaf`). Cost is **10,000 gil flat per trade** plus the catalyst itself. Every line is **rolled** within your [Augment Tier's band](augment-sage.md) — higher tiers roll strictly higher values. The **T1–T5 columns** show the value range of a **full 5-catalyst stack** rolled at that Augment Tier (divide by 5 for one catalyst). The **Cap** column is the hard engine ceiling for that stat where one exists (e.g. Haste caps at 25%, damage-taken floors at -50%), or **no cap** for additive stats._
+_146 augments across 11 categories. **Every augment is available at every Augment Tier** — your tier determines the **power** of the roll, not which augments you can access. Trade catalysts to the **Augment Moogle on Purgonorgo Isle** (`!hub`). Cost is **10,000 gil flat per trade** plus the catalyst itself. Every line is **rolled** within your [Augment Tier's band](augment-sage.md) — higher tiers roll strictly higher values. The **T1–T5 columns** show the value range of a **full 5-catalyst stack** rolled at that Augment Tier (divide by 5 for one catalyst). The **Cap** column is the hard engine ceiling for that stat where one exists (e.g. Haste caps at 25%, damage-taken floors at -50%), or **no cap** for additive stats._
 
 ### Base stats
 

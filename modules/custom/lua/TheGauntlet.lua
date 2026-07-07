@@ -23,7 +23,7 @@
 require('modules/module_utils')
 require('scripts/zones/Riverne-Site_A01/Zone')
 require('scripts/zones/Riverne-Site_B01/Zone')
-require('scripts/zones/Leafallia/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 require('scripts/globals/job_utils/dancer')
 require('scripts/globals/job_utils/white_mage')
 
@@ -1248,7 +1248,7 @@ end)
 -- Override: Leafallia onInitialize → place the Gauntlet Keeper NPC
 -- (relaunch hub; live server uses GM_Home instead)
 -----------------------------------
-m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     zone:insertDynamicEntity({
@@ -1256,10 +1256,10 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         name       = 'Gauntlet_Keeper',
         packetName = string.format('%sThe Gauntlet', xi.icon.SWORD_AND_SHIELD),
         look       = 2410,
-        x          = -20.000,
-        y          =   0.000,
-        z          =  20.000,
-        rotation   =  128,
+        x          = 517.000,
+        y          =   -3.000,
+        z          =  574.000,
+        rotation   =  64,
         widescan   =  1,
 
         onTrigger = function(player, npc)

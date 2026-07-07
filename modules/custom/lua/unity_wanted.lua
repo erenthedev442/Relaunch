@@ -12,7 +12,7 @@
 --   near them. onMobDeath awards accolades and clears state.
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Celennia_Memorial_Library/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 require('scripts/zones/Escha_ZiTah/Zone')
 
 local m = Module:new('unity_wanted')
@@ -155,7 +155,7 @@ end
 -----------------------------------
 -- CML Board NPC
 -----------------------------------
-m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local menu = { title = '', options = {} }

@@ -20,7 +20,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!affinitypop` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!ah` | — | opens the Auction House menu anywhere in the world |  |
 | `!ambuscade` | string | _(no description)_ | :material-puzzle: **custom** |
-| `!aoews` | string | Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (Leafallia, !leaf). Cannot be changed after setting. |  |
+| `!aoews` | string | Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (Purgonorgo Isle, !leaf). Cannot be changed after setting. |  |
 | `!apex` | string | Apex Trials helper -- check your record / Paragon Points, start a climb, or bail out of one. | :material-puzzle: **custom** |
 | `!auginfo` | — | _(no description)_ |  |
 | `!augment` | t, r, u, e | _(no description)_ |  |
@@ -33,7 +33,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!checkexpbonus` | — | Prints your current EXP_BONUS mod (gear/augments that boost EXP gain) and the per-kill effect it has. Useful for verifying that an EXP augment is actually attached to the player after equipping the piece. |  |
 | `!dig` | — | Treasure Hunting - dig for the strongbox your treasure map points at. Maps drop from Hunting League kills. | :material-puzzle: **custom** |
 | `!diwarp` | — | _(no description)_ | :material-puzzle: **custom** |
-| `!empower` | string, string | View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC in Leafallia (see SpellSkillMastery.lua). | :material-puzzle: **custom** |
+| `!empower` | string, string | View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC on Purgonorgo Isle (see SpellSkillMastery.lua). | :material-puzzle: **custom** |
 | `!events` | — | Lists upcoming and active seasonal bonus mark events from the catalog.  Shows event name, multiplier, start/end dates, and status (active / upcoming / expired). | :material-puzzle: **custom** |
 | `!expcamp` | string | _(no description)_ | :material-puzzle: **custom** |
 | `!featured` | — | Shows which NM is the Weekly Featured Hunt for each Hunting League tier.  Featured NMs award 2x base marks on the first kill of the week - the bonus stacks with the First-Kill bonus. | :material-puzzle: **custom** |
@@ -71,7 +71,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!paragon` | — | _(no description)_ |  |
 | `!petstats` | — | Prints a detailed stat snapshot for your cursor-targeted mob, Trust, or player-owned pet. | :material-puzzle: **custom** |
 | `!pos` | string | Sets the players position. If none is given, prints out the position instead. |  |
-| `!primevoucher` | string, int | [GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in Leafallia (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it. | :material-puzzle: **custom** |
+| `!primevoucher` | string, int | [GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC on Purgonorgo Isle (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it. | :material-puzzle: **custom** |
 | `!profile` | string | Displays a competitive stat summary for a player.  With no argument shows your own stats; with a name shows that player's (they must be online - offline players can't be queried via Lua). | :material-puzzle: **custom** |
 | `!progress` | string | Prints a cross-system progression summary: Hunting League rank, Hunt Marks, Reforge Marks, weekly-hunt completion, Hunter's Guild standings, and Daily Board - all in one quick readout. | :material-puzzle: **custom** |
 | `!prov1` | — | _(no description)_ | :material-puzzle: **custom** |
@@ -224,7 +224,7 @@ Shows all personal milestone achievements - earned and unearned - with their rew
 
 ### `!aoews`
 
-Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (Leafallia, !leaf). Cannot be changed after setting.
+Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (Purgonorgo Isle, !leaf). Cannot be changed after setting.
 
 **Usage:** `aoews`
 
@@ -288,7 +288,7 @@ Treasure Hunting - dig for the strongbox your treasure map points at. Maps drop 
 
 ### `!empower`  _(custom)_
 
-View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC in Leafallia (see SpellSkillMastery.lua).
+View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC on Purgonorgo Isle (see SpellSkillMastery.lua).
 
 **Usage:** `empower`
 
@@ -478,7 +478,7 @@ Prints a detailed stat snapshot for your cursor-targeted mob, Trust, or player-o
 
 ### `!primevoucher`  _(custom)_
 
-[GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in Leafallia (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it.
+[GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC on Purgonorgo Isle (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it.
 
 **Usage:** `primevoucher`
 

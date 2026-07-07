@@ -142,43 +142,34 @@ def _fallback_entry(key: str) -> tuple[str, str, str]:
 # Page specs. Intros are the vetted hand-written paragraphs (constant).
 # ---------------------------------------------------------------------------
 
+# 2026-07-06: the three former hubs (Leafallia / Celennia Library / GM Home) were
+# consolidated onto a single island plaza on Purgonorgo Isle (zone 44). One page
+# now owns every service NPC; old leafallia.md / library.md are redirect stubs.
 _PAGES = [
     {
-        "zone":  "Leafallia",
-        "out":   ("progression", "leafallia.md"),
-        "title": "# Leafallia — Endgame Hub",
+        "zone":  "Abdhaljs_Isle-Purgonorgo",
+        "out":   ("progression", "hub.md"),
+        "title": "# Purgonorgo Isle — The Hub",
         "intro": (
-            "Leafallia is the relaunch's **endgame hub**. Once you're geared and "
-            "into the mastery systems, this is where the high-end progression and "
-            "repeatable battle content lives."
-        ),
-        "sections": [
-            (_SEC_MASTERY,    "Weapons & mastery"),
-            (_SEC_AUGMENTS,   "Augments"),
-            (_SEC_BATTLE,     "Battle content"),
-            (_SEC_MISC,       "More services"),
-        ],
-        # candidate warp-command basenames + strings that must appear in the
-        # command file for the warp claim to be emitted at all
-        "warp_commands":    ("leaf", "leafallia"),
-        "warp_zone_tokens": ("LEAFALLIA", "Leafallia"),
-    },
-    {
-        "zone":  "Celennia_Memorial_Library",
-        "out":   ("progression", "library.md"),
-        "title": "# Celennia Memorial Library — Beginner Hub",
-        "intro": (
-            "The Celennia Memorial Library is the relaunch's **starting hub** — "
-            "convenience services, gil sinks, and getting-started tools all live here."
+            "Purgonorgo Isle is the relaunch's **one and only hub** — every custom "
+            "service NPC, from getting-started tools to endgame progression, lives "
+            "here on a single island plaza, spaced out so a crowd can shop at once. "
+            "Reach it any time with the `!hub` command (the old `!leaf`, `!lib`, and "
+            "`!gmhome` commands now land here too)."
         ),
         "sections": [
             (_SEC_TRAVEL,     "Getting around & set-up"),
             (_SEC_CURRENCY,   "Currencies & exchanges"),
+            (_SEC_AUGMENTS,   "Augments"),
+            (_SEC_MASTERY,    "Weapons & mastery"),
+            (_SEC_BATTLE,     "Battle content"),
             (_SEC_ACTIVITIES, "Activities & boards"),
             (_SEC_MISC,       "More services"),
         ],
-        "warp_commands":    ("lib", "library"),
-        "warp_zone_tokens": ("CELENNIA_MEMORIAL_LIBRARY", "Celennia_Memorial_Library"),
+        # candidate warp-command basenames + strings that must appear in the
+        # command file for the warp claim to be emitted at all
+        "warp_commands":    ("hub", "leaf", "lib"),
+        "warp_zone_tokens": ("ABDHALJS_ISLE_PURGONORGO", "Abdhaljs_Isle-Purgonorgo"),
     },
 ]
 
@@ -204,7 +195,8 @@ def _verify_warp_command(repo_root: Path, names: tuple[str, ...], zone_tokens: t
     """Return the first command basename that exists AND references the hub
     zone. No file (or no zone reference) -> None -> no warp claim on the page."""
     for name in names:
-        src = resolve_source(repo_root, f"scripts/commands/{name}.lua")
+        src = (resolve_source(repo_root, f"scripts/commands/{name}.lua")
+               or resolve_source(repo_root, f"modules/custom/commands/{name}.lua"))
         if src is None:
             continue
         text = src.read_text(encoding="utf-8", errors="ignore")

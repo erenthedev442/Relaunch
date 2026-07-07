@@ -10,7 +10,7 @@
 
 ## Where to start
 
-Talk to the **Unity Board** in <!--npc:unity_board-->Celennia Memorial Library<!--/npc--> (main hall). From the board you can:
+Talk to the **Unity Board** in <!--npc:unity_board-->Purgonorgo Isle<!--/npc--> (main hall). From the board you can:
 
 - **Pledge** to one of the 11 Unity leaders (affects your affiliation — cosmetic for now)
 - **Select a Wanted NM** from the three tiers and pay accolades to spawn it

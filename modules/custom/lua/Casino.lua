@@ -8,7 +8,7 @@
 -- Games: Slots, High-Low, Roulette, Dice.
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Celennia_Memorial_Library/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local catalog = require('modules/custom/lua/casino_catalog')
 
 local m = Module:new('casino')
@@ -38,7 +38,7 @@ local function rollSym(reel)
     return reel[#reel].sym
 end
 
-m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     -- One shared scratch menu; each screen sets title+options then snapshots it.

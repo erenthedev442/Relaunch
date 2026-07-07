@@ -1,14 +1,14 @@
 # Title Broker
 
-The **Title Broker** in <!--npc:title_broker-->the Celennia Memorial Library<!--/npc--> sells cosmetic character titles for gil. Titles are pure flair — the text that shows under your name — with no effect on your stats or gameplay. Buy whichever ones you like the look of.
+The **Title Broker** in <!--npc:title_broker-->the Purgonorgo Isle<!--/npc--> sells cosmetic character titles for gil. Titles are pure flair — the text that shows under your name — with no effect on your stats or gameplay. Buy whichever ones you like the look of.
 
 !!! tip "Summary"
-    Spend gil on cosmetic character titles at the Title Broker in <!--npc:title_broker-->the Celennia Memorial Library<!--/npc--> — four price tiers from 10,000 gil up to 10,000,000 gil, each with a handful of titles to choose from.
+    Spend gil on cosmetic character titles at the Title Broker in <!--npc:title_broker-->the Purgonorgo Isle<!--/npc--> — four price tiers from 10,000 gil up to 10,000,000 gil, each with a handful of titles to choose from.
 
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="title-vendor-access" -->
-The **Title Broker** is set up in **the Celennia Memorial Library** (reach it with `!lib`). Talk to them, pick a price tier, then the title you want — pay the gil and it's yours to wear.
+The **Title Broker** is set up in **Purgonorgo Isle** (reach it with `!lib`). Talk to them, pick a price tier, then the title you want — pay the gil and it's yours to wear.
 <!-- DOCGEN:END id="title-vendor-access" -->
 
 ## Price tiers

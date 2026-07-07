@@ -12,11 +12,11 @@
 -----------------------------------
 local catalog = {}
 
-catalog.zoneId   = xi.zone.CELENNIA_MEMORIAL_LIBRARY
-catalog.zonePath = 'xi.zones.Celennia_Memorial_Library'
+catalog.zoneId   = xi.zone.ABDHALJS_ISLE_PURGONORGO
+catalog.zonePath = 'xi.zones.Abdhaljs_Isle-Purgonorgo'
 catalog.npcName  = 'Title Broker'
 catalog.npcLook  = 3017
-catalog.npcPos   = { x = -98.000, y = -2.150, z = -100.000, rot = 190 }
+catalog.npcPos   = { x = 511.000, y = -3.000, z = 556.000, rot = 64 }
 
 -- Tiered title catalog. Cheap = silly flavor, mid = decent prestige,
 -- expensive = rare endgame titles. Player can buy + display anything

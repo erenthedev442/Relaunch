@@ -6,14 +6,14 @@ tenth floor. Fight your way to the top and the Pinnacle Sovereign falls — and
 with it, a piece of your Prime Weapon legend. One death, and the run is over.
 
 !!! tip "Summary"
-    A solo 50-floor climb from the Endless Tower Arbiter in <!--npc:endless_tower-->Leafallia<!--/npc--> — a boss
+    A solo 50-floor climb from the Endless Tower Arbiter in <!--npc:endless_tower-->Purgonorgo Isle<!--/npc--> — a boss
     every 10 floors, no Trusts allowed, one death ends the run, and reaching
     floor 50 completes Prime Weapon Trial 2.
 
 ## Where to start
 
 <!-- DOCGEN:BEGIN id="endless-tower-access" -->
-Speak to the **Tower Climb** in **Leafallia** (`!leaf`) and choose *Enter the Tower* to be warped into **Walk Of Echoes**. After a short breather the first floor spawns, and each cleared floor leads straight into the next.
+Speak to the **Tower Climb** in **Purgonorgo Isle** (`!hub`) and choose *Enter the Tower* to be warped into **Walk Of Echoes**. After a short breather the first floor spawns, and each cleared floor leads straight into the next.
 
 This is a **solo** gauntlet — Trusts are disabled inside the Tower. A single death ends the run on the spot with no reward and no floor saved, so you only ever advance by surviving. You can bail out early at any time with **`!tower abort`**, and **`!tower`** on its own reports your current floor (or your best-ever floor when you're not in a run).
 <!-- DOCGEN:END id="endless-tower-access" -->

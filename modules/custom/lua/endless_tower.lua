@@ -28,7 +28,7 @@
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Walk_of_Echoes/Zone')
-require('scripts/zones/Leafallia/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
 
@@ -44,7 +44,7 @@ local FLOOR_DELAY_MS = 5000  -- ms between floors (breather)
 local WARP_IN        = { x = -420, y = 14, z = -49, rot = 192 }
 
 -- Exit warp: back to GM Home activities area.
-local EXIT_WARP = { zoneId = 210, x = -15, y = 0, z = -18, rot = 128 }
+local EXIT_WARP = { zoneId = 44, x = 521.5, y = -3.0, z = 548.0, rot = 65 }
 
 -----------------------------------
 -- Floor band definitions
@@ -484,7 +484,7 @@ end)
 -----------------------------------
 -- Module override: GM Home - place the NPC
 -----------------------------------
-m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local npc = zone:insertDynamicEntity({
@@ -492,10 +492,10 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         name       = 'Tower_Arbiter',
         packetName = 'Tower Climb',
         look       = 169,
-        x          =   0.000,
-        y          =   0.000,
-        z          =  15.000,
-        rotation   =  128,
+        x          =   523.000,
+        y          =   -3.000,
+        z          =  574.000,
+        rotation   =  192,
         widescan   =  1,
 
         onTrigger = function(player, npc)

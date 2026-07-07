@@ -1,14 +1,14 @@
 # Casino — Lady Luck
 
-Feeling lucky? **Lady Luck** runs a four-game casino in **Celennia Memorial Library** where you can gamble your gil on slots, high-low, roulette, and dice. Every game keeps a small house edge, so over time it's a gil sink — but a hot streak can pay out huge, and any single win big enough is shouted to the whole server.
+Feeling lucky? **Lady Luck** runs a four-game casino in **Purgonorgo Isle** where you can gamble your gil on slots, high-low, roulette, and dice. Every game keeps a small house edge, so over time it's a gil sink — but a hot streak can pay out huge, and any single win big enough is shouted to the whole server.
 
 !!! tip "Summary"
-    A four-game gil-sink casino — slots, high-low, roulette, and dice — run by Lady Luck in **Celennia Memorial Library**. Pick a stake and play; the biggest wins shout server-wide.
+    A four-game gil-sink casino — slots, high-low, roulette, and dice — run by Lady Luck in **Purgonorgo Isle**. Pick a stake and play; the biggest wins shout server-wide.
 
 ## Where to play
 
 <!-- DOCGEN:BEGIN id="casino-access" -->
-**Lady Luck** holds court in **Celennia Memorial Library** — step up to the table, pick a game, and place your stake.
+**Lady Luck** holds court in **Purgonorgo Isle** — step up to the table, pick a game, and place your stake.
 <!-- DOCGEN:END id="casino-access" -->
 
 ## Placing a bet

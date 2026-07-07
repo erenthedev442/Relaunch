@@ -2,7 +2,7 @@
 -- Parallel private-instance Unity Wanted board
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Celennia_Memorial_Library/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m = Module:new('unity_wanted_instances')
 
@@ -104,7 +104,7 @@ local function startTrial(player, nm)
     end)
 end
 
-m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local menu = { title = '', options = {} }

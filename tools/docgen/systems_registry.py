@@ -74,7 +74,7 @@ HEADLINE = [
         "covers": ["progression/cross-job-traits.md"],
         "modules": ["CrossJob_Trainer.lua", "cross_job_ability_catalog.lua",
                     "CrossJob_TraitTrainer.lua", "cross_job_trait_catalog.lua"],
-        "text": "**Cross-Job Abilities — borrow from other jobs.** The Cross-Job Trainer in Leafallia sells a hand-curated set of job abilities — self and party buffs and utility, like Meditate — that you can then use on *any* job via macro, with the recast enforced server-side. No 2-hours, no build-breaking picks: just the smart cross-pollination retail never allowed.",
+        "text": "**Cross-Job Abilities — borrow from other jobs.** The Cross-Job Trainer on Purgonorgo Isle sells a hand-curated set of job abilities — self and party buffs and utility, like Meditate — that you can then use on *any* job via macro, with the recast enforced server-side. No 2-hours, no build-breaking picks: just the smart cross-pollination retail never allowed.",
     },
     {
         "name": "No dead content",

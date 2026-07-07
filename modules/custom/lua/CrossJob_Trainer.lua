@@ -21,7 +21,7 @@
 -- Zone: GM Home (zone 210)
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Leafallia/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local catalog = require('modules/custom/lua/cross_job_ability_catalog')
 -----------------------------------
 local m = Module:new('crossjob_trainer')
@@ -291,7 +291,7 @@ end
 -----------------------------------
 -- Module override: place the NPC in GM Home.
 -----------------------------------
-m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local CrossJobTrainer = zone:insertDynamicEntity({
@@ -301,10 +301,10 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         look       = 167,
         -- Extends the GM Home progression row at z=-7:
         --   Gear (-3) / Augment Moogle (0) / Augment Sage (+3) / Trainer (+6).
-        x          = -12.000,
-        y          =   0.000,
-        z          =  10.000,
-        rotation   =  128,
+        x          = 505.000,
+        y          =   -3.000,
+        z          =  568.000,
+        rotation   =  64,
         widescan   =  1,
 
         onTrigger = function(player, npc)

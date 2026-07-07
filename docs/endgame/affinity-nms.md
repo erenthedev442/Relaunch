@@ -1,6 +1,6 @@
 # Affinity NMs
 
-Twenty-four of Vana'diel's most legendary Notorious Monsters — HNMs, Sky Gods, Wyrms, and world bosses — are permanently spawned throughout the overworld as **Affinity NMs**. Defeating each one yields a guaranteed **registration trophy** that unlocks an augment affinity at the **Augment Sage** in Leafallia.
+Twenty-four of Vana'diel's most legendary Notorious Monsters — HNMs, Sky Gods, Wyrms, and world bosses — are permanently spawned throughout the overworld as **Affinity NMs**. Defeating each one yields a guaranteed **registration trophy** that unlocks an augment affinity at the **Augment Sage** on Purgonorgo Isle.
 
 <!-- DOCGEN:BEGIN id="affinity-overview" -->
 **What affinities do:** once registered, any gear you augment whose stat falls in your registered category gets a **1.5× multiplier** on that augment roll — so a registered STR affinity turns an STR+10 augment into STR+15.
@@ -15,7 +15,7 @@ Twenty-four of Vana'diel's most legendary Notorious Monsters — HNMs, Sky Gods,
 
 2. **Kill it.** The trophy is granted straight to **everyone in your party or alliance who is in the zone** — it does not drop on the floor, and it no longer matters who lands the killing blow. Keep a free inventory slot: any member whose inventory is full is warned and skipped, so make room and defeat it again.
 
-3. **Take the trophy to the Augment Sage** at Leafallia (`!leaf`).
+3. **Take the trophy to the Augment Sage** on Purgonorgo Isle (`!hub`).
 
 4. **Register the affinity.** Each registration costs **Hunting League Rank III (Elite)** or higher and **1,000 Hunt Marks**.
 

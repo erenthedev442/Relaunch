@@ -16,10 +16,10 @@ The following system detail pages exist but are **not** represented on the [Why 
 | [`progression/augment-calculator.md`](../progression/augment-calculator.md) | Plug in an augment, pick your Augment Tier (content-gated — see the Sage page ladder), how many catalyst slots you're filling, your Sage rank, and toggle affini |
 | [`progression/augmenting-guide.md`](../progression/augmenting-guide.md) | !Augment gem{ .lgnd-emblem } |
 | [`progression/fellow-companion.md`](../progression/fellow-companion.md) | Use !fellow to open the Fellow menu — summon/dismiss, allocate stat points, choose a role, set a name and appearance. Your Fellow earns XP from kills while it i |
-| [`progression/leafallia.md`](../progression/leafallia.md) | Leafallia is the relaunch's endgame hub. Once you're geared and into the mastery systems, this is where the high-end progression and repeatable battle content l |
-| [`progression/library.md`](../progression/library.md) | The Celennia Memorial Library is the relaunch's starting hub — convenience services, gil sinks, and getting-started tools all live here. |
+| [`progression/leafallia.md`](../progression/leafallia.md) | Purgonorgo Isle is the relaunch's endgame hub. Once you're geared and into the mastery systems, this is where the high-end progression and repeatable battle content l |
+| [`progression/library.md`](../progression/library.md) | The Purgonorgo Isle is the relaunch's starting hub — convenience services, gil sinks, and getting-started tools all live here. |
 | [`progression/prime-trials.md`](../progression/prime-trials.md) | Five trials, done in any order: gather the Abyssea collectibles, climb the Endless Tower, win a Prime Voucher from Hunting League NMs, master a job to beat a We |
-| [`progression/spell-mastery.md`](../progression/spell-mastery.md) | Earn Mastery Sigils from the daily NM rotation and use !empower to check your balance and owned upgrades. Spend Sigils at the Mastery Sage in Leafallia for perm |
+| [`progression/spell-mastery.md`](../progression/spell-mastery.md) | Earn Mastery Sigils from the daily NM rotation and use !empower to check your balance and owned upgrades. Spend Sigils at the Mastery Sage on Purgonorgo Isle for perm |
 | [`progression/weapon-forge.md`](../progression/weapon-forge.md) | Six legacy weapon paths. Earn the base weapon from its source content, then forge it through three stages to its final form. |
 <!-- DOCGEN:END id="unfeatured" -->
 

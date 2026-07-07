@@ -13,7 +13,7 @@
 --   Prize manifest --    -- "What can I win?" shows tier odds in chat
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Celennia_Memorial_Library/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local catalog = require('modules/custom/lua/gil_mystery_box_catalog')
 
 local m = Module:new('gil_mystery_box')
@@ -283,7 +283,7 @@ end
 -- NPC + Menu
 -- =====================================================
 
-m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local menu = { title = '', options = {} }

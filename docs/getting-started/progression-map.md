@@ -175,7 +175,7 @@ title: Progression Map
       <div class="wcell"><b>Voidwatch</b><span>Rift battles — pop a Planar Rift, burn the Voidwalker, stack lights for the Pyxis loot roll</span></div>
       <div class="wcell"><b>High-Tier Battlefields</b><span>Retail HTBF fights via phantom gems, tiered difficulty, dedicated vendor</span></div>
       <div class="wcell"><b>Nyzul Isle</b><span>The Sorrowful Sage in Mhaura opens retail Nyzul runs — floor-climb loot</span></div>
-      <div class="wcell"><b>Spell &amp; Skill Mastery</b><span>Spend <span class="chip c-sigil">Mastery Sigils</span> at the Mastery Sage in Leafallia to permanently empower weapon skills and spells</span></div>
+      <div class="wcell"><b>Spell &amp; Skill Mastery</b><span>Spend <span class="chip c-sigil">Mastery Sigils</span> at the Mastery Sage on Purgonorgo Isle to permanently empower weapon skills and spells</span></div>
       <div class="wcell"><b>Voidspire &amp; GM Waves</b><span>Weekly milestone dungeon + five wave difficulties — together an Augment Tier key</span></div>
       <div class="wcell"><b>Affinity NM Hunts</b><span>Always-up affinity NMs · register Augment Sage affinities for better rolls in their category</span></div>
       <div class="wcell"><b>Maat's Echo</b><span><code>!maat</code> — the solo super-fight · first kill is an Augment Tier key</span></div>

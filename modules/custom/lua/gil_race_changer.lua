@@ -19,14 +19,14 @@
 -- new model loads on the client.
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Celennia_Memorial_Library/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m = Module:new('gil_race_changer')
 
 local config = {
     npcName = 'Race Changer',
     npcLook = 3000,
-    npcPos  = { x = -102.000, y = -2.150, z = -100.000, rot = 190 },
+    npcPos  = { x = 535.000, y = -3.000, z = 550.000, rot = 192 },
     cost    = 100000000,   -- 100M gil
 }
 
@@ -72,7 +72,7 @@ local faceGroups = {
     },
 }
 
-m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local menu = { title = '', options = {} }

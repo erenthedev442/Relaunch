@@ -7,7 +7,7 @@ Tears in the void have opened across Vana'diel. The **Voidwatch** system sends y
 
 ## Getting started
 
-The **Officer** NPC in **Leafallia** sells Voidstones and runs the **Atmacite Refiner** where you spend atmacite shards on permanent perks. You start with a stock of Voidstones the first time you engage the system.
+The **Officer** NPC on **Purgonorgo Isle** sells Voidstones and runs the **Atmacite Refiner** where you spend atmacite shards on permanent perks. You start with a stock of Voidstones the first time you engage the system.
 
 <!-- DOCGEN:BEGIN id="voidwatch-economy" -->
 | Voidstones | Detail |
@@ -181,7 +181,7 @@ Each Voidwalker has its **own** drop table (retail-sourced from the fork's dropl
 
 ## Atmacite Refiner
 
-The **Officer** NPC in Leafallia runs the **Atmacite Refiner** — spend the atmacite shards you bank from Pearl lights on six perks that empower your Voidwatch runs. Each perk levels up; the cost climbs with every level.
+The **Officer** NPC on Purgonorgo Isle runs the **Atmacite Refiner** — spend the atmacite shards you bank from Pearl lights on six perks that empower your Voidwatch runs. Each perk levels up; the cost climbs with every level.
 
 <!-- DOCGEN:BEGIN id="voidwatch-atmacite" -->
 | Perk | Effect | Max level | Cost (shards) |

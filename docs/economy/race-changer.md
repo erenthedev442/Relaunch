@@ -1,14 +1,14 @@
 # Race Changer
 
-Want a fresh look? The **Race Changer** in <!--npc:race_changer-->the Celennia Memorial Library<!--/npc--> lets you change your character's race and pick a new face for a flat gil fee. It's purely cosmetic and applies instantly — your level, jobs, and progress are untouched.
+Want a fresh look? The **Race Changer** in <!--npc:race_changer-->the Purgonorgo Isle<!--/npc--> lets you change your character's race and pick a new face for a flat gil fee. It's purely cosmetic and applies instantly — your level, jobs, and progress are untouched.
 
 !!! tip "Summary"
-    Pay a one-time gil fee at the Race Changer in <!--npc:race_changer-->the Celennia Memorial Library<!--/npc--> to switch your race and face — instant, cosmetic, and nothing else about your character changes.
+    Pay a one-time gil fee at the Race Changer in <!--npc:race_changer-->the Purgonorgo Isle<!--/npc--> to switch your race and face — instant, cosmetic, and nothing else about your character changes.
 
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="race-changer-access" -->
-The **Race Changer** stands in the services row of **the Celennia Memorial Library** (`!lib`). Talk to it, choose a new race and face, then confirm.
+The **Race Changer** stands in the services row of **Purgonorgo Isle** (`!hub`). Talk to it, choose a new race and face, then confirm.
 <!-- DOCGEN:END id="race-changer-access" -->
 
 ## What it costs and what you get

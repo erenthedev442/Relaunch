@@ -1,6 +1,6 @@
 # Cosmetic Boutique — Boutique Moogle
 
-Want to stand out in town? The **Boutique Moogle** in <!--npc:cosmetic_shop-->the Celennia Memorial Library<!--/npc--> runs a daily-rotating fashion shop — one **appearance-only** cosmetic per day, from festival yukatas to full monster costumes. No stats, pure glamour.
+Want to stand out in town? The **Boutique Moogle** in <!--npc:cosmetic_shop-->the Purgonorgo Isle<!--/npc--> runs a daily-rotating fashion shop — one **appearance-only** cosmetic per day, from festival yukatas to full monster costumes. No stats, pure glamour.
 
 !!! tip "Summary"
     A new cosmetic is featured every day (resets 00:00 UTC). Examine the item in the shop window to see the look, then buy it with **Allied Notes**. Miss one? It comes back around as the rotation cycles.
@@ -17,7 +17,7 @@ Want to stand out in town? The **Boutique Moogle** in <!--npc:cosmetic_shop-->th
 Every cosmetic in the pool — today's is whichever day the rotation has landed on:
 
 <!-- DOCGEN:BEGIN id="cosmetic-catalog" -->
-_The **Boutique Moogle** at **the Celennia Memorial Library** (`!lib`) features **one** of these 59 cosmetics per day (rotating, resets 00:00 UTC). Pure appearance — **no combat stats**. Paid in **Allied Notes**, earned in (S) zones. Hover an item for its icon, or click through to FFXIAH for the full look._
+_The **Boutique Moogle** at **Purgonorgo Isle** (`!hub`) features **one** of these 59 cosmetics per day (rotating, resets 00:00 UTC). Pure appearance — **no combat stats**. Paid in **Allied Notes**, earned in (S) zones. Hover an item for its icon, or click through to FFXIAH for the full look._
 
 ### YUKATA (Summer Festival)
 

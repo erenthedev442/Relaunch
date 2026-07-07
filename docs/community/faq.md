@@ -14,7 +14,7 @@ No. The Relaunch server runs against a private server built on [LandSandBoat](ht
 
 ### How do I create a character?
 
-Once connected, the standard FFXI character-creation flow runs as usual. Your first login then triggers a one-time auto-setup that grants every weapon skill, every spell, capped combat/magic skills, every trust, all quests flagged complete, all missions flagged complete, all key items and maps, all outpost warps, every home point, all survival guides, expanded wardrobes, and all automaton attachments (the paid Void Keeper trusts stay locked), plus **500 starter Unity Accolades** for the Unity Wanted board. You begin with a **{{setting:START_GIL:comma}} gil** wallet, and first login adds a **300,000 gil** welcome gift and **25 Hunt Marks** — enough for a first Bronze-tier weapon. The level cap is {{setting:INITIAL_LEVEL_CAP}} from day one (no Limit Break quests); type `!gmhome` to visit the setup Moogles and start leveling at {{setting:map.EXP_RATE}}× EXP.
+Once connected, the standard FFXI character-creation flow runs as usual. Your first login then triggers a one-time auto-setup that grants every weapon skill, every spell, capped combat/magic skills, every trust, all quests flagged complete, all missions flagged complete, all key items and maps, all outpost warps, every home point, all survival guides, expanded wardrobes, and all automaton attachments (the paid Void Keeper trusts stay locked), plus **500 starter Unity Accolades** for the Unity Wanted board. You begin with a **{{setting:START_GIL:comma}} gil** wallet, and first login adds a **300,000 gil** welcome gift and **25 Hunt Marks** — enough for a first Bronze-tier weapon. The level cap is {{setting:INITIAL_LEVEL_CAP}} from day one (no Limit Break quests); type `!hub` to reach the island hub and start leveling at {{setting:map.EXP_RATE}}× EXP.
 
 ---
 
@@ -35,7 +35,7 @@ Kill the NMs at the [Hunting League](../progression/index.md) Spawner. Each NM g
 
 ### How does the [Augment Moogle](../progression/augments.md) differ from the [Augment Sage](../progression/augment-sage.md)?
 
-- **Augment Moogle** (in <!--npc:augment_moogle-->Leafallia<!--/npc-->) stamps augments onto gear: trade one piece + up to 5 catalysts (10,000 gil flat per trade). Each catalyst writes one augment line, and every line's value is **rolled** inside your **Augment Tier** band — 5 tiers gated by content milestones, covering the 0–31 roll space.
+- **Augment Moogle** (in <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc-->) stamps augments onto gear: trade one piece + up to 5 catalysts (10,000 gil flat per trade). Each catalyst writes one augment line, and every line's value is **rolled** inside your **Augment Tier** band — 5 tiers gated by content milestones, covering the 0–31 roll space.
 - **Augment Sage** improves your *rolls* (the old rank multiplier is retired): each Mastery rank raises the roll floor by +1 (up to +5) and lifts the perfect-roll crit chance from 5% to 30%. Ranks unlock automatically at content milestones (Hunting League rank, Prestige level, Job Rebirths, Gauntlet clears — nothing is consumed). Per-NM **affinities** make matching-category augments roll twice and keep the better; registering one takes Hunting League Rank 3, 1,000 Hunt Marks, and the NM's trophy (consumed). Talk to the Sage to track and rank up.
 
 ---

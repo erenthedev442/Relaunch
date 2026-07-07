@@ -17,11 +17,11 @@ local catalog = {}
 -- (7.5) / Race Caller (10.5).
 catalog.npcPos =
 {
-    zone     = 'Celennia_Memorial_Library',
-    zoneId   = 284,
-    x        = -114.000,
-    y        =   -2.150,
-    z        = -100.000,
+    zone     = 'Abdhaljs_Isle-Purgonorgo',
+    zoneId   = 44,
+    x        = 535.000,
+    y        =   -3.000,
+    z        = 556.000,
     rotation =  190,
 }
 

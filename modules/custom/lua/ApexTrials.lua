@@ -31,7 +31,7 @@
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Walk_of_Echoes_[P2]/Zone')
-require('scripts/zones/Leafallia/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local C         = require('modules/custom/lua/apex_catalog')
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
 
@@ -276,7 +276,7 @@ end)
 -----------------------------------
 -- Override: GM Home - place the Apex Arbiter NPC
 -----------------------------------
-m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local npc = zone:insertDynamicEntity({
@@ -284,10 +284,10 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         name       = 'Apex_Arbiter',
         packetName = string.format('%sApex Arbiter', xi.icon.STAR_LARGE),
         look       = 75,
-        x          = -16.000,
-        y          =   0.000,
-        z          =  15.000,
-        rotation   =  128,
+        x          = 505.000,
+        y          =   -3.000,
+        z          =  574.000,
+        rotation   =  64,
         widescan   =  1,
 
         onTrigger = function(player, npc)

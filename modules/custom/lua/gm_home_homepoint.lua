@@ -29,7 +29,7 @@
 --   hpBit = 122 % 32 = 26, hpSet = floor(122/32) = 3.
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Celennia_Memorial_Library/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local catalog = require('modules/custom/lua/gm_home_homepoint_catalog')
 
 local m = Module:new('gm_home_homepoint')
@@ -179,7 +179,7 @@ end
 -----------------------------------
 -- Place the crystal in GM Home.
 -----------------------------------
-m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     -- Teleport-services cluster on the east side of GM Home: the three travel
@@ -192,10 +192,10 @@ m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(z
         name       = 'Home_Point',
         packetName = 'Home Point',
         look       = 51,        -- homepoint crystal model (modelid 0x0033)
-        x          =  -94.000,
-        y          =  -2.150,
-        z          =  -88.000,
-        rotation   =  190,
+        x          =  517.000,
+        y          =  -3.000,
+        z          =  550.000,
+        rotation   =  64,
         widescan   = 1,
 
         onTrigger = function(player, npc)

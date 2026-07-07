@@ -18,11 +18,11 @@
 -- Trial-5 turn-in). Keep each FORGE_COST qty <= 99 (one stack) for this to work.
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Leafallia/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m = Module:new('relic_forge')
 
-local NPC_POS = { x = -12.000, y = 0.000, z = 20.000, rot = 128 }
+local NPC_POS = { x = 523.000, y = -3.000, z = 562.000, rot = 192 }
 
 -- Dynamis currency cost PER relic. Tunable. Dynamis currencies (item_basic):
 --   1449 Tukuku Whiteshell (Windurst)   1450 Lungo-Nango Jadeshell (San d'Oria)
@@ -64,7 +64,7 @@ local function costStr()
     return table.concat(parts, ', ')
 end
 
-m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local function sendMenu(player, title, options)

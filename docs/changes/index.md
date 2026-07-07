@@ -162,15 +162,15 @@ Three currencies (AF Marks, Relic Marks, Empyrean Marks) track separately. Every
 
 ## Custom service NPCs
 
-The server's custom service NPCs are split across two hubs — **Leafallia** (endgame progression) and the **Celennia Memorial Library** (beginner services). The summary below auto-updates from the live source.
+The server's custom service NPCs are split across two hubs — **Purgonorgo Isle** (endgame progression) and the **Purgonorgo Isle** (beginner services). The summary below auto-updates from the live source.
 
 <!-- DOCGEN:BEGIN id="gm-home-npcs" -->
 Custom service NPCs live across two hubs:
 
-- **[Leafallia — Endgame Hub](../progression/leafallia.md)** — Prime Armory, Relic Forge, Augment Moogle & Sage, the mastery trainers, Apex Trials, the Gauntlet, Colosseum, Endless Tower, and the HTBF / Infamy / Voidwatch vendors.
-- **[Celennia Memorial Library — Beginner Hub](../progression/library.md)** — home point, Warpman, the Gil / Sparks / Crafting exchanges, Title Broker, Cosmetic Shop, Daily & Hunt boards, Unity, Casino, Mystery Mog, Chocobo Derby, and the Race Changer.
+- **[Purgonorgo Isle — Endgame Hub](../progression/leafallia.md)** — Prime Armory, Relic Forge, Augment Moogle & Sage, the mastery trainers, Apex Trials, the Gauntlet, Colosseum, Endless Tower, and the HTBF / Infamy / Voidwatch vendors.
+- **[Purgonorgo Isle — Beginner Hub](../progression/library.md)** — home point, Warpman, the Gil / Sparks / Crafting exchanges, Title Broker, Cosmetic Shop, Daily & Hunt boards, Unity, Casino, Mystery Mog, Chocobo Derby, and the Race Changer.
 
-The combat **Test Dummy** for DPS testing remains in **GM Home** (`!gmhome`). New-character setup — weapon skills, spells, key items, missions, maps, and a starter gear kit — is now granted **automatically at character creation**, so the old setup moogles (Gear / Key Item / Mission / Character Upgrader / EXP Camp) are gone.
+The combat **Test Dummy** for DPS testing remains on **Purgonorgo Isle** (`!hub`). New-character setup — weapon skills, spells, key items, missions, maps, and a starter gear kit — is now granted **automatically at character creation**, so the old setup moogles (Gear / Key Item / Mission / Character Upgrader / EXP Camp) are gone.
 <!-- DOCGEN:END id="gm-home-npcs" -->
 
 ## Custom HNM system

@@ -1,7 +1,7 @@
 # Dungeons
 
 <!-- DOCGEN:BEGIN id="dungeon-intro" -->
-Classic Vana'diel zones become private expedition grounds. Talk to the **Dungeon Guide** in **GM Home**, pick a zone, and your party gets a personal copy of it — sealed off from the rest of the server — with **13 enemies** standing between you and the exit.
+Classic Vana'diel zones become private expedition grounds. Talk to the **Dungeon Guide** on **Purgonorgo Isle**, pick a zone, and your party gets a personal copy of it — sealed off from the rest of the server — with **13 enemies** standing between you and the exit.
 
 !!! tip "Quick start"
     Talk to the **Dungeon Guide** in {{npc:dungeon_guide}}, pick a category and a dungeon, and confirm. Clear all 13 mobs — including the boss — within **30 minutes**.
@@ -10,7 +10,7 @@ Classic Vana'diel zones become private expedition grounds. Talk to the **Dungeon
 ## How to Enter
 
 <!-- DOCGEN:BEGIN id="dungeon-overview" -->
-Talk to the **Dungeon Guide** in **GM Home** to register. Choose a category, then a dungeon, and confirm — you must be the party leader and every member of your group must be in the same zone when you register (no one in transit, no one already in an active dungeon).
+Talk to the **Dungeon Guide** on **Purgonorgo Isle** to register. Choose a category, then a dungeon, and confirm — you must be the party leader and every member of your group must be in the same zone when you register (no one in transit, no one already in an active dungeon).
 
 Each run gives your party **30 minutes** to defeat all **13 mobs**, including a final boss. When the last enemy falls a **30-second exit countdown** begins — use the time to collect drops, then you're automatically warped back.
 <!-- DOCGEN:END id="dungeon-overview" -->

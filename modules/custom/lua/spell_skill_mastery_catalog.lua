@@ -26,7 +26,7 @@ catalog.CURRENCY_VAR  = 'MasterySigils'     -- charVar holding the player's sigi
 catalog.CURRENCY_NAME = 'Mastery Sigils'
 
 -- NPC placement (Leafallia back row, near the Relic Forge) -------------------
-catalog.npcPos = { x = -8.000, y = 0.000, z = 20.000, rot = 128 }
+catalog.npcPos = { x = 517.000, y = -3.000, z = 568.000, rot = 64 }
 
 -- ── Sigil faucet (secondary; the rotation below is the primary source) ──────
 -- Optional small trickle on ANY NM kill so players are never fully dry between

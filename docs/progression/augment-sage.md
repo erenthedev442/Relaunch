@@ -2,7 +2,7 @@
 
 ![Arcane eye](../assets/emblems/augment-sage.svg){ .lgnd-emblem }
 
-The **Augment Sage** is the side-quest progression layer on top of the [Augment Moogle](augments.md). Talk to him in Leafallia (`!leaf`, right next to the Moogle) to pursue **mastery ranks**, **register NM affinities**, and check your boost status. The math he unlocks gets applied automatically the next time you trade catalysts to the Moogle — there's no separate "use this augment" workflow.
+The **Augment Sage** is the side-quest progression layer on top of the [Augment Moogle](augments.md). Talk to him on Purgonorgo Isle (`!leaf`, right next to the Moogle) to pursue **mastery ranks**, **register NM affinities**, and check your boost status. The math he unlocks gets applied automatically the next time you trade catalysts to the Moogle — there's no separate "use this augment" workflow.
 
 !!! warning "What the multipliers actually multiply"
     The "Mastery ×" and crit values on this page boost the **stat numbers written onto your gear** when you augment a piece at the Moogle — they fill an achievement **boost of 0–31** per slot, e.g. an Attack line climbs from **+2/slot fresh to +64/slot** at rank-5 + affinity + crit. They have **no effect on EXP gain, gil drops, or anything outside the augmentation trade itself.** If you want faster leveling, see [Subjob EXP Share](subjob-exp.md) or the EXP rates on [Retail Differences](../changes/index.md#rates-at-a-glance).
@@ -13,7 +13,7 @@ The **Augment Sage** is the side-quest progression layer on top of the [Augment 
 ## Where to find the Sage
 
 <!-- DOCGEN:BEGIN id="sage-location" -->
-**Zone:** Leafallia  
+**Zone:** Purgonorgo Isle  
 **Coordinates:** x = -16.00, y = 0.00, z = 10.00  
 **Same row as:** the Augment Moogle (talk to either to start a trade or pursue a rank).
 <!-- DOCGEN:END id="sage-location" -->

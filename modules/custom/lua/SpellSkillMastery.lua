@@ -30,7 +30,7 @@
 -- period; catalog.rotation.partyWide). The small NM trickle stays killer-only.
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Leafallia/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local C   = require('modules/custom/lua/spell_skill_mastery_catalog')
 local m   = Module:new('spell_skill_mastery')
@@ -475,7 +475,7 @@ end)
 -----------------------------------
 -- NPC placement (Leafallia).
 -----------------------------------
-m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
     zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,

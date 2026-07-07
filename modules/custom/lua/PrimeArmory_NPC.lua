@@ -22,7 +22,7 @@
 -- Zone: GM Home (zone 210).
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Leafallia/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m = Module:new('prime_armory')
 
@@ -90,7 +90,7 @@ local T5_ITEMS =
     { id = 1456, name = '100 Byne Bill'         },
 }
 
-m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local function sendMenu(player, menu)
@@ -400,10 +400,10 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         name       = 'Prime_Armory',
         packetName = string.format('%sPrime Armory', xi.icon.STAR_LARGE),
         look       = 216,
-        x          =  -4.000,
-        y          =   0.000,
-        z          =  15.000,
-        rotation   =  128,
+        x          =  535.000,
+        y          =   -3.000,
+        z          =  562.000,
+        rotation   =  192,
         widescan   =  1,
 
         onTrade = function(player, npc, trade)

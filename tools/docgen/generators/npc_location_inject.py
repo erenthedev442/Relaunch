@@ -64,6 +64,9 @@ _NPC_FILES: dict[str, str] = {
 
 # Raw zone id -> friendly display name (reads naturally after "in ...").
 _FRIENDLY: dict[str, str] = {
+    "Abdhaljs_Isle-Purgonorgo":  "Purgonorgo Isle",
+    # Legacy hubs (kept so historical references still resolve; all custom NPCs
+    # were consolidated onto Purgonorgo Isle 2026-07-06).
     "Leafallia":                 "Leafallia",
     "Celennia_Memorial_Library": "the Celennia Memorial Library",
     "GM_Home":                   "GM Home",
@@ -71,10 +74,11 @@ _FRIENDLY: dict[str, str] = {
 
 # Tried in order; first match wins. The bare `zone = '...'` form is restricted to
 # the known hub zones so a warp-destination `zone =` can't be mistaken for the home.
+# NOTE: zone names can contain hyphens (Abdhaljs_Isle-Purgonorgo) -> [\w-], not \w.
 _ZONE_PATTERNS = [
-    re.compile(r"addOverride\(\s*['\"]xi\.zones\.(\w+)\.Zone\.onInitialize"),
-    re.compile(r"zonePath\s*=\s*['\"]xi\.zones\.(\w+)['\"]"),
-    re.compile(r"\bzone\s*=\s*['\"](Leafallia|Celennia_Memorial_Library|GM_Home)['\"]"),
+    re.compile(r"addOverride\(\s*['\"]xi\.zones\.([\w-]+)\.Zone\.onInitialize"),
+    re.compile(r"zonePath\s*=\s*['\"]xi\.zones\.([\w-]+)['\"]"),
+    re.compile(r"\bzone\s*=\s*['\"](Abdhaljs_Isle-Purgonorgo|Leafallia|Celennia_Memorial_Library|GM_Home)['\"]"),
 ]
 
 _TOKEN_RE  = re.compile(r"\{\{\s*npc\s*:\s*([a-z0-9_]+)\s*\}\}")

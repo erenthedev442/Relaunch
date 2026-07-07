@@ -37,7 +37,7 @@
 -- addOverride -> ONE map restart to load; catalog/menu tweaks hot-reload after.
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Leafallia/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local C         = require('modules/custom/lua/voidwatch_catalog')
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
@@ -589,17 +589,17 @@ m:addOverride('xi.player.onGameIn', function(player, gameLogin, zoning)
 end)
 
 -- ── Voidwatch Officer NPC (Leafallia / GM Home) ─────────────────────────────
-m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
     local npc = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Voidwatch_Officer',
         packetName = string.format('%sVoidwatch Officer', xi.icon.STAR_LARGE),
         look       = 244,
-        x          = -13.000,
-        y          =   0.000,
-        z          =  15.000,
-        rotation   =  128,
+        x          = 505.000,
+        y          =   -3.000,
+        z          =  580.000,
+        rotation   =  64,
         widescan   =  1,
         onTrigger  = function(player, npcEnt)
             openMenu(player)

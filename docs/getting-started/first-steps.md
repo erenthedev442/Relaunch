@@ -9,14 +9,15 @@ This page walks you through the first 15–20 minutes: getting your character se
 
 ---
 
-## 1. Orient yourself — two hub zones
+## 1. Orient yourself — one island hub
 
-The two main zones you'll return to constantly are:
+Every custom NPC lives on a single island plaza — **Purgonorgo Isle**. Type **`!hub`** to warp there any time.
 
-- **Celennia Memorial Library** — type `!lib` to warp there. This is the entry hub: Hunt Board, Daily Board, economy NPCs (Gil Exchange, Sparks Exchange, Race Changer), the Casino, Home Point crystal, and the Warpman.
-- **Leafallia** — type `!leaf` to warp there. This is the endgame NPC row: Apex Trials, Prime Armory, Colosseum, Infamy Vendor, Augment Moogle and Sage, Job Mastery, Endless Tower, and Cross-Job Trainers.
+- **Getting-around & set-up** — Home Point crystal, Warpman, Survival Guide.
+- **Economy** — Gil Exchange, Sparks Exchange, Race Changer, Title Broker, Mystery Mog, Cosmetic Shop; the Casino; the Daily & Hunt boards; Unity and Chocobo Derby.
+- **Endgame** — Apex Trials, Prime Armory, Relic Forge, Colosseum, Endless Tower, the Gauntlet, Infamy / HTBF / Voidwatch vendors, Augment Moogle & Sage, the mastery trainers, Cross-Job Trainers, and the combat **Test Dummy** for DPS testing.
 
-GM Home (`!gmhome`) still exists, but only the **Test Dummy** for DPS testing lives there now.
+The NPCs are spaced out across the plaza so a crowd can shop at once. The old `!leaf`, `!lib`, and `!gmhome` commands all still work — they now land you on Purgonorgo Isle too.
 
 ---
 
@@ -84,7 +85,7 @@ It's the primary path to endgame gear and the main thing to do on the Relaunch s
 
 | Step | Action |
 |---|---|
-| 1 | `!lib` — warp to the Celennia Memorial Library (entry hub) |
+| 1 | `!lib` — warp to the Purgonorgo Isle (entry hub) |
 | 2 | Nothing to do — your character is fully set up at creation (weapon skills, spells, trusts, capped skills, key items, missions, maps, warps, wardrobes, starter gear) |
 | 3 | `!expcamp` — warp to a level-banded camp and level to 99 ({{setting:map.EXP_RATE}}× mob EXP) |
 | 4 | `!hunt` — warp to Escha ZiTah and start the Hunting League |

@@ -35,11 +35,11 @@ local catalog = {}
 -- / Arena Herald (7.5).
 catalog.npcPos =
 {
-    zone     = 'Leafallia',
-    zoneId   = 281,
-    x        = -20.000,
-    y        =   0.000,
-    z        =  15.000,
+    zone     = 'Abdhaljs_Isle-Purgonorgo',
+    zoneId   = 44,
+    x        = 529.000,
+    y        =   -3.000,
+    z        =  574.000,
     rotation =  128,
 }
 

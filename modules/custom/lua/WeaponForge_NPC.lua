@@ -22,14 +22,14 @@
 --                                     +  2000 Reforge Marks (any pool, drained)
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Leafallia/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m       = Module:new('weapon_forge_npc')
 local catalog = require('modules/custom/lua/weapon_forge_catalog')
 
-local NPC_POS = { x = -15.000, y = 0.000, z = 20.000, rot = 128 }
+local NPC_POS = { x = 517.000, y = -3.000, z = 562.000, rot = 64 }
 
-m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local function sendMenu(player, title, options)

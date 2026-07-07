@@ -154,7 +154,7 @@ The inverse of the list above — the pages whose content has gone longest witho
 | [Home Point Network](../economy/home-point.md) | 2026-06-29 04:19 UTC |
 | [Race Changer](../economy/race-changer.md) | 2026-06-29 04:19 UTC |
 | [NPCs & Hubs › GM Home](../progression/gm-home.md) | 2026-07-05 07:37 UTC |
-| [NPCs & Hubs › Leafallia (Endgame Hub)](../progression/leafallia.md) | 2026-07-05 07:37 UTC |
+| [NPCs & Hubs › Purgonorgo Isle (Endgame Hub)](../progression/leafallia.md) | 2026-07-05 07:37 UTC |
 | [NPCs & Hubs › Celennia Library (Beginner Hub)](../progression/library.md) | 2026-07-05 07:37 UTC |
 | [NPCs & Hubs › Gemma](../progression/skoll.md) | 2026-06-29 04:19 UTC |
 | [NPCs & Hubs › Meat, the Immortal Tank](../progression/meat.md) | 2026-06-29 04:19 UTC |

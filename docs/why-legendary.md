@@ -44,7 +44,7 @@ Everything that made the original server worth playing:
 
 - **Augment Moogle — 400+ ways to customize your gear.** Catalysts drop from monsters all over the world. Trade them to the Augment Moogle to apply permanent stat bonuses to your gear. Stack them with the Augment Sage (whose power scales with your NM kill history) and you can push gear further than retail ever allowed.
 
-- **Cross-Job Abilities — borrow from other jobs.** The Cross-Job Trainer in Leafallia sells a hand-curated set of job abilities — self and party buffs and utility, like Meditate — that you can then use on *any* job via macro, with the recast enforced server-side. No 2-hours, no build-breaking picks: just the smart cross-pollination retail never allowed.
+- **Cross-Job Abilities — borrow from other jobs.** The Cross-Job Trainer on Purgonorgo Isle sells a hand-curated set of job abilities — self and party buffs and utility, like Meditate — that you can then use on *any* job via macro, with the recast enforced server-side. No 2-hours, no build-breaking picks: just the smart cross-pollination retail never allowed.
 
 - **No dead content — weekly objectives, daily board, Wave Master arena.** The Weekly Hunt Board resets every week with five fresh objectives. The Daily Board resets at midnight UTC. The Wave Master NPC in Escha - Ru'Aun spawns NM waves on demand. There is always a reason to log in.
 

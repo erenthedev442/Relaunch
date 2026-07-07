@@ -22,7 +22,7 @@
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Walk_of_Echoes/Zone')
-require('scripts/zones/Leafallia/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m         = Module:new('job_mastery')
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
@@ -124,7 +124,7 @@ local GROUP_ZONE_ID     = 210
 -- never overlap. The original (-380,14,10) was off the map. The boss spawns at
 -- player+12 (x), so it lands just east on the same platform.
 local WARP_IN  = { x = -519.013, y = 36.000, z = 235.893, rot = 226 }
-local EXIT_WARP = { zoneId = 210, x = -15, y = 0, z = -18, rot = 128 }
+local EXIT_WARP = { zoneId = 44, x = 521.5, y = -3.0, z = 548.0, rot = 65 }
 
 -----------------------------------
 -- Boss affix pool (same as Endless Tower)
@@ -412,7 +412,7 @@ end
 -----------------------------------
 
 -- GM Home: place the Mastery Sage NPC at z = -35.
-m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local npc = zone:insertDynamicEntity({
@@ -420,10 +420,10 @@ m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
         name       = 'Weapon_Mastery_Sage',
         packetName = 'Weapon Mastery Sage',
         look       = 212,
-        x          =  -8.000,
-        y          =   0.000,
-        z          =  15.000,
-        rotation   =  128,
+        x          =  523.000,
+        y          =   -3.000,
+        z          =  568.000,
+        rotation   =  192,
         widescan   =  1,
 
         onTrigger = function(player, npc)

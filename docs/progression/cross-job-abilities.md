@@ -1,15 +1,15 @@
 # Cross-Job Abilities
 
-The **Cross-Job Ability Trainer** in <!--npc:cross_job_ability-->Leafallia<!--/npc--> sells permanent ability licenses that let you use abilities from other jobs on **any main job** — no subjob required.
+The **Cross-Job Ability Trainer** in <!--npc:cross_job_ability-->Purgonorgo Isle<!--/npc--> sells permanent ability licenses that let you use abilities from other jobs on **any main job** — no subjob required.
 
 !!! tip "Summary"
-    Find the Trainer in <!--npc:cross_job_ability-->Leafallia<!--/npc-->. Pay **10,000,000 gil per ability** (one-time, per-character). Activate via `/ja "Ability Name" <me>`. The ability fires on any job you play, with normal recast timers.
+    Find the Trainer in <!--npc:cross_job_ability-->Purgonorgo Isle<!--/npc-->. Pay **10,000,000 gil per ability** (one-time, per-character). Activate via `/ja "Ability Name" <me>`. The ability fires on any job you play, with normal recast timers.
 
 ---
 
 ## How It Works
 
-1. **Talk to the Cross-Job Ability Trainer** in the Utility cluster in <!--npc:cross_job_ability-->Leafallia<!--/npc-->.
+1. **Talk to the Cross-Job Ability Trainer** in the Utility cluster in <!--npc:cross_job_ability-->Purgonorgo Isle<!--/npc-->.
 2. **Browse by job group** — the menu is organized into groups (Warrior, Samurai, etc.).
 3. **Confirm purchase** — 10,000,000 gil is deducted and the license is permanently recorded to your character.
 4. **Use a macro** — `/ja "Meditate" <me>` (or whichever ability). The server validates the macro against your unlocked licenses and fires the ability.

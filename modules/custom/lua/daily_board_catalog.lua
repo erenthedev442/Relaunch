@@ -20,11 +20,11 @@ local catalog = {}
 -- this goes to x=-7.5 to continue the row westward).
 catalog.npcPos =
 {
-    zone     = 'Celennia_Memorial_Library',
-    zoneId   = 284,
-    x        = -98.000,
-    y        =  -2.150,
-    z        = -94.000,
+    zone     = 'Abdhaljs_Isle-Purgonorgo',
+    zoneId   = 44,
+    x        = 523.000,
+    y        =  -3.000,
+    z        = 580.000,
     rotation =  190,
 }
 

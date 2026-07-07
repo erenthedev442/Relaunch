@@ -7,7 +7,7 @@
 
 ## Where to start
 
-Talk to **The Gauntlet** keeper (sword-and-shield icon) in <!--npc:gauntlet-->Leafallia<!--/npc--> — same row as the Apex Arbiter and Rupture Sage. Choose *Enter The Gauntlet* and you are warped straight into the arena.
+Talk to **The Gauntlet** keeper (sword-and-shield icon) in <!--npc:gauntlet-->Purgonorgo Isle<!--/npc--> — same row as the Apex Arbiter and Rupture Sage. Choose *Enter The Gauntlet* and you are warped straight into the arena.
 
 **Rules:**
 
@@ -116,7 +116,7 @@ After clearing all nine levels Shinryu is the only thing left. Approach the **Fi
 
 Shinryu carries the full mechCfg kit at maximum intensity: a short enrage (~80s), rapid stance cycling, CC, heavy drain, and multiple phase thresholds including a 10% berserker state. It has **~199M HP** and its physical TP moves bypass parry.
 
-There is no clock, no time limit beyond the enrage timer. Defeat it to trigger the jackpot reward and warp back to Leafallia.
+There is no clock, no time limit beyond the enrage timer. Defeat it to trigger the jackpot reward and warp back to Purgonorgo Isle.
 
 ---
 

@@ -10,7 +10,7 @@
 --   !exec xi.sparks_exchange.jp_rate = 4000
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Celennia_Memorial_Library/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m = Module:new('sparks_exchange')
 
@@ -45,7 +45,7 @@ xi.sparks_exchange = {
 
 -- ===== static NPC config (requires restart to change) =====
 local cfg = {
-    npcPos = { x = -110.000, y = -2.150, z = -94.000, rot = 190 },
+    npcPos = { x = 505.000, y = -3.000, z = 550.000, rot = 64 },
     name   = 'Me Like Gil',
     look   = 220,
 }
@@ -56,7 +56,7 @@ local function fmtGil(n)
     return tostring(n)
 end
 
-m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local menu = { title = '', options = {} }

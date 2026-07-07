@@ -8,9 +8,9 @@
 -----------------------------------
 local catalog = {}
 
-catalog.zoneId    = xi.zone.LEAFALLIA
-catalog.zonePath  = 'xi.zones.Leafallia'
-catalog.npcPos    = { x = 8.500, y = -0.434, z = 8.133, rot = 73 }  -- 2026-07-06 moved off the Sage/Moogle row to beside the Leafallia homepoint (hp at 5.539,-0.434,8.133); !pos-verify after restart
+catalog.zoneId    = xi.zone.ABDHALJS_ISLE_PURGONORGO
+catalog.zonePath  = 'xi.zones.Abdhaljs_Isle-Purgonorgo'
+catalog.npcPos    = { x = 511.000, y = -3.000, z = 550.000, rot = 64 }  -- 2026-07-06 moved off the Sage/Moogle row to beside the Leafallia homepoint (hp at 5.539,-0.434,8.133); !pos-verify after restart
 catalog.npcName   = 'Survival_Guide'
 catalog.packet    = 'Survival Guide'
 -- Retail Survival Guide book model (npc_list look 0x0981 = 2433). If it

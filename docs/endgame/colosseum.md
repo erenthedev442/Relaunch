@@ -1,14 +1,14 @@
 # Colosseum — Ranked Arena
 
-Think you're the strongest champion on the server? Enroll at the **Arena Herald** in <!--npc:colosseum-->Leafallia<!--/npc--> and prove it. The Colosseum is an asynchronous, ranked PvP-style arena: you duel level-scaled replicas of other champions to climb an Elo rating ladder — no need to catch your rivals online.
+Think you're the strongest champion on the server? Enroll at the **Arena Herald** in <!--npc:colosseum-->Purgonorgo Isle<!--/npc--> and prove it. The Colosseum is an asynchronous, ranked PvP-style arena: you duel level-scaled replicas of other champions to climb an Elo rating ladder — no need to catch your rivals online.
 
 !!! tip "Summary"
-    A ranked arena in <!--npc:colosseum-->Leafallia<!--/npc--> where you duel AI replicas of other champions to climb an Elo ladder, earning Hunt Marks for every win.
+    A ranked arena in <!--npc:colosseum-->Purgonorgo Isle<!--/npc--> where you duel AI replicas of other champions to climb an Elo ladder, earning Hunt Marks for every win.
 
 ## Where to fight
 
 <!-- DOCGEN:BEGIN id="colosseum-access" -->
-The **Arena Herald** stands in **Leafallia** (`!leaf`) — talk to them to enroll your champion on the ladder, browse the roster of rivals, and accept a duel.
+The **Arena Herald** stands in **Purgonorgo Isle** (`!hub`) — talk to them to enroll your champion on the ladder, browse the roster of rivals, and accept a duel.
 <!-- DOCGEN:END id="colosseum-access" -->
 
 Enrolling snapshots your champion's name, race, job, and level onto the ladder. From then on, anyone can challenge a replica of your champion — and you can challenge theirs — at any time.
@@ -23,7 +23,7 @@ When you challenge a champion, you fight a level-scaled **replica** of them — 
 - You can challenge each champion **once per day** (resets at 00:00 UTC) — pick your matches and come back tomorrow for a rematch.
 <!-- DOCGEN:END id="colosseum-duel" -->
 
-Duels are fought in **Leafallia** (`!leaf`), with the replica spawning right next to you. There's no party play here — it's a one-on-one test of your champion.
+Duels are fought in **Purgonorgo Isle** (`!hub`), with the replica spawning right next to you. There's no party play here — it's a one-on-one test of your champion.
 
 ## The rating ladder
 

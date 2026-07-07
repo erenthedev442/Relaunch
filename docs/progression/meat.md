@@ -5,7 +5,7 @@
 ## At a glance
 
 <!-- DOCGEN:BEGIN id="meat-summary" -->
-- **Where:** the **Void Keeper** in **Leafallia** (reach it with `!leaf`) — the same NPC that grants [Corvus](corvus.md) and [Gemma](skoll.md)
+- **Where:** the **Void Keeper** on **Purgonorgo Isle** (reach it with `!leaf`) — the same NPC that grants [Corvus](corvus.md) and [Gemma](skoll.md)
 - **Unlock:** **Hunting League Rank 2 + 2,000 Hunt Marks** — one-time, permanent, per character
 - **Role:** pure tank — soaks the damage, minimal DPS
 - **To summon:** cast **Excenmille** from your Trust menu — that slot *is* Meat (the name **Meat** appears over its head and in your party list)
@@ -24,7 +24,7 @@ Meat is the ultimate meat-shield:
 
 ## How to unlock
 
-Reach **Hunting League Rank 2 + 2,000 Hunt Marks**, then travel to <!--npc:void_keeper-->Leafallia<!--/npc-->, find the **Void Keeper**, and bind Meat to your service. The marks are spent once; the binding is permanent and per character. In your Trust menu it appears as **"Excenmille"** — cast it, and the tiny Tarutaru answers.
+Reach **Hunting League Rank 2 + 2,000 Hunt Marks**, then travel to <!--npc:void_keeper-->Purgonorgo Isle<!--/npc-->, find the **Void Keeper**, and bind Meat to your service. The marks are spent once; the binding is permanent and per character. In your Trust menu it appears as **"Excenmille"** — cast it, and the tiny Tarutaru answers.
 
 ---
 

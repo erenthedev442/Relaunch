@@ -16,11 +16,11 @@ local catalog = {}
 
 catalog.npcPos =
 {
-    zone     = 'Celennia_Memorial_Library',
-    zoneId   = 284,
-    x        = -106.000,
-    y        =   -2.150,
-    z        =  -94.000,
+    zone     = 'Abdhaljs_Isle-Purgonorgo',
+    zoneId   = 44,
+    x        = 529.000,
+    y        =   -3.000,
+    z        =  562.000,
     rotation =  190,
 }
 

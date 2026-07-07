@@ -2,15 +2,15 @@
 
 The **High-Tier Battlefields (HTBF)** bring the classic mission boss fights back as repeatable, scaled endgame content. Each battlefield is a retail story-boss encounter — Avatar Primes, the Chains of Promathia bosses, the Ark Angels, and more — rebuilt with **three difficulty tiers** so you can climb from a warm-up clear to a genuine wall.
 
-Entry is gated by a **Phantom Gem** key item, bought for gil from a vendor in Leafallia. Buy the gem for the fight you want, trade it at that battlefield's entrance, and choose your tier. Clears pay out **gil and Hunt Marks** that scale with the tier, plus a chance at retail-style spoils from the treasure chest.
+Entry is gated by a **Phantom Gem** key item, bought for gil from a vendor on Purgonorgo Isle. Buy the gem for the fight you want, trade it at that battlefield's entrance, and choose your tier. Clears pay out **gil and Hunt Marks** that scale with the tier, plus a chance at retail-style spoils from the treasure chest.
 
 !!! tip "Summary"
-    Repeatable, tier-scaled versions of the classic mission boss battlefields. Buy a Phantom Gem with gil in Leafallia, trade it at the battlefield entrance, pick a tier (I / II / III), and win for scaling gil + Hunt Mark rewards.
+    Repeatable, tier-scaled versions of the classic mission boss battlefields. Buy a Phantom Gem with gil on Purgonorgo Isle, trade it at the battlefield entrance, pick a tier (I / II / III), and win for scaling gil + Hunt Mark rewards.
 
 ## Getting in
 
 <!-- DOCGEN:BEGIN id="htbf-access" -->
-Buy your **Phantom Gem** from the **Phantom Gems** vendor in **Leafallia** (the relaunch hub). Each gem is a key item bought with gil; the vendor's menu is grouped by expansion so you can browse the full roster. Once you hold a gem, travel to that battlefield's zone, trade the gem at the entrance, and pick a difficulty tier (I / II / III).
+Buy your **Phantom Gem** from the **Phantom Gems** vendor on **Purgonorgo Isle** (the relaunch hub). Each gem is a key item bought with gil; the vendor's menu is grouped by expansion so you can browse the full roster. Once you hold a gem, travel to that battlefield's zone, trade the gem at the entrance, and pick a difficulty tier (I / II / III).
 
 You can only hold one gem of a given type at a time, and entering a battlefield consumes it -- buy a fresh gem for each attempt.
 <!-- DOCGEN:END id="htbf-access" -->

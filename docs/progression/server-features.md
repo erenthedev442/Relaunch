@@ -46,7 +46,7 @@ This applies to every homepoint in every zone. Use them freely as rest stops whi
 
 ## Mystery Mog (Gil Gacha)
 
-Located in the **Celennia Memorial Library** (`!lib`).
+Located in the **Purgonorgo Isle** (`!hub`).
 
 The Mystery Mog is a weighted gacha that converts excess gil into random rewards — standard and premium pull tiers, with prizes ranging from cure items up to Hunt Mark jackpots and Ascension Points. For live pull costs, the full prize pool, and exact drop odds, see [Mystery Mog](gm-home.md#mystery-mog).
 
@@ -57,7 +57,7 @@ The Mystery Mog is a weighted gacha that converts excess gil into random rewards
 
 ## Gil to Marks Exchange
 
-The **Gil Exchange NPC** in the **Celennia Memorial Library** (`!lib`) converts raw gil into Hunt Marks in bulk bundles:
+The **Gil Exchange NPC** in the **Purgonorgo Isle** (`!hub`) converts raw gil into Hunt Marks in bulk bundles:
 
 <!-- DOCGEN:BEGIN id="server-features-gil-exchange" -->
 | Gil | Hunt Marks |
@@ -73,7 +73,7 @@ Bundle rates give modest discounts for larger purchases. This system is intentio
 
 ## Title Broker
 
-The **Title Broker NPC** in the **Celennia Memorial Library** (`!lib`) sells cosmetic titles for gil across several price tiers, from cheap flavor titles up to rare endgame trophies. For the full tier pricing and the complete title list, see [GM Home → Title Broker](gm-home.md#title-broker).
+The **Title Broker NPC** in the **Purgonorgo Isle** (`!hub`) sells cosmetic titles for gil across several price tiers, from cheap flavor titles up to rare endgame trophies. For the full tier pricing and the complete title list, see [GM Home → Title Broker](gm-home.md#title-broker).
 
 These are display titles — any player can buy any title regardless of whether they've earned it through gameplay.
 

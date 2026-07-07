@@ -47,11 +47,11 @@ local catalog = {}
 
 catalog.npcPos =
 {
-    zone     = 'GM_Home',
-    zoneId   = 210,
-    x        =  0.000,
-    y        =  0.000,
-    z        = -40.000,
+    zone     = 'Abdhaljs_Isle-Purgonorgo',
+    zoneId   = 44,
+    x        =  535.000,
+    y        =  -3.000,
+    z        = 568.000,
     rotation =  128,
 }
 

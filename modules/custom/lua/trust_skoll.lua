@@ -20,7 +20,7 @@
 -- SQL: modules/custom/sql/trust_skoll.sql, modules/custom/sql/trust_meat.sql
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Leafallia/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 require('scripts/globals/combat/magic_aoe')   -- defines xi.combat.magicAoE.* (overridden below)
 
 local m = Module:new('trust_skoll')
@@ -83,9 +83,9 @@ local NPC_NAME  = 'Void_Keeper'
 local NPC_LOOK  = 3017          -- 3017 = Trust: Prishe - a silver-haired divine warrior model; far more fitting
                                 -- for a 50M-gil vendor of legendary Trusts than a generic Moogle.
                                 -- Change this value if you have a preferred divine/godlike NPC look ID.
-local NPC_POS   = { x = -4.000, y = 0.000, z = 10.000, rot = 128 }
+local NPC_POS   = { x = 529.000, y = -3.000, z = 568.000, rot = 192 }
 
-m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local menu = { title = '', options = {} }

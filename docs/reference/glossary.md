@@ -11,16 +11,16 @@ Augment
 :   A permanent stat bonus applied to a piece of gear by trading a catalyst to the Augment Moogle. Augments stack with the gear's base stats; a piece holds up to 5 augment lines, and each line's value is rolled within your Augment Tier band.
 
 Augment Sage
-:   A special NPC (in <!--npc:augment_sage-->Leafallia<!--/npc-->) whose Mastery ranks improve your augment *rolls* under the Augment Tier system: each rank (up to 5) raises the roll floor by +1 inside your tier's band, and the chance of a perfect crit roll climbs from 5% to 30%. Ranks unlock automatically at content milestones (Hunting League rank, Prestige level, Job Rebirths, Gauntlet clears; nothing consumed). Per-category NM affinities make matching augments roll twice and keep the better result — registering one requires Hunting League Rank 3, 1,000 Hunt Marks, and the NM's trophy (consumed).
+:   A special NPC (in <!--npc:augment_sage-->Purgonorgo Isle<!--/npc-->) whose Mastery ranks improve your augment *rolls* under the Augment Tier system: each rank (up to 5) raises the roll floor by +1 inside your tier's band, and the chance of a perfect crit roll climbs from 5% to 30%. Ranks unlock automatically at content milestones (Hunting League rank, Prestige level, Job Rebirths, Gauntlet clears; nothing consumed). Per-category NM affinities make matching augments roll twice and keep the better result — registering one requires Hunting League Rank 3, 1,000 Hunt Marks, and the NM's trophy (consumed).
 
 Augment Tier
 :   The content ladder that gates how strong augment rolls can be. Each of the 5 tiers owns a band of the 0–31 roll space (T1 0–5, T2 6–11, T3 12–17, T4 18–24, T5 25–31); you sit at the highest gate you've cleared consecutively. A fresh character is Tier 0 — the Moogle won't augment at all until the first gate is cleared: slay your first 10 custom NMs (Hunting League, Wave Mode, Voidspire...). The final gate: defeat Maat's Echo (Ru'Lude Gardens, !maat).
 
 Catalyst
-:   An item bought from the Augment Moogle's catalyst shop (`!shop augments <group>`, flat gil), then traded back to the Moogle (in <!--npc:augment_moogle-->Leafallia<!--/npc-->) to write a specific augment line on your gear — up to 5 catalysts per trade, 10,000 gil flat per trade.
+:   An item bought from the Augment Moogle's catalyst shop (`!shop augments <group>`, flat gil), then traded back to the Moogle (in <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc-->) to write a specific augment line on your gear — up to 5 catalysts per trade, 10,000 gil flat per trade.
 
 Daily Board
-:   A 3-objective board located in <!--npc:daily_board-->the Celennia Memorial Library<!--/npc--> (`!lib`) that resets at midnight UTC every day. Completing all 3 objectives earns a bonus of 500 Hunt Marks + 100 AF Marks.
+:   A 3-objective board located in <!--npc:daily_board-->the Purgonorgo Isle<!--/npc--> (`!hub`) that resets at midnight UTC every day. Completing all 3 objectives earns a bonus of 500 Hunt Marks + 100 AF Marks.
 
 Empy Marks
 :   Reforge currency earned by killing the Abyssea NMs pool — Aello, Iratham, Briareus, Itzpapalotl, and Hadhayosh (ladder order, entry to apex). Used to upgrade Empyrean armor sets from base through +3.
@@ -35,7 +35,7 @@ Hunting League
 :   The custom 5-tier NM hunting system that drives all long-term progression on the Relaunch server. Advance through the ranks Initiate → Hunter → Elite → Champion → Legend by accumulating kills and Hunt Marks.
 
 Infamy
-:   A premium endgame currency earned across the server's high-end content — Abyssea NM hunts, scheduled Invasions, the weekly Raid boss, the Gauntlet, and the Tournament. Spent at the Infamy Vendor (in <!--npc:infamy_vendor-->Leafallia<!--/npc-->) for best-in-slot gear found nowhere else.
+:   A premium endgame currency earned across the server's high-end content — Abyssea NM hunts, scheduled Invasions, the weekly Raid boss, the Gauntlet, and the Tournament. Spent at the Infamy Vendor (in <!--npc:infamy_vendor-->Purgonorgo Isle<!--/npc-->) for best-in-slot gear found nowhere else.
 
 NM
 :   Notorious Monster — a named enemy that drops specific loot and earns Hunt Marks when killed. NMs are the primary activity of the Hunting League and Reforge systems.

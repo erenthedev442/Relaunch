@@ -1,14 +1,14 @@
 # Gil Exchange — turning gil into Hunt Marks
 
-Sitting on more gil than you'll ever spend? The **Gil Exchange** in <!--npc:gil_exchange-->the Celennia Memorial Library<!--/npc--> converts raw gil into **Hunt Marks**, the currency that drives the Hunting League. The rates are deliberately steep — this is a last-resort sink for rich players, not a shortcut around hunting.
+Sitting on more gil than you'll ever spend? The **Gil Exchange** in <!--npc:gil_exchange-->the Purgonorgo Isle<!--/npc--> converts raw gil into **Hunt Marks**, the currency that drives the Hunting League. The rates are deliberately steep — this is a last-resort sink for rich players, not a shortcut around hunting.
 
 !!! tip "Summary"
-    A gil sink in <!--npc:gil_exchange-->the Celennia Memorial Library<!--/npc--> that buys Hunt Marks with your spare gil at intentionally poor rates — for players drowning in gil who still want progression.
+    A gil sink in <!--npc:gil_exchange-->the Purgonorgo Isle<!--/npc--> that buys Hunt Marks with your spare gil at intentionally poor rates — for players drowning in gil who still want progression.
 
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="gil-exchange-access" -->
-The **Gil Exchange** is in the economy row at **the Celennia Memorial Library** (`!lib`). Speak to it to open the menu — your current gil shows at the top, and your Hunt Mark total is confirmed after each trade.
+The **Gil Exchange** is in the economy row at **Purgonorgo Isle** (`!hub`). Speak to it to open the menu — your current gil shows at the top, and your Hunt Mark total is confirmed after each trade.
 <!-- DOCGEN:END id="gil-exchange-access" -->
 
 ## Exchange bundles

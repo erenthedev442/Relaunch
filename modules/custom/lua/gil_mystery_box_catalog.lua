@@ -19,11 +19,11 @@
 -----------------------------------
 local catalog = {}
 
-catalog.zoneId    = xi.zone.CELENNIA_MEMORIAL_LIBRARY
-catalog.zonePath  = 'xi.zones.Celennia_Memorial_Library'
+catalog.zoneId    = xi.zone.ABDHALJS_ISLE_PURGONORGO
+catalog.zonePath  = 'xi.zones.Abdhaljs_Isle-Purgonorgo'
 catalog.npcName   = 'Mystery Mog'
 catalog.npcLook   = 2401
-catalog.npcPos    = { x = -114.000, y = -2.150, z = -94.000, rot = 190 }
+catalog.npcPos    = { x = 517.000, y = -3.000, z = 556.000, rot = 64 }
 
 -- Pull costs
 catalog.pullCost    = 100000  -- 100k  standard single pull

@@ -1,47 +1,5 @@
-# Leafallia — Endgame Hub
+# Leafallia → moved to The Hub
 
-Leafallia is the relaunch's **endgame hub**. Once you're geared and into the mastery systems, this is where the high-end progression and repeatable battle content lives.
+The former Leafallia endgame hub has been consolidated onto a single island plaza on **Purgonorgo Isle**. All of its NPCs — Prime Armory, Relic Forge, Augment Moogle & Sage, the mastery trainers, Apex Trials, the Gauntlet, Colosseum, Endless Tower, and the HTBF / Infamy / Voidwatch vendors — now live there.
 
-## Weapons & mastery
-
-| NPC | What it does |
-|---|---|
-| **Prime Armory** | Forge and upgrade Prime weapons through the five Armory trials. |
-| **Relic Forge** | Forge Stage-5 Relic weapons (Lv.119 III) from Dynamis currency. |
-| **Weapon Forger** | Upgrade Lv.119 weapons along the forge chain (119 I → II → III) for seals and Reforge Marks. |
-| **Spell & Skill Mastery** | Empower weapon skills and spells with Mastery Sigils. |
-| **Job Mastery** | Per-job mastery bonuses beyond the level cap. |
-| **Cross-Job Ability Trainer** | Learn a selection of another job's abilities. |
-| **Cross-Job Trait Trainer** | Learn another job's passive traits. |
-
-## Augments
-
-| NPC | What it does |
-|---|---|
-| **Augment Moogle** | Trade one equipment piece + 1–4 catalyst crystals for stacking augments. |
-| **Augment Sage** | Unlock augment affinities — passive stat bonuses — with hunt marks and NM trophies. |
-
-## Battle content
-
-| NPC | What it does |
-|---|---|
-| **Apex Trials** | Climb endlessly-scaling boss tiers for Paragon Points. |
-| **Paragon** | Spend Paragon Points on the Paragon board. |
-| **The Gauntlet** | Survival gauntlet against escalating NM waves. |
-| **Endless Tower** | Affix-stacked tower climb for rewards. |
-| **Colosseum** | Arena matches against summoned challengers. |
-| **HTBF Vendor** | Buy the phantom gems that open High-Tier Battlefields. |
-| **Infamy Vendor** | Spend infamy (from Abyssea hunts, Invasions, and the weekly Raid) on gear. |
-| **Voidwatch Officer** | Buy Voidstones and spend Voidwatch shards at the Atmacite Refiner. |
-| **Void Keeper** | Bind the custom trusts — Gemma and company — for Hunt Marks. |
-
----
-
-*The combat **Test Dummy** for DPS testing remains in <!--npc:test_dummy-->GM Home<!--/npc--> (reach it with `!gmhome`).*
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d97593a3e1db -->
-_Last updated: 2026-07-05 07:37 UTC_
-<!-- DOCGEN:END id="last-updated" -->
+➡️ **[The Hub — Purgonorgo Isle](hub.md)** — reach it with **`!hub`** (`!leaf` still works and lands you there).

@@ -1,14 +1,14 @@
 # Prime Armory
 
-The **Prime Armory** in <!--npc:prime_armory-->Leafallia<!--/npc--> hands out **Prime weapons** — the apex weapon tier on the server. Each one comes with its own signature weapon skill, unlocked the moment you equip it.
+The **Prime Armory** in <!--npc:prime_armory-->Purgonorgo Isle<!--/npc--> hands out **Prime weapons** — the apex weapon tier on the server. Each one comes with its own signature weapon skill, unlocked the moment you equip it.
 
 !!! tip "Summary"
-    Bring **1 Prime Voucher** and **750,000,000 gil** to the Prime Armory in <!--npc:prime_armory-->Leafallia<!--/npc--> and claim any one of the **12 Prime weapons** — best-in-slot gear, each with a unique weapon skill that unlocks on equip.
+    Bring **1 Prime Voucher** and **750,000,000 gil** to the Prime Armory in <!--npc:prime_armory-->Purgonorgo Isle<!--/npc--> and claim any one of the **12 Prime weapons** — best-in-slot gear, each with a unique weapon skill that unlocks on equip.
 
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="prime-armory-access" -->
-The **Prime Armory** is in **Leafallia** (`!leaf`), in the endgame NPC row. cluster. Talk to it to browse the Prime weapons; bring your **750M gil** when you're ready to forge (all 5 trials, including the voucher turn-in, must already be done).
+The **Prime Armory** is in **Purgonorgo Isle** (`!hub`), in the endgame NPC row. cluster. Talk to it to browse the Prime weapons; bring your **750M gil** when you're ready to forge (all 5 trials, including the voucher turn-in, must already be done).
 <!-- DOCGEN:END id="prime-armory-access" -->
 
 ## The cost

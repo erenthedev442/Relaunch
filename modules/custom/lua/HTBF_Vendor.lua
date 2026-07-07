@@ -10,12 +10,12 @@
 -- you already hold one. Needs a map restart to load (addOverride NPC).
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Leafallia/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local catalog = require('modules/custom/lua/htbf_catalog')
 local m       = Module:new('htbf_vendor')
 local SYS     = xi.msg.channel.SYSTEM_3
-local NPCPOS  = { x = -4.000, y = 0.000, z = 20.000, rot = 128 }
+local NPCPOS  = { x = 517.000, y = -3.000, z = 580.000, rot = 64 }
 
 local function commafy(n)
     local s = tostring(math.floor(n))
@@ -100,7 +100,7 @@ showBuy = function(p, g)
     end)
 end
 
-m:addOverride('xi.zones.Leafallia.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
     zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,

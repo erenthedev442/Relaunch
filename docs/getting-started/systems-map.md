@@ -60,8 +60,8 @@ Payout multipliers: your first-ever kill of each NM pays **double**; the weekly 
 | System | What it produces |
 | --- | --- |
 | Hunting League Rank I–Rank V | Hunt Marks — 5 / 12 / 22 / 38 / 65 per kill by rank (Shinryu **110**) |
-| Weekly Hunt Board (`!lib`) | Bonus marks — sweep all objectives for a **+5,000 mark** meta-bonus |
-| Daily Board (`!lib`) | Hunt Marks + Gil on daily objectives |
+| Weekly Hunt Board (`!hub`) | Bonus marks — sweep all objectives for a **+5,000 mark** meta-bonus |
+| Daily Board (`!hub`) | Hunt Marks + Gil on daily objectives |
 | Game Master / Wave Mode (`!wavemaster`) | Hunt Marks per difficulty cleared |
 | Seals Vendor | Bronze / Silver / Gold Seals |
 | Armor Vendor | Tiered armor, gated by seal type |
@@ -140,7 +140,7 @@ Your Sage Mastery rank lifts the roll floor inside the unlocked band — see [Au
 
 ### Infamy track
 
-Infamy accumulates from the sources below and is spent at the **Infamy Vendor** (`!leaf`) for best-in-slot gear.
+Infamy accumulates from the sources below and is spent at the **Infamy Vendor** (`!hub`) for best-in-slot gear.
 
 | Source | Notes |
 | --- | --- |

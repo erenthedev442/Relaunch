@@ -12,7 +12,7 @@
 -- NPC position: x=7.5, z=-25 (east end of the z=-25 activities row).
 -----------------------------------
 require('modules/module_utils')
-require('scripts/zones/Celennia_Memorial_Library/Zone')
+require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local catalog = require('modules/custom/lua/cosmetic_shop_catalog')
 
 local m = Module:new('cosmetic_shop')
@@ -31,7 +31,7 @@ local function getItem(offset)
     return catalog.items[(dayIdx % #catalog.items) + 1]
 end
 
-m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(zone)
+m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)
 
     local function openBoutique(player)

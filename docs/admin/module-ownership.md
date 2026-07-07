@@ -16,7 +16,7 @@ Deep chains are not inherently bugs — most are legitimate `super()` chains —
 | Target | Writers | Files |
 |---|---:|---|
 | `xi.player.onGameIn` | 28 | `AbysseaKICleanup.lua`, `announce_player_login.lua`, `Ascension_Companion.lua`, `blu_spell_progression.lua`, `Character_Upgrader.lua`, `combat_records.lua`, `CrossJob_TraitTrainer.lua`, `daily_login_bonus.lua`, `DualWieldPersist.lua`, `fellow_companion.lua`, `JobRebirth.lua`, `login_streak.lua`, `master_star_color.lua`, `new_player_starter.lua`, `online_tracker.lua`, `open_mog_containers.lua`, `Paragon.lua`, `Prestige_System.lua`, `RealLevel_Tracker.lua`, `RngOverhaul.lua`, `SpellSkillMastery.lua`, `subjob_exp_share.lua`, `trust_auto_attack_rearm.lua`, `unlock_adoulin_jobs.lua`, `unlock_progression_keyitems.lua`, `Voidwatch.lua`, `weekly_recap.lua`, `WSTracker.lua` |
-| `xi.zones.Leafallia.Zone.onInitialize` | 16 | `ApexTrials.lua`, `Augment_Moogle.lua`, `CrossJob_Trainer.lua`, `CrossJob_TraitTrainer.lua`, `endless_tower.lua`, `HTBF_Vendor.lua`, `InfamyVendor.lua`, `job_mastery.lua`, `Paragon.lua`, `PrimeArmory_NPC.lua`, `Relic_Forge.lua`, `SpellSkillMastery.lua`, `TheGauntlet.lua`, `trust_skoll.lua`, `Voidwatch.lua`, `WeaponForge_NPC.lua` |
+| `xi.zones.Purgonorgo Isle.Zone.onInitialize` | 16 | `ApexTrials.lua`, `Augment_Moogle.lua`, `CrossJob_Trainer.lua`, `CrossJob_TraitTrainer.lua`, `endless_tower.lua`, `HTBF_Vendor.lua`, `InfamyVendor.lua`, `job_mastery.lua`, `Paragon.lua`, `PrimeArmory_NPC.lua`, `Relic_Forge.lua`, `SpellSkillMastery.lua`, `TheGauntlet.lua`, `trust_skoll.lua`, `Voidwatch.lua`, `WeaponForge_NPC.lua` |
 | `xi.player.onPlayerDeath` | 13 | `ApexTrials.lua`, `Colosseum.lua`, `death_penalty.lua`, `endless_tower.lua`, `GameMaster.lua`, `invasion_reraise.lua`, `job_mastery.lua`, `TheGauntlet.lua`, `Tournament.lua`, `Voidspire.lua`, `Voidwatch.lua`, `weekly_hunts.lua`, `world_first_announcements.lua` |
 | `xi.zones.Celennia_Memorial_Library.Zone.onInitialize` | 11 | `Casino.lua`, `Cosmetic_Shop.lua`, `gil_exchange_npc.lua`, `gil_mystery_box.lua`, `gil_race_changer.lua`, `gil_title_vendor.lua`, `gil_warp_npc.lua`, `gm_home_homepoint.lua`, `SparksExchange.lua`, `unity_wanted.lua`, `UnityWantedInstances.lua` |
 | `xi.mob.onMobDeathEx` | 8 | `abyssea_su5_drops.lua`, `allied_notes_drop.lua`, `alzahbi_loot.lua`, `augment_catalyst_drops.lua`, `fellow_companion.lua`, `mob_seal_drops.lua`, `SpellSkillMastery.lua`, `world_first_announcements.lua` |
@@ -66,10 +66,10 @@ Deep chains are not inherently bugs — most are legitimate `super()` chains —
 |---|---:|---|---|
 | `AbysseaKICleanup.lua` | 1 | — | — |
 | `Accessory_NPC.lua` | 0 | `?:Accessory_NPC` | — |
-| `ApexTrials.lua` | 3 | `Leafallia:Apex_Arbiter` | — |
+| `ApexTrials.lua` | 3 | `Purgonorgo Isle:Apex_Arbiter` | — |
 | `Armor_NPC.lua` | 0 | `?:Armor_NPC` | — |
 | `Ascension_Companion.lua` | 1 | — | — |
-| `Augment_Moogle.lua` | 1 | `Leafallia:Augment_Moogle` | — |
+| `Augment_Moogle.lua` | 1 | `Purgonorgo Isle:Augment_Moogle` | — |
 | `Augment_Sage.lua` | 0 | `?:Augment_Sage` | — |
 | `BstJugPetOverhaul.lua` | 1 | — | — |
 | `Casino.lua` | 1 | `Celennia_Memorial_Library:Casino_LadyLuck` | — |
@@ -77,8 +77,8 @@ Deep chains are not inherently bugs — most are legitimate `super()` chains —
 | `ChocoboDerby.lua` | 0 | `?:Race_Caller` | — |
 | `Colosseum.lua` | 1 | `?:Arena_Herald` | — |
 | `Cosmetic_Shop.lua` | 1 | `Celennia_Memorial_Library:Cosmetic_Boutique` | — |
-| `CrossJob_Trainer.lua` | 1 | `Leafallia:CrossJob_Trainer` | — |
-| `CrossJob_TraitTrainer.lua` | 2 | `Leafallia:CrossJob_TraitTrainer` | — |
+| `CrossJob_Trainer.lua` | 1 | `Purgonorgo Isle:CrossJob_Trainer` | — |
+| `CrossJob_TraitTrainer.lua` | 2 | `Purgonorgo Isle:CrossJob_TraitTrainer` | — |
 | `Divergence_Reforger.lua` | 1 | `Southern_San_dOria:Divergence_Smith` | — |
 | `DualWieldPersist.lua` | 1 | — | — |
 | `DungeonInstances.lua` | 0 | `?:Dungeon_Guide` | — |
@@ -86,30 +86,30 @@ Deep chains are not inherently bugs — most are legitimate `super()` chains —
 | `GameMaster.lua` | 1 | `?:Game_Master` | — |
 | `GearProgression_NPC.lua` | 0 | `?:Weapons_NPC` | — |
 | `Geas_Fete.lua` | 2 | — | — |
-| `HTBF_Vendor.lua` | 1 | `Leafallia:HTBF_Gem_Vendor` | — |
+| `HTBF_Vendor.lua` | 1 | `Purgonorgo Isle:HTBF_Gem_Vendor` | — |
 | `HuntingLeague.lua` | 0 | `?:HuntingLeague_ZoneGuide`, `?:HuntingLeague_Seals`, `?:HuntingLeague_Accessories` | — |
-| `InfamyVendor.lua` | 1 | `Leafallia:Infamy_Vendor` | — |
+| `InfamyVendor.lua` | 1 | `Purgonorgo Isle:Infamy_Vendor` | — |
 | `JobRebirth.lua` | 3 | `RuLude_Gardens:JobRebirth_Altar` | — |
-| `Paragon.lua` | 2 | `Leafallia:Paragon_Sage` | — |
+| `Paragon.lua` | 2 | `Purgonorgo Isle:Paragon_Sage` | — |
 | `Prestige_System.lua` | 2 | `?:Ascension_Altar`, `?:Ascension_Altar_2`, `?:Ascension_Altar_3` | — |
-| `PrimeArmory_NPC.lua` | 1 | `Leafallia:Prime_Armory` | — |
+| `PrimeArmory_NPC.lua` | 1 | `Purgonorgo Isle:Prime_Armory` | — |
 | `ProvisionersLeague.lua` | 0 | `?:League_Steward` | — |
 | `RaidBoss.lua` | 0 | `?:Voidgate_Sentinel` | — |
 | `RealLevel_Tracker.lua` | 1 | — | — |
 | `Reforge_System.lua` | 0 | `?:Reforge_Spawner`, `?:Reforge_Vendor` | — |
-| `Relic_Forge.lua` | 1 | `Leafallia:Relic_Forge` | — |
+| `Relic_Forge.lua` | 1 | `Purgonorgo Isle:Relic_Forge` | — |
 | `RngOverhaul.lua` | 1 | — | — |
 | `SparksExchange.lua` | 1 | `Celennia_Memorial_Library:Sparks_Exchange` | — |
-| `SpellSkillMastery.lua` | 3 | `Leafallia:Spell_Mastery_Sage` | — |
+| `SpellSkillMastery.lua` | 3 | `Purgonorgo Isle:Spell_Mastery_Sage` | — |
 | `Temprix_NPC.lua` | 1 | `Reisenjima:Temprix` | — |
 | `TestDummy.lua` | 0 | `?:Test_Dummy` | — |
-| `TheGauntlet.lua` | 25 | `Leafallia:Gauntlet_Keeper` | — |
+| `TheGauntlet.lua` | 25 | `Purgonorgo Isle:Gauntlet_Keeper` | — |
 | `Tournament.lua` | 3 | — | — |
 | `UnityWantedInstances.lua` | 1 | `Celennia_Memorial_Library:Unity_Instance_Board` | — |
 | `Voidspire.lua` | 1 | `?:Voidspire_Warden` | — |
-| `Voidwatch.lua` | 4 | `?:Riftworn_Pyxis`, `Leafallia:Voidwatch_Officer`, `Leafallia:Planar_Rift` | — |
+| `Voidwatch.lua` | 4 | `?:Riftworn_Pyxis`, `Purgonorgo Isle:Voidwatch_Officer`, `Purgonorgo Isle:Planar_Rift` | — |
 | `WSTracker.lua` | 2 | — | — |
-| `WeaponForge_NPC.lua` | 1 | `Leafallia:Weapon_Forger` | — |
+| `WeaponForge_NPC.lua` | 1 | `Purgonorgo Isle:Weapon_Forger` | — |
 | `abyssea_su5_drops.lua` | 1 | — | — |
 | `allied_notes_drop.lua` | 1 | — | — |
 | `alzahbi_loot.lua` | 1 | — | — |
@@ -132,7 +132,7 @@ Deep chains are not inherently bugs — most are legitimate `super()` chains —
 | `daily_login_bonus.lua` | 1 | — | — |
 | `death_penalty.lua` | 1 | — | — |
 | `disable_zonein_cutscenes.lua` | 1 | — | — |
-| `endless_tower.lua` | 3 | `Leafallia:Tower_Arbiter` | — |
+| `endless_tower.lua` | 3 | `Purgonorgo Isle:Tower_Arbiter` | — |
 | `enhancing_magic_double_duration.lua` | 1 | — | — |
 | `fellow_companion.lua` | 2 | — | — |
 | `garrison_placeholder_data.lua` | 1 | — | — |
@@ -144,7 +144,7 @@ Deep chains are not inherently bugs — most are legitimate `super()` chains —
 | `gm_home_homepoint.lua` | 1 | `Celennia_Memorial_Library:Home_Point` | — |
 | `homepoint_heal.lua` | 1 | — | — |
 | `invasion_reraise.lua` | 1 | — | — |
-| `job_mastery.lua` | 3 | `Leafallia:Weapon_Mastery_Sage` | — |
+| `job_mastery.lua` | 3 | `Purgonorgo Isle:Weapon_Mastery_Sage` | — |
 | `leaderboard_npc.lua` | 1 | `Escha_ZiTah:The Chronicler` | — |
 | `level_99_tracker.lua` | 1 | — | — |
 | `login_streak.lua` | 1 | — | — |

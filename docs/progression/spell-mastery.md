@@ -1,9 +1,9 @@
 # Spell & Skill Mastery
 
-The **Mastery Sage** in Leafallia lets you permanently empower your weapon skills and magic with **Mastery Sigils** — a currency earned by hunting a rotating set of NMs. Pick the enhancements that matter most to your job and build them up over time.
+The **Mastery Sage** on Purgonorgo Isle lets you permanently empower your weapon skills and magic with **Mastery Sigils** — a currency earned by hunting a rotating set of NMs. Pick the enhancements that matter most to your job and build them up over time.
 
 !!! tip "Summary"
-    Earn Mastery Sigils from the daily NM rotation and use `!empower` to check your balance and owned upgrades. Spend Sigils at the Mastery Sage in Leafallia for permanent WS potency, spell potency, passive traits, or WS proc effects.
+    Earn Mastery Sigils from the daily NM rotation and use `!empower` to check your balance and owned upgrades. Spend Sigils at the Mastery Sage on Purgonorgo Isle for permanent WS potency, spell potency, passive traits, or WS proc effects.
 
 ## Mastery Sigils
 
