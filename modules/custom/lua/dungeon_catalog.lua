@@ -176,11 +176,14 @@ catalog.dungeons =
         hpScale    = 4,
         mobs       = buildRoster(
         {
-            { 45.000, -67.000, -320.000, 127  },
-            { 42.000, -66.000, -300.000, 127  },
-            { 38.000, -64.000, -280.000, 127  },
-            { 34.000, -62.000, -260.000, 127  },
-            { 28.000, -61.000, -240.000, 127  },
+            -- Skeleton 01-03,05: original round-number coords clipped walls (Duff 2026-07-06).
+            -- Replaced with verified stock Gusgen (zone 196) floor spawn points. 04 left as-is
+            -- (Duff confirmed it reachable). Boss (idx 13) moved to the far platform per Duff.
+            { 18.982, -59.922, -169.474, 127  }, -- 01 (was 45,-67,-320 in wall)
+            { -58.000, -59.826, -207.000, 127 }, -- 02 (was 42,-66,-300 in wall)
+            { -47.129, -60.036, -218.823, 57  }, -- 03 (was 38,-64,-280 in wall)
+            { 34.000, -62.000, -260.000, 127  }, -- 04 (reachable, unchanged)
+            { 69.590, -59.701, -181.616, 127  }, -- 05 (was 28,-61,-240 in wall)
             { 19.490, -60.205, -225.113, 78   },
             { 15.079, -59.919, -216.982, 131  },
             { 20.000, -60.234, -212.000, 68   },
@@ -188,7 +191,7 @@ catalog.dungeons =
             { 19.282, -59.874, -175.445, 127  },
             { -14.282, -59.900, -177.424, 15 },
             { -28.088, -59.560, -180.088, 127 },
-            { -60.000, -59.000, -177.000, 127 },
+            { 20.000, -60.000, -13.000, 127 }, -- boss: far platform (was -60,-59,-177 near entrance)
         }, 'Gusgen Skeleton', 'Gusgen Hound', 'Grieving Spirit', 8),
     },
 
