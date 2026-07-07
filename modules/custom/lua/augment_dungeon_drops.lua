@@ -24,10 +24,18 @@
 --
 -- Plain require()-library. xi.* only inside functions (call-time), per the
 -- module auto-load rule.
+--
+-- HOT-RELOADABLE: dungeon_instance.lua captures THIS table via require and its
+-- live mobs call `augmentDrops.onDungeonMobDeath` by field lookup at kill time.
+-- FileWatcher re-runs modules/ files on save (discarding the return value), and
+-- package.loaded still holds the original table during that re-run -- so we grab
+-- it and mutate its fields in place instead of returning a fresh table. That
+-- makes edits (e.g. a rate tweak) go live WITHOUT a map restart. On first load
+-- package.loaded is nil, so this is just `{}`.
 -----------------------------------
-local M = {}
+local M = package.loaded['modules/custom/lua/augment_dungeon_drops'] or {}
 
-local TRASH_RATE       = 30 -- % chance the assigned trash catalyst drops to the treasure pool (rolled once, on the killing blow)
+local TRASH_RATE       = 30 -- % chance the assigned trash catalyst drops to the killer (rolled once, on the killing blow)
 local BOSS_REPEAT_RATE = 35 -- % per member on repeat boss kills (first kill of the UTC day is guaranteed)
 local BOSS_QTY         = 5  -- catalysts each member receives per boss payout
 
