@@ -1,13 +1,16 @@
-"""Sync docs/progression/capacity-farm.md with capacity_farm_catalog.lua.
+"""Sync docs/progression/capacity-farm.md with the Capacity Point farm catalogs.
 
-The Capacity Farm is a permanent, always-up Capacity Point camp in Bibiki Bay:
-a fixed pool of high-level mobs that instant-respawn as they die, so the
-capacity chain never lapses. Everything on the page — the warp, the mob name /
-level range / pool size, the bonus CP per kill, and the no-loot rule — is read
-from the catalog so re-tuning the camp updates the published guide.
+There are TWO permanent, always-up Capacity Point camps, each a fixed pool of
+high-level phantoms that instant-respawn as they die so the capacity chain never
+lapses:
+  * Bibiki Bay            (!capacity) — capacity_farm_catalog.lua
+  * King Ranperre's Tomb  (!ranperre) — ranperre_farm_catalog.lua
+Both catalogs share the same shape, so everything on the page — each warp, the
+mob name / level range / pool size, the bonus CP per kill, and the no-loot rule
+— is read from the catalogs so re-tuning a camp updates the published guide.
 
 Markers written:
-  capacity-farm-access  — !capacity warp + zone line
+  capacity-farm-access  — the warp commands + zones (one line per camp)
   capacity-farm-mobs    — the mob pool (name / count / level range / respawn)
   capacity-farm-rewards — bonus CP per kill + how the chain pays out
   capacity-farm-notes   — no loot/gil + eligibility caveats
@@ -37,11 +40,11 @@ def _first(pattern: str, text: str, default: str) -> str:
     return m.group(1) if m else default
 
 
-def _parse(text: str) -> dict:
+def _parse(text: str, command: str) -> dict:
     c: dict = {}
 
     c["zone"] = _zone_name(text)
-    c["command"] = "!capacity"   # the warp command (modules/custom/commands/capacity.lua)
+    c["command"] = command   # the warp command (modules/custom/commands/<cmd>.lua)
 
     c["mobName"] = _first(r"catalog\.mobName\s*=\s*'([^']+)'", text, "Capacity Phantom")
     c["mobCount"] = int(float(_first(r"catalog\.mobCount\s*=\s*(\d+)", text, "100")))
@@ -63,83 +66,99 @@ def _parse(text: str) -> dict:
 
 # ---------------------------------------------------------------------------
 
-def _render_access(c: dict) -> str:
-    return (f"Type **`{c['command']}`** from anywhere to warp straight to the "
-            f"Capacity Point farm in **{c['zone']}**. It is open to every player, "
-            f"no flags or quests — the camp is always live, so you can drop in, "
-            f"grind a chain, and warp out whenever you like.")
+def _render_access(camps: list) -> str:
+    lines = ["There are two always-up Capacity Point camps — warp to either from "
+             "anywhere. Both are open to every player, no flags or quests, so you "
+             "can drop in, grind a chain, and warp out whenever you like.", ""]
+    for c in camps:
+        lines.append(f"- Type **`{c['command']}`** to warp to the camp in "
+                     f"**{c['zone']}**.")
+    return "\n".join(lines)
 
 
-def _render_mobs(c: dict) -> str:
+def _render_mobs(camps: list) -> str:
     lines = []
-    lines.append(f"The camp keeps a pool of **{c['mobCount']}** always-up "
-                 f"**{c['mobName']}** monsters standing by. They sit between "
-                 f"**level {c['minLv']} and {c['maxLv']}**, and each one "
-                 f"**instantly respawns the moment it dies** — kill one and a "
-                 f"fresh phantom takes its place on the spot, so there is always "
-                 f"a target and your capacity chain never lapses waiting on a pop.")
-    if c["templateCount"] > 1:
-        lines.append("")
-        lines.append(f"The phantoms wear a rotating mix of **{c['templateCount']}** "
-                     f"different monster looks, so the camp isn't a wall of "
-                     f"identical models.")
+    lines.append("Each camp keeps a standing pool of always-up **"
+                 f"{camps[0]['mobName']}** monsters that **instantly respawn the "
+                 "moment they die** — kill one and a fresh phantom takes its place "
+                 "on the spot, so there is always a target and your capacity chain "
+                 "never lapses waiting on a pop.")
+    lines.append("")
+    lines.append("| Camp | Warp | Pool | Levels |")
+    lines.append("|---|---|---|---|")
+    for c in camps:
+        looks = (f"{c['mobCount']} phantoms, {c['templateCount']} looks"
+                 if c["templateCount"] > 1 else f"{c['mobCount']} phantoms")
+        lines.append(f"| {c['zone']} | `{c['command']}` | {looks} "
+                     f"| Lv{c['minLv']}-{c['maxLv']} |")
     lines.append("")
     lines.append("Claim is shared free-for-all — everyone at the camp can fight "
                  "every monster, and the killer's alliance earns the Capacity "
-                 "Points. Bring a party, bring trusts, or solo it; the pool is "
+                 "Points. Bring a party, bring trusts, or solo it; each pool is "
                  "sized to stay dense without ever running dry.")
     return "\n".join(lines)
 
 
-def _render_rewards(c: dict) -> str:
+def _render_rewards(camps: list) -> str:
     lines = []
     lines.append("Every phantom is a full Capacity Point kill. Because they die "
                  "fast and respawn instantly, you can keep the engine's capacity "
                  "chain hot the whole time — back-to-back kills inside the chain "
                  "window stack the usual chain bonus on top of each award.")
-    if c["cpBonus"] > 0:
+    bonuses = {c["cpBonus"] for c in camps if c["cpBonus"] > 0}
+    if len(bonuses) == 1:
         lines.append("")
         lines.append(f"On top of the normal level-based award, each kill pays a "
-                     f"**flat {commafy(c['cpBonus'])} bonus Capacity Points** to "
+                     f"**flat {commafy(bonuses.pop())} bonus Capacity Points** to "
                      f"the killer (scaled by the server's Capacity rate, same as "
                      f"every other source).")
+    elif len(bonuses) > 1:
+        lines.append("")
+        lines.append("On top of the normal level-based award, each kill pays a "
+                     "flat bonus Capacity Points to the killer (scaled by the "
+                     "server's Capacity rate):")
+        lines.append("")
+        for c in camps:
+            if c["cpBonus"] > 0:
+                lines.append(f"- **{c['zone']}** — +{commafy(c['cpBonus'])} CP per kill.")
     return "\n".join(lines)
 
 
-def _render_notes(c: dict) -> str:
+def _render_notes(camps: list) -> str:
     lines = []
-    if c["noLoot"]:
-        lines.append("- **No loot, no gil.** The phantoms drop nothing — this is "
-                     "a pure Capacity Point camp, not a gear or gil farm.")
+    if any(c["noLoot"] for c in camps):
+        lines.append("- **No loot, no gil.** The phantoms drop nothing — these are "
+                     "pure Capacity Point camps, not gear or gil farms.")
     lines.append("- **Capacity Points only.** The level range is well above the "
                  "Lv100 floor that makes a mob CP-eligible, so every kill counts "
                  "toward your Job Points once you've earned Job Points access.")
-    lines.append("- **Always on.** The camp is seeded when the zone wakes and "
-                 "tops itself back up on every kill and every zone-in, so it is "
+    lines.append("- **Always on.** Each camp is seeded when its zone wakes and "
+                 "tops itself back up on every kill and every zone-in, so both are "
                  "ready around the clock with no GM intervention.")
     return "\n".join(lines)
 
 
 # ---------------------------------------------------------------------------
 
-_PAGE = """# Capacity Point Farm
+_PAGE = """# Capacity Point Farms
 
 Job Points are a long grind, and Vana'diel's wild capacity mobs are scattered
-and slow to respawn. The **Capacity Point Farm** fixes that: a permanent,
-always-up camp of high-level phantoms in {zone} that die fast and pop back
-instantly, so your capacity chain never goes cold.
+and slow to respawn. The **Capacity Point Farms** fix that: two permanent,
+always-up camps of high-level phantoms that die fast and pop back instantly, so
+your capacity chain never goes cold.
 
 !!! tip "Summary"
-    Type `{command}` to warp to an always-up Capacity Point camp in {zone} —
-    a pool of {mobCount} {mobName} (Lv{minLv}-{maxLv}) that instant-respawn on
-    death. Shared claim, no loot or gil, just Capacity Points.
+    Type `!capacity` (Bibiki Bay) or `!ranperre` (King Ranperre's Tomb) to warp
+    to an always-up Capacity Point camp — a pool of {mobCount} {mobName}
+    (Lv{minLv}-{maxLv}) that instant-respawn on death. Shared claim, no loot or
+    gil, just Capacity Points.
 
 ## Getting there
 
 <!-- DOCGEN:BEGIN id="capacity-farm-access" -->
 <!-- DOCGEN:END id="capacity-farm-access" -->
 
-## The camp
+## The camps
 
 <!-- DOCGEN:BEGIN id="capacity-farm-mobs" -->
 <!-- DOCGEN:END id="capacity-farm-mobs" -->
@@ -160,37 +179,47 @@ swinging.
 """
 
 
-def generate(repo_root: Path, docs_dir: Path) -> None:
-    src = resolve_source(repo_root, "modules/custom/lua/capacity_farm_catalog.lua")
-    if src is None:
-        print("[capacity-farm] skip: capacity_farm_catalog.lua not found")
-        return
+# The two Capacity Point camps, in display order. Each: (catalog path, warp command).
+_CAMPS = [
+    ("modules/custom/lua/capacity_farm_catalog.lua", "!capacity"),
+    ("modules/custom/lua/ranperre_farm_catalog.lua", "!ranperre"),
+]
 
-    text = src.read_text(encoding="utf-8", errors="replace")
-    c = _parse(text)
+
+def generate(repo_root: Path, docs_dir: Path) -> None:
+    camps = []
+    for rel, command in _CAMPS:
+        src = resolve_source(repo_root, rel)
+        if src is None:
+            print(f"[capacity-farm] skip camp: {rel} not found")
+            continue
+        camps.append(_parse(src.read_text(encoding="utf-8", errors="replace"), command))
+
+    if not camps:
+        print("[capacity-farm] skip: no camp catalogs found")
+        return
 
     page = docs_dir / "progression" / "capacity-farm.md"
     if not page.exists():
         page.parent.mkdir(parents=True, exist_ok=True)
+        c0 = camps[0]
         page.write_text(
             _PAGE.format(
-                zone=c["zone"],
-                command=c["command"],
-                mobCount=c["mobCount"],
-                mobName=c["mobName"],
-                minLv=c["minLv"],
-                maxLv=c["maxLv"],
+                mobCount=c0["mobCount"],
+                mobName=c0["mobName"],
+                minLv=c0["minLv"],
+                maxLv=c0["maxLv"],
             ),
             encoding="utf-8",
         )
 
     blocks = [
-        ("capacity-farm-access", _render_access(c)),
-        ("capacity-farm-mobs", _render_mobs(c)),
-        ("capacity-farm-rewards", _render_rewards(c)),
-        ("capacity-farm-notes", _render_notes(c)),
+        ("capacity-farm-access", _render_access(camps)),
+        ("capacity-farm-mobs", _render_mobs(camps)),
+        ("capacity-farm-rewards", _render_rewards(camps)),
+        ("capacity-farm-notes", _render_notes(camps)),
     ]
     written = sum(1 for marker, content in blocks if write_between_markers(page, marker, content))
     print(f"[capacity-farm] {written}/{len(blocks)} marker block(s) written "
-          f"(mobCount={c['mobCount']}, lv={c['minLv']}-{c['maxLv']}, "
-          f"cpBonus={c['cpBonus']}, templates={c['templateCount']})")
+          f"({len(camps)} camp(s): "
+          f"{', '.join(c['zone'] + ' ' + c['command'] for c in camps)})")

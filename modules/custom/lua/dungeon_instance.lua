@@ -4,7 +4,11 @@
 local catalog      = require('modules/custom/lua/dungeon_catalog')
 local augmentDrops = require('modules/custom/lua/augment_dungeon_drops')
 
-local runtime = {}
+-- Hot-reloadable: reuse the cached table so a FileWatcher re-run updates
+-- runtime.create in place -- NEW dungeon instances then use the updated spawn
+-- logic without a map restart (same pattern as augment_dungeon_drops.lua).
+local runtime = package.loaded['modules/custom/lua/dungeon_instance']
+if type(runtime) ~= 'table' then runtime = {} end
 
 local function forEachPlayer(instance, fn)
     for _, player in ipairs(instance:getChars()) do
@@ -131,9 +135,12 @@ runtime.create = function(dungeonKey)
 
                 onMobDeath = function(deadMob, player, optParams)
                     onDungeonMobDeath(instance, deadMob)
-                    -- Catalyst payouts (Augmentation Dungeons only; acts on
-                    -- the optParams.isKiller dispatch, no-op otherwise).
-                    augmentDrops.onDungeonMobDeath(dungeonKey, instance, deadMob, player, optParams)
+                    -- Catalyst payouts (Augmentation Dungeons only; acts on the
+                    -- optParams.isKiller dispatch, no-op otherwise). Pass the roster
+                    -- index + boss flag straight from this closure -- the
+                    -- DungeonMobIndex localvar does NOT survive on these dynamic
+                    -- mobs (reads 0 at death), so relying on it dropped nothing.
+                    augmentDrops.onDungeonMobDeath(dungeonKey, instance, deadMob, player, optParams, index, index == #dungeon.mobs)
                 end,
             })
 

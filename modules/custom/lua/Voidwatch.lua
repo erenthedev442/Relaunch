@@ -596,9 +596,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         name       = 'Voidwatch_Officer',
         packetName = string.format('%sVoidwatch Officer', xi.icon.STAR_LARGE),
         look       = 244,
-        x          = 505.000,
-        y          =   -3.000,
-        z          =  580.000,
+        x          = 554.971,
+        y          =   -3.360,
+        z          =  544.586,
         rotation   =  64,
         widescan   =  1,
         onTrigger  = function(player, npcEnt)

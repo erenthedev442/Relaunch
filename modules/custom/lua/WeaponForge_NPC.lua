@@ -27,7 +27,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local m       = Module:new('weapon_forge_npc')
 local catalog = require('modules/custom/lua/weapon_forge_catalog')
 
-local NPC_POS = { x = 517.000, y = -3.000, z = 562.000, rot = 64 }
+local NPC_POS = { x = 566.971, y = -3.360, z = 526.586, rot = 64 }
 
 m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zone)
     super(zone)

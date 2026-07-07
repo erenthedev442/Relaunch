@@ -129,15 +129,30 @@ INSERT INTO `mob_spawn_points` VALUES
  (17240974, 0, 'Aspidochelone',    'Aspidochelone',     20009,  85,  85, -175.33,   7.68, -247.30, 0),
  (16896911, 0, 'Ouryu',            'Ouryu',             20010,  99,  99,  618.78,   0.56, -552.23, 0),
  (17404816, 0, 'Bune',             'Bune',              20011,  83,  83,  405.43,  11.40,  -98.61, 0),
- (16901009, 0, 'Phoenix',          'Phoenix',           20012,  90,  90,  682.74, -31.76, -500.81, 0),
+ (16901009, 0, 'Phoenix',          'Phoenix',           20012,  90,  90,  685.00, -31.76, -481.00, 0),
  (17310624, 0, 'Suzaku',           'Suzaku',            20013, 125, 125,  -520.84, -70.22, -271.52, 0),
- (17507219, 0, 'Kirin',            'Kirin',             20014, 124, 124,  -90.38, 32.58, 5.51, 0),
- (17408916, 0, 'Fafnir',           'Fafnir',            20015,  90,  90,  78.00, 6.00, 39.00, 0),
- (17408917, 0, 'Nidhogg',          'Nidhogg',           20016,  90,  90,  78.00, 6.00, 34.00, 0),
+ (17507219, 0, 'Kirin',            'Kirin',             20014, 124, 124,  -68.00, 32.58, 3.50, 0),
+ (17408916, 0, 'Fafnir',           'Fafnir',            20015,  90,  90,  46.00, 6.00, 18.00, 0),
+ (17408917, 0, 'Nidhogg',          'Nidhogg',           20016,  90,  90,  46.00, 6.00, 24.00, 0),
  (17617814, 0, 'Vrtra',            'Vrtra',             20017,  95,  95,  168.79,   0.90,  -19.83, 0),
  (16798615, 0, 'Tiamat',           'Tiamat',            20018,  95,  95, -242.35, -39.88, -415.62, 0),
  (17290136, 0, 'King_Vinegarroon', 'King Vinegarroon',  20019,  80,  80,  -239.00, -0.23, -650.00, 0),
  (17556377, 0, 'Khimaira',         'Khimaira',          20020,  85,  85, -124.00,  -0.50,  249.52, 0),
  (17556378, 0, 'Cerberus',         'Cerberus',          20021,  85,  85, -147.00,  -0.50,  250.00, 0),
  (17310619, 0, 'Absolute_Virtue',  'Absolute Virtue',   20022,  92,  92,   -6.03, -40.52, -417.21, 0),
- (17310620, 0, 'Proto-Omega',      'Proto-Omega',       20023,  99,  99,    6.84, -38.60, -444.97, 0);
+ (17310620, 0, 'Proto-Omega',      'Proto-Omega',       20023,  99,  99,    1.00, -38.60, -485.00, 0);
+
+-- ---- Suppress the RETAIL duplicates that share these spawn spots ----
+-- The affinity NM sits at (or beside) the retail NM's point, so the retail mobid
+-- ALSO popped -> two/three NMs up and the retail one gives no trophy (Duff test
+-- 2026-07-06: #2 King Behemoth, #4 Simurgh, #5 Adamantoise, #7 Roc). Delete ONLY
+-- these specific retail spawn rows (scoped by mobid -> safe, never by groupid) so
+-- the affinity version is the sole spawn at each spot. Idempotent.
+DELETE FROM `mob_spawn_points` WHERE `mobid` IN (
+    17297440,  -- retail Behemoth       (Behemoth's Dominion) -- leaves only affinity King Behemoth
+    17297441,  -- retail King Behemoth  (Behemoth's Dominion)
+    17228242,  -- retail Simurgh        (Rolanberry Fields)
+    17269106,  -- retail Roc            (Sauromugue Champaign)
+    17301537,  -- retail Adamantoise    (Valley of Sorrows)
+    17301538   -- retail Aspidochelone  (Valley of Sorrows)
+);

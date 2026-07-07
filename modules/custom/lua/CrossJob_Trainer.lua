@@ -301,9 +301,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         look       = 167,
         -- Extends the GM Home progression row at z=-7:
         --   Gear (-3) / Augment Moogle (0) / Augment Sage (+3) / Trainer (+6).
-        x          = 505.000,
-        y          =   -3.000,
-        z          =  568.000,
+        x          = 554.971,
+        y          =   -3.360,
+        z          =  532.586,
         rotation   =  64,
         widescan   =  1,
 

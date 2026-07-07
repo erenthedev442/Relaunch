@@ -778,27 +778,51 @@ void CDataLoader::ExpireAHItems(uint16 expireAgeInDays)
             listingsToExpire.emplace_back(ListingToExpire{ saleID, itemID, itemStack, ahStack, sellerID, "?" });
         }
 
+        uint32 delivered = 0;
         for (auto listing : listingsToExpire)
         {
-            // Populate name now
-            const auto rset1 = db::preparedStmt("SELECT charname FROM chars WHERE charid = ?", listing.sellerID);
-            if (rset1 && rset1->rowsCount() && rset1->next())
-            {
-                listing.sellerName = rset1->get<std::string>("charname");
-            }
+            // ITEM-DUPE FIX (FJB): claim each listing by DELETE-ing it FIRST, and
+            // only deliver the item if that DELETE actually removed a row.
+            //
+            // This expiry runs from TWO unsynchronized places at search-server
+            // startup -- the interval timer's immediate first tick (main thread)
+            // and the onInitialize worker-thread pass -- plus the manual !ahclean
+            // command. The old order (INSERT-to-dbox, then DELETE) let two passes
+            // that both SELECT the same not-yet-deleted rows each deliver the item,
+            // so a seller got 2 copies of every expired listing back. DELETE is the
+            // atomic claim: whichever pass removes the row is the one that delivers
+            // it; a racing pass gets rowsAffected()==0 and skips. The transaction
+            // rolls the DELETE back if delivery throws, so the item is retried on a
+            // later pass -- never lost, never duplicated. The `buyer_name IS NULL`
+            // guard also drops any listing that sold (e.g. to the AH market-maker)
+            // between the SELECT and the DELETE, so it can't be paid out AND returned.
+            db::transaction(
+                [&]()
+                {
+                    const auto del = db::preparedStmt("DELETE FROM auction_house WHERE id = ? AND buyer_name IS NULL", listing.saleID);
+                    if (!del || del->rowsAffected() == 0)
+                    {
+                        return; // already claimed by a concurrent pass, or sold since the SELECT
+                    }
 
-            const auto rset2 = db::preparedStmt("INSERT INTO delivery_box (charid, charname, box, itemid, itemsubid, quantity, senderid, sender) VALUES "
-                                                "(?, ?, 1, ?, 0, ?, 0, 'AH-Jeuno')",
-                                                listing.sellerID,
-                                                listing.sellerName,
-                                                listing.itemID,
-                                                listing.ahStack == 1 ? listing.itemStack : 1);
-            if (rset2 && rset2->rowsAffected())
-            {
-                // delete the item from the auction house
-                db::preparedStmt("DELETE FROM auction_house WHERE id = ?", listing.saleID);
-            }
+                    // Populate name now
+                    const auto rset1 = db::preparedStmt("SELECT charname FROM chars WHERE charid = ?", listing.sellerID);
+                    if (rset1 && rset1->rowsCount() && rset1->next())
+                    {
+                        listing.sellerName = rset1->get<std::string>("charname");
+                    }
+
+                    db::preparedStmt("INSERT INTO delivery_box (charid, charname, box, itemid, itemsubid, quantity, senderid, sender) VALUES "
+                                     "(?, ?, 1, ?, 0, ?, 0, 'AH-Jeuno')",
+                                     listing.sellerID,
+                                     listing.sellerName,
+                                     listing.itemID,
+                                     listing.ahStack == 1 ? listing.itemStack : 1);
+                    ++delivered;
+                });
         }
+        ShowInfoFmt("Sent {} expired auction house listings back to sellers", delivered);
+        return;
     }
-    ShowInfoFmt("Sent {} expired auction house listings back to sellers", expiredAuctions);
+    ShowInfoFmt("Sent 0 expired auction house listings back to sellers");
 }

@@ -26,7 +26,7 @@ local m = Module:new('gil_race_changer')
 local config = {
     npcName = 'Race Changer',
     npcLook = 3000,
-    npcPos  = { x = 535.000, y = -3.000, z = 550.000, rot = 192 },
+    npcPos  = { x = 584.971, y = -3.360, z = 514.586, rot = 192 },
     cost    = 100000000,   -- 100M gil
 }
 

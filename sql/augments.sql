@@ -80,9 +80,9 @@ INSERT INTO `augments` VALUES (50,100,384,-1,0,0); -- Slow+1
 INSERT INTO `augments` VALUES (51,0,72,1,0,0); -- HP recovered while healing+1
 INSERT INTO `augments` VALUES (52,0,71,1,0,0); -- MP recovered while healing+1
 INSERT INTO `augments` VALUES (53,0,168,-1,0,0); -- Spell interruption rate down 1%
-INSERT INTO `augments` VALUES (54,100,161,-1,0,0); -- Phys. dmg. taken -1%
-INSERT INTO `augments` VALUES (55,100,163,-1,0,0); -- Magic dmg. taken -1%
-INSERT INTO `augments` VALUES (56,100,162,-1,0,0); -- Breath dmg. taken -1%
+INSERT INTO `augments` VALUES (54,30,161,-3,0,0); -- Phys. dmg. taken (retuned T1~-2%..T5~-10%; DMGPHYS floors -50%)
+INSERT INTO `augments` VALUES (55,30,163,-3,0,0); -- Magic dmg. taken (retuned T1~-2%..T5~-10%; DMGMAGIC floors -50%)
+INSERT INTO `augments` VALUES (56,30,162,-3,0,0); -- Breath dmg. taken (retuned T1~-2%..T5~-10%; DMGBREATH floors -50%)
 INSERT INTO `augments` VALUES (57,0,562,1,0,0); -- Magic crit. hit rate+1%
 INSERT INTO `augments` VALUES (58,0,29,-1,0,0); -- Mag.Def.Bns.-1
 INSERT INTO `augments` VALUES (59,0,0,0,0,0); -- Latent effect: Regain+10 (Do via Latent: triggered with your current weapon drawn for 10 TP/tick.)
@@ -100,7 +100,7 @@ INSERT INTO `augments` VALUES (69,0,26,1,0,0); -- Rng.Acc. +1 Rng.Atk. +1
 INSERT INTO `augments` VALUES (69,0,24,1,0,0); -- Cont.
 INSERT INTO `augments` VALUES (70,0,30,33,0,0); -- Mag. Acc. +33 Mag.Atk.Bns +33
 INSERT INTO `augments` VALUES (70,0,28,33,0,0); -- Cont.
-INSERT INTO `augments` VALUES (71,100,160,-1,0,0); -- Damage Taken -1%
+INSERT INTO `augments` VALUES (71,30,160,-3,0,0); -- Damage Taken (retuned T1~-2%..T5~-10%; DAMAGE floors -50%)
 INSERT INTO `augments` VALUES (72,0,0,1,0,0); -- Exp. Point +1%
 INSERT INTO `augments` VALUES (73,0,0,33,0,0); -- Exp. Point +33%
 INSERT INTO `augments` VALUES (74,0,915,1,0,0); -- Cap. Point +1%
@@ -1427,8 +1427,8 @@ INSERT INTO `augments` VALUES (1151,0,0,0,0,0);
 INSERT INTO `augments` VALUES (1152,10,1,1,0,0); -- DEF +10 (increases by 10)
 INSERT INTO `augments` VALUES (1153,0,68,3,0,0); -- Evasion +3
 INSERT INTO `augments` VALUES (1154,0,31,3,0,0); -- Mag. Evasion +3
-INSERT INTO `augments` VALUES (1155,200,161,-1,0,0); -- Physical Damage Taken -2%
-INSERT INTO `augments` VALUES (1156,200,163,-1,0,0); -- Magic Damage Taken -2%
+INSERT INTO `augments` VALUES (1155,30,161,-3,0,0); -- Physical Damage Taken (retuned T1~-2%..T5~-10%)
+INSERT INTO `augments` VALUES (1156,30,163,-3,0,0); -- Magic Damage Taken (retuned T1~-2%..T5~-10%)
 INSERT INTO `augments` VALUES (1157,0,168,2,0,0); -- Spell Interruption Rate Down 2%
 INSERT INTO `augments` VALUES (1158,0,958,2,0,0); -- Occ. Resistance to Status Ailments +2
 
@@ -1522,8 +1522,8 @@ INSERT INTO `augments` VALUES (1244,0,0,0,0,0);
 INSERT INTO `augments` VALUES (1245,0,0,0,0,0);
 -- End unused block
 
-INSERT INTO `augments` VALUES (1246,200,161,-1,1,0); -- Pet: Phy. Dmg. Taken -2%
-INSERT INTO `augments` VALUES (1247,200,163,-1,1,0); -- Pet: Magic Dmg. Taken -2%
+INSERT INTO `augments` VALUES (1246,30,161,-3,1,0); -- Pet: Phy. Dmg. Taken (retuned T1~-2%..T5~-10%)
+INSERT INTO `augments` VALUES (1247,30,163,-3,1,0); -- Pet: Magic Dmg. Taken (retuned T1~-2%..T5~-10%)
 INSERT INTO `augments` VALUES (1248,0,890,1,0,0); -- Enhancing Magic Effect Duration +1
 INSERT INTO `augments` VALUES (1249,0,477,1,0,0); -- Helix Effect Duration+1
 INSERT INTO `augments` VALUES (1250,0,960,1,0,0); -- Indi Effect Duration+1

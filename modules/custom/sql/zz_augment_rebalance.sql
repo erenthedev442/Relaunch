@@ -93,3 +93,22 @@ UPDATE `augments` SET `value` = 1, `multiplier` = 1 WHERE `augmentId` = 749;  --
 -- New:      value=9, mult=1 → per-slot 9.. 40, 5 slots = 45..200%
 -- Cap reduced 800→200% so WS DMG augments are strong but not ludicrous.
 UPDATE `augments` SET `value` = 9, `multiplier` = 1 WHERE `augmentId` BETWEEN 1024 AND 1058;
+
+-- ---- -DMG TAKEN family (2026-07-06, Duff's spec) ----
+-- The damage-taken mods floor at -50% in battleutils.cpp. Stock scaling made one
+-- line hit -32%/slot (mult 100: 54/55/56/71) or -64%/slot (mult 200: the -II
+-- 1155/1156 + Pet 1246/1247) at T5, so 1-2 lines slammed the cap and the tier
+-- bands were meaningless. Retuned to value=-3 / multiplier=30 -> per-line tier
+-- maxima 2.4 / 4.2 / 6.0 / 8.1 / 10.2% (T1..T5); five stacked T5 lines = 51% ->
+-- floored at -50%, so it now takes 5 max lines (or DT gear + fewer) to cap.
+-- Mirrors sql/augments.sql + augment_catalog.lua (base=3, mult=30, disp=100).
+-- NOTE: sql/augments.sql is only imported on a fresh DB, so this override is what
+-- lands the change on the LIVE relaunch DB. Idempotent; scoped by (augmentId, modId, isPet).
+UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 54   AND `modId` = 161 AND `isPet` = 0;  -- Phys. dmg. taken
+UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 55   AND `modId` = 163 AND `isPet` = 0;  -- Magic dmg. taken
+UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 56   AND `modId` = 162 AND `isPet` = 0;  -- Breath dmg. taken
+UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 71   AND `modId` = 160 AND `isPet` = 0;  -- Damage Taken (all)
+UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 1155 AND `modId` = 161 AND `isPet` = 0;  -- Physical Damage Taken
+UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 1156 AND `modId` = 163 AND `isPet` = 0;  -- Magic Damage Taken
+UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 1246 AND `modId` = 161 AND `isPet` = 1;  -- Pet: Phy. Dmg. Taken
+UPDATE `augments` SET `value` = -3, `multiplier` = 30 WHERE `augmentId` = 1247 AND `modId` = 163 AND `isPet` = 1;  -- Pet: Magic Dmg. Taken

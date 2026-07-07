@@ -400,9 +400,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         name       = 'Prime_Armory',
         packetName = string.format('%sPrime Armory', xi.icon.STAR_LARGE),
         look       = 216,
-        x          =  535.000,
-        y          =   -3.000,
-        z          =  562.000,
+        x          =  584.971,
+        y          =   -3.360,
+        z          =  526.586,
         rotation   =  192,
         widescan   =  1,
 

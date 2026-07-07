@@ -1,12 +1,12 @@
 -----------------------------------
 -- !augwarp <stat>
 -- Warp to a zone where a catalyst for the named augment drops.
---   !augwarp haste     -- warps to a mob that drops a Haste-augment catalyst
---   !augwarp store     -- partial match -> 'Store TP' catalysts
+--   !augwarp haste     -- one match  -> warps straight there
+--   !augwarp attack    -- many matches -> pops a menu to PICK the destination
 --   !augwarp           -- usage help
 -- Matches the typed text against augment stat labels first, then catalyst item
--- names. If several catalysts match, it warps to the most accessible one and
--- lists the rest so you can refine by item name.
+-- names. A single match warps immediately; multiple matches open a customMenu
+-- (up to 8, most-accessible first) so you choose where to go.
 --
 -- desc: Warp to a zone that drops a catalyst for a given augment stat. Usage: !augwarp <stat or catalyst name> (e.g. !augwarp Haste).
 --
@@ -29,7 +29,7 @@ commandObj.onTrigger = function(player, arg)
 
     if not arg or arg == '' then
         player:printToPlayer('!augwarp <stat> -- warp to a zone that drops a catalyst for that augment.', SYS)
-        player:printToPlayer('  e.g.  !augwarp Haste   |   !augwarp Crit   |   !augwarp Store', SYS)
+        player:printToPlayer('  e.g.  !augwarp Haste   |   !augwarp Attack   |   !augwarp Store', SYS)
         return
     end
 
@@ -57,33 +57,47 @@ commandObj.onTrigger = function(player, arg)
         return (a.lvl or 999) < (b.lvl or 999)
     end)
 
-    local best = matches[1]
-
-    if #matches > 1 then
-        player:printToPlayer(string.format(
-            '%d catalysts match "%s" -- warping to the most accessible. Refine with  !augwarp <item name>:',
-            #matches, arg), SYS)
-        for i = 1, math.min(#matches, 8) do
-            local e = matches[i]
-            player:printToPlayer(string.format('  %-22s [%s, T%d] @ %s (%.1f%%)',
-                e.item, e.label, e.tier, e.zoneName, (e.rate or 0) / 10), SYS)
+    -- Warp (or, for spawn-less drops, tell the player where to hunt).
+    local function goTo(q, e)
+        if e.noWarp then
+            q:printToPlayer(string.format(
+                '%s (%s augment, %.1f%%) drops from %s in %s -- no fixed spawn point, so no warp. Hunt it there.',
+                e.item, e.label, (e.rate or 0) / 10, e.mob, e.zoneName), SYS)
+            return
         end
-        if #matches > 8 then
-            player:printToPlayer(string.format('  ...and %d more.', #matches - 8), SYS)
-        end
+        q:printToPlayer(string.format(
+            'Warping to %s -- %s drops %s (%s augment, Tier %d, %.1f%% drop rate).',
+            e.zoneName, e.mob, e.item, e.label, e.tier, (e.rate or 0) / 10), SYS)
+        q:setPos(e.x, e.y, e.z, 0, e.zone)
     end
 
-    if best.noWarp then
-        player:printToPlayer(string.format(
-            '%s (%s augment, %.1f%%) drops from %s in %s -- no fixed spawn point, so no warp. Hunt it there.',
-            best.item, best.label, (best.rate or 0) / 10, best.mob, best.zoneName), SYS)
+    -- Single match: just go.
+    if #matches == 1 then
+        goTo(player, matches[1])
         return
     end
 
-    player:printToPlayer(string.format(
-        'Warping to %s -- %s drops %s (%s augment, Tier %d, %.1f%% drop rate).',
-        best.zoneName, best.mob, best.item, best.label, best.tier, (best.rate or 0) / 10), SYS)
-    player:setPos(best.x, best.y, best.z, 0, best.zone)
+    -- Multiple: pop a picker menu (client renders up to 8 options).
+    local shown   = math.min(#matches, 8)
+    local options = {}
+    for i = 1, shown do
+        local e = matches[i]
+        -- Keep each label well under the 128-byte per-option cap; no double quotes.
+        local label = string.format('%s | %s T%d', e.label, e.item, e.tier)
+        options[i] = { label, function(q) goTo(q, e) end }
+    end
+    options[shown + 1] = { 'Close', function() end }
+
+    local title = 'Augwarp: ' .. tostring(arg):gsub('"', '')
+    player:timer(30, function(pl)
+        pl:customMenu({ title = title, options = options })
+    end)
+
+    if #matches > shown then
+        player:printToPlayer(string.format(
+            '  (+%d more -- refine with a catalyst item name, e.g. !augwarp %s)',
+            #matches - shown, matches[1].item), SYS)
+    end
 end
 
 return commandObj

@@ -44,7 +44,7 @@ local FLOOR_DELAY_MS = 5000  -- ms between floors (breather)
 local WARP_IN        = { x = -420, y = 14, z = -49, rot = 192 }
 
 -- Exit warp: back to GM Home activities area.
-local EXIT_WARP = { zoneId = 44, x = 521.5, y = -3.0, z = 548.0, rot = 65 }
+local EXIT_WARP = { zoneId = 44, x = 571.471, y = -3.360, z = 512.586, rot = 65 }
 
 -----------------------------------
 -- Floor band definitions
@@ -492,9 +492,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         name       = 'Tower_Arbiter',
         packetName = 'Tower Climb',
         look       = 169,
-        x          =   523.000,
-        y          =   -3.000,
-        z          =  574.000,
+        x          =   572.971,
+        y          =   -3.360,
+        z          =  538.586,
         rotation   =  192,
         widescan   =  1,
 

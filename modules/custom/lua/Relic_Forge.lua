@@ -22,7 +22,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 
 local m = Module:new('relic_forge')
 
-local NPC_POS = { x = 523.000, y = -3.000, z = 562.000, rot = 192 }
+local NPC_POS = { x = 572.971, y = -3.360, z = 526.586, rot = 192 }
 
 -- Dynamis currency cost PER relic. Tunable. Dynamis currencies (item_basic):
 --   1449 Tukuku Whiteshell (Windurst)   1450 Lungo-Nango Jadeshell (San d'Oria)

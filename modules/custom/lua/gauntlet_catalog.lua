@@ -17,7 +17,7 @@ C.HALL_ZONE  = 29   -- Riverne-Site_B01 (Hall of Champions, read-only display)
 -- Spawn positions (verified from zone scripts)
 C.WARP_IN  = { x = 732.55, y = -32.5, z = -506.544, rot = 90 }  -- Riverne A01 default spawn
 C.HALL_IN  = { x = 729.749, y = -20.319, z = 407.153, rot = 90 } -- Riverne B01 default spawn
-C.EXIT_POS = { x = 521.5, y = -3.0, z = 548.0, rot = 65, zoneId = 44 } -- back to Leafallia (relaunch hub)
+C.EXIT_POS = { x = 571.471, y = -3.360, z = 512.586, rot = 65, zoneId = 44 } -- back to Leafallia (relaunch hub)
 
 -- NM pool by level (groupIds from zone 210; all confirmed in mob_groups)
 C.NM_POOL = {
