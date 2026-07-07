@@ -24,6 +24,7 @@ local PAGE    = 5  -- NMs per menu page (stay ≤ 7 to respect customMenu 150-by
 
 -- charVar keys
 local CV_NM = 'UW_NM'  -- catalog NM id queued for spawn (0 = none)
+local CV_ENTRY = 'UW_ArenaEntry'  -- one-shot: 1 = the next Escha zone-in is a board "enter the arena" warp (authorizes the auto-pop). Gates out !hunt5 / !hunt / any other Escha entry.
 
 -- Lookup tables
 local nmById = {}
@@ -246,6 +247,7 @@ m:addOverride('xi.zones.Celennia_Memorial_Library.Zone.onInitialize', function(z
                     end
                     p:delCurrency('unity_accolades', cost)
                     p:setCharVar(CV_NM, nm.id)
+                    p:setCharVar(CV_ENTRY, 1)  -- authorize the pop on THIS board-driven warp only
                     p:setPos(wp.x, wp.y, wp.z, wp.rot, catalog.huntZoneId)
                     p:printToPlayer(string.format(
                         '[Unity] Entering the arena to hunt %s!', nm.label), S)
@@ -369,6 +371,12 @@ m:addOverride('xi.zones.Escha_ZiTah.Zone.onZoneIn', function(player, prevZone)
     local cs = super(player, prevZone)
     local nmId = player:getCharVar(CV_NM)
     if not nmId or nmId == 0 then return cs end
+    -- Only auto-pop the queued NM when the player arrived via the Unity board's
+    -- own "enter the arena" warp (which sets CV_ENTRY=1 just before warping) --
+    -- NOT on !hunt5 / !hunt / any other Escha entry. Consume the token so it's
+    -- strictly one-shot; CV_NM is left intact so the board can re-arm it.
+    if (player:getCharVar(CV_ENTRY) or 0) == 0 then return cs end
+    player:setCharVar(CV_ENTRY, 0)
     local nm = nmById[nmId]
     if not nm then
         player:setCharVar(CV_NM, 0)
