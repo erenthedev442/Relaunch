@@ -10,10 +10,15 @@
 -- The retail guide UI is a client EVENT that only exists in survival-guide
 -- zones' DATs, so this uses the server's standard customMenu pattern
 -- instead (same machinery as gil_warp_npc.lua / Warpman):
---   level 1: region list (paged, 6 per page -- 11 regions)
---   level 2: destinations within the region (paged, 5 per page)
--- Page sizes keep every menu under FFXI's ~150-byte customMenu packet cap;
--- the catalog's labels are pre-shortened for the same reason.
+--   level 1: region list (paged, 5 per page -- 11 regions)
+--   level 2: destinations within the region (paged, 4 per page)
+-- The customMenu packet is a HARD 150-byte cap: SetCustomMenuContext sends
+-- the title + every option label, each wrapped in quotes and concatenated
+-- ("title""opt1""opt2"...); anything past byte 150 is silently truncated, so
+-- the last option loses characters (e.g. "Close" -> "Cl"). Page sizes are set
+-- so the worst-case page stays well under 150 (region page ~134 B, dest page
+-- ~130 B incl. the longest "(S)" labels). Was 6/5 -> overflowed to 154 B and
+-- clipped "Close" on region page 1 (fixed 2026-07-06). Labels also pre-shortened.
 --
 -- Destinations + placement + cost live in survival_guide_npc_catalog.lua
 -- (GENERATED -- same file name on both servers, zone/pos differ: GM Home on
@@ -29,8 +34,8 @@ require(string.format('scripts/zones/%s/Zone', _zoneName))
 local m   = Module:new('survival_guide_npc')
 local SYS = xi.msg.channel.SYSTEM_3
 
-local REGIONS_PER_PAGE = 6
-local DESTS_PER_PAGE   = 5
+local REGIONS_PER_PAGE = 5   -- 6 overflowed the 150-byte customMenu cap (clipped "Close" -> "Cl")
+local DESTS_PER_PAGE   = 4   -- 5 was a razor-thin 149 B on the long "(S)" regions; 4 = safe margin
 
 m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
     super(zone)
