@@ -80,6 +80,7 @@ catalog.bronze =
 {
     weapons =
     {
+        { id = 21515, name = "Tokko Knuckles", cost = 12, jobs = 'WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' },
         { id = 21561, name = "Tokko Knife", cost = 12, jobs = 'RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' },
         { id = 21617, name = "Tokko Sword", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' },
         { id = 21670, name = "Tokko Claymore", cost = 12, jobs = 'WAR/PLD/DRK/RUN' },
