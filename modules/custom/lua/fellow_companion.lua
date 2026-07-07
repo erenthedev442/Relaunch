@@ -221,7 +221,7 @@ local CONFIG =
         { name = 'Coeurl',     modelId = 367,  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder (coeurl signature)
         { name = 'Sabotender', modelId = 372,  ws = xi.mobSkill.THOUSAND_NEEDLES_1 },  -- 1000 Needles (cactuar)
         { name = 'Cardian',    modelId = 431,  ws = xi.mobSkill.FIRE_IV            },  -- fire nuke
-        { name = 'Goblin',     modelId = 292,  ws = xi.mobSkill.BOMB_TOSS_1        },  -- Bomb Toss (goblin)
+        { name = 'Goblin',     modelId = 484,  ws = xi.mobSkill.BOMB_TOSS_1        },  -- Bomb Toss (goblin). 484 = Goblin_Brigand humanoid; 292 was the Slime family (bug, 2026-07-07).
         { name = 'Yagudo',     modelId = 580,  ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit physical (yagudo)
         { name = 'Tonberry',   modelId = 1177, ws = xi.mobSkill.CURSED_SPHERE_1    },  -- dark burst
         { name = 'Antican',    modelId = 1280, ws = xi.mobSkill.ROCK_BUSTER        },  -- earth physical
