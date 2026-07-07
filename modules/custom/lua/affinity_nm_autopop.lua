@@ -58,18 +58,26 @@ local SYS             = xi.msg.channel.SYSTEM_3
 --   * UNIFORM across all 24: the god-tier NMs (Kirin/AV/Proto-Omega/4 gods) may end
 --     up over-tuned for the HL-rank-3 audience -- add a per-mobid override if so.
 -----------------------------------
-local NM_HP_MULT = 6.0
+-- BIG BUMP 2026-07-06 (Duff test: "fairly easy as thf"; owner: increase difficulty).
+-- HP is the primary lever (int32 -> longer fights, not one-shots); the flat combat
+-- mods stay well under the int16 mob-mod cap (~31000) even stacked on base, so no
+-- overflow/wrap. Uniform across all 24; add a per-mobid override later if the
+-- god-tier NMs need to outclass Behemoth etc.
+local NM_HP_MULT = 12.0
 local NM_MODS =
 {
-    [xi.mod.ATT]           = 4000,
-    [xi.mod.ACC]           = 1200,
-    [xi.mod.DEF]           = 500,
-    [xi.mod.EVA]           = 400,
-    [xi.mod.MATT]          = 200,
-    [xi.mod.STR]           = 200,
-    [xi.mod.DEX]           = 200,
-    [xi.mod.HASTE_GEAR]    = 150,   -- ~15% (engine caps gear haste ~25%)
-    [xi.mod.DOUBLE_ATTACK] = 15,
+    [xi.mod.ATT]           = 6000,
+    [xi.mod.ACC]           = 2400,
+    [xi.mod.DEF]           = 1800,
+    [xi.mod.EVA]           = 1000,
+    [xi.mod.MATT]          = 500,
+    [xi.mod.MDEF]          = 60,
+    [xi.mod.STR]           = 400,
+    [xi.mod.DEX]           = 400,
+    [xi.mod.HASTE_GEAR]    = 200,   -- ~20% (engine caps gear haste ~25%)
+    [xi.mod.DOUBLE_ATTACK] = 25,
+    [xi.mod.CRITHITRATE]   = 12,
+    [xi.mod.STORETP]       = 50,    -- more frequent TP moves = more real mechanics
 }
 
 -----------------------------------
@@ -200,10 +208,17 @@ local function configureMob(mobid)
     -- so each fresh spawn re-scales from base HP (SPAWN fires with the mob at base).
     mob:addListener('SPAWN', 'AFFINITY_STATS', function(m)
         m:setLocalVar('affHpScaled', 0)
+        m:setMobMod(xi.mobMod.IDLE_DESPAWN, 0)
         applyStats(m)
     end)
     if mob:isSpawned() then applyStats(mob) end
 
+    -- Keep affinity NMs up: the Sky gods (Genbu/Seiryu/Byakko/Suzaku) set a 300s
+    -- IDLE_DESPAWN in their retail onMobInitialize, which despawns them whenever
+    -- no one is fighting -- churning against this always-up system (Duff test
+    -- 2026-07-06: gods self-despawn / ~47s repop delay). Force it off. No-op for
+    -- the other 22 NMs, which don't set it.
+    mob:setMobMod(xi.mobMod.IDLE_DESPAWN, 0)
     mob:setRespawnTime(RESPAWN_SECONDS)
     if not mob:isSpawned() then
         SpawnMob(mobid)
