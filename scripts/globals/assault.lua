@@ -159,15 +159,26 @@ xi.assault.runeReleaseFinish = function(player, csid, option, npc)
                     points = points * 1.1
                 end
 
+                -- RELAUNCH: repeatable Imperial Standing faucet. Retail assault
+                -- completion grants Assault Points only, but the custom Mythic
+                -- Weapon Forge consumes Imperial Standing, which otherwise had NO
+                -- repeatable source (a handful of one-time ToAU quests only) --
+                -- leaving Mythics unobtainable. Award it on every clear so the
+                -- chain (Assault -> Imperial Standing -> Forge) pays out.
+                -- TUNE these two values to taste (Mythic needs several thousand).
+                local IMPERIAL_STANDING_CLEAR = 250   -- per repeat clear
+                local IMPERIAL_STANDING_FIRST = 500   -- first clear of this assault
                 if entity:hasCompletedAssault(assaultID) then
                     points = math.floor(points)
                     entity:setVar('AssaultPromotion', entity:getCharVar('AssaultPromotion') + 1)
                     entity:addAssaultPoint(pointsArea, points)
+                    entity:addCurrency('imperial_standing', IMPERIAL_STANDING_CLEAR)
                     entity:messageSpecial(ID.text.ASSAULT_POINTS_OBTAINED, points)
                 else
                     points = math.floor(points * 1.5)
                     entity:setVar('AssaultPromotion', entity:getCharVar('AssaultPromotion') + 5)
                     entity:addAssaultPoint(pointsArea, points)
+                    entity:addCurrency('imperial_standing', IMPERIAL_STANDING_FIRST)
                     entity:messageSpecial(ID.text.ASSAULT_POINTS_OBTAINED, points)
                 end
 
