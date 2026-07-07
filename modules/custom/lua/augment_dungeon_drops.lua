@@ -5,8 +5,12 @@
 -- (dungeon_catalog.lua category). Each dungeon owns a stat FAMILY:
 --
 --   * Trash mobs (roster slots 1-12) each carry ONE fixed catalyst from the
---     family's low tiers -- the killing blow rolls TRASH_RATE% to drop it into
---     the TREASURE POOL, so ANY party member can lot it (1:1 mob->item model).
+--     family's low tiers -- the killing blow rolls TRASH_RATE% to award it
+--     STRAIGHT TO THE KILLER's inventory (1:1 mob->item model). (Originally a
+--     treasure-pool drop, but player:addTreasure silently no-ops when the killer
+--     has no usable pool -- which is the case for SOLO players and inside these
+--     private instances -- so catalysts never arrived. Direct award works solo,
+--     partied, and instanced; the boss payout already hands out per-member.)
 --   * The boss (last roster slot) pays every party member BOSS_QTY of a catalyst
 --     from the family's tier-3+ pool, straight to inventory: GUARANTEED on each
 --     player's first boss kill of that dungeon per UTC day, BOSS_REPEAT_RATE% on
@@ -46,9 +50,10 @@ local function prettyItem(entry)
     return string.format('%s -- %s', n, entry.label)
 end
 
--- BOSS payout: hand `qty` of `entry`'s catalyst straight to `player`'s inventory.
--- Returns true when handed over (false = inventory full, so the caller doesn't
--- burn that member's daily guarantee).
+-- Catalyst payout (used by BOTH the boss and trash paths): hand `qty` of
+-- `entry`'s catalyst straight to `player`'s inventory. Returns true when handed
+-- over (false = inventory full, so the boss path doesn't burn that member's
+-- daily guarantee).
 local function awardDirect(player, entry, qty)
     local display = string.format('%s (T%d)', prettyItem(entry), entry.tier)
 
@@ -64,17 +69,6 @@ local function awardDirect(player, entry, qty)
         '[Dungeon] Catalyst dropped: %s x%d. Trade it to the Augment Moogle to apply.', display, qty),
         xi.msg.channel.SYSTEM_3)
     return true
-end
-
--- TRASH payout: drop the catalyst into the TREASURE POOL so any party member can
--- lot it, not just the killer. addTreasure = a real lottable pool entry (mirrors
--- abyssea_su5_drops.lua / alzahbi_loot.lua). No inventory gate -- the pool holds it.
-local function awardToPool(mob, killer, entry)
-    local display = string.format('%s (T%d)', prettyItem(entry), entry.tier)
-    pcall(function() killer:addTreasure(entry.id, mob) end)
-    killer:printToPlayer(string.format(
-        '[Dungeon] Catalyst dropped to the treasure pool: %s -- lot it, then trade to the Augment Moogle.', display),
-        xi.msg.channel.SYSTEM_3)
 end
 
 -- Called once per alliance member per kill; we act only on the killing-blow
@@ -121,7 +115,7 @@ M.onDungeonMobDeath = function(dungeonKey, instance, deadMob, player, optParams)
     else
         local entry = d.trash[slot]
         if entry and math.random(100) <= TRASH_RATE then
-            awardToPool(deadMob, player, entry)
+            awardDirect(player, entry, 1)  -- straight to the killer (see note on awardDirect)
         end
     end
 end
