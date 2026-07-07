@@ -74,6 +74,13 @@ xi.settings.map =
     -- Capacity Point Settings
     CAPACITY_RATE = 1.0,
 
+    -- Max UNSPENT job points a player can hold before capacity points stop
+    -- converting (retail is 500). job_points.cpp reads this via
+    -- settings::get("map.MAX_JOB_POINTS"); if the key is MISSING it resolves to
+    -- 0, which freezes every player's capacity at 29,999 and blocks ALL job
+    -- point gain server-wide. Relaunch ceiling is 2100 (see job_rebirth_catalog).
+    MAX_JOB_POINTS = 2100,
+
     -- Determines Vana'diel time epoch (886/1/1 Firesday)
     -- current timestamp - vanadiel_time_epoch = vana'diel time
     -- 0 defaults to SE epoch 1009810800 (JP midnight 1/1/2002)
