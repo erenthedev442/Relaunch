@@ -155,13 +155,18 @@ catalog.dungeons =
             { -8.315, 32.020, 195.125, 219 },
             { -11.370, 31.698, 202.837, 135 },
             { -12.470, 32.071, 191.046, 104 },
-            { -36.410, 31.940, 219.283, 253 },
-            { -43.690, 31.968, 218.671, 12  },
-            { -71.360, 31.975, 207.479, 25  },
-            { -76.670, 31.163, 186.602, 40  },
-            { -80.770, 31.979, 193.542, 112 },
-            { -79.820, 31.968, 208.309, 226 },
-            { -72.000, 31.975, 215.000, 127 },
+            -- Crabs 07-12 + Mireheart Slime boss (13) were at X -36..-80 -- a
+            -- disconnected maze section players couldn't reach, so the boss never
+            -- came into view ("11 remain, can't find them", Duff 2026-07-07).
+            -- Relocated into the reachable entrance chamber (midpoints of the six
+            -- confirmed-walkable Leech points above); boss centered.
+            { 6.500, 31.690, 195.000, 127  },
+            { -1.700, 31.660, 194.700, 127 },
+            { -9.850, 31.860, 199.000, 127 },
+            { -7.300, 31.670, 205.500, 127 },
+            { 2.450, 31.670, 202.000, 127  },
+            { -10.400, 31.880, 193.050, 127 },
+            { -4.000, 31.700, 199.000, 127 }, -- Mireheart Slime (boss), centered
         }, 'Ordelle Leech', 'Ordelle Crab', 'Mireheart Slime', 8),
     },
 
