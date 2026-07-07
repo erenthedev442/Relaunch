@@ -102,16 +102,8 @@ function htbf.register(fightKey, tier)
         {
             {
                 mobs = f.mobs,
-                -- Route the win through handleAllMonstersDefeated (NOT a bare
-                -- setStatus(WON)) so the Armoury Crate spawns and rolls
-                -- content.loot. HTBF fights use a custom battlefieldId that has
-                -- no C++ retail-treasure entry, so a bare WON gives an empty
-                -- crate -- this Lua loot path (crate -> handleOpenArmouryCrate ->
-                -- handleLootRolls(self.loot)) is what drops the htbf_loot.lua
-                -- tables. If no crate is detected it falls back to WON, so the
-                -- fight always still completes.
                 allDeath = function(battlefield, mob)
-                    content:handleAllMonstersDefeated(battlefield, mob)
+                    battlefield:setStatus(xi.battlefield.status.WON)
                 end,
             },
         }
@@ -164,10 +156,33 @@ function htbf.register(fightKey, tier)
                     (player:getCharVar('HL_Points_Lifetime') or 0) + rew.marks)
             end)
         end
+        -- Item loot. HTBF fights use a custom battlefieldId with NO C++ retail
+        -- treasure, and the reuse-base fights end their win in varied ways (most
+        -- on a bare setStatus(WON) that never opens an Armoury Crate), so the
+        -- stock crate -> handleLootRolls path drops nothing. Roll content.loot
+        -- HERE -- the one hook that reliably fires on every fight's win (it's
+        -- where gil/marks already land) -- and give the items straight to the
+        -- player, per completion. selectFromLootGroups is the same roller the
+        -- crate uses, so htbf_loot.lua tables behave identically.
+        local looted = 0
+        if self.loot then
+            pcall(function()
+                for _, entry in ipairs(utils.selectFromLootGroups(player, self.loot)) do
+                    if entry.itemId and entry.itemId ~= 0 then
+                        if entry.itemId == xi.item.GIL then
+                            player:addGil(entry.amount or 0)
+                        elseif npcUtil.giveItem(player, {{ entry.itemId, entry.amount or 1 }}) then
+                            looted = looted + 1
+                        end
+                    end
+                end
+            end)
+        end
         pcall(function()
             player:printToPlayer(string.format(
-                'High-Tier Battlefield cleared! Reward: %d gil and %d Hunt Marks.',
-                rew.gil or 0, rew.marks or 0), xi.msg.channel.SYSTEM_3)
+                'High-Tier Battlefield cleared! Reward: %d gil and %d Hunt Marks%s.',
+                rew.gil or 0, rew.marks or 0,
+                looted > 0 and (' + ' .. looted .. ' item(s)') or ''), xi.msg.channel.SYSTEM_3)
         end)
     end
 
