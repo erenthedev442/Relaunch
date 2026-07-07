@@ -9,10 +9,10 @@
 -- Tower / HL voucher / Job Mastery / Aht Urhgan currencies):
 --
 --   fresh character                          -> 2 trusts
---   conquer every Unity Wanted NM (all tiers)-> 3 trusts (Unity_NMs_Conquered,
+--   raise your Adventuring Fellow to Lv 100  -> 3 trusts (Fellow_Level)
+--   conquer every Unity Wanted NM (all tiers)-> 4 trusts (Unity_NMs_Conquered,
 --                                                all 56 board NMs, dedup per NM)
---   clear a tier-5 Voidwatch rift            -> 4 trusts (Voidwatch_Tier)
---   raise your Adventuring Fellow to the cap (Lv 120) -> 5 trusts (Fellow_Level)
+--   clear a tier-5 Voidwatch rift            -> 5 trusts (Voidwatch_Tier)
 --
 -- Theme: your allies earn your allies -- hunt with the Concord, close the
 -- rifts, max your companion, and the full trust party follows.
@@ -59,16 +59,17 @@ local function ordinal(n)
 end
 
 -- Each gate buys the next simultaneous-trust slot. TUNE HERE.
+-- Order matters: the ladder is CONSECUTIVE, so entries must ascend by cap.
 local TRUST_GATES =
 {
-    { cap = 3, unlock = 'conquer every Unity Wanted NM (all tiers)',
+    -- 100 = mid Fellow level (fellow_companion.lua caps at CONFIG.maxLevel 120);
+    -- this gate deliberately wants 100, not the cap.
+    { cap = 3, unlock = 'raise your Adventuring Fellow to level 100',
+      check = function(p) return (p:getCharVar('Fellow_Level') or 0) >= 100 end },
+    { cap = 4, unlock = 'conquer every Unity Wanted NM (all tiers)',
       check = function(p) return (p:getCharVar('Unity_NMs_Conquered') or 0) >= UNITY_TOTAL end },
-    { cap = 4, unlock = 'clear a tier-5 Voidwatch rift',
+    { cap = 5, unlock = 'clear a tier-5 Voidwatch rift',
       check = function(p) return (p:getCharVar('Voidwatch_Tier') or 0) >= 5 end },
-    -- 120 = the Fellow's level cap (fellow_companion.lua CONFIG.maxLevel);
-    -- keep in sync if the cap changes.
-    { cap = 5, unlock = 'raise your Adventuring Fellow to the level cap (120)',
-      check = function(p) return (p:getCharVar('Fellow_Level') or 0) >= 120 end },
 }
 
 local function trustCap(player)
