@@ -75,7 +75,7 @@ local function awardDirect(player, entry, qty)
 
     pcall(function() player:addItem({ id = entry.id, quantity = qty }) end)
     player:printToPlayer(string.format(
-        '[Dungeon] Catalyst dropped: %s x%d. Trade it to the Augment Moogle to apply.', display, qty),
+        '[Dungeon] Catalyst dropped: %s x%d.', display, qty),
         xi.msg.channel.SYSTEM_3)
     return true
 end
