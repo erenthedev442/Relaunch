@@ -26,59 +26,58 @@ local stock =
 {
     general =
     {
-        { xi.item.ANTIDOTE,                  100 },
+        { xi.item.ANTIDOTE,                  50 },
         { 27556,                          100000 },  -- Echad Ring
-        { xi.item.FLASK_OF_ECHO_DROPS,       250 },
-        { xi.item.ETHER,                     800 },
-        { xi.item.FLASK_OF_EYE_DROPS,        150 },
-        { xi.item.HI_ETHER,                 2400 },
-        { xi.item.HI_POTION,                 600 },
-        { xi.item.FLASK_OF_HOLY_WATER,       200 },
-        { xi.item.STRIP_OF_MEAT_JERKY,       120 },
-        { xi.item.FLASK_OF_SLEEPING_POTION,  300 },
+        { xi.item.FLASK_OF_ECHO_DROPS,       100 },
+        { xi.item.ETHER,                     300 },
+        { xi.item.FLASK_OF_EYE_DROPS,        50 },
+        { xi.item.HI_ETHER,                 1000 },
+        { xi.item.HI_POTION,                 400 },
+        { xi.item.FLASK_OF_HOLY_WATER,       100 },
+        { xi.item.STRIP_OF_MEAT_JERKY,       50 },
+        { xi.item.FLASK_OF_SLEEPING_POTION,  200 },
         { 27557,                          100000 },  -- Trizek Ring
         { xi.item.TRUMP_CARD,                 50 },  -- Trump Card
         { xi.item.TRUMP_CARD_CASE,            50 },  -- Trump Card Case
-        { xi.item.X_POTION,                 1800 },
+        { xi.item.X_POTION,                 1000 },
     },
 
     consumables =
     {
-        { xi.item.BOTTLE_OF_ANTACID,         500 },
-        { xi.item.ANTIDOTE,                  100 },
-        { xi.item.FLASK_OF_ECHO_DROPS,       250 },
-        { xi.item.ELIXIR,                  12000 },
-        { xi.item.ETHER,                     800 },
-        { xi.item.FLASK_OF_EYE_DROPS,        150 },
-        { xi.item.HI_ETHER,                 2400 },
-        { xi.item.HI_POTION,                 600 },
-        { xi.item.FLASK_OF_HOLY_WATER,       200 },
-        { xi.item.POTION,                    150 },
-        { xi.item.FLASK_OF_SLEEPING_POTION,  300 },
-        { xi.item.TOOLBAG_SHIHEI,          15000 },  -- Toolbag (Shihei)
-        { xi.item.VILE_ELIXIR,             10000 },
-        { xi.item.VILE_ELIXIR_P1,          18000 },
-        { xi.item.X_POTION,                 1800 },
+        { xi.item.BOTTLE_OF_ANTACID,         200 },
+        { xi.item.ANTIDOTE,                  50 },
+        { xi.item.FLASK_OF_ECHO_DROPS,       100 },
+        { xi.item.ELIXIR,                  2000 },
+        { xi.item.ETHER,                     300 },
+        { xi.item.FLASK_OF_EYE_DROPS,        50 },
+        { xi.item.HI_ETHER,                 1000 },
+        { xi.item.HI_POTION,                 400 },
+        { xi.item.FLASK_OF_HOLY_WATER,       100 },
+        { xi.item.POTION,                    100 },
+        { xi.item.FLASK_OF_SLEEPING_POTION,  200 },
+        { xi.item.VILE_ELIXIR,             3000 },
+        { xi.item.VILE_ELIXIR_P1,          5000 },
+        { xi.item.X_POTION,                 1000 },
     },
 
     weapons =
     {
         { 17859,    10000 },  -- Animator     (PUP, Lv1)
         { 17857,    50000 },  -- Animator +1  (PUP, Lv71)
-        { 21392,  1000000 },  -- Animator Z   (PUP, iLvl 119) -- Animator P / P+1 / P II line reserved for !hunt
-        { 21460,    15000 },  -- Matre Bell   (Lv.1 GEO handbell, MP+5)
-        { 21463,   150000 },  -- Nepote Bell  (Lv.99 GEO handbell, Geomancy+5)
+        { 21392,  500000 },  -- Animator Z   (PUP, iLvl 119) -- Animator P / P+1 / P II line reserved for !hunt
+        { 21460,    10000 },  -- Matre Bell   (Lv.1 GEO handbell, MP+5)
+        { 21463,   250000 },  -- Nepote Bell  (Lv.99 GEO handbell, Geomancy+5)
     },
 
     armor =
     {
-        { xi.item.CASSIE_EARRING,  300000 },             -- Cassie Earring
+        { xi.item.CASSIE_EARRING,  250000 },             -- Cassie Earring
         { 10293,                    50000 },              -- Chocobo Shirt
         { 11811,                    50000 },              -- Destrier Beret
-        { 14724,                   600000 },              -- Moldavite Earring
-        { 11009,                   300000 },              -- Shaper's Shawl (back, crafting/utility)
-        { 28509,                   300000 },              -- She-Slime Earring
-        { 28511,                   300000 },              -- Slime Earring
+        { 14724,                   500000 },              -- Moldavite Earring
+        { 11009,                   100000 },              -- Shaper's Shawl (back, crafting/utility)
+        { 28509,                   250000 },              -- She-Slime Earring
+        { 28511,                   250000 },              -- Slime Earring
     },
 
     -- Absolute-best endgame foods (max 16 slots). One BiS per role; each
@@ -87,32 +86,32 @@ local stock =
     -- variant (verified against item_basic.sql).
     food =
     {
-        { 6465,                              5000 },  -- Behemoth Steak +1       -- Attack +24% (cap 165), +STR8 +DEX8
-        { 5177,                              5000 },  -- Bream Sushi +1          -- Acc+18, Att+12
-        { 5925,                              5000 },  -- Charred Salisbury Steak -- Attack +22% (cap 165), +STR8
-        { 5167,                              5000 },  -- Coeurl Sub +1           -- STR / DEX
-        { 5722,                              5000 },  -- Crab Sushi +1           -- Acc, Att, crit
-        { 5179,                              5000 },  -- Dorado Sushi +1         -- DEX, AGI
-        { 5666,                              5000 },  -- Fin Sushi +1            -- RACC, DEX+8
-        { 6344,                              5000 },  -- Grape Daifuku +1        -- TP Bonus +50 (BiS for SAM/COR/RNG WS sets)
-        { 6072,                              5000 },  -- Magma Steak +1          -- Attack +24% (cap 185), +STR9
-        { 5744,                              5000 },  -- Marinara Pizza +1       -- Enmity (PLD / RUN)
-        { 5694,                              5000 },  -- Octopus Sushi +1        -- STR, VIT
-        { xi.item.FLASK_OF_PEAR_AU_LAIT,     5000 },  -- Pear au Lait            -- Macc, MAB, MP
-        { xi.item.FLASK_OF_PERSIKOS_AU_LAIT, 5000 },  -- Persikos au Lait        -- MP refresh tick
-        { 5765,                              5000 },  -- Red Curry Bun +1        -- MAB / INT (nuker)
-        { 5664,                              5000 },  -- Salmon Sushi +1         -- RACC, DEX
-        { 5692,                              5000 },  -- Shrimp Sushi +1         -- STR, DEX
-        { 5924,                              5000 },  -- Smoldering Salisbury Steak -- STR / Att (heavy melee)
-        { 5163,                              5000 },  -- Sole Sushi +1           -- Acc+18 (Acc-capped fights)
-        { 6459,                              5000 },  -- Soy Ramen +1            -- Acc+15, Att+15 (top all-round DD)
-        { 5199,                              5000 },  -- Spaghetti Carbonara +1  -- STR / VIT / HP (DD + survivability)
-        { 5162,                              5000 },  -- Squid Sushi +1          -- RACC+18, RATT+13% (RNG / COR)
-        { 6469,                              5000 },  -- Sublime Sushi +1        -- Macc+25, INT+9, MAB+15 (best caster food)
-        { 5216,                              5000 },  -- Tentacle Sushi +1       -- INT, Macc
-        { 5160,                              5000 },  -- Urchin Sushi +1         -- MND, CHR (support)
-        { 4330,                              5000 },  -- Witch Risotto           -- Magic defense (mage burns)
-        { 5763,                              5000 },  -- Yellow Curry Bun +1     -- STR / Acc hybrid
+        { 6465,                              2000 },  -- Behemoth Steak +1       -- Attack +24% (cap 165), +STR8 +DEX8
+        { 5177,                              2000 },  -- Bream Sushi +1          -- Acc+18, Att+12
+        { 5925,                              2000 },  -- Charred Salisbury Steak -- Attack +22% (cap 165), +STR8
+        { 5167,                              2000 },  -- Coeurl Sub +1           -- STR / DEX
+        { 5722,                              2000 },  -- Crab Sushi +1           -- Acc, Att, crit
+        { 5179,                              2000 },  -- Dorado Sushi +1         -- DEX, AGI
+        { 5666,                              2000 },  -- Fin Sushi +1            -- RACC, DEX+8
+        { 6344,                              2000 },  -- Grape Daifuku +1        -- TP Bonus +50 (BiS for SAM/COR/RNG WS sets)
+        { 6072,                              2000 },  -- Magma Steak +1          -- Attack +24% (cap 185), +STR9
+        { 5744,                              2000 },  -- Marinara Pizza +1       -- Enmity (PLD / RUN)
+        { 5694,                              2000 },  -- Octopus Sushi +1        -- STR, VIT
+        { xi.item.FLASK_OF_PEAR_AU_LAIT,     2000 },  -- Pear au Lait            -- Macc, MAB, MP
+        { xi.item.FLASK_OF_PERSIKOS_AU_LAIT, 2000 },  -- Persikos au Lait        -- MP refresh tick
+        { 5765,                              2000 },  -- Red Curry Bun +1        -- MAB / INT (nuker)
+        { 5664,                              2000 },  -- Salmon Sushi +1         -- RACC, DEX
+        { 5692,                              2000 },  -- Shrimp Sushi +1         -- STR, DEX
+        { 5924,                              2000 },  -- Smoldering Salisbury Steak -- STR / Att (heavy melee)
+        { 5163,                              2000 },  -- Sole Sushi +1           -- Acc+18 (Acc-capped fights)
+        { 6459,                              2000 },  -- Soy Ramen +1            -- Acc+15, Att+15 (top all-round DD)
+        { 5199,                              2000 },  -- Spaghetti Carbonara +1  -- STR / VIT / HP (DD + survivability)
+        { 5162,                              2000 },  -- Squid Sushi +1          -- RACC+18, RATT+13% (RNG / COR)
+        { 6469,                              2000 },  -- Sublime Sushi +1        -- Macc+25, INT+9, MAB+15 (best caster food)
+        { 5216,                              2000 },  -- Tentacle Sushi +1       -- INT, Macc
+        { 5160,                              2000 },  -- Urchin Sushi +1         -- MND, CHR (support)
+        { 4330,                              2000 },  -- Witch Risotto           -- Magic defense (mage burns)
+        { 5763,                              2000 },  -- Yellow Curry Bun +1     -- STR / Acc hybrid
     },
 
     -- Corsair dice: each die TEACHES its Phantom Roll when used by a COR of the
