@@ -260,9 +260,11 @@
       renderStatBar();
 
       dbCount = el("div", { "class": "gf-count" });
+      var exportBtn = el("button", { "class": "gf-export", title: "Download the filtered list as CSV (opens in Excel / Google Sheets)", text: "⬇ Export CSV" });
+      exportBtn.addEventListener("click", exportCSV);
       dbTableWrap = el("div", { "class": "gf-tablewrap" });
       dbPager = el("div", { "class": "gf-pager" });
-      panelDB.appendChild(dbCount);
+      panelDB.appendChild(el("div", { "class": "gf-countrow" }, [dbCount, exportBtn]));
       panelDB.appendChild(dbTableWrap);
       panelDB.appendChild(dbPager);
     }
@@ -316,18 +318,42 @@
       if (key === "ilvl") return it.il || 0;
       if (key === "score") return it._best;
       if (key.indexOf("stat:") === 0) { var id = +key.slice(5); return (id in it._mv) ? it._mv[id] : -1e9; }
+      if (key === "source") return (it.o || "").toLowerCase();
       return 0;
     }
     function popcount(n) { var c = 0; while (n) { n &= n - 1; c++; } return c; }
 
-    function renderDB() {
-      if (!dbTableWrap) return;
+    function sortedList() {
       var list = filterDB();
       list.sort(function (a, b) {
         var va = sortVal(a, sort.key), vb = sortVal(b, sort.key);
         if (va < vb) return -1 * sort.dir; if (va > vb) return 1 * sort.dir;
         return a._s < b._s ? -1 : 1;
       });
+      return list;
+    }
+    function csvCell(v) { v = String(v == null ? "" : v); return /[",\r\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+    function exportCSV() {
+      var list = sortedList();
+      var head = ["Item", "Slot", "Jobs", "Lv", "iLvl"];
+      statCols.forEach(function (sc) { head.push(modLabel(sc.id)); });
+      head.push("Score", "Role", "Source");
+      var lines = [head.map(csvCell).join(",")];
+      list.forEach(function (it) {
+        var row = [it.n, it._slots.join("/"), jobStr(it), it.l || "", it.il || ""];
+        statCols.forEach(function (sc) { var v = it._mv[sc.id]; row.push(v == null ? "" : fmt(v)); });
+        row.push(it._best || "", bestRole(it) || "", it.o || "");
+        lines.push(row.map(csvCell).join(","));
+      });
+      var csv = "\ufeff" + lines.join("\r\n"); // BOM so Excel reads UTF-8 correctly
+      var url = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+      var a = el("a", { href: url, download: "gear-finder.csv" });
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+    }
+    function renderDB() {
+      if (!dbTableWrap) return;
+      var list = sortedList();
       dbCount.textContent = list.length.toLocaleString() + " item" + (list.length === 1 ? "" : "s");
       var pages = Math.max(1, Math.ceil(list.length / PER));
       if (page >= pages) page = pages - 1;
@@ -336,26 +362,29 @@
       var cols = [["name", "Item", false], ["slot", "Slot", false], ["jobs", "Jobs", false], ["lv", "Lv", true], ["ilvl", "iLvl", true]];
       statCols.forEach(function (sc) { cols.push(["stat:" + sc.id, modLabel(sc.id), true]); });
       cols.push(["score", "Score", true]);
+      cols.push(["source", "Source", false]);
 
       var thead = el("thead"), htr = el("tr");
       cols.forEach(function (c) {
         var active = sort.key === c[0];
-        var th = el("th", { "class": c[2] ? "gf-num" : "", "data-key": c[0] },
-          [document.createTextNode(c[1]), active ? el("span", { "class": "gf-arrow", text: sort.dir < 0 ? "▾" : "▴" }) : null]);
+        var arrow = active
+          ? el("span", { "class": "gf-arrow", text: sort.dir < 0 ? "▾" : "▴" })
+          : el("span", { "class": "gf-arrow gf-arrow-idle", text: "⇅" });
+        var th = el("th", { "class": "gf-sortable" + (c[2] ? " gf-num" : ""), "data-key": c[0], title: "Sort by " + c[1] },
+          [document.createTextNode(c[1] + " "), arrow]);
         htr.appendChild(th);
       });
-      htr.appendChild(el("th", { text: "Source" }));
       thead.appendChild(htr);
       thead.addEventListener("click", function (e) {
         var th = e.target.closest("th[data-key]"); if (!th) return;
         var key = th.getAttribute("data-key");
-        if (sort.key === key) sort.dir *= -1; else sort = { key: key, dir: key === "name" || key === "slot" ? 1 : -1 };
+        if (sort.key === key) sort.dir *= -1; else sort = { key: key, dir: (key === "name" || key === "slot" || key === "source") ? 1 : -1 };
         renderDB();
       });
 
       var tbody = el("tbody");
       if (!slice.length) {
-        tbody.appendChild(el("tr", {}, [el("td", { "class": "gf-empty", colspan: String(cols.length + 1), text: "No items match these filters." })]));
+        tbody.appendChild(el("tr", {}, [el("td", { "class": "gf-empty", colspan: String(cols.length), text: "No items match these filters." })]));
       }
       slice.forEach(function (it) {
         var tr = el("tr", { "class": "gf-row" });
@@ -378,7 +407,7 @@
           var nxt = tr.nextSibling;
           if (nxt && nxt.classList && nxt.classList.contains("gf-detail")) { nxt.remove(); return; }
           var det = el("tr", { "class": "gf-detail" });
-          det.appendChild(el("td", { colspan: String(cols.length + 1) }, [detailBody(it)]));
+          det.appendChild(el("td", { colspan: String(cols.length) }, [detailBody(it)]));
           tr.parentNode.insertBefore(det, tr.nextSibling);
         });
       });
