@@ -251,6 +251,14 @@ set{
     xi.zone.ABYSSEA_VUNKERL,
     xi.zone.ABYSSEA_ALTEPA,
     xi.zone.ABYSSEA_GRAUBERG,
+    -- [RELAUNCH-CUSTOM] Diorama Abdhaljs-Ghelsba is the Reforge hub, hosting the
+    -- Lv150-250 Reforge NMs (see modules/custom/lua/Reforge_System.lua). Per this
+    -- file's own rule -- "any zone with a mob over lvl 99 -> level correction
+    -- deactivated" -- it must be excluded, or a Lv99 player would eat the full
+    -- cRatio/accuracy penalty vs the endgame NMs. Same treatment as Provenance
+    -- and the Abyssea marks zones; via the override set so it also holds on the
+    -- USE_ADOULIN=false path (which otherwise corrects EVERY zone).
+    xi.zone.DIORAMA_ABDHALJS_GHELSBA,
 }
 
 -- Meant to be called from a master function and fed to corresponding calculation.

@@ -1,8 +1,9 @@
 -----------------------------------
 -- reforge_mark_exchange_catalog.lua
--- Config for the Reforge Mark Exchange vendor at Gwora-Corridor.
--- Lets players convert between Reforge mark types at a 2:1 rate,
--- removing the "dead inventory" feel when you have excess marks in
+-- Config for the Reforge Mark Exchange vendor in the Reforge hub
+-- (Diorama Abdhaljs-Ghelsba, zone 43 -- moved 2026-07-07 with the rest of
+-- the Reforge system). Lets players convert between Reforge mark types at a
+-- 2:1 rate, removing the "dead inventory" feel when you have excess marks in
 -- one track. Does not trivialize any track - the exchange tax is
 -- intentional friction.
 --
@@ -10,11 +11,14 @@
 -----------------------------------
 local catalog = {}
 
+-- Sits just beside the Reforge Vendor at the hub centre (vendor is at 0,0,0).
+-- PLACEHOLDER coords -- finalise in the live !pos pass for zone 43 alongside
+-- the vendor and spawner stations (see reforge_catalog.lua).
 catalog.npcPos =
 {
-    zone     = 'Gwora-Corridor',
-    zoneId   = xi.zone.GWORA_CORRIDOR,
-    x        = 20.0,
+    zone     = 'Diorama_Abdhaljs-Ghelsba',
+    zoneId   = xi.zone.DIORAMA_ABDHALJS_GHELSBA,
+    x        =  4.0,
     y        =  0.0,
     z        =  0.0,
     rotation =  128,

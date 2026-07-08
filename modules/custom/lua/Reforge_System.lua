@@ -363,26 +363,26 @@ local spawnerMenu = { title = '', options = {} }
 local buildSpawnerMain
 local buildSourceNMMenu
 
-buildSpawnerMain = function(player)
+buildSpawnerMain = function(player, station)
     local options = {}
     for _, setKey in ipairs(catalog.sourceOrder) do
         local s = catalog.sources[setKey]
         table.insert(options, {
             -- "Sky Gods (AF)" - short so we stay under the 150-byte cap
             string.format('%s (%s)', s.label, s.currencyShort),
-            function(p) buildSourceNMMenu(p, s) end,
+            function(p) buildSourceNMMenu(p, s, station) end,
         })
     end
     table.insert(options, { 'Close', function(p) p:printToPlayer('Hunt well, kupo!', xi.msg.channel.SYSTEM_3) end })
 
-    -- Title carries the three balances; rows stay terse.
-    spawnerMenu.title   = 'Spawner  ' .. balanceTriplet(player)
+    -- Title carries the station number + the three balances; rows stay terse.
+    spawnerMenu.title   = string.format('Spawner %d  %s', station.id, balanceTriplet(player))
     spawnerMenu.options = options
     local snapshot = { title = spawnerMenu.title, options = spawnerMenu.options }  -- shared table + deferred send
     player:timer(30, function(p) p:customMenu(snapshot) end)
 end
 
-buildSourceNMMenu = function(player, srcDef)
+buildSourceNMMenu = function(player, srcDef, station)
     local options = {}
     for _, mob in ipairs(srcDef.mobs) do
         local md = mob
@@ -398,19 +398,30 @@ buildSourceNMMenu = function(player, srcDef)
             function(p)
                 local z = p:getZone()
 
-                -- Don't stack duplicates if already alive
-                local existing = z:queryEntitiesByName(md.name)
-                if existing then
-                    for _, e in ipairs(existing) do
-                        if e:getHP() > 0 then
-                            p:printToPlayer(string.format('%s is already up, kupo!', md.label), xi.msg.channel.SYSTEM_3)
-                            buildSourceNMMenu(p, srcDef)
-                            return
-                        end
+                -- Per-station single-occupancy guard. Each spawner station hosts
+                -- at most ONE live NM at a time, tracked on station.activeMob
+                -- (cleared in onMobDeath and the idle-despawn branch of onMobRoam).
+                -- This replaces the old zone-wide queryEntitiesByName(md.name)
+                -- guard on purpose: that guard let only ONE copy of a given NM
+                -- exist in the whole zone, so a second party couldn't pop the same
+                -- NM. Per-station occupancy is what lets many parties farm the hub
+                -- -- including the SAME NM type -- concurrently. The getHP() call is
+                -- pcall-guarded because station.activeMob may reference an entity
+                -- that was released (releaseIdOnDisappear) if a despawn path was
+                -- missed; a failed/zero read is treated as "station free".
+                if station.activeMob then
+                    local ok, hp = pcall(function() return station.activeMob:getHP() end)
+                    if ok and hp and hp > 0 then
+                        p:printToPlayer(
+                            string.format('Station %d already has an NM up, kupo! (try another station)', station.id),
+                            xi.msg.channel.SYSTEM_3)
+                        buildSourceNMMenu(p, srcDef, station)
+                        return
                     end
+                    station.activeMob = nil
                 end
 
-                local mPos = catalog.mobSpawnPos
+                local mPos = station.mobSpawnPos
                 -- Record spawn time so Speed Demon (kill within 60s)
                 -- objectives can compute secondsToKill. Captured by the
                 -- onMobDeath closure below - survives all the way to
@@ -464,6 +475,8 @@ buildSourceNMMenu = function(player, srcDef)
                             -- Idle despawn: free mechanics state before removing
                             -- (idempotent + pcall-safe in the library).
                             mechanics.cleanup(roamMob)
+                            -- Free the station so it can be re-popped immediately.
+                            station.activeMob = nil
                             DespawnMob(roamMob:getID())
                         end
                     end,
@@ -474,6 +487,9 @@ buildSourceNMMenu = function(player, srcDef)
 
                     onMobDeath = function(deadMob, killer)
                         mechanics.cleanup(deadMob)
+                        -- Free the station the instant its NM dies so the next
+                        -- party can pop here without waiting on the corpse.
+                        station.activeMob = nil
                         if not killer then return end
                         rollLootDrop(killer, srcDef, md.label)
                         awardCurrency(killer, srcDef, md)
@@ -493,9 +509,11 @@ buildSourceNMMenu = function(player, srcDef)
                     p:printToPlayer(
                         string.format('Failed to spawn %s (groupId %d missing?), kupo!', md.label, md.groupId),
                         xi.msg.channel.SYSTEM_3)
-                    buildSourceNMMenu(p, srcDef)
+                    buildSourceNMMenu(p, srcDef, station)
                     return
                 end
+                -- Mark this station occupied. Cleared in onMobDeath / idle-despawn.
+                station.activeMob = mob
                 mob:setSpawn(mPos.x, mPos.y, mPos.z, mPos.rot)
                 mob:spawn()
 
@@ -556,7 +574,7 @@ buildSourceNMMenu = function(player, srcDef)
             end,
         })
     end
-    table.insert(options, { '<< Back', function(p) buildSpawnerMain(p) end })
+    table.insert(options, { '<< Back', function(p) buildSpawnerMain(p, station) end })
 
     -- Title mirrors the spawner main menu's "<set> (<short>)" form (e.g.
     -- "Abyssea NMs (Em)"). Using currencyShort instead of the full
@@ -592,18 +610,26 @@ end
 m:addOverride(catalog.huntZonePath .. '.Zone.onInitialize', function(zone)
     super(zone)
 
-    local sPos = catalog.spawnerPos
-    local Spawner = zone:insertDynamicEntity({
-        objtype    = xi.objType.NPC,
-        name       = 'Reforge_Spawner',
-        packetName = string.format('%sNM Spawner', xi.icon.STAR_LARGE),
-        look       = 92,
-        x = sPos.x, y = sPos.y, z = sPos.z, rotation = sPos.rot,
-        widescan   = 1,
-        onTrade    = function(p) p:printToPlayer('No trades, kupo!', xi.msg.channel.SYSTEM_3) end,
-        onTrigger  = function(p) p:timer(50, function(pp) buildSpawnerMain(pp) end) end,
-    })
-    utils.unused(Spawner)
+    -- One "NM Spawner" NPC per station (catalog.stations). Each carries its
+    -- own station table into the menu closures, so its pops land at that
+    -- station's mobSpawnPos and its occupancy is tracked independently. This
+    -- is the "multiple spawn NPCs so many people can play at once" mechanic:
+    -- N stations => N parties can each have their own NM up simultaneously.
+    for _, station in ipairs(catalog.stations) do
+        local st   = station
+        local sPos = st.spawnerPos
+        local Spawner = zone:insertDynamicEntity({
+            objtype    = xi.objType.NPC,
+            name       = 'Reforge_Spawner',
+            packetName = string.format('%sNM Spawner %d', xi.icon.STAR_LARGE, st.id),
+            look       = 92,
+            x = sPos.x, y = sPos.y, z = sPos.z, rotation = sPos.rot,
+            widescan   = 1,
+            onTrade    = function(p) p:printToPlayer('No trades, kupo!', xi.msg.channel.SYSTEM_3) end,
+            onTrigger  = function(p) p:timer(50, function(pp) buildSpawnerMain(pp, st) end) end,
+        })
+        utils.unused(Spawner)
+    end
 
     local vPos = catalog.vendorPos
     local Vendor = zone:insertDynamicEntity({

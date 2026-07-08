@@ -31,14 +31,50 @@ local catalog = {}
 -- =========================================================
 -- ZONE / NPC PLACEMENT (mirrors HuntingLeague)
 -- =========================================================
-catalog.huntZoneId   = xi.zone.GWORA_CORRIDOR
-catalog.huntZonePath = 'xi.zones.Gwora-Corridor'
+-- Reforge hub lives in Diorama Abdhaljs-Ghelsba (zone 43). This is an
+-- otherwise-empty diorama, so we get a clean canvas for a dedicated hub.
+-- NOTE: zone 43 ships as a level-corrected zone AND without TRUST/AH flags --
+-- both are handled outside this file:
+--   * scripts/data/level_correction.lua  -> zone 43 added to the FJB exclusion
+--     set (endgame NMs/players must NOT be level-synced).
+--   * modules/custom/sql/reforge_zone_settings.sql -> OR's TRUST|AH|PET onto
+--     zone 43's misc mask (restart-gated).
+catalog.huntZoneId   = xi.zone.DIORAMA_ABDHALJS_GHELSBA
+catalog.huntZonePath = 'xi.zones.Diorama_Abdhaljs-Ghelsba'
 
-catalog.spawnerPos = { x = 10.0, y = 0.0, z =  0.0, rot = 128 }
-catalog.vendorPos  = { x = 15.0, y = 0.0, z =  0.0, rot = 128 }
+-- One shared Reforge Vendor sits at the hub centre; the spawner NPCs ring it
+-- (see catalog.stations). The vendor is menu-only (non-blocking), so a single
+-- one serves any number of concurrent players.
+catalog.vendorPos  = { x = 0.0, y = 0.0, z = 0.0, rot = 128 }
 
--- Where dynamic NMs appear when popped.
-catalog.mobSpawnPos = { x = 10.0, y = 0.0, z = 20.0, rot = 0 }
+-- --------------------------------------------------------------------------
+-- MULTI-STATION SPAWNERS
+-- Each station is an independent "NM Spawner" NPC with its OWN mob spawn
+-- position and its OWN single-occupancy guard (Reforge_System tracks
+-- station.activeMob). This is what lets many parties farm the hub -- even the
+-- SAME NM type -- at the same time: station 1 can have Kirin up while station
+-- 4 also has Kirin up, because occupancy is per-station, not zone-wide by name.
+--
+-- Add/remove stations here; Reforge_System.lua loops over this list to build
+-- the NPCs and route each spawner to its own mob position. Keep `id` unique.
+--
+-- !!! PLACEHOLDER COORDINATES !!!
+-- Zone 43 has no coordinate data in the repo (blank diorama), so the numbers
+-- below are a symmetric layout around the origin and MUST be finalised with a
+-- live `!pos` pass in-game (same workflow as the hub-migration NPC placement).
+-- spawnerPos = where the NPC stands; mobSpawnPos = where its NM pops (pushed
+-- radially outward so the NM appears in front of the station, away from the
+-- vendor and the other stations).
+-- --------------------------------------------------------------------------
+catalog.stations =
+{
+    { id = 1, spawnerPos = { x = -15.0, y = 0.0, z = -15.0, rot =  64 }, mobSpawnPos = { x = -26.0, y = 0.0, z = -26.0, rot = 192 } },
+    { id = 2, spawnerPos = { x =   0.0, y = 0.0, z = -18.0, rot = 128 }, mobSpawnPos = { x =   0.0, y = 0.0, z = -32.0, rot =   0 } },
+    { id = 3, spawnerPos = { x =  15.0, y = 0.0, z = -15.0, rot = 192 }, mobSpawnPos = { x =  26.0, y = 0.0, z = -26.0, rot =  64 } },
+    { id = 4, spawnerPos = { x = -15.0, y = 0.0, z =  15.0, rot =  32 }, mobSpawnPos = { x = -26.0, y = 0.0, z =  26.0, rot = 160 } },
+    { id = 5, spawnerPos = { x =   0.0, y = 0.0, z =  18.0, rot =   0 }, mobSpawnPos = { x =   0.0, y = 0.0, z =  32.0, rot = 128 } },
+    { id = 6, spawnerPos = { x =  15.0, y = 0.0, z =  15.0, rot = 224 }, mobSpawnPos = { x =  26.0, y = 0.0, z =  26.0, rot =  96 } },
+}
 
 -- Un-engaged despawn: a popped NM that nobody engages within this many
 -- seconds despawns on its own, so an ignored/accidental pop doesn't clog
@@ -964,7 +1000,7 @@ catalog.pieces[xi.job.RUN] =
 --
 -- Keyed by groupId so the spawner can look them up in O(1) after spawn().
 -- Each NM tier has a DISTINCT identity escalating in complexity and threat.
--- addZoneId MUST equal catalog.huntZoneId (xi.zone.GWORA_CORRIDOR).
+-- addZoneId MUST equal catalog.huntZoneId (xi.zone.DIORAMA_ABDHALJS_GHELSBA).
 -- addGroupId must be a groupId already in this system (entry-tier NMs used
 -- as minion adds so their AI/stats are already defined in the mob_groups rows).
 --

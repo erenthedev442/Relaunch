@@ -26,9 +26,9 @@ commandObj.onTrigger = function(player)
     player:printToPlayer(string.format('  Relic marks:           %d', relicMarks), B)
     player:printToPlayer(string.format('  Empyrean marks:        %d', empyMarks),  B)
     player:printToPlayer('  ==================================================', B)
-    player:printToPlayer('  Earn Reforge marks by killing Hunting League NMs.', B)
-    player:printToPlayer('  Spend them at the Reforge NPC in Reisenjima Henge.', B)
-    player:printToPlayer('  !progress reforge - full breakdown  |  !hunt - warp there', B)
+    player:printToPlayer('  Earn Reforge marks by popping Reforge NMs at the hub.', B)
+    player:printToPlayer('  Spend them at the Reforge Vendor in the Reforge hub.', B)
+    player:printToPlayer('  !progress reforge - full breakdown  |  !reforged - warp there', B)
 end
 
 return commandObj

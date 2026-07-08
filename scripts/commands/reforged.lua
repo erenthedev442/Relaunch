@@ -1,6 +1,6 @@
 -----------------------------------
 -- func: reforged
--- desc: Warps you to the Reforge Armor system NPCs in Gwora-Corridor.
+-- desc: Warps you to the Reforge Armor hub in Diorama Abdhaljs-Ghelsba (zone 43).
 -----------------------------------
 ---@type TCommand
 local commandObj = {}
@@ -12,10 +12,12 @@ commandObj.cmdprops =
 }
 
 commandObj.onTrigger = function(player)
-    -- Spawner is at (10, 0, 0); Vendor is at (15, 0, 0). Drop the player
-    -- a couple of units in front of the Spawner so both NPCs are in view.
-    player:setPos(8.0, 0.0, 0.0, 64, xi.zone.GWORA_CORRIDOR)
-    player:printToPlayer('Warped to the Reforge area. Reforge well, kupo!', xi.msg.channel.SYSTEM_3)
+    -- Drop the player at the hub centre, on the Reforge Vendor (0, 0, 0), with
+    -- the ring of NM Spawner stations around them (see reforge_catalog.stations).
+    -- NOTE: these coords track catalog.vendorPos -- finalise both together in the
+    -- live !pos pass for zone 43 (blank diorama, no repo coordinate data).
+    player:setPos(0.0, 0.0, 0.0, 128, xi.zone.DIORAMA_ABDHALJS_GHELSBA)
+    player:printToPlayer('Warped to the Reforge hub. Reforge well, kupo!', xi.msg.channel.SYSTEM_3)
 end
 
 return commandObj
