@@ -35,13 +35,16 @@ local m = Module:new('bst_jugpet_overhaul')
 -- ── Tunables ───────────────────────────────────────────────────────────────
 local CONFIG =
 {
-    -- Flat endgame floors so even a fresh BST's pet is immediately viable.
-    -- (Relaunch economy pass: flatATT 11200->5000, flatHP 280k->100k to match
-    -- the tighter post-wipe power curve. ACC/STR floors unchanged.)
+    -- Flat endgame floors so even a fresh BST's pet is immediately viable. These
+    -- are the LEVEL-99 values; applyEndgameScaling multiplies them by mainLvl/99
+    -- so low-level pets aren't overtuned (see floorMult below).
+    -- (Relaunch economy pass: flatATT 11200->5000, flatHP 280k->100k->60k to
+    -- match the tighter post-wipe curve + keep gear/master-share relevant.
+    -- ACC/STR floors unchanged.)
     flatATT = 5000,
     flatACC = 9000,
     flatSTR = 720,
-    flatHP  = 100000,
+    flatHP  = 60000,
 
     -- Gear-scaling: the pet inherits this share of the MASTER's stats, so it
     -- gets stronger as the BST gears/augments up (the "scales toward the cap" bit).
