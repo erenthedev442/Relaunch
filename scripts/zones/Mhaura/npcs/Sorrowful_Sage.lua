@@ -23,6 +23,15 @@ local function beginAssault(player)
         player:printToPlayer('[Nyzul Isle] You are already inside an assault.', SYS)
         return
     end
+    -- Pre-grant the Runic Disc so the in-instance Rune of Transfer opens the floor
+    -- menu on the FIRST touch. Stock Rune_of_Transfer_Start issues the disc on the
+    -- first touch and only shows the floor menu on a SECOND touch -- which
+    -- contradicts the "touch to choose your floor" instruction below and reads as a
+    -- dead gate to new players (Herdofturtles report 2026-07-07).
+    if not player:hasKeyItem(xi.ki.RUNIC_DISC) then
+        player:addKeyItem(xi.ki.RUNIC_DISC)
+    end
+
     -- Warps the registrant (and nearby party) straight into the Nyzul staging room.
     player:createInstance(NYZUL_INSTANCE)
     player:printToPlayer('[Nyzul Isle] Commencing transport. Touch the Rune of Transfer inside to choose your starting floor.', SYS)
