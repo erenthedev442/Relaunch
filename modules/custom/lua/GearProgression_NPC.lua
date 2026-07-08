@@ -25,20 +25,30 @@ local m = Module:new('gear_progression_npc')
 m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
     super(zone)
 
-    local function openShop(player, sealDef, items)
-        if #items == 0 then
+    -- Native shop windows hold at most 16 items (createShop cap). A tier with
+    -- more than that is shown one page at a time (see openTierShop) so nothing
+    -- is silently hidden; `offset` is the 0-based index of the page's first item.
+    local SHOP_PAGE = 16
+
+    local function openShop(player, sealDef, items, offset)
+        offset = offset or 0
+        local total = #items
+        if total == 0 then
             player:printToPlayer('No weapons available here.', xi.msg.channel.SYSTEM_3)
             return
         end
-        local count = math.min(#items, 16)
+        local count    = math.min(total - offset, SHOP_PAGE)
+        local pageNote = total > SHOP_PAGE
+            and string.format(' [items %d-%d of %d]', offset + 1, offset + count, total)
+            or ''
         player:printToPlayer(
-            string.format('Browsing %s weapons. Currency: %s (you have %d). Hover items to preview.',
-                sealDef.name, sealDef.name, player:getItemCount(sealDef.id)),
+            string.format('Browsing %s weapons%s. Currency: %s (you have %d). Hover items to preview.',
+                sealDef.name, pageNote, sealDef.name, player:getItemCount(sealDef.id)),
             xi.msg.channel.SYSTEM_3)
         player:timer(50, function(p)
             p:createShop(count)
             for i = 1, count do
-                p:addShopItem(items[i].id, items[i].cost)
+                p:addShopItem(items[offset + i].id, items[offset + i].cost)
             end
             p:setShopCurrency(sealDef.id)
             p:sendMenu(xi.menuType.SHOP)
@@ -46,9 +56,42 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
     end
 
     local function openTierShop(player, tierKey)
-        local tierData  = catalog[tierKey]
-        local sealDef   = catalog.seals[tierKey]
-        openShop(player, sealDef, tierData.weapons or {})
+        local tierData = catalog[tierKey]
+        local sealDef  = catalog.seals[tierKey]
+        local items    = tierData.weapons or {}
+
+        -- Fits in one shop window -> open it directly (unchanged behaviour).
+        if #items <= SHOP_PAGE then
+            openShop(player, sealDef, items)
+            return
+        end
+
+        -- Too many for one window -> offer a page picker so all items are reachable.
+        local pages    = math.ceil(#items / SHOP_PAGE)
+        local pageMenu =
+        {
+            title   = string.format('%s Weapons - Choose Page', sealDef.name:match('^(%S+)') or ''),
+            options = {},
+        }
+        for pg = 1, pages do
+            local first = (pg - 1) * SHOP_PAGE + 1
+            local last  = math.min(pg * SHOP_PAGE, #items)
+            pageMenu.options[#pageMenu.options + 1] =
+            {
+                string.format('Page %d  (items %d-%d)', pg, first, last),
+                function(playerArg)
+                    openShop(playerArg, sealDef, items, first - 1)
+                end,
+            }
+        end
+        pageMenu.options[#pageMenu.options + 1] =
+        {
+            'Close',
+            function(playerArg)
+                playerArg:printToPlayer('Come back when you have more seals!', xi.msg.channel.SYSTEM_3)
+            end,
+        }
+        player:timer(30, function(p) p:customMenu(pageMenu) end)
     end
 
     local menu = { title = 'Gear Progression', options = {} }
