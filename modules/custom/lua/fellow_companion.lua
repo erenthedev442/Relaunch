@@ -930,4 +930,72 @@ xi.fellow.debug = function(p)
         pet:getMaxHP(), pet:getTP(), tostring(pet:isEngaged()), CONFIG.autoReadyTP), SYS)
 end
 
+-- Reverse mod-id -> name for readable audit rows (built once).
+local MODNAME = {}
+for k, v in pairs(xi.mod) do if type(v) == 'number' then MODNAME[v] = MODNAME[v] or k end end
+
+-- (!fellowaudit) Prove every allocation LANDS on the live pet. For each mod the
+-- Fellow build should add, sum the EXPECTED total from every source (per-level,
+-- role, survival, and each allocated stat's mods) and compare to the pet's actual
+-- getMod. Any row flagged ** LOW ** means that mod isn't fully reaching the entity
+-- (a Lua application/clobber bug) -- the direct answer to "does boosting STR
+-- actually boost the Fellow?". (Whether the engine then USES a mod is a separate
+-- question; see the mods known to be read by mob combat in the audit footer.)
+xi.fellow.audit = function(p)
+    if not (p:hasPet() and petIsFellow(p:getPet())) then
+        p:printToPlayer('[Fellow] Summon your Fellow first -- the audit reads mods off the live pet.', SYS)
+        return
+    end
+    local pet     = p:getPet()
+    local lvl     = getLevel(p)
+    local roleKey = getRole(p)
+    local role    = CONFIG.roles[roleKey] or {}
+
+    local expected, source = {}, {}
+    local function add(mod, val, src)
+        if not mod or val == 0 then return end
+        expected[mod] = (expected[mod] or 0) + val
+        source[mod]   = source[mod] and (source[mod] .. '+' .. src) or src
+    end
+
+    -- Every source applyFellow() adds, mirrored here 1:1.
+    for _, mv in ipairs(CONFIG.perLevel)  do add(mv[1], mv[2] * lvl, 'lvl') end
+    for _, mv in ipairs(role.mods or {})  do add(mv[1], mv[2], 'role') end
+    local surv = role.survival or {}
+    add(xi.mod.DMGPHYS,  surv.pdt or CONFIG.pdt, 'role')
+    add(xi.mod.DMGMAGIC, surv.mdt or CONFIG.mdt, 'role')
+    for stat, mods in pairs(CONFIG.statMods) do
+        local pts = getStatPts(p, stat)
+        if pts > 0 then
+            for _, mv in ipairs(mods) do add(mv[1], mv[2] * pts, stat .. 'x' .. pts) end
+        end
+    end
+
+    local rows = {}
+    for mod in pairs(expected) do rows[#rows + 1] = mod end
+    table.sort(rows)
+
+    p:printToPlayer(string.format('=== Fellow audit -- Lv%d, role %s -- expected vs LIVE ===', lvl, roleKey), SYS)
+    p:printToPlayer('  mod             expect   live   status   (sources)', SYS)
+    local lowCount = 0
+    for _, mod in ipairs(rows) do
+        local exp = expected[mod]
+        local act = pet:getMod(mod)
+        local ok  = act >= exp                 -- live >= expected (base stats may add MORE, never less)
+        if not ok then lowCount = lowCount + 1 end
+        p:printToPlayer(string.format('  %-14s %6d %6d   %s   (%s)',
+            MODNAME[mod] or ('mod' .. mod), exp, act, ok and 'OK' or '**LOW**', source[mod]), SYS)
+    end
+    if lowCount == 0 then
+        p:printToPlayer('  All allocated mods landed on the pet. Spend a point + re-run to watch a row move.', SYS)
+    else
+        p:printToPlayer(string.format('  ** %d mod(s) LOW -- not fully applied to the entity (bug). **', lowCount), SYS)
+    end
+    -- Engine-usage note (verified against combat code): STR/DEX/VIT/AGI (+ATT/ACC/
+    -- DEF/EVA), ATTP, DOUBLE/TRIPLE_ATTACK, STORETP (melee TP return, tp.lua) and
+    -- DMGPHYS/DMGMAGIC are all read by mob combat. MATT/MACC/MDEF are read too, but
+    -- only exercised when the Fellow CASTS -- a melee-role Fellow never triggers them.
+    p:printToPlayer('  Note: MATT/MACC only matter for a CASTING role (Magus); a melee Fellow never uses them.', SYS)
+end
+
 return m
