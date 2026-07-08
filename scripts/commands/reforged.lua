@@ -12,11 +12,11 @@ commandObj.cmdprops =
 }
 
 commandObj.onTrigger = function(player)
-    -- Drop the player at the hub centre, on the Reforge Vendor (0, 0, 0), with
-    -- the ring of NM Spawner stations around them (see reforge_catalog.stations).
-    -- NOTE: these coords track catalog.vendorPos -- finalise both together in the
-    -- live !pos pass for zone 43 (blank diorama, no repo coordinate data).
-    player:setPos(0.0, 0.0, 0.0, 128, xi.zone.DIORAMA_ABDHALJS_GHELSBA)
+    -- Drop the player at the hub entrance -- the live-verified station-1 spot
+    -- (!pos 2026-07-07), with the Reforge Vendor + Mark Exchange a few units
+    -- north at the origin cluster and the NM Spawner stations spread out from
+    -- here (see reforge_catalog.stations).
+    player:setPos(-0.66, 0.0, -3.10, 143, xi.zone.DIORAMA_ABDHALJS_GHELSBA)
     player:printToPlayer('Warped to the Reforge hub. Reforge well, kupo!', xi.msg.channel.SYSTEM_3)
 end
 

@@ -42,9 +42,10 @@ local catalog = {}
 catalog.huntZoneId   = xi.zone.DIORAMA_ABDHALJS_GHELSBA
 catalog.huntZonePath = 'xi.zones.Diorama_Abdhaljs-Ghelsba'
 
--- One shared Reforge Vendor sits at the hub centre; the spawner NPCs ring it
--- (see catalog.stations). The vendor is menu-only (non-blocking), so a single
--- one serves any number of concurrent players.
+-- One shared Reforge Vendor + Mark Exchange sit at the hub entrance (origin).
+-- The vendor is menu-only (non-blocking), so a single one serves any number of
+-- concurrent players. Origin sits ~3 units from verified station-1 ground
+-- (X -0.66, Y 0, Z -3.10, "Path"), so this cluster is on walkable terrain.
 catalog.vendorPos  = { x = 0.0, y = 0.0, z = 0.0, rot = 128 }
 
 -- --------------------------------------------------------------------------
@@ -53,27 +54,26 @@ catalog.vendorPos  = { x = 0.0, y = 0.0, z = 0.0, rot = 128 }
 -- position and its OWN single-occupancy guard (Reforge_System tracks
 -- station.activeMob). This is what lets many parties farm the hub -- even the
 -- SAME NM type -- at the same time: station 1 can have Kirin up while station
--- 4 also has Kirin up, because occupancy is per-station, not zone-wide by name.
+-- 3 also has Kirin up, because occupancy is per-station, not zone-wide by name.
 --
 -- Add/remove stations here; Reforge_System.lua loops over this list to build
 -- the NPCs and route each spawner to its own mob position. Keep `id` unique.
 --
--- !!! PLACEHOLDER COORDINATES !!!
--- Zone 43 has no coordinate data in the repo (blank diorama), so the numbers
--- below are a symmetric layout around the origin and MUST be finalised with a
--- live `!pos` pass in-game (same workflow as the hub-migration NPC placement).
--- spawnerPos = where the NPC stands; mobSpawnPos = where its NM pops (pushed
--- radially outward so the NM appears in front of the station, away from the
--- vendor and the other stations).
+-- COORDINATES: spawnerPos values are LIVE-VERIFIED !pos readings from zone 43
+-- (2026-07-07). Each mobSpawnPos is a small 3-unit nudge off its spawner so the
+-- NM pops adjacent to (not on top of) the NPC while staying on the same
+-- verified walkable patch -- station 1's NM nudges away from the origin vendor
+-- cluster; stations 2/3 nudge +Z into open ground. Y is kept at the verified
+-- ground height per station. Add more stations here as you !pos more spots.
 -- --------------------------------------------------------------------------
 catalog.stations =
 {
-    { id = 1, spawnerPos = { x = -15.0, y = 0.0, z = -15.0, rot =  64 }, mobSpawnPos = { x = -26.0, y = 0.0, z = -26.0, rot = 192 } },
-    { id = 2, spawnerPos = { x =   0.0, y = 0.0, z = -18.0, rot = 128 }, mobSpawnPos = { x =   0.0, y = 0.0, z = -32.0, rot =   0 } },
-    { id = 3, spawnerPos = { x =  15.0, y = 0.0, z = -15.0, rot = 192 }, mobSpawnPos = { x =  26.0, y = 0.0, z = -26.0, rot =  64 } },
-    { id = 4, spawnerPos = { x = -15.0, y = 0.0, z =  15.0, rot =  32 }, mobSpawnPos = { x = -26.0, y = 0.0, z =  26.0, rot = 160 } },
-    { id = 5, spawnerPos = { x =   0.0, y = 0.0, z =  18.0, rot =   0 }, mobSpawnPos = { x =   0.0, y = 0.0, z =  32.0, rot = 128 } },
-    { id = 6, spawnerPos = { x =  15.0, y = 0.0, z =  15.0, rot = 224 }, mobSpawnPos = { x =  26.0, y = 0.0, z =  26.0, rot =  96 } },
+    -- Station 1 -- hub entrance (Path), beside the vendor/exchange/warp-in.
+    { id = 1, spawnerPos = { x =  -0.66, y =  0.00, z =  -3.10, rot = 143 }, mobSpawnPos = { x =  -0.66, y =  0.00, z =  -6.10, rot = 143 } },
+    -- Station 2 -- mid field (Grass).
+    { id = 2, spawnerPos = { x =  16.64, y = -0.54, z =  52.22, rot = 193 }, mobSpawnPos = { x =  16.64, y = -0.54, z =  55.22, rot = 193 } },
+    -- Station 3 -- far field (Path).
+    { id = 3, spawnerPos = { x = -26.16, y =  0.28, z =  94.49, rot =   9 }, mobSpawnPos = { x = -26.16, y =  0.28, z =  97.49, rot =   9 } },
 }
 
 -- Un-engaged despawn: a popped NM that nobody engages within this many

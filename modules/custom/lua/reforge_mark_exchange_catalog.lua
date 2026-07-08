@@ -11,9 +11,9 @@
 -----------------------------------
 local catalog = {}
 
--- Sits just beside the Reforge Vendor at the hub centre (vendor is at 0,0,0).
--- PLACEHOLDER coords -- finalise in the live !pos pass for zone 43 alongside
--- the vendor and spawner stations (see reforge_catalog.lua).
+-- Sits just beside the Reforge Vendor at the hub entrance (vendor at 0,0,0;
+-- origin cluster is ~3 units off the live-verified station-1 ground, see
+-- reforge_catalog.lua). ~4 units east of the vendor.
 catalog.npcPos =
 {
     zone     = 'Diorama_Abdhaljs-Ghelsba',
