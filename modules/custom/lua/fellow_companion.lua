@@ -433,6 +433,15 @@ scheduleCombatLoop = function(master, pet)
             -- Combat: every role fights (assist when idle, Ready at TP cap).
             if master:isEngaged() then
                 local tgt = master:getTarget()
+                -- EXP FIX (2026-07-07): players reported no kill-EXP while the Fellow
+                -- was out, and DISMISSING it restored EXP. The mob's death only pays
+                -- EXP if its owner (m_OwnerID) resolves to a PC; when the Fellow does
+                -- the damage/kill that ownership wasn't reliably landing on the master.
+                -- Force the master to own whatever it's fighting each tick so the kill
+                -- always distributes EXP to the player, whoever lands the last blow.
+                if tgt and not tgt:isDead() then
+                    pcall(function() tgt:updateClaim(master) end)
+                end
                 if not p:isEngaged() then
                     if tgt and not tgt:isDead() then master:petAttack(tgt) end
                 elseif p:getTP() >= CONFIG.autoReadyTP then
