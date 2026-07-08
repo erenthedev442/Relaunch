@@ -27,8 +27,10 @@
 --
 -- PHASE 1 (MVP): summon/dismiss, allocate stat points, pick role, name + model,
 --   kill-XP -> levels, keeper + onGameIn persistence. Roles: Vanguard / Bulwark.
--- PHASE 2+: ability/trait tree, Oracle/Magus/Hunter behaviours, respec, humanoid
+-- PHASE 2+: ability/trait tree, Oracle/Magus/Hunter behaviours, humanoid
 --   appearance, a physical Hall NPC.
+--   * Respec DONE (2026-07-07): !fellow -> Allocate Points -> Reset Points.
+--     Refunds the allocated pool minus a RESET_PENALTY_PCT (10%) loss.
 --
 -- ALL balance + name/model lists live in CONFIG -> tuning is a hot-reload.
 -- Override module (onGameIn / onMobDeathEx) -> needs ONE map restart to load.
@@ -542,6 +544,44 @@ local function respawnIfOut(p)
     armKeeper(p, 700)  -- keeper re-spawns the new chassis shortly
 end
 
+-- ════════════════════════════════ Respec ════════════════════════════════════
+-- Reset penalty: on a stats reset you get back the pool of allocated points
+-- MINUS this percent (rounded DOWN, so tiny builds lose nothing). Discourages
+-- constant flip-flopping without punishing an honest rebuild too hard.
+local RESET_PENALTY_PCT = 10
+
+local function totalAllocated(p)
+    local t = 0
+    for _, stat in ipairs(CONFIG.statOrder) do t = t + getStatPts(p, stat) end
+    return t
+end
+
+-- Preview the (total, lost, refund) a reset would produce right now.
+local function resetPreview(p)
+    local total  = totalAllocated(p)
+    local lost   = math.floor(total * RESET_PENALTY_PCT / 100)
+    return total, lost, total - lost
+end
+
+-- Respec: pool every allocated stat point back into the unspent pool, minus the
+-- reset penalty. Zeroing the Fellow_<stat> charVars + a respawn makes applyFellow
+-- recompute ALL mods from scratch -- the only correct path (liveAddStat has no
+-- inverse). Points BOUGHT with gil are part of the pool and are refunded like any
+-- other, minus the same penalty; gil itself is never returned.
+local function resetStats(p)
+    local total, lost, refund = resetPreview(p)
+    if total <= 0 then
+        p:printToPlayer('[Fellow] No allocated points to reset.', SYS)
+        return
+    end
+    for _, stat in ipairs(CONFIG.statOrder) do setN(p, statVar(stat), 0) end
+    setN(p, V.points, getPoints(p) + refund)
+    respawnIfOut(p)  -- fresh applyFellow rebuilds every mod from the zeroed stats
+    p:printToPlayer(string.format(
+        '[Fellow] Stats reset -- refunded %d of %d points (%d%% penalty, -%d lost). Unspent: %d.',
+        refund, total, RESET_PENALTY_PCT, lost, getPoints(p)), SYS)
+end
+
 -- ════════════════════════════════ XP / levels ═══════════════════════════════
 local function addXp(p, amount)
     if amount <= 0 then return end
@@ -618,7 +658,7 @@ local function offRoleReason(roleKey, stat)
 end
 
 -- ════════════════════════════════ Menus ═════════════════════════════════════
-local openMain, openAllocate, openRole, openName, openModel, openOutfit, openTpMove, openBuyPoints
+local openMain, openAllocate, openRole, openName, openModel, openOutfit, openTpMove, openBuyPoints, openResetConfirm
 
 local function show(p, title, options)
     local snapshot = { title = title, options = options }
@@ -655,8 +695,10 @@ openAllocate = function(p, page)
     end
     page = page or 0
     local order = CONFIG.statOrder
-    -- Reserve a slot for "Buy Points" at max level; keep each page within the 8-option cap.
-    local per   = atMax and 5 or CONFIG.namesPerPage
+    -- Keep each page within the 8-option customMenu cap. Fixed rows below the
+    -- stats: [More>>]? + [Buy Points]? (max level) + Reset Points + Back. So the
+    -- stat slots are capped at 4 (max level: +Buy) / 5 (otherwise).
+    local per   = atMax and 4 or 5
     local pages = math.max(1, math.ceil(#order / per))
     page = page % pages
     local roleKey = getRole(p)
@@ -697,6 +739,7 @@ openAllocate = function(p, page)
     if atMax then
         options[#options + 1] = { 'Buy Points', function(pp) openBuyPoints(pp) end }
     end
+    options[#options + 1] = { 'Reset Points', function(pp) openResetConfirm(pp) end }
     options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
     show(p, string.format('Allocate (%d left)%s', pts, anyOff and '  (*=off-role)' or ''), options)
 end
@@ -728,6 +771,24 @@ openBuyPoints = function(p)
     options[#options + 1] = { 'Spend Points', function(pp) openAllocate(pp, 0) end }
     options[#options + 1] = { 'Back',         function(pp) openMain(pp) end }
     show(p, string.format('Buy Points (have %dg)', p:getGil()), options)
+end
+
+-- Confirm gate for a full stats reset. Shows the exact refund/loss so a misclick
+-- can't silently nuke a hand-tuned build.
+openResetConfirm = function(p)
+    local total, lost, refund = resetPreview(p)
+    if total <= 0 then
+        p:printToPlayer('[Fellow] No allocated points to reset.', SYS)
+        openAllocate(p, 0)
+        return
+    end
+    local options =
+    {
+        { string.format('YES -- refund %d (lose %d)', refund, lost),
+          function(pp) resetStats(pp); openAllocate(pp, 0) end },
+        { 'NO -- keep my build', function(pp) openAllocate(pp, 0) end },
+    }
+    show(p, string.format('Reset all %d points?  -%d%% (-%d)', total, RESET_PENALTY_PCT, lost), options)
 end
 
 openRole = function(p)
