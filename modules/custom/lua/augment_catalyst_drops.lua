@@ -22,6 +22,15 @@ local SYS = xi.msg.channel.SYSTEM_3
 
 local DROP_RATE = 50   -- % chance the assigned mob drops its catalyst (tune in playtest)
 
+-- ── TEMP DIAGNOSTIC (2026-07-07) ──────────────────────────────────────────
+-- Trace WHY a catalyst drop does / doesn't fire. Every PLAYER-killed mob logs ONE
+-- [CatalystDBG] line to map-server.log naming the gate it hit. If you kill a mob
+-- and see NO [CatalystDBG] line at all, onMobDeathEx never fired for it (the mob
+-- wasn't claimed by you -> the C++ only calls it for the claimer). Grep the log for
+-- 'CatalystDBG'. Set DEBUG = false (or delete this block) once diagnosed.
+local DEBUG = true
+local function dbg(msg) if DEBUG then print('[CatalystDBG] ' .. msg) end end
+
 -- itemId -> stat label, built once from the catalog (for the drop message).
 local labels
 local function labelFor(itemId)
@@ -56,18 +65,10 @@ local function itemNameFor(itemId)
     end))
 end
 
-m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSkillKill)
-    super(mob, player, isKiller, isWeaponSkillKill)
-    -- onMobDeathEx fires once per alliance member; isKiller marks the killing blow,
-    -- so we drop ONCE per kill (not per member).
-    if not isKiller or player == nil then return end
-    if mob:isNM() then return end  -- catalysts never drop from NMs; farm regular mobs
-
-    local name   = mob:getName()
-    local itemId = name and MAP[name]
-    if not itemId then return end
-    if math.random(100) > DROP_RATE then return end
-
+-- Hand `itemId`'s catalyst to `player` with the drop message. Shared by the
+-- mob-death path below AND the GM !catalysttest command (via xi.augmentCatalystDrops).
+-- Returns true if awarded, false if the inventory was full.
+local function award(player, itemId)
     local itemName = itemNameFor(itemId)
     local display  = itemName
         and string.format('%s (%s)', itemName, labelFor(itemId))
@@ -76,11 +77,41 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
     if player:getFreeSlotsCount() <= 0 then
         player:printToPlayer(string.format(
             '[Augments] %s dropped, but your inventory is full!', display), SYS)
-        return
+        return false
     end
     pcall(function() player:addItem({ id = itemId, quantity = 1 }) end)
     player:printToPlayer(string.format(
         '[Augments] Catalyst dropped: %s. Trade it to the Augment Moogle to apply.', display), SYS)
+    return true
+end
+
+m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSkillKill)
+    super(mob, player, isKiller, isWeaponSkillKill)
+    -- onMobDeathEx fires once per alliance member; isKiller marks the killing blow,
+    -- so we drop ONCE per kill (not per member). Non-killer members return silently
+    -- (they'd flood the trace); every real player kill logs exactly one line below.
+    if not isKiller or player == nil then return end
+
+    local mname = mob:getName() or '?'
+    if mob:isNM() then dbg(mname .. ' -> skip: NM (catalysts never drop from NMs)'); return end
+
+    local itemId = MAP[mname]
+    if not itemId then dbg(mname .. ' -> skip: not in the catalyst mob map'); return end
+
+    local roll = math.random(100)
+    if roll > DROP_RATE then
+        dbg(string.format('%s -> skip: roll %d > DROP_RATE %d', mname, roll, DROP_RATE))
+        return
+    end
+
+    local ok = award(player, itemId)
+    dbg(string.format('%s -> %s catalyst itemId=%d for %s', mname,
+        ok and 'AWARDED' or 'INV-FULL', itemId, player:getName()))
 end)
+
+-- Exposed so the GM !catalysttest command can fire the exact award+message path in
+-- isolation (bypassing the mob-death hook + the roll). `map` lets it pick a real
+-- mapped catalyst when the command is called with no itemId.
+xi.augmentCatalystDrops = { give = award, map = MAP }
 
 return m
