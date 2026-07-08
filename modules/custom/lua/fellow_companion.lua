@@ -61,6 +61,10 @@ local CONFIG =
     -- 1400*12 + 9600 from levels = 26.4k.) Do NOT raise this past ~1436 or a
     -- fully-invested Magus wraps MATT negative and does pathetic magic damage.
     statCap        = 1400,
+    -- Bulk allocation: amounts offered in the per-stat quantity picker (plus a
+    -- "Max" option that fills to the cap or spends all remaining points). Lets
+    -- players dump many points at once instead of one click per point.
+    allocSteps     = { 1, 5, 10, 25, 50 },
 
     -- XP: each kill grants clamp(mobLevel * xpPerMobLevel, xpMin, xpMax), but only
     -- while your Fellow is summoned. xpToNext(L) = xpBase * L (linear ramp).
@@ -486,15 +490,18 @@ scheduleCombatLoop = function(master, pet)
     end)
 end
 
--- Live-add a single allocated point's worth of mods to an out Fellow.
-local function liveAddStat(p, stat)
-    if not p:hasPet() then return end
+-- Live-add N allocated points' worth of mods to an out Fellow (n defaults to 1).
+-- Scaling by n in a single addMod keeps a bulk allocation cheap (one call per
+-- mod, not one per point) and matches applyFellow's mv[2]*pts on summon.
+local function liveAddStat(p, stat, n)
+    n = n or 1
+    if n <= 0 or not p:hasPet() then return end
     local pet = p:getPet()
     if pet and pet:getLocalVar('fellowApplied') == 1 then
-        for _, mv in ipairs(CONFIG.statMods[stat]) do pet:addMod(mv[1], mv[2]) end
+        for _, mv in ipairs(CONFIG.statMods[stat]) do pet:addMod(mv[1], mv[2] * n) end
         if stat == 'VIT' then
-            pet:setMaxHP(pet:getMaxHP() + CONFIG.hpPerVitPt)
-            pet:addHP(CONFIG.hpPerVitPt)
+            pet:setMaxHP(pet:getMaxHP() + CONFIG.hpPerVitPt * n)
+            pet:addHP(CONFIG.hpPerVitPt * n)
         end
     end
 end
@@ -672,7 +679,7 @@ local function offRoleReason(roleKey, stat)
 end
 
 -- ════════════════════════════════ Menus ═════════════════════════════════════
-local openMain, openAllocate, openRole, openName, openModel, openOutfit, openTpMove, openBuyPoints, openResetConfirm
+local openMain, openAllocate, openAllocateStat, openRole, openName, openModel, openOutfit, openTpMove, openBuyPoints, openResetConfirm
 
 local function show(p, title, options)
     local snapshot = { title = title, options = options }
@@ -722,29 +729,12 @@ openAllocate = function(p, page)
         local s      = order[i]
         local reason = offRoleReason(roleKey, s)
         if reason then anyOff = true end
+        -- Clicking a stat now opens its quantity picker (+1/+5/.../Max) instead
+        -- of adding a single point, so bulk allocation is one or two clicks.
         options[#options + 1] =
         {
             string.format('%s (%d)%s', s, getStatPts(p, s), reason and ' *' or ''),
-            function(pp)
-                if getPoints(pp) <= 0 then
-                    pp:printToPlayer('[Fellow] No unspent points.' .. (atMax and ' Use Buy Points.' or ''), SYS)
-                    openAllocate(pp, page); return
-                end
-                if getStatPts(pp, s) >= CONFIG.statCap then
-                    pp:printToPlayer(string.format('[Fellow] %s is at the cap (%d).', s, CONFIG.statCap), SYS)
-                    openAllocate(pp, page); return
-                end
-                setN(pp, V.points, getPoints(pp) - 1)
-                setN(pp, statVar(s), getStatPts(pp, s) + 1)
-                liveAddStat(pp, s)
-                pp:printToPlayer(string.format('[Fellow] %s raised to %d. (%d points left)',
-                    s, getStatPts(pp, s), getPoints(pp)), SYS)
-                if reason then
-                    pp:printToPlayer(string.format('[Fellow] Heads up: %s is OFF-ROLE for your %s -- %s.',
-                        s, (CONFIG.roles[roleKey] or {}).name or roleKey, reason), SYS)
-                end
-                openAllocate(pp, page)
-            end,
+            function(pp) openAllocateStat(pp, s, page) end,
         }
     end
     if pages > 1 then
@@ -756,6 +746,52 @@ openAllocate = function(p, page)
     options[#options + 1] = { 'Reset Points', function(pp) openResetConfirm(pp) end }
     options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
     show(p, string.format('Allocate (%d left)%s', pts, anyOff and '  (*=off-role)' or ''), options)
+end
+
+-- Per-stat quantity picker: choose HOW MANY points to pour into one stat at once
+-- (CONFIG.allocSteps + "Max"). Each amount is clamped to what you can afford and
+-- the stat's headroom to the cap, so a big step never overspends or overflows.
+openAllocateStat = function(p, stat, backPage)
+    local roleKey = getRole(p)
+    local reason  = offRoleReason(roleKey, stat)
+
+    local function applyN(pp, n)
+        n = math.min(n, getPoints(pp), CONFIG.statCap - getStatPts(pp, stat))
+        if n <= 0 then
+            if getPoints(pp) <= 0 then
+                pp:printToPlayer('[Fellow] No unspent points.', SYS)
+            else
+                pp:printToPlayer(string.format('[Fellow] %s is at the cap (%d).', stat, CONFIG.statCap), SYS)
+            end
+            openAllocateStat(pp, stat, backPage); return
+        end
+        setN(pp, V.points, getPoints(pp) - n)
+        setN(pp, statVar(stat), getStatPts(pp, stat) + n)
+        liveAddStat(pp, stat, n)
+        pp:printToPlayer(string.format('[Fellow] %s +%d -> %d. (%d points left)',
+            stat, n, getStatPts(pp, stat), getPoints(pp)), SYS)
+        if reason then
+            pp:printToPlayer(string.format('[Fellow] Heads up: %s is OFF-ROLE for your %s -- %s.',
+                stat, (CONFIG.roles[roleKey] or {}).name or roleKey, reason), SYS)
+        end
+        openAllocateStat(pp, stat, backPage)
+    end
+
+    local options = {}
+    for _, step in ipairs(CONFIG.allocSteps) do
+        local n = step
+        options[#options + 1] = { string.format('+%d', n), function(pp) applyN(pp, n) end }
+    end
+    -- "Max" = spend every remaining point into this stat, up to its cap.
+    options[#options + 1] =
+    {
+        'Max',
+        function(pp) applyN(pp, math.min(getPoints(pp), CONFIG.statCap - getStatPts(pp, stat))) end,
+    }
+    options[#options + 1] = { 'Back', function(pp) openAllocate(pp, backPage) end }
+
+    show(p, string.format('%s %d  (avail %d / cap %d)%s',
+        stat, getStatPts(p, stat), getPoints(p), CONFIG.statCap, reason and '  *off-role' or ''), options)
 end
 
 -- Post-cap gil -> points exchange. Only reachable from openAllocate at max level.
