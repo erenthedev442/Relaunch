@@ -586,6 +586,28 @@ local function statusReport(p)
     p:printToPlayer(string.format('  TP move (%s): %s', role.name, tpName), SYS)
 end
 
+-- Off-role guidance: some allocatable stats only pay off for a matching Role, so
+-- pumping them elsewhere reads as "does nothing". Magic offense (INT/Sorcery) is
+-- only used by the Magus (the sole casting Role); physical offense (STR/Ferocity/
+-- Frenzy/Onslaught) is wasted on the Magus (it nukes, barely melees). DEX/AGI/VIT/
+-- MND/Warding help every Role (accuracy / survival) so they are never flagged.
+local STAT_SCHOOL =
+{
+    INT = 'magic', Sorcery = 'magic',
+    STR = 'phys', Ferocity = 'phys', Frenzy = 'phys', Onslaught = 'phys',
+}
+local function offRoleReason(roleKey, stat)
+    local school = STAT_SCHOOL[stat]
+    if not school then return nil end
+    local isCaster = (roleKey == 'magus')
+    if school == 'magic' and not isCaster then
+        return 'a magic stat; only the Magus (casting) Role uses it'
+    elseif school == 'phys' and isCaster then
+        return 'a melee stat; your Magus deals magic damage, not melee'
+    end
+    return nil
+end
+
 -- ════════════════════════════════ Menus ═════════════════════════════════════
 local openMain, openAllocate, openRole, openName, openModel, openOutfit, openTpMove, openBuyPoints
 
@@ -628,12 +650,16 @@ openAllocate = function(p, page)
     local per   = atMax and 5 or CONFIG.namesPerPage
     local pages = math.max(1, math.ceil(#order / per))
     page = page % pages
+    local roleKey = getRole(p)
     local options = {}
+    local anyOff  = false
     for i = page * per + 1, math.min((page + 1) * per, #order) do
-        local s = order[i]
+        local s      = order[i]
+        local reason = offRoleReason(roleKey, s)
+        if reason then anyOff = true end
         options[#options + 1] =
         {
-            string.format('%s (%d)', s, getStatPts(p, s)),
+            string.format('%s (%d)%s', s, getStatPts(p, s), reason and ' *' or ''),
             function(pp)
                 if getPoints(pp) <= 0 then
                     pp:printToPlayer('[Fellow] No unspent points.' .. (atMax and ' Use Buy Points.' or ''), SYS)
@@ -648,6 +674,10 @@ openAllocate = function(p, page)
                 liveAddStat(pp, s)
                 pp:printToPlayer(string.format('[Fellow] %s raised to %d. (%d points left)',
                     s, getStatPts(pp, s), getPoints(pp)), SYS)
+                if reason then
+                    pp:printToPlayer(string.format('[Fellow] Heads up: %s is OFF-ROLE for your %s -- %s.',
+                        s, (CONFIG.roles[roleKey] or {}).name or roleKey, reason), SYS)
+                end
                 openAllocate(pp, page)
             end,
         }
@@ -659,7 +689,7 @@ openAllocate = function(p, page)
         options[#options + 1] = { 'Buy Points', function(pp) openBuyPoints(pp) end }
     end
     options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
-    show(p, string.format('Allocate (%d left)', pts), options)
+    show(p, string.format('Allocate (%d left)%s', pts, anyOff and '  (*=off-role)' or ''), options)
 end
 
 -- Post-cap gil -> points exchange. Only reachable from openAllocate at max level.
