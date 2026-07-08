@@ -577,31 +577,59 @@ local function totalAllocated(p)
     return t
 end
 
--- Preview the (total, lost, refund) a reset would produce right now.
-local function resetPreview(p)
-    local total  = totalAllocated(p)
-    local lost   = math.floor(total * RESET_PENALTY_PCT / 100)
+-- Sum the points currently allocated across a list of stats, and how many of
+-- them actually carry points (for messaging).
+local function sumStats(p, stats)
+    local total, touched = 0, 0
+    for _, stat in ipairs(stats) do
+        local pts = getStatPts(p, stat)
+        if pts > 0 then total = total + pts; touched = touched + 1 end
+    end
+    return total, touched
+end
+
+-- Preview (total, lost, refund) for resetting a given stat list. The penalty is
+-- always applied to the COMBINED total, never per-stat -- that's deliberate:
+-- flooring 10% per stat would let a player reset small stats one at a time and
+-- dodge the penalty (floor(9*0.1)=0). Batching the selection closes that.
+local function resetPreviewList(p, stats)
+    local total = sumStats(p, stats)
+    local lost  = math.floor(total * RESET_PENALTY_PCT / 100)
     return total, lost, total - lost
 end
 
--- Respec: pool every allocated stat point back into the unspent pool, minus the
--- reset penalty. Zeroing the Fellow_<stat> charVars + a respawn makes applyFellow
--- recompute ALL mods from scratch -- the only correct path (liveAddStat has no
--- inverse). Points BOUGHT with gil are part of the pool and are refunded like any
+-- Full-reset preview (all categories) -- used by the "Reset ALL" confirm.
+local function resetPreview(p) return resetPreviewList(p, CONFIG.statOrder) end
+
+-- Respec core: pool the points from `stats` back into the unspent pool, minus
+-- the reset penalty on the combined total. Zeroing the Fellow_<stat> charVars +
+-- a respawn makes applyFellow recompute ALL mods from scratch -- the only correct
+-- path (liveAddStat has no inverse). Points BOUGHT with gil are refunded like any
 -- other, minus the same penalty; gil itself is never returned.
-local function resetStats(p)
-    local total, lost, refund = resetPreview(p)
+local function resetStatsList(p, stats)
+    local total, touched, lost, refund = sumStats(p, stats)
+    lost   = math.floor(total * RESET_PENALTY_PCT / 100)
+    refund = total - lost
     if total <= 0 then
-        p:printToPlayer('[Fellow] No allocated points to reset.', SYS)
+        p:printToPlayer('[Fellow] No allocated points to reset there.', SYS)
         return
     end
-    for _, stat in ipairs(CONFIG.statOrder) do setN(p, statVar(stat), 0) end
+    for _, stat in ipairs(stats) do setN(p, statVar(stat), 0) end
     setN(p, V.points, getPoints(p) + refund)
     respawnIfOut(p)  -- fresh applyFellow rebuilds every mod from the zeroed stats
     p:printToPlayer(string.format(
-        '[Fellow] Stats reset -- refunded %d of %d points (%d%% penalty, -%d lost). Unspent: %d.',
-        refund, total, RESET_PENALTY_PCT, lost, getPoints(p)), SYS)
+        '[Fellow] Reset %d categor%s -- refunded %d of %d points (%d%% penalty, -%d). Unspent: %d.',
+        touched, (touched == 1 and 'y' or 'ies'), refund, total, RESET_PENALTY_PCT, lost, getPoints(p)), SYS)
 end
+
+-- Full reset (every category).
+local function resetStats(p) resetStatsList(p, CONFIG.statOrder) end
+
+-- Transient per-player selection for the "Choose Categories" reset. Keyed by
+-- player name; holds a set { [stat] = true }. Cleared on Apply / Back.
+local resetSel = {}
+local function selSet(p)   local k = p:getName(); resetSel[k] = resetSel[k] or {}; return resetSel[k] end
+local function selClear(p) resetSel[p:getName()] = nil end
 
 -- ════════════════════════════════ XP / levels ═══════════════════════════════
 local function addXp(p, amount)
@@ -679,7 +707,8 @@ local function offRoleReason(roleKey, stat)
 end
 
 -- ════════════════════════════════ Menus ═════════════════════════════════════
-local openMain, openAllocate, openAllocateStat, openRole, openName, openModel, openOutfit, openTpMove, openBuyPoints, openResetConfirm
+local openMain, openAllocate, openAllocateStat, openRole, openName, openModel, openOutfit, openTpMove, openBuyPoints
+local openResetMenu, openResetConfirm, openResetCategory
 
 local function show(p, title, options)
     local snapshot = { title = title, options = options }
@@ -743,7 +772,7 @@ openAllocate = function(p, page)
     if atMax then
         options[#options + 1] = { 'Buy Points', function(pp) openBuyPoints(pp) end }
     end
-    options[#options + 1] = { 'Reset Points', function(pp) openResetConfirm(pp) end }
+    options[#options + 1] = { 'Reset Points', function(pp) openResetMenu(pp) end }
     options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
     show(p, string.format('Allocate (%d left)%s', pts, anyOff and '  (*=off-role)' or ''), options)
 end
@@ -823,8 +852,27 @@ openBuyPoints = function(p)
     show(p, string.format('Buy Points (have %dg)', p:getGil()), options)
 end
 
--- Confirm gate for a full stats reset. Shows the exact refund/loss so a misclick
--- can't silently nuke a hand-tuned build.
+-- Reset hub: pick between wiping EVERYTHING or choosing specific categories.
+openResetMenu = function(p)
+    local total = totalAllocated(p)
+    if total <= 0 then
+        p:printToPlayer('[Fellow] No allocated points to reset.', SYS)
+        openAllocate(p, 0)
+        return
+    end
+    selClear(p)  -- start each visit with a clean category selection
+    local _, lost, refund = resetPreview(p)
+    local options =
+    {
+        { string.format('Reset ALL (refund %d, -%d)', refund, lost), function(pp) openResetConfirm(pp) end },
+        { 'Choose Categories',                                       function(pp) openResetCategory(pp, 0) end },
+        { 'Back',                                                    function(pp) openAllocate(pp, 0) end },
+    }
+    show(p, string.format('Reset -- %d points allocated', total), options)
+end
+
+-- Confirm gate for a FULL reset. Shows the exact refund/loss so a misclick can't
+-- silently nuke a hand-tuned build.
 openResetConfirm = function(p)
     local total, lost, refund = resetPreview(p)
     if total <= 0 then
@@ -836,9 +884,68 @@ openResetConfirm = function(p)
     {
         { string.format('YES -- refund %d (lose %d)', refund, lost),
           function(pp) resetStats(pp); openAllocate(pp, 0) end },
-        { 'NO -- keep my build', function(pp) openAllocate(pp, 0) end },
+        { 'NO -- keep my build', function(pp) openResetMenu(pp) end },
     }
-    show(p, string.format('Reset all %d points?  -%d%% (-%d)', total, RESET_PENALTY_PCT, lost), options)
+    show(p, string.format('Reset ALL %d points?  -%d%% (-%d)', total, RESET_PENALTY_PCT, lost), options)
+end
+
+-- Category picker: tap stats to select (marked '*'), then Apply to reset just
+-- those. The 10%% penalty is charged on the selected total (see resetStatsList),
+-- so batching a selection is how the penalty is meant to be paid -- you can't
+-- reset one small stat at a time to floor it away. Only stats that actually have
+-- points are listed. per=4 keeps the page under the 8-option / 150-byte caps.
+openResetCategory = function(p, page)
+    local allocated = {}
+    for _, stat in ipairs(CONFIG.statOrder) do
+        if getStatPts(p, stat) > 0 then allocated[#allocated + 1] = stat end
+    end
+    if #allocated == 0 then
+        p:printToPlayer('[Fellow] No allocated categories to reset.', SYS)
+        selClear(p); openAllocate(p, 0)
+        return
+    end
+
+    local sel   = selSet(p)
+    local per   = 4
+    local pages = math.max(1, math.ceil(#allocated / per))
+    page = page % pages
+
+    local options = {}
+    for i = page * per + 1, math.min((page + 1) * per, #allocated) do
+        local stat = allocated[i]
+        options[#options + 1] =
+        {
+            string.format('%s%s %d', sel[stat] and '* ' or '', stat, getStatPts(p, stat)),
+            function(pp)
+                local s = selSet(pp)
+                s[stat] = (not s[stat]) or nil  -- toggle
+                openResetCategory(pp, page)
+            end,
+        }
+    end
+    if pages > 1 then
+        options[#options + 1] = { 'More >>', function(pp) openResetCategory(pp, page + 1) end }
+    end
+
+    -- Selected list + total (only stats that still have points).
+    local selList, selTotal = {}, 0
+    for _, stat in ipairs(CONFIG.statOrder) do
+        if sel[stat] and getStatPts(p, stat) > 0 then
+            selList[#selList + 1] = stat
+            selTotal = selTotal + getStatPts(p, stat)
+        end
+    end
+    if selTotal > 0 then
+        local lost = math.floor(selTotal * RESET_PENALTY_PCT / 100)
+        options[#options + 1] =
+        {
+            string.format('Apply -%d%% (refund %d)', RESET_PENALTY_PCT, selTotal - lost),
+            function(pp) resetStatsList(pp, selList); selClear(pp); openAllocate(pp, 0) end,
+        }
+    end
+    options[#options + 1] = { 'Back', function(pp) selClear(pp); openAllocate(pp, 0) end }
+
+    show(p, string.format('Reset which? (%d sel)', #selList), options)
 end
 
 openRole = function(p)
