@@ -35,13 +35,16 @@ local m = Module:new('bst_jugpet_overhaul')
 -- ── Tunables ───────────────────────────────────────────────────────────────
 local CONFIG =
 {
-    -- Flat endgame floors so even a fresh BST's pet is immediately viable.
-    -- (Relaunch economy pass: flatATT 11200->5000, flatHP 280k->100k to match
-    -- the tighter post-wipe power curve. ACC/STR floors unchanged.)
+    -- Flat endgame floors so even a fresh BST's pet is immediately viable. These
+    -- are the LEVEL-99 values; applyEndgameScaling multiplies them by mainLvl/99
+    -- so low-level pets aren't overtuned (see floorMult below).
+    -- (Relaunch economy pass: flatATT 11200->5000, flatHP 280k->100k->60k to
+    -- match the tighter post-wipe curve + keep gear/master-share relevant.
+    -- ACC/STR floors unchanged.)
     flatATT = 5000,
     flatACC = 9000,
     flatSTR = 720,
-    flatHP  = 100000,
+    flatHP  = 60000,
 
     -- Gear-scaling: the pet inherits this share of the MASTER's stats, so it
     -- gets stronger as the BST gears/augments up (the "scales toward the cap" bit).
@@ -119,25 +122,34 @@ local function applyEndgameScaling(master, pet)
     local beastAff     = math.max(0, master:getMod(xi.mod.PET_BEAST_AFF))
     local beastAffMult = 1.0 + beastAff / 100
 
+    -- Endgame floors scale IN with master level, so low-level pets aren't absurd.
+    -- Report 2026-07-07 (Herdofturtles): a Lv 27-62 BST's pet was getting the FULL
+    -- endgame floor -- ~100k HP, 5000 MATT, 720 STR -- trivializing leveling and
+    -- making the pet "the new meat". 1.0 at level 99, ~0.27 at level 27. Master-share
+    -- contributions already track the master's real (lower) stats, so they self-scale
+    -- and are intentionally NOT level-scaled. All flat floors below use floorMult.
+    local levelScale = math.min((master:getMainLvl() or 1) / 99, 1.0)
+    local floorMult  = beastAffMult * levelScale
+
     local strFromMaster = math.floor(mSTR * CONFIG.masterSTRShare)
 
-    pet:addMod(xi.mod.ATT, math.floor(CONFIG.flatATT * beastAffMult) + math.floor(mATT * CONFIG.masterATTShare) + strFromMaster)
-    pet:addMod(xi.mod.ACC, math.floor(CONFIG.flatACC * beastAffMult) + math.floor(mACC * CONFIG.masterACCShare))
-    pet:addMod(xi.mod.STR, math.floor(CONFIG.flatSTR * beastAffMult) + strFromMaster)
+    pet:addMod(xi.mod.ATT, math.floor(CONFIG.flatATT * floorMult) + math.floor(mATT * CONFIG.masterATTShare) + strFromMaster)
+    pet:addMod(xi.mod.ACC, math.floor(CONFIG.flatACC * floorMult) + math.floor(mACC * CONFIG.masterACCShare))
+    pet:addMod(xi.mod.STR, math.floor(CONFIG.flatSTR * floorMult) + strFromMaster)
     pet:addMod(xi.mod.ATTP, CONFIG.attp)
 
     pet:addMod(xi.mod.DMGPHYS, CONFIG.pdt)
     pet:addMod(xi.mod.DMGMAGIC, CONFIG.mdt)
 
-    pet:addMod(xi.mod.MATT, math.floor(CONFIG.flatMAB  * beastAffMult) + math.floor(mMATT * CONFIG.masterMATTShare))
-    pet:addMod(xi.mod.MACC, math.floor(CONFIG.flatMACC * beastAffMult) + math.floor(mMACC * CONFIG.masterMACCShare))
+    pet:addMod(xi.mod.MATT, math.floor(CONFIG.flatMAB  * floorMult) + math.floor(mMATT * CONFIG.masterMATTShare))
+    pet:addMod(xi.mod.MACC, math.floor(CONFIG.flatMACC * floorMult) + math.floor(mMACC * CONFIG.masterMACCShare))
 
     -- Magical Ready-move damage: MAGIC_DAMAGE adds to base before fTP in mobMagicalMove;
     -- BP_DAMAGE is a post-MAB multiplier (×21 at 2000) now enabled for player pets in
     -- scripts/globals/mobskills.lua. Scales with beastAffMult so Beast Affinity boosts
     -- magical output too.
-    pet:addMod(xi.mod.MAGIC_DAMAGE, math.floor(CONFIG.flatMagicDamage  * beastAffMult))
-    pet:addMod(xi.mod.BP_DAMAGE,    math.floor(CONFIG.flatMagicDMGMult * beastAffMult))
+    pet:addMod(xi.mod.MAGIC_DAMAGE, math.floor(CONFIG.flatMagicDamage  * floorMult))
+    pet:addMod(xi.mod.BP_DAMAGE,    math.floor(CONFIG.flatMagicDMGMult * floorMult))
 
     pet:addMod(xi.mod.DOUBLE_ATTACK, CONFIG.doubleAttack)
     pet:addMod(xi.mod.TRIPLE_ATTACK, CONFIG.tripleAttack)
@@ -168,7 +180,7 @@ local function applyEndgameScaling(master, pet)
     end
 
     -- HP: raise max AND heal into it (setMaxHP alone doesn't refill the new room).
-    local bonusHP = math.floor(CONFIG.flatHP * beastAffMult) + math.floor(master:getMaxHP() * CONFIG.masterHPShare)
+    local bonusHP = math.floor(CONFIG.flatHP * floorMult) + math.floor(master:getMaxHP() * CONFIG.masterHPShare)
     pet:setMaxHP(pet:getMaxHP() + bonusHP)
     pet:addHP(bonusHP)
 
