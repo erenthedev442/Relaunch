@@ -433,6 +433,20 @@ scheduleCombatLoop = function(master, pet)
             -- Combat: every role fights (assist when idle, Ready at TP cap).
             if master:isEngaged() then
                 local tgt = master:getTarget()
+                -- [FellowDbg] toggle with `!setplayervar FellowExpDbg 1` (0 to stop).
+                -- Logged BEFORE the claim force below, so it shows the NATURAL state:
+                -- if you see "do NOT own" while your Fellow is fighting, the Fellow's
+                -- own hits were failing to claim the mob for you -> that's the EXP bug.
+                if tgt and not tgt:isDead() and master:getCharVar('FellowExpDbg') == 1 then
+                    pcall(function()
+                        if not master:hasClaim(tgt) then
+                            master:printToPlayer(string.format(
+                                '[FellowDbg] you do NOT own %s yet (mobLv%d, you Lv%d, pet Lv%d) -- forcing claim',
+                                tgt:getName(), tgt:getMainLvl() or 0, master:getMainLvl() or 0, p:getMainLvl() or 0),
+                                xi.msg.channel.SYSTEM_3)
+                        end
+                    end)
+                end
                 -- EXP FIX (2026-07-07): players reported no kill-EXP while the Fellow
                 -- was out, and DISMISSING it restored EXP. The mob's death only pays
                 -- EXP if its owner (m_OwnerID) resolves to a PC; when the Fellow does
@@ -903,6 +917,21 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
     super(mob, player, isKiller, isWeaponSkillKill)
     pcall(function()
         if player == nil or player:getObjType() ~= xi.objType.PC then return end
+
+        -- [FellowDbg] `player` here IS the mob's resolved PC owner (mobentity OnDeath
+        -- passes the owner, or nil when nobody owns it -> in which case this hook never
+        -- runs). So seeing this line = the kill WAS credited to you and EXP was paid.
+        -- If you kill with the Fellow out and DON'T see it, ownership didn't resolve.
+        -- Levels are logged too: a credited kill despite pet Lv>you proves the 10-level
+        -- gap is NOT counting the Fellow. Toggle: !setplayervar FellowExpDbg 1
+        if player:getCharVar('FellowExpDbg') == 1 and player:hasPet() and petIsFellow(player:getPet()) then
+            pcall(function()
+                player:printToPlayer(string.format(
+                    '[FellowDbg] kill CREDITED to you: %s (mobLv%d) | you Lv%d, pet Lv%d | isKiller=%s',
+                    mob:getName(), mob:getMainLvl() or 0, player:getMainLvl() or 0,
+                    player:getPet():getMainLvl() or 0, tostring(isKiller)), xi.msg.channel.SYSTEM_3)
+            end)
+        end
 
         local mobLvl = mob:getMainLvl() or 1
         local xp     = math.max(CONFIG.xpMin, math.min(CONFIG.xpMax, mobLvl * CONFIG.xpPerMobLevel))
