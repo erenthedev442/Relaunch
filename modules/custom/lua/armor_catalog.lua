@@ -30,9 +30,10 @@
 -- KEEPS them on every regen -- a plain table.insert HERE is WIPED by the next
 -- re-score, so new pins MUST go in FORCED_INCLUDE, not in this file):
 --   Malignance Gold set on the Armor NPC: Chapeau (23732), Tabard (23733),
---   Tights (23735), Boots (23736). All score into the gold band but fall below
---   its per-slot top-N, so they need pinning. (Malignance Gloves live on the
---   Infamy Vendor.) Chapeau + Tights were lost as table.inserts before this.
+--   Gloves (23734), Tights (23735), Boots (23736) -- the FULL 5-piece set. All
+--   score into the gold band but fall below its per-slot top-N, so they need
+--   pinning. (Gloves were on NO vendor until 2026-07-08 -- an earlier note wrongly
+--   said "Infamy Vendor"; added to gold/hands FORCED_INCLUDE to complete the set.)
 -----------------------------------
 local catalog = {}
 
@@ -269,6 +270,7 @@ table.insert(g.body, { id = 25708, name = "Gyve Doublet", cost = 50, jobs = 'WHM
 table.insert(g.hands, { id = 25823, name = "Mallquis Cuffs +1", cost = 50, jobs = 'BLM/SCH/GEO' })  -- CASTER score 416
 table.insert(g.hands, { id = 23720, name = "Volte Moufles", cost = 50, jobs = 'WAR/PLD/DRK' })  -- TANK score 376
 table.insert(g.hands, { id = 25829, name = "Meghanada Gloves +2", cost = 50, jobs = 'THF/BST/RNG/COR/DNC/RUN' })  -- DPS score 368
+table.insert(g.hands, { id = 23734, name = "Malignance Gloves", cost = 50, jobs = 'MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC' })  -- pinned: completes the Malignance gold set (was missing; player report 2026-07-08)
 table.insert(g.hands, { id = 23770, name = "Gletis Gauntlets", cost = 50, jobs = 'THF/BST/DRG/BLU/DNC' })  -- DPS score 356
 table.insert(g.hands, { id = 23719, name = "Volte Mittens", cost = 50, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN' })  -- DPS score 324
 table.insert(g.hands, { id = 25832, name = "Jhakri Cuffs +2", cost = 50, jobs = 'BLM/RDM/BLU/SCH/GEO' })  -- CASTER score 316

@@ -392,7 +392,7 @@ FORCED_INCLUDE = {
     ('silver', 'body'): [25717, 25796, 25752],  # +25752 Inyanga Jubbah +1 -- completes the Inyanga caster set (2026-06-21)
     ('gold',   'body'): [23733, 23766, 23763],  # 2026-07 removed 26943 Agony Jerkin +1 (Unity/Voso drop) + 26530 Ea Houppelande +1 (craft/Invasion). +23763 Gletis Cuirass -- Gleti (Sortie) set
     ('gold',   'feet'): [23736],  # Malignance Boots -- pin to gold so the full Malignance gold set is buyable (it scores just under gold's cut). Added 2026-06-14. (Gletis Boots 23784 already auto-scores into gold/feet.)
-    ('gold',   'hands'): [23770],  # +23770 Gletis Gauntlets -- Gleti (Sortie) set (owner request 2026-06-21)
+    ('gold',   'hands'): [23770, 23734],  # 23770 Gletis Gauntlets -- Gleti (Sortie) set (owner request 2026-06-21). +23734 Malignance Gloves -- completes the Malignance gold set (was missing from ANY vendor; player report 2026-07-08).
     ('gold',   'head'): [23732, 25575, 23756],  # 2026-07 removed 25554 Ea Hat +1 (craft/Invasion). 23732 Malignance Chapeau + 25575 Meghanada Visor +2 + 23756 Gletis Mask
     ('gold',   'legs'): [23735],  # 2026-07 removed 25894 Ea Slops +1 (craft/Invasion). 23735 Malignance Tights completes its set. (Gletis Breeches 23777 is NAKED -- not pinned.)
     # ---- 2026-06-21: two near-finished sets that need a NEW (tier, slot) key ----
