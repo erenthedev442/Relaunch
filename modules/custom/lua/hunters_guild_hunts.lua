@@ -50,6 +50,13 @@ for guildKey, targets in pairs(catalog.huntTargets) do
     end
 end
 
+-- Per-player, per-NM rep cooldown (seconds). ANTI-FARM: several hunt targets
+-- double as Affinity NMs, which the affinity system repops every 30s -- without
+-- this a player could farm a target (e.g. King Vinegarroon, 1000 rep) every 30s.
+-- Gate only the GUILD REP behind a cooldown; the kill + augment trophy still drop
+-- every time. Slow retail HNMs never hit it (they can't repop this fast). TUNABLE.
+local REP_COOLDOWN = catalog.repCooldownSeconds or 3600
+
 -- Award helper. Pulled out so we can keep the override closures tight.
 -- Bumps rep through the existing hunters_guild API (which handles
 -- rank-up announcements + capstone checks automatically), then prints
@@ -58,6 +65,19 @@ end
 -- separately - this is additive.
 local function awardHunt(player, t, guildKey)
     if not player or player:getObjType() ~= xi.objType.PC then return end
+
+    -- Anti-farm cooldown: no guild rep from the SAME NM again until it expires.
+    local cdKey   = 'HGRepCD_' .. t.name
+    local now     = os.time()
+    local expires = player:getCharVar(cdKey) or 0
+    if expires > now then
+        player:printToPlayer(
+            string.format("[Guild] No rep from %s yet -- on cooldown (%dm).",
+                t.label, math.ceil((expires - now) / 60)),
+            xi.msg.channel.SYSTEM_3)
+        return
+    end
+    player:setCharVar(cdKey, now + REP_COOLDOWN)
 
     local _newRep, _newRank, didRankUp = hg.bumpRep(player, guildKey, t.baseRep)
     local g = catalog.guilds[guildKey]
