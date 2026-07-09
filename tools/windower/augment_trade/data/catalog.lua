@@ -137,7 +137,6 @@ return {
     [ 2524] = { cat = 23, tier = 1, label = 'Throwing skill' },
     [  831] = { cat = 23, tier = 1, label = 'Wind instrument skill' },
     [  895] = { cat =  1, tier = 2, label = 'Counter' },
-    [ 2147] = { cat =  1, tier = 2, label = 'Counter' },
     [  903] = { cat =  1, tier = 2, label = 'Kick Attacks Rate or Damage' },
     [  897] = { cat =  1, tier = 2, label = 'Martial Arts' },
     [ 1108] = { cat =  2, tier = 2, label = 'Conserve TP' },

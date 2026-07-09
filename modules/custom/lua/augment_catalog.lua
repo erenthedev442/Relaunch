@@ -177,7 +177,7 @@ return {
     -- ── cat 11: Job specific niche utilities ────────────────────────────────────
     [897]  = { augId = 151,  base = 1,   mult = 1,   disp = 1,    cat = 11,  tier = 0, label = 'Martial Arts' },
     [903]  = { augId = 194,  base = 1,   mult = 1,   disp = 1,    cat = 11,  tier = 0, label = 'Kick Attacks Rate or Damage' },
-    [2147] = { augId = 640,  base = 1,   mult = 2,   disp = 1,    cat = 11,  tier = 0, label = 'Counter' },
+    [895]  = { augId = 640,  base = 1,   mult = 2,   disp = 1,    cat = 11,  tier = 0, label = 'Counter' },
     [1591] = { augId = 354,  base = 1,   mult = 1,   disp = 1,    cat = 2,  tier = 0, label = 'Quadruple Attack' },
     [926]  = { augId = 198,  base = 1,   mult = 1,   disp = 1,    cat = 11,  tier = 0, label = 'Zanshin' },
     [947]  = { augId = 251,  base = 1,   mult = 1,   disp = 1,    cat = 11,  tier = 0, label = 'Daken' },

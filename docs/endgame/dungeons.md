@@ -274,7 +274,7 @@ _Trash: **30%** · **×1** · dropped to the treasure pool (whole party can lot)
 | <a class="item-link" href="https://www.ffxiah.com/item/1291" data-img="https://www.bg-wiki.com/images/9/96/Golden_Hktk._Eye_description.png" target="_blank" rel="noopener">Golden Hktk. Eye</a> | All songs | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/1199" data-img="https://www.bg-wiki.com/images/f/f2/Northern_Fur_description.png" target="_blank" rel="noopener">Northern Fur</a> | Barrage | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/902" data-img="https://www.bg-wiki.com/images/1/19/Demon_Horn_description.png" target="_blank" rel="noopener">Demon Horn</a> | Charm | T0 |
-| <a class="item-link" href="https://www.ffxiah.com/item/2147" data-img="https://www.bg-wiki.com/images/4/4b/Marid_Tusk_description.png" target="_blank" rel="noopener">Marid Tusk</a> | Counter | T0 |
+| <a class="item-link" href="https://www.ffxiah.com/item/895" data-img="https://www.bg-wiki.com/images/b/bb/Ram_Horn_description.png" target="_blank" rel="noopener">Ram Horn</a> | Counter | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/947" data-img="https://static.ffxiah.com/images/icon/947.png" target="_blank" rel="noopener">Firesand</a> | Daken | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/1858" data-img="https://www.bg-wiki.com/images/b/b7/Moblumin_Ingot_description.png" target="_blank" rel="noopener">Moblumin Ingot</a> | Gilfinder | T0 |
 | <a class="item-link" href="https://www.ffxiah.com/item/903" data-img="https://www.bg-wiki.com/images/3/30/Dragon_Talon_description.png" target="_blank" rel="noopener">Dragon Talon</a> | Kick Attacks Rate or Damage | T0 |

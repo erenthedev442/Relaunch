@@ -212,6 +212,7 @@ return {
         {
             { id = 834, tier = 0, cat = 11, label = 'Recycle', item = 'saruta_cotton' },
             { id = 836, tier = 0, cat = 11, label = 'Waltz TP cost', item = 'damascene_cloth' },
+            { id = 895, tier = 0, cat = 11, label = 'Counter', item = 'ram_horn' },
             { id = 897, tier = 0, cat = 11, label = 'Martial Arts', item = 'scorpion_claw' },
             { id = 902, tier = 0, cat = 11, label = 'Charm', item = 'demon_horn' },
             { id = 903, tier = 0, cat = 11, label = 'Kick Attacks Rate or Damage', item = 'dragon_talon' },
@@ -224,7 +225,6 @@ return {
             { id = 1293, tier = 0, cat = 11, label = 'Reverse Flourish', item = 'narasimha_hide' },
             { id = 1619, tier = 0, cat = 11, label = 'Rapid Shot', item = 'hippogryph_fthr.' },
             { id = 1858, tier = 0, cat = 11, label = 'Gilfinder', item = 'moblumin_ingot' },
-            { id = 2147, tier = 0, cat = 11, label = 'Counter', item = 'marid_tusk' },
         },
     },
 }

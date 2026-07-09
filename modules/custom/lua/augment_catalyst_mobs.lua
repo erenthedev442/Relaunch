@@ -10,7 +10,7 @@ return {
     ['2nd_Legion_Grenadier'] = 797,  -- Resist Gravity (T0, 2nd Legion Grenadier L0)
     ['Abashed_Heartwing'] = 2151,  -- Physical Damage Taken (T4, Abashed Heartwing L109)
     ['Abraxas'] = 1196,  -- Delay (melee,not ranged) (T3, Abraxas L86)
-    ['Abxzomit'] = 2147,  -- Counter (T3, Abxzomit L80)
+    ['Abxzomit'] = 895,  -- Counter / Ram Horn (T3, Abxzomit L80)
     ['Abyssal_Pugil'] = 1690,  -- Subtle Blow (T2, Abyssal Pugil L55)
     ['Abyssobugard'] = 927,  -- Delay (melee,not ranged) (T3, Abyssobugard L85)
     ['Accursed_Soldier'] = 1279,  -- Delay (ranged,not melee) (T3, Accursed Soldier L89)
