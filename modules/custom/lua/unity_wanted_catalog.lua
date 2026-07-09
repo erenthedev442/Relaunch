@@ -30,6 +30,11 @@ local ARENA = {
 -- Board NPC location in Celennia Memorial Library.
 local BOARD_POS = { x = 560.971, y = -3.360, z = 544.586, rot = 64 }
 
+-- Second "Re-Hunt" board IN the hunt zone (Escha-Zi'tah), so players can spawn
+-- the next NM without warping back to the hub. Placed by the T1 landing point
+-- near the T1/T3 arena cluster. PLACEHOLDER coords -- fine-tune with !pos.
+local HUNT_BOARD_POS = { x = -198.0, y = -0.5, z = 53.0, rot = 128 }
+
 -- Warp landing point for players entering the Unity Arena in zone 288.
 -- Position them slightly east of the mob spawn to face the NM.
 local WARP_POS = {
@@ -52,7 +57,8 @@ local WARP_POS = {
 --                { id=itemId, name='Display Name' } — name used on the docs page
 -----------------------------------
 return {
-    boardPos  = BOARD_POS,
+    boardPos     = BOARD_POS,
+    huntBoardPos = HUNT_BOARD_POS,
     arena     = ARENA,
     warpPos   = WARP_POS,
     huntZoneId = ZONE_288,

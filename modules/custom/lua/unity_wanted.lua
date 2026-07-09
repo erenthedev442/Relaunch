@@ -378,6 +378,107 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 end)
 
 -----------------------------------
+-- In-zone "Re-Hunt" Board (Escha-Zi'tah). Lets players spawn the next Wanted NM
+-- without warping back to the hub board. Lean menu (tiers -> NM -> pop); the
+-- pledge picker / reward shop stay on the hub board. Confirming pays accolades,
+-- hops the player to the tier arena IN-ZONE (setPos with no zoneid = no loading
+-- screen), and pops the NM right there via spawnWantedNm.
+-----------------------------------
+m:addOverride('xi.zones.Escha_ZiTah.Zone.onInitialize', function(zone)
+    super(zone)
+
+    local menu = { title = '', options = {} }
+    local mainScreen, tierScreen, confirmScreen
+
+    mainScreen = function(player)
+        local featured = nmById[weeklyFeaturedId()]
+        menu.title   = string.format('%sUnity Re-Hunt [%d acc]', ICON, player:getCurrency('unity_accolades'))
+        menu.options = {
+            { string.format('Weekly: %s (2x)', featured and featured.label or '?'),
+              function(p) if featured then confirmScreen(p, featured) end end },
+            { 'Tier 1  Lv 75-80',   function(p) tierScreen(p, 1, 1) end },
+            { 'Tier 2  Lv 99-119',  function(p) tierScreen(p, 2, 1) end },
+            { 'Tier 3  Lv 120+',    function(p) tierScreen(p, 3, 1) end },
+            { 'Leave', function(p) p:printToPlayer('[Unity] Happy hunting, kupo!', S) end },
+        }
+        showMenu(player, menu)
+    end
+
+    tierScreen = function(player, tier, page)
+        local tierNms = {}
+        for _, nm in ipairs(catalog.nms) do
+            if nm.tier == tier then table.insert(tierNms, nm) end
+        end
+        local start  = (page - 1) * PAGE + 1
+        local finish = math.min(start + PAGE - 1, #tierNms)
+        local weekly = weeklyFeaturedId()
+
+        menu.title = string.format('T%d Re-Hunt | cost %d / +%d acc', tier, catalog.costs[tier], catalog.rewards[tier])
+        local opts = {}
+        for i = start, finish do
+            local nm_  = tierNms[i]
+            local star = (nm_.id == weekly) and '*' or ''
+            table.insert(opts, { string.format('%s%s', nm_.label, star), function(p) confirmScreen(p, nm_) end })
+        end
+        if page > 1        then table.insert(opts, { '<< Prev', function(p) tierScreen(p, tier, page - 1) end }) end
+        if finish < #tierNms then table.insert(opts, { 'Next >>', function(p) tierScreen(p, tier, page + 1) end }) end
+        table.insert(opts, { '<< Back', function(p) mainScreen(p) end })
+        menu.options = opts
+        showMenu(player, menu)
+    end
+
+    confirmScreen = function(player, nm)
+        local cost      = catalog.costs[nm.tier]
+        local reward    = catalog.rewards[nm.tier]
+        local have      = player:getCurrency('unity_accolades')
+        local bonus     = (nm.id == weeklyFeaturedId()) and 2 or 1
+        local canAfford = have >= cost
+        local wp        = catalog.warpPos['T' .. nm.tier]
+
+        menu.title = string.format('[%s] Lv %d', nm.label, nm.minLv)
+        menu.options = {
+            {
+                canAfford
+                    and string.format('Hunt here!  [%d acc -> +%d acc]', cost, reward * bonus)
+                    or  string.format('Need %d acc (have %d)', cost, have),
+                function(p)
+                    if p:getCurrency('unity_accolades') < cost then
+                        p:printToPlayer(string.format('[Unity] Need %d accolades (have %d), kupo.', cost, have), S)
+                        confirmScreen(p, nm)
+                        return
+                    end
+                    p:delCurrency('unity_accolades', cost)
+                    p:setCharVar(CV_NM, nm.id)          -- reward settles against this on death
+                    p:setPos(wp.x, wp.y, wp.z, wp.rot)  -- in-zone hop to the arena (no zoneid = no loading screen)
+                    spawnWantedNm(p, nm)
+                end,
+            },
+            { '<< Back', function(p) tierScreen(p, nm.tier, 1) end },
+        }
+        showMenu(player, menu)
+    end
+
+    local RehuntBoard = zone:insertDynamicEntity({
+        objtype    = xi.objType.NPC,
+        name       = 'Unity_Rehunt_Board',
+        packetName = string.format('%sUnity Re-Hunt', ICON),
+        look       = 234,
+        x          = catalog.huntBoardPos.x,
+        y          = catalog.huntBoardPos.y,
+        z          = catalog.huntBoardPos.z,
+        rotation   = catalog.huntBoardPos.rot,
+        widescan   = 1,
+        onTrade    = function(player, npc, trade)
+            player:printToPlayer('[Unity] Use the board menu, kupo!', S)
+        end,
+        onTrigger  = function(player, npc)
+            mainScreen(player)
+        end,
+    })
+    utils.unused(RehuntBoard)
+end)
+
+-----------------------------------
 -- Escha-Zi'tah zone-in: spawn queued NM
 -----------------------------------
 m:addOverride('xi.zones.Escha_ZiTah.Zone.onZoneIn', function(player, prevZone)
