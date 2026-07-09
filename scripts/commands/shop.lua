@@ -347,6 +347,8 @@ local petStock =
         { 17018, 500 },  -- Pet Food Gamma Biscuit
         { 17023, 500 },  -- Pet Food Theta Biscuit
         { 17021, 500 },  -- Pet Food Zeta Biscuit
+        { 19251, 500 },  -- Pet Roborant  (cures the pet's status ailments)
+        { 19252, 500 },  -- Pet Poultice  (restores the pet's HP)
     },
 }
 
