@@ -517,6 +517,23 @@ buildSourceNMMenu = function(player, srcDef, station)
                 mob:setSpawn(mPos.x, mPos.y, mPos.z, mPos.rot)
                 mob:spawn()
 
+                -- [DIAG 2026-07-09] Trace for the "all NMs pop at Spawner 3"
+                -- report. Logs the station identity + intended mPos + the mob's
+                -- ACTUAL position after spawn(). Read it as:
+                --   * every pop shows the SAME `station=table: 0x..` address
+                --       => a shared/last-station closure ref (code bug).
+                --   * addresses differ but all mPos land on ONE station's coords
+                --       => stale/wrong catalog data.
+                --   * mPos differs from `actual` => spawn() ignored setSpawn().
+                --   * mPos & actual both match the station you clicked => WORKING
+                --       (the live bug was stale onInitialize NPCs; a restart fixed it).
+                -- Remove once diagnosed.  grep the map log for: [Reforge][DIAG]
+                print(string.format(
+                    '[Reforge][DIAG] pop=%s station.id=%d station=%s mPos=(%.2f,%.2f,%.2f) actual=(%.2f,%.2f,%.2f) zone=%d',
+                    tostring(md.name), station.id, tostring(station),
+                    mPos.x, mPos.y, mPos.z,
+                    mob:getXPos(), mob:getYPos(), mob:getZPos(), mob:getZoneID()))
+
                 -- Arm the un-engaged despawn (absolute deadline). onMobRoam
                 -- removes the NM if still un-engaged past this time; onMobEngage
                 -- clears it. Stamped after spawn() so spawn()'s stat recalc
