@@ -72,7 +72,7 @@ return {
     [889] = { item='Beetle Shell', label='Dmg (melee,not ranged)', cat=24, tier=4, zone=200, zoneName='Garlaige Citadel', x=-340.000, y=-0.010, z=310.000, mob='Borer Beetle', lvl=41, rate=240 },
     [891] = { item='Bat Fang', label='Triple Atk', cat=2, tier=3, zone=216, zoneName='Abyssea-Misareaux', x=-3.013, y=-16.000, z=-37.759, mob='Gore Bats', lvl=80, rate=100 },
     [894] = { item='Beetle Jaw', label='Sword skill', cat=23, tier=1, zone=104, zoneName='Jugner Forest', x=585.027, y=0.044, z=203.418, mob='Panzer Percival', lvl=25, rate=1000 },
-    [895] = { item='Ram Horn', label='Counter', cat=1, tier=2, zone=132, zoneName='Abyssea-La Theine', x=255.970, y=24.285, z=65.294, mob='Hammering Ram', lvl=81, rate=240 },
+    [2147] = { item='Marid Tusk', label='Counter', cat=11, tier=2, zone=51, zoneName='Wajaom Woodlands', x=0.0, y=0.0, z=0.0, mob='Marid -- DESPOIL only (THF)', lvl=80, rate=1000, noWarp=true },  -- Counter catalyst = Marid Tusk (2147) per augment_catalog. Old Ram Horn (895) is no longer any catalyst. Despoil-only -> noWarp.
     [897] = { item='Scorpion Claw', label='Martial Arts', cat=1, tier=2, zone=215, zoneName='Abyssea-Attohwa', x=-411.379, y=-3.972, z=-126.319, mob='Defile Scorpion', lvl=81, rate=150 },
     [901] = { item='Venomous Claw', label='Enmity', cat=15, tier=1, zone=130, zoneName='RuAun Gardens', x=261.868, y=-70.219, z=526.413, mob='Genbu', lvl=88, rate=150 },
     [902] = { item='Demon Horn', label='Charm', cat=14, tier=1, zone=162, zoneName='Castle Zvahl Keep', x=-199.000, y=-52.000, z=-99.000, mob='Count Bifrons', lvl=68, rate=240 },
