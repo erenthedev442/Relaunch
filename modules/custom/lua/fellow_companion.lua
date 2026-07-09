@@ -203,8 +203,53 @@ local CONFIG =
                 { name = 'Dark Shot',        ws = xi.mobSkill.DARK_SHOT           },  -- dark ranged
             },
         },
+        -- MASTERED: the prestige capstone. UNLOCKS only once ALL 14 categories are
+        -- capped at statCap (~962M gil of bought points -- see isMastered). It is a
+        -- flex / show-off form, NOT an endgame power spike: the fully-capped allocation
+        -- already supplies the raw stats, so these role mods are a modest "best of every
+        -- role" garnish on top. behaviours combine Oracle's self-heal + Bulwark's hate-hold.
+        --
+        -- INT16 SAFETY (do not loosen): a Mastered Fellow ALWAYS has Warding at cap
+        -- (DMGPHYS/DMGMAGIC -28000 each) and INT+Sorcery at cap (MATT 30800). So:
+        --   * survival.pdt/mdt are kept SMALL (-3000) -> DMGPHYS = -28000-3000 = -31000,
+        --     still above the int16 floor (-32768). A tank-sized -5000 here would WRAP.
+        --   * the MATT garnish is only +200 -> 30800+200 = 31000, under the +32767 wrap.
+        -- (Both are already past the engine's -50% / effective caps, so small values here
+        -- cost no real durability/power -- they only keep the mods from overflowing.)
+        mastered  =
+        {
+            name = 'Mastered', blurb = 'PRESTIGE: the effects of every role combined. A flex, not an endgame weapon.',
+            defaultWs = xi.mobSkill.DANCING_EDGE,
+            mods =
+            {
+                { xi.mod.ATTP, 40 }, { xi.mod.DOUBLE_ATTACK, 15 }, { xi.mod.TRIPLE_ATTACK, 8 },  -- Vanguard / Berserker
+                { xi.mod.DEF, 200 }, { xi.mod.ENMITY, 30 },                                      -- Bulwark
+                { xi.mod.MATT, 200 }, { xi.mod.MACC, 100 },                                      -- Magus (int16-capped garnish)
+                { xi.mod.ACC, 100 }, { xi.mod.EVA, 80 },                                         -- Hunter
+                { xi.mod.REGEN, 2 }, { xi.mod.REFRESH, 1 },                                      -- Oracle / Vigor
+            },
+            behaviors = { heal = true, tank = true },  -- self-heals the master + holds hate (see combat loop)
+            survival  = { hpMult = 1.4, pdt = -3000, mdt = -3000 },  -- sturdy capstone; pdt/mdt SMALL for int16 safety (note above)
+            moves =
+            {
+                { name = 'Penta Thrust',     ws = xi.mobSkill.PENTA_THRUST       },  -- Vanguard
+                { name = 'Vorpal Blade',     ws = xi.mobSkill.VORPAL_BLADE_1     },
+                { name = 'Auroral Uppercut', ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- Berserker
+                { name = 'Earth Pounder',    ws = xi.mobSkill.EARTH_POUNDER      },  -- Bulwark
+                { name = 'Maelstrom',        ws = xi.mobSkill.MAELSTROM_1        },
+                { name = 'Benediction',      ws = xi.mobSkill.BENEDICTION_1      },  -- Oracle heal-burst
+                { name = 'Blizzard IV',      ws = xi.mobSkill.BLIZZARD_IV        },  -- Magus
+                { name = 'Aero IV',          ws = xi.mobSkill.AERO_IV            },
+                { name = 'Barrage',          ws = xi.mobSkill.BARRAGE            },  -- Hunter
+                { name = 'Dark Shot',        ws = xi.mobSkill.DARK_SHOT          },
+                { name = 'Dancing Edge',     ws = xi.mobSkill.DANCING_EDGE       },  -- signature default
+            },
+        },
     },
-    roleOrder   = { 'vanguard', 'berserker', 'bulwark', 'oracle', 'magus', 'hunter' },
+    -- 'mastered' is index 7 but is HIDDEN from the Role picker until unlocked (openRole
+    -- only appends it when isMastered() is true), and getRole() falls a stored Mastered
+    -- selection back to the default if the caps are ever respec'd away.
+    roleOrder   = { 'vanguard', 'berserker', 'bulwark', 'oracle', 'magus', 'hunter', 'mastered' },
     defaultRole = 'vanguard',
 
     -- NAME picker: curated person-names (lifted from the engine's dead fellowNames
@@ -300,6 +345,7 @@ local V =
     nameIdx  = 'Fellow_NameIdx',  -- index into CONFIG.names
     modelPet = 'Fellow_ModelPet', -- index into CONFIG.models (each carries a petId)
     outfit   = 'Fellow_Outfit',  -- 0 = none (use Appearance); N = CONFIG.outfits[N]
+    mastered = 'Fellow_Mastered', -- 1 once the "all 14 capped" unlock message has fired (one-time)
 }
 local function statVar(stat) return 'Fellow_' .. stat end
 
@@ -311,10 +357,24 @@ local function getLevel(p)  return math.max(1, getN(p, V.level)) end
 local function getPoints(p) return getN(p, V.points) end
 local function getStatPts(p, stat) return getN(p, statVar(stat)) end
 
+-- Mastery gate: TRUE only when every allocatable category is at the cap. This is
+-- the ~962M-gil "cap everything" milestone that unlocks the Mastered role. Cheap
+-- (14 in-memory charVar reads); safe to call from the combat loop / menus.
+local function isMastered(p)
+    for _, stat in ipairs(CONFIG.statOrder) do
+        if getStatPts(p, stat) < CONFIG.statCap then return false end
+    end
+    return true
+end
+
 -- Role is stored as an INTEGER index into CONFIG.roleOrder (charVars are ints,
 -- not strings). 0/unset -> default.
 local function getRole(p)
     local key = CONFIG.roleOrder[getN(p, V.role)]
+    -- The Mastered role only holds while all 14 caps are maintained; if a player
+    -- respecs a category below cap, a stored Mastered selection reverts to default
+    -- (they keep the index, so re-capping restores Mastered automatically).
+    if key == 'mastered' and not isMastered(p) then return CONFIG.defaultRole end
     if key and CONFIG.roles[key] then return key end
     return CONFIG.defaultRole
 end
@@ -428,11 +488,14 @@ scheduleCombatLoop = function(master, pet)
         if not p or not p:isAlive() then return end
         pcall(function()
             if not (master and master:isAlive()) then return end
-            local beh = roleDef(master).behavior
-            local lvl = getLevel(master)
+            local rdef = roleDef(master)
+            local beh  = rdef.behavior
+            local behs = rdef.behaviors               -- optional set { name = true } for multi-role forms (Mastered)
+            local function hasBeh(name) return beh == name or (behs and behs[name]) end
+            local lvl  = getLevel(master)
 
-            -- Oracle: mend the master whenever their HP is low (works in or out of combat).
-            if beh == 'heal' then
+            -- Oracle (and Mastered): mend the master whenever their HP is low (in or out of combat).
+            if hasBeh('heal') then
                 local maxhp = math.max(1, master:getMaxHP())
                 if (master:getHP() * 100 / maxhp) <= CONFIG.healHpp then
                     master:addHP(CONFIG.healBase + CONFIG.healPerLevel * lvl)
@@ -442,7 +505,7 @@ scheduleCombatLoop = function(master, pet)
             -- Bulwark: spike hate toward the Fellow + bleed the player's enmity every tick.
             -- addEnmity(pet, CE, VE) raises the mob's hate toward the Fellow.
             -- lowerEnmity(master, %) drains the player's enmity so WS spikes don't pull hate permanently.
-            if beh == 'tank' and master:isEngaged() then
+            if hasBeh('tank') and master:isEngaged() then
                 local tgt = master:getTarget()
                 if tgt and not tgt:isDead() and p:isEngaged() then
                     pcall(function()
@@ -691,6 +754,18 @@ local function statusReport(p)
         if v > 0 then parts[#parts + 1] = string.format('%s %d', stat, v) end
     end
     p:printToPlayer('  Allocation: ' .. (#parts > 0 and table.concat(parts, '  ') or 'none yet'), SYS)
+    -- Mastery progress: how many of the 14 categories are at the cap. At 14/14 the
+    -- Mastered role is available in Choose Role (a prestige flex; see checkMasteredUnlock).
+    local capped = 0
+    for _, stat in ipairs(CONFIG.statOrder) do
+        if getStatPts(p, stat) >= CONFIG.statCap then capped = capped + 1 end
+    end
+    if capped >= #CONFIG.statOrder then
+        p:printToPlayer('  Mastery: 14/14 capped -- MASTERED role UNLOCKED (set it in Choose Role).', SYS)
+    else
+        p:printToPlayer(string.format('  Mastery: %d/%d categories capped (all 14 unlocks the Mastered role).',
+            capped, #CONFIG.statOrder), SYS)
+    end
     -- TP move in effect for the current role (per-role override, else role default).
     local roleKey  = getRole(p)
     local tpChoice  = getN(p, tpVar(roleKey))
@@ -711,6 +786,7 @@ local STAT_SCHOOL =
     STR = 'phys', Ferocity = 'phys', Frenzy = 'phys', Onslaught = 'phys',
 }
 local function offRoleReason(roleKey, stat)
+    if roleKey == 'mastered' then return nil end  -- Mastered uses every stat; nothing is off-role
     local school = STAT_SCHOOL[stat]
     if not school then return nil end
     local isCaster = (roleKey == 'magus')
@@ -720,6 +796,23 @@ local function offRoleReason(roleKey, stat)
         return 'a melee stat; your Magus deals magic damage, not melee'
     end
     return nil
+end
+
+-- ════════════════════════════════ Mastery unlock ════════════════════════════
+-- Fire once, the moment a player first caps all 14 categories: flag it (so it never
+-- repeats), tell the player, and broadcast the flex server-wide. Called after every
+-- allocation. Selecting the Mastered role itself is done in the Choose Role menu,
+-- which surfaces it whenever isMastered() is true (this is purely the announcement).
+local function checkMasteredUnlock(p)
+    if not isMastered(p) or getN(p, V.mastered) == 1 then return end
+    setN(p, V.mastered, 1)
+    p:printToPlayer('[Fellow] *** MASTERY ACHIEVED! *** Every category is capped. The Mastered role is now available in Choose Role.', SYS)
+    -- Best-effort server-wide shout (same pattern as the Hunters Guild rank broadcast).
+    pcall(function()
+        p:PrintToArea(string.format(
+            '%s has mastered their Adventuring Fellow, kupo! Every stat forged to the limit!', p:getName()),
+            xi.msg.channel.SYSTEM_3, xi.msg.area.SYSTEM)
+    end)
 end
 
 -- ════════════════════════════════ Menus ═════════════════════════════════════
@@ -815,6 +908,7 @@ openAllocateStat = function(p, stat, backPage)
         liveAddStat(pp, stat, n)
         pp:printToPlayer(string.format('[Fellow] %s +%d -> %d. (%d points left)',
             stat, n, getStatPts(pp, stat), getPoints(pp)), SYS)
+        checkMasteredUnlock(pp)  -- fires the one-time Mastery unlock if this filled the last cap
         if reason then
             pp:printToPlayer(string.format('[Fellow] Heads up: %s is OFF-ROLE for your %s -- %s.',
                 stat, (CONFIG.roles[roleKey] or {}).name or roleKey, reason), SYS)
@@ -964,23 +1058,44 @@ openResetCategory = function(p, page)
     show(p, string.format('Reset which? (%d sel)', #selList), options)
 end
 
-openRole = function(p)
+openRole = function(p, page)
+    page = page or 0
     local cur = getRole(p)
-    local options = {}
+    -- Visible roles = the 6 base roles, PLUS Mastered appended only once unlocked
+    -- (all 14 capped). 'mastered' is skipped in the base pass so it never shows early.
+    local vis = {}
     for i, key in ipairs(CONFIG.roleOrder) do
-        local idx = i
-        local r   = CONFIG.roles[key]
-        local label = (key == cur) and (r.name .. ' *') or r.name
+        if key ~= 'mastered' then vis[#vis + 1] = { idx = i, key = key } end
+    end
+    if isMastered(p) then
+        for i, key in ipairs(CONFIG.roleOrder) do
+            if key == 'mastered' then vis[#vis + 1] = { idx = i, key = key }; break end
+        end
+    end
+    -- 6 roles fit on one page (6 + SetTP + Back = 8). With Mastered unlocked (7) we
+    -- paginate at 5/page so [More>>] + Set TP Move + Back still fit the 8-option cap.
+    local paged = #vis > 6
+    local per   = paged and 5 or #vis
+    local pages = math.max(1, math.ceil(#vis / per))
+    page = page % pages
+    local options = {}
+    for i = page * per + 1, math.min((page + 1) * per, #vis) do
+        local e     = vis[i]
+        local r     = CONFIG.roles[e.key]
+        local label = (e.key == cur) and (r.name .. ' *') or r.name
         options[#options + 1] =
         {
             label,
             function(pp)
-                setN(pp, V.role, idx)
+                setN(pp, V.role, e.idx)
                 pp:printToPlayer(string.format('[Fellow] Role set: %s -- %s Re-summon to apply.',
                     r.name, r.blurb), SYS)
-                openRole(pp)
+                openRole(pp, page)
             end,
         }
+    end
+    if paged then
+        options[#options + 1] = { 'More >>', function(pp) openRole(pp, page + 1) end }
     end
     -- TP move is configured PER ROLE; edit the current role's move here.
     options[#options + 1] = { 'Set TP Move', function(pp) openTpMove(pp, 0) end }
