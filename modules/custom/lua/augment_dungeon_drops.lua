@@ -97,7 +97,6 @@ M.onDungeonMobDeath = function(dungeonKey, instance, deadMob, player, optParams,
     -- these dynamic mobs (they read 0 at death -> nothing ever dropped), so the
     -- passed args are authoritative; the localvar reads are only a fallback.
     local slot = slotArg or deadMob:getLocalVar('DungeonMobIndex')
-    print(string.format('[augchk] key=%s slot=%s isBoss=%s', tostring(dungeonKey), tostring(slot), tostring(isBossArg)))
     if not slot or slot == 0 then
         return
     end
@@ -136,7 +135,6 @@ M.onDungeonMobDeath = function(dungeonKey, instance, deadMob, player, optParams,
     else
         local entry = d.trash[slot]
         if entry and math.random(100) <= TRASH_RATE then
-            print('[augchk] TRASH AWARD slot=' .. tostring(slot) .. ' id=' .. tostring(entry.id) .. ' -> ' .. player:getName())
             awardDirect(player, entry, 1)  -- straight to the killer (see note on awardDirect)
         end
     end
