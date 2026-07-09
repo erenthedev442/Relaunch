@@ -84,6 +84,13 @@ local CONFIG =
     autoReady           = true,
     autoReadyTP         = 1000,
     autoReadyIntervalMs = 2500,
+
+    -- Auto-Engage (QoL, BST): the jug pet sics itself on the master's target the
+    -- moment it is idle or on a stale target -- like a Trust/Fellow -- so AoE
+    -- grinding does not need a manual /pet Fight per mob (which carries a recast).
+    -- Uses master:petAttack (petutils::AttackTarget), so NO Fight-command cooldown.
+    autoEngage           = true,
+    autoEngageIntervalMs = 1000,
 }
 
 -- Jug pets are petID >= SHEEP_FAMILIAR (21). 0-7 = spirits, 8-20 = SMN avatars.
@@ -100,6 +107,31 @@ local function scheduleAutoReady(pet)
             p:useMobAbility() -- no arg = pet picks from its Ready-move list
         end
         scheduleAutoReady(p)
+    end)
+end
+
+-- ── Auto-Engage loop ───────────────────────────────────────────────────────
+-- Mirror Trust/Fellow behavior: while the master is engaged, keep the jug pet on
+-- the master's battle target. Re-sic only when the pet is idle or on a different
+-- target (kill one, auto-move to the next), so no per-mob /pet Fight is needed.
+local function scheduleAutoEngage(pet)
+    pet:timer(CONFIG.autoEngageIntervalMs, function(p)
+        if not p or not p:isAlive() then
+            return
+        end
+        pcall(function()
+            local master = p:getMaster()
+            if master and master:isAlive() and master:isEngaged() then
+                local tgt = master:getTarget()
+                if tgt and not tgt:isDead() then
+                    local petTgt = p:getTarget()
+                    if not p:isEngaged() or not petTgt or petTgt:getID() ~= tgt:getID() then
+                        master:petAttack(tgt) -- petutils::AttackTarget -> no Fight recast
+                    end
+                end
+            end
+        end)
+        scheduleAutoEngage(p)
     end)
 end
 
@@ -186,6 +218,9 @@ local function applyEndgameScaling(master, pet)
 
     if CONFIG.autoReady then
         scheduleAutoReady(pet)
+    end
+    if CONFIG.autoEngage then
+        scheduleAutoEngage(pet)
     end
 end
 
