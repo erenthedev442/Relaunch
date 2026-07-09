@@ -6,7 +6,26 @@ require('scripts/globals/dynamis')
 -----------------------------------
 g_mixins = g_mixins or {}
 
+-- RELAUNCH (2026-07-09, report Spyro): stock Dynamis floods inventory with AF /
+-- Relic gear that nobody uses (players start at lvl 109), so every run ends in
+-- throwing the loot away. Block ALL droplist drops on Dynamis beastmen so only
+-- the CURRENCY remains -- currency is awarded below via killer:addTreasure(),
+-- which is INDEPENDENT of the mob's droplist, so zeroing the droplist keeps the
+-- currency economy (relic grind) fully intact while cutting the clutter.
+-- Scope: this mixin is used ONLY by the stock Dynamis zones; the Divergence
+-- instances (Dynamis-*_[D]) do NOT use it, so their medal droplists are untouched.
+-- Toggle off to restore vanilla gear drops.
+local BLOCK_GEAR_DROPS = true
+
 g_mixins.dynamis_beastmen = function(dynamisBeastmenMob)
+    if BLOCK_GEAR_DROPS then
+        -- setDropID(0) => no droplist roll at death. Runs each spawn so it's set
+        -- well before the death-time drop roll. Currency (addTreasure) is unaffected.
+        dynamisBeastmenMob:addListener('SPAWN', 'DYNAMIS_BLOCK_GEAR_DROPS', function(mob)
+            mob:setDropID(0)
+        end)
+    end
+
     local procjobs =
     {
         [xi.job.WAR] = 'ws',
