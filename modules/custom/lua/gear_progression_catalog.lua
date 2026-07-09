@@ -80,7 +80,10 @@ catalog.bronze =
 {
     weapons =
     {
-        { id = 21515, name = "Tokko Knuckles", cost = 12, jobs = 'WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC' },
+        -- 2026-07: removed Tokko Knuckles (21515) -- it is the Hand-to-Hand Stage-2 (119II)
+        -- forge output in weapon_forge_catalog.lua, so selling it here violates the
+        -- medal-vendor exclusivity rule (validate_vendor_exclusivity.py). MNK/PUP keep
+        -- silver Premium Heart, the Infamy H2H picks, and the forge path itself.
         { id = 21561, name = "Tokko Knife", cost = 12, jobs = 'RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC' },
         { id = 21617, name = "Tokko Sword", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN' },
         { id = 21670, name = "Tokko Claymore", cost = 12, jobs = 'WAR/PLD/DRK/RUN' },
