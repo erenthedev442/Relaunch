@@ -61,6 +61,18 @@ return {
     costs    = { [1] = 200,  [2] = 600,  [3] = 1500 },
     rewards  = { [1] = 400,  [2] = 1500, [3] = 4000 },
 
+    -- Difficulty scaling applied on spawn (unity_wanted.lua). The base mob HP is
+    -- far too low -- ~10k even at T3, killable with auto-attacks -- so set an
+    -- absolute HP floor + offensive mods per tier. TUNE HERE. (HP is int32, safe
+    -- to set large; att/acc/def/eva are int16 entity mods; dmgMult is the
+    -- BASE_DAMAGE_MULTIPLIER mobMod, 100 = normal, 200 = double.) Starting values
+    -- pending playtest -- dial per tier as needed.
+    difficulty = {
+        [1] = { hp =  60000, att = 200, acc = 220, def = 120, eva =  60, dmgMult = 120 },
+        [2] = { hp = 250000, att = 400, acc = 400, def = 220, eva = 110, dmgMult = 150 },
+        [3] = { hp = 800000, att = 650, acc = 620, def = 350, eva = 160, dmgMult = 180 },
+    },
+
     -- The 11 Unity leaders (xi.unityLeader). id = setUnityLeader() value.
     -- Display names kept short to fit the customMenu 150-byte/menu cap.
     leaders =

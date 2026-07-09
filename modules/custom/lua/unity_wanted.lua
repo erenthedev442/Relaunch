@@ -144,6 +144,19 @@ local function spawnWantedNm(player, nm)
     mob:setSpawn(spawnPos.x, spawnPos.y, spawnPos.z, spawnPos.rot)
     mob:spawn()
 
+    -- Difficulty scaling: base mob HP is far too low (killable with auto-attacks),
+    -- so set an absolute HP floor + offensive mods per tier. Applied AFTER spawn()
+    -- since spawn() can reset mob state. Values live in catalog.difficulty.
+    local d = catalog.difficulty and catalog.difficulty[nm.tier]
+    if d then
+        if d.hp      then mob:setMaxHP(d.hp); mob:setHP(d.hp) end
+        if d.att     then mob:addMod(xi.mod.ATT, d.att) end
+        if d.acc     then mob:addMod(xi.mod.ACC, d.acc) end
+        if d.def     then mob:addMod(xi.mod.DEF, d.def) end
+        if d.eva     then mob:addMod(xi.mod.EVA, d.eva) end
+        if d.dmgMult then mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, d.dmgMult) end
+    end
+
     -- Start the initial idle timer after spawn(), which can reset mob state.
     if despawnSecs > 0 then
         mob:setLocalVar('UW_DespawnAt', os.time() + despawnSecs)
