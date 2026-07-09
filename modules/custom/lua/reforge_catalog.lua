@@ -225,10 +225,10 @@ catalog.sources =
             --
             -- Ladder: Genbu (entry) -> Kirin (apex). Mark/stat values
             -- come from the level template; see _LEVEL_TIERS above.
-            { name = 'Genbu',  label = 'Genbu  [Lv150]',  groupId = 11404, minLv = 150, maxLv = 150, marks =  25, _t = statsFor(150) },
-            { name = 'Suzaku', label = 'Suzaku [Lv175]',  groupId = 11403, minLv = 175, maxLv = 175, marks =  40, _t = statsFor(175) },
-            { name = 'Seiryu', label = 'Seiryu [Lv200]',  groupId = 11402, minLv = 200, maxLv = 200, marks =  60, _t = statsFor(200) },
-            { name = 'Byakko', label = 'Byakko [Lv225]',  groupId = 11401, minLv = 225, maxLv = 225, marks =  90, _t = statsFor(225) },
+            { name = 'Genbu',  label = 'Genbu  [Lv150]',  groupId = 11404, minLv = 150, maxLv = 150, marks =  60, _t = statsFor(150) },
+            { name = 'Suzaku', label = 'Suzaku [Lv175]',  groupId = 11403, minLv = 175, maxLv = 175, marks =  80, _t = statsFor(175) },
+            { name = 'Seiryu', label = 'Seiryu [Lv200]',  groupId = 11402, minLv = 200, maxLv = 200, marks = 100, _t = statsFor(200) },
+            { name = 'Byakko', label = 'Byakko [Lv225]',  groupId = 11401, minLv = 225, maxLv = 225, marks = 125, _t = statsFor(225) },
             { name = 'Kirin',  label = 'Kirin  [Lv250]',  groupId = 11400, minLv = 250, maxLv = 250, marks = 150, _t = statsFor(250) },
         },
     },
@@ -244,10 +244,10 @@ catalog.sources =
         {
             -- Ladder: Bukhis (entry) -> Tinnin (apex). Tinnin retains
             -- apex status from the previous catalog (was 35 marks).
-            { name = 'Bukhis',  label = 'Bukhis  [Lv150]', groupId = 11408, minLv = 150, maxLv = 150, marks =  25, _t = statsFor(150) },
-            { name = 'Khun',    label = 'Khun    [Lv175]', groupId = 11406, minLv = 175, maxLv = 175, marks =  40, _t = statsFor(175) },
-            { name = 'Padfoot', label = 'Padfoot [Lv200]', groupId = 11405, minLv = 200, maxLv = 200, marks =  60, _t = statsFor(200) },
-            { name = 'Glavoid', label = 'Glavoid [Lv225]', groupId = 11407, minLv = 225, maxLv = 225, marks =  90, _t = statsFor(225) },
+            { name = 'Bukhis',  label = 'Bukhis  [Lv150]', groupId = 11408, minLv = 150, maxLv = 150, marks =  60, _t = statsFor(150) },
+            { name = 'Khun',    label = 'Khun    [Lv175]', groupId = 11406, minLv = 175, maxLv = 175, marks =  80, _t = statsFor(175) },
+            { name = 'Padfoot', label = 'Padfoot [Lv200]', groupId = 11405, minLv = 200, maxLv = 200, marks = 100, _t = statsFor(200) },
+            { name = 'Glavoid', label = 'Glavoid [Lv225]', groupId = 11407, minLv = 225, maxLv = 225, marks = 125, _t = statsFor(225) },
             { name = 'Tinnin',  label = 'Tinnin  [Lv250]', groupId = 11409, minLv = 250, maxLv = 250, marks = 150, _t = statsFor(250) },
         },
     },
@@ -264,10 +264,10 @@ catalog.sources =
             -- Ladder: Aello (entry) -> Hadhayosh (apex). Hadhayosh
             -- (Bahamut Behemoth-type) sits at the top as the most
             -- iconic king-tier Abyssea NM.
-            { name = 'Aello',       label = 'Aello       [Lv150]', groupId = 11413, minLv = 150, maxLv = 150, marks =  25, _t = statsFor(150) },
-            { name = 'Iratham',     label = 'Iratham     [Lv175]', groupId = 11411, minLv = 175, maxLv = 175, marks =  40, _t = statsFor(175) },
-            { name = 'Briareus',    label = 'Briareus    [Lv200]', groupId = 11410, minLv = 200, maxLv = 200, marks =  60, _t = statsFor(200) },
-            { name = 'Itzpapalotl', label = 'Itzpapalotl [Lv225]', groupId = 11412, minLv = 225, maxLv = 225, marks =  90, _t = statsFor(225) },
+            { name = 'Aello',       label = 'Aello       [Lv150]', groupId = 11413, minLv = 150, maxLv = 150, marks =  60, _t = statsFor(150) },
+            { name = 'Iratham',     label = 'Iratham     [Lv175]', groupId = 11411, minLv = 175, maxLv = 175, marks =  80, _t = statsFor(175) },
+            { name = 'Briareus',    label = 'Briareus    [Lv200]', groupId = 11410, minLv = 200, maxLv = 200, marks = 100, _t = statsFor(200) },
+            { name = 'Itzpapalotl', label = 'Itzpapalotl [Lv225]', groupId = 11412, minLv = 225, maxLv = 225, marks = 125, _t = statsFor(225) },
             { name = 'Hadhayosh',   label = 'Hadhayosh   [Lv250]', groupId = 11414, minLv = 250, maxLv = 250, marks = 150, _t = statsFor(250) },
         },
     },
@@ -1304,5 +1304,21 @@ end
 --   pool regardless of this value.
 -- =========================================================
 catalog.mainJobBias = 0.5
+
+-- =========================================================
+-- NM LOOT DROP  (Reforge_System.rollLootDrop)
+--   dropChance      : probability an NM kill drops a JSE piece at all.
+--                     Was a GUARANTEED base piece every kill; lowered
+--                     2026-07-09 (player feedback) so Marks are the steady
+--                     deterministic path and a drop is a rarer bonus.
+--                     1.0 = every kill.
+--   dropTierWeights : when a piece drops, its reforge tier is rolled from
+--                     these relative weights -- drops now arrive PRE-UPGRADED
+--                     as a random +1/+2/+3, skipping the base->+3 mark grind.
+--                     Falls back to the next lower tier (down to base) if a
+--                     piece has no art at the rolled tier.
+-- =========================================================
+catalog.dropChance      = 0.30
+catalog.dropTierWeights = { plus1 = 65, plus2 = 28, plus3 = 7 }
 
 return catalog
