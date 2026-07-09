@@ -65,14 +65,17 @@ commandObj.onTrigger = function(player, target)
     -- The category is encoded in bits 6-15 of each merit ID (id & 0xFFC0).
     -- Skipped: OTHERS (0x0140), all job-specific groups 1+2 (0x0180+),
     -- and Weaponskills (0x0680) — those are limited/expensive player choices.
-    -- EXCLUDE Max Merit (xi.merit.MAX_MERIT, sits in the HP_MP group): it raises
-    -- the held-merit CAP, and this server's base cap is already 127 -- the FFXI
-    -- client's signed-int8 ceiling. Buying it pushes the cap past 127, so the
-    -- merit-point count then renders as a NEGATIVE/garbage number. Never auto-buy it.
+    -- INCLUDES Max Merit (xi.merit.MAX_MERIT, in the HP_MP group) -- it raises the
+    -- held-merit CAP, and the live base (map.MAX_MERIT_POINTS) is only 30, so it is
+    -- a real, useful upgrade here. This is SAFE to auto-buy: merit.cpp's
+    -- hardCappedMeritMax() clamps the effective/displayed cap at 127 (the FFXI
+    -- client's signed-int8 ceiling), so it can no longer inflate the hold cap into
+    -- the negative/garbage-render range the way it did before that clamp existed
+    -- (which is why it used to be excluded). Player-requested 2026-07-08.
     local meritIds = {}
     for _, id in pairs(xi.merit) do
         local cat = bit.band(id, 0xFFC0)
-        if cat >= 0x0040 and cat <= 0x0100 and id ~= xi.merit.MAX_MERIT then
+        if cat >= 0x0040 and cat <= 0x0100 then
             table.insert(meritIds, id)
         end
     end
