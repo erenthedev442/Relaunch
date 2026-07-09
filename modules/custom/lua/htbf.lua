@@ -47,6 +47,74 @@ if xi.trust and xi.trust.checkBattlefieldTrustCount and not xi.trust._htbfTrustP
     end
 end
 
+-- ---------------------------------------------------------------------------
+-- Entrance tier legend (cosmetic fix for the "unmarked menu rows").
+-- The burning-circle "Which battlefield will you enter?" list draws each row's
+-- NAME from the CLIENT's zone dialog DAT, indexed by menu slot (content.index).
+-- Retail zones only carry names for their few retail slots, so our custom HTBF
+-- tiers -- which sit on indices past those -- render as BLANK ("unmarked") rows.
+-- The server cannot inject names into that pre-selection menu, so instead we
+-- print a legend to the log the instant the menu is built, telling the player
+-- which unnamed rows are which HTBF tiers.
+--
+-- We hook by wrapping xi.battlefield.getBattlefieldOptions rather than
+-- Battlefield.onEntryTrigger: onEntryTrigger looks that function up DYNAMICALLY
+-- on the xi.battlefield table right before opening the menu (battlefield.lua),
+-- so the wrap fires reliably no matter when each entrance NPC captured
+-- onEntryTrigger. (onEntryTrigger is bound BY VALUE at Battlefield:register()
+-- time -- and the base retail fight on a shared entrance registers before the
+-- HTBF tier files even load this module -- so wrapping it directly would be
+-- captured stale. Same reason the trust patch above wraps a dynamically-lookup'd
+-- function.) Installed once, guarded so non-HTBF entrances print nothing.
+-- ---------------------------------------------------------------------------
+function htbf.printEntranceLegend(player, npc)
+    local zoneId  = player:getZoneID()
+    local npcName = npc:getName()
+
+    -- HTBF fights on THIS entrance that the player can actually enter (holds the
+    -- gem = passes the same requiredKeyItems gate that put them in the menu), in
+    -- menu (index) order.
+    local rows = {}
+    for _, f in pairs(catalog.fights) do
+        if f.zone == zoneId and player:hasKeyItem(f.gem) then
+            local match = (f.entryNpc == npcName)
+            if not match and f.entryNpcs then
+                for _, n in ipairs(f.entryNpcs) do
+                    if n == npcName then match = true break end
+                end
+            end
+            if match then
+                rows[#rows + 1] = { idx = f.baseIndex, label = f.label }
+            end
+        end
+    end
+
+    if #rows == 0 then return end
+    table.sort(rows, function(a, b) return a.idx < b.idx end)
+
+    player:printToPlayer('[HTBF] Some entries below show no name (client limit). High-Tier Battlefields:', xi.msg.channel.SYSTEM_3)
+    for _, r in ipairs(rows) do
+        player:printToPlayer(string.format(
+            '[HTBF]   %s -- three consecutive rows = Tier I, II, III (easy -> hardest).', r.label),
+            xi.msg.channel.SYSTEM_3)
+    end
+end
+
+-- Wrap the menu-options builder (dynamically dispatched inside onEntryTrigger).
+if xi.battlefield and xi.battlefield.getBattlefieldOptions and not xi.battlefield._htbfLegendPatched then
+    xi.battlefield._htbfLegendPatched = true
+    local _origOptions = xi.battlefield.getBattlefieldOptions
+    xi.battlefield.getBattlefieldOptions = function(player, npc, trade)
+        local options = _origOptions(player, npc, trade)
+        -- Only for gem entry (no trade); printEntranceLegend no-ops on any
+        -- entrance without HTBF tiers the player qualifies for.
+        if not trade then
+            pcall(htbf.printEntranceLegend, player, npc)
+        end
+        return options
+    end
+end
+
 function htbf.register(fightKey, tier)
     local f     = catalog.fights[fightKey]
     local scale = catalog.tierScale[tier]
