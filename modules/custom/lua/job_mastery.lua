@@ -184,6 +184,13 @@ local sessions = {}
 xi._jm_sessions  = sessions
 xi._jm_guardians = GUARDIANS
 
+-- Monotonic per-run token. Each challenge start stamps its session with a unique
+-- runId; every boss closure captures the runId it was spawned under. A kill only
+-- credits completion when the CURRENT session is still that same run, so a boss
+-- from an aborted/abandoned run whose death is processed late (player left the
+-- zone, aborted, then started a fresh run) can never complete the new run.
+local nextRunId = 0
+
 local function getSession(p)   return sessions[p:getName()] end
 local function clearSession(p) sessions[p:getName()] = nil  end
 
@@ -240,9 +247,15 @@ endChallenge = function(player, reason)
         player:printToPlayer('[Mastery] You left the arena. Challenge forfeited.', xi.msg.channel.SYSTEM_3)
     end
 
-    player:timer(2000, function(p)
-        p:setPos(EXIT_WARP.x, EXIT_WARP.y, EXIT_WARP.z, EXIT_WARP.rot, EXIT_WARP.zoneId)
-    end)
+    -- 'left' means the player is already mid-transition OUT of the arena (an
+    -- external warp / home point / GM teleport). Don't yank them to the exit warp
+    -- on top of their own zone change -- just forfeit in place. Death/abort happen
+    -- while the player is still standing in the arena, so those DO warp out.
+    if reason ~= 'left' then
+        player:timer(2000, function(p)
+            p:setPos(EXIT_WARP.x, EXIT_WARP.y, EXIT_WARP.z, EXIT_WARP.rot, EXIT_WARP.zoneId)
+        end)
+    end
 end
 
 xi._jm_endChallenge = endChallenge
@@ -254,6 +267,7 @@ local function spawnGuardian(player, weaponKey)
     local g         = GUARDIANS[weaponKey]
     local affix     = AFFIXES[math.random(#AFFIXES)]
     local ownerName = player:getName()
+    local runId     = sessions[ownerName] and sessions[ownerName].runId
 
     local px, py, pz = player:getXPos(), player:getYPos(), player:getZPos()
     local mx = px + 12
@@ -274,7 +288,12 @@ local function spawnGuardian(player, weaponKey)
 
         onMobDeath = function(deadMob, killer)
             mechanics.cleanup(deadMob)
-            if not sessions[ownerName] then return end
+            -- Bind the credit to THIS run. If the active session belongs to a
+            -- different (newer) run -- or there is no session at all -- this is a
+            -- stale boss from an aborted/abandoned run; killing it must NOT
+            -- complete whatever the player is doing now.
+            local s = sessions[ownerName]
+            if not s or s.runId ~= runId then return end
             sessions[ownerName] = nil
             local resolved = GetPlayerByName(ownerName)
             if resolved then completeChallenge(resolved, weaponKey) end
@@ -312,7 +331,7 @@ local function spawnGuardian(player, weaponKey)
 
     -- Attach hardcore fight mechanics (stance dance / AoE / CC / drain /
     -- phases / doom / enrage). Must come AFTER all stat + HP setup.
-    mechanics.attach(mob, GUARDIAN_MECH_CFG)
+    mechanics.attach(mob, GUARDIAN_MECH_CFG, ownerName)
 
     -- Store ref for abort/death cleanup.
     local sess = sessions[ownerName]
@@ -323,7 +342,7 @@ local function spawnGuardian(player, weaponKey)
     local spawnHp = finalHp
     player:timer(45000, function(p)
         local s = sessions[ownerName]
-        if not s or s.boss ~= mob then return end   -- session gone or boss replaced
+        if not s or s.runId ~= runId or s.boss ~= mob then return end   -- session gone, new run, or boss replaced
         local hp = 0
         local ok = pcall(function() hp = mob:getHP() end)
         if not ok then return end                    -- mob already gone
@@ -390,7 +409,8 @@ local function showMasteryMenu(player, page)
                     p:printToPlayer('[Mastery] Active challenge. !mastery abort to reset.', xi.msg.channel.SYSTEM_3)
                     return
                 end
-                sessions[p:getName()] = { weapon = capturedKey, boss = nil }
+                nextRunId = nextRunId + 1
+                sessions[p:getName()] = { weapon = capturedKey, boss = nil, runId = nextRunId }
                 p:setPos(WARP_IN.x, WARP_IN.y, WARP_IN.z, WARP_IN.rot, CHALLENGE_ZONE_ID)
             end,
         })
@@ -449,6 +469,20 @@ m:addOverride('xi.zones.Walk_of_Echoes.Zone.onZoneIn', function(player, prevZone
         startChallenge(player, sess.weapon)
     end
     return cs
+end)
+
+-- Leaving the arena by ANY means (warp scroll, home point, GM teleport, etc.)
+-- forfeits the run and despawns the stranded Guardian. Closes the "strand the
+-- boss in a dormant zone, start a fresh run, let the old boss's queued death
+-- credit the new run" exploit at the source, and prevents the session soft-lock
+-- (an abandoned session would otherwise block starting another challenge until
+-- the player manually ran !mastery abort). endChallenge clears the session
+-- BEFORE killing the boss, so the boss's onMobDeath awards no credit.
+m:addOverride('xi.zones.Walk_of_Echoes.Zone.onZoneOut', function(player, ...)
+    pcall(super, player, ...)
+    if getSession(player) then
+        endChallenge(player, 'left')
+    end
 end)
 
 -- Death ends the challenge.

@@ -207,11 +207,16 @@ local function configureMob(mobid)
     -- Difficulty stat block; re-apply on every spawn. Reset the HP-scale guard first
     -- so each fresh spawn re-scales from base HP (SPAWN fires with the mob at base).
     mob:addListener('SPAWN', 'AFFINITY_STATS', function(m)
+        -- Mark this as an affinity autopop NM. King Vinegarroon's mob script
+        -- self-despawns on roam outside a sandstorm (retail burrow) -- with the
+        -- autopop force-repopping every 30s that becomes a spawn/despawn loop you
+        -- can never claim. Its onMobRoam reads this flag to skip the burrow.
+        m:setLocalVar('affinityNM', 1)
         m:setLocalVar('affHpScaled', 0)
         m:setMobMod(xi.mobMod.IDLE_DESPAWN, 0)
         applyStats(m)
     end)
-    if mob:isSpawned() then applyStats(mob) end
+    if mob:isSpawned() then mob:setLocalVar('affinityNM', 1); applyStats(mob) end
 
     -- Keep affinity NMs up: the Sky gods (Genbu/Seiryu/Byakko/Suzaku) set a 300s
     -- IDLE_DESPAWN in their retail onMobInitialize, which despawns them whenever
