@@ -95,14 +95,19 @@ end
 -- weapon skill's own `damage`. All numeric values come from the catalog.
 -----------------------------------
 local function applyWSEffects(attacker, target, damage)
-    if not damage or damage <= 0 then return end
-    if target == nil or target:isDead() then return end
-    local damType = attacker:getWeaponDamageType(xi.slot.MAIN)
+    if not damage or damage <= 0 or attacker == nil or target == nil then return end
+    -- IMPORTANT: WEAPONSKILL_USE fires AFTER the hit lands, so on a killing blow
+    -- `target` is already dead. We must NOT bail on that -- lifesteal and splash
+    -- still owe the player their effect (bailing here was why the effects felt
+    -- "off and on" / "none of it works": WS routinely one-shot the mob). Only the
+    -- crit BONUS (extra damage to the primary target) is pointless once it's dead.
+    local damType     = attacker:getWeaponDamageType(xi.slot.MAIN)
+    local targetAlive = not target:isDead()
     for _, fx in ipairs(C.wsEffects) do
         local tier = attacker:getCharVar(fx.var) or 0
         if tier > 0 then
             if fx.kind == 'crit' then
-                if math.random(100) <= tier * fx.chancePerTier then
+                if targetAlive and math.random(100) <= tier * fx.chancePerTier then
                     local bonus = math.floor(damage * fx.bonusPct / 100)
                     if bonus > 0 then
                         target:takeDamage(bonus, attacker, xi.attackType.PHYSICAL, damType)
@@ -111,10 +116,15 @@ local function applyWSEffects(attacker, target, damage)
             elseif fx.kind == 'splash' then
                 local splash = math.floor(damage * (tier * fx.pctPerTier) / 100)
                 if splash > 0 then
+                    -- IGNORE_BATTLEID so the splash reaches EVERY mob in the radius,
+                    -- not only the ones already claimed/engaged. findFlags=0 limited
+                    -- it to the couple of mobs in the current battle.
                     local enemies = attacker:getEntitiesInRange(
-                        target, xi.aoeType.ROUND, xi.aoeRadius.TARGET, fx.radius or 10, 0, xi.targetType.ENEMY)
+                        target, xi.aoeType.ROUND, xi.aoeRadius.TARGET, fx.radius or 10,
+                        xi.findFlag.IGNORE_BATTLEID, xi.targetType.ENEMY)
+                    local tid = target:getID()
                     for _, e in ipairs(enemies) do
-                        if not e:isDead() and e:getID() ~= target:getID() then
+                        if e ~= nil and not e:isDead() and e:getID() ~= tid then
                             e:takeDamage(splash, attacker, xi.attackType.PHYSICAL, damType)
                         end
                     end
