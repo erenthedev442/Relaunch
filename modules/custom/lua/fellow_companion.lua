@@ -219,21 +219,34 @@ local CONFIG =
     -- APPEARANCE picker: each entry has a modelId applied via setModelId() right after
     -- spawn. The spawn chassis is always LYNX_FAMILIAR (combat AI); only the visual
     -- is swapped. Model IDs derived from mob_pools.modelid bytes [2-3] little-endian.
+    --
+    -- CRASH RISK (report 2026-07-09, Duff): the pet's TP move is chosen by ROLE,
+    -- independent of the appearance. If the displayed model's skeleton lacks the
+    -- performed mob-skill's animation, the CLIENT force-closes (confirmed:
+    -- Cardian + Thunderstrike). `disabled = true` hides a look from the picker AND
+    -- makes any stored selection of it fall back to the default Lynx chassis, so
+    -- nobody is stuck on a crashy model. Disabled below = the confirmed crasher +
+    -- the most non-standard skeletons (floating / legless / plant / imp), which are
+    -- the highest risk of missing an arbitrary mob-skill animation.
+    -- NOTE: this is CURATION, not a guarantee -- a kept model can still crash on a
+    -- specific move (the Cardian crash was a caster model that DID have cast anims).
+    -- Toggle `disabled` as in-game testing confirms each look. Indices are stable,
+    -- so flipping the flag never shifts anyone's saved appearance.
     models =
     {
         -- `ws` = this form's SIGNATURE TP move, forced at TP cap (useMobAbility).
-        { name = 'Moogle',     modelId = 3035, ws = xi.mobSkill.METEORITE          },  -- light burst
-        { name = 'Mandragora', modelId = 300,  ws = xi.mobSkill.AERO_IV            },  -- wind nuke
-        { name = 'Coeurl',     modelId = 367,  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder (coeurl signature)
-        { name = 'Sabotender', modelId = 372,  ws = xi.mobSkill.THOUSAND_NEEDLES_1 },  -- 1000 Needles (cactuar)
-        { name = 'Cardian',    modelId = 431,  ws = xi.mobSkill.FIRE_IV            },  -- fire nuke
-        { name = 'Goblin',     modelId = 484,  ws = xi.mobSkill.BOMB_TOSS_1        },  -- Bomb Toss (goblin). 484 = Goblin_Brigand humanoid; 292 was the Slime family (bug, 2026-07-07).
-        { name = 'Yagudo',     modelId = 580,  ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit physical (yagudo)
-        { name = 'Tonberry',   modelId = 1177, ws = xi.mobSkill.CURSED_SPHERE_1    },  -- dark burst
-        { name = 'Antican',    modelId = 1280, ws = xi.mobSkill.ROCK_BUSTER        },  -- earth physical
-        { name = 'Boggart',    modelId = 451,  ws = xi.mobSkill.BLIZZARD_IV        },  -- ice nuke
-        { name = 'Goobbue',    modelId = 296,  ws = xi.mobSkill.AURORAL_UPPERCUT_1 },  -- heavy uppercut
-        { name = 'Adventurer', modelId = 3119, ws = xi.mobSkill.CRESCENT_FANG      },  -- strong physical
+        { name = 'Moogle',     modelId = 3035, ws = xi.mobSkill.METEORITE,          disabled = true },  -- CRASH-RISK: floating/tiny skeleton
+        { name = 'Mandragora', modelId = 300,  ws = xi.mobSkill.AERO_IV,            disabled = true },  -- CRASH-RISK: legless plant skeleton
+        { name = 'Coeurl',     modelId = 367,  ws = xi.mobSkill.CHARGED_WHISKER    },  -- thunder (coeurl signature) -- PENDING TEST
+        { name = 'Sabotender', modelId = 372,  ws = xi.mobSkill.THOUSAND_NEEDLES_1, disabled = true },  -- CRASH-RISK: rigid cactus skeleton
+        { name = 'Cardian',    modelId = 431,  ws = xi.mobSkill.FIRE_IV,            disabled = true },  -- CONFIRMED CRASH (Thunderstrike)
+        { name = 'Goblin',     modelId = 484,  ws = xi.mobSkill.BOMB_TOSS_1        },  -- Bomb Toss (goblin). 484 = Goblin_Brigand humanoid; 292 was the Slime family (bug, 2026-07-07). -- PENDING TEST
+        { name = 'Yagudo',     modelId = 580,  ws = xi.mobSkill.DANCING_EDGE       },  -- multi-hit physical (yagudo) -- PENDING TEST
+        { name = 'Tonberry',   modelId = 1177, ws = xi.mobSkill.CURSED_SPHERE_1    },  -- dark burst -- PENDING TEST
+        { name = 'Antican',    modelId = 1280, ws = xi.mobSkill.ROCK_BUSTER        },  -- earth physical -- PENDING TEST
+        { name = 'Boggart',    modelId = 451,  ws = xi.mobSkill.BLIZZARD_IV,        disabled = true },  -- CRASH-RISK: imp skeleton
+        { name = 'Goobbue',    modelId = 296,  ws = xi.mobSkill.AURORAL_UPPERCUT_1, disabled = true },  -- CRASH-RISK: plant-beast skeleton
+        { name = 'Adventurer', modelId = 3119, ws = xi.mobSkill.CRESCENT_FANG      },  -- strong physical -- PENDING TEST
     },
 
     -- OUTFIT picker: humanoid job-class themes applied on top of Appearance.
@@ -310,7 +323,10 @@ local function roleDef(p) return CONFIG.roles[getRole(p)] or CONFIG.roles[CONFIG
 -- Appearance = NPC model ID applied via setModelId after spawn; Name = live display name.
 local function chosenModelId(p)
     local mdl = CONFIG.models[getN(p, V.modelPet)]
-    return mdl and mdl.modelId
+    -- A disabled (crash-risk) or missing look falls back to the default Lynx
+    -- chassis (no overlay) so a stored selection can never crash the client.
+    if not mdl or mdl.disabled then return nil end
+    return mdl.modelId
 end
 -- Outfit overrides Appearance when set (0 = no outfit).
 local function getOutfitModelId(p)
@@ -1007,22 +1023,28 @@ end
 -- Paginated appearance picker -> swaps the spawn chassis (petId); re-summon to apply.
 openModel = function(p, page)
     page = page or 0
-    local models = CONFIG.models
+    -- Only list enabled looks. Disabled ones are crash-risk models pending
+    -- verification (see CONFIG.models). Keep each look's ORIGINAL index so a
+    -- stored Fellow_ModelPet never shifts when the disabled flags change.
+    local enabled = {}
+    for idx, m in ipairs(CONFIG.models) do
+        if not m.disabled then enabled[#enabled + 1] = { idx = idx, name = m.name } end
+    end
     local per    = CONFIG.namesPerPage
-    local pages  = math.max(1, math.ceil(#models / per))
+    local pages  = math.max(1, math.ceil(#enabled / per))
     page = page % pages
     local cur    = getN(p, V.modelPet)
     local options = {}
-    for i = page * per + 1, math.min((page + 1) * per, #models) do
-        local idx = i
-        local label = (idx == cur) and (models[idx].name .. ' *') or models[idx].name
+    for i = page * per + 1, math.min((page + 1) * per, #enabled) do
+        local e     = enabled[i]
+        local label = (e.idx == cur) and (e.name .. ' *') or e.name
         options[#options + 1] =
         {
             label,
             function(pp)
-                setN(pp, V.modelPet, idx)
+                setN(pp, V.modelPet, e.idx)
                 respawnIfOut(pp)  -- live-swap the chassis if the Fellow is out
-                pp:printToPlayer(string.format('[Fellow] Appearance set: %s.', models[idx].name), SYS)
+                pp:printToPlayer(string.format('[Fellow] Appearance set: %s.', e.name), SYS)
                 openModel(pp, page)
             end,
         }
