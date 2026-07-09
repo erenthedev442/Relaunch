@@ -93,7 +93,13 @@ end
 
 entity.onMobRoam = function(mob)
     local weather = mob:getWeather()
+    -- Retail: KV only stays up during a Dust/Sand Storm; otherwise it burrows
+    -- (despawns) while roaming. The relaunch affinity autopop keeps KV always
+    -- popped as a farmable NM and stamps affinityNM=1 on spawn -- skip the burrow
+    -- for that copy, or the force-repop + weather-despawn fight in a spawn/despawn
+    -- loop you can never claim. Retail (non-affinity) KV is unflagged -> unchanged.
     if
+        mob:getLocalVar('affinityNM') == 0 and
         weather ~= xi.weather.DUST_STORM and
         weather ~= xi.weather.SAND_STORM
     then
