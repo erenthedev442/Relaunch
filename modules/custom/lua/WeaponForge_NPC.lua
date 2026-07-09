@@ -166,7 +166,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             end
         end
 
-        if player:getFreeInventorySlots() == 0 then
+        if player:getFreeSlotsCount() == 0 then
             player:printToPlayer('[Weapon Forge] Free an inventory slot before forging.', S)
             return false
         end
@@ -264,7 +264,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return false
         end
 
-        if player:getFreeInventorySlots() == 0 then
+        if player:getFreeSlotsCount() == 0 then
             player:printToPlayer(
                 '[Weapon Forge] Free an inventory slot before forging.',
                 xi.msg.channel.SYSTEM_3)
@@ -559,7 +559,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer('[Weapon Forge] You no longer have the weapon to forge.', S)
             return
         end
-        if player:getFreeInventorySlots() == 0 then
+        if player:getFreeSlotsCount() == 0 then
             player:printToPlayer('[Weapon Forge] Free an inventory slot before forging.', S)
             return
         end
