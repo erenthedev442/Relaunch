@@ -513,6 +513,26 @@ xi.job_utils.dancer.useWildFlourishAbility = function(player, target, ability, a
     return 0
 end
 
+xi.job_utils.dancer.useStrikingFlourishAbility = function(player, target, ability)
+    local numMoves = getFinishingMoveCount(player)
+    -- Twofold at exactly 2 moves; threefold once 3+ can be spent (matches stock power).
+    local power    = numMoves >= 3 and 3 or 2
+
+    player:addStatusEffect(xi.effect.STRIKING_FLOURISH, { power = power, duration = 60, origin = player })
+    setFinishingMoves(player, numMoves - 2)
+
+    return xi.effect.STRIKING_FLOURISH
+end
+
+xi.job_utils.dancer.useTernaryFlourishAbility = function(player, target, ability)
+    local numMoves = getFinishingMoveCount(player)
+
+    player:addStatusEffect(xi.effect.TERNARY_FLOURISH, { power = 3, duration = 60, origin = player })
+    setFinishingMoves(player, numMoves - 3)
+
+    return xi.effect.TERNARY_FLOURISH
+end
+
 xi.job_utils.dancer.useContradanceAbility = function(player, target, ability)
     player:addStatusEffect(xi.effect.CONTRADANCE, { duration = 60, origin = player })
 
