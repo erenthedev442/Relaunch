@@ -50,6 +50,17 @@ local function build()
     end
 end
 
+-- Return a random catalyst itemId from tier `t`'s pool (nil if the tier is empty
+-- or invalid). Builds the pools on first use. Unlike M.roll (disabled), this is a
+-- pure picker -- used by the open-world FALLBACK drop in augment_catalyst_drops.lua
+-- so any non-mapped mob can still yield a level-appropriate catalyst.
+function M.pickForTier(t)
+    build()
+    local pool = pools[t]
+    if not pool or #pool == 0 then return nil end
+    return pool[math.random(#pool)]
+end
+
 -- Roll a tier-`augTier` catalyst onto `player` at `rate`% (default DROP_RATE).
 -- No-op if the pool is empty, the roll misses, or the player's inventory is
 -- full (with a heads-up in the latter case so the drop isn't silently eaten).

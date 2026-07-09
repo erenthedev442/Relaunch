@@ -16,19 +16,33 @@
 -----------------------------------
 require('modules/module_utils')
 
-local MAP = require('modules/custom/lua/augment_catalyst_mobs')  -- ['Mob_Internal_Name'] = itemId
-local m   = Module:new('augment_catalyst_drops')
-local SYS = xi.msg.channel.SYSTEM_3
+local MAP   = require('modules/custom/lua/augment_catalyst_mobs')   -- ['Mob_Internal_Name'] = itemId
+local POOLS = require('modules/custom/lua/augment_catalyst_pools')  -- M.pickForTier(tier) -> random catalyst
+local m     = Module:new('augment_catalyst_drops')
+local SYS   = xi.msg.channel.SYSTEM_3
 
-local DROP_RATE = 50   -- % chance the assigned mob drops its catalyst (tune in playtest)
+-- Drop rates (tune in playtest).
+--   DROP_RATE     = a MAPPED mob dropping its ONE assigned catalyst (targeted grind).
+--   FALLBACK_RATE = a NON-mapped mob dropping a RANDOM level-appropriate catalyst.
+-- Diagnostic (2026-07-07) found ~91% of kills are non-mapped mobs, so catalysts
+-- felt absent. The fallback lets any mob contribute; the level->tier banding keeps
+-- higher tiers gated to higher-level mobs (bands mirror the 1:1 map: T0<=28,
+-- T1 29-49, T2 50-72, T3 73-94, T4 95+).
+local DROP_RATE     = 60
+local FALLBACK_RATE = 12
 
--- ── TEMP DIAGNOSTIC (2026-07-07) ──────────────────────────────────────────
--- Trace WHY a catalyst drop does / doesn't fire. Every PLAYER-killed mob logs ONE
--- [CatalystDBG] line to map-server.log naming the gate it hit. If you kill a mob
--- and see NO [CatalystDBG] line at all, onMobDeathEx never fired for it (the mob
--- wasn't claimed by you -> the C++ only calls it for the claimer). Grep the log for
--- 'CatalystDBG'. Set DEBUG = false (or delete this block) once diagnosed.
-local DEBUG = true
+local function tierForLevel(lvl)
+    if     lvl >= 95 then return 4
+    elseif lvl >= 73 then return 3
+    elseif lvl >= 50 then return 2
+    elseif lvl >= 29 then return 1
+    else                  return 0 end
+end
+
+-- ── DIAGNOSTIC TRACE (2026-07-07) ─────────────────────────────────────────
+-- Set DEBUG = true to log one [CatalystDBG] line per player kill (which gate it
+-- hit). Left in place, off, so it can be re-enabled without another code change.
+local DEBUG = false
 local function dbg(msg) if DEBUG then print('[CatalystDBG] ' .. msg) end end
 
 -- itemId -> stat label, built once from the catalog (for the drop message).
@@ -96,8 +110,24 @@ m:addOverride('xi.mob.onMobDeathEx', function(mob, player, isKiller, isWeaponSki
     if mob:isNM() then dbg(mname .. ' -> skip: NM (catalysts never drop from NMs)'); return end
 
     local itemId = MAP[mname]
-    if not itemId then dbg(mname .. ' -> skip: not in the catalyst mob map'); return end
+    if not itemId then
+        -- FALLBACK: non-mapped mob -> chance at a RANDOM level-appropriate catalyst,
+        -- so any farming yields catalysts (not just the 186 assigned mobs).
+        if math.random(100) > FALLBACK_RATE then
+            dbg(mname .. ' -> skip: not mapped, fallback roll missed')
+            return
+        end
+        local lvl = 0
+        pcall(function() lvl = mob:getMainLvl() or 0 end)
+        local fbId = POOLS.pickForTier(tierForLevel(lvl))
+        if not fbId then dbg(mname .. ' -> skip: fallback tier pool empty'); return end
+        local okf = award(player, fbId)
+        dbg(string.format('%s (Lv%d) -> FALLBACK %s catalyst itemId=%d for %s', mname, lvl,
+            okf and 'AWARDED' or 'INV-FULL', fbId, player:getName()))
+        return
+    end
 
+    -- Mapped mob: its ONE assigned catalyst at the (higher) targeted rate.
     local roll = math.random(100)
     if roll > DROP_RATE then
         dbg(string.format('%s -> skip: roll %d > DROP_RATE %d', mname, roll, DROP_RATE))
