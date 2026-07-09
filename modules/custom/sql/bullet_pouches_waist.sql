@@ -49,3 +49,13 @@ INSERT INTO `item_mods` (`itemId`,`modId`,`value`) VALUES
     (26348,  28, 35), (26348,  30, 25), (26348, 305, 100),   -- Living:      MATT 35, MACC 25
     (26347,  24, 30), (26347,  26, 30), (26347, 305, 100),   -- Eradicating: RATT 30, RACC 30
     (26349,  26, 35), (26349,  30, 35), (26349, 305, 100);   -- Devastating: RACC 35, MACC 35
+
+-- ----- 5. de-register the "usable" identity so they are PURE WAIST GEAR --------
+--   These 6 items (4 bullet pouches + chrono quiver + quelling bolt quiver) were
+--   ALSO in item_usable (use -> 99-stack, 1h reuse) WHILE being waist gear -- the
+--   dual registration is what made pouches/quivers "hit or miss" (client vs server
+--   disagree on equip-vs-use). Worn infinite-ammo is the design, and the ammo
+--   itself is now buyable in !shop, so the usable dispenser is redundant. Drop it
+--   -> one clean identity, no cooldown. (To restore the usable dispensers instead,
+--   remove these items from item_equipment/item_mods and re-add item_usable rows.)
+DELETE FROM `item_usable` WHERE `itemid` IN (26345, 26346, 26347, 26348, 26349, 26350);
