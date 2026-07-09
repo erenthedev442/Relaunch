@@ -22,9 +22,9 @@ from tools.docgen._markers import write_between_markers
 from tools.docgen._bgwiki import item_anchor
 
 # Keep in sync with augment_dungeon_drops.lua (runtime knobs).
-TRASH_RATE       = 30
-BOSS_REPEAT_RATE = 35
-BOSS_QTY         = 5
+TRASH_RATE      = 30
+BOSS_QTY        = 5
+BOSS_REPEAT_QTY = 2
 
 _ENTRY_RE = re.compile(
     r"\{ id = (\d+), tier = (\d+), cat = \d+, label = '([^']*)'(?:, item = '((?:[^'\\]|\\.)*)')? \}"
@@ -118,10 +118,11 @@ def _render(drops: dict[str, dict], dungeons: dict[str, dict]) -> str:
         f"**treasure pool**, so anyone in the party can lot it. Same 1:1 model as "
         f"open-world catalyst mobs, so you can target a specific augment.")
     lines.append(
-        f"- **Boss** — **every party member** rolls a catalyst from the family's "
-        f"boss pool and receives **×{BOSS_QTY}** of it, straight to inventory: "
-        f"**guaranteed on your first boss kill of that dungeon each day** (UTC), "
-        f"**{BOSS_REPEAT_RATE}%** on repeat clears.")
+        f"- **Boss** — appears **only after you clear all 12 guardians**, so a boss "
+        f"kill always caps a full clear. **Every party member** then rolls a catalyst "
+        f"from the family's boss pool, straight to inventory, **guaranteed on every "
+        f"clear**: **×{BOSS_QTY}** on your first clear each UTC day, **×{BOSS_REPEAT_QTY}** "
+        f"on repeat clears (never nothing).")
     lines.append("")
     lines.append(
         "Trade catalysts to the **Augment Moogle** to apply them. Every augment is "
@@ -137,8 +138,8 @@ def _render(drops: dict[str, dict], dungeons: dict[str, dict]) -> str:
         lines.append("")
         lines.append(
             f"_Trash: **{TRASH_RATE}%** · **×1** · dropped to the treasure pool "
-            f"(whole party can lot) — Boss: **first clear each day guaranteed**, then "
-            f"**{BOSS_REPEAT_RATE}%** · **×{BOSS_QTY}** · to each member._")
+            f"(whole party can lot) — Boss: **every full clear**, **×{BOSS_QTY}** first "
+            f"each UTC day then **×{BOSS_REPEAT_QTY}** on repeats · to each member._")
         lines.append("")
         lines.append(f"**Boss pool — {info['boss']}** (×{BOSS_QTY} per member per roll):")
         lines.append("")
