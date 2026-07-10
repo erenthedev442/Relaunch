@@ -17,9 +17,6 @@ INSERT IGNORE INTO `item_mods` VALUES (20579, 24, 10);   -- RATT (RATT: 10)
 INSERT IGNORE INTO `item_mods` VALUES (20579, 25, 15);   -- ACC (ACC: 15)
 INSERT IGNORE INTO `item_mods` VALUES (20579, 23, 10);   -- ATT (ATT: 10)
 INSERT IGNORE INTO `item_mods` VALUES (20579, 68, 22);   -- EVA (EVA: 22)
--- TODO skinflayer: unparsed token: Magic
--- TODO skinflayer: unparsed token: Accuracy
--- TODO skinflayer: unparsed token: skill
 
 -- enchufla (20597) -- Enchufla
 INSERT IGNORE INTO `item_mods` VALUES (20597, 259, 4);   -- DUAL_WIELD (DUAL_WIELD: 4)
@@ -27,9 +24,6 @@ INSERT IGNORE INTO `item_mods` VALUES (20597, 25, 10);   -- ACC (ACC: 10)
 INSERT IGNORE INTO `item_mods` VALUES (20597, 23, 10);   -- ATT (ATT: 10)
 INSERT IGNORE INTO `item_mods` VALUES (20597, 68, 22);   -- EVA (EVA: 22)
 INSERT IGNORE INTO `item_mods` VALUES (20597, 491, 10);   -- WALTZ_POTENCY (WALTZ_POTENCY: 10)
--- TODO enchufla: unparsed token: Magic
--- TODO enchufla: unparsed token: Accuracy
--- TODO enchufla: unparsed token: skill
 -- TODO enchufla: unparsed token: Waltz
 -- TODO enchufla: unparsed token: delay
 
@@ -39,9 +33,6 @@ INSERT IGNORE INTO `item_mods` VALUES (20598, 421, 5);   -- CRIT_DMG_INCREASE (C
 INSERT IGNORE INTO `item_mods` VALUES (20598, 25, 10);   -- ACC (ACC: 10)
 INSERT IGNORE INTO `item_mods` VALUES (20598, 23, 10);   -- ATT (ATT: 10)
 INSERT IGNORE INTO `item_mods` VALUES (20598, 68, 22);   -- EVA (EVA: 22)
--- TODO shijo: unparsed token: Magic
--- TODO shijo: unparsed token: Accuracy
--- TODO shijo: unparsed token: skill
 -- TODO shijo: unparsed token: Additional
 -- TODO shijo: unparsed token: effect
 -- TODO shijo: unparsed token: Flee
@@ -52,10 +43,6 @@ INSERT IGNORE INTO `item_mods` VALUES (20599, 30, 10);   -- MACC (MACC: 10)
 INSERT IGNORE INTO `item_mods` VALUES (20599, 311, 108);   -- MAGIC_DAMAGE (MAGIC_DAMAGE: 108)
 INSERT IGNORE INTO `item_mods` VALUES (20599, 170, 7);   -- FASTCAST (FASTCAST: 7)
 INSERT IGNORE INTO `item_mods` VALUES (20599, 25, 10);   -- ACC (ACC: 10)
-INSERT IGNORE INTO `item_mods` VALUES (20599, 119, 10);   -- SINGING (SINGING: 10)
--- TODO kali: unparsed token: Magic
--- TODO kali: unparsed token: Accuracy
--- TODO kali: unparsed token: skill
 -- TODO kali: unparsed token: Song
 -- TODO kali: unparsed token: effect
 -- TODO kali: unparsed token: duration
@@ -64,9 +51,6 @@ INSERT IGNORE INTO `item_mods` VALUES (20599, 119, 10);   -- SINGING (SINGING: 1
 INSERT IGNORE INTO `item_mods` VALUES (20700, 161, -600);   -- DMGPHYS (DMGPHYS: -6)
 INSERT IGNORE INTO `item_mods` VALUES (20700, 25, 10);   -- ACC (ACC: 10)
 INSERT IGNORE INTO `item_mods` VALUES (20700, 23, 10);   -- ATT (ATT: 10)
--- TODO nixxer: unparsed token: Magic
--- TODO nixxer: unparsed token: Accuracy
--- TODO nixxer: unparsed token: skill
 -- TODO nixxer: unparsed token: Shield
 -- TODO nixxer: unparsed token: Mastery
 -- TODO nixxer: unparsed token: Chance
@@ -79,10 +63,6 @@ INSERT IGNORE INTO `item_mods` VALUES (20701, 28, 14);   -- MATT (MATT: 14)
 INSERT IGNORE INTO `item_mods` VALUES (20701, 311, 108);   -- MAGIC_DAMAGE (MAGIC_DAMAGE: 108)
 INSERT IGNORE INTO `item_mods` VALUES (20701, 25, 10);   -- ACC (ACC: 10)
 INSERT IGNORE INTO `item_mods` VALUES (20701, 23, 10);   -- ATT (ATT: 10)
-INSERT IGNORE INTO `item_mods` VALUES (20701, 122, 15);   -- BLUE (BLUE: 15)
--- TODO iris: unparsed token: Magic
--- TODO iris: unparsed token: Accuracy
--- TODO iris: unparsed token: skill
 -- TODO iris: unparsed token: Chain
 -- TODO iris: unparsed token: Affinity
 -- TODO iris: unparsed token: Blue
@@ -96,16 +76,10 @@ INSERT IGNORE INTO `item_mods` VALUES (20702, 28, 14);   -- MATT (MATT: 14)
 INSERT IGNORE INTO `item_mods` VALUES (20702, 311, 130);   -- MAGIC_DAMAGE (MAGIC_DAMAGE: 130)
 INSERT IGNORE INTO `item_mods` VALUES (20702, 170, 10);   -- FASTCAST (FASTCAST: 10)
 INSERT IGNORE INTO `item_mods` VALUES (20702, 25, 15);   -- ACC (ACC: 15)
--- TODO emissary: unparsed token: Magic
--- TODO emissary: unparsed token: Accuracy
--- TODO emissary: unparsed token: skill
 
 -- skullrender (20797) -- Skullrender
 INSERT IGNORE INTO `item_mods` VALUES (20797, 25, 10);   -- ACC (ACC: 10)
 INSERT IGNORE INTO `item_mods` VALUES (20797, 23, 10);   -- ATT (ATT: 10)
--- TODO skullrender: unparsed token: Magic
--- TODO skullrender: unparsed token: Accuracy
--- TODO skullrender: unparsed token: skill
 -- TODO skullrender: unparsed token: Spur
 
 -- deathbane (20892) -- Deathbane
@@ -113,17 +87,11 @@ INSERT IGNORE INTO `item_mods` VALUES (20892, 288, 4);   -- DOUBLE_ATTACK (DOUBL
 INSERT IGNORE INTO `item_mods` VALUES (20892, 73, 3);   -- STORETP (STORETP: 3)
 INSERT IGNORE INTO `item_mods` VALUES (20892, 23, 20);   -- ATT (ATT: 20)
 INSERT IGNORE INTO `item_mods` VALUES (20892, 840, 5);   -- ALL_WSDMG_ALL_HITS (ALL_WSDMG_ALL_HITS: 5)
--- TODO deathbane: unparsed token: Magic
--- TODO deathbane: unparsed token: Accuracy
--- TODO deathbane: unparsed token: skill
 
 -- rhomphaia (20937) -- Rhomphaia
 INSERT IGNORE INTO `item_mods` VALUES (20937, 288, 7);   -- DOUBLE_ATTACK (DOUBLE_ATTACK: 7)
 INSERT IGNORE INTO `item_mods` VALUES (20937, 23, 20);   -- ATT (ATT: 20)
 INSERT IGNORE INTO `item_mods` VALUES (20937, 345, 50);   -- TP_BONUS (TP_BONUS: 50)
--- TODO rhomphaia: unparsed token: Magic
--- TODO rhomphaia: unparsed token: Accuracy
--- TODO rhomphaia: unparsed token: skill
 -- TODO rhomphaia: unparsed token: Dragon
 -- TODO rhomphaia: unparsed token: Killer
 -- TODO rhomphaia: unparsed token: Jump
@@ -132,9 +100,6 @@ INSERT IGNORE INTO `item_mods` VALUES (20937, 345, 50);   -- TP_BONUS (TP_BONUS:
 INSERT IGNORE INTO `item_mods` VALUES (20979, 259, 5);   -- DUAL_WIELD (DUAL_WIELD: 5)
 INSERT IGNORE INTO `item_mods` VALUES (20979, 25, 15);   -- ACC (ACC: 15)
 INSERT IGNORE INTO `item_mods` VALUES (20979, 68, 22);   -- EVA (EVA: 22)
--- TODO aizushintogo: unparsed token: Magic
--- TODO aizushintogo: unparsed token: Accuracy
--- TODO aizushintogo: unparsed token: skill
 -- TODO aizushintogo: unparsed token: Utsusemi
 -- TODO aizushintogo: unparsed token: spellcasting
 -- TODO aizushintogo: unparsed token: time
@@ -152,18 +117,10 @@ INSERT IGNORE INTO `item_mods` VALUES (21021, 306, 5);   -- ZANSHIN (ZANSHIN: 5)
 INSERT IGNORE INTO `item_mods` VALUES (21021, 73, 5);   -- STORETP (STORETP: 5)
 INSERT IGNORE INTO `item_mods` VALUES (21021, 25, 20);   -- ACC (ACC: 20)
 INSERT IGNORE INTO `item_mods` VALUES (21021, 23, 10);   -- ATT (ATT: 10)
--- TODO umaru: unparsed token: Great
--- TODO umaru: unparsed token: Magic
--- TODO umaru: unparsed token: Accuracy
--- TODO umaru: unparsed token: skill
 
 -- ichigohitofuri (21027) -- Ichigohitofuri
 INSERT IGNORE INTO `item_mods` VALUES (21027, 73, 10);   -- STORETP (STORETP: 10)
 INSERT IGNORE INTO `item_mods` VALUES (21027, 25, 15);   -- ACC (ACC: 15)
--- TODO ichigohitofuri: unparsed token: Great
--- TODO ichigohitofuri: unparsed token: Magic
--- TODO ichigohitofuri: unparsed token: Accuracy
--- TODO ichigohitofuri: unparsed token: skill
 -- TODO ichigohitofuri: unparsed token: Seigan
 -- TODO ichigohitofuri: unparsed token: Counter
 -- TODO ichigohitofuri: unparsed token: rate
@@ -179,15 +136,8 @@ INSERT IGNORE INTO `item_mods` VALUES (21072, 28, 16);   -- MATT (MATT: 16)
 INSERT IGNORE INTO `item_mods` VALUES (21072, 30, 20);   -- MACC (MACC: 20)
 INSERT IGNORE INTO `item_mods` VALUES (21072, 311, 124);   -- MAGIC_DAMAGE (MAGIC_DAMAGE: 124)
 INSERT IGNORE INTO `item_mods` VALUES (21072, 374, 18);   -- CURE_POTENCY (CURE_POTENCY: 18)
-INSERT IGNORE INTO `item_mods` VALUES (21072, 111, 18);   -- DIVINE (DIVINE: 18)
-INSERT IGNORE INTO `item_mods` VALUES (21072, 112, 18);   -- HEALING (HEALING: 18)
-INSERT IGNORE INTO `item_mods` VALUES (21072, 113, 18);   -- ENHANCE (ENHANCE: 18)
-INSERT IGNORE INTO `item_mods` VALUES (21072, 114, 18);   -- ENFEEBLE (ENFEEBLE: 18)
 INSERT IGNORE INTO `item_mods` VALUES (21072, 12, 6);   -- INT (INT: 6)
 INSERT IGNORE INTO `item_mods` VALUES (21072, 13, 6);   -- MND (MND: 6)
--- TODO gada: unparsed token: Magic
--- TODO gada: unparsed token: Accuracy
--- TODO gada: unparsed token: skill
 
 -- queller_rod (21084) -- Queller Rod
 INSERT IGNORE INTO `item_mods` VALUES (21084, 28, 16);   -- MATT (MATT: 16)
@@ -197,9 +147,6 @@ INSERT IGNORE INTO `item_mods` VALUES (21084, 27, -10);   -- ENMITY (ENMITY: -10
 INSERT IGNORE INTO `item_mods` VALUES (21084, 12, 6);   -- INT (INT: 6)
 INSERT IGNORE INTO `item_mods` VALUES (21084, 13, 6);   -- MND (MND: 6)
 INSERT IGNORE INTO `item_mods` VALUES (21084, 369, 1);   -- REFRESH (REFRESH: 1)
--- TODO queller_rod: unparsed token: Magic
--- TODO queller_rod: unparsed token: Accuracy
--- TODO queller_rod: unparsed token: skill
 -- TODO queller_rod: unparsed token: Cure
 -- TODO queller_rod: unparsed token: potency
 -- TODO queller_rod: unparsed token: II
@@ -208,12 +155,8 @@ INSERT IGNORE INTO `item_mods` VALUES (21084, 369, 1);   -- REFRESH (REFRESH: 1)
 INSERT IGNORE INTO `item_mods` VALUES (21085, 28, 31);   -- MATT (MATT: 31)
 INSERT IGNORE INTO `item_mods` VALUES (21085, 30, 15);   -- MACC (MACC: 15)
 INSERT IGNORE INTO `item_mods` VALUES (21085, 311, 124);   -- MAGIC_DAMAGE (MAGIC_DAMAGE: 124)
-INSERT IGNORE INTO `item_mods` VALUES (21085, 124, 5);   -- HANDBELL_SKILL (HANDBELL_SKILL: 5)
 INSERT IGNORE INTO `item_mods` VALUES (21085, 12, 6);   -- INT (INT: 6)
 INSERT IGNORE INTO `item_mods` VALUES (21085, 13, 6);   -- MND (MND: 6)
--- TODO solstice: unparsed token: Magic
--- TODO solstice: unparsed token: Accuracy
--- TODO solstice: unparsed token: skill
 -- TODO solstice: unparsed token: Conserve
 -- TODO solstice: unparsed token: MP
 -- TODO solstice: unparsed token: Indicolure
@@ -224,9 +167,6 @@ INSERT IGNORE INTO `item_mods` VALUES (21085, 13, 6);   -- MND (MND: 6)
 INSERT IGNORE INTO `item_mods` VALUES (21149, 28, 120);   -- MATT (MATT: 120)
 INSERT IGNORE INTO `item_mods` VALUES (21149, 30, 15);   -- MACC (MACC: 15)
 INSERT IGNORE INTO `item_mods` VALUES (21149, 5, 88);   -- MP (MP: 88)
--- TODO espiritus: unparsed token: Magic
--- TODO espiritus: unparsed token: Accuracy
--- TODO espiritus: unparsed token: skill
 -- TODO espiritus: unparsed token: Blood
 -- TODO espiritus: unparsed token: Pact
 -- TODO espiritus: unparsed token: ability
@@ -245,9 +185,6 @@ INSERT IGNORE INTO `item_mods` VALUES (21150, 12, 12);   -- INT (INT: 12)
 INSERT IGNORE INTO `item_mods` VALUES (21150, 13, 12);   -- MND (MND: 12)
 INSERT IGNORE INTO `item_mods` VALUES (21150, 369, 1);   -- REFRESH (REFRESH: 1)
 -- TODO akademos: unparsed token: Magic
--- TODO akademos: unparsed token: Accuracy
--- TODO akademos: unparsed token: skill
--- TODO akademos: unparsed token: Magic
 -- TODO akademos: unparsed token: burst
 -- TODO akademos: unparsed token: damage
 -- TODO akademos: unparsed token: Same
@@ -265,27 +202,52 @@ INSERT IGNORE INTO `item_mods` VALUES (21215, 26, 20);   -- RACC (RACC: 20)
 -- TODO vijaya_bow: unparsed token: Shot
 -- TODO vijaya_bow: unparsed token: damage
 
+-- voluspa_knuckles (21510) -- Voluspa Knuckles  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (21510, 288, 15);   -- DOUBLE_ATTACK (DOUBLE_ATTACK: 30 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21510, 30, 60);   -- MACC (MACC: 120 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21510, 25, 60);   -- ACC (ACC: 120 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21510, 23, 60);   -- ATT (ATT: 120 (50% of latent))
+
+-- voluspa_knife (21566) -- Voluspa Knife  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (21566, 165, 15);   -- CRITHITRATE (CRITHITRATE: 30 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21566, 30, 40);   -- MACC (MACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21566, 25, 40);   -- ACC (ACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21566, 23, 40);   -- ATT (ATT: 80 (50% of latent))
+
+-- voluspa_sword (21622) -- Voluspa Sword  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (21622, 73, 15);   -- STORETP (STORETP: 30 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21622, 30, 40);   -- MACC (MACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21622, 25, 40);   -- ACC (ACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21622, 23, 40);   -- ATT (ATT: 80 (50% of latent))
+
+-- voluspa_blade (21665) -- Voluspa Blade  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (21665, 30, 40);   -- MACC (MACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21665, 25, 40);   -- ACC (ACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21665, 23, 40);   -- ATT (ATT: 80 (50% of latent))
+-- TODO voluspa_blade: unparsed token: Physical
+-- TODO voluspa_blade: unparsed token: damage
+-- TODO voluspa_blade: unparsed token: taken
+-- TODO voluspa_blade: unparsed token: II
+
 -- zulfiqar (21686) -- Zulfiqar
 INSERT IGNORE INTO `item_mods` VALUES (21686, 288, 2);   -- DOUBLE_ATTACK (DOUBLE_ATTACK: 2)
 INSERT IGNORE INTO `item_mods` VALUES (21686, 25, 15);   -- ACC (ACC: 15)
 INSERT IGNORE INTO `item_mods` VALUES (21686, 23, 15);   -- ATT (ATT: 15)
 INSERT IGNORE INTO `item_mods` VALUES (21686, 840, 2);   -- ALL_WSDMG_ALL_HITS (ALL_WSDMG_ALL_HITS: 2)
--- TODO zulfiqar: unparsed token: Great
--- TODO zulfiqar: unparsed token: Magic
--- TODO zulfiqar: unparsed token: Accuracy
--- TODO zulfiqar: unparsed token: skill
 
 -- bidenhander (21698) -- Bidenhander
 INSERT IGNORE INTO `item_mods` VALUES (21698, 160, -500);   -- DMG (DMG: -5)
 INSERT IGNORE INTO `item_mods` VALUES (21698, 25, 10);   -- ACC (ACC: 10)
 INSERT IGNORE INTO `item_mods` VALUES (21698, 23, 10);   -- ATT (ATT: 10)
 INSERT IGNORE INTO `item_mods` VALUES (21698, 2, 130);   -- HP (HP: 130)
--- TODO bidenhander: unparsed token: Great
--- TODO bidenhander: unparsed token: Magic
--- TODO bidenhander: unparsed token: Accuracy
--- TODO bidenhander: unparsed token: skill
 -- TODO bidenhander: unparsed token: Liement
 -- TODO bidenhander: unparsed token: duration
+
+-- voluspa_axe (21712) -- Voluspa Axe  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (21712, 288, 15);   -- DOUBLE_ATTACK (DOUBLE_ATTACK: 30 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21712, 30, 40);   -- MACC (MACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21712, 25, 40);   -- ACC (ACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21712, 23, 40);   -- ATT (ATT: 80 (50% of latent))
 
 -- digirbalag (21746) -- Digirbalag
 INSERT IGNORE INTO `item_mods` VALUES (21746, 288, 3);   -- DOUBLE_ATTACK (DOUBLE_ATTACK: 3)
@@ -293,28 +255,38 @@ INSERT IGNORE INTO `item_mods` VALUES (21746, 25, 20);   -- ACC (ACC: 20)
 INSERT IGNORE INTO `item_mods` VALUES (21746, 8, 10);   -- STR (STR: 10)
 INSERT IGNORE INTO `item_mods` VALUES (21746, 10, 10);   -- VIT (VIT: 10)
 INSERT IGNORE INTO `item_mods` VALUES (21746, 14, 10);   -- CHR (CHR: 10)
--- TODO digirbalag: unparsed token: Magic
--- TODO digirbalag: unparsed token: Accuracy
--- TODO digirbalag: unparsed token: skill
 
 -- aganoshe (21754) -- Aganoshe
 INSERT IGNORE INTO `item_mods` VALUES (21754, 161, -300);   -- DMGPHYS (DMGPHYS: -3)
 INSERT IGNORE INTO `item_mods` VALUES (21754, 73, 5);   -- STORETP (STORETP: 5)
 INSERT IGNORE INTO `item_mods` VALUES (21754, 25, 25);   -- ACC (ACC: 25)
 INSERT IGNORE INTO `item_mods` VALUES (21754, 23, 5);   -- ATT (ATT: 5)
--- TODO aganoshe: unparsed token: Great
--- TODO aganoshe: unparsed token: Magic
--- TODO aganoshe: unparsed token: Accuracy
--- TODO aganoshe: unparsed token: skill
+
+-- voluspa_chopper (21769) -- Voluspa Chopper  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (21769, 30, 40);   -- MACC (MACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21769, 25, 40);   -- ACC (ACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21769, 23, 40);   -- ATT (ATT: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21769, 840, 15);   -- ALL_WSDMG_ALL_HITS (ALL_WSDMG_ALL_HITS: 30 (50% of latent))
 
 -- obschine (21804) -- Obschine
 INSERT IGNORE INTO `item_mods` VALUES (21804, 25, 10);   -- ACC (ACC: 10)
 INSERT IGNORE INTO `item_mods` VALUES (21804, 23, 20);   -- ATT (ATT: 20)
 INSERT IGNORE INTO `item_mods` VALUES (21804, 8, 22);   -- STR (STR: 22)
 INSERT IGNORE INTO `item_mods` VALUES (21804, 840, 3);   -- ALL_WSDMG_ALL_HITS (ALL_WSDMG_ALL_HITS: 3)
--- TODO obschine: unparsed token: Magic
--- TODO obschine: unparsed token: Accuracy
--- TODO obschine: unparsed token: skill
+
+-- voluspa_scythe (21822) -- Voluspa Scythe  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (21822, 30, 40);   -- MACC (MACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21822, 25, 40);   -- ACC (ACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21822, 23, 40);   -- ATT (ATT: 80 (50% of latent))
+-- TODO voluspa_scythe: unparsed token: Physical
+-- TODO voluspa_scythe: unparsed token: damage
+-- TODO voluspa_scythe: unparsed token: limit
+
+-- voluspa_lance (21864) -- Voluspa Lance  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (21864, 288, 15);   -- DOUBLE_ATTACK (DOUBLE_ATTACK: 30 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21864, 30, 40);   -- MACC (MACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21864, 25, 40);   -- ACC (ACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21864, 23, 40);   -- ATT (ATT: 80 (50% of latent))
 
 -- kanaria (21904) -- Kanaria
 INSERT IGNORE INTO `item_mods` VALUES (21904, 73, 5);   -- STORETP (STORETP: 5)
@@ -324,9 +296,43 @@ INSERT IGNORE INTO `item_mods` VALUES (21904, 24, 10);   -- RATT (RATT: 10)
 INSERT IGNORE INTO `item_mods` VALUES (21904, 25, 15);   -- ACC (ACC: 15)
 INSERT IGNORE INTO `item_mods` VALUES (21904, 23, 10);   -- ATT (ATT: 10)
 INSERT IGNORE INTO `item_mods` VALUES (21904, 68, 22);   -- EVA (EVA: 22)
--- TODO kanaria: unparsed token: Magic
--- TODO kanaria: unparsed token: Accuracy
--- TODO kanaria: unparsed token: skill
+
+-- voluspa_katana (21912) -- Voluspa Katana  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (21912, 302, 15);   -- TRIPLE_ATTACK (TRIPLE_ATTACK: 30 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21912, 30, 40);   -- MACC (MACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21912, 26, 40);   -- RACC (RACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21912, 25, 40);   -- ACC (ACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21912, 23, 40);   -- ATT (ATT: 80 (50% of latent))
+
+-- voluspa_tachi (21976) -- Voluspa Tachi  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (21976, 30, 40);   -- MACC (MACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21976, 25, 40);   -- ACC (ACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21976, 23, 40);   -- ATT (ATT: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (21976, 840, 15);   -- ALL_WSDMG_ALL_HITS (ALL_WSDMG_ALL_HITS: 30 (50% of latent))
+
+-- voluspa_hammer (22006) -- Voluspa Hammer  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (22006, 28, 40);   -- MATT (MATT: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (22006, 30, 40);   -- MACC (MACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (22006, 25, 40);   -- ACC (ACC: 80 (50% of latent))
+-- TODO voluspa_hammer: unparsed token: Physical
+-- TODO voluspa_hammer: unparsed token: damage
+-- TODO voluspa_hammer: unparsed token: taken
+-- TODO voluspa_hammer: unparsed token: II
+
+-- voluspa_pole (22088) -- Voluspa Pole  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (22088, 28, 40);   -- MATT (MATT: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (22088, 30, 40);   -- MACC (MACC: 80 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (22088, 25, 40);   -- ACC (ACC: 80 (50% of latent))
+
+-- voluspa_bow (22133) -- Voluspa Bow  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (22133, 26, 50);   -- RACC (RACC: 100 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (22133, 24, 50);   -- RATT (RATT: 100 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (22133, 840, 15);   -- ALL_WSDMG_ALL_HITS (ALL_WSDMG_ALL_HITS: 30 (50% of latent))
+
+-- voluspa_gun (22144) -- Voluspa Gun  [latent-only: values at 50%, always-on]
+INSERT IGNORE INTO `item_mods` VALUES (22144, 73, 15);   -- STORETP (STORETP: 30 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (22144, 26, 50);   -- RACC (RACC: 100 (50% of latent))
+INSERT IGNORE INTO `item_mods` VALUES (22144, 24, 50);   -- RATT (RATT: 100 (50% of latent))
 
 -- voluspa_grip (22219) -- Voluspa Grip  [latent-only: values at 50%, always-on]
 INSERT IGNORE INTO `item_mods` VALUES (22219, 73, 15);   -- STORETP (STORETP: 30 (50% of latent))
@@ -386,6 +392,24 @@ INSERT IGNORE INTO `item_mods` VALUES (23739, 11, 20);   -- AGI (AGI: 20)
 INSERT IGNORE INTO `item_mods` VALUES (23739, 12, 16);   -- INT (INT: 16)
 INSERT IGNORE INTO `item_mods` VALUES (23739, 13, 16);   -- MND (MND: 16)
 INSERT IGNORE INTO `item_mods` VALUES (23739, 14, 16);   -- CHR (CHR: 16)
+
+-- angantyr_beret (23740) -- Angantyr Beret
+INSERT IGNORE INTO `item_mods` VALUES (23740, 384, 600);   -- HASTE_GEAR (HASTE_GEAR: 6)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 29, 5);   -- MDEF (MDEF: 5)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 30, 25);   -- MACC (MACC: 25)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 31, 102);   -- MEVA (MEVA: 102)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 25, 15);   -- ACC (ACC: 15)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 68, 44);   -- EVA (EVA: 44)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 1, 95);   -- DEF (DEF: 95)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 2, 41);   -- HP (HP: 41)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 5, 53);   -- MP (MP: 53)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 8, 15);   -- STR (STR: 15)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 9, 15);   -- DEX (DEX: 15)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 10, 15);   -- VIT (VIT: 15)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 11, 15);   -- AGI (AGI: 15)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 12, 21);   -- INT (INT: 21)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 13, 21);   -- MND (MND: 21)
+INSERT IGNORE INTO `item_mods` VALUES (23740, 14, 21);   -- CHR (CHR: 21)
 
 -- hervor_haubert (23741) -- Hervor Haubert
 INSERT IGNORE INTO `item_mods` VALUES (23741, 384, 400);   -- HASTE_GEAR (HASTE_GEAR: 4)
@@ -632,6 +656,25 @@ INSERT IGNORE INTO `item_mods` VALUES (25716, 11, 19);   -- AGI (AGI: 19)
 INSERT IGNORE INTO `item_mods` VALUES (25716, 12, 19);   -- INT (INT: 19)
 INSERT IGNORE INTO `item_mods` VALUES (25716, 13, 19);   -- MND (MND: 19)
 INSERT IGNORE INTO `item_mods` VALUES (25716, 14, 19);   -- CHR (CHR: 19)
+
+-- valorous_mail (25717) -- Valorous Mail
+INSERT IGNORE INTO `item_mods` VALUES (25717, 161, -200);   -- DMGPHYS (DMGPHYS: -2)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 384, 300);   -- HASTE_GEAR (HASTE_GEAR: 3)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 288, 2);   -- DOUBLE_ATTACK (DOUBLE_ATTACK: 2)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 73, 3);   -- STORETP (STORETP: 3)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 29, 4);   -- MDEF (MDEF: 4)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 31, 59);   -- MEVA (MEVA: 59)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 25, 20);   -- ACC (ACC: 20)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 68, 44);   -- EVA (EVA: 44)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 1, 146);   -- DEF (DEF: 146)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 2, 61);   -- HP (HP: 61)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 8, 29);   -- STR (STR: 29)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 9, 25);   -- DEX (DEX: 25)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 10, 29);   -- VIT (VIT: 29)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 11, 20);   -- AGI (AGI: 20)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 12, 20);   -- INT (INT: 20)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 13, 20);   -- MND (MND: 20)
+INSERT IGNORE INTO `item_mods` VALUES (25717, 14, 20);   -- CHR (CHR: 20)
 
 -- merlinic_jubbah (25719) -- Merlinic Jubbah
 INSERT IGNORE INTO `item_mods` VALUES (25719, 161, -200);   -- DMGPHYS (DMGPHYS: -2)

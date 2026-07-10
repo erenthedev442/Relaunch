@@ -175,6 +175,24 @@ catalog.vendorItems =
     { id = 22134, cat = 'Weapons', sub = 'Reisenjima', name = 'Holliday', cost = 2000 },
     { id = 21854, cat = 'Weapons', sub = 'Reisenjima', name = 'Reienkyo', cost = 2000 },
     { id = 22113, cat = 'Weapons', sub = 'Reisenjima', name = 'Teller', cost = 2000 },
+
+    -- Voluspa weapon set + 2 armor bases (statted 2026-07-10 via zz_zurim_gear_mods.sql)
+    { id = 21510, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Knuckles', cost = 200 },
+    { id = 21566, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Knife', cost = 200 },
+    { id = 21622, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Sword', cost = 200 },
+    { id = 21665, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Blade', cost = 200 },
+    { id = 21712, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Axe', cost = 200 },
+    { id = 21769, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Chopper', cost = 200 },
+    { id = 21822, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Scythe', cost = 200 },
+    { id = 21864, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Lance', cost = 200 },
+    { id = 21912, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Katana', cost = 200 },
+    { id = 21976, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Tachi', cost = 200 },
+    { id = 22006, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Hammer', cost = 200 },
+    { id = 22088, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Pole', cost = 200 },
+    { id = 22133, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Bow', cost = 200 },
+    { id = 22144, cat = 'Weapons', sub = 'Voluspa', name = 'Voluspa Gun', cost = 200 },
+    { id = 23740, cat = 'Armor', sub = 'Head', name = 'Angantyr Beret', cost = 100 },
+    { id = 25717, cat = 'Armor', sub = 'Body', name = 'Valorous Mail', cost = 2000 },
 }
 
 return catalog

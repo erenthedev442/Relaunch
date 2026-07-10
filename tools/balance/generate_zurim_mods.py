@@ -80,6 +80,14 @@ ITEMS: dict[int, str] = {
     26353: 'ask_sash', 26354: 'embla_sash', 26355: 'audumbla_sash',
     26111: 'beyla_earring', 26112: 'tuisto_earring', 26113: 'nehalennia_earring',
     26110: 'sjofn_earring',
+    # 2026-07-10 gap fill: 14 statless Voluspa weapons (latent-only -> Domain
+    # Invasion latent at 50% always-on, like Voluspa Grip) + 2 armor bases.
+    21510: 'voluspa_knuckles', 21566: 'voluspa_knife', 21622: 'voluspa_sword',
+    21665: 'voluspa_blade', 21712: 'voluspa_axe', 21769: 'voluspa_chopper',
+    21822: 'voluspa_scythe', 21864: 'voluspa_lance', 21912: 'voluspa_katana',
+    21976: 'voluspa_tachi', 22006: 'voluspa_hammer', 22088: 'voluspa_pole',
+    22133: 'voluspa_bow', 22144: 'voluspa_gun',
+    23740: 'angantyr_beret', 25717: 'valorous_mail',
 }
 
 # Combat-skill mod ids that are INTRINSIC on weapons (item_weapon ilvl columns),
@@ -144,8 +152,15 @@ def main() -> int:
 
         halved = False
         # DMG:/Delay: prefixes (weapons) -- intrinsic, strip for clean parsing.
-        stats = re.sub(r'\bDMG:\s*\d+\s*', ' ', stats)
-        stats = re.sub(r'\bDelay:\s*\d+\s*', ' ', stats)
+        # Optional '+' covers the latent form (e.g. "DMG:+86").
+        stats = re.sub(r'\bDMG:\s*\+?\d+\s*', ' ', stats)
+        stats = re.sub(r'\bDelay:\s*\+?\d+\s*', ' ', stats)
+        # Weapon combat-skill tokens ("Great Sword skill +215", "Magic Accuracy
+        # skill +215", ...) are intrinsic item_weapon columns. Strip the TEXT here
+        # (not just post-parse) so a weapon whose entire BASE line is skills is
+        # correctly detected as latent-only below (e.g. every Voluspa weapon).
+        if item_id in weapon_ids:
+            stats = re.sub(r'[A-Za-z][A-Za-z.\- ]*?\bskill \+\d+', ' ', stats)
         # Pet: suffix -- out of scope (item_mods_pet).
         stats = re.split(r'\bPet:', stats)[0]
         # Latent handling.
