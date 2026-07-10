@@ -11,15 +11,19 @@
 -- (289). Balga's Dais was too small; the Hall was long and narrow, so waves
 -- spawned into the walls. Escha - Ru'Aun is large and open.
 --
--- Tier mapping (matches game_master_catalog.lua difficulties):
---   11400-11403  Easy        — classic camp NMs (Lv 125 target)
---   11404-11407  Normal      — mid-tier NMs    (Lv 150 target)
---   11408-11411  Hard        — apex beasts     (Lv 175 target)
---   11412-11415  Insane      — gods & wyrms    (Lv 200 target)
---   11416-11418  Easy+       — additional Easy pool entries
---   11419-11421  Normal+     — additional Normal pool entries
---   11422-11424  Hard+       — additional Hard pool entries
---   11425-11428  Insane+/Nightmare — additional top-tier entries
+-- Tier mapping (matches game_master_catalog.lua difficulties). Every tier now
+-- draws from a DISTINCT pool so no two tiers repeat the same silhouettes -- the
+-- 5 endgame tiers each get their own themed god/HNM roster:
+--   11400-11403 + 11416-11418  Easy        — classic camp NMs
+--   11404-11407 + 11419-11421  Normal      — mid-tier NMs
+--   11408-11411 + 11422-11424  Hard        — apex beasts
+--   11412-11415, 11425-11442   Endgame (5 disjoint pools):
+--     Insane     = Four Gods       (Byakko/Suzaku/Genbu/Seiryu)
+--     Nightmare  = Elder Wyrms     (Bahamut/Ouryu/Fafnir/Jormungand)
+--     Apocalypse = Primeval Titans (Adamantoise/Aspidochelone/Behemoth/Sandworm)
+--     Oblivion   = Void Sovereigns (Kirin/Absolute Virtue/Pandemonium Warden/Shinryu/Jailer of Love)
+--     Ragnarok   = The Unmade      (Ultima/Omega/Odin/Dynamis Lord/Provenance Watcher)
+--     Terror     = Abyssal Terrors (Glavoid/Chloris/Sarameya/Orthrus/Bukhis/Sobek)
 --
 -- Idempotent: groupid-range DELETE + re-insert.
 -- ============================================================
@@ -31,7 +35,7 @@
 -- leaving Voidspire/Wave NMs unable to spawn.) No mob_spawn_points cleanup: these
 -- mobs are DYNAMIC (insertDynamicEntity), have no spawn points, and the old
 -- unscoped spawn_points DELETE only harmed Reforge's static spawn points.
-DELETE FROM `mob_groups` WHERE `groupid` BETWEEN 11400 AND 11431 AND `zoneid` = 289;
+DELETE FROM `mob_groups` WHERE `groupid` BETWEEN 11400 AND 11450 AND `zoneid` = 289;
 
 -- ----- Easy tier (Lv 125 target) ---------------------------------
 INSERT INTO `mob_groups` VALUES (11400,  228, 289, 'Argus',         0, 128, 0, 0, 0, 0, NULL);
@@ -77,3 +81,42 @@ INSERT INTO `mob_groups` VALUES (11425, 2265, 289, 'Kirin',              0, 128,
 INSERT INTO `mob_groups` VALUES (11426,   21, 289, 'Absolute_Virtue',    0, 128, 0, 0,      0, 0, NULL);
 INSERT INTO `mob_groups` VALUES (11427, 3604, 289, 'Shinryu',            0, 128, 0, 0,      0, 0, NULL);
 INSERT INTO `mob_groups` VALUES (11428, 7175, 289, 'Pandemonium_Warden', 0, 128, 0, 147000, 0, 0, NULL);
+
+-- =====================================================================
+-- Distinct endgame pools (2026-07-09): the top tiers used to SHARE the same
+-- 4 gods (Kirin/AV/PW/Shinryu), which felt stale. Each endgame tier now gets
+-- its own themed roster. Level/HP are overridden per-difficulty at spawn, so
+-- these reuse the retail poolids purely for the model + name variety.
+-- =====================================================================
+
+-- ----- Insane tier: The Four Gods (complete the set; Byakko/Suzaku already above)
+INSERT INTO `mob_groups` VALUES (11429, 1491, 289, 'Genbu',              0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11430, 3540, 289, 'Seiryu',             0, 128, 0, 0, 0, 0, NULL);
+
+-- ----- Nightmare tier: Elder Wyrms (Bahamut/Ouryu already above)
+INSERT INTO `mob_groups` VALUES (11431, 1280, 289, 'Fafnir',             0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11432, 2156, 289, 'Jormungand',         0, 128, 0, 0, 0, 0, NULL);
+
+-- ----- Apocalypse tier: Primeval Titans (the original three HNMs + Sandworm)
+INSERT INTO `mob_groups` VALUES (11433,   44, 289, 'Adamantoise',        0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11434,  268, 289, 'Aspidochelone',      0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11435,  387, 289, 'Behemoth',           0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11436, 3448, 289, 'Sandworm',           0, 128, 0, 0, 0, 0, NULL);
+
+-- ----- Oblivion tier: Void Sovereigns (Kirin/AV/PW/Shinryu above + Jailer of Love)
+INSERT INTO `mob_groups` VALUES (11441, 2134, 289, 'Jailer_of_Love',     0, 128, 0, 0, 0, 0, NULL);
+
+-- ----- Ragnarok tier: The Unmade (ultimate weapons + death gods)
+INSERT INTO `mob_groups` VALUES (11437, 4083, 289, 'Ultima',             0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11438, 2973, 289, 'Omega',              0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11439, 2941, 289, 'Odin',               0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11440, 1154, 289, 'Dynamis_Lord',       0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11442, 4654, 289, 'Provenance_Watcher', 0, 128, 0, 0, 0, 0, NULL);
+
+-- ----- Terror tier: Abyssal Terrors (apex Abyssea NMs for the 8-god pile-on farm)
+INSERT INTO `mob_groups` VALUES (11443, 4555, 289, 'Glavoid',            0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11444, 4554, 289, 'Chloris',            0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11445, 3465, 289, 'Sarameya',           0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11446, 3061, 289, 'Orthrus',            0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11447,  572, 289, 'Bukhis',             0, 128, 0, 0, 0, 0, NULL);
+INSERT INTO `mob_groups` VALUES (11448, 3695, 289, 'Sobek',              0, 128, 0, 0, 0, 0, NULL);
