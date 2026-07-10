@@ -199,10 +199,26 @@ local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
     local px = fs and fs.x or anchor:getXPos()
     local py = fs and fs.y or anchor:getYPos()
     local pz = fs and fs.z or anchor:getZPos()
-    local angle = math.random() * math.pi * 2
-    local dist  = catalog.spawnRingMin
-        + math.random() * (catalog.spawnRingMax - catalog.spawnRingMin)
-    local mx, mz = px + math.cos(angle) * dist, pz + math.sin(angle) * dist
+
+    -- Roll ring positions until one lands ON THE NAVMESH. Player report
+    -- 2026-07-08 (Lant/Mel): defenders standing near walls/corridors in
+    -- Al Zahbi had invaders spawn INSIDE the wall geometry -- untargetable
+    -- without //fillmode wireframe and idle until someone pulled them,
+    -- stalling the whole event. isNavigablePoint asks Detour for the
+    -- nearest poly with tight extents, so wall interiors fail the check.
+    -- Fallback after all tries miss: the anchor's own feet -- a player is
+    -- standing there, so it's walkable ground by definition.
+    local mx, mz = px, pz
+    for _ = 1, catalog.spawnTries or 8 do
+        local angle = math.random() * math.pi * 2
+        local dist  = catalog.spawnRingMin
+            + math.random() * (catalog.spawnRingMax - catalog.spawnRingMin)
+        local cx, cz = px + math.cos(angle) * dist, pz + math.sin(angle) * dist
+        if zone:isNavigablePoint({ x = cx, y = py, z = cz }) then
+            mx, mz = cx, cz
+            break
+        end
+    end
 
     local mob = zone:insertDynamicEntity({
         objtype              = xi.objType.MOB,

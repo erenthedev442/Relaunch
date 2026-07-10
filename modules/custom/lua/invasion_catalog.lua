@@ -102,9 +102,16 @@ catalog.waves =
     },
 }
 
--- Spawn ring around a (random) defender, yalms.
+-- Spawn ring around a (random) defender, yalms. Candidate positions are
+-- navmesh-validated (zone:isNavigablePoint) so wall/building interiors are
+-- rejected; see spawnTries below.
 catalog.spawnRingMin = 10.0
 catalog.spawnRingMax = 14.0
+
+-- How many random ring positions to try before giving up and spawning the
+-- invader at its anchor defender's feet (always-walkable fallback). Each try
+-- is one cheap Detour nearest-poly query; 8 is plenty even in tight corridors.
+catalog.spawnTries = 8
 
 -- ============================================================
 -- REWARDS
