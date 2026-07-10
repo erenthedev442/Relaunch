@@ -195,19 +195,31 @@ local nextWave, endInvasion
 -----------------------------------
 local function spawnInvader(zone, anchor, def, level, mods, hpMult, opts)
     opts = opts or {}
-    local fs = catalog.fixedSpawn
-    local px = fs and fs.x or anchor:getXPos()
-    local py = fs and fs.y or anchor:getYPos()
-    local pz = fs and fs.z or anchor:getZPos()
 
-    -- Roll ring positions until one lands ON THE NAVMESH. Player report
-    -- 2026-07-08 (Lant/Mel): defenders standing near walls/corridors in
-    -- Al Zahbi had invaders spawn INSIDE the wall geometry -- untargetable
-    -- without //fillmode wireframe and idle until someone pulled them,
-    -- stalling the whole event. isNavigablePoint asks Detour for the
-    -- nearest poly with tight extents, so wall interiors fail the check.
-    -- Fallback after all tries miss: the anchor's own feet -- a player is
-    -- standing there, so it's walkable ground by definition.
+    -- Spawn origin: a random CITY GATE (catalog.spawnPoints), NOT the
+    -- players. Owner direction 2026-07-09: invaders should pour into
+    -- Al Zahbi from around the zone and charge the defenders -- clustering
+    -- everything at one fixed plaza point (old fixedSpawn) or ringing the
+    -- players puts mobs on top of the fight instead of assaulting it. The
+    -- enmity seed below makes each invader charge its anchor defender
+    -- from the gate, so the assault converges on the fight.
+    local pts = catalog.spawnPoints
+    local pt  = (type(pts) == 'table' and #pts > 0) and pts[math.random(#pts)]
+        or catalog.fixedSpawn
+    local px, py, pz
+    if pt then
+        px, py, pz = pt.x, pt.y, pt.z
+    else
+        -- No curated points configured: legacy anchor-ring behavior.
+        px, py, pz = anchor:getXPos(), anchor:getYPos(), anchor:getZPos()
+    end
+
+    -- Scatter around the origin so a multi-mob wave doesn't stack on one
+    -- pixel. Candidates are navmesh-validated (isNavigablePoint = Detour
+    -- nearest-poly with tight extents, so wall/building interiors fail
+    -- the check -- Lant/Mel report 2026-07-08: wall-spawned invaders were
+    -- untargetable without //fillmode and idle until pulled). Fallback
+    -- after all tries miss = the origin itself, a curated walkable point.
     local mx, mz = px, pz
     for _ = 1, catalog.spawnTries or 8 do
         local angle = math.random() * math.pi * 2

@@ -23,10 +23,32 @@ catalog.zoneId = 48
 -- groupZoneId tells the engine where to look up the group definitions.
 catalog.groupZoneId = 210
 
--- Fixed spawn anchor: mobs always pour in from this spot (center of the
--- Al Zahbi market plaza) regardless of where defenders are standing.
--- Tune with !pos while standing at the desired spawn center, then update.
+-- Fixed spawn anchor: superseded by spawnPoints below (kept as a fallback
+-- if that list is ever emptied) -- a single origin clusters the whole
+-- wave at one spot instead of assaulting from around the city.
 catalog.fixedSpawn = { x = 42.4, y = 0, z = 46.4 }
+
+-- City gate / street-arch positions, harvested from the retail Besieged
+-- gate markers in npc_list (the _1c0.._1c9 door cluster for zone 48) --
+-- all street-level, walkable, and spread across the whole city so waves
+-- pour in from every direction and converge on the defenders (each
+-- invader charges its anchor via the enmity seed in Invasion.lua).
+-- Verify/extend with !pos in-game.
+catalog.spawnPoints =
+{
+    { x = -61.2, y = -2.0, z =  40.0 },  -- west gate
+    { x = -40.0, y = -2.0, z =  61.2 },  -- northwest gate
+    { x =  66.8, y = -2.0, z = 120.0 },  -- north gate
+    { x =  99.1, y =  0.0, z = 120.0 },  -- northeast gate
+    { x = 114.3, y = -4.2, z =  40.0 },  -- east gate
+    { x = -11.9, y = -2.0, z =  40.0 },  -- center-west arch
+    { x = -40.0, y = -2.0, z = -12.1 },  -- southwest arch
+    { x = -11.9, y = -2.0, z = -40.0 },  -- south arch
+    { x =  40.0, y = -2.0, z =  12.1 },  -- center-east arch
+    { x =  40.0, y = -2.0, z =  92.1 },  -- north-center arch
+    { x =  40.0, y = -2.0, z = -68.0 },  -- far-south gate
+    { x =  -6.9, y = -8.0, z =  56.0 },  -- lower center passage
+}
 
 -- ============================================================
 -- SCHEDULE (UTC)
@@ -102,14 +124,16 @@ catalog.waves =
     },
 }
 
--- Spawn ring around a (random) defender, yalms. Candidate positions are
+-- Scatter ring around each mob's spawn origin (a random city gate from
+-- spawnPoints above), yalms. Spreads a multi-mob wave out around the gate
+-- instead of stacking everything on one pixel. Candidate positions are
 -- navmesh-validated (zone:isNavigablePoint) so wall/building interiors are
 -- rejected; see spawnTries below.
 catalog.spawnRingMin = 10.0
 catalog.spawnRingMax = 14.0
 
 -- How many random ring positions to try before giving up and spawning the
--- invader at its anchor defender's feet (always-walkable fallback). Each try
+-- invader at the origin point itself (curated walkable fallback). Each try
 -- is one cheap Detour nearest-poly query; 8 is plenty even in tight corridors.
 catalog.spawnTries = 8
 
