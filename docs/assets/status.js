@@ -66,12 +66,12 @@
         var node = badge();
         if (!node) return;
 
-        // Not configured yet (placeholder URL still in place): hide the whole
-        // banner so the live site shows nothing until the gist is wired up,
-        // rather than a permanent "unavailable" bar on every page.
+        // Not configured yet (placeholder URL still in place): hide just the
+        // status badge rather than a permanent "unavailable" label. The banner
+        // itself stays visible -- it also carries the "Join us on Discord" CTA
+        // (overrides/main.html), which must show regardless of status wiring.
         if (!STATUS_URL || STATUS_URL.indexOf("__STATUS_JSON_URL__") !== -1) {
-            var banner = node.closest ? node.closest(".md-banner") : null;
-            if (banner) banner.style.display = "none";
+            node.style.display = "none";
             return;
         }
 

@@ -36,6 +36,17 @@ theme:
 plugins:
   - search
 
+# Footer social icons (every page). Mirrors the Legendary site so the Discord
+# invite gets the same prominence on the relaunch site.
+extra:
+  social:
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/Yd3Kn3dN36
+      name: Join the Legendary Discord
+    - icon: fontawesome/brands/github
+      link: https://github.com/richardknutzjr/Relaunch
+      name: Source on GitHub
+
 validation:
   nav:
     omitted_files: info
@@ -85,6 +96,7 @@ markdown_extensions:
 nav:
   - Home: index.md
   - About the Relaunch: why-legendary.md
+  - Discord: https://discord.gg/Yd3Kn3dN36
   - Getting Started:
     - getting-started/index.md
     - Install the Client: getting-started/install.md

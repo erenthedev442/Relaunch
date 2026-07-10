@@ -51,3 +51,44 @@
     animation: none;
   }
 }
+
+
+/* Banner row: status badge + Discord CTA side by side, centered.
+ * Wraps on narrow screens so neither element is clipped. */
+.lgnd-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em 1.4em;
+  flex-wrap: wrap;
+  padding: 0.15em 0;
+}
+
+/* "Join us on Discord" pill in the announcement bar. Discord blurple so it
+ * reads instantly as THE Discord link; explicit colors because Material's
+ * .md-banner sets its own link color. */
+.md-banner .lgnd-banner__discord {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 0.28em 0.9em;
+  border-radius: 1.2em;
+  background: #5865f2;
+  color: #ffffff;
+  transition: background 0.15s ease;
+}
+
+.md-banner .lgnd-banner__discord:hover,
+.md-banner .lgnd-banner__discord:focus {
+  background: #4752c4;
+  color: #ffffff;
+}
+
+.lgnd-banner__discord svg {
+  width: 1.25em;
+  height: auto;
+  flex: 0 0 auto;
+}
