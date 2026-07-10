@@ -18014,7 +18014,11 @@ void CLuaBaseEntity::setDelay(uint16 delay)
 
 void CLuaBaseEntity::setDamage(uint16 damage)
 {
-    if (!(m_PBaseEntity->objtype & TYPE_MOB))
+    // Custom (FJB): allow TYPE_PET too, not just TYPE_MOB. CPetEntity extends
+    // CMobEntity, so the cast + m_Weapons access below are valid for pets. This
+    // lets the Adventuring Fellow (fellow_companion.lua) scale its weapon damage
+    // with level. Core-patch: re-verify after upstream pulls.
+    if (!(m_PBaseEntity->objtype & (TYPE_MOB | TYPE_PET)))
     {
         ShowError("function call on invalid entity! (name: %s type: %d)", m_PBaseEntity->name, m_PBaseEntity->objtype);
         return;
