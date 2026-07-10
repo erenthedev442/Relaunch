@@ -245,6 +245,20 @@ commandObj.onTrigger = function(player)
     line(player, 'EXP Bonus +%d%%   Capacity Bonus +%d%%',
         player:getMod(xi.mod.EXP_BONUS),
         player:getMod(xi.mod.CAPACITY_BONUS))
+    -- Dedication (EXP: Happy Hour / EXP rings) and Commitment (CP: Happy Hour /
+    -- capacity rings) are status-effect PAYOUTS, not mods -- they never appear
+    -- in the mod totals above, so read the effects directly. subPower = bonus
+    -- points still to be paid before the effect expires. Requested by Lant.
+    local dedication = player:getStatusEffect(xi.effect.DEDICATION)
+    if dedication then
+        line(player, 'Dedication (EXP buff) +%d%%   %d bonus pts left',
+            dedication:getPower(), dedication:getSubPower())
+    end
+    local commitment = player:getStatusEffect(xi.effect.COMMITMENT)
+    if commitment then
+        line(player, 'Commitment (CP buff) +%d%%   %d bonus pts left',
+            commitment:getPower(), commitment:getSubPower())
+    end
 
     -- =========================================================
     header(player, 'Misc / Niche')

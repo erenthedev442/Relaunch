@@ -5475,9 +5475,14 @@ uint16 AddCapacityBonus(CCharEntity* PChar, uint16 capacityPoints)
     {
         CStatusEffect* commitment = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_COMMITMENT);
         int16          percentage = commitment->GetPower();
-        int16          cap        = commitment->GetSubPower();
-        rawBonus += std::clamp<int32>(((capacityPoints * percentage) / 100), 0, cap);
-        commitment->SetSubPower(cap -= rawBonus);
+        // Same int16 trap as Dedication in AddExpBonus() -- see the comment there.
+        // A negative cap here fed `capacityPoints *= 1.0f + rawBonus / 100` a huge
+        // negative multiplier, garbaging the CP payout entirely.
+        int32       cap      = commitment->GetSubPower();
+        const int32 comBonus = std::clamp<int32>(((capacityPoints * percentage) / 100), 0, cap);
+        rawBonus += comBonus;
+        cap -= comBonus;
+        commitment->SetSubPower((uint16)cap);
 
         if (cap <= 0)
         {
@@ -6821,9 +6826,16 @@ float AddExpBonus(CCharEntity* PChar, float exp)
     {
         CStatusEffect* dedication = PChar->StatusEffectContainer->GetStatusEffect(EFFECT_DEDICATION);
         int16          percentage = dedication->GetPower();
-        int16          cap        = dedication->GetSubPower();
-        bonus += std::clamp<int32>((int32)((exp * percentage) / 100), 0, cap);
-        dedication->SetSubPower(cap -= bonus);
+        // SubPower is a uint16 -- read it into an int32, NOT an int16: a remaining
+        // cap above 32767 flips negative in an int16, making std::clamp's hi < lo
+        // (UB; MSVC returns the negative cap) and paying a NEGATIVE bonus that
+        // guts the kill down to the 5%-of-base floor below (Happy Hour bug,
+        // player report 2026-07-10).
+        int32       cap      = dedication->GetSubPower();
+        const int32 dedBonus = std::clamp<int32>((int32)((exp * percentage) / 100), 0, cap);
+        bonus += dedBonus;
+        cap -= dedBonus;
+        dedication->SetSubPower((uint16)cap);
 
         if (cap <= 0)
         {

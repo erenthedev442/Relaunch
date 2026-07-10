@@ -30,7 +30,12 @@ local WINDOWS =
 
 local EXP_BONUS   = 50      -- Dedication power (+% EXP)
 local CP_BONUS    = 50      -- Commitment power (+% capacity points)
-local BONUS_CAP   = 500000  -- subPower: total bonus points the effect may pay out
+-- subPower: bonus points the effect pays out per application -- an INSTALLMENT
+-- size, not a window total (the 60s tick re-applies once it's exhausted).
+-- HARD LIMIT: the core stores subPower as a uint16, and pre-fix binaries read
+-- it back as an int16 -- anything above 32767 flips NEGATIVE there and pays a
+-- negative bonus (the "Happy Hour cut my EXP to 5%" bug). Keep this <= 30000.
+local BONUS_CAP   = 30000
 local TICK_MS     = 60000   -- re-arming player tick
 
 -- Returns windowStart, windowEnd (epoch) when `now` is inside a window.

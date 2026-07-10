@@ -155,6 +155,10 @@ def _render_happy_hour(c: dict) -> str:
         "on every job and level.",
         "- A stronger EXP/CP buff you already have (say, from a ring) is never "
         "downgraded — Happy Hour only applies where it's the better deal.",
+        "- The bonus pays out in installments: after a big burst of EXP/CP the "
+        "icon can blink off for up to a minute before the next installment "
+        "lands. You lose nothing — it re-applies automatically for the rest of "
+        "the window.",
     ])
 
 
