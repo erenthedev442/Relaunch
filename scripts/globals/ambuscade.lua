@@ -519,7 +519,40 @@ xi.ambuscade.onEventFinishGorpaMasorpa = function(player, csid, option, npc)
 end
 
 -- ─── Ambuscade Tome ───────────────────────────────────────────────────────────
+
+-- If a party member is already inside a live Ambuscade instance, return it so
+-- the player JOINS that battle instead of getting a private copy. Without this
+-- every party member got their own instance (visible-but-untargetable "ghosts"
+-- of each other) and numChars was always 1, making Gallantry unobtainable.
+local function findPartyAmbuscade(player)
+    for _, member in pairs(player:getParty()) do
+        if member:getID() ~= player:getID() then
+            local inst = member:getInstance()
+            if
+                inst and
+                inst:getZone():getID() == xi.zone.MAQUETTE_ABDHALJS_LEGION_B and
+                not inst:completed() and
+                not inst:failed()
+            then
+                return inst
+            end
+        end
+    end
+    return nil
+end
+
 local function enterAmbuscade(player, diffOption)
+    local partyInst = findPartyAmbuscade(player)
+    if partyInst then
+        -- setInstance registers the char on the instance (numChars now counts
+        -- them for Gallantry); the difficulty picked here is ignored — the
+        -- battle already runs at its creator's difficulty.
+        player:setInstance(partyInst)
+        player:setPos(137, 12.5, -137, 32, xi.zone.MAQUETTE_ABDHALJS_LEGION_B)
+        player:printToPlayer('[Ambuscade] Joining your party\'s battle already in progress!', SYS)
+        return
+    end
+
     player:setCharVar('Ambuscade_Difficulty', diffOption)
     player:createInstance(30000)
     player:printToPlayer(string.format('[Ambuscade] Entering %s. Good luck!', DIFF_NAME[diffOption]), SYS)
@@ -589,6 +622,14 @@ end
 
 -- ─── Instance rewards ─────────────────────────────────────────────────────────
 xi.ambuscade.onInstanceComplete = function(instance)
+    -- Belt-and-braces idempotency: rewards are paid at most once per instance,
+    -- even if complete() somehow fires again (the time-update loop used to
+    -- re-trigger it every second and spam +HM to the monthly cap).
+    if instance:getLocalVar('Amb_Rewarded') == 1 then
+        return
+    end
+    instance:setLocalVar('Amb_Rewarded', 1)
+
     local chars      = instance:getChars()
     local numChars   = math.max(1, #chars)
     local difficulty = instance:getProgress()

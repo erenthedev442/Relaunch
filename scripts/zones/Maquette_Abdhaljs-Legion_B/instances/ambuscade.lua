@@ -101,6 +101,13 @@ end
 
 -- Detect when all killable mobs are dead; record elapsed time for time bonus.
 instanceObject.onInstanceTimeUpdate = function(instance, elapsed)
+    -- CheckTime keeps ticking after completion (core only gates on Failed()),
+    -- and Complete() re-fires onInstanceComplete unconditionally — without this
+    -- guard every 1s tick after the clear re-awards the victory reward.
+    if instance:completed() then
+        return
+    end
+
     local mobs   = instance:getMobs()
     local anyMob = false
     for _, mob in pairs(mobs) do
