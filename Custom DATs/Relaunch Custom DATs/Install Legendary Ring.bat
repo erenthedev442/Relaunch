@@ -7,3 +7,8 @@ if %errorlevel% neq 0 (
     exit /b
 )
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0install.ps1"
+echo.
+echo ============================================================
+echo  Finished. Read the messages above, then press a key to close.
+echo ============================================================
+pause >nul
