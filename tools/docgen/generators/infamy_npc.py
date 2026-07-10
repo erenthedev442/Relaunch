@@ -32,6 +32,14 @@ from tools.docgen._markers import write_between_markers
 from tools.docgen._bgwiki import urls_for_item
 from tools.docgen.generators import dungeons
 
+# The Infamy Vendor's hub is NEVER hardcoded here: it is placed by an addOverride
+# in InfamyVendor.lua, and custom NPCs get consolidated between hubs over time
+# (the 2026-07-06 move to Purgonorgo Isle). Emit npc_location_inject's token
+# instead; it reads that SAME module (see _NPC_FILES["infamy_vendor"]) and
+# expands this to the NPC's live zone on every build, so the vendor line can't
+# drift the way a literal "Leafallia" would.
+_LOC = "{{npc:infamy_vendor}}"
+
 # infamy_vendor_catalog.lua names its currency CharVar `currencyCv = 'Infamy'`
 # (not the `currencyName` the dungeon catalog uses), so parse that and fall back
 # to "Infamy".
@@ -88,7 +96,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
     lines: list[str] = []
     lines.append(
-        f"The **Infamy Vendor** stands at **Leafallia** (`!leaf`) and is paid in **{currency}**, "
+        f"The **Infamy Vendor** stands at {_LOC} (`!hub`) and is paid in **{currency}**, "
         f"earned from endgame content -- Abyssea NM hunts, Invasions, and the weekly "
         f"Raid. It is a hand-curated **accessory shop** -- best-in-slot neck, ear, "
         f"ring, waist, and back pieces. Weapons and armor are no longer sold here; "

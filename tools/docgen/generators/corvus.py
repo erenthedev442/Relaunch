@@ -24,6 +24,14 @@ from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 from tools.docgen._luaparse import section, commafy
 
+# The Void Keeper's hub is NEVER hardcoded here: it is placed by an addOverride
+# in trust_skoll.lua, and custom NPCs get consolidated between hubs over time
+# (the 2026-07-06 move to Purgonorgo Isle). Emit npc_location_inject's token
+# instead; it reads that SAME module (see _NPC_FILES["void_keeper"]) and expands
+# this to the NPC's live zone on every build, so the "Where" line and unlock
+# paragraph can't drift the way a literal "Leafallia" would.
+_LOC = "{{npc:void_keeper}}"
+
 # Per-trust doc config. name / clientName / rankReq / markCost are pulled LIVE from the Lua;
 # the role line, sibling links, pronouns and "who answers" noun are stable prose
 # authored here. `unlock` is the unlock-paragraph marker id, or None to skip it.
@@ -97,8 +105,8 @@ def _gate(c: dict) -> str:
 
 def _render_summary(t: dict, c: dict) -> str:
     return (
-        f"- **Where:** the **Void Keeper** in **Leafallia** (reach it with "
-        f"`!leaf`) — the same NPC that grants {t['siblings']}\n"
+        f"- **Where:** the **Void Keeper** in {_LOC} (reach it with "
+        f"`!hub`) — the same NPC that grants {t['siblings']}\n"
         f"- **Unlock:** **{_gate(c)}** — one-time, permanent, per character\n"
         f"- **Role:** {t['role']}\n"
         f"- **To summon:** cast **{c['client']}** from your Trust menu — that slot "
@@ -109,7 +117,7 @@ def _render_summary(t: dict, c: dict) -> str:
 
 def _render_unlock(t: dict, c: dict) -> str:
     return (
-        f"Reach **{_gate(c)}**, then travel to **Leafallia** with `!leaf`, find the "
+        f"Reach **{_gate(c)}**, then travel to {_LOC} with `!hub`, find the "
         f"**Void Keeper**, and bind {c['name']}. The marks are spent once; the binding "
         f"is permanent and per character — earn {t['obj']} once and {t['subj']}'s yours "
         f"forever.\n\n"

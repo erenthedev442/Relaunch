@@ -6,7 +6,7 @@
 ## Apex Trials
 
 <!-- DOCGEN:BEGIN id="apex-overview" -->
-**Apex Trials** is an **infinite, scaling solo climb** — the one chase on the server with no summit. Talk to the **Apex Arbiter** on **Purgonorgo Isle** (`!leaf`, endgame row, beside the Prime Armory) or type `!apex` to begin.
+**Apex Trials** is an **infinite, scaling solo climb** — the one chase on the server with no summit. Talk to the **Apex Arbiter** in <!--npc:apex-->Purgonorgo Isle<!--/npc--> (`!hub`, endgame row, beside the Prime Armory) or type `!apex` to begin.
 
 Each **tier** pits you against a single scaled Apex boss (Apex Devourer, Paragon Sentinel, Ascendant Tyrant…). Clear it and you **bank Paragon Points** and raise your **record**, then the next tier spawns automatically — a little tougher. Keep climbing until you die or leave; **the run ends, but every Paragon Point you banked on the way up is kept.** Your next run resumes one tier above your record.
 
@@ -44,7 +44,7 @@ From tier 5 on, each boss rolls an extra **affix** every 5 tiers (up to **6** st
 ## Paragon
 
 <!-- DOCGEN:BEGIN id="paragon-overview" -->
-**Paragon** is the meta-progression Apex Trials feeds. Spend the Paragon Points you bank at the **Paragon Sage** on **Purgonorgo Isle** (`!leaf`, next to the Apex Arbiter) on three things: an infinite **Paragon Level** prestige track, permanent **capped perks**, and the **Daily Might** buff. It's deliberately flex-and-flavour — the perk caps are modest next to maxed gear, so Paragon is a prestige climb, not a power treadmill.
+**Paragon** is the meta-progression Apex Trials feeds. Spend the Paragon Points you bank at the **Paragon Sage** in <!--npc:paragon-->Purgonorgo Isle<!--/npc--> (`!hub`, next to the Apex Arbiter) on three things: an infinite **Paragon Level** prestige track, permanent **capped perks**, and the **Daily Might** buff. It's deliberately flex-and-flavour — the perk caps are modest next to maxed gear, so Paragon is a prestige climb, not a power treadmill.
 <!-- DOCGEN:END id="paragon-overview" -->
 
 ### Perks
@@ -87,6 +87,6 @@ Unlock **Daily Might** once for **80 Paragon Points**, then claim it from the Pa
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2296a9b3d4e2 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 7abc059fbdf8 -->
+_Last updated: 2026-07-10 03:45 PDT_
 <!-- DOCGEN:END id="last-updated" -->

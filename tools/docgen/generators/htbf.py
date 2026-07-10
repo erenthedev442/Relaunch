@@ -238,7 +238,7 @@ def _parse_loot(text: str) -> dict:
 def _render_access(c: dict) -> str:
     return (
         "Buy your **Phantom Gem** from the **Phantom Gems** vendor in "
-        "**Leafallia** (the relaunch hub). Each gem is a key item bought with "
+        "{{npc:htbf_vendor}} (`!hub`, the relaunch hub). Each gem is a key item bought with "
         "gil; the vendor's menu is grouped by expansion so you can browse the "
         "full roster. Once you hold a gem, travel to that battlefield's zone, "
         "trade the gem at the entrance, and pick a difficulty tier (I / II / "

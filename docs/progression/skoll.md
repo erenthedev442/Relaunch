@@ -5,7 +5,7 @@ Gemma is the server's flagship **premium Trust** — a tiny Hume woman who runs 
 ## At a glance
 
 <!-- DOCGEN:BEGIN id="gemma-summary" -->
-- **Where:** the **Void Keeper** on **Purgonorgo Isle** (reach it with `!leaf`) — the same NPC that grants [Corvus](corvus.md) and [Meat](meat.md)
+- **Where:** the **Void Keeper** in <!--npc:void_keeper-->Purgonorgo Isle<!--/npc--> (reach it with `!hub`) — the same NPC that grants [Corvus](corvus.md) and [Meat](meat.md)
 - **Unlock:** **Hunting League Rank 3 + 3,000 Hunt Marks** — one-time, permanent, per character
 - **Role:** primary support **+** secondary nuker; she never tanks
 - **To summon:** cast **Nanaa Mihgo** from your Trust menu — that slot *is* Gemma (the name **Gemma** appears over her head and in your party list)
@@ -81,6 +81,6 @@ So: **cast Nanaa Mihgo → get Gemma.**
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 41c4702bdcf4 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 90c5082b0e2e -->
+_Last updated: 2026-07-10 03:45 PDT_
 <!-- DOCGEN:END id="last-updated" -->

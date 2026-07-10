@@ -28,6 +28,16 @@ from tools.docgen._markers import write_between_markers
 from tools.docgen._luaparse import section, commafy
 
 
+# The Tower Arbiter's hub is NEVER hardcoded here: it is placed by an
+# addOverride in endless_tower.lua, and custom NPCs get consolidated between hubs
+# over time (the 2026-07-06 move to Purgonorgo Isle). Emit npc_location_inject's
+# token instead; it reads the SAME endless_tower.lua (see _NPC_FILES["endless_tower"])
+# and expands this to the NPC's live zone on every build, so the location can't
+# drift the way a literal "Leafallia" would. Plain string -> the {{ }} survive to
+# the .md; in .format() templates pass it as loc=_LOC so the braces aren't eaten.
+_LOC = "{{npc:endless_tower}}"
+
+
 def _first(pattern: str, text: str, default: str) -> str:
     m = re.search(pattern, text)
     return m.group(1) if m else default
@@ -97,7 +107,7 @@ def _parse(text: str) -> dict:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return (f"Speak to the **{c['npc']}** in **Leafallia** (`!leaf`) and choose *Enter the "
+    return (f"Speak to the **{c['npc']}** in {_LOC} (`!hub`) and choose *Enter the "
             f"Tower* to be warped into **{c['zone']}**. After a short breather "
             f"the first floor spawns, and each cleared floor leads straight into "
             f"the next.\n\n"
@@ -179,7 +189,7 @@ tenth floor. Fight your way to the top and the Pinnacle Sovereign falls — and
 with it, a piece of your Prime Weapon legend. One death, and the run is over.
 
 !!! tip "Summary"
-    A solo {max_floor}-floor climb from the {npc} in Leafallia (`!leaf`) — a boss every
+    A solo {max_floor}-floor climb from the {npc} in {loc} (`!hub`) — a boss every
     {boss_every} floors, no Trusts allowed, one death ends the run, and reaching
     floor {max_floor} completes Prime Weapon Trial {trial_num}.
 
@@ -226,6 +236,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
                 npc=c["npc"],
                 boss_every=c["bossEvery"],
                 trial_num=c["trialNum"],
+                loc=_LOC,
             ),
             encoding="utf-8",
         )

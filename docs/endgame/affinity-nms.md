@@ -15,7 +15,7 @@ Twenty-four of Vana'diel's most legendary Notorious Monsters — HNMs, Sky Gods,
 
 2. **Kill it.** The trophy is granted straight to **everyone in your party or alliance who is in the zone** — it does not drop on the floor, and it no longer matters who lands the killing blow. Keep a free inventory slot: any member whose inventory is full is warned and skipped, so make room and defeat it again.
 
-3. **Take the trophy to the Augment Sage** on Purgonorgo Isle (`!hub`).
+3. **Take the trophy to the Augment Sage** at <!--npc:augment_sage-->Purgonorgo Isle<!--/npc--> (`!hub`).
 
 4. **Register the affinity.** Each registration costs **Hunting League Rank III (Elite)** or higher and **1,000 Hunt Marks**.
 
@@ -62,6 +62,6 @@ These NMs are **stat-boosted** beyond their retail versions: 6× base HP, +4,000
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b86aad551790 -->
-_Last updated: 2026-07-06 17:42 PDT_
+<!-- content-hash: 56bbb9a6d676 -->
+_Last updated: 2026-07-10 03:45 PDT_
 <!-- DOCGEN:END id="last-updated" -->

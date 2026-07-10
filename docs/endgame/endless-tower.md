@@ -13,7 +13,7 @@ with it, a piece of your Prime Weapon legend. One death, and the run is over.
 ## Where to start
 
 <!-- DOCGEN:BEGIN id="endless-tower-access" -->
-Speak to the **Tower Climb** in **Purgonorgo Isle** (`!hub`) and choose *Enter the Tower* to be warped into **Walk Of Echoes**. After a short breather the first floor spawns, and each cleared floor leads straight into the next.
+Speak to the **Tower Climb** in <!--npc:endless_tower-->Purgonorgo Isle<!--/npc--> (`!hub`) and choose *Enter the Tower* to be warped into **Walk Of Echoes**. After a short breather the first floor spawns, and each cleared floor leads straight into the next.
 
 This is a **solo** gauntlet — Trusts are disabled inside the Tower. A single death ends the run on the spot with no reward and no floor saved, so you only ever advance by surviving. You can bail out early at any time with **`!tower abort`**, and **`!tower`** on its own reports your current floor (or your best-ever floor when you're not in a run).
 <!-- DOCGEN:END id="endless-tower-access" -->
@@ -73,6 +73,6 @@ only remembers how high you dared to go.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f7316e427303 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 86d0063dbbf7 -->
+_Last updated: 2026-07-10 03:45 PDT_
 <!-- DOCGEN:END id="last-updated" -->

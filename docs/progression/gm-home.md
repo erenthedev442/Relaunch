@@ -2,7 +2,7 @@
 
 GM Home is the server's private utility zone, accessible from anywhere with `!gmhome`.
 
-On the Relaunch, GM Home contains a single NPC: the **Test Dummy**. New-character setup, gear vendors, warps, and all endgame services are in **Leafallia** (`!leaf`) and the **Celennia Memorial Library** (`!lib`).
+On the Relaunch, GM Home contains a single NPC: the **Test Dummy**. New-character setup, gear vendors, warps, and all endgame services are on **Purgonorgo Isle** — reach it with **`!hub`** (the old `!leaf` and `!lib` commands still work and land you there too).
 
 ---
 

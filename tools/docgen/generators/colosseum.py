@@ -22,6 +22,15 @@ from tools.docgen._markers import write_between_markers
 from tools.docgen._luaparse import section, ints, commafy
 
 
+# The Arena Herald's hub is NEVER hardcoded here: colosseum_catalog.lua carries
+# its placement, and custom NPCs get consolidated between hubs over time (the
+# 2026-07-06 move to Purgonorgo Isle). Emit npc_location_inject's token instead;
+# it reads the SAME colosseum_catalog.lua (see _NPC_FILES["colosseum"]) and
+# expands this to the NPC's live zone on every build, so the access line can't
+# drift the way a literal "Leafallia" would.
+_LOC = "{{npc:colosseum}}"
+
+
 def _first(pattern: str, text: str, default: str) -> str:
     m = re.search(pattern, text)
     return m.group(1) if m else default
@@ -70,7 +79,7 @@ def _mins(seconds: int) -> str:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return (f"The **{c['npc']}** stands in **Leafallia** (`!leaf`) — talk to them to enroll "
+    return (f"The **{c['npc']}** stands in {_LOC} (`!hub`) — talk to them to enroll "
             f"your champion on the ladder, browse the roster of rivals, and "
             f"accept a duel.")
 

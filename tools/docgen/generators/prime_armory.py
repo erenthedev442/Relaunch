@@ -22,6 +22,15 @@ from tools.docgen._markers import write_between_markers
 from tools.docgen._luaparse import section
 
 
+# The Prime Armory's hub is NEVER hardcoded here: it is placed by an addOverride
+# in PrimeArmory_NPC.lua, and custom NPCs get consolidated between hubs over time
+# (the 2026-07-06 move to Purgonorgo Isle). Emit npc_location_inject's token
+# instead; it reads that SAME module (see _NPC_FILES["prime_armory"]) and expands
+# this to the NPC's live zone on every build, so the access line can't drift the
+# way a literal "Leafallia" would.
+_LOC = "{{npc:prime_armory}}"
+
+
 def _weapon_type(info: str) -> str:
     """The weapon type is the first sentence of `info` (up to the first '.').
 
@@ -53,7 +62,7 @@ def _parse(text: str) -> dict:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return ("The **Prime Armory** is in **Leafallia** (`!leaf`), in the endgame NPC row. "
+    return (f"The **Prime Armory** is in {_LOC} (`!hub`), in the endgame NPC row. "
             "cluster. Talk to it to browse the Prime weapons; bring your **750M "
             "gil** when you're ready to forge (all 5 trials, including the "
             "voucher turn-in, must already be done).")

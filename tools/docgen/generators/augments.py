@@ -27,6 +27,15 @@ from tools.docgen._bgwiki import urls_for_item
 from tools.docgen._db import connect
 
 
+# The Augment Moogle's hub is NEVER hardcoded here: it is placed by an
+# addOverride in Augment_Moogle.lua, and custom NPCs get consolidated between
+# hubs over time (the 2026-07-06 move to Purgonorgo Isle). Emit
+# npc_location_inject's token instead; it reads that SAME module (see
+# _NPC_FILES["augment_moogle"]) and expands this to the NPC's live zone on every
+# build, so the trade line can't drift the way a literal "Leafallia" would.
+_MOOGLE_LOC = "{{npc:augment_moogle}}"
+
+
 # Marker used in the markdown to flag unobtainable items.
 _GAP_MARK = "⚠"
 
@@ -448,7 +457,7 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] |
         f"_{total} augments across {len(groups)} categories. "
         f"**Every augment is available at every Augment Tier** — your tier determines the "
         f"**power** of the roll, not which augments you can access. "
-        f"Trade catalysts to the **Augment Moogle in Leafallia** (`!leaf`). "
+        f"Trade catalysts to the **Augment Moogle** in {_MOOGLE_LOC} (`!hub`). "
         f"Cost is **10,000 gil flat per trade** plus the catalyst itself. "
         f"Every line is **rolled** within your [Augment Tier's band](augment-sage.md) "
         f"— higher tiers roll strictly higher values. "

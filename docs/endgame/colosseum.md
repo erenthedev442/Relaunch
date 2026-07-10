@@ -8,7 +8,7 @@ Think you're the strongest champion on the server? Enroll at the **Arena Herald*
 ## Where to fight
 
 <!-- DOCGEN:BEGIN id="colosseum-access" -->
-The **Arena Herald** stands in **Purgonorgo Isle** (`!hub`) — talk to them to enroll your champion on the ladder, browse the roster of rivals, and accept a duel.
+The **Arena Herald** stands in <!--npc:colosseum-->Purgonorgo Isle<!--/npc--> (`!hub`) — talk to them to enroll your champion on the ladder, browse the roster of rivals, and accept a duel.
 <!-- DOCGEN:END id="colosseum-access" -->
 
 Enrolling snapshots your champion's name, race, job, and level onto the ladder. From then on, anyone can challenge a replica of your champion — and you can challenge theirs — at any time.
@@ -49,6 +49,6 @@ The bigger the gap when you beat someone rated above you, the sweeter the haul �
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 68838d8b6dbf -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 401a9c71662f -->
+_Last updated: 2026-07-10 03:45 PDT_
 <!-- DOCGEN:END id="last-updated" -->

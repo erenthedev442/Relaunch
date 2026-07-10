@@ -23,6 +23,15 @@ from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 from tools.docgen._luaparse import section, commafy
 
+# The Apex Arbiter / Paragon Sage hubs are NEVER hardcoded here: they are placed
+# by addOverrides in ApexTrials.lua / Paragon.lua, and custom NPCs get
+# consolidated between hubs over time (the 2026-07-06 move to Purgonorgo Isle).
+# Emit npc_location_inject's tokens instead; they read those SAME modules (see
+# _NPC_FILES["apex"] / ["paragon"]) and expand to the NPCs' live zones on every
+# build, so the overview prose can't drift the way literal "Leafallia" would.
+_APEX_LOC = "{{npc:apex}}"
+_PARAGON_LOC = "{{npc:paragon}}"
+
 # Friendly names for the perk modKeys (auto-falls back to the raw key).
 _MOD_LABEL = {
     "HP": "Max HP",
@@ -93,7 +102,7 @@ def _render_apex_overview(a: dict) -> str:
     names = ", ".join(a["bosses"][:3]) + ("…" if len(a["bosses"]) > 3 else "")
     return (
         "**Apex Trials** is an **infinite, scaling solo climb** — the one chase on the server "
-        "with no summit. Talk to the **Apex Arbiter** in **Leafallia** (`!leaf`, endgame row, beside the "
+        f"with no summit. Talk to the **Apex Arbiter** in {_APEX_LOC} (`!hub`, endgame row, beside the "
         "Prime Armory) or type `!apex` to begin.\n\n"
         "Each **tier** pits you against a single scaled Apex boss "
         f"({names}). Clear it and you **bank Paragon Points** and raise your **record**, then the "
@@ -144,7 +153,7 @@ def _render_apex_affixes(a: dict) -> str:
 def _render_paragon_overview(p: dict) -> str:
     return (
         "**Paragon** is the meta-progression Apex Trials feeds. Spend the Paragon Points you bank "
-        "at the **Paragon Sage** in **Leafallia** (`!leaf`, next to the Apex Arbiter) on three things: an infinite "
+        f"at the **Paragon Sage** in {_PARAGON_LOC} (`!hub`, next to the Apex Arbiter) on three things: an infinite "
         "**Paragon Level** prestige track, permanent **capped perks**, and the **Daily Might** buff. "
         "It's deliberately flex-and-flavour — the perk caps are modest next to maxed gear, so "
         "Paragon is a prestige climb, not a power treadmill."

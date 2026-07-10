@@ -10,7 +10,7 @@ The **Prime Weapon Trials** are the gateway to a Prime weapon. Clear all five, t
 <!-- DOCGEN:BEGIN id="prime-trials-gate" -->
 The Prime Armory forge is locked behind the **5 Prime Weapon Trials**. They are tracked independently, so you can chip away at them **in any order** -- clear all **5** and the Prime Armory will forge the Prime weapon of your choice.
 
-Talk to the **Prime Armory** NPC in **Purgonorgo Isle** (`!hub`) at any time to see which trials you've cleared and to hand in the collection trials.
+Talk to the **Prime Armory** NPC in <!--npc:prime_armory-->Purgonorgo Isle<!--/npc--> (`!hub`) at any time to see which trials you've cleared and to hand in the collection trials.
 <!-- DOCGEN:END id="prime-trials-gate" -->
 
 ## The five trials
@@ -72,6 +72,6 @@ You claim **one Prime per character**, so pick the weapon that fits your main jo
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 161e275d81d9 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 593c03c7e9fc -->
+_Last updated: 2026-07-10 03:45 PDT_
 <!-- DOCGEN:END id="last-updated" -->

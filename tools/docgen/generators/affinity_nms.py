@@ -108,7 +108,7 @@ def _render_how_it_works(mult: float, rank_req: int, mark_cost: int) -> str:
         "matters who lands the killing blow. Keep a free inventory slot: any member whose "
         "inventory is full is warned and skipped, so make room and defeat it again.",
         "",
-        "3. **Take the trophy to the Augment Sage** at Leafallia (`!leaf`).",
+        "3. **Take the trophy to the Augment Sage** at {{npc:augment_sage}} (`!hub`).",
         "",
         f"4. **Register the affinity.** Each registration costs **Hunting League Rank "
         f"{rank_name}** or higher and **{mark_cost:,} Hunt Marks**.",
