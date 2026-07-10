@@ -16,6 +16,9 @@ xi.ambuscade = {}
 
 local SYS = xi.msg.channel.SYSTEM_3
 
+-- Retail-faithful Ambuscade weapon upgrade chain (Tokko->Ajja->Eletta->Kaja->Final).
+local AMBU_WPN = require('modules/custom/lua/ambuscade_weapons_catalog')
+
 -- ─── Difficulty tables ────────────────────────────────────────────────────────
 local DIFF_NAME =
 {
@@ -164,6 +167,108 @@ local function buildShopMenu(player, items, currency, page, backFn)
     player:timer(30, function(pp) pp:customMenu(snapshot) end)
 end
 
+-- ─── Ambuscade weapons (Tokko -> Ajja -> Eletta -> Kaja -> Final) ─────────────
+local showWeaponMain  -- fwd decl
+
+-- Redeem a BASE (Tokko) weapon of your choice for Hallmarks.
+local function buildWeaponBaseMenu(player, page, backFn)
+    page = page or 0
+    local chains = AMBU_WPN.CHAINS
+    local pages  = math.max(1, math.ceil(#chains / SHOP_PER_PAGE))
+    page = page % pages
+    local options = {}
+    for i = page * SHOP_PER_PAGE + 1, math.min((page + 1) * SHOP_PER_PAGE, #chains) do
+        local chain = chains[i]
+        options[#options + 1] =
+        {
+            chain.label,
+            function(pp)
+                local cost = AMBU_WPN.BASE_HM_COST
+                if pp:getCurrency('current_hallmarks') < cost then
+                    pp:printToPlayer(string.format('[Ambuscade] Need %d Hallmarks (have %d).',
+                        cost, pp:getCurrency('current_hallmarks')), SYS)
+                elseif pp:getFreeSlotsCount() < 1 then
+                    pp:printToPlayer('[Ambuscade] Inventory full.', SYS)
+                else
+                    pp:delCurrency('current_hallmarks', cost)
+                    pp:addItem(chain.stages[1], 1)  -- Tokko (base)
+                    pp:printToPlayer(string.format('[Ambuscade] Received base %s. Upgrade it with Abdhaljs materials.',
+                        chain.label), SYS)
+                end
+                buildWeaponBaseMenu(pp, page, backFn)
+            end,
+        }
+    end
+    if pages > 1 then
+        options[#options + 1] = { 'More >>', function(pp) buildWeaponBaseMenu(pp, page + 1, backFn) end }
+    end
+    options[#options + 1] = { 'Back', backFn }
+    local snapshot = { title = string.format('Base Weapon [%dHM]', AMBU_WPN.BASE_HM_COST), options = options }
+    player:timer(30, function(pp) pp:customMenu(snapshot) end)
+end
+
+-- Upgrade a weapon the player already holds (scan inventory for any Ambuscade
+-- weapon at stage 1..4 -> offer the next stage for its material cost).
+local function buildWeaponUpgradeMenu(player, backFn)
+    local options = {}
+    for _, chain in ipairs(AMBU_WPN.CHAINS) do
+        for stage = 1, 4 do
+            local fromId = chain.stages[stage]
+            if player:hasItem(fromId, xi.inv.INVENTORY) then
+                local rec   = AMBU_WPN.UPGRADE[stage]
+                local toId  = chain.stages[stage + 1]
+                local have  = player:getItemCount(rec.mat)
+                local ready = have >= rec.qty
+                options[#options + 1] =
+                {
+                    -- e.g. "Sword: Ajja->Eletta 5xGem (3/5)"
+                    string.format('%s: %s->%s %dx%s%s',
+                        chain.label:match('%((.-)%)') or chain.label,
+                        AMBU_WPN.STAGE_NAME[stage], AMBU_WPN.STAGE_NAME[stage + 1],
+                        rec.qty, (AMBU_WPN.MAT_NAME[rec.mat] or 'mat'):gsub('Abdhaljs ', ''),
+                        ready and '' or string.format(' (%d/%d)', have, rec.qty)),
+                    function(pp)
+                        if not pp:hasItem(fromId, xi.inv.INVENTORY) then
+                            pp:printToPlayer('[Ambuscade] Unequip the weapon and keep it in your main inventory.', SYS)
+                        elseif pp:getItemCount(rec.mat) < rec.qty then
+                            pp:printToPlayer(string.format('[Ambuscade] Need %dx %s (have %d).',
+                                rec.qty, AMBU_WPN.MAT_NAME[rec.mat], pp:getItemCount(rec.mat)), SYS)
+                        else
+                            pp:delItem(rec.mat, rec.qty)
+                            pp:delItem(fromId, 1)
+                            pp:addItem(toId, 1)
+                            pp:printToPlayer(string.format('[Ambuscade] Upgraded to %s %s!',
+                                chain.label:match('%((.-)%)') or chain.label, AMBU_WPN.STAGE_NAME[stage + 1]), SYS)
+                        end
+                        buildWeaponUpgradeMenu(pp, backFn)
+                    end,
+                }
+            end
+        end
+    end
+    if #options == 0 then
+        options[#options + 1] = { '(no upgradeable weapon in bag)', function(pp) backFn(pp) end }
+    end
+    options[#options + 1] = { 'Back', backFn }
+    -- 8-option cap: if a player somehow holds many stages, keep the newest 7 rows.
+    while #options > 8 do table.remove(options, 1) end
+    local snapshot = { title = 'Upgrade Weapon', options = options }
+    player:timer(30, function(pp) pp:customMenu(snapshot) end)
+end
+
+showWeaponMain = function(player, backFn)
+    local options =
+    {
+        { string.format('Get Base Weapon [%dHM]', AMBU_WPN.BASE_HM_COST),
+          function(pp) buildWeaponBaseMenu(pp, 0, function(p) showWeaponMain(p, backFn) end) end },
+        { 'Upgrade a Weapon',
+          function(pp) buildWeaponUpgradeMenu(pp, function(p) showWeaponMain(p, backFn) end) end },
+        { 'Back', backFn },
+    }
+    local snapshot = { title = 'Ambuscade Weapons', options = options }
+    player:timer(30, function(pp) pp:customMenu(snapshot) end)
+end
+
 local function showGorpaMain(player)
     local hm  = player:getCurrency('current_hallmarks')
     local gal = player:getCurrency('gallantry')
@@ -176,6 +281,10 @@ local function showGorpaMain(player)
         {
             string.format('Gal Shop [%dG]', gal),
             function(pp) buildShopMenu(pp, GAL_SHOP, 'gallantry', 0, function(p) showGorpaMain(p) end) end,
+        },
+        {
+            'Weapons',
+            function(pp) showWeaponMain(pp, function(p) showGorpaMain(p) end) end,
         },
         { 'Leave', function(pp) end },
     }
