@@ -5,17 +5,20 @@ DATs pack.
 
 ## Included DATs
 
-No edited DAT binaries are included yet.
+| File | Overrides | Notes |
+|------|-----------|-------|
+| `ROM/286/73.DAT` | item `26169` name + description | Only 114 bytes differ from retail (record #3129); every other item in the file is byte-identical. |
 
-The repository does not contain the retail client DAT file for item `26169`, so
-the binary override must be exported/edited from a local FFXI client install
-first (see below).
+The edit was made by decoding the retail item block (FFXI items are ROR-5
+bit-rotated), rewriting the four strings in place, and re-encoding. The retail
+`Reraise Ring` name/help text became the Legendary Ring text below; nothing else
+in the 17 MB file changed.
 
-## Planned Overrides
+## Overrides
 
-| Item ID | Retail Name  | Relaunch Name  | Status            | Notes |
-|--------:|--------------|----------------|-------------------|-------|
-| `26169` | Reraise Ring | Legendary Ring | Pending DAT export | Functional Legacy migration reward. |
+| Item ID | Retail Name  | Relaunch Name  | Status | Notes |
+|--------:|--------------|----------------|--------|-------|
+| `26169` | Reraise Ring | Legendary Ring | Done (`ROM/286/73.DAT`) | Functional Legacy migration reward. |
 
 ## Required Display Text
 
@@ -32,6 +35,11 @@ Lv.1 All Jobs
 ```
 
 Name string: `Legendary Ring`
+
+The `[Ring] All Races` and `Lv.1 All Jobs` header lines are auto-rendered by the
+client from the item's binary attributes (slot=Rings, races=All, level 1, jobs
+All) — already correct on item 26169, so only the name + the three effect lines
+above are stored as edited text.
 
 ## Server-Side Source Of Truth
 
