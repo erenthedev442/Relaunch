@@ -48,7 +48,7 @@ You're also handed **25 Hunt Marks** as a starter stipend — the currency every
 
 You start at level **1** — but with every job and subjob already unlocked and **{{setting:map.EXP_RATE}}× mob EXP** (plus {{setting:main.EXP_RATE:int}}× from books & RoE), the climb is hours, not weeks.
 
-- Type **`!expcamp`** to warp straight to one of 20 level-banded EXP camps — La Theine and Valkurm early, up through the Boyahda Tree at 60–75. Run `!expcamp` on its own to list the camps, then `!expcamp 4` to warp to one.
+- Type **`!expcamp`** to warp straight to one of 20 level-banded EXP camps — La Theine Plateau early, up through Kamihr Drifts at 95–99. Run `!expcamp` on its own to list the camps, then `!expcamp 4` to warp to one.
 - Or dive into the **Hunting League** below right away: the Rank I NMs are low-level, so you earn EXP *and* Hunt Marks at the same time.
 
 ---
@@ -85,7 +85,7 @@ It's the primary path to endgame gear and the main thing to do on the Relaunch s
 
 | Step | Action |
 |---|---|
-| 1 | `!lib` — warp to the Purgonorgo Isle (entry hub) |
+| 1 | `!hub` — warp to Purgonorgo Isle, the single custom-NPC hub |
 | 2 | Nothing to do — your character is fully set up at creation (weapon skills, spells, trusts, capped skills, key items, missions, maps, warps, wardrobes, starter gear) |
 | 3 | `!expcamp` — warp to a level-banded camp and level to 99 ({{setting:map.EXP_RATE}}× mob EXP) |
 | 4 | `!hunt` — warp to Escha ZiTah and start the Hunting League |
@@ -99,6 +99,6 @@ If something isn't working, you're not sure what to do next, or you just want to
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e6e55eaf95ff -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: 35b034eae81a -->
+_Last updated: 2026-07-10 03:24 PDT_
 <!-- DOCGEN:END id="last-updated" -->

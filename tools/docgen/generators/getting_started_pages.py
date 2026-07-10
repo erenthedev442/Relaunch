@@ -44,6 +44,40 @@ def _first_int(pattern: str, text: str, default: int) -> int:
     return int(m.group(1)) if m else default
 
 
+# xi.zone.<CONST> -> friendly name that reads naturally in prose. Mirrors the
+# _FRIENDLY map in npc_location_inject (kept small: only the hub zones the warp
+# commands actually target). Unknown consts fall back to a title-cased name.
+_ZONE_FRIENDLY: dict[str, str] = {
+    "ABDHALJS_ISLE_PURGONORGO":  "Purgonorgo Isle",
+    "LEAFALLIA":                 "Leafallia",
+    "CELENNIA_MEMORIAL_LIBRARY": "the Celennia Memorial Library",
+    "GM_HOME":                   "GM Home",
+}
+
+
+def _hub_zone(repo_root: Path) -> str | None:
+    """Friendly name of the single zone the hub warp commands land in.
+
+    Reads the live `!hub` / `!lib` / `!leaf` targets so a future hub move can't
+    strand this page. Returns the friendly name only when every command shares
+    one zone (the current single-hub consolidation); returns None if they
+    diverge or none resolve, so the caller can fall back to generic phrasing.
+    """
+    consts: list[str] = []
+    for cmd in ("hub", "lib", "leaf"):
+        text = (_text(repo_root, f"modules/custom/commands/{cmd}.lua")
+                or _text(repo_root, f"scripts/commands/{cmd}.lua"))
+        if not text:
+            continue
+        m = re.search(r"setPos\([^)]*xi\.zone\.(\w+)", text)
+        if m:
+            consts.append(m.group(1))
+    if not consts or len(set(consts)) != 1:
+        return None
+    const = consts[0]
+    return _ZONE_FRIENDLY.get(const, const.replace("_", " ").title())
+
+
 # ---------------------------------------------------------------------------
 # Live facts
 # ---------------------------------------------------------------------------
@@ -95,6 +129,18 @@ def _facts(repo_root: Path) -> dict | None:
     # camps table rows look like { '10-25 La Theine Plateau', xi.zone.X, ... }
     ec = _text(repo_root, "modules/custom/commands/expcamp.lua") or ""
     f["expCamps"] = len(re.findall(r"xi\.zone\.\w+", ec))  # 0 -> phrased without a count
+    # Level bands: parse the "NN-NN Zone" label so the camp range in the prose
+    # follows the table instead of being hand-quoted (it drifted to a stale
+    # "Boyahda Tree at 60-75" while camps grew out to 95-99). Each entry is
+    # (lowLv, highLv, zoneLabel); low = first row, high = last row.
+    camp_rows = re.findall(r"\{\s*'(\d+)-(\d+)\s+([^']+)'", ec)
+    f["expLow"] = (int(camp_rows[0][0]), int(camp_rows[0][1]), camp_rows[0][2].strip()) \
+        if camp_rows else None
+    f["expHigh"] = (int(camp_rows[-1][0]), int(camp_rows[-1][1]), camp_rows[-1][2].strip()) \
+        if camp_rows else None
+
+    # Hub zone: where !hub / !lib / !leaf now land (single-hub consolidation).
+    f["hubZone"] = _hub_zone(repo_root)
 
     f["hasUnstick"] = resolve_source(repo_root, "scripts/commands/unstick.lua") is not None
     return f
@@ -222,8 +268,17 @@ Prefer to edit `Windower4/settings/settings.xml` by hand? The profile looks like
 
 def _page_first_steps(f: dict) -> str:
     nm1, nm2, nm3 = (f["rank1Nms"] + ["?", "?", "?"])[:3]
+    hub = f["hubZone"] or "the server hub"
     camps = (f"one of {f['expCamps']} level-banded EXP camps"
              if f["expCamps"] else "a level-banded EXP camp")
+    # Range phrase follows the camps table: "<low zone> early, up through
+    # <high zone> at <high band>." Falls back to a bare sentence if unparsed.
+    if f["expLow"] and f["expHigh"]:
+        lo_zone = f["expLow"][2]
+        hi_lo, hi_hi, hi_zone = f["expHigh"]
+        camp_range = f" — {lo_zone} early, up through {hi_zone} at {hi_lo}–{hi_hi}"
+    else:
+        camp_range = ""
     return f"""\
 # First Steps
 
@@ -236,14 +291,15 @@ This page walks you through the first 15–20 minutes: getting your character se
 
 ---
 
-## 1. Orient yourself — two hub zones
+## 1. Orient yourself — one island hub
 
-The two main zones you'll return to constantly are:
+Every custom NPC lives on a single island plaza — **{hub}**. Type **`!hub`** to warp there any time.
 
-- **Celennia Memorial Library** — type `!lib` to warp there. This is the entry hub: Hunt Board, Daily Board, economy NPCs (Gil Exchange, Sparks Exchange, Race Changer), the Casino, Home Point crystal, and the Warpman.
-- **Leafallia** — type `!leaf` to warp there. This is the endgame NPC row: Apex Trials, Prime Armory, Colosseum, Infamy Vendor, Augment Moogle and Sage, Job Mastery, Endless Tower, and Cross-Job Trainers.
+- **Getting-around & set-up** — Home Point crystal, Warpman, Survival Guide.
+- **Economy** — Gil Exchange, Sparks Exchange, Race Changer, Title Broker, Mystery Mog, Cosmetic Shop; the Casino; the Daily & Hunt boards; Unity and Chocobo Derby.
+- **Endgame** — Apex Trials, Prime Armory, Relic Forge, Colosseum, Endless Tower, the Gauntlet, Infamy / HTBF / Voidwatch vendors, Augment Moogle & Sage, the mastery trainers, Cross-Job Trainers, and the combat **Test Dummy** for DPS testing.
 
-GM Home (`!gmhome`) still exists, but only the **Test Dummy** for DPS testing lives there now.
+The NPCs are spaced out across the plaza so a crowd can shop at once. The old `!leaf`, `!lib`, and `!gmhome` commands all still work — they now land you on {hub} too.
 
 ---
 
@@ -274,7 +330,7 @@ You're also handed **{f['starterMarks']} Hunt Marks** as a starter stipend — t
 
 You start at level **1** — but with every job and subjob already unlocked and **{{{{setting:map.EXP_RATE}}}}× mob EXP** (plus {{{{setting:main.EXP_RATE:int}}}}× from books & RoE), the climb is hours, not weeks.
 
-- Type **`!expcamp`** to warp straight to {camps} — La Theine and Valkurm early, up through the Boyahda Tree at 60–75. Run `!expcamp` on its own to list the camps, then `!expcamp 4` to warp to one.
+- Type **`!expcamp`** to warp straight to {camps}{camp_range}. Run `!expcamp` on its own to list the camps, then `!expcamp 4` to warp to one.
 - Or dive into the **Hunting League** below right away: the Rank I NMs are low-level, so you earn EXP *and* Hunt Marks at the same time.
 
 ---
@@ -311,7 +367,7 @@ It's the primary path to endgame gear and the main thing to do on the Relaunch s
 
 | Step | Action |
 |---|---|
-| 1 | `!lib` — warp to the Celennia Memorial Library (entry hub) |
+| 1 | `!hub` — warp to {hub}, the single custom-NPC hub |
 | 2 | Nothing to do — your character is fully set up at creation (weapon skills, spells, trusts, capped skills, key items, missions, maps, warps, wardrobes, starter gear) |
 | 3 | `!expcamp` — warp to a level-banded camp and level to 99 ({{{{setting:map.EXP_RATE}}}}× mob EXP) |
 | 4 | `!hunt` — warp to Escha ZiTah and start the Hunting League |
@@ -591,5 +647,6 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     for name, content in pages:
         (gs / name).write_text(content, encoding="utf-8")
     print(f"[getting_started_pages] wrote {len(pages)} pages "
-          f"(host={f['host']}:{f['dataPort']}, starterMarks={f['starterMarks']}, "
-          f"daily={f['dailyBonus']}, rank2Cost={f['rank2Cost']}, camps={f['expCamps']})")
+          f"(host={f['host']}:{f['dataPort']}, hub={f['hubZone']}, "
+          f"starterMarks={f['starterMarks']}, daily={f['dailyBonus']}, "
+          f"rank2Cost={f['rank2Cost']}, camps={f['expCamps']})")
