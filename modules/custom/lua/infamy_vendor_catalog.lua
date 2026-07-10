@@ -122,6 +122,10 @@ catalog.vendorItems =
     { id = 26249, sub = "Back", name = "Taranus's Cape", cost = 4000, stats = { 'Back. BLM JSE cape. DEF+15.', 'Magic Burst dmg+5.' } },
     { id = 26251, sub = "Back", name = "Toutatis's Cape", cost = 4000, stats = { 'Back. THF JSE cape. DEF+16.', 'Sneak Atk+10, Triple Atk dmg+20.' } },
     { id = 26263, sub = "Back", name = "Visucius's Mantle", cost = 4000, stats = { 'Back. PUP JSE cape. DEF+16.', 'Automaton Lv+1, Overload-10.' } },
+    -- Catalyst (not an accessory) -- added 2026-07-09 (report: Burtgang/Spyro/Duff --
+    -- Philosopher Stone too scarce; ~80 catalyst per gear set). Native shop charges
+    -- Infamy; shows under the browser's "Other" sub-bucket. Peiste skins untouched.
+    { id = 942, sub = "Other", name = "Philosopher's Stone", cost = 50, stats = { 'Augment catalyst: Capacity Point +33%.', 'Alchemy material / stacks to 12.' } },
 }
 
 return catalog

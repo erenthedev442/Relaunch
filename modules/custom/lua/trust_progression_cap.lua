@@ -62,10 +62,20 @@ end
 -- Order matters: the ladder is CONSECUTIVE, so entries must ascend by cap.
 local TRUST_GATES =
 {
-    -- 100 = mid Fellow level (fellow_companion.lua caps at CONFIG.maxLevel 120);
-    -- this gate deliberately wants 100, not the cap.
-    { cap = 3, unlock = 'raise your Adventuring Fellow to level 100',
-      check = function(p) return (p:getCharVar('Fellow_Level') or 0) >= 100 end },
+    -- 3rd slot: EITHER path (2026-07-09, report: Herdofturtles/Duff -- the Fellow-100
+    -- grind alone was tedious). (a) Fellow level 100, OR (b) Rebirth any job on this
+    -- character. Rebirth itself requires maxing that job's Job Points (JobRebirth
+    -- gates on getSpentJobPoints), so it doubles as the "master a job" path without a
+    -- Lua master-level accessor (GetMLevel is C++-only). 100 = mid Fellow level
+    -- (fellow_companion.lua caps at CONFIG.maxLevel 120); this gate wants 100, not cap.
+    { cap = 3, unlock = 'raise your Fellow to Lv100, OR Rebirth any job',
+      check = function(p)
+          if (p:getCharVar('Fellow_Level') or 0) >= 100 then return true end
+          for job = 1, 22 do  -- WAR..RUN; any Rebirthed job on this character unlocks it
+              if (p:getCharVar('Rebirth_Count_' .. job) or 0) >= 1 then return true end
+          end
+          return false
+      end },
     { cap = 4, unlock = 'conquer every Unity Wanted NM (all tiers)',
       check = function(p) return (p:getCharVar('Unity_NMs_Conquered') or 0) >= UNITY_TOTAL end },
     { cap = 5, unlock = 'clear a tier-5 Voidwatch rift',

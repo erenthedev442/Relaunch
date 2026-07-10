@@ -35,25 +35,30 @@ local FORGE_COST =
     { id = 1456, qty = 75, name = '100 Byne Bill' },
 }
 
--- The 16 Stage-5 Relic weapons (Lv.119 III). info kept short for the menu.
+-- The 16 Stage-5 Relic weapons (Lv.119 III). `name` = the relic name the CLIENT
+-- actually displays for that id (these repurposed ids render by their retail relic
+-- identity). The menu previously showed the Prime alias (e.g. "Helheim" for id
+-- 21653, which the client shows as Ragnarok), so "make Helheim" handed you Ragnarok
+-- -- relabeled to the real relic names 2026-07-09 (report: Spyro). IDs unchanged;
+-- this only fixes the labels, not what is forged. info kept short for the menu.
 local RELICS =
 {
-    { id = 21535, name = 'Varga Purnikawa', info = 'H2H relic (Spharai). DEX/STR+35, Store TP+10, Triple Atk+5%.' },
-    { id = 21590, name = 'Mpu Gandring',    info = 'Dagger relic (Mandau). DEX/AGI+35, Crit rate+15%, Acc+35.' },
-    { id = 21646, name = 'Caliburnus',      info = 'Sword relic (Excalibur). DEX/MND+35, MAcc, Magic Dmg+263, Refresh+4.' },
-    { id = 21653, name = 'Helheim',         info = 'Great Sword relic (Ragnarok). STR/VIT+30, Store TP+7, GS/Parry skill+269.' },
-    { id = 21730, name = 'Spalirisos',      info = 'Axe relic (Guttler). STR/DEX/CHR+35, Crit rate+15%, Acc+35.' },
-    { id = 21785, name = 'Laphria',         info = 'Great Axe relic (Bravura). STR/VIT+35, Double Atk+10%, GAxe skill+277.' },
-    { id = 21837, name = 'Foenaria',        info = 'Scythe relic (Apocalypse). STR/INT+35, Triple Atk+6%, Acc+35.' },
-    { id = 21891, name = 'Gae Buide',       info = 'Polearm relic (Gungnir). STR/VIT+35, Double Atk+10%, Acc+35.' },
-    { id = 21932, name = 'Dokoku',          info = 'Katana relic (Kikoku). DEX/AGI+35, Store TP+10, Magic Dmg+263.' },
-    { id = 21986, name = 'Kusanagi',        info = 'Great Katana relic (Amanomurakumo). STR/DEX+35, Double Atk+10%, GKat skill+277.' },
-    { id = 22002, name = 'Lorg Mor',        info = 'Club relic (Mjollnir). STR/MND+30, MAtk+50, Magic Dmg+248, DT-7%.' },
-    { id = 22106, name = 'Opashoro',        info = 'Staff relic (Claustrum). INT/MND+35, MAtk+80, Magic Dmg+325.' },
-    { id = 22163, name = 'Pinaka',          info = 'Bow relic (Yoichinoyumi). STR/AGI+35, Store TP+10, Archery skill+277.' },
-    { id = 22164, name = 'Earp',            info = 'Gun relic (Annihilator). DEX/AGI+35, Crit rate+15%, Mkmanship skill+277.' },
-    { id = 26495, name = 'Duban',           info = 'Shield relic (Aegis). DEF+150, VIT/MND+30, Shield skill+129.' },
-    { id = 22307, name = 'Loughnashade',    info = 'Horn relic (Gjallarhorn). CHR+20, All Songs+4. (BRD)' },
+    { id = 21535, name = 'Spharai',        info = 'H2H relic. DEX/STR+35, Store TP+10, Triple Atk+5%.' },
+    { id = 21590, name = 'Mandau',         info = 'Dagger relic. DEX/AGI+35, Crit rate+15%, Acc+35.' },
+    { id = 21646, name = 'Excalibur',      info = 'Sword relic. DEX/MND+35, MAcc, Magic Dmg+263, Refresh+4.' },
+    { id = 21653, name = 'Ragnarok',       info = 'Great Sword relic. STR/VIT+30, Store TP+7, GS/Parry skill+269.' },
+    { id = 21730, name = 'Guttler',        info = 'Axe relic. STR/DEX/CHR+35, Crit rate+15%, Acc+35.' },
+    { id = 21785, name = 'Bravura',        info = 'Great Axe relic. STR/VIT+35, Double Atk+10%, GAxe skill+277.' },
+    { id = 21837, name = 'Apocalypse',     info = 'Scythe relic. STR/INT+35, Triple Atk+6%, Acc+35.' },
+    { id = 21891, name = 'Gungnir',        info = 'Polearm relic. STR/VIT+35, Double Atk+10%, Acc+35.' },
+    { id = 21932, name = 'Kikoku',         info = 'Katana relic. DEX/AGI+35, Store TP+10, Magic Dmg+263.' },
+    { id = 21986, name = 'Amanomurakumo',  info = 'Great Katana relic. STR/DEX+35, Double Atk+10%, GKat skill+277.' },
+    { id = 22002, name = 'Mjollnir',       info = 'Club relic. STR/MND+30, MAtk+50, Magic Dmg+248, DT-7%.' },
+    { id = 22106, name = 'Claustrum',      info = 'Staff relic. INT/MND+35, MAtk+80, Magic Dmg+325.' },
+    { id = 22163, name = 'Yoichinoyumi',   info = 'Bow relic. STR/AGI+35, Store TP+10, Archery skill+277.' },
+    { id = 22164, name = 'Annihilator',    info = 'Gun relic. DEX/AGI+35, Crit rate+15%, Mkmanship skill+277.' },
+    { id = 26495, name = 'Aegis',          info = 'Shield relic. DEF+150, VIT/MND+30, Shield skill+129.' },
+    { id = 22307, name = 'Gjallarhorn',    info = 'Horn relic. CHR+20, All Songs+4. (BRD)' },
 }
 
 local function costStr()

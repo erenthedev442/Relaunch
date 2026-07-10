@@ -785,14 +785,22 @@ local STAT_SCHOOL =
     INT = 'magic', Sorcery = 'magic',
     STR = 'phys', Ferocity = 'phys', Frenzy = 'phys', Onslaught = 'phys',
 }
+-- Roles whose damage scales off MATT/MACC (magical WS and/or nuke behaviour), so
+-- their magic stats are NOT off-role. The Oracle heals AND fires magical WS
+-- (Divine Judgment / Empty Salvation / Cursed Sphere), which scale off MATT that
+-- Sorcery/INT feed -- the old "magus-only" test wrongly flagged Sorcery on an
+-- Oracle even though it visibly boosted its damage (report: Spyro 2026-07-08).
+local MAGIC_ROLES = { magus = true, oracle = true, mastered = true }
 local function offRoleReason(roleKey, stat)
     if roleKey == 'mastered' then return nil end  -- Mastered uses every stat; nothing is off-role
     local school = STAT_SCHOOL[stat]
     if not school then return nil end
-    local isCaster = (roleKey == 'magus')
+    local isCaster = MAGIC_ROLES[roleKey] == true
     if school == 'magic' and not isCaster then
-        return 'a magic stat; only the Magus (casting) Role uses it'
-    elseif school == 'phys' and isCaster then
+        return 'a magic stat; only casting Roles (Magus / Oracle) use it'
+    elseif school == 'phys' and roleKey == 'magus' then
+        -- Only the pure-nuke Magus barely melees; the Oracle still auto-attacks,
+        -- so physical stats are NOT off-role for it.
         return 'a melee stat; your Magus deals magic damage, not melee'
     end
     return nil

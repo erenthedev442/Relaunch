@@ -594,10 +594,15 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end
         opts[#opts + 1] = { 'Show recipe', function(p) printNewRecipe(p, def, chain); showNewWeapon(p, def, chain) end }
         opts[#opts + 1] = { 'Back', function(p) showNewCat(p, def, 1) end }
-        sendMenu(player, string.format('%s [%s]', chain.name, STAGE_LBL[k]), opts)
+        sendMenu(player, string.format('%s (%s) [%s]', chain.name, chain.jobs, STAGE_LBL[k]), opts)
     end
 
-    local CAT_PAGE = 7
+    -- 5/page keeps each category page's customMenu string under the ~150-byte
+    -- wire cap. At 7 (with the old "(jobs)" label suffix) the Empyrean/Mythic
+    -- first pages overflowed and truncated the last label, so its click no
+    -- longer matched server-side and the menu silently closed -- that was the
+    -- "Twashtar / Terpsichore do nothing" bug (report: Jamesta 2026-07-09).
+    local CAT_PAGE = 5
     showNewCat = function(player, def, page)
         page = page or 1
         local n     = #def.chains
@@ -607,7 +612,9 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         local opts  = {}
         for i = a, b do
             local chain = def.chains[i]
-            opts[#opts + 1] = { string.format('%s (%s)', chain.name, chain.jobs),
+            -- Name only (no "(jobs)" suffix) to keep the page under the byte cap;
+            -- jobs are shown on the weapon's own screen (showNewWeapon title).
+            opts[#opts + 1] = { chain.name,
                 function(p) showNewWeapon(p, def, chain) end }
         end
         if pages > 1 and page > 1     then opts[#opts + 1] = { '<< Prev', function(p) showNewCat(p, def, page - 1) end } end

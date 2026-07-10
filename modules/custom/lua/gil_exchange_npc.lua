@@ -30,11 +30,14 @@ local config = {
     npcPos   = { x = 578.971, y = -3.360, z = 514.586, rot = 192 },
     huntCv   = 'HL_Points',   -- matches CV_POINTS in HuntingLeague.lua
     -- conversion bundles: { gil, hunt_marks }
+    -- 2026-07-09 retune (report: Burtgang -- "10M -> 150 marks ain't it" now that
+    -- gil is plentiful). Pegged to ~400k gil/mark so 200M gil == 500 marks == one
+    -- BASE Ascension (Prestige markCostBase; capped 3000-mark Ascension ~= 1.2B).
     bundles  =
     {
-        { gil =    100000, marks =   1, label = '100k  ->  1 mark' },
-        { gil =   1000000, marks =  12, label =   '1M  ->  12 marks' },
-        { gil =  10000000, marks = 150, label =  '10M  ->  150 marks  (best deal)' },
+        { gil =   2000000, marks =   5, label =   '2M  ->  5 marks' },
+        { gil =  40000000, marks = 100, label =  '40M  ->  100 marks' },
+        { gil = 200000000, marks = 500, label = '200M  ->  500 marks  (1 Ascension)' },
     },
 }
 
