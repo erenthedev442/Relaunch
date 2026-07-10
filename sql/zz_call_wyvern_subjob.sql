@@ -1,0 +1,21 @@
+-- zz_call_wyvern_subjob.sql
+-- Make Dragoon's wyvern summonable as a SUBJOB (/DRG).
+--
+-- Call Wyvern (abilityId 61) ships flagged ADDTYPE_MAIN_ONLY (addType = 4; see
+-- ADDTYPE enum in src/map/ability.h). charutils.cpp excludes MAIN_ONLY abilities
+-- when building the SUB-job JA list, so /DRG never receives the ability. Clearing
+-- the flag (addType 4 -> 0 = ADDTYPE_NORMAL) grants Call Wyvern to /DRG at DRG
+-- sublevel >= 1 (i.e. any /DRG).
+--
+-- No Lua/C++ change is needed:
+--   * job_utils/dragoon.abilityCheckCallWyvern does NOT gate on main job (it only
+--     checks: already has a pet / Spirit Surge / city zone).
+--   * The wyvern scales off the master's MAIN level (pets/wyvern.lua) and picks
+--     its breath capability from the player's SUBJOB (DRG sub -> OFFENSIVE), so a
+--     /DRG wyvern is a functional offensive pet.
+--
+-- Idempotent (re-running is a no-op once addType is 0) -> safe as a zz_ reapply.
+-- NOTE: the abilities table is read ONCE at map-server startup -> xi_map must be
+-- RESTARTED for this to take effect (no hot-reload of ability flags).
+
+UPDATE `abilities` SET `addType` = 0 WHERE `abilityId` = 61 AND `name` = 'call_wyvern';
