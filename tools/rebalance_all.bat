@@ -3,9 +3,9 @@ REM ============================================================
 REM  rebalance_all.bat - re-score every gear catalog in one shot
 REM ============================================================
 REM  Runs the three gear scorers (armor / weapons / accessories), which
-REM  refresh the scored catalog.infamy tiers used by the medal gear vendors.
-REM  Each script rewrites ONLY its own catalog's auto-generated section in
-REM  place - hand-curated sections are left untouched.
+REM  PRINT score recommendations only. Auto-write is DISABLED (2026-07-10):
+REM  the scorers do NOT rewrite any catalog. All medal vendor catalogs are
+REM  hand-curated - edit the .lua files directly.
 REM
 REM  Needs the MySQL DB (xidb) reachable. Safe to run from any
 REM  folder: it cd's to the repo root first.
