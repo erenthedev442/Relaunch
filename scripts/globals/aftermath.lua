@@ -11,7 +11,8 @@ xi.aftermath.type =
     MYTHIC   = 2,
     EMPYREAN = 3,
     PRIME    = 4,
-} -- TODO: Add Aeonic
+    AEONIC   = 5,
+}
 
 -----------------------------------
 -- HELPERS : For aftermath eyes only
@@ -587,6 +588,30 @@ xi.aftermath.effects =
             { xi.mod.MAGIC_DAMAGE, { 40, 60, 80 } }, -- M.Dmg (3000-TP endpoint 80 documented; lower tiers interpolated)
         },
         duration = { 120, 180, 240 },
+    },
+
+    -----------------------------------
+    -- Aeonic  (FJB custom -- retail-style Aeonic Aftermath: "Occasionally
+    --   deals double/triple damage", applied by ANY weapon skill while the
+    --   Aeonic weapon is equipped. Unlike Relic/Mythic/Empyrean/Prime it is
+    --   NOT gated to a signature WS -- it is hooked centrally in
+    --   scripts/globals/weaponskills.lua (do*Weaponskill). The effect is flat
+    --   (always Lv.3); only the DURATION scales with TP.
+    --   BALANCE LEVER: proc rate = value / 10 (see utils/attackutils.cpp), so
+    --   500 = 50% double, 250 = 25% triple. Tune the numbers here. The mods
+    --   boost auto-attack rounds (melee mainhand / ranged) while AM is up.
+    --   Restart-gated (aftermath.lua is a global). )
+    -----------------------------------
+    [49] = -- Aeonic melee (mainhand): the 12 melee Aeonics
+    {
+        mods     = { { xi.mod.REM_OCC_DO_DOUBLE_DMG, 500 }, { xi.mod.REM_OCC_DO_TRIPLE_DMG, 250 } },
+        duration = { 90, 180, 270 },
+    },
+
+    [50] = -- Aeonic ranged: Fomalhaut (gun) + Fail-Not (bow)
+    {
+        mods     = { { xi.mod.REM_OCC_DO_DOUBLE_DMG_RANGED, 500 }, { xi.mod.REM_OCC_DO_TRIPLE_DMG_RANGED, 250 } },
+        duration = { 90, 180, 270 },
     }
 }
 
@@ -624,7 +649,12 @@ xi.aftermath.addStatusEffect = function(player, tp, weaponSlot, aftermathType)
 
         -- Prime
         [4] = function(x)
-            invalid = id < 46
+            invalid = id < 46 or id > 48
+        end,
+
+        -- Aeonic
+        [5] = function(x)
+            invalid = id < 49 or id > 50
         end
     }
 
@@ -668,6 +698,12 @@ xi.aftermath.addStatusEffect = function(player, tp, weaponSlot, aftermathType)
             local tier = math.floor(tp / 1000)
             local icon = xi.effect['AFTERMATH_LV'..tier]
             player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = icon, subPower = tp, tier = aftermathType })
+        end,
+
+        -- Aeonic (any WS applies it; flat Lv.3 effect, only duration scales with TP)
+        [5] = function(x)
+            local tier = math.max(1, math.min(3, math.floor(tp / 1000)))
+            player:addStatusEffect(xi.effect.AFTERMATH, { power = id, duration = aftermath.duration[tier], origin = player, icon = xi.effect.AFTERMATH_LV3, subPower = tp, tier = aftermathType })
         end
     }
 end
@@ -743,6 +779,13 @@ xi.aftermath.onEffectGain = function(target, effect)
             for _, m in ipairs(aftermath.mods) do
                 effect:addMod(m[1], m[2][tier])
             end
+        end,
+
+        -- Aeonic (flat, always max): apply every mod at full power
+        [5] = function(x)
+            for _, m in ipairs(aftermath.mods) do
+                effect:addMod(m[1], m[2])
+            end
         end
     }
 end
@@ -787,6 +830,13 @@ xi.aftermath.canOverwrite = function(player, tp, aftermathId, aftermathType)
             local currentLevel = math.floor(effect:getSubPower() / 1000)
             local newLevel = math.floor(tp / 1000)
             canOverwrite = currentLevel == 1 or currentLevel < newLevel
+        end,
+
+        -- Aeonic (flat effect; refresh/extend on same or higher TP tier)
+        [5] = function(x)
+            local currentLevel = math.floor(effect:getSubPower() / 1000)
+            local newLevel = math.floor(tp / 1000)
+            canOverwrite = newLevel >= currentLevel
         end,
     }
 
