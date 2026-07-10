@@ -190,6 +190,14 @@ xi.settings.map =
     MOB_HP_MULTIPLIER       = 1.0,
     ALTER_EGO_HP_MULTIPLIER = 1.0,
 
+    -- Post-75 era HP curve for formula-HP mobs (mob_groups.HP = 0). The stock
+    -- growth formula was tuned for the level-75 game; above 75 these add
+    -- (d * LINEAR + d^2 * QUAD) bonus HP, where d = level - 75, scaled by job
+    -- grade. Defaults land ~12k @ 90, ~42k @ 119, ~75k @ 139 (rank A).
+    -- Set both to 0 to restore the stock (2007-era) formula.
+    MOB_ERA_HP_LINEAR = 235.0,
+    MOB_ERA_HP_QUAD   = 11.0,
+
     -- Adjust max MP pool for NMs, regular mobs, players, and trusts/fellows. Acts as a multiplier, so default is 1. Valid range: 0.1 to 2.0
     NM_MP_MULTIPLIER        = 1.0,
     MOB_MP_MULTIPLIER       = 1.0,

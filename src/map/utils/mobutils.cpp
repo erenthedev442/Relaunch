@@ -212,7 +212,8 @@ uint16 GetWeaponDamage(CMobEntity* PMob, uint16 slot)
 // Get base skill rankings for ACC/ATT/EVA/MEVA
 uint16 GetBaseSkill(CMobEntity* PMob, uint8 rank)
 {
-    int8 mlvl = PMob->GetMLevel();
+    // uint8, NOT int8: mob levels reach 150 (int8 wraps negative past 127).
+    uint8 mlvl = PMob->GetMLevel();
 
     switch (rank)
     {
@@ -640,6 +641,24 @@ static uint32 CalculateBaseMobHP(uint8 mLvl, uint8 baseHP, uint8 jobScale, uint8
         hp += level30Bonus;
     }
 
+    // Post-75 era scaling. The linear growth above was tuned for the original
+    // level-75 game and leaves 76+ content with 2007-era HP (a level 139 Apex
+    // mob would land at ~10k). Add an escalating per-level bonus above 75 so
+    // formula HP tracks retail-era values (~12k @ 90, ~42k @ 119, ~75k @ 139
+    // at rank A with the default coefficients). Coefficients live in map
+    // settings so the curve can be retuned with a restart instead of a
+    // rebuild; if both are 0/absent this block is a no-op and HP behaves
+    // exactly as before.
+    if (mLvl > 75)
+    {
+        const uint32 d      = mLvl - 75;
+        const float  linear = settings::get<float>("map.MOB_ERA_HP_LINEAR");
+        const float  quad   = settings::get<float>("map.MOB_ERA_HP_QUAD");
+        const float  grade  = (jobScale + 6) / 14.0f; // keep the job-grade spread (A ~1.07x .. G ~0.64x)
+
+        hp += static_cast<uint32>((d * linear + d * d * quad) * grade);
+    }
+
     return hp;
 }
 
@@ -744,7 +763,9 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
                 mobHP = (uint32)(mobHP * 0.30f);
             }
 
-            PMob->health.maxhp = (int16)(mobHP);
+            // int32, NOT int16: with post-75 era scaling, formula HP for 100+
+            // mobs legitimately exceeds 32767 (an int16 cast here would wrap).
+            PMob->health.maxhp = static_cast<int32>(mobHP);
         }
         else
         {
@@ -930,10 +951,13 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
         PMob->m_SpellListContainer = mobSpellList::GetMobSpellList(PMob->getMobMod(MOBMOD_SPELL_LIST));
     }
 
-    // cap all stats for mLvl / job
+    // cap all stats for mLvl / job. Pass the TRUE level (no 99 clamp):
+    // GetMaxSkill extrapolates past the skill_caps table for 100+ mobs, so
+    // Abyssea/Adoulin/Escha-tier mobs keep scaling instead of fighting with
+    // level-99 skill (= ACC/EVA/ATT) forever.
     for (int i = SKILL_DIVINE_MAGIC; i <= SKILL_BLUE_MAGIC; i++)
     {
-        uint16 maxSkill = battleutils::GetMaxSkill((SKILLTYPE)i, PMob->GetMJob(), mLvl > 99 ? 99 : mLvl);
+        uint16 maxSkill = battleutils::GetMaxSkill((SKILLTYPE)i, PMob->GetMJob(), mLvl);
         if (maxSkill != 0)
         {
             PMob->WorkingSkills.skill[i] = maxSkill;
@@ -941,7 +965,7 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
         else // if the mob is WAR/BLM and can cast spell
         {
             // set skill as high as main level, so their spells won't get resisted
-            uint16 maxSubSkill = battleutils::GetMaxSkill((SKILLTYPE)i, PMob->GetSJob(), mLvl > 99 ? 99 : mLvl);
+            uint16 maxSubSkill = battleutils::GetMaxSkill((SKILLTYPE)i, PMob->GetSJob(), mLvl);
 
             if (maxSubSkill != 0)
             {
@@ -951,7 +975,7 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
     }
     for (int i = SKILL_HAND_TO_HAND; i <= SKILL_STAFF; i++)
     {
-        uint16 maxSkill = battleutils::GetMaxSkill(3, mLvl > 99 ? 99 : mLvl);
+        uint16 maxSkill = battleutils::GetMaxSkill(3, mLvl);
         if (maxSkill != 0)
         {
             PMob->WorkingSkills.skill[i] = maxSkill;

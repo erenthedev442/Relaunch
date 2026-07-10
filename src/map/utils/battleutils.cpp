@@ -362,25 +362,32 @@ uint8 GetSkillRank(SKILLTYPE SkillID, JOBTYPE JobID)
  *                                                                       *
  ************************************************************************/
 
+// The skill_caps table only has rows for levels 0-99, but mobs go well past
+// that (Abyssea 77-105, Adoulin 99-139, Escha up to 150). Extend the table's
+// own final slope (row 99 minus row 98) past the end so 100+ mobs keep gaining
+// combat/magic skill -- and therefore ACC/EVA/ATT -- instead of fighting at
+// level-99 strength forever. Rank 0 columns stay 0 (slope 0), preserving the
+// "mob has no such skill" semantics callers rely on. Players never exceed the
+// table, so this only ever fires for mobs.
+static uint16 extrapolateSkill(uint8 rank, uint8 level, uint8 maxLevel)
+{
+    const uint16 top   = g_SkillTable[maxLevel][rank];
+    const uint16 slope = top - g_SkillTable[maxLevel - 1][rank];
+    return top + slope * (level - maxLevel);
+}
+
 uint16 GetMaxSkill(SKILLTYPE SkillID, JOBTYPE JobID, uint8 level)
 {
     // The skill_caps table is 0-indexed, so our maximum level should one lower
     // than the size of the array.
     auto maxLevel = static_cast<uint8>(g_SkillTable.size() - 1);
 
-    // TODO: Research on mobs level 99+ is still on-going. This line can be removed once the correct formula/skilltype have been established.
-    // max indexed value and level is capped at 99 as stated above for skill_caps table
-    if (level > 99)
-    {
-        level = 99;
-    }
-
     if (level > maxLevel)
     {
-        ShowDebug("battleutils::GetMaxSkill() received level value greater than array size! (Received: %d, Clamped to: %d)", level, maxLevel);
+        return extrapolateSkill(g_SkillRanks[SkillID][JobID], level, maxLevel);
     }
 
-    return g_SkillTable[std::clamp<uint8>(level, 0, maxLevel)][g_SkillRanks[SkillID][JobID]];
+    return g_SkillTable[level][g_SkillRanks[SkillID][JobID]];
 }
 
 uint16 GetMaxSkill(uint8 rank, uint8 level)
@@ -389,10 +396,10 @@ uint16 GetMaxSkill(uint8 rank, uint8 level)
 
     if (level > maxLevel)
     {
-        ShowDebug("battleutils::GetMaxSkill() received level value greater than array size! (Received: %d, Clamped to: %d)", level, maxLevel);
+        return extrapolateSkill(rank, level, maxLevel);
     }
 
-    return g_SkillTable[std::clamp<uint8>(level, 0, maxLevel)][rank];
+    return g_SkillTable[level][rank];
 }
 
 bool isValidSelfTargetWeaponskill(int wsid)
