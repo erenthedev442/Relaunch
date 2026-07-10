@@ -21,31 +21,31 @@ local catalog = {}
 -- narrow Hall of the Gods (251), so multi-mob waves spawn in the open instead
 -- of clipping into the walls. Trusts are already enabled here (zone misc 2048).
 --
--- Both the NPC and the !wavemaster warp sit on the open entry plaza where
--- players zone in (documented landing: -0.371, -34.277, -466.98, rot 187). The
--- NPC is placed a few units to the side so players see it on arrival.
--- Verify/nudge with !pos in-game -- pick a spot clear of any roaming Eschan
--- mobs if the entry area feels busy.
+-- Primary reference point (zone + zoneId are what the module actually reads for
+-- the require, the onInitialize override, and the mobs' groupZoneId; x/y/z are a
+-- fallback only used if npcPositions is empty). Kept in sync with npcPositions[1]
+-- and with the !wavemaster warp target.
 catalog.npcPos =
 {
     zone     = 'Escha_RuAun',
     zoneId   = 289,
-    x        = -6.0,
-    y        = -34.0,
-    z        = -463.0,
-    rotation = 128,
+    x        =  258.6571,
+    y        = -70.0200,
+    z        =  509.2923,
+    rotation = 149,
 }
 
--- Three interchangeable copies of the Game Master on the ENTRY PLAZA, a few units
--- WEST of the !wavemaster landing (-0.371, -34.277, -466.98) -- mirroring the
--- Voidspire NPCs on the EAST side (x=2/10/18) so the two don't overlap. (The old
--- coords here -289.5,-3.5,387.5 were stale Hall-of-the-Gods leftovers from before
--- the move to Escha-RuAun, spawning the NPCs ~850 units from where players land.)
+-- Four Game Masters spread across Escha - Ru'Aun (zone 289), one per owner-chosen
+-- !pos spot (2026-07-09). Each is a FULL, independent Game Master: talk to any one
+-- and its waves spawn around you right there (spawnRing is anchored on the player),
+-- so every location hosts its own self-contained fight. All sit on floor y=-70.02.
+-- Nudge any spot with !pos in-game; add/remove entries freely.
 catalog.npcPositions =
 {
-    { x = -6.0,  y = -34.0, z = -463.0, rot = 128 },
-    { x = -14.0, y = -34.0, z = -471.0, rot = 128 },
-    { x = -22.0, y = -34.0, z = -463.0, rot = 128 },
+    { x =  258.6571, y = -70.0200, z =  509.2923, rot = 149 },
+    { x = -403.9470, y = -70.0200, z =  400.5327, rot = 246 },
+    { x = -505.4169, y = -70.0200, z = -264.5769, rot =  74 },
+    { x =  553.0083, y = -70.0200, z =  -86.2772, rot = 249 },
 }
 
 -- Difficulty presets. Each preset is a self-contained spec:

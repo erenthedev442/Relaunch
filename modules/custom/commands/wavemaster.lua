@@ -16,11 +16,11 @@ commandObj.cmdprops =
 }
 
 commandObj.onTrigger = function(player)
-    -- Escha - Ru'Aun (zone 289), the open entry plaza. Player lands at the
-    -- documented zone-in point; the Wave Master NPC sits a few units to the
-    -- side. Far more room than the old Hall of the Gods, so waves spawn in the
-    -- open. (Adjust with !pos in-game if you want a different open spot.)
-    player:setPos(-0.371, -34.277, -466.98, 187, 289)
+    -- Escha - Ru'Aun (zone 289). The Game Masters were spread across the zone
+    -- 2026-07-09 (see game_master_catalog.lua npcPositions), so this convenience
+    -- warp now lands at the FIRST spot (npcPositions[1]); walk to any of the four
+    -- to run its waves. (Adjust with !pos in-game if you want a different spot.)
+    player:setPos(258.6571, -70.0200, 509.2923, 149, 289)
     player:printToPlayer('[Wave Master] Warping to Escha - Ru\'Aun - the arena awaits!', xi.msg.channel.SYSTEM_3)
 end
 
