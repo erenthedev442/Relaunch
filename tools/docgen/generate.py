@@ -171,6 +171,7 @@ def main() -> int:
         gear_guide_page,
         augmenting_guide_page,
         highlights_page,
+        your_session,
         page_index,
     )
 
@@ -318,6 +319,12 @@ def main() -> int:
         ("player_profiles",  player_profiles),
         # --- new content generators (2026-06-04): fill formerly hand-written pages ---
         ("achievements",     achievements),
+        # your_session fills the numeric tables on getting-started/your-session.md
+        # (starter/daily/streak/kill-milestone rewards + rank ladder). Reuses the
+        # login_rewards / achievements / hunting_league parsers so the compact
+        # onboarding tables can't drift from those systems' full pages. Runs after
+        # achievements so its reused parser is import-loaded.
+        ("your_session",     your_session),
         ("ah_prices",        ah_prices),
         ("crafting_exchange", crafting_exchange),
         ("missing_spells",   missing_spells),

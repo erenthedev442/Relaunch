@@ -34,9 +34,19 @@ Then work the loop using the two NPCs standing side-by-side where you landed:
 
 1. **Talk to Hunt: Hub** — your rank board. It shows your current Hunting League rank, your Hunt Marks balance, and the reward shop. (Quick balance check anytime with `!marks`.)
 2. **Talk to Hunt: Spawner** — pop a Rank I NM: **Leaping Lizzy**, **Valkurm Emperor**, or **Tom Tit Tat**. It appears right in front of you — no map navigation, no cooldown.
-3. **Kill it.** You must land the killing blow (or be credited as the killer). Each Rank I kill pays **5 Hunt Marks**, and your very first kill also fires the **First Hunt** achievement for a bonus **+50**.
-4. **Spend at the Hub.** You were handed **25 Hunt Marks** at character creation — a head start. Convert some into **Seals** at the reward shop and take them to the Armor & Weapons vendors at Escha ZiTah for your first real upgrade. (Full breakdown: [Gear Vendors](../progression/gear-vendors.md).)
-5. **Keep popping.** Rack up marks, return to **Hunt: Hub**, and unlock **Rank II** for **150 marks**. Each rank opens a tougher NM roster that pays more per kill — 5 at Rank I climbing to **65** at Rank 5.
+3. **Kill it.** You must land the killing blow (or be credited as the killer). Each Rank I kill pays Hunt Marks (see the ladder below), and your very first kill also fires the **First Hunt** achievement for a bonus.
+4. **Spend at the Hub.** Your **starter stipend** of Hunt Marks lands at character creation — a head start. Convert some into **Seals** at the reward shop and take them to the Armor & Weapons vendors at Escha ZiTah for your first real upgrade. (Full breakdown: [Gear Vendors](../progression/gear-vendors.md).)
+5. **Keep popping.** Rack up marks, return to **Hunt: Hub**, and unlock the next rank. Each rank opens a tougher NM roster that pays more per kill:
+
+<!-- DOCGEN:BEGIN id="session-rank-ladder" -->
+| Rank | Unlock cost | Hunt Marks per kill |
+|---|---:|---:|
+| Rank I — Initiate | Free | 5 |
+| Rank II — Hunter | 150 | 12 |
+| Rank III — Elite | 650 | 22 |
+| Rank IV — Champion | 1,500 | 38 |
+| Rank V — Legend | 3,000 | 65–110 |
+<!-- DOCGEN:END id="session-rank-ladder" -->
 
 Not sure what you need for the next rank? Ask the game directly:
 
@@ -55,6 +65,7 @@ It shows your current tier, the NMs available to you, and exactly what's require
 
 The Relaunch server front-loads its generosity. You don't have to grind for hours to feel progress — Hunt Marks land in your lap for logging in and for hitting milestones:
 
+<!-- DOCGEN:BEGIN id="session-rewards" -->
 | When | Reward |
 |---|---|
 | Create your character | **+25** Hunt Marks (starter stipend) |
@@ -66,7 +77,8 @@ The Relaunch server front-loads its generosity. You don't have to grind for hour
 | Your 1st NM kill | **+50** — *First Hunt* |
 | Your 10th NM kill | **+100** — *Ten Hunts In* |
 | Your 100th NM kill | **+300** — *Centennial Hunter* |
-| Your 1,000th NM kill | **+1000** — *Hero Among Heroes* |
+| Your 1,000th NM kill | **+1,000** — *Legendary Slayer* |
+<!-- DOCGEN:END id="session-rewards" -->
 
 Login streaks reset if you skip a UTC day, so a quick daily login keeps them alive. There are plenty more milestones beyond the ones above — first kill at each tier, lifetime-marks landmarks, Infamy hauls — and you can see the whole list, earned and unearned, with:
 
