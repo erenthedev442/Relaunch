@@ -422,7 +422,9 @@ _TIER_BANDS = [(0, 5), (6, 11), (12, 17), (18, 24), (25, 31)]
 def _band_cell(base: int, mult, disp, max_boost: int, band_idx: int, cat_tier: int) -> str:
     """One 'T{n} ×5' table cell: the FULL 5-CATALYST STACK's value range when
     rolled at that Augment Tier. Mirrors the Moogle math per slot --
-    floor((base + min(roll, maxBoost)) * mult / disp + 0.5) -- times 5 slots.
+    floor((base + scale(roll)) * mult / disp + 0.5) -- times 5 slots, where
+    scale(roll) = floor(roll * maxBoost / 31 + 0.5) spreads the ceiling across
+    all five tiers (Augment_Moogle.lua scaleRoll) so each tier is a distinct step.
     A band below the catalyst's own tier can never be rolled -> em-dash."""
     if (band_idx + 1) < max(cat_tier, 1):
         return "—"
@@ -431,7 +433,8 @@ def _band_cell(base: int, mult, disp, max_boost: int, band_idx: int, cat_tier: i
     d = disp if disp and disp > 1 else 1
 
     def slot(roll: int) -> int:
-        return int(math.floor((base + min(roll, max_boost)) * m / d + 0.5))
+        scaled = int(math.floor(roll * max_boost / 31 + 0.5))  # mirror Moogle scaleRoll
+        return int(math.floor((base + scaled) * m / d + 0.5))
 
     lo, hi = slot(lo_roll) * 5, slot(hi_roll) * 5
     return str(lo) if lo == hi else f"{lo}–{hi}"
