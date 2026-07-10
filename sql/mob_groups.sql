@@ -15678,7 +15678,10 @@ INSERT INTO `mob_groups` VALUES (37,0,287,'Auspicious_Entity',0,128,0,0,0,0,NULL
 --       mob entries will result in the current update's names being shown.
 
 -- April 2021 V1: Meebles
-INSERT INTO `mob_groups` VALUES (38,30000,287,'Bozzetto_Breadwinner',0,0,0,280000,0,0,NULL);
+-- FJB CORE PATCH: pool 30000 was renumbered to 30001 upstream ("Zdei family skill
+-- and behavior adjustments") but this group kept the old id, orphaning the
+-- Ambuscade boss (the instance loader's INNER JOIN dropped it -> empty instance).
+INSERT INTO `mob_groups` VALUES (38,30001,287,'Bozzetto_Breadwinner',0,0,0,280000,0,0,NULL);
 
 -- End of Ambuscade section
 -- ------------------------------------------------------------
