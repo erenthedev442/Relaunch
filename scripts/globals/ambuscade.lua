@@ -198,6 +198,26 @@ local GAL_SHOP =
     { 4312, 'Antidote',    50   },
 }
 
+-- ─── Abdhaljs Seal ────────────────────────────────────────────────────────────
+-- Item 6500 (usable, stacks to 99). Holding one when you clear a PARTY run
+-- (which is the only kind that pays Gallantry -- solo pays 0) auto-consumes it
+-- and triples that run's Gallantry. Because it only fires when Gallantry > 0 it
+-- can never be wasted on a solo clear. Two sources, mirroring retail: buy one
+-- per calendar month for Hallmarks, plus claim SEAL_WEEKLY free per week.
+local SEAL_ITEM    = 6500
+local SEAL_HM_COST = 2000   -- monthly merchant price
+local SEAL_WEEKLY  = 2      -- free seals claimable per calendar week
+
+local function sealMonthKey()
+    local t = os.date('*t')
+    return t.month, t.year - 2000        -- 2-digit year fits an int charVar
+end
+
+local function sealWeekKey()
+    local t = os.date('*t')
+    return (t.year - 2000) * 53 + math.ceil(t.yday / 7)  -- ~7-day bucket, rolls at year end
+end
+
 local SHOP_PER_PAGE = 6
 
 local function buildShopMenu(player, items, currency, page, backFn)
@@ -359,6 +379,61 @@ showWeaponMain = function(player, backFn)
     player:timer(30, function(pp) pp:customMenu(snapshot) end)
 end
 
+-- Seal menu: buy one/month for Hallmarks + claim SEAL_WEEKLY free/week.
+local function showSealMenu(player, backFn)
+    local have    = player:getItemCount(SEAL_ITEM)
+    local bMonth, bYear = sealMonthKey()
+    local boughtThisMonth = player:getCharVar('Amb_Seal_BuyMonth') == bMonth
+                        and player:getCharVar('Amb_Seal_BuyYear')  == bYear
+    local claimedThisWeek = player:getCharVar('Amb_Seal_ClaimWeek') == sealWeekKey()
+
+    local options =
+    {
+        {
+            boughtThisMonth and 'Buy Seal (bought this month)'
+                            or  string.format('Buy Seal [%dHM]', SEAL_HM_COST),
+            function(pp)
+                local m, y = sealMonthKey()
+                if pp:getCharVar('Amb_Seal_BuyMonth') == m and pp:getCharVar('Amb_Seal_BuyYear') == y then
+                    pp:printToPlayer('[Ambuscade] You have already bought your Seal this month.', SYS)
+                elseif pp:getCurrency('current_hallmarks') < SEAL_HM_COST then
+                    pp:printToPlayer(string.format('[Ambuscade] Need %d Hallmarks (have %d).',
+                        SEAL_HM_COST, pp:getCurrency('current_hallmarks')), SYS)
+                elseif pp:getItemCount(SEAL_ITEM) == 0 and pp:getFreeSlotsCount() < 1 then
+                    pp:printToPlayer('[Ambuscade] Inventory full.', SYS)
+                else
+                    pp:delCurrency('current_hallmarks', SEAL_HM_COST)
+                    pp:addItem(SEAL_ITEM, 1)
+                    pp:setCharVar('Amb_Seal_BuyMonth', m)
+                    pp:setCharVar('Amb_Seal_BuyYear',  y)
+                    pp:printToPlayer('[Ambuscade] Received an Abdhaljs Seal. Hold it into a party clear to triple that run\'s Gallantry.', SYS)
+                end
+                showSealMenu(pp, backFn)
+            end,
+        },
+        {
+            claimedThisWeek and 'Weekly Seals (claimed)'
+                            or  string.format('Claim Weekly (%d free)', SEAL_WEEKLY),
+            function(pp)
+                local wk = sealWeekKey()
+                if pp:getCharVar('Amb_Seal_ClaimWeek') == wk then
+                    pp:printToPlayer('[Ambuscade] You have already claimed your weekly Seals.', SYS)
+                elseif pp:getItemCount(SEAL_ITEM) == 0 and pp:getFreeSlotsCount() < 1 then
+                    pp:printToPlayer('[Ambuscade] Inventory full.', SYS)
+                else
+                    pp:addItem(SEAL_ITEM, SEAL_WEEKLY)
+                    pp:setCharVar('Amb_Seal_ClaimWeek', wk)
+                    pp:printToPlayer(string.format('[Ambuscade] Claimed %d Abdhaljs Seals for the week.', SEAL_WEEKLY), SYS)
+                end
+                showSealMenu(pp, backFn)
+            end,
+        },
+        { 'Back', backFn },
+    }
+    local snapshot = { title = string.format('Seals [have %d]', have), options = options }
+    player:timer(30, function(pp) pp:customMenu(snapshot) end)
+end
+
 local function showGorpaMain(player)
     local hm  = player:getCurrency('current_hallmarks')
     local gal = player:getCurrency('gallantry')
@@ -371,6 +446,10 @@ local function showGorpaMain(player)
         {
             string.format('Gal Shop [%dG]', gal),
             function(pp) buildShopMenu(pp, GAL_SHOP, 'gallantry', 0, function(p) showGorpaMain(p) end) end,
+        },
+        {
+            string.format('Seals [%d]', player:getItemCount(SEAL_ITEM)),
+            function(pp) showSealMenu(pp, function(p) showGorpaMain(p) end) end,
         },
         {
             'Weapons',
@@ -527,24 +606,36 @@ xi.ambuscade.onInstanceComplete = function(instance)
         local rawHM      = math.floor(baseHM * timeMult)
         local actualHM, remaining = applyMonthlyCapAndEarn(player, rawHM)
 
+        -- Abdhaljs Seal: a party clear (galEarned > 0) consumes one held Seal to
+        -- triple THIS player's Gallantry. Per-player so seals aren't shared, and
+        -- only spent when there is Gallantry to triple (never on a solo run).
+        local pGal   = galEarned
+        local sealed = false
+        if pGal > 0 and player:getItemCount(SEAL_ITEM) > 0 then
+            player:delItem(SEAL_ITEM, 1)
+            pGal   = pGal * 3
+            sealed = true
+        end
+
         player:addCurrency('current_hallmarks', actualHM)
         player:addCurrency('total_hallmarks',   actualHM)
-        if galEarned > 0 then
-            player:addCurrency('gallantry', galEarned)
+        if pGal > 0 then
+            player:addCurrency('gallantry', pGal)
         end
 
         -- Increment RoE clear record.
         xi.roe.onRecordTrigger(player, 499)
 
         local bonusStr = timeMult > 1.0 and string.format(' (×%.1f time bonus)', timeMult) or ''
+        local sealStr  = sealed and ' [Seal ×3!]' or ''
         if actualHM < rawHM then
             player:printToPlayer(string.format(
-                '[Ambuscade] Victory! +%d HM%s (monthly cap: %d/%d). +%d Gallantry.',
-                actualHM, bonusStr, MONTHLY_HM_CAP - remaining, MONTHLY_HM_CAP, galEarned), SYS)
+                '[Ambuscade] Victory! +%d HM%s (monthly cap: %d/%d). +%d Gallantry%s.',
+                actualHM, bonusStr, MONTHLY_HM_CAP - remaining, MONTHLY_HM_CAP, pGal, sealStr), SYS)
         else
             player:printToPlayer(string.format(
-                '[Ambuscade] Victory! +%d HM%s. Total: %d HM. +%d Gallantry.',
-                actualHM, bonusStr, player:getCurrency('current_hallmarks'), galEarned), SYS)
+                '[Ambuscade] Victory! +%d HM%s. Total: %d HM. +%d Gallantry%s.',
+                actualHM, bonusStr, player:getCurrency('current_hallmarks'), pGal, sealStr), SYS)
         end
 
         player:startEvent(10001)
@@ -565,7 +656,8 @@ xi.ambuscade.printStats = function(player)
     local total   = player:getCurrency('total_hallmarks')
     local gal     = player:getCurrency('gallantry')
     local monthly = player:getCharVar('Amb_HM_Earned')
+    local seals   = player:getItemCount(SEAL_ITEM)
     player:printToPlayer(string.format(
-        '[Ambuscade] Current HM: %d  |  Total HM: %d  |  Gallantry: %d  |  This month: %d/%d HM',
-        hm, total, gal, monthly, MONTHLY_HM_CAP), SYS)
+        '[Ambuscade] Current HM: %d  |  Total HM: %d  |  Gallantry: %d  |  Seals: %d  |  This month: %d/%d HM',
+        hm, total, gal, seals, monthly, MONTHLY_HM_CAP), SYS)
 end

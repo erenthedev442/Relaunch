@@ -50,6 +50,7 @@ def main() -> int:
     from tools.docgen import stamp
     from tools.docgen.generators import (
         achievements,
+        ambuscade,
         ah_prices,
         crafting_exchange,
         hnm,
@@ -192,6 +193,10 @@ def main() -> int:
         # abyssea_nms reads AbysseaMarks.lua zoneConfig and fills the tiers
         # table and all reward tables on endgame/abyssea-nms.md.
         ("abyssea_nms",      abyssea_nms),
+        # ambuscade reads scripts/globals/ambuscade.lua and fills the cap,
+        # per-clear reward tables, voucher prices, upgrade materials, Abdhaljs
+        # Seal, and Gallantry shop on endgame/ambuscade.md.
+        ("ambuscade",        ambuscade),
         # tournament reads the WAVES table from Tournament.lua and fills the
         # wave difficulty table on endgame/tournament.md.
         ("tournament",       tournament),

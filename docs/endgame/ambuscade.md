@@ -3,7 +3,7 @@
 Retail-style instanced boss fights in Mhaura, on demand and freely repeatable. Clear fights to earn **Hallmarks** and **Gallantry**, spend them on armor vouchers, weapon skins, and the Abdhaljs materials that upgrade both.
 
 !!! tip "Summary"
-    Talk to the **Ambuscade Tome** in Mhaura to enter a private instance (three modes × five difficulties). Clears pay **Hallmarks** (monthly cap 75,000) and **Gallantry**. Spend Hallmarks at **Gorpa-Masorpa** on gear vouchers and Abdhaljs materials. Redeem vouchers at the **Voucher Clerk** for your job's Ambuscade armor — then trade the piece + Abdhaljs Metal/Fiber back to Gorpa-Masorpa to upgrade it to +1/+2.
+    Talk to the **Ambuscade Tome** in Mhaura to enter a private instance (three modes × five difficulties). Clears pay **Hallmarks** (monthly-capped) and **Gallantry**. Spend Hallmarks at **Gorpa-Masorpa** on gear vouchers and Abdhaljs materials. Redeem vouchers at the **Voucher Clerk** for your job's Ambuscade armor — then trade the piece + Abdhaljs Metal/Fiber back to Gorpa-Masorpa to upgrade it to +1/+2.
 
 ## The NPCs
 
@@ -19,12 +19,36 @@ All three stand together in Mhaura:
 
 - Three modes — **Intense**, **Regular**, **Light** — each at five difficulties (VD/D/N/E/VE). Harder = more Hallmarks.
 - **Time bonus:** up to +50% on sub-5-minute clears.
+<!-- DOCGEN:BEGIN id="amb-cap" -->
 - **Monthly cap:** 75,000 Hallmarks per calendar month (Gallantry is uncapped).
+<!-- DOCGEN:END id="amb-cap" -->
+
+### Hallmarks per clear
+
+<!-- DOCGEN:BEGIN id="amb-rewards" -->
+| Mode | VD | D | N | E | VE |
+|---|--:|--:|--:|--:|--:|
+| **Intense** | 3,600 | 2,400 | 1,200 | 800 | 400 |
+| **Regular** | 600 | 500 | 400 | 300 | 200 |
+| **Light** | 150 | 125 | 100 | 75 | 50 |
+
+*Gallantry is a party reward: an **Intense VD** clear pays **300** per extra party member (scaling down with difficulty); solo clears pay 0.*
+<!-- DOCGEN:END id="amb-rewards" -->
+
+## Abdhaljs Seal
+
+<!-- DOCGEN:BEGIN id="amb-seal" -->
+The **Abdhaljs Seal** triples the Gallantry from your next **party** clear — solo runs pay no Gallantry, so a held Seal is never wasted, and it is consumed automatically on the clear it benefits. Manage them from the **Seals** menu at Gorpa-Masorpa:
+
+- **Buy:** one per calendar month for **2,000 Hallmarks**.
+- **Weekly:** claim **2** free per calendar week.
+<!-- DOCGEN:END id="amb-seal" -->
 
 ## Armor: vouchers → gear → upgrades
 
 **Step 1 — buy vouchers** from Gorpa-Masorpa's Hallmark shop:
 
+<!-- DOCGEN:BEGIN id="amb-vouchers" -->
 | Voucher | Cost (HM) | Voucher | Cost (HM) |
 |---|---:|---|---:|
 | Head | 3,000 | Head +1 | 5,000 |
@@ -32,6 +56,7 @@ All three stand together in Mhaura:
 | Hands | 3,000 | Hands +1 | 5,000 |
 | Legs | 5,000 | Legs +1 | 8,000 |
 | Feet | 3,000 | Feet +1 | 5,000 |
+<!-- DOCGEN:END id="amb-vouchers" -->
 
 **Step 2 — redeem** at the Voucher Clerk. Both retail armor lines are offered from the **same vouchers** — pick whichever set you want at the menu. Your main job decides the sets:
 
@@ -49,7 +74,10 @@ All three stand together in Mhaura:
 | BLM / SCH / GEO | Jhakri | Mallquis |
 | RDM / BLU | Jhakri | Ayanmo |
 
-**Step 3 — upgrade** by trading the armor piece to **Gorpa-Masorpa** together with its line's Abdhaljs material (sold in the Hallmark shop for 100 HM each):
+**Step 3 — upgrade** the piece:
+
+<!-- DOCGEN:BEGIN id="amb-materials" -->
+Trade the armor piece to **Gorpa-Masorpa** with its line's Abdhaljs material (sold in the Hallmark shop for **100 HM** each):
 
 | Trade | Result |
 |---|---|
@@ -57,6 +85,7 @@ All three stand together in Mhaura:
 | +1 piece + **10×** Abdhaljs Metal/Fiber | **+2** piece |
 
 Set 1 pieces use **Abdhaljs Metal**, Set 2 pieces use **Abdhaljs Fiber**. A +1 bought directly with a +1 voucher upgrades to +2 the same way.
+<!-- DOCGEN:END id="amb-materials" -->
 
 ## Weapons
 
@@ -64,10 +93,13 @@ Gorpa-Masorpa also runs the Ambuscade weapon path: redeem a base **Tokko** weapo
 
 ## Gallantry shop
 
+<!-- DOCGEN:BEGIN id="amb-galshop" -->
 | Item | Cost (Gallantry) |
 |---|---:|
-| Pulse Cell (final weapon upgrade material) | 3,000 |
-| Vile Elixir | 2,000 |
-| Hi-Ether | 300 |
+| Pulse Cell | 3,000 |
 | Hi-Potion | 200 |
-| Echo Drops / Antidote | 50 |
+| Hi-Ether | 300 |
+| Vile Elixir | 2,000 |
+| Echo Drops | 50 |
+| Antidote | 50 |
+<!-- DOCGEN:END id="amb-galshop" -->
