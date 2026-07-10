@@ -19,13 +19,14 @@ VALUES
     (19300, 'dungeon_ordelles_caves',   193, 210, 30,   15.000,  32.000,  185.000, 127, NULL, NULL, NULL, NULL),
     (19600, 'dungeon_gusgen_mines',     196, 210, 30,   46.4247, -67.8759, -340.0449, 249, NULL, NULL, NULL, NULL),
     (19700, 'dungeon_crawlers_nest',    197, 210, 30,  380.617, -34.610,    4.581,  59, NULL, NULL, NULL, NULL),
-    -- Fei'Yin entry moved 2026-07-09 (player report Jamesta: spawned outside
-    -- the map, couldn't move). The old (-40, 0, -5) floats 16 yalms above the
-    -- real floor: at that x/z the walkable ground is the y=-16 basement, and
-    -- the y~0 corridor only starts north of z~5. New point = the stock Talos
-    -- spawn (-49.72, -0.112, 5.45) -- retail-verified walkable ground at the
-    -- south end of the dungeon's mob corridor (rot 64 faces up the corridor).
-    (20400, 'dungeon_feiyin',           204, 210, 30,  -49.720,  -0.112,    5.450,  64, NULL, NULL, NULL, NULL),
+    -- Fei'Yin entry moved 2026-07-10 (Jamesta: the 07-09 z=5.45 point spawns
+    -- the player in a sealed alcove SOUTH of the Fei'Yin gate -- the door
+    -- won't open in the instance and mobs clip through the wall, so the
+    -- player is trapped. The gate sits at z<19; the dungeon's Talos mob
+    -- corridor is at z>=19 (mob @ -62.33/19.03). New point is just NORTH of
+    -- the gate at the corridor's south mouth, ~4.6y off the nearest mob,
+    -- inside the retail Talos roam area. Restart-gated; verify with !pos.
+    (20400, 'dungeon_feiyin',           204, 210, 30,  -57.000,   -0.200,   21.000,  64, NULL, NULL, NULL, NULL),
     (20500, 'dungeon_ifrits_cauldron',  205, 210, 30,   98.1775,   0.3434, -301.9413, 133, NULL, NULL, NULL, NULL),
     (21200, 'dungeon_gustav_tunnel',    212, 210, 30,  300.8949, -40.1816,   69.8268,  54, NULL, NULL, NULL, NULL)
 ON DUPLICATE KEY UPDATE
