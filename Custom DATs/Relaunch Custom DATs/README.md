@@ -6,11 +6,26 @@ These files update client display text, names, icons, or descriptions for custom
 Relaunch content. They do not affect gameplay, stats, equip rules, damage,
 augments, or server-side balance — the server is always the source of truth.
 
-## Install With XIPivot
+## Easiest: run the installer (recommended for players)
 
-1. Place the `Relaunch Custom DATs` folder inside your XIPivot DAT override folder.
+1. Unzip this whole folder anywhere.
+2. Double-click **`Install Legendary Ring.bat`** and approve the admin prompt.
+3. It finds your FINAL FANTASY XI install, backs up the original file, and drops
+   in the Legendary Ring DAT. Restart the game client — done.
+
+To revert at any time, double-click **`Uninstall Legendary Ring.bat`** (it
+restores the original from the backup the installer made).
+
+The installer simply replaces the client's item DAT (with a `.orig` backup), so
+it works no matter which launcher you use — Windower, Ashita, or none.
+
+## Alternative: XIPivot overlay (advanced, non-destructive)
+
+Prefer not to touch client files? Load it as an overlay instead:
+
+1. Place the `Relaunch Custom DATs` folder inside your XIPivot overlay folder.
 2. Keep the internal `ROM/...` folder structure exactly as provided.
-3. Enable the pack in XIPivot.
+3. Enable the overlay in XIPivot.
 4. Restart the game client.
 
 ## Current Override
