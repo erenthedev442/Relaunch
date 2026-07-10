@@ -2,14 +2,14 @@
 
 ![Wave survival](../assets/emblems/wave-mode.svg){ .lgnd-emblem }
 
-The **Wave Master** in Escha - Ru'Aun spawns themed enemy waves around you for solo or small-group survival. Pick a difficulty, brace, and try not to die.
+The **Wave Master** in Escha - Ru'Aun spawns themed enemy waves around you for solo or small-group survival. Pick a difficulty, brace, and try not to die. There are **four Wave Masters** spread across the zone — each is a full, independent instance of the system, so grab whichever one is free.
 
 !!! tip "Summary"
-    Type **`!wavemaster`** to warp directly to Escha - Ru'Aun. Talk to the **Wave Master** NPC. Pick a difficulty. Wait the grace period. NMs appear around you. Kill them, the next wave spawns, repeat. Clear all waves for a Hunt Marks bonus.
+    Type **`!wm1`**, **`!wm2`**, **`!wm3`** or **`!wm4`** to warp straight to any of the four Wave Masters in Escha - Ru'Aun (or **`!wavemaster`** for the first). Talk to the NPC, pick a difficulty, wait the grace period. NMs appear around you. Kill them, the next wave spawns, repeat. Clear all waves for a Hunt Marks bonus.
 
 ## How a session runs
 
-1. Type **`!wavemaster`** to warp directly to Escha - Ru'Aun, then talk to the **Wave Master** NPC and pick a difficulty.
+1. Type **`!wm1`**, **`!wm2`**, **`!wm3`** or **`!wm4`** (or **`!wavemaster`** for the first) to warp to a Wave Master in Escha - Ru'Aun, then talk to the NPC and pick a difficulty.
 2. Confirm Start. You get a short grace window (5-8 sec) to ready up.
 3. Mobs spawn in a ring around your current position. They aggro on sight.
 4. Each kill awards a small HL Points bump (your "wave points").
