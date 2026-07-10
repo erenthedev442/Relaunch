@@ -64,9 +64,9 @@ HEADLINE = [
     {
         "name": "Augment Moogle",
         "page": "progression/augments.md",
-        "covers": ["progression/augment-sage.md"],
+        "covers": ["progression/augment-sage.md", "progression/augmenting-guide.md"],
         "modules": ["Augment_Moogle.lua", "augment_catalog.lua", "Augment_Sage.lua", "augment_sage_catalog.lua"],
-        "text": "**Augment Moogle — 400+ ways to customize your gear.** Catalysts drop from monsters all over the world. Trade them to the Augment Moogle to apply permanent stat bonuses to your gear. Stack them with the Augment Sage (whose power scales with your NM kill history) and you can push gear further than retail ever allowed.",
+        "text": "**Augment Moogle — 140+ ways to customize your gear.** Catalysts drop from monsters all over the world. Trade them to the Augment Moogle to apply permanent stat bonuses to your gear. Stack them with the Augment Sage (whose power scales with your NM kill history) and you can push gear further than retail ever allowed.",
     },
     {
         "name": "Cross-Job Abilities",
@@ -97,14 +97,26 @@ HEADLINE = [
             "endgame/provisioners-league.md",
             "endgame/casino.md",
             "endgame/seasonal-events.md",
+            "endgame/the-gauntlet.md",
+            "endgame/maats-challenge.md",
+            "endgame/tournament.md",
+            "endgame/abyssea-nms.md",
         ],
         "modules": ["RaidBoss.lua", "Voidspire.lua", "Colosseum.lua", "Invasion.lua",
-                    "TreasureHunt.lua", "ChocoboDerby.lua", "ProvisionersLeague.lua", "Casino.lua"],
-        "text": "**Endgame & Events — a whole tier of things to do at 99.** Take on **The Star-Devourer**, a weekly multi-phase raid boss; climb the endless **Voidspire** gauntlet for a leaderboard floor; duel level-scaled champions in the **Colosseum**; hold the line against scheduled **Invasions**; dig up buried **Treasure**; bet at the **Chocobo Derby**; rank up the fishing-and-crafting **Provisioners' League**; or push your luck at **Lady Luck's Casino** — plus rotating **Seasonal Events** that supercharge your hunts.",
+                    "TreasureHunt.lua", "ChocoboDerby.lua", "ProvisionersLeague.lua", "Casino.lua",
+                    "Gauntlet.lua", "MaatsChallenge.lua", "Tournament.lua", "AbysseaMarks.lua"],
+        "text": "**Endgame & Events — a whole tier of things to do at 99.** Take on **The Star-Devourer**, a weekly multi-phase raid boss; fight the 10-round **Gauntlet** up to Shinryu; climb the endless **Voidspire**; duel level-scaled champions in the **Colosseum**; face a level-200 **Maat's Challenge**; pop **Abyssea NMs** on demand with Hunt Marks; hold the line against scheduled **Invasions**; battle through the last-team-standing **Tournament**; dig up buried **Treasure**; bet at the **Chocobo Derby**; rank up the fishing-and-crafting **Provisioners' League**; or push your luck at **Lady Luck's Casino** — plus rotating **Seasonal Events** that supercharge your hunts.",
+    },
+    {
+        "name": "Apex Trials & Paragon",
+        "page": "endgame/apex-paragon.md",
+        "modules": ["ApexTrials.lua", "apex_paragon_catalog.lua"],
+        "text": "**Apex Trials & Paragon — an endgame with no ceiling.** When you've cleared everything else, the **Apex Arbiter** opens an *infinite*, ever-scaling solo climb: each tier you beat banks **Paragon Points** and your next run resumes one tier higher. Spend those points at the **Paragon Sage** on an endless prestige track — the first numbers on the server with no cap, and both your deepest Apex tier and your Paragon Level ride the leaderboards.",
     },
     {
         "name": "Prime Armory",
         "page": "progression/prime-armory.md",
+        "covers": ["progression/prime-trials.md", "progression/weapon-forge.md"],
         "modules": ["PrimeArmory_NPC.lua"],
         "text": "**Prime Armory — claim an apex Prime weapon.** Trade a Prime Voucher at the Prime Armory for one of twelve **Prime weapons**, the server's top weapon tier. Browse the full set in the menu and take the one built for your job.",
     },
@@ -139,6 +151,7 @@ HEADLINE = [
             "economy/race-changer.md",
             "economy/home-point.md",
             "economy/reforge-mark-exchange.md",
+            "economy/cosmetic-boutique.md",
             "community/player-trusts.md",
         ],
         "text": "**A deep quality-of-life bench.** Always-popped NMs (no camping, no lottery), automatic character setup at creation, homepoint healing, zone-in cutscene skips, sub-job EXP share, gil-sink vendors, seasonal events, login streaks — dozens of friction-removers, all catalogued on the [Quality of Life Features](progression/server-features.md) page.",
@@ -147,6 +160,41 @@ HEADLINE = [
         "name": "Everything unlocked at character creation",
         "text": "**Everything unlocked at character creation.** No quest to unlock advanced jobs. No tour of outpost warps. No waiting for maps. You create a character and immediately have access to everything that retail made you spend weeks unlocking. The friction that doesn't make the game better is just gone.",
     },
+]
+
+# ---------------------------------------------------------------------------
+# RELAUNCH-EXCLUSIVE systems — content that was never on the original server.
+# Rendered into the "What's Different from the Original" section of
+# why-legendary.md (marker id="relaunch-exclusive"), so that list is generated
+# from the live detail pages instead of a hand-maintained bullet list. Same
+# entry shape as HEADLINE; blurbs are AUTO-EXTRACTED from each page's
+# `!!! tip "Summary"` (else its first paragraph) unless a `text` is given — so
+# adding a new relaunch system is just: create its detail page + add an entry
+# here, and it appears on Why Legendary? automatically. These pages also count
+# as "featured" for the drift reconciliation.
+RELAUNCH_EXCLUSIVE = [
+    {"name": "Voidwatch",             "page": "endgame/voidwatch.md",
+     "modules": ["Voidwatch.lua", "voidwatch_catalog.lua"]},
+    {"name": "Adventuring Fellow",    "page": "progression/fellow-companion.md",
+     "modules": ["Fellow.lua", "fellow_catalog.lua"]},
+    {"name": "Spell & Skill Mastery", "page": "progression/spell-mastery.md",
+     "modules": ["SpellMastery.lua", "spell_mastery_catalog.lua"]},
+    {"name": "Affinity NMs",          "page": "endgame/affinity-nms.md",
+     "modules": ["affinity_nm_spawns.lua"]},
+    {"name": "Ambuscade",             "page": "endgame/ambuscade.md",
+     "modules": ["Ambuscade.lua", "ambuscade_catalog.lua"]},
+    {"name": "Nyzul Isle",            "page": "endgame/nyzul-isle.md",
+     "modules": ["nyzul_entry.lua"]},
+    {"name": "Dynamis — Divergence",  "page": "endgame/dynamis-divergence.md",
+     "modules": ["DynamisDivergence.lua", "divergence_catalog.lua"]},
+    {"name": "Domain Invasion",       "page": "endgame/domain-invasion.md",
+     "modules": ["DomainInvasion.lua", "domain_invasion_catalog.lua"]},
+    {"name": "High-Tier Battlefields", "page": "endgame/high-tier-battlefields.md",
+     "modules": ["HighTierBattlefield.lua", "htbf_catalog.lua"]},
+    {"name": "Unity Concord",         "page": "endgame/unity-concord.md",
+     "modules": ["UnityConcord.lua", "unity_catalog.lua"]},
+    {"name": "Dungeons",              "page": "endgame/dungeons.md",
+     "modules": ["Dungeon.lua", "dungeon_catalog.lua"]},
 ]
 
 # Detail pages that are intentionally NOT headline systems (guides, reference,
@@ -158,6 +206,10 @@ IGNORE_PAGES = {
     "progression/gear-finder.md",
     "progression/item-database.md",
     "progression/item-finder.md",
+    "progression/augment-calculator.md",  # tool, not a system
+    "progression/hub.md",                 # location index (Purgonorgo Isle)
+    "progression/leafallia.md",           # redirect stub -> The Hub
+    "progression/library.md",             # redirect stub -> The Hub
     "community/status.md",
     "community/economy.md",
     "community/faq.md",

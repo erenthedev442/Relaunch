@@ -4,12 +4,18 @@ detail pages so no system silently drops off the highlights (the way Ascension
 once did).
 
 Writes:
-  - docs/why-legendary.md             marker id="differentiators" (the bullets)
-  - docs/admin/unfeatured-systems.md  marker id="unfeatured"      (drift report)
+  - docs/why-legendary.md  marker id="differentiators"       (carried-over bullets)
+  - docs/why-legendary.md  marker id="relaunch-exclusive"    (relaunch-only systems)
+  - docs/admin/unfeatured-systems.md  marker id="unfeatured" (drift report)
 
 Blurbs are HYBRID: an entry's hand-written `text` is emitted verbatim (marketing
 copy); an entry without `text` gets a blurb auto-extracted from its detail page,
 so newly-added systems appear on the list automatically.
+
+The relaunch-exclusive block is rendered from `reg.RELAUNCH_EXCLUSIVE` (absent on
+the Legendary registry, in which case that step is a no-op) so the "What's
+Different from the Original" section is generated from the live detail pages
+rather than a hand-maintained bullet list.
 """
 from __future__ import annotations
 
@@ -22,6 +28,7 @@ from tools.docgen import systems_registry as reg
 
 def generate(repo_root: Path, docs_dir: Path) -> None:
     _render_highlights(docs_dir)
+    _render_exclusive(docs_dir)
     _reconcile(docs_dir)
 
 
@@ -61,6 +68,45 @@ def _synthesize(entry: dict, docs_dir: Path) -> str:
         blurb = ("_(no blurb yet — add `text` in systems_registry.py, or a lead "
                  "paragraph / Summary tip to the detail page)_")
     return f"**{name}.** {blurb}"
+
+
+# ---- 1b. render the relaunch-exclusive systems ---------------------------
+
+def _render_exclusive(docs_dir: Path) -> None:
+    """Render `reg.RELAUNCH_EXCLUSIVE` into the why-legendary.md
+    id="relaunch-exclusive" block. No-op when the registry doesn't define it
+    (e.g. the Legendary registry) or the marker isn't present on the page."""
+    entries = getattr(reg, "RELAUNCH_EXCLUSIVE", None)
+    if not entries:
+        return
+    page = docs_dir / "why-legendary.md"
+
+    bullets = []
+    for entry in entries:
+        name = entry["name"]
+        detail = entry.get("page")
+        blurb = entry.get("text")
+        if not blurb and detail:
+            blurb = _extract_blurb(docs_dir / detail)
+        if not blurb:
+            blurb = ("_(no blurb yet — add `text` in systems_registry.py, or a "
+                     "lead paragraph / Summary tip to the detail page)_")
+        # Link the system name to its detail page so the highlight is a
+        # jumping-off point, not just a teaser.
+        lead = f"[{name}]({detail})" if detail else name
+        bullets.append(f"- **{lead}** — {blurb}")
+
+    if not bullets:
+        return
+    content = "\n\n".join(bullets)
+    wrote = write_between_markers(page, "relaunch-exclusive", content)
+    if wrote:
+        auto = sum(1 for e in entries if not e.get("text"))
+        print(f"[differentiators] wrote {len(bullets)} relaunch-exclusive "
+              f"bullets ({auto} auto-extracted from detail pages)")
+    else:
+        print('[differentiators] marker id="relaunch-exclusive" not found in '
+              "why-legendary.md — skipped (only relevant on the relaunch site)")
 
 
 # ---- 2. blurb extraction (for systems without curated text) ---------------
@@ -125,11 +171,14 @@ def _truncate_sentences(s: str, max_sentences: int, max_chars: int) -> str:
 # ---- 3. drift reconciliation ---------------------------------------------
 
 def _discover_system_pages(docs_dir: Path) -> list[str]:
-    """Candidate 'system' pages: top-level docs under progression/ and
-    community/ (player profile pages live in community/players/ and are
-    excluded by the non-recursive glob)."""
+    """Candidate 'system' pages: top-level docs under progression/, endgame/,
+    economy/ and community/ (player profile pages live in community/players/
+    and are excluded by the non-recursive glob). Every content section that
+    holds a *system* is scanned, so a new endgame or economy page can't
+    silently drop off the Why Legendary? highlights the way one under
+    endgame/ or economy/ used to."""
     out: list[str] = []
-    for sub in ("progression", "community"):
+    for sub in ("progression", "endgame", "economy", "community"):
         d = docs_dir / sub
         if not d.is_dir():
             continue
@@ -140,7 +189,7 @@ def _discover_system_pages(docs_dir: Path) -> list[str]:
 
 def _reconcile(docs_dir: Path) -> None:
     featured: set[str] = set()
-    for e in reg.HEADLINE:
+    for e in list(reg.HEADLINE) + list(getattr(reg, "RELAUNCH_EXCLUSIVE", ())):
         if e.get("page"):
             featured.add(e["page"])
         for c in e.get("covers", ()):  # type: ignore[union-attr]

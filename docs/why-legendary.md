@@ -18,10 +18,29 @@ The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat b
 
 **New relaunch-exclusive systems.** The Relaunch ships content that was never on the original server:
 
-- **Voidwatch** — Planar Rifts scattered across 30 overworld zones, tier-scaling Voidwalker NM fights, and a Spectral Alignment reward system
-- **Adventuring Fellow** — a personal companion any job can summon, leveled and built by the player
-- **Spell & Skill Mastery** — permanent WS and spell power-ups earned from a rotating NM currency system
-- **Affinity NM timed spawns** — all 24 Augment Sage affinity NMs placed as real timed spawns in their zones
+<!-- DOCGEN:BEGIN id="relaunch-exclusive" -->
+- **[Voidwatch](endgame/voidwatch.md)** — Find a Planar Rift in the overworld, spend a Voidstone to open a rift, fight a Voidwalker NM, and probe its hidden weaknesses with magic, weaponskills, and ranged attacks to shape your reward. Use !voidwatch to check status or buy Voidstones.
+
+- **[Adventuring Fellow](progression/fellow-companion.md)** — Use !fellow to open the Fellow menu — summon/dismiss, allocate stat points, choose a role, set a name and appearance. Your Fellow earns XP from kills while it is out, levels up, and hands you stat points to spend however you like.
+
+- **[Spell & Skill Mastery](progression/spell-mastery.md)** — Earn Mastery Sigils from the daily NM rotation and use !empower to check your balance and owned upgrades. Spend Sigils at the Mastery Sage on Purgonorgo Isle for permanent WS potency, spell potency, passive traits, or WS proc effects.
+
+- **[Affinity NMs](endgame/affinity-nms.md)** — Twenty-four of Vana'diel's most legendary Notorious Monsters — HNMs, Sky Gods, Wyrms, and world bosses — are permanently spawned throughout the overworld as Affinity NMs.
+
+- **[Ambuscade](endgame/ambuscade.md)** — Talk to the Ambuscade Tome in Mhaura to enter a private instance (three modes × five difficulties). Clears pay Hallmarks (monthly cap 45,000) and Gallantry.
+
+- **[Nyzul Isle](endgame/nyzul-isle.md)** — Nyzul Isle Investigation is an instanced floor-climbing dungeon lifted straight from retail, accessible on the Relaunch server without completing any Assault or ToAU prerequisites. The only custom piece is the entry NPC.
+
+- **[Dynamis — Divergence](endgame/dynamis-divergence.md)** — Four city Dynamis instances reached through entry portals for one Dynamis currency each.
+
+- **[Domain Invasion](endgame/domain-invasion.md)** — Two-wave events in the Escha zones (Zi'Tah / Ru'Aun alternating every 3 hours, eight times a day). Kill the vanguard, then kill the boss.
+
+- **[High-Tier Battlefields](endgame/high-tier-battlefields.md)** — Repeatable, tier-scaled versions of the classic mission boss battlefields. Buy a Phantom Gem with gil on Purgonorgo Isle, trade it at the battlefield entrance, pick a tier (I / II / III), and win for scaling gil + Hunt Mark rewards.
+
+- **[Unity Concord](endgame/unity-concord.md)** — Hunt Wanted NMs in Escha - Zi'Tah to earn Unity Accolades, then spend them in the board's shop. Three tiers of difficulty — lv 75 classic NMs up to lv 145 endgame superbosses.
+
+- **[Dungeons](endgame/dungeons.md)** — Classic Vana'diel zones become private expedition grounds. Talk to the Dungeon Guide on Purgonorgo Isle, pick a zone, and your party gets a personal copy of it — sealed off from the rest of the server — with 13 enemies standing between you and the exit.
+<!-- DOCGEN:END id="relaunch-exclusive" -->
 
 **A living economy from day one.** The auction house market-maker seeds gear listings immediately at launch — no waiting months for the economy to bootstrap.
 
@@ -42,13 +61,15 @@ Everything that made the original server worth playing:
 
 - **Hunter's Guild — reputation that pays you back.** Four hunting guilds, each tied to one of the mark currencies, are climbed by tracking down classic HNMs scattered across Vana'diel — not by farming the spawners. Every rank you earn passively *amplifies* the marks that currency pays out, so the more of the world you hunt, the faster your Reforge and Hunting League grinds go. Reach Grandmaster across multiple guilds and the Trinity and Apex meta-bonuses unlock.
 
-- **Augment Moogle — 400+ ways to customize your gear.** Catalysts drop from monsters all over the world. Trade them to the Augment Moogle to apply permanent stat bonuses to your gear. Stack them with the Augment Sage (whose power scales with your NM kill history) and you can push gear further than retail ever allowed.
+- **Augment Moogle — 140+ ways to customize your gear.** Catalysts drop from monsters all over the world. Trade them to the Augment Moogle to apply permanent stat bonuses to your gear. Stack them with the Augment Sage (whose power scales with your NM kill history) and you can push gear further than retail ever allowed.
 
 - **Cross-Job Abilities — borrow from other jobs.** The Cross-Job Trainer on Purgonorgo Isle sells a hand-curated set of job abilities — self and party buffs and utility, like Meditate — that you can then use on *any* job via macro, with the recast enforced server-side. No 2-hours, no build-breaking picks: just the smart cross-pollination retail never allowed.
 
 - **No dead content — weekly objectives, daily board, Wave Master arena.** The Weekly Hunt Board resets every week with five fresh objectives. The Daily Board resets at midnight UTC. The Wave Master NPC in Escha - Ru'Aun spawns NM waves on demand. There is always a reason to log in.
 
-- **Endgame & Events — a whole tier of things to do at 99.** Take on **The Star-Devourer**, a weekly multi-phase raid boss; climb the endless **Voidspire** gauntlet for a leaderboard floor; duel level-scaled champions in the **Colosseum**; hold the line against scheduled **Invasions**; dig up buried **Treasure**; bet at the **Chocobo Derby**; rank up the fishing-and-crafting **Provisioners' League**; or push your luck at **Lady Luck's Casino** — plus rotating **Seasonal Events** that supercharge your hunts.
+- **Endgame & Events — a whole tier of things to do at 99.** Take on **The Star-Devourer**, a weekly multi-phase raid boss; fight the 10-round **Gauntlet** up to Shinryu; climb the endless **Voidspire**; duel level-scaled champions in the **Colosseum**; face a level-200 **Maat's Challenge**; pop **Abyssea NMs** on demand with Hunt Marks; hold the line against scheduled **Invasions**; battle through the last-team-standing **Tournament**; dig up buried **Treasure**; bet at the **Chocobo Derby**; rank up the fishing-and-crafting **Provisioners' League**; or push your luck at **Lady Luck's Casino** — plus rotating **Seasonal Events** that supercharge your hunts.
+
+- **Apex Trials & Paragon — an endgame with no ceiling.** When you've cleared everything else, the **Apex Arbiter** opens an *infinite*, ever-scaling solo climb: each tier you beat banks **Paragon Points** and your next run resumes one tier higher. Spend those points at the **Paragon Sage** on an endless prestige track — the first numbers on the server with no cap, and both your deepest Apex tier and your Paragon Level ride the leaderboards.
 
 - **Prime Armory — claim an apex Prime weapon.** Trade a Prime Voucher at the Prime Armory for one of twelve **Prime weapons**, the server's top weapon tier. Browse the full set in the menu and take the one built for your job.
 
@@ -69,6 +90,6 @@ Everything that made the original server worth playing:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0366b59fe6bb -->
-_Last updated: 2026-07-06 17:42 PDT_
+<!-- content-hash: 3ae3abb8ffa8 -->
+_Last updated: 2026-07-10 03:30 PDT_
 <!-- DOCGEN:END id="last-updated" -->
