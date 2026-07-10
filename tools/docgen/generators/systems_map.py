@@ -441,6 +441,11 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         add(_row(["**[High-Tier Battlefields](../endgame/high-tier-battlefields.md)**",
                   "Retail HTBF fights via phantom gem entry, tiered difficulty, "
                   "dedicated vendor"]))
+    if have("scripts/zones/Mhaura/npcs/Ambuscade_Tome.lua"):
+        add(_row(["**[Ambuscade](../endgame/ambuscade.md)**",
+                  "On-demand instanced boss fights in Mhaura (3 modes × 5 "
+                  "difficulties). Clears pay **Hallmarks** + **Gallantry** → job "
+                  "armor vouchers, weapon skins, and +1/+2 upgrades."]))
     if have("modules/custom/lua/Dynamis_Divergence.lua"):
         add(_row(["**[Dynamis – Divergence](../endgame/dynamis-divergence.md)**",
                   "4 cities × wave battles. The **+3 → +4 Forge**: farm Rusted/Black ID "
@@ -449,6 +454,11 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     if have("modules/custom/lua/Voidwatch.lua"):
         add(_row(["**[Voidwatch](../endgame/voidwatch.md)**",
                   "Planar Rifts → Voidwalker NM → collect lights → Pyxis loot chest"]))
+    if have("modules/custom/lua/domain_invasion_catalog.lua"):
+        add(_row(["**[Domain Invasion](../endgame/domain-invasion.md)**",
+                  "Server-wide co-op event across the two Escha zones (8×/day). "
+                  "Two waves + a named boss; pays **Escha Silt**, **Escha Beads**, "
+                  "and **Domain Points**. `!diwarp`"]))
     if have("scripts/zones/Mhaura/npcs/Sorrowful_Sage.lua"):
         add(_row(["**[Nyzul Isle](../endgame/nyzul-isle.md)**",
                   "Floor-climb dungeon runs with Nyzul armor rewards"]))
@@ -512,6 +522,14 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
               f"Any job with **{_fmt(jp_required)} spent Job Points** can rebirth — "
               "permanent stacking category boosts."]))
     add("")
+    if have("modules/custom/lua/CapacityFarm.lua"):
+        add("### Capacity farm")
+        add("")
+        add("Job Points fuel Rebirth, and the **[Capacity farm](../progression/"
+            "capacity-farm.md)** is how you bank them: instant-respawn phantom camps at "
+            "Bibiki Bay (`!capacity`) and King Ranperre's Tomb (`!ranperre`) pay bonus "
+            "Capacity Points per kill so your capacity chain never goes cold.")
+        add("")
     add("### Prime Weapons")
     add("")
     add(f"The **Prime Armory** at `!leaf` forges a Prime Weapon after **{n_trials} "
@@ -570,6 +588,19 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     if have("modules/custom/lua/SpellSkillMastery.lua"):
         add(_row(["**Mastery Sigils**", "Regional buff via `!buff` grants the current "
                   "zone's Sigil", "Prime Armory trials, Spell & Skill Mastery empowers"]))
+    if have("scripts/zones/Mhaura/npcs/Ambuscade_Tome.lua"):
+        add(_row(["**Hallmarks / Gallantry**",
+                  "Clear Ambuscade fights (Mhaura)",
+                  "Gorpa-Masorpa — armor vouchers, weapon skins, Abdhaljs upgrade mats"]))
+    if have("modules/custom/lua/domain_invasion_catalog.lua"):
+        add(_row(["**Escha Silt / Beads / Domain Points**",
+                  "Domain Invasion (Escha zones, 8×/day)",
+                  "Escha vendors and Domain Point rewards"]))
+    if have("modules/custom/lua/CapacityFarm.lua"):
+        add(_row(["**Capacity Points**",
+                  "Capacity farm — Bibiki Bay (`!capacity`), King Ranperre's Tomb "
+                  "(`!ranperre`)",
+                  "Convert to Job Points → Job Rebirth"]))
     add(_row(["**Gil**", "Quests, crafting, drops"
               + (f", The Gauntlet ({_fmt(gaunt[0])} on full clear)" if gaunt else ""),
               "AH, consumables, crafting materials, NPC vendors"]))

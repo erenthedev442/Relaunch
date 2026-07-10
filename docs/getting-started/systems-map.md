@@ -123,8 +123,10 @@ Your Sage Mastery rank lifts the roll floor inside the unlocked band — see [Au
 | System | What you get |
 | --- | --- |
 | **[High-Tier Battlefields](../endgame/high-tier-battlefields.md)** | Retail HTBF fights via phantom gem entry, tiered difficulty, dedicated vendor |
+| **[Ambuscade](../endgame/ambuscade.md)** | On-demand instanced boss fights in Mhaura (3 modes × 5 difficulties). Clears pay **Hallmarks** + **Gallantry** → job armor vouchers, weapon skins, and +1/+2 upgrades. |
 | **[Dynamis – Divergence](../endgame/dynamis-divergence.md)** | 4 cities × wave battles. The **+3 → +4 Forge**: farm Rusted/Black ID Cards + a Mega-Boss Paragon Card, trade a reforged +3 AF/Relic piece → **+4** (AF & Relic only; Empy caps at +3). |
 | **[Voidwatch](../endgame/voidwatch.md)** | Planar Rifts → Voidwalker NM → collect lights → Pyxis loot chest |
+| **[Domain Invasion](../endgame/domain-invasion.md)** | Server-wide co-op event across the two Escha zones (8×/day). Two waves + a named boss; pays **Escha Silt**, **Escha Beads**, and **Domain Points**. `!diwarp` |
 | **[Nyzul Isle](../endgame/nyzul-isle.md)** | Floor-climb dungeon runs with Nyzul armor rewards |
 | **[The Gauntlet](../endgame/the-gauntlet.md)** | Solo NM climb. Full clear: **5,000,000 Gil + 500 Paragon Pts + 500 Infamy**. |
 | **[Endless Tower](../endgame/endless-tower.md)** | Infinite escalating floors. How high you climb is the score. |
@@ -159,6 +161,10 @@ Infamy accumulates from the sources below and is spent at the **Infamy Vendor** 
 | **[Prestige](../progression/prestige.md)** | Reach Hunting League Rank 5 → the Ascension Altar opens. Nightmare Court kills pay Ascension AP for permanent per-job bonuses. |
 | **[Job Rebirth](../progression/job-rebirth.md)** | Any job with **2,100 spent Job Points** can rebirth — permanent stacking category boosts. |
 
+### Capacity farm
+
+Job Points fuel Rebirth, and the **[Capacity farm](../progression/capacity-farm.md)** is how you bank them: instant-respawn phantom camps at Bibiki Bay (`!capacity`) and King Ranperre's Tomb (`!ranperre`) pay bonus Capacity Points per kill so your capacity chain never goes cold.
+
 ### Prime Weapons
 
 The **Prime Armory** at `!leaf` forges a Prime Weapon after **5 trials** — 12 named forms, 750,000,000 gil per forge. See [Prime Armory](../progression/prime-armory.md).
@@ -183,6 +189,9 @@ The **Prime Armory** at `!leaf` forges a Prime Weapon after **5 trials** — 12 
 | **Paragon Points** | Apex Trials, The Gauntlet (500/clear) | Paragon Board — permanent account-wide stat bonuses |
 | **Affinity Trophies** | Kill one of the 11 Affinity NMs | Augment Sage registration — better rolls in that stat category |
 | **Mastery Sigils** | Regional buff via `!buff` grants the current zone's Sigil | Prime Armory trials, Spell & Skill Mastery empowers |
+| **Hallmarks / Gallantry** | Clear Ambuscade fights (Mhaura) | Gorpa-Masorpa — armor vouchers, weapon skins, Abdhaljs upgrade mats |
+| **Escha Silt / Beads / Domain Points** | Domain Invasion (Escha zones, 8×/day) | Escha vendors and Domain Point rewards |
+| **Capacity Points** | Capacity farm — Bibiki Bay (`!capacity`), King Ranperre's Tomb (`!ranperre`) | Convert to Job Points → Job Rebirth |
 | **Gil** | Quests, crafting, drops, The Gauntlet (5,000,000 on full clear) | AH, consumables, crafting materials, NPC vendors |
 
 *Every number on this page is regenerated from the live server catalogs on each site publish — if it disagrees with the game, the next hourly publish reconciles it.*
