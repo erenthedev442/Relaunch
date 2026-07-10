@@ -1,4 +1,4 @@
-"""Generate docs/getting-started/progression-guide.md — the **Cheat Sheet**: a
+"""Generate docs/getting-started/cheat-sheet.md — the **Cheat Sheet**: a
 single interactive, filterable card grid of every custom system on the server.
 
 FULL-PAGE writer. The page is just an H1 ("Cheat Sheet") plus the systems
@@ -271,11 +271,11 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         return
 
     content = _render(docs_dir, widget_html).rstrip() + "\n\n" + _FOOTER_STUB + "\n"
-    page = docs_dir / "getting-started" / "progression-guide.md"
+    page = docs_dir / "getting-started" / "cheat-sheet.md"
     page.parent.mkdir(parents=True, exist_ok=True)
     page.write_text(content, encoding="utf-8")
     card_count = sum(len(rows) for _chip, rows in _CATALOG_GROUPS)
     print(
-        f"{_TAG} wrote getting-started/progression-guide.md "
+        f"{_TAG} wrote getting-started/cheat-sheet.md "
         f"(Cheat Sheet: {len(_CATALOG_GROUPS)} groups, up to {card_count} system cards)"
     )
