@@ -331,7 +331,7 @@ catalog.mythicChains =
 catalog.relicChains =
 {
     { type = 'Hand-to-Hand', jobs = 'MNK/PUP', name = 'Spharai', base = 19746, s1 = 20480, s2 = 20481, s3 = 20509 },
-    { type = 'Dagger', jobs = 'THF/BRD/DNC', name = 'Mandau', base = 19747, s1 = 20555, s2 = 20556, s3 = 20583 },
+    { type = 'Dagger', jobs = 'RDM/THF/BRD', name = 'Mandau', base = 19747, s1 = 20555, s2 = 20556, s3 = 20583 },
     { type = 'Sword', jobs = 'RDM/PLD/BLU', name = 'Excalibur', base = 19748, s1 = 20645, s2 = 20646, s3 = 20685 },
     { type = 'Great Sword', jobs = 'WAR/DRK', name = 'Ragnarok', base = 19749, s1 = 20745, s2 = 20746, s3 = 21683 },
     { type = 'Axe', jobs = 'WAR/BST', name = 'Guttler', base = 19750, s1 = 20790, s2 = 20791, s3 = 21750 },
