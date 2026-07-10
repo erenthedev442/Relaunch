@@ -18,8 +18,9 @@ require('modules/module_utils')
 local catalog = require('modules/custom/lua/gear_progression_catalog')
 -- Ambuscade weapons are Ambuscade-exclusive (Gorpa's weapon upgrade chain), so
 -- hide them from this seal vendor. Filtered at the consumer to avoid editing
--- Kirin's gear_progression_catalog data. EXCLUSIVE_IDS = Eletta/Kaja/Final only;
--- Tokko/Ajja stay because the Prime WeaponForge sources those here as 119I/119II.
+-- Kirin's gear_progression_catalog data. EXCLUSIVE_IDS = ALL Ambuscade stages;
+-- ALL FIVE Ambuscade stages scrub now (2026-07-10): the Prime/Aeonic 119I/119II
+-- feedstock is earned from Ambuscade, so Tokko/Ajja no longer stay here.
 local AMBU_WPN_IDS = require('modules/custom/lua/ambuscade_weapons_catalog').EXCLUSIVE_IDS
 
 local _zoneName = catalog.zonePath:match('xi%.zones%.(.+)')

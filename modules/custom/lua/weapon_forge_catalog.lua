@@ -3,8 +3,9 @@
 -- Data-only: defines the 14 weapon upgrade chains for two forge paths.
 --
 -- PATH 1 — PRIME (Ajja → Kaja → Stage-5 Relic)
---   Stage 1 (119I)   Bronze vendor (12 Beastmens Medals). Forge consumes it.
---   Stage 2 (119II)  Forge output of 119I; also sold at Silver vendor (25 Kindreds Medals).
+--   Stage 1 (119I)   From AMBUSCADE: redeem a base Tokko for Hallmarks (2026-07-10;
+--                    was Bronze medal vendor, pulled since Tokko is Ambuscade content).
+--   Stage 2 (119II)  Forge output of 119I; or upgrade Tokko->Ajja in Ambuscade.
 --   Stage 3 (119III) Stage-5 Relic. Also via Relic Forge NPC (Dynamis).
 --
 --   Costs:

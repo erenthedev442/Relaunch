@@ -94,6 +94,15 @@ for line in (SQL / "item_basic.sql").read_text(encoding="utf-8", errors="replace
     if m and (m.group(2) in _PRIME_FAMS or m.group(2).startswith("prime_")):
         source.setdefault(int(m.group(1)), set()).add("Prime Armory (forge-only)")
 
+# Ambuscade weapons (every stage of the Tokko->Ajja->Eletta->Kaja->Final chains) are
+# EARNED from Ambuscade (Hallmark base + upgrades, scripts/globals/ambuscade.lua) and
+# scrubbed from the medal vendor at runtime -- flag any that leak back into a medal tier.
+_ambu = LUA / "ambuscade_weapons_catalog.lua"
+if _ambu.exists():
+    for m in re.finditer(r"stages\s*=\s*\{([^}]*)\}", _ambu.read_text(encoding="utf-8", errors="replace")):
+        for x in re.findall(r"\d+", m.group(1)):
+            source.setdefault(int(x), set()).add("Ambuscade (earned)")
+
 
 # ---- read each medal catalog's bronze/silver/gold segment (Infamy excluded) ----
 _INFAMY = re.compile(r"--+\s*INFAMY TIER", re.IGNORECASE)

@@ -182,6 +182,20 @@ def _parse_legacy_tiers(text: str, tier_names: tuple) -> dict:
     return tiers
 
 
+def _ambuscade_ids(repo_root: Path) -> set:
+    """All Ambuscade weapon itemIds (every upgrade stage in ambuscade_weapons_catalog
+    CHAINS). Earned from Ambuscade, NOT vendored -- GearProgression_NPC scrubs the
+    whole set from the shop (EXCLUSIVE_IDS), so mirror that here or the docs advertise
+    weapons the vendor won't actually sell."""
+    p = resolve_source(repo_root, "modules/custom/lua/ambuscade_weapons_catalog.lua")
+    ids: set = set()
+    if p is not None:
+        txt = p.read_text(encoding="utf-8", errors="replace")
+        for m in re.finditer(r"stages\s*=\s*\{([^}]*)\}", txt):
+            ids.update(int(x) for x in re.findall(r"\d+", m.group(1)))
+    return ids
+
+
 def parse_weapon_tiers(text: str, repo_root: Path, include_infamy: bool = False) -> dict:
     """{tier: {category: [rows]}} for bronze/silver/gold (flat catalog format,
     category derived from each weapon's skill). With include_infamy, also adds the
@@ -191,6 +205,17 @@ def parse_weapon_tiers(text: str, repo_root: Path, include_infamy: bool = False)
     tiers = _parse_flat_tiers(text, item_cat)
     if include_infamy:
         tiers["infamy"] = _parse_legacy_tiers(text, ("infamy",)).get("infamy", {})
+    # Drop Ambuscade weapons -- the NPC scrubs them at runtime (they're Ambuscade-
+    # earned, not sold), so the docs must not list them either.
+    ambu = _ambuscade_ids(repo_root)
+    if ambu:
+        for tier_map in tiers.values():
+            for category, rows in list(tier_map.items()):
+                kept = [r for r in rows if r.get("id") not in ambu]
+                if kept:
+                    tier_map[category] = kept
+                else:
+                    del tier_map[category]
     return tiers
 
 
