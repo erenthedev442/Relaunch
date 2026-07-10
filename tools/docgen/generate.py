@@ -51,6 +51,10 @@ def main() -> int:
     from tools.docgen.generators import (
         achievements,
         ambuscade,
+        geas_fete,
+        aeonic_weapons,
+        capacity_farms,
+        coverage_check,
         ah_prices,
         crafting_exchange,
         hnm,
@@ -197,6 +201,11 @@ def main() -> int:
         # per-clear reward tables, voucher prices, upgrade materials, Abdhaljs
         # Seal, and Gallantry shop on endgame/ambuscade.md.
         ("ambuscade",        ambuscade),
+        # geas_fete / aeonic_weapons / capacity_farms — the Escha Aeonic path +
+        # Capacity Point farms (were missing-page gaps, 2026-07-10).
+        ("geas_fete",        geas_fete),
+        ("aeonic_weapons",   aeonic_weapons),
+        ("capacity_farms",   capacity_farms),
         # tournament reads the WAVES table from Tournament.lua and fills the
         # wave difficulty table on endgame/tournament.md.
         ("tournament",       tournament),
@@ -401,6 +410,9 @@ def main() -> int:
         # same idea as settings_inject for rates. Runs last so locations land on
         # final text (incl. anything other generators just wrote).
         ("npc_location_inject", npc_location_inject),
+        # coverage_check runs LAST: warns if any custom system has no docs page
+        # (enforces the "custom content must match the website" rule).
+        ("coverage_check",   coverage_check),
     ]
 
     successes: list[str] = []

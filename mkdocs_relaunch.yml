@@ -116,6 +116,8 @@ nav:
     - Gear:
       - Gear Guide: progression/gear-guide.md
       - Gear Vendors: progression/gear-vendors.md
+      - Aeonic Weapons: progression/aeonic-weapons.md
+      - Capacity Point Farms: progression/capacity-farms.md
     - Advancement:
       - Prestige / Ascension: progression/prestige.md
       - Job Rebirth: progression/job-rebirth.md
@@ -141,6 +143,7 @@ nav:
     - Nyzul Isle: endgame/nyzul-isle.md
     - Abyssea NMs: endgame/abyssea-nms.md
     - Affinity NMs: endgame/affinity-nms.md
+    - Geas Fete: endgame/geas-fete.md
     - Voidwatch: endgame/voidwatch.md
     - Voidspire: endgame/voidspire.md
     - Star-Devourer Raid: endgame/star-devourer.md
