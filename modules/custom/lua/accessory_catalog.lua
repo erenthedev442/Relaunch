@@ -199,6 +199,24 @@ table.insert(g.neck, { id =  25437, name = 'Sorcerers Stole +2'                ,
 table.insert(g.neck, { id =  25533, name = 'Argute Stole +2'                   , cost =  60, jobs = 'SCH' })  -- CASTER score 60
 table.insert(g.neck, { id =  25443, name = 'Duelists Torque +2'                , cost =  60, jobs = 'RDM' })  -- CASTER score 60
 table.insert(g.neck, { id =  25496, name = 'Dragoons Collar +1'                , cost =  60, jobs = 'DRG' })  -- DPS score 82
+-- JSE +2 necks for the remaining 15 jobs (2026-07-09, report: Herdofturtles/Jamesta --
+-- "+2 JSE necks missing"). The scorer only stocked the top-scoring 7; hand-added so
+-- EVERY job has a purchasable +2 neck. Native shop window, so slot length is unbounded.
+table.insert(g.neck, { id =  25425, name = 'Monks Nodowa +2'                   , cost =  60, jobs = 'MNK' })
+table.insert(g.neck, { id =  25431, name = 'Clerics Torque +2'                 , cost =  60, jobs = 'WHM' })
+table.insert(g.neck, { id =  25449, name = 'Assassins Gorget +2'               , cost =  60, jobs = 'THF' })
+table.insert(g.neck, { id =  25467, name = 'Beastmaster Collar +2'             , cost =  60, jobs = 'BST' })
+table.insert(g.neck, { id =  25473, name = 'Bards Charm +2'                    , cost =  60, jobs = 'BRD' })
+table.insert(g.neck, { id =  25479, name = 'Scouts Gorget +2'                  , cost =  60, jobs = 'RNG' })
+table.insert(g.neck, { id =  25485, name = 'Samurais Nodowa +2'                , cost =  60, jobs = 'SAM' })
+table.insert(g.neck, { id =  25491, name = 'Ninja Nodowa +2'                   , cost =  60, jobs = 'NIN' })
+table.insert(g.neck, { id =  25503, name = 'Summoners Collar +2'               , cost =  60, jobs = 'SMN' })
+table.insert(g.neck, { id =  25509, name = 'Mirage Stole +2'                   , cost =  60, jobs = 'BLU' })
+table.insert(g.neck, { id =  25515, name = 'Commodore Charm +2'                , cost =  60, jobs = 'COR' })
+table.insert(g.neck, { id =  25521, name = 'Puppetmasters Collar +2'           , cost =  60, jobs = 'PUP' })
+table.insert(g.neck, { id =  25527, name = 'Etoile Gorget +2'                  , cost =  60, jobs = 'DNC' })
+table.insert(g.neck, { id =  25539, name = 'Bagua Charm +2'                    , cost =  60, jobs = 'GEO' })
+table.insert(g.neck, { id =  25545, name = 'Futhark Torque +2'                 , cost =  60, jobs = 'RUN' })
 
 -- waist
 table.insert(g.waist, { id =  26340, name = 'Moonbow Belt'                      , cost =  60, jobs = 'MNK/PUP' })  -- DPS score 111

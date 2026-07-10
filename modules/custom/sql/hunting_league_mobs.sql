@@ -48,7 +48,7 @@ INSERT INTO `mob_groups` VALUES (11357, 3947, 288, 'Tom_Tit_Tat',     0, 128, 24
 
 -- Tier 2 — Rank II: Hunter
 INSERT INTO `mob_groups` VALUES (11358, 3376, 288, 'Roc',             0, 128, 1990, 0,      0,      0, NULL);
-INSERT INTO `mob_groups` VALUES (11359, 498,  288, 'Bomb_Queen',      0, 128, 334,  47000,  0,      0, NULL);
+INSERT INTO `mob_groups` VALUES (11359, 498,  288, 'Bomb_Queen',      0, 128, 334,  0,      0,      0, NULL);  -- HP 47000 -> 0 (2026-07-09, report: Duff): non-zero base HP made hpBoost x9 balloon her HP so the shared 2%/9s drain healed ~940 HP/s. Roc/Aquarius are 0; match them.
 INSERT INTO `mob_groups` VALUES (11360, 206,  288, 'Aquarius',        0, 128, 100,  0,      0,      0, NULL);
 
 -- Tier 3 — Rank III: Elite
