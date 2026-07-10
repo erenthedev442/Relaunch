@@ -9,11 +9,21 @@ VALUES
      939, 1500, 0, 0, 1.00, 0, 0,
      0, 0, 0, NULL);
 
-REPLACE INTO mob_skill_lists
+-- WS ids <= 255 load as REAL player weaponskills with their true skillchain
+-- properties (trustutils LoadTrustStatsAndSkills). Four openers spanning
+-- Fragmentation / Gravitation / Fusion / Darkness-Distortion so SPECIAL_AYAME
+-- (see locke.lua) can set up a level-3 chain for any common player closer.
+-- Rudra's Storm stays LAST: it is the fallback pick when the master has not
+-- used a weaponskill yet. DELETE+INSERT (not REPLACE): mob_skill_lists has no
+-- unique key on these columns, so REPLACE would stack duplicates every deploy.
+DELETE FROM mob_skill_lists WHERE skill_list_id = 5930;
+INSERT INTO mob_skill_lists
     (skill_list_name, skill_list_id, mob_skill_id)
 VALUES
-    ('locke_mandastab', 5930, 27),
-    ('locke_rudra', 5930, 31);
+    ('locke_sharkbite',    5930, 24),
+    ('locke_evisceration', 5930, 25),
+    ('locke_mandastab',    5930, 27),
+    ('locke_rudra',        5930, 31);
 
 REPLACE INTO mob_pools
     (poolid, name, packet_name, speciesid, modelid,

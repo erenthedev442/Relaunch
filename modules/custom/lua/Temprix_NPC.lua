@@ -130,11 +130,16 @@ m:addOverride('xi.zones.Reisenjima.Zone.onInitialize', function(zone)
         rotation = NPC_POS.rot,
 
         onTrigger = function(player, npc)
-            -- One-time migration: legacy charVar beads -> the real currency.
-            local legacy = player:getCharVar('Escha_Beads') or 0
-            if legacy > 0 then
-                player:addCurrency(BEADS_KEY, legacy)
-                player:setCharVar('Escha_Beads', 0)
+            -- One-time migration: fold the DEAD legacy charVars (Escha_Beads /
+            -- Escha_Silt, pre-real-currency) into the unified escha_beads currency
+            -- so pre-refactor balances aren't stranded. Idempotent. (The real
+            -- escha_silt currency is left alone -- it's portal/travel fuel.)
+            for _, var in ipairs({ 'Escha_Beads', 'Escha_Silt' }) do
+                local old = player:getCharVar(var) or 0
+                if old > 0 then
+                    player:addCurrency(BEADS_KEY, old)
+                    player:setCharVar(var, 0)
+                end
             end
             local beads = player:getCurrency(BEADS_KEY)
             if beads < COST then

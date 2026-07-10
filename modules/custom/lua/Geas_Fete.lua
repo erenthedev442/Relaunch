@@ -9,9 +9,12 @@
 -- No separate pop items required (relaunch-friendly).
 -- Per-player per-NM cooldown stored as charVar GF_<zoneId>_<groupId>.
 --
--- Currency (REAL char_points currency, shown in the Currencies II tab):
---   Zi'Tah kills → escha_beads
---   Ru'Aun kills → escha_silt
+-- Currency (UNIFIED 2026-07-09 -- REAL char_points currency, Currencies II tab):
+--   ALL Escha kills (Zi'Tah AND Ru'Aun) → escha_beads.
+--   One pool funds BOTH Warding Circle exchanges, the Temprix Aeonic vendor, and
+--   the WeaponForge Aeonic steps. Dead legacy charVars (Escha_Beads/Escha_Silt)
+--   are folded into escha_beads on first access. The real escha_silt CURRENCY is
+--   left alone -- it's the Eschan portal travel cost + Domain Invasion fuel.
 -- Exchange at the Warding Circle for Beitetsu / Riftcinder / Riftborn Boulder.
 --
 -- Drop materials from kills (Lua-only, no mob_droplist rows needed):
@@ -123,34 +126,43 @@ local NM_CATALOG = {
 -- ===================================================================
 -- CURRENCY HELPERS
 -- ===================================================================
--- Escha Beads/Silt are REAL currencies (char_points, shown in the Currencies II
--- tab), NOT charVars -- so players can see and spend them anywhere (Temprix, etc.),
--- matching the bead/silt pouches and Domain Invasion. CURRENCY_KEY = the currency
--- column; LEGACY_VAR = the old charVar we migrate off of on first read.
-local CURRENCY_KEY   = { [ZITAH] = 'escha_beads', [RUAUN] = 'escha_silt' }
-local CURRENCY_LABEL = { [ZITAH] = 'Escha Beads', [RUAUN] = 'Escha Silt' }
-local LEGACY_VAR     = { [ZITAH] = 'Escha_Beads', [RUAUN] = 'Escha_Silt' }
+-- UNIFIED (2026-07-09): every Escha kill (Zi'Tah AND Ru'Aun) awards ONE currency
+-- -- the real 'escha_beads' (char_points, Currencies II tab) -- so a single pool
+-- funds BOTH Warding Circle exchanges, the Temprix Aeonic vendor, and the Aeonic
+-- WeaponForge. escha_beads is a REAL currency (visible/spendable anywhere), NOT a
+-- charVar. Both zones map to it.
+local BEADS          = 'escha_beads'
+local CURRENCY_KEY   = { [ZITAH] = BEADS, [RUAUN] = BEADS }
+local CURRENCY_LABEL = { [ZITAH] = 'Escha Beads', [RUAUN] = 'Escha Beads' }
 
--- One-time migration: fold any old charVar balance into the real currency.
-local function migrateLegacy(player, zoneId)
-    local old = player:getCharVar(LEGACY_VAR[zoneId]) or 0
-    if old > 0 then
-        player:addCurrency(CURRENCY_KEY[zoneId], old)
-        player:setCharVar(LEGACY_VAR[zoneId], 0)
+-- Fold the DEAD legacy charVars (Escha_Beads / Escha_Silt, from before the
+-- real-currency refactor) into the unified escha_beads currency on access, so
+-- pre-refactor balances aren't stranded. Idempotent -- each var is zeroed once.
+-- NOTE: the real 'escha_silt' CURRENCY is intentionally NOT folded -- it is still
+-- the Eschan portal travel cost (scripts/globals/teleports/eschan_portals.lua)
+-- and Domain Invasion fuel, a separate currency from content beads.
+local function migrateLegacy(player)
+    for _, var in ipairs({ 'Escha_Beads', 'Escha_Silt' }) do
+        local old = player:getCharVar(var) or 0
+        if old > 0 then
+            player:addCurrency(BEADS, old)
+            player:setCharVar(var, 0)
+        end
     end
 end
 
 local function getCurrency(player, zoneId)
-    migrateLegacy(player, zoneId)
+    migrateLegacy(player)
     return player:getCurrency(CURRENCY_KEY[zoneId]) or 0
 end
 
 local function addCurrency(player, zoneId, amount)
+    migrateLegacy(player)
     player:addCurrency(CURRENCY_KEY[zoneId], amount)
 end
 
 local function takeCurrency(player, zoneId, amount)
-    migrateLegacy(player, zoneId)
+    migrateLegacy(player)
     local k = CURRENCY_KEY[zoneId]
     if (player:getCurrency(k) or 0) < amount then return false end
     player:delCurrency(k, amount)
