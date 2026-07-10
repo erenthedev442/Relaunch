@@ -26,7 +26,7 @@ try {
         'D:\PlayOnline\SquareEnix\FINAL FANTASY XI')) {
         if (Test-Path (Join-Path $c "$rel.orig")) { $cands.Add($c) }
     }
-    $cands = $cands | ForEach-Object { $_.TrimEnd('\') } | Select-Object -Unique
+    $cands = @($cands | ForEach-Object { $_.TrimEnd('\') } | Select-Object -Unique)
 
     if ($cands.Count -eq 0) { Say 'No backup found - nothing to restore.' Yellow; return }
     $target = $cands[0]

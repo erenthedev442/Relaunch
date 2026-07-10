@@ -41,7 +41,7 @@ try {
         'D:\PlayOnline\SquareEnix\FINAL FANTASY XI')) {
         if (Test-Path (Join-Path $c $rel)) { $cands.Add($c) }
     }
-    $cands = $cands | ForEach-Object { $_.TrimEnd('\') } | Select-Object -Unique
+    $cands = @($cands | ForEach-Object { $_.TrimEnd('\') } | Select-Object -Unique)
 
     # ---- pick the target -------------------------------------------------
     $target = $null
