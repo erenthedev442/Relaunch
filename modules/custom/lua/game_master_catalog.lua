@@ -226,18 +226,12 @@ catalog.difficulties =
         },
         mobs =
         {
-            -- Insane: gods + legendary wyrms from outside the Hunting
-            -- League's AV/PW/Shinryu pool. Bahamut headlines the dragon
-            -- god slot, Ouryu is the wyrm of myth, Byakko and Suzaku
-            -- bring the Four Heavenly Kings flavor. A 3-mob pile-on at
-            -- this tier shows three distinct god silhouettes per wave.
-            { groupId = 11412, name = 'Bahamut' },
-            { groupId = 11413, name = 'Ouryu' },
+            -- Insane: THE FOUR GODS (Byakko/Suzaku/Genbu/Seiryu) -- the complete
+            -- set of Heavenly Kings, distinct from every other tier's roster.
             { groupId = 11414, name = 'Byakko' },
             { groupId = 11415, name = 'Suzaku' },
-            { groupId = 11425, name = 'Kirin' },
-            { groupId = 11426, name = 'Absolute Virtue' },
-            { groupId = 11427, name = 'Shinryu' },
+            { groupId = 11429, name = 'Genbu' },
+            { groupId = 11430, name = 'Seiryu' },
         },
     },
 
@@ -272,13 +266,11 @@ catalog.difficulties =
         },
         mobs =
         {
-            -- Nightmare pulls from the combined pool of ultimate FFXI gods --
-            -- Kirin, Absolute Virtue, Pandemonium Warden, Shinryu.
-            -- Four different divine models per wave pile-on.
-            { groupId = 11425, name = 'Kirin' },
-            { groupId = 11426, name = 'Absolute Virtue' },
-            { groupId = 11428, name = 'Pandemonium Warden' },
-            { groupId = 11427, name = 'Shinryu' },
+            -- Nightmare: ELDER WYRMS -- the great dragons of Vana'diel.
+            { groupId = 11412, name = 'Bahamut' },
+            { groupId = 11413, name = 'Ouryu' },
+            { groupId = 11431, name = 'Fafnir' },
+            { groupId = 11432, name = 'Jormungand' },
         },
     },
 
@@ -312,10 +304,11 @@ catalog.difficulties =
         },
         mobs =
         {
-            { groupId = 11425, name = 'Kirin' },
-            { groupId = 11426, name = 'Absolute Virtue' },
-            { groupId = 11428, name = 'Pandemonium Warden' },
-            { groupId = 11427, name = 'Shinryu' },
+            -- Apocalypse: PRIMEVAL TITANS -- the original three HNMs + Sandworm.
+            { groupId = 11433, name = 'Adamantoise' },
+            { groupId = 11434, name = 'Aspidochelone' },
+            { groupId = 11435, name = 'Behemoth' },
+            { groupId = 11436, name = 'Sandworm' },
         },
     },
 
@@ -350,10 +343,12 @@ catalog.difficulties =
         },
         mobs =
         {
+            -- Oblivion: VOID SOVEREIGNS -- the endgame gods, now their own tier.
             { groupId = 11425, name = 'Kirin' },
             { groupId = 11426, name = 'Absolute Virtue' },
             { groupId = 11428, name = 'Pandemonium Warden' },
             { groupId = 11427, name = 'Shinryu' },
+            { groupId = 11441, name = 'Jailer of Love' },
         },
     },
 
@@ -391,20 +386,71 @@ catalog.difficulties =
         },
         mobs =
         {
-            { groupId = 11425, name = 'Kirin' },
-            { groupId = 11426, name = 'Absolute Virtue' },
-            { groupId = 11428, name = 'Pandemonium Warden' },
-            { groupId = 11427, name = 'Shinryu' },
+            -- Ragnarok: THE UNMADE -- ultimate weapons + death gods.
+            { groupId = 11437, name = 'Ultima' },
+            { groupId = 11438, name = 'Omega' },
+            { groupId = 11439, name = 'Odin' },
+            { groupId = 11440, name = 'Dynamis Lord' },
+            { groupId = 11442, name = 'Provenance Watcher' },
+        },
+    },
+
+    Terror =
+    {
+        -- Burtgang's proposal (2026-07-09): a SHORT, HIGH-DENSITY mark farm so
+        -- solo/small groups aren't stuck waiting on trickle waves (report: hunt
+        -- marks too slow solo). FEWER waves, MORE mobs per wave, big payout for
+        -- clearing. 3 waves x 8 gods = 24 kills; +20/kill (480) + 1600 completion
+        -- = ~2080 marks for a full clear -- the fastest marks/time on the board,
+        -- paid for by fielding 8 simultaneous gods. Level held at 225 (the
+        -- confirmed-hittable ceiling -- danger is the pile-on + Apocalypse-grade
+        -- offense, not level/evasion). spawnStagger=2 so the 8 arrive fast (~14s)
+        -- without an instant 8-god alpha strike. completionBonus is the main tuning
+        -- dial. UNPLAYTESTED.
+        -- NOTE: appended LAST in difficultyOrder (bit 256) per the append-only rule,
+        -- even though it's shorter than the tiers above it -- it is a side-grade.
+        wavesTotal      = 3,
+        mobsPerWave     = 8,
+        graceDelay      = 10,
+        waveDelay       = 10,
+        spawnStagger    = 2,
+        minLevel        = 225,
+        maxLevel        = 225,
+        completionBonus = 1600,
+        markBonus       = 20,
+        hpBoost         = 28.0,
+        mods =
+        {
+            [xi.mod.ATT]           = 20000,
+            [xi.mod.ACC]           = 2800,
+            [xi.mod.STR]           = 900,
+            [xi.mod.DEX]           = 900,
+            [xi.mod.HASTE_GEAR]    = 256,
+            [xi.mod.DOUBLE_ATTACK] = 35,
+            [xi.mod.TRIPLE_ATTACK] = 22,
+            [xi.mod.QUAD_ATTACK]   = 8,
+        },
+        mobs =
+        {
+            -- Terror: ABYSSAL TERRORS -- apex Abyssea beasts for the 8-god pile-on.
+            { groupId = 11443, name = 'Glavoid' },
+            { groupId = 11444, name = 'Chloris' },
+            { groupId = 11445, name = 'Sarameya' },
+            { groupId = 11446, name = 'Orthrus' },
+            { groupId = 11447, name = 'Bukhis' },
+            { groupId = 11448, name = 'Sobek' },
         },
     },
 }
 
 -- Order the difficulties appear in the menu (Lua tables aren't ordered).
 -- NOTE: order also assigns the GM_Wave_Clears full-clear BIT (index-1): Easy=1,
--- Normal=2, Hard=4, Insane=8, Nightmare=16, Apocalypse=32, Oblivion=64. The
--- Augment Moogle gate masks `& 31`, so tiers past Nightmare don't disturb it.
--- Only ever APPEND here -- reordering would rewrite everyone's earned bits.
-catalog.difficultyOrder = { 'Easy', 'Normal', 'Hard', 'Insane', 'Nightmare', 'Apocalypse', 'Oblivion', 'Ragnarok' }
+-- Normal=2, Hard=4, Insane=8, Nightmare=16, Apocalypse=32, Oblivion=64,
+-- Ragnarok=128, Terror=256. The Augment Moogle gate masks `& 31`, so tiers past
+-- Nightmare don't disturb it. Only ever APPEND here -- reordering would rewrite
+-- everyone's earned bits. (9 tiers now exceed the flat 8-option menu, so
+-- showStartMenu paginates -- see GameMaster.lua.)
+catalog.difficultyOrder = { 'Easy', 'Normal', 'Hard', 'Insane', 'Nightmare', 'Apocalypse', 'Oblivion', 'Ragnarok', 'Terror' }
 
 -- Spawn ring radius around the player. Mobs appear at this distance and
 -- random angles so they don't all stack on top of each other.
