@@ -268,3 +268,16 @@ INSERT INTO `mob_droplist` VALUES (29605, 0, 0, 1000, 9543, @ALWAYS);
 INSERT INTO `mob_droplist` VALUES (29605, 0, 0, 1000, 9541, @COMMON);
 INSERT INTO `mob_droplist` VALUES (29705, 0, 0, 1000, 9543, @ALWAYS);
 INSERT INTO `mob_droplist` VALUES (29705, 0, 0, 1000, 9541, @COMMON);
+
+-- ============================================================================
+-- Zone type: the [D] zones ship from upstream as zonetype 128 (DYNAMIS only).
+-- CInstanceLoader requires the INSTANCED (256) bit -- without it every
+-- createInstance() fails with "Invalid zone for instanceid" and the entry
+-- portal eats the toll, prints "the rift opens", and warps nobody (the exact
+-- player report 2026-07-09). 384 = DYNAMIS|INSTANCED keeps dynamis combat
+-- semantics AND lets the zone host instances. Idempotent.
+-- NOTE: zonetype is read once at map BOOT (zoneutils CreateZone) -> this fix
+-- is restart-gated. Stock sql/zone_settings.sql rows carry the same patch.
+-- ============================================================================
+UPDATE `zone_settings` SET `zonetype` = `zonetype` | 256
+WHERE `zoneid` IN (294, 295, 296, 297) AND (`zonetype` & 256) = 0;
