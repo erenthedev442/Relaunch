@@ -193,9 +193,19 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     gaunt_txt = _read_opt(repo_root, "modules/custom/lua/gauntlet_catalog.lua")
     gaunt = None
     if gaunt_txt:
-        m = re.search(r"gil\s*=\s*(\d+)[\s\S]{0,160}?pp\s*=\s*(\d+)[\s\S]{0,160}?infamy\s*=\s*(\d+)",
-                      gaunt_txt)
-        gaunt = (int(m.group(1)), int(m.group(2)), int(m.group(3))) if m else None
+        # The Gauntlet's full-clear (level-10) payout lives in C.FINAL_REWARD.
+        # Anchor on that brace block — a loose `gil=...pp=...infamy=` scan would
+        # instead grab the first numeric entry (MILESTONE_REWARDS[3], 250k/25/25)
+        # and mislabel a mid-run milestone as the full clear. This mirrors the
+        # detail-page generator gauntlet.py so the two pages can't disagree.
+        blk_m = re.search(r"FINAL_REWARD\s*=\s*\{([^}]*)\}", gaunt_txt)
+        if blk_m:
+            blk = blk_m.group(1)
+            g = re.search(r"\bgil\s*=\s*(\d+)", blk)
+            p = re.search(r"\bpp\s*=\s*(\d+)", blk)
+            i = re.search(r"\binfamy\s*=\s*(\d+)", blk)
+            if g and p and i:
+                gaunt = (int(g.group(1)), int(p.group(1)), int(i.group(1)))
 
     aff_txt = _read_opt(repo_root, "modules/custom/lua/augment_affinity_catalog.lua")
     aff = None

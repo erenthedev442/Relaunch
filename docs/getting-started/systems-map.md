@@ -60,8 +60,8 @@ Payout multipliers: your first-ever kill of each NM pays **double**; the weekly 
 | System | What it produces |
 | --- | --- |
 | Hunting League Rank I–Rank V | Hunt Marks — 5 / 12 / 22 / 38 / 65 per kill by rank (Shinryu **110**) |
-| Weekly Hunt Board (`!hub`) | Bonus marks — sweep all objectives for a **+5,000 mark** meta-bonus |
-| Daily Board (`!hub`) | Hunt Marks + Gil on daily objectives |
+| Weekly Hunt Board (`!lib`) | Bonus marks — sweep all objectives for a **+5,000 mark** meta-bonus |
+| Daily Board (`!lib`) | Hunt Marks + Gil on daily objectives |
 | Game Master / Wave Mode (`!wavemaster`) | Hunt Marks per difficulty cleared |
 | Seals Vendor | Bronze / Silver / Gold Seals |
 | Armor Vendor | Tiered armor, gated by seal type |
@@ -126,7 +126,7 @@ Your Sage Mastery rank lifts the roll floor inside the unlocked band — see [Au
 | **[Dynamis – Divergence](../endgame/dynamis-divergence.md)** | 4 cities × wave battles. The **+3 → +4 Forge**: farm Rusted/Black ID Cards + a Mega-Boss Paragon Card, trade a reforged +3 AF/Relic piece → **+4** (AF & Relic only; Empy caps at +3). |
 | **[Voidwatch](../endgame/voidwatch.md)** | Planar Rifts → Voidwalker NM → collect lights → Pyxis loot chest |
 | **[Nyzul Isle](../endgame/nyzul-isle.md)** | Floor-climb dungeon runs with Nyzul armor rewards |
-| **[The Gauntlet](../endgame/the-gauntlet.md)** | Solo NM climb. Full clear: **250,000 Gil + 25 Paragon Pts + 25 Infamy**. |
+| **[The Gauntlet](../endgame/the-gauntlet.md)** | Solo NM climb. Full clear: **5,000,000 Gil + 500 Paragon Pts + 500 Infamy**. |
 | **[Endless Tower](../endgame/endless-tower.md)** | Infinite escalating floors. How high you climb is the score. |
 | **[Colosseum](../endgame/colosseum.md)** | Ladder arena at `!leaf` — 10 Hunt Marks per win |
 | **[Maat's Challenge](../endgame/maats-challenge.md)** | `!maat` — the solo super-fight; first kill is an Augment Tier key |
@@ -140,13 +140,13 @@ Your Sage Mastery rank lifts the roll floor inside the unlocked band — see [Au
 
 ### Infamy track
 
-Infamy accumulates from the sources below and is spent at the **Infamy Vendor** (`!hub`) for best-in-slot gear.
+Infamy accumulates from the sources below and is spent at the **Infamy Vendor** (`!leaf`) for best-in-slot gear.
 
 | Source | Notes |
 | --- | --- |
 | Scheduled Invasions | Wave events — server-wide announcement on start |
 | Apex Trials | `!apex` — post-cap NMs. Infamy + Paragon Points per kill. See [Apex & Paragon](../endgame/apex-paragon.md). |
-| The Gauntlet | 25 Infamy per full clear |
+| The Gauntlet | 500 Infamy per full clear |
 
 ### Paragon board
 
@@ -180,10 +180,10 @@ The **Prime Armory** at `!leaf` forges a Prime Weapon after **5 trials** — 12 
 | **Seals** (Bronze / Silver / Gold) | Trade Hunt Marks at the Seals Vendor | Armor, Weapons, and Accessories Vendors — seal tier gates the gear tier |
 | **AF / Relic / Empy Marks** | Abyssea NMs, Unity Concord, HNM Kings | Reforge Vendor — upgrade armor to +1 / +2 / +3 |
 | **Infamy** | Invasions, Apex Trials, The Gauntlet | Infamy Vendor (BiS gear) |
-| **Paragon Points** | Apex Trials, The Gauntlet (25/clear) | Paragon Board — permanent account-wide stat bonuses |
+| **Paragon Points** | Apex Trials, The Gauntlet (500/clear) | Paragon Board — permanent account-wide stat bonuses |
 | **Affinity Trophies** | Kill one of the 11 Affinity NMs | Augment Sage registration — better rolls in that stat category |
 | **Mastery Sigils** | Regional buff via `!buff` grants the current zone's Sigil | Prime Armory trials, Spell & Skill Mastery empowers |
-| **Gil** | Quests, crafting, drops, The Gauntlet (250,000 on full clear) | AH, consumables, crafting materials, NPC vendors |
+| **Gil** | Quests, crafting, drops, The Gauntlet (5,000,000 on full clear) | AH, consumables, crafting materials, NPC vendors |
 
 *Every number on this page is regenerated from the live server catalogs on each site publish — if it disagrees with the game, the next hourly publish reconciles it.*
 <!-- DOCGEN:END id="systems-map" -->
