@@ -21,8 +21,18 @@
 -----------------------------------
 require('modules/module_utils')
 local catalog   = require('modules/custom/lua/invasion_catalog')
-local LOOT_POOL = require('modules/custom/lua/invasion_loot_pool')
 local mechanics = require('modules/custom/lua/mob_mechanics_library')
+
+-- Ambuscade weapons are Ambuscade-exclusive (obtained only via Gorpa's weapon
+-- upgrade chain), so strip every Ambuscade weapon stage from the Domain Invasion
+-- loot pool at load. Filtering here (not editing the 15k-line generated pool)
+-- keeps the change in one place and survives pool regeneration.
+-- EXCLUSIVE_IDS = Eletta/Kaja/Final only (Tokko/Ajja stay -- Prime forge needs them).
+local AMBU_WPN_IDS = require('modules/custom/lua/ambuscade_weapons_catalog').EXCLUSIVE_IDS
+local LOOT_POOL = {}
+for _, id in ipairs(require('modules/custom/lua/invasion_loot_pool')) do
+    if not AMBU_WPN_IDS[id] then LOOT_POOL[#LOOT_POOL + 1] = id end
+end
 
 -----------------------------------
 -- Hardcore mechanics config for the Voidsent Warlord (final-wave boss only).

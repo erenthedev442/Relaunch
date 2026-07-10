@@ -16,6 +16,11 @@
 -----------------------------------
 require('modules/module_utils')
 local catalog = require('modules/custom/lua/gear_progression_catalog')
+-- Ambuscade weapons are Ambuscade-exclusive (Gorpa's weapon upgrade chain), so
+-- hide them from this seal vendor. Filtered at the consumer to avoid editing
+-- Kirin's gear_progression_catalog data. EXCLUSIVE_IDS = Eletta/Kaja/Final only;
+-- Tokko/Ajja stay because the Prime WeaponForge sources those here as 119I/119II.
+local AMBU_WPN_IDS = require('modules/custom/lua/ambuscade_weapons_catalog').EXCLUSIVE_IDS
 
 local _zoneName = catalog.zonePath:match('xi%.zones%.(.+)')
 require(string.format('scripts/zones/%s/Zone', _zoneName))
@@ -58,7 +63,11 @@ m:addOverride(catalog.zonePath .. '.Zone.onInitialize', function(zone)
     local function openTierShop(player, tierKey)
         local tierData = catalog[tierKey]
         local sealDef  = catalog.seals[tierKey]
-        local items    = tierData.weapons or {}
+        -- Exclude Ambuscade weapons (now Ambuscade-exclusive) from this vendor.
+        local items    = {}
+        for _, it in ipairs(tierData.weapons or {}) do
+            if not AMBU_WPN_IDS[it.id] then items[#items + 1] = it end
+        end
 
         -- Fits in one shop window -> open it directly (unchanged behaviour).
         if #items <= SHOP_PAGE then
