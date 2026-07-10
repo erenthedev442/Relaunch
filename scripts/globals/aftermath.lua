@@ -746,9 +746,13 @@ xi.aftermath.onEffectGain = function(target, effect)
                 pet:getStatusEffect(xi.effect.AFTERMATH):addEffectFlag(xi.effectFlag.NO_LOSS_MESSAGE)
             end
 
-            -- each entry in aftermath.mods is a {modId, func[, modId2, func2...]} group;
-            -- iterate all groups and apply every pair so all mods land regardless of TP tier
-            for _, modGroup in ipairs(aftermath.mods) do
+            -- Mythic aftermath is TP-tiered: aftermath.mods groups are ordered by AM
+            -- level (group 1 = acc, group 2 = +atk, group 3 = +occ.attacks). Apply only
+            -- the first floor(tp/1000) groups so AM1 = acc, AM2 = acc+atk, AM3 = all.
+            -- (2026-07-10: was applying every group regardless of tier -> AM1 gave everything.)
+            local amLevel = math.max(1, math.min(3, math.floor(tp / 1000)))
+            for g = 1, math.min(amLevel, #aftermath.mods) do
+                local modGroup = aftermath.mods[g]
                 for i = 1, #modGroup, 2 do
                     effect:addMod(modGroup[i], modGroup[i + 1](tp))
                 end
