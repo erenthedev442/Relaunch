@@ -3,7 +3,7 @@
 A custom take on Dynamis built for the relaunch. Each of the four nations has a **Divergence Portal** at its old Dynamis entrance that tears open an alternate-timeline instance. Pay a single Dynamis currency, step through — solo is fine — and fight through escalating waves of Beastmen to fell the zone's Mega-Boss. Dynamis-Divergence is the **+3 → +4 Forge**: the tail of the reforged-armor ladder. The base [Reforge System](../progression/reforge.md) takes AF/Relic/Empyrean armor to **+3** with marks; the materials you farm here take a reforged **+3 AF or Relic** piece the rest of the way to **+4** at the **Divergence Forge**. (Empyrean caps at +3 — only AF and Relic reach +4.)
 
 !!! tip "Summary"
-    Four city Dynamis instances reached through entry portals for one Dynamis currency each. Clear the waves to farm the +4 materials (Rusted/Black ID Cards + a Mega-Boss Paragon Card), then trade a reforged **+3** AF/Relic piece at the **Divergence Forge** in San d'Oria to make it **+4**. Empyrean has no +4.
+    Four city Dynamis instances reached through entry portals for one Dynamis currency each. Clear the waves to farm the +4 materials (Rusted/Black ID Cards + a Mega-Boss Paragon Card), then trade a reforged **+3** AF/Relic piece at the **Divergence Forge** in San d'Oria to make it **+4**. Empyrean has no +4. One city is **featured each day** — clear it for bonus medals (see [Live Events](live-events.md)).
 
 ## Getting in
 
@@ -14,6 +14,18 @@ A **Divergence Portal** stands at each city's Dynamis entrance. Trade the toll, 
 
 **Entry toll:** a One Byne Bill per run. There is no rank or slot gate — the only gate on the +4 upgrade is farming the [D] materials (below).
 <!-- DOCGEN:END id="divergence-access" -->
+
+## City of the Day
+
+<!-- DOCGEN:BEGIN id="divergence-city-of-day" -->
+One of the four [D] cities is **featured each day**: finish the featured city's run and **every member of the clear** is paid **1× Demon's Medal** and **2× Kindred's Medal** on top of the normal spoils.
+
+The rotation is fixed — it flips at **00:00 UTC** and repeats every 4 days:
+
+**San d'Oria [D]** → **Bastok [D]** → **Windurst [D]** → **Jeuno [D]**
+
+Today's featured city, with a countdown to the next flip, is on the [Live Events board](https://portal.ffxi-legendary.com/events.html) and the [Live Events](live-events.md) page.
+<!-- DOCGEN:END id="divergence-city-of-day" -->
 
 ## How a run plays out
 

@@ -3,8 +3,8 @@
 !!! tip "Summary"
     Hunt **Wanted NMs** in **Escha - Zi'Tah** to earn **Unity Accolades**, then
     spend them in the board's shop. Three tiers of difficulty — lv 75 classic
-    NMs up to lv 145 endgame superbosses. Pledge to one of 11 Unity leaders to
-    get started.
+    NMs up to lv 145 endgame superbosses. One NM is **featured each week** for
+    **double accolades**. Pledge to one of 11 Unity leaders to get started.
 
 ---
 
@@ -14,6 +14,7 @@ Talk to the **Unity Board** in <!--npc:unity_board-->Purgonorgo Isle<!--/npc--> 
 
 - **Pledge** to one of the 11 Unity leaders (affects your affiliation — cosmetic for now)
 - **Select a Wanted NM** from the three tiers and pay accolades to spawn it
+- **Hunt the weekly featured NM** — pinned to the top of the menu, pays **double accolades** (see [Live Events](live-events.md))
 - **Browse the shop** to spend your accolades
 
 The selected NM spawns in a dedicated arena inside **Escha - Zi'Tah** and you're warped to it automatically. NMs despawn after 120 seconds if no one engages them.
@@ -29,6 +30,16 @@ The selected NM spawns in a dedicated arena inside **Escha - Zi'Tah** and you're
 | **2** | lv 99–119 | 600 accolades | 1,500 accolades |
 | **3** | lv 128–145 | 1,500 accolades | 4,000 accolades |
 <!-- DOCGEN:END id="unity-overview" -->
+
+---
+
+## Weekly featured NM
+
+<!-- DOCGEN:BEGIN id="unity-weekly-featured" -->
+One of the **56 Wanted NMs** on the board is **featured each week**, and its kill pays **double accolades** (the spawn cost doesn't change). The featured hunt is pinned to the top of the board menu as **Weekly:** and starred (`*`) in the tier lists.
+
+The feature moves to the next NM on the roster every **Thursday at 00:00 UTC**. This week's NM, with a countdown, is on the [Live Events board](https://portal.ffxi-legendary.com/events.html) and the [Live Events](live-events.md) page.
+<!-- DOCGEN:END id="unity-weekly-featured" -->
 
 ---
 

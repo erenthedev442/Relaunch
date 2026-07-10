@@ -40,6 +40,8 @@ The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat b
 - **[Unity Concord](endgame/unity-concord.md)** — Hunt Wanted NMs in Escha - Zi'Tah to earn Unity Accolades, then spend them in the board's shop. Three tiers of difficulty — lv 75 classic NMs up to lv 145 endgame superbosses.
 
 - **[Dungeons](endgame/dungeons.md)** — Classic Vana'diel zones become private expedition grounds. Talk to the Dungeon Guide on Purgonorgo Isle, pick a zone, and your party gets a personal copy of it — sealed off from the rest of the server — with 13 enemies standing between you and the exit.
+
+- **[Live Events](endgame/live-events.md)** — Three standing bonuses on fixed clocks: a daily Happy Hour EXP and Capacity-Point boost for everyone online, a Divergence City of the Day that pays bonus medals on a clear, and a Unity weekly featured NM that pays double accolades.
 <!-- DOCGEN:END id="relaunch-exclusive" -->
 
 **A living economy from day one.** The auction house market-maker seeds gear listings immediately at launch — no waiting months for the economy to bootstrap.

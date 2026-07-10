@@ -195,6 +195,8 @@ RELAUNCH_EXCLUSIVE = [
      "modules": ["UnityConcord.lua", "unity_catalog.lua"]},
     {"name": "Dungeons",              "page": "endgame/dungeons.md",
      "modules": ["Dungeon.lua", "dungeon_catalog.lua"]},
+    {"name": "Live Events",           "page": "endgame/live-events.md",
+     "modules": ["happy_hour.lua", "unity_wanted.lua"]},
 ]
 
 # Detail pages that are intentionally NOT headline systems (guides, reference,
