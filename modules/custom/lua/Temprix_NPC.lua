@@ -9,8 +9,8 @@
 --
 -- POSITION: adjust x/y/z to match Reisenjima zone geometry on first test.
 --
--- Required: run sql/aeonic_malformed_items.sql once on the box to add the
--- 14 Malformed weapon item rows (IDs 29701-29714) to item_basic.
+-- The 14 Malformed weapon item rows (IDs 29701-29714) are added to item_basic by
+-- modules/custom/sql/aeonic_malformed_items.sql (auto-applied every deploy).
 --
 -- restart-gated (addOverride)
 -----------------------------------
@@ -23,7 +23,10 @@ local S = xi.msg.channel.SYSTEM_3
 -- ===================================================================
 -- CONSTANTS
 -- ===================================================================
-local BEADS_KEY = 'Escha_Beads'
+-- Escha Beads are a REAL currency (char_points.escha_beads, shows in the
+-- Currencies II tab) -- getCurrency/delCurrency, NOT a charVar. Geas Fete and the
+-- bead pouch award the same currency.
+local BEADS_KEY = 'escha_beads'
 local COST      = 50000   -- Escha Beads per Malformed weapon
 local NPC_POS   = { x = 165.000, y = -18.000, z = 335.000, rot = 64 }
 -- TODO: position above is approximate; adjust in-game if off.
@@ -78,7 +81,7 @@ showPage = function(player, page)
         options[#options + 1] = {
             wCapture.name,
             function(pp)
-                local b = pp:getCharVar(BEADS_KEY)
+                local b = pp:getCurrency(BEADS_KEY)
                 if b < COST then
                     pp:printToPlayer(string.format(
                         '[Temprix] %d Escha Beads needed. You have %d.',
@@ -91,7 +94,7 @@ showPage = function(player, page)
                     pp:timer(30, function(p2) showPage(p2, pageCapture) end)
                     return
                 end
-                pp:setCharVar(BEADS_KEY, b - COST)
+                pp:delCurrency(BEADS_KEY, COST)
                 pp:addItem({ id = wCapture.id, quantity = 1 })
                 pp:printToPlayer(string.format(
                     '[Temprix] %s entrusted to you. Attune it with %s to begin forging.',
@@ -126,8 +129,14 @@ m:addOverride('xi.zones.Reisenjima.Zone.onInitialize', function(zone)
         z        = NPC_POS.z,
         rotation = NPC_POS.rot,
 
-        onTrigger = function(npc, player)
-            local beads = player:getCharVar(BEADS_KEY)
+        onTrigger = function(player, npc)
+            -- One-time migration: legacy charVar beads -> the real currency.
+            local legacy = player:getCharVar('Escha_Beads') or 0
+            if legacy > 0 then
+                player:addCurrency(BEADS_KEY, legacy)
+                player:setCharVar('Escha_Beads', 0)
+            end
+            local beads = player:getCurrency(BEADS_KEY)
             if beads < COST then
                 player:printToPlayer(string.format(
                     '[Temprix] These weapons were forged in the crucible of eternity. '..

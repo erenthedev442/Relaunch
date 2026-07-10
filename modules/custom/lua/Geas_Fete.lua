@@ -9,9 +9,9 @@
 -- No separate pop items required (relaunch-friendly).
 -- Per-player per-NM cooldown stored as charVar GF_<zoneId>_<groupId>.
 --
--- Currency:
---   Zi'Tah kills → Escha_Beads (charVar)
---   Ru'Aun kills → Escha_Silt  (charVar)
+-- Currency (REAL char_points currency, shown in the Currencies II tab):
+--   Zi'Tah kills → escha_beads
+--   Ru'Aun kills → escha_silt
 -- Exchange at the Warding Circle for Beitetsu / Riftcinder / Riftborn Boulder.
 --
 -- Drop materials from kills (Lua-only, no mob_droplist rows needed):
@@ -122,24 +122,37 @@ local NM_CATALOG = {
 -- ===================================================================
 -- CURRENCY HELPERS
 -- ===================================================================
-local CURRENCY_KEY   = { [ZITAH] = 'Escha_Beads', [RUAUN] = 'Escha_Silt' }
+-- Escha Beads/Silt are REAL currencies (char_points, shown in the Currencies II
+-- tab), NOT charVars -- so players can see and spend them anywhere (Temprix, etc.),
+-- matching the bead/silt pouches and Domain Invasion. CURRENCY_KEY = the currency
+-- column; LEGACY_VAR = the old charVar we migrate off of on first read.
+local CURRENCY_KEY   = { [ZITAH] = 'escha_beads', [RUAUN] = 'escha_silt' }
 local CURRENCY_LABEL = { [ZITAH] = 'Escha Beads', [RUAUN] = 'Escha Silt' }
+local LEGACY_VAR     = { [ZITAH] = 'Escha_Beads', [RUAUN] = 'Escha_Silt' }
+
+-- One-time migration: fold any old charVar balance into the real currency.
+local function migrateLegacy(player, zoneId)
+    local old = player:getCharVar(LEGACY_VAR[zoneId]) or 0
+    if old > 0 then
+        player:addCurrency(CURRENCY_KEY[zoneId], old)
+        player:setCharVar(LEGACY_VAR[zoneId], 0)
+    end
+end
 
 local function getCurrency(player, zoneId)
-    return player:getCharVar(CURRENCY_KEY[zoneId]) or 0
+    migrateLegacy(player, zoneId)
+    return player:getCurrency(CURRENCY_KEY[zoneId]) or 0
 end
 
 local function addCurrency(player, zoneId, amount)
-    local k   = CURRENCY_KEY[zoneId]
-    local cur = player:getCharVar(k) or 0
-    player:setCharVar(k, cur + amount)
+    player:addCurrency(CURRENCY_KEY[zoneId], amount)
 end
 
 local function takeCurrency(player, zoneId, amount)
-    local k   = CURRENCY_KEY[zoneId]
-    local cur = player:getCharVar(k) or 0
-    if cur < amount then return false end
-    player:setCharVar(k, cur - amount)
+    migrateLegacy(player, zoneId)
+    local k = CURRENCY_KEY[zoneId]
+    if (player:getCurrency(k) or 0) < amount then return false end
+    player:delCurrency(k, amount)
     return true
 end
 
