@@ -755,8 +755,18 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 -- All songs) clamp the roll as before.
                 local slice     = TIER_SLICES[playerTier] or TIER_SLICES[1]
                 local rollFloor = math.min(slice.min + rank, slice.max)
+                -- Boost ceiling. Rather than HARD-capping the 0-31 roll at maxBoost
+                -- (which saturated every tier band above the cap, so low-ceiling
+                -- stats -- Quad Attack, Triple Attack, Refresh, ... -- landed the
+                -- SAME value at T2..T5), SCALE the roll into the augment's
+                -- [0, maxBoost] range. Each Augment Tier then lands a DISTINCT step
+                -- of that ceiling instead of all piling on the max. Uncapped
+                -- augments (maxBoost == EXDATA_VALUE_MAX = 31) scale 1:1 -> unchanged.
                 local boostCap  = def.maxBoost and math.min(EXDATA_VALUE_MAX, def.maxBoost) or EXDATA_VALUE_MAX
-                local slotMax   = math.min(slice.max, boostCap)   -- the achievable "perfect" roll for this slot
+                local function scaleRoll(raw)
+                    return math.floor(raw * boostCap / EXDATA_VALUE_MAX + 0.5)
+                end
+                local slotMax   = scaleRoll(slice.max)   -- the achievable "perfect" (crystalize) value this tier
                 local rolls     = {}
                 for _ = 1, count do
                     local r = math.random(rollFloor, slice.max)
@@ -766,7 +776,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                     if isCrit then
                         r = slice.max
                     end
-                    table.insert(rolls, math.min(r, boostCap))
+                    table.insert(rolls, scaleRoll(r))
                 end
 
                 -- Emit ONE augment slot PER CATALYST into the FINAL layout (after

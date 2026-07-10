@@ -13,8 +13,8 @@ The **Augment Sage** is the side-quest progression layer on top of the [Augment 
 ## Where to find the Sage
 
 <!-- DOCGEN:BEGIN id="sage-location" -->
-**Zone:** Purgonorgo Isle  
-**Coordinates:** x = -16.00, y = 0.00, z = 10.00  
+**Zone:** Abdhaljs Isle Purgonorgo  
+**Coordinates:** x = 560.97, y = -3.36, z = 526.59  
 **Same row as:** the Augment Moogle (talk to either to start a trade or pursue a rank).
 <!-- DOCGEN:END id="sage-location" -->
 

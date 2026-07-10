@@ -18,6 +18,8 @@ from tools.docgen._markers import write_between_markers
 
 _BASE_RE  = re.compile(r"\bbase\s*=\s*(-?\d+)")
 _MULT_RE  = re.compile(r"\bmult\s*=\s*(-?\d+)")
+_DISP_RE  = re.compile(r"\bdisp\s*=\s*(\d+)")
+_MB_RE    = re.compile(r"\bmaxBoost\s*=\s*(\d+)")
 _TIER_RE  = re.compile(r"\btier\s*=\s*(\d+)")
 _LABEL_RE = re.compile(r"label\s*=\s*'([^']*)'")
 
@@ -45,12 +47,22 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             b  = _BASE_RE.search(line)
             mm = _MULT_RE.search(line)
             tm = _TIER_RE.search(line)
-            entries.append({
+            dm = _DISP_RE.search(line)
+            xb = _MB_RE.search(line)
+            entry = {
                 "label": label,
                 "base":  int(b.group(1))  if b  else 0,
                 "mult":  int(mm.group(1)) if mm else 1,
                 "tier":  int(tm.group(1)) if tm else 0,
-            })
+            }
+            # Only carry disp/maxBoost when they matter (keeps the JSON small; the
+            # page JS defaults d->1 and mb->31). mb caps + SCALES the roll so each
+            # tier is a distinct step (mirrors Augment_Moogle.lua scaleRoll).
+            if dm and int(dm.group(1)) > 1:
+                entry["d"] = int(dm.group(1))
+            if xb and int(xb.group(1)) < 31:
+                entry["mb"] = int(xb.group(1))
+            entries.append(entry)
 
     entries.sort(key=lambda x: x["label"])
     json_data = json.dumps(entries, separators=(",", ":"))
