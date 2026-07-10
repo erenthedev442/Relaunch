@@ -157,7 +157,7 @@ local function awardCurrency(player, silt, beads, points)
 end
 
 -- forward declarations
-local nextWave, endDomainInvasion
+local nextWave, endDomainInvasion, beginAssault
 
 -----------------------------------
 -- Spawn one mob near a defender anchor, entirely stat-overridden in Lua.
@@ -388,6 +388,36 @@ endDomainInvasion = function(zone, zoneCfg, zoneId, reason)
 end
 
 -----------------------------------
+-- Muster / warm-up before wave 1.
+-- The event STARTS (state created, !diwarp works) the instant the window fires,
+-- but the first wave is held back musterDelaySec so late defenders can rally in
+-- -- fixing "it can be over by the time you warp in". Mirrors the inter-wave
+-- token guard (startedAt) so a cancelled/replaced event can't spawn a late wave.
+-- endsAt already includes musterDelaySec (set at launch), so the fighting clock
+-- is unaffected by the warm-up.
+-----------------------------------
+beginAssault = function(zone, zoneCfg, zoneId)
+    local st = states[zoneId]
+    if not st then return end
+    local muster = catalog.musterDelaySec or 0
+    local anchor = playersInZone(zone)[1]
+    if muster <= 0 or not anchor then
+        nextWave(zone, zoneCfg, zoneId)   -- no warm-up configured / nobody to time it: start now
+        return
+    end
+    local token = st.startedAt
+    broadcast(anchor, string.format(
+        '[Domain Invasion] %s is under assault! The first wave descends in %d seconds — type !diwarp to rally!',
+        zoneCfg.label, muster))
+    anchor:timer(muster * 1000, function(pp)
+        local cst = states[zoneId]
+        if cst and cst.startedAt == token and cst.wave == 0 then
+            nextWave(zone, zoneCfg, zoneId)
+        end
+    end)
+end
+
+-----------------------------------
 -- Clock. Per-player re-arming timer in tick zones — checks for invasion
 -- start windows and enforces the time-limit deadline.
 -----------------------------------
@@ -444,12 +474,12 @@ local function checkClock(player)
                         mobsAlive    = {},
                         participants = {},
                         startedAt    = os.time(),
-                        endsAt       = os.time() + catalog.timeLimitSec,
+                        endsAt       = os.time() + (catalog.musterDelaySec or 0) + catalog.timeLimitSec,
                     }
                     broadcast(player, string.format(
                         '[Domain Invasion] THE ESCHA ATTACK! %s is under assault — type !diwarp to join the defense!',
                         zc.label))
-                    nextWave(zone, zc, zc.zoneId)
+                    beginAssault(zone, zc, zc.zoneId)
                 end
             end
         end
@@ -519,12 +549,12 @@ xi._domain_invasion_api =
                     mobsAlive    = {},
                     participants = {},
                     startedAt    = os.time(),
-                    endsAt       = os.time() + catalog.timeLimitSec,
+                    endsAt       = os.time() + (catalog.musterDelaySec or 0) + catalog.timeLimitSec,
                 }
                 local players = zone:getPlayers()
                 broadcast(players[1], string.format(
                     '[Domain Invasion] THE ESCHA ATTACK! %s is under assault!', zc.label))
-                nextWave(zone, zc, zid)
+                beginAssault(zone, zc, zid)
                 return true
             end
         end

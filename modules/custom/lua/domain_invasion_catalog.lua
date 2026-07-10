@@ -4,9 +4,16 @@
 --
 -- Every 3 hours, Dahaks or Lamiae assault an Escha zone. Zones alternate
 -- between Escha - Zi'Tah (Dahaks + Azi Dahaka) and Escha - Ru'Aun
--- (Lamiae + Naga Raja). Two-wave event: a trash wave followed by a boss
--- wave with adds. Rewards: Escha Silt, Escha Beads, Domain Points
+-- (Lamiae + Naga Raja). FIVE-wave event: four escalating trash waves that
+-- culminate in a boss wave with adds. A muster delay lets defenders !diwarp
+-- in before wave 1 spawns. Rewards: Escha Silt, Escha Beads, Domain Points
 -- (daily cap 80 per player).
+--
+-- 2026-07-09 RETUNE (report: Spyro -- "2 waves, die super fast, over in <2min,
+-- can be over before you warp in"): 2 waves -> 5 escalating waves; per-mob HP
+-- and level ramp each wave so a wave isn't melted in seconds (silent difficulty
+-- -- baked into the stat blocks, no visible multiplier); time limit 10 -> 15 min;
+-- musterDelaySec added so latecomers can rally before the first wave.
 -----------------------------------
 local catalog = {}
 
@@ -19,8 +26,9 @@ catalog.spawnRingMax      = 12.0
 catalog.warnMinutes       = 5
 catalog.graceMinutes      = 10
 catalog.tickSeconds       = 30
-catalog.interWaveDelaySec = 10
-catalog.timeLimitSec      = 600  -- 10 min per assault
+catalog.musterDelaySec    = 45   -- warm-up after launch before wave 1 (lets people !diwarp in)
+catalog.interWaveDelaySec = 12   -- breather + join window between waves
+catalog.timeLimitSec      = 900  -- 15 min of fighting (excludes the muster warm-up)
 
 -- ============================================================
 -- ZONE CONFIGS
@@ -29,7 +37,9 @@ catalog.timeLimitSec      = 600  -- 10 min per assault
 -- 3-hour window (zoneIdx in catalog.windows below).
 catalog.zones =
 {
-    -- [1] Escha - Zi'Tah: Dahak flood + Azi Dahaka boss
+    -- [1] Escha - Zi'Tah: Dahak flood + Azi Dahaka boss.
+    -- 5 waves: level 122 -> 140 and hpMult 3.0 -> 6.5 ramp across the trash
+    -- waves so each wave takes real time, then the Azi Dahaka boss wave.
     {
         zone   = 'Escha_ZiTah',
         zoneId = 288,
@@ -38,32 +48,53 @@ catalog.zones =
         waves =
         {
             {
-                label = 'Dahak Vanguard', level = 120, base = 5, perDefender = 2,
+                label = 'Dahak Vanguard', level = 122, base = 5, perDefender = 2,
                 groups = { 11480 },
-                names  = { 'Escha Dahak', 'Dahak Marauder', 'Dahak Raider', 'Dahak Vanguard' },
-                mods   = { [xi.mod.ATT] = 1600, [xi.mod.ACC] = 700, [xi.mod.HASTE_GEAR] = 80 },
-                hpMult = 2.0,
+                names  = { 'Escha Dahak', 'Dahak Raider', 'Dahak Vanguard' },
+                mods   = { [xi.mod.ATT] = 1600, [xi.mod.ACC] = 720, [xi.mod.HASTE_GEAR] = 80 },
+                hpMult = 3.0,
             },
             {
-                label = 'Azi Dahaka', level = 140, base = 2, perDefender = 1,
+                label = 'Dahak Marauders', level = 126, base = 6, perDefender = 2,
                 groups = { 11480 },
-                names  = { 'Dahak Sentinel', 'Dahak Ravager', 'Dahak Dreadguard' },
-                mods   = { [xi.mod.ATT] = 2200, [xi.mod.ACC] = 860, [xi.mod.HASTE_GEAR] = 120 },
-                hpMult = 2.5,
+                names  = { 'Dahak Marauder', 'Dahak Raider', 'Dahak Skirmisher' },
+                mods   = { [xi.mod.ATT] = 1900, [xi.mod.ACC] = 780, [xi.mod.HASTE_GEAR] = 100 },
+                hpMult = 4.0,
+            },
+            {
+                label = 'Dahak Ravagers', level = 130, base = 6, perDefender = 2,
+                groups = { 11480 },
+                names  = { 'Dahak Ravager', 'Dahak Sentinel' },
+                mods   = { [xi.mod.ATT] = 2200, [xi.mod.ACC] = 840, [xi.mod.HASTE_GEAR] = 120 },
+                hpMult = 5.0,
+            },
+            {
+                label = 'Dahak Dreadguard', level = 135, base = 7, perDefender = 2,
+                groups = { 11480 },
+                names  = { 'Dahak Dreadguard', 'Dahak Sentinel', 'Dahak Ravager' },
+                mods   = { [xi.mod.ATT] = 2500, [xi.mod.ACC] = 900, [xi.mod.HASTE_GEAR] = 140 },
+                hpMult = 6.5,
+            },
+            {
+                label = 'Azi Dahaka', level = 140, base = 3, perDefender = 1,
+                groups = { 11480 },
+                names  = { 'Dahak Dreadguard', 'Dahak Sentinel' },
+                mods   = { [xi.mod.ATT] = 2800, [xi.mod.ACC] = 960, [xi.mod.HASTE_GEAR] = 160 },
+                hpMult = 6.0,
                 boss =
                 {
                     name      = 'Azi Dahaka',
                     level     = 150,
                     group     = 11481,
-                    mods      = { [xi.mod.ATT] = 3000, [xi.mod.ACC] = 1000, [xi.mod.HASTE_GEAR] = 160 },
-                    hpMult    = 6.0,
+                    mods      = { [xi.mod.ATT] = 3400, [xi.mod.ACC] = 1050, [xi.mod.HASTE_GEAR] = 180 },
+                    hpMult    = 8.0,
                     modelSize = 3,
                 },
             },
         },
     },
 
-    -- [2] Escha - Ru'Aun: Lamia flood + Naga Raja boss
+    -- [2] Escha - Ru'Aun: Lamia flood + Naga Raja boss. Symmetric 5-wave ramp.
     {
         zone   = 'Escha_RuAun',
         zoneId = 289,
@@ -72,25 +103,46 @@ catalog.zones =
         waves =
         {
             {
-                label = 'Lamia Vanguard', level = 120, base = 5, perDefender = 2,
+                label = 'Lamia Vanguard', level = 122, base = 5, perDefender = 2,
                 groups = { 11482 },
-                names  = { 'Escha Lamia', 'Lamia Archer', 'Lamia Dancer', 'Lamia Skirmisher' },
-                mods   = { [xi.mod.ATT] = 1600, [xi.mod.ACC] = 700, [xi.mod.HASTE_GEAR] = 80 },
-                hpMult = 2.0,
+                names  = { 'Escha Lamia', 'Lamia Skirmisher', 'Lamia Archer' },
+                mods   = { [xi.mod.ATT] = 1600, [xi.mod.ACC] = 720, [xi.mod.HASTE_GEAR] = 80 },
+                hpMult = 3.0,
             },
             {
-                label = 'Naga Raja', level = 140, base = 2, perDefender = 1,
+                label = 'Lamia Raiders', level = 126, base = 6, perDefender = 2,
                 groups = { 11482 },
-                names  = { 'Lamia Sentry', 'Lamia Bloodletter', 'Lamia Champion' },
-                mods   = { [xi.mod.ATT] = 2200, [xi.mod.ACC] = 860, [xi.mod.HASTE_GEAR] = 120 },
-                hpMult = 2.5,
+                names  = { 'Lamia Dancer', 'Lamia Archer', 'Lamia Skirmisher' },
+                mods   = { [xi.mod.ATT] = 1900, [xi.mod.ACC] = 780, [xi.mod.HASTE_GEAR] = 100 },
+                hpMult = 4.0,
+            },
+            {
+                label = 'Lamia Bloodletters', level = 130, base = 6, perDefender = 2,
+                groups = { 11482 },
+                names  = { 'Lamia Bloodletter', 'Lamia Sentry' },
+                mods   = { [xi.mod.ATT] = 2200, [xi.mod.ACC] = 840, [xi.mod.HASTE_GEAR] = 120 },
+                hpMult = 5.0,
+            },
+            {
+                label = 'Lamia Champions', level = 135, base = 7, perDefender = 2,
+                groups = { 11482 },
+                names  = { 'Lamia Champion', 'Lamia Sentry', 'Lamia Bloodletter' },
+                mods   = { [xi.mod.ATT] = 2500, [xi.mod.ACC] = 900, [xi.mod.HASTE_GEAR] = 140 },
+                hpMult = 6.5,
+            },
+            {
+                label = 'Naga Raja', level = 140, base = 3, perDefender = 1,
+                groups = { 11482 },
+                names  = { 'Lamia Champion', 'Lamia Sentry' },
+                mods   = { [xi.mod.ATT] = 2800, [xi.mod.ACC] = 960, [xi.mod.HASTE_GEAR] = 160 },
+                hpMult = 6.0,
                 boss =
                 {
                     name      = 'Naga Raja',
                     level     = 150,
                     group     = 11483,
-                    mods      = { [xi.mod.ATT] = 3000, [xi.mod.ACC] = 1000, [xi.mod.HASTE_GEAR] = 160 },
-                    hpMult    = 6.0,
+                    mods      = { [xi.mod.ATT] = 3400, [xi.mod.ACC] = 1050, [xi.mod.HASTE_GEAR] = 180 },
+                    hpMult    = 8.0,
                     modelSize = 2,
                 },
             },
@@ -122,11 +174,11 @@ catalog.windows =
 -- Domain Points are hard-capped at dailyPointCap per UTC day per player.
 catalog.reward =
 {
-    perWaveSilt   = 75,   -- silt per wave clear (×2 = 150 on a full 2-wave run)
+    perWaveSilt   = 75,   -- silt per wave clear (×5 = 375 across a full 5-wave run)
 
-    victorySilt   = 150,
-    victoryBeads  = 3,
-    victoryPoints = 30,   -- Domain Points on victory (cap: 80/day)
+    victorySilt   = 200,
+    victoryBeads  = 4,
+    victoryPoints = 40,   -- Domain Points on victory (cap: 80/day -> 2 clears/day caps)
 
     timeoutSilt   = 50,
     timeoutBeads  = 1,
