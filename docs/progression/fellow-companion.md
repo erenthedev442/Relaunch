@@ -52,7 +52,7 @@ Each stat track adds its own bundle of bonuses per point:
 
 ## Roles
 
-Each Fellow follows a combat role that shapes how it fights. Every role still melee-assists and uses its signature TP move; the role layers extra stats (and, for some, a battle behaviour) on top:
+Each Fellow follows a combat role that shapes how it fights. Every role still melee-assists and uses its signature TP move; the role layers extra stats (and, for some, a battle behaviour) on top. Magical signature moves **magic burst** like a spell — time the Fellow's TP move into a matching skillchain window for bonus damage (this applies to all player-owned pets, jug pets included):
 
 <!-- DOCGEN:BEGIN id="fellow-roles" -->
 | Role | Behaviour |
@@ -102,6 +102,6 @@ With `Party-wide XP` enabled (the default), any party member who has their Fello
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3bf32b446dcc -->
-_Last updated: 2026-07-10 03:17 PDT_
+<!-- content-hash: 3b3e10722e15 -->
+_Last updated: 2026-07-10 16:40 PDT_
 <!-- DOCGEN:END id="last-updated" -->
