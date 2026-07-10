@@ -1,5 +1,12 @@
 -- =====================================================================
--- zz_dynamis_no_gear_drops.sql
+-- dynamis_no_gear_drops.sql
+-- NOTE: lives in modules/custom/sql/ (NOT sql/zz_) -- the relaunch OVH deploy
+-- (vps-rebuild.ps1) only applies modules/custom/sql/*.sql, so a sql/zz_ file
+-- would never run on deploy. A normal deploy does not reimport sql/mob_droplist,
+-- so this DELETE runs against the live table and sticks; a FULL dbtool reimport
+-- re-adds the stock rows AFTER modules/custom/sql -> re-run this after one.
+-- Droplists are boot-cached, so a live apply needs an xi_map restart.
+--
 -- Dynamis mobs on Relaunch should drop CURRENCY + reforge MATERIALS only --
 -- the custom reforge path (medals -> AF/Relic +1..+3) is the gear source, so the
 -- retail armor drops are unwanted clutter.

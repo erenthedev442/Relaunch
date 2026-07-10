@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------
--- zz_htbf_bcnm_records.sql  (relaunch)
+-- htbf_bcnm_records.sql  (relaunch)
 --
 -- Seeds bcnm_records rows for every custom High-Tier Mission Battlefield.
 -- The C++ battlefield loader (CBattlefieldHandler::LoadBattlefield) does
@@ -8,9 +8,15 @@
 -- fights use custom ids 4000-4202 (see modules/custom/lua/htbf_catalog.lua:
 -- baseBattlefieldId + tier 0/1/2), which retail bcnm_info.sql never seeds.
 --
--- Must be a zz_ file: sql/bcnm_info.sql DROPs+reseeds bcnm_records on every
--- deploy, wiping these, so this idempotent re-seed has to run AFTER it.
--- Read live per registration -> no map restart needed once applied.
+-- *** LOCATION MATTERS ON RELAUNCH ***  The OVH deploy (vps-rebuild.ps1 step 3)
+-- applies ONLY modules/custom/sql/*.sql -- it does NOT apply sql/zz_*.sql or
+-- sql/bcnm_info.sql. This file was originally sql/zz_htbf_bcnm_records.sql and
+-- therefore NEVER applied on deploy -> every HTBF trial returned 'access denied'
+-- (bug 2026-07-09). Moved here so the deploy actually seeds it. Because the
+-- relaunch deploy does not re-run sql/bcnm_info.sql, nothing wipes these rows on
+-- a normal deploy. (A FULL dbtool reimport DOES run sql/bcnm_info.sql after
+-- modules/custom/sql -> would wipe these; re-run this file after any full reimport.)
+-- Idempotent (ON DUPLICATE KEY UPDATE); read live per registration -> no restart.
 -----------------------------------------------------------------------------
 
 INSERT INTO `bcnm_records` (`bcnmId`,`zoneId`,`name`,`fastestName`,`fastestPartySize`,`fastestTime`) VALUES (4000,207,'htbf_trial_by_fire_1','Not Set!',0,1800) ON DUPLICATE KEY UPDATE `zoneId`=VALUES(`zoneId`),`name`=VALUES(`name`);
