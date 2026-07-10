@@ -52,3 +52,10 @@ On top of the normal level-based award, each kill pays a **flat 2,000 bonus Capa
 Capacity Points feed your Job Points, so park here whenever you want to push a
 job's gifts and Job Point categories — the chain stays hot as long as you keep
 swinging.
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 9c6cffcaeabb -->
+_Last updated: 2026-07-10 16:53 PDT_
+<!-- DOCGEN:END id="last-updated" -->

@@ -8,7 +8,7 @@ The **Reforge Exchange** lets you convert spare Reforge marks from one line into
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="reforge-mark-exchange-access" -->
-The **Reforge Exchange** stands at **Gwora-Corridor**, right beside the Gear Vendors — the same spot where you turn marks into upgrades.
+The **Reforge Exchange** stands at **Diorama Abdhaljs-Ghelsba**, right beside the Gear Vendors — the same spot where you turn marks into upgrades.
 <!-- DOCGEN:END id="reforge-mark-exchange-access" -->
 
 ## What it does
@@ -38,6 +38,6 @@ Each visit you can convert in batches of **1, 5, 10, 25, 50** target marks at on
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4629877a5f5b -->
-_Last updated: 2026-06-14 20:53 UTC_
+<!-- content-hash: d51b25c391bb -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

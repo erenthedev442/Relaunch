@@ -12,7 +12,7 @@ enough, line it up at the gate and bet on yourself.
 ## Where to play
 
 <!-- DOCGEN:BEGIN id="chocobo-derby-access" -->
-The **Race Caller** stands in **Purgonorgo Isle** (`!hub`). Step up to check the odds board, place a bet, and watch the race play out.
+The **Race Caller** stands in **the Celennia Memorial Library** (`!lib`). Step up to check the odds board, place a bet, and watch the race play out.
 <!-- DOCGEN:END id="chocobo-derby-access" -->
 
 ## Placing a bet
@@ -53,6 +53,6 @@ off big on the day.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: e10baefbcbe7 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: d0a7df06df83 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

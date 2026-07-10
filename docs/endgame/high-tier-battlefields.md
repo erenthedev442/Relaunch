@@ -47,9 +47,9 @@ Every battlefield is offered at three tiers. Higher tiers crank up the boss's HP
 <!-- DOCGEN:BEGIN id="htbf-tiers" -->
 | Tier | Difficulty | Reward |
 |---|---|---|
-| **Tier I** | A lightly-buffed take on the base fight — the entry tier. (~1.5× HP) | 30,000 gil + 50 Hunt Marks |
-| **Tier II** | A serious step up in toughness and incoming damage. (~4× HP) | 120,000 gil + 200 Hunt Marks |
-| **Tier III** | The wall — vastly more HP and punishing offense. (~10× HP) | 400,000 gil + 600 Hunt Marks |
+| **Tier I** | A lightly-buffed take on the base fight — the entry tier. (~3× HP) | 30,000 gil + 50 Hunt Marks |
+| **Tier II** | A serious step up in toughness and incoming damage. (~9× HP) | 120,000 gil + 200 Hunt Marks |
+| **Tier III** | The wall — vastly more HP and punishing offense. (~22× HP) | 400,000 gil + 600 Hunt Marks |
 <!-- DOCGEN:END id="htbf-tiers" -->
 
 A win also spawns a treasure chest. The drops are deliberately modest crafting spoils on common clears, with the rare retail gear kept genuinely scarce — these fights are repeatable, so the gil and Hunt Marks are the real payout.
@@ -115,6 +115,6 @@ Every win spawns a treasure chest. **All three tiers of a fight share the same d
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 33832ee9eedf -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: 933d22b670c0 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -33,6 +33,6 @@ _**4 traits** available — each one passive, permanent, and active on every job
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a1da1ebd3faa -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: 3565bf35eaf5 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

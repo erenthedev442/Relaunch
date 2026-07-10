@@ -86,3 +86,10 @@ If your problem isn't covered here:
 
 1. Check the [FAQ](../community/faq.md).
 2. Ask in **Discord** — describe what happened, what you expected, and what you saw instead.
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 2e38020760b8 -->
+_Last updated: 2026-07-10 16:53 PDT_
+<!-- DOCGEN:END id="last-updated" -->

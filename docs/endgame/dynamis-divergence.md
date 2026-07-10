@@ -119,6 +119,6 @@ The Forge only takes a reforged **+3** AF or Relic piece, and only when you're h
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8c72f9b39826 -->
-_Last updated: 2026-07-06 06:28 PDT_
+<!-- content-hash: 1828365c4e11 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

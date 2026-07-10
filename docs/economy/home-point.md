@@ -1,20 +1,20 @@
 # Home Point Network — Purgonorgo Isle
 
-A **Home Point** crystal stands in <!--npc:home_point-->the Purgonorgo Isle<!--/npc--> that works like a full home-point terminal: set your home point here, then free-warp to home points all across Vana'diel — no attunement, no gil, no gates.
+A **Home Point** crystal stands in <!--npc:home_point-->Purgonorgo Isle<!--/npc--> that works like a full home-point terminal: set your home point here, then free-warp to home points all across Vana'diel — no attunement, no gil, no gates.
 
 !!! tip "Summary"
-    A Home Point crystal in <!--npc:home_point-->the Purgonorgo Isle<!--/npc-->. Set your home point there and warp, for free, to home points across the whole world — every major city, the Adoulin and Aht Urhgan regions, the past, Sky, Sea, and dozens of dungeons and fields.
+    A Home Point crystal in <!--npc:home_point-->Purgonorgo Isle<!--/npc-->. Set your home point there and warp, for free, to home points across the whole world — every major city, the Adoulin and Aht Urhgan regions, the past, Sky, Sea, and dozens of dungeons and fields.
 
 ## Where to find it
 
 <!-- DOCGEN:BEGIN id="home-point-access" -->
-The **Home Point** crystal sits in **Purgonorgo Isle** (`!hub`), in the services cluster — alongside the other warp services. Using it is always **free**: no gil cost and no attunement, so every destination is open from your first visit.
+The **Home Point** crystal sits in **the Celennia Memorial Library** (`!lib`), in the services cluster — alongside the other warp services. Using it is always **free**: no gil cost and no attunement, so every destination is open from your first visit.
 <!-- DOCGEN:END id="home-point-access" -->
 
 ## Setting your home point
 
 <!-- DOCGEN:BEGIN id="home-point-sethome" -->
-Choose **Set home point here** and the Purgonorgo Isle becomes your home point — you'll return here whenever you're knocked out and raised, or any time you use a home-point warp. It also registers the Purgonorgo Isle as a destination on the wider home-point network, so other crystals out in the world can send you back.
+Choose **Set home point here** and the Celennia Memorial Library becomes your home point — you'll return here whenever you're knocked out and raised, or any time you use a home-point warp. It also registers the Celennia Memorial Library as a destination on the wider home-point network, so other crystals out in the world can send you back.
 <!-- DOCGEN:END id="home-point-sethome" -->
 
 ## Where you can warp
@@ -44,6 +44,6 @@ The crystal reaches **121 home points** spread across **12 regions** — effecti
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f6669e01e14d -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 752b730f996e -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

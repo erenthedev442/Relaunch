@@ -4,7 +4,7 @@
 !!! info "How many trusts you can field at once"
     Every trust is learnable from day 1 — the ladder below caps how many you can summon *simultaneously*. It is consecutive: you earn each slot in order. Your allies earn your allies.
 
-    **2** on a fresh character · **3** once you [conquer every Unity Wanted NM (all tiers)](../../endgame/unity-concord.md) · **4** once you [clear a tier-5 Voidwatch rift](../../endgame/voidwatch.md) · **5** once you [raise your Adventuring Fellow to the level cap (120)](../../progression/fellow-companion.md).
+    **2** on a fresh character · **3** once you [raise your Fellow to Lv100, OR Rebirth any job](../../progression/fellow-companion.md) · **4** once you [conquer every Unity Wanted NM (all tiers)](../../endgame/unity-concord.md) · **5** once you [clear a tier-5 Voidwatch rift](../../endgame/voidwatch.md).
 
     _Config: `trust_progression_cap.lua`._
 
@@ -150,6 +150,6 @@ _Spells are sorted by ID._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3258d94ed2f0 -->
-_Last updated: 2026-07-06 17:42 PDT_
+<!-- content-hash: 81ef45184e73 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

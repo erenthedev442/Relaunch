@@ -71,3 +71,10 @@ Spend Escha Beads at the Warding Circle for Aeonic materials:
 
 Chasing the endgame relics? The Attestations and Riftborn Boulders you farm here
 feed the [Aeonic weapon](../progression/aeonic-weapons.md) forge.
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: c2dd37d1d6a6 -->
+_Last updated: 2026-07-10 16:53 PDT_
+<!-- DOCGEN:END id="last-updated" -->

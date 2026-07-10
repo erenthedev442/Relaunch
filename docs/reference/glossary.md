@@ -20,7 +20,7 @@ Catalyst
 :   An item bought from the Augment Moogle's catalyst shop (`!shop augments <group>`, flat gil), then traded back to the Moogle (in <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc-->) to write a specific augment line on your gear — up to 5 catalysts per trade, 10,000 gil flat per trade.
 
 Daily Board
-:   A 3-objective board located in <!--npc:daily_board-->the Purgonorgo Isle<!--/npc--> (`!hub`) that resets at midnight UTC every day. Completing all 3 objectives earns a bonus of 500 Hunt Marks + 100 AF Marks.
+:   A 3-objective board located in <!--npc:daily_board-->Purgonorgo Isle<!--/npc--> (`!lib`) that resets at midnight UTC every day. Completing all 3 objectives earns a bonus of 500 Hunt Marks + 100 AF Marks.
 
 Empy Marks
 :   Reforge currency earned by killing the Abyssea NMs pool — Aello, Iratham, Briareus, Itzpapalotl, and Hadhayosh (ladder order, entry to apex). Used to upgrade Empyrean armor sets from base through +3.
@@ -55,6 +55,6 @@ Weekly Hunt Board
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 12257ead4109 -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: dd35e770def8 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

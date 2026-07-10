@@ -165,12 +165,11 @@ Three currencies (AF Marks, Relic Marks, Empyrean Marks) track separately. Every
 The server's custom service NPCs are split across two hubs — **Purgonorgo Isle** (endgame progression) and the **Purgonorgo Isle** (beginner services). The summary below auto-updates from the live source.
 
 <!-- DOCGEN:BEGIN id="gm-home-npcs" -->
-Custom service NPCs live across two hubs:
+Every custom service NPC now lives on a single island plaza — **Purgonorgo Isle** — reachable any time with the **`!hub`** command (the old `!leaf`, `!lib`, and `!gmhome` commands land there too).
 
-- **[Purgonorgo Isle — Endgame Hub](../progression/leafallia.md)** — Prime Armory, Relic Forge, Augment Moogle & Sage, the mastery trainers, Apex Trials, the Gauntlet, Colosseum, Endless Tower, and the HTBF / Infamy / Voidwatch vendors.
-- **[Purgonorgo Isle — Beginner Hub](../progression/library.md)** — home point, Warpman, the Gil / Sparks / Crafting exchanges, Title Broker, Cosmetic Shop, Daily & Hunt boards, Unity, Casino, Mystery Mog, Chocobo Derby, and the Race Changer.
+- **[The Hub — Purgonorgo Isle](../progression/hub.md)** — everything in one place: home point, Warpman, the Gil / Sparks / Crafting exchanges, Title Broker, Cosmetic Shop, Daily & Hunt boards, Unity, Casino, Mystery Mog, Chocobo Derby, Race Changer, Prime Armory, Relic Forge, Augment Moogle & Sage, the mastery trainers, Apex Trials, the Gauntlet, Colosseum, Endless Tower, the combat Test Dummy, and the HTBF / Infamy / Voidwatch vendors — spaced out so a crowd can shop at once.
 
-The combat **Test Dummy** for DPS testing remains on **Purgonorgo Isle** (`!hub`). New-character setup — weapon skills, spells, key items, missions, maps, and a starter gear kit — is now granted **automatically at character creation**, so the old setup moogles (Gear / Key Item / Mission / Character Upgrader / EXP Camp) are gone.
+New-character setup — weapon skills, spells, key items, missions, maps, and a starter gear kit — is granted **automatically at character creation**, so the old setup moogles (Gear / Key Item / Mission / Character Upgrader / EXP Camp) are gone.
 <!-- DOCGEN:END id="gm-home-npcs" -->
 
 ## Custom HNM system
@@ -233,6 +232,6 @@ For reference, these are at retail defaults on this server:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f553578faa39 -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: 492705265eb8 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

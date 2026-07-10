@@ -1,14 +1,14 @@
 # Sparks Exchange — Eminence Broker
 
-Capped currencies pile up with nothing to spend them on. The **Eminence Broker** (a.k.a. "Sparks Cash") in <!--npc:sparks_exchange-->the Purgonorgo Isle<!--/npc--> buys back your **Sparks of Eminence**, **Unity Accolades**, **Job Points**, and **Hunting Marks** for gil — a steady gil faucet for capped and endgame players.
+Capped currencies pile up with nothing to spend them on. The **Eminence Broker** (a.k.a. "Sparks Cash") in <!--npc:sparks_exchange-->Purgonorgo Isle<!--/npc--> buys back your **Sparks of Eminence**, **Unity Accolades**, **Job Points**, and **Hunting Marks** for gil — a steady gil faucet for capped and endgame players.
 
 !!! tip "Summary"
-    Trade Sparks of Eminence, Unity Accolades, Job Points, or Hunting Marks for gil at the Eminence Broker in <!--npc:sparks_exchange-->the Purgonorgo Isle<!--/npc--> — pick a preset amount or cash out everything at once.
+    Trade Sparks of Eminence, Unity Accolades, Job Points, or Hunting Marks for gil at the Eminence Broker in <!--npc:sparks_exchange-->Purgonorgo Isle<!--/npc--> — pick a preset amount or cash out everything at once.
 
 ## Where to find the Broker
 
 <!-- DOCGEN:BEGIN id="sparks-exchange-access" -->
-The **Eminence Broker** stands in **Purgonorgo Isle** (`!hub`), in the row of gil-service NPCs. Talk to him to convert Sparks of Eminence, Unity Accolades, Job Points, or Hunting Marks into gil.
+The **Eminence Broker** stands in **the Celennia Memorial Library** (`!lib`), in the row of gil-service NPCs. Talk to him to convert Sparks of Eminence, Unity Accolades, Job Points, or Hunting Marks into gil.
 <!-- DOCGEN:END id="sparks-exchange-access" -->
 
 ## The exchange rate
@@ -72,6 +72,6 @@ The Broker won't let an exchange overflow your gil — if you're near the gil ca
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f545ede0e592 -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 5d38c364c214 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

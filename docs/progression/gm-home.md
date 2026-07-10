@@ -35,6 +35,6 @@ Talk to the Test Dummy and pick an **Ascension Court** or an **Abyssea NM**:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 944e72333055 -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: 6701d6a8e086 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

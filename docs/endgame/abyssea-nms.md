@@ -151,7 +151,7 @@ Infamy is spent at the **Infamy Vendor** in <!--npc:infamy_vendor-->Purgonorgo I
 
 | Reward | Infamy | Heroes kills _(party, no trusts — ×3.0)_ |
 |---|---:|---:|
-| Cheapest item | 250 | 2 kills |
+| Cheapest item | 50 | 1 kill |
 | Standard endgame weapon _(Relic / Mythic / Aeonic)_ | 10,000 | 56 kills |
 | Most expensive item | 10,000 | 56 kills |
 
@@ -170,6 +170,6 @@ A full party clearing **Heroes** NMs without trusts earns **180 Infamy per kill*
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 33b2a5f3fc94 -->
-_Last updated: 2026-07-06 17:42 PDT_
+<!-- content-hash: c93607165ce9 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

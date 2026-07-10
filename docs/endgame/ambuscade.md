@@ -103,3 +103,10 @@ Gorpa-Masorpa also runs the Ambuscade weapon path: redeem a base **Tokko** weapo
 | Echo Drops | 50 |
 | Antidote | 50 |
 <!-- DOCGEN:END id="amb-galshop" -->
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 8c9f4afc3dd9 -->
+_Last updated: 2026-07-10 16:53 PDT_
+<!-- DOCGEN:END id="last-updated" -->

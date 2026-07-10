@@ -33,7 +33,10 @@ Two waves hit each zone in sequence. The first is a vanguard of trash mobs; the 
 
 | Wave | Enemy level |
 |---|---:|
-| **Dahak Vanguard** | 120 |
+| **Dahak Vanguard** | 122 |
+| **Dahak Marauders** | 126 |
+| **Dahak Ravagers** | 130 |
+| **Dahak Dreadguard** | 135 |
 | **Azi Dahaka** | 140 |
 | **Azi Dahaka** (boss) | 150 |
 
@@ -41,11 +44,14 @@ Two waves hit each zone in sequence. The first is a vanguard of trash mobs; the 
 
 | Wave | Enemy level |
 |---|---:|
-| **Lamia Vanguard** | 120 |
+| **Lamia Vanguard** | 122 |
+| **Lamia Raiders** | 126 |
+| **Lamia Bloodletters** | 130 |
+| **Lamia Champions** | 135 |
 | **Naga Raja** | 140 |
 | **Naga Raja** (boss) | 150 |
 
-Each assault is two waves: a vanguard of trash mobs followed by a boss wave that brings adds alongside the named NM. Wave count scales with attendance — more defenders means more enemies per wave. Clear both waves within **10 minutes** to claim victory.
+Each assault is two waves: a vanguard of trash mobs followed by a boss wave that brings adds alongside the named NM. Wave count scales with attendance — more defenders means more enemies per wave. Clear both waves within **15 minutes** to claim victory.
 <!-- DOCGEN:END id="di-zones" -->
 
 ## Rewards
@@ -56,10 +62,10 @@ Rewards go to every player in the zone at the relevant moment. Domain Points are
 | Outcome | Escha Silt | Escha Beads | Domain Points |
 |---|---:|---:|---:|
 | **Wave clear** (per wave) | 75 | — | — |
-| **Victory** (all waves + boss killed) | 150 | 3 | 30 |
+| **Victory** (all waves + boss killed) | 200 | 4 | 40 |
 | **Time expired** (consolation) | 50 | 1 | 10 |
 
-**Daily Domain Point cap: 80 per character.** On a perfect run (victory in both zones per day) you would earn 120 — well above the cap, so 80 is the real ceiling. Spend Domain Points at the Domain Invasion exchange NPC in the hub.
+**Daily Domain Point cap: 80 per character.** On a perfect run (victory in both zones per day) you would earn 160 — well above the cap, so 80 is the real ceiling. Spend Domain Points at the Domain Invasion exchange NPC in the hub.
 <!-- DOCGEN:END id="di-rewards" -->
 
 ## Domain Points exchange
@@ -76,6 +82,6 @@ Domain Points spend at the exchange NPC in the hub. Check the NPC's menu for the
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 5c3f9ad88f16 -->
-_Last updated: 2026-07-06 17:42 PDT_
+<!-- content-hash: 109547d17128 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

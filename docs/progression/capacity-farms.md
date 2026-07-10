@@ -18,3 +18,10 @@ Grinding **Capacity Points** for Job Points? Relaunch keeps two dedicated **CP f
 | Bibiki Bay | Lv150-160 | Capacity Phantom | `!capacity` |
 | King Ranperres Tomb | Lv150-160 | Capacity Phantom | `!ranperre` |
 <!-- DOCGEN:END id="cp-camps" -->
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 89b608e3205d -->
+_Last updated: 2026-07-10 16:53 PDT_
+<!-- DOCGEN:END id="last-updated" -->

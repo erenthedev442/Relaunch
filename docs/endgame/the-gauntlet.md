@@ -7,7 +7,7 @@
 
 ## Where to start
 
-Talk to **The Gauntlet** keeper (sword-and-shield icon) in <!--npc:gauntlet-->Purgonorgo Isle<!--/npc--> — same row as the Apex Arbiter and Rupture Sage. Choose *Enter The Gauntlet* and you are warped straight into the arena.
+Talk to **The Gauntlet** keeper (sword-and-shield icon) in <!--npc:gauntlet-->Riverne-Site A01<!--/npc--> — same row as the Apex Arbiter and Rupture Sage. Choose *Enter The Gauntlet* and you are warped straight into the arena.
 
 **Rules:**
 
@@ -152,6 +152,6 @@ The Hall updates after the next map restart following a clear.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 25c8339c407a -->
-_Last updated: 2026-07-05 07:43 UTC_
+<!-- content-hash: d62e0f5f4099 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

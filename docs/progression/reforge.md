@@ -47,10 +47,10 @@ The Reforge Vendor sells progressive upgrades: trade in a base piece + marks for
 
 | NM | Level | Marks per kill |
 |---|---:|---:|
-| Genbu | Lv150 | 25 |
-| Suzaku | Lv175 | 40 |
-| Seiryu | Lv200 | 60 |
-| Byakko | Lv225 | 90 |
+| Genbu | Lv150 | 60 |
+| Suzaku | Lv175 | 80 |
+| Seiryu | Lv200 | 100 |
+| Byakko | Lv225 | 125 |
 | Kirin | Lv250 | 150 |
 
 ### Relic (Unity NMs)
@@ -59,10 +59,10 @@ The Reforge Vendor sells progressive upgrades: trade in a base piece + marks for
 
 | NM | Level | Marks per kill |
 |---|---:|---:|
-| Bukhis | Lv150 | 25 |
-| Khun | Lv175 | 40 |
-| Padfoot | Lv200 | 60 |
-| Glavoid | Lv225 | 90 |
+| Bukhis | Lv150 | 60 |
+| Khun | Lv175 | 80 |
+| Padfoot | Lv200 | 100 |
+| Glavoid | Lv225 | 125 |
 | Tinnin | Lv250 | 150 |
 
 ### Empyrean (Abyssea NMs)
@@ -71,10 +71,10 @@ The Reforge Vendor sells progressive upgrades: trade in a base piece + marks for
 
 | NM | Level | Marks per kill |
 |---|---:|---:|
-| Aello | Lv150 | 25 |
-| Iratham | Lv175 | 40 |
-| Briareus | Lv200 | 60 |
-| Itzpapalotl | Lv225 | 90 |
+| Aello | Lv150 | 60 |
+| Iratham | Lv175 | 80 |
+| Briareus | Lv200 | 100 |
+| Itzpapalotl | Lv225 | 125 |
 | Hadhayosh | Lv250 | 150 |
 <!-- DOCGEN:END id="reforge-sources" -->
 
@@ -124,6 +124,6 @@ The catalog covers every job. Each job has three named sets across the AF/Relic/
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 982be665ed1e -->
-_Last updated: 2026-07-06 06:28 PDT_
+<!-- content-hash: 6e506e692e06 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

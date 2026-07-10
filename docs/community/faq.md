@@ -14,7 +14,7 @@ No. The Relaunch server runs against a private server built on [LandSandBoat](ht
 
 ### How do I create a character?
 
-Once connected, the standard FFXI character-creation flow runs as usual. Your first login then triggers a one-time auto-setup that grants every weapon skill, every spell, capped combat/magic skills, every trust, all quests flagged complete, all missions flagged complete, all key items and maps, all outpost warps, every home point, all survival guides, expanded wardrobes, and all automaton attachments (the paid Void Keeper trusts stay locked), plus **500 starter Unity Accolades** for the Unity Wanted board. You begin with a **{{setting:START_GIL:comma}} gil** wallet, and first login adds a **300,000 gil** welcome gift and **25 Hunt Marks** — enough for a first Bronze-tier weapon. The level cap is {{setting:INITIAL_LEVEL_CAP}} from day one (no Limit Break quests); type `!hub` to reach the island hub and start leveling at {{setting:map.EXP_RATE}}× EXP.
+Once connected, the standard FFXI character-creation flow runs as usual. Your first login then triggers a one-time auto-setup that grants every weapon skill, every spell, capped combat/magic skills, every trust, all quests flagged complete, all missions flagged complete, all key items and maps, all outpost warps, every home point, all survival guides, expanded wardrobes, and all automaton attachments (the paid Void Keeper trusts stay locked), plus **500 starter Unity Accolades** for the Unity Wanted board. You begin with a **{{setting:START_GIL:comma}} gil** wallet, and first login adds a **300,000 gil** welcome gift and **25 Hunt Marks** — enough for a first Bronze-tier weapon. The level cap is {{setting:INITIAL_LEVEL_CAP}} from day one (no Limit Break quests); type `!gmhome` to visit the setup Moogles and start leveling at {{setting:map.EXP_RATE}}× EXP.
 
 ---
 
@@ -102,6 +102,10 @@ The [Retail Differences](../changes/index.md) page is the authoritative list. Hi
 - Custom Hunting League, Reforge System, Augment Sage, Job Rebirth, and Weekly Hunt Board systems
 - Every player command listed in [Reference → Player Commands](../reference/commands.md)
 
+### Can I use universal ninjutsu tools with NIN as a subjob?
+
+Yes — at level 75+, the universal tools (Inoshishinofuda, Shikanofuda, Chonofuda) work with NIN set as your **subjob**, not just as your main job like on retail. Below 75 you'll still need the regular per-spell tools (Shihei, Uchitake, and so on) when subbing NIN.
+
 ### Are character files / progress safe? Are there backups?
 
 Yes — daily backups of the character database are taken. In a worst case, the most you'd lose is a few hours.
@@ -113,6 +117,6 @@ _Have a question that should be on this page? Ping a GM in [Discord](https://dis
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: cf124e430f11 -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: bc66999d7767 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

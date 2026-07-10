@@ -27,7 +27,7 @@ The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat b
 
 - **[Affinity NMs](endgame/affinity-nms.md)** — Twenty-four of Vana'diel's most legendary Notorious Monsters — HNMs, Sky Gods, Wyrms, and world bosses — are permanently spawned throughout the overworld as Affinity NMs.
 
-- **[Ambuscade](endgame/ambuscade.md)** — Talk to the Ambuscade Tome in Mhaura to enter a private instance (three modes × five difficulties). Clears pay Hallmarks (monthly cap 45,000) and Gallantry.
+- **[Ambuscade](endgame/ambuscade.md)** — Talk to the Ambuscade Tome in Mhaura to enter a private instance (three modes × five difficulties). Clears pay Hallmarks (monthly-capped) and Gallantry.
 
 - **[Nyzul Isle](endgame/nyzul-isle.md)** — Nyzul Isle Investigation is an instanced floor-climbing dungeon lifted straight from retail, accessible on the Relaunch server without completing any Assault or ToAU prerequisites. The only custom piece is the entry NPC.
 
@@ -39,7 +39,7 @@ The Relaunch fixes that. Everyone starts equal. The economy is fresh. The stat b
 
 - **[Unity Concord](endgame/unity-concord.md)** — Hunt Wanted NMs in Escha - Zi'Tah to earn Unity Accolades, then spend them in the board's shop. Three tiers of difficulty — lv 75 classic NMs up to lv 145 endgame superbosses.
 
-- **[Dungeons](endgame/dungeons.md)** — Classic Vana'diel zones become private expedition grounds. Talk to the Dungeon Guide on Purgonorgo Isle, pick a zone, and your party gets a personal copy of it — sealed off from the rest of the server — with 13 enemies standing between you and the exit.
+- **[Dungeons](endgame/dungeons.md)** — Classic Vana'diel zones become private expedition grounds.
 
 - **[Live Events](endgame/live-events.md)** — Three standing bonuses on fixed clocks: a daily Happy Hour EXP and Capacity-Point boost for everyone online, a Divergence City of the Day that pays bonus medals on a clear, and a Unity weekly featured NM that pays double accolades.
 <!-- DOCGEN:END id="relaunch-exclusive" -->
@@ -92,6 +92,6 @@ Everything that made the original server worth playing:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3ae3abb8ffa8 -->
-_Last updated: 2026-07-10 03:30 PDT_
+<!-- content-hash: 5a272ca92011 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

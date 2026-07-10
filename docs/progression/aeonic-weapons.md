@@ -37,3 +37,10 @@ Escha Beads come from *any* Escha Geas Fete kill, so the whole path is fuelled b
 | Archery | Malformed Bow | Attest. of Transcendence | **Fail-not** |
 | Marksmanship | Malformed Culverin | Attest. of Harmony | **Fomalhaut** |
 <!-- DOCGEN:END id="aeonic-weapons" -->
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 740cc83ce4c1 -->
+_Last updated: 2026-07-10 16:53 PDT_
+<!-- DOCGEN:END id="last-updated" -->

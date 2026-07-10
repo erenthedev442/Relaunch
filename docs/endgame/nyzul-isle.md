@@ -12,10 +12,8 @@
 
 No Assault rank, no Imperial Standing, no prior quest chain — just talk and enter.
 
-!!! note "The Sage is the supported way *into Nyzul*"
-    You don't need Assault rank or any quest chain to **enter Nyzul** — the Sorrowful Sage bypasses the retail entry chain (Nyzul Isle Assault Orders / Azouph Isle staging). Finishing or leaving a run returns the party to Mhaura.
-
-    Regular **Assault** does work, though — talk to **Rytaal** in Aht Urhgan Whitegate for orders. That's a separate activity from Nyzul, and it's where you farm the **Imperial Standing** the [Mythic Weapon Forge](../progression/weapon-forge.md) needs: **Nyzul** drops the weapons and clears the Floor 60/80/100 gates; **Assaults** pay the Imperial Standing.
+!!! note "The Sage is the supported way in"
+    The retail entry chain (Assault rank, Nyzul Isle Assault Orders, the Azouph Isle staging point) is **not wired up** on this server — the retail mission NPC never hands out assault orders. Use the Sorrowful Sage. Finishing or leaving a run returns the party to Mhaura.
 
 ---
 

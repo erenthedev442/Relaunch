@@ -24,10 +24,14 @@ The roster below reflects what's currently live on the server.
 | Difficulty | Waves | Mobs/wave | Wave delay | Per-kill bonus | Completion bonus |
 |---|---:|---:|---:|---:|---:|
 | Easy | 3 | 1 | 20s | +20 marks | **+50 marks** |
-| Normal | 5 | 1 | 25s | +20 marks | **+100 marks** |
-| Hard | 5 | 2 | 25s | +20 marks | **+200 marks** |
+| Normal | 5 | 1 | 10s | +20 marks | **+100 marks** |
+| Hard | 5 | 2 | 10s | +20 marks | **+200 marks** |
 | Insane | 5 | 3 | 15s | +20 marks | **+400 marks** |
 | Nightmare | 7 | 4 | 10s | +20 marks | **+800 marks** |
+| Apocalypse | 8 | 4 | 10s | +20 marks | **+1200 marks** |
+| Oblivion | 10 | 5 | 8s | +20 marks | **+2000 marks** |
+| Ragnarok | 12 | 5 | 8s | +20 marks | **+2800 marks** |
+| Terror | 3 | 8 | 10s | +20 marks | **+1600 marks** |
 <!-- DOCGEN:END id="game-master-difficulty" -->
 
 ## Mob roster per difficulty
@@ -40,8 +44,12 @@ Each wave picks a random mob from the difficulty's pool:
 | Easy | Argus, Stray Mary, Dune Widow, Capricornus, Leaping Lizzy, Tom Tit Tat, Aquarius |
 | Normal | Boggelmann, Hakutaku, Steam Cleaner, Faust, Serket, Simurgh, Roc |
 | Hard | Cerberus, Hydra, Khimaira, Tiamat, Nidhogg, King Behemoth, Vrtra |
-| Insane | Bahamut, Ouryu, Byakko, Suzaku, Kirin, Absolute Virtue, Shinryu |
-| Nightmare | Kirin, Absolute Virtue, Pandemonium Warden, Shinryu |
+| Insane | Byakko, Suzaku, Genbu, Seiryu |
+| Nightmare | Bahamut, Ouryu, Fafnir, Jormungand |
+| Apocalypse | Adamantoise, Aspidochelone, Behemoth, Sandworm |
+| Oblivion | Kirin, Absolute Virtue, Pandemonium Warden, Shinryu, Jailer of Love |
+| Ragnarok | Ultima, Omega, Odin, Dynamis Lord, Provenance Watcher |
+| Terror | Glavoid, Chloris, Sarameya, Orthrus, Bukhis, Sobek |
 <!-- DOCGEN:END id="game-master-mob-roster" -->
 
 The pool can grow or shrink over time; the in-game options always reflect what's currently configured.
@@ -63,6 +71,6 @@ The pool can grow or shrink over time; the in-game options always reflect what's
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 40ab96dbca42 -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: 89f2e02d92b7 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

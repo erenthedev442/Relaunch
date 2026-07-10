@@ -2,13 +2,13 @@
 
 These chat commands are available to every player on this server (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 91
+**Total player-accessible commands:** 98
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    62 of the commands below are **unique to this server** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    69 of the commands below are **unique to this server** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -20,7 +20,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!affinitypop` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!ah` | — | opens the Auction House menu anywhere in the world |  |
 | `!ambuscade` | string | _(no description)_ | :material-puzzle: **custom** |
-| `!aoews` | string | Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (Purgonorgo Isle, !leaf). Cannot be changed after setting. |  |
+| `!aoews` | string | Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (Leafallia, !leaf). Cannot be changed after setting. |  |
 | `!apex` | string | Apex Trials helper -- check your record / Paragon Points, start a climb, or bail out of one. | :material-puzzle: **custom** |
 | `!auginfo` | — | _(no description)_ |  |
 | `!augment` | t, r, u, e | _(no description)_ |  |
@@ -33,11 +33,13 @@ These chat commands are available to every player on this server (no GM rank req
 | `!checkexpbonus` | — | Prints your current EXP_BONUS mod (gear/augments that boost EXP gain) and the per-kill effect it has. Useful for verifying that an EXP augment is actually attached to the player after equipping the piece. |  |
 | `!dig` | — | Treasure Hunting - dig for the strongbox your treasure map points at. Maps drop from Hunting League kills. | :material-puzzle: **custom** |
 | `!diwarp` | — | _(no description)_ | :material-puzzle: **custom** |
-| `!empower` | string, string | View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC on Purgonorgo Isle (see SpellSkillMastery.lua). | :material-puzzle: **custom** |
+| `!empower` | string, string | View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC in Leafallia (see SpellSkillMastery.lua). | :material-puzzle: **custom** |
 | `!events` | — | Lists upcoming and active seasonal bonus mark events from the catalog.  Shows event name, multiplier, start/end dates, and status (active / upcoming / expired). | :material-puzzle: **custom** |
 | `!expcamp` | string | _(no description)_ | :material-puzzle: **custom** |
 | `!featured` | — | Shows which NM is the Weekly Featured Hunt for each Hunting League tier.  Featured NMs award 2x base marks on the first kill of the week - the bonus stacks with the First-Kill bonus. | :material-puzzle: **custom** |
 | `!fellow` | string, int | Opens the Adventuring Fellow menu (summon/dismiss, allocate stat points, choose role, view status). Your Fellow is a personal companion ANY job can summon; it levels from your kills and you build it as you like. | :material-puzzle: **custom** |
+| `!fellowaudit` | — | Audit the summoned Fellow -- for each mod the build should add, shows EXPECTED (from your allocations + level) vs the LIVE getMod on the pet, flagging anything that didn't land. Answers "does boosting STR actually reach the Fellow?". Fellow must be summoned. | :material-puzzle: **custom** |
+| `!fellowname` | string | _(no description)_ | :material-puzzle: **custom** |
 | `!fellowstats` | — | Dumps live mod values straight off the spawned Fellow pet. Fellow must be summoned. Spend a point, re-run, watch the number move. | :material-puzzle: **custom** |
 | `!gauntlet` | string | _(no description)_ |  |
 | `!getstats` | string | prints stats of cursor target into chatlog, for debugging. |  |
@@ -46,6 +48,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!henge` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!home` | string | Sends the target to their homepoint. |  |
 | `!hovershot` | — | _(no description)_ | :material-puzzle: **custom** |
+| `!htbf` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!hub` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!hunt` | — | Warps you to the Hunting League hub in Escha - Zi'Tah. The hub has three NPCs in a row: Seals (leftmost)  — tier info, rank-up, seal shop Zone Guide        — one-click teleport to any tier cluster area Accessories       — neck / earring / ring / back / waist shop From the Zone Guide, pick your tier to warp straight to that cluster's spawner NPC without crossing the zone on foot. Landing spot stays in sync with sealsPos in hunting_league_catalog. |  |
 | `!hunt1` | — | Warps you to the Tier 1 (Rank I - Initiate) hunt spawner in Escha - Zi'Tah. NMs: Leaping Lizzy, Valkurm Emperor, Tom Tit Tat. |  |
@@ -71,7 +74,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!paragon` | — | _(no description)_ |  |
 | `!petstats` | — | Prints a detailed stat snapshot for your cursor-targeted mob, Trust, or player-owned pet. | :material-puzzle: **custom** |
 | `!pos` | string | Sets the players position. If none is given, prints out the position instead. |  |
-| `!primevoucher` | string, int | [GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC on Purgonorgo Isle (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it. | :material-puzzle: **custom** |
+| `!primevoucher` | string, int | [GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in Leafallia (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it. | :material-puzzle: **custom** |
 | `!profile` | string | Displays a competitive stat summary for a player.  With no argument shows your own stats; with a name shows that player's (they must be online - offline players can't be queried via Lua). | :material-puzzle: **custom** |
 | `!progress` | string | Prints a cross-system progression summary: Hunting League rank, Hunt Marks, Reforge Marks, weekly-hunt completion, Hunter's Guild standings, and Daily Board - all in one quick readout. | :material-puzzle: **custom** |
 | `!prov1` | — | _(no description)_ | :material-puzzle: **custom** |
@@ -82,7 +85,7 @@ These chat commands are available to every player on this server (no GM rank req
 | `!reallevel` | string | Computes a player's "real level" -- a single fun number that reflects how far PAST the level-99 cap a character has actually progressed, by folding in every endgame power axis FFXI offers: gear (item level), Ascension (Prestige), Job Points, and merits. | :material-puzzle: **custom** |
 | `!rebirth` | — | _(no description)_ |  |
 | `!reforge` | — | Shows the player's Reforge AF, Relic, and Empy mark balances. | :material-puzzle: **custom** |
-| `!reforged` | — | Warps you to the Reforge Armor system NPCs in Gwora-Corridor. |  |
+| `!reforged` | — | Warps you to the Reforge Armor hub in Diorama Abdhaljs-Ghelsba (zone 43). |  |
 | `!release` | string | Releases the player from current events. |  |
 | `!releaseme` | string, string | Force-clears stuck event / NPC-sequence state on a player. |  |
 | `!reroll` | string, string | Gamble-reroll the augment magnitudes on an EQUIPPED item. | :material-puzzle: **custom** |
@@ -104,6 +107,10 @@ These chat commands are available to every player on this server (no GM rank req
 | `!week` | — | Shows the player's current weekly objectives at a glance: Weekly Hunt Board progress and featured NMs killed. Resets each Monday 00:00 UTC. | :material-puzzle: **custom** |
 | `!weekly` | — | Displays the player's current Weekly Hunt Board progress — the 5 rolled objectives, per-objective progress, and the lifetime "Weekly Hunter" sweep counter. |  |
 | `!who` | — | Lists players who have logged in during this server session, sorted by Hunting League tier (highest first), with their tier name shown.  Stale entries (crashed clients) are pruned lazily via GetPlayerByName at query time. | :material-puzzle: **custom** |
+| `!wm1` | — | _(no description)_ | :material-puzzle: **custom** |
+| `!wm2` | — | _(no description)_ | :material-puzzle: **custom** |
+| `!wm3` | — | _(no description)_ | :material-puzzle: **custom** |
+| `!wm4` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!zone` | bool/raw | Teleports a player to the given zone. |  |
 
 ## Movement & Teleport
@@ -224,7 +231,7 @@ Shows all personal milestone achievements - earned and unearned - with their rew
 
 ### `!aoews`
 
-Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (Purgonorgo Isle, !leaf). Cannot be changed after setting.
+Permanently binds a weapon skill as your AoE WS. Requires the AoE unlock from the Rupture Sage (Leafallia, !leaf). Cannot be changed after setting.
 
 **Usage:** `aoews`
 
@@ -288,7 +295,7 @@ Treasure Hunting - dig for the strongbox your treasure map points at. Maps drop 
 
 ### `!empower`  _(custom)_
 
-View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC on Purgonorgo Isle (see SpellSkillMastery.lua).
+View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC in Leafallia (see SpellSkillMastery.lua).
 
 **Usage:** `empower`
 
@@ -320,6 +327,18 @@ Opens the Adventuring Fellow menu (summon/dismiss, allocate stat points, choose 
 
 **Parameter types:** string, int
 
+### `!fellowaudit`  _(custom)_
+
+Audit the summoned Fellow -- for each mod the build should add, shows EXPECTED (from your allocations + level) vs the LIVE getMod on the pet, flagging anything that didn't land. Answers "does boosting STR actually reach the Fellow?". Fellow must be summoned.
+
+**Usage:** `fellowaudit`
+
+### `!fellowname`  _(custom)_
+
+**Usage:** `fellowname`
+
+**Parameter types:** string
+
 ### `!fellowstats`  _(custom)_
 
 Dumps live mod values straight off the spawned Fellow pet. Fellow must be summoned. Spend a point, re-run, watch the number move.
@@ -345,6 +364,10 @@ Lists all custom commands with a one-line description.
 ### `!hovershot`  _(custom)_
 
 **Usage:** `hovershot`
+
+### `!htbf`  _(custom)_
+
+**Usage:** `htbf`
 
 ### `!hub`  _(custom)_
 
@@ -478,7 +501,7 @@ Prints a detailed stat snapshot for your cursor-targeted mob, Trust, or player-o
 
 ### `!primevoucher`  _(custom)_
 
-[GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC on Purgonorgo Isle (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it.
+[GM] Grant Prime Voucher(s) (the Maze Monger Crown, item 3038) to a player. They trade one at the Prime Armory NPC in Leafallia (!leaf) to claim a Prime weapon of their choice. The voucher is EX (bound), so a GM cannot trade it over by hand -- this command is how you grant it.
 
 **Usage:** `primevoucher`
 
@@ -546,7 +569,7 @@ Shows the player's Reforge AF, Relic, and Empy mark balances.
 
 ### `!reforged`
 
-Warps you to the Reforge Armor system NPCs in Gwora-Corridor.
+Warps you to the Reforge Armor hub in Diorama Abdhaljs-Ghelsba (zone 43).
 
 **Usage:** `reforged`
 
@@ -678,6 +701,22 @@ Lists players who have logged in during this server session, sorted by Hunting L
 
 **Usage:** `who`
 
+### `!wm1`  _(custom)_
+
+**Usage:** `wm1`
+
+### `!wm2`  _(custom)_
+
+**Usage:** `wm2`
+
+### `!wm3`  _(custom)_
+
+**Usage:** `wm3`
+
+### `!wm4`  _(custom)_
+
+**Usage:** `wm4`
+
 ---
 
 _This list reflects the commands currently live on the server._
@@ -685,6 +724,6 @@ _This list reflects the commands currently live on the server._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c21c7ec4383e -->
-_Last updated: 2026-07-06 17:42 PDT_
+<!-- content-hash: 3c2a6e611d7d -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

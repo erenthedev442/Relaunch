@@ -71,6 +71,6 @@ The **Weekly Hunt Sweeps** leaderboard on the [Leaderboards page](../community/l
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0974f147435e -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 7b69ba4c2399 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

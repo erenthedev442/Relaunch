@@ -62,9 +62,9 @@ The **Gil Exchange NPC** in the **Purgonorgo Isle** (`!hub`) converts raw gil in
 <!-- DOCGEN:BEGIN id="server-features-gil-exchange" -->
 | Gil | Hunt Marks |
 |---:|---:|
-| 100,000 | 1 |
-| 1,000,000 | 12 |
-| 10,000,000 | 150 |
+| 2,000,000 | 5 |
+| 40,000,000 | 100 |
+| 200,000,000 | 500 |
 <!-- DOCGEN:END id="server-features-gil-exchange" -->
 
 Bundle rates give modest discounts for larger purchases. This system is intentionally slow — a last resort for players sitting on large gil stacks, not a primary farming path. NM kills will always be faster.
@@ -164,6 +164,6 @@ First Blood moments are real on the Relaunch server. If you're the first person 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8f6580291137 -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: f917209b6950 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

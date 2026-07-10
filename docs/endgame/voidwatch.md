@@ -197,6 +197,6 @@ The **Officer** NPC on Purgonorgo Isle runs the **Atmacite Refiner** — spend t
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d959edb406dc -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: fdaef0f04e95 -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

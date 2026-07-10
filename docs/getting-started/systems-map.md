@@ -200,6 +200,6 @@ The **Prime Armory** at `!leaf` forges a Prime Weapon after **5 trials** — 12 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: d92111383db5 -->
-_Last updated: 2026-07-06 17:42 PDT_
+<!-- content-hash: 594520cff8cb -->
+_Last updated: 2026-07-10 16:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

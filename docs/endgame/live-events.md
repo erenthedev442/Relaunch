@@ -23,6 +23,7 @@ Happy Hour runs **daily**, **20:00–21:00 UTC**. Everyone online gets **+50% EX
 
 - Nothing to sign up for and nowhere to be — it works in every zone, on every job and level.
 - A stronger EXP/CP buff you already have (say, from a ring) is never downgraded — Happy Hour only applies where it's the better deal.
+- The bonus pays out in installments: after a big burst of EXP/CP the icon can blink off for up to a minute before the next installment lands. You lose nothing — it re-applies automatically for the rest of the window.
 <!-- DOCGEN:END id="live-events-happy-hour" -->
 
 ---
@@ -54,3 +55,10 @@ The feature moves to the next NM on the roster every **Thursday at 00:00 UTC**. 
 !!! note "Looking for the bonus-mark windows?"
     Limited-time Hunt-Mark multipliers (holiday windows, GM-triggered bonuses)
     are a separate system — see [Seasonal Events](seasonal-events.md).
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: bde58d316ecf -->
+_Last updated: 2026-07-10 16:53 PDT_
+<!-- DOCGEN:END id="last-updated" -->
