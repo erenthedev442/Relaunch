@@ -15,6 +15,7 @@ Type `!fellow` at any time to open the main menu. Your Fellow doesn't exist unti
 | `!fellow summon` | Call your Fellow |
 | `!fellow dismiss` | Send it to rest |
 | `!fellow status` | Chat dump of level, XP, points, and allocation |
+| `!fellowname <name>` | Give your Fellow a custom name (letters and spaces, max 15 chars) |
 
 ## Leveling and stat points
 
@@ -68,10 +69,10 @@ Switch roles at any time through the menu; the change takes effect when you next
 
 ## Name and appearance
 
-Set your Fellow's displayed name through **Choose Name** in the menu. Pick its look through **Appearance** — each form carries its own signature TP move. Apply an **Outfit** for a job-themed humanoid look; an outfit overrides the Appearance pick. Changes apply the next time you summon.
+Set your Fellow's displayed name with the **`!fellowname <name>`** command (letters and spaces, up to 15 characters, run through a language filter). Pick its look through **Appearance** — each form carries its own signature TP move. Apply an **Outfit** for a job-themed humanoid look; an outfit overrides the Appearance pick. Appearance and outfit changes apply the next time you summon; a name change applies instantly if your Fellow is out.
 
 <!-- DOCGEN:BEGIN id="fellow-customization" -->
-**Names** — choose from **18** curated names: Siegward, Theobald, Gunnar, Ferdinand, Beatrice, Henrietta, Karyn, Nanako, Gauldeval, Romidiant, Liabelle, Radille, Nokum-Akkum, Yawawa, Cupapa, Raka Maimhov, Voldai, Zoldof.
+**Names** — set a custom name with the `!fellowname <name>` command (letters and spaces, up to 15 characters, run through a language filter). It applies instantly if your Fellow is out and persists across sessions.
 
 **Appearances** — **12** forms to pick from, each with its own signature TP move:
 
