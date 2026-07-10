@@ -140,6 +140,41 @@ catalog.vendorItems =
     { id = 26112, cat = 'Accessories', sub = 'Ear',   name = 'Tuisto Earring',    cost = 2500 },
     { id = 26113, cat = 'Accessories', sub = 'Ear',   name = 'Nehalennia Earring', cost = 2500 },
     { id = 26110, cat = 'Accessories', sub = 'Ear',   name = 'Sjofn Earring',     cost = 2500 },
+
+    -- ================================================================
+    -- Zurim gap fill 2026-07-10: Domain/Geas items sold ONLY by Zurim
+    -- (daily-capped) + obtainable nowhere else -> now marks-farmable here.
+    -- Priced Domain-Points x 2.5 like the rest. (Statless Voluspa set pending.)
+    -- ================================================================
+    { id = 23742, cat = 'Armor', sub = 'Body', name = 'Heidrek Harness', cost = 100 },
+    { id = 25718, cat = 'Armor', sub = 'Body', name = 'Herculean Vest', cost = 2000 },
+    { id = 27496, cat = 'Armor', sub = 'Feet', name = 'Herculean Boots', cost = 2000 },
+    { id = 27497, cat = 'Armor', sub = 'Feet', name = 'Merlinic Crackows', cost = 2000 },
+    { id = 27140, cat = 'Armor', sub = 'Hands', name = 'Herculean Gloves', cost = 2000 },
+    { id = 25644, cat = 'Armor', sub = 'Head', name = 'Chironic Hat', cost = 2000 },
+    { id = 25642, cat = 'Armor', sub = 'Head', name = 'Herculean Helm', cost = 2000 },
+    { id = 25643, cat = 'Armor', sub = 'Head', name = 'Merlinic Hood', cost = 2000 },
+    { id = 25844, cat = 'Armor', sub = 'Legs', name = 'Chironic Hose', cost = 2000 },
+    { id = 25842, cat = 'Armor', sub = 'Legs', name = 'Herculean Trousers', cost = 2000 },
+    { id = 27540, cat = 'Accessories', sub = 'Ear', name = 'Eabani Earring', cost = 250 },
+    { id = 26108, cat = 'Accessories', sub = 'Ear', name = 'Odr Earring', cost = 2500 },
+    { id = 26109, cat = 'Accessories', sub = 'Ear', name = 'Snotra Earring', cost = 2500 },
+    { id = 26107, cat = 'Accessories', sub = 'Ear', name = 'Thrud Earring', cost = 2500 },
+    { id = 26023, cat = 'Accessories', sub = 'Neck', name = 'Sanctity Necklace', cost = 250 },
+    { id = 26040, cat = 'Accessories', sub = 'Neck', name = 'Yngvi Choker', cost = 2500 },
+    { id = 26216, cat = 'Accessories', sub = 'Ring', name = 'Dreki Ring', cost = 2500 },
+    { id = 26323, cat = 'Accessories', sub = 'Waist', name = 'Gishdubar Sash', cost = 250 },
+    { id = 21482, cat = 'Weapons', sub = 'Fete T2', name = 'Compensator', cost = 500 },
+    { id = 20519, cat = 'Weapons', sub = 'Fete T2', name = 'Hammerfists', cost = 500 },
+    { id = 20845, cat = 'Weapons', sub = 'Fete T2', name = 'Instigator', cost = 500 },
+    { id = 21151, cat = 'Weapons', sub = 'Fete T2', name = 'Lathi', cost = 500 },
+    { id = 20520, cat = 'Weapons', sub = 'Fete T2', name = 'Midnights', cost = 500 },
+    { id = 20677, cat = 'Weapons', sub = 'Reisenjima', name = 'Colada', cost = 2000 },
+    { id = 20505, cat = 'Weapons', sub = 'Reisenjima', name = 'Condemners', cost = 2000 },
+    { id = 22054, cat = 'Weapons', sub = 'Reisenjima', name = 'Grioavolr', cost = 2000 },
+    { id = 22134, cat = 'Weapons', sub = 'Reisenjima', name = 'Holliday', cost = 2000 },
+    { id = 21854, cat = 'Weapons', sub = 'Reisenjima', name = 'Reienkyo', cost = 2000 },
+    { id = 22113, cat = 'Weapons', sub = 'Reisenjima', name = 'Teller', cost = 2000 },
 }
 
 return catalog
