@@ -38,7 +38,14 @@ def main() -> int:
         print("[docgen] LEGENDARY_LIVE_ROOT not set — only repo-committed sources will be used")
     print(f"[docgen] repo_root = {REPO_ROOT}")
     print(f"[docgen] docs_dir  = {DOCS_DIR}")
+    strict = bool(live)
+    print(f"[docgen] freshness gate: {'STRICT (fail-closed)' if strict else 'tolerant (off-box/CI)'}")
     print()
+
+    # Start a fresh source-resolution ledger so the gate can report which
+    # generator sources came from the repo / live tree / went missing.
+    from tools.docgen import _paths
+    _paths.reset_resolutions()
 
     # Build the display-name -> item-id index (sql/item_basic.sql) up front so
     # every generator's item links + hover icons resolve to FFXIAH by id.
@@ -469,8 +476,57 @@ def main() -> int:
         print("  Full tracebacks above. Site will publish with the sections")
         print("  that succeeded; failed sections keep their previous content.")
 
-    # Only fail the script if EVERY generator died. Partial success is fine
-    # — the refresh-site flow should still publish whatever did regenerate.
+    # ---- FRESHNESS GATE ----------------------------------------------------
+    # Empty marker blocks = a generator "succeeded" but wrote nothing → the
+    # page would ship with a blank section.
+    from tools.docgen import _freshness, _paths
+    empties = _freshness.find_empty_marker_blocks(DOCS_DIR)
+    if empties:
+        print()
+        print("[gate] EMPTY marker block(s) — a generator produced no content:")
+        for page, mid in empties:
+            print(f"  - {page}  id=\"{mid}\"")
+
+    # Informational only: sources that weren't found. A REQUIRED missing source
+    # already raised SourceMissing (→ counted in `failures`); anything left here
+    # is an explicitly-optional (required=False) lookup that's legitimately
+    # absent, so it must NOT fail the build — just surface it for visibility.
+    missing = sorted({p for p, outcome in _paths.get_resolutions() if outcome == "missing"})
+    if missing:
+        print()
+        print("[gate] optional source(s) absent (not fatal — generator skipped them):")
+        for p in missing:
+            print(f"  - {p}")
+
+    # A generator failure (which includes a missing REQUIRED source, raised as
+    # SourceMissing when enforcing) or an empty marker block means one or more
+    # pages would publish STALE.
+    stale = bool(failures or empties)
+
+    if strict and _paths.fail_closed():
+        # ENFORCING: fail the build so the refresh script keeps the last-good
+        # site and the dead-man's-switch alarms — never silently ship a drifted
+        # page.
+        if stale:
+            print()
+            print("[gate] FAIL — fail-closed against the live tree; the site "
+                  "will NOT be republished (last-good stays live) so no page "
+                  "silently drifts from the server. Fix the cause(s) above.")
+            return 1
+        print("[gate] OK — every page regenerated fresh from live content.")
+        return 0
+
+    if strict and stale:
+        # REPORT-ONLY (DOCGEN_STRICT_FAIL unset): surface the drift loudly but
+        # don't block the deploy, so the gate can be adopted before the source
+        # audit is fully clean.
+        print()
+        print("[gate] WARN — would FAIL if enforcing (set DOCGEN_STRICT_FAIL=1): "
+              f"{len(failures)} generator failure(s), {len(empties)} empty block(s). "
+              "Affected pages publish with their PREVIOUS content.")
+
+    # Default / off-box / report-only: preserve the historical exit contract
+    # (only a total wipeout fails the run).
     return 1 if (failures and not successes) else 0
 
 

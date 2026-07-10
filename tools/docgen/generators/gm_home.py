@@ -481,7 +481,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         return
 
     # --- Test Dummy ---
-    dummy_src = resolve_source(repo_root, "modules/custom/lua/test_dummy_catalog.lua")
+    dummy_src = resolve_source(repo_root, "modules/custom/lua/test_dummy_catalog.lua", required=False)
     if dummy_src is None:
         print("[gm_home] skip test-dummy: test_dummy_catalog.lua not found")
     else:
@@ -500,7 +500,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             print(f"[gm_home] test-dummy: marker 'gm-home-test-dummy' not found in {page.name}")
 
     # --- Mystery Mog ---
-    mog_src = resolve_source(repo_root, "modules/custom/lua/gil_mystery_box_catalog.lua")
+    mog_src = resolve_source(repo_root, "modules/custom/lua/gil_mystery_box_catalog.lua", required=False)
     if mog_src is None:
         print("[gm_home] skip mystery-mog: gil_mystery_box_catalog.lua not found")
     else:
@@ -519,7 +519,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             print(f"[gm_home] mystery-mog: marker 'gm-home-mystery-mog' not found in {page.name}")
 
     # --- Warpman ---
-    warp_src = resolve_source(repo_root, "modules/custom/lua/gil_warp_npc_catalog.lua")
+    warp_src = resolve_source(repo_root, "modules/custom/lua/gil_warp_npc_catalog.lua", required=False)
     if warp_src is None:
         print("[gm_home] skip warpman: gil_warp_npc_catalog.lua not found")
     else:
@@ -534,7 +534,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             print(f"[gm_home] warpman: marker 'gm-home-warpman' not found in {page.name}")
 
     # --- Title Broker ---
-    title_src = resolve_source(repo_root, "modules/custom/lua/gil_title_vendor_catalog.lua")
+    title_src = resolve_source(repo_root, "modules/custom/lua/gil_title_vendor_catalog.lua", required=False)
     if title_src is None:
         print("[gm_home] skip title-broker: gil_title_vendor_catalog.lua not found")
     else:
@@ -549,7 +549,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             print(f"[gm_home] title-broker: marker 'gm-home-title-broker' not found in {page.name}")
 
     # --- EXP Camp Moogle ---
-    camp_src = resolve_source(repo_root, "modules/custom/lua/ExpCamp_Moogle.lua")
+    camp_src = resolve_source(repo_root, "modules/custom/lua/ExpCamp_Moogle.lua", required=False)
     if camp_src is None:
         print("[gm_home] skip exp-camps: ExpCamp_Moogle.lua not found")
     else:
@@ -568,7 +568,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # single authoritative home for them. Generate the rate table there to keep
     # it from drifting away from the Lua catalog.
     features_page = docs_dir / "progression" / "server-features.md"
-    gil_src = resolve_source(repo_root, "modules/custom/lua/gil_exchange_npc.lua")
+    gil_src = resolve_source(repo_root, "modules/custom/lua/gil_exchange_npc.lua", required=False)
     if gil_src is None:
         print("[gm_home] skip gil-exchange: gil_exchange_npc.lua not found")
     elif not features_page.exists():

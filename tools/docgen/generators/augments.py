@@ -523,7 +523,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         return
 
     # Gap list is optional — generator works without it (just no warning marks).
-    gap_src = resolve_source(repo_root, "tools/augment_catalog_gaps.json")
+    gap_src = resolve_source(repo_root, "tools/augment_catalog_gaps.json", required=False)
     gap_set = _load_gap_set(gap_src)
 
     text = cat_src.read_text(encoding="utf-8", errors="replace")

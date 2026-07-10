@@ -300,7 +300,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     pos_missing: list[str] = []
 
     for spec in _NPCS:
-        src = resolve_source(repo_root, spec["file"])
+        src = resolve_source(repo_root, spec["file"], required=False)
         if src is None:
             pos_missing.append(spec["display"])
             resolved.append({**spec, "_pos": None})

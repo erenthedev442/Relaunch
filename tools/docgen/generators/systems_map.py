@@ -48,14 +48,14 @@ def _read(repo_root: Path, rel: str) -> str:
 
 
 def _read_opt(repo_root: Path, rel: str) -> str | None:
-    src = resolve_source(repo_root, rel)
+    src = resolve_source(repo_root, rel, required=False)
     if src is None:
         return None
     return src.read_text(encoding="utf-8", errors="replace")
 
 
 def _exists(repo_root: Path, rel: str) -> bool:
-    return resolve_source(repo_root, rel) is not None
+    return resolve_source(repo_root, rel, required=False) is not None
 
 
 def _num(pattern: str, text: str, what: str) -> int:
