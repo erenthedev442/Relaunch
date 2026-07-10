@@ -38,13 +38,13 @@ Each stat track adds its own bundle of bonuses per point:
 | **DEX** | +6 DEX, +10 Accuracy |
 | **VIT** | +6 VIT, +10 Defense |
 | **AGI** | +6 AGI, +10 Evasion |
-| **INT** | +6 INT, +10 Magic Attack |
+| **INT** | +6 INT, +3 Magic Attack |
 | **MND** | +6 MND, +10 Magic Defense |
 | **Ferocity** | +1% Attack |
 | **Critical** | +1% Critical Hit Rate |
 | **Frenzy** | +1% Double Attack |
 | **Onslaught** | +1% Triple Attack, +3 Store TP |
-| **Sorcery** | +12 Magic Attack, +6 Magic Accuracy |
+| **Sorcery** | +4 Magic Attack, +6 Magic Accuracy |
 | **Celerity** | +8% Attack Speed (Haste) |
 | **Warding** | -20 Physical Damage Taken, -20 Magic Damage Taken |
 | **Vigor** | +3 HP Regen, +1 MP Refresh |
@@ -58,11 +58,12 @@ Each Fellow follows a combat role that shapes how it fights. Every role still me
 | Role | Behaviour |
 |---|---|
 | **Vanguard** | Balanced melee damage dealer. |
-| **Berserker** | All-out melee offense; takes a bit more damage. |
-| **Bulwark** | Tank: more DEF, less damage taken, holds hate. |
+| **Berserker** | All-out melee offense; hits like a truck but fragile. |
+| **Bulwark** | Tank: huge HP, heavy mitigation, holds hate. The only real tank. |
 | **Oracle** | Battle-healer: fights and mends your wounds when hurt. |
-| **Magus** | Battle-mage: fights and hurls elemental magic at your foe. |
-| **Hunter** | Ranger: fights and adds ranged strikes to your target. |
+| **Magus** | Battle-mage: elemental power, but glass -- keep it off the tank spot. |
+| **Hunter** | Ranger: high accuracy and evasion; survives by dodging, not soaking. |
+| **Mastered** | PRESTIGE: the effects of every role combined. A flex, not an endgame weapon. |
 <!-- DOCGEN:END id="fellow-roles" -->
 
 Switch roles at any time through the menu; the change takes effect when you next summon.
@@ -101,6 +102,6 @@ With `Party-wide XP` enabled (the default), any party member who has their Fello
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: b06b3d37228c -->
-_Last updated: 2026-06-29 04:19 UTC_
+<!-- content-hash: 3bf32b446dcc -->
+_Last updated: 2026-07-10 03:17 PDT_
 <!-- DOCGEN:END id="last-updated" -->
