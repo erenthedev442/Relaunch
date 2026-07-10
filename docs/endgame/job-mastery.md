@@ -13,17 +13,17 @@ on the Prime Weapon path.
 ## Where to start
 
 <!-- DOCGEN:BEGIN id="job-mastery-access" -->
-Find the **Weapon Mastery Sage** in **Purgonorgo Isle** (`!hub`) and pick a weapon type. Choosing one warps you alone into **Walk Of Echoes**, where that weapon's Guardian appears moments later. There is no quest and no cost to attempt a challenge — just talk to the Sage and choose. If you ever need to bail out of an active attempt, use **`!mastery abort`**.
+Find the **Weapon Mastery Sage** in <!--npc:job_mastery-->Purgonorgo Isle<!--/npc--> (`!hub`) and pick a weapon type. Choosing one warps you alone into **Walk Of Echoes**, where that weapon's Guardian appears moments later. There is no quest and no cost to attempt a challenge — just talk to the Sage and choose. If you ever need to bail out of an active attempt, use **`!mastery abort`**.
 <!-- DOCGEN:END id="job-mastery-access" -->
 
 ## The Guardian fights
 
 <!-- DOCGEN:BEGIN id="job-mastery-fights" -->
-There is one Guardian for each of the **12 weapon types**. Each is a **solo** fight — trusts are disabled in the arena, so it is you and your weapon against the Guardian. Whichever one you defeat, the credit is the same; pick the weapon type you fight best with.
+There is one Guardian for each of the **14 weapon types**. Each is a **solo** fight — trusts are disabled in the arena, so it is you and your weapon against the Guardian. Whichever one you defeat, the credit is the same; pick the weapon type you fight best with.
 
 Every Guardian rolls a random **affix** when it spawns, so the same fight plays differently each attempt. They hit hard and carry an enormous health pool — bring your strongest setup.
 
-**Death ends the challenge** with no reward and no save: you are returned to Purgonorgo Isle and must start over.
+**Death ends the challenge** with no reward and no save: you are returned to <!--npc:job_mastery-->Purgonorgo Isle<!--/npc--> and must start over.
 
 | Weapon type | Guardian |
 |---|---|
@@ -39,6 +39,8 @@ Every Guardian rolls a random **affix** when it spawns, so the same fight plays 
 | **Club** | Guardian of the Mace |
 | **Staff** | Guardian of Elements |
 | **Archery** | Guardian of the Hunt |
+| **H2H** | Guardian of the Fist |
+| **Marksman** | Guardian of the Trigger |
 <!-- DOCGEN:END id="job-mastery-fights" -->
 
 ## Affixes
@@ -61,7 +63,7 @@ When a Guardian appears it carries one of these affixes, rolled at random and sh
 <!-- DOCGEN:BEGIN id="job-mastery-rewards" -->
 Defeating **any** Guardian completes **Trial 4** of the Prime Weapon path — the final gate before the **Prime Armory** will forge your Prime weapon. You only need to beat **one** Guardian to earn that credit.
 
-Beyond that first clear, every additional Guardian you defeat is tracked on its own, so completionists can work through all 12 weapon types — but a single victory is all Trial 4 requires.
+Beyond that first clear, every additional Guardian you defeat is tracked on its own, so completionists can work through all 14 weapon types — but a single victory is all Trial 4 requires.
 <!-- DOCGEN:END id="job-mastery-rewards" -->
 
 Job Mastery is the capstone of the Prime Weapon journey — there is no party to

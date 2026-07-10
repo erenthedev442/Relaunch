@@ -24,6 +24,15 @@ from tools.docgen._markers import write_between_markers
 from tools.docgen._luaparse import section
 
 
+# The Mastery Sage's hub is NEVER hardcoded here: it is placed by an
+# addOverride on some zone in job_mastery.lua, and NPCs get consolidated between
+# hubs over time. Emit npc_location_inject's token instead; it reads the SAME
+# job_mastery.lua (see _NPC_FILES["job_mastery"]) and expands this to the NPC's
+# live zone on every build, so the location can't drift out of sync with the
+# fight prose the way a literal "Leafallia" / "Purgonorgo Isle" would.
+_LOC = "{{npc:job_mastery}}"
+
+
 def _first(pattern: str, text: str, default: str) -> str:
     m = re.search(pattern, text)
     return m.group(1) if m else default
@@ -64,7 +73,7 @@ def _parse(text: str) -> dict:
 # ---------------------------------------------------------------------------
 
 def _render_access(c: dict) -> str:
-    return (f"Find the **{c['npc']}** in **Leafallia** (`!leaf`) and pick a weapon type. "
+    return (f"Find the **{c['npc']}** in {_LOC} (`!hub`) and pick a weapon type. "
             f"Choosing one warps you alone into **{c['zone']}**, where that "
             f"weapon's Guardian appears moments later. There is no quest and no "
             f"cost to attempt a challenge — just talk to the Sage and choose. "
@@ -85,7 +94,7 @@ def _render_fights(c: dict) -> str:
                  "carry an enormous health pool — bring your strongest setup.")
     lines.append("")
     lines.append("**Death ends the challenge** with no reward and no save: you "
-                 "are returned to Leafallia and must start over.")
+                 f"are returned to {_LOC} and must start over.")
     if c["guardians"]:
         lines.append("")
         lines.append("| Weapon type | Guardian |")
@@ -131,7 +140,7 @@ Each weapon type has a **Guardian** — a single, brutal boss you face solo in
 Prime Weapon path.
 
 !!! tip "Summary"
-    Pick a weapon type at the {npc} in Leafallia (`!leaf`), fight its Guardian solo in
+    Pick a weapon type at the {npc} in {loc} (`!hub`), fight its Guardian solo in
     {zone}, and a single victory completes Trial {trial} of the Prime Weapon
     path. Death ends the attempt with no reward.
 
@@ -174,7 +183,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     if not page.exists():
         page.parent.mkdir(parents=True, exist_ok=True)
         page.write_text(
-            _PAGE.format(zone=c["zone"], npc=c["npc"], trial=c["trial"]),
+            _PAGE.format(zone=c["zone"], npc=c["npc"], trial=c["trial"], loc=_LOC),
             encoding="utf-8",
         )
 
