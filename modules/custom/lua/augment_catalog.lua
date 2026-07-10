@@ -172,7 +172,10 @@ return {
 
     -- ── cat 10: Exp/Cap Points ──────────────────────────────────────────────────
     [2523] = { augId = 73,   base = 33,  mult = 1,   disp = 1,    cat = 10, tier = 0, label = 'Exp. Point +33%' },
-    [2542]  = { augId = 75,   base = 33,  mult = 1,   disp = 1,    cat = 10, tier = 0, label = 'Cap. Point +33%' },
+    -- 942 kept over the 2026-07-10 re-pick (Goblin Mess Tin): the Infamy vendor
+    -- sells Philosopher's Stone at 50 Infamy (infamy_vendor_catalog.lua), so it
+    -- is purchasable and not NM-gated despite its NM-only retail droplist.
+    [942]  = { augId = 75,   base = 33,  mult = 1,   disp = 1,    cat = 10, tier = 0, label = 'Cap. Point +33%' },
 
     -- ── cat 11: Job specific niche utilities ────────────────────────────────────
     [897]  = { augId = 151,  base = 1,   mult = 1,   disp = 1,    cat = 11,  tier = 0, label = 'Martial Arts' },

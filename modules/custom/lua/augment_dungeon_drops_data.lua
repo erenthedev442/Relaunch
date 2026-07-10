@@ -160,8 +160,8 @@ return {
             { id = 1616, tier = 0, cat = 9, label = 'Melee skill', item = 'antlion_jaw' },
             { id = 1663, tier = 0, cat = 9, label = 'Ranged skill', item = 'arnica_root' },
             { id = 1889, tier = 0, cat = 9, label = 'Magic skill' },
+            { id = 942, tier = 0, cat = 10, label = 'Cap. Point +33%', item = 'phil._stone' },
             { id = 2523, tier = 0, cat = 10, label = 'Exp. Point +33%', item = 'peiste_skin' },
-            { id = 2542, tier = 0, cat = 10, label = 'Cap. Point +33%' },
         },
     },
     feiYin =

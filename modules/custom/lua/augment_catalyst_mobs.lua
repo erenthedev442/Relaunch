@@ -143,7 +143,7 @@ return {
     ['Goblin_Hunter'] = 921,  -- INT (T2, Goblin_Hunter L50)
     ['Goblin_Lansquenet'] = 828,  -- Resist Slow (T0, Goblin_Lansquenet L1)
     ['Goblin_Pathfinder'] = 938,  -- Pet STR DEX VIT (T1, Goblin_Pathfinder L28)
-    ['Goblin_Shaman'] = 2542,  -- Cap. Point +33% (T1, Goblin_Shaman L28)
+    ['Goblin_Shaman'] = 942,  -- Cap. Point +33% (T1, Goblin_Shaman L28)
     ['Goblin_Smithy'] = 1616,  -- Melee skill (T1, Goblin_Smithy L28)
     ['Goblin_Swindler'] = 2521,  -- Pet Dbl.Atk. Crit.hit rate (T1, Goblin Swindler L35)
     ['Goblin_Thug'] = 937,  -- Earth resist (T0, Goblin_Thug L1)
