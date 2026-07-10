@@ -3,7 +3,7 @@
 Retail-style instanced boss fights in Mhaura, on demand and freely repeatable. Clear fights to earn **Hallmarks** and **Gallantry**, spend them on armor vouchers, weapon skins, and the Abdhaljs materials that upgrade both.
 
 !!! tip "Summary"
-    Talk to the **Ambuscade Tome** in Mhaura to enter a private instance (three modes × five difficulties). Clears pay **Hallmarks** (monthly cap 45,000) and **Gallantry**. Spend Hallmarks at **Gorpa-Masorpa** on gear vouchers and Abdhaljs materials. Redeem vouchers at the **Voucher Clerk** for your job's Ambuscade armor — then trade the piece + Abdhaljs Metal/Fiber back to Gorpa-Masorpa to upgrade it to +1/+2.
+    Talk to the **Ambuscade Tome** in Mhaura to enter a private instance (three modes × five difficulties). Clears pay **Hallmarks** (monthly cap 75,000) and **Gallantry**. Spend Hallmarks at **Gorpa-Masorpa** on gear vouchers and Abdhaljs materials. Redeem vouchers at the **Voucher Clerk** for your job's Ambuscade armor — then trade the piece + Abdhaljs Metal/Fiber back to Gorpa-Masorpa to upgrade it to +1/+2.
 
 ## The NPCs
 
@@ -19,7 +19,7 @@ All three stand together in Mhaura:
 
 - Three modes — **Intense**, **Regular**, **Light** — each at five difficulties (VD/D/N/E/VE). Harder = more Hallmarks.
 - **Time bonus:** up to +50% on sub-5-minute clears.
-- **Monthly cap:** 45,000 Hallmarks per calendar month (Gallantry is uncapped).
+- **Monthly cap:** 75,000 Hallmarks per calendar month (Gallantry is uncapped).
 
 ## Armor: vouchers → gear → upgrades
 
