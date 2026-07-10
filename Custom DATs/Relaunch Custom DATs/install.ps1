@@ -3,7 +3,7 @@
 # Backs up and replaces EVERY DAT override shipped in this pack's ROM\
 # folder (Legendary Ring text, Legendary Track Suit textures + names, and
 # any future overrides). Universal: Windower, Ashita, or vanilla.
-# Run via "Install Legendary Ring.bat" / the pack's .bat (handles admin
+# Run via "Install Relaunch DATs.bat" / the pack's .bat (handles admin
 # elevation + keeps the window open at the end).
 # =====================================================================
 $ErrorActionPreference = 'Stop'

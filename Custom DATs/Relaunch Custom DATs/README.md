@@ -9,15 +9,16 @@ augments, or server-side balance — the server is always the source of truth.
 ## Easiest: run the installer (recommended for players)
 
 1. Unzip this whole folder anywhere.
-2. Double-click **`Install Legendary Ring.bat`** and approve the admin prompt.
-3. It finds your FINAL FANTASY XI install, backs up the original file, and drops
-   in the Legendary Ring DAT. Restart the game client — done.
+2. Double-click **`Install Relaunch DATs.bat`** and approve the admin prompt.
+3. It finds your FINAL FANTASY XI install, backs up every original file, and
+   installs ALL of the pack's overrides (Legendary Ring + Legendary Track Suit).
+   Restart the game client — done.
 
-To revert at any time, double-click **`Uninstall Legendary Ring.bat`** (it
+To revert at any time, double-click **`Uninstall Relaunch DATs.bat`** (it
 restores the original from the backup the installer made).
 
-The installer simply replaces the client's item DAT (with a `.orig` backup), so
-it works no matter which launcher you use — Windower, Ashita, or none.
+The installer simply replaces the client DATs listed below (each with a `.orig`
+backup), so it works no matter which launcher you use — Windower, Ashita, or none.
 
 ## Alternative: XIPivot overlay (advanced, non-destructive)
 
@@ -28,7 +29,19 @@ Prefer not to touch client files? Load it as an overlay instead:
 3. Enable the overlay in XIPivot.
 4. Restart the game client.
 
-## Current Override
+## Current Overrides
+
+### Legendary Track Suit (cosmetic set)
+
+- Items: `23875` Track Jacket, `23876` Track Pants, `23877` Track Shoes,
+  `23878` Legend Sweater — all Lv.1, all jobs/races, zero stats (pure glamour)
+- Client models `515` (suit) and `615` (sweater + scarf) — unused by any other
+  item on Relaunch — custom-repainted for ALL 8 race/gender variants:
+  suit in **blue/white**, sweater in **crimson/white**
+- Files: `ROM/339/21-36.DAT` (suit textures), `ROM/341/16,18,20,22,24,26,28.DAT`
+  (sweater textures), plus item names/tooltips in `ROM/286/73.DAT`
+- Without this pack the set still equips and works — it just shows the models'
+  original colors (black/silver suit, dusty-red sweater) and blank item names
 
 ### Legendary Ring
 
