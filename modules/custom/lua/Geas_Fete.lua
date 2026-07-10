@@ -250,6 +250,15 @@ local function spawnNM(player, zone, zoneId, def)
         -- world -- which is exactly the "it said it spawned but didn't" bug.
         mob:setSpawn(mx, py, mz, rot)
         mob:spawn()
+        -- Some Escha Warder pools ship with FLAG_UNTARGETABLE (0x800) baked into
+        -- mob_pools.entityFlags -- retail spawns them sealed/untargetable and the
+        -- Geas Fete encounter unseals them. Warder of Hope (pool 5659) and Warder
+        -- of Love (pool 5661) are entityFlags=2183 (=0x887, has 0x800); the other
+        -- four Warders are 135 and work. Since this is a pop-on-demand system where
+        -- every NM should be immediately fightable, clear the flag unconditionally
+        -- after spawn (no-op for pools that never had it). Without this the mob is
+        -- visible but can't be attacked/shot/cast on -- the reported bug.
+        mob:setUntargetable(false)
         if def.hp and def.hp > 0 then
             mob:setMaxHP(def.hp)
             mob:setHP(def.hp)
