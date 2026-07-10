@@ -32,8 +32,8 @@ from tools.docgen._paths import resolve_source
 from tools.docgen import _site
 
 
-def _text(repo_root: Path, rel: str) -> str | None:
-    src = resolve_source(repo_root, rel)
+def _text(repo_root: Path, rel: str, required: bool = True) -> str | None:
+    src = resolve_source(repo_root, rel, required=required)
     if src is None:
         return None
     return src.read_text(encoding="utf-8", errors="replace")
@@ -65,8 +65,9 @@ def _hub_zone(repo_root: Path) -> str | None:
     """
     consts: list[str] = []
     for cmd in ("hub", "lib", "leaf"):
-        text = (_text(repo_root, f"modules/custom/commands/{cmd}.lua")
-                or _text(repo_root, f"scripts/commands/{cmd}.lua"))
+        # Candidate probes: either location may legitimately lack the command.
+        text = (_text(repo_root, f"modules/custom/commands/{cmd}.lua", required=False)
+                or _text(repo_root, f"scripts/commands/{cmd}.lua", required=False))
         if not text:
             continue
         m = re.search(r"setPos\([^)]*xi\.zone\.(\w+)", text)
@@ -142,14 +143,14 @@ def _facts(repo_root: Path) -> dict | None:
     # Hub zone: where !hub / !lib / !leaf now land (single-hub consolidation).
     f["hubZone"] = _hub_zone(repo_root)
 
-    f["hasUnstick"] = resolve_source(repo_root, "scripts/commands/unstick.lua") is not None
+    f["hasUnstick"] = resolve_source(repo_root, "scripts/commands/unstick.lua", required=False) is not None
 
     # Hub warp command: which of !hub/!gmhome/!leaf/!lib exists (first = canonical,
     # rest = legacy aliases), plus whether !hunt exists. hubZone (above) says where
     # they land; these say what to type.
     def _cmd_exists(name: str) -> bool:
-        return (resolve_source(repo_root, f"scripts/commands/{name}.lua") is not None
-                or resolve_source(repo_root, f"modules/custom/commands/{name}.lua") is not None)
+        return (resolve_source(repo_root, f"scripts/commands/{name}.lua", required=False) is not None
+                or resolve_source(repo_root, f"modules/custom/commands/{name}.lua", required=False) is not None)
 
     hub_present = [c for c in ("hub", "gmhome", "leaf", "lib") if _cmd_exists(c)]
     f["hubCmd"] = hub_present[0] if hub_present else "hub"

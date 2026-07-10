@@ -90,7 +90,7 @@ class _Ctx:
         return (self.lua_dir / fname).exists()
 
     def command_exists(self, name: str) -> bool:
-        return resolve_source(self.repo_root, f"scripts/commands/{name}.lua") is not None
+        return resolve_source(self.repo_root, f"scripts/commands/{name}.lua", required=False) is not None
 
 
 # ---------------------------------------------------------------------------

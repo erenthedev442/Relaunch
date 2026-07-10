@@ -446,7 +446,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         if gate is None:
             return True
         if gate.startswith("cmd:"):
-            return resolve_source(repo_root, f"modules/custom/commands/{gate[4:]}.lua") is not None
+            return resolve_source(repo_root, f"modules/custom/commands/{gate[4:]}.lua", required=False) is not None
         return True
 
     lines: list[str] = [

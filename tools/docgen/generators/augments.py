@@ -532,7 +532,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # lockstep with the .lua (single source of truth -- no regex round-trip,
     # so a new field can't silently drop an entry). Fall back to scraping the
     # .lua text only if the JSON is missing (older checkout / hand-built file).
-    json_src = resolve_source(repo_root, "modules/custom/lua/augment_catalog.json")
+    json_src = resolve_source(repo_root, "modules/custom/lua/augment_catalog.json", required=False)
     if json_src is not None and (groups := _groups_from_json(json_src)):
         source = f"json ({json_src.name})"
     else:

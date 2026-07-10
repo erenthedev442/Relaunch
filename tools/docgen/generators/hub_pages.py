@@ -195,8 +195,9 @@ def _verify_warp_command(repo_root: Path, names: tuple[str, ...], zone_tokens: t
     """Return the first command basename that exists AND references the hub
     zone. No file (or no zone reference) -> None -> no warp claim on the page."""
     for name in names:
-        src = (resolve_source(repo_root, f"scripts/commands/{name}.lua")
-               or resolve_source(repo_root, f"modules/custom/commands/{name}.lua"))
+        # Candidate probes: either location may legitimately lack the command.
+        src = (resolve_source(repo_root, f"scripts/commands/{name}.lua", required=False)
+               or resolve_source(repo_root, f"modules/custom/commands/{name}.lua", required=False))
         if src is None:
             continue
         text = src.read_text(encoding="utf-8", errors="ignore")
@@ -217,7 +218,7 @@ def _footer_lines(repo_root: Path, zone: str, zone_of) -> list[str]:
         if zone_of("test_dummy") is None or zone_of("test_dummy") == zone:
             return []
         note = "*The combat **Test Dummy** for DPS testing remains in {{npc:test_dummy}}"
-        if resolve_source(repo_root, "scripts/commands/gmhome.lua") is not None:
+        if resolve_source(repo_root, "scripts/commands/gmhome.lua", required=False) is not None:
             note += " (reach it with `!gmhome`)"
         note += ".*"
         return ["---", "", note, ""]

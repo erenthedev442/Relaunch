@@ -204,7 +204,8 @@ def _world_cells(repo_root: Path) -> str:
     ]
     out = []
     for rel, name, desc in cells:
-        if resolve_source(repo_root, rel) is not None:
+        # Presence probes; the aggregate guard below raises if too few resolve.
+        if resolve_source(repo_root, rel, required=False) is not None:
             out.append(f'      <div class="wcell"><b>{name}</b><span>{desc}</span></div>')
     if len(out) < 3:
         raise RuntimeError("progression_map: world-content presence checks nearly all failed")
