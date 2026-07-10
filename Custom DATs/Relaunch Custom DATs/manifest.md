@@ -7,7 +7,12 @@ DATs pack.
 
 | File | Overrides | Notes |
 |------|-----------|-------|
-| `ROM/286/73.DAT` | item `26169` name + description | Only 114 bytes differ from retail (record #3129); every other item in the file is byte-identical. |
+| `ROM/286/73.DAT` | item text: `26169` Legendary Ring; `23875-78` Track Suit set | Ring: 114-byte record edit. Track Suit: 4 free-id records cloned from donor armor (24213/23859/23831) with Lv.1/all-jobs/all-races attrs + new names. |
+| `ROM/339/21-36.DAT` (16 files) | model 515 textures, all 8 races | Legendary Track Suit: body/legs/feet repainted **blue/white** (DXT3 color blocks only; alpha + file size byte-identical to retail). |
+| `ROM/341/16,18,20,22,24,26,28.DAT` (7 files) | model 615 textures, all races | Legend Sweater + scarf repainted **crimson/white** (same integrity guarantees). |
+
+Models 515/615 are referenced by no other item on Relaunch (verified against
+item_equipment 2026-07-10), so these repaints change only the new custom items.
 
 The edit was made by decoding the retail item block (FFXI items are ROR-5
 bit-rotated), rewriting the four strings in place, and re-encoding. The retail

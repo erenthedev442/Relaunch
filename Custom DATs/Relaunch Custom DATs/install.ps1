@@ -1,37 +1,44 @@
 # =====================================================================
-# Legendary Ring - client DAT installer
-# Backs up the retail item DAT and drops in the Legendary Ring override.
-# Universal: works whether the player uses Windower, Ashita, or neither.
-# Run via "Install Legendary Ring.bat" (handles the admin prompt + keeps
-# the window open at the end).
+# Relaunch Custom DATs - client installer
+# Backs up and replaces EVERY DAT override shipped in this pack's ROM\
+# folder (Legendary Ring text, Legendary Track Suit textures + names, and
+# any future overrides). Universal: Windower, Ashita, or vanilla.
+# Run via "Install Legendary Ring.bat" / the pack's .bat (handles admin
+# elevation + keeps the window open at the end).
 # =====================================================================
 $ErrorActionPreference = 'Stop'
-$pack   = $PSScriptRoot
-$srcDat = Join-Path $pack 'ROM\286\73.DAT'
-$rel    = 'ROM\286\73.DAT'
+$pack = $PSScriptRoot
 
 function Say($m,$c='Gray'){ Write-Host $m -ForegroundColor $c }
 
 Say ''
-Say '  Legendary Ring - installer' Cyan
-Say '  --------------------------' Cyan
+Say '  Relaunch Custom DATs - installer' Cyan
+Say '  --------------------------------' Cyan
 
 try {
-    if (-not (Test-Path $srcDat)) {
-        Say "ERROR: can't find $rel next to this installer." Red
+    # ---- collect the pack's override DATs -------------------------------
+    $romRoot = Join-Path $pack 'ROM'
+    if (-not (Test-Path $romRoot)) {
+        Say "ERROR: no ROM folder next to this installer." Red
         Say "Make sure you extracted the WHOLE folder (not just the .bat), then run again." Red
         return
     }
-    $srcHash = (Get-FileHash $srcDat -Algorithm SHA1).Hash
+    $overrides = Get-ChildItem $romRoot -Recurse -Filter '*.DAT' | ForEach-Object {
+        $rel = $_.FullName.Substring($romRoot.Length + 1)   # e.g. 286\73.DAT
+        [pscustomobject]@{ Rel = (Join-Path 'ROM' $rel); Src = $_.FullName }
+    }
+    if ($overrides.Count -eq 0) { Say 'No .DAT overrides found in the pack.' Yellow; return }
+    Say "Pack contains $($overrides.Count) DAT override(s)."
 
-    # ---- locate FINAL FANTASY XI installs that contain this DAT ----------
+    # ---- locate FINAL FANTASY XI installs that contain the FIRST DAT ----
+    $probe = $overrides[0].Rel
     $cands = New-Object System.Collections.Generic.List[string]
     foreach ($key in @(
         'HKLM:\SOFTWARE\WOW6432Node\PlayOnlineUS\InstallFolder',
         'HKLM:\SOFTWARE\PlayOnlineUS\InstallFolder',
         'HKLM:\SOFTWARE\WOW6432Node\PlayOnline\InstallFolder')) {
         try { (Get-ItemProperty $key -ErrorAction Stop).PSObject.Properties |
-            ForEach-Object { if ($_.Value -is [string] -and (Test-Path (Join-Path $_.Value $rel))) { $cands.Add($_.Value) } } } catch {}
+            ForEach-Object { if ($_.Value -is [string] -and (Test-Path (Join-Path $_.Value $probe))) { $cands.Add($_.Value) } } } catch {}
     }
     foreach ($c in @(
         'C:\Program Files (x86)\PlayOnline\SquareEnix\FINAL FANTASY XI',
@@ -39,11 +46,10 @@ try {
         'C:\PlayOnline\SquareEnix\FINAL FANTASY XI',
         'C:\ValhallaXI\SquareEnix\FINAL FANTASY XI',
         'D:\PlayOnline\SquareEnix\FINAL FANTASY XI')) {
-        if (Test-Path (Join-Path $c $rel)) { $cands.Add($c) }
+        if (Test-Path (Join-Path $c $probe)) { $cands.Add($c) }
     }
     $cands = @($cands | ForEach-Object { $_.TrimEnd('\') } | Select-Object -Unique)
 
-    # ---- pick the target -------------------------------------------------
     $target = $null
     if ($cands.Count -eq 1) {
         $target = $cands[0]
@@ -56,34 +62,34 @@ try {
     } else {
         Say "Couldn't auto-detect FINAL FANTASY XI." Yellow
         $manual = Read-Host 'Paste the full path to your "FINAL FANTASY XI" folder (or Enter to cancel)'
-        if ([string]::IsNullOrWhiteSpace($manual) -or -not (Test-Path (Join-Path $manual $rel))) {
-            Say "That folder doesn't contain $rel - cancelled." Red
+        if ([string]::IsNullOrWhiteSpace($manual) -or -not (Test-Path (Join-Path $manual $probe))) {
+            Say "That folder doesn't contain $probe - cancelled." Red
             return
         }
         $target = $manual.TrimEnd('\')
     }
 
-    $dstDat = Join-Path $target $rel
-    if ((Get-FileHash $dstDat -Algorithm SHA1).Hash -eq $srcHash) {
-        Say 'Already installed - the Legendary Ring DAT is in place. Nothing to do.' Green
-        return
+    # ---- install each override: back up once, copy, verify --------------
+    $installed = 0; $already = 0; $skipped = 0
+    foreach ($o in $overrides) {
+        $dst = Join-Path $target $o.Rel
+        if (-not (Test-Path $dst)) { Say "  SKIP $($o.Rel) (not in this client)" Yellow; $skipped++; continue }
+        $srcHash = (Get-FileHash $o.Src -Algorithm SHA1).Hash
+        if ((Get-FileHash $dst -Algorithm SHA1).Hash -eq $srcHash) { $already++; continue }
+        $bak = "$dst.orig"
+        if (-not (Test-Path $bak)) { Copy-Item $dst $bak -Force }
+        Copy-Item $o.Src $dst -Force
+        if ((Get-FileHash $dst -Algorithm SHA1).Hash -ne $srcHash) {
+            Say "  VERIFY FAILED on $($o.Rel) - restoring backup." Red
+            Copy-Item $bak $dst -Force
+        } else {
+            $installed++
+        }
     }
-
-    # ---- back up the original once, then copy ----------------------------
-    $bak = "$dstDat.orig"
-    if (-not (Test-Path $bak)) { Copy-Item $dstDat $bak -Force; Say "Backed up original -> $bak" Gray }
-    else { Say "Backup already exists -> $bak (keeping it)" Gray }
-
-    Copy-Item $srcDat $dstDat -Force
-    if ((Get-FileHash $dstDat -Algorithm SHA1).Hash -eq $srcHash) {
-        Say ''
-        Say '  Done! The ring now shows as "Legendary Ring" in-game.' Green
-        Say '  (Restart the game client if it is open.)' Green
-        Say '  To undo, run: Uninstall Legendary Ring.bat' Gray
-    } else {
-        Say 'Copy finished but verification failed - restoring backup.' Red
-        Copy-Item $bak $dstDat -Force
-    }
+    Say ''
+    Say "  Done! installed/updated: $installed, already current: $already, skipped: $skipped" Green
+    Say '  (Restart the game client if it is open.)' Green
+    Say '  To undo everything, run the Uninstall .bat.' Gray
 }
 catch {
     Say ''
