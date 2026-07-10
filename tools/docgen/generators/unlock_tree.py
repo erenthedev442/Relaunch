@@ -23,11 +23,14 @@ but every NUMBER, COUNT, COST and GATE on it is parsed live from:
   modules/custom/lua/prestige_catalog.lua         unlockTier + cost band
   modules/custom/lua/job_rebirth_catalog.lua      jpRequired
   modules/custom/lua/PrimeArmory_NPC.lua          trials / forms / GIL_COST
+  modules/custom/lua/hunters_guild_catalog.lua    guild count / ranks / max amp
+  modules/custom/lua/raid_catalog.lua             Star-Devourer weekly marks/infamy
+  modules/custom/lua/Voidspire.lua                presence (endless wave gauntlet)
 
 Content nodes are PRESENCE-GATED: a node (and any edge touching it) renders only
-while its module exists in the live tree, so a system this branch never had —
-e.g. the Legendary-only Star-Devourer raid — simply isn't on the map. The
-rendering JS already skips edges whose endpoints are missing.
+while its module exists in the live tree, so a system a given branch doesn't ship
+— e.g. a raid or event pulled from one server but not the other — simply isn't on
+the map. The rendering JS already skips edges whose endpoints are missing.
 
 FAIL-CLOSED: essential parses that come back empty raise; generate.py logs it
 and the existing page is left intact.
@@ -422,6 +425,21 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         if gems:
             htbf = {"min": min(gems), "max": max(gems)}
 
+    hguild = None
+    if (t := _read_opt(repo_root, "modules/custom/lua/hunters_guild_catalog.lua")):
+        amps = re.findall(r"amplifier\s*=\s*([\d.]+)", t)
+        guilds = re.findall(r"key\s*=\s*'(af|relic|empy|hl)'", t)
+        if amps and guilds:
+            hguild = {"guilds": len(set(guilds)), "ranks": len(amps),
+                      "max_amp": max(float(a) for a in amps)}
+
+    raid = None
+    if (t := _read_opt(repo_root, "modules/custom/lua/raid_catalog.lua")):
+        wm = re.search(r"weeklyMarks\s*=\s*(\d+)", t)
+        wi = re.search(r"weeklyInfamy\s*=\s*(\d+)", t)
+        if wm and wi:
+            raid = {"marks": int(wm.group(1)), "infamy": int(wi.group(1))}
+
     # ---- shared derived text -------------------------------------------
     tmap = {x["tier"]: x for x in tiers}
     pays = [x["pay"] for x in tiers]
@@ -647,9 +665,9 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
          "modules/custom/lua/unity_wanted.lua"),
         ("prestige", 1300, 45, "Prestige / Ascension", "vert",
          _desc("Prestige / Ascension",
-               f"Requires HL Rank {prestige_unlock} on a job → reset it for a permanent per-job "
-               f"bonus. Cost: {_fmt(pcost_base)}–{_fmt(pcost_cap)} marks, escalating. Stackable "
-               "across all 22 jobs."),
+               f"At HL Rank {prestige_unlock} the Altar in Provenance opens. Clear the Nightmare "
+               f"Court trial and pay {_fmt(pcost_base)}–{_fmt(pcost_cap)} escalating Hunt Marks to "
+               "ascend, banking Ascension Points for permanent, uncapped per-job stat boosts."),
          "modules/custom/lua/prestige_catalog.lua"),
         ("rebirth", 1300, 190, "Job Rebirth", "vert",
          _desc("Job Rebirth",
@@ -666,6 +684,28 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
                f"Complete {n_trials} trials, then forge 1 of {n_forms} named Prime forms "
                f"({_gil(prime_gil)} each)."),
          "modules/custom/lua/PrimeArmory_NPC.lua"),
+        # ---- presence-gated systems added 2026-07-10 (reconcile w/ live content) ----
+        ("voidspire", 245, 250, "Voidspire", "always",
+         _desc("The Voidspire",
+               "Endless escalating wave-gauntlet, trusts enabled. A wipe ends the run and "
+               "records your deepest floor on the leaderboard. No gate."),
+         "modules/custom/lua/Voidspire.lua"),
+        ("hguild", 600, 250, "Hunter's Guild", "content",
+         _desc("Hunter's Guild",
+               f"{hguild['guilds']} guilds, {hguild['ranks']} ranks each. Climb by hunting "
+               "classic HNMs across Vana'diel — each rank passively amplifies that guild's "
+               f"mark payout, up to +{int(round(hguild['max_amp'] * 100))}% at Grandmaster."
+               if hguild else
+               "Reputation guilds; ranking up amplifies each mark currency's payout."),
+         "modules/custom/lua/hunters_guild_catalog.lua"),
+        ("raid", 960, 535, "Star-Devourer (raid)", "content",
+         _desc("The Star-Devourer",
+               "Weekly multi-phase raid, popped from the Voidgate Sentinel at Escha - Ru'Aun; "
+               "anyone present can join. Full weekly clear: "
+               f"{_fmt(raid['marks'])} Hunt Marks + {raid['infamy']} Infamy."
+               if raid else
+               "Weekly multi-phase raid boss at Escha - Ru'Aun; the big payout is once per week."),
+         "modules/custom/lua/RaidBoss.lua"),
     ]
 
     present = {nid for nid, *_rest, need in NODES if need is None or n(need)}
@@ -739,6 +779,13 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ("gauntlet", "prime", f"{gl()} clears flag" if gaunt else "clears flag"),
         ("etower", "prime", f"Fl.{tower_floors} clears flag" if tower_floors else "top floor clears flag"),
         ("sigils", "mastery", ""),
+        ("start", "voidspire", ""),
+        ("hguild", "marks",
+         f"+0–{int(round(hguild['max_amp'] * 100))}%" if hguild else "amplifies"),
+        ("hguild", "rfmarks",
+         f"+0–{int(round(hguild['max_amp'] * 100))}%" if hguild else "amplifies"),
+        ("raid", "marks", f"{_fmt(raid['marks'])}/wk" if raid else ""),
+        ("raid", "infamy", f"{raid['infamy']}/wk" if raid else ""),
     ]
     edges_out = [
         {"f": f, "t": t, **({"lb": lb} if lb else {})}
@@ -793,6 +840,9 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
                  f"{_fmt(aff['cost'])} Hunt Marks |")
     if n("modules/custom/lua/Reforge_System.lua"):
         L.append("| Reforge +3 gear | Abyssea NMs / HNM Kings → AF/Relic/Empy marks |")
+    if hguild:
+        L.append(f"| Faster mark payouts | Rank up the Hunter's Guild — {hguild['guilds']} guilds, "
+                 f"hunt classic HNMs, up to +{int(round(hguild['max_amp'] * 100))}% at Grandmaster |")
     if n("modules/custom/lua/Dynamis_Plus4_Forge.lua"):
         L.append("| +4 AF/Relic gear | A reforged **+3** piece + Dynamis-D materials "
                  "(Rusted/Black ID Cards + Paragon Card) at the Divergence Forge |")
