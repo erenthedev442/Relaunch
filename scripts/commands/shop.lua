@@ -40,6 +40,7 @@ local stock =
         { xi.item.TRUMP_CARD,                 50 },  -- Trump Card
         { xi.item.TRUMP_CARD_CASE,            50 },  -- Trump Card Case
         { xi.item.X_POTION,                 1000 },
+        { 27604,                          300000 },  -- Aptitude Mantle +1
     },
 
     consumables =
