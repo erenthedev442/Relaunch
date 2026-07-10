@@ -199,6 +199,11 @@ void GP_CLI_COMMAND_ACTION::process(MapSession* PSession, CCharEntity* PChar) co
             CBaseEntity* PNpc = PChar->GetEntity(this->ActIndex, TYPE_NPC | TYPE_MOB | TYPE_TRUST);
             if (!PNpc)
             {
+                // The target no longer exists server-side (e.g. a reaped
+                // dynamic entity the client still renders). Release the
+                // client, or the interaction never resolves and the player
+                // is movement-locked until they zone.
+                PChar->pushPacket<GP_SERV_COMMAND_EVENTUCOFF>(PChar, GP_SERV_COMMAND_EVENTUCOFF_MODE::Standard);
                 return;
             }
 

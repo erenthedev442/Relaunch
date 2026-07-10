@@ -273,7 +273,21 @@ local function spawnVoidwalker(owner, tier, roster)
 end
 
 -- ── Riftworn Pyxis (physical reward chest; examine within PYXIS_SECONDS) ─────
-local pendingPyxis = {}   -- [playerName] = { reward, mob }
+local pendingPyxis = {}   -- [playerName] = { reward, mob, id }
+
+-- Despawn a Pyxis so every client actually SEES it go. setStatus(DISAPPEAR)
+-- alone sends no packet, and the dynamic-entity reaper then deletes the NPC
+-- while silently erasing it from each client's spawn list -- leaving a
+-- clickable ghost chest whose next click soft-locks the client (movement
+-- lock until zoning; live report 2026-07-10, W. Sarutabaruta rift).
+-- hideNPC() broadcasts a real ENTITY_DESPAWN before flipping the status;
+-- releaseIdOnDisappear then reaps the entity on the next zone tick, and the
+-- hide's queued "reappear" dies with the entity. The setStatus fallback
+-- covers a chest whose status already left NORMAL (hideNPC no-ops there).
+local function despawnPyxis(chest)
+    pcall(function() chest:hideNPC(3600) end)
+    pcall(function() chest:setStatus(xi.status.DISAPPEAR) end)
+end
 
 local function deliverPyxis(player, reward)
     addCruor(player, reward.cruor)
@@ -294,7 +308,7 @@ local function spawnPyxis(player, reward)
     local old  = pendingPyxis[name]
     if old then                                  -- auto-claim + clear any stale Pyxis first
         pendingPyxis[name] = nil
-        pcall(function() old.mob:setStatus(xi.status.DISAPPEAR) end)
+        despawnPyxis(old.mob)
         deliverPyxis(player, old.reward)
     end
     local pyxis = player:getZone():insertDynamicEntity({
@@ -307,14 +321,25 @@ local function spawnPyxis(player, reward)
         widescan             = 1,
         releaseIdOnDisappear = true,
         onTrigger            = function(trig, npc)
-            if trig:getName() ~= name or not pendingPyxis[name] then return end
+            -- Owner only, a claim still pending, and THIS chest is the pending
+            -- one (id check: a stale chest must never pay out or eat the new
+            -- chest's claim). A bare return is safe -- the engine releases the
+            -- client after a no-event trigger on a live entity.
+            local pend = pendingPyxis[name]
+            if trig:getName() ~= name or not pend or pend.id ~= npc:getID() then
+                return
+            end
             pendingPyxis[name] = nil
-            deliverPyxis(trig, reward)
-            pcall(function() npc:setStatus(xi.status.DISAPPEAR) end)
+            despawnPyxis(npc)   -- despawn FIRST: a loot hiccup can never strand the chest
+            local ok, err = pcall(function() deliverPyxis(trig, reward) end)
+            if not ok then
+                print(string.format('[voidwatch] deliverPyxis failed for %s: %s', name, tostring(err)))
+                trig:printToPlayer('[Voidwatch] The Pyxis crumbles strangely -- if your reward is missing, contact a GM.', SYS)
+            end
         end,
     })
     if not pyxis then deliverPyxis(player, reward); return end   -- spawn failed -> deliver inline
-    pendingPyxis[name] = { reward = reward, mob = pyxis }
+    pendingPyxis[name] = { reward = reward, mob = pyxis, id = pyxis:getID() }
     player:printToPlayer(string.format(
         '[Voidwatch] A Riftworn Pyxis coalesces from the rift -- examine it within %d min to claim your reward.',
         math.floor(C.PYXIS_SECONDS / 60)), SYS)
@@ -322,7 +347,7 @@ local function spawnPyxis(player, reward)
         local pend = pendingPyxis[p:getName()]
         if pend and pend.reward == reward then                  -- still THIS Pyxis -> safety-net claim
             pendingPyxis[p:getName()] = nil
-            pcall(function() pend.mob:setStatus(xi.status.DISAPPEAR) end)
+            despawnPyxis(pend.mob)
             deliverPyxis(p, reward)
             p:printToPlayer('[Voidwatch] The Riftworn Pyxis dissolved -- its contents drift to you anyway.', SYS)
         end

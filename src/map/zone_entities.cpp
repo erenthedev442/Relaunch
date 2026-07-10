@@ -1740,6 +1740,11 @@ auto CZoneEntities::npcTick(CNpcEntity* PNpc, timer::time_point tick) -> Task<vo
     // This is only valid for dynamic entities
     if (PNpc->status == STATUS_TYPE::DISAPPEAR && PNpc->m_bReleaseTargIDOnDisappear)
     {
+        // Broadcast the despawn BEFORE reaping: erasing the entity from
+        // SpawnNPCLists without a packet leaves clients rendering a clickable
+        // ghost whose trigger then has no server entity to answer it.
+        UpdateEntityPacket(PNpc, ENTITY_DESPAWN, UPDATE_NONE);
+
         FOR_EACH_PAIR_CAST_SECOND(CCharEntity*, PChar, m_charList)
         {
             if (PChar->SpawnNPCList.find(PNpc->id) != PChar->SpawnNPCList.end())
