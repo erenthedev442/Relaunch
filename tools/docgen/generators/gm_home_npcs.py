@@ -110,6 +110,13 @@ _NPCS: list[dict] = [
         "pos_field": "npcPos",
         "desc":      "Spend infamy currency earned from Abyssea NM hunts, Invasions, and the weekly Raid on gear and rewards",
     },
+    {
+        "cluster":   "Activities cluster",
+        "display":   "Domain Quartermaster",
+        "file":      "modules/custom/lua/domain_spoils_catalog.lua",
+        "pos_field": "npcPos",
+        "desc":      "Domain Invasion / Geas Fete gear (Hervor sets, Fete weapons, skill earrings, Odyssean and more) for Hunt Marks — a marks path to Zurim's Domain-Point catalog",
+    },
     # ── Admin cluster (z ≈ −28) ───────────────────────────────────────────────
     {
         "cluster":   "Admin cluster",

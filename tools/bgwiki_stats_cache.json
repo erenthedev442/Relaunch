@@ -2515,6 +2515,11 @@
     "stats": "DMG:266 Delay:399 INT+12 MND+12 \"Magic Atk. Bonus\"+28 Magic Damage+217 Staff skill +242 Parrying skill +242 Magic Accuracy skill +228 Besieged: DMG:279 Elemental WS damage +50% Occasionally attacks twice",
     "url": "https://www.bg-wiki.com/ffxi/Dathaba_Staff"
   },
+  "22219": {
+    "name": "Voluspa Grip",
+    "stats": "Domain Invasion: Accuracy+80 Attack+80 Magic Accuracy+80 \"Magic Atk. Bonus\"+50 \"Store TP\"+30",
+    "url": "https://www.bg-wiki.com/ffxi/Voluspa_Grip"
+  },
   "22289": {
     "name": "Voluspa Arrow",
     "stats": "DMG:105 Delay:90 Ranged Accuracy+20 Ranged Attack+20",
@@ -2544,6 +2549,11 @@
     "name": "Hauksbok Bullet",
     "stats": "DMG:300 Delay:240 AGI+10 \"Magic Atk. Bonus\"+40",
     "url": "https://www.bg-wiki.com/ffxi/Hauksbok_Bullet"
+  },
+  "22296": {
+    "name": "Voluspa Tathlum",
+    "stats": "STR+5 DEX+5 CHR+5 Accuracy+10 Attack+10 Pet: Accuracy+15 Ranged Accuracy+15 Magic Accuracy+15",
+    "url": "https://www.bg-wiki.com/ffxi/Voluspa_Tathlum"
   },
   "22307": {
     "name": "Loughnashade (Level 119 III)",
@@ -6202,10 +6212,145 @@
     "stats": "DEF:15 Latent: Regain+20 (conditional)",
     "url": "https://www.bg-wiki.com/ffxi/Vim_Torque_+1"
   },
+  "26089": {
+    "name": "Ran Earring",
+    "stats": "DEF:20 Evasion skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Ran_Earring"
+  },
+  "26090": {
+    "name": "Hermodr Earring",
+    "stats": "DEF:20 Parrying skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Hermodr_Earring"
+  },
+  "26091": {
+    "name": "Foresti Earring",
+    "stats": "DEF:20 Shield skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Foresti_Earring"
+  },
+  "26092": {
+    "name": "Hretha Earring",
+    "stats": "DEF:20 Guarding skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Hretha_Earring"
+  },
+  "26093": {
+    "name": "Saxnot Earring",
+    "stats": "DEF:20 Divine magic skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Saxnot_Earring"
+  },
+  "26094": {
+    "name": "Mani Earring",
+    "stats": "DEF:20 Dark magic skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Mani_Earring"
+  },
+  "26095": {
+    "name": "Mimir Earring",
+    "stats": "DEF:20 Enhancing magic skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Mimir_Earring"
+  },
+  "26096": {
+    "name": "Vor Earring",
+    "stats": "DEF:20 Enfeebling magic skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Vor_Earring"
+  },
+  "26097": {
+    "name": "Ilmr Earring",
+    "stats": "DEF:20 Elemental magic skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Ilmr_Earring"
+  },
+  "26098": {
+    "name": "Meili Earring",
+    "stats": "DEF:20 Healing magic skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Meili_Earring"
+  },
+  "26099": {
+    "name": "Lodurr Earring",
+    "stats": "DEF:20 Summoning magic skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Lodurr_Earring"
+  },
+  "26100": {
+    "name": "Hnoss Earring",
+    "stats": "DEF:20 Ninjutsu skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Hnoss_Earring"
+  },
+  "26101": {
+    "name": "Bragi Earring",
+    "stats": "DEF:20 Singing skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Bragi_Earring"
+  },
+  "26102": {
+    "name": "Gersemi Earring",
+    "stats": "DEF:20 String instrument skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Gersemi_Earring"
+  },
+  "26103": {
+    "name": "Dellingr Earring",
+    "stats": "DEF:20 Wind instrument skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Dellingr_Earring"
+  },
+  "26104": {
+    "name": "Njordr Earring",
+    "stats": "DEF:20 Blue magic skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Njordr_Earring"
+  },
+  "26105": {
+    "name": "Gna Earring",
+    "stats": "DEF:20 Geomancy skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Gna_Earring"
+  },
+  "26106": {
+    "name": "Fulla Earring",
+    "stats": "DEF:20 Handbell skill +10",
+    "url": "https://www.bg-wiki.com/ffxi/Fulla_Earring"
+  },
+  "26110": {
+    "name": "Sjofn Earring",
+    "stats": "Waltz potency +10%",
+    "url": "https://www.bg-wiki.com/ffxi/Sjofn_Earring"
+  },
+  "26111": {
+    "name": "Beyla Earring",
+    "stats": "Ranged Accuracy+15 \"Subtle Blow\"+5 Enmity-8",
+    "url": "https://www.bg-wiki.com/ffxi/Beyla_Earring"
+  },
+  "26112": {
+    "name": "Tuisto Earring",
+    "stats": "DEF:20 VIT+10 Converts 150 MP to HP",
+    "url": "https://www.bg-wiki.com/ffxi/Tuisto_Earring"
+  },
+  "26113": {
+    "name": "Nehalennia Earring",
+    "stats": "Magic Accuracy+5 Converts 60 HP to MP",
+    "url": "https://www.bg-wiki.com/ffxi/Nehalennia_Earring"
+  },
+  "26163": {
+    "name": "Etana Ring",
+    "stats": "HP+60 MP+60 Accuracy+7 Magic Accuracy+7",
+    "url": "https://www.bg-wiki.com/ffxi/Etana_Ring"
+  },
+  "26245": {
+    "name": "Solemnity Cape",
+    "stats": "DEF:17 \"Resist Charm\"+15 \"Conserve MP\"+5 \"Cure\" potency +7% Damage taken -4%",
+    "url": "https://www.bg-wiki.com/ffxi/Solemnity_Cape"
+  },
   "26259": {
     "name": "Brigantia's Mantle",
     "stats": "DEF:18 All Jumps: \"Double Attack\"+20% Wyvern: \"Breath\" attacks +15",
     "url": "https://www.bg-wiki.com/ffxi/Brigantia%27s_Mantle"
+  },
+  "26353": {
+    "name": "Ask Sash",
+    "stats": "Boost: \"Regain\"+200 Weapon skill damage +5%",
+    "url": "https://www.bg-wiki.com/ffxi/Ask_Sash"
+  },
+  "26354": {
+    "name": "Embla Sash",
+    "stats": "\"Fast Cast\"+5% \"Sublimation\"+3 Enhancing magic duration +10%",
+    "url": "https://www.bg-wiki.com/ffxi/Embla_Sash"
+  },
+  "26355": {
+    "name": "Audumbla Sash",
+    "stats": "DEF:18 Spell interruption rate down 10% Physical damage taken -4%",
+    "url": "https://www.bg-wiki.com/ffxi/Audumbla_Sash"
   },
   "26401": {
     "name": "Forfend",
@@ -6931,6 +7076,11 @@
     "name": "Telos Earring",
     "stats": "Accuracy+10 Attack+10 Ranged Accuracy+10 Ranged Attack+10 \"Double Attack\"+1% \"Store TP\"+5",
     "url": "https://www.bg-wiki.com/ffxi/Telos_Earring"
+  },
+  "27616": {
+    "name": "Izdubar Mantle",
+    "stats": "DEF:12 MP+25 Magic Accuracy+5 \"Magic Atk. Bonus\"+10 \"Conserve MP\"+2",
+    "url": "https://www.bg-wiki.com/ffxi/Izdubar_Mantle"
   },
   "27624": {
     "name": "Homestead Shield",
