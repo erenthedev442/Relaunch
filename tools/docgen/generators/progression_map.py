@@ -192,7 +192,7 @@ def _world_cells(repo_root: Path) -> str:
         ("scripts/zones/Mhaura/npcs/Sorrowful_Sage.lua", "Nyzul Isle",
          "The Sorrowful Sage in Mhaura opens retail Nyzul runs — floor-climb loot"),
         ("modules/custom/lua/SpellSkillMastery.lua", "Spell &amp; Skill Mastery",
-         'Spend <span class="chip c-sigil">Mastery Sigils</span> at the Mastery Sage in Leafallia to permanently empower weapon skills and spells'),
+         'Spend <span class="chip c-sigil">Mastery Sigils</span> at the Mastery Sage in {{npc:spell_mastery}} to permanently empower weapon skills and spells'),
         ("modules/custom/lua/Voidspire.lua", "Voidspire &amp; GM Waves",
          "Weekly milestone dungeon + five wave difficulties — together an Augment Tier key"),
         ("modules/custom/lua/affinity_nm_autopop.lua", "Affinity NM Hunts",
