@@ -147,12 +147,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return false
         end
 
-        if stepCost.eschaSilt then
-            local silt = player:getCharVar('Escha_Silt')
-            if silt < stepCost.eschaSilt then
+        if stepCost.eschaBeads then
+            local beads = player:getCurrency('escha_beads') or 0
+            if beads < stepCost.eschaBeads then
                 player:printToPlayer(
-                    string.format('[Weapon Forge] Need %d Escha Silt (you have %d).',
-                        stepCost.eschaSilt, silt), S)
+                    string.format('[Weapon Forge] Need %d Escha Beads (you have %d).',
+                        stepCost.eschaBeads, beads), S)
                 return false
             end
         end
@@ -175,9 +175,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         player:delItem(fromItem.id, 1)
         player:delItem(ae.attestationId, stepCost.attestations)
         player:delItem(RIFTBORN_BOULDER_ID, stepCost.riftbornBoulders)
-        if stepCost.eschaSilt then
-            player:setCharVar('Escha_Silt',
-                player:getCharVar('Escha_Silt') - stepCost.eschaSilt)
+        if stepCost.eschaBeads then
+            player:delCurrency('escha_beads', stepCost.eschaBeads)
         end
         if stepCost.reforgeMarks then
             drainMarks(player, stepCost.reforgeMarks)
@@ -338,7 +337,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             string.format('%dx %s', sc.attestations, chain.aeonic.attestationName),
             string.format('%dx Riftborn Boulder', sc.riftbornBoulders),
         }
-        if sc.eschaSilt    then parts[#parts+1] = string.format('%d Escha Silt', sc.eschaSilt) end
+        if sc.eschaBeads   then parts[#parts+1] = string.format('%d Escha Beads', sc.eschaBeads) end
         if sc.reforgeMarks then parts[#parts+1] = string.format('%d Reforge Marks', sc.reforgeMarks) end
         if sc.hlRank       then parts[#parts+1] = string.format('HL Rank %d', sc.hlRank) end
         return table.concat(parts, '  |  ')
@@ -652,6 +651,17 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         end,
 
         onTrigger = function(player, npc)
+            -- Fold the DEAD legacy charVars (Escha_Beads / Escha_Silt, pre-real-
+            -- currency) into the unified escha_beads currency so pre-refactor
+            -- balances still pay for the Aeonic forge steps. Idempotent. (The real
+            -- escha_silt currency is left alone -- it's portal/travel fuel.)
+            for _, var in ipairs({ 'Escha_Beads', 'Escha_Silt' }) do
+                local old = player:getCharVar(var) or 0
+                if old > 0 then
+                    player:addCurrency('escha_beads', old)
+                    player:setCharVar(var, 0)
+                end
+            end
             player:printToPlayer(
                 '[Weapon Forge] I forge every endgame weapon path. Prime and Aeonic upgrade '
                 .. 'from a weapon in your bag; Empyrean, Mythic, and Relic I can start from the '

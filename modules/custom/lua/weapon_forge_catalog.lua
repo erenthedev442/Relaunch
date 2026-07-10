@@ -83,7 +83,7 @@ catalog.aeonicCosts =
         hlRank           = 4,
         attestations     = 3,
         riftbornBoulders = 100,
-        eschaSilt        = 10000,  -- charVar Escha_Silt
+        eschaBeads       = 10000,  -- real currency escha_beads (unified Escha currency)
     },
     -- 119II → Aeonic 119III
     toStage3 =
@@ -91,7 +91,7 @@ catalog.aeonicCosts =
         hlRank           = 4,
         attestations     = 10,
         riftbornBoulders = 300,
-        eschaSilt        = 50000,
+        eschaBeads       = 50000,
         reforgeMarks     = 24000,
     },
 }
