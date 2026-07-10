@@ -281,10 +281,89 @@ catalog.difficulties =
             { groupId = 11427, name = 'Shinryu' },
         },
     },
+
+    Apocalypse =
+    {
+        -- Beyond Nightmare. The step up is carried by HP (x30) + a heavier
+        -- offensive package + one more wave, NOT by level: Nightmare already sits
+        -- at L225, past the L200 "confirmed-hittable" mark, so pushing level higher
+        -- risks mob EVASION outrunning geared L99 melee (players whiff = un-fun,
+        -- not hard). 8 waves x 4 gods = 32 kills, 10s tempo, 5s stagger.
+        wavesTotal      = 8,
+        mobsPerWave     = 4,
+        graceDelay      = 10,
+        waveDelay       = 10,
+        spawnStagger    = 5,
+        minLevel        = 225,
+        maxLevel        = 225,
+        completionBonus = 1200,
+        markBonus       = 20,
+        hpBoost         = 30.0,
+        mods =
+        {
+            [xi.mod.ATT]           = 20000,
+            [xi.mod.ACC]           = 2800,
+            [xi.mod.STR]           = 900,
+            [xi.mod.DEX]           = 900,
+            [xi.mod.HASTE_GEAR]    = 256,
+            [xi.mod.DOUBLE_ATTACK] = 35,
+            [xi.mod.TRIPLE_ATTACK] = 22,
+            [xi.mod.QUAD_ATTACK]   = 8,
+        },
+        mobs =
+        {
+            { groupId = 11425, name = 'Kirin' },
+            { groupId = 11426, name = 'Absolute Virtue' },
+            { groupId = 11428, name = 'Pandemonium Warden' },
+            { groupId = 11427, name = 'Shinryu' },
+        },
+    },
+
+    Oblivion =
+    {
+        -- The current ceiling: 10 waves of 5 gods = 50 kills, an 8s waveDelay +
+        -- 4s stagger so five gods pile on almost at once. HP x45; the mods sit
+        -- just under the int16 mob-mod cap (~31k -- ATT 26000 is the headroom
+        -- limit). Level nudged one cautious step to 230 (re-check that melee still
+        -- lands before going higher). Only the deepest Prestige-geared full parties
+        -- should clear this. Push future pain via HP / mods / counts, not level.
+        wavesTotal      = 10,
+        mobsPerWave     = 5,
+        graceDelay      = 10,
+        waveDelay       = 8,
+        spawnStagger    = 4,
+        minLevel        = 230,
+        maxLevel        = 230,
+        completionBonus = 2000,
+        markBonus       = 20,
+        hpBoost         = 45.0,
+        mods =
+        {
+            [xi.mod.ATT]           = 26000,
+            [xi.mod.ACC]           = 3200,
+            [xi.mod.STR]           = 1200,
+            [xi.mod.DEX]           = 1200,
+            [xi.mod.HASTE_GEAR]    = 256,
+            [xi.mod.DOUBLE_ATTACK] = 40,
+            [xi.mod.TRIPLE_ATTACK] = 28,
+            [xi.mod.QUAD_ATTACK]   = 12,
+        },
+        mobs =
+        {
+            { groupId = 11425, name = 'Kirin' },
+            { groupId = 11426, name = 'Absolute Virtue' },
+            { groupId = 11428, name = 'Pandemonium Warden' },
+            { groupId = 11427, name = 'Shinryu' },
+        },
+    },
 }
 
 -- Order the difficulties appear in the menu (Lua tables aren't ordered).
-catalog.difficultyOrder = { 'Easy', 'Normal', 'Hard', 'Insane', 'Nightmare' }
+-- NOTE: order also assigns the GM_Wave_Clears full-clear BIT (index-1): Easy=1,
+-- Normal=2, Hard=4, Insane=8, Nightmare=16, Apocalypse=32, Oblivion=64. The
+-- Augment Moogle gate masks `& 31`, so tiers past Nightmare don't disturb it.
+-- Only ever APPEND here -- reordering would rewrite everyone's earned bits.
+catalog.difficultyOrder = { 'Easy', 'Normal', 'Hard', 'Insane', 'Nightmare', 'Apocalypse', 'Oblivion' }
 
 -- Spawn ring radius around the player. Mobs appear at this distance and
 -- random angles so they don't all stack on top of each other.

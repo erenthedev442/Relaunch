@@ -488,14 +488,20 @@ end
 
 
 showStartMenu = function(player)
-    -- Top-level menu lists each difficulty + an Abort if a session is live.
-    local options = {}
+    -- If a session is already live, the only valid action is to abort it (every
+    -- difficulty button would just reject with "already running"). Show ONLY that
+    -- and return -- this also keeps the menu clear of the customMenu 8-option /
+    -- ~150-byte cap now that there are 7 difficulties (Abort + 7 = 8 = the edge).
     if getSession(player) then
-        table.insert(options, {
+        sendMenu(player, { {
             'Abort current session',
             function(p) endSession(p, false) end,
-        })
+        } })
+        return
     end
+
+    -- Top-level menu lists each difficulty.
+    local options = {}
     for _, diff in ipairs(catalog.difficultyOrder) do
         local diffDef = catalog.difficulties[diff]
         table.insert(options, {
