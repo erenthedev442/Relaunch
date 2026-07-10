@@ -131,8 +131,23 @@ xi.divergence.onInstanceTimeUpdate = function(instance, elapsed, cfg)
     end
 end
 
+-- City of the Day: one [D] city rotates daily (UTC) and pays bonus medals on a
+-- full clear, funneling groups into the same instance each day. Deterministic
+-- from the epoch day so the player portal can mirror it (app.py DYNA_CITIES --
+-- keep in sync). Zone rotation: 294 SdO / 295 Bastok / 296 Windurst / 297 Jeuno.
+local CITY_BONUS =
+{
+    { id = 9543, qty = 1 },  -- Demon's Medal
+    { id = 9541, qty = 2 },  -- Kindred's Medal
+}
+
+xi.divergence.featuredZoneToday = function()
+    return 294 + (math.floor(os.time() / 86400) % 4)
+end
+
 xi.divergence.onInstanceComplete = function(instance, cfg)
-    local slotBit = xi.divergence.slotBit[cfg.entrySlot] or 0
+    local slotBit  = xi.divergence.slotBit[cfg.entrySlot] or 0
+    local featured = instance:getZone():getID() == xi.divergence.featuredZoneToday()
     for _, p in pairs(instance:getChars()) do
         local slots = p:getCharVar('DivergenceSlots')
         if slotBit ~= 0 and bit.band(slots, slotBit) == 0 then
@@ -142,6 +157,12 @@ xi.divergence.onInstanceComplete = function(instance, cfg)
             if bit.band(slots, 15) == 15 then
                 p:printToPlayer('[Divergence] All four slots cleared -- BODY reforge unlocked!', xi.msg.channel.SYSTEM_3)
             end
+        end
+        if featured then
+            for _, b in ipairs(CITY_BONUS) do
+                pcall(function() p:addItem({ id = b.id, quantity = b.qty }) end)
+            end
+            p:printToPlayer("[Divergence] City of the Day! Bonus spoils: 1 Demon's Medal + 2 Kindred's Medals.", xi.msg.channel.SYSTEM_3)
         end
         p:printToPlayer('[Divergence] Victory! Returning you to San d\'Oria...', xi.msg.channel.SYSTEM_3)
         p:timer(EXIT_DELAY_MS, function(pp)
