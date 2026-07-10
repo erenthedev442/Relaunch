@@ -332,7 +332,7 @@ const CATS = {
     label:'Aeonic', sub:'14 weapons · 4 stages',
     accent:'#158a78', dim:'#0a5248',
     lore:'Forged from Animated Weapons risen in Dynamis – Xarcabard and proved against the HNM Kings — the most process-intensive path on the server, using currencies found nowhere else.',
-    source:'The <strong>Malformed</strong> base weapon is purchased from <strong>Temprix</strong> in Reisenjima for <strong>50,000 Escha Beads</strong>. Escha Beads drop from Geas Fete NMs in Escha – Zi\'Tah and Escha – Ru\'Aun. <strong>Attestations</strong> are weapon-type-specific drops from the Geas Fete zone bosses (Azi Dahaka and Warder of Courage).',
+    source:'The <strong>Malformed</strong> base weapon is purchased from <strong>Temprix</strong> in <strong>Reisenjima</strong> for <strong>50,000 Escha Beads</strong> — Temprix is the <em>only</em> Aeonic NPC in Reisenjima. The Geas Fete NMs themselves are <strong>not</strong> in Reisenjima (there is no Warding Circle there): fight them at the <strong>Warding Circle</strong> NPC in <strong>Escha – Zi\'Tah</strong> (by the Hunting League hub — type <code>!hunt</code>) and <strong>Escha – Ru\'Aun</strong>, which award <strong>Escha Beads</strong> / <strong>Escha Silt</strong>. <strong>Attestations</strong> are weapon-type-specific drops from the Geas Fete zone bosses (Azi Dahaka and Warder of Courage).',
     s3lbl:'Stage III · Aeonic',
     forge:[
       {lbl:'Base → Stage I', mats:[['1×','Attestation (weapon-specific)'],['25×','Riftborn Boulder']], gate:'HL Rank IV (Champion) · 3 Geas Fete NMs killed'},

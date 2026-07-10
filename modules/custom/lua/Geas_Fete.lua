@@ -26,6 +26,7 @@
 require('modules/module_utils')
 require('scripts/zones/Escha_ZiTah/Zone')
 require('scripts/zones/Escha_RuAun/Zone')
+require('scripts/zones/Reisenjima/Zone')  -- for the redirect signpost override
 
 local m = Module:new('geas_fete')
 local S = xi.msg.channel.SYSTEM_3
@@ -424,6 +425,36 @@ end)
 m:addOverride('xi.zones.Escha_RuAun.Zone.onInitialize', function(zone)
     super(zone)
     spawnWardingCircle(zone, RUAUN, 5.0, -34.277, -455.0, 64)
+end)
+
+-- Reisenjima (291) redirect signpost. Players come here for Temprix (the Aeonic
+-- vendor) and, out of retail habit, hunt for a Geas Fete Warding Circle in the
+-- old spot -- but on relaunch the Geas Fete NMs live in Escha. This signpost
+-- sits right at the zone-in point (arrival is -500.0, -19.1, -487.7) so anyone
+-- looking for the circle gets pointed to the right zone.
+local function spawnReisenSignpost(zone)
+    local sp = zone:insertDynamicEntity({
+        objtype    = xi.objType.NPC,
+        name       = 'GF_Reisen_Signpost',
+        packetName = string.format('%sGeas Fete Notice', xi.icon.STAR_LARGE),
+        look       = 171,
+        x          = -497.0,
+        y          = -19.07,
+        z          = -484.0,
+        rotation   = 190,
+        widescan   = 1,
+
+        onTrigger = function(player, npc)
+            player:printToPlayer('[Geas Fete] The Warding Circles are in ESCHA now. Fight the Geas Fete NMs (Escha Beads/Silt + Attestations) at the Warding Circle in Escha - Zi\'Tah and Escha - Ru\'Aun -- type !hunt to warp to the Zi\'Tah hub.', S)
+            player:printToPlayer('[Geas Fete] Reisenjima still hosts Temprix, the Aeonic weapon vendor (Malformed base weapons for 50,000 Escha Beads), further into the zone.', S)
+        end,
+    })
+    utils.unused(sp)
+end
+
+m:addOverride('xi.zones.Reisenjima.Zone.onInitialize', function(zone)
+    super(zone)
+    spawnReisenSignpost(zone)
 end)
 
 return m
