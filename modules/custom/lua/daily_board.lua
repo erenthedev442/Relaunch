@@ -58,12 +58,26 @@ local function todaysObjectives()
         table.insert(byMetric[obj.metric], obj)
     end
 
-    local today = currentDayId()
-    -- 4-metric rotating selection: pick 3 consecutive metrics from a 4-entry
-    -- ring, shifted by (today mod 4). Each metric appears in 3 of every 4 days.
-    -- Cycle: kills/infamy/waves -> infamy/waves/augments -> waves/augments/kills
-    --     -> augments/kills/infamy -> (repeat)
-    local ALL_METRICS = { 'kills', 'infamy', 'waves', 'augments' }
+    local today       = currentDayId()
+    local ALL_METRICS = catalog.activeMetrics or { 'kills', 'infamy', 'waves', 'augments' }
+
+    -- Single active metric (XP-only board, 2026-07-10): the multi-metric ring
+    -- below would resolve to the SAME objective in all 3 slots, so instead offer
+    -- slotsPerDay DISTINCT tiered objectives from that one group, rotating the
+    -- window by day. Requires >= slotsPerDay objectives in the group.
+    if #ALL_METRICS == 1 then
+        local group  = byMetric[ALL_METRICS[1]] or {}
+        local n      = #group
+        local result = {}
+        if n == 0 then return result end
+        for i = 1, catalog.slotsPerDay do
+            table.insert(result, group[((today + i - 1) % n) + 1])
+        end
+        return result
+    end
+
+    -- Multi-metric rotating selection: pick slotsPerDay consecutive metrics from
+    -- the ring, shifted by (today mod #metrics), one objective per metric.
     local dayMod     = today % #ALL_METRICS
     local metricOrder = {}
     for i = 1, catalog.slotsPerDay do
@@ -104,19 +118,19 @@ local function isSlotDone(player, slot)
     return (player:getCharVar(cvSlot(slot, 'Done')) or 0) == 1
 end
 
+-- metric -> its day-start baseline CharVar. Current value comes from
+-- catalog.baselines[metric]; progress = current - baseline (clamped >= 0).
+local BASE_CV =
+{
+    kills    = catalog.cvKillsBase,
+    infamy   = catalog.cvInfamyBase,
+    waves    = catalog.cvWavesBase,
+    augments = catalog.cvAugmentsBase,
+    xp       = catalog.cvXpBase,
+}
 local function getProgress(player, metric)
-    local baseKey   = catalog.cvKillsBase
-    local currentCv = catalog.baselines.kills
-    if metric == 'infamy' then
-        baseKey   = catalog.cvInfamyBase
-        currentCv = catalog.baselines.infamy
-    elseif metric == 'waves' then
-        baseKey   = catalog.cvWavesBase
-        currentCv = catalog.baselines.waves
-    elseif metric == 'augments' then
-        baseKey   = catalog.cvAugmentsBase
-        currentCv = catalog.baselines.augments
-    end
+    local baseKey   = BASE_CV[metric]           or catalog.cvKillsBase
+    local currentCv = catalog.baselines[metric] or catalog.baselines.kills
     local base    = player:getCharVar(baseKey)   or 0
     local current = player:getCharVar(currentCv) or 0
     return math.max(0, current - base)
@@ -139,6 +153,8 @@ local function resetDay(player)
         player:getCharVar(catalog.baselines.waves)    or 0)
     player:setCharVar(catalog.cvAugmentsBase,
         player:getCharVar(catalog.baselines.augments) or 0)
+    player:setCharVar(catalog.cvXpBase,
+        player:getCharVar(catalog.baselines.xp) or 0)
 
     -- Reset daily HL cap counter
     player:setCharVar(CV_HL_TODAY, 0)

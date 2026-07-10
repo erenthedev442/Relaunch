@@ -53,7 +53,14 @@ catalog.baselines =
     infamy   = 'Infamy_Lifetime',
     waves    = 'Wave_Clears_Total',
     augments = 'Augment_Count',
+    xp       = 'XP_Grind_Lifetime',  -- fed by daily_xp_tracker.lua (combat XP grind)
 }
+
+-- Which metrics the board rotates through. 2026-07-10 (report: Burtgang -- "gain XP
+-- should be the only rotating task"): XP-only. To restore the 4-metric ring, set
+-- this back to { 'kills', 'infamy', 'waves', 'augments' } -- the old objectives are
+-- kept in objectivePool below (inert while not in activeMetrics).
+catalog.activeMetrics = { 'xp' }
 
 -- CharVar suffixes used internally.
 catalog.cvDay         = 'DB_Day'          -- Julian day YYYYDDD of last reset
@@ -61,6 +68,7 @@ catalog.cvKillsBase   = 'DB_Kills_Base'
 catalog.cvInfamyBase  = 'DB_Infamy_Base'
 catalog.cvWavesBase   = 'DB_Waves_Base'
 catalog.cvAugmentsBase= 'DB_Augments_Base'
+catalog.cvXpBase      = 'DB_XP_Base'
 
 -- =========================================================
 -- CURRENCY MAPPING
@@ -82,13 +90,68 @@ catalog.currencies =
 --   label       short display name (<= 16 chars to fit customMenu)
 --   description one-liner shown in the NPC menu
 --   target      numeric completion threshold
---   metric      which baseline to measure against: 'kills' | 'infamy' | 'waves' | 'augments'
+--   metric      which baseline to measure against: 'xp' | 'kills' | 'infamy' | 'waves' | 'augments'
 --   reward      { currency = 'hl'|'af'|'relic'|'empy', amount = N }
 --
 -- Rotation guarantees that only ONE entry per metric appears
 -- in any given day's 3 slots, so the board always has variety.
+-- (Currently XP-only per catalog.activeMetrics; the non-xp rows below stay
+-- in the pool but are never selected while activeMetrics = { 'xp' }.)
 catalog.objectivePool =
 {
+    -- --- XP GRIND (combat XP; XP_Grind_Lifetime via daily_xp_tracker.lua) ---
+    -- 'target' units are grind points = ~mob level per kill (endgame ~100-140/kill),
+    -- so ~1500 is a short session and ~12000 is a long grind day. 6 tiers so the
+    -- board can show 3 DISTINCT ones and rotate the window day to day.
+    {
+        id          = 'xp_1500',
+        label       = 'XP Grind I',
+        description = 'Grind 1,500 combat XP today (defeat monsters).',
+        target      = 1500,
+        metric      = 'xp',
+        reward      = { currency = 'hl', amount = 400 },
+    },
+    {
+        id          = 'xp_2500',
+        label       = 'XP Grind II',
+        description = 'Grind 2,500 combat XP today (defeat monsters).',
+        target      = 2500,
+        metric      = 'xp',
+        reward      = { currency = 'hl', amount = 600 },
+    },
+    {
+        id          = 'xp_4000',
+        label       = 'XP Grind III',
+        description = 'Grind 4,000 combat XP today (defeat monsters).',
+        target      = 4000,
+        metric      = 'xp',
+        reward      = { currency = 'hl', amount = 900 },
+    },
+    {
+        id          = 'xp_6000',
+        label       = 'XP Marathon',
+        description = 'Grind 6,000 combat XP today (defeat monsters).',
+        target      = 6000,
+        metric      = 'xp',
+        reward      = { currency = 'relic', amount = 1000 },
+    },
+    {
+        id          = 'xp_9000',
+        label       = 'XP Crusade',
+        description = 'Grind 9,000 combat XP today (defeat monsters).',
+        target      = 9000,
+        metric      = 'xp',
+        reward      = { currency = 'relic', amount = 1400 },
+    },
+    {
+        id          = 'xp_12000',
+        label       = 'XP Legend',
+        description = 'Grind 12,000 combat XP today (defeat monsters).',
+        target      = 12000,
+        metric      = 'xp',
+        reward      = { currency = 'empy', amount = 1600 },
+    },
+
     -- --- KILLS ------------------------------------------------
     {
         id          = 'kill_5',
