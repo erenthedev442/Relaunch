@@ -12,9 +12,9 @@ hide:
   <p class="lgnd-hero__tagline">Extreme QoL. Fast progression. No grind tax.</p>
 </div>
 
-**Hit 99 in an hour. Chase best-in-slot for months. This is FFXI the way it should feel.**
+**Hit 99 today, into real endgame the same day — then chase best-in-slot for months. This is FFXI the way it should feel.**
 
-The Relaunch is a fresh-start FFXI private server built around one idea: the grind should be *fun*, not a wall. We cut the mandatory busywork, kept the depth, and bolted on a custom endgame that gives you something real to chase — whether you've been playing for a week or a year.
+The Relaunch is a fresh-start FFXI private server built around one idea: the grind should be *fun*, not a wall. We cut the mandatory busywork, kept the depth, and bolted on a deep custom endgame that gives you something real to chase — whether you've been playing for a week or a year. You'll be at the level cap in an afternoon and fighting your first superboss before you log off.
 
 !!! tip "New Player? Start here."
     Don't know where to begin? The **[Getting Started guide](getting-started/index.md)** walks you through installing the client, connecting to the server, and taking your first steps — in about 20 minutes.
@@ -28,28 +28,39 @@ The Relaunch is a fresh-start FFXI private server built around one idea: the gri
 
 Retail FFXI is a masterpiece buried under 20 years of time-gating. Most private servers swing the other direction and trivialize everything. This server splits the difference:
 
-- **Fast leveling, real endgame.** {{setting:map.EXP_RATE}}× mob EXP (plus {{setting:main.EXP_RATE}}× from books, FoV/GoV & Records of Eminence) gets you to 99 in a few hours, not months. Then the actual game begins.
-- **Everything unlocked at creation.** Advanced jobs, all outpost warps, all maps, full inventory — no arbitrary gates.
-- **Custom content built for long-term play.** The Hunting League, Reforge gear, Ascension, and weekly objectives give you a loop that doesn't expire.
+- **Fast leveling, real endgame.** 3× mob EXP (plus 10× from books, FoV/GoV & Records of Eminence) gets you to 99 in an afternoon, not months. Then the *actual* game begins — dozens of custom systems built for the long haul.
+- **Everything unlocked at creation.** Advanced jobs, all outpost warps, all maps, full inventory, subjob ready to go — no arbitrary gates.
+- **Best-in-slot is earnable, not bought.** Reforge ladders, augments, and Prime weapons put the top gear at the end of a hunt, not a paywall.
+- **No dead content.** Daily and weekly objectives, rotating events, always-popped NMs, and a market-maker economy mean there's always a reason to log in.
 - **A small, friendly community.** No drama, no gatekeeping — just people who like this game.
 
 ---
 
 ## Feature highlights
 
-:crossed_swords: **Hunting League** — A custom 5-rank NM hunting system. Kill your way from Initiate → Hunter → Elite → Champion → Legend, unlocking gear, titles, and HL Points at every tier.
+:crossed_swords: **Hunting League** — A custom 5-rank NM hunting ladder. Fight your way from Initiate → Hunter → Elite → Champion → Legend, unlocking gear, titles, and HL Points at every tier.
 
-:crown: **Ascension** — The endgame *above* the endgame. Reaching Legend opens a per-job, no-cap progression track: re-clear escalating superboss Courts to bank Ascension Points and spend them on permanent stat boosts. The gauntlet swaps to a deadlier roster every 10 ascensions, so the climb never goes stale.
+:crown: **Ascension** — The endgame *above* the endgame. Reaching Legend opens a per-job, no-cap prestige track: re-clear the escalating Nightmare Court to bank Ascension Points and pour them into permanent stat boosts. The roster gets deadlier every 10 ascensions, so the climb never goes stale.
 
-:shield: **Reforge system** — Three parallel NM ladders (AF, Relic, Empy) that upgrade your armor from base all the way to +3. Best-in-slot is earnable, not bought.
+:shield: **Reforge system** — Three parallel NM mark ladders (AF, Relic, Empy) that upgrade full armor sets from base all the way to +3. Best-in-slot is earnable, not bought.
 
-:gem: **Augment Moogle** — 147 augment options. Trade catalysts from NM kills to permanently customize your gear in ways retail never allowed.
+:crossed_swords: **Prime Armory** — Forge the server's top weapon tier. Clear the Prime Trials, then claim a Prime weapon built for your job — an apex chase for every DD, mage, and support.
 
-:calendar: **Weekly Hunt Board** — Five rotating objectives every week. Complete all five for a big bonus. Always something to do.
+:gem: **Augment Moogle** — 147 augment options. Trade catalysts from NM kills to permanently customize your gear in ways retail never allowed, then push them further with the Augment Sage.
 
 :trophy: **Wave Master** — An NPC arena in Escha - Ru'Aun that spawns themed NM waves for solo or group practice. Earn Hunt Marks. Flex on your friends.
 
 :dart: **Hunter's Guild** — Four hunting guilds that rank up as you kill their NMs, permanently boosting the marks every kill pays out. Hit Grandmaster across all of them for the Trinity and Apex Hunter titles.
+
+:boom: **Voidwatch** — Examine Planar Rifts scattered across 30 overworld zones, fight tier-scaled Voidwalker NMs, and probe their hidden weaknesses to shape your rewards.
+
+:sparkles: **Adventuring Fellow** — A personal companion any job can summon. It levels from your kills, and you build it however you like by spending its stat points.
+
+:star: **Reimagined retail endgame** — Ambuscade, Dynamis – Divergence, Nyzul Isle, High-Tier Battlefields, Domain Invasion, Unity, Geas Fete and Abyssea — the classic battle content, retuned for a fresh-start server.
+
+:game_die: **Something for every night** — A weekly raid boss, an endless gauntlet tower, a colosseum, a casino, chocobo derby, treasure hunts, scheduled invasions and seasonal events. Full list below.
+
+:calendar: **No dead content** — A five-objective Weekly Hunt Board and a three-objective Daily Board reset on a clock, so there's always a fresh reason to log in.
 
 :wolf: **Custom Trusts** — Allies you won't find on retail: **Gemma** (a full healer / buffer / debuffer in a deceptively small package) and **Meat** (an unkillable wall that never drops aggro).
 
@@ -57,31 +68,27 @@ Retail FFXI is a masterpiece buried under 20 years of time-gating. Most private 
 
 :medal: **Achievements & Leaderboards** — 37 milestones that pay bonus marks and titles as you rack up first kills, tier climbs, and lifetime records — plus live server leaderboards (top hunters, fastest clears, most augments) to climb.
 
-:sparkles: **Adventuring Fellow** — A personal companion any job can summon. It levels from your kills, and you build it by spending stat points however you like.
-
-:boom: **Voidwatch** — Examine Planar Rifts scattered across 30 overworld zones, fight tier-scaled Voidwalker NMs, and probe their hidden weaknesses to shape your rewards.
-
 ---
 
 ## Server rates
 
 | Setting | Rate |
 |---|---|
-| EXP (mob kills) | {{setting:map.EXP_RATE}}× |
-| EXP (scripted: books, FoV/GoV, RoE) | {{setting:main.EXP_RATE}}× |
-| Capacity Points (scripted) | {{setting:main.CAPACITY_RATE}}× |
-| Sparks | {{setting:SPARKS_RATE}}× |
-| Gil from quests | {{setting:GIL_RATE}}× |
-| Magic / WS power | {{setting:main.WEAPON_SKILL_POWER:int}}× |
-| Mob drop rate | {{setting:DROP_RATE_MULTIPLIER}}× |
-| Starting level cap | {{setting:INITIAL_LEVEL_CAP}} (no Limit Break needed) |
-| Run speed | {{setting:BASE_SPEED}} base / {{setting:SPEED_LIMIT}} cap |
+| EXP (mob kills) | 3× |
+| EXP (scripted: books, FoV/GoV, RoE) | 10× |
+| Capacity Points (scripted) | 10× |
+| Sparks | 10× |
+| Gil from quests | 100× |
+| Magic / WS power | 2× |
+| Mob drop rate | 3× |
+| Starting level cap | 99 (no Limit Break needed) |
+| Run speed | 100 base / 500 cap |
 | Content | Through Seekers of Adoulin + Abyssea + all add-ons |
 
 ---
 
 !!! note "These docs reflect the live Relaunch server"
-    Many pages — server rates, player commands, spell lists, gear, Hunting League tiers, augment values — are **generated straight from the Relaunch server's own data** and refreshed regularly, so what you read here reflects what's actually running in-game. Spot something that's drifted out of date? Flag it on Discord and it'll be fixed.
+    Every number on this page — server rates, augment counts, Hunting League tiers, the endgame roster below — is **generated straight from the Relaunch server's own data and page set** on each refresh, so what you read here is what's actually running in-game. Spot something that's drifted out of date? Flag it on Discord and it'll be fixed.
 
 ---
 
@@ -89,7 +96,7 @@ Retail FFXI is a masterpiece buried under 20 years of time-gating. Most private 
 
 Every new character starts with:
 
-- :moneybag: **{{setting:START_GIL:comma}} Gil** in your wallet
+- :moneybag: **5,000,000 Gil** in your wallet
 - :school_satchel: **80 inventory slots** (the maximum)
 - :world_map: **All maps** for every zone
 - :round_pushpin: **All outpost warps** already unlocked
@@ -98,46 +105,64 @@ Every new character starts with:
 
 ---
 
-## What's waiting at endgame?
+## The full content roster
 
 !!! info "The real game starts at 99."
-    Most servers have nothing to do after you level cap. This server was built around that problem.
+    Most servers have nothing to do after you level cap. This one was built around that problem. Every system below is custom to the Relaunch — pick a thread and pull.
 
-**Hunting League (5 tiers)**
-Progress through Initiate → Hunter → Elite → Champion → Legend by killing increasingly difficult NMs. Each tier unlocks stronger gear options, higher HL Point rates, and exclusive titles. The grind is real — and it's meant to be.
+### Endgame & events
 
-**Ascension / Prestige (the layer above Legend)**
-The true ceiling. Reaching Legend tier opens the **Ascension Altar** in Provenance — a per-job, *infinite* progression track. Defeat the **Nightmare Court** (three dread superbosses), pay an escalating Mark cost, and bank Ascension Points to permanently empower the job you're playing.
+- **[Abyssea NMs — Hunt Marks System](endgame/abyssea-nms.md)** — Spend Hunt Marks at any Abyssea ???
+- **[Affinity NMs](endgame/affinity-nms.md)** — Twenty-four of Vana'diel's most legendary Notorious Monsters — HNMs, Sky Gods, Wyrms, and world bosses — are permanently spawned throughout the overworld as…
+- **[Ambuscade](endgame/ambuscade.md)** — Talk to the Ambuscade Tome in Mhaura to enter a private instance (three modes × five difficulties).
+- **[Apex Trials & Paragon](endgame/apex-paragon.md)** — Hit the cap and ran out of mountains to climb?
+- **[Casino — Lady Luck](endgame/casino.md)** — A four-game gil-sink casino — slots, high-low, roulette, and dice — run by Lady Luck in Purgonorgo Isle.
+- **[Chocobo Derby](endgame/chocobo-derby.md)** — Bet gil on chocobo races at the Race Caller on Purgonorgo Isle (!hub); raise a strong enough chocobo of your own and you can enter it as a runner for a bigger…
+- **[Colosseum — Ranked Arena](endgame/colosseum.md)** — A ranked arena in Purgonorgo Isle where you duel AI replicas of other champions to climb an Elo ladder, earning Hunt Marks for every win.
+- **[Domain Invasion](endgame/domain-invasion.md)** — Two-wave events in the Escha zones (Zi'Tah / Ru'Aun alternating every 3 hours, eight times a day).
+- **[Dungeons](endgame/dungeons.md)** — Classic Vana'diel zones become private expedition grounds.
+- **[Dynamis — Divergence](endgame/dynamis-divergence.md)** — Four city Dynamis instances reached through entry portals for one Dynamis currency each.
+- **[The Endless Tower](endgame/endless-tower.md)** — A solo 50-floor climb from the Endless Tower Arbiter in Purgonorgo Isle — a boss every 10 floors, no Trusts allowed, one death ends the run, and reaching floor…
+- **[High-Tier Battlefields](endgame/high-tier-battlefields.md)** — Repeatable, tier-scaled versions of the classic mission boss battlefields.
+- **[Scheduled Invasions — Defend Al Zahbi](endgame/invasions.md)** — An eight-times-daily Besieged-style defense of Al Zahbi — waves of Voidsent that scale with how many defenders show up, ending in a boss, rewarding marks and…
+- **[Job Mastery](endgame/job-mastery.md)** — Pick a weapon type at the Weapon Mastery Sage in Purgonorgo Isle, fight its Guardian solo in Walk Of Echoes, and a single victory completes Trial 4 of the…
+- **[Maat's Challenge](endgame/maats-challenge.md)** — Talk to Maat's Echo in Ru'Lude Gardens, pay 150 Infamy, and you'll be teleported to Waughroon Shrine to face a level-200 Maat — now the single hardest fight on…
+- **[Nyzul Isle](endgame/nyzul-isle.md)** — No Assault rank, no Imperial Standing, no prior quest chain — just talk and enter.
+- **[Provisioners' League](endgame/provisioners-league.md)** — Fish and turn in HQ crafts at the League Steward in Escha ZiTah to earn League Points; climbing the five-rank ladder grants a permanent, stacking mark bonus.
+- **[Seasonal Events](endgame/seasonal-events.md)** — During a seasonal event, Hunting League kills earn bonus marks (a mark multiplier) for a limited time.
+- **[The Star-Devourer — Weekly Raid Boss](endgame/star-devourer.md)** — A weekly-lockout, multi-phase raid boss (The Star-Devourer) at Escha-RuAun — survive the stance dance, the tendril adds, the dispel sweep, and the enrage for…
+- **[The Gauntlet](endgame/the-gauntlet.md)** — A 10-level mandatory solo challenge inside Riverne Site A01.
+- **[Tournament](endgame/tournament.md)** — Type !tournament join during sign-ups (or !tournament join <team> to form a team).
+- **[Treasure Hunts](endgame/treasure-hunts.md)** — Hunting League kills can drop treasure maps; take a map to its overworld zone and dig — hot/cold feedback guides you to a buried strongbox of marks, gil, and…
+- **[Unity Concord](endgame/unity-concord.md)** — Hunt Wanted NMs in Escha - Zi'Tah to earn Unity Accolades, then spend them in the board's shop.
+- **[The Voidspire](endgame/voidspire.md)** — An endless descent at the Warden in Escha-RuAun — clear floor after floor, your deepest floor is your leaderboard score, and one wipe ends the run.
+- **[Voidwatch](endgame/voidwatch.md)** — Find a Planar Rift in the overworld, spend a Voidstone to open a rift, fight a Voidwalker NM, and probe its hidden weaknesses with magic, weaponskills, and…
 
-**Hunter's Guild (4 guilds, lifetime amplifiers)**
-A passive reputation layer on top of every NM track. Each guild — AF, Relic, Empyrean, and League — ranks up as you kill its NMs, permanently amplifying the marks you earn from that source. Push to Grandmaster across multiple guilds for the **Trinity** and **Apex Hunter** capstones.
+### Core progression systems
 
-**Reforge Gear (+3 from NM kills)**
-Three independent NM ladders — AF Marks from Sky Gods, Relic Marks from Unity NMs, Empy Marks from Abyssea NMs — each upgrades a full armor set from base to +1 to +2 to +3. No RNG. No gacha. Just kills.
+- **[Prestige / Ascension System](progression/prestige.md)** — Prestige is the endgame layer above Legend tier.
+- **[Job Rebirth](progression/job-rebirth.md)** — Job Rebirth is a standalone prestige layer for individual jobs.
+- **[Reforge System](progression/reforge.md)** — Talk to the Reforge Spawner at Gwora Corridor (10, 0, 0).
+- **[Hunter's Guild](progression/hunters-guild.md)** — Kill NMs → earn rep in the matching guild → rep ranks up → earned marks get amplified more at each rank (see the ladder below).
+- **[Prime Armory](progression/prime-armory.md)** — Bring 1 Prime Voucher and 750,000,000 gil to the Prime Armory in Purgonorgo Isle and claim any one of the 12 Prime weapons — best-in-slot gear, each with a…
+- **[Spell & Skill Mastery](progression/spell-mastery.md)** — Earn Mastery Sigils from the daily NM rotation and use !empower to check your balance and owned upgrades.
+- **[Cross-Job Abilities](progression/cross-job-abilities.md)** — Find the Trainer in Purgonorgo Isle.
+- **[Augment Moogle](progression/augments.md)** — Talk to the Augment Moogle at Purgonorgo Isle (z = -15, in the row with the other moogles).
+- **[Capacity Point Farms](progression/capacity-farm.md)** — Type !capacity (Bibiki Bay) or !ranperre (King Ranperre's Tomb) to warp to an always-up Capacity Point camp — a pool of 100 Capacity Phantom (Lv150-160) that…
+- **[Subjob EXP Share](progression/subjob-exp.md)** — Your subjob levels up in the background while you grind your main.
+- **[Weekly Hunt Board](progression/weekly-hunts.md)** — Talk to the Hunt Board NPC in Purgonorgo Isle (or type !weekly anywhere).
+- **[Daily Board](progression/daily-board.md)** — The Daily Board NPC is in Purgonorgo Isle (the hub zone).
+- **[Adventuring Fellow](progression/fellow-companion.md)** — Use !fellow to open the Fellow menu — summon/dismiss, allocate stat points, choose a role, set a name and appearance.
+- **[Achievement System](progression/achievements.md)** — Achievements are personal milestones that award bonus Hunt Marks and occasionally an in-game title when you hit them for the first time.
 
-**Augment Moogle (147 augment options)**
-Catalysts drop from monsters across the world. Trade them to the Augment Moogle to permanently apply stat bonuses to your gear. Pair with the Augment Sage to push augment strength even further.
+### Economy & services
 
-**Voidwatch**
-Examine Planar Rifts across 30 overworld zones to trigger tier-scaled Voidwalker NM fights. Probe hidden weaknesses with magic, weaponskills, and ranged attacks to light up Spectral Alignments and earn bigger rewards from the Riftworn Pyxis.
-
-**Adventuring Fellow**
-Summon a personal companion on any job. It levels from your kills and you spend the points on the stats you choose — name it, pick its look, and bring it into every fight.
-
-**Weekly Hunt Board**
-Five objectives, reset every week. Complete all five and you earn a significant bonus. Always rotating, never stale.
-
-**Daily Board**
-Three fresh objectives every day, reset at UTC midnight. Clear all three in one day for a bonus on top.
-
-**Custom Trusts**
-Summons you won't find on retail. **Gemma** heals, raises, buffs, debuffs, and magic-bursts your skillchains. **Meat** soaks every hit and refuses to let go of aggro. Each unlocks permanently through Hunting League rank + Hunt Marks (Gemma: Rank 3 + 3,000; Meat: Rank 2 + 2,000; Corvus: Rank 4 + 5,000) — no gil required.
-
-**Achievements (37 milestones)**
-Personal milestones paying bonus Hunt Marks and titles, with the biggest ones triggering a server-wide announcement.
-
-**Leaderboards**
-See where you rank across the server — most augments crafted, top hunters, fastest clears — pulled live from the database and refreshed regularly.
+- **[Cosmetic Boutique — Boutique Moogle](economy/cosmetic-boutique.md)** — A new cosmetic is featured every day (resets 00:00 UTC).
+- **[Gil Exchange — turning gil into Hunt Marks](economy/gil-exchange.md)** — A gil sink in the Purgonorgo Isle that buys Hunt Marks with your spare gil at intentionally poor rates — for players drowning in gil who still want progression.
+- **[Home Point Network — Purgonorgo Isle](economy/home-point.md)** — A Home Point crystal in the Purgonorgo Isle.
+- **[Race Changer](economy/race-changer.md)** — Pay a one-time gil fee at the Race Changer in the Purgonorgo Isle to switch your race and face — instant, cosmetic, and nothing else about your character…
+- **[Reforge Mark Exchange](economy/reforge-mark-exchange.md)** — Trade excess AF, Relic, or Empyrean marks for the line you need at the Reforge Exchange near the Gear Vendors — a small conversion tax keeps each track honest.
+- **[Sparks Exchange — Eminence Broker](economy/sparks-exchange.md)** — Trade Sparks of Eminence, Unity Accolades, Job Points, or Hunting Marks for gil at the Eminence Broker in the Purgonorgo Isle — pick a preset amount or cash…
 
 ---
 
