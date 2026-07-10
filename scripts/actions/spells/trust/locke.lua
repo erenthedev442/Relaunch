@@ -172,9 +172,17 @@ spellObject.onMobSpawn = function(mob)
     mob:addMod(xi.mod.SAMBA_DURATION, 60) -- Samba+ duration QoL so isn't using it more often.
 
     -----------------------------------
-    -- Weaponskills -- Uses Rudra's Storm and Mandalic Stab
+    -- Weaponskills -- Shark Bite / Evisceration / Mandalic Stab / Rudra's Storm
+    -- Ayame-mode (player request 2026-07-07): OPENER + SPECIAL_AYAME reads the
+    -- master's LAST-USED weaponskill and opens with whichever of Locke's WS
+    -- lets that WS close the highest-tier skillchain (Corvus stays the closer,
+    -- so the two DD trusts complement instead of both waiting to close). The
+    -- four openers span Fusion / Gravitation / Fragmentation / Distortion-
+    -- Darkness, so every common player closer has a level-3 setup. If the
+    -- master hasn't used a WS yet, he defaults to the last list entry
+    -- (Rudra's Storm).
     -----------------------------------
-    mob:setTrustTPSkillSettings(ai.tp.CLOSER_UNTIL_TP, ai.s.RANDOM, 3000)
+    mob:setTrustTPSkillSettings(ai.tp.OPENER, ai.s.SPECIAL_AYAME)
 
     -----------------------------------
     -- Gambits
