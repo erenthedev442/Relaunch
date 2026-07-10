@@ -17,7 +17,10 @@ xi.ambuscade = {}
 local SYS = xi.msg.channel.SYSTEM_3
 
 -- Retail-faithful Ambuscade weapon upgrade chain (Tokko->Ajja->Eletta->Kaja->Final).
-local AMBU_WPN = require('modules/custom/lua/ambuscade_weapons_catalog')
+-- LAZY-loaded on first "Weapons" menu click (see showGorpaMain), NOT at globals
+-- init: this is a cross-tree require of a modules/custom data file, and deferring
+-- it means a missing/broken catalog can never fail the whole ambuscade.lua load.
+local AMBU_WPN
 
 -- ─── Difficulty tables ────────────────────────────────────────────────────────
 local DIFF_NAME =
@@ -171,13 +174,16 @@ end
 local showWeaponMain  -- fwd decl
 
 -- Redeem a BASE (Tokko) weapon of your choice for Hallmarks.
+-- Page size 4 (not SHOP_PER_PAGE=6): the descriptive labels ("Polearm (Shining
+-- One)" etc.) would blow the 150-byte per-menu customMenu cap at 6/page.
+local WPN_PER_PAGE = 4
 local function buildWeaponBaseMenu(player, page, backFn)
     page = page or 0
     local chains = AMBU_WPN.CHAINS
-    local pages  = math.max(1, math.ceil(#chains / SHOP_PER_PAGE))
+    local pages  = math.max(1, math.ceil(#chains / WPN_PER_PAGE))
     page = page % pages
     local options = {}
-    for i = page * SHOP_PER_PAGE + 1, math.min((page + 1) * SHOP_PER_PAGE, #chains) do
+    for i = page * WPN_PER_PAGE + 1, math.min((page + 1) * WPN_PER_PAGE, #chains) do
         local chain = chains[i]
         options[#options + 1] =
         {
@@ -221,12 +227,13 @@ local function buildWeaponUpgradeMenu(player, backFn)
                 local ready = have >= rec.qty
                 options[#options + 1] =
                 {
-                    -- e.g. "Sword: Ajja->Eletta 5xGem (3/5)"
-                    string.format('%s: %s->%s %dx%s%s',
+                    -- Short to stay under the 150-byte menu cap with several weapons
+                    -- held. e.g. "Naegling->Eletta OK" / "Naegling->Eletta 3/5".
+                    -- (Material name/qty are stated in the confirm + error messages.)
+                    string.format('%s->%s %s',
                         chain.label:match('%((.-)%)') or chain.label,
-                        AMBU_WPN.STAGE_NAME[stage], AMBU_WPN.STAGE_NAME[stage + 1],
-                        rec.qty, (AMBU_WPN.MAT_NAME[rec.mat] or 'mat'):gsub('Abdhaljs ', ''),
-                        ready and '' or string.format(' (%d/%d)', have, rec.qty)),
+                        AMBU_WPN.STAGE_NAME[stage + 1],
+                        ready and 'OK' or string.format('%d/%d', have, rec.qty)),
                     function(pp)
                         if not pp:hasItem(fromId, xi.inv.INVENTORY) then
                             pp:printToPlayer('[Ambuscade] Unequip the weapon and keep it in your main inventory.', SYS)
@@ -250,8 +257,9 @@ local function buildWeaponUpgradeMenu(player, backFn)
         options[#options + 1] = { '(no upgradeable weapon in bag)', function(pp) backFn(pp) end }
     end
     options[#options + 1] = { 'Back', backFn }
-    -- 8-option cap: if a player somehow holds many stages, keep the newest 7 rows.
-    while #options > 8 do table.remove(options, 1) end
+    -- Cap at 5 weapon rows + Back so the short labels stay under BOTH the 8-option
+    -- and 150-byte customMenu caps even if a player holds many Ambuscade weapons.
+    while #options > 6 do table.remove(options, 1) end
     local snapshot = { title = 'Upgrade Weapon', options = options }
     player:timer(30, function(pp) pp:customMenu(snapshot) end)
 end
@@ -284,7 +292,17 @@ local function showGorpaMain(player)
         },
         {
             'Weapons',
-            function(pp) showWeaponMain(pp, function(p) showGorpaMain(p) end) end,
+            function(pp)
+                if not AMBU_WPN then
+                    local ok, cat = pcall(require, 'modules/custom/lua/ambuscade_weapons_catalog')
+                    if not ok or type(cat) ~= 'table' then
+                        pp:printToPlayer('[Ambuscade] Weapon exchange is temporarily unavailable.', SYS)
+                        return
+                    end
+                    AMBU_WPN = cat
+                end
+                showWeaponMain(pp, function(p) showGorpaMain(p) end)
+            end,
         },
         { 'Leave', function(pp) end },
     }
