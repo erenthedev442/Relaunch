@@ -446,14 +446,14 @@ end
 
 -- Each call creates a fresh per-player table so concurrent interactions
 -- never share state.  The 30ms timer defers the send outside onTrigger.
-local function sendMenu(player, options)
-    local m = { title = 'Game Master', options = options }
+local function sendMenu(player, options, title)
+    local m = { title = title or 'Game Master', options = options }
     player:timer(30, function(p) p:customMenu(m) end)
 end
 
 
 -- Confirm screen shown when a difficulty is picked.
-local function buildConfirmOptions(difficulty)
+local function buildConfirmOptions(difficulty, page)
     local diffDef = catalog.difficulties[difficulty]
     return {
         {
@@ -481,17 +481,16 @@ local function buildConfirmOptions(difficulty)
         },
         {
             'No - Back',
-            function(p) showStartMenu(p) end,
+            function(p) showStartMenu(p, page) end,
         },
     }
 end
 
 
-showStartMenu = function(player)
+showStartMenu = function(player, page)
     -- If a session is already live, the only valid action is to abort it (every
     -- difficulty button would just reject with "already running"). Show ONLY that
-    -- and return -- this also keeps the menu clear of the customMenu 8-option /
-    -- ~150-byte cap now that there are 7 difficulties (Abort + 7 = 8 = the edge).
+    -- and return.
     if getSession(player) then
         sendMenu(player, { {
             'Abort current session',
@@ -500,15 +499,24 @@ showStartMenu = function(player)
         return
     end
 
-    -- Top-level menu lists each difficulty.
+    -- Top-level menu lists each difficulty, PAGINATED. The whole menu ships as one
+    -- 150-byte chat packet (title + every quoted label) and the client renders only
+    -- a handful of rows, so each page shows at most PER tiers + up to two nav rows
+    -- (<< Back / More >>). PER=5 keeps every page <= 7 options with margin, so the
+    -- menu scales cleanly no matter how many tiers difficultyOrder grows to. Labels
+    -- are the tier NAME only (a '(N waves)' suffix would bloat the packet); the wave
+    -- count shows on the confirm screen + the carrot line below.
+    page = page or 1
+    local order = catalog.difficultyOrder
+    local PER   = 5
+    local pages = math.max(1, math.ceil(#order / PER))
+    if page < 1 then page = 1 elseif page > pages then page = pages end
+
     local options = {}
-    for _, diff in ipairs(catalog.difficultyOrder) do
+    for i = (page - 1) * PER + 1, math.min(page * PER, #order) do
+        local diff    = order[i]
         local diffDef = catalog.difficulties[diff]
         table.insert(options, {
-            -- Label is the tier name ONLY. The whole menu is sent as one 150-byte
-            -- chat-packet string (title + every quoted label); with 8 tiers the
-            -- old '%s (%d waves)' suffix overflowed it and truncated the last row.
-            -- Wave count is still shown on the confirm screen + the carrot line.
             diff,
             function(p)
                 -- Show the carrot up front: the full-clear payout + per-kill rate.
@@ -516,11 +524,23 @@ showStartMenu = function(player)
                     string.format('[ Game Master ] Clear all %d waves for %d marks! (+%d per kill along the way.)',
                         diffDef.wavesTotal, diffDef.completionBonus, diffDef.markBonus),
                     xi.msg.channel.SYSTEM_3)
-                sendMenu(p, buildConfirmOptions(diff))
+                -- Pass the current page so "No - Back" returns here, not to page 1.
+                sendMenu(p, buildConfirmOptions(diff, page))
             end,
         })
     end
-    sendMenu(player, options)
+
+    -- Navigation: add only the arrows that apply, so single-page menus stay clean
+    -- and any middle page (3+ pages) gets BOTH a previous and a next step.
+    if page > 1 then
+        table.insert(options, { '<< Back', function(p) showStartMenu(p, page - 1) end })
+    end
+    if page < pages then
+        table.insert(options, { 'More >>', function(p) showStartMenu(p, page + 1) end })
+    end
+
+    local title = (pages > 1) and string.format('Game Master %d/%d', page, pages) or 'Game Master'
+    sendMenu(player, options, title)
 end
 
 
