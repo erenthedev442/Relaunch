@@ -33,13 +33,21 @@ M.BASE_HM_COST = 2000
 M.STAGE_NAME = { 'Tokko', 'Ajja', 'Eletta', 'Kaja', 'Final' }
 
 -- Per-step upgrade recipe, keyed by the FROM-stage index (1..4).
---   mat = material itemId, qty = amount consumed.
+--   mat   = Abdhaljs material itemId, qty = amount consumed.
+--   extra = optional additional item consumed (id/qty/name).
+-- Retail's final step is "5 Abdhaljs Matter + 1 non-Ambuscade Pulse Weapon".
+-- Pulse Weapons are Vagary content that isn't obtainable on relaunch, so we honor
+-- the extra-gate with a Pulse CELL (パルス管, real in-DB Vagary "Pulse" material)
+-- instead, sold in Gorpa's Gallantry shop (see ambuscade.lua GAL_SHOP) so it's
+-- obtainable within Ambuscade and Gallantry finally has an endgame sink.
+M.PULSE_CELL = 3840  -- pulse_cell_mx (representative Pulse component)
 M.UPGRADE =
 {
     [1] = { mat = 9782, qty = 5 },  -- Tokko  -> Ajja   : 5 Nugget
     [2] = { mat = 9783, qty = 5 },  -- Ajja   -> Eletta : 5 Gem
     [3] = { mat = 9784, qty = 5 },  -- Eletta -> Kaja   : 5 Anima
-    [4] = { mat = 9785, qty = 5 },  -- Kaja   -> Final  : 5 Matter
+    [4] = { mat = 9785, qty = 5,    -- Kaja   -> Final  : 5 Matter + 1 Pulse Cell
+            extra = { id = 3840, qty = 1, name = 'Pulse Cell' } },
 }
 
 -- 14 chains (13 weapons + grip). stages = { Tokko, Ajja, Eletta, Kaja, Final }.

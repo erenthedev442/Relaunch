@@ -116,6 +116,10 @@ local HM_SHOP =
 -- ─── Gallantry shop ───────────────────────────────────────────────────────────
 local GAL_SHOP =
 {
+    -- Endgame sink: the Pulse Cell is the extra item consumed by the final
+    -- Ambuscade weapon upgrade (Kaja -> Final). Selling it for Gallantry gives
+    -- that currency a real purpose and keeps the weapon path self-contained.
+    { 3840, 'Pulse Cell',  3000 },
     { 739,  'Hi-Potion',   200  },
     { 771,  'Hi-Ether',    300  },
     { 833,  'Vile Elixir', 2000 },
@@ -221,27 +225,34 @@ local function buildWeaponUpgradeMenu(player, backFn)
         for stage = 1, 4 do
             local fromId = chain.stages[stage]
             if player:hasItem(fromId, xi.inv.INVENTORY) then
-                local rec   = AMBU_WPN.UPGRADE[stage]
-                local toId  = chain.stages[stage + 1]
-                local have  = player:getItemCount(rec.mat)
-                local ready = have >= rec.qty
+                local rec     = AMBU_WPN.UPGRADE[stage]
+                local toId    = chain.stages[stage + 1]
+                local have    = player:getItemCount(rec.mat)
+                local extraOk = not rec.extra or player:getItemCount(rec.extra.id) >= rec.extra.qty
+                local ready   = have >= rec.qty and extraOk
                 options[#options + 1] =
                 {
                     -- Short to stay under the 150-byte menu cap with several weapons
-                    -- held. e.g. "Naegling->Eletta OK" / "Naegling->Eletta 3/5".
-                    -- (Material name/qty are stated in the confirm + error messages.)
-                    string.format('%s->%s %s',
+                    -- held. e.g. "Naegling->Eletta OK" / "Naegling->Final 3/5 +P".
+                    -- (The final step's "+P" flags the extra Pulse Cell; the exact
+                    -- material name/qty are stated in the confirm + error messages.)
+                    string.format('%s->%s %s%s',
                         chain.label:match('%((.-)%)') or chain.label,
                         AMBU_WPN.STAGE_NAME[stage + 1],
-                        ready and 'OK' or string.format('%d/%d', have, rec.qty)),
+                        ready and 'OK' or string.format('%d/%d', have, rec.qty),
+                        rec.extra and ' +P' or ''),
                     function(pp)
                         if not pp:hasItem(fromId, xi.inv.INVENTORY) then
                             pp:printToPlayer('[Ambuscade] Unequip the weapon and keep it in your main inventory.', SYS)
                         elseif pp:getItemCount(rec.mat) < rec.qty then
                             pp:printToPlayer(string.format('[Ambuscade] Need %dx %s (have %d).',
                                 rec.qty, AMBU_WPN.MAT_NAME[rec.mat], pp:getItemCount(rec.mat)), SYS)
+                        elseif rec.extra and pp:getItemCount(rec.extra.id) < rec.extra.qty then
+                            pp:printToPlayer(string.format('[Ambuscade] Final step also needs %dx %s (have %d) -- buy it in the Gal Shop.',
+                                rec.extra.qty, rec.extra.name, pp:getItemCount(rec.extra.id)), SYS)
                         else
                             pp:delItem(rec.mat, rec.qty)
+                            if rec.extra then pp:delItem(rec.extra.id, rec.extra.qty) end
                             pp:delItem(fromId, 1)
                             pp:addItem(toId, 1)
                             pp:printToPlayer(string.format('[Ambuscade] Upgraded to %s %s!',
