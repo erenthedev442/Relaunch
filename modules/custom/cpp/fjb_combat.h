@@ -25,3 +25,9 @@ void NotifyOverCapDamage(CBattleEntity* PAttacker, int32 damage, std::string_vie
 // Scale an automaton's outgoing PHYSICAL damage by AUTOMATON_DMG_MULTIPLIER.
 // Returns damage unchanged for non-automaton attackers or damage <= 0.
 int32 ApplyAutomatonDamageBonus(CBattleEntity* PAttacker, int32 damage);
+
+// Scale a main-job-RNG player's outgoing RANGED damage (auto-shots, ranged
+// weaponskills, Eagle Eye Shot) by RANGER_RANGED_DMG_MULTIPLIER. Returns
+// damage unchanged for melee swings, other jobs (incl. COR), non-PCs, or
+// damage <= 0.
+int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRanged);

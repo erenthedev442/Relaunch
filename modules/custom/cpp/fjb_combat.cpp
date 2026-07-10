@@ -50,6 +50,15 @@ namespace
     // Does NOT touch magic-frame nukes or any non-automaton entity.
     // 2026-07-06: turned down 20 -> 5 (relaunch PUP power reduction).
     constexpr float AUTOMATON_DMG_MULTIPLIER = 5.0f;
+
+    // Main-job-RNG player ranged-damage multiplier (auto-shots, Barrage,
+    // ranged weaponskills, Eagle Eye Shot — everything funnels through
+    // TakePhysical/TakeWeaponskillDamage with a ranged slot). Melee swings,
+    // COR, and /RNG subs are untouched. Silent server-side trim per the
+    // no-visible-multiplier balance policy.
+    // 2026-07-10: RNG outpacing other DDs on relaunch — 0.80 (pending tune;
+    // edit here + rebuild to adjust).
+    constexpr float RANGER_RANGED_DMG_MULTIPLIER = 0.80f;
 } // namespace
 
 bool IsPlayerControlled(CBattleEntity* PAttacker)
@@ -84,6 +93,16 @@ int32 ApplyAutomatonDamageBonus(CBattleEntity* PAttacker, int32 damage)
         static_cast<CPetEntity*>(PAttacker)->getPetType() == PET_TYPE::AUTOMATON)
     {
         return static_cast<int32>(damage * AUTOMATON_DMG_MULTIPLIER);
+    }
+    return damage;
+}
+
+int32 ApplyRangerDamageAdjust(CBattleEntity* PAttacker, int32 damage, bool isRanged)
+{
+    if (damage > 0 && isRanged && PAttacker != nullptr && PAttacker->objtype == TYPE_PC &&
+        PAttacker->GetMJob() == JOB_RNG)
+    {
+        return static_cast<int32>(damage * RANGER_RANGED_DMG_MULTIPLIER);
     }
     return damage;
 }

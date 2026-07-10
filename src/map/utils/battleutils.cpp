@@ -2002,6 +2002,7 @@ bool TryInterruptSpell(CBattleEntity* PAttacker, CBattleEntity* PDefender, CSpel
 int32 TakePhysicalDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, PHYSICAL_ATTACK_TYPE physicalAttackType, int32 damage, bool isBlocked, uint8 slot, uint16 tpMultiplier, CBattleEntity* taChar, bool giveTPtoVictim, bool giveTPtoAttacker, bool isCounter, bool isCovered, CBattleEntity* POriginalTarget)
 {
     damage = ApplyAutomatonDamageBonus(PAttacker, damage); // FJB: automaton DPS multiplier (melee + ranged)
+    damage = ApplyRangerDamageAdjust(PAttacker, damage, slot == SLOT_AMMO || slot == SLOT_RANGED); // FJB: relaunch RNG ranged trim
     auto* weapon           = GetEntityWeapon(PAttacker, (SLOTTYPE)slot);
     giveTPtoAttacker       = giveTPtoAttacker && !PAttacker->StatusEffectContainer->HasStatusEffect(EFFECT_MEIKYO_SHISUI);
     giveTPtoVictim         = giveTPtoVictim && physicalAttackType != PHYSICAL_ATTACK_TYPE::DAKEN;
@@ -2345,6 +2346,8 @@ int32 TakeWeaponskillDamage(CBattleEntity* PAttacker, CBattleEntity* PDefender, 
     damage = ApplyAutomatonDamageBonus(PAttacker, damage); // FJB: automaton DPS multiplier (weaponskills)
 
     bool isRanged = (slot == SLOT_AMMO || slot == SLOT_RANGED);
+
+    damage = ApplyRangerDamageAdjust(PAttacker, damage, isRanged); // FJB: relaunch RNG ranged trim
 
     if (attackType == ATTACK_TYPE::PHYSICAL &&
         PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_DEFENSE_BOOST) &&
