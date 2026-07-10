@@ -52,7 +52,13 @@ auto unarmedH2H() -> CItemWeapon*;
 } // namespace xi::items
 
 #define MAX_ITEMID        32768
-#define MAX_DROPID        5000
+// FJB CORE PATCH: was 5000. dropId is a uint16 everywhere (DB load + GetDropList),
+// and custom content (Dynamis-Divergence waves, dropids 29401-29705) allocates ids
+// far above the stock range -- anything >= MAX_DROPID was silently skipped by
+// LoadDropList's WHERE and rejected by GetDropList ("DropID %u too big"), so those
+// mobs dropped nothing. 65536 spans the whole uint16 space (512 KB of pointers),
+// eliminating the trap for all future custom dropids.
+#define MAX_DROPID        65536
 #define MAX_LOOTID        1300
 #define MAX_DROP_GROUP_ID 255
 

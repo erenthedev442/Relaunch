@@ -505,7 +505,11 @@ showStartMenu = function(player)
     for _, diff in ipairs(catalog.difficultyOrder) do
         local diffDef = catalog.difficulties[diff]
         table.insert(options, {
-            string.format('%s (%d waves)', diff, diffDef.wavesTotal),
+            -- Label is the tier name ONLY. The whole menu is sent as one 150-byte
+            -- chat-packet string (title + every quoted label); with 8 tiers the
+            -- old '%s (%d waves)' suffix overflowed it and truncated the last row.
+            -- Wave count is still shown on the confirm screen + the carrot line.
+            diff,
             function(p)
                 -- Show the carrot up front: the full-clear payout + per-kill rate.
                 p:printToPlayer(

@@ -315,8 +315,14 @@ catalog.dungeons =
         {
             -- PROACTIVE reachability fix (2026-07-07, unverified): 5 far
             -- mobs pulled from disconnected sections into the reachable cluster
-            -- near the instance start (-40.0, 0.0, -5.0); midpoints of kept points.
-            { -49.72, -0.112, 5.45, 104 },
+            -- near the instance start; midpoints of kept points.
+            -- 2026-07-09: the instance start itself moved to the stock Talos
+            -- point (-49.72, -0.112, 5.45) -- the old (-40, 0, -5) floated 16
+            -- yalms above the real floor (Jamesta: spawned outside the map).
+            -- The mob that sat on the Talos point moved ~18y up the corridor
+            -- (between the stock Goblin_Bandit and Talos camps) so players
+            -- don't zone in on top of a golem.
+            { -52.0, -0.25, 24.0, 104 },
             { -51.19, -0.018, 32.207, 251 },
             { -62.33, -0.5, 19.027, 10 },
             { -71.84, -0.112, 30.037, 129 },

@@ -716,6 +716,9 @@ xi.weaponskills.doPhysicalWeaponskill = function(attacker, target, wsID, wsParam
     calcParams.finalDmg = finaldmg
     finaldmg            = xi.weaponskills.takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
 
+    -- Aeonic Aftermath: any melee WS applies it while an Aeonic mainhand is equipped (no-op otherwise)
+    xi.aftermath.addStatusEffect(attacker, tp, xi.slot.MAIN, xi.aftermath.type.AEONIC)
+
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
 
@@ -800,6 +803,9 @@ xi.weaponskills.doRangedWeaponskill = function(attacker, target, wsID, wsParams,
     if calcParams.ammoUsed and calcParams.ammoUsed > 0 then
         attacker:removeAmmo(calcParams.ammoUsed)
     end
+
+    -- Aeonic Aftermath: any ranged WS (e.g. Last Stand) applies it while an Aeonic gun/bow is equipped (no-op otherwise)
+    xi.aftermath.addStatusEffect(attacker, tp, xi.slot.RANGED, xi.aftermath.type.AEONIC)
 
     return finaldmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end
@@ -910,6 +916,9 @@ xi.weaponskills.doMagicWeaponskill = function(attacker, target, wsID, wsParams, 
     end
 
     dmg = xi.weaponskills.takeWeaponskillDamage(target, attacker, wsParams, primaryMsg, attack, calcParams, action)
+
+    -- Aeonic Aftermath: any magic WS applies it while an Aeonic mainhand is equipped (no-op otherwise)
+    xi.aftermath.addStatusEffect(attacker, tp, xi.slot.MAIN, xi.aftermath.type.AEONIC)
 
     return dmg, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.shadowsAbsorbed
 end

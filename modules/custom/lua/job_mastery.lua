@@ -1,7 +1,7 @@
 -----------------------------------
 -- job_mastery.lua
 --
--- JOB MASTERY CHALLENGES: each of the 12 weapon types has a powerful Guardian
+-- JOB MASTERY CHALLENGES: each of the 14 weapon types has a powerful Guardian
 -- boss that spawns in Walk of Echoes. Defeating your chosen Guardian earns
 -- Prime Weapon Trial 4 credit (charVar PW_Trial4_Done = 1).
 --
@@ -142,7 +142,7 @@ local AFFIXES = {
 }
 
 -----------------------------------
--- Guardian catalog (12 weapon types)
+-- Guardian catalog (14 weapon types)
 -- groupId picks from existing HL mob_groups (registered in zone 210 / GM_Home).
 -----------------------------------
 -- "10x harder" baked straight into the stat block (owner: silent difficulty --
@@ -169,12 +169,15 @@ local GUARDIANS =
     club       = { label = 'Club',       bossName = 'Guardian of the Mace',     level = 160, hp = 50000000, groupId = 11364 },
     staff      = { label = 'Staff',      bossName = 'Guardian of Elements',     level = 170, hp = 55000000, groupId = 11366 },
     archery    = { label = 'Archery',    bossName = 'Guardian of the Hunt',     level = 160, hp = 50000000, groupId = 11363 },
+    handtohand   = { label = 'H2H',        bossName = 'Guardian of the Fist',    level = 160, hp = 50000000, groupId = 11364 },
+    marksmanship = { label = 'Marksman',   bossName = 'Guardian of the Trigger', level = 160, hp = 50000000, groupId = 11363 },
 }
 
--- Page-ordered key list for the 2-page menu (6 per page).
+-- Display-ordered key list; the menu paginates this dynamically (6 per page).
 local GUARDIAN_ORDER = {
-    'sword', 'dagger', 'greatsword', 'axe', 'greataxe', 'scythe',
-    'polearm', 'katana', 'greatkatana', 'club', 'staff', 'archery',
+    'handtohand', 'sword', 'dagger', 'greatsword', 'axe', 'greataxe',
+    'scythe', 'polearm', 'katana', 'greatkatana', 'club', 'staff',
+    'archery', 'marksmanship',
 }
 
 -----------------------------------
@@ -374,7 +377,7 @@ local function startChallenge(player, weaponKey)
 end
 
 -----------------------------------
--- NPC menu (2 pages; each page ≤150 bytes including title + all labels)
+-- NPC menu (paginated 6 per page; each page <=150 bytes incl. title + labels)
 -----------------------------------
 local function showMasteryMenu(player, page)
     -- Print completion status above the menu.
@@ -390,10 +393,13 @@ local function showMasteryMenu(player, page)
         player:printToPlayer('[Mastery] No Weapon Guardians defeated yet. Trial 4 incomplete.', xi.msg.channel.SYSTEM_3)
     end
 
-    local title    = 'Mastery ' .. page .. '/2'
+    local PER_PAGE   = 6
+    local totalPages = math.ceil(#GUARDIAN_ORDER / PER_PAGE)
+    page = math.max(1, math.min(page or 1, totalPages))
+    local title    = 'Mastery ' .. page .. '/' .. totalPages
     local opts     = {}
-    local idxStart = (page == 1) and 1 or 7
-    local idxEnd   = (page == 1) and 6 or 12
+    local idxStart = (page - 1) * PER_PAGE + 1
+    local idxEnd   = math.min(page * PER_PAGE, #GUARDIAN_ORDER)
 
     for i = idxStart, idxEnd do
         local key    = GUARDIAN_ORDER[i]
@@ -416,10 +422,11 @@ local function showMasteryMenu(player, page)
         })
     end
 
-    if page == 1 then
-        table.insert(opts, { 'Next ->', function(p) showMasteryMenu(p, 2) end })
-    else
-        table.insert(opts, { '<- Back', function(p) showMasteryMenu(p, 1) end })
+    if page > 1 then
+        table.insert(opts, { '<- Back', function(p) showMasteryMenu(p, page - 1) end })
+    end
+    if page < totalPages then
+        table.insert(opts, { 'Next ->', function(p) showMasteryMenu(p, page + 1) end })
     end
     table.insert(opts, { 'Leave', function(p) end })
 

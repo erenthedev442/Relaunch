@@ -356,6 +356,47 @@ catalog.difficulties =
             { groupId = 11427, name = 'Shinryu' },
         },
     },
+
+    Ragnarok =
+    {
+        -- The absolute ceiling: 12 waves of 5 gods = 60 kills. hp x70 makes each
+        -- god a genuine endurance wall; an 8s waveDelay + 4s stagger gives almost
+        -- no breathing room. ATT 28000 sits just under the int16 mob-mod cap
+        -- (~31k) with clamp headroom over the mob's innate attack. Level held at
+        -- 235 (same reason as the tiers above: higher = mob EVASION outruns L99
+        -- melee, un-fun not hard). This is the top flat-menu tier -- an 8th
+        -- difficulty fills the customMenu's ~8-visible-option ceiling, so a 9th
+        -- would need the difficulty menu paginated. Push future pain via HP /
+        -- mods / counts. UNPLAYTESTED.
+        wavesTotal      = 12,
+        mobsPerWave     = 5,
+        graceDelay      = 10,
+        waveDelay       = 8,
+        spawnStagger    = 4,
+        minLevel        = 235,
+        maxLevel        = 235,
+        completionBonus = 2800,
+        markBonus       = 20,
+        hpBoost         = 70.0,
+        mods =
+        {
+            [xi.mod.ATT]           = 28000,
+            [xi.mod.ACC]           = 3600,
+            [xi.mod.STR]           = 1400,
+            [xi.mod.DEX]           = 1400,
+            [xi.mod.HASTE_GEAR]    = 256,
+            [xi.mod.DOUBLE_ATTACK] = 45,
+            [xi.mod.TRIPLE_ATTACK] = 33,
+            [xi.mod.QUAD_ATTACK]   = 16,
+        },
+        mobs =
+        {
+            { groupId = 11425, name = 'Kirin' },
+            { groupId = 11426, name = 'Absolute Virtue' },
+            { groupId = 11428, name = 'Pandemonium Warden' },
+            { groupId = 11427, name = 'Shinryu' },
+        },
+    },
 }
 
 -- Order the difficulties appear in the menu (Lua tables aren't ordered).
@@ -363,7 +404,7 @@ catalog.difficulties =
 -- Normal=2, Hard=4, Insane=8, Nightmare=16, Apocalypse=32, Oblivion=64. The
 -- Augment Moogle gate masks `& 31`, so tiers past Nightmare don't disturb it.
 -- Only ever APPEND here -- reordering would rewrite everyone's earned bits.
-catalog.difficultyOrder = { 'Easy', 'Normal', 'Hard', 'Insane', 'Nightmare', 'Apocalypse', 'Oblivion' }
+catalog.difficultyOrder = { 'Easy', 'Normal', 'Hard', 'Insane', 'Nightmare', 'Apocalypse', 'Oblivion', 'Ragnarok' }
 
 -- Spawn ring radius around the player. Mobs appear at this distance and
 -- random angles so they don't all stack on top of each other.

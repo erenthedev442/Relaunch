@@ -335,10 +335,13 @@ INSERT INTO `zone_settings` VALUES (290,0,'127.0.0.1',54230,'Desuetia_Empyreal_P
 INSERT INTO `zone_settings` VALUES (291,0,'127.0.0.1',54230,'Reisenjima',79,79,79,79,0,0.00,2176);
 INSERT INTO `zone_settings` VALUES (292,0,'127.0.0.1',54230,'Reisenjima_Henge',0,0,0,0,0,0.00,2048);
 INSERT INTO `zone_settings` VALUES (293,0,'127.0.0.1',54230,'Reisenjima_Sanctorium',0,0,0,0,0,0.00,2176);
-INSERT INTO `zone_settings` VALUES (294,128,'127.0.0.1',54230,'Dynamis-San_dOria_[D]',88,88,88,88,0,0.00,6544);
-INSERT INTO `zone_settings` VALUES (295,128,'127.0.0.1',54230,'Dynamis-Bastok_[D]',88,88,88,88,0,0.00,6544);
-INSERT INTO `zone_settings` VALUES (296,128,'127.0.0.1',54230,'Dynamis-Windurst_[D]',88,88,88,88,0,0.00,6544);
-INSERT INTO `zone_settings` VALUES (297,128,'127.0.0.1',54230,'Dynamis-Jeuno_[D]',88,88,88,88,0,0.00,6544);
+-- FJB CORE PATCH: [D] zones 384 = DYNAMIS|INSTANCED (was 128). The custom
+-- Dynamis-Divergence engine hosts these as instances; without the INSTANCED bit
+-- CInstanceLoader rejects createInstance ("Invalid zone for instanceid").
+INSERT INTO `zone_settings` VALUES (294,384,'127.0.0.1',54230,'Dynamis-San_dOria_[D]',88,88,88,88,0,0.00,6544);
+INSERT INTO `zone_settings` VALUES (295,384,'127.0.0.1',54230,'Dynamis-Bastok_[D]',88,88,88,88,0,0.00,6544);
+INSERT INTO `zone_settings` VALUES (296,384,'127.0.0.1',54230,'Dynamis-Windurst_[D]',88,88,88,88,0,0.00,6544);
+INSERT INTO `zone_settings` VALUES (297,384,'127.0.0.1',54230,'Dynamis-Jeuno_[D]',88,88,88,88,0,0.00,6544);
 INSERT INTO `zone_settings` VALUES (298,0,'127.0.0.1',54230,'Walk_of_Echoes_[P1]',186,186,186,186,0,0.00,2048);
 INSERT INTO `zone_settings` VALUES (299,0,'127.0.0.1',54230,'Gwora-Throne_Room',0,0,0,0,0,0.00,0);
 
