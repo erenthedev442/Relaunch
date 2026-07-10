@@ -207,6 +207,14 @@ _SECTIONS: list[tuple[str, list[tuple[str, str, str | None]]]] = [
             None,
         ),
         (
+            "Can I use universal ninjutsu tools with NIN as a subjob?",
+            "Yes — at level 75+, the universal tools (Inoshishinofuda, Shikanofuda, "
+            "Chonofuda) work with NIN set as your **subjob**, not just as your main "
+            "job like on retail. Below 75 you'll still need the regular per-spell "
+            "tools (Shihei, Uchitake, and so on) when subbing NIN.",
+            None,
+        ),
+        (
             "Are character files / progress safe? Are there backups?",
             "Yes — daily backups of the character database are taken. In a worst case, "
             "the most you'd lose is a few hours.",

@@ -3959,7 +3959,9 @@ bool HasNinjaTool(CBattleEntity* PEntity, CSpell* PSpell, bool ConsumeTool)
 
         if (ERROR_SLOTID == (SlotID = PChar->getStorage(LOC_INVENTORY)->SearchItem(toolID)))
         {
-            if (PChar->GetMJob() == JOB_NIN)
+            // RELAUNCH QoL: universal ninjutsu tools (fuda) also substitute for NIN
+            // subjob at level 75+ (retail/upstream: main-job NIN only, any level).
+            if (PChar->GetMJob() == JOB_NIN || (PChar->GetSJob() == JOB_NIN && PChar->GetMLevel() >= 75))
             {
                 switch (toolID)
                 {
