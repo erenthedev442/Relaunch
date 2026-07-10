@@ -311,6 +311,42 @@ MAXBOOST = {
     # base/mult are already at the integer floor (1/1), so maxBoost is the only
     # lever. Total song bonus across 5 slots is now +5..10 (was +5..40, stock +5..160).
     67: 1,
+
+    # ── 2026-07-09 premium-mod balance pass ──────────────────────────────────
+    # Most augments sit at the +32/slot floor (base/mult 1/1). That's fine for a
+    # plain stat, but for premium % mods +32 means +32% -- and stacking one across
+    # all 5 slots hit absurd item totals (+160% Double Attack, +320 MP/tick Refresh).
+    # DT (~10%) and Haste (~6%) were already capped via mult/disp; do the same for
+    # the rest via maxBoost. Per-slot cap = (1 + maxBoost) * mult.
+    # -- multi-attack (worst; best gear gives single-digit % total) --
+    354: 2,   # Quadruple Attack           -> +3%/slot   (was +32)
+    144: 4,   # Triple Atk                 -> +5%/slot   (was +32)
+    143: 7,   # Dbl.Atk                    -> +8%/slot   (was +32)
+    132: 7,   # Dbl.Atk. Crit.hit rate     -> +8 each    (combo)
+    44:  14,  # Store TP Subtle Blow       -> +15 each   (combo)
+    # -- crit / weaponskill / skillchain --
+    41:  9,   # Crit.hit rate              -> +10%       (was +32)
+    328: 9,   # Crit. hit damage           -> +10%
+    327: 9,   # Weapon skill damage        -> +10%
+    332: 9,   # Sklchn.dmg (mult 100)      -> +10%
+    # -- caster tempo / magic --
+    140: 9,   # Fast Cast                  -> +10%
+    351: 9,   # Occ. quickens (Quick Magic)-> +10%
+    334: 9,   # Magic burst dmg            -> +10%
+    133: 14,  # Mag.Atk.Bns                -> +15
+    2044: 7,  # Helix Damage (mult 15)     -> +120%      (was +480)
+    1370: 7,  # Enhances (mult 10)         -> +80        (was +320)
+    # -- resource / sustain --
+    138: 4,   # Refresh (mult 2)           -> +10/tick   (was +64)
+    137: 5,   # Regen (mult 4)             -> +24/tick   (was +128)
+    51:  15,  # HP recovered while healing (mult 4) -> +64 (was +128)
+    52:  15,  # MP recovered while healing (mult 4) -> +64
+    # -- strong (milder trims) --
+    142: 14,  # Store TP                   -> +15        (was +32)
+    195: 14,  # Subtle Blow                -> +15
+    363: 9,   # Chance of successful block -> +10%
+    329: 14,  # Cure potency               -> +15%
+    369: 11,  # Avatar Blood Pact Dmg      -> +12%
 }
 
 # Specific item IDs kept OUT of the catalyst pool entirely -- never offered as
