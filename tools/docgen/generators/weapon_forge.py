@@ -109,7 +109,12 @@ def _parse(text: str) -> dict:
     }
 
     # --- chains ---
-    chains_region = _slice(text, "catalog.chains", "LOOKUP TABLES", "catalog.byId")
+    # Bound the region at the next table (catalog.forgeMats). The later end
+    # anchors (LOOKUP TABLES / catalog.byId) sit *after* catalog.empyreanChains
+    # / mythicChains / relicChains, which repeat every weapon type with no
+    # s1/s2/s3 subtables and would clobber prime[t] (keyed by type, unguarded),
+    # leaving every Prime stage name blank.
+    chains_region = _slice(text, "catalog.chains", "catalog.forgeMats")
     starts = [m.start() for m in re.finditer(r"type\s*=\s*'", chains_region)]
     chains = []
     for idx, s in enumerate(starts):
