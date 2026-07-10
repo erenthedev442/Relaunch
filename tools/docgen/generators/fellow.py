@@ -200,14 +200,14 @@ def _render_roles(c: dict) -> str:
 
 
 def _render_customization(c: dict) -> str:
-    names = c["names"]
     models = c["models"]
     outfits = c["outfits"]
 
     lines = []
     lines.append(
-        f"**Names** — choose from **{len(names)}** curated names: "
-        f"{', '.join(names)}."
+        "**Names** — set a custom name with the `!fellowname <name>` command "
+        "(letters and spaces, up to 15 characters, run through a language filter). "
+        "It applies instantly if your Fellow is out and persists across sessions."
     )
     lines.append("")
     lines.append(

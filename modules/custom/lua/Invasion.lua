@@ -27,7 +27,7 @@ local mechanics = require('modules/custom/lua/mob_mechanics_library')
 -- upgrade chain), so strip every Ambuscade weapon stage from the Domain Invasion
 -- loot pool at load. Filtering here (not editing the 15k-line generated pool)
 -- keeps the change in one place and survives pool regeneration.
--- EXCLUSIVE_IDS = Eletta/Kaja/Final only (Tokko/Ajja stay -- Prime forge needs them).
+-- EXCLUSIVE_IDS = ALL Ambuscade stages (2026-07-10; feedstock earned from Ambuscade).
 local AMBU_WPN_IDS = require('modules/custom/lua/ambuscade_weapons_catalog').EXCLUSIVE_IDS
 local LOOT_POOL = {}
 for _, id in ipairs(require('modules/custom/lua/invasion_loot_pool')) do

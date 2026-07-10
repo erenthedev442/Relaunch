@@ -4,9 +4,15 @@
 -- DB:  ambuscade_adds.sql (cloned look from Gorpa-Masorpa)
 --
 -- Accepts Ambuscade Vouchers (item IDs 9235-9244) and exchanges them for
--- job-specific Ambuscade armor.  Fill in GEAR_BY_JOB with the item IDs that
--- exist on this server (query: SELECT itemid,name FROM item_equipment WHERE
--- name LIKE '%Ambuscade%' ORDER BY itemid;).
+-- job-specific Ambuscade armor. Gear data lives in scripts/globals/
+-- ambuscade.lua (xi.ambuscade.armorSets / xi.ambuscade.jobSets) so the
+-- clerk and Gorpa-Masorpa's upgrade trades share one catalog.
+--
+-- Both retail armor lines are offered from the SAME vouchers (this server
+-- has no second voucher currency): e.g. a DNC/THF head voucher can become
+-- either a Meghanada Visor (line 1) or a Mummu Bonnet (line 2). +1
+-- vouchers redeem the +1 piece directly; +2 comes from trading the piece
+-- + Abdhaljs Metal/Fiber to Gorpa-Masorpa.
 --
 -- Voucher IDs:
 --   Head 9235 / Body 9236 / Hands 9237 / Legs 9238 / Feet 9239
@@ -14,25 +20,7 @@
 -----------------------------------
 local SYS = xi.msg.channel.SYSTEM_3
 
------------------------------------
--- Gear catalog: { [jobId] = { head, body, hands, legs, feet, head+1, body+1, hands+1, legs+1, feet+1 } }
--- Fill in item IDs from your DB.  0 = slot not available for this job.
--- Example stub: all zeros until populated.
--- Run:  SELECT itemid, name FROM item_equipment WHERE name LIKE '%mbuscade%';
------------------------------------
-local GEAR_BY_JOB =
-{
-    -- [xi.job.WAR] = { 0,0,0,0,0, 0,0,0,0,0 },
-    -- [xi.job.MNK] = { 0,0,0,0,0, 0,0,0,0,0 },
-    -- ... fill in per job when item IDs are known ...
-}
-
--- Slot index mapping inside GEAR_BY_JOB row.
-local SLOT_BASE   = { 1, 2, 3, 4, 5 }   -- base head/body/hands/legs/feet
-local SLOT_PLUS1  = { 6, 7, 8, 9, 10 }  -- +1 variants
-local SLOT_NAME   = { 'Head', 'Body', 'Hands', 'Legs', 'Feet' }
-
--- Voucher IDs indexed the same way as SLOT_NAME.
+local SLOT_NAME     = { 'Head', 'Body', 'Hands', 'Legs', 'Feet' }
 local VOUCHER_BASE  = { 9235, 9236, 9237, 9238, 9239 }
 local VOUCHER_PLUS1 = { 9240, 9241, 9242, 9243, 9244 }
 
@@ -40,20 +28,22 @@ local function hasVoucher(player, voucherId)
     return player:hasItem(voucherId, xi.inv.INVENTORY)
 end
 
-local function doRedeem(player, slotIdx, isPlus1)
-    local jobId   = player:getMainJob()
-    local catalog = GEAR_BY_JOB[jobId]
-    if not catalog then
+-- Resolve the player's set for a line ('line1' or 'line2').
+-- Returns the set table (with .label/.nq/.p1) or nil.
+local function setForJob(player, lineKey)
+    local jobSets = xi.ambuscade.jobSets[player:getMainJob()]
+    local setKey  = jobSets and jobSets[lineKey]
+    return setKey and xi.ambuscade.armorSets[setKey] or nil
+end
+
+local function doRedeem(player, slotIdx, isPlus1, lineKey)
+    local set = setForJob(player, lineKey)
+    if not set then
         player:printToPlayer('[Ambuscade] No gear available for your current job.', SYS)
         return false
     end
 
-    local itemId  = isPlus1 and catalog[SLOT_PLUS1[slotIdx]] or catalog[SLOT_BASE[slotIdx]]
-    if not itemId or itemId == 0 then
-        player:printToPlayer('[Ambuscade] That gear slot is not available for your job.', SYS)
-        return false
-    end
-
+    local itemId = isPlus1 and set.p1[slotIdx] or set.nq[slotIdx]
     local voucherId = isPlus1 and VOUCHER_PLUS1[slotIdx] or VOUCHER_BASE[slotIdx]
     if not hasVoucher(player, voucherId) then
         player:printToPlayer('[Ambuscade] You do not have the required voucher.', SYS)
@@ -67,47 +57,46 @@ local function doRedeem(player, slotIdx, isPlus1)
 
     player:delItem(voucherId, 1)
     player:addItem(itemId, 1)
-    player:printToPlayer(string.format('[Ambuscade] Exchanged voucher for %s piece (%s).',
-        SLOT_NAME[slotIdx], isPlus1 and '+1' or 'base'), SYS)
+    player:printToPlayer(string.format('[Ambuscade] Exchanged voucher for %s %s piece (%s).',
+        set.label, SLOT_NAME[slotIdx], isPlus1 and '+1' or 'base'), SYS)
     return true
 end
 
-local function showSlotMenu(player, isPlus1, backFn)
-    local jobId   = player:getMainJob()
-    local catalog = GEAR_BY_JOB[jobId]
+local function showSlotMenu(player, isPlus1, lineKey, backFn)
+    local set     = setForJob(player, lineKey)
     local options = {}
     local vlist   = isPlus1 and VOUCHER_PLUS1 or VOUCHER_BASE
-    local slist   = isPlus1 and SLOT_PLUS1    or SLOT_BASE
 
     for i, slotName in ipairs(SLOT_NAME) do
-        local idx     = i
-        local hasVch  = hasVoucher(player, vlist[i])
-        local hasGear = catalog and catalog[slist[i]] and catalog[slist[i]] ~= 0
-        local tag     = (not hasVch and ' (no vou)') or (not hasGear and ' (N/A)') or ''
+        local idx    = i
+        local hasVch = hasVoucher(player, vlist[i])
+        local tag    = (not set and ' (N/A)') or (not hasVch and ' (no vou)') or ''
         options[#options + 1] =
         {
             slotName .. tag,
-            function(pp) doRedeem(pp, idx, isPlus1); showSlotMenu(pp, isPlus1, backFn) end,
+            function(pp) doRedeem(pp, idx, isPlus1, lineKey); showSlotMenu(pp, isPlus1, lineKey, backFn) end,
         }
     end
     options[#options + 1] = { 'Back', backFn }
 
-    local title = isPlus1 and 'Redeem +1' or 'Redeem Base'
+    local title = string.format('%s %s', set and set.label or 'Redeem', isPlus1 and '+1' or 'Base')
     local snapshot = { title = title, options = options }
     player:timer(30, function(pp) pp:customMenu(snapshot) end)
 end
 
 local function showMainMenu(player)
+    local set1 = setForJob(player, 'line1')
+    local set2 = setForJob(player, 'line2')
+    local l1   = set1 and set1.label or 'Set 1'
+    local l2   = set2 and set2.label or 'Set 2'
+    local back = function(p) showMainMenu(p) end
+
     local options =
     {
-        {
-            'Redeem Base Gear',
-            function(pp) showSlotMenu(pp, false, function(p) showMainMenu(p) end) end,
-        },
-        {
-            'Redeem +1 Gear',
-            function(pp) showSlotMenu(pp, true, function(p) showMainMenu(p) end) end,
-        },
+        { string.format('Base: %s', l1), function(pp) showSlotMenu(pp, false, 'line1', back) end },
+        { string.format('+1:   %s', l1), function(pp) showSlotMenu(pp, true,  'line1', back) end },
+        { string.format('Base: %s', l2), function(pp) showSlotMenu(pp, false, 'line2', back) end },
+        { string.format('+1:   %s', l2), function(pp) showSlotMenu(pp, true,  'line2', back) end },
         { 'Leave', function(pp) end },
     }
     local snapshot = { title = 'Voucher Clerk', options = options }
@@ -123,13 +112,15 @@ end
 entity.onTrigger = function(player, npc)
     local hasAnyVoucher = false
     for _, vid in ipairs(VOUCHER_BASE) do
-        if hasVoucher(player, vid) then hasAnyVoucher = true; break end
-    end
-    for _, vid in ipairs(VOUCHER_PLUS1) do
-        if hasVoucher(player, vid) then hasAnyVoucher = true; break end
+        if hasVoucher(player, vid) then hasAnyVoucher = true break end
     end
     if not hasAnyVoucher then
-        player:printToPlayer('[Ambuscade] You have no vouchers.  Earn them by clearing Ambuscade!', SYS)
+        for _, vid in ipairs(VOUCHER_PLUS1) do
+            if hasVoucher(player, vid) then hasAnyVoucher = true break end
+        end
+    end
+    if not hasAnyVoucher then
+        player:printToPlayer('[Ambuscade] You have no vouchers. Gorpa-Masorpa sells them for Hallmarks -- earn those by clearing Ambuscade!', SYS)
         return
     end
     showMainMenu(player)

@@ -36,6 +36,7 @@
 -- Override module (onGameIn / onMobDeathEx) -> needs ONE map restart to load.
 -----------------------------------
 require('modules/module_utils')
+local FN = require('modules/custom/lua/fellow_name')  -- custom free-text name (replaced the preset list)
 
 local m   = Module:new('fellow_companion')
 local SYS = xi.msg.channel.SYSTEM_3
@@ -427,8 +428,12 @@ local function chosenWs(p)
     local mdl = CONFIG.models[getN(p, V.modelPet)]
     return mdl and mdl.ws
 end
+-- Naming is free-text via the !fellowname command (fellow_name.lua). The old
+-- preset name list (CONFIG.names / Fellow_NameIdx) was replaced 2026-07-09;
+-- fall back to a generic default until the player sets a custom name.
+local DEFAULT_FELLOW_NAME = 'Fellow'
 local function chosenName(p)
-    return CONFIG.names[getN(p, V.nameIdx)]  -- nil if unset -> no rename
+    return FN.read(p) or DEFAULT_FELLOW_NAME
 end
 
 local function xpToNext(level) return CONFIG.xpBase * level end
@@ -873,7 +878,7 @@ openMain = function(p)
           function(pp) if getN(pp, V.active) == 1 then dismiss(pp) else summon(pp) end end },
         { string.format('Allocate Points (%d)', getPoints(p)), function(pp) openAllocate(pp) end },
         { 'Choose Role',  function(pp) openRole(pp) end },
-        { 'Choose Name',  function(pp) openName(pp, 0) end },
+        { 'Name',         function(pp) openName(pp) end },
         { 'Appearance',   function(pp) openModel(pp, 0) end },
         { 'Outfit',       function(pp) openOutfit(pp, 0) end },
         { 'View Status',  function(pp) statusReport(pp); openMain(pp) end },
@@ -1142,36 +1147,22 @@ openRole = function(p, page)
     show(p, 'Choose Role', options)
 end
 
--- Paginated name picker -> renames the live Fellow instantly (and on next spawn).
-openName = function(p, page)
-    page = page or 0
-    local names = CONFIG.names
-    local per   = CONFIG.namesPerPage
-    local pages = math.max(1, math.ceil(#names / per))
-    page = page % pages
-    local cur   = getN(p, V.nameIdx)
-    local options = {}
-    for i = page * per + 1, math.min((page + 1) * per, #names) do
-        local idx = i
-        local label = (idx == cur) and (names[idx] .. ' *') or names[idx]
-        options[#options + 1] =
+-- Free-text naming replaced the old preset picker: names are set with the
+-- !fellowname command (there is no client dialog to type into from a menu).
+-- This screen shows the current name and how to change it.
+openName = function(p)
+    local cur = FN.read(p) or ('(' .. DEFAULT_FELLOW_NAME .. ')')
+    show(p, string.format('Fellow Name: %s', cur),
+    {
         {
-            label,
+            'How to rename -> !fellowname',
             function(pp)
-                setN(pp, V.nameIdx, idx)
-                if pp:hasPet() and petIsFellow(pp:getPet()) then
-                    pcall(function() pp:getPet():renameEntity(names[idx], true) end)
-                end
-                pp:printToPlayer(string.format('[Fellow] Name set: %s', names[idx]), SYS)
-                openName(pp, page)
+                pp:printToPlayer('[Fellow] Type  !fellowname <name>  to set a custom name (letters and spaces, max 15 chars).', SYS)
+                openMain(pp)
             end,
-        }
-    end
-    if pages > 1 then
-        options[#options + 1] = { 'More >>', function(pp) openName(pp, page + 1) end }
-    end
-    options[#options + 1] = { 'Back', function(pp) openMain(pp) end }
-    show(p, 'Choose Name', options)
+        },
+        { 'Back', function(pp) openMain(pp) end },
+    })
 end
 
 -- Paginated appearance picker -> swaps the spawn chassis (petId); re-summon to apply.

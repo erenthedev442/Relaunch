@@ -89,13 +89,15 @@ for _, chain in ipairs(M.CHAINS) do
 end
 
 -- Set used by the "Ambuscade-exclusive" scrubs (gear vendor / Domain Invasion):
--- ONLY the Eletta / Kaja / Final stages (indices 3,4,5). Tokko + Ajja (1,2) are
--- DELIBERATELY EXCLUDED -- the Prime WeaponForge sources those same items as its
--- 119I/119II stages from the seal vendor, so scrubbing them would break Prime.
--- The equippable Ambuscade weapons players care about (Eletta+) stay exclusive.
+-- ALL FIVE stages. As of 2026-07-10 the Prime/Aeonic forge 119I/119II feedstock
+-- is EARNED FROM AMBUSCADE (redeem a base Tokko for Hallmarks, then walk the
+-- Tokko->Ajja->Eletta->Kaja->Final upgrade chain -- scripts/globals/ambuscade.lua),
+-- NOT bought at the medal vendor, so the ENTIRE Ambuscade weapon family is now
+-- vendor-exclusive. Tokko + Ajja (stages 1-2) used to be a deliberate exception
+-- kept for the Prime forge's feedstock; that dependency is gone, so they scrub too.
 M.EXCLUSIVE_IDS = {}
 for _, chain in ipairs(M.CHAINS) do
-    for si = 3, 5 do
+    for si = 1, 5 do
         M.EXCLUSIVE_IDS[chain.stages[si]] = true
     end
 end

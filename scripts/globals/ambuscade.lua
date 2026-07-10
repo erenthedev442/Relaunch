@@ -113,6 +113,77 @@ local HM_SHOP =
     { 9244, 'Vou.Ft+1',  5000 },
 }
 
+-- ─── Ambuscade armor ──────────────────────────────────────────────────────────
+-- The two retail Ambuscade armor lines (item IDs verified against
+-- sql/item_basic.sql). Each set: { head, body, hands, legs, feet }.
+--   Line 1 "Salvage variant"     -- redeemed with Ambuscade Vouchers at the
+--                                   Voucher Clerk; upgrades with Abdhaljs METAL.
+--   Line 2 "Limbus/Nyzul variant" -- redeemed with the SAME vouchers (this
+--                                   server has no second voucher currency);
+--                                   upgrades with Abdhaljs FIBER.
+-- Upgrades happen by TRADE to Gorpa-Masorpa (onTradeGorpaMasorpa below):
+--   NQ piece + 5x material  -> +1
+--   +1 piece + 10x material -> +2
+local MAT_METAL = 9270  -- Abdhaljs Metal (sold in the Hallmark shop)
+local MAT_FIBER = 9271  -- Abdhaljs Fiber (sold in the Hallmark shop)
+
+local ARMOR_SETS =
+{
+    -- Line 1 (voucher line) -- upgrades with Metal
+    sulevia   = { label = "Sulevia's",  mat = MAT_METAL, nq = { 25659, 25745, 25800, 25858, 25925 }, p1 = { 25660, 25746, 25801, 25859, 25926 }, p2 = { 25574, 25790, 25828, 25879, 25946 } },
+    hizamaru  = { label = 'Hizamaru',   mat = MAT_METAL, nq = { 25663, 25749, 25804, 25862, 25929 }, p1 = { 25664, 25750, 25805, 25863, 25930 }, p2 = { 25576, 25792, 25830, 25881, 25948 } },
+    inyanga   = { label = 'Inyanga',    mat = MAT_METAL, nq = { 25665, 25751, 25806, 25865, 25931 }, p1 = { 25666, 25752, 25807, 25866, 25932 }, p2 = { 25577, 25793, 25831, 25882, 25949 } },
+    meghanada = { label = 'Meghanada',  mat = MAT_METAL, nq = { 25661, 25747, 25802, 25860, 25927 }, p1 = { 25662, 25748, 25803, 25861, 25928 }, p2 = { 25575, 25791, 25829, 25880, 25947 } },
+    jhakri    = { label = 'Jhakri',     mat = MAT_METAL, nq = { 25667, 25753, 25808, 25867, 25933 }, p1 = { 25668, 25754, 25809, 25868, 25934 }, p2 = { 25578, 25794, 25832, 25883, 25950 } },
+    -- Line 2 (alt line) -- upgrades with Fiber
+    flamma    = { label = 'Flamma',     mat = MAT_FIBER, nq = { 25579, 25779, 25818, 25873, 25940 }, p1 = { 25580, 25780, 25819, 25874, 25941 }, p2 = { 25569, 25797, 25835, 25886, 25953 } },
+    taliah    = { label = "Tali'ah",    mat = MAT_FIBER, nq = { 25590, 25764, 25812, 25871, 25937 }, p1 = { 25591, 25765, 25813, 25872, 25938 }, p2 = { 25573, 25796, 25834, 25885, 25952 } },
+    mummu     = { label = 'Mummu',      mat = MAT_FIBER, nq = { 25581, 25781, 25820, 25875, 25942 }, p1 = { 25582, 25782, 25821, 25876, 25943 }, p2 = { 25570, 25798, 25836, 25887, 25954 } },
+    ayanmo    = { label = 'Ayanmo',     mat = MAT_FIBER, nq = { 25588, 25762, 25810, 25869, 25935 }, p1 = { 25589, 25763, 25811, 25870, 25936 }, p2 = { 25572, 25795, 25833, 25884, 25951 } },
+    mallquis  = { label = 'Mallquis',   mat = MAT_FIBER, nq = { 25583, 25783, 25822, 25877, 25944 }, p1 = { 25584, 25784, 25823, 25878, 25945 }, p2 = { 25571, 25799, 25837, 25888, 25955 } },
+}
+
+-- Which set each job gets, per line (retail job coverage -- every one of the
+-- 22 jobs appears exactly once in each line).
+local JOB_SETS =
+{
+    [xi.job.WAR] = { line1 = 'sulevia',   line2 = 'flamma'   },
+    [xi.job.MNK] = { line1 = 'hizamaru',  line2 = 'mummu'    },
+    [xi.job.WHM] = { line1 = 'inyanga',   line2 = 'ayanmo'   },
+    [xi.job.BLM] = { line1 = 'jhakri',    line2 = 'mallquis' },
+    [xi.job.RDM] = { line1 = 'jhakri',    line2 = 'ayanmo'   },
+    [xi.job.THF] = { line1 = 'meghanada', line2 = 'mummu'    },
+    [xi.job.PLD] = { line1 = 'sulevia',   line2 = 'flamma'   },
+    [xi.job.DRK] = { line1 = 'sulevia',   line2 = 'flamma'   },
+    [xi.job.BST] = { line1 = 'meghanada', line2 = 'taliah'   },
+    [xi.job.BRD] = { line1 = 'inyanga',   line2 = 'ayanmo'   },
+    [xi.job.RNG] = { line1 = 'meghanada', line2 = 'mummu'    },
+    [xi.job.SAM] = { line1 = 'hizamaru',  line2 = 'flamma'   },
+    [xi.job.NIN] = { line1 = 'hizamaru',  line2 = 'mummu'    },
+    [xi.job.DRG] = { line1 = 'sulevia',   line2 = 'flamma'   },
+    [xi.job.SMN] = { line1 = 'inyanga',   line2 = 'taliah'   },
+    [xi.job.BLU] = { line1 = 'jhakri',    line2 = 'ayanmo'   },
+    [xi.job.COR] = { line1 = 'meghanada', line2 = 'mummu'    },
+    [xi.job.PUP] = { line1 = 'hizamaru',  line2 = 'taliah'   },
+    [xi.job.DNC] = { line1 = 'meghanada', line2 = 'mummu'    },
+    [xi.job.SCH] = { line1 = 'jhakri',    line2 = 'mallquis' },
+    [xi.job.GEO] = { line1 = 'jhakri',    line2 = 'mallquis' },
+    [xi.job.RUN] = { line1 = 'meghanada', line2 = 'ayanmo'   },
+}
+
+-- Exposed for the Voucher Clerk (scripts/zones/Mhaura/npcs/Ambuscade_Voucher_Clerk.lua).
+xi.ambuscade.armorSets = ARMOR_SETS
+xi.ambuscade.jobSets   = JOB_SETS
+
+-- itemId -> { result, mat, qty } upgrade map, built once at load.
+local UPGRADES = {}
+for _, set in pairs(ARMOR_SETS) do
+    for i = 1, 5 do
+        UPGRADES[set.nq[i]] = { result = set.p1[i], mat = set.mat, qty = 5  }
+        UPGRADES[set.p1[i]] = { result = set.p2[i], mat = set.mat, qty = 10 }
+    end
+end
+
 -- ─── Gallantry shop ───────────────────────────────────────────────────────────
 local GAL_SHOP =
 {
@@ -322,7 +393,31 @@ local function showGorpaMain(player)
 end
 
 -- ─── Gorpa-Masorpa ────────────────────────────────────────────────────────────
+-- Armor upgrade trades (was an empty stub until 2026-07-10 -- player report
+-- Jamesta: the documented upgrade trades did nothing):
+--   NQ piece + 5x its line's Abdhaljs material  -> +1 piece
+--   +1 piece + 10x its line's Abdhaljs material -> +2 piece
+-- Line 1 (Sulevia's/Hizamaru/Inyanga/Meghanada/Jhakri) uses Metal (9270);
+-- line 2 (Flamma/Tali'ah/Mummu/Ayanmo/Mallquis) uses Fiber (9271). Both
+-- materials are sold in the Hallmark shop above.
 xi.ambuscade.onTradeGorpaMasorpa = function(player, npc, trade)
+    for gearId, up in pairs(UPGRADES) do
+        if trade:hasItemQty(gearId, 1) then
+            if npcUtil.tradeHasExactly(trade, { gearId, { up.mat, up.qty } }) then
+                if npcUtil.giveItem(player, up.result) then
+                    player:confirmTrade()
+                    player:printToPlayer('[Ambuscade] A fine piece -- wear it with pride!', SYS)
+                end
+            else
+                local matName = up.mat == 9270 and 'Abdhaljs Metal' or 'Abdhaljs Fiber'
+                player:printToPlayer(string.format(
+                    '[Ambuscade] To upgrade that piece, trade it together with exactly %dx %s (sold here for Hallmarks).',
+                    up.qty, matName), SYS)
+            end
+            return
+        end
+    end
+    player:printToPlayer('[Ambuscade] Trade me an Ambuscade armor piece + its Abdhaljs material (Metal or Fiber) to upgrade it: NQ+5 -> +1, +1+10 -> +2.', SYS)
 end
 
 xi.ambuscade.onTriggerGorpaMasorpa = function(player, npc)

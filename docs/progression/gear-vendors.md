@@ -251,25 +251,17 @@ _175 pieces — 🥉 57 Bronze · 🥈 57 Silver · 🥇 61 Gold. Each slot list
 Tiered weapons grouped by category. Empty categories are hidden — only categories with stocked weapons appear.
 
 <!-- DOCGEN:BEGIN id="weapons-slots" -->
-_47 weapons — 🥉 14 Bronze · 🥈 23 Silver · 🥇 10 Gold. Each slot lists every tier together — pick by your job and the medal you have._
+_23 weapons — 🥉 1 Bronze · 🥈 21 Silver · 🥇 1 Gold. Each slot lists every tier together — pick by your job and the medal you have._
 
 **Tiers:** <span class="tier-pill tier-bronze">🥉&nbsp;Bronze</span> Beastmens Medal — entry endgame ilvl 119 · <span class="tier-pill tier-silver">🥈&nbsp;Silver</span> Kindreds Medal — event / Dynamis-D / Omen / Escha · <span class="tier-pill tier-gold">🥇&nbsp;Gold</span> Demons Medal — REMA + Aeonic
-
-### Swords
-
-| Item | Tier | Cost | Jobs |
-|---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21617" data-img="https://www.bg-wiki.com/images/6/61/Tokko_Sword_description.png" target="_blank" rel="noopener">Tokko Sword</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/21619" data-img="https://www.bg-wiki.com/images/9/98/Eletta_Sword_description.png" target="_blank" rel="noopener">Eletta Sword</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/NIN/DRG/BLU/COR/RUN |
 
 ### Daggers
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21561" data-img="https://www.bg-wiki.com/images/8/8f/Tokko_Knife_description.png" target="_blank" rel="noopener">Tokko Knife</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | RDM/THF/BST/BRD/RNG/NIN/COR/PUP/DNC |
-| <a class="item-link" href="https://www.ffxiah.com/item/20615" data-img="https://www.bg-wiki.com/images/2/28/Levante_Dagger_description.png" target="_blank" rel="noopener">Levante Dagger</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/SCH/GEO |
-| <a class="item-link" href="https://www.ffxiah.com/item/21566" data-img="https://www.bg-wiki.com/images/8/8c/Voluspa_Knife_description.png" target="_blank" rel="noopener">Voluspa Knife</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC |
-| <a class="item-link" href="https://www.ffxiah.com/item/21568" data-img="https://www.bg-wiki.com/images/2/28/Acrontica_description.png" target="_blank" rel="noopener">Acrontica</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | THF/DNC |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Levante+Dagger&go=Go" data-img="" target="_blank" rel="noopener">Levante Dagger</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/SCH/GEO |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Voluspa+Knife&go=Go" data-img="" target="_blank" rel="noopener">Voluspa Knife</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Acrontica&go=Go" data-img="" target="_blank" rel="noopener">Acrontica</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | THF/DNC |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Chocobo+Knife&go=Go" data-img="" target="_blank" rel="noopener">Chocobo Knife</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RDM/THF/BRD/RNG/DNC |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Air+Knife&go=Go" data-img="" target="_blank" rel="noopener">Air Knife</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | THF/DNC |
 
@@ -277,105 +269,69 @@ _47 weapons — 🥉 14 Bronze · 🥈 23 Silver · 🥇 10 Gold. Each slot list
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/22027" data-img="https://www.bg-wiki.com/images/b/b6/Tokko_Rod_description.png" target="_blank" rel="noopener">Tokko Rod</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/SMN/BLU/SCH/GEO |
-| <a class="item-link" href="https://www.ffxiah.com/item/21104" data-img="https://www.bg-wiki.com/images/b/bf/Eosuchus_Club_description.png" target="_blank" rel="noopener">Eosuchus Club</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | All |
-| <a class="item-link" href="https://www.ffxiah.com/item/22006" data-img="https://www.bg-wiki.com/images/b/b6/Voluspa_Hammer_description.png" target="_blank" rel="noopener">Voluspa Hammer</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/GEO |
-| <a class="item-link" href="https://www.ffxiah.com/item/22029" data-img="https://www.bg-wiki.com/images/8/85/Eletta_Rod_description.png" target="_blank" rel="noopener">Eletta Rod</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WHM/BLM/RDM/SMN/BLU/SCH/GEO |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Eosuchus+Club&go=Go" data-img="" target="_blank" rel="noopener">Eosuchus Club</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | All |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Voluspa+Hammer&go=Go" data-img="" target="_blank" rel="noopener">Voluspa Hammer</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/GEO |
 
 ### Staves
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/22082" data-img="https://www.bg-wiki.com/images/8/89/Tokko_Staff_description.png" target="_blank" rel="noopener">Tokko Staff</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO |
-| <a class="item-link" href="https://www.ffxiah.com/item/22088" data-img="https://www.bg-wiki.com/images/0/0b/Voluspa_Pole_description.png" target="_blank" rel="noopener">Voluspa Pole</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/WHM/BLM/SMN/SCH/GEO |
-| <a class="item-link" href="https://www.ffxiah.com/item/22084" data-img="https://www.bg-wiki.com/images/c/c9/Eletta_Staff_description.png" target="_blank" rel="noopener">Eletta Staff</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/SCH/GEO |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Voluspa+Pole&go=Go" data-img="" target="_blank" rel="noopener">Voluspa Pole</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/WHM/BLM/SMN/SCH/GEO |
 
 ### Great Swords
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21670" data-img="https://www.bg-wiki.com/images/8/81/Tokko_Claymore_description.png" target="_blank" rel="noopener">Tokko Claymore</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/PLD/DRK/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/21665" data-img="https://www.bg-wiki.com/images/6/6a/Voluspa_Blade_description.png" target="_blank" rel="noopener">Voluspa Blade</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | PLD/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/21672" data-img="https://www.bg-wiki.com/images/5/59/Eletta_Claymore_description.png" target="_blank" rel="noopener">Eletta Claymore</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/PLD/DRK/RUN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Voluspa+Blade&go=Go" data-img="" target="_blank" rel="noopener">Voluspa Blade</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | PLD/RUN |
 
 ### Axes
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21718" data-img="https://www.bg-wiki.com/images/9/9c/Tokko_Axe_description.png" target="_blank" rel="noopener">Tokko Axe</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/DRK/BST/RNG/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/20808" data-img="https://www.bg-wiki.com/images/f/f7/Tramontane_Axe_description.png" target="_blank" rel="noopener">Tramontane Axe</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/DRK/BST/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/20827" data-img="https://www.bg-wiki.com/images/9/9b/Kerehcatl_description.png" target="_blank" rel="noopener">Kerehcatl</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/BST |
-| <a class="item-link" href="https://www.ffxiah.com/item/21720" data-img="https://www.bg-wiki.com/images/c/c7/Eletta_Axe_description.png" target="_blank" rel="noopener">Eletta Axe</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/DRK/BST/RNG/RUN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Tramontane+Axe&go=Go" data-img="" target="_blank" rel="noopener">Tramontane Axe</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/DRK/BST/RUN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Kerehcatl&go=Go" data-img="" target="_blank" rel="noopener">Kerehcatl</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/BST |
 
 ### Great Axes
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21775" data-img="https://www.bg-wiki.com/images/e/ef/Tokko_Chopper_description.png" target="_blank" rel="noopener">Tokko Chopper</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/DRK/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/21769" data-img="https://www.bg-wiki.com/images/0/09/Voluspa_Chopper_description.png" target="_blank" rel="noopener">Voluspa Chopper</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/DRK/RUN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Voluspa+Chopper&go=Go" data-img="" target="_blank" rel="noopener">Voluspa Chopper</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/DRK/RUN |
 
 ### Scythes
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21826" data-img="https://www.bg-wiki.com/images/f/fe/Tokko_Scythe_description.png" target="_blank" rel="noopener">Tokko Scythe</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/BLM/DRK/BST |
-| <a class="item-link" href="https://www.ffxiah.com/item/20893" data-img="https://www.bg-wiki.com/images/d/db/Shukuyu%27s_Scythe_description.png" target="_blank" rel="noopener">Shukuyus Scythe</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/DRK/BST |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Shukuyus+Scythe&go=Go" data-img="" target="_blank" rel="noopener">Shukuyus Scythe</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/DRK/BST |
 
 ### Polearms
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21879" data-img="https://www.bg-wiki.com/images/b/b8/Tokko_Lance_description.png" target="_blank" rel="noopener">Tokko Lance</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/PLD/SAM/DRG |
-| <a class="item-link" href="https://www.ffxiah.com/item/20945" data-img="https://www.bg-wiki.com/images/d/dc/Nativus_Halberd_description.png" target="_blank" rel="noopener">Nativus Halberd</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/SAM/DRG |
-
-### Katana
-
-| Item | Tier | Cost | Jobs |
-|---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21918" data-img="https://www.bg-wiki.com/images/0/02/Tokko_Katana_description.png" target="_blank" rel="noopener">Tokko Katana</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | NIN |
-| <a class="item-link" href="https://www.ffxiah.com/item/21920" data-img="https://www.bg-wiki.com/images/c/cf/Eletta_Katana_description.png" target="_blank" rel="noopener">Eletta Katana</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | NIN |
-
-### Great Katana
-
-| Item | Tier | Cost | Jobs |
-|---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21971" data-img="https://www.bg-wiki.com/images/7/79/Tokko_Tachi_description.png" target="_blank" rel="noopener">Tokko Tachi</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | SAM/NIN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Nativus+Halberd&go=Go" data-img="" target="_blank" rel="noopener">Nativus Halberd</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/SAM/DRG |
 
 ### Archery
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/22108" data-img="https://www.bg-wiki.com/images/c/cd/Tokko_Bow_description.png" target="_blank" rel="noopener">Tokko Bow</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN |
-| <a class="item-link" href="https://www.ffxiah.com/item/21228" data-img="https://www.bg-wiki.com/images/7/73/Falubeza_description.png" target="_blank" rel="noopener">Falubeza</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
-| <a class="item-link" href="https://www.ffxiah.com/item/22111" data-img="https://www.bg-wiki.com/images/5/51/Kaja_Bow_description.png" target="_blank" rel="noopener">Kaja Bow</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN |
-| <a class="item-link" href="https://www.ffxiah.com/item/22118" data-img="https://www.bg-wiki.com/images/3/31/Venery_Bow_description.png" target="_blank" rel="noopener">Venery Bow</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
-| <a class="item-link" href="https://www.ffxiah.com/item/22133" data-img="https://www.bg-wiki.com/images/8/81/Voluspa_Bow_description.png" target="_blank" rel="noopener">Voluspa Bow</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
-| <a class="item-link" href="https://www.ffxiah.com/item/22110" data-img="https://www.bg-wiki.com/images/1/1a/Eletta_Bow_description.png" target="_blank" rel="noopener">Eletta Bow</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/NIN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Falubeza&go=Go" data-img="" target="_blank" rel="noopener">Falubeza</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Venery+Bow&go=Go" data-img="" target="_blank" rel="noopener">Venery Bow</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Voluspa+Bow&go=Go" data-img="" target="_blank" rel="noopener">Voluspa Bow</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
 
 ### Marksmanship
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21274" data-img="https://www.bg-wiki.com/images/9/90/Donar_Gun_description.png" target="_blank" rel="noopener">Donar Gun</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | THF/RNG/NIN/COR |
-| <a class="item-link" href="https://www.ffxiah.com/item/21256" data-img="https://www.bg-wiki.com/images/f/f9/Illapa_description.png" target="_blank" rel="noopener">Illapa</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
-| <a class="item-link" href="https://www.ffxiah.com/item/22119" data-img="https://www.bg-wiki.com/images/e/e5/Wochowsen_description.png" target="_blank" rel="noopener">Wochowsen</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
-| <a class="item-link" href="https://www.ffxiah.com/item/22144" data-img="https://www.bg-wiki.com/images/7/77/Voluspa_Gun_description.png" target="_blank" rel="noopener">Voluspa Gun</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG/COR |
-| <a class="item-link" href="https://www.ffxiah.com/item/21273" data-img="https://www.bg-wiki.com/images/4/45/Nibiru_Gun_description.png" target="_blank" rel="noopener">Nibiru Gun</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | RNG/COR |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Donar+Gun&go=Go" data-img="" target="_blank" rel="noopener">Donar Gun</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | THF/RNG/NIN/COR |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Illapa&go=Go" data-img="" target="_blank" rel="noopener">Illapa</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Wochowsen&go=Go" data-img="" target="_blank" rel="noopener">Wochowsen</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Voluspa+Gun&go=Go" data-img="" target="_blank" rel="noopener">Voluspa Gun</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG/COR |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Nibiru+Gun&go=Go" data-img="" target="_blank" rel="noopener">Nibiru Gun</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | RNG/COR |
 
 ### Hand-to-Hand
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21529" data-img="https://www.bg-wiki.com/images/f/ff/Premium_Heart_description.png" target="_blank" rel="noopener">Premium Heart</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/PUP |
-| <a class="item-link" href="https://www.ffxiah.com/item/21517" data-img="https://www.bg-wiki.com/images/1/16/Eletta_Knuckles_description.png" target="_blank" rel="noopener">Eletta Knuckles</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/DNC |
-
-### Grips
-
-| Item | Tier | Cost | Jobs |
-|---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/22214" data-img="https://www.bg-wiki.com/images/8/85/Tokko_Grip_description.png" target="_blank" rel="noopener">Tokko Grip</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/BLM/DRK/SAM/DRG/SMN/SCH/GEO/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/22215" data-img="https://www.bg-wiki.com/images/7/74/Ajja_Grip_description.png" target="_blank" rel="noopener">Ajja Grip</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/BLM/DRK/SAM/DRG/SMN/SCH/GEO/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/22216" data-img="https://www.bg-wiki.com/images/5/58/Eletta_Grip_description.png" target="_blank" rel="noopener">Eletta Grip</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/BLM/DRK/SAM/DRG/SMN/SCH/GEO/RUN |
+| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Premium+Heart&go=Go" data-img="" target="_blank" rel="noopener">Premium Heart</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/PUP |
 <!-- DOCGEN:END id="weapons-slots" -->
 
 ---

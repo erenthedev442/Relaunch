@@ -13,7 +13,7 @@ New to the Relaunch server and wondering what to wear? This page answers "what g
 |---|---|---|
 | **Weapons Vendor** | Weapons in three tiers (Bronze / Silver / Gold) | Hunt Marks → convert to medals at the Seals NPC |
 | **Armor Vendor / Accessories Vendor** | Body armor and accessories in three tiers | Same medal system as weapons |
-| **Reforge System** | AF/Relic/Empy armor sets, base through +3 | AF Marks / Relic Marks / Empy Marks from Reforge NMs in Gwora-Corridor |
+| **Reforge System** | AF/Relic/Empy armor sets, base through +3 | AF Marks / Relic Marks / Empy Marks from Reforge NMs in Diorama Abdhaljs-Ghelsba |
 | **Infamy Vendor** | Best-in-slot armor and weapons found nowhere else | Infamy earned from Abyssea NM hunts, Invasions, and the weekly Raid |
 | **Augmented gear** | Any piece with extra stats from the [Augment Moogle](augmenting-guide.md) | Catalyst drops from assigned mobs + a flat gil fee per trade |
 | **Hunting League rewards** | Currency and access to all of the above | Participate in Hunt spawns at Escha ZiTah |
@@ -37,7 +37,7 @@ Hunt Marks come from participating in [Hunting League](index.md) spawns at Escha
 ## The Weapons Vendor
 
 **Location:** Escha ZiTah — next to the Hunting League NPCs  
-This NPC sells weapons in 14 categories across three tiers. All items are ilvl 119 and available immediately to any job that can equip them. Browse the menu by weapon type; the NPC filters to categories relevant to your current job.
+This NPC sells weapons in 11 categories across three tiers. All items are ilvl 119 and available immediately to any job that can equip them. Browse the menu by weapon type; the NPC filters to categories relevant to your current job.
 
 ---
 
@@ -46,26 +46,13 @@ This NPC sells weapons in 14 categories across three tiers. All items are ilvl 1
 **Currency:** 12 Beastmens Medals each (= 60 Hunt Marks per weapon)  
 **For:** new characters who just hit level 99, or anyone who needs a solid baseline weapon fast.
 
-Bronze weapons are scored and curated — the NPC stocks the role-appropriate top picks per category (14 weapons across 14 categories), not just anything that exists. Every job has at least one option.
+Bronze weapons are scored and curated — the NPC stocks the role-appropriate top picks per category (1 weapons across 1 categories), not just anything that exists. Every job has at least one option.
 
 ### Selected highlights
 
 | Category | Standout picks | Jobs |
 |---|---|---|
-| Swords | <a class="item-link" href="https://www.ffxiah.com/item/21617" data-img="https://www.bg-wiki.com/images/6/61/Tokko_Sword_description.png" target="_blank" rel="noopener">Tokko Sword</a> | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/… |
-| Daggers | <a class="item-link" href="https://www.ffxiah.com/item/21561" data-img="https://www.bg-wiki.com/images/8/8f/Tokko_Knife_description.png" target="_blank" rel="noopener">Tokko Knife</a> | RDM/THF/BST/BRD/RNG/NIN/COR/PUP/… |
-| Clubs | <a class="item-link" href="https://www.ffxiah.com/item/22027" data-img="https://www.bg-wiki.com/images/b/b6/Tokko_Rod_description.png" target="_blank" rel="noopener">Tokko Rod</a> | WHM/BLM/RDM/SMN/BLU/SCH/GEO |
-| Staves | <a class="item-link" href="https://www.ffxiah.com/item/22082" data-img="https://www.bg-wiki.com/images/8/89/Tokko_Staff_description.png" target="_blank" rel="noopener">Tokko Staff</a> | WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/… |
-| Great Swords | <a class="item-link" href="https://www.ffxiah.com/item/21670" data-img="https://www.bg-wiki.com/images/8/81/Tokko_Claymore_description.png" target="_blank" rel="noopener">Tokko Claymore</a> | WAR/PLD/DRK/RUN |
-| Axes | <a class="item-link" href="https://www.ffxiah.com/item/21718" data-img="https://www.bg-wiki.com/images/9/9c/Tokko_Axe_description.png" target="_blank" rel="noopener">Tokko Axe</a> | WAR/DRK/BST/RNG/RUN |
-| Great Axes | <a class="item-link" href="https://www.ffxiah.com/item/21775" data-img="https://www.bg-wiki.com/images/e/ef/Tokko_Chopper_description.png" target="_blank" rel="noopener">Tokko Chopper</a> | WAR/DRK/RUN |
-| Scythes | <a class="item-link" href="https://www.ffxiah.com/item/21826" data-img="https://www.bg-wiki.com/images/f/fe/Tokko_Scythe_description.png" target="_blank" rel="noopener">Tokko Scythe</a> | WAR/BLM/DRK/BST |
-| Polearms | <a class="item-link" href="https://www.ffxiah.com/item/21879" data-img="https://www.bg-wiki.com/images/b/b8/Tokko_Lance_description.png" target="_blank" rel="noopener">Tokko Lance</a> | WAR/PLD/SAM/DRG |
-| Katana | <a class="item-link" href="https://www.ffxiah.com/item/21918" data-img="https://www.bg-wiki.com/images/0/02/Tokko_Katana_description.png" target="_blank" rel="noopener">Tokko Katana</a> | NIN |
-| Great Katana | <a class="item-link" href="https://www.ffxiah.com/item/21971" data-img="https://www.bg-wiki.com/images/7/79/Tokko_Tachi_description.png" target="_blank" rel="noopener">Tokko Tachi</a> | SAM/NIN |
-| Archery | <a class="item-link" href="https://www.ffxiah.com/item/22108" data-img="https://www.bg-wiki.com/images/c/cd/Tokko_Bow_description.png" target="_blank" rel="noopener">Tokko Bow</a> | WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/… |
-| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21274" data-img="https://www.bg-wiki.com/images/9/90/Donar_Gun_description.png" target="_blank" rel="noopener">Donar Gun</a> | THF/RNG/NIN/COR |
-| Grips | <a class="item-link" href="https://www.ffxiah.com/item/22214" data-img="https://www.bg-wiki.com/images/8/85/Tokko_Grip_description.png" target="_blank" rel="noopener">Tokko Grip</a> | WAR/BLM/DRK/SAM/DRG/SMN/SCH/GEO/… |
+| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21274" data-img="https://static.ffxiah.com/images/icon/21274.png" target="_blank" rel="noopener">Donar Gun</a> | THF/RNG/NIN/COR |
 
 !!! tip "60 Hunt Marks per weapon"
     At Bronze tier, 60 Hunt Marks = 12 Beastmens Medals = one weapon. A typical Hunting League session yields enough to buy one or two weapons. Prioritize your main weapon first, then fill in an offhand or ranged slot.
@@ -77,24 +64,23 @@ Bronze weapons are scored and curated — the NPC stocks the role-appropriate to
 **Currency:** 25 Kindreds Medals each (= 375 Hunt Marks per weapon)  
 **For:** characters with Hunting League Rank I–III who want a significant step up from Bronze.
 
-Silver weapons have higher base damage and often better weapon skills or secondary stats (23 weapons across 12 categories), with caster and support jobs gaining dedicated club and staff options that didn't exist at Bronze.
+Silver weapons have higher base damage and often better weapon skills or secondary stats (21 weapons across 11 categories), with caster and support jobs gaining dedicated club and staff options that didn't exist at Bronze.
 
 ### Selected highlights
 
 | Category | Standout picks | Jobs |
 |---|---|---|
-| Daggers | <a class="item-link" href="https://www.ffxiah.com/item/20615" data-img="https://www.bg-wiki.com/images/2/28/Levante_Dagger_description.png" target="_blank" rel="noopener">Levante Dagger</a>, <a class="item-link" href="https://www.ffxiah.com/item/21566" data-img="https://www.bg-wiki.com/images/8/8c/Voluspa_Knife_description.png" target="_blank" rel="noopener">Voluspa Knife</a>, <a class="item-link" href="https://www.ffxiah.com/item/21568" data-img="https://www.bg-wiki.com/images/2/28/Acrontica_description.png" target="_blank" rel="noopener">Acrontica</a> | WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/… |
-| Clubs | <a class="item-link" href="https://www.ffxiah.com/item/21104" data-img="https://www.bg-wiki.com/images/b/bf/Eosuchus_Club_description.png" target="_blank" rel="noopener">Eosuchus Club</a>, <a class="item-link" href="https://www.ffxiah.com/item/22006" data-img="https://www.bg-wiki.com/images/b/b6/Voluspa_Hammer_description.png" target="_blank" rel="noopener">Voluspa Hammer</a> | All/WHM/GEO |
-| Staves | <a class="item-link" href="https://www.ffxiah.com/item/22088" data-img="https://www.bg-wiki.com/images/0/0b/Voluspa_Pole_description.png" target="_blank" rel="noopener">Voluspa Pole</a> | MNK/WHM/BLM/SMN/SCH/GEO |
-| Great Swords | <a class="item-link" href="https://www.ffxiah.com/item/21665" data-img="https://www.bg-wiki.com/images/6/6a/Voluspa_Blade_description.png" target="_blank" rel="noopener">Voluspa Blade</a> | PLD/RUN |
-| Axes | <a class="item-link" href="https://www.ffxiah.com/item/20808" data-img="https://www.bg-wiki.com/images/f/f7/Tramontane_Axe_description.png" target="_blank" rel="noopener">Tramontane Axe</a>, <a class="item-link" href="https://www.ffxiah.com/item/20827" data-img="https://www.bg-wiki.com/images/9/9b/Kerehcatl_description.png" target="_blank" rel="noopener">Kerehcatl</a> | WAR/DRK/BST/RUN |
-| Great Axes | <a class="item-link" href="https://www.ffxiah.com/item/21769" data-img="https://www.bg-wiki.com/images/0/09/Voluspa_Chopper_description.png" target="_blank" rel="noopener">Voluspa Chopper</a> | WAR/DRK/RUN |
-| Scythes | <a class="item-link" href="https://www.ffxiah.com/item/20893" data-img="https://www.bg-wiki.com/images/d/db/Shukuyu%27s_Scythe_description.png" target="_blank" rel="noopener">Shukuyus Scythe</a> | WAR/DRK/BST |
-| Polearms | <a class="item-link" href="https://www.ffxiah.com/item/20945" data-img="https://www.bg-wiki.com/images/d/dc/Nativus_Halberd_description.png" target="_blank" rel="noopener">Nativus Halberd</a> | WAR/PLD/SAM/DRG |
-| Archery | <a class="item-link" href="https://www.ffxiah.com/item/21228" data-img="https://www.bg-wiki.com/images/7/73/Falubeza_description.png" target="_blank" rel="noopener">Falubeza</a>, <a class="item-link" href="https://www.ffxiah.com/item/22111" data-img="https://www.bg-wiki.com/images/5/51/Kaja_Bow_description.png" target="_blank" rel="noopener">Kaja Bow</a>, <a class="item-link" href="https://www.ffxiah.com/item/22118" data-img="https://www.bg-wiki.com/images/3/31/Venery_Bow_description.png" target="_blank" rel="noopener">Venery Bow</a> | RNG/WAR/RDM/THF/PLD/DRK/BST/SAM/… |
-| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21256" data-img="https://www.bg-wiki.com/images/f/f9/Illapa_description.png" target="_blank" rel="noopener">Illapa</a>, <a class="item-link" href="https://www.ffxiah.com/item/22119" data-img="https://www.bg-wiki.com/images/e/e5/Wochowsen_description.png" target="_blank" rel="noopener">Wochowsen</a>, <a class="item-link" href="https://www.ffxiah.com/item/22144" data-img="https://www.bg-wiki.com/images/7/77/Voluspa_Gun_description.png" target="_blank" rel="noopener">Voluspa Gun</a> | RNG/COR |
-| Hand-to-Hand | <a class="item-link" href="https://www.ffxiah.com/item/21529" data-img="https://www.bg-wiki.com/images/f/ff/Premium_Heart_description.png" target="_blank" rel="noopener">Premium Heart</a> | MNK/PUP |
-| Grips | <a class="item-link" href="https://www.ffxiah.com/item/22215" data-img="https://www.bg-wiki.com/images/7/74/Ajja_Grip_description.png" target="_blank" rel="noopener">Ajja Grip</a> | WAR/BLM/DRK/SAM/DRG/SMN/SCH/GEO/… |
+| Daggers | <a class="item-link" href="https://www.ffxiah.com/item/20615" data-img="https://static.ffxiah.com/images/icon/20615.png" target="_blank" rel="noopener">Levante Dagger</a>, <a class="item-link" href="https://www.ffxiah.com/item/21566" data-img="https://static.ffxiah.com/images/icon/21566.png" target="_blank" rel="noopener">Voluspa Knife</a>, <a class="item-link" href="https://www.ffxiah.com/item/21568" data-img="https://static.ffxiah.com/images/icon/21568.png" target="_blank" rel="noopener">Acrontica</a> | WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/… |
+| Clubs | <a class="item-link" href="https://www.ffxiah.com/item/21104" data-img="https://static.ffxiah.com/images/icon/21104.png" target="_blank" rel="noopener">Eosuchus Club</a>, <a class="item-link" href="https://www.ffxiah.com/item/22006" data-img="https://static.ffxiah.com/images/icon/22006.png" target="_blank" rel="noopener">Voluspa Hammer</a> | All/WHM/GEO |
+| Staves | <a class="item-link" href="https://www.ffxiah.com/item/22088" data-img="https://static.ffxiah.com/images/icon/22088.png" target="_blank" rel="noopener">Voluspa Pole</a> | MNK/WHM/BLM/SMN/SCH/GEO |
+| Great Swords | <a class="item-link" href="https://www.ffxiah.com/item/21665" data-img="https://static.ffxiah.com/images/icon/21665.png" target="_blank" rel="noopener">Voluspa Blade</a> | PLD/RUN |
+| Axes | <a class="item-link" href="https://www.ffxiah.com/item/20808" data-img="https://static.ffxiah.com/images/icon/20808.png" target="_blank" rel="noopener">Tramontane Axe</a>, <a class="item-link" href="https://www.ffxiah.com/item/20827" data-img="https://static.ffxiah.com/images/icon/20827.png" target="_blank" rel="noopener">Kerehcatl</a> | WAR/DRK/BST/RUN |
+| Great Axes | <a class="item-link" href="https://www.ffxiah.com/item/21769" data-img="https://static.ffxiah.com/images/icon/21769.png" target="_blank" rel="noopener">Voluspa Chopper</a> | WAR/DRK/RUN |
+| Scythes | <a class="item-link" href="https://www.ffxiah.com/item/20893" data-img="https://static.ffxiah.com/images/icon/20893.png" target="_blank" rel="noopener">Shukuyus Scythe</a> | WAR/DRK/BST |
+| Polearms | <a class="item-link" href="https://www.ffxiah.com/item/20945" data-img="https://static.ffxiah.com/images/icon/20945.png" target="_blank" rel="noopener">Nativus Halberd</a> | WAR/PLD/SAM/DRG |
+| Archery | <a class="item-link" href="https://www.ffxiah.com/item/21228" data-img="https://static.ffxiah.com/images/icon/21228.png" target="_blank" rel="noopener">Falubeza</a>, <a class="item-link" href="https://www.ffxiah.com/item/22118" data-img="https://static.ffxiah.com/images/icon/22118.png" target="_blank" rel="noopener">Venery Bow</a>, <a class="item-link" href="https://www.ffxiah.com/item/22133" data-img="https://static.ffxiah.com/images/icon/22133.png" target="_blank" rel="noopener">Voluspa Bow</a> | RNG |
+| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21256" data-img="https://static.ffxiah.com/images/icon/21256.png" target="_blank" rel="noopener">Illapa</a>, <a class="item-link" href="https://www.ffxiah.com/item/22119" data-img="https://static.ffxiah.com/images/icon/22119.png" target="_blank" rel="noopener">Wochowsen</a>, <a class="item-link" href="https://www.ffxiah.com/item/22144" data-img="https://static.ffxiah.com/images/icon/22144.png" target="_blank" rel="noopener">Voluspa Gun</a> | RNG/COR |
+| Hand-to-Hand | <a class="item-link" href="https://www.ffxiah.com/item/21529" data-img="https://static.ffxiah.com/images/icon/21529.png" target="_blank" rel="noopener">Premium Heart</a> | MNK/PUP |
 
 !!! info "Silver is the sweet spot for mid-progression"
     Silver weapons represent a major power jump over Bronze and are within reach after a few weeks of regular Hunting League participation. Many players stay on Silver weapons for quite a while while building out their armor sets via Reforge.
@@ -106,22 +92,13 @@ Silver weapons have higher base damage and often better weapon skills or seconda
 **Currency:** 50 Demons Medals each (= 2,000 Hunt Marks per weapon)  
 **For:** players with Hunting League Rank IV–V who are approaching or in endgame content.
 
-Gold weapons are the top-end purchases from the vendor system (10 weapons across 10 categories). Many are best-in-slot or near-BiS for their category, comparable to Mythic or Empyrean weapons from retail. The selection emphasizes caster-optimized and tanking options that didn't exist at lower tiers, plus DD weapons with high raw damage.
+Gold weapons are the top-end purchases from the vendor system (1 weapons across 1 categories). Many are best-in-slot or near-BiS for their category, comparable to Mythic or Empyrean weapons from retail. The selection emphasizes caster-optimized and tanking options that didn't exist at lower tiers, plus DD weapons with high raw damage.
 
 ### Selected highlights
 
 | Category | Standout picks | Jobs |
 |---|---|---|
-| Swords | <a class="item-link" href="https://www.ffxiah.com/item/21619" data-img="https://www.bg-wiki.com/images/9/98/Eletta_Sword_description.png" target="_blank" rel="noopener">Eletta Sword</a> | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/… |
-| Clubs | <a class="item-link" href="https://www.ffxiah.com/item/22029" data-img="https://www.bg-wiki.com/images/8/85/Eletta_Rod_description.png" target="_blank" rel="noopener">Eletta Rod</a> | WHM/BLM/RDM/SMN/BLU/SCH/GEO |
-| Staves | <a class="item-link" href="https://www.ffxiah.com/item/22084" data-img="https://www.bg-wiki.com/images/c/c9/Eletta_Staff_description.png" target="_blank" rel="noopener">Eletta Staff</a> | WAR/MNK/WHM/BLM/RDM/BST/BRD/SMN/… |
-| Great Swords | <a class="item-link" href="https://www.ffxiah.com/item/21672" data-img="https://www.bg-wiki.com/images/5/59/Eletta_Claymore_description.png" target="_blank" rel="noopener">Eletta Claymore</a> | WAR/PLD/DRK/RUN |
-| Axes | <a class="item-link" href="https://www.ffxiah.com/item/21720" data-img="https://www.bg-wiki.com/images/c/c7/Eletta_Axe_description.png" target="_blank" rel="noopener">Eletta Axe</a> | WAR/DRK/BST/RNG/RUN |
-| Katana | <a class="item-link" href="https://www.ffxiah.com/item/21920" data-img="https://www.bg-wiki.com/images/c/cf/Eletta_Katana_description.png" target="_blank" rel="noopener">Eletta Katana</a> | NIN |
-| Archery | <a class="item-link" href="https://www.ffxiah.com/item/22110" data-img="https://www.bg-wiki.com/images/1/1a/Eletta_Bow_description.png" target="_blank" rel="noopener">Eletta Bow</a> | WAR/RDM/THF/PLD/DRK/BST/RNG/SAM/… |
-| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21273" data-img="https://www.bg-wiki.com/images/4/45/Nibiru_Gun_description.png" target="_blank" rel="noopener">Nibiru Gun</a> | RNG/COR |
-| Hand-to-Hand | <a class="item-link" href="https://www.ffxiah.com/item/21517" data-img="https://www.bg-wiki.com/images/1/16/Eletta_Knuckles_description.png" target="_blank" rel="noopener">Eletta Knuckles</a> | WAR/MNK/RDM/THF/DRK/BST/NIN/PUP/… |
-| Grips | <a class="item-link" href="https://www.ffxiah.com/item/22216" data-img="https://www.bg-wiki.com/images/5/58/Eletta_Grip_description.png" target="_blank" rel="noopener">Eletta Grip</a> | WAR/BLM/DRK/SAM/DRG/SMN/SCH/GEO/… |
+| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21273" data-img="https://static.ffxiah.com/images/icon/21273.png" target="_blank" rel="noopener">Nibiru Gun</a> | RNG/COR |
 
 !!! warning "Gold weapons are a large Hunt Mark investment"
     50 Demons Medals = 2,000 Hunt Marks per weapon. Plan your spending carefully — fill in Silver weapons for secondary jobs first, and save Gold purchases for your main job's primary weapon. The armor in the Armor Vendor's Gold tier competes for the same Demons Medals.
@@ -134,9 +111,9 @@ Armor does not come from the Weapons Vendor — it comes from two other sources:
 
 **Gear Vendors (Escha ZiTah):** The Armor Vendor and Accessories Vendor at the same cluster sell body armor and accessories using the same three medal tiers. See [Gear Vendors](gear-vendors.md) for the full catalog.
 
-**Reforge System:** AF, Relic, and Empyrean armor sets are upgraded from base through +3 using Reforge marks earned from spawner NMs in Gwora-Corridor (+1 300 / +2 900 / +3 2,000 marks per piece, in that set's own currency). This is your primary armor progression path alongside the medal vendors. See [Reforge System](reforge.md).
+**Reforge System:** AF, Relic, and Empyrean armor sets are upgraded from base through +3 using Reforge marks earned from spawner NMs in Diorama Abdhaljs-Ghelsba (+1 300 / +2 900 / +3 2,000 marks per piece, in that set's own currency). This is your primary armor progression path alongside the medal vendors. See [Reforge System](reforge.md).
 
-**Infamy gear:** High-end armor and weapons are sold by the [Infamy Vendor](gear-vendors.md#infamy-vendor) for **Infamy** earned from endgame content — including 65 weapons auto-promoted from the top of the scored catalogs and the per-job +4 Reforge Sets. These compete with or surpass Reforge +3 in some slots.
+**Infamy gear:** High-end armor and weapons are sold by the [Infamy Vendor](gear-vendors.md#infamy-vendor) for **Infamy** earned from endgame content — including 38 weapons auto-promoted from the top of the scored catalogs and the per-job +4 Reforge Sets. These compete with or surpass Reforge +3 in some slots.
 
 ---
 
@@ -194,10 +171,3 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 
 !!! tip "One weapon at a time"
     Do not try to gear every job simultaneously. Pick your main job, get its weapon to Gold, and build the armor set around it. Then move on to a second job. Hunt Marks are a finite resource per session — focus pays off faster than spreading thin.
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 35a75cf3c227 -->
-_Last updated: 2026-07-06 17:42 PDT_
-<!-- DOCGEN:END id="last-updated" -->

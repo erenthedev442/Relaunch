@@ -31,34 +31,48 @@ _Each ability costs **10,000,000 gil** — a one-time, per-character, per-abilit
 
 _**9 abilities** available across 4 job groups._
 
-**Warrior**
+<style>
+.cja-group{margin:1.6rem 0 .55rem;font-size:1.05rem;font-weight:700;letter-spacing:.01em;
+  display:flex;align-items:center;gap:.55rem}
+.cja-group::after{content:"";flex:1;height:1px;background:var(--md-default-fg-color--lightest)}
+.cja-count{font-size:.72rem;font-weight:600;color:var(--md-default-fg-color--light);
+  background:var(--md-default-fg-color--lightest);border-radius:10px;padding:.05rem .5rem}
+.cja-grid{display:grid;gap:.7rem;grid-template-columns:repeat(auto-fill,minmax(255px,1fr))}
+.cja-card{border:1px solid var(--md-default-fg-color--lightest);border-left:4px solid var(--acc);
+  border-radius:9px;padding:.7rem .85rem .75rem;background:var(--md-default-bg-color);
+  transition:transform .12s ease,box-shadow .12s ease}
+.cja-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.14)}
+.cja-top{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.4rem}
+.cja-name{font-weight:700;font-size:.96rem;line-height:1.2}
+.cja-badges{display:flex;gap:.3rem;flex-shrink:0}
+.cja-job{font-size:.64rem;font-weight:700;letter-spacing:.03em;color:#fff;background:var(--acc);
+  padding:.12rem .42rem;border-radius:4px}
+.cja-lvl{font-size:.64rem;font-weight:700;color:var(--md-default-fg-color--light);
+  background:var(--md-default-fg-color--lightest);padding:.12rem .42rem;border-radius:4px;white-space:nowrap}
+.cja-eff{margin:0;font-size:.82rem;line-height:1.4;color:var(--md-default-fg-color--light)}
+</style>
 
-| Ability | Job | Lv. | Effect |
-|---|---|---:|---|
-| Berserk | WAR | 15 | Boosts attack; lowers defense. |
-| Aggressor | WAR | 45 | Boosts accuracy; lowers evasion. |
-| Warcry | WAR | 35 | Party-wide attack boost (AoE). |
-| Blood Rage | WAR | 87 | Party-wide critical hit rate boost (AoE). |
-| Retaliation | WAR | 60 | Chance to counter melee attacks while standing. |
-
-**Thief**
-
-| Ability | Job | Lv. | Effect |
-|---|---|---:|---|
-| Conspirator | THF | 87 | Boosts accuracy and Subtle Blow; scales with nearby allies. |
-
-**Samurai**
-
-| Ability | Job | Lv. | Effect |
-|---|---|---:|---|
-| Third Eye | SAM | 15 | Anticipate (evade) your next incoming attack. |
-
-**Paladin/DRK**
-
-| Ability | Job | Lv. | Effect |
-|---|---|---:|---|
-| Last Resort | DRK | 15 | Boosts attack; lowers defense. |
-| Souleater | DRK | 30 | Adds part of your HP to melee damage, costing HP. |
+<div class="cja-group">Warrior<span class="cja-count">5 abilities</span></div>
+<div class="cja-grid">
+<div class="cja-card" style="--acc:#c0392b"><div class="cja-top"><span class="cja-name">Berserk</span><span class="cja-badges"><span class="cja-job">WAR</span><span class="cja-lvl">Lv.15</span></span></div><p class="cja-eff">Boosts attack; lowers defense.</p></div>
+<div class="cja-card" style="--acc:#c0392b"><div class="cja-top"><span class="cja-name">Aggressor</span><span class="cja-badges"><span class="cja-job">WAR</span><span class="cja-lvl">Lv.45</span></span></div><p class="cja-eff">Boosts accuracy; lowers evasion.</p></div>
+<div class="cja-card" style="--acc:#c0392b"><div class="cja-top"><span class="cja-name">Warcry</span><span class="cja-badges"><span class="cja-job">WAR</span><span class="cja-lvl">Lv.35</span></span></div><p class="cja-eff">Party-wide attack boost (AoE).</p></div>
+<div class="cja-card" style="--acc:#c0392b"><div class="cja-top"><span class="cja-name">Blood Rage</span><span class="cja-badges"><span class="cja-job">WAR</span><span class="cja-lvl">Lv.87</span></span></div><p class="cja-eff">Party-wide critical hit rate boost (AoE).</p></div>
+<div class="cja-card" style="--acc:#c0392b"><div class="cja-top"><span class="cja-name">Retaliation</span><span class="cja-badges"><span class="cja-job">WAR</span><span class="cja-lvl">Lv.60</span></span></div><p class="cja-eff">Chance to counter melee attacks while standing.</p></div>
+</div>
+<div class="cja-group">Thief<span class="cja-count">1 ability</span></div>
+<div class="cja-grid">
+<div class="cja-card" style="--acc:#27ae60"><div class="cja-top"><span class="cja-name">Conspirator</span><span class="cja-badges"><span class="cja-job">THF</span><span class="cja-lvl">Lv.87</span></span></div><p class="cja-eff">Boosts accuracy and Subtle Blow; scales with nearby allies.</p></div>
+</div>
+<div class="cja-group">Samurai<span class="cja-count">1 ability</span></div>
+<div class="cja-grid">
+<div class="cja-card" style="--acc:#d35400"><div class="cja-top"><span class="cja-name">Third Eye</span><span class="cja-badges"><span class="cja-job">SAM</span><span class="cja-lvl">Lv.15</span></span></div><p class="cja-eff">Anticipate (evade) your next incoming attack.</p></div>
+</div>
+<div class="cja-group">Paladin/DRK<span class="cja-count">2 abilities</span></div>
+<div class="cja-grid">
+<div class="cja-card" style="--acc:#34495e"><div class="cja-top"><span class="cja-name">Last Resort</span><span class="cja-badges"><span class="cja-job">DRK</span><span class="cja-lvl">Lv.15</span></span></div><p class="cja-eff">Boosts attack; lowers defense.</p></div>
+<div class="cja-card" style="--acc:#34495e"><div class="cja-top"><span class="cja-name">Souleater</span><span class="cja-badges"><span class="cja-job">DRK</span><span class="cja-lvl">Lv.30</span></span></div><p class="cja-eff">Adds part of your HP to melee damage, costing HP.</p></div>
+</div>
 <!-- DOCGEN:END id="cross-job-abilities-catalog" -->
 
 ---
