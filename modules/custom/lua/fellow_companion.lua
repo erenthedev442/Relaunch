@@ -82,14 +82,14 @@ local CONFIG =
         DEX = { { xi.mod.DEX, 6 }, { xi.mod.ACC, 10 } },
         VIT = { { xi.mod.VIT, 6 }, { xi.mod.DEF, 10 } },
         AGI = { { xi.mod.AGI, 6 }, { xi.mod.EVA, 10 } },
-        INT = { { xi.mod.INT, 6 }, { xi.mod.MATT, 10 } },
+        INT = { { xi.mod.INT, 6 }, { xi.mod.MATT, 3 } },   -- MATT 10->3 (2026-07-09; clamped by CONFIG.mattCap)
         MND = { { xi.mod.MND, 6 }, { xi.mod.MDEF, 10 } },
         -- Advanced categories: focused combat mods that STACK on top of the attributes.
         Ferocity  = { { xi.mod.ATTP, 1 } },                                -- +1% attack
         Critical  = { { xi.mod.CRITHITRATE, 1 } },                         -- +1% critical hit rate
         Frenzy    = { { xi.mod.DOUBLE_ATTACK, 1 } },                       -- +1% Double Attack
         Onslaught = { { xi.mod.TRIPLE_ATTACK, 1 }, { xi.mod.STORETP, 3 } },-- +1% Triple Attack, +3 Store TP
-        Sorcery   = { { xi.mod.MATT, 12 }, { xi.mod.MACC, 6 } },           -- magic atk + acc (boosts Magus)
+        Sorcery   = { { xi.mod.MATT, 4 }, { xi.mod.MACC, 6 } },            -- magic atk (12->4, 2026-07-09) + acc; MATT clamped by CONFIG.mattCap
         Celerity  = { { xi.mod.HASTE_GEAR, 8 } },                          -- attack speed (engine-capped ~25%)
         Warding   = { { xi.mod.DMGPHYS, -20 }, { xi.mod.DMGMAGIC, -20 } }, -- damage taken - (engine-capped -50%)
         Vigor     = { { xi.mod.REGEN, 3 }, { xi.mod.REFRESH, 1 } },        -- HP + MP regen per tick
@@ -110,6 +110,22 @@ local CONFIG =
     -- is a wall, a Magus is glass. Values are % damage taken (100 = 1%; - reduces).
     pdt          = -1500,
     mdt          = -1500,
+
+    -- PHYSICAL SCALING (2026-07-09 rebalance). The Fellow is a raw Lynx pet whose
+    -- base weapon DMG is tiny, so autos + physical WS were stuck (~600 / ~4k) no
+    -- matter how much ATT it piled on -- ATT only raises pDIF (caps ~3x); it can't
+    -- fix a small base. setDamage() gives the Fellow a REAL weapon that scales with
+    -- LEVEL, so physical output tracks the Fellow's level, and STR investment
+    -- (-> ATT -> pDIF) then scales it further. Both knobs are playtest-tunable.
+    dmgBase      = 24,    -- weapon DMG at level 1
+    dmgPerLevel  = 2.0,   -- + per Fellow level  (level 120 => ~264 base DMG)
+
+    -- MAGIC CEILING (2026-07-09 rebalance). Magic mob skills (Magus Fire IV, Oracle
+    -- Divine Judgment) multiply off MATT, which used to reach ~30,800 (INT 10/pt +
+    -- Sorcery 12/pt x 1400 cap) and produced 280k-800k hits. MATT is now clamped
+    -- AFTER all mods so magic still grows with INT/Sorcery investment but tops out
+    -- in the same band as physical. Raise this to make magic builds stronger.
+    mattCap      = 1200,
 
     -- Each role owns:
     --   mods     = flat OFFENSE/utility mods applied on spawn (identity of the role).
@@ -178,7 +194,7 @@ local CONFIG =
         magus     =
         {
             name = 'Magus', blurb = 'Battle-mage: elemental power, but glass -- keep it off the tank spot.', defaultWs = xi.mobSkill.FIRE_IV,
-            mods     = { { xi.mod.INT, 150 }, { xi.mod.MATT, 400 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',
+            mods     = { { xi.mod.INT, 150 }, { xi.mod.MATT, 150 }, { xi.mod.MACC, 200 } }, behavior = 'nuke',  -- MATT 400->150 (2026-07-09; clamped)
             survival = { hpMult = 0.45, pdt = 0, mdt = -1000 },  -- glass: lowest HP + takes FULL phys. Cannot tank.
             moves =
             {
@@ -448,6 +464,21 @@ local function applyFellow(p, pet)
         if pts > 0 then
             for _, mv in ipairs(mods) do pet:addMod(mv[1], mv[2] * pts) end
         end
+    end
+
+    -- PHYSICAL: give the Fellow a real, level-scaling weapon so autos + physical WS
+    -- track level (see CONFIG.dmgBase/dmgPerLevel). STR investment (-> ATT -> pDIF)
+    -- scales it further. pcall-guarded: a pet always has a weapon, but never let a
+    -- nil weapon abort the whole apply.
+    pcall(function()
+        pet:setDamage(math.floor(CONFIG.dmgBase + CONFIG.dmgPerLevel * lvl))
+    end)
+
+    -- MAGIC: clamp MATT AFTER every mod source (attributes + role + advanced
+    -- categories) so magic mob skills grow with INT/Sorcery investment but can't
+    -- runaway-scale into the 100k-800k hits players were seeing. See CONFIG.mattCap.
+    if pet:getMod(xi.mod.MATT) > CONFIG.mattCap then
+        pet:setMod(xi.mod.MATT, CONFIG.mattCap)
     end
 
     -- Durability is ROLE-OWNED: each role's `survival` sets its damage-taken and an
