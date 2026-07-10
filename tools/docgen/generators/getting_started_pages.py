@@ -143,6 +143,18 @@ def _facts(repo_root: Path) -> dict | None:
     f["hubZone"] = _hub_zone(repo_root)
 
     f["hasUnstick"] = resolve_source(repo_root, "scripts/commands/unstick.lua") is not None
+
+    # Hub warp command: which of !hub/!gmhome/!leaf/!lib exists (first = canonical,
+    # rest = legacy aliases), plus whether !hunt exists. hubZone (above) says where
+    # they land; these say what to type.
+    def _cmd_exists(name: str) -> bool:
+        return (resolve_source(repo_root, f"scripts/commands/{name}.lua") is not None
+                or resolve_source(repo_root, f"modules/custom/commands/{name}.lua") is not None)
+
+    hub_present = [c for c in ("hub", "gmhome", "leaf", "lib") if _cmd_exists(c)]
+    f["hubCmd"] = hub_present[0] if hub_present else "hub"
+    f["hubAliases"] = hub_present[1:]
+    f["hasHunt"] = _cmd_exists("hunt")
     return f
 
 
@@ -381,6 +393,13 @@ If something isn't working, you're not sure what to do next, or you just want to
 
 
 def _page_troubleshoot(f: dict) -> str:
+    hub = f["hubCmd"]
+    hub_zone = f["hubZone"] or "the server hub"
+    warp_examples = f"`!{hub}`" + (", `!hunt`" if f["hasHunt"] else "") + ", etc."
+    alias_note = ""
+    if f["hubAliases"]:
+        aliases = ", ".join(f"`!{a}`" for a in f["hubAliases"])
+        alias_note = f" {aliases} are legacy aliases that land in the same place."
     unstick = ""
     if f["hasUnstick"]:
         unstick = """
@@ -408,7 +427,7 @@ The server has an **Auto-Unstick watchdog** that clears stuck event state on zon
 
 **Fix:**
 
-1. Zone out — walk to a zone line, or use any warp command (`!gmhome`, `!hunt`, etc.).
+1. Zone out — walk to a zone line, or use any warp command ({warp_examples}).
 2. Zone back in.
 3. The watchdog fires on zone-in and should release the stuck state.
 
@@ -431,13 +450,13 @@ If something was lost due to a server bug (not player error), a GM can investiga
 
 ---
 
-## `!gmhome` Not Working
+## Hub Warp (`!{hub}`) Not Working
 
-A few possible causes:
+`!{hub}` warps you to {hub_zone}, where every custom NPC lives.{alias_note} If a hub warp isn't working:
 
-- **You don't have GM access for that command.** `!gmhome` is available to all players on this server — if it's not working at all, check if you see any error message in the chat log.
+- **Nothing happens / an error in the log.** `!{hub}` is available to every player — if it isn't firing at all, check the chat log for a message (usually a typo, or you're somewhere it's blocked).
 - **Command is on cooldown.** Some warp commands have a short cooldown between uses. Wait a few seconds and try again.
-- **You're in a zone that blocks it.** A small number of instanced areas prevent teleport commands from firing. Zone out first, then use `!gmhome`.
+- **You're in a zone that blocks it.** A small number of instanced areas prevent teleport commands from firing. Zone out first, then use `!{hub}`.
 
 Still not working? Ask in Discord.
 

@@ -18,7 +18,7 @@ The server has an **Auto-Unstick watchdog** that clears stuck event state on zon
 
 **Fix:**
 
-1. Zone out — walk to a zone line, or use any warp command (`!gmhome`, `!hunt`, etc.).
+1. Zone out — walk to a zone line, or use any warp command (`!hub`, `!hunt`, etc.).
 2. Zone back in.
 3. The watchdog fires on zone-in and should release the stuck state.
 
@@ -44,13 +44,13 @@ If something was lost due to a server bug (not player error), a GM can investiga
 
 ---
 
-## `!gmhome` Not Working
+## Hub Warp (`!hub`) Not Working
 
-A few possible causes:
+`!hub` warps you to Purgonorgo Isle, where every custom NPC lives. `!gmhome`, `!leaf`, `!lib` are legacy aliases that land in the same place. If a hub warp isn't working:
 
-- **You don't have GM access for that command.** `!gmhome` is available to all players on this server — if it's not working at all, check if you see any error message in the chat log.
+- **Nothing happens / an error in the log.** `!hub` is available to every player — if it isn't firing at all, check the chat log for a message (usually a typo, or you're somewhere it's blocked).
 - **Command is on cooldown.** Some warp commands have a short cooldown between uses. Wait a few seconds and try again.
-- **You're in a zone that blocks it.** A small number of instanced areas prevent teleport commands from firing. Zone out first, then use `!gmhome`.
+- **You're in a zone that blocks it.** A small number of instanced areas prevent teleport commands from firing. Zone out first, then use `!hub`.
 
 Still not working? Ask in Discord.
 
@@ -86,10 +86,3 @@ If your problem isn't covered here:
 
 1. Check the [FAQ](../community/faq.md).
 2. Ask in **Discord** — describe what happened, what you expected, and what you saw instead.
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c788a9bc5971 -->
-_Last updated: 2026-07-06 17:42 PDT_
-<!-- DOCGEN:END id="last-updated" -->
