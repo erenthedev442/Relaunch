@@ -18,7 +18,7 @@ local B = xi.msg.channel.SYSTEM_3
 
 commandObj.onTrigger = function(player)
     player:printToPlayer('[Legendary] == Custom Commands ==========================', H)
-    player:printToPlayer('  !hunt            - Warp to Reisenjima Henge (hunting hub)', B)
+    player:printToPlayer("  !hunt            - Warp to Escha - Zi'Tah (hunting hub)", B)
     player:printToPlayer('  !marks           - Quick marks balance (current + lifetime)', B)
     player:printToPlayer('  !streak          - Your current kill streak status + timer', B)
     player:printToPlayer('  !tier            - Next HL tier requirements + cost', B)

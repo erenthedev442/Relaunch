@@ -1,6 +1,6 @@
 -----------------------------------
 -- !henge
--- Warps the player to Reisenjima Henge (!hunt zone).
+-- Warps to Reisenjima Henge (LEGACY hub; !hunt warps to the current Escha - Zi'Tah hub).
 -- Available to all players (permission 0).
 -----------------------------------
 ---@type TCommand

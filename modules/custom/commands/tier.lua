@@ -56,7 +56,7 @@ commandObj.onTrigger = function(player)
         player:printToPlayer(
             string.format('    Cost: %d marks  (you have %d)', cost, pts), B)
         player:printToPlayer(
-            '    Visit the Hunt Seals NPC in Reisenjima Henge to unlock.', B)
+            "    Visit the Hunt Seals NPC in Escha - Zi'Tah to unlock.", B)
     else
         local needed = cost - pts
         player:printToPlayer(

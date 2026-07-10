@@ -46,7 +46,7 @@ commandObj.onTrigger = function(player)
     player:printToPlayer(string.format('  Infamy:      %d', infamy),  B)
     player:printToPlayer(string.format('  Hunter rank: Tier %d', tier), B)
     player:printToPlayer(string.format('  Kill streak: %s', streakStr), B)
-    player:printToPlayer('  Spend marks at the Hunt Seals NPC in Reisenjima Henge!', B)
+    player:printToPlayer("  Spend marks at the Hunt Seals NPC in Escha - Zi'Tah!", B)
 end
 
 return commandObj
