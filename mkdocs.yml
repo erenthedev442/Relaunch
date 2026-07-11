@@ -1,7 +1,7 @@
-site_name: Legendary FFXI
-site_description: Player guide and reference for Legendary — an extreme QoL, fast-progression FFXI private server
-site_url: https://legendary-ffxi.pages.dev/
-repo_url: https://github.com/richardknutzjr/FFXI-Private-Server-FJB
+site_name: FJB Relaunch
+site_description: Player guide and reference for the FJB Relaunch — an extreme QoL, fast-progression FFXI private server
+site_url: https://fjb-relaunch.pages.dev/
+repo_url: https://github.com/richardknutzjr/Relaunch
 repo_name: Source
 
 theme:

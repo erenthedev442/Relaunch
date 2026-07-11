@@ -136,7 +136,7 @@ def post(cfg, content: str) -> bool:
             # real UA clears Cloudflare's Browser Integrity Check. Overridable via
             # config.py (LS_BRIDGE_USER_AGENT) if Discord ever tightens it further.
             "User-Agent": cfg.get("LS_BRIDGE_USER_AGENT")
-                or "Legendary-LS-Bridge/1.0 (+https://legendary-ffxi.pages.dev)",
+                or "Relaunch-LS-Bridge/1.0 (+https://fjb-relaunch.pages.dev)",
         },
         method="POST",
     )

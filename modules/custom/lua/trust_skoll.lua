@@ -262,38 +262,38 @@ local GEMMA_QUIPS =
     -- ---- Small, and the only reason you are alive -------------------------
     '[Gemma] She is five feet of nothing and the only reason your party is still breathing.',
     '[Gemma] You will not notice her -- right up until the moment you would have died. Then you notice her a great deal.',
-    '[Legendary] Gemma is the smallest thing on the field and the last thing standing between you and the wipe.',
+    '[Relaunch] Gemma is the smallest thing on the field and the last thing standing between you and the wipe.',
     '[Gemma] People keep trying to protect her. She finds it sweet. She has never once needed it.',
     '[Gemma] Small hands. Protectra V, Shellra V, Haste II, and a raise queued before you finish hitting the floor.',
     '[Gemma] The enemy went for the small one in the back. The enemy did not survive the decision.',
 
     -- ---- The indignity of the spell name ----------------------------------
     '[Gemma] A support goddess of overwhelming power, summoned by casting "Nanaa Mihgo." She has chosen, graciously, not to comment.',
-    '[Legendary] Calling a 50-million-gil clutch healer requires typing the name of a Mithra thief. The healer is aware. The healer is very tired.',
+    '[Relaunch] Calling a 50-million-gil clutch healer requires typing the name of a Mithra thief. The healer is aware. The healer is very tired.',
     '[Gemma] Fifty million gil. Full support suite. Summoned with the spell "Nanaa Mihgo." Every single day is like this.',
 
     -- ---- She is very small -----------------------------------------------
     '[Gemma] She comes up to your belt and out-heals, out-buffs, and out-lasts everything taller than her -- which is everything.',
-    '[Legendary] A woman that small should not be able to carry an entire party. She does it anyway, and she makes it look easy.',
+    '[Relaunch] A woman that small should not be able to carry an entire party. She does it anyway, and she makes it look easy.',
     '[Gemma] The engine lists her as a Hume Female. The lore lists her as "the reason you are reading this instead of staring at a homepoint."',
 
     -- ---- Buff economics --------------------------------------------------
-    '[Legendary] Somewhere right now, a five-foot woman is casting Haste II on someone who has not said thank you.',
+    '[Relaunch] Somewhere right now, a five-foot woman is casting Haste II on someone who has not said thank you.',
     '[Gemma] No healing fee. No rebuff fee. She charged 50M gil once and considers your continued survival the receipt.',
     '[Gemma] Four songs. Four rolls. Full debuff suite. Total status immunity. She is not the hero of the story -- she is why the hero lived to the end of it.',
     '[Gemma] She does not fight. She keeps six debuffs on the enemy and four buffs on you, and asks only that you not stand in the AoE.',
 
     -- ---- The immunity list -----------------------------------------------
     '[Gemma] Immune to Sleep, Silence, Paralysis, Bind, Slow, Blind, Stun, Terror, Petrify, Addle, Poison, Plague, Aspir, Elegy, Requiem, and Dispel. Not immune to being underestimated -- she just enjoys it.',
-    '[Legendary] Fun fact: Gemma cannot be silenced, slept, stunned, or paralyzed. The enemy keeps trying. The enemy keeps getting paralyzed instead.',
+    '[Relaunch] Fun fact: Gemma cannot be silenced, slept, stunned, or paralyzed. The enemy keeps trying. The enemy keeps getting paralyzed instead.',
 
     -- ---- The rolls -------------------------------------------------------
-    '[Legendary] Gemma is, technically, a Corsair. A tiny woman rolling dice against cosmic forces. The dice land on eleven. They would not dare do otherwise.',
+    '[Relaunch] Gemma is, technically, a Corsair. A tiny woman rolling dice against cosmic forces. The dice land on eleven. They would not dare do otherwise.',
     '[Gemma] Chaos Roll. Rogue\'s Roll. Allies\' Roll. Choral Roll. She runs the full table and has never busted. She is far too small to bust.',
 
     -- ---- Availability reminders (semi-helpful) ---------------------------
-    '[Legendary] Gemma: songs, rolls, debuffs, magic bursts, raise, and a full status-cure suite -- all packed into someone who has to look UP at a Tarutaru. Sold by the Void Keeper in GM Home. 50M gil. Worth every coin.',
-    '[Legendary] The Void Keeper in GM Home sells a five-foot woman who will personally keep your party alive. You have been informed. She is waiting. She is not impressed yet.',
+    '[Relaunch] Gemma: songs, rolls, debuffs, magic bursts, raise, and a full status-cure suite -- all packed into someone who has to look UP at a Tarutaru. Sold by the Void Keeper in GM Home. 50M gil. Worth every coin.',
+    '[Relaunch] The Void Keeper in GM Home sells a five-foot woman who will personally keep your party alive. You have been informed. She is waiting. She is not impressed yet.',
 }
 
 m:addOverride('xi.player.onZoneIn', function(player, prevZone)

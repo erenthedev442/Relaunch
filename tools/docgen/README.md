@@ -1,6 +1,6 @@
 # Docs site generator
 
-The player-facing site at https://legendary-ffxi.pages.dev/ is built from `docs/` by MkDocs. Some pages are written by hand; some have auto-generated sections from the server's source data (`sql/`, `scripts/commands/`, `settings/`, `modules/custom/`, etc.).
+The player-facing site at https://fjb-relaunch.pages.dev/ is built from `docs/` by MkDocs. Some pages are written by hand; some have auto-generated sections from the server's source data (`sql/`, `scripts/commands/`, `settings/`, `modules/custom/`, etc.).
 
 ## Layout
 

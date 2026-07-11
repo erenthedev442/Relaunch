@@ -72,7 +72,7 @@ header = f"{prefix}:scroll: **Server Update — {day_label}**"
 # The "full changelog" link also stays outside so it stays clickable.
 footer = ""
 if total > cap:
-    footer = f"\n…and {total - cap} more. Full changelog: https://legendary-ffxi.pages.dev/changelog/"
+    footer = f"\n…and {total - cap} more. Full changelog: https://fjb-relaunch.pages.dev/changelog/"
 
 # Per Ririn: wrap the notes in a triple-backtick code block so they render as a
 # clean monospace box in Discord.

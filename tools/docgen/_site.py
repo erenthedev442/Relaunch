@@ -24,7 +24,7 @@ AUTH_PORT = 54231
 VIEW_PORT = 54001
 
 DISCORD_URL = "https://discord.gg/Yd3Kn3dN36"
-REPO_URL = "https://github.com/richardknutzjr/FFXI-Private-Server-FJB"
+REPO_URL = "https://github.com/richardknutzjr/Relaunch"
 
 
 def connection(repo_root: Path) -> tuple[str, int, int, int]:

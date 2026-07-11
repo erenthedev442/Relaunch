@@ -1,6 +1,6 @@
 # FAQ
 
-Common questions about playing on the Relaunch server. If you have a question that isn't answered here, ask in our [Discord](https://discord.gg/Yd3Kn3dN36) or open an issue on the [project repo](https://github.com/richardknutzjr/FFXI-Private-Server-FJB).
+Common questions about playing on the Relaunch server. If you have a question that isn't answered here, ask in our [Discord](https://discord.gg/Yd3Kn3dN36) or open an issue on the [project repo](https://github.com/richardknutzjr/Relaunch).
 
 ## Getting Started
 
@@ -80,7 +80,7 @@ Yes. Almost all custom content (Hunting League, Reforge System, Weekly Hunts) ca
 ### I think I found a bug. Where do I report it?
 
 Two options:
-- **[GitHub Issues](https://github.com/richardknutzjr/FFXI-Private-Server-FJB/issues)** — preferred for reproducible bugs with clear steps.
+- **[GitHub Issues](https://github.com/richardknutzjr/Relaunch/issues)** — preferred for reproducible bugs with clear steps.
 - **[Discord](https://discord.gg/Yd3Kn3dN36) #bug-reports** — for quick reports or "is this intended?" questions.
 
 ### My character got stuck / I lost an item / something broke. Can a GM help?

@@ -45,7 +45,7 @@ m:addOverride('xi.zones.Escha_ZiTah.Zone.onZoneIn', function(player, prevZone)
         p:addStatusEffect(xi.effect.REGAIN,  { power = regainPower,  duration = duration, origin = p, tick = 3, subType = 0, subPower = 0 })
 
         p:printToPlayer(
-            string.format('[Legendary] Auto-buff: Refresh %d/tick | Regen %d/tick | Regain %d/tick  (5 hr). Happy hunting!',
+            string.format('[Relaunch] Auto-buff: Refresh %d/tick | Regen %d/tick | Regain %d/tick  (5 hr). Happy hunting!',
                 refreshPower, regenPower, regainPower),
             xi.msg.channel.SYSTEM_3)
     end)

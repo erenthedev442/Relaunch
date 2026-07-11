@@ -17,7 +17,7 @@ local H = xi.msg.channel.SYSTEM_3
 local B = xi.msg.channel.SYSTEM_3
 
 commandObj.onTrigger = function(player)
-    player:printToPlayer('[Legendary] == Custom Commands ==========================', H)
+    player:printToPlayer('[Relaunch] == Custom Commands ===========================', H)
     player:printToPlayer("  !hunt            - Warp to Escha - Zi'Tah (hunting hub)", B)
     player:printToPlayer('  !marks           - Quick marks balance (current + lifetime)', B)
     player:printToPlayer('  !streak          - Your current kill streak status + timer', B)
@@ -35,7 +35,7 @@ commandObj.onTrigger = function(player)
     player:printToPlayer('  !time            - Server time + daily/weekly reset countdowns', B)
     player:printToPlayer('  !optin / !optout - Opt in or out of public leaderboards', B)
     player:printToPlayer('  =====================================================', B)
-    player:printToPlayer('  Docs: richardknutzjr.github.io/FFXI-Private-Server-FJB', B)
+    player:printToPlayer('  Docs: fjb-relaunch.pages.dev', B)
 end
 
 return commandObj
