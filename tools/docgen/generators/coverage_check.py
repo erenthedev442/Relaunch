@@ -29,6 +29,7 @@ ALLOWLIST = {
     "CraftingExchange_NPC.lua",        # -> crafting_exchange generator
     "ReforgeMarkExchange_NPC.lua",     # -> reforge_mark_exchange generator
     "Accessory_NPC.lua", "Weapons_NPC.lua",
+    "DomainSpoils_NPC.lua",            # domain_spoils_catalog -> domain_spoils generator
     # thin wrappers / runtime / points pools (catalog or parent system is documented)
     "RanperreFarm.lua", "CapacityFarm.lua",     # capacity_farm/ranperre_farm catalogs have the page
     "UnityWantedInstances.lua",        # Unity documented via unity_concord

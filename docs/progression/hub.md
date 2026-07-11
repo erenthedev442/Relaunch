@@ -17,6 +17,7 @@ Reach it any time with the `!hub` command.
 | NPC | What it does |
 |---|---|
 | **Gil Exchange** | Trade hunt marks for gil in bulk. |
+| **Domain Quartermaster** | Zurim's Domain-Points gear catalog, sold for hunt marks instead. |
 | **Sparks Exchange** | Spend Sparks of Eminence on gear and items. |
 | **Crafting Exchange** | Trade for crafting materials. |
 | **Title Broker** | Buy cosmetic titles for gil. |
@@ -76,6 +77,6 @@ Reach it any time with the `!hub` command.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 80639341a546 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 760339ae2bbd -->
+_Last updated: 2026-07-10 17:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -98,6 +98,8 @@ _NPCS: dict[str, tuple[str, str, str]] = {
     # -- currencies & exchanges --------------------------------------------------
     "gil_exchange":      ("Gil Exchange",            _SEC_CURRENCY,
                           "Trade hunt marks for gil in bulk."),
+    "domain_quartermaster": ("Domain Quartermaster", _SEC_CURRENCY,
+                          "Zurim's Domain-Points gear catalog, sold for hunt marks instead."),
     "sparks_exchange":   ("Sparks Exchange",         _SEC_CURRENCY,
                           "Spend Sparks of Eminence on gear and items."),
     "crafting_exchange": ("Crafting Exchange",       _SEC_CURRENCY,

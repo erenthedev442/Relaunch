@@ -155,6 +155,7 @@ def main() -> int:
         shop_command,
         nyzul_isle,
         domain_invasion,
+        domain_spoils,
         live_events,
         # --- full-page owners for formerly hand-written pages (2026-07-05):
         # every one rewrites its whole page from live catalogs so nothing drifts.
@@ -402,6 +403,10 @@ def main() -> int:
         # domain_invasion syncs docs/endgame/domain-invasion.md from
         # domain_invasion_catalog.lua (schedule, zone wave tables, rewards).
         ("domain_invasion",      domain_invasion),
+        # domain_spoils fills the Domain Quartermaster stock (the Hunt-Marks
+        # mirror of Zurim's Domain-Points catalog) on the same page, from
+        # domain_spoils_catalog.lua.
+        ("domain_spoils",        domain_spoils),
         # live_events syncs docs/endgame/live-events.md (Happy Hour, Divergence
         # City of the Day, Unity weekly featured NM) PLUS the shorter call-outs
         # on the Divergence and Unity Concord pages — one parse renders all

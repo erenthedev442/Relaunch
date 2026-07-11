@@ -15,6 +15,9 @@
 <!-- DOCGEN:BEGIN id="page-index-recent" -->
 | Page | Last updated |
 |---|---|
+| [NPCs & Hubs › The Hub (Purgonorgo Isle)](../progression/hub.md) | 2026-07-10 17:15 PDT |
+| [Scheduled Events › Domain Invasion](../endgame/domain-invasion.md) | 2026-07-10 17:13 PDT |
+| [Page Index](../admin/page-index.md) | 2026-07-10 17:13 PDT |
 | [About the Relaunch](../why-legendary.md) | 2026-07-10 16:53 PDT |
 | [Player Commands](../reference/commands.md) | 2026-07-10 16:53 PDT |
 | [Troubleshooting](../getting-started/troubleshoot.md) | 2026-07-10 16:53 PDT |
@@ -24,9 +27,6 @@
 | [Guides › Cheat Sheet](../getting-started/cheat-sheet.md) | 2026-07-10 16:53 PDT |
 | [Gear › Gear Guide](../progression/gear-guide.md) | 2026-07-10 16:53 PDT |
 | [Gear › Gear Vendors](../progression/gear-vendors.md) | 2026-07-10 16:53 PDT |
-| [Gear › Aeonic Weapons](../progression/aeonic-weapons.md) | 2026-07-10 16:53 PDT |
-| [Gear › Capacity Point Farms](../progression/capacity-farms.md) | 2026-07-10 16:53 PDT |
-| [Advancement › Reforge System](../progression/reforge.md) | 2026-07-10 16:53 PDT |
 <!-- DOCGEN:END id="page-index-recent" -->
 
 ## Least recently updated
@@ -141,7 +141,7 @@ The inverse of the list above — the pages whose content has gone longest witho
 | [Tasks & Boards › Treasure Hunts](../endgame/treasure-hunts.md) | 2026-06-14 13:15 UTC |
 | [Scheduled Events › Live Events](../endgame/live-events.md) | 2026-07-10 16:53 PDT |
 | [Scheduled Events › Scheduled Invasions](../endgame/invasions.md) | 2026-06-29 04:19 UTC |
-| [Scheduled Events › Domain Invasion](../endgame/domain-invasion.md) | 2026-07-10 16:53 PDT |
+| [Scheduled Events › Domain Invasion](../endgame/domain-invasion.md) | 2026-07-10 17:13 PDT |
 | [Scheduled Events › Tournament](../endgame/tournament.md) | 2026-06-29 04:19 UTC |
 | [Scheduled Events › Seasonal Events](../endgame/seasonal-events.md) | 2026-06-14 13:15 UTC |
 | [Diversions › Chocobo Derby](../endgame/chocobo-derby.md) | 2026-07-10 16:53 PDT |
@@ -159,7 +159,7 @@ The inverse of the list above — the pages whose content has gone longest witho
 | [Reforge Mark Exchange](../economy/reforge-mark-exchange.md) | 2026-07-10 16:53 PDT |
 | [Home Point Network](../economy/home-point.md) | 2026-07-10 16:53 PDT |
 | [Race Changer](../economy/race-changer.md) | 2026-07-10 16:53 PDT |
-| [NPCs & Hubs › The Hub (Purgonorgo Isle)](../progression/hub.md) | 2026-07-10 16:53 PDT |
+| [NPCs & Hubs › The Hub (Purgonorgo Isle)](../progression/hub.md) | 2026-07-10 17:15 PDT |
 | [NPCs & Hubs › Gemma](../progression/skoll.md) | 2026-07-10 03:45 PDT |
 | [NPCs & Hubs › Meat, the Immortal Tank](../progression/meat.md) | 2026-07-10 03:45 PDT |
 | [NPCs & Hubs › Corvus, the Sharpshooter](../progression/corvus.md) | 2026-07-10 03:45 PDT |
@@ -219,13 +219,13 @@ The inverse of the list above — the pages whose content has gone longest witho
 
 | Page | Last updated |
 |---|---|
-| [Page Index](../admin/page-index.md) | 2026-07-10 16:53 PDT |
+| [Page Index](../admin/page-index.md) | 2026-07-10 17:13 PDT |
 | [Legacy Rewards](../admin/review.html) | — |
 <!-- DOCGEN:END id="page-index-all" -->
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 7ebfcda73676 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 2714d6d1229a -->
+_Last updated: 2026-07-10 17:15 PDT_
 <!-- DOCGEN:END id="last-updated" -->

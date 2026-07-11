@@ -64,6 +64,8 @@ _NPC_FILES: dict[str, str] = {
     "dungeon_guide":     "dungeon_catalog.lua",
     "test_dummy":        "test_dummy_catalog.lua",
     "weapon_forger":     "WeaponForge_NPC.lua",
+    # npcPos.zone literal; DomainSpoils_NPC.lua places the NPC from this catalog.
+    "domain_quartermaster": "domain_spoils_catalog.lua",
 }
 
 # Raw zone id -> friendly display name (reads naturally after "in ...").
