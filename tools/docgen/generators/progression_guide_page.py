@@ -66,6 +66,7 @@ _CATALOG_GROUPS: list[tuple[str, list[tuple[str, str]]]] = [
         ("endgame/star-devourer.md",          "Escha-RuAun · weekly"),
         ("endgame/the-gauntlet.md",           "Riverne A01"),
         ("endgame/high-tier-battlefields.md", "!leaf"),
+        ("endgame/ambuscade.md",              "Mhaura"),
         ("endgame/maats-challenge.md",        "Ru'Lude Gardens"),
         ("endgame/nyzul-isle.md",             "Mhaura"),
     ]),
@@ -73,6 +74,7 @@ _CATALOG_GROUPS: list[tuple[str, list[tuple[str, str]]]] = [
         ("endgame/voidwatch.md",          "!voidwatch"),
         ("endgame/unity-concord.md",      "!lib"),
         ("endgame/abyssea-nms.md",        "Abyssea"),
+        ("endgame/geas-fete.md",          "Escha zones"),
         ("endgame/affinity-nms.md",       "overworld"),
         ("endgame/dynamis-divergence.md", "city Dynamis"),
         ("endgame/invasions.md",          "scheduled"),
@@ -85,6 +87,7 @@ _CATALOG_GROUPS: list[tuple[str, list[tuple[str, str]]]] = [
         ("endgame/treasure-hunts.md",       "overworld"),
         ("endgame/provisioners-league.md",  "!lib"),
         ("endgame/seasonal-events.md",      "seasonal"),
+        ("endgame/live-events.md",          "scheduled"),
         ("endgame/dungeons.md",             "instanced"),
     ]),
     # The former "Supporting Systems" table — now filterable cards alongside the rest.
