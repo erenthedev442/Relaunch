@@ -9,7 +9,9 @@ Drop rates come from the LIVE DB first (sees custom drop tables), falling back
 to SQL-file parsing when the DB is unavailable (laptop / CI).
 Spawn coordinates always come from the committed mob_spawn_points.sql.
 
-Primary sort key: highest itemRate (% chance). Tiebreak: real coords over
+Primary sort key: non-NM mobs first (a 100% drop from a lottery NM is worse
+for farming than a 10-24% drop from a repeatable mob), then highest itemRate
+(% chance). Tiebreak: Abyssea zones (denser spawns), then real coords over
 placeholder (0,0,0 / 1,1,1), then lowest minLevel for accessibility.
 
 Run:  python tools/gen_catalyst_warp_table.py     (cwd = repo root / D:\\server_relaunch)
@@ -99,8 +101,8 @@ def parse_spawns() -> dict[tuple[int, int], list[tuple[int, float, float, float]
 # Drop data: live DB (preferred) or SQL fallback
 # ---------------------------------------------------------------------------
 
-# itemId -> {(groupid, zoneid, mob_name): itemRate}
-_DropMap = dict[int, dict[tuple[int, int, str], int]]
+# itemId -> {(groupid, zoneid, mob_name): (itemRate, isNM)}
+_DropMap = dict[int, dict[tuple[int, int, str], tuple[int, bool]]]
 
 
 def _drops_from_db() -> _DropMap | None:
@@ -111,9 +113,11 @@ def _drops_from_db() -> _DropMap | None:
     if conn is None:
         return None
     sql = """
-        SELECT d.itemid, g.groupid, g.zoneid, g.name AS mob, MAX(d.itemRate) AS rate
+        SELECT d.itemid, g.groupid, g.zoneid, g.name AS mob,
+               MAX(d.itemRate) AS rate, MAX(p.mobType & 2) AS nm
         FROM mob_droplist d
         JOIN mob_groups g ON g.dropid = d.dropid
+        JOIN mob_pools p ON p.poolid = g.poolid
         WHERE d.dropType IN (0, 1)
         GROUP BY d.itemid, g.groupid, g.zoneid, g.name
     """
@@ -121,12 +125,12 @@ def _drops_from_db() -> _DropMap | None:
     try:
         cur = conn.cursor()
         cur.execute(sql)
-        for itemid, groupid, zoneid, mob, rate in cur.fetchall():
+        for itemid, groupid, zoneid, mob, rate, nm in cur.fetchall():
             key = (int(groupid), int(zoneid), (mob or "?").replace("_", " "))
             iid = int(itemid)
-            cur_rate = out.setdefault(iid, {}).get(key, -1)
+            cur_rate = out.setdefault(iid, {}).get(key, (-1, False))[0]
             if int(rate) > cur_rate:
-                out[iid][key] = int(rate)
+                out[iid][key] = (int(rate), bool(nm))
         cur.close()
     finally:
         conn.close()
@@ -155,26 +159,39 @@ def _drops_from_sql() -> _DropMap:
         if rate > d.get(drop_id, -1):
             d[drop_id] = rate
 
-    # dropId -> [(groupid, zoneid, mobname)]
+    # poolid -> mobType&2 (NM flag). mobType is the 10th numeric field after
+    # the 0x... modelid blob (mJob..links are the 9 before it).
+    pool_text = read(SQL / "mob_pools.sql")
+    nm_pools: set[int] = set()
+    for m in re.finditer(
+        r"VALUES \((\d+),(?:'[^']*'|NULL),(?:'[^']*'|NULL),\d+,0x[0-9A-Fa-f]+,"
+        r"(?:\d+,){9}(\d+),", pool_text
+    ):
+        if int(m.group(2)) & 2:
+            nm_pools.add(int(m.group(1)))
+
+    # dropId -> [(groupid, zoneid, mobname, isNM)]
     grp_text = read(SQL / "mob_groups.sql")
-    drop_to_groups: dict[int, list[tuple[int, int, str]]] = {}
+    drop_to_groups: dict[int, list[tuple[int, int, str, bool]]] = {}
     rx = re.compile(r"VALUES \((\d+),(\d+),(\d+),(?:'([^']*)'|NULL),(\d+),(\d+),(\d+),")
     for m in rx.finditer(grp_text):
         groupid = int(m.group(1))
+        poolid  = int(m.group(2))
         zoneid  = int(m.group(3))
         name    = m.group(4) or "?"
         dropid  = int(m.group(7))
         if dropid:
-            drop_to_groups.setdefault(dropid, []).append((groupid, zoneid, name))
+            drop_to_groups.setdefault(dropid, []).append(
+                (groupid, zoneid, name, poolid in nm_pools))
 
     out: _DropMap = {}
     for item_id, drop_rates in item_to_drops.items():
         for drop_id, rate in drop_rates.items():
-            for groupid, zoneid, mob in drop_to_groups.get(drop_id, ()):
+            for groupid, zoneid, mob, is_nm in drop_to_groups.get(drop_id, ()):
                 key = (groupid, zoneid, mob.replace("_", " "))
-                cur = out.setdefault(item_id, {}).get(key, -1)
+                cur = out.setdefault(item_id, {}).get(key, (-1, False))[0]
                 if rate > cur:
-                    out[item_id][key] = rate
+                    out[item_id][key] = (rate, is_nm)
     return out
 
 
@@ -192,9 +209,15 @@ def _placeholder(x: float, y: float, z: float) -> bool:
 # resolution; only the warp destination coordinates are replaced.
 #
 # Format: itemId -> {zone, zoneName, x, y, z}
-# Abyssea zones get priority in candidate sorting — denser mob spawns make them
-# better farming destinations even if another zone has a higher drop rate.
+# Abyssea zones win ties in candidate sorting — denser mob spawns make them
+# better farming destinations when the drop rate is equal — but never beat a
+# higher drop rate elsewhere (a 5% Abyssea mob must not outrank a 15% one).
 ABYSSEA_ZONES: frozenset[int] = frozenset({15, 45, 132, 215, 216, 217, 218, 253, 254, 255})
+
+# Boats, barges and airships (zone_settings ids). Warping a player onto a
+# moving transport strands them until it docks — only pick one of these when
+# no land-based source exists.
+TRANSPORT_ZONES: frozenset[int] = frozenset({1, 3, 46, 47, 58, 59, 220, 221, 223, 224, 225, 226, 227, 228})
 
 WARP_OVERRIDES: dict[int, dict] = {
     # Attack catalyst: warp to Abyssea-La Theine (132) at -681 / 0 / 242 instead of
@@ -228,16 +251,16 @@ def main() -> int:
         cands:     list[dict] = []
         info_only: dict | None = None
 
-        for (groupid, zoneid, mobname), item_rate in drop_map.get(iid, {}).items():
+        for (groupid, zoneid, mobname), (item_rate, is_nm) in drop_map.get(iid, {}).items():
             pts = spawns.get((zoneid, groupid), [])
-            if not pts and info_only is None:
-                info_only = {"zone": zoneid, "mob": mobname, "rate": item_rate}
+            if not pts and (info_only is None or (info_only["nm"] and not is_nm)):
+                info_only = {"zone": zoneid, "mob": mobname, "rate": item_rate, "nm": is_nm}
             for minlvl, x, y, z in pts:
                 cands.append({
                     "zone": zoneid, "mob": mobname,
                     "lvl": minlvl, "x": x, "y": y, "z": z,
                     "ph": _placeholder(x, y, z),
-                    "rate": item_rate,
+                    "rate": item_rate, "nm": is_nm,
                 })
 
         if not cands:
@@ -256,9 +279,17 @@ def main() -> int:
                 unresolved.append(iid)
             continue
 
-        # Primary sort: Abyssea zones first (denser spawns), then highest drop rate.
-        # Tiebreak: real coords over placeholder (0,0,0), then lowest level.
-        cands.sort(key=lambda c: (0 if c["zone"] in ABYSSEA_ZONES else 1, -c["rate"], c["ph"], c["lvl"]))
+        # Primary sort: repeatable (non-NM) mobs first, land over boats/airships,
+        # then highest drop rate. Tiebreak: Abyssea zones (denser spawns), then
+        # real coords over placeholder (0,0,0), then lowest level.
+        cands.sort(key=lambda c: (
+            c["nm"],
+            1 if c["zone"] in TRANSPORT_ZONES else 0,
+            -c["rate"],
+            0 if c["zone"] in ABYSSEA_ZONES else 1,
+            c["ph"],
+            c["lvl"],
+        ))
         best = cands[0]
         ov = WARP_OVERRIDES.get(iid, {})
         rows[iid] = {
