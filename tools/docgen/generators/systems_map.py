@@ -395,7 +395,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             gate_bits.append(f"requires Hunting League Rank {aff['rank']}")
         if aff["cost"]:
             gate_bits.append(f"costs {_fmt(aff['cost'])} Hunt Marks")
-        add(f"3. Take the trophy to the **Augment Sage** at `!leaf` and register the "
+        add(f"3. Take the trophy to the **Augment Sage** at `!hub` and register the "
             f"affinity{' (' + ', '.join(gate_bits) + ')' if gate_bits else ''}")
         if aff_double_roll:
             add("4. Every augment roll in that stat category now **rolls twice and keeps "
@@ -471,7 +471,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
                   "Infinite escalating floors. How high you climb is the score."]))
     if colo_win:
         add(_row(["**[Colosseum](../endgame/colosseum.md)**",
-                  f"Ladder arena at `!leaf` — {colo_win} Hunt Marks per win"]))
+                  f"Ladder arena at `!hub` — {colo_win} Hunt Marks per win"]))
     if have("modules/custom/lua/maat_infamy_fight.lua"):
         add(_row(["**[Maat's Challenge](../endgame/maats-challenge.md)**",
                   "`!maat` — the solo super-fight; first kill is an Augment Tier key"]))
@@ -489,7 +489,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     add("### Infamy track")
     add("")
     add("Infamy accumulates from the sources below and is spent at the **Infamy Vendor** "
-        "(`!leaf`) for best-in-slot gear.")
+        "(`!hub`) for best-in-slot gear.")
     add("")
     add(_row(["Source", "Notes"]))
     add(_row(["---", "---"]))
@@ -532,14 +532,14 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         add("")
     add("### Prime Weapons")
     add("")
-    add(f"The **Prime Armory** at `!leaf` forges a Prime Weapon after **{n_trials} "
+    add(f"The **Prime Armory** at `!hub` forges a Prime Weapon after **{n_trials} "
         f"trials** — {n_weapons} named forms, {_fmt(prime_gil)} gil per forge. See "
         "[Prime Armory](../progression/prime-armory.md).")
     add("")
     mastery_rows = []
     if have("modules/custom/lua/SpellSkillMastery.lua"):
         mastery_rows.append(_row(["**[Spell & Skill Mastery](../progression/spell-mastery.md)**",
-                                  "Mastery Sage at `!leaf`. Spend Mastery Sigils to empower "
+                                  "Mastery Sage at `!hub`. Spend Mastery Sigils to empower "
                                   "weapon skills and spells beyond their normal caps."]))
     if have("modules/custom/lua/job_mastery.lua"):
         mastery_rows.append(_row(["**[Job Mastery](../endgame/job-mastery.md)**",

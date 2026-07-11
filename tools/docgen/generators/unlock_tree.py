@@ -533,7 +533,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
          None),
         ("mastery", 245, 815, "Spell & Skill Mastery", "vert",
          _desc("Spell & Skill Mastery",
-               "Mastery Sage at !leaf. Spend Mastery Sigils to empower weapon skills and spells "
+               "Mastery Sage at !hub. Spend Mastery Sigils to empower weapon skills and spells "
                "beyond their normal caps."),
          "modules/custom/lua/SpellSkillMastery.lua"),
         ("rank1", 420, 45, f"HL {tmap[1]['name'].replace(' - ', ' — ')}", "rank",
@@ -626,7 +626,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ("reforge", 960, 820, "Reforge (+1/+2/+3)", "reward",
          _desc("Reforge Vendor",
                "Upgrades AF, Relic, and Empy armor from base to +1, +2, +3. Spend marks at the "
-               "Reforge Vendor at !leaf. (+4 is the separate Dynamis-D Forge.)"),
+               "Reforge Vendor in the Reforge hall at !reforged. (+4 is the separate Dynamis-D Forge.)"),
          "modules/custom/lua/Reforge_System.lua"),
         ("plus4forge", 1140, 635, "Divergence +4 Forge", "reward",
          _desc("Divergence +4 Forge",

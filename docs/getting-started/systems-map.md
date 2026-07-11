@@ -91,7 +91,7 @@ The **Affinity NM** system bridges boss content and augmenting:
 
 1. Kill one of the **11 always-up Affinity NMs** (classic HNMs, back up 30 seconds after each kill)
 2. The NM drops its unique **trophy**
-3. Take the trophy to the **Augment Sage** at `!leaf` and register the affinity (requires Hunting League Rank 3, costs 1,000 Hunt Marks)
+3. Take the trophy to the **Augment Sage** at `!hub` and register the affinity (requires Hunting League Rank 3, costs 1,000 Hunt Marks)
 4. Every augment roll in that stat category now **rolls twice and keeps the better result**
 
 Full roster: [Affinity NMs](../endgame/affinity-nms.md)
@@ -130,7 +130,7 @@ Your Sage Mastery rank lifts the roll floor inside the unlocked band — see [Au
 | **[Nyzul Isle](../endgame/nyzul-isle.md)** | Floor-climb dungeon runs with Nyzul armor rewards |
 | **[The Gauntlet](../endgame/the-gauntlet.md)** | Solo NM climb. Full clear: **5,000,000 Gil + 500 Paragon Pts + 500 Infamy**. |
 | **[Endless Tower](../endgame/endless-tower.md)** | Infinite escalating floors. How high you climb is the score. |
-| **[Colosseum](../endgame/colosseum.md)** | Ladder arena at `!leaf` — 10 Hunt Marks per win |
+| **[Colosseum](../endgame/colosseum.md)** | Ladder arena at `!hub` — 10 Hunt Marks per win |
 | **[Maat's Challenge](../endgame/maats-challenge.md)** | `!maat` — the solo super-fight; first kill is an Augment Tier key |
 
 ---
@@ -142,7 +142,7 @@ Your Sage Mastery rank lifts the roll floor inside the unlocked band — see [Au
 
 ### Infamy track
 
-Infamy accumulates from the sources below and is spent at the **Infamy Vendor** (`!leaf`) for best-in-slot gear.
+Infamy accumulates from the sources below and is spent at the **Infamy Vendor** (`!hub`) for best-in-slot gear.
 
 | Source | Notes |
 | --- | --- |
@@ -167,13 +167,13 @@ Job Points fuel Rebirth, and the **[Capacity farm](../progression/capacity-farm.
 
 ### Prime Weapons
 
-The **Prime Armory** at `!leaf` forges a Prime Weapon after **5 trials** — 12 named forms, 750,000,000 gil per forge. See [Prime Armory](../progression/prime-armory.md).
+The **Prime Armory** at `!hub` forges a Prime Weapon after **5 trials** — 12 named forms, 750,000,000 gil per forge. See [Prime Armory](../progression/prime-armory.md).
 
 ### Mastery systems
 
 | System | What it does |
 | --- | --- |
-| **[Spell & Skill Mastery](../progression/spell-mastery.md)** | Mastery Sage at `!leaf`. Spend Mastery Sigils to empower weapon skills and spells beyond their normal caps. |
+| **[Spell & Skill Mastery](../progression/spell-mastery.md)** | Mastery Sage at `!hub`. Spend Mastery Sigils to empower weapon skills and spells beyond their normal caps. |
 | **[Job Mastery](../endgame/job-mastery.md)** | Earn Mastery Points by killing specific mob types. Permanent per-job-class bonuses. |
 
 ---
@@ -200,6 +200,6 @@ The **Prime Armory** at `!leaf` forges a Prime Weapon after **5 trials** — 12 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 594520cff8cb -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: f7ecea3781bc -->
+_Last updated: 2026-07-10 17:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

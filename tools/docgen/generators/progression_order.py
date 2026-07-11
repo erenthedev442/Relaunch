@@ -227,13 +227,17 @@ def _render(
 
     lines: list[str] = []
 
-    # ---- Step 1: Visit GM Home ----------------------------------------
+    # ---- Step 1: Visit the hub -----------------------------------------
+    # Single hub since the 2026-07-06 consolidation. The zone is NEVER hardcoded
+    # here — {{npc:hunt_board}} expands via npc_location_inject from the Hunt
+    # Board's live catalog, so a future hub move can't strand this step.
     lines.append(
-        "1. **Orient yourself at the two main hubs.** The **Celennia Memorial Library** (`!lib`) "
-        "is the economy hub — Hunt Board, Gil Exchange, Sparks Exchange, Race Changer, Home Point. "
-        "**Leafallia** (`!leaf`) is the endgame hub — Apex Trials, Prime Armory, Colosseum, "
-        "Infamy Vendor, Augment Sage, and the endgame NPC row. GM Home (`!gmhome`) still exists "
-        "but only the Test Dummy remains there for DPS testing."
+        "1. **Orient yourself at the hub.** Every custom NPC stands together on "
+        "**{{npc:hunt_board}}** (`!hub`) — the economy row (Hunt Board, Gil Exchange, "
+        "Sparks Exchange, Race Changer, Home Point) and the endgame row (Apex Trials, "
+        "Prime Armory, Colosseum, Infamy Vendor, Augment Sage) side by side, plus the "
+        "Test Dummy for DPS testing. The old `!lib`, `!leaf`, and `!gmhome` commands "
+        "still work and land you there too."
     )
 
     # ---- Step 2: Hit level 99 -----------------------------------------
@@ -281,8 +285,8 @@ def _render(
             f"{currency}** meta-bonus on top of the per-objective rewards."
         )
     lines.append(
-        "5. **Pick up Weekly Hunt objectives.** Visit the Weekly Hunt Board at the **Celennia "
-        "Memorial Library** (`!lib`) or type `!weekly` for a status check. "
+        "5. **Pick up Weekly Hunt objectives.** Visit the Weekly Hunt Board at "
+        "**{{npc:hunt_board}}** (`!hub`) or type `!weekly` for a status check. "
         f"Five random objectives roll fresh each Monday.{weekly_note} "
         "Completing these adds a big mark income boost alongside your regular NM grind."
     )
@@ -366,10 +370,11 @@ def _render(
 
     # ---- Step 10: Augmentation -----------------------------------------
     lines.append(
-        "10. **Augment your gear.** Visit the **Augment Moogle in Leafallia** (`!leaf`) "
+        "10. **Augment your gear.** Visit the **Augment Moogle** at "
+        "**{{npc:augment_moogle}}** (`!hub`) "
         "to add random stats to equipment. "
         "For passive endgame bonuses, earn enough Infamy to unlock the "
-        "**Augment Sage** — also in Leafallia — Infamy comes from apex Escha - Ru'Aun NMs, Scheduled "
+        "**Augment Sage** — right beside the Moogle — Infamy comes from apex Escha - Ru'Aun NMs, Scheduled "
         "Invasions, and the weekly Raid. "
         "The Sage applies permanent stat bonuses outside the normal augment RNG."
     )

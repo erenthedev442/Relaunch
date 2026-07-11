@@ -1,8 +1,6 @@
 # GM Home
 
-GM Home is the server's private utility zone, accessible from anywhere with `!gmhome`.
-
-On the Relaunch, GM Home contains a single NPC: the **Test Dummy**. New-character setup, gear vendors, warps, and all endgame services are on **Purgonorgo Isle** — reach it with **`!hub`** (the old `!leaf` and `!lib` commands still work and land you there too).
+GM Home was the server's original utility zone. Since the hub consolidation, everything that lived here — including the **Test Dummy** — stands on <!--npc:test_dummy-->Purgonorgo Isle<!--/npc--> with the rest of the custom NPCs. Reach it with **`!hub`** (the old `!gmhome`, `!leaf`, and `!lib` commands still work and land you there too).
 
 ---
 
@@ -35,6 +33,6 @@ Talk to the Test Dummy and pick an **Ascension Court** or an **Abyssea NM**:
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 6701d6a8e086 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: c7d2b2018dac -->
+_Last updated: 2026-07-10 17:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->
