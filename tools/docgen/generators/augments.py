@@ -4,6 +4,13 @@ Reads `modules/custom/lua/augment_catalog.lua` (catalyst-item-to-augment
 mapping), `sql/item_basic.sql` (item-id-to-name lookup), and
 `tools/augment_catalog_gaps.json` (items not in any obtainable source).
 
+Drop sources come from `modules/custom/lua/catalyst_warp_table.lua` — the SAME
+generated table the in-game !augwarp command uses, built by
+tools/gen_catalyst_warp_table.py from augment_catalyst_mobs.lua (the mob the
+drop hook actually rolls at DROP_RATE). Re-run that script BEFORE docgen when
+the mob map changes. Hunting League trophies and Augmentation Dungeon drops
+are layered in from their own runtime catalogs. No live-DB dependency.
+
 Emits one table per stat-family category between DOCGEN markers, with a
 warning marker on each row whose catalyst doesn't appear in any in-game
 obtainable source (mob drops, synth, shops, fishing, gardening, synergy).
@@ -24,7 +31,6 @@ from pathlib import Path
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 from tools.docgen._bgwiki import urls_for_item
-from tools.docgen._db import connect
 
 
 # The Augment Moogle's hub is NEVER hardcoded here: it is placed by an
@@ -334,93 +340,124 @@ _CAP_BY_AUG = {
 }
 
 
-_DROP_SQL = """
-SELECT d.itemid, g.name AS mob, z.name AS zone, MAX(d.itemRate) AS rate
-FROM mob_droplist d
-JOIN mob_groups g       ON g.dropid  = d.dropid
-LEFT JOIN zone_settings z ON z.zoneid = g.zoneid
-WHERE d.dropType IN (0, 1)
-  AND NOT (g.spawntype & 8)
-GROUP BY d.itemid, g.name, z.name
-"""
+# ---------------------------------------------------------------------------
+# Drop sources. SINGLE SOURCE OF TRUTH: catalyst_warp_table.lua — the same
+# generated table the in-game !augwarp command require()s, itself generated
+# from augment_catalyst_mobs.lua (the mob the drop hook actually rolls) by
+# tools/gen_catalyst_warp_table.py. Reading the SAME file guarantees the
+# website, !augwarp, and the on-kill drop all name the same mob at the same
+# rate. Secondary sources (Hunting League trophies, Augmentation Dungeons)
+# are parsed from THEIR runtime catalogs — no hand-synced tables here.
+# ---------------------------------------------------------------------------
 
-# Hunting League trophy drops — scripted, not in mob_droplist.
-_HL_ZONE = "Escha Zi'Tah"
-_HL_DROPS: dict[int, tuple[str, float]] = {
-    8983:  ("Valkurm Emperor (Hunting League)",    100.0),
-    843:   ("Roc (Hunting League)",                100.0),
-    908:   ("Aquarius (Hunting League)",           100.0),
-    1015:  ("Serket (Hunting League)",             100.0),
-    909:   ("Vrtra (Hunting League)",              100.0),
-    844:   ("Simurgh (Hunting League)",            100.0),
-    1122:  ("Nidhogg (Hunting League)",            100.0),
-    10037: ("Nidhogg (Hunting League)",            100.0),
-    893:   ("King Behemoth (Hunting League)",      100.0),
-    2893:  ("Kirin (Hunting League)",              100.0),
-    1473:  ("Absolute Virtue (Hunting League)",    100.0),
-    2371:  ("Pandemonium Warden (Hunting League)", 100.0),
-    2372:  ("Pandemonium Warden (Hunting League)", 100.0),
-    1133:  ("Shinryu (Hunting League)",            100.0),
-}
-
-# Each entry: list of (display_label, pct) sorted by pct descending.
-_DropList = list[tuple[str, float]]
+# Lua single-quoted string body, escape-aware ('Aern\'s Elemental').
+_LQ = r"'((?:[^'\\]|\\.)*)'"
 
 
-def _fetch_drops(repo_root: Path) -> dict[int, _DropList] | None:
-    """Return {itemId: [(label, pct), ...]} sorted by pct desc, merged with HL
-    trophy drops. Returns None if the DB is unreachable (CI / laptop)."""
-    conn = connect(repo_root)
-    raw: dict[int, dict[str, float]] = {}
-    if conn is not None:
-        try:
-            cur = conn.cursor()
-            cur.execute(_DROP_SQL)
-            for itemid, mob, zone, rate in cur.fetchall():
-                iid = int(itemid)
-                mob_s  = (mob  or "").replace("_", " ")
-                zone_s = (zone or "").replace("_", " ")
-                label  = f"{mob_s} ({zone_s})" if zone_s else mob_s
-                pct    = round(int(rate) / 10.0, 1)
-                if pct > raw.get(iid, {}).get(label, -1.0):
-                    raw.setdefault(iid, {})[label] = pct
-            cur.close()
-        finally:
-            conn.close()
-    else:
-        return None
-    # Sort: Abyssea zones always first, then by drop rate descending.
-    result: dict[int, _DropList] = {
-        iid: sorted(
-            entries.items(),
-            key=lambda kv: (0 if "abyssea" in kv[0].lower() else 1, -kv[1]),
-        )
-        for iid, entries in raw.items()
-    }
-    # Overlay HL trophy drops at the front (100% always wins).
-    for iid, (label, pct) in _HL_DROPS.items():
-        hl_entry = (f"{label} ({_HL_ZONE})", pct)
-        existing = [e for e in result.get(iid, []) if e[0] != hl_entry[0]]
-        result[iid] = [hl_entry] + existing
-    return result
+def _lua_unescape(s: str) -> str:
+    return s.replace("\\'", "'").replace("\\\\", "\\")
+
+
+# Each entry: list of display strings, primary first.
+_DropList = list[str]
+
+
+def _warp_table_drops(warp_lua: Path) -> dict[int, _DropList]:
+    """catalyst_warp_table.lua -> {itemId: ['Mob (Zone) — N%', alt...]}."""
+    out: dict[int, _DropList] = {}
+    text = warp_lua.read_text(encoding="utf-8", errors="replace")
+    for m in re.finditer(r"\[(\d+)\]\s*=\s*\{([^}]*)\}", text):
+        iid, body = int(m.group(1)), m.group(2)
+
+        def f(key: str) -> str | None:
+            mm = re.search(rf"\b{key}\s*=\s*" + _LQ, body)
+            return _lua_unescape(mm.group(1)) if mm else None
+
+        rate_m = re.search(r"\brate\s*=\s*(\d+)", body)
+        pct = int(rate_m.group(1)) / 10 if rate_m else 0
+        mob, zone = f("mob"), f("zoneName")
+        if not mob:
+            continue
+        entries = [f"{mob} ({zone}) — {pct:g}%"]
+        alt_mob, alt_zone = f("altMob"), f("altZone")
+        if alt_mob:
+            entries.append(f"{alt_mob} ({alt_zone}) — {pct:g}%")
+        out[iid] = entries
+    return out
+
+
+def _hl_trophy_drops(hl_lua: Path | None) -> dict[int, list[str]]:
+    """hunting_league_catalog.lua -> {itemId: ['Label (Hunting League) — 100%, ×N per clear']}.
+    Trophy drops are guaranteed on each catalog NM kill (HuntingLeague.lua)."""
+    out: dict[int, list[str]] = {}
+    if hl_lua is None or not hl_lua.exists():
+        return out
+    label = None
+    for line in hl_lua.read_text(encoding="utf-8", errors="replace").splitlines():
+        lm = re.search(r"\blabel\s*=\s*" + _LQ, line)
+        if lm:
+            label = _lua_unescape(lm.group(1))
+        if "drops" in line and label:
+            for dm in re.finditer(r"\{\s*id\s*=\s*(\d+)\s*,\s*qty\s*=\s*(\d+)\s*\}", line):
+                out.setdefault(int(dm.group(1)), []).append(
+                    f"{label} (Hunting League) — 100%, ×{dm.group(2)} per kill")
+    return out
+
+
+def _dungeon_drops(data_lua: Path | None, catalog_lua: Path | None,
+                   trash_rate: int = 30) -> dict[int, list[str]]:
+    """augment_dungeon_drops_data.lua + dungeon_catalog.lua ->
+    {itemId: ['<Dungeon label> dungeon — 30% (trash) / boss pool']}."""
+    out: dict[int, list[str]] = {}
+    if data_lua is None or not data_lua.exists():
+        return out
+    labels: dict[str, str] = {}
+    if catalog_lua is not None and catalog_lua.exists():
+        text = catalog_lua.read_text(encoding="utf-8", errors="replace")
+        starts = [(m.start(), m.group(1))
+                  for m in re.finditer(r"^    (\w+) =\s*$", text, flags=re.M)]
+        for i, (pos, key) in enumerate(starts):
+            end = starts[i + 1][0] if i + 1 < len(starts) else len(text)
+            lm = re.search(r"label\s*=\s*([\"'])(.+?)\1", text[pos:end])
+            if lm:
+                labels[key] = lm.group(2)
+
+    dtext = data_lua.read_text(encoding="utf-8", errors="replace")
+    blocks = re.split(r"^    (\w+) =$", dtext, flags=re.M)
+    for key, body in zip(blocks[1::2], blocks[2::2]):
+        dungeon = labels.get(key, key)
+        trash_part, _, boss_part = body.partition("boss =")
+        for m in re.finditer(r"\bid\s*=\s*(\d+)", trash_part):
+            out.setdefault(int(m.group(1)), []).append(
+                f"{dungeon} dungeon trash — {trash_rate}%")
+        for m in re.finditer(r"\bid\s*=\s*(\d+)", boss_part):
+            out.setdefault(int(m.group(1)), []).append(
+                f"{dungeon} dungeon boss pool — guaranteed on clear")
+    return out
+
+
+def _parse_hook_rates(drops_lua: Path | None) -> tuple[int, int]:
+    """(DROP_RATE, FALLBACK_RATE) percent from augment_catalyst_drops.lua.
+    Parsed live so a balance retune shows up on the next docs build."""
+    if drops_lua is None or not drops_lua.exists():
+        return 60, 12
+    text = drops_lua.read_text(encoding="utf-8", errors="replace")
+    d = re.search(r"^local\s+DROP_RATE\s*=\s*(\d+)", text, re.M)
+    f = re.search(r"^local\s+FALLBACK_RATE\s*=\s*(\d+)", text, re.M)
+    return (int(d.group(1)) if d else 60, int(f.group(1)) if f else 12)
 
 
 def _drop_cell(sources: _DropList) -> str:
     """Render a drop-source list as a table cell string.
 
-    Single source → plain text.  Multiple → <details> dropdown sorted by %.
+    Single source → plain text.  Multiple → <details> dropdown, primary first.
     """
     if not sources:
         return "—"
-    top_label, top_pct = sources[0]
-    top_str = f"{top_label} {top_pct:g}%"
     if len(sources) == 1:
-        return top_str
-    rest = "".join(
-        f"<br>{lbl} {pct:g}%"
-        for lbl, pct in sources[1:]
-    )
-    return f"<details><summary>{top_str}</summary>{rest}</details>"
+        return sources[0]
+    rest = "".join(f"<br>{s}" for s in sources[1:])
+    return f"<details><summary>{sources[0]}</summary>{rest}</details>"
 
 
 # The five Augment Tier roll bands (2026-06-30 tier revamp). MUST mirror
@@ -449,7 +486,8 @@ def _band_cell(base: int, mult, disp, max_boost: int, band_idx: int, cat_tier: i
     return str(lo) if lo == hi else f"{lo}–{hi}"
 
 
-def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] | None = None) -> str:
+def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] | None = None,
+            drop_rate: int = 60, fallback_rate: int = 12) -> str:
     lines: list[str] = []
     total = sum(len(rows) for _, rows in groups)
     gap_count = sum(1 for _, rs in groups for r in rs if r[0] in gap_set)
@@ -465,6 +503,20 @@ def _render(groups, item_names, gap_set: set[int], drops: dict[int, _DropList] |
         f"rolled at that Augment Tier (divide by 5 for one catalyst). "
         f"The **Cap** column is the hard engine ceiling for that stat where one exists "
         f"(e.g. Haste caps at 25%, damage-taken floors at -50%), or **no cap** for additive stats._"
+    )
+    lines.append("")
+    lines.append(
+        f"!!! info \"How catalysts drop\"\n"
+        f"    Each catalyst is assigned to **one specific monster** — the mob in the "
+        f"**Drops from** column — which drops it **{drop_rate}%** of the time when you land "
+        f"the killing blow. On top of that, **every other non-NM monster** has a "
+        f"**{fallback_rate}%** chance to drop a **random** catalyst matched to its level "
+        f"band, so any farming yields catalysts. **Notorious Monsters never drop "
+        f"catalysts.** A drop announces itself on screen with the catalyst's item name "
+        f"and augment. Use **`!augwarp <stat or item>`** in game to warp straight to the "
+        f"assigned mob shown here. Catalysts also drop inside "
+        f"[Augmentation Dungeons](../endgame/dungeons.md) and from "
+        f"[Hunting League](index.md) trophies where listed."
     )
     lines.append("")
     if gap_count > 0:
@@ -574,12 +626,29 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         )
 
     item_names = _load_item_names(item_src)
-    drops = _fetch_drops(repo_root)
-    if drops is None:
-        print("[augments] no DB connection — 'Drops from' column will show '—'")
+
+    # Drop sources: warp table (primary, same file !augwarp uses) + HL trophy
+    # and Augmentation Dungeon catalogs (secondary, from their runtime data).
+    warp_src = resolve_source(repo_root, "modules/custom/lua/catalyst_warp_table.lua", required=False)
+    if warp_src is None:
+        drops = None
+        print("[augments] catalyst_warp_table.lua not found — 'Drops from' column will show '—'")
+    else:
+        drops = _warp_table_drops(warp_src)
+        hl = _hl_trophy_drops(resolve_source(
+            repo_root, "modules/custom/lua/hunting_league_catalog.lua", required=False))
+        dg = _dungeon_drops(
+            resolve_source(repo_root, "modules/custom/lua/augment_dungeon_drops_data.lua", required=False),
+            resolve_source(repo_root, "modules/custom/lua/dungeon_catalog.lua", required=False))
+        for iid, extras in list(hl.items()) + list(dg.items()):
+            drops.setdefault(iid, []).extend(extras)
+        print(f"[augments] drop sources: {len(drops)} catalysts from warp table"
+              f" (+{sum(len(v) for v in hl.values())} HL, +{sum(len(v) for v in dg.values())} dungeon)")
+    drop_rate, fallback_rate = _parse_hook_rates(resolve_source(
+        repo_root, "modules/custom/lua/augment_catalyst_drops.lua", required=False))
 
     page = docs_dir / "progression" / "augments.md"
-    content = _render(groups, item_names, gap_set, drops)
+    content = _render(groups, item_names, gap_set, drops, drop_rate, fallback_rate)
     wrote = write_between_markers(page, "augment-catalog", content)
     if wrote:
         total = sum(len(rs) for _, rs in groups)

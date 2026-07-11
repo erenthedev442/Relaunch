@@ -75,7 +75,7 @@ python3 "$LIVE_ROOT/tools/gen_augment_catalog.py" >> "$LOG" 2>&1 \
     && echo "[0c/4] augment catalog: OK" \
     || echo "[WARN] augment catalog regen failed -- using existing"
 
-echo "[0d/4] regenerating catalyst warp table from live DB..."
+echo "[0d/4] regenerating catalyst warp table from augment_catalyst_mobs.lua..."
 if python3 tools/gen_catalyst_warp_table.py >> "$LOG" 2>&1; then
     cp modules/custom/lua/catalyst_warp_table.lua "$LIVE_ROOT/modules/custom/lua/catalyst_warp_table.lua" \
         && echo "[0d/4] warp table: OK (deployed to LIVE_ROOT)" \
