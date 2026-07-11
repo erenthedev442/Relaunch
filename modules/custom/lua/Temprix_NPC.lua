@@ -4,7 +4,7 @@
 -- Temprix is the gate-keeper for the Aeonic weapon path in Reisenjima.
 -- She sells "Malformed" base weapons in exchange for Escha Beads (charVar).
 -- Players then forge their Malformed weapon into a full Aeonic 119III at
--- the Weapon Forger in Leafallia once they have enough Attestations and
+-- the Weapon Forger (see WeaponForge_NPC.lua) once they have enough Attestations and
 -- Riftborn Boulders.
 --
 -- POSITION: adjust x/y/z to match Reisenjima zone geometry on first test.

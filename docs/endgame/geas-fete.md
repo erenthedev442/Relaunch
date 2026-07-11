@@ -7,7 +7,7 @@ Aeonic crafting materials as you go.
 ## How it works
 
 <!-- DOCGEN:BEGIN id="geas-overview" -->
-Two **Warding Circle** NPCs — one in <!--npc:geas_zitah-->Escha - Zi'Tah<!--/npc--> and one in <!--npc:geas_ruaun-->Escha - Ru'Aun<!--/npc--> — let you pop retail-faithful **Geas Fete NMs** on demand: walk up, pick a tier, pick an NM. **No pop items needed**, but each NM has a per-player cooldown.
+Two **Warding Circle** NPCs — one in Escha - Zi'Tah and one in Escha - Ru'Aun — let you pop retail-faithful **Geas Fete NMs** on demand: walk up, pick a tier, pick an NM. **No pop items needed**, but each NM has a per-player cooldown.
 
 Every Escha kill pays **Escha Beads** (a real currency — see the Currencies II tab). That one pool funds the Warding Circle material exchange **and** the **Aeonic weapon** path ([Temprix in Reisenjima](../progression/aeonic-weapons.md)). NMs also drop the Aeonic crafting materials directly — **Beitetsu**, **Riftcinder**, **Riftborn Boulder**, and (from bosses) **Attestations**, the weapon-type tokens the Aeonic forge needs.
 <!-- DOCGEN:END id="geas-overview" -->
@@ -75,6 +75,6 @@ feed the [Aeonic weapon](../progression/aeonic-weapons.md) forge.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c2dd37d1d6a6 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 9b98a36f2e57 -->
+_Last updated: 2026-07-10 17:20 PDT_
 <!-- DOCGEN:END id="last-updated" -->

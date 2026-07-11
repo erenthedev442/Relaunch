@@ -2,7 +2,8 @@
 
 The Aeonic weapon path: Temprix (Reisenjima) sells 14 "Malformed" base weapons
 for Escha Beads; you forge a Malformed into a full Aeonic 119III at the Weapon
-Forger in Leafallia with the matching Attestation + Riftborn Boulders (both from
+Forger (zone injected via {{npc:weapon_forger}}) with the matching Attestation +
+Riftborn Boulders (both from
 Escha Geas Fete). Reads Temprix's weapon catalog + bead cost from the Lua.
 
 Marker IDs: aeonic-overview, aeonic-weapons
@@ -41,11 +42,12 @@ def _overview(c: dict) -> str:
     return (
         "**Aeonic** weapons (the 119III relics — Godhands, Aeneas, Sequence…) are the top melee reward "
         "on relaunch, forged in three steps:\n\n"
-        f"1. **Buy a Malformed base weapon** from <!--npc:temprix-->Temprix in Reisenjima<!--/npc--> for "
+        f"1. **Buy a Malformed base weapon** from Temprix in Reisenjima for "
         f"**{c['cost']:,} Escha Beads**.\n"
         "2. **Farm your Attestation + Riftborn Boulders** from [Escha Geas Fete](../endgame/geas-fete.md) "
         "— bosses drop the weapon-type Attestation; every tier drops Riftborn Boulders.\n"
-        "3. **Forge** the Malformed weapon into its full Aeonic at the **Weapon Forger in Leafallia**.\n\n"
+        "3. **Forge** the Malformed weapon into its full Aeonic at the **Weapon Forger** in "
+        "{{npc:weapon_forger}}.\n\n"
         "Escha Beads come from *any* Escha Geas Fete kill, so the whole path is fuelled by one currency."
     )
 

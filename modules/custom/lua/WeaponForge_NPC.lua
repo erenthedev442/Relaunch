@@ -3,7 +3,7 @@
 -- Retail-style 3-stage weapon upgrade path: 119I → 119II → 119III.
 --
 -- HOW IT WORKS (like retail FFXI Oboro reforging)
---   1. Talk to the Weapon Forger in Leafallia.
+--   1. Talk to the Weapon Forger (zone set in the addOverride below).
 --   2. The NPC scans your main inventory and lists every weapon you own that
 --      is upgradeable to the next stage.
 --   3. Select a weapon. The NPC shows the full upgrade chain (I → II → III)

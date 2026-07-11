@@ -30,8 +30,8 @@ def _parse(text: str) -> dict:
 
 def _overview(c: dict) -> str:
     return (
-        "Two **Warding Circle** NPCs — one in <!--npc:geas_zitah-->Escha - Zi'Tah<!--/npc--> and one in "
-        "<!--npc:geas_ruaun-->Escha - Ru'Aun<!--/npc--> — let you pop retail-faithful **Geas Fete NMs** "
+        "Two **Warding Circle** NPCs — one in Escha - Zi'Tah and one in "
+        "Escha - Ru'Aun — let you pop retail-faithful **Geas Fete NMs** "
         "on demand: walk up, pick a tier, pick an NM. **No pop items needed**, but each NM has a "
         "per-player cooldown.\n\n"
         "Every Escha kill pays **Escha Beads** (a real currency — see the Currencies II tab). That one "
