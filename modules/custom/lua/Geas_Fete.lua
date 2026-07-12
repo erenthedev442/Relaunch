@@ -328,17 +328,73 @@ local function tierOptions(player, zone, zoneId, tierNum, mainFn, menu)
     return opts
 end
 
--- Exchange shop: spend currency on materials.
+-- Exchange shop: spend currency on materials. Each material opens a quantity
+-- submenu (x1 / x10 / x<stack> / Max) -- the Aeonic/Mythic forge steps need
+-- materials by the thousands (Mythic II+III alone is 10,300 Beitetsu), so
+-- one-per-click is not viable. Max buys as many as beads AND bag space allow.
 local function buildShop(player, zone, zoneId, mainFn, menu)
     local clbl   = CURRENCY_LABEL[zoneId] or 'pts'
     local shopFn -- forward decl
 
+    -- Keep one entry per line: the site's geas_fete docgen parses label=/cost=.
     local SHOP = {
-        { label='Beitetsu x1',        id=BEITETSU,         qty=1, cost=200  },
-        { label='Riftcinder x1',      id=RIFTCINDER,       qty=1, cost=150  },
-        { label='Riftborn Boulder x1',id=RIFTBORN_BOULDER, qty=1, cost=500  },
-        { label='Eschalixir+2 x1',    id=ESCHALIXIR_2,     qty=1, cost=2000 },
+        { label='Beitetsu',         id=BEITETSU,         stack=99, cost=200  },
+        { label='Riftcinder',       id=RIFTCINDER,       stack=99, cost=150  },
+        { label='Riftborn Boulder', id=RIFTBORN_BOULDER, stack=99, cost=500  },
+        { label='Eschalixir+2',     id=ESCHALIXIR_2,     stack=12, cost=2000 },
     }
+
+    -- Grant items FIRST (batched per stack, stopping when the bag fills), then
+    -- charge only for what actually landed -- a full inventory can never eat
+    -- beads. Affordability is pre-checked and nothing yields in between, so
+    -- the final takeCurrency cannot come up short.
+    local function buy(pp, it, want)
+        local afford = math.floor(getCurrency(pp, zoneId) / it.cost)
+        if afford < 1 then
+            pp:printToPlayer(string.format('[Geas Fete] Need %d %s.', it.cost, clbl), S)
+            return
+        end
+        local n     = math.min(want, afford)
+        local added = 0
+        while added < n do
+            local batch = math.min(it.stack, n - added)
+            if not pp:addItem({ id = it.id, quantity = batch }) then break end
+            added = added + batch
+        end
+        if added == 0 then
+            pp:printToPlayer('[Geas Fete] Your inventory is full.', S)
+            return
+        end
+        takeCurrency(pp, zoneId, added * it.cost)
+        pp:printToPlayer(string.format('[Geas Fete] %s x%d for %d %s.', it.label, added, added * it.cost, clbl), S)
+        if added < n then
+            pp:printToPlayer('[Geas Fete] Inventory filled -- exchanged what fit.', S)
+        end
+    end
+
+    local function qtyMenu(pp, it)
+        menu.title = string.format('%s [%s: %d]', it.label, clbl, getCurrency(pp, zoneId))
+        local function opt(n)
+            return {
+                string.format('x%d (%d)', n, n * it.cost),
+                function(p2)
+                    buy(p2, it, n)
+                    p2:timer(30, function(p3) qtyMenu(p3, it) end)
+                end,
+            }
+        end
+        menu.options = {
+            opt(1),
+            opt(10),
+            opt(it.stack),
+            { 'Max', function(p2)
+                buy(p2, it, math.floor(getCurrency(p2, zoneId) / it.cost))
+                p2:timer(30, function(p3) qtyMenu(p3, it) end)
+            end },
+            { 'Back', function(p2) shopFn(p2) end },
+        }
+        pp:timer(30, function(p2) p2:customMenu(menu) end)
+    end
 
     shopFn = function(p)
         local cur = getCurrency(p, zoneId)
@@ -348,15 +404,7 @@ local function buildShop(player, zone, zoneId, mainFn, menu)
             local it = item
             menu.options[#menu.options + 1] = {
                 string.format('%s (%d)', it.label, it.cost),
-                function(pp)
-                    if takeCurrency(pp, zoneId, it.cost) then
-                        pp:addItem({ id = it.id, quantity = it.qty })
-                        pp:printToPlayer('[Geas Fete] Exchanged.', S)
-                    else
-                        pp:printToPlayer(string.format('[Geas Fete] Need %d %s.', it.cost, clbl), S)
-                    end
-                    pp:timer(30, function(p2) p2:customMenu(menu) end)
-                end,
+                function(pp) qtyMenu(pp, it) end,
             }
         end
         menu.options[#menu.options + 1] = { 'Back', function(pp) mainFn(pp) end }

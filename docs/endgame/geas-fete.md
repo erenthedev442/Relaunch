@@ -59,14 +59,14 @@ Every Escha kill pays **Escha Beads** (a real currency — see the Currencies II
 ## Material exchange
 
 <!-- DOCGEN:BEGIN id="geas-exchange" -->
-Spend Escha Beads at the Warding Circle for Aeonic materials:
+Spend Escha Beads at the Warding Circle for Aeonic materials — pick a material, then a quantity (x1 / x10 / full stack / Max):
 
-| Material | Cost (Escha Beads) |
+| Material | Cost each (Escha Beads) |
 |---|---:|
-| Beitetsu x1 | 200 |
-| Riftcinder x1 | 150 |
-| Riftborn Boulder x1 | 500 |
-| Eschalixir+2 x1 | 2,000 |
+| Beitetsu | 200 |
+| Riftcinder | 150 |
+| Riftborn Boulder | 500 |
+| Eschalixir+2 | 2,000 |
 <!-- DOCGEN:END id="geas-exchange" -->
 
 Chasing the endgame relics? The Attestations and Riftborn Boulders you farm here

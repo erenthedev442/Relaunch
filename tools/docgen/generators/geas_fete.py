@@ -57,8 +57,9 @@ def _roster(c: dict) -> str:
 def _exchange(c: dict) -> str:
     if not c["exchange"]:
         return "_Exchange list unavailable._"
-    lines = ["Spend Escha Beads at the Warding Circle for Aeonic materials:", "",
-             "| Material | Cost (Escha Beads) |", "|---|---:|"]
+    lines = ["Spend Escha Beads at the Warding Circle for Aeonic materials — pick a "
+             "material, then a quantity (x1 / x10 / full stack / Max):", "",
+             "| Material | Cost each (Escha Beads) |", "|---|---:|"]
     for e in c["exchange"]:
         lines.append(f"| {e['label']} | {e['cost']:,} |")
     return "\n".join(lines)
