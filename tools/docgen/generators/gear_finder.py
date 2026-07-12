@@ -656,6 +656,25 @@ CATALOG_SOURCES = [
 ]
 
 
+def _synth_ids(repo_root: Path) -> set[int]:
+    """Every item produced by an ACTIVE synthesis recipe (NQ + HQ results):
+    stock sql/synth_recipes.sql plus the relaunch enable_craft_only_recipes.sql
+    (the escutcheon-master lines). Crafting is a first-class source -- without
+    this, 3,900+ craft-only items were reported unobtainable."""
+    ids: set[int] = set()
+    for rel in ('sql/synth_recipes.sql',
+                'modules/custom/sql/enable_craft_only_recipes.sql'):
+        text = _read(repo_root, rel)
+        if not text:
+            continue
+        for m in re.finditer(
+                r"^INSERT INTO `synth_recipes` VALUES \((?:\d+,){21}"
+                r"(\d+),(\d+),(\d+),(\d+),", text, re.M):
+            ids |= {int(g) for g in m.groups()}
+    ids.discard(0)
+    return ids
+
+
 def _ambuscade_ids(repo_root: Path) -> set[int]:
     """Every item the Ambuscade system hands out: the 10 armor sets
     (NQ/+1/+2 from ARMOR_SETS in scripts/globals/ambuscade.lua -- NQ/+1 via
@@ -969,6 +988,10 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # to the Gear Finder / item database.
     for iid in _plus4_forge_ids(repo_root):
         obtainable.setdefault(iid, 'Divergence +4 Forge')
+    # Crafting runs LAST of the gap-fills: it is the most generic source, so
+    # any more specific label (vendor / forge / drop page) wins first.
+    for iid in _synth_ids(repo_root):
+        obtainable.setdefault(iid, 'Crafting')
     # Unity Wanted +1s: upgraded from the base drop at the Wanted Board for
     # accolades. The base items come from the page scan; these have no table.
     for iid in _unity_plus1_ids(repo_root):

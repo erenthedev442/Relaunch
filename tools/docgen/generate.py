@@ -146,6 +146,7 @@ def main() -> int:
         dungeon_instances,
         augment_dungeon_drops,
         dynamis_divergence,
+        crafted_gear,
         classic_dynamis,
         sync_audit,
         fellow,
@@ -381,6 +382,8 @@ def main() -> int:
         # page; marker blocks are independent so order only groups them.
         ("augment_dungeon_drops", augment_dungeon_drops),
         ("dynamis_divergence",   dynamis_divergence),
+        # crafted_gear: the ilvl craftables index (economy/crafted-gear.md)
+        ("crafted_gear",         crafted_gear),
         # classic_dynamis reads the attestation-pop guard SQL + zone data and
         # fills the Attestation NM chain tables on endgame/dynamis-classic.md
         # (player request "Aeonic Attestation", 2026-07-10).
