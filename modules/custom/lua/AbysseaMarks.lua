@@ -27,8 +27,8 @@ local MARKS_CRUOR_LV   = '[MarksPopCruor]'
 --   eleRes  added to ALL 8 elemental magic-evasion mods (Fire..Dark) -- an
 --           elemental-nuke resistance layered on top of meva
 -- RELAUNCH Phase 2 retune (2026-06-24): cut to the relaunch power curve
--- (RELAUNCH_PLAN "Mob Retune Targets", Abyssea rows). att/def/maxHP land in
--- the plan's per-tier ranges -- Visions(T1) def 900-1100 / att 4-5.5k / HP
+-- (original design "Mob Retune Targets", Abyssea rows). att/def/maxHP land in
+-- the design's per-tier ranges -- Visions(T1) def 900-1100 / att 4-5.5k / HP
 -- 375-565k, Scars(T2) def 1.2-1.5k / att 5.5-7.5k / HP 780k-1.2M, Heroes(T3)
 -- def 1.8-2.2k / att 7-9k / HP 1.55-2.3M -- and the secondary stats (matt/acc/
 -- eva/macc/meva/da/haste/eleRes) are scaled to match so the mob stays coherent
