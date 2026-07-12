@@ -76,9 +76,14 @@ end
 --------------------------------------------------------------------
 
 local CAT_ORDER = { 'Weapons', 'Armor', 'Accessories' }
+-- Weapons browse by WEAPON TYPE (owner request 2026-07-11; was by content
+-- source). Types follow item_weapon.skill; Grip-Shield and Ammo stay as
+-- slot buckets.
 local SUB_ORDER =
 {
-    Weapons     = { 'Fete T2', 'Reisenjima', 'Grip-Shield', 'Ammo', 'Other' },
+    Weapons     = { 'Hand-to-Hand', 'Dagger', 'Sword', 'Gt. Sword', 'Axe', 'Gt. Axe',
+                    'Scythe', 'Polearm', 'Katana', 'Gt. Katana', 'Club', 'Staff',
+                    'Archery', 'Marksmanship', 'Grip-Shield', 'Ammo', 'Other' },
     Armor       = { 'Head', 'Body', 'Hands', 'Legs', 'Feet', 'Other' },
     Accessories = { 'Ear', 'Ring', 'Waist', 'Back', 'Other' },
 }

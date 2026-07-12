@@ -44,7 +44,9 @@ _ROW_RE = re.compile(
 # at runtime (e.g. Voluspa) sort after the known ones, alphabetically.
 _CAT_ORDER = ["Weapons", "Armor", "Accessories"]
 _SUB_ORDER = {
-    "Weapons":     ["Fete T2", "Reisenjima", "Grip-Shield", "Ammo"],
+    "Weapons":     ["Hand-to-Hand", "Dagger", "Sword", "Gt. Sword", "Axe", "Gt. Axe",
+                    "Scythe", "Polearm", "Katana", "Gt. Katana", "Club", "Staff",
+                    "Archery", "Marksmanship", "Grip-Shield", "Ammo"],
     "Armor":       ["Head", "Body", "Hands", "Legs", "Feet"],
     "Accessories": ["Ear", "Neck", "Ring", "Waist", "Back"],
 }
