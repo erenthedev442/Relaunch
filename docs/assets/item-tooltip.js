@@ -134,6 +134,11 @@
             var link = e.target && e.target.closest ? e.target.closest(".item-link") : null;
 
             if (link && isTouch) {
+                // No preview image -> nothing to toggle; swallowing the tap
+                // would make the link permanently dead. Just navigate.
+                if (!link.getAttribute("data-img")) {
+                    return;
+                }
                 // First tap shows; second tap on same link opens the article.
                 if (currentLink === link && tooltip && tooltip.style.display === "block") {
                     // Let the click navigate

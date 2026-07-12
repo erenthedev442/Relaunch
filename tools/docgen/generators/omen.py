@@ -17,6 +17,7 @@ from pathlib import Path
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
 from tools.docgen._luaparse import section
+from tools.docgen._bgwiki import item_anchor
 
 
 # ---------------------------------------------------------------------------
@@ -53,8 +54,9 @@ def _quoted_list(block: str) -> list[str]:
 
 
 def _link(item: dict) -> str:
-    return (f'<a class="item-link" href="https://www.ffxiah.com/item/{item["id"]}" '
-            f'target="_blank" rel="noopener">{item["name"]}</a>')
+    # Shared builder: emits data-img, which item-tooltip.js requires -- a
+    # hand-rolled anchor without it leaves taps dead on touch devices.
+    return item_anchor(item["name"], item_id=item["id"])
 
 
 def _pct(fraction: float) -> str:
@@ -263,8 +265,7 @@ def _render_floors(c: dict) -> str:
         f"**Hidden vault.** Leaving the third or final gate has a **{_pct(c['r_bonus'])}** "
         f"chance to detour through a chamber of treasure caskets: gil, paragon cards, "
         f"moonbow materials, scales, a spare canteen — and sometimes "
-        f"<a class=\"item-link\" href=\"https://www.ffxiah.com/item/28273\" target=\"_blank\" "
-        f"rel=\"noopener\">Regal Pumps</a>.",
+        f"{_link({'id': 28273, 'name': 'Regal Pumps'})}.",
     ])
     return "\n".join(lines)
 
