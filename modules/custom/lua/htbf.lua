@@ -156,6 +156,14 @@ function htbf.register(fightKey, tier)
             for _, hook in ipairs({
                 'onBattlefieldTick', 'sections', 'onExitTrigger', 'onEventFinishExit',
                 'onEventUpdate', 'onBattlefieldLoss', 'onBattlefieldRegister', 'paths',
+                -- onEventFinishBattlefield drives the PHASE-2 spawn on multi-phase
+                -- fights (Dawn spawns Promathia P2 here; Shadow Lord and Celestial
+                -- Nexus likewise). Without it those reuse fights play the P1-death
+                -- cutscene but never spawn P2 -> unwinnable. The closures capture
+                -- the base file's own scope + our shared groups table, so copying
+                -- the reference is correct. Guarded by rawget, so single-boss
+                -- fights that don't define it are unaffected.
+                'onEventFinishBattlefield',
             }) do
                 if rawget(base, hook) ~= nil then content[hook] = base[hook] end
             end

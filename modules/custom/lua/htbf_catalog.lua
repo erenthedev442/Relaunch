@@ -28,6 +28,7 @@ catalog.gemPrice =
     [xi.ki.WARRIORS_PATH_PHANTOM_GEM] = 100000,  -- The Warrior's Path (Sealion's Den)
     [xi.ki.FEARED_ONE_PHANTOM_GEM]    = 150000,  -- One to be Feared (Sealion's Den)
     [xi.ki.HEAD_WIND_PHANTOM_GEM]     = 100000,  -- Head Wind (Boneyard Gully)
+    [xi.ki.DAWN_PHANTOM_GEM]          = 200000,  -- Dawn (Empyreal Paradox) -- final CoP boss, priciest
     [xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM] = 120000, -- Puppet in Peril (Jade Sepulcher)
     [xi.ki.LEGACY_PHANTOM_GEM]        = 120000,  -- Legacy of the Lost (Talacca Cove)
     [xi.ki.SHADOW_LORD_PHANTOM_GEM]   = 150000,  -- Shadow Lord (Throne Room)
@@ -50,6 +51,7 @@ catalog.gemName =
     [xi.ki.WARRIORS_PATH_PHANTOM_GEM] = "Warrior's Path Phantom Gem",
     [xi.ki.FEARED_ONE_PHANTOM_GEM]    = 'Feared One Phantom Gem',
     [xi.ki.HEAD_WIND_PHANTOM_GEM]     = 'Head Wind Phantom Gem',
+    [xi.ki.DAWN_PHANTOM_GEM]          = 'Dawn Phantom Gem',
     [xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM] = 'Puppet in Peril Phantom Gem',
     [xi.ki.LEGACY_PHANTOM_GEM]        = 'Legacy Phantom Gem',
     [xi.ki.SHADOW_LORD_PHANTOM_GEM]   = 'Shadow Lord Phantom Gem',
@@ -69,7 +71,7 @@ catalog.gemName =
 catalog.gemCategories =
 {
     { label = 'Avatar Prime Trials',     gems = { xi.ki.AVATAR_PHANTOM_GEM } },
-    { label = 'Chains of Promathia',     gems = { xi.ki.SAVAGES_PHANTOM_GEM, xi.ki.WARRIORS_PATH_PHANTOM_GEM, xi.ki.FEARED_ONE_PHANTOM_GEM, xi.ki.HEAD_WIND_PHANTOM_GEM } },
+    { label = 'Chains of Promathia',     gems = { xi.ki.SAVAGES_PHANTOM_GEM, xi.ki.WARRIORS_PATH_PHANTOM_GEM, xi.ki.FEARED_ONE_PHANTOM_GEM, xi.ki.HEAD_WIND_PHANTOM_GEM, xi.ki.DAWN_PHANTOM_GEM } },
     { label = 'Treasures of Aht Urhgan', gems = { xi.ki.PUPPET_IN_PERIL_PHANTOM_GEM, xi.ki.LEGACY_PHANTOM_GEM } },
     { label = 'Rise of the Zilart',      gems = { xi.ki.SHADOW_LORD_PHANTOM_GEM, xi.ki.STELLAR_FULCRUM_PHANTOM_GEM, xi.ki.CELESTIAL_NEXUS_PHANTOM_GEM, xi.ki.DIVINE_PHANTOM_GEM } },
     { label = 'Ark Angels',              gems = { xi.ki.PHANTOM_GEM_OF_APATHY, xi.ki.PHANTOM_GEM_OF_COWARDICE, xi.ki.PHANTOM_GEM_OF_ENVY, xi.ki.PHANTOM_GEM_OF_ARROGANCE, xi.ki.PHANTOM_GEM_OF_RAGE } },
@@ -232,6 +234,18 @@ catalog.fights =
         exitNpcs = { '_082', '_084', '_086' },
         gem = xi.ki.HEAD_WIND_PHANTOM_GEM, baseIndex = 7, baseBattlefieldId = 4090,
         reuseBaseId = xi.battlefield.id.HEAD_WIND, label = 'Head Wind',
+    },
+    -- Dawn (the final CoP fight vs Promathia). Empyreal Paradox entrance
+    -- TR_Entrance already carries the base Dawn (index 0) + Apocalypse Nigh
+    -- (index 1), so HTBF tiers sit at 2/3/4. Multi-phase (P1 -> cutscene ->
+    -- P2 Promathia): the phase-2 spawn rides in on onEventFinishBattlefield,
+    -- now copied by the registrar. Prishe + Selhteus allies come along via the
+    -- reused setupBattlefield. 6-player, 30-min.
+    dawn =
+    {
+        zone = xi.zone.EMPYREAL_PARADOX, entryNpc = 'TR_Entrance', exitNpc = 'Transcendental_Radiance',
+        gem = xi.ki.DAWN_PHANTOM_GEM, baseIndex = 2, baseBattlefieldId = 4210,
+        reuseBaseId = xi.battlefield.id.DAWN, label = 'Dawn',
     },
 
     -- ── ToAU boss battlefields ──────────────────────────────────────────────

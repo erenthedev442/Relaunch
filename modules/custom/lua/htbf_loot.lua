@@ -190,6 +190,11 @@ fightLoot.the_savage =
         { itemId = 27912, weight = 15 },  -- Cizin Mail (Skirmish armor)
         { itemId = 27874, weight = 10 },  -- Cizin Mail +1 (Skirmish armor)
         { itemId = 28018, weight = 10 },  -- Cizin Mufflers +1 (Skirmish armor)
+        -- The Wyrm God sprinkle (that HTBF is unimplemented; its retail loot
+        -- lives here instead -- owner 2026-07-13). Crepuscular weapons.
+        { itemId = 21585, weight = 14 },  -- Crepuscular Knife (Dagger)
+        { itemId = 22300, weight = 14 },  -- Crepuscular Pebble (Ammo)
+        { itemId = 18566, weight = 14 },  -- Crepuscular Scythe (Scythe)
     },
 }
 
@@ -242,6 +247,10 @@ fightLoot.one_to_be_feared =
         { itemId = 28019, weight = 10 },  -- Otronif Gloves +1 (Skirmish armor)
         { itemId = 28161, weight = 10 },  -- Otronif Brais +1 (Skirmish armor)
         { itemId = 28298, weight = 10 },  -- Otronif Boots +1 (Skirmish armor)
+        -- The Wyrm God sprinkle (unimplemented HTBF; owner 2026-07-13).
+        -- Crepuscular accessories.
+        { itemId = 26220, weight = 15 },  -- Crepuscular Ring
+        { itemId = 26117, weight = 15 },  -- Crepuscular Earring
     },
 }
 
@@ -266,6 +275,33 @@ fightLoot.head_wind =
         { itemId = 28020, weight = 10 },  -- Iuitl Wristbands +1 (Skirmish armor)
         { itemId = 28162, weight = 10 },  -- Iuitl Tights +1 (Skirmish armor)
         { itemId = 28299, weight = 10 },  -- Iuitl Gaiters +1 (Skirmish armor)
+        -- The Wyrm God sprinkle (unimplemented HTBF; owner 2026-07-13).
+        -- Crepuscular armor set (head/body/back).
+        { itemId = 23797, weight = 14 },  -- Crepuscular Helm (Head)
+        { itemId = 23798, weight = 14 },  -- Crepuscular Mail (Body)
+        { itemId = 23799, weight = 14 },  -- Crepuscular Cloak (Back)
+    },
+}
+
+-- Dawn (Promathia). Its own retail HTBF gear pool. G1 = CoP-era ingots (the
+-- retail testimonial mats -- Maliyakaleya Coral etc. -- are Adoulin-era and have
+-- no enum const here). G2 = the six Dawn reward pieces.
+fightLoot.dawn =
+{
+    {
+        { itemId = xi.item.ORICHALCUM_INGOT, weight =  90 },
+        { itemId = xi.item.GOLD_INGOT,       weight =  70 },
+        { itemId = xi.item.DAMASCUS_INGOT,   weight =  25 },
+    },
+    {
+        quantity = 1,
+        { itemId = 0,     weight = 850 },
+        { itemId = 20698, weight = 25 },  -- Fettering Blade (Sword)
+        { itemId = 22118, weight = 25 },  -- Venery Bow (Archery)
+        { itemId = 25708, weight = 30 },  -- Gyve Doublet (Body)
+        { itemId = 27324, weight = 30 },  -- Gyve Trousers (Legs)
+        { itemId = 27618, weight = 25 },  -- Laic Mantle (Back)
+        { itemId = 26324, weight = 25 },  -- Latria Sash (Waist)
     },
 }
 
@@ -335,6 +371,11 @@ fightLoot.shadow_lord =
         { itemId = 27045, weight = 12 },  -- Yorium Gauntlets (Alluvion Skirmish armor)
         { itemId = 27232, weight = 12 },  -- Yorium Cuisses (Alluvion Skirmish armor)
         { itemId = 27402, weight = 12 },  -- Yorium Sabatons (Alluvion Skirmish armor)
+        -- Maiden of the Dusk sprinkle (unimplemented HTBF; owner 2026-07-13).
+        -- Malignance melee/tank pieces + the tank Sword.
+        { itemId = 23735, weight = 14 },  -- Malignance Tights (Legs)
+        { itemId = 23736, weight = 14 },  -- Malignance Boots (Feet)
+        { itemId = 21635, weight = 14 },  -- Malignance Sword
     },
 }
 
@@ -377,6 +418,11 @@ fightLoot.celestial_nexus =
         { itemId = 27048, weight = 12 },  -- Telchine Gloves (Alluvion Skirmish armor)
         { itemId = 27235, weight = 12 },  -- Telchine Braconi (Alluvion Skirmish armor)
         { itemId = 27405, weight = 12 },  -- Telchine Pigaches (Alluvion Skirmish armor)
+        -- Maiden of the Dusk sprinkle (that HTBF is unimplemented; its retail
+        -- loot lives here instead -- owner 2026-07-13). Caster-leaning pieces.
+        { itemId = 22040, weight = 15 },  -- Daybreak (healer Club)
+        { itemId = 22087, weight = 15 },  -- Malignance Pole (Staff)
+        { itemId = 26088, weight = 15 },  -- Malignance Earring
     },
 }
 
@@ -408,6 +454,11 @@ fightLoot.divine_might =
         { itemId = 27047, weight = 12 },  -- Taeon Gloves (Alluvion Skirmish armor)
         { itemId = 27234, weight = 12 },  -- Taeon Tights (Alluvion Skirmish armor)
         { itemId = 27404, weight = 12 },  -- Taeon Boots (Alluvion Skirmish armor)
+        -- Maiden of the Dusk sprinkle (unimplemented HTBF; owner 2026-07-13).
+        -- The mage half of the Malignance armor set.
+        { itemId = 23732, weight = 14 },  -- Malignance Chapeau (Head)
+        { itemId = 23733, weight = 14 },  -- Malignance Tabard (Body)
+        { itemId = 23734, weight = 14 },  -- Malignance Gloves (Hands)
     },
 }
 
