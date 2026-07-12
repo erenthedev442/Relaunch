@@ -17,6 +17,7 @@ without the DB. Today that's the Augment Sage catalysts; add more sources here.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import time
@@ -113,14 +114,18 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # static widget HTML (the data lives in the JSON above), which froze its
     # "Last updated" stamp -- this marker bumps the content hash whenever the item
     # coverage changes AND tells readers the dataset is regenerated every deploy.
+    # The dataset-rev hash (generated_at excluded) catches changes that keep the
+    # counts identical, e.g. a drop source moving between mobs.
     page = docs_dir / "progression" / "item-database.md"
     if page.exists():
+        rev = hashlib.sha256(json.dumps(
+            items, separators=(",", ":")).encode("utf-8")).hexdigest()[:12]
         meta = (
             f"**{len(items):,} items** indexed straight from the live server — "
             f"**{n_drop:,}** with drop sources, **{n_use:,}** with system uses. This "
             f"dataset is **rebuilt from the live database on every deploy**, so it always "
-            f"reflects the current server (the \"Last updated\" date below tracks the "
-            f"page layout, not the data)."
+            f"reflects the current server.\n"
+            f"<!-- dataset-rev: {rev} -->"
         )
         if write_between_markers(page, "item-database-meta", meta):
             print("[drop_finder] item-database-meta: written")
