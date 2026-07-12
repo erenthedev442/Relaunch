@@ -99,6 +99,26 @@ local ATTESTATIONS = {
     1569, -- attestation_of_harmony        (Marks   / Fomalhaut)
 }
 
+-- Reisenjima abjurations (owner request 2026-07-13: 'these should drop from
+-- our geas-fete NMs'). 5 augmented-armor families x 5 slots = 25 items.
+-- T3+ NMs roll for one; the AbjurationForge NPC in the hub trades an
+-- abjuration for its matching augmented armor piece (slot- and family-locked).
+--   Bushin      -> Valorous       Cyllenian  -> Odyssean
+--   Foreboding  -> Chironic       Grove      -> Merlinic
+--   Hadean      -> Herculean
+local ABJURATIONS = {
+    -- Bushin (-> Valorous)
+    8762, 8763, 8764, 8765, 8766,  -- head/body/hands/legs/feet
+    -- Cyllenian (-> Odyssean)
+    9125, 9126, 9127, 9128, 9129,
+    -- Foreboding (-> Chironic)
+    3574, 3575, 3576, 3577, 3578,
+    -- Grove (-> Merlinic)
+    8772, 8773, 8774, 8775, 8776,
+    -- Hadean (-> Herculean)
+    2434, 2435, 2436, 2437, 2438,
+}
+
 -- ===================================================================
 -- NM CATALOG
 -- Fields:
@@ -477,6 +497,20 @@ local function awardDrops(player, zoneId, def)
         local id = GEAR_HQ[math.random(#GEAR_HQ)]
         if player:addItem({ id = id, quantity = 1 }) then
             player:printToPlayer('[Geas Fete] A pristine (+1) piece of Reisenjima armor drops!', S)
+        end
+    end
+
+    -- Reisenjima abjurations (owner call 2026-07-13): T3 rolls a single
+    -- random abjuration; bosses roll one guaranteed + a chance at a second.
+    -- Trade at the AbjurationForge NPC in Purgonorgo Isle (!hub) for the
+    -- matching augmented armor piece (Odyssean/Valorous/Chironic/etc.).
+    local abjRolls = (t == 4) and 1 or 0
+    if t == 3 and math.random() < 0.15 then abjRolls = 1 end
+    if t == 4 and math.random() < 0.30 then abjRolls = 2 end
+    for _ = 1, abjRolls do
+        local id = ABJURATIONS[math.random(#ABJURATIONS)]
+        if player:addItem({ id = id, quantity = 1 }) then
+            player:printToPlayer('[Geas Fete] A Reisenjima abjuration falls -- trade it at the forge in !hub!', S)
         end
     end
 end
