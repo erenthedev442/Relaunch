@@ -50,6 +50,53 @@ Say '  [B] docgen -> mkdocs -> Cloudflare  (fjb-relaunch.pages.dev)' 'Cyan'
 Say '  LIVE relaunch server: players briefly disconnect on the restart.' 'Cyan'
 Say '  (Legendary / ~server is a separate box and is NOT touched.)' 'Cyan'
 Say '============================================================' 'Cyan'
+
+# ---- PRE-FLIGHT: what THIS deploy will pull, flagging non-you authors ----
+# Read-only, non-gating, fail-open (never blocks the deploy). Fetches origin,
+# then lists the incoming commits git-sync will merge and, for anyone whose
+# author email is NOT in $MyEmails, prints the exact files going live from
+# that collaborator. $MyEmails = the identities YOU commit under; edit if you
+# gain another. It does not approve or hold anything -- just awareness before
+# you answer the prompt below.
+$MyEmails = @('rknutz@gmail.com','richardknutzjr@hotmail.com')
+try {
+    git -C $root fetch origin relaunch --quiet 2>$null
+    $US = [char]0x1f
+    $incoming = @(git -C $root log 'HEAD..origin/relaunch' --format='%ae' 2>$null)
+    if (-not $incoming -or $incoming.Count -eq 0) {
+        Say '  Incoming: nothing new since your live code (or offline -- fetch skipped).' 'Gray'
+    } else {
+        $mineCount  = @($incoming | Where-Object { $MyEmails -contains $_ }).Count
+        $otherCount = $incoming.Count - $mineCount
+        Say ('  Incoming this deploy: {0} commit(s) -- {1} yours, {2} from other collaborators.' -f $incoming.Count, $mineCount, $otherCount) 'Cyan'
+        if ($otherCount -gt 0) {
+            $byAuthor = @{}
+            $curKey = $null
+            foreach ($ln in @(git -C $root log 'HEAD..origin/relaunch' --name-only --pretty=("format:@@%ae{0}%an" -f $US) 2>$null)) {
+                if ($ln -like '@@*') {
+                    $p = $ln.Substring(2).Split($US)
+                    if ($MyEmails -contains $p[0]) { $curKey = $null }
+                    else {
+                        $curKey = $p[0]
+                        if (-not $byAuthor.ContainsKey($curKey)) {
+                            $byAuthor[$curKey] = @{ Name = $p[1]; Files = New-Object System.Collections.Generic.HashSet[string] }
+                        }
+                    }
+                } elseif ($curKey -and $ln.Trim()) {
+                    [void]$byAuthor[$curKey].Files.Add($ln.Trim())
+                }
+            }
+            Say '  ------ FILES GOING LIVE FROM OTHER COLLABORATORS ------' 'Yellow'
+            foreach ($email in $byAuthor.Keys) {
+                Say ('   {0} <{1}>  ({2} file(s))' -f $byAuthor[$email].Name, $email, $byAuthor[$email].Files.Count) 'Yellow'
+                foreach ($f in ($byAuthor[$email].Files | Sort-Object)) { Say ('     ' + $f) 'Gray' }
+            }
+            Say '  ------------------------------------------------------' 'Yellow'
+            Say '  (Awareness only -- these are NOT held; the deploy proceeds normally.)' 'Gray'
+        }
+    }
+} catch { Say ('  (incoming-changes preflight skipped: {0})' -f $_.Exception.Message) 'Gray' }
+
 $go = Read-Host '  Proceed? [Y/N]'
 if ($go -notmatch '^[Yy]') { Say '  Cancelled - nothing changed.' 'Yellow'; Read-Host '  Press Enter to close'; exit 0 }
 
