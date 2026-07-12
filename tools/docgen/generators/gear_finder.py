@@ -585,6 +585,20 @@ def _dynamis_su5_ids(repo_root: Path) -> set[int]:
     return {int(x) for x in re.findall(r'\{\s*id\s*=\s*(\d+)', m.group(1))}
 
 
+def _geas_fete_gear_ids(repo_root: Path) -> set[int]:
+    """The Reisenjima-crafted armor (Adhemar/Argosy/Carmine/Rao/Ryuo/Souveran/
+    Naga, NQ + +1) that drops off Geas-Fete T2+ NMs -- the GEAR_NQ/GEAR_HQ
+    pools in modules/custom/lua/Geas_Fete.lua (their only source since the
+    2026-07 vendor sweep)."""
+    text = _read(repo_root, 'modules/custom/lua/Geas_Fete.lua')
+    if not text:
+        return set()
+    ids: set[int] = set()
+    for mm in re.finditer(r'local GEAR_(?:NQ|HQ)\s*=\s*\{(.*?)\n\}', text, re.DOTALL):
+        ids |= {int(x) for x in re.findall(r'\b(2\d{4})\b', mm.group(1))}
+    return ids
+
+
 def _ambuscade_ids(repo_root: Path) -> set[int]:
     """Every item the Ambuscade system hands out: the 10 armor sets
     (NQ/+1/+2 from ARMOR_SETS in scripts/globals/ambuscade.lua -- NQ/+1 via
@@ -852,6 +866,10 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # 2026-07 vendor sweep -- this tag is their only source.
     for iid in _ambuscade_ids(repo_root):
         obtainable.setdefault(iid, 'Ambuscade')
+    # Geas-Fete: the Reisenjima-crafted armor families drop off T2+ fete NMs
+    # (GEAR_NQ/GEAR_HQ in Geas_Fete.lua) -- exclusive since the 2026-07 sweep.
+    for iid in _geas_fete_gear_ids(repo_root):
+        obtainable.setdefault(iid, 'Geas Fete')
     # !shop command (scripts/commands/shop.lua): direct-purchase gear, no per-item
     # doc page. Runs last so an item also sold by a medal vendor keeps its tag.
     for iid in _shop_ids(repo_root):

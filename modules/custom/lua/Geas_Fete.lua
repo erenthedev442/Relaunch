@@ -42,6 +42,29 @@ local RIFTBORN_BOULDER = 4061  -- riftborn boulder
 local RIFTCINDER       = 3499  -- pinch of riftcinder
 local ESCHALIXIR_2     = 9086  -- eschalixir +2
 
+-- Reisenjima-crafted armor (retail: crafted from geas-fete NM materials;
+-- relaunch: direct drops off the NMs themselves, owner call 2026-07-12 --
+-- pulled from the HL gear vendors the same day, this is their only source).
+-- Tier gates in awardDrops: T2 rolls NQ, T3/T4 roll NQ + HQ (+1).
+-- Naga is a 5-piece NQ-only set (no +1 exists in the item data).
+local GEAR_NQ = {
+    25613, 27473, 25686, 27302, 27117,  -- Adhemar  bonnet/gamashes/jacket/kecks/wristbands
+    26672, 26848, 27024, 27200, 27376,  -- Argosy   celata/hauberk/mufflers/breeches/sollerets
+    26678, 26854, 27030, 27206, 27382,  -- Carmine  mask/scale mail/fng. gauntlets/cuisses/greaves
+    26674, 26850, 27026, 27202, 27378,  -- Rao      kabuto/togi/kote/haidate/sune-ate
+    25611, 25684, 27115, 27300, 27471,  -- Ryuo     somen/domaru/tekko/hakama/sune-ate
+    26670, 26846, 27022, 27198, 27374,  -- Souveran schaller/cuirass/handschuhs/diechlings/schuhs
+    26793, 26949, 27099, 27284, 27459,  -- Naga     somen/samue/tekko/hakama/kyahan (NQ only)
+}
+local GEAR_HQ = {
+    25614, 27474, 25687, 27303, 27118,  -- Adhemar +1
+    26673, 26849, 27025, 27201, 27377,  -- Argosy +1
+    26679, 26855, 27031, 27207, 27383,  -- Carmine +1
+    26675, 26851, 27027, 27203, 27379,  -- Rao +1
+    25612, 25685, 27116, 27301, 27472,  -- Ryuo +1
+    26671, 26847, 27023, 27199, 27375,  -- Souveran +1
+}
+
 -- Attestations (retail IDs 1556-1569) — weapon-type-specific Aeonic materials.
 -- Bosses (tier 4) drop 1-2 random Attestations; players collect the one
 -- matching their desired Aeonic weapon type.
@@ -224,6 +247,24 @@ local function awardDrops(player, zoneId, def)
         player:addItem({ id = ATTESTATIONS[math.random(#ATTESTATIONS)], quantity = 1 })
         if math.random() < 0.40 then
             player:addItem({ id = ATTESTATIONS[math.random(#ATTESTATIONS)], quantity = 1 })
+        end
+    end
+
+    -- Reisenjima-crafted armor (Adhemar/Argosy/Carmine/Rao/Ryuo/Souveran/Naga):
+    -- T2 rolls an NQ piece, T3/boss roll NQ and the +1. Random piece from the
+    -- whole pool -- the hunt is the gate, not a job lock.
+    local nqChance = ({ [2] = 0.20, [3] = 0.35, [4] = 0.50 })[t] or 0
+    local hqChance = ({ [3] = 0.10, [4] = 0.25 })[t] or 0
+    if math.random() < nqChance then
+        local id = GEAR_NQ[math.random(#GEAR_NQ)]
+        if player:addItem({ id = id, quantity = 1 }) then
+            player:printToPlayer('[Geas Fete] The vanquished NM yields a piece of Reisenjima armor!', S)
+        end
+    end
+    if math.random() < hqChance then
+        local id = GEAR_HQ[math.random(#GEAR_HQ)]
+        if player:addItem({ id = id, quantity = 1 }) then
+            player:printToPlayer('[Geas Fete] A pristine (+1) piece of Reisenjima armor drops!', S)
         end
     end
 end

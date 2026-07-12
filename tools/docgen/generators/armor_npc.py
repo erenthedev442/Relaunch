@@ -56,7 +56,7 @@ _TIER_ORDER = ("bronze", "silver", "gold")
 _ARMOR_TIER_DESC = {
     "bronze": "entry ilvl 119",
     "silver": "HQ +1 / +2 augmented",
-    "gold":   "BiS (Nyame / Malignance / Sakpata's / +3)",
+    "gold":   "BiS (Volte / Omen bodies / exclusives)",
 }
 
 # Fallback if the catalog doesn't expose a seals table — these match the

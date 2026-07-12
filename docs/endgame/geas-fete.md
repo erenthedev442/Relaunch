@@ -10,6 +10,8 @@ Aeonic crafting materials as you go.
 Two **Warding Circle** NPCs — one in Escha - Zi'Tah and one in Escha - Ru'Aun — let you pop retail-faithful **Geas Fete NMs** on demand: walk up, pick a tier, pick an NM. **No pop items needed**, but each NM has a per-player cooldown.
 
 Every Escha kill pays **Escha Beads** (a real currency — see the Currencies II tab). That one pool funds the Warding Circle material exchange **and** the **Aeonic weapon** path ([Temprix in Reisenjima](../progression/aeonic-weapons.md)). NMs also drop the Aeonic crafting materials directly — **Beitetsu**, **Riftcinder**, **Riftborn Boulder**, and (from bosses) **Attestations**, the weapon-type tokens the Aeonic forge needs.
+
+Tier 2 and up also drop the **Reisenjima-crafted armor** families as direct drops — **Adhemar, Argosy, Carmine, Rao, Ryuo, Souveran and Naga** (35 base pieces, 30 +1 pieces) — and the fete NMs are their **only source**. Base pieces drop at **20%** from Tier 2, **35%** from Tier 3 and **50%** from bosses; **+1** pieces at **10%** from Tier 3 and **25%** from bosses. Drops are a random piece from the whole pool — the hunt is the gate, not a job lock.
 <!-- DOCGEN:END id="geas-overview" -->
 
 ---
@@ -75,6 +77,6 @@ feed the [Aeonic weapon](../progression/aeonic-weapons.md) forge.
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 9b98a36f2e57 -->
-_Last updated: 2026-07-10 17:20 PDT_
+<!-- content-hash: 9e55a8ad527c -->
+_Last updated: 2026-07-12 01:17 PDT_
 <!-- DOCGEN:END id="last-updated" -->

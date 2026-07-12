@@ -25,7 +25,19 @@ def _parse(text: str) -> dict:
     ex = []
     for m in re.finditer(r"label\s*=\s*'([^']+)'[^}\n]*?cost\s*=\s*(\d+)", text):
         ex.append({"label": m.group(1), "cost": int(m.group(2))})
-    return {"nms": nms, "exchange": ex}
+
+    # Reisenjima-crafted armor drops (GEAR_NQ/GEAR_HQ pools + tier chances).
+    gear = {"nq": 0, "hq": 0, "nq_pct": {}, "hq_pct": {}}
+    for kind in ("NQ", "HQ"):
+        m = re.search(r"local GEAR_" + kind + r"\s*=\s*\{(.*?)\n\}", text, re.DOTALL)
+        if m:
+            gear[kind.lower()] = len(re.findall(r"\b2\d{4}\b", m.group(1)))
+    for var, key in (("nqChance", "nq_pct"), ("hqChance", "hq_pct")):
+        m = re.search(var + r"\s*=\s*\(\{([^}]*)\}\)", text)
+        if m:
+            gear[key] = {int(t): float(v) for t, v in
+                         re.findall(r"\[(\d)\]\s*=\s*([\d.]+)", m.group(1))}
+    return {"nms": nms, "exchange": ex, "gear": gear}
 
 
 def _overview(c: dict) -> str:
@@ -39,6 +51,26 @@ def _overview(c: dict) -> str:
         "([Temprix in Reisenjima](../progression/aeonic-weapons.md)). NMs also drop the Aeonic crafting "
         "materials directly — **Beitetsu**, **Riftcinder**, **Riftborn Boulder**, and (from bosses) "
         "**Attestations**, the weapon-type tokens the Aeonic forge needs."
+        + _gear_para(c)
+    )
+
+
+def _gear_para(c: dict) -> str:
+    g = c.get("gear") or {}
+    if not g.get("nq"):
+        return ""
+    nq, hq = g["nq_pct"], g["hq_pct"]
+    def pct(d, t):
+        return f"{round(d.get(t, 0) * 100)}%"
+    return (
+        "\n\nTier 2 and up also drop the **Reisenjima-crafted armor** families "
+        "as direct drops — **Adhemar, Argosy, Carmine, Rao, Ryuo, Souveran and "
+        f"Naga** ({g['nq']} base pieces, {g['hq']} +1 pieces) — and the fete NMs "
+        "are their **only source**. Base pieces drop at "
+        f"**{pct(nq, 2)}** from Tier 2, **{pct(nq, 3)}** from Tier 3 and "
+        f"**{pct(nq, 4)}** from bosses; **+1** pieces at **{pct(hq, 3)}** from "
+        f"Tier 3 and **{pct(hq, 4)}** from bosses. Drops are a random piece "
+        "from the whole pool — the hunt is the gate, not a job lock."
     )
 
 
