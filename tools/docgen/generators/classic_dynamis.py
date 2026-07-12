@@ -29,6 +29,7 @@ from pathlib import Path
 
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
+from tools.docgen._bgwiki import urls_for_item
 
 # Retail display names for the pop parchments (item_basic only has log names).
 _PARCHMENTS = {
@@ -102,17 +103,26 @@ def _parse_qm_positions(text: str, qm_by_item: dict[int, str]) -> dict[str, str]
     return pos
 
 
-def _parse_forge(text: str) -> tuple[dict[int, tuple[str, str]], int]:
-    """-> ({attestationId: (attestation name, Aeonic name)}, total attestations/weapon)."""
-    forge: dict[int, tuple[str, str]] = {}
+def _parse_forge(text: str) -> tuple[dict[int, tuple[str, str, int]], int]:
+    """-> ({attestationId: (attestation name, Aeonic name, Aeonic id)}, total attestations/weapon)."""
+    forge: dict[int, tuple[str, str, int]] = {}
     for m in re.finditer(
         r"attestationId\s*=\s*(\d+)\s*,\s*attestationName\s*=\s*'([^']+)'\s*,"
-        r"\s*s3\s*=\s*\{\s*id\s*=\s*\d+\s*,\s*name\s*=\s*'([^']+)'",
+        r"\s*s3\s*=\s*\{\s*id\s*=\s*(\d+)\s*,\s*name\s*=\s*'([^']+)'",
         text,
     ):
-        forge[int(m.group(1))] = (m.group(2), m.group(3))
+        forge[int(m.group(1))] = (m.group(2), m.group(4), int(m.group(3)))
     total = sum(int(q) for q in re.findall(r"attestations\s*=\s*(\d+)", text))
     return forge, total
+
+
+def _item_link(name: str, item_id: int | None) -> str:
+    """FFXIAH link with a data-img hover icon, matching the vendor tables."""
+    page_url, image_url = urls_for_item(name, None, item_id=item_id)
+    return (
+        f'<a class="item-link" href="{page_url}" '
+        f'data-img="{image_url}" target="_blank" rel="noopener">{name}</a>'
+    )
 
 
 def _attestation_name(item_id: int, forge: dict[int, tuple[str, str]]) -> str:
@@ -164,10 +174,10 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             continue
         nm_rows.append({
             "nm": nm,
-            "parchment": _PARCHMENTS[item_id],
+            "parchment": _item_link(_PARCHMENTS[item_id], item_id),
             "jobs": _fomor_jobs(item_id, parchment_by_dropid, zone_groups),
             "pos": qm_pos.get(nm, "—"),
-            "atts": [_attestation_name(i, forge) for i, _ in sorted(atts)],
+            "atts": [(i, _attestation_name(i, forge)) for i, _ in sorted(atts)],
         })
     if len(nm_rows) != len(_PARCHMENTS):
         print(f"[classic_dynamis] skip: expected {len(_PARCHMENTS)} NM chains, "
@@ -196,7 +206,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         "|---|---|---|---|---|",
     ]
     for r in nm_rows:
-        atts = "<br>".join(f"• {a}" for a in r["atts"])
+        atts = "<br>".join(f"• {_item_link(name, iid)}" for iid, name in r["atts"])
         nm_lines.append(
             f"| **{r['nm']}** | {r['parchment']} | {r['jobs']} | {r['pos']} | {atts} |"
         )
@@ -205,14 +215,18 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         "| Attestation | Dropped by | Feeds Aeonic |",
         "|---|---|---|",
     ]
-    nm_by_att: dict[str, str] = {}
+    nm_by_att: dict[int, str] = {}
     for r in nm_rows:
-        for a in r["atts"]:
-            nm_by_att[a] = r["nm"]
+        for iid, _ in r["atts"]:
+            nm_by_att[iid] = r["nm"]
     for att_id in sorted(_ATTESTATION_IDS):
         name = _attestation_name(att_id, forge)
-        aeonic = f"**{forge[att_id][1]}**" if att_id in forge else "— (no forge use)"
-        aeonic_lines.append(f"| {name} | {nm_by_att.get(name, '—')} | {aeonic} |")
+        if att_id in forge:
+            aeonic = f"**{_item_link(forge[att_id][1], forge[att_id][2])}**"
+        else:
+            aeonic = "— (no forge use)"
+        aeonic_lines.append(
+            f"| {_item_link(name, att_id)} | {nm_by_att.get(att_id, '—')} | {aeonic} |")
 
     page = docs_dir / "endgame" / "dynamis-classic.md"
     blocks = [
