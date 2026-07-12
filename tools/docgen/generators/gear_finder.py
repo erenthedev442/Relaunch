@@ -739,6 +739,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ('sql/zz_relic_119iii_mods.sql', False),
         ('sql/zz_tokko_voluspa_mods.sql', False),
         ('sql/zz_zurim_gear_mods.sql', False),
+        # reward-item stats authored for the 2026-07 Skirmish/Geas-Fete drops
+        ('modules/custom/sql/skirmish_fete_gear_stats.sql', True),
         ('sql/zzz_reforge_carryforward.sql', False),   # tier carry-forward (loads last)
     ]
     # Tolerate spaces after commas, e.g. "(23756, 1, 152)" (Gleti set) -- the

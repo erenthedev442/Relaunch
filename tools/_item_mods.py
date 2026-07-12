@@ -33,6 +33,8 @@ SOURCES = [
     ("zz_relic_119iii_mods.sql", False),
     ("zz_tokko_voluspa_mods.sql", False),
     ("zz_zurim_gear_mods.sql", False),
+    # reward-item stats authored for the 2026-07 Skirmish/Geas-Fete drops
+    ("../modules/custom/sql/skirmish_fete_gear_stats.sql", True),
     ("zzz_reforge_carryforward.sql", False),
 ]
 # Tolerate spaces after commas: some item_mods rows are written "(23756, 1, 152)"
