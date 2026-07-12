@@ -114,7 +114,10 @@ for name, idx, log in SITES:
     except OSError:
         problems.append((name, f"built site missing ({idx})"))
         continue
-    if "Deployment complete" not in tail(log):
+    # 300 lines, not the default 80: a noisy run (e.g. verbose PowerShell
+    # error records) can push the deploy line past a short tail and
+    # false-alarm even though wrangler finished fine (seen 2026-07-12).
+    if "Deployment complete" not in tail(log, 300):
         problems.append((name, "last refresh did not reach 'Deployment complete' -- publish/deploy error"))
 
 # --- signal 4: player portal health -----------------------------------------
@@ -123,9 +126,16 @@ PORTAL_LOCAL = "http://127.0.0.1:8090/"
 
 
 def http_ok(url, timeout=15):
+    """True if the URL's ORIGIN is reachable. Any status < 500 counts:
+    Cloudflare's WAF answers python-urllib with 403 from this box, but a 403
+    still proves the tunnel is alive -- a dead tunnel answers 530 (Error
+    1033), and a dead origin 52x. Only 5xx / no-response mean down."""
+    req = urllib.request.Request(url, headers={"User-Agent": "relaunch-drift-monitor"})
     try:
-        with urllib.request.urlopen(url, timeout=timeout) as r:
-            return 200 <= r.getcode() < 400
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            return r.getcode() < 500
+    except urllib.error.HTTPError as e:
+        return e.code < 500
     except Exception:
         return False
 
