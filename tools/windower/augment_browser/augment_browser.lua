@@ -8,7 +8,7 @@
 --   //ab tab catalog / rank / mine   switch tabs
 --   //ab n  / //ab p                 next / prev page (Catalog tab)
 --   //ab tier 0-5                    tier filter  (0 = all)
---   //ab cat  0-24                   category filter (0 = all)
+--   //ab cat  0-N                    category filter (0 = all; N = #data/categories.lua)
 --   //ab owned                       toggle owned-only
 --   //ab avail                       toggle unlocked-only
 --   //ab sync                        re-fetch rank data from server
@@ -21,6 +21,7 @@ _addon.commands = {'augmentbrowser', 'ab'}
 local texts  = require('texts')
 local catalog = require('data/catalog')
 local cats    = require('data/categories')
+local MAX_CAT = #cats   -- categories are contiguous 1..N (11 since the 2026-07-06 rework)
 
 -----------------------------------
 -- Constants
@@ -384,7 +385,7 @@ windower.register_event('addon command', function(cmd, arg1)
     elseif cmd == 'p' or cmd == 'prev' then cur_page = math.max(1, cur_page-1); render()
 
     elseif cmd == 'tier'  then f_tier  = math.min(5, math.max(0,tonumber(arg1) or 0)); cur_page=1; render()
-    elseif cmd == 'cat'   then f_cat   = math.min(24,math.max(0,tonumber(arg1) or 0)); cur_page=1; render()
+    elseif cmd == 'cat'   then f_cat   = math.min(MAX_CAT,math.max(0,tonumber(arg1) or 0)); cur_page=1; render()
     elseif cmd == 'owned' then f_owned = not f_owned; cur_page=1; render()
     elseif cmd == 'avail' then f_avail = not f_avail; cur_page=1; render()
 
@@ -397,6 +398,6 @@ windower.register_event('addon command', function(cmd, arg1)
         local h = '[AugmentBrowser]  //ab <cmd>:'
         windower.add_to_chat(207, h)
         windower.add_to_chat(207, '  (toggle)  tab catalog/rank/mine  n  p')
-        windower.add_to_chat(207, '  tier 0-5  cat 0-24  owned  avail  sync')
+        windower.add_to_chat(207, ('  tier 0-5  cat 0-%d  owned  avail  sync'):format(MAX_CAT))
     end
 end)
