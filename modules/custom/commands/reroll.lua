@@ -176,6 +176,8 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
             local lbl = ln.def and ln.def.label or ('#' .. tostring(ln.augId))
             if ln.locked then
                 player:printToPlayer(string.format('  %s : %d  ->  CRYSTALIZED (locked, kept)', lbl, ln.oldVal), CHANNEL)
+            elseif ln.def and ln.def.tierValue then
+                player:printToPlayer(string.format('  %s : %d  ->  tier-fixed at your Augment Tier (%d)', lbl, ln.oldVal, tier), CHANNEL)
             else
                 player:printToPlayer(string.format('  %s : %d  ->  will roll %d-%d', lbl, ln.oldVal, rollFloor, slice.max), CHANNEL)
             end
@@ -211,14 +213,22 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
             local cap     = (ln.def and ln.def.maxBoost) and math.min(EXDATA_VALUE_MAX, ln.def.maxBoost) or EXDATA_VALUE_MAX
             local slotMax = math.min(slice.max, cap)
 
-            local r = math.random(rollFloor, slice.max)
-            if hasAff then
-                r = math.max(r, math.random(rollFloor, slice.max))
+            local r
+            if ln.def and ln.def.tierValue then
+                -- Tier-fixed (Treasure Hunter): value = your Augment Tier; a
+                -- reroll just rewrites it. Only a T5 line can crystalize.
+                r       = tier - 1
+                slotMax = #TIER_SLICES - 1
+            else
+                r = math.random(rollFloor, slice.max)
+                if hasAff then
+                    r = math.max(r, math.random(rollFloor, slice.max))
+                end
+                if isCrit then
+                    r = slice.max
+                end
+                r = math.min(r, cap)
             end
-            if isCrit then
-                r = slice.max
-            end
-            r = math.min(r, cap)
 
             -- Pack: Augment { Id:11 | Value:5 } -> word = id + value*2048.
             local word = ln.augId + r * 2048

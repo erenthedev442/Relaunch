@@ -635,6 +635,27 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                         xi.msg.channel.SYSTEM_3)
                     return
                 end
+                -- Tier-fixed augments (Treasure Hunter): the line's value IS your
+                -- Augment Tier, so extra catalysts add nothing but stacked slots
+                -- would multiply it. One catalyst per trade, one line per item.
+                if def2 and def2.tierValue then
+                    if (catalystCounts[itemId] or 0) > 1 then
+                        player:printToPlayer(string.format(
+                            '[%s] is tier-fixed (its value is your Augment Tier, +%d for you) -- trade a SINGLE catalyst, kupo!',
+                            def2.label, playerTier),
+                            xi.msg.channel.SYSTEM_3)
+                        return
+                    end
+                    for _, la in ipairs(lockedAugs) do
+                        if la.id == def2.augId then
+                            player:printToPlayer(string.format(
+                                'This item already carries a crystalized %s line -- it cannot stack. Scour the item first, kupo!',
+                                def2.label),
+                                xi.msg.channel.SYSTEM_3)
+                            return
+                        end
+                    end
+                end
             end
 
             -- Read the player's Sage-quest state ONCE for the trade. The
@@ -768,15 +789,26 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 end
                 local slotMax   = scaleRoll(slice.max)   -- the achievable "perfect" (crystalize) value this tier
                 local rolls     = {}
-                for _ = 1, count do
-                    local r = math.random(rollFloor, slice.max)
-                    if hasAff then
-                        r = math.max(r, math.random(rollFloor, slice.max))
+                if def.tierValue then
+                    -- Tier-fixed (Treasure Hunter): the written boost is
+                    -- playerTier-1, so the engine's (base + boost) renders exactly
+                    -- +playerTier. Deterministic -- no roll, affinity, or crit.
+                    -- Only a T5 line counts as "max" (crystalize-eligible).
+                    slotMax = #TIER_SLICES - 1
+                    for _ = 1, count do
+                        table.insert(rolls, playerTier - 1)
                     end
-                    if isCrit then
-                        r = slice.max
+                else
+                    for _ = 1, count do
+                        local r = math.random(rollFloor, slice.max)
+                        if hasAff then
+                            r = math.max(r, math.random(rollFloor, slice.max))
+                        end
+                        if isCrit then
+                            r = slice.max
+                        end
+                        table.insert(rolls, scaleRoll(r))
                     end
-                    table.insert(rolls, scaleRoll(r))
                 end
 
                 -- Emit ONE augment slot PER CATALYST into the FINAL layout (after

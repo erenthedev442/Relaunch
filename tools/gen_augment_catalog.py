@@ -347,6 +347,19 @@ MAXBOOST = {
     363: 9,   # Chance of successful block -> +10%
     329: 14,  # Cure potency               -> +15%
     369: 11,  # Avatar Blood Pact Dmg      -> +12%
+
+    # Treasure Hunter -- tier-fixed since 2026-07-11 (see TIER_VALUE below).
+    # maxBoost 0 is kept as a safety floor for any consumer that doesn't know
+    # the tierValue flag (it then behaves like the old fixed +1/slot).
+    147: 0,
+}
+
+# Tier-fixed augments (owner request 2026-07-11): a SINGLE catalyst whose
+# written boost is (Augment Tier - 1), so the engine's (base + boost) renders
+# exactly +1 at T1 .. +5 at T5. Emitted as `tierValue = true`; Augment_Moogle,
+# !reroll, and the docgen augments/calculator generators all read the flag.
+TIER_VALUE = {
+    147,  # Treasure Hunter
 }
 
 # Specific item IDs kept OUT of the catalyst pool entirely -- never offered as
@@ -1323,15 +1336,17 @@ def main():
             label_final = LABEL_OVERRIDE.get(aid, clean_label(label))
             mb_val = MAXBOOST.get(aid)
             mb_suffix = f", maxBoost = {mb_val}" if mb_val is not None else ""
+            tv_suffix = ", tierValue = true" if aid in TIER_VALUE else ""
             lines.append(
                 f"    {id_str} = {{ augId = {aug_str} base = {base_str} "
                 f"mult = {mult_str} disp = {disp_str} cat = {cat_str} "
-                f"label = {lua_str(label_final)}{mb_suffix} }},"
+                f"label = {lua_str(label_final)}{mb_suffix}{tv_suffix} }},"
             )
             jentries.append({
                 "itemId": iid, "augId": aid, "label": label_final,
                 "base": base_val, "mult": mult_val, "disp": disp_val,
                 "cat": _cat_idx + 1, "maxBoost": mb_val,
+                "tierValue": aid in TIER_VALUE,
             })
         json_groups.append({"category": CAT_NAMES[cidx], "entries": jentries})
 

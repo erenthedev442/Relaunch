@@ -194,6 +194,9 @@ return {
     [1888] = { augId = 67,   base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'All songs',             maxBoost = 1 },
     [1630] = { augId = 148,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Gilfinder' },
     [1269] = { augId = 215,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Ninja tool expertise' },
-    [863]  = { augId = 147,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Treasure Hunter', maxBoost = 0 },
+    -- tierValue: the line's value IS your Augment Tier (+1 at T1 .. +5 at T5).
+    -- One catalyst per trade, no roll/affinity/crit; the engine renders base(1)
+    -- + written boost(tier-1). Old TH gear (boost-0 slots) keeps its +1/slot.
+    [863]  = { augId = 147,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Treasure Hunter', maxBoost = 0, tierValue = true },
 
 }
