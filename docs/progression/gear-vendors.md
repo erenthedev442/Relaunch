@@ -34,7 +34,7 @@ Both vendors use the same three currencies, tier-gated:
 Tiered armor across the five main slots. Items are listed with the seal cost and the jobs allowed to equip each piece.
 
 <!-- DOCGEN:BEGIN id="armor-slots" -->
-_88 pieces — 🥉 43 Bronze · 🥈 21 Silver · 🥇 24 Gold. Each slot lists every tier together — pick by your job and the medal you have._
+_84 pieces — 🥉 41 Bronze · 🥈 21 Silver · 🥇 22 Gold. Each slot lists every tier together — pick by your job and the medal you have._
 
 **Tiers:** <span class="tier-pill tier-bronze">🥉&nbsp;Bronze</span> Beastmens Medal — entry ilvl 119 · <span class="tier-pill tier-silver">🥈&nbsp;Silver</span> Kindreds Medal — HQ +1 / +2 augmented · <span class="tier-pill tier-gold">🥇&nbsp;Gold</span> Demons Medal — BiS (Volte / Omen bodies / exclusives)
 
@@ -78,10 +78,8 @@ _88 pieces — 🥉 43 Bronze · 🥈 21 Silver · 🥇 24 Gold. Each slot lists
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Kyujutsugi&go=Go" data-img="" target="_blank" rel="noopener">Kyujutsugi</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG/SAM |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Lapidary+Tunic&go=Go" data-img="" target="_blank" rel="noopener">Lapidary Tunic</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Crepuscular+Mail&go=Go" data-img="" target="_blank" rel="noopener">Crepuscular Mail</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/PLD/DRK/BST/SAM/DRG |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Ashera+Harness&go=Go" data-img="" target="_blank" rel="noopener">Ashera Harness</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | MNK/THF/BRD/NIN/DNC/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Respite+Cloak&go=Go" data-img="" target="_blank" rel="noopener">Respite Cloak</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Harness&go=Go" data-img="" target="_blank" rel="noopener">Volte Harness</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Shamash+Robe&go=Go" data-img="" target="_blank" rel="noopener">Shamash Robe</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WHM/BLM/RDM/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Gyve+Doublet&go=Go" data-img="" target="_blank" rel="noopener">Gyve Doublet</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO |
 
 ### Hands
@@ -135,7 +133,6 @@ _88 pieces — 🥉 43 Bronze · 🥈 21 Silver · 🥇 24 Gold. Each slot lists
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Durgai+Leggings&go=Go" data-img="" target="_blank" rel="noopener">Durgai Leggings</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | MNK/THF/BST/NIN/PUP/DNC/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Yorium+Sabatons&go=Go" data-img="" target="_blank" rel="noopener">Yorium Sabatons</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/PLD/DRK |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Vanir+Boots&go=Go" data-img="" target="_blank" rel="noopener">Vanir Boots</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Regal+Pumps&go=Go" data-img="" target="_blank" rel="noopener">Regal Pumps</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/SMN/PUP/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Shukuyu+Sune-Ate&go=Go" data-img="" target="_blank" rel="noopener">Shukuyu Sune-Ate</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/MNK/BST/BRD/RNG/SAM/NIN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Artsieq+Boots&go=Go" data-img="" target="_blank" rel="noopener">Artsieq Boots</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Boots&go=Go" data-img="" target="_blank" rel="noopener">Volte Boots</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
@@ -149,7 +146,6 @@ _88 pieces — 🥉 43 Bronze · 🥈 21 Silver · 🥇 24 Gold. Each slot lists
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Nusku+Shield&go=Go" data-img="" target="_blank" rel="noopener">Nusku Shield</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | RNG/COR |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Priwen&go=Go" data-img="" target="_blank" rel="noopener">Priwen</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | PLD |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Rinda+Shield&go=Go" data-img="" target="_blank" rel="noopener">Rinda Shield</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Genmei+Shield&go=Go" data-img="" target="_blank" rel="noopener">Genmei Shield</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
@@ -234,7 +230,7 @@ A third member of the Escha ZiTah gear-vendor row, paid in the **same Bronze/Sil
 Re-run `tools/rebalance_all.bat` after any DB or scoring-weight change — that one batch refreshes Armor + Weapons + Accessory catalogs together.
 
 <!-- DOCGEN:BEGIN id="accessory-slots" -->
-_155 accessories — 🥉 40 Bronze · 🥈 40 Silver · 🥇 75 Gold. Each slot lists every tier together — pick by your job and the medal you have._
+_154 accessories — 🥉 40 Bronze · 🥈 40 Silver · 🥇 74 Gold. Each slot lists every tier together — pick by your job and the medal you have._
 
 **Tiers:** <span class="tier-pill tier-bronze">🥉&nbsp;Bronze</span> Beastmens Medal · <span class="tier-pill tier-silver">🥈&nbsp;Silver</span> Kindreds Medal · <span class="tier-pill tier-gold">🥇&nbsp;Gold</span> Demons Medal — BiS
 
@@ -342,7 +338,6 @@ _Within each slot, tiers run Bronze → Gold; the top pick per tier is listed fi
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Fowling+Earring&go=Go" data-img="" target="_blank" rel="noopener">Fowling Earring</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 32 | WAR/PLD/DRK/SAM/DRG | — | — |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Summoning+Earring&go=Go" data-img="" target="_blank" rel="noopener">Summoning Earring</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 32 | All | — | — |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Drake+Earring&go=Go" data-img="" target="_blank" rel="noopener">Drake Earring</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 32 | DRG | — | — |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Regal+Earring&go=Go" data-img="" target="_blank" rel="noopener">Regal Earring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WHM/BLM/RDM/BRD/BLU/SCH/GEO | CASTER (52) | RARE,EX |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Wicce+Earring&go=Go" data-img="" target="_blank" rel="noopener">Wicce Earring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | BLM | CASTER (49) | EX |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Arbatel+Earring&go=Go" data-img="" target="_blank" rel="noopener">Arbatel Earring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | SCH | CASTER (49) | EX |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Medicine+Earring&go=Go" data-img="" target="_blank" rel="noopener">Medicine Earring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WHM | HEAL (45) | RARE |
@@ -500,7 +495,7 @@ Looking for **+4 armor**? That's no longer bought here — the +4 tier is an ear
 
 ### Accessories
 
-_98 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
+_95 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 
 | Item | Cost | Notes |
 |---|---:|---|
@@ -536,7 +531,6 @@ _98 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Nukumi+Earring+%2B2&go=Go" data-img="" target="_blank" rel="noopener">Nukumi Earring +2</a> | 300 | Sortie JSE +2 earring · Best-in-slot for BST · Jobs: BST |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Odr+Earring&go=Go" data-img="" target="_blank" rel="noopener">Odr Earring</a> | 250 | Accessory top-5 (ear) · Jobs: MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Peltasts+Earring+%2B2&go=Go" data-img="" target="_blank" rel="noopener">Peltasts Earring +2</a> | 300 | Sortie JSE +2 earring · Best-in-slot for DRG · Jobs: DRG |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Sherida+Earring&go=Go" data-img="" target="_blank" rel="noopener">Sherida Earring</a> | 300 | Earring. DEX, Double Attack, crit. · DD earring. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Skulkers+Earring+%2B2&go=Go" data-img="" target="_blank" rel="noopener">Skulkers Earring +2</a> | 300 | Sortie JSE +2 earring · Best-in-slot for THF · Jobs: THF |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Sroda+Earring&go=Go" data-img="" target="_blank" rel="noopener">Sroda Earring</a> | 300 | Earring. STR + WS damage. · DD earring. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Wicce+Earring+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Wicce Earring +1</a> | 250 | Accessory top-5 (ear) · Jobs: BLM |
@@ -556,10 +550,8 @@ _98 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Lehko%27s+Ring&go=Go" data-img="" target="_blank" rel="noopener">Lehko's Ring</a> | 300 | Ring. DEX+10, AGI+10, Store TP+5, Haste+2%. · EX/RARE. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Medada%27s+Ring&go=Go" data-img="" target="_blank" rel="noopener">Medada's Ring</a> | 300 | Ring. STR+10, Acc+15, Crit Rate+3%. · EX/RARE. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Moonlight+Ring&go=Go" data-img="" target="_blank" rel="noopener">Moonlight Ring</a> | 300 | Ring. Hybrid (DT-, Accuracy). · Universal ring. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Niqmaddu+Ring&go=Go" data-img="" target="_blank" rel="noopener">Niqmaddu Ring</a> | 300 | Ring. STR/VIT, Double Attack. · DD ring. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Orvail+Ring+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Orvail Ring +1</a> | 10000 | Ring. Crafting: Synth success+2%, skill-up+6, material loss-2%, HQ+2. · EX/RARE. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Ragelise%27s+Ring&go=Go" data-img="" target="_blank" rel="noopener">Ragelise's Ring</a> | 300 | Ring. HP+30, DEF+20, MND+10. · EX/RARE. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Regal+Ring&go=Go" data-img="" target="_blank" rel="noopener">Regal Ring</a> | 250 | Accessory top-5 (ring) · Jobs: WAR/MNK/THF/PLD/DRK/BST/RNG/SAM/NIN/DRG/COR/PUP/DNC/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Renaye+Ring+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Renaye Ring +1</a> | 10000 | Ring. Magic skill (Singing/Blue/Geomancy)+11, Refresh+2. · EX/RARE. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Shneddick+Ring+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Shneddick Ring +1</a> | 10000 | Ring. Movement+18%, Resist Petrify/Bind/Gravity+17. · EX/RARE. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Thurandaut+Ring+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Thurandaut Ring +1</a> | 10000 | Ring. Pet: Atk/Rng.Atk+23, Acc/Rng.Acc+22, Dmg taken-4%, Haste+4%. · EX/RARE. (BST/SMN/PUP/DRG) |
@@ -607,6 +599,6 @@ _98 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 42e627971ed5 -->
-_Last updated: 2026-07-12 01:20 PDT_
+<!-- content-hash: 4e82d889bec8 -->
+_Last updated: 2026-07-12 01:30 PDT_
 <!-- DOCGEN:END id="last-updated" -->

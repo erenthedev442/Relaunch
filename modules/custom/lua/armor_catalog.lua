@@ -138,12 +138,10 @@ table.insert(b.feet, { id = 28280, name = "Sokushitsu Sune-Ate", cost = 12, jobs
 table.insert(b.feet, { id = 28287, name = "Durgai Leggings", cost = 12, jobs = 'MNK/THF/BST/NIN/PUP/DNC/RUN' })  -- DPS score 184
 table.insert(b.feet, { id = 27402, name = "Yorium Sabatons", cost = 12, jobs = 'WAR/PLD/DRK' })  -- TANK score 181
 table.insert(b.feet, { id = 28310, name = "Vanir Boots", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 181
-table.insert(b.feet, { id = 28273, name = "Regal Pumps", cost = 12, jobs = 'WHM/BLM/SMN/PUP/SCH/GEO' })  -- DPS score 173
 table.insert(b.feet, { id = 27489, name = "Shukuyu Sune-Ate", cost = 12, jobs = 'WAR/MNK/BST/BRD/RNG/SAM/NIN' })  -- TANK score 154
 table.insert(b.feet, { id = 28296, name = "Artsieq Boots", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- DPS score 105
 
 -- Shields (1 picks, scored highest first)
-table.insert(b.shields, { id = 26421, name = "Nusku Shield", cost = 12, jobs = 'RNG/COR' })  -- DPS score 18
 
 
 -- SILVER TIER
@@ -201,10 +199,8 @@ table.insert(g.head, { id = 27731, name = "Gendewitha Caubeen +1", cost = 50, jo
 
 -- Body (13 picks, scored highest first)
 table.insert(g.body, { id = 23798, name = "Crepuscular Mail", cost = 50, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 463
-table.insert(g.body, { id = 25786, name = "Ashera Harness", cost = 50, jobs = 'MNK/THF/BRD/NIN/DNC/RUN' })  -- DPS score 454
 table.insert(g.body, { id = 27857, name = "Respite Cloak", cost = 50, jobs = 'MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN' })  -- TANK score 451
 table.insert(g.body, { id = 23715, name = "Volte Harness", cost = 50, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN' })  -- DPS score 408
-table.insert(g.body, { id = 25787, name = "Shamash Robe", cost = 50, jobs = 'WHM/BLM/RDM/BLU/SCH/GEO' })  -- CASTER score 379
 table.insert(g.body, { id = 25708, name = "Gyve Doublet", cost = 50, jobs = 'WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO' })  -- TANK score 276
 
 -- Hands (10 picks, scored highest first)

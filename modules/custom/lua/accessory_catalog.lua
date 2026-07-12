@@ -233,7 +233,6 @@ table.insert(g.waist, { id =  28461, name = 'Sekhmet Corset'                    
 -- ear
 table.insert(g.ear, { id =  26078, name = 'Kyrenes Earring'                   , cost =  60, jobs = 'All' })  -- DPS score 54 [RARE]
 table.insert(g.ear, { id =  28478, name = 'Etiolation Earring'                , cost =  60, jobs = 'All' })  -- TANK score 43 [RARE,EX]
-table.insert(g.ear, { id =  26085, name = 'Regal Earring'                     , cost =  60, jobs = 'WHM/BLM/RDM/BRD/BLU/SCH/GEO' })  -- CASTER score 52 [RARE,EX]
 table.insert(g.ear, { id =  13421, name = 'Medicine Earring'                  , cost =  60, jobs = 'WHM' })  -- HEAL score 45 [RARE]
 table.insert(g.ear, { id =  26107, name = 'Thrud Earring'                     , cost =  60, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- WS score 35 [RARE,EX]
 table.insert(g.ear, { id =  28506, name = 'Andoaa Earring'                    , cost =  60, jobs = 'All' })  -- DPS score 25 [RARE,EX]
@@ -298,7 +297,6 @@ table.insert(inf.waist, { id =  26361, name = 'Gerdr Belt +1'                   
 table.insert(inf.waist, { id =  26359, name = 'Orpheuss Sash'                     , cost = 300, jobs = 'All' })  -- DPS score 111 [RARE]
 
 -- ear (top 5 by score -> Infamy Vendor)
-table.insert(inf.ear, { id =  26084, name = 'Sherida Earring'                   , cost = 300, jobs = 'MNK/RDM/THF/BST/RNG/DRG/DNC/RUN' })  -- DPS score 65 [RARE,EX]
 table.insert(inf.ear, { id =  25439, name = 'Wicce Earring +1'                  , cost = 300, jobs = 'BLM' })  -- CASTER score 56 [EX]
 table.insert(inf.ear, { id =  25535, name = 'Arbatel Earring +1'                , cost = 300, jobs = 'SCH' })  -- CASTER score 56 [EX]
 table.insert(inf.ear, { id =  26108, name = 'Odr Earring'                       , cost = 300, jobs = 'MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' })  -- DPS score 55 [RARE,EX]
@@ -306,7 +304,6 @@ table.insert(inf.ear, { id =  26108, name = 'Odr Earring'                       
 -- ring (top 5 by score -> Infamy Vendor)
 table.insert(inf.ring, { id =  26186, name = 'Ilabrat Ring'                      , cost = 300, jobs = 'MNK/WHM/RDM/THF/BST/BRD/RNG/SAM/NIN/BLU/COR/DNC/RUN' })  -- DPS score 120 [RARE,EX]
 table.insert(inf.ring, { id =  26230, name = 'Fickblixs Ring'                    , cost = 300, jobs = 'All' })  -- CASTER score 115 [RARE,EX]
-table.insert(inf.ring, { id =  26191, name = 'Regal Ring'                        , cost = 300, jobs = 'WAR/MNK/THF/PLD/DRK/BST/RNG/SAM/NIN/DRG/COR/PUP/DNC/RUN' })  -- DPS score 100 [RARE,EX]
 table.insert(inf.ring, { id =  10783, name = 'Veneficium Ring'                   , cost = 300, jobs = 'All' })  -- DPS score 96 [RARE]
 table.insert(inf.ring, { id =  28537, name = 'Lunette Ring +1'                   , cost = 300, jobs = 'All' })  -- DPS score 96 [RARE]
 
