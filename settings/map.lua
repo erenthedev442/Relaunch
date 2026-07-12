@@ -1,4 +1,4 @@
------------------------------------
+﻿-----------------------------------
 -- MAP SERVER SETTINGS
 -----------------------------------
 -- All settings are attached to the `xi.settings` object. This is published globally, and be accessed from C++ and any script.
@@ -193,7 +193,7 @@ xi.settings.map =
     -- 8x HP for post-75 formula-HP mobs (mob_groups.HP = 0); explicit DB HP
     -- overrides are never scaled. Owner request 2026-07-11. Inert until the
     -- MOB_ERA_HP_MULT core change is rebuilt + restarted (next deploy).
-    MOB_ERA_HP_MULT = 8.0,
+    MOB_ERA_HP_MULT = 1.0,
 
     -- Adjust max MP pool for NMs, regular mobs, players, and trusts/fellows. Acts as a multiplier, so default is 1. Valid range: 0.1 to 2.0
     NM_MP_MULTIPLIER        = 1.0,
