@@ -1,8 +1,10 @@
 """Sync docs/endgame/affinity-nms.md with augment_affinity_catalog.lua.
 
-Parses the 24 affinity NM rows AND the registration config (multiplier, HL rank
-requirement, Hunt Mark cost) so re-ordering/renaming NMs or retuning the gate
-auto-updates the docs page — no hand-edited numbers to drift.
+Parses the registering affinity NM rows AND the registration config
+(multiplier, HL rank requirement, Hunt Mark cost) so re-ordering/renaming NMs
+or retuning the gate auto-updates the docs page — no hand-edited numbers to
+drift. The repop delay is read from affinity_nm_autopop.lua (RESPAWN_SECONDS)
+for the same reason.
 
 Markers written:
   affinity-overview     — "What affinities do" (the affinityMult multiplier)
@@ -10,7 +12,8 @@ Markers written:
                           The trophy goes to the whole in-zone party/alliance,
                           NOT just the killer (augment_affinity_grants.lua drops
                           the isKiller gate), so no killing-blow text is emitted.
-  affinity-nm-roster    — 24 NM rows: name, zone, trophy, augment category
+  affinity-nm-roster    — one row per registering NM: name, zone, trophy,
+                          augment category (11 since the 2026-07-06 rework)
 """
 from __future__ import annotations
 
@@ -81,27 +84,23 @@ def _parse(text: str) -> list[dict]:
     return rows
 
 
-def _fmt_mult(mult: float) -> str:
-    """1.5 -> '1.5', 2.0 -> '2'."""
-    return f'{mult:g}'
-
-
-def _render_overview(mult: float) -> str:
-    example = int(round(10 * mult)) if mult else 15
+def _render_overview() -> str:
+    # affinityMult in the catalog is LEGACY -- the live Augment Moogle path
+    # rolls a registered-category augment TWICE and keeps the better result
+    # (Augment_Moogle.lua), so no multiplier number is emitted here.
     return (
-        f"**What affinities do:** once registered, any gear you augment whose stat "
-        f"falls in your registered category gets a **{_fmt_mult(mult)}× multiplier** on "
-        f"that augment roll — so a registered STR affinity turns an STR+10 augment into "
-        f"STR+{example}."
+        "**What affinities do:** once registered, every augment roll whose stat falls "
+        "in a registered category is **rolled twice and the better result kept** — a "
+        "straight upgrade to both your average and your top-end rolls."
     )
 
 
-def _render_how_it_works(mult: float, rank_req: int, mark_cost: int) -> str:
+def _render_how_it_works(rank_req: int, mark_cost: int, respawn: int) -> str:
     rank_name = _RANK_NAMES.get(rank_req, f"{rank_req}")
     return "\n".join([
-        "1. **Find the NM in its zone.** Every Affinity NM is a 15-minute timed spawn — "
-        "no pop item, no window. Navigate to the zone listed in the table below and look "
-        "for the NM.",
+        f"1. **Find the NM in its zone.** Every Affinity NM is permanently up — it "
+        f"repops about {respawn} seconds after each kill, no pop item, no window. "
+        f"Navigate to the zone listed in the table below and look for the NM.",
         "",
         "2. **Kill it.** The trophy is granted straight to **everyone in your party or "
         "alliance who is in the zone** — it does not drop on the floor, and it no longer "
@@ -113,8 +112,8 @@ def _render_how_it_works(mult: float, rank_req: int, mark_cost: int) -> str:
         f"4. **Register the affinity.** Each registration costs **Hunting League Rank "
         f"{rank_name}** or higher and **{mark_cost:,} Hunt Marks**.",
         "",
-        f"5. **Augment.** Affinities apply automatically through the Augment Moogle. Any "
-        f"roll in a registered category gets ×{_fmt_mult(mult)}.",
+        "5. **Augment.** Affinities apply automatically through the Augment Moogle. Any "
+        "roll in a registered category is rolled twice and the better result kept.",
     ])
 
 
@@ -137,9 +136,16 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     text = src.read_text(encoding='utf-8', errors='replace')
     rows = _parse(text)
 
-    mult      = _num(text, 'affinityMult')      or 1.5
     rank_req  = int(_num(text, 'affinityRankReq')  or 3)
     mark_cost = int(_num(text, 'affinityMarkCost') or 1000)
+
+    # Repop delay comes from the autopop module so a retune updates the docs.
+    respawn = 30
+    autopop = resolve_source(repo_root, 'modules/custom/lua/affinity_nm_autopop.lua')
+    if autopop is not None:
+        m = re.search(r'\bRESPAWN_SECONDS\s*=\s*(\d+)', autopop.read_text(encoding='utf-8', errors='replace'))
+        if m:
+            respawn = int(m.group(1))
 
     page = docs_dir / 'endgame' / 'affinity-nms.md'
     if not page.exists():
@@ -147,8 +153,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         return
 
     blocks = [
-        ('affinity-overview',     _render_overview(mult)),
-        ('affinity-how-it-works', _render_how_it_works(mult, rank_req, mark_cost)),
+        ('affinity-overview',     _render_overview()),
+        ('affinity-how-it-works', _render_how_it_works(rank_req, mark_cost, respawn)),
         ('affinity-nm-roster',    _render_roster(rows)),
     ]
     written = 0
@@ -158,4 +164,4 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         else:
             print(f'[affinity_nms] marker not found: {marker_id}')
     print(f'[affinity_nms] {written}/{len(blocks)} markers written '
-          f'(rows={len(rows)}, mult={_fmt_mult(mult)}, rank={rank_req}, marks={mark_cost})')
+          f'(rows={len(rows)}, rank={rank_req}, marks={mark_cost}, respawn={respawn}s)')

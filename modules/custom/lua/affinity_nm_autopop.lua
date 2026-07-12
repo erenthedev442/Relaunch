@@ -58,6 +58,8 @@ local SYS             = xi.msg.channel.SYSTEM_3
 --   * UNIFORM across all 24: the god-tier NMs (Kirin/AV/Proto-Omega/4 gods) may end
 --     up over-tuned for the HL-rank-3 audience -- add a per-mobid override if so.
 -----------------------------------
+-- Docs: the stat block below is quoted on docs/endgame/affinity-nms.md
+-- ("Difficulty and notes") -- update that section when retuning here.
 -- BIG BUMP 2026-07-06 (Duff test: "fairly easy as thf"; owner: increase difficulty).
 -- HP is the primary lever (int32 -> longer fights, not one-shots); the flat combat
 -- mods stay well under the int16 mob-mod cap (~31000) even stacked on base, so no
