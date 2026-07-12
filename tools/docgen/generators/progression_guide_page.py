@@ -210,13 +210,22 @@ def _build_systems_widget(repo_root: Path, docs_dir: Path) -> str | None:
             if got is None:
                 continue  # page absent this run — skip rather than emit a dead card
             title, blurb = got
+            # The href ships inside a <script> JSON blob, which mkdocs does NOT
+            # rewrite (it only rewrites markdown links) — so it must be the
+            # BUILT pretty URL, not the .md path. The built page lives at
+            # /getting-started/cheat-sheet/, hence ../../ to the site root.
+            # (Raw "../{rel}" 404'd every card — owner report 2026-07-12.)
+            if rel.endswith("/index.md"):
+                pretty = rel[: -len("index.md")]
+            else:
+                pretty = rel[:-3] + "/" if rel.endswith(".md") else rel
             cards.append({
                 "groupLabel": chip,
                 "tag":        chip,
                 "name":       title,
                 "blurb":      blurb,
                 "where":      where,
-                "href":       f"../{rel}",
+                "href":       f"../../{pretty}",
             })
 
     template = repo_root / "tools" / "docgen" / "templates" / "progression_systems_widget.html"
