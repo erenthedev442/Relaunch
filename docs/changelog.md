@@ -4,7 +4,221 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
 
 ---
 
-!!! note "Week of June 29 – July 5, 2026"
+!!! note "Week of July 6–12, 2026"
+    **Saturday, July 11**
+
+    - **Relaunch/Augments** — Owner tier-curve rebalance -- 19 maxBoost ceilings tightened
+    - **Relaunch/Docs** — Sync audit part 4 — lua_const_inject + zero naked facts
+    - **Relaunch/Docs** — Sync audit part 3 — Maat + Gauntlet numbers generated
+    - **Relaunch/Docs** — Sync audit part 2 — gear-guide truth + voidwatch mechanics generated
+    - **Relaunch/Augments** — All songs is tier-fixed -- +2 at T1 up to +10 at T5
+    - **Relaunch/Augments** — Treasure Hunter is tier-fixed -- +1 at T1 up to +5 at T5
+    - **Relaunch/Docs** — Website sync audit part 1 — stale facts, wrong locations, new sync_audit guard
+    - **Relaunch/Dynamis D** — Mob names players see now match the website (DAT-driven mobids)
+    - **Relaunch/Docgen** — Drop stray sync_audit references committed without their module
+    - **Relaunch/Dynamis** — Guard Attestation pop-item drops + classic Dynamis docs page
+    - **Relaunch/Vendor** — Restore medal-vendor exclusivity vs the Domain QM
+    - **Relaunch/Dynamis D** — Triple the [D] wave populations (12 -> 31 mobs per run)
+    - **Relaunch/Domain** — Date Shuriken statted + ammo pouches on the Domain QM
+    - **Relaunch/Affinity** — Single-source trophy grants + one-time notice for reworked-out NMs
+    - **Relaunch/Dynamis D** — +4 Forge accepts the piece traded together with its materials
+    - **Relaunch/Affinity** — Re-open the Sky god island portals the always-up gods keep shut
+    - **Relaunch/Geas Fete** — Bulk quantity selection at the Warding Circle exchange
+    - **Relaunch/Prestige** — Trial boss no longer idle-despawns mid-fight (pet petrified)
+    - **Relaunch/Bst** — Reward accepts Pet Roborant and Pet Poultice
+    - **Relaunch/Hunters Guild** — Align rep cooldown with 30-min hunt respawn + doc it
+    - **Relaunch/Dungeons** — Ranguemont Pass mobs sealed behind the one-way Granite Door
+    - **Relaunch/Treasure** — !dig strongbox can no longer seed inside walls
+    - **Relaunch/Rng** — Stop stale zz_barrage_recast re-clobbering the 3s Barrage stance
+    - **Relaunch/Reforge** — Spawner stations 1/2 ran station 3's menu -- unique DE names
+    - **Relaunch/Prestige** — Jailer of Justice ATT 27900 -> 25000
+    - **Relaunch/Deploy** — Drop the Discord deploy-note step from [A2]
+    - **Relaunch/Deploy** — Wire changelog marker + regen + Discord note into deploy-relaunch
+    - **Relaunch/Branding** — Purge remaining Legendary residuals from player-facing strings
+    - **Relaunch/Commands** — Add GM-only !rescue command (port from Legendary)
+    - **Relaunch/Augments** — Make website, !augwarp, drops, and drop message match 100%
+    - **Relaunch/Augwarp** — Pick farmable mobs — rate first, no NMs, no boats
+    - **Relaunch/Augments** — Cap. Point catalyst back to Philosopher's Stone (942)
+    - **Monsters** — Scale HP and combat skill for level 76+ mobs
+    - **Relaunch/Pets** — Pet magical TP moves now magic burst (Fellow + jug pets)
+    - **Relaunch/Voidwatch** — Pyxis ghost chest + second-click movement lock
+    - **Relaunch/Events** — Happy Hour negative-payout bug (subPower int16 overflow)
+    - **Relaunch/Rng** — Trim main-job Ranger ranged damage to 0.80x
+    - **Relaunch/Nin** — Universal ninja tools usable by NIN subjob at 75+
+    - **Relaunch/Ambuscade** — Stop victory-reward spam + let parties share the instance
+    - **Relaunch/Aftermath** — Tier Mythic aftermath by TP again (AM1=acc only)
+    - **Relaunch/Dungeon** — Move Fei'Yin entry past the gate into the mob corridor
+    - **Relaunch/Commands** — Hunt-hub text Reisenjima Henge -> Escha - Zi'Tah
+    - **Relaunch/Ambuscade** — Abdhaljs Seal (triple Gallantry) + docgen-backed page
+    - **Relaunch/Docs** — Add prominent Discord invite site-wide
+    - **Relaunch/Ambuscade** — Raise monthly Hallmark cap 45k -> 75k
+    - **Relaunch/Events** — Happy Hour buffs + Divergence City of the Day
+    - **Relaunch/Docs** — Add Ambuscade, Domain Invasion & Capacity farm to systems-map
+    - **Relaunch/Docs** — Systems-map Gauntlet full-clear reward reads FINAL_REWARD
+    - **Relaunch/Legacy** — Legendary Track Suit -- custom-painted cosmetic set
+    - **Relaunch/Fellow** — Custom free-text Fellow names via !fellowname (replaces preset list)
+    - **Relaunch/Ambuscade** — Voucher Clerk hands out gear; Gorpa upgrade trades
+    - **Relaunch/Vendor** — Stat + add the Voluspa weapon set to the Hunt-Marks vendor
+    - **Relaunch/Vendor** — Add 29 Zurim-only gear/weapons to the Hunt-Marks vendor
+    - **Relaunch** — Grant Free Job to 99 Legacy reward on login
+    - **Relaunch/Vendor** — Pull the whole Ambuscade weapon family from the medal vendor
+    - **Relaunch** — Implement the 86 statless Zurim items + Hunt Marks vendor
+    - **Relaunch/Augments** — No catalyst is NM-only -- 59 re-picked to multi-zone normal drops
+    - **Relaunch/Augments** — Make every augment tier a distinct step
+    - **Relaunch/Legacy** — Legendary Ring DAT now shows the stat description
+    - **Relaunch** — Stop Eschan Amoeban spawning in Escha - Ru'Aun (wavemaster hub)
+    - **Relaunch/Gamemaster** — Normal/Hard wave delay 25s -> 10s
+    - **Relaunch/Db** — Silence item_usable null-key spam on map boot
+    - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-10 00:25
+    - **Core/Lua** — Let setDamage() accept TYPE_PET (was mob-only)
+    - **Relaunch/Fellow** — Physical scales with level (setDamage) + MATT-cap the magic runaway
+    - **Relaunch/Daily Board** — Make XP grind the only rotating task
+    - **Relaunch/Legacy** — Installer detected FFXI path as "C" (scalar-string bug)
+    - **Relaunch/Legacy** — Keep installer window open + graceful errors
+    - **Relaunch/Gamemaster** — Paginate the difficulty menu (all 9+ tiers reachable)
+    - **Relaunch/Ambuscade** — Add final-step Pulse gate to weapon chain (match BG-wiki)
+    - **Relaunch/Gamemaster** — Give every endgame tier a distinct NM pool
+    - **Relaunch/Legacy** — One-click installer for the Legendary Ring DAT
+    - **Relaunch** — QA restart-gated batch -- Bomb Queen regen, JSE necks, philo stone, trust path
+    - **Relaunch** — QA quick-wins -- fellow off-role, relic/forge menus, gil rate, shop
+    - **Relaunch/Legacy** — Ship edited DAT so the ring displays "Legendary Ring"
+    - **Relaunch/Ambuscade** — Harden the weapon menus (boot-safe require + menu-cap fixes)
+    - **Relaunch/Ambuscade** — Retail Ambuscade weapon upgrade chain, Ambuscade-exclusive
+    - **Relaunch/Legacy** — Legendary Ring -- the one functional Legacy reward
+    - **DRG** — Make Call Wyvern (and the wyvern) available as /DRG subjob
+    - **Relaunch/Augments** — Cap the overpowered premium-% augments per slot
+    - **Relaunch/Domain Invasion** — 5 escalating waves, tankier mobs, muster delay
+    - **Relaunch/Htbf** — HTBF 'access denied' -- seed was in sql/zz_ (never deployed)
+    - **Relaunch/Game Master** — !wm1-!wm4 warps to the 4 Game Masters in Escha-Ru'Aun
+    - **Relaunch/Trusts** — Locke opens skillchains Ayame-style off your last WS
+    - **Relaunch/Escha** — Unify content currency to escha_beads (both zones fund Temprix/exchanges/forge)
+    - **Relaunch/Hub** — Nomad Moogle at the !hub landing (job change + dbox)
+    - **Relaunch/Forge** — Correct 13 more Weapon Forger job labels to match item data
+    - **Relaunch/Dynamis** — Strip ALL gear (+-1 items, belts, capes) from Dynamis drops
+    - **Relaunch/Mastery** — Add missing Marksmanship + H2H Weapon Guardians
+    - **Aeonic** — Port Aeonic Aftermath (fixes Fomalhaut/Last Stand)
+    - **Relaunch/Dungeons** — Fei'Yin warp dropped players outside the map
+    - **Relaunch/Gamemaster** — Add Ragnarok tier + fix menu 150-byte overflow
+    - **Relaunch/Divergence** — Entry portals warp nobody + mobs could never drop
+    - **Relaunch/Forge** — Correct Mandau job label (was THF/BRD/DNC -> RDM/THF/BRD)
+    - **Relaunch/Geas Fete** — Reisenjima redirect signpost + clarify Aeonic docs
+    - **Relaunch/Aeonic** — Temprix interactable, Escha Beads = real currency, base items applied
+    - **Relaunch/Gamemaster** — Add Apocalypse + Oblivion tiers beyond Nightmare
+    - **Relaunch/Geas Fete** — Clear FLAG_UNTARGETABLE so Warder of Hope/Love are attackable
+    - **Invasion** — Voidsent pour in from city gates, not one plaza point
+    - **Relaunch/Gamemaster** — Relocate Game Master NPCs to 4 new zone-289 spots
+    - **Relaunch/Ambuscade** — Make the instance actually spawn its mobs
+    - **Invasion** — Navmesh-validate spawn ring so Voidsent stop spawning in walls
+    - **Relaunch/Htbf** — Print a tier legend for the unnamed entrance menu rows
+    - **Relaunch/Dungeons** — Boss-after-clear, guaranteed clear loot, zoning leash
+    - **Relaunch/Unity** — In-zone Re-Hunt board (no more warping home)
+    - **Relaunch/Merits** — !automerits also maxes the Max Merit hold cap
+    - **Relaunch/Reforge** — Rarer pre-upgraded drops + flatten lesser-NM marks
+    - **Relaunch/Htbf** — Seed bcnm_records so HTBF fights are enterable
+    - **Relaunch/Ammo** — Buyable Chrono/Bayeux bullets + de-jank the bullet pouches
+    - **Relaunch/Fellow** — Mastered role prestige capstone (all 14 categories capped)
+    - **Relaunch/Unity** — Scale Unity Wanted NM HP + offense per tier
+    - **Relaunch/Dynamis** — Block AF/Relic gear drops, keep only currency
+    - **Relaunch/Bst** — Jug pets auto-engage like Trusts/Fellows (QoL)
+    - **Shop** — Add Pet Roborant + Pet Poultice to !shop pets food
+    - **Relaunch/Affinity Nm** — Stop King Vinegarroon spawn/despawn loop
+    - **Relaunch/Mastery** — Close Weapon Guardian trial auto-win exploit
+    - **Relaunch/Augments** — Widen catalyst drops + fallback for non-mapped mobs
+    - **Relaunch/Augment** — Counter catalyst Marid Tusk -> Ram Horn
+    - **Relaunch/Fellow** — Curate crash-prone appearances (model/animation mismatch)
+    - **Relaunch/Reforge** — Log station id + intended vs actual NM spawn pos
+    - **Relaunch/Mastery** — WS effects (splash/lifesteal) no longer skip on kills
+    - **Relaunch/Augwarp** — Counter catalyst was stale (Ram Horn -> Marid Tusk)
+    - **Relaunch/Hunters Guild** — Per-NM rep cooldown (stop 30s Affinity-NM farm)
+    - **Relaunch/Forge** — Weapon Forger silently closed menu, gave nothing
+    - **Relaunch/Vendor** — Drop Tokko Knuckles from bronze medal tier (forge leak)
+    - **Relaunch/Dnc** — Striking & Ternary Flourish rejected despite finishing moves
+    - **Relaunch/Vendor** — Malignance Gloves missing from the gold armor set
+    - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-07 20:58
+    - **Relaunch/Fellow** — Reset ALL or a chosen subset of categories
+    - **Relaunch/Fellow** — Bulk stat allocation via a per-stat quantity picker
+    - **Relaunch/Fellow** — Stats reset (respec) with a 10% point penalty
+    - **Relaunch/Fellow** — Add FellowExpDbg toggle to confirm the EXP mechanism
+    - **Relaunch/Reforge** — Drop in live-verified zone-43 spawner coords (3 stations)
+    - **Relaunch/Fellow** — Claim master's target so kills credit player EXP
+    - **Relaunch/Augments** — Trace why catalyst drops don't fire + !catalysttest
+    - **Relaunch/Fellow** — Flag off-role stats in the Allocate menu
+    - **Relaunch/Fellow** — Make !fellowaudit self-contained (hot-loads, no restart)
+    - **Relaunch/Reforge** — Move hub to Diorama Abdhaljs-Ghelsba + multi-station spawners
+    - **Relaunch/Bst** — Lower jug-pet endgame HP floor 100k -> 60k
+    - **Relaunch/Nyzul** — Pre-grant Runic Disc so entry rune opens floor menu on first touch
+    - **Relaunch/Bst** — Level-scale jug-pet endgame floors (fix low-level 100k HP)
+    - **Relaunch/Fellow** — !fellowaudit -- prove stat allocations land on the pet
+    - **Relaunch/Gearvendor** — Paginate tiers over 16 weapons (Silver showed 16/23)
+    - **Relaunch/Mythic** — Pay Imperial Standing on assault clears + correct Nyzul doc
+    - **Core/Battle** — Shield Mastery grants TP on any real shield block
+    - **Relaunch/Missions** — ToAU current-mission stuck at 0 -> Rytaal blocks Assault
+    - **Relaunch/Gearvendor** — Add missing Tokko Knuckles to Bronze weapons
+    - **Relaunch/Deploy** — Guarantee navmeshes/ exists before the map server starts
+    - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-07 03:28
+    - **Relaunch/Jobpoints** — Add missing map.MAX_JOB_POINTS (was 0 -> JP gain dead server-wide)
+    - **Search/Ah** — Stop unsold-listing dupe (2 copies to seller dbox)
+    - **Relaunch/Augwarp** — Pop a picker menu when several catalysts match
+    - **Relaunch/Dungeons** — Proactively cluster the remaining 5 dungeons to reachable areas
+    - **Relaunch/Dungeons** — Proactively relocate unreachable Crawlers'/Boyahda mobs
+    - **Relaunch/Dungeons** — Ordelle's crabs + boss were unreachable
+    - **Relaunch/Hub** — Move the whole !hub plaza out of the water onto the sand
+    - **Relaunch/Dungeons** — Trim the catalyst-drop message
+    - **Relaunch/Fellow** — Goblin appearance spawned a Slime (wrong model id)
+    - **Relaunch/Dungeons** — Integrate box hotfix - pass roster slot/boss flag to drop handler
+    - **Relaunch/Augment** — Apply -DT rebalance to the LIVE DB via override SQL
+    - **Relaunch/Affinity Nm** — Duff test pass -- coords, dual-spawns, gods, difficulty
+    - **Relaunch/Augment** — Tone down -Dmg Taken augment lines
+    - **Relaunch/Dungeons** — Unstick Gusgen Mines in-wall skeletons + relocate boss
+    - **Relaunch** — Disable Dealer Moogle (blocks coupon->REMA/Aeonic bypass)
+    - **Relaunch/Trusts** — Reorder simultaneous-trust ladder
+    - **Relaunch/Geas Fete** — Actually spawn the NM (setSpawn+spawn)
+    - **Relaunch/Hub** — Consolidate all custom NPCs onto Purgonorgo Isle (zone 44)
+    - **Relaunch/Htbf** — Loot for ALL fights via onEventFinishWin (covers reuse-base)
+    - **Relaunch/Htbf** — Big difficulty bump on the shared tier scale
+    - **Relaunch/Fellow** — Role-owned durability so casters can't tank
+    - **Relaunch/Htbf** — Simple fights now drop loot (route win through crate)
+    - **Relaunch/Htbf** — Allow Trusts inside High-Tier Battlefield fights
+    - **Relaunch/Htbf** — !htbf command warps to your chosen fight's entrance
+    - **Relaunch/Augment** — Swap Quadruple Attack catalyst to H.Q. Coeurl Hide
+    - **Relaunch/Unity** — Only pop the queued Wanted NM on the board's own warp
+    - **Relaunch/Dungeons** — Trash catalysts to killer inventory, not the treasure pool
+    - **Relaunch/Survival Guide** — Shrink menu pages under the 150-byte customMenu cap
+    - **Relaunch** — One-click deploy-relaunch (code rebuild + website publish)
+    - **Gear Finder** — Sort every column + CSV export (mirror of Legendary)
+    - **Reroll** — Make !reroll cost purely Infamy (no gil, no catalyst)
+    - **Shop** — Add COR cards / scrolls / crystals / keys categories + Leaf ambience
+    - **Shop** — Value-tiered repricing of !shop gil costs
+    - **NPCS** — Give every custom NPC a unique model + move the Leaf warp book
+    - **Augments** — Crystalized augments -- lock perfect rolls (relaunch)
+    - **Relaunch/Vendor** — Add 20 net-new Gold accessories to the medal NPC
+    - **Augment Moogle** — Point players to the wiki, not the Lua catalog file
+    - **VPS** — Drop the ximeshes submodule gitlink too (same fix as losmeshes) - the meshes are local gitignored binaries, submodule was never initialized on the box
+    - **VPS** — Auto-resolve generated-doc rebase conflicts + fix losmeshes gitlink
+    - **Gear Finder** — Wire full item drop-sources into the Gear Finder + fix COMBAT_SKILLS crash
+    - **Forge** — Implement the Empyrean / Mythic / Relic weapon forge
+    - **Voidwatch** — Pull the forge weapons back out of the NM loot
+    - **PUP** — Turn down relaunch automaton physical damage 20x -> 5x
+    - **Voidwatch** — Tier-gated gear drops (Twashtar & the ex-Infamy weapons)
+    - **Gear Finder** — Restore COMBAT_SKILLS constant (unbreak gear-data.json)
+    - **Augments** — Recategorize augment catalog into 11 functional categories
+    - **Infamy** — Pull forge/reforge-earned weapons off the Infamy vendor
+    - **Dynamis D** — Repurpose Divergence into the reforged +3->+4 Forge
+    - **Reforge** — Close the spawner menu after a successful NM pop
+    - **VPS** — Auto-commit on-disk edits pre-rebuild 2026-07-06 02:34
+    - **VPS** — Commit on-disk relaunch tooling + discord catalog edits
+    - VPS relaunch supervisor + rebuild + management tooling
+    - **BLU** — Implement 20 net-new retail Blue Magic spells (715-753)
+    - **BLU** — Enable 15 finished-but-disabled Blue Magic spells
+    - **NPC** — Survival Guide warp book in Leafallia (owner request)
+    - **Relaunch** — Raise player movement speed to 150 (BASE_SPEED + SPEED_LIMIT)
+    - **Commands** — !petstats permission 4 -> 0 (all players)
+    - **Gear** — Implement Gleti's Breeches (23777) and add to gold-tier vendor
+    - **Augments** — Cascade tier/removal changes to all downstream systems
+    - **Augments** — Remove ~50 redundant augments from catalog
+    - **Augments** — All augments available at all tiers, power scales via roll band
+
+??? note "Week of June 29 – July 5, 2026"
     **Sunday, July 5**
 
     - **Item Database** — Add HTBF/Su5/catalyst/Voidwatch/seal drops to item database
@@ -952,67 +1166,3 @@ Recent updates to Relaunch, newest first — generated from our live deploy hist
     - **JOBS** — Auto-unlock RUN + GEO for all players in the Mog House menu
     - ﻿feat(ops): NPC declutter -- status-0 filter + both-bucket SQL
     - **Gm Home** — Cluster the 3 teleport NPCs on the east side
-    - **Linkshell** — Global Legendary server linkshell for all players
-    - **OPS** — Searchable HTML view for the NPC disable audit
-    - ﻿feat(ops): NPC disable audit -- per-zone "extra NPC" review list
-    - **Systems** — Gate login hooks on gameLogin, not `not zoning`
-    - **Missions** — Skip the SoA/RoV mission tails too
-    - **NPC** — Set customMenu send delay to 30ms (was 50, briefly 15)
-    - **NPC** — Lower customMenu send delay 50ms -> 15ms (all NPCs)
-    - **Missions** — Actually skip CoP in the Mission Moogle
-    - ﻿feat(augments): wire up an Enspell Damage catalyst (Wamoura Scale)
-    - ﻿feat(ops): achievements feed for the Discord watcher (second webhook)
-    - ﻿feat(ops): Discord join watcher for the public launch
-    - Feat(jobs)!: retire the Bouncer, restore retail Geomancer on slot 21
-    - **Commands** — Remove dev notes from player command !help text
-    - ﻿fix(world): stop the ZMQ router busy-spin pinning a core at 100%
-    - ﻿fix(mounts): honor MOUNT_SPEED above 255 and clamp the mount branch
-    - ﻿feat(mystats): Ascension section -- every Provenance AP category
-    - **Concurrency** — Public-launch hardening - menu race + dungeon occupancy
-    - **League** — Reisenjima_Henge zoneId is 292, not 291
-    - **Derby** — Chocobo Derby - simulated racing with betting + raised birds
-    - **Treasure** — Treasure maps, overworld digs, buried strongboxes
-    - **League** — Provisioners' League - the non-combat fishing/crafting league
-    - **Prestige** — Spawn Trial bosses on a ring at the summoner, on the floor
-    - **RAID** — The Star-Devourer - weekly multi-phase raid boss
-    - **Invasion** — Scheduled Voidsent assaults on GM Home
-    - **Colosseum** — Async ranked PvP vs AI replicas of real champions
-    - **Prestige** — Spawn Trial bosses at the summoner, not a fixed off-map point
-    - **Dungeons** — Mythic+ keystones - endless key levels above Mythic
-    - ﻿Retire the new-player linkshell; dedupe the Dungeon Veteran title
-    - ﻿docs-in-code: catch comments up to the 5-catalyst reality
-
-    **Wednesday, June 10**
-
-    - **Augments** — Allow up to 5 catalysts/trade (the engine's 5 augment slots)
-    - **Augments** — Back to one augment line per catalyst (4-line stacking)
-    - **Augments** — Split value budget rank 0-24 / stack 0-7 (owner choice)
-
-    **Tuesday, June 9**
-
-    - **Augments** — Confirm menu fits stacked trades + proper N-times scaling
-    - **Dangruf Wadi** — Nil-guard weather handler to stop intermittent startup crash
-    - **Augments** — Stop catalyst stacking from eating gear; amplify via value field
-    - Re-tune haste augments to a sane ~1%->25% curve + normalize their display
-    - Normalize stored-xN augment mods in the displays (disp divisor)
-
-    **Monday, June 8**
-
-    - **Escha** — Remove Warder of Temperance spawn from the GM-wave area
-    - **Items** — Make all edible foods stack to 99 (Magma Steak etc. shipped at stackSize 1)
-    - **Shop** — Add top attack foods to !shop food (Magma/Behemoth/Charred Salisbury Steak)
-    - **Combat** — Exempt Provenance from level correction (hosts lv150 Prestige bosses)
-    - Permanently exclude the 19 Judge items from all three gear scorers
-    - **Gear** — WS Set Builder fixes — grips, Fotia, WSD rings, Knobkierrie; remove Judge's
-    - Reforge tier carry-forward + all-source mod reads + ascension perks
-    - **Gear** — Commit reforge tier stat/model fills + audit tooling
-    - **Combat** — Raise magic/spell damage cap 99,999 -> 131,071
-    - **Combat** — Raise damage cap 99,999 -> 131,071 (FFXIAH client packet max)
-    - **Infamy** — Remove phantom 'Knobkierrie' vendor entry (id 26072 doesn't exist)
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: bb465561e1e6 -->
-_Last updated: 2026-07-06 17:42 PDT_
-<!-- DOCGEN:END id="last-updated" -->
