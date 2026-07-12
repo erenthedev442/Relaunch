@@ -23,12 +23,20 @@ sys.path.insert(0, str(ROOT / "tools" / "discord_bot"))
 try:
     import config as cfg
 except ImportError:
-    print("[post_deploy] config.py not found — skipping Discord post")
-    sys.exit(0)
+    cfg = None
 
-WEBHOOK_URL: str = getattr(cfg, "WEBHOOK_URL", "") or ""
+WEBHOOK_URL: str = (getattr(cfg, "WEBHOOK_URL", "") or "") if cfg else ""
 if not WEBHOOK_URL or "REPLACE_ME" in WEBHOOK_URL:
-    print("[post_deploy] WEBHOOK_URL not set in config.py — skipping")
+    # OVH-box fallback: the box keeps its webhook as a one-line file at
+    # C:\relaunch-ops\.discord_webhook (same convention as
+    # tools/ovh-ops/site_drift_monitor_relaunch.py); config.py is gitignored
+    # and typically absent there.
+    try:
+        WEBHOOK_URL = Path(r"C:\relaunch-ops\.discord_webhook").read_text(encoding="utf-8").strip()
+    except OSError:
+        WEBHOOK_URL = ""
+if not WEBHOOK_URL or "REPLACE_ME" in WEBHOOK_URL:
+    print("[post_deploy] no webhook (config.py or C:\\relaunch-ops\\.discord_webhook) — skipping")
     sys.exit(0)
 
 CHANGELOG = ROOT / "docs" / "changelog.md"

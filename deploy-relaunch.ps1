@@ -13,6 +13,10 @@
 #         -> C++ rebuild (vcvars64 + cmake Ninja; restores *.bak on failure)
 #         -> restart (schtasks /run FFXIRelaunch) + health check
 #         -> push local commit(s) to origin after a good build
+#   [A2] CHANGELOG -> deploy marker + regen + Discord note (this script)
+#         "Relaunch Deploy <stamp>" empty commit (the changelog generator's
+#         live-marker) -> regen_changelog.py -> commit/push docs/changelog.md
+#         -> post_deploy_notes.py to Discord. Skipped when the build failed.
 #   [B] WEBSITE -> Relaunch-DocsRefresh task (refresh_site_relaunch.ps1)
 #         docgen (live C:\server tree + xi_relaunch) -> mkdocs -> Cloudflare
 #         Pages (fjb-relaunch.pages.dev).  vps-rebuild.ps1 deliberately SKIPS
@@ -54,6 +58,10 @@ if (-not (Test-Path $rebuild)) { Say "  ERROR: $rebuild not found - cannot rebui
 # ---- [A] CODE: run the proven local rebuild (own logging + *.bak safety) ----
 Say ''
 Say '########## [A] CODE REBUILD  (vps-rebuild.ps1) ##########' 'Cyan'
+# Remember where vps-rebuild.log ends now, so [A2] can read ONLY what THIS run
+# appends (a stale 'build OK' from a previous run must not count).
+$vpsLog = Join-Path $root 'vps-rebuild.log'
+$vpsLogLines = 0; if (Test-Path $vpsLog) { $vpsLogLines = @(Get-Content $vpsLog).Count }
 & $rebuild
 Say '########## [A] code rebuild returned ##########' 'Cyan'
 
@@ -63,6 +71,52 @@ $upList  = @($exes | Where-Object { $up -contains $_ })
 $upCount = $upList.Count
 Say ("  services up: {0}/4  ({1})" -f $upCount, ($upList -join ', '))
 if ($upCount -lt 4) { Say '  NOTE: not all 4 confirmed yet - the FFXIRelaunch watchdog respawns any missing exe within ~10s.' 'Yellow' }
+
+# ---- [A2] CHANGELOG: deploy marker -> regen -> commit/push -> Discord note ----
+# The public changelog page (docs/changelog.md) is generated from git history
+# and only advances past "Relaunch Deploy ..." marker commits (the not-live-yet
+# guard in tools/docgen/generators/changelog.py). The old Azure path wrote the
+# marker in relaunch-rebuild.bat; this is the OVH equivalent. It runs between
+# [A] and [B] because the docs task in [B] hard-resets C:\relaunch-docs to
+# origin/relaunch -- the marker + regenerated changelog MUST be pushed first or
+# the site publishes the previous changelog. Every failure here is NON-FATAL:
+# the worst case is the changelog lagging one deploy, never a broken deploy.
+Say ''
+Say '########## [A2] CHANGELOG + DEPLOY MARKER ##########' 'Cyan'
+$Py = 'C:\Program Files\Python312\python.exe'; if (-not (Test-Path $Py)) { $Py = 'python' }
+Set-Location $root
+# Only mark this deploy as LIVE if vps-rebuild logged a good build THIS run and
+# HEAD landed on origin/relaunch (git sync wasn't skipped). On a failed build
+# the previous binaries were restored, so a marker would falsely publish dead
+# changes as live -- skip, and the next good deploy's marker sweeps them up.
+$vpsNew = ''; if (Test-Path $vpsLog) { $vpsNew = (@(Get-Content $vpsLog | Select-Object -Skip $vpsLogLines) -join "`n") }
+$goodBuild = $vpsNew -match 'build OK - new binaries in place'
+$onOrigin  = ((git rev-parse HEAD 2>$null) -eq (git rev-parse origin/relaunch 2>$null))
+if ($goodBuild -and $onOrigin) {
+    $stamp = Get-Date -Format 'ddd MM/dd/yyyy HH:mm:ss'
+    git commit --allow-empty -m ("Relaunch Deploy " + $stamp) | Out-Null
+    Say ("  marker committed: Relaunch Deploy " + $stamp)
+    $env:LEGENDARY_LIVE_ROOT = $root   # changelog.py reads git history from here (default is the dev box path)
+    & $Py (Join-Path $root 'tools\regen_changelog.py') 2>&1 | ForEach-Object { Say ("    | " + $_) }
+    git add docs/changelog.md 2>$null
+    git diff --cached --quiet -- docs/changelog.md
+    if ($LASTEXITCODE -ne 0) {
+        git commit -m ("docs(changelog): regenerate for deploy " + $stamp) | Out-Null
+        Say '  changelog regenerated + committed.'
+    } else {
+        Say '  changelog unchanged.'
+    }
+    git push origin relaunch 2>&1 | Out-Null
+    if ($LASTEXITCODE -eq 0) { Say '  pushed - docs task in [B] will publish the fresh changelog.' 'Green' }
+    else { Say '  WARNING: push failed - the site keeps the previous changelog until the next successful push.' 'Yellow' }
+    # Post this deploy's player-facing notes to Discord. Graceful no-op if no
+    # webhook is configured (config.py or C:\relaunch-ops\.discord_webhook).
+    & $Py (Join-Path $root 'tools\discord_bot\post_deploy_notes.py') 2>&1 | ForEach-Object { Say ("    | " + $_) }
+} elseif (-not $goodBuild) {
+    Say '  SKIP marker: vps-rebuild did not report a good build (previous binaries running) - changelog catches up on the next good deploy.' 'Yellow'
+} else {
+    Say '  SKIP marker: HEAD is not on origin/relaunch (git sync skipped?) - changelog not regenerated.' 'Yellow'
+}
 
 # ---- [B] WEBSITE: trigger the docs task, wait for it, verify ----
 Say ''
