@@ -91,6 +91,9 @@ Set 1 pieces use **Abdhaljs Metal**, Set 2 pieces use **Abdhaljs Fiber**. A +1 b
 
 Gorpa-Masorpa also runs the Ambuscade weapon path: redeem a base **Tokko** weapon for Hallmarks, then walk the retail upgrade chain (Tokko → Ajja → Eletta → Kaja → Final) using the Abdhaljs materials from the shop. The final step also consumes a **Pulse Cell**, sold for Gallantry. See the [Weapon Forge](../progression/weapon-forge.md) page for how Ambuscade weapons feed the wider weapon progression.
 
+!!! warning "One copy per stage (RARE)"
+    Every weapon in the chain is RARE — you can't redeem or upgrade into a stage you already own **anywhere**: equipment, wardrobes, mog safe, storage, locker, satchel, sack, or case. Note that [Prime Weapon Forge](../progression/weapon-forge.md) Stage I/II weapons are the **same items** as Tokko/Ajja, so a Prime-track weapon of a given type blocks the Ambuscade base of that type (and vice versa). Gorpa-Masorpa will warn you before taking any Hallmarks or materials.
+
 ## Gallantry shop
 
 <!-- DOCGEN:BEGIN id="amb-galshop" -->
@@ -107,6 +110,6 @@ Gorpa-Masorpa also runs the Ambuscade weapon path: redeem a base **Tokko** weapo
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 8c9f4afc3dd9 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: cae269ee3708 -->
+_Last updated: 2026-07-11 20:46 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -284,17 +284,27 @@ local function buildWeaponBaseMenu(player, page, backFn)
         {
             chain.label,
             function(pp)
-                local cost = AMBU_WPN.BASE_HM_COST
+                local cost   = AMBU_WPN.BASE_HM_COST
+                local baseId = chain.stages[1]
                 if pp:getCurrency('current_hallmarks') < cost then
                     pp:printToPlayer(string.format('[Ambuscade] Need %d Hallmarks (have %d).',
                         cost, pp:getCurrency('current_hallmarks')), SYS)
+                elseif pp:hasItem(baseId) then
+                    -- RARE: a copy ANYWHERE (equipment/wardrobes, safe, storage,
+                    -- locker, satchel, sack, case) blocks a second -- including a
+                    -- Prime forge Stage I weapon of the same type (same item id).
+                    pp:printToPlayer('[Ambuscade] You already own that base weapon (RARE) -- check equipment, wardrobes, safe, storage, satchel, sack, and case.', SYS)
+                    pp:printToPlayer('[Ambuscade] Note: a Prime forge Stage I weapon of the same type IS this item.', SYS)
                 elseif pp:getFreeSlotsCount() < 1 then
                     pp:printToPlayer('[Ambuscade] Inventory full.', SYS)
-                else
+                elseif pp:addItem(baseId, 1) then  -- Tokko (base)
+                    -- Charge only AFTER the item lands: addItem fails on the RARE
+                    -- check, and the old charge-first order ate the Hallmarks anyway.
                     pp:delCurrency('current_hallmarks', cost)
-                    pp:addItem(chain.stages[1], 1)  -- Tokko (base)
                     pp:printToPlayer(string.format('[Ambuscade] Received base %s. Upgrade it with Abdhaljs materials.',
                         chain.label), SYS)
+                else
+                    pp:printToPlayer('[Ambuscade] Could not hand over the weapon. No Hallmarks were taken.', SYS)
                 end
                 buildWeaponBaseMenu(pp, page, backFn)
             end,
@@ -335,6 +345,11 @@ local function buildWeaponUpgradeMenu(player, backFn)
                     function(pp)
                         if not pp:hasItem(fromId, xi.inv.INVENTORY) then
                             pp:printToPlayer('[Ambuscade] Unequip the weapon and keep it in your main inventory.', SYS)
+                        elseif pp:hasItem(toId) then
+                            -- RARE: owning the next stage anywhere would make addItem
+                            -- fail AFTER the materials + weapon were consumed.
+                            pp:printToPlayer(string.format('[Ambuscade] You already own a %s-stage %s (RARE) -- it blocks this upgrade.',
+                                AMBU_WPN.STAGE_NAME[stage + 1], chain.label:match('%((.-)%)') or chain.label), SYS)
                         elseif pp:getItemCount(rec.mat) < rec.qty then
                             pp:printToPlayer(string.format('[Ambuscade] Need %dx %s (have %d).',
                                 rec.qty, AMBU_WPN.MAT_NAME[rec.mat], pp:getItemCount(rec.mat)), SYS)
@@ -345,9 +360,17 @@ local function buildWeaponUpgradeMenu(player, backFn)
                             pp:delItem(rec.mat, rec.qty)
                             if rec.extra then pp:delItem(rec.extra.id, rec.extra.qty) end
                             pp:delItem(fromId, 1)
-                            pp:addItem(toId, 1)
-                            pp:printToPlayer(string.format('[Ambuscade] Upgraded to %s %s!',
-                                chain.label:match('%((.-)%)') or chain.label, AMBU_WPN.STAGE_NAME[stage + 1]), SYS)
+                            if pp:addItem(toId, 1) then
+                                pp:printToPlayer(string.format('[Ambuscade] Upgraded to %s %s!',
+                                    chain.label:match('%((.-)%)') or chain.label, AMBU_WPN.STAGE_NAME[stage + 1]), SYS)
+                            else
+                                -- Should be unreachable (RARE pre-checked, slot freed by
+                                -- delItem) -- restore the consumed items if it ever isn't.
+                                pp:addItem(fromId, 1)
+                                pp:addItem(rec.mat, rec.qty)
+                                if rec.extra then pp:addItem(rec.extra.id, rec.extra.qty) end
+                                pp:printToPlayer('[Ambuscade] Upgrade failed -- your weapon and materials were returned.', SYS)
+                            end
                         end
                         buildWeaponUpgradeMenu(pp, backFn)
                     end,

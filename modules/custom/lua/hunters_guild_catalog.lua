@@ -259,6 +259,23 @@ catalog.huntTargets =
 }
 
 -- =========================================================
+-- PER-NM REP COOLDOWN
+-- =========================================================
+-- Seconds before the SAME NM can award guild rep to the same player
+-- again (charvar HGRepCD_<name>, enforced in hunters_guild_hunts.lua).
+-- Exists because two hunt targets (King Vinegarroon, Fafnir) have
+-- Affinity-NM copies in the same zone -- same mob script, so the 30s
+-- affinity repop would otherwise be farmable for full rep every kill
+-- (Ropraz report, 2026-07-09).
+--
+-- Keep this EQUAL to the hunt targets' respawn timer (1800s flat, per
+-- hunters_guild_hunt_respawns.sql): a legit camper killing every
+-- respawn always earns rep, while affinity-copy farming can never
+-- beat the intended camp rate. Raising it above the respawn time
+-- silently blocks rep on every other legitimate kill.
+catalog.repCooldownSeconds = 1800
+
+-- =========================================================
 -- ALLIANCE / PARTY CREDIT POLICY
 -- =========================================================
 -- killerOnly = false means ALL members of the killer's alliance/party

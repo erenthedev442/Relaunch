@@ -54,6 +54,8 @@ Capstone roll calls live on the [Leaderboards page](../community/leaderboards.md
 
 Reputation in each guild comes **exclusively** from killing the following Vana'diel NMs. Rep is shared with the **whole party/alliance** — every member present when the NM dies earns rep, regardless of who landed the killing blow.
 
+All 20 hunt targets respawn on a flat **30-minute timer**, and each NM awards rep to a given player at most **once per 30 minutes** — a camper killing every respawn always earns rep, but re-killing the same NM sooner (see below) yields the kill and drops with no extra rep. Two targets — **King Vinegarroon** and **Fafnir** — also have fast-repop [Affinity NM](../endgame/affinity-nms.md) copies in the same zone; those copies count as the same NM for rep, so they can't out-earn the normal camp rate.
+
 <!-- DOCGEN:BEGIN id="hunters-guild-hunt-targets" -->
 <div class="milestone-grid" markdown="1">
 

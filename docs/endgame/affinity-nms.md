@@ -59,6 +59,8 @@ These NMs are **stat-boosted** beyond their retail versions: 6× base HP, +4,000
 
 **All 24 trophies are 100% guaranteed** to drop for every party/alliance member in the zone. No lottery, no bad luck.
 
+**Hunter's Guild overlap:** King Vinegarroon (Western Altepa Desert) and Fafnir (Dragon's Aery) are also [Hunter's Guild hunt targets](../progression/hunters-guild.md) in the same zones. Killing the Affinity copy awards guild rep too, but rep from any one NM is capped at **once per 30 minutes per player** — the fast Affinity repop can't be farmed for extra rep.
+
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
