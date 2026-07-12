@@ -72,6 +72,7 @@ WHOLE_PAGE = {
     "admin/page-index.md",               # page_index.py
     "admin/missing-spells.md",           # missing_spells.py (excluded from nav anyway)
     "community/players/index.md",        # player_profiles.py
+    "admin/review.html",                 # legacy_review_page.py
 }
 
 # Whole DIRECTORIES of generated pages (computed filenames).
@@ -182,7 +183,12 @@ _SKIP_LINE = re.compile(
 
 
 def _published_pages(docs_dir: Path):
-    for p in sorted(docs_dir.rglob("*.md")):
+    # .html pages publish too and historically escaped every guard (the Legacy
+    # review page drifted for a week — owner escalation 2026-07-11). They get
+    # the same ownership check; being whole-page artifacts they skip the
+    # naked-fact prose scan like any WHOLE_PAGE entry.
+    pages = list(docs_dir.rglob("*.md")) + list(docs_dir.rglob("*.html"))
+    for p in sorted(pages):
         rel = p.relative_to(docs_dir).as_posix()
         if any(rel.startswith(x) if x.endswith("/") else rel == x for x in EXCLUDED):
             continue

@@ -177,6 +177,7 @@ def main() -> int:
         highlights_page,
         your_session,
         downloads_page,
+        legacy_review_page,
         page_index,
     )
 
@@ -408,6 +409,10 @@ def main() -> int:
         # docs/assets/downloads (deterministic archives) and writes the
         # Downloads page with live sizes/hashes.
         ("downloads_page",         downloads_page),
+        # legacy_review_page owns admin/review.html: rewards parsed from the
+        # live legacy_*_grant.lua modules + legendary_ring.sql; the frozen
+        # wipe-day tier snapshot re-embedded from tools/docgen/data.
+        ("legacy_review_page",     legacy_review_page),
         # nyzul_isle parses armoury_crate.lua + appraisal.lua to render the
         # per-NM drop table and floor-100 vigil-weapon pool into the two marker
         # blocks nyzul_page just emitted on docs/endgame/nyzul-isle.md.
