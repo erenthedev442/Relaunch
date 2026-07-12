@@ -16,7 +16,7 @@ end
 
 spellObject.onMobSpawn = function(mob)
     mob:renameEntity('Meat', true)
-	mob:getMaster():printToPlayer('spawnmessage here', xi.msg.channel.PARTY, 'Meat')
+	mob:getMaster():printToPlayer('Stand behind me and fear nothing.', xi.msg.channel.PARTY, 'Meat')
     
 	local master = mob:getMaster()
 	local power = mob:getMainLvl() * master:getCharVar("TrustUpgraded") -- 99 * 1 / 99 * 3 / 99 * 5 / 99 * 7 -- TrustUpgraded grows as you complete server content.
@@ -74,7 +74,7 @@ spellObject.onMobDespawn = function(mob)
 end
 
 spellObject.onMobDeath = function(mob)
-	mob:getMaster():printToPlayer('deathmessage here', xi.msg.channel.PARTY, 'Meat')
+	mob:getMaster():printToPlayer('The rest is on you..', xi.msg.channel.PARTY, 'Meat')
     -- Should never fire -- Meat is unkillable. Left intentionally silent.
 end
 

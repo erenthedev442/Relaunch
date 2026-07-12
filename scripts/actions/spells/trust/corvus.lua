@@ -15,7 +15,7 @@ end
 
 spellObject.onMobSpawn = function(mob)
     mob:renameEntity('Corvus', true)
-	mob:getMaster():printToPlayer('spawnmessage here', xi.msg.channel.PARTY, 'Corvus')
+	mob:getMaster():printToPlayer('The odds are in our favor today.', xi.msg.channel.PARTY, 'Corvus')
 	local master = mob:getMaster()
 	local power = mob:getMainLvl() * master:getCharVar("TrustUpgraded")
 	
@@ -133,7 +133,7 @@ spellObject.onMobDespawn = function(mob)
 end
 
 spellObject.onMobDeath = function(mob)
-	mob:getMaster():printToPlayer('deathmessage here', xi.msg.channel.PARTY, 'Corvus')
+	mob:getMaster():printToPlayer("Shouldn't have went all in.", xi.msg.channel.PARTY, 'Corvus')
     -- Same as above.
 end
 
