@@ -610,6 +610,14 @@ buildSourceNMMenu = function(player, srcDef, station)
                 end
                 mechanics.attach(mob, mechCfg)
 
+                -- Claim to the spawner immediately (same pattern as the
+                -- HuntingLeague / AbysseaMarks pops): claim + enmity, AFTER
+                -- spawn()/mods/HP so the fight starts with final stats.
+                -- Without this the NM popped unclaimed and anyone could
+                -- take it.
+                mob:updateClaim(p)
+                mob:updateEnmity(p)
+
                 p:printToPlayer(
                     string.format('%s has appeared!  Slay it for %d %s + base piece, kupo!',
                         md.label, md.marks, srcDef.currencyName),
