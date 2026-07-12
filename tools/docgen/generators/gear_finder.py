@@ -432,6 +432,7 @@ SOURCE_PAGES = {
     # Keys are relative to docs/progression/ unless they contain a '/', in
     # which case they resolve from docs_dir (e.g. the endgame pages).
     'endgame/domain-invasion.md': 'Domain QM',
+    'economy/cosmetic-boutique.md': 'Cosmetic Boutique',
     'dungeons.md': 'Dungeon (Infamy)',
     'augments.md': 'Augment Moogle',
     'augment-sage.md': 'Augment Sage',
@@ -612,6 +613,11 @@ def _ambuscade_ids(repo_root: Path) -> set[int]:
         m = re.search(r'local ARMOR_SETS\s*=(.*?)local JOB_SETS', text, re.DOTALL)
         if m:
             ids |= {int(x) for x in re.findall(r'\b(2\d{4})\b', m.group(1))}
+        # HM shop rows in the equipment id range (the set rings; the Abdhaljs
+        # materials/vouchers are 9xxx and stay out).
+        m = re.search(r'local HM_SHOP\s*=\s*\{(.*?)\n\}', text, re.DOTALL)
+        if m:
+            ids |= {int(x) for x in re.findall(r'\{\s*(2\d{4}),', m.group(1))}
     text = _read(repo_root, 'modules/custom/lua/ambuscade_weapons_catalog.lua')
     if text:
         for mm in re.finditer(r'stages\s*=\s*\{([^}]*)\}', text):

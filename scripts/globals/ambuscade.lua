@@ -100,6 +100,18 @@ local HM_SHOP =
     { 9223, 'Sap',       200  },
     { 9222, 'Dye',       800  },
     { 9224, 'Resin',     1500 },
+    -- Ambuscade set rings (retail set-completion rewards; one per armor set).
+    -- Added 2026-07-12: the sets' rings had no source anywhere on the server.
+    { 26204, "Sulevia's Ring", 4000 },
+    { 26205, 'Meghanada Ring', 4000 },
+    { 26206, 'Hizamaru Ring',  4000 },
+    { 26207, 'Inyanga Ring',   4000 },
+    { 26208, 'Jhakri Ring',    4000 },
+    { 26209, 'Ayanmo Ring',    4000 },
+    { 26210, 'Taliah Ring',    4000 },
+    { 26211, 'Flamma Ring',    4000 },
+    { 26212, 'Mummu Ring',     4000 },
+    { 26213, 'Mallquis Ring',  4000 },
     -- Gear vouchers
     { 9235, 'Vou.Head',  3000 },
     { 9236, 'Vou.Body',  5000 },
