@@ -2,14 +2,18 @@
 -- unity_wanted.lua
 -- Unity Concord "Wanted" battle system for Legendary Relaunch.
 --
--- Board NPC in Celennia Memorial Library (zone 284):
---   Shows weekly featured NM (double reward), all 56 NMs by tier,
---   deducts accolades, warps player to Escha-Zi'tah (zone 288),
---   and spawns the chosen NM dynamically.
---
--- Spawner in Escha-Zi'tah (zone 288):
---   On zone-in, if a player has UW_NM charVar set, spawn the NM
---   near them. onMobDeath awards accolades and clears state.
+-- Retail junction flow (owner request 2026-07-12):
+--   * The hub Board (Celennia Memorial Library) REGISTERS a Wanted mark and
+--     warps you to the Ethereal Junction in the NM's retail zone
+--     (unity_junction_map.lua -- BG-wiki Category:Unity_Concord mapping).
+--   * Touching that junction expends the accolades and pops the NM at the
+--     junction. Stock junction NPCs get ON_TRIGGER listeners; 15 zones whose
+--     retail junctions never made it into stock npc_list get a custom
+--     junction spawned at a verified-safe anchor.
+--   * onMobDeath awards accolades and clears state (unchanged).
+--   * NM stats/groups still live in zone 288 mob_groups; the engine's
+--     InstantiateDynamicMob(group, groupZone, targetZone) spawns them
+--     cross-zone at the junction.
 -----------------------------------
 require('modules/module_utils')
 require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
@@ -18,18 +22,21 @@ require('scripts/zones/Escha_ZiTah/Zone')
 local m = Module:new('unity_wanted')
 
 local catalog = require('modules/custom/lua/unity_wanted_catalog')
+local jmap    = require('modules/custom/lua/unity_junction_map')
 local S       = xi.msg.channel.SYSTEM_3
 local ICON    = xi.icon and xi.icon.STAR_LARGE or ''
 local PAGE    = 5  -- NMs per menu page (stay ≤ 7 to respect customMenu 150-byte limit)
 
 -- charVar keys
-local CV_NM = 'UW_NM'  -- catalog NM id queued for spawn (0 = none)
-local CV_ENTRY = 'UW_ArenaEntry'  -- one-shot: 1 = the next Escha zone-in is a board "enter the arena" warp (authorizes the auto-pop). Gates out !hunt5 / !hunt / any other Escha entry.
+local CV_NM = 'UW_NM'  -- catalog NM id registered for the junction pop (0 = none)
 
 -- Lookup tables
 local nmById = {}
 for _, nm in ipairs(catalog.nms) do
     nmById[nm.id] = nm
+    if not jmap.byNm[nm.name] then
+        printf('[unity_wanted] WARN: %s has no junction zone mapping', nm.name)
+    end
 end
 
 -- BASE-item -> +1 upgrade map, built from the catalog's drops (NQ id, +1 id)
@@ -62,8 +69,11 @@ end
 -----------------------------------
 -- Spawn logic
 -----------------------------------
-local function spawnWantedNm(player, nm)
-    local zone = GetZone(catalog.huntZoneId)
+local function spawnWantedNm(player, nm, pos)
+    -- Spawns in the PLAYER'S zone (at the junction); the mob group still
+    -- belongs to zone 288 -- InstantiateDynamicMob supports the cross-zone
+    -- group reference.
+    local zone = player:getZone()
     if not zone then return end
 
     local existing = zone:queryEntitiesByName(nm.name)
@@ -78,7 +88,7 @@ local function spawnWantedNm(player, nm)
         end
     end
 
-    local spawnPos    = catalog.arena['T' .. nm.tier]
+    local spawnPos    = pos or catalog.arena['T' .. nm.tier]
     local despawnSecs = catalog.despawnSecs
     local ownerName   = player:getName()
 
@@ -263,31 +273,25 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     confirmScreen = function(player, nm)
         local cost   = catalog.costs[nm.tier]
         local reward = catalog.rewards[nm.tier]
-        local have   = player:getCurrency('unity_accolades')
         local bonus  = (nm.id == weeklyFeaturedId()) and 2 or 1
-        local arenaStr = 'T' .. nm.tier
-        local wp       = catalog.warpPos[arenaStr]
-        local canAfford = have >= cost
+        local zoneId = jmap.byNm[nm.name]
+        local jz     = zoneId and jmap.junctions[zoneId]
 
         menu.title = string.format('[%s] Lv %d', nm.label, nm.minLv)
         menu.options = {
             {
-                canAfford
-                    and string.format('Hunt!  [%d acc -> +%d acc]', cost, reward * bonus)
-                    or  string.format('Need %d acc (have %d)', cost, have),
+                string.format('Register & travel [pop: %d acc -> +%d]', cost, reward * bonus),
                 function(p)
-                    if p:getCurrency('unity_accolades') < cost then
-                        p:printToPlayer(string.format(
-                            '[Unity] Need %d accolades (have %d), kupo.', cost, have), S)
-                        confirmScreen(p, nm)
+                    if not jz then
+                        p:printToPlayer('[Unity] No junction is mapped for that mark, kupo!', S)
                         return
                     end
-                    p:delCurrency('unity_accolades', cost)
                     p:setCharVar(CV_NM, nm.id)
-                    p:setCharVar(CV_ENTRY, 1)  -- authorize the pop on THIS board-driven warp only
-                    p:setPos(wp.x, wp.y, wp.z, wp.rot, catalog.huntZoneId)
+                    local pt = jz.points[1]
                     p:printToPlayer(string.format(
-                        '[Unity] Entering the arena to hunt %s!', nm.label), S)
+                        '[Unity] %s registered! Touch the Ethereal Junction to call it forth (%d accolades).',
+                        nm.label, cost), S)
+                    p:setPos(pt.x + 1.5, pt.y, pt.z + 1.5, pt.rot, zoneId)
                 end,
             },
             { '<< Back', function(p) tierScreen(p, nm.tier, 1) end },
@@ -434,132 +438,97 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
 end)
 
 -----------------------------------
--- In-zone "Re-Hunt" Board (Escha-Zi'tah). Lets players spawn the next Wanted NM
--- without warping back to the hub board. Lean menu (tiers -> NM -> pop); the
--- pledge picker / reward shop stay on the hub board. Confirming pays accolades,
--- hops the player to the tier arena IN-ZONE (setPos with no zoneid = no loading
--- screen), and pops the NM right there via spawnWantedNm.
+-- Ethereal Junctions: registered marks pop HERE for accolades.
+-- Stock junction NPCs (81 rows in sql/npc_list.sql) are plain script-less
+-- npc_list entries -- an ON_TRIGGER listener is the whole wiring (same
+-- pattern as the Geas-Fete ??? points). Zones whose retail junction rows
+-- never made it into stock data get a custom junction dynamic NPC at a
+-- verified-safe anchor (unity_junction_map.lua, custom = true).
 -----------------------------------
-m:addOverride('xi.zones.Escha_ZiTah.Zone.onInitialize', function(zone)
-    super(zone)
+local function junctionMenu(player, zoneId, npc)
+    local nmId = player:getCharVar(CV_NM) or 0
+    local nm   = nmId ~= 0 and nmById[nmId] or nil
 
-    local menu = { title = '', options = {} }
-    local mainScreen, tierScreen, confirmScreen
-
-    mainScreen = function(player)
-        local featured = nmById[weeklyFeaturedId()]
-        menu.title   = string.format('%sUnity Re-Hunt [%d acc]', ICON, player:getCurrency('unity_accolades'))
-        menu.options = {
-            { string.format('Weekly: %s (2x)', featured and featured.label or '?'),
-              function(p) if featured then confirmScreen(p, featured) end end },
-            { 'Tier 1  Lv 75-80',   function(p) tierScreen(p, 1, 1) end },
-            { 'Tier 2  Lv 99-119',  function(p) tierScreen(p, 2, 1) end },
-            { 'Tier 3  Lv 120+',    function(p) tierScreen(p, 3, 1) end },
-            { 'Leave', function(p) p:printToPlayer('[Unity] Happy hunting, kupo!', S) end },
-        }
-        showMenu(player, menu)
+    if not nm then
+        player:printToPlayer('[Unity] The junction hums with otherworldly energy. Register a Wanted mark at the Unity board first, kupo.', S)
+        return
     end
 
-    tierScreen = function(player, tier, page)
-        local tierNms = {}
-        for _, nm in ipairs(catalog.nms) do
-            if nm.tier == tier then table.insert(tierNms, nm) end
-        end
-        local start  = (page - 1) * PAGE + 1
-        local finish = math.min(start + PAGE - 1, #tierNms)
-        local weekly = weeklyFeaturedId()
-
-        menu.title = string.format('T%d Re-Hunt | cost %d / +%d acc', tier, catalog.costs[tier], catalog.rewards[tier])
-        local opts = {}
-        for i = start, finish do
-            local nm_  = tierNms[i]
-            local star = (nm_.id == weekly) and '*' or ''
-            table.insert(opts, { string.format('%s%s', nm_.label, star), function(p) confirmScreen(p, nm_) end })
-        end
-        if page > 1        then table.insert(opts, { '<< Prev', function(p) tierScreen(p, tier, page - 1) end }) end
-        if finish < #tierNms then table.insert(opts, { 'Next >>', function(p) tierScreen(p, tier, page + 1) end }) end
-        table.insert(opts, { '<< Back', function(p) mainScreen(p) end })
-        menu.options = opts
-        showMenu(player, menu)
+    local nmZone = jmap.byNm[nm.name]
+    if nmZone ~= zoneId then
+        local jz = nmZone and jmap.junctions[nmZone]
+        player:printToPlayer(string.format('[Unity] %s prowls elsewhere -- seek the Ethereal Junction in %s, kupo!',
+            nm.label, jz and string.gsub(jz.zoneName, '_', ' ') or '???'), S)
+        return
     end
 
-    confirmScreen = function(player, nm)
-        local cost      = catalog.costs[nm.tier]
-        local reward    = catalog.rewards[nm.tier]
-        local have      = player:getCurrency('unity_accolades')
-        local bonus     = (nm.id == weeklyFeaturedId()) and 2 or 1
-        local canAfford = have >= cost
-        local wp        = catalog.warpPos['T' .. nm.tier]
+    local cost   = catalog.costs[nm.tier]
+    local reward = catalog.rewards[nm.tier]
+    local bonus  = (nm.id == weeklyFeaturedId()) and 2 or 1
+    local have   = player:getCurrency('unity_accolades')
 
-        menu.title = string.format('[%s] Lv %d', nm.label, nm.minLv)
-        menu.options = {
+    showMenu(player, {
+        title = string.format('[%s] Lv %d', nm.label, nm.minLv),
+        options = {
             {
-                canAfford
-                    and string.format('Hunt here!  [%d acc -> +%d acc]', cost, reward * bonus)
+                (have >= cost)
+                    and string.format('Expend %d acc -- call it forth! [+%d]', cost, reward * bonus)
                     or  string.format('Need %d acc (have %d)', cost, have),
                 function(p)
                     if p:getCurrency('unity_accolades') < cost then
                         p:printToPlayer(string.format('[Unity] Need %d accolades (have %d), kupo.', cost, have), S)
-                        confirmScreen(p, nm)
                         return
                     end
                     p:delCurrency('unity_accolades', cost)
-                    p:setCharVar(CV_NM, nm.id)          -- reward settles against this on death
-                    p:setPos(wp.x, wp.y, wp.z, wp.rot)  -- in-zone hop to the arena (no zoneid = no loading screen)
-                    spawnWantedNm(p, nm)
+                    spawnWantedNm(p, nm, {
+                        x   = npc:getXPos() + 4.0,
+                        y   = npc:getYPos(),
+                        z   = npc:getZPos() + 4.0,
+                        rot = 128,
+                    })
                 end,
             },
-            { '<< Back', function(p) tierScreen(p, nm.tier, 1) end },
-        }
-        showMenu(player, menu)
-    end
-
-    local RehuntBoard = zone:insertDynamicEntity({
-        objtype    = xi.objType.NPC,
-        name       = 'Unity_Rehunt_Board',
-        packetName = string.format('%sUnity Re-Hunt', ICON),
-        look       = 234,
-        x          = catalog.huntBoardPos.x,
-        y          = catalog.huntBoardPos.y,
-        z          = catalog.huntBoardPos.z,
-        rotation   = catalog.huntBoardPos.rot,
-        widescan   = 1,
-        onTrade    = function(player, npc, trade)
-            player:printToPlayer('[Unity] Use the board menu, kupo!', S)
-        end,
-        onTrigger  = function(player, npc)
-            mainScreen(player)
-        end,
+            { 'Never mind', function() end },
+        },
     })
-    utils.unused(RehuntBoard)
-end)
+end
 
------------------------------------
--- Escha-Zi'tah zone-in: spawn queued NM
------------------------------------
-m:addOverride('xi.zones.Escha_ZiTah.Zone.onZoneIn', function(player, prevZone)
-    local cs = super(player, prevZone)
-    local nmId = player:getCharVar(CV_NM)
-    if not nmId or nmId == 0 then return cs end
-    -- Only auto-pop the queued NM when the player arrived via the Unity board's
-    -- own "enter the arena" warp (which sets CV_ENTRY=1 just before warping) --
-    -- NOT on !hunt5 / !hunt / any other Escha entry. Consume the token so it's
-    -- strictly one-shot; CV_NM is left intact so the board can re-arm it.
-    if (player:getCharVar(CV_ENTRY) or 0) == 0 then return cs end
-    player:setCharVar(CV_ENTRY, 0)
-    local nm = nmById[nmId]
-    if not nm then
-        player:setCharVar(CV_NM, 0)
-        return cs
-    end
-    -- 2-second delay: ensures client is stable before mob pop
-    player:timer(2000, function(p)
-        if p:getZoneID() == catalog.huntZoneId then
-            spawnWantedNm(p, nm)
+for zoneId, jz in pairs(jmap.junctions) do
+    require(string.format('scripts/zones/%s/Zone', jz.zoneName))
+    m:addOverride(string.format('xi.zones.%s.Zone.onInitialize', jz.zoneName), function(zone)
+        super(zone)
+        local capturedZoneId = zoneId
+        local capturedJz     = jz
+        for _, pt in ipairs(capturedJz.points) do
+            if pt.custom then
+                local jnpc = zone:insertDynamicEntity({
+                    objtype    = xi.objType.NPC,
+                    name       = 'Ethereal_Junction',
+                    packetName = 'Ethereal Junction',
+                    look       = 2447,  -- stock junction model (npc_list look blob 0x8F09)
+                    x          = pt.x,
+                    y          = pt.y,
+                    z          = pt.z,
+                    rotation   = pt.rot,
+                    widescan   = 1,
+                    onTrigger  = function(player, trigNpc)
+                        junctionMenu(player, capturedZoneId, trigNpc)
+                    end,
+                })
+                utils.unused(jnpc)
+            else
+                local npc = GetNPCByID(pt.id)
+                if npc then
+                    npc:addListener('ON_TRIGGER', 'UNITY_JUNCTION', function(player, trigNpc)
+                        junctionMenu(player, capturedZoneId, trigNpc)
+                    end)
+                else
+                    printf('[unity_wanted] junction npc %i missing in zone %i', pt.id, zoneId)
+                end
+            end
         end
     end)
-    return cs
-end)
+end
 
 -----------------------------------
 -- Bypass the retail Unity "10 RoE records" gate.

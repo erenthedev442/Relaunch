@@ -2,7 +2,7 @@
 
 Unity Concord is a custom NM hunting system accessed from the Celennia Memorial
 Library board. Players pledge to a Unity leader, pay accolades to spawn a
-Wanted NM in Escha-Zi'tah, and earn accolades on kill to spend in the shop.
+Wanted NM at its retail zone's Ethereal Junction, and earn accolades on kill to spend in the shop.
 
 Markers written:
   unity-overview  — tier cost/reward table
@@ -48,6 +48,22 @@ def _extract_drops(nm_block: str) -> list[tuple[int, str]]:
         name = m.group(2) if m.group(2) is not None else m.group(3)
         results.append((int(m.group(1)), name))
     return results
+
+
+def _parse_junctions(repo_root) -> dict[str, str]:
+    """catalog NM internal name -> pretty junction zone name, from the
+    generated unity_junction_map.lua (retail Ethereal Junction flow)."""
+    src = resolve_source(repo_root, "modules/custom/lua/unity_junction_map.lua")
+    if src is None:
+        return {}
+    jt = src.read_text(encoding="utf-8", errors="replace")
+    zone_names = {int(z): n for z, n in
+                  re.findall(r"\[(\d+)\] = \{ zoneName = '(\w+)'", jt)}
+    out = {}
+    for nm, z in re.findall(r"\['([^']+)'\] = (\d+),", jt):
+        zn = zone_names.get(int(z), "?")
+        out[nm] = zn.replace("_", " ")
+    return out
 
 
 def _parse(text: str) -> dict:
@@ -115,12 +131,14 @@ def _parse(text: str) -> dict:
             if depth == 0 and start is not None:
                 block = nms_blk[start:i + 1]
                 lbl_m = re.search(r"label\s*=\s*(?:'([^']*)'|\"([^\"]*)\")", block)
+                name_m = re.search(r"name\s*=\s*'([^']*)'", block)
                 tier_m = re.search(r"tier\s*=\s*(\d)", block)
                 minlv_m = re.search(r"minLv\s*=\s*(\d+)", block)
                 maxlv_m = re.search(r"maxLv\s*=\s*(\d+)", block)
                 if lbl_m and tier_m and minlv_m and maxlv_m:
                     label = lbl_m.group(1) if lbl_m.group(1) is not None else lbl_m.group(2)
                     c["nms"].append({
+                        "name":  name_m.group(1) if name_m else "",
                         "label": label,
                         "tier":  int(tier_m.group(1)),
                         "minLv": int(minlv_m.group(1)),
@@ -151,7 +169,7 @@ def _render_overview(c: dict) -> str:
     return "\n".join(lines)
 
 
-def _render_tiers(c: dict) -> str:
+def _render_tiers(c: dict, junctions: dict) -> str:
     nms_by_tier: dict[int, list[dict]] = {}
     for nm in c["nms"]:
         nms_by_tier.setdefault(nm["tier"], []).append(nm)
@@ -165,14 +183,14 @@ def _render_tiers(c: dict) -> str:
         lines.append(f"### Tier {tier} — {lv_rng}")
         lines.append(f"*Spawn cost: {cost} · Kill reward: {reward} accolades*")
         lines.append("")
-        lines.append("| NM | Level | Notable Drops (50% each, base version) |")
-        lines.append("|---|---:|---|")
+        lines.append("| NM | Junction zone | Level | Notable Drops (50% each, base version) |")
+        lines.append("|---|---|---:|---|")
         for nm in tier_nms:
             lv = nm["minLv"] if nm["minLv"] == nm["maxLv"] else f"{nm['minLv']}–{nm['maxLv']}"
             drops_str = ", ".join(
                 item_anchor(name, item_id=iid) for iid, name in nm["drops"]
             ) if nm["drops"] else "—"
-            lines.append(f"| {nm['label']} | {lv} | {drops_str} |")
+            lines.append(f"| {nm['label']} | {junctions.get(nm['name'], '—')} | {lv} | {drops_str} |")
         lines.append("")
     return "\n".join(lines).rstrip()
 
@@ -225,13 +243,14 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
     text = src.read_text(encoding="utf-8", errors="replace")
     c = _parse(text)
+    junctions = _parse_junctions(repo_root)
 
     page = docs_dir / "endgame" / "unity-concord.md"
     page.parent.mkdir(parents=True, exist_ok=True)
 
     blocks = [
         ("unity-overview", _render_overview(c)),
-        ("unity-tiers",    _render_tiers(c)),
+        ("unity-tiers",    _render_tiers(c, junctions)),
         ("unity-upgrades", _render_upgrades(c)),
         ("unity-shop",     _render_shop(c)),
         ("unity-leaders",  _render_leaders(c)),
