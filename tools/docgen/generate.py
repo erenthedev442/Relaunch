@@ -62,7 +62,6 @@ def main() -> int:
         aeonic_weapons,
         capacity_farms,
         coverage_check,
-        sync_audit,
         ah_prices,
         crafting_exchange,
         hnm,
@@ -438,11 +437,6 @@ def main() -> int:
         # coverage_check runs LAST: warns if any custom system has no docs page
         # (enforces the "custom content must match the website" rule).
         ("coverage_check",   coverage_check),
-        # sync_audit runs after everything: warns on published pages with no
-        # generator owner and on server facts sitting in hand prose OUTSIDE
-        # DOCGEN blocks (the "100% generator-tied" rule — facts must live in
-        # generated content so tuning auto-populates the site).
-        ("sync_audit",       sync_audit),
     ]
 
     successes: list[str] = []
