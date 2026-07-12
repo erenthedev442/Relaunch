@@ -57,6 +57,8 @@ The Trial is no ordinary fight. Three superbosses — used **nowhere else** on t
 
 They rise in turn — Diabolos, then Medusa, then Odin — each stronger than the last, and **every one must fall again each cycle**. There is no shortcut and no carry-over: the Court is reborn every time you return to ascend.
 
+A summoned boss you leave **unengaged** for 20 seconds retreats into the void and frees your summon slot to try again — but it will never retreat out of an **active fight**, even while petrification or other lockouts keep you (or your pet) from landing damage. It also withdraws without credit if it knocks you out.
+
 !!! danger "Come prepared, or do not come at all"
     Odin's Zantetsuken can kill outright. Bring Reraise, bring a plan, and bring friends — the Court was built to break the overconfident.
 

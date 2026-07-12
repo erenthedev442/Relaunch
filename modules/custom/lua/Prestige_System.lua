@@ -900,9 +900,12 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
                 xi.msg.channel.SYSTEM_3, xi.msg.area.SYSTEM, '', false)
         end
 
-        -- Idle-despawn: if no damage is dealt to the boss for 20 seconds it
-        -- retreats without awarding kill credit, and the player's summon slot
-        -- is freed so they can try again.
+        -- Idle-despawn: if the boss stands UNENGAGED with no damage dealt for
+        -- 20 seconds it retreats without awarding kill credit, and the player's
+        -- summon slot is freed so they can try again. Engaged counts as
+        -- challenged: Medusa petrifies pets for 60-180s (Gorgon Dance /
+        -- Calcifying Deluge), so a pet-only player deals no damage for well
+        -- over 20s mid-fight -- the boss must not retreat out of an active fight.
         local IDLE_SECONDS = 20
         local lastHp       = mob:getMaxHP()
         local idleSecs     = 0
@@ -934,11 +937,15 @@ m:addOverride(cfg.zonePath .. '.Zone.onInitialize', function(zone)
                 return
             end
 
-            local curHp = 0
-            local ok    = pcall(function() curHp = mob:getHP() end)
+            local curHp   = 0
+            local engaged = false
+            local ok      = pcall(function()
+                curHp   = mob:getHP()
+                engaged = mob:isEngaged()
+            end)
             if not ok or curHp <= 0 then return end      -- mob gone
 
-            if curHp < lastHp then
+            if curHp < lastHp or engaged then
                 lastHp   = curHp
                 idleSecs = 0
             else
