@@ -62,6 +62,7 @@ def main() -> int:
         aeonic_weapons,
         capacity_farms,
         coverage_check,
+        sync_audit,
         ah_prices,
         crafting_exchange,
         hnm,
@@ -144,6 +145,7 @@ def main() -> int:
         dungeon_instances,
         augment_dungeon_drops,
         dynamis_divergence,
+        classic_dynamis,
         fellow,
         spell_skill_mastery,
         gear_vs_retail,
@@ -368,6 +370,10 @@ def main() -> int:
         # page; marker blocks are independent so order only groups them.
         ("augment_dungeon_drops", augment_dungeon_drops),
         ("dynamis_divergence",   dynamis_divergence),
+        # classic_dynamis reads the attestation-pop guard SQL + zone data and
+        # fills the Attestation NM chain tables on endgame/dynamis-classic.md
+        # (player request "Aeonic Attestation", 2026-07-10).
+        ("classic_dynamis",      classic_dynamis),
         ("fellow",               fellow),
         ("spell_skill_mastery",  spell_skill_mastery),
         ("gauntlet",             gauntlet),
@@ -432,6 +438,11 @@ def main() -> int:
         # coverage_check runs LAST: warns if any custom system has no docs page
         # (enforces the "custom content must match the website" rule).
         ("coverage_check",   coverage_check),
+        # sync_audit runs after everything: warns on published pages with no
+        # generator owner and on server facts sitting in hand prose OUTSIDE
+        # DOCGEN blocks (the "100% generator-tied" rule — facts must live in
+        # generated content so tuning auto-populates the site).
+        ("sync_audit",       sync_audit),
     ]
 
     successes: list[str] = []

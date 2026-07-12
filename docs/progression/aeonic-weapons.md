@@ -9,7 +9,7 @@ top melee reward, forged from Escha Geas Fete spoils.
 **Aeonic** weapons (the 119III relics — Godhands, Aeneas, Sequence…) are the top melee reward on relaunch, forged in three steps:
 
 1. **Buy a Malformed base weapon** from Temprix in Reisenjima for **50,000 Escha Beads**.
-2. **Farm your Attestation + Riftborn Boulders** from [Escha Geas Fete](../endgame/geas-fete.md) — bosses drop the weapon-type Attestation; every tier drops Riftborn Boulders.
+2. **Farm your Attestation + Riftborn Boulders** from [Escha Geas Fete](../endgame/geas-fete.md) — bosses drop the weapon-type Attestation; every tier drops Riftborn Boulders. Attestations also drop from the [Attestation NMs in classic Dynamis](../endgame/dynamis-classic.md).
 3. **Forge** the Malformed weapon into its full Aeonic at the **Weapon Forger** in <!--npc:weapon_forger-->Purgonorgo Isle<!--/npc-->.
 
 Escha Beads come from *any* Escha Geas Fete kill, so the whole path is fuelled by one currency.
