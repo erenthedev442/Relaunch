@@ -384,6 +384,70 @@ def _render_nm_loot(c: dict, names: dict[int, str]) -> str:
 
 # ---------------------------------------------------------------------------
 
+def _render_mechanics(text: str) -> str:
+    """Tier-gated combat mechanics table straight from mechCfg() in the
+    catalog, so combat retunes land on the page automatically."""
+    def grab(pat: str) -> re.Match | None:
+        return re.search(pat, text, re.DOTALL)
+
+    rows: list[tuple[str, str]] = []
+    m = grab(r"if tier >= (\d+) then\s*\n\s*cfg\.stance")
+    p = grab(r"cfg\.stance\s*=\s*\{\s*startHpp\s*=\s*\d+,\s*periodSec\s*=\s*(\d+)")
+    if m and p:
+        rows.append((m.group(1), f"Stance dance — alternates physical-immunity / "
+                                 f"magic-immunity windows every ~{p.group(1)} seconds"))
+    m = grab(r"if tier >= (\d+) then cfg\.aoe\s*=\s*\{\s*periodSec\s*=\s*(\d+),\s*dmgPct\s*=\s*(\d+)")
+    if m:
+        rows.append((m.group(1), f"AoE void shockwave (~{m.group(3)}% max HP) every "
+                                 f"~{m.group(2)} seconds"))
+    m = grab(r"if tier >= (\d+) then cfg\.cc\s*=\s*\{\s*periodSec\s*=\s*(\d+),\s*effect\s*=\s*xi\.effect\.(\w+),\s*power\s*=\s*\d+,\s*dur\s*=\s*(\d+)")
+    if m:
+        rows.append((m.group(1), f"{m.group(3).title()} CC ({m.group(4)}s) every "
+                                 f"~{m.group(2)} seconds"))
+    m = grab(r"if tier >= (\d+) then cfg\.enrage\s*=\s*\{\s*sec\s*=\s*(\d+)")
+    if m:
+        mins = int(m.group(2)) // 60
+        rows.append((m.group(1), f"Enrage at {mins} minutes (massive attack/haste boost)"))
+    m = grab(r"if tier >= (\d+) then cfg\.doom\s*=\s*\{\s*startHpp\s*=\s*(\d+),\s*dur\s*=\s*(\d+)")
+    if m:
+        rows.append((m.group(1), f"Doom ({m.group(3)}s) at {m.group(2)}% HP"))
+    m = grab(r"if tier >= (\d+) then\s*\n\s*cfg\.phases")
+    hps = re.findall(r"\{\s*hp\s*=\s*(\d+),\s*action", text)
+    if m and hps:
+        rows.append((m.group(1), "Phase transitions at " +
+                     " and ".join(f"{h}%" for h in hps) + " HP"))
+    if len(rows) < 4:
+        raise RuntimeError(
+            f"voidwatch mechCfg parse degraded ({len(rows)} rows) -- "
+            f"mechCfg() format in voidwatch_catalog.lua changed, update "
+            f"_render_mechanics."
+        )
+    out = ["Higher tiers layer in additional combat mechanics from the "
+           "`mob_mechanics_library`:", "",
+           "| Unlocks at tier | Mechanic |", "|---|---|"]
+    for tier, desc in rows:
+        out.append(f"| **{tier}** | {desc} |")
+    return "\n".join(out)
+
+
+def _render_pyxis_quality(text: str) -> str:
+    """Riftworn Pyxis quality bands from the catalog constants."""
+    rare = re.search(r"C\.QUALITY_RARE_AT\s*=\s*(\d+)", text)
+    unc = re.search(r"C\.QUALITY_UNCOMMON_AT\s*=\s*(\d+)", text)
+    per_red = re.search(r"C\.QUALITY_PER_RED\s*=\s*(\d+)", text)
+    if not (rare and unc and per_red):
+        raise RuntimeError("voidwatch quality constants not found -- "
+                           "catalog renamed C.QUALITY_*, update _render_pyxis_quality.")
+    r, u, pr = int(rare.group(1)), int(unc.group(1)), int(per_red.group(1))
+    return "\n".join([
+        f"- **Quality** — a d100 roll boosted by Vermillion lights (+{pr} each) "
+        f"determines common / uncommon / rare:",
+        f"    - **{r}+** (+ Vermillion bias) → rare (gear + valuable items)",
+        f"    - **{u}–{r - 1}** → uncommon (valuable mats + consumables)",
+        f"    - **0–{u - 1}** → common (crafting materials)",
+    ])
+
+
 def generate(repo_root: Path, docs_dir: Path) -> None:
     src = resolve_source(repo_root, "modules/custom/lua/voidwatch_catalog.lua")
     if src is None:
@@ -410,6 +474,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ("voidwatch-rifts", _render_rifts(c)),
         ("voidwatch-loot", _render_nm_loot(c, names)),
         ("voidwatch-atmacite", _render_atmacite(c)),
+        ("voidwatch-mechanics", _render_mechanics(text)),
+        ("voidwatch-pyxis-quality", _render_pyxis_quality(text)),
     ]
     written = sum(1 for marker, content in blocks if write_between_markers(page, marker, content))
     print(f"[voidwatch] {written}/{len(blocks)} marker block(s) written "

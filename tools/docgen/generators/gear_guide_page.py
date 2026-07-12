@@ -205,6 +205,24 @@ def _render(d: dict) -> str:
         cats = sum(1 for rows in tiers[tier].values() if rows)
         return n, cats
 
+    def count_phrase(n: int, cats: int) -> str:
+        return (f"{n} weapon{'s' if n != 1 else ''} across "
+                f"{cats} categor{'ies' if cats != 1 else 'y'}")
+
+    _ALL_JOBS = {"WAR", "MNK", "WHM", "BLM", "RDM", "THF", "PLD", "DRK",
+                 "BST", "BRD", "RNG", "SAM", "NIN", "DRG", "SMN", "BLU",
+                 "COR", "PUP", "DNC", "SCH", "GEO", "RUN"}
+
+    def jobs_covered(tier: str) -> set[str]:
+        covered: set[str] = set()
+        for rows in tiers[tier].values():
+            for r in rows:
+                j = (r.get("jobs") or "").strip()
+                if j.lower() == "all":
+                    return set(_ALL_JOBS)
+                covered |= {p.strip().upper() for p in j.split("/") if p.strip()}
+        return covered & _ALL_JOBS
+
     n_cats_stocked = max(tier_stats(t)[1] for t in ("bronze", "silver", "gold"))
     infamy_weapons = sum(len(rows) for rows in tiers.get("infamy", {}).values())
 
@@ -329,11 +347,17 @@ def _render(d: dict) -> str:
     A(f"**Currency:** {cost_str('bronze')} {_plural(medal('bronze'))} each (= {marks_str('bronze')})  ")
     A("**For:** new characters who just hit level 99, or anyone who needs a solid baseline weapon fast.")
     A("")
+    cov_b = jobs_covered("bronze")
+    cov_txt = (
+        "Every job has at least one option."
+        if cov_b >= _ALL_JOBS else
+        f"Current stock covers {len(cov_b)} of {len(_ALL_JOBS)} jobs — everyone "
+        f"else gears up via the Infamy picks, the forge paths, or Silver."
+    )
     A(
-        f"Bronze weapons are scored and curated — the NPC stocks the "
-        f"role-appropriate top picks per category ({n_b} weapons across {cats_b} "
-        f"categories), not just anything that exists. Every job has at least one "
-        f"option."
+        f"Bronze weapons are curated for vendor exclusivity — the NPC stocks "
+        f"only gear you can't earn elsewhere ({count_phrase(n_b, cats_b)}). "
+        f"{cov_txt}"
     )
     A("")
     L.extend(_render_highlights(tiers["bronze"]))
@@ -357,9 +381,8 @@ def _render(d: dict) -> str:
     A("")
     A(
         f"Silver weapons have higher base damage and often better weapon skills or "
-        f"secondary stats ({n_s} weapons across {cats_s} categories), with caster "
-        f"and support jobs gaining dedicated club and staff options that didn't "
-        f"exist at Bronze."
+        f"secondary stats ({count_phrase(n_s, cats_s)}), with a wider selection "
+        f"than Bronze."
     )
     A("")
     L.extend(_render_highlights(tiers["silver"]))
@@ -383,11 +406,9 @@ def _render(d: dict) -> str:
     A("**For:** players with Hunting League Rank IV–V who are approaching or in endgame content.")
     A("")
     A(
-        f"Gold weapons are the top-end purchases from the vendor system ({n_g} "
-        f"weapons across {cats_g} categories). Many are best-in-slot or near-BiS "
-        f"for their category, comparable to Mythic or Empyrean weapons from "
-        f"retail. The selection emphasizes caster-optimized and tanking options "
-        f"that didn't exist at lower tiers, plus DD weapons with high raw damage."
+        f"Gold weapons are the top-end purchases from the vendor system "
+        f"({count_phrase(n_g, cats_g)}), priced for players deep into the "
+        f"Hunting League ladder."
     )
     A("")
     L.extend(_render_highlights(tiers["gold"]))

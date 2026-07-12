@@ -46,7 +46,7 @@ This NPC sells weapons in 8 categories across three tiers. All items are ilvl 11
 **Currency:** 12 Beastmens Medals each (= 60 Hunt Marks per weapon)  
 **For:** new characters who just hit level 99, or anyone who needs a solid baseline weapon fast.
 
-Bronze weapons are scored and curated — the NPC stocks the role-appropriate top picks per category (1 weapons across 1 categories), not just anything that exists. Every job has at least one option.
+Bronze weapons are curated for vendor exclusivity — the NPC stocks only gear you can't earn elsewhere (1 weapon across 1 category). Current stock covers 4 of 22 jobs — everyone else gears up via the Infamy picks, the forge paths, or Silver.
 
 ### Selected highlights
 
@@ -64,7 +64,7 @@ Bronze weapons are scored and curated — the NPC stocks the role-appropriate to
 **Currency:** 25 Kindreds Medals each (= 375 Hunt Marks per weapon)  
 **For:** characters with Hunting League Rank I–III who want a significant step up from Bronze.
 
-Silver weapons have higher base damage and often better weapon skills or secondary stats (14 weapons across 8 categories), with caster and support jobs gaining dedicated club and staff options that didn't exist at Bronze.
+Silver weapons have higher base damage and often better weapon skills or secondary stats (14 weapons across 8 categories), with a wider selection than Bronze.
 
 ### Selected highlights
 
@@ -89,7 +89,7 @@ Silver weapons have higher base damage and often better weapon skills or seconda
 **Currency:** 50 Demons Medals each (= 2,000 Hunt Marks per weapon)  
 **For:** players with Hunting League Rank IV–V who are approaching or in endgame content.
 
-Gold weapons are the top-end purchases from the vendor system (1 weapons across 1 categories). Many are best-in-slot or near-BiS for their category, comparable to Mythic or Empyrean weapons from retail. The selection emphasizes caster-optimized and tanking options that didn't exist at lower tiers, plus DD weapons with high raw damage.
+Gold weapons are the top-end purchases from the vendor system (1 weapon across 1 category), priced for players deep into the Hunting League ladder.
 
 ### Selected highlights
 
@@ -172,6 +172,6 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 69b093824ac4 -->
-_Last updated: 2026-07-11 21:03 PDT_
+<!-- content-hash: bf5291fcf707 -->
+_Last updated: 2026-07-11 21:20 PDT_
 <!-- DOCGEN:END id="last-updated" -->
