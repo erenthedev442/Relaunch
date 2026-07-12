@@ -29,10 +29,14 @@ catalog.campCenter = { x = 93.0, y = -45.5, z = 928.0 }
 catalog.spreadX    = 5
 catalog.spreadZ    = 8
 
--- ZONE-WIDE spawn pool: every native walkable spawn point in Bibiki Bay (357,
--- pulled from mob_spawn_points). spawnOne picks a random one, so the farm fills
--- the WHOLE zone on guaranteed-valid ground (no water/terrain clipping). The
--- campCenter/spread above are now just the !capacity warp landing + a fallback.
+-- BEACH-CAMP spawn pool: 19 native land spawn points around the !capacity warp
+-- (filtered from mob_spawn_points; see capacity_farm_points.lua). spawnOne picks
+-- a random one, so the camp spreads across the reachable beach near the warp.
+-- FIXED 2026-07-12 (Lant report): the previous pull was the WHOLE zone (357
+-- pts) and Bibiki Bay is mostly ocean -- ~158 of those were shoreline/water
+-- spawns at y ~= 0, so phantoms spawned floating over the bay, off the walkable
+-- map. The pool is now restricted to camp-elevation land (y<=-38) within 300u
+-- of campCenter. campCenter/spread below are the warp landing + a fallback.
 catalog.spawnPoints = require('modules/custom/lua/capacity_farm_points')
 
 -- HL NM mob_groups (registered in zone 210 / GM_Home) reused as spawn

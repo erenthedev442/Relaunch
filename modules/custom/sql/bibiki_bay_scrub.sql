@@ -3,7 +3,7 @@
 -- Wipes the native mob population of Bibiki Bay (zone 4) so
 -- the Capacity Farm can own the zone.
 --
--- The Capacity Farm (CapacityFarm.lua) spawns 200 Capacity
+-- The Capacity Farm (CapacityFarm.lua) spawns 100 Capacity
 -- Phantoms dynamically via insertDynamicEntity using GM_Home
 -- templates (groupZoneId=210). The vanilla zone population
 -- (357 spawn_points across 50 mob_groups — Alraune, Opo-opo,
@@ -33,7 +33,7 @@
 --   * All regular zone pop (Alraune, Opo-opo, Jagil, Hobgoblins,
 --     Locus mobs, NMs without scripts like Bismarck, Dalham, etc.)
 --     will not appear in Bibiki Bay. The zone will feel empty
---     except for the 200 Capacity Phantoms.
+--     except for the 100 Capacity Phantoms.
 --   * Fishing-spawned mobs (Ghost_Crab_fished, Kraken_fished etc.)
 --     are removed — fishing spots may yield no catch in that zone.
 --   * Serra/Peerifool/Intulo/Splacknuck and Shen remain spawnable
