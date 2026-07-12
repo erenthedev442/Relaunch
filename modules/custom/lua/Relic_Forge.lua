@@ -89,6 +89,14 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer('[Relic Forge] Free an inventory slot first, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
+        -- RARE pre-check: the engine refuses a second copy, and consuming
+        -- first would eat the currency with nothing granted.
+        if player:hasItem(relic.id) then
+            player:printToPlayer(string.format(
+                '[Relic Forge] You already hold %s -- it is RARE, so a second cannot be forged, kupo!',
+                relic.name), xi.msg.channel.SYSTEM_3)
+            return
+        end
         -- All currencies present?
         for _, c in ipairs(FORGE_COST) do
             if player:getItemCount(c.id) < c.qty then
@@ -114,7 +122,14 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer('[Relic Forge] I could not gather it all -- keep each currency as a single stack in your MAIN inventory (not satchel/case) and try again, kupo!', xi.msg.channel.SYSTEM_3)
             return
         end
-        player:addItem({ id = relic.id, quantity = 1 })
+        if not player:addItem({ id = relic.id, quantity = 1 }) then
+            -- Grant failed anyway: return every consumed currency.
+            for id, qty in pairs(removed) do
+                if qty > 0 then player:addItem({ id = id, quantity = qty }) end
+            end
+            player:printToPlayer('[Relic Forge] The forging failed -- your currency has been returned, kupo!', xi.msg.channel.SYSTEM_3)
+            return
+        end
         player:printToPlayer(string.format(
             '[Relic Forge] %s, forged from the spoils of Dynamis! Kupo!', relic.name),
             xi.msg.channel.SYSTEM_3)

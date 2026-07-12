@@ -311,10 +311,11 @@ buildUpgradeMenu = function(player, jobDef, setKey, slotKey, tiers)
         local fromId = tiers[tierIdx - 1]
         local toId   = tiers[tierIdx]
         if fromId and toId and fromId > 0 and toId > 0 then
-            local cost   = tierCosts[tierIdx]
-            local has    = player:hasItem(fromId)
-            local canPay = getMarks(player, setKey) >= cost
-            local flag   = (has and canPay) and '' or ' *'
+            local cost     = tierCosts[tierIdx]
+            local has      = player:hasItem(fromId)
+            local canPay   = getMarks(player, setKey) >= cost
+            local ownsNext = player:hasItem(toId) -- RARE: can't hold a second
+            local flag     = (has and canPay and not ownsNext) and '' or ' *'
 
             table.insert(options, {
                 string.format('To %s [%d %s]%s', tierLabels[tierIdx], cost, cur.currencyShort, flag),
@@ -322,6 +323,17 @@ buildUpgradeMenu = function(player, jobDef, setKey, slotKey, tiers)
                     if not p:hasItem(fromId) then
                         p:printToPlayer(
                             string.format('You need the %s piece first, kupo!', tierLabels[tierIdx - 1]),
+                            xi.msg.channel.SYSTEM_3)
+                        buildUpgradeMenu(p, jobDef, setKey, slotKey, tiers)
+                        return
+                    end
+                    -- RARE pre-check: the engine refuses a second copy, and
+                    -- charging first ate the player's marks AND base piece
+                    -- (Jbae, 2026-07-12). Refuse before anything is spent.
+                    if p:hasItem(toId) then
+                        p:printToPlayer(
+                            string.format('You already own the %s piece -- it is RARE, so you cannot hold another, kupo!',
+                                tierLabels[tierIdx]),
                             xi.msg.channel.SYSTEM_3)
                         buildUpgradeMenu(p, jobDef, setKey, slotKey, tiers)
                         return
@@ -341,7 +353,18 @@ buildUpgradeMenu = function(player, jobDef, setKey, slotKey, tiers)
 
                     spendMarks(p, setKey, cost)
                     p:delItem(fromId, 1)
-                    p:addItem({ id = toId, quantity = 1 })
+                    if not p:addItem({ id = toId, quantity = 1 }) then
+                        -- Grant failed anyway (race, storage-slip, etc.):
+                        -- roll the whole transaction back.
+                        spendMarks(p, setKey, -cost)
+                        p:addItem({ id = fromId, quantity = 1 })
+                        p:printToPlayer(
+                            string.format('The upgrade failed -- your %s and %s piece were returned, kupo!',
+                                cur.currencyName, tierLabels[tierIdx - 1]),
+                            xi.msg.channel.SYSTEM_3)
+                        buildUpgradeMenu(p, jobDef, setKey, slotKey, tiers)
+                        return
+                    end
                     p:printToPlayer(
                         string.format('Upgraded to %s, kupo!  (-%d %s)', tierLabels[tierIdx], cost, cur.currencyName),
                         xi.msg.channel.SYSTEM_3)

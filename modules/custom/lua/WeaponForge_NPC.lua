@@ -171,6 +171,16 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return false
         end
 
+        -- RARE pre-check: the engine refuses a second copy, and consuming
+        -- first would eat the materials with nothing granted (Jbae's Empy
+        -- reforge loss, 2026-07-12 — same defect class).
+        if player:hasItem(toItem.id) then
+            player:printToPlayer(
+                string.format('[Weapon Forge] You already hold %s — it is RARE, so a second cannot be forged.',
+                    toItem.name), S)
+            return false
+        end
+
         -- All checks passed — consume.
         player:delItem(fromItem.id, 1)
         player:delItem(ae.attestationId, stepCost.attestations)
@@ -182,7 +192,11 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             drainMarks(player, stepCost.reforgeMarks)
         end
 
-        player:addItem({ id = toItem.id, quantity = 1 })
+        if not player:addItem({ id = toItem.id, quantity = 1 }) then
+            player:printToPlayer(
+                '[Weapon Forge] ERROR: the forge consumed your materials but could not hand over the weapon — contact a GM with this message.', S)
+            return true
+        end
         player:printToPlayer(
             string.format('[Weapon Forge] The %s resonates with ancient power — behold the %s!',
                 fromItem.name, toItem.name), S)
@@ -270,6 +284,15 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             return false
         end
 
+        -- RARE pre-check before anything is consumed.
+        if player:hasItem(toItem.id) then
+            player:printToPlayer(
+                string.format('[Weapon Forge] You already hold %s — it is RARE, so a second cannot be forged.',
+                    toItem.name),
+                xi.msg.channel.SYSTEM_3)
+            return false
+        end
+
         -- All checks passed — consume items.
         player:delItem(fromItem.id, 1)
         player:delItem(cost.medals.id, cost.medals.qty)
@@ -280,7 +303,12 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:delGil(cost.gil)
         end
 
-        player:addItem({ id = toItem.id, quantity = 1 })
+        if not player:addItem({ id = toItem.id, quantity = 1 }) then
+            player:printToPlayer(
+                '[Weapon Forge] ERROR: the forge consumed your materials but could not hand over the weapon — contact a GM with this message.',
+                xi.msg.channel.SYSTEM_3)
+            return true
+        end
         player:printToPlayer(
             string.format(
                 '[Weapon Forge] The %s shimmers and transforms — behold the %s!',
@@ -562,10 +590,18 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
             player:printToPlayer('[Weapon Forge] Free an inventory slot before forging.', S)
             return
         end
+        -- RARE pre-check before anything is consumed.
+        if player:hasItem(toId) then
+            player:printToPlayer(string.format('[Weapon Forge] You already hold the %s stage — it is RARE, so a second cannot be forged.', STAGE_LBL[k + 1]), S)
+            return
+        end
         for _, req in ipairs(reqs) do req.take(player) end
         if marks then drainMarks(player, marks) end
         if fromId then player:delItem(fromId, 1) end
-        player:addItem({ id = toId, quantity = 1 })
+        if not player:addItem({ id = toId, quantity = 1 }) then
+            player:printToPlayer('[Weapon Forge] ERROR: the forge consumed your materials but could not hand over the weapon — contact a GM with this message.', S)
+            return
+        end
         player:printToPlayer(string.format('[Weapon Forge] Your %s advances to %s!', chain.name, STAGE_LBL[k + 1]), S)
     end
 

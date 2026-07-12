@@ -67,7 +67,9 @@ end
 local showPage  -- forward-declared so purchase handler can reference it
 
 showPage = function(player, page)
-    local beads   = player:getCharVar(BEADS_KEY)
+    -- escha_beads is a CURRENCY (char_points), not a charvar -- getCharVar
+    -- always read 0 here, so the title showed the wrong balance.
+    local beads   = player:getCurrency(BEADS_KEY)
     local title   = string.format('Temprix [Beads: %d]', beads)
     local options = {}
     local p       = math.max(1, math.min(page, TOTAL_PAGES))
@@ -94,8 +96,22 @@ showPage = function(player, page)
                     pp:timer(30, function(p2) showPage(p2, pageCapture) end)
                     return
                 end
+                -- RARE pre-check: charging first would eat the beads with
+                -- nothing granted.
+                if pp:hasItem(wCapture.id) then
+                    pp:printToPlayer(string.format(
+                        '[Temprix] You already hold %s -- it is RARE, so I cannot entrust a second.',
+                        wCapture.name), S)
+                    pp:timer(30, function(p2) showPage(p2, pageCapture) end)
+                    return
+                end
                 pp:delCurrency(BEADS_KEY, COST)
-                pp:addItem({ id = wCapture.id, quantity = 1 })
+                if not pp:addItem({ id = wCapture.id, quantity = 1 }) then
+                    pp:addCurrency(BEADS_KEY, COST)
+                    pp:printToPlayer('[Temprix] Something went wrong -- your beads have been returned.', S)
+                    pp:timer(30, function(p2) showPage(p2, pageCapture) end)
+                    return
+                end
                 pp:printToPlayer(string.format(
                     '[Temprix] %s entrusted to you. Attune it with %s to begin forging.',
                     wCapture.name, wCapture.attName), S)

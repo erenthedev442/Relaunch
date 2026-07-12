@@ -322,10 +322,23 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 player:getGil()), xi.msg.channel.SYSTEM_3)
             return
         end
+        -- RARE pre-check before anything is charged.
+        if player:hasItem(weapon.id) then
+            player:printToPlayer(string.format(
+                '[Prime Armory] You already hold %s - it is RARE, so a second cannot be forged. Kupo!',
+                weapon.name), xi.msg.channel.SYSTEM_3)
+            return
+        end
         -- Forge!
         player:delGil(GIL_COST)
         player:setCharVar('PW_WeaponClaimed', weapon.id)
-        player:addItem({ id = weapon.id, quantity = 1 })
+        if not player:addItem({ id = weapon.id, quantity = 1 }) then
+            -- Roll the whole claim back: gil and the once-per-hero flag.
+            player:addGil(GIL_COST)
+            player:setCharVar('PW_WeaponClaimed', 0)
+            player:printToPlayer('[Prime Armory] The forging failed - your gil has been returned. Kupo!', xi.msg.channel.SYSTEM_3)
+            return
+        end
         if weapon.ws then
             player:printToPlayer(string.format(
                 '[Prime Armory] %s has been forged! Equip it to unlock the weapon skill %s. Kupo!',

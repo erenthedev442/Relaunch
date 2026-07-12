@@ -108,6 +108,15 @@ m:addOverride('xi.zones.Southern_San_dOria.Zone.onInitialize', function(zone)
             return
         end
 
+        -- RARE pre-check: giveItem would refuse a second +4 AFTER the trade
+        -- and materials were consumed. Refuse before anything is spent.
+        if player:hasItem(entry.result) then
+            player:printToPlayer(string.format(
+                '[+4 Forge] You already own %s +4 -- it is RARE, so a second cannot be forged, kupo!',
+                entry.name), SYS)
+            return
+        end
+
         if not matsInTrade then
             -- Enough of every material?
             for _, c in ipairs(mats) do
