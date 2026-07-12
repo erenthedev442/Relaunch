@@ -35,6 +35,16 @@ fightLoot.trial_by_fire =
         { itemId = 0,                 weight = 850 },
         { itemId = xi.item.FIRE_BELT, weight = 20 },
         { itemId = xi.item.FIRE_RING, weight = 20 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 21132, weight = 15 },  -- Aedold (Skirmish weapon)
+        { itemId = 21126, weight = 9 },  -- Aedold +1 (Skirmish weapon)
+        { itemId = 21115, weight = 5 },  -- Aedold +2 (Skirmish weapon)
+        { itemId = 21242, weight = 15 },  -- Bocluamni (Skirmish weapon)
+        { itemId = 21236, weight = 9 },  -- Bocluamni +1 (Skirmish weapon)
+        { itemId = 21230, weight = 5 },  -- Bocluamni +2 (Skirmish weapon)
+        { itemId = 20787, weight = 15 },  -- Crobaci (Skirmish weapon)
+        { itemId = 20775, weight = 9 },  -- Crobaci +1 (Skirmish weapon)
+        { itemId = 20764, weight = 5 },  -- Crobaci +2 (Skirmish weapon)
     },
 }
 
@@ -54,6 +64,13 @@ fightLoot.trial_by_ice =
         { itemId = xi.item.NILAS_GLOVES,    weight = 18 },
         { itemId = xi.item.ICE_BELT,        weight = 15 },
         { itemId = xi.item.ICE_RING,        weight = 15 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 20833, weight = 15 },  -- Faizzeer (Skirmish weapon)
+        { itemId = 20824, weight = 9 },  -- Faizzeer +1 (Skirmish weapon)
+        { itemId = 20816, weight = 5 },  -- Faizzeer +2 (Skirmish weapon)
+        { itemId = 21294, weight = 15 },  -- Hgafircian (Skirmish weapon)
+        { itemId = 21286, weight = 9 },  -- Hgafircian +1 (Skirmish weapon)
+        { itemId = 21279, weight = 5 },  -- Hgafircian +2 (Skirmish weapon)
     },
 }
 
@@ -68,6 +85,16 @@ fightLoot.trial_by_wind =
         { itemId = 0,                 weight = 850 },
         { itemId = xi.item.WIND_BELT, weight = 20 },
         { itemId = xi.item.WIND_RING, weight = 20 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 20877, weight = 15 },  -- Iclamar (Skirmish weapon)
+        { itemId = 20870, weight = 9 },  -- Iclamar +1 (Skirmish weapon)
+        { itemId = 20863, weight = 5 },  -- Iclamar +2 (Skirmish weapon)
+        { itemId = 20924, weight = 15 },  -- Iizamal (Skirmish weapon)
+        { itemId = 20915, weight = 9 },  -- Iizamal +1 (Skirmish weapon)
+        { itemId = 20907, weight = 5 },  -- Iizamal +2 (Skirmish weapon)
+        { itemId = 20742, weight = 15 },  -- Iztaasu (Skirmish weapon)
+        { itemId = 20736, weight = 9 },  -- Iztaasu +1 (Skirmish weapon)
+        { itemId = 20725, weight = 5 },  -- Iztaasu +2 (Skirmish weapon)
     },
 }
 
@@ -82,6 +109,13 @@ fightLoot.trial_by_earth =
         { itemId = 0,                  weight = 850 },
         { itemId = xi.item.EARTH_BELT, weight = 20 },
         { itemId = xi.item.EARTH_RING, weight = 20 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 21013, weight = 15 },  -- Kannakiri (Skirmish weapon)
+        { itemId = 21004, weight = 9 },  -- Kannakiri +1 (Skirmish weapon)
+        { itemId = 20996, weight = 5 },  -- Kannakiri +2 (Skirmish weapon)
+        { itemId = 21208, weight = 15 },  -- Lehbrailg (Skirmish weapon)
+        { itemId = 21194, weight = 9 },  -- Lehbrailg +1 (Skirmish weapon)
+        { itemId = 21179, weight = 5 },  -- Lehbrailg +2 (Skirmish weapon)
     },
 }
 
@@ -96,6 +130,16 @@ fightLoot.trial_by_lightning =
         { itemId = 0,                      weight = 850 },
         { itemId = xi.item.LIGHTNING_BELT, weight = 20 },
         { itemId = xi.item.LIGHTNING_RING, weight = 20 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 20641, weight = 15 },  -- Leisilonu (Skirmish weapon)
+        { itemId = 20634, weight = 9 },  -- Leisilonu +1 (Skirmish weapon)
+        { itemId = 20623, weight = 5 },  -- Leisilonu +2 (Skirmish weapon)
+        { itemId = 20553, weight = 15 },  -- Ninzas (Skirmish weapon)
+        { itemId = 20546, weight = 9 },  -- Ninzas +1 (Skirmish weapon)
+        { itemId = 20539, weight = 5 },  -- Ninzas +2 (Skirmish weapon)
+        { itemId = 20967, weight = 15 },  -- Qatsunoci (Skirmish weapon)
+        { itemId = 20961, weight = 9 },  -- Qatsunoci +1 (Skirmish weapon)
+        { itemId = 20952, weight = 5 },  -- Qatsunoci +2 (Skirmish weapon)
     },
 }
 
@@ -111,6 +155,13 @@ fightLoot.trial_by_water =
         { itemId = xi.item.NERITIC_EARRING, weight = 18 },
         { itemId = xi.item.WATER_BELT,      weight = 20 },
         { itemId = xi.item.WATER_RING,      weight = 20 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 21058, weight = 15 },  -- Shichishito (Skirmish weapon)
+        { itemId = 21051, weight = 9 },  -- Shichishito +1 (Skirmish weapon)
+        { itemId = 21043, weight = 5 },  -- Shichishito +2 (Skirmish weapon)
+        { itemId = 21209, weight = 15 },  -- Uffrat (Skirmish weapon)
+        { itemId = 21195, weight = 9 },  -- Uffrat +1 (Skirmish weapon)
+        { itemId = 21180, weight = 5 },  -- Uffrat +2 (Skirmish weapon)
     },
 }
 
@@ -133,6 +184,12 @@ fightLoot.the_savage =
         { itemId = xi.item.SCUFFLERS_COSCIALES,   weight =  30 },
         { itemId = xi.item.METALSINGER_BELT,      weight =  25 },
         { itemId = xi.item.DOMESTICATORS_EARRING, weight =  20 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 27768, weight = 15 },  -- Cizin Helm (Skirmish armor)
+        { itemId = 27728, weight = 10 },  -- Cizin Helm +1 (Skirmish armor)
+        { itemId = 27912, weight = 15 },  -- Cizin Mail (Skirmish armor)
+        { itemId = 27874, weight = 10 },  -- Cizin Mail +1 (Skirmish armor)
+        { itemId = 28018, weight = 10 },  -- Cizin Mufflers +1 (Skirmish armor)
     },
 }
 
@@ -153,6 +210,13 @@ fightLoot.warriors_path =
         { itemId = xi.item.MIZUKAGE_NO_KUBIKAZARI, weight =  20 },
         { itemId = xi.item.SERAPHICALLER,          weight =  15 },
         { itemId = xi.item.DIVINATOR,              weight =  15 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 28192, weight = 15 },  -- Cizin Breeches (Skirmish armor)
+        { itemId = 28160, weight = 10 },  -- Cizin Breeches +1 (Skirmish armor)
+        { itemId = 28332, weight = 15 },  -- Cizin Greaves (Skirmish armor)
+        { itemId = 28297, weight = 10 },  -- Cizin Greaves +1 (Skirmish armor)
+        { itemId = 28662, weight = 15 },  -- Beatific Shield (Skirmish armor)
+        { itemId = 28654, weight = 10 },  -- Beatific Shield +1 (Skirmish armor)
     },
 }
 
@@ -172,6 +236,12 @@ fightLoot.one_to_be_feared =
         { itemId = xi.item.TERMINAL_PLATE,      weight =  30 },
         { itemId = xi.item.CESSANCE_EARRING,    weight =  20 },
         { itemId = xi.item.CONSUMMATION_TORQUE, weight =  20 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 27729, weight = 10 },  -- Otronif Mask +1 (Skirmish armor)
+        { itemId = 27875, weight = 10 },  -- Otronif Harness +1 (Skirmish armor)
+        { itemId = 28019, weight = 10 },  -- Otronif Gloves +1 (Skirmish armor)
+        { itemId = 28161, weight = 10 },  -- Otronif Brais +1 (Skirmish armor)
+        { itemId = 28298, weight = 10 },  -- Otronif Boots +1 (Skirmish armor)
     },
 }
 
@@ -190,6 +260,12 @@ fightLoot.head_wind =
         { itemId = xi.item.SHETAL_STONE,    weight =  30 },
         { itemId = xi.item.BAGHERE_SALADE,  weight =  30 },
         { itemId = xi.item.DURGAI_LEGGINGS, weight =  30 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 27730, weight = 10 },  -- Iuitl Headgear +1 (Skirmish armor)
+        { itemId = 27876, weight = 10 },  -- Iuitl Vest +1 (Skirmish armor)
+        { itemId = 28020, weight = 10 },  -- Iuitl Wristbands +1 (Skirmish armor)
+        { itemId = 28162, weight = 10 },  -- Iuitl Tights +1 (Skirmish armor)
+        { itemId = 28299, weight = 10 },  -- Iuitl Gaiters +1 (Skirmish armor)
     },
 }
 
@@ -207,6 +283,12 @@ fightLoot.puppet_in_peril =
         { itemId = 0,                               weight = 850 },
         { itemId = xi.item.HIGH_QUALITY_AERN_ORGAN, weight = 40 },
         { itemId = xi.item.DAMASCUS_INGOT,          weight = 25 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 27732, weight = 10 },  -- Hagondes Hat +1 (Skirmish armor)
+        { itemId = 27878, weight = 10 },  -- Hagondes Coat +1 (Skirmish armor)
+        { itemId = 28022, weight = 10 },  -- Hagondes Cuffs +1 (Skirmish armor)
+        { itemId = 28164, weight = 10 },  -- Hagondes Pants +1 (Skirmish armor)
+        { itemId = 28301, weight = 10 },  -- Hagondes Sabots +1 (Skirmish armor)
     },
 }
 
@@ -223,6 +305,12 @@ fightLoot.legacy_of_the_lost =
         { itemId = xi.item.HIGH_QUALITY_EUVHI_ORGAN,  weight = 35 },
         { itemId = xi.item.HIGH_QUALITY_PHUABO_ORGAN, weight = 35 },
         { itemId = xi.item.DAMASCUS_INGOT,            weight = 20 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 27731, weight = 10 },  -- Gendewitha Caubeen +1 (Skirmish armor)
+        { itemId = 27877, weight = 10 },  -- Gendewitha Bliaut +1 (Skirmish armor)
+        { itemId = 28021, weight = 10 },  -- Gendewitha Gages +1 (Skirmish armor)
+        { itemId = 28163, weight = 10 },  -- Gendewitha Spats +1 (Skirmish armor)
+        { itemId = 28300, weight = 10 },  -- Gendewitha Galoshes +1 (Skirmish armor)
     },
 }
 
@@ -241,6 +329,12 @@ fightLoot.shadow_lord =
         { itemId = 0,                          weight = 850 },
         { itemId = xi.item.DAMASCUS_INGOT,     weight = 30 },
         { itemId = xi.item.PHILOSOPHERS_STONE, weight = 25 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 26733, weight = 12 },  -- Yorium Barbuta (Alluvion Skirmish armor)
+        { itemId = 26891, weight = 12 },  -- Yorium Cuirass (Alluvion Skirmish armor)
+        { itemId = 27045, weight = 12 },  -- Yorium Gauntlets (Alluvion Skirmish armor)
+        { itemId = 27232, weight = 12 },  -- Yorium Cuisses (Alluvion Skirmish armor)
+        { itemId = 27402, weight = 12 },  -- Yorium Sabatons (Alluvion Skirmish armor)
     },
 }
 
@@ -256,6 +350,12 @@ fightLoot.stellar_fulcrum =
         { itemId = 0,                        weight = 850 },
         { itemId = xi.item.ORICHALCUM_INGOT, weight = 30 },
         { itemId = xi.item.DRAGON_TALON,     weight = 20 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 26737, weight = 12 },  -- Helios Band (Alluvion Skirmish armor)
+        { itemId = 26895, weight = 12 },  -- Helios Jacket (Alluvion Skirmish armor)
+        { itemId = 27049, weight = 12 },  -- Helios Gloves (Alluvion Skirmish armor)
+        { itemId = 27236, weight = 12 },  -- Helios Spats (Alluvion Skirmish armor)
+        { itemId = 27406, weight = 12 },  -- Helios Boots (Alluvion Skirmish armor)
     },
 }
 
@@ -271,6 +371,12 @@ fightLoot.celestial_nexus =
         { itemId = 0,                      weight = 880 },
         { itemId = xi.item.DRAGON_HEART,   weight = 25 },
         { itemId = xi.item.DAMASCUS_INGOT, weight = 20 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 26736, weight = 12 },  -- Telchine Cap (Alluvion Skirmish armor)
+        { itemId = 26894, weight = 12 },  -- Telchine Chasuble (Alluvion Skirmish armor)
+        { itemId = 27048, weight = 12 },  -- Telchine Gloves (Alluvion Skirmish armor)
+        { itemId = 27235, weight = 12 },  -- Telchine Braconi (Alluvion Skirmish armor)
+        { itemId = 27405, weight = 12 },  -- Telchine Pigaches (Alluvion Skirmish armor)
     },
 }
 
@@ -291,6 +397,17 @@ fightLoot.divine_might =
         { itemId = xi.item.ABYSSAL_EARRING, weight = 14 },
         { itemId = xi.item.BEASTLY_EARRING, weight = 14 },
         { itemId = xi.item.BUSHINOMIMI,     weight = 14 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 26734, weight = 12 },  -- Acro Helm (Alluvion Skirmish armor)
+        { itemId = 26892, weight = 12 },  -- Acro Surcoat (Alluvion Skirmish armor)
+        { itemId = 27046, weight = 12 },  -- Acro Gauntlets (Alluvion Skirmish armor)
+        { itemId = 27233, weight = 12 },  -- Acro Breeches (Alluvion Skirmish armor)
+        { itemId = 27403, weight = 12 },  -- Acro Leggings (Alluvion Skirmish armor)
+        { itemId = 26735, weight = 12 },  -- Taeon Chapeau (Alluvion Skirmish armor)
+        { itemId = 26893, weight = 12 },  -- Taeon Tabard (Alluvion Skirmish armor)
+        { itemId = 27047, weight = 12 },  -- Taeon Gloves (Alluvion Skirmish armor)
+        { itemId = 27234, weight = 12 },  -- Taeon Tights (Alluvion Skirmish armor)
+        { itemId = 27404, weight = 12 },  -- Taeon Boots (Alluvion Skirmish armor)
     },
 }
 
@@ -311,6 +428,10 @@ fightLoot.ark_angels_1 =  -- Ark Angel HM
         { itemId = xi.item.LITHELIMB_CAP,     weight = 30 },
         { itemId = xi.item.BLOODRAIN_STRAP,   weight = 30 },
         { itemId = xi.item.MANABYSS_PIGACHES, weight = 30 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 20530, weight = 12 },  -- Ohrmazd (Alluvion Skirmish weapon)
+        { itemId = 20616, weight = 12 },  -- Ipetam (Alluvion Skirmish weapon)
+        { itemId = 20759, weight = 12 },  -- Macbain (Alluvion Skirmish weapon)
     },
 }
 
@@ -327,6 +448,10 @@ fightLoot.ark_angels_2 =  -- Ark Angel TT
         { itemId = xi.item.THEURGISTS_SLACKS, weight = 30 },
         { itemId = xi.item.SCAMPS_SOLLERETS,  weight = 30 },
         { itemId = xi.item.FRAVASHI_MANTLE,   weight = 25 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 20901, weight = 12 },  -- Inanna (Alluvion Skirmish weapon)
+        { itemId = 20809, weight = 12 },  -- Kumbhakarna (Alluvion Skirmish weapon)
+        { itemId = 20857, weight = 12 },  -- Svarga (Alluvion Skirmish weapon)
     },
 }
 
@@ -343,6 +468,10 @@ fightLoot.ark_angels_3 =  -- Ark Angel MR
         { itemId = xi.item.REGIMEN_MITTENS, weight = 30 },
         { itemId = xi.item.FELISTRIS_MASK,  weight = 30 },
         { itemId = xi.item.SEKHMET_CORSET,  weight = 25 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 20718, weight = 12 },  -- Claidheamh Soluis (Alluvion Skirmish weapon)
+        { itemId = 21169, weight = 12 },  -- Keraunos (Alluvion Skirmish weapon)
+        { itemId = 21105, weight = 12 },  -- Nehushtan (Alluvion Skirmish weapon)
     },
 }
 
@@ -359,6 +488,10 @@ fightLoot.ark_angels_4 =  -- Ark Angel EV
         { itemId = xi.item.OSMIUM_CUISSES,  weight = 30 },
         { itemId = xi.item.PATRICIUS_RING,  weight = 25 },
         { itemId = xi.item.DYNASTY_MITTS,   weight = 30 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 20946, weight = 12 },  -- Olyndicus (Alluvion Skirmish weapon)
+        { itemId = 21224, weight = 12 },  -- Phaosphaelia (Alluvion Skirmish weapon)
+        { itemId = 21476, weight = 12 },  -- Doomsday (Alluvion Skirmish weapon)
     },
 }
 
@@ -375,6 +508,11 @@ fightLoot.ark_angels_5 =  -- Ark Angel GK
         { itemId = xi.item.AGITATORS_COLLAR, weight = 25 },
         { itemId = xi.item.LURID_MITTS,      weight = 30 },
         { itemId = xi.item.DAIHANSHI_HABAKI, weight = 30 },
+        -- Skirmish sprinkle (BG-wiki categories, owner 2026-07-12):
+        { itemId = 21037, weight = 12 },  -- Nenekirimaru (Alluvion Skirmish weapon)
+        { itemId = 20989, weight = 12 },  -- Izuna (Alluvion Skirmish weapon)
+        { itemId = 27627, weight = 12 },  -- Svalinn (Alluvion Skirmish weapon)
+        { itemId = 21404, weight = 12 },  -- Linos (Alluvion Skirmish weapon)
     },
 }
 

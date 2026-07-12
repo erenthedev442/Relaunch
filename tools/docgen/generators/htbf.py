@@ -203,9 +203,24 @@ def _top_level_groups(body: str) -> list[str]:
 
 
 _ITEM_RE = re.compile(
-    r"itemId\s*=\s*(?:xi\.item\.(\w+)|0)\s*,\s*weight\s*=\s*(\d+)"
+    r"itemId\s*=\s*(?:xi\.item\.(\w+)|(\d+))\s*,\s*weight\s*=\s*(\d+)"
     r"(?:\s*,\s*amount\s*=\s*(\d+))?"
 )
+
+# Raw numeric itemIds (used for loot with no xi.item enum const, e.g. the
+# Skirmish weapon NQ/+1 tiers) -> display name, filled by generate() from
+# item_basic so the loot table can render them.
+_ID_DISPLAY: dict[int, str] = {}
+
+
+def _load_id_display(repo_root: Path) -> None:
+    src = resolve_source(repo_root, "sql/item_basic.sql")
+    if src is None:
+        return
+    for m in re.finditer(
+            r"INSERT INTO `item_basic` VALUES \((\d+),\d+,'([^']+)'",
+            src.read_text(encoding="utf-8", errors="replace")):
+        _ID_DISPLAY[int(m.group(1))] = _item_name(m.group(2))
 
 
 def _parse_loot(text: str) -> dict:
@@ -223,10 +238,16 @@ def _parse_loot(text: str) -> dict:
             continue
         groups = []
         for g in _top_level_groups(body):
-            items = [
-                {"token": tok or None, "weight": int(w), "amount": int(a) if a else 1}
-                for tok, w, a in _ITEM_RE.findall(g)
-            ]
+            items = []
+            for tok, num, w, a in _ITEM_RE.findall(g):
+                iid = int(num) if num else None
+                items.append({
+                    # token None + iid None/0 = the "drop nothing" slot
+                    "token": tok or None,
+                    "iid": iid if iid else None,
+                    "weight": int(w),
+                    "amount": int(a) if a else 1,
+                })
             if items:
                 groups.append(items)
         out[key] = groups
@@ -321,17 +342,23 @@ def _render_loot(c: dict, loot: dict) -> str:
         rare: list[tuple[int, str]] = []
         for items in groups:
             total = sum(it["weight"] for it in items)
-            has_nothing = any(it["token"] is None for it in items)
+            has_nothing = any(it["token"] is None and it.get("iid") is None
+                              for it in items)
             for it in items:
-                if it["token"] is None or total == 0:
+                if (it["token"] is None and it.get("iid") is None) or total == 0:
                     continue
                 # Link the item name to FFXIAH (hover shows its stat box). The
                 # loot token IS the item_basic internal name, so its Title-Cased
                 # form is exactly the id-resolution key; the ×N / % stay outside
-                # the anchor so only the item text is the link.
+                # the anchor so only the item text is the link. Raw numeric ids
+                # (no enum const) resolve through _ID_DISPLAY instead.
                 token = it["token"]
-                link = item_anchor(_item_name(token),
-                                   resolve_key=token.replace("_", " ").title())
+                if token is None:
+                    name = _ID_DISPLAY.get(it["iid"], f"item #{it['iid']}")
+                    link = item_anchor(name, item_id=it["iid"])
+                else:
+                    link = item_anchor(_item_name(token),
+                                       resolve_key=token.replace("_", " ").title())
                 suffix = f" ×{it['amount']}" if it["amount"] > 1 else ""
                 bit = f"{link}{suffix} ({_pct(it['weight'] / total * 100)})"
                 (rare if has_nothing else common).append((it["weight"], bit))
@@ -358,6 +385,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     loot_src = resolve_source(repo_root, "modules/custom/lua/htbf_loot.lua")
     loot = _parse_loot(loot_src.read_text(encoding="utf-8", errors="replace")) \
         if loot_src is not None else {}
+    if any(it.get("iid") for gs in loot.values() for g in gs for it in g):
+        _load_id_display(repo_root)
 
     page = docs_dir / "endgame" / "high-tier-battlefields.md"
     blocks = [
