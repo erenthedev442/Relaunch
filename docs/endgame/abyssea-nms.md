@@ -111,43 +111,10 @@ After the kill a system message confirms your payout and any active multiplier b
 
 ---
 
-## Superior Lv5 weapon drops (any mob)
-
-<!-- DOCGEN:BEGIN id="abyssea-su5-drops" -->
-Beyond the NMs, **every regular mob in an Abyssea zone has a 5% chance on death to drop a Superior Lv5 (Dynamis Divergence) weapon** into the treasure pool — a random one of the 22 below (one per job), free for the whole alliance to lot. No `???`, pop, Hunt Marks, or trade required; just grind Abyssea mobs.
-
-| Job | Weapon | Type |
-|---|---|---|
-| BLM | [Kaumodaki](https://www.ffxiah.com/item/22093) | Staff |
-| BLU | [Zomorrodnegar](https://www.ffxiah.com/item/21633) | Sword |
-| BRD | [Barfawc](https://www.ffxiah.com/item/21578) | Dagger |
-| BST | [Pangu](https://www.ffxiah.com/item/21717) | Axe |
-| COR | [Rostam](https://www.ffxiah.com/item/21581) | Dagger |
-| DNC | [Setan Kober](https://www.ffxiah.com/item/21584) | Dagger |
-| DRG | [Aram](https://www.ffxiah.com/item/21878) | Polearm |
-| DRK | [Father Time](https://www.ffxiah.com/item/21825) | Scythe |
-| GEO | [Bhima](https://www.ffxiah.com/item/22038) | Club |
-| MNK | [Sagitta](https://www.ffxiah.com/item/21523) | Hand-to-Hand |
-| NIN | [Fudo Masamune](https://www.ffxiah.com/item/21917) | Katana |
-| PLD | [Moralltach](https://www.ffxiah.com/item/21630) | Sword |
-| PUP | [Xiucoatl](https://www.ffxiah.com/item/21526) | Hand-to-Hand |
-| RDM | [Crocea Mors](https://www.ffxiah.com/item/21627) | Sword |
-| RNG | [Sharanga](https://www.ffxiah.com/item/22149) | Marksmanship |
-| RUN | [Morgelai](https://www.ffxiah.com/item/21669) | Great Sword |
-| SAM | [Fusenaikyo](https://www.ffxiah.com/item/21970) | Great Katana |
-| SCH | [Musa](https://www.ffxiah.com/item/22099) | Staff |
-| SMN | [Draumstafir](https://www.ffxiah.com/item/22096) | Staff |
-| THF | [Gandring](https://www.ffxiah.com/item/21575) | Dagger |
-| WAR | [Labraunda](https://www.ffxiah.com/item/21774) | Great Axe |
-| WHM | [Asclepius](https://www.ffxiah.com/item/22035) | Club |
-<!-- DOCGEN:END id="abyssea-su5-drops" -->
-
----
-
 ## What to Spend Infamy On
 
 <!-- DOCGEN:BEGIN id="abyssea-infamy-costs" -->
-Infamy is spent at the **Infamy Vendor** in <!--npc:infamy_vendor-->Purgonorgo Isle<!--/npc-->. The full catalog — accessories, best-in-slot armor, and Relic / Mythic / Aeonic weapons — is listed with exact prices on the [Gear Vendors](../progression/gear-vendors.md#infamy-vendor) page. A few reference points, priced against the top **Heroes** payout:
+Infamy is spent at the **Infamy Vendor** in {{npc:infamy_vendor}}. The full catalog — accessories, best-in-slot armor, and Relic / Mythic / Aeonic weapons — is listed with exact prices on the [Gear Vendors](../progression/gear-vendors.md#infamy-vendor) page. A few reference points, priced against the top **Heroes** payout:
 
 | Reward | Infamy | Heroes kills _(party, no trusts — ×3.0)_ |
 |---|---:|---:|

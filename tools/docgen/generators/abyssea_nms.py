@@ -164,45 +164,6 @@ def _render_rewards(tiers: list[dict]) -> str:
 
 
 # ---------------------------------------------------------------------------
-# Superior Lv5 (Dynamis Divergence) weapon drops — a SEPARATE system from the NM
-# Hunt Marks above, defined in modules/custom/lua/abyssea_su5_drops.lua. Each pool
-# row is "<id>, -- <Name> (<Type>, <JOB>)".
-# ---------------------------------------------------------------------------
-
-_SU5_CHANCE_RE = re.compile(r'DROP_CHANCE\s*=\s*([\d.]+)')
-_SU5_BLOCK_RE  = re.compile(r'SU5_WEAPONS\s*=\s*\{(.*?)\}', re.DOTALL)
-_SU5_ROW_RE    = re.compile(r'(\d+)\s*,\s*--\s*(\S[^(]*?)\s*\(\s*([^,]+?)\s*,\s*([^)]+?)\s*\)')
-
-
-def _render_su5_drops(text: str) -> str | None:
-    block = _SU5_BLOCK_RE.search(text)
-    if not block:
-        return None
-    cm  = _SU5_CHANCE_RE.search(text)
-    pct = f"{float(cm.group(1)) * 100:g}%" if cm else "5%"
-    rows = []
-    for m in _SU5_ROW_RE.finditer(block.group(1)):
-        iid, name, slot, job = m.group(1), m.group(2).strip(), m.group(3).strip(), m.group(4).strip()
-        link = f"[{name}](https://www.ffxiah.com/item/{iid})"
-        rows.append((job, link, slot))
-    if not rows:
-        return None
-    rows.sort()
-    lines = [
-        f"Beyond the NMs, **every regular mob in an Abyssea zone has a {pct} chance on death "
-        f"to drop a Superior Lv5 (Dynamis Divergence) weapon** into the treasure pool — a random "
-        f"one of the {len(rows)} below (one per job), free for the whole alliance to lot. No "
-        f"`???`, pop, Hunt Marks, or trade required; just grind Abyssea mobs.",
-        "",
-        "| Job | Weapon | Type |",
-        "|---|---|---|",
-    ]
-    for job, link, slot in rows:
-        lines.append(f"| {job} | {link} | {slot} |")
-    return "\n".join(lines)
-
-
-# ---------------------------------------------------------------------------
 # Infamy "reference points" — what your Infamy buys and how many Heroes kills
 # it takes. Every number is derived: per-kill from the reward config (Heroes
 # base x the full party/no-trust multiplier), item costs from the live Infamy
@@ -318,12 +279,5 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     else:
         print("[abyssea_nms] abyssea-infamy-costs: skip (no catalog/heroes infamy)")
 
-    # Superior Lv5 (Dynamis Divergence) weapon drops — separate module.
-    su5_src = resolve_source(repo_root, "modules/custom/lua/abyssea_su5_drops.lua")
-    if su5_src is not None:
-        su5 = _render_su5_drops(su5_src.read_text(encoding="utf-8", errors="replace"))
-        if su5:
-            wrote = write_between_markers(page, "abyssea-su5-drops", su5)
-            print(f"[abyssea_nms] abyssea-su5-drops: {'written' if wrote else 'MARKER NOT FOUND'}")
-        else:
-            print("[abyssea_nms] abyssea-su5-drops: skip (no SU5_WEAPONS parsed)")
+    # (Superior Lv5 weapon drops removed 2026-07-12 — owner pulled the
+    # any-Abyssea-mob Su5 system pending a new home for the 22 weapons.)
