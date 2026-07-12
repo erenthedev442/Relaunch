@@ -18,12 +18,9 @@ You need a working **retail FFXI client** plus a third-party launcher (Ashita or
 
 Private servers use **`xiloader.exe`** in place of the retail PlayOnline login. Grab it from the **Discord server** (pinned in the getting-started channel) and drop it somewhere convenient — your launcher profile points at it during [Connect](connect.md).
 
+## Optional extras
+
+Once you're connected, the [Downloads page](downloads.md) has the **Relaunch client files**: the cosmetic **Custom DAT pack** (proper names, tooltips, and textures for custom items, with a one-click installer) and the **Windower augment addons** (`//ab` catalog browser, `//at` trade planner). All optional — the game plays fine without them.
+
 !!! tip "Hitting a snag?"
     Connection failures and version-mismatch errors are almost always a patching or config issue. The [Troubleshooting](troubleshoot.md) page covers the common ones.
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 84c927cf35b0 -->
-_Last updated: 2026-07-05 07:37 UTC_
-<!-- DOCGEN:END id="last-updated" -->

@@ -176,6 +176,7 @@ def main() -> int:
         augmenting_guide_page,
         highlights_page,
         your_session,
+        downloads_page,
         page_index,
     )
 
@@ -403,6 +404,10 @@ def main() -> int:
         ("gear_guide_page",        gear_guide_page),
         ("augmenting_guide_page",  augmenting_guide_page),
         ("highlights_page",        highlights_page),
+        # downloads_page zips the Windower addons + Custom DAT pack into
+        # docs/assets/downloads (deterministic archives) and writes the
+        # Downloads page with live sizes/hashes.
+        ("downloads_page",         downloads_page),
         # nyzul_isle parses armoury_crate.lua + appraisal.lua to render the
         # per-NM drop table and floor-100 vigil-weapon pool into the two marker
         # blocks nyzul_page just emitted on docs/endgame/nyzul-isle.md.

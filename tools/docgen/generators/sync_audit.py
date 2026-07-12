@@ -43,6 +43,7 @@ WHOLE_PAGE = {
     "reference/glossary.md",             # glossary_page.py
     "reference/index.md",                # spells.py / hand index (small)
     "getting-started/index.md",          # getting_started_pages.py
+    "getting-started/downloads.md",      # downloads_page.py
     "getting-started/install.md",        # getting_started_pages.py
     "getting-started/connect.md",        # getting_started_pages.py
     "getting-started/first-steps.md",    # getting_started_pages.py
