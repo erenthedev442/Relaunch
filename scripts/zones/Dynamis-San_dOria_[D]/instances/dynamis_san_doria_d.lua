@@ -13,10 +13,14 @@ local CONFIG =
     exitZone  = xi.zone.SOUTHERN_SAN_DORIA,
     entryPos  = { 161.838, -2.000, 161.673, 93 },
     exitPos   = { 161.000, -2.000, 161.000, 94 },
-    wave1Mobs = { 17981441, 17981442, 17981443, 17981444 }, -- Squadron Orcs
-    statues   = { 17981445, 17981446 },                     -- time-extension statues
+    wave1Mobs = { 17981441, 17981442, 17981443, 17981444,   -- Squadron Orcs
+                  17981454, 17981455, 17981456, 17981457,
+                  17981458, 17981459, 17981460, 17981461 },
+    statues   = { 17981445, 17981446, 17981462, 17981463 }, -- time-extension statues
     midBoss   = 17981447,                                   -- Overseer's Tombstone
-    wave2Mobs = { 17981448, 17981449, 17981450, 17981451 }, -- Regiment Orcs
+    wave2Mobs = { 17981448, 17981449, 17981450, 17981451,   -- Regiment Orcs
+                  17981464, 17981465, 17981466, 17981467,
+                  17981468, 17981469, 17981470, 17981471 },
     megaBoss  = 17981452,                                   -- Halphas
     disjoined = 17981453,                                   -- Disjoined Elvaan (wave 3)
 }

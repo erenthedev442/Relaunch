@@ -12,10 +12,14 @@ local CONFIG =
     exitZone  = xi.zone.WINDURST_WALLS,
     entryPos  = { -221.988, 1.000, -120.184, 0 },
     exitPos   = { -217.000, 1.000, -119.000, 94 },
-    wave1Mobs = { 17989633, 17989634, 17989635, 17989636 }, -- Yagudo Squadron
-    statues   = { 17989637, 17989638 },
+    wave1Mobs = { 17989633, 17989634, 17989635, 17989636,   -- Yagudo Squadron
+                  17989646, 17989647, 17989648, 17989649,
+                  17989650, 17989651, 17989652, 17989653 },
+    statues   = { 17989637, 17989638, 17989654, 17989655 },
     midBoss   = 17989639,                                   -- Evincing Idol
-    wave2Mobs = { 17989640, 17989641, 17989642, 17989643 }, -- Yagudo Regiment
+    wave2Mobs = { 17989640, 17989641, 17989642, 17989643,   -- Yagudo Regiment
+                  17989656, 17989657, 17989658, 17989659,
+                  17989660, 17989661, 17989662, 17989663 },
     megaBoss  = 17989644,                                   -- Fii Pexu the Eternal
     disjoined = 17989645,                                   -- Disjoined Tarutaru (wave 3)
 }

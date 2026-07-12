@@ -12,10 +12,14 @@ local CONFIG =
     exitZone  = xi.zone.RULUDE_GARDENS,
     entryPos  = { 48.930, 10.002, -71.032, 195 },
     exitPos   = { 48.930, 10.002, -71.032, 195 },
-    wave1Mobs = { 17993729, 17993730, 17993731, 17993732 }, -- Goblin Squadron
-    statues   = { 17993733, 17993734 },
+    wave1Mobs = { 17993729, 17993730, 17993731, 17993732,   -- Goblin Squadron
+                  17993742, 17993743, 17993744, 17993745,
+                  17993746, 17993747, 17993748, 17993749 },
+    statues   = { 17993733, 17993734, 17993750, 17993751 },
     midBoss   = 17993735,                                   -- Impish Golem
-    wave2Mobs = { 17993736, 17993737, 17993738, 17993739 }, -- Goblin Regiment
+    wave2Mobs = { 17993736, 17993737, 17993738, 17993739,   -- Goblin Regiment
+                  17993752, 17993753, 17993754, 17993755,
+                  17993756, 17993757, 17993758, 17993759 },
     megaBoss  = 17993740,                                   -- Obstatrix
     disjoined = 17993741,                                   -- Disjoined Mithra (wave 3)
 }

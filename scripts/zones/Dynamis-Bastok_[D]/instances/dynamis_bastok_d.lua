@@ -12,10 +12,14 @@ local CONFIG =
     exitZone  = xi.zone.BASTOK_MINES,
     entryPos  = { 116.482, 0.994, -72.121, 128 },
     exitPos   = { 112.000, 0.994, -72.000, 127 },
-    wave1Mobs = { 17985537, 17985538, 17985539, 17985540 }, -- Quadav Squadron
-    statues   = { 17985541, 17985542 },
+    wave1Mobs = { 17985537, 17985538, 17985539, 17985540,   -- Quadav Squadron
+                  17985550, 17985551, 17985552, 17985553,
+                  17985554, 17985555, 17985556, 17985557 },
+    statues   = { 17985541, 17985542, 17985558, 17985559 },
     midBoss   = 17985543,                                   -- Mu'Sha Effigy
-    wave2Mobs = { 17985544, 17985545, 17985546, 17985547 }, -- Quadav Regiment
+    wave2Mobs = { 17985544, 17985545, 17985546, 17985547,   -- Quadav Regiment
+                  17985560, 17985561, 17985562, 17985563,
+                  17985564, 17985565, 17985566, 17985567 },
     megaBoss  = 17985548,                                   -- Ka'Rho Fearsinger
     disjoined = 17985549,                                   -- Disjoined Galka (wave 3)
 }
