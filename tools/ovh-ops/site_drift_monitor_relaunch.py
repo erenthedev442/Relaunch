@@ -119,25 +119,33 @@ stamp = time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime())
 findings = audit_findings(SITES[0][2])
 fp = hashlib.md5("\n".join(sorted(findings)).encode("utf-8", "replace")).hexdigest() if findings else ""
 if findings and state.get("audit_fp") != fp:
-    state["audit_fp"] = fp
-    save_state(state)
     shown = findings[:12]
+    print(f"[drift] {len(findings)} audit warning(s) in last publish:")
+    for ln in shown:
+        print(f"  - {ln}")
     msg = (":warning: **Relaunch site sync audit** -- the last publish raised "
            f"{len(findings)} warning(s):\n"
            + "\n".join(f"- `{ln}`" for ln in shown)
            + (f"\n_... and {len(findings) - len(shown)} more_" if len(findings) > len(shown) else "")
            + f"\n_fix or allowlist (docs stay live meanwhile); {stamp}_")
     url = webhook_url()
+    posted = False
     if url:
         try:
             urllib.request.urlopen(urllib.request.Request(
                 url, data=json.dumps({"content": msg}).encode(),
                 headers={"Content-Type": "application/json"}), timeout=10)
-            print(f"[drift] {len(findings)} audit warning(s) -- alerted via Discord webhook")
+            posted = True
+            print("[drift] audit warnings alerted via Discord webhook")
         except Exception as e:
-            print(f"[drift] audit webhook post FAILED: {e}")
+            print(f"[drift] audit webhook post FAILED: {e} -- will retry next run")
     else:
-        print(f"[drift] {len(findings)} audit warning(s) -- no webhook, logged only")
+        print("[drift] no webhook configured -- audit warnings logged only")
+    # Record the fingerprint only once the alert actually went out (or can
+    # never go out) -- a transient/broken webhook must not eat the alert.
+    if posted or not url:
+        state["audit_fp"] = fp
+        save_state(state)
 elif findings:
     print(f"[drift] {len(findings)} audit warning(s) (unchanged -- already alerted)")
 elif state.pop("audit_fp", None) is not None:
