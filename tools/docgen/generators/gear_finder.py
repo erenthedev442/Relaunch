@@ -742,7 +742,17 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ('sql/zz_tokko_voluspa_mods.sql', False),
         ('sql/zz_zurim_gear_mods.sql', False),
         # reward-item stats authored for the 2026-07 Skirmish/Geas-Fete drops
+        ('modules/custom/sql/anguta_weapon.sql', True),
+        ('modules/custom/sql/bullet_pouches_waist.sql', True),
+        ('modules/custom/sql/fix_sancus_sachet_mods.sql', True),
+        ('modules/custom/sql/jse_capes_stats.sql', True),
+        ('modules/custom/sql/legendary_ring.sql', True),
+        ('modules/custom/sql/prime_aftermath_mods.sql', True),
+        ('modules/custom/sql/prime_gs_axe_ws.sql', True),
+        ('modules/custom/sql/prime_weapons_gear.sql', True),
+        ('modules/custom/sql/prime_weapons_zz_aftermath_fix.sql', True),
         ('modules/custom/sql/skirmish_fete_gear_stats.sql', True),
+        ('modules/custom/sql/trishula_weapon.sql', True),
         ('sql/zzz_reforge_carryforward.sql', False),   # tier carry-forward (loads last)
     ]
     # Tolerate spaces after commas, e.g. "(23756, 1, 152)" (Gleti set) -- the
@@ -753,10 +763,15 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         t = _read(repo_root, fn)
         if not t:
             continue
-        for ln in t.splitlines():
-            if 'item_mods`' not in ln:
+        # Statement-based (split on ';'): multi-line INSERTs put the value
+        # tuples on continuation lines, and a line filter missed them (the
+        # Prime stage-5 stats bug). INSERT statements only -- a multi-id
+        # DELETE ... IN (a, b, c) list false-matches the tuple pattern.
+        for stmt in t.split(';'):
+            if 'item_mods`' not in stmt or 'INSERT' not in stmt:
                 continue
-            for m in _tuple_re.finditer(ln):
+            stmt = stmt[stmt.index('VALUES') + 6:] if 'VALUES' in stmt else stmt
+            for m in _tuple_re.finditer(stmt):
                 iid, mid, val = int(m.group(1)), int(m.group(2)), int(m.group(3))
                 d = mods[iid]
                 if override or mid not in d:

@@ -104,19 +104,44 @@ require(string.format('scripts/zones/%s/Zone', catalog.zone))
 
 -- Forge/Dynamis-only weapons must never drop from invasions. The auto-generated
 -- LOOT_POOL dumps ALL item_weapon/item_equipment, so it sweeps these IDs in --
--- skip them here. Covers the 12 Prime weapons (Prime Armory, trial-gated) AND
--- the 16 Stage-5 Relic weapons (now Dynamis-gated at the Relic Forge).
+-- skip them here. Covers EVERY stage (1-5) of all 16 Prime weapon lines plus the
+-- Stage-1 'Prime <type>' placeholders (2026-07-13: the old list only excluded
+-- the final stages, so mid-stage Primes could leak out of invasion loot).
+-- Naegling (21621) is NOT excluded -- it is Ambuscade-chain gear, not a Prime.
 local PRIME_WEAPONS =
 {
-    -- Prime weapons (12) -- forge-only
-    [21531] = true, [21534] = true, [21589] = true, [21621] = true,
-    [21642] = true, [21781] = true, [21833] = true, [21887] = true,
-    [21999] = true, [22102] = true, [22155] = true, [22159] = true,
-    -- Stage-5 Relic weapons (16) -- Dynamis-gated (Relic Forge)
-    [21535] = true, [21590] = true, [21646] = true, [21653] = true,
-    [21730] = true, [21785] = true, [21837] = true, [21891] = true,
-    [21932] = true, [21986] = true, [22002] = true, [22106] = true,
-    [22163] = true, [22164] = true, [26495] = true, [22307] = true,
+    -- H2H (Prime Fists / Varga Purnikawa)
+    [21531] = true, [21532] = true, [21533] = true, [21534] = true, [21535] = true,
+    -- Dagger (Prime Dagger / Mpu Gandring)
+    [21586] = true, [21587] = true, [21588] = true, [21589] = true, [21590] = true,
+    -- Sword (Prime Sword / Caliburnus)
+    [21642] = true, [21643] = true, [21644] = true, [21645] = true, [21646] = true,
+    -- Great Sword (Helheim)
+    [21649] = true, [21651] = true, [21652] = true, [21653] = true,
+    -- Axe (Spalirisos)
+    [21727] = true, [21728] = true, [21729] = true, [21730] = true,
+    -- Great Axe (Prime Great Axe / Laphria)
+    [21781] = true, [21782] = true, [21783] = true, [21784] = true, [21785] = true,
+    -- Scythe (Prime Scythe / Foenaria)
+    [21833] = true, [21834] = true, [21835] = true, [21836] = true, [21837] = true,
+    -- Polearm (Prime Lance / Gae Buide)
+    [21887] = true, [21888] = true, [21889] = true, [21890] = true, [21891] = true,
+    -- Katana (Dokoku)
+    [21929] = true, [21930] = true, [21931] = true, [21932] = true,
+    -- Great Katana (Kusanagi)
+    [21983] = true, [21984] = true, [21985] = true, [21986] = true,
+    -- Club (Lorg Mor / Prime Maul)
+    [21998] = true, [21999] = true, [22000] = true, [22001] = true, [22002] = true,
+    -- Staff (Prime Staff / Opashoro)
+    [22102] = true, [22103] = true, [22104] = true, [22105] = true, [22106] = true,
+    -- Archery (Prime Bow / Pinaka)
+    [22155] = true, [22156] = true, [22157] = true, [22158] = true, [22163] = true,
+    -- Marksmanship (Prime Gun / Earp)
+    [22159] = true, [22160] = true, [22161] = true, [22162] = true, [22164] = true,
+    -- Harp (Loughnashade)
+    [22304] = true, [22305] = true, [22306] = true, [22307] = true,
+    -- Shield (Prime Shield / Duban)
+    [26491] = true, [26492] = true, [26493] = true, [26494] = true, [26495] = true,
 }
 
 local function tryDrop(killer)

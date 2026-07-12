@@ -34,7 +34,19 @@ SOURCES = [
     ("zz_tokko_voluspa_mods.sql", False),
     ("zz_zurim_gear_mods.sql", False),
     # reward-item stats authored for the 2026-07 Skirmish/Geas-Fete drops
+    # modules/custom/sql mod files (DELETE+INSERT, authoritative overrides).
+    # Reading only sql/ missed e.g. the Prime stage-5 stats+WS wiring.
+    ("../modules/custom/sql/anguta_weapon.sql", True),
+    ("../modules/custom/sql/bullet_pouches_waist.sql", True),
+    ("../modules/custom/sql/fix_sancus_sachet_mods.sql", True),
+    ("../modules/custom/sql/jse_capes_stats.sql", True),
+    ("../modules/custom/sql/legendary_ring.sql", True),
+    ("../modules/custom/sql/prime_aftermath_mods.sql", True),
+    ("../modules/custom/sql/prime_gs_axe_ws.sql", True),
+    ("../modules/custom/sql/prime_weapons_gear.sql", True),
+    ("../modules/custom/sql/prime_weapons_zz_aftermath_fix.sql", True),
     ("../modules/custom/sql/skirmish_fete_gear_stats.sql", True),
+    ("../modules/custom/sql/trishula_weapon.sql", True),
     ("zzz_reforge_carryforward.sql", False),
 ]
 # Tolerate spaces after commas: some item_mods rows are written "(23756, 1, 152)"
@@ -50,10 +62,15 @@ def load_item_mod_map(sqldir: Path) -> dict[tuple[int, int], int]:
         p = sqldir / fn
         if not p.exists():
             continue
-        for ln in p.read_text(encoding="utf-8", errors="replace").splitlines():
-            if "item_mods`" not in ln:
+        # Statement-based (split on ';'): multi-line INSERTs put the value
+        # tuples on continuation lines, and a line filter missed them (the
+        # Prime stage-5 stats bug). INSERT statements only -- a multi-id
+        # DELETE ... IN (a, b, c) list false-matches the tuple pattern.
+        for stmt in p.read_text(encoding="utf-8", errors="replace").split(";"):
+            if "item_mods`" not in stmt or "INSERT" not in stmt:
                 continue
-            for m in _TUPLE.finditer(ln):
+            body = stmt[stmt.index("VALUES") + 6:] if "VALUES" in stmt else stmt
+            for m in _TUPLE.finditer(body):
                 key = (int(m.group(1)), int(m.group(2)))
                 val = int(m.group(3))
                 if override or key not in out:

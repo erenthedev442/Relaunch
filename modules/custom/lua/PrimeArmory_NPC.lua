@@ -12,12 +12,12 @@
 -- Once all five are complete the player may claim ONE Prime weapon of their
 -- choice. Claiming sets PW_WeaponClaimed = item_id (0 = none yet).
 --
--- Each Prime weapon's ADDS_WEAPONSKILL mod unlocks its Prime weapon skill the
--- moment it is equipped (wired in modules/custom/sql/prime_weapons_gear.sql):
---   Prime Fists      -> Dragon Blow        Mpu Gandring -> Merciless Strike
---   Varga Purnikawa  -> Maru Kala          Naegling     -> Savage Blade
---   Prime Sword      -> Imperator          Prime Maul   -> Dagda
---   Prime Staff      -> Oshala
+-- The claim list is the 16 retail Stage-5 Primes (Level 119 III -- the final
+-- form of each type, owner-corrected 2026-07-13; the old list mixed Stage-1
+-- placeholders, a Stage-4 Varga/Mpu, and Naegling, which is not a Prime).
+-- Each weapon's ADDS_WEAPONSKILL mod (modules/custom/sql/prime_weapons_gear.sql,
+-- Stage-5 block) unlocks its weapon skill on equip; types whose true Prime WS
+-- is not in the engine substitute the type's flagship WS (see that file).
 --
 -- Zone: GM Home (zone 210).
 -----------------------------------
@@ -37,21 +37,25 @@ local TRIALS =
 
 local WEAPONS =
 {
-    { id = 21531, name = 'Prime Fists',     ws = 'Dragon Blow',      info = 'Hand-to-Hand. STR/DEX, Acc, Att, Store TP, Double Attack.' },
-    { id = 21534, name = 'Varga Purnikawa', ws = 'Maru Kala',        info = 'Hand-to-Hand. STR/DEX, Acc, Att, Store TP, Double Attack.' },
-    { id = 21589, name = 'Mpu Gandring',    ws = 'Merciless Strike',  info = 'Dagger. DEX/AGI, Acc, Att, Store TP, Double Attack.' },
-    { id = 21621, name = 'Naegling',        ws = 'Savage Blade',     info = 'Sword. STR/DEX/INT/MND, Acc/Att, MAcc/MAtt, Magic Dmg +217, Savage Blade DMG+15%.' },
-    { id = 21642, name = 'Prime Sword',     ws = 'Imperator',        info = 'Sword. STR/DEX/MND, Acc, Att, Store TP, Double Attack.' },
-    { id = 21999, name = 'Prime Maul',      ws = 'Dagda',            info = 'Club. STR/MND, Acc, Att, Store TP, Double Attack.' },
-    { id = 22102, name = 'Prime Staff',     ws = 'Oshala',           info = 'Staff. INT/MND, Magic Acc/Att, Magic Dmg, Acc, Att.' },
-    { id = 21781, name = 'Prime Great Axe', ws = 'Disaster',         info = 'Great Axe. STR/VIT, Acc, Att, Store TP, Double Attack.' },
-    { id = 21833, name = 'Prime Scythe',    ws = 'Origin',           info = 'Scythe. STR/INT, Acc, Att, Store TP, Double Attack. WS drains HP/MP.' },
-    { id = 21887, name = 'Prime Lance',     ws = 'Diarmuid',         info = 'Polearm. STR/VIT, Acc, Att, Store TP, Double Attack.' },
-    { id = 22155, name = 'Prime Bow',       ws = 'Sarv',             info = 'Archery. AGI/STR, Ranged Acc/Att, Store TP, Rapid Shot. Needs arrows.' },
-    { id = 22159, name = 'Prime Gun',       ws = 'Terminus',         info = 'Marksmanship. AGI/DEX, Ranged Acc/Att, Store TP, Rapid Shot. Needs bullets.' },
-    -- Stage-5 Relic weapons (Lv.119 III) were REMOVED from the Prime forge
-    -- 2026-06-25 (owner request): relics are now gated behind Dynamis -- earn
-    -- them at the Relic Forge (Relic_Forge.lua) by spending Dynamis currency.
+    -- The 16 retail Stage-5 Primes (Level 119 III), one per weapon type.
+    -- ids = the final stage of each name run in item_basic; stats + WS links
+    -- live in prime_weapons_gear.sql (Stage-5 block).
+    { id = 21535, name = 'Varga Purnikawa', ws = 'Maru Kala',        info = 'Hand-to-Hand. STR/DEX, Acc, Att, Store TP, Double Attack.' },
+    { id = 21590, name = 'Mpu Gandring',    ws = 'Merciless Strike', info = 'Dagger. DEX/AGI, Acc, Att, Store TP, Double Attack.' },
+    { id = 21646, name = 'Caliburnus',      ws = 'Imperator',        info = 'Sword. STR/DEX, Acc, Att, Store TP, Double Attack.' },
+    { id = 21653, name = 'Helheim',         ws = 'Resolution',       info = 'Great Sword. STR/VIT, Acc, Att, Store TP, Double Attack.' },
+    { id = 21730, name = 'Spalirisos',      ws = 'Decimation',       info = 'Axe. STR/DEX, Acc, Att, Store TP, Double Attack.' },
+    { id = 21785, name = 'Laphria',         ws = 'Disaster',         info = 'Great Axe. STR/VIT, Acc, Att, Store TP, Double Attack.' },
+    { id = 21837, name = 'Foenaria',        ws = 'Origin',           info = 'Scythe. STR/INT, Acc, Att, Store TP, Double Attack.' },
+    { id = 21891, name = 'Gae Buide',       ws = 'Diarmuid',         info = 'Polearm. STR/VIT, Acc, Att, Store TP, Double Attack.' },
+    { id = 21932, name = 'Dokoku',          ws = '(native katana WS)'  , info = 'Katana. DEX/AGI, Acc, Att, Store TP, Double Attack.' },
+    { id = 21986, name = 'Kusanagi',        ws = 'Tachi: Mumei',     info = 'Great Katana. STR/DEX, Acc, Att, Store TP, Double Attack.' },
+    { id = 22002, name = 'Lorg Mor',        ws = 'Dagda',            info = 'Club. STR/MND, Acc, Att, Store TP, Double Attack.' },
+    { id = 22106, name = 'Opashoro',        ws = 'Oshala',           info = 'Staff. INT/MND, Magic Acc/Att, Magic Dmg, Acc, Att.' },
+    { id = 22163, name = 'Pinaka',          ws = 'Sarv',             info = 'Archery. AGI/STR, Ranged Acc/Att, Store TP, Rapid Shot. Needs arrows.' },
+    { id = 22164, name = 'Earp',            ws = 'Terminus',         info = 'Marksmanship. AGI/DEX, Ranged Acc/Att, Store TP, Rapid Shot. Needs bullets.' },
+    { id = 26495, name = 'Duban',           ws = '(shield -- no WS)', info = 'Shield. DEF+150, HP+300, VIT, Magic Evasion. Sub slot.' },
+    { id = 22307, name = 'Loughnashade',    ws = '(harp -- no WS)',  info = 'Harp. CHR, Magic Acc, HP/MP. BRD song support. Range slot.' },
 }
 
 -----------------------------------
