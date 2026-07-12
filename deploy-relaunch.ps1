@@ -13,10 +13,10 @@
 #         -> C++ rebuild (vcvars64 + cmake Ninja; restores *.bak on failure)
 #         -> restart (schtasks /run FFXIRelaunch) + health check
 #         -> push local commit(s) to origin after a good build
-#   [A2] CHANGELOG -> deploy marker + regen + Discord note (this script)
+#   [A2] CHANGELOG -> deploy marker + regen (this script)
 #         "Relaunch Deploy <stamp>" empty commit (the changelog generator's
-#         live-marker) -> regen_changelog.py -> commit/push docs/changelog.md
-#         -> post_deploy_notes.py to Discord. Skipped when the build failed.
+#         live-marker) -> regen_changelog.py -> commit/push docs/changelog.md.
+#         Skipped when the build failed.
 #   [B] WEBSITE -> Relaunch-DocsRefresh task (refresh_site_relaunch.ps1)
 #         docgen (live C:\server tree + xi_relaunch) -> mkdocs -> Cloudflare
 #         Pages (fjb-relaunch.pages.dev).  vps-rebuild.ps1 deliberately SKIPS
@@ -72,7 +72,7 @@ $upCount = $upList.Count
 Say ("  services up: {0}/4  ({1})" -f $upCount, ($upList -join ', '))
 if ($upCount -lt 4) { Say '  NOTE: not all 4 confirmed yet - the FFXIRelaunch watchdog respawns any missing exe within ~10s.' 'Yellow' }
 
-# ---- [A2] CHANGELOG: deploy marker -> regen -> commit/push -> Discord note ----
+# ---- [A2] CHANGELOG: deploy marker -> regen -> commit/push ----
 # The public changelog page (docs/changelog.md) is generated from git history
 # and only advances past "Relaunch Deploy ..." marker commits (the not-live-yet
 # guard in tools/docgen/generators/changelog.py). The old Azure path wrote the
@@ -109,9 +109,6 @@ if ($goodBuild -and $onOrigin) {
     git push origin relaunch 2>&1 | Out-Null
     if ($LASTEXITCODE -eq 0) { Say '  pushed - docs task in [B] will publish the fresh changelog.' 'Green' }
     else { Say '  WARNING: push failed - the site keeps the previous changelog until the next successful push.' 'Yellow' }
-    # Post this deploy's player-facing notes to Discord. Graceful no-op if no
-    # webhook is configured (config.py or C:\relaunch-ops\.discord_webhook).
-    & $Py (Join-Path $root 'tools\discord_bot\post_deploy_notes.py') 2>&1 | ForEach-Object { Say ("    | " + $_) }
 } elseif (-not $goodBuild) {
     Say '  SKIP marker: vps-rebuild did not report a good build (previous binaries running) - changelog catches up on the next good deploy.' 'Yellow'
 } else {
