@@ -16,7 +16,7 @@ This is a heavily-customized FFXI server. Beyond the settings tweaks (rates, cap
 | **Capacity Points** (mob kills) | **3×** |  |
 | **Sparks** | **10×** |  |
 | **TABs** (FoV) | **10×** |  |
-| **Mob drop rate** | **3×** |  |
+| **Mob drop rate** | **1×** |  |
 | **Gil from mobs** | **10×** | Plus the **+N gil/mob level** bonus shown below |
 | **Gil bonus per mob level** | **+1,000** | Flat bonus added to every mob kill |
 | **Gil from quests** | **100×** |  |

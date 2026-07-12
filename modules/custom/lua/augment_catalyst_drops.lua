@@ -30,8 +30,9 @@ local SYS   = xi.msg.channel.SYSTEM_3
 -- T1 29-49, T2 50-72, T3 73-94, T4 95+).
 -- 2026-07-11 (owner): FLAT 10% EVERYWHERE — every catalyst source (mapped,
 -- fallback, retail droplist via zz_catalyst_droplist_rate.sql, dungeon trash)
--- pays 10%, paired with DROP_RATE_MULTIPLIER 3.0 -> 1.0 in settings/map.lua
--- on the box so the effective rate is exactly 10% across the board.
+-- pays 10%. DROP_RATE_MULTIPLIER is 1.0 on the box (verified 2026-07-11 —
+-- the committed docs table saying 3x was a stale Legendary-era import), so
+-- the effective rate is exactly 10% across the board.
 local DROP_RATE     = 10
 local FALLBACK_RATE = 10
 

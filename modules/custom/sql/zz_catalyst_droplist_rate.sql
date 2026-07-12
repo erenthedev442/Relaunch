@@ -9,9 +9,9 @@
 --   * assigned 1:1 mobs     -> DROP_RATE     = 10 (augment_catalyst_drops.lua)
 --   * any-mob fallback      -> FALLBACK_RATE = 10 (augment_catalyst_drops.lua)
 --   * dungeon trash         -> TRASH_RATE    = 10 (augment_dungeon_drops.lua)
--- Paired with DROP_RATE_MULTIPLIER 3.0 -> 1.0 in settings/map.lua on the box,
--- so the effective retail rate is exactly 10% (Treasure Hunter still adds on
--- top -- engine behaviour).
+-- DROP_RATE_MULTIPLIER is 1.0 in settings/map.lua on the box (verified
+-- 2026-07-11), so the effective retail rate is exactly 10% (Treasure Hunter
+-- still adds on top -- engine behaviour).
 --
 -- The item-id list mirrors augment_catalog.lua (146 catalysts). Regenerate the
 -- list after catalog changes: the ids below are every key with an augId field.
