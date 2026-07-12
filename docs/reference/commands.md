@@ -2,13 +2,13 @@
 
 These chat commands are available to every player on this server (no GM rank required). Type them in any chat channel with the `!` prefix.
 
-**Total player-accessible commands:** 98
+**Total player-accessible commands:** 100
 
 !!! info "Who can use these"
     Every command listed here is available to all players. Some other commands exist but are reserved for GMs; those aren't shown.
 
 !!! note "Custom commands"
-    69 of the commands below are **unique to this server** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
+    71 of the commands below are **unique to this server** and won't be found on a standard FFXI server. They're tagged **:material-puzzle: custom** in the table and their detail section, and every player can use them.
 
 ## Quick reference
 
@@ -30,7 +30,9 @@ These chat commands are available to every player on this server (no GM rank req
 | `!automerits` | string | Auto-spends all unspent merit points on whichever categories can still be upgraded, distributing breadth-first so every category grows evenly rather than one rank stack getting maxed first. | :material-puzzle: **custom** |
 | `!buff` | string | Grants the zone-appropriate regional buff (Signet / Sanction / Sigil / Ionis) plus Refresh, Regen, Regain, and Composure to the player. Refresh = 10% of max MP per tick Regen   = 10% of max HP per tick Regain  = scales with player level (1 per 10 levels, min 1) |  |
 | `!capacity` | string | Warps you to a Capacity Point farm camp. Usage: !capacity            -> Bibiki Bay (default) !capacity bibiki     -> Bibiki Bay !capacity ranperre   -> King Ranperre's Tomb Landing spots MUST stay in sync with warpPos in the corresponding catalog files (capacity_farm_catalog.lua / ranperre_farm_catalog.lua). | :material-puzzle: **custom** |
+| `!checkascend` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!checkexpbonus` | — | Prints your current EXP_BONUS mod (gear/augments that boost EXP gain) and the per-kill effect it has. Useful for verifying that an EXP augment is actually attached to the player after equipping the piece. |  |
+| `!checkrebirth` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!dig` | — | Treasure Hunting - dig for the strongbox your treasure map points at. Maps drop from Hunting League kills. | :material-puzzle: **custom** |
 | `!diwarp` | — | _(no description)_ | :material-puzzle: **custom** |
 | `!empower` | string, string | View your Spell & Skill Mastery -- Mastery Sigil balance, weapon-skill and spell potency tiers, and owned trait riders. Upgrades are bought at the Mastery Sage NPC in Leafallia (see SpellSkillMastery.lua). | :material-puzzle: **custom** |
@@ -186,6 +188,14 @@ Grants the zone-appropriate regional buff (Signet / Sanction / Sigil / Ionis) pl
 **Parameter types:** string
 
 ## Information & Debug
+
+### `!checkascend`  _(custom)_
+
+**Usage:** `checkascend`
+
+### `!checkrebirth`  _(custom)_
+
+**Usage:** `checkrebirth`
 
 ### `!getstats`
 
@@ -720,10 +730,3 @@ Lists players who have logged in during this server session, sorted by Hunting L
 ---
 
 _This list reflects the commands currently live on the server._
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 3c2a6e611d7d -->
-_Last updated: 2026-07-10 16:53 PDT_
-<!-- DOCGEN:END id="last-updated" -->

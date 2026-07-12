@@ -37,7 +37,7 @@ CATEGORIES = [
     ("Buffs & Power",       {"buff", "godmode", "trustengage", "addeffect", "deleffect",
                              "autojp", "automerits"}),  # last two: Legendary custom modules
     ("Information & Debug", {"build", "geteffects", "getstats", "getmod", "getskill", "getfame", "getid", "getpool", "getmobmod", "getmobaction", "getmobflags", "getmobfamily", "getspecies", "getstats", "gettp", "getwspoints", "checkvar", "checklocalvar", "getlocalvars", "pos",
-                             "mystats"}),  # mystats: Legendary custom module
+                             "mystats", "checkascend", "checkrebirth"}),  # custom stat readouts
 ]
 
 
