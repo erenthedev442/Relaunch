@@ -104,18 +104,14 @@ catalog.silver =
         { id = 21228, name = "Falubeza", cost = 25, jobs = 'RNG' },
         { id = 21256, name = "Illapa", cost = 25, jobs = 'RNG' },
         { id = 21529, name = "Premium Heart", cost = 25, jobs = 'MNK/PUP' },
-        { id = 21566, name = "Voluspa Knife", cost = 25, jobs = 'WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC' },
+        -- 7 Voluspa weapons removed 2026-07-11: sold by Zurim (Domain Points)
+        -- and the Domain Quartermaster (Hunt Marks), so keeping them here broke
+        -- medal-vendor exclusivity (validate_vendor_exclusivity.py).
         { id = 21568, name = "Acrontica", cost = 25, jobs = 'THF/DNC' },
         { id = 21569, name = "Chocobo Knife", cost = 25, jobs = 'RDM/THF/BRD/RNG/DNC' },
         { id = 21570, name = "Air Knife", cost = 25, jobs = 'THF/DNC' },
-        { id = 21665, name = "Voluspa Blade", cost = 25, jobs = 'PLD/RUN' },
-        { id = 21769, name = "Voluspa Chopper", cost = 25, jobs = 'WAR/DRK/RUN' },
-        { id = 22006, name = "Voluspa Hammer", cost = 25, jobs = 'WHM/GEO' },
-        { id = 22088, name = "Voluspa Pole", cost = 25, jobs = 'MNK/WHM/BLM/SMN/SCH/GEO' },
         { id = 22118, name = "Venery Bow", cost = 25, jobs = 'RNG' },
         { id = 22119, name = "Wochowsen", cost = 25, jobs = 'RNG' },
-        { id = 22133, name = "Voluspa Bow", cost = 25, jobs = 'RNG' },
-        { id = 22144, name = "Voluspa Gun", cost = 25, jobs = 'RNG/COR' },
     },
 }
 

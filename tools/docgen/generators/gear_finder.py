@@ -427,6 +427,9 @@ def _parse_mod_enum(text: str) -> dict[int, str]:
 # items rather than grant them.
 SOURCE_PAGES = {
     'gear-vendors.md': 'Gear Vendor',
+    # Keys are relative to docs/progression/ unless they contain a '/', in
+    # which case they resolve from docs_dir (e.g. the endgame pages).
+    'endgame/domain-invasion.md': 'Domain QM',
     'dungeons.md': 'Dungeon (Infamy)',
     'augments.md': 'Augment Moogle',
     'augment-sage.md': 'Augment Sage',
@@ -469,7 +472,7 @@ def _scan_obtainable(docs_dir: Path, name2id: dict[str, int],
     prog = docs_dir / 'progression'
     pages: list[tuple[str, str]] = []
     for fname, label in SOURCE_PAGES.items():
-        page = prog / fname
+        page = (docs_dir / fname) if '/' in fname else (prog / fname)
         if page.exists():
             pages.append((page.read_text(encoding='utf-8', errors='replace'), label))
     # Phase 1: unambiguous ID-based links (ffxiah.com/item/<id>) win.
@@ -798,6 +801,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     ambiguous_names = {nm for nm, c in _name_counts.items() if c > 1}
     name2id = {_norm(display_name(s)): i for i, s in name_by_id.items()}
     obtainable = _scan_obtainable(docs_dir, name2id, ambiguous_names)
+    # The Domain QM / Zurim ammo dispensers are linked by their POUCH id on the
+    # source page; tag the ammo each pouch dispenses (scripts/items/*.lua):
+    # Voluspa Quiver->Arrow, Bolt Quiver->Bolt, Bullet Pouch->Bullet,
+    # Date Shuriken Pouch->Date Shuriken.
+    for iid in (22289, 22290, 22291, 22292):
+        obtainable.setdefault(iid, 'Domain QM')
     # Reforge items (narrative page, no links) — fill in any not already tagged
     # by a vendor/dungeon page (those direct-purchase sources take precedence).
     for iid in _reforge_ids(repo_root):

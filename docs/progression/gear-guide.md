@@ -37,7 +37,7 @@ Hunt Marks come from participating in [Hunting League](index.md) spawns at Escha
 ## The Weapons Vendor
 
 **Location:** Escha ZiTah — next to the Hunting League NPCs  
-This NPC sells weapons in 11 categories across three tiers. All items are ilvl 119 and available immediately to any job that can equip them. Browse the menu by weapon type; the NPC filters to categories relevant to your current job.
+This NPC sells weapons in 8 categories across three tiers. All items are ilvl 119 and available immediately to any job that can equip them. Browse the menu by weapon type; the NPC filters to categories relevant to your current job.
 
 ---
 
@@ -64,22 +64,19 @@ Bronze weapons are scored and curated — the NPC stocks the role-appropriate to
 **Currency:** 25 Kindreds Medals each (= 375 Hunt Marks per weapon)  
 **For:** characters with Hunting League Rank I–III who want a significant step up from Bronze.
 
-Silver weapons have higher base damage and often better weapon skills or secondary stats (21 weapons across 11 categories), with caster and support jobs gaining dedicated club and staff options that didn't exist at Bronze.
+Silver weapons have higher base damage and often better weapon skills or secondary stats (14 weapons across 8 categories), with caster and support jobs gaining dedicated club and staff options that didn't exist at Bronze.
 
 ### Selected highlights
 
 | Category | Standout picks | Jobs |
 |---|---|---|
-| Daggers | <a class="item-link" href="https://www.ffxiah.com/item/20615" data-img="https://www.bg-wiki.com/images/2/28/Levante_Dagger_description.png" target="_blank" rel="noopener">Levante Dagger</a>, <a class="item-link" href="https://www.ffxiah.com/item/21566" data-img="https://www.bg-wiki.com/images/8/8c/Voluspa_Knife_description.png" target="_blank" rel="noopener">Voluspa Knife</a>, <a class="item-link" href="https://www.ffxiah.com/item/21568" data-img="https://www.bg-wiki.com/images/2/28/Acrontica_description.png" target="_blank" rel="noopener">Acrontica</a> | WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/… |
-| Clubs | <a class="item-link" href="https://www.ffxiah.com/item/21104" data-img="https://www.bg-wiki.com/images/b/bf/Eosuchus_Club_description.png" target="_blank" rel="noopener">Eosuchus Club</a>, <a class="item-link" href="https://www.ffxiah.com/item/22006" data-img="https://www.bg-wiki.com/images/b/b6/Voluspa_Hammer_description.png" target="_blank" rel="noopener">Voluspa Hammer</a> | All/WHM/GEO |
-| Staves | <a class="item-link" href="https://www.ffxiah.com/item/22088" data-img="https://www.bg-wiki.com/images/0/0b/Voluspa_Pole_description.png" target="_blank" rel="noopener">Voluspa Pole</a> | MNK/WHM/BLM/SMN/SCH/GEO |
-| Great Swords | <a class="item-link" href="https://www.ffxiah.com/item/21665" data-img="https://www.bg-wiki.com/images/6/6a/Voluspa_Blade_description.png" target="_blank" rel="noopener">Voluspa Blade</a> | PLD/RUN |
+| Daggers | <a class="item-link" href="https://www.ffxiah.com/item/20615" data-img="https://www.bg-wiki.com/images/2/28/Levante_Dagger_description.png" target="_blank" rel="noopener">Levante Dagger</a>, <a class="item-link" href="https://www.ffxiah.com/item/21568" data-img="https://www.bg-wiki.com/images/2/28/Acrontica_description.png" target="_blank" rel="noopener">Acrontica</a>, <a class="item-link" href="https://www.ffxiah.com/item/21569" data-img="https://www.bg-wiki.com/images/3/3a/Chocobo_Knife_description.png" target="_blank" rel="noopener">Chocobo Knife</a> | WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/… |
+| Clubs | <a class="item-link" href="https://www.ffxiah.com/item/21104" data-img="https://www.bg-wiki.com/images/b/bf/Eosuchus_Club_description.png" target="_blank" rel="noopener">Eosuchus Club</a> | All |
 | Axes | <a class="item-link" href="https://www.ffxiah.com/item/20808" data-img="https://www.bg-wiki.com/images/f/f7/Tramontane_Axe_description.png" target="_blank" rel="noopener">Tramontane Axe</a>, <a class="item-link" href="https://www.ffxiah.com/item/20827" data-img="https://www.bg-wiki.com/images/9/9b/Kerehcatl_description.png" target="_blank" rel="noopener">Kerehcatl</a> | WAR/DRK/BST/RUN |
-| Great Axes | <a class="item-link" href="https://www.ffxiah.com/item/21769" data-img="https://www.bg-wiki.com/images/0/09/Voluspa_Chopper_description.png" target="_blank" rel="noopener">Voluspa Chopper</a> | WAR/DRK/RUN |
 | Scythes | <a class="item-link" href="https://www.ffxiah.com/item/20893" data-img="https://www.bg-wiki.com/images/d/db/Shukuyu%27s_Scythe_description.png" target="_blank" rel="noopener">Shukuyus Scythe</a> | WAR/DRK/BST |
 | Polearms | <a class="item-link" href="https://www.ffxiah.com/item/20945" data-img="https://www.bg-wiki.com/images/d/dc/Nativus_Halberd_description.png" target="_blank" rel="noopener">Nativus Halberd</a> | WAR/PLD/SAM/DRG |
-| Archery | <a class="item-link" href="https://www.ffxiah.com/item/21228" data-img="https://www.bg-wiki.com/images/7/73/Falubeza_description.png" target="_blank" rel="noopener">Falubeza</a>, <a class="item-link" href="https://www.ffxiah.com/item/22118" data-img="https://www.bg-wiki.com/images/3/31/Venery_Bow_description.png" target="_blank" rel="noopener">Venery Bow</a>, <a class="item-link" href="https://www.ffxiah.com/item/22133" data-img="https://www.bg-wiki.com/images/8/81/Voluspa_Bow_description.png" target="_blank" rel="noopener">Voluspa Bow</a> | RNG |
-| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21256" data-img="https://www.bg-wiki.com/images/f/f9/Illapa_description.png" target="_blank" rel="noopener">Illapa</a>, <a class="item-link" href="https://www.ffxiah.com/item/22119" data-img="https://www.bg-wiki.com/images/e/e5/Wochowsen_description.png" target="_blank" rel="noopener">Wochowsen</a>, <a class="item-link" href="https://www.ffxiah.com/item/22144" data-img="https://www.bg-wiki.com/images/7/77/Voluspa_Gun_description.png" target="_blank" rel="noopener">Voluspa Gun</a> | RNG/COR |
+| Archery | <a class="item-link" href="https://www.ffxiah.com/item/21228" data-img="https://www.bg-wiki.com/images/7/73/Falubeza_description.png" target="_blank" rel="noopener">Falubeza</a>, <a class="item-link" href="https://www.ffxiah.com/item/22118" data-img="https://www.bg-wiki.com/images/3/31/Venery_Bow_description.png" target="_blank" rel="noopener">Venery Bow</a> | RNG |
+| Marksmanship | <a class="item-link" href="https://www.ffxiah.com/item/21256" data-img="https://www.bg-wiki.com/images/f/f9/Illapa_description.png" target="_blank" rel="noopener">Illapa</a>, <a class="item-link" href="https://www.ffxiah.com/item/22119" data-img="https://www.bg-wiki.com/images/e/e5/Wochowsen_description.png" target="_blank" rel="noopener">Wochowsen</a> | RNG |
 | Hand-to-Hand | <a class="item-link" href="https://www.ffxiah.com/item/21529" data-img="https://www.bg-wiki.com/images/f/ff/Premium_Heart_description.png" target="_blank" rel="noopener">Premium Heart</a> | MNK/PUP |
 
 !!! info "Silver is the sweet spot for mid-progression"
@@ -175,6 +172,6 @@ Use this as a rough roadmap. Time estimates assume regular play (several session
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 602d1124bbb5 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 69b093824ac4 -->
+_Last updated: 2026-07-11 21:03 PDT_
 <!-- DOCGEN:END id="last-updated" -->

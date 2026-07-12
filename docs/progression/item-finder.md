@@ -8,7 +8,7 @@ Every purchasable item on the Relaunch server in one searchable list — armor, 
 Each **Item** links to its BG-Wiki page for full stats. The **Source** links to the exact vendor section where you buy it, and **Cost** spells out the currency, since each vendor tier is paid in a different seal or medal.
 
 <!-- DOCGEN:BEGIN id="item-finder" -->
-430 items in stock — **176** Armor · **155** Accessories · **99** Infamy.
+424 items in stock — **170** Armor · **155** Accessories · **99** Infamy.
 
 _This list is **rebuilt from the live vendor catalogs on every deploy**, so it always reflects current stock (the "Last updated" date only moves when the stock itself changes)._
 
@@ -42,7 +42,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Amini Earring +2](https://www.ffxiah.com/item/25482) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
 | [Andartia's Mantle](https://www.ffxiah.com/item/26258) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Andoaa Earring](https://www.ffxiah.com/item/28506) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
-| [Angantyr Beret](https://www.ffxiah.com/item/23740) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/PUP/SCH/GEO |
 | [Ankou's Mantle](https://www.ffxiah.com/item/26253) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Annointed Kalasiris](https://www.ffxiah.com/item/26960) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/PUP/SCH/GEO |
 | [Aput Mantle +1](https://www.ffxiah.com/item/28607) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
@@ -95,7 +94,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Carmine Mask](https://www.ffxiah.com/item/26678) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | RDM/PLD/DRK/RNG/DRG/BLU/COR/RUN |
 | [Chasseurs Earring +2](https://www.ffxiah.com/item/25518) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
 | [Chevaliers Earring +2](https://www.ffxiah.com/item/25458) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
-| [Chironic Hose](https://www.ffxiah.com/item/25844) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | WHM/RDM/BRD/SCH |
 | [Cichol's Mantle](https://www.ffxiah.com/item/26246) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Cichols Mantle](https://www.ffxiah.com/item/26246) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Back | 32 Kindreds Medal | WAR |
 | [Clerics Torque +2](https://www.ffxiah.com/item/25431) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | WHM |
@@ -183,9 +181,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Heathens Earring +2](https://www.ffxiah.com/item/25464) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
 | [Hegira Wristbands](https://www.ffxiah.com/item/28013) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
 | [Helios Spats](https://www.ffxiah.com/item/27236) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WHM/BLM/RDM/SMN/BLU/SCH/GEO |
-| [Herculean Boots](https://www.ffxiah.com/item/27496) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Feet | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
-| [Herculean Gloves](https://www.ffxiah.com/item/27140) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Hands | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
-| [Herculean Trousers](https://www.ffxiah.com/item/25842) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Legs | 25 Kindreds Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Hizamaru Haramaki +2](https://www.ffxiah.com/item/25792) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Body | 50 Demons Medal | MNK/SAM/NIN/PUP |
 | [Hizamaru Sune-Ate +2](https://www.ffxiah.com/item/25948) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Feet | 50 Demons Medal | MNK/SAM/NIN/PUP |
 | [Holy Phial](https://www.ffxiah.com/item/13073) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
@@ -407,7 +402,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Triton Ring](https://www.ffxiah.com/item/14616) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Ring | 15 Beastmens Medal | All |
 | [Umbani Cap](https://www.ffxiah.com/item/27720) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Head | 12 Beastmens Medal | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | [Updraft Mantle](https://www.ffxiah.com/item/28630) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | DRG |
-| [Valorous Mail](https://www.ffxiah.com/item/25717) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/DRG |
 | [Vanguard Belt](https://www.ffxiah.com/item/15434) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Waist | 32 Kindreds Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Vanir Boots](https://www.ffxiah.com/item/28310) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Vanir Cotehardie](https://www.ffxiah.com/item/27887) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
@@ -454,6 +448,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: c71ddf3e67d9 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: 31a0ebce5a58 -->
+_Last updated: 2026-07-11 21:03 PDT_
 <!-- DOCGEN:END id="last-updated" -->

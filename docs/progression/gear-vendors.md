@@ -34,7 +34,7 @@ Both vendors use the same three currencies, tier-gated:
 Tiered armor across the five main slots. Items are listed with the seal cost and the jobs allowed to equip each piece.
 
 <!-- DOCGEN:BEGIN id="armor-slots" -->
-_176 pieces — 🥉 57 Bronze · 🥈 57 Silver · 🥇 62 Gold. Each slot lists every tier together — pick by your job and the medal you have._
+_170 pieces — 🥉 56 Bronze · 🥈 52 Silver · 🥇 62 Gold. Each slot lists every tier together — pick by your job and the medal you have._
 
 **Tiers:** <span class="tier-pill tier-bronze">🥉&nbsp;Bronze</span> Beastmens Medal — entry ilvl 119 · <span class="tier-pill tier-silver">🥈&nbsp;Silver</span> Kindreds Medal — HQ +1 / +2 augmented · <span class="tier-pill tier-gold">🥇&nbsp;Gold</span> Demons Medal — BiS (Nyame / Malignance / Sakpata's / +3)
 
@@ -49,7 +49,6 @@ _176 pieces — 🥉 57 Bronze · 🥈 57 Silver · 🥇 62 Gold. Each slot list
 | <a class="item-link" href="https://www.ffxiah.com/item/25590" data-img="https://static.ffxiah.com/images/icon/25590.png" target="_blank" rel="noopener">Taliah Turban</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | BST/SMN/PUP |
 | <a class="item-link" href="https://www.ffxiah.com/item/25609" data-img="https://www.bg-wiki.com/images/7/78/Emicho_Coronet_description.png" target="_blank" rel="noopener">Emicho Coronet</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/PLD/DRK/BST/DRG |
 | <a class="item-link" href="https://www.ffxiah.com/item/25666" data-img="https://www.bg-wiki.com/images/3/32/Inyanga_Tiara_%2B1_description.png" target="_blank" rel="noopener">Inyanga Tiara +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BRD/SMN |
-| <a class="item-link" href="https://www.ffxiah.com/item/23740" data-img="https://www.bg-wiki.com/images/8/85/Angantyr_Beret_description.png" target="_blank" rel="noopener">Angantyr Beret</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/PUP/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/26669" data-img="https://www.bg-wiki.com/images/9/91/Lustratio_Cap_%2B1_description.png" target="_blank" rel="noopener">Lustratio Cap +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/THF/PLD/DRK/BST/BRD/DRG/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/27775" data-img="https://www.bg-wiki.com/images/1/15/Nahtirah_Hat_description.png" target="_blank" rel="noopener">Nahtirah Hat</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/27725" data-img="https://www.bg-wiki.com/images/a/ac/Artsieq_Hat_description.png" target="_blank" rel="noopener">Artsieq Hat</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
@@ -94,7 +93,6 @@ _176 pieces — 🥉 57 Bronze · 🥈 57 Silver · 🥇 62 Gold. Each slot list
 | <a class="item-link" href="https://www.ffxiah.com/item/25751" data-img="https://www.bg-wiki.com/images/5/5f/Inyanga_Jubbah_description.png" target="_blank" rel="noopener">Inyanga Jubbah</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BRD/SMN |
 | <a class="item-link" href="https://www.ffxiah.com/item/26868" data-img="https://www.bg-wiki.com/images/4/40/Rosette_Jaseran_description.png" target="_blank" rel="noopener">Rosette Jaseran</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/25796" data-img="https://static.ffxiah.com/images/icon/25796.png" target="_blank" rel="noopener">Taliah Manteel +2</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | BST/SMN/PUP |
-| <a class="item-link" href="https://www.ffxiah.com/item/25717" data-img="https://www.bg-wiki.com/images/8/85/Valorous_Mail_description.png" target="_blank" rel="noopener">Valorous Mail</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK/BST/SAM/DRG |
 | <a class="item-link" href="https://www.ffxiah.com/item/25752" data-img="https://www.bg-wiki.com/images/7/79/Inyanga_Jubbah_%2B1_description.png" target="_blank" rel="noopener">Inyanga Jubbah +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BRD/SMN |
 | <a class="item-link" href="https://www.ffxiah.com/item/27887" data-img="https://www.bg-wiki.com/images/f/ff/Vanir_Cotehardie_description.png" target="_blank" rel="noopener">Vanir Cotehardie</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25753" data-img="https://www.bg-wiki.com/images/4/46/Jhakri_Robe_description.png" target="_blank" rel="noopener">Jhakri Robe</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | BLM/RDM/BLU/SCH/GEO |
@@ -138,7 +136,6 @@ _176 pieces — 🥉 57 Bronze · 🥈 57 Silver · 🥇 62 Gold. Each slot list
 | <a class="item-link" href="https://www.ffxiah.com/item/23769" data-img="https://www.bg-wiki.com/images/f/f3/Ikenga%27s_Gloves_description.png" target="_blank" rel="noopener">Ikengas Gloves</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG/COR |
 | <a class="item-link" href="https://www.ffxiah.com/item/27027" data-img="https://www.bg-wiki.com/images/b/bd/Rao_Kote_%2B1_description.png" target="_blank" rel="noopener">Rao Kote +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/SAM/NIN/PUP |
 | <a class="item-link" href="https://www.ffxiah.com/item/27045" data-img="https://www.bg-wiki.com/images/1/11/Yorium_Gauntlets_description.png" target="_blank" rel="noopener">Yorium Gauntlets</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK |
-| <a class="item-link" href="https://www.ffxiah.com/item/27140" data-img="https://www.bg-wiki.com/images/a/a1/Herculean_Gloves_description.png" target="_blank" rel="noopener">Herculean Gloves</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/27114" data-img="https://www.bg-wiki.com/images/d/d6/Emi._Gauntlets_%2B1_description.png" target="_blank" rel="noopener">Emicho Gauntlets +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK/BST/DRG |
 | <a class="item-link" href="https://www.ffxiah.com/item/25808" data-img="https://www.bg-wiki.com/images/0/0e/Jhakri_Cuffs_description.png" target="_blank" rel="noopener">Jhakri Cuffs</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | BLM/RDM/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/25823" data-img="https://www.bg-wiki.com/images/e/e1/Mallquis_Cuffs_%2B1_description.png" target="_blank" rel="noopener">Mallquis Cuffs +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | BLM/SCH/GEO |
@@ -178,10 +175,8 @@ _176 pieces — 🥉 57 Bronze · 🥈 57 Silver · 🥇 62 Gold. Each slot list
 | <a class="item-link" href="https://www.ffxiah.com/item/27301" data-img="https://www.bg-wiki.com/images/7/7c/Ryuo_Hakama_%2B1_description.png" target="_blank" rel="noopener">Ryuo Hakama +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/SAM/NIN/PUP |
 | <a class="item-link" href="https://www.ffxiah.com/item/27303" data-img="https://www.bg-wiki.com/images/5/56/Adhemar_Kecks_%2B1_description.png" target="_blank" rel="noopener">Adhemar Kecks +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/THF/RNG/NIN/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/27324" data-img="https://www.bg-wiki.com/images/9/91/Gyve_Trousers_description.png" target="_blank" rel="noopener">Gyve Trousers</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO |
-| <a class="item-link" href="https://www.ffxiah.com/item/25842" data-img="https://www.bg-wiki.com/images/7/7c/Herculean_Trousers_description.png" target="_blank" rel="noopener">Herculean Trousers</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/27305" data-img="https://www.bg-wiki.com/images/3/3f/Amalric_Slops_%2B1_description.png" target="_blank" rel="noopener">Amalric Slops +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | BLM/RDM/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/25866" data-img="https://www.bg-wiki.com/images/a/ab/Inyanga_Shalwar_%2B1_description.png" target="_blank" rel="noopener">Inyanga Shalwar +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BRD/SMN |
-| <a class="item-link" href="https://www.ffxiah.com/item/25844" data-img="https://www.bg-wiki.com/images/c/c6/Chironic_Hose_description.png" target="_blank" rel="noopener">Chironic Hose</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/RDM/BRD/SCH |
 | <a class="item-link" href="https://www.ffxiah.com/item/25878" data-img="https://www.bg-wiki.com/images/2/21/Mallquis_Trews_%2B1_description.png" target="_blank" rel="noopener">Mallquis Trews +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | BLM/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/24131" data-img="https://www.bg-wiki.com/images/5/59/Revelation_Brais_description.png" target="_blank" rel="noopener">Revelation Brais</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/BRD/NIN |
 | <a class="item-link" href="https://www.ffxiah.com/item/23780" data-img="https://www.bg-wiki.com/images/1/1d/Agwu%27s_Slops_description.png" target="_blank" rel="noopener">Agwus Slops</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | BLM/SCH/GEO/RUN |
@@ -215,7 +210,6 @@ _176 pieces — 🥉 57 Bronze · 🥈 57 Silver · 🥇 62 Gold. Each slot list
 | <a class="item-link" href="https://www.ffxiah.com/item/27377" data-img="https://www.bg-wiki.com/images/2/20/Argosy_Sollerets_%2B1_description.png" target="_blank" rel="noopener">Argosy Sollerets +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/DRK/BST |
 | <a class="item-link" href="https://www.ffxiah.com/item/23729" data-img="https://www.bg-wiki.com/images/d/d0/Volte_Boots_description.png" target="_blank" rel="noopener">Volte Boots</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/25935" data-img="https://www.bg-wiki.com/images/f/f1/Aya._Gambieras_description.png" target="_blank" rel="noopener">Ayanmo Gambieras</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/RDM/BRD/BLU/RUN |
-| <a class="item-link" href="https://www.ffxiah.com/item/27496" data-img="https://www.bg-wiki.com/images/9/9a/Herculean_Boots_description.png" target="_blank" rel="noopener">Herculean Boots</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/27379" data-img="https://www.bg-wiki.com/images/7/76/Rao_Sune-Ate_%2B1_description.png" target="_blank" rel="noopener">Rao Sune-Ate +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/SAM/NIN/PUP |
 | <a class="item-link" href="https://www.ffxiah.com/item/25922" data-img="https://www.bg-wiki.com/images/2/2e/Navon_Crackows_description.png" target="_blank" rel="noopener">Navon Crackows</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.ffxiah.com/item/25940" data-img="https://www.bg-wiki.com/images/4/4e/Flamma_Gambieras_description.png" target="_blank" rel="noopener">Flamma Gambieras</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK/SAM/DRG |
@@ -252,7 +246,7 @@ _176 pieces — 🥉 57 Bronze · 🥈 57 Silver · 🥇 62 Gold. Each slot list
 Tiered weapons grouped by category. Empty categories are hidden — only categories with stocked weapons appear.
 
 <!-- DOCGEN:BEGIN id="weapons-slots" -->
-_23 weapons — 🥉 1 Bronze · 🥈 21 Silver · 🥇 1 Gold. Each slot lists every tier together — pick by your job and the medal you have._
+_16 weapons — 🥉 1 Bronze · 🥈 14 Silver · 🥇 1 Gold. Each slot lists every tier together — pick by your job and the medal you have._
 
 **Tiers:** <span class="tier-pill tier-bronze">🥉&nbsp;Bronze</span> Beastmens Medal — entry endgame ilvl 119 · <span class="tier-pill tier-silver">🥈&nbsp;Silver</span> Kindreds Medal — event / Dynamis-D / Omen / Escha · <span class="tier-pill tier-gold">🥇&nbsp;Gold</span> Demons Medal — REMA + Aeonic
 
@@ -261,7 +255,6 @@ _23 weapons — 🥉 1 Bronze · 🥈 21 Silver · 🥇 1 Gold. Each slot lists 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/20615" data-img="https://www.bg-wiki.com/images/2/28/Levante_Dagger_description.png" target="_blank" rel="noopener">Levante Dagger</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/SCH/GEO |
-| <a class="item-link" href="https://www.ffxiah.com/item/21566" data-img="https://www.bg-wiki.com/images/8/8c/Voluspa_Knife_description.png" target="_blank" rel="noopener">Voluspa Knife</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/THF/PLD/DRK/BRD/RNG/SAM/NIN/DRG/COR/PUP/DNC |
 | <a class="item-link" href="https://www.ffxiah.com/item/21568" data-img="https://www.bg-wiki.com/images/2/28/Acrontica_description.png" target="_blank" rel="noopener">Acrontica</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | THF/DNC |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Chocobo+Knife&go=Go" data-img="" target="_blank" rel="noopener">Chocobo Knife</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RDM/THF/BRD/RNG/DNC |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Air+Knife&go=Go" data-img="" target="_blank" rel="noopener">Air Knife</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | THF/DNC |
@@ -271,19 +264,6 @@ _23 weapons — 🥉 1 Bronze · 🥈 21 Silver · 🥇 1 Gold. Each slot lists 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/21104" data-img="https://www.bg-wiki.com/images/b/bf/Eosuchus_Club_description.png" target="_blank" rel="noopener">Eosuchus Club</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | All |
-| <a class="item-link" href="https://www.ffxiah.com/item/22006" data-img="https://www.bg-wiki.com/images/b/b6/Voluspa_Hammer_description.png" target="_blank" rel="noopener">Voluspa Hammer</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/GEO |
-
-### Staves
-
-| Item | Tier | Cost | Jobs |
-|---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/22088" data-img="https://www.bg-wiki.com/images/0/0b/Voluspa_Pole_description.png" target="_blank" rel="noopener">Voluspa Pole</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | MNK/WHM/BLM/SMN/SCH/GEO |
-
-### Great Swords
-
-| Item | Tier | Cost | Jobs |
-|---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21665" data-img="https://www.bg-wiki.com/images/6/6a/Voluspa_Blade_description.png" target="_blank" rel="noopener">Voluspa Blade</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | PLD/RUN |
 
 ### Axes
 
@@ -291,12 +271,6 @@ _23 weapons — 🥉 1 Bronze · 🥈 21 Silver · 🥇 1 Gold. Each slot lists 
 |---|---|--:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/20808" data-img="https://www.bg-wiki.com/images/f/f7/Tramontane_Axe_description.png" target="_blank" rel="noopener">Tramontane Axe</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/DRK/BST/RUN |
 | <a class="item-link" href="https://www.ffxiah.com/item/20827" data-img="https://www.bg-wiki.com/images/9/9b/Kerehcatl_description.png" target="_blank" rel="noopener">Kerehcatl</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/BST |
-
-### Great Axes
-
-| Item | Tier | Cost | Jobs |
-|---|---|--:|---|
-| <a class="item-link" href="https://www.ffxiah.com/item/21769" data-img="https://www.bg-wiki.com/images/0/09/Voluspa_Chopper_description.png" target="_blank" rel="noopener">Voluspa Chopper</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/DRK/RUN |
 
 ### Scythes
 
@@ -316,7 +290,6 @@ _23 weapons — 🥉 1 Bronze · 🥈 21 Silver · 🥇 1 Gold. Each slot lists 
 |---|---|--:|---|
 | <a class="item-link" href="https://www.ffxiah.com/item/21228" data-img="https://www.bg-wiki.com/images/7/73/Falubeza_description.png" target="_blank" rel="noopener">Falubeza</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
 | <a class="item-link" href="https://www.ffxiah.com/item/22118" data-img="https://www.bg-wiki.com/images/3/31/Venery_Bow_description.png" target="_blank" rel="noopener">Venery Bow</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
-| <a class="item-link" href="https://www.ffxiah.com/item/22133" data-img="https://www.bg-wiki.com/images/8/81/Voluspa_Bow_description.png" target="_blank" rel="noopener">Voluspa Bow</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
 
 ### Marksmanship
 
@@ -325,7 +298,6 @@ _23 weapons — 🥉 1 Bronze · 🥈 21 Silver · 🥇 1 Gold. Each slot lists 
 | <a class="item-link" href="https://www.ffxiah.com/item/21274" data-img="https://www.bg-wiki.com/images/9/90/Donar_Gun_description.png" target="_blank" rel="noopener">Donar Gun</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | THF/RNG/NIN/COR |
 | <a class="item-link" href="https://www.ffxiah.com/item/21256" data-img="https://www.bg-wiki.com/images/f/f9/Illapa_description.png" target="_blank" rel="noopener">Illapa</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
 | <a class="item-link" href="https://www.ffxiah.com/item/22119" data-img="https://www.bg-wiki.com/images/e/e5/Wochowsen_description.png" target="_blank" rel="noopener">Wochowsen</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
-| <a class="item-link" href="https://www.ffxiah.com/item/22144" data-img="https://www.bg-wiki.com/images/7/77/Voluspa_Gun_description.png" target="_blank" rel="noopener">Voluspa Gun</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG/COR |
 | <a class="item-link" href="https://www.ffxiah.com/item/21273" data-img="https://www.bg-wiki.com/images/4/45/Nibiru_Gun_description.png" target="_blank" rel="noopener">Nibiru Gun</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | RNG/COR |
 
 ### Hand-to-Hand
@@ -718,6 +690,6 @@ _99 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 03ed7022b896 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: b6f029e6717b -->
+_Last updated: 2026-07-11 21:03 PDT_
 <!-- DOCGEN:END id="last-updated" -->

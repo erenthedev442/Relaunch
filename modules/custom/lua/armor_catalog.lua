@@ -89,7 +89,8 @@ end
 catalog.bronze = emptySlots()
 local b = catalog.bronze
 
--- Head (11 picks, scored highest first)
+-- Head (10 picks, scored highest first; Angantyr Beret removed 2026-07-11 --
+-- sold by Zurim/Domain QM, medal-vendor exclusivity)
 table.insert(b.head, { id = 27720, name = "Umbani Cap", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- TANK score 198
 table.insert(b.head, { id = 27729, name = "Otronif Mask +1", cost = 12, jobs = 'MNK/SAM/NIN/PUP' })  -- TANK score 195
 table.insert(b.head, { id = 27724, name = "Qaaxo Mask", cost = 12, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- TANK score 189
@@ -97,7 +98,6 @@ table.insert(b.head, { id = 26734, name = "Acro Helm", cost = 12, jobs = 'WAR/PL
 table.insert(b.head, { id = 25590, name = "Taliah Turban", cost = 12, jobs = 'BST/SMN/PUP' })  -- DPS score 186
 table.insert(b.head, { id = 25609, name = "Emicho Coronet", cost = 12, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- TANK score 184
 table.insert(b.head, { id = 25666, name = "Inyanga Tiara +1", cost = 12, jobs = 'WHM/BRD/SMN' })  -- CASTER score 182
-table.insert(b.head, { id = 23740, name = "Angantyr Beret", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/PUP/SCH/GEO' })  -- CASTER score 176
 table.insert(b.head, { id = 26669, name = "Lustratio Cap +1", cost = 12, jobs = 'WAR/THF/PLD/DRK/BST/BRD/DRG/DNC/RUN' })  -- WS score 152
 table.insert(b.head, { id = 27775, name = "Nahtirah Hat", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 118
 table.insert(b.head, { id = 27725, name = "Artsieq Hat", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- DPS score 99
@@ -176,9 +176,9 @@ table.insert(s.head, { id = 25654, name = "Welkin Crown", cost = 25, jobs = 'WHM
 table.insert(s.head, { id = 25577, name = "Inyanga Tiara +2", cost = 25, jobs = 'WHM/BRD/SMN' })  -- CASTER score 206
 table.insert(s.head, { id = 25616, name = "Amalric Coif +1", cost = 25, jobs = 'BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 165
 
--- Body (8 picks, scored highest first)
+-- Body (7 picks, scored highest first; Valorous Mail removed 2026-07-11 --
+-- sold by Zurim/Domain QM, medal-vendor exclusivity)
 table.insert(s.body, { id = 25796, name = "Taliah Manteel +2", cost = 25, jobs = 'BST/SMN/PUP' })  -- DPS score 341
-table.insert(s.body, { id = 25717, name = "Valorous Mail", cost = 25, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 292
 table.insert(s.body, { id = 25752, name = "Inyanga Jubbah +1", cost = 25, jobs = 'WHM/BRD/SMN' })  -- CASTER score 262
 table.insert(s.body, { id = 27887, name = "Vanir Cotehardie", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN' })  -- TANK score 244
 table.insert(s.body, { id = 25753, name = "Jhakri Robe", cost = 25, jobs = 'BLM/RDM/BLU/SCH/GEO' })  -- DPS score 243
@@ -186,7 +186,8 @@ table.insert(s.body, { id = 25688, name = "Amalric Doublet", cost = 25, jobs = '
 table.insert(s.body, { id = 27888, name = "Kyujutsugi", cost = 25, jobs = 'RNG/SAM' })  -- DPS score 211
 table.insert(s.body, { id = 26970, name = "Lapidary Tunic", cost = 25, jobs = 'MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' })  -- TANK score 204
 
--- Hands (12 picks, scored highest first)
+-- Hands (11 picks, scored highest first; Herculean Gloves removed 2026-07-11 --
+-- sold by Zurim/Domain QM, medal-vendor exclusivity)
 table.insert(s.hands, { id = 25834, name = "Taliah Gages +2", cost = 25, jobs = 'BST/SMN/PUP' })  -- DPS score 270
 table.insert(s.hands, { id = 25831, name = "Inyanga Dastanas +2", cost = 25, jobs = 'WHM/BRD/SMN' })  -- CASTER score 237
 table.insert(s.hands, { id = 27024, name = "Argosy Mufflers", cost = 25, jobs = 'WAR/DRK/BST' })  -- DPS score 236
@@ -196,11 +197,11 @@ table.insert(s.hands, { id = 27117, name = "Adhemar Wristbands", cost = 25, jobs
 table.insert(s.hands, { id = 23769, name = "Ikengas Gloves", cost = 25, jobs = 'RNG/COR' })  -- DPS score 230
 table.insert(s.hands, { id = 27027, name = "Rao Kote +1", cost = 25, jobs = 'MNK/SAM/NIN/PUP' })  -- DPS score 229
 table.insert(s.hands, { id = 27045, name = "Yorium Gauntlets", cost = 25, jobs = 'WAR/PLD/DRK' })  -- TANK score 229
-table.insert(s.hands, { id = 27140, name = "Herculean Gloves", cost = 25, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- TANK score 222
 table.insert(s.hands, { id = 27114, name = "Emicho Gauntlets +1", cost = 25, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- DPS score 216
 table.insert(s.hands, { id = 25808, name = "Jhakri Cuffs", cost = 25, jobs = 'BLM/RDM/BLU/SCH/GEO' })  -- CASTER score 216
 
--- Legs (13 picks, scored highest first)
+-- Legs (11 picks, scored highest first; Herculean Trousers + Chironic Hose
+-- removed 2026-07-11 -- sold by Zurim/Domain QM, medal-vendor exclusivity)
 table.insert(s.legs, { id = 25874, name = "Flamma Dirs +1", cost = 25, jobs = 'WAR/PLD/DRK/SAM/DRG' })  -- TANK score 291
 table.insert(s.legs, { id = 25870, name = "Ayanmo Cosciales +1", cost = 25, jobs = 'WHM/RDM/BRD/BLU/RUN' })  -- TANK score 249
 table.insert(s.legs, { id = 25867, name = "Jhakri Slops", cost = 25, jobs = 'BLM/RDM/BLU/SCH/GEO' })  -- CASTER score 249
@@ -210,18 +211,16 @@ table.insert(s.legs, { id = 25885, name = "Taliah Seraweels +2", cost = 25, jobs
 table.insert(s.legs, { id = 27301, name = "Ryuo Hakama +1", cost = 25, jobs = 'MNK/SAM/NIN/PUP' })  -- DPS score 241
 table.insert(s.legs, { id = 27303, name = "Adhemar Kecks +1", cost = 25, jobs = 'MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' })  -- DPS score 238
 table.insert(s.legs, { id = 27324, name = "Gyve Trousers", cost = 25, jobs = 'WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO' })  -- TANK score 235
-table.insert(s.legs, { id = 25842, name = "Herculean Trousers", cost = 25, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- TANK score 234
 table.insert(s.legs, { id = 27305, name = "Amalric Slops +1", cost = 25, jobs = 'BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 230
 table.insert(s.legs, { id = 25866, name = "Inyanga Shalwar +1", cost = 25, jobs = 'WHM/BRD/SMN' })  -- CASTER score 227
-table.insert(s.legs, { id = 25844, name = "Chironic Hose", cost = 25, jobs = 'WHM/RDM/BRD/SCH' })  -- CASTER score 221
 
--- Feet (10 picks, scored highest first)
+-- Feet (9 picks, scored highest first; Herculean Boots removed 2026-07-11 --
+-- sold by Zurim/Domain QM, medal-vendor exclusivity)
 table.insert(s.feet, { id = 25952, name = "Taliah Crackows +2", cost = 25, jobs = 'BST/SMN/PUP' })  -- DPS score 281
 table.insert(s.feet, { id = 27472, name = "Ryuo Sune-Ate +1", cost = 25, jobs = 'MNK/SAM/NIN/PUP' })  -- DPS score 247
 table.insert(s.feet, { id = 27377, name = "Argosy Sollerets +1", cost = 25, jobs = 'WAR/DRK/BST' })  -- DPS score 246
 table.insert(s.feet, { id = 23729, name = "Volte Boots", cost = 25, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- TANK score 243
 table.insert(s.feet, { id = 25935, name = "Ayanmo Gambieras", cost = 25, jobs = 'WHM/RDM/BRD/BLU/RUN' })  -- DPS score 242
-table.insert(s.feet, { id = 27496, name = "Herculean Boots", cost = 25, jobs = 'MNK/THF/RNG/NIN/BLU/COR/PUP/DNC/RUN' })  -- DPS score 237
 table.insert(s.feet, { id = 27379, name = "Rao Sune-Ate +1", cost = 25, jobs = 'MNK/SAM/NIN/PUP' })  -- DPS score 234
 table.insert(s.feet, { id = 25922, name = "Navon Crackows", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 218
 table.insert(s.feet, { id = 25940, name = "Flamma Gambieras", cost = 25, jobs = 'WAR/PLD/DRK/SAM/DRG' })  -- TANK score 212
