@@ -105,27 +105,6 @@ Collect **all five beads** (one per Caturae felled), take the **smaller light**,
 | The five Caturae scales | 15% each |
 <!-- DOCGEN:END id="omen-ou" -->
 
-## Reforged Artifact armor (+2 / +3)
-
-<!-- DOCGEN:BEGIN id="omen-reforge" -->
-**Coelestrox** reforges Artifact armor on the spot — trade the piece together with its components:
-
-| Step | Trade | Fee |
-|---|---|---|
-| **+1 → +2** | The +1 piece + its job's paragon cards (head 4 / body 5 / hands 3 / legs 4 / feet 3) | 10 Escha Beads |
-| **+2 → +3** | The +2 piece + 1 paragon card + the job's Caturae scale | 500 Escha Beads |
-
-Which scale a job needs for its +3s:
-
-| Scale | Jobs |
-|---|---|
-| Kin's Scale | WAR MNK PLD DRK SAM |
-| Kei's Scale | WHM BLM RDM BLU SCH |
-| Gin's Scale | THF NIN DNC RUN |
-| Fu's Scale | BST DRG SMN PUP |
-| Kyou's Scale | BRD RNG COR GEO |
-<!-- DOCGEN:END id="omen-reforge" -->
-
 ## Differences from retail
 
 The implementation follows [bg-wiki's Omen reference](https://www.bg-wiki.com/ffxi/Category:Omen)
@@ -149,3 +128,10 @@ wherever the data exists. Known deviations, kept deliberately small:
   Escha Beads), and the +3 step's second-day crafted materials are waived.
 - The **"restore 500 HP ten times"** bonus objective is not offered; all
   other retail objective types are implemented.
+
+---
+
+<!-- DOCGEN:BEGIN id="last-updated" -->
+<!-- content-hash: 402f494f0a4c -->
+_Last updated: 2026-07-12 03:20 PDT_
+<!-- DOCGEN:END id="last-updated" -->

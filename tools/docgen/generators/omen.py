@@ -4,10 +4,10 @@ Everything player-facing derives from the live catalog so the page tracks
 tuning changes automatically: entry economy (canteen cooldown/banking),
 time rules, floor compositions, objective lists, boss/mid-boss drop tables
 (item-linked so the Gear Finder source scan sees them), card economics and
-the Artifact +2/+3 reforge recipes.
+the boss roster and drops.
 
 Marker IDs: omen-intro, omen-entry, omen-floors, omen-objectives,
-            omen-midbosses, omen-bosses, omen-ou, omen-reforge
+            omen-midbosses, omen-bosses, omen-ou
 """
 from __future__ import annotations
 
@@ -180,22 +180,6 @@ def _parse(text: str) -> dict:
         "hands":     _items(ou_hand_m.group(1)) if ou_hand_m else [],
     }
 
-    # Reforge
-    cards_block = section(text, "catalog.cardsForSlot")
-    c["cards_for_slot"] = {
-        slot: int(n) for slot, n in re.findall(r"(\w+)\s*=\s*(\d+)", cards_block)
-    }
-    fees_block = section(text, "catalog.reforgeFees")
-    c["fee_two"]   = _int_val(fees_block, "plusTwo")
-    c["fee_three"] = _int_val(fees_block, "plusThree")
-
-    # Scale <-> job mapping
-    scale_block = section(text, "catalog.scaleForJob")
-    scale_jobs: dict[str, list[str]] = {}
-    for job, scale in re.findall(r"\[xi\.job\.(\w+)\]\s*=\s*'(\w+)'", scale_block):
-        scale_jobs.setdefault(scale, []).append(job)
-    c["scale_jobs"] = scale_jobs
-
     return c
 
 
@@ -365,31 +349,6 @@ def _render_ou(c: dict) -> str:
     )
 
 
-def _render_reforge(c: dict) -> str:
-    slots = c["cards_for_slot"]
-    slot_costs = " / ".join(f"{slot} {n}" for slot, n in slots.items())
-    scale_rows = "\n".join(
-        f"| {scale.capitalize()}'s Scale | {' '.join(jobs)} |"
-        for scale, jobs in c["scale_jobs"].items()
-    )
-    return (
-        f"**Coelestrox** reforges Artifact armor on the spot — trade the piece together "
-        f"with its components:\n\n"
-        f"| Step | Trade | Fee |\n"
-        f"|---|---|---|\n"
-        f"| **+1 → +2** | The +1 piece + its job's paragon cards ({slot_costs}) | "
-        f"{c['fee_two']} Escha Beads |\n"
-        f"| **+2 → +3** | The +2 piece + 1 paragon card + the job's Caturae scale | "
-        f"{c['fee_three']} Escha Beads |\n\n"
-        f"Which scale a job needs for its +3s:\n\n"
-        f"| Scale | Jobs |\n"
-        f"|---|---|\n"
-        f"{scale_rows}"
-    )
-
-
-# ---------------------------------------------------------------------------
-
 def generate(repo_root: Path, docs_dir: Path) -> None:
     src = resolve_source(repo_root, "modules/custom/lua/omen_catalog.lua")
     if src is None:
@@ -408,7 +367,6 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ("omen-midbosses",  _render_midbosses(c)),
         ("omen-bosses",     _render_bosses(c)),
         ("omen-ou",         _render_ou(c)),
-        ("omen-reforge",    _render_reforge(c)),
     ]
     written = sum(1 for marker, content in blocks if write_between_markers(page, marker, content))
     print(f"[omen] {written}/{len(blocks)} marker block(s) written "

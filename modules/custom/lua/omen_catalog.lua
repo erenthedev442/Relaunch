@@ -23,7 +23,6 @@
 --     someone captures the real looks -- see modules/custom/sql/omen.sql.
 --   * The untrackable "restore 500 HP ten times" bonus objective is not
 --     offered; the other retail objective types are all implemented.
---   * Reforge fees are charged in Escha Beads at the retail "cheap" tier
 --     but complete instantly (no game-day wait).
 -----------------------------------
 local catalog = {}
@@ -579,42 +578,12 @@ catalog.caskets =
 }
 
 -----------------------------------
--- Coelestrox: 5:1 card conversion + Reforged AF +2/+3
--- (reforge recipes live in omen_reforge_catalog.lua)
+-- Coelestrox: 5:1 paragon card conversion.
+-- (Retail's AF +2/+3 reforge service was REMOVED 2026-07-12, owner call:
+-- AF reforges live in the Reforge System, +4 at the Divergence Forge. The
+-- Caturae scales remain boss trophies with no sink for now.)
 -----------------------------------
 catalog.cardConversionRate = 5
-
--- Scale required per job for AF+3 steps (retail mapping).
-catalog.scaleForJob =
-{
-    [xi.job.WAR] = 'kin',  [xi.job.MNK] = 'kin',  [xi.job.PLD] = 'kin',
-    [xi.job.DRK] = 'kin',  [xi.job.SAM] = 'kin',
-    [xi.job.WHM] = 'kei',  [xi.job.BLM] = 'kei',  [xi.job.RDM] = 'kei',
-    [xi.job.BLU] = 'kei',  [xi.job.SCH] = 'kei',
-    [xi.job.THF] = 'gin',  [xi.job.NIN] = 'gin',  [xi.job.DNC] = 'gin',
-    [xi.job.RUN] = 'gin',
-    [xi.job.BST] = 'fu',   [xi.job.DRG] = 'fu',   [xi.job.SMN] = 'fu',
-    [xi.job.PUP] = 'fu',
-    [xi.job.BRD] = 'kyou', [xi.job.RNG] = 'kyou', [xi.job.COR] = 'kyou',
-    [xi.job.GEO] = 'kyou',
-}
-
--- Paragon cards required per slot for the +1 -> +2 step (retail).
-catalog.cardsForSlot =
-{
-    head  = 4,
-    body  = 5,
-    hands = 3,
-    legs  = 4,
-    feet  = 3,
-}
-
--- Reforge fees (Escha Beads; retail "cheap" tier, completed instantly).
-catalog.reforgeFees =
-{
-    plusTwo   = 10,
-    plusThree = 500, -- retail: 200 (day 1) + 300 (day 2)
-}
 
 -----------------------------------
 -- Helpers
