@@ -117,13 +117,13 @@ local NM_CATALOG = {
     -- spread. Retail tiering: 119->T1, 125->T2, 135/HELM/AA/gods->T3.
     [ZITAH] = {
         -- Tier 1 (retail 119) ------------------------------------------
-        { name='Wepwawet', gid=37, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27099, name='Naga Tekko' }, { id=27461, name='Pursuer\'s Gaiters' }, { id=21413, name='Clemency Grip' }, { id=26791, name='Eschite Helm' } } },
+        { name='Wepwawet', gid=37, tier=1, hp=130000, currency=350, cooldown=1800, delay=280, drops = { { id=27099, name='Naga Tekko' }, { id=27461, name='Pursuer\'s Gaiters' }, { id=21413, name='Clemency Grip' }, { id=26791, name='Eschite Helm' } } },
         { name='Lustful Lydia', gid=38, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=26947, name='Eschite Breastplate' }, { id=27284, name='Naga Hakama' }, { id=26796, name='Psycloth Tiara' }, { id=22250, name='Seraphic Ampulla' } } },
         { name='Aglaophotis', gid=39, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27097, name='Eschite Gauntlets' }, { id=26952, name='Psycloth Vest' }, { id=27459, name='Naga Kyahan' }, { id=27512, name='Marked Gorget' } } },
         { name='Tangata Manu', gid=40, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27282, name='Eschite Cuisses' }, { id=27102, name='Psycloth Manillas' }, { id=28474, name='Mendicant\'s Earring' }, { id=26794, name='Rawhide Mask' } } },
         { name='Vidala', gid=41, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27552, name='Overbearing Ring' }, { id=27287, name='Psycloth Lappas' }, { id=26950, name='Rawhide Vest' }, { id=27457, name='Eschite Greaves' } } },
         { name='Gestalt', gid=42, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27462, name='Psycloth Boots' }, { id=26792, name='Despair Helm' }, { id=27606, name='Disperser\'s Cape' }, { id=27100, name='Rawhide Gloves' } } },
-        { name='Angrboda', gid=43, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=28416, name='Lucidity Sash' }, { id=26948, name='Despair Mail' }, { id=26797, name='Vanya Hood' }, { id=27285, name='Rawhide Trousers' } } },
+        { name='Angrboda', gid=43, tier=1, hp=130000, currency=350, cooldown=1800, delay=280, drops = { { id=28416, name='Lucidity Sash' }, { id=26948, name='Despair Mail' }, { id=26797, name='Vanya Hood' }, { id=27285, name='Rawhide Trousers' } } },
         { name='Cunnast', gid=44, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=26953, name='Vanya Robe' }, { id=27098, name='Despair Finger Gauntlets' }, { id=27460, name='Rawhide Boots' }, { id=21414, name='Willpower Grip' } } },
         { name='Revetaur', gid=45, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=26795, name='Pursuer\'s Beret' }, { id=27103, name='Vanya Cuffs' }, { id=27283, name='Despair Cuisses' }, { id=22251, name='Grenade Core' } } },
         { name='Ferrodon', gid=46, tier=1, hp=130000, currency=350, cooldown=1800, drops = { { id=27458, name='Despair Greaves' }, { id=27513, name='Subtlety Spectacles' }, { id=26951, name='Pursuer\'s Doublet' }, { id=27288, name='Vanya Slops' } } },
@@ -143,14 +143,14 @@ local NM_CATALOG = {
         { name='Kamohoalii', gid=59, tier=2, hp=320000, currency=800, cooldown=3600, drops = { { id=20801, name='Nibiru Tabar' }, { id=21092, name='Nibiru Cudgel' }, { id=21415, name='Forefathers\' Grip' } } },
         { name='Umdhlebi', gid=60, tier=2, hp=320000, currency=800, cooldown=3600, drops = { { id=20848, name='Nibiru Chopper' }, { id=21156, name='Nibiru Staff' }, { id=22252, name='Sapience Orb' } } },
         -- Tier 2 (relaunch originals) ----------------------------------
-        { name='Keeper of Heiligtum', gid=28, tier=2, hp=320000, currency=800, cooldown=3600 },
+        { name='Keeper of Heiligtum', gid=28, tier=2, hp=320000, currency=800, cooldown=3600, delay=260 },
         { name='Jester Malatrix', gid=33, tier=2, hp=320000, currency=800, cooldown=3600 },
         { name='Immanibugard', gid=34, tier=2, hp=320000, currency=800, cooldown=3600 },
         { name='Beist', gid=35, tier=2, hp=320000, currency=800, cooldown=3600 },
         -- Tier 3 (retail 135 + HELM NMs) -------------------------------
         { name='Fleetstalker', gid=61, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=27605, name='Penetrating Cape' }, { id=26958, name='Sweller\'s Harness' }, { id=20847, name='Router' }, { id=27104, name='Shrieker\'s Cuffs' } } },
         { name='Shockmaw', gid=62, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=27464, name='Inspirited Boots' }, { id=27289, name='Doyen Pants' }, { id=27511, name='Dampener\'s Torque' }, { id=20938, name='Annealed Lance' } } },
-        { name='Urmahlullu', gid=63, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=26963, name='Onca Suit' }, { id=28415, name='Eschan Stone' }, { id=27783, name='Skormoth Mask' }, { id=20523, name='Chastisers' } } },
+        { name='Urmahlullu', gid=63, tier=3, hp=550000, currency=1300, cooldown=5400, delay=240, spellList=5, mp=9999, drops = { { id=26963, name='Onca Suit' }, { id=28415, name='Eschan Stone' }, { id=27783, name='Skormoth Mask' }, { id=20523, name='Chastisers' } } },
         { name='Alpluachra', gid=52, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=28477, name='Hermetic Earring' }, { id=26960, name='Annointed Kalasiris' } } },
         { name='Bucca', gid=50, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=28477, name='Hermetic Earring' }, { id=26960, name='Annointed Kalasiris' } } },
         { name='Puca', gid=51, tier=3, hp=550000, currency=1300, cooldown=5400, drops = { { id=28477, name='Hermetic Earring' }, { id=26960, name='Annointed Kalasiris' } } },
@@ -185,7 +185,7 @@ local NM_CATALOG = {
         -- Tier 2 (retail 125) ------------------------------------------
         { name='Palila', gid=57, tier=2, hp=380000, currency=1050, cooldown=3600, drops = { { id=20700, name='Nixxer' }, { id=20979, name='Aizushintogo' }, { id=20519, name='Hammerfists' }, { id=20845, name='Instigator' } } },
         { name='Hanbi', gid=59, tier=2, hp=380000, currency=1050, cooldown=3600, drops = { { id=20597, name='Enchufla' }, { id=21149, name='Espiritus' }, { id=21150, name='Akademos' }, { id=20937, name='Rhomphaia' } } },
-        { name='Yilan', gid=61, tier=2, hp=380000, currency=1050, cooldown=3600, drops = { { id=20701, name='Iris' }, { id=21151, name='Lathi' }, { id=20702, name='Emissary' }, { id=21084, name='Queller Rod' } } },
+        { name='Yilan', gid=61, tier=2, hp=380000, currency=1050, cooldown=3600, delay=260, drops = { { id=20701, name='Iris' }, { id=21151, name='Lathi' }, { id=20702, name='Emissary' }, { id=21084, name='Queller Rod' } } },
         { name='Amymone', gid=63, tier=2, hp=380000, currency=1050, cooldown=3600, drops = { { id=21482, name='Compensator' }, { id=20892, name='Deathbane' }, { id=20598, name='Shijo' }, { id=21698, name='Bidenhander' } } },
         { name='Naphula', gid=65, tier=2, hp=380000, currency=1050, cooldown=3600, drops = { { id=21085, name='Solstice' }, { id=20797, name='Skullrender' }, { id=21215, name='Vijaya Bow' } } },
         { name='Kammavaca', gid=67, tier=2, hp=380000, currency=1050, cooldown=3600, drops = { { id=20599, name='Kali' }, { id=21027, name='Ichigohitofuri' }, { id=20520, name='Midnights' } } },
@@ -201,10 +201,10 @@ local NM_CATALOG = {
         { name='Ark Angel TT', label='AA TT', gid=86, tier=3, hp=800000, currency=2200, cooldown=7200, drops = { { id=20894, name='Deacon Scythe' }, { id=26162, name='Rahab Ring' }, { id=28616, name='Fravashi Mantle' } } },
         -- Tier 3 (Heavenly Beasts, retail 140/150) ---------------------
         { name='Byakko-Escha', label='Byakko', gid=78, tier=3, hp=700000, currency=2000, cooldown=7200, drops = { { id=22256, name='Jokushunoibuki' }, { id=20846, name='Jokushuono' }, { id=27318, name='Jokushu Haidate' }, { id=27525, name='Jokushu Chain' } } },
-        { name='Genbu-Escha', label='Genbu', gid=79, tier=3, hp=700000, currency=2000, cooldown=7200, drops = { { id=22257, name='Genmeinoibuki' }, { id=27645, name='Genmei Shield' }, { id=25629, name='Genmei Kabuto' }, { id=27539, name='Genmei Earring' } } },
-        { name='Seiryu-Escha', label='Seiryu', gid=80, tier=3, hp=700000, currency=2000, cooldown=7200, drops = { { id=22259, name='Kobonoibuki' }, { id=20699, name='Koboto' }, { id=27133, name='Kobo Kote' }, { id=26320, name='Kobo Obi' } } },
+        { name='Genbu-Escha', label='Genbu', gid=79, tier=3, hp=700000, currency=2000, cooldown=7200, delay=240, drops = { { id=22257, name='Genmeinoibuki' }, { id=27645, name='Genmei Shield' }, { id=25629, name='Genmei Kabuto' }, { id=27539, name='Genmei Earring' } } },
+        { name='Seiryu-Escha', label='Seiryu', gid=80, tier=3, hp=700000, currency=2000, cooldown=7200, delay=240, drops = { { id=22259, name='Kobonoibuki' }, { id=20699, name='Koboto' }, { id=27133, name='Kobo Kote' }, { id=26320, name='Kobo Obi' } } },
         { name='Suzaku-Escha', label='Suzaku', gid=81, tier=3, hp=700000, currency=2000, cooldown=7200, drops = { { id=22258, name='Shukuyunoibuki' }, { id=20893, name='Shukuyu\'s Scythe' }, { id=27489, name='Shukuyu Sune-Ate' }, { id=26161, name='Shukuyu Ring' } } },
-        { name='Kirin', gid=82, tier=3, hp=1200000, currency=3500, cooldown=7200 },
+        { name='Kirin', gid=82, tier=3, hp=1200000, currency=3500, cooldown=7200, delay=240 },
         { name='Kouryu', gid=84, tier=3, hp=1000000, currency=3500, cooldown=7200, drops = { { id=27615, name='Reiki Cloak' }, { id=20842, name='Reikiono' }, { id=21152, name='Reikikon' }, { id=20690, name='Reikiko' }, { id=26321, name='Reiki Yotai' }, { id=25702, name='Reiki Osode' } } },
         -- Boss ---------------------------------------------------------
         { name='Warder of Courage', label='Courage', gid=93, tier=4, hp=2000000, currency=8000, cooldown=86400, drops = { { id=22196, name='Alber Strap' }, { id=20887, name='Dacnomania' }, { id=20932, name='Habile Mazrak' }, { id=19209, name='Molybdosis' }, { id=27545, name='Telos Earring' }, { id=25728, name='Zendik Robe' } } },
@@ -239,7 +239,7 @@ local NM_CATALOG = {
         { name='Zerde', gid=67, tier=4, hp=1400000, currency=4500, cooldown=86400, drops = { { id=25854, name='Arjuna Breeches' }, { id=25760, name='Mrigavyadha Gloves' }, { id=20506, name='Suwaiyas' }, { id=25721, name='Vedic Coat' } } },
         { name='Vinipata', gid=71, tier=4, hp=1400000, currency=4500, cooldown=86400, drops = { { id=21022, name='Shishio' }, { id=21905, name='Taka' }, { id=21073, name='Izcalli' }, { id=25655, name='Ipoca Beret' } } },
         { name='Schah', gid=74, tier=4, hp=1400000, currency=4500, cooldown=86400, drops = { { id=21687, name='Takoba' }, { id=22055, name='Oranyan' }, { id=25730, name='Nzingha Cuirass' }, { id=25920, name='Ahosi Leggings' } } },
-        { name='Albumen', gid=80, tier=4, hp=1400000, currency=4500, cooldown=86400, drops = { { id=25921, name='Skaoi Boots' }, { id=25656, name='Ynglinga Sallet' }, { id=21747, name='Freydis' }, { id=22114, name='Steinthor' } } },
+        { name='Albumen', gid=80, tier=4, hp=1400000, currency=4500, cooldown=86400, delay=240, drops = { { id=25921, name='Skaoi Boots' }, { id=25656, name='Ynglinga Sallet' }, { id=21747, name='Freydis' }, { id=22114, name='Steinthor' } } },
         { name='Onychophora', gid=85, tier=4, hp=1400000, currency=4500, cooldown=86400, drops = { { id=20678, name='Firangi' }, { id=22056, name='Gozuki Mezuki' }, { id=21855, name='Lembing' }, { id=25922, name='Navon Crackows' } } },
         { name='Erinys', gid=87, tier=4, hp=1400000, currency=4500, cooldown=86400, drops = { { id=21755, name='Hodadenon' }, { id=25761, name='Iktomi Dastanas' }, { id=22119, name='Wochowsen' }, { id=25731, name='Sayadio\'s Kaftan' } } },
     },
@@ -464,6 +464,59 @@ local function awardDrops(player, zoneId, def)
 end
 
 -- ===================================================================
+-- DIFFICULTY LAYER (owner request 2026-07-12: 'all these geas fetes need
+-- to be significantly harder'). Stock pools at level 149 were sponges --
+-- formula stats, slow swings, little TP pressure -- so every spawned NM
+-- now gets a tier-scaled OFFENSE profile on top of its pool. Defense is
+-- deliberately untouched (harder should mean 'kills you', not 'unhittable').
+-- Retune here, not in the catalog. Reference points: Absolute Virtue runs
+-- REGAIN 200, Nepionic Soulflayer 50.
+--   attP     : +% physical attack        acc/macc : flat accuracy boosts
+--   matt     : flat magic attack bonus   regain   : passive TP/tick (more TP moves)
+--   da / ta  : double / triple attack %
+-- Per-NM catalog overrides (all optional):
+--   delay=N     : auto-attack delay (240-scale; for slow stock pools)
+--   spellList=N : grant/replace the mob's spell list (pair with mp=)
+--   mp=N        : max MP (casters need a pool; stock WAR/WAR mobs have 0)
+--   mods={ [xi.mod.X]=v, ... } : any extra modifier
+-- ===================================================================
+local TIER_TUNING = {
+    [1] = { attP = 25, acc =  75, macc =  75, matt = 20, regain =  30, da = 15, ta = 0  },
+    [2] = { attP = 40, acc = 100, macc = 100, matt = 35, regain =  50, da = 25, ta = 5  },
+    [3] = { attP = 55, acc = 125, macc = 125, matt = 50, regain =  80, da = 30, ta = 10 },
+    [4] = { attP = 70, acc = 150, macc = 150, matt = 70, regain = 120, da = 35, ta = 15 },
+}
+
+local function applyDifficulty(mob, def)
+    local t = TIER_TUNING[def.tier] or TIER_TUNING[1]
+    mob:addMod(xi.mod.ATTP,          t.attP)
+    mob:addMod(xi.mod.ACC,           t.acc)
+    mob:addMod(xi.mod.MACC,          t.macc)
+    mob:addMod(xi.mod.MATT,          t.matt)
+    mob:addMod(xi.mod.REGAIN,        t.regain)
+    mob:addMod(xi.mod.DOUBLE_ATTACK, t.da)
+    if t.ta > 0 then
+        mob:addMod(xi.mod.TRIPLE_ATTACK, t.ta)
+    end
+
+    if def.delay then
+        mob:setDelay(def.delay)
+    end
+    if def.spellList then
+        mob:setSpellList(def.spellList)
+    end
+    if def.mp then
+        mob:setMaxMP(def.mp)
+        mob:setMP(def.mp)
+    end
+    if def.mods then
+        for modId, v in pairs(def.mods) do
+            mob:addMod(modId, v)
+        end
+    end
+end
+
+-- ===================================================================
 -- NM SPAWN
 -- ===================================================================
 local function spawnNM(player, zone, zoneId, def)
@@ -524,6 +577,7 @@ local function spawnNM(player, zone, zoneId, def)
             mob:setMaxHP(def.hp)
             mob:setHP(def.hp)
         end
+        applyDifficulty(mob, def)
         mob:updateClaim(player)
     end
     return mob

@@ -15,6 +15,7 @@ from pathlib import Path
 
 from tools.docgen._paths import resolve_source
 from tools.docgen._markers import write_between_markers
+from tools.docgen._bgwiki import item_anchor
 
 _TIER_NAME = {1: "Tier 1", 2: "Tier 2", 3: "Tier 3", 4: "Boss"}
 _ZONES = ["Escha - Zi'Tah", "Escha - Ru'Aun", "Reisenjima"]
@@ -89,7 +90,10 @@ def _overview(c: dict) -> str:
         f"({n_camps[_ZONES[1]]} points), and **Reisenjima** ({n_camps[_ZONES[2]]} points). "
         "Inspect a `???` to pop one of the NMs camped there — **no pop items needed** "
         "(no trinkets or Tribulens), just a per-player cooldown per NM. "
-        "The full camp map is [below](#camp-map).\n\n"
+        "The full camp map is [below](#camp-map). Fair warning: every fete NM is "
+        "**tuned aggressive** — tier-scaled attack, accuracy, multi-hits, and TP "
+        "pressure on top of its stock kit — so bring a real setup, especially for "
+        "Tier 3 and the bosses.\n\n"
         "Every Escha kill pays **Escha Beads** (a real currency — see the Currencies II tab). That one "
         "pool funds the Warding Circle material exchange **and** the **Aeonic weapon** path "
         "([Temprix in Reisenjima](../progression/aeonic-weapons.md)). NMs also drop the Aeonic crafting "
@@ -133,8 +137,9 @@ def _gear_para(c: dict) -> str:
 
 
 def _item_link(d: dict) -> str:
-    return (f'<a class="item-link" href="https://www.ffxiah.com/item/{d["id"]}" '
-            f'target="_blank" rel="noopener">{d["name"]}</a>')
+    # Shared builder: emits data-img, which item-tooltip.js requires -- a
+    # hand-rolled anchor without it leaves taps dead on touch devices.
+    return item_anchor(d["name"], item_id=d["id"])
 
 
 def _camps(c: dict, qm_pos: dict) -> str:
