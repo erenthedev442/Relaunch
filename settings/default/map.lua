@@ -202,6 +202,10 @@ xi.settings.map =
     -- the era curve above. Only touches mobs whose HP the server computes
     -- (mob_groups.HP = 0) at level 76+ -- explicit DB HP overrides are never
     -- scaled. Unlike MOB_HP_MULTIPLIER this is not clamped to 2.0.
+    -- PLAIN FIELD MOBS ONLY (2026-07-12): NMs, battlefield mobs, instanced
+    -- mobs, dynamic entities, and pets are excluded, so custom NM systems
+    -- that tune HP by multiplying the spawn formula (Hunting League, waves,
+    -- Colosseum, dungeons, ...) are never compounded by this knob.
     -- 0 or unset = no-op (1x).
     MOB_ERA_HP_MULT = 1.0,
 

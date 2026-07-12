@@ -762,7 +762,22 @@ void CalculateMobStats(CMobEntity* PMob, bool recover)
             // scales the ENTIRE formula result (base + subjob) for 76+ mobs.
             // Formula path only -- explicit HPmodifier mobs never reach this
             // branch, so DB HP overrides are untouched. <= 0 / absent = no-op.
-            if (mLvl > 75)
+            //
+            // PLAIN FIELD MOBS ONLY (owner correction 2026-07-12): the first
+            // cut multiplied every formula mob over 75, but the custom NM
+            // systems (Hunting League, GameMaster waves, Colosseum, Endless
+            // Tower, Invasions, Domain, dungeons, HTBF, ...) tune their
+            // encounters by MULTIPLYING spawn-time formula HP -- so the x8
+            // compounded under them (e.g. Shinryu hpBoost 72 became 8x72).
+            // Excluding NMs, battlefield mobs, instanced mobs, dynamic
+            // entities, and pets restores every custom system to exactly its
+            // tuned values while era trash keeps the boost.
+            if (mLvl > 75 &&
+                !(PMob->m_Type & MOBTYPE_NOTORIOUS) &&
+                !(PMob->m_Type & MOBTYPE_BATTLEFIELD) &&
+                PMob->PInstance == nullptr &&
+                !PMob->IsDynamicEntity() &&
+                PMob->PMaster == nullptr)
             {
                 const float eraMult = settings::get<float>("map.MOB_ERA_HP_MULT");
                 if (eraMult > 0.0f)
