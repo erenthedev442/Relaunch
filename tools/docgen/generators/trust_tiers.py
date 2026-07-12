@@ -1,4 +1,4 @@
-"""trust_tiers — fills the trust-tiers slot on reference/spells/trust.md.
+"""trust_tiers — fills the trust-tiers slot on progression/trusts.md.
 
 Two gating systems, both parsed from live Lua so the page can't drift:
 
@@ -13,7 +13,7 @@ Two gating systems, both parsed from live Lua so the page can't drift:
      — the crosswalk table here is the only place a player learns that
      "Excenmille" IS the Meat trust and that it's a paid unlock.
 
-spells.py owns and rewrites trust.md wholesale each run, emitting an empty
+spells.py owns and rewrites trusts.md wholesale each run, emitting an empty
 `trust-tiers` marker slot under the title; this generator (registered AFTER
 spells) fills it. FAIL-CLOSED: a parse error raises, generate.py logs it, and
 spells.py's fallback text stays — the page never shows a hole.
@@ -89,10 +89,12 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     vendor = _vendor_name(paid_txt)
 
     # Link the gate content to its own reference page where one exists.
+    # Paths are relative to progression/trusts.md (the page moved out of
+    # reference/spells 2026-07-12).
     LINKS = {
-        "Unity": "../../endgame/unity-concord.md",
-        "Voidwatch": "../../endgame/voidwatch.md",
-        "Fellow": "../../progression/fellow-companion.md",
+        "Unity": "../endgame/unity-concord.md",
+        "Voidwatch": "../endgame/voidwatch.md",
+        "Fellow": "fellow-companion.md",
     }
 
     def _linkify(unlock: str) -> str:
@@ -139,7 +141,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
     body = ladder + "\n\n" + locked
 
-    page = docs_dir / "reference" / "spells" / "trust.md"
+    page = docs_dir / "progression" / "trusts.md"
     if write_between_markers(page, "trust-tiers", body):
         print(f"[trust_tiers] filled: ladder {base}-{gates[-1][0]}, {len(paid)} locked trusts")
     else:

@@ -329,7 +329,7 @@ def _render(d: dict) -> str:
     A(
         f"(Trust summon counts climb a **separate** ladder — Unity Concord "
         f"accolades, Voidwatch rift tiers, and your Adventuring Fellow's level. "
-        f"See the [Trust page](../reference/spells/trust.md).){climb} So:"
+        f"See the [Trusts page](trusts.md).){climb} So:"
     )
     A("")
     A(

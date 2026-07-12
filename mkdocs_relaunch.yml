@@ -136,6 +136,7 @@ nav:
       - Cross-Job Traits: progression/cross-job-traits.md
       - Subjob EXP Share: progression/subjob-exp.md
       - Adventuring Fellow: progression/fellow-companion.md
+      - Trusts: progression/trusts.md
   - Endgame:
     - HNM Kings: progression/hnm.md
     - High-Tier Battlefields: endgame/high-tier-battlefields.md
@@ -222,7 +223,6 @@ nav:
       - Summoning: reference/spells/summoning.md
       - Blue Magic: reference/spells/blue.md
       - Geomancy: reference/spells/geomancy.md
-      - Trust: reference/spells/trust.md
     - Gear vs Retail: reference/gear-vs-retail.md
     - Weapon Skills vs Retail: reference/ws-vs-retail.md
     - Rules: rules.md

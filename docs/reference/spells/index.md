@@ -13,11 +13,4 @@ _Search the site (top right) to find a spell by name._
 | [Summoning](summoning.md) | 22 |
 | [White Magic](white.md) | 189 |
 | [Geomancy](geomancy.md) | 60 |
-| [Trust](trust.md) | 120 |
-
----
-
-<!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 0f9065c89369 -->
-_Last updated: 2026-07-06 17:42 PDT_
-<!-- DOCGEN:END id="last-updated" -->
+| [Trust](../../progression/trusts.md) | 120 |

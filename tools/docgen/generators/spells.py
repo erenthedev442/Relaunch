@@ -216,7 +216,11 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         if gid not in GROUPS:
             continue
         slug, label = GROUPS[gid]
-        index_lines.append(f"| [{label}]({slug}.md) | {len(by_group[gid])} |")
+        # Trust lives under Progression (owner request 2026-07-12) -- it is a
+        # progression system on relaunch (summon-count ladder, vendor unlocks),
+        # not spell reference material.
+        target = "../../progression/trusts.md" if slug == "trust" else f"{slug}.md"
+        index_lines.append(f"| [{label}]({target}) | {len(by_group[gid])} |")
     index_lines.append("")
     (out_dir / "index.md").write_text("\n".join(index_lines), encoding="utf-8")
 
@@ -224,9 +228,23 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         if gid not in GROUPS:
             continue
         slug, label = GROUPS[gid]
-        _write_group_page(out_dir / f"{slug}.md", label, group_spells)
+        if slug == "trust":
+            _write_group_page(docs_dir / "progression" / "trusts.md", label, group_spells)
+        else:
+            _write_group_page(out_dir / f"{slug}.md", label, group_spells)
 
-    print(f"[spells] wrote {len(spells)} spells across {len(by_group)} groups -> {out_dir}")
+    # Redirect stub at the old trust URL so bookmarks and external links keep
+    # working (the site has no redirects plugin; a body meta-refresh works in
+    # every browser). Generator-owned so sync_audit sees an owner.
+    (out_dir / "trust.md").write_text(
+        "# Trust\n\n"
+        '<meta http-equiv="refresh" content="0; url=../../progression/trusts/">\n\n'
+        "This page moved to **[Progression → Trusts](../../progression/trusts.md)** "
+        "— you will be redirected automatically.\n",
+        encoding="utf-8")
+
+    print(f"[spells] wrote {len(spells)} spells across {len(by_group)} groups -> {out_dir} "
+          f"(trust -> progression/trusts.md + redirect stub)")
 
 
 # Relaunch-specific per-page notes, keyed by page slug (path stem). Rendered as
@@ -238,7 +256,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 # + trust_skoll.lua so it can't drift. The text below is a fallback that only
 # survives if trust_tiers fails to parse.
 PAGE_NOTES = {
-    "trust": (
+    "trusts": (   # progression/trusts.md (moved out of reference/spells 2026-07-12)
         '<!-- DOCGEN:BEGIN id="trust-tiers" -->\n'
         '!!! info "Trust progression"\n'
         "    Every trust is learnable from day 1; how many you can field at once "
@@ -264,7 +282,7 @@ def _write_group_page(path: Path, label: str, spells: list[dict]) -> None:
         "",
     ])
 
-    if path.stem == "trust":
+    if path.stem == "trusts":
         # Trust page: drop the mechanical spell columns; show each alter ego's
         # BG-wiki behavior/role instead. Behaviors keyed by display name.
         behaviors = _load_trust_behaviors()
