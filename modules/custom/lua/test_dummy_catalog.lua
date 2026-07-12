@@ -49,10 +49,10 @@ catalog.npcPos =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',
     zoneId   = 44,
-    x        =  548.500,
-    y        =  -3.360,
-    z        = 515.000,
-    rotation =   64,
+    x        = 621.8802,
+    y        =   0.2895,
+    z        = 552.9599,
+    rotation =  94,
 }
 
 -- Where the dummy mob appears when summoned. Pulled WELL away from the
@@ -60,10 +60,10 @@ catalog.npcPos =
 -- lobby. Placed off to the east in open empty space.
 catalog.spawnPos =
 {
-    x = 20.000,
-    y = 0.000,
-    z = -20.000,
-    rotation = 192,
+    x = 632.7421,
+    y = 0.2000,
+    z = 546.4929,
+    rotation = 126,
 }
 
 -- How far a summoned dummy may land from spawnPos. Each summon picks a

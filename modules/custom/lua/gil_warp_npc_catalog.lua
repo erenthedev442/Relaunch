@@ -23,7 +23,7 @@ catalog.zoneId    = xi.zone.ABDHALJS_ISLE_PURGONORGO
 catalog.zonePath  = 'xi.zones.Abdhaljs_Isle-Purgonorgo'
 catalog.npcName   = 'Warpman'
 catalog.npcLook   = 3000
-catalog.npcPos    = { x = 529.500, y = -3.038, z = 545.300, rot = 192 }
+catalog.npcPos    = { x = 514.1982, y = -3.0378, z = 541.3422, rot = 255 }
 
 -- Pricing tiers used in the destinations below. Adjust globally here.
 catalog.pricing =

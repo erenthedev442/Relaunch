@@ -16,10 +16,10 @@ catalog.npcPos =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',
     zoneId   = 44,
-    x        = 525.800,
-    y        =  -3.038,
-    z        = 554.000,
-    rotation =   32,
+    x        = 515.5119,
+    y        =  -3.1516,
+    z        = 520.0237,
+    rotation =  192,
 }
 
 -- How many objectives are active per week (rolled from the pool).

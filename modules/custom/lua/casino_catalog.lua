@@ -13,7 +13,7 @@ local catalog = {}
 catalog.zoneId  = xi.zone.ABDHALJS_ISLE_PURGONORGO
 catalog.npcName = 'Lady Luck'
 catalog.npcLook = 3000                                   -- reuse the proven Unlocker model; re-skin freely
-catalog.npcPos  = { x = 584.000, y = -3.360, z = 525.000, rot = 192 }
+catalog.npcPos  = { x = 581.0750, y = -2.5712, z = 472.6133, rot = 0 }
 
 -- Preset bet sizes. customMenu can't take a typed number, so bets are tiers.
 catalog.betTiers = { 5000, 25000, 100000, 500000 }

@@ -492,10 +492,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         name       = 'Tower_Arbiter',
         packetName = 'Tower Climb',
         look       = 169,
-        x          =   580.500,
+        x          =   613.000,
         y          =   -3.360,
-        z          =  543.800,
-        rotation   =  160,
+        z          =  526.000,
+        rotation   =  135,
         widescan   =  1,
 
         onTrigger = function(player, npc)

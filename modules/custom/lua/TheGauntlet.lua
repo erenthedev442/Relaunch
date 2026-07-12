@@ -1270,10 +1270,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         name       = 'Gauntlet_Keeper',
         packetName = string.format('%sThe Gauntlet', xi.icon.SWORD_AND_SHIELD),
         look       = 2410,
-        x          = 577.000,
-        y          =   -3.360,
-        z          =  544.500,
-        rotation   = 128,
+        x          = 606.1380,
+        y          =  -3.2550,
+        z          = 515.1959,
+        rotation   = 135,
         widescan   =  1,
 
         onTrigger = function(player, npc)

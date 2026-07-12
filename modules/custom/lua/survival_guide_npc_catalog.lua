@@ -10,7 +10,7 @@ local catalog = {}
 
 catalog.zoneId    = xi.zone.ABDHALJS_ISLE_PURGONORGO
 catalog.zonePath  = 'xi.zones.Abdhaljs_Isle-Purgonorgo'
-catalog.npcPos    = { x = 529.000, y = -3.038, z = 541.000, rot = 160 }  -- 2026-07-06 moved off the Sage/Moogle row to beside the Leafallia homepoint (hp at 5.539,-0.434,8.133); !pos-verify after restart
+catalog.npcPos    = { x = 528.0743, y = -3.0378, z = 543.4601, rot = 85 }  -- 2026-07-06 moved off the Sage/Moogle row to beside the Leafallia homepoint (hp at 5.539,-0.434,8.133); !pos-verify after restart
 catalog.npcName   = 'Survival_Guide'
 catalog.packet    = 'Survival Guide'
 -- Retail Survival Guide book model (npc_list look 0x0981 = 2433). If it

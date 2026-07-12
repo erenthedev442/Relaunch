@@ -18,7 +18,7 @@ runtime.config =
     completionDelay  = 10,
     emptyCloseDelay  = 30,
 
-    boardPos = { x = 531.500, y = -3.038, z = 551.800, rot = 208 },
+    boardPos = { x = 506.5119, y = -3.1516, z = 520.0237, rot = 64 },
     exitPos  = { x = -102.0, y = -2.15, z = -106.0, rot = 190 },
 
     -- Save the Children hut arena.

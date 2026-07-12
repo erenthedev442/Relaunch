@@ -15,7 +15,7 @@ require('scripts/zones/Abdhaljs_Isle-Purgonorgo/Zone')
 local catalog = require('modules/custom/lua/htbf_catalog')
 local m       = Module:new('htbf_vendor')
 local SYS     = xi.msg.channel.SYSTEM_3
-local NPCPOS  = { x = 581.200, y = -3.360, z = 536.500, rot = 224 }
+local NPCPOS  = { x = 592.000, y = -3.360, z = 516.500, rot = 135 }
 
 local function commafy(n)
     local s = tostring(math.floor(n))

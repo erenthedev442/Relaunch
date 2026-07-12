@@ -37,10 +37,10 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         name       = 'Nomad_Moogle',
         packetName = string.format('%sNomad Moogle', xi.icon.STAR_LARGE),
         look       = 2419,  -- moogle (same confirmed-visible look as the Cosmetic Boutique / Gil Exchange moogles)
-        x          = 524.000,
+        x          = 529.000,
         y          =  -3.038,
-        z          = 539.800,
-        rotation   = 224,
+        z          = 541.000,
+        rotation   = 192,
         widescan   =  1,
 
         onTrigger = function(player, npc)

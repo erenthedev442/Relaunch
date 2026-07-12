@@ -420,7 +420,7 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         x          =  574.600,
         y          =   -3.360,
         z          =  531.800,
-        rotation   =  208,
+        rotation   =   16,
         widescan   =  1,
 
         onTrade = function(player, npc, trade)

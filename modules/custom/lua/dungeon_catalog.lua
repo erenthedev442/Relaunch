@@ -7,10 +7,10 @@ catalog.npc =
 {
     zone     = 'Abdhaljs_Isle-Purgonorgo',
     zoneId   = 44,
-    x        = 584.000,
+    x        = 618.000,
     y        = -3.360,
-    z        = 538.200,
-    rotation = 208,
+    z        = 521.500,
+    rotation = 135,
 }
 
 catalog.exit =

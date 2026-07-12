@@ -471,13 +471,13 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
     local AugmentMoogle = zone:insertDynamicEntity({
         objtype    = xi.objType.NPC,
         name       = 'Augment_Moogle',
-        packetName = string.format('%sAugment Moogle', xi.icon.STAR_LARGE),
+        packetName = string.format('%sArcane Augmenter', xi.icon.STAR_LARGE),
         look       = 1834,   -- Alexander model: divine mechanical deity, colossal scale
         -- GM Home Augment Sanctum (z=-45): centered, standalone, far from the main NPC cluster.
-        x          = 562.400,
-        y          =   -3.360,
-        z          =  532.000,
-        rotation   =  96,
+        x          = 571.6949,
+        y          =  -0.5056,
+        z          = 544.0399,
+        rotation   =  67,
         widescan   =  1,
 
         onTrigger = function(player, npc)
