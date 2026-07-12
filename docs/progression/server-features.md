@@ -81,7 +81,7 @@ These are display titles — any player can buy any title regardless of whether 
 
 ## Always Stocked Auction House
 
-The Auction House is permanently stocked with **every piece of non-iLevel equipment in the game** — weapons, armor, and accessories. You will never find an empty category while leveling a job.
+See the full **[Auction House page](../economy/auction-house.md)** for everything the market maker does. In short: the Auction House is permanently stocked with **every piece of non-iLevel equipment in the game** — weapons, armor, and accessories. You will never find an empty category while leveling a job.
 
 Type `!ah` from anywhere to open the Auction House menu. You don't need to travel to Jeuno, Bastok, or any other AH counter.
 
@@ -105,7 +105,7 @@ Type `!ah` from anywhere to open the Auction House menu. You don't need to trave
 
 The same system also **buys this gear back** from you at the exact price in the table above. List a piece of non-iLevel gear at or below its table price and the server purchases it, paying you in full through your delivery box — even if you asked for less than the table price.
 
-This gives every leveling piece a guaranteed gil floor: you can always sell it back for what it's worth, so there's no risk in buying gear to try out a new job. Buy-backs are processed in batches every few minutes, so payment may not be instant.
+This gives every leveling piece a guaranteed gil floor: you can always sell it back for what it's worth, so there's no risk in buying gear to try out a new job. Buy-backs are processed on the market maker's hourly pass, so payment may not be instant.
 
 !!! note "Endgame iLevel gear is not included"
     Item-level 119 endgame gear is handled separately by the [Gear Vendors](gear-vendors.md), not the Auction House. This system covers the classic level 1–99 equipment you use while leveling.

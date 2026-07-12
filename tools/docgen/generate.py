@@ -63,6 +63,7 @@ def main() -> int:
         capacity_farms,
         coverage_check,
         ah_prices,
+        auction_house,
         crafting_exchange,
         hnm,
         abyssea_nms,
@@ -335,6 +336,10 @@ def main() -> int:
         # achievements so its reused parser is import-loaded.
         ("your_session",     your_session),
         ("ah_prices",        ah_prices),
+        # auction_house reads the same market-maker config and owns the
+        # full economy/auction-house.md page (ah_prices keeps the small
+        # price block on server-features).
+        ("auction_house",    auction_house),
         ("crafting_exchange", crafting_exchange),
         ("missing_spells",   missing_spells),
         # --- custom-systems pages (2026-06-14): each parses its own live catalog ---
