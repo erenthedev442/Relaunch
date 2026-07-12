@@ -1,37 +1,39 @@
 -- ============================================================================
 -- legendary_ring.sql   (RELAUNCH -- lives in modules/custom/sql/)
 --
--- The "Legendary Ring" -- the one FUNCTIONAL Legacy migration reward. Every
--- other Legacy reward is strictly cosmetic; the rule was intentionally relaxed
--- for THIS single heirloom as recognition for time invested on Legendary:
+-- The "Legendary Ring" -- the one FUNCTIONAL Legacy migration reward, buffed
+-- into a flagship heirloom for Legendary 1.0 migrants (owner, 2026-07-12).
 --
---     Legendary Ring   [Ring] All Races   (Rare/Ex)
---       Capacity Points Boost +50%
---       Experience Points Boost +50%
---       Auto Reraise Effect
---       Lv.1 All Jobs
+--     Legendary Ring   [Ring] All Races   (Rare/Ex)   -- item 26169
+--       Experience Points Boost  +100%
+--       Capacity Points Boost    +100%
+--       Auto-Reraise (tier III)  -- highest a gear item can grant
+--       Movement Speed           +25%  (engine hard cap; highest-piece-only)
+--       Experience Retained on death  100%  -- you never lose EXP on death
+--       No Weakness after Reraise      -- engine guard (charentity.cpp)
+--       USE: toggles Vanish (Sneak+Invisible) <-> Transform (costume)
+--       Permanent "legendary" costume aura while worn
 --
--- All four effects are stock, engine-honored EQUIPMENT mods -- no C++, no Lua
--- for the item itself:
---   EXP_BONUS       382  = 50   -> charutils.cpp AddExpBonus() (additive +% EXP)
---   CAPACITY_BONUS  915  = 50   -> charutils.cpp capacity gain (+% capacity/JP)
---   RERAISE_I       456  = 1    -> charentity.cpp auto-reraise-on-death from gear
+-- The five stat lines are stock engine-honored EQUIPMENT mods (pure data):
+--   EXP_BONUS             382 = 100  -> charutils.cpp AddExpBonus (additive +% EXP)
+--   CAPACITY_BONUS        915 = 100  -> charutils.cpp capacity gain (+% capacity/JP)
+--   RERAISE_III           458 = 1    -> charentity.cpp auto-reraise-on-death (tier III)
+--   MOVE_SPEED_GEAR_BONUS  76 = 25   -> battleentity.cpp gear move speed (clamped +25%)
+--   EXPERIENCE_RETAINED   914 = 100  -> charentity.cpp death: retain 100% of EXP
+-- The Vanish/Transform toggle + aura live in scripts/items/legendary_ring.lua;
+-- "No Weakness after Reraise" is a guard in src/map/entities/charentity.cpp.
 --
--- CLIENT DISPLAY: this repurposes retail item 26169 (reraise_ring), which was
--- chosen because it is (a) already Lv.1 / all-jobs / ring-slot / Rare-Ex, and
--- (b) NOT present in any Relaunch droplist, vendor, or quest, so nothing else is
--- clobbered. The client only has DAT text for real item ids, so a custom name
--- REQUIRES reusing a retail id + a client DAT override (XIPivot). See
--- "Custom DATs/Relaunch Custom DATs" for the id->"Legendary Ring" text override.
--- Without the DAT pack the ring still works; the client just shows the retail
--- "Reraise Ring" name (a sensible fallback).
+-- CLIENT DISPLAY: repurposes retail item 26169 (reraise_ring) -- already Lv.1,
+-- all-jobs, ring-slot, Rare/Ex, USABLE (item_usable enchantment), and absent
+-- from every Relaunch droplist/vendor/quest. The custom "Legendary Ring" name
+-- needs the client DAT override (see "Custom DATs/Relaunch Custom DATs"); with-
+-- out it the client shows the retail "Reraise Ring" name (a sensible fallback).
 --
--- GRANTED BY: modules/custom/lua/legacy_ring_grant.lua on login, to any char
--- whose charVar Legacy_Ring_Grant == 1 (set when the player claims this reward
--- on the portal). Nothing here distributes the item.
+-- GRANTED BY: modules/custom/lua/legacy_ring_grant.lua on login.
 --
--- Apply, then RESTART the map -- item_basic / item_equipment / item_mods are all
--- cached at boot. Idempotent (UPDATE + DELETE/INSERT).
+-- Apply, then RESTART the map -- item_basic / item_equipment / item_mods /
+-- item_usable are cached at boot. The charentity.cpp guard needs a REBUILD.
+-- Idempotent (UPDATE + DELETE/INSERT).
 -- ============================================================================
 
 -- ----- server-side name (GM commands / logging); display name is DAT-driven --
@@ -44,10 +46,18 @@ UPDATE `item_equipment`
    SET `name` = 'legendary_ring', `level` = 1, `ilvl` = 0, `jobs` = 4194303, `slot` = 24576
  WHERE `itemId` = 26169;
 
+-- ----- make the enchantment a quick, reusable toggle (retail Reraise Ring is a
+--       30s cast / 20h recharge; we want a fast on-demand Vanish/Transform) -----
+UPDATE `item_usable`
+   SET `useDelay` = 3, `reuseDelay` = 10, `maxCharges` = 1, `validTargets` = 1
+ WHERE `itemId` = 26169;
+
 -- ----- stat package -----------------------------------------------------------
 DELETE FROM `item_mods` WHERE `itemId` = 26169;
 
 INSERT INTO `item_mods` (`itemId`, `modId`, `value`) VALUES
-    (26169, 382, 50),   -- EXP_BONUS        +50%
-    (26169, 915, 50),   -- CAPACITY_BONUS   +50%
-    (26169, 456,  1);   -- RERAISE_I        Auto Reraise (tier I) from gear
+    (26169, 382, 100),   -- EXP_BONUS             +100%
+    (26169, 915, 100),   -- CAPACITY_BONUS        +100%
+    (26169, 458,   1),   -- RERAISE_III           Auto-Reraise tier III (max gear tier)
+    (26169,  76,  25),   -- MOVE_SPEED_GEAR_BONUS  +25% (engine cap)
+    (26169, 914, 100);   -- EXPERIENCE_RETAINED    100% -> no EXP loss on death

@@ -31,7 +31,16 @@ _MOD_TEXT = {
     382: lambda v: f'EXP +{v}%',
     915: lambda v: f'Capacity Points +{v}%',
     456: lambda v: 'Auto-Reraise',
+    458: lambda v: 'Auto-Reraise III',
+     76: lambda v: f'Movement Speed +{v}%',
+    914: lambda v: f'EXP retained on death {v}%',
 }
+
+# Extra ring features that are NOT item_mods (driven by the item script + a
+# charentity.cpp guard), appended to the parsed stat line so the page stays
+# complete when the ring is retuned.
+_RING_EXTRAS = ('No Weakness after Reraise', 'USE: toggle Vanish (Sneak+Invisible) / '
+                'Transform (costume)', 'permanent legendary aura while worn')
 
 _TIER_ORDER = ('4', '3', '2', '1')
 _CARD_CLASS = {'4': 't4', '3': 't3', '2': 't2', '1': 't1'}
@@ -137,7 +146,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
     piece_names = ' / '.join(n for _i, n in pieces)
     piece_ids = ', '.join(i for i, _n in pieces)
-    ring_txt = ', '.join(ring_stats)
+    ring_txt = ', '.join(ring_stats + list(_RING_EXTRAS))
 
     cards = ''.join(
         f"<div class='card {_CARD_CLASS[t]}'><div class='cn'>{counts[t]}</div>"

@@ -2133,7 +2133,14 @@ void CCharEntity::OnRaise()
         }
 
         // add weakness effect (75% reduction in HP/MP)
-        if (GetLocalVar("MijinGakure") == 0)
+        // RELAUNCH (2026-07-12): the Legendary Ring (item 26169, the Legacy 1.0
+        // heirloom) suppresses post-raise Weakness -- pop back up at full
+        // strength. Checked on either ring slot.
+        const bool hasLegendaryRing =
+            (getEquip(SLOT_RING1) != nullptr && getEquip(SLOT_RING1)->getID() == 26169) ||
+            (getEquip(SLOT_RING2) != nullptr && getEquip(SLOT_RING2)->getID() == 26169);
+
+        if (GetLocalVar("MijinGakure") == 0 && !hasLegendaryRing)
         {
             auto weaknessTime = 5min;
 
