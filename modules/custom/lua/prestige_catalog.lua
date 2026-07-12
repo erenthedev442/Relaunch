@@ -364,7 +364,7 @@ return
                   {
                       [11384] = { name = 'Jailer_of_Justice', label = 'Jailer of Justice', level = 150, hpBoost = 54,
                                   cry = '"You are weighed, and found wanting. The sentence is death."',
-                                  mods = { [xi.mod.DEF] = 4675, [xi.mod.ATT] = 27900, [xi.mod.ACC] = 6120, [xi.mod.EVASION] = 1800, [xi.mod.MATT] = 1980, [xi.mod.MACC] = 2340, [xi.mod.MEVA] = 1800, [xi.mod.MDEF] = 1800, [xi.mod.AGI] = 600, [xi.mod.DOUBLE_ATTACK] = 30, [xi.mod.TRIPLE_ATTACK] = 15, [xi.mod.HASTE_GEAR] = 400, [xi.mod.REGEN] = 1200 } },
+                                  mods = { [xi.mod.DEF] = 4675, [xi.mod.ATT] = 25000, [xi.mod.ACC] = 6120, [xi.mod.EVASION] = 1800, [xi.mod.MATT] = 1980, [xi.mod.MACC] = 2340, [xi.mod.MEVA] = 1800, [xi.mod.MDEF] = 1800, [xi.mod.AGI] = 600, [xi.mod.DOUBLE_ATTACK] = 30, [xi.mod.TRIPLE_ATTACK] = 15, [xi.mod.HASTE_GEAR] = 400, [xi.mod.REGEN] = 1200 } },
                       [11385] = { name = 'Jailer_of_Fortitude', label = 'Jailer of Fortitude', level = 150, hpBoost = 56,
                                   cry = '"My guard has never broken. Yours already has."',
                                   mods = { [xi.mod.DEF] = 4537, [xi.mod.ATT] = 25200, [xi.mod.ACC] = 5760, [xi.mod.EVASION] = 1620, [xi.mod.MATT] = 2700, [xi.mod.MACC] = 2700, [xi.mod.MEVA] = 2160, [xi.mod.MDEF] = 2160, [xi.mod.INT] = 700, [xi.mod.MND] = 500, [xi.mod.HASTE_GEAR] = 350, [xi.mod.REGEN] = 1200 } },
