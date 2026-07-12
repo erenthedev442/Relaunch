@@ -180,6 +180,7 @@ return {
     [1889] = { augId = 280,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Magic skill' },
     [1607] = { augId = 286,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Shield skill' },
     [1608] = { augId = 287,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Parrying Skill' },
+    [863]  = { augId = 147,  base = 1,   mult = 1,   disp = 1,    cat = 9, tier = 0, label = 'Treasure Hunter', maxBoost = 0, tierValue = 1 },
 
     -- ── cat 10: Exp/Cap Points ──────────────────────────────────────────────────
     -- maxBoost=0: owner target is 1..32%/slot, but the +33 base lives in the
@@ -207,11 +208,10 @@ return {
     [1888] = { augId = 67,   base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'All songs',             maxBoost = 1, tierValue = 2 },
     [1630] = { augId = 148,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Gilfinder', maxBoost = 19 },
     [1269] = { augId = 215,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Ninja tool expertise' },
-    -- tierValue = STEP: the line's value is STEP x your Augment Tier (TH 1..5,
-    -- All songs 2..10). One catalyst per trade, no roll/affinity/crit; the
-    -- Moogle writes boost = STEP*tier - base so the engine's (base + boost)
-    -- renders exactly STEP*tier (requires effective mult 1). Old gear keeps
-    -- its already-written slots.
-    [863]  = { augId = 147,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Treasure Hunter', maxBoost = 0, tierValue = 1 },
+    -- tierValue = STEP: the line's value is STEP x your Augment Tier (TH 1..5
+    -- in cat 9 Skills, All songs 2..10 above). One catalyst per trade, no
+    -- roll/affinity/crit; the Moogle writes boost = STEP*tier - base so the
+    -- engine's (base + boost) renders exactly STEP*tier (requires effective
+    -- mult 1). Old gear keeps its already-written slots.
 
 }

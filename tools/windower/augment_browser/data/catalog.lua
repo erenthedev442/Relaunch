@@ -128,6 +128,7 @@ return {
     [ 1608] = { cat =  9, tier = 0, label = 'Parrying Skill' },
     [ 1663] = { cat =  9, tier = 0, label = 'Ranged skill' },
     [ 1607] = { cat =  9, tier = 0, label = 'Shield skill' },
+    [  863] = { cat =  9, tier = 0, label = 'Treasure Hunter' },
     [  942] = { cat = 10, tier = 0, label = 'Cap. Point +33%' },
     [ 2523] = { cat = 10, tier = 0, label = 'Exp. Point +33%' },
     [ 1888] = { cat = 11, tier = 0, label = 'All songs' },
@@ -144,7 +145,6 @@ return {
     [  857] = { cat = 11, tier = 0, label = 'Reverse Flourish' },
     [  770] = { cat = 11, tier = 0, label = 'Shield Mastery' },
     [  829] = { cat = 11, tier = 0, label = 'Snapshot' },
-    [  863] = { cat = 11, tier = 0, label = 'Treasure Hunter' },
     [  836] = { cat = 11, tier = 0, label = 'Waltz TP cost' },
     [  926] = { cat = 11, tier = 0, label = 'Zanshin' },
 }

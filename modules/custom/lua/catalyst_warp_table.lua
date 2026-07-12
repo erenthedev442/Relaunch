@@ -41,7 +41,7 @@ return {
     [858] = { item='Wolf Hide', label='Phys. dmg. taken', cat=4, tier=0, zone=265, zoneName='Morimar Basalt Fields', x=-289.600, y=-32.270, z=-86.862, mob='Acerbic Jagil', lvl=102, rate=100 },
     [859] = { item='Ram Skin', label='Enfeebling Magic Recast Delay', cat=5, tier=0, zone=108, zoneName='Konschtat Highlands', x=21.000, y=50.000, z=514.000, mob='Tremor Ram', lvl=21, rate=100 },
     [861] = { item='Black Tiger Hide', label='Attack', cat=2, tier=0, zone=5, zoneName='Uleguerand Range', x=-195.730, y=-40.376, z=-434.642, mob='Uleguerand Tiger', lvl=60, rate=100 },
-    [863] = { item='Coeurl Hide', label='Treasure Hunter', cat=11, tier=0, zone=16, zoneName='Promyvion-Holla', x=-8.032, y=0.000, z=163.253, mob='Apex Idle Drifter', lvl=139, rate=100 },
+    [863] = { item='Coeurl Hide', label='Treasure Hunter', cat=9, tier=0, zone=16, zoneName='Promyvion-Holla', x=-8.032, y=0.000, z=163.253, mob='Apex Idle Drifter', lvl=139, rate=100 },
     [868] = { item='Handful Of Pugil Scales', label='Enhancing Magic Recast Delay', cat=5, tier=0, zone=100, zoneName='West Ronfaure', x=-361.734, y=-51.292, z=287.212, mob='Ding Bats', lvl=1, rate=100 },
     [876] = { item='Manta Skin', label='Blood Pact ability delay', cat=5, tier=0, zone=213, zoneName='Labyrinth of Onzozo', x=60.418, y=4.432, z=-34.907, mob='Flying Manta', lvl=55, rate=100 },
     [878] = { item='Karakul Skin', label='AGI', cat=1, tier=0, zone=195, zoneName='The Eldieme Necropolis', x=-244.445, y=0.725, z=108.502, mob='Anemone', lvl=45, rate=100 },

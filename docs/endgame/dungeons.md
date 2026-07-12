@@ -215,6 +215,7 @@ _Trash: **10%** · **×1** · to the treasure pool (anyone in the run can lot) �
 | <a class="item-link" href="https://www.ffxiah.com/item/1663" data-img="https://static.ffxiah.com/images/icon/1663.png" target="_blank" rel="noopener">Arnica Root</a> | Ranged skill |
 | <a class="item-link" href="https://www.ffxiah.com/item/1607" data-img="https://static.ffxiah.com/images/icon/1607.png" target="_blank" rel="noopener">Remnant Of A Bitter Memory</a> | Shield skill |
 | <a class="item-link" href="https://www.ffxiah.com/item/1667" data-img="https://static.ffxiah.com/images/icon/1667.png" target="_blank" rel="noopener">Cluster Core</a> | Song spellcasting time |
+| <a class="item-link" href="https://www.ffxiah.com/item/863" data-img="https://static.ffxiah.com/images/icon/863.png" target="_blank" rel="noopener">Coeurl Hide</a> | Treasure Hunter |
 
 **Trash assignments:**
 
@@ -283,7 +284,6 @@ _Trash: **10%** · **×1** · to the treasure pool (anyone in the run can lot) �
 | <a class="item-link" href="https://www.ffxiah.com/item/1619" data-img="https://static.ffxiah.com/images/icon/1619.png" target="_blank" rel="noopener">Hippogryph Feather</a> | Rapid Shot |
 | <a class="item-link" href="https://www.ffxiah.com/item/834" data-img="https://static.ffxiah.com/images/icon/834.png" target="_blank" rel="noopener">Ball Of Saruta Cotton</a> | Recycle |
 | <a class="item-link" href="https://www.ffxiah.com/item/857" data-img="https://static.ffxiah.com/images/icon/857.png" target="_blank" rel="noopener">Dhalmel Hide</a> | Reverse Flourish |
-| <a class="item-link" href="https://www.ffxiah.com/item/863" data-img="https://static.ffxiah.com/images/icon/863.png" target="_blank" rel="noopener">Coeurl Hide</a> | Treasure Hunter |
 | <a class="item-link" href="https://www.ffxiah.com/item/836" data-img="https://static.ffxiah.com/images/icon/836.png" target="_blank" rel="noopener">Square Of Damascene Cloth</a> | Waltz TP cost |
 | <a class="item-link" href="https://www.ffxiah.com/item/926" data-img="https://static.ffxiah.com/images/icon/926.png" target="_blank" rel="noopener">Lizard Tail</a> | Zanshin |
 
@@ -318,6 +318,6 @@ _Trash: **10%** · **×1** · to the treasure pool (anyone in the run can lot) �
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 913cafbd4f63 -->
-_Last updated: 2026-07-11 22:28 PDT_
+<!-- content-hash: 97fda84bf001 -->
+_Last updated: 2026-07-11 22:47 PDT_
 <!-- DOCGEN:END id="last-updated" -->

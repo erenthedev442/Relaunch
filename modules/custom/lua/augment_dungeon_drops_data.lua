@@ -155,6 +155,7 @@ return {
         {
             { id = 1667, tier = 0, cat = 5, label = 'Song spellcasting time', item = 'cluster_core' },
             { id = 2198, tier = 0, cat = 5, label = 'Cure spellcasting time', item = 'water_spiders_web' },
+            { id = 863, tier = 0, cat = 9, label = 'Treasure Hunter', item = 'coeurl_hide' },
             { id = 1607, tier = 0, cat = 9, label = 'Shield skill', item = 'remnant_of_a_bitter_memory' },
             { id = 1608, tier = 0, cat = 9, label = 'Parrying Skill', item = 'remnant_of_a_fleeting_memory' },
             { id = 1616, tier = 0, cat = 9, label = 'Melee skill', item = 'antlion_jaw' },
@@ -213,7 +214,6 @@ return {
             { id = 834, tier = 0, cat = 11, label = 'Recycle', item = 'ball_of_saruta_cotton' },
             { id = 836, tier = 0, cat = 11, label = 'Waltz TP cost', item = 'square_of_damascene_cloth' },
             { id = 857, tier = 0, cat = 11, label = 'Reverse Flourish', item = 'dhalmel_hide' },
-            { id = 863, tier = 0, cat = 11, label = 'Treasure Hunter', item = 'coeurl_hide' },
             { id = 895, tier = 0, cat = 11, label = 'Counter', item = 'ram_horn' },
             { id = 897, tier = 0, cat = 11, label = 'Martial Arts', item = 'scorpion_claw' },
             { id = 902, tier = 0, cat = 11, label = 'Charm', item = 'demon_horn' },
