@@ -25,7 +25,6 @@ catalog.npcPos =
 catalog.vendorItems =
 {
     { id = 25461, sub = "Neck", name = "Abyssal Bead Necklace +2", cost = 3000, stats = { 'WS score 90', 'Accessory top-5 (neck)', 'Jobs: DRK' } },
-    { id = 11607, sub = "Neck", name = "Artemiss Medal", cost = 3000, stats = { 'CASTER score 95', 'Accessory top-5 (neck)', 'Jobs: All' } },
     { id = 26003, sub = "Neck", name = "Baetyl Pendant", cost = 3000, stats = { 'Neck. Caster (Magic Attack).', 'EX/RARE.' } },
     { id = 26015, sub = "Neck", name = "Combatants Torque", cost = 3000, stats = { 'Neck. DD (Accuracy / Attack).', 'EX/RARE.' } },
     { id = 25497, sub = "Neck", name = "Dragoons Collar +2", cost = 3000, stats = { 'WS score 83', 'Accessory top-5 (neck)', 'Jobs: DRG' } },
@@ -72,7 +71,6 @@ catalog.vendorItems =
     { id = 26267, sub = "Back", name = "Ogma's Cape", cost = 4000, stats = { 'Back. RUN JSE cape. DEF+18.', 'Inquartata+3, Vallation/Valiance dur+15.' } },
     { id = 26261, sub = "Back", name = "Rosmerta's Cape", cost = 4000, stats = { 'Back. BLU JSE cape. DEF+16.', 'Monster correlation+10.' } },
     { id = 26252, sub = "Back", name = "Rudianos's Mantle", cost = 4000, stats = { 'Back. PLD JSE cape. DEF+20.', 'Phys dmg->MP 5%, Shield block+3.' } },
-    { id = 13655, sub = "Back", name = "Sand Mantle", cost = 3000, stats = { 'TANK score 108', 'Accessory top-5 (back)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' } },
     { id = 26247, sub = "Back", name = "Segomo's Mantle", cost = 4000, stats = { 'Back. MNK JSE cape. DEF+16.', 'Kick Attacks+10, Attack+25.' } },
     { id = 26264, sub = "Back", name = "Senuna's Mantle", cost = 4000, stats = { 'Back. DNC JSE cape. DEF+16.', 'Samba dur+15, Crit dmg+5%.' } },
     { id = 26257, sub = "Back", name = "Smertrios's Mantle", cost = 4000, stats = { 'Back. SAM JSE cape. DEF+18.', 'Meditate dur+8, Skillchain Bonus+3.' } },
