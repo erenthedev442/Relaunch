@@ -76,6 +76,7 @@ local stock =
         { 10293,                    50000 },              -- Chocobo Shirt
         { 11811,                    50000 },              -- Destrier Beret
         { 14724,                   500000 },              -- Moldavite Earring
+        { 13122,                    50000 },              -- Miner's Pendant (neck, gathering utility)
         { 11009,                   100000 },              -- Shaper's Shawl (back, crafting/utility)
         { 28509,                   250000 },              -- She-Slime Earring
         { 28511,                   250000 },              -- Slime Earring
