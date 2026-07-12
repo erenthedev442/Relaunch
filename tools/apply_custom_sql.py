@@ -100,7 +100,11 @@ def main(argv):
     if args:
         files = [a if os.path.isabs(a) else os.path.join(REPO, a) for a in args]
     else:
-        files = sorted(glob.glob(os.path.join(REPO, "sql", "zz_*.sql")))
+        # zz*.sql covers BOTH zz_<layer>.sql and zzz_<runs-last>.sql — the old
+        # zz_*.sql glob silently skipped zzz_reforge_carryforward.sql, leaving
+        # gap-fill mods (e.g. parts of the +4 reforge tier) unapplied.
+        # sorted() keeps zzz_ after zz_, preserving the intended layer order.
+        files = sorted(glob.glob(os.path.join(REPO, "sql", "zz*.sql")))
     files = [f for f in files if f.endswith(".sql") and os.path.exists(f)]
     if not files:
         sys.exit("No matching sql/zz_*.sql files found.")

@@ -4,7 +4,7 @@
 #
 #   [1] git SYNC with origin/relaunch  (auto-reconcile - see below)
 #   [2] stop servers + back up binaries    (Windows locks running .exe)
-#   [3] apply modules\custom\sql\*.sql -> xi_relaunch
+#   [3] apply sql\zz*.sql overlay layer + modules\custom\sql\*.sql -> xi_relaunch
 #   [4] C++ rebuild (MSVC/Ninja) in C:\server\build
 #   [5] restart servers + health check
 #   [+] push local commit(s) back to origin (only after a GOOD build)
@@ -114,7 +114,21 @@ Start-Sleep 3
 foreach($e in $exes){ if(Test-Path "$root\$e"){ Copy-Item "$root\$e" "$root\$e.bak" -Force -EA SilentlyContinue } }
 
 # ---- [3] apply custom SQL ----
-Say '[3/5] Applying modules\custom\sql\*.sql to xi_relaunch...' 'Cyan'
+# [3a] the sql\zz*.sql OVERLAY layer (item mods / latents / carryforward).
+# Owner escalation 2026-07-12: this layer previously only landed via a manual
+# apply-custom-sql.bat run, so content like the 220 +4 reforge stat blocks
+# could sit in the repo while the live items examined blank. Every deploy now
+# applies it (idempotent INSERT IGNORE / ON DUPLICATE KEY UPDATE), BEFORE the
+# modules layer so module config overrides keep the final word. Non-fatal:
+# a failure here warns loudly but never blocks the deploy.
+Say '[3/5] Applying sql\zz*.sql overlay layer (apply_custom_sql.py)...' 'Cyan'
+$pyExe = 'C:\Program Files\Python312\python.exe'; if (-not (Test-Path $pyExe)) { $pyExe = 'python' }
+$env:XI_MYSQL_BIN = $mysql
+& $pyExe "$root\tools\apply_custom_sql.py" 2>&1 | ForEach-Object { Say ("   | " + $_) }
+if ($LASTEXITCODE -ne 0) { Say '   WARNING: zz overlay apply FAILED - item-stat overlays may be stale (run apply-custom-sql.bat by hand).' 'Yellow' }
+
+# [3b] modules\custom\sql (custom systems + config overrides - final word).
+Say '   Applying modules\custom\sql\*.sql to xi_relaunch...' 'Cyan'
 $sqls = Get-ChildItem "$root\modules\custom\sql\*.sql" -EA SilentlyContinue
 if ($sqls) {
   foreach($f in $sqls){

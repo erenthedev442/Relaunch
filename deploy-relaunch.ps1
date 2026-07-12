@@ -9,7 +9,7 @@
 #   [A] CODE   ->  vps-rebuild.ps1        (already on the box)
 #         git sync origin/relaunch (auto-reconcile, preserves on-disk edits)
 #         -> stop (schtasks /end FFXIRelaunch + kill exes, back up *.bak)
-#         -> apply modules\custom\sql\*.sql to xi_relaunch
+#         -> apply sql\zz*.sql overlay layer (item mods etc.) + modules\custom\sql\*.sql
 #         -> C++ rebuild (vcvars64 + cmake Ninja; restores *.bak on failure)
 #         -> restart (schtasks /run FFXIRelaunch) + health check
 #         -> push local commit(s) to origin after a good build
