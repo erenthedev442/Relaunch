@@ -48,16 +48,40 @@ def _item_name(token: str) -> str:
     return _titleize(t)
 
 
+# enum TOKEN -> item id, and item id -> display name; filled by _load_item_maps().
+# Resolving by ENUM ID (not by humanizing the token) is what fixes items whose
+# enum name doesn't match their item_basic name -- e.g. xi.item.UCHIGATANA_P1
+# (16978) is really "Uchigatana +1", so humanizing to "Uchigatana P1" produced a
+# dead search link (found 2026-07-13).
+_ENUM_ID: dict[str, int] = {}
+_ID_NAME: dict[int, str] = {}
+
+
+def _load_item_maps(repo_root: Path) -> None:
+    enum = resolve_source(repo_root, "scripts/enum/item.lua")
+    basic = resolve_source(repo_root, "sql/item_basic.sql")
+    if enum:
+        for m in re.finditer(r"^\s*([A-Z0-9_]+)\s*=\s*(\d+)",
+                             enum.read_text(encoding="utf-8", errors="replace"), re.M):
+            _ENUM_ID[m.group(1)] = int(m.group(2))
+    if basic:
+        for m in re.finditer(r"INSERT INTO `item_basic` VALUES \((\d+),\d+,'([^']+)'",
+                             basic.read_text(encoding="utf-8", errors="replace")):
+            _ID_NAME[int(m.group(1))] = _item_name(m.group(2))
+
+
 def _item_link(token: str) -> str:
     """Link a bare item token -> FFXIAH hover-tooltip anchor.
 
-    `token` is the item_basic internal name in Lua form (GUST_CLAYMORE, with
-    or without the xi.item. prefix). Its Title-Cased form is the exact
-    id-resolution key, so the hover stat-box image resolves — the same
-    pattern htbf/unity_concord use. Ambiguous names degrade to a BG-Wiki
-    search link with no image (never a hard 404).
+    Resolves the enum token to its numeric id (from scripts/enum/item.lua) and
+    renders by id, so the display name + stat-box image come from item_basic
+    even when the enum name differs (e.g. *_P1 -> +1). Falls back to a
+    name-search link only if the token isn't a known enum constant.
     """
     bare = re.sub(r"^xi\.item\.", "", token).strip()
+    iid = _ENUM_ID.get(bare.upper())
+    if iid is not None:
+        return item_anchor(_ID_NAME.get(iid, _item_name(bare)), item_id=iid)
     return item_anchor(_item_name(bare),
                        resolve_key=bare.replace("_", " ").title())
 
@@ -257,6 +281,7 @@ def _render_vigil_table(weapons: list[str]) -> str:
 # ── Entry point ─────────────────────────────────────────────────────────────
 
 def generate(repo_root: Path, docs_dir: Path) -> None:
+    _load_item_maps(repo_root)
     crate_path  = resolve_source(repo_root, "scripts/globals/nyzul/armoury_crate.lua")
     appr_path   = resolve_source(repo_root, "scripts/globals/appraisal.lua")
     nyzul_path  = resolve_source(repo_root, "scripts/globals/nyzul.lua")
