@@ -180,11 +180,37 @@ local function spawnWantedNm(player, nm, pos)
     local d = catalog.difficulty and catalog.difficulty[nm.tier]
     if d then
         if d.hp      then mob:setMaxHP(d.hp); mob:setHP(d.hp) end
-        if d.att     then mob:addMod(xi.mod.ATT, d.att) end
-        if d.acc     then mob:addMod(xi.mod.ACC, d.acc) end
-        if d.def     then mob:addMod(xi.mod.DEF, d.def) end
-        if d.eva     then mob:addMod(xi.mod.EVA, d.eva) end
+        if d.att     then mob:addMod(xi.mod.ATT,           d.att)  end
+        if d.acc     then mob:addMod(xi.mod.ACC,           d.acc)  end
+        if d.macc    then mob:addMod(xi.mod.MACC,          d.macc) end
+        if d.matt    then mob:addMod(xi.mod.MATT,          d.matt) end
+        if d.def     then mob:addMod(xi.mod.DEF,           d.def)  end
+        if d.eva     then mob:addMod(xi.mod.EVA,           d.eva)  end
+        if d.regain  then mob:addMod(xi.mod.REGAIN,        d.regain) end
+        if d.da      then mob:addMod(xi.mod.DOUBLE_ATTACK, d.da)  end
+        if d.ta and d.ta > 0 then mob:addMod(xi.mod.TRIPLE_ATTACK, d.ta) end
         if d.dmgMult then mob:setMobMod(xi.mobMod.BASE_DAMAGE_MULTIPLIER, d.dmgMult) end
+    end
+
+    -- Grace period: spawn UNTARGETABLE + pre-claimed to the paying player, then
+    -- flip to targetable after N seconds. Retail semantics -- the mob's name
+    -- reads red to the owner, un-attackable to anyone outside their alliance
+    -- (updateClaim locks it to the owner's alliance). Player report 2026-07-13:
+    -- 'NM spawned right on top of me, no time to summon trusts before aggro'.
+    mob:updateClaim(player)
+    local grace = catalog.graceSeconds or 0
+    if grace > 0 then
+        mob:setUntargetable(true)
+        player:printToPlayer(string.format(
+            '[Unity] %s awakens... you have %ds to prepare before it strikes!',
+            nm.label, grace), S)
+        mob:timer(grace * 1000, function(m)
+            if m and not m:isDead() then
+                m:setUntargetable(false)
+                m:updateEnmity(player)
+                player:printToPlayer(string.format('[Unity] %s attacks!', nm.label), S)
+            end
+        end)
     end
 
     -- Start the initial idle timer after spawn(), which can reset mob state.

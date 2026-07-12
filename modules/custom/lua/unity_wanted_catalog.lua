@@ -80,14 +80,24 @@ return {
     -- Difficulty scaling applied on spawn (unity_wanted.lua). The base mob HP is
     -- far too low -- ~10k even at T3, killable with auto-attacks -- so set an
     -- absolute HP floor + offensive mods per tier. TUNE HERE. (HP is int32, safe
-    -- to set large; att/acc/def/eva are int16 entity mods; dmgMult is the
-    -- BASE_DAMAGE_MULTIPLIER mobMod, 100 = normal, 200 = double.) Starting values
-    -- pending playtest -- dial per tier as needed.
+    -- to set large; att/acc/def/eva/matt/macc/regain/da/ta are int16 entity
+    -- mods; dmgMult is the BASE_DAMAGE_MULTIPLIER mobMod, 100 = normal.)
+    --
+    -- 2026-07-13 rebalance (player reports: 'auto-attacked to death', 'AFKed
+    -- Hidhaeg with tank fellow'). Geas-Fete pattern: layered offense --
+    -- regain for constant TP moves, DA/TA for spike damage, macc/matt so
+    -- casters bite. Tripled the previous multipliers.
     difficulty = {
-        [1] = { hp =  60000, att = 200, acc = 220, def = 120, eva =  60, dmgMult = 120 },
-        [2] = { hp = 250000, att = 400, acc = 400, def = 220, eva = 110, dmgMult = 150 },
-        [3] = { hp = 800000, att = 650, acc = 620, def = 350, eva = 160, dmgMult = 180 },
+        [1] = { hp =  180000, att =  600, acc = 200, macc = 200, matt =  60, def = 200, eva = 120, regain =  90, da = 45, ta =  0, dmgMult = 150 },
+        [2] = { hp =  750000, att = 1200, acc = 300, macc = 300, matt = 105, def = 350, eva = 200, regain = 150, da = 75, ta = 15, dmgMult = 175 },
+        [3] = { hp = 2400000, att = 1800, acc = 400, macc = 400, matt = 150, def = 500, eva = 260, regain = 240, da = 90, ta = 30, dmgMult = 200 },
     },
+
+    -- Grace period (seconds) after spawn during which the mob is untargetable
+    -- but already claimed to the paying player. Retail-style 'come prepare'
+    -- window (player report 2026-07-13: 'no time to summon trusts before it
+    -- aggros me'). Set to 0 to disable.
+    graceSeconds = 60,
 
     -- The 11 Unity leaders (xi.unityLeader). id = setUnityLeader() value.
     -- Display names kept short to fit the customMenu 150-byte/menu cap.
