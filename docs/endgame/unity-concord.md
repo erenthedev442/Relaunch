@@ -13,11 +13,11 @@
 Talk to the **Unity Board** in <!--npc:unity_board-->Purgonorgo Isle<!--/npc--> (main hall). From the board you can:
 
 - **Pledge** to one of the 11 Unity leaders (affects your affiliation — cosmetic for now)
-- **Register a Wanted NM** from the three tiers — the board warps you to the **Ethereal Junction** in its home zone
+- **Pick a Wanted NM** from the three tiers — the board warps you straight to the **Ethereal Junction** in its home zone
 - **Hunt the weekly featured NM** — pinned to the top of the menu, pays **double accolades** (see [Live Events](live-events.md))
 - **Browse the shop** to spend your accolades
 
-Registering a mark warps you to the **Ethereal Junction** in that NM's retail zone (each tier table below lists the zone). **Touch the junction** to expend the spawn cost in accolades and call the NM forth right there — just like retail's Wanted battles. NMs despawn after 120 seconds if no one engages them.
+Every junction is **self-service**: touch it at any time — no registration needed — pick the zone's Wanted NM, expend the spawn cost in accolades, and fight it right there, just like retail's Wanted battles. Chain-pop as many as your accolades allow, or stumble onto a junction in the wild and spawn its NM on the spot. The board is simply the fast way to travel to the right junction (each tier table below lists the zone). NMs despawn after 120 seconds if no one engages them.
 
 ---
 
@@ -167,6 +167,6 @@ Pledge to one of the **11 Unity leaders** from the board. Your pledge is cosmeti
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: f159a119ffa4 -->
-_Last updated: 2026-07-12 03:49 PDT_
+<!-- content-hash: 9dafb3b1734b -->
+_Last updated: 2026-07-12 03:53 PDT_
 <!-- DOCGEN:END id="last-updated" -->

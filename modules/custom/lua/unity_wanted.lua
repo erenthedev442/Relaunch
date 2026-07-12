@@ -2,14 +2,16 @@
 -- unity_wanted.lua
 -- Unity Concord "Wanted" battle system for Legendary Relaunch.
 --
--- Retail junction flow (owner request 2026-07-12):
---   * The hub Board (Celennia Memorial Library) REGISTERS a Wanted mark and
---     warps you to the Ethereal Junction in the NM's retail zone
---     (unity_junction_map.lua -- BG-wiki Category:Unity_Concord mapping).
---   * Touching that junction expends the accolades and pops the NM at the
---     junction. Stock junction NPCs get ON_TRIGGER listeners; 15 zones whose
---     retail junctions never made it into stock npc_list get a custom
---     junction spawned at a verified-safe anchor.
+-- Retail junction flow (owner request 2026-07-12, self-service rev same day):
+--   * The Ethereal Junction in each NM's retail zone is SELF-SERVICE: click
+--     it at ANY time -- no registration -- pick the zone's Wanted NM, expend
+--     the accolades, fight. Chain-pop as long as your accolades hold out;
+--     stumbling on a junction in the wild works too.
+--   * The hub Board is a taxi + info service: pick an NM and it warps you to
+--     the right junction (plus shop / pledge / +1 upgrades as before).
+--   * Stock junction NPCs get ON_TRIGGER listeners; 15 zones whose retail
+--     junctions never made it into stock npc_list get a custom junction
+--     spawned at a verified-safe anchor (unity_junction_map.lua).
 --   * onMobDeath awards accolades and clears state (unchanged).
 --   * NM stats/groups still live in zone 288 mob_groups; the engine's
 --     InstantiateDynamicMob(group, groupZone, targetZone) spawns them
@@ -27,14 +29,17 @@ local S       = xi.msg.channel.SYSTEM_3
 local ICON    = xi.icon and xi.icon.STAR_LARGE or ''
 local PAGE    = 5  -- NMs per menu page (stay ≤ 7 to respect customMenu 150-byte limit)
 
--- charVar keys
-local CV_NM = 'UW_NM'  -- catalog NM id registered for the junction pop (0 = none)
 
 -- Lookup tables
 local nmById = {}
+local nmsByZone = {}  -- junction zone id -> { nm, ... } (1-2 NMs per zone)
 for _, nm in ipairs(catalog.nms) do
     nmById[nm.id] = nm
-    if not jmap.byNm[nm.name] then
+    local zid = jmap.byNm[nm.name]
+    if zid then
+        nmsByZone[zid] = nmsByZone[zid] or {}
+        table.insert(nmsByZone[zid], nm)
+    else
         printf('[unity_wanted] WARN: %s has no junction zone mapping', nm.name)
     end
 end
@@ -82,8 +87,7 @@ local function spawnWantedNm(player, nm, pos)
             if e:getHP() > 0 then
                 player:printToPlayer(
                     string.format('[Unity] %s is already up, kupo! Wait for it to fall.', nm.label), S)
-                player:setCharVar(CV_NM, 0)
-                return
+                return 'refund'
             end
         end
     end
@@ -131,10 +135,9 @@ local function spawnWantedNm(player, nm, pos)
             if deadMob:getLocalVar('UW_Rewarded') == 1 then return end
 
             local owner = GetPlayerByName(ownerName)
-            if not owner or owner:getCharVar(CV_NM) ~= nm.id then return end
+            if not owner then return end
 
             deadMob:setLocalVar('UW_Rewarded', 1)
-            owner:setCharVar(CV_NM, 0)
 
             local reward = catalog.rewards[nm.tier]
             local isWeekly = (nm.id == weeklyFeaturedId())
@@ -162,9 +165,8 @@ local function spawnWantedNm(player, nm, pos)
         end,
     })
     if not mob then
-        player:setCharVar(CV_NM, 0)
         player:printToPlayer('[Unity] Spawn failed — zone may be full. Try again or contact a GM.', S)
-        return
+        return 'refund'
     end
 
     -- insertDynamicEntity only allocates and registers the entity. As with the
@@ -280,16 +282,15 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
         menu.title = string.format('[%s] Lv %d', nm.label, nm.minLv)
         menu.options = {
             {
-                string.format('Register & travel [pop: %d acc -> +%d]', cost, reward * bonus),
+                string.format('Travel to its junction [pop: %d acc -> +%d]', cost, reward * bonus),
                 function(p)
                     if not jz then
                         p:printToPlayer('[Unity] No junction is mapped for that mark, kupo!', S)
                         return
                     end
-                    p:setCharVar(CV_NM, nm.id)
                     local pt = jz.points[1]
                     p:printToPlayer(string.format(
-                        '[Unity] %s registered! Touch the Ethereal Junction to call it forth (%d accolades).',
+                        '[Unity] Touch the Ethereal Junction to call %s forth (%d accolades).',
                         nm.label, cost), S)
                     p:setPos(pt.x + 1.5, pt.y, pt.z + 1.5, pt.rot, zoneId)
                 end,
@@ -446,50 +447,49 @@ end)
 -- verified-safe anchor (unity_junction_map.lua, custom = true).
 -----------------------------------
 local function junctionMenu(player, zoneId, npc)
-    local nmId = player:getCharVar(CV_NM) or 0
-    local nm   = nmId ~= 0 and nmById[nmId] or nil
-
-    if not nm then
-        player:printToPlayer('[Unity] The junction hums with otherworldly energy. Register a Wanted mark at the Unity board first, kupo.', S)
+    local zoneNms = nmsByZone[zoneId]
+    if not zoneNms or #zoneNms == 0 then
+        player:printToPlayer('[Unity] The junction hums with otherworldly energy.', S)
         return
     end
 
-    local nmZone = jmap.byNm[nm.name]
-    if nmZone ~= zoneId then
-        local jz = nmZone and jmap.junctions[nmZone]
-        player:printToPlayer(string.format('[Unity] %s prowls elsewhere -- seek the Ethereal Junction in %s, kupo!',
-            nm.label, jz and string.gsub(jz.zoneName, '_', ' ') or '???'), S)
-        return
-    end
-
-    local cost   = catalog.costs[nm.tier]
-    local reward = catalog.rewards[nm.tier]
-    local bonus  = (nm.id == weeklyFeaturedId()) and 2 or 1
+    local weekly = weeklyFeaturedId()
     local have   = player:getCurrency('unity_accolades')
+    local opts   = {}
+
+    for _, nm in ipairs(zoneNms) do
+        local nmRef  = nm
+        local cost   = catalog.costs[nm.tier]
+        local reward = catalog.rewards[nm.tier]
+        local bonus  = (nm.id == weekly) and 2 or 1
+        local star   = (nm.id == weekly) and '*' or ''
+        table.insert(opts, {
+            string.format('%s%s [%d acc -> +%d]', nmRef.label, star, cost, reward * bonus),
+            function(p)
+                if p:getCurrency('unity_accolades') < cost then
+                    p:printToPlayer(string.format('[Unity] Need %d accolades (have %d), kupo.',
+                        cost, p:getCurrency('unity_accolades')), S)
+                    return
+                end
+                p:delCurrency('unity_accolades', cost)
+                local outcome = spawnWantedNm(p, nmRef, {
+                    x   = npc:getXPos() + 4.0,
+                    y   = npc:getYPos(),
+                    z   = npc:getZPos() + 4.0,
+                    rot = 128,
+                })
+                if outcome == 'refund' then
+                    p:addCurrency('unity_accolades', cost)
+                    p:printToPlayer(string.format('[Unity] Your %d accolades are returned.', cost), S)
+                end
+            end,
+        })
+    end
+    table.insert(opts, { 'Never mind', function() end })
 
     showMenu(player, {
-        title = string.format('[%s] Lv %d', nm.label, nm.minLv),
-        options = {
-            {
-                (have >= cost)
-                    and string.format('Expend %d acc -- call it forth! [+%d]', cost, reward * bonus)
-                    or  string.format('Need %d acc (have %d)', cost, have),
-                function(p)
-                    if p:getCurrency('unity_accolades') < cost then
-                        p:printToPlayer(string.format('[Unity] Need %d accolades (have %d), kupo.', cost, have), S)
-                        return
-                    end
-                    p:delCurrency('unity_accolades', cost)
-                    spawnWantedNm(p, nm, {
-                        x   = npc:getXPos() + 4.0,
-                        y   = npc:getYPos(),
-                        z   = npc:getZPos() + 4.0,
-                        rot = 128,
-                    })
-                end,
-            },
-            { 'Never mind', function() end },
-        },
+        title   = string.format('Ethereal Junction [%d acc]', have),
+        options = opts,
     })
 end
 
