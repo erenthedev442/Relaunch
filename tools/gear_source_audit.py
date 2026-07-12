@@ -10,7 +10,12 @@ slot, jobs, and WHERE it comes from -- split into:
                        the xi.item.* enum).
   * relaunch_source -- the CUSTOM relaunch overlay that references the item id:
                        the medal / Infamy vendors, HTBF, Omen, Ambuscade,
-                       Invasion, Voidwatch, Domain, the forges, etc.
+                       Voidwatch, Domain, the forges, Unity, etc. UPGRADE tiers
+                       are labelled "<System> upgrade" (distinct from the base
+                       drop/reward): e.g. the Unity NM drops Ababinili ("Unity")
+                       and its +1 is forged up ("Unity upgrade"). Covers Unity
+                       (+1), Reforge AF/Relic/Empy (+1/+2/+3), Weapon Forge
+                       stages, and Dynamis +4.
 
 Everything is read straight from the repo working tree (sql/*.sql +
 modules/custom/**), so the output reflects the CURRENT source -- including
@@ -317,8 +322,76 @@ for p in sorted(CUSTOM.glob("lua/*.lua")):
     for m in _ID_RE.finditer(text):
         _add_custom(int(m.group(1)), label)
 
+# --- UPGRADE paths -----------------------------------------------------------
+# Many systems have an item that is the +1/+2/+3/+4 (or forge stage) of a base:
+# the base is the DROP/REWARD, the tier is UPGRADED THROUGH the system. We tag
+# the base with the plain source and each tier with "<Source> upgrade" so the
+# two read differently (the Unity Ababinili / Ababinili +1 case, etc.).
+#
+# sys_base[id]    -> {plain labels}      (this id is a base entry of a system)
+# sys_upgrade[id] -> {"X upgrade", ...}  (this id is produced by upgrading)
+sys_base: dict[int, set] = {}
+sys_upgrade: dict[int, set] = {}
+
+def _mk_base(iid: int, label: str):
+    if iid in gear:
+        sys_base.setdefault(iid, set()).add(label)
+
+def _mk_up(iid: int, label: str):
+    if iid in gear:
+        sys_upgrade.setdefault(iid, set()).add(label)
+
+def _read_custom(name: str) -> str:
+    p = CUSTOM / "lua" / name
+    return p.read_text(encoding="utf-8", errors="replace") if p.exists() else ""
+
+# 1. Unity: each drop entry is { id = <base>, ... plus1 = <+1> }.
+for m in re.finditer(r"\{\s*id\s*=\s*(\d+)[^}]*?plus1\s*=\s*(\d+)",
+                     _read_custom("unity_wanted_catalog.lua")):
+    _mk_base(int(m.group(1)), "Unity")
+    _mk_up(int(m.group(2)), "Unity upgrade")
+
+# 2. Reforge (AF/Relic/Empy): slot arrays { base, +1, +2, +3 }. Bare 4-id
+#    arrays only appear as piece rows (cost tables use `plusN = <num>`).
+for m in re.finditer(r"\{\s*(\d{4,5})\s*,\s*(\d{4,5})\s*,\s*(\d{4,5})\s*,\s*(\d{4,5})\s*\}",
+                     _read_custom("reforge_catalog.lua")):
+    b, p1, p2, p3 = (int(g) for g in m.groups())
+    _mk_base(b, "Reforge")
+    for up in (p1, p2, p3):
+        _mk_up(up, "Reforge upgrade")
+
+# 3. Weapon Forge: s1 = base entry, s2/s3 (+ aeonic s3) = forged upgrades.
+wf = _read_custom("weapon_forge_catalog.lua")
+for m in re.finditer(r"\bs1\s*=\s*\{\s*id\s*=\s*(\d+)", wf):
+    _mk_base(int(m.group(1)), "Weapon Forge")
+for m in re.finditer(r"\b(?:s2|s3)\s*=\s*\{\s*id\s*=\s*(\d+)", wf):
+    _mk_up(int(m.group(1)), "Weapon Forge upgrade")
+for m in re.finditer(r"aeonic\s*=\s*\{\s*base\s*=\s*\{\s*id\s*=\s*(\d+)", wf):
+    _mk_base(int(m.group(1)), "Weapon Forge")
+
+# 4. Dynamis +4: reforge_plus4_map [ +3id ] = { result = <+4id> }.
+for m in re.finditer(r"result\s*=\s*(\d+)", _read_custom("reforge_plus4_map.lua")):
+    _mk_up(int(m.group(1)), "Dynamis +4 upgrade")
+
+# 5. Omen (Coelestrox): AF +2 / +3 via id = base + jobId (WAR=1 .. RUN=22).
+cox = (ROOT / "scripts" / "zones" / "Reisenjima" / "npcs" / "Coelestrox.lua")
+if cox.exists():
+    ctext = cox.read_text(encoding="utf-8", errors="replace")
+    for tier in ("plusTwo", "plusThree"):
+        m = re.search(tier + r"\s*=\s*\{([^}]*)\}", ctext)
+        if m:
+            for slot_m in re.finditer(r"\w+\s*=\s*(\d+)", m.group(1)):
+                base = int(slot_m.group(1))
+                for job_id in range(1, 23):
+                    _mk_up(base + job_id, "Omen upgrade")
+
 def relaunch_source(iid: int) -> str:
-    return " | ".join(sorted(item_custom.get(iid, ())))
+    labels = set(item_custom.get(iid, ()))
+    labels |= sys_base.get(iid, set())
+    for up in sys_upgrade.get(iid, ()):
+        labels.discard(up.rsplit(" upgrade", 1)[0])  # drop the plain form
+        labels.add(up)
+    return " | ".join(sorted(labels))
 
 # ---------------------------------------------------------------------------
 # Emit CSV
@@ -345,12 +418,14 @@ with out_path.open("w", newline="", encoding="utf-8") as fh:
         rows += 1
 
 n_retail   = sum(1 for iid in gear if retail_source(iid))
-n_relaunch = sum(1 for iid in gear if item_custom.get(iid))
+n_relaunch = sum(1 for iid in gear if relaunch_source(iid))
+n_upgrade  = sum(1 for iid in gear if sys_upgrade.get(iid))
 n_inv      = sum(1 for iid in gear if iid in invasion_pool)
 n_orphan   = sum(1 for iid in gear
-                 if not retail_source(iid) and not item_custom.get(iid) and iid not in invasion_pool)
+                 if not retail_source(iid) and not relaunch_source(iid) and iid not in invasion_pool)
 print(f"wrote {rows} gear rows -> {out_path}")
 print(f"  with a retail source:              {n_retail}")
 print(f"  with a curated relaunch source:    {n_relaunch}")
+print(f"    of which are an upgrade tier:    {n_upgrade}")
 print(f"  in the Invasion catch-all pool:    {n_inv}")
 print(f"  UNOBTAINABLE (none of the above):  {n_orphan}")
