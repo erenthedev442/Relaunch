@@ -107,6 +107,37 @@ Every zone reuses the same six-role chain — only the Beastmen change. The **Ru
 Collect the Rusted/Black ID Cards and your Mega-Boss Paragon Card, then take a reforged +3 AF/Relic piece to the Divergence Forge — see **The +3 → +4 Forge** below.
 <!-- DOCGEN:END id="divergence-loot" -->
 
+## Superior Lv5 weapon drops (Mega-Boss)
+
+<!-- DOCGEN:BEGIN id="divergence-su5" -->
+Every **Mega-Boss kill** drops **1 random Superior Lv5 weapon** from the pool below (one per job) into the treasure pool — the whole run can lot it. Any city, every clear.
+
+| Job | Weapon | Type |
+|---|---|---|
+| BLM | [Kaumodaki](https://www.ffxiah.com/item/22093) | Staff |
+| BLU | [Zomorrodnegar](https://www.ffxiah.com/item/21633) | Sword |
+| BRD | [Barfawc](https://www.ffxiah.com/item/21578) | Dagger |
+| BST | [Pangu](https://www.ffxiah.com/item/21717) | Axe |
+| COR | [Rostam](https://www.ffxiah.com/item/21581) | Dagger |
+| DNC | [Setan Kober](https://www.ffxiah.com/item/21584) | Dagger |
+| DRG | [Aram](https://www.ffxiah.com/item/21878) | Polearm |
+| DRK | [Father Time](https://www.ffxiah.com/item/21825) | Scythe |
+| GEO | [Bhima](https://www.ffxiah.com/item/22038) | Club |
+| MNK | [Sagitta](https://www.ffxiah.com/item/21523) | Hand-to-Hand |
+| NIN | [Fudo Masamune](https://www.ffxiah.com/item/21917) | Katana |
+| PLD | [Moralltach](https://www.ffxiah.com/item/21630) | Sword |
+| PUP | [Xiucoatl](https://www.ffxiah.com/item/21526) | Hand-to-Hand |
+| RDM | [Crocea Mors](https://www.ffxiah.com/item/21627) | Sword |
+| RNG | [Sharanga](https://www.ffxiah.com/item/22149) | Marksmanship |
+| RUN | [Morgelai](https://www.ffxiah.com/item/21669) | Great Sword |
+| SAM | [Fusenaikyo](https://www.ffxiah.com/item/21970) | Great Katana |
+| SCH | [Musa](https://www.ffxiah.com/item/22099) | Staff |
+| SMN | [Draumstafir](https://www.ffxiah.com/item/22096) | Staff |
+| THF | [Gandring](https://www.ffxiah.com/item/21575) | Dagger |
+| WAR | [Labraunda](https://www.ffxiah.com/item/21774) | Great Axe |
+| WHM | [Asclepius](https://www.ffxiah.com/item/22035) | Club |
+<!-- DOCGEN:END id="divergence-su5" -->
+
 ## The +3 → +4 Forge
 
 <!-- DOCGEN:BEGIN id="divergence-reforge" -->

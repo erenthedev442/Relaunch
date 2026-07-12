@@ -22,6 +22,39 @@ local STATUE_EXTEND = 1
 local BOSS_EXTEND   = 30
 local EXIT_DELAY_MS = 8000
 
+-- Superior Lv5 (Dynamis Divergence) weapons -- their retail home. On EVERY
+-- Mega-Boss kill, SU5_DROPS_PER_KILL random weapon(s) from this pool land in
+-- the treasure pool for the whole run to lot. (Owner decision 2026-07-12:
+-- moved here from the removed any-Abyssea-mob 5% roll in
+-- abyssea_su5_drops.lua.) The docgen dynamis_divergence.py PARSES this table
+-- (id/name/slot/job fields) -- keep the row shape.
+local SU5_DROPS_PER_KILL = 1
+local SU5_WEAPONS =
+{
+    { id = 21878, name = 'Aram',          slot = 'Polearm',      job = 'DRG' },
+    { id = 22035, name = 'Asclepius',     slot = 'Club',         job = 'WHM' },
+    { id = 21578, name = 'Barfawc',       slot = 'Dagger',       job = 'BRD' },
+    { id = 22038, name = 'Bhima',         slot = 'Club',         job = 'GEO' },
+    { id = 21627, name = 'Crocea Mors',   slot = 'Sword',        job = 'RDM' },
+    { id = 22096, name = 'Draumstafir',   slot = 'Staff',        job = 'SMN' },
+    { id = 21825, name = 'Father Time',   slot = 'Scythe',       job = 'DRK' },
+    { id = 21917, name = 'Fudo Masamune', slot = 'Katana',       job = 'NIN' },
+    { id = 21970, name = 'Fusenaikyo',    slot = 'Great Katana', job = 'SAM' },
+    { id = 21575, name = 'Gandring',      slot = 'Dagger',       job = 'THF' },
+    { id = 22093, name = 'Kaumodaki',     slot = 'Staff',        job = 'BLM' },
+    { id = 21774, name = 'Labraunda',     slot = 'Great Axe',    job = 'WAR' },
+    { id = 21630, name = 'Moralltach',    slot = 'Sword',        job = 'PLD' },
+    { id = 21669, name = 'Morgelai',      slot = 'Great Sword',  job = 'RUN' },
+    { id = 22099, name = 'Musa',          slot = 'Staff',        job = 'SCH' },
+    { id = 21717, name = 'Pangu',         slot = 'Axe',          job = 'BST' },
+    { id = 21581, name = 'Rostam',        slot = 'Dagger',       job = 'COR' },
+    { id = 21523, name = 'Sagitta',       slot = 'Hand-to-Hand', job = 'MNK' },
+    { id = 21584, name = 'Setan Kober',   slot = 'Dagger',       job = 'DNC' },
+    { id = 22149, name = 'Sharanga',      slot = 'Marksmanship', job = 'RNG' },
+    { id = 21526, name = 'Xiucoatl',      slot = 'Hand-to-Hand', job = 'PUP' },
+    { id = 21633, name = 'Zomorrodnegar', slot = 'Sword',        job = 'BLU' },
+}
+
 -- Armor slot -> bit in the player's 'DivergenceSlots' charVar.
 -- Body reforge unlocks once all four (1|2|4|8 = 15) are set.
 xi.divergence.slotBit = { feet = 1, hands = 2, head = 4, legs = 8 }
@@ -37,6 +70,24 @@ end
 local function isDead(instance, mobid)
     local mob = GetMobByID(mobid, instance)
     return mob ~= nil and not mob:isAlive()
+end
+
+-- Mega-Boss Su5 payout: roll SU5_DROPS_PER_KILL random weapons into the run's
+-- treasure pool (fires exactly once -- the caller's wave transition guards it).
+local function dropSu5(instance, cfg)
+    local chars  = instance:getChars()
+    local looter = chars and chars[1]
+    if not looter then
+        return
+    end
+    local boss = GetMobByID(cfg.megaBoss, instance)
+    for _ = 1, SU5_DROPS_PER_KILL do
+        local w = SU5_WEAPONS[math.random(#SU5_WEAPONS)]
+        looter:addTreasure(w.id, boss)
+        tell(instance, string.format(
+            '[Divergence] The Mega-Boss relinquishes a Superior weapon: %s (%s, %s)!',
+            w.name, w.slot, w.job))
+    end
 end
 
 -- Extend the timer (capped) and refresh the on-screen countdown for everyone.
@@ -110,6 +161,7 @@ xi.divergence.onInstanceTimeUpdate = function(instance, elapsed, cfg)
         end
     elseif wave == 2 then
         if isDead(instance, cfg.megaBoss) then
+            dropSu5(instance, cfg)
             if cfg.disjoined then
                 -- Wave 3: the Disjoined NM at the elemental circle. No time extension.
                 instance:setLocalVar('divWave', 3)

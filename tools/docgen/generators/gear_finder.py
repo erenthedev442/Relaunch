@@ -561,19 +561,17 @@ def _shop_ids(repo_root: Path) -> set[int]:
     return ids
 
 
-def _abyssea_su5_ids(repo_root: Path) -> set[int]:
-    """The Su5 (Dynamis Divergence) weapons that drop from ANY Abyssea mob kill via
-    modules/custom/lua/abyssea_su5_drops.lua (the SU5_WEAPONS pool). No droplist or
-    doc page, so tag them straight from the Lua like the reforge/!shop sources."""
-    text = _read(repo_root, 'modules/custom/lua/abyssea_su5_drops.lua')
+def _dynamis_su5_ids(repo_root: Path) -> set[int]:
+    """The Su5 (Dynamis Divergence) weapons that drop from the [D] Mega-Bosses
+    via the SU5_WEAPONS pool in scripts/globals/dynamis_divergence.lua (moved
+    there from the removed any-Abyssea-mob roll, 2026-07-12)."""
+    text = _read(repo_root, 'scripts/globals/dynamis_divergence.lua')
     if not text:
         return set()
-    m = re.search(r'SU5_WEAPONS\s*=\s*\{(.*?)\}', text, re.DOTALL)
+    m = re.search(r'SU5_WEAPONS\s*=\s*\n\{(.*?)\n\}', text, re.DOTALL)
     if not m:
         return set()
-    # Each pool entry is a leading "<id>," at line start (an optional -- comment may
-    # follow); anchor to line-start so any numbers inside comments can't leak in.
-    return {int(x) for x in re.findall(r'^\s*(\d+)\s*,', m.group(1), re.MULTILINE)}
+    return {int(x) for x in re.findall(r'\{\s*id\s*=\s*(\d+)', m.group(1))}
 
 
 # ---------------------------------------------------------------------------
@@ -822,11 +820,11 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # doc page. Runs last so an item also sold by a medal vendor keeps its tag.
     for iid in _shop_ids(repo_root):
         obtainable.setdefault(iid, '!shop')
-    # Su5 (Dynamis Divergence) weapons drop from ANY Abyssea mob kill via the
-    # abyssea_su5_drops module (no droplist/doc page). Gap-fill: a Su5 weapon also
+    # Su5 (Dynamis Divergence) weapons drop from the [D] Mega-Bosses (pool in
+    # scripts/globals/dynamis_divergence.lua). Gap-fill: a Su5 weapon also
     # sold somewhere keeps its more specific tag.
-    for iid in _abyssea_su5_ids(repo_root):
-        obtainable.setdefault(iid, 'Abyssea (Su5)')
+    for iid in _dynamis_su5_ids(repo_root):
+        obtainable.setdefault(iid, 'Dynamis [D] Mega-Boss')
     # Full source list per item: merge the coarse system label (vendor /
     # reforge / !shop / dungeon / augment-moogle, from obtainable[iid]) with the
     # COMPLETE drop-source list (live mob_droplist + every scripted drop table)

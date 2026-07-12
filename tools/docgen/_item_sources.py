@@ -263,20 +263,22 @@ def _htbf_drops(repo_root: Path) -> dict[int, list[dict]]:
 
 
 # ---------------------------------------------------------------------------
-# Abyssea Su5 weapon drops (5% per kill, 1 random of 22 weapons)
+# Su5 weapon drops (Dynamis [D] Mega-Boss: N random per kill, pool of 22)
 # ---------------------------------------------------------------------------
 
-def _abyssea_su5_drops(repo_root: Path) -> dict[int, list[dict]]:
-    p = resolve_source(repo_root, "modules/custom/lua/abyssea_su5_drops.lua")
+def _dynamis_su5_drops(repo_root: Path) -> dict[int, list[dict]]:
+    p = resolve_source(repo_root, "scripts/globals/dynamis_divergence.lua")
     if not p:
         return {}
-    m = re.search(r"SU5_WEAPONS\s*=\s*\{([^}]+)\}",
-                  p.read_text(encoding="utf-8", errors="replace"))
+    text = p.read_text(encoding="utf-8", errors="replace")
+    m = re.search(r"SU5_WEAPONS\s*=\s*\n\{(.*?)\n\}", text, re.DOTALL)
     if not m:
         return {}
-    ids = [int(x) for x in re.findall(r"(\d+)", m.group(1))]
-    pct = round(5.0 / max(len(ids), 1), 1)
-    return {iid: [{"mob": "Any mob (Abyssea)", "zone": "Abyssea",
+    ids = [int(x) for x in re.findall(r"\{\s*id\s*=\s*(\d+)", m.group(1))]
+    per = re.search(r"SU5_DROPS_PER_KILL\s*=\s*(\d+)", text)
+    per_kill = int(per.group(1)) if per else 1
+    pct = round(100.0 * per_kill / max(len(ids), 1), 1)
+    return {iid: [{"mob": "Mega-Boss (any city)", "zone": "Dynamis Divergence",
                     "pct": pct}] for iid in ids}
 
 
@@ -398,7 +400,7 @@ def collect_drop_sources(repo_root: Path) -> tuple[dict[int, list[dict]], bool]:
         drops.setdefault(iid, []).extend(entries)
 
     # Remaining scripted drop sources.
-    for src in (_htbf_drops, _abyssea_su5_drops, _catalyst_mob_drops,
+    for src in (_htbf_drops, _dynamis_su5_drops, _catalyst_mob_drops,
                 _voidwatch_drops):
         for iid, entries in src(repo_root).items():
             drops.setdefault(iid, []).extend(entries)

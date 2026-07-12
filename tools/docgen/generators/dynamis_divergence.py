@@ -365,6 +365,32 @@ def _city_of_label(label: str) -> str:
 
 # ---------------------------------------------------------------------------
 
+def _render_su5(engine_text: str) -> str:
+    """Superior Lv5 Mega-Boss weapon pool from SU5_WEAPONS in the engine
+    (scripts/globals/dynamis_divergence.lua) — parsed, never mirrored."""
+    m = re.search(r"SU5_WEAPONS\s*=\s*\n\{(.*?)\n\}", engine_text, re.DOTALL)
+    rows = re.findall(
+        r"\{\s*id\s*=\s*(\d+),\s*name\s*=\s*'([^']+)',\s*slot\s*=\s*'([^']+)',\s*job\s*=\s*'([^']+)'",
+        m.group(1)) if m else []
+    if not rows:
+        raise RuntimeError("SU5_WEAPONS not parsed from dynamis_divergence.lua "
+                           "— table moved/reshaped, update _render_su5.")
+    per = re.search(r"SU5_DROPS_PER_KILL\s*=\s*(\d+)", engine_text)
+    per_kill = int(per.group(1)) if per else 1
+    n = per_kill
+    lines = [
+        f"Every **Mega-Boss kill** drops **{n} random Superior Lv5 weapon{'s' if n != 1 else ''}** "
+        f"from the pool below (one per job) into the treasure pool — the whole run can lot it. "
+        f"Any city, every clear.",
+        "",
+        "| Job | Weapon | Type |",
+        "|---|---|---|",
+    ]
+    for iid, name, slot, job in sorted(rows, key=lambda r: r[3]):
+        lines.append(f"| {job} | [{name}](https://www.ffxiah.com/item/{iid}) | {slot} |")
+    return "\n".join(lines)
+
+
 def generate(repo_root: Path, docs_dir: Path) -> None:
     portals_src = resolve_source(repo_root, "modules/custom/lua/Dynamis_Divergence.lua")
     if portals_src is None:
@@ -410,6 +436,8 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ("divergence-access", _render_access(c)),
         ("divergence-waves", _render_waves(c)),
         ("divergence-loot", _render_loot(cities, c["statue_extend"])),
+        ("divergence-su5", _render_su5(engine_src.read_text(encoding="utf-8", errors="replace")
+                                       if engine_src is not None else "")),
         ("divergence-reforge", _render_forge(c)),
     ]
     written = sum(1 for marker, content in blocks if write_between_markers(page, marker, content))
