@@ -3,7 +3,7 @@
 The **Cross-Job Ability Trainer** in <!--npc:cross_job_ability-->Purgonorgo Isle<!--/npc--> sells permanent ability licenses that let you use abilities from other jobs on **any main job** — no subjob required.
 
 !!! tip "Summary"
-    Find the Trainer in <!--npc:cross_job_ability-->Purgonorgo Isle<!--/npc-->. Pay **10,000,000 gil per ability** (one-time, per-character). Activate via `/ja "Ability Name" <me>`. The ability fires on any job you play, with normal recast timers.
+    Find the Trainer in <!--npc:cross_job_ability-->Purgonorgo Isle<!--/npc-->. Pay **<!--luaconst:cross_job_ability_catalog.lua:GIL_COST:comma-->10,000,000<!--/luaconst--> gil per ability** (one-time, per-character). Activate via `/ja "Ability Name" <me>`. The ability fires on any job you play, with normal recast timers.
 
 ---
 
@@ -11,7 +11,7 @@ The **Cross-Job Ability Trainer** in <!--npc:cross_job_ability-->Purgonorgo Isle
 
 1. **Talk to the Cross-Job Ability Trainer** in the Utility cluster in <!--npc:cross_job_ability-->Purgonorgo Isle<!--/npc-->.
 2. **Browse by job group** — the menu is organized into groups (Warrior, Samurai, etc.).
-3. **Confirm purchase** — 10,000,000 gil is deducted and the license is permanently recorded to your character.
+3. **Confirm purchase** — <!--luaconst:cross_job_ability_catalog.lua:GIL_COST:comma-->10,000,000<!--/luaconst--> gil is deducted and the license is permanently recorded to your character.
 4. **Use a macro** — `/ja "Meditate" <me>` (or whichever ability). The server validates the macro against your unlocked licenses and fires the ability.
 
 ### Important Notes
@@ -27,7 +27,7 @@ The **Cross-Job Ability Trainer** in <!--npc:cross_job_ability-->Purgonorgo Isle
 ## Available Abilities
 
 <!-- DOCGEN:BEGIN id="cross-job-abilities-catalog" -->
-_Each ability costs **10,000,000 gil** — a one-time, per-character, per-ability purchase. After buying, activate via macro: `/ja "Ability Name" <me>`. Purchased abilities do **not** appear in the in-game Job Abilities menu (the menu is client-side); they are enforced server-side and their recast timers work normally._
+_Each ability costs **<!--luaconst:cross_job_ability_catalog.lua:GIL_COST:comma-->10,000,000<!--/luaconst--> gil** — a one-time, per-character, per-ability purchase. After buying, activate via macro: `/ja "Ability Name" <me>`. Purchased abilities do **not** appear in the in-game Job Abilities menu (the menu is client-side); they are enforced server-side and their recast timers work normally._
 
 _**9 abilities** available across 4 job groups._
 

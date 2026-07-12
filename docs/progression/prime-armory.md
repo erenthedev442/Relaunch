@@ -3,7 +3,7 @@
 The **Prime Armory** in <!--npc:prime_armory-->Purgonorgo Isle<!--/npc--> hands out **Prime weapons** — the apex weapon tier on the server. Each one comes with its own signature weapon skill, unlocked the moment you equip it.
 
 !!! tip "Summary"
-    Bring **1 Prime Voucher** and **750,000,000 gil** to the Prime Armory in <!--npc:prime_armory-->Purgonorgo Isle<!--/npc--> and claim any one of the **12 Prime weapons** — best-in-slot gear, each with a unique weapon skill that unlocks on equip.
+    Bring **1 Prime Voucher** and **<!--luaconst:PrimeArmory_NPC.lua:GIL_COST:comma-->750,000,000<!--/luaconst--> gil** to the Prime Armory in <!--npc:prime_armory-->Purgonorgo Isle<!--/npc--> and claim any one of the **12 Prime weapons** — best-in-slot gear, each with a unique weapon skill that unlocks on equip.
 
 ## Where to find it
 
@@ -14,7 +14,7 @@ The **Prime Armory** is in <!--npc:prime_armory-->Purgonorgo Isle<!--/npc--> (`!
 ## The cost
 
 <!-- DOCGEN:BEGIN id="prime-armory-cost" -->
-Forging a Prime takes two things: **all 5 Prime Weapon Trials** ([see the trials](prime-trials.md)) complete — Trial 3 is where your single **Prime Voucher** is consumed — and **750,000,000 gil** paid at the forge. You claim **one Prime weapon per character**, so choose the one that fits your main job.
+Forging a Prime takes two things: **all 5 Prime Weapon Trials** ([see the trials](prime-trials.md)) complete — Trial 3 is where your single **Prime Voucher** is consumed — and **<!--luaconst:PrimeArmory_NPC.lua:GIL_COST:comma-->750,000,000<!--/luaconst--> gil** paid at the forge. You claim **one Prime weapon per character**, so choose the one that fits your main job.
 
 Make sure you have the gil and a free inventory slot before you confirm, or the Armory won't be able to hand the weapon over.
 <!-- DOCGEN:END id="prime-armory-cost" -->

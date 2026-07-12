@@ -205,11 +205,11 @@ Boosts are **permanent and stacking** — they re-apply automatically every time
 - **The Nightmare Court must be re-cleared each cycle.** A kill from a previous ascension does not carry over.
 - **Per-job isolation.** AP earned on Warrior stays on Warrior; AP earned on Black Mage stays on Black Mage. You cannot transfer AP between jobs.
 - **Boosts apply on main job only.** Set your Prestige job as main before zoning in to activate its bonuses.
-- **No level cap.** Prestige is an infinite long-term chase. The mark cost plateaus at 3,000 per ascension, so the commitment is a steady 3,000 marks per cycle indefinitely.
+- **No level cap.** Prestige is an infinite long-term chase. The mark cost plateaus at the cap shown in the economy table above, so the commitment per cycle is steady indefinitely.
 
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 88e2ad1c94f4 -->
-_Last updated: 2026-07-05 07:37 UTC_
+<!-- content-hash: 29d3e944d356 -->
+_Last updated: 2026-07-11 21:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

@@ -80,8 +80,37 @@ EXCLUDED = (
 )
 
 # (page, exact snippet) pairs reviewed and accepted as non-drifting. Every
-# entry needs a reason. Prefer FIXING the page over allowlisting.
+# entry needs a reason. Prefer FIXING the page over allowlisting — use a
+# {{lua:...}} / {{setting:...}} token or point prose at the generated table.
 FACT_ALLOWLIST: dict[tuple[str, str], str] = {
+    ("changes/index.md", "30,000"):
+        "engine enmity cap (CE/VE clamp) — C++ constant, not a tunable catalog value",
+    ("endgame/casino.md", "25,000 gil"):
+        "worked example illustrating the generated 2x even-money payout table",
+    ("progression/hnm.md", "38 Hunt Marks"):
+        "Rank IV per-kill marks; duplicates the generated Hunting League ladder (verified 2026-07-11)",
+    ("progression/hunters-guild.md", "150 marks"):
+        "apex reforge NM award, hunters_guild_catalog.lua table value (verified 2026-07-11)",
+    ("progression/index.md", "2420"):
+        "illustrative Shinryu DEF example from hunting_league_catalog.lua (verified 2026-07-11)",
+    ("progression/index.md", "2700"):
+        "illustrative Leaping Lizzy ATT example from hunting_league_catalog.lua (verified 2026-07-11)",
+    ("progression/index.md", "5,300 marks"):
+        "arithmetic sum of the four rank-unlock gates shown in the generated ladder",
+    ("progression/index.md", "1000"):
+        "retail Hunt Registry scyld cap — stock LSB behaviour, not custom-tuned",
+    ("progression/job-rebirth.md", "2,100"):
+        "retail total job points per job — engine constant",
+    ("reference/ws-vs-retail.md", "131,071"):
+        "17-bit client damage-display cap — engine constant",
+    ("reference/ws-vs-retail.md", "250000"):
+        "illustrative chat-whisper example, not a tuned value",
+    ("progression/login-rewards.md", "75 marks"):
+        "verbatim streak chat-message example; the streak table on this page is generated",
+    ("changes/index.md", "50,000"):
+        "retail comparison value (Prismatic Hourglass) — static by design",
+    ("progression/hunters-guild.md", "1,540"):
+        "derived kill-count estimate, not a tuned value",
 }
 
 _BLOCK_RE = re.compile(
@@ -119,6 +148,10 @@ def _published_pages(docs_dir: Path):
 
 _EMBED_RE = re.compile(r"<(script|style)\b.*?</\1>", re.DOTALL | re.IGNORECASE)
 _YEAR_RE = re.compile(r"^20\d\d$")
+# Inline-injected spans are SYNCED content (settings_inject, lua_const_inject,
+# npc_location_inject rewrite them every run) — blank them before scanning.
+_INJECTED_RE = re.compile(
+    r"<!--(setting|luaconst|npc):[^>]*-->.*?<!--/\1-->", re.DOTALL)
 
 
 def _hand_prose(text: str) -> list[tuple[int, str]]:
@@ -134,6 +167,7 @@ def _hand_prose(text: str) -> list[tuple[int, str]]:
 
     stripped = _BLOCK_RE.sub(blank, text)
     stripped = _EMBED_RE.sub(blank, stripped)
+    stripped = _INJECTED_RE.sub("", stripped)
     out = []
     for i, line in enumerate(stripped.splitlines(), 1):
         if _SKIP_LINE.match(line):
@@ -172,7 +206,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:  # noqa: ARG001
                 if _YEAR_RE.match(snippet):
                     continue  # bare calendar year, not a tunable
                 if (rel, snippet) in FACT_ALLOWLIST:
-                    continue
+                    break  # reviewed line — don't re-flag it via a weaker pattern
                 naked.append((rel, lineno, kind, snippet))
                 break  # one report per line is enough
 

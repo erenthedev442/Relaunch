@@ -17,7 +17,7 @@ Talk to the **Daily Board** NPC in **Purgonorgo Isle** to pick up 3 objectives t
     Progress is measured as **current value − baseline**, where the baseline is snapped the first time you talk to the NPC each day. Activities completed before your first visit that day don't count toward today's objectives. Just talk to the NPC before you start grinding.
 
 !!! note "Daily Hunt Mark cap"
-    The Daily Board pays a maximum of **750 Hunt Marks per UTC day** total across all three objectives. Objectives that would push you over the cap pay only the remainder.
+    The Daily Board pays a maximum of **<!--luaconst:daily_board.lua:DAILY_HL_CAP-->750<!--/luaconst--> Hunt Marks per UTC day** total across all three objectives. Objectives that would push you over the cap pay only the remainder.
 
 ## Objectives rotate daily
 

@@ -14,7 +14,7 @@ Re-logging or zoning does not trigger it again.
 
 A system message confirms the bonus a few seconds after you connect:
 
-> *[Daily Bonus] +50 Hunt Marks for logging in today! Come back tomorrow for more.*
+> *[Daily Bonus] +<!--luaconst:daily_login_bonus.lua:DAILY_BONUS-->50<!--/luaconst--> Hunt Marks for logging in today! Come back tomorrow for more.*
 
 There is no action required. Just log in.
 

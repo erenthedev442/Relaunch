@@ -24,7 +24,7 @@ Meat is the ultimate meat-shield:
 
 ## How to unlock
 
-Reach **Hunting League Rank 2 + 2,000 Hunt Marks**, then travel to <!--npc:void_keeper-->Purgonorgo Isle<!--/npc-->, find the **Void Keeper**, and bind Meat to your service. The marks are spent once; the binding is permanent and per character. In your Trust menu it appears as **"Excenmille"** — cast it, and the tiny Tarutaru answers.
+Reach **Hunting League Rank 2** with the Hunt-Marks price shown above banked, then travel to <!--npc:void_keeper-->Purgonorgo Isle<!--/npc-->, find the **Void Keeper**, and bind Meat to your service. The marks are spent once; the binding is permanent and per character. In your Trust menu it appears as **"Excenmille"** — cast it, and the tiny Tarutaru answers.
 
 ---
 

@@ -3,7 +3,7 @@
 A rotating set of weekly objectives that *amplify* your normal hunting. Every Monday at midnight UTC, **5 random objectives** roll from a larger pool. Just play — kills, augments, rank-ups, and Game Master clears all push your progress automatically. Completion pays the reward instantly. Sweep all 5 in one week for a meta-bonus and a permanent sweep counter.
 
 !!! tip "Summary"
-    Talk to the **Hunt Board** NPC in **Purgonorgo Isle** (or type `!weekly` anywhere). See your 5 weekly objectives. Hunt as you normally would — progress is automatic. Each completion auto-claims its reward. Clear all 5 in a week for +5,000 Hunt Marks and a +1 to your lifetime sweep counter (leaderboard-tracked).
+    Talk to the **Hunt Board** NPC in **Purgonorgo Isle** (or type `!weekly` anywhere). See your 5 weekly objectives. Hunt as you normally would — progress is automatic. Each completion auto-claims its reward. Clear all 5 in a week for the completion bonus (board table below) and a +1 to your lifetime sweep counter (leaderboard-tracked).
 
 ## How it works
 
@@ -20,7 +20,7 @@ A rotating set of weekly objectives that *amplify* your normal hunting. Every Mo
 |---|---|
 | Objectives rolled per week | 5 |
 | Reset cadence | Every Monday 00:00 UTC (ISO week) |
-| All-cleared bonus | **5,000 Hunt Marks** + lifetime sweep counter |
+| All-cleared bonus | a large Hunt Marks bonus (shown in the board table below) + lifetime sweep counter |
 | Reset trigger | Lazy — first player interaction in a new week auto-rolls |
 <!-- DOCGEN:END id="weekly-hunts-config" -->
 

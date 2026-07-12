@@ -5,15 +5,15 @@
 The **Augment Moogle** at <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc--> lets you stamp custom augments onto any piece of equipment by trading a catalyst item that maps 1:1 to a specific augment.
 
 !!! tip "Summary"
-    Talk to the **Augment Moogle** at <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc--> (z = -15, in the row with the other moogles). Trade **1 gear piece + 1-5 catalyst items + 10,000 gil**. Each catalyst writes one augment line onto the gear. Up to 5 augments per piece — the engine's 5 augment slots.
+    Talk to the **Augment Moogle** at <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc--> (z = -15, in the row with the other moogles). Trade **1 gear piece + 1-5 catalyst items + <!--luaconst:Augment_Moogle.lua:GIL_COST:comma-->10,000<!--/luaconst--> gil**. Each catalyst writes one augment line onto the gear. Up to 5 augments per piece — the engine's 5 augment slots.
 
 ## How it works
 
 1. **Pick the augments** you want from the catalog table below.
 2. **Acquire the catalyst items** for those augments. Each augment has a unique catalyst — for example, `bismuth_ingot` maps to `HP+1`.
-3. **Talk to the Augment Moogle** with the gear piece, the catalysts, and at least **10,000 gil** in your inventory.
+3. **Talk to the Augment Moogle** with the gear piece, the catalysts, and at least **<!--luaconst:Augment_Moogle.lua:GIL_COST:comma-->10,000<!--/luaconst--> gil** in your inventory.
 4. **Trade** the gear + catalysts. The moogle holds them and shows you what's about to be applied.
-5. **Confirm** in the menu. The moogle deducts 10,000 gil and hands the gear back with the augments stamped on it.
+5. **Confirm** in the menu. The moogle deducts <!--luaconst:Augment_Moogle.lua:GIL_COST:comma-->10,000<!--/luaconst--> gil and hands the gear back with the augments stamped on it.
 
 Cancel at any time during the confirm menu to get everything (gear + catalysts) back.
 
@@ -23,7 +23,7 @@ Cancel at any time during the confirm menu to get everything (gear + catalysts) 
 - **Duplicates are allowed — and encouraged.** Each catalyst writes one augment line, so stacking the same catalyst multiplies that stat (5 of one catalyst = 5 lines of that augment), or mix different catalysts on one piece.
 - **The catalyst is consumed** on apply. Gear is not consumed; it's stamped and returned.
 - **Re-augmenting keeps crystalized slots.** The moogle rebuilds the piece's *non-crystalized* augments from the catalysts you trade — any slot that has **crystalized** (locked) is preserved and doesn't need its catalyst again. Every other augment already on the piece is replaced, so bring a catalyst for each line you still want.
-- **Perfect rolls can crystalize (lock).** When a fresh line rolls its **maximum** value (a crit guarantees this), it gets a second roll — by **Augment Sage rank**, 5% → 50% — to **crystalize**, locking it so neither re-augmenting nor `!reroll` can change or remove it. **Scour** (trade the gear *alone*, 25,000 gil) strips every augment, crystalized included, to start anew. Full details: [Crystalize: lock in your best rolls](augmenting-guide.md#crystalize-lock-in-your-best-rolls).
+- **Perfect rolls can crystalize (lock).** When a fresh line rolls its **maximum** value (a crit guarantees this), it gets a second roll — by **Augment Sage rank**, 5% → 50% — to **crystalize**, locking it so neither re-augmenting nor `!reroll` can change or remove it. **Scour** (trade the gear *alone*, <!--luaconst:Augment_Moogle.lua:SCOUR_GIL_COST:comma-->25,000<!--/luaconst--> gil) strips every augment, crystalized included, to start anew. Full details: [Crystalize: lock in your best rolls](augmenting-guide.md#crystalize-lock-in-your-best-rolls).
 
 ## Known display limitation
 

@@ -72,7 +72,32 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
 
     entries.sort(key=lambda x: x["label"])
     json_data = json.dumps(entries, separators=(",", ":"))
-    block = f"<script>window._augCalcData={json_data};</script>"
+
+    # Tier constants for the page's calculator JS — parsed from the same Lua
+    # the server runs (Augment_Moogle.lua slices/gates, augment_sage_catalog
+    # crit ladder) so a tier retune can't silently break the calculator. The
+    # static JS reads window._augCalcTiers with its previous values as
+    # fallback.
+    tiers_js = ""
+    moogle = resolve_source(repo_root, "modules/custom/lua/Augment_Moogle.lua")
+    sage = resolve_source(repo_root, "modules/custom/lua/augment_sage_catalog.lua")
+    if moogle and sage:
+        mtext = moogle.read_text(encoding="utf-8", errors="replace")
+        stext = sage.read_text(encoding="utf-8", errors="replace")
+        slices = [[int(a), int(b)] for a, b in re.findall(
+            r"\{\s*min\s*=\s*(\d+),\s*max\s*=\s*(\d+)\s*\}", mtext)]
+        unlocks = re.findall(r"\btier\s*=\s*\d+,\s*unlock\s*=\s*(?:'([^']+)'|\"([^\"]+)\")", mtext)
+        unlocks = [a or b for a, b in unlocks]
+        crit_m = re.search(r"catalog\.critChance\s*=\s*\{([^}]*)\}", stext)
+        crit = [float(x) for x in re.findall(r"[\d.]+", crit_m.group(1))] if crit_m else []
+        if len(slices) == 5 and len(unlocks) == 5 and len(crit) == 6:
+            tiers = {"slices": slices, "unlocks": unlocks, "crit": crit}
+            tiers_js = f"<script>window._augCalcTiers={json.dumps(tiers, separators=(',', ':'))};</script>"
+        else:
+            print(f"  [augment_calculator] WARN: tier parse degraded "
+                  f"(slices={len(slices)}, unlocks={len(unlocks)}, crit={len(crit)}) "
+                  f"— _augCalcTiers not emitted; page JS falls back to baked-in values")
+    block = f"<script>window._augCalcData={json_data};</script>{tiers_js}"
 
     page = docs_dir / "progression" / "augment-calculator.md"
     wrote = write_between_markers(page, "augment-calc-data", block)

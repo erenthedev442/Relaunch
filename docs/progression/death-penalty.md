@@ -1,6 +1,6 @@
 # Death Penalty
 
-Dying inside **Escha ZiTah** — the Hunting League zone — costs you **10 Hunt Marks**. This is the only zone on the server with a mark deduction on death.
+Dying inside **Escha ZiTah** — the Hunting League zone — costs you **<!--luaconst:death_penalty.lua:PENALTY-->10<!--/luaconst--> Hunt Marks**. This is the only zone on the server with a mark deduction on death.
 
 ---
 
@@ -17,7 +17,7 @@ Dying inside **Escha ZiTah** — the Hunting League zone — costs you **10 Hunt
 
 When the penalty applies, you see:
 
-> *[Hunting League] Fallen in the hunt zone: −10 marks! (Balance: X)*
+> *[Hunting League] Fallen in the hunt zone: −<!--luaconst:death_penalty.lua:PENALTY-->10<!--/luaconst--> marks! (Balance: X)*
 
 ---
 

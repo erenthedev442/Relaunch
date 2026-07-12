@@ -61,7 +61,7 @@ She's also extremely durable — near-maxed HP and MP, and **immune to status ai
 
 ## How to unlock her
 
-1. Reach **Hunting League Rank 3 + 3,000 Hunt Marks**.
+1. Reach **Hunting League Rank 3** with the Hunt-Marks price shown above banked.
 2. Travel to <!--npc:void_keeper-->Purgonorgo Isle<!--/npc-->.
 3. Find the **Void Keeper** and speak with him.
 4. Choose to bind Gemma to your service.

@@ -294,6 +294,10 @@ def _render(f: dict, s: dict[str, dict[str, str]], roster_md: str) -> str:
     trust_costs = "; ".join(
         f"{name}: Rank {rank} + {cost:,}" for name, rank, cost in f["trusts"]
     ) or "unlocked via Hunting League rank + Hunt Marks"
+    # Names from the parsed trust_skoll.lua roster so a rename/addition lands
+    # here; the flavor line stays hand-tuned copy.
+    trust_names = ", ".join(f"**{name}**" for name, _, _ in f["trusts"]) \
+        or "**Gemma**, **Meat**, **Corvus**"
     vw_zones = f"{f['vwZones']} overworld zones" if f["vwZones"] else "overworld zones across Vana'diel"
     aug_count = f"{f['augCount']}" if f["augCount"] else "hundreds of"
     ach_count = f"{f['achCount']}" if f["achCount"] else "dozens of"
@@ -376,7 +380,7 @@ Retail FFXI is a masterpiece buried under 20 years of time-gating. Most private 
 
 :calendar: **No dead content** — A five-objective Weekly Hunt Board and a three-objective Daily Board reset on a clock, so there's always a fresh reason to log in.
 
-:wolf: **Custom Trusts** — Allies you won't find on retail: **Gemma** (a full healer / buffer / debuffer in a deceptively small package) and **Meat** (an unkillable wall that never drops aggro).
+:wolf: **Custom Trusts** — Allies you won't find on retail: {trust_names} — from a full healer / buffer / debuffer in a deceptively small package to an unkillable wall that never drops aggro, each earned through Hunting League progression.
 
 :coin: **Living economy** — The auction house is never empty: a market-maker keeps thousands of gear listings stocked around the clock — a built-in price floor and gil sink — so you can actually *buy* your upgrades.
 

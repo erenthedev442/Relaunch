@@ -94,6 +94,7 @@ def main() -> int:
         item_index,
         leaderboards,
         login_rewards,
+        lua_const_inject,
         npc_location_inject,
         player_profiles,
         prestige,
@@ -431,6 +432,9 @@ def main() -> int:
         # docs/, so its {{setting:X}} -> live-value substitutions land on
         # the final text (including content other generators just wrote).
         ("settings_inject",  settings_inject),
+        # lua_const_inject: same idea for named module constants ({{lua:...}}),
+        # so hand prose can state tuned prices/costs without drifting.
+        ("lua_const_inject", lua_const_inject),
         # npc_location_inject substitutes {{npc:KEY}} -> the NPC's live hub zone,
         # same idea as settings_inject for rates. Runs last so locations land on
         # final text (incl. anything other generators just wrote).

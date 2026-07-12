@@ -83,9 +83,9 @@ The `Augment_Count` charvar is bumped by **+1 every time you confirm an augmenta
 
 ## Track 2 — NM Affinities
 
-Each augment in the catalog has a thematic category, unlocked by a **signature NM**. Defeating that NM drops its **unique trophy**; bring the trophy to the Augment Sage's _Register NM Affinity_ menu to permanently unlock the affinity. Registration **costs Hunting League Rank 3 and 1,000 Hunt Marks**, and consumes the trophy. From that point on, any augment whose category matches one of your unlocked affinities is rolled twice, keeping the better result.
+Each augment in the catalog has a thematic category, unlocked by a **signature NM**. Defeating that NM drops its **unique trophy**; bring the trophy to the Augment Sage's _Register NM Affinity_ menu to permanently unlock the affinity. Registration **costs Hunting League Rank 3 and <!--luaconst:augment_affinity_catalog.lua:affinityMarkCost:comma-->1,000<!--/luaconst--> Hunt Marks**, and consumes the trophy. From that point on, any augment whose category matches one of your unlocked affinities is rolled twice, keeping the better result.
 
-You can register affinities in any order once you reach Hunting League Rank 3 — each costs 1,000 Hunt Marks plus the NM's trophy. Affinities are permanent once registered. In the menu, **[ ]** means locked, **[!]** means you're holding that NM's trophy and can register it, and **[*]** means already unlocked.
+You can register affinities in any order once you reach Hunting League Rank 3 — each costs <!--luaconst:augment_affinity_catalog.lua:affinityMarkCost:comma-->1,000<!--/luaconst--> Hunt Marks plus the NM's trophy. Affinities are permanent once registered. In the menu, **[ ]** means locked, **[!]** means you're holding that NM's trophy and can register it, and **[*]** means already unlocked.
 
 <!-- DOCGEN:BEGIN id="sage-affinities" -->
 Holding an affinity gives augments **in that category** roll advantage: the Moogle **rolls twice and keeps the better** result. It stacks with the Sage-rank roll floor and crits. Each NM drops a unique trophy; register the affinity at the Augment Sage's _Register NM Affinity_ menu — it requires **Hunting League Rank 3** and costs **1,000 Hunt Marks**, and the trophy is consumed.
@@ -135,6 +135,6 @@ Only the **affinity registration** trophy (Track 2) is removed from inventory on
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 58cd338a7ba1 -->
-_Last updated: 2026-07-10 16:53 PDT_
+<!-- content-hash: ef9719864d63 -->
+_Last updated: 2026-07-11 21:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->
