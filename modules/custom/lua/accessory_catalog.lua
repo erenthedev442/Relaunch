@@ -239,8 +239,6 @@ table.insert(g.ear, { id =  28483, name = 'Cryptic Earring'                   , 
 -- net-new gold options (2026-07-06, hand-curated from score_accessories.py recommendations)
 table.insert(g.ear, { id =  26114, name = 'Balder Earring'                    , cost =  60, jobs = 'All' })  -- DPS score 53
 table.insert(g.ear, { id =  27540, name = 'Eabani Earring'                    , cost =  60, jobs = 'All' })  -- TANK score 31 [RARE,EX]
-table.insert(g.ear, { id =  25438, name = 'Wicce Earring'                     , cost =  60, jobs = 'BLM' })  -- CASTER score 49 [EX]
-table.insert(g.ear, { id =  25534, name = 'Arbatel Earring'                   , cost =  60, jobs = 'SCH' })  -- CASTER score 49 [EX]
 
 -- ring
 table.insert(g.ring, { id =  10766, name = 'Lunette Ring'                      , cost =  60, jobs = 'All' })  -- DPS score 96 [RARE]
@@ -294,8 +292,6 @@ table.insert(inf.waist, { id =  26361, name = 'Gerdr Belt +1'                   
 table.insert(inf.waist, { id =  26359, name = 'Orpheuss Sash'                     , cost = 300, jobs = 'All' })  -- DPS score 111 [RARE]
 
 -- ear (top 5 by score -> Infamy Vendor)
-table.insert(inf.ear, { id =  25439, name = 'Wicce Earring +1'                  , cost = 300, jobs = 'BLM' })  -- CASTER score 56 [EX]
-table.insert(inf.ear, { id =  25535, name = 'Arbatel Earring +1'                , cost = 300, jobs = 'SCH' })  -- CASTER score 56 [EX]
 table.insert(inf.ear, { id =  26108, name = 'Odr Earring'                       , cost = 300, jobs = 'MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' })  -- DPS score 55 [RARE,EX]
 
 -- ring (top 5 by score -> Infamy Vendor)
@@ -311,28 +307,6 @@ table.insert(inf.back, { id =  28628, name = 'Takaha Mantle'                    
 table.insert(inf.back, { id =  13655, name = 'Sand Mantle'                       , cost = 300, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- TANK score 108 [RARE]
 
 -- ear (Sortie +2, one per job)
-table.insert(inf.ear, { id =  25422, name = 'Boii Earring +2'                   , cost = 300, jobs = 'WAR' })  -- DPS score 27
-table.insert(inf.ear, { id =  25428, name = 'Bhikku Earring +2'                 , cost = 300, jobs = 'MNK' })  -- DPS score 0
-table.insert(inf.ear, { id =  25434, name = 'Ebers Earring +2'                  , cost = 300, jobs = 'WHM' })  -- HEAL score 6
-table.insert(inf.ear, { id =  25440, name = 'Wicce Earring +2'                  , cost = 300, jobs = 'BLM' })  -- CASTER score 56
-table.insert(inf.ear, { id =  25446, name = 'Lethargy Earring +2'               , cost = 300, jobs = 'RDM' })  -- CASTER score 16
-table.insert(inf.ear, { id =  25452, name = 'Skulkers Earring +2'               , cost = 300, jobs = 'THF' })  -- DPS score 0
-table.insert(inf.ear, { id =  25458, name = 'Chevaliers Earring +2'             , cost = 300, jobs = 'PLD' })  -- TANK score 0
-table.insert(inf.ear, { id =  25464, name = 'Heathens Earring +2'               , cost = 300, jobs = 'DRK' })  -- DPS score 0
-table.insert(inf.ear, { id =  25470, name = 'Nukumi Earring +2'                 , cost = 300, jobs = 'BST' })  -- DPS score 0
-table.insert(inf.ear, { id =  25476, name = 'Fili Earring +2'                   , cost = 300, jobs = 'BRD' })  -- DPS score 0
-table.insert(inf.ear, { id =  25482, name = 'Amini Earring +2'                  , cost = 300, jobs = 'RNG' })  -- DPS score 0
-table.insert(inf.ear, { id =  25488, name = 'Kasuga Earring +2'                 , cost = 300, jobs = 'SAM' })  -- DPS score 48
-table.insert(inf.ear, { id =  25494, name = 'Hattori Earring +2'                , cost = 300, jobs = 'NIN' })  -- DPS score 0
-table.insert(inf.ear, { id =  25500, name = 'Peltasts Earring +2'               , cost = 300, jobs = 'DRG' })  -- DPS score 0
-table.insert(inf.ear, { id =  25506, name = 'Beckoners Earring +2'              , cost = 300, jobs = 'SMN' })  -- CASTER score 0
-table.insert(inf.ear, { id =  25512, name = 'Hashishin Earring +2'              , cost = 300, jobs = 'BLU' })  -- DPS score 0
-table.insert(inf.ear, { id =  25518, name = 'Chasseurs Earring +2'              , cost = 300, jobs = 'COR' })  -- DPS score 0
-table.insert(inf.ear, { id =  25524, name = 'Karagoz Earring +2'                , cost = 300, jobs = 'PUP' })  -- DPS score 3
-table.insert(inf.ear, { id =  25530, name = 'Maculele Earring +2'               , cost = 300, jobs = 'DNC' })  -- DPS score 0
-table.insert(inf.ear, { id =  25536, name = 'Arbatel Earring +2'                , cost = 300, jobs = 'SCH' })  -- CASTER score 56
-table.insert(inf.ear, { id =  25542, name = 'Azimuth Earring +2'                , cost = 300, jobs = 'GEO' })  -- CASTER score 24
-table.insert(inf.ear, { id =  25548, name = 'Erilaz Earring +2'                 , cost = 300, jobs = 'RUN' })  -- TANK score 2
 
 
 return catalog

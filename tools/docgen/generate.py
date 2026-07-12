@@ -69,7 +69,6 @@ def main() -> int:
         abyssea_nms,
         tournament,
         missing_spells,
-        accessories_npc,
         accessory_npc,
         armor_npc,
         augment_sage,
@@ -250,11 +249,12 @@ def main() -> int:
         ("unlock_tree",      unlock_tree),
         ("armor_npc",        armor_npc),
         ("weapons_npc",      weapons_npc),
-        # accessories_npc reads the same hunting_league_catalog as
-        # hunting_league does, but renders the Accessories Vendor's stock
-        # (rewardCategories minus Seals) onto gear-vendors.md so players
-        # see all three vendors on one page.
-        ("accessories_npc",  accessories_npc),
+        # accessories_npc (the legacy Hunt-Marks Accessories Vendor) is
+        # DECOMMISSIONED 2026-07-13: its only remaining stock was the Sortie
+        # earrings, which were pulled from every custom vendor. The page
+        # section + its DOCGEN block are removed, so the generator has nothing
+        # to render -- unregistered here to avoid a per-run "marker missing"
+        # warning. Re-add both the block and this line if the vendor returns.
         # accessory_npc (singular) reads the scored accessory_catalog.lua
         # and renders Bronze/Silver/Gold tier blocks on gear-vendors.md.
         # Parallel to armor_npc / weapons_npc but for jewelry slots.
