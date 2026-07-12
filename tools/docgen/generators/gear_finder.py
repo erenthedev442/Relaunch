@@ -26,12 +26,14 @@ so the set builder's recommendations line up with the scored catalogs.
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 import time
 from collections import defaultdict
 from pathlib import Path
 
+from tools.docgen._markers import write_between_markers
 from tools.docgen._paths import resolve_source
 from tools.docgen._item_sources import collect_drop_sources
 
@@ -895,3 +897,19 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     print(f'[gear_finder] wrote {out.name}: {len(items)} items '
           f'({n_obt} obtainable, {n_src} with sources, {n_drop} with drops, '
           f'{len(mod_labels)} mods, {size_kb} KB)')
+
+    # gear-finder.md is a static shell -- the content players see lives in
+    # gear-data.json, loaded by JS -- so the page's content-aware "Last
+    # updated" footer never moved when the dataset did, and the page-index
+    # staleness report called the tool stale. Mirror the dataset's fingerprint
+    # into a marker block: a real data change alters the block and advances
+    # the stamp. generated_at is excluded so a no-op regen keeps the date.
+    rev = hashlib.sha256(json.dumps(
+        {'meta': payload['meta'], 'items': items},
+        separators=(',', ':')).encode('utf-8')).hexdigest()[:12]
+    write_between_markers(
+        docs_dir / 'progression' / 'gear-finder.md', 'gear-finder-dataset',
+        f'**{len(items):,}** equippable items indexed ({n_obt:,} obtainable '
+        f'on the Relaunch server, {n_src:,} with acquisition sources) — the '
+        f'dataset regenerates from live server data on every deploy.\n'
+        f'<!-- dataset-rev: {rev} -->')
