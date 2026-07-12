@@ -191,12 +191,14 @@ return {
     [829]  = { augId = 211,  base = 1,   mult = 1,   disp = 1,    cat = 11,  tier = 0, label = 'Snapshot' },
     [836]  = { augId = 342,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Waltz TP cost' },
     [902]  = { augId = 43,   base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Charm' },
-    [1888] = { augId = 67,   base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'All songs',             maxBoost = 1 },
+    [1888] = { augId = 67,   base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'All songs',             maxBoost = 1, tierValue = 2 },
     [1630] = { augId = 148,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Gilfinder' },
     [1269] = { augId = 215,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Ninja tool expertise' },
-    -- tierValue: the line's value IS your Augment Tier (+1 at T1 .. +5 at T5).
-    -- One catalyst per trade, no roll/affinity/crit; the engine renders base(1)
-    -- + written boost(tier-1). Old TH gear (boost-0 slots) keeps its +1/slot.
-    [863]  = { augId = 147,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Treasure Hunter', maxBoost = 0, tierValue = true },
+    -- tierValue = STEP: the line's value is STEP x your Augment Tier (TH 1..5,
+    -- All songs 2..10). One catalyst per trade, no roll/affinity/crit; the
+    -- Moogle writes boost = STEP*tier - base so the engine's (base + boost)
+    -- renders exactly STEP*tier (requires effective mult 1). Old gear keeps
+    -- its already-written slots.
+    [863]  = { augId = 147,  base = 1,   mult = 1,   disp = 1,    cat = 11, tier = 0, label = 'Treasure Hunter', maxBoost = 0, tierValue = 1 },
 
 }

@@ -308,8 +308,9 @@ MAXBOOST = {
     # All songs -- successively nerfed. Stock maxBoost 31 => per-slot cap (1+31)=32.
     #   2026-06-19: -> 7  (cap 8/slot, a 75% cut of the prior cap).
     #   2026-06-20: -> 1  (cap 2/slot, ANOTHER 75% cut, owner request).
-    # base/mult are already at the integer floor (1/1), so maxBoost is the only
-    # lever. Total song bonus across 5 slots is now +5..10 (was +5..40, stock +5..160).
+    #   2026-07-11: tier-fixed (TIER_VALUE below): single catalyst, +2..+10 by
+    #   Augment Tier. maxBoost 1 kept as the safety floor for consumers that
+    #   don't know the tierValue flag.
     67: 1,
 
     # ── 2026-07-09 premium-mod balance pass ──────────────────────────────────
@@ -354,12 +355,15 @@ MAXBOOST = {
     147: 0,
 }
 
-# Tier-fixed augments (owner request 2026-07-11): a SINGLE catalyst whose
-# written boost is (Augment Tier - 1), so the engine's (base + boost) renders
-# exactly +1 at T1 .. +5 at T5. Emitted as `tierValue = true`; Augment_Moogle,
+# Tier-fixed augments (owner requests 2026-07-11): a SINGLE catalyst whose
+# value is STEP x the player's Augment Tier -- the Moogle writes boost =
+# STEP*tier - base so the engine's (base + boost) renders exactly STEP*tier
+# (requires effective mult 1). Emitted as `tierValue = STEP`; Augment_Moogle,
 # !reroll, and the docgen augments/calculator generators all read the flag.
+# augId -> step.
 TIER_VALUE = {
-    147,  # Treasure Hunter
+    147: 1,  # Treasure Hunter  -> +1 at T1 .. +5 at T5
+    67:  2,  # All songs        -> +2 at T1 .. +10 at T5
 }
 
 # Specific item IDs kept OUT of the catalyst pool entirely -- never offered as
@@ -1336,7 +1340,7 @@ def main():
             label_final = LABEL_OVERRIDE.get(aid, clean_label(label))
             mb_val = MAXBOOST.get(aid)
             mb_suffix = f", maxBoost = {mb_val}" if mb_val is not None else ""
-            tv_suffix = ", tierValue = true" if aid in TIER_VALUE else ""
+            tv_suffix = f", tierValue = {TIER_VALUE[aid]}" if aid in TIER_VALUE else ""
             lines.append(
                 f"    {id_str} = {{ augId = {aug_str} base = {base_str} "
                 f"mult = {mult_str} disp = {disp_str} cat = {cat_str} "
@@ -1346,7 +1350,7 @@ def main():
                 "itemId": iid, "augId": aid, "label": label_final,
                 "base": base_val, "mult": mult_val, "disp": disp_val,
                 "cat": _cat_idx + 1, "maxBoost": mb_val,
-                "tierValue": aid in TIER_VALUE,
+                "tierValue": TIER_VALUE.get(aid, 0),
             })
         json_groups.append({"category": CAT_NAMES[cidx], "entries": jentries})
 

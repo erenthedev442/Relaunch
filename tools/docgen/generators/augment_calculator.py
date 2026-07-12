@@ -21,7 +21,7 @@ _MULT_RE  = re.compile(r"\bmult\s*=\s*(-?\d+)")
 _DISP_RE  = re.compile(r"\bdisp\s*=\s*(\d+)")
 _MB_RE    = re.compile(r"\bmaxBoost\s*=\s*(\d+)")
 _TIER_RE  = re.compile(r"\btier\s*=\s*(\d+)")
-_TV_RE    = re.compile(r"\btierValue\s*=\s*true")
+_TV_RE    = re.compile(r"\btierValue\s*=\s*(\d+|true)")
 _LABEL_RE = re.compile(r"label\s*=\s*'([^']*)'")
 
 _CATALOG_PATH = "modules/custom/lua/augment_catalog.lua"
@@ -63,10 +63,11 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
                 entry["d"] = int(dm.group(1))
             if xb and int(xb.group(1)) < 31:
                 entry["mb"] = int(xb.group(1))
-            # Tier-fixed augments (Treasure Hunter): single catalyst, value =
-            # the player's Augment Tier. The page JS reads `tv`.
-            if _TV_RE.search(line):
-                entry["tv"] = 1
+            # Tier-fixed augments (Treasure Hunter, All songs): single catalyst,
+            # value = tv × the player's Augment Tier. The page JS reads `tv`.
+            tv = _TV_RE.search(line)
+            if tv:
+                entry["tv"] = 1 if tv.group(1) == "true" else int(tv.group(1))
             entries.append(entry)
 
     entries.sort(key=lambda x: x["label"])

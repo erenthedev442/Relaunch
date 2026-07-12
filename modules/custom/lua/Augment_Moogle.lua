@@ -641,8 +641,8 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 if def2 and def2.tierValue then
                     if (catalystCounts[itemId] or 0) > 1 then
                         player:printToPlayer(string.format(
-                            '[%s] is tier-fixed (its value is your Augment Tier, +%d for you) -- trade a SINGLE catalyst, kupo!',
-                            def2.label, playerTier),
+                            '[%s] is tier-fixed (+%d at your Augment Tier) -- trade a SINGLE catalyst, kupo!',
+                            def2.label, def2.tierValue * playerTier),
                             xi.msg.channel.SYSTEM_3)
                         return
                     end
@@ -790,13 +790,14 @@ m:addOverride('xi.zones.Abdhaljs_Isle-Purgonorgo.Zone.onInitialize', function(zo
                 local slotMax   = scaleRoll(slice.max)   -- the achievable "perfect" (crystalize) value this tier
                 local rolls     = {}
                 if def.tierValue then
-                    -- Tier-fixed (Treasure Hunter): the written boost is
-                    -- playerTier-1, so the engine's (base + boost) renders exactly
-                    -- +playerTier. Deterministic -- no roll, affinity, or crit.
-                    -- Only a T5 line counts as "max" (crystalize-eligible).
-                    slotMax = #TIER_SLICES - 1
+                    -- Tier-fixed (Treasure Hunter, All songs): the written boost
+                    -- is tierValue*tier - base, so the engine's (base + boost)
+                    -- renders exactly tierValue x playerTier (needs mult 1).
+                    -- Deterministic -- no roll, affinity, or crit. Only a T5
+                    -- line counts as "max" (crystalize-eligible).
+                    slotMax = def.tierValue * #TIER_SLICES - base
                     for _ = 1, count do
-                        table.insert(rolls, playerTier - 1)
+                        table.insert(rolls, def.tierValue * playerTier - base)
                     end
                 else
                     for _ = 1, count do

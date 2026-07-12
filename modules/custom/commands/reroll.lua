@@ -177,7 +177,7 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
             if ln.locked then
                 player:printToPlayer(string.format('  %s : %d  ->  CRYSTALIZED (locked, kept)', lbl, ln.oldVal), CHANNEL)
             elseif ln.def and ln.def.tierValue then
-                player:printToPlayer(string.format('  %s : %d  ->  tier-fixed at your Augment Tier (%d)', lbl, ln.oldVal, tier), CHANNEL)
+                player:printToPlayer(string.format('  %s : %d  ->  tier-fixed at +%d (Augment Tier %d)', lbl, ln.oldVal, ln.def.tierValue * tier, tier), CHANNEL)
             else
                 player:printToPlayer(string.format('  %s : %d  ->  will roll %d-%d', lbl, ln.oldVal, rollFloor, slice.max), CHANNEL)
             end
@@ -215,10 +215,12 @@ commandObj.onTrigger = function(player, slotArg, confirmArg)
 
             local r
             if ln.def and ln.def.tierValue then
-                -- Tier-fixed (Treasure Hunter): value = your Augment Tier; a
-                -- reroll just rewrites it. Only a T5 line can crystalize.
-                r       = tier - 1
-                slotMax = #TIER_SLICES - 1
+                -- Tier-fixed (Treasure Hunter, All songs): value = tierValue x
+                -- your Augment Tier; a reroll just rewrites it (boost =
+                -- tierValue*tier - base). Only a T5 line can crystalize.
+                local tvBase = ln.def.base or 0
+                r       = ln.def.tierValue * tier - tvBase
+                slotMax = ln.def.tierValue * #TIER_SLICES - tvBase
             else
                 r = math.random(rollFloor, slice.max)
                 if hasAff then

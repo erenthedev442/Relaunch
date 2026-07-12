@@ -73,7 +73,7 @@ So a maxed tank reaches **+640 HP on a single body piece**, and a sustain build 
 The table below lists **every catalyst and its augment**, organized by category. All augments are available at every Augment Tier — your tier determines the **power** of the roll, not which augments you can access. The **T1–T5 columns** show the value range at each tier. The **Cap** column shows the hard in-game ceiling where one exists — see [how scaling works](#how-augment-power-scales) above.
 
 <!-- DOCGEN:BEGIN id="augment-catalog" -->
-_146 augments across 11 categories. **Every augment is available at every Augment Tier** — your tier determines the **power** of the roll, not which augments you can access. Trade catalysts to the **Augment Moogle** in <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc--> (`!hub`). Cost is **10,000 gil flat per trade** plus the catalyst itself. Every line is **rolled** within your [Augment Tier's band](augment-sage.md) — higher tiers roll strictly higher values. The **T1–T5 columns** show the value range of a **full 5-catalyst stack** rolled at that Augment Tier (divide by 5 for one catalyst). The **Cap** column is the hard engine ceiling for that stat where one exists (e.g. Haste caps at 25%, damage-taken floors at -50%), or **no cap** for additive stats._
+_146 augments across 12 categories. **Every augment is available at every Augment Tier** — your tier determines the **power** of the roll, not which augments you can access. Trade catalysts to the **Augment Moogle** in <!--npc:augment_moogle-->Purgonorgo Isle<!--/npc--> (`!hub`). Cost is **10,000 gil flat per trade** plus the catalyst itself. Every line is **rolled** within your [Augment Tier's band](augment-sage.md) — higher tiers roll strictly higher values. The **T1–T5 columns** show the value range of a **full 5-catalyst stack** rolled at that Augment Tier (divide by 5 for one catalyst). The **Cap** column is the hard engine ceiling for that stat where one exists (e.g. Haste caps at 25%, damage-taken floors at -50%), or **no cap** for additive stats._
 
 !!! info "How catalysts drop"
     Each catalyst is assigned to **one specific monster** — the mob in the **Drops from** column — which drops it **60%** of the time when you land the killing blow. On top of that, **every other non-NM monster** has a **12%** chance to drop a **random** catalyst matched to its level band, so any farming yields catalysts. **Notorious Monsters never drop catalysts.** A drop announces itself on screen with the catalyst's item name and augment. Use **`!augwarp <stat or item>`** in game to warp straight to the assigned mob shown here. Catalysts also drop inside [Augmentation Dungeons](../endgame/dungeons.md) and from [Hunting League](index.md) trophies where listed.
@@ -274,9 +274,14 @@ _146 augments across 11 categories. **Every augment is available at every Augmen
 | Snapshot | <a class="item-link" href="https://www.ffxiah.com/item/829" data-img="https://static.ffxiah.com/images/icon/829.png" target="_blank" rel="noopener">Square Of Silk Cloth</a> | <details><summary>Gespenst (Bostaunieux Oubliette) — 60%</summary><br>Ranguemont Pass dungeon trash — 30%</details> | 5–30 | 35–60 | 65–90 | 95–125 | 130–160 | no cap |
 | Waltz TP cost | <a class="item-link" href="https://www.ffxiah.com/item/836" data-img="https://static.ffxiah.com/images/icon/836.png" target="_blank" rel="noopener">Square Of Damascene Cloth</a> | <details><summary>Battle Bat (Inner Horutoto Ruins) — 60%</summary><br>Ranguemont Pass dungeon boss pool — guaranteed on clear</details> | 5–30 | 35–60 | 65–90 | 95–125 | 130–160 | no cap |
 | Charm | <a class="item-link" href="https://www.ffxiah.com/item/902" data-img="https://www.bg-wiki.com/images/1/19/Demon_Horn_description.png" target="_blank" rel="noopener">Demon Horn</a> | <details><summary>Abyssal Demon (Castle Zvahl Baileys) — 60%</summary><br>Ranguemont Pass dungeon boss pool — guaranteed on clear</details> | 5–30 | 35–60 | 65–90 | 95–125 | 130–160 | no cap |
-| All songs | <a class="item-link" href="https://www.ffxiah.com/item/1888" data-img="https://static.ffxiah.com/images/icon/1888.png" target="_blank" rel="noopener">Sack Of Silica</a> | <details><summary>Land Pugil (Carpenters Landing) — 60%</summary><br>Ranguemont Pass dungeon boss pool — guaranteed on clear</details> | 5 | 5 | 5–10 | 10 | 10 | no cap |
+| All songs | <a class="item-link" href="https://www.ffxiah.com/item/1888" data-img="https://static.ffxiah.com/images/icon/1888.png" target="_blank" rel="noopener">Sack Of Silica</a> | <details><summary>Land Pugil (Carpenters Landing) — 60%</summary><br>Ranguemont Pass dungeon boss pool — guaranteed on clear</details> | 2 | 4 | 6 | 8 | 10 | no cap |
 | Gilfinder | <a class="item-link" href="https://www.ffxiah.com/item/1630" data-img="https://static.ffxiah.com/images/icon/1630.png" target="_blank" rel="noopener">Pinch Of Cluster Ash</a> | <details><summary>Cluster (Lufaise Meadows) — 60%</summary><br>Ranguemont Pass dungeon boss pool — guaranteed on clear</details> | 5–30 | 35–60 | 65–90 | 95–125 | 130–160 | no cap |
 | Ninja tool expertise | <a class="item-link" href="https://www.ffxiah.com/item/1269" data-img="https://www.bg-wiki.com/images/6/67/Mana_Barrel_description.png" target="_blank" rel="noopener">Mana Barrel</a> | <details><summary>River Crab (North Gustaberg) — 60%</summary><br>Ranguemont Pass dungeon boss pool — guaranteed on clear</details> | 5–30 | 35–60 | 65–90 | 95–125 | 130–160 | no cap |
+
+### its already-written slots.
+
+| Augment | Catalyst | Drops from | T1 ×5 | T2 ×5 | T3 ×5 | T4 ×5 | T5 ×5 | Cap |
+|---|---|---|--:|--:|--:|--:|--:|:--:|
 | Treasure Hunter | <a class="item-link" href="https://www.ffxiah.com/item/863" data-img="https://www.bg-wiki.com/images/8/8a/Coeurl_Hide_description.png" target="_blank" rel="noopener">Coeurl Hide</a> | <details><summary>Apex Idle Drifter (Promyvion-Holla) — 60%</summary><br>Ranguemont Pass dungeon boss pool — guaranteed on clear</details> | 1 | 2 | 3 | 4 | 5 | no cap |
 <!-- DOCGEN:END id="augment-catalog" -->
 
@@ -289,6 +294,6 @@ _146 augments across 11 categories. **Every augment is available at every Augmen
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: a2083d48694b -->
-_Last updated: 2026-07-11 21:16 PDT_
+<!-- content-hash: 0ba43f291789 -->
+_Last updated: 2026-07-11 21:20 PDT_
 <!-- DOCGEN:END id="last-updated" -->
