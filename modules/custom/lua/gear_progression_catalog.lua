@@ -98,7 +98,6 @@ catalog.silver =
         { id = 20615, name = "Levante Dagger", cost = 25, jobs = 'WAR/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/SCH/GEO' },
         { id = 20808, name = "Tramontane Axe", cost = 25, jobs = 'WAR/DRK/BST/RUN' },
         { id = 20827, name = "Kerehcatl", cost = 25, jobs = 'WAR/BST' },
-        { id = 20893, name = "Shukuyus Scythe", cost = 25, jobs = 'WAR/DRK/BST' },
         { id = 20945, name = "Nativus Halberd", cost = 25, jobs = 'WAR/PLD/SAM/DRG' },
         { id = 21104, name = "Eosuchus Club", cost = 25, jobs = 'All' },
         { id = 21228, name = "Falubeza", cost = 25, jobs = 'RNG' },
@@ -122,7 +121,6 @@ catalog.gold =
 {
     weapons =
     {
-        { id = 21273, name = "Nibiru Gun", cost = 50, jobs = 'RNG/COR' },
     },
 }
 -----------------------------------
@@ -204,7 +202,6 @@ do
     table.insert(inf_marksmanship, { id = 22121, name = "Imati +1", cost = 500, jobs = 'RNG' })  -- WS score 307, DMG 146/Dly 424
     table.insert(inf_marksmanship, { id = 21485, name = "Fomalhaut", cost = 500, jobs = 'RNG/COR' })  -- WS score 270, DMG 167/Dly 600
     table.insert(inf_marksmanship, { id = 22136, name = "Arasy Gun +1", cost = 500, jobs = 'RNG/COR' })  -- WS score 252, DMG 108/Dly 582
-    table.insert(inf_marksmanship, { id = 19209, name = "Molybdosis", cost = 500, jobs = 'COR' })  -- WS score 222, DMG 103/Dly 480
 
 end
 return catalog

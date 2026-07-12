@@ -8,7 +8,7 @@ Every purchasable item on the Relaunch server in one searchable list — armor, 
 Each **Item** links to its BG-Wiki page for full stats. The **Source** links to the exact vendor section where you buy it, and **Cost** spells out the currency, since each vendor tier is paid in a different seal or medal.
 
 <!-- DOCGEN:BEGIN id="item-finder" -->
-333 items in stock — **84** Armor · **154** Accessories · **95** Infamy.
+323 items in stock — **78** Armor · **151** Accessories · **94** Infamy.
 
 _This list is **rebuilt from the live vendor catalogs on every deploy**, so it always reflects current stock (the "Last updated" date only moves when the stock itself changes)._
 
@@ -37,7 +37,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Andartia's Mantle](https://www.bg-wiki.com/index.php?search=Andartia%27s+Mantle&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Andoaa Earring](https://www.bg-wiki.com/index.php?search=Andoaa+Earring&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
 | [Ankou's Mantle](https://www.bg-wiki.com/index.php?search=Ankou%27s+Mantle&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
-| [Annointed Kalasiris](https://www.bg-wiki.com/index.php?search=Annointed+Kalasiris&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/PUP/SCH/GEO |
 | [Aput Mantle +1](https://www.bg-wiki.com/index.php?search=Aput+Mantle+%2B1&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Back | 60 Demons Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Aput Mantle +1](https://www.bg-wiki.com/index.php?search=Aput+Mantle+%2B1&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 250 Infamy | — |
 | [Arbatel Earring](https://www.bg-wiki.com/index.php?search=Arbatel+Earring&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | SCH |
@@ -128,9 +127,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Gavialis Helm](https://www.bg-wiki.com/index.php?search=Gavialis+Helm&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | WAR/PLD/DRK/BST/SAM/NIN/DRG |
 | [Gelatinous Ring +1](https://www.bg-wiki.com/index.php?search=Gelatinous+Ring+%2B1&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Ring | 60 Demons Medal | All |
 | [Gendewitha Caubeen +1](https://www.bg-wiki.com/index.php?search=Gendewitha+Caubeen+%2B1&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | WHM/RDM/BRD/SCH |
-| [Genmei Earring](https://www.bg-wiki.com/index.php?search=Genmei+Earring&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
-| [Genmei Kabuto](https://www.bg-wiki.com/index.php?search=Genmei+Kabuto&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Head | 50 Demons Medal | WAR/MNK/BST/BRD/RNG/SAM/NIN |
-| [Genmei Shield](https://www.bg-wiki.com/index.php?search=Genmei+Shield&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Shields | 25 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
 | [Gerdr Belt](https://www.bg-wiki.com/index.php?search=Gerdr+Belt&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Gerdr Belt +1](https://www.bg-wiki.com/index.php?search=Gerdr+Belt+%2B1&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 250 Infamy | — |
 | [Gere Ring](https://www.bg-wiki.com/index.php?search=Gere+Ring&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Ring | 60 Demons Medal | MNK/THF/BST/NIN/PUP/DNC |
@@ -169,7 +165,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Kaykaus Cuffs +1](https://www.bg-wiki.com/index.php?search=Kaykaus+Cuffs+%2B1&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Hands | 12 Beastmens Medal | WHM/RDM/BRD/SCH |
 | [Kaykaus Tights](https://www.bg-wiki.com/index.php?search=Kaykaus+Tights&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Legs | 12 Beastmens Medal | WHM/RDM/BRD/SCH |
 | [Knights Bead Necklace +2](https://www.bg-wiki.com/index.php?search=Knights+Bead+Necklace+%2B2&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | PLD |
-| [Kobo Obi](https://www.bg-wiki.com/index.php?search=Kobo+Obi&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Waist | 32 Kindreds Medal | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
 | [Koenigs Belt](https://www.bg-wiki.com/index.php?search=Koenigs+Belt&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Waist | 32 Kindreds Medal | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | [Kyrenes Earring](https://www.bg-wiki.com/index.php?search=Kyrenes+Earring&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Earring | 60 Demons Medal | All |
 | [Kyujutsugi](https://www.bg-wiki.com/index.php?search=Kyujutsugi&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Body | 25 Kindreds Medal | RNG/SAM |
@@ -184,8 +179,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Lightning Ring](https://www.bg-wiki.com/index.php?search=Lightning+Ring&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
 | [Lissome Necklace](https://www.bg-wiki.com/index.php?search=Lissome+Necklace&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Neck | 60 Demons Medal | All |
 | [Lissome Necklace](https://www.bg-wiki.com/index.php?search=Lissome+Necklace&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 250 Infamy | — |
-| [Lithelimb Cap](https://www.bg-wiki.com/index.php?search=Lithelimb+Cap&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| [Lucidity Sash](https://www.bg-wiki.com/index.php?search=Lucidity+Sash&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | SMN |
 | [Lugh's Cape](https://www.bg-wiki.com/index.php?search=Lugh%27s+Cape&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 4,000 Infamy | — |
 | [Luminary Sash](https://www.bg-wiki.com/index.php?search=Luminary+Sash&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
 | [Lunette Ring](https://www.bg-wiki.com/index.php?search=Lunette+Ring&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Ring | 60 Demons Medal | All |
@@ -249,8 +242,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Rabid Visor](https://www.bg-wiki.com/index.php?search=Rabid+Visor&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Silver · Head | 25 Kindreds Medal | WAR/RDM/PLD/DRK/BST/RNG/SAM/DRG/BLU/RUN |
 | [Ragelise's Ring](https://www.bg-wiki.com/index.php?search=Ragelise%27s+Ring&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 300 Infamy | — |
 | [Red Cape](https://www.bg-wiki.com/index.php?search=Red+Cape&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Back | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO |
-| [Reiki Cloak](https://www.bg-wiki.com/index.php?search=Reiki+Cloak&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 250 Infamy | — |
-| [Reiki Osode](https://www.bg-wiki.com/index.php?search=Reiki+Osode&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Body | 12 Beastmens Medal | WAR/MNK/BST/BRD/RNG/SAM/NIN |
 | [Renaye Ring +1](https://www.bg-wiki.com/index.php?search=Renaye+Ring+%2B1&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 10,000 Infamy | — |
 | [Republican Gold Medal](https://www.bg-wiki.com/index.php?search=Republican+Gold+Medal&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Neck | 15 Beastmens Medal | All |
 | [Respite Cloak](https://www.bg-wiki.com/index.php?search=Respite+Cloak&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Gold · Body | 50 Demons Medal | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN |
@@ -277,7 +268,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 | [Shinjutsu-no-obi +1](https://www.bg-wiki.com/index.php?search=Shinjutsu-no-obi+%2B1&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Bronze · Waist | 15 Beastmens Medal | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | [Shinobi Earring](https://www.bg-wiki.com/index.php?search=Shinobi+Earring&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Earring | 32 Kindreds Medal | NIN |
 | [Shneddick Ring +1](https://www.bg-wiki.com/index.php?search=Shneddick+Ring+%2B1&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 10,000 Infamy | — |
-| [Shukuyu Sune-Ate](https://www.bg-wiki.com/index.php?search=Shukuyu+Sune-Ate&go=Go) | [Armor Vendor](gear-vendors.md#armor-vendor) · Bronze · Feet | 12 Beastmens Medal | WAR/MNK/BST/BRD/RNG/SAM/NIN |
 | [Sironas Ring](https://www.bg-wiki.com/index.php?search=Sironas+Ring&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Silver · Ring | 32 Kindreds Medal | All |
 | [Skrymir Cord](https://www.bg-wiki.com/index.php?search=Skrymir+Cord&go=Go) | [Accessories Vendor](gear-vendors.md#accessory-npc-medal-paid-jewelry) · Gold · Waist | 60 Demons Medal | All |
 | [Skrymir Cord +1](https://www.bg-wiki.com/index.php?search=Skrymir+Cord+%2B1&go=Go) | [Infamy Vendor](gear-vendors.md#infamy-vendor) · Curated | 350 Infamy | — |
@@ -357,6 +347,6 @@ _This list is **rebuilt from the live vendor catalogs on every deploy**, so it a
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: de2f24778ea8 -->
-_Last updated: 2026-07-12 01:30 PDT_
+<!-- content-hash: c485002f49e2 -->
+_Last updated: 2026-07-12 02:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

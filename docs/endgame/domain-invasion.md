@@ -77,7 +77,7 @@ Domain Points spend at the exchange NPC in the hub. Check the NPC's menu for the
 Capped out on Domain Points for the day? The same gear has a second price tag. The tables below are generated straight from the vendor's live catalog.
 
 <!-- DOCGEN:BEGIN id="domain-spoils" -->
-The **Domain Quartermaster** stands at <!--npc:domain_quartermaster-->Purgonorgo Isle<!--/npc--> (`!hub`) and sells the entire Zurim Domain-Points catalog for **Hunt Marks** — the currency earned from [Hunting League](../progression/index.md) NM kills, Weekly Hunts, wave events, and dailies. Everything Zurim sells for daily-capped Domain Points is also here for marks, so you can keep gearing after you've hit the day's Domain-Point ceiling. _135 items across 3 categories._
+The **Domain Quartermaster** stands at {{npc:domain_quartermaster}} (`!hub`) and sells the entire Zurim Domain-Points catalog for **Hunt Marks** — the currency earned from [Hunting League](../progression/index.md) NM kills, Weekly Hunts, wave events, and dailies. Everything Zurim sells for daily-capped Domain Points is also here for marks, so you can keep gearing after you've hit the day's Domain-Point ceiling. _113 items across 3 categories._
 
 Pricing follows one rule: **Hunt Marks cost = Zurim's Domain-Point cost × 2.5**. Domain Points are daily-capped; marks are not.
 
@@ -86,7 +86,6 @@ Pricing follows one rule: **Hunt Marks cost = Zurim's Domain-Point cost × 2.5**
 | 40 DP | 100 | 15 |
 | 80 DP | 200 | 20 |
 | 100 DP | 250 | 6 |
-| 200 DP | 500 | 22 |
 | 600 DP | 1,500 | 18 |
 | 800 DP | 2,000 | 39 |
 | 1,000 DP | 2,500 | 15 |
@@ -96,54 +95,32 @@ Pricing follows one rule: **Hunt Marks cost = Zurim's Domain-Point cost × 2.5**
 | Item | Type | Hunt Marks |
 |---|---|---:|
 | <a class="item-link" href="https://www.ffxiah.com/item/21510" data-img="https://static.ffxiah.com/images/icon/21510.png" target="_blank" rel="noopener">Voluspa Knuckles</a> | Hand-to-Hand | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20519" data-img="https://static.ffxiah.com/images/icon/20519.png" target="_blank" rel="noopener">Hammerfists</a> | Hand-to-Hand | 500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20520" data-img="https://static.ffxiah.com/images/icon/20520.png" target="_blank" rel="noopener">Midnights</a> | Hand-to-Hand | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/20505" data-img="https://static.ffxiah.com/images/icon/20505.png" target="_blank" rel="noopener">Condemners</a> | Hand-to-Hand | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21566" data-img="https://static.ffxiah.com/images/icon/21566.png" target="_blank" rel="noopener">Voluspa Knife</a> | Dagger | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20597" data-img="https://static.ffxiah.com/images/icon/20597.png" target="_blank" rel="noopener">Enchufla</a> | Dagger | 500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20599" data-img="https://static.ffxiah.com/images/icon/20599.png" target="_blank" rel="noopener">Kali</a> | Dagger | 500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20598" data-img="https://static.ffxiah.com/images/icon/20598.png" target="_blank" rel="noopener">Shijo</a> | Dagger | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/20579" data-img="https://static.ffxiah.com/images/icon/20579.png" target="_blank" rel="noopener">Skinflayer</a> | Dagger | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21622" data-img="https://static.ffxiah.com/images/icon/21622.png" target="_blank" rel="noopener">Voluspa Sword</a> | Sword | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20702" data-img="https://static.ffxiah.com/images/icon/20702.png" target="_blank" rel="noopener">Emissary</a> | Sword | 500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20701" data-img="https://static.ffxiah.com/images/icon/20701.png" target="_blank" rel="noopener">Iris</a> | Sword | 500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20700" data-img="https://static.ffxiah.com/images/icon/20700.png" target="_blank" rel="noopener">Nixxer</a> | Sword | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/20677" data-img="https://static.ffxiah.com/images/icon/20677.png" target="_blank" rel="noopener">Colada</a> | Sword | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21665" data-img="https://static.ffxiah.com/images/icon/21665.png" target="_blank" rel="noopener">Voluspa Blade</a> | Gt. Sword | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21698" data-img="https://static.ffxiah.com/images/icon/21698.png" target="_blank" rel="noopener">Bidenhander</a> | Gt. Sword | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21686" data-img="https://static.ffxiah.com/images/icon/21686.png" target="_blank" rel="noopener">Zulfiqar</a> | Gt. Sword | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21712" data-img="https://static.ffxiah.com/images/icon/21712.png" target="_blank" rel="noopener">Voluspa Axe</a> | Axe | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20797" data-img="https://static.ffxiah.com/images/icon/20797.png" target="_blank" rel="noopener">Skullrender</a> | Axe | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21746" data-img="https://static.ffxiah.com/images/icon/21746.png" target="_blank" rel="noopener">Digirbalag</a> | Axe | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21769" data-img="https://static.ffxiah.com/images/icon/21769.png" target="_blank" rel="noopener">Voluspa Chopper</a> | Gt. Axe | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20845" data-img="https://static.ffxiah.com/images/icon/20845.png" target="_blank" rel="noopener">Instigator</a> | Gt. Axe | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21754" data-img="https://static.ffxiah.com/images/icon/21754.png" target="_blank" rel="noopener">Aganoshe</a> | Gt. Axe | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21822" data-img="https://static.ffxiah.com/images/icon/21822.png" target="_blank" rel="noopener">Voluspa Scythe</a> | Scythe | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20892" data-img="https://static.ffxiah.com/images/icon/20892.png" target="_blank" rel="noopener">Deathbane</a> | Scythe | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21804" data-img="https://static.ffxiah.com/images/icon/21804.png" target="_blank" rel="noopener">Obschine</a> | Scythe | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21864" data-img="https://static.ffxiah.com/images/icon/21864.png" target="_blank" rel="noopener">Voluspa Lance</a> | Polearm | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20937" data-img="https://static.ffxiah.com/images/icon/20937.png" target="_blank" rel="noopener">Rhomphaia</a> | Polearm | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21854" data-img="https://static.ffxiah.com/images/icon/21854.png" target="_blank" rel="noopener">Reienkyo</a> | Polearm | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21912" data-img="https://static.ffxiah.com/images/icon/21912.png" target="_blank" rel="noopener">Voluspa Katana</a> | Katana | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/20979" data-img="https://static.ffxiah.com/images/icon/20979.png" target="_blank" rel="noopener">Aizushintogo</a> | Katana | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21904" data-img="https://static.ffxiah.com/images/icon/21904.png" target="_blank" rel="noopener">Kanaria</a> | Katana | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21976" data-img="https://static.ffxiah.com/images/icon/21976.png" target="_blank" rel="noopener">Voluspa Tachi</a> | Gt. Katana | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21027" data-img="https://static.ffxiah.com/images/icon/21027.png" target="_blank" rel="noopener">Ichigohitofuri</a> | Gt. Katana | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21021" data-img="https://static.ffxiah.com/images/icon/21021.png" target="_blank" rel="noopener">Umaru</a> | Gt. Katana | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/22006" data-img="https://static.ffxiah.com/images/icon/22006.png" target="_blank" rel="noopener">Voluspa Hammer</a> | Club | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21084" data-img="https://static.ffxiah.com/images/icon/21084.png" target="_blank" rel="noopener">Queller Rod</a> | Club | 500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21085" data-img="https://static.ffxiah.com/images/icon/21085.png" target="_blank" rel="noopener">Solstice</a> | Club | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/21072" data-img="https://static.ffxiah.com/images/icon/21072.png" target="_blank" rel="noopener">Gada</a> | Club | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/22088" data-img="https://static.ffxiah.com/images/icon/22088.png" target="_blank" rel="noopener">Voluspa Pole</a> | Staff | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21150" data-img="https://static.ffxiah.com/images/icon/21150.png" target="_blank" rel="noopener">Akademos</a> | Staff | 500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21149" data-img="https://static.ffxiah.com/images/icon/21149.png" target="_blank" rel="noopener">Espiritus</a> | Staff | 500 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21151" data-img="https://static.ffxiah.com/images/icon/21151.png" target="_blank" rel="noopener">Lathi</a> | Staff | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/22054" data-img="https://static.ffxiah.com/images/icon/22054.png" target="_blank" rel="noopener">Grioavolr</a> | Staff | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/22133" data-img="https://static.ffxiah.com/images/icon/22133.png" target="_blank" rel="noopener">Voluspa Bow</a> | Archery | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21215" data-img="https://static.ffxiah.com/images/icon/21215.png" target="_blank" rel="noopener">Vijaya Bow</a> | Archery | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/22113" data-img="https://static.ffxiah.com/images/icon/22113.png" target="_blank" rel="noopener">Teller</a> | Archery | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/22144" data-img="https://static.ffxiah.com/images/icon/22144.png" target="_blank" rel="noopener">Voluspa Gun</a> | Marksmanship | 200 |
-| <a class="item-link" href="https://www.ffxiah.com/item/21482" data-img="https://static.ffxiah.com/images/icon/21482.png" target="_blank" rel="noopener">Compensator</a> | Marksmanship | 500 |
 | <a class="item-link" href="https://www.ffxiah.com/item/22134" data-img="https://static.ffxiah.com/images/icon/22134.png" target="_blank" rel="noopener">Holliday</a> | Marksmanship | 2,000 |
 | <a class="item-link" href="https://www.ffxiah.com/item/22219" data-img="https://static.ffxiah.com/images/icon/22219.png" target="_blank" rel="noopener">Voluspa Grip</a> | Grip-Shield | 200 |
 | <a class="item-link" href="https://www.ffxiah.com/item/26413" data-img="https://static.ffxiah.com/images/icon/26413.png" target="_blank" rel="noopener">Voluspa Shield</a> | Grip-Shield | 200 |
@@ -252,6 +229,6 @@ Pricing follows one rule: **Hunt Marks cost = Zurim's Domain-Point cost × 2.5**
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 2e84b2d276a8 -->
-_Last updated: 2026-07-11 20:56 PDT_
+<!-- content-hash: d5ce6d366da7 -->
+_Last updated: 2026-07-12 02:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

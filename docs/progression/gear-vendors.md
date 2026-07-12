@@ -34,7 +34,7 @@ Both vendors use the same three currencies, tier-gated:
 Tiered armor across the five main slots. Items are listed with the seal cost and the jobs allowed to equip each piece.
 
 <!-- DOCGEN:BEGIN id="armor-slots" -->
-_84 pieces — 🥉 41 Bronze · 🥈 21 Silver · 🥇 22 Gold. Each slot lists every tier together — pick by your job and the medal you have._
+_78 pieces — 🥉 38 Bronze · 🥈 19 Silver · 🥇 21 Gold. Each slot lists every tier together — pick by your job and the medal you have._
 
 **Tiers:** <span class="tier-pill tier-bronze">🥉&nbsp;Bronze</span> Beastmens Medal — entry ilvl 119 · <span class="tier-pill tier-silver">🥈&nbsp;Silver</span> Kindreds Medal — HQ +1 / +2 augmented · <span class="tier-pill tier-gold">🥇&nbsp;Gold</span> Demons Medal — BiS (Volte / Omen bodies / exclusives)
 
@@ -52,12 +52,10 @@ _84 pieces — 🥉 41 Bronze · 🥈 21 Silver · 🥇 22 Gold. Each slot lists
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Artsieq+Hat&go=Go" data-img="" target="_blank" rel="noopener">Artsieq Hat</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Gavialis+Helm&go=Go" data-img="" target="_blank" rel="noopener">Gavialis Helm</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK/BST/SAM/NIN/DRG |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Rabid+Visor&go=Go" data-img="" target="_blank" rel="noopener">Rabid Visor</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/RDM/PLD/DRK/BST/RNG/SAM/DRG/BLU/RUN |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Lithelimb+Cap&go=Go" data-img="" target="_blank" rel="noopener">Lithelimb Cap</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Amin+Turban&go=Go" data-img="" target="_blank" rel="noopener">Amin Turban</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Sahip+Helm&go=Go" data-img="" target="_blank" rel="noopener">Sahip Helm</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK/BST/SAM/DRG |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Welkin+Crown&go=Go" data-img="" target="_blank" rel="noopener">Welkin Crown</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Amalric+Coif+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Amalric Coif +1</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | BLM/RDM/SMN/BLU/SCH/GEO |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Genmei+Kabuto&go=Go" data-img="" target="_blank" rel="noopener">Genmei Kabuto</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/MNK/BST/BRD/RNG/SAM/NIN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Maiitsoh+Haube&go=Go" data-img="" target="_blank" rel="noopener">Maiitsoh Haube</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/PLD/DRK/BST/SAM/NIN/DRG |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Beret&go=Go" data-img="" target="_blank" rel="noopener">Volte Beret</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Cap&go=Go" data-img="" target="_blank" rel="noopener">Volte Cap</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
@@ -67,10 +65,8 @@ _84 pieces — 🥉 41 Bronze · 🥈 21 Silver · 🥇 22 Gold. Each slot lists
 
 | Item | Tier | Cost | Jobs |
 |---|---|--:|---|
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Reiki+Osode&go=Go" data-img="" target="_blank" rel="noopener">Reiki Osode</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/MNK/BST/BRD/RNG/SAM/NIN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Emicho+Haubert+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Emicho Haubert +1</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/PLD/DRK/BST/DRG |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Emet+Harness&go=Go" data-img="" target="_blank" rel="noopener">Emet Harness</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Annointed+Kalasiris&go=Go" data-img="" target="_blank" rel="noopener">Annointed Kalasiris</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/PUP/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Kaykaus+Bliaut&go=Go" data-img="" target="_blank" rel="noopener">Kaykaus Bliaut</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/RDM/BRD/SCH |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Rosette+Jaseran&go=Go" data-img="" target="_blank" rel="noopener">Rosette Jaseran</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Vanir+Cotehardie&go=Go" data-img="" target="_blank" rel="noopener">Vanir Cotehardie</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO/RUN |
@@ -133,7 +129,6 @@ _84 pieces — 🥉 41 Bronze · 🥈 21 Silver · 🥇 22 Gold. Each slot lists
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Durgai+Leggings&go=Go" data-img="" target="_blank" rel="noopener">Durgai Leggings</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | MNK/THF/BST/NIN/PUP/DNC/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Yorium+Sabatons&go=Go" data-img="" target="_blank" rel="noopener">Yorium Sabatons</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/PLD/DRK |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Vanir+Boots&go=Go" data-img="" target="_blank" rel="noopener">Vanir Boots</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Shukuyu+Sune-Ate&go=Go" data-img="" target="_blank" rel="noopener">Shukuyu Sune-Ate</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WAR/MNK/BST/BRD/RNG/SAM/NIN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Artsieq+Boots&go=Go" data-img="" target="_blank" rel="noopener">Artsieq Boots</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Volte+Boots&go=Go" data-img="" target="_blank" rel="noopener">Volte Boots</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Navon+Crackows&go=Go" data-img="" target="_blank" rel="noopener">Navon Crackows</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/SMN/SCH/GEO |
@@ -148,7 +143,6 @@ _84 pieces — 🥉 41 Bronze · 🥈 21 Silver · 🥇 22 Gold. Each slot lists
 |---|---|--:|---|
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Priwen&go=Go" data-img="" target="_blank" rel="noopener">Priwen</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | PLD |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Rinda+Shield&go=Go" data-img="" target="_blank" rel="noopener">Rinda Shield</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/PLD/DRK |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Genmei+Shield&go=Go" data-img="" target="_blank" rel="noopener">Genmei Shield</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Sacro+Bulwark&go=Go" data-img="" target="_blank" rel="noopener">Sacro Bulwark</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/RDM/PLD/BST |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Adapa+Shield&go=Go" data-img="" target="_blank" rel="noopener">Adapa Shield</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | WAR/DRK/BST |
 <!-- DOCGEN:END id="armor-slots" -->
@@ -160,7 +154,7 @@ _84 pieces — 🥉 41 Bronze · 🥈 21 Silver · 🥇 22 Gold. Each slot lists
 Tiered weapons grouped by category. Empty categories are hidden — only categories with stocked weapons appear.
 
 <!-- DOCGEN:BEGIN id="weapons-slots" -->
-_16 weapons — 🥉 1 Bronze · 🥈 14 Silver · 🥇 1 Gold. Each slot lists every tier together — pick by your job and the medal you have._
+_14 weapons — 🥉 1 Bronze · 🥈 13 Silver · 🥇 0 Gold. Each slot lists every tier together — pick by your job and the medal you have._
 
 **Tiers:** <span class="tier-pill tier-bronze">🥉&nbsp;Bronze</span> Beastmens Medal — entry endgame ilvl 119 · <span class="tier-pill tier-silver">🥈&nbsp;Silver</span> Kindreds Medal — event / Dynamis-D / Omen / Escha · <span class="tier-pill tier-gold">🥇&nbsp;Gold</span> Demons Medal — REMA + Aeonic
 
@@ -186,12 +180,6 @@ _16 weapons — 🥉 1 Bronze · 🥈 14 Silver · 🥇 1 Gold. Each slot lists 
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Tramontane+Axe&go=Go" data-img="" target="_blank" rel="noopener">Tramontane Axe</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/DRK/BST/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Kerehcatl&go=Go" data-img="" target="_blank" rel="noopener">Kerehcatl</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/BST |
 
-### Scythes
-
-| Item | Tier | Cost | Jobs |
-|---|---|--:|---|
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Shukuyus+Scythe&go=Go" data-img="" target="_blank" rel="noopener">Shukuyus Scythe</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | WAR/DRK/BST |
-
 ### Polearms
 
 | Item | Tier | Cost | Jobs |
@@ -212,7 +200,6 @@ _16 weapons — 🥉 1 Bronze · 🥈 14 Silver · 🥇 1 Gold. Each slot lists 
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Donar+Gun&go=Go" data-img="" target="_blank" rel="noopener">Donar Gun</a> | <span class="tier-pill tier-bronze" title="Paid in Beastmens Medal">🥉&nbsp;Bronze</span> | 12 | THF/RNG/NIN/COR |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Illapa&go=Go" data-img="" target="_blank" rel="noopener">Illapa</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Wochowsen&go=Go" data-img="" target="_blank" rel="noopener">Wochowsen</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 25 | RNG |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Nibiru+Gun&go=Go" data-img="" target="_blank" rel="noopener">Nibiru Gun</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 50 | RNG/COR |
 
 ### Hand-to-Hand
 
@@ -230,7 +217,7 @@ A third member of the Escha ZiTah gear-vendor row, paid in the **same Bronze/Sil
 Re-run `tools/rebalance_all.bat` after any DB or scoring-weight change — that one batch refreshes Armor + Weapons + Accessory catalogs together.
 
 <!-- DOCGEN:BEGIN id="accessory-slots" -->
-_154 accessories — 🥉 40 Bronze · 🥈 40 Silver · 🥇 74 Gold. Each slot lists every tier together — pick by your job and the medal you have._
+_151 accessories — 🥉 40 Bronze · 🥈 39 Silver · 🥇 72 Gold. Each slot lists every tier together — pick by your job and the medal you have._
 
 **Tiers:** <span class="tier-pill tier-bronze">🥉&nbsp;Bronze</span> Beastmens Medal · <span class="tier-pill tier-silver">🥈&nbsp;Silver</span> Kindreds Medal · <span class="tier-pill tier-gold">🥇&nbsp;Gold</span> Demons Medal — BiS
 
@@ -303,7 +290,6 @@ _Within each slot, tiers run Bronze → Gold; the top pick per tier is listed fi
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Ovate+Rope&go=Go" data-img="" target="_blank" rel="noopener">Ovate Rope</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 32 | WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO | HEAL (16) | RARE |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Shaolin+Belt&go=Go" data-img="" target="_blank" rel="noopener">Shaolin Belt</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 32 | WAR/MNK/BST/NIN/PUP | — | — |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Life+Belt&go=Go" data-img="" target="_blank" rel="noopener">Life Belt</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 32 | All | — | — |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Kobo+Obi&go=Go" data-img="" target="_blank" rel="noopener">Kobo Obi</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 32 | WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO | — | — |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Vanguard+Belt&go=Go" data-img="" target="_blank" rel="noopener">Vanguard Belt</a> | <span class="tier-pill tier-silver" title="Paid in Kindreds Medal">🥈&nbsp;Silver</span> | 32 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN | — | — |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Skrymir+Cord&go=Go" data-img="" target="_blank" rel="noopener">Skrymir Cord</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | CASTER (145) | — |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Sacro+Cord&go=Go" data-img="" target="_blank" rel="noopener">Sacro Cord</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WHM/BLM/RDM/BLU/SCH/GEO | CASTER (64) | RARE,EX |
@@ -313,7 +299,6 @@ _Within each slot, tiers run Bronze → Gold; the top pick per tier is listed fi
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Luminary+Sash&go=Go" data-img="" target="_blank" rel="noopener">Luminary Sash</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN | CASTER (32) | RARE,EX |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Moonbow+Belt&go=Go" data-img="" target="_blank" rel="noopener">Moonbow Belt</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | MNK/PUP | — | — |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Gerdr+Belt&go=Go" data-img="" target="_blank" rel="noopener">Gerdr Belt</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN | — | — |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Lucidity+Sash&go=Go" data-img="" target="_blank" rel="noopener">Lucidity Sash</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | SMN | — | — |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Tempus+Fugit+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Tempus Fugit +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN | — | — |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Sweordfaetels+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Sweordfaetels +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN | — | — |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Prosilio+Belt+%2B1&go=Go" data-img="" target="_blank" rel="noopener">Prosilio Belt +1</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | — | — |
@@ -344,7 +329,6 @@ _Within each slot, tiers run Bronze → Gold; the top pick per tier is listed fi
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Etiolation+Earring&go=Go" data-img="" target="_blank" rel="noopener">Etiolation Earring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | TANK (43) | RARE,EX |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Cryptic+Earring&go=Go" data-img="" target="_blank" rel="noopener">Cryptic Earring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | TANK (36) | RARE,EX |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Eabani+Earring&go=Go" data-img="" target="_blank" rel="noopener">Eabani Earring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | TANK (31) | RARE,EX |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Genmei+Earring&go=Go" data-img="" target="_blank" rel="noopener">Genmei Earring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | TANK (30) | RARE,EX |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Kyrenes+Earring&go=Go" data-img="" target="_blank" rel="noopener">Kyrenes Earring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | — | — |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Thrud+Earring&go=Go" data-img="" target="_blank" rel="noopener">Thrud Earring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | WAR/PLD/DRK/BST/SAM/DRG | — | — |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Andoaa+Earring&go=Go" data-img="" target="_blank" rel="noopener">Andoaa Earring</a> | <span class="tier-pill tier-gold" title="Paid in Demons Medal">🥇&nbsp;Gold</span> | 60 | All | — | — |
@@ -495,7 +479,7 @@ Looking for **+4 armor**? That's no longer bought here — the +4 tier is an ear
 
 ### Accessories
 
-_95 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
+_94 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 
 | Item | Cost | Notes |
 |---|---:|---|
@@ -582,7 +566,6 @@ _95 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Moonlight+Cape&go=Go" data-img="" target="_blank" rel="noopener">Moonlight Cape</a> | 250 | Accessory top-5 (back) · Jobs: All |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Nantosuelta%27s+Cape&go=Go" data-img="" target="_blank" rel="noopener">Nantosuelta's Cape</a> | 4000 | Back. GEO JSE cape. DEF+15. · Indi duration+20, Life Cycle+10. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Ogma%27s+Cape&go=Go" data-img="" target="_blank" rel="noopener">Ogma's Cape</a> | 4000 | Back. RUN JSE cape. DEF+18. · Inquartata+3, Vallation/Valiance dur+15. |
-| <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Reiki+Cloak&go=Go" data-img="" target="_blank" rel="noopener">Reiki Cloak</a> | 250 | Accessory top-5 (back) · Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Rosmerta%27s+Cape&go=Go" data-img="" target="_blank" rel="noopener">Rosmerta's Cape</a> | 4000 | Back. BLU JSE cape. DEF+16. · Monster correlation+10. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Rudianos%27s+Mantle&go=Go" data-img="" target="_blank" rel="noopener">Rudianos's Mantle</a> | 4000 | Back. PLD JSE cape. DEF+20. · Phys dmg->MP 5%, Shield block+3. |
 | <a class="item-link" href="https://www.bg-wiki.com/index.php?search=Sand+Mantle&go=Go" data-img="" target="_blank" rel="noopener">Sand Mantle</a> | 250 | Accessory top-5 (back) · Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN |
@@ -599,6 +582,6 @@ _95 hand-picked accessories -- neck, ear, ring, waist, and back pieces._
 ---
 
 <!-- DOCGEN:BEGIN id="last-updated" -->
-<!-- content-hash: 4e82d889bec8 -->
-_Last updated: 2026-07-12 01:30 PDT_
+<!-- content-hash: 703c08f7ca95 -->
+_Last updated: 2026-07-12 02:16 PDT_
 <!-- DOCGEN:END id="last-updated" -->

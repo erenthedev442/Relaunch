@@ -135,7 +135,6 @@ table.insert(s.waist, { id =  13197, name = 'Koenigs Belt'                      
 table.insert(s.waist, { id =  11766, name = 'Sanctuary Obi +1'                  , cost =  32, jobs = 'All' })  -- CASTER score 17
 table.insert(s.waist, { id =  28455, name = 'Ovate Rope'                        , cost =  32, jobs = 'WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO' })  -- HEAL score 16 [RARE]
 table.insert(s.waist, { id =  13231, name = 'Life Belt'                         , cost =  32, jobs = 'All' })  -- DPS score 15
-table.insert(s.waist, { id =  26320, name = 'Kobo Obi'                          , cost =  32, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- PET score 17 [RARE,EX]
 table.insert(s.waist, { id =  15434, name = 'Vanguard Belt'                     , cost =  32, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 16
 table.insert(s.waist, { id =  15867, name = 'Sultans Belt'                      , cost =  32, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- TANK score 17
 
@@ -221,7 +220,6 @@ table.insert(g.waist, { id =  11750, name = 'Creed Baudrier'                    
 table.insert(g.waist, { id =  26356, name = 'Skrymir Cord'                      , cost =  60, jobs = 'All' })  -- CASTER score 145
 table.insert(g.waist, { id =  26329, name = 'Luminary Sash'                     , cost =  60, jobs = 'MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN' })  -- CASTER score 32 [RARE,EX]
 table.insert(g.waist, { id =  26360, name = 'Gerdr Belt'                        , cost =  60, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 111
-table.insert(g.waist, { id =  28416, name = 'Lucidity Sash'                     , cost =  60, jobs = 'SMN' })  -- PET score 18 [RARE,EX]
 table.insert(g.waist, { id =  28437, name = 'Flume Belt +1'                     , cost =  60, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- TANK score 55 [RARE]
 table.insert(g.waist, { id =  26351, name = 'Sacro Cord'                        , cost =  60, jobs = 'WHM/BLM/RDM/BLU/SCH/GEO' })  -- CASTER score 64 [RARE,EX]
 -- net-new gold options (2026-07-06, hand-curated from score_accessories.py recommendations)
@@ -240,7 +238,6 @@ table.insert(g.ear, { id =  26079, name = 'Hypaspist Earring'                 , 
 table.insert(g.ear, { id =  28483, name = 'Cryptic Earring'                   , cost =  60, jobs = 'All' })  -- TANK score 36 [RARE,EX]
 -- net-new gold options (2026-07-06, hand-curated from score_accessories.py recommendations)
 table.insert(g.ear, { id =  26114, name = 'Balder Earring'                    , cost =  60, jobs = 'All' })  -- DPS score 53
-table.insert(g.ear, { id =  27539, name = 'Genmei Earring'                    , cost =  60, jobs = 'All' })  -- TANK score 30 [RARE,EX]
 table.insert(g.ear, { id =  27540, name = 'Eabani Earring'                    , cost =  60, jobs = 'All' })  -- TANK score 31 [RARE,EX]
 table.insert(g.ear, { id =  25438, name = 'Wicce Earring'                     , cost =  60, jobs = 'BLM' })  -- CASTER score 49 [EX]
 table.insert(g.ear, { id =  25534, name = 'Arbatel Earring'                   , cost =  60, jobs = 'SCH' })  -- CASTER score 49 [EX]
@@ -310,7 +307,6 @@ table.insert(inf.ring, { id =  28537, name = 'Lunette Ring +1'                  
 -- back (top 5 by score -> Infamy Vendor)
 table.insert(inf.back, { id =  27620, name = 'Aurists Cape +1'                   , cost = 300, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/PUP/SCH/GEO' })  -- CASTER score 177 [RARE,EX]
 table.insert(inf.back, { id =  26269, name = 'Moonlight Cape'                    , cost = 300, jobs = 'All' })  -- TANK score 171
-table.insert(inf.back, { id =  27615, name = 'Reiki Cloak'                       , cost = 300, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- TANK score 153 [RARE,EX]
 table.insert(inf.back, { id =  28628, name = 'Takaha Mantle'                     , cost = 300, jobs = 'SAM' })  -- DPS score 112 [EX]
 table.insert(inf.back, { id =  13655, name = 'Sand Mantle'                       , cost = 300, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- TANK score 108 [RARE]
 

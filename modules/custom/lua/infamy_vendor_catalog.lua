@@ -107,7 +107,6 @@ catalog.vendorItems =
     { id = 26269, sub = "Back", name = "Moonlight Cape", cost = 250, stats = { 'TANK score 171', 'Accessory top-5 (back)', 'Jobs: All' } },
     { id = 26266, sub = "Back", name = "Nantosuelta's Cape", cost = 4000, stats = { 'Back. GEO JSE cape. DEF+15.', 'Indi duration+20, Life Cycle+10.' } },
     { id = 26267, sub = "Back", name = "Ogma's Cape", cost = 4000, stats = { 'Back. RUN JSE cape. DEF+18.', 'Inquartata+3, Vallation/Valiance dur+15.' } },
-    { id = 27615, sub = "Back", name = "Reiki Cloak", cost = 250, stats = { 'TANK score 153', 'Accessory top-5 (back)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' } },
     { id = 26261, sub = "Back", name = "Rosmerta's Cape", cost = 4000, stats = { 'Back. BLU JSE cape. DEF+16.', 'Monster correlation+10.' } },
     { id = 26252, sub = "Back", name = "Rudianos's Mantle", cost = 4000, stats = { 'Back. PLD JSE cape. DEF+20.', 'Phys dmg->MP 5%, Shield block+3.' } },
     { id = 13655, sub = "Back", name = "Sand Mantle", cost = 250, stats = { 'TANK score 108', 'Accessory top-5 (back)', 'Jobs: WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' } },

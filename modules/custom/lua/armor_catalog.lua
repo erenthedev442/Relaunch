@@ -101,10 +101,8 @@ table.insert(b.head, { id = 27775, name = "Nahtirah Hat", cost = 12, jobs = 'WHM
 table.insert(b.head, { id = 27725, name = "Artsieq Hat", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- DPS score 99
 
 -- Body (12 picks, scored highest first)
-table.insert(b.body, { id = 25702, name = "Reiki Osode", cost = 12, jobs = 'WAR/MNK/BST/BRD/RNG/SAM/NIN' })  -- TANK score 348
 table.insert(b.body, { id = 25683, name = "Emicho Haubert +1", cost = 12, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- DPS score 344
 table.insert(b.body, { id = 26870, name = "Emet Harness", cost = 12, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- TANK score 330
-table.insert(b.body, { id = 26960, name = "Annointed Kalasiris", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/PUP/SCH/GEO' })  -- HEAL score 189
 table.insert(b.body, { id = 25690, name = "Kaykaus Bliaut", cost = 12, jobs = 'WHM/RDM/BRD/SCH' })  -- CASTER score 186
 table.insert(b.body, { id = 26868, name = "Rosette Jaseran", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- DPS score 141
 
@@ -138,7 +136,6 @@ table.insert(b.feet, { id = 28280, name = "Sokushitsu Sune-Ate", cost = 12, jobs
 table.insert(b.feet, { id = 28287, name = "Durgai Leggings", cost = 12, jobs = 'MNK/THF/BST/NIN/PUP/DNC/RUN' })  -- DPS score 184
 table.insert(b.feet, { id = 27402, name = "Yorium Sabatons", cost = 12, jobs = 'WAR/PLD/DRK' })  -- TANK score 181
 table.insert(b.feet, { id = 28310, name = "Vanir Boots", cost = 12, jobs = 'WAR/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- DPS score 181
-table.insert(b.feet, { id = 27489, name = "Shukuyu Sune-Ate", cost = 12, jobs = 'WAR/MNK/BST/BRD/RNG/SAM/NIN' })  -- TANK score 154
 table.insert(b.feet, { id = 28296, name = "Artsieq Boots", cost = 12, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- DPS score 105
 
 -- Shields (1 picks, scored highest first)
@@ -151,7 +148,6 @@ local s = catalog.silver
 -- Head (11 picks, scored highest first)
 table.insert(s.head, { id = 26702, name = "Gavialis Helm", cost = 25, jobs = 'WAR/PLD/DRK/BST/SAM/NIN/DRG' })  -- TANK score 248
 table.insert(s.head, { id = 26721, name = "Rabid Visor", cost = 25, jobs = 'WAR/RDM/PLD/DRK/BST/RNG/SAM/DRG/BLU/RUN' })  -- TANK score 246
-table.insert(s.head, { id = 27744, name = "Lithelimb Cap", cost = 25, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/SAM/NIN/DRG/BLU/COR/DNC/RUN' })  -- TANK score 239
 table.insert(s.head, { id = 24274, name = "Amin Turban", cost = 25, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- TANK score 237
 table.insert(s.head, { id = 27710, name = "Sahip Helm", cost = 25, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 228
 table.insert(s.head, { id = 25654, name = "Welkin Crown", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 208
@@ -183,7 +179,6 @@ table.insert(s.feet, { id = 25922, name = "Navon Crackows", cost = 25, jobs = 'W
 -- Shields (3 picks, scored highest first)
 table.insert(s.shields, { id = 28648, name = "Priwen", cost = 25, jobs = 'PLD' })  -- TANK score 150
 table.insert(s.shields, { id = 28649, name = "Rinda Shield", cost = 25, jobs = 'WAR/PLD/DRK' })  -- TANK score 126
-table.insert(s.shields, { id = 27645, name = "Genmei Shield", cost = 25, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- DPS score 82
 
 
 -- GOLD TIER
@@ -191,7 +186,6 @@ catalog.gold = emptySlots()
 local g = catalog.gold
 
 -- Head (12 picks, scored highest first)
-table.insert(g.head, { id = 25629, name = "Genmei Kabuto", cost = 50, jobs = 'WAR/MNK/BST/BRD/RNG/SAM/NIN' })  -- TANK score 385
 table.insert(g.head, { id = 25600, name = "Maiitsoh Haube", cost = 50, jobs = 'WAR/PLD/DRK/BST/SAM/NIN/DRG' })  -- DPS score 305
 table.insert(g.head, { id = 23710, name = "Volte Beret", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 304
 table.insert(g.head, { id = 23713, name = "Volte Cap", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- TANK score 273
@@ -236,7 +230,6 @@ table.insert(inf.head, { id = 24182, name = "Clemency Somen", cost = 500, jobs =
 table.insert(inf.head, { id = 24166, name = "Magnificent Crown", cost = 500, jobs = 'MNK/THF/BST/PUP/DNC' })  -- DPS score 416
 
 -- Body (top 5 by score -> Infamy Vendor)
-table.insert(inf.body, { id = 26963, name = "Onca Suit", cost = 500, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- DPS score 1033
 table.insert(inf.body, { id = 23716, name = "Volte Haubert", cost = 500, jobs = 'WAR/PLD/DRK' })  -- TANK score 562
 
 -- Hands (top 5 by score -> Infamy Vendor)
