@@ -585,6 +585,26 @@ def _dynamis_su5_ids(repo_root: Path) -> set[int]:
     return {int(x) for x in re.findall(r'\{\s*id\s*=\s*(\d+)', m.group(1))}
 
 
+def _ambuscade_ids(repo_root: Path) -> set[int]:
+    """Every item the Ambuscade system hands out: the 10 armor sets
+    (NQ/+1/+2 from ARMOR_SETS in scripts/globals/ambuscade.lua -- NQ/+1 via
+    Voucher Clerk, upgrades via Abdhaljs trades at Gorpa-Masorpa) plus the
+    weapon chains (all 5 stages per type from ambuscade_weapons_catalog.lua).
+    Vendor-page tags win via setdefault order; the Tokko/Ajja stages shared
+    with the Prime WeaponForge keep their 'Prime Armory' tag (deliberate)."""
+    ids: set[int] = set()
+    text = _read(repo_root, 'scripts/globals/ambuscade.lua')
+    if text:
+        m = re.search(r'local ARMOR_SETS\s*=(.*?)local JOB_SETS', text, re.DOTALL)
+        if m:
+            ids |= {int(x) for x in re.findall(r'\b(2\d{4})\b', m.group(1))}
+    text = _read(repo_root, 'modules/custom/lua/ambuscade_weapons_catalog.lua')
+    if text:
+        for mm in re.finditer(r'stages\s*=\s*\{([^}]*)\}', text):
+            ids |= {int(x) for x in re.findall(r'\b(\d{5})\b', mm.group(1))}
+    return ids
+
+
 # ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
@@ -827,6 +847,11 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
     # Prime weapon also sold by a vendor keeps its more specific vendor tag.
     for iid in _prime_armory_ids(repo_root):
         obtainable.setdefault(iid, 'Prime Armory')
+    # Ambuscade: the 10 armor sets (NQ/+1/+2) + weapon chains are earned inside
+    # Ambuscade (vouchers, Hallmarks, Abdhaljs upgrades). Exclusive since the
+    # 2026-07 vendor sweep -- this tag is their only source.
+    for iid in _ambuscade_ids(repo_root):
+        obtainable.setdefault(iid, 'Ambuscade')
     # !shop command (scripts/commands/shop.lua): direct-purchase gear, no per-item
     # doc page. Runs last so an item also sold by a medal vendor keeps its tag.
     for iid in _shop_ids(repo_root):
