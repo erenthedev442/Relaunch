@@ -12,7 +12,7 @@
 --       Experience Retained on death  100%  -- you never lose EXP on death
 --       No Weakness after Reraise      -- engine guard (charentity.cpp)
 --       USE: toggles Vanish (Sneak+Invisible) <-> Transform (costume)
---       Permanent "legendary" costume aura while worn
+--       Permanent "legendary" aura -- a pure-visual glow (AFTERGLOW) while worn
 --
 -- The five stat lines are stock engine-honored EQUIPMENT mods (pure data):
 --   EXP_BONUS             382 = 100  -> charutils.cpp AddExpBonus (additive +% EXP)
@@ -21,7 +21,9 @@
 --   MOVE_SPEED_GEAR_BONUS  76 = 25   -> battleentity.cpp gear move speed (clamped +25%)
 --   EXPERIENCE_RETAINED   914 = 100  -> charentity.cpp death: retain 100% of EXP
 -- The Vanish/Transform toggle + aura live in scripts/items/legendary_ring.lua;
--- "No Weakness after Reraise" is a guard in src/map/entities/charentity.cpp.
+-- the aura is re-applied on every zone-in by modules/custom/lua/
+-- legendary_ring_aura.lua (status effects drop on zone). "No Weakness after
+-- Reraise" is a guard in src/map/entities/charentity.cpp.
 --
 -- CLIENT DISPLAY: repurposes retail item 26169 (reraise_ring) -- already Lv.1,
 -- all-jobs, ring-slot, Rare/Ex, USABLE (item_usable enchantment), and absent

@@ -40,7 +40,7 @@ _MOD_TEXT = {
 # charentity.cpp guard), appended to the parsed stat line so the page stays
 # complete when the ring is retuned.
 _RING_EXTRAS = ('No Weakness after Reraise', 'USE: toggle Vanish (Sneak+Invisible) / '
-                'Transform (costume)', 'permanent legendary aura while worn')
+                'Transform (costume)', 'permanent legendary aura glow while worn')
 
 _TIER_ORDER = ('4', '3', '2', '1')
 _CARD_CLASS = {'4': 't4', '3': 't3', '2': 't2', '1': 't1'}
