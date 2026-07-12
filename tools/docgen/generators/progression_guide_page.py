@@ -77,6 +77,7 @@ _CATALOG_GROUPS: list[tuple[str, list[tuple[str, str]]]] = [
         ("endgame/geas-fete.md",          "Escha zones"),
         ("endgame/affinity-nms.md",       "overworld"),
         ("endgame/dynamis-divergence.md", "city Dynamis"),
+        ("endgame/dynamis-classic.md",    "classic Dynamis"),
         ("endgame/invasions.md",          "scheduled"),
         ("endgame/domain-invasion.md",    "scheduled"),
         ("endgame/tournament.md",         "!leaf"),
