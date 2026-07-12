@@ -433,17 +433,28 @@ SOURCE_PAGES = {
     # which case they resolve from docs_dir (e.g. the endgame pages).
     'endgame/domain-invasion.md': 'Domain QM',
     'economy/cosmetic-boutique.md': 'Cosmetic Boutique',
-    'dungeons.md': 'Dungeon (Infamy)',
+    # dungeons.md lives in endgame/ -- the old progression-relative key
+    # resolved to a non-existent path and the scan SILENTLY skipped all 146
+    # of its item links (found 2026-07-12 via "Agony Jerkin +1 is Unity").
+    'endgame/dungeons.md': 'Dungeon (Infamy)',
     'augments.md': 'Augment Moogle',
     'augment-sage.md': 'Augment Sage',
     'reforge.md': 'Reforge',
     'gm-home.md': 'GM Home',
-    'crafting-exchange.md': 'Crafting Exchange',
     'hunters-guild.md': "Hunter's Guild",
     'weekly-hunts.md': 'Weekly Hunt Board',
     'daily-board.md': 'Daily Board',
     'login-rewards.md': 'Login Rewards',
     'hnm.md': 'HNM',
+    # Source pages that were never registered (same audit): every page below
+    # item-links gear a player earns through that system.
+    'endgame/unity-concord.md': 'Unity Wanted NM',
+    'endgame/high-tier-battlefields.md': 'HTBF',
+    'endgame/nyzul-isle.md': 'Nyzul Isle',
+    'endgame/voidwatch.md': 'Voidwatch',
+    'endgame/dynamis-classic.md': 'Classic Dynamis',
+    'endgame/ambuscade.md': 'Ambuscade',
+    'aeonic-weapons.md': 'Aeonic Forge (Temprix)',
 }
 # Item links now point at FFXIAH by id (ffxiah.com/item/<id>); the few
 # unresolved items fall back to a BG-Wiki search url (?search=<name>). Scan BOTH
