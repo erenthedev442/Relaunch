@@ -7,7 +7,7 @@ Azure). The relaunch docs site rebuilds hourly on OVH from the live server
 docgen error, wrangler/auth failure, disk full -- the PUBLISHED site quietly
 drifts from the live game and nobody notices.
 
-Three independent signals:
+Four independent signals:
   * built site index.html mtime           -> missed task + docgen/mkdocs failure
   * refresh log reached "Deployment complete" -> wrangler/deploy failure
   * docgen WARN / [sync_audit] lines in the last refresh run -> content/site
@@ -16,6 +16,13 @@ Three independent signals:
     so a fixed warning re-arms and a standing one doesn't spam. This is the
     owner-visible half of the "site must match the server" rule -- the audits
     are warn-loud in a log nobody reads without this.
+  * player portal health (portal.ffxi-legendary.com) -> the portal app
+    (uvicorn on 127.0.0.1:8090) and its cloudflared tunnel are SCHEDULED
+    TASKS, not services; a dead tunnel serves Cloudflare Error 1033 to every
+    player while the box looks healthy from inside (2026-07-12 outage: the
+    migrated tunnel task had only a boot trigger and had never run). If the
+    public URL fails but the app answers locally, the monitor SELF-HEALS by
+    kicking the FFXIPortalTunnel task and re-checking before it alerts.
 
 Alerts go to the Discord webhook in C:\\relaunch-ops\\.discord_webhook (one line).
 A cooldown stops it spamming during a sustained outage. stdlib only; never raises
@@ -27,6 +34,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import subprocess
 import sys
 import time
 import urllib.request
@@ -109,6 +117,48 @@ for name, idx, log in SITES:
     if "Deployment complete" not in tail(log):
         problems.append((name, "last refresh did not reach 'Deployment complete' -- publish/deploy error"))
 
+# --- signal 4: player portal health -----------------------------------------
+PORTAL_URL = "https://portal.ffxi-legendary.com/"
+PORTAL_LOCAL = "http://127.0.0.1:8090/"
+
+
+def http_ok(url, timeout=15):
+    try:
+        with urllib.request.urlopen(url, timeout=timeout) as r:
+            return 200 <= r.getcode() < 400
+    except Exception:
+        return False
+
+
+def portal_check():
+    """None = healthy; else a problem string. Self-heals a dead tunnel."""
+    if http_ok(PORTAL_URL):
+        return None
+    app_ok = http_ok(PORTAL_LOCAL, timeout=5)
+    note = ""
+    if app_ok:
+        # App is fine locally -> the cloudflared tunnel is what died. Kick its
+        # task (MultipleInstances=IgnoreNew makes this a no-op if racing) and
+        # give it a moment before deciding to alert.
+        try:
+            subprocess.run(["schtasks", "/run", "/tn", "FFXIPortalTunnel"],
+                           capture_output=True, timeout=30)
+            time.sleep(20)
+            if http_ok(PORTAL_URL):
+                print("[drift] portal public URL was down; FFXIPortalTunnel "
+                      "kicked -- healthy again (self-healed)")
+                return None
+            note = " (tunnel restart attempted, still down)"
+        except Exception as e:
+            note = f" (tunnel restart failed to launch: {e})"
+        return "public URL down -- cloudflared tunnel dead" + note
+    return "portal app not answering on 127.0.0.1:8090 (uvicorn down)" + note
+
+
+portal_reason = portal_check()
+if portal_reason:
+    problems.append(("Player Portal", portal_reason))
+
 state = load_state()
 stamp = time.strftime("%Y-%m-%d %H:%M UTC", time.gmtime())
 
@@ -170,7 +220,7 @@ for n, _ in fresh:
 save_state(state)
 
 if fresh:
-    msg = (":rotating_light: **Relaunch docs drift alarm** -- fjb-relaunch may be stale:\n"
+    msg = (":rotating_light: **Relaunch drift alarm**:\n"
            + "\n".join(f"- **{n}**: {r}" for n, r in fresh)
            + f"\n_checked {stamp} on OVH; re-alerts at most every {COOLDOWN // 3600}h_")
     url = webhook_url()
