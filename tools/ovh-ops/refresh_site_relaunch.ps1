@@ -57,6 +57,23 @@ try {
     & $Git fetch origin $branch  2>&1 | Out-File -FilePath $Log -Append -Encoding utf8
     & $Git reset --hard "origin/$branch" 2>&1 | Out-File -FilePath $Log -Append -Encoding utf8
 
+    # ---- [0b/4] OPS-SELFSYNC: deploy ops scripts from the checkout ----
+    # The scheduled tasks run the C:\relaunch-ops COPIES of these scripts; this
+    # step keeps those copies current so ops changes land via git alone (repo ->
+    # C:\server on game deploy -> this checkout -> C:\relaunch-ops next hour).
+    # Guard: only sync when the checkout's copy carries this same OPS-SELFSYNC
+    # step, so a stale checkout can never downgrade an already-updated ops dir.
+    # (Overwriting THIS running script is safe: PS parses the whole file first.)
+    $repoOps = Join-Path $DocsRepo "tools\ovh-ops"
+    if (Select-String -Path (Join-Path $repoOps "refresh_site_relaunch.ps1") -Pattern "OPS-SELFSYNC" -Quiet) {
+        foreach ($f in @("refresh_site_relaunch.ps1", "site_drift_monitor_relaunch.py", "run_site_drift_monitor.ps1")) {
+            Copy-Item (Join-Path $repoOps $f) "C:\relaunch-ops\" -Force
+        }
+        Log "[0b/4] ops scripts self-synced from checkout"
+    } else {
+        Log "[0b/4] checkout predates OPS-SELFSYNC -- ops copies left untouched"
+    }
+
     # ---- load Cloudflare token into the environment (wrangler reads it) ----
     if(Test-Path $CfEnv){
         foreach($ln in Get-Content $CfEnv){
