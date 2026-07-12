@@ -3,8 +3,11 @@
 Emit a CSV of EVERY equippable item in the DB with its level / item level,
 slot, jobs, and WHERE it comes from -- split into:
 
-  * retail_source   -- the stock (retail-accurate) LSB acquisition still in the
-                       DB: mob drops (which mob), crafting, guild-shop sale.
+  * retail_source   -- the stock (retail-accurate) LSB acquisition: mob drops
+                       (which mob) / crafting / guild-shop sale from SQL, PLUS
+                       battlefield-BCNM loot, quest rewards, and mission rewards
+                       scraped from the Lua scripts (which reference items by
+                       the xi.item.* enum).
   * relaunch_source -- the CUSTOM relaunch overlay that references the item id:
                        the medal / Infamy vendors, HTBF, Omen, Ambuscade,
                        Invasion, Voidwatch, Domain, the forges, etc.
@@ -17,9 +20,14 @@ uncommitted / pending changes -- with NO server restart or DB required.
     python tools/gear_source_audit.py path/to/out.csv
 
 Notes / limitations:
-  * "retail" here means "stock LSB data in the DB." LSB mirrors retail, so mob
-    drops / synth / guild shops are retail-accurate, but a custom drop added to
-    mob_droplist would also show up under retail_source.
+  * "retail" here means "stock LSB content." LSB mirrors retail, so drops /
+    synth / guild shops / BCNM / quests / missions are retail-accurate, but a
+    custom drop added to mob_droplist (or a custom battlefield) would also show
+    up under retail_source.
+  * Quest/mission scraping matches GRANT contexts (npcUtil.giveItem, a reward
+    table's item(s)=, :addItem) -- not trade-in requirements -- and resolves
+    xi.item.* enum names to ids. A giveItem argument built from a variable
+    (e.g. { reward.item, ... }) can't be resolved statically and is skipped.
   * relaunch_source is derived from item ids referenced in the custom lua
     catalogs/loot pools. A file's label is inferred from its name (see LABELS).
   * An item with neither column populated is currently UNOBTAINABLE in the repo.
@@ -156,17 +164,82 @@ if gpath.exists():
         if len(f) > 1 and f[1].isdigit():
             guild_sold.add(int(f[1]))
 
+# --- Battlefield / BCNM loot + quest + mission rewards (Lua-scripted) --------
+# These acquisition methods live in Lua, not SQL. They reference items by the
+# xi.item.CONSTANT enum, so first build NAME -> id, then scrape each script set.
+SCRIPTS = ROOT / "scripts"
+
+ITEM_ENUM: dict[str, int] = {}
+_enum_path = SCRIPTS / "enum" / "item.lua"
+if _enum_path.exists():
+    for m in re.finditer(r"^\s*([A-Z_][A-Z0-9_]*)\s*=\s*(\d+)\s*,",
+                         _enum_path.read_text(encoding="utf-8", errors="replace"), re.M):
+        ITEM_ENUM[m.group(1)] = int(m.group(2))
+
+_XI_ITEM = re.compile(r"xi\.item\.([A-Z_][A-Z0-9_]*)")
+
+def _enum_ids(blob: str):
+    """Every xi.item.NAME in `blob` that resolves to an equippable gear id."""
+    for m in _XI_ITEM.finditer(blob):
+        iid = ITEM_ENUM.get(m.group(1))
+        if iid is not None and iid in gear:
+            yield iid
+
+# item -> set of source names, per script family
+item_bcnm: dict[int, set] = {}
+item_quest: dict[int, set] = {}
+item_mission: dict[int, set] = {}
+
+def _harvest(target: dict[int, set], iid: int, name: str):
+    target.setdefault(iid, set()).add(name)
+
+# Battlefields: the `content.loot = { ... }` armoury-crate table.
+_LOOT_BLOCK = re.compile(r"content\.loot\s*=\s*\{.*?\n\}", re.S)
+for p in SCRIPTS.glob("battlefields/**/*.lua"):
+    text = p.read_text(encoding="utf-8", errors="replace")
+    name = _pretty(p.stem)
+    for block in _LOOT_BLOCK.findall(text):
+        for iid in _enum_ids(block):
+            _harvest(item_bcnm, iid, name)
+
+# Quests + missions: grant contexts only -- npcUtil.giveItem(...), a reward
+# table's `item(s) = ...`, and :addItem(...). Filtering to gear ids drops the
+# non-gear grants (currency, KIs, food). Trade/haveItem checks are not matched.
+_GIVE   = re.compile(r"npcUtil\.giveItem\(\s*\w+\s*,\s*(\{(?:[^{}]|\{[^{}]*\})*\}|xi\.item\.\w+[^)]*)\)")
+_REWARD = re.compile(r"\bitems?\s*=\s*(\{[^{}]*\}|xi\.item\.\w+)")
+_ADD    = re.compile(r":addItem\(\s*(xi\.item\.\w+[^)]*)\)")
+
+def _scan_rewards(root_glob: str, target: dict[int, set]):
+    for p in SCRIPTS.glob(root_glob):
+        text = p.read_text(encoding="utf-8", errors="replace")
+        name = _pretty(p.stem)
+        for rx in (_GIVE, _REWARD, _ADD):
+            for m in rx.finditer(text):
+                for iid in _enum_ids(m.group(1)):
+                    _harvest(target, iid, name)
+
+_scan_rewards("quests/**/*.lua",   item_quest)
+_scan_rewards("missions/**/*.lua", item_mission)
+
+def _capped(names: set, n: int = 3) -> str:
+    shown = sorted(names)
+    return ", ".join(shown[:n]) + (f" +{len(shown) - n} more" if len(shown) > n else "")
+
 def retail_source(iid: int) -> str:
     parts = []
     mobs = item_drop_mobs.get(iid)
     if mobs:
-        shown = sorted(mobs)
-        label = ", ".join(shown[:4]) + (f" +{len(shown) - 4} more" if len(shown) > 4 else "")
-        parts.append(f"Drop: {label}")
+        parts.append(f"Drop: {_capped(mobs, 4)}")
     if iid in craftable:
         parts.append("Craft")
     if iid in guild_sold:
         parts.append("Guild Shop")
+    if iid in item_bcnm:
+        parts.append(f"BCNM: {_capped(item_bcnm[iid])}")
+    if iid in item_quest:
+        parts.append(f"Quest: {_capped(item_quest[iid])}")
+    if iid in item_mission:
+        parts.append(f"Mission: {_capped(item_mission[iid])}")
     return " | ".join(parts)
 
 # ---------------------------------------------------------------------------
