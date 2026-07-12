@@ -53,7 +53,6 @@ catalog.vendorItems =
     { id = 25488, sub = "Ear", name = "Kasuga Earring +2", cost = 300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for SAM', 'Jobs: SAM' } },
     { id = 25446, sub = "Ear", name = "Lethargy Earring +2", cost = 300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for RDM', 'Jobs: RDM' } },
     { id = 25530, sub = "Ear", name = "Maculele Earring +2", cost = 300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for DNC', 'Jobs: DNC' } },
-    { id = 26088, sub = "Ear", name = "Malignance Earring", cost = 250, stats = { 'CASTER score 76', 'Accessory top-5 (ear)', 'Jobs: WHM/BLM/RDM/DRK/SMN/SCH/GEO' } },
     { id = 25470, sub = "Ear", name = "Nukumi Earring +2", cost = 300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for BST', 'Jobs: BST' } },
     { id = 26108, sub = "Ear", name = "Odr Earring", cost = 250, stats = { 'DPS score 55', 'Accessory top-5 (ear)', 'Jobs: MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' } },
     { id = 25500, sub = "Ear", name = "Peltasts Earring +2", cost = 300, stats = { 'Sortie JSE +2 earring', 'Best-in-slot for DRG', 'Jobs: DRG' } },

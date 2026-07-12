@@ -135,18 +135,15 @@ do
     -- Hand-to-Hand: 5 pick(s) -> Infamy Vendor
     local inf_h2h = cat(catalog.infamy.weapons, 'Hand-to-Hand')
     table.insert(inf_h2h, { id = 21535, name = "Varga Purnikawa", cost = 500, jobs = 'MNK/PUP' })  -- WS score 329, DMG 213/Dly 596
-    table.insert(inf_h2h, { id = 21527, name = "Sakpatas Fists", cost = 500, jobs = 'MNK/PUP' })  -- DPS score 275, DMG 165/Dly 576
     table.insert(inf_h2h, { id = 21528, name = "Dragon Fangs", cost = 500, jobs = 'MNK/PUP' })  -- WS score 214, DMG 188/Dly 606
 
     -- Daggers: 5 pick(s) -> Infamy Vendor
     local inf_daggers = cat(catalog.infamy.weapons, 'Daggers')
-    table.insert(inf_daggers, { id = 21567, name = "Gletis Knife", cost = 500, jobs = 'RDM/THF/BRD/RNG/NIN/COR/DNC' })  -- DPS score 326, DMG 133/Dly 200
     table.insert(inf_daggers, { id = 21590, name = "Mpu Gandring", cost = 500, jobs = 'RDM/THF/BRD/DNC' })  -- DPS score 322, DMG 137/Dly 176
 
     -- Swords: 5 pick(s) -> Infamy Vendor
     local inf_swords = cat(catalog.infamy.weapons, 'Swords')
     table.insert(inf_swords, { id = 20672, name = "Ice Brand", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 1060, DMG 187/Dly 264
-    table.insert(inf_swords, { id = 21637, name = "Sakpatas Sword", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 977, DMG 160/Dly 240
     table.insert(inf_swords, { id = 21646, name = "Caliburnus", cost = 500, jobs = 'RDM/PLD/BLU' })  -- CASTER score 935, DMG 181/Dly 233
 
     -- Great Swords: 5 pick(s) -> Infamy Vendor

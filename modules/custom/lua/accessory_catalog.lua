@@ -298,7 +298,6 @@ table.insert(inf.waist, { id =  26361, name = 'Gerdr Belt +1'                   
 table.insert(inf.waist, { id =  26359, name = 'Orpheuss Sash'                     , cost = 300, jobs = 'All' })  -- DPS score 111 [RARE]
 
 -- ear (top 5 by score -> Infamy Vendor)
-table.insert(inf.ear, { id =  26088, name = 'Malignance Earring'                , cost = 300, jobs = 'WHM/BLM/RDM/DRK/SMN/SCH/GEO' })  -- CASTER score 76 [RARE,EX]
 table.insert(inf.ear, { id =  26084, name = 'Sherida Earring'                   , cost = 300, jobs = 'MNK/RDM/THF/BST/RNG/DRG/DNC/RUN' })  -- DPS score 65 [RARE,EX]
 table.insert(inf.ear, { id =  25439, name = 'Wicce Earring +1'                  , cost = 300, jobs = 'BLM' })  -- CASTER score 56 [EX]
 table.insert(inf.ear, { id =  25535, name = 'Arbatel Earring +1'                , cost = 300, jobs = 'SCH' })  -- CASTER score 56 [EX]

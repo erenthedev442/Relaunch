@@ -176,7 +176,6 @@ table.insert(s.body, { id = 26970, name = "Lapidary Tunic", cost = 25, jobs = 'M
 -- sold by Zurim/Domain QM, medal-vendor exclusivity)
 table.insert(s.hands, { id = 27024, name = "Argosy Mufflers", cost = 25, jobs = 'WAR/DRK/BST' })  -- DPS score 236
 table.insert(s.hands, { id = 27117, name = "Adhemar Wristbands", cost = 25, jobs = 'MNK/THF/RNG/NIN/BLU/COR/DNC/RUN' })  -- DPS score 232
-table.insert(s.hands, { id = 23769, name = "Ikengas Gloves", cost = 25, jobs = 'RNG/COR' })  -- DPS score 230
 table.insert(s.hands, { id = 27027, name = "Rao Kote +1", cost = 25, jobs = 'MNK/SAM/NIN/PUP' })  -- DPS score 229
 table.insert(s.hands, { id = 27045, name = "Yorium Gauntlets", cost = 25, jobs = 'WAR/PLD/DRK' })  -- TANK score 229
 table.insert(s.hands, { id = 27114, name = "Emicho Gauntlets +1", cost = 25, jobs = 'WAR/PLD/DRK/BST/DRG' })  -- DPS score 216
@@ -211,9 +210,6 @@ local g = catalog.gold
 -- Head (12 picks, scored highest first)
 table.insert(g.head, { id = 25629, name = "Genmei Kabuto", cost = 50, jobs = 'WAR/MNK/BST/BRD/RNG/SAM/NIN' })  -- TANK score 385
 table.insert(g.head, { id = 26671, name = "Souveran Schaller +1", cost = 50, jobs = 'WAR/PLD' })  -- TANK score 381
-table.insert(g.head, { id = 23759, name = "Agwus Cap", cost = 50, jobs = 'BLM/SCH/GEO/RUN' })  -- CASTER score 375
-table.insert(g.head, { id = 23756, name = "Gletis Mask", cost = 50, jobs = 'THF/BST/DRG/BLU/DNC' })  -- DPS score 363
-table.insert(g.head, { id = 23732, name = "Malignance Chapeau", cost = 50, jobs = 'MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC' })  -- TANK score 327
 table.insert(g.head, { id = 25600, name = "Maiitsoh Haube", cost = 50, jobs = 'WAR/PLD/DRK/BST/SAM/NIN/DRG' })  -- DPS score 305
 table.insert(g.head, { id = 23710, name = "Volte Beret", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 304
 table.insert(g.head, { id = 23713, name = "Volte Cap", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- TANK score 273
@@ -221,20 +217,14 @@ table.insert(g.head, { id = 27731, name = "Gendewitha Caubeen +1", cost = 50, jo
 
 -- Body (13 picks, scored highest first)
 table.insert(g.body, { id = 23798, name = "Crepuscular Mail", cost = 50, jobs = 'WAR/PLD/DRK/BST/SAM/DRG' })  -- TANK score 463
-table.insert(g.body, { id = 23767, name = "Bunzis Robe", cost = 50, jobs = 'WHM/RDM/BRD/SMN' })  -- CASTER score 462
 table.insert(g.body, { id = 25786, name = "Ashera Harness", cost = 50, jobs = 'MNK/THF/BRD/NIN/DNC/RUN' })  -- DPS score 454
 table.insert(g.body, { id = 27857, name = "Respite Cloak", cost = 50, jobs = 'MNK/WHM/BLM/RDM/PLD/BRD/RNG/SMN/BLU/PUP/SCH/GEO/RUN' })  -- TANK score 451
-table.insert(g.body, { id = 23733, name = "Malignance Tabard", cost = 50, jobs = 'MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC' })  -- TANK score 420
-table.insert(g.body, { id = 23766, name = "Agwus Robe", cost = 50, jobs = 'BLM/SCH/GEO/RUN' })  -- CASTER score 416
 table.insert(g.body, { id = 23715, name = "Volte Harness", cost = 50, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN' })  -- DPS score 408
-table.insert(g.body, { id = 23763, name = "Gletis Cuirass", cost = 50, jobs = 'THF/BST/DRG/BLU/DNC' })  -- DPS score 397
 table.insert(g.body, { id = 25787, name = "Shamash Robe", cost = 50, jobs = 'WHM/BLM/RDM/BLU/SCH/GEO' })  -- CASTER score 379
 table.insert(g.body, { id = 25708, name = "Gyve Doublet", cost = 50, jobs = 'WHM/BLM/RDM/BRD/RNG/NIN/SMN/BLU/PUP/SCH/GEO' })  -- TANK score 276
 
 -- Hands (10 picks, scored highest first)
 table.insert(g.hands, { id = 23720, name = "Volte Moufles", cost = 50, jobs = 'WAR/PLD/DRK' })  -- TANK score 376
-table.insert(g.hands, { id = 23734, name = "Malignance Gloves", cost = 50, jobs = 'MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC' })  -- pinned: completes the Malignance gold set (was missing; player report 2026-07-08)
-table.insert(g.hands, { id = 23770, name = "Gletis Gauntlets", cost = 50, jobs = 'THF/BST/DRG/BLU/DNC' })  -- DPS score 356
 table.insert(g.hands, { id = 23719, name = "Volte Mittens", cost = 50, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN' })  -- DPS score 324
 table.insert(g.hands, { id = 23718, name = "Volte Gloves", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 307
 table.insert(g.hands, { id = 27023, name = "Souveran Handschuhs +1", cost = 50, jobs = 'WAR/PLD' })  -- TANK score 299
@@ -242,16 +232,11 @@ table.insert(g.hands, { id = 23721, name = "Volte Bracers", cost = 50, jobs = 'W
 
 -- Legs (12 picks, scored highest first)
 table.insert(g.legs, { id = 24131, name = "Revelation Brais", cost = 50, jobs = 'WAR/BRD/NIN' })  -- TANK score 438
-table.insert(g.legs, { id = 23780, name = "Agwus Slops", cost = 50, jobs = 'BLM/SCH/GEO/RUN' })  -- CASTER score 412
 table.insert(g.legs, { id = 23722, name = "Volte Brais", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 356
-table.insert(g.legs, { id = 23777, name = "Gletis Breeches", cost = 50, jobs = 'THF/BST/DRG/BLU/DNC' })  -- DPS score 380
-table.insert(g.legs, { id = 23735, name = "Malignance Tights", cost = 50, jobs = 'MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC' })  -- DPS score 345
 table.insert(g.legs, { id = 23725, name = "Volte Hose", cost = 50, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- TANK score 285
 
 -- Feet (12 picks, scored highest first)
-table.insert(g.feet, { id = 23784, name = "Gletis Boots", cost = 50, jobs = 'THF/BST/DRG/BLU/DNC' })  -- DPS score 386
 table.insert(g.feet, { id = 23727, name = "Volte Spats", cost = 50, jobs = 'WAR/MNK/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/BLU/COR/PUP/DNC/RUN' })  -- DPS score 366
-table.insert(g.feet, { id = 23736, name = "Malignance Boots", cost = 50, jobs = 'MNK/RDM/THF/BST/RNG/NIN/BLU/COR/PUP/DNC' })  -- DPS score 361
 table.insert(g.feet, { id = 23728, name = "Volte Sollerets", cost = 50, jobs = 'WAR/PLD/DRK' })  -- TANK score 352
 table.insert(g.feet, { id = 23726, name = "Volte Gaiters", cost = 50, jobs = 'WHM/BLM/RDM/BRD/SMN/SCH/GEO' })  -- CASTER score 276
 table.insert(g.feet, { id = 27476, name = "Amalric Nails +1", cost = 50, jobs = 'BLM/RDM/SMN/BLU/SCH/GEO' })  -- CASTER score 259
@@ -270,31 +255,20 @@ local inf = catalog.infamy
 -- Head (top 5 by score -> Infamy Vendor)
 table.insert(inf.head, { id = 24182, name = "Clemency Somen", cost = 500, jobs = 'RNG/SAM/DRG/COR' })  -- DPS score 434
 table.insert(inf.head, { id = 24166, name = "Magnificent Crown", cost = 500, jobs = 'MNK/THF/BST/PUP/DNC' })  -- DPS score 416
-table.insert(inf.head, { id = 23760, name = "Bunzis Hat", cost = 500, jobs = 'WHM/RDM/BRD/SMN' })  -- CASTER score 413
-table.insert(inf.head, { id = 23757, name = "Sakpatas Helm", cost = 500, jobs = 'WAR/PLD/DRK' })  -- TANK score 405
 
 -- Body (top 5 by score -> Infamy Vendor)
 table.insert(inf.body, { id = 26963, name = "Onca Suit", cost = 500, jobs = 'WAR/MNK/WHM/BLM/RDM/THF/PLD/DRK/BST/BRD/RNG/SAM/NIN/DRG/SMN/BLU/COR/PUP/DNC/SCH/GEO/RUN' })  -- DPS score 1033
 table.insert(inf.body, { id = 23716, name = "Volte Haubert", cost = 500, jobs = 'WAR/PLD/DRK' })  -- TANK score 562
-table.insert(inf.body, { id = 23765, name = "Mpacas Doublet", cost = 500, jobs = 'MNK/SAM/NIN/PUP' })  -- TANK score 509
-table.insert(inf.body, { id = 23764, name = "Sakpatas Breastplate", cost = 500, jobs = 'WAR/PLD/DRK' })  -- TANK score 501
 
 -- Hands (top 5 by score -> Infamy Vendor)
-table.insert(inf.hands, { id = 23774, name = "Bunzis Gloves", cost = 500, jobs = 'WHM/RDM/BRD/SMN' })  -- CASTER score 432
 table.insert(inf.hands, { id = 24188, name = "Clemency Kote", cost = 500, jobs = 'RNG/SAM/DRG/COR' })  -- DPS score 428
 table.insert(inf.hands, { id = 24128, name = "Revelation Gauntlets", cost = 500, jobs = 'WAR/BRD/NIN' })  -- DPS score 424
-table.insert(inf.hands, { id = 23772, name = "Mpacas Gloves", cost = 500, jobs = 'MNK/SAM/NIN/PUP' })  -- TANK score 402
 
 -- Legs (top 5 by score -> Infamy Vendor)
-table.insert(inf.legs, { id = 23781, name = "Bunzis Pants", cost = 500, jobs = 'WHM/RDM/BRD/SMN' })  -- CASTER score 469
-table.insert(inf.legs, { id = 23779, name = "Mpacas Hose", cost = 500, jobs = 'MNK/SAM/NIN/PUP' })  -- TANK score 447
 table.insert(inf.legs, { id = 23724, name = "Volte Brayettes", cost = 500, jobs = 'WAR/PLD/DRK' })  -- TANK score 440
-table.insert(inf.legs, { id = 23778, name = "Sakpatas Cuisses", cost = 500, jobs = 'WAR/PLD/DRK' })  -- TANK score 439
 
 -- Feet (top 5 by score -> Infamy Vendor)
-table.insert(inf.feet, { id = 23788, name = "Bunzis Sabots", cost = 500, jobs = 'WHM/RDM/BRD/SMN' })  -- CASTER score 407
 table.insert(inf.feet, { id = 24178, name = "Magnificent Sollerets", cost = 500, jobs = 'MNK/THF/BST/PUP/DNC' })  -- DPS score 394
-table.insert(inf.feet, { id = 23786, name = "Mpacas Boots", cost = 500, jobs = 'MNK/SAM/NIN/PUP' })  -- DPS score 391
 
 -- Shields (top 5 by score -> Infamy Vendor)
 table.insert(inf.shields, { id = 26400, name = "Culminus", cost = 500, jobs = 'WHM/BLM/RDM/BRD/SMN/BLU/SCH/GEO' })  -- CASTER score 368
