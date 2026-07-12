@@ -1312,13 +1312,10 @@ catalog.mainJobBias = 0.5
 --                     2026-07-09 (player feedback) so Marks are the steady
 --                     deterministic path and a drop is a rarer bonus.
 --                     1.0 = every kill.
---   dropTierWeights : when a piece drops, its reforge tier is rolled from
---                     these relative weights -- drops now arrive PRE-UPGRADED
---                     as a random +1/+2/+3, skipping the base->+3 mark grind.
---                     Falls back to the next lower tier (down to base) if a
---                     piece has no art at the rolled tier.
+--   Drops are always the BASE (i109) piece -- the start of the upgrade
+--   line (owner request 2026-07-11; the short-lived pre-upgraded +1/+2/+3
+--   drops skipped the base->+3 mark grind the vendor is built around).
 -- =========================================================
-catalog.dropChance      = 0.30
-catalog.dropTierWeights = { plus1 = 65, plus2 = 28, plus3 = 7 }
+catalog.dropChance = 0.30
 
 return catalog

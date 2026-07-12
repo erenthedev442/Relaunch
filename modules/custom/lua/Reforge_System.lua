@@ -41,8 +41,7 @@ local DESPAWN_SECS = catalog.unengagedDespawnSecs or 180
 -- Salvage trade: set of all base-tier item IDs across every job/set/slot.
 -- Built once at module load so the onTrade handler has an O(1) lookup.
 -----------------------------------
-local _basePieceIds  = {}
-local _tiersByBaseId = {}  -- baseItemId -> { base, +1, +2, +3 } tier array (for pre-upgraded drops)
+local _basePieceIds = {}
 do
     for _, jobPieces in pairs(catalog.pieces) do
         for _, setKey in ipairs({ 'af', 'relic', 'empy' }) do
@@ -51,8 +50,7 @@ do
                 for _, slot in pairs(set) do
                     -- slot[1] is always the base tier
                     if slot[1] and slot[1] > 0 then
-                        _basePieceIds[slot[1]]  = true
-                        _tiersByBaseId[slot[1]] = slot
+                        _basePieceIds[slot[1]] = true
                     end
                 end
             end
@@ -113,28 +111,12 @@ end
 -----------------------------------
 -- Award helpers
 -----------------------------------
--- Weighted roll of a reforge tier index for a dropped piece:
--- 2 = +1, 3 = +2, 4 = +3 (indices into the { base, +1, +2, +3 } slot array).
-local function rollDropTier()
-    local w     = catalog.dropTierWeights or { plus1 = 65, plus2 = 28, plus3 = 7 }
-    local total = (w.plus1 or 0) + (w.plus2 or 0) + (w.plus3 or 0)
-    if total <= 0 then
-        return 2
-    end
-    local r = math.random(total)
-    if r <= (w.plus1 or 0) then
-        return 2
-    elseif r <= (w.plus1 or 0) + (w.plus2 or 0) then
-        return 3
-    end
-    return 4
-end
-
 local function rollLootDrop(player, srcDef, mobLabel)
     -- Drop CHANCE: NM kills no longer guarantee a piece. Marks (awardCurrency)
-    -- are the steady deterministic path; a piece is a catalog.dropChance bonus
-    -- that arrives PRE-UPGRADED to a random +1/+2/+3 (catalog.dropTierWeights),
-    -- skipping the base->+3 mark grind.
+    -- are the steady deterministic path; a piece is a catalog.dropChance bonus.
+    -- Drops are always the BASE (i109) piece -- the start of the upgrade line
+    -- (owner request 2026-07-11; pre-upgraded +1/+2/+3 drops skipped the
+    -- base->+3 mark grind the vendor is built around).
     if math.random() >= (catalog.dropChance or 1.0) then
         return
     end
@@ -162,33 +144,13 @@ local function rollLootDrop(player, srcDef, mobLabel)
         return
     end
 
-    -- Resolve the pre-upgraded tier to award. Drops come reforged to a random
-    -- +1/+2/+3; fall back to the next lower tier (ultimately base) if this piece
-    -- has no item id at the rolled tier.
-    local baseId  = pool[math.random(#pool)]
-    local tiers   = _tiersByBaseId[baseId]
-    local tierIdx = rollDropTier()
-    local itemId  = baseId
-    if tiers then
-        while tierIdx >= 2 do
-            if tiers[tierIdx] and tiers[tierIdx] > 0 then
-                itemId = tiers[tierIdx]
-                break
-            end
-            tierIdx = tierIdx - 1
-        end
-    end
-    if itemId == baseId then
-        tierIdx = 1  -- no +N art for this piece; awarded base
-    end
-
-    local tierLabel = ({ [1] = 'base', [2] = '+1', [3] = '+2', [4] = '+3' })[tierIdx]
+    local itemId    = pool[math.random(#pool)]  -- pools are base-tier ids
     local addedItem = player:addItem({ id = itemId, quantity = 1 })
     local rawName   = addedItem and addedItem:getName() or string.format('item %d', itemId)
     local itemName  = toDisplayName(rawName)
     local tag       = useJob and ' (main-job match!)' or ''
     player:printToPlayer(
-        string.format('[Reforge] %s dropped a %s %s piece (%s)%s!', mobLabel, tierLabel, srcDef.setKey:upper(), itemName, tag),
+        string.format('[Reforge] %s dropped a base %s piece (%s)%s!', mobLabel, srcDef.setKey:upper(), itemName, tag),
         xi.msg.channel.SYSTEM_3
     )
 end
