@@ -28,8 +28,12 @@ local SYS   = xi.msg.channel.SYSTEM_3
 -- felt absent. The fallback lets any mob contribute; the level->tier banding keeps
 -- higher tiers gated to higher-level mobs (bands mirror the 1:1 map: T0<=28,
 -- T1 29-49, T2 50-72, T3 73-94, T4 95+).
-local DROP_RATE     = 60
-local FALLBACK_RATE = 12
+-- 2026-07-11 (owner): FLAT 10% EVERYWHERE — every catalyst source (mapped,
+-- fallback, retail droplist via zz_catalyst_droplist_rate.sql, dungeon trash)
+-- pays 10%, paired with DROP_RATE_MULTIPLIER 3.0 -> 1.0 in settings/map.lua
+-- on the box so the effective rate is exactly 10% across the board.
+local DROP_RATE     = 10
+local FALLBACK_RATE = 10
 
 local function tierForLevel(lvl)
     if     lvl >= 95 then return 4

@@ -38,7 +38,7 @@ if type(M) ~= 'table' then M = {} end
 
 -- The docgen page generator (tools/docgen/generators/augment_dungeon_drops.py)
 -- PARSES these two knobs from this file -- keep the `NAME = value` shape.
-local TRASH_RATE = 30 -- % chance the assigned trash catalyst drops to the party's treasure pool (rolled once, on the killing blow)
+local TRASH_RATE = 10 -- % chance the assigned trash catalyst drops to the party's treasure pool (rolled once, on the killing blow; 2026-07-11 owner: flat 10% across all catalyst sources)
 local BOSS_QTY   = 20 -- catalysts each member receives on EVERY full clear (independent random picks from the boss pool)
 
 local data

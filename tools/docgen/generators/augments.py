@@ -411,10 +411,20 @@ def _hl_trophy_drops(hl_lua: Path | None) -> dict[int, list[str]]:
     return out
 
 
+def _trash_rate(runtime_lua: Path | None, fallback: int = 10) -> int:
+    """TRASH_RATE parsed from augment_dungeon_drops.lua (never mirrored here —
+    a hardcoded copy is how this generator shipped a stale 30% on 2026-07-11)."""
+    if runtime_lua is None or not runtime_lua.exists():
+        return fallback
+    m = re.search(r"^local\s+TRASH_RATE\s*=\s*(\d+)",
+                  runtime_lua.read_text(encoding="utf-8", errors="replace"), re.M)
+    return int(m.group(1)) if m else fallback
+
+
 def _dungeon_drops(data_lua: Path | None, catalog_lua: Path | None,
-                   trash_rate: int = 30) -> dict[int, list[str]]:
+                   trash_rate: int) -> dict[int, list[str]]:
     """augment_dungeon_drops_data.lua + dungeon_catalog.lua ->
-    {itemId: ['<Dungeon label> dungeon — 30% (trash) / boss pool']}."""
+    {itemId: ['<Dungeon label> dungeon — N% (trash) / boss pool']}."""
     out: dict[int, list[str]] = {}
     if data_lua is None or not data_lua.exists():
         return out
@@ -651,7 +661,9 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
             repo_root, "modules/custom/lua/hunting_league_catalog.lua", required=False))
         dg = _dungeon_drops(
             resolve_source(repo_root, "modules/custom/lua/augment_dungeon_drops_data.lua", required=False),
-            resolve_source(repo_root, "modules/custom/lua/dungeon_catalog.lua", required=False))
+            resolve_source(repo_root, "modules/custom/lua/dungeon_catalog.lua", required=False),
+            _trash_rate(resolve_source(
+                repo_root, "modules/custom/lua/augment_dungeon_drops.lua", required=False)))
         for iid, extras in list(hl.items()) + list(dg.items()):
             drops.setdefault(iid, []).extend(extras)
         print(f"[augments] drop sources: {len(drops)} catalysts from warp table"

@@ -17,7 +17,7 @@ This means **any** gear can become best-in-slot. That ring with no useful stats?
 
 Let's add some **Attack** to a piece of gear. (Any stat works the same way — this is just an example.)
 
-1. **Farm the catalysts.** Every catalyst **drops from one specific monster** (~60% per kill) — catalysts are **no longer bought for gil**. The "Attack" catalyst is **Black Tiger Hide**; its assigned mob is **Uleguerand Tiger** (a level ~60 mob) — kill it until you have **5×**. Every augment is available at every tier — see [Catalyst access](#catalyst-access) below.
+1. **Farm the catalysts.** Every catalyst **drops from one specific monster** (~10% per kill) — catalysts are **no longer bought for gil**. The "Attack" catalyst is **Black Tiger Hide**; its assigned mob is **Uleguerand Tiger** (a level ~60 mob) — kill it until you have **5×**. Every augment is available at every tier — see [Catalyst access](#catalyst-access) below.
 2. **Have 10,000 gil** in your inventory (the Augment Moogle's flat trade cost, no matter how many catalysts).
 3. **Go to {{npc:augment_moogle}}** and find the **Augment Moogle** (it's in the row of moogles).
 4. **Trade** the gear piece **+ your 5 catalysts** to the Moogle. It shows you what's about to be applied.
