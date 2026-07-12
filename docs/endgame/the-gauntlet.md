@@ -63,16 +63,18 @@ Every Gauntlet NM has the same shared hardcore kit, scaled by level. All of thes
 
 ### Level-specific behaviour
 
+<!-- DOCGEN:BEGIN id="gauntlet-boss-overrides" -->
 Some levels also override specific TP moves:
 
 | Level | NM | Notable override |
 |---|---|---|
-| 2 | Serket | Earthbreaker → magical earth damage + stun, capped at 4,500 |
+| 2 | Serket | Earthbreaker → magical earth damage + stun (10s), capped at 4,500 |
 | 4 | Nidhogg | Spike Flail → 3-hit physical, minimum 12,000 per use; Absolute Terror → 10–15s Terror |
 | 5 | King Behemoth | Meteor → magical damage capped at 6,500, on a 60s recast |
-| 6 | Vrtra | Sable Breath → dark breath damage to the front arc |
+| 6 | Vrtra | Spike Flail → 3-hit physical, minimum 12,000 per use; Sable Breath → dark breath damage to the front arc (~20% max HP), capped at 7,000 |
 | 7 | Kirin | Deadly Hold and Tail-type moves bypass parry; Stonega IV / Stone V / Quake capped at 5,000 |
 | 8 | Absolute Virtue | Medusa Javelin → physical + Bind 8s (replaces retail Petrify) |
+<!-- DOCGEN:END id="gauntlet-boss-overrides" -->
 
 ---
 

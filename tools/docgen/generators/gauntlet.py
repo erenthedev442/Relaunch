@@ -280,6 +280,65 @@ def _render_mechanics(text: str, c: dict) -> str:
     return "\n".join(out)
 
 
+def _render_boss_overrides(text: str, c: dict) -> str:
+    """Level-specific TP-move override table from C.bossOverrides in the
+    catalog (hoisted out of TheGauntlet.lua 2026-07-11 so tuning lives in
+    data, and this page can't drift from it)."""
+    blk = re.search(r"C\.bossOverrides\s*=\s*\{(.*?)\n\}", text, re.DOTALL)
+    if not blk:
+        raise RuntimeError("C.bossOverrides not found in gauntlet_catalog.lua "
+                           "-- update _render_boss_overrides.")
+    body = blk.group(1)
+
+    def entry(key: str) -> dict[str, str]:
+        m = re.search(rf"{key}\s*=\s*\{{([^{{}}]*(?:\{{[^}}]*\}}[^{{}}]*)*)\}}", body)
+        if not m:
+            raise RuntimeError(f"bossOverrides.{key} missing -- update "
+                               f"_render_boss_overrides.")
+        fields = dict(re.findall(r"(\w+)\s*=\s*([\d.]+)", m.group(1)))
+        lv = re.search(r"levels\s*=\s*\{\s*([\d,\s]+)\}", m.group(1))
+        if lv:
+            fields["levels"] = [int(x) for x in re.findall(r"\d+", lv.group(1))]
+        return fields
+
+    eb = entry("earthbreaker")
+    sf = entry("spikeFlail")
+    at = entry("absoluteTerror")
+    me = entry("meteor")
+    sb = entry("sableBreath")
+    ks = entry("kirinSpellCap")
+    mj = entry("medusaJavelin")
+
+    def fmt(n: str) -> str:
+        return f"{int(float(n)):,}"
+
+    by_level: dict[int, list[str]] = {}
+
+    def add(level: int, txt: str) -> None:
+        by_level.setdefault(level, []).append(txt)
+
+    add(int(eb["level"]), f"Earthbreaker → magical earth damage + stun "
+                          f"({eb['stunSec']}s), capped at {fmt(eb['damageCap'])}")
+    for lv in sf.get("levels", []):
+        add(lv, f"Spike Flail → 3-hit physical, minimum {fmt(sf['damageFloor'])} per use")
+    add(int(at["level"]), f"Absolute Terror → {at['terrorMinSec']}–{at['terrorMaxSec']}s Terror")
+    add(int(me["level"]), f"Meteor → magical damage capped at {fmt(me['damage'])}, "
+                          f"on a {me['recastSec']}s recast")
+    add(int(sb["level"]), f"Sable Breath → dark breath damage to the front arc "
+                          f"(~{int(float(sb['hpPct']) * 100)}% max HP), capped at {fmt(sb['damageCap'])}")
+    add(int(ks["level"]), f"Deadly Hold and Tail-type moves bypass parry; "
+                          f"Stonega IV / Stone V / Quake capped at {fmt(ks['damageCap'])}")
+    add(int(mj["level"]), f"Medusa Javelin → physical + Bind {mj['bindSec']}s "
+                          f"(replaces retail Petrify)")
+
+    out = ["Some levels also override specific TP moves:", "",
+           "| Level | NM | Notable override |", "|---|---|---|"]
+    for lv in sorted(by_level):
+        name = c["nms"].get(lv, f"Level {lv}")
+        out.append(f"| {lv} | {name} | " + "; ".join(by_level[lv]) + " |")
+    return "\n".join(out)
+
+
 def generate(repo_root: Path, docs_dir: Path) -> None:
     src = resolve_source(repo_root, "modules/custom/lua/gauntlet_catalog.lua")
     if src is None:
@@ -300,6 +359,7 @@ def generate(repo_root: Path, docs_dir: Path) -> None:
         ("gauntlet-level-rewards", _render_level_rewards(c)),
         ("gauntlet-milestones",    _render_milestones(c)),
         ("gauntlet-mechanics",     _render_mechanics(text, c)),
+        ("gauntlet-boss-overrides", _render_boss_overrides(text, c)),
     ]
     written = sum(
         1 for marker, content in blocks

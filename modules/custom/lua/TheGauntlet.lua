@@ -284,7 +284,7 @@ local function chooseGauntletMobSkill(level, mob, target, skillId)
 
         local selected = randomChoice(skills)
         if selected == 634 then
-            mob:setLocalVar('Gauntlet_MeteorReady', os.time() + 60)
+            mob:setLocalVar('Gauntlet_MeteorReady', os.time() + C.bossOverrides.meteor.recastSec)
         end
 
         return selected
@@ -860,7 +860,8 @@ m:addOverride('xi.mobskills.mobStatusEffectMove', function(mob, target, typeEffe
 end)
 
 m:addOverride('xi.actions.mobskills.earthbreaker.onMobWeaponSkill', function(mob, target, skill, action)
-    if not isGauntletLevelTarget(mob, target, 2) then
+    local ov = C.bossOverrides.earthbreaker
+    if not isGauntletLevelTarget(mob, target, ov.level) then
         return super(mob, target, skill, action)
     end
 
@@ -876,25 +877,26 @@ m:addOverride('xi.actions.mobskills.earthbreaker.onMobWeaponSkill', function(mob
     }
 
     local info = xi.mobskills.mobMagicalMove(mob, target, skill, action, params)
-    info.damage = math.min(info.damage, 4500)
+    info.damage = math.min(info.damage, ov.damageCap)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, 10)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.STUN, 1, 0, ov.stunSec)
     end
 
     return info.damage
 end)
 
 m:addOverride('xi.actions.mobskills.sable_breath.onMobWeaponSkill', function(mob, target, skill, action)
-    if not isGauntletLevelTarget(mob, target, 6) then
+    local ov = C.bossOverrides.sableBreath
+    if not isGauntletLevelTarget(mob, target, ov.level) then
         return super(mob, target, skill, action)
     end
 
     local params =
     {
-        percentMultipier = 0.20,
-        damageCap        = 7000,
+        percentMultipier = ov.hpPct,
+        damageCap        = ov.damageCap,
         bonusDamage      = 0,
         mAccuracyBonus   = { 0, 0, 0 },
         resistStat       = xi.mod.INT,
@@ -915,7 +917,15 @@ m:addOverride('xi.actions.mobskills.sable_breath.onMobWeaponSkill', function(mob
 end)
 
 m:addOverride('xi.actions.mobskills.spike_flail.onMobWeaponSkill', function(mob, target, skill, action)
-    if not (isGauntletLevelTarget(mob, target, 4) or isGauntletLevelTarget(mob, target, 6)) then
+    local ov = C.bossOverrides.spikeFlail
+    local onLevel = false
+    for _, lv in ipairs(ov.levels) do
+        if isGauntletLevelTarget(mob, target, lv) then
+            onLevel = true
+            break
+        end
+    end
+    if not onLevel then
         return super(mob, target, skill, action)
     end
 
@@ -934,7 +944,7 @@ m:addOverride('xi.actions.mobskills.spike_flail.onMobWeaponSkill', function(mob,
     }
 
     local info = xi.mobskills.mobPhysicalMove(mob, target, skill, action, params)
-    info.damage = math.max(info.damage, 12000)
+    info.damage = math.max(info.damage, ov.damageFloor)
 
     if xi.mobskills.processDamage(mob, target, skill, action, info) then
         target:takeDamage(info.damage, mob, info.attackType, info.damageType)
@@ -944,16 +954,18 @@ m:addOverride('xi.actions.mobskills.spike_flail.onMobWeaponSkill', function(mob,
 end)
 
 m:addOverride('xi.actions.mobskills.absolute_terror.onMobWeaponSkill', function(mob, target, skill, action)
-    if not isGauntletLevelTarget(mob, target, 4) then
+    local ov = C.bossOverrides.absoluteTerror
+    if not isGauntletLevelTarget(mob, target, ov.level) then
         return super(mob, target, skill, action)
     end
 
-    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.TERROR, 30, 0, math.random(10, 15)))
+    skill:setMsg(xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.TERROR, 30, 0, math.random(ov.terrorMinSec, ov.terrorMaxSec)))
     return xi.effect.TERROR
 end)
 
 m:addOverride('xi.actions.mobskills.medusa_javelin.onMobWeaponSkill', function(mob, target, skill, action)
-    if not isGauntletLevelTarget(mob, target, 8) then
+    local ov = C.bossOverrides.medusaJavelin
+    if not isGauntletLevelTarget(mob, target, ov.level) then
         return super(mob, target, skill, action)
     end
 
@@ -976,18 +988,19 @@ m:addOverride('xi.actions.mobskills.medusa_javelin.onMobWeaponSkill', function(m
 
         -- Retail petrification is 30-60s and too punishing in the solo Gauntlet.
         -- Keep the control threat, but let the player keep acting.
-        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BIND, 1, 0, 8)
+        xi.mobskills.mobStatusEffectMove(mob, target, xi.effect.BIND, 1, 0, ov.bindSec)
     end
 
     return info.damage
 end)
 
 m:addOverride('xi.actions.mobskills.meteor.onMobWeaponSkill', function(mob, target, skill, action)
-    if not isGauntletLevelTarget(mob, target, 5) then
+    local ov = C.bossOverrides.meteor
+    if not isGauntletLevelTarget(mob, target, ov.level) then
         return super(mob, target, skill, action)
     end
 
-    local damage = 6500
+    local damage = ov.damage
     damage = math.floor(damage * xi.combat.damage.calculateDamageAdjustment(target, false, true, false, false))
     damage = math.floor(target:handleSevereDamage(damage, false))
     damage = utils.handlePhalanx(target, damage)
@@ -1012,12 +1025,13 @@ end)
 -- bypass Utsusemi by design (shadow absorption is physical-only) -- the cap is the
 -- intended mitigation, not shadows.
 local function kirinSpellCap(caster, target, spell)
-    if not isGauntletLevelTarget(caster, target, 7) then
+    local ov = C.bossOverrides.kirinSpellCap
+    if not isGauntletLevelTarget(caster, target, ov.level) then
         return super(caster, target, spell)
     end
 
     local previousCap = target:getMod(xi.mod.RECEIVED_DAMAGE_CAP)
-    target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, 5000)
+    target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, ov.damageCap)
     local damage = super(caster, target, spell)
     target:setMod(xi.mod.RECEIVED_DAMAGE_CAP, previousCap)
 

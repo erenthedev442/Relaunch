@@ -207,6 +207,25 @@ C.SILENCE_RES_DOWN =
     [9] = -75, -- Pandemonium Warden: same, silence-specific only.
 }
 
+-- =========================================================
+-- PER-BOSS TP-MOVE OVERRIDES (read by TheGauntlet.lua)
+-- Level-keyed tuning for the boss-specific move overrides, hoisted here so
+-- balance lives in the catalog like everything else (and the website's
+-- gauntlet.py docgen renders the Level-specific behaviour table from it).
+-- `level`/`levels` both gate the override in TheGauntlet.lua and label the
+-- docgen row; `desc` is the player-facing summary shown on the site.
+-- =========================================================
+C.bossOverrides =
+{
+    earthbreaker   = { level = 2, damageCap = 4500, stunSec = 10 },
+    spikeFlail     = { levels = { 4, 6 }, damageFloor = 12000 },
+    absoluteTerror = { level = 4, terrorMinSec = 10, terrorMaxSec = 15 },
+    meteor         = { level = 5, damage = 6500, recastSec = 60 },
+    sableBreath    = { level = 6, hpPct = 0.20, damageCap = 7000 },
+    kirinSpellCap  = { level = 7, damageCap = 5000 },
+    medusaJavelin  = { level = 8, bindSec = 8 },
+}
+
 function C.weakWindowMods(level)
     local t = level - 1
     local currentDef  = math.floor(6000 + t * (4000 / 9) + 0.5)
