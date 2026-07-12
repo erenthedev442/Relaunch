@@ -62,6 +62,12 @@ CHECKS = [
      "src/map/lua/luautils.cpp", r"xi\.player\.onJobChange", "present", 1),
     ("Boom: onJobChange Lua stub (player.lua)",
      "scripts/globals/player.lua", r"xi\.player\.onJobChange", "present", 1),
+    # Reward accepts Pet Roborant/Poultice (2026-07-11, player report): the
+    # stock LSB checkReward only allows the biscuit id range, rejecting the
+    # pet medicines !shop sells. An upstream merge of beastmaster.lua would
+    # silently re-break them.
+    ("Reward: Pet Roborant/Poultice accepted (beastmaster.lua)",
+     "scripts/globals/job_utils/beastmaster.lua", r"PET_ROBORANT", "min", 2),
     ("Patch markers present across src/ (broad-revert tripwire)",
      "src", r"FJB|LEGENDARY[- ]CUSTOM", "min", 30),
 ]

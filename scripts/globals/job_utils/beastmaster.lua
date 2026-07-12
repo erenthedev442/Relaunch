@@ -272,8 +272,13 @@ xi.job_utils.beastmaster.checkReward = function(player, target, ability)
     else
         local id = player:getEquipID(xi.slot.AMMO)
         if
-            id >= xi.item.PET_FOOD_ALPHA_BISCUIT and
-            id <= xi.item.PET_FOOD_THETA_BISCUIT
+            (id >= xi.item.PET_FOOD_ALPHA_BISCUIT and
+            id <= xi.item.PET_FOOD_THETA_BISCUIT) or
+            -- Pet medicines also deliver through Reward (retail behavior):
+            -- Roborant cures the pet's status ailments, Poultice regens HP.
+            -- Sold via !shop; handled in useReward below.
+            id == xi.item.PET_ROBORANT or
+            id == xi.item.PET_POULTICE
         then
             return 0, 0
         else
@@ -512,6 +517,38 @@ xi.job_utils.beastmaster.useReward = function(player, target, ability)
     local pet              = player:getPet()
     local petCurrentHP     = pet:getHP()
     local petMaxHP         = pet:getMaxHP()
+
+    -- Pet medicines deliver through Reward but are not food (no instant-heal
+    -- formula). Handled before the food math and consumed the same way.
+    if rangeObj == xi.item.PET_ROBORANT then
+        -- Cures the pet's status ailments.
+        for _, eff in ipairs({
+            xi.effect.PARALYSIS,
+            xi.effect.POISON,
+            xi.effect.BLINDNESS,
+            xi.effect.WEIGHT,
+            xi.effect.SLOW,
+            xi.effect.SILENCE,
+            xi.effect.BIND,
+        }) do
+            pet:delStatusEffect(eff)
+        end
+
+        pet:wakeUp()
+        player:removeAmmo(1)
+
+        return 0
+    elseif rangeObj == xi.item.PET_POULTICE then
+        -- Gradually restores the pet's HP: strong regen, no instant heal.
+        -- 25 HP/tick for 3 min out-heals a Theta biscuit's regen line (20)
+        -- over time, trading away the biscuit's instant chunk.
+        pet:delStatusEffect(xi.effect.REGEN)
+        pet:addStatusEffect(xi.effect.REGEN, { power = 25, duration = 180, origin = player, tick = 3 })
+        pet:wakeUp()
+        player:removeAmmo(1)
+
+        return 0
+    end
 
     -- Need to start to calculate the HP to restore to the pet.
     -- Please note that I used this as base for the calculations:
